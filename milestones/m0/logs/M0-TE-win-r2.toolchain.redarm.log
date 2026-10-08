@@ -1,0 +1,67 @@
+==== 2026-10-08T16:49:21-04:00 toolchain · clean · a fresh scratch copy of the tree
+== 2026-10-08T16:49:22-04:00 toolchain[desktop] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:49:22-04:00 toolchain[wasm] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:49:22-04:00 toolchain[trunk] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=0 · 48.21 s
+toolchain wasm: wasm32-unknown-unknown module built (2653026 bytes)
+=== GO ===
+
+-- toolchain[desktop] · exit=0 · 48.93 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+-- toolchain[trunk] · exit=0 · 49.28 s
+toolchain trunk: trunk 0.21.14 built the page
+=== GO ===
+
+==== 2026-10-08T16:50:12-04:00 toolchain · plant toolchain-compiler · a fresh scratch copy of the tree
+planted toolchain-compiler: tests/plants/toolchain-compiler.patch -> tests/toolchain/check.sh
+== 2026-10-08T16:50:12-04:00 toolchain[desktop] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:50:12-04:00 toolchain[wasm] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:50:12-04:00 toolchain[trunk] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=1 · 0.35 s
+toolchain wasm: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+-- toolchain[desktop] · exit=1 · 0.36 s
+toolchain desktop: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+-- toolchain[trunk] · exit=1 · 0.35 s
+toolchain trunk: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+==== 2026-10-08T16:50:13-04:00 toolchain · plant toolchain-web-target · a fresh scratch copy of the tree
+planted toolchain-web-target: tests/plants/toolchain-web-target.patch -> tests/toolchain/check.sh
+== 2026-10-08T16:50:13-04:00 toolchain[desktop] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:50:13-04:00 toolchain[wasm] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:50:13-04:00 toolchain[trunk] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=1 · 0.66 s
+toolchain wasm: cargo build --target wasm32-unknown-unknwn failed
+=== NO-GO: cargo build --target wasm32-unknown-unknwn failed ===
+
+-- toolchain[desktop] · exit=0 · 2.34 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+-- toolchain[trunk] · exit=0 · 28.71 s
+toolchain trunk: trunk 0.21.14 built the page
+=== GO ===
+
+==== 2026-10-08T16:50:43-04:00 toolchain · plant toolchain-trunk · a fresh scratch copy of the tree
+planted toolchain-trunk: tests/plants/toolchain-trunk.patch -> tests/toolchain/check.sh
+== 2026-10-08T16:50:43-04:00 toolchain[desktop] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:50:43-04:00 toolchain[wasm] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:50:43-04:00 toolchain[trunk] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[trunk] · exit=1 · 0.26 s
+toolchain trunk: trunc not found on PATH
+=== NO-GO: trunc not found on PATH ===
+
+-- toolchain[wasm] · exit=0 · 23.46 s
+toolchain wasm: wasm32-unknown-unknown module built (2653026 bytes)
+=== GO ===
+
+-- toolchain[desktop] · exit=0 · 24.07 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+

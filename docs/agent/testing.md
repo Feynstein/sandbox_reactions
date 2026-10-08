@@ -24,6 +24,7 @@ A run's log opens first at `milestones/m0/logs/<ID>.<scope>.log`; every run appe
 | `plan_lint` | the plan's structure (`plan.py lint`) | ≥ 30 (49 now) | 0.1 s | `plan-bad-status` (a command: the plan moves, a patch would not apply) |
 | `tools_selftest` | each annex tool's own red-armed selftest — proves the tools, never the game | 10 | 10 s | `tools-selftest-scratch` |
 | `toolchain` | the stack builds a one-file program: `desktop` (rustc 1.99), `wasm` (wasm32-unknown-unknown), `trunk` (trunk 0.21.14 + wasm-bindgen 0.2.129) | 3 | 0.3 s warm · ≈ 9 s cold (first trunk run fetches wasm-bindgen-cli into `~/.cache/trunk`) | `toolchain-compiler`, `toolchain-web-target`, `toolchain-trunk` |
+| `build` | the game's workspace (R11): `native` — `cargo build --workspace --release --locked` then `cargo clippy ... -- -D warnings`; `wasm` — `cargo check --workspace --target wasm32-unknown-unknown --locked` (M0-T1) | 2 | ≈ 5 s on win-laptop (the empty `sr-physics`; grows with the crates) | `build-wasm-only` |
 
 The complete loop: 3.2 s wall on linux-pc (62 cases, `jobs` 8). `tools_selftest` GO is the tools' GO, never the
 game's: the game's scopes arrive with the lots that build their passes (§5 names 38 — `grav-force` … `web`;
@@ -72,13 +73,34 @@ across adapters agree within G-REF's tolerances only (contract §6.7).
   82 % full. Settled by contract §6.5 as amended [M0-TG] (the lead approved, 2026-10-08): cargo's target is
   `build/target/` (`.cargo/config.toml`), left out of copies by name; red-arm copies may share
   `~/.cache/sandbox-reactions/redarm-target/` outside the tree for the dependencies' artifacts — never for a
-  binary a scope launches. M0-T1 writes the mechanism here.
+  binary a scope launches. The mechanism is below (§ Cargo scopes).
 - **A scope's script must create its own `build/`**: a scratch copy has none (the toolchain scope's first red-arm
   failed on exactly this).
 - **`rustup`-installed targets**: the `wasm` case needs `wasm32-unknown-unknown` (`rustup target add`, R3) and the
   `trunk` case needs `trunk` 0.21.14 on `~/.cargo/bin` — a box without them reads NO-GO there, naming the missing tool.
 - **`capture_web.mjs`'s live tier** needs Playwright (arrives with `web/package.json`): until then its selftest
   reports `live=0` — `NOT RUN (no Playwright)`.
+
+## Hazards measured on win-laptop (M0-TE-win, M0-D5)
+- **Run the toolkit from Git Bash with `MSYS=winsymlinks:nativestrict`** (a user variable there; Developer Mode
+  on), never from PowerShell, whose `bash` is WSL's relay. A Git Bash **without** the setting copies instead of
+  linking: `scratch_copy.sh --selftest` reads NO-GO 9/12 (the leak, symlink and `models` plant checks) and
+  `tools_selftest[scratch_copy]` is red — not a defect, the shell; set the variable and rerun.
+- **8.3 short names** (`TMPDIR=/c/Users/YOHANB~1/…`): `pwd -P` expands them and normalises case and `/tmp`,
+  `realpath -m` does not — two paths are compared only after one resolution (scratch_copy.sh's `canon`, M0-D5).
+
+## Cargo scopes — `tests/cargo.sh` (M0-T1)
+Every cargo scope's script sources `tests/cargo.sh`; it is also the `build` scope's case runner (`bash tests/cargo.sh build native|wasm`).
+- It puts `~/.cargo/bin` first on the PATH (linux-pc has it off; harmless on win-laptop).
+- Real tree: `CARGO_TARGET_DIR` is unset, so cargo builds into `build/target/` (`.cargo/config.toml`). In a red-arm scratch
+  copy (no `.git`) it is `~/.cache/sandbox-reactions/redarm-target/`, shared by both arms so a plant rebuilds only the workspace's
+  crates — for test builds only, never a binary a scope launches (§6.5). The cache is safe to delete.
+- Every build, check and test is `--locked`: `Cargo.lock` is committed, and adding a dependency means regenerating it.
+- One build profile: `[profile.release]` in the root `Cargo.toml`; `[profile.test]` inherits it (the CPU twin needs optimised code).
+- `rust-toolchain.toml` pins 1.99.0 (+ clippy, rustfmt, targets linux-gnu and wasm32); the first cargo call in a tree auto-installs that
+  toolchain user-level (win-laptop: 2026-10-08, ≈ 25 s, beside `stable`).
+- A new member crate lands inside `crates/*` and is covered by the `build` scope's `crates/**` path; a cargo test scope is
+  `cargo test --release --locked -p <crate> --lib` (R11) and sources `tests/cargo.sh` for the environment.
 
 ## Long runs
 `calibrate`, the ⏱ scopes and benches at low rungs can pass 10 minutes on the Quadro: the lead's, in one

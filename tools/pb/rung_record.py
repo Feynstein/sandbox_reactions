@@ -1044,16 +1044,18 @@ def cmd_selftest(a):
         lines = lambda c, exe=LINUX_EXE: _now_run(["now", "--sessions", ndir], "snow", None, cfg[c], exe)[1].splitlines()
         head = "model=claude-opus-5-5 level=xhigh plugin="
         tool = os.path.join(_tools(), "switch.mjs")
-        posix = lambda c, exe=LINUX_EXE, verb="install": 'install: node "%s" build --out "%s" && "%s" plugin marketplace add "%s" && "%s" plugin %s pb-switch@pb --scope user' % (
+        host = lambda c, exe=LINUX_EXE, verb="install": (
+            'install: node "%s" build --out "%s"; & "%s" plugin marketplace add "%s"; & "%s" plugin %s pb-switch@pb --scope user' if windows() else
+            'install: node "%s" build --out "%s" && "%s" plugin marketplace add "%s" && "%s" plugin %s pb-switch@pb --scope user') % (
             tool, os.path.join(cfg[c], PLUGIN + "-src"), exe, os.path.join(cfg[c], PLUGIN + "-src"), exe, verb)
         installed = lambda: lines("user") == [head + "installed"]
         check("now: installed → one line, the model, the record's level and plugin=installed, no install line", installed())
         check("now: installed under local scope for this folder → installed", lines("here") == [head + "installed"])
-        missing = lambda: lines("none") == [head + "missing", posix("none")]
-        check("now: missing → the POSIX line: the build of the switch.mjs beside the tool first, then the client's two calls, quoted", missing())
-        other = lambda: lines("other") == [head + "missing", posix("other")]
+        missing = lambda: lines("none") == [head + "missing", host("none")]
+        check("now: missing → this host's line (POSIX; PowerShell on Windows): the build of the switch.mjs beside the tool first, then the client's two calls, quoted", missing())
+        other = lambda: lines("other") == [head + "missing", host("other")]
         check("now: installed under another project's scope only → missing here", other())
-        stale = lambda: lines("old") == [head + "stale", posix("old", verb="update")]
+        stale = lambda: lines("old") == [head + "stale", host("old", verb="update")]
         check("now: an install older than the switch.mjs beside the tool → plugin=stale and the install line whose last call is `plugin update` (`install` on an installed id leaves the old version recorded)", stale())
         newer = lambda: lines("new") == [head + "installed"]
         check("now: an install newer than the switch.mjs beside the tool is installed (versions compared, not bytes)", newer())
@@ -1069,7 +1071,7 @@ def cmd_selftest(a):
             with _env({"CLAUDE_CONFIG_DIR": WIN_CFG, "CLAUDE_CODE_EXECPATH": WIN_EXE}):
                 return install_line(WIN_EXE, WIN_TOOLS + "\\switch.mjs", WIN_CFG + "\\pb-switch-src", True, True) == win_up
         check("now: stale on Windows → the same PowerShell line, its last call `plugin update`", windows_stale())
-        bare = lambda: lines("none", None) == [head + "missing", posix("none", "claude")]
+        bare = lambda: lines("none", None) == [head + "missing", host("none", "claude")]
         check("now: no $CLAUDE_CODE_EXECPATH → `claude`, never a path looked up", bare())
         unknown = lambda: lines("bad") == [head + "unknown"] and lines("shape") == [head + "unknown"]
         check("now: a malformed record or one of the wrong shape → plugin=unknown, no install line", unknown())

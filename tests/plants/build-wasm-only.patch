@@ -1,0 +1,7 @@
+--- a/crates/sr-physics/src/lib.rs
++++ b/crates/sr-physics/src/lib.rs
+@@ -1 +1,4 @@
+ //! sr-physics — no GPU: units, registries, EOS, rate laws, time control, the CPU f64 twin (m0_contrat.md §1.1).
++
++#[cfg(target_arch = "wasm32")]
++compile_error!("planted: the wasm build breaks while the native build stays green");

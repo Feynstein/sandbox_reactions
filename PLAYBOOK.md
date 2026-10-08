@@ -1886,7 +1886,7 @@ the right one. Every write call locks the plan through `.<plan file>.lock` besid
 in place and never deleted (§A.0); a read (`show`, `lint`, `header`) leaves none.
 
 #### `tools/pb/plan.py`
-<!-- pb:file tools/pb/plan.py md5:4886df610160 -->
+<!-- pb:file tools/pb/plan.py md5:9c293922e286 -->
 ~~~~python
 #!/usr/bin/env python3
 """tools/pb/plan.py - every edit an agent makes to the plan, one call each.
@@ -4331,11 +4331,12 @@ def cmd_selftest(_plan, a):
         # --- lint: the authoring warnings (open blocks) --------------------------------------------
         big = os.path.join(root, "big_reference.md")
         write_text(big, "x\n" * (READ_CAP + 100), "\n")
-        reset(FIXTURE.replace("- Deliver: widget.py grows a seam", "- Read: this file + %s\n- Deliver: widget.py grows a seam" % big, 1))
+        bigname = os.path.basename(big)     # beside the plan: a native absolute path reads C:\... on Windows
+        reset(FIXTURE.replace("- Deliver: widget.py grows a seam", "- Read: this file + %s\n- Deliver: widget.py grows a seam" % bigname, 1))
         rc, out = go("lint")
         check("WARN: a `Read:` naming a file over %d lines whole" % READ_CAP,
-              rc == 0 and "M12.1-T2a: `Read:` names %s whole (%d lines" % (big, READ_CAP + 100) in out, out)
-        reset(FIXTURE.replace("- Deliver: widget.py grows a seam", "- Read: this file + %s §2\n- Deliver: widget.py grows a seam" % big, 1))
+              rc == 0 and "M12.1-T2a: `Read:` names %s whole (%d lines" % (bigname, READ_CAP + 100) in out, out)
+        reset(FIXTURE.replace("- Deliver: widget.py grows a seam", "- Read: this file + %s §2\n- Deliver: widget.py grows a seam" % bigname, 1))
         rc, out = go("lint")
         check("... and none when it names a section", rc == 0 and "`Read:` names" not in out, out)
         rep = "- Adversarial: the seam may leak under load - measure it twice with the probe"
@@ -4829,7 +4830,7 @@ when the complete loop is over `--budget`. A wrong call prints the right one.
 any other unknown key or bad value NOT RUNs its scope or part, named (`--all` NO-GO); `report` counts other shapes `foreign`.
 
 #### `tools/pb/verify.py`
-<!-- pb:file tools/pb/verify.py md5:cdf8b7c56213 -->
+<!-- pb:file tools/pb/verify.py md5:5f52675a3900 -->
 ~~~~python
 #!/usr/bin/env python3
 """tools/pb/verify.py - the one runner, the routine's instrument (PLAYBOOK annex §A.2).
@@ -5279,6 +5280,15 @@ def argv_of(cmd, man, root, case=None):
     if not exe:
         raise ValueError(f"{toks[0]!r} is not on PATH")
     return [exe] + toks[1:]
+
+
+def case_env(task):
+    """Every command's environment: the task id, UTF-8 output, and faulthandler on - a native crash (an access
+    violation, no traceback) still leaves its Python stack in the log. A caller's own value wins."""
+    env = dict(os.environ, PB_TASK=task)
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env.setdefault("PYTHONFAULTHANDLER", "1")
+    return env
 
 
 def new_group():
@@ -5960,8 +5970,7 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     if refused:
         raise Refused(refused)
     one = dict(man, scopes={name: s})
-    env = dict(os.environ, PB_TASK=task)
-    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env = case_env(task)
     lines, fails, red, green, errors, t0 = [], [], 0, 0, 0, time.monotonic()
     tmp = Path(tempfile.mkdtemp(prefix="pb-redarm-"))
     arms = {}
@@ -6172,8 +6181,7 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     snap = (anchor_snapshot(man, root, [n for n, _s, no in specs if not no], visible)
             if use_anchor and visible is not None else {})
     tree = tree_id(root, man, logs) if record else None
-    env = dict(os.environ, PB_TASK=task)
-    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env = case_env(task)
     t0, runs, todo = time.monotonic(), [], []
     for name, s, no in specs:
         sr = ScopeRun(name, s, 0 if no else 1 if case is not None or name == "smoke" else int(s.get("expected", 0)),
@@ -6526,6 +6534,9 @@ if kind == "marker":
     open("ran.marker", "w").close()
 if kind == "check":
     kind = "nogo" if "BUG" in open(args[0], encoding="utf-8").read() else "go"
+if kind == "fault":
+    import faulthandler
+    kind = "go" if faulthandler.is_enabled() else "nogo"
 if kind == "exit":
     text, rc = "", int(args[0])
 elif kind == "verdict":
@@ -6541,8 +6552,18 @@ else:
 print(text)
 trace = os.environ.get("PB_TRACE")
 if trace:
+    line, lock, until = "%s %.6f %.6f\n" % (args[0] if kind == "trace" else kind, t0, time.time()), trace + ".lock", time.time() + 5
+    while lock:                       # one writer at a time: two appends at once tear a line on Windows; 5 s at most
+        try:
+            os.close(os.open(lock, os.O_CREAT | os.O_EXCL))
+            break
+        except OSError:               # held (or being deleted, on Windows)
+            lock = lock if time.time() < until else None
+            time.sleep(0.005)
     with open(trace, "a") as f:
-        f.write("%s %.6f %.6f\n" % (args[0] if kind == "trace" else kind, t0, time.time()))
+        f.write(line)
+    if lock:
+        os.remove(lock)
 sys.exit(rc)
 '''
 
@@ -6552,7 +6573,8 @@ def selftest():
     reason. Never touches the real logs, the real anchor or the tree it sits in."""
     global PROGRESS
     checks, failed, plants = [], [], [0, 0]           # plants: [planted, red]
-    saved = {k: os.environ.get(k) for k in ("PB_TASK", "PB_TRACE", "PB_BOX", "GIT_CEILING_DIRECTORIES")}
+    saved = {k: os.environ.get(k) for k in ("PB_TASK", "PB_TRACE", "PB_BOX", "GIT_CEILING_DIRECTORIES",
+                                            "PYTHONFAULTHANDLER")}
     saved_progress, PROGRESS = PROGRESS, False
 
     def check(name, ok, detail=""):
@@ -6580,6 +6602,7 @@ def selftest():
         with tempfile.TemporaryDirectory(prefix="pb-verify-") as tmpd:
             tmp = Path(tmpd)
             os.environ.pop("PB_TASK", None)
+            os.environ.pop("PYTHONFAULTHANDLER", None)               # the harness, not the caller, must set it
             os.environ["PB_BOX"] = "SELFBOX"
             os.environ["GIT_CEILING_DIRECTORIES"] = str(tmp.parent)   # the fixture root is no git checkout
             trace = tmp / "trace.txt"
@@ -6624,9 +6647,13 @@ def selftest():
                 return (rc == 1 and bool(fails) and all(ln.strip().startswith(f"{scope}:") for ln in fails)
                         and why in out), out[-400:]
 
-            def spans():
-                return [(s.split()[0], float(s.split()[1]), float(s.split()[2]))
-                        for s in trace.read_text(encoding="utf-8").splitlines()]
+            def spans():                    # whole records only: a torn one reads missing on its check, never a crash
+                return [(m[1], float(m[2]), float(m[3])) for s in trace.read_text(encoding="utf-8").splitlines()
+                        if (m := re.fullmatch(r"(\S+) (\d+\.\d+) (\d+\.\d+)", s))]
+
+            def overlap(sp):
+                t = {s[0]: s for s in sp if s[0] in ("t1", "t2")}
+                return len(t) == 2 and t["t1"][1] < t["t2"][2] and t["t2"][1] < t["t1"][2], t
 
             # -- A · the clean fixture: every form counts right, and the run's shape ---------------------------
             trace.write_text("", encoding="utf-8")
@@ -6654,9 +6681,7 @@ def selftest():
             check("the exclusive scope ran alone after the rest, the smoke last",
                   len(last) == 2 and last["alone"][1] >= max(s[2] for s in sp if s[0] not in last)
                   and last["smoke"][1] >= last["alone"][2], sp)
-            t = {s[0]: s for s in sp if s[0] in ("t1", "t2")}
-            check("two shared scopes ran at the same time",
-                  len(t) == 2 and t["t1"][1] < t["t2"][2] and t["t2"][1] < t["t1"][2], t)
+            check("two shared scopes ran at the same time", *overlap(sp))
             recs = [json.loads(ln) for ln in (logs / "loop_times.jsonl").read_text(encoding="utf-8").splitlines()]
             check("loop_times.jsonl: one line per run, with the box and the interpreter",
                   len(recs) == 1 and RECORD_KEYS | {"box", "python", "load_source", "cases"} <= set(recs[0])
@@ -6671,6 +6696,10 @@ def selftest():
             sp = sorted(spans(), key=lambda s: s[1])
             check("--serial: no two commands overlap",
                   rc == 0 and len(sp) == 3 and all(b[1] >= x[2] for x, b in zip(sp, sp[1:])), sp)
+            trace.write_text("t1 10.000000 12.000000\nt2 11.0\n", encoding="utf-8")    # a torn record: two appends at once
+            ok, _t = overlap(spans())
+            plant_("a torn trace record: read missing, its check red - never an IndexError",
+                   not ok and spans() == [("t1", 10.0, 12.0)], spans())
 
             # -- B · plants: each beside a clean scope, each NO-GO on its own reason -------------------------
             with socket.socket() as held:
@@ -7237,6 +7266,18 @@ def selftest():
                 check("busy_cpus refuses a stopped clock", False)
             except OSError as exc:
                 check("busy_cpus refuses a stopped clock", "did not advance" in str(exc))
+
+            # -- J2 · a native crash leaves a stack: every case runs with faulthandler on ----------------------
+            rc, out = run_({"f": {"cmd": f"{py} fault"}}, "f")
+            check("a case runs with faulthandler on (PYTHONFAULTHANDLER from the harness, not the caller)",
+                  rc == 0 and out.rstrip().endswith("=== GO ==="), out[-300:])
+            real = globals()["case_env"]
+            globals()["case_env"] = lambda task: dict(os.environ, PB_TASK=task, PYTHONIOENCODING="utf-8")
+            try:
+                rc, out = run_({"f": {"cmd": f"{py} fault"}}, "f")
+            finally:
+                globals()["case_env"] = real
+            plant_("an env without faulthandler reads red", rc == 1 and "f:" in out, out[-300:])
 
             # -- K · the console, the list ------------------------------------------------------------------
             (tmp / "u.json").write_text(json.dumps({"scopes": {"a": {"cmd": "x", "note": "≤ 5 s"}}}), encoding="utf-8")
@@ -11074,7 +11115,7 @@ ephemeral port, GET `/` contains the marked id → GO; an unanswered critical qu
 exit 3 → the NO-GO arm.
 
 #### `tools/pb/status_page.py`
-<!-- pb:file tools/pb/status_page.py md5:2fd9acd147e7 -->
+<!-- pb:file tools/pb/status_page.py md5:8cce7ffce793 -->
 ~~~~python
 #!/usr/bin/env python3
 """status_page.py — the orchestrator's two-way page (PLAYBOOK annex §A.6, §7 O8).
@@ -11473,6 +11514,18 @@ def handler(st):
             self.end_headers()
             self.wfile.write(data)
 
+        def drain(self, n):  # a refused body is read first: a close on unread bytes is a reset on Windows (10053)
+            left = min(n, 16 * MAX_BODY)
+            try:
+                self.connection.settimeout(2)
+                while left > 0:
+                    chunk = self.rfile.read(min(left, MAX_BODY))
+                    if not chunk:
+                        break
+                    left -= len(chunk)
+            except OSError:
+                pass
+
         def do_GET(self):
             path = urllib.parse.urlsplit(self.path).path
             if path == "/health":
@@ -11497,6 +11550,7 @@ def handler(st):
                 n = -1
             if n < 0 or n > MAX_BODY:
                 self.close_connection = True
+                self.drain(n)
                 return self.reply(413, {"ok": False, "error": f"a body of 0 to {MAX_BODY} bytes"})
             is_json = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower() == "application/json"
             qid = text = None
@@ -12156,7 +12210,7 @@ the symlink present → GO; a planted exclude removed from the list → the file
 Windows-only project the same shape is a PowerShell script over `robocopy /XD`.
 
 #### `tools/pb/scratch_copy.sh`
-<!-- pb:file tools/pb/scratch_copy.sh md5:de04c76b5215 -->
+<!-- pb:file tools/pb/scratch_copy.sh md5:02dd8f26fbf3 -->
 ~~~~bash
 #!/usr/bin/env bash
 # tools/pb/scratch_copy.sh — the sanctioned scratch copy (PLAYBOOK annex §A.7).
@@ -12178,10 +12232,17 @@ LINKS=(.venv node_modules)
 
 nogo() { echo "files=0 · dest=${2:--}"; echo "=== NO-GO: $1 ==="; return 1; }
 
+canon() {                                   # <path> as the source is resolved: pwd -P on its deepest existing folder
+  local p head tail="" d                    # (Git Bash: 8.3 names, letter case, /tmp → /c/… — realpath -m keeps them)
+  p="$(realpath -m -- "$1")" || return 1; head="$p"
+  while [[ -n "$head" && ! -d "$head" ]]; do tail="/${head##*/}$tail"; head="${head%/*}"; done
+  d="$(cd "${head:-/}" && pwd -P)" || return 1; p="${d%/}$tail"; echo "${p:-/}"
+}
+
 copy() {                                    # copy <src> <dest> [extra names…]
   local src dest name files ex=() links=()
   src="$(cd "$1" 2>/dev/null && pwd -P)" || { nogo "no source folder: $1" "$2"; return 1; }
-  dest="$(realpath -m -- "$2")" || { nogo "cannot resolve $2" "$2"; return 1; }
+  dest="$(canon "$2")" || { nogo "cannot resolve $2" "$2"; return 1; }
   [[ "$dest/" == "$src/"* ]] && { nogo "dest sits inside the source: $dest" "$dest"; return 1; }
   [[ -e "$dest" && -n "$(ls -A "$dest" 2>&1)" ]] && { nogo "dest is not empty: $dest — use a fresh folder" "$dest"; return 1; }
   command -v rsync >/dev/null || { nogo "rsync not found" "$dest"; return 1; }
@@ -12265,7 +12326,7 @@ reddens. The planted-bug campaign is `verify.py --redarm` (§A.2); a bilingual p
 user-visible strings with a harness scope of its own.
 
 #### `tools/pb/content_gate.py`
-<!-- pb:file tools/pb/content_gate.py md5:90a1a464e16f -->
+<!-- pb:file tools/pb/content_gate.py md5:993166b08d43 -->
 ~~~~python
 #!/usr/bin/env python3
 """content_gate.py — the `neutral` gate: no pushed file names what the denylist holds (PLAYBOOK annex §A.8).
@@ -12559,7 +12620,7 @@ def cmd_selftest(a):
             def child(*argv, enc="utf-8"):
                 p = subprocess.run([sys.executable, os.path.join(kit, "content_gate.py"), *argv], cwd=decoy,
                                    capture_output=True, timeout=60, env=dict(os.environ, PYTHONIOENCODING=enc))
-                return p.returncode, p.stdout.decode("utf-8", "replace")
+                return p.returncode, p.stdout.decode("utf-8", "replace").replace("\r\n", "\n")   # Windows' text stdout
             put(doc, planted(PLANTS[0][1], PLANTS[0][2])[0])
             rc, out = child("check", doc)
             check("no --denylist → the list beside the tool, not one in the working folder: the italic plant NO-GO",
@@ -12578,7 +12639,8 @@ def cmd_selftest(a):
                         "notes/other.md", "tools/pb/denylist.txt"):
                 put(os.path.join(repo, rel), "x\n")
             put(os.path.join(repo, ".gitignore"), "tools/local.txt\nproposals/\n")
-            subprocess.run(["git", "-C", repo, "add", "PLAYBOOK.md", "tools/gone.py"], check=True)
+            subprocess.run(["git", "-C", repo, "-c", "core.autocrlf=false", "add", "PLAYBOOK.md", "tools/gone.py"],
+                           check=True)
             os.remove(os.path.join(repo, "tools", "gone.py"))                # tracked, then deleted: nothing to scan
             os.chdir(repo)
             args = ("cases", "--denylist", "tools/pb/denylist.txt", "--fenced", "proposals/P.md", "PLAYBOOK.md", "tools")
@@ -12595,6 +12657,7 @@ def cmd_selftest(a):
                   rc == 0 and sorted(out.split()) == ["PLAYBOOK.md", "proposals/P.md", "tools/new.md", "tools/pb/tool.py"])
             os.chdir(plain)
             check("cases outside a git checkout → exit 1", run(*args)[0] == 1)
+            os.chdir(home)                  # out before the cleanup: Windows removes no folder that is the cwd
     except Exception as e:                  # a crash is a failed check, never a traceback in place of the verdict
         check(f"selftest stopped after {len(checks)} checks: {type(e).__name__}: {e}", False)
     finally:
@@ -12717,7 +12780,7 @@ the checkout, a stale copy read as installed, a newer install read as stale, a s
 `plugin install`, POSIX and PowerShell.
 
 #### `tools/pb/rung_record.py`
-<!-- pb:file tools/pb/rung_record.py md5:b4afcebce9b1 -->
+<!-- pb:file tools/pb/rung_record.py md5:3a3c3a3ae9b2 -->
 ~~~~python
 #!/usr/bin/env python3
 """rung_record.py — each DONE block's rung, claim run and cost, by class and rung (PLAYBOOK annex §A.9).
@@ -13765,16 +13828,18 @@ def cmd_selftest(a):
         lines = lambda c, exe=LINUX_EXE: _now_run(["now", "--sessions", ndir], "snow", None, cfg[c], exe)[1].splitlines()
         head = "model=claude-opus-5-5 level=xhigh plugin="
         tool = os.path.join(_tools(), "switch.mjs")
-        posix = lambda c, exe=LINUX_EXE, verb="install": 'install: node "%s" build --out "%s" && "%s" plugin marketplace add "%s" && "%s" plugin %s pb-switch@pb --scope user' % (
+        host = lambda c, exe=LINUX_EXE, verb="install": (
+            'install: node "%s" build --out "%s"; & "%s" plugin marketplace add "%s"; & "%s" plugin %s pb-switch@pb --scope user' if windows() else
+            'install: node "%s" build --out "%s" && "%s" plugin marketplace add "%s" && "%s" plugin %s pb-switch@pb --scope user') % (
             tool, os.path.join(cfg[c], PLUGIN + "-src"), exe, os.path.join(cfg[c], PLUGIN + "-src"), exe, verb)
         installed = lambda: lines("user") == [head + "installed"]
         check("now: installed → one line, the model, the record's level and plugin=installed, no install line", installed())
         check("now: installed under local scope for this folder → installed", lines("here") == [head + "installed"])
-        missing = lambda: lines("none") == [head + "missing", posix("none")]
-        check("now: missing → the POSIX line: the build of the switch.mjs beside the tool first, then the client's two calls, quoted", missing())
-        other = lambda: lines("other") == [head + "missing", posix("other")]
+        missing = lambda: lines("none") == [head + "missing", host("none")]
+        check("now: missing → this host's line (POSIX; PowerShell on Windows): the build of the switch.mjs beside the tool first, then the client's two calls, quoted", missing())
+        other = lambda: lines("other") == [head + "missing", host("other")]
         check("now: installed under another project's scope only → missing here", other())
-        stale = lambda: lines("old") == [head + "stale", posix("old", verb="update")]
+        stale = lambda: lines("old") == [head + "stale", host("old", verb="update")]
         check("now: an install older than the switch.mjs beside the tool → plugin=stale and the install line whose last call is `plugin update` (`install` on an installed id leaves the old version recorded)", stale())
         newer = lambda: lines("new") == [head + "installed"]
         check("now: an install newer than the switch.mjs beside the tool is installed (versions compared, not bytes)", newer())
@@ -13790,7 +13855,7 @@ def cmd_selftest(a):
             with _env({"CLAUDE_CONFIG_DIR": WIN_CFG, "CLAUDE_CODE_EXECPATH": WIN_EXE}):
                 return install_line(WIN_EXE, WIN_TOOLS + "\\switch.mjs", WIN_CFG + "\\pb-switch-src", True, True) == win_up
         check("now: stale on Windows → the same PowerShell line, its last call `plugin update`", windows_stale())
-        bare = lambda: lines("none", None) == [head + "missing", posix("none", "claude")]
+        bare = lambda: lines("none", None) == [head + "missing", host("none", "claude")]
         check("now: no $CLAUDE_CODE_EXECPATH → `claude`, never a path looked up", bare())
         unknown = lambda: lines("bad") == [head + "unknown"] and lines("shape") == [head + "unknown"]
         check("now: a malformed record or one of the wrong shape → plugin=unknown, no install line", unknown())

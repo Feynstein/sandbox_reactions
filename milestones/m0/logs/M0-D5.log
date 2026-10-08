@@ -1,0 +1,62 @@
+== 2026-10-08T16:34:21-04:00 M0-D5 · box Laser2025-20 · GNU bash, version 5.3.15(2)-release (x86_64-pc-cygwin)
+-- repro: scratch_copy.sh --selftest (MSYS=winsymlinks:nativestrict)
+checks=12 · passed=11 · failed=1
+FAIL a dest inside the source → NO-GO, nothing created
+=== NO-GO: 1 check(s) failed ===
+exit=1
+-- probe
+TMPDIR=/c/Users/YOHANB~1/AppData/Local/Temp TMP=C:\Users\YOHANB~1\AppData\Local\Temp
+mktemp:      /c/Users/YOHANB~1/AppData/Local/Temp/probe.GHp0SP
+pwd -P src:  /c/Users/YohanBelanger/AppData/Local/Temp/probe.GHp0SP/src
+realpath -m: /c/Users/YOHANB~1/AppData/Local/Temp/probe.GHp0SP/src/inner
+cygpath -m:  C:/Users/YOHANB~1/AppData/Local/Temp/probe.GHp0SP
+-- probe 2
+realpath existing:     /tmp/tmp.3n32yHb1hJ/src
+realpath -m existing:  /tmp/tmp.3n32yHb1hJ/src
+lowercase in:          /tmp/tmp.3n32yhb1hj/src
+pwd -P of lowercase:   /c/Users/YohanBelanger/AppData/Local/Temp/tmp.3n32yHb1hJ/src
+realpath -m lowercase: /tmp/tmp.3n32yhb1hj/src/inner
+-- lead's answer (question tool): landing «Both, identical»
+-- after fix: selftest (MSYS=winsymlinks:nativestrict)
+checks=12 · passed=12 · failed=0
+=== GO ===
+exit=0
+-- after fix: selftest without MSYS
+checks=12 · passed=9 · failed=3
+FAIL no file of §A.7's 13 excluded folders is copied, top level or nested
+FAIL .venv and node_modules are symlinks to the source's
+FAIL PLANT `models` removed from the list → its two files appear → the leak check turns red
+=== NO-GO: 3 check(s) failed ===
+exit=1
+-- canon edges
+  / → /
+  /nonexistent/a/b → /nonexistent/a/b
+  /c/Users/YOHANB~1/AppData/Local/Temp → /c/Users/YohanBelanger/AppData/Local/Temp
+  /c/users/yohanb~1/appdata/local/temp/x/y → /c/Users/YohanBelanger/AppData/Local/Temp/x/y
+  /tmp/x → /c/Users/YohanBelanger/AppData/Local/Temp/x
+-- hand plant (scratchpad copy): canon → realpath -m, the old guard
+31c31
+<   dest="$(canon "$2")" || { nogo "cannot resolve $2" "$2"; return 1; }
+---
+>   dest="$(realpath -m -- "$2")" || { nogo "cannot resolve $2" "$2"; return 1; }
+checks=12 · passed=11 · failed=1
+FAIL a dest inside the source → NO-GO, nothing created
+=== NO-GO: 1 check(s) failed ===
+exit=1
+-- verify.py tools_selftest --case scratch_copy
+tools_selftest  1/0/0        7.76 s  GO
+logs: milestones/m0/logs/M0-D5.<scope>.log · record: loop_times.jsonl · tree 251b054c67bf+d396eff160da
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 7.77 s · mode case · PARTIAL, not the loop (--case scratch_copy) · jobs 8 · box Laser2025-20 · python 3.13.14 · load 17.76->13.5
+=== GO ===
+exit=0
+-- verify.py --redarm tools_selftest
+tools_selftest · clean · GO
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[status_page]: 1 failed; tools_selftest[status_page]: its own verdict NO-GO: 1 check(s) failed; tools_self)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 171.87 s · box Laser2025-20 · log milestones/m0/logs/M0-D5.tools_selftest.redarm.log
+=== GO ===
+exit=0
+-- annex vs tool (bytes)
+identical
+old md5 (HEAD): de04c76b5215
+new md5:        02dd8f26fbf3
+tools/pb/scratch_copy.sh: Bourne-Again shell script, Unicode text, UTF-8 text executable

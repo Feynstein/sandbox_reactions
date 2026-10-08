@@ -77,6 +77,31 @@
           "patch": "tests/plants/toolchain-trunk.patch"
         }
       ]
+    },
+    "build": {
+      "desc": "the game's workspace builds and lints clean natively (cargo build + clippy -D warnings, release) and checks for wasm32-unknown-unknown (M0-T1)",
+      "cases": [
+        "native",
+        "wasm"
+      ],
+      "case_cmd": "bash tests/cargo.sh build {case}",
+      "expected": 2,
+      "timeout_s": 900,
+      "paths": [
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "crates/**",
+        "tests/cargo.sh",
+        "tests/plants/build-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "build-wasm-only",
+          "patch": "tests/plants/build-wasm-only.patch"
+        }
+      ]
     }
   },
   "skip_classes": [

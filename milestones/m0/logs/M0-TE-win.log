@@ -46,3 +46,6 @@ rustup update stable: 1.97.1 -> rustc/cargo 1.99.0 (b940084d7 2026-09-28); +wasm
 trunk 0.21.14: github.com/trunk-rs/trunk release trunk-x86_64-pc-windows-msvc.zip sha256 cd6ac15b9daff0365e5695036791ef2ce3c63f61c014f5a8c532363266e4569c (matches the .sha256 file) -> ~/.cargo/bin/trunk.exe
 rsync 3.5.1 (protocol 33), the lead's yes at M0-TE-win (AskUserQuestion, 2026-10-08): MSYS2 packages rsync-3.5.1-2 + libxxhash-0.8.4-1 + popt-1.19-1 from repo.msys2.org/msys/x86_64, sha256 each equal to msys.db's (rsync cba52e41…, libxxhash ba784ad1…, popt b402bd1d…); rsync.exe + msys-xxhash-0.dll + msys-popt-0.dll in C:\Users\YohanBelanger\bin (Git Bash PATH's first entry); GPL-3.0-or-later, dev tool only
 user env MSYS=winsymlinks:nativestrict set (Developer Mode is on: AllowDevelopmentWithoutDevLicense=1) so Git Bash's ln -s makes real symlinks; scratch_copy.sh --selftest went 8/12 -> 11/12 with it (3/12 before rsync)
+M0-TE-win re-verify after D2-D5 2026-10-08T20:47:22Z box win-laptop
+all: refused - nothing run
+=== NO-GO: NOT RUN (M0-TE-win.plan_lint.log, M0-TE-win.tools_selftest.log, M0-TE-win.toolchain.log: git already tracks it - another task's evidence is never appended to; pass --task <YOUR-TASK-ID>) ===

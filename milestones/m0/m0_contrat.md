@@ -712,7 +712,11 @@ without a GPU against §1.8.
 
 ### 3.3 The binary `sandbox-reactions`
 - **Desktop** (no subcommand): `sandbox-reactions [--adapter <name substring>] [--world <W>x<H>]
-  [--status-port <port>] [--capture <script.json> --out <dir>] [--measure-ui <frames>]`.
+  [--status-port <port>] [--capture <script.json> --out <dir>] [--measure-ui <frames>]
+  [--offscreen-window]`.
+  - `--offscreen-window` [M0-TJ3]: the window placed outside every monitor's area, never activated and
+    kept out of the taskbar, the app otherwise unchanged — the route of the window, capture and UI-cost
+    checks on a box with no private display (win-laptop, §6.6; R4 as amended). Never in the web build.
 - **Headless:** `sandbox-reactions headless --scene <file | preset:sun | preset:massive |
   preset:giant> [--world WxH] [--edge leave|bounce] (--steps N | --until <condition>)
   [--max-steps N] [--out DIR] [--frames-every N] [--view glow|heat|element|density]
@@ -782,10 +786,13 @@ without a GPU against §1.8.
 |---|---|---|---|
 | `game` | `build/target/release/sandbox-reactions --status-port 47811` [M0-TG: cargo's target is build/target/, §6.5] | url http://127.0.0.1:47811/status | yes — a visible window (R4) |
 | `game-xvfb` | the same plus `--adapter llvmpipe`, under launch.py's private Xvfb (`xvfb: true`) — Mesa's software Vulkan (lavapipe; `lvp_icd.json` present on linux-pc, probed 2026-10-08) | url, as above | no — a private display, never the lead's desktop (R4) |
+| `game-offscreen` [M0-TJ3] | the same as `game` plus `--offscreen-window` — win-laptop's route for the window checks (§6.6) | url, as above | no — off-screen, never on the lead's screen (R4 as amended) |
 | `headless-boot` | `build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out <tmp>` [M0-TG] | exit; ready_forbid SR-ERROR, panicked at | no |
 | `web` | the static server on 47812 | port | no |
 The double-click launchers PLAYBOOK §8 requires (start.sh: `launch.py start game --task <id>`, wait
-for Enter, `launch.py stop`) come with the first build block that runs a window.
+for Enter, `launch.py stop`) come with the first build block that runs a window. [M0-TJ3] start.bat sits
+beside start.sh for win-laptop: `py -3.12 tools\pb\launch.py start game --task <id>`, wait for Enter,
+`py -3.12 tools\pb\launch.py stop` (the lead's Q2, reports/win_laptop.md § Ruling).
 
 ## §4 UI — exact English strings and design tokens (B12, B16, B17; answer 7, answer 13)
 
@@ -1205,14 +1212,16 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
 - **G-BOOT · the headless boot.** `launch.py smoke` of `headless-boot` (§3.6) is GO within 60 s and
   its summary.json parses against §2.12.2. *By construction*. Scope `boot`. Plant `scene-refuse`:
   the loader rejects `preset:sun`.
-- **G-DESK · the desktop boot on a private display** (R4). `launch.py smoke` of `game-xvfb`:
-  /status reads "ready" within 90 s. *UNVERIFIED* (lavapipe presenting on Xvfb). Scope `desktop`.
+- **G-DESK · the desktop boot on a private display** (R4). `launch.py smoke` of `game-xvfb` — on
+  win-laptop of `game-offscreen` (§6.6) [M0-TJ3]: /status reads "ready" within 90 s. *UNVERIFIED*
+  (lavapipe presenting on Xvfb; an off-screen window presenting on Windows). Scope `desktop`.
   Plant `status-never-ready`: the status stays "booting".
 - **G-WEB · the web build** (Q4; the web kept alive). `trunk build --release`, the `web` service,
   web/smoke.mjs (§6.2.3) loading `/?preset=sun&steps=200` in headless Chrome: srState reaches
   "ready" within 30 s and the canvas's central 100 × 100 px are not all black; `/?no-webgpu=1` shows
   srState "no-webgpu" and the three `web.no_webgpu_*` texts exactly. *UNVERIFIED* (WebGPU in
-  headless Chrome on linux-pc — ES). Box: linux-pc. Scope `web`. Plant `never-ready`: srState never
+  headless Chrome on linux-pc — ES — and on win-laptop, §6.2.3). Box: linux-pc or win-laptop, each
+  with §6.2.3's Chrome [M0-TJ3 — was "Box: linux-pc"]. Scope `web`. Plant `never-ready`: srState never
   set to "ready".
 
 ### 5.5 UNVERIFIED — the satisfiability register
@@ -1250,6 +1259,11 @@ Wayland or X11 (eframe `wayland` and `x11`); the lead's session is Wayland with 
   tools/pb/capture_web.mjs launches Chromium with no flags (PLAYBOOK §A.5's source), so WebGPU
   captures go through smoke.mjs; the no-WebGPU page captures through capture_web.mjs as is.
   UNVERIFIED until the first web smoke runs (ES).
+  **On win-laptop** [M0-TJ3, the lead's Q2]: the installed Chrome at `C:\Program
+  Files\Google\Chrome\Application\chrome.exe` (154 — probed by M0-TE-win, 2026-10-08), headless, with
+  `--headless=new --enable-unsafe-webgpu` — Chrome's own GPU backend on Windows (D3D12), the Vulkan flags
+  above being Linux's (opinion) — its `--no-sandbox` left out; smoke.mjs picks the box's Chrome and
+  flags. UNVERIFIED until the first web smoke runs there; the block that runs it names what it used.
 - **6.2.4 Browsers without WebGPU (Q4) — FROZEN.** The lead, 2026-10-08 11:23 EDT: **"A 'needs
   WebGPU' page (Recommended)"**. They get §4.9's page. The game ships no CPU physics (the CPU f64
   twin is a test oracle, never shipped) and no browser threads (no SharedArrayBuffer, no COOP/COEP
@@ -1266,7 +1280,8 @@ calibrate, the ⏱ scopes and benches at low rungs can pass 10 minutes on the Qu
 minutes is the lead's, in one visible terminal (PLAYBOOK §4 Rule 4; R2's exclusion). M0-TG places
 them in V windows and splits what splits (`calibrate --only <item>`, one life per scope case).
 Physics-only scopes may run on the RTX 5090 (`--adapter "RTX 5090"`) to stay short; timing scopes
-never do.
+never do. [M0-TJ3] On win-laptop they run on the RTX 4080 Laptop (`--adapter "RTX 4080"`, §6.6) — the
+same oracles and tolerances, longer runs; one over 10 minutes is the lead's.
 
 ### 6.5 Builds and caches
 The disk is 82 % full (Hazards): cargo's target directory is `build/target/`, set by
@@ -1280,9 +1295,26 @@ written in docs/agent/testing.md [M0-TG]. web/dist/, node_modules/ and trunk's c
 `~/.cargo/bin` is off the PATH (Hazards): commands call `~/.cargo/bin/cargo` or source `~/.cargo/env`
 first.
 
-### 6.6 win-laptop
-Later (R5): DX12 or Vulkan through wgpu; a scope that names linux-pc reads `owed on win-laptop`
-there until a task runs it.
+### 6.6 win-laptop [M0-TJ3 — replaces "Later (R5): …", mirrored in the plan's Superseded section]
+In play for every M0 block, the lot V's included (the lead, 2026-10-08, at M0-TJ3: reports/win_laptop.md
+§ Ruling; R5, R15). Hostname Laser2025-20; the agent's shell Git Bash (the plan's Repo facts). DX12 or Vulkan
+through wgpu under §6.1's adapter rule (Vulkan preferred where a name matches on two backends); the
+adapters, probed by M0-TE-win: NVIDIA GeForce RTX 4080 Laptop GPU and Intel Arc Graphics — WARP (Microsoft
+Basic Render Driver) too where wgpu lists it (UNVERIFIED). Windows through winit's Win32 backend: no Xvfb,
+Wayland or X11 here.
+- **The window's checks run off-screen** (the lead's Q3): `--offscreen-window` (§3.3) on the box's
+  high-performance adapter; the service `game-offscreen` (§3.6) is the window, capture and UI-cost checks'
+  route here where linux-pc's is `game-xvfb` or `xvfb-run` — the same /status ready signal (§3.4). UNVERIFIED
+  until M0-T5 runs it; if it cannot reach "ready", the window tasks run on linux-pc (Q3's consequence).
+- **Physics** (the lead's Q2; §6.4): a scope, a `calibrate` run or a probe that names the RTX 5090 runs here
+  on the RTX 4080 Laptop — results agree across adapters within G-REF's tolerances (§6.7), never bit for
+  bit; every number names its adapter (R13).
+- **Timing, never here:** G-FPS, G-TOP, the per-pass costs, step_cost.md and `--measure-ui`'s
+  render_reserve_ms are the Quadro's (§6.1, §5.3; `box: laserax-ai`) and read `owed on laserax-ai` here (R15).
+- **The web smoke:** §6.2.3's win-laptop line. **Launchers:** start.bat beside start.sh (§3.6).
+- **Builds and caches:** §6.5 holds; `~/.cargo/bin` is on the PATH here; the disk is 97 % full (the plan's
+  Hazards) — read the free space before a lot's first big build. The binary is `sandbox-reactions.exe`; a
+  script never assumes the suffix away.
 
 ### 6.7 How far determinism reaches
 Bit-identical on one adapter, driver and binary (§1.3.4); across adapters, results agree within

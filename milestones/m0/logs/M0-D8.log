@@ -1,0 +1,17 @@
+# M0-D8 — 2026-10-08T22:10:29Z — box win-laptop (Laser2025-20)
+tools_selftest  1/0/0       43.91 s  GO
+logs: milestones/m0/logs/M0-D8.<scope>.log · record: loop_times.jsonl · tree 251b054c67bf+cd6dc4b95813
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 43.91 s · mode case · PARTIAL, not the loop (--case verify) · jobs 8 · box Laser2025-20 · python 3.12.10 · load 2.98->1.95
+=== GO ===
+## race probe (old writer = HEAD, new writer = working tree)
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/01a0f720-16a9-4fee-99dc-e8eb8c53169e/scratchpad/verify_head.py: rounds=30 children=19 records=570 torn_lines=0 lost_records=7
+tools/pb/verify.py: rounds=30 children=19 records=570 torn_lines=0 lost_records=0
+## injected bug: old spans() in a scratch copy
+FAILED:
+  crashed after 11 checks: IndexError: list index out of range (return [(s.split()[0], float(s.split()[1]), float(s.split()[2])))
+selftest: checks=11 · failed=1 · plants=0/0 red
+=== NO-GO: 1 check(s) failed ===
+tools_selftest · clean · GO
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 148.22 s · box Laser2025-20 · log milestones/m0/logs/M0-D8.tools_selftest.redarm.log
+=== GO ===

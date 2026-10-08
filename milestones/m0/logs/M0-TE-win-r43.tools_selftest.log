@@ -1,0 +1,10 @@
+== 2026-10-08T16:53:09-04:00 tools_selftest[status_page] · task M0-TE-win-r43 · box Laser2025-20 :: {python} tools/pb/status_page.py selftest
+-- tools_selftest[status_page] · exit=1 · 3.90 s
+WARN: replace of attention.jsonl needed 2 attempts - transient lock on this box
+  block lists: the page's == the fixture's 6 · plan.py lint GO, blocks 6, Flow rows 6
+  round trip: 1 answered question(s) read back by poll after a served POST
+  red arms: own_parser → red · critical_ignored → red · rewrite_state → red · accept_unknown → red · no_lock → red
+checks 43 · passed 42 · failed 1
+FAIL POST /answer refuses a foreign Origin (403), an empty answer and malformed JSON (400), a body over 64 KiB (413); nothing written
+=== NO-GO: 1 check(s) failed ===
+

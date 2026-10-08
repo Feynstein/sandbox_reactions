@@ -1,0 +1,72 @@
+== 2026-10-08T17:12:09-04:00 M0-D7 · box Laser2025-20 · measurement log (repro of tools_selftest[verify] 0xC0000005)
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/e15c9779-5a98-40ff-9c11-c538b6ef5cfc/scratchpad/burst.sh: line 9: bc: command not found
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/e15c9779-5a98-40ff-9c11-c538b6ef5cfc/scratchpad/burst.sh: line 9: bc: command not found
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/e15c9779-5a98-40ff-9c11-c538b6ef5cfc/scratchpad/burst.sh: line 9: bc: command not found
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/e15c9779-5a98-40ff-9c11-c538b6ef5cfc/scratchpad/burst.sh: line 9: bc: command not found
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/e15c9779-5a98-40ff-9c11-c538b6ef5cfc/scratchpad/burst.sh: line 9: bc: command not found
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/e15c9779-5a98-40ff-9c11-c538b6ef5cfc/scratchpad/burst.sh: line 9: bc: command not found
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/e15c9779-5a98-40ff-9c11-c538b6ef5cfc/scratchpad/burst.sh: line 9: bc: command not found
+C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/e15c9779-5a98-40ff-9c11-c538b6ef5cfc/scratchpad/burst.sh: line 9: bc: command not found
+store-r1 copy 1 · exit=1 · s · === NO-GO: 1 check(s) failed ===
+---- stderr of store-r1 copy 1
+---- stdout tail
+FAILED:
+  two shared scopes ran at the same time: {'t1': ('t1', 1791493954.617935, 1791493954.826718), 't2': ('t2', 1791493954.985877, 1791493955.195578)}
+selftest: checks=166 · failed=1 · plants=98/98 red
+=== NO-GO: 1 check(s) failed ===
+store-r1 copy 2 · exit=0 · s · === GO ===
+store-r1 copy 3 · exit=1 · s · === NO-GO: 1 check(s) failed ===
+---- stderr of store-r1 copy 3
+---- stdout tail
+FAILED:
+  two shared scopes ran at the same time: {'t1': ('t1', 1791493954.678357, 1791493954.885865), 't2': ('t2', 1791493955.104133, 1791493955.310574)}
+selftest: checks=166 · failed=1 · plants=98/98 red
+=== NO-GO: 1 check(s) failed ===
+store-r1 copy 4 · exit=0 · s · === GO ===
+store-r1 copy 5 · exit=0 · s · === GO ===
+store-r1 copy 6 · exit=1 · s · === NO-GO: 1 check(s) failed ===
+---- stderr of store-r1 copy 6
+---- stdout tail
+FAILED:
+  two shared scopes ran at the same time: {'t1': ('t1', 1791493955.175426, 1791493955.379218), 't2': ('t2', 1791493955.431686, 1791493955.636713)}
+selftest: checks=166 · failed=1 · plants=98/98 red
+=== NO-GO: 1 check(s) failed ===
+store-r1 copy 7 · exit=0 · s · === GO ===
+store-r1 copy 8 · exit=0 · s · === GO ===
+store-r1: 3 of 8 non-zero
+== 2026-10-08T17:14:01-04:00 whole scope, python3 (Store 3.13.14), PYTHONFAULTHANDLER=1
+M0-D7-s01 · 82 s · === GO ===
+M0-D7-s02 · 62 s · === NO-GO: tools_selftest: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 13 check(s) failed; tools_selftest[launch]: 1 failed; tools_selftest[launch]: its own verdict NO-GO: 37 failure(s) · log milestones/m0/logs/M0-D7-s02.tools_selftest.log ===
+    51:-- tools_selftest[verify] · exit=1 · 30.81 s
+    84:-- tools_selftest[launch] · exit=1 · 60.74 s
+== 2026-10-08 burst: 8 concurrent `python3 -X faulthandler tools/pb/verify.py selftest` (Store 3.13.14) on Laser2025-20
+   0/8 exit 3221225477 · 5/8 GO · 3/8 NO-GO on "two shared scopes ran at the same time" only (the 0.2 s overlap fixture
+   starved by 8x load - an artefact of this repro, not the D; the real scope runs one verify copy)
+== whole-scope loop (5 x ~90 s) not run: stopped by the lead ("5 times 7 minutes is way too long")
+== Windows event log, Application, 2026-10-08 15:38:00-15:39:30 and 17:02:50-17:04:30: no event 1000/1001 APPCRASH for
+   python at either sighting (only app crash since 2026-10-08: KillerProviderDataHelperService.exe 15:15, 15:57) -
+   no faulting module recoverable after the fact; an AV with no WER event = WER suppressed for the tree (unmeasured)
+== {python} = sys.executable = C:\Users\<user>\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_
+   qbz5n2kfra8p0\python.exe - the Store App Execution Alias (reparse point), for the case AND for every {python} child
+   the verify selftest fans out (-j 4, section A, the first seconds); `py -3.12` -> ...\Programs\Python\Python312\python.exe
+   Cause NOT PROVEN (source + probe only): the crash is not reproduced in this session.
+M0-D7-s03 · 75 s · === GO ===
+M0-D7-s04 · 80 s · === NO-GO: tools_selftest: tools_selftest[capture_web]: 1 failed; tools_selftest[capture_web]: its own verdict NO-GO: 1 failure(s); tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed · log milestones/m0/logs/M0-D7-s04.tools_selftest.log ===
+    23:-- tools_selftest[capture_web] · exit=1 · 6.07 s
+    53:-- tools_selftest[verify] · exit=1 · 51.88 s
+== 2026-10-08T17:20:07-04:00 verify.py selftest alone after the case_env change (python3 Store)
+M0-D7-s05 · 79 s · === GO ===
+selftest: checks=168 · failed=0 · plants=99/99 red
+=== GO ===
+== 2026-10-08T17:21:01-04:00 injected bug: case_env without PYTHONFAULTHANDLER (scratch copy) -> expect NO-GO on the J2 check
+verify: 0 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box SELFBOX · python 3.13.14 · load 1.97->2.77
+=== NO-GO: f: 1 failed; its own verdict NO-GO: 1 check(s) failed · log logs/T9.f.log ===
+
+selftest: checks=168 · failed=2 · plants=99/99 red
+=== NO-GO: 2 check(s) failed ===
+== 2026-10-08T17:23:08-04:00 verify.py --redarm tools_selftest under py -3.12 (python.org 3.12.10: {python} = the real python.exe)
+tools_selftest · clean · GO
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 148.28 s · box Laser2025-20 · log milestones/m0/logs/M0-D7.tools_selftest.redarm.log
+=== GO ===
+149 s

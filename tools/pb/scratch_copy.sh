@@ -18,10 +18,17 @@ LINKS=(.venv node_modules)
 
 nogo() { echo "files=0 · dest=${2:--}"; echo "=== NO-GO: $1 ==="; return 1; }
 
+canon() {                                   # <path> as the source is resolved: pwd -P on its deepest existing folder
+  local p head tail="" d                    # (Git Bash: 8.3 names, letter case, /tmp → /c/… — realpath -m keeps them)
+  p="$(realpath -m -- "$1")" || return 1; head="$p"
+  while [[ -n "$head" && ! -d "$head" ]]; do tail="/${head##*/}$tail"; head="${head%/*}"; done
+  d="$(cd "${head:-/}" && pwd -P)" || return 1; p="${d%/}$tail"; echo "${p:-/}"
+}
+
 copy() {                                    # copy <src> <dest> [extra names…]
   local src dest name files ex=() links=()
   src="$(cd "$1" 2>/dev/null && pwd -P)" || { nogo "no source folder: $1" "$2"; return 1; }
-  dest="$(realpath -m -- "$2")" || { nogo "cannot resolve $2" "$2"; return 1; }
+  dest="$(canon "$2")" || { nogo "cannot resolve $2" "$2"; return 1; }
   [[ "$dest/" == "$src/"* ]] && { nogo "dest sits inside the source: $dest" "$dest"; return 1; }
   [[ -e "$dest" && -n "$(ls -A "$dest" 2>&1)" ]] && { nogo "dest is not empty: $dest — use a fresh folder" "$dest"; return 1; }
   command -v rsync >/dev/null || { nogo "rsync not found" "$dest"; return 1; }

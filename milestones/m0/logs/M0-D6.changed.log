@@ -1,0 +1,18 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since 251b054: milestones/m0/m0_implementation_plan.md
+why tools_selftest: never: tests/plants/tools-selftest-scratch.patch (+10) · moved since 251b054: tools/pb/content_gate.py (+4)
+plan_lint       492/0/0      0.62 s  GO
+tools_selftest  10/0/0     178.47 s  GO
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since 251b054)
+FLAG oracle: tools/pb/content_gate.py changed since 251b054c67bf - a test, case or check M0-D6's Deliver: does not name
+FLAG oracle: tools/pb/plan.py changed since 251b054c67bf - a test, case or check M0-D6's Deliver: does not name
+FLAG oracle: tools/pb/rung_record.py changed since 251b054c67bf - a test, case or check M0-D6's Deliver: does not name
+FLAG oracle: tools/pb/scratch_copy.sh changed since 251b054c67bf - a test, case or check M0-D6's Deliver: does not name
+FLAG oracle: tools/pb/status_page.py changed since 251b054c67bf - a test, case or check M0-D6's Deliver: does not name
+logs: milestones/m0/logs/M0-D6.<scope>.log · record: loop_times.jsonl · tree 251b054c67bf+8abcd11db1e4
+anchor: 12 path×scope entries moved by this run
+anchor: 21 paths checked · 41 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 62 visible
+skipped    33  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 502 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 1 not impacted · 78.06 s · mode changed · jobs 8 · box Laser2025-20 · python 3.13.14 · load 8.03->5.11
+=== GO ===

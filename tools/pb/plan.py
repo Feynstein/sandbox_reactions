@@ -2441,11 +2441,12 @@ def cmd_selftest(_plan, a):
         # --- lint: the authoring warnings (open blocks) --------------------------------------------
         big = os.path.join(root, "big_reference.md")
         write_text(big, "x\n" * (READ_CAP + 100), "\n")
-        reset(FIXTURE.replace("- Deliver: widget.py grows a seam", "- Read: this file + %s\n- Deliver: widget.py grows a seam" % big, 1))
+        bigname = os.path.basename(big)     # beside the plan: a native absolute path reads C:\... on Windows
+        reset(FIXTURE.replace("- Deliver: widget.py grows a seam", "- Read: this file + %s\n- Deliver: widget.py grows a seam" % bigname, 1))
         rc, out = go("lint")
         check("WARN: a `Read:` naming a file over %d lines whole" % READ_CAP,
-              rc == 0 and "M12.1-T2a: `Read:` names %s whole (%d lines" % (big, READ_CAP + 100) in out, out)
-        reset(FIXTURE.replace("- Deliver: widget.py grows a seam", "- Read: this file + %s §2\n- Deliver: widget.py grows a seam" % big, 1))
+              rc == 0 and "M12.1-T2a: `Read:` names %s whole (%d lines" % (bigname, READ_CAP + 100) in out, out)
+        reset(FIXTURE.replace("- Deliver: widget.py grows a seam", "- Read: this file + %s §2\n- Deliver: widget.py grows a seam" % bigname, 1))
         rc, out = go("lint")
         check("... and none when it names a section", rc == 0 and "`Read:` names" not in out, out)
         rep = "- Adversarial: the seam may leak under load - measure it twice with the probe"

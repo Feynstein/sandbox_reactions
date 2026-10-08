@@ -1,0 +1,4 @@
+# Cargo builds into build/target/ — verify.py's scratch copies leave `build` out by name (m0_contrat.md §6.5,
+# as amended by M0-TG).
+[build]
+target-dir = "build/target"

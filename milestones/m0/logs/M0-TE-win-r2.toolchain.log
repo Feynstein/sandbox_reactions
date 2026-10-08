@@ -1,0 +1,15 @@
+== 2026-10-08T16:47:41-04:00 toolchain[desktop] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:47:46-04:00 toolchain[wasm] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T16:47:46-04:00 toolchain[trunk] · task M0-TE-win-r2 · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[desktop] · exit=0 · 8.83 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+-- toolchain[wasm] · exit=0 · 4.60 s
+toolchain wasm: wasm32-unknown-unknown module built (2652711 bytes)
+=== GO ===
+
+-- toolchain[trunk] · exit=0 · 5.30 s
+toolchain trunk: trunk 0.21.14 built the page
+=== GO ===
+

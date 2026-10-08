@@ -44,16 +44,18 @@ Sizes: the downloads were trunk's zip (7.3 MB) and the three MSYS2 packages (~0.
 
 | Scope | win-laptop | linux-pc (plan: Rules, testing.md) |
 |---|---|---|
-| `plan_lint` | GO, 479 checks | GO |
+| `plan_lint` | GO, 479 checks (487 at the re-run) | GO |
 | `toolchain` | **GO, 3 cases** (desktop, wasm, trunk) — cold 113 s, warm 4.4 s | GO, 3 |
 | `toolchain` red-armed | **GO: clean GO, 3 plants / 3 red** (65 s) | same |
-| `tools_selftest` | **NO-GO, 10 cases: 6 GO, 4 red** | 10 cases, GO |
+| `tools_selftest` | **NO-GO, 10 cases: 6 GO, 4 red** — after M0-D2..D5: **GO, 10/10** (215 s) | 10 cases, GO |
 | loop | 75–97 s wall (jobs 8; `tools_selftest[launch]` alone is 97 s) | 3.2 s |
 
 Case counts equal linux-pc's (plan_lint 479, tools_selftest 10, toolchain 3); no case skips — the one SKIP printed inside
 `launch.py selftest` («private X display: an X server is POSIX only — NOT RUN on os nt») is that tool's own, inside a GO.
 
-Red cases of `tools_selftest`, each reproduced alone and routed to a D (filed, specs in the plan):
+Re-run after M0-D2..D5 (2026-10-08, win-laptop, Git Bash, `--task M0-TE-win-r2` because the first run's logs are committed and the harness never appends to committed evidence): `verify.py --all` → **500 passed, 0 failed, 0 skipped, 3/3 scopes GO**, 97.7 s wall (tools_selftest 10/10, 215 s of case time; toolchain 3/3; plan_lint 487); `--redarm toolchain` → clean GO, 3 plants / 3 red (107 s). Logs: `logs/M0-TE-win-r2.*`.
+
+Red cases of `tools_selftest` at the first run, each reproduced alone and routed to a D (all four since fixed, DONE):
 
 | Case | Checks red | Routed |
 |---|---|---|
@@ -116,3 +118,121 @@ Each Windows difference that bit — dated 2026-10-08, root-caused; also copied 
 7. **Windows file locks.** Root cause: Windows refuses to delete or replace an open file. Effect: `content_gate.py selftest` stops on WinError 32 (M0-D3); `plan.py` retries its own replace («needed 2 attempts - transient lock on this box»), harmless. 
 8. **`tools_selftest` is slow here.** 170–254 s against linux-pc's ~10 s (process starts and temp-repo creation are slower on Windows); the complete loop is 75–97 s warm (Rules budget: 600 s). Not a defect; a TR counts it.
 9. **Git line-ending warnings** («LF will be replaced by CRLF») appear in selftests' temporary repos, which have no `.gitattributes`; the real tree is LF throughout.
+
+## Ruling
+M0-TJ3, 2026-10-08 ~17:40 EDT, on win-laptop (Laser2025-20, Git Bash), the rung read by `rung_record.py now`:
+model=claude-opus-5-5 level=max plugin=installed. One call of the question tool, four questions, the recommendation
+first, each option's description its consequence as the lead read it. The lead's picks are the record (PLAYBOOK §12):
+quoted below, never restated. Log: milestones/m0/logs/M0-TJ3.log; detail: milestones/m0/tasks/M0-TJ3.md.
+
+### The questions as asked, and the answers (picked: **bold**, ← picked)
+**Q1 · Where work** — «Your laptop is set up and the toolkit passes there (500 checks green). R5 says "linux-pc for every
+M0 gate, win-laptop later". Where should M0's work run from now on?»
+- «Build anywhere, close lots on PC (Recommended)» — «Coding tasks and their own checks run on whichever machine you're
+  on; each lot's validation task (M0-V1, V2, …) runs on the Linux PC, where the PC-only checks run. Consequence: you can
+  build on the laptop, but a lot only closes when you're at the PC.»
+- **«Build and close lots anywhere»** — «A lot can also be validated on the laptop: PC-only checks are marked owed, the
+  next validation on the PC runs them, and the final one (M0-V17) runs them all. Consequence: nothing waits for the PC,
+  but a PC-only problem can surface a lot or more later.» ← picked
+- «Keep the laptop off M0 builds» — «R5 stays as written: only plans, docs and toolkit work on the laptop. Consequence:
+  coding tasks wait until you're at the PC.»
+
+**Q2 · Win versions** — «Some checks name hardware or paths only the PC has. Should the laptop get its own version of
+each where one is cheap? (Timing stays on the PC's Quadro RTX 4000 either way: it stands in for the 'mid-range gaming
+PC'.)»
+- **«Laptop versions (Recommended)»** — «The adapter test lists the laptop's own graphics cards (RTX 4080 Laptop, Intel
+  Arc); physics checks run on the RTX 4080 where the PC uses the RTX 5090 (the contract has physics agree across cards
+  within its tolerances); the web test uses Chrome's Windows install; a double-click start.bat sits beside start.sh.
+  Consequence: most tasks can be built and checked on the laptop.» ← picked
+- «PC only» — «Those checks run only on the PC and show 'owed on laserax-ai' on the laptop; a task whose own check is
+  PC-only waits for the PC. Consequence: no extra work, but most physics tasks can't be finished on the laptop.»
+
+**Q3 · Window** — «On the PC, agents test the game window on a private virtual screen (Xvfb) that you never see.
+Windows has no such screen. How should the laptop test the window (and the screenshot and UI-cost checks that need
+it)?»
+- **«Off-screen window (Recommended)»** — «Agents open the game window outside the visible screen area (never focused,
+  not in the taskbar) on the laptop's own GPU, and R4 (the debug-run grant) is extended to count that as off-screen.
+  Consequence: window work can be built on the laptop with nothing popping up; untested yet, so if M0-T5 finds it can't
+  work, window tasks go back to the PC.» ← picked
+- «Window work at the PC» — «On the laptop the window, screenshot and UI-cost checks show 'owed on laserax-ai'.
+  Consequence: the tasks that build them (M0-T5, M0-T6's check, M0-T8, the UI passes, lots 12–13) run at the PC.»
+
+**Q4 · Crash check** — «M0-D7 left one proof owed before the laptop joins: the toolkit's selftests 20 times in a row
+under Python 3.12 with no crash (the 0xC0000005 crash seen twice). About 30 minutes, over the 10-minute line, so it's
+yours to run. When?»
+- «Run it now (Recommended)» — «You paste one loop into a Git Bash terminal (not PowerShell) and let it run while I write
+  the ruling; I check the 20 results before closing. Consequence: the laptop joins with the crash ruled out, or with a bug
+  task holding the crash's stack.»
+- «Before lot 1 closes» — «The laptop joins now; you run the loop any time before M0-V1, which reads its 20 logs.
+  Consequence: until then, a crash in a task's final check run can send that task back to TODO.»
+- **«Skip it»** — «The laptop joins without it; tracing is on, so any later crash is caught with its stack and filed as
+  a bug. Consequence: no 30 minutes now, but crashes may still interrupt tasks.» ← picked
+
+### What the ruling changed — each surface cited to its answer
+| Surface | Change | Answer |
+|---|---|---|
+| R5 (Rules row, m0_rules.md) | both boxes in play; any block, lot V's included, runs on the box the lead is on; the old text mirrored in Superseded | Q1 |
+| R15 (new: Rules row, m0_rules.md) | the box pattern — what a block written for linux-pc reads on win-laptop, the owed-check mechanism, switching boxes | Q1, Q2, Q3 |
+| R4 (Rules row, m0_rules.md) | the DEBUG lane counts the off-screen window on win-laptop as off-screen | Q3 |
+| R12 (Rules row, m0_rules.md) | physics ⏱ on the RTX 4080 Laptop on win-laptop; timing on the Quadro only, unchanged | Q2 |
+| R9 (m0_rules.md) · the Rules' budget line | the loop budget stated per box (PLAYBOOK §8), win-laptop's measured 97.7 s | Q1 |
+| Contract §6.6 | rewritten in place [M0-TJ3]: win-laptop in play — adapters, the off-screen route, physics, timing never, Chrome, launchers | Q1–Q3 |
+| Contract §3.3 · §3.6 | `--offscreen-window` · the `game-offscreen` service · start.bat beside start.sh [M0-TJ3] | Q3 · Q2 |
+| Contract §6.2.3 · §6.4 · §5.4 (G-DESK, G-WEB) | Windows Chrome for the web smoke · the RTX 4080 Laptop for physics · each guarantee's win-laptop route [M0-TJ3] | Q2, Q3 |
+| M0-T2 | the adapter test names each box's adapters | Q2 |
+| M0-T5 | the off-screen route built with the window; the desktop scope's case `xvfb` renamed `window` (the box picks its route) | Q3 |
+| M0-T6 | start.bat beside start.sh; the `launcher` case through the box's route; no longer an edit job (re-rated, §0 rule (3)) | Q2, Q3 |
+| M0-T8 | the capture check's win-laptop route | Q3 |
+| M0-T9 | running.md and testing.md name both boxes | Q1, Q2, Q3 |
+| M0-T84 | its Pass line's case names (`window` for `xvfb`) | Q3 |
+| M0-V1 | runs on the box the lead is on; the human-run tier double-clicks that box's launcher | Q1, Q2 |
+| M0-V17 | runs on linux-pc and runs every check still owed there; names any owed on win-laptop with its last GO | Q1 |
+| Goal paragraph · Repo facts (Targets, Boxes, launchers) | "the Windows laptop" no longer routed past M0; win-laptop in play | Q1 |
+| M0-D7's 20-of-20 loop | retired, N/A — Superseded | Q4 |
+| M0-D8 (filed) | `tools_selftest[verify]` crashed in M0-TJ3's claim run (an IndexError in a three-field parse, once in five runs) — a D placed before M0-T1 and the Phase 2b gate | Q4: «any later crash is caught with its stack and filed as a bug» |
+
+### Where each owed check runs
+- **M0-D2..D7's toolkit fixes, owed on linux-pc** (each D's handoff; M0-D3's and M0-D7's flags on this block):
+  `python3 tools/pb/verify.py tools_selftest` (10/10, content_gate 36/36) and `python3 tools/pb/verify.py --redarm
+  tools_selftest` on linux-pc — flagged into M0-V1's `Carried flags:`; a V on win-laptop carries the flag to the next V
+  (R15); M0-V17, on linux-pc, at the latest.
+- **M0-D7's 20-of-20 loop on win-laptop** — not run, retired by the lead (Q4 «Skip it»); a later 0xC0000005 is a D with
+  the faulthandler stack (Hazards).
+- **A check only one box can run, from lot 1 on** (R15): the block that meets it tags it `[NOT RUN — owed on <box>]`; the
+  lot's V lists it and flags it into the next V; the next V run on that box runs it first; M0-V17 runs every one owed on
+  linux-pc (Q1's «the final one (M0-V17) runs them all») and names, with its last GO, any owed on win-laptop (PLAYBOOK §8).
+- **A block whose `Deliver:` is a Quadro measurement** — M0-T63, M0-T112, M0-T113 — runs on linux-pc (Q2's «Timing stays on
+  the PC's Quadro RTX 4000 either way»); its scope is `box: laserax-ai`.
+- **The two laptop routes' first proofs:** the off-screen window — M0-T5 on win-laptop (UNVERIFIED until then; a red
+  sends the window tasks to linux-pc, Q3); the Windows web smoke — M0-T15 on win-laptop, else owed there to the next V on
+  win-laptop (UNVERIFIED, §6.2.3).
+
+### The later blocks R15 covers, with no per-block edit
+- **The RTX 5090 → the RTX 4080 Laptop** (physics, calibrate): M0-T30 (Adversarial), M0-T66 (Verify 3), M0-T70, M0-V9,
+  M0-T97, M0-T98b, M0-T99b, M0-T100, M0-T101, M0-T103, M0-T104, M0-T105, M0-T106, M0-T107.
+- **The Quadro RTX 4000 → linux-pc only, owed elsewhere** (timing): M0-T31 (Verify 2–3), M0-T34, M0-T42, M0-T46 (their
+  timing steps), M0-V6 (the costs gathered), M0-T63, M0-T95 (the real `--measure-ui` run), M0-V13 (the lead's
+  `--measure-ui 600`), M0-T112, M0-T113, M0-V16 (the lead's fps and top-speed runs), M0-TJ2's wake.
+- **Xvfb, `xvfb-run`, `game-xvfb`, llvmpipe and lavapipe → the off-screen window**: M0-T95 (tests/measure/check.sh),
+  M0-TV1, M0-TV2, M0-TV3 (the captures; a state lavapipe cannot reach is reached by the laptop's own GPU), M0-V12
+  (Adversarial), M0-TD (the captures).
+- **start.sh → start.bat** (the lead's double-click): M0-V12, M0-V13, M0-TW.
+- **/usr/bin/google-chrome and its Linux flags → §6.2.3's win-laptop line**: M0-T15, M0-T94, M0-TV1 (the no-WebGPU
+  capture), M0-TV3 (the web capture), M0-V13 (G-WEB).
+- **`python3 tools/pb/<tool>` → `py -3.12 tools/pb/<tool>`** in Git Bash: every block's commands (M0-D7's switch, kept).
+- **"on linux-pc" in a lot V → the box it runs on**: M0-V2–M0-V16.
+
+### Not retired, explicitly
+- linux-pc's routes and checks — Xvfb with lavapipe (`game-xvfb`), start.sh, /usr/bin/google-chrome with its flags,
+  llvmpipe in the adapter list, the RTX 5090 for physics there: each stays; the laptop's versions sit beside them.
+- Timing on the Quadro RTX 4000 — G-FPS, G-TOP, the per-pass costs, step_cost.md, render_reserve_ms (R12, §5.3, §6.1):
+  linux-pc only; no timing gate on the laptop's GPUs.
+- R4's exclusions — a visible window on the lead's screen is asked each time, on both boxes; a DEBUG run is never
+  acceptance; the 10-minute line.
+- The FROZEN clauses (Q1–Q5 of M0-TC), every physics oracle and tolerance (§0.4: never a looser number), bit-identity per
+  adapter (§1.3.4) — never compared across boxes.
+- R2 and R3 as written (R2 reaches win-laptop by its own words, «once it is in play»); R10's claim-run base; §10 — agents
+  never write git.
+- M0-D7's switch (`py -3.12`) and trace (`PYTHONFAULTHANDLER=1`) — only its 20-run loop is retired.
+- The owed linux-pc toolkit checks of M0-D2..D7 — routed above, not retired.
+- Steam, a Windows release, installer or store build, and the goal paragraph's other routed items — still past M0.

@@ -1,0 +1,24 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since 251b054: milestones/m0/m0_implementation_plan.md (+1)
+why tools_selftest: moved since 251b054: tools/pb/content_gate.py (+5)
+why build: moved since 251b054: .cargo/config.toml (+7)
+plan_lint       490/0/0      0.48 s  GO
+tools_selftest  10/0/0     158.33 s  GO
+build           2/0/0        4.16 s  GO
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since 251b054)
+build · clean · GO
+build · plant build-wasm-only · RED (proven: build[wasm]: 1 failed; build[wasm]: its own verdict NO-GO: cargo check --target wasm32-unknown-unknown failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope build · 5.05 s · box Laser2025-20 · log milestones/m0/logs/M0-T1.build.redarm.log
+FLAG oracle: tools/pb/content_gate.py changed since 251b054c67bf - a test, case or check M0-T1's Deliver: does not name
+FLAG oracle: tools/pb/plan.py changed since 251b054c67bf - a test, case or check M0-T1's Deliver: does not name
+FLAG oracle: tools/pb/rung_record.py changed since 251b054c67bf - a test, case or check M0-T1's Deliver: does not name
+FLAG oracle: tools/pb/scratch_copy.sh changed since 251b054c67bf - a test, case or check M0-T1's Deliver: does not name
+FLAG oracle: tools/pb/status_page.py changed since 251b054c67bf - a test, case or check M0-T1's Deliver: does not name
+FLAG oracle: tools/pb/verify.py changed since 251b054c67bf - a test, case or check M0-T1's Deliver: does not name
+logs: milestones/m0/logs/M0-T1.<scope>.log · record: loop_times.jsonl · tree 251b054c67bf+802423690135
+anchor: 1 path×scope entries moved by this run
+anchor: 29 paths checked · 46 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 29 covered of 75 visible
+skipped    38  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 502 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 1 not impacted · 71.98 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 1.58->2.81
+=== GO ===

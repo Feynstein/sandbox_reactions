@@ -1,0 +1,104 @@
+# M0-TJ3 log — win-laptop (Laser2025-20), Git Bash; opened 2026-10-08 17:50    
+rung: model=claude-opus-5-5 level=max plugin=installed (rung_record.py now, launch prompt)
+
+$ py -3.12 tools/pb/plan.py status M0-TJ3 "IN PROGRESS"
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+
+$ py -3.12 tools/pb/plan.py flag M0-V1 "<owed linux-pc toolkit checks>" --from M0-TJ3
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+
+$ py -3.12 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md   # Verify 1
+lint: checks=490 failed=0 warnings=1 · blocks=166 · flow_rows=166 · verify_fences=0 · history=0 · flow=per-task · header=392/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-T5 1 · M0-V17 1
+=== GO ===
+
+$ py -3.12 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md   # Verify 1, repeated after the WARN fix
+lint: checks=490 failed=0 warnings=0 · blocks=166 · flow_rows=166 · verify_fences=0 · history=0 · flow=per-task · header=392/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+
+$ py -3.12 tools/pb/verify.py --changed --base 251b054 --task M0-TJ3   # the claim run
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md (+1) · moved since 251b054: milestones/m0/m0_implementation_plan.md (+1)
+why tools_selftest: moved since 251b054: tools/pb/content_gate.py (+5)
+plan_lint       490/0/0      0.66 s  GO
+tools_selftest  9/1/0      145.37 s  NO-GO
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since 251b054)
+FLAG oracle: tools/pb/content_gate.py changed since 251b054c67bf - a test, case or check M0-TJ3's Deliver: does not name
+FLAG type: tools/pb/content_gate.py changed since 251b054c67bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/plan.py changed since 251b054c67bf - a test, case or check M0-TJ3's Deliver: does not name
+FLAG type: tools/pb/plan.py changed since 251b054c67bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/rung_record.py changed since 251b054c67bf - a test, case or check M0-TJ3's Deliver: does not name
+FLAG type: tools/pb/rung_record.py changed since 251b054c67bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/scratch_copy.sh changed since 251b054c67bf - a test, case or check M0-TJ3's Deliver: does not name
+FLAG type: tools/pb/scratch_copy.sh changed since 251b054c67bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/status_page.py changed since 251b054c67bf - a test, case or check M0-TJ3's Deliver: does not name
+FLAG type: tools/pb/status_page.py changed since 251b054c67bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: tools/pb/verify.anchor.json changed since 251b054c67bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/verify.py changed since 251b054c67bf - a test, case or check M0-TJ3's Deliver: does not name
+FLAG type: tools/pb/verify.py changed since 251b054c67bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+logs: milestones/m0/logs/M0-TJ3.<scope>.log · record: loop_times.jsonl · tree 251b054c67bf+647cd403b3e7
+anchor: 13 path×scope entries moved by this run
+anchor: 10 paths checked · 44 skipped (3 classes) · 11 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 65 visible
+NEVER CHECKED  tests/plants/tools-selftest-scratch.patch  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/capture_web.mjs  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/content_gate.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/launch.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/plan.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/review_page.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/rung_record.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/scratch_copy.sh  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/status_page.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/switch.mjs  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/verify.py  (no entry for tools_selftest)
+skipped    36  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  tools_selftest: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed · log milestones/m0/logs/M0-TJ3.tools_selftest.log
+  anchor: 11 never checked, 0 stale, 0 unclassified - every one named above
+verify: 499 passed, 1 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 1 not impacted · 75.22 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 3.69->5.48
+=== NO-GO: tools_selftest: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed · log milestones/m0/logs/M0-TJ3.tools_selftest.log; anchor: 11 never checked, 0 stale, 0 unclassified - every one named above ===
+wall: 77 s
+
+# repro of tools_selftest[verify]'s IndexError — the case alone x3, then the scope x1 (jobs 8)
+$ py -3.12 tools/pb/verify.py tools_selftest --case verify --task M0-TJ3-v01
+=== GO ===
+selftest: checks=168 · failed=0 · plants=99/99 red
+$ py -3.12 tools/pb/verify.py tools_selftest --case verify --task M0-TJ3-v02
+=== GO ===
+selftest: checks=168 · failed=0 · plants=99/99 red
+$ py -3.12 tools/pb/verify.py tools_selftest --case verify --task M0-TJ3-v03
+=== GO ===
+selftest: checks=168 · failed=0 · plants=99/99 red
+$ py -3.12 tools/pb/verify.py tools_selftest --task M0-TJ3-s01   # the whole scope, parallel
+anchor: 21 paths checked · 44 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 65 visible
+verify: 10 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 76.69 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 3.44->10.52
+=== GO ===
+
+$ py -3.12 tools/pb/plan.py append <scratchpad>/M0-D8.md --after M0-TJ3
+append: checks=3 failed=0 warnings=1 · flow=per-task · flow_row=written
+WARN: M0-D8 went in above M0-TJ3's trailer (> **Commit gate (lead):** Phase 2b closes after M0-TJ3 — fr…), which stays last - check which side of it the block belongs on
+=== GO ===
+
+$ py -3.12 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md   # Verify 1, after M0-D8 and the gate line
+lint: checks=493 failed=0 warnings=1 · blocks=167 · flow_rows=167 · verify_fences=0 · history=0 · flow=per-task · header=393/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-D8: `Read:` names tools/pb/verify.py whole (2564 lines > 500) - name a section or a line range
+=== GO ===
+
+$ py -3.12 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md   # Verify 1, after the M0-D8 Read: fix
+lint: checks=493 failed=0 warnings=0 · blocks=167 · flow_rows=167 · verify_fences=0 · history=0 · flow=per-task · header=393/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+
+$ py -3.12 tools/pb/verify.py plan_lint --task M0-TJ3-p01   # the late plan edits (M0-D8, gate line, Flow row), scoped
+anchor: 21 paths checked · 44 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 65 visible
+verify: 493 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.30 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 5.42->5.48
+=== GO ===
+
+$ py -3.12 tools/pb/plan.py close M0-TJ3 --status "DONE" --text "<handoff>" --set ... 
+close: checks=6 failed=0 warnings=0 · handoff_lines=1 · flow=per-task · set=3 · replaced=3 · appended=0
+=== GO ===
+
+$ py -3.12 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md   # after the close
+lint: checks=492 failed=0 warnings=0 · blocks=167 · flow_rows=167 · verify_fences=0 · history=0 · flow=per-task · header=393/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===

@@ -1,0 +1,42 @@
+# The game's workspace (m0_contrat.md §1.1). Members are the crates under crates/; the one-file program of the
+# `toolchain` scope (tests/toolchain/) keeps its own [workspace] and stays out.
+[workspace]
+members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+# The approved dependencies (§1.2 — FROZEN): the approved minor; a patch release within it needs no ask, any other
+# version or package is a new ask (PLAYBOOK §4 Rule 2). A member writes `name.workspace = true`.
+[workspace.dependencies]
+# wgpu: native backends and webgpu only — no webgl, so a browser without WebGPU reaches the §4.9 page (Q4).
+wgpu = { version = "30.0", default-features = false, features = ["wgsl", "vulkan", "dx12", "metal", "webgpu"] }
+# eframe: wgpu, wayland, x11, default_fonts — no glow, no persistence (winit 0.30.13 comes with it).
+eframe = { version = "0.36", default-features = false, features = ["wgpu", "wayland", "x11", "default_fonts"] }
+bytemuck = "1.25"
+pollster = "1.0"
+serde = "1.0"
+serde_json = "1.0"
+png = "0.18"
+log = "0.4"
+env_logger = "0.11"
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+web-sys = "0.3"
+js-sys = "0.3"
+console_error_panic_hook = "0.1"
+
+# One profile for every cargo scope: the CPU f64 twin (sr-physics::reference) needs optimised code, so tests and
+# the scopes' builds share the release settings. Debug info stays off to keep build/target small (the disk).
+[profile.release]
+opt-level = 3
+debug = false
+lto = false
+codegen-units = 16
+incremental = false
+
+[profile.test]
+inherits = "release"

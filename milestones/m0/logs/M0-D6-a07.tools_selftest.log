@@ -1,0 +1,8 @@
+== 2026-10-08T17:01:31-04:00 tools_selftest[status_page] · task M0-D6-a07 · box Laser2025-20 :: {python} tools/pb/status_page.py selftest
+-- tools_selftest[status_page] · exit=0 · 4.33 s
+  block lists: the page's == the fixture's 6 · plan.py lint GO, blocks 6, Flow rows 6
+  round trip: 1 answered question(s) read back by poll after a served POST
+  red arms: own_parser → red · critical_ignored → red · rewrite_state → red · accept_unknown → red · no_lock → red
+checks 43 · passed 43 · failed 0
+=== GO ===
+

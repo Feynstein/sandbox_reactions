@@ -395,6 +395,18 @@ def handler(st):
             self.end_headers()
             self.wfile.write(data)
 
+        def drain(self, n):  # a refused body is read first: a close on unread bytes is a reset on Windows (10053)
+            left = min(n, 16 * MAX_BODY)
+            try:
+                self.connection.settimeout(2)
+                while left > 0:
+                    chunk = self.rfile.read(min(left, MAX_BODY))
+                    if not chunk:
+                        break
+                    left -= len(chunk)
+            except OSError:
+                pass
+
         def do_GET(self):
             path = urllib.parse.urlsplit(self.path).path
             if path == "/health":
@@ -419,6 +431,7 @@ def handler(st):
                 n = -1
             if n < 0 or n > MAX_BODY:
                 self.close_connection = True
+                self.drain(n)
                 return self.reply(413, {"ok": False, "error": f"a body of 0 to {MAX_BODY} bytes"})
             is_json = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower() == "application/json"
             qid = text = None

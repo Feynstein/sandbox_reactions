@@ -1,0 +1,62 @@
+==== 2026-10-08T18:21:36-04:00 build · clean · a fresh scratch copy of the tree
+== 2026-10-08T18:21:36-04:00 build[native] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+== 2026-10-08T18:21:36-04:00 build[wasm] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.22 s
+build wasm: 1.99.0 in 1 s, target /c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target (86K)
+=== GO ===
+
+-- build[native] · exit=0 · 1.88 s
+build native: 1.99.0 in 2 s, target /c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target (99K)
+=== GO ===
+
+==== 2026-10-08T18:21:39-04:00 build · plant build-wasm-only · a fresh scratch copy of the tree
+planted build-wasm-only: tests/plants/build-wasm-only.patch -> crates/sr-physics/src/lib.rs
+== 2026-10-08T18:21:39-04:00 build[native] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+== 2026-10-08T18:21:39-04:00 build[wasm] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=1 · 0.75 s
+--- cargo check --workspace --target wasm32-unknown-unknown --locked (check) ---
+    Checking sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-btbsa0do\arm1\crates\sr-physics)
+error: planted: the wasm build breaks while the native build stays green
+ --> crates\sr-physics\src\lib.rs:4:1
+  |
+4 | compile_error!("planted: the wasm build breaks while the native build stays green");
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: could not compile `sr-physics` (lib) due to 1 previous error
+=== NO-GO: cargo check --target wasm32-unknown-unknown failed ===
+
+-- build[native] · exit=0 · 1.69 s
+build native: 1.99.0 in 1 s, target /c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target (106K)
+=== GO ===
+
+==== 2026-10-08T18:23:27-04:00 build · clean · a fresh scratch copy of the tree
+== 2026-10-08T18:23:27-04:00 build[native] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+== 2026-10-08T18:23:27-04:00 build[wasm] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.25 s
+build wasm: 1.99.0 in 1 s, target /c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target (132K)
+=== GO ===
+
+-- build[native] · exit=0 · 1.64 s
+build native: 1.99.0 in 1 s, target /c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target (132K)
+=== GO ===
+
+==== 2026-10-08T18:23:30-04:00 build · plant build-wasm-only · a fresh scratch copy of the tree
+planted build-wasm-only: tests/plants/build-wasm-only.patch -> crates/sr-physics/src/lib.rs
+== 2026-10-08T18:23:30-04:00 build[native] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+== 2026-10-08T18:23:30-04:00 build[wasm] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=1 · 0.74 s
+--- cargo check --workspace --target wasm32-unknown-unknown --locked (check) ---
+    Checking sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-z5f47znw\arm1\crates\sr-physics)
+error: planted: the wasm build breaks while the native build stays green
+ --> crates\sr-physics\src\lib.rs:4:1
+  |
+4 | compile_error!("planted: the wasm build breaks while the native build stays green");
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: could not compile `sr-physics` (lib) due to 1 previous error
+=== NO-GO: cargo check --target wasm32-unknown-unknown failed ===
+
+-- build[native] · exit=0 · 1.72 s
+build native: 1.99.0 in 1 s, target /c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target (106K)
+=== GO ===
+

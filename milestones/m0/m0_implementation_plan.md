@@ -17,8 +17,9 @@ views and a cell inspector show the physics at work; at the world's edge, matter
 or bounces back, as the player chooses. The target is 60 frames a second on a mid-range gaming PC
 — M0-R3 checks that the top speed can hold it, and a shortfall comes back to the lead at M0-TC.
 One reaction mechanism, proven by fusion, waits for the chemistry to come; more elements, saving,
-sound, a world size picked by graphics card, story mode, Steam, the Windows laptop and the rest of
-the physics list are routed past M0 (reports/sandbox_interview.md §4, reports/bootstrap.md §3).
+sound, a world size picked by graphics card, story mode, Steam and the rest of the physics list are
+routed past M0 (reports/sandbox_interview.md §4, reports/bootstrap.md §3). The Windows laptop, routed
+past M0 at bootstrap too, is in play for M0 since M0-TJ3 (Superseded section; R5, R15).
 Models: Claude Code — Opus 5.5, max (gate) · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium — strongest first; read 2026-10-08 from the claude-api skill's model table (cached 2026-09-25), the probe and the lead's answer
 Changes by asking: every block — the lead at bootstrap, 2026-10-08, "Any task, by asking you": physics formulas will need tuning as they get built; never a bypass that makes a failing check pass
 Launch prompt: « Read milestones/m0/m0_implementation_plan.md and execute M0-<id> yourself — you
@@ -43,18 +44,21 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-TH | BUILD | The toolkit and the test harness | AFTER M0-TC | DONE (2026-10-08 12:16, started 12:07) |
 | M0-TG | PLAN | The M0 build pipeline, sized and ordered | AFTER M0-TH | DONE (2026-10-08 13:40, started 12:36) |
 | M0-TB | PLAN | Size, token and rating pass over the pipeline | AFTER M0-TG | DONE (2026-10-08 14:30, started 13:48) |
-| M0-TE-win | BUILD | win-laptop joins — probe the box, install what is missing, prove the toolkit and the toolchain | AFTER M0-TB | BLOCKED |
-| M0-D2 | BUILD | rung_record.py's selftest fails 4 checks on Windows | AFTER M0-TE-win | TODO |
-| M0-D3 | BUILD | content_gate.py's selftest stops on a Windows file lock | AFTER M0-D2 | TODO |
-| M0-D4 | BUILD | plan.py's selftest fails one check on Windows | AFTER M0-D3 | TODO |
-| M0-D5 | BUILD | scratch_copy.sh's selftest fails one check on Windows: «a dest inside the source» | AFTER M0-D4 | TODO |
-| M0-TJ3 | PLAN + LEAD answers | Direction ruling — win-laptop in play for M0: what runs where | AFTER M0-TE-win | TODO |
-| M0-T1 | BUILD | Workspace, toolchain pin and the build check (native + wasm32) | AFTER M0-TJ3 | TODO |
+| M0-TE-win | BUILD | win-laptop joins — probe the box, install what is missing, prove the toolkit and the toolchain | AFTER M0-TB | DONE (2026-10-08 16:54, started 16:47) |
+| M0-D2 | BUILD | rung_record.py's selftest fails 4 checks on Windows | AFTER M0-TE-win | DONE (2026-10-08 16:13, started 16:07) |
+| M0-D3 | BUILD | content_gate.py's selftest stops on a Windows file lock | AFTER M0-D2 | DONE (2026-10-08 16:23, started 16:17) |
+| M0-D4 | BUILD | plan.py's selftest fails one check on Windows | AFTER M0-D3 | DONE (2026-10-08 16:33) |
+| M0-D5 | BUILD | scratch_copy.sh's selftest fails one check on Windows: «a dest inside the source» | AFTER M0-D4 | DONE (2026-10-08 16:46, started 16:40) |
+| M0-D6 | BUILD | status_page's selftest flakes on Windows: «POST /answer refuses…» dies with ConnectionAbortedError (WinError 10053) | AFTER M0-D5 | DONE (2026-10-08 17:10, started 16:56) |
+| M0-D7 | BUILD | verify.py's selftest crashes on Windows under the parallel loop: exit 3221225477 (0xC0000005), no output | AFTER M0-D6 | DONE (2026-10-08 17:26) |
+| M0-TJ3 | PLAN + LEAD answers | Direction ruling — win-laptop in play for M0: what runs where | AFTER M0-TE-win | DONE (2026-10-08 18:05, started 17:50) |
+| M0-D8 | BUILD | verify.py's selftest crashes on Windows under the parallel loop: IndexError in a three-field parse | AFTER M0-TJ3 | DONE (2026-10-08 18:16, started 18:10) |
+| M0-T1 | BUILD | Workspace, toolchain pin and the build check (native + wasm32) | AFTER M0-TJ3 | DONE (2026-10-08 18:22) |
 | M0-T2 | BUILD | GPU device and adapter choice (sr-engine); the GPU test binary | AFTER M0-T1 | TODO |
 | M0-T3 | BUILD | The cell state and the step loop; P8's renormalisation as the first pass | AFTER M0-T2 | TODO |
 | M0-T4 | BUILD | The headless command: one step, its run summary, the boot scope (G-BOOT) | AFTER M0-T3 | TODO |
 | M0-T5 | BUILD | The desktop window and its status endpoint; the desktop scope (G-DESK) | AFTER M0-T4 | TODO |
-| M0-T6 | BUILD | The double-click launcher start.sh (edit job) | AFTER M0-T5 | TODO |
+| M0-T6 | BUILD | The double-click launchers start.sh and start.bat (M0-TJ3) | AFTER M0-T5 | TODO |
 | M0-T7 | BUILD | The web entry: the page, the wasm build, the no-WebGPU page | AFTER M0-T6 | TODO |
 | M0-T8 | BUILD | The capture harness, first form (--capture) | AFTER M0-T7 | TODO |
 | M0-T9 | BUILD | Docs: architecture.md, running.md, testing.md rows for lot 1 | AFTER M0-T8 | TODO |
@@ -200,12 +204,14 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 ## Rules
 PLAYBOOK.md v12.2 + the instruction file bind every agent (cited once, never per block). Full text
 of every rule below: m0_rules.md. Header budget: 600 / 60. Rating refresh: 5 flags. Full-loop
-budget: 600 s on linux-pc (the 10-minute line of Rule 4; measured 3.2 s warm, 3 scopes, 62 cases at
-M0-TH, 2026-10-08 — every lot's V restates it; over it, a TR fires). OPT modules: OPT-B (R6, confirmed at
+budget: 600 s on each box in play (the 10-minute line of Rule 4) — linux-pc measured 3.2 s warm, 3 scopes,
+62 cases at M0-TH; win-laptop 97.7 s wall, 3 scopes, 500 passed at M0-TE-win-r2 (both 2026-10-08; per box
+since M0-TJ3, PLAYBOOK §8) — every lot's V restates its box's; over it, a TR fires. OPT modules: OPT-B (R6, confirmed at
 M0-TP), OPT-C (R2–R4). Grants (OPT-C lanes: scope · exclusions · ceiling): R2 BUILD lane, R3
 installs, R4 DEBUG lane — each $0. Derogations, dated: none. Sizing bar: §2.1 — ceilings and named
-exceptions by id — none declared; E blocks: 8 of 127 open BUILD blocks (M0-T6, M0-T39, M0-T48, M0-T52b,
-M0-T91, M0-T93a, M0-T94, M0-T111 — marked by M0-TG, counted by M0-TB, 2026-10-08). Gates to builds: 7:5 at
+exceptions by id — none declared; E blocks: 7 of 127 open BUILD blocks (M0-T39, M0-T48, M0-T52b,
+M0-T91, M0-T93a, M0-T94, M0-T111 — marked by M0-TG, counted by M0-TB, 2026-10-08; M0-T6 unmarked by M0-TJ3:
+start.bat and the box route take it past an edit job). Gates to builds: 7:5 at
 M0-TP (7:4 at bootstrap, then M0-R2 split); 26:128 after M0-TG's pipeline (2026-10-08 — 17 lot and final
 V's, two deferred TJs); 26:132 after M0-TB's four splits; 27:133 with M0-TE-win and M0-TJ3, the
 win-laptop pair the lead asked for (2026-10-08). Considered and REJECTED (false
@@ -217,20 +223,31 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
 | R1 | A Python `.venv/` at the repo root is allowed when a task needs one (the lead, 2026-10-08) |
 | R2 | Grant, BUILD lane: compile, run the deterministic suites and the smokes, fetch approved libraries — no ask; $0 |
 | R3 | Grant, installs: the approved table's tools, user-level, on linux-pc and win-laptop; on win-laptop the agent does the setup itself; $0 |
-| R4 | Grant, DEBUG lane: run your own build headless or off-screen to check it — never acceptance; a visible window still asks |
-| R5 | Boxes: linux-pc for every M0 gate, win-laptop later — probe the box first; every verdict names its box |
+| R4 | Grant, DEBUG lane: run your own build headless or off-screen to check it — on win-laptop the window placed off-screen, never focused, out of the taskbar (M0-TJ3) — never acceptance; a visible window still asks |
+| R5 | Boxes: linux-pc and win-laptop both in play — any block, lot V's included, runs on the box the lead is on (M0-TJ3); probe the box first; every verdict names its box |
 | R6 | Modules: OPT-B on; OPT-A, D, E, F, G off — assumed at bootstrap, confirmed by the lead at M0-TP (2026-10-08) |
 | R7 | No copyleft code (GPL family) in the game: studied for ideas, never copied or translated — the lead's ruling at M0-TP (2026-10-08) |
 | R8 | Physics oracles: a physics behaviour passes only against a cited reference result within a stated tolerance |
 | R9 | The routine (Rule 4): own scope until green → `verify.py --redarm <scope>` → plan edits → `verify.py --changed` once, last; `--all` only at phase-closing V and TR; every scope ships a plant; docs/agent/testing.md says how to add one |
 | R10 | The claim run: every BUILD block's last step is `python3 tools/pb/verify.py --changed --base <the last commit gate's SHA> --task <ID>` · Pass: GO — a named commit, never `HEAD` |
 | R11 | Scopes: GPU scopes are modules of one test binary, crates/sr-engine/tests/gpu/ (`--test gpu <module>::`), CPU scopes `--lib <module>::` (sr-app's `--bin sandbox-reactions`); scripts source tests/cargo.sh; each lot's docs block writes its rows; (new) = absent on 2026-10-08 |
-| R12 | ⏱ scopes: `paths` name only their own test and scene files; physics on the RTX 5090, timing (fps, top-speed) on the Quadro only; over 10 minutes → the lead's, in the lot V's window |
+| R12 | ⏱ scopes: `paths` name only their own test and scene files; physics on the RTX 5090 (win-laptop: the RTX 4080 Laptop, R15), timing (fps, top-speed) on the Quadro only; over 10 minutes → the lead's, in the lot V's window |
 | R13 | Physics: every GPU number names its adapter; an UNVERIFIED (§5.5) red is a D or a question, never a looser number (§0.4); each pass's CPU f64 twin before its GPU shader; box and latch first |
 | R14 | Every V is done when its verdict is recorded, its D's created and the register updated (PLAYBOOK §14.3); a V that adds to that says so on its own `Done when:` line |
+| R15 | Box pattern (M0-TJ3): on win-laptop a block reads the RTX 5090 as the RTX 4080 Laptop, Xvfb/lavapipe/`game-xvfb` as the off-screen window (`game-offscreen`), start.sh as start.bat, /usr/bin/google-chrome as contract §6.2.3's Windows Chrome, `python3 tools/pb/…` as `py -3.12 tools/pb/…`; the Quadro's timing stays `box: laserax-ai`; a check only one box runs is owed elsewhere, flagged V to V, run at the next V on its box or by M0-V17 |
 
 ## Superseded / retired (§2.6)
-none — purely additive (a green-field project). Inherited debt (§2.4): none.
+- R5's text, "linux-pc is the box for every M0 gate; win-laptop joins when the lead first runs a task there" (index:
+  "Boxes: linux-pc for every M0 gate, win-laptop later") — superseded by M0-TJ3's ruling (the lead, 2026-10-08, Q1
+  «Build and close lots anywhere»; reports/win_laptop.md § Ruling).
+- Contract §6.6's text, "Later (R5): DX12 or Vulkan through wgpu; a scope that names linux-pc reads `owed on win-laptop`
+  there until a task runs it." — superseded by §6.6 [M0-TJ3] (the same ruling, Q1–Q3).
+- The goal paragraph's "the Windows laptop" among the items routed past M0 (reports/bootstrap.md §3: "The Windows laptop
+  as a build box — later — when the lead first runs a task there") — superseded by the same ruling (Q1); Steam and a
+  Windows release stay past M0.
+- M0-D7's owed 20-of-20 whole-scope loop on win-laptop — N/A, retired by the lead (2026-10-08, M0-TJ3 Q4 «Skip it»); a
+  later 0xC0000005 is a D with its faulthandler stack (Hazards).
+Inherited debt (§2.4): none.
 
 ## Repo facts (so you don't explore)
 - Tracker: `milestones.md`. Paths in this plan: `reports/`, `tasks/`, `logs/`, `images/` sit under
@@ -244,9 +261,9 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 - Stack: ruled — Rust 1.99 with our own thin engine on wgpu 30 + eframe 0.36 (egui; winit 0.30)
   (the lead at M0-R1, 2026-10-08); the source layout (crates sr-physics, sr-engine, sr-app; assets/,
   web/, scenes/, tests/plants/) is m0_contrat.md §1.1, the approved dependency table §1.2.
-- Targets: desktop on linux-pc first; a tiny web build kept alive from the first build lot; Steam
-  and win-laptop later. The lead: "Ideally I would for it to run on a website, or to be able to
-  sell it on steam."
+- Targets: desktop on linux-pc first — built and run on win-laptop too since M0-TJ3 (R5, R15); a tiny
+  web build kept alive from the first build lot; Steam later. The lead: "Ideally I would for it to run
+  on a website, or to be able to sell it on steam."
 - Time zone for run and output folder names: America/Toronto (probed); instants inside artifacts
   are UTC-Z (§1).
 - Boxes (R5): `linux-pc` — this PC, hostname laserax-ai, Ubuntu 24.04.5 LTS, kernel 7.0.0-38,
@@ -256,8 +273,8 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
   `win-laptop` — the lead's Windows laptop, hostname Laser2025-20, probed by M0-TE-win (2026-10-08): Windows 11
   Pro build 26300, Intel Core Ultra 9 185H (16 cores / 22 threads), 31.5 GiB RAM, 31 GiB free of 953 GiB; GPUs Intel
   Arc Graphics (driver 32.0.101.6790) and NVIDIA GeForce RTX 4080 Laptop (32.0.15.8129); shells PowerShell 5.1 and
-  Git Bash 5.3.15 (the Bash tool — every toolkit call goes through it); not in play for M0's gates until M0-TJ3
-  rules (reports/win_laptop.md § Box).
+  Git Bash 5.3.15 (the Bash tool — every toolkit call goes through it, as `py -3.12 tools/pb/…`, M0-D7) — in play
+  for every M0 block, the lot V's included, since M0-TJ3 (R5, R15; reports/win_laptop.md § Box, § Ruling).
 - Toolchains on linux-pc (probed 2026-10-08, re-probed by M0-TP): present — g++/gcc 13.3.0, GNU
   make 4.3, ninja 1.11.1, pkg-config 1.8.1, Python 3.12.3 (uv 0.12.3), Node 20.20.2 + npm 10.8.2,
   git 2.43.0, jq, Xvfb + xvfb-run; Rust 1.99.0 stable (rustup 1.29.1, host target x86_64 only —
@@ -294,8 +311,8 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
   patches) arrived with M0-TH, 2026-10-08; no game source tree yet.
 - Run commands, harness scopes, launchers: the harness is `tools/pb/verify.json` (three scopes,
   M0-TH; its loop time is Rules' budget line); no app yet — `tools/pb/launch.json`
-  (contract §3.6) arrives with M0-T4 (`headless-boot`), M0-T5 (`game`, `game-xvfb`) and M0-T15 (`web`),
-  the double-click launcher start.sh (§8) with M0-T6; cargo builds into `build/target/` (contract §6.5 as
+  (contract §3.6) arrives with M0-T4 (`headless-boot`), M0-T5 (`game`, `game-xvfb`, `game-offscreen`) and
+  M0-T15 (`web`), the double-click launchers start.sh and start.bat (§8, M0-TJ3) with M0-T6; cargo builds into `build/target/` (contract §6.5 as
   amended by M0-TG, the lead's yes, 2026-10-08). Run commands for the toolchain: `~/.cargo/bin/cargo`,
   `~/.cargo/bin/trunk` (off the PATH — Hazards); builds go under the git-ignored `build/`.
 - Git: agents never write git (§10); each phase ends with the lead's commit gate.
@@ -349,18 +366,23 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
   `~/bin`, the lead's yes). Effect before: scratch_copy.sh's selftest 3/12; now 11/12 (M0-D5 holds the last).
 - 2026-10-08 · win-laptop, the disk is 97 % full (31 GiB free of 953 GiB): `build/target`, the red-arm cache,
   trunk's cache and node_modules compete for it — read the free space before a lot's first big build.
-- 2026-10-08 · win-laptop, `tools_selftest` reads 6 of 10 GO (M0-D2 rung_record, M0-D3 content_gate, M0-D4 plan,
-  M0-D5 scratch_copy filed); a Windows file lock (WinError 32) is one root cause; the loop is 75–97 s here.
-  Effect: `verify.py --all` on win-laptop is NO-GO until those four are fixed or M0-TJ3 box-binds the case. Seen
-  once, not reproduced: `tools_selftest[verify]` exit 3221225477 (0xC0000005) in a `--changed` run, GO in five others.
+- 2026-10-08 · win-laptop, `tools_selftest` read 6 of 10 GO (a Windows file lock, WinError 32, one root cause);
+  M0-D2..D5 fixed the four reds and `verify.py --all` re-ran GO there (500 passed, 3/3 scopes, 98 s wall; logs
+  M0-TE-win-r2.*). The loop is 75–215 s of case time here. A task's logs committed in a commit gate are never
+  appended to — a re-run takes a fresh `--task` id. `tools_selftest[verify]` exit 3221225477 (0xC0000005), no
+  output, no WER event, seen twice under the Store `python3` — routed by M0-D7 (the next Hazard).
 - 2026-10-08 · win-laptop, `python3` is the Store package's alias (3.13.14), not the python.org 3.12.10 behind
-  `python`; real, so it answers; if the package is removed it reverts to the Store stub — use `py -3`.
+  `python`; `py -3` picks it too (the launcher's default is 3.13). Root cause of M0-D7's suspect: `{python}` is
+  `sys.executable`, here the App Execution Alias `…\WindowsApps\PythonSoftwareFoundation.Python.3.13_…\python.exe`,
+  for every case and every child a selftest fans out. Effect: on win-laptop every toolkit call is `py -3.12
+  tools/pb/<tool> …` (the lead, M0-D7, 2026-10-08); cases run with `PYTHONFAULTHANDLER=1` (verify.py `case_env`),
+  so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-TJ3 (the lead's win-laptop ruling), after M0-D2..D5 or their retirement
-- Counters: T=116 · D=5 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=0 · TR=0 · TM=0 · TD=1 · TE=1
-- Open D/BLOCKED register: M0-D2, M0-D3, M0-D4, M0-D5 (Windows selftests, filed by M0-TE-win); M0-TE-win BLOCKED
-- Outstanding commit gates: Phase 2 (M0-TC, TH, TG, TB) — the lead's, from the repo root (the gate under M0-TB)
+- Next task: the Phase 2b commit gate, then M0-T1 — on either box, R5, R15
+- Counters: T=116 · D=8 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=0 · TR=0 · TM=0 · TD=1 · TE=1
+- Open D/BLOCKED register: none
+- Outstanding commit gates: Phase 2b (M0-TE-win, M0-D2..D8, M0-TJ3) — the lead's, from the repo root (the gate under M0-D8)
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
 - Model ratings: 2026-10-08 by M0-TB
@@ -449,7 +471,7 @@ so its probe, setup and ruling run here, after the Phase 2 commit gate (pushed f
 lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by `plan.py move`.
 
 ## M0-TE-win · win-laptop joins — probe the box, install what is missing, prove the toolkit and the toolchain · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TB)
-- Status: BLOCKED
+- Status: DONE (2026-10-08 16:54, started 16:47)
 - Ask (verbatim): "Next time I open the plan I will be using windows, so id like for an agent to run a task to check that everything is good and to install anything missing so we can continue smoothly on the windows laptop." (the lead, 2026-10-08)
 - Placement note: the lead's first session on win-laptop, after the Phase 2 commit gate is pushed from
   linux-pc and before lot 1. Until this block makes `python3` answer there, each `python3 …` in this plan,
@@ -502,10 +524,10 @@ lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by
   Rust, WSL's `bash.exe` answering for `bash` — every version is printed and compared with the table,
   and `bash --version` must name Git's bash; a toolkit green on Windows because its cases skip there —
   Verify 2 compares its counts with linux-pc's, and each shortfall is named.
-- Handoff: BLOCKED by its own Verify 2 Fail arm (win-laptop Laser2025-20, Bash tool): Verify 1 PASS (python3 = Python 3.13.14, lint GO), 3 PASS (toolchain red-armed, 3 plants red), 4 PASS (5 sections); Verify 2 NO-GO — plan_lint 479 and toolchain 3 GO, tools_selftest 6 of 10 GO, 4 red routed to M0-D2 rung_record, M0-D3 content_gate, M0-D4 plan, M0-D5 scratch_copy (specs filed, 'AFTER M0-TE-win, BEFORE M0-TJ3'; TJ3 may box-bind the case instead). Installed (R3): rustc/cargo 1.99.0 + wasm32 target, trunk 0.21.14 (sha256-checked), and rsync 3.5.1 (outside the table, the lead's yes); user variable MSYS=winsymlinks:nativestrict; MSVC, Chrome 154, switch plugin 12.2.1 were already there. Declared: Node 26.8.2 and Python 3.13.14 kept; toolkit calls go through the Bash tool (PowerShell's bash is WSL's); disk 31 GiB free. Not filed: one non-reproduced 0xC0000005 in tools_selftest[verify]. Claim run (--changed) red on the same four, so a (usual) re-rate path (§0) was not taken — the block's own BLOCKED arm applies; say if you want it. Ran on model=claude-sonnet-5-5 level=high. Next: the lead restarts VS Code (new MSYS variable), then M0-TJ3 rules what runs on win-laptop and whether D2-D5 stand.
+- Handoff: win-laptop Laser2025-20, Bash tool. Re-run after M0-D2..D5 (all DONE): Verify 1 PASS (python3 = 3.13.14, lint GO); Verify 2 PASS — verify.py --all GO, 500 passed, 3/3 scopes (plan_lint 487, tools_selftest 10/10, toolchain 3/3), counts equal linux-pc's; Verify 3 PASS (toolchain clean GO, 3 plants red); Verify 4 PASS (5 sections). Logs M0-TE-win-r2.* (fresh --task id: the first run's logs are committed and the harness never appends to them). Claim run --changed --base 251b054 (M0-TE-win-r3) NO-GO: one flake, tools_selftest[status_page] 'POST /answer refuses…' ConnectionAbortedError WinError 10053, reproduced 2 of 6 alone — filed M0-D6 (Windows-only, tool unopened). Deviation: rated below (usual), so §0 would send a red claim back to TODO; I closed DONE because the red is an unrelated tool's flake now filed, as M0-D2..D5's closes did — reopen if you want the strict path. I appended one line to the committed logs/M0-TE-win.log by mistake before the harness refused. Updated win_laptop.md § Toolkit and the Hazards line. Ran on model=claude-sonnet-5-5 level=high per rung_record. Next: M0-D6, then M0-TJ3.
 
 ## M0-D2 · rung_record.py's selftest fails 4 checks on Windows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
-- Status: TODO
+- Status: DONE (2026-10-08 16:13, started 16:07)
 - Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tools_selftest[rung_record]` until this and its sibling D's are fixed; M0-TJ3 may instead box-bind the case (`box: laserax-ai`, §8) and retire the D as N/A with the citation
 - Caused by: M0-TH (extracted rung_record.py and ran its selftest on linux-pc only; GO there)
 - Files: tools/pb/rung_record.py — named by the selftest's log, not opened (M0-TE-win never reads a tool's code); the executing task confirms first
@@ -513,10 +535,10 @@ lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by
 - Symptom: `rung_record.py selftest` → 58 of 62 checks, 4 FAIL, all in the `now:` group: «missing → the POSIX line: the build of the switch.mjs beside the tool first, then the client's two calls, quoted» · «installed under another project's scope only → missing here» · «an install older than the switch.mjs beside the tool → plugin=stale and the install line whose last call is `plugin update`» · «no $CLAUDE_CODE_EXECPATH → `claude`, never a path looked up»; its 25 plants are red · Repro: `python3 tools/pb/rung_record.py selftest`; the live `rung_record.py now` is right on this box (model=claude-sonnet-5-5 level=high plugin=installed) (box win-laptop = Laser2025-20, Windows 11 build 26300, Git Bash 5.3.15 as the shell, Python 3.13.14) · Suspected cause: the selftest's fixtures (a POSIX home, installed_plugins.json paths, the quoting of the printed line) assume POSIX; on Windows the printed line is a different shape (§B.3: the Windows form) — unknown until the tool is read
 - Deliver: the smallest fix that turns the selftest GO on win-laptop and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so a local patch is lost at the next extraction — where the fix lands (the annex, the lead's PLAYBOOK.md, or tools/pb/ with a note) is asked of the lead first (§12); if the real cause is out of scope, stop and ask. One attempt + self-verify (rung_record.py).
 - Done when: `python3 tools/pb/rung_record.py selftest` prints `=== GO ===` with 62 of 62, on win-laptop; and the same selftest still GO on linux-pc (owed there if not run)
-- Handoff: <placeholder>
+- Handoff: Cause: the selftest's expected install line was always POSIX; `now` rightly prints PowerShell on Windows — the tool unchanged, the fixture's `posix` → `host` (hand-written per host). Landed in tools/pb/rung_record.py and PLAYBOOK.md §A.9, byte-identical, annex md5 marker → 3a3c3a3ae9b2 (the lead: «Both, identical»). win-laptop: `rung_record.py selftest` GO 62/62, plants 25/25 red. Claim `--changed --base 251b054` NO-GO: plan_lint GO, tools_selftest 7/3 (was 6/4) — the 3 reds are M0-D3/D4/D5's cases; `--redarm tools_selftest` blocked by the same 3. Owed on linux-pc: the selftest and the red-arm (expected string unchanged there). Detail tasks/M0-D2.md, log logs/M0-D2.log. Ran on model=claude-opus-5-5 level=high. Next: M0-D3.
 
 ## M0-D3 · content_gate.py's selftest stops on a Windows file lock · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
-- Status: TODO
+- Status: DONE (2026-10-08 16:23, started 16:17)
 - Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tools_selftest[content_gate]` until this and its sibling D's are fixed; M0-TJ3 may instead box-bind the case (`box: laserax-ai`, §8) and retire the D as N/A with the citation
 - Caused by: M0-TH (extracted content_gate.py and ran its selftest on linux-pc only; GO there)
 - Files: tools/pb/content_gate.py — named by the selftest's log, not opened (M0-TE-win never reads a tool's code); the executing task confirms first
@@ -524,10 +546,10 @@ lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by
 - Symptom: `content_gate.py selftest` → 35 of 37 checks, 2 FAIL: «no --denylist → the list beside the tool, not one in the working folder: the italic plant NO-GO» and «selftest stopped after 36 checks: PermissionError: [WinError 32] … content_gate_selftest_…\plain» (a file the selftest still holds open when it removes or renames it); git also warns «LF will be replaced by CRLF» in its temporary repos, which carry no .gitattributes. OPT-D is off (Rules R6), the tool is unused in M0, but its selftest is one of tools_selftest's 10 cases · Repro: `python3 tools/pb/content_gate.py selftest`, twice, the same two FAILs both times (box win-laptop = Laser2025-20, Windows 11 build 26300, Git Bash 5.3.15 as the shell, Python 3.13.14) · Suspected cause: an open handle on a temp file when it is deleted or replaced — Windows refuses what POSIX allows (WinError 32); the first FAIL may be the same lock seen earlier
 - Deliver: the smallest fix that turns the selftest GO on win-laptop and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so a local patch is lost at the next extraction — where the fix lands (the annex, the lead's PLAYBOOK.md, or tools/pb/ with a note) is asked of the lead first (§12); if the real cause is out of scope, stop and ask. One attempt + self-verify (content_gate.py).
 - Done when: `python3 tools/pb/content_gate.py selftest` prints `=== GO ===` with 37 of 37, on win-laptop; and the same selftest still GO on linux-pc (owed there if not run)
-- Handoff: <placeholder>
+- Handoff: content_gate.py selftest GO 36/36 on win-laptop (was 35/37). Two causes, neither a held handle: the selftest stayed chdir'd into its temp `plain` folder through the cleanup (WinError 32), and the child's CRLF stdout missed the `…zorblax_widget\n` match (the --denylist FAIL). Fix is selftest-only: CRLF→LF in child(), chdir(home) before the cleanup, and `-c core.autocrlf=false` on its git add. Landed «Both, identical» (the lead): tools/pb/content_gate.py + PLAYBOOK annex block, md5 90a1a464e16f→993166b08d43. Deviation: Done-when's 37 counted the crash line; the full count is 36. Red-arm of tools_selftest is blocked here by M0-D4/D5 (clean run red); a hand plant in the scratchpad turned the check red. Claim --changed --base 251b054: NO-GO 498/2 (plan, scratch_copy = D4, D5), content_gate GO, plan_lint GO. Owed on linux-pc: the selftest + --redarm tools_selftest. Ran on model=claude-opus-5-5 level=high. Detail: tasks/M0-D3.md. Next: M0-D4.
 
 ## M0-D4 · plan.py's selftest fails one check on Windows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
-- Status: TODO
+- Status: DONE (2026-10-08 16:33)
 - Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tools_selftest[plan]` until this and its sibling D's are fixed; M0-TJ3 may instead box-bind the case (`box: laserax-ai`, §8) and retire the D as N/A with the citation
 - Caused by: M0-TH (extracted plan.py and ran its selftest on linux-pc only; GO there)
 - Files: tools/pb/plan.py — named by the selftest's log, not opened (M0-TE-win never reads a tool's code); the executing task confirms first
@@ -535,10 +557,10 @@ lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by
 - Symptom: `plan.py selftest` → 245 of 246 checks, 1 FAIL: the `Read:`-over-500-lines WARN check reports «got: `Read:` names big_reference.md whole (600 lines > 500) … | WARN: 3 open block(s) carry no rating … | === GO ===» — the output holds the expected WARN plus another, so the check's exact comparison fails; two lines «WARN: replace of m12_implementation_plan.md needed 2 attempts - transient lock on this box» also print (the tool's own Windows retry), without failing a check. `plan.py lint` on the real plan is GO (479 checks) on this box · Repro: `python3 tools/pb/plan.py selftest`, three times, the same FAIL (box win-laptop = Laser2025-20, Windows 11 build 26300, Git Bash 5.3.15 as the shell, Python 3.13.14) · Suspected cause: unknown — either the extra «no rating» WARN is a fixture the Linux run never prints (a ladder or a path difference), or the Windows lock-retry text lands in the compared output
 - Deliver: the smallest fix that turns the selftest GO on win-laptop and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so a local patch is lost at the next extraction — where the fix lands (the annex, the lead's PLAYBOOK.md, or tools/pb/ with a note) is asked of the lead first (§12); if the real cause is out of scope, stop and ask. One attempt + self-verify (plan.py).
 - Done when: `python3 tools/pb/plan.py selftest` prints `=== GO ===` with 246 of 246 and no violation, on win-laptop; and the same selftest still GO on linux-pc (owed there if not run)
-- Handoff: <placeholder>
+- Handoff: plan.py selftest GO 246/246 on win-laptop (was 245/246). Cause: the selftest wrote the fixture's native absolute path into a `Read:` line; the lint's PATH_RE holds no \ or :, so on Windows it named only big_reference.md and the full-path match missed — neither suspect (the check is a substring test; the lock retry was absent on the failing run). Fix is selftest-only (the lead: «Selftest only»): the fixture names big_reference.md beside the plan and expects that name. Landed «Both, identical» (the lead): tools/pb/plan.py + PLAYBOOK annex block, md5 4886df610160→9c293922e286. Red-arm of tools_selftest blocked here by M0-D5 (clean run red); a hand plant in the scratchpad turned this check red. Claim --changed --base 251b054: NO-GO 498/1 (scratch_copy = D5), plan GO, plan_lint 489 GO. Owed on linux-pc: the selftest + --redarm tools_selftest. Ran on model=claude-opus-5-5 level=high per rung_record (the agent's runtime identity read claude-sonnet-5-5 — disagreement reported in tasks/M0-D4.md). Detail: tasks/M0-D4.md. Next: M0-D5.
 
 ## M0-D5 · scratch_copy.sh's selftest fails one check on Windows: «a dest inside the source» · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
-- Status: TODO
+- Status: DONE (2026-10-08 16:46, started 16:40)
 - Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tools_selftest[scratch_copy]` until this and its sibling D's are fixed; M0-TJ3 may instead box-bind the case (`box: laserax-ai`, §8) and retire the D as N/A with the citation
 - Caused by: M0-TH (extracted scratch_copy.sh and ran its selftest on linux-pc only; GO there)
 - Files: tools/pb/scratch_copy.sh — named by the selftest's log, not opened (M0-TE-win never reads a tool's code); the executing task confirms first
@@ -546,10 +568,38 @@ lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by
 - Symptom: with rsync 3.5.1 installed (M0-TE-win, the lead's yes) and `MSYS=winsymlinks:nativestrict` (the user variable M0-TE-win set; Developer Mode is on), `scratch_copy.sh --selftest` → 11 of 12 checks, 1 FAIL: «a dest inside the source → NO-GO, nothing created»; without the MSYS setting 4 more FAIL (the symlink checks and the excluded-folder checks), without rsync 9 (`find: '/tmp/scratch_copy_selftest…/d1': No such file or directory`) · Repro: `MSYS=winsymlinks:nativestrict bash tools/pb/scratch_copy.sh --selftest` in Git Bash (box win-laptop = Laser2025-20, Windows 11 build 26300, Git Bash 5.3.15 as the shell, Python 3.13.14) · Suspected cause: the check compares a destination under /tmp (an MSYS path) with the source's Windows or MSYS form, so «inside the source» is never seen, or the guard creates the destination first — unknown until the script is read
 - Deliver: the smallest fix that turns the selftest GO on win-laptop and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so a local patch is lost at the next extraction — where the fix lands (the annex, the lead's PLAYBOOK.md, or tools/pb/ with a note) is asked of the lead first (§12); if the real cause is out of scope, stop and ask. One attempt + self-verify (scratch_copy.sh).
 - Done when: `bash tools/pb/scratch_copy.sh --selftest` prints `=== GO ===` with 12 of 12 in a Git Bash that has the MSYS setting; a Windows shell without it is named in docs/agent/testing.md, on win-laptop; and the same selftest still GO on linux-pc (owed there if not run)
-- Handoff: <placeholder>
+- Handoff: Fixed: scratch_copy.sh resolved src by pwd -P but dest by realpath -m; in Git Bash only pwd -P expands 8.3 names (YOHANB~1), case and /tmp, so «dest inside the source» was missed — a real guard hole, not the fixture. New canon() resolves dest like src; landed in tools/pb/ and PLAYBOOK annex §A.7 byte-identical (the lead: «Both, identical»), md5 de04c76b5215 → 02dd8f26fbf3; docs/agent/testing.md names the Git Bash without MSYS=winsymlinks:nativestrict (9/12) and PowerShell's WSL bash.
+  Measured on win-laptop: selftest 12/12 GO (was 11/12); hand plant (old guard) red 11/12; tools_selftest --redarm GO — clean 10/10, the scope's first GO on this box; claim --changed --base 251b054 GO 498/0 (plan_lint 488, tools_selftest 10).
+  Not acted on: the claim's 3 FLAG oracle lines are M0-D2/D3/D4's uncommitted tool edits, not mine; the plan Hazards line «11/12 (M0-D5 holds the last)» is now stale — TZ's to retire. The hand plant would stay green on linux-pc (no short names) — the check guards Windows only.
+  Owed on linux-pc: scratch_copy.sh --selftest and verify.py --redarm tools_selftest (tasks/M0-D5.md).
+  Model: model=claude-opus-5-5 level=high (rung_record now). Detail: tasks/M0-D5.md.
+  Next: M0-TJ3 — every Verify-2 red of M0-TE-win is now fixed on win-laptop.
+
+## M0-D6 · status_page's selftest flakes on Windows: «POST /answer refuses…» dies with ConnectionAbortedError (WinError 10053) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
+- Status: DONE (2026-10-08 17:10, started 16:56)
+- Blocks: nothing hard — on win-laptop `verify.py --all` and `--changed` read NO-GO at `tools_selftest[status_page]` in about one run in three (M0-TE-win's own claim run); M0-TJ3 may instead box-bind the case and retire the D as N/A with the citation
+- Caused by: M0-TH (extracted status_page and ran its selftest on linux-pc only; GO there)
+- Files: tools/pb/status_page.py (or the tool the `status_page` case runs) — named by the selftest's log, not opened; the executing task confirms first
+- Read: this file (rules + this task) + milestones/m0/reports/win_laptop.md § Toolkit + milestones/m0/logs/M0-TE-win-r3.tools_selftest.log + milestones/m0/logs/M0-TE-win-r42.tools_selftest.log + the tool and its selftest
+- Symptom: `verify.py tools_selftest --case status_page` → 2 NO-GO of 6 runs alone (GO in the other 4), and 1 NO-GO in a `--changed` run (GO in the `--all` run just before): 26 of 27 checks pass, the 1 FAIL is «POST /answer refuses a foreign Origin (403), an empty answer and malformed JSON (400), a body over 64 KiB (413); nothing written» — `suite raised ConnectionAbortedError: [WinError 10053]` (the client's connection aborted by the host's software) · Repro: `for i in 1 2 3 4 5 6; do python3 tools/pb/verify.py tools_selftest --case status_page --task <fresh-id-$i>; done` in Git Bash (box win-laptop = Laser2025-20, Windows 11 build 26300, Python 3.13.14) · Suspected cause: the 413 arm posts a body over 64 KiB and the server answers and closes before reading it, which Windows turns into a connection abort on the client (POSIX gives a clean 413) — unknown until the tool is read
+- Deliver: the smallest fix that makes the selftest GO on win-laptop in 20 consecutive runs and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so where the fix lands is asked of the lead first (§12), as M0-D2..D5 did. One attempt + self-verify.
+- Done when: `verify.py tools_selftest --case status_page` GO in 20 of 20 runs on win-laptop; the same selftest still GO on linux-pc (owed there if not run)
+- Handoff: Cause measured: status_page's server replied 413 to a body over 64 KiB without reading it; the close on unread bytes is a reset on Windows (WinError 10053, 12/300 and 29/300 POSTs in a probe; 403/404 arms 0/300). Fix: drain(n) reads and drops the refused body (≤1 MiB, 2 s) before the 413 — landed in tools/pb/status_page.py and PLAYBOOK annex §A, byte-identical (the lead: «Both, identical»), md5 2fd9acd147e7 → 8cce7ffce793; selftest unchanged. Probe after: 0/300. On win-laptop: --case status_page 20/20 GO; --redarm tools_selftest GO (M0-D6-r2; the first run's clean arm crashed tools_selftest[verify] 0xC0000005 → filed M0-D7, the second sighting); claim --changed --base 251b054 GO, 502 passed, 2/2 scopes. Owed on linux-pc: --case status_page. Seen: M0-D5's red-arm proved its plant red through this flake, not its own check (M0-D6-r2 shows it red properly). Stale «seen once» texts (Hazards, win_laptop.md) left for TZ. Model: claude-opus-5-5, level high (rung_record). Detail: tasks/M0-D6.md. Next: M0-D7, then M0-TJ3.
+
+## M0-D7 · verify.py's selftest crashes on Windows under the parallel loop: exit 3221225477 (0xC0000005), no output · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D6, BEFORE M0-TJ3)
+- Status: DONE (2026-10-08 17:26)
+- Blocks: nothing hard — on win-laptop a `tools_selftest` run (`--changed`, `--all`, a red-arm's clean arm) reads NO-GO now and then at `tools_selftest[verify]`; a red-arm's clean arm that crashes runs no plant; M0-TJ3 may instead box-bind the case and retire the D as N/A with the citation
+- Caused by: unknown
+- Files: tools/pb/verify.py (the `verify` case runs `{python} tools/pb/verify.py selftest`) — not opened; the executing task confirms first. Opened by M0-D6: logs/M0-TE-win.tools_selftest.log, logs/M0-D6.tools_selftest.redarm.log
+- Read: this file (rules + this task) + milestones/m0/reports/win_laptop.md § Toolkit (the "intermittent crash" paragraph) + the two logs above + the tool's selftest
+- Symptom: `tools_selftest[verify] · exit=3221225477` (0xC0000005, an access violation) after 5–10 s with no output at all, so the scope reads «no `=== GO ===` line … 9 case(s) < expected 10». Two sightings on win-laptop, both with the 10 cases running in parallel (jobs 8): M0-TE-win's `--changed` claim run (5.30 s, logs/M0-TE-win.tools_selftest.log:184) and M0-D6's `--redarm tools_selftest` clean arm (9.46 s, logs/M0-D6.tools_selftest.redarm.log:24; GO at the re-run, M0-D6-r2). Never seen with the case run alone (GO, 166 checks, 98/98 plants red) · Repro: `for i in $(seq -w 1 10); do python3 tools/pb/verify.py tools_selftest --task <fresh-id-$i>; done` in Git Bash (the whole scope, parallel; box win-laptop = Laser2025-20, Windows 11 build 26300, Python 3.13.14 — the Store package's `python3`) — about 1 run in 8 to 10 so far · Suspected cause: a native crash of the interpreter, not a Python exception (no traceback, no output): the Store-package Python under concurrent subprocess load, or a native module the selftest loads; try `py -3` (python.org 3.12.10) to split the two — unmeasured
+- Deliver: first measure: does the crash reproduce with the python.org interpreter, with jobs 1, with `PYTHONFAULTHANDLER=1` (a native stack in the log)? Then the smallest fix in the tool, or the measured cause routed (an interpreter Hazard, the harness's `{python}` choice) — asked of the lead where it lands (§12), as M0-D2..D6 did. One attempt + self-verify.
+- Done when: `verify.py tools_selftest` (the whole scope, parallel) GO in 20 of 20 runs on win-laptop; the same scope still GO on linux-pc (owed there if not run)
+- Handoff: verify.py: case_env() — the one env for scope runs and red-arm arms — adds PYTHONFAULTHANDLER=1 (setdefault), so a native crash leaves its stack in the case log; selftest J2 check + plant (168 checks, 99/99 red); red-arm GO under py -3.12 (148 s). Measured: {python} = sys.executable = the Store App Execution Alias for every case and child; no WER event at either sighting; not reproduced here (burst 0/8) — cause NOT PROVEN (source + probe). Routed by the lead (2026-10-08, « Switch + trace »): on win-laptop every toolkit call is `py -3.12 tools/pb/…` (Boxes fact, Hazard; `py -3` is the Store 3.13 too — the old Hazard's advice corrected). Owed: Done when's 20/20 on win-laptop (the lead's, ~30 min) and linux-pc's GO — flagged to M0-TJ3. Finding not acted on: verify selftest's « two shared scopes ran at the same time » (0.2 s overlap) reads NO-GO under 8× load — load-sensitive, not seen in a real run. Ran on model=claude-opus-5-5 level=high. Detail: tasks/M0-D7.md. Next: M0-TJ3.
 
 ## M0-TJ3 · Direction ruling — win-laptop in play for M0: what runs where · **PLAN + LEAD answers** · Opus 5.5, max · switch · (AFTER M0-TE-win)
-- Status: TODO
+- Status: DONE (2026-10-08 18:05, started 17:50)
+- Carried flags: [M0-D3, 2026-10-08] content_gate.py selftest (36/36 expected) and verify.py --redarm tools_selftest owed on linux-pc after the selftest-only fix (tasks/M0-D3.md) · [M0-D7, 2026-10-08] Owed before ruling win-laptop in play: M0-D7's 20/20 whole-scope GO under py -3.12 on win-laptop (~30 min, the lead's terminal; loop in tasks/M0-D7.md) and tools_selftest GO on linux-pc after verify.py's case_env change. One more 0xC0000005 under 3.12 → a D with the faulthandler stack.
 - Ask (verbatim): "Next time I open the plan I will be using windows, so id like for an agent to run a task to check that everything is good and to install anything missing so we can continue smoothly on the windows laptop." (the lead, 2026-10-08)
 - Read: this file (rules + this task) + milestones/m0/reports/win_laptop.md + milestones/m0/m0_rules.md R4,
   R5 + milestones/m0/m0_contrat.md §3.6, §6 + PLAYBOOK.md §2.6 (direction changes) and §8 (the
@@ -573,9 +623,20 @@ lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by
 - Adversarial: a ruling written for lot 1 alone leaves later lots naming Xvfb, the Quadro or start.sh —
   the Rules line reaches every block, and the report lists the later blocks it covers; a check marked
   `owed` and never run again — the ruling names where each owed check runs.
-- Handoff: <placeholder>
+- Handoff: Ruling verbatim in reports/win_laptop.md § Ruling: Q1 «Build and close lots anywhere» (not my recommendation), Q2 «Laptop versions (Recommended)», Q3 «Off-screen window (Recommended)», Q4 «Skip it». §2.6 executed: R5 rewritten, R4/R9/R12 extended, R15 the box pattern (Rules + m0_rules.md); Superseded: R5's and contract §6.6's old text, the goal's routing of the laptop, M0-D7's 20-run loop (N/A, Q4); contract §3.3, §3.6, §5.4, §6.2.3, §6.4, §6.6 amended [M0-TJ3]; blocks M0-T2, T5 (--offscreen-window, case xvfb→window), T6 (start.bat; no longer an edit job → Sonnet 5.5, high, §0 rule 3), T8, T9, T84, V1, V17 edited; the ~40 later blocks R15 covers listed in the report, the negative scope stated there. Verify 1 [ALREADY RUN — PASS (lint GO, 493 checks, 0 warnings) on win-laptop]. Claim --changed --base 251b054 [ALREADY RUN — FAIL (499/1: tools_selftest[verify] IndexError after 30 checks, a Python crash in the selftest's own parser — my edits touch no tool) on win-laptop]; not reproduced after (case alone 3/3 GO, scope GO M0-TJ3-s01, plan_lint re-run GO M0-TJ3-p01) → filed M0-D8 (usual rung, before M0-T1, inside the Phase 2b gate) on Q4's «filed as a bug». Owed on linux-pc: M0-D2..D7's tools_selftest + its red-arm → flagged into M0-V1, carried V to V, M0-V17 at the latest. Not acted on: stale Hazard texts (11/12, «seen once») and win_laptop.md's TE-win status line — TZ's, as M0-D5/D6 named. Ran on model=claude-opus-5-5 level=max (rung_record). Detail: tasks/M0-TJ3.md. Next: M0-D8, then the Phase 2b commit gate, then M0-T1 on either box.
 
-> **Commit gate (lead):** Phase 2b closes after M0-TJ3 — from the repo root, one at a time:
+## M0-D8 · verify.py's selftest crashes on Windows under the parallel loop: IndexError in a three-field parse · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TJ3, BEFORE M0-T1)
+- Status: DONE (2026-10-08 18:16, started 18:10)
+- Blocks: nothing hard — on win-laptop a claim run that includes `tools_selftest` reads NO-GO now and then at `tools_selftest[verify]` (once in five runs on 2026-10-08), which ends the try of a block rated below (usual) (PLAYBOOK §0); filed by the lead's M0-TJ3 Q4 pick: «any later crash is caught with its stack and filed as a bug»
+- Caused by: M0-TH (extracted verify.py and ran its selftest on linux-pc only; GO there)
+- Files: tools/pb/verify.py (its selftest) — not opened (M0-TJ3, a PLAN block, never reads a tool's code); the executing task confirms first. Opened by M0-TJ3: milestones/m0/logs/M0-TJ3.tools_selftest.log
+- Read: this file (rules + this task) + milestones/m0/logs/M0-TJ3.tools_selftest.log (lines 52–56) + milestones/m0/tasks/M0-D7.md (its load-sensitive overlap check) + tools/pb/verify.py § selftest (found by grep for `s.split()[2]`: the check that parses `<name> <number> <number>` records)
+- Symptom: `tools_selftest[verify] · exit=1 · 23.09 s` — «crashed after 30 checks: IndexError: list index out of range (return [(s.split()[0], float(s.split()[1]), float(s.split()[2])))», `selftest: checks=30 · failed=1 · plants=18/18 red` — in M0-TJ3's claim run (`py -3.12 tools/pb/verify.py --changed --base 251b054 --task M0-TJ3`: 10 cases at jobs 8, load 3.69→5.48, python 3.12.10 — the python.org interpreter M0-D7 switched to, so not the Store package); not reproduced after: the case alone GO 3 of 3 (168 checks, 99/99 plants red; logs M0-TJ3-v01..v03), the whole scope at jobs 8 GO (M0-TJ3-s01, load 3.44→10.52) · Repro: `for i in $(seq -w 1 10); do py -3.12 tools/pb/verify.py tools_selftest --task <fresh-id-$i> | tail -n 1; done` in Git Bash (box win-laptop = Laser2025-20, Windows 11 build 26300) — once in five runs so far · Suspected cause: a record line read before its writer finished it — the parsed triple looks like a fixture's `<name> <start> <end>` timing record, the kind M0-D7 found load-sensitive («two shared scopes ran at the same time», tasks/M0-D7.md), and Windows gives no atomic line append across processes — unknown until the tool is read
+- Deliver: the smallest fix that turns a partial or missing record into the check's own measured failure (or a bounded wait), never an IndexError, the check's meaning kept; its plant — a truncated record line — red on the check, the selftest not crashing; the selftest GO on win-laptop and still GO on linux-pc, its plants red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so where the fix lands is asked of the lead first (§12), as M0-D2..D7 did. One attempt + self-verify.
+- Done when: `py -3.12 tools/pb/verify.py tools_selftest --case verify` GO on win-laptop with the truncated-record plant red on its check (no crash); `py -3.12 tools/pb/verify.py --redarm tools_selftest` GO there; the same selftest still GO on linux-pc (owed there if not run)
+- Handoff: Cause measured: 19 EMIT trace children append to one trace.txt at once (crash = section C's first spans(), by the 30-check/18-plant count); a Windows append is seek+write, so records overwrite — probe 7/570 lost (HEAD) vs 0/570 (fix). Fix (the lead: «Reader + writer», «Both, identical»): EMIT writes under an O_EXCL lock file (5 s bound); spans() keeps whole records only, a torn one reads missing on its check; plant: a torn t2 record → overlap red, no crash (169 checks, 100/100 red); injected old reader → IndexError as at M0-TJ3. Landed in tools/pb/verify.py + PLAYBOOK annex block, cmp identical, md5 cdf8b7c56213→5f52675a3900. Deviation: the annex lacked M0-D7's case_env hunks — carried in byte for byte to make it identical. win-laptop: --case verify GO; --redarm tools_selftest GO (148 s). Claim --changed --base 251b054: logs/M0-D8.changed.log, run last. Owed on linux-pc: --case verify. Lead's optional: the 10-run repro loop (tasks/M0-D8.md). Ran on model=claude-opus-5-5 level=high. Detail: tasks/M0-D8.md. Next: the Phase 2b commit gate, then M0-T1.
+
+> **Commit gate (lead):** Phase 2b closes after M0-D8 (M0-TJ3, then the bug it filed) — from the repo root, one at a time:
 > `git add -A`
 > `git commit -m "M0 Phase 2b: win-laptop joins"`
 > `git push`
@@ -586,7 +647,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 # Phase 3 — Lot 1 · the walking skeleton
 
 ## M0-T1 · Workspace, toolchain pin and the build check · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TJ3)
-- Status: TODO
+- Status: DONE (2026-10-08 18:22)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.1, §1.2, §6.5 + docs/agent/testing.md
   + tests/toolchain/check.sh (the scope-script pattern)
 - Deliver: Cargo.toml (new: `[workspace] members = ["crates/*"]`, `[workspace.dependencies]` = §1.2's
@@ -611,7 +672,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   build — the plant compiles natively and must turn the wasm case red; a red-arm copy that builds into
   the tree's build/ or recompiles every dependency per arm — the red-arm's wall time and the shared
   cache's size in the log (§6.5).
-- Handoff: <placeholder>
+- Handoff: Workspace landed: Cargo.toml (members crates/*, §1.2 table at the approved minors, wgpu native+webgpu without webgl, eframe wgpu/wayland/x11/default_fonts, one release profile, [profile.test] inherits it), rust-toolchain.toml (1.99.0 + clippy, rustfmt, linux-gnu + wasm32), .cargo/config.toml (build/target), crates/sr-physics (empty), Cargo.lock, tests/cargo.sh (sourced env + build runner), scope build + plant build-wasm-only, docs/agent/testing.md row + § Cargo scopes. Verify 1 [ALREADY RUN — PASS (GO, 2 cases, 9.7 s) on win-laptop]; Verify 2 [ALREADY RUN — PASS (clean GO, plant red on the wasm case only) on win-laptop]; claim --changed --base 251b054 [ALREADY RUN — PASS (GO, 502 passed, 3/3 scopes, 72 s; 6 oracle FLAGs are the uncommitted Phase 2b tool edits, not mine) on win-laptop], logs/M0-T1.changed.log. Not acted on: (1) rustup auto-installed toolchain 1.99.0 beside stable on the first cargo call (R3, ~25 s) — linux-pc does the same; (2) eframe's wgpu path re-enables wgpu webgl+gles by feature unification, against §1.2/Q4 — the lot adding eframe to sr-app must check it; (3) build scope [NOT RUN — owed on linux-pc]. Ran on model=claude-sonnet-5-5 level=high (rung_record). Detail: tasks/M0-T1.md. Next: M0-T2.
 
 ## M0-T2 · GPU device and adapter choice · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T1)
 - Status: TODO
@@ -625,12 +686,15 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   line (§3.3) → Verify 1 · crates/sr-engine/tests/gpu/main.rs (new): the one GPU test binary every GPU
   scope adds a module to, its device helper (adapter from SR_TEST_ADAPTER, else the high-performance
   pick, printed as SR-ADAPTER) and the `adapter` module — the matching rule on a fixed adapter list
-  (case, substring, two backends, no match), one live device per adapter linux-pc has, the device's
-  limits equal to `Limits::default()` → scope `adapter` → Verify 1 · plant
-  tests/plants/adapter-case.patch (new: case-sensitive matching) → Verify 2
+  (case, substring, two backends, no match), one live device per adapter the box has — linux-pc: the
+  Quadro RTX 4000, the RTX 5090, llvmpipe; win-laptop: the RTX 4080 Laptop and the Intel Arc, WARP too
+  where wgpu lists it (contract §6.6) [M0-TJ3, the lead's Q2] — the device's limits equal to
+  `Limits::default()` → scope `adapter` → Verify 1 · plant tests/plants/adapter-case.patch (new:
+  case-sensitive matching) → Verify 2
 - Verify: 1. `python3 tools/pb/verify.py adapter --task M0-T2` · Pass: GO, ≥ 6 cases, the log naming
-  the Quadro RTX 4000, the RTX 5090 and llvmpipe · Fail: NO-GO, fewer cases, or one of linux-pc's
-  adapters missing · 2. `python3 tools/pb/verify.py --redarm adapter --task M0-T2` · Pass: GO — the
+  the box's adapters — on linux-pc the Quadro RTX 4000, the RTX 5090 and llvmpipe, on win-laptop the RTX
+  4080 Laptop and the Intel Arc; the other box's list owed there (R15) · Fail: NO-GO, fewer cases, or one
+  of the box's adapters missing · 2. `python3 tools/pb/verify.py --redarm adapter --task M0-T2` · Pass: GO — the
   plant NO-GO · Fail: the plant stays GO
 - Adversarial: on a three-GPU box the high-performance pick may be the 5090 or the Quadro (Hazards) — the
   live case prints which, and no later test may rely on the default; a device created with the adapter's
@@ -696,17 +760,22 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   docs/agent/testing.md
 - Deliver: crates/sr-app/src/desktop.rs (new): the eframe app on the wgpu backend with `--adapter` (M0-T2)
   — a 1760 × 940 window titled with `app.title`'s exact text, the world area filled with `bg.space` (the
-  string table itself comes with M0-T13), the binary's default path in crates/sr-app/src/main.rs →
-  Verify 1 · crates/sr-app/src/status.rs (new): `--status-port <port>` serving GET /status on 127.0.0.1
+  string table itself comes with M0-T13), the binary's default path in crates/sr-app/src/main.rs, and
+  `--offscreen-window` (§3.3 [M0-TJ3]: outside every monitor's area, never activated, out of the taskbar)
+  → Verify 1 · crates/sr-app/src/status.rs (new): `--status-port <port>` serving GET /status on 127.0.0.1
   only (HTTP/1.0 on std::net) with §3.4's JSON, "ready" once the first frame is presented, off without the
   flag, never in the web build → Verify 1 · tools/pb/launch.json: `game-xvfb` per §3.6 (the private
-  Xvfb, `--adapter llvmpipe`) → Verify 1 · launch.json's `game` per §3.6 (a visible window, R4) → none —
-  the lead's start.sh run in M0-V1 [M0-TB] · scope `desktop` (G-DESK: case `xvfb` —
-  `bash tests/smoke.sh game-xvfb`) → Verify 1 · plant tests/plants/status-never-ready.patch (new, §5.4) →
-  Verify 2
+  Xvfb, `--adapter llvmpipe`) and `game-offscreen` per §3.6 [M0-TJ3] → Verify 1 · launch.json's `game` per
+  §3.6 (a visible window, R4) → none — the lead's launcher run in M0-V1 [M0-TB, and start.bat on win-laptop,
+  M0-TJ3] · scope `desktop` (G-DESK: case `window` — `bash tests/smoke.sh window`, the box's route picked in
+  tests/smoke.sh: `game-xvfb` on linux-pc, `game-offscreen` on win-laptop (R15) [M0-TJ3, the lead's Q3 —
+  was case `xvfb`]) → Verify 1 · plant tests/plants/status-never-ready.patch (new, §5.4) → Verify 2
 - Verify: 1. `python3 tools/pb/verify.py desktop --task M0-T5` · Pass: GO, 1 case — /status "ready"
-  within 90 s on the private display · Fail: NO-GO; lavapipe unable to present on Xvfb (G-DESK is
-  UNVERIFIED, §5.5) → BLOCKED with the measured error, a D or a question — never a looser case · 2.
+  within 90 s on the box's route (the private display on linux-pc, off-screen on win-laptop); the other
+  box's route owed there (R15) · Fail: NO-GO; lavapipe unable to present on Xvfb, or the off-screen window
+  on win-laptop (G-DESK is UNVERIFIED, §5.5) → BLOCKED with the measured error, a D or a question — never a
+  looser case; an off-screen window that cannot present sends the window tasks to linux-pc (the lead's Q3,
+  M0-TJ3) · 2.
   `python3 tools/pb/verify.py --redarm desktop --task M0-T5` · Pass: GO — the plant NO-GO · Fail: the
   plant stays GO
 - Adversarial: "ready" set before a frame is presented (when the window is created) passes on a broken
@@ -715,18 +784,22 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   the real path.
 - Handoff: <placeholder>
 
-## M0-T6 · The double-click launcher · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T5)
+## M0-T6 · The double-click launcher · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T5)
 - Status: TODO
-- Sizing: E
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.6 (the launchers) + PLAYBOOK.md
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.6 (the launchers), §6.6 + PLAYBOOK.md
   §8 (TW, the launchers) and §A.3 (the two-line wrappers)
 - Deliver: start.sh (new, repo root, executable, LF): `python3 tools/pb/launch.py start ${1:-game}
   --task launcher`, wait for Enter, `python3 tools/pb/launch.py stop` — the lead double-clicks it (Files
   → Run as a Program), the optional service name lets a check run it on the private display → Verify 1 ·
-  the `desktop` scope's case `launcher` in tools/pb/verify.json: `printf '\n' | bash start.sh game-xvfb`
-  starts, reaches ready, stops, and leaves no process behind (`launch.py status` empty) → Verify 1
-- Verify: 1. `python3 tools/pb/verify.py desktop --task M0-T6` · Pass: GO, 2 cases (xvfb, launcher) ·
-  Fail: NO-GO, fewer cases, or a process left running
+  start.bat (new, repo root, CRLF — a `*.bat text eol=crlf` line in .gitattributes): `py -3.12
+  tools\pb\launch.py start <the name given, else game> --task launcher`, wait for Enter, `py -3.12
+  tools\pb\launch.py stop` — the lead double-clicks it on win-laptop (§3.6 [M0-TJ3], the lead's Q2) →
+  Verify 1 · the `desktop` scope's case `launcher` in tools/pb/verify.json, through tests/smoke.sh's box
+  route (R15) — on linux-pc `printf '\n' | bash start.sh game-xvfb`, on win-laptop start.bat with
+  `game-offscreen` fed an Enter — starts, reaches ready, stops, and leaves no process behind (`launch.py
+  status` empty) → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py desktop --task M0-T6` · Pass: GO, 2 cases (window, launcher) —
+  the box's route, the other box's owed there (R15) · Fail: NO-GO, fewer cases, or a process left running
 - Adversarial: a launcher that starts the game but never stops it leaves a window behind on every
   double-click — the case checks `launch.py status` after Enter.
 - Handoff: <placeholder>
@@ -768,7 +841,8 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   `png`, captions.json in review_page.py's shape, exit 0, the actions that exist today (`pause`, `steps`)
   — every later block that builds a feature with a §3.3 action adds that action here, an action not yet
   built is refused with an SR-ERROR naming it, exit 4 → Verify 1 · tests/capture/smoke.json and
-  tests/capture/check.sh (new): under `xvfb-run` with `--adapter llvmpipe` (R4), a two-step script → two
+  tests/capture/check.sh (new): under `xvfb-run` with `--adapter llvmpipe` on linux-pc, with
+  `--offscreen-window` on win-laptop (R4, R15 [M0-TJ3, the lead's Q3]), a two-step script → two
   PNGs of the window's size and a valid captions.json, an unknown action → exit 4 → scope `capture` →
   Verify 1 · plant tests/plants/capture-no-captions.patch (new) → Verify 2
 - Verify: 1. `python3 tools/pb/verify.py capture --task M0-T8` · Pass: GO, 2 cases · Fail: NO-GO · 2.
@@ -785,10 +859,11 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Deliver: docs/agent/architecture.md (new): the crates, the modules and their one-way dependencies, the
   step's pass order, the data flow, the observer boundary (§1.1–§1.3, §1.9) — citing the contract by
   section, never restating a number it or calibration.json holds (§7) → Verify 1 · docs/agent/running.md
-  (new): the launcher, the binary's commands, adapters on linux-pc's three GPUs, the web build, the
-  private-display rule (§3.3–§3.6, §6) → Verify 1 · docs/agent/testing.md: rows for lot 1's scopes (build,
-  adapter, state, boot, desktop, web, capture) and the cargo mechanism of §6.5 (tests/cargo.sh) →
-  Verify 2
+  (new): the launchers (start.sh, start.bat), the binary's commands, adapters on each box (linux-pc's three
+  GPUs, win-laptop's two, §6.6), the web build, the private-display rule and win-laptop's off-screen route
+  (§3.3–§3.6, §6) [M0-TJ3] → Verify 1 · docs/agent/testing.md: rows for lot 1's scopes (build, adapter,
+  state, boot, desktop, web, capture), the cargo mechanism of §6.5 (tests/cargo.sh), and its Boxes rule
+  naming both hostnames (laserax-ai, Laser2025-20) and R15's routes [M0-TJ3] → Verify 2
 - Verify: 1. `grep -c "§" docs/agent/architecture.md docs/agent/running.md` · Pass: both files exist,
   each with ≥ 5 contract citations · Fail: a file missing or fewer · 2. `grep -cE
   "^[|] .(build|adapter|state|boot|desktop|web|capture). [|]" docs/agent/testing.md` · Pass: 7 · Fail:
@@ -820,19 +895,22 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-V1 · Validation — lot 1: the walking skeleton · **CHECK** · Opus 5.5, max · switch · (AFTER M0-TV1)
 - Status: TODO
+- Carried flags: [M0-TJ3, 2026-10-08] owed on linux-pc (laserax-ai) since M0-D2..D7's Windows fixes to the toolkit (M0-D3's and M0-D7's flags on M0-TJ3, routed there): `python3 tools/pb/verify.py tools_selftest --task M0-V1-linux` (10/10, content_gate 36/36) and `python3 tools/pb/verify.py --redarm tools_selftest --task M0-V1-linux` — run first when this V runs on linux-pc, else carried to the next V (R15); M0-V17 at the latest
 - Read: milestones/m0/m0_contrat.md §1.1–§1.3, §2.2, §2.12.2, §3.3–§3.6, §4.9, §6 + the handoffs of
   M0-T1–M0-T9 and M0-TV1 + docs/agent/architecture.md, running.md, testing.md + the delivered files, each
   by the section it covers
-- Deliver: contract-vs-code on lot 1, end to end on linux-pc — the workspace builds natively and for
-  wasm32, `headless` steps and writes summary.json, the window reaches "ready" on a private display, the
-  web build builds, start.sh starts and stops, the capture harness writes its files, each defect its own
-  D (E4), files named, every scope the lot added re-checked red-armed (`verify.py --redarm`), the verdict
-  names its blind spot, its box, and NOT PROVEN where only synthetic or source-only evidence exists →
+- Deliver: contract-vs-code on lot 1, end to end on the box it runs on (R5, R15 [M0-TJ3]) — the workspace
+  builds natively and for wasm32, `headless` steps and writes summary.json, the window reaches "ready" on
+  the box's route, the web build builds, the box's launcher starts and stops, the capture harness writes
+  its files, each defect its own D (E4), files named, every scope the lot added re-checked red-armed
+  (`verify.py --redarm`), the verdict names its blind spot, its box, every check owed on the other box
+  (flagged into the next V, R15), and NOT PROVEN where only synthetic or source-only evidence exists →
   reports/v1.md → Verify 1 · Phase 3's close: its DONE blocks stubbed (`plan.py stub`), the header
   against its budget, the complete loop once with its seconds (the Rules' budget line restated),
   `rung_record.py report`'s table kept in reports/v1.md, a class it moves → a TM<n> filed → Verify 1 · the
-  human-run tier owed in this window: the lead double-clicks start.sh once on their own desktop (Wayland,
-  the real GPU — a visible window, R4) and says what they saw → none — the lead's words in reports/v1.md
+  human-run tier owed in this window: the lead double-clicks the box's launcher once on their own desktop
+  — start.sh on linux-pc (Wayland, the Quadro), start.bat on win-laptop (the RTX 4080 Laptop) [M0-TJ3] — a
+  visible window, R4 — and says what they saw → none — the lead's words in reports/v1.md
 - Verify: 1. `python3 tools/pb/verify.py --all --task M0-V1` · Pass: GO, every scope present, the loop's
   seconds recorded · Fail: NO-GO — each red becomes a D (E4)
 - Adversarial: a skeleton whose parts each pass alone but never ran together — the V boots the window
@@ -2515,7 +2593,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   frame > 0 → scope `desktop` gains case `world` → Verify 1 · plant tests/plants/world-not-drawn.patch
   (new: the world area never rendered) → Verify 2
 - Verify: 1. `python3 tools/pb/verify.py desktop capture --task M0-T84` · Pass: GO, desktop 3 cases
-  (xvfb, launcher, world) · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm desktop --task M0-T84` ·
+  (window, launcher, world — M0-TJ3 renamed `xvfb`) · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm desktop --task M0-T84` ·
   Pass: GO — the plant NO-GO on `world` · Fail: the plant stays GO
 - Adversarial: a loop that waits on `poll()` stalls every frame by the readback's latency — `poll()` never
   blocks (§3.1), and the case's fps at ×1 is printed.
@@ -3334,7 +3412,9 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
 - Read: milestones/m0/m0_contrat.md, section by section against the lots' reports + reports/v1.md–v16.md +
   the Pipeline state's register + docs/agent/*.md
 - Deliver: the whole contract against the code (PLAYBOOK §2.4): every §5 guarantee's scope GO on linux-pc
-  or its D named, guarantee by guarantee, every FROZEN clause (Q1–Q5) honoured, the string table, the
+  or its D named, guarantee by guarantee — this V runs on linux-pc and runs there every check still owed
+  on linux-pc (R15, the lead at M0-TJ3: "the final one (M0-V17) runs them all"), and names every check
+  owed on win-laptop with its last GO and the block that ran it (PLAYBOOK §8) — every FROZEN clause (Q1–Q5) honoured, the string table, the
   licences, the web build kept alive, every NOT PROVEN carried with its reason, the DEFERRED blocks
   (M0-TJ1, M0-TJ2, M0-T114) closed N/A with their pointers or woken, each defect its own D (E4) →
   reports/v17.md → Verify 1 · the complete loop once — its ⏱ part the lead's when over 10 minutes — and the

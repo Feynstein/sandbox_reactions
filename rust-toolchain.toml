@@ -1,0 +1,6 @@
+# The pinned toolchain (m0_contrat.md §1.1, §1.2).
+[toolchain]
+channel = "1.99.0"
+components = ["clippy", "rustfmt"]
+targets = ["x86_64-unknown-linux-gnu", "wasm32-unknown-unknown"]
+profile = "minimal"

@@ -1,0 +1,20 @@
+== 2026-10-08T18:21:27-04:00 build[native] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+== 2026-10-08T18:21:27-04:00 build[wasm] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 4.39 s
+build wasm: 1.99.0 in 4 s, target C:/workspace/sandbox_reactions/build/target (86K)
+=== GO ===
+
+-- build[native] · exit=0 · 5.33 s
+build native: 1.99.0 in 5 s, target C:/workspace/sandbox_reactions/build/target (99K)
+=== GO ===
+
+== 2026-10-08T18:22:17-04:00 build[native] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[native] · exit=0 · 2.73 s
+build native: 1.99.0 in 3 s, target C:/workspace/sandbox_reactions/build/target (99K)
+=== GO ===
+
+== 2026-10-08T18:22:20-04:00 build[wasm] · task M0-T1 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.42 s
+build wasm: 1.99.0 in 1 s, target C:/workspace/sandbox_reactions/build/target (99K)
+=== GO ===
+

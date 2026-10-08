@@ -1,0 +1,66 @@
+== 2026-10-08T16:56:33-04:00 M0-D6 · box Laser2025-20 · Python 3.13.14
+-- repro: status_page.py selftest x10, before the fix
+run 1 exit=0 checks 43 · passed 43 · failed 0 
+run 2 exit=0 checks 43 · passed 43 · failed 0 
+run 3 exit=0 checks 43 · passed 43 · failed 0 
+run 4 exit=0 checks 43 · passed 43 · failed 0 
+run 5 exit=0 checks 43 · passed 43 · failed 0 
+run 6 exit=0 checks 43 · passed 43 · failed 0 
+run 7 exit=0 checks 43 · passed 43 · failed 0 
+run 8 exit=1 checks 43 · passed 42 · failed 1 FAIL POST /answer refuses a foreign Origin (403), an empty answer and malformed JSON (400), a body over 64 KiB (413); nothing written 
+run 9 exit=0 checks 43 · passed 43 · failed 0 
+run 10 exit=0 checks 43 · passed 43 · failed 0 
+-- probe: 413 arm alone, 300 POSTs of a 65548-byte form, tool as is
+{'HTTP 413': 288, 'open raised ConnectionAbortedError': 12}
+-- probe: 403 arm, 300 POSTs of a small form, tool as is
+{'HTTP 403': 300}
+-- probe: 404 arm, 300 POSTs of a small form, tool as is
+{'HTTP 404': 300}
+-- probe: 413 arm, 300 POSTs, scratch copy with drain() before the 413
+Traceback (most recent call last):
+  File "C:\Users\YOHANB~1\AppData\Local\Temp\claude\c--workspace-sandbox-reactions\bf439815-1437-451a-8859-4567331cbaac\scratchpad\probe413.py", line 4, in <module>
+    import status_page as sp
+  File "C:\Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/bf439815-1437-451a-8859-4567331cbaac/scratchpad/fixed\status_page.py", line 54, in <module>
+    import plan as pb_plan  # noqa: E402 � �A.0: the plan-parsing functions are plan.py's; a second parser would drift
+    ^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'plan'
+{'HTTP 413': 300}
+-- control, same moment: tool as is
+{'HTTP 413': 271, 'open raised ConnectionAbortedError': 29}
+-- lead's answer (question tool): landing «Both, identical»
+-- annex vs tool (bytes): identical · md5 2fd9acd147e7 -> 8cce7ffce793
+-- acceptance: verify.py tools_selftest --case status_page x20 (task ids M0-D6-a01..a20)
+a01 exit=0 tools_selftest  1/0/0        4.11 s  GO
+a02 exit=0 tools_selftest  1/0/0        4.09 s  GO
+a03 exit=0 tools_selftest  1/0/0        4.22 s  GO
+a04 exit=0 tools_selftest  1/0/0        5.33 s  GO
+a05 exit=0 tools_selftest  1/0/0        4.75 s  GO
+a06 exit=0 tools_selftest  1/0/0        4.44 s  GO
+a07 exit=0 tools_selftest  1/0/0        4.33 s  GO
+a08 exit=0 tools_selftest  1/0/0        4.23 s  GO
+a09 exit=0 tools_selftest  1/0/0        4.35 s  GO
+a10 exit=0 tools_selftest  1/0/0        4.22 s  GO
+a11 exit=0 tools_selftest  1/0/0        4.52 s  GO
+a12 exit=0 tools_selftest  1/0/0        4.32 s  GO
+a13 exit=0 tools_selftest  1/0/0        4.00 s  GO
+a14 exit=0 tools_selftest  1/0/0        4.05 s  GO
+a15 exit=0 tools_selftest  1/0/0        3.96 s  GO
+a16 exit=0 tools_selftest  1/0/0        4.03 s  GO
+a17 exit=0 tools_selftest  1/0/0        4.57 s  GO
+a18 exit=0 tools_selftest  1/0/0        4.34 s  GO
+a19 exit=0 tools_selftest  1/0/0        3.90 s  GO
+a20 exit=0 tools_selftest  1/0/0        3.70 s  GO
+acceptance: 20/20 GO
+-- verify.py --redarm tools_selftest
+FAILED:
+  clean: tools_selftest[verify]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 3221225477); 9 case(s) < expected 10 - red with no plant, so a red plant would prove nothing; the plants did not run
+redarm: 1 plants · 0 red · 0 green · 0 errors · scope tools_selftest · 88.55 s · box Laser2025-20 · log milestones/m0/logs/M0-D6.tools_selftest.redarm.log
+=== NO-GO: clean: tools_selftest[verify]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 3221225477); 9 case(s) < expected 10 - red with no plant, so a red plant would prove nothing; the plants did not run ===
+exit=1
+-- verify.py --redarm tools_selftest (re-run, fresh id M0-D6-r2: the first's clean arm crashed tools_selftest[verify] 0xC0000005 after 9.46 s, no output)
+tools_selftest · clean · GO
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 199.50 s · box Laser2025-20 · log milestones/m0/logs/M0-D6-r2.tools_selftest.redarm.log
+=== GO ===
+exit=0
+-- claim: verify.py --changed --base 251b054 → GO, 502 passed, 2/2 scopes (log M0-D6.changed.log)

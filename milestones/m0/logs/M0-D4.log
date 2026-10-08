@@ -1,0 +1,17 @@
+# M0-D4 2026-10-08T20:26:48Z win-laptop: plan.py selftest repro
+selftest: checks=246 failed=1 warnings=0 · plants=78
+FAIL: WARN: a `Read:` naming a file over 500 lines whole - got: `Read:` names big_reference.md whole (600 lines > 500) - name a section or a line range | WARN: 3 open block(s) carry no rating - no `Models:` ladder in the header yet, so nothing is red; the plan's v12.1 adoption writes the ladder and rates them (§3.2): M12.1-T2a · M12.1-T2b · M12.1-D1 | === GO ===
+=== NO-GO: 1 violation(s) ===
+exit=1
+# 2026-10-08T20:27:59Z win-laptop: plan.py selftest after the fix (run 1, 2)
+selftest: checks=246 failed=0 warnings=0 · plants=78
+=== GO ===
+exit=0
+WARN: replace of m12_implementation_plan.md needed 2 attempts - transient lock on this box
+selftest: checks=246 failed=0 warnings=0 · plants=78
+=== GO ===
+exit=0
+# 2026-10-08T20:30:26Z win-laptop: hand plant (lint message reworded) in scratchpad copy C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/bd8e7858-39cb-4a41-a69f-530123993cbd/scratchpad/d4plant
+selftest: checks=246 failed=1 warnings=0 · plants=78
+FAIL: WARN: a `Read:` naming a file over 500 lines whole - got: ead:` names big_reference.md in full (600 lines > 500) - name a section or a line range | WARN: 3 open block(s) carry no rating - no `Models:` ladder in the header yet, so nothing is red; the plan's v12.1 adoption writes the ladder and rates them (§3.2): M12.1-T2a · M12.1-T2b · M12.1-D1 | === GO ===
+=== NO-GO: 1 violation(s) ===

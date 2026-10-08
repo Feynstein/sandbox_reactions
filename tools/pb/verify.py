@@ -448,6 +448,15 @@ def argv_of(cmd, man, root, case=None):
     return [exe] + toks[1:]
 
 
+def case_env(task):
+    """Every command's environment: the task id, UTF-8 output, and faulthandler on - a native crash (an access
+    violation, no traceback) still leaves its Python stack in the log. A caller's own value wins."""
+    env = dict(os.environ, PB_TASK=task)
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env.setdefault("PYTHONFAULTHANDLER", "1")
+    return env
+
+
 def new_group():
     return {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == "nt" else {"start_new_session": True}
 
@@ -1127,8 +1136,7 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     if refused:
         raise Refused(refused)
     one = dict(man, scopes={name: s})
-    env = dict(os.environ, PB_TASK=task)
-    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env = case_env(task)
     lines, fails, red, green, errors, t0 = [], [], 0, 0, 0, time.monotonic()
     tmp = Path(tempfile.mkdtemp(prefix="pb-redarm-"))
     arms = {}
@@ -1339,8 +1347,7 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     snap = (anchor_snapshot(man, root, [n for n, _s, no in specs if not no], visible)
             if use_anchor and visible is not None else {})
     tree = tree_id(root, man, logs) if record else None
-    env = dict(os.environ, PB_TASK=task)
-    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env = case_env(task)
     t0, runs, todo = time.monotonic(), [], []
     for name, s, no in specs:
         sr = ScopeRun(name, s, 0 if no else 1 if case is not None or name == "smoke" else int(s.get("expected", 0)),
@@ -1693,6 +1700,9 @@ if kind == "marker":
     open("ran.marker", "w").close()
 if kind == "check":
     kind = "nogo" if "BUG" in open(args[0], encoding="utf-8").read() else "go"
+if kind == "fault":
+    import faulthandler
+    kind = "go" if faulthandler.is_enabled() else "nogo"
 if kind == "exit":
     text, rc = "", int(args[0])
 elif kind == "verdict":
@@ -1708,8 +1718,18 @@ else:
 print(text)
 trace = os.environ.get("PB_TRACE")
 if trace:
+    line, lock, until = "%s %.6f %.6f\n" % (args[0] if kind == "trace" else kind, t0, time.time()), trace + ".lock", time.time() + 5
+    while lock:                       # one writer at a time: two appends at once tear a line on Windows; 5 s at most
+        try:
+            os.close(os.open(lock, os.O_CREAT | os.O_EXCL))
+            break
+        except OSError:               # held (or being deleted, on Windows)
+            lock = lock if time.time() < until else None
+            time.sleep(0.005)
     with open(trace, "a") as f:
-        f.write("%s %.6f %.6f\n" % (args[0] if kind == "trace" else kind, t0, time.time()))
+        f.write(line)
+    if lock:
+        os.remove(lock)
 sys.exit(rc)
 '''
 
@@ -1719,7 +1739,8 @@ def selftest():
     reason. Never touches the real logs, the real anchor or the tree it sits in."""
     global PROGRESS
     checks, failed, plants = [], [], [0, 0]           # plants: [planted, red]
-    saved = {k: os.environ.get(k) for k in ("PB_TASK", "PB_TRACE", "PB_BOX", "GIT_CEILING_DIRECTORIES")}
+    saved = {k: os.environ.get(k) for k in ("PB_TASK", "PB_TRACE", "PB_BOX", "GIT_CEILING_DIRECTORIES",
+                                            "PYTHONFAULTHANDLER")}
     saved_progress, PROGRESS = PROGRESS, False
 
     def check(name, ok, detail=""):
@@ -1747,6 +1768,7 @@ def selftest():
         with tempfile.TemporaryDirectory(prefix="pb-verify-") as tmpd:
             tmp = Path(tmpd)
             os.environ.pop("PB_TASK", None)
+            os.environ.pop("PYTHONFAULTHANDLER", None)               # the harness, not the caller, must set it
             os.environ["PB_BOX"] = "SELFBOX"
             os.environ["GIT_CEILING_DIRECTORIES"] = str(tmp.parent)   # the fixture root is no git checkout
             trace = tmp / "trace.txt"
@@ -1791,9 +1813,13 @@ def selftest():
                 return (rc == 1 and bool(fails) and all(ln.strip().startswith(f"{scope}:") for ln in fails)
                         and why in out), out[-400:]
 
-            def spans():
-                return [(s.split()[0], float(s.split()[1]), float(s.split()[2]))
-                        for s in trace.read_text(encoding="utf-8").splitlines()]
+            def spans():                    # whole records only: a torn one reads missing on its check, never a crash
+                return [(m[1], float(m[2]), float(m[3])) for s in trace.read_text(encoding="utf-8").splitlines()
+                        if (m := re.fullmatch(r"(\S+) (\d+\.\d+) (\d+\.\d+)", s))]
+
+            def overlap(sp):
+                t = {s[0]: s for s in sp if s[0] in ("t1", "t2")}
+                return len(t) == 2 and t["t1"][1] < t["t2"][2] and t["t2"][1] < t["t1"][2], t
 
             # -- A · the clean fixture: every form counts right, and the run's shape ---------------------------
             trace.write_text("", encoding="utf-8")
@@ -1821,9 +1847,7 @@ def selftest():
             check("the exclusive scope ran alone after the rest, the smoke last",
                   len(last) == 2 and last["alone"][1] >= max(s[2] for s in sp if s[0] not in last)
                   and last["smoke"][1] >= last["alone"][2], sp)
-            t = {s[0]: s for s in sp if s[0] in ("t1", "t2")}
-            check("two shared scopes ran at the same time",
-                  len(t) == 2 and t["t1"][1] < t["t2"][2] and t["t2"][1] < t["t1"][2], t)
+            check("two shared scopes ran at the same time", *overlap(sp))
             recs = [json.loads(ln) for ln in (logs / "loop_times.jsonl").read_text(encoding="utf-8").splitlines()]
             check("loop_times.jsonl: one line per run, with the box and the interpreter",
                   len(recs) == 1 and RECORD_KEYS | {"box", "python", "load_source", "cases"} <= set(recs[0])
@@ -1838,6 +1862,10 @@ def selftest():
             sp = sorted(spans(), key=lambda s: s[1])
             check("--serial: no two commands overlap",
                   rc == 0 and len(sp) == 3 and all(b[1] >= x[2] for x, b in zip(sp, sp[1:])), sp)
+            trace.write_text("t1 10.000000 12.000000\nt2 11.0\n", encoding="utf-8")    # a torn record: two appends at once
+            ok, _t = overlap(spans())
+            plant_("a torn trace record: read missing, its check red - never an IndexError",
+                   not ok and spans() == [("t1", 10.0, 12.0)], spans())
 
             # -- B · plants: each beside a clean scope, each NO-GO on its own reason -------------------------
             with socket.socket() as held:
@@ -2404,6 +2432,18 @@ def selftest():
                 check("busy_cpus refuses a stopped clock", False)
             except OSError as exc:
                 check("busy_cpus refuses a stopped clock", "did not advance" in str(exc))
+
+            # -- J2 · a native crash leaves a stack: every case runs with faulthandler on ----------------------
+            rc, out = run_({"f": {"cmd": f"{py} fault"}}, "f")
+            check("a case runs with faulthandler on (PYTHONFAULTHANDLER from the harness, not the caller)",
+                  rc == 0 and out.rstrip().endswith("=== GO ==="), out[-300:])
+            real = globals()["case_env"]
+            globals()["case_env"] = lambda task: dict(os.environ, PB_TASK=task, PYTHONIOENCODING="utf-8")
+            try:
+                rc, out = run_({"f": {"cmd": f"{py} fault"}}, "f")
+            finally:
+                globals()["case_env"] = real
+            plant_("an env without faulthandler reads red", rc == 1 and "f:" in out, out[-300:])
 
             # -- K · the console, the list ------------------------------------------------------------------
             (tmp / "u.json").write_text(json.dumps({"scopes": {"a": {"cmd": "x", "note": "≤ 5 s"}}}), encoding="utf-8")

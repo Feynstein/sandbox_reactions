@@ -1,0 +1,62 @@
+== 2026-10-08T17:56:32-04:00 tools_selftest[plan] · task M0-TJ3 · box Laser2025-20 :: {python} tools/pb/plan.py selftest
+== 2026-10-08T17:56:32-04:00 tools_selftest[launch] · task M0-TJ3 · box Laser2025-20 :: {python} tools/pb/launch.py selftest
+== 2026-10-08T17:56:32-04:00 tools_selftest[review_page] · task M0-TJ3 · box Laser2025-20 :: {python} tools/pb/review_page.py selftest
+== 2026-10-08T17:56:32-04:00 tools_selftest[content_gate] · task M0-TJ3 · box Laser2025-20 :: {python} tools/pb/content_gate.py selftest
+== 2026-10-08T17:56:32-04:00 tools_selftest[verify] · task M0-TJ3 · box Laser2025-20 :: {python} tools/pb/verify.py selftest
+== 2026-10-08T17:56:32-04:00 tools_selftest[rung_record] · task M0-TJ3 · box Laser2025-20 :: {python} tools/pb/rung_record.py selftest
+== 2026-10-08T17:56:32-04:00 tools_selftest[status_page] · task M0-TJ3 · box Laser2025-20 :: {python} tools/pb/status_page.py selftest
+== 2026-10-08T17:56:33-04:00 tools_selftest[capture_web] · task M0-TJ3 · box Laser2025-20 :: node tools/pb/capture_web.mjs selftest
+-- tools_selftest[rung_record] · exit=0 · 1.33 s
+selftest: checks=62 passed=62 failed=0 · plants red 25/25
+=== GO ===
+
+== 2026-10-08T17:56:33-04:00 tools_selftest[switch] · task M0-TJ3 · box Laser2025-20 :: node tools/pb/switch.mjs selftest
+-- tools_selftest[switch] · exit=0 · 0.36 s
+selftest: checks=29 passed=29 failed=0 · plants red 8/8
+=== GO ===
+
+== 2026-10-08T17:56:34-04:00 tools_selftest[scratch_copy] · task M0-TJ3 · box Laser2025-20 :: bash tools/pb/scratch_copy.sh --selftest
+-- tools_selftest[content_gate] · exit=0 · 3.75 s
+checks: 36 · passed: 36 · failed: 0
+=== GO ===
+
+-- tools_selftest[status_page] · exit=0 · 7.30 s
+WARN: replace of attention.jsonl needed 2 attempts - transient lock on this box
+  block lists: the page's == the fixture's 6 · plan.py lint GO, blocks 6, Flow rows 6
+  round trip: 1 answered question(s) read back by poll after a served POST
+  red arms: own_parser → red · critical_ignored → red · rewrite_state → red · accept_unknown → red · no_lock → red
+checks 43 · passed 43 · failed 0
+=== GO ===
+
+-- tools_selftest[capture_web] · exit=0 · 6.80 s
+NOTE no tools\pb\routes.json beside the tool: nothing of the project's to validate
+NOTE live tier NOT RUN (--live: a real browser, through the project's Playwright)
+selftest: checks=85 · failed=0 · plants=38 · live=0 · seconds=6.46
+=== GO ===
+
+-- tools_selftest[review_page] · exit=0 · 7.95 s
+  read back verbatim from the report on disk after a served POST: 2/2 (JSON + text/plain beacon shape)
+  unknown capture id POST: HTTP 422, remarks.json + report unchanged; the unflagged capture's POST: HTTP 422
+  red arms: accept_unknown → red · memory_only → red · drop_outside → red · show_unflagged → red · raw_paths → red
+checks 45 · passed 45 · failed 0 · skipped 0
+=== GO ===
+
+-- tools_selftest[scratch_copy] · exit=0 · 8.88 s
+checks=12 · passed=12 · failed=0
+=== GO ===
+
+-- tools_selftest[plan] · exit=0 · 10.72 s
+selftest: checks=246 failed=0 warnings=0 · plants=78
+=== GO ===
+
+-- tools_selftest[verify] · exit=1 · 23.09 s
+FAILED:
+  crashed after 30 checks: IndexError: list index out of range (return [(s.split()[0], float(s.split()[1]), float(s.split()[2])))
+selftest: checks=30 · failed=1 · plants=18/18 red
+=== NO-GO: 1 check(s) failed ===
+
+-- tools_selftest[launch] · exit=0 · 75.20 s
+checks: 46, failures: 0
+SKIP private X display: an X server is POSIX only - NOT RUN on os nt
+=== GO ===
+

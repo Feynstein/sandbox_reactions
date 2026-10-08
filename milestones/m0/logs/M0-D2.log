@@ -1,0 +1,60 @@
+# M0-D2 · 2026-10-08T20:10:02Z · win-laptop (Laser2025-20)
+$ python3 tools/pb/rung_record.py selftest
+selftest: checks=62 passed=62 failed=0 · plants red 25/25
+=== GO ===
+exit=0
+$ python3 tools/pb/verify.py tools_selftest --case rung_record --task M0-D2
+tools_selftest  1/0/0        1.72 s  GO
+logs: milestones/m0/logs/M0-D2.<scope>.log · record: loop_times.jsonl · tree 251b054c67bf+872a26b017a1
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.73 s · mode case · PARTIAL, not the loop (--case rung_record) · jobs 8 · box Laser2025-20 · python 3.13.14 · load 13.91->15.36
+=== GO ===
+exit=0
+$ python3 tools/pb/verify.py --redarm tools_selftest --task M0-D2
+tools_selftest · clean · NO-GO
+FAILED:
+  clean: tools_selftest[content_gate]: 1 failed; tools_selftest[content_gate]: its own verdict NO-GO: 2 check(s) failed; tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 1 check(s) failed; tools_selftest[plan]: 1 failed; tools_selftest[plan]: its own verdict NO-GO: 1 violation(s) - red with no plant, so a red plant would prove nothing; the plants did not run
+redarm: 1 plants · 0 red · 0 green · 0 errors · scope tools_selftest · 88.92 s · box Laser2025-20 · log milestones/m0/logs/M0-D2.tools_selftest.redarm.log
+=== NO-GO: clean: tools_selftest[content_gate]: 1 failed; tools_selftest[content_gate]: its own verdict NO-GO: 2 check(s) failed; tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 1 check(s) failed; tools_selftest[plan]: 1 failed; tools_selftest[plan]: its own verdict NO-GO: 1 violation(s) - red with no plant, so a red plant would prove nothing; the plants... ===
+exit=1
+$ python3 tools/pb/verify.py --redarm tools_selftest --case rung_record --task M0-D2
+the calls:
+  python3 tools/pb/verify.py <scope>... --task <ID>
+  python3 tools/pb/verify.py --all --task <ID>
+  python3 tools/pb/verify.py <scope> --case <id> --task <ID>
+  python3 tools/pb/verify.py --changed [--base <commit>] --task <ID>
+  python3 tools/pb/verify.py --redarm <scope> --task <ID>
+  python3 tools/pb/verify.py list
+  python3 tools/pb/verify.py report [--since YYYY-MM-DD] [--budget <s>]
+  python3 tools/pb/verify.py selftest
+verify: wrong call - nothing run
+=== NO-GO: --redarm names its one scope itself: --redarm <scope> - the calls are listed above ===
+exit=1
+$ python3 tools/pb/verify.py --changed --base 251b054 --task M0-D2
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since 251b054: milestones/m0/m0_implementation_plan.md
+why tools_selftest: never: tests/plants/tools-selftest-scratch.patch (+10) · moved since 251b054: tools/pb/rung_record.py
+plan_lint       490/0/0      0.61 s  GO
+tools_selftest  7/3/0      185.43 s  NO-GO
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since 251b054)
+logs: milestones/m0/logs/M0-D2.<scope>.log · record: loop_times.jsonl · tree 251b054c67bf+831eebc7c510
+anchor: 1 path×scope entries moved by this run
+anchor: 10 paths checked · 38 skipped (3 classes) · 11 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 59 visible
+NEVER CHECKED  tests/plants/tools-selftest-scratch.patch  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/capture_web.mjs  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/content_gate.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/launch.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/plan.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/review_page.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/rung_record.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/scratch_copy.sh  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/status_page.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/switch.mjs  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/verify.py  (no entry for tools_selftest)
+skipped    30  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  tools_selftest: tools_selftest[content_gate]: 1 failed; tools_selftest[content_gate]: its own verdict NO-GO: 2 check(s) failed; tools_selftest[plan]: 1 failed; tools_selftest[plan]: its own verdict NO-GO: 1 violation(s); tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 1 check(s) failed · log milestones/m0/logs/M0-D2.tools_selftest.log
+  anchor: 11 never checked, 0 stale, 0 unclassified - every one named above
+verify: 497 passed, 3 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 1 not impacted · 80.91 s · mode changed · jobs 8 · box Laser2025-20 · python 3.13.14 · load 4.25->5.8
+=== NO-GO: tools_selftest: tools_selftest[content_gate]: 1 failed; tools_selftest[content_gate]: its own verdict NO-GO: 2 check(s) failed; tools_selftest[plan]: 1 failed; tools_selftest[plan]: its own verdict NO-GO: 1 violation(s); tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 1 check(s) failed · log milestones/m0/logs/M0-D2.tools_selftest.log; anchor:... ===
+exit=1

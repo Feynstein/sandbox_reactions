@@ -290,7 +290,7 @@ def cmd_selftest(a):
             def child(*argv, enc="utf-8"):
                 p = subprocess.run([sys.executable, os.path.join(kit, "content_gate.py"), *argv], cwd=decoy,
                                    capture_output=True, timeout=60, env=dict(os.environ, PYTHONIOENCODING=enc))
-                return p.returncode, p.stdout.decode("utf-8", "replace")
+                return p.returncode, p.stdout.decode("utf-8", "replace").replace("\r\n", "\n")   # Windows' text stdout
             put(doc, planted(PLANTS[0][1], PLANTS[0][2])[0])
             rc, out = child("check", doc)
             check("no --denylist → the list beside the tool, not one in the working folder: the italic plant NO-GO",
@@ -309,7 +309,8 @@ def cmd_selftest(a):
                         "notes/other.md", "tools/pb/denylist.txt"):
                 put(os.path.join(repo, rel), "x\n")
             put(os.path.join(repo, ".gitignore"), "tools/local.txt\nproposals/\n")
-            subprocess.run(["git", "-C", repo, "add", "PLAYBOOK.md", "tools/gone.py"], check=True)
+            subprocess.run(["git", "-C", repo, "-c", "core.autocrlf=false", "add", "PLAYBOOK.md", "tools/gone.py"],
+                           check=True)
             os.remove(os.path.join(repo, "tools", "gone.py"))                # tracked, then deleted: nothing to scan
             os.chdir(repo)
             args = ("cases", "--denylist", "tools/pb/denylist.txt", "--fenced", "proposals/P.md", "PLAYBOOK.md", "tools")
@@ -326,6 +327,7 @@ def cmd_selftest(a):
                   rc == 0 and sorted(out.split()) == ["PLAYBOOK.md", "proposals/P.md", "tools/new.md", "tools/pb/tool.py"])
             os.chdir(plain)
             check("cases outside a git checkout → exit 1", run(*args)[0] == 1)
+            os.chdir(home)                  # out before the cleanup: Windows removes no folder that is the cwd
     except Exception as e:                  # a crash is a failed check, never a traceback in place of the verdict
         check(f"selftest stopped after {len(checks)} checks: {type(e).__name__}: {e}", False)
     finally:

@@ -1,0 +1,20 @@
+== 2026-10-08T16:18:02-04:00 M0-D3 repro · box Laser2025-20 :: python3 tools/pb/content_gate.py selftest
+warning: in the working copy of 'PLAYBOOK.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tools/gone.py', LF will be replaced by CRLF the next time Git touches it
+checks: 37 · passed: 35 · failed: 2
+FAIL no --denylist → the list beside the tool, not one in the working folder: the italic plant NO-GO
+FAIL selftest stopped after 36 checks: PermissionError: [WinError 32] Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus: 'C:\\Users\\YOHANB~1\\AppData\\Local\\Temp\\content_gate_selftest_erlhe8yj\\plain'
+=== NO-GO: 2 check(s) failed ===
+exit=1
+== 2026-10-08T16:19:07-04:00 M0-D3 after fix · box Laser2025-20 :: python3 tools/pb/content_gate.py selftest
+checks: 36 · passed: 36 · failed: 0
+=== GO ===
+exit=0
+checks: 36 · passed: 36 · failed: 0
+=== GO ===
+exit=0
+== 2026-10-08T16:20:52-04:00 M0-D3 manual plant (default list from the cwd) · box Laser2025-20
+checks: 36 · passed: 34 · failed: 2
+FAIL no --denylist → the list beside the tool, not one in the working folder: the italic plant NO-GO
+FAIL a cp437 or ASCII console → the verdict in UTF-8, not a crash: fence mode GO, the `—` printed
+=== NO-GO: 2 check(s) failed ===
