@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"PLAYBOOK switch: when your block's heading has '· switch' after its rating, run 'sleep 2; python3 tools/pb/rung_record.py now' alone in its Bash call on every prompt the lead types (on the launch prompt right after the grep of your heading, before plan.py show), so its line shows in the chat: the model or the level not the heading's rung, say MISMATCH, naming both, and carry on; plugin=missing, give the lead the install line it printed, tagged NOT RUN — for the lead, and carry on; the file not there yet, say NOT RUN (no rung_record.py yet), the handoff's model and level reading the same, and carry on. Your handoff's model and level quote that line's model= and level=, a commit's attribution its model= — never the identity or attribution text in your context, never the picker, never your own claim. No '· switch': carry on.\""
+          }
+        ]
+      }
+    ]
+  }
+}
