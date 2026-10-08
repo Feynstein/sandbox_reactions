@@ -1,0 +1,26 @@
+== 2026-10-08T13:39:37-04:00 plan_lint · task M0-TG · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.07 s
+lint: checks=471 failed=0 warnings=8 · blocks=154 · flow_rows=154 · verify_fences=4 · history=0 · flow=per-task · header=335/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-TI: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-TP: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-R1: DONE outside the current phase and 54 lines long - stub it (§2.6)
+WARN: M0-D1: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-R2a: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-R2b: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-R3: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-TG: `Read:` names milestones/m0/m0_contrat.md whole (1302 lines > 500) - name a section or a line range
+=== GO ===
+
+== 2026-10-08T13:39:54-04:00 plan_lint · task M0-TG · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.07 s
+lint: checks=471 failed=0 warnings=8 · blocks=154 · flow_rows=154 · verify_fences=4 · history=0 · flow=per-task · header=335/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-TI: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-TP: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-R1: DONE outside the current phase and 54 lines long - stub it (§2.6)
+WARN: M0-D1: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-R2a: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-R2b: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-R3: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-TG: `Read:` names milestones/m0/m0_contrat.md whole (1302 lines > 500) - name a section or a line range
+=== GO ===
+

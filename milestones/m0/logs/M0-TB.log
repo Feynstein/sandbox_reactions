@@ -1,0 +1,299 @@
+# M0-TB log — opened 2026-10-08 13:48 EDT on laserax-ai
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+blocks in table: 122 · open BUILD blocks missing from table: []
+paths checked: 495 (new 273, edit 222)
+FINDING M0-T37 crates/sr-physics/src/reference/mod.rs marked new but M0-T28 created it
+FINDING M0-T80 crates/sr-engine/src/render.rs marked new but M0-T79 created it
+FINDING M0-T81 crates/sr-engine/src/render.rs marked new but M0-T79 created it
+scopes made: 87
+   tools_selftest M0-TH
+   plan_lint M0-TH
+   toolchain M0-TH
+   build M0-T1
+   adapter M0-T2
+   state M0-T3
+   boot M0-T4
+   desktop M0-T5
+   web M0-T7
+   capture M0-T8
+   registry M0-T10
+   eos M0-T12
+   strings M0-T13
+   licences M0-T14
+   watch-only M0-T16
+   booking M0-T18
+   floors M0-T19
+   dt M0-T20
+   box M0-T21
+   latch M0-T22
+   timing M0-T23
+   time-control M0-T24
+   scene M0-T25
+   dump M0-T26
+   fft-twin M0-T28
+   grav-force M0-T29
+   grav-selfforce M0-T29
+   fft M0-T30
+   sod M0-T33
+   edges M0-T35
+   collapse M0-T36
+   twin M0-T37
+   cpu-gpu M0-T38
+   heat-gauss M0-T41
+   heat-rkl2 M0-T41
+   heat-limiter M0-T41
+   radiation-force M0-T43
+   burn-cell M0-T44
+   burn-order M0-T44
+   neutrino M0-T45
+   sink M0-T50
+   nu-heat M0-T53
+   summary M0-T56
+   ledger M0-T57
+   objects M0-T58
+   classify M0-T59
+   observe-run M0-T60
+   preset-cloud M0-T61
+   jeans M0-T62
+   calibration M0-T65
+   calibrate-cold M0-T66
+   cold-core M0-T67
+   calibrate-bisect M0-T68
+   readouts M0-T69
+   calibrate-order M0-T70
+   ending M0-T72
+   age-clock M0-T73
+   multi M0-T74
+   formats M0-T75
+   edits M0-T76
+   edits-file M0-T77
+   blackbody M0-T79
+   views M0-T80
+   glow M0-T81
+   frames M0-T82
+   ui-topbar M0-T85
+   ui-banner M0-T86
+   ui-world M0-T87
+   ui-tools M0-T89
+   ui-presets M0-T90
+   ui-star M0-T92
+   ui-inspect M0-T93b
+   measure-ui M0-T95
+   squeeze M0-T98
+   fit M0-T99
+   virial M0-T100
+   thermostat M0-T101
+   stages M0-T103
+   endings M0-T104
+   touch M0-T105
+   conservation M0-T106
+   age M0-T107
+   bench M0-T109
+   warp M0-T110
+   fps M0-T112
+   top-speed M0-T113
+   cadence M0-T114
+contract §5: 38 scopes, 38 plants (whitespace-normalised)
+scopes not in the plan: none
+plants not in the plan: none
+ok   time_warp.md R1
+ok   time_warp.md R4
+ok   time_warp.md R5
+ok   time_warp.md R6
+ok   time_warp.md R8
+ok   time_warp.md M2
+ok   time_warp.md M3
+ok   time_warp.md M4
+ok   time_warp.md A2
+ok   time_warp.md Summary
+ok   sim_models.md SM-C1
+ok   sim_models.md SM-C2
+ok   sim_models.md SM-E13
+ok   sim_models.md SM-E14
+ok   sim_models.md SM-E18
+ok   sim_models.md SM-E22
+ok   sim_models.md SM-E28
+ok   sim_models.md SM-E29
+ok   sim_models.md SM-O2
+ok   sim_models.md SM-O5
+ok   sim_models.md SM-O7
+ok   sim_models.md SM-O8
+ok   plan_redteam.md RT6
+MISS contract_rulings.md §2
+ok   contract_rulings.md Q3
+ok   sandbox_interview.md B28
+## baseline lint 2026-10-08T18:07:13Z
+lint: checks=470 failed=0 warnings=7 · blocks=154 · flow_rows=154 · verify_fences=4 · history=0 · flow=per-task · header=335/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-TI: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-TP: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-R1: DONE outside the current phase and 54 lines long - stub it (§2.6)
+WARN: M0-D1: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-R2a: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-R2b: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-R3: DONE outside the current phase and 44 lines long - stub it (§2.6)
+=== GO ===
+## The lead's answers, question tool, one call of four (2026-10-08, linux-pc) — verbatim
+Splits: "Split both (Recommended)"
+Lot 14: "Tune first, check after (Recommended)"
+Ratings: "Yes, those 14 (Recommended)"
+Housekeep: "Apply all (Recommended)"
+stub: 263 lines moved, 263 verified byte-for-byte -> milestones/m0/plan_archive.md
+stub: checks=7 failed=0 warnings=2 · stubbed=7 · moved_lines=263 · verified_lines=263 · trailers_kept=2
+WARN: M0-TP's trailer (> **Commit gate (lead):** Phase 0 closes after M0-TP — from…) stays in the plan under its stub, not archived
+WARN: M0-R3's trailer (> **Commit gate (lead):** Phase 1 closes after M0-R3 — from…) stays in the plan under its stub, not archived
+=== GO ===
+## hoist check: preamble → m0_rules.md R10–R14
+orig 20 lines, moved 20 lines
+byte-identical: yes
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+moved M0-T100 after M0-T99b (13 lines, byte-identical). Write the ordering note (E8).
+move: checks=1 failed=0 warnings=0
+=== GO ===
+moved M0-T101 after M0-T100 (14 lines, byte-identical). Write the ordering note (E8).
+move: checks=1 failed=0 warnings=0
+=== GO ===
+## lint after splits and lot-14 restructure 2026-10-08T18:21:56Z
+lint: checks=474 failed=0 warnings=1 · blocks=158 · flow_rows=158 · verify_fences=0 · history=0 · flow=per-task · header=335/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-T98a 1 · M0-T99a 1
+=== GO ===
+## lint after ratings and check fixes 2026-10-08T18:25:12Z
+lint: checks=474 failed=0 warnings=0 · blocks=158 · flow_rows=158 · verify_fences=0 · history=0 · flow=per-task · header=335/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+blocks in table: 126 · open BUILD blocks missing from table: []
+paths checked: 510 (new 278, edit 232)
+scopes made: 89
+   plan_lint M0-TH
+   tools_selftest M0-TH
+   toolchain M0-TH
+   build M0-T1
+   adapter M0-T2
+findings: 0 · scope-before-made: 0
+## verify plan_lint 2026-10-08T18:29:17Z
+plan_lint  474/0/0      0.06 s  GO
+logs: milestones/m0/logs/M0-TB.<scope>.log · record: loop_times.jsonl · tree a5065fb758b7+7d1e15dad91c
+anchor: 2 path×scope entries moved by this run
+anchor: 21 paths checked · 34 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 55 visible
+verify: 474 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.29->1.29
+=== GO ===
+## verify --redarm plan_lint 2026-10-08T18:29:19Z
+plan_lint · clean · GO
+plan_lint · plant plan-bad-status · RED (proven: 475 failed; its own verdict NO-GO: 2 violation(s))
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope plan_lint · 0.15 s · box laserax-ai · log milestones/m0/logs/M0-TB.plan_lint.redarm.log
+=== GO ===
+## claim run: verify --changed --base a5065fb 2026-10-08T18:29:23Z
+why plan_lint: moved since a5065fb: milestones/m0/m0_implementation_plan.md (+1)
+why tools_selftest: moved since a5065fb: tests/plants/tools-selftest-scratch.patch (+10)
+why toolchain: moved since a5065fb: tests/plants/toolchain-compiler.patch (+7)
+plan_lint       474/0/0      0.12 s  GO
+tools_selftest  10/0/0      10.25 s  GO
+toolchain       3/0/0        0.26 s  GO
+plants: git cannot show tools/pb/verify.json at a5065fb758b7 - the scopes added or changed are unknown
+FLAG oracle: tests/plants/toolchain-compiler.patch changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG oracle: tests/plants/toolchain-trunk.patch changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG oracle: tests/plants/toolchain-web-target.patch changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG oracle: tests/plants/tools-selftest-scratch.patch changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG oracle: tests/toolchain/Cargo.lock changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG oracle: tests/toolchain/Cargo.toml changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG oracle: tests/toolchain/check.sh changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tests/toolchain/check.sh changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tests/toolchain/index.html changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG oracle: tests/toolchain/src/main.rs changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tests/toolchain/src/main.rs changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/capture_web.mjs changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/capture_web.mjs changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/content_gate.py changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/content_gate.py changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/launch.py changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/launch.py changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: tools/pb/plan.py changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/review_page.py changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/review_page.py changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/rung_record.py changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/rung_record.py changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/scratch_copy.sh changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/scratch_copy.sh changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/status_page.py changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/status_page.py changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/switch.mjs changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/switch.mjs changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: tools/pb/verify.anchor.json changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/verify.json changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/verify.json changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/verify.py changed since a5065fb758b7 - a test, case or check M0-TB's Deliver: does not name
+FLAG type: tools/pb/verify.py changed since a5065fb758b7 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+logs: milestones/m0/logs/M0-TB.<scope>.log · record: loop_times.jsonl · tree a5065fb758b7+7d1e15dad91c
+anchor: 0 path×scope entries moved by this run
+anchor: 21 paths checked · 34 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 55 visible
+skipped    26  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 487 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 3.28 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 1.27->1.49
+=== GO ===
+close: checks=5 failed=0 warnings=0 · handoff_lines=7 · flow=per-task · set=2 · replaced=2 · appended=0
+=== GO ===
+WARN: M0-TB: DONE outside the current phase and 28 lines long - stub it (§2.6)
+=== GO ===
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+## the lead, 2026-10-08: "Yes you can stub them, and then can you write a task after TB for me. Next time I open the plan I will be using windows, so id like for an agent to run a task to check that everything is good and to install anything missing so we can continue smoothly on the windows laptop."
+stub: 96 lines moved, 96 verified byte-for-byte -> milestones/m0/plan_archive.md
+stub: checks=3 failed=0 warnings=0 · stubbed=3 · moved_lines=96 · verified_lines=96 · trailers_kept=0
+=== GO ===
+## file M0-TE-win and M0-TJ3 (the lead's request) 2026-10-08T18:40:30Z
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+moved M0-T1 after M0-TJ3 (27 lines, byte-identical). Write the ordering note (E8).
+move: checks=1 failed=0 warnings=0
+=== GO ===
+## plan_lint re-run after the filing 2026-10-08T18:41:13Z
+plan_lint  479/0/0      0.06 s  GO
+logs: milestones/m0/logs/M0-TB.<scope>.log · record: loop_times.jsonl · tree a5065fb758b7+4385acbe510b
+anchor: 1 path×scope entries moved by this run
+anchor: 21 paths checked · 35 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 56 visible
+verify: 479 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 0.71->0.71
+=== GO ===
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+stub: 29 lines moved, 29 verified byte-for-byte -> milestones/m0/plan_archive.md
+stub: checks=1 failed=0 warnings=1 · stubbed=1 · moved_lines=29 · verified_lines=29 · trailers_kept=1
+WARN: M0-TB's trailer (> **Commit gate (lead):** Phase 2 closes after M0-TB — from…) stays in the plan under its stub, not archived
+=== GO ===
+lint: checks=479 failed=0 warnings=0 · blocks=160 · flow_rows=160 · verify_fences=0 · history=0 · flow=per-task · header=338/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+lint: checks=479 failed=0 warnings=0 · blocks=160 · flow_rows=160 · verify_fences=0 · history=0 · flow=per-task · header=338/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+## final checks 2026-10-08T18:42:41Z
+lint: checks=479 failed=0 warnings=0 · blocks=160 · flow_rows=160 · verify_fences=0 · history=0 · flow=per-task · header=338/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+plan_lint  479/0/0      0.06 s  GO
+logs: milestones/m0/logs/M0-TB.<scope>.log · record: loop_times.jsonl · tree a5065fb758b7+0a8591ddba0f
+anchor: 1 path×scope entries moved by this run
+anchor: 21 paths checked · 35 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 21 covered of 56 visible
+verify: 479 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 0.91->0.91
+=== GO ===

@@ -1,0 +1,27 @@
+{
+  "version": 3,
+  "note": "written by tools/pb/verify.py - covered path -> the scope that graded it, at the content hash it graded and the scope's own definition. Advanced only by a scope that went GO; a scope that went red loses its entries. `verify.py --changed` reads it.",
+  "paths": {
+    "milestones/m0/m0_implementation_plan.md": {"plan_lint": {"box": "laserax-ai", "sha1": "206bf618525db815", "spec": "3231f8c51581", "task": "M0-TB", "tree": "a5065fb758b7+0a8591ddba0f", "ts": "2026-10-08T14:42:41-04:00"}},
+    "milestones/m0/m0_rules.md": {"plan_lint": {"box": "laserax-ai", "sha1": "33a75f160e1b8fa0", "spec": "3231f8c51581", "task": "M0-TB", "tree": "a5065fb758b7+7d1e15dad91c", "ts": "2026-10-08T14:29:17-04:00"}},
+    "tests/plants/toolchain-compiler.patch": {"toolchain": {"box": "laserax-ai", "sha1": "5d364432c8526d2e", "spec": "9427e3d5fc71", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:47-04:00"}},
+    "tests/plants/toolchain-trunk.patch": {"toolchain": {"box": "laserax-ai", "sha1": "8d1f743762a8640c", "spec": "9427e3d5fc71", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:47-04:00"}},
+    "tests/plants/toolchain-web-target.patch": {"toolchain": {"box": "laserax-ai", "sha1": "2da6b21d431bc890", "spec": "9427e3d5fc71", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:47-04:00"}},
+    "tests/plants/tools-selftest-scratch.patch": {"tools_selftest": {"box": "laserax-ai", "sha1": "71abaefec64d6bbc", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tests/toolchain/Cargo.lock": {"toolchain": {"box": "laserax-ai", "sha1": "cf9ed6ac220ee5da", "spec": "9427e3d5fc71", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:47-04:00"}},
+    "tests/toolchain/Cargo.toml": {"toolchain": {"box": "laserax-ai", "sha1": "f5cb31d0e8c0aade", "spec": "9427e3d5fc71", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:47-04:00"}},
+    "tests/toolchain/check.sh": {"toolchain": {"box": "laserax-ai", "sha1": "34aa9fc3b6775c43", "spec": "9427e3d5fc71", "task": "M0-TH", "tree": "a5065fb758b7+cd8f0af23288", "ts": "2026-10-08T12:12:49-04:00"}},
+    "tests/toolchain/index.html": {"toolchain": {"box": "laserax-ai", "sha1": "81982a4b85cf901f", "spec": "9427e3d5fc71", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:47-04:00"}},
+    "tests/toolchain/src/main.rs": {"toolchain": {"box": "laserax-ai", "sha1": "33c5cd0aeb081d2b", "spec": "9427e3d5fc71", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:47-04:00"}},
+    "tools/pb/capture_web.mjs": {"tools_selftest": {"box": "laserax-ai", "sha1": "d103fb4376fe07e6", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/content_gate.py": {"tools_selftest": {"box": "laserax-ai", "sha1": "3dc40d4df296446f", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/launch.py": {"tools_selftest": {"box": "laserax-ai", "sha1": "e7ced09da838fb94", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/plan.py": {"tools_selftest": {"box": "laserax-ai", "sha1": "9c0e653b782f0480", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/review_page.py": {"tools_selftest": {"box": "laserax-ai", "sha1": "2dfb518bd0d02f2b", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/rung_record.py": {"tools_selftest": {"box": "laserax-ai", "sha1": "a87742700b341b9b", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/scratch_copy.sh": {"tools_selftest": {"box": "laserax-ai", "sha1": "ad5e2cd1f0f9224a", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/status_page.py": {"tools_selftest": {"box": "laserax-ai", "sha1": "70f173ee95068330", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/switch.mjs": {"tools_selftest": {"box": "laserax-ai", "sha1": "f9eda96f3d819648", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}},
+    "tools/pb/verify.py": {"tools_selftest": {"box": "laserax-ai", "sha1": "d370ce5b7278068c", "spec": "80ad81c7107a", "task": "M0-TH", "tree": "a5065fb758b7+013a4e2290f8", "ts": "2026-10-08T12:11:50-04:00"}}
+  }
+}

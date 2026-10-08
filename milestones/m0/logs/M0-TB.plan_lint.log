@@ -1,0 +1,21 @@
+== 2026-10-08T14:29:17-04:00 plan_lint · task M0-TB · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=474 failed=0 warnings=0 · blocks=158 · flow_rows=158 · verify_fences=0 · history=0 · flow=per-task · header=335/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+
+== 2026-10-08T14:29:23-04:00 plan_lint · task M0-TB · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=474 failed=0 warnings=0 · blocks=158 · flow_rows=158 · verify_fences=0 · history=0 · flow=per-task · header=335/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+
+== 2026-10-08T14:41:13-04:00 plan_lint · task M0-TB · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=479 failed=0 warnings=1 · blocks=160 · flow_rows=160 · verify_fences=0 · history=0 · flow=per-task · header=338/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-TB: DONE outside the current phase and 28 lines long - stub it (§2.6)
+=== GO ===
+
+== 2026-10-08T14:42:41-04:00 plan_lint · task M0-TB · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=479 failed=0 warnings=0 · blocks=160 · flow_rows=160 · verify_fences=0 · history=0 · flow=per-task · header=338/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+

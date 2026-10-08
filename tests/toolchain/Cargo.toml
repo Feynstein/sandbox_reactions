@@ -1,0 +1,12 @@
+# M0-TH's toolchain scope: one program, built for the desktop and the web (verify.json `toolchain`).
+# Its own `[workspace]` keeps it out of the game's workspace (m0_contrat.md §1.1).
+[package]
+name = "sr-toolchain"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "=0.2.129"

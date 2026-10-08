@@ -1,0 +1,30 @@
+==== 2026-10-08T12:11:54-04:00 plan_lint · clean · a fresh scratch copy of the tree
+== 2026-10-08T12:11:54-04:00 plan_lint · task M0-TH · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=49 failed=0 warnings=8 · blocks=13 · flow_rows=13 · verify_fences=4 · history=0 · flow=per-task · header=176/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-TI: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-TP: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-R1: DONE outside the current phase and 54 lines long - stub it (§2.6)
+WARN: M0-D1: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-R2a: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-R2b: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-R3: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-TG: `Read:` names milestones/m0/m0_contrat.md whole (1296 lines > 500) - name a section or a line range
+=== GO ===
+
+==== 2026-10-08T12:11:54-04:00 plan_lint · plant plan-bad-status · a fresh scratch copy of the tree
+planted plan-bad-status: {python} -S -c "import pathlib;p=pathlib.Path('milestones/m0/m0_implementation_plan.md');t=p.read_text(encoding='utf-8');assert '- Status: DONE' in t;p.write_text(t.replace('- Status: DONE','- Status: WIBBLE',1),encoding='utf-8')" -> exit 0
+== 2026-10-08T12:11:54-04:00 plan_lint · task M0-TH · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=1 · 0.06 s
+lint: checks=50 failed=2 warnings=7 · blocks=13 · flow_rows=13 · verify_fences=4 · history=0 · flow=per-task · header=176/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+FAIL: M0-TI: 'WIBBLE (2026-10-08 09:10, started 08:51)' is off §3.3's closed set - the statuses: TODO · IN PROGRESS (<stamp> | awaiting: <question>) · DONE (<date> ...) · BLOCKED (+ what unblocks it) | BLOCKED-D<n> · DEFERRED (wake: <condition>) · N/A (<reason>) (line 178)
+FAIL: Flow row M0-TI says 'DONE', block says None
+WARN: M0-TP: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-R1: DONE outside the current phase and 54 lines long - stub it (§2.6)
+WARN: M0-D1: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-R2a: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-R2b: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-R3: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-TG: `Read:` names milestones/m0/m0_contrat.md whole (1296 lines > 500) - name a section or a line range
+=== NO-GO: 2 violation(s) ===
+

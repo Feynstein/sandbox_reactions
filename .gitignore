@@ -5,3 +5,13 @@ milestones/*/images/*
 !milestones/*/images/.gitkeep
 # Raw run and measurement outputs (PLAYBOOK §1)
 output/
+# The plan tool's lock file (PLAYBOOK §A.1; M0-TH)
+.*implementation_plan.md.lock
+# Build outputs and caches (m0_contrat.md §6.5; the disk is 82 % full): cargo's target, web/dist, node_modules,
+# the toolchain scope's build/ folder (verify.py's scratch copies leave `build` out by name), shared caches
+target/
+build/
+web/dist/
+node_modules/
+.cache/
+__pycache__/

@@ -1,0 +1,11 @@
+--- a/tools/pb/scratch_copy.sh
++++ b/tools/pb/scratch_copy.sh
+@@ -12,7 +12,7 @@
+ # a copy of zero files is NO-GO (annex §A.0: the verdict is derived from the counts).
+ set -uo pipefail
+ 
+-EXCLUDES=(.git .venv venv node_modules models data var output __pycache__ .pytest_cache dist build)
++EXCLUDES=(.git .venv venv models data var output __pycache__ .pytest_cache dist build)
+ EMPTIED=(images)                            # the folder is copied, its contents are not
+ LINKS=(.venv node_modules)
+ 

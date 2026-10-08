@@ -1,0 +1,12 @@
+# LF in scripts and sources, so a win-laptop checkout runs them (M0-TH)
+* text=auto eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.mjs text eol=lf
+*.rs text eol=lf
+*.toml text eol=lf
+*.json text eol=lf
+*.wgsl text eol=lf
+*.md text eol=lf
+*.png binary
+*.patch text eol=lf

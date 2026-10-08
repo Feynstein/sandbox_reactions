@@ -92,5 +92,79 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   (re-worded at M0-TP, 2026-10-08, on the lead's "Rewrite them (Recommended)"). The lead wants "as
   much physics as we can"; without oracles, plausibility drifts unnoticed.
 
+## R9 · The routine — one harness, one order (PLAYBOOK §4 Rule 4)
+- Written by M0-TH, 2026-10-08. The runner is `tools/pb/verify.py` over `tools/pb/verify.json`; how to add a
+  scope, its count parser for this stack and what each scope costs: `docs/agent/testing.md`.
+- The order, for every task that builds or changes something checkable: (1) author the artifact and its scope,
+  with the scope's planted bugs (`tests/plants/<plant>.patch`, or a command for a file that moves); (2) iterate on
+  **your scope alone** until green (`verify.py <scope> --task <ID>`); (3) red-arm it while you iterate
+  (`verify.py --redarm <scope> --task <ID>`: the clean copy GO, each plant NO-GO); (4) make every plan edit through
+  `plan.py`; (5) run `verify.py --changed --base <named commit> --task <ID>` **once, last** — the claim about the
+  tree you hand over; (6) write the handoff from that run; (7) a fix after step 5 is re-verified scoped, one block
+  per scope it could have moved. The complete loop (`--all`) runs at phase-closing V and TR blocks, never per task;
+  a second green loop on an unchanged tree is waste, named in the handoff.
+- Scope: a scope is a manifest entry, never a second runner. Every task that builds a contract surface adds its
+  scope or case; a scope only a plant can turn red is unfinished. A scope without paths is a placeholder.
+- Budget: the complete loop's wall clock on linux-pc is held under 600 s (Rule 4's 10-minute line; measured 3.2 s
+  warm at M0-TH). Over it, or on the lead's word, a TR measures and files the fixes — no other trigger.
+- Why: PLAYBOOK §4 Rule 4 — iterating on a moving artifact under a wide loop costs the lead's time, and a check
+  nobody has seen red proves nothing.
+
+## R10–R14 · The Build preamble — every build lot's shared rules
+- Written by M0-TG (2026-10-08) once above the build lots; hoisted here by M0-TB (2026-10-08), each bullet
+  moved byte for byte (logs/M0-TB.log), because a task's start read (`plan.py show`) prints the header and
+  its own block, never that preamble. "Below" in R14 reads "in the build lots".
+
+### R10 · The claim run
+- **The claim run.** After its scope's GO and its red-arm, every BUILD block's last step is R9's claim
+  run, `python3 tools/pb/verify.py --changed --base <the last commit gate's SHA> --task <its ID>` · Pass:
+  GO · Fail: NO-GO — the base a named commit, never `HEAD` (PLAYBOOK §A.2).
+
+### R11 · Scopes
+- **Scopes.** GPU scopes are modules of one test binary, crates/sr-engine/tests/gpu/ (M0-T2), each run
+  as `cargo test -p sr-engine --release --test gpu <module>::`; pure-CPU scopes as `cargo test -p <crate>
+  --release --lib <module>::` (sr-app's with `--bin sandbox-reactions`); both read with
+  docs/agent/testing.md's regex parse; scripts source tests/cargo.sh (M0-T1). Each lot's docs block
+  writes its scopes' rows into docs/agent/testing.md (contract §7). A path marked (new) did not exist on
+  2026-10-08: the tree held no game code (`git ls-files`).
+
+### R12 · ⏱ scopes
+- **⏱ scopes** (contract §5.0, §6.4): their `paths` name only their own test and scene files, so
+  `--changed` runs them only when those change; physics ⏱ scopes run on the RTX 5090; a run over 10
+  minutes is the lead's, in the lot V's window, one visible terminal [NOT RUN — for you]; the timing
+  scopes (fps, top-speed) run on the Quadro RTX 4000 only.
+
+### R13 · Physics
+- **Physics.** Every GPU number names its adapter (Hazards). A physics row passes only against its
+  oracle within its tolerance (R8); an UNVERIFIED row (§5.5) that goes red is a D, or a question to the
+  lead when a tolerance or a FROZEN clause is at stake — never a looser number (§0.4). Each pass's CPU
+  f64 twin comes before its GPU shader (D11, G-REF); the box and the latch are first-lot architecture
+  (M0-R3's and M0-TC's flags).
+
+### R14 · Every V
+- **Every V below** is done when its verdict is recorded, its D's created and the register updated
+  (PLAYBOOK §14.3's V template); a V that adds to that says so on its own `Done when:` line.
+
 ## Considered and REJECTED (false economy)
-- none yet — M0-TB starts this list (§2.1).
+Binding (PLAYBOOK §2.1, §11): a later agent proposing an item below re-opens a closed decision — it asks
+the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.
+- **Merging each lot's docs block into its code blocks** (fewer sessions) — two artifact kinds in one
+  block (§2.1 (i)); contract §7 gives each lot its page, and the docs block reads the lot's handoffs whole.
+- **Merging a pass's CPU twin and GPU blocks** — the twin before the shader is first-lot architecture
+  (R13; D11, G-REF); merged, one block holds two artifacts and the twin's oracle loses its independence.
+- **Dropping each block's red-arm Verify step for a citation of R9** — the plant is a `Deliver:` item;
+  without its Verify step it becomes an item no check names (§3.2), which the lint flags.
+- **Replacing each lot V's phase-close checklist by a citation of PLAYBOOK §14.3** — the inline line
+  and a half is cheaper than every V opening the playbook to find it.
+- **One TV for the whole milestone** — §8 asks one per phase that adds or changes screens; a late TV
+  turns early UI misfits into a wall of D's.
+- **The complete loop only at the final V** — it costs seconds today (3.2 s at M0-TH); each phase-closing
+  V's loop time is the measurement that fires a TR (R9).
+- **Dropping `Adversarial:` lines from build blocks** — mandatory on implementation blocks of an M or L
+  milestone (§3.2).
+- **One "whole-life" scope for the ⏱ guarantees** — each §5 row is its own scope with its own plant
+  (contract §5.0); a merged scope's red cannot name the guarantee that failed.
+- **Hoisting the shared tail of `Read:` lines** (`+ docs/agent/testing.md`) — three words a block; a
+  `Read:` line lists exactly what its block reads (§3.2).
+- **Stepping a near-ceiling block up a rung instead of splitting it** — size is §2.1's: a block too big
+  for its rung splits, never steps up (§0, no step up on a guess).

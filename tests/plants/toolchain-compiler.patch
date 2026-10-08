@@ -1,0 +1,11 @@
+--- a/tests/toolchain/check.sh
++++ b/tests/toolchain/check.sh
+@@ -10,7 +10,7 @@
+ root="$(cd "$here/../.." && pwd)"
+ export PATH="$HOME/.cargo/bin:$PATH"
+ export CARGO_TARGET_DIR="$root/build/toolchain-target"
+-compiler=cargo
++compiler=carg0
+ web_target=wasm32-unknown-unknown
+ bundler=trunk
+ 

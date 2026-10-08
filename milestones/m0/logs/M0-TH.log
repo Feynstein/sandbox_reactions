@@ -1,0 +1,8 @@
+extracted: 10 - refused: 0
+=== GO ===
+== R3 install: rustup target add wasm32-unknown-unknown (2026-10-08T12:09:21-04:00)
+info: downloading component rust-std
+wasm32-unknown-unknown
+x86_64-unknown-linux-gnu
+== R3 install: trunk 0.21.14 prebuilt (github.com/trunk-rs/trunk release, sha256 f2b4680c...e7036b verified) -> ~/.cargo/bin/trunk (2026-10-08T12:09:38-04:00)
+trunk 0.21.14

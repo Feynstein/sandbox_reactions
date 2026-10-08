@@ -1,0 +1,11 @@
+--- a/tests/toolchain/check.sh
++++ b/tests/toolchain/check.sh
+@@ -12,7 +12,7 @@
+ export CARGO_TARGET_DIR="$root/build/toolchain-target"
+ compiler=cargo
+ web_target=wasm32-unknown-unknown
+-bundler=trunk
++bundler=trunc
+ 
+ die() { echo "toolchain $case_: $1"; echo "=== NO-GO: $1 ==="; exit 1; }
+ ok() { echo "toolchain $case_: $1"; echo "=== GO ==="; exit 0; }

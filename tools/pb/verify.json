@@ -1,0 +1,111 @@
+{
+  "_note": "M0-TH's manifest. One scope per thing checkable today; each lot that builds a §5 surface adds its scopes (docs/agent/testing.md). Plants: tests/plants/<plant>.patch, or a command for a plant on a file that moves (plan_lint).",
+  "logs_dir": "milestones/m0/logs",
+  "jobs_cap": 8,
+  "scopes": {
+    "plan_lint": {
+      "desc": "the plan's structure: every block, Flow row, status word, budget (plan.py lint)",
+      "cmd": "{python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md",
+      "count": "checks=(?P<n>\\d+)",
+      "expected": 30,
+      "timeout_s": 60,
+      "paths": [
+        "milestones/m0/m0_implementation_plan.md",
+        "milestones/m0/m0_rules.md"
+      ],
+      "plants": [
+        {
+          "id": "plan-bad-status",
+          "patch": "{python} -S -c \"import pathlib;p=pathlib.Path('milestones/m0/m0_implementation_plan.md');t=p.read_text(encoding='utf-8');assert '- Status: DONE' in t;p.write_text(t.replace('- Status: DONE','- Status: WIBBLE',1),encoding='utf-8')\""
+        }
+      ]
+    },
+    "tools_selftest": {
+      "desc": "each annex tool's own red-armed selftest - proves the tools, never the game",
+      "cases": {
+        "plan": "{python} tools/pb/plan.py selftest",
+        "verify": "{python} tools/pb/verify.py selftest",
+        "launch": "{python} tools/pb/launch.py selftest",
+        "review_page": "{python} tools/pb/review_page.py selftest",
+        "status_page": "{python} tools/pb/status_page.py selftest",
+        "content_gate": "{python} tools/pb/content_gate.py selftest",
+        "rung_record": "{python} tools/pb/rung_record.py selftest",
+        "capture_web": "node tools/pb/capture_web.mjs selftest",
+        "switch": "node tools/pb/switch.mjs selftest",
+        "scratch_copy": "bash tools/pb/scratch_copy.sh --selftest"
+      },
+      "expected": 10,
+      "timeout_s": 600,
+      "paths": [
+        "tools/pb/*.py",
+        "tools/pb/*.mjs",
+        "tools/pb/*.sh",
+        "tests/plants/tools-selftest-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "tools-selftest-scratch",
+          "patch": "tests/plants/tools-selftest-scratch.patch"
+        }
+      ]
+    },
+    "toolchain": {
+      "desc": "the picked stack builds a one-file program: desktop (rustc 1.99), wasm32, and the web page through trunk 0.21.14 - not the game's GO",
+      "cases": [
+        "desktop",
+        "wasm",
+        "trunk"
+      ],
+      "case_cmd": "bash tests/toolchain/check.sh {case}",
+      "expected": 3,
+      "timeout_s": 900,
+      "paths": [
+        "tests/toolchain/**",
+        "tests/plants/toolchain-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "toolchain-compiler",
+          "patch": "tests/plants/toolchain-compiler.patch"
+        },
+        {
+          "id": "toolchain-web-target",
+          "patch": "tests/plants/toolchain-web-target.patch"
+        },
+        {
+          "id": "toolchain-trunk",
+          "patch": "tests/plants/toolchain-trunk.patch"
+        }
+      ]
+    }
+  },
+  "skip_classes": [
+    {
+      "match": [
+        "tools/pb/verify.json",
+        "tools/pb/verify.anchor.json"
+      ],
+      "reason": "the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one"
+    },
+    {
+      "match": [
+        "PLAYBOOK.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "GEMINI.md",
+        ".gitignore",
+        ".gitattributes",
+        ".claude/**"
+      ],
+      "reason": "instruction and config files - no scope grades text; the lead reads them"
+    },
+    {
+      "match": [
+        "milestones.md",
+        "milestones/**",
+        "docs/**"
+      ],
+      "reason": "reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them"
+    }
+  ]
+}

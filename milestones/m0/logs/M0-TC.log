@@ -1,0 +1,60 @@
+# M0-TC log — opened 2026-10-08 11:14 EDT on laserax-ai (linux-pc)
+
+## read-only probes
+$ git status -sb; git log --oneline -3; git log origin/main --oneline -1
+## main...origin/main
+?? milestones/m0/logs/M0-TC.log
+a5065fb M0 Phase 1: engine pick and physics research
+fc6a758 M0 Phase 0: lead interview and plan red-team
+7acd1fc M0 bootstrap: playbook v12.2, tracker, M0 plan
+a5065fb M0 Phase 1: engine pick and physics research
+
+## probe: Vulkan ICDs and Chrome path (11:45)
+$ ls /usr/share/vulkan/icd.d/ /etc/vulkan/icd.d/ 2>&1; command -v google-chrome google-chrome-stable chromium 2>&1; ls ~/.cargo/bin 2>&1 | head -20; ~/.cargo/bin/rustup component list --installed 2>&1 | head
+/etc/vulkan/icd.d/:
+
+/usr/share/vulkan/icd.d/:
+asahi_icd.json
+gfxstream_vk_icd.json
+intel_hasvk_icd.json
+intel_icd.json
+lvp_icd.json
+nouveau_icd.json
+nvidia_icd.json
+radeon_icd.json
+virtio_icd.json
+/usr/bin/google-chrome
+/usr/bin/google-chrome-stable
+cargo
+cargo-clippy
+cargo-fmt
+cargo-miri
+clippy-driver
+rls
+rust-analyzer
+rustc
+rustdoc
+rustfmt
+rust-gdb
+rust-gdbgui
+rust-lldb
+rustup
+cargo-x86_64-unknown-linux-gnu
+clippy-x86_64-unknown-linux-gnu
+rust-docs-x86_64-unknown-linux-gnu
+rust-std-x86_64-unknown-linux-gnu
+rustc-x86_64-unknown-linux-gnu
+rustfmt-x86_64-unknown-linux-gnu
+
+## research fetches (WebFetch / WebSearch, 2026-10-08; no command ran)
+crates.io API: wgpu 30.0.1 · eframe 0.36.2 (+ its dependency list) · egui-wgpu 0.36.2 deps (wgpu ^30.0, winit ^0.30.13) · winit 0.30.13 · bytemuck 1.25.2 · pollster 1.0.1 · png 0.18.1 · serde 1.0.229 · serde_json 1.0.151 · log 0.4.34 · env_logger 0.11.11 · wasm-bindgen 0.2.129 · wasm-bindgen-futures 0.4.79 · web-sys 0.3.106 · console_error_panic_hook 0.1.7 · trunk 0.21.14 · wasm-pack 0.15.0 · wasm-bindgen-cli 0.2.129
+npm: playwright-core 1.64.0 (Apache-2.0, node >= 20) · rust-lang.org licences (MIT / Apache-2.0) · binaryen (Apache-2.0)
+Chrome blog 2024-01-16: headless WebGPU flags · Höfner & Olofsson 2018 (chalmers record) · Imasheva, Janka & Weiss (arXiv:2209.10989 abstract) · Janka 2000 (astro-ph/0008432 abstract: no share fixed) · Wikipedia: Interstellar medium (molecular clouds 10-20 K), sRGB matrix, Planck's law · JCGT 2(2) 2013 Wyman et al. (PDF pages 1-4 read: Eq. 4, Table 1)
+
+## question tool
+11:23 EDT call 1 — Q1 gravity, Q2 top speed, Q3 stand-in laws, Q4 browsers: all four on the recommended option
+11:28 EDT call 2 — Q5 dependency gate: "Approve the whole list (Recommended)"
+verbatim: reports/contract_rulings.md §1-§2
+
+## suites
+none run — a PLAN block, no code exists; verify.py and plan.py not yet extracted (M0-TH); rung_record.py absent (NOT RUN)

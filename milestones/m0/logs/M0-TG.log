@@ -1,0 +1,28 @@
+M0-TG log — opened 2026-10-08 12:36 EDT on laserax-ai (linux-pc)
+rung_record: model=claude-opus-5-5 level=max plugin=installed (launch prompt and the 'carry on' prompt)
+contract amended §3.6 (game, headless-boot commands) and §6.5 (target dir build/target, shared redarm cache outside the tree) [M0-TG]
+Question to the lead (2026-10-08, the question tool) — the contract fix M0-TH flagged: (1) §6.5 cargo target build/target/ + shared redarm cache ~/.cache/sandbox-reactions/redarm-target/ (deps only); (2) §3.6 commands build/target/release/… and its heading; (3) docs/agent/testing.md hazard line. Answer, verbatim: "Approve all three (Recommended)". Applied: contract §3.6 (heading + game + headless-boot rows), §6.5; testing.md Hazards.
+filed 139 blocks via plan.py append (138 --after M0-TB in reverse run order, M0-T116 --after M0-TW); counters T=116 V=17 TJ=2 TV=3 TD=1
+lint: checks=465 failed=0 warnings=8 · blocks=152 · flow_rows=152 · verify_fences=4 · history=0 · flow=per-task · header=333/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-TI: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-TP: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-R1: DONE outside the current phase and 54 lines long - stub it (§2.6)
+WARN: M0-D1: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-R2a: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-R2b: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-R3: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-TG: `Read:` names milestones/m0/m0_contrat.md whole (1302 lines > 500) - name a section or a line range
+=== GO ===
+restored the plan from scratchpad/plan.before-TG.md (taken before filing) to re-file in forward order: the reverse filing had written every Flow Order as 'AFTER M0-TB'
+re-filed 141 blocks via plan.py append in forward order (each --after its predecessor; M0-T116 --after M0-TW)
+lint: checks=471 failed=0 warnings=8 · blocks=154 · flow_rows=154 · verify_fences=4 · history=0 · flow=per-task · header=335/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-TI: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-TP: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-R1: DONE outside the current phase and 54 lines long - stub it (§2.6)
+WARN: M0-D1: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-R2a: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-R2b: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-R3: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-TG: `Read:` names milestones/m0/m0_contrat.md whole (1302 lines > 500) - name a section or a line range
+=== GO ===
+closed M0-TG DONE; lint after close GO
