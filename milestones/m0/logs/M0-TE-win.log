@@ -1,0 +1,48 @@
+﻿=== M0-TE-win on win-laptop (Laser2025-20) ===
+probe 2026-10-08: Win11 Pro build 26300 | PS 5.1.26100.9444 | Git Bash 5.3.15 (msys) | Core Ultra 9 185H 16c/22t | 31.5 GiB RAM | C: 31 GiB free of 953
+GPUs: Intel Arc Graphics 32.0.101.6790; NVIDIA RTX 4080 Laptop 32.0.15.8129
+before: python3=Store Python 3.13.14 (real) | python=3.12.10 | node 26.8.2 npm 11.19.1 | rustc 1.97.1 (targets: msvc only) | trunk missing | rsync missing | VS 2026 Community + MSVC 14.44/14.51 + SDK present | Chrome 154.0.8037.98 | system32 bash.exe = WSL
+--- install: rustup update stable
+rustup : info: syncing channel updates for stable-x86_64-pc-windows-msvc
+Au caractère Ligne:8 : 1
++ rustup update stable 2>&1 | Tee-Object -Variable out | Out-String | % ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (info: syncing c...pc-windows-msvc:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+info: latest update on 2026-10-01 for version 1.99.0 (b940084d7 2026-09-28)
+info: removing previous version of component cargo
+info: removing previous version of component clippy
+info: removing previous version of component rust-docs
+info: removing previous version of component rust-std
+info: removing previous version of component rustc
+info: removing previous version of component rustfmt
+info: downloading 6 components
+
+  stable-x86_64-pc-windows-msvc updated - rustc 1.99.0 (b940084d7 2026-09-28) (from rustc 1.97.1 (8bab26f4f 2026-07-14))
+
+info: checking for self-update (current version: 1.29.0)
+info: downloading self-update (new version: 1.29.1)
+
+rustup : info: downloading component rust-std
+Au caractère Ligne:9 : 1
++ rustup target add wasm32-unknown-unknown 2>&1 | Tee-Object -Variable  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (info: downloading component rust-std:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+rustup : info: component clippy is up to date
+Au caractère Ligne:10 : 1
++ rustup component add clippy rustfmt 2>&1 | Out-String | % { L $_; $_  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (info: component clippy is up to date:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+info: component rustfmt is up to date
+
+--- installs
+rustup update stable: 1.97.1 -> rustc/cargo 1.99.0 (b940084d7 2026-09-28); +wasm32-unknown-unknown; clippy, rustfmt present; rustup self-updated 1.29.0->1.29.1
+trunk 0.21.14: github.com/trunk-rs/trunk release trunk-x86_64-pc-windows-msvc.zip sha256 cd6ac15b9daff0365e5695036791ef2ce3c63f61c014f5a8c532363266e4569c (matches the .sha256 file) -> ~/.cargo/bin/trunk.exe
+rsync 3.5.1 (protocol 33), the lead's yes at M0-TE-win (AskUserQuestion, 2026-10-08): MSYS2 packages rsync-3.5.1-2 + libxxhash-0.8.4-1 + popt-1.19-1 from repo.msys2.org/msys/x86_64, sha256 each equal to msys.db's (rsync cba52e41…, libxxhash ba784ad1…, popt b402bd1d…); rsync.exe + msys-xxhash-0.dll + msys-popt-0.dll in C:\Users\YohanBelanger\bin (Git Bash PATH's first entry); GPL-3.0-or-later, dev tool only
+user env MSYS=winsymlinks:nativestrict set (Developer Mode is on: AllowDevelopmentWithoutDevLicense=1) so Git Bash's ln -s makes real symlinks; scratch_copy.sh --selftest went 8/12 -> 11/12 with it (3/12 before rsync)

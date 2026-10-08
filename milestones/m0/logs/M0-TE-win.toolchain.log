@@ -1,0 +1,42 @@
+== 2026-10-08T15:27:47-04:00 toolchain[desktop] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T15:27:51-04:00 toolchain[wasm] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T15:27:52-04:00 toolchain[trunk] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[desktop] · exit=0 · 7.65 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+-- toolchain[wasm] · exit=0 · 51.60 s
+toolchain wasm: wasm32-unknown-unknown module built (2652711 bytes)
+=== GO ===
+
+-- toolchain[trunk] · exit=0 · 54.15 s
+toolchain trunk: trunk 0.21.14 built the page
+=== GO ===
+
+== 2026-10-08T15:31:20-04:00 toolchain[desktop] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T15:31:20-04:00 toolchain[wasm] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+== 2026-10-08T15:31:20-04:00 toolchain[trunk] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=1 · 5.78 s
+<3>WSL (13 - Relay) ERROR: CreateProcessCommon:735: execvpe(/bin/bash) failed: No such file or directory
+
+-- toolchain[trunk] · exit=1 · 5.78 s
+<3>WSL (11 - Relay) ERROR: CreateProcessCommon:735: execvpe(/bin/bash) failed: No such file or directory
+
+-- toolchain[desktop] · exit=1 · 5.79 s
+<3>WSL (9 - Relay) ERROR: CreateProcessCommon:735: execvpe(/bin/bash) failed: No such file or directory
+
+== 2026-10-08T15:33:27-04:00 toolchain[desktop] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[desktop] · exit=0 · 1.19 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+== 2026-10-08T15:33:28-04:00 toolchain[wasm] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=0 · 1.08 s
+toolchain wasm: wasm32-unknown-unknown module built (2652711 bytes)
+=== GO ===
+
+== 2026-10-08T15:33:29-04:00 toolchain[trunk] · task M0-TE-win · box Laser2025-20 :: bash tests/toolchain/check.sh {case}
+-- toolchain[trunk] · exit=0 · 2.14 s
+toolchain trunk: trunk 0.21.14 built the page
+=== GO ===
+

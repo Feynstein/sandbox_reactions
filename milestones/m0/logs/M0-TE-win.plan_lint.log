@@ -1,0 +1,20 @@
+== 2026-10-08T15:27:41-04:00 plan_lint · task M0-TE-win · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.87 s
+lint: checks=479 failed=0 warnings=0 · blocks=160 · flow_rows=160 · verify_fences=0 · history=0 · flow=per-task · header=338/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+
+== 2026-10-08T15:33:24-04:00 plan_lint · task M0-TE-win · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.56 s
+lint: checks=479 failed=0 warnings=0 · blocks=160 · flow_rows=160 · verify_fences=0 · history=0 · flow=per-task · header=338/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+
+== 2026-10-08T15:38:08-04:00 plan_lint · task M0-TE-win · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.56 s
+lint: checks=491 failed=0 warnings=5 · blocks=164 · flow_rows=164 · verify_fences=0 · history=0 · flow=per-task · header=370/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-D2: `Read:` names tools/pb/rung_record.py whole (1163 lines > 500) - name a section or a line range
+WARN: M0-D4: `Read:` names tools/pb/plan.py whole (2909 lines > 500) - name a section or a line range
+WARN: a line in 4 blocks (M0-D2 · M0-D3 · M0-D4 · M0-D5): '- Deliver: the smallest fix that turns the selftest GO on win-laptop and...' - state it once in Rules and cite it
+WARN: a line in 4 blocks (M0-D2 · M0-D3 · M0-D4 · M0-D5): '- Caused by: M0-TH (extracted the tools and ran their selftests on linux...' - state it once in Rules and cite it
+WARN: a line in 4 blocks (M0-D2 · M0-D3 · M0-D4 · M0-D5): '- Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tool...' - state it once in Rules and cite it
+=== GO ===
+

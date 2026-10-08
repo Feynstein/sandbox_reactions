@@ -43,7 +43,11 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-TH | BUILD | The toolkit and the test harness | AFTER M0-TC | DONE (2026-10-08 12:16, started 12:07) |
 | M0-TG | PLAN | The M0 build pipeline, sized and ordered | AFTER M0-TH | DONE (2026-10-08 13:40, started 12:36) |
 | M0-TB | PLAN | Size, token and rating pass over the pipeline | AFTER M0-TG | DONE (2026-10-08 14:30, started 13:48) |
-| M0-TE-win | BUILD | win-laptop joins — probe the box, install what is missing, prove the toolkit and the toolchain | AFTER M0-TB | TODO |
+| M0-TE-win | BUILD | win-laptop joins — probe the box, install what is missing, prove the toolkit and the toolchain | AFTER M0-TB | BLOCKED |
+| M0-D2 | BUILD | rung_record.py's selftest fails 4 checks on Windows | AFTER M0-TE-win | TODO |
+| M0-D3 | BUILD | content_gate.py's selftest stops on a Windows file lock | AFTER M0-D2 | TODO |
+| M0-D4 | BUILD | plan.py's selftest fails one check on Windows | AFTER M0-D3 | TODO |
+| M0-D5 | BUILD | scratch_copy.sh's selftest fails one check on Windows: «a dest inside the source» | AFTER M0-D4 | TODO |
 | M0-TJ3 | PLAN + LEAD answers | Direction ruling — win-laptop in play for M0: what runs where | AFTER M0-TE-win | TODO |
 | M0-T1 | BUILD | Workspace, toolchain pin and the build check (native + wasm32) | AFTER M0-TJ3 | TODO |
 | M0-T2 | BUILD | GPU device and adapter choice (sr-engine); the GPU test binary | AFTER M0-T1 | TODO |
@@ -249,7 +253,11 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
   bash, 32 CPU threads, 188 GiB RAM; GPUs NVIDIA GeForce RTX 5090 32 GB and Quadro RTX 4000 8 GB
   (driver 595.99.02) and an Intel UHD 770; OpenGL 4.6 (renderer: the Quadro), Vulkan ICDs present,
   Vulkan loader dev 1.3.275; Wayland session with XWayland on DISPLAY=:1 — in play.
-  `win-laptop` — the lead's Windows laptop; not in play for M0's gates; probed when first used.
+  `win-laptop` — the lead's Windows laptop, hostname Laser2025-20, probed by M0-TE-win (2026-10-08): Windows 11
+  Pro build 26300, Intel Core Ultra 9 185H (16 cores / 22 threads), 31.5 GiB RAM, 31 GiB free of 953 GiB; GPUs Intel
+  Arc Graphics (driver 32.0.101.6790) and NVIDIA GeForce RTX 4080 Laptop (32.0.15.8129); shells PowerShell 5.1 and
+  Git Bash 5.3.15 (the Bash tool — every toolkit call goes through it); not in play for M0's gates until M0-TJ3
+  rules (reports/win_laptop.md § Box).
 - Toolchains on linux-pc (probed 2026-10-08, re-probed by M0-TP): present — g++/gcc 13.3.0, GNU
   make 4.3, ninja 1.11.1, pkg-config 1.8.1, Python 3.12.3 (uv 0.12.3), Node 20.20.2 + npm 10.8.2,
   git 2.43.0, jq, Xvfb + xvfb-run; Rust 1.99.0 stable (rustup 1.29.1, host target x86_64 only —
@@ -270,6 +278,16 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
   (`~/.claude/plugins/installed_plugins.json` lists it); `rung_record.py now` reads whether it is
   current against this playbook's switch (12.2.1) once M0-TH extracts it. Every rung of the ladder
   is in the switch's `RUNGS` table.
+- Toolchains on win-laptop (M0-TE-win, 2026-10-08, logs/M0-TE-win.log): present — Python 3.13.14 as `python3` (the
+  Store package's alias; `python` 3.12.10), Node 26.8.2 + npm 11.19.1 (the table says Node 20; kept, ≥ 20), git
+  2.55.0, Git Bash 5.3.15, Chrome 154.0.8037.98 at `C:\Program Files\Google\Chrome\Application\chrome.exe`,
+  Visual Studio 2026 Community with MSVC 14.44/14.51 and Windows SDKs; installed by M0-TE-win (R3) — rustc/cargo
+  1.99.0 (rustup update; was 1.97.1) with clippy, rustfmt and `wasm32-unknown-unknown`, trunk 0.21.14 (release
+  zip, sha256-checked) in `~/.cargo/bin`, and rsync 3.5.1 (outside the table — the lead's yes, GPL-3.0, a dev
+  tool) in `~/bin`; user variable `MSYS=winsymlinks:nativestrict`. Missing — playwright-core (arrives with
+  web/package.json, M0-T15), the Vulkan SDK. `~/.cargo/bin` is on the PATH here (it is not on linux-pc).
+- Agent on win-laptop (M0-TE-win, 2026-10-08): Claude Code 2.1.294 (`AI_AGENT=claude-code_2-1-294_agent`); the
+  switch plugin `pb-switch@pb` 12.2.1 is installed (`rung_record.py now` → `plugin=installed`).
 - Folders: `milestones/m0/` holds this plan, m0_rules.md, the contract (m0_contrat.md) and
   logs/ reports/ tasks/ images/ (`.gitkeep` holds the empty ones); `tools/pb/` (the toolkit),
   `docs/agent/testing.md`, `tests/toolchain/` (the one-file program) and `tests/plants/` (planted-bug
@@ -322,11 +340,26 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
   cause: the rustup install's PATH line is absent. Effect: a scope, a launcher or an agent calling
   `cargo` bare fails "not found" — call `~/.cargo/bin/cargo` or source `~/.cargo/env` first; a
   PATH edit in the lead's shell files is the lead's.
+- 2026-10-08 · win-laptop, `bash` is two programs (M0-TE-win): from PowerShell the toolkit's `bash` is
+  `C:\WINDOWS\system32\bash.exe`, WSL's relay (no `/bin/bash` in its docker-desktop distro) — `verify.py
+  toolchain` read NO-GO 0/3 there; in the Bash tool it is Git's `usr\bin\bash.EXE`. Every toolkit call on
+  win-laptop goes through the Bash tool; no PATH edit (it would shadow Windows' find and sort).
+- 2026-10-08 · win-laptop, symlinks and rsync (M0-TE-win): Git Bash copies instead of linking unless
+  `MSYS=winsymlinks:nativestrict` (Developer Mode is on; a user variable now); Windows has no rsync (installed to
+  `~/bin`, the lead's yes). Effect before: scratch_copy.sh's selftest 3/12; now 11/12 (M0-D5 holds the last).
+- 2026-10-08 · win-laptop, the disk is 97 % full (31 GiB free of 953 GiB): `build/target`, the red-arm cache,
+  trunk's cache and node_modules compete for it — read the free space before a lot's first big build.
+- 2026-10-08 · win-laptop, `tools_selftest` reads 6 of 10 GO (M0-D2 rung_record, M0-D3 content_gate, M0-D4 plan,
+  M0-D5 scratch_copy filed); a Windows file lock (WinError 32) is one root cause; the loop is 75–97 s here.
+  Effect: `verify.py --all` on win-laptop is NO-GO until those four are fixed or M0-TJ3 box-binds the case. Seen
+  once, not reproduced: `tools_selftest[verify]` exit 3221225477 (0xC0000005) in a `--changed` run, GO in five others.
+- 2026-10-08 · win-laptop, `python3` is the Store package's alias (3.13.14), not the python.org 3.12.10 behind
+  `python`; real, so it answers; if the package is removed it reverts to the Store stub — use `py -3`.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-TE-win, on win-laptop, after the lead's Phase 2 commit gate is pushed from linux-pc
-- Counters: T=116 · D=1 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=0 · TR=0 · TM=0 · TD=1 · TE=1
-- Open D/BLOCKED register: none
+- Next task: M0-TJ3 (the lead's win-laptop ruling), after M0-D2..D5 or their retirement
+- Counters: T=116 · D=5 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=0 · TR=0 · TM=0 · TD=1 · TE=1
+- Open D/BLOCKED register: M0-D2, M0-D3, M0-D4, M0-D5 (Windows selftests, filed by M0-TE-win); M0-TE-win BLOCKED
 - Outstanding commit gates: Phase 2 (M0-TC, TH, TG, TB) — the lead's, from the repo root (the gate under M0-TB)
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
@@ -416,7 +449,7 @@ so its probe, setup and ruling run here, after the Phase 2 commit gate (pushed f
 lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by `plan.py move`.
 
 ## M0-TE-win · win-laptop joins — probe the box, install what is missing, prove the toolkit and the toolchain · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TB)
-- Status: TODO
+- Status: BLOCKED
 - Ask (verbatim): "Next time I open the plan I will be using windows, so id like for an agent to run a task to check that everything is good and to install anything missing so we can continue smoothly on the windows laptop." (the lead, 2026-10-08)
 - Placement note: the lead's first session on win-laptop, after the Phase 2 commit gate is pushed from
   linux-pc and before lot 1. Until this block makes `python3` answer there, each `python3 …` in this plan,
@@ -469,6 +502,50 @@ lot 1; M0-TE-win and M0-TJ3 were filed after M0-T1 and M0-T1 moved below them by
   Rust, WSL's `bash.exe` answering for `bash` — every version is printed and compared with the table,
   and `bash --version` must name Git's bash; a toolkit green on Windows because its cases skip there —
   Verify 2 compares its counts with linux-pc's, and each shortfall is named.
+- Handoff: BLOCKED by its own Verify 2 Fail arm (win-laptop Laser2025-20, Bash tool): Verify 1 PASS (python3 = Python 3.13.14, lint GO), 3 PASS (toolchain red-armed, 3 plants red), 4 PASS (5 sections); Verify 2 NO-GO — plan_lint 479 and toolchain 3 GO, tools_selftest 6 of 10 GO, 4 red routed to M0-D2 rung_record, M0-D3 content_gate, M0-D4 plan, M0-D5 scratch_copy (specs filed, 'AFTER M0-TE-win, BEFORE M0-TJ3'; TJ3 may box-bind the case instead). Installed (R3): rustc/cargo 1.99.0 + wasm32 target, trunk 0.21.14 (sha256-checked), and rsync 3.5.1 (outside the table, the lead's yes); user variable MSYS=winsymlinks:nativestrict; MSVC, Chrome 154, switch plugin 12.2.1 were already there. Declared: Node 26.8.2 and Python 3.13.14 kept; toolkit calls go through the Bash tool (PowerShell's bash is WSL's); disk 31 GiB free. Not filed: one non-reproduced 0xC0000005 in tools_selftest[verify]. Claim run (--changed) red on the same four, so a (usual) re-rate path (§0) was not taken — the block's own BLOCKED arm applies; say if you want it. Ran on model=claude-sonnet-5-5 level=high. Next: the lead restarts VS Code (new MSYS variable), then M0-TJ3 rules what runs on win-laptop and whether D2-D5 stand.
+
+## M0-D2 · rung_record.py's selftest fails 4 checks on Windows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
+- Status: TODO
+- Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tools_selftest[rung_record]` until this and its sibling D's are fixed; M0-TJ3 may instead box-bind the case (`box: laserax-ai`, §8) and retire the D as N/A with the citation
+- Caused by: M0-TH (extracted rung_record.py and ran its selftest on linux-pc only; GO there)
+- Files: tools/pb/rung_record.py — named by the selftest's log, not opened (M0-TE-win never reads a tool's code); the executing task confirms first
+- Read: this file (rules + this task) + milestones/m0/reports/win_laptop.md § Toolkit + milestones/m0/logs/M0-TE-win.tools_selftest.log + tools/pb/rung_record.py § `now` (found by grep; its selftest's `now:` cases)
+- Symptom: `rung_record.py selftest` → 58 of 62 checks, 4 FAIL, all in the `now:` group: «missing → the POSIX line: the build of the switch.mjs beside the tool first, then the client's two calls, quoted» · «installed under another project's scope only → missing here» · «an install older than the switch.mjs beside the tool → plugin=stale and the install line whose last call is `plugin update`» · «no $CLAUDE_CODE_EXECPATH → `claude`, never a path looked up»; its 25 plants are red · Repro: `python3 tools/pb/rung_record.py selftest`; the live `rung_record.py now` is right on this box (model=claude-sonnet-5-5 level=high plugin=installed) (box win-laptop = Laser2025-20, Windows 11 build 26300, Git Bash 5.3.15 as the shell, Python 3.13.14) · Suspected cause: the selftest's fixtures (a POSIX home, installed_plugins.json paths, the quoting of the printed line) assume POSIX; on Windows the printed line is a different shape (§B.3: the Windows form) — unknown until the tool is read
+- Deliver: the smallest fix that turns the selftest GO on win-laptop and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so a local patch is lost at the next extraction — where the fix lands (the annex, the lead's PLAYBOOK.md, or tools/pb/ with a note) is asked of the lead first (§12); if the real cause is out of scope, stop and ask. One attempt + self-verify (rung_record.py).
+- Done when: `python3 tools/pb/rung_record.py selftest` prints `=== GO ===` with 62 of 62, on win-laptop; and the same selftest still GO on linux-pc (owed there if not run)
+- Handoff: <placeholder>
+
+## M0-D3 · content_gate.py's selftest stops on a Windows file lock · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
+- Status: TODO
+- Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tools_selftest[content_gate]` until this and its sibling D's are fixed; M0-TJ3 may instead box-bind the case (`box: laserax-ai`, §8) and retire the D as N/A with the citation
+- Caused by: M0-TH (extracted content_gate.py and ran its selftest on linux-pc only; GO there)
+- Files: tools/pb/content_gate.py — named by the selftest's log, not opened (M0-TE-win never reads a tool's code); the executing task confirms first
+- Read: this file (rules + this task) + milestones/m0/reports/win_laptop.md § Toolkit + milestones/m0/logs/M0-TE-win.tools_selftest.log + tools/pb/content_gate.py
+- Symptom: `content_gate.py selftest` → 35 of 37 checks, 2 FAIL: «no --denylist → the list beside the tool, not one in the working folder: the italic plant NO-GO» and «selftest stopped after 36 checks: PermissionError: [WinError 32] … content_gate_selftest_…\plain» (a file the selftest still holds open when it removes or renames it); git also warns «LF will be replaced by CRLF» in its temporary repos, which carry no .gitattributes. OPT-D is off (Rules R6), the tool is unused in M0, but its selftest is one of tools_selftest's 10 cases · Repro: `python3 tools/pb/content_gate.py selftest`, twice, the same two FAILs both times (box win-laptop = Laser2025-20, Windows 11 build 26300, Git Bash 5.3.15 as the shell, Python 3.13.14) · Suspected cause: an open handle on a temp file when it is deleted or replaced — Windows refuses what POSIX allows (WinError 32); the first FAIL may be the same lock seen earlier
+- Deliver: the smallest fix that turns the selftest GO on win-laptop and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so a local patch is lost at the next extraction — where the fix lands (the annex, the lead's PLAYBOOK.md, or tools/pb/ with a note) is asked of the lead first (§12); if the real cause is out of scope, stop and ask. One attempt + self-verify (content_gate.py).
+- Done when: `python3 tools/pb/content_gate.py selftest` prints `=== GO ===` with 37 of 37, on win-laptop; and the same selftest still GO on linux-pc (owed there if not run)
+- Handoff: <placeholder>
+
+## M0-D4 · plan.py's selftest fails one check on Windows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
+- Status: TODO
+- Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tools_selftest[plan]` until this and its sibling D's are fixed; M0-TJ3 may instead box-bind the case (`box: laserax-ai`, §8) and retire the D as N/A with the citation
+- Caused by: M0-TH (extracted plan.py and ran its selftest on linux-pc only; GO there)
+- Files: tools/pb/plan.py — named by the selftest's log, not opened (M0-TE-win never reads a tool's code); the executing task confirms first
+- Read: this file (rules + this task) + milestones/m0/reports/win_laptop.md § Toolkit + milestones/m0/logs/M0-TE-win.tools_selftest.log + tools/pb/plan.py (its selftest's `Read:`-over-500-lines case)
+- Symptom: `plan.py selftest` → 245 of 246 checks, 1 FAIL: the `Read:`-over-500-lines WARN check reports «got: `Read:` names big_reference.md whole (600 lines > 500) … | WARN: 3 open block(s) carry no rating … | === GO ===» — the output holds the expected WARN plus another, so the check's exact comparison fails; two lines «WARN: replace of m12_implementation_plan.md needed 2 attempts - transient lock on this box» also print (the tool's own Windows retry), without failing a check. `plan.py lint` on the real plan is GO (479 checks) on this box · Repro: `python3 tools/pb/plan.py selftest`, three times, the same FAIL (box win-laptop = Laser2025-20, Windows 11 build 26300, Git Bash 5.3.15 as the shell, Python 3.13.14) · Suspected cause: unknown — either the extra «no rating» WARN is a fixture the Linux run never prints (a ladder or a path difference), or the Windows lock-retry text lands in the compared output
+- Deliver: the smallest fix that turns the selftest GO on win-laptop and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so a local patch is lost at the next extraction — where the fix lands (the annex, the lead's PLAYBOOK.md, or tools/pb/ with a note) is asked of the lead first (§12); if the real cause is out of scope, stop and ask. One attempt + self-verify (plan.py).
+- Done when: `python3 tools/pb/plan.py selftest` prints `=== GO ===` with 246 of 246 and no violation, on win-laptop; and the same selftest still GO on linux-pc (owed there if not run)
+- Handoff: <placeholder>
+
+## M0-D5 · scratch_copy.sh's selftest fails one check on Windows: «a dest inside the source» · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-win, BEFORE M0-TJ3)
+- Status: TODO
+- Blocks: nothing — on win-laptop `verify.py --all` reads NO-GO at `tools_selftest[scratch_copy]` until this and its sibling D's are fixed; M0-TJ3 may instead box-bind the case (`box: laserax-ai`, §8) and retire the D as N/A with the citation
+- Caused by: M0-TH (extracted scratch_copy.sh and ran its selftest on linux-pc only; GO there)
+- Files: tools/pb/scratch_copy.sh — named by the selftest's log, not opened (M0-TE-win never reads a tool's code); the executing task confirms first
+- Read: this file (rules + this task) + milestones/m0/reports/win_laptop.md § Toolkit + milestones/m0/logs/M0-TE-win.tools_selftest.log + tools/pb/scratch_copy.sh
+- Symptom: with rsync 3.5.1 installed (M0-TE-win, the lead's yes) and `MSYS=winsymlinks:nativestrict` (the user variable M0-TE-win set; Developer Mode is on), `scratch_copy.sh --selftest` → 11 of 12 checks, 1 FAIL: «a dest inside the source → NO-GO, nothing created»; without the MSYS setting 4 more FAIL (the symlink checks and the excluded-folder checks), without rsync 9 (`find: '/tmp/scratch_copy_selftest…/d1': No such file or directory`) · Repro: `MSYS=winsymlinks:nativestrict bash tools/pb/scratch_copy.sh --selftest` in Git Bash (box win-laptop = Laser2025-20, Windows 11 build 26300, Git Bash 5.3.15 as the shell, Python 3.13.14) · Suspected cause: the check compares a destination under /tmp (an MSYS path) with the source's Windows or MSYS form, so «inside the source» is never seen, or the guard creates the destination first — unknown until the script is read
+- Deliver: the smallest fix that turns the selftest GO on win-laptop and leaves it GO on linux-pc, its plants still red (`verify.py --redarm tools_selftest`); the tool is extracted from PLAYBOOK annex §A, so a local patch is lost at the next extraction — where the fix lands (the annex, the lead's PLAYBOOK.md, or tools/pb/ with a note) is asked of the lead first (§12); if the real cause is out of scope, stop and ask. One attempt + self-verify (scratch_copy.sh).
+- Done when: `bash tools/pb/scratch_copy.sh --selftest` prints `=== GO ===` with 12 of 12 in a Git Bash that has the MSYS setting; a Windows shell without it is named in docs/agent/testing.md, on win-laptop; and the same selftest still GO on linux-pc (owed there if not run)
 - Handoff: <placeholder>
 
 ## M0-TJ3 · Direction ruling — win-laptop in play for M0: what runs where · **PLAN + LEAD answers** · Opus 5.5, max · switch · (AFTER M0-TE-win)
