@@ -1,0 +1,7 @@
+# Python venv (m0_rules.md R1 — the lead, 2026-10-08)
+.venv/
+# Captures are git-ignored (PLAYBOOK §1); a .gitkeep holds each images/ folder
+milestones/*/images/*
+!milestones/*/images/.gitkeep
+# Raw run and measurement outputs (PLAYBOOK §1)
+output/
