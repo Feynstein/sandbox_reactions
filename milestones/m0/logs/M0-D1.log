@@ -1,0 +1,176 @@
+# M0-D1 — research Verify 1 fix, linux-pc (laserax-ai), opened 2026-10-08 10:01 EDT — 2026-10-08T14:01:52Z
+
+## run 1 — 10:03 — the plan's current lines (old) and the fixed lines (new) on the fixtures, from /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2378687f-6403-49ea-8717-df8ad6f950f5/scratchpad/d1
+ok   R1   old  missing                          exit 1  NO-GO: no report
+ok   R1   new  missing                          exit 1  NO-GO: no report
+ok   R1   old  prose (repro 1)                  exit 0  GO
+ok   R1   new  prose (repro 1)                  exit 1  NO-GO: missing sections
+ok   R1   old  good                             exit 0  GO
+ok   R1   new  good                             exit 0  GO
+ok   R1   old  mention (repro 2)                exit 1  NO-GO: no answer quoted under Ruling
+ok   R1   new  mention (repro 2)                exit 0  GO
+ok   R1   old  h3 second section                exit 0  GO
+ok   R1   new  h3 second section                exit 1  NO-GO: missing sections
+ok   R1   old  suffix on every heading          exit 0  GO
+ok   R1   new  suffix on every heading          exit 0  GO
+ok   R1   old  word-continued first heading     exit 0  GO
+ok   R1   new  word-continued first heading     exit 1  NO-GO: missing sections
+ok   R1   old  14 sources                       exit 1  NO-GO: fewer than 15 dated sources
+ok   R1   new  14 sources                       exit 1  NO-GO: fewer than 15 dated sources
+ok   R1   old  ruling unanswered                exit 1  NO-GO: no answer quoted under Ruling
+ok   R1   new  ruling unanswered                exit 1  NO-GO: no answer quoted under Ruling
+ok   R1   old  quote after an inline mention    exit 0  GO
+ok   R1   new  quote after an inline mention    exit 1  NO-GO: no answer quoted under Ruling
+ok   R1   old  repo (as M0-R1 left it)          exit 0  GO
+ok   R1   new  repo (as M0-R1 left it)          exit 0  GO
+ok   R2a  old  missing                          exit 1  NO-GO: no report
+ok   R2a  new  missing                          exit 1  NO-GO: no report
+ok   R2a  old  prose (repro 1)                  exit 0  GO
+ok   R2a  new  prose (repro 1)                  exit 1  NO-GO: missing sections
+ok   R2a  old  good                             exit 0  GO
+ok   R2a  new  good                             exit 0  GO
+ok   R2a  old  mention                          exit 0  GO
+ok   R2a  new  mention                          exit 0  GO
+ok   R2a  old  h3 second section                exit 0  GO
+ok   R2a  new  h3 second section                exit 1  NO-GO: missing sections
+ok   R2a  old  suffix on every heading          exit 0  GO
+ok   R2a  new  suffix on every heading          exit 0  GO
+ok   R2a  old  word-continued first heading     exit 0  GO
+ok   R2a  new  word-continued first heading     exit 1  NO-GO: missing sections
+ok   R2a  old  9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R2a  new  9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R2a  old  repo (report not written yet)    exit 1  NO-GO: no report
+ok   R2a  new  repo (report not written yet)    exit 1  NO-GO: no report
+ok   R2b  old  missing                          exit 1  NO-GO: no report
+ok   R2b  new  missing                          exit 1  NO-GO: no report
+ok   R2b  old  prose (repro 1)                  exit 0  GO
+ok   R2b  new  prose (repro 1)                  exit 1  NO-GO: missing sections
+ok   R2b  old  good                             exit 0  GO
+ok   R2b  new  good                             exit 0  GO
+ok   R2b  old  mention                          exit 0  GO
+ok   R2b  new  mention                          exit 0  GO
+ok   R2b  old  h3 second section                exit 0  GO
+ok   R2b  new  h3 second section                exit 1  NO-GO: missing sections
+ok   R2b  old  suffix on every heading          exit 0  GO
+ok   R2b  new  suffix on every heading          exit 0  GO
+ok   R2b  old  word-continued first heading     exit 0  GO
+ok   R2b  new  word-continued first heading     exit 1  NO-GO: missing sections
+ok   R2b  old  9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R2b  new  9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R2b  old  repo (report not written yet)    exit 1  NO-GO: no report
+ok   R2b  new  repo (report not written yet)    exit 1  NO-GO: no report
+ok   R3   old  missing                          exit 1  NO-GO: no report
+ok   R3   new  missing                          exit 1  NO-GO: no report
+ok   R3   old  prose (repro 1)                  exit 0  GO
+ok   R3   new  prose (repro 1)                  exit 1  NO-GO: missing sections
+ok   R3   old  good                             exit 0  GO
+ok   R3   new  good                             exit 0  GO
+ok   R3   old  mention                          exit 0  GO
+ok   R3   new  mention                          exit 0  GO
+ok   R3   old  h3 second section                exit 0  GO
+ok   R3   new  h3 second section                exit 1  NO-GO: missing sections
+ok   R3   old  suffix on every heading          exit 0  GO
+ok   R3   new  suffix on every heading          exit 0  GO
+ok   R3   old  word-continued first heading     exit 0  GO
+ok   R3   new  word-continued first heading     exit 1  NO-GO: missing sections
+ok   R3   old  9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R3   new  9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R3   old  repo (report not written yet)    exit 1  NO-GO: no report
+ok   R3   new  repo (report not written yet)    exit 1  NO-GO: no report
+ok   R1   old  no ! $ or backtick in the line   
+ok   R2a  old  no ! $ or backtick in the line   
+ok   R2b  old  no ! $ or backtick in the line   
+ok   R3   old  no ! $ or backtick in the line   
+ok   R1   new  no ! $ or backtick in the line   
+ok   R2a  new  no ! $ or backtick in the line   
+ok   R2b  new  no ! $ or backtick in the line   
+ok   R3   new  no ! $ or backtick in the line   
+cases: 84 · pass: 84 · fail: 0
+=== GO ===
+
+## side measurements — 10:03
+(a) the Deliver's example pattern (heading text alone on its line, \s*$) on the real engine_stack.md:
+   strict misses: ['## Dependency table', '## UNVERIFIED']
+(b) a line holding ! pasted into an interactive bash (history expansion on, as in a terminal):
+   bash: cannot set terminal process group (1432247): Inappropriate ioctl for device
+   bash: no job control in this shell
+   bash-5.2$ echo "kept: (?!\w)"
+   bash: !\w: event not found
+   bash-5.2$ exit
+(c) residual: headings only inside a code fence (fixed R2a line):
+   report: milestones/m0/reports/star_physics.md - sections missing: 0 - dated sources: 10
+   === GO ===
+      exit 0
+
+## run 2 — 10:09 — the four lines as they now stand in the plan (plan), same fixtures
+ok   R1   plan missing                          exit 1  NO-GO: no report
+ok   R1   plan prose (repro 1)                  exit 1  NO-GO: missing sections
+ok   R1   plan good                             exit 0  GO
+ok   R1   plan mention (repro 2)                exit 0  GO
+ok   R1   plan h3 second section                exit 1  NO-GO: missing sections
+ok   R1   plan suffix on every heading          exit 0  GO
+ok   R1   plan word-continued first heading     exit 1  NO-GO: missing sections
+ok   R1   plan 14 sources                       exit 1  NO-GO: fewer than 15 dated sources
+ok   R1   plan ruling unanswered                exit 1  NO-GO: no answer quoted under Ruling
+ok   R1   plan quote after an inline mention    exit 1  NO-GO: no answer quoted under Ruling
+ok   R1   plan repo (as M0-R1 left it)          exit 0  GO
+ok   R2a  plan missing                          exit 1  NO-GO: no report
+ok   R2a  plan prose (repro 1)                  exit 1  NO-GO: missing sections
+ok   R2a  plan good                             exit 0  GO
+ok   R2a  plan mention                          exit 0  GO
+ok   R2a  plan h3 second section                exit 1  NO-GO: missing sections
+ok   R2a  plan suffix on every heading          exit 0  GO
+ok   R2a  plan word-continued first heading     exit 1  NO-GO: missing sections
+ok   R2a  plan 9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R2a  plan repo (report not written yet)    exit 1  NO-GO: no report
+ok   R2b  plan missing                          exit 1  NO-GO: no report
+ok   R2b  plan prose (repro 1)                  exit 1  NO-GO: missing sections
+ok   R2b  plan good                             exit 0  GO
+ok   R2b  plan mention                          exit 0  GO
+ok   R2b  plan h3 second section                exit 1  NO-GO: missing sections
+ok   R2b  plan suffix on every heading          exit 0  GO
+ok   R2b  plan word-continued first heading     exit 1  NO-GO: missing sections
+ok   R2b  plan 9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R2b  plan repo (report not written yet)    exit 1  NO-GO: no report
+ok   R3   plan missing                          exit 1  NO-GO: no report
+ok   R3   plan prose (repro 1)                  exit 1  NO-GO: missing sections
+ok   R3   plan good                             exit 0  GO
+ok   R3   plan mention                          exit 0  GO
+ok   R3   plan h3 second section                exit 1  NO-GO: missing sections
+ok   R3   plan suffix on every heading          exit 0  GO
+ok   R3   plan word-continued first heading     exit 1  NO-GO: missing sections
+ok   R3   plan 9 sources                        exit 1  NO-GO: fewer than 10 dated sources
+ok   R3   plan repo (report not written yet)    exit 1  NO-GO: no report
+ok   R1   plan no ! $ or backtick in the line   
+ok   R2a  plan no ! $ or backtick in the line   
+ok   R2b  plan no ! $ or backtick in the line   
+ok   R3   plan no ! $ or backtick in the line   
+cases: 42 · pass: 42 · fail: 0
+=== GO ===
+
+## run 3 — 10:09 — the four plan lines on the tree, from the repo root (linux-pc)
+M0-R1 Verify 1:
+report: milestones/m0/reports/engine_stack.md - sections missing: 0 - dated sources: 39 - answer quoted under Ruling: True
+=== GO ===
+exit 0
+M0-R2a Verify 1:
+report: missing - sections missing: 4 ## Stages ## Elements ## Squeeze ## UNVERIFIED - dated sources: 0
+=== NO-GO: no report ===
+exit 1
+M0-R2b Verify 1:
+report: missing - sections missing: 3 ## Models ## Oracles ## UNVERIFIED - dated sources: 0
+=== NO-GO: no report ===
+exit 1
+M0-R3 Verify 1:
+report: missing - sections missing: 5 ## Problem ## Prior art ## Options ## Recommendation ## UNVERIFIED - dated sources: 0
+=== NO-GO: no report ===
+exit 1
+
+## side measurement (d) — 10:10 — which ! forms survive a paste into an interactive bash
+   bash-5.2$ echo "ne: a!=b"
+   ne: a!=b
+   bash-5.2$ echo "fmt: {x!r}"
+   bash: !r}: event not found
+   bash-5.2$ echo "neg: (?!x)"
+   bash: !x: event not found
+   bash-5.2$ exit

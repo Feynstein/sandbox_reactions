@@ -1,0 +1,93 @@
+M0-R3 log opened 2026-10-08 10:49 on linux-pc
+== 10:55 cargo build --offline --release (scratch bench at /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/11e4a1f3-bd3c-47e4-8cb5-6a411c8fe0be/scratchpad/warpbench)
+== 10:56 warpbench quadro (linux-pc)
+== adapter: Quadro RTX 4000 (DiscreteGpu, driver NVIDIA 595.99.02)
+
+thread 'main' (1808005) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1280:26:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_bind_group
+    Number of bindings in bind group descriptor (2) does not match the number of bindings defined in the bind group layout (1)
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+== 10:56 warpbench quadro, rerun after the binding fix (linux-pc)
+== adapter: Quadro RTX 4000 (DiscreteGpu, driver NVIDIA 595.99.02)
+dispatch cost: 2.65 us wall, 2.12 us gpu, 0.33 us encode (per dispatch, 1000 in one pass)
+-- world 600x400, FFT 2048x1024 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   0.584 ms  gpu   0.569 ms  encode  0.006 ms
+   gravity FFT    dispatches/step   6 | per step: wall   1.244 ms  gpu   1.226 ms  encode  0.009 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   0.298 ms  gpu   0.273 ms  encode  0.017 ms
+   burn           dispatches/step   1 | per step: wall   0.142 ms  gpu   0.134 ms  encode  0.003 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.025 ms  gpu   0.019 ms  encode  0.003 ms
+   FULL STEP      dispatches/step  29 | per step: wall   2.132 ms  gpu   2.092 ms  encode  0.033 ms
+-- massive-star box 160x160, FFT 512x512 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   0.052 ms  gpu   0.044 ms  encode  0.003 ms
+   gravity FFT    dispatches/step   6 | per step: wall   0.168 ms  gpu   0.157 ms  encode  0.005 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   0.054 ms  gpu   0.034 ms  encode  0.016 ms
+   burn           dispatches/step   1 | per step: wall   0.021 ms  gpu   0.016 ms  encode  0.001 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.011 ms  gpu   0.005 ms  encode  0.002 ms
+   FULL STEP      dispatches/step  29 | per step: wall   0.294 ms  gpu   0.254 ms  encode  0.032 ms
+-- sun-like box 64x64, FFT 128x128 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   0.031 ms  gpu   0.023 ms  encode  0.004 ms
+   gravity FFT    dispatches/step   6 | per step: wall   0.034 ms  gpu   0.024 ms  encode  0.007 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   0.044 ms  gpu   0.024 ms  encode  0.015 ms
+   burn           dispatches/step   1 | per step: wall   0.014 ms  gpu   0.010 ms  encode  0.001 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.010 ms  gpu   0.005 ms  encode  0.003 ms
+   FULL STEP      dispatches/step  29 | per step: wall   0.113 ms  gpu   0.081 ms  encode  0.025 ms
+== 10:56 warpbench 5090 (linux-pc)
+== adapter: NVIDIA GeForce RTX 5090 (DiscreteGpu, driver NVIDIA 595.99.02)
+dispatch cost: 1.92 us wall, 0.87 us gpu, 0.90 us encode (per dispatch, 1000 in one pass)
+-- world 600x400, FFT 2048x1024 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   0.047 ms  gpu   0.038 ms  encode  0.006 ms
+   gravity FFT    dispatches/step   6 | per step: wall   0.139 ms  gpu   0.124 ms  encode  0.011 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   0.064 ms  gpu   0.038 ms  encode  0.022 ms
+   burn           dispatches/step   1 | per step: wall   0.018 ms  gpu   0.014 ms  encode  0.001 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.010 ms  gpu   0.004 ms  encode  0.003 ms
+   FULL STEP      dispatches/step  29 | per step: wall   0.269 ms  gpu   0.217 ms  encode  0.044 ms
+-- massive-star box 160x160, FFT 512x512 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   0.025 ms  gpu   0.017 ms  encode  0.005 ms
+   gravity FFT    dispatches/step   6 | per step: wall   0.042 ms  gpu   0.029 ms  encode  0.010 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   0.041 ms  gpu   0.019 ms  encode  0.020 ms
+   burn           dispatches/step   1 | per step: wall   0.008 ms  gpu   0.005 ms  encode  0.001 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.008 ms  gpu   0.003 ms  encode  0.003 ms
+   FULL STEP      dispatches/step  29 | per step: wall   0.121 ms  gpu   0.073 ms  encode  0.044 ms
+-- sun-like box 64x64, FFT 128x128 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   0.024 ms  gpu   0.017 ms  encode  0.006 ms
+   gravity FFT    dispatches/step   6 | per step: wall   0.024 ms  gpu   0.013 ms  encode  0.009 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   0.044 ms  gpu   0.019 ms  encode  0.022 ms
+   burn           dispatches/step   1 | per step: wall   0.008 ms  gpu   0.005 ms  encode  0.001 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.009 ms  gpu   0.003 ms  encode  0.004 ms
+   FULL STEP      dispatches/step  29 | per step: wall   0.104 ms  gpu   0.056 ms  encode  0.043 ms
+== 10:56 warpbench intel (linux-pc)
+== adapter: Intel(R) Graphics (RPL-S) (IntegratedGpu, driver Intel open-source Mesa driver Mesa 25.2.8-0ubuntu0.24.04.4)
+dispatch cost: 2.45 us wall, 1.71 us gpu, 0.32 us encode (per dispatch, 1000 in one pass)
+-- world 600x400, FFT 2048x1024 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   4.169 ms  gpu   4.149 ms  encode  0.008 ms
+   gravity FFT    dispatches/step   6 | per step: wall   8.052 ms  gpu   8.030 ms  encode  0.011 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   1.338 ms  gpu   1.310 ms  encode  0.017 ms
+   burn           dispatches/step   1 | per step: wall   0.803 ms  gpu   0.786 ms  encode  0.004 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.179 ms  gpu   0.165 ms  encode  0.004 ms
+   FULL STEP      dispatches/step  29 | per step: wall  14.422 ms  gpu  14.379 ms  encode  0.018 ms
+-- massive-star box 160x160, FFT 512x512 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   0.449 ms  gpu   0.429 ms  encode  0.007 ms
+   gravity FFT    dispatches/step   6 | per step: wall   1.238 ms  gpu   1.215 ms  encode  0.010 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   0.141 ms  gpu   0.126 ms  encode  0.007 ms
+   burn           dispatches/step   1 | per step: wall   0.099 ms  gpu   0.087 ms  encode  0.001 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.026 ms  gpu   0.020 ms  encode  0.002 ms
+   FULL STEP      dispatches/step  29 | per step: wall   1.920 ms  gpu   1.886 ms  encode  0.018 ms
+-- sun-like box 64x64, FFT 128x128 (25 steps per submit; per-step ms = median / 25)
+   hydro x4       dispatches/step   4 | per step: wall   0.088 ms  gpu   0.077 ms  encode  0.004 ms
+   gravity FFT    dispatches/step   6 | per step: wall   0.228 ms  gpu   0.213 ms  encode  0.007 ms
+   heat RKL2 x16  dispatches/step  16 | per step: wall   0.055 ms  gpu   0.039 ms  encode  0.008 ms
+   burn           dispatches/step   1 | per step: wall   0.022 ms  gpu   0.019 ms  encode  0.001 ms
+   CFL reduce     dispatches/step   2 | per step: wall   0.014 ms  gpu   0.006 ms  encode  0.003 ms
+   FULL STEP      dispatches/step  29 | per step: wall   0.394 ms  gpu   0.358 ms  encode  0.027 ms
+== 11:06 Verify 1 (linux-pc)
+report: milestones/m0/reports/time_warp.md - sections missing: 0 - dated sources: 16
+=== GO ===
+== red arm: ## Options un-headed, scratch copy at /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/11e4a1f3-bd3c-47e4-8cb5-6a411c8fe0be/scratchpad/redarm
+report: milestones/m0/reports/time_warp.md - sections missing: 1 ## Options - dated sources: 16
+=== NO-GO: missing sections ===
+exit 1

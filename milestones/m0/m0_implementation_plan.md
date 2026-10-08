@@ -44,10 +44,11 @@ Answered at M0-TP by the question tool (≤4 per call), each restating its conse
 |---|---|---|---|---|
 | M0-TI | PLAN + LEAD answers | The sandbox's mechanics and the star's life, from the lead | FIRST | DONE (2026-10-08 09:10, started 08:51) |
 | M0-TP | PLAN | Red-team this plan; goal, size, modules and licence put to the lead | AFTER M0-TI | DONE (2026-10-08 09:40, started 09:12) |
-| M0-R1 | BUILD | Engine and language research; the lead picks | AFTER M0-TP | TODO |
-| M0-R2a | BUILD | Star research: stages, endings, elements, the squeeze | AFTER M0-R1 | TODO |
-| M0-R2b | BUILD | Simulation research: models, flat-world gravity, edges, oracles | AFTER M0-R2a | TODO |
-| M0-R3 | BUILD | Time-warp research: the squeeze, the speed range, the top speed's frame budget | AFTER M0-R2b | TODO |
+| M0-R1 | BUILD | Engine and language research; the lead picks | AFTER M0-TP | DONE (2026-10-08 09:52, started 09:43) |
+| M0-D1 | BUILD | Research Verify lines: match sections as headings, not substrings | AFTER M0-R1, BEFORE M0-R2a | DONE (2026-10-08 10:11, started 09:58) |
+| M0-R2a | BUILD | Star research: stages, endings, elements, the squeeze | AFTER M0-R1 | DONE (2026-10-08 10:24, started 10:14) |
+| M0-R2b | BUILD | Simulation research: models, flat-world gravity, edges, oracles | AFTER M0-R2a | DONE (2026-10-08 10:47) |
+| M0-R3 | BUILD | Time-warp research: the squeeze, the speed range, the top speed's frame budget | AFTER M0-R2b | DONE (2026-10-08 11:06, started 10:49) |
 | M0-TC | PLAN | Physics forks and the dependency gate with the lead; the M0 contract | AFTER M0-R3 | TODO |
 | M0-TH | BUILD | The toolkit and the test harness | AFTER M0-TC | TODO |
 | M0-TG | PLAN | The M0 build pipeline, sized and ordered | AFTER M0-TH | TODO |
@@ -157,12 +158,12 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
   PATH edit in the lead's shell files is the lead's.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-R1 — after the Phase 0 commit gate
-- Counters: T=0 · D=0 · V=0 · Q=0 · TI=0 · TJ=0 · TV=0 · TC=0 · TR=0 · TM=0
+- Next task: M0-TC, after the lead's Phase 1 commit gate
+- Counters: T=0 · D=1 · V=0 · Q=0 · TI=0 · TJ=0 · TV=0 · TC=0 · TR=0 · TM=0
 - Open D/BLOCKED register: none
-- Outstanding commit gates: Phase 0 (M0-TI, M0-TP) — the lead's, the block after M0-TP
+- Outstanding commit gates: Phase 1 (lead) — M0-R3 closed 2026-10-08 11:06; the three lines under M0-R3's block
 - Carryover: none
-- Awaiting lead: the Phase 0 commit gate
+- Awaiting lead: none (M0-R1's engine pick ruled 2026-10-08)
 - Model ratings: 2026-10-08 by the bootstrap
 
 # Tasks
@@ -236,7 +237,7 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 # Phase 1 — research: the engine, the star's physics, the time warp
 
 ## M0-R1 · Engine and language research — C++ or Rust, our own engine or an existing one · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TP)
-- Status: TODO
+- Status: DONE (2026-10-08 09:52, started 09:43)
 - Ask (verbatim): "I dont know whats the best engine to use (custom or other) but I know were going to have to build it in c++ or rust." · "Ideally I would for it to run on a website, or to be able to sell it on steam." · "Research first, then you pick (Recommended)" (the lead, 2026-10-08)
 - Read: this file (rules + this task) + reports/bootstrap.md §1–§3 + reports/sandbox_interview.md
   (its MVP and its feel and performance answers)
@@ -270,20 +271,57 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 - Verify:
   1. the report's sections, its dated sources and the lead's pick, from the repo root
      ```bash
-     python3 -c "import os,re,sys;p='milestones/m0/reports/engine_stack.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Candidates','## Criteria','## Recommendation','## Dependency table','## UNVERIFIED','## Ruling');miss=[s for s in need if s not in t];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));r=t.split('## Ruling',1)[1].split('\n## ',1)[0] if '## Ruling' in t else '';q=bool(re.search(r'[\"“][^\"”\n]{2,}[\"”]',r));ok=bool(t) and not miss and n>=15 and q;print('report:',p if t else 'missing','- sections missing:',len(miss),*miss,'- dated sources:',n,'- answer quoted under Ruling:',q);print('=== GO ===' if ok else '=== NO-GO: '+('no report' if not t else 'missing sections' if miss else 'fewer than 15 dated sources' if n<15 else 'no answer quoted under Ruling')+' ===');sys.exit(0 if ok else 1)"
+     python3 -c "import os,re,sys;p='milestones/m0/reports/engine_stack.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Candidates','## Criteria','## Recommendation','## Dependency table','## UNVERIFIED','## Ruling');miss=[s for s in need if not re.search(r'(?m)^'+re.escape(s)+r'\b',t)];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));m=re.search(r'(?m)^## Ruling\b.*',t);r=t[m.end():].split('\n## ',1)[0] if m else '';q=bool(re.search(r'[\"“][^\"”\n]{2,}[\"”]',r));ok=bool(t) and not miss and n>=15 and q;print('report:',p if t else 'missing','- sections missing:',len(miss),*miss,'- dated sources:',n,'- answer quoted under Ruling:',q);print('=== GO ===' if ok else '=== NO-GO: '+('no report' if not t else 'missing sections' if miss else 'fewer than 15 dated sources' if n<15 else 'no answer quoted under Ruling')+' ===');sys.exit(0 if ok else 1)"
      ```
-     Pass: GO — the six sections present, at least 15 sources with `(accessed YYYY-MM-DD)`, and
-     the lead's answer quoted under `## Ruling`.
+     Pass: GO — the six sections present as heading lines (each `## <name>` at a line's start; a
+     suffix after the name allowed), at least 15 sources with `(accessed YYYY-MM-DD)`, and the
+     lead's answer quoted under `## Ruling`.
      Fail: NO-GO — no report, a missing section, fewer than 15 dated sources, or no answer quoted
      under `## Ruling`. A pick the lead has not given yet is `IN PROGRESS (awaiting: the engine and
      language pick)`, never a defect.
 - Adversarial: a recommendation driven by familiarity or hype — the runner-up's strongest case is
   written out and answered; a "runs on the web" claim read off a README — each web claim cites a
   working demo, a release note or an issue tracker.
-- Handoff: <placeholder>
+- Handoff: reports/engine_stack.md exists: 6 candidates scored on 16 criteria, 36 evidence lines (39 dated URLs), UNVERIFIED register. **Ruled by the lead: "Rust + wgpu, own engine (Recommended)"** — Rust with wgpu + winit + egui; runner-up Rust + Bevy, answered.
+  Measured: wgpu runs compute on desktop and in the browser via WebGPU; Godot and raylib web builds are WebGL2-only, which has no compute. Quadro RTX 4000 = RTX 2070 class (I11 holds), so the 60-frames check can run on it. The Powder Toy's grid is 612 × 384. WebGPU is missing from Firefox on Linux.
+  Deviations: the question offered a third option (C++ + Godot), because the lead named C++. plan.py and rung_record.py are absent, so the plan was edited by hand per Repo facts.
+  Filed M0-D1: Verify 1 (here and in R2a/R2b/R3) gives a false GO on a report with no real headings — measured; repro in tasks/M0-R1.md.
+  Not acted on: Repo facts' "Stack: not chosen" line is left for M0-TC (it fixes the layout); the web smoke on linux-pc's Chrome 155 is NOT PROVEN (no build yet).
+  Verify 1: [ALREADY RUN — FAIL (no report), FAIL (ruling pending), FAIL (false NO-GO, see D1), then PASS — GO on linux-pc]; logs/M0-R1.log.
+  Model and level: NOT RUN (no rung_record.py yet).
+  Next: M0-D1, then M0-R2a.
+
+## M0-D1 · The research Verify lines pass a report with no real sections · **BUILD** · Opus 5.5, max · switch · (AFTER M0-R1, BEFORE M0-R2a)
+- Status: DONE (2026-10-08 10:11, started 09:58)
+- Blocks: M0-R2a (its Verify 1 is the first to run next)
+- Caused by: M0-TP (it wrote the four research Verify lines)
+- Files: milestones/m0/m0_implementation_plan.md — the Verify 1 one-liners of M0-R1, M0-R2a, M0-R2b,
+  M0-R3 (each contains `miss=[s for s in need if s not in t]`; opened and verified by M0-R1)
+- Read: this file (rules + this task + the four Verify 1 lines) + tasks/M0-R1.md (the repro)
+- Symptom: Verify 1 checks each section as a substring anywhere in the report and cuts the Ruling
+  section at the heading text's first occurrence. False GO, measured by M0-R1 on linux-pc: a report
+  whose single prose line names all six headings, then `"yes"`, plus 15 lines `https://x.example/<n>
+  (accessed 2026-10-08)` → `=== GO ===`, exit 0. False NO-GO, measured on the real
+  reports/engine_stack.md: a summary sentence mentioning "`## Ruling`" made the check read that
+  sentence as the Ruling section → `no answer quoted under Ruling` while the answer was there.
+  Suspected cause: measured — the substring test `s not in t` and `t.split('## Ruling',1)`.
+- Deliver: the smallest fix — each section matched as a heading line (e.g. `re.search(r'(?m)^' +
+  re.escape(s) + r'\s*$', t)`) and the Ruling body taken from that heading line — applied to all
+  four Verify lines by asking the lead first (`Changes by asking: every block`; a live plan's edit,
+  rule (2)); each line red-armed on the two repros above plus a GO on a correct synthetic report;
+  never a weaker check. One attempt + self-verify.
+- Done when: on linux-pc, each fixed Verify 1 gives NO-GO on the prose-only repro, GO on
+  reports/engine_stack.md as M0-R1 left it, and the R2a/R2b/R3 lines NO-GO on a missing report.
+- Handoff: The four research Verify 1 lines (M0-R1, R2a, R2b, R3) now match each section as a heading line, `re.search(r'(?m)^'+re.escape(s)+r'\b',t)`, and R1 reads the Ruling body from under its heading line; each Pass line says so. Applied by asking — the lead, 2026-10-08: "Apply to all four (Recommended)".
+  Done when: [ALREADY RUN — PASS (prose-only repro NO-GO on all four, engine_stack.md GO with 39 dated sources, R2a/R2b/R3 NO-GO no report) on linux-pc]; bench 84/84, then 42/42 on the plan's own bytes; logs/M0-D1.log. The old lines also passed a `###` heading, `## Candidatess` and a quote right after an inline `## Ruling` mention — all NO-GO now.
+  Deviation: `\b` after the name, not the Deliver's example `\s*$` — that form NO-GOes engine_stack.md (`## Dependency table (for C1)`, `## UNVERIFIED (refuted …)`); not `(?!\w)` either — a `!` stops a paste into an interactive bash (`event not found`, measured; flagged to M0-TG).
+  Not acted on: headings only inside a code fence still pass (measured GO) — outside the smallest fix; a report has to fence its headings on purpose.
+  Tools absent (plan.py, verify.py, rung_record.py): plan edited by hand; red arm by the scratch bench (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2378687f-6403-49ea-8717-df8ad6f950f5/scratchpad/d1), not `verify.py --redarm`; `verify.py --changed` NOT RUN (no verify.py yet — M0-TH). Detail: tasks/M0-D1.md.
+  Model and level: NOT RUN (no rung_record.py yet).
+  Next: M0-R2a.
 
 ## M0-R2a · Star research — the stages, the endings and the squeeze · **BUILD** · Opus 5.5, high · switch · (AFTER M0-R1)
-- Status: TODO
+- Status: DONE (2026-10-08 10:24, started 10:14)
 - Ask (verbatim): "As a first demo I want to be able to simulate the life of a star." (the lead, 2026-10-08) · "Real laws, squeezed scale (Recommended)" (reports/sandbox_interview.md, answer 1)
 - Read: this file (rules + this task) + reports/sandbox_interview.md (§1–§4: the star, world and
   sandbox answers, I1–I11, the MVP map) + reports/engine_stack.md (`## Recommendation` and
@@ -302,19 +340,27 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 - Verify:
   1. the report's sections and its dated sources (the star), from the repo root
      ```bash
-     python3 -c "import os,re,sys;p='milestones/m0/reports/star_physics.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Stages','## Elements','## Squeeze','## UNVERIFIED');miss=[s for s in need if s not in t];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));ok=bool(t) and not miss and n>=10;print('report:',p if t else 'missing','- sections missing:',len(miss),*miss,'- dated sources:',n);print('=== GO ===' if ok else '=== NO-GO: '+('no report' if not t else 'missing sections' if miss else 'fewer than 10 dated sources')+' ===');sys.exit(0 if ok else 1)"
+     python3 -c "import os,re,sys;p='milestones/m0/reports/star_physics.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Stages','## Elements','## Squeeze','## UNVERIFIED');miss=[s for s in need if not re.search(r'(?m)^'+re.escape(s)+r'\b',t)];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));ok=bool(t) and not miss and n>=10;print('report:',p if t else 'missing','- sections missing:',len(miss),*miss,'- dated sources:',n);print('=== GO ===' if ok else '=== NO-GO: '+('no report' if not t else 'missing sections' if miss else 'fewer than 10 dated sources')+' ===');sys.exit(0 if ok else 1)"
      ```
-     Pass: GO — the four sections present and at least 10 sources with `(accessed YYYY-MM-DD)`.
+     Pass: GO — the four sections present as heading lines (each `## <name>` at a line's start; a
+     suffix after the name allowed) and at least 10 sources with `(accessed YYYY-MM-DD)`.
      Fail: NO-GO — no star_physics.md, a missing section, or fewer than 10 dated sources.
 - Adversarial: real-scale numbers smuggled in as the sandbox's targets — every number in
   `## Squeeze` is an order or a ratio the sandbox keeps, and real values appear only as the
   translation's anchors ("Tests check each law's exact answers, not the real Sun's numbers",
   answer 1's shown text).
-- Handoff: <placeholder>
+- Handoff: reports/star_physics.md exists — 25 dated sources (Pols' Utrecht notes, Heger 2003, Sukhbold 2016, NASA, OpenStax, Wikipedia); `## Stages` S1–S8″ with each stage's driver, real time scale and end state, the ending-threshold table, I11 checked; `## Elements` H He C O Ne Mg Si S Fe (+ optional Ni-56); `## Squeeze` K1–K9 as orders and ratios; the B31 translation proposed (mass: one factor; temperature: one factor or log-anchors; age: a stage clock).
+  Verify 1: [ALREADY RUN — PASS (GO, 4 sections, 25 dated sources) on linux-pc]; red arm (`## Squeeze` un-headed, scratch copy) NO-GO exit 1; logs/M0-R2a.log. `verify.py --redarm/--changed` NOT RUN (no verify.py yet — M0-TH).
+  Findings: I11 holds, two corrected — "10 billion years" is the main sequence (cloud to white dwarf ~11 Gyr, my arithmetic), a core collapse is milliseconds to under a second; the black-hole boundary is soft and non-monotonic (kept as one threshold); clouds below the ignition threshold become failed stars — flagged to M0-R2b, M0-R3, M0-TC.
+  Not acted on: the helium flash's duration conflicts across two sources (UNVERIFIED; nothing rests on it).
+  Deviation: plan.py and rung_record.py absent — plan edited by hand. Detail: tasks/M0-R2a.md.
+  Model and level: NOT RUN (no rung_record.py yet).
+  Next: M0-R2b.
 
 ## M0-R2b · Simulation research — the models that run the star, and their oracles · **BUILD** · Opus 5.5, high · switch · (AFTER M0-R2a)
-- Status: TODO
+- Status: DONE (2026-10-08 10:47, started 10:32)
 - Ask (verbatim): "I also want to have chemical reactions, like mixing two elements with heat can produce them." (the lead, 2026-10-08) · "Machinery only, via fusion (Recommended)" · "the player can choose if it leaves for good or bounces back" (reports/sandbox_interview.md, answers 15 and 18)
+- Carried flags: · [M0-R2a, 2026-10-08] from reports/star_physics.md: (a) the endings exist only if a pressure holds a cold core up to a maximum mass, twice — electron then neutron degeneracy (K9; E12, E13, E19); whether B32's flat-world gravity still gives a maximum mass is UNVERIFIED — yours; (b) the white dwarf's shell ejection (S7) is wind-driven in nature (E2) — a model risk for B4 if gas, gravity and heat alone cannot puff a shell off; (c) K2's late-stage speed-up comes from a neutrino sink steeper in temperature than photon losses (E3); (d) the gap K1 needs between the dynamical, thermal and nuclear clocks is unmeasured — an oracle candidate
 - Read: this file (rules + this task) + reports/sandbox_interview.md (§3 I1, I7, I8; §4 B13, B19,
   B20, B32) + reports/star_physics.md + reports/engine_stack.md (`## Recommendation` and
   `## Ruling`)
@@ -340,18 +386,26 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 - Verify:
   1. the report's sections and its dated sources (the simulation), from the repo root
      ```bash
-     python3 -c "import os,re,sys;p='milestones/m0/reports/sim_models.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Models','## Oracles','## UNVERIFIED');miss=[s for s in need if s not in t];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));ok=bool(t) and not miss and n>=10;print('report:',p if t else 'missing','- sections missing:',len(miss),*miss,'- dated sources:',n);print('=== GO ===' if ok else '=== NO-GO: '+('no report' if not t else 'missing sections' if miss else 'fewer than 10 dated sources')+' ===');sys.exit(0 if ok else 1)"
+     python3 -c "import os,re,sys;p='milestones/m0/reports/sim_models.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Models','## Oracles','## UNVERIFIED');miss=[s for s in need if not re.search(r'(?m)^'+re.escape(s)+r'\b',t)];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));ok=bool(t) and not miss and n>=10;print('report:',p if t else 'missing','- sections missing:',len(miss),*miss,'- dated sources:',n);print('=== GO ===' if ok else '=== NO-GO: '+('no report' if not t else 'missing sections' if miss else 'fewer than 10 dated sources')+' ===');sys.exit(0 if ok else 1)"
      ```
-     Pass: GO — the three sections present and at least 10 sources with `(accessed YYYY-MM-DD)`.
+     Pass: GO — the three sections present as heading lines (each `## <name>` at a line's start; a
+     suffix after the name allowed) and at least 10 sources with `(accessed YYYY-MM-DD)`.
      Fail: NO-GO — no sim_models.md, a missing section, or fewer than 10 dated sources.
 - Adversarial: a model right in a textbook but unstable or too slow at the sandbox's step sizes —
   each recommendation states its stability condition and its cost at about 600 × 400 cells, and
   one is worked by hand in the report.
-- Handoff: <placeholder>
+- Handoff: reports/sim_models.md exists — 31 dated sources (Pols, Chavanis 2007, Maclaurin-disk and thin-disk gravity papers, RKL2, FLD, Truelove, Federrath sinks, Wikipedia laws); `## Models` M1–M8: an Eulerian grid on the GPU; B32 recommended as the 3D 1/r² law inside a flat sheet (2D log gravity breaks K5 and K9) by zero-padded FFT convolution; MUSCL-Hancock gas; flux-limited diffusion under RKL2; one reaction registry (fusion now, chemistry later, B19); a Σ²→Σ^(3/2) cold pressure giving a maximum mass in the sheet; sink-particle black holes; both edge modes; a worked example; `## Oracles` O1–O16 with tolerances.
+  Verify 1: [ALREADY RUN — PASS (GO, 3 sections, 31 dated sources) on linux-pc]; red arm (`## Oracles` un-headed, scratch copy) NO-GO exit 1; local checks C1–C3 in logs/M0-R2b.log. `verify.py --redarm/--changed` NOT RUN (no verify.py yet — M0-TH).
+  Findings: C1 measured the gravity oracle at ≤ 1.6 % at a 40-cell radius (first order); by arithmetic the top speed needs ~25 steps per frame × ~0.88 ms ≈ 22 ms vs 16.6 ms — flagged to M0-R3; B32's fork and the oracles flagged to M0-TC; the sheet's maximum mass, shell ejection and the supernova's explosion stay UNVERIFIED.
+  Lead's mid-session ask: a game picker on the website (space_tykun too) — flagged to M0-TZ; `M1-R2` filed in ../space_tykun's plan through its plan.py, lint GO, committed and pushed as 727dca8 at the lead's request.
+  Deviation: plan.py and rung_record.py absent — plan edited by hand; one early scripted status edit broke this heading and was repaired at once. Detail: tasks/M0-R2b.md.
+  Model and level: NOT RUN (no rung_record.py yet).
+  Next: M0-R3.
 
 ## M0-R3 · Time-warp research — the squeeze and the speed range, from slow motion to a star's life in about ten seconds · **BUILD** · Opus 5.5, high · switch · (AFTER M0-R2b)
-- Status: TODO
+- Status: DONE (2026-10-08 11:06, started 10:49)
 - Ask (verbatim): "I want to be able to slow or speed up time." (the lead, 2026-10-08) · "Speed steps (Recommended)" · "Slow-mo to a life in ~10 s (Recommended)" · "Yes, with an off switch (Recommended)" (reports/sandbox_interview.md, answers 5, 6, 8)
+- Carried flags: · [M0-R1, 2026-10-08] the stack is Rust + wgpu (reports/engine_stack.md, Ruling): price the top speed's frame budget as wgpu compute on the Quadro RTX 4000, which is confirmed RTX 2070 class (E21–E23) · "about 600 × 400 cells … light enough for a laptop and for the web build" holds only for Powder-Toy-class rules (E29, E32); for this sim's physics at top speed it is UNVERIFIED — yours to price, on desktop and in the browser through WebGPU · [M0-R2a, 2026-10-08] from reports/star_physics.md: B9's "cloud to white dwarf in about 10 seconds" squeezes ~11 Gyr, not 10 (main sequence 9–10 Gyr + ~2 subgiant and red giant + ~0.12 helium burning — my arithmetic from E2); the age readout is proposed as a stage clock (real durations of passed stages + the current stage's fraction, scaled by mass), not one factor — yours to confirm or replace (`## Squeeze`, translation) · [M0-R2b, 2026-10-08] from reports/sim_models.md (M8, worked example): steps per life ≈ (5–10 × R/Δx) × the K1 gaps — the sound speed cancels; a 15-cell star with gaps of 10 needs ~15,000 steps for its main sequence, ~25 steps per frame for a life in ~10 s; ~0.88 ms per full step at 600 × 400 (peak-bandwidth arithmetic, unmeasured) → ~22 ms per frame vs 16.6 ms. Measure it on the Quadro through wgpu; levers named there (gravity every k steps, heat only where needed, smaller presets); the K1 gap is the oracle candidate O14
 - Read: this file (rules + this task) + reports/sandbox_interview.md (answers 1, 5–8, 11; §3 I2,
   I4–I6) + reports/star_physics.md (`## Stages` and `## Squeeze`) + reports/sim_models.md
   (`## Models`) + reports/engine_stack.md (`## Ruling`)
@@ -378,15 +432,20 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 - Verify:
   1. the report's sections and its dated sources (the time warp), from the repo root
      ```bash
-     python3 -c "import os,re,sys;p='milestones/m0/reports/time_warp.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Problem','## Prior art','## Options','## Recommendation','## UNVERIFIED');miss=[s for s in need if s not in t];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));ok=bool(t) and not miss and n>=10;print('report:',p if t else 'missing','- sections missing:',len(miss),*miss,'- dated sources:',n);print('=== GO ===' if ok else '=== NO-GO: '+('no report' if not t else 'missing sections' if miss else 'fewer than 10 dated sources')+' ===');sys.exit(0 if ok else 1)"
+     python3 -c "import os,re,sys;p='milestones/m0/reports/time_warp.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Problem','## Prior art','## Options','## Recommendation','## UNVERIFIED');miss=[s for s in need if not re.search(r'(?m)^'+re.escape(s)+r'\b',t)];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));ok=bool(t) and not miss and n>=10;print('report:',p if t else 'missing','- sections missing:',len(miss),*miss,'- dated sources:',n);print('=== GO ===' if ok else '=== NO-GO: '+('no report' if not t else 'missing sections' if miss else 'fewer than 10 dated sources')+' ===');sys.exit(0 if ok else 1)"
      ```
-     Pass: GO — the five sections present and at least 10 sources with `(accessed YYYY-MM-DD)`.
+     Pass: GO — the five sections present as heading lines (each `## <name>` at a line's start; a
+     suffix after the name allowed) and at least 10 sources with `(accessed YYYY-MM-DD)`.
      Fail: NO-GO — no time_warp.md, a missing section, or fewer than 10 dated sources.
 - Adversarial: a warp that looks smooth but breaks the conservation of energy or mass at a switch
   between models or a sub-cycling boundary — the recommendation names the conserved quantities and
   the test that checks them across a switch; a top speed declared reachable without the frame
   budget's arithmetic — `## Problem` writes it out, its inputs sourced or measured.
-- Handoff: <placeholder>
+- Handoff: reports/time_warp.md exists — 16 dated sources (SSE, BSE, MIST EEPs, MESA, Gear–Kevrekidis, reduced speed of light and of sound, GADGET-2, Dursi–Zingale, Fix Your Timestep, WebGPU limits) and measurements M1–M4: a scratch wgpu 30 bench (built offline from the cargo cache, headless; source in the session scratchpad, not the repo) put a whole-world 600 × 400 step at 2.13 ms on the Quadro (R2b estimated 0.88), the Sun-like star's box at 0.11 ms, 2.65 µs per dispatch. Steps per life re-derived: ~22,500 / ~63,000 / ~340,000 (scenarios L/C/H by the unmeasured K1 gap). Verdict: the top speed is NOT shown held — reachable only by computing the star's box (L held, C at the edge, H ~5× over); fork F1 to M0-TC with a measured decision point.
+  Recommended: one adaptive CFL step, speed in sandbox time, an active box, gravity every k steps, a GPU event latch for the slow-down, an SSE-style monotonic stage-clock age; projective jumps as the fallback; sub-cycling and a reduced model rejected.
+  Not acted on: browser WebGPU overhead and the render reserve are unmeasured (no wasm32 target, no drawing code) — UNVERIFIED. Deviation: the IN PROGRESS edit was a Python script over the plan (landed cleanly; a §C defect, declared); later edits by hand.
+  Verify 1: [ALREADY RUN — PASS (GO, 16 dated sources) on linux-pc]; red arm NO-GO exit 1 (logs/M0-R3.log). Model and level: NOT RUN (no rung_record.py yet). Detail: tasks/M0-R3.md.
+  Next: the lead's Phase 1 commit gate (below), then M0-TC.
 
 > **Commit gate (lead):** Phase 1 closes after M0-R3 — from the repo root, one at a time:
 > `git add -A`
@@ -397,7 +456,7 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 
 ## M0-TC · The M0 contract — physics forks and the dependency gate with the lead first · **PLAN** · Opus 5.5, max · switch · (AFTER M0-R3)
 - Status: TODO
-- Carried flags: · [M0-TI, 2026-10-08] reports/sandbox_interview.md §4 routes here the default edge mode (B29), how a preset's mass is chosen (B30), the real-equivalent translation and the inspector's units (B31), gravity's law in a flat world (B32, with M0-R2), and proposes keeping the world size a setting (I9) — each ruled or put to the lead · [M0-TP, 2026-10-08] the 60-frames target has no check yet — frame rate is on Rules' "what a capture cannot show" list, so neither a TV capture nor the walk can prove it: a §5 or §6 guarantee measured by a timed headless run on a named adapter (the Quadro RTX 4000 if M0-R1 confirms its class), a named scene, the top speed step (reports/plan_redteam.md RT16) · [M0-TP, 2026-10-08] the ending readout ("how much you paint sets the star's mass, and so its ending, shown on a readout", answer 2's shown text) is a prediction: a §5 guarantee that each preset ends as its readout predicts, the thresholds measured in the sandbox's own physics, never taken from real astronomy (reports/plan_redteam.md RT17)
+- Carried flags: · [M0-TI, 2026-10-08] reports/sandbox_interview.md §4 routes here the default edge mode (B29), how a preset's mass is chosen (B30), the real-equivalent translation and the inspector's units (B31), gravity's law in a flat world (B32, with M0-R2), and proposes keeping the world size a setting (I9) — each ruled or put to the lead · [M0-TP, 2026-10-08] the 60-frames target has no check yet — frame rate is on Rules' "what a capture cannot show" list, so neither a TV capture nor the walk can prove it: a §5 or §6 guarantee measured by a timed headless run on a named adapter (the Quadro RTX 4000 if M0-R1 confirms its class), a named scene, the top speed step (reports/plan_redteam.md RT16) · [M0-TP, 2026-10-08] the ending readout ("how much you paint sets the star's mass, and so its ending, shown on a readout", answer 2's shown text) is a prediction: a §5 guarantee that each preset ends as its readout predicts, the thresholds measured in the sandbox's own physics, never taken from real astronomy (reports/plan_redteam.md RT17) · [M0-R1, 2026-10-08] from reports/engine_stack.md: (a) the Quadro RTX 4000 is confirmed RTX 2070 class (E21–E23), so the 60-frames guarantee above names it; (b) a browser without WebGPU (Firefox on Linux today, E3) gets a "needs WebGPU" message or a CPU fallback — a fork for the lead, recommended: the message; (c) GPU floats differ across GPUs (WGSL allows fused multiply-add and flushed denormals, E20) — R8's tolerances, and whether a CPU f64 reference of each law is the oracle for the GPU path; (d) Repo facts' "Stack: not chosen" now reads ruled — update it with the source layout; (e) the dependency gate starts from the report's `## Dependency table`, its UNVERIFIED licences (Rust, wasm-bindgen, wasm-pack/trunk) to be confirmed · [M0-R2a, 2026-10-08] from reports/star_physics.md: (a) a cloud below the ignition threshold (~0.08 Suns real) becomes a failed star that cools — the physics will show it though it is not one of the lead's three endings; and the lightest stars outlive the universe in nature (E10) but play out in the squeezed sandbox — a label, and whether a preset may sit there, are yours; (b) the real black-hole boundary is soft and non-monotonic (E3, E6) — the report keeps one threshold as the goal's "as its mass decides": confirm; (c) the B31 translation, proposed: mass one factor anchored on the sandbox's white-dwarf ceiling = 1.44 Suns (painting stays additive), temperature one factor if the ignition ratios hold else log-anchors, age a stage clock with M0-R3 · [M0-R2b, 2026-10-08] from reports/sim_models.md: B32's fork for the lead — recommended B, the 3D 1/r² law inside a flat sheet (keeps K5 "contraction heats" and K9 "a maximum mass", the latter by my arithmetic, UNVERIFIED), against A, 2D log gravity (breaks both) and C, axisymmetric (painting makes rings); the models M1–M8 and the oracles O1–O16 with proposed tolerances for R8; small forks: light still leaves in bounce mode (M7), the readout's surface temperature as T_eff from L and the perimeter (M4); model risks for B4 shell ejection and B5's explosion stay UNVERIFIED · [M0-R3, 2026-10-08] from reports/time_warp.md: (F1) the top speed is NOT shown held — measured on the Quadro (wgpu 30, Vulkan), a whole-world step costs 2.13 ms (~6 steps per frame), the Sun-like star's box 0.11 ms (~115); a life in ~10 s needs ~38 / ~105 / ~560 steps per frame as the unmeasured K1 gap is small / central / large (L/C/H). Put to the lead with its decision point (the first solver lot measures steps per life, O14): if over budget, (a) 30 frames a second on the top rung only [recommended first], (b) projective jumps in quiet phases (R6), (c) a lower top speed — a life in ~1 min re-opens answer 6 (B28), a new ask; (F2) small forks: no auto-return after a slow-down, ×1 = 1 τ_dyn of the Sun-like preset per second, a 1-3-10 rung ladder ×0.1…×100, a ~3 ms render reserve to measure; the age readout recommended as a monotonic stage clock (EEP milestones, SSE fractional age on mass change, R7); the warp-invariance, box and gravity-cadence guarantees T1–T3 (R5) for §5
 - Read: this file (rules + this task) + reports/sandbox_interview.md + reports/engine_stack.md +
   reports/star_physics.md + reports/sim_models.md + reports/time_warp.md + PLAYBOOK.md §9 and
   §14.4
@@ -455,7 +514,7 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 
 ## M0-TG · Task generation — the M0 build pipeline · **PLAN** · Opus 5.5, max · switch · (AFTER M0-TH)
 - Status: TODO
-- Carried flags: · [M0-TP, 2026-10-08] the top speed at 60 frames a second is M0's hardest promise (reports/plan_redteam.md RT6, M0-R3's verdict): the first lot that has a solver measures one step's cost at about 600 × 400 cells on the named adapter, before any ending is built, so a shortfall surfaces early
+- Carried flags: · [M0-TP, 2026-10-08] the top speed at 60 frames a second is M0's hardest promise (reports/plan_redteam.md RT6, M0-R3's verdict): the first lot that has a solver measures one step's cost at about 600 × 400 cells on the named adapter, before any ending is built, so a shortfall surfaces early · [M0-D1, 2026-10-08] a Verify one-liner pasted into an interactive bash stops at a `!` before a letter or a backslash — `(?!x)` and `{x!r}` print `event not found`, `!=` passes (measured, logs/M0-D1.log); the research lines use `\b` for that reason · [M0-R3, 2026-10-08] from reports/time_warp.md: computing only the star's box (A2) and the GPU event latch for the slow-down (R4) are first-lot architecture, not late optimisation — whole-world computing holds no scenario (2.13 ms per step measured on the Quadro); small boxes are dispatch-bound (2.65 µs per dispatch, 29 per step), so fewer, fused kernels are the lever; the first solver lot measures steps per life (O14) and the box's step cost on the Quadro — the decision point of M0-TC's top-speed fork
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md (whole — every block is sized
   against it) + reports/sandbox_interview.md (its MVP) + docs/agent/testing.md + PLAYBOOK.md §2.1
   (TB's tests) and §2.2 (TG)
@@ -530,6 +589,7 @@ none — purely additive (a green-field project). Inherited debt (§2.4): none.
 
 ## M0-TZ · Next-plan authoring — M1 · **PLAN** · Opus 5.5, max · switch · (LAST)
 - Status: TODO
+- Carried flags: · [M0-R1, 2026-10-08] the lead, after the engine ruling: "nice can you quickly check if I could serve it on something like a small amazon lightsail? and move to a larger box when traffic justifies it? If so were gonna have to add some google adsense ad serving to the website, to generate passive revenue" — and, after the check, "great record all that, the CDN and the adsense stuff, its perfect!" A web-release behaviour, routed past M0 (reports/bootstrap.md §3). The sourced record is reports/web_hosting.md: static hosting on a small Lightsail box; a CDN as the first scaling step; AdSense H5 Games Ads at game breaks; no COEP `require-corp` on the game page. Place the web release — hosting, CDN, ads, consent — in a milestone with the lead. Consent rules and revenue are the lead's to rule. · [M0-R2b, 2026-10-08] the lead, mid-session: "one thing id like to add in this project is for the website running the game id like for the user to be able to choose which game they want to play. I might add my space_tykun game from ../ on the website also. It might require something so it can run on the players own hardware, but this is something to settle with the agents running space_tykun." — place the site's game picker with the web release; space_tykun's side is its own `M1-R2` (filed at the lead's request, pushed as 727dca8 in that repo; its report will be `../space_tykun/milestones/m1/reports/web_build.md`)
 - Read: this file (whole) + milestones.md + reports/bootstrap.md §3 + reports/sandbox_interview.md
   (its later, dropped and open lists) + reports/walk1.md
 - Deliver: PLAYBOOK §2.4's TZ → milestones/m1/m1_implementation_plan.md, m1_rules.md and

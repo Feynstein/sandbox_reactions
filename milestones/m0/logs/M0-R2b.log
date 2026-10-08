@@ -1,0 +1,32 @@
+# M0-R2b log — linux-pc, started 2026-10-08 10:32 America/Toronto
+## 2026-10-08 10:39:34 EDT linux-pc: python3 -I scratchpad/check_oracles.py (Maclaurin disk force, edge free fall, uniform-disk W)
+maclaurin a=20 eps=0 M=838.4 cells=1257 rel.err by r/a: 0.10:-2.009% 0.25:-2.075% 0.50:-2.355% 0.75:-3.254% 0.90:-5.844%  worst=5.844%
+maclaurin a=20 eps=0.5 M=838.4 cells=1257 rel.err by r/a: 0.10:-3.494% 0.25:-3.607% 0.50:-4.085% 0.75:-5.574% 0.90:-9.527%  worst=9.527%
+maclaurin a=40 eps=0 M=3351.6 cells=5027 rel.err by r/a: 0.10:-0.998% 0.25:-1.029% 0.50:-1.160% 0.75:-1.561% 0.90:-2.586%  worst=2.586%
+maclaurin a=40 eps=0.5 M=3351.6 cells=5027 rel.err by r/a: 0.10:-1.740% 0.25:-1.793% 0.50:-2.018% 0.75:-2.699% 0.90:-4.372%  worst=4.372%
+free-fall edge: numeric 3.16228 analytic 3.16228 rel +2.41e-07
+uniform disk W: numeric -0.8282 analytic -0.8488 rel -2.43%
+exit 0
+## 2026-10-08 10:42:08 EDT linux-pc: worked example arithmetic (python3 -I -c)
+Maclaurin a=40 S0=1: M=3351.0, t_ff=3.162
+virial disk R=15: c_mean=9.74, core c~2x=19.5
+hydro CFL dt (2D unsplit, v=0, C=0.4, c=19.5) = 0.0103; tau_dyn=R/c=1.54 -> 150 steps
+K1 gap 10 -> chi<= 14.6; explicit dt_p=0.0171 vs hydro 0.0103
+surface chi x100 = 1461: dt_p=1.71e-04, hydro/dt_p=60.0 explicit substeps=60, RKL2 stages s=16
+steps per main sequence (gaps 10,10) = 15000; per frame over 600 frames = 25.0
+hydro: 49.9 MB -> 0.186 ms at 60% of 448 GB/s
+gravity FFT: 70.0 MB -> 0.260 ms at 60% of 448 GB/s
+heat x16 stages: 92.2 MB -> 0.343 ms at 60% of 448 GB/s
+burn+EOS: 25.0 MB -> 0.093 ms at 60% of 448 GB/s
+total per step ~0.88 ms; x25 steps/frame = 22.0 ms vs 16.6 ms
+direct-sum gravity 240k^2 pairs x20 flop @7.5 TFLOPS = 154 ms
+Hockney padded grid 960000 points, one complex f32 array 7.7 MB
+uniform-disk M_ch estimate = 4 K2^2/(pi alpha^2 G^2) = 1.767 K2^2/G^2
+## 2026-10-08 10:44:33 EDT linux-pc: Verify 1
+report: milestones/m0/reports/sim_models.md - sections missing: 0 - dated sources: 31
+=== GO ===
+exit 0
+## 2026-10-08 10:44:40 EDT linux-pc: Verify 1 red arm (scratch copy, '## Oracles' un-headed)
+report: milestones/m0/reports/sim_models.md - sections missing: 1 ## Oracles - dated sources: 31
+=== NO-GO: missing sections ===
+exit 1
