@@ -1,0 +1,195 @@
+# M0-TP probes — 2026-10-08 09:14 EDT — 2026-10-08T13:14:13Z
+## box
+laserax-ai
+Linux laserax-ai 7.0.0-38-generic #38~24.04.4-Ubuntu SMP PREEMPT_DYNAMIC Mon Sep 14 16:37:11 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+32
+Mem:             188          19         142           0          29         169
+SHELL=/bin/bash
+## tz
+Timezone=America/Toronto
+## session
+XDG_SESSION_TYPE=wayland DISPLAY=:1 WAYLAND_DISPLAY=wayland-0
+## gpus
+index, name, memory.total [MiB], driver_version, pci.bus_id, display_active
+0, NVIDIA GeForce RTX 5090, 32607 MiB, 595.99.02, 00000000:01:00.0, Disabled
+1, Quadro RTX 4000, 8192 MiB, 595.99.02, 00000000:04:00.0, Enabled
+00:02.0 Display controller: Intel Corporation Raptor Lake-S GT1 [UHD Graphics 770] (rev 04)
+01:00.0 VGA compatible controller: NVIDIA Corporation Device 2b85 (rev a1)
+04:00.0 VGA compatible controller: NVIDIA Corporation TU104GL [Quadro RTX 4000] (rev a1)
+## opengl
+OpenGL renderer string: Quadro RTX 4000/PCIe/SSE2
+OpenGL core profile version string: 4.6.0 NVIDIA 595.99.02
+OpenGL version string: 4.6.0 NVIDIA 595.99.02
+## vulkan
+asahi_icd.json
+gfxstream_vk_icd.json
+intel_hasvk_icd.json
+intel_icd.json
+lvp_icd.json
+nouveau_icd.json
+nvidia_icd.json
+radeon_icd.json
+virtio_icd.json
+1.3.275
+vulkaninfo: missing
+## disk
+/dev/nvme0n1p2  937G  727G  163G  82% /
+## toolchains — present?
+g++: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+gcc: gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+make: GNU Make 4.3
+ninja: 1.11.1
+pkg-config: 1.8.1
+python3: Python 3.12.3
+node: v20.20.2
+npm: 10.8.2
+git: git version 2.43.0
+jq: jq-1.7
+Xvfb: Unrecognized option: --version
+xvfb-run: xvfb-run: unrecognized option '--version'
+rustc: MISSING
+cargo: MISSING
+rustup: MISSING
+clang: MISSING
+cmake: MISSING
+emcc: MISSING
+wasm-pack: MISSING
+vulkaninfo: MISSING
+glslc: MISSING
+cargo
+cargo-clippy
+cargo-fmt
+/home/ybelanger/.rustup
+## dev libs (pkg-config)
+x11: 1.8.7
+xcursor: 1.2.1
+xrandr: 1.5.2
+xi: 1.8.1
+wayland-client: 1.22.0
+xkbcommon: 1.6.0
+vulkan: 1.3.275
+libudev: 255
+sdl2: MISSING
+sdl3: MISSING
+alsa: MISSING
+gl: 1.2
+egl: 1.5
+glfw3: MISSING
+## agent probe (§B.3)
+CLAUDECODE=1
+CLAUDE_EFFORT=max
+AI_AGENT=claude-code_2-1-292_agent
+## switch plugin
+installed_plugins.json: present
+pb-switch@pb: [('pb-switch@pb', [{'scope': 'user', 'version': '12.2.1', 'installedAt': '2026-10-05T16:38:44.630Z', 'lastUpdated': '2026-10-05T20:27:27.920Z'}])]
+## rust, user-level (not on PATH)
+total 20628
+drwxrwxr-x 2 ybelanger ybelanger     4096 Oct  6 11:59 .
+drwxrwxr-x 5 ybelanger ybelanger     4096 Oct  8 09:11 ..
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 cargo -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 cargo-clippy -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 cargo-fmt -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 cargo-miri -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 clippy-driver -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 rls -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 rust-analyzer -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 rustc -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 rustdoc -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 rustfmt -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 rust-gdb -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 rust-gdbgui -> rustup
+lrwxrwxrwx 1 ybelanger ybelanger        6 Oct  6 11:59 rust-lldb -> rustup
+-rwxr-xr-x 1 ybelanger ybelanger 21113232 Oct  6 11:59 rustup
+rustc 1.99.0 (b940084d7 2026-09-28)
+cargo 1.99.0 (5f94df478 2026-08-27)
+rustup 1.29.1 (d95a37b6a 2026-08-13)
+info: This is the version for the rustup toolchain manager, not the rustc compiler.
+Default host: x86_64-unknown-linux-gnu
+rustup home:  /home/ybelanger/.rustup
+
+installed toolchains
+--------------------
+stable-x86_64-unknown-linux-gnu (active, default)
+
+active toolchain
+----------------
+name: stable-x86_64-unknown-linux-gnu
+active because: it's the default toolchain
+installed targets:
+  x86_64-unknown-linux-gnu
+x86_64-unknown-linux-gnu
+stable-x86_64-unknown-linux-gnu
+PATH has .cargo/bin: 0
+## other user-level tools off PATH?
+(condensed by M0-TP before handoff: the raw listing of ~/.local/bin, ~/Applications, /opt and the
+full PATH named the lead's unrelated software and is left out of a tracked file. What the
+findings use:)
+~/.local/bin holds godot (-> below) and uv; nothing else toolchain-related to M0's stack
+/home/ybelanger/Applications and /home/ybelanger/.local/share/godot present (-> below)
+PATH entries: ~/.local/bin, the nvm Node 20.20.2 bin, system dirs — none is ~/.cargo/bin
+## godot
+lrwxrwxrwx 1 ybelanger ybelanger 65 Jun 30 09:04 /home/ybelanger/.local/bin/godot -> /home/ybelanger/Applications/godot/Godot_v4.7-stable_linux.x86_64
+/home/ybelanger/Applications/godot/Godot_v4.7-stable_linux.x86_64
+4.7.stable.official.5b4e0cb0f
+godot
+app_userdata
+export_templates
+keystores
+## uv
+uv 0.12.3 (x86_64-unknown-linux-gnu)
+## godot export templates
+4.7.stable
+android_debug.apk
+android_release.apk
+android_source.zip
+icudt_godot.dat
+ios.zip
+linux_debug.arm32
+linux_debug.arm64
+linux_debug.x86_32
+linux_debug.x86_64
+linux_release.arm32
+linux_release.arm64
+linux_release.x86_32
+linux_release.x86_64
+macos.zip
+version.txt
+web_debug.zip
+web_dlink_debug.zip
+web_dlink_nothreads_debug.zip
+web_dlink_nothreads_release.zip
+web_dlink_release.zip
+web_nothreads_debug.zip
+web_nothreads_release.zip
+web_release.zip
+windows_debug_arm64_console.exe
+windows_debug_arm64.exe
+windows_debug_x86_32_console.exe
+windows_debug_x86_32.exe
+windows_debug_x86_64_console.exe
+windows_debug_x86_64.exe
+windows_release_arm64_console.exe
+[R1] good report -> rc=0 | === GO ===
+[R1] PLANT ruling unanswered -> rc=1 | === NO-GO: no answer quoted under Ruling ===
+[R1] PLANT release dates, no access date -> rc=1 | === NO-GO: fewer than 15 dated sources ===
+[R1] PLANT section missing -> rc=1 | === NO-GO: missing sections ===
+[R1] typographic quotes accepted -> rc=0 | === GO ===
+[R1] PLANT no report -> rc=1 | === NO-GO: no report ===
+[R2a] good report -> rc=0 | === GO ===
+[R2a] PLANT dates in URL paths only -> rc=1 | === NO-GO: fewer than 10 dated sources ===
+[R2a] PLANT 9 sources -> rc=1 | === NO-GO: fewer than 10 dated sources ===
+[R2a] PLANT first section missing -> rc=1 | === NO-GO: missing sections ===
+[R2b] good report -> rc=0 | === GO ===
+[R2b] PLANT dates in URL paths only -> rc=1 | === NO-GO: fewer than 10 dated sources ===
+[R2b] PLANT 9 sources -> rc=1 | === NO-GO: fewer than 10 dated sources ===
+[R2b] PLANT first section missing -> rc=1 | === NO-GO: missing sections ===
+[R3] good report -> rc=0 | === GO ===
+[R3] PLANT dates in URL paths only -> rc=1 | === NO-GO: fewer than 10 dated sources ===
+[R3] PLANT 9 sources -> rc=1 | === NO-GO: fewer than 10 dated sources ===
+[R3] PLANT first section missing -> rc=1 | === NO-GO: missing sections ===
+blocks: 12 - flow rows: 12 - rows without block: [] - blocks without row: [] - duplicate ids: []
+first line not Status: [] - no blank before heading: [] - rating off the ladder or no switch: [] - python Verify without Pass/Fail: []
+header lines: 167 / 600 - pipeline state lines: 8 / 60
+lines in 3+ blocks: [(3, '> `git add -A`'), (3, '> `git push`'), (4, '- Verify:')]
+=== GO ===

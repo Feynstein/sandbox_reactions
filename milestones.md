@@ -6,24 +6,27 @@ lives in the current plan — `milestones/m0/m0_implementation_plan.md` today.
 ## Milestones
 | Milestone | Goal | Size | Status | Plan |
 |---|---|---|---|---|
-| M0 | The sandbox engine and a star's life — time control, desktop first, a web build kept alive | L | TODO — next: M0-TI, once worklist items 1–2 are done | milestones/m0/m0_implementation_plan.md |
+| M0 | The sandbox engine and a star's life — time control, desktop first, a web build kept alive | L | IN PROGRESS — next: M0-R1, after the Phase 0 commit gate | milestones/m0/m0_implementation_plan.md |
 
 ## Lead worklist
-1. **Generate the instruction files, before M0-TI** — AGENTS.md, CLAUDE.md and GEMINI.md, from the
-   playbook's §C: run PLAYBOOK.md §B.2 step 0's one line from the repo root. Claude Code's auto
-   mode refused it to the bootstrap agent (2026-10-08).
-2. **Add the switch's check hook, before M0-TI** (needed by M0-TH at the latest) — PLAYBOOK §B.3
-   "The check": one UserPromptSubmit hook in `.claude/settings.json`. The same refusal.
-3. **Commit and push the bootstrap**, after items 1 and 2 — from the repo root, one at a time:
-   `git add -A` · `git commit -m "M0 bootstrap: playbook v12.2, tracker, M0 plan"` ·
-   `git push -u origin main`.
-4. **Once M0-TH has run** — `python3 tools/pb/rung_record.py now` says whether the installed switch
+1. Done 2026-10-08 — the instruction files (AGENTS.md, CLAUDE.md, GEMINI.md) and the switch's
+   check hook (`.claude/settings.json`) in place, the bootstrap committed and pushed.
+2. **Once M0-TH has run** — `python3 tools/pb/rung_record.py now` says whether the installed switch
    plugin is current (this playbook's switch is 12.2.1) and prints the install line when it is
    missing or stale. On win-laptop, the switch is installed once there too.
-5. **Before a Steam release** — Steamworks partner enrolment and the per-app fee (M0-R1's report
+3. **Before a Steam release** — Steamworks partner enrolment and the per-app fee (M0-R1's report
    states the current terms).
 
 ## Deltas
 - 2026-10-08 · Bootstrap under PLAYBOOK v12.2: this tracker, the M0 plan (size L), m0_rules.md,
   the bootstrap record (milestones/m0/reports/bootstrap.md) and .gitignore. AGENTS.md, CLAUDE.md,
   GEMINI.md and the switch's hook are left to the lead — auto mode refused them to the agent.
+- 2026-10-08 · The bootstrap agent staged those four files in a scratch folder at the lead's
+  request, checked against §C and §B.3; the lead moved them in and pushed the bootstrap as
+  9a07813 and 7acd1fc. Next: M0-TI.
+- 2026-10-08 · M0-TI: the lead interviewed, 18 answers (milestones/m0/reports/sandbox_interview.md).
+  M0-TP: the plan red-teamed (milestones/m0/reports/plan_redteam.md); the lead approved the
+  revised M0 goal (size L kept), no copyleft code (R7), the modules as assumed (R6), the research
+  rewritten for "Real laws, squeezed scale", M0-R2 split into M0-R2a/R2b, the walk-through over
+  all three endings, and the probed facts (Rust 1.99 and Godot 4.7 already on linux-pc). Next:
+  the Phase 0 commit gate, then M0-R1.

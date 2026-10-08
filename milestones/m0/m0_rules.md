@@ -65,25 +65,32 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
 - Off: OPT-A (no measurement campaign yet; a later plan may turn it on for performance work) ·
   OPT-D (no real user data) · OPT-E and OPT-F (one product: story mode and sandbox mode are modes of
   one game) · OPT-G (the lead's own game: "be able to sell it on steam").
-- Declared in reports/bootstrap.md §4; M0-TP confirms or reverses them with the lead.
+- Declared in reports/bootstrap.md §4; confirmed by the lead at M0-TP, 2026-10-08: "Yes, as
+  assumed (Recommended)" (reports/plan_redteam.md §8).
 
 ## R7 · Copyleft
-- Until M0-TP's licence ruling, no copyleft source (GPL, AGPL, or an LGPL library linked
-  statically) enters the tree. Copyleft projects — The Powder Toy among them, its licence to be
-  read by M0-R1 (UNVERIFIED until then) — are studied for ideas and behaviour, never copied,
-  translated or paraphrased line by line. Every dependency's licence sits in the approved table,
-  copyleft flagged (§4 Rule 2).
-- Why: the lead's "be able to sell it on steam" — my reading: a closed-source commercial game,
-  which copied copyleft code would oblige to publish its source.
+- The lead, 2026-10-08, at M0-TP: "No copyleft code (Recommended)", shown as: "The game stays
+  closed-source and sellable on Steam with no duty to publish its code. GPL projects like The
+  Powder Toy are studied for ideas only, never copied or translated; an LGPL library only as a
+  separately linked file (rule R7 as written)."
+- No copyleft source (GPL, AGPL, or an LGPL library linked statically) enters the tree. Copyleft
+  projects — The Powder Toy among them, its licence to be read by M0-R1 (UNVERIFIED until then) —
+  are studied for ideas and behaviour, never copied, translated or paraphrased line by line.
+  Every dependency's licence sits in the approved table, copyleft flagged (§4 Rule 2).
+- Why: the lead's "be able to sell it on steam" and the ruling above — a closed-source commercial
+  game, which copied copyleft code would oblige to publish its source.
 
 ## R8 · Physics oracles
 - Every physics behaviour the contract fixes names its oracle — an analytic solution, a published
   relation or a measured value, with its source — and a tolerance; a harness scope checks the
   engine against it and is red-armed by a planted bug (§8). A capture that looks right is
   evidence of looks only: for physics it is NOT PROVEN (synthetic).
-- Why: §8's "Real data, or it is not proven", read for a simulation, whose real data are nature's
-  numbers. The lead wants "as much physics as we can"; without oracles, plausibility drifts
-  unnoticed.
+- Why: §8's "Real data, or it is not proven", read for a simulation under the lead's "Real laws,
+  squeezed scale" (reports/sandbox_interview.md, answer 1, shown as "Tests check each law's exact
+  answers, not the real Sun's numbers"): its real data are each law's exact answers in sandbox
+  units, and nature's measured numbers anchor only the readouts' translation to real units
+  (re-worded at M0-TP, 2026-10-08, on the lead's "Rewrite them (Recommended)"). The lead wants "as
+  much physics as we can"; without oracles, plausibility drifts unnoticed.
 
 ## Considered and REJECTED (false economy)
 - none yet — M0-TB starts this list (§2.1).
