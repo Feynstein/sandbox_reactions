@@ -69,7 +69,8 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-TC1 | MOVE | Compaction — Phase 3's close: twelve DONE blocks to stub, more than ten (PLAYBOOK §8, §11) | AFTER M0-V1 | DONE (2026-10-09 12:36, started 12:36) |
 | M0-D10 | BUILD | Lot 1's scopes leave out inputs their verdicts depend on: `--changed` skips G-BOOT on a headless.rs edit | AFTER M0-TC1 | DONE (2026-10-09 12:45) |
 | M0-D11 | BUILD | The binary refuses its own flags by position: `--out` first, `--help` after a flag read "unknown argument" | AFTER M0-D10 | DONE (2026-10-09 12:48) |
-| M0-D12 | BUILD | Lot 1's docs name an adapter wgpu does not list, restate contract numbers and carry a pre-lot-1 loop line | AFTER M0-D11 | TODO |
+| M0-D14 | BUILD | The adapter scope reads NO-GO: after one NVIDIA device is made, wgpu lists only the Intel iGPU and llvmpipe | AFTER M0-D13 | DONE (2026-10-09 18:16) |
+| M0-D12 | BUILD | Lot 1's docs name an adapter wgpu does not list, restate contract numbers and carry a pre-lot-1 loop line | AFTER M0-D11 | DONE (2026-10-09 18:27) |
 | M0-D13 | BUILD | The boot scope deletes the summary.json it grades: a V cannot read what G-BOOT checked | AFTER M0-D12 | TODO |
 | M0-T10 | BUILD | Sandbox units and the element and constant registries | AFTER M0-V1 | TODO |
 | M0-T11 | BUILD | The reaction registry: ten records, shares conserving mass | AFTER M0-T10 | TODO |
@@ -390,9 +391,9 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-D11
-- Counters: T=116 · D=13 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=1 · TD=1 · TE=1
-- Open D/BLOCKED register: M0-D10 · scope paths leave out inputs (--changed skips G-BOOT on a headless.rs edit; Cargo.lock reruns build only) · its manifest fix · M0-D11 · --out first and --help after a flag read « unknown argument » · its main.rs fix · M0-D12 · lot 1's docs: an adapter wgpu does not list, restated contract numbers, the pre-lot-1 loop line · its docs fix · M0-D13 · the boot scope deletes the summary.json it grades · its smoke.sh fix — none blocks M0-T10
+- Next task: M0-D13
+- Counters: T=116 · D=14 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=1 · TD=1 · TE=1
+- Open D/BLOCKED register: M0-D10 · scope paths leave out inputs (--changed skips G-BOOT on a headless.rs edit; Cargo.lock reruns build only) · its manifest fix · M0-D11 · --out first and --help after a flag read « unknown argument » · its main.rs fix · M0-D13 · the boot scope deletes the summary.json it grades · its smoke.sh fix — none blocks M0-T10
 - Outstanding commit gates: Phase 2b (M0-TE-win, M0-D2..D8, M0-TJ3) — the lead's, from the repo root (the gate under M0-D8) · Phase 3 (M0-T1 … M0-V1, then M0-TC1 and M0-D10–D13 that M0-V1 filed) — the gate under M0-D13, its text still « closes after M0-V1 »
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
@@ -665,8 +666,20 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   gate's SHA> --task M0-D11` GO.
 - Handoff: main.rs now sends every non-headless, non---help-first argument list to desktop::run; desktop parse answers -h/--help anywhere with the usage (exit 0), unknown stays SR-ERROR exit 4, --world/--measure-ui keep their refusal. Measured on linux-pc: --out first + --capture under xvfb/llvmpipe exit 0 with 2 PNGs; --adapter llvmpipe --help exit 0; --bogus exit 4 (logs/M0-D11.log). Not guarded: no scope tests flag order and the existing capture plant does not cover it — a case is a CHECK/new-scope job, not filed as a D (lead's call). Ran on rung_record: model=claude-sonnet-5-5 level=medium. Next: M0-D12.
 
-## M0-D12 · Lot 1's docs name an adapter wgpu does not list, restate contract numbers and carry a pre-lot-1 loop line · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D11)
-- Status: TODO
+## M0-D14 · The adapter scope reads NO-GO: after one NVIDIA device is made, wgpu lists only the Intel iGPU and llvmpipe · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D11)
+- Status: DONE (2026-10-09 18:16)
+- Blocks: M0-D12's claim run, and every `--changed`/`--all` that reaches the adapter scope
+- Caused by: unknown
+- Files: crates/sr-engine/tests/gpu/main.rs (lines 105–140, `live_this_boxs_adapters_are_listed`, `live_one_device_per_adapter_found_by_a_differently_cased_name`), crates/sr-engine/src (the headless device path, `Gpu::new_headless`) — opened by M0-D12, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §6.1–§6.3 + milestones/m0/logs/M0-D12b.adapter.log
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-09 evening, 4 times (verify.py --changed, verify.py adapter, `bash tests/gpu.sh adapter` ×3, with and without `DISPLAY=:1`, shell `XDG_SESSION_TYPE=tty`): `adapter` reads 8 passed, 2 failed. The tests before them list all four adapters (Quadro, RTX 5090, Intel `Intel(R) Graphics (RPL-S)`, llvmpipe); in `live_one_device_per_adapter_found_by_a_differently_cased_name` the device for the Quadro is made, then the next `Gpu::new_headless(Some("nvidia geforce rtx 5090"))` lists only [Intel, llvmpipe] and panics (main.rs:129); `live_this_boxs_adapters_are_listed` then sees the same two and reports « missing: Quadro RTX 4000, RTX 5090 » (main.rs:118). `nvidia-smi` lists both GPUs idle. M0-V1 read the same scope 10/10 GO earlier the same day (logs/M0-V1.adapter.log). Repro: `bash tests/gpu.sh adapter`. Suspected cause: not measured — the NVIDIA Vulkan ICD failing to enumerate again once a device of the same driver is alive in the process (or a changed box state since M0-V1); check the first failing instance's `Instance` flags and `VK_*` / ICD state, then whether a fresh process lists them.
+- Deliver: the cause measured and the smallest fix in the test or the headless device path (or, if the box is at fault, the box state named in docs/agent/testing.md § Hazards); no loosened expectation.
+- Done when: on linux-pc, `python3 tools/pb/verify.py adapter --task M0-D14` GO, 10 cases, and `--redarm adapter` GO (adapter-case still red).
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record). Cause measured: each wgpu::Instance dropped unloads the Vulkan ICDs; every NVIDIA reload leaks glibc static TLS and from the 11th instance in a process the loader logs « libnvidia-tls.so.595.99.02: cannot allocate memory in static TLS block » and ignores nvidia_icd.json, so wgpu lists only Intel + llvmpipe (VK_LOADER_DEBUG; probe: 10 ok then 30 without NVIDIA; 40/40 with instances kept alive or GLIBC_TUNABLES optional_static_tls raised). Fix: sr-engine gpu.rs headless_instance() — one process-wide instance (OnceLock; wasm keeps one per call), used by Gpu::new_headless and the test's live_adapters; no expectation loosened. verify.py adapter [ALREADY RUN — PASS (10/0/0) on linux-pc]; --redarm adapter [ALREADY RUN — PASS (clean GO, adapter-case RED 5 failed) on linux-pc]; claim --changed --base 516ec7c [ALREADY RUN — PASS (523 passed, 8/8 scopes GO) on linux-pc] — run twice on the same tree by mistake, both GO; its FLAG oracle lines are earlier tasks' files since 516ec7c. Not explained: why M0-V1 read 10/10 the same day (same driver, glibc, loader, layers, source) — reading, not measured: unload timing. Not acted on: a plan Hazards line (one wgpu instance per process on linux-pc) is TZ's/the lead's; win-laptop NOT RUN (owed on win-laptop at its next V). Plan: close --set "Caused by=…" wrote a register row, not the block's field — that one row removed with the file-edit tool (plan.py has no row delete); Caused by stays unknown (a box/driver limit, no block). Detail: tasks/M0-D14.md. Next: M0-D12 (re-run its claim).
+
+## M0-D12 · Lot 1's docs name an adapter wgpu does not list, restate contract numbers and carry a pre-lot-1 loop line · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D14 — the lead moved D14 first, 2026-10-09: D12's claim run needs the adapter scope green)
+- Status: DONE (2026-10-09 18:27)
+- Carried flags: [M0-D12, 2026-10-09] [M0-D12, 2026-10-09] Docs done and in the tree (Done-when greps clean, M0-T9's two greps 50/32 § and 7 rows); only the claim run is red: `verify.py --changed --base 516ec7c --task M0-D12` NO-GO on the adapter scope (2 of 10 fail — NVIDIA adapters drop out of wgpu's list after the first device; repro `bash tests/gpu.sh adapter`, logs/M0-D12.log) — not caused by a docs edit, filed as M0-D14. Re-try: keep the three edited pages (git diff docs/agent), re-run the claim once M0-D14 is green, then close. · [M0-D14, 2026-10-09] M0-D14 DONE: the adapter scope is GO again on linux-pc (10/0/0; one process-wide wgpu instance in sr-engine gpu.rs) — re-run your claim --changed --base 516ec7c --task M0-D12-r2 (a fresh id: your logs are not appended to), then close.
 - Blocks: nothing
 - Caused by: M0-T9
 - Files: docs/agent/running.md (line 50, the Adapters table; § The binary's exit codes), docs/agent/testing.md (line 28,
@@ -689,7 +702,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Done when: on linux-pc, `grep -n "UHD 770" docs/agent/*.md` and `grep -nE "frames late|101"
   docs/agent/architecture.md docs/agent/running.md` print nothing; M0-T9's two Verify greps still pass (≥ 5 § lines
   in each page; 7 scope rows in testing.md).
-- Handoff: <placeholder>
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record). Docs corrected in place, uncommitted, as the first try left them plus one tightening: running.md's exit-code line now reads « Exit codes: §3.3. » (the first try's « a refused flag or scene is 4; no adapter is 3 » still restated §3.3, against Deliver and §7). Also in the tree: running.md's iGPU named « Intel(R) Graphics (RPL-S) » with the --adapter "RPL-S" match; architecture.md:65 figure dropped, § 1.9.1 cited; testing.md's adapter row, Scopes header dated M0-V1, loop line from reports/v1.md § The complete loop, the seven rows' costs from M0-V1's logs. Done-when [ALREADY RUN — PASS (both greps empty; 50/32/17 § lines; 7 scope rows) on linux-pc]. Claim --changed --base 516ec7c --task M0-D12-r2 [ALREADY RUN — PASS (GO 522/0/0, 8/8 scopes, 4.91 s) on linux-pc], logs/M0-D12-r2.log; its one flag (M0-D12-r2 is no block) is the fresh-id rule, expected. First try's red (adapter 8/10) was M0-D14, now DONE. Not acted on: architecture.md:65 reads « read back async. » (terse, not wrong); testing.md's win-laptop costs stay as written. Next: M0-D13.
 
 ## M0-D13 · The boot scope deletes the summary.json it grades: a V cannot read what G-BOOT checked · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-D12)
 - Status: TODO

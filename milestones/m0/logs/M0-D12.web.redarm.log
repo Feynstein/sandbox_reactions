@@ -1,0 +1,20 @@
+==== 2026-10-09T17:53:13-04:00 web · clean · a fresh scratch copy of the tree
+== 2026-10-09T17:53:13-04:00 web[build] · task M0-D12 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 3.88 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+
+==== 2026-10-09T17:53:17-04:00 web · plant web-no-gpu-check · a fresh scratch copy of the tree
+planted web-no-gpu-check: tests/plants/web-no-gpu-check.patch -> web/index.html
+== 2026-10-09T17:53:17-04:00 web[build] · task M0-D12 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 3.52 s
+web build: index.html has no navigator.gpu check
+=== NO-GO: index.html has no navigator.gpu check ===
+
+==== 2026-10-09T17:53:20-04:00 web · plant web-autoload · a fresh scratch copy of the tree
+planted web-autoload: tests/plants/web-autoload.patch -> web/Trunk.toml
+== 2026-10-09T17:53:20-04:00 web[build] · task M0-D12 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 3.23 s
+web build: trunk's auto-loader or preload for the wasm is still in index.html
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html ===
+

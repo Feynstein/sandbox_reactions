@@ -100,6 +100,21 @@ pub fn match_adapter(list: &[AdapterDesc], query: &str) -> Result<usize, GpuErro
         .ok_or_else(|| GpuError::NoMatch { query: query.to_string(), seen: list.to_vec() })
 }
 
+/// The instance every headless device and adapter listing in this process comes from, created once (M0-D14). Each
+/// instance dropped unloads the Vulkan ICDs and each new one dlopens them again; on linux-pc every NVIDIA reload
+/// leaks part of glibc's static TLS, and from the 11th the load fails (« libnvidia-tls.so…: cannot allocate memory in
+/// static TLS block ») so wgpu silently lists no NVIDIA adapter. One live instance loads the ICDs once. On wasm an
+/// instance is not `Sync`, so each call makes its own (the browser loads no ICD).
+pub fn headless_instance() -> wgpu::Instance {
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        static INSTANCE: std::sync::OnceLock<wgpu::Instance> = std::sync::OnceLock::new();
+        INSTANCE.get_or_init(|| wgpu::Instance::new(wgpu::InstanceDescriptor::new_without_display_handle())).clone()
+    }
+    #[cfg(target_arch = "wasm32")]
+    wgpu::Instance::new(wgpu::InstanceDescriptor::new_without_display_handle())
+}
+
 /// Every adapter wgpu lists on the instance's backends, in wgpu's order (the no-op backend left out).
 pub async fn list_adapters(instance: &wgpu::Instance) -> Vec<wgpu::Adapter> {
     instance
@@ -124,7 +139,7 @@ pub struct Gpu {
 impl Gpu {
     /// `query` is `--adapter`'s substring; `None` is wgpu's high-performance preference.
     pub async fn new_headless(query: Option<&str>) -> Result<Gpu, GpuError> {
-        let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::new_without_display_handle());
+        let instance = headless_instance();
         let adapters = list_adapters(&instance).await;
         let seen: Vec<AdapterDesc> = adapters.iter().map(|a| (&a.get_info()).into()).collect();
         let adapter = match query {

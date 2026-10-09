@@ -1,0 +1,52 @@
+# M0-D12-r2 2026-10-09T18:21:10-04:00 linux-pc
+done-when greps: 1
+docs/agent/architecture.md § lines 50
+docs/agent/running.md § lines 32
+docs/agent/testing.md § lines 17
+why plan_lint: moved since 516ec7c: milestones/m0/m0_implementation_plan.md
+why build: moved since 516ec7c: Cargo.lock (+17)
+why adapter: moved since 516ec7c: Cargo.lock (+13)
+why state: moved since 516ec7c: Cargo.lock (+13)
+why boot: moved since 516ec7c: Cargo.lock (+20)
+why desktop: moved since 516ec7c: Cargo.lock (+24)
+why web: moved since 516ec7c: Cargo.lock (+23)
+why capture: moved since 516ec7c: Cargo.lock (+20)
+plan_lint       498/0/0      0.12 s  GO
+build           2/0/0        1.58 s  GO
+adapter         10/0/0       2.98 s  GO
+state           6/0/0        2.67 s  GO
+boot            1/0/0        3.53 s  GO
+desktop         2/0/0        3.54 s  GO
+web             1/0/0        4.79 s  GO
+capture         2/0/0        1.13 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since 516ec7c)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since 516ec7c)
+adapter · clean · GO
+adapter · plant adapter-case · RED (proven: 5 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 4.17 s · box laserax-ai · log milestones/m0/logs/M0-D12-r2.adapter.redarm.log
+boot · clean · GO
+boot · plant scene-refuse · RED (proven: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope boot · 53.97 s · box laserax-ai · log milestones/m0/logs/M0-D12-r2.boot.redarm.log
+capture · clean · GO
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope capture · 50.75 s · box laserax-ai · log milestones/m0/logs/M0-D12-r2.capture.redarm.log
+desktop · clean · GO
+desktop · plant status-never-ready · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[window])
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb)
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope desktop · 257.30 s · box laserax-ai · log milestones/m0/logs/M0-D12-r2.desktop.redarm.log
+state · clean · GO
+state · plant state-renorm-skip · RED (proven: 1 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope state · 3.55 s · box laserax-ai · log milestones/m0/logs/M0-D12-r2.state.redarm.log
+web · clean · GO
+web · plant web-no-gpu-check · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: index.html has no navigator.gpu check)
+web · plant web-autoload · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still in index.h)
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope web · 11.21 s · box laserax-ai · log milestones/m0/logs/M0-D12-r2.web.redarm.log
+flags: M0-D12-r2 is no block of a plan under milestones/ - no Deliver and no type to read them against
+logs: milestones/m0/logs/M0-D12-r2.<scope>.log · record: loop_times.jsonl · tree fee412b520d0+12be6c4faa0d
+anchor: 0 path×scope entries moved by this run
+anchor: 64 paths checked · 63 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 64 covered of 127 visible
+skipped    55  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 522 passed, 0 failed, 0 skipped · 8/8 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 2 not impacted · 4.91 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 14.56->14.51
+=== GO ===

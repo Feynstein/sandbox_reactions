@@ -1,0 +1,48 @@
+== 2026-10-09T18:02:57-04:00 desktop[launcher] · task M0-D14 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-09T18:02:57-04:00 desktop[window] · task M0-D14 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 3.73 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: pid 120641 stopped; its X server :100, pid 120637 stopped
+game-offscreen: nothing recorded
+services: 4, stopped: 4
+=== GO ===
+launcher game-xvfb: built in 2 s, started, stopped, nothing left running
+=== GO ===
+
+-- desktop[window] · exit=0 · 4.19 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D14.launch.game-xvfb.log)
+game-xvfb: pid 120833 stopped; its X server :99, pid 120832 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D14.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 2 s, booted and checked in 2 s
+=== GO ===
+
+== 2026-10-09T18:09:40-04:00 desktop[window] · task M0-D14 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-09T18:09:40-04:00 desktop[launcher] · task M0-D14 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 2.92 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D14.launch.game-xvfb.log)
+game-xvfb: pid 189022 stopped; its X server :99, pid 189017 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D14.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 0 s, booted and checked in 3 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 3.42 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: pid 189198 stopped; its X server :99, pid 189170 stopped
+game-offscreen: nothing recorded
+services: 4, stopped: 4
+=== GO ===
+launcher game-xvfb: built in 0 s, started, stopped, nothing left running
+=== GO ===
+

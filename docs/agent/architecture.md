@@ -62,7 +62,7 @@ feeds the state and is not a fixed-order tree. Flags use `atomicOr` / `atomicMax
                                                                           │
    frame loop (time control, §1.8) ── asks for k steps ──► Step: P0 … P9 ─┤   the box (§1.3.3) bounds every pass
                                                                           ▼
-                                    block summaries (§1.9.1, read back ≤ 2 frames late) ─► observe (sr-physics)
+                                    block summaries (§1.9.1, read back async.) ─► observe (sr-physics)
                                     ledger (§2.9)                                              │
                                     render (§1.11) ◄── state, views, glow                     ▼
                                                                   objects · stages · events · readouts (§1.9, §1.10)

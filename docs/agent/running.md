@@ -26,8 +26,7 @@ block that builds their feature and are refused with exit 4 until then:
     `tests/capture/`). An action not built yet is refused with `SR-ERROR`, exit 4.
 - **Headless**: `headless --scene preset:<sun|massive|giant> --steps N [--world WxH] [--max-steps N] [--out DIR]
   [--adapter S]` — the same step with no surface and no display (§6.3); `DIR/summary.json` per §2.12.2. stdout: first line
-  `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`, warnings `SR-WARN`. Exit codes: 0 done · 2 condition not
-  met · 3 no adapter or a GPU error · 4 bad arguments or scene · 5, 6 (when their checks exist) · 101 a panic (§3.3).
+  `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`, warnings `SR-WARN`. Exit codes: §3.3.
 - Later blocks add `bench`, `calibrate`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the
   headless run's `--until`, `--frames-every`, `--dump-every`, `--edits`, `--cpu-reference`, `--timing` (§3.3).
 
@@ -47,7 +46,7 @@ number names its adapter** (R13).
 
 | Box | Adapters wgpu lists | Use |
 |---|---|---|
-| linux-pc | Quadro RTX 4000 (drives the display) · RTX 5090 · Intel UHD 770 · llvmpipe (Mesa software Vulkan) | physics scopes `--adapter "RTX 5090"` (`SR_TEST_ADAPTER`, `tests/gpu.sh … physics`); timing scopes the Quadro only (`box: laserax-ai`); private-display windows `--adapter llvmpipe` |
+| linux-pc | Quadro RTX 4000 (drives the display) · RTX 5090 · "Intel(R) Graphics (RPL-S)" (the Intel iGPU — match it with `--adapter "RPL-S"`; `"UHD"` finds nothing) · llvmpipe (Mesa software Vulkan) | physics scopes `--adapter "RTX 5090"` (`SR_TEST_ADAPTER`, `tests/gpu.sh … physics`); timing scopes the Quadro only (`box: laserax-ai`); private-display windows `--adapter llvmpipe` |
 | win-laptop | RTX 4080 Laptop · Intel Arc Graphics · WARP where wgpu lists it (UNVERIFIED) | physics reads the 4080 where linux-pc reads the 5090 (§6.4, R15); timing is never measured here (`owed on laserax-ai`) |
 
 The default pick on linux-pc is **not** the 5090 (the display sits on the Quadro): never rely on it — name the adapter.

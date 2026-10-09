@@ -1,0 +1,87 @@
+why plan_lint: moved since 516ec7c: milestones/m0/m0_implementation_plan.md
+why build: moved since 516ec7c: Cargo.lock (+17)
+why adapter: moved since 516ec7c: Cargo.lock (+13)
+why state: moved since 516ec7c: Cargo.lock (+13)
+why boot: moved since 516ec7c: Cargo.lock (+20)
+why desktop: moved since 516ec7c: Cargo.lock (+24)
+why web: moved since 516ec7c: Cargo.lock (+23)
+why capture: moved since 516ec7c: Cargo.lock (+20)
+plan_lint       496/0/0      0.12 s  GO
+build           2/0/0        2.09 s  GO
+adapter         8/2/0        4.44 s  NO-GO
+state           6/0/0        3.54 s  GO
+boot            1/0/0        3.48 s  GO
+desktop         2/0/0        5.45 s  GO
+web             1/0/0        4.22 s  GO
+capture         2/0/0        1.03 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since 516ec7c)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since 516ec7c)
+adapter · clean · NO-GO
+redarm: 1 plants · 0 red · 0 green · 0 errors · scope adapter · 3.54 s · box laserax-ai · log milestones/m0/logs/M0-D12.adapter.redarm.log
+boot · clean · GO
+boot · plant scene-refuse · RED (proven: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope boot · 53.99 s · box laserax-ai · log milestones/m0/logs/M0-D12.boot.redarm.log
+capture · clean · GO
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope capture · 55.92 s · box laserax-ai · log milestones/m0/logs/M0-D12.capture.redarm.log
+desktop · clean · GO
+desktop · plant status-never-ready · RED (proven: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[lau)
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb)
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope desktop · 258.03 s · box laserax-ai · log milestones/m0/logs/M0-D12.desktop.redarm.log
+state · clean · GO
+state · plant state-renorm-skip · RED (proven: 1 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope state · 5.27 s · box laserax-ai · log milestones/m0/logs/M0-D12.state.redarm.log
+web · clean · GO
+web · plant web-no-gpu-check · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: index.html has no navigator.gpu check)
+web · plant web-autoload · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still in index.h)
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope web · 10.72 s · box laserax-ai · log milestones/m0/logs/M0-D12.web.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/state.rs changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/capture/check.sh changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/capture/smoke.json changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/cargo.sh changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/gpu.sh changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/plants/adapter-case.patch changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/plants/capture-no-captions.patch changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/plants/launcher-no-stop.patch changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/plants/scene-refuse.patch changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/plants/state-renorm-skip.patch changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/plants/status-never-ready.patch changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/plants/web-autoload.patch changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/plants/web-no-gpu-check.patch changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/smoke.sh changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tests/web/check.sh changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since 516ec7ca31bf - a test, case or check M0-D12's Deliver: does not name
+FLAG oracle: scope `boot` added in tools/pb/verify.json - M0-D12's Deliver: names neither it nor the manifest
+FLAG oracle: scope `capture` added in tools/pb/verify.json - M0-D12's Deliver: names neither it nor the manifest
+FLAG oracle: scope `desktop` added in tools/pb/verify.json - M0-D12's Deliver: names neither it nor the manifest
+FLAG oracle: scope `state` added in tools/pb/verify.json - M0-D12's Deliver: names neither it nor the manifest
+FLAG oracle: scope `web` added in tools/pb/verify.json - M0-D12's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-D12.<scope>.log · record: loop_times.jsonl · tree fee412b520d0+35351d50a6f2
+anchor: 16 path×scope entries moved by this run
+anchor: 48 paths checked · 62 skipped (3 classes) · 16 never checked · 0 stale · 0 unclassified · 0 owed · 64 covered of 126 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for adapter)
+NEVER CHECKED  Cargo.lock  (no entry for adapter)
+NEVER CHECKED  Cargo.toml  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for adapter)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for adapter)
+NEVER CHECKED  rust-toolchain.toml  (no entry for adapter)
+NEVER CHECKED  tests/cargo.sh  (no entry for adapter)
+NEVER CHECKED  tests/gpu.sh  (no entry for adapter)
+NEVER CHECKED  tests/plants/adapter-case.patch  (no entry for adapter)
+skipped    54  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  adapter: 2 failed · log milestones/m0/logs/M0-D12.adapter.log
+  redarm adapter: clean: 2 failed - red with no plant, so a red plant would prove nothing; the plants did not run
+  anchor: 16 never checked, 0 stale, 0 unclassified - every one named above
+verify: 518 passed, 2 failed, 0 skipped · 7/8 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 2 not impacted · 4.45 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 33.71->34.37
+=== NO-GO: adapter: 2 failed · log milestones/m0/logs/M0-D12.adapter.log; redarm adapter: clean: 2 failed - red with no plant, so a red plant would prove nothing; the plants did not run; anchor: 16 never checked, 0 stale, 0 unclassified - every one named above ===

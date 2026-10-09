@@ -93,7 +93,7 @@ mod adapter {
     /// Every adapter wgpu lists on this box, once per name (a name on two backends is reached by name through
     /// Vulkan; the rule's own test covers the other twin).
     fn live_adapters() -> Vec<AdapterDesc> {
-        let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::new_without_display_handle());
+        let instance = sr_engine::gpu::headless_instance();
         let mut list: Vec<AdapterDesc> = pollster::block_on(sr_engine::gpu::list_adapters(&instance))
             .iter()
             .map(|a| (&a.get_info()).into())
