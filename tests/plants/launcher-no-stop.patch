@@ -5,3 +5,10 @@
  echo "Sandbox Reactions is running. Press Enter to close it."
  read -r _
 -python3 tools/pb/launch.py stop --task launcher
+--- a/start.bat
++++ b/start.bat
+@@ -9,4 +9,3 @@
+ py -3.12 tools\pb\launch.py start %SERVICE% --task launcher %ASKED%
+ echo Sandbox Reactions is running. Press Enter to close it.
+ set /p "_="
+-py -3.12 tools\pb\launch.py stop --task launcher

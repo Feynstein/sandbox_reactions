@@ -1,0 +1,48 @@
+== 2026-10-09T19:01:43-04:00 desktop[window] · task M0-D15 · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-09T19:01:43-04:00 desktop[launcher] · task M0-D15 · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 3.61 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.8s (log C:\workspace\sandbox_reactions\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 17372 stopped
+services: 4, stopped: 4
+=== GO ===
+launcher game-offscreen: built in 1 s, started, stopped, nothing left running
+=== GO ===
+
+-- desktop[window] · exit=0 · 6.14 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.6s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D15.launch.game-offscreen.log)
+game-offscreen: pid 31536 stopped
+game-offscreen: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D15.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 1 s, booted and checked in 5 s
+=== GO ===
+
+== 2026-10-09T19:27:55-04:00 desktop[window] · task M0-D15 · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-09T19:27:57-04:00 desktop[launcher] · task M0-D15 · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 7.59 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.9s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D15.launch.game-offscreen.log)
+game-offscreen: pid 33816 stopped
+game-offscreen: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D15.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 1 s, booted and checked in 6 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 8.95 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.9s (log C:\workspace\sandbox_reactions\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 33088 stopped
+services: 4, stopped: 4
+=== GO ===
+launcher game-offscreen: built in 1 s, started, stopped, nothing left running
+=== GO ===
+

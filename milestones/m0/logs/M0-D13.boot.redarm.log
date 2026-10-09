@@ -1,0 +1,98 @@
+==== 2026-10-09T18:40:18-04:00 boot · clean · a fresh scratch copy of the tree
+== 2026-10-09T18:40:19-04:00 boot · task M0-D13 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 180.14 s
+headless-boot: ready - exit 0, 1.3s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-xghvhw1z\arm0\milestones\m0\logs\M0-D13.launch.headless-boot.log)
+headless-boot: pid 34124 not signalled - gone
+headless-boot: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-xghvhw1z\arm0\milestones\m0\logs\M0-D13.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "unknown",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 0.0,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.0217683,
+  "world": {
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 175 s, booted and checked in 5 s
+=== GO ===
+
+==== 2026-10-09T18:43:20-04:00 boot · plant scene-refuse · a fresh scratch copy of the tree
+planted scene-refuse: tests/plants/scene-refuse.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-09T18:43:20-04:00 boot · task M0-D13 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 157.94 s
+headless-boot: exited 4 (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-xghvhw1z\arm1\milestones\m0\logs\M0-D13.launch.headless-boot.log)
+headless-boot: pid 33772 not signalled - gone
+headless-boot: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-xghvhw1z\arm1\milestones\m0\logs\M0-D13.launch.headless-boot.log
+services: 1, ready: 0, failures: 1
+FAIL headless-boot: exited 4 (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-xghvhw1z\arm1\milestones\m0\logs\M0-D13.launch.headless-boot.log)
+=== NO-GO: launch.py smoke headless-boot did not end GO ===
+
+==== 2026-10-09T18:52:56-04:00 boot · clean · a fresh scratch copy of the tree
+== 2026-10-09T18:52:56-04:00 boot · task M0-D13 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 160.45 s
+headless-boot: ready - exit 0, 1.3s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-odul155m\arm0\milestones\m0\logs\M0-D13.launch.headless-boot.log)
+headless-boot: pid 15728 not signalled - gone
+headless-boot: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-odul155m\arm0\milestones\m0\logs\M0-D13.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "unknown",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 0.0,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.0165081,
+  "world": {
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 156 s, booted and checked in 4 s
+=== GO ===
+
+==== 2026-10-09T18:55:38-04:00 boot · plant scene-refuse · a fresh scratch copy of the tree
+planted scene-refuse: tests/plants/scene-refuse.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-09T18:55:38-04:00 boot · task M0-D13 · box Laser2025-20 :: bash tests/smoke.sh headless-boot

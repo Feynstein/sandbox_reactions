@@ -2,8 +2,9 @@
 # The boot scope's runner (G-BOOT, m0_contrat.md §5.4): bash tests/smoke.sh <service> — builds the release binary into
 # THIS tree's own build/target (in a red-arm scratch copy that is the copy's own, never the shared redarm-target of
 # tests/cargo.sh, §6.5: two arms must not launch one binary), then `launch.py smoke <service>`. For `headless-boot` it
-# also runs the same command once into a folder it keeps and checks summary.json against §2.12.2 (launch.py removes
-# the throwaway --out it gave the booted run). `window` is the desktop scope's case (G-DESK, M0-T5): the box's route —
+# also runs the same command once into a throwaway folder, checks summary.json against §2.12.2 and prints the file it
+# checked, verbatim, into its own output (the folder goes at exit, launch.py removes its own --out), so the scope's log
+# keeps the text a V reads. `window` is the desktop scope's case (G-DESK, M0-T5): the box's route —
 # `game-xvfb` (the private Xvfb, lavapipe) on linux-pc, `game-offscreen` on win-laptop (R15; contract §6.6) — whose
 # /status must read "ready". Ends in `=== GO ===` or `=== NO-GO: <reason> ===`.
 source "$(dirname "${BASH_SOURCE[0]}")/cargo.sh"
@@ -42,8 +43,10 @@ fi
 if [ $launcher -eq 1 ]; then
   # `launcher` is the desktop scope's second case (G-DESK, M0-T6): the double-click launcher, fed its Enter, on the box's
   # window route — starts, reaches ready, stops, and leaves nothing running (R15: start.bat on win-laptop).
+  # `.\start.bat`, never bare: with NoDefaultCurrentDirectoryInExePath set (Claude Code's shell sets it), cmd skips the
+  # current directory when it looks a bare name up and reads « not recognised » (M0-D15, logs/M0-D15.log).
   case "$(uname -s)" in
-    MINGW* | MSYS* | CYGWIN*) run_launcher() { printf '\n' | cmd //c "start.bat $service" 2>&1; } ;;
+    MINGW* | MSYS* | CYGWIN*) run_launcher() { printf '\n' | cmd //c ".\\start.bat $service" 2>&1; } ;;
     *) run_launcher() { printf '\n' | bash start.sh "$service" 2>&1; } ;;
   esac
   out="$(run_launcher)"; rc=$?
@@ -86,6 +89,9 @@ if s["steps"] != 200:
     sys.exit(f"summary.json steps = {s['steps']}, expected 200")
 print(f"summary.json: {len(need)} keys of §2.12.2, steps = {s['steps']}")
 PY
+  echo "--- summary.json (verbatim, as checked) ---"
+  cat "$dir/summary.json"; echo
+  echo "--- end summary.json ---"
 fi
 echo "boot $service: built in $built s, booted and checked in $((SECONDS - start - built)) s"
 echo "=== GO ==="

@@ -1,0 +1,22 @@
+== 2026-10-09T19:01:20-04:00 M0-D15 probes · box Laser2025-20
+-- env NoDefaultCurrentDirectoryInExePath=[1]
+-- pwd=/c/workspace/sandbox_reactions · pwd -W=C:/workspace/sandbox_reactions
+-- cmd //c cd:
+C:\workspace\sandbox_reactions
+-- cmd //c echo of argv:
+[C:\WINDOWS\system32\cmd.exe /c "echo [%CMDCMDLINE%]"]
+-- cmd //c 'if exist start.bat':
+yes
+-- cmd //c 'start.bat /?'-free probe: where start.bat
+C:\workspace\sandbox_reactions\start.bat
+-- isolated probe in C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/4a4fd1f5-501d-4c7a-a218-99ea2d7e7144/scratchpad/d15 (a .bat that only echoes)
+-- A: var=1, bare name (the case's form):
+'probe.bat' n'est pas reconnu en tant que commande interne
+ou externe, un programme ex�cutable ou un fichier de commandes.
+rc=1
+-- B: var unset, bare name:
+probe ran with [game-offscreen]
+rc=0
+-- C: var=1, .\ prefix (the fix):
+probe ran with [game-offscreen]
+rc=0
