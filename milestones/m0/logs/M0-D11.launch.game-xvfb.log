@@ -1,0 +1,4 @@
+# M0-D11 | launch game-xvfb | 2026-10-09T12:48:41-0400
+# private X display :99, its X server pid 3061531
+$ build/target/release/sandbox-reactions --status-port 47811 --adapter llvmpipe
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe

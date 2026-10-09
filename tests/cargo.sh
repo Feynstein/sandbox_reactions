@@ -6,7 +6,7 @@
 #   wasm    cargo check --workspace --target wasm32-unknown-unknown --locked
 # Sourced, it only sets the environment: ~/.cargo/bin first on the PATH (off it on linux-pc, Hazards), and in a
 # red-arm scratch copy (no `.git`) a CARGO_TARGET_DIR shared outside the tree, so a plant recompiles only the
-# workspace's crates. That shared dir is for test builds only, never for a binary a scope launches (two arms
+# workspace's crates, and a `cargo` wrapper that keeps that sharing honest (M0-D9, below). That shared dir is for test builds only, never for a binary a scope launches (two arms
 # would race on one uplifted binary). In the real tree the target is build/target (.cargo/config.toml).
 _sr_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -14,6 +14,31 @@ if [ -e "$_sr_root/.git" ]; then
   unset CARGO_TARGET_DIR
 else
   export CARGO_TARGET_DIR="$HOME/.cache/sandbox-reactions/redarm-target"
+  # M0-D9: cargo's freshness is mtime-based and the copy keeps each file's mtime, so a build another arm left in the
+  # shared target looks fresh here (a clean arm ran the plant's binary). Every cargo call in a copy therefore takes
+  # the shared target's lock, touches the workspace's inputs — later than any build already there — and builds
+  # inside it; only the workspace's crates recompile, the dependencies stay cached.
+  _sr_lock="$CARGO_TARGET_DIR.lock"
+  cargo() {
+    mkdir -p "${CARGO_TARGET_DIR%/*}"
+    (
+      if command -v flock >/dev/null 2>&1; then
+        exec 9>"$_sr_lock" && flock 9
+      else  # no flock (Git Bash): a mkdir lock, broken when its holder is gone
+        until mkdir "$_sr_lock.d" 2>/dev/null; do
+          local holder; holder="$(cat "$_sr_lock.d/pid" 2>/dev/null)"
+          [ -n "$holder" ] && ! kill -0 "$holder" 2>/dev/null && rm -rf "$_sr_lock.d"
+          sleep 0.2
+        done
+        echo "$BASHPID" >"$_sr_lock.d/pid"
+        trap 'rm -rf "$_sr_lock.d"' EXIT
+      fi
+      local p; for p in crates assets scenes Cargo.toml Cargo.lock .cargo; do
+        [ -e "$_sr_root/$p" ] && find "$_sr_root/$p" -type f -exec touch {} +
+      done
+      command cargo "$@"
+    )
+  }
 fi
 
 # sr_cargo_run <label> <cargo args...>: run cargo in the workspace root; on failure print its last lines.

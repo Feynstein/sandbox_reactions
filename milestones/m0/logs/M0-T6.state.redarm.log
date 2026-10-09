@@ -1,0 +1,60 @@
+==== 2026-10-09T10:28:13-04:00 state · clean · a fresh scratch copy of the tree
+== 2026-10-09T10:28:13-04:00 state · task M0-T6 · box laserax-ai :: bash tests/gpu.sh state physics
+-- state · exit=0 · 2.72 s
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-z4ze0eiv/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 1.09s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-96f3c8909aeb02b8)
+
+running 6 tests
+test state::a_step_is_p0_to_p9_with_p8s_renormalisation_its_only_dispatch_today ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+4096 cells: worst |Σ X − 1| = 1.8719583749771118e-7, worst |X − oracle| = 6.857620882261273e-8 (tolerance 1e-6)
+ok
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 1.54s
+
+
+==== 2026-10-09T10:28:16-04:00 state · plant state-renorm-skip · a fresh scratch copy of the tree
+planted state-renorm-skip: tests/plants/state-renorm-skip.patch -> crates/sr-engine/shaders/floors.wgsl
+== 2026-10-09T10:28:16-04:00 state · task M0-T6 · box laserax-ai :: bash tests/gpu.sh state physics
+-- state · exit=101 · 3.32 s
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-z4ze0eiv/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 1.33s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-96f3c8909aeb02b8)
+
+running 6 tests
+test state::a_step_is_p0_to_p9_with_p8s_renormalisation_its_only_dispatch_today ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical' (1229140) panicked at crates/sr-engine/tests/gpu/state.rs:157:9:
+cell 0: Σ X = 3.076705766841769 (from [1.846926, 1.323412, 1.065141, 2.997755, 2.0507193, 1.0349799, 2.0447667, 0.41873652, 0.28308526, 2.0767057], now [0.14135878, 0.10129041, 0.08152304, 0.22944015, 0.15695657, 0.079214595, 0.15650097, 0.032048974, 0.021666588, 2.0767057])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+failures:
+
+failures:
+    state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 1.91s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

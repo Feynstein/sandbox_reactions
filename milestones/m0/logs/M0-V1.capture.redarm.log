@@ -1,0 +1,68 @@
+==== 2026-10-09T12:12:13-04:00 capture · clean · a fresh scratch copy of the tree
+== 2026-10-09T12:12:13-04:00 capture[smoke] · task M0-V1 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-09T12:12:13-04:00 capture[refuse] · task M0-V1 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 27.97 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 28.61 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE DONE 2 /tmp/tmp.ufHjeYHcxh
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+==== 2026-10-09T12:12:41-04:00 capture · plant capture-no-captions · a fresh scratch copy of the tree
+planted capture-no-captions: tests/plants/capture-no-captions.patch -> crates/sr-app/src/capture.rs
+== 2026-10-09T12:12:41-04:00 capture[smoke] · task M0-V1 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-09T12:12:41-04:00 capture[refuse] · task M0-V1 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 22.15 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=1 · 22.70 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE DONE 2 /tmp/tmp.7tBZ3SNzcn
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.7tBZ3SNzcn/captions.json'
+=== NO-GO: the captures do not match §3.3 ===
+
+==== 2026-10-09T12:24:08-04:00 capture · clean · a fresh scratch copy of the tree
+== 2026-10-09T12:24:08-04:00 capture[smoke] · task M0-V1 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-09T12:24:08-04:00 capture[refuse] · task M0-V1 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 32.36 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 32.99 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE DONE 2 /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/351f4824-4582-4726-adae-f656f8144a90/scratchpad/tmp-all/tmp.up3dJpS7E7
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+==== 2026-10-09T12:24:41-04:00 capture · plant capture-no-captions · a fresh scratch copy of the tree
+planted capture-no-captions: tests/plants/capture-no-captions.patch -> crates/sr-app/src/capture.rs
+== 2026-10-09T12:24:41-04:00 capture[smoke] · task M0-V1 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-09T12:24:41-04:00 capture[refuse] · task M0-V1 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 33.37 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=1 · 34.04 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE DONE 2 /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/351f4824-4582-4726-adae-f656f8144a90/scratchpad/tmp-all/tmp.rCzoCuEI63
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/351f4824-4582-4726-adae-f656f8144a90/scratchpad/tmp-all/tmp.rCzoCuEI63/captions.json'
+=== NO-GO: the captures do not match §3.3 ===
+

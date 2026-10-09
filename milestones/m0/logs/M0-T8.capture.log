@@ -1,0 +1,30 @@
+== 2026-10-09T11:03:01-04:00 capture[smoke] · task M0-T8 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-09T11:03:01-04:00 capture[refuse] · task M0-T8 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 0.26 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 1.17 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1846x1016
+SR-CAPTURE running running.png 1846x1016
+SR-CAPTURE DONE 2 /tmp/tmp.PG2pikxuF6
+2 PNGs of (1846, 1016) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+== 2026-10-09T11:04:28-04:00 capture[smoke] · task M0-T8 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-09T11:04:28-04:00 capture[refuse] · task M0-T8 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 0.26 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 2.13 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1846x1016
+SR-CAPTURE running running.png 1846x1016
+SR-CAPTURE DONE 2 /tmp/tmp.yojRtx6iVz
+2 PNGs of (1846, 1016) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+

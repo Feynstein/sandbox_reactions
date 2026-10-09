@@ -25,6 +25,12 @@ A run's log opens first at `milestones/m0/logs/<ID>.<scope>.log`; every run appe
 | `tools_selftest` | each annex tool's own red-armed selftest — proves the tools, never the game | 10 | 10 s | `tools-selftest-scratch` |
 | `toolchain` | the stack builds a one-file program: `desktop` (rustc 1.99), `wasm` (wasm32-unknown-unknown), `trunk` (trunk 0.21.14 + wasm-bindgen 0.2.129) | 3 | 0.3 s warm · ≈ 9 s cold (first trunk run fetches wasm-bindgen-cli into `~/.cache/trunk`) | `toolchain-compiler`, `toolchain-web-target`, `toolchain-trunk` |
 | `build` | the game's workspace (R11): `native` — `cargo build --workspace --release --locked` then `cargo clippy ... -- -D warnings`; `wasm` — `cargo check --workspace --target wasm32-unknown-unknown --locked` (M0-T1) | 2 | ≈ 5 s on win-laptop (the empty `sr-physics`; grows with the crates) | `build-wasm-only` |
+| `adapter` | the GPU adapter choice (§6.1–§6.3, §6.2.2): the matching rule on a fixed list (case, substring, two backends, no match) and a live headless device per adapter the box has, at `Limits::default()`; the log names every adapter as `SR-ADAPTER …` (M0-T2) | 10 | ≈ 3 s warm on linux-pc (4 adapters: Quadro, RTX 5090, Intel UHD 770, llvmpipe) | `adapter-case` |
+| `state` | the cell state and one step (§2.2, §1.3.2, §1.3.4): a world-size upload/readback round trip with a distinct value per channel and cell, bit-exact; unnormalised and negative species fractions → one step → ΣX = 1 within the tolerance and the other channels bit-identical; two runs bit-identical (M0-T3). `bash tests/gpu.sh state physics` | 6 | ≈ 2 s on linux-pc (RTX 5090, Vulkan; 2026-10-09) | `state-renorm-skip` |
+| `boot` | G-BOOT (§5.4): `bash tests/smoke.sh headless-boot` builds sr-app into the tree's own `build/target`, runs `launch.py smoke headless-boot`, then the same command once more into a kept folder and checks `summary.json` carries every §2.12.2 key with `steps` = 200 and stdout's first/last lines (M0-T4) | 1 | ≈ 1 s warm · ≈ 38 s for `--redarm` (cold build per arm), linux-pc 2026-10-09 | `scene-refuse` |
+| `desktop` | G-DESK (§5.4, §3.4): case `window` — `bash tests/smoke.sh window`, the box's route (`game-xvfb` on linux-pc, `game-offscreen` on win-laptop, R15): `/status` reads `ready` (the first presented frame) within the deadline; case `launcher` — the double-click launcher fed an Enter (`printf '\n' \| bash start.sh game-xvfb`; win-laptop `start.bat game-offscreen`) starts, reaches ready, stops and leaves `launch.py status` at `running: 0` (M0-T5, M0-T6) | 2 | ≈ 1.2 s per case warm · `--redarm` ≈ 270 s (the `status-never-ready` arm waits out the 90 s deadline), linux-pc 2026-10-09; win-laptop route owed there | `status-never-ready`, `launcher-no-stop` |
+| `web` | G-WEB's build (§3.5, §6.2.1, §6.2.4): case `build` — `trunk build --release` into `web/dist`: index.html, the `.wasm` and the glue exist; the canvas, the `web.*` texts and the inline WebGPU check stand ahead of any use of the wasm; trunk's own auto-loader is gone (M0-T7). The page's behaviour in a browser is M0-T15's smoke | 1 | ≈ 4–6 s warm · ≈ 40 s `--redarm`, linux-pc 2026-10-09 | `web-no-gpu-check`, `web-autoload` |
+| `capture` | the scripted captures (§3.3): case `smoke` — `tests/capture/smoke.json` (paused, then running) on the box's window route → two PNGs of the window's size whose pixels differ, and a valid `captions.json` (review_page.py's shape); case `refuse` — an action not built yet, an unknown action and a bad id each → exit 4 with an `SR-ERROR` line, before any window opens (M0-T8) | 2 | ≈ 1–2 s warm · ≈ 73 s `--redarm`, linux-pc 2026-10-09; win-laptop route owed there | `capture-no-captions` |
 
 The complete loop: 3.2 s wall on linux-pc (62 cases, `jobs` 8). `tools_selftest` GO is the tools' GO, never the
 game's: the game's scopes arrive with the lots that build their passes (§5 names 38 — `grav-force` … `web`;
@@ -95,12 +101,38 @@ Every cargo scope's script sources `tests/cargo.sh`; it is also the `build` scop
 - Real tree: `CARGO_TARGET_DIR` is unset, so cargo builds into `build/target/` (`.cargo/config.toml`). In a red-arm scratch
   copy (no `.git`) it is `~/.cache/sandbox-reactions/redarm-target/`, shared by both arms so a plant rebuilds only the workspace's
   crates — for test builds only, never a binary a scope launches (§6.5). The cache is safe to delete.
+- In a copy, `cargo` is a wrapper (M0-D9): cargo's freshness is mtime-based and the copy keeps each file's mtime, so a build
+  another arm left in the shared target looked fresh (a second `--redarm` ran the plant's binary in its clean arm). Each call
+  takes the target's lock (`redarm-target.lock`; `flock`, else a `.lock.d` mkdir lock broken when its holder is gone),
+  touches `crates/ assets/ scenes/ Cargo.toml Cargo.lock .cargo/`, then runs cargo inside the lock: every arm rebuilds the
+  workspace's crates (≈ 1–3 s), never the dependencies, and arms building in parallel are serialised. A scope calls `cargo`
+  after sourcing `tests/cargo.sh`, never `command cargo` or a path to it, or it bypasses the wrapper. An input cargo reads from
+  outside those paths (an `include_str!` elsewhere) goes on the touch list.
 - Every build, check and test is `--locked`: `Cargo.lock` is committed, and adding a dependency means regenerating it.
 - One build profile: `[profile.release]` in the root `Cargo.toml`; `[profile.test]` inherits it (the CPU twin needs optimised code).
 - `rust-toolchain.toml` pins 1.99.0 (+ clippy, rustfmt, targets linux-gnu and wasm32); the first cargo call in a tree auto-installs that
   toolchain user-level (win-laptop: 2026-10-08, ≈ 25 s, beside `stable`).
+- A GPU scope is `bash tests/gpu.sh <module>` (M0-T2): `cargo test` of sr-engine's one GPU binary, `<module>::`, `--nocapture --test-threads=1`, so the log names the adapters; a GPU test gets its device from `device()` in `crates/sr-engine/tests/gpu/main.rs` (adapter from `SR_TEST_ADAPTER`, else the high-performance pick — on linux-pc that is the Quadro RTX 4000, never rely on it).
+- `bash tests/gpu.sh <module> [physics]`: the optional `physics` argument points the module at the box's physics adapter (R12) — `SR_TEST_ADAPTER` becomes `RTX 5090` on linux-pc, `RTX 4080` under Git Bash — unless the caller already set `SR_TEST_ADAPTER` (M0-T3). The `state` scope uses it; `adapter` does not (it walks every adapter the box has).
+- A window or boot scope is `bash tests/smoke.sh <service|window|launcher>` (M0-T4–M0-T6): it builds sr-app into **the tree's own `build/target`**, never the shared `redarm-target` (two arms must not launch one binary, §6.5), takes a lock on launch.json's port so the desktop scope's parallel cases boot one at a time, and always stops what it started. `tools/pb/launch.json` holds the services (`headless-boot`, `game`, `game-xvfb`, `game-offscreen`; `web` arrives with M0-T15, §3.6); the binary's flags and the routes are in `docs/agent/running.md`.
+- `bash tests/capture/check.sh <smoke|refuse>` (M0-T8) and `bash tests/web/check.sh build` (M0-T7) follow the same pattern: build or `trunk build` in the tree's own `build/`, check, end in `=== GO ===` / `=== NO-GO: … ===`. The capture's windowed arm runs under `xvfb-run … env -u WAYLAND_DISPLAY -u XDG_SESSION_TYPE` on linux-pc (winit prefers Wayland whenever it is set, so without the `env -u` the window opens on the lead's desktop) and with `--offscreen-window` on win-laptop.
 - A new member crate lands inside `crates/*` and is covered by the `build` scope's `crates/**` path; a cargo test scope is
   `cargo test --release --locked -p <crate> --lib` (R11) and sources `tests/cargo.sh` for the environment.
+
+## Boxes — two hostnames, one rule (R5, R15; contract §6.1, §6.6)
+Both boxes are in play for every M0 block, lot V's included; a block runs on the box the lead is on, after probing it,
+and every verdict names its box.
+| | linux-pc | win-laptop |
+|---|---|---|
+| hostname (`box:` in verify.json) | `laserax-ai` | `Laser2025-20` |
+| shell for the toolkit | bash | Git Bash through the Bash tool only (`py -3.12 tools/pb/…`, never `python3`; `MSYS=winsymlinks:nativestrict`) |
+| physics adapter (R12) | RTX 5090 | RTX 4080 Laptop |
+| window checks (G-DESK, captures) | `game-xvfb` / `xvfb-run` on a private Xvfb with lavapipe | `game-offscreen` — `--offscreen-window`, never focused, out of the taskbar |
+| launcher | `start.sh` | `start.bat` (and `start.ps1`) |
+| web smoke's Chrome | `/usr/bin/google-chrome` | `C:\Program Files\Google\Chrome\Application\chrome.exe` |
+| timing (G-FPS, G-TOP, per-pass costs, `--measure-ui`) | the Quadro RTX 4000 — `box: laserax-ai` | never here: reads `owed on laserax-ai` |
+A check only one box can run reads `NOT RUN — owed on <other box>`, flagged V to V and run at the next V on its box (R15).
+A scope's `box` key is the hostname, never `linux-pc`. Details: `docs/agent/running.md`.
 
 ## Long runs
 `calibrate`, the ⏱ scopes and benches at low rungs can pass 10 minutes on the Quadro: the lead's, in one

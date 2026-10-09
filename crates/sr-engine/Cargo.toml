@@ -1,0 +1,15 @@
+[package]
+name = "sr-engine"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+wgpu.workspace = true
+pollster.workspace = true
+serde_json.workspace = true
+
+# One GPU test binary (tests/gpu/main.rs); every GPU scope adds a module to it (R11).
+[[test]]
+name = "gpu"
+path = "tests/gpu/main.rs"

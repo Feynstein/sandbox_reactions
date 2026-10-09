@@ -1,0 +1,11 @@
+--- a/web/Trunk.toml
++++ b/web/Trunk.toml
+@@ -6,8 +6,3 @@
+ release = true
+ filehash = false
+ public_url = "./"
+-
+-[[hooks]]
+-stage = "post_build"
+-command = "node"
+-command_arguments = ["strip-autoload.mjs"]

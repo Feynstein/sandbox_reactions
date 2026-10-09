@@ -1,0 +1,7 @@
+--- a/start.sh
++++ b/start.sh
+@@ -8,4 +8,3 @@
+ python3 tools/pb/launch.py start "$service" --task launcher $asked
+ echo "Sandbox Reactions is running. Press Enter to close it."
+ read -r _
+-python3 tools/pb/launch.py stop --task launcher

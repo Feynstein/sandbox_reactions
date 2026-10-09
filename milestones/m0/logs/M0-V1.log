@@ -1,0 +1,273 @@
+[M0-V1 — opened 2026-10-09T12:01:31-04:00 on laserax-ai (linux-pc)]
+rung_record now: model=claude-opus-5-5 level=max plugin=installed (heading: Opus 5.5, max — match)
+[carried flag 1 — tools_selftest on linux-pc, 2026-10-09T12:01:37-04:00]
+tools_selftest  10/0/0      11.87 s  GO
+logs: milestones/m0/logs/M0-V1-linux.<scope>.log · record: loop_times.jsonl · tree 516ec7ca31bf+6e4dc2ef1083
+anchor: 0 path×scope entries moved by this run
+anchor: 63 paths checked · 60 skipped (3 classes) · 0 never checked · 1 stale · 0 unclassified · 0 owed · 64 covered of 124 visible
+verify: 10 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 3.73 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 10.47->10.19
+=== GO ===
+[carried flag 1 — redarm tools_selftest, 2026-10-09T12:01:45-04:00]
+tools_selftest · clean · GO
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 7.60 s · box laserax-ai · log milestones/m0/logs/M0-V1-linux.tools_selftest.redarm.log
+=== GO ===
+[red-arm campaign — lot 1's seven scopes, sequential, started 2026-10-09T12:05:10-04:00]
+-- redarm build rc=0 wall=56.6 s
+build · clean · GO
+build · plant build-wasm-only · RED (proven: build[wasm]: 1 failed; build[wasm]: its own verdict NO-GO: cargo check --target wasm32-unknown-unknown failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope build · 56.47 s · box laserax-ai · log milestones/m0/logs/M0-V1.build.redarm.log
+=== GO ===
+-- redarm adapter rc=0 wall=6.7 s
+adapter · clean · GO
+adapter · plant adapter-case · RED (proven: 5 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 6.64 s · box laserax-ai · log milestones/m0/logs/M0-V1.adapter.redarm.log
+=== GO ===
+-- redarm state rc=0 wall=5.5 s
+state · clean · GO
+state · plant state-renorm-skip · RED (proven: 1 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope state · 5.39 s · box laserax-ai · log milestones/m0/logs/M0-V1.state.redarm.log
+=== GO ===
+-- redarm boot rc=0 wall=65.2 s
+boot · clean · GO
+boot · plant scene-refuse · RED (proven: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope boot · 65.16 s · box laserax-ai · log milestones/m0/logs/M0-V1.boot.redarm.log
+=== GO ===
+[hand checks of the binary §3.3 — 2026-10-09T12:09:09-04:00, linux-pc]
+$ sandbox-reactions --help
+usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] | sandbox-reactions headless --scene preset:<sun|massive|giant> --steps N [--world WxH] [--max-steps N] [--out DIR] [--adapter S]
+  exit=0
+$ sandbox-reactions headless --scene preset:sun --steps 3 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/351f4824-4582-4726-adae-f656f8144a90/scratchpad/h1
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3 sim_time=0.000000 until=none
+  exit=0
+$ sandbox-reactions headless --scene preset:sun --steps 10 --max-steps 5
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.000000 until=unmet
+  exit=2
+$ sandbox-reactions headless --scene preset:sun --steps 3 --adapter no-such-gpu-xyz
+SR-ERROR no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel o
+  exit=3
+$ sandbox-reactions headless --scene scenes/none.json --steps 3
+SR-ERROR bad scene: scene "scenes/none.json": scene files arrive with M0-T25 — only preset:<name> loads today
+  exit=4
+$ sandbox-reactions headless --scene preset:sun --steps 3 --world 100x100
+SR-ERROR bad arguments: world 100 × 100: width and height must be multiples of 8 within [64, 2048]
+  exit=4
+$ sandbox-reactions headless --scene preset:massive --steps 2
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-WARN preset massive: the nominal Sun-like disk until calibration gives preset_mass_sb (§2.11)
+SR-HEADLESS DONE steps=2 sim_time=0.000000 until=none
+  exit=0
+$ sandbox-reactions headless --scene preset:sun --until ending
+SR-ERROR bad arguments: unknown argument "--until"
+  exit=4
+$ sandbox-reactions --bogus
+SR-ERROR unknown argument "--bogus"; usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] | sandbox-reactions headless --scene preset:<sun|massive|giant> --steps N [--world WxH] [--max-steps N] [--out DIR] 
+  exit=4
+$ sandbox-reactions --world 600x400
+SR-ERROR --world is not built yet (its block comes later); usage: sandbox-reactions [--adapter <name substring>] [--status-port <port>] [--offscreen-window] [--capture <script.json> --out <dir>]
+  exit=4
+$ sandbox-reactions --measure-ui 10
+SR-ERROR --measure-ui is not built yet (its block comes later); usage: sandbox-reactions [--adapter <name substring>] [--status-port <port>] [--offscreen-window] [--capture <script.json> --out <dir>]
+  exit=4
+$ sandbox-reactions --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/351f4824-4582-4726-adae-f656f8144a90/scratchpad/c1 --capture tests/capture/smoke.json
+SR-ERROR unknown argument "--out"; usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] | sandbox-reactions headless --scene preset:<sun|massive|giant> --steps N [--world WxH] [--max-steps N] [--out DIR] [-
+  exit=4
+$ sandbox-reactions --adapter llvmpipe --help
+SR-ERROR unknown argument "--help"; usage: sandbox-reactions [--adapter <name substring>] [--status-port <port>] [--offscreen-window] [--capture <script.json> --out <dir>]
+  exit=4
+[docs name 'Intel UHD 770' as a wgpu adapter — 2026-10-09T12:09:47-04:00]
+--adapter "UHD 770" → exit 3 · SR-ERROR no adapter name contains "UHD 770"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver N
+--adapter "UHD" → exit 3 · SR-ERROR no adapter name contains "UHD"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDI
+--adapter "RPL-S" → exit 0 · SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+docs/agent/testing.md:28:| `adapter` | the GPU adapter choice (§6.1–§6.3, §6.2.2): the matching rule on a fixed list (case, substring, two backends, no mat
+docs/agent/running.md:50:| linux-pc | Quadro RTX 4000 (drives the display) · RTX 5090 · Intel UHD 770 · llvmpipe (Mesa software Vulkan) | physics scopes `--a
+[hand capture run — the capture scope's own argv, kept folder — 2026-10-09T12:10:40-04:00]
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE DONE 2 /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/351f4824-4582-4726-adae-f656f8144a90/scratchpad/cap1
+exit=0
+total 36
+drwxrwxr-x 2 ybelanger ybelanger 4096 Oct  9 12:10 .
+drwx------ 4 ybelanger ybelanger 4096 Oct  9 12:10 ..
+-rw-rw-r-- 1 ybelanger ybelanger  494 Oct  9 12:10 captions.json
+-rw-rw-r-- 1 ybelanger ybelanger 9689 Oct  9 12:10 paused.png
+-rw-rw-r-- 1 ybelanger ybelanger 8554 Oct  9 12:10 running.png
+/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/351f4824-4582-4726-adae-f656f8144a90/scratchpad/cap1/paused.png:  PNG image data, 1760 x 940, 8-bit/color RGB, non-interlaced
+/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/351f4824-4582-4726-adae-f656f8144a90/scratchpad/cap1/running.png: PNG image data, 1760 x 940, 8-bit/color RGB, non-interlaced
+[{"caption": "One step taken while paused", "file": "paused.png", "flag": false, "id": "paused", "overflow": false, "path": "smoke.json", "route": "desktop", "state": "paused", "viewport": "1760x940"}, {"caption": "Running again for five frames", "file": "running.png", "flag": false, "id": "running", "overflow": false, "path": "smoke.json", "route": "desktop", "state": "running", "viewport": "1760x940"}]
+[§1.2 / §0.5: wgpu's resolved features — 2026-10-09T12:11:17-04:00]
+-- target x86_64-unknown-linux-gnu: wgpu features enabled
+wgpu feature "capture" wgpu feature "dx12" wgpu feature "metal" wgpu feature "std" wgpu feature "vulkan" wgpu feature "wayland" wgpu feature "web" wgpu feature "webgpu" wgpu feature "wgsl" wgpu feature "winit" wgpu feature "x11" 
+   webgl/gles present: 0
+-- target wasm32-unknown-unknown: wgpu features enabled
+wgpu feature "capture" wgpu feature "dx12" wgpu feature "metal" wgpu feature "std" wgpu feature "vulkan" wgpu feature "wayland" wgpu feature "web" wgpu feature "webgpu" wgpu feature "web-sys" wgpu feature "wgsl" wgpu feature "x11" 
+   webgl/gles present: 0
+-- eframe features enabled (native):
+eframe feature "default_fonts" eframe feature "wayland" eframe feature "wgpu_no_default_features" eframe feature "x11" 
+-- resolved versions:
+console_error_panic_hook v0.1.7
+eframe v0.36.2
+log v0.4.34
+png v0.18.1
+serde_json v1.0.151
+wasm-bindgen-futures v0.4.79
+wasm-bindgen v0.2.129
+web-sys v0.3.106
+wgpu v30.0.1
+winit v0.30.13
+bytemuck v1.25.2
+-- redarm desktop rc=0 wall=276.9 s
+desktop · clean · GO
+desktop · plant status-never-ready · RED (proven: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[lau)
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb)
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope desktop · 276.83 s · box laserax-ai · log milestones/m0/logs/M0-V1.desktop.redarm.log
+=== GO ===
+-- redarm web rc=0 wall=11.5 s
+web · clean · GO
+web · plant web-no-gpu-check · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: index.html has no navigator.gpu check)
+web · plant web-autoload · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still in index.h)
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope web · 11.39 s · box laserax-ai · log milestones/m0/logs/M0-V1.web.redarm.log
+=== GO ===
+[start.sh with no terminal (stdin /dev/null), private display — 2026-10-09T12:12:18-04:00]
+   0.64 s  game-xvfb: ready on http://127.0.0.1:47811/status, 0.6s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+   0.64 s  services: 1, ready: 1
+   0.65 s  === GO ===
+   0.66 s  Sandbox Reactions is running. Press Enter to close it.
+   0.77 s  headless-boot: nothing recorded
+   0.77 s  game: nothing recorded
+   0.77 s  game-xvfb: pid 2622865 stopped; its X server :99, pid 2622853 stopped
+   0.78 s  game-offscreen: nothing recorded
+   0.78 s  services: 4, stopped: 4
+   0.79 s  === GO ===
+start.sh exit=0
+services: 4, running: 0
+=== GO ===
+no game process left
+-- redarm capture rc=0 wall=51.5 s
+capture · clean · GO
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope capture · 51.47 s · box laserax-ai · log milestones/m0/logs/M0-V1.capture.redarm.log
+=== GO ===
+[red-arm campaign done 2026-10-09T12:13:04-04:00]
+[after the lead's two runs — 2026-10-09T12:15:40-04:00]
+1083587 bash ./start.sh
+1083809 bash ./start.sh
+1083810 bash ./start.sh
+pid 1083587 stdin -> /dev/pts/23 · started Fri Oct  9 10:20:30 2026
+pid 1083809 stdin -> /dev/null · started Fri Oct  9 10:20:30 2026
+pid 1083810 stdin -> /dev/null · started Fri Oct  9 10:20:30 2026
+pid 2641710 stdin -> /dev/null · started Fri Oct  9 12:15:40 2026
+pid 2641711 stdin -> /dev/null · started Fri Oct  9 12:15:40 2026
+game-offscreen stopped
+services: 4, running: 0
+=== GO ===
+-- launcher log (game):
+:14:58 milestones/m0/logs/launcher.launch.game.log
+# launcher | launch game | 2026-10-09T12:14:58-0400
+$ build/target/release/sandbox-reactions --status-port 47811
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+[claim checks — 2026-10-09T12:17:28-04:00]
+--status-port 0 → exit 4 · SR-ERROR --status-port "0": not a port; usage: sandbox-reactions [--adapter <name substrin
+--status-port abc → exit 4 · SR-ERROR --status-port "abc": not a port; usage: sandbox-reactions [--adapter <name substr
+--status-port <busy 44529> → exit 4 · SR-ERROR --status-port 44529: cannot listen on 127.0.0.1 (Address already in use (os error 98))
+M0-T9 Verify 1: 50 and 32 lines citing §
+M0-T9 Verify 2: 7 rows
+TV1 captures: captions.json desktop-script.json first-frame.png paused.png review.html running.png stepped.png web-default-noflags-1280x800.png web-loading-held-1280x800.png web-loading-held-390x844.png web-no-webgpu-1280x800.png web-no-webgpu-390x844.png 
+1164:## M0-T19 · P8 floors, complete, and the equation of state on the GPU · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T18)
+- Carried flags: [M0-T3, 2026-10-09] from M0-T3: P8's list holds renormalise_species (floors.wgsl) — put the vacuum reset and the temperature floor AHEAD of it in Step's P8 list; declared default, contract silent: a cell whose fractions are all ≤ 0 becomes pure hydrogen — state it in §2.7 by asking, and match it in the CPU f64 twin, which R13 wants and M0-T3's Deliver did not name (its test
+[Verify 1 — the complete loop, verify.py --all, TMPDIR watched for the boot scope's summary.json — 2026-10-09T12:22:51-04:00]
+plan_lint       500/0/0      0.12 s  GO
+tools_selftest  10/0/0      12.37 s  GO
+toolchain       3/0/0        0.49 s  GO
+build           2/0/0        0.63 s  GO
+adapter         10/0/0       4.84 s  GO
+state           6/0/0        3.14 s  GO
+boot            1/0/0        2.27 s  GO
+desktop         2/0/0        6.31 s  GO
+web             1/0/0        4.44 s  GO
+capture         2/0/0        1.38 s  GO
+adapter · clean · GO
+adapter · plant adapter-case · RED (proven: 5 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 6.70 s · box laserax-ai · log milestones/m0/logs/M0-V1.adapter.redarm.log
+boot · clean · GO
+boot · plant scene-refuse · RED (proven: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope boot · 64.33 s · box laserax-ai · log milestones/m0/logs/M0-V1.boot.redarm.log
+capture · clean · GO
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope capture · 67.18 s · box laserax-ai · log milestones/m0/logs/M0-V1.capture.redarm.log
+desktop · clean · GO
+desktop · plant status-never-ready · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[window])
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb)
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope desktop · 286.91 s · box laserax-ai · log milestones/m0/logs/M0-V1.desktop.redarm.log
+state · clean · GO
+state · plant state-renorm-skip · RED (proven: 1 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope state · 5.21 s · box laserax-ai · log milestones/m0/logs/M0-V1.state.redarm.log
+web · clean · GO
+web · plant web-no-gpu-check · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: index.html has no navigator.gpu check)
+web · plant web-autoload · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still in index.h)
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope web · 13.08 s · box laserax-ai · log milestones/m0/logs/M0-V1.web.redarm.log
+FLAG type: crates/sr-app/src/capture.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-app/src/desktop.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-app/src/main.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-app/src/status.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-app/src/web.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-engine/src/gpu.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-engine/src/headless.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-engine/src/lib.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-engine/src/state.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: crates/sr-engine/src/step/mod.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG type: crates/sr-engine/tests/gpu/main.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: crates/sr-engine/tests/gpu/state.rs changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG type: crates/sr-engine/tests/gpu/state.rs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: start.bat changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: start.ps1 changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: start.sh changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tests/capture/check.sh changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG type: tests/capture/check.sh changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tests/capture/smoke.json changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/cargo.sh changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG type: tests/cargo.sh changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tests/gpu.sh changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG type: tests/gpu.sh changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tests/plants/adapter-case.patch changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/plants/capture-no-captions.patch changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/plants/launcher-no-stop.patch changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/plants/scene-refuse.patch changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/plants/state-renorm-skip.patch changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/plants/status-never-ready.patch changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/plants/web-autoload.patch changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/plants/web-no-gpu-check.patch changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG oracle: tests/smoke.sh changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG type: tests/smoke.sh changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tests/web/check.sh changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG type: tests/web/check.sh changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: tools/pb/launch.json changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: tools/pb/verify.anchor.json changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/verify.json changed since HEAD - a test, case or check M0-V1's Deliver: does not name
+FLAG type: tools/pb/verify.json changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: web/strip-autoload.mjs changed since HEAD - a CHECK block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: scope `adapter` added in tools/pb/verify.json - M0-V1's Deliver: names neither it nor the manifest
+FLAG oracle: scope `boot` added in tools/pb/verify.json - M0-V1's Deliver: names neither it nor the manifest
+FLAG oracle: scope `state` added in tools/pb/verify.json - M0-V1's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-V1.<scope>.log · record: loop_times.jsonl · tree 516ec7ca31bf+046ab74464ef
+anchor: 1 path×scope entries moved by this run
+anchor: 64 paths checked · 60 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 64 covered of 124 visible
+verify: 537 passed, 0 failed, 0 skipped · 10/10 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.11 s · mode all · jobs 8 · box laserax-ai · python 3.12.3 · load 12.82->15.96
+=== GO ===
+wall (outer) 449.7 s
+[the boot scope's own summary.json files, caught in flight during Verify 1 — §2.12.2]
+- launch.py smoke headless-boot's --out (G-BOOT's own run): 13 §2.12.2 keys, missing/mistyped none, extra none; version 1, tool 'sandbox-reactions 0.0.0', git '516ec7c', adapter Quadro RTX 4000 / Vulkan / NVIDIA, scene 'preset:sun', world {'height': 400, 'width': 600}, steps 200, sim_time 0.0, wall_s 0.0328, ledger {'end': {}, 'start': {}}, events [], objects [], until {'condition': 'steps:200', 'met': True}, timing absent
+- tests/smoke.sh's second run (the file its check read): 13 §2.12.2 keys, missing/mistyped none, extra none; version 1, tool 'sandbox-reactions 0.0.0', git '516ec7c', adapter Quadro RTX 4000 / Vulkan / NVIDIA, scene 'preset:sun', world {'height': 400, 'width': 600}, steps 200, sim_time 0.0, wall_s 0.0560, ledger {'end': {}, 'start': {}}, events [], objects [], until {'condition': 'steps:200', 'met': True}, timing absent
+[§4.1 strings, byte for byte — the contract's table against the files lot 1 wrote]
+  web.loading              verbatim in web/index.html
+  web.no_webgpu_title      verbatim in web/index.html
+  web.no_webgpu_body       verbatim in web/index.html
+  web.no_webgpu_browsers   verbatim in web/index.html
+  error.no_adapter         verbatim in crates/sr-app/src/web.rs
+  error.device_lost        verbatim in crates/sr-app/src/web.rs
+  app.title                verbatim in crates/sr-app/src/desktop.rs
+strings: 7 verbatim, 0 missing

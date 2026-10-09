@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sandbox Reactions</title>
+<style>
+  /* Tokens of m0_contrat.md §4.11: bg.space #05070D, text.primary #E6EAF2; heading 18 px, body 14 px. */
+  html, body { margin: 0; height: 100%; background: #05070D; color: #E6EAF2; overflow: hidden;
+               font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #sr-canvas { display: block; width: 100vw; height: 100vh; }
+  #sr-loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+                text-align: center; padding: 0 16px; pointer-events: none; }
+  #sr-loading[hidden] { display: none; }
+  #sr-no-webgpu { max-width: 640px; margin: 0 auto; padding: 96px 16px 0; }
+  #sr-no-webgpu[hidden] { display: none; }
+  #sr-no-webgpu h1 { font-size: 18px; font-weight: 600; margin: 0 0 16px; }
+  #sr-no-webgpu p { margin: 0 0 16px; }
+</style>
+<!-- trunk builds sr-app for wasm32; its own auto-loader is stripped (strip-autoload.mjs): the script below loads the wasm, once WebGPU is confirmed. -->
+<link data-trunk rel="rust" href="../crates/sr-app/Cargo.toml" data-bin="sandbox-reactions" data-wasm-opt="z" />
+</head>
+<body>
+<canvas id="sr-canvas"></canvas>
+<div id="sr-loading">Loading Sandbox Reactions…</div>
+<div id="sr-no-webgpu" hidden>
+  <h1>Sandbox Reactions needs WebGPU</h1>
+  <p>Your browser does not support WebGPU yet. Sandbox Reactions uses it to run its physics on your graphics card.</p>
+  <p>It runs in Google Chrome on Windows, macOS and ChromeOS (and on Linux with recent Intel or NVIDIA graphics), in Safari 26, and in Firefox on Windows and macOS.</p>
+</div>
+<!-- The WebGPU check (m0_contrat.md §3.5, §6.2.4): inline and ahead of the wasm, which only the last lines load. -->
+<script type="module">
+  const state = (s) => { document.body.dataset.srState = s; };
+  state("loading");
+  let adapter = null;
+  if (navigator.gpu && !new URLSearchParams(location.search).has("no-webgpu")) {
+    try { adapter = await navigator.gpu.requestAdapter({ powerPreference: "high-performance" }); } catch (e) { adapter = null; }
+  }
+  if (!adapter) {
+    document.getElementById("sr-canvas").remove();
+    document.getElementById("sr-loading").hidden = true;
+    document.getElementById("sr-no-webgpu").hidden = false;
+    state("no-webgpu");
+  } else {
+    try {
+      const app = await import("./sandbox-reactions.js");
+      await app.default({ module_or_path: "./sandbox-reactions_bg.wasm" });
+    } catch (e) {
+      // The wasm failed to load or start (the app's own fatal errors are raised by the app).
+      if (document.body.dataset.srState !== "error") {
+        state("error");
+        document.body.dataset.srErrorDetail = String(e);
+        document.getElementById("sr-loading").textContent = "SR-ERROR " + e;
+      }
+    }
+  }
+</script>
+</body>
+</html>

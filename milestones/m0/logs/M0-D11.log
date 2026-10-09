@@ -1,0 +1,10 @@
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 0.62s
+build/target/release/sandbox-reactions
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE DONE 2 /tmp/tmp.Zhf6uTFM3r
+capture exit 0
+captions.json
+paused.png
+running.png

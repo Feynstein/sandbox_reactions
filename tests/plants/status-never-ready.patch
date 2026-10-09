@@ -1,0 +1,11 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -72,7 +72,7 @@
+                 s.frame = frames;
+                 s.fps = fps;
+                 if presented {
+-                    s.state = crate::status::State::Ready;
++                    s.state = crate::status::State::Booting;
+                 }
+             });
+         }

@@ -27,7 +27,11 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
   code: no tolerance here may be chosen after seeing a result. A tolerance a measured run proves
   unsatisfiable is re-set only by a PLAN amendment that asks the lead ("Changes by asking" covers
   formulas, never a bypass that makes a failing check pass) — never loosened inside a build block.
-- **0.5 Declared overrides** (PLAYBOOK §9 — passage · what replaces it · why): none.
+- **0.5 Declared overrides** (PLAYBOOK §9 — passage · what replaces it · why):
+  - [M0-T5] §1.2's "Features: eframe `wgpu`" · eframe `wgpu_no_default_features` (with `wayland`, `x11`,
+    `default_fonts`) · in eframe 0.36.2 `wgpu` also turns on egui-wgpu's defaults, i.e. wgpu's `webgl` and `gles`
+    (measured, `cargo tree -e features -i wgpu`), against §1.2's own "no `webgl`" (Q4); the same renderer, no package
+    added — the lead's answer at M0-T5, 2026-10-09: «wgpu_no_default_features (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

@@ -1,0 +1,13 @@
+# The web build (m0_contrat.md §3.5, §6.2.1): `trunk build --release` from web/ writes web/dist/ (git-ignored).
+# Stable file names: index.html's inline script loads the wasm itself, after its WebGPU check.
+[build]
+target = "index.html"
+dist = "dist"
+release = true
+filehash = false
+public_url = "./"
+
+[[hooks]]
+stage = "post_build"
+command = "node"
+command_arguments = ["strip-autoload.mjs"]

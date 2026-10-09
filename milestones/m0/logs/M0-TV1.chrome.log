@@ -1,0 +1,28 @@
+[1009/114307.013754:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+31958 bytes written to file /home/ybelanger/private/sandbox_reactions/milestones/m0/images/tv1/web-no-webgpu-1280x800.png
+[1009/114307.405086:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+28074 bytes written to file /home/ybelanger/private/sandbox_reactions/milestones/m0/images/tv1/web-no-webgpu-390x844.png
+[1009/114307.747522:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+31958 bytes written to file /home/ybelanger/private/sandbox_reactions/milestones/m0/images/tv1/web-default-noflags-1280x800.png
+[1009/114334.493572:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+31958 bytes written to file /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/5b33c504-c11b-46b5-b948-8dda4ee17c9c/scratchpad/loading-try.png
+[1009/114343.141689:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+[2405550:2405566:1009/114343.801743:ERROR:gpu/ipc/client/command_buffer_proxy_impl.cc:277] ContextResult::kTransientFailure: Failed to send GpuControl.CreateCommandBuffer.
+Warning: maxDynamicUniformBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
+Warning: maxDynamicStorageBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
+31958 bytes written to file /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/5b33c504-c11b-46b5-b948-8dda4ee17c9c/scratchpad/loading-try1.png
+[1009/114344.083044:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+[2405735:2405760:1009/114347.544692:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+Created TensorFlow Lite XNNPACK delegate for CPU.
+[2405735:2405760:1009/114416.783796:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[2405735:2405760:1009/114508.159330:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[1009/114514.075852:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+[2412044:2412044:1009/114514.751244:ERROR:components/viz/service/display_embedder/skia_output_device_vulkan.cc:307] Failed to initialize vulkan surface.
+[2412109:2412127:1009/114514.755352:ERROR:gpu/ipc/client/command_buffer_proxy_impl.cc:277] ContextResult::kTransientFailure: Failed to send GpuControl.CreateCommandBuffer.
+Warning: maxDynamicUniformBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
+Warning: maxDynamicStorageBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
+31958 bytes written to file /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/5b33c504-c11b-46b5-b948-8dda4ee17c9c/scratchpad/loading-try3.png
+[1009/114526.557795:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+8152 bytes written to file /home/ybelanger/private/sandbox_reactions/milestones/m0/images/tv1/web-loading-held-1280x800.png
+[1009/114526.908452:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:153] open /home/ybelanger/.config/google-chrome/Crash Reports/pending/8dd3d7cf-2ce7-4d15-9c35-229c6a3f2791.lock: File exists (17)
+6112 bytes written to file /home/ybelanger/private/sandbox_reactions/milestones/m0/images/tv1/web-loading-held-390x844.png

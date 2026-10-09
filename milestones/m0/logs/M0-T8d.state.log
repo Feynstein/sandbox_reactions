@@ -1,0 +1,27 @@
+== 2026-10-09T11:17:32-04:00 state · task M0-T8d · box laserax-ai :: bash tests/gpu.sh state physics
+-- state · exit=0 · 3.74 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.51s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-96f3c8909aeb02b8)
+
+running 6 tests
+test state::a_step_is_p0_to_p9_with_p8s_renormalisation_its_only_dispatch_today ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+4096 cells: worst |Σ X − 1| = 1.8719583749771118e-7, worst |X − oracle| = 6.857620882261273e-8 (tolerance 1e-6)
+ok
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 3.14s
+
+

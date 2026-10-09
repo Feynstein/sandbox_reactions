@@ -1,0 +1,5 @@
+== 2026-10-09T12:48:36-04:00 web[build] · task M0-D11 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 7.16 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+

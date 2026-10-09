@@ -1,0 +1,29 @@
+==== 2026-10-09T11:14:59-04:00 desktop · clean · a fresh scratch copy of the tree
+== 2026-10-09T11:14:59-04:00 desktop[window] · task M0-T8c · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-09T11:14:59-04:00 desktop[launcher] · task M0-T8c · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 31.39 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.5s (log /tmp/pb-redarm-dbaokdvg/arm0/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: pid 1848840 stopped; its X server :99, pid 1848839 stopped
+game-offscreen: nothing recorded
+services: 4, stopped: 4
+=== GO ===
+launcher game-xvfb: built in 30 s, started, stopped, nothing left running
+=== GO ===
+
+-- desktop[window] · exit=0 · 32.00 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.5s (log /tmp/pb-redarm-dbaokdvg/arm0/milestones/m0/logs/M0-T8c.launch.game-xvfb.log)
+game-xvfb: pid 1849162 stopped; its X server :99, pid 1849151 stopped
+game-xvfb: log /tmp/pb-redarm-dbaokdvg/arm0/milestones/m0/logs/M0-T8c.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 30 s, booted and checked in 2 s
+=== GO ===
+
+==== 2026-10-09T11:15:31-04:00 desktop · plant status-never-ready · a fresh scratch copy of the tree
+planted status-never-ready: tests/plants/status-never-ready.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-09T11:15:31-04:00 desktop[window] · task M0-T8c · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-09T11:15:31-04:00 desktop[launcher] · task M0-T8c · box laserax-ai :: bash tests/smoke.sh {case}

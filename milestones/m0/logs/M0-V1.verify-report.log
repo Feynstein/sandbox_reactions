@@ -1,0 +1,37 @@
+M0-TH: 4 all · 0 changed · 3 scope · 0 case · 5 redarm · first run GO
+M0-TG: 0 all · 2 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TB: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run GO
+M0-TE-win: 2 all · 1 changed · 1 scope · 0 case · 1 redarm · first run NO-GO
+M0-D2: 0 all · 1 changed · 1 scope · 1 case · 1 redarm · first run GO
+M0-D3: 0 all · 1 changed · 1 scope · 1 case · 1 redarm · first run GO
+M0-D4: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run NO-GO
+M0-D5: 0 all · 1 changed · 0 scope · 1 case · 1 redarm · first run GO
+M0-TE-win-r2: 1 all · 0 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-TE-win-r3: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D6: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run NO-GO
+M0-D7: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-TJ3: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D8: 0 all · 1 changed · 0 scope · 1 case · 1 redarm · first run GO
+M0-T1: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T2: 0 all · 2 changed · 2 scope · 0 case · 2 redarm · first run GO
+M0-D9: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T3: 0 all · 2 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-T4: 0 all · 1 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-T4b: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TM1: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T5: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T6: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run NO-GO
+M0-T6d: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T7: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T8: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T8d: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T9: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TV1: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-V1: 1 all · 0 changed · 0 scope · 0 case · 7 redarm · first run GO
+(51 further task label(s) ran scoped, case or redarm runs only)
+redundant: M0-TH 2026-10-08T12:12:57-04:00 (all) - a second GO run on the tree of M0-TH 2026-10-08T12:12:49-04:00
+redundant: M0-TG 2026-10-08T13:39:57-04:00 (changed) - a second GO run on the tree of M0-TG 2026-10-08T13:39:40-04:00
+laserax-ai: slowest scopes (median over 5 complete loops): tools_selftest 10.22 s · desktop 6.31 s · adapter 4.84 s · web 4.44 s · state 3.13 s
+Laser2025-20: slowest scopes (median over 3 complete loops): tools_selftest 215.19 s · toolchain 18.73 s · plan_lint 0.56 s
+report: 148 runs · 0 foreign · 8 complete loops · 30 changed · 81 task label(s) · loops per task 1.27 · redundant 2 · first-try 69/81 · median complete loop laserax-ai 3.27 s · Laser2025-20 97.54 s
+=== GO ===

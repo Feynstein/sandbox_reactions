@@ -1,0 +1,129 @@
+{
+  "_note": "Contract §3.6 as amended [M0-TG, M0-TJ3]. M0-T4 wrote headless-boot; M0-T5 game, game-xvfb, game-offscreen (game-offscreen also takes launch.py's private Xvfb on Linux, where Wayland ignores a window position — so it never lands on the lead's desktop; on Windows it runs as declared); M0-T15 adds web.",
+  "services": {
+    "headless-boot": {
+      "cmd": {
+        "posix": [
+          "build/target/release/sandbox-reactions",
+          "headless",
+          "--scene",
+          "preset:sun",
+          "--steps",
+          "200",
+          "--out",
+          "{tmpdir}"
+        ],
+        "nt": [
+          "build\\target\\release\\sandbox-reactions.exe",
+          "headless",
+          "--scene",
+          "preset:sun",
+          "--steps",
+          "200",
+          "--out",
+          "{tmpdir}"
+        ]
+      },
+      "cwd": ".",
+      "ready": "exit",
+      "ready_forbid": [
+        "SR-ERROR",
+        "panicked at"
+      ],
+      "deadline_s": 60
+    },
+    "game": {
+      "cmd": {
+        "posix": [
+          "build/target/release/sandbox-reactions",
+          "--status-port",
+          "47811"
+        ],
+        "nt": [
+          "build\\target\\release\\sandbox-reactions.exe",
+          "--status-port",
+          "47811"
+        ]
+      },
+      "cwd": ".",
+      "port": 47811,
+      "ready": "url",
+      "ready_url": "http://127.0.0.1:47811/status",
+      "ready_key": "status",
+      "ready_values": [
+        "ready"
+      ],
+      "ready_forbid": [
+        "SR-ERROR",
+        "panicked at"
+      ],
+      "deadline_s": 90,
+      "ask": true
+    },
+    "game-xvfb": {
+      "cmd": {
+        "posix": [
+          "build/target/release/sandbox-reactions",
+          "--status-port",
+          "47811",
+          "--adapter",
+          "llvmpipe"
+        ],
+        "nt": [
+          "build\\target\\release\\sandbox-reactions.exe",
+          "--status-port",
+          "47811",
+          "--adapter",
+          "llvmpipe"
+        ]
+      },
+      "cwd": ".",
+      "port": 47811,
+      "ready": "url",
+      "ready_url": "http://127.0.0.1:47811/status",
+      "ready_key": "status",
+      "ready_values": [
+        "ready"
+      ],
+      "ready_forbid": [
+        "SR-ERROR",
+        "panicked at"
+      ],
+      "deadline_s": 90,
+      "xvfb": true
+    },
+    "game-offscreen": {
+      "cmd": {
+        "posix": [
+          "build/target/release/sandbox-reactions",
+          "--status-port",
+          "47811",
+          "--offscreen-window"
+        ],
+        "nt": [
+          "build\\target\\release\\sandbox-reactions.exe",
+          "--status-port",
+          "47811",
+          "--offscreen-window"
+        ]
+      },
+      "cwd": ".",
+      "port": 47811,
+      "ready": "url",
+      "ready_url": "http://127.0.0.1:47811/status",
+      "ready_key": "status",
+      "ready_values": [
+        "ready"
+      ],
+      "ready_forbid": [
+        "SR-ERROR",
+        "panicked at"
+      ],
+      "deadline_s": 90,
+      "xvfb": true
+    }
+  },
+  "pid_file": "tools/pb/.launch.pid.json",
+  "logs_dir": "milestones/m0/logs",
+  "deadline_s": 90
+}

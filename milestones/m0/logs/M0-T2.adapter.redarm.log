@@ -1,0 +1,520 @@
+==== 2026-10-09T09:13:47-04:00 adapter · clean · a fresh scratch copy of the tree
+== 2026-10-09T09:13:47-04:00 adapter · task M0-T2 · box laserax-ai :: bash tests/gpu.sh adapter
+-- adapter · exit=0 · 19.32 s
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.26
+   Compiling cfg_aliases v0.2.2
+   Compiling cfg-if v1.0.5
+   Compiling foldhash v0.2.0
+   Compiling autocfg v1.5.1
+   Compiling thiserror v2.0.21
+   Compiling libm v0.2.16
+   Compiling equivalent v1.0.2
+   Compiling zerocopy v0.8.62
+   Compiling bitflags v2.13.2
+   Compiling log v0.4.34
+   Compiling rustc-hash v1.1.0
+   Compiling libc v0.2.190
+   Compiling parking_lot_core v0.9.12
+   Compiling ash v0.38.0+1.3.281
+   Compiling bit-vec v0.9.1
+   Compiling unicode-width v0.2.2
+   Compiling scopeguard v1.2.0
+   Compiling arrayvec v0.7.8
+   Compiling static_assertions v1.1.0
+   Compiling smallvec v1.16.2
+   Compiling raw-window-handle v0.6.2
+   Compiling once_cell v1.21.4
+   Compiling allocator-api2 v0.2.21
+   Compiling presser v0.3.1
+   Compiling renderdoc-sys v1.1.0
+   Compiling profiling v1.0.18
+   Compiling litrs v1.0.0
+   Compiling pollster v1.0.1
+   Compiling libloading v0.8.9
+   Compiling naga v30.0.1
+   Compiling wgpu-hal v30.0.1
+   Compiling lock_api v0.4.14
+   Compiling wgpu-core v30.0.1
+   Compiling wgpu v30.0.1
+   Compiling hashbrown v0.17.1
+   Compiling spirv v0.4.0+sdk-1.4.341.0
+   Compiling codespan-reporting v0.13.1
+   Compiling bit-set v0.10.0
+   Compiling num-traits v0.2.19
+   Compiling hashbrown v0.16.1
+   Compiling document-features v0.2.12
+   Compiling indexmap v2.14.2
+   Compiling syn v3.0.6
+   Compiling syn v2.0.119
+   Compiling parking_lot v0.12.5
+   Compiling ordered-float v5.5.0
+   Compiling thiserror-impl v2.0.21
+   Compiling bytemuck_derive v1.12.1
+   Compiling zerocopy-derive v0.8.62
+   Compiling naga-types v30.0.1
+   Compiling bytemuck v1.25.2
+   Compiling wgpu-types v30.0.1
+   Compiling half v2.7.1
+   Compiling gpu-allocator v0.28.0
+   Compiling wgpu-naga-bridge v30.0.1
+   Compiling wgpu-core-deps-windows-linux-android v30.0.1
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-ya5cii7t/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 16.24s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-84aac530e0e30dd8)
+
+running 10 tests
+test adapter::live_default_pick_prints_which_adapter_it_is ... SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+ok
+test adapter::live_device_limits_equal_webgpu_defaults_never_the_adapters_own ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+Quadro RTX 4000: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+NVIDIA GeForce RTX 5090: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+Intel(R) Graphics (RPL-S): adapter allows 65536 B workgroup storage, device has 16384 B
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+llvmpipe (LLVM 20.1.2, 256 bits): adapter allows 32768 B workgroup storage, device has 16384 B
+ok
+test adapter::live_no_match_names_every_adapter_the_box_has ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::live_one_device_per_adapter_found_by_a_differently_cased_name ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+ok
+test adapter::live_this_boxs_adapters_are_listed ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::match_is_a_substring_of_the_name ... ok
+test adapter::match_is_case_insensitive ... ok
+test adapter::match_on_several_names_takes_vulkan_then_list_order ... ok
+test adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends ... ok
+test adapter::no_match_is_an_error_naming_every_adapter_seen ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.00s
+
+
+==== 2026-10-09T09:14:06-04:00 adapter · plant adapter-case · a fresh scratch copy of the tree
+planted adapter-case: tests/plants/adapter-case.patch -> crates/sr-engine/src/gpu.rs
+== 2026-10-09T09:14:06-04:00 adapter · task M0-T2 · box laserax-ai :: bash tests/gpu.sh adapter
+-- adapter · exit=101 · 2.52 s
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-ya5cii7t/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 0.72s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-84aac530e0e30dd8)
+
+running 10 tests
+test adapter::live_default_pick_prints_which_adapter_it_is ... SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+ok
+test adapter::live_device_limits_equal_webgpu_defaults_never_the_adapters_own ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+Quadro RTX 4000: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+NVIDIA GeForce RTX 5090: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+Intel(R) Graphics (RPL-S): adapter allows 65536 B workgroup storage, device has 16384 B
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+llvmpipe (LLVM 20.1.2, 256 bits): adapter allows 32768 B workgroup storage, device has 16384 B
+ok
+test adapter::live_no_match_names_every_adapter_the_box_has ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::live_one_device_per_adapter_found_by_a_differently_cased_name ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'adapter::live_one_device_per_adapter_found_by_a_differently_cased_name' (172635) panicked at crates/sr-engine/tests/gpu/main.rs:126:37:
+no device for "Quadro RTX 4000": no adapter name contains "quadro rtx 4000"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test adapter::live_this_boxs_adapters_are_listed ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::match_is_a_substring_of_the_name ... 
+thread 'adapter::match_is_a_substring_of_the_name' (172677) panicked at crates/sr-engine/tests/gpu/main.rs:54:55:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "pipe (llvm", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_is_case_insensitive ... 
+thread 'adapter::match_is_case_insensitive' (172678) panicked at crates/sr-engine/tests/gpu/main.rs:45:60:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "quadro rtx 4000", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_on_several_names_takes_vulkan_then_list_order ... 
+thread 'adapter::match_on_several_names_takes_vulkan_then_list_order' (172679) panicked at crates/sr-engine/tests/gpu/main.rs:70:48:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "rtx", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends ... 
+thread 'adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends' (172680) panicked at crates/sr-engine/tests/gpu/main.rs:63:53:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "arc", seen: [AdapterDesc { name: "Intel(R) Arc(TM) Graphics", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::no_match_is_an_error_naming_every_adapter_seen ... ok
+
+failures:
+
+failures:
+    adapter::live_one_device_per_adapter_found_by_a_differently_cased_name
+    adapter::match_is_a_substring_of_the_name
+    adapter::match_is_case_insensitive
+    adapter::match_on_several_names_takes_vulkan_then_list_order
+    adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends
+
+test result: FAILED. 5 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.72s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-09T09:14:33-04:00 adapter · clean · a fresh scratch copy of the tree
+== 2026-10-09T09:14:33-04:00 adapter · task M0-T2 · box laserax-ai :: bash tests/gpu.sh adapter
+-- adapter · exit=101 · 2.12 s
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-84aac530e0e30dd8)
+
+running 10 tests
+test adapter::live_default_pick_prints_which_adapter_it_is ... SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+ok
+test adapter::live_device_limits_equal_webgpu_defaults_never_the_adapters_own ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+Quadro RTX 4000: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+NVIDIA GeForce RTX 5090: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+Intel(R) Graphics (RPL-S): adapter allows 65536 B workgroup storage, device has 16384 B
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+llvmpipe (LLVM 20.1.2, 256 bits): adapter allows 32768 B workgroup storage, device has 16384 B
+ok
+test adapter::live_no_match_names_every_adapter_the_box_has ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::live_one_device_per_adapter_found_by_a_differently_cased_name ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'adapter::live_one_device_per_adapter_found_by_a_differently_cased_name' (176017) panicked at crates/sr-engine/tests/gpu/main.rs:126:37:
+no device for "Quadro RTX 4000": no adapter name contains "quadro rtx 4000"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test adapter::live_this_boxs_adapters_are_listed ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::match_is_a_substring_of_the_name ... 
+thread 'adapter::match_is_a_substring_of_the_name' (176032) panicked at crates/sr-engine/tests/gpu/main.rs:54:55:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "pipe (llvm", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_is_case_insensitive ... 
+thread 'adapter::match_is_case_insensitive' (176033) panicked at crates/sr-engine/tests/gpu/main.rs:45:60:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "quadro rtx 4000", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_on_several_names_takes_vulkan_then_list_order ... 
+thread 'adapter::match_on_several_names_takes_vulkan_then_list_order' (176034) panicked at crates/sr-engine/tests/gpu/main.rs:70:48:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "rtx", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends ... 
+thread 'adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends' (176035) panicked at crates/sr-engine/tests/gpu/main.rs:63:53:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "arc", seen: [AdapterDesc { name: "Intel(R) Arc(TM) Graphics", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::no_match_is_an_error_naming_every_adapter_seen ... ok
+
+failures:
+
+failures:
+    adapter::live_one_device_per_adapter_found_by_a_differently_cased_name
+    adapter::match_is_a_substring_of_the_name
+    adapter::match_is_case_insensitive
+    adapter::match_on_several_names_takes_vulkan_then_list_order
+    adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends
+
+test result: FAILED. 5 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.01s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-09T09:24:48-04:00 adapter · clean · a fresh scratch copy of the tree
+== 2026-10-09T09:24:48-04:00 adapter · task M0-T2 · box laserax-ai :: bash tests/gpu.sh adapter
+-- adapter · exit=0 · 3.62 s
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-kvkefi27/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 0.82s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-84aac530e0e30dd8)
+
+running 10 tests
+test adapter::live_default_pick_prints_which_adapter_it_is ... SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+ok
+test adapter::live_device_limits_equal_webgpu_defaults_never_the_adapters_own ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+Quadro RTX 4000: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+NVIDIA GeForce RTX 5090: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+Intel(R) Graphics (RPL-S): adapter allows 65536 B workgroup storage, device has 16384 B
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+llvmpipe (LLVM 20.1.2, 256 bits): adapter allows 32768 B workgroup storage, device has 16384 B
+ok
+test adapter::live_no_match_names_every_adapter_the_box_has ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::live_one_device_per_adapter_found_by_a_differently_cased_name ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+ok
+test adapter::live_this_boxs_adapters_are_listed ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::match_is_a_substring_of_the_name ... ok
+test adapter::match_is_case_insensitive ... ok
+test adapter::match_on_several_names_takes_vulkan_then_list_order ... ok
+test adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends ... ok
+test adapter::no_match_is_an_error_naming_every_adapter_seen ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.69s
+
+
+==== 2026-10-09T09:24:52-04:00 adapter · plant adapter-case · a fresh scratch copy of the tree
+planted adapter-case: tests/plants/adapter-case.patch -> crates/sr-engine/src/gpu.rs
+== 2026-10-09T09:24:52-04:00 adapter · task M0-T2 · box laserax-ai :: bash tests/gpu.sh adapter
+-- adapter · exit=101 · 2.93 s
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-kvkefi27/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 0.75s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-84aac530e0e30dd8)
+
+running 10 tests
+test adapter::live_default_pick_prints_which_adapter_it_is ... SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+ok
+test adapter::live_device_limits_equal_webgpu_defaults_never_the_adapters_own ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+Quadro RTX 4000: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+NVIDIA GeForce RTX 5090: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+Intel(R) Graphics (RPL-S): adapter allows 65536 B workgroup storage, device has 16384 B
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+llvmpipe (LLVM 20.1.2, 256 bits): adapter allows 32768 B workgroup storage, device has 16384 B
+ok
+test adapter::live_no_match_names_every_adapter_the_box_has ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::live_one_device_per_adapter_found_by_a_differently_cased_name ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'adapter::live_one_device_per_adapter_found_by_a_differently_cased_name' (239472) panicked at crates/sr-engine/tests/gpu/main.rs:126:37:
+no device for "Quadro RTX 4000": no adapter name contains "quadro rtx 4000"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test adapter::live_this_boxs_adapters_are_listed ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::match_is_a_substring_of_the_name ... 
+thread 'adapter::match_is_a_substring_of_the_name' (239555) panicked at crates/sr-engine/tests/gpu/main.rs:54:55:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "pipe (llvm", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_is_case_insensitive ... 
+thread 'adapter::match_is_case_insensitive' (239556) panicked at crates/sr-engine/tests/gpu/main.rs:45:60:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "quadro rtx 4000", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_on_several_names_takes_vulkan_then_list_order ... 
+thread 'adapter::match_on_several_names_takes_vulkan_then_list_order' (239557) panicked at crates/sr-engine/tests/gpu/main.rs:70:48:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "rtx", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends ... 
+thread 'adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends' (239558) panicked at crates/sr-engine/tests/gpu/main.rs:63:53:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "arc", seen: [AdapterDesc { name: "Intel(R) Arc(TM) Graphics", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::no_match_is_an_error_naming_every_adapter_seen ... ok
+
+failures:
+
+failures:
+    adapter::live_one_device_per_adapter_found_by_a_differently_cased_name
+    adapter::match_is_a_substring_of_the_name
+    adapter::match_is_case_insensitive
+    adapter::match_on_several_names_takes_vulkan_then_list_order
+    adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends
+
+test result: FAILED. 5 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.11s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-09T09:25:48-04:00 adapter · clean · a fresh scratch copy of the tree
+== 2026-10-09T09:25:48-04:00 adapter · task M0-T2 · box laserax-ai :: bash tests/gpu.sh adapter
+-- adapter · exit=0 · 3.78 s
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-7y0szx3s/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 0.65s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-84aac530e0e30dd8)
+
+running 10 tests
+test adapter::live_default_pick_prints_which_adapter_it_is ... SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+ok
+test adapter::live_device_limits_equal_webgpu_defaults_never_the_adapters_own ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+Quadro RTX 4000: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+NVIDIA GeForce RTX 5090: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+Intel(R) Graphics (RPL-S): adapter allows 65536 B workgroup storage, device has 16384 B
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+llvmpipe (LLVM 20.1.2, 256 bits): adapter allows 32768 B workgroup storage, device has 16384 B
+ok
+test adapter::live_no_match_names_every_adapter_the_box_has ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::live_one_device_per_adapter_found_by_a_differently_cased_name ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+ok
+test adapter::live_this_boxs_adapters_are_listed ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::match_is_a_substring_of_the_name ... ok
+test adapter::match_is_case_insensitive ... ok
+test adapter::match_on_several_names_takes_vulkan_then_list_order ... ok
+test adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends ... ok
+test adapter::no_match_is_an_error_naming_every_adapter_seen ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.05s
+
+
+==== 2026-10-09T09:25:51-04:00 adapter · plant adapter-case · a fresh scratch copy of the tree
+planted adapter-case: tests/plants/adapter-case.patch -> crates/sr-engine/src/gpu.rs
+== 2026-10-09T09:25:51-04:00 adapter · task M0-T2 · box laserax-ai :: bash tests/gpu.sh adapter
+-- adapter · exit=101 · 2.98 s
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-7y0szx3s/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 0.75s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-84aac530e0e30dd8)
+
+running 10 tests
+test adapter::live_default_pick_prints_which_adapter_it_is ... SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+ok
+test adapter::live_device_limits_equal_webgpu_defaults_never_the_adapters_own ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+Quadro RTX 4000: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+NVIDIA GeForce RTX 5090: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Intel(R) Graphics (RPL-S) backend=Vulkan driver=Intel open-source Mesa driver
+Intel(R) Graphics (RPL-S): adapter allows 65536 B workgroup storage, device has 16384 B
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+llvmpipe (LLVM 20.1.2, 256 bits): adapter allows 32768 B workgroup storage, device has 16384 B
+ok
+test adapter::live_no_match_names_every_adapter_the_box_has ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::live_one_device_per_adapter_found_by_a_differently_cased_name ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'adapter::live_one_device_per_adapter_found_by_a_differently_cased_name' (248894) panicked at crates/sr-engine/tests/gpu/main.rs:126:37:
+no device for "Quadro RTX 4000": no adapter name contains "quadro rtx 4000"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test adapter::live_this_boxs_adapters_are_listed ... listed: Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver)
+listed: llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+ok
+test adapter::match_is_a_substring_of_the_name ... 
+thread 'adapter::match_is_a_substring_of_the_name' (248964) panicked at crates/sr-engine/tests/gpu/main.rs:54:55:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "pipe (llvm", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_is_case_insensitive ... 
+thread 'adapter::match_is_case_insensitive' (248965) panicked at crates/sr-engine/tests/gpu/main.rs:45:60:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "quadro rtx 4000", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_on_several_names_takes_vulkan_then_list_order ... 
+thread 'adapter::match_on_several_names_takes_vulkan_then_list_order' (248966) panicked at crates/sr-engine/tests/gpu/main.rs:70:48:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "rtx", seen: [AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "NVIDIA GeForce RTX 5090", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "Quadro RTX 4000", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }, AdapterDesc { name: "llvmpipe (LLVM 19.1.1, 256 bits)", backend: Vulkan, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends ... 
+thread 'adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends' (248967) panicked at crates/sr-engine/tests/gpu/main.rs:63:53:
+called `Result::unwrap()` on an `Err` value: NoMatch { query: "arc", seen: [AdapterDesc { name: "Intel(R) Arc(TM) Graphics", backend: Dx12, driver: "test-driver", device_type: DiscreteGpu }] }
+FAILED
+test adapter::no_match_is_an_error_naming_every_adapter_seen ... ok
+
+failures:
+
+failures:
+    adapter::live_one_device_per_adapter_found_by_a_differently_cased_name
+    adapter::match_is_a_substring_of_the_name
+    adapter::match_is_case_insensitive
+    adapter::match_on_several_names_takes_vulkan_then_list_order
+    adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends
+
+test result: FAILED. 5 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.16s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

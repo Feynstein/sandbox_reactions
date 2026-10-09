@@ -1,0 +1,8 @@
+report: 32 DONE blocks · 6 class/rung rows · 2 session folder(s) · 10 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 1 D block(s) naming no cause in the record · $127.07 read from the sessions' own cost
+BUILD on Opus 5.5, high: 7 block(s) · first-try 2/3 · $3.97 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 8 block(s) · first-try 4/8 · $1.60 per DONE block · n<10
+BUILD on unknown: 9 block(s) · first-try 5/9 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 6 block(s) · first-try 3/3 · $14.42 per DONE block · above (usual)
+PLAN on Sonnet 5.5, high: 1 block(s) · first-try 0/1 · n/a per DONE block · n<10
+=== GO ===

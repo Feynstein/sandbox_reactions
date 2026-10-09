@@ -1,0 +1,18 @@
+== 2026-10-09T10:10:10-04:00 desktop[window] · task M0-T5 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 1.17 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.5s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T5.launch.game-xvfb.log)
+game-xvfb: pid 835796 stopped; its X server :99, pid 835794 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T5.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 1 s, booted and checked in 0 s
+=== GO ===
+
+== 2026-10-09T10:14:04-04:00 desktop[window] · task M0-T5 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 1.17 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.7s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T5.launch.game-xvfb.log)
+game-xvfb: pid 890847 stopped; its X server :99, pid 890844 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T5.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 0 s, booted and checked in 1 s
+=== GO ===
+

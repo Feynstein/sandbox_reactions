@@ -1,0 +1,27 @@
+2026-10-09T09:16:35-04:00
+M0-D9 linux-pc: measuring the red-arm shared-target reuse
+== adapter run 1
+adapter · plant adapter-case · RED (proven: 5 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 5.83 s · box laserax-ai · log milestones/m0/logs/M0-D9.adapter1.adapter.redarm.log
+=== GO ===
+== adapter run 2
+adapter · plant adapter-case · RED (proven: 5 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 5.78 s · box laserax-ai · log milestones/m0/logs/M0-D9.adapter2.adapter.redarm.log
+=== GO ===
+== adapter run 3
+adapter · plant adapter-case · RED (proven: 5 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 5.72 s · box laserax-ai · log milestones/m0/logs/M0-D9.adapter3.adapter.redarm.log
+=== GO ===
+== build run 1
+build · plant build-wasm-only · RED (proven: build[wasm]: 1 failed; build[wasm]: its own verdict NO-GO: cargo check --target wasm32-unknown-unknown failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope build · 30.53 s · box laserax-ai · log milestones/m0/logs/M0-D9.build1.build.redarm.log
+=== GO ===
+== build run 2
+build · plant build-wasm-only · RED (proven: build[wasm]: 1 failed; build[wasm]: its own verdict NO-GO: cargo check --target wasm32-unknown-unknown failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope build · 1.77 s · box laserax-ai · log milestones/m0/logs/M0-D9.build2.build.redarm.log
+=== GO ===
+== build run 3
+build · plant build-wasm-only · RED (proven: build[wasm]: 1 failed; build[wasm]: its own verdict NO-GO: cargo check --target wasm32-unknown-unknown failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope build · 1.62 s · box laserax-ai · log milestones/m0/logs/M0-D9.build3.build.redarm.log
+=== GO ===
+claim: --changed --base 516ec7c GO 504 passed 3/3 scopes (linux-pc)

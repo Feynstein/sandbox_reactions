@@ -1,0 +1,28 @@
+== 2026-10-09T09:14:18-04:00 plan_lint · task M0-T2 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=490 failed=0 warnings=9 · blocks=167 · flow_rows=167 · verify_fences=0 · history=0 · flow=per-task · header=393/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+WARN: M0-TE-win: DONE outside the current phase and 55 lines long - stub it (§2.6)
+WARN: M0-D2: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D3: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D4: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D5: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D6: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D7: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-TJ3: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D8: DONE outside the current phase and 10 lines long - stub it (§2.6)
+=== GO ===
+
+== 2026-10-09T09:25:45-04:00 plan_lint · task M0-T2 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=491 failed=0 warnings=9 · blocks=168 · flow_rows=168 · verify_fences=0 · history=0 · flow=per-task · header=394/600 · pipeline=9/60 · ladder=4 rungs · refresh=2/5
+WARN: M0-TE-win: DONE outside the current phase and 55 lines long - stub it (§2.6)
+WARN: M0-D2: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D3: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D4: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D5: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D6: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D7: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-TJ3: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D8: DONE outside the current phase and 10 lines long - stub it (§2.6)
+=== GO ===
+

@@ -1,0 +1,20 @@
+--- a/crates/sr-engine/shaders/floors.wgsl
++++ b/crates/sr-engine/shaders/floors.wgsl
+@@ -35,7 +35,7 @@
+         x[i] = max(species_a[i * n + cell], 0.0);
+         sum += x[i];
+     }
+-    for (var i = 0u; i < PLANES_B; i++) {
++    for (var i = 0u; i < PLANES_B - 1u; i++) { // planted: the last species is skipped
+         x[PLANES_A + i] = max(species_b[i * n + cell], 0.0);
+         sum += x[PLANES_A + i];
+     }
+@@ -54,7 +54,7 @@
+     for (var i = 0u; i < PLANES_A; i++) {
+         species_a[i * n + cell] = x[i];
+     }
+-    for (var i = 0u; i < PLANES_B; i++) {
++    for (var i = 0u; i < PLANES_B - 1u; i++) {
+         species_b[i * n + cell] = x[PLANES_A + i];
+     }
+ }

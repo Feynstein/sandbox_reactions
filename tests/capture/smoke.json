@@ -1,0 +1,4 @@
+[
+  {"id": "paused", "caption": "One step taken while paused", "actions": [{"pause": true}, {"steps": 1}], "frames": 3},
+  {"id": "running", "caption": "Running again for five frames", "actions": [{"pause": false}], "frames": 5}
+]

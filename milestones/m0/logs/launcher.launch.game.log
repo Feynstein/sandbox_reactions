@@ -1,0 +1,3 @@
+# launcher | launch game | 2026-10-09T12:14:58-0400
+$ build/target/release/sandbox-reactions --status-port 47811
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA

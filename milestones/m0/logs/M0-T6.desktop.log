@@ -1,0 +1,47 @@
+== 2026-10-09T10:21:10-04:00 desktop[window] · task M0-T6 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-09T10:21:10-04:00 desktop[launcher] · task M0-T6 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 0.36 s
+game-xvfb: already running as pid 1093395 - not restarting
+services: 1, ready: 0
+FAIL game-xvfb: already running as pid 1093395 - not restarting
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: pid 1093395 stopped; its X server :99, pid 1093394 stopped
+game-offscreen: nothing recorded
+services: 4, stopped: 4
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+-- desktop[window] · exit=1 · 0.37 s
+game-xvfb: died before ready, exit -15 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T6.launch.game-xvfb.log)
+game-xvfb: pid 1093395 not signalled - gone; its X server :99, pid 1093394 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T6.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: died before ready, exit -15 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T6.launch.game-xvfb.log)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+== 2026-10-09T10:26:23-04:00 desktop[window] · task M0-T6 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-09T10:26:23-04:00 desktop[launcher] · task M0-T6 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 2.62 s
+game-xvfb: port 47811 held by a process we did not start - not reusing
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T6.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: port 47811 held by a process we did not start - not reusing
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+-- desktop[launcher] · exit=1 · 2.72 s
+game-xvfb: port 47811 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL game-xvfb: port 47811 held by a process we did not start - not reusing
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: nothing recorded
+services: 4, stopped: 4
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+

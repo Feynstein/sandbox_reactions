@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -85,7 +85,7 @@
+     let Some(name) = scene.strip_prefix("preset:") else {
+         return Err(format!("scene {scene:?}: scene files arrive with M0-T25 — only preset:<name> loads today"));
+     };
+-    if !PRESETS.contains(&name) {
++    if !PRESETS.contains(&name) || name == "sun" { // planted: the loader rejects preset:sun
+         return Err(format!("scene {scene:?}: unknown preset (known: {})", PRESETS.join(", ")));
+     }
+     let mut warnings = Vec::new();

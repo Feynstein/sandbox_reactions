@@ -1,0 +1,44 @@
+==== 2026-10-09T09:39:18-04:00 boot · clean · a fresh scratch copy of the tree
+== 2026-10-09T09:39:18-04:00 boot · task M0-T4 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 21.22 s
+headless-boot: ready - exit 0, 0.5s (log /tmp/pb-redarm-u9bjgrwt/arm0/milestones/m0/logs/M0-T4.launch.headless-boot.log)
+headless-boot: pid 387781 not signalled - gone
+headless-boot: log /tmp/pb-redarm-u9bjgrwt/arm0/milestones/m0/logs/M0-T4.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+boot headless-boot: built in 20 s, booted and checked in 1 s
+=== GO ===
+
+==== 2026-10-09T09:39:39-04:00 boot · plant scene-refuse · a fresh scratch copy of the tree
+planted scene-refuse: tests/plants/scene-refuse.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-09T09:39:39-04:00 boot · task M0-T4 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 16.92 s
+headless-boot: exited 4 (log /tmp/pb-redarm-u9bjgrwt/arm1/milestones/m0/logs/M0-T4.launch.headless-boot.log)
+headless-boot: pid 391813 not signalled - gone
+headless-boot: log /tmp/pb-redarm-u9bjgrwt/arm1/milestones/m0/logs/M0-T4.launch.headless-boot.log
+services: 1, ready: 0, failures: 1
+FAIL headless-boot: exited 4 (log /tmp/pb-redarm-u9bjgrwt/arm1/milestones/m0/logs/M0-T4.launch.headless-boot.log)
+=== NO-GO: launch.py smoke headless-boot did not end GO ===
+
+==== 2026-10-09T09:40:51-04:00 boot · clean · a fresh scratch copy of the tree
+== 2026-10-09T09:40:51-04:00 boot · task M0-T4 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 19.21 s
+headless-boot: ready - exit 0, 0.5s (log /tmp/pb-redarm-zvy5ktfq/arm0/milestones/m0/logs/M0-T4.launch.headless-boot.log)
+headless-boot: pid 408191 not signalled - gone
+headless-boot: log /tmp/pb-redarm-zvy5ktfq/arm0/milestones/m0/logs/M0-T4.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+boot headless-boot: built in 18 s, booted and checked in 1 s
+=== GO ===
+
+==== 2026-10-09T09:41:11-04:00 boot · plant scene-refuse · a fresh scratch copy of the tree
+planted scene-refuse: tests/plants/scene-refuse.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-09T09:41:11-04:00 boot · task M0-T4 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 17.72 s
+headless-boot: exited 4 (log /tmp/pb-redarm-zvy5ktfq/arm1/milestones/m0/logs/M0-T4.launch.headless-boot.log)
+headless-boot: pid 411731 not signalled - gone
+headless-boot: log /tmp/pb-redarm-zvy5ktfq/arm1/milestones/m0/logs/M0-T4.launch.headless-boot.log
+services: 1, ready: 0, failures: 1
+FAIL headless-boot: exited 4 (log /tmp/pb-redarm-zvy5ktfq/arm1/milestones/m0/logs/M0-T4.launch.headless-boot.log)
+=== NO-GO: launch.py smoke headless-boot did not end GO ===
+

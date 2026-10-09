@@ -14,8 +14,10 @@ publish = false
 [workspace.dependencies]
 # wgpu: native backends and webgpu only — no webgl, so a browser without WebGPU reaches the §4.9 page (Q4).
 wgpu = { version = "30.0", default-features = false, features = ["wgsl", "vulkan", "dx12", "metal", "webgpu"] }
-# eframe: wgpu, wayland, x11, default_fonts — no glow, no persistence (winit 0.30.13 comes with it).
-eframe = { version = "0.36", default-features = false, features = ["wgpu", "wayland", "x11", "default_fonts"] }
+# eframe: wgpu, wayland, x11, default_fonts — no glow, no persistence (winit 0.30.13 comes with it). Its wgpu renderer is
+# `wgpu_no_default_features`: eframe's `wgpu` also turns on egui-wgpu's defaults, i.e. wgpu's webgl and gles (the lead,
+# M0-T5, 2026-10-09; contract §1.2 [M0-T5]).
+eframe = { version = "0.36", default-features = false, features = ["wgpu_no_default_features", "wayland", "x11", "default_fonts"] }
 bytemuck = "1.25"
 pollster = "1.0"
 serde = "1.0"

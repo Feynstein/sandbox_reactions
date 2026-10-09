@@ -1,0 +1,10 @@
+== 2026-10-09T11:04:27-04:00 boot · task M0-T8 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 4.33 s
+headless-boot: ready - exit 0, 1.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T8.launch.headless-boot.log)
+headless-boot: pid 1578836 not signalled - gone
+headless-boot: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T8.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+boot headless-boot: built in 1 s, booted and checked in 3 s
+=== GO ===
+

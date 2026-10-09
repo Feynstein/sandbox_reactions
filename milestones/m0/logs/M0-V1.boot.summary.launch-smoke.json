@@ -1,0 +1,28 @@
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "Quadro RTX 4000"
+  },
+  "events": [],
+  "git": "516ec7c",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 0.0,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.032771987,
+  "world": {
+    "height": 400,
+    "width": 600
+  }
+}

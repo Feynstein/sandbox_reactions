@@ -1,0 +1,14 @@
+--- a/web/index.html
++++ b/web/index.html
+@@ -32,10 +32,7 @@
+ <script type="module">
+   const state = (s) => { document.body.dataset.srState = s; };
+   state("loading");
+-  let adapter = null;
+-  if (navigator.gpu && !new URLSearchParams(location.search).has("no-webgpu")) {
+-    try { adapter = await navigator.gpu.requestAdapter({ powerPreference: "high-performance" }); } catch (e) { adapter = null; }
+-  }
++  let adapter = true;
+   if (!adapter) {
+     document.getElementById("sr-canvas").remove();
+     document.getElementById("sr-loading").hidden = true;

@@ -15,3 +15,5 @@ web/dist/
 node_modules/
 .cache/
 __pycache__/
+# launch.py's record of what it started (PLAYBOOK §A.3; M0-T4)
+tools/pb/.launch.pid.json

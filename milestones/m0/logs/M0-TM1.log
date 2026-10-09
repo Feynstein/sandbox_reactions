@@ -1,0 +1,64 @@
+=== M0-TM1 · 2026-10-09T13:46:03Z · laserax-ai ===
+--- probe (§B.3)
+CLAUDECODE=1
+CLAUDE_EFFORT=high
+AI_AGENT=claude-code_2-1-295_agent
+--- rung_record.py report
+report: 25 DONE blocks · 6 class/rung rows · 2 session folder(s) · 10 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 1 D block(s) naming no cause in the record · $110.87 read from the sessions' own cost
+BUILD on Opus 5.5, high: 6 block(s) · first-try 1/2 · $4.05 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 3 block(s) · first-try 1/3 · $2.00 per DONE block · n<10
+BUILD on unknown: 9 block(s) · first-try 5/9 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 5 block(s) · first-try 2/2 · $16.12 per DONE block · above (usual)
+PLAN on Sonnet 5.5, high: 1 block(s) · first-try 0/1 · n/a per DONE block · n<10
+=== GO ===
+exit=0
+--- plan.py lint (before)
+lint: checks=492 failed=0 warnings=9 · blocks=169 · flow_rows=169 · verify_fences=0 · history=0 · flow=per-task · header=395/600 · pipeline=9/60 · ladder=4 rungs · refresh=5/5
+WARN: M0-TE-win: DONE outside the current phase and 55 lines long - stub it (§2.6)
+WARN: M0-D2: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D3: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D4: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D5: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D6: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D7: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-TJ3: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D8: DONE outside the current phase and 10 lines long - stub it (§2.6)
+=== GO ===
+exit=0
+--- plan.py lint (after the Models edit)
+lint: checks=492 failed=0 warnings=9 · blocks=169 · flow_rows=169 · verify_fences=0 · history=0 · flow=per-task · header=395/600 · pipeline=9/60 · ladder=4 rungs · refresh=5/5
+=== GO ===
+exit=0
+--- plan.py lint (after the close)
+lint: checks=491 failed=0 warnings=9 · blocks=169 · flow_rows=169 · verify_fences=0 · history=0 · flow=per-task · header=395/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+exit=0
+--- diff against the snapshot taken after plan.py status
+< Models: Claude Code — Opus 5.5, max (gate) · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium — strongest first; read
+> Models: Claude Code — Opus 5.5, max (gate) · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium — strongest first; read
+< | M0-TM1 | PLAN | Rating pass - 5 carried flags | AFTER M0-T4 | IN PROGRESS (2026-10-09 09:54) |
+> | M0-TM1 | PLAN | Rating pass - 5 carried flags | AFTER M0-T4 | DONE (2026-10-09 09:57, started 09:54) |
+< - Model ratings: 2026-10-08 by M0-TB
+> - Model ratings: 2026-10-09 by M0-TM1
+< - Status: IN PROGRESS (2026-10-09 09:54)
+> - Status: DONE (2026-10-09 09:57, started 09:54)
+< - Handoff: <placeholder>
+> - Handoff: linux-pc, model=claude-opus-5-5 level=max (rung_record now, the heading's rung). Ladder re-read 2026-10-09: the claude-api skil
+--- claim run: verify.py --changed --base 516ec7c --task M0-TM1 (13:57:48Z)
+FLAG type: tools/pb/launch.json changed since 516ec7ca31bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG type: tools/pb/verify.anchor.json changed since 516ec7ca31bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: tools/pb/verify.json changed since 516ec7ca31bf - a test, case or check M0-TM1's Deliver: does not name
+FLAG type: tools/pb/verify.json changed since 516ec7ca31bf - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+FLAG oracle: scope `adapter` added in tools/pb/verify.json - M0-TM1's Deliver: names neither it nor the manifest
+FLAG oracle: scope `boot` added in tools/pb/verify.json - M0-TM1's Deliver: names neither it nor the manifest
+FLAG oracle: scope `state` added in tools/pb/verify.json - M0-TM1's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-TM1.<scope>.log · record: loop_times.jsonl · tree 516ec7ca31bf+62be191954ea
+anchor: 1 path×scope entries moved by this run
+anchor: 46 paths checked · 51 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 46 covered of 97 visible
+skipped    43  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 510 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 2 not impacted · 4.99 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 31.0->32.12
+=== GO ===
+exit=0

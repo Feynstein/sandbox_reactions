@@ -102,6 +102,172 @@
           "patch": "tests/plants/build-wasm-only.patch"
         }
       ]
+    },
+    "adapter": {
+      "desc": "the GPU adapter choice (contract \u00a76.1-\u00a76.3, \u00a76.2.2): the matching rule on a fixed list, and a live headless device per adapter this box has, at WebGPU's default limits (M0-T2); box's adapters named in the log",
+      "cmd": "bash tests/gpu.sh adapter",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 10,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/adapter-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "adapter-case",
+          "patch": "tests/plants/adapter-case.patch"
+        }
+      ]
+    },
+    "state": {
+      "desc": "the cell state and the step loop (contract \u00a72.2, \u00a72.8, \u00a71.3.2, \u00a71.3.4): WorldConfig's sizes, a 600 \u00d7 400 upload/readback round trip bit-exact, P0-P9's order, P8's species renormalisation (\u03a3 X = 1 within 1e-6, other channels bit-identical), two runs bit-identical (M0-T3); on the physics adapter (R12, R15)",
+      "cmd": "bash tests/gpu.sh state physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 6,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/state-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "state-renorm-skip",
+          "patch": "tests/plants/state-renorm-skip.patch"
+        }
+      ]
+    },
+    "boot": {
+      "desc": "the headless boot (contract \u00a73.3, \u00a73.4, \u00a75.4 G-BOOT): launch.py smoke of headless-boot is ready within 60 s and its summary.json carries every \u00a72.12.2 key with steps = 200; stdout opens with SR-ADAPTER and ends with SR-HEADLESS DONE steps=200 (M0-T4); the build is the tree's own",
+      "cmd": "bash tests/smoke.sh headless-boot",
+      "expected": 1,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/**",
+        "crates/sr-engine/**",
+        "tools/pb/launch.json",
+        "tests/smoke.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/scene-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "scene-refuse",
+          "patch": "tests/plants/scene-refuse.patch"
+        }
+      ]
+    },
+    "desktop": {
+      "desc": "the desktop boot (contract \u00a73.3, \u00a73.4, \u00a73.6, \u00a75.4 G-DESK): launch.py smoke of the box's window route \u2014 game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) \u2014 reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); the build is the tree's own",
+      "cases": [
+        "window",
+        "launcher"
+      ],
+      "case_cmd": "bash tests/smoke.sh {case}",
+      "expected": 2,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/**",
+        "crates/sr-engine/**",
+        "tools/pb/launch.json",
+        "tests/smoke.sh",
+        "start.sh",
+        "start.bat",
+        "start.ps1",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/status-*.patch",
+        "tests/plants/launcher-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "status-never-ready",
+          "patch": "tests/plants/status-never-ready.patch"
+        },
+        {
+          "id": "launcher-no-stop",
+          "patch": "tests/plants/launcher-no-stop.patch"
+        }
+      ]
+    },
+    "web": {
+      "desc": "the web build (contract \u00a73.5, \u00a76.2.1, \u00a76.2.4, \u00a75.4 G-WEB, build half): trunk build --release writes web/dist with index.html, the .wasm and the wasm-bindgen glue; index.html keeps the canvas, the web.* texts and the inline WebGPU check ahead of the wasm, trunk's auto-loader stripped (M0-T7); the page in a browser is M0-T15's smoke",
+      "cases": [
+        "build"
+      ],
+      "case_cmd": "bash tests/web/check.sh {case}",
+      "expected": 1,
+      "timeout_s": 900,
+      "paths": [
+        "web/**",
+        "crates/sr-app/**",
+        "crates/sr-engine/**",
+        "tests/web/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/web-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "web-no-gpu-check",
+          "patch": "tests/plants/web-no-gpu-check.patch"
+        },
+        {
+          "id": "web-autoload",
+          "patch": "tests/plants/web-autoload.patch"
+        }
+      ]
+    },
+    "capture": {
+      "desc": "the capture harness, first form (contract \u00a73.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; the build is the tree's own",
+      "cases": [
+        "smoke",
+        "refuse"
+      ],
+      "case_cmd": "bash tests/capture/check.sh {case}",
+      "expected": 2,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/**",
+        "crates/sr-engine/**",
+        "tests/capture/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/capture-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "capture-no-captions",
+          "patch": "tests/plants/capture-no-captions.patch"
+        }
+      ]
     }
   },
   "skip_classes": [

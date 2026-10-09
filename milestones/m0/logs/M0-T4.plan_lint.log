@@ -1,0 +1,15 @@
+== 2026-10-09T09:40:37-04:00 plan_lint · task M0-T4 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=1 · 0.12 s
+lint: checks=489 failed=1 warnings=9 · blocks=168 · flow_rows=168 · verify_fences=0 · history=0 · flow=per-task · header=394/600 · pipeline=9/60 · ladder=4 rungs · refresh=5/5
+FAIL: rating refresh: 5 carried flag(s) on open BUILD blocks since `Model ratings: 2026-10-08 by M0-TB` reach `Rating refresh: 5 flags` and no TM<n> is pending - file the rating pass (§14.3's TM<n> template, rated), it runs next: python3 tools/pb/plan.py --plan milestones/m0/m0_implementation_plan.md append <M0-TM1 block.md> --after M0-T4 --goal "Rating pass - 5 carried flags"
+WARN: M0-TE-win: DONE outside the current phase and 55 lines long - stub it (§2.6)
+WARN: M0-D2: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D3: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D4: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D5: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D6: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D7: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-TJ3: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D8: DONE outside the current phase and 10 lines long - stub it (§2.6)
+=== NO-GO: 1 violation(s) ===
+

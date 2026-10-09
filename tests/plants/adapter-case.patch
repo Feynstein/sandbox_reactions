@@ -1,0 +1,15 @@
+--- a/crates/sr-engine/src/gpu.rs
++++ b/crates/sr-engine/src/gpu.rs
+@@ -91,10 +91,10 @@
+ /// The matching rule: the index in `list` of the adapter `query` names — a case-insensitive substring of the name,
+ /// Vulkan over any other backend, then list order — or `NoMatch` carrying the whole list.
+ pub fn match_adapter(list: &[AdapterDesc], query: &str) -> Result<usize, GpuError> {
+-    let needle = query.to_lowercase();
++    let needle = query.to_string(); // planted: case-sensitive matching
+     list.iter()
+         .enumerate()
+-        .filter(|(_, a)| a.name.to_lowercase().contains(&needle))
++        .filter(|(_, a)| a.name.contains(&needle))
+         .min_by_key(|(i, a)| (backend_rank(a.backend), *i))
+         .map(|(i, _)| i)
+         .ok_or_else(|| GpuError::NoMatch { query: query.to_string(), seen: list.to_vec() })

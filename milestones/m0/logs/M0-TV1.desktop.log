@@ -1,0 +1,30 @@
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE first-frame first-frame.png 1760x940
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE stepped stepped.png 1760x940
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE DONE 4 milestones/m0/images/tv1
+== 2026-10-09T11:47:18-04:00 desktop[launcher] · task M0-TV1 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-09T11:47:18-04:00 desktop[window] · task M0-TV1 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 1.37 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.5s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: pid 2424070 stopped; its X server :99, pid 2424053 stopped
+game-offscreen: nothing recorded
+services: 4, stopped: 4
+=== GO ===
+launcher game-xvfb: built in 0 s, started, stopped, nothing left running
+=== GO ===
+
+-- desktop[window] · exit=0 · 3.58 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.4s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-TV1.launch.game-xvfb.log)
+game-xvfb: pid 2424984 stopped; its X server :99, pid 2424983 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-TV1.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 0 s, booted and checked in 3 s
+=== GO ===
+

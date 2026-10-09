@@ -1,0 +1,20 @@
+== 2026-10-09T09:39:14-04:00 boot · task M0-T4 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 1.07 s
+headless-boot: ready - exit 0, 0.5s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T4.launch.headless-boot.log)
+headless-boot: pid 380519 not signalled - gone
+headless-boot: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T4.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+boot headless-boot: built in 0 s, booted and checked in 1 s
+=== GO ===
+
+== 2026-10-09T09:40:37-04:00 boot · task M0-T4 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 1.67 s
+headless-boot: ready - exit 0, 0.5s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T4.launch.headless-boot.log)
+headless-boot: pid 401452 not signalled - gone
+headless-boot: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T4.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+boot headless-boot: built in 0 s, booted and checked in 2 s
+=== GO ===
+
