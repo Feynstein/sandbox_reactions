@@ -1,11 +1,12 @@
 --- a/web/index.html
 +++ b/web/index.html
-@@ -32,10 +32,7 @@
+@@ -32,11 +32,7 @@
  <script type="module">
    const state = (s) => { document.body.dataset.srState = s; };
    state("loading");
 -  let adapter = null;
--  if (navigator.gpu && !new URLSearchParams(location.search).has("no-webgpu")) {
+-  // Asked twice: a Chrome started on this page can answer its first request null, then the adapter (M0-D19, linux-pc).
+-  for (let i = 0; i < 2 && !adapter && navigator.gpu && !new URLSearchParams(location.search).has("no-webgpu"); i++) {
 -    try { adapter = await navigator.gpu.requestAdapter({ powerPreference: "high-performance" }); } catch (e) { adapter = null; }
 -  }
 +  let adapter = true;

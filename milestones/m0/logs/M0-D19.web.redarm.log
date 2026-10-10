@@ -1,0 +1,92 @@
+==== 2026-10-10T16:25:46-04:00 web · clean · a fresh scratch copy of the tree
+== 2026-10-10T16:25:46-04:00 web[build] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:25:46-04:00 web[ready] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:25:46-04:00 web[no-webgpu] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 4.13 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 38, wasm on line 48
+=== GO ===
+
+-- web[no-webgpu] · exit=0 · 5.28 s
+web: ready on port 47812, 0.0s (log /tmp/pb-redarm-hdrm4kv5/arm0/milestones/m0/logs/M0-D19.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+no-webgpu: srState "no-webgpu" after 0.0 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[ready] · exit=0 · 6.38 s
+web: ready on port 47812, 0.0s (log /tmp/pb-redarm-hdrm4kv5/arm0/milestones/m0/logs/M0-D19.launch.web.log)
+services: 1, ready: 1
+web smoke ready: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+ready: srState "ready" after 0.5 s
+=== GO ===
+
+==== 2026-10-10T16:25:53-04:00 web · plant web-no-gpu-check · a fresh scratch copy of the tree
+==== 2026-10-10T16:25:53-04:00 web · plant web-autoload · a fresh scratch copy of the tree
+planted web-autoload: tests/plants/web-autoload.patch -> web/Trunk.toml
+== 2026-10-10T16:25:53-04:00 web[build] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:25:53-04:00 web[ready] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:25:53-04:00 web[no-webgpu] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 4.03 s
+web ready: trunk's auto-loader or preload for the wasm is still in index.html
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html ===
+
+-- web[no-webgpu] · exit=1 · 8.04 s
+web no-webgpu: trunk's auto-loader or preload for the wasm is still in index.html
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html ===
+
+-- web[build] · exit=1 · 11.97 s
+web build: trunk's auto-loader or preload for the wasm is still in index.html
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html ===
+
+==== 2026-10-10T16:26:05-04:00 web · plant never-ready · a fresh scratch copy of the tree
+planted never-ready: tests/plants/never-ready.patch -> crates/sr-app/src/web.rs
+== 2026-10-10T16:26:05-04:00 web[build] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:26:05-04:00 web[ready] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:26:05-04:00 web[no-webgpu] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 34.86 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 38, wasm on line 48
+web: ready on port 47812, 0.0s (log /tmp/pb-redarm-hdrm4kv5/arm3/milestones/m0/logs/M0-D19.launch.web.log)
+services: 1, ready: 1
+web smoke ready: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+=== NO-GO: ready: srState is "loading" after 30 s; never ready - console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+
+-- web[no-webgpu] · exit=0 · 35.76 s
+web: ready on port 47812, 0.0s (log /tmp/pb-redarm-hdrm4kv5/arm3/milestones/m0/logs/M0-D19.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+no-webgpu: srState "no-webgpu" after 0.0 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[build] · exit=0 · 39.78 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 38, wasm on line 48
+=== GO ===
+
+==== 2026-10-10T16:26:45-04:00 web · plant smoke-no-sandbox · a fresh scratch copy of the tree
+planted smoke-no-sandbox: tests/plants/smoke-no-sandbox.patch -> web/smoke.mjs
+== 2026-10-10T16:26:45-04:00 web[build] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:26:45-04:00 web[ready] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:26:45-04:00 web[no-webgpu] · task M0-D19 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 4.08 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 38, wasm on line 48
+=== GO ===
+
+-- web[no-webgpu] · exit=1 · 4.78 s
+web: ready on port 47812, 0.0s (log /tmp/pb-redarm-hdrm4kv5/arm4/milestones/m0/logs/M0-D19.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: OFF (--no-sandbox in Chrome's command line)
+=== NO-GO: no-webgpu: Chrome runs with --no-sandbox, which contract §6.2.3 leaves out (playwright-core adds it unless chromiumSandbox is on) ===
+
+-- web[ready] · exit=1 · 5.29 s
+web: ready on port 47812, 0.0s (log /tmp/pb-redarm-hdrm4kv5/arm4/milestones/m0/logs/M0-D19.launch.web.log)
+services: 1, ready: 1
+web smoke ready: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: OFF (--no-sandbox in Chrome's command line)
+=== NO-GO: ready: Chrome runs with --no-sandbox, which contract §6.2.3 leaves out (playwright-core adds it unless chromiumSandbox is on) ===
+

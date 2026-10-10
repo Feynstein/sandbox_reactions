@@ -1,0 +1,27 @@
+== 2026-10-10T16:25:47-04:00 web[build] · task M0-D19-win · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T16:25:47-04:00 web[ready] · task M0-D19-win · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T16:25:47-04:00 web[no-webgpu] · task M0-D19-win · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[ready] · exit=0 · 47.33 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 38, wasm on line 48
+web: ready on port 47812, 0.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D19-win.launch.web.log)
+services: 1, ready: 1
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+ready: srState "ready" after 0.9 s
+=== GO ===
+
+-- web[build] · exit=0 · 95.17 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 38, wasm on line 48
+=== GO ===
+
+-- web[no-webgpu] · exit=0 · 106.62 s
+web: ready on port 47812, 0.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D19-win.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+no-webgpu: srState "no-webgpu" after 0.1 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+

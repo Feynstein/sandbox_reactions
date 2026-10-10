@@ -22,6 +22,26 @@ case "$(uname -s)" in
   MINGW* | MSYS* | CYGWIN*) PY="py -3.12" ;;
   *) PY="python3" ;;
 esac
+# Node >= 20 (playwright-core's floor), picked here, never the caller's PATH alone (M0-D19): a non-interactive shell on
+# linux-pc reads /usr/bin/node 18, while nvm's Node 20 is on the PATH only once ~/.bashrc has run. PATH's node when it is
+# >= 20, else the newest install matching nvm's default alias; its bin goes first on the PATH, for trunk's hook and npm too.
+node_major() { "$1" -e 'process.stdout.write(process.versions.node.split(".")[0])' 2>/dev/null; }
+pick_node() {
+  local found nvm alias cand
+  found="$(command -v node 2>/dev/null)"
+  [ -n "$found" ] && [ "$(node_major "$found")" -ge 20 ] 2>/dev/null && return 0
+  nvm="${NVM_DIR:-$HOME/.nvm}"
+  alias="$(cat "$nvm/alias/default" 2>/dev/null)"
+  if [ -n "$alias" ]; then
+    cand="$(ls -d "$nvm/versions/node/v${alias#v}"* 2>/dev/null | sort -V | tail -1)"
+    if [ -n "$cand" ] && [ "$(node_major "$cand/bin/node")" -ge 20 ] 2>/dev/null; then
+      export PATH="$cand/bin:$PATH"; return 0
+    fi
+  fi
+  die "no Node >= 20: PATH's node is ${found:-absent}${found:+ $("$found" --version 2>/dev/null)}, nvm's default alias '${alias:-none}' in $nvm gives none (playwright-core needs 20)"
+}
+pick_node
+
 lock="${TMPDIR:-/tmp}/sr-web-47812.lock"
 _sr_unlock() { rm -rf "$lock.d" 2>/dev/null; }
 if command -v flock >/dev/null 2>&1; then

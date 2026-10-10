@@ -1,0 +1,7 @@
+# M0-D19 node guard, laserax-ai, 2026-10-10T16:25:28-04:00: PATH node v18.19.1, NVM_DIR empty -> expect NO-GO
+web ready: no Node >= 20: PATH's node is /usr/bin/node v18.19.1, nvm's default alias 'none' in /tmp/d19-empty-nvm gives none (playwright-core needs 20)
+=== NO-GO: no Node >= 20: PATH's node is /usr/bin/node v18.19.1, nvm's default alias 'none' in /tmp/d19-empty-nvm gives none (playwright-core needs 20) ===
+exit=1
+# default env (nvm default alias 20) -> the picked node:
+/home/ybelanger/.nvm/versions/node/v20.20.2/bin/node
+v20.20.2
