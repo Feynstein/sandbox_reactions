@@ -1,0 +1,11 @@
+--- a/web/smoke.mjs
++++ b/web/smoke.mjs
+@@ -61,7 +61,7 @@
+   return { title: get('web.no_webgpu_title'), body: get('web.no_webgpu_body'), browsers: get('web.no_webgpu_browsers') };
+ }
+ 
+-const browser = await chromium.launch({ executablePath: chrome, headless: true, args: chromeArgs, chromiumSandbox: true });
++const browser = await chromium.launch({ executablePath: chrome, headless: true, args: chromeArgs }); // plant smoke-no-sandbox (G-WEB, M0-D17): chromiumSandbox dropped
+ let verdict;
+ try {
+   const version = browser.version();

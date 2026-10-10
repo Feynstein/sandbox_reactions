@@ -295,7 +295,7 @@
       ]
     },
     "web": {
-      "desc": "G-WEB (contract §3.5, §6.2.1, §6.2.4, §5.4, §6.2.3): case build - trunk build --release writes web/dist with index.html, the .wasm and the wasm-bindgen glue; index.html keeps the canvas, the web.* texts and the inline WebGPU check ahead of the wasm, trunk's auto-loader stripped (M0-T7); cases ready and no-webgpu - web/smoke.mjs drives the box's installed Chrome (playwright-core, headless, §6.2.3's flags) against the `web` service launch.py starts over web/dist (M0-T15): `/` reaches srState \"ready\" within 30 s and srAdapter is logged; `/?no-webgpu=1` shows srState \"no-webgpu\" and the three web.no_webgpu_* texts exactly. Each case builds first when web/dist is not fresh against its inputs",
+      "desc": "G-WEB (contract §3.5, §6.2.1, §6.2.4, §5.4, §6.2.3): case build - trunk build --release writes web/dist with index.html, the .wasm and the wasm-bindgen glue; index.html keeps the canvas, the web.* texts and the inline WebGPU check ahead of the wasm, trunk's auto-loader stripped (M0-T7); cases ready and no-webgpu - web/smoke.mjs drives the box's installed Chrome (playwright-core, headless, §6.2.3's flags) against the `web` service launch.py starts over web/dist (M0-T15): `/` reaches srState \"ready\" within 30 s and srAdapter is logged; `/?no-webgpu=1` shows srState \"no-webgpu\" and the three web.no_webgpu_* texts exactly; both read Chrome's command line from chrome://version and refuse a run with --no-sandbox (chromiumSandbox on, M0-D17). Each case builds first when web/dist is not fresh against its inputs",
       "cases": [
         "build",
         "ready",
@@ -316,7 +316,8 @@
         "tests/cargo.sh",
         "tests/plants/web-*.patch",
         "tools/pb/launch.json",
-        "tests/plants/never-ready.patch"
+        "tests/plants/never-ready.patch",
+        "tests/plants/smoke-no-sandbox.patch"
       ],
       "plants": [
         {
@@ -330,6 +331,10 @@
         {
           "id": "never-ready",
           "patch": "tests/plants/never-ready.patch"
+        },
+        {
+          "id": "smoke-no-sandbox",
+          "patch": "tests/plants/smoke-no-sandbox.patch"
         }
       ]
     },

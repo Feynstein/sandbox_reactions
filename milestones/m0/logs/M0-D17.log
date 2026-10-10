@@ -1,0 +1,58 @@
+M0-D17 · win-laptop (Laser2025-20) · 2026-10-10T18:11:28Z · py -3.12 tools/pb/verify.py web --task M0-D17
+web       3/0/0      181.72 s  GO
+logs: milestones/m0/logs/M0-D17.<scope>.log · record: loop_times.jsonl · tree 2ada210f896a+fd5dd1fbe6cf
+anchor: 2 path×scope entries moved by this run
+anchor: 86 paths checked · 77 skipped (3 classes) · 0 never checked · 1 stale · 0 unclassified · 0 owed · 87 covered of 164 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 72.78 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 1.29->4.71
+=== GO ===
+
+real	1m14.047s
+user	0m0.000s
+sys	0m0.047s
+2026-10-10T18:13:31Z · py -3.12 tools/pb/verify.py --redarm web --task M0-D17
+web · clean · GO
+web · plant web-no-gpu-check · RED (proven: web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: index.html has no navigator.gpu check; web[build]: 1 fa)
+web · plant web-autoload · RED (proven: web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still in)
+web · plant never-ready · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: srState is "loading" after 30 s; never ready - console.w)
+web · plant smoke-no-sandbox · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: Chrome runs with --no-sandbox, which contract §6.2.3 lea)
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope web · 514.62 s · box Laser2025-20 · log milestones/m0/logs/M0-D17.web.redarm.log
+=== GO ===
+redarm web: exit=0 wall=515 s
+load redarm web: wall 515 s · external CPU 772 s over 22 logical CPUs = 6.8 % of the box · normalised wall ≈ 480 s (CPU-bound estimate)
+2026-10-10T18:23:07Z · py -3.12 tools/pb/verify.py --changed --base 2ada210 --task M0-D17
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since 2ada210: milestones/m0/m0_implementation_plan.md
+why web: moved since 2ada210: tests/plants/smoke-no-sandbox.patch (+1)
+plan_lint       496/0/0      0.30 s  GO
+web             3/0/0      113.61 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since 2ada210)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since 2ada210)
+build           NOT RUN (not impacted: its 28 path(s) checked at the anchor, none moved since 2ada210)
+registry        NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since 2ada210)
+eos             NOT RUN (not impacted: its 13 path(s) checked at the anchor, none moved since 2ada210)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since 2ada210)
+adapter         NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since 2ada210)
+state           NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since 2ada210)
+boot            NOT RUN (not impacted: its 25 path(s) checked at the anchor, none moved since 2ada210)
+desktop         NOT RUN (not impacted: its 29 path(s) checked at the anchor, none moved since 2ada210)
+capture         NOT RUN (not impacted: its 25 path(s) checked at the anchor, none moved since 2ada210)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor, none moved since 2ada210)
+watch_only      NOT RUN (not impacted: its 5 path(s) checked at the anchor, none moved since 2ada210)
+web · clean · GO
+web · plant web-no-gpu-check · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: index.html has no navigator.gpu check; web[no-webgpu]: 1 failed)
+web · plant web-autoload · RED (proven: web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still in)
+web · plant never-ready · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: srState is "loading" after 30 s; never ready - console.w)
+web · plant smoke-no-sandbox · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: Chrome runs with --no-sandbox, which contract §6.2.3 lea)
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope web · 600.00 s · box Laser2025-20 · log milestones/m0/logs/M0-D17.web.redarm.log
+FLAG oracle: tests/plants/smoke-no-sandbox.patch changed since 2ada210f896a - a test, case or check M0-D17's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since 2ada210f896a - a test, case or check M0-D17's Deliver: does not name
+logs: milestones/m0/logs/M0-D17.<scope>.log · record: loop_times.jsonl · tree 2ada210f896a+0e3b4024463e
+anchor: 1 path×scope entries moved by this run
+anchor: 87 paths checked · 78 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 87 covered of 165 visible
+skipped    70  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 499 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 13 not impacted · 48.12 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 1.29->1.97
+=== GO ===
+WARN: M0-D12: DONE outside the current phase and 26 lines long - stub it (§2.6)
+WARN: M0-D13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+=== GO ===

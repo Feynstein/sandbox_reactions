@@ -7,7 +7,9 @@
  *   linux-pc   /usr/bin/google-chrome   --headless=new --use-angle=vulkan --enable-features=Vulkan
  *                                       --disable-vulkan-surface --enable-unsafe-webgpu
  *   win-laptop C:\Program Files\Google\Chrome\Application\chrome.exe   --headless=new --enable-unsafe-webgpu
- * SR_CHROME overrides the executable. The page is served by `launch.py start web` (tools/pb/launch.json), never by this file.
+ * playwright-core appends `--no-sandbox` unless `chromiumSandbox` is on, so the launch turns it on and every case reads
+ * the launched Chrome's command line back from chrome://version: `sandbox: on` in the log, or NO-GO naming `--no-sandbox`
+ * (M0-D17). SR_CHROME overrides the executable. The page is served by `launch.py start web` (tools/pb/launch.json), never by this file.
  * Cases (the `web` scope's, tests/web/check.sh):
  *   ready      `/` sets document.body.dataset.srState to "ready" within 30 s (srError, "error" or "no-webgpu" ends it early);
  *              srAdapter is printed as `SR-ADAPTER <description>`, and a software adapter is named in a NOTE (it reaches
@@ -59,11 +61,20 @@ function noWebgpuTexts() {
   return { title: get('web.no_webgpu_title'), body: get('web.no_webgpu_body'), browsers: get('web.no_webgpu_browsers') };
 }
 
-const browser = await chromium.launch({ executablePath: chrome, headless: true, args: chromeArgs });
+const browser = await chromium.launch({ executablePath: chrome, headless: true, args: chromeArgs, chromiumSandbox: true });
 let verdict;
 try {
   const version = browser.version();
   console.log(`web smoke ${kase}: ${chrome} (${version}) on ${process.platform}, flags ${chromeArgs.join(' ')}, ${base}`);
+  // §6.2.3 leaves `--no-sandbox` out: the smoke proves WebGPU in the browser a player runs, so Chrome's own command line decides.
+  const probe = await browser.newPage();
+  await probe.goto('chrome://version');
+  const cmdline = await probe.evaluate(() => document.querySelector('#command_line')?.textContent ?? null);
+  await probe.close();
+  if (cmdline === null) throw new Error('chrome://version shows no #command_line: the sandbox state cannot be read');
+  const sandboxOff = /(^|\s)--no-sandbox(\s|$)/.test(cmdline);
+  console.log(`sandbox: ${sandboxOff ? 'OFF (--no-sandbox in' : 'on (--no-sandbox absent from'} Chrome's command line)`);
+  if (sandboxOff) throw new Error('Chrome runs with --no-sandbox, which contract §6.2.3 leaves out (playwright-core adds it unless chromiumSandbox is on)');
   const page = await browser.newPage();
   const fetched = [];
   const problems = [];
