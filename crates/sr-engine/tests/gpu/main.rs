@@ -30,6 +30,9 @@ mod dt;
 /// M0-T21 — the active box (contract §1.3.3, §1.3.2, §1.3.4); `box` is a reserved word, hence the raw name.
 mod r#box;
 
+/// M0-T22 — a frame of steps and the collapse latch (contract §1.8.3, §1.8.5, §1.8.7, §3.1).
+mod latch;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;

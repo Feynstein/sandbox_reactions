@@ -91,7 +91,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D18 | BUILD | P8 zeroes a NaN species fraction before P9's guard reads it: the run goes on with the cell renormalised | AFTER M0-T20 | DONE (2026-10-10 15:53) |
 | M0-T21 | BUILD | The active box (§1.3.3) | AFTER M0-T20 | DONE (2026-10-10 16:12) |
 | M0-D19 | BUILD | The web scope is red on linux-pc: `node` resolves to 18 outside an interactive shell, and the page's WebGPU check gets no adapter | AFTER M0-T21 | DONE (2026-10-10 16:30) |
-| M0-T22 | BUILD | Frames of steps and the collapse latch, on indirect dispatches | AFTER M0-T21 | TODO |
+| M0-T22 | BUILD | Frames of steps and the collapse latch, on indirect dispatches | AFTER M0-T21 | DONE (2026-10-10 16:45) |
 | M0-T23 | BUILD | GPU timestamps, cost per step and per pass, --timing | AFTER M0-T22 | TODO |
 | M0-T24 | BUILD | Time control (sr_physics::time): rungs, frame plan, cap, slow-down, 30-frames switch | AFTER M0-T23 | TODO |
 | M0-T25 | BUILD | Scene files (§2.12.1) | AFTER M0-T24 | TODO |
@@ -406,7 +406,7 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-T22
+- Next task: M0-T23
 - Counters: T=116 · D=19 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=2 · TD=1 · TE=1
 - Open D/BLOCKED register: none (M0-D19 DONE 2026-10-10)
 - Outstanding commit gates: Phase 4 (M0-T10 … M0-V2, then M0-D17 and M0-TM2 that M0-V2 filed) — the gate under M0-TM2, its text « closes after M0-V2 »; Phase 2b and Phase 3 are in dde81d3, pushed (per-block commits, R16)
@@ -979,7 +979,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   Model: claude-opus-5-5, level high. Next: M0-T22.
 
 ## M0-T22 · Frames of steps and the collapse latch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T21)
-- Status: TODO
+- Status: DONE (2026-10-10 16:45)
 - Carried flags: [M0-T21, 2026-10-10] Box-sized dispatches (Step::box_sized: floor_cells, renormalise_species, dt_cells) take their counts from box.args on the GPU; P1, dt_partials, the guard and the box's own are Fixed — a latch that zeroes a frame's dispatches must reach both kinds (M0-T21).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3, §1.8.5, §1.8.7, §3.1
   (encode_frame, poll), §5.3 (G-LATCH) + milestones/m0/reports/time_warp.md R4 + docs/agent/testing.md
@@ -998,10 +998,11 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   stays GO
 - Adversarial: a box re-fit inside the frame restoring the zeroed sizes lets steps run past the event —
   the test fires the latch at step 15 so that step 16's re-fit falls inside the stopped stretch.
-- Handoff: <placeholder>
+- Handoff: win-laptop (Laser2025-20, RTX 4080 Laptop), model=claude-opus-5-5 level=high (rung_record). Built: shaders/latch.wgsl + step/latch.rs — Step::encode_frame(plan, encoder) records N steps in one encoder under the latch; every dispatch reads its size from a buffer the controller (latch_check, after each P9) zeroes: fixed sizes from latch slots (guard every 64 and re-fit every 16 opened by the GPU's step index), box-sized from box.args, P0's re-fit from its gate (both saved, zeroed, restored by latch_end); Latch::new refuses a step with any other indirect buffer. Armed = 1.0 t.u. since the last set (every set restarts it); slow-down off never fires. Step::poll(device) returns each frame's report once (map_buffer_on_submit, PollType::Poll). Test hook set_latch_hook + box-sized probe. Deviations: Step methods, no Engine yet; FramePlan carries slow_down; frames and bare run() not mixed (CPU index runs ahead after a stop); no cost per step (M0-T23). Verify 1 [ALREADY RUN — PASS (latch 5/5) on win-laptop] · Verify 2 [ALREADY RUN — PASS (latch-off RED, 5 failed) on win-laptop]. G-LATCH NOT PROVEN (synthetic) until M0-T111. Owed on laserax-ai: latch + --redarm latch (R15). Claim --changed --base 14d51e1: tasks/M0-T22.md. Detail: tasks/M0-T22.md. Next: M0-T23.
 
 ## M0-T23 · GPU timestamps, cost per step and `--timing` · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T22)
 - Status: TODO
+- Carried flags: [M0-T22, 2026-10-10] poll()'s FrameReport and its 128-byte map-on-submit readback live in step/latch.rs (encode_frame copies the latch and Δt records); a frame adds 'frame begin'/'frame end' compute passes and the controller closes P9's pass; under frames the guard and re-fit dispatches are recorded every step, zero-sized off schedule — time them as such (M0-T22).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3 (c_step), §2.12.2 (timing),
   §3.1 (poll), §3.3 (`--timing`), §6.2.2 + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/step/mod.rs: timestamp writes at compute-pass boundaries where the
@@ -1022,7 +1023,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T24 · Time control — rungs, the frame plan, the cap, the slow-down, the 30-frames switch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T23)
 - Status: TODO
-- Carried flags: [M0-T21, 2026-10-10] An all-vacuum world has an empty box: Δt_{n+1} is the largest finite f32 (3.4e38), not the vacuum floor's — Δt_est, N and the sandbox clock must survive it (M0-T21 default, cheap to reverse in reduce.wgsl dt_partials).
+- Carried flags: [M0-T21, 2026-10-10] An all-vacuum world has an empty box: Δt_{n+1} is the largest finite f32 (3.4e38), not the vacuum floor's — Δt_est, N and the sandbox clock must survive it (M0-T21 default, cheap to reverse in reduce.wgsl dt_partials). · [M0-T22, 2026-10-10] TimeControl reads FrameReport {steps_run, advanced (f32), sim_time (f64), dt, dt_next, steps, latch_fired: Option<frame step>}; FramePlan {steps, slow_down} is encode_frame's input; a run uses frames or bare Step::run, never both — the CPU step count runs ahead of the GPU's after a stop (M0-T22).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8, §3.2, §4.3, §4.12 (speeds) +
   docs/agent/testing.md
 - Deliver: crates/sr-physics/src/time.rs (new): `TimeControl` per §3.2 — §1.8.2's ladder (TOP from
@@ -1577,6 +1578,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T47 · Neutrinos and the iron gate on the GPU, setting the latch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T46)
 - Status: TODO
+- Carried flags: [M0-T22, 2026-10-10] P6 sets the latch by atomicOr(1) into word 0 of Step::latch_flag() (the latch record, a u32); the controller takes it after P9 (M0-T22).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5, §2.5.3, §5.3 (G-LATCH) +
   docs/agent/testing.md
 - Deliver: crates/sr-engine/shaders/react.wgsl and src/step/react.rs: neutrino cooling, S_ν and N_Fe's
@@ -1679,6 +1681,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T52a · The sinks' pull and the latch on formation · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T51)
 - Status: TODO
+- Carried flags: [M0-T22, 2026-10-10] P3 sets the latch on formation by atomicOr(1) into word 0 of Step::latch_flag() (M0-T22).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.3, §1.8.5, §2.6 +
   docs/agent/testing.md
 - Deliver: crates/sr-engine/shaders/grav.wgsl: the sinks' potential −GM_s/√(r² + r_acc²) added to φ in
@@ -1725,6 +1728,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T54 · Neutrino heating on the GPU (P7) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T53)
 - Status: TODO
+- Carried flags: [M0-T22, 2026-10-10] P7's own indirect sizes are a third indirect buffer: Latch::new asserts the step reads exactly box.args and P0's gate — add a binding to latch.wgsl's zero_sizes/latch_end (save, zero, restore) and widen the assert, or the latch would not reach P7 (M0-T22).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P7), §2.5.4 +
   docs/agent/testing.md
 - Deliver: crates/sr-engine/src/step/nuheat.rs and shaders/nuheat.wgsl (new): P7 through M0-T30's
@@ -3094,6 +3098,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
 
 ## M0-T111 · The collapse caught within one step — G-LATCH's scenario · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T110)
 - Status: TODO
+- Carried flags: [M0-T22, 2026-10-10] The mechanism and a test hook exist (Step::encode_frame, set_latch_hook, latch_probe; scope latch, 5 synthetic cases): G-LATCH's scenario is the first physics proof; the scope's expected count grows with it (M0-T22).
 - Sizing: E
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5, §4.3, §5.3 (G-LATCH) +
   milestones/m0/reports/lives.md (the iron-core dump) + docs/agent/testing.md

@@ -1,0 +1,70 @@
+== 2026-10-10T16:45:38-04:00 box · task M0-T22 · box Laser2025-20 :: bash tests/gpu.sh box physics
+-- box · exit=0 · 25.34 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 10.98s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 6 tests
+test r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+step 4, edit flagged: box [192, 88, 24, 24], from step 4, 3 fits
+ok
+test r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+after 1 steps: box [32, 32, 24, 24], from step 1, 2 fits
+after 16 steps: box [32, 32, 24, 24], from step 1, 2 fits
+after 17 steps: box [192, 88, 24, 24], from step 17, 3 fits
+after 32 steps: box [192, 88, 24, 24], from step 17, 3 fits
+after 33 steps: box [32, 32, 24, 24], from step 33, 4 fits
+ok
+test r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+empty world: box [0, 0, 0, 0]
+one cell, middle: box [288, 192, 24, 24]
+on the 8-grid: box [0, 0, 24, 24]
+on the 8-grid, inside: box [8, 8, 24, 24]
+one off the grid: box [0, 0, 16, 16]
+corner (0, 0): box [0, 0, 16, 16]
+corner (599, 399): box [584, 384, 16, 16]
+left edge: box [0, 192, 16, 24]
+right edge: box [584, 192, 16, 24]
+top edge: box [288, 0, 24, 16]
+a 100 × 10 block: box [88, 40, 120, 32]
+two far corners: box [0, 0, 600, 400]
+ok
+test r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+600 × 400, gas on []: box [0, 0, 0, 0], FFT [32, 32]
+600 × 400, gas on [(4, 4)]: box [0, 0, 16, 16], FFT [32, 32]
+600 × 400, gas on [(300, 200)]: box [288, 192, 24, 24], FFT [64, 64]
+600 × 400, gas on [(0, 0), (599, 399)]: box [0, 0, 600, 400], FFT [2048, 1024]
+2048 × 64, gas on [(0, 0), (2047, 63)]: box [0, 0, 2048, 64], FFT [4096, 128]
+ok
+test r#box::the_passes_read_their_dispatch_sizes_from_the_box ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+Fit: box [88, 40, 40, 32], tiles [5, 4, 1], cells [5, 1, 1], Δt_0 9.108400344848633e-1 (want 9.108400612990104e-1)
+WholeWorld: box [0, 0, 256, 128], tiles [32, 16, 1], cells [128, 1, 1], Δt_0 4.4721364974975586e-1 (want 4.4721359216795703e-1)
+ok
+test r#box::the_whole_world_switch_holds_the_box_at_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 13.46s
+
+

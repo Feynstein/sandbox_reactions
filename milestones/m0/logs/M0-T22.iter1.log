@@ -1,0 +1,48 @@
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 20.34s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 5 tests
+test latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+k = 1: FrameReport { steps_run: 1, advanced: 0.44721362, sim_time: 0.44721361994743347, dt: 0.44721362, dt_next: 0.44721362, steps: 1, latch_fired: Some(1) }, box-sized hook dispatches run 1
+k = 15: FrameReport { steps_run: 15, advanced: 6.7082043, sim_time: 6.70820426940918, dt: 0.44721362, dt_next: 0.44721362, steps: 15, latch_fired: Some(15) }, box-sized hook dispatches run 15
+k = 40: FrameReport { steps_run: 40, advanced: 17.888538, sim_time: 17.888538360595703, dt: 0.44721362, dt_next: 0.44721362, steps: 40, latch_fired: Some(40) }, box-sized hook dispatches run 40
+ok
+test latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+edit flagged, latch at the frame's step 1: FrameReport { steps_run: 1, advanced: 0.44721362, sim_time: 1.7888544499874115, dt: 0.44721362, dt_next: 0.44721362, steps: 4, latch_fired: Some(1) }, box BoxReport { x0: 88, y0: 40, w: 32, h: 32, fft: [64, 64], from_step: 3, fits: 3, tiles: [4, 4, 1], cells: [4, 1, 1] }
+ok
+test latch::poll_never_waits_and_reports_each_frame_once_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+0 report(s) on the first poll after submit; [FrameReport { steps_run: 20, advanced: 8.944271, sim_time: 8.944271087646484, dt: 0.44721362, dt_next: 0.44721362, steps: 20, latch_fired: None }, FrameReport { steps_run: 11, advanced: 4.9193497, sim_time: 13.86362075805664, dt: 0.44721362, dt_next: 0.44721362, steps: 31, latch_fired: Some(11) }]
+ok
+test latch::the_latch_re_arms_only_after_1_tu_without_a_set ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+Δt of the start 0.44721362
+frame 0, hook (4, 5, 1): FrameReport { steps_run: 5, advanced: 2.236068, sim_time: 2.2360680103302, dt: 0.44721362, dt_next: 0.44721362, steps: 5, latch_fired: Some(5) }
+frame 1, hook (6, 45, 2): FrameReport { steps_run: 40, advanced: 17.888538, sim_time: 20.124606370925903, dt: 0.44721362, dt_next: 0.44721362, steps: 45, latch_fired: None }
+frame 2, hook (46, 50, 3): FrameReport { steps_run: 5, advanced: 2.236068, sim_time: 22.360674381256104, dt: 0.44721362, dt_next: 0.44721362, steps: 50, latch_fired: Some(5) }
+frame 3, hook (88, 89, 1): FrameReport { steps_run: 40, advanced: 17.888538, sim_time: 40.24921274185181, dt: 0.44721362, dt_next: 0.44721362, steps: 90, latch_fired: None }
+ok
+test latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+slow-down off, flag at step 15: FrameReport { steps_run: 40, advanced: 17.888538, sim_time: 17.888538360595703, dt: 0.44721362, dt_next: 0.44721362, steps: 40, latch_fired: None }, box-sized hook dispatches run 40
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 39 filtered out; finished in 5.78s
+

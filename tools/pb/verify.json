@@ -342,6 +342,33 @@
         }
       ]
     },
+    "latch": {
+      "desc": "a frame of steps and the collapse latch (contract §1.8.3, §1.8.5, §1.8.7, §3.1; G-LATCH's mechanism — its contract scenario arrives with M0-T111, until then NOT PROVEN (synthetic)): a test hook sets the flag in P6 at step k of a 40-step frame (k = 1, 15, 40; 15 puts the re-fit after step index 16 inside the stopped stretch) → exactly k steps run, the state, the Δt record and the box bit-identical to a k-step run, no box-sized dispatch after step k, the next frame whole; slow-down off → all 40; re-armed only after 1.0 t.u. without a set (Δt ≈ 0.447 checked first); P0's gate zeroed when an edit is flagged on the firing step; poll() reports each frame once, in order, without waiting (M0-T22); on the physics adapter (R12, R15)",
+      "cmd": "bash tests/gpu.sh latch physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 5,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/latch-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "latch-off",
+          "patch": "tests/plants/latch-off.patch"
+        }
+      ]
+    },
     "boot": {
       "desc": "the headless boot (contract §3.3, §3.4, §5.4 G-BOOT): launch.py smoke of headless-boot is ready within 60 s and its summary.json carries every §2.12.2 key with steps = 200; stdout opens with SR-ADAPTER and ends with SR-HEADLESS DONE steps=200 (M0-T4); the build is the tree's own",
       "cmd": "bash tests/smoke.sh headless-boot",

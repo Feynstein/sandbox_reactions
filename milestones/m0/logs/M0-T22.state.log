@@ -1,0 +1,47 @@
+== 2026-10-10T16:45:38-04:00 state · task M0-T22 · box Laser2025-20 :: bash tests/gpu.sh state physics
+-- state · exit=0 · 21.08 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 10.89s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 6 tests
+test state::a_step_is_p0_to_p9_with_p1s_dt_p8s_floors_and_renormalisation_and_p9s_dt_reduction_its_only_dispatches_today ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+4096 cells: worst |Σ X − 1| = 1.8719583749771118e-7, worst |X − oracle| = 6.857620882261273e-8 (tolerance 1e-6)
+ok
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 9.19s
+
+

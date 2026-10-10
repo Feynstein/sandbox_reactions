@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/latch.wgsl
++++ b/crates/sr-engine/shaders/latch.wgsl
+@@ -110,7 +110,7 @@
+         latch.since = 0.0;
+     }
+     if (latch.stopped != 0u) {
+-        zero_sizes();
++        // planted: the controller never zeroes the dispatches
+     } else {
+         open_sizes(dt.steps);
+     }

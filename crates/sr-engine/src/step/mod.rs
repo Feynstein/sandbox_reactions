@@ -11,12 +11,17 @@
 //! from the box's indirect sizes on the GPU ([`Size::Indirect`]), never from a readback. The box is fit before step 0
 //! (ahead of the initial Δt reduction), after P9 at step indices ≡ 0 (mod 16), and in P0 after an edit outside it.
 //!
+//! A frame ([`latch`], §1.8.3, §1.8.5, M0-T22) records N steps under the latch: every dispatch of a step then takes its
+//! workgroup count from a buffer the latch's controller can zero, and the guard's and the re-fit's schedule is the GPU's
+//! step index, not this step's CPU count.
+//!
 //! The equation of state every pass shares (shaders/eos.wgsl) is prepended to a pass's shader ([`with_eos`]) and bound
 //! as group 1 from [`EosGpu`], built once per run from physics.json and elements.json: the species table, the cold
 //! pairs, M0-T12's u(x) table (sr_physics::eos::ColdTable) and the floors.
 
 pub mod boxfit;
 pub mod dt;
+pub mod latch;
 
 use std::cell::Cell;
 
@@ -26,6 +31,7 @@ use sr_physics::registry::{Elements, Physics, N_SPECIES};
 use crate::state::{Booking, State, BOOK_GROUPS, TERMS};
 use boxfit::{BoxFit, BoxMode, BoxReport, ARGS_TILES, REFIT_EVERY};
 use dt::{Dt, DtReport, GUARD_EVERY};
+use latch::Latch;
 
 /// The passes of one step, in §1.3.2's order.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -89,12 +95,13 @@ pub enum Size {
     Indirect(wgpu::Buffer, u64),
 }
 
-/// The step: one dispatch list per pass, indexed as `Pass::ORDER`, the Δt record, the active box and the index of the
-/// next step.
+/// The step: one dispatch list per pass, indexed as `Pass::ORDER`, the Δt record, the active box, the latch and the
+/// index of the next step.
 pub struct Step {
     passes: [Vec<Dispatch>; 10],
     dt: Dt,
     boxfit: BoxFit,
+    latch: Latch,
     next: Cell<u64>,
 }
 
@@ -126,7 +133,8 @@ impl Step {
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
-        Step { passes, dt, boxfit, next: Cell::new(0) }
+        let latch = Latch::new(device, &passes, &dt, &boxfit);
+        Step { passes, dt, boxfit, latch, next: Cell::new(0) }
     }
 
     /// How many dispatches each pass records on a step the guard skips, in `Pass::ORDER`.
@@ -170,33 +178,53 @@ impl Step {
         self.boxfit.edit_flag()
     }
 
-    /// Records the next step: a compute pass per non-empty slot, P0 to P9 — before step 0, the initial state's Δt.
+    /// Records the next step: a compute pass per non-empty slot, P0 to P9 — before step 0, the initial state's Δt. The
+    /// guard and the re-fit follow this step's CPU count; after a frame the latch stopped, that count runs ahead of the
+    /// GPU's, so a run uses frames ([`Step::encode_frame`]) or bare steps, not both.
     pub fn encode(&self, encoder: &mut wgpu::CommandEncoder) {
+        self.encode_step(encoder, None);
+    }
+
+    /// One step, bare (`latch` none) or under the latch: then every fixed-size dispatch reads its workgroup count from
+    /// the latch's sizes, the guard and the re-fit are recorded on every step and opened by the GPU's step index, and the
+    /// controller closes P9.
+    fn encode_step(&self, encoder: &mut wgpu::CommandEncoder, latch: Option<&Latch>) {
         let n = self.next.get();
+        let record = |cpass: &mut wgpu::ComputePass<'_>, list: &[Dispatch], every: u64| match latch {
+            Some(l) => l.record(cpass, list, every),
+            None => record_dispatches(cpass, list),
+        };
         if n == 0 {
             // The box fit to the initial state, then P9's Δt reduction over it; the reduce dispatches are P9's own list.
             let mut cpass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
                 label: Some("P9 reductions (initial state)"),
                 timestamp_writes: None,
             });
-            record_dispatches(&mut cpass, &self.boxfit.refit);
-            record_dispatches(&mut cpass, &self.passes[Pass::Reductions as usize]);
+            record(&mut cpass, &self.boxfit.refit, REFIT_EVERY);
+            record(&mut cpass, &self.passes[Pass::Reductions as usize], 1);
         }
         for (pass, dispatches) in Pass::ORDER.iter().zip(&self.passes) {
-            if dispatches.is_empty() && *pass != Pass::Edits {
+            let hooked = latch.is_some_and(|l| l.hooked()) && *pass == Pass::Reactions;
+            if dispatches.is_empty() && *pass != Pass::Edits && !hooked {
                 continue;
             }
             let mut cpass =
                 encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some(pass.label()), timestamp_writes: None });
-            record_dispatches(&mut cpass, dispatches);
+            record(&mut cpass, dispatches, 1);
             if *pass == Pass::Edits {
-                record_dispatches(&mut cpass, &self.boxfit.on_edit);
+                record(&mut cpass, &self.boxfit.on_edit, 1);
             }
-            if *pass == Pass::Reductions && n.is_multiple_of(GUARD_EVERY) {
-                record_dispatches(&mut cpass, &self.dt.guard);
+            if let (true, Some(l)) = (hooked, latch) {
+                l.record(&mut cpass, l.hook_dispatches(), 1);
             }
-            if *pass == Pass::Reductions && n.is_multiple_of(REFIT_EVERY) {
-                record_dispatches(&mut cpass, &self.boxfit.refit);
+            if *pass == Pass::Reductions && (latch.is_some() || n.is_multiple_of(GUARD_EVERY)) {
+                record(&mut cpass, &self.dt.guard, GUARD_EVERY);
+            }
+            if *pass == Pass::Reductions && (latch.is_some() || n.is_multiple_of(REFIT_EVERY)) {
+                record(&mut cpass, &self.boxfit.refit, REFIT_EVERY);
+            }
+            if let (Pass::Reductions, Some(l)) = (*pass, latch) {
+                record_dispatches(&mut cpass, std::slice::from_ref(l.controller()));
             }
         }
         self.next.set(n + 1);
@@ -313,14 +341,19 @@ fn init_buffer(device: &wgpu::Device, label: &str, usage: wgpu::BufferUsages, wo
 /// Sets each dispatch's pipeline and bind groups and dispatches it, in order.
 fn record_dispatches(cpass: &mut wgpu::ComputePass<'_>, dispatches: &[Dispatch]) {
     for d in dispatches {
-        cpass.set_pipeline(&d.pipeline);
-        for (g, bind_group) in d.bind_groups.iter().enumerate() {
-            cpass.set_bind_group(g as u32, bind_group, &[]);
-        }
-        match &d.size {
-            Size::Fixed([x, y, z]) => cpass.dispatch_workgroups(*x, *y, *z),
-            Size::Indirect(buffer, offset) => cpass.dispatch_workgroups_indirect(buffer, *offset),
-        }
+        record_sized(cpass, d, &d.size);
+    }
+}
+
+/// Sets `d`'s pipeline and bind groups and dispatches it with `size` (its own, or the latch's in its place).
+fn record_sized(cpass: &mut wgpu::ComputePass<'_>, d: &Dispatch, size: &Size) {
+    cpass.set_pipeline(&d.pipeline);
+    for (g, bind_group) in d.bind_groups.iter().enumerate() {
+        cpass.set_bind_group(g as u32, bind_group, &[]);
+    }
+    match size {
+        Size::Fixed([x, y, z]) => cpass.dispatch_workgroups(*x, *y, *z),
+        Size::Indirect(buffer, offset) => cpass.dispatch_workgroups_indirect(buffer, *offset),
     }
 }
 
