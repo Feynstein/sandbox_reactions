@@ -1,0 +1,34 @@
+==== 2026-10-10T10:42:49-04:00 web · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:42:50-04:00 web[build] · task M0-T15-r4 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:42:50-04:00 web[ready] · task M0-T15-r4 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:42:50-04:00 web[no-webgpu] · task M0-T15-r4 · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 32.55 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+
+-- web[ready] · exit=0 · 45.91 s
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-iuhicw87\arm0\milestones\m0\logs\M0-T15-r4.launch.web.log)
+services: 1, ready: 1
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+ready: srState "ready" after 0.8 s
+=== GO ===
+
+-- web[no-webgpu] · exit=0 · 55.73 s
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-iuhicw87\arm0\milestones\m0\logs\M0-T15-r4.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+no-webgpu: srState "no-webgpu" after 0.0 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+==== 2026-10-10T10:43:47-04:00 web · plant web-no-gpu-check · a fresh scratch copy of the tree
+planted web-no-gpu-check: tests/plants/web-no-gpu-check.patch -> web/index.html
+== 2026-10-10T10:43:47-04:00 web[build] · task M0-T15-r4 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:43:47-04:00 web[ready] · task M0-T15-r4 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:43:47-04:00 web[no-webgpu] · task M0-T15-r4 · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 36.44 s
+web ready: index.html has no navigator.gpu check
+=== NO-GO: index.html has no navigator.gpu check ===
+

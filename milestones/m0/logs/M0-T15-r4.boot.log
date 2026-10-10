@@ -1,0 +1,41 @@
+== 2026-10-10T10:44:43-04:00 boot · task M0-T15-r4 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 9.66 s
+headless-boot: ready - exit 0, 2.3s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T15-r4.launch.headless-boot.log)
+headless-boot: pid 32840 not signalled - gone
+headless-boot: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T15-r4.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "a552c96",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 0.0,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.0288132,
+  "world": {
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 2 s, booted and checked in 7 s
+=== GO ===
+
