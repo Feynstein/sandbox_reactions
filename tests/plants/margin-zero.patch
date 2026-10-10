@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/reduce.wgsl
++++ b/crates/sr-engine/shaders/reduce.wgsl
+@@ -106,7 +106,7 @@
+ const NONE: u32 = 0u;
+
+ // §1.3.3: the margin in cells, the multiple the box is rounded out to, the smallest FFT size.
+-const MARGIN: u32 = 8u;
++const MARGIN: u32 = 0u; // planted: the margin 8 → 0
+ const ROUND: u32 = 8u;
+ const FFT_MIN: u32 = 32u;
+ const BOX_EMPTY = vec4<u32>(0xffffffffu, 0xffffffffu, 0u, 0u);

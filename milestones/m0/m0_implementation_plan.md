@@ -89,7 +89,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T19 | BUILD | P8 floors complete (vacuum reset, temperature floor) and the EOS on the GPU | AFTER M0-T18 | DONE (2026-10-10 15:25, started 15:10) |
 | M0-T20 | BUILD | Δt and the non-finite guard (P1, P9) | AFTER M0-T19 | DONE (2026-10-10 15:46) |
 | M0-D18 | BUILD | P8 zeroes a NaN species fraction before P9's guard reads it: the run goes on with the cell renormalised | AFTER M0-T20 | DONE (2026-10-10 15:53) |
-| M0-T21 | BUILD | The active box (§1.3.3) | AFTER M0-T20 | TODO |
+| M0-T21 | BUILD | The active box (§1.3.3) | AFTER M0-T20 | DONE (2026-10-10 16:12) |
 | M0-T22 | BUILD | Frames of steps and the collapse latch, on indirect dispatches | AFTER M0-T21 | TODO |
 | M0-T23 | BUILD | GPU timestamps, cost per step and per pass, --timing | AFTER M0-T22 | TODO |
 | M0-T24 | BUILD | Time control (sr_physics::time): rungs, frame plan, cap, slow-down, 30-frames switch | AFTER M0-T23 | TODO |
@@ -942,7 +942,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: win-laptop (Laser2025-20, RTX 4080 Laptop), model=claude-opus-5-5 level=high (rung_record now, the heading's rung). floors.wgsl: non_finite (bits, reduce.wgsl's test) + fractions_non_finite; floor_cells and renormalise_species return at once for a cell holding an Inf/NaN fraction - fractions as read, Σ/u/E untouched, nothing booked; finite cells' rules unchanged. Deviation (declared, my reading of 'the floors kept as they are'): floor_cells skips the cell too, else a vacuum cell would get E = NaN and the guard would name energy, not the fraction. verify.json: floors expected 7, dt 6 (the Pass counts). New cases: floors a_cell_with_a_non_finite_fraction_is_left_for_the_guard (NaN/+Inf/-Inf in 5 kinds of cell), dt the_guard_names_a_nan_fraction_that_p8_would_renormalise_away (M0-T20's probe, now step 0, (20, 10), x_C); both shown red with the check stubbed out (logs M0-D18-red.*). floors [ALREADY RUN — PASS (7/0/0) on win-laptop]; dt [ALREADY RUN — PASS (6/0/0) on win-laptop]; --redarm floors [ALREADY RUN — PASS (floors-no-cold-energy RED) on win-laptop]; claim --changed --base 5206293 runs after this close, result in tasks/M0-D18.md. Not acted on: Twin's dead-code warning (M0-T19, cosmetic). linux-pc owed (R15). Detail: tasks/M0-D18.md. Next: M0-T21.
 
 ## M0-T21 · The active box · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T20)
-- Status: TODO
+- Status: DONE (2026-10-10 16:12)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (the re-fit), §1.3.3, §1.3.4,
   §5.3 (G-BOX) + milestones/m0/reports/time_warp.md R1 (A2) + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/step/boxfit.rs (new) with its reduction in shaders/reduce.wgsl: the
@@ -959,10 +959,11 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   stays GO
 - Adversarial: a box read back to the CPU to size dispatches costs a frame of lag and breaks the latch's
   in-frame stop — the sizes are written and read on the GPU only (TW-E16).
-- Handoff: <placeholder>
+- Handoff: On win-laptop Laser2025-20 (RTX 4080 Laptop): step/boxfit.rs + reduce.wgsl's box_cells/box_fit/box_gate write the box record, the passes' indirect sizes and the FFT size per axis on the GPU, never read back; P8's two dispatches and dt_cells run indirect over the box; re-fit before step 0, after P9 at n ≡ 0 (mod 16), and in P0 when Step::box_edit_flag is set; Step::with_box(…, BoxMode::WholeWorld) is the switch. Scope box GO 6/6, --redarm GO (margin-zero red, 5 of 6 failed); claim: --changed --base 103a236 (logs/M0-T21.*). Deviations: 7 code files, ≈ 720 new code lines (P8/P9 moved onto the box's sizes in the same thread); defaults — empty box → zero-sized dispatches and Δt = the largest f32; the re-fit's scan and the guard read the whole world; vacuum outside the box is never floored. Not acted on: clippy --tests red on 4 pre-existing lints in tests/gpu/floors.rs (no scope runs it). Model claude-opus-5-5, level high. Detail: tasks/M0-T21.md. Next: M0-T22.
 
 ## M0-T22 · Frames of steps and the collapse latch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T21)
 - Status: TODO
+- Carried flags: [M0-T21, 2026-10-10] Box-sized dispatches (Step::box_sized: floor_cells, renormalise_species, dt_cells) take their counts from box.args on the GPU; P1, dt_partials, the guard and the box's own are Fixed — a latch that zeroes a frame's dispatches must reach both kinds (M0-T21).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3, §1.8.5, §1.8.7, §3.1
   (encode_frame, poll), §5.3 (G-LATCH) + milestones/m0/reports/time_warp.md R4 + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/step/latch.rs and shaders/latch.wgsl (new): `encode_frame(plan,
@@ -1004,6 +1005,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T24 · Time control — rungs, the frame plan, the cap, the slow-down, the 30-frames switch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T23)
 - Status: TODO
+- Carried flags: [M0-T21, 2026-10-10] An all-vacuum world has an empty box: Δt_{n+1} is the largest finite f32 (3.4e38), not the vacuum floor's — Δt_est, N and the sandbox clock must survive it (M0-T21 default, cheap to reverse in reduce.wgsl dt_partials).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8, §3.2, §4.3, §4.12 (speeds) +
   docs/agent/testing.md
 - Deliver: crates/sr-physics/src/time.rs (new): `TimeControl` per §3.2 — §1.8.2's ladder (TOP from
@@ -1171,6 +1173,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T31 · Gravity on the GPU (P2) and one step's cost at 600 × 400 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T30)
 - Status: TODO
+- Carried flags: [M0-T21, 2026-10-10] The FFT size per axis lives only on the GPU (ActiveBox.fft_w/fft_h, boxfit.rs); choosing a cached kernel transform per size on the CPU would need a readback — size gravity's dispatches indirectly or hold every power-of-two size's kernel (32 … 4096) (M0-T21).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.3, §1.4, §5.1 (G-GRAV1,
   G-GRAV2), §6.1 + milestones/m0/reports/time_warp.md M2–M4 + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/step/grav.rs and shaders/grav.wgsl (new): P2 by M0-T30's convolution over
@@ -1274,6 +1277,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T34 · Gas flow on the GPU (P4) with bounce walls · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T33b)
 - Status: TODO
+- Carried flags: [M0-T21, 2026-10-10] Run P4 over the box: Size::Indirect(boxfit.args(), ARGS_TILES) and the ActiveBox uniform (named abox — active is a WGSL reserved word). Ghosts at the box edge read cells P8 never floors: an uploaded vacuum cell may hold Σ = 0, not Σ_floor — treat Σ < Σ_vac as the floor state on read, as dt's cell_rates does (M0-T21).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P4), §2.2 (packing), §2.3,
   §2.8 (bounce), §5.1 (G-SOD), §6.2.2 + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/step/hydro.rs and shaders/hydro.wgsl (new): P4 per §2.3.4 over the box
@@ -1366,6 +1370,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T39 · The box against the whole world (G-BOX) · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T38)
 - Status: TODO
+- Carried flags: [M0-T21, 2026-10-10] tests/gpu/box.rs exists (module r#box, 6 cases, scope expected 6 — raise it); the switch is Step::with_box(…, BoxMode::WholeWorld) (M0-T21).
 - Sizing: E
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.3, §5.3 (G-BOX) +
   milestones/m0/reports/time_warp.md R5 + docs/agent/testing.md
@@ -2184,6 +2189,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T76 · Player edits on the GPU (P0) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T75)
 - Status: TODO
+- Carried flags: [M0-T21, 2026-10-10] P0's edit pass ORs 1 into Step::box_edit_flag() (one u32) when an edit lands outside the box, read from the ActiveBox uniform; box_gate, box_cells and box_fit already follow the edits in P0 and clear the flag (M0-T21).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P0), §1.12, §2.7 (paint_sigma,
   paint_t, heat_factor, cool_factor), §2.9 (painted, erased, preset_dropped, cleared, tools), §3.1
   (queue_edit) + docs/agent/testing.md

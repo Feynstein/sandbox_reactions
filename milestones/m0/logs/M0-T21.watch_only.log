@@ -1,0 +1,12 @@
+== 2026-10-10T16:11:29-04:00 watch_only · task M0-T21 · box Laser2025-20 :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.11 s
+files scanned: 6 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+1 passed, 0 failed (6 files)
+=== GO ===
+
+== 2026-10-10T16:13:07-04:00 watch_only · task M0-T21 · box Laser2025-20 :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.16 s
+files scanned: 6 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+1 passed, 0 failed (6 files)
+=== GO ===
+

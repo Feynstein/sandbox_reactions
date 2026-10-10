@@ -27,6 +27,9 @@ mod floors;
 /// M0-T20 — P1 Δt, P9's reduction and the non-finite guard (contract §1.3.2, §1.3.4, §2.3.5, §3.3).
 mod dt;
 
+/// M0-T21 — the active box (contract §1.3.3, §1.3.2, §1.3.4); `box` is a reserved word, hence the raw name.
+mod r#box;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;

@@ -13,6 +13,9 @@
 // invocation adds into its own booking slot, no atomic. A NaN Σ or E is left to P9's guard, and so is a cell holding
 // an Inf or a NaN fraction: neither kernel touches it — no floor, no booking, its fractions as read — since the clamp's
 // max(NaN, 0) may return 0 and renormalise the NaN away before the guard reads it (M0-D18).
+//
+// Both run over the active box only (§1.3.3), as many 8 × 8 tiles as its indirect size says, from its origin: outside
+// it every cell is vacuum and static.
 
 struct Dims {
     width: u32,
@@ -29,6 +32,20 @@ struct Dims {
 @group(0) @binding(3) var<storage, read_write> hydro: array<f32>;
 // booking.floors (state.rs BOOK_GROUPS): mass.vacuum_reset's plane, then energy.floor_added's, one slot per cell.
 @group(0) @binding(4) var<storage, read_write> book: array<f32>;
+
+// The active box (reduce.wgsl `ActiveBox`, boxfit.rs).
+struct ActiveBox {
+    x0: u32,
+    y0: u32,
+    w: u32,
+    h: u32,
+    fft_w: u32,
+    fft_h: u32,
+    from_step: u32,
+    fits: u32,
+}
+
+@group(0) @binding(5) var<uniform> abox: ActiveBox;
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
@@ -84,10 +101,10 @@ fn renormalised(cell: u32) -> array<f32, 10> {
 
 @compute @workgroup_size(8, 8)
 fn floor_cells(@builtin(global_invocation_id) id: vec3<u32>) {
-    if (id.x >= dims.width || id.y >= dims.height) {
+    if (id.x >= abox.w || id.y >= abox.h) {
         return;
     }
-    let cell = id.y * dims.width + id.x;
+    let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
     let n = dims.cells;
     if (fractions_non_finite(cell)) {
         return;
@@ -126,10 +143,10 @@ fn floor_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 
 @compute @workgroup_size(8, 8)
 fn renormalise_species(@builtin(global_invocation_id) id: vec3<u32>) {
-    if (id.x >= dims.width || id.y >= dims.height) {
+    if (id.x >= abox.w || id.y >= abox.h) {
         return;
     }
-    let cell = id.y * dims.width + id.x;
+    let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
     let n = dims.cells;
     if (fractions_non_finite(cell)) {
         return;

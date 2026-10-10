@@ -7,10 +7,15 @@
 //! slot its lot fills, in place, without reordering the others. A step knows its index — the guard runs on every 64th
 //! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction.
 //!
+//! Every pass runs inside the active box ([`boxfit`], §1.3.3, M0-T21): a box-sized dispatch takes its workgroup count
+//! from the box's indirect sizes on the GPU ([`Size::Indirect`]), never from a readback. The box is fit before step 0
+//! (ahead of the initial Δt reduction), after P9 at step indices ≡ 0 (mod 16), and in P0 after an edit outside it.
+//!
 //! The equation of state every pass shares (shaders/eos.wgsl) is prepended to a pass's shader ([`with_eos`]) and bound
 //! as group 1 from [`EosGpu`], built once per run from physics.json and elements.json: the species table, the cold
 //! pairs, M0-T12's u(x) table (sr_physics::eos::ColdTable) and the floors.
 
+pub mod boxfit;
 pub mod dt;
 
 use std::cell::Cell;
@@ -19,6 +24,7 @@ use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::state::{Booking, State, BOOK_GROUPS, TERMS};
+use boxfit::{BoxFit, BoxMode, BoxReport, ARGS_TILES, REFIT_EVERY};
 use dt::{Dt, DtReport, GUARD_EVERY};
 
 /// The passes of one step, in §1.3.2's order.
@@ -67,32 +73,60 @@ impl Pass {
     }
 }
 
-/// One compute dispatch of a pass: its entry point, a pipeline, its bind groups (group g at index g) and a fixed
-/// workgroup count.
+/// One compute dispatch of a pass: its entry point, a pipeline, its bind groups (group g at index g) and its workgroup
+/// count.
 pub struct Dispatch {
     pub label: &'static str,
     pub pipeline: wgpu::ComputePipeline,
     pub bind_groups: Vec<wgpu::BindGroup>,
-    pub workgroups: [u32; 3],
+    pub size: Size,
 }
 
-/// The step: one dispatch list per pass, indexed as `Pass::ORDER`, the Δt record and the index of the next step.
+/// A dispatch's workgroup count: fixed when built, or read by the GPU from a buffer at a byte offset (the box's sizes).
+#[derive(Clone, Debug)]
+pub enum Size {
+    Fixed([u32; 3]),
+    Indirect(wgpu::Buffer, u64),
+}
+
+/// The step: one dispatch list per pass, indexed as `Pass::ORDER`, the Δt record, the active box and the index of the
+/// next step.
 pub struct Step {
     passes: [Vec<Dispatch>; 10],
     dt: Dt,
+    boxfit: BoxFit,
     next: Cell<u64>,
 }
 
 impl Step {
     /// Builds every pass's dispatch list for `state`'s buffers and world, booking into `booking`, with the equation of
-    /// state `eos` and the run's constants `physics` (C and η_g). The next step it records is step 0.
+    /// state `eos` and the run's constants `physics` (C, η_g, Σ_vac), the box fit to the state. The next step it
+    /// records is step 0.
     pub fn new(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, physics: &Physics) -> Step {
-        let mut dt = Dt::new(device, state, eos, physics);
+        Step::with_box(device, state, booking, eos, physics, BoxMode::Fit)
+    }
+
+    /// As [`Step::new`], the box fit to the state or held at the world (the switch for tests, G-BOX).
+    pub fn with_box(
+        device: &wgpu::Device,
+        state: &State,
+        booking: &Booking,
+        eos: &EosGpu,
+        physics: &Physics,
+        mode: BoxMode,
+    ) -> Step {
+        let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
+            label: Some("reduce.wgsl"),
+            source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/reduce.wgsl")).into()),
+        });
+        let mut boxfit = BoxFit::new(device, state, physics, mode);
+        let mut dt = Dt::new(device, &module, state, eos, physics, &boxfit);
+        boxfit.build(device, &module, state, dt.record());
         let mut passes: [Vec<Dispatch>; 10] = Default::default();
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
-        passes[Pass::Floors as usize] = floors(device, state, booking, eos);
+        passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
-        Step { passes, dt, next: Cell::new(0) }
+        Step { passes, dt, boxfit, next: Cell::new(0) }
     }
 
     /// How many dispatches each pass records on a step the guard skips, in `Pass::ORDER`.
@@ -110,26 +144,59 @@ impl Step {
         self.dt.guard.iter().map(|d| d.label).collect()
     }
 
+    /// The box's entry points: its re-fit (before step 0, and after P9 every 16th step), then P0's, after the edits.
+    pub fn box_labels(&self) -> [Vec<&'static str>; 2] {
+        [&self.boxfit.refit, &self.boxfit.on_edit].map(|list| list.iter().map(|d| d.label).collect())
+    }
+
+    /// Every dispatch of a step whose workgroup count the GPU reads from the box's sizes: (entry point, byte offset in
+    /// [`BoxFit::args`]).
+    pub fn box_sized(&self) -> Vec<(&'static str, u64)> {
+        let all = self.passes.iter().flatten().chain(&self.dt.guard);
+        all.filter_map(|d| match &d.size {
+            Size::Indirect(b, offset) if b == self.boxfit.args() => Some((d.label, *offset)),
+            _ => None,
+        })
+        .collect()
+    }
+
+    /// The box as the GPU last wrote it. Blocks on the device (tests and headless only) — never sizes a dispatch.
+    pub fn read_box(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> BoxReport {
+        self.boxfit.read(device, queue)
+    }
+
+    /// The box's edit flag, set by P0's edit pass when an edit lands outside the box ([`BoxFit::edit_flag`]).
+    pub fn box_edit_flag(&self) -> &wgpu::Buffer {
+        self.boxfit.edit_flag()
+    }
+
     /// Records the next step: a compute pass per non-empty slot, P0 to P9 — before step 0, the initial state's Δt.
     pub fn encode(&self, encoder: &mut wgpu::CommandEncoder) {
         let n = self.next.get();
         if n == 0 {
-            // P9's reduction is the one that reads the state; the reduce dispatches are P9's own list.
+            // The box fit to the initial state, then P9's Δt reduction over it; the reduce dispatches are P9's own list.
             let mut cpass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
                 label: Some("P9 reductions (initial state)"),
                 timestamp_writes: None,
             });
+            record_dispatches(&mut cpass, &self.boxfit.refit);
             record_dispatches(&mut cpass, &self.passes[Pass::Reductions as usize]);
         }
         for (pass, dispatches) in Pass::ORDER.iter().zip(&self.passes) {
-            if dispatches.is_empty() {
+            if dispatches.is_empty() && *pass != Pass::Edits {
                 continue;
             }
             let mut cpass =
                 encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some(pass.label()), timestamp_writes: None });
             record_dispatches(&mut cpass, dispatches);
+            if *pass == Pass::Edits {
+                record_dispatches(&mut cpass, &self.boxfit.on_edit);
+            }
             if *pass == Pass::Reductions && n.is_multiple_of(GUARD_EVERY) {
                 record_dispatches(&mut cpass, &self.dt.guard);
+            }
+            if *pass == Pass::Reductions && n.is_multiple_of(REFIT_EVERY) {
+                record_dispatches(&mut cpass, &self.boxfit.refit);
             }
         }
         self.next.set(n + 1);
@@ -250,14 +317,11 @@ fn record_dispatches(cpass: &mut wgpu::ComputePass<'_>, dispatches: &[Dispatch])
         for (g, bind_group) in d.bind_groups.iter().enumerate() {
             cpass.set_bind_group(g as u32, bind_group, &[]);
         }
-        cpass.dispatch_workgroups(d.workgroups[0], d.workgroups[1], d.workgroups[2]);
+        match &d.size {
+            Size::Fixed([x, y, z]) => cpass.dispatch_workgroups(*x, *y, *z),
+            Size::Indirect(buffer, offset) => cpass.dispatch_workgroups_indirect(buffer, *offset),
+        }
     }
-}
-
-/// Workgroups covering the world with the shaders' 8 × 8 tiles (the world is a multiple of 8, §2.8).
-fn tiles(state: &State) -> [u32; 3] {
-    let world = state.world();
-    [world.width.div_ceil(8), world.height.div_ceil(8), 1]
 }
 
 fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModule, entry: &'static str) -> wgpu::ComputePipeline {
@@ -272,8 +336,8 @@ fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModule, entry: &
 }
 
 /// P8 floors (§1.3.2): `floor_cells` — the vacuum reset and the temperature floor, booked into P8's booking buffer —
-/// then `renormalise_species`.
-fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu) -> Vec<Dispatch> {
+/// then `renormalise_species`, both over the box's 8 × 8 tiles.
+fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, boxfit: &BoxFit) -> Vec<Dispatch> {
     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("floors.wgsl"),
         source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/floors.wgsl")).into()),
@@ -293,6 +357,7 @@ fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu)
             wgpu::BindGroupEntry { binding: 2, resource: state.group(2).as_entire_binding() },
             wgpu::BindGroupEntry { binding: 3, resource: state.group(0).as_entire_binding() },
             wgpu::BindGroupEntry { binding: 4, resource: booking.group(book).as_entire_binding() },
+            wgpu::BindGroupEntry { binding: 5, resource: boxfit.active().as_entire_binding() },
         ],
     });
     let eos_group = eos.bind_group(device, &floor_cells);
@@ -305,16 +370,13 @@ fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu)
             wgpu::BindGroupEntry { binding: 0, resource: state.dims().as_entire_binding() },
             wgpu::BindGroupEntry { binding: 1, resource: state.group(1).as_entire_binding() },
             wgpu::BindGroupEntry { binding: 2, resource: state.group(2).as_entire_binding() },
+            wgpu::BindGroupEntry { binding: 5, resource: boxfit.active().as_entire_binding() },
         ],
     });
+    let tiles = || Size::Indirect(boxfit.args().clone(), ARGS_TILES);
 
     vec![
-        Dispatch {
-            label: "floor_cells",
-            pipeline: floor_cells,
-            bind_groups: vec![cells_group, eos_group],
-            workgroups: tiles(state),
-        },
-        Dispatch { label: "renormalise_species", pipeline: renormalise, bind_groups: vec![species_group], workgroups: tiles(state) },
+        Dispatch { label: "floor_cells", pipeline: floor_cells, bind_groups: vec![cells_group, eos_group], size: tiles() },
+        Dispatch { label: "renormalise_species", pipeline: renormalise, bind_groups: vec![species_group], size: tiles() },
     ]
 }

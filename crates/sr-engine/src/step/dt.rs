@@ -8,11 +8,14 @@
 //! Every 64 steps P9 also runs the non-finite guard (`guard_scan`, `guard_stamp`): the first NaN or Inf found, by step,
 //! cell and channel, stays in the record until the run reads it ([`Dt::read`]) and stops (exit 5, §3.3).
 //!
-//! Later passes read Δt_n from [`Dt::record`]'s first word (an f32).
+//! Later passes read Δt_n from [`Dt::record`]'s first word (an f32). The reduction runs over the active box
+//! ([`super::boxfit`]): `dt_cells` takes its workgroup count from the box's indirect sizes and `dt_partials` the box's
+//! partials; the guard scans the whole world.
 
 use sr_physics::registry::Physics;
 
-use super::{compute_pipeline, init_buffer, Dispatch, EosGpu};
+use super::boxfit::{BoxFit, ARGS_CELLS};
+use super::{compute_pipeline, init_buffer, Dispatch, EosGpu, Size};
 use crate::state::{read_buffers, State, CHANNELS};
 
 /// The guard runs at step indices ≡ 0 (mod `GUARD_EVERY`).
@@ -56,12 +59,16 @@ pub struct Dt {
 }
 
 impl Dt {
-    /// The record (zeroed) and the dispatches for `state`, with C = `cfl` and η_g = `eta_g` from `physics`.
-    pub fn new(device: &wgpu::Device, state: &State, eos: &EosGpu, physics: &Physics) -> Dt {
-        let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
-            label: Some("reduce.wgsl"),
-            source: wgpu::ShaderSource::Wgsl(super::with_eos(include_str!("../../shaders/reduce.wgsl")).into()),
-        });
+    /// The record (zeroed) and the dispatches for `state` on `module` (reduce.wgsl with eos.wgsl prepended), with
+    /// C = `cfl` and η_g = `eta_g` from `physics`, the reduction over `boxfit`'s box.
+    pub fn new(
+        device: &wgpu::Device,
+        module: &wgpu::ShaderModule,
+        state: &State,
+        eos: &EosGpu,
+        physics: &Physics,
+        boxfit: &BoxFit,
+    ) -> Dt {
         let get = |k: &str| physics.get(k).unwrap_or_else(|| panic!("physics.json key {k}")) as f32;
         let world = state.world();
         let partials = (world.cells() as u32).div_ceil(WG);
@@ -93,11 +100,12 @@ impl Dt {
                 3 => state.group(2).as_entire_binding(),
                 4 => partials_buf.as_entire_binding(),
                 5 => record.as_entire_binding(),
-                _ => params.as_entire_binding(),
+                6 => params.as_entire_binding(),
+                _ => boxfit.active().as_entire_binding(),
             }
         };
-        let dispatch = |label: &'static str, bindings: &[u32], workgroups: [u32; 3], uses_eos: bool| {
-            let pipeline = compute_pipeline(device, &module, label);
+        let dispatch = |label: &'static str, bindings: &[u32], size: Size, uses_eos: bool| {
+            let pipeline = compute_pipeline(device, module, label);
             let entries: Vec<wgpu::BindGroupEntry> =
                 bindings.iter().map(|&b| wgpu::BindGroupEntry { binding: b, resource: entry(b) }).collect();
             let mut bind_groups = vec![device.create_bind_group(&wgpu::BindGroupDescriptor {
@@ -108,16 +116,17 @@ impl Dt {
             if uses_eos {
                 bind_groups.push(eos.bind_group(device, &pipeline));
             }
-            Dispatch { label, pipeline, bind_groups, workgroups }
+            Dispatch { label, pipeline, bind_groups, size }
         };
-        let tiles = [world.width.div_ceil(8), world.height.div_ceil(8), 1];
+        let one = || Size::Fixed([1, 1, 1]);
+        let tiles = Size::Fixed([world.width.div_ceil(8), world.height.div_ceil(8), 1]);
         Dt {
-            advance: vec![dispatch("dt_advance", &[5], [1, 1, 1], false)],
+            advance: vec![dispatch("dt_advance", &[5], one(), false)],
             reduce: vec![
-                dispatch("dt_cells", &[0, 1, 2, 3, 4], [partials, 1, 1], true),
-                dispatch("dt_partials", &[4, 5, 6], [1, 1, 1], false),
+                dispatch("dt_cells", &[0, 1, 2, 3, 4, 7], Size::Indirect(boxfit.args().clone(), ARGS_CELLS), true),
+                dispatch("dt_partials", &[4, 5, 6, 7], one(), false),
             ],
-            guard: vec![dispatch("guard_scan", &[0, 1, 2, 3, 5], tiles, false), dispatch("guard_stamp", &[5], [1, 1, 1], false)],
+            guard: vec![dispatch("guard_scan", &[0, 1, 2, 3, 5], tiles, false), dispatch("guard_stamp", &[5], one(), false)],
             world_width: world.width,
             record,
         }
