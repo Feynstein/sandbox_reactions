@@ -32,6 +32,11 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     `default_fonts`) · in eframe 0.36.2 `wgpu` also turns on egui-wgpu's defaults, i.e. wgpu's `webgl` and `gles`
     (measured, `cargo tree -e features -i wgpu`), against §1.2's own "no `webgl`" (Q4); the same renderer, no package
     added — the lead's answer at M0-T5, 2026-10-09: «wgpu_no_default_features (Recommended)».
+  - [M0-T14] §5.4 G-LIC's list ("a missing licence or any other … is NO-GO") · the same, plus one named exception: package 
+    `epaint_default_fonts` with exactly the expression `(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0`; any other
+    package or a changed expression stays NO-GO and an ask · eframe's approved `default_fonts` (§1.2) pulls that crate, which
+    bundles font files (data, not GPL-family code), measured by `cargo metadata` on 2026-10-10 (164 packages native, 143
+    wasm32; no other refusal) — the lead's answer at M0-T14, 2026-10-10: «Named exception (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

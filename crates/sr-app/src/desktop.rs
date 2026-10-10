@@ -8,9 +8,6 @@ use std::sync::Arc;
 
 use eframe::{egui, egui_wgpu};
 
-/// `app.title` (§4.1); the string table itself, crates/sr-app/src/strings.rs, comes with M0-T13.
-#[cfg(not(target_arch = "wasm32"))]
-pub const APP_TITLE: &str = "Sandbox Reactions";
 /// `bg.space` (§4.11): the world's background and vacuum, #05070D.
 pub const BG_SPACE: egui::Color32 = egui::Color32::from_rgb(0x05, 0x07, 0x0D);
 /// The default window (§4.2), in logical px.
@@ -174,7 +171,8 @@ mod native {
     use sr_engine::gpu::{match_adapter, AdapterDesc};
     use sr_engine::headless::{EXIT_ARGS, EXIT_DONE, EXIT_GPU};
 
-    use super::{SandboxApp, APP_TITLE, WINDOW_SIZE};
+    use super::{SandboxApp, WINDOW_SIZE};
+    use crate::strings;
 
     const USAGE: &str = "usage: sandbox-reactions [--adapter <name substring>] [--status-port <port>] \
 [--offscreen-window] [--capture <script.json> --out <dir>]";
@@ -281,7 +279,7 @@ mod native {
             }
         };
 
-        let mut viewport = egui::ViewportBuilder::default().with_title(APP_TITLE).with_inner_size(WINDOW_SIZE);
+        let mut viewport = egui::ViewportBuilder::default().with_title(strings::get("app.title")).with_inner_size(WINDOW_SIZE);
         if args.offscreen {
             viewport = viewport.with_position(OFFSCREEN_POS).with_active(false).with_taskbar(false);
         }
@@ -296,7 +294,7 @@ mod native {
 
         let shared = status.clone();
         let result = eframe::run_native(
-            APP_TITLE,
+            strings::get("app.title"),
             options,
             Box::new(move |cc| {
                 let mut app = SandboxApp::new();

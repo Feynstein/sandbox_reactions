@@ -1,0 +1,157 @@
+==== 2026-10-10T09:23:16-04:00 registry · clean · a fresh scratch copy of the tree
+== 2026-10-10T09:23:16-04:00 registry · task M0-T12 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=0 · 6.84 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-emqdxiyc\arm0\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 5.32s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 29 tests
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... ok
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::reactions_ten_records_verbatim ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::reactions_conserve_mass_per_record ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::reactions_groups_are_the_accumulators ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+test registry::tests::the_registry_loads_the_reactions_too ... ok
+test registry::tests::reactions_resolve_against_physics ... ok
+test registry::tests::a_stand_in_record_ships_disabled ... ok
+test registry::tests::share_entries_are_refused ... ok
+test registry::tests::shares_off_by_a_millionth_are_refused_naming_the_record ... ok
+test registry::tests::share_tolerance_is_a_trillionth ... ok
+test registry::tests::rate_keys_must_resolve ... ok
+test registry::tests::steepness_is_at_least_four ... ok
+test registry::tests::the_file_and_record_shape_refusals_name_their_place ... ok
+test registry::tests::the_threshold_the_gate_and_the_orders_have_their_shapes ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.01s
+
+
+==== 2026-10-10T09:23:25-04:00 registry · plant registry-order-unchecked · a fresh scratch copy of the tree
+planted registry-order-unchecked: tests/plants/registry-order-unchecked.patch -> crates/sr-physics/src/registry.rs
+== 2026-10-10T09:23:25-04:00 registry · task M0-T12 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=101 · 6.95 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-emqdxiyc\arm1\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 5.57s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 29 tests
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... FAILED
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::reactions_groups_are_the_accumulators ... ok
+test registry::tests::reactions_ten_records_verbatim ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::reactions_conserve_mass_per_record ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+test registry::tests::a_stand_in_record_ships_disabled ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::shares_off_by_a_millionth_are_refused_naming_the_record ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::the_registry_loads_the_reactions_too ... ok
+test registry::tests::reactions_resolve_against_physics ... ok
+test registry::tests::share_tolerance_is_a_trillionth ... ok
+test registry::tests::rate_keys_must_resolve ... ok
+test registry::tests::share_entries_are_refused ... ok
+test registry::tests::steepness_is_at_least_four ... ok
+test registry::tests::the_file_and_record_shape_refusals_name_their_place ... ok
+test registry::tests::the_threshold_the_gate_and_the_orders_have_their_shapes ... ok
+
+failures:
+
+---- registry::tests::ladder_is_strict_where_the_contract_says_less_than stdout ----
+
+thread 'registry::tests::ladder_is_strict_where_the_contract_says_less_than' (31008) panicked at crates\sr-physics\src\registry.rs:768:11:
+must be refused: Physics { values: {"a_c_alpha": 0.001, "a_c_burn": 0.001, "a_h_burn": 0.0005, "a_he_burn": 0.001, "a_mg_burn": 0.001, "a_n_fe": 0.001, "a_ne_burn": 0.001, "a_nu": 0.001, "a_o_burn": 0.001, "a_r": 4e-7, "a_s_burn": 0.001, "a_si_burn": 0.001, "block": 4.0, "burn_dt": 0.05, "burn_dx": 0.1, "c_sb": 200.0, "cfl": 0.4, "cool_factor": 0.95, "eta_g": 0.3, "f_dep": 0.05, "heat_factor": 1.05, "k1e": 21.3, "k1n": 2.67, "k2e": 134.0, "k2n": 58.2, "k_cond": 0.0, "kappa0": 1.0, "kappa_dust": 0.0, "m_nu": 8.0, "nu_c_burn": 30.0, "nu_mg_burn": 30.0, "nu_ne_burn": 30.0, "nu_o_burn": 30.0, "nu_s_burn": 30.0, "nu_si_burn": 30.0, "paint_sigma": 0.02, "paint_t": 2.0, "q_h": 8700.0, "sigma_bh": 4000.0, "sigma_floor": 1e-8, "sigma_n": 160.0, "sigma_obj": 0.001, "sigma_vac": 1e-6, "t_c": 140.0, "t_dust": 0.0, "t_floor": 0.05, "t_h": 100.0, "t_he": 140.0, "t_ne": 274.0, "t_nu": 166.0, "t_o": 300.0, "t_si": 420.0}, standins: Standins { s1: false, s2: false } }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    registry::tests::ladder_is_strict_where_the_contract_says_less_than
+
+test result: FAILED. 28 passed; 1 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-10T09:23:33-04:00 registry · plant registry-shares-unchecked · a fresh scratch copy of the tree
+planted registry-shares-unchecked: tests/plants/registry-shares-unchecked.patch -> crates/sr-physics/src/registry.rs
+== 2026-10-10T09:23:33-04:00 registry · task M0-T12 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=101 · 7.06 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-emqdxiyc\arm2\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 5.70s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 29 tests
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::reactions_groups_are_the_accumulators ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... ok
+test registry::tests::reactions_ten_records_verbatim ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::reactions_conserve_mass_per_record ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::shares_off_by_a_millionth_are_refused_naming_the_record ... FAILED
+test registry::tests::a_stand_in_record_ships_disabled ... ok
+test registry::tests::reactions_resolve_against_physics ... ok
+test registry::tests::share_tolerance_is_a_trillionth ... FAILED
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+test registry::tests::the_registry_loads_the_reactions_too ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::share_entries_are_refused ... ok
+test registry::tests::rate_keys_must_resolve ... ok
+test registry::tests::steepness_is_at_least_four ... ok
+test registry::tests::the_file_and_record_shape_refusals_name_their_place ... ok
+test registry::tests::the_threshold_the_gate_and_the_orders_have_their_shapes ... ok
+
+failures:
+
+---- registry::tests::shares_off_by_a_millionth_are_refused_naming_the_record stdout ----
+
+thread 'registry::tests::shares_off_by_a_millionth_are_refused_naming_the_record' (32724) panicked at crates\sr-physics\src\registry.rs:1025:30:
+must be refused: Reactions { records: [Record { id: "H_burn", group: "H", inputs: [Share { species: 0, share: 1.0 }], outputs: [Share { species: 1, share: 1.0 }], q_ratio: 1.0, rate: RateLaw { a: 1.0, orders: [2.0], terms: [RateTerm { t_key: "t_h", t_factor: 1.0, t_k: 100.0, nu: 4.0, w: 1.0 }, RateTerm { t_key: "t_h", t_factor: 1.15, t_k: 114.99999999999999, nu: 18.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(50.0), gate: None, a_key: "a_h_burn", a_coef: 0.0005 }, enabled: true, standin: false }, Record { id: "He_burn", group: "He", inputs: [Share { species: 1, share: 1.0 }], outputs: [Share { species: 2, share: 1.0 }], q_ratio: 0.0925925925925926, rate: RateLaw { a: 2.0, orders: [3.0], terms: [RateTerm { t_key: "t_he", t_factor: 1.0, t_k: 140.0, nu: 40.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(70.0), gate: None, a_key: "a_he_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "C_alpha", group: "He", inputs: [Share { species: 2, share: 0.750001 }, Share { species: 1, share: 0.25 }], outputs: [Share { species: 3, share: 1.0 }], q_ratio: 0.0684931506849315, rate: RateLaw { a: 1.0, orders: [1.0, 1.0], terms: [RateTerm { t_key: "t_he", t_factor: 1.0, t_k: 140.0, nu: 40.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(70.0), gate: None, a_key: "a_c_alpha", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "C_burn", group: "C", inputs: [Share { species: 2, share: 1.0 }], outputs: [Share { species: 4, share: 0.8 }, Share { species: 5, share: 0.2 }], q_ratio: 0.06369426751592357, rate: RateLaw { a: 1.0, orders: [2.0], terms: [RateTerm { t_key: "t_c", t_factor: 1.0, t_k: 196.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(98.0), gate: None, a_key: "a_c_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "Ne_burn", group: "Ne", inputs: [Share { species: 4, share: 1.0 }], outputs: [Share { species: 3, share: 0.4 }, Share { species: 5, share: 0.6 }], q_ratio: 0.017543859649122806, rate: RateLaw { a: 1.0, orders: [1.0], terms: [RateTerm { t_key: "t_ne", t_factor: 1.0, t_k: 274.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(137.0), gate: None, a_key: "a_ne_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "O_burn", group: "O", inputs: [Share { species: 3, share: 1.0 }], outputs: [Share { species: 6, share: 0.7 }, Share { species: 7, share: 0.3 }], q_ratio: 0.07936507936507936, rate: RateLaw { a: 1.0, orders: [2.0], terms: [RateTerm { t_key: "t_o", t_factor: 1.0, t_k: 300.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(150.0), gate: None, a_key: "a_o_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "Mg_burn", group: "O", inputs: [Share { species: 5, share: 1.0 }], outputs: [Share { species: 6, share: 1.0 }], q_ratio: 0.07936507936507936, rate: RateLaw { a: 1.0, orders: [1.0], terms: [RateTerm { t_key: "t_o", t_factor: 1.0, t_k: 300.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(150.0), gate: None, a_key: "a_mg_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "Si_burn", group: "Si", inputs: [Share { species: 6, share: 1.0 }], outputs: [Share { species: 8, share: 1.0 }], q_ratio: 0.030303030303030304, rate: RateLaw { a: 1.0, orders: [1.0], terms: [RateTerm { t_key: "t_si", t_factor: 1.0, t_k: 420.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(210.0), gate: None, a_key: "a_si_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "S_burn", group: "Si", inputs: [Share { species: 7, share: 1.0 }], outputs: [Share { species: 8, share: 1.0 }], q_ratio: 0.030303030303030304, rate: RateLaw { a: 1.0, orders: [1.0], terms: [RateTerm { t_key: "t_si", t_factor: 1.0, t_k: 420.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(210.0), gate: None, a_key: "a_s_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "N_Fe", group: "N", inputs: [Share { species: 8, share: 1.0 }], outputs: [Share { species: 9, share: 1.0 }], q_ratio: -1.14, rate: RateLaw { a: 0.0, orders: [1.0], terms: [], t_thr_factor: None, t_thr: None, gate: Some(Gate { sigma_key: "sigma_n", sigma_g: 160.0, p: 1.0 }), a_key: "a_n_fe", a_coef: 0.001 }, enabled: true, standin: false }] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- registry::tests::share_tolerance_is_a_trillionth stdout ----
+
+thread 'registry::tests::share_tolerance_is_a_trillionth' (13832) panicked at crates\sr-physics\src\registry.rs:1025:30:
+must be refused: Reactions { records: [Record { id: "H_burn", group: "H", inputs: [Share { species: 0, share: 1.0 }], outputs: [Share { species: 1, share: 1.0 }], q_ratio: 1.0, rate: RateLaw { a: 1.0, orders: [2.0], terms: [RateTerm { t_key: "t_h", t_factor: 1.0, t_k: 100.0, nu: 4.0, w: 1.0 }, RateTerm { t_key: "t_h", t_factor: 1.15, t_k: 114.99999999999999, nu: 18.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(50.0), gate: None, a_key: "a_h_burn", a_coef: 0.0005 }, enabled: true, standin: false }, Record { id: "He_burn", group: "He", inputs: [Share { species: 1, share: 1.0 }], outputs: [Share { species: 2, share: 1.0 }], q_ratio: 0.0925925925925926, rate: RateLaw { a: 2.0, orders: [3.0], terms: [RateTerm { t_key: "t_he", t_factor: 1.0, t_k: 140.0, nu: 40.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(70.0), gate: None, a_key: "a_he_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "C_alpha", group: "He", inputs: [Share { species: 2, share: 0.750000000002 }, Share { species: 1, share: 0.25 }], outputs: [Share { species: 3, share: 1.0 }], q_ratio: 0.0684931506849315, rate: RateLaw { a: 1.0, orders: [1.0, 1.0], terms: [RateTerm { t_key: "t_he", t_factor: 1.0, t_k: 140.0, nu: 40.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(70.0), gate: None, a_key: "a_c_alpha", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "C_burn", group: "C", inputs: [Share { species: 2, share: 1.0 }], outputs: [Share { species: 4, share: 0.8 }, Share { species: 5, share: 0.2 }], q_ratio: 0.06369426751592357, rate: RateLaw { a: 1.0, orders: [2.0], terms: [RateTerm { t_key: "t_c", t_factor: 1.0, t_k: 196.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(98.0), gate: None, a_key: "a_c_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "Ne_burn", group: "Ne", inputs: [Share { species: 4, share: 1.0 }], outputs: [Share { species: 3, share: 0.4 }, Share { species: 5, share: 0.6 }], q_ratio: 0.017543859649122806, rate: RateLaw { a: 1.0, orders: [1.0], terms: [RateTerm { t_key: "t_ne", t_factor: 1.0, t_k: 274.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(137.0), gate: None, a_key: "a_ne_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "O_burn", group: "O", inputs: [Share { species: 3, share: 1.0 }], outputs: [Share { species: 6, share: 0.7 }, Share { species: 7, share: 0.3 }], q_ratio: 0.07936507936507936, rate: RateLaw { a: 1.0, orders: [2.0], terms: [RateTerm { t_key: "t_o", t_factor: 1.0, t_k: 300.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(150.0), gate: None, a_key: "a_o_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "Mg_burn", group: "O", inputs: [Share { species: 5, share: 1.0 }], outputs: [Share { species: 6, share: 1.0 }], q_ratio: 0.07936507936507936, rate: RateLaw { a: 1.0, orders: [1.0], terms: [RateTerm { t_key: "t_o", t_factor: 1.0, t_k: 300.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(150.0), gate: None, a_key: "a_mg_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "Si_burn", group: "Si", inputs: [Share { species: 6, share: 1.0 }], outputs: [Share { species: 8, share: 1.0 }], q_ratio: 0.030303030303030304, rate: RateLaw { a: 1.0, orders: [1.0], terms: [RateTerm { t_key: "t_si", t_factor: 1.0, t_k: 420.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(210.0), gate: None, a_key: "a_si_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "S_burn", group: "Si", inputs: [Share { species: 7, share: 1.0 }], outputs: [Share { species: 8, share: 1.0 }], q_ratio: 0.030303030303030304, rate: RateLaw { a: 1.0, orders: [1.0], terms: [RateTerm { t_key: "t_si", t_factor: 1.0, t_k: 420.0, nu: 30.0, w: 1.0 }], t_thr_factor: Some(0.5), t_thr: Some(210.0), gate: None, a_key: "a_s_burn", a_coef: 0.001 }, enabled: true, standin: false }, Record { id: "N_Fe", group: "N", inputs: [Share { species: 8, share: 1.0 }], outputs: [Share { species: 9, share: 1.0 }], q_ratio: -1.14, rate: RateLaw { a: 0.0, orders: [1.0], terms: [], t_thr_factor: None, t_thr: None, gate: Some(Gate { sigma_key: "sigma_n", sigma_g: 160.0, p: 1.0 }), a_key: "a_n_fe", a_coef: 0.001 }, enabled: true, standin: false }] }
+
+
+failures:
+    registry::tests::share_tolerance_is_a_trillionth
+    registry::tests::shares_off_by_a_millionth_are_refused_naming_the_record
+
+test result: FAILED. 27 passed; 2 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

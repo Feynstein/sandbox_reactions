@@ -1,5 +1,5 @@
 {
-  "_note": "Contract §3.6 as amended [M0-TG, M0-TJ3]. M0-T4 wrote headless-boot; M0-T5 game, game-xvfb, game-offscreen (game-offscreen also takes launch.py's private Xvfb on Linux, where Wayland ignores a window position — so it never lands on the lead's desktop; on Windows it runs as declared); M0-T15 adds web.",
+  "_note": "Contract \u00a73.6 as amended [M0-TG, M0-TJ3]. M0-T4 wrote headless-boot; M0-T5 game, game-xvfb, game-offscreen (game-offscreen also takes launch.py's private Xvfb on Linux, where Wayland ignores a window position \u2014 so it never lands on the lead's desktop; on Windows it runs as declared); M0-T15 added web (the static server over web/dist, kind port, contract \u00a73.4/\u00a73.6).",
   "services": {
     "headless-boot": {
       "cmd": {
@@ -121,6 +121,35 @@
       ],
       "deadline_s": 90,
       "xvfb": true
+    },
+    "web": {
+      "cmd": {
+        "posix": [
+          "python3",
+          "-m",
+          "http.server",
+          "47812",
+          "--bind",
+          "127.0.0.1",
+          "--directory",
+          "web/dist"
+        ],
+        "nt": [
+          "py",
+          "-3.12",
+          "-m",
+          "http.server",
+          "47812",
+          "--bind",
+          "127.0.0.1",
+          "--directory",
+          "web/dist"
+        ]
+      },
+      "cwd": ".",
+      "port": 47812,
+      "ready": "port",
+      "deadline_s": 30
     }
   },
   "pid_file": "tools/pb/.launch.pid.json",

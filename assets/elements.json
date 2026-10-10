@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "species": [
+    {"key": "H",  "name": "Hydrogen",       "symbol": "H",  "a": 1,  "z": 1,  "paintable": true,  "color": "#7FB2FF"},
+    {"key": "He", "name": "Helium",         "symbol": "He", "a": 4,  "z": 2,  "paintable": true,  "color": "#FFE38A"},
+    {"key": "C",  "name": "Carbon",         "symbol": "C",  "a": 12, "z": 6,  "paintable": true,  "color": "#9E9E9E"},
+    {"key": "O",  "name": "Oxygen",         "symbol": "O",  "a": 16, "z": 8,  "paintable": true,  "color": "#6BE3C9"},
+    {"key": "Ne", "name": "Neon",           "symbol": "Ne", "a": 20, "z": 10, "paintable": true,  "color": "#FF6FAE"},
+    {"key": "Mg", "name": "Magnesium",      "symbol": "Mg", "a": 24, "z": 12, "paintable": true,  "color": "#B58CFF"},
+    {"key": "Si", "name": "Silicon",        "symbol": "Si", "a": 28, "z": 14, "paintable": true,  "color": "#D8B27A"},
+    {"key": "S",  "name": "Sulfur",         "symbol": "S",  "a": 32, "z": 16, "paintable": true,  "color": "#F2E14C"},
+    {"key": "Fe", "name": "Iron",           "symbol": "Fe", "a": 56, "z": 26, "paintable": true,  "color": "#D9572B"},
+    {"key": "n",  "name": "Neutron matter", "symbol": "n",  "a": 1,  "z": 0,  "paintable": false, "color": "#FFFFFF"}
+  ]
+}

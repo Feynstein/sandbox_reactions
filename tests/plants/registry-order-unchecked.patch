@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/registry.rs
++++ b/crates/sr-physics/src/registry.rs
+@@ -372,7 +372,7 @@
+         if t_he <= t_h {
+             return physics_err("t_he", format!("must be > t_h = {t_h} (K6), got {t_he}"));
+         }
+-        if t_c <= t_he {
++        if false && t_c <= t_he { // planted: T_He > T_C is accepted
+             return physics_err("t_c", format!("must be > t_he = {t_he} (K6), got {t_c}"));
+         }
+         if t_ne <= t_c {

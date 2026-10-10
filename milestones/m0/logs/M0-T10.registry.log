@@ -1,0 +1,57 @@
+== 2026-10-10T09:03:42-04:00 registry · task M0-T10 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=0 · 0.70 s
+    Finished `release` profile [optimized] target(s) in 0.18s
+     Running unittests src\lib.rs (build/target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 16 tests
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+== 2026-10-10T09:04:54-04:00 registry · task M0-T10 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=0 · 5.02 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 4.31s
+     Running unittests src\lib.rs (build/target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 16 tests
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+

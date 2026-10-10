@@ -1,0 +1,94 @@
+==== 2026-10-10T10:14:36-04:00 strings · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:14:36-04:00 strings · task M0-T15b · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 42.17 s
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-94gmuo3s\arm0\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-94gmuo3s\arm0\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 14.12s
+     Running tests\strings.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\strings-801f126b789da6f8.exe)
+
+running 3 tests
+test web_texts_verbatim_in_index_html ... ok
+test same_keys_both_ways ... ok
+test texts_byte_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+==== 2026-10-10T10:15:21-04:00 strings · plant string-typo · a fresh scratch copy of the tree
+planted string-typo: tests/plants/string-typo.patch -> crates/sr-app/src/strings.rs
+== 2026-10-10T10:15:21-04:00 strings · task M0-T15b · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=101 · 16.11 s
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-94gmuo3s\arm1\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-94gmuo3s\arm1\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 8.11s
+     Running tests\strings.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\strings-801f126b789da6f8.exe)
+
+running 3 tests
+test web_texts_verbatim_in_index_html ... ok
+test same_keys_both_ways ... ok
+test texts_byte_identical ... FAILED
+
+failures:
+
+---- texts_byte_identical stdout ----
+
+thread 'texts_byte_identical' (32760) panicked at crates\sr-app\tests\strings.rs:83:5:
+texts that differ from §4.1:
+stage.supernova: STRINGS "Supernoba" ([53, 75, 70, 65, 72, 6e, 6f, 62, 61]), §4.1 "Supernova" ([53, 75, 70, 65, 72, 6e, 6f, 76, 61])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    texts_byte_identical
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p sr-app --test strings`
+
+==== 2026-10-10T10:15:49-04:00 strings · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:15:49-04:00 strings · task M0-T15b · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 32.53 s
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nm0nxv15\arm0\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nm0nxv15\arm0\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 16.87s
+     Running tests\strings.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\strings-801f126b789da6f8.exe)
+
+running 3 tests
+test web_texts_verbatim_in_index_html ... ok
+test texts_byte_identical ... ok
+test same_keys_both_ways ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+
+==== 2026-10-10T10:16:24-04:00 strings · plant string-typo · a fresh scratch copy of the tree
+planted string-typo: tests/plants/string-typo.patch -> crates/sr-app/src/strings.rs
+== 2026-10-10T10:16:25-04:00 strings · task M0-T15b · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=101 · 29.39 s
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nm0nxv15\arm1\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nm0nxv15\arm1\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 8.62s
+     Running tests\strings.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\strings-801f126b789da6f8.exe)
+
+running 3 tests
+test same_keys_both_ways ... ok
+test web_texts_verbatim_in_index_html ... ok
+test texts_byte_identical ... FAILED
+
+failures:
+
+---- texts_byte_identical stdout ----
+
+thread 'texts_byte_identical' (5476) panicked at crates\sr-app\tests\strings.rs:83:5:
+texts that differ from §4.1:
+stage.supernova: STRINGS "Supernoba" ([53, 75, 70, 65, 72, 6e, 6f, 62, 61]), §4.1 "Supernova" ([53, 75, 70, 65, 72, 6e, 6f, 76, 61])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    texts_byte_identical
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p sr-app --test strings`
+

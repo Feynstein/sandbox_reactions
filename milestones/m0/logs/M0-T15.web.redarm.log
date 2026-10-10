@@ -1,0 +1,106 @@
+==== 2026-10-10T09:55:59-04:00 web · clean · a fresh scratch copy of the tree
+== 2026-10-10T09:56:00-04:00 web[build] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T09:56:00-04:00 web[ready] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T09:56:00-04:00 web[no-webgpu] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[ready] · exit=0 · 227.64 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1yz3y4dg\arm0\milestones\m0\logs\M0-T15.launch.web.log)
+services: 1, ready: 1
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+ready: srState "ready" after 1.4 s
+=== GO ===
+
+-- web[no-webgpu] · exit=0 · 238.72 s
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1yz3y4dg\arm0\milestones\m0\logs\M0-T15.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+no-webgpu: srState "no-webgpu" after 0.1 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[build] · exit=0 · 275.08 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+
+==== 2026-10-10T10:00:36-04:00 web · plant web-no-gpu-check · a fresh scratch copy of the tree
+planted web-no-gpu-check: tests/plants/web-no-gpu-check.patch -> web/index.html
+== 2026-10-10T10:00:36-04:00 web[build] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:00:36-04:00 web[ready] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:00:36-04:00 web[no-webgpu] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 34.56 s
+web build: index.html has no navigator.gpu check
+=== NO-GO: index.html has no navigator.gpu check ===
+
+-- web[ready] · exit=1 · 64.22 s
+web ready: index.html has no navigator.gpu check
+=== NO-GO: index.html has no navigator.gpu check ===
+
+-- web[no-webgpu] · exit=1 · 92.64 s
+web no-webgpu: index.html has no navigator.gpu check
+=== NO-GO: index.html has no navigator.gpu check ===
+
+==== 2026-10-10T10:02:10-04:00 web · plant web-autoload · a fresh scratch copy of the tree
+planted web-autoload: tests/plants/web-autoload.patch -> web/Trunk.toml
+== 2026-10-10T10:02:11-04:00 web[build] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:02:11-04:00 web[ready] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:02:11-04:00 web[no-webgpu] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=1 · 29.72 s
+web no-webgpu: trunk's auto-loader or preload for the wasm is still in index.html
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html ===
+
+-- web[build] · exit=1 · 57.84 s
+web build: trunk's auto-loader or preload for the wasm is still in index.html
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html ===
+
+-- web[ready] · exit=1 · 88.39 s
+web ready: trunk's auto-loader or preload for the wasm is still in index.html
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html ===
+
+==== 2026-10-10T10:03:40-04:00 web · plant never-ready · a fresh scratch copy of the tree
+planted never-ready: tests/plants/never-ready.patch -> crates/sr-app/src/web.rs
+== 2026-10-10T10:03:40-04:00 web[build] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:03:40-04:00 web[no-webgpu] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:03:40-04:00 web[ready] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=0 · 52.20 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1yz3y4dg\arm3\milestones\m0\logs\M0-T15.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+no-webgpu: srState "no-webgpu" after 0.1 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[build] · exit=0 · 87.23 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+
+-- web[ready] · exit=1 · 127.50 s
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1yz3y4dg\arm3\milestones\m0\logs\M0-T15.launch.web.log)
+services: 1, ready: 1
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+=== NO-GO: ready: srState is "loading" after 30 s; never ready - console.error: Failed to load resource: the server responded with a status of 404 (File not found) ===
+
+==== 2026-10-10T10:10:06-04:00 web · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:10:07-04:00 web[build] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:10:07-04:00 web[ready] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:10:07-04:00 web[no-webgpu] · task M0-T15 · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 38.28 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+
+-- web[no-webgpu] · exit=0 · 82.81 s
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-ei9rzsnt\arm0\milestones\m0\logs\M0-T15.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+no-webgpu: srState "no-webgpu" after 0.1 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[ready] · exit=1 · 123.45 s
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-ei9rzsnt\arm0\milestones\m0\logs\M0-T15.launch.web.log)
+services: 1, ready: 1
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+=== NO-GO: ready: srState is "loading" after 30 s; never ready - console.error: Failed to load resource: the server responded with a status of 404 (File not found) ===
+

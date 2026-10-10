@@ -2240,6 +2240,9 @@ dependencies = [
 [[package]]
 name = "sr-physics"
 version = "0.0.0"
+dependencies = [
+ "serde_json",
+]
 
 [[package]]
 name = "static_assertions"

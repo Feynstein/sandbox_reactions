@@ -1,0 +1,11 @@
+--- a/crates/sr-app/src/web.rs
++++ b/crates/sr-app/src/web.rs
+@@ -34,7 +34,7 @@
+     if body().is_some_and(|b| b.dataset().get("srState").as_deref() == Some("error")) {
+         return;
+     }
+-    set_data("srState", "ready");
++    // plant never-ready (G-WEB, M0-T15): srState is never set to "ready"
+     if let Some(line) = web_sys::window().and_then(|w| w.document()).and_then(|d| d.get_element_by_id(LOADING_ID)) {
+         let _ = line.set_attribute("hidden", "");
+     }

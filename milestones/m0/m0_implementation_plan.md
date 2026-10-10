@@ -74,12 +74,12 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D16 | BUILD | tools_selftest[capture_web] native crash on win-laptop | AFTER M0-D15 | DONE (2026-10-10 08:49) |
 | M0-D12 | BUILD | Lot 1's docs name an adapter wgpu does not list, restate contract numbers and carry a pre-lot-1 loop line | AFTER M0-D11 | DONE (2026-10-09 18:27) |
 | M0-D13 | BUILD | The boot scope deletes the summary.json it grades: a V cannot read what G-BOOT checked | AFTER M0-D12 | DONE (2026-10-10 08:56) |
-| M0-T10 | BUILD | Sandbox units and the element and constant registries | AFTER M0-V1 | TODO |
-| M0-T11 | BUILD | The reaction registry: ten records, shares conserving mass | AFTER M0-T10 | TODO |
-| M0-T12 | BUILD | The equation of state: ideal gas, cold pressure, the u(x) table | AFTER M0-T11 | TODO |
-| M0-T13 | BUILD | The string table and its check (G-STR) | AFTER M0-T12 | TODO |
-| M0-T14 | BUILD | The licence gate (G-LIC) | AFTER M0-T13 | TODO |
-| M0-T15 | BUILD | The web smoke in headless Chrome (G-WEB, first cases) | AFTER M0-T14 | TODO |
+| M0-T10 | BUILD | Sandbox units and the element and constant registries | AFTER M0-V1 | DONE (2026-10-10 09:04) |
+| M0-T11 | BUILD | The reaction registry: ten records, shares conserving mass | AFTER M0-T10 | DONE (2026-10-10 09:13) |
+| M0-T12 | BUILD | The equation of state: ideal gas, cold pressure, the u(x) table | AFTER M0-T11 | DONE (2026-10-10 09:24) |
+| M0-T13 | BUILD | The string table and its check (G-STR) | AFTER M0-T12 | DONE (2026-10-10 09:32) |
+| M0-T14 | BUILD | The licence gate (G-LIC) | AFTER M0-T13 | DONE (2026-10-10 09:49) |
+| M0-T15 | BUILD | The web smoke in headless Chrome (G-WEB, first cases) | AFTER M0-T14 | IN PROGRESS (awaiting: the lead's commit of the open gates, then --redarm web and the claim) |
 | M0-T16 | BUILD | Labels watch, never drive: the static scan (G-WATCH) | AFTER M0-T15 | TODO |
 | M0-T17 | BUILD | Docs: physics.md (units, registries, EOS), lot 2's testing rows | AFTER M0-T16 | TODO |
 | M0-V2 | CHECK | Validation, lot 2: registries, EOS, strings, licences, web smoke, scan | AFTER M0-T17 | TODO |
@@ -261,6 +261,9 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
 - Contract §1.2's text "Features: eframe `wgpu`" (FROZEN, Q5) — superseded by contract §0.5 [M0-T5]: eframe
   `wgpu_no_default_features`, because `wgpu` re-enables wgpu's webgl and gles through egui-wgpu's defaults (the lead,
   2026-10-09, M0-T5: «wgpu_no_default_features (Recommended)»).
+- Contract §5.4's G-LIC list ("a missing licence or any other … is NO-GO") — superseded by contract §0.5 [M0-T14]: one named
+  exception, `epaint_default_fonts` with exactly `(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0` (bundled fonts; the lead,
+  2026-10-10, M0-T14: «Named exception (Recommended)»).
 Inherited debt (§2.4): none.
 
 ## Repo facts (so you don't explore)
@@ -393,7 +396,7 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-T10
+- Next task: M0-T15
 - Counters: T=116 · D=16 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=1 · TD=1 · TE=1
 - Open D/BLOCKED register: M0-D10 · scope paths leave out inputs (--changed skips G-BOOT on a headless.rs edit; Cargo.lock reruns build only) · its manifest fix · M0-D11 · --out first and --help after a flag read « unknown argument » · its main.rs fix — none blocks M0-T10
 - Outstanding commit gates: Phase 2b (M0-TE-win, M0-D2..D8, M0-TJ3) — the lead's, from the repo root (the gate under M0-D8) · Phase 3 (M0-T1 … M0-V1, then M0-TC1 and M0-D10–D13 that M0-V1 filed) — the gate under M0-D13, its text still « closes after M0-V1 »
@@ -757,7 +760,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 # Phase 4 — Lot 2 · the registries, the equation of state and the guards
 
 ## M0-T10 · Sandbox units and the element and constant registries · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V1)
-- Status: TODO
+- Status: DONE (2026-10-10 09:04)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.5, §1.6.4 (the stand-ins'
   switches), §2.1, §2.5.1, §2.7 + docs/agent/testing.md
 - Deliver: assets/elements.json (new): §1.5's ten species in order, verbatim, assets/physics.json (new):
@@ -775,10 +778,11 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   Fail: the plant stays GO
 - Adversarial: a bound checked with ≤ where the contract writes < (T_H < T_He) passes every initial value
   — the edge cases sit exactly on each bound.
-- Handoff: <placeholder>
+- Handoff: win-laptop (Laser2025-20), model=claude-sonnet-5-5 level=high (rung_record). assets/elements.json (§1.5 verbatim) + assets/physics.json (52 keys, §2.5.1 + §2.7 initial values, flat object; spellings in tasks/M0-T10.md) embedded and validated by sr-physics registry.rs (Elements, Physics, Standins, composition → 1/mu, Y_e, Z_met) and units.rs (M0 = 2πΣc a²/3 = 3351.03); tests/cpu.sh is the CPU scopes' runner. Verify 1 [ALREADY RUN — PASS (GO, 16/16, 0.7 s) on win-laptop]; Verify 2 [ALREADY RUN — PASS (clean GO, plant registry-order-unchecked red, 11.7 s) on win-laptop]; claim --changed --base 8484a25 [ALREADY RUN — PASS (GO, 539 passed, 9/9 scopes, 50 s) on win-laptop], logs/M0-T10.changed.log; its 2 oracle FLAGs name tests/cpu.sh and verify.json — the scope's own runner and manifest entry the Deliver's 'scope registry' implies. Declared (cheap to reverse): each K pair on-or-off (K's = 0 is a test scene's legal override, so Σ_N and m_tov/m_ch bounds apply only while on); m_nu < every nu_*; sanity classes (finite, >0, >=0) where the table says nothing; elements pinned to the ten. Not checked: c_sb > 2 max_gas_speed (needs calibration, G-CAL). Cargo.lock regenerated offline (sr-physics + serde_json, approved). Owed: testing.md rows (lot 2's docs block, R11); [NOT RUN — owed on linux-pc] scope registry. Next: M0-T11.
 
 ## M0-T11 · The reaction registry · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T10)
-- Status: TODO
+- Status: DONE (2026-10-10 09:13)
+- Carried flags: [M0-T10, 2026-10-10] The registry scope already holds 16 cases (M0-T10: elements, physics bounds, composition, units) and verify.json says expected 16 — your record cases are added on top: raise expected to 16 + yours so fewer-than-promised stays NO-GO. physics.json keys your t_key resolves to are t_h t_he t_c t_ne t_o t_si (tasks/M0-T10.md); registry.rs already has RegistryError {file, key, message} and Elements::index_of. The CPU runner is tests/cpu.sh; the Verify's >= 16 is met by T10 alone, so count only your new cases.
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.1–§1.6.4, §2.5.1 +
   docs/agent/testing.md
 - Deliver: assets/reactions.json (new): §1.6.2's ten records verbatim — ids, groups, shares, q ratios,
@@ -793,10 +797,10 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   · Fail: a plant stays GO
 - Adversarial: shares that sum to 1 in decimal but not in f64 (0.7 + 0.3) — the check states its
   tolerance (10⁻¹²) and a record off by 10⁻⁶ is refused.
-- Handoff: <placeholder>
+- Handoff: win-laptop (Laser2025-20), model=claude-sonnet-5-5 level=high (rung_record). assets/reactions.json (§1.6.2's ten records, {version, records}) parsed and validated by sr-physics registry.rs: Reactions/Record/RateLaw, keys resolved against species and physics.json (A via a_coef key, ν a number or a key, T_k, Σ_g), shares summing to 1 within 1e-12 per side, ν ≥ 4, stand-in must be disabled, every refusal key records[<id>].<field>; Registry::load carries them. Verify 1 [ALREADY RUN — PASS (GO, 29/29) on win-laptop]; Verify 2 [ALREADY RUN — PASS (clean GO, both plants red: order 1 failed, shares 2 failed) on win-laptop]; claim --changed --base 8484a25 [ALREADY RUN — PASS (GO, 552 passed, 9/9 scopes, 52 s) on win-laptop], per-scope logs/M0-T11.<scope>.log; its 3 oracle FLAGs name tests/cpu.sh, M0-T10's plant and verify.json (this scope's entry: expected 16 → 29, reactions.json in paths). Declared (cheap to reverse; tasks/M0-T11.md): a_coef is a physics.json key; term ν number-or-key, checked ≥ 4 on every term; T_thr = t_thr_factor × first term's T_k, N_Fe = terms [] with t_thr_factor null; group one of the seven accumulators. Owed: testing.md registry row (lot 2 docs block, R11); [NOT RUN — owed on linux-pc] scope registry. Next: M0-T12.
 
 ## M0-T12 · The equation of state · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T11)
-- Status: TODO
+- Status: DONE (2026-10-10 09:24)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.5 (μ, Y_e), §2.3.1–§2.3.3 +
   docs/agent/testing.md
 - Deliver: crates/sr-physics/src/eos.rs (new): Π_th = Σε_th and T = μ ε_th (γ = 2), the cold pressure
@@ -812,10 +816,10 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   plant stays GO
 - Adversarial: a table accurate at its nodes and wrong between them — the interpolation case samples
   midpoints; u(x)'s integral diverging at x → 0 — the low end checked against the x² limit.
-- Handoff: <placeholder>
+- Handoff: eos.rs: Π_th=Σε_th, T=με_th, P(x;K₁,K₂), ColdTable (512 pts, 1e-8..1e8, log-log, built by quadrature, closed form is the oracle), ε_cold, ε_th from E floored at T_floor/μ with floor_added, c²=2Π/Σ, K=0 → none; scope eos 13/0/0 GO, plant eos-exponent RED (7 failed), claim --changed --base 8484a25 GO 564 passed 10/10 on win-laptop Laser2025-20. Deviation (declared, tasks/M0-T12.md): u's 1e-4 closeness to 2K₂x^{3/2} holds only where the blend has converged (shipped electrons at 1e8 are 4.6e-3 off), so the table's high end is tested with a K2≪K1 pair and the shipped pairs beyond the table; interpolation worst 3.55e-5. Owed: testing.md rows (eos, registry), eos on linux-pc. Ran model=claude-sonnet-5-5 level=high. Next: M0-T13
 
 ## M0-T13 · The string table and its check (G-STR) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T12)
-- Status: TODO
+- Status: DONE (2026-10-10 09:32)
 - Carried flags: [M0-TB, 2026-10-08] sr-app is bin-only (R11: its unit tests run with --bin sandbox-reactions), so crates/sr-app/tests/strings.rs cannot use the bin's modules — include src/strings.rs by #[path], or make the check a unit test in strings.rs; the scope's command and paths follow the choice
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §4.1, §5.4 (G-STR) +
   docs/agent/testing.md
@@ -832,10 +836,10 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Adversarial: a check that compares keys only lets a changed text through — the plant edits one
   character of a text, not a key; ×, —, ≈, ·, … in other code points (§4.1) — byte comparison, not a
   normalised one.
-- Handoff: <placeholder>
+- Handoff: strings.rs: STRINGS = §4.1's 117 rows byte-identical (generated from the contract block) + get(key); the desktop title now reads get("app.title") (APP_TITLE gone). tests/strings.rs includes strings.rs by #[path] (sr-app is bin-only; the carried flag's first option) — 3 cases: same keys both ways, texts byte-identical, web.* verbatim in web/index.html. Scope strings 3/0/0 GO [ALREADY RUN — PASS on win-laptop Laser2025-20]; plant string-typo (stage.supernova: Supernova→Supernoba) RED 1 failed under --redarm; claim --changed --base 8484a25 GO 566 passed 11/11 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. Deviations: tests/cpu.sh gained a '<crate> --test <file>' form (the scope's command); verify.json skip-class reason reworded (the contract leaves the class via the scope's paths). Owed: testing.md row (strings; the docs block, as eos/registry), strings on linux-pc. Ran model=claude-sonnet-5-5 level=high per rung_record. Next: M0-T14
 
 ## M0-T14 · The licence gate (G-LIC) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T13)
-- Status: TODO
+- Status: DONE (2026-10-10 09:49)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.2, §5.4 (G-LIC) +
   milestones/m0/reports/contract_rulings.md §2 (the approved table) + docs/agent/testing.md
 - Deliver: tests/licences/check.py (new, standard library): `cargo metadata --format-version 1` over the
@@ -852,10 +856,11 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   the plant stays GO
 - Adversarial: "MIT AND GPL-3.0" read as acceptable because MIT is listed — AND needs every term, OR
   one; a target-specific dependency missed by a host-only metadata call — the wasm32 case.
-- Handoff: <placeholder>
+- Handoff: tests/licences/check.py (stdlib): cargo metadata --locked --filter-platform <host|wasm32> over resolve.nodes, SPDX parser (OR/AND/WITH, '/'=OR, only 'Apache-2.0 WITH LLVM-exception' passes WITH), its fixed-expression checks run first in each case ('MIT AND GPL-3.0' refused); scope licences (cargo-native 164 pkgs, cargo-wasm32 143 pkgs) in verify.json; plant gpl-dep.patch. Verify 1 scope licences 2/0/0 GO [ALREADY RUN — PASS on win-laptop Laser2025-20]; Verify 2 --redarm licences GO, plant RED (_gpl-dep refused) [ALREADY RUN — PASS on win-laptop Laser2025-20]; claim --changed --base 8484a25 GO 567 passed 12/12 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. ASKED + RULED: epaint_default_fonts 0.36.2 (eframe default_fonts; bundled fonts) is '(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0' — the lead: «Named exception (Recommended)» → exact-match EXCEPTIONS entry in check.py, override line in contract §0.5 [M0-T14] + mirror in Superseded. Deviations: a workspace member with no licence is counted not refused (publish=false; one declaring GPL is refused); the npm path ('check.py npm', walks npm ls + node_modules/*/package.json) is NOT PROVEN (synthetic fixture only, no web/package.json) — M0-T15 adds its scope case and must run it. Owed: testing.md row for licences (docs block, as eos/registry/strings); both cases on linux-pc. Ran model=claude-sonnet-5-5 level=high per rung_record. Next: M0-T15
 
-## M0-T15 · The web smoke (G-WEB, first cases) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T14)
-- Status: TODO
+## M0-T15 · The web smoke (G-WEB, first cases) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T14)
+- Status: IN PROGRESS (awaiting: the lead's commit of the open gates, then --redarm web and the claim)
+- Carried flags: [M0-T15, 2026-10-10] Try 1 (Sonnet 5.5, high; win-laptop Laser2025-20) ended by its first NO-GO claim run; the work is in the tree, detail tasks/M0-T15.md. Built: web/package.json (playwright-core 1.64.0) + lock, web/smoke.mjs (cases ready, no-webgpu; logs SR-ADAPTER and SR-CHROME-ADAPTER — wgpu on the web reads no GPU name, Chrome's own reads nvidia/lovelace, fallback=false), launch.json `web`, tests/web/check.sh cases ready/no-webgpu (port lock, fresh-dist stamp), verify.json web 3 cases + plant never-ready (tests/plants/never-ready.patch), licences + case npm (check.py runs npm ci when node_modules is absent), testing.md web row. Verify 1 `verify.py web` GO 3/0/0, Verify 2 `licences` GO 3/0/0, Verify 3 `--redarm web` GO (3 plants red, 590 s) [ALREADY RUN — PASS on win-laptop]. Claim `py -3.12 tools/pb/verify.py --changed --base 8484a25 --task M0-T15` NO-GO [ALREADY RUN — FAIL on win-laptop]: 569 passed, 12/12 scopes GO, then its red-arm `web: clean` failed — web[ready] « srState is "loading" after 30 s » (+ a console 404), logs/M0-T15.web.redarm.log; not reproduced in 17 later tries, idle and under load — unexplained (GPU/CPU contention with the parallel red-arms, or a first-frame stall); smoke.mjs now lists console, failed-request and HTTP ≥ 400 lines on a timeout. Re-try: keep the tree, run the claim once on a fresh id (M0-T15-r2); on a second red read the new diagnostic lines before changing anything; the claim's web arms take ≈ 8–10 min on win-laptop — at the 10-minute line, so measure and, past it, hand the run to the lead. Owed: web and licences npm on linux-pc.
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.2, §3.4 (web), §3.5, §3.6 (web),
   §5.4 (G-WEB), §6.2.3 + docs/agent/testing.md
 - Deliver: web/package.json (new: playwright-core 1.64.0) and web/package-lock.json (generated) →

@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/registry.rs
++++ b/crates/sr-physics/src/registry.rs
+@@ -600,7 +600,7 @@
+         shares.push(Share { species, share });
+     }
+     let sum: f64 = shares.iter().map(|s| s.share).sum();
+-    if (sum - 1.0).abs() > SHARE_TOLERANCE {
++    if false && (sum - 1.0).abs() > SHARE_TOLERANCE { // planted: shares that do not sum to 1 are accepted
+         let why = format!("shares must sum to 1 within {SHARE_TOLERANCE:e} (mass conserved per record, §1.6.1), got {sum:.17}");
+         return reaction_err(at(field), &why);
+     }

@@ -6,6 +6,7 @@ mod capture;
 mod desktop;
 #[cfg(not(target_arch = "wasm32"))]
 mod status;
+mod strings;
 #[cfg(target_arch = "wasm32")]
 mod web;
 

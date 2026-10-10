@@ -12,14 +12,18 @@ _sr_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export PATH="$HOME/.cargo/bin:$PATH"
 if [ -e "$_sr_root/.git" ]; then
   unset CARGO_TARGET_DIR
+  sr_in_shared_target() { "$@"; }
 else
   export CARGO_TARGET_DIR="$HOME/.cache/sandbox-reactions/redarm-target"
   # M0-D9: cargo's freshness is mtime-based and the copy keeps each file's mtime, so a build another arm left in the
   # shared target looks fresh here (a clean arm ran the plant's binary). Every cargo call in a copy therefore takes
   # the shared target's lock, touches the workspace's inputs — later than any build already there — and builds
-  # inside it; only the workspace's crates recompile, the dependencies stay cached.
+  # inside it; only the workspace's crates recompile, the dependencies stay cached. A tool that runs the cargo binary
+  # itself (trunk) bypasses the `cargo` function: it runs as `sr_in_shared_target <tool> ...` (M0-T15 — a clean web
+  # arm served the never-ready plant's wasm).
   _sr_lock="$CARGO_TARGET_DIR.lock"
-  cargo() {
+  cargo() { sr_in_shared_target command cargo "$@"; }
+  sr_in_shared_target() {
     mkdir -p "${CARGO_TARGET_DIR%/*}"
     (
       if command -v flock >/dev/null 2>&1; then
@@ -36,7 +40,7 @@ else
       local p; for p in crates assets scenes Cargo.toml Cargo.lock .cargo; do
         [ -e "$_sr_root/$p" ] && find "$_sr_root/$p" -type f -exec touch {} +
       done
-      command cargo "$@"
+      "$@"
     )
   }
 fi

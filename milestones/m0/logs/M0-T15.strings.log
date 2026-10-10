@@ -1,0 +1,18 @@
+== 2026-10-10T10:06:09-04:00 strings · task M0-T15 · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 3.80 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 3.05s
+     Running tests\strings.rs (build/target\release\deps\strings-801f126b789da6f8.exe)
+
+running 3 tests
+test texts_byte_identical ... ok
+test same_keys_both_ways ... ok
+test web_texts_verbatim_in_index_html ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+

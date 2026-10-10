@@ -1,0 +1,24 @@
+== 2026-10-10T09:47:20-04:00 licences[cargo-native] · task M0-T14 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+== 2026-10-10T09:47:20-04:00 licences[cargo-wasm32] · task M0-T14 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+-- licences[cargo-wasm32] · exit=0 · 0.78 s
+EXCEPTION epaint_default_fonts 0.36.2: (MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 (named, M0-T14)
+cargo-wasm32 (wasm32-unknown-unknown): 143 packages (3 workspace members), 0 refused
+=== GO ===
+
+-- licences[cargo-native] · exit=0 · 0.97 s
+EXCEPTION epaint_default_fonts 0.36.2: (MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 (named, M0-T14)
+cargo-native (x86_64-pc-windows-msvc): 164 packages (3 workspace members), 0 refused
+=== GO ===
+
+== 2026-10-10T09:47:57-04:00 licences[cargo-native] · task M0-T14 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+== 2026-10-10T09:47:59-04:00 licences[cargo-wasm32] · task M0-T14 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+-- licences[cargo-native] · exit=0 · 5.23 s
+EXCEPTION epaint_default_fonts 0.36.2: (MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 (named, M0-T14)
+cargo-native (x86_64-pc-windows-msvc): 164 packages (3 workspace members), 0 refused
+=== GO ===
+
+-- licences[cargo-wasm32] · exit=0 · 4.25 s
+EXCEPTION epaint_default_fonts 0.36.2: (MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 (named, M0-T14)
+cargo-wasm32 (wasm32-unknown-unknown): 143 packages (3 workspace members), 0 refused
+=== GO ===
+

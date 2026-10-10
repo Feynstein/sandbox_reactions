@@ -1,0 +1,9 @@
+{
+  "name": "sandbox-reactions-web",
+  "private": true,
+  "description": "The web smoke's one dependency (m0_contrat.md §1.2, §6.2.3): playwright-core drives the installed Chrome; no browser is downloaded.",
+  "type": "module",
+  "devDependencies": {
+    "playwright-core": "1.64.0"
+  }
+}

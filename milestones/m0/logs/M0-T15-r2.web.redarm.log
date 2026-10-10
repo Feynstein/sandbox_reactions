@@ -1,0 +1,23 @@
+==== 2026-10-10T10:24:03-04:00 web · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:24:04-04:00 web[build] · task M0-T15-r2 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:24:04-04:00 web[ready] · task M0-T15-r2 · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-10T10:24:04-04:00 web[no-webgpu] · task M0-T15-r2 · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 68.12 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-xcfhncnv\arm0\milestones\m0\logs\M0-T15-r2.launch.web.log)
+services: 1, ready: 1
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+=== NO-GO: ready: srState is "loading" after 30 s; never ready - console.warning: The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 | console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 ===
+
+-- web[no-webgpu] · exit=0 · 78.05 s
+web: ready on port 47812, 0.5s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-xcfhncnv\arm0\milestones\m0\logs\M0-T15-r2.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: C:\Program Files\Google\Chrome\Application\chrome.exe (154.0.8037.99) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+no-webgpu: srState "no-webgpu" after 0.1 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[build] · exit=0 · 108.11 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+

@@ -103,8 +103,91 @@
         }
       ]
     },
+    "registry": {
+      "desc": "the element, constant and reaction registries and the sandbox units (contract §1.5, §1.6, §2.1, §2.5.1, §2.7): elements.json's ten species verbatim and in order, physics.json's constants at their initial values, every bound at its edge (the ignition ladder, T_Si/T_H, Σ_N, ν, f_dep, κ_dust, the K pairs), each refusal naming its key, 1/μ, Y_e and Z_met of the solar mix against hand values, M0 = 2πΣc a²/3 (M0-T10); reactions.json's ten records verbatim, shares summing to 1 within 1e-12, keys resolving, ν ≥ 4, stand-ins disabled, each refusal naming its record (M0-T11)",
+      "cmd": "bash tests/cpu.sh sr-physics registry",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 29,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "assets/elements.json",
+        "assets/physics.json",
+        "assets/reactions.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/registry-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "registry-order-unchecked",
+          "patch": "tests/plants/registry-order-unchecked.patch"
+        },
+        {
+          "id": "registry-shares-unchecked",
+          "patch": "tests/plants/registry-shares-unchecked.patch"
+        }
+      ]
+    },
+    "eos": {
+      "desc": "the equation of state (contract §2.3.1-§2.3.3, §2.7): Π_th = Σε_th and T = με_th, the cold pressure P(x; K₁, K₂)'s two limits within 1e-6, u(x) = x∫P/s² tabulated on 512 log-spaced points over [1e-8, 1e8] and checked against the integral in closed form at the nodes, against both limits' closed forms, and between nodes within 1e-4 (the log-log interpolation), monotone, finite at the low end, K = 0 meaning no cold pressure, ε_th from E floored at T_floor/μ with the floor booked, c² = 2Π/Σ (M0-T12)",
+      "cmd": "bash tests/cpu.sh sr-physics eos",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 13,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/eos-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "eos-exponent",
+          "patch": "tests/plants/eos-exponent.patch"
+        }
+      ]
+    },
+    "strings": {
+      "desc": "the string table (contract §4.1, §5.4 G-STR): crates/sr-app/src/strings.rs and the contract's `strings` block hold the same keys, each way, with byte-identical texts (× — ≈ · … compared as bytes), and web/index.html carries each web.* text verbatim; the test includes strings.rs by #[path] because sr-app is bin-only (M0-T13)",
+      "cmd": "bash tests/cpu.sh sr-app --test strings",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 3,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/tests/strings.rs",
+        "web/index.html",
+        "milestones/m0/m0_contrat.md",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/string-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "string-typo",
+          "patch": "tests/plants/string-typo.patch"
+        }
+      ]
+    },
     "adapter": {
-      "desc": "the GPU adapter choice (contract \u00a76.1-\u00a76.3, \u00a76.2.2): the matching rule on a fixed list, and a live headless device per adapter this box has, at WebGPU's default limits (M0-T2); box's adapters named in the log",
+      "desc": "the GPU adapter choice (contract §6.1-§6.3, §6.2.2): the matching rule on a fixed list, and a live headless device per adapter this box has, at WebGPU's default limits (M0-T2); box's adapters named in the log",
       "cmd": "bash tests/gpu.sh adapter",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
@@ -128,7 +211,7 @@
       ]
     },
     "state": {
-      "desc": "the cell state and the step loop (contract \u00a72.2, \u00a72.8, \u00a71.3.2, \u00a71.3.4): WorldConfig's sizes, a 600 \u00d7 400 upload/readback round trip bit-exact, P0-P9's order, P8's species renormalisation (\u03a3 X = 1 within 1e-6, other channels bit-identical), two runs bit-identical (M0-T3); on the physics adapter (R12, R15)",
+      "desc": "the cell state and the step loop (contract §2.2, §2.8, §1.3.2, §1.3.4): WorldConfig's sizes, a 600 × 400 upload/readback round trip bit-exact, P0-P9's order, P8's species renormalisation (Σ X = 1 within 1e-6, other channels bit-identical), two runs bit-identical (M0-T3); on the physics adapter (R12, R15)",
       "cmd": "bash tests/gpu.sh state physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
@@ -152,7 +235,7 @@
       ]
     },
     "boot": {
-      "desc": "the headless boot (contract \u00a73.3, \u00a73.4, \u00a75.4 G-BOOT): launch.py smoke of headless-boot is ready within 60 s and its summary.json carries every \u00a72.12.2 key with steps = 200; stdout opens with SR-ADAPTER and ends with SR-HEADLESS DONE steps=200 (M0-T4); the build is the tree's own",
+      "desc": "the headless boot (contract §3.3, §3.4, §5.4 G-BOOT): launch.py smoke of headless-boot is ready within 60 s and its summary.json carries every §2.12.2 key with steps = 200; stdout opens with SR-ADAPTER and ends with SR-HEADLESS DONE steps=200 (M0-T4); the build is the tree's own",
       "cmd": "bash tests/smoke.sh headless-boot",
       "expected": 1,
       "timeout_s": 900,
@@ -176,7 +259,7 @@
       ]
     },
     "desktop": {
-      "desc": "the desktop boot (contract \u00a73.3, \u00a73.4, \u00a73.6, \u00a75.4 G-DESK): launch.py smoke of the box's window route \u2014 game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) \u2014 reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); the build is the tree's own",
+      "desc": "the desktop boot (contract §3.3, §3.4, §3.6, §5.4 G-DESK): launch.py smoke of the box's window route — game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) — reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); the build is the tree's own",
       "cases": [
         "window",
         "launcher"
@@ -212,12 +295,14 @@
       ]
     },
     "web": {
-      "desc": "the web build (contract \u00a73.5, \u00a76.2.1, \u00a76.2.4, \u00a75.4 G-WEB, build half): trunk build --release writes web/dist with index.html, the .wasm and the wasm-bindgen glue; index.html keeps the canvas, the web.* texts and the inline WebGPU check ahead of the wasm, trunk's auto-loader stripped (M0-T7); the page in a browser is M0-T15's smoke",
+      "desc": "G-WEB (contract §3.5, §6.2.1, §6.2.4, §5.4, §6.2.3): case build - trunk build --release writes web/dist with index.html, the .wasm and the wasm-bindgen glue; index.html keeps the canvas, the web.* texts and the inline WebGPU check ahead of the wasm, trunk's auto-loader stripped (M0-T7); cases ready and no-webgpu - web/smoke.mjs drives the box's installed Chrome (playwright-core, headless, §6.2.3's flags) against the `web` service launch.py starts over web/dist (M0-T15): `/` reaches srState \"ready\" within 30 s and srAdapter is logged; `/?no-webgpu=1` shows srState \"no-webgpu\" and the three web.no_webgpu_* texts exactly. Each case builds first when web/dist is not fresh against its inputs",
       "cases": [
-        "build"
+        "build",
+        "ready",
+        "no-webgpu"
       ],
       "case_cmd": "bash tests/web/check.sh {case}",
-      "expected": 1,
+      "expected": 3,
       "timeout_s": 900,
       "paths": [
         "web/**",
@@ -229,7 +314,9 @@
         "rust-toolchain.toml",
         ".cargo/**",
         "tests/cargo.sh",
-        "tests/plants/web-*.patch"
+        "tests/plants/web-*.patch",
+        "tools/pb/launch.json",
+        "tests/plants/never-ready.patch"
       ],
       "plants": [
         {
@@ -239,11 +326,15 @@
         {
           "id": "web-autoload",
           "patch": "tests/plants/web-autoload.patch"
+        },
+        {
+          "id": "never-ready",
+          "patch": "tests/plants/never-ready.patch"
         }
       ]
     },
     "capture": {
-      "desc": "the capture harness, first form (contract \u00a73.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; the build is the tree's own",
+      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; the build is the tree's own",
       "cases": [
         "smoke",
         "refuse"
@@ -266,6 +357,31 @@
         {
           "id": "capture-no-captions",
           "patch": "tests/plants/capture-no-captions.patch"
+        }
+      ]
+    },
+    "licences": {
+      "desc": "G-LIC, no copyleft (contract §5.4, R7): `cargo metadata --locked --filter-platform <target>` over the workspace for the native host and for wasm32-unknown-unknown; every package the target resolves to has a licence expression with an alternative made only of §5.4's list (OR, AND, WITH parsed, `/` read as OR; one named exception, epaint_default_fonts, contract §0.5 [M0-T14]); a missing licence or any other is NO-GO naming the package. The parser's own fixed-expression checks run first in each case. `npm ls --all --json` in web/ is case `npm` (M0-T14, added with web/package.json by M0-T15)",
+      "cases": [
+        "cargo-native",
+        "cargo-wasm32",
+        "npm"
+      ],
+      "case_cmd": "{python} tests/licences/check.py {case}",
+      "expected": 3,
+      "timeout_s": 900,
+      "paths": [
+        "Cargo.toml",
+        "Cargo.lock",
+        "crates/*/Cargo.toml",
+        "web/package*.json",
+        "tests/licences/**",
+        "tests/plants/gpl-dep.patch"
+      ],
+      "plants": [
+        {
+          "id": "gpl-dep",
+          "patch": "tests/plants/gpl-dep.patch"
         }
       ]
     }
@@ -296,7 +412,7 @@
         "milestones/**",
         "docs/**"
       ],
-      "reason": "reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them"
+      "reason": "reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them"
     }
   ]
 }

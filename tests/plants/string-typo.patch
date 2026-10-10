@@ -1,0 +1,11 @@
+--- a/crates/sr-app/src/strings.rs
++++ b/crates/sr-app/src/strings.rs
+@@ -90,7 +90,7 @@
+     ("stage.si_burn", "Supergiant: burning silicon"),
+     ("stage.iron_core", "Supergiant: iron core"),
+     ("stage.core_collapse", "Core collapse"),
+-    ("stage.supernova", "Supernova"),
++    ("stage.supernova", "Supernoba"),
+     ("stage.planetary_nebula", "Planetary nebula: shedding its shell"),
+     ("stage.white_dwarf", "White dwarf: cooling"),
+     ("stage.neutron_star", "Neutron star"),

@@ -1,0 +1,3 @@
+# M0-T13 | launch game-offscreen | 2026-10-10T09:30:45-0400
+$ build\target\release\sandbox-reactions.exe --status-port 47811 --offscreen-window
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA

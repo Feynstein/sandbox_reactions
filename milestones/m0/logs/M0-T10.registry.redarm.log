@@ -1,0 +1,140 @@
+==== 2026-10-10T09:03:48-04:00 registry · clean · a fresh scratch copy of the tree
+== 2026-10-10T09:03:49-04:00 registry · task M0-T10 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=0 · 4.75 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-9ia2yiv9\arm0\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 3.30s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 16 tests
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+==== 2026-10-10T09:03:54-04:00 registry · plant registry-order-unchecked · a fresh scratch copy of the tree
+planted registry-order-unchecked: tests/plants/registry-order-unchecked.patch -> crates/sr-physics/src/registry.rs
+== 2026-10-10T09:03:55-04:00 registry · task M0-T10 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=101 · 3.58 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-9ia2yiv9\arm1\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.26s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 16 tests
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... FAILED
+
+failures:
+
+---- registry::tests::ladder_is_strict_where_the_contract_says_less_than stdout ----
+
+thread 'registry::tests::ladder_is_strict_where_the_contract_says_less_than' (33956) panicked at crates\sr-physics\src\registry.rs:463:11:
+must be refused: Physics { values: {"a_c_alpha": 0.001, "a_c_burn": 0.001, "a_h_burn": 0.0005, "a_he_burn": 0.001, "a_mg_burn": 0.001, "a_n_fe": 0.001, "a_ne_burn": 0.001, "a_nu": 0.001, "a_o_burn": 0.001, "a_r": 4e-7, "a_s_burn": 0.001, "a_si_burn": 0.001, "block": 4.0, "burn_dt": 0.05, "burn_dx": 0.1, "c_sb": 200.0, "cfl": 0.4, "cool_factor": 0.95, "eta_g": 0.3, "f_dep": 0.05, "heat_factor": 1.05, "k1e": 21.3, "k1n": 2.67, "k2e": 134.0, "k2n": 58.2, "k_cond": 0.0, "kappa0": 1.0, "kappa_dust": 0.0, "m_nu": 8.0, "nu_c_burn": 30.0, "nu_mg_burn": 30.0, "nu_ne_burn": 30.0, "nu_o_burn": 30.0, "nu_s_burn": 30.0, "nu_si_burn": 30.0, "paint_sigma": 0.02, "paint_t": 2.0, "q_h": 8700.0, "sigma_bh": 4000.0, "sigma_floor": 1e-8, "sigma_n": 160.0, "sigma_obj": 0.001, "sigma_vac": 1e-6, "t_c": 140.0, "t_dust": 0.0, "t_floor": 0.05, "t_h": 100.0, "t_he": 140.0, "t_ne": 274.0, "t_nu": 166.0, "t_o": 300.0, "t_si": 420.0}, standins: Standins { s1: false, s2: false } }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    registry::tests::ladder_is_strict_where_the_contract_says_less_than
+
+test result: FAILED. 15 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-10T09:05:46-04:00 registry · clean · a fresh scratch copy of the tree
+== 2026-10-10T09:05:46-04:00 registry · task M0-T10 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=0 · 3.09 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-t_v55hpe\arm0\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.07s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 16 tests
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+==== 2026-10-10T09:05:50-04:00 registry · plant registry-order-unchecked · a fresh scratch copy of the tree
+planted registry-order-unchecked: tests/plants/registry-order-unchecked.patch -> crates/sr-physics/src/registry.rs
+== 2026-10-10T09:05:50-04:00 registry · task M0-T10 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=101 · 2.95 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-t_v55hpe\arm1\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 1.85s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 16 tests
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... FAILED
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+
+failures:
+
+---- registry::tests::ladder_is_strict_where_the_contract_says_less_than stdout ----
+
+thread 'registry::tests::ladder_is_strict_where_the_contract_says_less_than' (28256) panicked at crates\sr-physics\src\registry.rs:463:11:
+must be refused: Physics { values: {"a_c_alpha": 0.001, "a_c_burn": 0.001, "a_h_burn": 0.0005, "a_he_burn": 0.001, "a_mg_burn": 0.001, "a_n_fe": 0.001, "a_ne_burn": 0.001, "a_nu": 0.001, "a_o_burn": 0.001, "a_r": 4e-7, "a_s_burn": 0.001, "a_si_burn": 0.001, "block": 4.0, "burn_dt": 0.05, "burn_dx": 0.1, "c_sb": 200.0, "cfl": 0.4, "cool_factor": 0.95, "eta_g": 0.3, "f_dep": 0.05, "heat_factor": 1.05, "k1e": 21.3, "k1n": 2.67, "k2e": 134.0, "k2n": 58.2, "k_cond": 0.0, "kappa0": 1.0, "kappa_dust": 0.0, "m_nu": 8.0, "nu_c_burn": 30.0, "nu_mg_burn": 30.0, "nu_ne_burn": 30.0, "nu_o_burn": 30.0, "nu_s_burn": 30.0, "nu_si_burn": 30.0, "paint_sigma": 0.02, "paint_t": 2.0, "q_h": 8700.0, "sigma_bh": 4000.0, "sigma_floor": 1e-8, "sigma_n": 160.0, "sigma_obj": 0.001, "sigma_vac": 1e-6, "t_c": 140.0, "t_dust": 0.0, "t_floor": 0.05, "t_h": 100.0, "t_he": 140.0, "t_ne": 274.0, "t_nu": 166.0, "t_o": 300.0, "t_si": 420.0}, standins: Standins { s1: false, s2: false } }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    registry::tests::ladder_is_strict_where_the_contract_says_less_than
+
+test result: FAILED. 15 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

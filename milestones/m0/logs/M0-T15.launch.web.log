@@ -1,0 +1,42 @@
+# M0-T15 | launch web | 2026-10-10T10:14:33-0400
+$ py -3.12 -m http.server 47812 --bind 127.0.0.1 --directory web/dist
+127.0.0.1 - - [10/Oct/2026 10:14:51] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:14:51] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 10:14:51] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 10:14:51] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:14:51] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:14:55] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:14:55] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 10:14:55] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 10:14:56] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:14:56] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:00] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:00] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 10:15:00] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 10:15:00] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:00] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:04] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:04] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 10:15:04] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 10:15:04] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:04] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:08] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:08] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 10:15:08] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 10:15:09] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:09] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:13] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:13] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 10:15:13] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 10:15:14] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:14] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:17] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 10:15:17] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 10:15:18] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:18] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:21] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:21] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 10:15:21] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 10:15:22] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 10:15:22] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -

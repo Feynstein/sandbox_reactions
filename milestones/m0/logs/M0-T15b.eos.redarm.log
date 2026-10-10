@@ -1,0 +1,200 @@
+==== 2026-10-10T10:14:36-04:00 eos · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:14:36-04:00 eos · task M0-T15b · box Laser2025-20 :: bash tests/cpu.sh sr-physics eos
+-- eos · exit=0 · 15.09 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nch84iw_\arm0\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 5.97s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 13 tests
+test eos::tests::cold_pressure_limits ... ok
+test eos::tests::low_end_is_finite ... ok
+test eos::tests::pressure_log_slope_is_at_most_two ... ok
+test eos::tests::table_geometry ... ok
+test eos::tests::zero_k_means_no_cold_pressure ... ok
+test eos::tests::thermal_from_energy_and_the_floor ... ok
+test eos::tests::gas_laws ... ok
+test eos::tests::shipped_pairs_are_the_contracts ... ok
+test eos::tests::energy_limits ... ok
+test eos::tests::monotone ... ok
+test eos::tests::table_nodes_equal_the_closed_form_integral ... ok
+test eos::tests::closed_form_matches_quadrature ... ok
+test eos::tests::interpolation_between_nodes ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.03s
+
+
+==== 2026-10-10T10:14:54-04:00 eos · plant eos-exponent · a fresh scratch copy of the tree
+planted eos-exponent: tests/plants/eos-exponent.patch -> crates/sr-physics/src/eos.rs
+== 2026-10-10T10:14:54-04:00 eos · task M0-T15b · box Laser2025-20 :: bash tests/cpu.sh sr-physics eos
+-- eos · exit=101 · 33.64 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nch84iw_\arm1\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 7.58s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 13 tests
+test eos::tests::interpolation_between_nodes ... FAILED
+test eos::tests::cold_pressure_limits ... FAILED
+test eos::tests::closed_form_matches_quadrature ... FAILED
+test eos::tests::table_nodes_equal_the_closed_form_integral ... FAILED
+test eos::tests::table_geometry ... ok
+test eos::tests::zero_k_means_no_cold_pressure ... ok
+test eos::tests::energy_limits ... FAILED
+test eos::tests::low_end_is_finite ... FAILED
+test eos::tests::shipped_pairs_are_the_contracts ... ok
+test eos::tests::thermal_from_energy_and_the_floor ... ok
+test eos::tests::pressure_log_slope_is_at_most_two ... ok
+test eos::tests::monotone ... FAILED
+test eos::tests::gas_laws ... ok
+
+failures:
+
+---- eos::tests::interpolation_between_nodes stdout ----
+
+thread 'eos::tests::interpolation_between_nodes' (12972) panicked at crates\sr-physics\src\eos.rs:373:13:
+K = 21.3/134: worst interpolation error 4.2127325173002435e0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- eos::tests::cold_pressure_limits stdout ----
+
+thread 'eos::tests::cold_pressure_limits' (32420) panicked at crates\sr-physics\src\eos.rs:297:13:
+x² limit, K = 21.3/134
+
+---- eos::tests::closed_form_matches_quadrature stdout ----
+
+thread 'eos::tests::closed_form_matches_quadrature' (14360) panicked at crates\sr-physics\src\eos.rs:353:17:
+x = 0.0000001, K = 21.3/134
+
+---- eos::tests::table_nodes_equal_the_closed_form_integral stdout ----
+
+thread 'eos::tests::table_nodes_equal_the_closed_form_integral' (18152) panicked at crates\sr-physics\src\eos.rs:317:13:
+K = 21.3/134: worst node error 4.22554750346347e0
+
+---- eos::tests::energy_limits stdout ----
+
+thread 'eos::tests::energy_limits' (580) panicked at crates\sr-physics\src\eos.rs:330:13:
+x^3/2 limit at 100000000
+
+---- eos::tests::low_end_is_finite stdout ----
+
+thread 'eos::tests::low_end_is_finite' (33392) panicked at crates\sr-physics\src\eos.rs:432:13:
+y = 0.000999
+
+---- eos::tests::monotone stdout ----
+
+thread 'eos::tests::monotone' (34984) panicked at crates\sr-physics\src\eos.rs:408:17:
+P below both limits at 2.2642154311580697e2
+
+
+failures:
+    eos::tests::closed_form_matches_quadrature
+    eos::tests::cold_pressure_limits
+    eos::tests::energy_limits
+    eos::tests::interpolation_between_nodes
+    eos::tests::low_end_is_finite
+    eos::tests::monotone
+    eos::tests::table_nodes_equal_the_closed_form_integral
+
+test result: FAILED. 6 passed; 7 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-10T10:15:49-04:00 eos · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:15:49-04:00 eos · task M0-T15b · box Laser2025-20 :: bash tests/cpu.sh sr-physics eos
+-- eos · exit=0 · 14.25 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-cko6cw6g\arm0\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 6.86s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 13 tests
+test eos::tests::cold_pressure_limits ... ok
+test eos::tests::low_end_is_finite ... ok
+test eos::tests::table_geometry ... ok
+test eos::tests::pressure_log_slope_is_at_most_two ... ok
+test eos::tests::zero_k_means_no_cold_pressure ... ok
+test eos::tests::thermal_from_energy_and_the_floor ... ok
+test eos::tests::shipped_pairs_are_the_contracts ... ok
+test eos::tests::energy_limits ... ok
+test eos::tests::gas_laws ... ok
+test eos::tests::table_nodes_equal_the_closed_form_integral ... ok
+test eos::tests::interpolation_between_nodes ... ok
+test eos::tests::closed_form_matches_quadrature ... ok
+test eos::tests::monotone ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.02s
+
+
+==== 2026-10-10T10:16:05-04:00 eos · plant eos-exponent · a fresh scratch copy of the tree
+planted eos-exponent: tests/plants/eos-exponent.patch -> crates/sr-physics/src/eos.rs
+== 2026-10-10T10:16:05-04:00 eos · task M0-T15b · box Laser2025-20 :: bash tests/cpu.sh sr-physics eos
+-- eos · exit=101 · 31.78 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-cko6cw6g\arm1\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 12.23s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 13 tests
+test eos::tests::cold_pressure_limits ... FAILED
+test eos::tests::closed_form_matches_quadrature ... FAILED
+test eos::tests::energy_limits ... FAILED
+test eos::tests::low_end_is_finite ... FAILED
+test eos::tests::table_nodes_equal_the_closed_form_integral ... FAILED
+test eos::tests::zero_k_means_no_cold_pressure ... ok
+test eos::tests::interpolation_between_nodes ... FAILED
+test eos::tests::table_geometry ... ok
+test eos::tests::thermal_from_energy_and_the_floor ... ok
+test eos::tests::shipped_pairs_are_the_contracts ... ok
+test eos::tests::pressure_log_slope_is_at_most_two ... ok
+test eos::tests::gas_laws ... ok
+test eos::tests::monotone ... FAILED
+
+failures:
+
+---- eos::tests::cold_pressure_limits stdout ----
+
+thread 'eos::tests::cold_pressure_limits' (32104) panicked at crates\sr-physics\src\eos.rs:297:13:
+x² limit, K = 21.3/134
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- eos::tests::closed_form_matches_quadrature stdout ----
+
+thread 'eos::tests::closed_form_matches_quadrature' (12200) panicked at crates\sr-physics\src\eos.rs:353:17:
+x = 0.0000001, K = 21.3/134
+
+---- eos::tests::energy_limits stdout ----
+
+thread 'eos::tests::energy_limits' (9760) panicked at crates\sr-physics\src\eos.rs:330:13:
+x^3/2 limit at 100000000
+
+---- eos::tests::low_end_is_finite stdout ----
+
+thread 'eos::tests::low_end_is_finite' (34720) panicked at crates\sr-physics\src\eos.rs:432:13:
+y = 0.000999
+
+---- eos::tests::table_nodes_equal_the_closed_form_integral stdout ----
+
+thread 'eos::tests::table_nodes_equal_the_closed_form_integral' (31548) panicked at crates\sr-physics\src\eos.rs:317:13:
+K = 21.3/134: worst node error 4.22554750346347e0
+
+---- eos::tests::interpolation_between_nodes stdout ----
+
+thread 'eos::tests::interpolation_between_nodes' (32432) panicked at crates\sr-physics\src\eos.rs:373:13:
+K = 21.3/134: worst interpolation error 4.2127325173002435e0
+
+---- eos::tests::monotone stdout ----
+
+thread 'eos::tests::monotone' (25172) panicked at crates\sr-physics\src\eos.rs:408:17:
+P below both limits at 2.2642154311580697e2
+
+
+failures:
+    eos::tests::closed_form_matches_quadrature
+    eos::tests::cold_pressure_limits
+    eos::tests::energy_limits
+    eos::tests::interpolation_between_nodes
+    eos::tests::low_end_is_finite
+    eos::tests::monotone
+    eos::tests::table_nodes_equal_the_closed_form_integral
+
+test result: FAILED. 6 passed; 7 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
