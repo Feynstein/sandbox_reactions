@@ -10,7 +10,9 @@
 // floor state — Σ_floor, u = 0, T = T_floor, its fractions kept — and the mass it loses is booked `vacuum_reset`;
 // any other cell whose ε_th = E/Σ − ½|u|² − ε_cold is below T_floor/μ is raised to it. Every energy P8 changes, the
 // reset's and the floor's, is booked `floor_added` (signed; §2.9 has no other term for it — §2.7 [M0-T19]). Each
-// invocation adds into its own booking slot, no atomic. A NaN Σ or E is left to P9's guard.
+// invocation adds into its own booking slot, no atomic. A NaN Σ or E is left to P9's guard, and so is a cell holding
+// an Inf or a NaN fraction: neither kernel touches it — no floor, no booking, its fractions as read — since the clamp's
+// max(NaN, 0) may return 0 and renormalise the NaN away before the guard reads it (M0-D18).
 
 struct Dims {
     width: u32,
@@ -30,6 +32,28 @@ struct Dims {
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
+
+// An Inf or a NaN, told by its exponent bits as reduce.wgsl's guard tells it — never a float comparison, which WGSL may
+// fold away.
+fn non_finite(v: f32) -> bool {
+    return (bitcast<u32>(v) & 0x7f800000u) == 0x7f800000u;
+}
+
+// Whether any of the cell's fractions is an Inf or a NaN: such a cell is left for P9's guard.
+fn fractions_non_finite(cell: u32) -> bool {
+    let n = dims.cells;
+    for (var i = 0u; i < PLANES_A; i++) {
+        if (non_finite(species_a[i * n + cell])) {
+            return true;
+        }
+    }
+    for (var i = 0u; i < PLANES_B; i++) {
+        if (non_finite(species_b[i * n + cell])) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // The cell's fractions clamped ≥ 0 and divided by their sum; pure hydrogen when none is positive.
 fn renormalised(cell: u32) -> array<f32, 10> {
@@ -65,6 +89,9 @@ fn floor_cells(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     let cell = id.y * dims.width + id.x;
     let n = dims.cells;
+    if (fractions_non_finite(cell)) {
+        return;
+    }
 
     let x = renormalised(cell);
     let comp = composition(x);
@@ -104,6 +131,9 @@ fn renormalise_species(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     let cell = id.y * dims.width + id.x;
     let n = dims.cells;
+    if (fractions_non_finite(cell)) {
+        return;
+    }
 
     let x = renormalised(cell);
     for (var i = 0u; i < PLANES_A; i++) {

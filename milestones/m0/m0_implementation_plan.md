@@ -88,7 +88,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T18 | BUILD | Booking: the per-cell side buffers and accumulators every pass books into | AFTER M0-V2 | DONE (2026-10-10 15:02) |
 | M0-T19 | BUILD | P8 floors complete (vacuum reset, temperature floor) and the EOS on the GPU | AFTER M0-T18 | DONE (2026-10-10 15:25, started 15:10) |
 | M0-T20 | BUILD | Δt and the non-finite guard (P1, P9) | AFTER M0-T19 | DONE (2026-10-10 15:46) |
-| M0-D18 | BUILD | P8 zeroes a NaN species fraction before P9's guard reads it: the run goes on with the cell renormalised | AFTER M0-T20 | TODO |
+| M0-D18 | BUILD | P8 zeroes a NaN species fraction before P9's guard reads it: the run goes on with the cell renormalised | AFTER M0-T20 | DONE (2026-10-10 15:53) |
 | M0-T21 | BUILD | The active box (§1.3.3) | AFTER M0-T20 | TODO |
 | M0-T22 | BUILD | Frames of steps and the collapse latch, on indirect dispatches | AFTER M0-T21 | TODO |
 | M0-T23 | BUILD | GPU timestamps, cost per step and per pass, --timing | AFTER M0-T22 | TODO |
@@ -405,9 +405,9 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-D18
+- Next task: M0-T21
 - Counters: T=116 · D=18 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=2 · TD=1 · TE=1
-- Open D/BLOCKED register: M0-D18 (TODO, filed by M0-T20 2026-10-10)
+- Open D/BLOCKED register: none (M0-D18 DONE 2026-10-10)
 - Outstanding commit gates: Phase 4 (M0-T10 … M0-V2, then M0-D17 and M0-TM2 that M0-V2 filed) — the gate under M0-TM2, its text « closes after M0-V2 »; Phase 2b and Phase 3 are in dde81d3, pushed (per-block commits, R16)
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
@@ -932,14 +932,14 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: win-laptop (Laser2025-20, RTX 4080 Laptop), model=claude-opus-5-5 level=high (rung_record). Built: reduce.wgsl + step/dt.rs — P9's Δt by a fixed-order tree (C, η_g from physics.json; gravity term infinite until P2), P1 dt_advance on step n−1's value, step 0 preceded by the initial state's reduction, the guard every 64th step (index ≡ 0 mod 64; non-finite told by bits; lowest cell, then channel) → headless exit 5 naming step, cell, channel (exit-5 path NOT PROVEN (source only): no scene can plant a NaN yet). Step::new now takes &Physics; Step::read_dt, dt_record (Δt_n = word 0) for later passes. Vacuum cells count as P8's floor state in Δt; whole world until M0-T21's box. Deviation: 9 code files / ≈680 added lines over the 6/600 ceiling — state.rs, floors.rs, state test edits are the new signature and the P1/P9 dispatches (the FLAG oracle lines). Carried flag decided: guard reads all 14 channels after P8; measured P8 zeroes a NaN fraction (logs/M0-T20.probe.log) → filed M0-D18. sim_time still 0 (Δt not summed — not this Deliver). verify.py dt [ALREADY RUN — PASS (5/0/0) on win-laptop]; --redarm dt [ALREADY RUN — PASS (dt-cfl-one RED) on win-laptop]; --changed --base 2ee163f [ALREADY RUN — PASS (538 passed, 12/12 scopes GO) on win-laptop]; linux-pc owed (R15). Detail: tasks/M0-T20.md. Next: M0-D18.
 
 ## M0-D18 · P8 zeroes a NaN species fraction before P9's guard reads it: the run goes on with the cell renormalised · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T20)
-- Status: TODO
+- Status: DONE (2026-10-10 15:53)
 - Caused by: M0-T19
 - Files: crates/sr-engine/shaders/floors.wgsl (`renormalised`, lines 34–59), crates/sr-engine/shaders/reduce.wgsl (`non_finite`, `guard_scan`), crates/sr-engine/tests/gpu/dt.rs — opened by M0-T20, floors.wgsl not changed
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P8, P9), §2.7 [M0-T19], §3.3 (exit 5) + milestones/m0/logs/M0-T20.probe.log
 - Symptom: measured on win-laptop (Laser2025-20, RTX 4080 Laptop, Vulkan), 2026-10-10, M0-T20's probe (logs/M0-T20.probe.log; a temporary case in tests/gpu/dt.rs, removed): a NaN planted in x_C at (20, 10) before step 0 → after one step the guard (step 0's scan, P9) finds nothing and the cell's fractions read [0.2375, 0.0399, 0.0, 0.0955, …], x_C silently 0 and the rest renormalised; an Inf planted the same way reads x_C = NaN after P8 and the guard names it (step 0, (20, 10), x_C). Repro: plant `f32::NAN` in a species plane of tests/gpu/dt.rs's `field`, run one step, read `Step::read_dt`. Cause (source, consistent with the measure): `renormalised` clamps with `max(x, 0.0)`, which returns 0 for a NaN on this adapter, before the sum — so §3.3's "a non-finite value in the state" upstream of P8 (a P4 or P6 bug writing a NaN fraction) never stops the run. Σ, momentum and energy NaNs pass P8 untouched and are caught (tests/gpu/dt.rs).
 - Deliver: floors.wgsl — a cell holding any non-finite fraction (told by its bits, as reduce.wgsl's `non_finite`, never by a float comparison WGSL may fold) is left for P9's guard — its fractions written back as read, not renormalised, the floors kept as they are, no expectation loosened → Verify 1, 3 · a case in tests/gpu/floors.rs (a NaN fraction still non-finite after P8) → Verify 1 · a case in tests/gpu/dt.rs (a NaN x_C planted, the guard naming its step, cell and x_C) → Verify 2
 - Verify: 1. `python3 tools/pb/verify.py floors --task M0-D18` · Pass: GO, 7 cases · Fail: NO-GO · 2. `python3 tools/pb/verify.py dt --task M0-D18` · Pass: GO, 6 cases · Fail: NO-GO · 3. `python3 tools/pb/verify.py --redarm floors --task M0-D18` · Pass: GO — floors-no-cold-energy NO-GO · Fail: the plant stays GO
-- Handoff: <placeholder>
+- Handoff: win-laptop (Laser2025-20, RTX 4080 Laptop), model=claude-opus-5-5 level=high (rung_record now, the heading's rung). floors.wgsl: non_finite (bits, reduce.wgsl's test) + fractions_non_finite; floor_cells and renormalise_species return at once for a cell holding an Inf/NaN fraction - fractions as read, Σ/u/E untouched, nothing booked; finite cells' rules unchanged. Deviation (declared, my reading of 'the floors kept as they are'): floor_cells skips the cell too, else a vacuum cell would get E = NaN and the guard would name energy, not the fraction. verify.json: floors expected 7, dt 6 (the Pass counts). New cases: floors a_cell_with_a_non_finite_fraction_is_left_for_the_guard (NaN/+Inf/-Inf in 5 kinds of cell), dt the_guard_names_a_nan_fraction_that_p8_would_renormalise_away (M0-T20's probe, now step 0, (20, 10), x_C); both shown red with the check stubbed out (logs M0-D18-red.*). floors [ALREADY RUN — PASS (7/0/0) on win-laptop]; dt [ALREADY RUN — PASS (6/0/0) on win-laptop]; --redarm floors [ALREADY RUN — PASS (floors-no-cold-energy RED) on win-laptop]; claim --changed --base 5206293 runs after this close, result in tasks/M0-D18.md. Not acted on: Twin's dead-code warning (M0-T19, cosmetic). linux-pc owed (R15). Detail: tasks/M0-D18.md. Next: M0-T21.
 
 ## M0-T21 · The active box · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T20)
 - Status: TODO

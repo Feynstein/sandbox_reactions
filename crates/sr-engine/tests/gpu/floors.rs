@@ -383,9 +383,12 @@ struct Run {
 }
 
 fn run_p8(c: &Constants) -> Run {
-    let gpu = device();
     let world = WorldConfig::new(64, 64).unwrap();
-    let before = field(c, world);
+    run_p8_on(c, world, field(c, world))
+}
+
+fn run_p8_on(c: &Constants, world: WorldConfig, before: Vec<f32>) -> Run {
+    let gpu = device();
     let state = State::new(&gpu.device, world).unwrap();
     let booking = Booking::new(&gpu.device, world).unwrap();
     state.upload(&gpu.queue, &before).unwrap();
@@ -521,6 +524,51 @@ fn species_renormalised_after_the_floors() {
     let all_le_0 = (0..run.cells()).filter(|i| (i / 8) % 4 == 3).count();
     assert!(all_le_0 > 0 && (0..run.cells()).filter(|i| (i / 8) % 4 == 3).all(|i| run.get(&run.after, 4, i) == 1.0));
     println!("{} cells: worst |X − twin| = {worst:e}; {all_le_0} all-≤ 0 cells now pure hydrogen", run.cells());
+}
+
+#[test]
+fn a_cell_with_a_non_finite_fraction_is_left_for_the_guard() {
+    // M0-D18: a NaN x_C in a vacuum, a cold and a hot cell, an Inf x_Fe and a −Inf x_n elsewhere → after one step each
+    // such cell is bit-identical — its fractions still non-finite for P9's guard, no floor, nothing booked — and every
+    // other cell is what the clean field's run leaves.
+    let c = shipped();
+    let world = WorldConfig::new(64, 64).unwrap();
+    let cells = world.cells();
+    let clean = run_p8(&c);
+    let species = |name: &str| CHANNELS.iter().position(|&n| n == name).unwrap();
+    let (x_c, x_fe, x_n) = (species("x_C"), species("x_Fe"), species("x_n"));
+    let planted = [
+        (8 * 40, x_c, f32::NAN),
+        (8 * 41 + 2, x_c, f32::NAN),
+        (8 * 42 + 5, x_c, f32::NAN),
+        (8 * 43 + 4, x_fe, f32::INFINITY),
+        (8 * 44 + 7, x_n, f32::NEG_INFINITY),
+    ];
+    let kinds: Vec<Kind> = planted.iter().map(|&(i, _, _)| Kind::of(i)).collect();
+    assert_eq!(kinds, [Kind::Vacuum, Kind::Cold, Kind::Hot, Kind::ColdDense, Kind::Cold], "the planted cells' kinds");
+    let mut before = field(&c, world);
+    for &(i, ch, v) in &planted {
+        before[ch * cells + i] = v;
+    }
+    let run = run_p8_on(&c, world, before);
+    for &(i, ch, _) in &planted {
+        let x = run.get(&run.after, ch, i);
+        assert!(!x.is_finite(), "cell {i} ({:?}): {} {x} after P8, the guard would never see it", Kind::of(i), CHANNELS[ch]);
+        for k in 0..N_CHANNELS {
+            let (b, a) = (run.get(&run.before, k, i), run.get(&run.after, k, i));
+            assert_eq!(a.to_bits(), b.to_bits(), "cell {i}: {} {b} → {a}, P8 touched a non-finite cell", CHANNELS[k]);
+        }
+        assert_eq!((run.vacuum_reset[i], run.floor_added[i]), (0.0, 0.0), "cell {i}: P8 booked a non-finite cell");
+    }
+    let mut others = 0;
+    for i in (0..cells).filter(|i| !planted.iter().any(|p| p.0 == *i)) {
+        for k in 0..N_CHANNELS {
+            let (want, got) = (clean.get(&clean.after, k, i), run.get(&run.after, k, i));
+            assert_eq!(got.to_bits(), want.to_bits(), "cell {i}: {} {got}, the clean run's {want}", CHANNELS[k]);
+        }
+        others += 1;
+    }
+    println!("{} planted cells left as read (non-finite fractions kept, nothing booked); {others} other cells as the clean run", planted.len());
 }
 
 #[test]

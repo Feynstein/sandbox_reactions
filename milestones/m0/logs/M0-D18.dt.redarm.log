@@ -1,0 +1,114 @@
+==== 2026-10-10T15:55:10-04:00 dt · clean · a fresh scratch copy of the tree
+== 2026-10-10T15:55:11-04:00 dt · task M0-D18 · box Laser2025-20 :: bash tests/gpu.sh dt physics
+-- dt · exit=0 · 20.02 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-90sseunj\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-90sseunj\arm0\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 12.24s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 6 tests
+test dt::dt_and_the_state_are_bit_identical_over_two_runs_on_a_600_by_400_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+Δt over 130 steps, run 1: [0.040301796, 0.040301796, 0.040301796, 0.040301796]
+ok
+test dt::dt_equals_the_cfl_formula_on_fields_of_known_u_and_c ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+64 × 64, peak at Some(0): Δt_0 = 1.6e-2 (oracle 1.6000000439943284e-2), Δt_1 = 1.6e-2 (oracle 1.6000000439943284e-2), tolerance 1e-6
+72 × 88, peak at Some(6335): Δt_0 = 1.6e-2 (oracle 1.6000000135411016e-2), Δt_1 = 1.6e-2 (oracle 1.6000000135411016e-2), tolerance 1e-6
+600 × 400, peak at Some(123457): Δt_0 = 1.6e-2 (oracle 1.6000000093257995e-2), Δt_1 = 1.6e-2 (oracle 1.6000000093257995e-2), tolerance 1e-6
+600 × 400, peak at Some(0): Δt_0 = 1.6e-2 (oracle 1.6000000159451137e-2), Δt_1 = 1.6e-2 (oracle 1.6000000159451137e-2), tolerance 1e-6
+64 × 64, peak at None: Δt_0 = 4.174852e-2 (oracle 4.174851741343726e-2), Δt_1 = 4.174852e-2 (oracle 4.174851741343726e-2), tolerance 1e-6
+72 × 88, peak at None: Δt_0 = 4.1293006e-2 (oracle 4.129300352018855e-2), Δt_1 = 4.1293006e-2 (oracle 4.129300352018855e-2), tolerance 1e-6
+600 × 400, peak at None: Δt_0 = 4.0209737e-2 (oracle 4.020973668020954e-2), Δt_1 = 4.0209737e-2 (oracle 4.020973668020954e-2), tolerance 1e-6
+ok
+test dt::p1_advances_dt_and_p9_reduces_it_and_guards_every_64th_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test dt::step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1 ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+Δt_0 = 1.6e-2, Δt_1 = 1.6e-2 (P9 of step 0), Δt_2 = 1.59315e-2 (P9 of step 1)
+ok
+test dt::the_guard_names_a_nan_fraction_that_p8_would_renormalise_away ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test dt::the_guard_names_the_step_cell_and_channel_of_a_planted_non_finite_value ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 27 filtered out; finished in 5.16s
+
+
+==== 2026-10-10T15:55:33-04:00 dt · plant dt-cfl-one · a fresh scratch copy of the tree
+planted dt-cfl-one: tests/plants/dt-cfl-one.patch -> crates/sr-engine/shaders/reduce.wgsl
+== 2026-10-10T15:55:33-04:00 dt · task M0-D18 · box Laser2025-20 :: bash tests/gpu.sh dt physics
+-- dt · exit=101 · 21.78 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-90sseunj\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-90sseunj\arm1\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 11.47s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 6 tests
+test dt::dt_and_the_state_are_bit_identical_over_two_runs_on_a_600_by_400_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+Δt over 130 steps, run 1: [0.100754485, 0.100754485, 0.100754485, 0.100754485]
+ok
+test dt::dt_equals_the_cfl_formula_on_fields_of_known_u_and_c ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+64 × 64, peak at Some(0): Δt_0 = 4e-2 (oracle 1.6000000439943284e-2), Δt_1 = 4e-2 (oracle 1.6000000439943284e-2), tolerance 1e-6
+
+thread 'dt::dt_equals_the_cfl_formula_on_fields_of_known_u_and_c' (8348) panicked at crates\sr-engine\tests\gpu\dt.rs:173:9:
+64 × 64: Δt_0 0.04 against the f64 formula 0.016000000439943284
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test dt::p1_advances_dt_and_p9_reduces_it_and_guards_every_64th_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test dt::step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1 ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'dt::step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1' (2428) panicked at crates\sr-engine\tests\gpu\dt.rs:191:5:
+step 0 runs on the initial state's reduction: 0.04
+FAILED
+test dt::the_guard_names_a_nan_fraction_that_p8_would_renormalise_away ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test dt::the_guard_names_the_step_cell_and_channel_of_a_planted_non_finite_value ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    dt::dt_equals_the_cfl_formula_on_fields_of_known_u_and_c
+    dt::step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 27 filtered out; finished in 8.14s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

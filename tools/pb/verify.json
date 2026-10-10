@@ -262,11 +262,11 @@
       ]
     },
     "floors": {
-      "desc": "P8 complete and the equation of state on the GPU (contract §1.3.2, §1.5, §2.3.2-§2.3.3, §2.7, §2.9): eos.wgsl's helpers (1/μ, Y_e, Z_met, Π_e, Π_n, ε_cold from M0-T12's u(x) table, Π, c², T) against sr_physics::eos with the cold pairs on and off; P8 lists floor_cells ahead of renormalise_species; a 64 × 64 field of vacuum, cold, dense cold and hot cells with normalised, unnormalised, mixed-sign and all-≤0 fractions → one step → vacuum cells at the floor state, cold cells at T_floor (2e-5 relative of the f64 twin), hot cells bit-identical, fractions renormalised (1e-6), vacuum_reset and floor_added equal to the mass and energy changed within 1e-6 relative, cell by cell and in total (M0-T19); on the physics adapter (R12, R15)",
+      "desc": "P8 complete and the equation of state on the GPU (contract §1.3.2, §1.5, §2.3.2-§2.3.3, §2.7, §2.9): eos.wgsl's helpers (1/μ, Y_e, Z_met, Π_e, Π_n, ε_cold from M0-T12's u(x) table, Π, c², T) against sr_physics::eos with the cold pairs on and off; P8 lists floor_cells ahead of renormalise_species; a 64 × 64 field of vacuum, cold, dense cold and hot cells with normalised, unnormalised, mixed-sign and all-≤0 fractions → one step → vacuum cells at the floor state, cold cells at T_floor (2e-5 relative of the f64 twin), hot cells bit-identical, fractions renormalised (1e-6), vacuum_reset and floor_added equal to the mass and energy changed within 1e-6 relative, cell by cell and in total (M0-T19); cells holding a NaN or an Inf fraction left bit-identical for P9's guard, nothing booked, every other cell as the clean run (M0-D18); on the physics adapter (R12, R15)",
       "cmd": "bash tests/gpu.sh floors physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 6,
+      "expected": 7,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -289,11 +289,11 @@
       ]
     },
     "dt": {
-      "desc": "P1 Δt, P9's Δt reduction and the non-finite guard (contract §1.3.2 P1 and P9, §1.3.4, §2.3.3, §2.3.5, §3.3): P1 holds dt_advance, P9 dt_cells and dt_partials, plus guard_scan and guard_stamp every 64th step; Δt against §2.3.5's formula in f64 (C = 0.4, η_g = 0.3, the gravity term infinite until P2) on fields of known u and c, the cold pairs off, 64 × 64, 72 × 88 and 600 × 400, within 1e-6 relative; step 0 on the initial state's reduction and step n on the value P9 made at the end of step n − 1; Δt and the state bit-identical over two 130-step runs on 600 × 400; a NaN and an Inf planted at known cells and steps → the guard's step, cell and channel (M0-T20); on the physics adapter (R12, R15)",
+      "desc": "P1 Δt, P9's Δt reduction and the non-finite guard (contract §1.3.2 P1 and P9, §1.3.4, §2.3.3, §2.3.5, §3.3): P1 holds dt_advance, P9 dt_cells and dt_partials, plus guard_scan and guard_stamp every 64th step; Δt against §2.3.5's formula in f64 (C = 0.4, η_g = 0.3, the gravity term infinite until P2) on fields of known u and c, the cold pairs off, 64 × 64, 72 × 88 and 600 × 400, within 1e-6 relative; step 0 on the initial state's reduction and step n on the value P9 made at the end of step n − 1; Δt and the state bit-identical over two 130-step runs on 600 × 400; a NaN and an Inf planted at known cells and steps → the guard's step, cell and channel (M0-T20); a NaN x_C planted before step 0 → named by step 0's scan, its cell's fractions as planted (M0-D18); on the physics adapter (R12, R15)",
       "cmd": "bash tests/gpu.sh dt physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 5,
+      "expected": 6,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",

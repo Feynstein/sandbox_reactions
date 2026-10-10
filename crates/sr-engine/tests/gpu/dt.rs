@@ -254,3 +254,25 @@ fn the_guard_names_the_step_cell_and_channel_of_a_planted_non_finite_value() {
     assert_eq!(run.run(&gpu, 2).non_finite, found, "the scan at step 128");
     assert_eq!(run.run(&gpu, 80).non_finite, found, "the first finding is kept past the scan at step 192");
 }
+
+#[test]
+fn the_guard_names_a_nan_fraction_that_p8_would_renormalise_away() {
+    // M0-D18: P8's clamp may read max(NaN, 0) as 0 — a NaN x_C planted before step 0 must still be there for the scan
+    // at the end of step 0, which names its step, cell and channel; the cell's fractions stay as planted.
+    let gpu = device();
+    let c = constants();
+    let world = WorldConfig::new(64, 64).unwrap();
+    let cells = world.cells();
+    let i = 10 * 64 + 20;
+    let x_c = CHANNELS.iter().position(|&n| n == "x_C").unwrap();
+    let mut start = field(world, 3, None);
+    start[x_c * cells + i] = f32::NAN;
+    let run = Run::new(&gpu, &c, world, &start);
+    let report = run.run(&gpu, 1);
+    assert_eq!(report.non_finite, Some(NonFinite { step: 0, x: 20, y: 10, channel: "x_C" }));
+    let planes = run.planes(&gpu);
+    for ch in SPECIES {
+        let (b, a) = (start[ch * cells + i], planes[ch * cells + i]);
+        assert_eq!(a.to_bits(), b.to_bits(), "(20, 10) {}: {b} → {a}, P8 renormalised a NaN cell", CHANNELS[ch]);
+    }
+}
