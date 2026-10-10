@@ -21,6 +21,9 @@ mod state;
 /// M0-T18 — the side fields and the booking layout (contract §2.2, §1.9.1, §2.9, §1.3.4).
 mod booking;
 
+/// M0-T19 — P8 complete and the equation of state on the GPU (contract §1.3.2, §2.3.2–§2.3.3, §2.7, §2.9).
+mod floors;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;

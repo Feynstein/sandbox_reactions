@@ -86,7 +86,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D17 | BUILD | web/smoke.mjs runs Chrome with `--no-sandbox`: playwright-core adds it by default, against §6.2.3 | AFTER M0-V2 | DONE (2026-10-10 14:22) |
 | M0-TM2 | PLAN | Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) | AFTER M0-D17 | DONE (2026-10-10 14:52, started 14:43) |
 | M0-T18 | BUILD | Booking: the per-cell side buffers and accumulators every pass books into | AFTER M0-V2 | DONE (2026-10-10 15:02) |
-| M0-T19 | BUILD | P8 floors complete (vacuum reset, temperature floor) and the EOS on the GPU | AFTER M0-T18 | TODO |
+| M0-T19 | BUILD | P8 floors complete (vacuum reset, temperature floor) and the EOS on the GPU | AFTER M0-T18 | DONE (2026-10-10 15:25, started 15:10) |
 | M0-T20 | BUILD | Δt and the non-finite guard (P1, P9) | AFTER M0-T19 | TODO |
 | M0-T21 | BUILD | The active box (§1.3.3) | AFTER M0-T20 | TODO |
 | M0-T22 | BUILD | Frames of steps and the collapse latch, on indirect dispatches | AFTER M0-T21 | TODO |
@@ -404,7 +404,7 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-TM2
+- Next task: M0-T20
 - Counters: T=116 · D=17 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=2 · TD=1 · TE=1
 - Open D/BLOCKED register: none (M0-D17 closed 2026-10-10; M0-D10, M0-D11 closed 2026-10-09)
 - Outstanding commit gates: Phase 4 (M0-T10 … M0-V2, then M0-D17 and M0-TM2 that M0-V2 filed) — the gate under M0-TM2, its text « closes after M0-V2 »; Phase 2b and Phase 3 are in dde81d3, pushed (per-block commits, R16)
@@ -886,7 +886,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   Model: claude-opus-5-5, level high (rung_record.py). Detail: tasks/M0-T18.md. Next: the plan's next TODO block.
 
 ## M0-T19 · P8 floors, complete, and the equation of state on the GPU · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T18)
-- Status: TODO
+- Status: DONE (2026-10-10 15:25, started 15:10)
 - Carried flags: [M0-T3, 2026-10-09] from M0-T3: P8's list holds renormalise_species (floors.wgsl) — put the vacuum reset and the temperature floor AHEAD of it in Step's P8 list; declared default, contract silent: a cell whose fractions are all ≤ 0 becomes pure hydrogen — state it in §2.7 by asking, and match it in the CPU f64 twin, which R13 wants and M0-T3's Deliver did not name (its test carries an inline f64 oracle); NaN fractions are left to P9's guard
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P8), §2.3.2–§2.3.3, §2.7
   (sigma_floor, sigma_vac, t_floor), §2.9 (vacuum_reset, floor_added) + docs/agent/testing.md
@@ -904,10 +904,15 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   plant stays GO
 - Adversarial: a floor that books the mass it removes but not the energy it adds lets G-CONS drift for a
   reason no physics scope finds — both terms are cases.
-- Handoff: <placeholder>
+- Handoff: eos.wgsl (new; group-1 EosParams + per-pair ln u and f64 segment slopes, uploaded once by step::EosGpu; composition, cold_pressure, cold_u, ε_cold, Π, c², T, floors) · floors.wgsl: floor_cells (vacuum reset → Σ_floor, u = 0, T_floor; else T floor; books vacuum_reset + floor_added) ahead of renormalise_species, both on one renormalised() · Step::new(device, state, booking, eos), Dispatch with labels and bind groups · sr-engine → sr-physics path dep (Cargo.lock +1 line) · headless builds Booking + EosGpu · tests/gpu/floors.rs (6 cases, inline f64 twin) · plant floors-no-cold-energy · scope floors · contract §2.7 [M0-T19] (the lead's yes: all ≤ 0 → pure H, μ of the renormalised fractions, reset energy booked floor_added) · testing.md row.
+  Deviations: state test field made hot non-vacuum (its all-negative Σ would now reset), P8 count 2, case renamed; state paths + sr-physics/assets; >6 files by forced one-liners. Claim's oracle FLAGs: floors.rs, main.rs, state.rs, verify.json — those.
+  Measured: first floors run red (ε_cold above the table 5.3e-5 > 2e-5: f32 slope ln u[511]−ln u[510]); fixed by f64 slopes, tolerance unchanged; worst ε_cold 5.1e-6. Not measured: NaN fractions masked as pure H by P8 (flagged M0-T20); sun_disk_planes' E lacks ε_cold so P8 floors part of it (tasks file).
+  [ALREADY RUN — PASS on win-laptop Laser2025-20, RTX 4080 Laptop Vulkan]: floors FAIL 5/1 then GO 6/0/0; --redarm floors GO (plant RED); state GO 6/0/0; --redarm state GO (plant RED); claim --changed --base a7c38c2 GO 579/0/0, 15/15 scopes. linux-pc owed (R15).
+  Flags: M0-T37 (move p8_twin to reference/floors.rs, match §2.7 [M0-T19]), M0-T20 (NaN). Ran on model=claude-opus-5-5 level=high. Detail: tasks/M0-T19.md. Next: M0-T20.
 
 ## M0-T20 · Δt and the non-finite guard (P1, P9) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T19)
 - Status: TODO
+- Carried flags: [M0-T19, 2026-10-10] Source only, not measured: P8 (before P9) can mask a NaN species fraction — renormalised() in floors.wgsl turns a NaN sum into pure hydrogen (sum > 0 is false), so P9's non-finite guard never sees it; a NaN Σ or E passes P8 untouched. Decide where the guard reads the fractions (M0-T19)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P1, P9), §1.3.4, §2.3.3,
   §2.3.5, §3.3 (exit 5) + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/step/dt.rs and shaders/reduce.wgsl (new): P9's Δt_{n+1} = min(C·min[(|u|
@@ -1315,6 +1320,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T37 · The twin's step driver and `--cpu-reference` · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T36)
 - Status: TODO
+- Carried flags: [M0-T19, 2026-10-10] P8's f64 twin lives inline in crates/sr-engine/tests/gpu/floors.rs (p8_twin, on sr_physics::eos::Eos + Elements::composition): move it into reference/floors.rs and match contract §2.7 [M0-T19] — order vacuum reset, temperature floor, renormalise; μ/Y_e/X_n of the renormalised fractions; all ≤ 0 → pure H; the reset keeps the fractions; E_floor − E and the floor's energy both booked floor_added; Σ_vac and Σ_floor compared as f32 (the GPU's)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2, §1.7 (every solver's twin),
   §3.3 (`--cpu-reference`) + docs/agent/testing.md
 - Deliver: crates/sr-physics/src/reference/mod.rs (M0-T28's) and reference/floors.rs (new): the twin's state

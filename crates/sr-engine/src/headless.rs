@@ -12,10 +12,11 @@ use std::sync::Arc;
 use std::time::Instant;
 
 use serde_json::json;
+use sr_physics::registry::{Elements, Physics};
 
 use crate::gpu::Gpu;
-use crate::state::{State, WorldConfig, N_CHANNELS};
-use crate::step::Step;
+use crate::state::{Booking, State, WorldConfig, N_CHANNELS};
+use crate::step::{EosGpu, Step};
 
 pub const EXIT_DONE: i32 = 0;
 pub const EXIT_UNMET: i32 = 2;
@@ -215,7 +216,16 @@ pub fn run(args: &[String]) -> i32 {
         }
     };
     state.upload(&gpu.queue, &sun_disk_planes(args.world)).expect("the preset fills 14 planes of the world");
-    let step = Step::new(&gpu.device, &state);
+    // The shipped registries (a scene's overrides arrive with M0-T25); the ledger reads the booking (its lot).
+    let (physics, elements) = match (Physics::shipped(), Elements::shipped()) {
+        (Ok(p), Ok(e)) => (p, e),
+        (Err(e), _) | (_, Err(e)) => {
+            say(&format!("SR-ERROR {e}"));
+            return EXIT_ARGS;
+        }
+    };
+    let booking = Booking::new(&gpu.device, args.world).expect("the state's world is valid");
+    let step = Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &physics, &elements));
 
     let target = args.steps.min(args.max_steps);
     let started = Instant::now();

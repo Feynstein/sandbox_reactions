@@ -1,0 +1,9 @@
+--- a/crates/sr-engine/shaders/eos.wgsl
++++ b/crates/sr-engine/shaders/eos.wgsl
+@@ -135,5 +135,5 @@
+ // ε_th = E/Σ − ½|u|² − ε_cold from the state, before any floor (§2.3.3).
+ fn eps_th_raw(sigma: f32, mom: vec2<f32>, energy: f32, y_e: f32, x_n: f32) -> f32 {
+     let vel = mom / sigma;
+-    return energy / sigma - 0.5 * dot(vel, vel) - eps_cold(sigma, y_e, x_n);
++    return energy / sigma - 0.5 * dot(vel, vel); // planted: ε_th computed without ε_cold
+ }

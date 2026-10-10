@@ -8,6 +8,7 @@ publish.workspace = true
 wgpu.workspace = true
 pollster.workspace = true
 serde_json.workspace = true
+sr-physics = { path = "../sr-physics" }
 
 # One GPU test binary (tests/gpu/main.rs); every GPU scope adds a module to it (R11).
 [[test]]

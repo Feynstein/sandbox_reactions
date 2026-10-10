@@ -2234,6 +2234,7 @@ version = "0.0.0"
 dependencies = [
  "pollster",
  "serde_json",
+ "sr-physics",
  "wgpu",
 ]
 

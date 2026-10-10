@@ -589,6 +589,14 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
 | kappa_dust, t_dust | 0, 0 | S1, disabled (§1.6.4) |
 | block | 4 | summary block edge in cells (§1.9.1) |
 
+[M0-T19] P8's rules where the table is silent (the lead's answer at M0-T19, 2026-10-10: «Yes, add to §2.7
+(Recommended)»): the dispatch order is the vacuum reset and the temperature floor, then the species renormalised; the
+floors read μ, Y_e and X_n of the fractions as the renormalisation will leave them (clamped ≥ 0, divided by their sum);
+a cell whose fractions are all ≤ 0 becomes pure hydrogen (M0-T3's default); the vacuum reset keeps the cell's
+fractions; every energy P8 changes — the vacuum reset's E_floor − E as well as the temperature floor's — is booked
+`floor_added` (signed; §2.9 has no other energy term for it); the momentum a vacuum reset removes is booked nowhere
+(§2.9's momentum lists no such term; G-CONS grades mass and energy only).
+
 ### 2.8 World and edges (B20, I8, I9; D1, D9)
 - **WorldConfig {width, height}** is a setting, never built in (I9; D9): default 600 × 400 cells —
   the size the lead was shown (B13); any width and height that are multiples of 8 within [64, 2048].

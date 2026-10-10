@@ -1,9 +1,11 @@
 //! M0-T3 — the cell state and the step loop (contract §2.2, §2.8, §1.3.2, §1.3.4): the canonical upload/readback
-//! round trip, P0–P9's order, and P8's species renormalisation as the first pass.
+//! round trip, P0–P9's order, and P8's species renormalisation as the first pass (P8's floors: tests/gpu/floors.rs).
 
 use super::device;
-use sr_engine::state::{State, StateError, WorldConfig, CHANNELS, N_CHANNELS, SPECIES};
-use sr_engine::step::{Pass, Step};
+use sr_engine::gpu::Gpu;
+use sr_engine::state::{Booking, State, StateError, WorldConfig, CHANNELS, N_CHANNELS, SPECIES};
+use sr_engine::step::{EosGpu, Pass, Step};
+use sr_physics::registry::{Elements, Physics};
 
 /// A fixed sequence of values in [0, 1) — the same on every run (xorshift64*).
 struct Seq(u64);
@@ -17,16 +19,26 @@ impl Seq {
     }
 }
 
-/// 64 × 64 cells: channels 0–3 a distinct value per channel and cell; the fractions unnormalised, some negative, and
-/// the edge cases on a fixed pattern — all ≤ 0, all zero, only x_n positive.
+/// The step of `state` with the shipped constants, booking into a booking layout of its own.
+fn step(gpu: &Gpu, state: &State) -> Step {
+    let booking = Booking::new(&gpu.device, state.world()).unwrap();
+    let eos = EosGpu::new(&gpu.device, &Physics::shipped().unwrap(), &Elements::shipped().unwrap());
+    Step::new(&gpu.device, state, &booking, &eos)
+}
+
+/// 64 × 64 cells: channels 0–3 a distinct, exact value per cell — hot gas, Σ in [1, 2) and E/Σ ≥ 500, far above P8's
+/// floors (M0-T19), so they leave it; the fractions unnormalised, some negative, and the edge cases on a fixed
+/// pattern — all ≤ 0, all zero, only x_n positive.
 fn unnormalised_field(world: WorldConfig) -> Vec<f32> {
     let cells = world.cells();
     let mut planes = vec![0f32; N_CHANNELS * cells];
     let mut seq = Seq(0x5eed_0003);
-    for c in 0..SPECIES.start {
-        for i in 0..cells {
-            planes[c * cells + i] = (c * cells + i) as f32 * 0.25 - 1000.0;
-        }
+    for i in 0..cells {
+        let k = i as f32;
+        planes[i] = 1.0 + k / 4096.0;
+        planes[cells + i] = k / 1024.0 - 2.0;
+        planes[2 * cells + i] = 2.0 - k / 2048.0;
+        planes[3 * cells + i] = 1000.0 + k * 0.25;
     }
     for i in 0..cells {
         for (k, c) in SPECIES.enumerate() {
@@ -120,16 +132,16 @@ fn upload_refuses_anything_but_14_planes_of_the_world() {
 }
 
 #[test]
-fn a_step_is_p0_to_p9_with_p8s_renormalisation_its_only_dispatch_today() {
+fn a_step_is_p0_to_p9_with_p8s_floors_and_renormalisation_its_only_dispatches_today() {
     let labels: Vec<&str> = Pass::ORDER.iter().map(|p| p.label()).collect();
     for (i, label) in labels.iter().enumerate() {
         assert!(label.starts_with(&format!("P{i} ")), "{labels:?}");
     }
     let gpu = device();
     let state = State::new(&gpu.device, WorldConfig::new(64, 64).unwrap()).unwrap();
-    let step = Step::new(&gpu.device, &state);
+    let step = step(&gpu, &state);
     let mut expected = [0usize; 10];
-    expected[Pass::Floors as usize] = 1;
+    expected[Pass::Floors as usize] = 2;
     assert_eq!(step.dispatch_counts(), expected);
 }
 
@@ -141,7 +153,7 @@ fn one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical
     let before = unnormalised_field(world);
     let state = State::new(&gpu.device, world).unwrap();
     state.upload(&gpu.queue, &before).unwrap();
-    Step::new(&gpu.device, &state).run(&gpu.device, &gpu.queue, 1);
+    step(&gpu, &state).run(&gpu.device, &gpu.queue, 1);
     let after = state.readback(&gpu.device, &gpu.queue);
 
     let other = 0..SPECIES.start * cells;
@@ -173,7 +185,7 @@ fn two_runs_from_the_same_state_are_bit_identical() {
     let run = || {
         let state = State::new(&gpu.device, world).unwrap();
         state.upload(&gpu.queue, &start).unwrap();
-        Step::new(&gpu.device, &state).run(&gpu.device, &gpu.queue, 3);
+        step(&gpu, &state).run(&gpu.device, &gpu.queue, 3);
         state.readback(&gpu.device, &gpu.queue)
     };
     let (a, b) = (run(), run());

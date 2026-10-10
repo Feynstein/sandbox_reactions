@@ -1,10 +1,16 @@
-// P8 floors (m0_contrat.md §1.3.2, §2.7): vacuum reset, temperature floor, then the species renormalised. Today only
-// the last — the vacuum reset and the temperature floor arrive with M0-T19, ahead of it in P8's dispatch list.
+// P8 floors (m0_contrat.md §1.3.2, §2.7, §2.3.3, §2.9): two dispatches, in this order — `floor_cells` (the vacuum reset,
+// then the temperature floor) and `renormalise_species`. Compiled with eos.wgsl prepended (group 1).
 //
 // Species renormalisation, one cell per invocation: every mass fraction clamped ≥ 0, then divided by their sum, so
-// Σ_i X_i = 1. A cell whose fractions are all ≤ 0 becomes pure hydrogen (M0-T3's declared default; the contract is
-// silent). The sum runs in §1.5's order, cell by cell, with no atomic: the result is the same on every run (§1.3.4).
-// The state's other channels are not bound.
+// Σ_i X_i = 1. A cell whose fractions are all ≤ 0 becomes pure hydrogen (§2.7 [M0-T19]). The sum runs in §1.5's order,
+// cell by cell, with no atomic: the result is the same on every run (§1.3.4).
+//
+// The floors read μ, Y_e and X_n of the fractions as the renormalisation will leave them (`renormalised`, the one
+// helper both kernels call), so the gas they floor is the gas the step ends with. A cell below Σ_vac is reset to the
+// floor state — Σ_floor, u = 0, T = T_floor, its fractions kept — and the mass it loses is booked `vacuum_reset`;
+// any other cell whose ε_th = E/Σ − ½|u|² − ε_cold is below T_floor/μ is raised to it. Every energy P8 changes, the
+// reset's and the floor's, is booked `floor_added` (signed; §2.9 has no other term for it — §2.7 [M0-T19]). Each
+// invocation adds into its own booking slot, no atomic. A NaN Σ or E is left to P9's guard.
 
 struct Dims {
     width: u32,
@@ -17,18 +23,17 @@ struct Dims {
 // The species planes, row-major, in §2.2's order: x_H, x_He, x_C, x_O, x_Ne, then x_Mg, x_Si, x_S, x_Fe, x_n.
 @group(0) @binding(1) var<storage, read_write> species_a: array<f32>;
 @group(0) @binding(2) var<storage, read_write> species_b: array<f32>;
+// The hydro planes: sigma, mom_x, mom_y, energy.
+@group(0) @binding(3) var<storage, read_write> hydro: array<f32>;
+// booking.floors (state.rs BOOK_GROUPS): mass.vacuum_reset's plane, then energy.floor_added's, one slot per cell.
+@group(0) @binding(4) var<storage, read_write> book: array<f32>;
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
 
-@compute @workgroup_size(8, 8)
-fn renormalise_species(@builtin(global_invocation_id) id: vec3<u32>) {
-    if (id.x >= dims.width || id.y >= dims.height) {
-        return;
-    }
-    let cell = id.y * dims.width + id.x;
+// The cell's fractions clamped ≥ 0 and divided by their sum; pure hydrogen when none is positive.
+fn renormalised(cell: u32) -> array<f32, 10> {
     let n = dims.cells;
-
     var x: array<f32, 10>;
     var sum = 0.0;
     for (var i = 0u; i < PLANES_A; i++) {
@@ -50,7 +55,57 @@ fn renormalise_species(@builtin(global_invocation_id) id: vec3<u32>) {
         }
         x[0] = 1.0;
     }
+    return x;
+}
 
+@compute @workgroup_size(8, 8)
+fn floor_cells(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= dims.width || id.y >= dims.height) {
+        return;
+    }
+    let cell = id.y * dims.width + id.x;
+    let n = dims.cells;
+
+    let x = renormalised(cell);
+    let comp = composition(x);
+    let x_n = x[ID_N];
+    let eps_floor = eps_th_floor(comp.inv_mu);
+
+    let sigma = hydro[cell];
+    let energy = hydro[3u * n + cell];
+    var mass_out = 0.0;
+    var energy_added = 0.0;
+    if (sigma < eos.sigma_vac) {
+        let s = eos.sigma_floor;
+        let e = s * (eps_floor + eps_cold(s, comp.y_e, x_n));
+        hydro[cell] = s;
+        hydro[n + cell] = 0.0;
+        hydro[2u * n + cell] = 0.0;
+        hydro[3u * n + cell] = e;
+        mass_out = sigma - s;
+        energy_added = e - energy;
+    } else {
+        let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
+        let raw = eps_th_raw(sigma, mom, energy, comp.y_e, x_n);
+        if (raw < eps_floor) {
+            let e = sigma * (eps_floor + eps_cold(sigma, comp.y_e, x_n)) + 0.5 * dot(mom, mom) / sigma;
+            hydro[3u * n + cell] = e;
+            energy_added = e - energy;
+        }
+    }
+    book[cell] += mass_out;
+    book[n + cell] += energy_added;
+}
+
+@compute @workgroup_size(8, 8)
+fn renormalise_species(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= dims.width || id.y >= dims.height) {
+        return;
+    }
+    let cell = id.y * dims.width + id.x;
+    let n = dims.cells;
+
+    let x = renormalised(cell);
     for (var i = 0u; i < PLANES_A; i++) {
         species_a[i * n + cell] = x[i];
     }
