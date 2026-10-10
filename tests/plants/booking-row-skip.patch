@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/state.rs
++++ b/crates/sr-engine/src/state.rs
+@@ -453,7 +453,7 @@
+         let rows = group.domain.rows(world);
+         for total in &mut totals[group.terms.clone()] {
+             let plane = &planes[base..base + slots];
+-            for row in &rows {
++            for row in &rows[..rows.len() - 1] { // planted: the last row is skipped
+                 *total += plane[row.clone()].iter().map(|&v| v as f64).sum::<f64>();
+             }
+             base += slots;

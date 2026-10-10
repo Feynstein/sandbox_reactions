@@ -1,0 +1,84 @@
+== 2026-10-10T14:59:14-04:00 booking · task M0-T18 · box Laser2025-20 :: bash tests/gpu.sh booking physics
+-- booking · exit=0 · 12.08 s
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.35s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-2e58d81167947221.exe)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+37 terms, 5548000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::the_paramsnames_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 4.02s
+
+
+== 2026-10-10T14:59:57-04:00 booking · task M0-T18 · box Laser2025-20 :: bash tests/gpu.sh booking physics
+-- booking · exit=0 · 8.83 s
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.18s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-2e58d81167947221.exe)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+37 terms, 5548000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 3.87s
+
+
+== 2026-10-10T15:01:28-04:00 booking · task M0-T18 · box Laser2025-20 :: bash tests/gpu.sh booking physics
+-- booking · exit=0 · 6.16 s
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 3.08s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-2e58d81167947221.exe)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+37 terms, 5548000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 2.56s
+
+
+== 2026-10-10T15:02:38-04:00 booking · task M0-T18 · box Laser2025-20 :: bash tests/gpu.sh booking physics
+-- booking · exit=0 · 13.56 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 3.87s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-2e58d81167947221.exe)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+37 terms, 5548000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 8.79s
+
+

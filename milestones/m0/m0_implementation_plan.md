@@ -85,7 +85,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-V2 | CHECK | Validation, lot 2: registries, EOS, strings, licences, web smoke, scan | AFTER M0-T17 | DONE (2026-10-10 14:08) |
 | M0-D17 | BUILD | web/smoke.mjs runs Chrome with `--no-sandbox`: playwright-core adds it by default, against §6.2.3 | AFTER M0-V2 | DONE (2026-10-10 14:22) |
 | M0-TM2 | PLAN | Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) | AFTER M0-D17 | DONE (2026-10-10 14:52, started 14:43) |
-| M0-T18 | BUILD | Booking: the per-cell side buffers and accumulators every pass books into | AFTER M0-V2 | TODO |
+| M0-T18 | BUILD | Booking: the per-cell side buffers and accumulators every pass books into | AFTER M0-V2 | DONE (2026-10-10 15:02) |
 | M0-T19 | BUILD | P8 floors complete (vacuum reset, temperature floor) and the EOS on the GPU | AFTER M0-T18 | TODO |
 | M0-T20 | BUILD | Δt and the non-finite guard (P1, P9) | AFTER M0-T19 | TODO |
 | M0-T21 | BUILD | The active box (§1.3.3) | AFTER M0-T20 | TODO |
@@ -861,7 +861,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 # Phase 5 — Lot 3 · the step framework: booking, floors, Δt, the box, the latch, time
 
 ## M0-T18 · Booking — the side buffers and accumulators every pass books into · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V2)
-- Status: TODO
+- Status: DONE (2026-10-10 15:02)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.4, §1.9.1 (the frame
   accumulators), §2.2 (the last paragraph), §2.9 + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/state.rs: §2.2's per-cell side buffers (φ, the heat flux F, the
@@ -879,7 +879,11 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   plant stays GO
 - Adversarial: a layout too small for a term a later pass needs forces every pass block to reopen this
   one — the layout lists every §2.9 term and §1.9.1 accumulator now, with its writer pass named.
-- Handoff: <placeholder>
+- Handoff: state.rs: SideFields (side.phi 1, side.flux 2 F_x/F_y, side.s_nu 1 planes), TERMS (37: every §2.9 booked term + the 10 §1.9.1 accumulators, writer pass named), BOOK_GROUPS (8 buffers, one writer each, const-asserted ≤128 MiB at 2048²), Booking (clear, readback), book_totals (f64, term→row→slot); State::readback now shares read_buffers. Scope booking 4 cases + plant booking-row-skip, testing.md lot-3 row.
+  Declared defaults: escaped booked per boundary face (Domain::EdgeFaces, 2(w+h) slots), not per cell; slots hold one frame (reader reads then clears; the ledger keeps the f64 cumulative); P5–P7 add straight into their accumulators (P9 needs no dispatch); swallowed is energy only (§2.9).
+  Measured, not acted on → flagged to M0-T57: floor_added's one writer is P8 (a P4 floor write-back needs its own term); book_totals sums full planes (~22 MB/readback at 600×400), so §2.9's per-frame path needs a GPU fixed-order partial reduction first.
+  Runs, win-laptop Laser2025-20, RTX 4080 Laptop: booking GO 4/0/0 (worst rel. error 0, tol 1e-9); --redarm booking GO (plant RED); claim --changed --base 2f176dd in tasks/M0-T18.md. linux-pc owed (R15).
+  Model: claude-opus-5-5, level high (rung_record.py). Detail: tasks/M0-T18.md. Next: the plan's next TODO block.
 
 ## M0-T19 · P8 floors, complete, and the equation of state on the GPU · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T18)
 - Status: TODO
@@ -1752,6 +1756,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T57 · The ledger · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T56)
 - Status: TODO
+- Carried flags: [M0-T18, 2026-10-10] M0-T18's booking (state.rs TERMS/BOOK_GROUPS/book_totals): (1) energy.floor_added has one writer, P8 — if P4 writes a floored E back (§2.3.3), add a P4 term, never share P8's buffer; (2) book_totals sums full per-slot planes (~22 MB a readback at 600×400) — §2.9's per-frame path needs a fixed-order GPU partial reduction in TERMS order first; slots hold one frame, the ledger keeps the f64 cumulative (tasks/M0-T18.md)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.9, §2.12.2 (ledger) +
   docs/agent/testing.md
 - Deliver: crates/sr-engine/src/ledger.rs (new): the mass, energy and momentum terms of §2.9 in f64 from

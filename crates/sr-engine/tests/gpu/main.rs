@@ -18,6 +18,9 @@ pub fn device() -> Gpu {
 /// M0-T3 — the cell state and the step loop (contract §2.2, §2.8, §1.3.2, §1.3.4).
 mod state;
 
+/// M0-T18 — the side fields and the booking layout (contract §2.2, §1.9.1, §2.9, §1.3.4).
+mod booking;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;
