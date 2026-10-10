@@ -20,7 +20,7 @@ One reaction mechanism, proven by fusion, waits for the chemistry to come; more 
 sound, a world size picked by graphics card, story mode, Steam and the rest of the physics list are
 routed past M0 (reports/sandbox_interview.md §4, reports/bootstrap.md §3). The Windows laptop, routed
 past M0 at bootstrap too, is in play for M0 since M0-TJ3 (Superseded section; R5, R15).
-Models: Claude Code — Opus 5.5, max (gate) · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium — strongest first; read 2026-10-09 from the claude-api skill's model table (cached 2026-10-06), the probe and the lead's answer
+Models: Claude Code — Opus 5.5, max (gate) · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium — strongest first; read 2026-10-10 from the claude-api skill's model table (cached 2026-10-06), the probe and the lead's answer
 Changes by asking: every block — the lead at bootstrap, 2026-10-08, "Any task, by asking you": physics formulas will need tuning as they get built; never a bypass that makes a failing check pass
 Launch prompt: « Read milestones/m0/m0_implementation_plan.md and execute M0-<id> yourself — you
 are the task agent, not an orchestrator. Grep for your own heading first. »
@@ -84,7 +84,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T17 | BUILD | Docs: physics.md (units, registries, EOS), lot 2's testing rows | AFTER M0-T16 | DONE (2026-10-10 10:53) |
 | M0-V2 | CHECK | Validation, lot 2: registries, EOS, strings, licences, web smoke, scan | AFTER M0-T17 | DONE (2026-10-10 14:08) |
 | M0-D17 | BUILD | web/smoke.mjs runs Chrome with `--no-sandbox`: playwright-core adds it by default, against §6.2.3 | AFTER M0-V2 | DONE (2026-10-10 14:22) |
-| M0-TM2 | PLAN | Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) | AFTER M0-D17 | TODO |
+| M0-TM2 | PLAN | Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) | AFTER M0-D17 | DONE (2026-10-10 14:52, started 14:43) |
 | M0-T18 | BUILD | Booking: the per-cell side buffers and accumulators every pass books into | AFTER M0-V2 | TODO |
 | M0-T19 | BUILD | P8 floors complete (vacuum reset, temperature floor) and the EOS on the GPU | AFTER M0-T18 | TODO |
 | M0-T20 | BUILD | Δt and the non-finite guard (P1, P9) | AFTER M0-T19 | TODO |
@@ -410,7 +410,7 @@ Inherited debt (§2.4): none.
 - Outstanding commit gates: Phase 4 (M0-T10 … M0-V2, then M0-D17 and M0-TM2 that M0-V2 filed) — the gate under M0-TM2, its text « closes after M0-V2 »; Phase 2b and Phase 3 are in dde81d3, pushed (per-block commits, R16)
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
-- Model ratings: 2026-10-09 by M0-TM1
+- Model ratings: 2026-10-10 by M0-TM2
 
 # Tasks
 
@@ -837,7 +837,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=high (rung_record now, the heading's rung). smoke.mjs launches Chrome with chromiumSandbox: true and both cases read chrome://version's #command_line: 'sandbox: on' in the log, NO-GO naming --no-sandbox otherwise (an unreadable command line is NO-GO too); plant smoke-no-sandbox (the option dropped) in the web scope; testing.md's web row (guard, plant, red-arm cost) and verify.json's desc say so. web GO 3/0/0 (ready 0.8 s, SR-CHROME-ADAPTER nvidia lovelace fallback=false: WebGPU holds in a sandboxed headless Chrome here, the BLOCKED arm did not fire); --redarm web GO 4/4 red, smoke-no-sandbox red on both cases, 515 s wall, 6.8 % external load, about 480 s normalised. Claim run verify.py --changed --base 2ada210 --task M0-D17: GO, 499 passed, 2/2 scopes (its web red-arm 4/4 red, 600.00 s, not load-measured); its two oracle FLAGs (the plant, verify.json) are the plant and scope entry Deliver names - declared, not a deviation. Owed on linux-pc (R15): web and its red-arm with the sandbox on - flagged to M0-V3. Detail: tasks/M0-D17.md. Next: M0-TM2.
 
 ## M0-TM2 · Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) · **PLAN** · Opus 5.5, max · switch · (AFTER M0-D17)
-- Status: TODO
+- Status: DONE (2026-10-10 14:52, started 14:43)
 - Read: this file (rules + this task) + PLAYBOOK.md §0 (the ladder, the rubric) and §B.3 (the probe) + the agent's model
   pages the ladder cites + the record (`rung_record.py report`; milestones/m0/reports/v2.md § Phase 4's close)
 - Deliver: the ladder re-read on the day — the probe and the model pages: a model retired, renamed or added, a price or a
@@ -851,7 +851,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   task file with its rule; the diff touches rating segments, the `Models:` line and the register's line only. Fail: any
   other byte changed; a BUILD or MOVE block above the cheapest rung that fits with none of §0's rules (1)–(4) named; a
   CHECK or PLAN block below `(gate)`.
-- Handoff: <placeholder>
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=max (rung_record now, the heading's rung). Ladder re-read 2026-10-10: the claude-api skill's table in Claude Code 2.1.295's bundle (cached 2026-10-06, the copy M0-TM1 read) - no rung retired, renamed, repriced or relevelled (Opus 5.5 $4/$20, Sonnet 5.5 $2/$10) → Models line re-dated, rungs unchanged, no question. Record today (rung_record report): BUILD on Sonnet 5.5, high 10 blocks at $1.85 per DONE block (M0-V2's $1.70 plus M0-D17, traced to M0-T15) against (usual) 11 blocks at $1.45 → rule (4) moves the class one rung, to (usual). 128 open blocks re-derived, 89 changed - Opus 5.5 max 20 (0) · Opus 5.5 high 101 (+89: 89 by rule (4), 12 by (3)'s list → (5)) · Sonnet 5.5 high 0 (−89) · Sonnet 5.5 medium 7 (0: E, their class n=1); no trail (rule (1)); every heading keeps · switch; the diff is the 89 rating segments and the Models line (checked against a post-status snapshot). Not acted on: the record's rows differ in kind ((usual) = 10 D fixes, Sonnet = 9 feature T's + TE-win; medians $1.12 vs $1.42; T15's escalation $6.24) and linux-pc's 28 blocks are unread - observations, rule (4) applied as written; Next task still reads M0-TM2 (outside TM2's diff; next is M0-T18); Repo facts name Claude Code 2.1.294, the probe reads 2.1.295. lint GO (496), plan_lint GO, its red-arm GO; the claim run verify.py --changed --base aa2e690 --task M0-TM2 is the last step, after this close. Detail: tasks/M0-TM2.md. Next: M0-T18.
 
 > **Commit gate (lead):** Phase 4 closes after M0-V2 — from the repo root, one at a time:
 > `git add -A`
@@ -962,7 +962,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   the test fires the latch at step 15 so that step 16's re-fit falls inside the stopped stretch.
 - Handoff: <placeholder>
 
-## M0-T23 · GPU timestamps, cost per step and `--timing` · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T22)
+## M0-T23 · GPU timestamps, cost per step and `--timing` · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T22)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3 (c_step), §2.12.2 (timing),
   §3.1 (poll), §3.3 (`--timing`), §6.2.2 + docs/agent/testing.md
@@ -982,7 +982,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   that uses them breaks in the browser; boundaries only.
 - Handoff: <placeholder>
 
-## M0-T24 · Time control — rungs, the frame plan, the cap, the slow-down, the 30-frames switch · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T23)
+## M0-T24 · Time control — rungs, the frame plan, the cap, the slow-down, the 30-frames switch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T23)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8, §3.2, §4.3, §4.12 (speeds) +
   docs/agent/testing.md
@@ -1003,7 +1003,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   after a long run — owed is bounded below by −Δt_est and the cap case runs 10,000 frames.
 - Handoff: <placeholder>
 
-## M0-T25 · Scene files · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T24)
+## M0-T25 · Scene files · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T24)
 - Status: TODO
 - Carried flags: [M0-T4, 2026-10-09] [M0-T4, 2026-10-09] scene files plug into check_scene / run in crates/sr-engine/src/headless.rs (a file path is refused with exit 4 today; preset:massive and preset:giant load the nominal Sun-like disk with an SR-WARN until calibration gives preset_mass_sb; the disk builder sun_disk_planes is there to move into the scene loader)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.8, §2.10 (the cloud's shape),
@@ -1045,7 +1045,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   diverges from the straight run — the 2 × 100 case compares the full state and the reports.
 - Handoff: <placeholder>
 
-## M0-T27 · Docs — architecture.md (the step, the box, the latch, the files) and time_control.md · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T26)
+## M0-T27 · Docs — architecture.md (the step, the box, the latch, the files) and time_control.md · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T26)
 - Status: TODO
 - Carried flags: [M0-V2, 2026-10-10] testing.md beside your lot-3 rows, stale since lot 2 (M0-V2, reports/v2.md): (a) the closing paragraph's « licences and strings … can be armed as soon as code exists » — both armed by lot 2; « §5 names 38 » counts rows (38 rows, 32 scope names); (b) the complete-loop line is M0-V1's linux-pc run — add M0-V2's win-laptop loop (reports/v2.md § The complete loop); (c) the build row's « ≈ 5 s on win-laptop (the empty sr-physics) », and the desktop and capture rows' « win-laptop route owed there » — measured by M0-V2 on a loaded box: --redarm build 300 s cold, 53–60 s warm; boot 431 s; capture 526 s; desktop 746 s (≈ 688 s normalised by load); web 752 s; (d) the watch_only row's « not the contract's watch-only » — the contract reads watch_only now (§0.5 [M0-V2], R17); (e) running.md's « The two ways a person starts the game (the lead, double-clicking) » lists start.ps1, which Windows does not run on a double-click (Explorer offers Notepad — the lead, M0-V2): start.bat is the double-click, start.ps1 runs from PowerShell (its command)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3, §1.8, §2.9, §2.12, §7 + the
@@ -1087,7 +1087,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 6 — Lot 4 · gravity
 
-## M0-T28 · The CPU twin's FFT and convolution · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V3)
+## M0-T28 · The CPU twin's FFT and convolution · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V3)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.3 (FFT sizes), §1.4.2, §2.5.4
   (K_ν, the same machinery) + docs/agent/testing.md
@@ -1106,7 +1106,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   comparison.
 - Handoff: <placeholder>
 
-## M0-T29 · Gravity on the CPU twin (P2) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T28)
+## M0-T29 · Gravity on the CPU twin (P2) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T28)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.1–§1.4.3, §1.7, §5.1 (G-GRAV1,
   G-GRAV2) + milestones/m0/reports/sim_models.md SM-C1 (the force-error measurement) +
@@ -1149,7 +1149,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   twiddles tabulated, the cost in the log.
 - Handoff: <placeholder>
 
-## M0-T31 · Gravity on the GPU (P2) and one step's cost at 600 × 400 · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T30)
+## M0-T31 · Gravity on the GPU (P2) and one step's cost at 600 × 400 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T30)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.3, §1.4, §5.1 (G-GRAV1,
   G-GRAV2), §6.1 + milestones/m0/reports/time_warp.md M2–M4 + docs/agent/testing.md
@@ -1174,7 +1174,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   promise is about — the Quadro is named in the command and checked in SR-ADAPTER.
 - Handoff: <placeholder>
 
-## M0-T32 · Docs — physics.md (gravity) and lot 4's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T31)
+## M0-T32 · Docs — physics.md (gravity) and lot 4's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T31)
 - Status: TODO
 - Carried flags: [M0-V2, 2026-10-10] physics.md's « Not checked at load » (Constants) names c_sb against max_gas_speed and the K1 timescale gap but not Σ_BH ≥ 4 × calibration's ns_sigma_max_sb (contract §2.6): the loader holds sigma_bh only to > 0 (registry.rs's Pos class), so the page reads as if that bound were checked; add it to the list when you edit the page (its check: M0-V7 names it, M0-V9 runs it) — M0-V2
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.3, §1.4, §7 + the handoffs of
@@ -1212,7 +1212,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 7 — Lot 5 · gas flow
 
-## M0-T33a · Sod's exact solution — the Riemann oracle for γ = 2 · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V4)
+## M0-T33a · Sod's exact solution — the Riemann oracle for γ = 2 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V4)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.3 (γ = 2), §5.1 (G-SOD) +
   milestones/m0/reports/sim_models.md SM-O5 + docs/agent/testing.md
@@ -1233,7 +1233,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   jump conditions, never by a scheme's output.
 - Handoff: <placeholder>
 
-## M0-T33b · Gas flow on the CPU twin (P4) — G-SOD's twin case · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T33a)
+## M0-T33b · Gas flow on the CPU twin (P4) — G-SOD's twin case · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T33a)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.7 (hydro), §2.3, §2.8 (bounce),
   §5.1 (G-SOD) + milestones/m0/reports/sim_models.md SM-E13, SM-E14, SM-O5 + docs/agent/testing.md
@@ -1271,7 +1271,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   copy of the case.
 - Handoff: <placeholder>
 
-## M0-T35 · The leave edge and escaped mass (G-EDGE) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T34)
+## M0-T35 · The leave edge and escaped mass (G-EDGE) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T34)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.8, §2.9 (escaped), §5.1 (G-EDGE)
   + docs/agent/testing.md
@@ -1291,7 +1291,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   drifts by the ghost's update — the case compares the grid's loss with the booked term to 10⁻⁶.
 - Handoff: <placeholder>
 
-## M0-T36 · Gravity's source in the flow — the cold collapse (G-COLL) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T35)
+## M0-T36 · Gravity's source in the flow — the cold collapse (G-COLL) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T35)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.2 (the sources), §2.7 (the K's),
   §5.1 (G-COLL) + milestones/m0/reports/sim_models.md SM-O2, SM-C2 + docs/agent/testing.md
@@ -1309,7 +1309,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   the scene's overrides list only the four K's, named in the handoff.
 - Handoff: <placeholder>
 
-## M0-T37 · The twin's step driver and `--cpu-reference` · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T36)
+## M0-T37 · The twin's step driver and `--cpu-reference` · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T36)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2, §1.7 (every solver's twin),
   §3.3 (`--cpu-reference`) + docs/agent/testing.md
@@ -1327,7 +1327,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   printed beside the GPU's in the log.
 - Handoff: <placeholder>
 
-## M0-T38 · GPU against the twin (G-REF) — the collapsing disk and the Sod strip · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T37)
+## M0-T38 · GPU against the twin (G-REF) — the collapsing disk and the Sod strip · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T37)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.7, §2.2 (canonical order), §5.1
   (G-REF), §6.7 + docs/agent/testing.md
@@ -1360,7 +1360,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   speed, close to the 0.4 the margin was sized for (§1.3.3).
 - Handoff: <placeholder>
 
-## M0-T40 · Docs — physics.md (gas flow, edges, the CPU twin) and lot 5's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T39)
+## M0-T40 · Docs — physics.md (gas flow, edges, the CPU twin) and lot 5's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T39)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.7, §2.3, §2.8, §7 + the handoffs of
   M0-T33a–M0-T39
@@ -1397,7 +1397,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 8 — Lot 6 · heat, light and burning
 
-## M0-T41 · Heat and light on the CPU twin (P5) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V5)
+## M0-T41 · Heat and light on the CPU twin (P5) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V5)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.4 (S1), §1.7 (heat), §2.4, §5.1
   (G-HEAT1, G-HEAT2, G-FLD) + milestones/m0/reports/sim_models.md SM-E18–SM-E22, SM-O7, SM-O8 +
@@ -1441,7 +1441,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   rest of the step — s and P5's share are in the handoff for M0-T63's probe.
 - Handoff: <placeholder>
 
-## M0-T43 · The radiation force in the flow · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T42)
+## M0-T43 · The radiation force in the flow · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T42)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P4), §2.4.4 +
   docs/agent/testing.md
@@ -1458,7 +1458,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   silently — the case steps F by hand and checks which one P4 read.
 - Handoff: <placeholder>
 
-## M0-T44a · The rate law — ω and its temperature table · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T43)
+## M0-T44a · The rate law — ω and its temperature table · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T43)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.1–§1.6.3, §2.5.1 +
   docs/agent/testing.md
@@ -1477,7 +1477,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   a case brackets T_thr.
 - Handoff: <placeholder>
 
-## M0-T44b · Burning on the CPU twin (P6) — G-BURN, G-ORDER twin cases · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T44a)
+## M0-T44b · Burning on the CPU twin (P6) — G-BURN, G-ORDER twin cases · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T44a)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.1–§1.6.3, §1.7 (reactions),
   §2.5.1, §2.5.2, §5.1 (G-BURN, G-ORDER) + docs/agent/testing.md
@@ -1497,7 +1497,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   the heat case sums q·Δm per sub-step against the total.
 - Handoff: <placeholder>
 
-## M0-T45 · Neutrino cooling and the iron gate on the CPU twin · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T44b)
+## M0-T45 · Neutrino cooling and the iron gate on the CPU twin · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T44b)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.2 (N_Fe), §1.8.5 (the latch's P6
   trigger), §2.5.3 + docs/agent/testing.md
@@ -1532,7 +1532,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   step of a hot core against a cold field is in the handoff.
 - Handoff: <placeholder>
 
-## M0-T47 · Neutrinos and the iron gate on the GPU, setting the latch · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T46)
+## M0-T47 · Neutrinos and the iron gate on the GPU, setting the latch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T46)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5, §2.5.3, §5.3 (G-LATCH) +
   docs/agent/testing.md
@@ -1561,7 +1561,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   H's mass fell by ≥ 1 % in the twin.
 - Handoff: <placeholder>
 
-## M0-T49 · Docs — physics.md (heat, light, reactions, neutrinos) and lot 6's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T48)
+## M0-T49 · Docs — physics.md (heat, light, reactions, neutrinos) and lot 6's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T48)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6, §2.4, §2.5, §7 + the handoffs of
   M0-T41–M0-T48
@@ -1599,7 +1599,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 9 — Lot 7 · black holes and neutrino heating
 
-## M0-T50 · Sinks on the CPU twin (P3) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V6)
+## M0-T50 · Sinks on the CPU twin (P3) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V6)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.3, §1.7 (sinks), §2.6, §2.9
   (swallowed), §5.1 (G-SINK) + milestones/m0/reports/sim_models.md SM-E28, SM-E29 +
@@ -1634,7 +1634,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   case puts two sinks' r_acc over one cell and checks the mass once.
 - Handoff: <placeholder>
 
-## M0-T52a · The sinks' pull and the latch on formation · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T51)
+## M0-T52a · The sinks' pull and the latch on formation · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T51)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.3, §1.8.5, §2.6 +
   docs/agent/testing.md
@@ -1662,7 +1662,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   hole — the round trip compares the sinks' state too.
 - Handoff: <placeholder>
 
-## M0-T53 · Neutrino heating on the CPU twin (P7) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T52b)
+## M0-T53 · Neutrino heating on the CPU twin (P7) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T52b)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.4 (S2), §2.5.4, §2.7 (f_dep) +
   docs/agent/testing.md
@@ -1680,7 +1680,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   energy case is exact by construction and must stay so.
 - Handoff: <placeholder>
 
-## M0-T54 · Neutrino heating on the GPU (P7) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T53)
+## M0-T54 · Neutrino heating on the GPU (P7) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T53)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P7), §2.5.4 +
   docs/agent/testing.md
@@ -1695,7 +1695,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   star — the zero-dispatch case.
 - Handoff: <placeholder>
 
-## M0-T55 · Docs — physics.md (sinks, neutrino heating, the stand-ins) and lot 7's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T54)
+## M0-T55 · Docs — physics.md (sinks, neutrino heating, the stand-ins) and lot 7's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T54)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.4, §2.5.4, §2.6, §7 + the
   handoffs of M0-T50–M0-T54
@@ -1750,7 +1750,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   multiple of 8 (§1.3.3), and the plant drops a row to prove the check sees it.
 - Handoff: <placeholder>
 
-## M0-T57 · The ledger · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T56)
+## M0-T57 · The ledger · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T56)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.9, §2.12.2 (ledger) +
   docs/agent/testing.md
@@ -1768,7 +1768,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   placed so mass leaves within the 500 steps, and the escaped total is printed.
 - Handoff: <placeholder>
 
-## M0-T58 · Objects · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T57)
+## M0-T58 · Objects · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T57)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.2, §2.7 (sigma_obj), §3.1
   (Tracker::update) + docs/agent/testing.md
@@ -1787,7 +1787,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   blob shifted by two blocks between summaries keeps its id.
 - Handoff: <placeholder>
 
-## M0-T59 · Stages and events · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T58)
+## M0-T59 · Stages and events · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T58)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5 (the latch event), §1.9.3,
   §1.9.4 + docs/agent/testing.md
@@ -1805,7 +1805,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   its history only, and lives in observe, which G-WATCH keeps out of the step.
 - Handoff: <placeholder>
 
-## M0-T60 · Observers in headless runs · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T59)
+## M0-T60 · Observers in headless runs · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T59)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.12.2, §3.3 (`--until`, `--max-steps`,
   events.jsonl, exit 2) + docs/agent/testing.md
@@ -1824,7 +1824,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   the stop step and its sim time are recorded, and the case states the overshoot it allows.
 - Handoff: <placeholder>
 
-## M0-T61 · The preset cloud at a given mass · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T60)
+## M0-T61 · The preset cloud at a given mass · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T60)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.1, §2.10, §2.11 (items 3–4 use it)
   + docs/agent/testing.md
@@ -1842,7 +1842,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   W is the grid's own, from P2.
 - Handoff: <placeholder>
 
-## M0-T62 · No artificial fragmentation (G-JEANS) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T61)
+## M0-T62 · No artificial fragmentation (G-JEANS) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T61)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.3.5 (the Jeans number), §5.1
   (G-JEANS), §5.5 + docs/agent/testing.md
@@ -1859,7 +1859,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   case reports the largest Σ reached and fails rather than passing on a timeout.
 - Handoff: <placeholder>
 
-## M0-T63 · The step-cost probe — a main sequence's steps and the box's cost on the Quadro · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T62)
+## M0-T63 · The step-cost probe — a main sequence's steps and the box's cost on the Quadro · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T62)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.2, §1.8.6, §5.3 (G-FPS, G-TOP),
   §5.5 + milestones/m0/reports/time_warp.md (Summary, R1, R8) + milestones/m0/reports/plan_redteam.md RT6
@@ -1879,7 +1879,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   the projection (TW's scenarios).
 - Handoff: <placeholder>
 
-## M0-T64 · Docs — readouts.md (summary, ledger, objects, stages, events) and lot 8's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T63)
+## M0-T64 · Docs — readouts.md (summary, ledger, objects, stages, events) and lot 8's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T63)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9, §2.9, §7 + the handoffs of
   M0-T56–M0-T63
@@ -1918,7 +1918,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 11 — Lot 9 · calibration
 
-## M0-T65 · The calibration file, its physics hash and the refusal (G-CAL) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V8)
+## M0-T65 · The calibration file, its physics hash and the refusal (G-CAL) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V8)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §2.11 (schema, refusal), §3.1
   (Engine::new's errors), §3.3 (exit 6), §5.4 (G-CAL) + docs/agent/testing.md
@@ -1939,7 +1939,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   not — the canonical form is hashed, and a reformatted physics.json keeps its hash.
 - Handoff: <placeholder>
 
-## M0-T66 · The `calibrate` command and items 1–2 — the cold ceilings · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T65)
+## M0-T66 · The `calibrate` command and items 1–2 — the cold ceilings · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T65)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.3.2 (M_ch), §2.7 (the K's), §2.11
   (the procedure, items 1–2), §2.12.1 (overrides), §3.3 (calibrate), §6.4 + docs/agent/testing.md
@@ -1966,7 +1966,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   the 1.1 × case of G-CORE (M0-T67) is the counter-check.
 - Handoff: <placeholder>
 
-## M0-T67 · The cold ceiling holds (G-CORE) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T66)
+## M0-T67 · The cold ceiling holds (G-CORE) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T66)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.1 (K9), §2.3.2, §5.1 (G-CORE),
   §5.5 + docs/agent/testing.md
@@ -1983,7 +1983,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   run fresh from the stored value.
 - Handoff: <placeholder>
 
-## M0-T68 · `calibrate` items 3–4 — the ignition and ending thresholds · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T67)
+## M0-T68 · `calibrate` items 3–4 — the ignition and ending thresholds · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T67)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.3, §1.9.4, §2.10, §2.11 items 3–4,
   §6.4 + docs/agent/testing.md
@@ -2003,7 +2003,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   driver refuses a bracket whose first runs end alike, and every run's ending is logged.
 - Handoff: <placeholder>
 
-## M0-T69 · Real-equivalent translations (G-READ) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T68)
+## M0-T69 · Real-equivalent translations (G-READ) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T68)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.10.1–§1.10.3, §5.4 (G-READ) +
   docs/agent/testing.md
@@ -2023,7 +2023,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   between them — a midpoint case per segment.
 - Handoff: <placeholder>
 
-## M0-T70 · `calibrate` items 5–6 — the order, preset masses, the Sun's life, the top rung · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T69)
+## M0-T70 · `calibrate` items 5–6 — the order, preset masses, the Sun's life, the top rung · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T69)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.2 (TOP), §1.10.1, §2.10, §2.11
   items 5–7, §5.5 + docs/agent/testing.md
@@ -2044,7 +2044,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   surface — exit 6 and the report, never a retry with other constants.
 - Handoff: <placeholder>
 
-## M0-T71 · Docs — calibrating, and lot 9's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T70)
+## M0-T71 · Docs — calibrating, and lot 9's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T70)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §1.10, §2.11, §6.4, §7 + the
   handoffs of M0-T65–M0-T70
@@ -2091,7 +2091,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 12 — Lot 10 · the readouts, the presets and the player's edits
 
-## M0-T72 · The predicted ending · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V9)
+## M0-T72 · The predicted ending · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V9)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §1.10.1 + docs/agent/testing.md
 - Deliver: crates/sr-physics/src/observe/ending.rs (new): from M in Suns (M0-T69) — below 0.08 failed
@@ -2107,7 +2107,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   §1.9.5 says sandbox mass, and the edge cases are taken there.
 - Handoff: <placeholder>
 
-## M0-T73 · The age clock · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T72)
+## M0-T73 · The age clock · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T72)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.3 (the fuels), §1.10.4 +
   docs/agent/testing.md
@@ -2125,7 +2125,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   age jump back — the clock integrates Δφ, and a case changes stage mid-run.
 - Handoff: <placeholder>
 
-## M0-T74 · The three presets and several clouds (G-MULTI) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T73)
+## M0-T74 · The three presets and several clouds (G-MULTI) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T73)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.10, §3.3 (`preset:`), §5.2
   (G-MULTI) + docs/agent/testing.md
@@ -2141,7 +2141,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   scene's 240 cells against each cloud's radius is asserted before the run.
 - Handoff: <placeholder>
 
-## M0-T75 · Number formats · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T74)
+## M0-T75 · Number formats · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T74)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §4.1 (units.*, time.*), §4.12 +
   docs/agent/testing.md
@@ -2160,7 +2160,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   — the boundary cases pick the unit after rounding.
 - Handoff: <placeholder>
 
-## M0-T76 · Player edits on the GPU (P0) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T75)
+## M0-T76 · Player edits on the GPU (P0) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T75)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P0), §1.12, §2.7 (paint_sigma,
   paint_t, heat_factor, cool_factor), §2.9 (painted, erased, preset_dropped, cleared, tools), §3.1
@@ -2183,7 +2183,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   — the case checks momentum, not velocity.
 - Handoff: <placeholder>
 
-## M0-T77 · The edits file and `--edits` · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T76)
+## M0-T77 · The edits file and `--edits` · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T76)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.12.5, §3.3 (`--edits`) +
   docs/agent/testing.md
@@ -2201,7 +2201,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   triggers read the state at the step boundary, and the two-run case proves it.
 - Handoff: <placeholder>
 
-## M0-T78 · Docs — readouts.md (the ending, the age), physics.md (edits) and lot 10's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T77)
+## M0-T78 · Docs — readouts.md (the ending, the age), physics.md (edits) and lot 10's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T77)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §1.10.4, §1.12, §2.12.5, §4.12,
   §7 + the handoffs of M0-T72–M0-T77
@@ -2238,7 +2238,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 13 — Lot 11 · drawing, headless
 
-## M0-T79 · The blackbody table · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V10)
+## M0-T79 · The blackbody table · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V10)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.11 (the Glow view's colour) +
   docs/agent/testing.md
@@ -2257,7 +2257,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   and 6,500 K's near-white are external anchors.
 - Handoff: <placeholder>
 
-## M0-T80 · The cell image and the four views · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T79)
+## M0-T80 · The cell image and the four views · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T79)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3 (α), §1.10.2, §1.11, §3.1
   (render), §4.11 (the maps) + docs/agent/testing.md
@@ -2277,7 +2277,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   midpoint case per map.
 - Handoff: <placeholder>
 
-## M0-T81 · The glow · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T80)
+## M0-T81 · The glow · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T80)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.11 (Glow), §4.11 (glow) +
   docs/agent/testing.md
@@ -2292,7 +2292,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Adversarial: a glow applied in every view tints the Heat and Density maps — the other-views case.
 - Handoff: <placeholder>
 
-## M0-T82 · Frames from headless runs · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T81)
+## M0-T82 · Frames from headless runs · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T81)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.3 (`--frames-every`, `--view`), §6.3
   + docs/agent/testing.md
@@ -2308,7 +2308,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   matches the dump of the same step.
 - Handoff: <placeholder>
 
-## M0-T83 · Docs — architecture.md (rendering) and lot 11's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T82)
+## M0-T83 · Docs — architecture.md (rendering) and lot 11's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T82)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.11, §4.11, §7 + the handoffs of
   M0-T79–M0-T82
@@ -2343,7 +2343,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 14 — Lot 12 · the window: the world and its time
 
-## M0-T84 · The world in the window — the frame loop · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V11)
+## M0-T84 · The world in the window — the frame loop · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V11)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3, §1.11 (the integer scale),
   §3.1 (encode_frame, render, poll), §4.1 (status.line), §4.2 (centre, status bar) + docs/agent/running.md
@@ -2364,7 +2364,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   blocks (§3.1), and the case's fps at ×1 is printed.
 - Handoff: <placeholder>
 
-## M0-T85 · The top bar — time controls, the speed readout, the slow-down setting · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T84)
+## M0-T85 · The top bar — time controls, the speed readout, the slow-down setting · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T84)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.2–§1.8.4, §4.1 (time.*), §4.2 (the
   top bar), §4.3, §4.10 (Space, ., 1–9, + or =, −), §4.11, §4.12 (speeds) + docs/agent/testing.md
@@ -2387,7 +2387,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   model, and TV2's captures compare the two.
 - Handoff: <placeholder>
 
-## M0-T86 · The banner and the automatic slow-down in the app · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T85)
+## M0-T86 · The banner and the automatic slow-down in the app · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T85)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5, §1.9.4, §4.1 (banner.*), §4.2
   (the banner), §4.3, §4.11 (banner tokens) + docs/agent/testing.md
@@ -2405,7 +2405,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   frame shows a second banner — each event fires once per object (§1.9.4), and a case sends both.
 - Handoff: <placeholder>
 
-## M0-T87 · World actions — the edge choice and Clear world · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T86)
+## M0-T87 · World actions — the edge choice and Clear world · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T86)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.12 (Clear world), §2.8 (D1), §4.1
   (edge.*, world.*), §4.2, §4.7, §4.10 (Delete) + docs/agent/testing.md
@@ -2423,7 +2423,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   case reads all four after a Clear.
 - Handoff: <placeholder>
 
-## M0-T88 · Docs — running.md (the window) and time_control.md (the app's frame loop) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T87)
+## M0-T88 · Docs — running.md (the window) and time_control.md (the app's frame loop) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T87)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8, §4.2, §4.3, §4.10, §7 + the
   handoffs of M0-T84–M0-T87
@@ -2437,7 +2437,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   §4.10 and the view models' cases.
 - Handoff: <placeholder>
 
-## M0-TV2 · UI/UX pass — Phase 14: the world and its time · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T88)
+## M0-TV2 · UI/UX pass — Phase 14: the world and its time · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T88)
 - Status: TODO
 - Read: this file (rules + this task) + docs/agent/running.md + milestones/m0/m0_contrat.md §3.3 (capture),
   §4.2, §4.3, §4.7, §4.11 + PLAYBOOK.md §8 (TV) and §A.4 (review_page.py's section text)
@@ -2482,7 +2482,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 15 — Lot 13 · the window: tools, stars and cells
 
-## M0-T89 · Tools and elements · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V12)
+## M0-T89 · Tools and elements · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V12)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.5 (colours), §1.12, §4.1 (tools.*,
   element.*), §4.2 (left panel), §4.4, §4.10 (B, E, H, C, [, ]) + docs/agent/testing.md
@@ -2503,7 +2503,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   fast mouse — the case drives frames, not events.
 - Handoff: <placeholder>
 
-## M0-T90 · Presets in the window · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T89)
+## M0-T90 · Presets in the window · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T89)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.12 (DropPreset), §4.1 (presets.*),
   §4.2, §4.5, §4.10 (Esc) + docs/agent/testing.md
@@ -2536,7 +2536,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   tools after a switch.
 - Handoff: <placeholder>
 
-## M0-T92 · The star readout and selection · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T91)
+## M0-T92 · The star readout and selection · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T91)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.3 (Supergiant), §1.9.5, §1.9.6,
   §4.1 (star.*, fate.*, ending.*, stage.*), §4.2 (right panel), §4.6, §4.12 + docs/agent/testing.md
@@ -2572,7 +2572,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   waiting and counts the frames until the reply.
 - Handoff: <placeholder>
 
-## M0-T93b · The cell inspector · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T93a)
+## M0-T93b · The cell inspector · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T93a)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §4.1 (inspect.*), §4.6, §4.12
   (inspector numbers, percentages) + docs/agent/testing.md
@@ -2610,7 +2610,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   asking), and M0-V13 names the gap.
 - Handoff: <placeholder>
 
-## M0-T95 · The UI's cost — `--measure-ui` · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T94)
+## M0-T95 · The UI's cost — `--measure-ui` · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T94)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3 (R_reserve), §2.11 item 7,
   §3.3 (Measure UI) + docs/agent/testing.md
@@ -2630,7 +2630,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   — the agent's run writes only a copy, and the real file's value names its adapter.
 - Handoff: <placeholder>
 
-## M0-T96 · Docs — running.md (tools, presets, captures, measuring the UI) and lot 13's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T95)
+## M0-T96 · Docs — running.md (tools, presets, captures, measuring the UI) and lot 13's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T95)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.3, §3.5, §4.4–§4.6, §7 + the
   handoffs of M0-T89–M0-T95
@@ -2644,7 +2644,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   §3.3's and the harness's.
 - Handoff: <placeholder>
 
-## M0-TV3 · UI/UX pass — Phase 15: tools, stars and cells · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T96)
+## M0-TV3 · UI/UX pass — Phase 15: tools, stars and cells · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T96)
 - Status: TODO
 - Read: this file (rules + this task) + docs/agent/running.md + milestones/m0/m0_contrat.md §3.3 (capture),
   §4.2, §4.4–§4.6, §4.11, §6.2.3 + PLAYBOOK.md §8 (TV) and §A.4 (review_page.py's section text)
@@ -2691,7 +2691,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 16 — Lot 14 · a star's whole life, measured and tuned
 
-## M0-T97 · The life probe — three presets' lives, measured · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V13)
+## M0-T97 · The life probe — three presets' lives, measured · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V13)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.4 (the stand-ins' triggers),
   §1.9.3, §2.10, §5.2, §5.5, §6.4 + milestones/m0/reports/step_cost.md
@@ -2732,7 +2732,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   its pointer. Fail: a stand-in enabled without a measured failure or without the lead's answer.
 - Handoff: <placeholder>
 
-## M0-T98a · K1's gap tuned — the clocks spread apart · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TJ1)
+## M0-T98a · K1's gap tuned — the clocks spread apart · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TJ1)
 - Status: TODO
 - Carried flags: [M0-TB, 2026-10-08] the one physics.json write makes assets/calibration.json stale (G-CAL): scopes that run named presets or read the real calibration are refused (exit 6) until M0-V14's recalibration — if your claim run's --changed set holds one, that red is G-CAL working: name it and ask the lead before the claim run (Changes by asking), never a looser check
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §2.4 (a_r, c_sb, κ₀), §2.5.1
@@ -2759,7 +2759,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   preset-free clouds until the one final write.
 - Handoff: <placeholder>
 
-## M0-T99a · The mass ladder tuned — every life fits the world · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T98a)
+## M0-T99a · The mass ladder tuned — every life fits the world · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T98a)
 - Status: TODO
 - Carried flags: [M0-TB, 2026-10-08] the one physics.json write makes assets/calibration.json stale (G-CAL): scopes that run named presets or read the real calibration are refused (exit 6) until M0-V14's recalibration — if your claim run's --changed set holds one, that red is G-CAL working: name it and ask the lead before the claim run (Changes by asking), never a looser check
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §1.10.1 (D5's squeezed ladder),
@@ -2782,7 +2782,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   physics.json key changes only by asking the lead (Changes by asking, §0.3), never in place here.
 - Handoff: <placeholder>
 
-## M0-T102 · Docs — physics.md (the tuning record) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T99a)
+## M0-T102 · Docs — physics.md (the tuning record) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T99a)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §2.5.1, §2.7, §7 +
   milestones/m0/reports/lives.md + the handoffs of M0-T97, M0-T98a and M0-T99a (and M0-TJ1's if woken)
@@ -2827,7 +2827,7 @@ M0-T99b, M0-T100 and M0-T101 run in this lot, after M0-V14's recalibration, beca
 named presets, which the engine refuses once lot 14's tuning changes physics.json (G-CAL) until that run;
 M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 by `plan.py move`.
 
-## M0-T103 · The visible life (G-STAGES) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V14)
+## M0-T103 · The visible life (G-STAGES) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V14)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.3, §5.2 (G-STAGES), §5.5 +
   milestones/m0/reports/lives.md + docs/agent/testing.md
@@ -2843,7 +2843,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   stage needs 3 identical summaries (§1.9.3), and the case reads displayed stages, not raw matches.
 - Handoff: <placeholder>
 
-## M0-T104 · Each ending as predicted (G-END) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T103)
+## M0-T104 · Each ending as predicted (G-END) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T103)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §2.12.2, §5.2 (G-END), §5.5,
   §6.4 + docs/agent/testing.md
@@ -2860,7 +2860,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   case uses `--until ending` (§3.3).
 - Handoff: <placeholder>
 
-## M0-T105 · Touch any time (G-TOUCH) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T104)
+## M0-T105 · Touch any time (G-TOUCH) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T104)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.12, §2.12.5, §5.2 (G-TOUCH), §5.5 +
   docs/agent/testing.md
@@ -2877,7 +2877,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   records the prediction after the edit and checks the ending against it.
 - Handoff: <placeholder>
 
-## M0-T106 · Conservation over whole lives (G-CONS) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T105)
+## M0-T106 · Conservation over whole lives (G-CONS) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T105)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §2.9, §5.1 (G-CONS), §5.5 +
   milestones/m0/reports/lives.md (the dumps) + docs/agent/testing.md
@@ -2893,7 +2893,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   lists each term's size beside the drift.
 - Handoff: <placeholder>
 
-## M0-T107 · The age clock over a touched life (G-AGE) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T106)
+## M0-T107 · The age clock over a touched life (G-AGE) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T106)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.10.4, §2.12.5, §5.4 (G-AGE) +
   docs/agent/testing.md
@@ -2909,7 +2909,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   also prints each stage's share of the age.
 - Handoff: <placeholder>
 
-## M0-T98b · The clocks' order (G-SQUEEZE) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T107)
+## M0-T98b · The clocks' order (G-SQUEEZE) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T107)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §5.2 (G-SQUEEZE), §5.5, §6.4 +
   milestones/m0/reports/lives.md (§ Tuning — K1) + docs/agent/testing.md
@@ -2927,7 +2927,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   off M0-T98a's preset-free clouds would grade the tuning by itself — the case runs the presets.
 - Handoff: <placeholder>
 
-## M0-T99b · Every life fits the world (G-FIT) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T98b)
+## M0-T99b · Every life fits the world (G-FIT) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T98b)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §5.2 (G-FIT), §5.5, §6.4 +
   milestones/m0/reports/lives.md (§ Tuning — the mass ladder) + docs/agent/testing.md
@@ -2944,7 +2944,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   case prints each life's closest approach beside M0-T99a's.
 - Handoff: <placeholder>
 
-## M0-T100 · Virial equilibrium (G-VIR) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T99b)
+## M0-T100 · Virial equilibrium (G-VIR) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T99b)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §5.1 (G-VIR), §5.5 +
   docs/agent/testing.md
@@ -2958,7 +2958,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   dump against the summary's.
 - Handoff: <placeholder>
 
-## M0-T101 · The thermostat (G-THERMO) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T100)
+## M0-T101 · The thermostat (G-THERMO) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T100)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §5.1 (G-THERMO), §5.5 +
   milestones/m0/reports/lives.md (the dumps) + docs/agent/testing.md
@@ -2973,7 +2973,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   energy is read back one step after the kick.
 - Handoff: <placeholder>
 
-## M0-T108 · Docs — readouts.md (the stages over a life) and lot 15's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T101)
+## M0-T108 · Docs — readouts.md (the stages over a life) and lot 15's testing rows · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T101)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9, §5.1 (G-VIR, G-THERMO), §5.2, §7 +
   the handoffs of M0-T103–M0-T107, M0-T98b, M0-T99b, M0-T100 and M0-T101
@@ -3014,7 +3014,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
 
 # Phase 18 — Lot 16 · speed and frame rate
 
-## M0-T109 · The bench · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V15)
+## M0-T109 · The bench · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V15)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8, §3.3 (bench), §5.3 (G-FPS,
   G-TOP), §6.1 + docs/agent/testing.md
@@ -3033,7 +3033,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   rendering and the frame-cost case must see it.
 - Handoff: <placeholder>
 
-## M0-T110 · Warps never touch the physics (G-WARP) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T109)
+## M0-T110 · Warps never touch the physics (G-WARP) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T109)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.4, §1.8.7, §5.3 (G-WARP) +
   docs/agent/testing.md
@@ -3065,7 +3065,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   dump's step and turns on within the frame.
 - Handoff: <placeholder>
 
-## M0-T112 · The frame rate (G-FPS) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T111)
+## M0-T112 · The frame rate (G-FPS) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T111)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.6, §5.3 (G-FPS), §6.1, §6.4 +
   milestones/m0/reports/lives.md (the mid-main-sequence dump) + docs/agent/testing.md
@@ -3082,7 +3082,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   Quadro.
 - Handoff: <placeholder>
 
-## M0-T113 · A Sun-like life in about 10 s (G-TOP) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T112)
+## M0-T113 · A Sun-like life in about 10 s (G-TOP) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T112)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.2, §1.8.6, §5.3 (G-TOP), §6.4 +
   docs/agent/testing.md
@@ -3115,7 +3115,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   (§1.8.6).
 - Handoff: <placeholder>
 
-## M0-T114 · The gravity cadence (G-CAD), only if the budget needs it · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TJ2)
+## M0-T114 · The gravity cadence (G-CAD), only if the budget needs it · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TJ2)
 - Status: DEFERRED (wake: G-FPS or G-TOP red with P2's share of the step large enough, by per_pass_ms, that k = 4 brings the frame under budget — or the lead's word)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.4, §1.8.5, §5.3 (G-CAD) +
   docs/agent/testing.md
@@ -3133,7 +3133,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   steps — the decision reads the state at the step boundary (§1.4.4).
 - Handoff: <placeholder>
 
-## M0-T115 · Docs — time_control.md (the bench and the frame budget), running.md (long runs) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T114)
+## M0-T115 · Docs — time_control.md (the bench and the frame budget), running.md (long runs) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T114)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8, §3.3 (bench), §6.4, §7 + the
   handoffs of M0-T109–M0-T113
@@ -3190,7 +3190,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   per lot against the code directly and says which.
 - Handoff: <placeholder>
 
-## M0-TD · Show-off demo — a star's life staged and polished · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V17)
+## M0-TD · Show-off demo — a star's life staged and polished · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V17)
 - Status: TODO
 - Read: this file (rules + this task) + milestones/m0/reports/lives.md + docs/agent/running.md +
   PLAYBOOK.md §13 (OPT-B) and §8 (TV)
@@ -3231,7 +3231,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
   list.
 - Handoff: <placeholder>
 
-## M0-T116 · Documentation — the tracker and the docs aligned with what shipped · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TW)
+## M0-T116 · Documentation — the tracker and the docs aligned with what shipped · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TW)
 - Status: TODO
 - Read: this file (rules + this task) + milestones.md + docs/agent/*.md + milestones/m0/reports/walk1.md +
   milestones/m0/reports/v17.md

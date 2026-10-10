@@ -1,0 +1,31 @@
+==== 2026-10-10T14:49:18-04:00 plan_lint · clean · a fresh scratch copy of the tree
+== 2026-10-10T14:49:18-04:00 plan_lint · task M0-TM2 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.70 s
+lint: checks=496 failed=0 warnings=8 · blocks=179 · flow_rows=179 · verify_fences=0 · history=0 · flow=per-task · header=418/600 · pipeline=9/60 · ladder=4 rungs · refresh=2/5
+WARN: M0-TC1: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-D10: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D11: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D14: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D15: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D16: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D12: DONE outside the current phase and 26 lines long - stub it (§2.6)
+WARN: M0-D13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+=== GO ===
+
+==== 2026-10-10T14:49:20-04:00 plan_lint · plant plan-bad-status · a fresh scratch copy of the tree
+planted plan-bad-status: {python} -S -c "import pathlib;p=pathlib.Path('milestones/m0/m0_implementation_plan.md');t=p.read_text(encoding='utf-8');assert '- Status: DONE' in t;p.write_text(t.replace('- Status: DONE','- Status: WIBBLE',1),encoding='utf-8')" -> exit 0
+== 2026-10-10T14:49:21-04:00 plan_lint · task M0-TM2 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=1 · 0.55 s
+lint: checks=497 failed=2 warnings=8 · blocks=179 · flow_rows=179 · verify_fences=0 · history=0 · flow=per-task · header=418/600 · pipeline=9/60 · ladder=4 rungs · refresh=2/5
+FAIL: M0-TI: 'WIBBLE (2026-10-08 09:10, started 08:51) · archived by M0-TB, 2026-10-08' is off §3.3's closed set - the statuses: TODO · IN PROGRESS (<stamp> | awaiting: <question>) · DONE (<date> ...) · BLOCKED (+ what unblocks it) | BLOCKED-D<n> · DEFERRED (wake: <condition>) · N/A (<reason>) (line 420)
+FAIL: Flow row M0-TI says 'DONE', block says None
+WARN: M0-TC1: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-D10: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D11: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D14: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D15: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D16: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D12: DONE outside the current phase and 26 lines long - stub it (§2.6)
+WARN: M0-D13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+=== NO-GO: 2 violation(s) ===
+

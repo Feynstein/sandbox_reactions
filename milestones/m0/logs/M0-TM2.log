@@ -1,0 +1,90 @@
+M0-TM2 log — rating pass · box: win-laptop (Laser2025-20) · started 2026-10-10 14:36    
+now: model=claude-opus-5-5 level=max plugin=installed (heading rung Opus 5.5, max — match)
+probe: CLAUDECODE=1 CLAUDE_EFFORT=xhigh AI_AGENT=claude-code_2-1-295_agent
+report: 51 DONE blocks · 10 class/rung rows · 1 session folder(s) · 28 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 3 D block(s) naming no cause in the record · $58.68 read from the sessions' own cost
+BUILD on Opus 5.5, high: 11 block(s) · first-try 6/11 · $1.45 per DONE block · usual
+BUILD on Sonnet 5.5, high: 10 block(s) · first-try 8/10 · $1.85 per DONE block · costs more on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 17 block(s) · first-try 7/12 · n/a per DONE block · off the ladder
+BUILD·E on Sonnet 5.5, medium: 1 block(s) · first-try 1/1 · $1.15 per DONE block · n<10
+BUILD·E on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+CHECK on Opus 5.5, max: 1 block(s) · first-try 1/1 · $16.30 per DONE block · above (usual)
+CHECK on unknown: 1 block(s) · first-try 1/1 · n/a per DONE block · off the ladder
+MOVE on unknown: 1 block(s) · first-try n/a · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 2 block(s) · first-try 1/2 · $9.73 per DONE block · above (usual)
+PLAN on unknown: 5 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+=== GO ===
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+--- 14:49 plan.py lint (pass 1, after the 89 rating edits and the Models line)
+lint: checks=496 failed=0 warnings=8 · blocks=179 · flow_rows=179 · verify_fences=0 · history=0 · flow=per-task · header=418/600 · pipeline=9/60 · ladder=4 rungs · refresh=2/5
+WARN: M0-TC1: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-D10: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D11: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D14: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D15: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D16: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D12: DONE outside the current phase and 26 lines long - stub it (§2.6)
+WARN: M0-D13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+=== GO ===
+exit 0
+--- 14:49 verify.py plan_lint --task M0-TM2
+plan_lint  496/0/0      0.28 s  GO
+logs: milestones/m0/logs/M0-TM2.<scope>.log · record: loop_times.jsonl · tree aa2e690b4fc8+8ea2ad787f2a
+anchor: 1 path×scope entries moved by this run
+anchor: 87 paths checked · 78 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 87 covered of 165 visible
+verify: 496 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.28 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 4.02->3.92
+=== GO ===
+exit 0
+--- 14:49 verify.py --redarm plan_lint --task M0-TM2
+plan_lint · clean · GO
+plan_lint · plant plan-bad-status · RED (proven: 497 failed; its own verdict NO-GO: 2 violation(s))
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope plan_lint · 5.39 s · box Laser2025-20 · log milestones/m0/logs/M0-TM2.plan_lint.redarm.log
+=== GO ===
+exit 0
+--- 14:52 plan.py close M0-TM2 --status DONE --set Model ratings=2026-10-10 by M0-TM2
+close: checks=4 failed=0 warnings=0 · handoff_lines=1 · flow=per-task · set=1 · replaced=1 · appended=0
+=== GO ===
+exit 0
+--- 14:52 plan.py lint (final plan, after the close)
+lint: checks=495 failed=0 warnings=11 · blocks=179 · flow_rows=179 · verify_fences=0 · history=0 · flow=per-task · header=418/600 · pipeline=9/60 · ladder=4 rungs · refresh=0/5
+=== GO ===
+exit 0
+WARN: M0-TC1: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-D10: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D11: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D14: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D15: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D16: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D12: DONE outside the current phase and 26 lines long - stub it (§2.6)
+WARN: M0-D13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-V2: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D17: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-TM2: DONE outside the current phase and 16 lines long - stub it (§2.6)
+--- 14:52 claim run: verify.py --changed --base aa2e690 --task M0-TM2
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since aa2e690: milestones/m0/m0_implementation_plan.md
+plan_lint       495/0/0      0.31 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since aa2e690)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since aa2e690)
+build           NOT RUN (not impacted: its 28 path(s) checked at the anchor, none moved since aa2e690)
+registry        NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since aa2e690)
+eos             NOT RUN (not impacted: its 13 path(s) checked at the anchor, none moved since aa2e690)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since aa2e690)
+adapter         NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since aa2e690)
+state           NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since aa2e690)
+boot            NOT RUN (not impacted: its 25 path(s) checked at the anchor, none moved since aa2e690)
+desktop         NOT RUN (not impacted: its 29 path(s) checked at the anchor, none moved since aa2e690)
+web             NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since aa2e690)
+capture         NOT RUN (not impacted: its 25 path(s) checked at the anchor, none moved since aa2e690)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor, none moved since aa2e690)
+watch_only      NOT RUN (not impacted: its 5 path(s) checked at the anchor, none moved since aa2e690)
+FLAG type: tools/pb/verify.anchor.json changed since aa2e690b4fc8 - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+logs: milestones/m0/logs/M0-TM2.<scope>.log · record: loop_times.jsonl · tree aa2e690b4fc8+4d4050061a43
+anchor: 1 path×scope entries moved by this run
+anchor: 87 paths checked · 79 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 87 covered of 166 visible
+skipped    71  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 495 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 14 not impacted · 0.31 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 4.83->6.69
+=== GO ===
+exit 0
+--- 14:53 done: TM2 closed DONE; claim run GO; task file tasks/M0-TM2.md
