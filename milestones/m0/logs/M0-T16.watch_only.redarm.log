@@ -1,0 +1,32 @@
+==== 2026-10-10T10:49:57-04:00 watch_only · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:49:57-04:00 watch_only · task M0-T16 · box Laser2025-20 :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.16 s
+files scanned: 2 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+1 passed, 0 failed (2 files)
+=== GO ===
+
+==== 2026-10-10T10:49:59-04:00 watch_only · plant stage-in-step · a fresh scratch copy of the tree
+planted stage-in-step: tests/plants/stage-in-step.patch -> crates/sr-engine/src/step/mod.rs
+== 2026-10-10T10:49:59-04:00 watch_only · task M0-T16 · box Laser2025-20 :: {python} tests/watch/check.py
+-- watch_only · exit=1 · 0.17 s
+files scanned: 2 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+crates/sr-engine/src/step/mod.rs:9: names `observe`
+crates/sr-engine/src/step/mod.rs:9: names `Stage`
+=== NO-GO: 2 name(s) a label or a calibration value in the step code ===
+
+==== 2026-10-10T10:50:40-04:00 watch_only · clean · a fresh scratch copy of the tree
+== 2026-10-10T10:50:40-04:00 watch_only · task M0-T16 · box Laser2025-20 :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.14 s
+files scanned: 2 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+1 passed, 0 failed (2 files)
+=== GO ===
+
+==== 2026-10-10T10:50:41-04:00 watch_only · plant stage-in-step · a fresh scratch copy of the tree
+planted stage-in-step: tests/plants/stage-in-step.patch -> crates/sr-engine/src/step/mod.rs
+== 2026-10-10T10:50:42-04:00 watch_only · task M0-T16 · box Laser2025-20 :: {python} tests/watch/check.py
+-- watch_only · exit=1 · 0.12 s
+files scanned: 2 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+crates/sr-engine/src/step/mod.rs:9: names `observe`
+crates/sr-engine/src/step/mod.rs:9: names `Stage`
+=== NO-GO: 2 name(s) a label or a calibration value in the step code ===
+

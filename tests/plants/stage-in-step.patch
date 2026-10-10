@@ -1,0 +1,9 @@
+--- a/crates/sr-engine/src/step/mod.rs
++++ b/crates/sr-engine/src/step/mod.rs
+@@ -6,5 +6,6 @@
+ //! slot its lot fills, in place, without reordering the others.
+ 
+ use crate::state::State;
++use sr_physics::observe::Stage;
+ 
+ /// The passes of one step, in §1.3.2's order.

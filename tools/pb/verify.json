@@ -384,6 +384,26 @@
           "patch": "tests/plants/gpl-dep.patch"
         }
       ]
+    },
+    "watch_only": {
+      "desc": "G-WATCH, labels watch and never drive (contract §1.1, §5.4; M0-T16): a static scan - no file under crates/sr-engine/src/step/ or crates/sr-engine/shaders/ names `observe`, `Stage`, `Tracker` or a §2.11 calibration key other than `physics_hash` (the keys read from the contract's schema line); the log counts the files scanned (≥ 2), an empty folder is NO-GO, a hit names file and line",
+      "cmd": "{python} tests/watch/check.py",
+      "count": "(?P<n>\\d+) passed",
+      "expected": 1,
+      "timeout_s": 60,
+      "paths": [
+        "crates/sr-engine/src/step/**",
+        "crates/sr-engine/shaders/**",
+        "milestones/m0/m0_contrat.md",
+        "tests/watch/**",
+        "tests/plants/stage-in-step.patch"
+      ],
+      "plants": [
+        {
+          "id": "stage-in-step",
+          "patch": "tests/plants/stage-in-step.patch"
+        }
+      ]
     }
   },
   "skip_classes": [

@@ -80,7 +80,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T13 | BUILD | The string table and its check (G-STR) | AFTER M0-T12 | DONE (2026-10-10 09:32) |
 | M0-T14 | BUILD | The licence gate (G-LIC) | AFTER M0-T13 | DONE (2026-10-10 09:49) |
 | M0-T15 | BUILD | The web smoke in headless Chrome (G-WEB, first cases) | AFTER M0-T14 | DONE (2026-10-10 10:45) |
-| M0-T16 | BUILD | Labels watch, never drive: the static scan (G-WATCH) | AFTER M0-T15 | TODO |
+| M0-T16 | BUILD | Labels watch, never drive: the static scan (G-WATCH) | AFTER M0-T15 | DONE (2026-10-10 10:50) |
 | M0-T17 | BUILD | Docs: physics.md (units, registries, EOS), lot 2's testing rows | AFTER M0-T16 | TODO |
 | M0-V2 | CHECK | Validation, lot 2: registries, EOS, strings, licences, web smoke, scan | AFTER M0-T17 | TODO |
 | M0-T18 | BUILD | Booking: the per-cell side buffers and accumulators every pass books into | AFTER M0-V2 | TODO |
@@ -884,7 +884,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: Try 2 (rung_record: model=claude-opus-5-5 level=high; win-laptop Laser2025-20). The web smoke from try 1 stands (detail tasks/M0-T15.md); srAdapter reads « (BrowserWebGpu, Other, driver ) » — wgpu on the web names no GPU — and Chrome's own adapter nvidia/lovelace, fallback=false, so the GPU path, not software. Root cause of both NO-GO claims, measured: in a red-arm copy trunk runs the cargo binary itself, bypassing M0-D9's lock+touch wrapper, so a clean web arm reused the never-ready plant's artifacts from the shared redarm-target (scratch wasm lacked the "ready" string; reproduced 2/2, fixed 1/1). Fix: tests/cargo.sh's wrapper lifted into sr_in_shared_target (cargo() unchanged), check.sh runs trunk under it, testing.md says so; the 404 is /favicon.ico. Deviations: tests/cargo.sh is a shared helper (behaviour unchanged for cargo scopes); the lead committed T15 in a552c96 and ruled « dont re-run the whole 10 minute thing, just run the new commit and move on » — so --redarm web on the fixed tree was stopped twice, NOT RUN (the plant was RED in try 1's Verify 3; the fixed clean arm GO in a scratch copy only). Verify: verify.py web M0-T15-r3 GO 3/0/0 [ALREADY RUN — PASS on win-laptop]; claim py -3.12 tools/pb/verify.py --changed --base a552c96 --task M0-T15-r4 GO 563/0/0, 10/10 impacted, 21 s [ALREADY RUN — PASS on win-laptop] (web, licences not impacted since a552c96). Owed: --redarm web on the fixed tree, web and licences npm on linux-pc (flagged to M0-V2); five try-1 pb-redarm-* dirs remain in %TEMP% (disk 98 %), not deleted. Next: M0-T16.
 
 ## M0-T16 · Labels watch, never drive — the static scan (G-WATCH) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T15)
-- Status: TODO
+- Status: DONE (2026-10-10 10:50)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.1 (the one-way rule), §2.11 (the
   calibration keys), §5.4 (G-WATCH) + docs/agent/testing.md
 - Deliver: tests/watch/check.py (new, standard library): no file under crates/sr-engine/src/step/ or
@@ -898,10 +898,11 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Adversarial: a scan of an empty folder is always green — the log counts the files scanned (≥ 2:
   step/mod.rs and floors.wgsl today); a calibration value smuggled in under another name — the scan
   lists §2.11's keys from the contract's schema line, not from memory.
-- Handoff: <placeholder>
+- Handoff: Built tests/watch/check.py (stdlib): scans every file under crates/sr-engine/src/step/ + shaders/ for whole-identifier observe, Stage, Tracker and §2.11's 13 value keys (read from the contract's Schema line; version/measured/physics_hash left out); NO-GO names file:line, or on <2 files / <10 keys. Scope watch_only in verify.json (the 'oracle' FLAGs on it are the scope entry Deliver calls for), plant tests/plants/stage-in-step.patch. Verify 1 GO (2 files, 16 words); Verify 2 --redarm GO (plant NO-GO at step/mod.rs:9); claim run --changed --base 7251a24: GO 494 passed, 2/2 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. Deviations: scope is watch_only not watch-only (verify.py refuses a hyphen; flagged to M0-T17, which writes the testing.md row); paths add milestones/m0/m0_contrat.md (the scan reads it). Detail tasks/M0-T16.md. Ran model=claude-sonnet-5-5 level=high. Next: M0-T17.
 
 ## M0-T17 · Docs — physics.md (units, registries, equation of state) and lot 2's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T16)
 - Status: TODO
+- Carried flags: [M0-T16, 2026-10-10] [M0-T16, 2026-10-10] The scope is named watch_only, not watch-only: verify.py refuses a hyphen (names are [a-z0-9_]; NOT RUN on 'watch-only'). Write the docs/agent/testing.md row as | `watch_only` | and run Verify 2's grep with watch_only in place of watch-only (the count stays 5); contract §5.4 still reads watch-only — a name, not a rule; the plan's M0-T17 text is the lead's to retype or M0-T17 declares it.
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.5, §1.6, §2.1, §2.3, §2.5.1, §2.7,
   §7 + the handoffs of M0-T10–M0-T16
 - Deliver: docs/agent/physics.md (new): Units, Elements, Reactions, Equation of state — the laws, the
