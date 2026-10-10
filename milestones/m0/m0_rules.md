@@ -194,6 +194,25 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
 - **The lead's own runs** (a visible window, a run over 10 minutes) run on the box the block names, else on the box the
   lead is on; the human-run tier double-clicks that box's launcher.
 
+## R16 · The commit line — every block's last message (the lead, 2026-10-10)
+- The lead, 2026-10-10, after M0-T15: "when an agent is done he gives me one command line to git add -A, commit and
+  push. And he must verify if were on windows or not so as to give me the right line."
+- **When.** Every block that ends its turn closed — DONE, BLOCKED, N/A, DEFERRED, or a try sent back to TODO — ends its
+  last message to the lead with one command line that stages everything, commits and pushes. Agents still never run
+  it (PLAYBOOK §10); the line is the lead's, tagged `[NOT RUN — for you]` on the line above its fence, the fence
+  holding the line and nothing else.
+- **Which box — probed, never assumed.** Read the platform first (`uname -s`: `MINGW*`/`MSYS*`/`CYGWIN*` = Windows;
+  `Linux` = linux-pc; or the session's own platform line, `win32`). On Windows the lead's terminal is PowerShell 5.1,
+  where `&&` is a parse error; on linux-pc it is bash.
+- **The line.** The message is `M0-<ID> <status, lower case>` (`M0-T15 done`, `M0-D16 blocked`), as the commits so far:
+
+| Box | The line |
+|---|---|
+| Windows (win-laptop) — PowerShell | `git add -A; if ($?) { git commit -m "M0-<ID> done" }; if ($?) { git push }` |
+| linux-pc — bash | `git add -A && git commit -m "M0-<ID> done" && git push` |
+
+- A block that ends IN PROGRESS (awaiting the lead) gives no line: nothing is finished to commit.
+
 ## Considered and REJECTED (false economy)
 Binding (PLAYBOOK §2.1, §11): a later agent proposing an item below re-opens a closed decision — it asks
 the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.

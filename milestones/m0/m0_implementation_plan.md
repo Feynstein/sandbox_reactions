@@ -246,6 +246,7 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
 | R13 | Physics: every GPU number names its adapter; an UNVERIFIED (§5.5) red is a D or a question, never a looser number (§0.4); each pass's CPU f64 twin before its GPU shader; box and latch first |
 | R14 | Every V is done when its verdict is recorded, its D's created and the register updated (PLAYBOOK §14.3); a V that adds to that says so on its own `Done when:` line |
 | R15 | Box pattern (M0-TJ3): on win-laptop a block reads the RTX 5090 as the RTX 4080 Laptop, Xvfb/lavapipe/`game-xvfb` as the off-screen window (`game-offscreen`), start.sh as start.bat, /usr/bin/google-chrome as contract §6.2.3's Windows Chrome, `python3 tools/pb/…` as `py -3.12 tools/pb/…`; the Quadro's timing stays `box: laserax-ai`; a check only one box runs is owed elsewhere, flagged V to V, run at the next V on its box or by M0-V17 |
+| R16 | A block's last message ends with one line for the lead — `git add -A`, commit `M0-<ID> <status>`, push — in the probed box's shell: Windows → PowerShell (`git add -A; if ($?) { git commit -m "…" }; if ($?) { git push }`), linux-pc → bash (`&&`); agents never run it (the lead, 2026-10-10) |
 
 ## Superseded / retired (§2.6)
 - R5's text, "linux-pc is the box for every M0 gate; win-laptop joins when the lead first runs a task there" (index:
