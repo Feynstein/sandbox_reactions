@@ -1,0 +1,21 @@
+== 2026-10-10T16:18:05-04:00 web[build] · task M0-T21-linux · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:18:05-04:00 web[ready] · task M0-T21-linux · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:18:06-04:00 web[no-webgpu] · task M0-T21-linux · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 6.23 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+
+-- web[ready] · exit=1 · 8.55 s
+web: ready on port 47812, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T21-linux.launch.web.log)
+services: 1, ready: 1
+You are running Node.js 18.19.1.
+Playwright requires Node.js 20 or higher. 
+Please update your version of Node.js.
+
+-- web[no-webgpu] · exit=1 · 8.39 s
+web: ready on port 47812, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T21-linux.launch.web.log)
+services: 1, ready: 1
+You are running Node.js 18.19.1.
+Playwright requires Node.js 20 or higher. 
+Please update your version of Node.js.
+

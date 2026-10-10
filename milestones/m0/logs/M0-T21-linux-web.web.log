@@ -1,0 +1,23 @@
+== 2026-10-10T16:18:41-04:00 web[build] · task M0-T21-linux-web · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:18:41-04:00 web[ready] · task M0-T21-linux-web · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-10T16:18:41-04:00 web[no-webgpu] · task M0-T21-linux-web · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 1.32 s
+web: ready on port 47812, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T21-linux-web.launch.web.log)
+services: 1, ready: 1
+web smoke ready: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+=== NO-GO: ready: srState "no-webgpu" - not "ready"; console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+
+-- web[no-webgpu] · exit=0 · 3.28 s
+web: ready on port 47812, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T21-linux-web.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+no-webgpu: srState "no-webgpu" after 0.0 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[build] · exit=0 · 6.78 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 37, wasm on line 47
+=== GO ===
+

@@ -90,6 +90,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T20 | BUILD | Δt and the non-finite guard (P1, P9) | AFTER M0-T19 | DONE (2026-10-10 15:46) |
 | M0-D18 | BUILD | P8 zeroes a NaN species fraction before P9's guard reads it: the run goes on with the cell renormalised | AFTER M0-T20 | DONE (2026-10-10 15:53) |
 | M0-T21 | BUILD | The active box (§1.3.3) | AFTER M0-T20 | DONE (2026-10-10 16:12) |
+| M0-D19 | BUILD | The web scope is red on linux-pc: `node` resolves to 18 outside an interactive shell, and the page's WebGPU check gets no adapter | AFTER M0-T21 | TODO |
 | M0-T22 | BUILD | Frames of steps and the collapse latch, on indirect dispatches | AFTER M0-T21 | TODO |
 | M0-T23 | BUILD | GPU timestamps, cost per step and per pass, --timing | AFTER M0-T22 | TODO |
 | M0-T24 | BUILD | Time control (sr_physics::time): rungs, frame plan, cap, slow-down, 30-frames switch | AFTER M0-T23 | TODO |
@@ -405,9 +406,9 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-T21
-- Counters: T=116 · D=18 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=2 · TD=1 · TE=1
-- Open D/BLOCKED register: none (M0-D18 DONE 2026-10-10)
+- Next task: M0-D19
+- Counters: T=116 · D=19 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=2 · TD=1 · TE=1
+- Open D/BLOCKED register: M0-D19 TODO (web scope red on linux-pc, filed by M0-T21 2026-10-10)
 - Outstanding commit gates: Phase 4 (M0-T10 … M0-V2, then M0-D17 and M0-TM2 that M0-V2 filed) — the gate under M0-TM2, its text « closes after M0-V2 »; Phase 2b and Phase 3 are in dde81d3, pushed (per-block commits, R16)
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
@@ -959,7 +960,20 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   stays GO
 - Adversarial: a box read back to the CPU to size dispatches costs a frame of lag and breaks the latch's
   in-frame stop — the sizes are written and read on the GPU only (TW-E16).
-- Handoff: On win-laptop Laser2025-20 (RTX 4080 Laptop): step/boxfit.rs + reduce.wgsl's box_cells/box_fit/box_gate write the box record, the passes' indirect sizes and the FFT size per axis on the GPU, never read back; P8's two dispatches and dt_cells run indirect over the box; re-fit before step 0, after P9 at n ≡ 0 (mod 16), and in P0 when Step::box_edit_flag is set; Step::with_box(…, BoxMode::WholeWorld) is the switch. Scope box GO 6/6, --redarm GO (margin-zero red, 5 of 6 failed); claim: --changed --base 103a236 (logs/M0-T21.*). Deviations: 7 code files, ≈ 720 new code lines (P8/P9 moved onto the box's sizes in the same thread); defaults — empty box → zero-sized dispatches and Δt = the largest f32; the re-fit's scan and the guard read the whole world; vacuum outside the box is never floored. Not acted on: clippy --tests red on 4 pre-existing lints in tests/gpu/floors.rs (no scope runs it). Model claude-opus-5-5, level high. Detail: tasks/M0-T21.md. Next: M0-T22.
+- Handoff: On win-laptop Laser2025-20 (RTX 4080 Laptop): step/boxfit.rs + reduce.wgsl's box_cells/box_fit/box_gate write the box record, the passes' indirect sizes and the FFT size per axis on the GPU, never read back; P8's two dispatches and dt_cells run indirect over the box; re-fit before step 0, after P9 at n ≡ 0 (mod 16), and in P0 when Step::box_edit_flag is set; Step::with_box(…, BoxMode::WholeWorld) is the switch. Scope box GO 6/6, --redarm GO (margin-zero red, 5 of 6 failed); claim --changed --base 103a236 GO 13/13, 543 passed (win-laptop). linux-pc laserax-ai over ssh (tree 695bbb9, RTX 5090): box GO 6/6, --redarm GO; --changed 12/13 — web NO-GO, pre-existing (wasm never fetched) → M0-D19 filed. Deviations: 7 code files, ≈ 720 new code lines (P8/P9 moved onto the box's sizes in the same thread); defaults — empty box → zero-sized dispatches and Δt = the largest f32; the re-fit's scan and the guard read the whole world; vacuum outside the box is never floored. Not acted on: clippy --tests red on 4 pre-existing lints in tests/gpu/floors.rs (no scope runs it). Model claude-opus-5-5, level high. Detail: tasks/M0-T21.md. Next: M0-D19.
+
+## M0-D19 · The web scope is red on linux-pc: `node` resolves to 18 outside an interactive shell, and the page's WebGPU check gets no adapter · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T21)
+- Status: TODO
+- Caused by: M0-T15
+- Files: web/index.html (the inline WebGPU check, lines 31–56), web/smoke.mjs (`SR-CHROME-ADAPTER`'s probe, line 107), tests/web/check.sh (`node`, lines 41, 91, 102) — opened by M0-T21's linux-pc run
+- Box: run from win-laptop and reach linux-pc over ssh, as M0-T21's linux-pc run did (the lead, 2026-10-10: «connect via ssh the same way you just did»): every linux-pc command is one non-interactive call, `ssh -o BatchMode=yes ybelanger@laserax-ai 'cd ~/private/sandbox_reactions && <command>'` (bash there: `python3 tools/pb/…`; cargo off the PATH, Hazards). First `git pull --ff-only` there; then the fix and Verify 1 there; then, as the lead asked at M0-T21 (« pull the commit … run the tests, then add -A … commit and push and then ill pull it here »), `git add -A`, commit `M0-D19 <status>`, push from linux-pc; the lead pulls on win-laptop. That non-interactive shell is symptom (a)'s: it must pass without an nvm PATH set by hand.
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.5, §6.2.3, §6.2.4 + milestones/m0/logs/M0-T21-linux.web.log, M0-T21-linux-web.web.log, M0-T21-linux-web.launch.web.log + docs/agent/testing.md (`web`)
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-10, tree 695bbb9, over a non-interactive ssh shell. (a) `verify.py --changed --base 103a236 --task M0-T21-linux`: web[ready] and web[no-webgpu] exit 1 with no verdict line — "You are running Node.js 18.19.1. Playwright requires Node.js 20 or higher": `node` is /usr/bin/node 18.19.1; Node 20.20.2 (Repo facts) is nvm's, on the PATH only in an interactive shell (`bash -ic` → ~/.nvm/versions/node/v20.20.2/bin/node), so an agent's shell on linux-pc reads NO-GO. (b) With nvm's 20.20.2 first on the PATH, `verify.py web --task M0-T21-linux-web`: build GO, no-webgpu GO, ready NO-GO — srState "no-webgpu", not "ready"; Chrome 155.0.8059.39 headless (`--use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu`), sandbox on, smoke.mjs's own probe logs `SR-CHROME-ADAPTER vendor=nvidia architecture=turing … fallback=false`, then the page's identical `requestAdapter({powerPreference: "high-performance"})` returns null (no wasm fetched); console: a 404 and "A valid external Instance reference no longer exists". Same scope GO on win-laptop (M0-T15, M0-D17).
+- Repro: on linux-pc from a non-interactive shell, `python3 tools/pb/verify.py web --task <id>` (a); then `PATH=$HOME/.nvm/versions/node/v20.20.2/bin:$PATH python3 tools/pb/verify.py web --task <id>` (b).
+- Suspected cause: (a) check.sh calls a bare `node` and trusts the caller's PATH. (b) Not measured — the probe's adapter (or its device) is still held when the page asks, or Chrome's Vulkan path on the three-GPU box (Quadro display, RTX 5090, Intel UHD) answers the first request and drops the instance; M0-T21 is ruled out: the page decided before any wasm loaded.
+- Deliver: (a) the web scripts pick a Node ≥ 20 themselves (nvm's when present, else refuse naming the version found) — never the caller's PATH alone; (b) web[ready] reaching "ready" on linux-pc with Chrome's own WebGPU adapter named, the cause measured and recorded, never a looser check → scope `web` → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py web --task M0-D19` on linux-pc from a non-interactive shell · Pass: GO, 3 cases · Fail: NO-GO · 2. the same on win-laptop (`py -3.12 tools/pb/…`) · Pass: GO, 3 cases · Fail: NO-GO
+- Handoff: <placeholder>
 
 ## M0-T22 · Frames of steps and the collapse latch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T21)
 - Status: TODO
