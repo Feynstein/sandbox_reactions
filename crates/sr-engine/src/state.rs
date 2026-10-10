@@ -176,7 +176,7 @@ impl State {
 
 /// Copies `buffers`, whole and in order, into one staging buffer and reads it back as f32. Blocks on the device
 /// (native and headless only, §6.3).
-fn read_buffers<'a>(
+pub(crate) fn read_buffers<'a>(
     device: &wgpu::Device,
     queue: &wgpu::Queue,
     label: &str,

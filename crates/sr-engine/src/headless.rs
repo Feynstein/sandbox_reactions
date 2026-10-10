@@ -5,7 +5,8 @@
 //! stdout: the first line `SR-ADAPTER …`; the last, when the run ends without an error (exit 0 or 2), `SR-HEADLESS DONE
 //! steps=<n> sim_time=<t> until=<met|unmet|none>`; every error line starts `SR-ERROR`, every warning `SR-WARN`.
 //! Exit codes: 0 done · 2 `--steps` not reached within `--max-steps` · 3 no adapter or a GPU error · 4 bad arguments
-//! or scene · 101 a panic (Rust's own). 5 (a non-finite value) and 6 (calibration) arrive with their checks.
+//! or scene · 5 a non-finite value in the state, found by P9's guard every 64 steps and read after each submission
+//! (the message names the step, cell and channel) · 101 a panic (Rust's own). 6 (calibration) arrives with its check.
 
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -22,6 +23,7 @@ pub const EXIT_DONE: i32 = 0;
 pub const EXIT_UNMET: i32 = 2;
 pub const EXIT_GPU: i32 = 3;
 pub const EXIT_ARGS: i32 = 4;
+pub const EXIT_NON_FINITE: i32 = 5;
 
 /// §3.3: `--max-steps` defaults to 2,000,000.
 pub const DEFAULT_MAX_STEPS: u64 = 2_000_000;
@@ -225,7 +227,7 @@ pub fn run(args: &[String]) -> i32 {
         }
     };
     let booking = Booking::new(&gpu.device, args.world).expect("the state's world is valid");
-    let step = Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &physics, &elements));
+    let step = Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &physics, &elements), &physics);
 
     let target = args.steps.min(args.max_steps);
     let started = Instant::now();
@@ -238,11 +240,19 @@ pub fn run(args: &[String]) -> i32 {
             return EXIT_GPU;
         }
         done += n;
+        if let Some(bad) = step.read_dt(&gpu.device, &gpu.queue).non_finite {
+            say(&format!(
+                "SR-ERROR non-finite value in the state at step {}, cell ({}, {}), channel {}",
+                bad.step, bad.x, bad.y, bad.channel
+            ));
+            return EXIT_NON_FINITE;
+        }
     }
     let wall_s = started.elapsed().as_secs_f64();
 
     let met = done == args.steps;
-    let sim_time = 0.0; // P1 (the time step) arrives with M0-T9's lot; until then a step advances no time.
+    // Δt exists since M0-T20 (P1, P9); summing it into sim time is not built yet, so a run still reports 0.
+    let sim_time = 0.0;
     if let Some(dir) = &args.out {
         let summary = json!({
             "version": 1,

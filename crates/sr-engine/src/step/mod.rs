@@ -2,17 +2,24 @@
 //! dispatches built once for the state's world. A step records the lists as they are — it reads no wall clock, no
 //! rung, no frame and no label — so the same state and step count give the same state, bit for bit (§1.3.4).
 //!
-//! Today only P8 holds dispatches — the floors, then the species renormalisation (shaders/floors.wgsl, M0-T19); every
-//! other pass is an empty slot its lot fills, in place, without reordering the others.
+//! Today P1, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
+//! M0-T20), P8 the floors, then the species renormalisation (shaders/floors.wgsl, M0-T19); every other pass is an empty
+//! slot its lot fills, in place, without reordering the others. A step knows its index — the guard runs on every 64th
+//! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction.
 //!
 //! The equation of state every pass shares (shaders/eos.wgsl) is prepended to a pass's shader ([`with_eos`]) and bound
 //! as group 1 from [`EosGpu`], built once per run from physics.json and elements.json: the species table, the cold
 //! pairs, M0-T12's u(x) table (sr_physics::eos::ColdTable) and the floors.
 
+pub mod dt;
+
+use std::cell::Cell;
+
 use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::state::{Booking, State, BOOK_GROUPS, TERMS};
+use dt::{Dt, DtReport, GUARD_EVERY};
 
 /// The passes of one step, in §1.3.2's order.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -69,46 +76,74 @@ pub struct Dispatch {
     pub workgroups: [u32; 3],
 }
 
-/// The step: one dispatch list per pass, indexed as `Pass::ORDER`.
+/// The step: one dispatch list per pass, indexed as `Pass::ORDER`, the Δt record and the index of the next step.
 pub struct Step {
     passes: [Vec<Dispatch>; 10],
+    dt: Dt,
+    next: Cell<u64>,
 }
 
 impl Step {
     /// Builds every pass's dispatch list for `state`'s buffers and world, booking into `booking`, with the equation of
-    /// state `eos`.
-    pub fn new(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu) -> Step {
+    /// state `eos` and the run's constants `physics` (C and η_g). The next step it records is step 0.
+    pub fn new(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, physics: &Physics) -> Step {
+        let mut dt = Dt::new(device, state, eos, physics);
         let mut passes: [Vec<Dispatch>; 10] = Default::default();
+        passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Floors as usize] = floors(device, state, booking, eos);
-        Step { passes }
+        passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
+        Step { passes, dt, next: Cell::new(0) }
     }
 
-    /// How many dispatches each pass records, in `Pass::ORDER`.
+    /// How many dispatches each pass records on a step the guard skips, in `Pass::ORDER`.
     pub fn dispatch_counts(&self) -> [usize; 10] {
         std::array::from_fn(|p| self.passes[p].len())
     }
 
-    /// The entry points a pass dispatches, in its order.
+    /// The entry points a pass dispatches on a step the guard skips, in its order.
     pub fn dispatch_labels(&self, pass: Pass) -> Vec<&'static str> {
         self.passes[pass as usize].iter().map(|d| d.label).collect()
     }
 
-    /// Records one step: a compute pass per non-empty slot, P0 to P9.
+    /// The entry points P9 adds after the Δt reduction on every 64th step: the non-finite guard.
+    pub fn guard_labels(&self) -> Vec<&'static str> {
+        self.dt.guard.iter().map(|d| d.label).collect()
+    }
+
+    /// Records the next step: a compute pass per non-empty slot, P0 to P9 — before step 0, the initial state's Δt.
     pub fn encode(&self, encoder: &mut wgpu::CommandEncoder) {
+        let n = self.next.get();
+        if n == 0 {
+            // P9's reduction is the one that reads the state; the reduce dispatches are P9's own list.
+            let mut cpass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
+                label: Some("P9 reductions (initial state)"),
+                timestamp_writes: None,
+            });
+            record_dispatches(&mut cpass, &self.passes[Pass::Reductions as usize]);
+        }
         for (pass, dispatches) in Pass::ORDER.iter().zip(&self.passes) {
             if dispatches.is_empty() {
                 continue;
             }
             let mut cpass =
                 encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some(pass.label()), timestamp_writes: None });
-            for d in dispatches {
-                cpass.set_pipeline(&d.pipeline);
-                for (g, bind_group) in d.bind_groups.iter().enumerate() {
-                    cpass.set_bind_group(g as u32, bind_group, &[]);
-                }
-                cpass.dispatch_workgroups(d.workgroups[0], d.workgroups[1], d.workgroups[2]);
+            record_dispatches(&mut cpass, dispatches);
+            if *pass == Pass::Reductions && n.is_multiple_of(GUARD_EVERY) {
+                record_dispatches(&mut cpass, &self.dt.guard);
             }
         }
+        self.next.set(n + 1);
+    }
+
+    /// The Δt record after every submitted step: Δt_n, Δt_{n+1}, the steps run and the guard's finding. Blocks on the
+    /// device (native and headless only, §6.3).
+    pub fn read_dt(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> DtReport {
+        self.dt.read(device, queue)
+    }
+
+    /// The Δt record buffer, which later passes bind to read Δt_n (its first word, f32).
+    pub fn dt_record(&self) -> &wgpu::Buffer {
+        self.dt.record()
     }
 
     /// Records and submits `steps` steps, in order, in one submission.
@@ -206,6 +241,17 @@ fn init_buffer(device: &wgpu::Device, label: &str, usage: wgpu::BufferUsages, wo
     buffer.get_mapped_range_mut(..).expect("mapped at creation").copy_from_slice(&bytes);
     buffer.unmap();
     buffer
+}
+
+/// Sets each dispatch's pipeline and bind groups and dispatches it, in order.
+fn record_dispatches(cpass: &mut wgpu::ComputePass<'_>, dispatches: &[Dispatch]) {
+    for d in dispatches {
+        cpass.set_pipeline(&d.pipeline);
+        for (g, bind_group) in d.bind_groups.iter().enumerate() {
+            cpass.set_bind_group(g as u32, bind_group, &[]);
+        }
+        cpass.dispatch_workgroups(d.workgroups[0], d.workgroups[1], d.workgroups[2]);
+    }
 }
 
 /// Workgroups covering the world with the shaders' 8 × 8 tiles (the world is a multiple of 8, §2.8).

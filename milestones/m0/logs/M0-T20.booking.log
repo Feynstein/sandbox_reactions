@@ -1,0 +1,42 @@
+== 2026-10-10T15:44:00-04:00 booking · task M0-T20 · box Laser2025-20 :: bash tests/gpu.sh booking physics
+-- booking · exit=0 · 18.56 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 9.66s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+37 terms, 5548000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 27 filtered out; finished in 7.93s
+
+

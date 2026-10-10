@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/reduce.wgsl
++++ b/crates/sr-engine/shaders/reduce.wgsl
+@@ -133,7 +133,7 @@
+         let top = tree[0];
+         var dt = DT_UNBOUNDED;
+         if (top.x > 0.0) {
+-            dt = min(dt, params.cfl / top.x);
++            dt = min(dt, 1.0 / top.x); // planted: C = 1
+         }
+         if (top.y > 0.0) {
+             dt = min(dt, params.eta_g / sqrt(top.y));

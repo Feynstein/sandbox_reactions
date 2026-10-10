@@ -1,0 +1,31 @@
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 4.14s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 1 test
+test dt::probe_nan_fraction ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+PROBE planted x_C = NaN at (20, 10) before step 0 -> guard None; fractions after P8 [0.23750865, 0.03989781, 0.0, 0.09548479, 0.022872286, 0.13149348, 0.08822432, 0.052273575, 0.19590078, 0.13634428]
+PROBE planted x_C = inf at (20, 10) before step 0 -> guard Some(NonFinite { step: 0, x: 20, y: 10, channel: "x_C" }); fractions after P8 [0.0, 0.0, NaN, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 31 filtered out; finished in 1.02s
+

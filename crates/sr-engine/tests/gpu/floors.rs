@@ -390,7 +390,7 @@ fn run_p8(c: &Constants) -> Run {
     let booking = Booking::new(&gpu.device, world).unwrap();
     state.upload(&gpu.queue, &before).unwrap();
     let eos = EosGpu::new(&gpu.device, &c.physics, &c.elements);
-    Step::new(&gpu.device, &state, &booking, &eos).run(&gpu.device, &gpu.queue, 1);
+    Step::new(&gpu.device, &state, &booking, &eos, &c.physics).run(&gpu.device, &gpu.queue, 1);
     let after = state.readback(&gpu.device, &gpu.queue);
     let book = booking.readback(&gpu.device, &gpu.queue);
     let totals = book_totals(world, &book);
@@ -435,9 +435,10 @@ fn p8_dispatches_the_floors_ahead_of_the_renormalisation() {
     let world = WorldConfig::new(64, 64).unwrap();
     let state = State::new(&gpu.device, world).unwrap();
     let booking = Booking::new(&gpu.device, world).unwrap();
-    let step = Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &c.physics, &c.elements));
+    let step = Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &c.physics, &c.elements), &c.physics);
     assert_eq!(step.dispatch_labels(Pass::Floors), ["floor_cells", "renormalise_species"]);
-    for pass in Pass::ORDER.into_iter().filter(|&p| p != Pass::Floors) {
+    // P1 and P9 hold the Δt and the guard (M0-T20, tests/gpu/dt.rs); every other pass is still empty.
+    for pass in Pass::ORDER.into_iter().filter(|&p| ![Pass::Dt, Pass::Floors, Pass::Reductions].contains(&p)) {
         assert!(step.dispatch_labels(pass).is_empty(), "{} holds a dispatch", pass.label());
     }
 }

@@ -22,8 +22,9 @@ impl Seq {
 /// The step of `state` with the shipped constants, booking into a booking layout of its own.
 fn step(gpu: &Gpu, state: &State) -> Step {
     let booking = Booking::new(&gpu.device, state.world()).unwrap();
-    let eos = EosGpu::new(&gpu.device, &Physics::shipped().unwrap(), &Elements::shipped().unwrap());
-    Step::new(&gpu.device, state, &booking, &eos)
+    let physics = Physics::shipped().unwrap();
+    let eos = EosGpu::new(&gpu.device, &physics, &Elements::shipped().unwrap());
+    Step::new(&gpu.device, state, &booking, &eos, &physics)
 }
 
 /// 64 × 64 cells: channels 0–3 a distinct, exact value per cell — hot gas, Σ in [1, 2) and E/Σ ≥ 500, far above P8's
@@ -132,7 +133,7 @@ fn upload_refuses_anything_but_14_planes_of_the_world() {
 }
 
 #[test]
-fn a_step_is_p0_to_p9_with_p8s_floors_and_renormalisation_its_only_dispatches_today() {
+fn a_step_is_p0_to_p9_with_p1s_dt_p8s_floors_and_renormalisation_and_p9s_dt_reduction_its_only_dispatches_today() {
     let labels: Vec<&str> = Pass::ORDER.iter().map(|p| p.label()).collect();
     for (i, label) in labels.iter().enumerate() {
         assert!(label.starts_with(&format!("P{i} ")), "{labels:?}");
@@ -141,7 +142,9 @@ fn a_step_is_p0_to_p9_with_p8s_floors_and_renormalisation_its_only_dispatches_to
     let state = State::new(&gpu.device, WorldConfig::new(64, 64).unwrap()).unwrap();
     let step = step(&gpu, &state);
     let mut expected = [0usize; 10];
+    expected[Pass::Dt as usize] = 1;
     expected[Pass::Floors as usize] = 2;
+    expected[Pass::Reductions as usize] = 2;
     assert_eq!(step.dispatch_counts(), expected);
 }
 

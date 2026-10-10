@@ -1,0 +1,76 @@
+== 2026-10-10T15:44:00-04:00 adapter · task M0-T20 · box Laser2025-20 :: bash tests/gpu.sh adapter
+-- adapter · exit=0 · 26.62 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 9.77s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 10 tests
+test adapter::live_default_pick_prints_which_adapter_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test adapter::live_device_limits_equal_webgpu_defaults_never_the_adapters_own ... listed: NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Arc(TM) Graphics (Vulkan, IntegratedGpu, driver Intel Corporation)
+listed: NVIDIA GeForce RTX 4080 Laptop GPU (Dx12, DiscreteGpu, driver 32.0.15.8129)
+listed: Intel(R) Arc(TM) Graphics (Dx12, IntegratedGpu, driver 32.0.101.6790)
+listed: Microsoft Basic Render Driver (Dx12, Cpu, driver 10.0.26100.9278)
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+NVIDIA GeForce RTX 4080 Laptop GPU: adapter allows 49152 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Intel(R) Arc(TM) Graphics backend=Vulkan driver=Intel Corporation
+Intel(R) Arc(TM) Graphics: adapter allows 32768 B workgroup storage, device has 16384 B
+SR-ADAPTER name=Microsoft Basic Render Driver backend=Dx12 driver=10.0.26100.9278
+Microsoft Basic Render Driver: adapter allows 32768 B workgroup storage, device has 16384 B
+ok
+test adapter::live_no_match_names_every_adapter_the_box_has ... listed: NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Arc(TM) Graphics (Vulkan, IntegratedGpu, driver Intel Corporation)
+listed: NVIDIA GeForce RTX 4080 Laptop GPU (Dx12, DiscreteGpu, driver 32.0.15.8129)
+listed: Intel(R) Arc(TM) Graphics (Dx12, IntegratedGpu, driver 32.0.101.6790)
+listed: Microsoft Basic Render Driver (Dx12, Cpu, driver 10.0.26100.9278)
+no adapter name contains "no-such-gpu-xyz"; adapters seen: [0] NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA); [1] Intel(R) Arc(TM) Graphics (Vulkan, IntegratedGpu, driver Intel Corporation); [2] NVIDIA GeForce RTX 4080 Laptop GPU (Dx12, DiscreteGpu, driver 32.0.15.8129); [3] Intel(R) Arc(TM) Graphics (Dx12, IntegratedGpu, driver 32.0.101.6790); [4] Microsoft Basic Render Driver (Dx12, Cpu, driver 10.0.26100.9278)
+ok
+test adapter::live_one_device_per_adapter_found_by_a_differently_cased_name ... listed: NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Arc(TM) Graphics (Vulkan, IntegratedGpu, driver Intel Corporation)
+listed: NVIDIA GeForce RTX 4080 Laptop GPU (Dx12, DiscreteGpu, driver 32.0.15.8129)
+listed: Intel(R) Arc(TM) Graphics (Dx12, IntegratedGpu, driver 32.0.101.6790)
+listed: Microsoft Basic Render Driver (Dx12, Cpu, driver 10.0.26100.9278)
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=Intel(R) Arc(TM) Graphics backend=Vulkan driver=Intel Corporation
+SR-ADAPTER name=Microsoft Basic Render Driver backend=Dx12 driver=10.0.26100.9278
+ok
+test adapter::live_this_boxs_adapters_are_listed ... listed: NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA)
+listed: Intel(R) Arc(TM) Graphics (Vulkan, IntegratedGpu, driver Intel Corporation)
+listed: NVIDIA GeForce RTX 4080 Laptop GPU (Dx12, DiscreteGpu, driver 32.0.15.8129)
+listed: Intel(R) Arc(TM) Graphics (Dx12, IntegratedGpu, driver 32.0.101.6790)
+listed: Microsoft Basic Render Driver (Dx12, Cpu, driver 10.0.26100.9278)
+ok
+test adapter::match_is_a_substring_of_the_name ... ok
+test adapter::match_is_case_insensitive ... ok
+test adapter::match_on_several_names_takes_vulkan_then_list_order ... ok
+test adapter::match_prefers_vulkan_when_a_name_matches_on_two_backends ... ok
+test adapter::no_match_is_an_error_naming_every_adapter_seen ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 15.95s
+
+
