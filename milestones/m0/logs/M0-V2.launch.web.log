@@ -1,0 +1,5 @@
+# M0-V2 | launch web | 2026-10-10T14:03:12-0400
+$ py -3.12 -m http.server 47812 --bind 127.0.0.1 --directory web/dist
+127.0.0.1 - - [10/Oct/2026 14:03:15] "GET /?no-webgpu=1 HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 14:03:15] code 404, message File not found
+127.0.0.1 - - [10/Oct/2026 14:03:15] "GET /favicon.ico HTTP/1.1" 404 -

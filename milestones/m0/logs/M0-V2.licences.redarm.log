@@ -1,0 +1,39 @@
+==== 2026-10-10T11:05:12-04:00 licences · clean · a fresh scratch copy of the tree
+== 2026-10-10T11:05:12-04:00 licences[cargo-native] · task M0-V2 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+== 2026-10-10T11:05:12-04:00 licences[cargo-wasm32] · task M0-V2 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+== 2026-10-10T11:05:12-04:00 licences[npm] · task M0-V2 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+-- licences[cargo-wasm32] · exit=0 · 1.06 s
+EXCEPTION epaint_default_fonts 0.36.2: (MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 (named, M0-T14)
+cargo-wasm32 (wasm32-unknown-unknown): 143 packages (3 workspace members), 0 refused
+=== GO ===
+
+-- licences[cargo-native] · exit=0 · 1.22 s
+EXCEPTION epaint_default_fonts 0.36.2: (MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 (named, M0-T14)
+cargo-native (x86_64-pc-windows-msvc): 164 packages (3 workspace members), 0 refused
+=== GO ===
+
+-- licences[npm] · exit=0 · 3.59 s
+npm (npm): 1 packages (0 workspace members), 0 refused
+=== GO ===
+
+==== 2026-10-10T11:05:17-04:00 licences · plant gpl-dep · a fresh scratch copy of the tree
+planted gpl-dep: tests/plants/gpl-dep.patch -> crates/gpl-dep/Cargo.toml, crates/gpl-dep/src/lib.rs, Cargo.lock
+== 2026-10-10T11:05:17-04:00 licences[cargo-native] · task M0-V2 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+== 2026-10-10T11:05:17-04:00 licences[cargo-wasm32] · task M0-V2 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+== 2026-10-10T11:05:17-04:00 licences[npm] · task M0-V2 · box Laser2025-20 :: {python} tests/licences/check.py {case}
+-- licences[cargo-wasm32] · exit=1 · 1.00 s
+EXCEPTION epaint_default_fonts 0.36.2: (MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 (named, M0-T14)
+cargo-wasm32 (wasm32-unknown-unknown): 144 packages (4 workspace members), 1 refused
+REFUSED _gpl-dep 0.0.0: licence 'GPL-3.0-only' has no alternative made only of the G-LIC list
+=== NO-GO: 1 package(s) outside the G-LIC list: _gpl-dep 0.0.0 ===
+
+-- licences[cargo-native] · exit=1 · 1.12 s
+EXCEPTION epaint_default_fonts 0.36.2: (MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0 (named, M0-T14)
+cargo-native (x86_64-pc-windows-msvc): 165 packages (4 workspace members), 1 refused
+REFUSED _gpl-dep 0.0.0: licence 'GPL-3.0-only' has no alternative made only of the G-LIC list
+=== NO-GO: 1 package(s) outside the G-LIC list: _gpl-dep 0.0.0 ===
+
+-- licences[npm] · exit=0 · 3.16 s
+npm (npm): 1 packages (0 workspace members), 0 refused
+=== GO ===
+

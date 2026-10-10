@@ -1,0 +1,43 @@
+== 2026-10-10T14:01:27-04:00 registry · task M0-V2 · box Laser2025-20 :: bash tests/cpu.sh sr-physics registry
+-- registry · exit=0 · 12.55 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 11.44s
+     Running unittests src\lib.rs (build/target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 29 tests
+test registry::tests::physics_initial_values_verbatim ... ok
+test registry::tests::kappa_dust_is_zero_while_s1_is_off ... ok
+test registry::tests::f_dep_cap_follows_the_s2_switch ... ok
+test registry::tests::neon_and_oxygen_may_tie_but_not_invert ... ok
+test registry::tests::composition_of_the_solar_mix_against_hand_values ... ok
+test registry::tests::reactions_ten_records_verbatim ... ok
+test registry::tests::physics_unknown_missing_and_not_a_number ... ok
+test registry::tests::ladder_is_strict_where_the_contract_says_less_than ... ok
+test registry::tests::elements_refusals_name_their_key ... ok
+test registry::tests::reactions_conserve_mass_per_record ... ok
+test registry::tests::elements_in_contract_order_verbatim ... ok
+test registry::tests::cold_pressure_pairs_and_the_tov_to_chandrasekhar_ratio ... ok
+test registry::tests::reactions_groups_are_the_accumulators ... ok
+test registry::tests::nu_at_least_four_and_m_below_every_nu ... ok
+test registry::tests::a_stand_in_record_ships_disabled ... ok
+test registry::tests::shipped_files_load ... ok
+test registry::tests::silicon_over_hydrogen_at_most_ten ... ok
+test registry::tests::sigma_n_at_least_twice_the_squared_k_ratio ... ok
+test registry::tests::shares_off_by_a_millionth_are_refused_naming_the_record ... ok
+test registry::tests::reactions_resolve_against_physics ... ok
+test registry::tests::class_bounds_at_their_edge ... ok
+test registry::tests::share_entries_are_refused ... ok
+test registry::tests::share_tolerance_is_a_trillionth ... ok
+test registry::tests::units_nominal_sun_like_mass ... ok
+test registry::tests::the_registry_loads_the_reactions_too ... ok
+test registry::tests::rate_keys_must_resolve ... ok
+test registry::tests::steepness_is_at_least_four ... ok
+test registry::tests::the_threshold_the_gate_and_the_orders_have_their_shapes ... ok
+test registry::tests::the_file_and_record_shape_refusals_name_their_place ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.03s
+
+

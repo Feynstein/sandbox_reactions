@@ -37,6 +37,12 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     package or a changed expression stays NO-GO and an ask · eframe's approved `default_fonts` (§1.2) pulls that crate, which
     bundles font files (data, not GPL-family code), measured by `cargo metadata` on 2026-10-10 (164 packages native, 143
     wasm32; no other refusal) — the lead's answer at M0-T14, 2026-10-10: «Named exception (Recommended)».
+  - [M0-V2] §5's scope names written with a hyphen — `grav-force`, `grav-selfforce`, `heat-rkl2`, `heat-limiter`,
+    `burn-cell`, `burn-order`, `top-speed`, `watch-only` · the same names with `_` for `-` (`grav_force` … `watch_only`),
+    and every scope name so (the plan's R17); the checks, their cases and their plants unchanged · verify.py takes scope
+    names of letters, digits and `_` only — measured at M0-T16 (G-WATCH's scope shipped as `watch_only`) and at M0-V2
+    (`verify.py watch-only` → « unknown scope(s): watch-only ») — the lead's answer at M0-V2, 2026-10-10: «Yes, rename
+    once (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

@@ -82,7 +82,9 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T15 | BUILD | The web smoke in headless Chrome (G-WEB, first cases) | AFTER M0-T14 | DONE (2026-10-10 10:45) |
 | M0-T16 | BUILD | Labels watch, never drive: the static scan (G-WATCH) | AFTER M0-T15 | DONE (2026-10-10 10:50) |
 | M0-T17 | BUILD | Docs: physics.md (units, registries, EOS), lot 2's testing rows | AFTER M0-T16 | DONE (2026-10-10 10:53) |
-| M0-V2 | CHECK | Validation, lot 2: registries, EOS, strings, licences, web smoke, scan | AFTER M0-T17 | TODO |
+| M0-V2 | CHECK | Validation, lot 2: registries, EOS, strings, licences, web smoke, scan | AFTER M0-T17 | DONE (2026-10-10 14:08) |
+| M0-D17 | BUILD | web/smoke.mjs runs Chrome with `--no-sandbox`: playwright-core adds it by default, against §6.2.3 | AFTER M0-V2 | TODO |
+| M0-TM2 | PLAN | Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) | AFTER M0-D17 | TODO |
 | M0-T18 | BUILD | Booking: the per-cell side buffers and accumulators every pass books into | AFTER M0-V2 | TODO |
 | M0-T19 | BUILD | P8 floors complete (vacuum reset, temperature floor) and the EOS on the GPU | AFTER M0-T18 | TODO |
 | M0-T20 | BUILD | Δt and the non-finite guard (P1, P9) | AFTER M0-T19 | TODO |
@@ -216,8 +218,9 @@ PLAYBOOK.md v12.2 + the instruction file bind every agent (cited once, never per
 of every rule below: m0_rules.md. Header budget: 600 / 60. Rating refresh: 5 flags. Full-loop
 budget: 600 s on each box in play (the 10-minute line of Rule 4) — linux-pc measured 449.7 s wall at M0-V1
 (2026-10-09): 10 scopes, 537 cases in 6.1 s, then 443 s red-arming the six scopes new since HEAD (desktop's
-287 s); win-laptop 97.7 s wall, 3 scopes, 500 passed at M0-TE-win-r2 (2026-10-08; lot 1 there owed, M0-V2's
-flag; per box since M0-TJ3, PLAYBOOK §8) — every lot's V restates its box's; over it, a TR fires. OPT modules: OPT-B (R6, confirmed at
+287 s); win-laptop 134 s wall at M0-V2 (2026-10-10): 15 scopes, 586 passed, none new since HEAD to red-arm, ≈ 113 s
+normalised by the measured load (15.6 % of the box external; per box since M0-TJ3, PLAYBOOK §8) — every lot's V
+restates its box's; over it, a TR fires. OPT modules: OPT-B (R6, confirmed at
 M0-TP), OPT-C (R2–R4). Grants (OPT-C lanes: scope · exclusions · ceiling): R2 BUILD lane, R3
 installs, R4 DEBUG lane — each $0. Derogations, dated: none. Sizing bar: §2.1 — ceilings and named
 exceptions by id — none declared; E blocks: 7 of 127 open BUILD blocks (M0-T39, M0-T48, M0-T52b,
@@ -247,6 +250,7 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
 | R14 | Every V is done when its verdict is recorded, its D's created and the register updated (PLAYBOOK §14.3); a V that adds to that says so on its own `Done when:` line |
 | R15 | Box pattern (M0-TJ3): on win-laptop a block reads the RTX 5090 as the RTX 4080 Laptop, Xvfb/lavapipe/`game-xvfb` as the off-screen window (`game-offscreen`), start.sh as start.bat, /usr/bin/google-chrome as contract §6.2.3's Windows Chrome, `python3 tools/pb/…` as `py -3.12 tools/pb/…`; the Quadro's timing stays `box: laserax-ai`; a check only one box runs is owed elsewhere, flagged V to V, run at the next V on its box or by M0-V17 |
 | R16 | A block's last message ends with one line for the lead — `git add -A`, commit `M0-<ID> <status>`, push — in the probed box's shell: Windows → PowerShell (`git add -A; if ($?) { git commit -m "…" }; if ($?) { git push }`), linux-pc → bash (`&&`); agents never run it (the lead, 2026-10-10) |
+| R17 | Scope names are letters, digits and `_` (verify.py): a scope the contract or a block writes with `-` reads `_` — `watch-only` is `watch_only`, `time-control` is `time_control`; case and plant ids keep their spelling (contract §0.5 [M0-V2]; the lead, 2026-10-10) |
 
 ## Superseded / retired (§2.6)
 - R5's text, "linux-pc is the box for every M0 gate; win-laptop joins when the lead first runs a task there" (index:
@@ -265,6 +269,9 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
 - Contract §5.4's G-LIC list ("a missing licence or any other … is NO-GO") — superseded by contract §0.5 [M0-T14]: one named
   exception, `epaint_default_fonts` with exactly `(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0` (bundled fonts; the lead,
   2026-10-10, M0-T14: «Named exception (Recommended)»).
+- Contract §5's scope names written with a hyphen (`grav-force`, `grav-selfforce`, `heat-rkl2`, `heat-limiter`, `burn-cell`,
+  `burn-order`, `top-speed`, `watch-only`) and every block's scope name written so — superseded by contract §0.5 [M0-V2] and
+  R17: the same names with `_` (the lead, 2026-10-10, M0-V2: «Yes, rename once (Recommended)»).
 Inherited debt (§2.4): none.
 
 ## Repo facts (so you don't explore)
@@ -397,10 +404,10 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-T18
-- Counters: T=116 · D=16 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=1 · TD=1 · TE=1
-- Open D/BLOCKED register: M0-D10 · scope paths leave out inputs (--changed skips G-BOOT on a headless.rs edit; Cargo.lock reruns build only) · its manifest fix · M0-D11 · --out first and --help after a flag read « unknown argument » · its main.rs fix — none blocks M0-T10
-- Outstanding commit gates: Phase 2b (M0-TE-win, M0-D2..D8, M0-TJ3) — the lead's, from the repo root (the gate under M0-D8) · Phase 3 (M0-T1 … M0-V1, then M0-TC1 and M0-D10–D13 that M0-V1 filed) — the gate under M0-D13, its text still « closes after M0-V1 »
+- Next task: M0-D17
+- Counters: T=116 · D=17 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=2 · TD=1 · TE=1
+- Open D/BLOCKED register: M0-D17 · smoke.mjs runs Chrome with --no-sandbox (playwright-core's default chromiumSandbox: false) · its smoke.mjs fix, guard and plant — blocks nothing (M0-D10, M0-D11 closed 2026-10-09)
+- Outstanding commit gates: Phase 4 (M0-T10 … M0-V2, then M0-D17 and M0-TM2 that M0-V2 filed) — the gate under M0-TM2, its text « closes after M0-V2 »; Phase 2b and Phase 3 are in dde81d3, pushed (per-block commits, R16)
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
 - Model ratings: 2026-10-09 by M0-TM1
@@ -761,162 +768,47 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 # Phase 4 — Lot 2 · the registries, the equation of state and the guards
 
 ## M0-T10 · Sandbox units and the element and constant registries · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V1)
-- Status: DONE (2026-10-10 09:04)
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.5, §1.6.4 (the stand-ins'
-  switches), §2.1, §2.5.1, §2.7 + docs/agent/testing.md
-- Deliver: assets/elements.json (new): §1.5's ten species in order, verbatim, assets/physics.json (new):
-  every §2.5.1 and §2.7 constant at its initial value, its keys the ones scenes' `overrides` name →
-  Verify 1 · crates/sr-physics/src/units.rs (new, §2.1: G = 1, Δx = 1, the nominal Sun-like mass
-  M₀ = 2πΣc a²/3 at Σc = 1, a = 40) and src/registry.rs (new): both files embedded (`include_str!`),
-  parsed and validated — the species' order, keys, A and Z, §2.5.1's and §2.7's bounds (T_H < T_He < T_C <
-  T_Ne ≤ T_O < T_Si, T_Si/T_H ≤ 10, Σ_N ≥ 2 (K₂ₑ/K₁ₑ)², ν ≥ 4, 0 ≤ f_dep ≤ 0.1 while S2 is off, κ_dust = 0
-  while S1 is off), each refusal naming its key, per composition 1/μ, Y_e and Z_met (§1.5) → Verify 1 ·
-  its tests in the module: one per bound at its edge, a refusal per key class, μ and Y_e of §2.10's solar
-  mix against hand values → scope `registry` (`cargo test -p sr-physics --release --lib registry::`) →
-  Verify 1 · plant tests/plants/registry-order-unchecked.patch (new: T_He > T_C accepted) → Verify 2
-- Verify: 1. `python3 tools/pb/verify.py registry --task M0-T10` · Pass: GO, ≥ 10 cases · Fail: NO-GO or
-  fewer · 2. `python3 tools/pb/verify.py --redarm registry --task M0-T10` · Pass: GO — the plant NO-GO ·
-  Fail: the plant stays GO
-- Adversarial: a bound checked with ≤ where the contract writes < (T_H < T_He) passes every initial value
-  — the edge cases sit exactly on each bound.
-- Handoff: win-laptop (Laser2025-20), model=claude-sonnet-5-5 level=high (rung_record). assets/elements.json (§1.5 verbatim) + assets/physics.json (52 keys, §2.5.1 + §2.7 initial values, flat object; spellings in tasks/M0-T10.md) embedded and validated by sr-physics registry.rs (Elements, Physics, Standins, composition → 1/mu, Y_e, Z_met) and units.rs (M0 = 2πΣc a²/3 = 3351.03); tests/cpu.sh is the CPU scopes' runner. Verify 1 [ALREADY RUN — PASS (GO, 16/16, 0.7 s) on win-laptop]; Verify 2 [ALREADY RUN — PASS (clean GO, plant registry-order-unchecked red, 11.7 s) on win-laptop]; claim --changed --base 8484a25 [ALREADY RUN — PASS (GO, 539 passed, 9/9 scopes, 50 s) on win-laptop], logs/M0-T10.changed.log; its 2 oracle FLAGs name tests/cpu.sh and verify.json — the scope's own runner and manifest entry the Deliver's 'scope registry' implies. Declared (cheap to reverse): each K pair on-or-off (K's = 0 is a test scene's legal override, so Σ_N and m_tov/m_ch bounds apply only while on); m_nu < every nu_*; sanity classes (finite, >0, >=0) where the table says nothing; elements pinned to the ten. Not checked: c_sb > 2 max_gas_speed (needs calibration, G-CAL). Cargo.lock regenerated offline (sr-physics + serde_json, approved). Owed: testing.md rows (lot 2's docs block, R11); [NOT RUN — owed on linux-pc] scope registry. Next: M0-T11.
+- Status: DONE (2026-10-10 09:04) · archived by M0-V2, 2026-10-10
+- Handoff (one line): win-laptop (Laser2025-20), model=claude-sonnet-5-5 level=high (rung_record). assets/elements.json (§1.5 verbatim) + assets/physics.json (52 keys, §2.5.1 + §2.7 initial values, flat object; spellings in tasks/M0-T10.md) embedded and validated by sr-physics registry.rs (Elements, Physics, Standins, composition → 1/mu, Y_e, Z_met) and units.rs (M0 = 2πΣc a²/3 = 3351.03); tests/cpu.sh is the CPU scopes' runner. Verify 1 [ALREADY RUN — PASS (GO, 16/16, 0.7 s) on win-laptop]; Verify 2 [ALREADY RUN — PASS (clean GO, plant registry-order-unchecked red, 11.7 s) on win-laptop]; claim --changed --base 8484a25 [ALREADY RUN — PASS (GO, 539 passed, 9/9 scopes, 50 s) on win-laptop], logs/M0-T10.changed.log; its 2 oracle FLAGs name tests/cpu.sh and verify.json — the scope's own runner and manifest entry the Deliver's 'scope registry' implies. Declared (cheap to reverse): each K pair on-or-off (K's = 0 is a test scene's legal override, so Σ_N and m_tov/m_ch bounds apply only while on); m_nu < every nu_*; sanity classes (finite, >0, >=0) where the table says nothing; elements pinned to the ten. Not checked: c_sb > 2 max_gas_speed (needs calibration, G-CAL). Cargo.lock regenerated offline (sr-physics + serde_json, approved). Owed: testing.md rows (lot 2's docs block, R11); [NOT RUN — owed on linux-pc] scope registry. Next: M0-T11.
+- Full block: plan_archive.md § M0-T10
 
 ## M0-T11 · The reaction registry · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T10)
-- Status: DONE (2026-10-10 09:13)
-- Carried flags: [M0-T10, 2026-10-10] The registry scope already holds 16 cases (M0-T10: elements, physics bounds, composition, units) and verify.json says expected 16 — your record cases are added on top: raise expected to 16 + yours so fewer-than-promised stays NO-GO. physics.json keys your t_key resolves to are t_h t_he t_c t_ne t_o t_si (tasks/M0-T10.md); registry.rs already has RegistryError {file, key, message} and Elements::index_of. The CPU runner is tests/cpu.sh; the Verify's >= 16 is met by T10 alone, so count only your new cases.
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.1–§1.6.4, §2.5.1 +
-  docs/agent/testing.md
-- Deliver: assets/reactions.json (new): §1.6.2's ten records verbatim — ids, groups, shares, q ratios,
-  rate terms, T_thr_factor 0.5, N_Fe's gate, `enabled`, `standin` → Verify 1 ·
-  crates/sr-physics/src/registry.rs: the records parsed and validated — input and output shares each
-  summing to 1 (mass conserved per record — G-BURN's load check), keys resolving to species and to
-  physics.json temperatures, ν ≥ 4 on the late records (K7), a stand-in record shipping disabled
-  (§1.6.4) — each refusal naming the record → Verify 1 · the `registry` scope gains the record cases →
-  Verify 1 · plant tests/plants/registry-shares-unchecked.patch (new) → Verify 2
-- Verify: 1. `python3 tools/pb/verify.py registry --task M0-T11` · Pass: GO, ≥ 16 cases · Fail: NO-GO or
-  fewer · 2. `python3 tools/pb/verify.py --redarm registry --task M0-T11` · Pass: GO — both plants NO-GO
-  · Fail: a plant stays GO
-- Adversarial: shares that sum to 1 in decimal but not in f64 (0.7 + 0.3) — the check states its
-  tolerance (10⁻¹²) and a record off by 10⁻⁶ is refused.
-- Handoff: win-laptop (Laser2025-20), model=claude-sonnet-5-5 level=high (rung_record). assets/reactions.json (§1.6.2's ten records, {version, records}) parsed and validated by sr-physics registry.rs: Reactions/Record/RateLaw, keys resolved against species and physics.json (A via a_coef key, ν a number or a key, T_k, Σ_g), shares summing to 1 within 1e-12 per side, ν ≥ 4, stand-in must be disabled, every refusal key records[<id>].<field>; Registry::load carries them. Verify 1 [ALREADY RUN — PASS (GO, 29/29) on win-laptop]; Verify 2 [ALREADY RUN — PASS (clean GO, both plants red: order 1 failed, shares 2 failed) on win-laptop]; claim --changed --base 8484a25 [ALREADY RUN — PASS (GO, 552 passed, 9/9 scopes, 52 s) on win-laptop], per-scope logs/M0-T11.<scope>.log; its 3 oracle FLAGs name tests/cpu.sh, M0-T10's plant and verify.json (this scope's entry: expected 16 → 29, reactions.json in paths). Declared (cheap to reverse; tasks/M0-T11.md): a_coef is a physics.json key; term ν number-or-key, checked ≥ 4 on every term; T_thr = t_thr_factor × first term's T_k, N_Fe = terms [] with t_thr_factor null; group one of the seven accumulators. Owed: testing.md registry row (lot 2 docs block, R11); [NOT RUN — owed on linux-pc] scope registry. Next: M0-T12.
+- Status: DONE (2026-10-10 09:13) · archived by M0-V2, 2026-10-10
+- Handoff (one line): win-laptop (Laser2025-20), model=claude-sonnet-5-5 level=high (rung_record). assets/reactions.json (§1.6.2's ten records, {version, records}) parsed and validated by sr-physics registry.rs: Reactions/Record/RateLaw, keys resolved against species and physics.json (A via a_coef key, ν a number or a key, T_k, Σ_g), shares summing to 1 within 1e-12 per side, ν ≥ 4, stand-in must be disabled, every refusal key records[<id>].<field>; Registry::load carries them. Verify 1 [ALREADY RUN — PASS (GO, 29/29) on win-laptop]; Verify 2 [ALREADY RUN — PASS (clean GO, both plants red: order 1 failed, shares 2 failed) on win-laptop]; claim --changed --base 8484a25 [ALREADY RUN — PASS (GO, 552 passed, 9/9 scopes, 52 s) on win-laptop], per-scope logs/M0-T11.<scope>.log; its 3 oracle FLAGs name tests/cpu.sh, M0-T10's plant and verify.json (this scope's entry: expected 16 → 29, reactions.json in paths). Declared (cheap to reverse; tasks/M0-T11.md): a_coef is a physics.json key; term ν number-or-key, checked ≥ 4 on every term; T_thr = t_thr_factor × first term's T_k, N_Fe = terms [] with t_thr_factor null; group one of the seven accumulators. Owed: testing.md registry row (lot 2 docs block, R11); [NOT RUN — owed on linux-pc] scope registry. Next: M0-T12.
+- Full block: plan_archive.md § M0-T11
 
 ## M0-T12 · The equation of state · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T11)
-- Status: DONE (2026-10-10 09:24)
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.5 (μ, Y_e), §2.3.1–§2.3.3 +
-  docs/agent/testing.md
-- Deliver: crates/sr-physics/src/eos.rs (new): Π_th = Σε_th and T = μ ε_th (γ = 2), the cold pressure
-  P(x, K₁, K₂) for electrons (x = Y_eΣ) and neutron matter (x = X_nΣ), u(x) = x ∫₀^x P(s)/s² ds tabulated
-  once on 512 log-spaced points over [10⁻⁸, 10⁸] with log-log interpolation (the table the GPU uploads,
-  M0-T19), ε_cold, ε_th from E with T_floor's floor, c² = 2Π/Σ (§2.3.3), a K of 0 meaning no cold
-  pressure (the scenes' `overrides` for Sod and the cold collapse) → Verify 1 · its tests: P's two
-  limits (K₁x² and K₂x^{3/2}) within 10⁻⁶ relative, u(x) against both limits' closed forms within 10⁻⁴,
-  the interpolation error ≤ 10⁻⁴ between nodes, monotonicity, K = 0 → scope `eos` → Verify 1 · plant
-  tests/plants/eos-exponent.patch (new: the relativistic exponent 3/2 → 1.6 in the table) → Verify 2
-- Verify: 1. `python3 tools/pb/verify.py eos --task M0-T12` · Pass: GO, ≥ 6 cases · Fail: NO-GO or fewer
-  · 2. `python3 tools/pb/verify.py --redarm eos --task M0-T12` · Pass: GO — the plant NO-GO · Fail: the
-  plant stays GO
-- Adversarial: a table accurate at its nodes and wrong between them — the interpolation case samples
-  midpoints; u(x)'s integral diverging at x → 0 — the low end checked against the x² limit.
-- Handoff: eos.rs: Π_th=Σε_th, T=με_th, P(x;K₁,K₂), ColdTable (512 pts, 1e-8..1e8, log-log, built by quadrature, closed form is the oracle), ε_cold, ε_th from E floored at T_floor/μ with floor_added, c²=2Π/Σ, K=0 → none; scope eos 13/0/0 GO, plant eos-exponent RED (7 failed), claim --changed --base 8484a25 GO 564 passed 10/10 on win-laptop Laser2025-20. Deviation (declared, tasks/M0-T12.md): u's 1e-4 closeness to 2K₂x^{3/2} holds only where the blend has converged (shipped electrons at 1e8 are 4.6e-3 off), so the table's high end is tested with a K2≪K1 pair and the shipped pairs beyond the table; interpolation worst 3.55e-5. Owed: testing.md rows (eos, registry), eos on linux-pc. Ran model=claude-sonnet-5-5 level=high. Next: M0-T13
+- Status: DONE (2026-10-10 09:24) · archived by M0-V2, 2026-10-10
+- Handoff (one line): eos.rs: Π_th=Σε_th, T=με_th, P(x;K₁,K₂), ColdTable (512 pts, 1e-8..1e8, log-log, built by quadrature, closed form is the oracle), ε_cold, ε_th from E floored at T_floor/μ with floor_added, c²=2Π/Σ, K=0 → none; scope eos 13/0/0 GO, plant eos-exponent RED (7 failed), claim --changed --base 8484a25 GO 564 passed 10/10 on win-laptop Laser2025-20. Deviation (declared, tasks/M0-T12.md): u's 1e-4 closeness to 2K₂x^{3/2} holds only where the blend has converged (shipped electrons at 1e8 are 4.6e-3 off), so the table's high end is tested with a K2≪K1 pair and the shipped pairs beyond the table; interpolation worst 3.55e-5. Owed: testing.md rows (eos, registry), eos on linux-pc. Ran model=claude-sonnet-5-5 level=high. Next: M0-T13
+- Full block: plan_archive.md § M0-T12
 
 ## M0-T13 · The string table and its check (G-STR) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T12)
-- Status: DONE (2026-10-10 09:32)
-- Carried flags: [M0-TB, 2026-10-08] sr-app is bin-only (R11: its unit tests run with --bin sandbox-reactions), so crates/sr-app/tests/strings.rs cannot use the bin's modules — include src/strings.rs by #[path], or make the check a unit test in strings.rs; the scope's command and paths follow the choice
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §4.1, §5.4 (G-STR) +
-  docs/agent/testing.md
-- Deliver: crates/sr-app/src/strings.rs (new): `pub const STRINGS: &[(&str, &str)]` holding every row of
-  §4.1's strings block, byte-identical, the desktop's title (M0-T5) read from it → Verify 1 ·
-  crates/sr-app/tests/strings.rs (new): §4.1's block read from milestones/m0/m0_contrat.md and STRINGS —
-  the same keys both ways, byte-identical texts — and web/index.html carrying each `web.*` text verbatim
-  → scope `strings` (paths: strings.rs, the test, web/index.html and the contract — which leaves the
-  `milestones/**` skip class, as its reason foresaw) → Verify 1 · plant tests/plants/string-typo.patch
-  (new, §5.4: one character of `stage.supernova`) → Verify 2
-- Verify: 1. `python3 tools/pb/verify.py strings --task M0-T13` · Pass: GO, ≥ 3 cases · Fail: NO-GO ·
-  2. `python3 tools/pb/verify.py --redarm strings --task M0-T13` · Pass: GO — the plant NO-GO · Fail: the
-  plant stays GO
-- Adversarial: a check that compares keys only lets a changed text through — the plant edits one
-  character of a text, not a key; ×, —, ≈, ·, … in other code points (§4.1) — byte comparison, not a
-  normalised one.
-- Handoff: strings.rs: STRINGS = §4.1's 117 rows byte-identical (generated from the contract block) + get(key); the desktop title now reads get("app.title") (APP_TITLE gone). tests/strings.rs includes strings.rs by #[path] (sr-app is bin-only; the carried flag's first option) — 3 cases: same keys both ways, texts byte-identical, web.* verbatim in web/index.html. Scope strings 3/0/0 GO [ALREADY RUN — PASS on win-laptop Laser2025-20]; plant string-typo (stage.supernova: Supernova→Supernoba) RED 1 failed under --redarm; claim --changed --base 8484a25 GO 566 passed 11/11 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. Deviations: tests/cpu.sh gained a '<crate> --test <file>' form (the scope's command); verify.json skip-class reason reworded (the contract leaves the class via the scope's paths). Owed: testing.md row (strings; the docs block, as eos/registry), strings on linux-pc. Ran model=claude-sonnet-5-5 level=high per rung_record. Next: M0-T14
+- Status: DONE (2026-10-10 09:32) · archived by M0-V2, 2026-10-10
+- Handoff (one line): strings.rs: STRINGS = §4.1's 117 rows byte-identical (generated from the contract block) + get(key); the desktop title now reads get("app.title") (APP_TITLE gone). tests/strings.rs includes strings.rs by #[path] (sr-app is bin-only; the carried flag's first option) — 3 cases: same keys both ways, texts byte-identical, web.* verbatim in web/index.html. Scope strings 3/0/0 GO [ALREADY RUN — PASS on win-laptop Laser2025-20]; plant string-typo (stage.supernova: Supernova→Supernoba) RED 1 failed under --redarm; claim --changed --base 8484a25 GO 566 passed 11/11 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. Deviations: tests/cpu.sh gained a '<crate> --test <file>' form (the scope's command); verify.json skip-class reason reworded (the contract leaves the class via the scope's paths). Owed: testing.md row (strings; the docs block, as eos/registry), strings on linux-pc. Ran model=claude-sonnet-5-5 level=high per rung_record. Next: M0-T14
+- Full block: plan_archive.md § M0-T13
 
 ## M0-T14 · The licence gate (G-LIC) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T13)
-- Status: DONE (2026-10-10 09:49)
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.2, §5.4 (G-LIC) +
-  milestones/m0/reports/contract_rulings.md §2 (the approved table) + docs/agent/testing.md
-- Deliver: tests/licences/check.py (new, standard library): `cargo metadata --format-version 1` over the
-  workspace for the native and the wasm32 targets, and `npm ls --all --json` in web/ once
-  web/package.json exists (M0-T15 adds that case), every package's licence expression needs an
-  alternative made only of §5.4's list (OR, AND and WITH parsed, `/` read as OR), a missing licence or
-  any other NO-GO naming the package → Verify 1 · scope `licences` (cases cargo-native, cargo-wasm32,
-  paths Cargo.toml, Cargo.lock, crates/*/Cargo.toml, web/package*.json, tests/licences/**) → Verify 1 ·
-  plant tests/plants/gpl-dep.patch (new, §5.4: a path crate with `license = "GPL-3.0-only"` added to the
-  workspace) → Verify 2
-- Verify: 1. `python3 tools/pb/verify.py licences --task M0-T14` · Pass: GO, 2 cases, the package count
-  per target in the log · Fail: NO-GO — a copyleft or missing licence is also an ask (PLAYBOOK §4 Rule 2)
-  · 2. `python3 tools/pb/verify.py --redarm licences --task M0-T14` · Pass: GO — the plant NO-GO · Fail:
-  the plant stays GO
-- Adversarial: "MIT AND GPL-3.0" read as acceptable because MIT is listed — AND needs every term, OR
-  one; a target-specific dependency missed by a host-only metadata call — the wasm32 case.
-- Handoff: tests/licences/check.py (stdlib): cargo metadata --locked --filter-platform <host|wasm32> over resolve.nodes, SPDX parser (OR/AND/WITH, '/'=OR, only 'Apache-2.0 WITH LLVM-exception' passes WITH), its fixed-expression checks run first in each case ('MIT AND GPL-3.0' refused); scope licences (cargo-native 164 pkgs, cargo-wasm32 143 pkgs) in verify.json; plant gpl-dep.patch. Verify 1 scope licences 2/0/0 GO [ALREADY RUN — PASS on win-laptop Laser2025-20]; Verify 2 --redarm licences GO, plant RED (_gpl-dep refused) [ALREADY RUN — PASS on win-laptop Laser2025-20]; claim --changed --base 8484a25 GO 567 passed 12/12 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. ASKED + RULED: epaint_default_fonts 0.36.2 (eframe default_fonts; bundled fonts) is '(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0' — the lead: «Named exception (Recommended)» → exact-match EXCEPTIONS entry in check.py, override line in contract §0.5 [M0-T14] + mirror in Superseded. Deviations: a workspace member with no licence is counted not refused (publish=false; one declaring GPL is refused); the npm path ('check.py npm', walks npm ls + node_modules/*/package.json) is NOT PROVEN (synthetic fixture only, no web/package.json) — M0-T15 adds its scope case and must run it. Owed: testing.md row for licences (docs block, as eos/registry/strings); both cases on linux-pc. Ran model=claude-sonnet-5-5 level=high per rung_record. Next: M0-T15
+- Status: DONE (2026-10-10 09:49) · archived by M0-V2, 2026-10-10
+- Handoff (one line): tests/licences/check.py (stdlib): cargo metadata --locked --filter-platform <host|wasm32> over resolve.nodes, SPDX parser (OR/AND/WITH, '/'=OR, only 'Apache-2.0 WITH LLVM-exception' passes WITH), its fixed-expression checks run first in each case ('MIT AND GPL-3.0' refused); scope licences (cargo-native 164 pkgs, cargo-wasm32 143 pkgs) in verify.json; plant gpl-dep.patch. Verify 1 scope licences 2/0/0 GO [ALREADY RUN — PASS on win-laptop Laser2025-20]; Verify 2 --redarm licences GO, plant RED (_gpl-dep refused) [ALREADY RUN — PASS on win-laptop Laser2025-20]; claim --changed --base 8484a25 GO 567 passed 12/12 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. ASKED + RULED: epaint_default_fonts 0.36.2 (eframe default_fonts; bundled fonts) is '(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0' — the lead: «Named exception (Recommended)» → exact-match EXCEPTIONS entry in check.py, override line in contract §0.5 [M0-T14] + mirror in Superseded. Deviations: a workspace member with no licence is counted not refused (publish=false; one declaring GPL is refused); the npm path ('check.py npm', walks npm ls + node_modules/*/package.json) is NOT PROVEN (synthetic fixture only, no web/package.json) — M0-T15 adds its scope case and must run it. Owed: testing.md row for licences (docs block, as eos/registry/strings); both cases on linux-pc. Ran model=claude-sonnet-5-5 level=high per rung_record. Next: M0-T15
+- Full block: plan_archive.md § M0-T14
 
 ## M0-T15 · The web smoke (G-WEB, first cases) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T14)
-- Status: DONE (2026-10-10 10:45)
-- Carried flags: [M0-T15, 2026-10-10] Try 1 (Sonnet 5.5, high; win-laptop Laser2025-20) ended by its first NO-GO claim run; the work is in the tree, detail tasks/M0-T15.md. Built: web/package.json (playwright-core 1.64.0) + lock, web/smoke.mjs (cases ready, no-webgpu; logs SR-ADAPTER and SR-CHROME-ADAPTER — wgpu on the web reads no GPU name, Chrome's own reads nvidia/lovelace, fallback=false), launch.json `web`, tests/web/check.sh cases ready/no-webgpu (port lock, fresh-dist stamp), verify.json web 3 cases + plant never-ready (tests/plants/never-ready.patch), licences + case npm (check.py runs npm ci when node_modules is absent), testing.md web row. Verify 1 `verify.py web` GO 3/0/0, Verify 2 `licences` GO 3/0/0, Verify 3 `--redarm web` GO (3 plants red, 590 s) [ALREADY RUN — PASS on win-laptop]. Claim `py -3.12 tools/pb/verify.py --changed --base 8484a25 --task M0-T15` NO-GO [ALREADY RUN — FAIL on win-laptop]: 569 passed, 12/12 scopes GO, then its red-arm `web: clean` failed — web[ready] « srState is "loading" after 30 s » (+ a console 404), logs/M0-T15.web.redarm.log; not reproduced in 17 later tries, idle and under load — unexplained (GPU/CPU contention with the parallel red-arms, or a first-frame stall); smoke.mjs now lists console, failed-request and HTTP ≥ 400 lines on a timeout. Re-try: keep the tree, run the claim once on a fresh id (M0-T15-r2); on a second red read the new diagnostic lines before changing anything; the claim's web arms take ≈ 8–10 min on win-laptop — at the 10-minute line, so measure and, past it, hand the run to the lead. Owed: web and licences npm on linux-pc.
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.2, §3.4 (web), §3.5, §3.6 (web),
-  §5.4 (G-WEB), §6.2.3 + docs/agent/testing.md
-- Deliver: web/package.json (new: playwright-core 1.64.0) and web/package-lock.json (generated) →
-  Verify 2 · web/smoke.mjs (new, §6.2.3): the installed Chrome through playwright-core, headless, with
-  §6.2.3's flags (no `--no-sandbox`), srAdapter recorded, cases `ready` — `/` reaches srState "ready"
-  within 30 s — and `no-webgpu` — `/?no-webgpu=1` shows srState "no-webgpu" and the three
-  `web.no_webgpu_*` texts exactly (the preset case waits for presets and drawing, M0-T94) →
-  Verify 1 · tools/pb/launch.json: `web` per §3.6, the smoke served through `launch.py` → Verify 1 · the
-  `web` scope's cases `ready` and `no-webgpu` → Verify 1 · the `licences` scope's case `npm` → Verify 2 ·
-  plant tests/plants/never-ready.patch (new, §5.4: srState never set to "ready") → Verify 3
-- Verify: 1. `python3 tools/pb/verify.py web --task M0-T15` · Pass: GO, 3 cases (build, ready,
-  no-webgpu), Chrome's adapter in the log · Fail: NO-GO; `ready` impossible with §6.2.3's flags (WebGPU
-  in headless Chrome is UNVERIFIED, §6.2.3) → BLOCKED with the measured failure, a D or a question —
-  never a looser case · 2. `python3 tools/pb/verify.py licences --task M0-T15` · Pass: GO, 3 cases ·
-  Fail: NO-GO · 3. `python3 tools/pb/verify.py --redarm web --task M0-T15` · Pass: GO — never-ready
-  NO-GO · Fail: the plant stays GO
-- Adversarial: Chrome falling back to a software adapter passes "ready" without proving the GPU path —
-  srAdapter is recorded and named in the handoff; a smoke that runs against a stale web/dist — the case
-  depends on the `build` case's fresh output.
-- Handoff: Try 2 (rung_record: model=claude-opus-5-5 level=high; win-laptop Laser2025-20). The web smoke from try 1 stands (detail tasks/M0-T15.md); srAdapter reads « (BrowserWebGpu, Other, driver ) » — wgpu on the web names no GPU — and Chrome's own adapter nvidia/lovelace, fallback=false, so the GPU path, not software. Root cause of both NO-GO claims, measured: in a red-arm copy trunk runs the cargo binary itself, bypassing M0-D9's lock+touch wrapper, so a clean web arm reused the never-ready plant's artifacts from the shared redarm-target (scratch wasm lacked the "ready" string; reproduced 2/2, fixed 1/1). Fix: tests/cargo.sh's wrapper lifted into sr_in_shared_target (cargo() unchanged), check.sh runs trunk under it, testing.md says so; the 404 is /favicon.ico. Deviations: tests/cargo.sh is a shared helper (behaviour unchanged for cargo scopes); the lead committed T15 in a552c96 and ruled « dont re-run the whole 10 minute thing, just run the new commit and move on » — so --redarm web on the fixed tree was stopped twice, NOT RUN (the plant was RED in try 1's Verify 3; the fixed clean arm GO in a scratch copy only). Verify: verify.py web M0-T15-r3 GO 3/0/0 [ALREADY RUN — PASS on win-laptop]; claim py -3.12 tools/pb/verify.py --changed --base a552c96 --task M0-T15-r4 GO 563/0/0, 10/10 impacted, 21 s [ALREADY RUN — PASS on win-laptop] (web, licences not impacted since a552c96). Owed: --redarm web on the fixed tree, web and licences npm on linux-pc (flagged to M0-V2); five try-1 pb-redarm-* dirs remain in %TEMP% (disk 98 %), not deleted. Next: M0-T16.
+- Status: DONE (2026-10-10 10:45) · archived by M0-V2, 2026-10-10
+- Handoff (one line): Try 2 (rung_record: model=claude-opus-5-5 level=high; win-laptop Laser2025-20). The web smoke from try 1 stands (detail tasks/M0-T15.md); srAdapter reads « (BrowserWebGpu, Other, driver ) » — wgpu on the web names no GPU — and Chrome's own adapter nvidia/lovelace, fallback=false, so the GPU path, not software. Root cause of both NO-GO claims, measured: in a red-arm copy trunk runs the cargo binary itself, bypassing M0-D9's lock+touch wrapper, so a clean web arm reused the never-ready plant's artifacts from the shared redarm-target (scratch wasm lacked the "ready" string; reproduced 2/2, fixed 1/1). Fix: tests/cargo.sh's wrapper lifted into sr_in_shared_target (cargo() unchanged), check.sh runs trunk under it, testing.md says so; the 404 is /favicon.ico. Deviations: tests/cargo.sh is a shared helper (behaviour unchanged for cargo scopes); the lead committed T15 in a552c96 and ruled « dont re-run the whole 10 minute thing, just run the new commit and move on » — so --redarm web on the fixed tree was stopped twice, NOT RUN (the plant was RED in try 1's Verify 3; the fixed clean arm GO in a scratch copy only). Verify: verify.py web M0-T15-r3 GO 3/0/0 [ALREADY RUN — PASS on win-laptop]; claim py -3.12 tools/pb/verify.py --changed --base a552c96 --task M0-T15-r4 GO 563/0/0, 10/10 impacted, 21 s [ALREADY RUN — PASS on win-laptop] (web, licences not impacted since a552c96). Owed: --redarm web on the fixed tree, web and licences npm on linux-pc (flagged to M0-V2); five try-1 pb-redarm-* dirs remain in %TEMP% (disk 98 %), not deleted. Next: M0-T16.
+- Full block: plan_archive.md § M0-T15
 
 ## M0-T16 · Labels watch, never drive — the static scan (G-WATCH) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T15)
-- Status: DONE (2026-10-10 10:50)
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.1 (the one-way rule), §2.11 (the
-  calibration keys), §5.4 (G-WATCH) + docs/agent/testing.md
-- Deliver: tests/watch/check.py (new, standard library): no file under crates/sr-engine/src/step/ or
-  crates/sr-engine/shaders/ names `observe`, `Stage`, `Tracker` or a §2.11 calibration key other than
-  `physics_hash`, GO or NO-GO naming file and line → scope `watch-only` (paths: those two folders,
-  tests/watch/**, tests/plants/stage-in-step.patch) → Verify 1 · plant tests/plants/stage-in-step.patch
-  (new, §5.4: a `use sr_physics::observe::Stage` line added to the step module) → Verify 2
-- Verify: 1. `python3 tools/pb/verify.py watch-only --task M0-T16` · Pass: GO, 1 case, the files scanned
-  counted in the log · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm watch-only --task M0-T16` ·
-  Pass: GO — the plant NO-GO · Fail: the plant stays GO
-- Adversarial: a scan of an empty folder is always green — the log counts the files scanned (≥ 2:
-  step/mod.rs and floors.wgsl today); a calibration value smuggled in under another name — the scan
-  lists §2.11's keys from the contract's schema line, not from memory.
-- Handoff: Built tests/watch/check.py (stdlib): scans every file under crates/sr-engine/src/step/ + shaders/ for whole-identifier observe, Stage, Tracker and §2.11's 13 value keys (read from the contract's Schema line; version/measured/physics_hash left out); NO-GO names file:line, or on <2 files / <10 keys. Scope watch_only in verify.json (the 'oracle' FLAGs on it are the scope entry Deliver calls for), plant tests/plants/stage-in-step.patch. Verify 1 GO (2 files, 16 words); Verify 2 --redarm GO (plant NO-GO at step/mod.rs:9); claim run --changed --base 7251a24: GO 494 passed, 2/2 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. Deviations: scope is watch_only not watch-only (verify.py refuses a hyphen; flagged to M0-T17, which writes the testing.md row); paths add milestones/m0/m0_contrat.md (the scan reads it). Detail tasks/M0-T16.md. Ran model=claude-sonnet-5-5 level=high. Next: M0-T17.
+- Status: DONE (2026-10-10 10:50) · archived by M0-V2, 2026-10-10
+- Handoff (one line): Built tests/watch/check.py (stdlib): scans every file under crates/sr-engine/src/step/ + shaders/ for whole-identifier observe, Stage, Tracker and §2.11's 13 value keys (read from the contract's Schema line; version/measured/physics_hash left out); NO-GO names file:line, or on <2 files / <10 keys. Scope watch_only in verify.json (the 'oracle' FLAGs on it are the scope entry Deliver calls for), plant tests/plants/stage-in-step.patch. Verify 1 GO (2 files, 16 words); Verify 2 --redarm GO (plant NO-GO at step/mod.rs:9); claim run --changed --base 7251a24: GO 494 passed, 2/2 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. Deviations: scope is watch_only not watch-only (verify.py refuses a hyphen; flagged to M0-T17, which writes the testing.md row); paths add milestones/m0/m0_contrat.md (the scan reads it). Detail tasks/M0-T16.md. Ran model=claude-sonnet-5-5 level=high. Next: M0-T17.
+- Full block: plan_archive.md § M0-T16
 
 ## M0-T17 · Docs — physics.md (units, registries, equation of state) and lot 2's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T16)
-- Status: DONE (2026-10-10 10:53)
-- Carried flags: [M0-T16, 2026-10-10] [M0-T16, 2026-10-10] The scope is named watch_only, not watch-only: verify.py refuses a hyphen (names are [a-z0-9_]; NOT RUN on 'watch-only'). Write the docs/agent/testing.md row as | `watch_only` | and run Verify 2's grep with watch_only in place of watch-only (the count stays 5); contract §5.4 still reads watch-only — a name, not a rule; the plan's M0-T17 text is the lead's to retype or M0-T17 declares it.
-- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.5, §1.6, §2.1, §2.3, §2.5.1, §2.7,
-  §7 + the handoffs of M0-T10–M0-T16
-- Deliver: docs/agent/physics.md (new): Units, Elements, Reactions, Equation of state — the laws, the
-  registries, the constants and their bounds, citing the contract and assets/*.json, never restating a
-  number (§7) → Verify 1 · docs/agent/testing.md: rows for registry, eos, strings, licences, web's new
-  cases, watch-only → Verify 2
-- Verify: 1. `grep -c "^## " docs/agent/physics.md` · Pass: ≥ 4 · Fail: fewer, or no file · 2. `grep -cE
-  "^[|] .(registry|eos|strings|licences|watch-only). [|]" docs/agent/testing.md` · Pass: 5 · Fail: fewer
-- Adversarial: a constant's value copied into the page goes stale at the first tuning — the V reads the
-  page for numbers that belong to physics.json.
-- Handoff: docs/agent/physics.md (6 sections, no physics.json value) and testing.md's lot-2 table (registry, eos, strings, licences, watch_only; web's ready/no-webgpu already in T15's row). Deviation: row/scope is watch_only, not watch-only (M0-T16's flag; Verify 2 run with it, count 5; contract §5.4 still reads watch-only). Verify 1 = 6, Verify 2 = 5, claim --changed --base b9ce600 GO (493 passed, win-laptop Laser2025-20). Found, not acted on: testing.md's old « Scopes today » closing paragraph still says licences/strings 'can be armed as soon as code exists' (stale; V's to refresh). Ran on model=claude-sonnet-5-5 level=high. Next: M0-T18.
+- Status: DONE (2026-10-10 10:53) · archived by M0-V2, 2026-10-10
+- Handoff (one line): docs/agent/physics.md (6 sections, no physics.json value) and testing.md's lot-2 table (registry, eos, strings, licences, watch_only; web's ready/no-webgpu already in T15's row). Deviation: row/scope is watch_only, not watch-only (M0-T16's flag; Verify 2 run with it, count 5; contract §5.4 still reads watch-only). Verify 1 = 6, Verify 2 = 5, claim --changed --base b9ce600 GO (493 passed, win-laptop Laser2025-20). Found, not acted on: testing.md's old « Scopes today » closing paragraph still says licences/strings 'can be armed as soon as code exists' (stale; V's to refresh). Ran on model=claude-sonnet-5-5 level=high. Next: M0-T18.
+- Full block: plan_archive.md § M0-T17
 
 ## M0-V2 · Validation — lot 2: the registries, the equation of state and the guards · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T17)
-- Status: TODO
+- Status: DONE (2026-10-10 14:08)
 - Carried flags: [M0-V1, 2026-10-09] owed on win-laptop (M0-D9; carried by M0-V1, which ran on linux-pc): tests/cargo.sh's red-arm cargo wrapper — py -3.12 tools/pb/verify.py --redarm adapter --task <id> and --redarm build, each three times in a row, read clean GO + plant red; Git Bash may lack flock, so the mkdir-lock path runs (linux-pc proved it only with flock forced off); else carried to the next V on win-laptop, M0-V17 at the latest (R15) · [M0-V1, 2026-10-09] owed on win-laptop (R15; M0-V1 ran lot 1 on linux-pc only — reports/v1.md § Owed): py -3.12 tools/pb/verify.py --all --task <id> with lot 1's seven scopes GO there — adapter listing the RTX 4080 Laptop and the Intel Arc (WARP where wgpu lists it), state on the RTX 4080, boot, desktop through game-offscreen (G-DESK UNVERIFIED, §6.6: NO-GO sends the window tasks to linux-pc, Q3 — M0-T5's flag), web (trunk there), capture with --offscreen-window — then --redarm of build, adapter, state, boot, desktop, web and capture; the human-run tier there: the lead runs start.bat (and start.ps1) once by double-click and says what they saw; read the free disk first (97 % full, Hazards); else carried V to V, M0-V17 at the latest · [M0-D13, 2026-10-10] M0-D13 measured on win-laptop only: on linux-pc run verify.py boot (summary.json verbatim in its log: version, adapter, steps 200) and --redarm boot (scene-refuse red) — owed by R15 · [M0-T15, 2026-10-10] Owed by M0-T15: py -3.12 tools/pb/verify.py --redarm web on win-laptop — the clean arm after the sr_in_shared_target fix (tests/cargo.sh, check.sh) never ran to its end in the real harness (the lead waived it, 2026-10-10); plus verify.py web and licences (npm) on linux-pc.
 - Read: milestones/m0/m0_contrat.md §1.5, §1.6, §2.1, §2.3, §2.5.1, §2.7, §4.1, §5.4 (G-STR, G-LIC,
   G-WATCH, G-WEB), §6.2 + the handoffs of M0-T10–M0-T17 + docs/agent/physics.md, testing.md + the
@@ -931,6 +823,34 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   NO-GO — each red a D (E4)
 - Adversarial: a registry that matches the contract's table but not its bounds — the V checks each
   bound's edge case, not only the initial values.
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=max (rung_record now). Verdict DEFECTS(1), reports/v2.md: lot 2 conforms to §1.5, §1.6.2, §2.3, §2.5.1, §2.7, §4.1 and §5.4 value by value and bound by bound (27/27 registry mutants killed); Verify 1 py -3.12 tools/pb/verify.py --all --task M0-V2 [ALREADY RUN — PASS (GO, 586 passed, 15/15 scopes, 134 s wall, ≈ 113 s normalised by load) on win-laptop]; lot 2's six scopes and lot 1's seven red-armed here, 16/16 plants red (desktop 746 s, web 752 s raw — over 600 s). Filed: M0-D17 (smoke.mjs runs Chrome with --no-sandbox, playwright-core's default — chrome://version measured), M0-TM2 (the record moves BUILD on Sonnet 5.5, high: $1.70 vs $1.44 per DONE block, 10 blocks each). The lead: «Yes, rename once (Recommended)» → contract §0.5 [M0-V2], Superseded, R17 (declared: R17 reads all 30 hyphenated scope names in the plan, not only §5's 8). Carried flags discharged: M0-D9's wrapper ×3 (adapter, build; mkdir lock), lot 1 on win-laptop with the lead's start.bat «Opened, stayed till closed» (start.ps1's double-click opened Notepad — Windows' default; its off-screen run works), --redarm web on the fixed tree; owed on linux-pc → M0-V3 (lot 2, M0-T15's web/npm, M0-D13's boot). Not filed (E1 (i), § Observations): T84's stand-in readout, Chrome ignoring powerPreference on Windows, start.ps1 without a case, G-LIC's workspace-member reading without a §0.5 line, red-arm cost here. Phase 4: T10–T17 stubbed, header 418/600, flags → M0-T27, M0-T32; Phase 3's 8 late blocks a TC's. Next: M0-D17.
+
+## M0-D17 · web/smoke.mjs runs Chrome with `--no-sandbox`: playwright-core adds it by default, against §6.2.3 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V2)
+- Status: TODO
+- Blocks: nothing — G-WEB reaches "ready" on the GPU path today (nvidia, fallback=false); the gap is the browser it proves it in
+- Caused by: M0-T15
+- Files: web/smoke.mjs (its `chromium.launch({ executablePath: chrome, headless: true, args: chromeArgs })`), tools/pb/verify.json (the `web` scope's plants), tests/plants/ — opened by M0-V2, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §6.2.3, §5.4 (G-WEB) + docs/agent/testing.md (the `web` row) + milestones/m0/logs/M0-V2.log (« probe: Chrome's command line ») + milestones/m0/tasks/M0-V2.md (the probe's script)
+- Symptom: measured on win-laptop (Laser2025-20), Chrome 154.0.8037.99, playwright-core 1.64.0, 2026-10-10 (M0-V2): Chrome launched with smoke.mjs's exact options (executable, `--headless=new --enable-unsafe-webgpu`, headless) shows `--no-sandbox` in chrome://version's Command Line; the same launch with `chromiumSandbox: true` shows it absent. §6.2.3 leaves `--no-sandbox` out of Chrome's guidance and smoke.mjs's own header says « never `--no-sandbox` »: the smoke proves WebGPU in an unsandboxed browser, not the one a player runs. Repro: the probe in M0-V2's task file, or chrome://version from a page smoke.mjs opens. Cause measured: playwright-core's `chromiumSandbox` defaults to false, which appends `--no-sandbox` to every Chromium launch.
+- Deliver: smoke.mjs launches with `chromiumSandbox: true` and refuses its own run when the launched Chrome's command line holds `--no-sandbox` (NO-GO naming it; the command line's sandbox state in both cases' logs) · plant `smoke-no-sandbox` (tests/plants/, the option dropped) in the `web` scope · testing.md's `web` row says so. If `ready` cannot reach "ready" with the sandbox on (WebGPU in a sandboxed headless Chrome is UNVERIFIED, §6.2.3), stop: BLOCKED with the measured failure and a question to the lead — never the flag put back.
+- Done when: on win-laptop, `py -3.12 tools/pb/verify.py web --task M0-D17` GO with the log reading the sandbox on, and `py -3.12 tools/pb/verify.py --redarm web --task M0-D17` GO with `smoke-no-sandbox` red — 752 s at M0-V2 on a loaded box, over the 10-minute line: the lead's run in one visible terminal, or normalised by measured load (the lead, 2026-10-10: « you can normalize by load if you have it »); linux-pc owed (R15).
+- Handoff: <placeholder>
+
+## M0-TM2 · Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) · **PLAN** · Opus 5.5, max · switch · (AFTER M0-D17)
+- Status: TODO
+- Read: this file (rules + this task) + PLAYBOOK.md §0 (the ladder, the rubric) and §B.3 (the probe) + the agent's model
+  pages the ladder cites + the record (`rung_record.py report`; milestones/m0/reports/v2.md § Phase 4's close)
+- Deliver: the ladder re-read on the day — the probe and the model pages: a model retired, renamed or added, a price or a
+  level changed → the `Models:` line rewritten and dated, the lead's answer first where a rung they run changes (§12) ·
+  every open block's rating re-derived by §0's rubric from its heading, `Sizing:`, `Deliver:`, `Verify:` and `Carried
+  flags:` and the record — rule (4): BUILD on Sonnet 5.5, high at $1.70 per DONE block against $1.44 for BUILD on Opus
+  5.5, high (`usual`), 10 blocks each, costs read from win-laptop's session folder only (28 of 49 DONE blocks had none
+  readable, linux-pc's) — its rating segment rewritten, nothing else in the block · the register's `Model ratings:
+  <YYYY-MM-DD> by M0-TM2` line · in the handoff, the ratings changed, counted by rung.
+- Pass: `plan.py lint` GO; every open block on a rung of the ladder, each above the cheapest rung that fits named in the
+  task file with its rule; the diff touches rating segments, the `Models:` line and the register's line only. Fail: any
+  other byte changed; a BUILD or MOVE block above the cheapest rung that fits with none of §0's rules (1)–(4) named; a
+  CHECK or PLAN block below `(gate)`.
 - Handoff: <placeholder>
 
 > **Commit gate (lead):** Phase 4 closes after M0-V2 — from the repo root, one at a time:
@@ -1127,6 +1047,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T27 · Docs — architecture.md (the step, the box, the latch, the files) and time_control.md · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T26)
 - Status: TODO
+- Carried flags: [M0-V2, 2026-10-10] testing.md beside your lot-3 rows, stale since lot 2 (M0-V2, reports/v2.md): (a) the closing paragraph's « licences and strings … can be armed as soon as code exists » — both armed by lot 2; « §5 names 38 » counts rows (38 rows, 32 scope names); (b) the complete-loop line is M0-V1's linux-pc run — add M0-V2's win-laptop loop (reports/v2.md § The complete loop); (c) the build row's « ≈ 5 s on win-laptop (the empty sr-physics) », and the desktop and capture rows' « win-laptop route owed there » — measured by M0-V2 on a loaded box: --redarm build 300 s cold, 53–60 s warm; boot 431 s; capture 526 s; desktop 746 s (≈ 688 s normalised by load); web 752 s; (d) the watch_only row's « not the contract's watch-only » — the contract reads watch_only now (§0.5 [M0-V2], R17); (e) running.md's « The two ways a person starts the game (the lead, double-clicking) » lists start.ps1, which Windows does not run on a double-click (Explorer offers Notepad — the lead, M0-V2): start.bat is the double-click, start.ps1 runs from PowerShell (its command)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3, §1.8, §2.9, §2.12, §7 + the
   handoffs of M0-T18–M0-T26
 - Deliver: docs/agent/architecture.md: the step's sequence and dispatch lists, the booking layout, the
@@ -1144,6 +1065,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-V3 · Validation — lot 3: the step framework · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T27)
 - Status: TODO
+- Carried flags: [M0-V2, 2026-10-10] owed on linux-pc (R15; M0-V2 ran lot 2 on win-laptop only — reports/v2.md § Owed): python3 tools/pb/verify.py --all --task <id> with lot 2's scopes GO there — registry, eos, strings, licences (its cargo-native case over the linux-gnu set: M0-V2 read it GO from win-laptop by --filter-platform, 189 packages, 48 Linux-only, 0 refused — a probe, not the scope), watch_only, web's ready and no-webgpu with §6.2.3's Linux flags (srAdapter and Chrome's own adapter named) — then --redarm of registry, eos, strings, licences, watch_only and web there; carried from M0-T15: web and licences (npm) on linux-pc; carried from M0-D13: verify.py boot (summary.json verbatim in its log: version, adapter, steps 200) and --redarm boot (scene-refuse red); else carried V to V, M0-V17 at the latest
 - Read: milestones/m0/m0_contrat.md §1.3, §1.8, §1.9.1, §2.2, §2.3.5, §2.7, §2.9, §2.12.1, §2.12.3 + the
   handoffs of M0-T18–M0-T27 + docs/agent/architecture.md, time_control.md, testing.md + the delivered
   files, each by the section it covers
@@ -1254,6 +1176,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T32 · Docs — physics.md (gravity) and lot 4's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T31)
 - Status: TODO
+- Carried flags: [M0-V2, 2026-10-10] physics.md's « Not checked at load » (Constants) names c_sb against max_gas_speed and the K1 timescale gap but not Σ_BH ≥ 4 × calibration's ns_sigma_max_sb (contract §2.6): the loader holds sigma_bh only to > 0 (registry.rs's Pos class), so the page reads as if that bound were checked; add it to the list when you edit the page (its check: M0-V7 names it, M0-V9 runs it) — M0-V2
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.3, §1.4, §7 + the handoffs of
   M0-T28–M0-T31
 - Deliver: docs/agent/physics.md § Gravity: the sheet law (Q1), the kernel, the FFT over the box, M0-T29's

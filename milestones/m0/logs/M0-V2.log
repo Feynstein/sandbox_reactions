@@ -1,0 +1,183 @@
+# M0-V2 — Validation, lot 2 — raw log (win-laptop Laser2025-20)
+opened 2026-10-10T15:01:37Z, HEAD dde81d3, model=claude-opus-5-5 level=max (rung_record now)
+M0-TH: 4 all · 0 changed · 3 scope · 0 case · 5 redarm · first run GO
+M0-TG: 0 all · 2 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TB: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run GO
+M0-TE-win: 2 all · 1 changed · 1 scope · 0 case · 1 redarm · first run NO-GO
+M0-D2: 0 all · 1 changed · 1 scope · 1 case · 1 redarm · first run GO
+M0-D3: 0 all · 1 changed · 1 scope · 1 case · 1 redarm · first run GO
+M0-D4: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run NO-GO
+M0-D5: 0 all · 1 changed · 0 scope · 1 case · 1 redarm · first run GO
+M0-TE-win-r2: 1 all · 0 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-TE-win-r3: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D6: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run NO-GO
+M0-D7: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-TJ3: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D8: 0 all · 1 changed · 0 scope · 1 case · 1 redarm · first run GO
+M0-T1: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T2: 0 all · 2 changed · 2 scope · 0 case · 2 redarm · first run GO
+M0-D9: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T3: 0 all · 2 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-T4: 0 all · 1 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-T4b: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TM1: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T5: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T6: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run NO-GO
+M0-T6d: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T7: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T8: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T8d: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T9: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TV1: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-V1: 1 all · 0 changed · 0 scope · 0 case · 7 redarm · first run GO
+M0-D10: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-D11: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-D12: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D14: 0 all · 2 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-D12-r2: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-D13b: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D15: 0 all · 1 changed · 1 scope · 0 case · 2 redarm · first run GO
+M0-D16: 0 all · 1 changed · 1 scope · 3 case · 1 redarm · first run NO-GO
+M0-D13c: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T10: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T11: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T12: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T13: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T14: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T15: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run GO
+M0-T15-r2: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-T15-r4: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T16: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run NO-GO
+M0-T17: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+(58 further task label(s) ran scoped, case or redarm runs only)
+redundant: M0-TH 2026-10-08T12:12:57-04:00 (all) - a second GO run on the tree of M0-TH 2026-10-08T12:12:49-04:00
+redundant: M0-TG 2026-10-08T13:39:57-04:00 (changed) - a second GO run on the tree of M0-TG 2026-10-08T13:39:40-04:00
+redundant: M0-D14 2026-10-09T18:09:44-04:00 (changed) - a second GO run on the tree of M0-D14 2026-10-09T18:03:05-04:00
+laserax-ai: slowest scopes (median over 5 complete loops): tools_selftest 10.22 s · desktop 6.31 s · adapter 4.84 s · web 4.44 s · state 3.13 s
+Laser2025-20: slowest scopes (median over 3 complete loops): tools_selftest 215.19 s · toolchain 18.73 s · plan_lint 0.56 s
+report: 214 runs · 0 foreign · 8 complete loops · 50 changed · 107 task label(s) · loops per task 1.18 · redundant 3 · first-try 88/107 · median complete loop laserax-ai 3.27 s · Laser2025-20 97.54 s
+=== GO ===
+redarm registry: exit=0 wall=24 s :: === GO ===
+redarm eos: exit=0 wall=15 s :: === GO ===
+redarm strings: exit=0 wall=28 s :: === GO ===
+redarm licences: exit=0 wall=10 s :: === GO ===
+redarm watch_only: exit=0 wall=4 s :: === GO ===
+flock: absent — mkdir-lock path
+redarm adapter #1 (M0-V2-d9-1): exit=0 wall=33 s :: === GO ===
+redarm adapter #2 (M0-V2-d9-2): exit=0 wall=33 s :: === GO ===
+redarm adapter #3 (M0-V2-d9-3): exit=0 wall=34 s :: === GO ===
+redarm build #1 (M0-V2-d9-1): exit=0 wall=300 s :: === GO ===
+redarm build #2 (M0-V2-d9-2): exit=0 wall=53 s :: === GO ===
+redarm build #3 (M0-V2-d9-3): exit=0 wall=60 s :: === GO ===
+redarm state: exit=0 wall=29 s :: === GO ===
+redarm boot: exit=0 wall=432 s :: === GO ===
+redarm capture: exit=0 wall=527 s :: === GO ===
+contract block rows: 117 � STRINGS rows: 117 � unknown escapes: none
+duplicate keys � block: none � table: none
+in block, not in table: none
+in table, not in block: none
+same order: True
+texts differing in bytes: none
+�4.1's special characters in the block: {'U+00D7': 5, 'U+2014': 3, 'U+2248': 1, 'U+00B7': 7, 'U+2026': 1}
+look-alikes in STRINGS: {'x (in �{rung})': 0, '-- or � (en dash)': 0, '...': 0}
+web.* rows: 4 � missing verbatim from web/index.html: none
+contract block rows: 117 � STRINGS rows: 117 � unknown escapes: none
+duplicate keys � block: none � table: none
+in block, not in table: none
+in table, not in block: none
+same order: True
+texts differing in bytes: none
+�4.1's special characters in the block: {'U+00D7': 5, 'U+2014': 3, 'U+2248': 1, 'U+00B7': 7, 'U+2026': 1}
+look-alikes in STRINGS: {'x (in �{rung})': 0, '-- or � (en dash)': 0, '...': 0}
+web.* rows: 4 � missing verbatim from web/index.html: none
+redarm web: exit=0 wall=754 s :: === GO ===
+verify: refused - nothing run
+=== NO-GO: unknown scope(s): watch-only - `list` shows them (plan_lint, tools_selftest, toolchain, build, registry, eos, strings, adapter, state, boot, desktop, web, capture, licences, watch_only) ===
+== strings probe (UTF-8):
+contract block rows: 117 · STRINGS rows: 117 · unknown escapes: none
+duplicate keys — block: none · table: none
+in block, not in table: none
+in table, not in block: none
+same order: True
+texts differing in bytes: none
+§4.1's special characters in the block: {'U+00D7': 5, 'U+2014': 3, 'U+2248': 1, 'U+00B7': 7, 'U+2026': 1}
+look-alikes in STRINGS: {'x (in ×{rung})': 0, '-- or – (en dash)': 0, '...': 0}
+web.* rows: 4 · missing verbatim from web/index.html: none
+redarm desktop: exit=0 wall=746 s :: === GO ===
+load redarm desktop: wall 746 s · external CPU 1267 s over 22 logical CPUs = 7.7 % of the box · normalised wall ≈ 688 s (CPU-bound estimate)
+  top external: Code 905 s · ollama 122 s · claude 94 s · chrome 27 s · steamwebhelper 23 s · SoundTune 13 s · msedgewebview2 9 s · cpptools 9 s
+== probe: Chrome's command line under smoke.mjs's launch options
+as smoke.mjs launches it: Chrome 154.0.8037.99 · --no-sandbox PRESENT
+  command line: "C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --headless=new --enable-unsafe-webgpu --user-data-dir="C:\Users\YOHANB~1\AppData\Local\Temp\playwright_chromiumdev_profile-L306aV" --remote-debugging-pipe --no-startup-window --noerrdialogs --flag-switches-begin --flag-switches-end --enable-unsafe-swiftshader
+with chromiumSandbox: true: Chrome 154.0.8037.99 · --no-sandbox absent
+  command line: "C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --headless=new --enable-unsafe-webgpu --user-data-dir="C:\Users\YOHANB~1\AppData\Local\Temp\playwright_chromiumdev_profile-XjgCeD" --remote-debugging-pipe --no-startup-window --noerrdialogs --flag-switches-begin --flag-switches-end --enable-unsafe-swiftshader
+== probe: G-LIC over the linux-gnu native set, from win-laptop
+linux-gnu native set: 189 packages · windows-msvc native set: 164 · Linux-only: 48
+  linux-only as-raw-xcb-connection 1.0.1: MIT OR Apache-2.0
+  linux-only calloop 0.13.0: MIT
+  linux-only calloop 0.14.5: MIT
+  linux-only calloop-wayland-source 0.3.0: MIT
+  linux-only calloop-wayland-source 0.4.1: MIT
+  linux-only cc 1.6.0: MIT OR Apache-2.0
+  linux-only dlib 0.5.3: MIT
+  linux-only downcast-rs 1.2.1: MIT/Apache-2.0
+  linux-only errno 0.3.14: MIT OR Apache-2.0
+  linux-only find-msvc-tools 0.1.14: MIT OR Apache-2.0
+  linux-only gethostname 1.1.0: Apache-2.0
+  linux-only glutin_glx_sys 0.6.1: Apache-2.0
+  linux-only jobserver 0.1.35: MIT OR Apache-2.0
+  linux-only libc 0.2.190: MIT OR Apache-2.0
+  linux-only linux-raw-sys 0.12.1: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT
+  linux-only linux-raw-sys 0.4.15: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT
+  linux-only memmap2 0.9.11: MIT OR Apache-2.0
+  linux-only percent-encoding 2.3.2: MIT OR Apache-2.0
+  linux-only pkg-config 0.3.34: MIT OR Apache-2.0
+  linux-only polling 3.11.0: Apache-2.0 OR MIT
+  linux-only quick-xml 0.41.0: MIT
+  linux-only rustix 0.38.44: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT
+  linux-only rustix 1.1.5: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT
+  linux-only scoped-tls 1.0.1: MIT/Apache-2.0
+  linux-only shlex 2.0.1: MIT OR Apache-2.0
+  linux-only slab 0.4.12: MIT
+  linux-only smithay-client-toolkit 0.19.2: MIT
+  linux-only smithay-client-toolkit 0.20.0: MIT
+  linux-only smithay-clipboard 0.7.3: MIT
+  linux-only thiserror 1.0.69: MIT OR Apache-2.0
+  linux-only thiserror-impl 1.0.69: MIT OR Apache-2.0
+  linux-only wayland-backend 0.3.17: MIT
+  linux-only wayland-client 0.31.15: MIT
+  linux-only wayland-csd-frame 0.3.0: MIT
+  linux-only wayland-cursor 0.31.14: MIT
+  linux-only wayland-protocols 0.32.13: MIT
+  linux-only wayland-protocols-experimental 20250721.0.1: MIT
+  linux-only wayland-protocols-misc 0.3.12: MIT
+  linux-only wayland-protocols-plasma 0.3.12: MIT
+  linux-only wayland-protocols-wlr 0.3.12: MIT
+  linux-only wayland-scanner 0.31.11: MIT
+  linux-only wayland-sys 0.31.11: MIT
+  linux-only x11-dl 2.21.0: MIT
+  linux-only x11rb 0.13.2: MIT OR Apache-2.0
+  linux-only x11rb-protocol 0.13.2: MIT OR Apache-2.0
+  linux-only xcursor 0.3.11: MIT
+  linux-only xkbcommon-dl 0.4.2: MIT
+  linux-only xkeysym 0.2.1: MIT OR Apache-2.0 OR Zlib
+refused in the linux-gnu set: 0
+=== GO ===
+== probe: start.ps1 on game-offscreen (R4 DEBUG lane), Enter piped
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.1s (log C:\workspace\sandbox_reactions\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 34556 stopped
+web: nothing recorded
+services: 5, stopped: 5
+=== GO ===
+start.ps1 exit=0 after 4 s
+services: 5, running: 0
+=== GO ===
+verify --all: exit=0 wall=134 s
+load verify --all: wall 134 s · external CPU 460 s over 22 logical CPUs = 15.6 % of the box · normalised wall ≈ 113 s (CPU-bound estimate)
+  top external: Code 388 s · claude 12 s · ollama 8 s · python3.13 7 s · explorer 7 s · chrome 7 s · steamwebhelper 5 s · SoundTune 2 s

@@ -213,6 +213,20 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
 
 - A block that ends IN PROGRESS (awaiting the lead) gives no line: nothing is finished to commit.
 
+## R17 · Scope names — letters, digits and `_` (the lead, 2026-10-10, at M0-V2)
+- The lead, 2026-10-10, at M0-V2, picked "Yes, rename once (Recommended)", shown as: "I add one override line to the
+  contract's §0.5 (those 8 names read with `_` instead of `-`), its mirror in Superseded, and a rule R17 in the plan header
+  so every later block sees it. Text only: no code, no check weakened."
+- **Why.** `tools/pb/verify.py` takes scope names of letters, digits and `_` only: M0-T16 measured a hyphenated name
+  refused and shipped G-WATCH's scope as `watch_only`; M0-V2 measured `verify.py watch-only` → « unknown scope(s):
+  watch-only ». Contract §5 wrote 8 scope names with a hyphen and the plan's blocks 30 (2026-10-10: `time-control`,
+  `nu-heat`, `ui-tools`, `cpu-gpu`, `calibrate-order`, …), each a refusal waiting for the block that builds it.
+- **The reading.** A scope name the contract or a block writes with `-` reads with `_`: `grav-force` is `grav_force`,
+  `watch-only` is `watch_only`, `time-control` is `time_control` — in `verify.json`, in every `verify.py` call and in
+  testing.md's rows (contract §0.5 [M0-V2]). Only scope names: a case id (`no-webgpu`) and a plant id (`stage-in-step`)
+  keep their spelling. The checks, their cases, `expected` counts and plants are unchanged — a rename, never a bypass.
+- A block that greps testing.md for its rows (a docs block's Verify) greps the `_` spelling.
+
 ## Considered and REJECTED (false economy)
 Binding (PLAYBOOK §2.1, §11): a later agent proposing an item below re-opens a closed decision — it asks
 the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.
