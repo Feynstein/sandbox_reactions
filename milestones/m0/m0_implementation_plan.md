@@ -81,7 +81,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T14 | BUILD | The licence gate (G-LIC) | AFTER M0-T13 | DONE (2026-10-10 09:49) |
 | M0-T15 | BUILD | The web smoke in headless Chrome (G-WEB, first cases) | AFTER M0-T14 | DONE (2026-10-10 10:45) |
 | M0-T16 | BUILD | Labels watch, never drive: the static scan (G-WATCH) | AFTER M0-T15 | DONE (2026-10-10 10:50) |
-| M0-T17 | BUILD | Docs: physics.md (units, registries, EOS), lot 2's testing rows | AFTER M0-T16 | TODO |
+| M0-T17 | BUILD | Docs: physics.md (units, registries, EOS), lot 2's testing rows | AFTER M0-T16 | DONE (2026-10-10 10:53) |
 | M0-V2 | CHECK | Validation, lot 2: registries, EOS, strings, licences, web smoke, scan | AFTER M0-T17 | TODO |
 | M0-T18 | BUILD | Booking: the per-cell side buffers and accumulators every pass books into | AFTER M0-V2 | TODO |
 | M0-T19 | BUILD | P8 floors complete (vacuum reset, temperature floor) and the EOS on the GPU | AFTER M0-T18 | TODO |
@@ -397,7 +397,7 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-T16
+- Next task: M0-T18
 - Counters: T=116 · D=16 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=1 · TD=1 · TE=1
 - Open D/BLOCKED register: M0-D10 · scope paths leave out inputs (--changed skips G-BOOT on a headless.rs edit; Cargo.lock reruns build only) · its manifest fix · M0-D11 · --out first and --help after a flag read « unknown argument » · its main.rs fix — none blocks M0-T10
 - Outstanding commit gates: Phase 2b (M0-TE-win, M0-D2..D8, M0-TJ3) — the lead's, from the repo root (the gate under M0-D8) · Phase 3 (M0-T1 … M0-V1, then M0-TC1 and M0-D10–D13 that M0-V1 filed) — the gate under M0-D13, its text still « closes after M0-V1 »
@@ -901,7 +901,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: Built tests/watch/check.py (stdlib): scans every file under crates/sr-engine/src/step/ + shaders/ for whole-identifier observe, Stage, Tracker and §2.11's 13 value keys (read from the contract's Schema line; version/measured/physics_hash left out); NO-GO names file:line, or on <2 files / <10 keys. Scope watch_only in verify.json (the 'oracle' FLAGs on it are the scope entry Deliver calls for), plant tests/plants/stage-in-step.patch. Verify 1 GO (2 files, 16 words); Verify 2 --redarm GO (plant NO-GO at step/mod.rs:9); claim run --changed --base 7251a24: GO 494 passed, 2/2 scopes [ALREADY RUN — PASS on win-laptop Laser2025-20]. Deviations: scope is watch_only not watch-only (verify.py refuses a hyphen; flagged to M0-T17, which writes the testing.md row); paths add milestones/m0/m0_contrat.md (the scan reads it). Detail tasks/M0-T16.md. Ran model=claude-sonnet-5-5 level=high. Next: M0-T17.
 
 ## M0-T17 · Docs — physics.md (units, registries, equation of state) and lot 2's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T16)
-- Status: TODO
+- Status: DONE (2026-10-10 10:53)
 - Carried flags: [M0-T16, 2026-10-10] [M0-T16, 2026-10-10] The scope is named watch_only, not watch-only: verify.py refuses a hyphen (names are [a-z0-9_]; NOT RUN on 'watch-only'). Write the docs/agent/testing.md row as | `watch_only` | and run Verify 2's grep with watch_only in place of watch-only (the count stays 5); contract §5.4 still reads watch-only — a name, not a rule; the plan's M0-T17 text is the lead's to retype or M0-T17 declares it.
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.5, §1.6, §2.1, §2.3, §2.5.1, §2.7,
   §7 + the handoffs of M0-T10–M0-T16
@@ -913,7 +913,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   "^[|] .(registry|eos|strings|licences|watch-only). [|]" docs/agent/testing.md` · Pass: 5 · Fail: fewer
 - Adversarial: a constant's value copied into the page goes stale at the first tuning — the V reads the
   page for numbers that belong to physics.json.
-- Handoff: <placeholder>
+- Handoff: docs/agent/physics.md (6 sections, no physics.json value) and testing.md's lot-2 table (registry, eos, strings, licences, watch_only; web's ready/no-webgpu already in T15's row). Deviation: row/scope is watch_only, not watch-only (M0-T16's flag; Verify 2 run with it, count 5; contract §5.4 still reads watch-only). Verify 1 = 6, Verify 2 = 5, claim --changed --base b9ce600 GO (493 passed, win-laptop Laser2025-20). Found, not acted on: testing.md's old « Scopes today » closing paragraph still says licences/strings 'can be armed as soon as code exists' (stale; V's to refresh). Ran on model=claude-sonnet-5-5 level=high. Next: M0-T18.
 
 ## M0-V2 · Validation — lot 2: the registries, the equation of state and the guards · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T17)
 - Status: TODO
