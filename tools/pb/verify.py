@@ -450,10 +450,13 @@ def argv_of(cmd, man, root, case=None):
 
 def case_env(task):
     """Every command's environment: the task id, UTF-8 output, and faulthandler on - a native crash (an access
-    violation, no traceback) still leaves its Python stack in the log. A caller's own value wins."""
+    violation, no traceback) still leaves its Python stack in the log - and PB_PYTHON, this harness's own
+    interpreter, so a non-Python case (capture_web.mjs) never spawns whatever `python` the PATH finds first
+    (win-laptop, M0-D16: a stdlib-less 3.14 ahead of 3.12). A caller's own value wins."""
     env = dict(os.environ, PB_TASK=task)
     env.setdefault("PYTHONIOENCODING", "utf-8")
     env.setdefault("PYTHONFAULTHANDLER", "1")
+    env.setdefault("PB_PYTHON", sys.executable)
     return env
 
 
@@ -1703,6 +1706,8 @@ if kind == "check":
 if kind == "fault":
     import faulthandler
     kind = "go" if faulthandler.is_enabled() else "nogo"
+if kind == "pbpy":
+    kind = "go" if os.path.realpath(os.environ.get("PB_PYTHON", "-")) == os.path.realpath(sys.executable) else "nogo"
 if kind == "exit":
     text, rc = "", int(args[0])
 elif kind == "verdict":
@@ -1740,7 +1745,7 @@ def selftest():
     global PROGRESS
     checks, failed, plants = [], [], [0, 0]           # plants: [planted, red]
     saved = {k: os.environ.get(k) for k in ("PB_TASK", "PB_TRACE", "PB_BOX", "GIT_CEILING_DIRECTORIES",
-                                            "PYTHONFAULTHANDLER")}
+                                            "PYTHONFAULTHANDLER", "PB_PYTHON")}
     saved_progress, PROGRESS = PROGRESS, False
 
     def check(name, ok, detail=""):
@@ -1769,6 +1774,7 @@ def selftest():
             tmp = Path(tmpd)
             os.environ.pop("PB_TASK", None)
             os.environ.pop("PYTHONFAULTHANDLER", None)               # the harness, not the caller, must set it
+            os.environ.pop("PB_PYTHON", None)                        # the same
             os.environ["PB_BOX"] = "SELFBOX"
             os.environ["GIT_CEILING_DIRECTORIES"] = str(tmp.parent)   # the fixture root is no git checkout
             trace = tmp / "trace.txt"
@@ -2444,6 +2450,16 @@ def selftest():
             finally:
                 globals()["case_env"] = real
             plant_("an env without faulthandler reads red", rc == 1 and "f:" in out, out[-300:])
+            rc, out = run_({"p": {"cmd": f"{py} pbpy"}}, "p")
+            check("a case gets PB_PYTHON, the harness's own interpreter (never the PATH's first python)",
+                  rc == 0 and out.rstrip().endswith("=== GO ==="), out[-300:])
+            globals()["case_env"] = lambda task: dict(os.environ, PB_TASK=task, PYTHONIOENCODING="utf-8",
+                                                      PYTHONFAULTHANDLER="1")
+            try:
+                rc, out = run_({"p": {"cmd": f"{py} pbpy"}}, "p")
+            finally:
+                globals()["case_env"] = real
+            plant_("an env without PB_PYTHON reads red", rc == 1 and "p:" in out, out[-300:])
 
             # -- K · the console, the list ------------------------------------------------------------------
             (tmp / "u.json").write_text(json.dumps({"scopes": {"a": {"cmd": "x", "note": "≤ 5 s"}}}), encoding="utf-8")

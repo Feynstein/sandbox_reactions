@@ -1,0 +1,52 @@
+== 2026-10-10T08:39:55-04:00 M0-D16 repro on Laser2025-20: py -3.12 verify.py tools_selftest --case capture_web
+tools_selftest  0/1/0        8.70 s  NO-GO
+logs: milestones/m0/logs/M0-D16.<scope>.log · record: loop_times.jsonl · tree fabab0c97e83+da39a3ee5e6b
+FAILED:
+  tools_selftest: tools_selftest[capture_web]: 1 failed; tools_selftest[capture_web]: its own verdict NO-GO: 2 failure(s) · log milestones/m0/logs/M0-D16.tools_selftest.log
+verify: 0 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 8.72 s · mode case · PARTIAL, not the loop (--case capture_web) · jobs 8 · box Laser2025-20 · python 3.12.10 · load 17.81->7.42
+=== NO-GO: tools_selftest: tools_selftest[capture_web]: 1 failed; tools_selftest[capture_web]: its own verdict NO-GO: 2 failure(s) · log milestones/m0/logs/M0-D16.tools_selftest.log ===
+exit=1
+== 2026-10-10T08:42:14-04:00 after the fix: cases verify, capture_web
+logs: milestones/m0/logs/M0-D16.<scope>.log · record: loop_times.jsonl · tree fabab0c97e83+47e8105c2bc9
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 51.94 s · mode case · PARTIAL, not the loop (--case verify) · jobs 8 · box Laser2025-20 · python 3.12.10 · load 4.99->10.47
+=== GO ===
+logs: milestones/m0/logs/M0-D16.<scope>.log · record: loop_times.jsonl · tree fabab0c97e83+47e8105c2bc9
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 3.62 s · mode case · PARTIAL, not the loop (--case capture_web) · jobs 8 · box Laser2025-20 · python 3.12.10 · load 3.02->6.98
+=== GO ===
+== 2026-10-10T08:43:26-04:00 INJECTED: the PB_PYTHON line removed (expect red)
+=== NO-GO: tools_selftest: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed · log milestones/m0/logs/M0-D16-inj.tools_selftest.log ===
+=== NO-GO: tools_selftest: tools_selftest[capture_web]: 1 failed; tools_selftest[capture_web]: its own verdict NO-GO: 2 failure(s) · log milestones/m0/logs/M0-D16-inj.tools_selftest.log ===
+== 2026-10-10T08:44:36-04:00 fix restored: full tools_selftest (Done when)
+tools_selftest  10/0/0     163.94 s  GO
+logs: milestones/m0/logs/M0-D16.<scope>.log · record: loop_times.jsonl · tree fabab0c97e83+47e8105c2bc9
+anchor: 11 path×scope entries moved by this run
+anchor: 63 paths checked · 65 skipped (3 classes) · 0 never checked · 1 stale · 0 unclassified · 0 owed · 64 covered of 129 visible
+verify: 10 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 72.80 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 2.4->1.27
+=== GO ===
+== 2026-10-10T08:45:55-04:00 redarm tools_selftest
+tools_selftest · clean · GO
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[status_page]: 1 failed; tools_selftest[status_page]: its own verdict NO-GO: 1 check(s) failed; tools_self)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 152.31 s · box Laser2025-20 · log milestones/m0/logs/M0-D16.tools_selftest.redarm.log
+=== GO ===
+== 2026-10-10T08:49:30-04:00 claim: --changed --base fabab0c
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since fabab0c: milestones/m0/m0_implementation_plan.md
+why tools_selftest: moved since fabab0c: tools/pb/verify.py
+plan_lint       501/0/0      0.42 s  GO
+tools_selftest  10/0/0     150.59 s  GO
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since fabab0c)
+build           NOT RUN (not impacted: its 23 path(s) checked at the anchor, none moved since fabab0c)
+adapter         NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since fabab0c)
+state           NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since fabab0c)
+boot            NOT RUN (not impacted: its 23 path(s) checked at the anchor, none moved since fabab0c)
+desktop         NOT RUN (not impacted: its 27 path(s) checked at the anchor, none moved since fabab0c)
+web             NOT RUN (not impacted: its 26 path(s) checked at the anchor, none moved since fabab0c)
+capture         NOT RUN (not impacted: its 23 path(s) checked at the anchor, none moved since fabab0c)
+FLAG oracle: tools/pb/verify.py changed since fabab0c97e83 - a test, case or check M0-D16's Deliver: does not name
+logs: milestones/m0/logs/M0-D16.<scope>.log · record: loop_times.jsonl · tree fabab0c97e83+4938e3afb4ac
+anchor: 1 path×scope entries moved by this run
+anchor: 64 paths checked · 66 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 64 covered of 130 visible
+skipped    58  reports, tasks, the contract and docs - until a scope reads one (G-STR will read the contract's strings block), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 511 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 8 not impacted · 69.30 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 2.27->1.33
+=== GO ===

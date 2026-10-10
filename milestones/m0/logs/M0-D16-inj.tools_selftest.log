@@ -1,0 +1,19 @@
+== 2026-10-10T08:43:27-04:00 tools_selftest[verify] · task M0-D16-inj · box Laser2025-20 :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 52.70 s
+FAILED:
+  a case gets PB_PYTHON, the harness's own interpreter (never the PATH's first python): failed · log logs/T9.p.log
+verify: 0 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.06 s · mode scope · jobs 8 · box SELFBOX · python 3.12.10 · load 0.63->1.65
+=== NO-GO: p: 1 failed; its own verdict NO-GO: 1 check(s) failed · log logs/T9.p.log ===
+
+selftest: checks=171 · failed=1 · plants=101/101 red
+=== NO-GO: 1 check(s) failed ===
+
+== 2026-10-10T08:44:21-04:00 tools_selftest[capture_web] · task M0-D16-inj · box Laser2025-20 :: node tools/pb/capture_web.mjs selftest
+-- tools_selftest[capture_web] · exit=1 · 4.66 s
+NOTE no tools\pb\routes.json beside the tool: nothing of the project's to validate
+NOTE live tier NOT RUN (--live: a real browser, through the project's Playwright)
+selftest: checks=85 · failed=2 · plants=38 · live=0 · seconds=3.30
+FAIL review_page.py reads every capture, and shows none until the TV flags one ::  | Current thread 0x000012e4 (most recent call first): |   <no Python frame>
+FAIL review_page.py builds its page once the TV flags a capture with its note ::  | Current thread 0x00000bbc (most recent call first): |   <no Python frame>
+=== NO-GO: 2 failure(s) ===
+
