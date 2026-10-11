@@ -1,5 +1,5 @@
 # How we work here
-<!-- Mirrored from PLAYBOOK.md v12.2 (§C). Identical in every project — never edited here.
+<!-- Mirrored from PLAYBOOK.md v12.3 (§C). Identical in every project — never edited here.
      Project facts, hazards and grants live in the current plan's ## Repo facts and ## Rules.
      Precedence: the plan's dated derogations > this block > PLAYBOOK.md. Open PLAYBOOK.md
      only when a line below points there. -->
@@ -26,9 +26,11 @@ fresh. Here's how we work.
   report, D blocks and moves, never a fix. PLAN: blocks, contract, Rules, your report, never
   code. MOVE: text moved byte for byte, a pointer where it stood, never reworded.
 * **Test the way the team tests.** One harness, one routine (PLAYBOOK §4 Rule 4): iterate on
-  your scope alone until it's green, red-arm it (`verify.py --redarm <scope>`), make your plan
-  edits, then run `verify.py --changed` once — the scopes your changes touch; that run is your
-  claim about the tree (the complete loop runs at phase-closing V and TR blocks). Rated below
+  your scope alone until it's green, red-arm it if you added the scope or changed its check
+  (`verify.py --redarm <scope>`), make your plan edits, then run `verify.py --changed` once —
+  the scopes your changes touch, read against your task's start (`plan.py show` records it; no
+  commit between tasks); that run is your claim about the tree (the complete loop and the
+  red-arm sweep run at phase-closing V and TR blocks). Rated below
   `(usual)`, a red claim ends your try: trail into your `Carried flags:`, rating `(usual)`, back
   to TODO (PLAYBOOK §0). A late fix is re-verified on the scopes it could have moved, each in its
   own block. Add a scope, never a second runner. Don't re-run a suite already green on the same tree.

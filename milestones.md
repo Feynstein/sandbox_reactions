@@ -63,3 +63,4 @@ lives in the current plan — `milestones/m0/m0_implementation_plan.md` today.
   lot 1 — M0-TE-win (the Windows laptop probed, what is missing installed, the toolkit and the toolchain
   proven there) and M0-TJ3 (the lead rules which checks run on the laptop and which stay on linux-pc).
   Next: the Phase 2 commit gate on linux-pc, then M0-TE-win on win-laptop.
+- **2026-10-11 · PLAYBOOK v12.3 propagated** — PLAYBOOK.md v12.3 written (byte-identical to canonical); AGENTS.md written from §C, CLAUDE.md and GEMINI.md set to `@AGENTS.md`; in milestones/m0/m0_implementation_plan.md: M0-TE-V12.3, M0-TH-adopt-a inserted after M0-T22. Committed and pushed by tools/propagate.py after the lead's go (11:06).

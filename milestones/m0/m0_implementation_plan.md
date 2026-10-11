@@ -92,6 +92,8 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T21 | BUILD | The active box (§1.3.3) | AFTER M0-T20 | DONE (2026-10-10 16:12) |
 | M0-D19 | BUILD | The web scope is red on linux-pc: `node` resolves to 18 outside an interactive shell, and the page's WebGPU check gets no adapter | AFTER M0-T21 | DONE (2026-10-10 16:30) |
 | M0-T22 | BUILD | Frames of steps and the collapse latch, on indirect dispatches | AFTER M0-T21 | DONE (2026-10-10 16:45) |
+| M0-TE-V12.3 | PLAN | PLAYBOOK v12.3 adoption | AFTER M0-T22 | TODO |
+| M0-TH-adopt-a | BUILD | Adopt the toolkit — the tools v12.3 changed | AFTER M0-TE-V12.3 | TODO |
 | M0-T23 | BUILD | GPU timestamps, cost per step and per pass, --timing | AFTER M0-T22 | TODO |
 | M0-T24 | BUILD | Time control (sr_physics::time): rungs, frame plan, cap, slow-down, 30-frames switch | AFTER M0-T23 | TODO |
 | M0-T25 | BUILD | Scene files (§2.12.1) | AFTER M0-T24 | TODO |
@@ -216,7 +218,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-TZ | PLAN | The next plan, M1 | LAST | TODO |
 
 ## Rules
-PLAYBOOK.md v12.2 + the instruction file bind every agent (cited once, never per block). Full text
+PLAYBOOK.md v12.3 + the instruction file bind every agent (cited once, never per block). Full text
 of every rule below: m0_rules.md. Header budget: 600 / 60. Rating refresh: 5 flags. Full-loop
 budget: 600 s on each box in play (the 10-minute line of Rule 4) — linux-pc measured 449.7 s wall at M0-V1
 (2026-10-09): 10 scopes, 537 cases in 6.1 s, then 443 s red-arming the six scopes new since HEAD (desktop's
@@ -999,6 +1001,108 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Adversarial: a box re-fit inside the frame restoring the zeroed sizes lets steps run past the event —
   the test fires the latch at step 15 so that step 16's re-fit falls inside the stopped stretch.
 - Handoff: win-laptop (Laser2025-20, RTX 4080 Laptop), model=claude-opus-5-5 level=high (rung_record). Built: shaders/latch.wgsl + step/latch.rs — Step::encode_frame(plan, encoder) records N steps in one encoder under the latch; every dispatch reads its size from a buffer the controller (latch_check, after each P9) zeroes: fixed sizes from latch slots (guard every 64 and re-fit every 16 opened by the GPU's step index), box-sized from box.args, P0's re-fit from its gate (both saved, zeroed, restored by latch_end); Latch::new refuses a step with any other indirect buffer. Armed = 1.0 t.u. since the last set (every set restarts it); slow-down off never fires. Step::poll(device) returns each frame's report once (map_buffer_on_submit, PollType::Poll). Test hook set_latch_hook + box-sized probe. Deviations: Step methods, no Engine yet; FramePlan carries slow_down; frames and bare run() not mixed (CPU index runs ahead after a stop); no cost per step (M0-T23). Verify 1 [ALREADY RUN — PASS (latch 5/5) on win-laptop] · Verify 2 [ALREADY RUN — PASS (latch-off RED, 5 failed) on win-laptop]. G-LATCH NOT PROVEN (synthetic) until M0-T111. Owed on laserax-ai: latch + --redarm latch (R15). Claim --changed --base 14d51e1: tasks/M0-T22.md. Detail: tasks/M0-T22.md. Next: M0-T23.
+
+## M0-TE-V12.3 · PLAYBOOK v12.3 adoption · **PLAN** · Opus 5.5, max · switch · (AFTER M0-T22)
+- Status: TODO
+- Carried flags: [M0-TE-V12.3, 2026-10-11] The lead's ladder, answered once in the canonical repository for every project the lead runs on Claude Code: Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haiku 5.5, high — strongest first; read 2026-10-10 from its model pages and the probe, the last rung added 2026-10-11 on the lead's word, and the lead's answer. Write it as this plan's Models: line, re-read on the day (§0); a project the lead runs on another agent asks (§14.3).
+- Ask (verbatim): "I want this to be V12.3." … "In V12.3 if we dont need git well have to remove that rule" — the lead, 2026-10-10, launching PLAYBOOK v12.3 (the claim reads the task's own start, never git) · "Everywhere (Recommended)" · "Yes, fold it in (Recommended)" · "Delete it (Recommended)" — the lead, 2026-10-10, on how far "works without git" goes, folding a field fix (plants already shown red on the same files are not re-run) into v12.3 and a stray playbook copy above an adopter's checkout (M0-TJ4 in the canonical repository) · "Per check, sweep at phase end (Recommended)" · "Yes, a new task before M0-V10 (Recommended)" · "Now, in v12.3" — the lead, 2026-10-10, on where the red arm runs, the tools' blocks and when (M0-R7 in the canonical repository)
+- Read: this file (whole — the one sanctioned end-to-end read) + PLAYBOOK.md §16's entries this
+  block applies (its STRUCTURAL Deliver, first line) and the sections they name + tasks/local_law_extract_v12.3.md (when the bump moved law) + milestones.md (this
+  milestone's row and the bump's delta line) + annex §A's section texts (the source is the
+  TH-adopt pair's read)
+- Deliver — STRUCTURAL, self-applied, for every §16 entry newer than the version of the plan's
+  last DONE `TE-V<k>`, in the plan or its archives — never the Rules' version line, which the
+  bump renamed before this block runs (§15 (3)); a plan whose other `TE-V` blocks are none DONE
+  applies every entry from the oldest one's version on (that chain never ran); a plan with no
+  other `TE-V` block, the entries newer than the version its Rules named before the bump (a
+  Rules line reading v12.3 named the version before it) — oldest first (a plan on v11 adopting v12.1
+  applies v12's entry, then v12.1's): local
+  law filed into Repo facts / Hazards / Rules + annex
+  (nothing dropped; a line the playbook now states becomes "now PLAYBOOK §x") · the
+  Changes-by-asking line in the header · no live file claims the old version as its law —
+  history lines keep theirs (§15 (3)): the Rules' version line and every live reference renamed,
+  archives, closed blocks, Superseded and handoffs left as written → Verify 1 · every open block's
+  Status in §3.3's shapes, its first line `- Status:` → Verify 2 · the header's `Models:` line
+  the ladder (§0) — the agent probed (§B.3), its model pages read on the day, the lead's rungs as
+  this block's `Ask` or `Carried flags:` carry them, else one question in the call below, the
+  probe's reading recommended — and every open block rated by §0's rubric, a role word (§3.2)
+  converted, the register's `Model ratings:` line written and the Counters' `TM=0` beside it
+  where the line has no `TM=` (a rating pass's `append` refuses without it); past ~15 open blocks, a rating pass
+  (§0) filed to run next does the rating instead → Verify 2 · where the ladder's agent is Claude
+  Code, the switch wired (§B.3): its hook line in `.claude/settings.json`, every other key kept,
+  an older switch's hook line replaced and its `.claude/skills/pb-*` deleted — the bump's roll-out
+  writes them first where the lead's go covers the folder, this block writes what is missing; the
+  file itself is the TH-adopt pair's (an annex tool); any ladder rung its `RUNGS` lacks and the
+  machine's install, when `rung_record.py now` reads `plugin=missing`, named to the lead in the
+  handoff, both read from `now` once the swap has extracted it, else `NOT RUN (before the swap)`
+  (the roll-out's chain headings already carry ` · switch` where the plan's own ladder is on
+  Claude Code) — and on the adoption that first brings the switch ` · switch` after every open block's
+  rating, a later one keeping each segment as it finds it (§3.2) → none — no check reads them yet
+  · an open block whose id
+  v12.3's letters type otherwise keeps its kind: a Repo facts line in §0's `Kind kept:` form,
+  that type in its tag beside the old word (closed blocks untouched, E8) · Pipeline state a
+  register of pointers · closed blocks stubbed · `logs/ reports/ tasks/ images/` exist → Verify 2
+  · the `M0-TB-V12.3` filed when the version changed the sizing rules (§2.1), its re-run that
+  block's · the toolkit left to the TH-adopt pair after this block, when the chain holds one — a
+  PLAN block writes no tool.
+- Deliver — BEHAVIOUR-CHANGING, put to the lead in blocks of ≤4, never silently applied: each
+  rule of v12.3 — and of v12.2, v12.1 and v12 first, where the STRUCTURAL Deliver above applies their
+  entries too (this plan's last DONE adoption older than `TE-V12.2`), never read from the Rules' version line —
+  that widens or narrows a grant, adds a task type to a live pipeline, or changes a block's type or
+  model, read from §16's entries — one line each, recommendation first; never the items of their
+  "Ratified for every project" lines — the block types (BUILD · CHECK · PLAN · MOVE, the old words
+  read as aliases), the rating and its rubric, the rating pass, a D's filer rating it, point versions
+  and the tool swap, the cheapest rung that fits, the escalation, the record, no step up on a guess,
+  the compaction's margin, the heading grepped first and the switch; the task's own start, the claim
+  record, the red-arm proof, the two tiers and the sweep, the TR trigger at an idle box, the per-block
+  commit line retired and git optional: the lead ratified them for every project at each bump (v12:
+  2026-09-26, M0-TJ1; v12.1: 2026-10-01, M0-TJ2; v12.2: 2026-10-05, M0-TJ3; v12.3: 2026-10-10, M0-TJ4 and
+  M0-R7 — in the canonical repository). A change any applied §16 entry
+  records as ratified for every project at the bump is applied, never asked again.
+- Deliver — RETIRED, ratified for every project at v12.3, never asked: a rule that makes every block hand the lead
+  a commit line (`git add -A`, commit, push) is marked `N/A — superseded by PLAYBOOK v12.3` where it stands, its
+  text kept, with the lead's words *"In V12.3 if we dont need git well have to remove that rule"*
+  and a line in the plan's Superseded section naming the rule, the day and those words; a block's handoff then
+  ends without that line. A phase's commit gate (§10) and a project's own commit-gate derogation stay as
+  written. Held in this plan: R16 ("A block's last message ends with one line for the lead — git add -A, c") — also its full text in any rules annex the index row points at. → none — text the next agent reads
+- Verify:
+  1. the copy's version line and this plan's Rules, both v12.3
+     ~~~bash
+     python3 -c "import os,re,sys;V=sys.argv[2];c=[p for p in ('PLAYBOOK.md','../PLAYBOOK.md','../../PLAYBOOK.md','../../../PLAYBOOK.md') if os.path.isfile(p)][:1];v=re.findall(r'^\*\*Version: (\d+(?:\.\d+)*)',open(c[0],encoding='utf-8').read(),re.M)[:1] if c else [];m=re.search(r'^## Rules(.*?)^##? ',open(sys.argv[1],encoding='utf-8').read(),re.M|re.S);r=re.findall(r'PLAYBOOK(?:\.md)?[^\n]{0,40}?\bv(\d+(?:\.\d+)*)\b',m.group(1) if m else '')[:1];ok=v==[V]==r;print('copy:',*c or ['none'],'- its version:',*v or '?','- the Rules name:',*r or ['?' if m else 'no ## Rules section']);print('=== GO ===' if ok else '=== NO-GO: the copy and the Rules must both say v'+V+' ===');sys.exit(0 if ok else 1)" milestones/m0/m0_implementation_plan.md 12.3
+     ~~~
+     Pass: GO — the copy (here or up to three folders up) and the Rules' first version, both v12.3.
+     Fail: NO-GO — either names another version (`12` is not `12.1`), or none (the Rules' line:
+     §14.1's first).
+  2. the project's own plan lint — the statuses and the Flow with it
+     ~~~bash
+     python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+     ~~~
+     Pass: GO (a build that takes `--plan` first answers a usage error: `plan.py --plan … lint`);
+     `NOT RUN (no plan.py before TH-adopt)` where no `tools/pb/plan.py` sits here or up to three
+     folders up — the pair brings the annex's.
+     Fail: NO-GO — each finding on an open block fixed, the run repeated.
+  Drift is the canonical repository's check (§15 (4)), never run here.
+- Adversarial: a structural pass that changes a Deliver's meaning or drops a fact — diff every
+  moved block byte-for-byte, report the count.
+- Handoff: ≤8 lines inline · full record → tasks/M0-TE-V12.3.md · Next: M0-TH-adopt-a
+
+## M0-TH-adopt-a · Adopt the toolkit — the tools v12.3 changed · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TE-V12.3)
+- Status: TODO
+- Read: this file (rules + this task) + PLAYBOOK.md §16's v12.3 entry + annex §A's sections of the
+  tools it names + those tools in the project's tools/pb/ + tasks/toolkit_local_diff.md
+- Deliver: annex §A extracted into a temp folder and each changed tool's selftest run there →
+  Verify 1, 2 · each changed tool replaced by its annex build — the project's build diffed
+  against it into tasks/toolkit_local_diff.md first, a local fix the annex lacks re-added and
+  flagged for the next TZ → Verify 2, 3 · a tool new to the project given its `tools_selftest`
+  case in the project's `verify.json` — the one manifest edit, every other line kept → Verify 2 ·
+  every other tool, its local fixes and every other manifest line kept, byte for byte → none —
+  nothing else is written · this plan GO under the swapped lint → Verify 3.
+- Verify: 1. §B.4's one line, the project's copy of PLAYBOOK.md first, the temp folder second
+  · Pass: GO, `refused: 0` · Fail: NO-GO. 2. each swapped tool's `selftest`, the swapped file in
+  place (`python3 tools/pb/plan.py selftest` for the plan tool) · Pass: GO each · Fail: a NO-GO.
+  3. `python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md` · Pass:
+  GO · Fail: NO-GO — each finding on an open block fixed, the run repeated.
+- Handoff: <placeholder>
 
 ## M0-T23 · GPU timestamps, cost per step and `--timing` · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T22)
 - Status: TODO
