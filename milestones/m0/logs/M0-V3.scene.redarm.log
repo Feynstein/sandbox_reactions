@@ -1,0 +1,130 @@
+==== 2026-10-11T14:40:55-04:00 scene · clean · a fresh scratch copy of the tree
+== 2026-10-11T14:40:57-04:00 scene · task M0-V3 · box Laser2025-20 :: bash tests/gpu.sh scene physics
+-- scene · exit=0 · 24.12 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-vhddzh_0\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-vhddzh_0\arm0\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 18.11s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 8 tests
+test scene::a_disks_mass_is_the_maclaurin_integral_within_its_sampling_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+disk a = 40 at (300, 200): M = 3351.6480, 2πΣc a²/3 = 3351.0322, off 1.84e-4 ≤ bound 1.12e-2
+disk a = 12 at (100.3, 57.8): M = 150.8166, 2πΣc a²/3 = 150.7964, off 1.34e-4 ≤ bound 6.80e-2
+disk a = 25.5 at (420, 300.25): M = 2722.4639, 2πΣc a²/3 = 2723.7608, off 4.76e-4 ≤ bound 2.20e-2
+disk a = 150 at (300.5, 200.5): M = 4712.2922, 2πΣc a²/3 = 4712.3890, off 2.05e-5 ≤ bound 1.54e-3
+ok
+test scene::every_scene_file_parses ... C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-vhddzh_0\arm0\crates\sr-engine\../../scenes\fill_world.json: 1 objects, 600x400, no warning: true
+C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-vhddzh_0\arm0\crates\sr-engine\../../scenes\sun_disk.json: 1 objects, 600x400, no warning: true
+ok
+test scene::headless_runs_a_scene_file_as_given ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.000000 until=none
+summary: scene "C:\\Users\\YohanBelanger\\AppData\\Local\\Temp\\pb-redarm-vhddzh_0\\arm0\\crates\\sr-engine\\../../scenes\\sun_disk.json" world {"edge":"bounce","height":256,"width":256} steps 5
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.000000 until=none
+SR-ERROR bad arguments: --edge must be "leave" or "bounce", got "wrap"
+ok
+test scene::objects_land_where_section_2_12_4_puts_them ... ok
+test scene::overrides_are_physics_keys_within_their_bounds ... ok
+test scene::t_and_pressure_are_one_or_the_other ... ok
+test scene::t_and_pressure_set_the_energy_through_the_eos ... t = 3: E = 68.83882141113281, expected 68.83882420307782
+pressure 500: Π = 500.000001275184
+ok
+test scene::unknown_keys_are_refused_at_every_level ... refused: switches.hydor: unknown key
+refused: colour: unknown key
+refused: world.depth: unknown key
+refused: test.pin_temp: unknown key
+refused: objects[0].radius: unknown key
+refused: objects[0].composition.Hx: unknown key
+refused: objects[1].colour: unknown key
+refused: objects[2].mass: unknown key
+SR-ERROR bad scene: scene "C:\\Users\\YOHANB~1\\AppData\\Local\\Temp\\sr-scene-42444\\hydor.json": C:\Users\YOHANB~1\AppData\Local\Temp\sr-scene-42444\hydor.json: switches.hydor: unknown key
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 54 filtered out; finished in 3.84s
+
+
+==== 2026-10-11T14:40:55-04:00 scene · plant scene-unknown-key · a fresh scratch copy of the tree
+planted scene-unknown-key: tests/plants/scene-unknown-key.patch -> crates/sr-engine/src/scene.rs
+== 2026-10-11T14:40:57-04:00 scene · task M0-V3 · box Laser2025-20 :: bash tests/gpu.sh scene physics
+-- scene · exit=101 · 47.00 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-vhddzh_0\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-vhddzh_0\arm1\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 16.94s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 8 tests
+test scene::a_disks_mass_is_the_maclaurin_integral_within_its_sampling_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+disk a = 40 at (300, 200): M = 3351.6480, 2πΣc a²/3 = 3351.0322, off 1.84e-4 ≤ bound 1.12e-2
+disk a = 12 at (100.3, 57.8): M = 150.8166, 2πΣc a²/3 = 150.7964, off 1.34e-4 ≤ bound 6.80e-2
+disk a = 25.5 at (420, 300.25): M = 2722.4639, 2πΣc a²/3 = 2723.7608, off 4.76e-4 ≤ bound 2.20e-2
+disk a = 150 at (300.5, 200.5): M = 4712.2922, 2πΣc a²/3 = 4712.3890, off 2.05e-5 ≤ bound 1.54e-3
+ok
+test scene::every_scene_file_parses ... C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-vhddzh_0\arm1\crates\sr-engine\../../scenes\fill_world.json: 1 objects, 600x400, no warning: true
+C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-vhddzh_0\arm1\crates\sr-engine\../../scenes\sun_disk.json: 1 objects, 600x400, no warning: true
+ok
+test scene::headless_runs_a_scene_file_as_given ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.000000 until=none
+summary: scene "C:\\Users\\YohanBelanger\\AppData\\Local\\Temp\\pb-redarm-vhddzh_0\\arm1\\crates\\sr-engine\\../../scenes\\sun_disk.json" world {"edge":"bounce","height":256,"width":256} steps 5
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.000000 until=none
+SR-ERROR bad arguments: --edge must be "leave" or "bounce", got "wrap"
+ok
+test scene::objects_land_where_section_2_12_4_puts_them ... ok
+test scene::overrides_are_physics_keys_within_their_bounds ... ok
+test scene::t_and_pressure_are_one_or_the_other ... ok
+test scene::t_and_pressure_set_the_energy_through_the_eos ... t = 3: E = 68.83882141113281, expected 68.83882420307782
+pressure 500: Π = 500.000001275184
+ok
+test scene::unknown_keys_are_refused_at_every_level ... 
+thread 'scene::unknown_keys_are_refused_at_every_level' (12500) panicked at crates\sr-engine\tests\gpu\scene.rs:93:47:
+switches.hydor: unknown key: Scene { world: WorldConfig { width: 64, height: 64 }, edge: Leave, slowdown: true, switches: Switches { gravity: true, hydro: true, heat: true, reactions: true, neutrinos: true, sinks: true }, test: TestSettings { pin_temperature: false, constant_diffusivity: None, flux_limiter: true }, objects: [Disk { x: 32.0, y: 32.0, a: 10.0, sigma_c: 0.5, gas: Gas { heat: T(2.0), composition: [0.7346, 0.2485, 0.0092, 0.0077, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], v: [0.0, 0.0] } }, Rect { x0: 0, y0: 0, w: 64, h: 4, sigma: 1.0, gas: Gas { heat: Pressure(100.0), composition: [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], v: [0.0, 0.0] } }, Preset { preset: "sun", x: 32.0, y: 32.0 }], overrides: [("cfl", 0.3)] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    scene::unknown_keys_are_refused_at_every_level
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 54 filtered out; finished in 3.93s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

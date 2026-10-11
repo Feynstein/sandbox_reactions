@@ -101,7 +101,14 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T25 | BUILD | Scene files (§2.12.1) | AFTER M0-T24 | DONE (2026-10-11 13:41) |
 | M0-T26 | BUILD | State dumps (§2.12.3), --dump-every, --load-dump | AFTER M0-T25 | DONE (2026-10-11 14:01) |
 | M0-T27 | BUILD | Docs: architecture.md (step, box, latch, files), time_control.md, lot 3 rows | AFTER M0-T26 | DONE (2026-10-11 14:14) |
-| M0-V3 | CHECK | Validation, lot 3: the step framework | AFTER M0-T27 | TODO |
+| M0-V3 | CHECK | Validation, lot 3: the step framework | AFTER M0-T27 | DONE (2026-10-11 17:10) |
+| M0-TC2 | MOVE | Compaction — Phase 5's close: seventeen DONE blocks to stub, more than ten (PLAYBOOK §8, §11) | AFTER M0-V3 | TODO |
+| M0-TM4 | PLAN | Rating pass — M0-V3's record no longer moves BUILD on Sonnet 5.5, high | AFTER M0-TC2 | TODO |
+| M0-TR1 | BUILD | Test-time pass — the phase-close sweep's four game-launching red-arms, on the lead's word | AFTER M0-TM4 | TODO |
+| M0-D21 | BUILD | Sim time is not a function of the steps run: bare steps add no Δt, frames add it grouped by frame | AFTER M0-TM4 | TODO |
+| M0-D22 | BUILD | The boot scope leaves out sr-physics and the assets its headless run reads: `--changed` skips G-BOOT on a physics.json edit | AFTER M0-D21 | TODO |
+| M0-D23 | BUILD | The harness needs Git Bash on win-laptop: from PowerShell `bash` is WSL's relay and every `bash` scope reads NO-GO | AFTER M0-D22 | TODO |
+| M0-D24 | BUILD | The watch_only plant no longer applies: M0-T19 rewrote step/mod.rs's head, so G-WATCH cannot be proven red | AFTER M0-D23 | TODO |
 | M0-T28 | BUILD | The CPU twin's FFT and convolution (f64) | AFTER M0-V3 | TODO |
 | M0-T29 | BUILD | Gravity on the CPU twin (P2); G-GRAV1/G-GRAV2 twin cases | AFTER M0-T28 | TODO |
 | M0-T30 | BUILD | The GPU FFT (radix-2, within WebGPU's limits) | AFTER M0-T29 | TODO |
@@ -433,10 +440,10 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-V3
-- Counters: T=116 · D=20 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=1 · TR=0 · TM=3 · TD=1 · TE=1
-- Open D/BLOCKED register: none
-- Outstanding commit gates: none — Phases 2b–4 and Phase 5's DONE blocks through M0-T22 are in per-block commits through ab36299, pushed (R16, retired 2026-10-11 by M0-TE-V12.3); next: Phase 5's, under M0-V3
+- Next task: M0-TC2
+- Counters: T=116 · D=24 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=2 · TR=1 · TM=4 · TD=1 · TE=1
+- Open D/BLOCKED register: M0-D21 · sim time is not a function of the steps run (headless writes 0, frames sum it by their grouping) · its fix, after M0-TR1 · M0-D22 · boot's paths leave out sr-physics and the assets its headless run reads · its fix (E), after M0-D21 · M0-D23 · the harness needs Git Bash on win-laptop (PowerShell's bash is WSL's relay) · its fix, after M0-D22 · M0-D24 · watch_only's plant stage-in-step no longer applies (step/mod.rs moved at M0-T19) · its fix (E), after M0-D23
+- Outstanding commit gates: Phase 5's (the lead's, after M0-V3's close): its blocks through M0-T27 are in per-block commits through e5f0ef0, pushed; M0-V3's report, logs and plan edits are not
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
 - Model ratings: 2026-10-11 by M0-TM3
@@ -1130,7 +1137,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=high (rung_record). architecture.md: lot 3's parts added — the dispatch lists per pass (initial-state reduction, guard and re-fit schedules, EOS group, cost per step), the booking layout (state groups, side fields, TERMS/BOOK_GROUPS, slot domains, book_totals' order), the box, a frame and the latch (G-LATCH NOT PROVEN (synthetic) until M0-T111), the files (scene, dump with §0.5 [M0-T26]'s resume, summary as filled today); 10 sections. time_control.md (new, 8 sections): §3.2 ↔ TimeControl, rungs, the frame plan with M0-T24's defaults, the cap, pause/step, slow-down + latch, the 30-frames switch; app wiring is M0-T84–T86, page extended by M0-T88. testing.md: § The calls rewritten for v12.3, flags (a)–(d) fixed, floors 7 / dt 6 cases (M0-D18). running.md: flag (e) start.bat the double-click, headless flags as the tree has them. Verify 1 [ALREADY RUN — PASS (10, 8) on win-laptop] · Verify 2 [ALREADY RUN — PASS (9, R17's time_control; 8 under the literal time-control, no hyphen row written) on win-laptop]. Not acted on: sr-app USAGE stale (code) → flagged M0-T37; touched is NO-GO before a claim (row says so). Claim: verify.py --changed --task M0-T27 (logs/M0-T27.changed.log). Detail: tasks/M0-T27.md. Next: M0-V3 (lot 3's V — linux-pc owes booking … dump, R15).
 
 ## M0-V3 · Validation — lot 3: the step framework · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T27)
-- Status: TODO
+- Status: DONE (2026-10-11 17:10)
 - Carried flags: [M0-V2, 2026-10-10] owed on linux-pc (R15; M0-V2 ran lot 2 on win-laptop only — reports/v2.md § Owed): python3 tools/pb/verify.py --all --task <id> with lot 2's scopes GO there — registry, eos, strings, licences (its cargo-native case over the linux-gnu set: M0-V2 read it GO from win-laptop by --filter-platform, 189 packages, 48 Linux-only, 0 refused — a probe, not the scope), watch_only, web's ready and no-webgpu with §6.2.3's Linux flags (srAdapter and Chrome's own adapter named) — then --redarm of registry, eos, strings, licences, watch_only and web there; carried from M0-T15: web and licences (npm) on linux-pc; carried from M0-D13: verify.py boot (summary.json verbatim in its log: version, adapter, steps 200) and --redarm boot (scene-refuse red); else carried V to V, M0-V17 at the latest · [M0-D17, 2026-10-10] M0-D17 (win-laptop, 2026-10-10): web/smoke.mjs now launches Chrome with chromiumSandbox: true and refuses --no-sandbox — owed on linux-pc: verify.py web and --redarm web (plant smoke-no-sandbox); a sandboxed headless /usr/bin/google-chrome under §6.2.3's Vulkan flags is unmeasured — a NO-GO there is a D or a question, never the flag put back
 - Read: milestones/m0/m0_contrat.md §1.3, §1.8, §1.9.1, §2.2, §2.3.5, §2.7, §2.9, §2.12.1, §2.12.3 + the
   handoffs of M0-T18–M0-T27 + docs/agent/architecture.md, time_control.md, testing.md + the delivered
@@ -1144,6 +1151,169 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   NO-GO — each red a D (E4)
 - Adversarial: a latch proven by a hook only — the V checks that the controller also zeroes the box
   re-fit's dispatch, from the shader's code and the step-15 case.
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=max (rung_record now at launch and on the lead's four prompts — the heading's rung). Verdict DEFECTS(4), reports/v3.md: lot 3 conforms to §1.3 (pass order, determinism), §1.3.3, §1.8 rule by rule, §2.7, §2.9, §2.12.1, §2.12.3 with §0.5 [M0-T26] and §3.1–§3.3; G-LATCH NOT PROVEN (synthetic) until M0-T111. Verify 1 py -3.12 tools/pb/verify.py --all --task M0-V3 [ALREADY RUN — PASS (GO, 665 passed, 24/24 scopes, 187.7 s, 183.9 s idle; no TR) on win-laptop]; lot 3's nine scopes red-armed here, 9 plants red; the sweep, the lead's PowerShell run 15:06–15:43 [ALREADY RUN — FAIL (moved 14 of 24, 20 RED, 1 ERROR, 2221 s) on win-laptop].
+  Filed: M0-D21 (sim time is not a function of the steps: headless writes 0, frames sum it by their grouping — G-WARP's dumps), M0-D22 (boot's paths leave out sr-physics and the assets), M0-D23 (the harness needs Git Bash on Windows — the lead's words), M0-D24 (watch_only's plant stale since M0-T19 — the sweep's ERROR); M0-TC2 (17 DONE blocks > 10, runs next); M0-TM4 (the record: BUILD on Sonnet 5.5, high $1.89 against (usual) $2.92 per DONE block — no longer moved); M0-TR1 (the lead's word: the four game-launching red-arms, 1,790 of the sweep's 2,221 s).
+  Adversarial met: the controller zeroes the re-fit's slots (latch.wgsl); mutant M-a (the re-fit's slot spared) dies at k = 1, not k = 15; M-b (the re-fit outside the latch) dies at k = 15 — flagged M0-T111. Headless exit 5 now PROVEN through a NaN dump (step 128, (300, 200), x_C).
+  Flags: M0-V4 (linux-pc owes lots 2 and 3 entire, R15), M0-T39 (the vacuum floor against G-BOX's 1e-6), M0-T111, M0-T84. Not acted on (E1 (i)): timing.source and owed's upper bound have no §0.5 line; clippy --all-targets red, 8 lints in tests/gpu; 4 of lot 3's 10 builds past the size ceiling. OVERSTATED: the « step 15 grades the re-fit » claim (T22, verify.json, testing.md), T27's « already flagged to M0-T84 ». Detail: tasks/M0-V3.md. Next: M0-TC2.
+
+## M0-TC2 · Compaction — Phase 5's close: seventeen DONE blocks to stub, more than ten (PLAYBOOK §8, §11) · **MOVE** · Haiku 5.5, high · switch · (AFTER M0-V3)
+- Status: TODO
+- Read: this file (rules + this task) + plan_archive.md § M0-V2 (one archived block: the shape to keep)
+- Deliver: `plan.py stub` over Phase 5's DONE blocks — M0-T18, M0-T19, M0-T20, M0-D18, M0-T21, M0-D19, M0-T22,
+  M0-TE-V12.3, M0-TM3, M0-TH-adopt-a, M0-D20, M0-T23, M0-T24, M0-T25, M0-T26, M0-T27 and M0-V3 — into plan_archive.md,
+  no TODO block touched (M0-TM4, M0-TR1 and M0-D21 … M0-D24 stay whole) · the Pipeline state back to a register of pointers ·
+  lines repeated in three or more blocks hoisted, long Rules entries moved to m0_rules.md (index line kept, text
+  unchanged) · Repo facts de-duplicated · every moved line diffed byte-for-byte, counts reported · `plan.py lint`'s header
+  before and after in the handoff.
+- Pass: `plan.py lint` GO, header within budget, diff count = moved count. Fail: any TODO block touched, any rule
+  reworded, any fact dropped.
+- Handoff: <placeholder>
+
+## M0-TM4 · Rating pass — M0-V3's record no longer moves BUILD on Sonnet 5.5, high · **PLAN** · Opus 5.5, max · switch · (AFTER M0-TC2)
+- Status: TODO
+- Carried flags: [M0-V3, 2026-10-11] Filed by M0-V3 at Phase 5's close (PLAYBOOK §2.3; §0 rule (4)). The record is the phase-closing V's table, now M0-V3's (`rung_record.py report`, 2026-10-11, win-laptop; reports/v3.md § Phase 5's close): BUILD on Sonnet 5.5, high — 11 blocks, first-try 9/11, $1.89 per DONE block — against BUILD on Opus 5.5, high (usual) — 24 blocks, first-try 17/24, $2.92 — so the class no longer costs more than the same class on (usual). Rule (4)'s move that M0-TM2 applied from M0-V2's table ($1.70 against $1.44, 10 blocks each) no longer holds, and M0-TM3 left the 89 blocks it moved for this table to decide: each goes back to rule (3)'s rung, Sonnet 5.5, high, unless a reason from (3)'s list holds (M0-TM3's task file names the open blocks that hold one). 28 blocks have no readable session (linux-pc's), as at M0-TM2.
+- Read: this file (rules + this task) + PLAYBOOK.md §0 (the ladder, the rubric) and §B.3 (the probe) + the agent's
+  model pages the ladder cites + the record (`rung_record.py report`; milestones/m0/reports/v3.md § Phase 5's close,
+  milestones/m0/tasks/M0-TM2.md, milestones/m0/tasks/M0-TM3.md)
+- Deliver: the ladder re-read on the day — the probe and the model pages: a model retired, renamed or added, a price or a
+  level changed → the `Models:` line rewritten and dated, the lead's answer first where a rung they run changes (§12) ·
+  every open block's rating re-derived by §0's rubric from its heading, `Sizing:`, `Deliver:`, `Verify:` and `Carried
+  flags:` and the record — its rating segment rewritten, nothing else in the block · the register's `Model ratings:
+  <YYYY-MM-DD> by M0-TM4` line · in the handoff, the ratings changed, counted by rung.
+- Pass: `plan.py lint` GO; every open block on a rung of the ladder, each above the cheapest rung that fits named in the
+  task file with its rule; the diff touches rating segments, the `Models:` line and the register's line only. Fail: any
+  other byte changed; a BUILD or MOVE block above the cheapest rung that fits with none of §0's rules (1)–(4) named; a
+  CHECK or PLAN block below `(gate)`.
+- Handoff: <placeholder>
+
+## M0-TR1 · Test-time pass — the phase-close sweep's four game-launching red-arms, on the lead's word · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TM4)
+- Status: TODO
+- Ask (verbatim): the lead, 2026-10-11, at M0-V3's sweep (≈ 45 min on win-laptop): "40-50 minutes for an unbuilt game... I
+  thought we fixed that with the playbook v12,3" — then «Yes, file M0-TR1 (Recommended)» to « Those four game-launching
+  checks will cost about 38 minutes at every phase close on this laptop, because every lot edits the engine code they
+  compile. Should I file a test-time pass (M0-TR1) now, on your word? »
+- Read: this file (rules + this task) + milestones/m0/logs/loop_times.jsonl + milestones/m0/reports/v3.md § The red-arm
+  sweep + docs/agent/testing.md § Cargo scopes and the boot, desktop, web and capture rows + tests/cargo.sh, tests/smoke.sh,
+  tests/web/check.sh, tests/capture/check.sh + milestones/m0/m0_contrat.md §6.5
+- Deliver: `verify.py report` and a per-span measurement, cold and warm on win-laptop, of the red-arm campaigns of the four
+  scopes that launch the game — boot, desktop, web, capture (344, 652, 505 and 289 s in M0-V3's sweep, 1,790 of its
+  2,221 s; logs/M0-V3.<scope>.redarm.log) — where an arm's seconds go: the scratch copy, the cold release build of sr-app and its dependencies in the
+  arm's own build/, the run, a plant's ready deadline → reports/test_time_1.md, causes named, the budget line restated
+  after re-measuring → none — a report, no check grades it · the fixes filed as their own blocks, placed to run ahead of
+  M0-V4's sweep (a lever to measure first: arms that build the dependencies once in the shared cache and give each arm its
+  own copy of the binary it launches, §6.5's rule kept) → none — blocks, each carrying its own Verify · declined levers
+  recorded with their measured gain → none — the report's
+- Pass: the campaigns measured before and after with the same harness; no case dropped, no plant removed, no `Pass:`
+  weakened, §6.5's « never a binary a scope launches » held. Fail: a saving bought by measuring less.
+- Handoff: <placeholder>
+
+## M0-D21 · Sim time is not a function of the steps run: bare steps add no Δt, frames add it grouped by frame · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TR1)
+- Status: TODO
+- Blocks: nothing yet — M0-T60's `--until sim_time`, M0-T110's dumps compared across rungs and M0-T111's dump read it
+- Caused by: M0-T22 (sim time kept per frame only — latch.wgsl's f32 `advanced`, added in f64 by `poll()` — which
+  M0-T26's `dump_state` and headless write)
+- Files: crates/sr-engine/shaders/latch.wgsl (`advanced`), crates/sr-engine/src/step/latch.rs (`poll`, `Readbacks.sim_time`,
+  `resume_records`, `restore`), crates/sr-engine/src/dump.rs (`dump_state`), crates/sr-engine/src/headless.rs (`sim_time`, the
+  DONE line, `write_dump`) — opened by M0-V3, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.4, §2.12.2, §2.12.3 with §0.5 [M0-T26], §3.1
+  (`poll`, `dump_state`), §3.3 (the DONE line, `--until sim_time`), §5.3 (G-WARP) + milestones/m0/reports/v3.md
+  § Defects + docs/agent/architecture.md § A frame and the latch, § The files
+- Symptom: measured on win-laptop (Laser2025-20, RTX 4080 Laptop, Vulkan) by M0-V3, 2026-10-11 (logs/M0-V3.log): (a)
+  `sandbox-reactions headless --scene preset:sun --steps 100 --dump-every 50 --out DIR`, Δt 0.030264 on every step:
+  summary.json's `sim_time` 0.0, `SR-HEADLESS DONE steps=100 sim_time=0.000000`, dumps/s_50.bin and s_100.bin `sim_time`
+  0.0 (≈ 1.51 and 3.03 ran); (b) tests/gpu/latch.rs's start (Δt 0.44721362 on every step), 40 steps as 1 × 40, 2 × 20
+  and 40 × 1 frames (a probe in a scratch copy, tasks/M0-V3.md): planes and `resume` bit-identical, `FrameReport.sim_time`
+  and `dump_state`'s header 17.888538360595703, 17.888542175292969 and 17.888544797897339 — one state, three dump byte
+  strings, so G-WARP's « bit-identical dumps » at ×0.1, ×1 and TOP (§5.3, M0-T110) cannot hold. Repro: (a) the command
+  above; (b) the probe in tasks/M0-V3.md. Cause (source, consistent with both): `Step::run` adds Δt nowhere; a frame sums
+  its steps' Δt in f32 and `poll()` adds that sum in f64, so the rounding follows the grouping; headless writes its
+  start's sim time (M0-T20: « not this Deliver »); M0-T27's « already flagged to M0-T84 » names a flag about frames.
+- Deliver: one sim time per step count, the same whatever the frame grouping and for bare steps — each step's Δt added
+  in step order, within 10⁻⁹ relative of the f64 sum of the steps' f32 Δt in that order (an f32 running sum is not:
+  (b)'s single frame is 3.6 × 10⁻⁷ off at 40 steps), an empty box's Δt (the largest f32, M0-T21) adding nothing,
+  `FrameReport.advanced` kept as the frame's own (time control's, M0-T24) → Verify 1, 2 · summary.json's `sim_time`, the
+  DONE line and every dump header written from it, `--load-dump` carrying it on → Verify 1 · tests/gpu/dump.rs: the
+  same 40 steps as 1 × 40, 2 × 20 and 40 × 1 frames and as bare steps give four byte-identical dumps, `sim_time` within
+  the bound → Verify 1 · a headless `--steps 100` run writes summary.json's and the final dump's `sim_time` equal and
+  within the bound → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py dump --task M0-D21` · Pass: GO, ≥ 7 cases · Fail: NO-GO · 2. `python3
+  tools/pb/verify.py latch --task M0-D21` · Pass: GO, 5 cases · Fail: NO-GO
+- Handoff: <placeholder>
+
+## M0-D22 · The boot scope leaves out sr-physics and the assets its headless run reads: `--changed` skips G-BOOT on a physics.json edit · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D21)
+- Status: TODO
+- Sizing: E
+- Blocks: nothing
+- Caused by: M0-T19 (sr-engine on sr-physics: headless builds `EosGpu` from physics.json and elements.json; the `state`
+  scope's paths gained them, `boot`'s did not)
+- Files: tools/pb/verify.json (`boot`'s `paths`), docs/agent/testing.md (`boot`'s row) — opened by M0-V3, not changed
+- Read: this file (rules + this task) + docs/agent/testing.md § Adding a scope (step 4) and the `boot` row
+- Symptom: measured on win-laptop (Laser2025-20) by M0-V3, 2026-10-11, from tools/pb/verify.anchor.json: assets/physics.json
+  → box, dt, dump, eos, floors, latch, registry, scene, state, timing; assets/elements.json → the same less eos;
+  crates/sr-physics/src/registry.rs and eos.rs → those and build — never `boot`, whose run (`headless --scene preset:sun`,
+  launch.json's headless-boot) parses both assets through sr-physics before its first step (`Scene::physics` →
+  `Physics::shipped`, `Elements::shipped`, `EosGpu::new`; `Scene::planes` → `Eos::from_physics`). A claim run (`--changed`)
+  on an edit there never re-runs G-BOOT — M0-D10's class (M0-V1). Repro: those four files' entries in
+  verify.anchor.json's `paths`.
+- Deliver: `boot`'s `paths` gain `crates/sr-physics/**`, `assets/physics.json` and `assets/elements.json` (reactions.json
+  once a pass the boot runs reads it), no case, plant or `expected` changed → Verify 1, 2 · testing.md's `boot` row
+  names them → none — a docs row, no check grades it
+- Verify: 1. `python3 tools/pb/verify.py boot --task M0-D22` · Pass: GO, 1 case, and verify.anchor.json then maps
+  assets/physics.json, assets/elements.json and crates/sr-physics/src/eos.rs to `boot` · Fail: NO-GO, or a path unmapped ·
+  2. `python3 tools/pb/verify.py --redarm boot --task M0-D22` · Pass: GO — scene-refuse NO-GO · Fail: the plant stays GO
+- Handoff: <placeholder>
+
+## M0-D23 · The harness needs Git Bash on win-laptop: from PowerShell `bash` is WSL's relay and every `bash` scope reads NO-GO · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D22)
+- Status: TODO
+- Blocks: nothing — until it lands, a PowerShell run puts Git's folders first in that window (reports/v3.md § The red-arm sweep)
+- Caused by: unknown — 21 of the 24 scopes' commands have started with `bash` since lot 1's runners; M0-TE-win measured the
+  relay (Hazards) and routed every toolkit call through Git Bash, a route the lead has now ruled out for runs on Windows
+- Files: tools/pb/verify.json (the 21 `bash …` commands), docs/agent/testing.md (§ Hazards measured on win-laptop, § Boxes)
+  — opened by M0-V3, not changed; tools/pb/verify.py (how a scope's command is spawned on win32) — unverified, the
+  executing task confirms first
+- Read: this file (rules + this task) + docs/agent/testing.md § The calls, § Hazards measured on win-laptop, § Boxes +
+  PLAYBOOK.md §A.2 (the manifest's shape) + milestones/m0/tasks/toolkit_local_diff.md
+- Ask (verbatim): the lead, 2026-10-11, at M0-V3: "and I shouldnt be forced to use git bash to run something the thing is
+  supposed to run both on linux and windows"
+- Symptom: measured on win-laptop (Laser2025-20) by M0-V3, 2026-10-11, from Windows PowerShell 5.1 at the repo root:
+  `py -3.12 tools/pb/verify.py time_control --task M0-V3-ps1` → NO-GO, 0 of 18 cases, its log « <3>WSL (9 - Relay) ERROR:
+  CreateProcessCommon:735: execvpe(/bin/bash) failed: No such file or directory » — PowerShell's `bash` is
+  C:\WINDOWS\system32\bash.exe (then WindowsApps\bash.exe) and Git's usr\bin is not on its PATH; the same call after
+  `$env:Path = "C:\Program Files\Git\usr\bin;$env:USERPROFILE\bin;$env:Path"` (that window only) → GO 18/18, and `--redarm
+  time_control` → GO, the plant red (logs/M0-V3-ps1…ps3.*). Every scope but plan_lint, licences and watch_only starts with
+  `bash`.
+- Deliver: `py -3.12 tools/pb/verify.py …` runs every scope from a plain Windows PowerShell window on win-laptop with no PATH
+  change by the caller — the harness itself gives the scopes Git's bash (with its usr\bin, and ~/bin's rsync, on their PATH),
+  never WSL's relay; linux-pc unchanged → Verify 1, 2, 3 · the local fix to an annex tool flagged to M0-TZ for the annex,
+  as M0-D20's → none — a plan flag, no check grades it · testing.md's win-laptop hazards and the plan's Hazards line say both
+  shells work → none — docs, no check grades them
+- Verify: 1. from Windows PowerShell 5.1 at the repo root, no PATH change: `py -3.12 tools/pb/verify.py time_control latch
+  --task M0-D23` · Pass: GO, 18 + 5 cases · Fail: NO-GO · 2. the same window: `py -3.12 tools/pb/verify.py --redarm
+  time_control --task M0-D23` · Pass: GO — the plant red · Fail: NO-GO · 3. the claim, `py -3.12 tools/pb/verify.py --changed
+  --task M0-D23` · Pass: GO · Fail: NO-GO
+- Handoff: <placeholder>
+
+## M0-D24 · The watch_only plant no longer applies: M0-T19 rewrote step/mod.rs's head, so G-WATCH cannot be proven red · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D23)
+- Status: TODO
+- Sizing: E
+- Blocks: nothing — every `--redarm watch_only` and M0-V4's sweep read NO-GO on it until it lands
+- Caused by: M0-T19 (its edit of crates/sr-engine/src/step/mod.rs's opening comment and its `use crate::state::…` line took
+  away the plant's context)
+- Files: tests/plants/stage-in-step.patch, tools/pb/verify.json (`watch_only`'s `plants` entry) — opened by M0-V3, not changed
+- Read: this file (rules + this task) + docs/agent/testing.md § Adding a scope (step 3) and the `watch_only` row
+- Symptom: measured on win-laptop (Laser2025-20), 2026-10-11, in M0-V3's sweep (the lead's run;
+  logs/M0-V3.watch_only.redarm.log): « watch_only · plant stage-in-step · ERROR (the patch tests/plants/stage-in-step.patch
+  does not apply: crates/sr-engine/src/step/mod.rs @@ -6,5 +6,6 @@: its old lines appear 0 times in the file, not once) »,
+  the clean arm GO — the sweep's only non-red (plants RED 20, GREEN 0, ERROR 1, NO-GO). `git apply --check` of the patch on
+  step/mod.rs as committed: applies at fee412b (lot 1), refused at 2ee163f (M0-T19) and every commit since — its context
+  lines (`//! slot its lot fills, in place, without reordering the others.`, `use crate::state::State;`) are gone. No lot-3
+  task re-armed the scope (none changed its check), so the phase-close sweep is where it showed. Repro: `py -3.12
+  tools/pb/verify.py --redarm watch_only --task <id>`.
+- Deliver: the same bug — `observe` and `Stage` named in crates/sr-engine/src/step/mod.rs — planted on today's file by a
+  command (testing.md § Adding a scope, step 3: a file that moves takes a command plant), so the next edit to step/mod.rs
+  cannot stale it again; the scan, its case and `expected` unchanged → Verify 1
+- Verify: 1. `py -3.12 tools/pb/verify.py --redarm watch_only --task M0-D24` · Pass: GO — the clean arm GO, stage-in-step
+  RED naming step/mod.rs · Fail: an ERROR, or the plant GO
 - Handoff: <placeholder>
 
 > **Commit gate (lead):** Phase 5 closes after M0-V3 — from the repo root, one at a time:
@@ -1257,6 +1427,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-V4 · Validation — lot 4: gravity · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T32)
 - Status: TODO
+- Carried flags: [M0-V3, 2026-10-11] owed on linux-pc (R15; M0-V3 ran lot 3 on win-laptop only — reports/v3.md § Owed on linux-pc): what M0-V2 and M0-D17 carried into M0-V3, unchanged — lot 2 entire (registry, eos, strings, licences, watch_only, web's ready and no-webgpu with §6.2.3's Linux flags, then --redarm of the six), M0-T15's web and licences (npm), M0-D13's boot (summary.json verbatim in its log) and --redarm boot, M0-D17's web and --redarm web with the sandbox on (a NO-GO there is a D or a question, never the flag put back) — and lot 3 entire: booking, floors, dt, box (M0-T21 ran it there on tree 695bbb9, since moved), latch, timing, time_control, scene and dump on the RTX 5090 (R12), each then red-armed; python3 tools/pb/verify.py --all --task <id> and --redarm --moved --task <id> there cover all of it; else carried V to V, M0-V17 at the latest
 - Read: milestones/m0/m0_contrat.md §1.3.3, §1.4, §5.1 (G-GRAV1, G-GRAV2) + milestones/m0/reports/
   time_warp.md M2–M4, R8 + the handoffs of M0-T28–M0-T32 + docs/agent/physics.md + the delivered files,
   each by the section it covers
@@ -1415,7 +1586,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T39 · The box against the whole world (G-BOX) · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T38)
 - Status: TODO
-- Carried flags: [M0-T21, 2026-10-10] tests/gpu/box.rs exists (module r#box, 6 cases, scope expected 6 — raise it); the switch is Step::with_box(…, BoxMode::WholeWorld) (M0-T21).
+- Carried flags: [M0-T21, 2026-10-10] tests/gpu/box.rs exists (module r#box, 6 cases, scope expected 6 — raise it); the switch is Step::with_box(…, BoxMode::WholeWorld) (M0-T21). · [M0-V3, 2026-10-11] G-BOX against the vacuum floor (source only, my arithmetic): a scene's uncovered cells are Σ = 0 (scene.rs Sums::planes) and P8 floors only inside the box (M0-T21), so under BoxMode::WholeWorld every vacuum cell becomes Σ_floor at step 0 and books vacuum_reset −Σ_floor while the box run floors only its box — sun_disk.json at 600 × 400: ≈ 2.30 × 10⁻³ more grid mass in the whole-world run, 6.9 × 10⁻⁷ of the Sun-like mass and 9.3 × 10⁻⁷ of its hydrogen (vacuum is pure H), inside §5.3's 10⁻⁶ by about 7 %; compare the conserved sums (vacuum_reset added, §2.9) or say which sum each case compares (M0-V3)
 - Sizing: E
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.3, §5.3 (G-BOX) +
   milestones/m0/reports/time_warp.md R5 + docs/agent/testing.md
@@ -2421,7 +2592,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T84 · The world in the window — the frame loop · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V11)
 - Status: TODO
-- Carried flags: [M0-T24, 2026-10-11] TimeControl (sr_physics::time) takes Report{steps_run, advanced as f64, dt_next as f64, step_ms = cost.map(|c| c.step_ms), latch_fired.is_some()} once per polled frame with steps > 0, in order, then on_event(CoreCollapse) on latch_fired; Plan{steps, slow_down} → encode_frame, paced at Plan.f_target. N_max is 1 until a step_ms arrives: turn Step::set_timing on, and on wasm32 without timestamp-query feed a wall-clock step_ms. An empty world (Δt f32::MAX) still grows FrameReport.sim_time by f32::MAX per step — TimeControl ignores it, the age readout must too (M0-T24).
+- Carried flags: [M0-T24, 2026-10-11] TimeControl (sr_physics::time) takes Report{steps_run, advanced as f64, dt_next as f64, step_ms = cost.map(|c| c.step_ms), latch_fired.is_some()} once per polled frame with steps > 0, in order, then on_event(CoreCollapse) on latch_fired; Plan{steps, slow_down} → encode_frame, paced at Plan.f_target. N_max is 1 until a step_ms arrives: turn Step::set_timing on, and on wasm32 without timestamp-query feed a wall-clock step_ms. An empty world (Δt f32::MAX) still grows FrameReport.sim_time by f32::MAX per step — TimeControl ignores it, the age readout must too (M0-T24). · [M0-V3, 2026-10-11] once the app's frame loop runs Step, the desktop, capture and web scopes read crates/sr-physics/** and assets/physics.json, assets/elements.json at run time: their paths gain them as M0-D22 gives boot's (M0-D10's class; today they compile sr-physics and embed the assets but read neither — M0-V3)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3, §1.11 (the integer scale),
   §3.1 (encode_frame, render, poll), §4.1 (status.line), §4.2 (centre, status bar) + docs/agent/running.md
   + docs/agent/testing.md
@@ -3127,7 +3298,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
 
 ## M0-T111 · The collapse caught within one step — G-LATCH's scenario · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T110)
 - Status: TODO
-- Carried flags: [M0-T22, 2026-10-10] The mechanism and a test hook exist (Step::encode_frame, set_latch_hook, latch_probe; scope latch, 5 synthetic cases): G-LATCH's scenario is the first physics proof; the scope's expected count grows with it (M0-T22).
+- Carried flags: [M0-T22, 2026-10-10] The mechanism and a test hook exist (Step::encode_frame, set_latch_hook, latch_probe; scope latch, 5 synthetic cases): G-LATCH's scenario is the first physics proof; the scope's expected count grows with it (M0-T22). · [M0-V3, 2026-10-11] the latch module's k = 1 case (the flag at step index 0, where the re-fit's slot is open) is the one that grades the controller zeroing the re-fit's own slot: M0-V3's mutant M-a (zero_sizes sparing the period-16 slots) survives k = 15 alone and dies at k = 1 (39 box-sized dispatches after the fire); k = 15 kills a re-fit recorded outside the latch (M-b: 38 of 15, and the edit case) — keep both when the contract case joins (reports/v3.md § The Adversarial line)
 - Sizing: E
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5, §4.3, §5.3 (G-LATCH) +
   milestones/m0/reports/lives.md (the iron-core dump) + docs/agent/testing.md

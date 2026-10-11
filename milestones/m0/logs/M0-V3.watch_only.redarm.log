@@ -1,0 +1,8 @@
+==== 2026-10-11T15:43:15-04:00 watch_only · clean · a fresh scratch copy of the tree
+== 2026-10-11T15:43:17-04:00 watch_only · task M0-V3 · box Laser2025-20 :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.31 s
+files scanned: 8 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+1 passed, 0 failed (8 files)
+=== GO ===
+
+==== 2026-10-11T15:43:15-04:00 watch_only · plant stage-in-step · a fresh scratch copy of the tree

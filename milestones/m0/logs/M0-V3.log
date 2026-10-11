@@ -1,0 +1,109 @@
+# M0-V3 log — win-laptop (Laser2025-20), opened 2026-10-11T14:28:52-04:00
+## m1: headless sim_time (build/target/release, built 2026-10-11 14:01 by M0-T26's claim)
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=0.000000 until=none
+exit 0
+summary: steps 100 sim_time 0.0 until {'condition': 'steps:100', 'met': True}
+s_100.bin step 100 sim_time 0.0 resume.dt 0.030264107510447502 dt_next 0.030264107510447502 latch_since 1.0
+s_50.bin step 50 sim_time 0.0 resume.dt 0.030264107510447502 dt_next 0.030264107510447502 latch_since 1.0
+## scratch copy for the probes: /c/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/f258d12e-5087-4d6a-a50b-e950e354dfd3/scratchpad/v3copy (2026-10-11T14:29:20-04:00)
+dest=/c/Users/YohanBelanger/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/f258d12e-5087-4d6a-a50b-e950e354dfd3/scratchpad/v3copy · files=1116 · size=12M · linked=none · excluded=13
+=== GO ===
+## mutant M-a (zero_sizes spares the re-fit's period-16 slots): bash tests/gpu.sh latch physics in the scratch copy (2026-10-11T14:30:51-04:00)
+test latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+k = 1: FrameReport { steps_run: 1, advanced: 0.44721362, sim_time: 0.44721361994743347, dt: 0.44721362, dt_next: 0.44721362, steps: 1, latch_fired: Some(1), cost: None }, box-sized hook dispatches run 39
+thread 'latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run' (33276) panicked at crates\sr-engine\tests\gpu\latch.rs:130:9:
+assertion `left == right` failed: k = 1: a box-sized dispatch ran after the latch fired
+  left: 39
+ right: 1
+test latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test latch::poll_never_waits_and_reports_each_frame_once_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test latch::the_latch_re_arms_only_after_1_tu_without_a_set ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 57 filtered out; finished in 2.98s
+exit 101
+## mutant M-a, the k-test with k = 15 alone (2026-10-11T14:31:30-04:00)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 62 filtered out; finished in 0.00s
+exit 0
+test latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+k = 15: FrameReport { steps_run: 15, advanced: 6.7082043, sim_time: 6.70820426940918, dt: 0.44721362, dt_next: 0.44721362, steps: 15, latch_fired: Some(15), cost: None }, box-sized hook dispatches run 15
+test latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test latch::poll_never_waits_and_reports_each_frame_once_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test latch::the_latch_re_arms_only_after_1_tu_without_a_set ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 57 filtered out; finished in 4.12s
+exit 0
+## mutant M-b (the re-fit recorded outside the latch, on the CPU's count), the k-test with k = 15 alone (2026-10-11T14:32:32-04:00)
+test latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+k = 15: FrameReport { steps_run: 15, advanced: 6.7082043, sim_time: 6.70820426940918, dt: 0.44721362, dt_next: 0.44721362, steps: 15, latch_fired: Some(15), cost: None }, box-sized hook dispatches run 38
+thread 'latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run' (34080) panicked at crates\sr-engine\tests\gpu\latch.rs:130:9:
+assertion `left == right` failed: k = 15: a box-sized dispatch ran after the latch fired
+  left: 38
+ right: 15
+test latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+thread 'latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs' (38096) panicked at crates\sr-engine\tests\gpu\latch.rs:113:5:
+  left: BoxReport { x0: 88, y0: 40, w: 32, h: 32, fft: [64, 64], from_step: 4, fits: 5, tiles: [4, 4, 1], cells: [4, 1, 1] }
+ right: BoxReport { x0: 88, y0: 40, w: 32, h: 32, fft: [64, 64], from_step: 3, fits: 3, tiles: [4, 4, 1], cells: [4, 1, 1] }
+test latch::poll_never_waits_and_reports_each_frame_once_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test latch::the_latch_re_arms_only_after_1_tu_without_a_set ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 57 filtered out; finished in 4.06s
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+exit 101
+## probe P2: FrameReport.sim_time and dump_state's header against the frame grouping, 40 steps as 1x40, 2x20, 40x1 (2026-10-11T14:33:16-04:00)
+PROBE 1 frame(s): FrameReport.sim_time 1.78885383605957031e1 (0x4031e37740000000); dump step 40 sim_time 1.78885383605957031e1 (0x4031e37740000000)
+PROBE 2 frame(s): FrameReport.sim_time 1.78885421752929688e1 (0x4031e37780000000); dump step 40 sim_time 1.78885421752929688e1 (0x4031e37780000000)
+PROBE 40 frame(s): FrameReport.sim_time 1.78885447978973389e1 (0x4031e377ac000000); dump step 40 sim_time 1.78885447978973389e1 (0x4031e377ac000000)
+PROBE grouping 1 against 1 x 40: planes equal true, resume equal true, sim_time equal false, dump bytes equal false
+PROBE grouping 2 against 1 x 40: planes equal true, resume equal true, sim_time equal false, dump bytes equal false
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 57 filtered out; finished in 5.01s
+exit 0
+## rung_record.py report (2026-10-11T14:42:21-04:00)
+## m5: headless exit 5 through a dump holding a NaN x_C at (300, 200) (2026-10-11T14:45:31-04:00)
+planted NaN: channel 6 x_C at (300, 200), header step 100
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ERROR non-finite value in the state at step 128, cell (300, 200), channel x_C
+exit 5
+## clippy --all-targets (not graded by any scope; T21, T25, T26 noted it) (2026-10-11T14:45:52-04:00)
+exit 101
+      4 error: very complex type used. Consider factoring parts into `type` definitions
+      2 error: the loop variable `k` is used to index `CHANNELS`
+      1 error: the loop variable `ch` is used to index `CHANNELS`
+      1 error: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+      1 error: could not compile `sr-engine` (test "gpu") due to 8 previous errors
+      2    --> crates\sr-engine\tests\gpu\box.rs
+      1    --> crates\sr-engine\tests\gpu\dump.rs
+      4    --> crates\sr-engine\tests\gpu\floors.rs
+      1    --> crates\sr-engine\tests\gpu\latch.rs
+## Verify 1: py -3.12 tools/pb/verify.py --all --task M0-V3 (2026-10-11T14:50:59-04:00)
+exit 0 · wall 190 s
+plan_lint       513/0/0      0.42 s  GO
+tools_selftest  10/0/0     340.08 s  GO
+toolchain       3/0/0       10.62 s  GO
+build           2/0/0       20.39 s  GO
+registry        29/0/0       1.61 s  GO
+eos             13/0/0       1.98 s  GO
+time_control    18/0/0       1.27 s  GO
+strings         3/0/0        1.72 s  GO
+adapter         10/0/0      23.48 s  GO
+state           6/0/0       12.48 s  GO
+booking         4/0/0       11.67 s  GO
+floors          7/0/0       20.50 s  GO
+dt              6/0/0       17.77 s  GO
+box             6/0/0       15.86 s  GO
+latch           5/0/0       13.20 s  GO
+timing          5/0/0       23.44 s  GO
+scene           8/0/0       14.98 s  GO
+dump            5/0/0       20.69 s  GO
+boot            1/0/0       20.78 s  GO
+desktop         2/0/0       37.49 s  GO
+web             3/0/0      165.12 s  GO
+capture         2/0/0       16.63 s  GO
+licences        3/0/0       35.03 s  GO
+watch_only      1/0/0        0.23 s  GO
+logs: milestones/m0/logs/M0-V3.<scope>.log · record: loop_times.jsonl · tree e5f0ef09ed37+1b68a8b5f9bf
+anchor: 1 path×scope entries moved by this run
+anchor: 115 paths checked · 97 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 115 covered of 212 visible
+verify: 665 passed, 0 failed, 0 skipped · 24/24 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 187.69 s + loop 0.14 s · mode all · jobs 8 · box Laser2025-20 · python 3.12.10 · load 2.82->3.06 · base: M0-V3's start 2026-10-11T14:15:35-04:00
+=== GO ===
+## the sweep (the lead's run, PowerShell, 15:06-15:43): moved 14 of 24 armed scopes, plants RED 20, GREEN 0, ERROR 1 (watch_only stage-in-step does not apply) · 2221.12 s · NO-GO -> M0-D24; git apply --check: applies at fee412b, refused at 2ee163f (M0-T19) and 5206293
