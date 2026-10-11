@@ -1,0 +1,43 @@
+--- a/crates/sr-physics/src/time.rs
++++ b/crates/sr-physics/src/time.rs
+@@ -166,6 +166,8 @@
+     advanced: VecDeque<f64>,
+     top_binds: VecDeque<bool>,
+     quiet: u32,
++    before: usize,
++    shown: u32,
+ }
+ 
+ impl TimeControl {
+@@ -205,6 +207,8 @@
+             advanced: VecDeque::new(),
+             top_binds: VecDeque::new(),
+             quiet: 0,
++            before: 0,
++            shown: 0,
+         })
+     }
+ 
+@@ -279,6 +283,13 @@
+             return plan(1);
+         }
+         push(&mut self.walls, est.wall_s, CAP_WINDOW);
++        if self.banner.is_some() {
++            self.shown += 1;
++            if self.shown >= 120 {
++                let back = self.before;
++                self.set_rung(back, None);
++            }
++        }
+         self.owed += self.rungs[self.rung].value / self.f_target as f64;
+         let n_max = self.n_max(self.f_target);
+         let (steps, planned, bind) = match self.dt_est {
+@@ -331,6 +342,8 @@
+         }
+         let target = self.rungs.iter().rposition(|r| r.value <= event.rung_value()).unwrap_or(0);
+         if target < self.rung {
++            self.before = self.rung;
++            self.shown = 0;
+             self.set_rung(target, Some(event));
+         }
+     }

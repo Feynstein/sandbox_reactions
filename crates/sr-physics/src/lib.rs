@@ -2,4 +2,5 @@
 
 pub mod eos;
 pub mod registry;
+pub mod time;
 pub mod units;

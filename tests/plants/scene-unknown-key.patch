@@ -1,0 +1,13 @@
+--- a/crates/sr-engine/src/scene.rs
++++ b/crates/sr-engine/src/scene.rs
+@@ -142,7 +142,5 @@
+ /// The first key of `map` that is not in `known`, refused by its path.
+ fn check_keys(map: &Map<String, Value>, at: &str, known: &[&str]) -> Result<(), String> {
+-    match map.keys().find(|k| !known.contains(&k.as_str())) {
+-        Some(k) => Err(format!("{}: unknown key", join(at, k))),
+-        None => Ok(()),
+-    }
++    let _ = (map, at, known, join); // planted: unknown keys accepted
++    Ok(())
+ }
+

@@ -1025,3 +1025,194 @@
 - Adversarial: a constant's value copied into the page goes stale at the first tuning — the V reads the
   page for numbers that belong to physics.json.
 - Handoff: docs/agent/physics.md (6 sections, no physics.json value) and testing.md's lot-2 table (registry, eos, strings, licences, watch_only; web's ready/no-webgpu already in T15's row). Deviation: row/scope is watch_only, not watch-only (M0-T16's flag; Verify 2 run with it, count 5; contract §5.4 still reads watch-only). Verify 1 = 6, Verify 2 = 5, claim --changed --base b9ce600 GO (493 passed, win-laptop Laser2025-20). Found, not acted on: testing.md's old « Scopes today » closing paragraph still says licences/strings 'can be armed as soon as code exists' (stale; V's to refresh). Ran on model=claude-sonnet-5-5 level=high. Next: M0-T18.
+
+## M0-TC1 · Compaction — Phase 3's close: twelve DONE blocks to stub, more than ten (PLAYBOOK §8, §11) · **MOVE** · Sonnet 5.5, medium · switch · (AFTER M0-V1)
+- Status: DONE (2026-10-09 12:36, started 12:36)
+- Read: this file (rules + this task) + plan_archive.md as the shape to keep
+- Deliver: `plan.py stub <ID>... --by M0-TC1` over every DONE / N/A / DEFERRED block of the closed phases — Phase 2b's
+  (M0-TE-win, M0-D2, M0-D3, M0-D4, M0-D5, M0-D6, M0-D7, M0-TJ3, M0-D8) and Phase 3's (M0-T1, M0-D9, M0-T2, M0-T3, M0-T4,
+  M0-TM1, M0-T5, M0-T6, M0-T7, M0-T8, M0-T9, M0-TV1, M0-V1), never a TODO block (this one, the D blocks M0-V1 filed) ·
+  the Pipeline state back to a register of pointers · lines repeated in three or more blocks hoisted, long Rules
+  entries moved to m0_rules.md (index line kept, text unchanged) · Repo facts de-duplicated · every moved line
+  diffed byte-for-byte, counts reported · `plan.py show`'s header count before and after in the handoff.
+- Pass: `plan.py lint` GO, header within budget (600 / 60), diff count = moved count. Fail: any TODO block touched,
+  any rule reworded, any fact dropped.
+- Handoff: 22 DONE blocks stubbed (Phase 2b: M0-TE-win, D2–D8, TJ3; Phase 3: M0-T1–T9, D9, TM1, TV1, V1) into plan_archive.md: 450 lines moved, 450 verified byte-for-byte; M0-D8's commit-gate trailer kept in the plan (WARN, by design). No TODO block touched. Rules already index lines (text in m0_rules.md) and Pipeline state already pointers — nothing to move there; Repo facts left as is (no safe de-dup measured, nothing dropped). plan.py show header=225 before and after (lint header 404/600 after, pipeline 9/60); plan lint GO 499 checks, 1 warn (Read: names plan_archive.md whole, this block's own line). Ran on model=claude-sonnet-5-5 level=medium per rung_record (linux-pc). Next: M0-D10.
+
+## M0-D10 · Lot 1's scopes leave out inputs their verdicts depend on: `--changed` skips G-BOOT on a headless.rs edit · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-TC1)
+- Status: DONE (2026-10-09 12:45)
+- Sizing: E
+- Blocks: nothing — every later `--changed` claim under-selects until it lands
+- Caused by: M0-T4
+- Files: tools/pb/verify.json (the `paths` of boot, desktop, capture, web, adapter, state) — opened by M0-V1, not changed.
+  Opened: tools/pb/verify.anchor.json, tests/plants/scene-refuse.patch, tests/smoke.sh, tests/gpu.sh, tests/web/check.sh
+- Read: this file (rules + this task) + docs/agent/testing.md § Adding a scope (step 4) + tools/pb/verify.json
+- Symptom: measured on linux-pc, 2026-10-09 (M0-V1): the `boot` scope grades `sandbox-reactions headless` (G-BOOT) but its
+  `paths` are crates/sr-app/**, tools/pb/launch.json, tests/smoke.sh and its plants — its own plant `scene-refuse` patches
+  crates/sr-engine/src/headless.rs, outside them; verify.anchor.json records headless.rs (and gpu.rs, state.rs,
+  step/mod.rs) as covered by adapter, build and state only, Cargo.lock / Cargo.toml / rust-toolchain.toml by build only,
+  and desktop.rs (the SandboxApp the web build runs) by boot, build, capture and desktop, never web. So `verify.py
+  --changed` after an edit to headless.rs alone runs build, adapter and state and never G-BOOT; a dependency bump in
+  Cargo.lock reruns only the build scope — never the GPU tests, the window or `trunk build` (whose wasm-bindgen must equal
+  trunk's wasm-bindgen-cli, §1.2). The same gap, in the scopes of M0-T2, M0-T3 (Cargo.*, tests/cargo.sh), M0-T5, M0-T8
+  (crates/sr-engine/**) and M0-T7 (all of sr-app and sr-engine). Repro: read the anchor —
+  `python3 -I -c "import json;print(sorted(json.load(open('tools/pb/verify.anchor.json'))['paths']['crates/sr-engine/src/headless.rs']))"`
+  → ['adapter', 'build', 'state']. Cause: measured (the manifest's globs).
+- Deliver: tools/pb/verify.json — each scope's `paths` names every input its cases compile or source: boot, desktop and
+  capture + `crates/sr-engine/**`; web: `crates/sr-app/**` and `crates/sr-engine/**` in place of its three narrower globs;
+  boot, desktop, capture, web, adapter and state + `Cargo.toml`, `Cargo.lock`, `rust-toolchain.toml`, `.cargo/**`,
+  `tests/cargo.sh` (every one of their runners sources it); no case, plant or `expected` changed.
+- Done when: on linux-pc, the anchor read above lists boot after the claim run, and Cargo.lock lists adapter, boot,
+  build, capture, desktop, state and web; `python3 tools/pb/verify.py --changed --base <the last commit gate's SHA>
+  --task M0-D10` GO (the changed entries' plants red).
+- Handoff: verify.json: boot, desktop, capture + crates/sr-engine/**; web: crates/sr-app/** + crates/sr-engine/** replace its three narrower globs; boot, desktop, capture, web, adapter, state + Cargo.toml, Cargo.lock, rust-toolchain.toml, .cargo/**, tests/cargo.sh; no case, plant or expected changed. Anchor on linux-pc: headless.rs -> adapter, boot, build, capture, desktop, state, web; Cargo.lock -> the same seven. Claim --changed --base 516ec7c [ALREADY RUN — PASS (522 passed, 8/8 scopes GO) on linux-pc], logs/M0-D10.*.log; --redarm boot [ALREADY RUN — PASS (scene-refuse red) on linux-pc]. Deviations: base is the latest commit 516ec7c (Phase 3 gate not yet made), so FLAG oracle lines list lot-1 plants/tests as changed — expected, not this task's edits; verify.json rewritten via json.dump (the scopes' non-ASCII text now \u-escaped, content equal). Not owed on win-laptop: untested there. Ran on model=claude-sonnet-5-5 level=medium (rung_record). Next: M0-D11.
+
+## M0-D11 · The binary refuses its own flags by position: `--out` first, `--help` after a flag read "unknown argument" · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-D10)
+- Status: DONE (2026-10-09 12:48)
+- Sizing: E
+- Blocks: nothing
+- Caused by: M0-T8
+- Files: crates/sr-app/src/main.rs (the first-argument `match` in `main`), crates/sr-app/src/desktop.rs (`native::parse`)
+  — opened by M0-V1, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.3 (Desktop, Capture) + the two files above
+- Symptom: measured on linux-pc, 2026-10-09 (M0-V1, logs/M0-V1.log § hand checks): `build/target/release/sandbox-reactions
+  --out <dir> --capture tests/capture/smoke.json` → `SR-ERROR unknown argument "--out"`, exit 4, while `--capture
+  tests/capture/smoke.json --out <dir>` runs (exit 0, two PNGs); `sandbox-reactions --adapter llvmpipe --help` →
+  `SR-ERROR unknown argument "--help"`, exit 4, while `--help` alone prints the usage, exit 0. Cause, measured in the
+  source: main.rs routes on the first argument alone and its desktop arm lists `--adapter | --status-port |
+  --offscreen-window | --world | --capture | --measure-ui`, not `--out`; `native::parse` has no `-h` / `--help` arm.
+- Deliver: the smallest fix in those two places — every argument list whose first word is not `headless` (and not
+  `-h` / `--help`) reaches the desktop parser, which answers `-h` / `--help` anywhere with the usage, exit 0; an unknown
+  argument stays `SR-ERROR` naming it, exit 4; `--world` and `--measure-ui` keep their "not built yet" refusal.
+- Done when: on linux-pc, `--out <dir> --capture tests/capture/smoke.json --adapter llvmpipe` under the capture's route
+  (`xvfb-run -a -s "-screen 0 1920x1080x24" env -u WAYLAND_DISPLAY -u XDG_SESSION_TYPE …`) exits 0 with two PNGs;
+  `--adapter llvmpipe --help` prints the usage, exit 0; `--bogus` exit 4; `verify.py --changed --base <the last commit
+  gate's SHA> --task M0-D11` GO.
+- Handoff: main.rs now sends every non-headless, non---help-first argument list to desktop::run; desktop parse answers -h/--help anywhere with the usage (exit 0), unknown stays SR-ERROR exit 4, --world/--measure-ui keep their refusal. Measured on linux-pc: --out first + --capture under xvfb/llvmpipe exit 0 with 2 PNGs; --adapter llvmpipe --help exit 0; --bogus exit 4 (logs/M0-D11.log). Not guarded: no scope tests flag order and the existing capture plant does not cover it — a case is a CHECK/new-scope job, not filed as a D (lead's call). Ran on rung_record: model=claude-sonnet-5-5 level=medium. Next: M0-D12.
+
+## M0-D14 · The adapter scope reads NO-GO: after one NVIDIA device is made, wgpu lists only the Intel iGPU and llvmpipe · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D11)
+- Status: DONE (2026-10-09 18:16)
+- Blocks: M0-D12's claim run, and every `--changed`/`--all` that reaches the adapter scope
+- Caused by: unknown
+- Files: crates/sr-engine/tests/gpu/main.rs (lines 105–140, `live_this_boxs_adapters_are_listed`, `live_one_device_per_adapter_found_by_a_differently_cased_name`), crates/sr-engine/src (the headless device path, `Gpu::new_headless`) — opened by M0-D12, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §6.1–§6.3 + milestones/m0/logs/M0-D12b.adapter.log
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-09 evening, 4 times (verify.py --changed, verify.py adapter, `bash tests/gpu.sh adapter` ×3, with and without `DISPLAY=:1`, shell `XDG_SESSION_TYPE=tty`): `adapter` reads 8 passed, 2 failed. The tests before them list all four adapters (Quadro, RTX 5090, Intel `Intel(R) Graphics (RPL-S)`, llvmpipe); in `live_one_device_per_adapter_found_by_a_differently_cased_name` the device for the Quadro is made, then the next `Gpu::new_headless(Some("nvidia geforce rtx 5090"))` lists only [Intel, llvmpipe] and panics (main.rs:129); `live_this_boxs_adapters_are_listed` then sees the same two and reports « missing: Quadro RTX 4000, RTX 5090 » (main.rs:118). `nvidia-smi` lists both GPUs idle. M0-V1 read the same scope 10/10 GO earlier the same day (logs/M0-V1.adapter.log). Repro: `bash tests/gpu.sh adapter`. Suspected cause: not measured — the NVIDIA Vulkan ICD failing to enumerate again once a device of the same driver is alive in the process (or a changed box state since M0-V1); check the first failing instance's `Instance` flags and `VK_*` / ICD state, then whether a fresh process lists them.
+- Deliver: the cause measured and the smallest fix in the test or the headless device path (or, if the box is at fault, the box state named in docs/agent/testing.md § Hazards); no loosened expectation.
+- Done when: on linux-pc, `python3 tools/pb/verify.py adapter --task M0-D14` GO, 10 cases, and `--redarm adapter` GO (adapter-case still red).
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record). Cause measured: each wgpu::Instance dropped unloads the Vulkan ICDs; every NVIDIA reload leaks glibc static TLS and from the 11th instance in a process the loader logs « libnvidia-tls.so.595.99.02: cannot allocate memory in static TLS block » and ignores nvidia_icd.json, so wgpu lists only Intel + llvmpipe (VK_LOADER_DEBUG; probe: 10 ok then 30 without NVIDIA; 40/40 with instances kept alive or GLIBC_TUNABLES optional_static_tls raised). Fix: sr-engine gpu.rs headless_instance() — one process-wide instance (OnceLock; wasm keeps one per call), used by Gpu::new_headless and the test's live_adapters; no expectation loosened. verify.py adapter [ALREADY RUN — PASS (10/0/0) on linux-pc]; --redarm adapter [ALREADY RUN — PASS (clean GO, adapter-case RED 5 failed) on linux-pc]; claim --changed --base 516ec7c [ALREADY RUN — PASS (523 passed, 8/8 scopes GO) on linux-pc] — run twice on the same tree by mistake, both GO; its FLAG oracle lines are earlier tasks' files since 516ec7c. Not explained: why M0-V1 read 10/10 the same day (same driver, glibc, loader, layers, source) — reading, not measured: unload timing. Not acted on: a plan Hazards line (one wgpu instance per process on linux-pc) is TZ's/the lead's; win-laptop NOT RUN (owed on win-laptop at its next V). Plan: close --set "Caused by=…" wrote a register row, not the block's field — that one row removed with the file-edit tool (plan.py has no row delete); Caused by stays unknown (a box/driver limit, no block). Detail: tasks/M0-D14.md. Next: M0-D12 (re-run its claim).
+
+## M0-D15 · desktop[launcher] reads « 'start.bat' is not recognised » on win-laptop: the case's `cmd //c "start.bat window"` never reaches the file · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D14)
+- Status: DONE (2026-10-09 19:27)
+- Blocks: M0-D13's claim run, and every `--changed`/`--all` that reaches the desktop scope on win-laptop
+- Caused by: M0-T6
+- Files: tests/smoke.sh (`run_launcher`, the MINGW branch), start.bat — opened by M0-D13, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §8 + tests/smoke.sh + milestones/m0/logs/M0-D13b.desktop.log
+- Symptom: measured on win-laptop (Laser2025-20), 2026-10-09 (M0-D13's claim, `verify.py --changed --base fc0a0fe --task M0-D13b`): `desktop[launcher]` exit 1 in 4.95 s, output « 'start.bat' n'est pas reconnu en tant que commande interne ou externe… », then « === NO-GO: the launcher exited 1 === ». `desktop[window]` is GO the same run. start.bat exists at the repo root. Repro: `py -3.12 tools/pb/verify.py desktop --case launcher --task M0-D15`. Suspected cause: not measured — Git Bash rewrites `cmd //c "start.bat window"` (path conversion/quoting) or cmd's cwd/PATH lacks the repo root (`.\start.bat`); smoke.sh edited only the headless-boot branch, so the break predates M0-D13.
+- Deliver: the cause measured and the smallest fix in the launcher case's call (or start.bat); no loosened expectation.
+- Done when: on win-laptop, `py -3.12 tools/pb/verify.py desktop --task M0-D15` GO and `--redarm desktop` GO.
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=high (rung_record). Cause measured: the Bash tool's env sets NoDefaultCurrentDirectoryInExePath=1, so cmd skips the cwd for a bare name; A/B/C on an echo-only probe.bat: bare+var → « not recognised », var unset → runs, .\ prefix → runs (logs/M0-D15.log). Fix: tests/smoke.sh run_launcher MINGW → cmd //c ".\start.bat $service"; nothing loosened. Deviation, the lead's yes (« Extend the plant (Recommended) »): launcher-no-stop.patch patched start.sh only, which made it unfailable on win-laptop (first --redarm NO-GO); it now also drops start.bat's stop line (LF hunk, applies to CRLF via git apply and patch). verify.py desktop [ALREADY RUN — PASS (2/0/0) on win-laptop]; --redarm desktop [ALREADY RUN — PASS (clean GO, both plants RED, 606 s) on win-laptop]; claim --changed --base fc0a0fe [ALREADY RUN — FAIL (514/1: plan_lint, boot, desktop GO; tools_selftest[capture_web] 2 failures, M0-D16's native crash, the same in M0-D13b's run before this fix; the anchor's 11 never-checked are tools/pb files left unrecorded by that red, my reading) on win-laptop]. Finding: a desktop red-arm takes 606 s here, over the 10-minute line (Rule 4), so it is the lead's run on win-laptop until shortened. testing.md's desktop row still reads « owed ». Detail: tasks/M0-D15.md. Next: M0-D16, then M0-D13's claim.
+
+## M0-D16 · tools_selftest[capture_web] crashes in review_page.py's two cases on win-laptop: a native crash with a faulthandler stack and no Python frame · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D15)
+- Status: DONE (2026-10-10 08:49)
+- Blocks: M0-D13's claim run, and every `--changed`/`--all` that reaches tools_selftest on win-laptop
+- Caused by: unknown
+- Files: tools/pb/review_page.py, the capture_web selftest cases — opened by M0-D13 (log only), not changed
+- Read: this file (rules + this task) + milestones/m0/logs/M0-D13b.tools_selftest.log (lines 27–29) + the Hazards line on M0-D7's 0xC0000005
+- Symptom: measured on win-laptop (Laser2025-20), py 3.12.10, 2026-10-09 (M0-D13's claim): `tools_selftest[capture_web]` 1 failed, 2 failures — « review_page.py reads every capture, and shows none until the TV flags one » and « review_page.py builds its page once the TV flags a capture with its note », each with a faulthandler « Current thread … (most recent call first): <no Python frame> ». Same family as M0-D7's 0xC0000005 (Hazards). Repro: `py -3.12 tools/pb/verify.py tools_selftest --case capture_web --task M0-D16`. Suspected cause: not measured — the Node child (capture_web.mjs) or Chrome dying, versus the Python process; check the exit code and whether a leftover process from the killed claim run (M0-D13 ran `taskkill` on python/cargo) was in the way: re-run first on a quiet box.
+- Deliver: the cause measured and the smallest fix; if it was only the killed processes, say so and close with no change.
+- Done when: on win-laptop, `py -3.12 tools/pb/verify.py tools_selftest --task M0-D16` GO.
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=high (rung_record). Cause measured, not a native crash and not M0-D13's killed processes (quiet box, case alone, same 2 reds): capture_web.mjs spawns PB_PYTHON || bare 'python' on win32, the harness never set PB_PYTHON, and bare python is now C:\Program Files\Python314 — Python 3.14.8 installed machine-wide 2026-10-09 without its Standard Library (Lib\ holds only site-packages); it dies « Failed to import encodings module », whose dump tail is the « <no Python frame> » we saw. Fix: tools/pb/verify.py case_env sets PB_PYTHON=sys.executable (setdefault, a caller's value wins), plus a selftest check and a plant (verify 171/0, plants 101/101); nothing loosened. Injected bug (line removed) → both cases red, restored. tools_selftest [ALREADY RUN — PASS (10/0/0, 72.8 s) on win-laptop]; --redarm tools_selftest [ALREADY RUN — PASS (clean GO, plant RED, 152 s) on win-laptop]; claim --changed --base fabab0c [ALREADY RUN — PASS (511/0/0, 2/2 scopes, 69.3 s) on win-laptop]. Finding, the lead's: repair or uninstall Python 3.14.8 (Modify → Standard library) — until then bare python, py and py -3 fail at startup on win-laptop (py -3.12 is fine); Repo facts do not list it. Detail: tasks/M0-D16.md. Next: M0-D13's claim on a fresh id.
+
+## M0-D12 · Lot 1's docs name an adapter wgpu does not list, restate contract numbers and carry a pre-lot-1 loop line · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D14 — the lead moved D14 first, 2026-10-09: D12's claim run needs the adapter scope green)
+- Status: DONE (2026-10-09 18:27)
+- Carried flags: [M0-D12, 2026-10-09] [M0-D12, 2026-10-09] Docs done and in the tree (Done-when greps clean, M0-T9's two greps 50/32 § and 7 rows); only the claim run is red: `verify.py --changed --base 516ec7c --task M0-D12` NO-GO on the adapter scope (2 of 10 fail — NVIDIA adapters drop out of wgpu's list after the first device; repro `bash tests/gpu.sh adapter`, logs/M0-D12.log) — not caused by a docs edit, filed as M0-D14. Re-try: keep the three edited pages (git diff docs/agent), re-run the claim once M0-D14 is green, then close. · [M0-D14, 2026-10-09] M0-D14 DONE: the adapter scope is GO again on linux-pc (10/0/0; one process-wide wgpu instance in sr-engine gpu.rs) — re-run your claim --changed --base 516ec7c --task M0-D12-r2 (a fresh id: your logs are not appended to), then close.
+- Blocks: nothing
+- Caused by: M0-T9
+- Files: docs/agent/running.md (line 50, the Adapters table; § The binary's exit codes), docs/agent/testing.md (line 28,
+  the `adapter` row; § Scopes today's header and its loop line), docs/agent/architecture.md (line 65) — opened by
+  M0-V1, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §7 + milestones/m0/reports/v1.md § The complete
+  loop + the three pages, by the lines named
+- Symptom: measured on linux-pc, 2026-10-09 (M0-V1, logs/M0-V1.log): (1) running.md's column « Adapters wgpu lists »
+  and testing.md's adapter row name « Intel UHD 770 »; wgpu lists that GPU as « Intel(R) Graphics (RPL-S) », so a
+  reader's `--adapter "UHD 770"` exits 3 (`--adapter "RPL-S"` exits 0). (2) §7: pages « never restate a number that
+  this contract or calibration.json holds » — running.md restates §3.3's exit codes (0 · 2 · 3 · 4 · 5, 6 · 101) and
+  architecture.md:65 « read back ≤ 2 frames late » (§1.9.1). (3) testing.md's « Scopes today (linux-pc, 2026-10-08,
+  warm caches) » header and « The complete loop: 3.2 s wall on linux-pc (62 cases, `jobs` 8) » predate lot 1's seven
+  scopes (M0-T9's flag to M0-V1, which writes no docs — PLAYBOOK §0, CHECK); the web row's « ≈ 40 s `--redarm` » read
+  11.4 s at M0-V1. Cause: measured (the pages against the binary and the contract).
+- Deliver: the three pages corrected in place — the adapter named as wgpu lists it, with the substring that matches
+  it; §3.3's exit codes and §1.9.1's figure replaced by pointers to their sections; testing.md's header dated and its
+  loop line restated from reports/v1.md § The complete loop (M0-V1's measured `--all`, linux-pc), each row's cost from
+  M0-V1's logs where it moved; no other text.
+- Done when: on linux-pc, `grep -n "UHD 770" docs/agent/*.md` and `grep -nE "frames late|101"
+  docs/agent/architecture.md docs/agent/running.md` print nothing; M0-T9's two Verify greps still pass (≥ 5 § lines
+  in each page; 7 scope rows in testing.md).
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record). Docs corrected in place, uncommitted, as the first try left them plus one tightening: running.md's exit-code line now reads « Exit codes: §3.3. » (the first try's « a refused flag or scene is 4; no adapter is 3 » still restated §3.3, against Deliver and §7). Also in the tree: running.md's iGPU named « Intel(R) Graphics (RPL-S) » with the --adapter "RPL-S" match; architecture.md:65 figure dropped, § 1.9.1 cited; testing.md's adapter row, Scopes header dated M0-V1, loop line from reports/v1.md § The complete loop, the seven rows' costs from M0-V1's logs. Done-when [ALREADY RUN — PASS (both greps empty; 50/32/17 § lines; 7 scope rows) on linux-pc]. Claim --changed --base 516ec7c --task M0-D12-r2 [ALREADY RUN — PASS (GO 522/0/0, 8/8 scopes, 4.91 s) on linux-pc], logs/M0-D12-r2.log; its one flag (M0-D12-r2 is no block) is the fresh-id rule, expected. First try's red (adapter 8/10) was M0-D14, now DONE. Not acted on: architecture.md:65 reads « read back async. » (terse, not wrong); testing.md's win-laptop costs stay as written. Next: M0-D13.
+
+## M0-D13 · The boot scope deletes the summary.json it grades: a V cannot read what G-BOOT checked · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D12)
+- Status: DONE (2026-10-10 08:56)
+- Carried flags: [M0-D13, 2026-10-09] Change is in the tree (tests/smoke.sh prints the checked summary.json verbatim, after the check; boot GO, logs/M0-D13.boot.log holds version/adapter/steps 200; --redarm boot GO, scene-refuse red) — measured on win-laptop (Laser2025-20), not linux-pc. Only the claim run is red: py -3.12 tools/pb/verify.py --changed --base fc0a0fe --task M0-D13b NO-GO, 508 passed 2 failed: (1) desktop[launcher] 'start.bat' not recognised as a command (tests/smoke.sh run_launcher: cmd //c "start.bat window" from Git Bash, start.bat exists at the root) (2) tools_selftest[capture_web] review_page.py cases crash with a faulthandler stack, no Python frame (the M0-D7 0xC0000005 family). Neither is in smoke.sh's headless-boot branch; smoke.sh is in both scopes' paths. Also the harness rewrote tools/pb/verify.anchor.json (62 lines). Re-try: keep the smoke.sh edit, get those two reds filed/fixed, re-run the claim on a fresh id, then close. The unverified 0.5 claim: base fc0a0fe is HEAD. · [M0-D16, 2026-10-10] M0-D16 DONE: tools_selftest[capture_web]'s two reds were a stdlib-less Python 3.14 on win-laptop's machine PATH, not a crash; verify.py case_env now passes PB_PYTHON (the harness's interpreter) to every case — tools_selftest GO 10/0/0 on win-laptop. With M0-D15's fix, re-run your claim on a fresh id (M0-D13c), then close.
+- Sizing: E
+- Blocks: nothing — each lot V's Adversarial reads the boot scope's summary.json
+- Caused by: M0-T4
+- Files: tests/smoke.sh (the `headless-boot` branch and `_sr_unlock`) — opened by M0-V1, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.12.2, §5.4 (G-BOOT) + tests/smoke.sh
+- Symptom: measured on linux-pc, 2026-10-09 (M0-V1): tests/smoke.sh says it runs the boot command « once into a folder
+  it keeps », but that folder is `mktemp -d` and the EXIT trap's `_sr_unlock` runs `rm -rf "$dir"`; launch.py removes
+  its own `--out`. The scope's log keeps one line, « summary.json: 13 keys of §2.12.2, steps = 200 », so no reader can
+  see the file G-BOOT graded — M0-V1's Adversarial (« reads the summary.json the boot scope wrote ») was met only by an
+  inotify watcher copying it in flight (reports/v1.md). Cause: measured (the script).
+- Deliver: the smallest change in tests/smoke.sh — the `headless-boot` branch writes the summary.json it checked,
+  verbatim, into its own output (so the scope's log holds it), and its comment says what it keeps; the check itself
+  unchanged.
+- Done when: on linux-pc, `python3 tools/pb/verify.py boot --task M0-D13` GO and logs/M0-D13.boot.log holds the
+  summary.json's text (its `"version"`, `"adapter"` and `"steps": 200`); `python3 tools/pb/verify.py --redarm boot --task
+  M0-D13` GO (scene-refuse still red); the `--changed` claim GO.
+- Handoff: tests/smoke.sh's headless-boot branch prints the summary.json it checked, verbatim, after the unchanged §2.12.2 check (in the tree since fabab0c). Claim on win-laptop (Laser2025-20): verify.py --changed --base fc0a0fe --task M0-D13c GO, 514 passed 0 failed, 4/4 scopes (plan_lint, tools_selftest, boot, desktop); logs/M0-D13c.boot.log holds version/adapter/steps 200. The 2026-10-09 try's two claim reds were filed and fixed as M0-D15 and M0-D16. Deviation: measured on win-laptop, not linux-pc — boot + --redarm boot on linux-pc owed (R15), flagged to M0-V2. Ran on Opus 5.5, high (model=claude-opus-5-5 level=high). Detail: tasks/M0-D13.md. Next: the Phase 3 commit gate (lead), then the next TODO.
+
+## M0-V2 · Validation — lot 2: the registries, the equation of state and the guards · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T17)
+- Status: DONE (2026-10-10 14:08)
+- Carried flags: [M0-V1, 2026-10-09] owed on win-laptop (M0-D9; carried by M0-V1, which ran on linux-pc): tests/cargo.sh's red-arm cargo wrapper — py -3.12 tools/pb/verify.py --redarm adapter --task <id> and --redarm build, each three times in a row, read clean GO + plant red; Git Bash may lack flock, so the mkdir-lock path runs (linux-pc proved it only with flock forced off); else carried to the next V on win-laptop, M0-V17 at the latest (R15) · [M0-V1, 2026-10-09] owed on win-laptop (R15; M0-V1 ran lot 1 on linux-pc only — reports/v1.md § Owed): py -3.12 tools/pb/verify.py --all --task <id> with lot 1's seven scopes GO there — adapter listing the RTX 4080 Laptop and the Intel Arc (WARP where wgpu lists it), state on the RTX 4080, boot, desktop through game-offscreen (G-DESK UNVERIFIED, §6.6: NO-GO sends the window tasks to linux-pc, Q3 — M0-T5's flag), web (trunk there), capture with --offscreen-window — then --redarm of build, adapter, state, boot, desktop, web and capture; the human-run tier there: the lead runs start.bat (and start.ps1) once by double-click and says what they saw; read the free disk first (97 % full, Hazards); else carried V to V, M0-V17 at the latest · [M0-D13, 2026-10-10] M0-D13 measured on win-laptop only: on linux-pc run verify.py boot (summary.json verbatim in its log: version, adapter, steps 200) and --redarm boot (scene-refuse red) — owed by R15 · [M0-T15, 2026-10-10] Owed by M0-T15: py -3.12 tools/pb/verify.py --redarm web on win-laptop — the clean arm after the sr_in_shared_target fix (tests/cargo.sh, check.sh) never ran to its end in the real harness (the lead waived it, 2026-10-10); plus verify.py web and licences (npm) on linux-pc.
+- Read: milestones/m0/m0_contrat.md §1.5, §1.6, §2.1, §2.3, §2.5.1, §2.7, §4.1, §5.4 (G-STR, G-LIC,
+  G-WATCH, G-WEB), §6.2 + the handoffs of M0-T10–M0-T17 + docs/agent/physics.md, testing.md + the
+  delivered files, each by the section it covers
+- Deliver: contract-vs-code on lot 2 — assets/*.json against §1.5, §1.6.2, §2.5.1 and §2.7 value by value
+  and bound by bound, the EOS against §2.3, the string table both ways, the licence tree, the scan, the
+  web smoke (its adapter named), each defect its own D (E4), every scope the lot added red-armed, the
+  verdict, its blind spot, its box, NOT PROVEN where only synthetic evidence exists → reports/v2.md →
+  Verify 1 · Phase 4's close (stubs, the header budget, the complete loop and its seconds,
+  `rung_record.py report`'s table in reports/v2.md, a moved class → a TM<n>) → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py --all --task M0-V2` · Pass: GO, every scope present · Fail:
+  NO-GO — each red a D (E4)
+- Adversarial: a registry that matches the contract's table but not its bounds — the V checks each
+  bound's edge case, not only the initial values.
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=max (rung_record now). Verdict DEFECTS(1), reports/v2.md: lot 2 conforms to §1.5, §1.6.2, §2.3, §2.5.1, §2.7, §4.1 and §5.4 value by value and bound by bound (27/27 registry mutants killed); Verify 1 py -3.12 tools/pb/verify.py --all --task M0-V2 [ALREADY RUN — PASS (GO, 586 passed, 15/15 scopes, 134 s wall, ≈ 113 s normalised by load) on win-laptop]; lot 2's six scopes and lot 1's seven red-armed here, 16/16 plants red (desktop 746 s, web 752 s raw — over 600 s). Filed: M0-D17 (smoke.mjs runs Chrome with --no-sandbox, playwright-core's default — chrome://version measured), M0-TM2 (the record moves BUILD on Sonnet 5.5, high: $1.70 vs $1.44 per DONE block, 10 blocks each). The lead: «Yes, rename once (Recommended)» → contract §0.5 [M0-V2], Superseded, R17 (declared: R17 reads all 30 hyphenated scope names in the plan, not only §5's 8). Carried flags discharged: M0-D9's wrapper ×3 (adapter, build; mkdir lock), lot 1 on win-laptop with the lead's start.bat «Opened, stayed till closed» (start.ps1's double-click opened Notepad — Windows' default; its off-screen run works), --redarm web on the fixed tree; owed on linux-pc → M0-V3 (lot 2, M0-T15's web/npm, M0-D13's boot). Not filed (E1 (i), § Observations): T84's stand-in readout, Chrome ignoring powerPreference on Windows, start.ps1 without a case, G-LIC's workspace-member reading without a §0.5 line, red-arm cost here. Phase 4: T10–T17 stubbed, header 418/600, flags → M0-T27, M0-T32; Phase 3's 8 late blocks a TC's. Next: M0-D17.
+
+## M0-D17 · web/smoke.mjs runs Chrome with `--no-sandbox`: playwright-core adds it by default, against §6.2.3 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V2)
+- Status: DONE (2026-10-10 14:22)
+- Blocks: nothing — G-WEB reaches "ready" on the GPU path today (nvidia, fallback=false); the gap is the browser it proves it in
+- Caused by: M0-T15
+- Files: web/smoke.mjs (its `chromium.launch({ executablePath: chrome, headless: true, args: chromeArgs })`), tools/pb/verify.json (the `web` scope's plants), tests/plants/ — opened by M0-V2, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §6.2.3, §5.4 (G-WEB) + docs/agent/testing.md (the `web` row) + milestones/m0/logs/M0-V2.log (« probe: Chrome's command line ») + milestones/m0/tasks/M0-V2.md (the probe's script)
+- Symptom: measured on win-laptop (Laser2025-20), Chrome 154.0.8037.99, playwright-core 1.64.0, 2026-10-10 (M0-V2): Chrome launched with smoke.mjs's exact options (executable, `--headless=new --enable-unsafe-webgpu`, headless) shows `--no-sandbox` in chrome://version's Command Line; the same launch with `chromiumSandbox: true` shows it absent. §6.2.3 leaves `--no-sandbox` out of Chrome's guidance and smoke.mjs's own header says « never `--no-sandbox` »: the smoke proves WebGPU in an unsandboxed browser, not the one a player runs. Repro: the probe in M0-V2's task file, or chrome://version from a page smoke.mjs opens. Cause measured: playwright-core's `chromiumSandbox` defaults to false, which appends `--no-sandbox` to every Chromium launch.
+- Deliver: smoke.mjs launches with `chromiumSandbox: true` and refuses its own run when the launched Chrome's command line holds `--no-sandbox` (NO-GO naming it; the command line's sandbox state in both cases' logs) · plant `smoke-no-sandbox` (tests/plants/, the option dropped) in the `web` scope · testing.md's `web` row says so. If `ready` cannot reach "ready" with the sandbox on (WebGPU in a sandboxed headless Chrome is UNVERIFIED, §6.2.3), stop: BLOCKED with the measured failure and a question to the lead — never the flag put back.
+- Done when: on win-laptop, `py -3.12 tools/pb/verify.py web --task M0-D17` GO with the log reading the sandbox on, and `py -3.12 tools/pb/verify.py --redarm web --task M0-D17` GO with `smoke-no-sandbox` red — 752 s at M0-V2 on a loaded box, over the 10-minute line: the lead's run in one visible terminal, or normalised by measured load (the lead, 2026-10-10: « you can normalize by load if you have it »); linux-pc owed (R15).
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=high (rung_record now, the heading's rung). smoke.mjs launches Chrome with chromiumSandbox: true and both cases read chrome://version's #command_line: 'sandbox: on' in the log, NO-GO naming --no-sandbox otherwise (an unreadable command line is NO-GO too); plant smoke-no-sandbox (the option dropped) in the web scope; testing.md's web row (guard, plant, red-arm cost) and verify.json's desc say so. web GO 3/0/0 (ready 0.8 s, SR-CHROME-ADAPTER nvidia lovelace fallback=false: WebGPU holds in a sandboxed headless Chrome here, the BLOCKED arm did not fire); --redarm web GO 4/4 red, smoke-no-sandbox red on both cases, 515 s wall, 6.8 % external load, about 480 s normalised. Claim run verify.py --changed --base 2ada210 --task M0-D17: GO, 499 passed, 2/2 scopes (its web red-arm 4/4 red, 600.00 s, not load-measured); its two oracle FLAGs (the plant, verify.json) are the plant and scope entry Deliver names - declared, not a deviation. Owed on linux-pc (R15): web and its red-arm with the sandbox on - flagged to M0-V3. Detail: tasks/M0-D17.md. Next: M0-TM2.
+
+## M0-TM2 · Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) · **PLAN** · Opus 5.5, max · switch · (AFTER M0-D17)
+- Status: DONE (2026-10-10 14:52, started 14:43)
+- Read: this file (rules + this task) + PLAYBOOK.md §0 (the ladder, the rubric) and §B.3 (the probe) + the agent's model
+  pages the ladder cites + the record (`rung_record.py report`; milestones/m0/reports/v2.md § Phase 4's close)
+- Deliver: the ladder re-read on the day — the probe and the model pages: a model retired, renamed or added, a price or a
+  level changed → the `Models:` line rewritten and dated, the lead's answer first where a rung they run changes (§12) ·
+  every open block's rating re-derived by §0's rubric from its heading, `Sizing:`, `Deliver:`, `Verify:` and `Carried
+  flags:` and the record — rule (4): BUILD on Sonnet 5.5, high at $1.70 per DONE block against $1.44 for BUILD on Opus
+  5.5, high (`usual`), 10 blocks each, costs read from win-laptop's session folder only (28 of 49 DONE blocks had none
+  readable, linux-pc's) — its rating segment rewritten, nothing else in the block · the register's `Model ratings:
+  <YYYY-MM-DD> by M0-TM2` line · in the handoff, the ratings changed, counted by rung.
+- Pass: `plan.py lint` GO; every open block on a rung of the ladder, each above the cheapest rung that fits named in the
+  task file with its rule; the diff touches rating segments, the `Models:` line and the register's line only. Fail: any
+  other byte changed; a BUILD or MOVE block above the cheapest rung that fits with none of §0's rules (1)–(4) named; a
+  CHECK or PLAN block below `(gate)`.
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=max (rung_record now, the heading's rung). Ladder re-read 2026-10-10: the claude-api skill's table in Claude Code 2.1.295's bundle (cached 2026-10-06, the copy M0-TM1 read) - no rung retired, renamed, repriced or relevelled (Opus 5.5 $4/$20, Sonnet 5.5 $2/$10) → Models line re-dated, rungs unchanged, no question. Record today (rung_record report): BUILD on Sonnet 5.5, high 10 blocks at $1.85 per DONE block (M0-V2's $1.70 plus M0-D17, traced to M0-T15) against (usual) 11 blocks at $1.45 → rule (4) moves the class one rung, to (usual). 128 open blocks re-derived, 89 changed - Opus 5.5 max 20 (0) · Opus 5.5 high 101 (+89: 89 by rule (4), 12 by (3)'s list → (5)) · Sonnet 5.5 high 0 (−89) · Sonnet 5.5 medium 7 (0: E, their class n=1); no trail (rule (1)); every heading keeps · switch; the diff is the 89 rating segments and the Models line (checked against a post-status snapshot). Not acted on: the record's rows differ in kind ((usual) = 10 D fixes, Sonnet = 9 feature T's + TE-win; medians $1.12 vs $1.42; T15's escalation $6.24) and linux-pc's 28 blocks are unread - observations, rule (4) applied as written; Next task still reads M0-TM2 (outside TM2's diff; next is M0-T18); Repo facts name Claude Code 2.1.294, the probe reads 2.1.295. lint GO (496), plan_lint GO, its red-arm GO; the claim run verify.py --changed --base aa2e690 --task M0-TM2 is the last step, after this close. Detail: tasks/M0-TM2.md. Next: M0-T18.

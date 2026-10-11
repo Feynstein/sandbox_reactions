@@ -16,14 +16,17 @@
  *      type tag is the rating, and `switch` must be the segment after it (§3.2);
  *   3. maps the rating through RUNGS to a model id and a level and sends the request on with them.
  * Nothing found, no switch segment, a rating RUNGS lacks, a sub-agent's request, any read that fails ->
- * the request goes on untouched: the lead's pick. The answer is kept per session id, so the plan is
- * read once and a later prompt never moves it; a new session (`/clear` makes one) reads again.
+ * the request goes on untouched: the lead's pick. The answer is kept per session id: a later prompt
+ * never moves it, a new session (`/clear` makes one) reads again. A switched session re-reads its one
+ * heading on every request: ` · switch` gone, the heading gone or the plan unreadable -> the decision
+ * is dropped for the session and every request after goes untouched; a miss is never re-read, so a
+ * segment added mid-session, or a new rating, waits for the next session.
  * Run by Node (>= 20.16, for process.getBuiltinModule), it is a tool in the §4 Rule 4 shape: one
  * counts line, failures only when non-zero, `=== GO ===` / `=== NO-GO: <reason> ===`, exit 0 / 1.
  * Nothing here writes outside `build`'s folder and the selftest's own temp folder.
  */
 
-const VERSION = '12.2.1'
+const VERSION = '12.3.1'
 const PLUGIN = 'pb-switch'
 const MARKET = 'pb'
 
@@ -36,6 +39,7 @@ const RUNGS = {
   'Opus 5.5, high': ['claude-opus-5-5', 'high'],
   'Sonnet 5.5, high': ['claude-sonnet-5-5', 'high'],
   'Sonnet 5.5, medium': ['claude-sonnet-5-5', 'medium'],
+  'Haiku 5.5, high': ['claude-haiku-5-5', 'high'],
 }
 const TRANSCRIPT_CAP = 4096          // messages() returns the newest 4096: at the cap the first prompt may be cut
 
@@ -72,7 +76,7 @@ const F = {
   },
   // The one heading of that id outside code fences; a local id matches the part after the milestone prefix.
   headingFor(text, id) {
-    const whole = /^\d*M[\d.]+-/.test(id)
+    const whole = /^\d*M[\d.]+[a-z]?-/.test(id)
     const hits = []
     let fence = null
     for (const line of text.split(/\r?\n/)) {
@@ -83,7 +87,7 @@ const F = {
         continue
       }
       if (fence) continue
-      const h = /^## (\d*M[\d.]+)-(\S+) · /.exec(line)
+      const h = /^## (\d*M[\d.]+[a-z]?)-(\S+) · /.exec(line)
       if (h && (whole ? `${h[1]}-${h[2]}` === id : h[2] === id)) hits.push(line)
     }
     return hits.length === 1 ? hits[0] : null
@@ -102,6 +106,17 @@ const F = {
   },
   mapRung(rating) {
     return Object.prototype.hasOwnProperty.call(RUNGS, rating) ? { model: RUNGS[rating][0], effort: RUNGS[rating][1] } : null
+  },
+  // A kept decision on a later request: a switch holds only while its one heading still carries
+  // ` · switch` (the launch rung kept); anything else drops it. A miss stays a miss, unread.
+  async again(d, read) {
+    if (!d || !d.model) return d
+    let text = null
+    try { text = String(await read(d.plan)) } catch (e) { text = null }
+    const heading = text === null ? null : F.headingFor(text, d.id)
+    if (heading && F.rungOf(heading)) return d
+    return { why: text === null ? `the plan no longer reads: ${d.plan}` : heading ? '`· switch` removed from its heading mid-session'
+      : `no single heading for ${d.id} in ${d.plan} any more`, id: d.id, plan: d.plan, dropped: true }
   },
 }
 
@@ -138,7 +153,11 @@ const CACHE = new Map()
 
 async function decision($) {
   const sid = await $.session.id()
-  if (CACHE.has(sid)) return CACHE.get(sid)
+  if (CACHE.has(sid)) {
+    const kept = CACHE.get(sid), d = await F.again(kept, p => $.fs.read(p))
+    if (d !== kept) CACHE.set(sid, d)
+    return d
+  }
   const messages = await $.session.messages()
   if (messages.length >= TRANSCRIPT_CAP) return { why: 'the transcript is past the cap: its first prompt may be cut' }
   const launch = F.launchOf(messages)
@@ -237,6 +256,7 @@ async function selftest(P, fs, pathm, os, json) {
   const checks = [], plants = []
   const check = (name, ok) => checks.push([name, !!ok])
   const ROOT = '/w', M9 = 'milestones/m9/m9_implementation_plan.md', M8 = 'milestones/m8/m8_implementation_plan.md'
+  const M7B = 'milestones/m7b/m7b_implementation_plan.md'
   const FILES = {
     [`${ROOT}/${M9}`]: [
       '# M9 - fixture plan', '',
@@ -248,7 +268,11 @@ async function selftest(P, fs, pathm, os, json) {
       '## M9-T4 · another switched block · **BUILD** · Opus 5.5, xhigh · switch · (LAST)', '- Status: TODO', '',
       '## M9-T5 · a gate where the lead plays a part · **BUILD + LEAD go** · Opus 5.5, max · switch · (AFTER M9-T4)', '- Status: TODO', '',
       '## M9-T6 · Closing live walk — **the USER GATE** · Sonnet 5.5, high · switch · (AFTER M9-T5)', '- Status: TODO', '',
-      '## M9-T7 · a bold word in the title and a real tag — **the USER GATE** · **JUDGE (+ one JUDGE scribe)** · Opus 5.5, max · switch · (LAST)', '- Status: TODO', ''].join('\n'),
+      '## M9-T7 · a bold word in the title and a real tag — **the USER GATE** · **JUDGE (+ one JUDGE scribe)** · Opus 5.5, max · switch · (LAST)', '- Status: TODO', '',
+      '## M9-T8 · the ladder\'s lowest rung · **BUILD** · Haiku 5.5, high · switch · (AFTER M9-T7)', '- Status: TODO', ''].join('\n'),
+    [`${ROOT}/${M7B}`]: ['# M7b - a letter-suffixed milestone', '',
+      '## M7b-T5 · the suffixed block · **BUILD** · Opus 5.5, max · switch · (FIRST)', '- Status: TODO', '',
+      '## M7bb-T8 · a heading the plan tool does not read · **BUILD** · Fable 5.1, high · switch · (AFTER M7b-T5)', '- Status: TODO', ''].join('\n'),
     [`${ROOT}/${M8}`]: ['# M8', '', '## M8-T1 · the other plan · **BUILD** · Fable 5.1, high · switch · (FIRST)', '- Status: TODO', ''].join('\n'),
   }
   const user = text => ({ role: 'user', text, toolUses: [] })
@@ -263,20 +287,24 @@ async function selftest(P, fs, pathm, os, json) {
     whole: [user(opened(`${ROOT}/${M9}`) + 'read this and do task M9-T1')],
     noswitch: [user(opened(`${ROOT}/${M9}`) + 'read this and do task T2')],
     unmapped: [user(opened(`${ROOT}/${M9}`) + 'read this and do task T3')],
+    haiku: [user(opened(`${ROOT}/${M9}`) + 'read this and do task T8')],
     nolaunch: [user(opened(`${ROOT}/${M9}`) + 'what does this plan say about tests?'), asst('It says…'), user('ok, do task T1')],
     followup: [user(opened(`${ROOT}/${M9}`) + 'read this and do task T4'), asst('Done.'), user('now do task T1')],
     leadgo: [user(opened(`${ROOT}/${M9}`) + 'read this and do task T5')],
     boldtitle: [user(opened(`${ROOT}/${M9}`) + 'read this and do task T6')],
     boldtitletag: [user(opened(`${ROOT}/${M9}`) + 'read this and do task T7')],
     twoids: [user(opened(`${ROOT}/${M9}`) + 'do task T1 then task T4')],
+    sufwhole: [user(opened(`${ROOT}/${M7B}`) + 'read this and do task M7b-T5')],
+    suflocal: [user(opened(`${ROOT}/${M7B}`) + 'read this and do task T5')],
+    sufbb: [user(opened(`${ROOT}/${M7B}`) + 'read this and do task M7bb-T8')],
     noplan: [user(opened(`${ROOT}/nope.md`) + 'read this and do task T1')],
     capped: Array.from({ length: TRANSCRIPT_CAP }, (_, i) => (i ? asst('…') : user(`Read ${M9} and execute M9-T1`))),
   }
   let n = 0
   const fake = messages => {
-    const reads = [], sid = `s${++n}`
-    return { reads, $: { session: { id: async () => sid, root: async () => ROOT, messages: async () => messages },
-      fs: { read: async p => { reads.push(p); if (!(p in FILES)) throw new Error(`ENOENT ${p}`); return FILES[p] } } } }
+    const reads = [], sid = `s${++n}`, files = { ...FILES }          // a session's own copy: the lead edits it mid-session
+    return { reads, files, $: { session: { id: async () => sid, root: async () => ROOT, messages: async () => messages },
+      fs: { read: async p => { reads.push(p); if (!(p in files)) throw new Error(`ENOENT ${p}`); return files[p] } } } }
   }
   let hook = null
   register((ev, h) => { if (ev === 'turn.step') hook = h })
@@ -292,13 +320,17 @@ async function selftest(P, fs, pathm, os, json) {
   const on = (s, model, effort) => s && s.model === model && s.effort === effort
   const untouched = s => on(s, E.model, E.effort)
   const probe = async (name, want) => step(fake(S[name]).$).then(s => want ? on(s, ...want) : untouched(s))
-  const SONNET_MED = ['claude-sonnet-5-5', 'medium']
+  const SONNET_MED = ['claude-sonnet-5-5', 'medium'], HAIKU = ['claude-haiku-5-5', 'high']
 
   check('§14.5 launch prompt -> the rung of M9-T1', await probe('launch', SONNET_MED))
   check("lead's form (IDE plan, local id, after /clear) -> M9-T1's rung, not the fenced copy's or M9-T12's", await probe('lead', SONNET_MED))
   check('a whole id in the lead\'s form', await probe('whole', SONNET_MED))
+  check("a letter-suffixed milestone's block by its whole id (`M7b-T5`) -> its rung", await probe('sufwhole', ['claude-opus-5-5', 'max']))
+  check("a letter-suffixed milestone's block by its local id (`T5`) -> its rung", await probe('suflocal', ['claude-opus-5-5', 'max']))
+  check('a doubled suffix (`M7bb-T8`), a heading the plan tool does not read -> untouched', await probe('sufbb'))
   check('no ` · switch` -> untouched', await probe('noswitch'))
-  check('a rung RUNGS lacks -> untouched', await probe('unmapped'))
+  check('a rung RUNGS lacks (`Haiku 4.5, low`) -> untouched', await probe('unmapped'))
+  check('`Haiku 5.5, high` -> claude-haiku-5-5 at high', await probe('haiku', HAIKU))
   check('a type tag that names the lead\'s part (`BUILD + LEAD go`) -> the rung', await probe('leadgo', ['claude-opus-5-5', 'max']))
   check('a tag with a parenthesis and a plus (`JUDGE (+ one JUDGE scribe)`) after a bold title word -> the rung', await probe('boldtitletag', ['claude-opus-5-5', 'max']))
   check('a bold word in the title and no tag -> untouched', await probe('boldtitle'))
@@ -313,7 +345,50 @@ async function selftest(P, fs, pathm, os, json) {
     const main1 = await step(f.$), main2 = await step(f.$, { ...E, index: 1, effort: 'xhigh' })
     check("a sub-agent's request -> untouched", untouched(sub))
     check('every main-loop request of the session switched', on(main1, ...SONNET_MED) && on(main2, ...SONNET_MED))
-    check('the plan read once per session', f.reads.length === 1)
+    check("a switched session re-reads the plan on each main-loop request, a sub-agent's never", f.reads.length === 2)
+  }
+  // mid-session edits of the plan (the lead deletes ` · switch` after the launch turn switched)
+  const P9 = `${ROOT}/${M9}`, T1H = '## M9-T1 · the block · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M9-T12)'
+  const T2H = '## M9-T2 · switch deleted by the lead · **BUILD** · Sonnet 5.5, high · (AFTER M9-T1)'
+  const midway = async (name, edit) => {
+    const f = fake(S[name]), first = await step(f.$)
+    edit(f.files)
+    const later = [await step(f.$), await step(f.$, { ...E, index: 1 })]
+    return { f, first, later }
+  }
+  const unmarked = async () => {
+    const f = fake(S.noswitch), all = [await step(f.$), await step(f.$, { ...E, index: 1 }), await step(f.$, { ...E, index: 2 })]
+    return all.every(untouched) && f.reads.length === 1
+  }
+  const dropped = async () => {
+    const { f, first, later } = await midway('launch', fs => { fs[P9] = fs[P9].replace(T1H, T1H.replace(' · switch', '')) })
+    f.files[P9] = FILES[P9]                                          // put back: the dropped decision stays dropped
+    const back = await step(f.$, { ...E, index: 2 })
+    return on(first, ...SONNET_MED) && later.every(untouched) && untouched(back)
+  }
+  const deleted = async () => {
+    const { first, later } = await midway('launch', fs => { fs[P9] = fs[P9].replace(T1H + '\n', '') })
+    return on(first, ...SONNET_MED) && later.every(untouched)
+  }
+  const added = async () => {
+    const { f, first, later } = await midway('noswitch', fs => { fs[P9] = fs[P9].replace(T2H, T2H.replace(' · (', ' · switch · (')) })
+    return untouched(first) && later.every(untouched) && f.reads.length === 1
+  }
+  check('no ` · switch` -> untouched on the launch request and every later one, the plan read once', await unmarked())
+  check('` · switch` deleted after the launch turn switched -> every later request untouched, put back or not', await dropped())
+  check('the heading deleted mid-session -> untouched', await deleted())
+  check('` · switch` added mid-session -> still untouched (the next session reads it)', await added())
+  {
+    const { first, later } = await midway('launch', fs => { fs[P9] = fs[P9].replace(T1H, T1H.replace('Sonnet 5.5, medium', 'Opus 5.5, xhigh')) })
+    check('a new rating with ` · switch` kept -> the launch rung holds', on(first, ...SONNET_MED) && later.every(s => on(s, ...SONNET_MED)))
+  }
+  {
+    const { first, later } = await midway('launch', fs => { fs[P9] += '## M9-T1 · a twin, unmarked · **BUILD** · Sonnet 5.5, high · (LAST)\n' })
+    check('a second heading of the id added mid-session -> untouched (the miss stays a miss)', on(first, ...SONNET_MED) && later.every(untouched))
+  }
+  {
+    const { first, later } = await midway('launch', fs => { delete fs[P9] })
+    check('the plan unreadable mid-session -> untouched, no throw', on(first, ...SONNET_MED) && later.every(untouched))
   }
   check('explain reads the same decision', (await decide(F.launchOf(S.lead), ROOT, p => FILES[p])).model === 'claude-sonnet-5-5')
 
@@ -327,6 +402,12 @@ async function selftest(P, fs, pathm, os, json) {
   }
   await plant('the rating read off another block', 'headingFor',
     (text, id) => text.split('\n').find(l => l.startsWith('## ') && l.includes(id)) || null, () => probe('lead', SONNET_MED))
+  await plant('the id and the heading read without the milestone letter', 'headingFor',
+    (text, id) => {
+      const whole = /^\d*M[\d.]+-/.test(id), hits = []
+      for (const line of text.split(/\r?\n/)) { const h = /^## (\d*M[\d.]+)-(\S+) · /.exec(line); if (h && (whole ? `${h[1]}-${h[2]}` === id : h[2] === id)) hits.push(line) }
+      return hits.length === 1 ? hits[0] : null
+    }, async () => (await probe('sufwhole', ['claude-opus-5-5', 'max'])) && (await probe('suflocal', ['claude-opus-5-5', 'max'])))
   await plant('a heading without the switch segment switched', 'rungOf',
     h => { const s = h.split(' · '); const t = s.findIndex(x => /^\*\*/.test(x)); return t > 0 ? s[t + 1] : null }, () => probe('noswitch'))
   await plant('a LEAD go gate left untouched', 'rungOf',
@@ -338,6 +419,9 @@ async function selftest(P, fs, pathm, os, json) {
   await plant('an unmapped rung switched', 'mapRung',
     r => { const m = /^(.+), (\w+)$/.exec(r); return m ? { model: 'claude-' + m[1].toLowerCase().replace(/[\s.]+/g, '-'), effort: m[2] } : null },
     () => probe('unmapped'))
+  await plant('the Haiku 5.5 rung dropped from RUNGS', 'mapRung',
+    r => r === 'Haiku 5.5, high' ? null : (Object.prototype.hasOwnProperty.call(RUNGS, r) ? { model: RUNGS[r][0], effort: RUNGS[r][1] } : null),
+    () => probe('haiku', HAIKU))
   await plant('a session with no launch prompt switched', 'launchOf',
     msgs => { let o = null; for (const m of msgs) { const x = /opened the file (.+?) in the IDE/.exec(m.text); if (x) o = o || x[1]; const p = stripTags(m.text).trim(); if (m.role === 'user' && F.idsOf(p).length) return { prompt: p, opened: o, raw: m.text } } return null },
     () => probe('nolaunch'))
@@ -349,6 +433,16 @@ async function selftest(P, fs, pathm, os, json) {
     F.defaultOut({ CLAUDE_CONFIG_DIR: '/cfg' }, '/home/u', pathm.join) === pathm.join('/cfg', PLUGIN + '-src') &&
     F.defaultOut({}, '/home/u', pathm.join) === pathm.join('/home/u', '.claude', PLUGIN + '-src')
   check("build's default folder is the client's own, beside no checkout", defOut())
+  const again0 = F.again
+  await plant('the kept decision never re-read (still switched after the edit)', 'again', async d => d, dropped)
+  await plant('a re-read that treats a missing heading as still switch', 'again',
+    async (d, read) => { if (!d || !d.model) return d; const h = F.headingFor(String(await read(d.plan)), d.id); return !h || F.rungOf(h) ? d : { why: 'dropped' } },
+    deleted)
+  await plant('a re-read that adds a switch the first read did not', 'again',
+    async (d, read) => {
+      if (d && !d.model && d.plan && d.id) { const h = F.headingFor(String(await read(d.plan)), d.id), r = h && F.rungOf(h), to = r && F.mapRung(r); return to ? { ...d, ...to } : d }
+      return again0(d, read)
+    }, added)
   await plant('build\'s folder inside the checkout', 'defaultOut', (env, home, join) => join('/w/proj', '.claude', PLUGIN), defOut)
 
   // the file itself: what the client refuses to load, and the folder `build` writes
@@ -366,7 +460,7 @@ async function selftest(P, fs, pathm, os, json) {
 
   const failed = checks.filter(c => !c[1])
   const red = plants.filter(p => p[1]).length
-  const ok = checks.length > 0 && !failed.length && red === plants.length && plants.length === 8
+  const ok = checks.length > 0 && !failed.length && red === plants.length && plants.length === 13
   out(P, json, { cmd: 'selftest', checks: checks.length, failed: failed.map(c => c[0]), plants_red: red, plants: plants.length }, [
     `selftest: checks=${checks.length} passed=${checks.length - failed.length} failed=${failed.length} · plants red ${red}/${plants.length}`,
     ...failed.map(c => `  FAIL ${c[0]}`)], ok, failed.length ? `${failed.length} failed` : 'a plant stayed green')

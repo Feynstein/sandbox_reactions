@@ -16,7 +16,10 @@ own per-model rates, a session with no cost line priced from its own tokens at t
 paid for that model, else at list prices (`priced from tokens`); and the D blocks whose `Caused by:` line names it.
 Then per class (type and E) and rung: blocks, first-try rate, cost per DONE block, and against `(usual)` the verdict
 §0's rule (4) reads. A block with no session file readable keeps the rung of its handoff and a null cost, named on the
-counts line, apart from the sessions with no cost line. Ends in a counts line and `=== GO ===` (a record was read) or
+counts line, apart from the sessions with no cost line. With no `--sessions`, a project that moved is found: the folders
+under the agent's projects folder whose slug ends with the project folder's own name are read for the sessions whose launch
+prompt names a block of the plan (and the plan's path tail where it carries one), a session another plan also claims counting
+for neither. Ends in a counts line naming each folder read and `=== GO ===` (a DONE block with a session file readable) or
 `=== NO-GO: <reason> ===`; exit 0 / 1. Usage: docs/agent/rung_record.md.
 `now` prints one line, `model=<id> level=<level> plugin=<installed|missing|unknown>`, the running request's model
 and level read first, then whether the switch plugin is installed for this folder; when missing, a second line,
@@ -44,6 +47,8 @@ UNITS = (1.0, 0.1, 1.25, 5.0)          # input, cache read, cache write, output:
 DO_RE = re.compile(r"\bdo task ([A-Za-z][A-Za-z0-9.-]*[A-Za-z0-9])")
 EXEC_RE = re.compile(r"\bexecute (M[\d.]+[a-z]?-[A-Za-z][A-Za-z0-9.-]*[A-Za-z0-9])")
 OPENED_RE = re.compile(r"milestones/(m[\d.]+[a-z]?)/")
+OPENED_FILE_RE = re.compile(r"The user opened the file (\S+) in the IDE")
+TAIL_RE = re.compile(r"milestones/(m[\d.]+[a-z]?)/([\w.-]+_implementation_plan\.md)")
 CAUSE_RE = re.compile(r"\bM[\d.]+[a-z]?-[A-Za-z][A-Za-z0-9.-]*[A-Za-z0-9]")
 DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 DONE_RE = re.compile(r"DONE\b[^0-9]*(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})(?:, started (\d{2}:\d{2}))?")
@@ -56,7 +61,8 @@ BASIS = ("cost-state", "priced from tokens", "priced from list prices")   # best
 # (output x5, cache read x0.1, cache write x1.25 — Opus 5.5's and Fable's cache reads list cheaper, so a list-priced figure reads high there).
 LIST_INPUT_PER_MTOK = {"claude-fable-5-1": 10.0, "claude-fable-5": 10.0, "claude-opus-5-5": 4.0, "claude-opus-5": 5.0,
                        "claude-opus-4-8": 5.0, "claude-opus-4-7": 5.0, "claude-opus-4-6": 5.0, "claude-sonnet-5-5": 2.0,
-                       "claude-sonnet-5": 2.0, "claude-sonnet-4-6": 3.0, "claude-haiku-4-5": 1.0}
+                       "claude-sonnet-5": 2.0, "claude-sonnet-4-6": 3.0, "claude-haiku-4-5": 1.0,
+                       "claude-haiku-5-5": 0.10}
 MIN_CLASS = 10                         # §0 rule (4): a class moves on >=10 blocks
 MIXED = 0.10
 PLUGIN, MARKET = "pb-switch", "pb"      # switch.mjs's PLUGIN and MARKET; `switch.mjs build` writes <client folder>/pb-switch-src
@@ -87,6 +93,61 @@ def session_dirs(extra, cwd=None):
     return out
 
 
+def project_root(plan):
+    """The folder a plan `<root>/milestones/<m>/<file>` belongs to."""
+    p = os.path.abspath(plan).replace(os.sep, "/")
+    t = plan_tail(plan)
+    return os.path.normpath(p[:p.rfind(t) - 1]) if t else os.path.dirname(os.path.dirname(os.path.dirname(p)))
+
+
+def plan_tail(plan):
+    """`milestones/<m>/<file>` of a plan's path, or None."""
+    found = TAIL_RE.findall(os.path.abspath(plan).replace(os.sep, "/"))
+    return "milestones/%s/%s" % found[-1] if found else None
+
+
+def moved_dirs(plan, chain):
+    """The other folders under the agent's projects folder whose slug ends with this project folder's own name: where Claude
+    Code filed the sessions of the project's earlier folders. Candidates only — `claims` decides which sessions are the plan's."""
+    name = re.sub(r"[^A-Za-z0-9-]", "-", os.path.basename(project_root(plan)))
+    base = os.path.join(config_dir(), "projects")
+    if not name.strip("-") or not os.path.isdir(base):
+        return []
+    return [os.path.join(base, d) for d in sorted(os.listdir(base))
+            if d.endswith("-" + name) and os.path.join(base, d) not in chain and os.path.isdir(os.path.join(base, d))]
+
+
+def other_plan_claims(s, bid, plan, tail):
+    """Whether a plan other than `plan` still on disk holds block `bid` and the session points at it: the folder its records
+    name (a checkout of the same name elsewhere) or the plan file opened in its launch prompt."""
+    files = []
+    if s["cwd"]:
+        cwd = s["cwd"].replace(os.sep, "/")
+        files.append(os.path.join(cwd.split("/milestones/")[0], tail))
+    for kind, x in s["events"]:
+        if kind == "prompt":
+            files += [m.group(1) for t in x for m in OPENED_FILE_RE.finditer(t)]
+    for f in files:
+        if os.path.isfile(f) and not os.path.samefile(f, plan):
+            with contextlib.suppress(OSError):
+                if re.search(r"^## %s\b" % re.escape(bid), P.read_text(f)[0], re.M):
+                    return True
+    return False
+
+
+def claims(s, plan, tail, ids, own):
+    """(claimed, claimed also by another plan): a session is the plan's when a launch prompt names one of its blocks and the
+    plan path that prompt or its opened file carries, if any, is the plan's own tail."""
+    for kind, x in s["events"]:
+        if kind != "prompt":
+            continue
+        bid = named(x, own)
+        tails = {"milestones/%s/%s" % m.groups() for t in x for m in TAIL_RE.finditer(t.replace(os.sep, "/"))}
+        if bid in ids and (not tails or tail in tails):
+            return True, other_plan_claims(s, bid, plan, tail)
+    return False, False
+
+
 def local(ts):
     try:
         t = datetime.datetime.fromisoformat(ts.replace("Z", "+00:00"))
@@ -112,8 +173,8 @@ def weight(q):
 
 
 def read_session(path):
-    """{id, dir, events: [("prompt", [text]) | ("req", {...})] in file order, cost: the last cost-state record or None}."""
-    s, seen = {"id": os.path.basename(path)[:-6], "dir": os.path.dirname(path), "events": [], "cost": None}, set()
+    """{id, dir, cwd: the folder its first record names, events: [("prompt", [text]) | ("req", {...})] in file order, cost: the last cost-state record or None}."""
+    s, seen = {"id": os.path.basename(path)[:-6], "dir": os.path.dirname(path), "cwd": None, "events": [], "cost": None}, set()
     with open(path, encoding="utf-8", errors="replace") as f:
         for line in f:
             try:
@@ -124,6 +185,8 @@ def read_session(path):
                 continue
             t, m = r.get("type"), r.get("message")
             m = m if isinstance(m, dict) else {}
+            if s["cwd"] is None and isinstance(r.get("cwd"), str):
+                s["cwd"] = r["cwd"]
             if t == "cost-state":
                 s["cost"] = r
             elif t == "assistant" and m.get("id") and counted_once(seen, m["id"]):
@@ -391,15 +454,32 @@ def rung_of(parts, rec):
     return rung, mixed, why, later
 
 
-def build(plan_path, since, sess_dirs, stats=None):
+def build(plan_path, since, sess_dirs, stats=None, moved=()):
+    """`sess_dirs` are read whole; `moved` (a moved project's earlier folders) only for the sessions `claims` gives this plan,
+    one that another plan also claims counting for neither (`stats["twice"]`); `stats["folders"]` the folders read."""
     blocks = read_blocks(plan_path)
     own = next((i.split("-", 1)[0] for i in blocks), "M0")
     kept = {m.group(1): m.group(2) for m in P.KIND_KEPT_RE.finditer(P.read_text(plan_path)[0])}
-    sessions = []
+    sessions, folders, twice = [], list(sess_dirs), []
     for d in sess_dirs:
         for f in sorted(glob.glob(os.path.join(d, "*.jsonl"))):
             with contextlib.suppress(OSError):
                 sessions.append(read_session(f))
+    tail, have = plan_tail(plan_path), {s["id"] for s in sessions}
+    for d in moved:
+        for f in sorted(glob.glob(os.path.join(d, "*.jsonl"))):
+            with contextlib.suppress(OSError):
+                s = read_session(f)
+                mine, other = claims(s, plan_path, tail, set(blocks), own) if tail and s["id"] not in have else (False, False)
+                if mine and other:
+                    twice.append(s["id"])
+                elif mine:
+                    sessions.append(s)
+                    have.add(s["id"])
+                    if d not in folders:
+                        folders.append(d)
+    if stats is not None:
+        stats["folders"], stats["twice"] = folders, twice
     att = attribute(sessions, own)
     rates = folder_rates(sessions)
     priced = {sid: block_costs(s, groups, rates=rates.get(s["dir"], {})) for sid, (s, groups, free) in att.items()}
@@ -495,15 +575,17 @@ def cmd_report(a):
         return finish(a, "report: 0 blocks", None, "no plan found (--plan <file>)")
     dirs = session_dirs(a.sessions)
     stats = {}
-    rows = build(plan, a.since, dirs, stats)
+    rows = build(plan, a.since, dirs, stats, [] if a.sessions else moved_dirs(plan, dirs))
     rungs, usual = ladder_of(plan)
     cls = classes_of(rows, rungs, usual)
     bare = [r for r in rows if not r["sessions"]]
     priced = lambda basis: [r for r in rows if r["cost_basis"] == basis]
-    counts = ("report: %d DONE blocks · %d class/rung rows · %d session folder(s) · %d block(s) with no session file readable"
+    counts = ("report: %d DONE blocks · %d class/rung rows · %d session folder(s) (%s)%s · %d block(s) with no session file readable"
               "%s · %d block(s) priced from tokens (a session file with no cost line) · %d priced from list prices · "
               "%d D block(s) naming no cause in the record · $%.2f read from the sessions' own cost" % (
-                  len(rows), len(cls), len(dirs), len(bare), " (rung from the handoff, cost null)" if bare else "",
+                  len(rows), len(cls), len(stats["folders"]), ", ".join(os.path.basename(d) for d in stats["folders"]) or "none",
+                  " · %d session(s) two plans claim, counted for neither (%s)" % (len(stats["twice"]), ", ".join(stats["twice"]))
+                  if stats["twice"] else "", len(bare), " (rung from the handoff, cost null)" if bare else "",
                   len(priced(BASIS[1])), len(priced(BASIS[2])), len(stats["d_unjoined"]), sum(r["client_usd"] for r in rows)))
     lines = ["%s on %s: %d block(s) · first-try %s · %s per DONE block · %s" % (
         c["class"], c["rung"], c["n"], c["tries"], "$%.2f" % c["cost_per_done"] if c["cost_per_done"] is not None else "n/a",
@@ -515,8 +597,17 @@ def cmd_report(a):
             "$%.2f" % r["cost_usd"] if r["cost_usd"] is not None else "no cost",
             " (%s)" % r["cost_basis"] if r["cost_basis"] not in (None, BASIS[0]) else "",
             ",".join(r["traced_d"]) or "-") for r in rows]
-    return finish(a, counts, {"blocks": rows, "classes": cls, "d_unjoined": stats["d_unjoined"]},
-                  None if rows else "no DONE block read", lines)
+    return finish(a, counts, {"blocks": rows, "classes": cls, "d_unjoined": stats["d_unjoined"], "folders": stats["folders"],
+                              "claimed_twice": stats["twice"]}, report_nogo(rows), lines)
+
+
+def report_nogo(rows):
+    """The reason a report is NO-GO, else None: no DONE block, or none with a session file readable (a cost of null for all)."""
+    if not rows:
+        return "no DONE block read"
+    if not any(r["sessions"] for r in rows):
+        return "%d DONE blocks, none with a session file readable — pass --sessions <dir>" % len(rows)
+    return None
 
 
 def finish(a, counts, data, nogo, lines=()):
@@ -693,7 +784,7 @@ def _wr(path, text):
         f.write(text)
 
 
-def _session(path, sid, events, total, usage):
+def _session(path, sid, events, total, usage, cwd=None):
     """events: ("p", text) | ("r", message id, model, effort, side, (in, cr, cc, out), local time, records)."""
     out = []
     for e in events:
@@ -706,6 +797,8 @@ def _session(path, sid, events, total, usage):
                 out.append({"type": "assistant", "isSidechain": side, "effort": effort, "timestamp": ts, "message": {
                     "id": mid, "model": model, "usage": {"input_tokens": u[0], "cache_read_input_tokens": u[1],
                                                          "cache_creation_input_tokens": u[2], "output_tokens": u[3]}}})
+    if cwd:
+        out = [dict(r, cwd=cwd) for r in out]
     if total is not None:
         out.append({"type": "cost-state", "totalCostUSD": total, "modelUsage": usage})
     _wr(path, "\n".join(json.dumps(r) for r in out) + "\n")
@@ -719,7 +812,8 @@ def _fixture(tmp):
     _wr(plan, FIXTURE_PLAN)
     _wr(os.path.join(mdir, "logs", "loop_times.jsonl"), "\n".join(json.dumps(r) for r in (
         {"ts": "t1", "task": "M9-T1", "mode": "scope", "verdict": "NO-GO"},
-        {"ts": at(10, 0), "task": "M9-T1", "mode": "changed", "verdict": "GO"},
+        {"ts": at(10, 0), "task": "M9-T1", "mode": "changed", "verdict": "GO", "base": "M9-T1's start " + at(9, 0),
+         "touched": {"added": ["a.py"], "modified": [], "deleted": []}, "seconds": 3.0, "loop_seconds": 1.5},
         {"ts": "t3", "task": "M9-T2", "mode": "all", "verdict": "NO-GO"},
         {"ts": "t4", "task": "M9-T3", "mode": "changed", "verdict": "GO"},
         {"ts": at(14, 10), "task": "M9-T6", "mode": "changed", "verdict": "NO-GO"},
@@ -889,6 +983,69 @@ def _plugin_cfgs(tmp):
     return out
 
 
+def slug(path):
+    return re.sub(r"[^A-Za-z0-9-]", "-", path)
+
+
+def _moved_fixture(tmp):
+    """A project `new/myproj` that moved from `old/myproj`, and a checkout of the same name, `other/myproj`, with its own plan.
+    The earlier sessions sit under the old folder's slug; one block (T4) was done after the move, in the new folder's. The
+    checkout's sessions sit under its own slug: one names T4 of its plan (a session two plans claim), one names T4 and another
+    plan file (m8) of no plan on disk.
+    Returns (config folder, the new project folder, its plan)."""
+    cfg, new, other = (os.path.join(tmp, x) for x in ("cfg_moved", "new/myproj", "other/myproj"))
+    plan, _ = _fixture(new)
+    old = os.path.join(cfg, "projects", slug(os.path.join(tmp, "old/myproj")))
+    os.makedirs(old)
+    for f in glob.glob(os.path.join(new, "sessions", "*.jsonl")):
+        shutil.move(f, old)
+    day = datetime.datetime(2026, 10, 6, 9, 0)
+    opened = lambda root: "<ide_opened_file>The user opened the file %s/milestones/m9/m9_implementation_plan.md in the IDE.</ide_opened_file>" % root
+    sonnet = "claude-sonnet-5-5"
+    use = {sonnet: {"costUSD": 0.4}}
+    _session(os.path.join(cfg, "projects", slug(new), "n1.jsonl"), "n1", [
+        ("p", opened(new), "do task T4"), ("r", "k1", sonnet, "high", False, (0, 0, 0, 100), day, 1)], 0.4, use)
+    _wr(os.path.join(other, "milestones", "m9", "m9_implementation_plan.md"), FIXTURE_PLAN)
+    side = os.path.join(cfg, "projects", slug(other))
+    _session(os.path.join(side, "o1.jsonl"), "o1", [("p", opened(other), "do task T4"),
+             ("r", "k2", sonnet, "high", False, (0, 0, 0, 100), day, 1)], 0.4, use, cwd=other)
+    _session(os.path.join(side, "o3.jsonl"), "o3", [("p", opened("/gone/myproj").replace("m9_implementation", "m8_implementation"), "do task T4"),
+             ("r", "k3", sonnet, "high", False, (0, 0, 0, 100), day, 1)], 0.4, use)
+    return cfg, new, plan
+
+
+def _report_in(root, cfg, argv):
+    """`report` run from `root` with the agent's folder at `cfg`: (rc, the counts line, the output)."""
+    buf, here = io.StringIO(), os.getcwd()
+    os.chdir(root)
+    try:
+        with _env({"CLAUDE_CONFIG_DIR": cfg}), contextlib.redirect_stdout(buf):
+            rc = main(["report"] + argv)
+    finally:
+        os.chdir(here)
+    return rc, buf.getvalue().split("\n")[0], buf.getvalue()
+
+
+def _current_folder_only(plan, chain):
+    return []
+
+
+def _go_regardless(rows):
+    return None if rows else "no DONE block read"
+
+
+def _id_only_claims(s, plan, tail, ids, own):
+    for kind, x in s["events"]:
+        bid = named(x, own) if kind == "prompt" else None
+        if bid in ids:
+            return True, other_plan_claims(s, bid, plan, tail)
+    return False, False
+
+
+def _no_other_plan(s, bid, plan, tail):
+    return False
+
+
 def _tools():
     return os.path.dirname(os.path.abspath(__file__))
 
@@ -982,6 +1139,7 @@ def cmd_selftest(a):
               and t7["sessions"] == ["s8"] and t7["claim"] == "GO" and t1["cost_basis"] == "cost-state")
         check("clean: no rate in the folder → list prices, named; a model with no price → null",
               token_cost([{"model": "claude-sonnet-5-5", "u": (0, 0, 0, 100)}], {}) == (0.001, "priced from list prices")
+              and token_cost([{"model": "claude-haiku-5-5", "u": (0, 0, 0, 1000000)}], {}) == (0.5, "priced from list prices")
               and token_cost([{"model": "claude-x-9", "u": (1, 0, 0, 0)}], {}) == (None, None))
         check("clean: a block with no session keeps the rung of its handoff, cost null",
               rows["M9-T4"]["cost_usd"] is None and rows["M9-T4"]["rung"] == "Sonnet 5.5, medium" and rows["M9-T4"]["via"] == "handoff")
@@ -1029,6 +1187,31 @@ def cmd_selftest(a):
               lambda: _rows(plan, sdir)["M9-T2"]["cost_usd"] == 0.75)
         plant("a cost read from tokens where totalCostUSD exists", "session_cost", _cost_from_tokens,
               lambda: _rows(plan, sdir)["M9-T1"]["cost_usd"] == 0.5)
+        mcfg, mroot, mplan = _moved_fixture(tmp)
+        moved = lambda: _report_in(mroot, mcfg, ["--plan", mplan, "--blocks"])
+        mrc, mcounts, mout = moved()
+        both = "(%s, %s)" % (slug(mroot), slug(os.path.join(tmp, "old/myproj")))
+        check("moved: a project's earlier sessions sit under its old folder's slug: found, no folder named by hand, both folders on the counts line",
+              mrc == 0 and "M9-T1 Sonnet 5.5, high" in mout and "M9-T1 Sonnet 5.5, high (mixed)" not in mout and "$0.50" in mout and both in mcounts)
+        check("moved: a block done after the move reads from the new folder (T4 $0.40), though the checkout's session names it too",
+              "M9-T4 Sonnet 5.5, high: prompt" in mout and "$0.40" in mout)
+        check("moved: a session two plans claim counts for neither, named; one carrying another plan file's tail is no one's (T4 stays $0.40)",
+              "1 session(s) two plans claim, counted for neither (o1)" in mcounts and slug(os.path.join(tmp, "other/myproj")) not in mcounts
+              and "$0.80" not in mout)
+        plant("a moved project read from the current folder only", "moved_dirs", _current_folder_only,
+              lambda: "$0.50" in moved()[2])
+        plant("a session two plans claim kept by this one", "other_plan_claims", _no_other_plan,
+              lambda: "counted for neither" in moved()[1])
+        plant("a session claimed by the block id alone, the plan file ignored", "claims", _id_only_claims, lambda: "$0.80" not in moved()[2])
+        lcfg = os.path.join(tmp, "cfg_lone")
+        os.makedirs(os.path.join(lcfg, "projects"))
+        lplan, _ = _fixture(os.path.join(tmp, "lone/myproj"))
+        lone = lambda: _report_in(os.path.join(tmp, "lone/myproj"), lcfg, ["--plan", lplan])
+        lrc, lcounts, lout = lone()
+        check("report: DONE blocks, none with a session file readable → NO-GO naming --sessions, exit 1; one that prices some keeps GO",
+              lrc == 1 and "NO-GO: 11 DONE blocks, none with a session file readable — pass --sessions <dir> ===" in lout and mrc == 0
+              and "block(s) with no session file readable" in mcounts)
+        plant("a report that prices no DONE block reading GO", "report_nogo", _go_regardless, lambda: lone()[0] == 1)
         ndir, cfg = _now_fixture(tmp), _plugin_cfgs(tmp)
         nowrun = lambda sid="snow", env="low": _now_run(["now", "--sessions", ndir, "--json"], sid, env, cfg["user"])
         rc, out = nowrun()
@@ -1142,7 +1325,7 @@ def main(argv=None):
     sp = sub.add_parser("report", help="the record: per block, per class and rung, the rule (4) verdict")
     sp.add_argument("--plan", help="default: the newest milestones/*/*_implementation_plan.md")
     sp.add_argument("--since", metavar="YYYY-MM-DD", help="only blocks DONE on or after this date")
-    sp.add_argument("--sessions", nargs="+", metavar="dir", help="default: the folders the working folder and each parent up to three map to")
+    sp.add_argument("--sessions", nargs="+", metavar="dir", help="default: the folders the working folder and each parent up to three map to, and a moved project's earlier ones")
     sp.add_argument("--blocks", action="store_true", help="also one line per block")
     sp.add_argument("--json", action="store_true", help="machine output, for agents")
     sp = sub.add_parser("now", help="the model and level of the running request, read from this session's file")

@@ -1,0 +1,70 @@
+M0-TH-adopt-a start 2026-10-11T15:59:29Z box=Laser2025-20
+extracted: 10 - refused: 0
+=== GO ===
+### temp: py -3.12 tools/pb/plan.py selftest
+selftest: checks=259 failed=1 warnings=0 · plants=80
+FAIL: WARN: a `Read:` naming a file over 500 lines whole - got: `Read:` names big_reference.md whole (600 lines > 500) - name a section or a line range | WARN: 3 open block(s) carry no rating - no `Models:` ladder in the header yet, so nothing is red; the plan's v12.1 adoption writes the ladder and rates them (§3.2): M12.1-T2a · M12.1-T2b · M12.1-D1 | === GO ===
+=== NO-GO: 1 violation(s) ===
+### temp: py -3.12 tools/pb/content_gate.py selftest
+warning: in the working copy of 'PLAYBOOK.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tools/gone.py', LF will be replaced by CRLF the next time Git touches it
+checks: 88 · passed: 86 · failed: 2
+FAIL no --denylist → the list beside the tool, not one in the working folder: the italic plant NO-GO
+FAIL selftest stopped after 87 checks: PermissionError: [WinError 32] Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus: 'C:\\Users\\YOHANB~1\\AppData\\Local\\Temp\\content_gate_selftest_5hw5hfoi\\plain'
+=== NO-GO: 2 check(s) failed ===
+### temp: py -3.12 tools/pb/rung_record.py selftest
+selftest: checks=70 passed=66 failed=4 · plants red 29/29
+FAIL: now: missing → the POSIX line: the build of the switch.mjs beside the tool first, then the client's two calls, quoted
+FAIL: now: installed under another project's scope only → missing here
+FAIL: now: an install older than the switch.mjs beside the tool → plugin=stale and the install line whose last call is `plugin update` (`install` on an installed id leaves the old version recorded)
+FAIL: now: no $CLAUDE_CODE_EXECPATH → `claude`, never a path looked up
+=== NO-GO: 4 check(s) failed ===
+### temp: node tools/pb/switch.mjs selftest
+selftest: checks=45 passed=45 failed=0 · plants red 13/13
+=== GO ===
+### temp: py -3.12 tools/pb/verify.py selftest
+FAILED:
+  the walk lists what the .gitignore files leave (comments, !, / anchor, trailing /, * ? [..] **, escapes, nested files, a nested repository, CRLF, the global excludes): ['trail']
+  the walk equals `git ls-files -co --exclude-standard` on the same fixture: ['sub2/a.crlf']
+  PLANT arms of an `exclusive` scope side by side: red - the serial case sees them overlap: [('nogo', 1791734590.58286, 1791734590.733757)]
+selftest: checks=340 · failed=3 · plants=153/154 red
+=== NO-GO: 3 check(s) failed ===
+### project (v12.2): py -3.12 tools/pb/plan.py selftest
+selftest: checks=246 failed=0 warnings=0 · plants=78
+=== GO ===
+### project (v12.2): py -3.12 tools/pb/content_gate.py selftest
+checks: 36 · passed: 36 · failed: 0
+=== GO ===
+### project (v12.2): py -3.12 tools/pb/rung_record.py selftest
+selftest: checks=62 passed=62 failed=0 · plants red 25/25
+=== GO ===
+### swapped in place: py -3.12 tools/pb/plan.py selftest
+WARN: replace of m12_implementation_plan.md needed 2 attempts - transient lock on this box
+WARN: replace of m12_implementation_plan.md needed 2 attempts - transient lock on this box
+selftest: checks=259 failed=0 warnings=0 · plants=80
+=== GO ===
+### swapped in place: py -3.12 tools/pb/content_gate.py selftest
+warning: in the working copy of 'PLAYBOOK.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tools/gone.py', LF will be replaced by CRLF the next time Git touches it
+checks: 87 · passed: 87 · failed: 0
+=== GO ===
+### swapped in place: py -3.12 tools/pb/rung_record.py selftest
+selftest: checks=70 passed=70 failed=0 · plants red 29/29
+=== GO ===
+### swapped in place: node tools/pb/switch.mjs selftest
+selftest: checks=45 passed=45 failed=0 · plants red 13/13
+=== GO ===
+### swapped in place: py -3.12 tools/pb/verify.py selftest
+FAILED:
+  the walk lists what the .gitignore files leave (comments, !, / anchor, trailing /, * ? [..] **, escapes, nested files, a nested repository, CRLF, the global excludes): ['trail']
+  the walk equals `git ls-files -co --exclude-standard` on the same fixture: ['sub2/a.crlf']
+selftest: checks=345 · failed=2 · plants=157/157 red
+=== NO-GO: 2 check(s) failed ===
+lint: checks=505 failed=0 warnings=0 · blocks=184 · flow_rows=184 · verify_fences=2 · history=0 · flow=per-task · header=442/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+=== GO ===
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D20 1
+=== GO ===
+lint: checks=508 failed=0 warnings=0 · blocks=185 · flow_rows=185 · verify_fences=2 · history=0 · flow=per-task · header=443/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+=== GO ===
+=== 2026-10-11T12:32:26-04:00 resume after M0-D20: claim --changed --base ab36299 ===
+exit=0

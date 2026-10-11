@@ -4,8 +4,10 @@
   <scope>... --task <ID>                   those scopes
   --all --task <ID>                        the complete loop: every scope, then the smoke
   <scope> --case <id> --task <ID>          one case: PARTIAL, never the loop
+  <scope>... [--case <id>] --force ...     the same, a scope already GO on this tree run again (else it is not re-run)
   --changed [--base <commit>] --task <ID>  every scope a changed path touches, read from the coverage anchor
-  --redarm <scope> --task <ID>             one scratch copy per plant: the clean copy GO, each plant NO-GO
+  --redarm <scope> --task <ID>             one scratch copy per arm, the arms side by side: clean GO, each plant NO-GO
+  --redarm --moved --task <ID>             the phase's re-proof sweep: every armed scope its proof no longer vouches for
   list      report [--since YYYY-MM-DD] [--budget <s>]      selftest
   options: -j N | --serial · --json · --manifest <file> · --root <dir> · --no-progress
 
@@ -17,7 +19,9 @@ one counts line, then `=== GO ===` or `=== NO-GO: <reason> ===` derived from the
 A run refuses to start without `--task` (or $PB_TASK): no log is shared.  Each scope's log is opened at
 <logs_dir>/<TASK>.<scope>.log before its first command starts, and every run appends one line to
 <logs_dir>/loop_times.jsonl naming its box and interpreter.  No project file is deleted, no git write is
-run (read-only git, always with --no-optional-locks), and no process this run did not start is signalled.
+run, and no process this run did not start is signalled.  The tree is listed by a walk that reads .gitignore
+and its id comes from content: git is read only where a call names it (--base) or a repository can answer
+(the HEAD prefix, the committed-evidence guard) - always read-only, with --no-optional-locks.
 """
 from __future__ import annotations
 
@@ -30,6 +34,7 @@ import io
 import json
 import os
 import platform
+import posixpath
 import re
 import shlex
 import shutil
@@ -50,10 +55,13 @@ ROOT = TOOL_DIR.parent.parent                       # the repository: tools/pb/v
 MANIFEST = TOOL_DIR / "verify.json"
 PROG = "python3 tools/pb/verify.py"
 PARSERS = ("gonogo", "pytest", "jest", "regex", "exit")
-COMMANDS = ("list", "report", "selftest")
+COMMANDS = ("list", "report", "selftest", "start", "touched")
+BASELINES_KEPT = 20                                 # the newest starts a box keeps (M0-T62)
 CALLS = ("<scope>... --task <ID>", "--all --task <ID>", "<scope> --case <id> --task <ID>",
-         "--changed [--base <commit>] --task <ID>", "--redarm <scope> --task <ID>", "list",
-         "report [--since YYYY-MM-DD] [--budget <s>]", "selftest")
+         "--changed [--base <commit>] --task <ID>", "--force <scope>... --task <ID>", "--redarm <scope> --task <ID>", "--redarm --moved --task <ID>", "list",
+         "report [--since YYYY-MM-DD] [--budget <s>]", "start [--fresh] --task <ID>",
+         "touched [--task <ID>] [--path <glob>]", "selftest")
+TOUCH_KINDS = ("added", "modified", "deleted")
 NAME_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 ID_RE = re.compile(r"^[\w./@+-]+$")             # a case id lands in a command: no space, no shell character
 TASK_RE = re.compile(r"^[\w.-]+$")              # a task id lands in a file name
@@ -68,10 +76,10 @@ CODE_SUFFIXES = (".py", ".sh", ".mjs", ".js", ".cjs", ".ts", ".tsx", ".jsx", ".p
                  ".java", ".c", ".cc", ".cpp", ".h", ".hpp", ".cs", ".rb", ".php", ".swift", ".kt")
 TOP_KEYS = {"scopes", "smoke", "jobs_cap", "logs_dir", "tree_extra", "anchor", "skip_classes", "vars", "budget"}
 SCOPE_KEYS = {"cmd", "cases", "cases_cmd", "case_cmd", "placeholder", "parse", "regex", "count",
-              "expected", "exclusive", "timeout_s", "cwd", "paths", "box", "plants", "free_ports", "good"}
+              "expected", "exclusive", "timeout_s", "cwd", "paths", "box", "plants", "free_ports", "good", "rerun"}
 NOTE_KEYS = ("note", "desc", "why", "hint", "reason")    # and any `_` key: a note - read, never acted on
 SPEC_KEYS = ("cmd", "cases", "cases_cmd", "case_cmd", "parse", "regex", "count", "expected", "cwd", "good")
-PLANT_KEYS = {"id", "patch"}
+PLANT_KEYS = {"id", "patch", "case"}
 RECORD_KEYS = {"ts", "task", "mode", "scopes", "seconds", "verdict", "tree"}
 PLACEHOLDER_RE = re.compile(r"\{[A-Za-z_]\w*\}")         # in a path only this runner reads, nothing fills it
 RULES_FILE_RE = re.compile(r"(?:^|/)\d*m[\w.]*_rules\.md$")   # m<N>_rules.md, where a MOVE block moves Rules entries
@@ -91,9 +99,12 @@ ANCHOR_DEFAULT = "tools/pb/verify.anchor.json"
 ANCHOR_VERSION = 3
 ANCHOR_NOTE = ("written by tools/pb/verify.py - covered path -> the scope that graded it, at the content hash "
                "it graded and the scope's own definition. Advanced only by a scope that went GO; a scope that "
-               "went red loses its entries. `verify.py --changed` reads it.")
+               "went red loses its entries. `cases`: per scope whose cases are files, each case -> the content "
+               "hash it last went GO on, the scope's suite hash and its count. `verify.py --changed` reads it.")
 PROGRESS = True                                          # live stderr progress on a terminal, display only
 WIN32_LOAD_WINDOW_S = 0.25                               # the GetSystemTimes window, never inside `seconds`
+DEFAULT_LOAD_K = 0.15                                    # seconds / (1 + k x load / cpus): the fleet's median, M0-T64d
+TR_LOOPS = 3                                             # the TR line reads the median of a box's last 3 counted loops
 LOCK = threading.Lock()
 PART = [0]                                               # part-file counter (under LOCK)
 HOME = str(Path.home())
@@ -184,6 +195,45 @@ def sample_load(osmod=os, win32=win32_load):
         return None, f"none: {type(exc).__name__}: {exc}"
 
 
+# ------------------------------------- the seconds at an idle box: seconds / (1 + k x load / cpus), load the run's
+def budget_box(man, box):
+    """The manifest's budget entry for this box, {} when there is none or the budget cannot be read."""
+    bud = man.get("budget") if "budget" not in top_errors(man) else None
+    return ((bud or {}).get("boxes") or {}).get(box or "") or {}
+
+
+def norm_k(man, box, cpus=None):
+    """(k, source) - k relative to the box's CPUs, so one factor reads every box. The manifest box's fitted `load_k`
+    (seconds per load unit, the budget's form) times its CPUs wins; else the fleet's median, DEFAULT_LOAD_K."""
+    bb = budget_box(man, box)
+    lk, n = bb.get("load_k"), bb.get("cpus") or cpus
+    if is_num(lk) and lk >= 0 and is_num(n) and n > 0:
+        return round(lk * n, 4), f"manifest {box} load_k {lk:g} x {n:g} cpus"
+    return DEFAULT_LOAD_K, f"default {DEFAULT_LOAD_K:g} - the fleet's median, M0-T64d"
+
+
+def normalise(rec, man):
+    """The record's `seconds_norm` (and `loop_seconds_norm` beside a `loop_seconds`) from its end `load` - the
+    1-minute average over the run's last minute - and `load_norm` naming the k. No load sample: null, the reason
+    named - never the raw seconds copied in."""
+    load, box = rec.get("load"), rec.get("box")
+    cpus = rec.get("cpus") or budget_box(man, box).get("cpus")
+    keys = ["seconds_norm"] + (["loop_seconds_norm"] if "loop_seconds" in rec else [])
+    if not is_num(load) or not (is_num(cpus) and cpus > 0):
+        src = str(rec.get("load_source") or "no load sample")
+        why = "none: no CPU count" if is_num(load) else src if src.startswith("none:") else f"none: {src}"
+        rec.update({k: None for k in keys}, load_norm=why)
+        return rec
+    k, src = norm_k(man, box, cpus)
+    d = 1.0 + k * float(load) / float(cpus)
+    for key, raw in (("seconds_norm", "seconds"), ("loop_seconds_norm", "loop_seconds")):
+        if key in keys:
+            rec[key] = round(float(rec[raw]) / d, 3) if is_num(rec.get(raw)) else None
+    rec["load_norm"] = (f"k {k:g} ({src}) · load {load:g} / {cpus:g} cpus"
+                        + (" · OUT OF RANGE: load > cpus" if load > cpus else ""))
+    return rec
+
+
 # ------------------------------------------------------------------------------------------------ manifest
 def regex_error(rx, group):
     try:
@@ -260,6 +310,8 @@ def scope_errors(name, s):
         out.append("`timeout_s` is a number > 0")
     if not isinstance(s.get("exclusive", False), bool):
         out.append("`exclusive` is true or false")
+    if not isinstance(s.get("rerun", False), bool):
+        out.append("`rerun` is true or false")
     if "paths" in s and not str_list(s["paths"]):
         out.append("`paths` is a list of globs")
     if "box" in s and not (isinstance(s["box"], str) and s["box"].strip()):
@@ -273,7 +325,10 @@ def scope_errors(name, s):
     for p in plants:
         if not isinstance(p, dict) or {k for k in p if not is_note(k)} - PLANT_KEYS or not all(
                 isinstance(p.get(k), str) and p.get(k) for k in ("id", "patch")):
-            out.append(f"a plant is {{\"id\": \"<plant>\", \"patch\": \"<patch file or command>\"}}: {p!r}")
+            out.append(f"a plant is {{\"id\": \"<plant>\", \"patch\": \"<patch file or command>\"[, \"case\": "
+                       f"\"<one case id>\"]}}: {p!r}")
+        elif "case" in p and not (isinstance(p["case"], str) and ID_RE.match(p["case"])):
+            out.append(f"plant `{p['id']}`: `case` is one case id of the scope")
         elif not ID_RE.match(p["id"]) or p["id"] in seen:
             out.append(f"plant id `{p['id']}` is not a unique id")
         else:
@@ -488,9 +543,12 @@ class ScopeRun:
         self.passed = self.failed = self.skipped = 0
         self.seconds, self.skip, self.owed, self.notrun, self.reasons = 0.0, None, None, None, []
         self.started = self.ended = None
+        self.listed, self.booked, self.case_paths, self.suite = None, False, None, None   # cases that are files
+        self.case_now, self.case_out, self.vouched, self.vouched_n, self.pick = {}, {}, 0, 0, None
+        self.green = None                                    # (ts, entry) of the record it was already GO in (M0-T64c)
 
     def ran(self):
-        return not (self.skip or self.owed or self.notrun)
+        return not (self.skip or self.owed or self.notrun or self.green)
 
     def red(self):
         """The NO-GO reasons, [] when GO - a scope that did not run (placeholder, owed, NOT RUN) is never red
@@ -500,11 +558,15 @@ class ScopeRun:
         out = list(self.reasons)
         if self.passed == 0 and not out:
             out.append("zero passed")
-        if self.passed + self.failed < self.expected:
-            out.append(f"{self.passed + self.failed} case(s) < expected {self.expected}")
+        got = self.passed + self.failed + self.vouched_n     # read against the cases it LISTED: the anchor's own
+        if got < self.expected:                               # counts for the ones it vouched for, never the ran alone
+            out.append(f"{got} case(s) < expected {self.expected}"
+                       + (f" ({self.vouched_n} vouched by the anchor)" if self.vouched_n else ""))
         return out
 
     def record(self):
+        if self.green:
+            return {"verdict": "GO", "not_rerun": self.green[0]}
         if self.skip:
             return {"verdict": "SKIP", "reason": self.skip}
         if self.owed:
@@ -512,9 +574,12 @@ class ScopeRun:
         if self.notrun:
             return {"verdict": "NOT RUN", "reason": self.notrun}
         return {"passed": self.passed, "failed": self.failed, "skipped": self.skipped,
-                "seconds": round(self.seconds, 3), "verdict": "NO-GO" if self.red() else "GO"}
+                "seconds": round(self.seconds, 3), "verdict": "NO-GO" if self.red() else "GO",
+                **({"vouched": self.vouched} if self.vouched else {})}
 
     def line(self, w, box):
+        if self.green:
+            return f"{self.name:<{w}}GO (already GO on this tree at {self.green[0]} \u2014 not re-run)"
         if self.skip:
             return f"{self.name:<{w}}SKIP ({self.skip})"
         if self.notrun:
@@ -581,6 +646,8 @@ def run_unit(sr, label, cmd, case, root, man, env, task, box):
         p, f, k = counts or (0, 0, 0)
         sr.passed, sr.failed, sr.skipped, sr.seconds = sr.passed + p, sr.failed + f, sr.skipped + k, sr.seconds + secs
         sr.reasons += [r if label == sr.name else f"{label}: {r}" for r in reasons]
+        if case is not None:                              # one case's own verdict and count, for the anchor's book
+            sr.case_out[case] = (counts is not None and not reasons and p > 0 and not f, p + f)
     if PROGRESS and sys.stderr.isatty():
         print(f".. {label} {secs:.2f}s", file=sys.stderr, flush=True)
 
@@ -614,6 +681,8 @@ def units(sr, case, root, man, env, task, box):
             sr.reasons.append(f"`cases_cmd` printed a bad id {bad[0]!r}")
         elif not found and not sr.expected:
             sr.skip = "no case present"
+        else:
+            sr.listed = found
         return [] if sr.reasons or sr.skip else [(f"{name}[{c}]", s["case_cmd"], c) for c in found]
     return [(name, s["cmd"], None)]
 
@@ -677,33 +746,199 @@ def extra_files(root, man, logs):
     return out
 
 
-def tree_id(root, man, logs, git=git_out):
-    """`<HEAD 12>+<sha1 12>` over `git status --porcelain -uall`'s entries, the content of each file it
-    lists, and every file under `tree_extra` - content hashed CRLF-as-LF, so one commit's two checkouts
-    name ONE tree, and a second edit to an already-dirty file moves the id. Held out: the logs folder and
-    the anchor (every run rewrites them). None outside a work tree, or with `tree_extra` unreadable: two
-    unknown trees are not one tree."""
-    extra = extra_files(root, man, logs)
-    if extra is None:
-        return None
-    head, st = git(root, ["rev-parse", "HEAD"], 30), git(root, ["status", "--porcelain", "-z", "-uall"])
-    if head is None or st is None:
-        return None
-    held, digest, items, i = held_out(root, man, logs), hashlib.sha1(), st.split("\0"), 0
-    while i < len(items):
-        e = items[i]
-        i += 1 + (e[:1] in ("R", "C"))                   # a rename's origin follows in its own field
-        path = e[3:]
-        if len(e) < 4 or is_held(path, held):
+# ------------------------------------------- the tree without git: a walk that reads .gitignore as git does
+POSIX_CLASSES = {"alnum": "0-9A-Za-z", "alpha": "A-Za-z", "digit": "0-9", "lower": "a-z", "upper": "A-Z",
+                 "space": " \\t\\n\\r\\f\\v", "xdigit": "0-9A-Fa-f", "blank": " \\t", "punct": "!-/:-@\\[-`{-~",
+                 "word": "0-9A-Za-z_", "print": " -~", "graph": "!-~", "cntrl": "\\x00-\\x1f\\x7f"}
+
+
+def ignore_class(pat, i):
+    """`[...]` at pat[i] -> (regex, index after it), or None when no `]` closes it (then `[` is a literal)."""
+    j, neg = i + 1, False
+    if j < len(pat) and pat[j] in "!^":
+        neg, j = True, j + 1
+    body, first = "", True
+    while j < len(pat):
+        c = pat[j]
+        if c == "]" and not first:
+            return "[" + ("^" if neg else "") + (body or "") + "]", j + 1
+        first = False
+        if c == "[" and pat.startswith("[:", j) and ":]" in pat[j:]:
+            k = pat.index(":]", j)
+            body, j = body + POSIX_CLASSES.get(pat[j + 2:k], ""), k + 2
+        elif c == "\\" and j + 1 < len(pat):
+            body, j = body + re.escape(pat[j + 1]), j + 2
+        else:
+            body, j = body + (re.escape(c) if c in "\\^[" else c), j + 1
+    return None
+
+
+def ignore_regex(pat):
+    """One .gitignore glob (slashes in, no trailing slash) -> its regex: `*` and `?` stay inside a segment,
+    `**` crosses them only as a whole segment (leading `**/`, middle `/**/`, trailing `/**`)."""
+    out, i, n = [], 0, len(pat)
+    while i < n:
+        c = pat[i]
+        if c == "*":
+            j = i
+            while j < n and pat[j] == "*":
+                j += 1
+            whole = j - i >= 2 and (i == 0 or pat[i - 1] == "/") and (j == n or pat[j] == "/")
+            if whole and j == n:
+                out.append(".*")
+            elif whole:
+                out.append("(?:.*/)?")
+                j += 1
+            else:
+                out.append("[^/]*")
+            i = j
+        elif c == "?":
+            out.append("[^/]")
+            i += 1
+        elif c == "[":
+            cls = ignore_class(pat, i)
+            out.append(cls[0] if cls else re.escape(c))
+            i = cls[1] if cls else i + 1
+        elif c == "\\" and i + 1 < n:
+            out.append(re.escape(pat[i + 1]))
+            i += 2
+        else:
+            out.append(re.escape(c))
+            i += 1
+    return re.compile("".join(out) + r"\Z", re.S)
+
+
+def ignore_rules(text):
+    """The rules of one .gitignore (or .git/info/exclude), in file order: (regex, negated, dir_only, anchored).
+    Blank lines and `#` comments skipped, trailing spaces dropped unless escaped, a leading `!` negates,
+    a trailing `/` is directories only, a `/` first or inside the pattern anchors it to the file's folder."""
+    rules = []
+    for line in text.lstrip("\ufeff").split("\n"):
+        line = line.rstrip("\r")
+        while line.endswith(" ") and not line.endswith("\\ "):
+            line = line[:-1]
+        if not line or line.startswith("#"):
             continue
-        digest.update(e.encode("utf-8", "surrogateescape") + b"\0")
+        neg = line.startswith("!")
+        pat = line[1:] if neg else line
+        dir_only = pat.endswith("/")
+        pat = pat.rstrip("/") if dir_only else pat
+        if not pat:
+            continue
+        anchored = "/" in pat
+        rules.append((ignore_regex(pat.lstrip("/")), neg, dir_only, anchored))
+    return rules
+
+
+def read_rules(path):
+    """The rules of the file at `path`, [] when there is none; an unreadable one raises (never a guess)."""
+    if not os.path.isfile(path):
+        return []
+    with open(path, "rb") as fh:
+        return ignore_rules(fh.read().decode("utf-8", "replace"))
+
+
+def ignored(sources, rel_path, is_dir):
+    """git's verdict on `rel_path`: the nearest source (deepest .gitignore first, `.git/info/exclude` last)
+    with a matching rule decides, and in it the LAST matching rule."""
+    for prefix, rules in sources:
+        sub = rel_path[len(prefix):]
+        base = sub.rsplit("/", 1)[-1]
+        for rx, neg, dir_only, anchored in reversed(rules):
+            if (is_dir or not dir_only) and rx.match(sub if anchored else base):
+                return not neg
+    return False
+
+
+def global_rules():
+    """The user's global excludes file, read the way git finds it - `core.excludesFile` named in
+    `~/.gitconfig` or `$XDG_CONFIG_HOME/git/config`, else `$XDG_CONFIG_HOME/git/ignore` (default
+    `~/.config/git/ignore`) - so the walk lists what `git ls-files -co --exclude-standard` lists on this box.
+    A file, never a git call; [] when none."""
+    cfg = os.environ.get("XDG_CONFIG_HOME") or os.path.join(os.path.expanduser("~"), ".config")
+    path = os.path.join(cfg, "git", "ignore")
+    for conf in (os.path.join(os.path.expanduser("~"), ".gitconfig"), os.path.join(cfg, "git", "config")):
         with contextlib.suppress(OSError):
-            if (Path(root) / path).is_file():
-                digest.update(content_sha1((Path(root) / path).read_bytes()).encode("ascii"))
-    for p in extra:
-        if not is_held(p, held):
-            digest.update(p.encode("utf-8", "surrogateescape") + b"\0" + (sha1_of(root, p) or "?").encode())
-    return head.strip()[:12] + "+" + digest.hexdigest()[:12]
+            m = re.search(r"(?mi)^[ \t]*excludesfile[ \t]*=[ \t]*(\S.*?)[ \t]*$", Path(conf).read_text("utf-8", "replace"))
+            if m:
+                path = os.path.expanduser(m.group(1).strip("\""))
+    return read_rules(path)
+
+
+def repo_top(root):
+    """`(top, up)` for `root`: the nearest folder at or above it holding a `.git` entry (found without git) and
+    the `/`-separated path from `top` down to `root` with a trailing `/` (empty at the top itself); `(root, "")`
+    when no folder above holds one, so a tree with no repository is walked as its own top."""
+    root = os.path.abspath(os.fspath(root))
+    here, parts = root, []
+    while not os.path.lexists(os.path.join(here, ".git")):
+        parent = os.path.dirname(here)
+        if parent == here:
+            return root, ""
+        parts.insert(0, os.path.basename(here))
+        here = parent
+    return here, "".join(x + "/" for x in parts)
+
+
+def walk_tree(root):
+    """The relative `/`-separated paths, sorted, of every file under `root` that git would show as tracked or
+    untracked-not-ignored: every `.gitignore` in the tree read as git reads it - the folders from the
+    repository's top down to `root` too, each rule relative to its own folder, so a `root` below its
+    repository's top (a track) lists what git lists there - `.git/info/exclude` of the top where it exists, an
+    ignored folder never entered (a `root` an ignored folder holds lists nothing), `.git` and a folder holding
+    its own `.git` (a nested repository) never entered. The user's global excludes file is read last, as git
+    reads it. No git call. A folder or `.gitignore` that cannot be read raises OSError - a list that silently
+    lacks files certifies nothing. (Files git tracks although a `.gitignore` names them are not listed.)"""
+    top, up = repo_top(root)
+    out = []
+    last = [("", r) for r in (read_rules(os.path.join(top, ".git", "info", "exclude")), global_rules()) if r]
+    local, folder, prefix = [], top, ""
+    for name in up.split("/")[:-1]:                       # the folders above `root`: their rules, and are they ignored
+        rules = read_rules(os.path.join(folder, ".gitignore"))
+        local = [(prefix, rules)] + local if rules else local
+        folder, prefix = os.path.join(folder, name), prefix + name + "/"
+        if ignored(local + last, prefix[:-1], True):
+            return []
+
+    def visit(folder, prefix, local):
+        with os.scandir(folder) as it:
+            entries = sorted(it, key=lambda e: e.name)
+        rules = read_rules(os.path.join(folder, ".gitignore"))
+        local = [(prefix, rules)] + local if rules else local
+        sources = local + last
+        for e in entries:
+            rel_path = prefix + e.name
+            if e.is_dir(follow_symlinks=False):
+                if e.name == ".git" or os.path.lexists(os.path.join(e.path, ".git")) \
+                        or ignored(sources, rel_path, True):
+                    continue
+                visit(e.path, rel_path + "/", local)
+            elif os.path.isfile(e.path) and not ignored(sources, rel_path, False):
+                out.append(rel_path[len(up):])
+
+    visit(os.fspath(root), up, local)
+    return sorted(out)
+
+
+def tree_id(root, man, logs, git=git_out):
+    """`[<HEAD 12>+]<sha1 12>`: the sha1 runs over every file the walk lists (and every file under
+    `tree_extra`), each as its path and the hash of its content - CRLF read as LF, so one commit's two
+    checkouts name ONE tree, and a second edit to an already-edited file moves the id. Held out: the logs
+    folder and the anchor (every run rewrites them). `<HEAD 12>+` leads only where a repository answers; no
+    repository, no prefix, the same hash. None when a listed file cannot be read, or `tree_extra` cannot:
+    two unknown trees are not one tree."""
+    paths = visible_files(root, man, logs)
+    if paths is None:
+        return None
+    digest = hashlib.sha1()
+    for p in paths:
+        try:
+            body = (Path(root) / p).read_bytes()
+        except OSError:
+            return None
+        digest.update(p.encode("utf-8", "surrogateescape") + b"\0" + content_sha1(body).encode("ascii") + b"\n")
+    head = git(root, ["rev-parse", "HEAD"], 30)
+    return (head.strip()[:12] + "+" if head and head.strip() else "") + digest.hexdigest()[:12]
 
 
 def tracked(root, paths):
@@ -758,16 +993,20 @@ def globs(pats):
     return re.compile("|".join(srcs)) if srcs else None
 
 
-def visible_files(root, man, logs, git=git_out):
-    """The anchor's subject: every file git can see (tracked, and untracked but not ignored - a new file is
-    part of the tree the moment it exists) plus every file under `tree_extra`, the held-out two excepted.
-    None when git cannot answer, or `tree_extra` cannot be read: a gate that cannot name its subject
-    certifies nothing."""
-    out, extra = git(root, ["ls-files", "-co", "--exclude-standard", "-z"]), extra_files(root, man, logs)
-    if out is None or extra is None:
+def visible_files(root, man, logs):
+    """The anchor's subject: every file `walk_tree` lists (tracked, and untracked but not ignored - a new file
+    is part of the tree the moment it exists) plus every file under `tree_extra`, the held-out two excepted.
+    None when the tree or `tree_extra` cannot be read: a gate that cannot name its subject certifies
+    nothing. No git."""
+    extra = extra_files(root, man, logs)
+    try:
+        listed = walk_tree(root)
+    except OSError:
+        return None
+    if extra is None:
         return None
     held = held_out(root, man, logs)
-    paths = {p for p in out.split("\0") if p} | set(extra)
+    paths = set(listed) | set(extra)
     return sorted(p for p in paths if not is_held(p, held) and (Path(root) / p).is_file())
 
 
@@ -807,6 +1046,8 @@ def anchor_read(path):
         raise Refused(f"{p.name}: {exc} - an anchor that cannot be read is not an anchor")
     if not isinstance(data, dict) or not isinstance(data.get("paths"), dict):
         raise Refused(f"{p.name}: no `paths` object - an anchor that cannot be read is not an anchor")
+    if not isinstance(data.get("cases", {}), dict) or not all(isinstance(v, dict) for v in data.get("cases", {}).values()):
+        raise Refused(f"{p.name}: `cases` is no object of scope -> cases - an anchor that cannot be read is not an anchor")
     if data.get("version") != ANCHOR_VERSION:
         return dict(fresh, superseded=data.get("version"))
     return dict(data, superseded=None)
@@ -830,8 +1071,12 @@ def anchor_write(path, data):
     p = Path(path)
     rows = ",\n".join(f"    {json.dumps(k)}: {json.dumps(v, sort_keys=True)}"
                       for k, v in sorted((data.get("paths") or {}).items()))
+    books = ",\n".join(f"    {json.dumps(s)}: {{\n" + ",\n".join(f"      {json.dumps(c)}: {json.dumps(e, sort_keys=True)}"
+                                                       for c, e in sorted(ents.items())) + "\n    }"
+                       for s, ents in sorted((data.get("cases") or {}).items()) if ents)
     text = ('{\n  "version": ' + json.dumps(ANCHOR_VERSION) + ',\n  "note": ' + json.dumps(ANCHOR_NOTE)
-            + ',\n  "paths": {\n' + rows + ("\n" if rows else "") + "  }\n}\n")
+            + ',\n  "paths": {\n' + rows + ("\n" if rows else "") + "  }"
+            + (',\n  "cases": {\n' + books + "\n  }" if books else "") + "\n}\n")
     tmp = p.with_name(p.name + ".tmp")
     tmp.write_text(text, encoding="utf-8", newline="\n")
     replace_retry(tmp, p)
@@ -990,14 +1235,160 @@ def choose(man, st, moved, box, base=None):
     return chosen, why, not_run
 
 
+# ------------------------- a scope whose cases are files: under --changed, only the cases whose file moved
+# PLAYBOOK §A.2 (v12.3, M0-T64b). Beside its paths the anchor keeps, per scope whose `cases_cmd` lists files,
+# each case's content hash at its last GO, the scope's SUITE hash then - its manifest entry, every file its case
+# commands name, every file under `tree_extra` - and the count the case reported. A case runs again when its
+# file is new or moved, or it never went GO; EVERY case runs when the suite moved (a rule that reads across
+# files - a denylist, a shared config - is the suite's), a case id is no file, or a covered path the anchor no
+# longer vouches for is no case: the case-level skip is never wider than the anchor can prove.
+def case_paths(s, ids, visible, held=None, root=None):
+    """{case id: its path from the root} when every listed id names a visible file (read from the scope's
+    `cwd`) or a file the runner holds out of the tree (the logs folder, the anchor: a log can leak a value, so a
+    gate lists it, and its content hash vouches for it like any other), else None: a case that is no file has no
+    bytes the anchor could vouch for."""
+    vis, out = set(visible or ()), {}
+    for c in ids:
+        p = posixpath.normpath(posixpath.join(str(s.get("cwd", ".")).replace("\\", "/"), c))
+        if p not in vis and not (held and root is not None and is_held(p, held) and (Path(root) / p).is_file()):
+            return None
+        out[c] = p
+    return out
+
+
+def named_files(man, root, s):
+    """The files of the tree the scope's `cases_cmd` and `case_cmd` name - a `bash -c "..."` read inside, an
+    `--opt=<file>` after its `=`, a manifest var as the candidate it runs - each from the root. A folder is
+    named too, but as the place the cases are listed from, never as a file every case reads."""
+    root = Path(root).resolve()
+    here = root / str(s.get("cwd", "."))
+    values = {k: next((str(root / c) for c in cands if (root / c).is_file()), None)
+              for k, cands in ({} if "vars" in top_errors(man) else man.get("vars") or {}).items()}
+    out = set()
+
+    def visit(text, depth):
+        try:
+            toks = shlex.split(text)
+        except ValueError:
+            return
+        for tok in toks:
+            if depth < 3 and any(ch.isspace() for ch in tok):
+                visit(tok, depth + 1)
+            for piece in {tok, tok.split("=", 1)[-1]}:
+                for k, v in values.items():
+                    piece = piece.replace("{" + k + "}", v) if v else piece
+                if not piece or piece.startswith("-") or PLACEHOLDER_RE.search(piece):
+                    continue
+                with contextlib.suppress(ValueError, OSError):
+                    full = Path(os.path.normpath(str(here / piece)))
+                    if full.is_file():
+                        out.add(full.relative_to(root).as_posix())
+    for cmd in (s.get("cases_cmd"), s.get("case_cmd")):
+        if isinstance(cmd, str):
+            visit(cmd, 0)
+    return out
+
+
+def suite_hash(man, name, root, logs):
+    """What every case of the scope reads beside its own file, as one hash: its manifest entry (notes aside),
+    every file its case commands name, every file under `tree_extra`. None when `tree_extra` cannot be read:
+    then no case is vouched for."""
+    s, extra = man["scopes"][name], extra_files(root, man, logs)
+    if extra is None:
+        return None
+    parts = [["entry", json.dumps({k: v for k, v in s.items() if not is_note(k)}, sort_keys=True)]]
+    parts += [[p, file_sha256(Path(root) / p) or "absent"] for p in sorted(named_files(man, root, s) | set(extra))]
+    return hashlib.sha256(json.dumps(parts).encode("utf-8")).hexdigest()[:16]
+
+
+def case_vouched(ent, now, suite):
+    """The anchor vouches for a case: an entry at the bytes on disk now, under the suite as it is now."""
+    return (isinstance(ent, dict) and now is not None and ent.get("sha1") == now and ent.get("suite") == suite
+            and isinstance(ent.get("n"), int) and not isinstance(ent.get("n"), bool))
+
+
+def case_pick(us, cases, now, suite, kept, owes):
+    """-> (the units a --changed run runs, its line, the count the vouched cases stand for). `us` the scope's units
+    (label, command, case), `cases` {id: path} or None, `now` {id: content hash} taken before any case ran,
+    `kept` the anchor's entries for the scope, `owes` the covered paths it no longer vouches for (never checked,
+    stale, gone). Never zero cases: every case vouched for, yet the scope chosen, runs them all."""
+    n = len(us)
+
+    def whole(why):
+        return us, f"cases: {n} of {n} (all: {why})", 0
+    if cases is None:
+        return whole("a case id is no file of the tree")
+    if suite is None:
+        return whole("its suite cannot be hashed - `tree_extra` unreadable")
+    if any(isinstance(kept.get(c), dict) and kept[c].get("suite") != suite for c in cases):
+        return whole("its manifest entry, a file its case commands name or a file under `tree_extra` moved")
+    loose = sorted(set(owes) - set(cases.values()))
+    if loose:
+        return whole(f"{loose[0]} moved and is no case" + (f" (+{len(loose) - 1})" if len(loose) > 1 else ""))
+    run = [u for u in us if not case_vouched(kept.get(u[2]), now.get(u[2]), suite)]
+    if not run:
+        return whole("the anchor vouches for every case, yet the scope was chosen")
+    ran = {u[2] for u in run}
+    if len(run) == n:
+        return run, f"cases: {n} of {n} (none vouched by the anchor yet)", 0
+    return run, f"cases: {len(run)} of {n} (the rest vouched by the anchor)", sum(
+        (kept.get(c) or {}).get("n", 0) for c in cases if c not in ran)
+
+
+def suite_chosen(man, root, logs, book, chosen, why, not_run):
+    """A scope left out because no covered path moved is chosen still when its case entries stand on a suite
+    that moved since: a denylist outside its `paths` reddens every case, none of whose files moved."""
+    keep = []
+    for n, g in not_run:
+        kept = book.get(n) or {}
+        h = suite_hash(man, n, root, logs) if kept and "cases_cmd" in man["scopes"][n] else None
+        if kept and "cases_cmd" in man["scopes"][n] and any(e.get("suite") != h for e in kept.values()):
+            chosen, why[n] = chosen + [n], "its suite moved since its cases last went GO (its entry, a file its case commands name, or tree_extra)"
+        else:
+            keep.append((n, g))
+    return [n for n in man["scopes"] if n in chosen], why, keep
+
+
+def cases_advance(path, runs, rec):
+    """The case entries of each booked scope: a case that went GO gains its entry at the bytes it ran against,
+    under the suite it ran under, with the count it reported; one that went red loses it, and so does a case no
+    longer listed. A scope whose ids are no files, or whose suite cannot be hashed, keeps none. -> entries moved."""
+    data, moved = anchor_read(path), 0
+    book = data.setdefault("cases", {})
+    for sr in runs:
+        if sr.case_paths is None or sr.suite is None:
+            moved += len(book.pop(sr.name, None) or {})
+            continue
+        ent = book.setdefault(sr.name, {})
+        for c in [c for c in ent if c not in sr.case_paths]:
+            del ent[c]
+            moved += 1
+        for c, (ok, cnt) in sorted(sr.case_out.items()):
+            new = {"sha1": sr.case_now.get(c), "suite": sr.suite, "n": cnt}
+            if ok and new["sha1"] is not None:
+                if {k: (ent.get(c) or {}).get(k) for k in new} != new:
+                    ent[c] = dict(new, task=rec.get("task"), ts=rec.get("ts"), box=rec.get("box"))
+                    moved += 1
+            elif ent.pop(c, None) is not None:
+                moved += 1
+        if not ent:
+            book.pop(sr.name, None)
+    if moved:
+        anchor_write(path, data)
+    return moved
+
+
 # ------------------------------------------------------- --redarm: one scratch copy per plant, each NO-GO
 def scratch_copy(src, dest):
     """Annex §A.7's copy, in the standard library: the tree without the folders it names (by name, at any
-    depth), `images/` folders kept empty, `.venv` and `node_modules` linked back when they exist."""
+    depth), `images/` folders kept empty, `.venv` and `node_modules` linked back when they exist. A `*.part`
+    file - a running command's output, joined and removed when it ends - is left out: arms side by side
+    write theirs beside the logs while another arm copies the tree, and one gone mid-copy fails the copy."""
     src, dest = Path(src), Path(dest)
 
     def ignore(d, names):
-        return set(names) if os.path.basename(d) in EMPTIED else {n for n in names if n in EXCLUDES}
+        return set(names) if os.path.basename(d) in EMPTIED else {n for n in names if n in EXCLUDES
+                                                                   or n.endswith(".part")}
 
     shutil.copytree(str(src), str(dest), symlinks=True, ignore=ignore)
     for name in LINKS:
@@ -1112,11 +1503,145 @@ def plant(arm, root, copy, man, env, log):
     return None if p.returncode == 0 else f"the plant's command exited {p.returncode}"
 
 
-def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracked_fn=None):
+# ------------------------------------- the red-arm proof: plants already red on the same bytes are not re-run
+def file_sha256(path):
+    """The file's content hash (CRLF read as LF, as `tree_id` reads it), or None when it cannot be read."""
+    with contextlib.suppress(OSError):
+        return hashlib.sha256(normalised(Path(path).read_bytes())).hexdigest()
+    return None
+
+
+def patch_targets(text):
+    """The files a unified diff patches, as `apply_unified` reads its headers (git's a/ b/ dropped); a path
+    outside the tree is left out - the patch never applies, so the plant re-runs as an error anyway."""
+    lines, out = text.splitlines(), []
+    for i, ln in enumerate(lines[:-1]):
+        if not (ln.startswith("--- ") and lines[i + 1].startswith("+++ ")):
+            continue
+        old, new = diff_path(ln[4:]), diff_path(lines[i + 1][4:])
+        if (old.startswith("a/") or old == "/dev/null") and (new.startswith("b/") or new == "/dev/null"):
+            old, new = old[2:] if old != "/dev/null" else old, new[2:] if new != "/dev/null" else new
+        t = (new if new != "/dev/null" else old).replace("\\", "/")
+        if t and not (t.startswith("/") or ".." in t.split("/") or re.match(r"^[A-Za-z]:", t)):
+            out.append(t)
+    return out
+
+
+def fingerprint(man, name, root, visible, tool=None):
+    """What a scope's plants are a function of, as one sha256 (PLAYBOOK §A.2, the red-arm proof): its manifest
+    entry (canonical JSON, notes aside, as `scope_changes` reads it), every visible file its `paths` match,
+    each `.patch` / `.diff` plant file and every file it patches (outside `paths` too; one it creates reads
+    `absent`), the scripts a function plant or the scope's own command names, and this runner. Left out: the
+    toolchain, the interpreter, the drivers, the box's GPU - a proof is read on its own box only. None when it
+    cannot be told (the tree unlisted, a member unreadable): a proof nobody can recompute proves nothing."""
+    s = man["scopes"].get(name)
+    if visible is None or not isinstance(s, dict):
+        return None
+    root, rx = Path(root), globs(s.get("paths"))
+    members = {p: False for p in visible if rx is not None and rx.match(p)}          # path -> may be absent
+    cmds = list(commands(s))
+    for a in s.get("plants") or []:
+        patch = a.get("patch") if isinstance(a, dict) else None
+        if not isinstance(patch, str):
+            continue
+        if not patch.endswith((".patch", ".diff")):
+            cmds.append(patch)
+            continue
+        members[patch] = False
+        with contextlib.suppress(OSError, UnicodeDecodeError):
+            members.update({t: True for t in patch_targets((root / patch).read_text(encoding="utf-8"))
+                            if t not in members})
+    for cmd in cmds:
+        with contextlib.suppress(ValueError):
+            members.update({t: False for t in shlex.split(cmd) if t.endswith(CODE_SUFFIXES) and not t.startswith("-")
+                            and t not in members and (root / t).is_file()})
+    parts = [["entry", json.dumps({k: v for k, v in s.items() if not is_note(k)}, sort_keys=True)]]
+    for p in sorted(members):
+        h = file_sha256(root / p)
+        if h is None and not (members[p] and not (root / p).exists()):
+            return None
+        parts.append([p, h or "absent"])
+    h = file_sha256(Path(tool or __file__))
+    return None if h is None else hashlib.sha256(json.dumps(parts + [["runner", h]]).encode("utf-8")).hexdigest()
+
+
+def newest_redarm(name, logs, box):
+    """(the newest `redarm` record naming this scope on this box - any task's - , its entry), or (None, None)."""
+    last = None
+    with contextlib.suppress(OSError, UnicodeDecodeError):
+        for ln in (Path(logs) / "loop_times.jsonl").read_text(encoding="utf-8").splitlines():
+            with contextlib.suppress(ValueError, AttributeError, TypeError):
+                r = json.loads(ln)
+                if r.get("mode") == "redarm" and r.get("box") == box and name in (r.get("scopes") or {}):
+                    last = r
+    sc = (last or {}).get("scopes")
+    sc = sc.get(name) if isinstance(sc, dict) else None
+    return (last, sc) if isinstance(sc, dict) else (None, None)
+
+
+def redarm_proof(man, name, logs, box, fp):
+    """The newest red-arm record of this scope on this box - any task's - when it still vouches for the scope:
+    GO, every plant RED, the plant ids the manifest's, its fingerprint `fp` (today's). -> (task, ts) or None."""
+    if fp is None:
+        return None
+    ids = {a.get("id") for a in man["scopes"][name].get("plants") or [] if isinstance(a, dict)}
+    last, sc = newest_redarm(name, logs, box)
+    if sc is None or sc.get("verdict") != "GO" or sc.get("fingerprint") != fp:
+        return None
+    plants = sc.get("plants")
+    if not isinstance(plants, dict) or not ids or set(plants) != ids or any(v != "RED" for v in plants.values()):
+        return None
+    return str(last.get("task", "?")), str(last.get("ts", "?"))
+
+
+def clean_proof(name, logs, box, fp):
+    """The clean arm already proven: the newest red-arm record of this scope on this box - any task's - holds a
+    clean GO (or a clean it took as proven) on fingerprint `fp`, today's. -> (task, ts) or None. A record from
+    before the `clean` field: its verdict GO says its clean went GO; a NO-GO one says nothing."""
+    last, sc = newest_redarm(name, logs, box) if fp is not None else (None, None)
+    if sc is None or sc.get("fingerprint") != fp:
+        return None
+    clean = sc.get("clean", "GO" if sc.get("verdict") == "GO" else None)
+    return (str(last.get("task", "?")), str(last.get("ts", "?"))) if clean in ("GO", "PROVEN") else None
+
+
+def arm_workers(s, jobs, n):
+    """How many arms run at once: up to the run's jobs, one at a time for a scope that must run alone - `exclusive`,
+    bound to one `box` (a GPU, a device), or holding `free_ports` (two arms would race for one port)."""
+    if s.get("exclusive") or s.get("box") or s.get("free_ports"):
+        return 1
+    return max(1, min(int(jobs), n))
+
+
+def plant_case(arm):
+    """The one case a plant's arm runs - its `case` - or None: the whole scope."""
+    return arm.get("case") if isinstance(arm, dict) else None
+
+
+def case_listed(sr, case, copy, man, env, task, box):
+    """None when `case` is one of the scope's cases - its `cases`, or what its `cases_cmd` lists in the planted
+    copy - else why not: an arm on a case the scope does not list reads red on that reason alone, a red that
+    proves nothing, so it is an error, never a red and never a skip."""
+    cases = sr.spec.get("cases")
+    if isinstance(cases, (list, dict)):
+        found = [str(c) for c in cases]
+    elif "cases_cmd" in sr.spec:
+        found = [u[2] for u in units(sr, None, copy, man, env, task, box)]
+        if sr.reasons or sr.skip:
+            return f"cannot be checked: the scope's `cases_cmd` lists none ({'; '.join(sr.reasons) or sr.skip})"
+    else:
+        return "names a case of a scope that has none (no `cases`, no `cases_cmd`)"
+    return None if case in found else f"`{case}` is not one of the scope's cases ({', '.join(found[:8]) or 'none'})"
+
+
+def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracked_fn=None, tool=None):
     """The red-arm campaign of one scope: a fresh scratch copy per arm - the clean copy must go GO (a red
-    with no plant proves nothing), then each declared plant, planted in its own copy, must go NO-GO; a
-    timeout or a command that did not start is an error, never a red. The tree itself is never written
-    but for the campaign's log."""
+    with no plant proves nothing), each declared plant, planted in its own copy, must go NO-GO; a timeout
+    or a command that did not start is an error, never a red. The arms run side by side, up to `jobs`
+    (`arm_workers`: a scope that must run alone, one at a time), the jobs shared out between them; their
+    lines, logs and record in declared order. A plant's `case` runs that case alone. The clean arm is not
+    re-run when the newest red-arm record on this box holds a clean GO on today's fingerprint (`clean_proof`).
+    The tree itself is never written but for the campaign's log."""
     box, root = box or this_box(), Path(root)
     logs = Path(logs) if logs else logs_of(man, root)
     if name not in man["scopes"]:
@@ -1140,62 +1665,160 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
         raise Refused(refused)
     one = dict(man, scopes={name: s})
     env = case_env(task)
-    lines, fails, red, green, errors, t0 = [], [], 0, 0, 0, time.monotonic()
+    t0 = time.monotonic()
+    fp = fingerprint(man, name, root, visible_files(root, man, logs), tool)       # the bytes, before
+    proof = clean_proof(name, logs, box, fp)
+    todo = [(i, arm) for i, arm in enumerate([None] + plants) if arm is not None or not proof]
+    workers = arm_workers(s, jobs, len(todo))
+    inner = max(1, int(jobs) // workers)                     # the run's jobs shared out between the arms
+    part = lambda i: Path(f"{log}.arm{i}.part")              # noqa: E731 - each arm's own log, joined in order
     tmp = Path(tempfile.mkdtemp(prefix="pb-redarm-"))
-    arms = {}
-    try:
-        for i, arm in enumerate([None] + plants):
-            label = "clean" if arm is None else f"plant {arm['id']}"
-            copy = tmp / f"arm{i}"
-            scratch_copy(root, copy)
-            with LOCK, open(log, "a", encoding="utf-8") as fh:
-                fh.write(f"==== {stamp()} {name} · {label} · a fresh scratch copy of the tree\n")
-            if arm is not None:
-                why = plant(arm, root, copy, one, env, log)
+
+    def arm_run(i, arm):
+        """One arm in its own copy -> (why it is an error, or None; its scope's row, or None)."""
+        label = "clean" if arm is None else f"plant {arm['id']}"
+        with LOCK, open(part(i), "a", encoding="utf-8") as fh:
+            fh.write(f"==== {stamp()} {name} · {label} · a fresh scratch copy of the tree\n")
+        copy = tmp / f"arm{i}"
+        scratch_copy(root, copy)
+        case = plant_case(arm)
+        if arm is not None:
+            why = plant(arm, root, copy, one, env, part(i))
+            if why:
+                return why, None
+            if case is not None:
+                why = case_listed(ScopeRun(name, s, 0, part(i)), case, copy, one, env, task, box)
                 if why:
-                    errors += 1
-                    arms[arm["id"]] = "ERROR"
-                    lines.append(f"{name} · {label} · ERROR ({why})")
-                    fails.append(f"{label}: {why} - an error, not a red")
-                    continue
-            r = run_scopes(one, [name], copy, task, jobs, mode="redarm", box=box, logs=logs, log_for=lambda n: log,
-                           anchor=False, record=False, tracked_fn=lambda _r, _p: [])
-            row = r["data"]["rows"][0]
-            if arm is None:
-                lines.append(f"{name} · clean · {row['verdict']}")
-                if row["verdict"] != "GO":
-                    fails.append(f"clean: {'; '.join(row['reasons'])} - red with no plant, so a red plant would prove "
-                                 f"nothing; the plants did not run")
-                    break
-                continue
-            honest = row["verdict"] == "NO-GO" and not any(
-                k in x for x in row["reasons"] for k in ("timed out", "not started", "NOT RUN ("))
-            arms[arm["id"]] = "RED" if honest else "GREEN" if row["verdict"] == "GO" else "ERROR"
-            if honest:
-                red += 1
-                lines.append(f"{name} · {label} · RED (proven: {'; '.join(row['reasons'])[:120]})")
-            elif row["verdict"] == "GO":
-                green += 1
-                lines.append(f"{name} · {label} · GREEN (unfailable)")
-                fails.append(f"{label}: stayed GO - the scope cannot see this bug")
-            else:
-                errors += 1
-                lines.append(f"{name} · {label} · ERROR ({'; '.join(row['reasons'])})")
-                fails.append(f"{label}: {'; '.join(row['reasons'])} - an error, not a red")
+                    return f"its `case` {why}", None
+        r = run_scopes(one, [name], copy, task, inner, case=case, mode="redarm", box=box, logs=logs,
+                       log_for=lambda n: part(i), anchor=False, record=False, tracked_fn=lambda _r, _p: [])
+        return None, r["data"]["rows"][0]
+
+    done = {}
+    try:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            futs = {i: pool.submit(arm_run, i, arm) for i, arm in todo}
+            if 0 in futs and futs[0].result()[1]["verdict"] != "GO":
+                for f in futs.values():                       # a red clean: the arms not started never start
+                    f.cancel()
+            done = {i: f.result() for i, f in futs.items() if not f.cancelled()}
     finally:
+        with LOCK, open(log, "a", encoding="utf-8") as fh:
+            if proof:
+                fh.write(f"==== {stamp()} {name} · clean: proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]})\n")
+            for i, _arm in todo:                              # declared order, whatever order they ended in
+                with contextlib.suppress(OSError):
+                    fh.write(part(i).read_text(encoding="utf-8", errors="replace"))
+                    part(i).unlink()
         shutil.rmtree(str(tmp), ignore_errors=True)               # this campaign's own copies
+    lines, fails, red, green, errors, arms = [], [], 0, 0, 0, {}
+    if proof:
+        clean = "PROVEN"
+        lines.append(f"{name} · clean: proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]})")
+    else:
+        row = done[0][1]
+        clean = row["verdict"]
+        lines.append(f"{name} · clean · {clean}")
+        if clean != "GO":
+            fails.append(f"clean: {'; '.join(row['reasons'])} - red with no plant, so a red plant would prove "
+                         f"nothing; the plants are not counted")
+    for i, arm in enumerate(plants, 1):
+        if clean not in ("GO", "PROVEN"):
+            break
+        label = f"plant {arm['id']}" + (f" (case {plant_case(arm)})" if plant_case(arm) is not None else "")
+        why, row = done[i]
+        if why:
+            errors += 1
+            arms[arm["id"]] = "ERROR"
+            lines.append(f"{name} · {label} · ERROR ({why})")
+            fails.append(f"{label}: {why} - an error, not a red")
+            continue
+        honest = row["verdict"] == "NO-GO" and not any(
+            k in x for x in row["reasons"] for k in ("timed out", "not started", "NOT RUN (", "no case `"))
+        arms[arm["id"]] = "RED" if honest else "GREEN" if row["verdict"] == "GO" else "ERROR"
+        if honest:
+            red += 1
+            lines.append(f"{name} · {label} · RED (proven: {'; '.join(row['reasons'])[:120]})")
+        elif row["verdict"] == "GO":
+            green += 1
+            lines.append(f"{name} · {label} · GREEN (unfailable)")
+            fails.append(f"{label}: stayed GO - the scope cannot see this bug")
+        else:
+            errors += 1
+            lines.append(f"{name} · {label} · ERROR ({'; '.join(row['reasons'])})")
+            fails.append(f"{label}: {'; '.join(row['reasons'])} - an error, not a red")
     secs = round(time.monotonic() - t0, 2)
     if record:
+        if fp is not None and fingerprint(man, name, root, visible_files(root, man, logs), tool) != fp:
+            fp = None                          # the bytes moved under the campaign: its arms saw two trees, no proof
         rec = {"ts": stamp(), "task": task, "mode": "redarm", "seconds": secs, "tree": tree_id(root, man, logs),
-               "verdict": "NO-GO" if fails or not red else "GO", "box": box, "python": PYTHON,
-               "scopes": {name: {"plants": arms, "verdict": "NO-GO" if fails or not red else "GO"}}}
+               "verdict": "NO-GO" if fails or not red else "GO", "box": box, "python": PYTHON, "arms_at_once": workers,
+               "scopes": {name: {"plants": arms, "verdict": "NO-GO" if fails or not red else "GO",
+                                 "clean": clean, "fingerprint": fp}}}
+        load, load_source = sample_load()                  # after `secs`: sampling never bills the campaign
+        rec.update(load=load, load_source=load_source, cpus=os.cpu_count())
+        normalise(rec, man)
         with LOCK, open(logs / "loop_times.jsonl", "a", encoding="utf-8") as fh:
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     counts = (f"redarm: {len(plants)} plants · {red} red · {green} green · {errors} errors · scope {name} · {secs:.2f} s · "
+              f"{workers} arm(s) at a time · "
               f"box {box} · log {rel(log, root)}")
     return result(counts, failures=fails, lines=lines,
                   nogo=None if not fails and red else ("zero plants red" if not fails else None),
-                  red=red, green=green, errors=errors)
+                  red=red, green=green, errors=errors, clean=clean, workers=workers)
+
+
+def moved_sweep(man, root, task, jobs, box=None, logs=None, tool=None):
+    """--redarm --moved, the heavy tier's re-proof sweep (PLAYBOOK §A.2): every armed scope the red-arm proof no
+    longer vouches for on this box - no record, another fingerprint, a NO-GO, a plant not RED, the ids moved - is
+    red-armed, one campaign each, each writing its own record; the rest are named with the proof they stand on.
+    GO only when every campaign is GO; nothing moved is GO, named; no armed scope at all is NO-GO."""
+    box, root = box or this_box(), Path(root)
+    logs = Path(logs) if logs else logs_of(man, root)
+    bl = blocked(man)
+    armed = [n for n, s in man["scopes"].items() if isinstance(s, dict) and s.get("plants")]
+    if not armed:
+        return result(f"moved: 0 of 0 armed scopes, plants RED 0, GREEN 0, ERROR 0 · box {box}",
+                      nogo="no scope declares plants - nothing to sweep (§8: a check ships red-armed)")
+    visible = visible_files(root, man, logs)
+    if visible is None:
+        raise Refused("the tree's files cannot be listed (a folder or .gitignore is unreadable) - no fingerprint, "
+                      "so the sweep cannot tell a moved scope: nothing ran")
+    t0, lines, fails, n = time.monotonic(), [], [], {"moved": 0, "here": 0, "red": 0, "green": 0, "errors": 0}
+    for name in armed:
+        s = man["scopes"][name]
+        if name in bl:
+            lines.append(f"{name} · NOT RUN ({bl[name]})")
+            fails.append(f"{name}: NOT RUN ({bl[name]}) - the sweep cannot vouch for a scope it cannot run")
+            continue
+        if "placeholder" in s:
+            lines.append(f"{name} · SKIP (placeholder until {s['placeholder']})")
+            continue
+        if owed_on(s, box):
+            lines.append(f"{name} · owed on {s['box']} (this box: {box}) - swept there, never NO-GO here")
+            continue
+        n["here"] += 1
+        fp = fingerprint(man, name, root, visible, tool)
+        proof = redarm_proof(man, name, logs, box, fp)
+        if proof:
+            lines.append(f"{name} · proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]}) - not moved")
+            continue
+        n["moved"] += 1
+        try:
+            r = redarm(man, name, root, task, jobs, box=box, logs=logs, tool=tool)
+        except Refused as exc:
+            lines.append(f"{name} · refused ({exc})")
+            fails.append(f"redarm {name}: {exc}")
+            continue
+        lines += r["lines"] + [r["counts"]]
+        for k in ("red", "green", "errors"):
+            n[k] += r["data"].get(k, 0)
+        fails += [f"redarm {name}: {x}" for x in (r["failures"] or ([r["nogo"]] if r["nogo"] else []))]
+    if not n["moved"] and not fails:
+        lines.append(f"nothing moved: every armed scope on this box stands on its proof ({n['here']})")
+    counts = (f"moved: {n['moved']} of {n['here']} armed scopes, plants RED {n['red']}, GREEN {n['green']}, "
+              f"ERROR {n['errors']} · {time.monotonic() - t0:.2f} s · box {box}")
+    return result(counts, failures=fails, lines=lines, **n)
 
 
 # --------------------------------------------------- the loop's flags: an oracle edit, a write off its type
@@ -1237,12 +1860,149 @@ def manifest_changes(man, root, manifest, rev, git=git_out):
         olds = (json.loads(old).get("scopes") or {}) if old is not None else None
     except (ValueError, AttributeError):
         olds = None
+    return scope_changes(man, olds)
+
+
+def scope_changes(man, olds):
+    """{scope: 'added' | 'changed'} of the manifest in `man` against the scopes mapping `olds`, a note's
+    wording aside; None when `olds` is no mapping."""
     if not isinstance(olds, dict):
         return None
     canon = lambda s: json.dumps({k: v for k, v in s.items() if not is_note(k)} if isinstance(s, dict) else s,  # noqa: E731
                                  sort_keys=True)
     return {n: ("added" if n not in olds else "changed") for n, s in man["scopes"].items()
             if n not in olds or not isinstance(olds[n], dict) or canon(s) != canon(olds[n])}
+
+
+# ----------------------------------------- the task's own start: the tree as the task found it (PLAYBOOK §A.2)
+# `start` records, once per task, every file the walk lists (size, mtime, content hash) and the manifest's text,
+# under <logs_dir>/.baseline/ - per box, never committed (a `.gitignore` of `*` inside), held out of the
+# anchor's subject as the logs folder is. The loop reads what THIS task changed against it, never HEAD: a
+# commit between tasks - or none - no longer decides how much a check runs, and no repository is needed.
+def baseline_dir(man, root):
+    return logs_of(man, root) / ".baseline"
+
+
+def read_baseline(path):
+    """The baseline record at `path`, or None when it is absent or no record of ours."""
+    try:
+        rec = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return rec if isinstance(rec, dict) and isinstance(rec.get("files"), dict) and rec.get("task") else None
+
+
+def baselines(man, root):
+    """Every baseline on this box, newest first: [(epoch, record)]."""
+    bdir = baseline_dir(man, root)
+    got = [(rec.get("epoch") or 0, rec) for rec in (read_baseline(p) for p in sorted(bdir.glob("*.json")))
+           if rec is not None] if bdir.is_dir() else []
+    return sorted(got, key=lambda t: -t[0])
+
+
+def snapshot(root, man, logs, prev=None):
+    """{path: [size, mtime_ns, content hash]} of every file `walk_tree` lists, the logs folder and the anchor
+    held out (every run rewrites them); `tree_extra` is the anchor's, not the task's. A file whose size and
+    mtime match `prev`'s entry (the newest baseline's) keeps that hash - no re-read. None when the tree cannot
+    be listed or a listed file cannot be read: a start that cannot name the tree certifies nothing."""
+    try:
+        held = held_out(root, man, logs)
+        paths = [p for p in walk_tree(root) if not is_held(p, held)]
+    except OSError:
+        return None
+    out = {}
+    for p in paths:
+        try:
+            st = os.stat(Path(root) / p)
+            old = (prev or {}).get(p)
+            if old and old[0] == st.st_size and old[1] == st.st_mtime_ns:
+                out[p] = list(old)
+            else:
+                out[p] = [st.st_size, st.st_mtime_ns, content_sha1((Path(root) / p).read_bytes())]
+        except OSError:
+            return None
+    return out
+
+
+def cmd_start(man, a, root, manifest):
+    """`start --task <ID>`: write the task's baseline once; a second call for the same id keeps the first (an
+    escalated or resumed task keeps its start) unless --fresh. One line: `baseline: <ID>, <n> files, <ts>`."""
+    task = task_of(a)
+    bdir = baseline_dir(man, root)
+    target, kept = bdir / f"{task}.json", None
+    first = read_baseline(target)
+    if first is not None and not a.fresh:
+        kept = first
+    else:
+        logs = logs_of(man, root)
+        known = baselines(man, root)
+        files = snapshot(root, man, logs, known[0][1]["files"] if known else None)
+        if files is None:
+            raise Refused("the tree's files cannot be listed or read (a folder, a .gitignore or a file is unreadable) "
+                          "- a start that cannot name the tree certifies nothing")
+        try:
+            text = Path(manifest).read_text(encoding="utf-8")
+        except OSError:
+            text = ""
+        kept = {"version": 1, "task": task, "ts": stamp(), "epoch": time.time(), "manifest": text, "files": files}
+        bdir.mkdir(parents=True, exist_ok=True)
+        (bdir / ".gitignore").write_text("*\n", encoding="utf-8")
+        tmp = bdir / f"{task}.json.tmp"
+        tmp.write_text(json.dumps(kept, ensure_ascii=False), encoding="utf-8")
+        os.replace(tmp, target)
+        for _epoch, old in baselines(man, root)[BASELINES_KEPT:]:
+            with contextlib.suppress(OSError):
+                (bdir / f"{old['task']}.json").unlink()
+    line = f"baseline: {task}, {len(kept['files'])} files, {kept['ts']}"
+    return result(f"start: {task} · {len(kept['files'])} files · {'kept' if kept is first and not a.fresh else 'written'}"
+                  f" · box {this_box()}", lines=[line], baseline=line)
+
+
+def touched_of(now, old):
+    """{added, modified, deleted}: the paths `now` adds to, changes in and drops from `old` (a start's files),
+    by content hash - the task's own changes, as its claim record names them."""
+    return {"added": sorted(p for p in now if p not in old),
+            "modified": sorted(p for p in now if p in old and now[p][2] != old[p][2]),
+            "deleted": sorted(p for p in old if p not in now)}
+
+
+def touched_git(root, rev, git=git_out):
+    """{added, modified, deleted} against the named commit (--base), untracked files as added; None when git
+    cannot list them."""
+    d, u = git(root, ["diff", "--name-status", "--no-renames", "-z", rev, "--"]), git(root, ["ls-files", "-o", "--exclude-standard", "-z"])
+    if d is None or u is None:
+        return None
+    out, parts = {k: set() for k in TOUCH_KINDS}, d.split("\0")
+    for st, p in zip(parts[0::2], parts[1::2]):
+        if p:
+            out[{"A": "added", "D": "deleted"}.get(st[:1], "modified")].add(p)
+    out["added"] |= {p for p in u.split("\0") if p}
+    return {k: sorted(v) for k, v in out.items()}
+
+
+def loop_base(man, root, task, manifest, git=git_out, now=None):
+    """What the loop reads this task's changes against: -> {changed, touched, mchanges, label, line}. The task's
+    own start; else the newest start on this box, named; else none - every scope with plants re-armed once and no
+    path flagged. `touched` is {added, modified, deleted} or None, `changed` their union, `mchanges` {scope:
+    added|changed} or None, all against the baseline - never HEAD. `line` is the `base:` line for the counts'
+    tail; the claim record keeps it, so a list read against another task's start says whose."""
+    known = baselines(man, root)
+    own = next((r for _e, r in known if r["task"] == task), None)
+    base = own or (known[0][1] if known else None)
+    if base is None:
+        armed = {n: "added" for n, s in man["scopes"].items() if isinstance(s, dict) and s.get("plants")}
+        return {"changed": None, "touched": None, "mchanges": armed, "label": "no start",
+                "line": "base: none \u2014 every plant"}
+    now = snapshot(root, man, logs_of(man, root)) if now is None else now
+    touched = None if now is None else touched_of(now, base["files"])
+    changed = None if touched is None else sorted(p for k in TOUCH_KINDS for p in touched[k])
+    try:
+        olds = json.loads(base.get("manifest") or "").get("scopes")
+    except (ValueError, AttributeError):
+        olds = None
+    label = f"{base['task']}'s start"
+    line = f"base: {label} {base['ts']}" + ("" if own else f" \u2014 no start for {task}")
+    return {"changed": changed, "touched": touched, "mchanges": scope_changes(man, olds), "label": label, "line": line}
 
 
 def command_paths(man):
@@ -1278,7 +2038,7 @@ def loop_flags(block, changed, mchanges, man, manifest_rel, task, rev):
     if block is None:
         return [f"flags: {task} is no block of a plan under milestones/ - no Deliver and no type to read them against"]
     if changed is None:
-        return ["flags: git could not list the changed paths - no flag read"]
+        return ["flags: no base to list the changed paths against (no start, or git could not list them) - no flag read"]
     deliver, lines = block["deliver"], []
     named = lambda p: names(deliver, p) or names(deliver, os.path.basename(p))  # noqa: E731
     checks = command_paths(man)
@@ -1296,37 +2056,58 @@ def loop_flags(block, changed, mchanges, man, manifest_rel, task, rev):
 
 
 def loop_checks(man, root, task, jobs, box, manifest, base_sha=None, git=git_out, block=False, changed=False,
-                mchanges=False):
+                mchanges=False, label=None, tool=None, proven=None):
     """What the loop adds to its scopes (PLAYBOOK §8, §A.2): the plants of every scope added or changed
-    since the base (HEAD unless --base names one) run, and must each go NO-GO; the flags. -> (lines, failures)."""
+    since the base run, and must each go NO-GO - unless a red-arm record on this box, any task's, already
+    proves them on the same bytes (`redarm_proof`; `proven` collects {scope: "<task> <ts> <fp 12>"} for the
+    claim's record); the flags. The base is the task's own start (`loop_base`, which hands `changed`,
+    `mchanges` and `label` in); a `--base` commit reads git; passing neither reads HEAD. -> (lines, failures)."""
     rev, lines, fails = base_sha or "HEAD", [], []
+    label = label or rev[:12]
     manifest_rel = rel(manifest, root)
     block = find_block(root, task) if block is False else block
     changed = changed_paths(root, rev, git) if changed is False else changed
     mchanges = manifest_changes(man, root, manifest, rev, git) if mchanges is False else mchanges
     if mchanges is None:
-        lines.append(f"plants: git cannot show {manifest_rel} at {rev[:12]} - the scopes added or changed are unknown")
-    bl = blocked(man)
+        lines.append(f"plants: {manifest_rel} as of {label} cannot be read - the scopes added or changed are unknown")
+    bl, logs, visible = blocked(man), logs_of(man, root), False
     for n, how in sorted((mchanges or {}).items()):
         s = man["scopes"][n]
         if n in bl or "placeholder" in s or owed_on(s, box):          # a NOT RUN scope is named on its own line
             continue
         if not s.get("plants"):
-            lines.append(f"FLAG plants: scope `{n}` {how} since {rev[:12]} and declares no plant - a check it "
+            lines.append(f"FLAG plants: scope `{n}` {how} since {label} and declares no plant - a check it "
                          f"cannot fail is not a check (§8)")
+            continue
+        visible = visible_files(root, man, logs) if visible is False else visible
+        fp = fingerprint(man, n, root, visible, tool)
+        proof = redarm_proof(man, n, logs, box, fp)
+        if proof:
+            lines.append(f"{n} · red-arm proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]}) - not re-run")
+            if proven is not None:
+                proven[n] = f"{proof[0]} {proof[1]} {fp[:12]}"
             continue
         r = redarm(man, n, root, task, jobs, box=box, record=False)
         lines += r["lines"] + [r["counts"]]
         fails += [f"redarm {n}: {x}" for x in (r["failures"] or ([r["nogo"]] if r["nogo"] else []))]
-    return lines + loop_flags(block, changed, mchanges, man, manifest_rel, task, rev[:12]), fails
+    return lines + loop_flags(block, changed, mchanges, man, manifest_rel, task, label), fails
+
+
+def loop_bill(elapsed, before_s, hook_s):
+    """The claim's two clocks, each second once: `seconds` the scopes alone, as every record has it;
+    `loop_seconds` what the loop adds - its base read before the scopes, its plants and flags after them."""
+    return {"seconds": elapsed, "loop_seconds": round(before_s + hook_s, 3)}
 
 
 # ----------------------------------------------------------------------------------------------------- a run
 def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, logs=None, log_for=None,
                anchor=True, gate=False, visible=None, not_run=(), why=None, hook=None, record=True,
-               tracked_fn=None, extra=None):
+               tracked_fn=None, extra=None, pick=None, reuse=False):
     """Run these scopes: the plain ones in parallel (jobs), the exclusive ones alone after them, the smoke last
-    on --all; one record appended; the anchor advanced by the green scopes; with `gate`, the anchor graded."""
+    on --all; one record appended; the anchor advanced by the green scopes; with `gate`, the anchor graded.
+    `pick` ({"cases", "by_scope"}, --changed's): a scope whose cases are files runs the cases that moved.
+    `reuse` (a scoped or `--case` run's, never the loop's): a scope the task's newest record on this box has GO on
+    today's tree id is not re-run, unless it declares `rerun` (M0-T64c)."""
     box, root = box or this_box(), Path(root)
     logs = Path(logs) if logs else logs_of(man, root)
     log_for = log_for or (lambda n: logs / f"{task}.{n}.log")
@@ -1335,21 +2116,26 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     specs = [(n, man["scopes"][n], bl.get(n)) for n in names]         # (name, spec, why it is NOT RUN or None)
     if mode == "all" and (man.get("smoke") or "smoke" in parts):
         specs.append(("smoke", {"cmd": man["smoke"], "exclusive": True}, parts.get("smoke")))
+    tree = tree_id(root, man, logs) if record else None
+    green = {}
+    if reuse and tree:
+        recs = records_in(logs / "loop_times.jsonl")[1]
+        green = {n: g for n, s, no in specs if not no and "placeholder" not in s and not owed_on(s, box)
+                 and not s.get("rerun") and (g := green_cover(recs, task, box, tree, n, case))}
     refused = refuse_log(root, [log_for(n) for n, s, no in specs if not no and "placeholder" not in s
-                                and not owed_on(s, box)], tracked_fn)
+                                and not owed_on(s, box) and n not in green], tracked_fn)
     if refused:                                  # nothing opened, nothing spawned, no record: the run did not happen
         raise Refused(refused)
     load_start, _src = sample_load()
     apath = anchor_path(man, root)
     use_anchor = (anchor and case is None and apath is not None and not anchor_off(man)
-                  and any(s.get("paths") for _n, s, no in specs if not no))
+                  and any(s.get("paths") for n, s, no in specs if not no and n not in green))
     if (use_anchor or gate) and visible is None:
         visible = visible_files(root, man, logs)
         if visible is None and gate:
-            raise Refused("git could not list the tree's files - the anchor cannot name its subject")
-    snap = (anchor_snapshot(man, root, [n for n, _s, no in specs if not no], visible)
+            raise Refused("the tree's files cannot be listed (a folder or .gitignore is unreadable) - the anchor cannot name its subject")
+    snap = (anchor_snapshot(man, root, [n for n, _s, no in specs if not no and n not in green], visible)
             if use_anchor and visible is not None else {})
-    tree = tree_id(root, man, logs) if record else None
     env = case_env(task)
     t0, runs, todo = time.monotonic(), [], []
     for name, s, no in specs:
@@ -1358,12 +2144,28 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
         runs.append(sr)
         if no:
             sr.notrun = no                                            # never run without the setting it holds
+        elif name in green:                                           # already GO on this tree: nothing runs
+            sr.green = green[name]
+            sr.passed, sr.failed, sr.skipped = (int(green[name][1].get(k) or 0) for k in ("passed", "failed", "skipped"))
         elif "placeholder" in s:
             sr.skip = f"placeholder until {s['placeholder']}"
         elif owed_on(s, box):
             sr.owed = s["box"]
         else:
-            todo += [(sr,) + u for u in units(sr, case, root, man, env, task, box)]
+            us = units(sr, case, root, man, env, task, box)
+            if use_anchor and visible is not None and s.get("paths") and sr.listed and us:
+                sr.booked = True                                               # hashed BEFORE any case runs
+                sr.case_paths = case_paths(s, sr.listed, visible, held_out(root, man, logs), root)
+                sr.suite = suite_hash(man, name, root, logs)
+                sr.case_now = {c: sha1_of(root, f) for c, f in (sr.case_paths or {}).items()}
+                if pick is not None:
+                    bs = (pick.get("by_scope") or {}).get(name) or {}
+                    us, sr.pick, sr.vouched_n = case_pick(us, sr.case_paths, sr.case_now, sr.suite,
+                                                          (pick.get("cases") or {}).get(name) or {},
+                                                          list(bs.get("never", [])) + list(bs.get("stale", []))
+                                                          + list(bs.get("gone", [])))
+                    sr.vouched = len(sr.listed) - len(us)
+            todo += [(sr,) + u for u in us]
 
     def one(u):
         sr, label, cmd, value = u
@@ -1380,6 +2182,7 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     elapsed = round(time.monotonic() - t0, 3)          # taken before the end sample: sampling never bills the run
     load, load_source = sample_load()
     ran = [sr for sr in runs if sr.ran()]
+    kept = [sr for sr in runs if sr.green]                 # not re-run: counted as the run they were, named in the record
     reds = [sr for sr in ran if sr.red()]
     rec = {"ts": stamp(), "task": task, "mode": mode, "seconds": elapsed, "verdict": None, "tree": tree, "box": box,
            "python": PYTHON, "os": platform.system(), "load_start": load_start, "load": load,
@@ -1387,10 +2190,15 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     rec.update({k: v for k, v in (extra or {}).items() if v is not None})
     if case is not None:
         rec["case"] = case
+    if kept:
+        rec["not_rerun"] = {sr.name: sr.green[0] for sr in kept}
     moved = anchor_advance(man, root, {sr.name for sr in ran if not sr.red() and sr.name != "smoke"},
                            {sr.name for sr in reds if sr.name != "smoke"}, snap, rec, apath, visible) if snap else 0
+    booked = [sr for sr in ran if sr.booked]
+    moved += cases_advance(apath, booked, rec) if booked else 0
     unrun = [sr for sr in runs if sr.notrun]
     lines = manifest_lines(man) + [f"why {n}: {w}" for n, w in (why or {}).items()]
+    lines += [f"{sr.name} {sr.pick}" for sr in runs if sr.pick]
     w = max([len(sr.name) for sr in runs] + [len(n) for n, _g in not_run] + [8]) + 2
     lines += [sr.line(w, box) for sr in runs] + [f"{n:<{w}}NOT RUN ({g})" for n, g in not_run]
     failures = [f"{sr.name}: {'; '.join(sr.red())} · log {rel(sr.log, root)}" for sr in reds]
@@ -1399,9 +2207,11 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
                                                                 else "the gate cannot vouch for a scope it cannot run")
                      for sr in unrun]
     if hook:
+        th = time.monotonic()
         hook_lines, hook_fails = hook()
         lines += hook_lines
         failures += hook_fails
+        rec.update(loop_bill(elapsed, rec.get("loop_seconds") or 0.0, time.monotonic() - th))
     tail = []
     if snap or gate:
         with contextlib.suppress(Refused, OSError):
@@ -1414,23 +2224,25 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
                 why_not = anchor_nogo(st)
                 if why_not:
                     failures.append(f"anchor: {why_not}")
-    passed, failed, skipped = (sum(getattr(sr, k) for sr in ran) for k in ("passed", "failed", "skipped"))
+    passed, failed, skipped = (sum(getattr(sr, k) for sr in ran + kept) for k in ("passed", "failed", "skipped"))
     if passed == 0 and not failures:
         failures.append("zero passed in total" + (" - every scope named is NOT RUN, each named above"
                                                   if unrun and not ran else ""))
     rec["verdict"] = "NO-GO" if failures else "GO"
-    rec["scopes"] = {sr.name: sr.record() for sr in runs}
+    rec["scopes"] = {sr.name: sr.record() for sr in runs if not sr.green}
     rec["scopes"].update({n: {"verdict": "NOT RUN", "reason": g} for n, g in not_run})
+    normalise(rec, man)                                    # after the loop's bill: its seconds normalised too
     if record:
         with LOCK, open(logs / "loop_times.jsonl", "a", encoding="utf-8") as fh:   # append-only: one line
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     lines.append(f"logs: {rel(logs, root)}/{task}.<scope>.log · record: loop_times.jsonl · tree {tree}")
     lines += tail
     partial = f" · PARTIAL, not the loop (--case {case})" if case is not None else ""
-    n_go = sum(1 for sr in ran if not sr.red())
-    counts = (f"verify: {passed} passed, {failed} failed, {skipped} skipped · {n_go}/{len(ran)} scopes GO · "
+    n_go = sum(1 for sr in ran if not sr.red()) + len(kept)
+    counts = (f"verify: {passed} passed, {failed} failed, {skipped} skipped · {n_go}/{len(ran) + len(kept)} scopes GO · "
               f"{sum(1 for sr in runs if sr.skip)} skipped · {sum(1 for sr in runs if sr.owed)} owed · "
-              f"{len(unrun)} NOT RUN · {len(not_run)} not impacted · {elapsed:.2f} s · mode {mode}{partial} · "
+              f"{f'{len(kept)} not re-run · ' if kept else ''}{len(unrun)} NOT RUN · {len(not_run)} not impacted · {elapsed:.2f} s"
+              + (f" + loop {rec['loop_seconds']:.2f} s" if is_num(rec.get("loop_seconds")) else "") + f" · mode {mode}{partial} · "
               f"jobs {jobs} · box {box} · "
               f"python {PYTHON} · load {load_start}->{load if load is not None else load_source}")
     rows = [dict(sr.record(), scope=sr.name, reasons=sr.red(), log=str(sr.log), started=sr.started, ended=sr.ended)
@@ -1447,9 +2259,9 @@ def task_of(a):
     return task
 
 
-def changed_run(man, root, task, jobs, base=None, box=None, git=git_out, visible=None, hook=None):
+def changed_run(man, root, task, jobs, base=None, box=None, git=git_out, visible=None, hook=None, extra=None):
     """--changed: every scope a changed path touches, chosen from the coverage anchor; then the gate - a path
-    no scope has checked, or no scope covers, is NO-GO."""
+    no scope has checked, or no scope covers, is NO-GO. `extra`: the loop's record fields (`loop_hook`)."""
     box, root, bl = box or this_box(), Path(root), blocked(man)
     off = anchor_off(man)
     if off:
@@ -1459,13 +2271,14 @@ def changed_run(man, root, task, jobs, base=None, box=None, git=git_out, visible
                       "scope's paths and skip classes (docs/agent/testing.md), seed the anchor with one --all, "
                       "or run --all")
     logs = logs_of(man, root)
-    visible = visible_files(root, man, logs, git) if visible is None else visible
+    visible = visible_files(root, man, logs) if visible is None else visible
     if visible is None:
-        raise Refused("git could not list the tree's files - --changed cannot name its subject, so it certifies nothing")
+        raise Refused("the tree's files cannot be listed (a folder or .gitignore is unreadable) - --changed cannot name its subject, so it certifies nothing")
     sha = resolve_base(root, base, git) if base is not None else None
     moved = moved_since(root, sha, git) if sha else set()
-    st = anchor_status(man, root, anchor_read(anchor_path(man, root)), visible, box)
-    chosen, why, not_run = choose(man, st, moved, box, base)
+    anchor = anchor_read(anchor_path(man, root))
+    st = anchor_status(man, root, anchor, visible, box)
+    chosen, why, not_run = suite_chosen(man, root, logs, anchor.get("cases") or {}, *choose(man, st, moved, box, base))
     if not [n for n in chosen if n in bl or ("placeholder" not in man["scopes"][n] and not owed_on(man["scopes"][n], box))]:
         return result(f"verify: 0 passed, 0 failed, 0 skipped · 0 scopes chosen · {len(not_run)} not impacted · "
                       f"mode changed · box {box}",
@@ -1473,7 +2286,28 @@ def changed_run(man, root, task, jobs, base=None, box=None, git=git_out, visible
                       nogo="nothing changed since every scope's last GO: no scope to run, zero cases - the anchor "
                            "already vouches for this tree (a loop on it is waste)")
     return run_scopes(man, chosen, root, task, jobs, mode="changed", box=box, gate=True, visible=visible,
-                      not_run=not_run, why=why, hook=hook, extra={"base": sha})
+                      not_run=not_run, why=why, hook=hook, extra={"base": sha} if extra is None else extra,
+                      pick={"cases": anchor.get("cases") or {}, "by_scope": st["by_scope"]})
+
+
+def loop_hook(man, root, task, jobs, manifest, sha=None):
+    """-> (hook, counts tail, record fields): the loop's hook for --changed and --all. The task's own changes are
+    read against its start BEFORE the scopes run (a scope's own writes are not the task's); --base <commit> reads
+    git. The fields: `base` (the line's text - whose start, or the commit), `touched` (the task's own files,
+    added / modified / deleted), `loop_seconds` so far (this read; `run_scopes` adds the hook's) and `proven`
+    (each scope the red-arm proof spared, filled by the hook before the record is written)."""
+    t0, proven = time.monotonic(), {}
+    if sha:
+        hook = lambda: loop_checks(man, root, task, jobs, this_box(), manifest, sha, proven=proven)  # noqa: E731
+        line, touched = f"base: commit {sha[:12]}", touched_git(root, sha)
+    else:
+        lb = loop_base(man, root, task, manifest)
+        hook = lambda: loop_checks(man, root, task, jobs, this_box(), manifest, changed=lb["changed"],  # noqa: E731
+                                   mchanges=lb["mchanges"], label=lb["label"], proven=proven)
+        line, touched = lb["line"], lb["touched"]
+    fields = {"base": line[len("base: "):], "touched": touched, "loop_seconds": round(time.monotonic() - t0, 3),
+              "proven": proven}
+    return hook, " \u00b7 " + line, fields
 
 
 def cmd_run(man, a, root, manifest):
@@ -1481,15 +2315,19 @@ def cmd_run(man, a, root, manifest):
     cap = 1 if "jobs_cap" in top_errors(man) else int(man.get("jobs_cap", 8))    # a bad cap: one command at a time
     jobs = 1 if a.serial else (a.jobs or min(os.cpu_count() or 1, cap))
     if a.redarm:
-        return redarm(man, a.redarm, root, task, jobs)
+        return moved_sweep(man, root, task, jobs) if a.moved else redarm(man, a.redarm, root, task, jobs)
     if a.changed:
         sha = resolve_base(root, a.base) if a.base else None
-        hook = lambda: loop_checks(man, root, task, jobs, this_box(), manifest, sha)  # noqa: E731
-        return changed_run(man, root, task, jobs, base=a.base, hook=hook)
+        hook, tail, fields = loop_hook(man, root, task, jobs, manifest, sha)
+        res = changed_run(man, root, task, jobs, base=a.base, hook=hook, extra=fields)
+        res["counts"] += tail
+        return res
     names = list(man["scopes"])
     if a.all:
-        hook = lambda: loop_checks(man, root, task, jobs, this_box(), manifest)  # noqa: E731
-        return run_scopes(man, names, root, task, jobs, mode="all", hook=hook)
+        hook, tail, fields = loop_hook(man, root, task, jobs, manifest)
+        res = run_scopes(man, names, root, task, jobs, mode="all", hook=hook, extra=fields)
+        res["counts"] += tail
+        return res
     if a.case is not None:
         bl = blocked(man)
         with_case = [n for n in names if n not in bl and (man["scopes"][n].get("case_cmd")
@@ -1501,11 +2339,11 @@ def cmd_run(man, a, root, manifest):
             raise Refused(f"no scope {chosen[0]!r} - `list` shows them")
         if not ID_RE.match(a.case):
             raise Refused(f"--case `{a.case}` has a space or a shell character")
-        return run_scopes(man, chosen, root, task, jobs, case=a.case, mode="case")
+        return run_scopes(man, chosen, root, task, jobs, case=a.case, mode="case", reuse=not a.force)
     unknown = [n for n in a.scopes if n not in man["scopes"]]
     if unknown:
         raise Refused(f"unknown scope(s): {', '.join(unknown)} - `list` shows them ({', '.join(names)})")
-    return run_scopes(man, list(dict.fromkeys(a.scopes)), root, task, jobs, mode="scope")
+    return run_scopes(man, list(dict.fromkeys(a.scopes)), root, task, jobs, mode="scope", reuse=not a.force)
 
 
 # --------------------------------------------------------------------------------------------- list · report
@@ -1517,9 +2355,13 @@ def cmd_list(man):
             continue
         form = (f"placeholder until {s['placeholder']}" if "placeholder" in s else "cases from `cases_cmd`"
                 if "cases_cmd" in s else f"{len(s['cases'])} case(s)" if "cases" in s else "1 command")
+        cased = [f"{p['id']}: case {p['case']}" + ("" if not isinstance(s.get("cases"), (list, dict)) or p["case"]
+                                                   in s["cases"] else " - not one of its cases: its arm is an ERROR")
+                 for p in s.get("plants") or [] if "case" in p]
         more = [f for f, on in ((f"paths {len(s.get('paths', []))}", s.get("paths")),
-                                (f"plants {len(s.get('plants', []))}", s.get("plants")),
-                                (f"box {s.get('box')}", s.get("box")), ("exclusive", s.get("exclusive")),
+                                (f"plants {len(s.get('plants', []))}" + (f" ({'; '.join(cased)})" if cased else ""),
+                                 s.get("plants")),
+                                (f"box {s.get('box')}", s.get("box")), ("exclusive", s.get("exclusive")), ("rerun", s.get("rerun")),
                                 (f"free_ports {s.get('free_ports')}", s.get("free_ports"))) if on]
         note = next((s[k] for k in ("note", "desc") if isinstance(s.get(k), str) and s[k]), None)
         lines.append(f"{name:<18}{s.get('parse', 'gonogo'):<8}{form:<32}expected {s.get('expected', 0)}"
@@ -1545,41 +2387,75 @@ def loop_cases(rec, scope=None):
     return int(rec.get("cases") or sum(cases(s) for s in (rec.get("scopes") or {}).values()))
 
 
+def loop_cpus(r, man, box=None):
+    """The CPUs a record's load is read against: its own count, else the manifest box's."""
+    n = r.get("cpus") or budget_box(man, box or r.get("box")).get("cpus")
+    return n if is_num(n) and n > 0 else None
+
+
+def norm_factor(r, man, box=None):
+    """The factor taking a record's seconds to an idle box's, or None: its own `seconds_norm` when it holds one,
+    else derived from its `load` and CPUs with today's k (a record from before the field); a null `seconds_norm`
+    (no load sample, named by the runner) or no load is None - never 1, the raw read as idle."""
+    s, sn = r.get("seconds"), r.get("seconds_norm")
+    if "seconds_norm" in r and sn is None:
+        return None
+    if is_num(sn) and is_num(s) and s > 0:
+        return float(sn) / float(s)
+    box = box or r.get("box")
+    load, cpus = r.get("load"), loop_cpus(r, man, box)
+    if not is_num(load) or cpus is None:
+        return None
+    return 1.0 / (1.0 + norm_k(man, box, cpus)[0] * float(load) / cpus)
+
+
+def counted(r, f, man, box=None):
+    """A complete loop the normalised median and the TR line count: a load sample, and a load within its CPUs (an
+    oversubscribed box measures the queue, not the tree)."""
+    cpus, load = loop_cpus(r, man, box), r.get("load")
+    return f is not None and not (cpus and is_num(load) and load > cpus)
+
+
 def budget_lines(man, box, rows):
-    """The manifest's per-box budget, applied per loop - a function of the case count and the load, never a
-    constant. A loop with no load sample is graded at load 0 and says so."""
+    """The manifest's per-box budget, applied per loop - a function of the case count, stated at an idle box: each
+    loop's seconds normalised by its load are graded against it, never a constant. A loop with no load sample is
+    graded raw, as at load 0, and says so."""
     bud = man.get("budget") or {}
     bb = (bud.get("boxes") or {}).get(box or "", {}) or {}
     if not bb.get("base_s"):
         return [f"{box or '?':<8} {len(rows)} loops · no budget measured for this box in the manifest - measure it "
                 f"with {bud.get('measured_by', 'a TR block')}"]
-    per, k = float(bb.get("per_case_s") or 0.0), float(bb.get("load_k") or 0.0)
+    per = float(bb.get("per_case_s") or 0.0)
     band, ref, base = float(bb.get("band_pct") or 0) / 100.0, int(bb["at_cases"]), float(bb["base_s"])
+    k, src = norm_k(man, box, bb.get("cpus") or (rows[-1].get("cpus") if rows else None))
     scope = bud.get("cases_scope")
-    out = [f"{box or '?':<8} {len(rows)} loops · budget E = ({base:g} s + {per:g} s/case x (cases - {ref}))"
-           f" x (1 + {k:g} x load) · band +/-{band * 100:.0f} % · stated for load <= cpus"
-           + (f" · {bb['measured']}" if bb.get("measured") else ""),
-           f"{'':<8} {'task':<16}{'obs':>8}{'E':>8}{'delta':>8}{'load':>7}{'cases':>7}"]
+    out = [f"{box or '?':<8} {len(rows)} loops · budget E = {base:g} s + {per:g} s/case x (cases - {ref}) at an idle box"
+           f" · seconds normalised by (1 + k x load / cpus), k {k:g} ({src}) · band +/-{band * 100:.0f} % · stated for"
+           f" load <= cpus" + (f" · {bb['measured']}" if bb.get("measured") else ""),
+           f"{'':<8} {'task':<16}{'obs':>8}{'norm':>8}{'E':>8}{'delta':>8}{'load':>7}{'cases':>7}"]
     over, blind, oor = [], [], []
     for r in rows:
-        cases, load = loop_cases(r, scope), r.get("load")
-        cpus = r.get("cpus") or bb.get("cpus")
+        cases, load, f = loop_cases(r, scope), r.get("load"), norm_factor(r, man, box)
+        cpus = loop_cpus(r, man, box)
         obs, mark = float(r.get("seconds", 0)), ""
-        exp = (base + per * (cases - ref)) * (1 + k * (load or 0.0))
+        norm = obs * f if f is not None else None
+        val, exp = (norm if norm is not None else obs), base + per * (cases - ref)
+        delta = round((val - exp) / exp * 100, 1) + 0.0         # + 0.0: a -0.0 % is +0.0 %
         if len(r.get("scopes") or {}) != len(man.get("scopes") or {}):
             mark = (f"  SCOPE SET DIFFERS ({len(r.get('scopes') or {})} of {len(man.get('scopes') or {})}): the budget "
                     "is stated against the manifest as it stands, so this loop is not graded")
-        elif load is None:
+        elif norm is None:
             blind.append(r.get("task"))
-            mark = "  NO LOAD SAMPLE: graded at load 0, so E is a floor"
+            mark = "  NO LOAD SAMPLE: graded raw, as at load 0, so E is a floor"
         elif cpus and load > cpus:
             oor.append(f"{r.get('task')} (load {load} > {cpus} cpus)")
             mark = "  OUT OF RANGE: the box is oversubscribed, so this run does not measure the tree"
-        elif abs(obs - exp) > band * exp:
-            over.append(f"{r.get('task')} {(obs - exp) / exp * 100:+.0f} %")
+        elif abs(val - exp) > band * exp:
+            over.append(f"{r.get('task')} {delta:+.0f} %")
             mark = "  OVER BAND"
-        out.append(f"{'':<8} {str(r.get('task')):<16}{obs:>8.1f}{exp:>8.1f}{(obs - exp) / exp * 100:>+7.1f}%"
-                   f"{(load if load is not None else float('nan')):>7.2f}{cases:>7}{mark}")
+        out.append(f"{'':<8} {str(r.get('task')):<16}{obs:>8.1f}{(norm if norm is not None else float('nan')):>8.1f}"
+                   f"{exp:>8.1f}{delta:>+7.1f}%"
+                   f"{(load if is_num(load) else float('nan')):>7.2f}{cases:>7}{mark}")
     out.append(f"{'':<8} over band: {', '.join(over) or 'none'} · out of range: {', '.join(oor) or 'none'}"
                + (f" · NO LOAD SAMPLE: {len(blind)} of {len(rows)} ({', '.join(blind[:3])}"
                   f"{'...' if len(blind) > 3 else ''})" if blind else ""))
@@ -1598,21 +2474,26 @@ def own_record(r):
             and all(isinstance(r[k], str) for k in ("ts", "task", "mode"))
             and all(r[k] is None or isinstance(r[k], str) for k in ("verdict", "tree"))):
         return None
-    return {k: v for k, v in r.items() if not (k in ("box", "type", "model") and not isinstance(v, str)
-                                               or k in ("load", "cpus", "cases") and not is_num(v))}
+    return {k: v for k, v in r.items() if not (k in ("box", "type", "model", "base", "load_norm") and not isinstance(v, str)
+                                               or k in ("load", "cpus", "cases", "loop_seconds") and not is_num(v)
+                                               or k in ("seconds_norm", "loop_seconds_norm") and not (v is None or is_num(v))
+                                               or k == "touched" and not isinstance(v, dict))}
 
 
-def entry_num(s, key):
-    """A scope entry's number, or None when the entry is not in this runner's shape (an older runner's list)."""
-    v = s.get(key) if isinstance(s, dict) else None
-    return v if is_num(v) else None
+def loop_total(r):
+    """A complete loop's seconds as the box paid them: the scopes' plus the loop's plants and flags (a record
+    from before the loop was billed reads its loop as 0 - `report` names how many)."""
+    return float(r.get("seconds", 0)) + (float(r["loop_seconds"]) if is_num(r.get("loop_seconds")) else 0.0)
 
 
-def cmd_report(man, root, since=None, budget=None):
-    """From loop_times.jsonl: loops per task, redundant loops, first-try passes, the complete loop's median and
-    slowest scopes per box, the budget, and the TR line only over --budget. A record in another runner's shape is
-    `foreign`: counted apart, the rest read - never a traceback, never a number read from a shape it cannot trust."""
-    path, recs, foreign = logs_of(man, root) / "loop_times.jsonl", [], 0
+def read_records(man, root):
+    """(path, this runner's records in file order, foreign count) from <logs_dir>/loop_times.jsonl."""
+    return records_in(logs_of(man, root) / "loop_times.jsonl")
+
+
+def records_in(path):
+    """(path, this runner's records in file order, foreign count) from this record file."""
+    path, recs, foreign = Path(path), [], 0
     with contextlib.suppress(OSError):
         for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
             if not line.strip():
@@ -1623,9 +2504,45 @@ def cmd_report(man, root, since=None, budget=None):
                 r = None
             if r is None:
                 foreign += 1
-                continue
-            if not since or r["ts"][:10] >= since:
+            else:
                 recs.append(r)
+    return path, recs, foreign
+
+
+def green_cover(recs, task, box, tree, scope, case=None):
+    """(ts, entry) of the record this scope is already GO in, or None: the task's own records on this box, newest
+    first, only those that ran the scope. The newest one that is not a red-arm campaign decides - another tree, or
+    a scope that did not go GO, is None (a red always re-runs); a run of one other case or a partly vouched
+    `--changed` run says nothing about this one and is read past; a full run covers any case, a `--case` run only
+    its own (M0-T64c)."""
+    if not tree:
+        return None
+    for r in reversed(recs):
+        e = (r.get("scopes") or {}).get(scope)
+        if r.get("task") != task or r.get("box") != box or r.get("mode") == "redarm" or e is None:
+            continue
+        if r.get("tree") != tree or not isinstance(e, dict) or e.get("verdict") != "GO":
+            return None
+        if e.get("vouched") or (r.get("mode") == "case" and (case is None or r.get("case") != case)):
+            continue
+        return r["ts"], e
+    return None
+
+
+def entry_num(s, key):
+    """A scope entry's number, or None when the entry is not in this runner's shape (an older runner's list)."""
+    v = s.get(key) if isinstance(s, dict) else None
+    return v if is_num(v) else None
+
+
+def cmd_report(man, root, since=None, budget=None):
+    """From loop_times.jsonl: loops per task, redundant loops, first-try passes, the complete loop's median and
+    slowest scopes per box, raw and at an idle box, the budget, and the TR line only when the median of the box's last
+    TR_LOOPS counted loops, at an idle box, is over --budget (a loop with no load sample, or a load over its CPUs, is
+    never counted - named). A record in another runner's shape is
+    `foreign`: counted apart, the rest read - never a traceback, never a number read from a shape it cannot trust."""
+    path, recs, foreign = read_records(man, root)
+    recs = [r for r in recs if not since or r["ts"][:10] >= since]
     if not recs:
         return result(f"report: 0 runs · {foreign} foreign", lines=manifest_lines(man),
                       nogo=f"no record of this runner's in {rel(path, root)}" + (f" since {since}" if since else "")
@@ -1662,36 +2579,123 @@ def cmd_report(man, root, since=None, budget=None):
     for r in loops:
         boxes.setdefault(r.get("box") or "?", []).append(r)
     for box, rows in boxes.items():                  # never one median over two boxes: two different budgets
+        fs = [norm_factor(r, man) for r in rows]
+        idle = [(r, f) for r, f in zip(rows, fs) if counted(r, f, man)]          # file order: the newest last
+        oor = [r for r, f in zip(rows, fs) if f is not None and not counted(r, f, man)]
         per_scope = {}
-        for r in rows:
+        for r, f in zip(rows, fs):
             for name, s in (r.get("scopes") or {}).items():
                 if entry_num(s, "seconds") is not None:              # an entry not in this runner's shape is not read
-                    per_scope.setdefault(name, []).append(float(s["seconds"]))
-        med = statistics.median(float(r.get("seconds", 0)) for r in rows)
-        medians.append(f"{box} {med:.2f} s")
-        slow = sorted(((statistics.median(v), k) for k, v in per_scope.items()), reverse=True)
+                    raw = float(s["seconds"])
+                    per_scope.setdefault(name, ([], []))[0].append(raw)
+                    if counted(r, f, man):
+                        per_scope[name][1].append(raw * f)
+        med = statistics.median(loop_total(r) for r in rows)             # the scopes and the loop, each second once
+        nmed = statistics.median(loop_total(r) * f for r, f in idle) if idle else None
+        medians.append(f"{box} {med:.2f} s" + (f" ({nmed:.2f} s idle)" if nmed is not None else " (idle n/a)"))
+        k, src = norm_k(man, box, loop_cpus(rows[-1], man))
+        lines.append(f"{box}: at an idle box, seconds / (1 + k x load / cpus), k {k:g} ({src}): median "
+                     + (f"{nmed:.2f} s over {len(idle)} counted complete loop(s), raw {med:.2f} s" if idle
+                        else f"n/a - no complete loop counted, raw {med:.2f} s")
+                     + (f" · out of range {len(oor)} (load > cpus, never counted: "
+                        + ", ".join(f"{r.get('task')} load {r.get('load')}" for r in oor[:3]) + ("..." if len(oor) > 3 else "")
+                        + ")" if oor else "")
+                     + (f" · NO LOAD SAMPLE {fs.count(None)} of {len(rows)} (never counted)" if None in fs else ""))
+        billed = [float(r["loop_seconds"]) for r in rows if is_num(r.get("loop_seconds"))]
+        if billed:
+            lines.append(f"{box}: the loop's plants and flags, median {statistics.median(billed):.2f} s over {len(billed)} "
+                         f"complete loop(s) - counted in the median and the TR line")
+        slow = sorted(((statistics.median(v[0]), k_, v[1]) for k_, v in per_scope.items()), reverse=True)
         if slow:
-            lines.append(f"{box}: slowest scopes (median over {len(rows)} complete loops): "
-                         + " · ".join(f"{k} {m:.2f} s" for m, k in slow[:5]))
+            lines.append(f"{box}: slowest scopes (median over {len(rows)} complete loops, idle over {len(idle)}): "
+                         + " · ".join(f"{k_} {m:.2f} s" + (f" ({statistics.median(n):.2f} s idle)" if n else "")
+                                      for m, k_, n in slow[:5]))
         if man.get("budget") and "budget" not in top_errors(man):      # a bad budget: its NOT RUN line above
             lines += budget_lines(man, box, rows)
-        if budget is not None and float(rows[-1].get("seconds", 0)) > budget:
+        if budget is None:
+            continue
+        last = idle[-TR_LOOPS:]
+        if not last:
+            lines.append(f"TR: {box} - no complete loop with a load sample within its CPUs ({fs.count(None)} without a "
+                         f"sample, {len(oor)} out of range): the TR line cannot read this box")
+            continue
+        tmed = statistics.median(loop_total(r) * f for r, f in last)
+        if tmed > budget:
             trs.append(box)
-            lines.append(f"TR: the last complete loop on {box} took {float(rows[-1]['seconds']):.2f} s - over the "
-                         f"--budget {budget:g} s: a TR fires (§4 Rule 4)")
+            own = statistics.median(loop_total(r) - float(r.get("seconds", 0)) for r, _f in last)
+            lines.append(f"TR: the last {len(last)} counted complete loop(s) on {box} take {tmed:.2f} s at an idle box "
+                         f"(median; raw {statistics.median(loop_total(r) for r, _f in last):.2f} s, the loop's own "
+                         f"{own:.2f} s in it) - over the --budget {budget:g} s: a TR fires (§4 Rule 4)")
+    kept = [r for r in recs if isinstance(r.get("not_rerun"), dict) and r["not_rerun"]]
+    n_kept = sum(len(r["not_rerun"]) for r in kept)
+    if kept:
+        lines.append(f"not re-run: {n_kept} scope(s) in {len(kept)} run(s) - already GO on the same tree, the task's own "
+                     "record; not a redundant loop, and no seconds in any median")
+    unbilled = [r for r in loops if not is_num(r.get("loop_seconds"))]
+    if unbilled:
+        since_b = next((r["ts"][:10] for r in loops if is_num(r.get("loop_seconds"))), None)
+        lines.append((f"loop seconds unknown before {since_b}" if since_b else "loop seconds unknown: no complete loop "
+                      "records them") + f" - {len(unbilled)} complete loop(s) read as 0")
     n_loop = sum(r.get("mode") in ("all", "changed") for r in recs)
     counts = (f"report: {len(recs)} runs · {foreign} foreign · {len(loops)} complete loops · "
               f"{sum(r.get('mode') == 'changed' for r in recs)} changed · {len(by_task)} task label(s) · loops per "
               f"task {n_loop / (len(looped) or 1):.2f} · redundant {len(redundant)} · first-try "
-              f"{sum(first.values())}/{len(first)} · median complete loop {' · '.join(medians) or 'n/a'}"
+              f"{sum(first.values())}/{len(first)}" + (f" · not re-run {n_kept}" if kept else "")
+              + f" · median complete loop {' · '.join(medians) or 'n/a'}"
               + (f" · TR {', '.join(trs) or 'none'} (budget {budget:g} s)" if budget is not None else ""))
     return result(counts, lines=lines, redundant=len(redundant), loops=len(loops), first_try=sum(first.values()),
                   tasks=len(first), tr=trs, foreign=foreign)
 
 
+def cmd_touched(man, root, task=None, pattern=None):
+    """From the claim records (`--changed`, `--all`): per task, the files it touched at its last claim; with
+    --path, per matching path every task that touched it - newest first. A claim from before the field is
+    counted, never read as `touched nothing`."""
+    path, recs, foreign = read_records(man, root)
+    claims = [r for r in recs if r["mode"] in ("all", "changed")]
+    named = [r for r in claims if isinstance(r.get("touched"), dict)]
+    last = {}
+    for r in named:                                  # file order is time order: the last claim wins
+        last[r["task"]] = r
+    if task is not None:
+        last = {task: last[task]} if task in last else {}
+    m = globs([pattern]) if pattern else None
+    rows = {t: [(p, k) for k in TOUCH_KINDS for p in (r["touched"].get(k) or []) if isinstance(p, str)
+                and (m is None or m.match(p))] for t, r in last.items()}
+    order = sorted(last, key=lambda t: last[t]["ts"], reverse=True)
+    lines = []
+    if m is None:
+        for t in order:
+            r = last[t]
+            lines.append(f"{t} · claim {r['ts']} ({r['mode']}) · base {r.get('base', 'not recorded')} · {len(rows[t])} file(s)")
+            lines += [f"  {k}: " + ", ".join(p for p, kk in rows[t] if kk == k) for k in TOUCH_KINDS
+                      if any(kk == k for _p, kk in rows[t])]
+    by_path = {}
+    for t in order:
+        for p, k in rows[t]:
+            by_path.setdefault(p, []).append(f"{t} ({k}, {last[t]['ts']})")
+    if m is not None:
+        lines += [f"{p}: " + " · ".join(v) for p, v in sorted(by_path.items())]
+    counts = (f"touched: {sum(1 for t in order if rows[t])} task(s) · {len(by_path)} path(s) · {len(named)} claim "
+              f"record(s) naming their files · {len(claims) - len(named)} without (before the field) · {foreign} foreign")
+    nogo = (f"no claim record names the files it touched in {rel(path, root)}" if not named
+            else f"no claim record of {task} names its files" if not last
+            else f"no task's last claim touched a path matching `{pattern}`" if not by_path and m is not None
+            else None)
+    return result(counts, lines=lines, nogo=nogo, tasks={t: dict(last[t]["touched"], base=last[t].get("base"),
+                                                                  ts=last[t]["ts"]) for t in order}, paths=by_path)
+
+
 # ---------------------------------------------------------------------------------------------- selftest
 EMIT = r'''import os, sys, time
-t0, kind, args = time.time(), sys.argv[1], sys.argv[2:]
+t0, kind, args, tag = time.time(), sys.argv[1], sys.argv[2:], None
+if kind == "ls":
+    import glob
+    kind, args = "rows", sorted([os.path.join(d, f).replace(os.sep, "/") for d, _s, fs in os.walk(args[0]) for f in fs]
+                                + [g.replace(os.sep, "/") for a in args[1:] for g in glob.glob(a)])
+if kind == "deny":
+    words, body = open(args[0], encoding="utf-8").read().split(), open(args[1], encoding="utf-8").read()
+    kind, tag = ("nogo" if any(w in body for w in words) else "go"), args[1]
 if kind == "sleep":
     open("sleep.pid", "w").write(str(os.getpid()))
 if kind in ("trace", "sleep"):
@@ -1702,6 +2706,8 @@ if kind == "seelog":
 if kind == "marker":
     open("ran.marker", "w").close()
 if kind == "check":
+    if len(args) > 1:
+        time.sleep(float(args[1]))
     kind = "nogo" if "BUG" in open(args[0], encoding="utf-8").read() else "go"
 if kind == "fault":
     import faulthandler
@@ -1723,7 +2729,7 @@ else:
 print(text)
 trace = os.environ.get("PB_TRACE")
 if trace:
-    line, lock, until = "%s %.6f %.6f\n" % (args[0] if kind == "trace" else kind, t0, time.time()), trace + ".lock", time.time() + 5
+    line, lock, until = "%s %.6f %.6f\n" % (tag or (args[0] if kind == "trace" else kind), t0, time.time()), trace + ".lock", time.time() + 5
     while lock:                       # one writer at a time: two appends at once tear a line on Windows; 5 s at most
         try:
             os.close(os.open(lock, os.O_CREAT | os.O_EXCL))
@@ -1768,6 +2774,14 @@ def selftest():
         plants[0] += 1
         plants[1] += bool(ok)
         check(f"PLANT {name}", ok, detail)
+
+    def swap_(fn_name, mutant, call):                    # one mutant of this runner, put back whatever happens
+        real = globals()[fn_name]
+        globals()[fn_name] = mutant
+        try:
+            return call()
+        finally:
+            globals()[fn_name] = real
 
     try:
         with tempfile.TemporaryDirectory(prefix="pb-verify-") as tmpd:
@@ -1823,10 +2837,6 @@ def selftest():
                 return [(m[1], float(m[2]), float(m[3])) for s in trace.read_text(encoding="utf-8").splitlines()
                         if (m := re.fullmatch(r"(\S+) (\d+\.\d+) (\d+\.\d+)", s))]
 
-            def overlap(sp):
-                t = {s[0]: s for s in sp if s[0] in ("t1", "t2")}
-                return len(t) == 2 and t["t1"][1] < t["t2"][2] and t["t2"][1] < t["t1"][2], t
-
             # -- A · the clean fixture: every form counts right, and the run's shape ---------------------------
             trace.write_text("", encoding="utf-8")
             rc, out = run_(clean, "--all", "-j", "4", smoke=f"{py} trace smoke 0.01")
@@ -1853,7 +2863,9 @@ def selftest():
             check("the exclusive scope ran alone after the rest, the smoke last",
                   len(last) == 2 and last["alone"][1] >= max(s[2] for s in sp if s[0] not in last)
                   and last["smoke"][1] >= last["alone"][2], sp)
-            check("two shared scopes ran at the same time", *overlap(sp))
+            t = {s[0]: s for s in sp if s[0] in ("t1", "t2")}
+            check("two shared scopes ran at the same time",
+                  len(t) == 2 and t["t1"][1] < t["t2"][2] and t["t2"][1] < t["t1"][2], t)
             recs = [json.loads(ln) for ln in (logs / "loop_times.jsonl").read_text(encoding="utf-8").splitlines()]
             check("loop_times.jsonl: one line per run, with the box and the interpreter",
                   len(recs) == 1 and RECORD_KEYS | {"box", "python", "load_source", "cases"} <= set(recs[0])
@@ -1869,9 +2881,9 @@ def selftest():
             check("--serial: no two commands overlap",
                   rc == 0 and len(sp) == 3 and all(b[1] >= x[2] for x, b in zip(sp, sp[1:])), sp)
             trace.write_text("t1 10.000000 12.000000\nt2 11.0\n", encoding="utf-8")    # a torn record: two appends at once
-            ok, _t = overlap(spans())
+            t = {s[0]: s for s in spans() if s[0] in ("t1", "t2")}
             plant_("a torn trace record: read missing, its check red - never an IndexError",
-                   not ok and spans() == [("t1", 10.0, 12.0)], spans())
+                   len(t) != 2 and spans() == [("t1", 10.0, 12.0)], spans())
 
             # -- B · plants: each beside a clean scope, each NO-GO on its own reason -------------------------
             with socket.socket() as held:
@@ -1930,6 +2942,7 @@ def selftest():
                 "f_covers": ({"cmd": tr("f_covers"), "covers": ["src/*.py"]}, "unknown key `covers`"),
                 "v_parse": ({"cmd": tr("v_parse"), "parse": "unittest"}, "`parse` is one of"),
                 "v_exclusive": ({"cmd": tr("v_exclusive"), "exclusive": "gpu"}, "`exclusive` is true or false"),
+                "v_rerun": ({"cmd": tr("v_rerun"), "rerun": "yes"}, "`rerun` is true or false"),
                 "v_placeholder": ({"placeholder": "M9", "cmd": tr("v_placeholder")}, "a placeholder runs nothing"),
                 "v_nocmd": ({"parse": "gonogo"}, "needs exactly one of"),
                 "v_regex": ({"cmd": tr("v_regex"), "parse": "regex", "regex": r"(\d+) ok"}, "has no (?P<passed>"),
@@ -2055,12 +3068,12 @@ def selftest():
             troot = tmp / "tree"
             for d in ("tools/pb", "logs", "extra/logs", "extra/notes"):
                 (troot / d).mkdir(parents=True)
-            for p, b in (("tools/pb/plan.py", b"P"), ("tools/pb/verify.anchor.json", b"{}"), ("logs/r.log", b"L"),
-                         ("extra/notes/n.md", b"N"), ("extra/logs/x.log", b"X")):
+            for p, b in ((".gitignore", b"extra/\n"), ("tools/pb/plan.py", b"P"), ("tools/pb/verify.anchor.json", b"{}"),
+                         ("logs/r.log", b"L"), ("extra/notes/n.md", b"N"), ("extra/logs/x.log", b"X")):
                 (troot / p).write_bytes(b)
             tman = {"logs_dir": "logs", "tree_extra": ["extra"], "scopes": {}}
-            tporc = "\0".join([" M tools/pb/plan.py", "?? tools/pb/verify.anchor.json", "?? logs/r.log", ""])
-            tgit = lambda r, args, timeout=120: "0123456789abcdef\n" if args[0] == "rev-parse" else tporc  # noqa: E731
+            tgit = lambda r, args, timeout=120: "0123456789abcdef\n"  # noqa: E731
+            nogit = lambda r, args, timeout=120: None  # noqa: E731
             tid = lambda man=tman, g=tgit: tree_id(troot, man, troot / "logs", g)  # noqa: E731
             t0_ = tid()
             (troot / "tools/pb/verify.anchor.json").write_bytes(b'{"paths": {"advanced": 1}}')
@@ -2070,14 +3083,393 @@ def selftest():
             check("the tree id reads the anchor's path from the manifest", tid(dict(tman, anchor="tools/pb/elsewhere.json")) != t0_)
             (troot / "tools/pb/plan.py").write_bytes(b"P edited")
             t1_ = tid()
-            check("the tree id sees a byte of a dirty file", t1_ != t0_)
+            check("the tree id sees a byte of an edited file", t1_ != t0_)
             (troot / "extra/notes/n.md").write_bytes(b"N edited")
             check("the tree id sees a byte under tree_extra", tid() != t1_)
-            check("the tree id is None when git cannot answer", tid(g=lambda r, args, timeout=120: None) is None)
+            t2_ = tid()
+            check("the tree id leads with HEAD where a repository answers", t2_.startswith("0123456789ab+"))
+            check("with no repository it is the same hash alone", tid(g=nogit) == t2_.split("+", 1)[1])
             (troot / "tools/pb/plan.py").write_bytes(text_lf)
             t_lf = tid()
             (troot / "tools/pb/plan.py").write_bytes(crlf(text_lf))
             check("one commit's two checkouts name one tree", t_lf is not None and tid() == t_lf)
+            if hasattr(os, "geteuid") and os.geteuid() != 0:
+                (troot / "tools/pb/plan.py").chmod(0)
+                check("the tree id is None when a listed file cannot be read", tid() is None)
+                (troot / "tools/pb/plan.py").chmod(0o644)
+
+            def id_moves(idfn):
+                before = idfn()
+                (troot / "tools/pb/plan.py").write_bytes(os.urandom(8))
+                return idfn() != before
+            check("the tree id moves with an edit, nothing committed", id_moves(tid))
+            real_visible = visible_files
+            globals()["visible_files"] = lambda root, man, logs: []            # the id left to HEAD alone
+            try:
+                plant_("the tree id on HEAD alone: red - an edit does not move it", not id_moves(tid))
+            finally:
+                globals()["visible_files"] = real_visible
+
+            # -- D2 · the tree without git: the walk against git's own list, then every mode with no repository --
+            have_git = shutil.which("git") is not None
+            wenv = {k: os.environ.get(k) for k in ("HOME", "XDG_CONFIG_HOME", "GIT_CONFIG_NOSYSTEM")}
+            whome = tmp / "whome"
+            (whome / "git").mkdir(parents=True)
+            (whome / "git" / "ignore").write_text("*.glob\n", encoding="utf-8")
+            os.environ.update(HOME=str(whome), XDG_CONFIG_HOME=str(whome), GIT_CONFIG_NOSYSTEM="1")
+            wroot = tmp / "walk"
+            wfiles = {
+                ".gitignore": "# a comment\n*.log\n!keep.log\n/build\ndocs/*.tmp\ncache/\n**/tmpdir\nout/**/gen\nsec[0-9]?.dat\n"
+                              "\\#hash\n\\!bang\ntrail\\ \nlogs2/**\n!logs2/keep.txt\nvar/\n!var/inside.txt\nclass[[:digit:]].x\n"
+                              "*.o\n!keep.glob\ndata/**/\n",
+                "a.txt": "", "a.log": "", "keep.log": "", "build/x.txt": "", "sub/build/y.txt": "", "docs/a.tmp": "",
+                "docs/sub/a.tmp": "", "cache/c.txt": "", "sub/cache/c.txt": "", "a/tmpdir/z": "", "tmpdir": "",
+                "out/gen/f": "", "out/x/y/gen/f": "", "out/genx": "", "sec1a.dat": "", "sec12.dat": "", "secab.dat": "",
+                "#hash": "", "!bang": "", "trail ": "", "logs2/a.txt": "", "logs2/keep.txt": "", "var/other.txt": "",
+                "var/inside.txt": "", "class5.x": "", "classa.x": "", "x.o": "", "x.glob": "", "keep.glob": "",
+                "data/d/e/f.txt": "", "é.txt": "", "with space.txt": "", "from-exclude.txt": "",
+                "sub/.gitignore": "!*.log\n/only-here\n*.bak\n", "sub/a.log": "", "sub/only-here": "",
+                "sub/deep/only-here": "", "sub/z.bak": "", "sub/deep/.gitignore": "!x.bak\n/*.cfg\n",
+                "sub/deep/x.bak": "", "sub/deep/y.bak": "", "sub/deep/a.cfg": "", "sub/deep/in/a.cfg": "",
+                "sub2/.gitignore": "*.crlf\r\n", "sub2/a.crlf": "", "sub2/b.txt": "",
+                "nested/n.txt": "", "nested/.git/HEAD": "ref: refs/heads/main\n",
+            }
+            ignored_by_rule = {
+                "a.log", "build/x.txt", "docs/a.tmp", "cache/c.txt", "sub/cache/c.txt", "a/tmpdir/z", "tmpdir", "out/gen/f",
+                "out/x/y/gen/f", "sec1a.dat", "sec12.dat", "#hash", "!bang", "trail ", "logs2/a.txt", "var/other.txt",
+                "var/inside.txt", "class5.x", "x.o", "x.glob", "data/d/e/f.txt", "sub/only-here", "sub/z.bak",
+                "sub/deep/y.bak", "sub/deep/a.cfg", "sub2/a.crlf"}
+            in_nested_repo = {"nested/n.txt", "nested/.git/HEAD"}
+            (tmp / "probe ").write_bytes(b"")                   # Win32 strips a trailing space: does this file system keep one?
+            trail_kept = "probe " in os.listdir(tmp)
+            (tmp / ("probe " if trail_kept else "probe")).unlink()
+            if not trail_kept:                                  # the case cannot exist here - left out of both sides, not tolerated
+                wfiles.pop("trail ")
+                ignored_by_rule.discard("trail ")
+            for rp, body in wfiles.items():
+                (wroot / rp).parent.mkdir(parents=True, exist_ok=True)
+                (wroot / rp).write_bytes(body.encode("utf-8"))  # the bytes exact: text mode turns "\r\n" into "\r\r\n" on Windows
+            with contextlib.suppress(OSError, NotImplementedError):
+                (wroot / "link.txt").symlink_to("a.txt")
+                (wroot / "dlink").symlink_to("sub", target_is_directory=True)
+            for d in ("objects", "refs"):                      # enough of a repository for git to see one
+                (wroot / "nested" / ".git" / d).mkdir()
+            hand_off = {"from-exclude.txt"}                    # git's, from .git/info/exclude - only a repository holds one
+            want = sorted((set(wfiles) | ({"link.txt"} if (wroot / "link.txt").is_symlink() else set()))
+                          - ignored_by_rule - in_nested_repo)
+
+            def gitlist(r):
+                out = git_out(r, ["ls-files", "-co", "--exclude-standard", "-z"])
+                return None if out is None else sorted(x for x in out.split("\0") if x and os.path.isfile(os.path.join(r, x)))
+            check("the walk lists what the .gitignore files leave (comments, !, / anchor, trailing /, * ? [..] **, "
+                  "escapes, nested files, a nested repository, CRLF, the global excludes)",
+                  walk_tree(wroot) == want, sorted(set(walk_tree(wroot)) ^ set(want)))
+            if have_git:
+                subprocess.run(["git", "init", "-q"], cwd=str(wroot), check=True, capture_output=True)
+                (wroot / ".git" / "info").mkdir(exist_ok=True)
+                (wroot / ".git" / "info" / "exclude").write_text("from-exclude.txt\n", encoding="utf-8")
+                check("the walk equals `git ls-files -co --exclude-standard` on the same fixture",
+                      walk_tree(wroot) == gitlist(wroot) == [x for x in want if x not in hand_off],
+                      sorted(set(walk_tree(wroot)) ^ set(gitlist(wroot) or [])))
+            real_rules = read_rules
+            globals()["read_rules"] = lambda path: []                           # a walk blind to every ignore file
+            try:
+                plant_("the walk blind to .gitignore: red - it lists the ignored files",
+                       walk_tree(wroot) != [x for x in want if x not in hand_off])
+            finally:
+                globals()["read_rules"] = real_rules
+            # a root below its repository's top (a track): the parents' ignore files read, each rule relative to its folder
+            ntop = tmp / "ntop"
+            nfiles = {
+                ".gitignore": "*.log\n__pycache__/\nout/\n!keep.log\n/build\n",
+                "build/top.txt": "", "trk/build/x.txt": "", "trk/mid/.gitignore": "*.tmp\n/zed\n",
+                "trk/mid/root/a.txt": "", "trk/mid/root/a.log": "", "trk/mid/root/keep.log": "",
+                "trk/mid/root/__pycache__/a.pyc": "", "trk/mid/root/build/b.txt": "", "trk/mid/root/b.tmp": "",
+                "trk/mid/root/zed": "", "trk/mid/root/sub/zed": "", "trk/mid/root/.gitignore": "*.cfg\n",
+                "trk/mid/root/c.cfg": "", "trk/mid/root/out2/d.txt": "",
+                "trk/out/inner/e.txt": "", "trk/out/inner/e.log": "",
+            }
+            for rp, body in nfiles.items():
+                (ntop / rp).parent.mkdir(parents=True, exist_ok=True)
+                (ntop / rp).write_text(body, encoding="utf-8")
+            if have_git:
+                subprocess.run(["git", "init", "-q"], cwd=str(ntop), check=True, capture_output=True)
+            else:
+                (ntop / ".git").mkdir()
+            nroot, nout = ntop / "trk" / "mid" / "root", ntop / "trk" / "out" / "inner"
+            nwant = [".gitignore", "a.txt", "build/b.txt", "keep.log", "out2/d.txt", "sub/zed", "zed"]
+            check("a root below its repository's top lists what the parents' .gitignore files leave "
+                  "(*.log, __pycache__/, a re-include, /build anchored at the top, /zed anchored at a middle folder), "
+                  "and a root an ignored folder holds lists nothing",
+                  walk_tree(nroot) == nwant and walk_tree(nout) == [], (walk_tree(nroot), walk_tree(nout)))
+            if have_git:
+                check("the nested-root walk equals `git ls-files -co --exclude-standard` run in the root",
+                      walk_tree(nroot) == gitlist(nroot) and walk_tree(nout) == gitlist(nout) == [],
+                      (walk_tree(nroot), gitlist(nroot), walk_tree(nout), gitlist(nout)))
+            real_top = repo_top
+            globals()["repo_top"] = lambda r: (os.path.abspath(os.fspath(r)), "")      # the parents' ignore files unread
+            try:
+                plant_("the parents' ignore files unread: red - the nested root lists what git ignores",
+                       walk_tree(nroot) != nwant and walk_tree(nout) != [])
+            finally:
+                globals()["repo_top"] = real_top
+            big = tmp / "big"
+            for i in range(60):
+                (big / f"d{i}" / "ign").mkdir(parents=True)
+                for j in range(50):
+                    (big / f"d{i}" / f"f{j}.txt").write_text(str(j), encoding="utf-8")
+            (big / ".gitignore").write_text("ign/\n*.tmp\n", encoding="utf-8")
+            tw = time.perf_counter()
+            nbig = len(walk_tree(big))
+            tw = time.perf_counter() - tw
+            tg, note = None, ""
+            if have_git:
+                subprocess.run(["git", "init", "-q"], cwd=str(big), check=True, capture_output=True)
+                tg = time.perf_counter()
+                gbig = gitlist(big)
+                tg = time.perf_counter() - tg
+                note = f" (git {tg:.3f}s)"
+            check(f"the walk of {nbig} files takes {tw:.3f}s{note}: under 2s and under 50x git",
+                  nbig == 3001 and tw < 2 and (tg is None or tw < max(0.5, 50 * tg)), (nbig, tw, tg))
+            for k, v in wenv.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
+
+            # every mode in a folder with no repository
+            nrep = tmp / "norepo"
+            nrep.mkdir()
+            (nrep / "emit.py").write_text(EMIT, encoding="utf-8")
+            for rp, body in (("data.txt", "ok\n"), ("plant.py", "open('data.txt', 'w').write('BUG')\n"), ("doc.md", "d\n"),
+                             (".gitignore", "ign.txt\nlogs/\nanchor.json\n"), ("ign.txt", "ignored\n")):
+                (nrep / rp).write_text(body, encoding="utf-8")
+            nman = {"logs_dir": "logs", "anchor": "anchor.json", "vars": {"emit": ["emit.py"]},
+                    "skip_classes": [{"match": ["*.md", "emit.py", "plant.py", ".gitignore"], "reason": "fixture"}],
+                    "scopes": {"chk": {"cmd": f"{py} check data.txt", "paths": ["data.txt"],
+                                       "plants": [{"id": "fn", "patch": "{python} -S plant.py"}]}}}
+            check("git cannot answer in the folder", git_out(nrep, ["rev-parse", "HEAD"], 30) is None)
+            nvis = visible_files(nrep, nman, nrep / "logs")
+            check("the anchor's subject in a folder with no repository: the files the .gitignore leaves",
+                  nvis == [".gitignore", "data.txt", "doc.md", "emit.py", "plant.py"], nvis)
+            n1 = changed_run(nman, nrep, "T9", 1, box="SELFBOX")
+            check("--changed with no repository: runs, GO, the anchor seeded",
+                  not n1["failures"] and not n1["nogo"] and (nrep / "anchor.json").exists(), n1["failures"] or n1["nogo"])
+            (nrep / "data.txt").write_text("ok edited\n", encoding="utf-8")
+            n2 = changed_run(nman, nrep, "T9", 1, box="SELFBOX")
+            check("--changed with no repository: the edited file chooses its scope",
+                  {r["scope"] for r in n2["data"]["rows"]} == {"chk"} and not n2["failures"], n2["failures"] or n2["lines"])
+            n3 = run_scopes(nman, ["chk"], nrep, "T9", 1, mode="all",
+                            hook=lambda: loop_checks(nman, nrep, "T9", 1, "SELFBOX", nrep / "verify.json"))
+            check("--all with no repository: GO", not n3["failures"] and not n3["nogo"], n3["failures"] or n3["nogo"])
+            n4 = redarm(nman, "chk", nrep, "T9", 1, box="SELFBOX")
+            check("--redarm with no repository: the plant goes red, GO", not n4["failures"] and not n4["nogo"]
+                  and n4["data"]["red"] == 1, n4["failures"] or n4["nogo"])
+            recs = [json.loads(x) for x in (nrep / "logs" / "loop_times.jsonl").read_text(encoding="utf-8").splitlines() if x.strip()]
+            check("the records' tree id is the content hash alone, no HEAD in front",
+                  bool(recs) and all(re.fullmatch(r"[0-9a-f]{12}", r.get("tree") or "") for r in recs), [r.get("tree") for r in recs])
+            check("refuse_log refuses nothing where no repository answers", refuse_log(nrep, [nrep / "logs" / "T9.chk.log"]) is None)
+
+            # -- D3 · the task's own start: three tasks in a row, no commit, no repository ----------------
+            sq = tmp / "seq"
+            sq.mkdir()
+            (sq / "emit.py").write_text(EMIT, encoding="utf-8")
+            (sq / "plant.py").write_text("import sys\nopen(sys.argv[1], 'w').write('BUG')\n", encoding="utf-8")
+            (sq / ".gitignore").write_text("*.tmp\n", encoding="utf-8")       # the logs folder is held out by the tool
+            sq_man = {"logs_dir": "logs", "anchor": "anchor.json", "vars": {"emit": ["emit.py"]},
+                      "skip_classes": [{"match": ["emit.py", "plant.py", ".gitignore", "verify.json"], "reason": "fixture"}],
+                      "scopes": {}}
+            sq_mf = sq / "verify.json"
+
+            def sq_add(name):                       # a task adds a scope with a plant, and the file it grades
+                (sq / f"{name}.py").write_text("ok\n", encoding="utf-8")
+                sq_man["scopes"][name] = {"cmd": f"{py} check {name}.py", "paths": [f"{name}.py"],
+                                          "plants": [{"id": "p", "patch": f"{{python}} -S plant.py {name}.py"}]}
+                sq_mf.write_text(json.dumps(sq_man), encoding="utf-8")
+
+            def sq_start(task, fresh=False, root=sq, mf=sq_mf):
+                return cmd_start(load_manifest(mf), argparse.Namespace(task=task, fresh=fresh), root, mf)
+
+            def sq_claim(task, root=sq, mf=sq_mf):
+                m = load_manifest(mf)
+                lb = loop_base(m, root, task, mf)               # looked up at the call: the plants below swap it
+                lines_, fails_ = loop_checks(m, root, task, 1, "SELFBOX", mf, block={"type": "CHECK", "deliver": "", "plan": "p"},
+                                             changed=lb["changed"], mchanges=lb["mchanges"], label=lb["label"])
+                armed = sorted({x.group(1) for x in (re.match(r"(\w+) · plant ", ln) for ln in lines_) if x})
+                flagged = sorted({x.group(1) for x in (re.match(r"FLAG (?:oracle|type): (\S+\.py) changed", ln) for ln in lines_) if x})
+                return lb, armed, flagged, fails_
+            sq_add("s0")
+            r_a = sq_start("TA")
+            check("start: one line, the task, the file count, a timestamp",
+                  re.fullmatch(r"baseline: TA, \d+ files, 20\d\d-\d\d-\d\dT\S+", r_a["lines"][0]) is not None, r_a["lines"])
+            bdir = sq / "logs" / ".baseline"
+            check("start: a .gitignore of `*` inside the baselines folder, the logs folder held out of the files",
+                  (bdir / ".gitignore").read_text(encoding="utf-8") == "*\n"
+                  and not any(k.startswith("logs/") or k == "anchor.json" for k in read_baseline(bdir / "TA.json")["files"]))
+            check("start: the manifest's text is kept", json.loads(read_baseline(bdir / "TA.json")["manifest"])["scopes"].keys() == {"s0"})
+            sq_add("sa")                                        # task A's work, uncommitted - there is no commit
+            lb_a, armed_a, flagged_a, f_a = sq_claim("TA")
+            check("a claim after the task's own start: its added scope's plant re-armed, red; the scope it found is not",
+                  armed_a == ["sa"] and not f_a and lb_a["line"].startswith("base: TA's start 20"), (armed_a, f_a, lb_a["line"]))
+            check("a claim after the task's own start flags the paths it changed", flagged_a == ["sa.py"], flagged_a)
+            sq_start("TB")
+            sq_add("sb")
+            sq_start("TC")
+            lb_b, armed_b, flagged_b, _f = sq_claim("TB")
+            check("task B's claim reads its own start, though task A left its work uncommitted and TC started after",
+                  armed_b == ["sb"] and flagged_b == ["sb.py"], (armed_b, flagged_b))
+            sq_add("sc")
+            real_loop_base = loop_base
+            lb_c, armed_c, flagged_c, _f = sq_claim("TC")
+            check("the third task of a row: its claim re-arms its own scope only and flags its own paths only",
+                   armed_c == ["sc"] and flagged_c == ["sc.py"], (armed_c, flagged_c))
+            globals()["loop_base"] = lambda m, root, task, mf: {                      # the loop back on HEAD: no commit,
+                "changed": sorted(walk_tree(root)), "mchanges": {n: "added" for n in m["scopes"]},    # so all of it differs
+                "label": "HEAD", "line": "base: HEAD"}
+            try:
+                _l, armed_h, flagged_h, _f = sq_claim("TC")
+                plant_("the loop back on HEAD: red - every uncommitted task's scope re-armed and path flagged",
+                       not (armed_h == ["sc"] and flagged_h == ["sc.py"]), (armed_h, flagged_h))
+            finally:
+                globals()["loop_base"] = real_loop_base
+            # the claim's record (M0-T63): whose start, the task's own files, the loop's seconds apart
+            real_checks, real_bill, real_touched = loop_checks, loop_bill, touched_of
+
+            def sq_loop(task, slow=0.0):                 # one real --all claim; the loop slowed by `slow` s
+                globals()["loop_checks"] = lambda *x, **k: (time.sleep(slow), real_checks(*x, **k))[1]
+                try:
+                    cmd_run(load_manifest(sq_mf), build_parser().parse_args(["--all", "--task", task, "-j", "2"]), sq, sq_mf)
+                finally:
+                    globals()["loop_checks"] = real_checks
+                return json.loads((sq / "logs" / "loop_times.jsonl").read_text(encoding="utf-8").splitlines()[-1])
+            rc_c = sq_loop("TC", slow=1.0)
+            check("the claim record names the task's own files against its own start, and whose start",
+                  rc_c.get("touched") == {"added": ["sc.py"], "modified": ["verify.json"], "deleted": []}
+                  and rc_c.get("base", "").startswith("TC's start 20") and "no start" not in rc_c.get("base", ""),
+                  (rc_c.get("touched"), rc_c.get("base")))
+            check("the claim bills the loop apart: `seconds` the scopes alone, `loop_seconds` the plants and flags",
+                  is_num(rc_c.get("loop_seconds")) and rc_c["loop_seconds"] >= 1.0 and rc_c["seconds"] < 1.0,
+                  (rc_c.get("seconds"), rc_c.get("loop_seconds")))
+            globals()["loop_bill"] = lambda e, before, h: {"seconds": e + before + h, "loop_seconds": round(before + h, 3)}
+            try:
+                rc_x = sq_loop("TC", slow=1.0)
+            finally:
+                globals()["loop_bill"] = real_bill
+            plant_("`loop_seconds` folded into `seconds`: red - the scopes' clock bills the loop too",
+                   not (rc_x["seconds"] < 1.0 <= rc_x["loop_seconds"]), (rc_x["seconds"], rc_x["loop_seconds"]))
+            # the seconds at an idle box (M0-T64d): from the end load, k the default without a fitted load_k
+            idle_of = lambda rc, k: tuple(round(float(rc[x]) / (1 + k * rc["load"] / rc["cpus"]), 3)  # noqa: E731
+                                          for x in ("seconds", "loop_seconds"))
+            check("the claim record: `seconds_norm` and `loop_seconds_norm` from its load, `load_norm` naming the default k",
+                  (rc_c.get("seconds_norm"), rc_c.get("loop_seconds_norm")) == idle_of(rc_c, DEFAULT_LOAD_K)
+                  and "default 0.15" in rc_c.get("load_norm", "") if is_num(rc_c.get("load"))
+                  else rc_c.get("seconds_norm") is None, (rc_c.get("seconds_norm"), rc_c.get("load_norm")))
+            real_sample = sample_load
+
+            def blind_loop(task):                    # a box that cannot sample its load
+                globals()["sample_load"] = lambda *a, **k: (None, "none: a denied counter")
+                try:
+                    return sq_loop(task)
+                finally:
+                    globals()["sample_load"] = real_sample
+            nulled = lambda rc: ("seconds_norm" in rc and "loop_seconds_norm" in rc and rc["seconds_norm"] is None  # noqa: E731
+                                 and rc["loop_seconds_norm"] is None and rc.get("load_norm") == "none: a denied counter")
+            rc_n = blind_loop("TC")
+            check("no load sample: `seconds_norm` null, `load_norm` the reason - never the raw copied in", nulled(rc_n),
+                  {k: rc_n.get(k) for k in ("seconds", "seconds_norm", "loop_seconds_norm", "load_norm")})
+            rc_p = swap_("normalise", lambda rec, man: rec.update(seconds_norm=rec["seconds"],
+                                                                  loop_seconds_norm=rec.get("loop_seconds"),
+                                                                  load_norm="none: a denied counter") or rec,
+                         lambda: blind_loop("TC"))
+            plant_("the raw seconds copied into a null `seconds_norm`: red", not nulled(rc_p), rc_p.get("seconds_norm"))
+            nk = {"scopes": {}, "budget": {"boxes": {"B32": {"load_k": 0.007, "cpus": 32}}}}
+            rn = normalise({"box": "B32", "seconds": 10.0, "load": 16.0, "cpus": 32}, nk)
+            check("normalise: the manifest box's fitted load_k wins, in the relative form (0.007 x 32 = k 0.224)",
+                  rn["seconds_norm"] == round(10 / 1.112, 3) and "manifest B32 load_k 0.007 x 32 cpus" in rn["load_norm"]
+                  and "seconds_norm" in normalise({"box": "B8", "seconds": 1.0, "load": 0.0, "cpus": 8}, nk)
+                  and normalise({"box": "B8", "seconds": 1.0, "load": 0.0, "cpus": 8}, nk)["load_norm"].startswith("k 0.15 "),
+                  rn)
+            check("normalise: a load over the CPUs is computed and named out of range",
+                  "OUT OF RANGE" in normalise({"box": "B8", "seconds": 1.0, "load": 9.0, "cpus": 8}, nk)["load_norm"])
+            globals()["touched_of"] = lambda now, old: {k: [] for k in TOUCH_KINDS}
+            try:
+                rc_e = sq_loop("TC")
+            finally:
+                globals()["touched_of"] = real_touched
+            plant_("`touched` empty for a task that wrote files: red", rc_e.get("touched") != rc_c.get("touched"),
+                   rc_e.get("touched"))
+            _h, tail_d, fields_d = loop_hook(load_manifest(sq_mf), sq, "TD", 1, sq_mf)
+            check("a task with no start of its own: the record's base names whose start its list was read against",
+                  fields_d["base"].startswith("TC's start 20") and fields_d["base"].endswith("— no start for TD")
+                  and tail_d.endswith(fields_d["base"]), fields_d["base"])
+            first_bytes = (bdir / "TA.json").read_bytes()
+            (sq / "late.py").write_text("late\n", encoding="utf-8")
+            r_a2 = sq_start("TA")
+            check("a resumed task keeps its first start: the same line, the same bytes, the late file not in it",
+                  r_a2["lines"] == r_a["lines"] and (bdir / "TA.json").read_bytes() == first_bytes
+                  and "late.py" not in read_baseline(bdir / "TA.json")["files"], r_a2["lines"])
+            real_read = read_baseline
+            globals()["read_baseline"] = lambda path: None                             # a start that never sees the first
+            try:
+                sq_start("TA")
+            finally:
+                globals()["read_baseline"] = real_read
+            plant_("a second start overwriting the first: red - the resumed task lost its start",
+                   (bdir / "TA.json").read_bytes() != first_bytes)
+            (bdir / "TA.json").write_bytes(first_bytes)
+            lb_d, armed_d, flagged_d, _f = sq_claim("TD")
+            check("a task with no start of its own reads the newest start on the box, named",
+                  lb_d["line"].startswith("base: TC's start 20") and lb_d["line"].endswith("— no start for TD")
+                  and armed_d == ["sc"] and flagged_d == ["late.py", "sc.py"],
+                  (lb_d["line"], armed_d, flagged_d))
+            r_f = sq_start("TA", fresh=True)
+            check("--fresh writes the start again, the late file now in it",
+                  "late.py" in read_baseline(bdir / "TA.json")["files"] and r_f["lines"][0].startswith("baseline: TA, "))
+            nb = tmp / "nobase"
+            nb.mkdir()
+            for f in ("emit.py", "plant.py"):
+                (nb / f).write_text((sq / f).read_text(encoding="utf-8"), encoding="utf-8")
+            nb_man = dict(sq_man, scopes={n: sc for n, sc in sq_man["scopes"].items() if n in ("sa", "sb")})
+            nb_man["scopes"]["bare"] = {"cmd": f"{py} check sa.py", "paths": ["sa.py"]}
+            for n in ("sa", "sb"):
+                (nb / f"{n}.py").write_text("ok\n", encoding="utf-8")
+            (nb / "verify.json").write_text(json.dumps(nb_man), encoding="utf-8")
+            lb_n, armed_n, _fl, f_n = sq_claim("TZ", root=nb, mf=nb / "verify.json")
+            check("a task with no start and no start on the box: every scope with plants re-armed once, the line says so",
+                   armed_n == ["sa", "sb"] and lb_n["line"] == "base: none — every plant" and not f_n, (armed_n, lb_n["line"]))
+            globals()["loop_base"] = lambda m, root, task, mf: dict(real_loop_base(m, root, task, mf), mchanges={})
+            try:
+                _l, armed_x, _fl, _f = sq_claim("TZ", root=nb, mf=nb / "verify.json")
+                plant_("the no-start fallback running no plant: red - nothing re-armed", armed_x != ["sa", "sb"])
+            finally:
+                globals()["loop_base"] = real_loop_base
+            # the shortcut: a file whose size and mtime match the newest start keeps its hash, unread
+            (sq / "same.py").write_text("one\n", encoding="utf-8")
+            sq_start("TE")
+            st_ = os.stat(sq / "same.py")
+            (sq / "same.py").write_text("two\n", encoding="utf-8")
+            os.utime(sq / "same.py", ns=(st_.st_atime_ns, st_.st_mtime_ns))
+            sq_start("TF")
+            check("start: a file whose size and mtime match the newest start keeps that hash, no re-read; a changed one is read",
+                  read_baseline(bdir / "TF.json")["files"]["same.py"][2] == read_baseline(bdir / "TE.json")["files"]["same.py"][2]
+                  and read_baseline(bdir / "TF.json")["files"]["sc.py"][1] == read_baseline(bdir / "TE.json")["files"]["sc.py"][1])
+            for i in range(BASELINES_KEPT + 2):
+                sq_start(f"TX{i}")
+            kept_ = sorted(x.name for x in bdir.glob("*.json"))
+            check(f"start: the newest {BASELINES_KEPT} baselines kept, the oldest gone",
+                  len(kept_) == BASELINES_KEPT and f"TX{BASELINES_KEPT + 1}.json" in kept_ and "TA.json" not in kept_, kept_)
+            def sq_cli(*args):
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    rc = main(["--manifest", str(sq_mf), "--root", str(sq), "--no-progress"] + list(args))
+                return rc, out.getvalue()
+            rc, out = sq_cli("start", "--task", "TG")
+            check("the CLI: `start --task` prints the baseline line, the counts, GO",
+                  rc == 0 and re.search(r"^baseline: TG, \d+ files, 20", out, re.M) and "=== GO ===" in out, out[-300:])
+            rc, out = sq_cli("start")
+            check("the CLI: `start` without --task is refused", rc == 1 and "no --task" in out, out[-200:])
+            rc, out = sq_cli("sa", "--fresh", "--task", "TG")
+            check("the CLI: --fresh goes with `start` only", rc == 1 and "--fresh goes with `start`" in out, out[-200:])
 
             # -- E · the coverage anchor -----------------------------------------------------------------
             aroot = tmp / "anchor"
@@ -2185,6 +3577,10 @@ def selftest():
             check("--base: a path moved since the named commit chooses its scope too",
                   {r["scope"] for r in r3["data"]["rows"]} == {"sb", "free"}
                   and any("moved since v1.0: src/b.py" in ln for ln in r3["lines"]), r3["lines"])
+            tg = touched_git(croot, "v1.0", git=lambda r, args, timeout=120: "M\0src/a.py\0D\0gone.py\0A\0new.py\0"
+                             if args[0] == "diff" else "u.py\0")
+            check("--base: the record's touched read from git, untracked files as added",
+                  tg == {"added": ["new.py", "u.py"], "modified": ["src/a.py"], "deleted": ["gone.py"]}, tg)
             for name, base in (("HEAD", "HEAD"), ("HEAD~1", "HEAD~1"), ("@", "@")):
                 try:
                     ch(base=base)
@@ -2223,6 +3619,333 @@ def selftest():
                 plant_("--changed with no scope declaring paths: refused", False, "ran")
             except Refused as exc:
                 plant_("--changed with no scope declaring paths: refused", "no scope declares `paths`" in str(exc), str(exc))
+
+            # -- F2 · a scope whose cases are files: under --changed, only the cases whose file moved (M0-T64b) --
+            kroot = tmp / "casefiles"
+            (kroot / "d").mkdir(parents=True)
+            (kroot / "x").mkdir()
+            (kroot / "emit.py").write_text(EMIT, encoding="utf-8")
+            (kroot / "deny.txt").write_text("BAD\n", encoding="utf-8")
+            (kroot / "x/conf.txt").write_text("1\n", encoding="utf-8")
+            for f in ("a", "b", "c"):
+                (kroot / f"d/{f}.txt").write_text(f"{f}\n", encoding="utf-8")
+            kman = {"logs_dir": "logs", "anchor": "anchor.json", "vars": {"emit": ["emit.py"]}, "tree_extra": ["x"],
+                    "skip_classes": [{"match": ["emit.py", "deny.txt", "x/**"], "reason": "the fixture"}],
+                    "scopes": {"docs": {"cases_cmd": f"{py} ls d", "case_cmd": f"{py} deny deny.txt {{case}}",
+                                        "expected": 3, "paths": ["d/**"]}}}
+
+            def kch(m=None, task="K"):
+                trace.write_text("", encoding="utf-8")
+                r = changed_run(m or kman, kroot, task, 2, box="SELFBOX")
+                return r, sorted(s[0] for s in spans() if s[0].startswith("d/"))
+
+            def kline(r):
+                return next((ln for ln in r["lines"] if ln.startswith("docs cases: ")), "")
+
+            def kmut(fn_name, mutant, call):              # a mutant's run, the anchor put back as it found it
+                saved = (kroot / "anchor.json").read_bytes()
+                try:
+                    return swap_(fn_name, mutant, call)
+                finally:
+                    (kroot / "anchor.json").write_bytes(saved)
+
+            def kbook():
+                return json.loads((kroot / "anchor.json").read_text(encoding="utf-8")).get("cases", {}).get("docs", {})
+            r, ran = kch()
+            check("cases that are files: the first --changed runs them all and books each in the anchor, GO",
+                  not r["failures"] and not r["nogo"] and ran == ["d/a.txt", "d/b.txt", "d/c.txt"]
+                  and sorted(kbook()) == ["d/a.txt", "d/b.txt", "d/c.txt"] and all(e["n"] == 1 for e in kbook().values())
+                  and kline(r) == "docs cases: 3 of 3 (none vouched by the anchor yet)", (r["failures"], ran, kline(r)))
+            (kroot / "d/b.txt").write_text("b2\n", encoding="utf-8")
+            r, ran = kch()
+            check("... then only the case whose file moved, `cases: 1 of 3 (the rest vouched by the anchor)`, GO - "
+                  "`expected` 3 read against the 3 listed, never the 1 run",
+                  not r["failures"] and ran == ["d/b.txt"] and kline(r) == "docs cases: 1 of 3 (the rest vouched by the anchor)"
+                  and r["data"]["record"]["scopes"]["docs"].get("vouched") == 2, (r["failures"], ran, kline(r)))
+            (kroot / "d/n.txt").write_text("n\n", encoding="utf-8")
+            r, ran = kch()
+            check("... a new case file runs alone", not r["failures"] and ran == ["d/n.txt"], (r["failures"], ran))
+            (kroot / "d/c.txt").write_text("BAD c\n", encoding="utf-8")
+            r, ran = kch()
+            check("... a moved case that goes red: NO-GO, and it loses its entry", ran == ["d/c.txt"]
+                  and any(f.startswith("docs:") for f in r["failures"]) and "d/c.txt" not in kbook(), (r["failures"], ran))
+            (kroot / "d/c.txt").write_text("c\n", encoding="utf-8")
+            r, ran = kch()
+            check("... the scope red, its path entries gone: the red case alone runs again - the others' case "
+                  "entries still vouch - GO", not r["failures"] and ran == ["d/c.txt"]
+                  and kline(r) == "docs cases: 1 of 4 (the rest vouched by the anchor)", (r["failures"], ran, kline(r)))
+            (kroot / "deny.txt").write_text("BAD\nb2\n", encoding="utf-8")             # the list every case reads
+            rm, mran = kmut("suite_chosen", lambda _m, _r, _l, _b, *cwn: cwn, lambda: kch(task="KM"))
+            r, ran = kch()
+            plant_("a list every case reads moved and no case file did, the scope left out: red - the real run chooses "
+                   "it, runs every case and reddens the one the new entry names",
+                   mran == [] and "nothing changed" in (rm["nogo"] or "") and len(ran) == 4
+                   and any(f.startswith("docs:") for f in r["failures"]), (rm["nogo"], ran))
+            check("the list every case reads moved, no case file did: the scope chosen, every case run, the old file "
+                  "the new entry names red", len(ran) == 4 and any(f.startswith("docs:") for f in r["failures"])
+                  and "file its case commands name" in kline(r) + " ".join(r["lines"]), (r["failures"], ran, kline(r)))
+            (kroot / "deny.txt").write_text("BAD\n", encoding="utf-8")
+            r, ran = kch()
+            check("... put back: every case again, GO", not r["failures"] and len(ran) == 4, (r["failures"], ran))
+            (kroot / "x/conf.txt").write_text("2\n", encoding="utf-8")
+            r, ran = kch()
+            check("a file under `tree_extra` moved: every case", not r["failures"] and len(ran) == 4
+                  and "all: its manifest entry" in kline(r), (r["failures"], ran, kline(r)))
+            kman2 = json.loads(json.dumps(kman))
+            kman2["scopes"]["docs"]["timeout_s"] = 30
+            r, ran = kch(kman2)
+            check("the scope's manifest entry moved: every case", not r["failures"] and len(ran) == 4
+                  and "all: its manifest entry" in kline(r), (r["failures"], ran, kline(r)))
+            r, ran = kch(kman2)
+            plant_("nothing moved: NO-GO, zero cases - the anchor vouches for the scope and its cases",
+                   bool(r["nogo"]) and ran == [], (r["nogo"], ran))
+            n_ok = lambda r: not r["failures"] and not r["nogo"]                            # noqa: E731
+            (kroot / "d/a.txt").write_text("a2\n", encoding="utf-8")
+            rm, mran = kmut("case_pick", lambda us, *a: ([], "cases: 0 of 4 (MUTANT)", 0), lambda: kch(kman2, "KM"))
+            plant_("a pick that runs no case: red - zero cases is NO-GO, never a vouched GO",
+                   not n_ok(rm) and mran == [] and any("zero passed" in f for f in rm["failures"]), rm["failures"])
+            r, ran = kch(kman2)
+            check("... the real pick runs the one moved case", n_ok(r) and ran == ["d/a.txt"], (r["failures"], ran))
+            (kroot / "d/a.txt").write_text("a3\n", encoding="utf-8")
+            (kroot / "d/z.txt").write_text("BAD z\n", encoding="utf-8")                 # never GO, and red
+            real_v = case_vouched
+            rm, mran = kmut("case_vouched", lambda e, now, s: e is None or real_v(e, now, s), lambda: kch(kman2, "KM"))
+            r, ran = kch(kman2)
+            plant_("a pick that skips a never-GO case: red - the case the anchor never saw go GO runs, and reddens",
+                   n_ok(rm) and mran == ["d/a.txt"] and not n_ok(r) and ran == ["d/a.txt", "d/z.txt"], (mran, ran))
+            (kroot / "d/z.txt").unlink()
+            r, ran = kch(kman2)
+            check("... the red case's file deleted: the scope chosen, every case, GO", n_ok(r) and len(ran) == 4, (r["failures"], ran))
+            (kroot / "d/n.txt").unlink()
+            r, ran = kch(kman2)
+            check("a case file deleted from a GO tree: a covered path gone, no case - every case",
+                  n_ok(r) and ran == ["d/a.txt", "d/b.txt", "d/c.txt"] and "d/n.txt moved and is no case" in kline(r),
+                  (r["failures"], ran, kline(r)))
+            kman3 = json.loads(json.dumps(kman2))
+            kman3["scopes"]["docs"]["case_cmd"] = f"{py} deny d/c.txt {{case}}"      # the entry: now `c` is denied
+
+            def entry_moved():                            # seeded on the mutant's suite, one case file moved, the entry too
+                kch(kman2, "KM")
+                (kroot / "d/b.txt").write_text("b3\n", encoding="utf-8")
+                return kch(kman3, "KM")
+            sm, smran = kmut("suite_hash", lambda *_a: "MUTANT", entry_moved)
+            r, ran = kch(kman3)
+            plant_("a pick that skips every case on an entry change: red - the changed entry runs all, and its new "
+                   "rule reddens a case whose file did not move", smran == ["d/b.txt"] and n_ok(sm)
+                   and len(ran) == 3 and any(f.startswith("docs:") for f in r["failures"]), (smran, ran, r["failures"]))
+            ids = [("l", "go", "x")]
+            check("case_pick: a case id that is no file - every case, named",
+                  case_pick(ids, None, {}, "S", {}, [])[1] == "cases: 1 of 1 (all: a case id is no file of the tree)"
+                  and case_paths({}, ["d/a.txt", "nope"], ["d/a.txt"]) is None
+                  and case_paths({"cwd": "d"}, ["a.txt"], ["d/a.txt"]) == {"a.txt": "d/a.txt"})
+            two = [("l", "go", "p"), ("l", "go", "q")]
+            kept = {"p": {"sha1": "h", "suite": "S", "n": 1}, "q": {"sha1": "h", "suite": "S", "n": 1},
+                    "gone": {"sha1": "h", "suite": "S", "n": 9}}
+            check("case_pick: a moved covered path that is no case - every case; every case vouched yet chosen - "
+                  "every case; the vouched count sums the listed only",
+                  "all: t.cfg moved and is no case" in case_pick(two, {"p": "p", "q": "q"}, {"p": "h", "q": "h"}, "S", kept, ["t.cfg"])[1]
+                  and "all: the anchor vouches for every case" in case_pick(two, {"p": "p", "q": "q"}, {"p": "h", "q": "h"}, "S", kept, [])[1]
+                  and case_pick(two, {"p": "p", "q": "q"}, {"p": "h", "q": "h2"}, "S", kept, ["q"])[1:] == (
+                      "cases: 1 of 2 (the rest vouched by the anchor)", 1))
+            check("named_files: inside `bash -c`, after `=`, a var's candidate - files only, never a folder or {case}",
+                  named_files({"vars": {"emit": ["emit.py"]}}, kroot, {
+                      "cases_cmd": "bash -c \"python3 {emit} ls d --deny=deny.txt\"", "case_cmd": "x {case} x/conf.txt"})
+                  == {"emit.py", "deny.txt", "x/conf.txt"})
+            bad = kroot / "bad_anchor.json"
+            bad.write_text(json.dumps({"version": ANCHOR_VERSION, "paths": {}, "cases": {"docs": []}}), encoding="utf-8")
+            try:
+                anchor_read(bad)
+                plant_("an anchor whose `cases` is no object: refused", False, "read")
+            except Refused as exc:
+                plant_("an anchor whose `cases` is no object: refused", "`cases`" in str(exc), str(exc))
+
+            # -- F2b · a case that is a file the runner holds out of the tree: booked by its hash like any (M0-D42) --
+            hroot = tmp / "heldcases"
+            (hroot / "d").mkdir(parents=True)
+            (hroot / "logs").mkdir()
+            (hroot / "emit.py").write_text(EMIT, encoding="utf-8")
+            (hroot / "deny.txt").write_text("BAD\n", encoding="utf-8")
+            for f_, v_ in (("d/a.txt", "a"), ("d/b.txt", "b"), ("logs/g.log", "g")):
+                (hroot / f_).write_text(v_ + "\n", encoding="utf-8")
+            hman = {"logs_dir": "logs", "anchor": "anchor.json", "vars": {"emit": ["emit.py"]},
+                    "skip_classes": [{"match": ["emit.py", "deny.txt"], "reason": "the fixture"}],
+                    "scopes": {"docs": {"cases_cmd": f"{py} ls d logs/g*.log",
+                                        "case_cmd": f"{py} deny deny.txt {{case}}", "expected": 3, "paths": ["d/**"]}}}
+
+            def hch(m=None, task="H"):
+                trace.write_text("", encoding="utf-8")
+                r = changed_run(m or hman, hroot, task, 2, box="SELFBOX")
+                return r, sorted(s[0] for s in spans() if s[0].endswith((".txt", ".log")))
+
+            def hline(r):
+                return next((ln for ln in r["lines"] if ln.startswith("docs cases: ")), "")
+            r, ran = hch()
+            check("a case in the logs folder: the first --changed runs all three and books the log's hash like the rest, GO",
+                  not r["failures"] and not r["nogo"] and ran == ["d/a.txt", "d/b.txt", "logs/g.log"]
+                  and hline(r) == "docs cases: 3 of 3 (none vouched by the anchor yet)", (r["failures"], ran, hline(r)))
+            (hroot / "d/a.txt").write_text("a2\n", encoding="utf-8")
+            r, ran = hch()
+            check("... a doc moved: only that case, `cases: 1 of 3 (the rest vouched by the anchor)` - the log is vouched, "
+                  "not re-run", not r["failures"] and ran == ["d/a.txt"]
+                  and hline(r) == "docs cases: 1 of 3 (the rest vouched by the anchor)", (r["failures"], ran, hline(r)))
+            (hroot / "logs/g.log").write_text("g2\n", encoding="utf-8")
+            (hroot / "d/b.txt").write_text("b2\n", encoding="utf-8")
+            r, ran = hch()
+            check("... the log moved with a doc: both run, the other vouched", not r["failures"]
+                  and ran == ["d/b.txt", "logs/g.log"] and hline(r) == "docs cases: 2 of 3 (the rest vouched by the anchor)",
+                  (r["failures"], ran, hline(r)))
+            (hroot / "d/a.txt").write_text("a3\n", encoding="utf-8")
+            real_cp = case_paths
+            hm, hmran = swap_("case_paths", lambda s, ids, vis, held=None, root=None: real_cp(s, ids, vis),
+                              lambda: hch(task="HM"))
+            plant_("a held-out id read as no file: red - the pick runs every case again (`all: a case id is no file of the tree`)",
+                   hmran == ["d/a.txt", "d/b.txt", "logs/g.log"] and "all: a case id is no file" in hline(hm), (hmran, hline(hm)))
+
+            # -- F3 · a scope already GO on this tree, in this task, on this box, is not re-run (M0-T64c) --------
+            zroot = tmp / "greens"
+            for d_ in ("d", "e"):
+                (zroot / d_).mkdir(parents=True)
+            (zroot / "emit.py").write_text(EMIT, encoding="utf-8")
+            (zroot / "deny.txt").write_text("BAD\n", encoding="utf-8")
+            for f_, v_ in (("d/a.txt", "a"), ("d/b.txt", "b"), ("e/x.txt", "x")):
+                (zroot / f_).write_text(v_ + "\n", encoding="utf-8")
+            zman = {"logs_dir": "logs", "anchor": "anchor.json", "vars": {"emit": ["emit.py"]},
+                    "skip_classes": [{"match": ["emit.py", "deny.txt"], "reason": "the fixture"}],
+                    "scopes": {"zg": {"cmd": f"{py} deny deny.txt e/x.txt", "paths": ["e/**"]},
+                               "zr": {"cmd": f"{py} trace zr 0.0", "rerun": True},
+                               "zt": {"cmd": f"{py} trace zt 0.0"},
+                               "zf": {"cases_cmd": f"{py} ls d", "case_cmd": f"{py} deny deny.txt {{case}}",
+                                      "expected": 2, "paths": ["d/**"]}}}
+
+            def zrun(*args, task="Z", box="SELFBOX"):
+                trace.write_text("", encoding="utf-8")
+                (tmp / "greens.json").write_text(json.dumps(zman), encoding="utf-8")
+                os.environ["PB_BOX"] = box
+                out = io.StringIO()
+                try:
+                    with contextlib.redirect_stdout(out):
+                        rc = main(["--manifest", str(tmp / "greens.json"), "--root", str(zroot), "--no-progress",
+                                   "--task", task] + list(args))
+                finally:
+                    os.environ["PB_BOX"] = "SELFBOX"
+                return rc, out.getvalue(), [s[0] for s in spans() if s[0] != "rows"]
+
+            def zlast():
+                return records_in(zroot / "logs" / "loop_times.jsonl")[1][-1]
+            rc, out, ran = zrun("zg")
+            first_ts = zlast()["ts"]
+            check("not re-run: a scope's first run runs it, GO", rc == 0 and ran == ["e/x.txt"]
+                  and "not re-run" not in out, (rc, ran, out[-300:]))
+            rc, out, ran = zrun("zg")
+            rec = zlast()
+            check("... the same scope again, same task, same tree: nothing runs, `<scope>  GO (already GO on this tree at "
+                  "<ts> — not re-run)`, GO, the counts say so",
+                  rc == 0 and ran == [] and out.rstrip().endswith("=== GO ===") and "1 not re-run" in out
+                  and re.search(r"^zg +GO \(already GO on this tree at " + re.escape(first_ts) + " — not re-run\\)$", out, re.M)
+                  and "1/1 scopes GO" in out, (rc, ran, out[-500:]))
+            check("... its record names the scope it skipped (`not_rerun`: the run it stands on) and holds it in no `scopes`",
+                  rec["not_rerun"] == {"zg": first_ts} and rec["scopes"] == {} and rec["verdict"] == "GO", rec)
+            rc, out, ran = zrun("zg")
+            check("... and again: it still stands on the first run (a skip is no run to stand on)",
+                  ran == [] and f"at {first_ts} " in out, out[-300:])
+            rc, out, ran = zrun("zg", "zt")
+            check("... a run of this scope and a new one: the new one runs, this one does not",
+                  rc == 0 and ran == ["zt"] and "zg  " in out and "already GO" in out, (ran, out[-400:]))
+            rc, out, ran = zrun("zr")
+            rc2, out2, ran2 = zrun("zr")
+            check("`rerun: true`: a scope that reads what the tree id does not hold always runs",
+                  ran == ["zr"] and ran2 == ["zr"] and "already GO" not in out2, (ran, ran2))
+            rc, out, ran = zrun("zg", "--force")
+            check("`--force` runs the scope again, and its record holds it", rc == 0 and ran == ["e/x.txt"]
+                  and "zg" in zlast()["scopes"] and "not_rerun" not in zlast(), (ran, zlast()))
+            (zroot / "e/x.txt").write_text("y\n", encoding="utf-8")
+            rc, out, ran = zrun("zg")
+            check("the tree moved: the scope runs", ran == ["e/x.txt"], ran)
+            (zroot / "e/x.txt").write_text("BAD\n", encoding="utf-8")
+            rc, out, ran = zrun("zg")
+            rc2, out2, ran2 = zrun("zg")
+            check("a red always re-runs: red twice on one tree, both runs run it",
+                  rc == 1 and rc2 == 1 and ran == ["e/x.txt"] and ran2 == ["e/x.txt"] and "already GO" not in out2, (rc, rc2, ran2))
+            (zroot / "e/x.txt").write_text("y\n", encoding="utf-8")
+            rc, out, ran = zrun("zg")
+            rc2, out2, ran2 = zrun("zg")
+            check("... a GO that follows it is GO again, and stands", rc == 0 and ran == ["e/x.txt"] and ran2 == [], (ran, ran2))
+            rc, out, ran = zrun("zg", task="Z2")
+            check("another task's GO is not this task's: the scope runs", ran == ["e/x.txt"] and "already GO" not in out, ran)
+            rc, out, ran = zrun("zg", box="OTHERBOX")
+            check("another box's GO is not this box's: the scope runs", ran == ["e/x.txt"] and "already GO" not in out, ran)
+            rc, out, ran = zrun("--all", "-j", "1")
+            rc2, out2, ran2 = zrun("--all", "-j", "1")
+            check("`--all` always runs, on the tree a scoped run was GO on, and again on the same tree",
+                  "e/x.txt" in ran and "e/x.txt" in ran2 and "not re-run" not in out + out2, (ran, ran2))
+            rc, out, ran = zrun("zf", "--case", "d/a.txt", task="ZC")
+            rc2, out2, ran2 = zrun("zf", "--case", "d/a.txt", task="ZC")
+            rc3, out3, ran3 = zrun("zf", "--case", "d/b.txt", task="ZC")
+            check("`--case`: the same case again is not re-run, another case runs (a case run says nothing of the others)",
+                  ran == ["d/a.txt"] and ran2 == [] and "already GO" in out2 and ran3 == ["d/b.txt"], (ran, ran2, ran3))
+            rc, out, ran = zrun("zf", task="ZC")
+            rc2, out2, ran2 = zrun("zf", "--case", "d/a.txt", task="ZC")
+            check("... a run of the whole scope is not covered by a case run, and covers every case after it",
+                  sorted(ran) == ["d/a.txt", "d/b.txt"] and ran2 == [] and "already GO" in out2, (ran, ran2))
+            rc, out, ran = zrun("zf", "--case", "d/a.txt", "--force", task="ZC")
+            check("... `--force` with `--case` runs it", ran == ["d/a.txt"], ran)
+            out_ = io.StringIO()
+            with contextlib.redirect_stdout(out_):
+                rcf = main(["--all", "--force", "--task", "Z"])
+            check("`--force` with `--all` is no call: the loop always runs", rcf == 1 and "--force goes with a scope run" in out_.getvalue(),
+                  out_.getvalue()[-300:])
+            (zroot / "e/x.txt").write_text("x\n", encoding="utf-8")
+            zrun("zg", task="ZM")
+            (zroot / "anchor.json").unlink(missing_ok=True)                  # the anchor forgot: --changed chooses it
+            rc, out, ran = zrun("--changed", task="ZM")
+            check("`--changed` always runs: the scope was GO on this tree in this task, and still runs",
+                  "e/x.txt" in ran and "not re-run" not in out, (ran, out[-300:]))
+
+            real_gc = green_cover
+
+            def forcing(real):                                              # a runner that reuses in every call
+                return lambda *a, **k: real(*a, **dict(k, reuse=True))
+
+            def nocase(recs, *a, **k):                                      # a cover that reads a case run as a full run
+                return real_gc([dict(r, mode="scope") if r.get("mode") == "case" else r for r in recs], *a, **k)
+
+            def anytask(recs, task, *a, **k):                               # a cover that reads every task's records
+                return real_gc([dict(r, task=task) for r in recs], task, *a, **k)
+
+            def reddish(recs, *a, **k):                                     # a cover that reads a red as GO
+                return real_gc([dict(r, scopes={n: dict(e, verdict="GO") if isinstance(e, dict) else e
+                                                    for n, e in r["scopes"].items()}) for r in recs], *a, **k)
+
+            def norerun(real):                                              # a runner that does not read `rerun`
+                return lambda man, *a, **k: real(dict(man, scopes={n: {k2: v for k2, v in s.items() if k2 != "rerun"}
+                                                                   for n, s in man["scopes"].items()}), *a, **k)
+            real_rs = run_scopes
+            (zroot / "e/x.txt").write_text("BAD\n", encoding="utf-8")
+            zrun("zg", task="ZP1")
+            rc, out, ran = swap_("green_cover", reddish, lambda: zrun("zg", task="ZP1"))
+            plant_("not re-run: a cover that reads a red as GO skips the red (a red always re-runs)", ran == [], (rc, ran))
+            (zroot / "e/x.txt").write_text("x\n", encoding="utf-8")
+            zrun("zg", task="ZP2")
+            (zroot / "anchor.json").unlink(missing_ok=True)
+            rc, out, ran = swap_("run_scopes", forcing(real_rs), lambda: zrun("--changed", task="ZP2"))
+            plant_("not re-run: a runner that reuses under `--changed` skips a scope the claim must run", "e/x.txt" not in ran
+                   and "not re-run" in out, (ran, out[-300:]))
+            zrun("zr", task="ZP3")
+            rc, out, ran = swap_("run_scopes", norerun(real_rs), lambda: zrun("zr", task="ZP3"))
+            plant_("not re-run: a runner that ignores `rerun` skips the scope that must always run", ran == [], (rc, ran))
+            zrun("zf", "--case", "d/a.txt", task="ZP4")
+            rc, out, ran = swap_("green_cover", nocase, lambda: zrun("zf", "--case", "d/b.txt", task="ZP4"))
+            plant_("not re-run: a cover that reads one case as the whole scope skips a case never run", ran == [], (rc, ran))
+            zrun("zg", task="ZP5")
+            rc, out, ran = swap_("green_cover", anytask, lambda: zrun("zg", task="ZP6"))
+            plant_("not re-run: a cover that reads another task's records skips what this task never ran", ran == [], (rc, ran))
+            rcm = swap_("green_cover", lambda *a, **k: None, lambda: zrun("zg", task="ZP5"))
+            plant_("not re-run: a cover that never finds a green runs the scope again (the arm the checks above stand on)",
+                   rcm[2] == ["e/x.txt"], rcm)
+            rep = cmd_report({"scopes": {"a": {}}, "logs_dir": "logs"}, zroot)
+            check("report: the scopes not re-run are counted apart, never as a redundant loop",
+                  "not re-run " in rep["counts"] and any(ln.startswith("not re-run: ") for ln in rep["lines"]),
+                  (rep["counts"], rep["lines"][-4:]))
 
             # -- G · --redarm: one scratch copy per plant ------------------------------------------------
             proot = tmp / "proj"
@@ -2271,11 +3994,15 @@ def selftest():
                    any(f.startswith("clean:") for f in r["failures"]) and r["data"]["red"] == 0, r["failures"])
             (proot / "data.txt").write_text("ok\n", encoding="utf-8")
             dest = tmp / "copy"
+            (proot / "logs" / "T9.chk.log.1.part").write_text("a running command's output\n", encoding="utf-8")
             scratch_copy(proot, dest)
+            (proot / "logs" / "T9.chk.log.1.part").unlink()
             check("the scratch copy leaves out models, data, .git at any depth; keeps images/ empty; links .venv back",
                   (dest / "data.txt").is_file() and not (dest / "models").exists() and not (dest / "sub/data").exists()
                   and (dest / "images").is_dir() and not list((dest / "images").iterdir())
                   and (os.name == "nt" or (dest / ".venv").is_symlink()))
+            plant_("the scratch copy leaves out a `*.part` file - another arm's, gone mid-copy, would fail the copy",
+                   (dest / "logs").is_dir() and not list((dest / "logs").glob("*.part")))
             dpatch = tmp / "dp"
             dpatch.mkdir()
             (dpatch / "w.txt").write_bytes(b"one\r\ntwo\r\n")
@@ -2311,7 +4038,265 @@ def selftest():
             lines_, _f = lc({"unarmed": "added"})
             plant_("the loop flags a changed scope with no plant", any(ln.startswith("FLAG plants: scope `unarmed` added")
                                                                        for ln in lines_), lines_)
-            bman = {"scopes": {"u": {"cmd": "python3 tests/run.py --fast"},
+            # the red-arm proof the loop reads: a scope whose newest red-arm record on this box is GO, every plant RED,
+            # on the same fingerprint, is not re-run - whichever task recorded it (Tracelax's M0-D13, M0-T64)
+            (proot / "tool.py").write_text("v1\n", encoding="utf-8")
+            fman = json.loads(json.dumps(pman))
+            fman["scopes"]["chk"]["paths"] = ["data.txt"]
+            fman["scopes"]["chk"]["plants"] = [{"id": "diff", "patch": "plants/bug.patch"}]
+            fpl = proot / "logs" / "loop_times.jsonl"
+            fnow = lambda m=None: fingerprint(m or fman, "chk", proot, visible_files(proot, m or fman, proot / "logs"),  # noqa: E731
+                                              proot / "tool.py")
+
+            def frec(task, verdict="GO", plants=None, fp=None, box="SELFBOX", logs=fpl):
+                with open(logs, "a", encoding="utf-8") as fh:
+                    fh.write(json.dumps({"ts": "2999-01-01T00:00:00", "task": task, "mode": "redarm", "box": box,
+                                         "scopes": {"chk": {"plants": {"diff": "RED"} if plants is None else plants,
+                                                            "verdict": verdict, "fingerprint": fp or fnow()}}}) + "\n")
+
+            def fgate(m=None, proven=None):
+                ls, fl = loop_checks(m or fman, proot, "T9", 1, "SELFBOX", proot / "verify.json", block=None,
+                                     changed=[], mchanges={"chk": "changed"}, tool=proot / "tool.py", proven=proven)
+                return ("skipped" if any("red-arm proven by" in x for x in ls) else
+                        "ran" if any("plant diff · RED" in x for x in ls) else "?"), ls, fl
+
+            fp0 = fnow()
+            redarm(fman, "chk", proot, "T7", 1, box="SELFBOX", tool=proot / "tool.py")
+            last = json.loads(fpl.read_text(encoding="utf-8").splitlines()[-1])
+            check("--redarm's record carries the scope's fingerprint, the plants RED and the verdict",
+                  last["scopes"]["chk"].get("fingerprint") == fp0 and last["scopes"]["chk"]["plants"] == {"diff": "RED"}
+                  and last["scopes"]["chk"]["verdict"] == "GO" and bool(fp0), last)
+            proven_ = {}
+            verdict, ls_, fl_ = fgate(proven=proven_)
+            check("the loop skips a scope whose red-arm, another task's, has the same fingerprint - and says by whom",
+                  verdict == "skipped" and not fl_ and any("proven by T7" in x and fp0[:12] in x for x in ls_), (ls_, fl_))
+            check("... and hands the claim's record the proof it relied on",
+                  list(proven_) == ["chk"] and proven_["chk"].startswith("T7 ") and proven_["chk"].endswith(fp0[:12]),
+                  proven_)
+            with open(proot / "data.txt", "ab") as fh:
+                fh.write(b"x")
+            plant_("the loop re-runs a scope when one byte of a `paths` file changed", fgate()[0] == "ran")
+            real_proof = redarm_proof
+            globals()["redarm_proof"] = lambda *_a, **_k: ("MUTANT", "0")    # the skip made unconditional
+            try:
+                mutant = fgate()[0]
+            finally:
+                globals()["redarm_proof"] = real_proof
+            plant_("an unconditional skip (any record vouching, whatever the bytes) is seen by the re-run cases",
+                   mutant == "skipped" and fgate()[0] == "ran", mutant)
+            (proot / "data.txt").write_text("ok\n", encoding="utf-8")
+            check("... and skips again once the bytes are back", fgate()[0] == "skipped")
+            fout = json.loads(json.dumps(fman))
+            fout["scopes"]["chk"]["paths"] = ["other.txt"]                   # the plant patches data.txt, outside `paths`
+            frec("T8", fp=fnow(fout))
+            check("a proof of a scope whose plant patches a file outside its `paths` skips on the same bytes",
+                  fgate(fout)[0] == "skipped")
+            with open(proot / "data.txt", "ab") as fh:
+                fh.write(b"x")
+            plant_("the loop re-runs a scope when a file its plant patches, outside its `paths`, changed",
+                   fgate(fout)[0] == "ran")
+            (proot / "data.txt").write_text("ok\n", encoding="utf-8")
+            frec("T8")                                               # the proof of fman's own entry, newest again
+            (proot / "plants/bug.patch").write_text("--- a/data.txt\n+++ b/data.txt\n@@ -1 +1 @@\n-ok\n+BUG2\n", encoding="utf-8")
+            plant_("the loop re-runs a scope when a plant's patch file changed", fgate()[0] == "ran")
+            (proot / "plants/bug.patch").write_text("--- a/data.txt\n+++ b/data.txt\n@@ -1 +1 @@\n-ok\n+BUG\n", encoding="utf-8")
+            f2 = json.loads(json.dumps(fman))
+            f2["scopes"]["chk"]["timeout_s"] = 77
+            plant_("the loop re-runs a scope when its manifest entry changed", fgate(f2)[0] == "ran")
+            f2["scopes"]["chk"].pop("timeout_s")
+            f2["scopes"]["chk"]["_note"] = "wording only"
+            f2["scopes"]["chk"]["note"] = "a note is no entry"
+            check("... but not when only a note's wording changed", fgate(f2)[0] == "skipped")
+            (proot / "tool.py").write_text("v2\n", encoding="utf-8")
+            plant_("the loop re-runs a scope when the runner changed", fgate()[0] == "ran")
+            frec("T8")
+            check("... and a record of the new runner vouches again, whichever task wrote it", fgate()[0] == "skipped")
+            frec("T8", verdict="NO-GO")
+            plant_("the loop re-runs a scope whose newest red-arm record is NO-GO", fgate()[0] == "ran")
+            frec("T8", plants={"diff": "GREEN"})
+            plant_("the loop re-runs a scope whose record has a GREEN plant", fgate()[0] == "ran")
+            f3 = json.loads(json.dumps(fman))
+            f3["scopes"]["chk"]["plants"].append({"id": "fn", "patch": "{python} -S plant.py"})
+            frec("T8", fp=fnow(f3))                                  # a record of the one-plant entry, read for the two-plant one
+            plant_("the loop re-runs a scope when a plant was added", fgate(f3)[0] == "ran")
+            frec("T8", plants={"diff": "RED", "fn": "RED"}, fp=fnow())
+            plant_("the loop re-runs a scope whose record names a plant the manifest no longer has", fgate()[0] == "ran")
+            fp_fn = fnow(f3)
+            (proot / "plant.py").write_text("open('data.txt', 'w').write('BUG!')\n", encoding="utf-8")
+            plant_("the fingerprint reads a function plant's own script", fnow(f3) != fp_fn)
+            (proot / "plant.py").write_text("open('data.txt', 'w').write('BUG')\n", encoding="utf-8")
+            fnew = json.loads(json.dumps(fman))
+            (proot / "plants/new.patch").write_text("--- /dev/null\n+++ b/made.txt\n@@ -0,0 +1 @@\n+BUG\n", encoding="utf-8")
+            fnew["scopes"]["chk"]["plants"] = [{"id": "new", "patch": "plants/new.patch"}]
+            check("a plant that creates a file: the file absent is a fingerprint, not an unreadable member",
+                  fnow(fnew) is not None and patch_targets((proot / "plants/new.patch").read_text()) == ["made.txt"])
+            (proot / "plants/new.patch").unlink()
+            other = tmp / "otherbox"
+            other.mkdir()
+            frec("T8", box="OTHERBOX", logs=other / "loop_times.jsonl")
+            plant_("a record from another box is no proof",
+                   redarm_proof(fman, "chk", other, "SELFBOX", fnow()) is None
+                   and redarm_proof(fman, "chk", other, "OTHERBOX", fnow()) is not None)
+            plant_("no fingerprint (the tree could not be listed) is no proof",
+                   redarm_proof(fman, "chk", proot / "logs", "SELFBOX", None) is None
+                   and fingerprint(fman, "chk", proot, None) is None)
+            frec("T8")
+            check("a good record is the proof again - the cases above left the tree as they found it", fgate()[0] == "skipped")
+
+            # -- G2 · a faster red arm: the arms side by side, a plant's own case, the clean arm proven, the sweep
+            qroot = tmp / "arms"
+            (qroot / "plants").mkdir(parents=True)
+            (qroot / "emit.py").write_text(EMIT, encoding="utf-8")
+            qtool = qroot / "tool.py"
+            qtool.write_text("v1\n", encoding="utf-8")
+            for f in ("data", "a", "b", "x", "y"):
+                (qroot / f"{f}.txt").write_text("ok\n", encoding="utf-8")
+                (qroot / f"plants/{f}.patch").write_text(f"--- a/{f}.txt\n+++ b/{f}.txt\n@@ -1 +1 @@\n-ok\n+BUG\n", encoding="utf-8")
+            three = [{"id": f"p{k}", "patch": "plants/data.patch"} for k in (1, 2, 3)]
+            qman = {"logs_dir": "logs", "vars": {"emit": ["emit.py"]}, "scopes": {
+                "par": {"cmd": f"{py} check data.txt 0.15", "paths": ["a.txt"], "plants": three},
+                "ex": {"cmd": f"{py} check data.txt 0.15", "exclusive": True, "plants": three[:2]},
+                "cs": {"cases": ["x", "y"], "case_cmd": f"{py} check {{case}}.txt", "expected": 2,
+                       "plants": [{"id": "yb", "patch": "plants/y.patch", "case": "y"}]},
+                "cf": {"cases_cmd": f"{py} rows x y", "case_cmd": f"{py} check {{case}}.txt", "expected": 2,
+                       "plants": [{"id": "yb", "patch": "plants/y.patch", "case": "y"}]},
+                "m1": {"cmd": f"{py} check a.txt", "paths": ["a.txt"], "plants": [{"id": "a", "patch": "plants/a.patch"}]},
+                "m2": {"cmd": f"{py} check b.txt", "paths": ["b.txt"], "plants": [{"id": "b", "patch": "plants/b.patch"}]},
+                "bare": {"cmd": f"{py} go"}}}
+            qrecs = qroot / "logs" / "loop_times.jsonl"
+            qcopy = lambda m=None: json.loads(json.dumps(m or qman))                     # noqa: E731
+            overlap = lambda sp: any(a[1] < b[2] and b[1] < a[2] for i, a in enumerate(sp) for b in sp[i + 1:])  # noqa: E731
+
+            def qarm(scope, task, m=None, jobs=4, record=True):
+                trace.write_text("", encoding="utf-8")
+                r = redarm(m or qman, scope, qroot, task, jobs, box="SELFBOX", record=record, tool=qtool)
+                return r, spans()
+
+            def swap(fn_name, mutant, call):                 # one mutant of this runner, put back whatever happens
+                real = globals()[fn_name]
+                globals()[fn_name] = mutant
+                try:
+                    return call()
+                finally:
+                    globals()[fn_name] = real
+
+            r, sp = qarm("par", "Q1")
+            check("--redarm: the arms side by side - the clean and three plants, each in its own copy, GO",
+                  not r["failures"] and r["data"]["red"] == 3 and r["data"]["workers"] == 4 and len(sp) == 4 and overlap(sp),
+                  (r["lines"], sp))
+            check("... their lines in declared order, whatever order they ended in",
+                  [ln.split(" · ")[1] for ln in r["lines"]] == ["clean", "plant p1", "plant p2", "plant p3"], r["lines"])
+            qlog = (qroot / "logs" / "Q1.par.redarm.log").read_text(encoding="utf-8")
+            heads = [qlog.find(f"par · {x} · a fresh scratch copy") for x in ("clean", "plant p1", "plant p2", "plant p3")]
+            check("... the campaign's log one arm after another in declared order, no part file left",
+                  -1 not in heads and heads == sorted(heads) and not list((qroot / "logs").glob("*.part")), heads)
+            check("arm_workers: a `box` or `free_ports` scope one arm at a time, the rest up to the jobs",
+                  (arm_workers({"box": "B"}, 8, 3), arm_workers({"free_ports": [9]}, 8, 3), arm_workers({}, 8, 3),
+                   arm_workers({}, 2, 5)) == (1, 1, 3, 2))
+            r, sp = qarm("ex", "Q2")
+            check("--redarm: an `exclusive` scope's arms one at a time", not r["failures"] and r["data"]["workers"] == 1
+                  and len(sp) == 3 and not overlap(sp), sp)
+            _r, msp = swap("arm_workers", lambda s, j, n: max(1, min(int(j), n)), lambda: qarm("ex", "Q2m", record=False))
+            plant_("arms of an `exclusive` scope side by side: red - the serial case sees them overlap",
+                   overlap(msp) and not overlap(qarm("ex", "Q2b", record=False)[1]), msp)
+            r, sp = qarm("par", "Q3")
+            check("--redarm: the clean arm a record on today's fingerprint proved is not re-run - and says by whom",
+                  not r["failures"] and r["lines"][0].startswith("par · clean: proven by Q1 ") and len(sp) == 3
+                  and r["data"]["clean"] == "PROVEN", (r["lines"], sp))
+            last = json.loads(qrecs.read_text(encoding="utf-8").splitlines()[-1])
+            check("... its record says so: clean PROVEN, the campaign GO, the fingerprint kept",
+                  last["scopes"]["par"]["clean"] == "PROVEN" and last["scopes"]["par"]["verdict"] == "GO"
+                  and bool(last["scopes"]["par"]["fingerprint"]), last)
+            (qroot / "data.txt").write_text("ok\nmore\n", encoding="utf-8")       # a file the plants patch, outside `paths`
+            r, sp = qarm("par", "Q4")
+            plant_("the clean arm re-runs when a file the plants patch, outside `paths`, changed",
+                   r["lines"][0] == "par · clean · GO" and len(sp) == 4 and not r["failures"], r["lines"])
+            (qroot / "data.txt").write_text("ok\n", encoding="utf-8")
+            rm, _sp = swap("clean_proof", lambda *_a, **_k: ("MUTANT", "0"), lambda: qarm("par", "Q5m", record=False))
+            r, sp = qarm("par", "Q5")
+            plant_("a clean arm skipped whatever the bytes: red - the moved-bytes case runs it",
+                   "proven by MUTANT" in rm["lines"][0] and r["lines"][0] == "par · clean · GO", (rm["lines"][0], r["lines"][0]))
+            last = json.loads(qrecs.read_text(encoding="utf-8").splitlines()[-1])
+            last["task"], last["scopes"]["par"]["clean"] = "Q6x", "NO-GO"
+            with open(qrecs, "a", encoding="utf-8") as fh:
+                fh.write(json.dumps(last) + "\n")
+            r, _sp = qarm("par", "Q6", record=False)
+            plant_("the clean arm re-runs when the newest record's clean was NO-GO", r["lines"][0] == "par · clean · GO", r["lines"])
+            leg = tmp / "legacy"
+            leg.mkdir()
+            (leg / "loop_times.jsonl").write_text(json.dumps({"ts": "t", "task": "OLD", "mode": "redarm", "box": "SELFBOX", "scopes": {
+                "par": {"plants": {"p1": "RED"}, "verdict": "GO", "fingerprint": "f"}}}) + "\n", encoding="utf-8")
+            plant_("the clean proof: a record from before the field proves on its GO, its own box and fingerprint only",
+                   clean_proof("par", leg, "SELFBOX", "f") == ("OLD", "t") and clean_proof("par", leg, "OTHERBOX", "f") is None
+                   and clean_proof("par", leg, "SELFBOX", "g") is None and clean_proof("par", leg, "SELFBOX", None) is None)
+            r, sp = qarm("cs", "Q7")
+            check("a plant's `case`: its arm runs that case alone and goes red - the clean arm runs the whole scope",
+                  not r["failures"] and r["data"]["red"] == 1 and len(sp) == 3 and "(case y)" in r["lines"][1], (r["lines"], sp))
+            qw = qcopy()
+            qw["scopes"]["cs"]["plants"][0]["case"] = "x"                       # x cannot see a bug planted in y
+            r, _sp = qarm("cs", "Q8", m=qw, record=False)
+            check("a `case` that cannot see the plant reads GREEN, so NO-GO - never silently green",
+                  r["data"]["green"] == 1 and any("stayed GO" in f for f in r["failures"]), r["failures"])
+            rm, _sp = swap("plant_case", lambda _a: None, lambda: qarm("cs", "Q8m", m=qw, record=False))
+            plant_("a `case` arm run as the whole scope: red - the wrong-case plant reads RED under it",
+                   rm["data"]["red"] == 1 and not rm["failures"] and r["data"]["green"] == 1, rm["lines"])
+            for nm, scope, case, patch_, want in (("a listed scope", "cs", "z", "y", "not one of the scope's cases"),
+                                                  ("a `cases_cmd` scope", "cf", "z", "y", "not one of the scope's cases"),
+                                                  ("a scope with no cases", "m1", "y", "a", "a scope that has none")):
+                qz = qcopy()
+                qz["scopes"][scope]["plants"] = [{"id": "z", "patch": f"plants/{patch_}.patch", "case": case}]
+                r, _sp = qarm(scope, "Q9", m=qz, record=False)
+                plant_(f"a plant `case` {nm} does not list: an ERROR, never a red or a skip",
+                       r["data"]["errors"] == 1 and r["data"]["red"] == 0 and any(want in f for f in r["failures"]), r["failures"])
+            r, _sp = qarm("cf", "Q10")
+            check("a `cases_cmd` scope's plant `case`: listed in the planted copy, run alone, red",
+                  not r["failures"] and r["data"]["red"] == 1, r["lines"])
+            check("a plant `case` that is no id blocks its scope, named", "`case` is one case id" in blocked(
+                {"scopes": {"s": {"cmd": "x", "plants": [{"id": "p", "patch": "q.patch", "case": "a b"}]}}}).get("s", ""))
+            qz = qcopy()
+            qz["scopes"]["cs"]["plants"][0]["case"] = "z"
+            check("list shows a plant's case, and names one its scope does not list",
+                  any("yb: case y)" in x for x in cmd_list(qman)["lines"])
+                  and any("yb: case z - not one of its cases" in x for x in cmd_list(qz)["lines"]))
+            mman = dict(qman, scopes={k: qman["scopes"][k] for k in ("m1", "m2", "bare")})
+            mman["scopes"]["far"] = dict(qman["scopes"]["m1"], box="OTHERBOX")
+            sw = lambda task, m=None: moved_sweep(m or mman, qroot, task, 2, box="SELFBOX", tool=qtool)  # noqa: E731
+            r = sw("Q11")
+            check("--redarm --moved: no proof yet - every armed scope here red-armed, one campaign each; the owed one named",
+                  r["counts"].startswith("moved: 2 of 2 armed scopes, plants RED 2, GREEN 0, ERROR 0") and not r["failures"]
+                  and not r["nogo"] and any(x.startswith("far · owed on OTHERBOX") for x in r["lines"]), (r["counts"], r["lines"]))
+            r = sw("Q12")
+            check("--redarm --moved: nothing moved - GO, named, each scope on the proof it stands on",
+                  r["counts"].startswith("moved: 0 of 2 armed scopes") and not r["failures"] and not r["nogo"]
+                  and any(x.startswith("nothing moved") for x in r["lines"]) and sum("proven by Q11" in x for x in r["lines"]) == 2,
+                  r["lines"])
+            (qroot / "b.txt").write_text("ok\nb\n", encoding="utf-8")
+            r = sw("Q13")
+            plant_("--redarm --moved: a moved scope is red-armed, the unmoved named on its proof",
+                   r["counts"].startswith("moved: 1 of 2") and any(x.startswith("m2 · plant b · RED") for x in r["lines"])
+                   and any(x.startswith("m1 · proven by") for x in r["lines"]), r["lines"])
+            (qroot / "b.txt").write_text("ok\n", encoding="utf-8")
+            rm = swap("redarm_proof", lambda *_a, **_k: ("MUTANT", "0"), lambda: sw("Q14m"))
+            r = sw("Q14")
+            plant_("--moved skipping a moved scope: red - the moved case sees it re-armed",
+                   rm["counts"].startswith("moved: 0 of 2") and r["counts"].startswith("moved: 1 of 2"), (rm["counts"], r["counts"]))
+            mg = qcopy(mman)
+            mg["scopes"]["m2"]["plants"] = [{"id": "nop", "patch": "plants/a.patch"}]     # m2 reads b.txt: blind to it
+            r = sw("Q15", mg)
+            plant_("--redarm --moved: one campaign NO-GO makes the sweep NO-GO",
+                   bool(r["failures"]) and "GREEN 1" in r["counts"] and any("stayed GO" in f for f in r["failures"]), r["counts"])
+            r = moved_sweep({"logs_dir": "logs", "scopes": {"bare": {"cmd": "x"}}}, qroot, "Q16", 1, box="SELFBOX")
+            plant_("--redarm --moved with no armed scope: NO-GO, named", "nothing to sweep" in (r["nogo"] or ""), r["nogo"])
+            for name, args in (("--moved without --redarm", ("--moved",)), ("--redarm with no scope, no --moved", ("--redarm",)),
+                               ("--redarm <scope> --moved", ("--redarm", "a", "--moved"))):
+                rc, out = run_(clean, *args)
+                plant_(f"a wrong call ({name}) prints the right one", rc == 1 and "the calls:" in out and "--redarm --moved" in out,
+                       out[-300:])
+            rc, out = run_(clean, "--redarm", "--moved")
+            check("--redarm --moved through the CLI: the fixture arms no scope - NO-GO, nothing to sweep",
+                  rc == 1 and "nothing to sweep" in out, out[-300:])
+            (proot / "tool.py").unlink()
+            bman ={"scopes": {"u": {"cmd": "python3 tests/run.py --fast"},
                                "l": {"cmd": "python3 tools/pb/lint.py --plan milestones/m1/m1_implementation_plan.md"}}}
             build = {"type": "BUILD", "deliver": "src/x.py, the new parser, run by hand", "plan": "p"}
             fl = loop_flags(build, ["tests/test_a.py", "src/x.py", "tools/pb/lint.py", "tools/pb/verify.json",
@@ -2358,7 +4343,7 @@ def selftest():
                      ("T4", "case", "GO", "t5", "BOXA", 1), ("T4", "case", "GO", "t5", "BOXA", 1)]
             (rlogs / "loop_times.jsonl").write_text("".join(json.dumps(
                 {"ts": f"2999-01-0{i + 1}T00:00:00", "task": t, "mode": m, "verdict": v, "tree": tr, "box": b, "seconds": s,
-                 "scopes": {"a": {"passed": 1, "failed": 0, "skipped": 0, "seconds": s}}}) + "\n"
+                 "load": 0.0, "cpus": 8, "scopes": {"a": {"passed": 1, "failed": 0, "skipped": 0, "seconds": s}}}) + "\n"
                 for i, (t, m, v, tr, b, s) in enumerate(rows_)), encoding="utf-8")
             rep = cmd_report(rman, tmp / "rep", budget=50)
             check("report: first-try passes per task, medians per box, loops per task",
@@ -2376,7 +4361,7 @@ def selftest():
                    not rep["nogo"] and rep["data"]["foreign"] == 1 and " 1 foreign " in rep["counts"]
                    and rep["data"]["tasks"] == 4, rep["counts"])
             own = {"ts": "2999-02-01T00:00:00", "task": "T1", "mode": "all", "verdict": "GO", "tree": "t1", "box": "BOXA",
-                   "seconds": 5, "scopes": {"a": {"passed": 1, "failed": 0, "skipped": 0, "seconds": 5}}}
+                   "seconds": 5, "load": 0.0, "cpus": 8, "scopes": {"a": {"passed": 1, "failed": 0, "skipped": 0, "seconds": 5}}}
             fman = {"scopes": {"a": {}}, "logs_dir": "logs", "budget": {"cases_scope": "plan_index", "boxes": {
                 "BOXA": {"base_s": 5.0, "at_cases": 1, "per_case_s": 0.1, "load_k": 0.0, "band_pct": 50}}}}   # every reader runs
             for name, other in (("a list of scope names (one fleet runner's)",
@@ -2404,6 +4389,56 @@ def selftest():
             rep = cmd_report(rman, tmp / "rep")
             plant_("report: every line foreign - NO-GO naming the count, no traceback", "1 foreign line(s)" in (rep["nogo"] or ""),
                    rep["nogo"])
+            # the loop's own seconds (M0-T63): counted once in the median and the TR line, a record without them named
+            (rlogs / "loop_times.jsonl").write_text("".join(json.dumps(dict(own, box="BOXC", ts=ts, **more)) + "\n" for ts, more in (
+                ("2999-03-01T00:00:00", {"seconds": 10}),
+                ("2999-03-02T00:00:00", {"seconds": 10, "loop_seconds": 5}),
+                ("2999-03-03T00:00:00", {"seconds": 10, "loop_seconds": 5}))), encoding="utf-8")
+            rep = cmd_report(rman, tmp / "rep", budget=12)
+            check("report: the median counts the scopes and the loop, each second once (10 + 5, never 20)",
+                  "BOXC 15.00 s" in rep["counts"], rep["counts"])
+            check("report: a complete loop without the field read as 0 and named",
+                  any(ln == "loop seconds unknown before 2999-03-02 - 1 complete loop(s) read as 0" for ln in rep["lines"]),
+                  rep["lines"][-4:])
+            check("report: the TR line fires on the loop's seconds too", rep["data"]["tr"] == ["BOXC"], rep["lines"][-4:])
+            real_total = loop_total
+            globals()["loop_total"] = lambda r: float(r.get("seconds", 0))
+            try:
+                blind = cmd_report(rman, tmp / "rep", budget=12)["data"]["tr"]
+            finally:
+                globals()["loop_total"] = real_total
+            plant_("report's TR line blind to `loop_seconds`: red - a 15 s loop under a 12 s budget fires", blind != ["BOXC"], blind)
+            (rlogs / "loop_times.jsonl").write_text(json.dumps(dict(own, loop_seconds="5 s", touched=["a.py"], base=3)) + "\n",
+                                                    encoding="utf-8")
+            rep = cmd_report(rman, tmp / "rep")
+            check("report: the loop's fields in another shape read as absent, the record read",
+                  not rep["nogo"] and rep["data"]["foreign"] == 0 and "BOXA 5.00 s" in rep["counts"], rep["counts"])
+            tw = lambda t, m, ts, touched=None: dict(own, task=t, mode=m, ts=f"2999-04-0{ts}T00:00:00",  # noqa: E731
+                                                       **({"touched": touched, "base": f"{t}'s start"} if touched else {}))
+            (rlogs / "loop_times.jsonl").write_text("".join(json.dumps(r) + "\n" for r in (
+                tw("T1", "all", 1, {"added": ["a.py", "keep.py"], "modified": [], "deleted": []}),
+                tw("T2", "changed", 2, {"added": [], "modified": ["a.py", "b/c.md"], "deleted": []}),
+                tw("T1", "all", 3, {"added": [], "modified": ["keep.py", "x.py"], "deleted": []}),
+                tw("T3", "all", 4),
+                tw("T5", "all", 5, {"added": [], "modified": [], "deleted": ["a.py"]}),
+                tw("T4", "scope", 6, {"added": ["a.py"], "modified": [], "deleted": []}))) + "{not json\n", encoding="utf-8")
+            tch = cmd_touched(rman, tmp / "rep")
+            check("touched: per task its last claim's files, newest first; a scoped run is no claim",
+                  not tch["nogo"] and list(tch["data"]["tasks"]) == ["T5", "T1", "T2"]
+                  and tch["data"]["tasks"]["T1"]["modified"] == ["keep.py", "x.py"] and tch["data"]["tasks"]["T1"]["added"] == []
+                  and "1 without (before the field) · 1 foreign" in tch["counts"], (tch["counts"], tch["lines"]))
+            tch = cmd_touched(rman, tmp / "rep", pattern="a.py")
+            check("touched --path: every task whose last claim touched it, newest first",
+                  tch["data"]["paths"] == {"a.py": ["T5 (deleted, 2999-04-05T00:00:00)", "T2 (modified, 2999-04-02T00:00:00)"]}
+                  and tch["lines"] == ["a.py: T5 (deleted, 2999-04-05T00:00:00) · T2 (modified, 2999-04-02T00:00:00)"], tch["lines"])
+            tch = cmd_touched(rman, tmp / "rep", pattern="b/*.md", task="T2")
+            check("touched --task --path: the one task, the matching paths", not tch["nogo"]
+                  and tch["data"]["paths"] == {"b/c.md": ["T2 (modified, 2999-04-02T00:00:00)"]}, tch["data"]["paths"])
+            for name, kw, want in (("a task whose claims carry no list", {"task": "T3"}, "no claim record of T3"),
+                                   ("a glob nothing matches", {"pattern": "*.rs"}, "matching `*.rs`")):
+                check(f"touched: {name} - NO-GO, named", want in (cmd_touched(rman, tmp / "rep", **kw)["nogo"] or ""))
+            (rlogs / "loop_times.jsonl").write_text(json.dumps(tw("T3", "all", 4)) + "\n", encoding="utf-8")
+            check("touched: no record names its files - NO-GO", "no claim record names" in (cmd_touched(rman, tmp / "rep")["nogo"] or ""))
             bman2 = {"scopes": {"s": {}}, "budget": {"cases_scope": "s", "boxes": {
                 "B": {"base_s": 100.0, "at_cases": 400, "per_case_s": 0.5, "load_k": 0.01, "band_pct": 10, "cpus": 8}}}}
 
@@ -2419,6 +4454,48 @@ def selftest():
                 check(f"budget {name}", want in "\n".join(budget_lines(bman2, "B", rows)[2:-1]))
             check("budget: inside the band is not flagged", "OVER BAND" not in "\n".join(budget_lines(bman2, "B", [bl(112.0, 400, 4.0)])))
             check("budget: an unmeasured box says so", "no budget measured" in budget_lines(bman2, "OTHER", [bl(1.0, 1, 1.0)])[0])
+            check("budget: the normalised seconds beside the raw (104 s at load 4 of 8, k 0.08: 100.0)",
+                  "   104.0   100.0   100.0   +0.0%" in "\n".join(budget_lines(bman2, "B", [bl(104.0, 400, 4.0)])))
+
+            # -- I2 · report at an idle box (M0-T64d): the median beside the raw, the TR line on the normalised only
+            def idle_rep(loops, budget):              # loops: (seconds, load); box BOXN, 8 CPUs, the default k
+                (rlogs / "loop_times.jsonl").write_text("".join(json.dumps(dict(
+                    own, box="BOXN", ts=f"2999-05-{i + 1:02d}T00:00:00", seconds=s, load=ld,
+                    scopes={"a": {"passed": 1, "failed": 0, "skipped": 0, "seconds": s}})) + "\n"
+                    for i, (s, ld) in enumerate(loops)), encoding="utf-8")
+                return cmd_report(rman, tmp / "rep", budget=budget)
+            busy = [(10.0, 8.0)] * 3                  # 10 s at load 8 of 8 CPUs: 10 / 1.15 = 8.70 s at an idle box
+            rep = idle_rep(busy, 9.5)
+            check("report: the complete loop's median raw and at an idle box, per box; the slowest scopes both ways",
+                  "BOXN 10.00 s (8.70 s idle)" in rep["counts"] and any("a 10.00 s (8.70 s idle)" in ln for ln in rep["lines"])
+                  and any(ln.startswith("BOXN: at an idle box") and "k 0.15 (default" in ln for ln in rep["lines"]),
+                  (rep["counts"], rep["lines"]))
+            check("report: a loop over the budget raw, under it at an idle box - no TR", rep["data"]["tr"] == [], rep["lines"])
+            raw_tr = swap_("norm_factor", lambda r, man, box=None: 1.0, lambda: idle_rep(busy, 9.5))["data"]["tr"]
+            plant_("the TR line reading the raw seconds: red - a loaded 10 s loop fires a 9.5 s budget", raw_tr == ["BOXN"], raw_tr)
+            rep = idle_rep([(9.0, 0.0), (12.0, 0.0), (12.0, 0.0)], 9.5)
+            check("report: a tree that got slower at load 0 still fires the TR line - no load to hide behind",
+                  rep["data"]["tr"] == ["BOXN"] and any(ln.startswith("TR: the last 3 counted") for ln in rep["lines"]),
+                  rep["lines"])
+            rep = idle_rep([(9.0, 0.0)] * 3 + [(20.0, 0.0)] * 2, 15)
+            check(f"report: the TR line reads the last {TR_LOOPS} counted loops - two slow loops after three fast fire it",
+                  rep["data"]["tr"] == ["BOXN"] and "BOXN 9.00 s (9.00 s idle)" in rep["counts"], (rep["counts"], rep["lines"]))
+            over = [(9.0, 0.0), (40.0, 20.0), (40.0, 20.0)]           # load 20 on 8 CPUs: the queue, not the tree
+            rep = idle_rep(over, 9.5)
+            check("report: an oversubscribed loop is out of range - named, never counted, no TR",
+                  rep["data"]["tr"] == [] and any("out of range 2 (load > cpus" in ln for ln in rep["lines"]), rep["lines"])
+            oor_tr = swap_("counted", lambda r, f, man, box=None: f is not None, lambda: idle_rep(over, 9.5))["data"]["tr"]
+            plant_("an oversubscribed loop counted: red - it fires the TR line", oor_tr == ["BOXN"], oor_tr)
+            rep = idle_rep([(50.0, None)] * 2, 9.5)
+            check("report: a box with no load sample is named - the TR line cannot read it, never the raw in its place",
+                  rep["data"]["tr"] == [] and "BOXN 50.00 s (idle n/a)" in rep["counts"]
+                  and any("TR: BOXN - no complete loop with a load sample" in ln for ln in rep["lines"]), rep["lines"])
+            (rlogs / "loop_times.jsonl").write_text(json.dumps(dict(own, box="BOXN", seconds=10.0, load=8.0, seconds_norm=5.0))
+                                                    + "\n" + json.dumps(dict(own, box="BOXN", seconds=10.0, load=8.0,
+                                                                             seconds_norm=None)) + "\n", encoding="utf-8")
+            rep = cmd_report(rman, tmp / "rep", budget=9.5)
+            check("report: a record's own `seconds_norm` is read; a null one is not counted",
+                  "BOXN 10.00 s (5.00 s idle)" in rep["counts"] and rep["data"]["tr"] == [], rep["counts"])
 
             # -- J · the load sample -----------------------------------------------------------------------
             class NoLoadAvg:
@@ -2521,7 +4598,13 @@ def build_parser():
     ap.add_argument("--case", help="one case of the one scope named, through its `case_cmd` or `cases` entry")
     ap.add_argument("--changed", action="store_true", help="every scope a changed path touches, from the coverage anchor")
     ap.add_argument("--base", help="--changed: also every scope a path moved since this named commit touches (never HEAD)")
-    ap.add_argument("--redarm", metavar="SCOPE", help="the scope's plants, one scratch copy each: clean GO, each plant NO-GO")
+    ap.add_argument("--force", action="store_true", help="a scope or --case run: run every scope named, even one already GO on this tree")
+    ap.add_argument("--fresh", action="store_true", help="start: write the task's baseline again (default: keep the first)")
+    ap.add_argument("--path", help="touched: the paths matching this glob, each with every task that touched it")
+    ap.add_argument("--redarm", metavar="SCOPE", nargs="?", const=True,
+                    help="the scope's plants, one scratch copy each, side by side: clean GO, each plant NO-GO")
+    ap.add_argument("--moved", action="store_true",
+                    help="with --redarm alone: every armed scope whose red-arm proof no longer holds, one campaign each")
     ap.add_argument("--task", help="names the logs; required for a run (else $PB_TASK)")
     ap.add_argument("-j", "--jobs", type=int, help="parallel commands (default: min(CPUs, jobs_cap))")
     ap.add_argument("--serial", action="store_true", help="one command at a time")
@@ -2548,12 +4631,25 @@ def check_call(a):
         raise CallError(f"`{cmd}` takes no scope and no {', '.join(run_flags) or 'other name'}")
     if a.base and not a.changed:
         raise CallError("--base goes with --changed")
+    if a.force and (cmd or a.all or a.changed or a.redarm or not (a.scopes or a.case is not None)):
+        raise CallError("--force goes with a scope run: <scope>... --force, or <scope> --case <id> --force "
+                        "(--all, --changed and --redarm always run)")
+    if a.fresh and cmd != "start":
+        raise CallError("--fresh goes with `start`")
+    if a.path is not None and cmd != "touched":
+        raise CallError("--path goes with `touched`")
+    if cmd == "start" and (len(a.scopes) > 1 or a.base):
+        raise CallError("`start` takes --task <ID> and --fresh, nothing else")
     if a.all and (a.scopes or a.case is not None or a.changed or a.redarm):
         raise CallError("--all takes no scope, no --case, no --changed, no --redarm")
     if a.changed and (a.scopes or a.case is not None or a.redarm):
         raise CallError("--changed takes no scope, no --case, no --redarm")
     if a.redarm and (a.scopes or a.case is not None):
         raise CallError("--redarm names its one scope itself: --redarm <scope>")
+    if a.moved and a.redarm is not True:
+        raise CallError("--moved goes with --redarm alone: --redarm --moved")
+    if a.redarm is True and not a.moved:
+        raise CallError("--redarm names its scope: --redarm <scope>, or --redarm --moved for the sweep")
     if not (cmd or run_flags or a.scopes):
         raise CallError("name a scope, or --all, --changed, --redarm, list, report or selftest")
     return cmd
@@ -2581,7 +4677,8 @@ def main(argv=None):
             manifest = Path(a.manifest).resolve() if a.manifest else MANIFEST
             man = load_manifest(manifest)
             res = (cmd_list(man) if cmd == "list" else cmd_report(man, root, a.since, a.budget) if cmd == "report"
-                   else cmd_run(man, a, root, manifest))
+                   else cmd_start(man, a, root, manifest) if cmd == "start"
+                   else cmd_touched(man, root, a.task, a.path) if cmd == "touched" else cmd_run(man, a, root, manifest))
     except CallError as exc:
         res = wrong_call(exc)
     except Refused as exc:

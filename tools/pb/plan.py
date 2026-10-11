@@ -1425,8 +1425,85 @@ def cmd_register(plan, a):
 
 
 # ------------------------------------------------------------------------ the reads
+def track_manifest(plan_path, tools):
+    """OPT-F (PLAYBOOK §13): a shared toolkit keeps each track's manifest at `<tools>/tracks/<track>/verify.json`,
+    `<track>` being the folder that holds the plan's `milestones/`. -> the path, or None when the plan sits
+    elsewhere or the file is not there."""
+    mdir = os.path.dirname(os.path.abspath(plan_path))
+    if os.path.basename(os.path.dirname(mdir)) != "milestones":
+        return None
+    track = os.path.basename(os.path.dirname(os.path.dirname(mdir)))
+    path = os.path.join(tools, "tracks", track, "verify.json")
+    return path if track and os.path.isfile(path) else None
+
+
+def fit_roots(plan_path, manifest):
+    """The folders above the plan from which the manifest's `logs_dir` names the plan's own `logs/` folder - the
+    root `verify.py start` must run with, for the start to land where the claims read it. One at most, but
+    every fit is returned."""
+    try:
+        with open(manifest, encoding="utf-8") as fh:
+            logs_dir = json.load(fh).get("logs_dir", "logs")
+    except (OSError, ValueError, AttributeError):
+        return []
+    if not isinstance(logs_dir, str) or not logs_dir:
+        return []
+    mdir = os.path.dirname(os.path.abspath(plan_path))
+    want, found, d = os.path.realpath(os.path.join(mdir, "logs")), [], mdir
+    while True:
+        if os.path.realpath(os.path.join(d, logs_dir)) == want:
+            found.append(d)
+        up = os.path.dirname(d)
+        if up == d:
+            return found
+        d = up
+
+
+def baseline_line(plan_path, task, tools_dir=None):
+    """The task's own start (annex §A.2): `verify.py start --task <ID>` records the tree as the task found it,
+    and this is its one `baseline: <ID>, <n> files, <ts>` line - or `baseline: not recorded - <why>`. Show's
+    verdict never depends on it. The manifest is the one beside verify.py, run from the project root; else
+    the track's (OPT-F), with the root its `logs_dir` fits to the plan's own `logs/`. A plan outside the
+    project the tools sit in (a fixture, another checkout) records nothing: the start would write into a tree
+    that is not the plan's."""
+    tools = os.path.abspath(tools_dir or os.path.dirname(os.path.abspath(__file__)))
+    root = os.path.dirname(os.path.dirname(tools))
+    verify, manifest = os.path.join(tools, "verify.py"), os.path.join(tools, "verify.json")
+    args, why = ["--root", root], None
+    if not os.path.isfile(verify):
+        why = "no verify.py beside plan.py"
+    elif os.path.isfile(manifest):
+        if os.path.commonpath([root, os.path.abspath(plan_path)]) != root:
+            why = "the plan sits outside %s, the project the tools sit in" % os.path.basename(root)
+    else:
+        track = track_manifest(plan_path, tools)
+        if track is None:
+            why = "no verify.json beside verify.py, and none under tracks/ for this plan's track"
+        else:
+            fits, name = fit_roots(plan_path, track), os.path.basename(os.path.dirname(track))
+            if len(fits) != 1:
+                why = ("no folder above the plan makes %s's `logs_dir` the plan's own logs/" % name if not fits
+                       else "%d folders above the plan fit %s's `logs_dir`" % (len(fits), name))
+            else:
+                root, args = fits[0], ["--manifest", track, "--root", fits[0]]
+    if why is None:
+        try:
+            run = subprocess.run([sys.executable, verify, "start", "--task", task] + args, cwd=root,
+                                 capture_output=True, timeout=120)
+            out = run.stdout.decode("utf-8", "replace").splitlines()
+            line = next((x for x in out if x.startswith("baseline: ")), None)
+            if run.returncode == 0 and line:
+                return line
+            reason = next((x for x in reversed(out) if x.startswith("=== NO-GO")), "exit %d" % run.returncode)
+            why = "verify.py start: " + reason.strip("= ")
+        except (OSError, subprocess.SubprocessError) as exc:
+            why = "verify.py start: %s" % exc
+    return "baseline: not recorded - " + why
+
+
 def cmd_show(plan, a):
-    """The block's start read (§4 Rule 1): the header without its Flow table, then the block."""
+    """The block's start read (§4 Rule 1): the header without its Flow table, then the block, then the baseline
+    line - `verify.py start` run for the task (annex §A.2); the verdict is the read's alone."""
     b = plan.block(a.id)
     if not b:
         return verdict("show", 1, [no_block(plan, a.id)], as_json=a.json)
@@ -1442,10 +1519,12 @@ def cmd_show(plan, a):
     while body and not body[-1].strip():
         body.pop()
     text = "\n".join(head + [""] + body)
+    base = baseline_line(plan.path, b.id)
     if not a.json:
         print(text)
         print()
-    return verdict("show", 2, [], payload={"id": b.id, "text": text} if a.json else {"id": b.id},
+        print(base)
+    return verdict("show", 2, [], payload={"id": b.id, "text": text, "baseline": base} if a.json else {"id": b.id},
                    as_json=a.json, counts=[("header", len(head)), ("flow_left_out", left_out),
                                            ("block", len(body)), ("total", len(head) + 1 + len(body))])
 
@@ -1961,6 +2040,103 @@ def cmd_selftest(_plan, a):
               and "## M12.1-T1 " not in out and "block=" in out and "flow_left_out=" in out, out)
         rc, out = go("show", "T2b")
         check("show with a local id: NO-GO naming the whole id", rc == 1 and "M12.1-T2b" in out, out)
+        rc, out = go("show", "M12.1-T2b")
+        lines_ = out.splitlines()
+        i_ = next((i for i, x in enumerate(lines_) if x.startswith("show: checks=")), -1)
+        check("show: the baseline line sits just above the counts line, and the verdict is the read's alone",
+              rc == 0 and i_ > 0 and lines_[i_ - 1].startswith("baseline: ") and lines_[-1] == "=== GO ===", out)
+        rc, out = go("--json", "show", "M12.1-T2b")
+        check("show --json carries the line as `baseline`", rc == 0 and '"baseline": "baseline: not recorded' in out, out)
+        ftools = os.path.join(root, "tools", "pb")
+        os.makedirs(ftools)
+        write_text(os.path.join(ftools, "verify.json"), "{}", "\n")
+        check("baseline: no verify.py beside plan.py - says why, nothing run",
+              baseline_line(path, "M12.1-T2b", ftools).startswith("baseline: not recorded - no verify.py beside plan.py"))
+        write_text(os.path.join(ftools, "verify.py"),
+                   "import sys\nt = sys.argv[sys.argv.index('--task') + 1]\n"
+                   "if t.endswith('BAD'):\n    print('=== NO-GO: boom ===')\n    sys.exit(1)\n"
+                   "print('baseline: %s, 3 files, 2026-01-01T00:00:00+00:00' % t)\nprint('=== GO ===')\n", "\n")
+        check("baseline: verify.py start's one line is the answer, for the whole id",
+              baseline_line(path, "M12.1-T2b", ftools) == "baseline: M12.1-T2b, 3 files, 2026-01-01T00:00:00+00:00")
+        check("baseline: a start that goes NO-GO says so - the line, never an exception",
+              baseline_line(path, "M12.1-BAD", ftools) == "baseline: not recorded - verify.py start: NO-GO: boom")
+        elsewhere = os.path.join(root, "elsewhere", "tools", "pb")
+        os.makedirs(elsewhere)
+        for name in ("verify.py", "verify.json"):
+            shutil.copy(os.path.join(ftools, name), os.path.join(elsewhere, name))
+        check("baseline: a plan outside the project the tools sit in records nothing - says so, the start never run",
+              baseline_line(path, "M12.1-T2b", elsewhere).startswith("baseline: not recorded - the plan sits outside "))
+        os.remove(os.path.join(ftools, "verify.json"))
+        check("baseline: no verify.json - says why",
+              baseline_line(path, "M12.1-T2b", ftools).startswith("baseline: not recorded - no verify.json"))
+
+        # --- OPT-F: a toolkit shared over tracks, each track's manifest under tracks/<track>/ ----------
+        fake_start = ("import json, os, sys\n"
+                      "a = sys.argv\n"
+                      "man = json.load(open(a[a.index('--manifest') + 1])) if '--manifest' in a else {}\n"
+                      "top = a[a.index('--root') + 1]\n"
+                      "t = a[a.index('--task') + 1]\n"
+                      "d = os.path.join(top, man.get('logs_dir', 'logs'), '.baseline')\n"
+                      "os.makedirs(d, exist_ok=True)\n"
+                      "open(os.path.join(d, t + '.json'), 'w').write('{}')\n"
+                      "print('baseline: %s, 3 files, 2026-01-01T00:00:00+00:00' % t)\nprint('=== GO ===')\n")
+
+        def optf(name, logs_dir, above="w"):
+            """A shared toolkit at <name>/<above>/notebooks/tools/pb, the track `trk` beside it, its plan under
+            trk/milestones/m1/ - the shape of a repository whose top sits above the toolkit. -> (plan, toolkit, notebooks)."""
+            nb = os.path.join(root, name, above, "notebooks") if above else os.path.join(root, name, "notebooks")
+            tk = os.path.join(nb, "tools", "pb")
+            os.makedirs(os.path.join(tk, "tracks", "trk"))
+            write_text(os.path.join(tk, "verify.py"), fake_start, "\n")
+            write_text(os.path.join(tk, "tracks", "trk", "verify.json"), json.dumps({"logs_dir": logs_dir}), "\n")
+            pl = os.path.join(nb, "trk", "milestones", "m1", "m1_implementation_plan.md")
+            os.makedirs(os.path.dirname(pl))
+            write_text(pl, FIXTURE, "\n")
+            return pl, tk, nb
+
+        def landed(line, nb, rel):
+            return (line == "baseline: M1-T1, 3 files, 2026-01-01T00:00:00+00:00"
+                    and os.path.isfile(os.path.join(nb, rel, ".baseline", "M1-T1.json")))
+
+        o_plan, o_tk, o_nb = optf("optf", "notebooks/trk/milestones/m1/logs")
+        o_line = baseline_line(o_plan, "M1-T1", o_tk)
+        check("baseline OPT-F: no verify.json beside verify.py - the track's manifest, the root its logs_dir fits "
+              "(the repository's top, above the toolkit's project): the start lands under the plan's own logs/",
+              landed(o_line, o_nb, "trk/milestones/m1/logs"), o_line)
+        o2_plan, o2_tk, o2_nb = optf("optf2", "trk/milestones/m1/logs", above="")
+        o2_line = baseline_line(o2_plan, "M1-T1", o2_tk)
+        check("baseline OPT-F: a logs_dir relative to the folder above the track - that folder is the root",
+              landed(o2_line, o2_nb, "trk/milestones/m1/logs"), o2_line)
+        o3_plan, o3_tk, o3_nb = optf("optf3", "other/milestones/m1/logs", above="")
+        o3_line = baseline_line(o3_plan, "M1-T1", o3_tk)
+        check("baseline OPT-F: a logs_dir that names a sibling's logs/ fits no folder - says so, the start never "
+              "run, no .baseline written anywhere",
+              o3_line.startswith("baseline: not recorded - no folder above the plan makes trk's `logs_dir`")
+              and not glob.glob(os.path.join(root, "optf3", "**", ".baseline"), recursive=True), o3_line)
+        os.remove(os.path.join(o_tk, "tracks", "trk", "verify.json"))
+        check("baseline OPT-F: no manifest for the track - says why",
+              baseline_line(o_plan, "M1-T1", o_tk).startswith("baseline: not recorded - no verify.json beside "
+                                                               "verify.py, and none under tracks/"))
+
+        def mutant(name, fn, call):
+            real = globals()[name]
+            globals()[name] = fn
+            try:
+                return call()
+            finally:
+                globals()[name] = real
+
+        p_plan, p_tk, p_nb = optf("optf_p", "notebooks/trk/milestones/m1/logs")
+        line = mutant("track_manifest", lambda _p, _t: None, lambda: baseline_line(p_plan, "M1-T1", p_tk))
+        plant("baseline OPT-F: the track's manifest ignored - the start not recorded, read red",
+              not landed(line, p_nb, "trk/milestones/m1/logs") and line.startswith("baseline: not recorded"), line)
+        line = mutant("fit_roots", lambda _p, _m: [os.path.dirname(os.path.dirname(p_tk))],
+                      lambda: baseline_line(p_plan, "M1-T1", p_tk))
+        plant("baseline OPT-F: the start run with the toolkit's folder as root - the file lands in the wrong "
+              "tree, read red",
+              not landed(line, p_nb, "trk/milestones/m1/logs")
+              and not os.path.isfile(os.path.join(os.path.dirname(p_nb), "notebooks", "trk", "milestones", "m1",
+                                                  "logs", ".baseline", "M1-T1.json")), line)
 
         # --- status and its stamps -------------------------------------------------------------
         os.environ["PB_PLAN_TEST_CLOCK"] = "09:15"

@@ -1,6 +1,14 @@
 //! `sandbox-reactions headless` (m0_contrat.md §3.3, §6.3): load a scene, run N steps on a surfaceless device, write the
-//! run summary (§2.12.2). Today: `--scene preset:<name>` loads the nominal Sun-like disk (§2.1, §2.10) and `--steps N`
-//! runs [`Step`] N times; scene files (M0-T25), `--until`, the ledger, events and objects arrive with their blocks.
+//! run summary (§2.12.2). Today: `--scene` reads a scene file or `preset:<name>` through [`crate::scene`] (M0-T25; every
+//! preset is the nominal Sun-like disk until M0-T74), `--world` and `--edge` stand over the scene's `world`, `--steps N`
+//! runs [`Step`] N times and `--timing` adds the steps' cost (M0-T23); `--until`, the ledger, events and objects arrive
+//! with their blocks. The edge mode and the scene's switches are recorded, not yet applied (no pass reads them).
+//!
+//! State dumps (§2.12.3, [`crate::dump`], M0-T26): with `--out`, DIR/dumps/s_<step>.bin at the end of every run, and with
+//! `--dump-every N` at every step index that N divides — the index counts from the scene, so a resumed run's dumps fall
+//! where a straight run's do. `--load-dump FILE` starts from a dump instead of the scene's objects: its world (a
+//! `--world` other than it is refused) and cells, its step index and the step's records; the scene still gives the
+//! constants, the edge and the switches. `--steps N` is then N more steps. A dump refused is exit 4.
 //!
 //! stdout: the first line `SR-ADAPTER …`; the last, when the run ends without an error (exit 0 or 2), `SR-HEADLESS DONE
 //! steps=<n> sim_time=<t> until=<met|unmet|none>`; every error line starts `SR-ERROR`, every warning `SR-WARN`.
@@ -8,16 +16,18 @@
 //! or scene · 5 a non-finite value in the state, found by P9's guard every 64 steps and read after each submission
 //! (the message names the step, cell and channel) · 101 a panic (Rust's own). 6 (calibration) arrives with its check.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Instant;
 
 use serde_json::json;
-use sr_physics::registry::{Elements, Physics};
+use sr_physics::registry::Elements;
 
+use crate::dump::{dump_state, load_dump, Dump};
 use crate::gpu::Gpu;
-use crate::state::{Booking, State, WorldConfig, N_CHANNELS};
-use crate::step::{EosGpu, Step};
+use crate::scene::{EdgeMode, Scene};
+use crate::state::{Booking, State, WorldConfig};
+use crate::step::{CostSource, EosGpu, Pass, Step, StepCost, Timing};
 
 pub const EXIT_DONE: i32 = 0;
 pub const EXIT_UNMET: i32 = 2;
@@ -30,31 +40,43 @@ pub const DEFAULT_MAX_STEPS: u64 = 2_000_000;
 /// Steps recorded per submission: the queue never holds more than this many at once.
 const CHUNK: u64 = 256;
 
-/// The presets §2.10 names. Their masses come from calibration (`preset_mass_sb`, §2.11) — until then all three load
-/// the nominal Sun-like disk, and the run says so.
-const PRESETS: [&str; 3] = ["sun", "massive", "giant"];
-
 #[derive(Debug, PartialEq)]
 pub struct Args {
     pub scene: String,
     pub steps: u64,
-    pub world: WorldConfig,
+    /// `--world` and `--edge`: over the scene's own `world` when given.
+    pub world: Option<WorldConfig>,
+    pub edge: Option<EdgeMode>,
     pub max_steps: u64,
     pub out: Option<PathBuf>,
     pub adapter: Option<String>,
+    /// `--timing`: summary.json gets `timing` (§2.12.2), the steps' cost per pass and per step.
+    pub timing: bool,
+    /// `--dump-every N` (needs `--out`): a dump at every step index N divides.
+    pub dump_every: Option<u64>,
+    /// `--load-dump FILE`: the run starts from this dump.
+    pub load_dump: Option<PathBuf>,
 }
 
-/// Parses what follows `headless`. `--flag value` or `--flag=value`; anything else is an error naming it.
+/// Parses what follows `headless`. `--flag value` or `--flag=value`, `--timing` alone; anything else is an error
+/// naming it.
 pub fn parse_args(args: &[String]) -> Result<Args, String> {
-    let (mut scene, mut steps, mut world, mut max_steps, mut out, mut adapter) =
-        (None, None, WorldConfig::default(), DEFAULT_MAX_STEPS, None, None);
+    let (mut scene, mut steps, mut world, mut edge, mut max_steps, mut out, mut adapter) =
+        (None, None, None, None, DEFAULT_MAX_STEPS, None, None);
+    let (mut dump_every, mut load_dump) = (None, None);
+    let mut timing = false;
     let mut it = args.iter();
     while let Some(arg) = it.next() {
+        if arg == "--timing" {
+            timing = true;
+            continue;
+        }
         let (flag, inline) = match arg.split_once('=') {
             Some((f, v)) => (f, Some(v.to_string())),
             None => (arg.as_str(), None),
         };
-        if !matches!(flag, "--scene" | "--steps" | "--world" | "--max-steps" | "--out" | "--adapter") {
+        let known = ["--scene", "--steps", "--world", "--edge", "--max-steps", "--out", "--adapter", "--dump-every", "--load-dump"];
+        if !known.contains(&flag) {
             return Err(format!("unknown argument {arg:?}"));
         }
         let value = match inline {
@@ -68,10 +90,13 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
             "--max-steps" => max_steps = count(&value)?,
             "--out" => out = Some(PathBuf::from(value)),
             "--adapter" => adapter = Some(value),
+            "--dump-every" => dump_every = Some(count(&value)?),
+            "--load-dump" => load_dump = Some(PathBuf::from(value)),
+            "--edge" => edge = Some(EdgeMode::parse(&value).map_err(|e| format!("--{e}"))?),
             _ => {
                 let size = value.split_once('x').and_then(|(w, h)| Some((w.parse().ok()?, h.parse().ok()?)));
                 let (w, h) = size.ok_or_else(|| format!("--world takes WxH, got {value:?}"))?;
-                world = WorldConfig::new(w, h).map_err(|e| e.to_string())?;
+                world = Some(WorldConfig::new(w, h).map_err(|e| e.to_string())?);
             }
         }
     }
@@ -80,80 +105,62 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
     if steps == 0 {
         return Err("--steps must be at least 1".to_string());
     }
-    Ok(Args { scene, steps, world, max_steps, out, adapter })
+    if dump_every == Some(0) {
+        return Err("--dump-every must be at least 1".to_string());
+    }
+    if dump_every.is_some() && out.is_none() {
+        return Err("--dump-every needs --out (dumps go to DIR/dumps)".to_string());
+    }
+    Ok(Args { scene, steps, world, edge, max_steps, out, adapter, timing, dump_every, load_dump })
 }
 
-/// Checks `--scene` before any GPU is touched: the preset's name, or a refusal for a file (M0-T25).
-fn check_scene(scene: &str) -> Result<Vec<String>, String> {
-    let Some(name) = scene.strip_prefix("preset:") else {
-        return Err(format!("scene {scene:?}: scene files arrive with M0-T25 — only preset:<name> loads today"));
-    };
-    if !PRESETS.contains(&name) {
-        return Err(format!("scene {scene:?}: unknown preset (known: {})", PRESETS.join(", ")));
+/// Reads `--scene` before any GPU is touched: `preset:<name>` (one preset at the world's centre), else a scene file
+/// (§2.12.1, [`Scene::load`]). Any refusal is exit 4.
+fn load_scene(arg: &str, world: Option<WorldConfig>) -> Result<Scene, String> {
+    match arg.strip_prefix("preset:") {
+        Some(name) => Scene::preset(name, world.unwrap_or_default()),
+        None => Scene::load(Path::new(arg)),
     }
-    let mut warnings = Vec::new();
-    if name != "sun" {
-        warnings.push(format!("preset {name}: the nominal Sun-like disk until calibration gives preset_mass_sb (§2.11)"));
-    }
-    Ok(warnings)
+    .map_err(|e| format!("scene {arg:?}: {e}"))
 }
 
-/// §2.10's composition by mass: H 0.7346, He 0.2485, O 0.0077, C 0.0092, as (channel, fraction).
-const SUN_MIX: [(usize, f64); 4] = [(4, 0.7346), (5, 0.2485), (7, 0.0077), (6, 0.0092)];
-/// §2.1: the nominal cloud has Σc = 1 at radius a = 40 cells.
-const SIGMA_C: f64 = 1.0;
-const RADIUS: f64 = 40.0;
-/// §2.10: the uniform temperature is set so that U_th = 0.1 |W|.
-const THERMAL_OVER_W: f64 = 0.1;
+/// The disk builder moved into the scene loader (M0-T25); kept here for the callers that name it so.
+pub use crate::scene::sun_disk_planes;
+/// The run's cost (`--timing`): each batch's means weighted by the steps it timed.
+#[derive(Default)]
+struct Costs {
+    source: Option<CostSource>,
+    steps: u64,
+    step_ms: f64,
+    pass_ms: [Option<f64>; 10],
+}
 
-/// The nominal Sun-like disk in the world's centre, at rest, in the state's canonical form (§2.2): Σ(r) = Σc√(1 − r²/a²)
-/// inside r < a (cell centres), vacuum outside. The energy is a uniform specific thermal energy ε with Σ ε over the
-/// cloud = 0.1 |W|, W = ½ Σ m φ by §1.4.2's kernel; E = Σ ε there (no cold part, no motion). Vacuum cells carry x_H = 1
-/// so that every cell sums to 1, as P8 leaves them.
-pub fn sun_disk_planes(world: WorldConfig) -> Vec<f32> {
-    let (w, h) = (world.width as usize, world.height as usize);
-    let cells = w * h;
-    let (cx, cy) = (w as f64 / 2.0, h as f64 / 2.0);
-    let mut planes = vec![0f32; N_CHANNELS * cells];
-    let mut cloud = Vec::new(); // (x, y, mass) of the non-vacuum cells
-    for y in 0..h {
-        for x in 0..w {
-            let (dx, dy) = (x as f64 + 0.5 - cx, y as f64 + 0.5 - cy);
-            let r2 = (dx * dx + dy * dy) / (RADIUS * RADIUS);
-            let i = y * w + x;
-            if r2 < 1.0 {
-                let sigma = SIGMA_C * (1.0 - r2).sqrt();
-                planes[i] = sigma as f32;
-                for (c, frac) in SUN_MIX {
-                    planes[c * cells + i] = frac as f32;
-                }
-                cloud.push((x as f64, y as f64, sigma));
-            } else {
-                planes[4 * cells + i] = 1.0;
+impl Costs {
+    fn add(&mut self, c: &StepCost) {
+        let w = f64::from(c.steps);
+        self.source = Some(c.source);
+        self.steps += u64::from(c.steps);
+        self.step_ms += c.step_ms * w;
+        for (sum, p) in self.pass_ms.iter_mut().zip(c.pass_ms) {
+            if let Some(ms) = p {
+                *sum.get_or_insert(0.0) += ms * w;
             }
         }
     }
-    let self_term = -4.0 * (1.0 + 2f64.sqrt()).ln();
-    let (mut w_sum, mut mass) = (0.0, 0.0);
-    for &(xi, yi, mi) in &cloud {
-        let phi: f64 = cloud
+
+    /// §2.12.2's `timing`: `per_pass_ms` (each pass the steps recorded, by its label, ms per step), `step_ms_mean`,
+    /// and `source` — `gpu-timestamp` or `wall`, the latter with no pass named; none while timing is off.
+    fn summary(&self) -> Option<serde_json::Value> {
+        let source = self.source?;
+        let n = self.steps.max(1) as f64;
+        let per_pass: serde_json::Map<String, serde_json::Value> = Pass::ORDER
             .iter()
-            .map(|&(xj, yj, mj)| {
-                let r = ((xi - xj).powi(2) + (yi - yj).powi(2)).sqrt();
-                mj * if r == 0.0 { self_term } else { -1.0 / r }
-            })
-            .sum();
-        w_sum += 0.5 * mi * phi;
-        mass += mi;
+            .zip(self.pass_ms)
+            .filter_map(|(pass, ms)| Some((pass.label().to_string(), json!(ms? / n))))
+            .collect();
+        let mean = (self.steps > 0).then(|| self.step_ms / n);
+        Some(json!({"per_pass_ms": per_pass, "step_ms_mean": mean, "source": source.name()}))
     }
-    let eps = THERMAL_OVER_W * w_sum.abs() / mass;
-    for y in 0..h {
-        for x in 0..w {
-            let i = y * w + x;
-            planes[3 * cells + i] = (planes[i] as f64 * eps) as f32;
-        }
-    }
-    planes
 }
 
 fn say(line: &str) {
@@ -179,15 +186,44 @@ pub fn run(args: &[String]) -> i32 {
             return EXIT_ARGS;
         }
     };
-    let warnings = match check_scene(&args.scene) {
-        Ok(w) => w,
+    // A dump to start from, read and checked before anything else (exit 4).
+    let dump = match args.load_dump.as_deref().map(Dump::read).transpose() {
+        Ok(d) => d,
+        Err(e) => {
+            say(&format!("SR-ERROR bad dump: {e}"));
+            return EXIT_ARGS;
+        }
+    };
+    if let (Some(d), Some(w)) = (&dump, args.world) {
+        if d.world != w {
+            let text = format!("--world {}x{} against the dump's {}x{}", w.width, w.height, d.world.width, d.world.height);
+            say(&format!("SR-ERROR bad arguments: {text}"));
+            return EXIT_ARGS;
+        }
+    }
+    // The scene, its world and constants and the state it starts from, all before any GPU is touched (exit 4); a dump
+    // gives the world and the cells instead.
+    let prepared = load_scene(&args.scene, args.world).and_then(|scene| {
+        let physics = scene.physics()?;
+        let elements = Elements::shipped().map_err(|e| e.to_string())?;
+        let edge = args.edge.unwrap_or(scene.edge);
+        if let Some(d) = &dump {
+            return Ok((d.world, edge, physics, elements, Vec::new(), scene.warnings()));
+        }
+        let world = args.world.unwrap_or(scene.world);
+        let (planes, mut warnings) = scene.planes(world, &physics, &elements)?;
+        warnings.splice(0..0, scene.warnings());
+        Ok((world, edge, physics, elements, planes, warnings))
+    });
+    let (world, edge, physics, elements, planes, warnings) = match prepared {
+        Ok(p) => p,
         Err(e) => {
             say(&format!("SR-ERROR bad scene: {e}"));
             return EXIT_ARGS;
         }
     };
     if let Some(dir) = &args.out {
-        if let Err(e) = std::fs::create_dir_all(dir) {
+        if let Err(e) = std::fs::create_dir_all(dir.join("dumps")) {
             say(&format!("SR-ERROR bad arguments: --out {}: {e}", dir.display()));
             return EXIT_ARGS;
         }
@@ -210,36 +246,55 @@ pub fn run(args: &[String]) -> i32 {
         std::process::exit(EXIT_GPU);
     }));
 
-    let state = match State::new(&gpu.device, args.world) {
+    let state = match State::new(&gpu.device, world) {
         Ok(s) => s,
         Err(e) => {
             say(&format!("SR-ERROR bad arguments: {e}"));
             return EXIT_ARGS;
         }
     };
-    state.upload(&gpu.queue, &sun_disk_planes(args.world)).expect("the preset fills 14 planes of the world");
-    // The shipped registries (a scene's overrides arrive with M0-T25); the ledger reads the booking (its lot).
-    let (physics, elements) = match (Physics::shipped(), Elements::shipped()) {
-        (Ok(p), Ok(e)) => (p, e),
-        (Err(e), _) | (_, Err(e)) => {
-            say(&format!("SR-ERROR {e}"));
-            return EXIT_ARGS;
+    // The physics is the shipped constants with the scene's overrides; the ledger reads the booking (its lot).
+    let booking = Booking::new(&gpu.device, world).expect("the state's world is valid");
+    let step = Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &physics, &elements), &physics);
+    let first = match &dump {
+        Some(d) => {
+            if let Err(e) = load_dump(&gpu.queue, &state, &step, d) {
+                say(&format!("SR-ERROR bad dump: {e}"));
+                return EXIT_ARGS;
+            }
+            d.step
+        }
+        None => {
+            state.upload(&gpu.queue, &planes).expect("the scene fills 14 planes of the world");
+            0
         }
     };
-    let booking = Booking::new(&gpu.device, args.world).expect("the state's world is valid");
-    let step = Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &physics, &elements), &physics);
+    let timing = if args.timing { Timing::Auto } else { Timing::Off };
+    let mut cost = Costs { source: step.set_timing(&gpu.device, &gpu.queue, timing), ..Costs::default() };
+    // A dump of the state as it stands, named by its step index; a failed write is exit 4, as a bad --out.
+    let write_dump = |dir: &Path| {
+        let d = dump_state(&gpu.device, &gpu.queue, &state, &step);
+        let path = dir.join("dumps").join(format!("s_{}.bin", d.step));
+        d.write(&path).map_err(|e| format!("SR-ERROR bad arguments: --out {}: {e}", path.display()))
+    };
 
     let target = args.steps.min(args.max_steps);
     let started = Instant::now();
     let mut done = 0u64;
     while done < target {
-        let n = (target - done).min(CHUNK);
+        let mut n = (target - done).min(CHUNK);
+        if let Some(every) = args.dump_every {
+            n = n.min(every - (first + done) % every);
+        }
         step.run(&gpu.device, &gpu.queue, n as u32);
         if let Err(e) = gpu.device.poll(wgpu::PollType::wait_indefinitely()) {
             say(&format!("SR-ERROR GPU error after {done} steps: {e}"));
             return EXIT_GPU;
         }
         done += n;
+        if let Some(c) = step.read_cost(&gpu.device, &gpu.queue) {
+            cost.add(&c);
+        }
         if let Some(bad) = step.read_dt(&gpu.device, &gpu.queue).non_finite {
             say(&format!(
                 "SR-ERROR non-finite value in the state at step {}, cell ({}, {}), channel {}",
@@ -247,20 +302,37 @@ pub fn run(args: &[String]) -> i32 {
             ));
             return EXIT_NON_FINITE;
         }
+        let at = first + done;
+        if let (Some(every), Some(dir)) = (args.dump_every, &args.out) {
+            if at.is_multiple_of(every) && done < target {
+                if let Err(e) = write_dump(dir) {
+                    say(&e);
+                    return EXIT_ARGS;
+                }
+            }
+        }
     }
     let wall_s = started.elapsed().as_secs_f64();
+    // The final dump, always (§3.3).
+    if let Some(dir) = &args.out {
+        if let Err(e) = write_dump(dir) {
+            say(&e);
+            return EXIT_ARGS;
+        }
+    }
 
     let met = done == args.steps;
-    // Δt exists since M0-T20 (P1, P9); summing it into sim time is not built yet, so a run still reports 0.
-    let sim_time = 0.0;
+    // Δt exists since M0-T20 (P1, P9); summing it into sim time is not built yet, so a run reports the sim time it
+    // started from (0, or its dump's).
+    let sim_time = dump.as_ref().map_or(0.0, |d| d.sim_time);
     if let Some(dir) = &args.out {
-        let summary = json!({
+        let mut summary = json!({
             "version": 1,
             "tool": format!("sandbox-reactions {}", env!("CARGO_PKG_VERSION")),
             "git": git_rev(),
             "adapter": {"name": gpu.info.name, "backend": format!("{:?}", gpu.info.backend), "driver": gpu.info.driver},
             "scene": args.scene,
-            "world": {"width": args.world.width, "height": args.world.height},
+            "world": {"width": world.width, "height": world.height, "edge": edge.name()},
             "steps": done,
             "sim_time": sim_time,
             "wall_s": wall_s,
@@ -269,6 +341,9 @@ pub fn run(args: &[String]) -> i32 {
             "objects": [],
             "until": {"condition": format!("steps:{}", args.steps), "met": met},
         });
+        if let Some(timing) = cost.summary() {
+            summary["timing"] = timing;
+        }
         let text = serde_json::to_string_pretty(&summary).expect("a json! value serialises");
         if let Err(e) = std::fs::write(dir.join("summary.json"), text + "\n") {
             say(&format!("SR-ERROR bad arguments: --out {}: {e}", dir.display()));

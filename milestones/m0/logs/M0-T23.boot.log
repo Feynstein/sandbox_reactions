@@ -1,0 +1,82 @@
+== 2026-10-11T12:52:21-04:00 boot · task M0-T23 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 9.76 s
+headless-boot: ready - exit 0, 3.1s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T23.launch.headless-boot.log)
+headless-boot: pid 4352 not signalled - gone
+headless-boot: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T23.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "ab36299",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 0.0,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.091653,
+  "world": {
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 2 s, booted and checked in 8 s
+=== GO ===
+
+== 2026-10-11T12:55:20-04:00 boot · task M0-T23 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 18.81 s
+headless-boot: ready - exit 0, 4.1s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T23.launch.headless-boot.log)
+headless-boot: pid 36632 not signalled - gone
+headless-boot: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T23.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "ab36299",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 0.0,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.1881906,
+  "world": {
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 6 s, booted and checked in 12 s
+=== GO ===
+

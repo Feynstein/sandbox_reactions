@@ -1,0 +1,4 @@
+tools_selftest · clean · GO
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 195.16 s · 2 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-D20.tools_selftest.redarm.log
+=== GO ===

@@ -87,7 +87,7 @@ impl Dt {
         let record = init_buffer(
             device,
             "dt.record",
-            wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_SRC,
+            wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST,
             &[0; RECORD_WORDS],
         );
 

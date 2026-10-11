@@ -10,13 +10,16 @@ counts line, one `<file>:<line>: <entry>` line per hit, then `=== GO ===` when t
 whole token (no letter or digit on either side); inside it `_`, `-`, a space or nothing stand for one
 another, and a markdown `\\_` reads as `_`. A file named by `--fenced` is read in fence mode: only the lines
 inside ```<tag> fences count (`--tag`, default v12) and every other hit is listed `allowed`.
-`cases <pathspec>…` prints the runner's case ids and nothing else, one per line: the files git lists there,
-tracked or untracked but never ignored, minus the list itself, plus each `--fenced` file present. The list
-is local — never pushed, never scanned. Nothing is written and git is only read; the selftest's `git init`
-and `git add` run inside its own temp folder. Usage: docs/agent/testing.md.
+`cases <pathspec>…` prints the runner's case ids and nothing else, one per line: the files under each
+pathspec from verify.py's walk_tree() — no git call, a folder with no repository included — minus the list
+itself, plus each `--fenced` file present. A pathspec is a folder, a file, a glob, `.` or `./` (the tree), git's
+`:(exclude)<spec>` / `:!<spec>` / `:^<spec>` (taken out of the rest; exclusions alone read as `.` minus them) or
+`:(literal)<spec>` (no glob); any other `:(…)` magic exits 1 naming it. The list is local — never pushed, never
+scanned. Nothing is written; the selftest's `git init` and `git add` run inside its own temp folder. Usage: docs/agent/testing.md.
 """
 import argparse
 import contextlib
+import fnmatch
 import io
 import json
 import os
@@ -122,16 +125,80 @@ def cmd_check(a):
                    reason, [f"error: {x}" for x in errors] + hits + allowed, hits=hits, allowed=allowed, errors=errors)
 
 
-def cmd_cases(a):
-    """The case ids for the runner's `cases_cmd` — ids only, no counts line; exit 1 when git cannot list."""
-    r = subprocess.run(["git", "--no-optional-locks", "ls-files", "-co", "--exclude-standard", "-z", "--", *a.paths],
+def git_files(paths):
+    """The old listing, kept as the selftest's plant: git's files under the pathspecs; None when git cannot list."""
+    r = subprocess.run(["git", "--no-optional-locks", "ls-files", "-co", "--exclude-standard", "-z", "--", *paths],
                        capture_output=True)
-    if r.returncode:
-        print(f"cases: git ls-files exit {r.returncode}: {r.stderr.decode('utf-8', 'replace').strip()}", file=sys.stderr)
+    return None if r.returncode else [p for p in r.stdout.decode("utf-8", "replace").split("\0") if p]
+
+
+class PathspecError(ValueError):
+    """A pathspec this tool does not read - `cases` exits 1 naming it, never a silent zero."""
+
+
+def parse_pathspec(spec):
+    """(pattern, exclude, literal) of one pathspec, read as git reads it: `:(exclude)`, `:!` and `:^` exclude,
+    `:(literal)` turns the glob off, `./` is dropped, `.` and `./` are the whole tree (the empty pattern). Any
+    other `:` magic raises PathspecError."""
+    exclude = literal = False
+    if spec.startswith((":!", ":^")):
+        exclude, spec = True, spec[2:]
+    elif spec.startswith(":"):
+        end = spec.find(")") if spec.startswith(":(") else -1
+        words = spec[2:end].split(",") if end > 0 else []
+        if end < 0 or any(w not in ("exclude", "literal") for w in words):
+            raise PathspecError(f"pathspec magic not read here: {spec!r} (only :(exclude), :!, :^ and :(literal))")
+        exclude, literal, spec = "exclude" in words, "literal" in words, spec[end + 1:]
+    while spec.startswith("./"):
+        spec = spec[2:]
+    return ("" if spec == "." else spec), exclude, literal
+
+
+def walk_files(paths, _plant=None):
+    """The files under `paths` from verify.py's walk_tree(), no git call. A pathspec is a folder, a file or a glob,
+    `.` or `./` (the tree), `:(exclude)<spec>` / `:!<spec>` / `:^<spec>` (taken out of the rest), `:(literal)<spec>`
+    (no glob); exclusions alone are the whole tree minus them; none = all. `_plant` is the selftest's."""
+    if TOOL_DIR not in sys.path:
+        sys.path.insert(0, TOOL_DIR)
+    from verify import walk_tree                                # the sibling annex module, as verify.py imports plan.py
+    include, exclude = [], []
+    for p in paths:
+        if _plant == "magic" and p.startswith(":(top") or _plant == "dot" and p in (".", "./"):
+            include.append(("\0", False))                      # PLANT: `.` a folder named `.`, unknown magic a name
+            continue
+        pattern, is_exclude, literal = parse_pathspec(p)
+        if not is_exclude:
+            include.append((pattern, literal))
+        elif _plant != "exclude":                               # PLANT "exclude": the exclusions dropped
+            exclude.append((pattern, literal))
+
+    def hit(f, spec):
+        pattern, literal = spec
+        return pattern == "" or f == pattern or f.startswith(pattern.rstrip("/") + "/") or \
+            (not literal and fnmatch.fnmatchcase(f, pattern))
+
+    return [f for f in walk_tree(".")
+            if (not include or any(hit(f, s) for s in include)) and not any(hit(f, s) for s in exclude)]
+
+
+LISTER = walk_files                                              # the selftest's plant swaps it for git_files
+
+
+def cmd_cases(a):
+    """The case ids for the runner's `cases_cmd` — ids only, no counts line; exit 1 when the files cannot be listed."""
+    try:
+        listed = LISTER(a.paths)
+    except PathspecError as e:
+        print(f"cases: {e}", file=sys.stderr)
+        return 1
+    except OSError as e:
+        print(f"cases: cannot list the files: {e}", file=sys.stderr)
+        return 1
+    if listed is None:
+        print("cases: git cannot list the files here", file=sys.stderr)
         return 1
     deny = os.path.realpath(a.denylist)
-    ids = [p for p in r.stdout.decode("utf-8", "replace").split("\0")
-           if p and os.path.isfile(p) and os.path.realpath(p) != deny]
+    ids = [p for p in listed if os.path.isfile(p) and os.path.realpath(p) != deny]
     ids += [p for p in a.fenced if os.path.isfile(p) and p not in ids]
     for p in ids:
         print(p)
@@ -193,6 +260,24 @@ def planted(after, line, text=FIXTURE):
     lines = text.split("\n")
     i = next(k for k, s in enumerate(lines) if after in s) + 1
     return "\n".join(lines[:i] + [line] + lines[i:]), i + 1
+
+
+ALL = [".gitignore", "PLAYBOOK.md", "notes/other.md", "tools/new.md", "tools/pb/tool.py"]    # the fixture, listed
+FORMS = [                                    # (pathspecs, the files they list in the fixture, the list itself left out)
+    (("tools",), ["tools/new.md", "tools/pb/tool.py"]), (("tools/pb",), ["tools/pb/tool.py"]),
+    (("PLAYBOOK.md",), ["PLAYBOOK.md"]), (("tools/*.md",), ["tools/new.md"]), (("./notes",), ["notes/other.md"]),
+    (("tools/",), ["tools/new.md", "tools/pb/tool.py"]), (("./tools/pb",), ["tools/pb/tool.py"]),
+    (("*.md",), ["PLAYBOOK.md", "notes/other.md", "tools/new.md"]),
+    ((".",), ALL), (("./",), ALL), (("./.",), ALL),
+    ((":(exclude)*.md",), [".gitignore", "tools/pb/tool.py"]), ((":!PLAYBOOK.md",), ALL[:1] + ALL[2:]),
+    ((":^notes",), [".gitignore", "PLAYBOOK.md", "tools/new.md", "tools/pb/tool.py"]),
+    (("tools", ":(exclude)tools/pb"), ["tools/new.md"]), ((".", ":!tools/pb"), ALL[:4]),
+    (("*.md", ":(exclude,literal)PLAYBOOK.md"), ["notes/other.md", "tools/new.md"]),
+    ((".", ":(exclude,literal)tools/new.md"), ALL[:3] + ALL[4:]),
+    ((":(literal)tools/*.md",), []), ((":(literal)tools",), ["tools/new.md", "tools/pb/tool.py"]),
+    (("tools/*.md", ":(exclude)tools/*.md"), []),
+]
+BAD_MAGIC = (":(top)tools", ":(glob)*.md", ":/tools", ":(exclude,icase)tools", ":(exclude")
 
 
 def cmd_selftest(a):
@@ -309,8 +394,7 @@ def cmd_selftest(a):
                         "notes/other.md", "tools/pb/denylist.txt"):
                 put(os.path.join(repo, rel), "x\n")
             put(os.path.join(repo, ".gitignore"), "tools/local.txt\nproposals/\n")
-            subprocess.run(["git", "-C", repo, "-c", "core.autocrlf=false", "add", "PLAYBOOK.md", "tools/gone.py"],
-                           check=True)
+            subprocess.run(["git", "-C", repo, "add", "PLAYBOOK.md", "tools/gone.py"], check=True)
             os.remove(os.path.join(repo, "tools", "gone.py"))                # tracked, then deleted: nothing to scan
             os.chdir(repo)
             args = ("cases", "--denylist", "tools/pb/denylist.txt", "--fenced", "proposals/P.md", "PLAYBOOK.md", "tools")
@@ -321,12 +405,51 @@ def cmd_selftest(a):
             check("cases with no pathspec: every file git lists, the list still left out",
                   rc == 0 and sorted(out.split()) == [".gitignore", "PLAYBOOK.md", "notes/other.md", "tools/new.md",
                                                       "tools/pb/tool.py"])
+            deny_rel = "tools/pb/denylist.txt"
+            for specs, _ in FORMS:                                          # every form, the walk against git's own list
+                listed = git_files(list(specs))
+                want = None if listed is None else sorted(p for p in listed if os.path.isfile(p) and p != deny_rel)
+                rc, out = run("cases", "--denylist", deny_rel, *specs)
+                check(f"cases {' '.join(specs)!r} = git ls-files on the same pathspecs ({len(want or [])})",
+                      want is not None and rc == 0 and sorted(out.split()) == want)
             put(os.path.join(repo, "proposals", "P.md"), "x\n")
             rc, out = run(*args)
             check("cases: a --fenced file present is a case, ignored or not",
                   rc == 0 and sorted(out.split()) == ["PLAYBOOK.md", "proposals/P.md", "tools/new.md", "tools/pb/tool.py"])
+            for rel in ("PLAYBOOK.md", "tools/pb/tool.py", "tools/new.md", "tools/local.txt", "notes/other.md",
+                        "tools/pb/denylist.txt"):
+                put(os.path.join(plain, rel), "x\n")
+            put(os.path.join(plain, ".gitignore"), "tools/local.txt\nproposals/\n")
             os.chdir(plain)
-            check("cases outside a git checkout → exit 1", run(*args)[0] == 1)
+            rc, out = run(*args)
+            check("cases in a folder with no repository: the same files, read from the walk",
+                  rc == 0 and sorted(out.split()) == ["PLAYBOOK.md", "tools/new.md", "tools/pb/tool.py"])
+            for specs, want in FORMS:
+                rc, out = run("cases", "--denylist", "tools/pb/denylist.txt", *specs)
+                check(f"cases pathspec {' '.join(specs)!r} (no repository) → {want}", rc == 0 and sorted(out.split()) == want)
+            for bad in BAD_MAGIC:
+                out, err = io.StringIO(), io.StringIO()
+                with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                    rc = main(["cases", "--denylist", "tools/pb/denylist.txt", "tools", bad])
+                check(f"cases with the magic {bad!r}: exit 1, no ids, the spec named", rc == 1 and not out.getvalue() and
+                      bad in err.getvalue())
+            global LISTER
+            LISTER = git_files                                             # PLANT: cases back on git ls-files
+            try:
+                rc, out = run(*args)
+            finally:
+                LISTER = walk_files
+            check("PLANT cases on git ls-files in a folder with no repository → red (exit 1, no ids)",
+                  rc == 1 and not out)
+            for plant, specs, want, rcw in (("dot", (".",), ALL, 0), ("exclude", (".", ":!tools"), ALL[:3], 0),
+                                            ("magic", ("tools", ":(top)tools"), None, 1)):
+                LISTER = lambda paths, plant=plant: walk_files(paths, _plant=plant)       # PLANT: the form misread
+                try:
+                    rc, out = run("cases", "--denylist", "tools/pb/denylist.txt", *specs)
+                finally:
+                    LISTER = walk_files
+                good = rc == rcw and (want is None or sorted(out.split()) == want)
+                check(f"PLANT {plant}: {' '.join(specs)!r} misread → red (the listing or the exit moves)", not good)
             os.chdir(home)                  # out before the cleanup: Windows removes no folder that is the cwd
     except Exception as e:                  # a crash is a failed check, never a traceback in place of the verdict
         check(f"selftest stopped after {len(checks)} checks: {type(e).__name__}: {e}", False)

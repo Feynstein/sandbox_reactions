@@ -43,6 +43,14 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     names of letters, digits and `_` only — measured at M0-T16 (G-WATCH's scope shipped as `watch_only`) and at M0-V2
     (`verify.py watch-only` → « unknown scope(s): watch-only ») — the lead's answer at M0-V2, 2026-10-10: «Yes, rename
     once (Recommended)».
+  - [M0-T26] §2.12.3's header `{"version": 1, "width", "height", "step", "sim_time", "channels", "sinks"}` · the same
+    plus one key, `"resume": {"dt", "dt_next", "latch_since", "box": [x0, y0, w, h, fft_w, fft_h, from_step, fits],
+    "box_args": [6 words]}` — Δt_n and Δt_{n+1}, the latch's sim time since its last set (§1.8.5) and the active box's
+    record and indirect sizes (§1.3.3) at the dump's step boundary; version stays 1, the planes unchanged, a header
+    without it (or with any other key) refused · a resumed run is bit-identical to the straight one (§1.3.4) only with
+    these records, and none can be rebuilt from the cells: a latch set within 1.0 t.u. before the dump would fire again
+    on a resume that starts armed (measured, `dump` scope's control case) — the lead's answer at M0-T26, 2026-10-11:
+    «Add one header key (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

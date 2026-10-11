@@ -1,0 +1,35 @@
+M0-TE-V12.3 · PLAYBOOK v12.3 adoption · log opened 2026-10-11T15:33:42Z
+box: win-laptop Laser2025-20, MINGW64_NT-10.0-26300, Git Bash (the Bash tool); toolkit calls as py -3.12 tools/pb/... (Hazards, R15)
+rung line (sleep 2; python3 tools/pb/rung_record.py now): model=claude-opus-5-5 level=max plugin=installed — heading's rung Opus 5.5, max: match
+probe (§B.3): CLAUDECODE=1 CLAUDE_EFFORT=xhigh AI_AGENT=claude-code_2-1-295_agent
+model pages: claude-api skill, Claude Code 2.1.295 bundle, table cached 2026-10-06 — Fable 5.1 $10/$50, Opus 5.5 $4/$20, Sonnet 5.5 $2/$10, Haiku 5.5 $0.10/$0.50 (<=100K prompt); levels low..max on all four
+pre-images: plan a1e11e2859ae, rules 1ed9333b6a71, archive 2223498609ff
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+stub: 180 lines moved, 180 verified byte-for-byte -> milestones\m0\plan_archive.md
+stub: checks=11 failed=0 warnings=2 · stubbed=11 · moved_lines=180 · verified_lines=180 · trailers_kept=2
+WARN: M0-D13's trailer (> **Commit gate (lead):** Phase 3 closes after M0-V1 — from…) stays in the plan under its stub, not archived
+WARN: M0-TM2's trailer (> **Commit gate (lead):** Phase 4 closes after M0-V2 — from…) stays in the plan under its stub, not archived
+=== GO ===
+blocks byte-identical: 11 of 11 � lines 180 � differing 0
+=== GO ===
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=1/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=2/5
+=== GO ===
+--- Verify 1 (copy's version line and the Rules, both v12.3)
+copy: PLAYBOOK.md - its version: 12.3 - the Rules name: 12.3
+=== GO ===
+exit 0
+--- Verify 2 (plan lint)
+lint: checks=507 failed=0 warnings=0 · blocks=184 · flow_rows=184 · verify_fences=2 · history=0 · flow=per-task · header=442/600 · pipeline=9/60 · ladder=7 rungs · refresh=2/5
+=== GO ===
+exit 0
+close: checks=5 failed=0 warnings=0 · handoff_lines=5 · flow=per-task · set=2 · replaced=2 · appended=0
+=== GO ===
+--- claim run: py -3.12 tools/pb/verify.py --changed --base ab36299 --task M0-TE-V12.3
+verify: 506 passed, 0 failed, 0 skipped · 1/1 scopes GO (plan_lint) · 19 not impacted · 0.17 s · box Laser2025-20 · python 3.12.10 · tree ab36299eb49e+1161fb678d7f · === GO ===
+FLAG type: tools/pb/verify.anchor.json — the harness's anchor write of this run (2 plan_lint entries), answered in tasks/M0-TE-V12.3.md
+closed 2026-10-11T15:40:35Z — Next: M0-TM3

@@ -1,0 +1,50 @@
+why build: never: .cargo/config.toml (+39)
+why adapter: stale: crates/sr-engine/src/step/latch.rs
+why state: stale: crates/sr-engine/src/step/latch.rs
+why booking: stale: crates/sr-engine/src/step/latch.rs
+why floors: stale: crates/sr-engine/src/step/latch.rs
+why dt: stale: crates/sr-engine/src/step/latch.rs
+why box: stale: crates/sr-engine/src/step/latch.rs
+why latch: stale: crates/sr-engine/src/step/latch.rs
+why timing: stale: crates/sr-engine/src/step/latch.rs
+why boot: stale: crates/sr-engine/src/step/latch.rs
+why desktop: stale: crates/sr-engine/src/step/latch.rs
+why web: stale: crates/sr-engine/src/step/latch.rs
+why capture: stale: crates/sr-engine/src/step/latch.rs
+why watch_only: stale: crates/sr-engine/src/step/latch.rs
+build           2/0/0       62.92 s  GO
+adapter         10/0/0      43.02 s  GO
+state           6/0/0       34.98 s  GO
+booking         4/0/0       33.62 s  GO
+floors          7/0/0       60.41 s  GO
+dt              6/0/0       38.97 s  GO
+box             6/0/0       38.08 s  GO
+latch           5/0/0       44.20 s  GO
+timing          5/0/0       26.86 s  GO
+boot            1/0/0       18.81 s  GO
+desktop         2/0/0       57.89 s  GO
+web             3/0/0      178.47 s  GO
+capture         2/0/0       15.86 s  GO
+watch_only      1/0/0        0.38 s  GO
+plan_lint       NOT RUN (not impacted: its 2 path(s) checked at the anchor)
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 16 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 13 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+timing · clean · GO
+timing · plant timing-skip-pass · RED (proven: 1 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope timing · 71.22 s · 2 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-T23.timing.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T23's start - a test, case or check M0-T23's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/timing.rs changed since M0-T23's start - a test, case or check M0-T23's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T23's start - a test, case or check M0-T23's Deliver: does not name
+logs: milestones/m0/logs/M0-T23.<scope>.log · record: loop_times.jsonl · tree ab36299eb49e+d7ff614a823c
+anchor: 53 path×scope entries moved by this run
+anchor: 105 paths checked · 92 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 105 covered of 197 visible
+skipped    84  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 60 passed, 0 failed, 0 skipped · 14/14 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 7 not impacted · 123.36 s + loop 71.44 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 9.31->9.64 · base: M0-T23's start 2026-10-11T12:36:46-04:00
+=== GO ===
+rc=0

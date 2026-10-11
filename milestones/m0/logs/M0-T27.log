@@ -1,0 +1,17 @@
+# M0-T27 2026-10-11T14:13:28-04:00 Laser2025-20
+## Verify 1
+docs/agent/architecture.md:10
+docs/agent/time_control.md:8
+## Verify 2 (as written, time-control)
+8
+## Verify 2 (R17 reading, time_control)
+9
+| `booking` |
+| `floors` |
+| `dt` |
+| `box` |
+| `latch` |
+| `timing` |
+| `time_control` |
+| `scene` |
+| `dump` |

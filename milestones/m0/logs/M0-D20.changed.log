@@ -1,0 +1,31 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why tools_selftest: never: tests/plants/tools-selftest-scratch.patch (+10)
+plan_lint       507/0/0      0.47 s  GO
+tools_selftest  10/0/0     296.41 s  GO
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 39 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 16 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 13 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 27 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 27 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 36 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 36 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+FLAG oracle: tools/pb/verify.py changed since M0-D20's start - a test, case or check M0-D20's Deliver: does not name
+logs: milestones/m0/logs/M0-D20.<scope>.log · record: loop_times.jsonl · tree ab36299eb49e+ae3ac3d37e4f
+anchor: 12 path×scope entries moved by this run
+anchor: 103 paths checked · 91 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 103 covered of 194 visible
+skipped    83  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 517 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 18 not impacted · 164.27 s + loop 0.14 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 6.15->4.64 · base: M0-D20's start 2026-10-11T12:21:14-04:00
+=== GO ===

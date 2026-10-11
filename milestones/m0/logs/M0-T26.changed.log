@@ -1,0 +1,53 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why strings: stale: milestones/m0/m0_contrat.md
+why adapter: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why state: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why booking: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why floors: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why dt: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why box: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why latch: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why timing: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why scene: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why boot: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why desktop: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why web: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why capture: never: crates/sr-engine/src/dump.rs (+1) · stale: crates/sr-engine/src/headless.rs (+5)
+why watch_only: stale: crates/sr-engine/src/step/boxfit.rs (+3)
+plan_lint       502/0/0      0.61 s  GO
+build           2/0/0       28.64 s  GO
+strings         3/0/0       13.84 s  GO
+adapter         10/0/0      14.59 s  GO
+state           6/0/0       26.36 s  GO
+booking         4/0/0       24.03 s  GO
+floors          7/0/0       33.19 s  GO
+dt              6/0/0       29.70 s  GO
+box             6/0/0       23.64 s  GO
+latch           5/0/0       14.61 s  GO
+timing          5/0/0       19.52 s  GO
+scene           8/0/0       10.25 s  GO
+boot            1/0/0       10.81 s  GO
+desktop         2/0/0       39.74 s  GO
+web             3/0/0      169.75 s  GO
+capture         2/0/0       26.44 s  GO
+watch_only      1/0/0        0.23 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 14 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 42 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+dump · red-arm proven by M0-T26 2026-10-11T13:59:42-04:00 (fingerprint b9663c81d03e) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/dump.rs changed since M0-T26's start - a test, case or check M0-T26's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T26's start - a test, case or check M0-T26's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T26's start - a test, case or check M0-T26's Deliver: does not name
+logs: milestones/m0/logs/M0-T26.<scope>.log · record: loop_times.jsonl · tree ab36299eb49e+63cba0cb4984
+anchor: 118 path×scope entries moved by this run
+anchor: 115 paths checked · 95 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 115 covered of 210 visible
+skipped    87  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 573 passed, 0 failed, 0 skipped · 17/17 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 7 not impacted · 99.28 s + loop 0.14 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 1.26->2.55 · base: M0-T26's start 2026-10-11T13:46:28-04:00
+=== GO ===

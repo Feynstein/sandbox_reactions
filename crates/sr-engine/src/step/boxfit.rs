@@ -72,10 +72,12 @@ impl BoxFit {
     pub fn new(device: &wgpu::Device, state: &State, physics: &Physics, mode: BoxMode) -> BoxFit {
         let sigma_vac = physics.get("sigma_vac").expect("physics.json key sigma_vac") as f32;
         let storage = wgpu::BufferUsages::STORAGE;
+        // The record and the sizes are read back and written by a state dump's restore (M0-T26).
+        let copy = wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST;
         let partials = (state.world().cells() as u32).div_ceil(WG);
         BoxFit {
-            record: init_buffer(device, "box.record", storage | wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_SRC, &[0; RECORD_WORDS]),
-            args: init_buffer(device, "box.args", storage | wgpu::BufferUsages::INDIRECT | wgpu::BufferUsages::COPY_SRC, &[0, 0, 1, 0, 1, 1]),
+            record: init_buffer(device, "box.record", storage | wgpu::BufferUsages::UNIFORM | copy, &[0; RECORD_WORDS]),
+            args: init_buffer(device, "box.args", storage | wgpu::BufferUsages::INDIRECT | copy, &[0, 0, 1, 0, 1, 1]),
             gate: init_buffer(device, "box.gate", storage | wgpu::BufferUsages::INDIRECT, &[0, 1, 1, 0, 1, 1]),
             flags: init_buffer(device, "box.flags", storage | wgpu::BufferUsages::COPY_DST, &[0]),
             partials: device.create_buffer(&wgpu::BufferDescriptor {

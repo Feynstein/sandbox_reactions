@@ -1,0 +1,10 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -195,6 +195,7 @@
+         let per_pass: serde_json::Map<String, serde_json::Value> = Pass::ORDER
+             .iter()
+             .zip(self.pass_ms)
++            .filter(|(pass, _)| **pass != Pass::Floors) // planted: one pass left out of per_pass_ms
+             .filter_map(|(pass, ms)| Some((pass.label().to_string(), json!(ms? / n))))
+             .collect();
+         let mean = (self.steps > 0).then(|| self.step_ms / n);

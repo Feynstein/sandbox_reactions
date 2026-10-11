@@ -33,6 +33,15 @@ mod r#box;
 /// M0-T22 — a frame of steps and the collapse latch (contract §1.8.3, §1.8.5, §1.8.7, §3.1).
 mod latch;
 
+/// M0-T23 — GPU timestamps, the cost per step and `headless --timing` (contract §1.8.3, §2.12.2, §3.1, §3.3, §6.2.2).
+mod timing;
+
+/// M0-T25 — scene files and `headless --scene --world --edge` (contract §2.12.1, §2.12.4, §2.10, §2.8, §3.3).
+mod scene;
+
+/// M0-T26 — state dumps (contract §2.12.3, §0.5 [M0-T26], §3.1, §3.3, §1.3.4).
+mod dump;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;
@@ -159,7 +168,9 @@ mod adapter {
             println!("{}", gpu.info.sr_adapter_line());
             let adapter_limits = gpu.adapter.limits();
             assert_eq!(gpu.device.limits(), wgpu::Limits::default(), "{}: the device's limits", a.name);
-            assert!(gpu.device.features().is_empty(), "{}: no native-only feature (§6.2.2)", a.name);
+            // No native-only feature (§6.2.2): WebGPU's timestamp-query alone, and only where the adapter offers it.
+            let offered = gpu.adapter.features() & wgpu::Features::TIMESTAMP_QUERY;
+            assert_eq!(gpu.device.features(), offered, "{}: no feature but timestamp-query where offered", a.name);
             // The point of the case: this adapter could have given more, and the device must not have taken it.
             println!(
                 "{}: adapter allows {} B workgroup storage, device has {} B",

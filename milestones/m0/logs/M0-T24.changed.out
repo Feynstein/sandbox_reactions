@@ -1,0 +1,44 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+why registry: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+why eos: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+why time_control: never: tests/plants/slowdown-auto-return.patch
+why state: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+why floors: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+why dt: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+why box: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+why latch: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+why timing: never: crates/sr-physics/src/time.rs · stale: crates/sr-physics/src/lib.rs
+plan_lint       504/0/0      0.67 s  GO
+build           2/0/0       76.41 s  GO
+registry        29/0/0      37.27 s  GO
+eos             13/0/0       7.28 s  GO
+time_control    18/0/0      37.28 s  GO
+state           6/0/0       59.00 s  GO
+floors          7/0/0       61.89 s  GO
+dt              6/0/0       60.01 s  GO
+box             6/0/0       53.33 s  GO
+latch           5/0/0       37.92 s  GO
+timing          5/0/0       24.98 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 41 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 46 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+time_control · red-arm proven by M0-T24 2026-10-11T13:11:35-04:00 (fingerprint e39d2f0a17d5) - not re-run
+FLAG oracle: tools/pb/verify.json changed since M0-T24's start - a test, case or check M0-T24's Deliver: does not name
+FLAG oracle: scope `time_control` added in tools/pb/verify.json - M0-T24's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-T24.<scope>.log · record: loop_times.jsonl · tree ab36299eb49e+bf05402e754e
+anchor: 20 path×scope entries moved by this run
+anchor: 107 paths checked · 93 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 107 covered of 200 visible
+skipped    85  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 601 passed, 0 failed, 0 skipped · 11/11 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 11 not impacted · 62.28 s + loop 0.16 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 7.29->2.67 · base: M0-T24's start 2026-10-11T13:01:34-04:00
+=== GO ===

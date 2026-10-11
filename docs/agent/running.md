@@ -10,9 +10,10 @@ the PATH on linux-pc, `~/.cargo/bin` is on it on win-laptop — `docs/agent/test
 | Box | Launcher | What it does |
 |---|---|---|
 | linux-pc (`laserax-ai`) | `start.sh` (Files → Run as a Program) | `launch.py start game --task launcher`, waits for Enter, `launch.py stop` |
-| win-laptop (`Laser2025-20`) | `start.bat`, or `powershell -ExecutionPolicy Bypass -File start.ps1` | the same, through `py -3.12 tools\pb\launch.py …` |
+| win-laptop (`Laser2025-20`) | `start.bat` (the double-click) | the same, through `py -3.12 tools\pb\launch.py …` |
 
-All three take an optional service name (`bash start.sh game-xvfb`) so a check can run the launcher on a route that
+On win-laptop `start.ps1` is not a double-click: Explorer opens a `.ps1` in Notepad (the lead, M0-V2). It runs from
+PowerShell: `powershell -ExecutionPolicy Bypass -File start.ps1`. All three take an optional service name (`bash start.sh game-xvfb`) so a check can run the launcher on a route that
 opens no window on the lead's screen. `game` is the only service that asks (`--asked`): the double-click is the ask
 (R4, §3.6). Not for agents: a visible window is the lead's to run and to watch.
 
@@ -24,11 +25,16 @@ block that builds their feature and are refused with exit 4 until then:
   - `--offscreen-window` places the window outside every monitor, never activated, out of the taskbar (§3.3 [M0-TJ3]).
   - `--capture` runs a scripted session, one PNG per step plus `captions.json`, then exits 0 (§3.3; the harness is
     `tests/capture/`). An action not built yet is refused with `SR-ERROR`, exit 4.
-- **Headless**: `headless --scene preset:<sun|massive|giant> --steps N [--world WxH] [--max-steps N] [--out DIR]
-  [--adapter S]` — the same step with no surface and no display (§6.3); `DIR/summary.json` per §2.12.2. stdout: first line
-  `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`, warnings `SR-WARN`. Exit codes: §3.3.
+- **Headless**: `headless --scene <scenes/FILE.json | preset:<sun|massive|giant>> --steps N [--world WxH]
+  [--edge leave|bounce] [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE] [--adapter S]` — the
+  same step with no surface and no display (§6.3); `DIR/summary.json` per §2.12.2 and, with `--out`, the final state dump
+  `DIR/dumps/s_<step>.bin` (§2.12.3; `--dump-every` adds one at every step index N divides, counted from the scene;
+  `--load-dump` starts from a dump, M0-T26). `--world` and `--edge` stand over the scene's `world` (M0-T25); `--timing`
+  adds `timing` to the summary (M0-T23). stdout: first line `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`,
+  warnings `SR-WARN`. Exit codes: §3.3. The file formats: `docs/agent/architecture.md` § The files. sr-app's usage line
+  (`--help`) still lists only the M0-T4 flags — stale since M0-T23 (flagged to M0-T37); this list is the tree's.
 - Later blocks add `bench`, `calibrate`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the
-  headless run's `--until`, `--frames-every`, `--dump-every`, `--edits`, `--cpu-reference`, `--timing` (§3.3).
+  headless run's `--until`, `--frames-every`, `--edits`, `--cpu-reference` (§3.3).
 
 ## launch.py — how a service is started, polled, stopped (`tools/pb/launch.py`, §3.4, §3.6)
 `python3 tools/pb/launch.py start|stop|status|smoke|list <service> --task <ID>` (`py -3.12 …` on win-laptop). A service's

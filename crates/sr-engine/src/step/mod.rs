@@ -18,12 +18,18 @@
 //! The equation of state every pass shares (shaders/eos.wgsl) is prepended to a pass's shader ([`with_eos`]) and bound
 //! as group 1 from [`EosGpu`], built once per run from physics.json and elements.json: the species table, the cold
 //! pairs, M0-T12's u(x) table (sr_physics::eos::ColdTable) and the floors.
+//!
+//! The cost of a step (§1.8.3's c_step, §3.1, §2.12.2's `timing`; M0-T23), off until [`Step::set_timing`]: each compute
+//! pass writes a timestamp at its beginning and its end where the device has WebGPU's `timestamp-query` — at pass
+//! boundaries only, never inside a pass (wgpu's TIMESTAMP_QUERY_INSIDE_PASSES is native-only, §6.2.2) — else the batch
+//! is timed by the wall clock and says so ([`CostSource`]). A batch is a frame, or the bare steps recorded between two
+//! [`Step::read_cost`] calls; it times as many whole steps as one query set holds.
 
 pub mod boxfit;
 pub mod dt;
 pub mod latch;
 
-use std::cell::Cell;
+use std::cell::{Cell, RefCell};
 
 use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
@@ -103,6 +109,185 @@ pub struct Step {
     boxfit: BoxFit,
     latch: Latch,
     next: Cell<u64>,
+    timer: Timer,
+}
+
+/// Whether and how a step's cost is measured ([`Step::set_timing`]).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Timing {
+    Off,
+    /// GPU timestamps where the device has `timestamp-query`, else the wall clock.
+    Auto,
+    /// The wall clock even where timestamps are offered (the fallback's own test).
+    Wall,
+}
+
+/// Where a cost came from.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CostSource {
+    GpuTimestamp,
+    Wall,
+}
+
+impl CostSource {
+    /// The name summary.json and the logs give it.
+    pub fn name(self) -> &'static str {
+        match self {
+            CostSource::GpuTimestamp => "gpu-timestamp",
+            CostSource::Wall => "wall",
+        }
+    }
+}
+
+/// The cost of a batch's timed steps (§1.8.3's c_step input, §3.1).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct StepCost {
+    pub source: CostSource,
+    /// Steps timed: the batch's first whole steps, as many as the query set holds; every step under wall time.
+    pub steps: u32,
+    /// Mean ms per timed step, from its first pass's beginning to its last pass's end (the gaps between passes
+    /// included); under wall time, the batch's wall time ÷ its steps — recording, submission and readback included.
+    pub step_ms: f64,
+    /// Mean ms per timed step spent in each pass, in `Pass::ORDER` (step 0's initial reduction is P9's); none for a pass
+    /// the step does not record, and every pass under wall time. A step a frame's latch stopped is recorded with its
+    /// dispatches zero-sized, so it is counted at its near-zero cost.
+    pub pass_ms: [Option<f64>; 10],
+    /// A frame's own passes, `frame begin` + `frame end`, in ms; none for bare steps and under wall time.
+    pub frame_ms: Option<f64>,
+}
+
+/// The query set's size: wgpu's maximum.
+const QUERIES: u32 = wgpu::QUERY_SET_MAX_QUERIES;
+/// A step records at most 11 compute passes (P0–P9 and step 0's initial reduction); a step is timed only when 12
+/// passes' queries still fit, with `frame end`'s two kept back.
+const STEP_QUERIES: u32 = 2 * 12;
+/// The slot of a frame's own passes in a batch's list (the passes are 0–9, `Pass::ORDER`).
+const FRAME_SLOT: usize = 10;
+
+/// The step's timer: the query set, its resolve buffer and the timestamp period when the GPU times, and the batch being
+/// recorded.
+#[derive(Default)]
+struct Timer {
+    mode: Cell<Option<CostSource>>,
+    gpu: RefCell<Option<GpuTimer>>,
+    batch: RefCell<Batch>,
+}
+
+struct GpuTimer {
+    queries: wgpu::QuerySet,
+    resolve: wgpu::Buffer,
+    period_ns: f64,
+}
+
+/// The passes a batch timed, in query order (pass i wrote queries 2i and 2i + 1): (slot, the step within the batch —
+/// none for a frame's own passes).
+#[derive(Clone, Debug, Default)]
+pub(crate) struct Batch {
+    live: bool,
+    passes: Vec<(usize, Option<u32>)>,
+    steps: u32,
+    timed: u32,
+    open: bool,
+    started_ms: Option<f64>,
+}
+
+impl Timer {
+    /// Starts a batch (a frame, or the first bare step since the last read).
+    fn start(&self) {
+        *self.batch.borrow_mut() = Batch { live: true, started_ms: wall_ms(), ..Batch::default() };
+    }
+
+    /// A step begins: it is timed when every pass it may record still fits.
+    fn begin_step(&self) {
+        let mut b = self.batch.borrow_mut();
+        b.steps += 1;
+        b.open = self.mode.get() == Some(CostSource::GpuTimestamp)
+            && b.timed + 1 == b.steps
+            && 2 * b.passes.len() as u32 + STEP_QUERIES + 2 <= QUERIES;
+        if b.open {
+            b.timed += 1;
+        }
+    }
+
+    /// Begins a compute pass labelled `label`, its two timestamps booked to `slot` when the batch times it.
+    fn begin<'e>(&self, encoder: &'e mut wgpu::CommandEncoder, label: &str, slot: usize) -> wgpu::ComputePass<'e> {
+        let gpu = self.gpu.borrow();
+        let mut b = self.batch.borrow_mut();
+        let timed = self.mode.get() == Some(CostSource::GpuTimestamp) && (slot == FRAME_SLOT || b.open);
+        let writes = match (&*gpu, timed) {
+            (Some(g), true) => {
+                let i = 2 * b.passes.len() as u32;
+                let step = (slot != FRAME_SLOT).then(|| b.steps - 1);
+                b.passes.push((slot, step));
+                Some(wgpu::ComputePassTimestampWrites {
+                    query_set: &g.queries,
+                    beginning_of_pass_write_index: Some(i),
+                    end_of_pass_write_index: Some(i + 1),
+                })
+            }
+            _ => None,
+        };
+        encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some(label), timestamp_writes: writes })
+    }
+
+    /// Ends the batch: records the resolve of its queries (into the resolve buffer, from byte 0) and returns the batch,
+    /// with the resolve buffer and the bytes to copy when the GPU timed it. None when timing is off or nothing ran.
+    fn finish(&self, encoder: &mut wgpu::CommandEncoder) -> Option<(Batch, Option<(wgpu::Buffer, u64)>)> {
+        let batch = std::mem::take(&mut *self.batch.borrow_mut());
+        if self.mode.get().is_none() || batch.steps == 0 {
+            return None;
+        }
+        let gpu = self.gpu.borrow();
+        let resolved = match (&*gpu, batch.passes.len() as u32) {
+            (Some(g), n) if n > 0 => {
+                encoder.resolve_query_set(&g.queries, 0..2 * n, &g.resolve, 0);
+                Some((g.resolve.clone(), 16 * u64::from(n)))
+            }
+            _ => None,
+        };
+        Some((batch, resolved))
+    }
+
+    /// The cost of a finished batch: from its resolved timestamps (`ticks`), or from the wall clock now when it has
+    /// none; `steps` is how many steps it ran (a frame's, after the latch).
+    fn cost(&self, batch: &Batch, ticks: Option<&[u64]>, steps: u32) -> Option<StepCost> {
+        let period_ns = self.gpu.borrow().as_ref().map_or(0.0, |g| g.period_ns);
+        let Some(ticks) = ticks else {
+            let ms = wall_ms()? - batch.started_ms?;
+            let steps = steps.max(1);
+            let step_ms = ms / f64::from(steps);
+            return Some(StepCost { source: CostSource::Wall, steps, step_ms, pass_ms: [None; 10], frame_ms: None });
+        };
+        let ms = |b: u64, e: u64| e.saturating_sub(b) as f64 * period_ns / 1e6;
+        let (mut pass_ms, mut frame_ms) = ([None::<f64>; 10], None::<f64>);
+        let mut spans = vec![(u64::MAX, 0u64); batch.timed as usize];
+        for (k, &(slot, step)) in batch.passes.iter().enumerate() {
+            let (b, e) = (ticks[2 * k], ticks[2 * k + 1]);
+            match step {
+                Some(s) => {
+                    *pass_ms[slot].get_or_insert(0.0) += ms(b, e);
+                    let span = &mut spans[s as usize];
+                    *span = (span.0.min(b), span.1.max(e));
+                }
+                None => *frame_ms.get_or_insert(0.0) += ms(b, e),
+            }
+        }
+        let n = f64::from(batch.timed.max(1));
+        let step_ms = spans.iter().map(|&(b, e)| ms(b, e)).sum::<f64>() / n;
+        let pass_ms = pass_ms.map(|p| p.map(|v| v / n));
+        Some(StepCost { source: CostSource::GpuTimestamp, steps: batch.timed, step_ms, pass_ms, frame_ms })
+    }
+}
+
+/// Milliseconds on the wall clock since the first call; none on wasm32, which has no clock without a new dependency.
+fn wall_ms() -> Option<f64> {
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        static EPOCH: std::sync::OnceLock<std::time::Instant> = std::sync::OnceLock::new();
+        Some(EPOCH.get_or_init(std::time::Instant::now).elapsed().as_secs_f64() * 1e3)
+    }
+    #[cfg(target_arch = "wasm32")]
+    None
 }
 
 impl Step {
@@ -134,7 +319,7 @@ impl Step {
         passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
         let latch = Latch::new(device, &passes, &dt, &boxfit);
-        Step { passes, dt, boxfit, latch, next: Cell::new(0) }
+        Step { passes, dt, boxfit, latch, next: Cell::new(0), timer: Timer::default() }
     }
 
     /// How many dispatches each pass records on a step the guard skips, in `Pass::ORDER`.
@@ -182,6 +367,9 @@ impl Step {
     /// guard and the re-fit follow this step's CPU count; after a frame the latch stopped, that count runs ahead of the
     /// GPU's, so a run uses frames ([`Step::encode_frame`]) or bare steps, not both.
     pub fn encode(&self, encoder: &mut wgpu::CommandEncoder) {
+        if !self.timer.batch.borrow().live {
+            self.timer.start();
+        }
         self.encode_step(encoder, None);
     }
 
@@ -190,16 +378,14 @@ impl Step {
     /// controller closes P9.
     fn encode_step(&self, encoder: &mut wgpu::CommandEncoder, latch: Option<&Latch>) {
         let n = self.next.get();
+        self.timer.begin_step();
         let record = |cpass: &mut wgpu::ComputePass<'_>, list: &[Dispatch], every: u64| match latch {
             Some(l) => l.record(cpass, list, every),
             None => record_dispatches(cpass, list),
         };
         if n == 0 {
             // The box fit to the initial state, then P9's Δt reduction over it; the reduce dispatches are P9's own list.
-            let mut cpass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
-                label: Some("P9 reductions (initial state)"),
-                timestamp_writes: None,
-            });
+            let mut cpass = self.timer.begin(encoder, "P9 reductions (initial state)", Pass::Reductions as usize);
             record(&mut cpass, &self.boxfit.refit, REFIT_EVERY);
             record(&mut cpass, &self.passes[Pass::Reductions as usize], 1);
         }
@@ -208,8 +394,7 @@ impl Step {
             if dispatches.is_empty() && *pass != Pass::Edits && !hooked {
                 continue;
             }
-            let mut cpass =
-                encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some(pass.label()), timestamp_writes: None });
+            let mut cpass = self.timer.begin(encoder, pass.label(), *pass as usize);
             record(&mut cpass, dispatches, 1);
             if *pass == Pass::Edits {
                 record(&mut cpass, &self.boxfit.on_edit, 1);
@@ -248,6 +433,65 @@ impl Step {
             self.encode(&mut encoder);
         }
         queue.submit([encoder.finish()]);
+    }
+
+    /// Turns the cost measurement on or off from the next batch on, and returns the source it will use: GPU timestamps
+    /// when `timing` is Auto and the device has `timestamp-query` (the adapter offered it, §6.2.2), else the wall clock.
+    pub fn set_timing(&self, device: &wgpu::Device, queue: &wgpu::Queue, timing: Timing) -> Option<CostSource> {
+        let stamps = timing == Timing::Auto
+            && device.features().contains(wgpu::Features::TIMESTAMP_QUERY)
+            && queue.get_timestamp_period() > 0.0;
+        let mode = match timing {
+            Timing::Off => None,
+            _ if stamps => Some(CostSource::GpuTimestamp),
+            _ => Some(CostSource::Wall),
+        };
+        if stamps && self.timer.gpu.borrow().is_none() {
+            let queries = device.create_query_set(&wgpu::QuerySetDescriptor {
+                label: Some("step.timestamps"),
+                ty: wgpu::QueryType::Timestamp,
+                count: QUERIES,
+            });
+            let resolve = device.create_buffer(&wgpu::BufferDescriptor {
+                label: Some("step.timestamps.resolve"),
+                size: 8 * u64::from(QUERIES),
+                usage: wgpu::BufferUsages::QUERY_RESOLVE | wgpu::BufferUsages::COPY_SRC,
+                mapped_at_creation: false,
+            });
+            let period_ns = f64::from(queue.get_timestamp_period());
+            *self.timer.gpu.borrow_mut() = Some(GpuTimer { queries, resolve, period_ns });
+        }
+        self.timer.mode.set(mode);
+        *self.timer.batch.borrow_mut() = Batch::default();
+        mode
+    }
+
+    /// The cost of the bare steps submitted since the last read ([`Step::run`]); none when timing is off or no step
+    /// ran. Waits for the device (tests and headless only); the next bare step starts a new batch.
+    pub fn read_cost(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> Option<StepCost> {
+        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("step.cost") });
+        let (batch, resolved) = self.timer.finish(&mut encoder)?;
+        let ticks = resolved.map(|(resolve, bytes)| {
+            let staging = device.create_buffer(&wgpu::BufferDescriptor {
+                label: Some("step.timestamps.read"),
+                size: bytes,
+                usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
+                mapped_at_creation: false,
+            });
+            encoder.copy_buffer_to_buffer(&resolve, 0, &staging, 0, bytes);
+            staging
+        });
+        queue.submit([encoder.finish()]);
+        let ticks = ticks.map(|staging| {
+            staging.map_async(wgpu::MapMode::Read, .., |r| r.expect("timestamps: map failed"));
+            device.poll(wgpu::PollType::wait_indefinitely()).expect("the device waits");
+            let view = staging.get_mapped_range(..).expect("mapped for reading");
+            view.as_chunks::<8>().0.iter().map(|b| u64::from_le_bytes(*b)).collect::<Vec<u64>>()
+        });
+        if ticks.is_none() {
+            device.poll(wgpu::PollType::wait_indefinitely()).expect("the device waits");
+        }
+        self.timer.cost(&batch, ticks.as_deref(), batch.steps)
     }
 }
 

@@ -1,0 +1,376 @@
+//! M0-T26 — state dumps (contract §2.12.3 with §0.5 [M0-T26]'s `resume`, §3.1's `load_dump` and `dump_state`, §3.3's
+//! `--dump-every` and `--load-dump`, §1.3.4).
+//!
+//! The oracles: the format is read back by hand from the bytes (§2.12.3's offsets, §2.2's channel order — Σ, mom_x and
+//! mom_y identified by the values the start gave them), never through the reader under test; a resumed run is graded
+//! against the straight run of the same start, bit for bit — the state, the Δt record, the box and every frame report.
+//! The resume case dumps right after the latch fired on the dump's last step, with a second flag two steps later, so a
+//! restore that loses the latch's arming time (or the step index) fires where the straight run does not. Every number is
+//! exact (bits and integers).
+
+use super::device;
+use sr_engine::dump::{dump_state, load_dump, Dump, Resume};
+use sr_engine::gpu::Gpu;
+use sr_engine::state::{Booking, State, WorldConfig, N_CHANNELS};
+use sr_engine::step::boxfit::BoxReport;
+use sr_engine::step::dt::DtReport;
+use sr_engine::step::latch::{FramePlan, FrameReport};
+use sr_engine::step::{EosGpu, Step};
+use sr_physics::registry::{Elements, Physics};
+
+/// §2.2's channels, written out from the contract (not from `state::CHANNELS`).
+const SPEC_CHANNELS: [&str; 14] =
+    ["sigma", "mom_x", "mom_y", "energy", "x_H", "x_He", "x_C", "x_O", "x_Ne", "x_Mg", "x_Si", "x_S", "x_Fe", "x_n"];
+
+struct Constants {
+    physics: Physics,
+    elements: Elements,
+}
+
+/// The shipped constants, the cold pairs off (as tests/gpu/latch.rs).
+fn constants() -> Constants {
+    let physics = Physics::shipped().unwrap().with(&[("k1e", 0.0), ("k2e", 0.0), ("k1n", 0.0), ("k2n", 0.0)]).unwrap();
+    Constants { physics, elements: Elements::shipped().unwrap() }
+}
+
+/// A `w` × `h` world of vacuum hydrogen and a 10 × 10 block of gas on x 40..50, y 20..30 with `block` = (Σ, mom_x,
+/// mom_y, E) and the species `x` (§1.5's order).
+fn start(w: u32, h: u32, block: [f32; 4], x: [f32; 10]) -> (WorldConfig, Vec<f32>) {
+    let world = WorldConfig::new(w, h).unwrap();
+    let n = world.cells();
+    let mut p = vec![0f32; N_CHANNELS * n];
+    p[4 * n..5 * n].fill(1.0);
+    for y in 20..30 {
+        for xx in 40..50 {
+            let i = y * w as usize + xx;
+            for (c, v) in block.iter().chain(&x).enumerate() {
+                p[c * n + i] = *v;
+            }
+        }
+    }
+    (world, p)
+}
+
+/// Cold hydrogen at rest: Δt ≈ 0.447 on every step (tests/gpu/latch.rs), so 1.0 t.u. is 3 steps, never 2.
+fn cold_start() -> (WorldConfig, Vec<f32>) {
+    let mut h = [0f32; 10];
+    h[0] = 1.0;
+    start(256, 128, [1.0, 0.0, 0.0, 0.0], h)
+}
+
+/// Hot, moving gas of ten species: every channel of the block distinct from its neighbours in §2.2's order.
+fn mixed_start() -> (WorldConfig, Vec<f32>) {
+    let x = [0.40, 0.25, 0.10, 0.08, 0.06, 0.05, 0.03, 0.015, 0.01, 0.005];
+    start(128, 64, [1.0, 0.25, -0.5, 2.0], x)
+}
+
+struct Run {
+    state: State,
+    step: Step,
+}
+
+impl Run {
+    fn new(gpu: &Gpu, c: &Constants, (world, planes): (WorldConfig, Vec<f32>)) -> Run {
+        let state = State::new(&gpu.device, world).unwrap();
+        state.upload(&gpu.queue, &planes).unwrap();
+        let booking = Booking::new(&gpu.device, world).unwrap();
+        let eos = EosGpu::new(&gpu.device, &c.physics, &c.elements);
+        let step = Step::new(&gpu.device, &state, &booking, &eos, &c.physics);
+        Run { state, step }
+    }
+
+    /// One frame with the slow-down on, submitted, waited for, and its report.
+    fn frame(&self, gpu: &Gpu, steps: u32) -> FrameReport {
+        let mut encoder = gpu.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frame") });
+        self.step.encode_frame(&FramePlan { steps, slow_down: true }, &mut encoder);
+        gpu.queue.submit([encoder.finish()]);
+        gpu.device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
+        let reports = self.step.poll(&gpu.device);
+        assert_eq!(reports.len(), 1, "one report per frame: {reports:?}");
+        reports[0]
+    }
+
+    fn outcome(&self, gpu: &Gpu) -> (Vec<u32>, DtReport, BoxReport) {
+        let state = self.state.readback(&gpu.device, &gpu.queue).iter().map(|v| v.to_bits()).collect();
+        (state, self.step.read_dt(&gpu.device, &gpu.queue), self.step.read_box(&gpu.device, &gpu.queue))
+    }
+}
+
+/// A small dump built on the CPU, for the refusal cases.
+fn small_dump() -> Dump {
+    let world = WorldConfig::new(64, 64).unwrap();
+    let planes = (0..N_CHANNELS * world.cells()).map(|i| i as f32 * 0.5).collect();
+    let resume = Resume {
+        dt: 0.447,
+        dt_next: 0.448,
+        latch_since: 0.25,
+        box_record: [8, 16, 24, 32, 64, 64, 17, 3],
+        box_args: [3, 4, 1, 3, 1, 1],
+    };
+    Dump { world, step: 17, sim_time: 7.123456789012345, sinks: Vec::new(), resume, planes }
+}
+
+/// The header's bytes and the planes' offset, read by hand.
+fn split(bytes: &[u8]) -> (serde_json::Value, usize) {
+    let len = u32::from_le_bytes(bytes[8..12].try_into().unwrap()) as usize;
+    (serde_json::from_slice(&bytes[12..12 + len]).expect("the header is JSON"), 12 + len)
+}
+
+/// Runs `headless` in-process with `args` (and the test adapter); returns the exit code.
+fn headless(args: &[&str]) -> i32 {
+    let mut args: Vec<String> = args.iter().map(|s| s.to_string()).collect();
+    if let Ok(a) = std::env::var("SR_TEST_ADAPTER") {
+        args.extend(["--adapter".to_string(), a]);
+    }
+    sr_engine::headless::run(&args)
+}
+
+fn temp(name: &str) -> std::path::PathBuf {
+    let dir = std::env::temp_dir().join(format!("sr-dump-{}-{name}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).unwrap();
+    dir
+}
+
+#[test]
+fn write_then_read_gives_a_bit_identical_state_and_the_bytes_follow_2_12_3() {
+    let gpu = device();
+    let c = constants();
+    let run = Run::new(&gpu, &c, mixed_start());
+    // The latch fires after GPU step index 17: the dump carries a fired latch's records, 18 steps in.
+    run.step.set_latch_hook(&gpu.queue, Some((17, 18, 1)));
+    let r = run.frame(&gpu, 30);
+    assert_eq!((r.steps_run, r.latch_fired), (18, Some(18)), "{r:?}");
+    let dump = dump_state(&gpu.device, &gpu.queue, &run.state, &run.step);
+    let bytes = dump.to_bytes();
+
+    // The bytes, by hand: magic, header length, header, then 14 f32 planes in §2.2's order, row-major.
+    assert_eq!(&bytes[..8], b"SRDUMP01");
+    let (header, base) = split(&bytes);
+    println!("header: {header}");
+    let keys: Vec<&str> = header.as_object().unwrap().keys().map(String::as_str).collect();
+    let mut want = vec!["version", "width", "height", "step", "sim_time", "channels", "sinks", "resume"];
+    want.sort();
+    let mut got = keys.clone();
+    got.sort();
+    assert_eq!(got, want, "the header's keys");
+    assert_eq!((header["version"].as_u64(), header["width"].as_u64(), header["height"].as_u64()), (Some(1), Some(128), Some(64)));
+    assert_eq!(header["step"].as_u64(), Some(18), "the next step's index");
+    assert!(r.sim_time > 0.0 && header["sim_time"].is_number(), "the frames' sim time: {}", header["sim_time"]);
+    assert_eq!(header["channels"], serde_json::json!(SPEC_CHANNELS));
+    assert_eq!(header["sinks"], serde_json::json!([]));
+    assert_eq!(header["resume"]["latch_since"].as_f64(), Some(0.0), "the latch set on the dump's last step");
+    let (w, cells) = (128usize, 128 * 64);
+    assert_eq!(bytes.len(), base + 4 * N_CHANNELS * cells, "nothing past the last plane");
+    let at = |ch: usize, x: usize, y: usize| {
+        let o = base + 4 * (ch * cells + y * w + x);
+        f32::from_le_bytes(bytes[o..o + 4].try_into().unwrap())
+    };
+    // P8 leaves hot gas's Σ and momentum as they were: the start's values sit at §2.2's channel indices.
+    for (x, y) in [(40, 20), (49, 29), (45, 23)] {
+        assert_eq!([at(0, x, y), at(1, x, y), at(2, x, y)], [1.0, 0.25, -0.5], "Σ, mom_x, mom_y at cell ({x}, {y})");
+    }
+    let planes = run.state.readback(&gpu.device, &gpu.queue);
+    for ch in 0..N_CHANNELS {
+        for (x, y) in [(0, 0), (127, 63), (44, 25), (50, 30)] {
+            assert_eq!(at(ch, x, y).to_bits(), planes[ch * cells + y * w + x].to_bits(), "{} at ({x}, {y})", SPEC_CHANNELS[ch]);
+        }
+    }
+
+    // Read back: the same dump, the same bytes; through a file too.
+    let read = Dump::from_bytes(&bytes).expect("its own dump is read");
+    assert_eq!(read.sim_time.to_bits(), r.sim_time.to_bits(), "sim_time back bit for bit");
+    assert_eq!(read, dump);
+    assert_eq!(read.to_bytes(), bytes);
+    let dir = temp("roundtrip");
+    let path = dir.join("s_18.bin");
+    dump.write(&path).unwrap();
+    assert_eq!(Dump::read(&path).unwrap().to_bytes(), bytes);
+    let _ = std::fs::remove_dir_all(&dir);
+
+    // Loaded into a fresh state and step, dumped again: bit for bit.
+    let fresh = Run::new(&gpu, &c, (dump.world, vec![0.0; N_CHANNELS * cells]));
+    load_dump(&gpu.queue, &fresh.state, &fresh.step, &read).unwrap();
+    let again = dump_state(&gpu.device, &gpu.queue, &fresh.state, &fresh.step);
+    assert_eq!(again.to_bytes(), bytes, "load_dump then dump_state");
+}
+
+#[test]
+fn two_hundred_steps_through_a_dump_equal_two_hundred_straight_steps_state_and_reports() {
+    let gpu = device();
+    let c = constants();
+    let dt = {
+        let run = Run::new(&gpu, &c, cold_start());
+        run.step.run(&gpu.device, &gpu.queue, 1);
+        run.step.read_dt(&gpu.device, &gpu.queue).dt
+    };
+    assert!(2.0 * dt < 1.0 && 3.0 * dt >= 1.0, "Δt {dt}: a set two steps after another must be inside the window");
+    // Flags at GPU step indices 99 and 101: the first fires (armed) on the dump's last step, the second falls 2 Δt later
+    // and must not fire — unless the arming time was lost.
+    let hook = Some((99, 102, 2));
+    let frames = [50u32; 4];
+
+    let straight = Run::new(&gpu, &c, cold_start());
+    straight.step.set_latch_hook(&gpu.queue, hook);
+    let want: Vec<FrameReport> = frames.iter().map(|&n| straight.frame(&gpu, n)).collect();
+    println!("straight: {want:?}");
+    assert_eq!((want[1].steps_run, want[1].latch_fired), (50, Some(50)), "fired after index 99");
+    assert_eq!((want[2].steps_run, want[2].latch_fired), (50, None), "index 101 inside the window");
+    let want_end = straight.outcome(&gpu);
+    assert_eq!(want_end.1.steps, 200);
+
+    let first = Run::new(&gpu, &c, cold_start());
+    first.step.set_latch_hook(&gpu.queue, hook);
+    for (k, &n) in frames[..2].iter().enumerate() {
+        assert_eq!(first.frame(&gpu, n), want[k], "frame {k} before the dump");
+    }
+    let bytes = dump_state(&gpu.device, &gpu.queue, &first.state, &first.step).to_bytes();
+    let dump = Dump::from_bytes(&bytes).unwrap();
+    assert_eq!(dump.step, 100);
+
+    let resumed = Run::new(&gpu, &c, cold_start());
+    load_dump(&gpu.queue, &resumed.state, &resumed.step, &dump).unwrap();
+    resumed.step.set_latch_hook(&gpu.queue, hook);
+    for (k, &n) in frames.iter().enumerate().skip(2) {
+        let got = resumed.frame(&gpu, n);
+        println!("resumed frame {k}: {got:?}");
+        assert_eq!(got, want[k], "frame {k} after the dump: the whole report");
+    }
+    let got_end = resumed.outcome(&gpu);
+    assert_eq!(got_end.1, want_end.1, "the Δt record");
+    assert_eq!(got_end.2, want_end.2, "the box (re-fits counted)");
+    let diff = got_end.0.iter().zip(&want_end.0).filter(|(a, b)| a != b).count();
+    assert_eq!(diff, 0, "{diff} state words differ from the straight run");
+
+    // The case can see the bug it guards: the cells alone, on a fresh step, run ahead of the straight run.
+    let cells_only = Run::new(&gpu, &c, (dump.world, dump.planes.clone()));
+    cells_only.step.set_latch_hook(&gpu.queue, hook);
+    let wrong = cells_only.frame(&gpu, 50);
+    println!("cells only: {wrong:?}");
+    assert_ne!(wrong, want[2], "restoring the cells alone must not pass for a resume");
+    // And every record but the latch's arming time: the flag at index 101 then fires, 2 steps into the frame.
+    let unarmed = Dump { resume: Resume { latch_since: 1.0, ..dump.resume }, ..dump.clone() };
+    let lost = Run::new(&gpu, &c, cold_start());
+    load_dump(&gpu.queue, &lost.state, &lost.step, &unarmed).unwrap();
+    lost.step.set_latch_hook(&gpu.queue, hook);
+    let wrong = lost.frame(&gpu, 50);
+    println!("arming time lost: {wrong:?}");
+    assert_eq!((wrong.steps_run, wrong.latch_fired), (2, Some(2)), "the control fires where the straight run does not");
+}
+
+#[test]
+fn headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte() {
+    let _gpu = device();
+    let root = temp("headless");
+    let (a, b, c) = (root.join("straight"), root.join("first"), root.join("resumed"));
+    let base = ["--scene", "preset:sun", "--world", "256x256"];
+    let s = |p: &std::path::Path| p.display().to_string();
+    let run = |extra: &[&str]| headless(&[&base[..], extra].concat());
+    assert_eq!(run(&["--steps", "200", "--dump-every", "50", "--out", &s(&a)]), 0);
+    assert_eq!(run(&["--steps", "100", "--out", &s(&b)]), 0);
+    let from = s(&b.join("dumps").join("s_100.bin"));
+    let resumed = ["--scene", "preset:sun", "--load-dump", &from, "--steps", "100", "--dump-every", "50", "--out", &s(&c)];
+    assert_eq!(headless(&resumed), 0);
+
+    let list = |d: &std::path::Path| {
+        let mut names: Vec<String> =
+            std::fs::read_dir(d.join("dumps")).unwrap().map(|e| e.unwrap().file_name().into_string().unwrap()).collect();
+        names.sort();
+        names
+    };
+    assert_eq!(list(&a), ["s_100.bin", "s_150.bin", "s_200.bin", "s_50.bin"], "every 50 steps, the end once");
+    assert_eq!(list(&b), ["s_100.bin"], "the final dump, always");
+    assert_eq!(list(&c), ["s_150.bin", "s_200.bin"], "step indices count from the scene");
+    let read = |d: &std::path::Path, f: &str| std::fs::read(d.join("dumps").join(f)).unwrap();
+    assert_eq!(read(&b, "s_100.bin"), read(&a, "s_100.bin"), "100 steps either way");
+    for f in ["s_150.bin", "s_200.bin"] {
+        assert!(read(&c, f) == read(&a, f), "{f}: the resumed run's dump differs from the straight run's");
+    }
+    let end = Dump::from_bytes(&read(&c, "s_200.bin")).unwrap();
+    assert_eq!((end.step, end.world), (200, WorldConfig::new(256, 256).unwrap()));
+
+    // A --world other than the dump's is refused before any step, as are the flags' misuses.
+    let other = root.join("other");
+    assert_eq!(headless(&["--scene", "preset:sun", "--world", "128x128", "--load-dump", &from, "--steps", "1", "--out", &s(&other)]), 4);
+    assert!(!other.join("summary.json").exists());
+    assert_eq!(run(&["--steps", "10", "--dump-every", "5"]), 4, "--dump-every without --out");
+    assert_eq!(run(&["--steps", "10", "--dump-every", "0", "--out", &s(&other)]), 4);
+    let _ = std::fs::remove_dir_all(&root);
+}
+
+#[test]
+fn a_truncated_dump_is_refused_wherever_it_is_cut() {
+    let _gpu = device();
+    let bytes = small_dump().to_bytes();
+    let (_, base) = split(&bytes);
+    assert_eq!(Dump::from_bytes(&bytes).unwrap(), small_dump());
+    for cut in [0, 5, 8, 11, 12, base / 2, base - 1, base, base + 3, base + 4 * 64 * 64, bytes.len() - 4, bytes.len() - 1] {
+        let err = Dump::from_bytes(&bytes[..cut]).expect_err(&format!("cut at {cut} of {}", bytes.len()));
+        println!("cut at {cut}: {err}");
+        assert!(err.contains("truncated"), "cut at {cut}: {err}");
+    }
+    let mut long = bytes.clone();
+    long.push(0);
+    assert_eq!(Dump::from_bytes(&long).unwrap_err(), "1 bytes past the last plane");
+
+    // Through headless: exit 4, no summary, no dump.
+    let root = temp("truncated");
+    let file = root.join("cut.bin");
+    std::fs::write(&file, &bytes[..bytes.len() - 1]).unwrap();
+    let out = root.join("out");
+    assert_eq!(headless(&["--scene", "preset:sun", "--load-dump", &file.display().to_string(), "--steps", "1", "--out", &out.display().to_string()]), 4);
+    assert!(!out.join("summary.json").exists() && !out.join("dumps").exists());
+    let _ = std::fs::remove_dir_all(&root);
+}
+
+#[test]
+fn a_wrong_magic_or_a_header_off_the_contract_is_refused() {
+    let _gpu = device();
+    let bytes = small_dump().to_bytes();
+    for magic in [b"SRDUMP02", b"srdump01", b"\x89PNG\r\n\x1a\n", b"\0\0\0\0\0\0\0\0"] {
+        let mut bad = bytes.clone();
+        bad[..8].copy_from_slice(magic);
+        let err = Dump::from_bytes(&bad).unwrap_err();
+        println!("magic {magic:?}: {err}");
+        assert!(err.starts_with("not a state dump"), "{err}");
+    }
+    // The header rewritten: each departure from §2.12.3 (with §0.5's resume) is refused, naming it.
+    let (header, base) = split(&bytes);
+    let with = |edit: &dyn Fn(&mut serde_json::Value)| {
+        let mut h = header.clone();
+        edit(&mut h);
+        let text = h.to_string();
+        let mut out = b"SRDUMP01".to_vec();
+        out.extend((text.len() as u32).to_le_bytes());
+        out.extend(text.as_bytes());
+        out.extend(&bytes[base..]);
+        Dump::from_bytes(&out)
+    };
+    assert_eq!(with(&|_| {}).unwrap(), small_dump(), "the header rewritten unchanged reads the same");
+    let cases: [(&str, &dyn Fn(&mut serde_json::Value)); 7] = [
+        ("header.extra: unknown key", &|h| h["extra"] = 1.into()),
+        ("header.resume.box_args: missing", &|h| {
+            h["resume"].as_object_mut().unwrap().remove("box_args");
+        }),
+        ("header.resume: missing", &|h| {
+            h.as_object_mut().unwrap().remove("resume");
+        }),
+        ("header.version: 2", &|h| h["version"] = 2.into()),
+        ("header.channels", &|h| h["channels"][1] = "mom_y".into()),
+        ("header: world 60", &|h| h["width"] = 60.into()),
+        ("header.resume.box", &|h| h["resume"]["box"] = serde_json::json!([1, 2, 3])),
+    ];
+    for (want, edit) in cases {
+        let err = with(edit).unwrap_err();
+        println!("{want}: {err}");
+        assert!(err.starts_with(want), "expected {want:?}, got {err:?}");
+    }
+
+    let root = temp("magic");
+    let file = root.join("png.bin");
+    let mut bad = bytes.clone();
+    bad[..8].copy_from_slice(b"SRDUMP02");
+    std::fs::write(&file, bad).unwrap();
+    assert_eq!(headless(&["--scene", "preset:sun", "--load-dump", &file.display().to_string(), "--steps", "1"]), 4);
+    let _ = std::fs::remove_dir_all(&root);
+}

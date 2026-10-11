@@ -1,0 +1,119 @@
+# M0-TM3 log — rating pass, win-laptop (Laser2025-20), opened 2026-10-11 11:42:23 America/Toronto
+now: model=claude-opus-5-5 level=max plugin=installed (launch prompt)
+probe: CLAUDECODE=1 CLAUDE_EFFORT=xhigh AI_AGENT=claude-code_2-1-295_agent
+HEAD: ab36299 (M0-TE-V12.3's edits uncommitted in the tree)
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+snapshot after status: /c/Users/YohanBelanger/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/3422c851-f320-4917-8eec-9008e47236c1/scratchpad/tm3/plan_after_status.md
+--- rung_record.py report (11:42:38)
+report: 60 DONE blocks · 10 class/rung rows · 1 session folder(s) · 28 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 3 D block(s) naming no cause in the record · $101.58 read from the sessions' own cost
+BUILD on Opus 5.5, high: 18 block(s) · first-try 13/18 · $2.46 per DONE block · usual
+BUILD on Sonnet 5.5, high: 10 block(s) · first-try 8/10 · $2.05 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 17 block(s) · first-try 7/12 · n/a per DONE block · off the ladder
+BUILD·E on Sonnet 5.5, medium: 1 block(s) · first-try 1/1 · $1.15 per DONE block · n<10
+BUILD·E on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+CHECK on Opus 5.5, max: 1 block(s) · first-try 1/1 · $16.30 per DONE block · above (usual)
+CHECK on unknown: 1 block(s) · first-try 1/1 · n/a per DONE block · off the ladder
+MOVE on unknown: 1 block(s) · first-try n/a · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 4 block(s) · first-try 3/4 · $8.95 per DONE block · above (usual)
+PLAN on unknown: 5 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+=== GO ===
+--- the ladder re-read (11:4x)
+model pages: claude-api skill bundled with Claude Code 2.1.295 (bundled-skills/2.1.295/4beb7794…/claude-api), "Current Models (cached: 2026-10-06)"; shared/models.md sha256 1601794b74c4a9415eb272d5ad459ab2776f224d731285c4b492a4c5c6f9a2ec (= M0-TM2's)
+  Fable 5.1 $10/$50 low..max · Opus 5.5 $4/$20 low..max (default medium) · Sonnet 5.5 $2/$10 low..max (default high) · Haiku 5.5 $0.10/$0.50 (<=100K prompt; $0.50/$2.50 above) low..max (default medium) — all Active, none deprecated/retired
+  Claude Code 2.1.296's extension is on disk (installed 2026-10-10 08:34), not running (probe: 2.1.295); no 2.1.296 bundle extracted
+result: no model retired, renamed, added or repriced, no level changed against M0-TE-V12.3's read the same day -> Models: line unchanged (already read 2026-10-11)
+--- plan.py lint after the 7 rating edits (11:53:48)
+lint: checks=506 failed=0 warnings=0 · blocks=184 · flow_rows=184 · verify_fences=2 · history=0 · flow=per-task · header=442/600 · pipeline=9/60 · ladder=7 rungs · refresh=2/5
+=== GO ===
+--- classification (classify.py over the plan, read-only, 11:54:38)
+TM2 rule-4 list: 89 | unique: 89
+open blocks: 124 | classified: 124 | overlap: 124
+open, unclassified: []
+classified, not open: []
+in two classes: []
+by rung: {'Opus 5.5, max': 20, 'Opus 5.5, high': 97, 'Haiku 5.5, high': 7}
+   ('Haiku 5.5, high', '(3) Sizing: E') 7
+   ('Opus 5.5, high', '(3) list -> (5)') 8
+   ('Opus 5.5, high', '(4)') 89
+   ('Opus 5.5, max', '(2)') 20
+changes: 0
+--- checkdiff vs the post-status snapshot (before the close)
+   7  rating: Sonnet 5.5, medium -> Haiku 5.5, high
+OTHER lines: 0
+--- plan.py close (11:56:21)
+close: checks=4 failed=0 warnings=0 · handoff_lines=1 · flow=per-task · set=1 · replaced=1 · appended=0
+=== GO ===
+--- checkdiff vs the post-status snapshot (after the close, 11:56:28)
+own: Flow row:
+  - | M0-TM3 | PLAN | Rating pass — the ladder changed at M0-TE-V12.3: three rungs added | AFTER M0-TE-V12.3 | IN PROGRESS (2026-10-11 11:42) |
+  + | M0-TM3 | PLAN | Rating pass — the ladder changed at M0-TE-V12.3: three rungs added | AFTER M0-TE-V12.3 | DONE (2026-10-11 11:56, started 11:42) |
+register: Model ratings:
+  - - Model ratings: 2026-10-10 by M0-TM2
+  + - Model ratings: 2026-10-11 by M0-TM3
+own: Status:
+  - - Status: IN PROGRESS (2026-10-11 11:42)
+  + - Status: DONE (2026-10-11 11:56, started 11:42)
+own: Handoff:
+  - - Handoff: <placeholder>
+  + - Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=max (rung_record now, the heading's rung). Ladder re-read 2026-10-11 — the probe (Claude Code 2.1.295) and the claude-api skill's table (cached 2026-10-06, the models.md M0-TM2 read): nothing retired, renamed, added or repriced, each rung's level one its model takes → Models line unchanged, no question. 124 open blocks re-derived; 7 changed — the E blocks M0-T39, T48, T52b, T91, T93a, T94, T111 Sonnet 5.5, medium → Haiku 5.5, high (rule (3), the ladder's new lowest rung; BUILD·E has no record there). By rung: Opus 5.5 max 20 (0, rule (2)) · Opus 5.5 high 97 (0: 89 by rule (4), M0-TH-adopt-a's placeholder now among them by name; 8 by (3)'s list → (5), M0-T31 newly (c) from M0-T21's flag) · Haiku 5.5 high 7 (+7) · Sonnet 5.5 medium 0 (−7) · Sonnet 5.5 high, Opus 5.5 xhigh, Fable 5.1 high 0; no trail (rule (1)); every heading keeps · switch; the diff is the 7 rating segments (checkdiff against a post-status snapshot). Measured, not acted on: today's rung_record report no longer moves BUILD on Sonnet 5.5, high ($2.05 against (usual) $2.46 per DONE block — lot 3's five rule-(5) builds at a $4.77 mean, M0-D19 now traced to M0-T15); §0's record is the phase-closing V's table, M0-V2's still moves the class, so the 89 stay on (usual) until M0-V3's table decides; the switch's RUNGS likely lacks Haiku 5.5, high (the box's plugin is 12.2.1) — the 7 run on the lead's pick until M0-TH-adopt-a's swap and the lead's reinstall; Next task still reads M0-TM3 (outside this diff; next is M0-TH-adopt-a). lint GO (506 checks, 0 warnings); the claim run verify.py --changed --base ab36299 --task M0-TM3 is the last step, after this close. Detail: tasks/M0-TM3.md. Next: M0-TH-adopt-a.
+rating: Sonnet 5.5, medium -> Haiku 5.5, high:
+  - ## M0-T39 · The box against the whole world (G-BOX) · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T38)
+  + ## M0-T39 · The box against the whole world (G-BOX) · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T38)
+rating: Sonnet 5.5, medium -> Haiku 5.5, high:
+  - ## M0-T48 · The burning field in G-REF · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T47)
+  + ## M0-T48 · The burning field in G-REF · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T47)
+rating: Sonnet 5.5, medium -> Haiku 5.5, high:
+  - ## M0-T52b · Sinks in the state dump · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T52a)
+  + ## M0-T52b · Sinks in the state dump · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T52a)
+rating: Sonnet 5.5, medium -> Haiku 5.5, high:
+  - ## M0-T91 · Views in the window · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T90)
+  + ## M0-T91 · Views in the window · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T90)
+rating: Sonnet 5.5, medium -> Haiku 5.5, high:
+  - ## M0-T93a · The engine's cell inspection — `inspect(cell)` · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T92)
+  + ## M0-T93a · The engine's cell inspection — `inspect(cell)` · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T92)
+rating: Sonnet 5.5, medium -> Haiku 5.5, high:
+  - ## M0-T94 · The web build's star — URL parameters and G-WEB's preset case · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T93b)
+  + ## M0-T94 · The web build's star — URL parameters and G-WEB's preset case · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T93b)
+rating: Sonnet 5.5, medium -> Haiku 5.5, high:
+  - ## M0-T111 · The collapse caught within one step — G-LATCH's scenario · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-T110)
+  + ## M0-T111 · The collapse caught within one step — G-LATCH's scenario · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T110)
+   1  own: Flow row
+   1  own: Handoff
+   1  own: Status
+   7  rating: Sonnet 5.5, medium -> Haiku 5.5, high
+   1  register: Model ratings
+OTHER lines: 0
+--- claim run: verify.py --changed --base ab36299 --task M0-TM3 (11:56:41)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since ab36299: milestones/m0/m0_implementation_plan.md (+1)
+plan_lint       505/0/0      0.23 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since ab36299)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since ab36299)
+build           NOT RUN (not impacted: its 39 path(s) checked at the anchor, none moved since ab36299)
+registry        NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since ab36299)
+eos             NOT RUN (not impacted: its 13 path(s) checked at the anchor, none moved since ab36299)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since ab36299)
+adapter         NOT RUN (not impacted: its 27 path(s) checked at the anchor, none moved since ab36299)
+state           NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+booking         NOT RUN (not impacted: its 27 path(s) checked at the anchor, none moved since ab36299)
+floors          NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+dt              NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+box             NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+latch           NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+boot            NOT RUN (not impacted: its 36 path(s) checked at the anchor, none moved since ab36299)
+desktop         NOT RUN (not impacted: its 40 path(s) checked at the anchor, none moved since ab36299)
+web             NOT RUN (not impacted: its 45 path(s) checked at the anchor, none moved since ab36299)
+capture         NOT RUN (not impacted: its 36 path(s) checked at the anchor, none moved since ab36299)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor, none moved since ab36299)
+watch_only      NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since ab36299)
+FLAG type: tools/pb/verify.anchor.json changed since ab36299eb49e - a PLAN block writes no product code and no tool (PLAYBOOK §0)
+logs: milestones/m0/logs/M0-TM3.<scope>.log · record: loop_times.jsonl · tree ab36299eb49e+82ef1ec0569c
+anchor: 1 path×scope entries moved by this run
+anchor: 103 paths checked · 88 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 103 covered of 191 visible
+skipped    80  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 505 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 19 not impacted · 0.23 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 14.69->14.06
+=== GO ===
+exit 0
+--- end: task file results appended after the claim run (11:57:11); nothing else written

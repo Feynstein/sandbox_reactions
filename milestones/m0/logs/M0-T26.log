@@ -1,0 +1,112 @@
+M0-T26 2026-10-11T13:52:55-04:00 cargo clippy sr-engine (win-laptop)
+    Checking sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+error: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `-D dead-code` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[expect(dead_code)]` or `#[allow(dead_code)]`
+
+error: the loop variable `ch` is used to index `CHANNELS`
+   --> crates\sr-engine\tests\gpu\floors.rs:489:19
+    |
+489 |         for ch in 0..3 {
+    |                   ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+489 -         for ch in 0..3 {
+489 +         for (ch, <item>) in CHANNELS.iter().enumerate().take(3) {
+    |
+
+error: the loop variable `k` is used to index `CHANNELS`
+   --> crates\sr-engine\tests\gpu\floors.rs:557:18
+    |
+557 |         for k in 0..N_CHANNELS {
+    |                  ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+557 -         for k in 0..N_CHANNELS {
+557 +         for (k, <item>) in CHANNELS.iter().enumerate().take(N_CHANNELS) {
+    |
+
+error: the loop variable `k` is used to index `CHANNELS`
+   --> crates\sr-engine\tests\gpu\floors.rs:565:18
+    |
+565 |         for k in 0..N_CHANNELS {
+    |                  ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+565 -         for k in 0..N_CHANNELS {
+565 +         for (k, <item>) in CHANNELS.iter().enumerate().take(N_CHANNELS) {
+    |
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates\sr-engine\tests\gpu\box.rs:129:17
+    |
+129 |     let places: Vec<(&str, Vec<(u32, u32)>, [u32; 4])> = vec![
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+    = note: `-D clippy::type-complexity` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::type_complexity)]`
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates\sr-engine\tests\gpu\box.rs:162:16
+    |
+162 |     let cases: [((u32, u32), Vec<(u32, u32)>, [u32; 2]); 5] = [
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates\sr-engine\tests\gpu\latch.rs:163:17
+    |
+163 |     let script: [((u32, u32, u32), u32, Option<u32>); 4] = [
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: could not compile `sr-engine` (test "gpu") due to 7 previous errors
+M0-T26 2026-10-11T13:56:13-04:00 cargo build of the gpu test binary (win-laptop)
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 18.61s
+  Executable tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)

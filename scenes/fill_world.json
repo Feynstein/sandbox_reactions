@@ -1,0 +1,6 @@
+{"version": 1,
+ "world": {"width": 600, "height": 400, "edge": "leave"},
+ "objects": [
+   {"kind": "rect", "x0": -724, "y0": -824, "w": 2048, "h": 2048, "sigma": 0.01, "t": 2.0,
+    "composition": {"H": 0.7346, "He": 0.2485, "O": 0.0077, "C": 0.0092}, "v": [0, 0]}
+ ]}

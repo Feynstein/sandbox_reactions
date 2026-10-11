@@ -109,18 +109,26 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   scope, its count parser for this stack and what each scope costs: `docs/agent/testing.md`.
 - The order, for every task that builds or changes something checkable: (1) author the artifact and its scope,
   with the scope's planted bugs (`tests/plants/<plant>.patch`, or a command for a file that moves); (2) iterate on
-  **your scope alone** until green (`verify.py <scope> --task <ID>`); (3) red-arm it while you iterate
-  (`verify.py --redarm <scope> --task <ID>`: the clean copy GO, each plant NO-GO); (4) make every plan edit through
-  `plan.py`; (5) run `verify.py --changed --base <named commit> --task <ID>` **once, last** — the claim about the
-  tree you hand over; (6) write the handoff from that run; (7) a fix after step 5 is re-verified scoped, one block
-  per scope it could have moved. The complete loop (`--all`) runs at phase-closing V and TR blocks, never per task;
-  a second green loop on an unchanged tree is waste, named in the handoff.
+  **your scope alone** until green (`verify.py <scope> --task <ID>`); (3) red-arm it **only when the task added it or
+  changed its check** — its manifest entry, its plants, or a test file its `Deliver:` names (`verify.py --redarm
+  <scope> --task <ID>`: the clean copy GO, each plant NO-GO); a scope the task only runs is not re-armed, the sweep
+  covers it [M0-TE-V12.3]; (4) make every plan edit through `plan.py`; (5) run `verify.py --changed --task <ID>`
+  **once, last** — the claim about the tree you hand over, read against the task's own start that `plan.py show`
+  records, never a commit, so no commit is needed between tasks; a block whose `show` recorded no start names `--base
+  <a commit's SHA>`, never `HEAD` (R10) [M0-TE-V12.3]; (6) write the handoff from that run; (7) a fix after step 5 is
+  re-verified scoped, one block per scope it could have moved. The complete loop (`--all`), then the sweep
+  (`verify.py --redarm --moved`: every scope with plants that no proof on today's bytes vouches for, red-armed once)
+  [M0-TE-V12.3], run at phase-closing V and TR blocks, never per task; a second green loop on an unchanged tree is
+  waste, named in the handoff. Now PLAYBOOK §4 Rule 4's two tiers (v12.3); the old text in the plan's Superseded section.
 - Scope: a scope is a manifest entry, never a second runner. Every task that builds a contract surface adds its
   scope or case; a scope only a plant can turn red is unfinished. A scope without paths is a placeholder.
 - Budget: the complete loop's wall clock on linux-pc is held under 600 s (Rule 4's 10-minute line; measured 3.2 s
   warm at M0-TH). Over it, or on the lead's word, a TR measures and files the fixes — no other trigger.
   [M0-TJ3] The same 600 s on win-laptop, in play since M0-TJ3 (R5) — PLAYBOOK §8 states the budget per box;
   measured 97.7 s wall there (3 scopes, 500 passed, M0-TE-win-r2, 2026-10-08). Each V restates its own box's.
+  [M0-TE-V12.3] Read at an idle box (now PLAYBOOK §4 Rule 4, v12.3): the loop's seconds normalised by the load it ran
+  under, the median of the box's last three counted complete loops against the 600 s, the raw beside it; a loop run
+  over the box's CPUs, or with no load sample, is never counted.
 - Why: PLAYBOOK §4 Rule 4 — iterating on a moving artifact under a wide loop costs the lead's time, and a check
   nobody has seen red proves nothing.
 
@@ -130,9 +138,11 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   its own block, never that preamble. "Below" in R14 reads "in the build lots".
 
 ### R10 · The claim run
-- **The claim run.** After its scope's GO and its red-arm, every BUILD block's last step is R9's claim
-  run, `python3 tools/pb/verify.py --changed --base <the last commit gate's SHA> --task <its ID>` · Pass:
-  GO · Fail: NO-GO — the base a named commit, never `HEAD` (PLAYBOOK §A.2).
+- **The claim run.** After its scope's GO and, where it added the scope or changed its check, its red-arm, every
+  BUILD block's last step is R9's claim run, `python3 tools/pb/verify.py --changed --task <its ID>` · Pass: GO ·
+  Fail: NO-GO — read against the task's own start that `plan.py show` records, never a commit (now PLAYBOOK §4 Rule 4,
+  §A.2, v12.3); a block whose `show` recorded no start — one that started before M0-TH-adopt-a's swap — names
+  `--base <a commit's SHA>`, never `HEAD` [M0-TE-V12.3; the old text in the plan's Superseded section].
 
 ### R11 · Scopes
 - **Scopes.** GPU scopes are modules of one test binary, crates/sr-engine/tests/gpu/ (M0-T2), each run
@@ -190,11 +200,15 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   owed there (Q1: "the final one (M0-V17) runs them all"), and names any owed on win-laptop with its last GO.
 - **Switching boxes.** Agents never write git (PLAYBOOK §10): the lead commits and pushes on the box they leave — at a
   commit gate where they can; mid-phase `git add -A`, `git commit -m "M0 WIP: switching boxes after <id>"`, `git push`
-  — and runs `git pull` on the box they join. The claim run's base stays the last commit gate's SHA (R10).
+  — and runs `git pull` on the box they join. [M0-TE-V12.3] The claim reads each task's own start on the box it runs
+  on (R10), never a commit — a start is per box and never committed; the old sentence in the plan's Superseded section.
 - **The lead's own runs** (a visible window, a run over 10 minutes) run on the box the block names, else on the box the
   lead is on; the human-run tier double-clicks that box's launcher.
 
-## R16 · The commit line — every block's last message (the lead, 2026-10-10)
+## R16 · The commit line — every block's last message (the lead, 2026-10-10) — N/A, superseded by PLAYBOOK v12.3
+- **N/A — superseded by PLAYBOOK v12.3** (2026-10-11, M0-TE-V12.3), ratified for every project at the bump — the lead,
+  2026-10-10: *"In V12.3 if we dont need git well have to remove that rule"*. A block's handoff ends without the line;
+  a phase's commit gate (PLAYBOOK §10) stays the lead's. The text below is kept as written (the plan's Superseded section).
 - The lead, 2026-10-10, after M0-T15: "when an agent is done he gives me one command line to git add -A, commit and
   push. And he must verify if were on windows or not so as to give me the right line."
 - **When.** Every block that ends its turn closed — DONE, BLOCKED, N/A, DEFERRED, or a try sent back to TODO — ends its

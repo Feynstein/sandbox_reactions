@@ -1,0 +1,49 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since ab36299: milestones/m0/m0_implementation_plan.md (+1)
+why tools_selftest: stale: tools/pb/content_gate.py (+4) · moved since ab36299: tools/pb/content_gate.py (+4)
+plan_lint       508/0/0      0.53 s  GO
+tools_selftest  9/1/0      281.16 s  NO-GO
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since ab36299)
+build           NOT RUN (not impacted: its 39 path(s) checked at the anchor, none moved since ab36299)
+registry        NOT RUN (not impacted: its 16 path(s) checked at the anchor, none moved since ab36299)
+eos             NOT RUN (not impacted: its 13 path(s) checked at the anchor, none moved since ab36299)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since ab36299)
+adapter         NOT RUN (not impacted: its 27 path(s) checked at the anchor, none moved since ab36299)
+state           NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+booking         NOT RUN (not impacted: its 27 path(s) checked at the anchor, none moved since ab36299)
+floors          NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+dt              NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+box             NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+latch           NOT RUN (not impacted: its 34 path(s) checked at the anchor, none moved since ab36299)
+boot            NOT RUN (not impacted: its 36 path(s) checked at the anchor, none moved since ab36299)
+desktop         NOT RUN (not impacted: its 40 path(s) checked at the anchor, none moved since ab36299)
+web             NOT RUN (not impacted: its 45 path(s) checked at the anchor, none moved since ab36299)
+capture         NOT RUN (not impacted: its 36 path(s) checked at the anchor, none moved since ab36299)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor, none moved since ab36299)
+watch_only      NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since ab36299)
+FLAG oracle: tools/pb/content_gate.py changed since ab36299eb49e - a test, case or check M0-TH-adopt-a's Deliver: does not name
+FLAG oracle: tools/pb/plan.py changed since ab36299eb49e - a test, case or check M0-TH-adopt-a's Deliver: does not name
+FLAG oracle: tools/pb/rung_record.py changed since ab36299eb49e - a test, case or check M0-TH-adopt-a's Deliver: does not name
+FLAG oracle: tools/pb/switch.mjs changed since ab36299eb49e - a test, case or check M0-TH-adopt-a's Deliver: does not name
+FLAG oracle: tools/pb/verify.py changed since ab36299eb49e - a test, case or check M0-TH-adopt-a's Deliver: does not name
+logs: milestones/m0/logs/M0-TH-adopt-a.<scope>.log · record: loop_times.jsonl · tree ab36299eb49e+2b7b1591c63f
+anchor: 12 path×scope entries moved by this run
+anchor: 92 paths checked · 89 skipped (3 classes) · 11 never checked · 0 stale · 0 unclassified · 0 owed · 103 covered of 192 visible
+NEVER CHECKED  tests/plants/tools-selftest-scratch.patch  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/capture_web.mjs  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/content_gate.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/launch.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/plan.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/review_page.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/rung_record.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/scratch_copy.sh  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/status_page.py  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/switch.mjs  (no entry for tools_selftest)
+NEVER CHECKED  tools/pb/verify.py  (no entry for tools_selftest)
+skipped    81  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  tools_selftest: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 2 check(s) failed · log milestones/m0/logs/M0-TH-adopt-a.tools_selftest.log
+  anchor: 11 never checked, 0 stale, 0 unclassified - every one named above
+verify: 517 passed, 1 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 18 not impacted · 164.12 s + loop 0.39 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 3.18->11.55 · base: commit ab36299eb49e
+=== NO-GO: tools_selftest: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 2 check(s) failed · log milestones/m0/logs/M0-TH-adopt-a.tools_selftest.log; anchor: 11 never checked, 0 stale, 0 unclassified - every one named above ===

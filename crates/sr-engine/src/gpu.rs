@@ -3,7 +3,8 @@
 //! `--adapter <substring>` is matched case-insensitively against the adapter's name; where a name matches on two
 //! backends Vulkan wins (§6.1), then the order wgpu listed them in. No match is an error naming every adapter seen
 //! (the binary's exit 3). No `--adapter` is wgpu's high-performance preference. The device is created with
-//! `Limits::default()` and no feature, so what runs here runs in the browser (§6.2.2).
+//! `Limits::default()` and no feature but WebGPU's own `timestamp-query` where the adapter offers it (a web and native
+//! feature, for the step's cost, M0-T23), so what runs here runs in the browser (§6.2.2).
 
 use std::fmt;
 
@@ -167,7 +168,8 @@ impl Gpu {
         let (device, queue) = adapter
             .request_device(&wgpu::DeviceDescriptor {
                 label: Some("sr-engine headless"),
-                required_features: wgpu::Features::empty(),
+                // Pass-boundary timestamps only: never TIMESTAMP_QUERY_INSIDE_PASSES or _INSIDE_ENCODERS (native-only).
+                required_features: adapter.features() & wgpu::Features::TIMESTAMP_QUERY,
                 required_limits: wanted,
                 ..Default::default()
             })
