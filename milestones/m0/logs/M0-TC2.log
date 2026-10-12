@@ -1,0 +1,91 @@
+M0-TC2 — compaction: stub Phase 5's 17 DONE blocks into plan_archive.md (MOVE)
+Box: win-laptop (Laser2025-20), Windows 11 Pro 26300
+Rung: model=claude-haiku-5-5 level=high (rung_record.py now; heading's rung Haiku 5.5, high)
+Start: plan.py show M0-TC2 → GO (checks=2 failed=0 warnings=0 · header=257 · block=12 · total=270)
+--- stub run (output not captured by the first call; state checked by diff below)
+   3205 milestones/m0/m0_implementation_plan.md
+   3516 /c/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/92483189-32d2-49c1-9ee8-f30327953255/scratchpad/tc2/m0_implementation_plan.md
+   1614 milestones/m0/plan_archive.md
+   1218 /c/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/92483189-32d2-49c1-9ee8-f30327953255/scratchpad/tc2/plan_archive.md
+   9553 total
+--- plan: stub-line count per id
+17
+764:- Status: DONE (2026-10-10 15:02) · archived by M0-TC2, 2026-10-12
+769:- Status: DONE (2026-10-10 15:25, started 15:10) · archived by M0-TC2, 2026-10-12
+774:- Status: DONE (2026-10-10 15:46) · archived by M0-TC2, 2026-10-12
+779:- Status: DONE (2026-10-10 15:53) · archived by M0-TC2, 2026-10-12
+784:- Status: DONE (2026-10-10 16:12) · archived by M0-TC2, 2026-10-12
+789:- Status: DONE (2026-10-10 16:30) · archived by M0-TC2, 2026-10-12
+794:- Status: DONE (2026-10-10 16:45) · archived by M0-TC2, 2026-10-12
+799:- Status: DONE (2026-10-11 11:39, started 11:33) · archived by M0-TC2, 2026-10-12
+804:- Status: DONE (2026-10-11 11:56, started 11:42) · archived by M0-TC2, 2026-10-12
+809:- Status: DONE (2026-10-11 12:35) · archived by M0-TC2, 2026-10-12
+814:- Status: DONE (2026-10-11 12:27) · archived by M0-TC2, 2026-10-12
+819:- Status: DONE (2026-10-11 12:51) · archived by M0-TC2, 2026-10-12
+824:- Status: DONE (2026-10-11 13:12) · archived by M0-TC2, 2026-10-12
+829:- Status: DONE (2026-10-11 13:41) · archived by M0-TC2, 2026-10-12
+834:- Status: DONE (2026-10-11 14:01) · archived by M0-TC2, 2026-10-12
+839:- Status: DONE (2026-10-11 14:14) · archived by M0-TC2, 2026-10-12
+844:- Status: DONE (2026-10-11 17:10) · archived by M0-TC2, 2026-10-12
+--- archive new headings
+1174:## M0-V2 · Validation — lot 2: the registries, the equation of state and the guards · **CHECK** · Op
+1192:## M0-D17 · web/smoke.mjs runs Chrome with `--no-sandbox`: playwright-core adds it by default, against �
+1203:## M0-TM2 · Rating pass — the record moved BUILD on Sonnet 5.5, high (M0-V2's table) · **PLAN** · Op
+1220:## M0-T18 · Booking — the side buffers and accumulators every pass books into · **BUILD** · Opus 5.5
+1245:## M0-T19 · P8 floors, complete, and the equation of state on the GPU · **BUILD** · Opus 5.5, high · 
+1270:## M0-T20 · Δt and the non-finite guard (P1, P9) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-
+1290:## M0-D18 · P8 zeroes a NaN species fraction before P9's guard reads it: the run goes on with the cell r
+1300:## M0-T21 · The active box · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T20)
+1320:## M0-D19 · The web scope is red on linux-pc: `node` resolves to 18 outside an interactive shell, and th
+1336:## M0-T22 · Frames of steps and the collapse latch · **BUILD** · Opus 5.5, high · switch · (AFTER M0
+1358:## M0-TE-V12.3 · PLAYBOOK v12.3 adoption · **PLAN** · Opus 5.5, max · switch · (AFTER M0-T22)
+1446:## M0-TM3 · Rating pass — the ladder changed at M0-TE-V12.3: three rungs added, 123 open blocks · **P
+1463:## M0-TH-adopt-a · Adopt the toolkit — the tools v12.3 changed · **BUILD** · Opus 5.5, high · switc
+1482:## M0-D20 · v12.3's verify.py selftest reads NO-GO 2 on win-laptop: the walk fixture's `trail ` and CRLF
+1493:## M0-T23 · GPU timestamps, cost per step and `--timing` · **BUILD** · Opus 5.5, high · switch · (AF
+1514:## M0-T24 · Time control — rungs, the frame plan, the cap, the slow-down, the 30-frames switch · **BU
+1536:## M0-T25 · Scene files · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T24)
+1560:## M0-T26 · State dumps · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T25)
+1578:## M0-T27 · Docs — architecture.md (the step, the box, the latch, the files) and time_control.md · **
+1596:## M0-V3 · Validation — lot 3: the step framework · **CHECK** · Opus 5.5, max · switch · (AFTER M0
+--- lint
+lint: checks=517 failed=0 warnings=0 · blocks=192 · flow_rows=192 · verify_fences=0 · history=0 · flow=per-task · header=454/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+=== GO ===
+close: checks=4 failed=0 warnings=1 · handoff_lines=1 · flow=per-task · set=1 · replaced=1 · appended=0
+WARN: no milestones\m0\tasks\M0-TC2.md - detail belongs there, not in the plan
+=== GO ===
+lint: checks=516 failed=0 warnings=0 · blocks=192 · flow_rows=192 · verify_fences=0 · history=0 · flow=per-task · header=454/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+=== GO ===
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint       516/0/0      0.63 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 14 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 42 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 42 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 41 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TC2.<scope>.log · record: loop_times.jsonl · tree e01b7b8ef726+bf026283c474
+anchor: 1 path×scope entries moved by this run
+anchor: 115 paths checked · 100 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 115 covered of 215 visible
+skipped    92  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 516 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 23 not impacted · 0.64 s + loop 0.53 s · mode changed · jobs 8 · box Laser2025-20 · python 3.13.14 · load 15.97->16.67 · base: M0-TC2's start 2026-10-12T07:58:47-04:00
+=== GO ===

@@ -1,0 +1,118 @@
+==== 2026-10-12T08:23:08-04:00 M0-TR1 · win-laptop Laser2025-20 · probes
+C:              954G  816G  138G  86% /c
+/c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target
+build
+build/target
+2.0G	build/target
+1.9G	/c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target
+cargo 1.99.0 (5f94df478 2026-08-27)
+22
+1162
+31
+---- scratch copy (scratch_copy.sh as proxy for verify.py's copy)
+dest=/c/Users/YohanBelanger/AppData/Local/Temp/tr1/arm0 · files=1182 · size=15M · linked=none · excluded=13
+=== GO ===
+
+real	0m25.624s
+user	0m0.603s
+sys	0m5.229s
+15M	/c/Users/YohanBelanger/AppData/Local/Temp/tr1/arm0
+1182
+AGENTS.md
+CLAUDE.md
+Cargo.lock
+Cargo.toml
+GEMINI.md
+PLAYBOOK.md
+assets
+crates
+docs
+milestones
+milestones.md
+rust-toolchain.toml
+scenes
+start.bat
+start.ps1
+start.sh
+tests
+tools
+web
+span copy: scratch_copy.sh  s, 1182 files, 15M
+---- 2026-10-12T08:25:20-04:00 cold/warm sr-app build in a scratch copy (tr1_cold.sh)
+span copy_ms=13131
+load_before=3
+span cold_build_ms=198874 rc=0 target=777M
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\tr1\arm0\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 3m 18s
+load_after=25
+span nochange_ms=777
+span workspace_rebuild_ms=11135
+3
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\tr1\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\tr1\arm0\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\tr1\arm0\crates\sr-app)
+---- 2026-10-12T08:29:33-04:00 shared-cache lever and warm run spans (tr1_warm.sh)
+--- (a) lever: shared CARGO_TARGET_DIR via the copy's cargo wrapper (tests/cargo.sh)
+CARGO_TARGET_DIR=/c/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target
+span shared_build_1_ms=13990 rc=0
+3
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\tr1\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\tr1\arm0\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\tr1\arm0\crates\sr-app)
+span shared_build_2_ms=10143 rc=0
+3
+span exe_copy_ms=87 size=13M
+--- (b) run spans, warm own build/target (cargo is a no-op: 0.8 s)
+span run[tests/smoke.sh headless-boot]_ms=15245 rc=0
+boot headless-boot: built in 10 s, booted and checked in 5 s
+=== GO ===
+span run[tests/smoke.sh window]_ms=3408 rc=0
+boot game-offscreen: built in 1 s, booted and checked in 2 s
+=== GO ===
+span run[tests/smoke.sh launcher]_ms=4074 rc=0
+launcher game-offscreen: built in 0 s, started, stopped, nothing left running
+=== GO ===
+span run[tests/capture/check.sh smoke]_ms=14922 rc=0
+capture smoke: ok
+=== GO ===
+span run[tests/capture/check.sh refuse]_ms=1430 rc=0
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+---- 2026-10-12T08:30:48-04:00 web arm spans (tr1_web.sh)
+ls: cannot access 'web/dist': No such file or directory
+ls: cannot access 'web/node_modules': No such file or directory
+span web[build]_ms=55052 rc=0
+web build: trunk 0.21.14, 4.1M wasm; check on line 38, wasm on line 48
+=== GO ===
+span web[ready]_ms=32813 rc=0
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+ready: srState "ready" after 0.9 s
+=== GO ===
+span web[no-webgpu]_ms=11131 rc=0
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+no-webgpu: srState "no-webgpu" after 0.1 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+trunk log tail:
+2026-10-12T12:31:42.010889Z  INFO spawning hook stage=PostBuild command=node
+2026-10-12T12:31:42.124921Z  INFO finished hook node
+2026-10-12T12:31:42.125312Z  INFO applying new distribution
+2026-10-12T12:31:42.133595Z  INFO success
+npm log:
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+span web[build_after_touch]_ms=40035
+span npm_ci_ms=2674
+span web_build_wasm_opt_off_ms=10800 web build: trunk 0.21.14, 5.2M wasm; check on line 38, wasm on line 48
+---- 2026-10-12T08:37:28-04:00 prototype: 2 arms at once, shared build + own exe copy (boot's campaign shape; no plant applied)
+(first attempt: smoke.sh's own 'unset CARGO_TARGET_DIR' made both arms cold-build in their own target, 161 s and 186 s concurrently, and the cp fail - prototype bug, redone)
+---- 2026-10-12T08:43:33-04:00 prototype redo
+span proto_boot_2arms_wall_ms=31864
+arm0 rc=0 24011 ms
+arm1 rc=0 31769 ms
+---- verify.py report (tail)
+Laser2025-20: at an idle box, seconds / (1 + k x load / cpus), k 0.15 (default 0.15 - the fleet's median, M0-T64d): median 91.12 s over 5 counted complete loop(s), raw 97.68 s
+Laser2025-20: the loop's plants and flags, median 0.14 s over 1 complete loop(s) - counted in the median and the TR line
+Laser2025-20: slowest scopes (median over 5 complete loops, idle over 5): tools_selftest 254.45 s (237.70 s idle) · web 194.00 s (184.64 s idle) · desktop 44.65 s (42.48 s idle) · build 33.61 s (31.79 s idle) · licences 28.42 s (27.31 s idle)
+loop seconds unknown before 2026-10-11 - 9 complete loop(s) read as 0
+report: 329 runs · 0 foreign · 10 complete loops · 73 changed · 140 task label(s) · loops per task 1.15 · redundant 4 · first-try 115/140 · median complete loop laserax-ai 3.27 s (3.26 s idle) · Laser2025-20 97.68 s (91.12 s idle)
+=== GO ===

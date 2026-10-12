@@ -6,8 +6,9 @@
 #   wasm    cargo check --workspace --target wasm32-unknown-unknown --locked
 # Sourced, it only sets the environment: ~/.cargo/bin first on the PATH (off it on linux-pc, Hazards), and in a
 # red-arm scratch copy (no `.git`) a CARGO_TARGET_DIR shared outside the tree, so a plant recompiles only the
-# workspace's crates, and a `cargo` wrapper that keeps that sharing honest (M0-D9, below). That shared dir is for test builds only, never for a binary a scope launches (two arms
-# would race on one uplifted binary). In the real tree the target is build/target (.cargo/config.toml).
+# workspace's crates, and a `cargo` wrapper that keeps that sharing honest (M0-D9, below). A scope never launches the
+# binary in that shared dir (two arms would race on one uplifted binary): `sr_build_app` copies it into the copy's own
+# build/target first (M0-TR1a). In the real tree the target is build/target (.cargo/config.toml).
 _sr_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export PATH="$HOME/.cargo/bin:$PATH"
 if [ -e "$_sr_root/.git" ]; then
@@ -53,6 +54,32 @@ sr_cargo_run() {
     rm -f "$out"; return 0
   fi
   echo "--- cargo $* ($label) ---"; tail -n 25 "$out"; rm -f "$out"; return 1
+}
+
+# sr_build_app <exe-suffix>: build sr-app release and leave the binary a scope launches at THIS tree's own
+# build/target/release/sandbox-reactions<exe> (M0-TR1a). Real tree: cargo builds there directly. Scratch copy: cargo
+# builds into the shared CARGO_TARGET_DIR (the dependencies stay cached across arms) and, in the same lock and touch
+# (M0-D9), the binary is copied into the copy's own build/target — the arm launches its own copy, never the shared one
+# (§6.5). The copy's binary carries a stamp of its inputs' contents (the touch list): a second case of the same arm
+# finds it current and keeps it — a rebuild is not byte-identical, and on Windows the other case's running game holds
+# the file (`cp`: Device or resource busy, M0-TR1a). On failure it prints cargo's last lines and returns 1; the caller
+# ends `=== NO-GO: … ===`.
+sr_build_app() {
+  local exe="${1:-}" out
+  _sr_build_app_in_lock() {
+    local rel="$_sr_root/build/target/release" p stamp; stamp="$(
+      cd "$_sr_root" && for p in crates assets scenes Cargo.toml Cargo.lock .cargo; do
+        [ -e "$p" ] && find "$p" -type f -print0
+      done | LC_ALL=C sort -z | xargs -0 sha1sum | sha1sum | cut -c1-40)"
+    [ -f "$rel/sandbox-reactions$exe" ] && [ "$(cat "$rel/.sr-app-inputs" 2>/dev/null)" = "$stamp" ] && return 0
+    command cargo build --release --locked -p sr-app || return 1
+    mkdir -p "$rel" && cp "$CARGO_TARGET_DIR/release/sandbox-reactions$exe" "$rel/" && echo "$stamp" >"$rel/.sr-app-inputs"
+  }
+  if [ -e "$_sr_root/.git" ]; then
+    out="$(cd "$_sr_root" && command cargo build --release --locked -p sr-app --target-dir build/target 2>&1)"
+  else
+    out="$(cd "$_sr_root" && sr_in_shared_target _sr_build_app_in_lock 2>&1)"
+  fi || { echo "$out" | tail -n 25; return 1; }
 }
 
 sr_build_case() {

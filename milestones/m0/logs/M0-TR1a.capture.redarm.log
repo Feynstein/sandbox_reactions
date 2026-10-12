@@ -1,0 +1,34 @@
+==== 2026-10-12T11:29:30-04:00 capture · clean · a fresh scratch copy of the tree
+== 2026-10-12T11:29:35-04:00 capture[smoke] · task M0-TR1a · box Laser2025-20 :: bash tests/capture/check.sh {case}
+== 2026-10-12T11:29:35-04:00 capture[refuse] · task M0-TR1a · box Laser2025-20 :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=0 · 32.62 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-CAPTURE paused paused.png 2560x1410
+SR-CAPTURE running running.png 2560x1410
+SR-CAPTURE DONE 2 C:/Users/YOHANB~1/AppData/Local/Temp/tmp.R5Pc99LpDn
+2 PNGs of (2560, 1410) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[refuse] · exit=0 · 48.19 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+==== 2026-10-12T11:29:30-04:00 capture · plant capture-no-captions · a fresh scratch copy of the tree
+planted capture-no-captions: tests/plants/capture-no-captions.patch -> crates/sr-app/src/capture.rs
+== 2026-10-12T11:29:36-04:00 capture[smoke] · task M0-TR1a · box Laser2025-20 :: bash tests/capture/check.sh {case}
+== 2026-10-12T11:29:36-04:00 capture[refuse] · task M0-TR1a · box Laser2025-20 :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 46.86 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=1 · 48.55 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-CAPTURE paused paused.png 2560x1410
+SR-CAPTURE running running.png 2560x1410
+SR-CAPTURE DONE 2 C:/Users/YOHANB~1/AppData/Local/Temp/tmp.ihqUPTwug1
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'C:/Users/YOHANB~1/AppData/Local/Temp/tmp.ihqUPTwug1\\captions.json'
+=== NO-GO: the captures do not match §3.3 ===
+

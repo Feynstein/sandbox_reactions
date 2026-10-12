@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# The capture scope's runner (M0-T8, m0_contrat.md §3.3): bash tests/capture/check.sh <case>. Builds the release binary
-# into THIS tree's own build/target (as tests/smoke.sh does), then:
+# The capture scope's runner (M0-T8, m0_contrat.md §3.3): bash tests/capture/check.sh <case>. `sr_build_app` leaves the
+# release binary in THIS tree's own build/target (as tests/smoke.sh does; in a copy, through the shared cache, M0-TR1a), then:
 #   smoke  — tests/capture/smoke.json (paused, then running) on the box's window route: `xvfb-run` with `--adapter
 #            llvmpipe` on linux-pc, `--offscreen-window` on win-laptop (R4, R15). Pass: exit 0; two PNGs of the window's
 #            size (the IHDR matching captions.json's viewport) whose pixels DIFFER (a screenshot taken before the frame it
@@ -18,9 +18,7 @@ case "$(uname -s)" in
      runner=(xvfb-run -a -s "-screen 0 1920x1080x24" env -u WAYLAND_DISPLAY -u XDG_SESSION_TYPE) ;;
 esac
 cd "$_sr_root" || exit 1
-unset CARGO_TARGET_DIR
-cargo_out="$(command cargo build --release --locked -p sr-app --target-dir build/target 2>&1)" \
-  || { echo "$cargo_out" | tail -n 25; echo "=== NO-GO: cargo build --release -p sr-app failed ==="; exit 1; }
+sr_build_app "$exe" || { echo "=== NO-GO: cargo build --release -p sr-app failed ==="; exit 1; }
 bin="build/target/release/sandbox-reactions$exe"
 dir="$(mktemp -d)"
 trap 'rm -rf "$dir"' EXIT

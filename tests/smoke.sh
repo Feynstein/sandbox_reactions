@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# The boot scope's runner (G-BOOT, m0_contrat.md §5.4): bash tests/smoke.sh <service> — builds the release binary into
-# THIS tree's own build/target (in a red-arm scratch copy that is the copy's own, never the shared redarm-target of
-# tests/cargo.sh, §6.5: two arms must not launch one binary), then `launch.py smoke <service>`. For `headless-boot` it
+# The boot scope's runner (G-BOOT, m0_contrat.md §5.4): bash tests/smoke.sh <service> — `sr_build_app` (tests/cargo.sh)
+# leaves the release binary in THIS tree's own build/target (in a red-arm scratch copy it builds through the shared
+# redarm-target and copies the binary in: the arm launches its own copy, §6.5, M0-TR1a), then `launch.py smoke <service>`. For `headless-boot` it
 # also runs the same command once into a throwaway folder, checks summary.json against §2.12.2 and prints the file it
 # checked, verbatim, into its own output (the folder goes at exit, launch.py removes its own --out), so the scope's log
 # keeps the text a V reads. `window` is the desktop scope's case (G-DESK, M0-T5): the box's route —
@@ -18,9 +18,7 @@ esac
 launcher=0; [ "$service" = "launcher" ] && { launcher=1; service="$window"; }
 cd "$_sr_root" || exit 1
 start=$SECONDS
-unset CARGO_TARGET_DIR
-cargo_out="$(command cargo build --release --locked -p sr-app --target-dir build/target 2>&1)" \
-  || { echo "$cargo_out" | tail -n 25; echo "=== NO-GO: cargo build --release -p sr-app failed ==="; exit 1; }
+sr_build_app "$exe" || { echo "=== NO-GO: cargo build --release -p sr-app failed ==="; exit 1; }
 built=$((SECONDS - start))
 
 # The desktop scope's cases run in parallel yet share launch.json's port 47811 and one pid file (M0-T6): take a lock keyed

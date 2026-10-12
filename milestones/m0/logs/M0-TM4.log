@@ -1,0 +1,73 @@
+# M0-TM4 — rating pass, win-laptop (Laser2025-20), started 2026-10-12T08:03:03-04:00
+now (launch prompt): model=claude-opus-5-5 level=max plugin=installed (python3 alias; later calls py -3.12, R15)
+show: baseline: M0-TM4, 215 files, 2026-10-12T08:01:58-04:00 · checks=2 failed=0 warnings=0 · === GO ===
+$ py -3.12 tools/pb/plan.py status M0-TM4 "IN PROGRESS"
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+snapshot taken
+$ probe (§B.3)
+CLAUDECODE=1
+CLAUDE_EFFORT=xhigh
+AI_AGENT=claude-code_2-1-296_agent
+$ ladder re-read: claude-api skill bundled with Claude Code 2.1.296 (AI_AGENT=claude-code_2-1-296_agent), Current Models (cached: 2026-10-06); shared/models.md sha256 1601794b74c4a9415eb272d5ad459ab2776f224d731285c4b492a4c5c6f9a2ec, identical to 2.1.295's; Fable 5.1 $10/$50, Opus 5.5 $4/$20, Sonnet 5.5 $2/$10, Haiku 5.5 $0.10/$0.50 (<=100K), all Active, effort low..max
+$ py -3.12 tools/pb/rung_record.py report  (2026-10-12T08:04:51-04:00)
+report: 70 DONE blocks · 11 class/rung rows · 1 session folder(s) (C--workspace-sandbox-reactions) · 28 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 3 D block(s) naming no cause in the record · $159.42 read from the sessions' own cost
+BUILD on Opus 5.5, high: 24 block(s) · first-try 17/24 · $2.91 per DONE block · usual
+BUILD on Sonnet 5.5, high: 11 block(s) · first-try 9/11 · $1.89 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 17 block(s) · first-try 7/12 · n/a per DONE block · off the ladder
+BUILD·E on Sonnet 5.5, medium: 1 block(s) · first-try 1/1 · $1.15 per DONE block · n<10
+BUILD·E on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+CHECK on Opus 5.5, max: 2 block(s) · first-try 2/2 · $21.10 per DONE block · above (usual)
+CHECK on unknown: 1 block(s) · first-try 1/1 · n/a per DONE block · off the ladder
+MOVE on Haiku 5.5, high: 1 block(s) · first-try 1/1 · $0.04 per DONE block · n<10
+MOVE on unknown: 1 block(s) · first-try n/a · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 5 block(s) · first-try 4/5 · $8.41 per DONE block · above (usual)
+PLAN on unknown: 5 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+=== GO ===
+$ checkdiff.py (scratchpad helper) against the post-status snapshot, after the 84 edits and the Models line (2026-10-12T08:16:19-04:00)
+rating=84 · models=1 · own=0 · register=0 · other=0
+=== GO ===
+$ py -3.12 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md  (after the edits, before the close; 2026-10-12T08:16:26-04:00)
+lint: checks=516 failed=0 warnings=0 · blocks=192 · flow_rows=192 · verify_fences=0 · history=0 · flow=per-task · header=454/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+=== GO ===
+$ py -3.12 tools/pb/plan.py close M0-TM4 --status "DONE" --text "<handoff: scratchpad tm4/handoff.txt>" --set "Model ratings=2026-10-12 by M0-TM4"  (2026-10-12T08:19:50-04:00)
+close: checks=4 failed=0 warnings=0 · handoff_lines=1 · flow=per-task · set=1 · replaced=1 · appended=0
+=== GO ===
+$ checkdiff.py after the close
+rating=84 · models=1 · own=3 · register=1 · other=0
+=== GO ===
+$ py -3.12 tools/pb/verify.py --changed --task M0-TM4  (the claim, after the close; 2026-10-12T08:20:02-04:00)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint       515/0/0      0.30 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 14 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 42 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 42 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 41 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TM4.<scope>.log · record: loop_times.jsonl · tree e01b7b8ef726+df28f9a91253
+anchor: 1 path×scope entries moved by this run
+anchor: 115 paths checked · 101 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 115 covered of 216 visible
+skipped    93  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 515 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 23 not impacted · 0.30 s + loop 0.20 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 3.96->1.7 · base: M0-TM4's start 2026-10-12T08:01:58-04:00
+=== GO ===
+end 2026-10-12T08:20:31-04:00: results appended to milestones/m0/tasks/M0-TM4.md; Next: M0-TR1

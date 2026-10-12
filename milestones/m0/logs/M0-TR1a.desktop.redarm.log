@@ -1,0 +1,157 @@
+==== 2026-10-12T11:18:28-04:00 desktop · clean · a fresh scratch copy of the tree
+== 2026-10-12T11:18:30-04:00 desktop[window] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-12T11:18:30-04:00 desktop[launcher] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 24.19 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 2.6s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm0\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log)
+game-offscreen: pid 21416 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm0\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 17 s, booted and checked in 6 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 57.39 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.8s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm0\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 14840 stopped
+web: nothing recorded
+services: 5, stopped: 5
+=== GO ===
+launcher game-offscreen: built in 50 s, started, stopped, nothing left running
+=== GO ===
+
+==== 2026-10-12T11:18:28-04:00 desktop · plant status-never-ready · a fresh scratch copy of the tree
+planted status-never-ready: tests/plants/status-never-ready.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-12T11:18:31-04:00 desktop[window] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-12T11:18:31-04:00 desktop[launcher] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 80.08 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm1\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm1\crates\sr-app)
+warning: variant `Ready` is never constructed
+  --> crates\sr-app\src\status.rs:14:5
+   |
+12 | pub enum State {
+   |          ----- variant in this enum
+13 |     Booting,
+14 |     Ready,
+   |     ^^^^^
+   |
+   = note: `State` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-app` (bin "sandbox-reactions") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 12.13s
+cp: cannot create regular file '/tmp/pb-redarm-yn_yin2_/arm1/build/target/release/sandbox-reactions.exe': Device or resource busy
+=== NO-GO: cargo build --release -p sr-app failed ===
+
+-- desktop[launcher] · exit=1 · 161.89 s
+game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm1\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 0
+FAIL game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm1\milestones\m0\logs\launcher.launch.game-offscreen.log)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 28596 stopped
+web: nothing recorded
+services: 5, stopped: 5
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+==== 2026-10-12T11:18:28-04:00 desktop · plant launcher-no-stop · a fresh scratch copy of the tree
+planted launcher-no-stop: tests/plants/launcher-no-stop.patch -> start.sh, start.bat
+== 2026-10-12T11:18:31-04:00 desktop[window] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-12T11:18:31-04:00 desktop[launcher] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 42.58 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 2.4s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm2\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+=== NO-GO: the launcher exited 1 ===
+
+-- desktop[window] · exit=0 · 167.75 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 2.1s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm2\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log)
+game-offscreen: pid 3032 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-yn_yin2_\arm2\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 90 s, booted and checked in 77 s
+=== GO ===
+
+==== 2026-10-12T11:25:09-04:00 desktop · clean · a fresh scratch copy of the tree
+== 2026-10-12T11:25:12-04:00 desktop[launcher] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-12T11:25:12-04:00 desktop[window] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 246.06 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 3.7s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm0\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 3684 stopped
+web: nothing recorded
+services: 5, stopped: 5
+=== GO ===
+launcher game-offscreen: built in 65 s, started, stopped, nothing left running
+=== GO ===
+
+-- desktop[window] · exit=0 · 253.84 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 3.3s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm0\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log)
+game-offscreen: pid 4352 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm0\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 63 s, booted and checked in 190 s
+=== GO ===
+
+==== 2026-10-12T11:25:09-04:00 desktop · plant status-never-ready · a fresh scratch copy of the tree
+planted status-never-ready: tests/plants/status-never-ready.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-12T11:25:12-04:00 desktop[window] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-12T11:25:12-04:00 desktop[launcher] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 138.20 s
+game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm1\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 0
+FAIL game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm1\milestones\m0\logs\launcher.launch.game-offscreen.log)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 27252 stopped
+web: nothing recorded
+services: 5, stopped: 5
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+-- desktop[window] · exit=1 · 230.11 s
+game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm1\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log)
+game-offscreen: pid 6032 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm1\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log
+services: 1, ready: 0, failures: 1
+FAIL game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm1\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log)
+=== NO-GO: launch.py smoke game-offscreen did not end GO ===
+
+==== 2026-10-12T11:25:09-04:00 desktop · plant launcher-no-stop · a fresh scratch copy of the tree
+planted launcher-no-stop: tests/plants/launcher-no-stop.patch -> start.sh, start.bat
+== 2026-10-12T11:25:12-04:00 desktop[window] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-12T11:25:12-04:00 desktop[launcher] · task M0-TR1a · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 29.69 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 2.2s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm2\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log)
+game-offscreen: pid 6648 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm2\milestones\m0\logs\M0-TR1a.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 22 s, booted and checked in 7 s
+=== GO ===
+
+-- desktop[launcher] · exit=1 · 235.42 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.7s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-_sedy6la\arm2\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+=== NO-GO: the launcher exited 1 ===
+
