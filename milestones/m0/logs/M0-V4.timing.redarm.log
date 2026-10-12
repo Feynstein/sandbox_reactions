@@ -1,0 +1,78 @@
+==== 2026-10-12T13:52:56-04:00 timing · clean: proven by M0-T31 2026-10-12T13:30:23-04:00 (fingerprint dc90bfd9fec6)
+==== 2026-10-12T13:52:33-04:00 timing · plant timing-skip-pass · a fresh scratch copy of the tree
+planted timing-skip-pass: tests/plants/timing-skip-pass.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-12T13:52:34-04:00 timing · task M0-V4 · box Laser2025-20 :: bash tests/gpu.sh timing physics
+-- timing · exit=101 · 21.94 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-34xjnddw\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-34xjnddw\arm1\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 13.67s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+a 1000-step frame: StepCost { source: GpuTimestamp, steps: 407, step_ms: 0.361832412776413, pass_ms: [Some(0.037182270270270275), Some(0.02077625552825554), Some(0.10130453071253073), None, None, None, None, None, Some(0.058243538083538104), Some(0.09842004914004916)], frame_ms: Some(0.019648) }
+a 1000-step frame: passes sum 0.315927 ms, step 0.361832 ms, off by 12.7 %
+the next frame starts a fresh query set: StepCost { source: GpuTimestamp, steps: 10, step_ms: 0.3446176, pass_ms: [Some(0.0371104), Some(0.0203424), Some(0.09656640000000001), None, None, None, None, None, Some(0.056784000000000015), Some(0.09112)], frame_ms: Some(0.019744) }
+the next frame starts a fresh query set: passes sum 0.301923 ms, step 0.344618 ms, off by 12.4 %
+ok
+test timing::bare_steps_time_every_pass_at_its_boundaries ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+recorded passes: ["P0 edits", "P1 dt", "P2 gravity", "P8 floors", "P9 reductions"]
+steps 0–63: StepCost { source: GpuTimestamp, steps: 64, step_ms: 0.2727365, pass_ms: [Some(0.03759150000000001), Some(0.009485999999999998), Some(0.08516499999999996), None, None, None, None, None, Some(0.0574085), Some(0.04012199999999999)], frame_ms: None }
+steps 0–63: passes sum 0.229773 ms, step 0.272736 ms, off by 15.8 %
+steps 64–78: StepCost { source: GpuTimestamp, steps: 15, step_ms: 0.2506538666666666, pass_ms: [Some(0.025920000000000002), Some(0.0095424), Some(0.07690666666666666), None, None, None, None, None, Some(0.05697493333333333), Some(0.039750400000000005)], frame_ms: None }
+steps 64–78: passes sum 0.209094 ms, step 0.250654 ms, off by 16.6 %
+ok
+test timing::frames_report_their_cost_per_step_and_per_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+frame 0: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.3480047999999999, pass_ms: [Some(0.03650399999999999), Some(0.020407200000000004), Some(0.10203200000000001), None, None, None, None, None, Some(0.057091199999999995), Some(0.08976559999999997)], frame_ms: Some(0.019456) }
+frame 0: passes sum 0.305800 ms, step 0.348005 ms, off by 12.1 %
+frame 1: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.3426656000000001, pass_ms: [Some(0.03515839999999999), Some(0.0202408), Some(0.10005199999999999), None, None, None, None, None, Some(0.05652079999999998), Some(0.08969359999999998)], frame_ms: Some(0.01952) }
+frame 1: passes sum 0.301666 ms, step 0.342666 ms, off by 12.0 %
+frame 2: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.39723680000000006, pass_ms: [Some(0.03573919999999999), Some(0.039107199999999995), Some(0.11304479999999999), None, None, None, None, None, Some(0.06770720000000001), Some(0.09986239999999999)], frame_ms: Some(0.018624) }
+frame 2: passes sum 0.355461 ms, step 0.397237 ms, off by 10.5 %
+ok
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=300 sim_time=9.079232 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=300 sim_time=9.079232 until=none
+summary.json timing: {"per_pass_ms":{"P0 edits":0.02859669333333333,"P1 dt":0.009289813333333334,"P2 gravity":0.0830148266666667,"P9 reductions":0.04313141333333334},"source":"gpu-timestamp","step_ms_mean":0.2707741866666666}
+
+thread 'timing::headless_timing_writes_every_pass_of_the_nominal_disk' (21252) panicked at crates\sr-engine\tests\gpu\timing.rs:205:5:
+assertion `left == right` failed: every recorded pass in per_pass_ms, and no other: {"per_pass_ms":{"P0 edits":0.02859669333333333,"P1 dt":0.009289813333333334,"P2 gravity":0.0830148266666667,"P9 reductions":0.04313141333333334},"source":"gpu-timestamp","step_ms_mean":0.2707741866666666}
+  left: ["P0 edits", "P1 dt", "P2 gravity", "P9 reductions"]
+ right: ["P0 edits", "P1 dt", "P2 gravity", "P8 floors", "P9 reductions"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+bare, wall: StepCost { source: Wall, steps: 20, step_ms: 0.5348449999999957, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+frame, wall: StepCost { source: Wall, steps: 20, step_ms: 0.8050349999999981, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+ok
+
+failures:
+
+failures:
+    timing::headless_timing_writes_every_pass_of_the_nominal_disk
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 79 filtered out; finished in 6.78s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

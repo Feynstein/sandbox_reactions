@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/grav.rs
++++ b/crates/sr-physics/src/reference/grav.rs
+@@ -70,7 +70,7 @@
+ impl Gravity {
+     /// A gravity pass for the constant `g` (G = 1 in the sandbox's units, §2.1).
+     pub fn new(g: f64) -> Gravity {
+-        Gravity { conv: Convolver::new(move |dx, dy| kernel(g, dx, dy)) }
++        Gravity { conv: Convolver::new(move |dx, dy| kernel(g, dx - 1, dy)) }
+     }
+ 
+     /// φ = K ∗ Σ_src over the `w` × `h` box; `sigma_src` is already masked ([`source`]).

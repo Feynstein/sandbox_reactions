@@ -1,0 +1,87 @@
+==== 2026-10-12T12:54:54-04:00 grav_selfforce · clean · a fresh scratch copy of the tree
+== 2026-10-12T12:54:56-04:00 grav_selfforce · task M0-T29 · box Laser2025-20 :: bash tests/gpu.sh grav::selfforce
+-- grav_selfforce · exit=0 · 38.80 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-0h7ihcg2\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-0h7ihcg2\arm0\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 16.43s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 2 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.093e-12, Σ m|g| = 2.767e3, ratio 3.949e-16
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 1.695e-16
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 69 filtered out; finished in 0.02s
+
+
+==== 2026-10-12T12:54:54-04:00 grav_selfforce · plant grav-kernel-shift · a fresh scratch copy of the tree
+planted grav-kernel-shift: tests/plants/grav-kernel-shift.patch -> crates/sr-physics/src/reference/grav.rs
+== 2026-10-12T12:54:56-04:00 grav_selfforce · task M0-T29 · box Laser2025-20 :: bash tests/gpu.sh grav::selfforce
+-- grav_selfforce · exit=101 · 20.89 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-0h7ihcg2\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-0h7ihcg2\arm1\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 18.92s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 2 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 2.412e2, Σ m|g| = 2.764e3, ratio 8.726e-2
+
+thread 'grav::selfforce::asym_blob_has_no_net_self_force' (31120) panicked at crates\sr-engine\tests\gpu\grav.rs:177:9:
+G-GRAV2: |Σ m·g| / Σ m|g| = 8.726e-2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 6.469e-1
+
+thread 'grav::selfforce::random_asymmetric_masses_have_none_either' (31768) panicked at crates\sr-engine\tests\gpu\grav.rs:204:9:
+|Σ m·g| / Σ m|g| = 6.469e-1
+FAILED
+
+failures:
+
+failures:
+    grav::selfforce::asym_blob_has_no_net_self_force
+    grav::selfforce::random_asymmetric_masses_have_none_either
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 69 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

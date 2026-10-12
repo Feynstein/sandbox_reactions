@@ -4,7 +4,7 @@ Written by M0-T17 (2026-10-10) for the first physics lot (M0-T10 – M0-T12); ea
 (contract §7). The page points: a value lives in `assets/physics.json`, `assets/elements.json`, `assets/reactions.json` or
 `assets/calibration.json` (§2.11) and in the contract section named beside it — **never copy one here**, it goes stale
 at the first tuning. A law's form (an exponent, an ordering) is stated; a constant's value is looked up.
-Pass order and module map: `architecture.md`. Scopes that grade these pages: `testing.md` (`registry`, `eos`).
+Pass order and module map: `architecture.md`. Scopes that grade these pages: `testing.md` (`registry`, `eos`; gravity's `fft_twin`, `fft`, `grav_force`, `grav_selfforce`).
 
 ## Units (contract §2.1; `crates/sr-physics/src/units.rs`)
 - Sandbox units: length is one cell (Δx = Δy = 1), G = 1, the mass unit is fixed by the Sun-like preset's central surface
@@ -43,7 +43,9 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 - **Pairs.** K₁/K₂ for electrons and for neutron matter are each *on* (both > 0) or *off* (both 0 — a scene that needs cold pressure off, M0-T33b/T36);
   half a pair is refused.
 - **Not checked at load:** `c_sb` against calibration's `max_gas_speed` (needs calibration.json, G-CAL) and the K1 timescale gap
-  (τ_nuc against τ_KH; measured by G-SQUEEZE). Both are measured numbers, not file checks.
+  (τ_nuc against τ_KH; measured by G-SQUEEZE). Both are measured numbers, not file checks. Also `sigma_bh` against 4 × calibration's `ns_sigma_max_sb` (§2.6:
+  a black hole's density must clear any stable neutron star's): the loader holds `sigma_bh` only to > 0 (the `Pos` class), so the bound is not enforced at load — M0-V7 names
+  it, M0-V9 runs it.
 - Retuning is by editing the file and re-running calibration (G-CAL refuses a stale `physics_hash`, §2.11). A tuned value is a PLAN-visible change
   only where the contract marks it fixed (the q ratios, K8); ν, T_k and A are tuning within the bounds above.
 
@@ -85,6 +87,33 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
   non-positive T_floor is refused as a `RegistryError`.
 - **Scheme, step and Δt** (§2.3.4–§2.3.5) belong to the flow pass, not to this page until that pass lands (M0-T19+).
 
+## Gravity (contract §1.4, P2; `crates/sr-physics/src/reference/{fft,grav}.rs` the f64 twin, `crates/sr-engine/src/step/{fft,grav}.rs` and `shaders/{fft,grav}.wgsl` the GPU)
+- **The law (§1.4.1, Q1 — FROZEN; the lead, 2026-10-08).** The world is a razor-thin sheet in 3D space: every cell pulls every other with the **3D** law — potential −Gm/r, r measured in the
+  plane — while gas pressure, heat and light act in the plane only. Two consequences the sandbox is built on: contraction heats (K5, T ∝ M/R in the sheet) and a cold core has a ceiling mass
+  (K9: the in-plane ultra-relativistic Fermi gas, Π ∝ Σ^{3/2}, is exactly critical; graded by G-CORE). Free space in both edge modes — no image masses. G = 1 (§2.1).
+- **The kernel (§1.4.2).** φ(x) = Σ_y K(x − y) Σ_src(y), K(i, j) = −G/√(i² + j²) for (i, j) ≠ (0, 0), and **K(0, 0) = −G · 4 ln(1 + √2)** — the exact potential at a unit square's centre from its
+  own uniform mass (∫∫ dA/r over the square, `grav::SELF_CELL`; the contract gives the decimal). It is **not softened**: Plummer softening was SM-C1's candidate and was rejected — a softening of
+  half a cell doubled the force error. Nothing in P2 or the twin softens K, and a changed exponent or shifted offset is what the plants `grav-kernel-exponent` and `grav-kernel-shift` plant.
+  A sink's potential, −G M_s/√(r² + r_acc²) (§1.4.3), is the one place a softening length appears; sinks arrive with P3's lot and are not in P2 yet.
+- **The source.** Σ_src = Σ in non-vacuum cells (Σ ≥ Σ_vac) and 0 in vacuum — the mask is applied where the plane is first read (`grav_rows` on the GPU, `grav::source` on the twin).
+- **The FFT over the box (§1.3.3, §1.4.2).** φ is a zero-padded (Hockney–Eastwood) convolution over the active box, never the world: per axis the padded size is the smallest power of two ≥ 2 × the
+  box side, at least 32 (twin: `fft::padded_size`; GPU: the box fit writes it). The twin is a radix-2 f64 FFT with each twiddle from its own sin/cos. The GPU holds one row or column of up to
+  2048 points in one workgroup (the whole of WebGPU's default workgroup memory; the twiddles sit in a storage table built in f64 on the CPU, so no cos/sin runs in a shader) — a transform is
+  2 dispatches, a convolution 3, P2 four (rows with the mask, columns × K̂ and back, the rows' inverse into φ, the gradient). Forward is unnormalised, the inverse divides by N, row-major
+  `y · nx + x`, the kernel indexed `K(x_target − x_source)`. A box whose padded axis would pass 2048 is refused (`FftError`; `headless` exits 4 naming the axis) — a world axis over half of that
+  cannot be solved today.
+- **The kernel's transform lives for every size.** The box's padded size is written by `box_fit` on the GPU and never read back, so the CPU cannot pick a transform per frame. K is real and even
+  on both axes, so is K̂, and each size keeps one quarter of it; the table holds every size the world's boxes can take, made once per `Step` in f64 from the twin's own `grav::kernel` (so a bug in
+  the twin's K reaches the shader too). Its size and cost at the default world: `milestones/m0/tasks/M0-T31.md`.
+- **The force: central differences (M0-T29's choice).** g = −∇φ by central differences, one-sided on the box's outermost ring (y down). G-GRAV1 was measured on the twin **before** the GPU
+  was built: the force on a Maclaurin disk is far inside its bound over every cell with 0 < r ≤ 0.75a (worst error and its cell are printed; `testing.md`, `grav_force`), so the direct force
+  kernels (two more inverse FFTs) stayed unbuilt — φ is one forward FFT, one multiply, one inverse, then the differences. The rim rule matters to G-GRAV2: the net self-force
+  Σ m·g cancels exactly (to rounding) only while no mass sits on that outermost ring, which the box's 8-cell margin guarantees; the shader keeps the twin's rule. φ and g outside the box keep
+  their last values.
+- **Δt (§2.3.5).** The gravity term η_g/√max|g| reads P2's |g|; step 0's initial reduction runs after P2 on the initial state, so P2 runs twice on step 0 (one extra solve per run).
+- **Not built.** The solve cadence k ∈ {1, 4} (§1.4.4) is a lever for M0-TG's budget; every step solves (k = 1). Sinks' potentials (§1.4.3) wait for P3.
+- **Cost.** The measurements — the RTX 4080 Laptop's smoke and the Quadro RTX 4000 figures owed on `laserax-ai` — live in `milestones/m0/tasks/M0-T31.md` and `M0-T30.md`; this page holds none.
+
 ## Where a number lives (so this page never holds one)
 | A value | Lives in | Checked by |
 |---|---|---|
@@ -93,3 +122,4 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 | Record shares, q ratios, rate terms, gate | `assets/reactions.json`, §1.6.2 | `registry` (shapes and mass conservation) |
 | Measured scales: max gas speed, core and mass thresholds, preset masses | `assets/calibration.json`, §2.11 | `calibration` (G-CAL, later) |
 | Display anchors (real Sun, years, kelvin) | §1.10 only | `readouts` (later) |
+| G, the kernel, K(0, 0), the FFT sizes | §2.1, §1.4.2, §1.3.3 (`grav::SELF_CELL` in code) | `grav_force`, `grav_selfforce`, `fft_twin`, `fft` |

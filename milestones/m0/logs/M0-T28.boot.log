@@ -1,0 +1,84 @@
+== 2026-10-12T12:33:45-04:00 boot · task M0-T28 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 8.31 s
+headless-boot: ready - exit 0, 2.3s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T28.launch.headless-boot.log)
+headless-boot: pid 28436 not signalled - gone
+headless-boot: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T28.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "cce5da7",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 6.0528215020895,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.1135777,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 1 s, booted and checked in 6 s
+=== GO ===
+
+== 2026-10-12T12:35:25-04:00 boot · task M0-T28 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 6.78 s
+headless-boot: ready - exit 0, 2.9s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T28.launch.headless-boot.log)
+headless-boot: pid 22120 not signalled - gone
+headless-boot: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T28.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "cce5da7",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 6.0528215020895,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.0922576,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 1 s, booted and checked in 6 s
+=== GO ===
+

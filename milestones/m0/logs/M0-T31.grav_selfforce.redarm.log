@@ -1,0 +1,99 @@
+==== 2026-10-12T13:27:56-04:00 grav_selfforce · clean · a fresh scratch copy of the tree
+== 2026-10-12T13:27:59-04:00 grav_selfforce · task M0-T31 · box Laser2025-20 :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=0 · 22.58 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nht0aykg\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nht0aykg\arm0\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 18.99s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 3 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.093e-12, Σ m|g| = 2.767e3, ratio 3.949e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.151e-6, Σ m|g| = 2.767e3, ratio 2.223e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 1.25e-7, gx 1.57e-6, gy 1.57e-6
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 1.695e-16
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 81 filtered out; finished in 1.21s
+
+
+==== 2026-10-12T13:27:56-04:00 grav_selfforce · plant grav-kernel-shift · a fresh scratch copy of the tree
+planted grav-kernel-shift: tests/plants/grav-kernel-shift.patch -> crates/sr-physics/src/reference/grav.rs
+== 2026-10-12T13:27:59-04:00 grav_selfforce · task M0-T31 · box Laser2025-20 :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=101 · 42.42 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nht0aykg\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nht0aykg\arm1\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 17.07s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 3 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 2.412e2, Σ m|g| = 2.764e3, ratio 8.726e-2
+
+thread 'grav::selfforce::asym_blob_has_no_net_self_force' (3216) panicked at crates\sr-engine\tests\gpu\grav.rs:264:9:
+G-GRAV2: |Σ m·g| / Σ m|g| = 8.726e-2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.151e-6, Σ m|g| = 2.767e3, ratio 2.223e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 2.23e-2, gx 1.17e-1, gy 4.85e-2
+
+thread 'grav::selfforce::gpu_asym_blob_has_no_net_self_force' (35236) panicked at crates\sr-engine\tests\gpu\grav.rs:373:13:
+asym_blob: the GPU against the twin over G-REF's 0.001
+FAILED
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 6.469e-1
+
+thread 'grav::selfforce::random_asymmetric_masses_have_none_either' (33012) panicked at crates\sr-engine\tests\gpu\grav.rs:291:9:
+|Σ m·g| / Σ m|g| = 6.469e-1
+FAILED
+
+failures:
+
+failures:
+    grav::selfforce::asym_blob_has_no_net_self_force
+    grav::selfforce::gpu_asym_blob_has_no_net_self_force
+    grav::selfforce::random_asymmetric_masses_have_none_either
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 81 filtered out; finished in 1.04s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

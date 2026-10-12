@@ -1,0 +1,41 @@
+== 2026-10-12T12:33:02-04:00 build[wasm] · task M0-T28 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+== 2026-10-12T12:33:02-04:00 build[native] · task M0-T28 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 14.28 s
+build wasm: 1.99.0 in 10 s, target C:/workspace/sandbox_reactions/build/target (2.0G)
+=== GO ===
+
+-- build[native] · exit=1 · 33.73 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+    Blocking waiting for file lock on build directory
+    Checking sr-physics v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-physics)
+error: usage of `contains_key` followed by `insert` on a `HashMap`
+   --> crates\sr-physics\src\reference\fft.rs:235:13
+    |
+235 | /             if !self.plans.contains_key(&n) {
+236 | |                 self.plans.insert(n, FftPlan::new(n)?);
+237 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#map_entry
+    = note: `-D clippy::map-entry` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::map_entry)]`
+help: try
+    |
+235 ~             if let std::collections::hash_map::Entry::Vacant(e) = self.plans.entry(n) {
+236 +                 e.insert(FftPlan::new(n)?);
+237 +             }
+    |
+
+error: could not compile `sr-physics` (lib) due to 1 previous error
+=== NO-GO: cargo clippy -D warnings failed ===
+
+== 2026-10-12T12:34:20-04:00 build[native] · task M0-T28 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+== 2026-10-12T12:34:20-04:00 build[wasm] · task M0-T28 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 4.04 s
+build wasm: 1.99.0 in 3 s, target C:/workspace/sandbox_reactions/build/target (2.0G)
+=== GO ===
+
+-- build[native] · exit=0 · 15.85 s
+build native: 1.99.0 in 15 s, target C:/workspace/sandbox_reactions/build/target (2.0G)
+=== GO ===
+

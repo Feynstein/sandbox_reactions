@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/fft.wgsl
++++ b/crates/sr-engine/shaders/fft.wgsl
+@@ -49,7 +49,7 @@
+ var<workgroup> buf: array<vec2<f32>, MAX_N>;
+ 
+ fn bitrev(i: u32, log_n: u32) -> u32 {
+-    return reverseBits(i) >> (32u - log_n);
++    return reverseBits(i) >> (31u - log_n);
+ }
+ 
+ fn cmul(a: vec2<f32>, b: vec2<f32>) -> vec2<f32> {

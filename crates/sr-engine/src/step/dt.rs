@@ -8,6 +8,9 @@
 //! Every 64 steps P9 also runs the non-finite guard (`guard_scan`, `guard_stamp`): the first NaN or Inf found, by step,
 //! cell and channel, stays in the record until the run reads it ([`Dt::read`]) and stops (exit 5, §3.3).
 //!
+//! P9's gravity term reads |g| from P2's field ([`super::grav`], M0-T31) when the step runs gravity; without it the term
+//! is infinite.
+//!
 //! P1 also adds each step's Δt to the record's sim time, an f64 summed on the GPU in step order (M0-D21, [`sim_time`]).
 //! Later passes read Δt_n from [`Dt::record`]'s first word (an f32). The reduction runs over the active box
 //! ([`super::boxfit`]): `dt_cells` takes its workgroup count from the box's indirect sizes and `dt_partials` the box's
@@ -64,7 +67,8 @@ pub struct Dt {
 
 impl Dt {
     /// The record (zeroed) and the dispatches for `state` on `module` (reduce.wgsl with eos.wgsl prepended), with
-    /// C = `cfl` and η_g = `eta_g` from `physics`, the reduction over `boxfit`'s box.
+    /// C = `cfl` and η_g = `eta_g` from `physics`, the reduction over `boxfit`'s box, the gravity term from P2's field
+    /// `g` (none: no gravity).
     pub fn new(
         device: &wgpu::Device,
         module: &wgpu::ShaderModule,
@@ -72,6 +76,7 @@ impl Dt {
         eos: &EosGpu,
         physics: &Physics,
         boxfit: &BoxFit,
+        g: Option<&wgpu::Buffer>,
     ) -> Dt {
         let get = |k: &str| physics.get(k).unwrap_or_else(|| panic!("physics.json key {k}")) as f32;
         let world = state.world();
@@ -80,8 +85,10 @@ impl Dt {
             device,
             "dt.params",
             wgpu::BufferUsages::UNIFORM,
-            &[get("cfl").to_bits(), get("eta_g").to_bits(), partials, 0],
+            &[get("cfl").to_bits(), get("eta_g").to_bits(), partials, u32::from(g.is_some())],
         );
+        let no_gravity = g.is_none().then(|| init_buffer(device, "dt.no_gravity", wgpu::BufferUsages::STORAGE, &[0; 2]));
+        let g = g.or(no_gravity.as_ref()).expect("P2's field or its stand-in");
         let partials_buf = device.create_buffer(&wgpu::BufferDescriptor {
             label: Some("dt.partials"),
             size: u64::from(partials) * 8,
@@ -105,6 +112,7 @@ impl Dt {
                 4 => partials_buf.as_entire_binding(),
                 5 => record.as_entire_binding(),
                 6 => params.as_entire_binding(),
+                14 => g.as_entire_binding(),
                 _ => boxfit.active().as_entire_binding(),
             }
         };
@@ -127,7 +135,7 @@ impl Dt {
         Dt {
             advance: vec![dispatch("dt_advance", &[5], one(), false)],
             reduce: vec![
-                dispatch("dt_cells", &[0, 1, 2, 3, 4, 7], Size::Indirect(boxfit.args().clone(), ARGS_CELLS), true),
+                dispatch("dt_cells", &[0, 1, 2, 3, 4, 6, 7, 14], Size::Indirect(boxfit.args().clone(), ARGS_CELLS), true),
                 dispatch("dt_partials", &[4, 5, 6, 7], one(), false),
             ],
             guard: vec![dispatch("guard_scan", &[0, 1, 2, 3, 5], tiles, false), dispatch("guard_stamp", &[5], one(), false)],

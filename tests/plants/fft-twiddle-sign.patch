@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/fft.rs
++++ b/crates/sr-physics/src/reference/fft.rs
+@@ -116,7 +116,7 @@ impl FftPlan {
+         }
+         let twiddles = (0..n / 2)
+             .map(|k| {
+-                let (s, c) = (-2.0 * PI * k as f64 / n as f64).sin_cos();
++                let (s, c) = (2.0 * PI * k as f64 / n as f64).sin_cos();
+                 Complex::new(c, s)
+             })
+             .collect();

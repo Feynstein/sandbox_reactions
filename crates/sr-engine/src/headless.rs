@@ -2,7 +2,8 @@
 //! run summary (§2.12.2). Today: `--scene` reads a scene file or `preset:<name>` through [`crate::scene`] (M0-T25; every
 //! preset is the nominal Sun-like disk until M0-T74), `--world` and `--edge` stand over the scene's `world`, `--steps N`
 //! runs [`Step`] N times and `--timing` adds the steps' cost (M0-T23); `--until`, the ledger, events and objects arrive
-//! with their blocks. The edge mode and the scene's switches are recorded, not yet applied (no pass reads them).
+//! with their blocks. Of the scene's switches, `gravity` turns P2 on (M0-T31); the edge mode and the other switches are
+//! recorded, not yet applied (no pass reads them).
 //!
 //! State dumps (§2.12.3, [`crate::dump`], M0-T26): with `--out`, DIR/dumps/s_<step>.bin at the end of every run, and with
 //! `--dump-every N` at every step index that N divides — the index counts from the scene, so a resumed run's dumps fall
@@ -26,7 +27,8 @@ use sr_physics::registry::Elements;
 use crate::dump::{dump_state, load_dump, Dump};
 use crate::gpu::Gpu;
 use crate::scene::{EdgeMode, Scene};
-use crate::state::{Booking, State, WorldConfig};
+use crate::state::{Booking, SideFields, State, WorldConfig};
+use crate::step::boxfit::BoxMode;
 use crate::step::{CostSource, EosGpu, Pass, Step, StepCost, Timing};
 
 pub const EXIT_DONE: i32 = 0;
@@ -208,14 +210,14 @@ pub fn run(args: &[String]) -> i32 {
         let elements = Elements::shipped().map_err(|e| e.to_string())?;
         let edge = args.edge.unwrap_or(scene.edge);
         if let Some(d) = &dump {
-            return Ok((d.world, edge, physics, elements, Vec::new(), scene.warnings()));
+            return Ok((d.world, edge, physics, elements, Vec::new(), scene.warnings(), scene.switches));
         }
         let world = args.world.unwrap_or(scene.world);
         let (planes, mut warnings) = scene.planes(world, &physics, &elements)?;
         warnings.splice(0..0, scene.warnings());
-        Ok((world, edge, physics, elements, planes, warnings))
+        Ok((world, edge, physics, elements, planes, warnings, scene.switches))
     });
-    let (world, edge, physics, elements, planes, warnings) = match prepared {
+    let (world, edge, physics, elements, planes, warnings, switches) = match prepared {
         Ok(p) => p,
         Err(e) => {
             say(&format!("SR-ERROR bad scene: {e}"));
@@ -255,7 +257,19 @@ pub fn run(args: &[String]) -> i32 {
     };
     // The physics is the shipped constants with the scene's overrides; the ledger reads the booking (its lot).
     let booking = Booking::new(&gpu.device, world).expect("the state's world is valid");
-    let step = Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &physics, &elements), &physics);
+    let eos = EosGpu::new(&gpu.device, &physics, &elements);
+    let side = SideFields::new(&gpu.device, world).expect("the state's world is valid");
+    let step = if switches.gravity {
+        match Step::with_gravity(&gpu.device, &state, &booking, &eos, &physics, BoxMode::Fit, &side) {
+            Ok(s) => s,
+            Err(e) => {
+                say(&format!("SR-ERROR bad arguments: gravity over a {}x{} world: {e}", world.width, world.height));
+                return EXIT_ARGS;
+            }
+        }
+    } else {
+        Step::new(&gpu.device, &state, &booking, &eos, &physics)
+    };
     let first = match &dump {
         Some(d) => {
             if let Err(e) = load_dump(&gpu.queue, &state, &step, d) {

@@ -1,0 +1,85 @@
+==== 2026-10-12T13:51:24-04:00 grav_force · clean: proven by M0-T31 2026-10-12T13:27:55-04:00 (fingerprint b36f780d0481)
+==== 2026-10-12T13:50:36-04:00 grav_force · plant grav-kernel-exponent · a fresh scratch copy of the tree
+planted grav-kernel-exponent: tests/plants/grav-kernel-exponent.patch -> crates/sr-physics/src/reference/grav.rs
+== 2026-10-12T13:50:47-04:00 grav_force · task M0-V4 · box Laser2025-20 :: bash tests/gpu.sh grav::force physics
+-- grav_force · exit=101 · 36.80 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-syu9bncv\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-syu9bncv\arm1\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 28.93s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 8 tests
+test grav::force::force_error_halves_when_the_disk_doubles ... SR-GRAV1 largest error a=20: 1.916e-1 (19.16 %) at (28, 27); a=40: 2.658e-1 (26.58 %) at (48, 47); ratio 0.721
+
+thread 'grav::force::force_error_halves_when_the_disk_doubles' (34712) panicked at crates\sr-engine\tests\gpu\grav.rs:142:9:
+G-GRAV1: a=20 over a=40 = 0.721, first order wants 1.6 … 2.4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::force::gpu_a_frames_gravity_is_the_bare_steps_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test grav::force::gpu_force_error_halves_when_the_disk_doubles ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 8.27e-8, gx 1.79e-6, gy 2.20e-6
+SR-GRAV-REF disk a=20, box 64x64 at (0, 0), FFT [128, 128]: relative L1 against the twin φ 8.46e-8, gx 9.53e-7, gy 1.13e-6
+SR-GRAV1 GPU largest error a=20: 1.916e-1; a=40: 2.658e-1; ratio 0.721
+
+thread 'grav::force::gpu_force_error_halves_when_the_disk_doubles' (33704) panicked at crates\sr-engine\tests\gpu\grav.rs:185:9:
+G-GRAV1 (GPU): a=20 over a=40 = 0.721, first order wants 1.6 … 2.4
+FAILED
+test grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-DT max |g| 4.010815e0: η_g term 1.497976e-1; gravity off Δt_0 4.4721362e-1, Δt_1 4.4721356e-1; on Δt_0 1.4979765e-1, Δt_1 1.4979765e-1
+ok
+test grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 8.27e-8, gx 1.79e-6, gy 2.20e-6
+SR-GRAV1 GPU a=40 centred on a cell: largest |Δg|/|g| = 2.658e-1 (26.58 %) at box cell (48, 46), 2820 cells with 0 < r ≤ 0.75a
+
+thread 'grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin' (7532) panicked at crates\sr-engine\tests\gpu\grav.rs:174:9:
+G-GRAV1 (GPU): 26.582 % at box cell (48, 46) over 2 %
+FAILED
+test grav::force::kernel_is_the_section_1_4_2_kernel ... 
+thread 'grav::force::kernel_is_the_section_1_4_2_kernel' (16896) panicked at crates\sr-engine\tests\gpu\grav.rs:110:13:
+K(3, 4)
+FAILED
+test grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere ... SR-GRAV1 a=40 centred on a cell: largest |Δg|/|g| = 2.658e-1 (26.58 %) at cell (48, 47), 2820 cells with 0 < r ≤ 0.75a
+
+thread 'grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere' (584) panicked at crates\sr-engine\tests\gpu\grav.rs:132:9:
+G-GRAV1: 26.585 % at cell (48, 47) over 2 %
+FAILED
+test grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too ... SR-GRAV1 a=40 centred on a corner: largest |Δg|/|g| = 2.659e-1 (26.59 %) at cell (49, 49), 2828 cells
+
+thread 'grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too' (592) panicked at crates\sr-engine\tests\gpu\grav.rs:152:9:
+G-GRAV1 (corner-centred): 26.593 % at cell (49, 49)
+FAILED
+
+failures:
+
+failures:
+    grav::force::force_error_halves_when_the_disk_doubles
+    grav::force::gpu_force_error_halves_when_the_disk_doubles
+    grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin
+    grav::force::kernel_is_the_section_1_4_2_kernel
+    grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere
+    grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too
+
+test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 76 filtered out; finished in 3.13s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

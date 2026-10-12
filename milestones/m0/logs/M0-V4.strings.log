@@ -1,0 +1,27 @@
+== 2026-10-12T14:05:20-04:00 strings · task M0-V4 · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 3.41 s
+   Compiling sr-app v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 2.84s
+     Running tests\strings.rs (build/target\release\deps\strings-3ac2c939bb6b4983.exe)
+
+running 3 tests
+test web_texts_verbatim_in_index_html ... ok
+test same_keys_both_ways ... ok
+test texts_byte_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+== 2026-10-12T14:56:02-04:00 strings · task M0-V4 · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 1.24 s
+    Finished `release` profile [optimized] target(s) in 0.74s
+     Running tests\strings.rs (build/target\release\deps\strings-3ac2c939bb6b4983.exe)
+
+running 3 tests
+test same_keys_both_ways ... ok
+test texts_byte_identical ... ok
+test web_texts_verbatim_in_index_html ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+

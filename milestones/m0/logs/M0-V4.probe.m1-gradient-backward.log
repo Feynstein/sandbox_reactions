@@ -1,0 +1,101 @@
+
+running 15 tests
+test grav::force::force_error_halves_when_the_disk_doubles ... SR-GRAV1 largest error a=20: 5.786e-3 (0.58 %) at (17, 18); a=40: 3.005e-3 (0.30 %) at (24, 30); ratio 1.926
+ok
+test grav::force::gpu_a_frames_gravity_is_the_bare_steps_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test grav::force::gpu_force_error_halves_when_the_disk_doubles ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 8.21e-8, gx 3.83e-2, gy 2.56e-6
+FAILED
+test grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-DT max |g| 4.940643e0: η_g term 1.349676e-1; gravity off Δt_0 4.4721362e-1, Δt_1 4.4721356e-1; on Δt_0 1.349676e-1, Δt_1 1.349676e-1
+ok
+test grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 8.21e-8, gx 3.83e-2, gy 2.56e-6
+FAILED
+test grav::force::kernel_is_the_section_1_4_2_kernel ... ok
+test grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere ... SR-GRAV1 a=40 centred on a cell: largest |Δg|/|g| = 3.005e-3 (0.30 %) at cell (24, 30), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too ... SR-GRAV1 a=40 centred on a corner: largest |Δg|/|g| = 3.104e-3 (0.31 %) at cell (19, 48), 2828 cells
+ok
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.093e-12, Σ m|g| = 2.767e3, ratio 3.949e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 1.296e2, Σ m|g| = 2.769e3, ratio 4.679e-2
+FAILED
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 1.695e-16
+ok
+test grav::v4probe::sub_vacuum_cells_are_no_source ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-V4PROBE sub-vacuum background: world 128x128, box 64x64 at (32, 32), FFT [128, 128]: rel L1 vs twin phi 8.41e-8 gx 6.22e-2 gy 1.40e-6; net-force ratio 4.172e-2
+FAILED
+test grav::v4probe::tall_nonsquare_box ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-V4PROBE tall 128x512: world 128x512, box 40x344 at (40, 88), FFT [128, 1024]: rel L1 vs twin phi 8.56e-8 gx 1.43e-1 gy 8.61e-6; net-force ratio 1.585e-1
+FAILED
+test grav::v4probe::whole_default_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-V4PROBE whole world 600x400: world 600x400, box 600x400 at (0, 0), FFT [2048, 1024]: rel L1 vs twin phi 8.49e-8 gx 2.06e-2 gy 2.44e-5; net-force ratio 8.590e-4
+FAILED
+test grav::v4probe::wide_nonsquare_box_in_the_default_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-V4PROBE wide 600x400: world 600x400, box 392x64 at (120, 168), FFT [1024, 128]: rel L1 vs twin phi 1.18e-7 gx 5.63e-2 gy 3.13e-6; net-force ratio 3.561e-2
+FAILED
+
+failures:
+
+failures:
+    grav::force::gpu_force_error_halves_when_the_disk_doubles
+    grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin
+    grav::selfforce::gpu_asym_blob_has_no_net_self_force
+    grav::v4probe::sub_vacuum_cells_are_no_source
+    grav::v4probe::tall_nonsquare_box
+    grav::v4probe::whole_default_world
+    grav::v4probe::wide_nonsquare_box_in_the_default_world
+
+test result: FAILED. 8 passed; 7 failed; 0 ignored; 0 measured; 73 filtered out; finished in 5.05s
+
+
+--- stderr ---
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\claude\c--workspace-sandbox-reactions\070909a1-6bd2-426e-afdf-d6881bf5397b\scratchpad\v4copy\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\claude\c--workspace-sandbox-reactions\070909a1-6bd2-426e-afdf-d6881bf5397b\scratchpad\v4copy\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 12.60s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+thread 'grav::force::gpu_force_error_halves_when_the_disk_doubles' (7304) panicked at crates\sr-engine\tests\gpu\grav.rs:373:13:
+disk a=40: the GPU against the twin over G-REF's 0.001
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin' (33756) panicked at crates\sr-engine\tests\gpu\grav.rs:373:13:
+disk a=40: the GPU against the twin over G-REF's 0.001
+
+thread 'grav::selfforce::gpu_asym_blob_has_no_net_self_force' (30220) panicked at crates\sr-engine\tests\gpu\grav.rs:309:9:
+G-GRAV2 (GPU): |Σ m·g| / Σ m|g| = 4.679e-2
+
+thread 'grav::v4probe::sub_vacuum_cells_are_no_source' (26792) panicked at crates\sr-engine\tests\gpu\grav.rs:486:9:
+sub-vacuum background: GPU against the twin over 0.00001
+
+thread 'grav::v4probe::tall_nonsquare_box' (32268) panicked at crates\sr-engine\tests\gpu\grav.rs:486:9:
+tall 128x512: GPU against the twin over 0.001
+
+thread 'grav::v4probe::whole_default_world' (10164) panicked at crates\sr-engine\tests\gpu\grav.rs:486:9:
+whole world 600x400: GPU against the twin over 0.001
+
+thread 'grav::v4probe::wide_nonsquare_box_in_the_default_world' (35460) panicked at crates\sr-engine\tests\gpu\grav.rs:486:9:
+wide 600x400: GPU against the twin over 0.001
+error: test failed, to rerun pass `-p sr-engine --test gpu`

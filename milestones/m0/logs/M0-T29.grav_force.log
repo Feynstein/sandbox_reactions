@@ -1,0 +1,39 @@
+== 2026-10-12T12:53:56-04:00 grav_force · task M0-T29 · box Laser2025-20 :: bash tests/gpu.sh grav::force
+-- grav_force · exit=0 · 0.70 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 0.34s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 4 tests
+test grav::force::force_error_halves_when_the_disk_doubles ... SR-GRAV1 largest error a=20: 5.786e-3 (0.58 %) at (17, 18); a=40: 3.005e-3 (0.30 %) at (24, 30); ratio 1.926
+ok
+test grav::force::kernel_is_the_section_1_4_2_kernel ... ok
+test grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere ... SR-GRAV1 a=40 centred on a cell: largest |Δg|/|g| = 3.005e-3 (0.30 %) at cell (24, 30), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too ... SR-GRAV1 a=40 centred on a corner: largest |Δg|/|g| = 3.104e-3 (0.31 %) at cell (19, 48), 2828 cells
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 67 filtered out; finished in 0.03s
+
+

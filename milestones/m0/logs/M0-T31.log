@@ -1,0 +1,130 @@
+M0-T31 log — win-laptop Laser2025-20 (2026-10-12)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 0.21s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 11 tests
+test grav::force::force_error_halves_when_the_disk_doubles ... SR-GRAV1 largest error a=20: 5.786e-3 (0.58 %) at (17, 18); a=40: 3.005e-3 (0.30 %) at (24, 30); ratio 1.926
+ok
+test grav::force::gpu_a_frames_gravity_is_the_bare_steps_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test grav::force::gpu_force_error_halves_when_the_disk_doubles ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 8.21e-8, gx 2.14e-6, gy 2.56e-6
+SR-GRAV-REF disk a=20, box 64x64 at (0, 0), FFT [128, 128]: relative L1 against the twin φ 8.07e-8, gx 1.21e-6, gy 1.46e-6
+SR-GRAV1 GPU largest error a=20: 5.787e-3; a=40: 3.006e-3; ratio 1.925
+ok
+test grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-DT max |g| 4.857731e0: η_g term 1.361145e-1; gravity off Δt_0 3.2898813e-2, Δt_1 3.2898813e-2; on Δt_0 3.2898813e-2, Δt_1 3.2898813e-2
+
+thread 'grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term' (35196) panicked at crates\sr-engine\tests\gpu\grav.rs:201:9:
+the gravity term must bind for the case to say anything
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 8.21e-8, gx 2.14e-6, gy 2.56e-6
+SR-GRAV1 GPU a=40 centred on a cell: largest |Δg|/|g| = 3.006e-3 (0.30 %) at box cell (30, 24), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::kernel_is_the_section_1_4_2_kernel ... ok
+test grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere ... SR-GRAV1 a=40 centred on a cell: largest |Δg|/|g| = 3.005e-3 (0.30 %) at cell (24, 30), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too ... SR-GRAV1 a=40 centred on a corner: largest |Δg|/|g| = 3.104e-3 (0.31 %) at cell (19, 48), 2828 cells
+ok
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.093e-12, Σ m|g| = 2.767e3, ratio 3.949e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.151e-6, Σ m|g| = 2.767e3, ratio 2.223e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 1.25e-7, gx 1.57e-6, gy 1.57e-6
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 1.695e-16
+ok
+
+failures:
+
+failures:
+    grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term
+
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 73 filtered out; finished in 3.05s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 6.94s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 11 tests
+test grav::force::force_error_halves_when_the_disk_doubles ... SR-GRAV1 largest error a=20: 5.786e-3 (0.58 %) at (17, 18); a=40: 3.005e-3 (0.30 %) at (24, 30); ratio 1.926
+ok
+test grav::force::gpu_a_frames_gravity_is_the_bare_steps_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test grav::force::gpu_force_error_halves_when_the_disk_doubles ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 8.21e-8, gx 2.14e-6, gy 2.56e-6
+SR-GRAV-REF disk a=20, box 64x64 at (0, 0), FFT [128, 128]: relative L1 against the twin φ 8.07e-8, gx 1.21e-6, gy 1.46e-6
+SR-GRAV1 GPU largest error a=20: 5.787e-3; a=40: 3.006e-3; ratio 1.925
+ok
+test grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-DT max |g| 4.857731e0: η_g term 1.361145e-1; gravity off Δt_0 4.4721362e-1, Δt_1 4.4721356e-1; on Δt_0 1.3611455e-1, Δt_1 1.3611455e-1
+ok
+test grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 8.21e-8, gx 2.14e-6, gy 2.56e-6
+SR-GRAV1 GPU a=40 centred on a cell: largest |Δg|/|g| = 3.006e-3 (0.30 %) at box cell (30, 24), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::kernel_is_the_section_1_4_2_kernel ... ok
+test grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere ... SR-GRAV1 a=40 centred on a cell: largest |Δg|/|g| = 3.005e-3 (0.30 %) at cell (24, 30), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too ... SR-GRAV1 a=40 centred on a corner: largest |Δg|/|g| = 3.104e-3 (0.31 %) at cell (19, 48), 2828 cells
+ok
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.093e-12, Σ m|g| = 2.767e3, ratio 3.949e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.151e-6, Σ m|g| = 2.767e3, ratio 2.223e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 1.25e-7, gx 1.57e-6, gy 1.57e-6
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 1.695e-16
+ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 73 filtered out; finished in 2.51s
+
+   Compiling sr-app v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 11.84s
+== fill_world on RTX 4080 Laptop
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=15.143633 until=none
+== sun_disk on RTX 4080 Laptop
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=6.052822 until=none

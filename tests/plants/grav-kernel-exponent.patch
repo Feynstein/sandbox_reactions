@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/grav.rs
++++ b/crates/sr-physics/src/reference/grav.rs
+@@ -23,7 +23,7 @@
+         return -g * SELF_CELL;
+     }
+     let r2 = (dx * dx + dy * dy) as f64;
+-    -g / r2.sqrt()
++    -g / r2.sqrt().powf(1.15)
+ }
+ 
+ /// Σ_src: Σ where the cell is not vacuum (Σ ≥ `sigma_vac`, the box's own test, §1.3.3), 0 in vacuum.

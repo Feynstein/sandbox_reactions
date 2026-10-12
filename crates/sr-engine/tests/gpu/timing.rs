@@ -12,7 +12,8 @@
 use super::device;
 use sr_engine::gpu::Gpu;
 use sr_engine::headless::sun_disk_planes;
-use sr_engine::state::{Booking, State, WorldConfig};
+use sr_engine::state::{Booking, SideFields, State, WorldConfig};
+use sr_engine::step::boxfit::BoxMode;
 use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::{CostSource, EosGpu, Pass, Step, StepCost, Timing};
 use sr_physics::registry::{Elements, Physics};
@@ -20,14 +21,16 @@ use sr_physics::registry::{Elements, Physics};
 /// The block's tolerance: the passes' sum within 40 % of the step's cost.
 const SUM_WITHIN: f64 = 0.40;
 
-/// A step on the nominal Sun-like disk (§2.1, §2.10) in a `w` × `h` world, the shipped constants.
+/// A step on the nominal Sun-like disk (§2.1, §2.10) in a `w` × `h` world, the shipped constants, gravity on as a
+/// scene's default switches have it (headless, M0-T31).
 fn disk(gpu: &Gpu, w: u32, h: u32) -> Step {
     let world = WorldConfig::new(w, h).unwrap();
     let state = State::new(&gpu.device, world).unwrap();
     state.upload(&gpu.queue, &sun_disk_planes(world)).unwrap();
     let (physics, elements) = (Physics::shipped().unwrap(), Elements::shipped().unwrap());
     let booking = Booking::new(&gpu.device, world).unwrap();
-    Step::new(&gpu.device, &state, &booking, &EosGpu::new(&gpu.device, &physics, &elements), &physics)
+    let (eos, side) = (EosGpu::new(&gpu.device, &physics, &elements), SideFields::new(&gpu.device, world).unwrap());
+    Step::with_gravity(&gpu.device, &state, &booking, &eos, &physics, BoxMode::Fit, &side).unwrap()
 }
 
 /// The source `Timing::Auto` must pick on this device, after checking the device holds no feature but timestamp-query

@@ -3,8 +3,8 @@
 //
 // Δt_{n+1} = min(C · min_cells [(|u| + c)/Δx + (|v| + c)/Δy]⁻¹, η_g · min_cells √(Δx/|g|)), Δx = Δy = 1 cell (§2.1),
 // reduced as the largest rate of each term — r_h = (|u| + c)/Δx + (|v| + c)/Δy and r_g = |g|/Δx — so Δt_{n+1} =
-// min(C / max r_h, η_g / √(max r_g)); a term whose largest rate is 0 does not bound Δt. Until P2 writes g, r_g is 0
-// and the gravity term infinite. c² = 2Π/Σ with ε_th floored at T_floor/μ (§2.3.3); a cell below Σ_vac counts as the
+// min(C / max r_h, η_g / √(max r_g)); a term whose largest rate is 0 does not bound Δt. |g| is P2's field (grav.wgsl,
+// this step's), read only when the step runs gravity (`params.gravity`); without it r_g is 0 and the term infinite. c² = 2Π/Σ with ε_th floored at T_floor/μ (§2.3.3); a cell below Σ_vac counts as the
 // floor state P8 leaves it in (Σ_floor, u = 0, T = T_floor), so the reduction of an initial state and of a floored
 // one agree. The fractions are taken as stored: P9 runs after P8's renormalisation.
 //
@@ -43,7 +43,8 @@ struct DtParams {
     cfl: f32,
     eta_g: f32,
     partials: u32,
-    _pad: u32,
+    // 1: the step runs P2, and `grav_g` is its field
+    gravity: u32,
 }
 
 // The Δt record, one per run (dt.rs `DtRecord`): Δt_n of the step in flight, Δt_{n+1} as P9 left it, the index of the
@@ -103,6 +104,8 @@ struct BoxParams {
 @group(0) @binding(11) var<storage, read_write> box_flag: atomic<u32>;
 @group(0) @binding(12) var<storage, read_write> box_partials: array<vec4<u32>>;
 @group(0) @binding(13) var<uniform> box_params: BoxParams;
+// P2's g = −∇φ (grav.wgsl): the x plane, then the y plane; a stand-in when the step runs no gravity.
+@group(0) @binding(14) var<storage, read> grav_g: array<f32>;
 
 const WG: u32 = 256u;
 const DX: f32 = 1.0;
@@ -148,7 +151,10 @@ fn cell_rates(cell: u32) -> vec2<f32> {
     }
     let c = sqrt(max(wave_speed_sq(sigma, pressure(sigma, eps_th, comp.y_e, x_n)), 0.0));
     let r_h = (abs(vel.x) + c) / DX + (abs(vel.y) + c) / DY;
-    let r_g = 0.0; // |g|/Δx once P2 writes g (§1.4, §2.3.5)
+    var r_g = 0.0;
+    if (params.gravity != 0u) {
+        r_g = length(vec2<f32>(grav_g[cell], grav_g[n + cell])) / DX;
+    }
     return vec2<f32>(r_h, r_g);
 }
 

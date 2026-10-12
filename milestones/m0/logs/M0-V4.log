@@ -1,0 +1,244 @@
+M0-V4 · Validation — lot 4: gravity · win-laptop (Laser2025-20) · started 2026-10-12T13:39-04:00
+rung: model=claude-opus-5-5 level=max plugin=installed (python3 = Store 3.13 for the first two calls; py -3.12 from then on, R15)
+[13:46:47] py -3.12 tools/pb/verify.py --redarm fft_twin grav_force grav_selfforce fft timing --task M0-V4
+the calls:
+  python3 tools/pb/verify.py <scope>... --task <ID>
+  python3 tools/pb/verify.py --all --task <ID>
+  python3 tools/pb/verify.py <scope> --case <id> --task <ID>
+  python3 tools/pb/verify.py --changed [--base <commit>] --task <ID>
+  python3 tools/pb/verify.py --force <scope>... --task <ID>
+  python3 tools/pb/verify.py --redarm <scope> --task <ID>
+  python3 tools/pb/verify.py --redarm --moved --task <ID>
+  python3 tools/pb/verify.py list
+  python3 tools/pb/verify.py report [--since YYYY-MM-DD] [--budget <s>]
+  python3 tools/pb/verify.py start [--fresh] --task <ID>
+  python3 tools/pb/verify.py touched [--task <ID>] [--path <glob>]
+  python3 tools/pb/verify.py selftest
+verify: wrong call - nothing run
+=== NO-GO: --redarm names its one scope itself: --redarm <scope> - the calls are listed above ===
+[13:47:01] py -3.12 tools/pb/verify.py --redarm fft_twin --task M0-V4
+fft_twin · clean · GO
+fft_twin · plant fft-twiddle-sign · RED (proven: 3 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope fft_twin · 204.38 s · 2 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-V4.fft_twin.redarm.log
+=== GO ===
+[13:50:32] py -3.12 tools/pb/verify.py --redarm grav_force --task M0-V4
+grav_force · clean: proven by M0-T31 2026-10-12T13:27:55-04:00 (fingerprint b36f780d0481)
+grav_force · plant grav-kernel-exponent · RED (proven: 6 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope grav_force · 49.38 s · 1 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-V4.grav_force.redarm.log
+=== GO ===
+[13:51:26] py -3.12 tools/pb/verify.py --redarm grav_selfforce --task M0-V4
+grav_selfforce · clean: proven by M0-T31 2026-10-12T13:28:42-04:00 (fingerprint 191fb196974f)
+grav_selfforce · plant grav-kernel-shift · RED (proven: 3 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope grav_selfforce · 20.22 s · 1 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-V4.grav_selfforce.redarm.log
+=== GO ===
+[13:51:47] py -3.12 tools/pb/verify.py --redarm fft --task M0-V4
+fft · clean · GO
+fft · plant fft-gpu-bitreverse · RED (proven: 7 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope fft · 44.83 s · 2 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-V4.fft.redarm.log
+=== GO ===
+[13:52:32] py -3.12 tools/pb/verify.py --redarm timing --task M0-V4
+timing · clean: proven by M0-T31 2026-10-12T13:30:23-04:00 (fingerprint dc90bfd9fec6)
+timing · plant timing-skip-pass · RED (proven: 1 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope timing · 24.41 s · 1 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-V4.timing.redarm.log
+=== GO ===
+[13:53:53] bash tools/pb/scratch_copy.sh . C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/070909a1-6bd2-426e-afdf-d6881bf5397b/scratchpad/v4copy
+[13:56:59] probes: py -3.12 scratchpad/v4mutants.py <copy> milestones/m0/logs (baseline, m1..m4) in C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/070909a1-6bd2-426e-afdf-d6881bf5397b/scratchpad/v4copy
+baseline: 7 s · passed/failed no count line · none
+  last lines:
+  --- stderr ---
+  <3>WSL (9 - Relay) ERROR: CreateProcessCommon:735: execvpe(/bin/bash) failed: No such file or directory
+baseline: 23 s · passed/failed ('15', '0') · none
+  SR-GRAV1 GPU a=40 centred on a cell: largest |Δg|/|g| = 3.006e-3 (0.30 %) at box cell (30, 24), 2820 cells with 0 < r ≤ 0.75a
+  SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.151e-6, Σ m|g| = 2.767e3, ratio 2.223e-9
+  SR-V4PROBE sub-vacuum background: world 128x128, box 64x64 at (32, 32), FFT [128, 128]: rel L1 vs twin phi 8.41e-8 gx 1.16e-6 gy 1.40e-6; net-force ratio 3.318e-9
+  SR-V4PROBE tall 128x512: world 128x512, box 40x344 at (40, 88), FFT [128, 1024]: rel L1 vs twin phi 8.56e-8 gx 1.21e-6 gy 8.61e-6; net-force ratio 4.837e-8
+  SR-V4PROBE whole world 600x400: world 600x400, box 600x400 at (0, 0), FFT [2048, 1024]: rel L1 vs twin phi 8.49e-8 gx 2.55e-5 gy 2.44e-5; net-force ratio 2.656e-4
+  SR-V4PROBE wide 600x400: world 600x400, box 392x64 at (120, 168), FFT [1024, 128]: rel L1 vs twin phi 1.18e-7 gx 3.20e-6 gy 3.13e-6; net-force ratio 9.475e-9
+m1-gradient-backward: 19 s · passed/failed ('8', '7') · none
+  SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 1.296e2, Σ m|g| = 2.769e3, ratio 4.679e-2
+  SR-V4PROBE sub-vacuum background: world 128x128, box 64x64 at (32, 32), FFT [128, 128]: rel L1 vs twin phi 8.41e-8 gx 6.22e-2 gy 1.40e-6; net-force ratio 4.172e-2
+  SR-V4PROBE tall 128x512: world 128x512, box 40x344 at (40, 88), FFT [128, 1024]: rel L1 vs twin phi 8.56e-8 gx 1.43e-1 gy 8.61e-6; net-force ratio 1.585e-1
+  SR-V4PROBE whole world 600x400: world 600x400, box 600x400 at (0, 0), FFT [2048, 1024]: rel L1 vs twin phi 8.49e-8 gx 2.06e-2 gy 2.44e-5; net-force ratio 8.590e-4
+  SR-V4PROBE wide 600x400: world 600x400, box 392x64 at (120, 168), FFT [1024, 128]: rel L1 vs twin phi 1.18e-7 gx 5.63e-2 gy 3.13e-6; net-force ratio 3.561e-2
+m2-no-vacuum-mask: 21 s · passed/failed ('14', '1') · none
+  SR-GRAV1 GPU a=40 centred on a cell: largest |Δg|/|g| = 3.006e-3 (0.30 %) at box cell (30, 24), 2820 cells with 0 < r ≤ 0.75a
+  SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.151e-6, Σ m|g| = 2.767e3, ratio 2.223e-9
+  SR-V4PROBE sub-vacuum background: world 128x128, box 64x64 at (32, 32), FFT [128, 128]: rel L1 vs twin phi 2.51e-3 gx 1.10e-3 gy 1.10e-3; net-force ratio 2.187e-5
+  SR-V4PROBE tall 128x512: world 128x512, box 40x344 at (40, 88), FFT [128, 1024]: rel L1 vs twin phi 8.56e-8 gx 1.21e-6 gy 8.61e-6; net-force ratio 4.837e-8
+  SR-V4PROBE whole world 600x400: world 600x400, box 600x400 at (0, 0), FFT [2048, 1024]: rel L1 vs twin phi 8.49e-8 gx 2.55e-5 gy 2.44e-5; net-force ratio 2.656e-4
+  SR-V4PROBE wide 600x400: world 600x400, box 392x64 at (120, 168), FFT [1024, 128]: rel L1 vs twin phi 1.18e-7 gx 3.20e-6 gy 3.13e-6; net-force ratio 9.475e-9
+m3-ktable-transposed: 21 s · passed/failed ('12', '3') · none
+  SR-GRAV1 GPU a=40 centred on a cell: largest |Δg|/|g| = 3.006e-3 (0.30 %) at box cell (30, 24), 2820 cells with 0 < r ≤ 0.75a
+  SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.151e-6, Σ m|g| = 2.767e3, ratio 2.223e-9
+  SR-V4PROBE sub-vacuum background: world 128x128, box 64x64 at (32, 32), FFT [128, 128]: rel L1 vs twin phi 8.41e-8 gx 1.16e-6 gy 1.40e-6; net-force ratio 3.318e-9
+  SR-V4PROBE tall 128x512: world 128x512, box 40x344 at (40, 88), FFT [128, 1024]: rel L1 vs twin phi 9.29e-1 gx 8.67e-1 gy 9.89e-1; net-force ratio 1.259e-8
+  SR-V4PROBE whole world 600x400: world 600x400, box 600x400 at (0, 0), FFT [2048, 1024]: rel L1 vs twin phi 9.12e-1 gx 8.96e-1 gy 1.79e0; net-force ratio 1.598e-3
+  SR-V4PROBE wide 600x400: world 600x400, box 392x64 at (120, 168), FFT [1024, 128]: rel L1 vs twin phi 4.80e-1 gx 9.97e-1 gy 1.01e0; net-force ratio 8.527e-8
+m4-kernel-diagonal: 20 s · passed/failed ('15', '0') · none
+  SR-GRAV1 GPU a=40 centred on a cell: largest |Δg|/|g| = 4.256e-3 (0.43 %) at box cell (30, 24), 2820 cells with 0 < r ≤ 0.75a
+  SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 4.083e-6, Σ m|g| = 2.758e3, ratio 1.480e-9
+  SR-V4PROBE sub-vacuum background: world 128x128, box 64x64 at (32, 32), FFT [128, 128]: rel L1 vs twin phi 8.08e-8 gx 1.11e-6 gy 1.55e-6; net-force ratio 8.205e-9
+  SR-V4PROBE tall 128x512: world 128x512, box 40x344 at (40, 88), FFT [128, 1024]: rel L1 vs twin phi 6.96e-8 gx 1.22e-6 gy 8.77e-6; net-force ratio 4.535e-8
+  SR-V4PROBE whole world 600x400: world 600x400, box 600x400 at (0, 0), FFT [2048, 1024]: rel L1 vs twin phi 9.78e-8 gx 2.54e-5 gy 2.44e-5; net-force ratio 2.723e-4
+  SR-V4PROBE wide 600x400: world 600x400, box 392x64 at (120, 168), FFT [1024, 128]: rel L1 vs twin phi 1.09e-7 gx 3.23e-6 gy 3.12e-6; net-force ratio 1.040e-8
+[14:01:25] cargo build --release --locked -p sr-app (freshness check)
+[14:01:36] build/target/release/sandbox-reactions headless --scene scenes/fill_world.json --steps 200 --timing --adapter "RTX 4080" --out C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/070909a1-6bd2-426e-afdf-d6881bf5397b/scratchpad/v4-fill_world
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=15.143633 until=none
+timing {"per_pass_ms": {"P0 edits": 0.026220160000000006, "P1 dt": 0.009283359999999996, "P2 gravity": 0.8595864000000002, "P8 floors": 0.21081551999999992, "P9 reductions": 0.10874207999999992}, "source": "gpu-timestamp", "step_ms_mean": 1.2619214399999998}
+{'adapter': {'backend': 'Vulkan', 'driver': 'NVIDIA', 'name': 'NVIDIA GeForce RTX 4080 Laptop GPU'}, 'events': [], 'git': 'cce5da7', 'ledger': {'end': {}, 'start': {}}, 'objects': [], 'scene': 'scenes/fill_world.json', 'sim_time': 15.143632888793945, 'steps': 200, 'tool': 'sandbox-reactions 0.0.0', 'until': {'condition': 'steps:200', 'met': True}, 'version': 1, 'wall_s': 0.3427716, 'world': {'edge': 'leave', 'height': 400, 'width': 600}}
+[14:01:38] build/target/release/sandbox-reactions headless --scene scenes/sun_disk.json --steps 200 --timing --adapter "RTX 4080" --out C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/070909a1-6bd2-426e-afdf-d6881bf5397b/scratchpad/v4-sun_disk
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=6.052822 until=none
+timing {"per_pass_ms": {"P0 edits": 0.02641807999999999, "P1 dt": 0.009488319999999996, "P2 gravity": 0.08007791999999997, "P8 floors": 0.060320479999999996, "P9 reductions": 0.03865935999999999}, "source": "gpu-timestamp", "step_ms_mean": 0.25733744000000003}
+{'adapter': {'backend': 'Vulkan', 'driver': 'NVIDIA', 'name': 'NVIDIA GeForce RTX 4080 Laptop GPU'}, 'events': [], 'git': 'cce5da7', 'ledger': {'end': {}, 'start': {}}, 'objects': [], 'scene': 'scenes/sun_disk.json', 'sim_time': 6.0528215020895, 'steps': 200, 'tool': 'sandbox-reactions 0.0.0', 'until': {'condition': 'steps:200', 'met': True}, 'version': 1, 'wall_s': 0.1339563, 'world': {'edge': 'leave', 'height': 400, 'width': 600}}
+sun_disk 200 wall_s 0.1207347
+sun_disk 200 wall_s 0.1263409
+sun_disk 200 wall_s 0.1234243
+sun_disk 2200 wall_s 0.8574028
+sun_disk 2200 wall_s 0.8511573
+sun_disk 2200 wall_s 0.8549428
+fill_world 200 wall_s 0.3233155
+fill_world 200 wall_s 0.3247035
+fill_world 200 wall_s 0.3366406
+fill_world 2200 wall_s 3.0048902
+fill_world 2200 wall_s 2.8764182
+fill_world 2200 wall_s 2.7811352
+[14:05:07] py -3.12 tools/pb/verify.py --all --task M0-V4 (Verify 1, the complete loop)
+plan_lint       509/0/0      0.44 s  GO
+tools_selftest  10/0/0     313.36 s  GO
+toolchain       3/0/0        8.00 s  GO
+build           2/0/0       15.53 s  GO
+registry        29/0/0       2.01 s  GO
+eos             13/0/0       0.89 s  GO
+fft_twin        10/0/0       1.27 s  GO
+grav_force      8/0/0        7.30 s  GO
+grav_selfforce  3/0/0        3.08 s  GO
+fft             8/0/0       16.44 s  GO
+time_control    18/0/0       0.69 s  GO
+strings         3/0/0        3.41 s  GO
+adapter         10/0/0      18.50 s  GO
+state           6/0/0       10.72 s  GO
+booking         4/0/0        9.33 s  GO
+floors          7/0/0       16.48 s  GO
+dt              6/0/0       12.67 s  GO
+box             6/0/0       12.05 s  GO
+latch           5/0/0       10.05 s  GO
+timing          5/0/0       20.61 s  GO
+scene           8/0/0       10.80 s  GO
+dump            8/0/0       22.83 s  GO
+boot            1/0/0       11.81 s  GO
+desktop         2/0/0       33.25 s  GO
+web             3/0/0      168.97 s  GO
+capture         2/0/0       11.17 s  GO
+licences        3/0/0       39.19 s  GO
+watch_only      1/0/0        0.77 s  GO
+logs: milestones/m0/logs/M0-V4.<scope>.log · record: loop_times.jsonl · tree cce5da7f4f04+5eba47dfdad3
+anchor: 1 path×scope entries moved by this run
+anchor: 130 paths checked · 114 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 130 covered of 244 visible
+verify: 693 passed, 0 failed, 0 skipped · 28/28 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 183.59 s + loop 0.08 s · mode all · jobs 8 · box Laser2025-20 · python 3.12.10 · load 0.84->1.51 · base: M0-V4's start 2026-10-12T13:39:14-04:00
+=== GO ===
+[14:08:43] headless --scene scenes/sun_disk.json --world 1024x400 --steps 2 --adapter "RTX 4080"
+SR-HEADLESS DONE steps=2 sim_time=0.060528 until=none
+  1024x400 exit 0
+[14:08:44] headless --scene scenes/sun_disk.json --world 1032x400 --steps 2 --adapter "RTX 4080"
+SR-ERROR bad arguments: gravity over a 1032x400 world: box axis of 1032 cells pads outside 32..=2048
+  1032x400 exit 4
+[14:08:45] headless --scene scenes/sun_disk.json --world 2048x2048 --steps 2 --adapter "RTX 4080"
+SR-ERROR bad arguments: gravity over a 2048x2048 world: box axis of 2048 cells pads outside 32..=2048
+  2048x2048 exit 4
+fill_world.json exit 0 process wall  s 
+fill_world_nograv.json exit 0 process wall  s 
+fill_world.json exit 0 process wall  s 
+fill_world_nograv.json exit 0 process wall  s 
+fill_world.json exit 0 process wall  s 
+fill_world_nograv.json exit 0 process wall  s 
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] Le fichier spécifié est introuvable
+process wall, fill_world 600x400, 1 step, gravity on: median 1.424 s over 5 runs (1.514, 1.424, 1.397, 1.475, 1.412)
+process wall, fill_world 600x400, 1 step, gravity off: median 1.255 s over 5 runs (1.354, 1.232, 1.309, 1.247, 1.255)
+difference (the kernel table for 42 sizes, P2's pipelines and buffers, 2 P2 solves): 0.170 s
+[14:13:48] py -3.12 tools/pb/rung_record.py report
+[14:16:02] py -3.12 tools/pb/plan.py append tc3.md --after M0-V4
+append: checks=3 failed=0 warnings=1 · flow=per-task · flow_row=written
+WARN: M0-TC3 went in above M0-V4's trailer (> **Commit gate (lead):** Phase 6 closes after M0-V4 — from…), which stays last - check which side of it the block belongs on
+=== GO ===
+[14:16:03] py -3.12 tools/pb/plan.py append d25.md --after M0-TC3
+append: checks=3 failed=0 warnings=1 · flow=per-task · flow_row=written
+WARN: M0-D25 went in above M0-TC3's trailer (> **Commit gate (lead):** Phase 6 closes after M0-V4 — from…), which stays last - check which side of it the block belongs on
+=== GO ===
+[14:16:03] py -3.12 tools/pb/plan.py append d26.md --after M0-D25
+append: checks=3 failed=0 warnings=1 · flow=per-task · flow_row=written
+WARN: M0-D26 went in above M0-D25's trailer (> **Commit gate (lead):** Phase 6 closes after M0-V4 — from…), which stays last - check which side of it the block belongs on
+=== GO ===
+[14:16:42] py -3.12 tools/pb/plan.py flag M0-V5 ... --from M0-V4
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+[14:17:30] py -3.12 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+lint: checks=518 failed=0 warnings=10 · blocks=197 · flow_rows=197 · verify_fences=0 · history=0 · flow=per-task · header=464/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC2: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-TM4: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TR1: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-TR1a: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-TR1b: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D21: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-D22: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D23: DONE outside the current phase and 29 lines long - stub it (§2.6)
+WARN: M0-D24: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D25 4
+=== GO ===
+[14:29:29] py -3.12 tools/pb/plan.py append d27.md --after M0-TC3 (the lead's word)
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+[14:55:55] py -3.12 tools/pb/plan.py close M0-V4 --status DONE --text <handoff> --set Next task / Open D register / Outstanding commit gates
+close: checks=6 failed=0 warnings=0 · handoff_lines=1 · flow=per-task · set=3 · replaced=3 · appended=0
+=== GO ===
+[14:56:00] py -3.12 tools/pb/verify.py --changed --task M0-V4 (the claim)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why strings: stale: milestones/m0/m0_contrat.md
+why watch_only: stale: milestones/m0/m0_contrat.md
+plan_lint       520/0/0      0.38 s  GO
+strings         3/0/0        1.24 s  GO
+watch_only      1/0/0        0.20 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+fft_twin        NOT RUN (not impacted: its 13 path(s) checked at the anchor)
+grav_force      NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+grav_selfforce  NOT RUN (not impacted: its 51 path(s) checked at the anchor)
+fft             NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 53 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 53 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 51 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 56 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-V4.<scope>.log · record: loop_times.jsonl · tree cce5da7f4f04+c7fb31d54278
+anchor: 3 path×scope entries moved by this run
+anchor: 130 paths checked · 116 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 130 covered of 246 visible
+skipped   108  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 524 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 25 not impacted · 1.24 s + loop 0.20 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 4.33->2.09 · base: M0-V4's start 2026-10-12T13:39:14-04:00
+=== GO ===

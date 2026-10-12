@@ -1,0 +1,28 @@
+== 2026-10-12T14:05:07-04:00 plan_lint · task M0-V4 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.44 s
+lint: checks=509 failed=0 warnings=9 · blocks=194 · flow_rows=194 · verify_fences=0 · history=0 · flow=per-task · header=458/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC2: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-TM4: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TR1: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-TR1a: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-TR1b: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D21: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-D22: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D23: DONE outside the current phase and 29 lines long - stub it (§2.6)
+WARN: M0-D24: DONE outside the current phase and 22 lines long - stub it (§2.6)
+=== GO ===
+
+== 2026-10-12T14:56:02-04:00 plan_lint · task M0-V4 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.38 s
+lint: checks=520 failed=0 warnings=9 · blocks=198 · flow_rows=198 · verify_fences=0 · history=0 · flow=per-task · header=465/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC2: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-TM4: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TR1: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-TR1a: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-TR1b: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D21: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-D22: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D23: DONE outside the current phase and 29 lines long - stub it (§2.6)
+WARN: M0-D24: DONE outside the current phase and 22 lines long - stub it (§2.6)
+=== GO ===
+

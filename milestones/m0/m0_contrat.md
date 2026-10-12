@@ -51,6 +51,15 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     these records, and none can be rebuilt from the cells: a latch set within 1.0 t.u. before the dump would fire again
     on a resume that starts armed (measured, `dump` scope's control case) — the lead's answer at M0-T26, 2026-10-11:
     «Add one header key (Recommended)».
+  - [M0-V4] §2.8's "any width and height that are multiples of 8 within [64, 2048]" · the same with gravity off; with
+    gravity on (§2.12.1's `gravity` switch, on by default), each axis at most 1024 cells — a wider or taller world is
+    refused when its step is built (`headless` exit 4, « SR-ERROR bad arguments: gravity over a 1032x400 world: box axis
+    of 1032 cells pads outside 32..=2048 »); 4096-point FFTs wait for the milestone that picks the world's size by
+    graphics card (B21) · §1.3.3 pads a box axis to the smallest power of two ≥ 2 × its cells, so a box over 1024 cells
+    needs 4096 points, past the GPU FFT's 2048 (one row in WebGPU's default 16,384 B of workgroup memory, M0-T30) and the
+    twin's; no M0 surface makes such a world (§2.8: the UI never changes it) — measured on win-laptop, 2026-10-12:
+    `--world 1024x400` exit 0, `1032x400` and `2048x2048` exit 4 — the lead's answer at M0-V4, 2026-10-12: «Cap at 1024
+    (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

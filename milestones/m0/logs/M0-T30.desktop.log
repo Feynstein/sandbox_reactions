@@ -1,0 +1,25 @@
+== 2026-10-12T13:09:11-04:00 desktop[window] · task M0-T30 · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-12T13:09:11-04:00 desktop[launcher] · task M0-T30 · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 21.45 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 2.4s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T30.launch.game-offscreen.log)
+game-offscreen: pid 9312 stopped
+game-offscreen: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-T30.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 3 s, booted and checked in 18 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 44.67 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 7.6s (log C:\workspace\sandbox_reactions\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 5396 stopped
+web: nothing recorded
+services: 5, stopped: 5
+=== GO ===
+launcher game-offscreen: built in 4 s, started, stopped, nothing left running
+=== GO ===
+

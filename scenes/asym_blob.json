@@ -1,0 +1,6 @@
+{"version": 1,
+ "world": {"width": 128, "height": 128, "edge": "leave"},
+ "objects": [
+   {"kind": "disk", "x": 40, "y": 56, "a": 20, "sigma_c": 1.0, "t": 2.0, "composition": {"H": 1.0}, "v": [0, 0]},
+   {"kind": "rect", "x0": 78, "y0": 30, "w": 26, "h": 12, "sigma": 0.6, "t": 2.0, "composition": {"H": 1.0}, "v": [0, 0]}
+ ]}

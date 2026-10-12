@@ -42,6 +42,12 @@ mod scene;
 /// M0-T26 — state dumps (contract §2.12.3, §0.5 [M0-T26], §3.1, §3.3, §1.3.4).
 mod dump;
 
+/// M0-T29 — gravity on the CPU twin (contract §1.4, §5.1's G-GRAV1 and G-GRAV2); M0-T31 — P2 on the GPU, the same oracles.
+mod grav;
+
+/// M0-T30 — the GPU FFT and the convolution over the box (contract §1.3.3, §1.4.2, §6.2.2).
+mod fft;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;

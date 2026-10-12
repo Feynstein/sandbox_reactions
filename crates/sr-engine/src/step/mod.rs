@@ -2,10 +2,12 @@
 //! dispatches built once for the state's world. A step records the lists as they are — it reads no wall clock, no
 //! rung, no frame and no label — so the same state and step count give the same state, bit for bit (§1.3.4).
 //!
-//! Today P1, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
-//! M0-T20), P8 the floors, then the species renormalisation (shaders/floors.wgsl, M0-T19); every other pass is an empty
-//! slot its lot fills, in place, without reordering the others. A step knows its index — the guard runs on every 64th
-//! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction.
+//! Today P1, P2, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
+//! M0-T20), P2 gravity when the step is built with it ([`grav`], [`Step::with_gravity`], M0-T31), P8 the floors, then the
+//! species renormalisation (shaders/floors.wgsl, M0-T19); every other pass is an empty slot its lot fills, in place,
+//! without reordering the others. A step knows its index — the guard runs on every 64th
+//! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction — after P2 on that state, so step 0's
+//! Δt has its gravity term.
 //!
 //! Every pass runs inside the active box ([`boxfit`], §1.3.3, M0-T21): a box-sized dispatch takes its workgroup count
 //! from the box's indirect sizes on the GPU ([`Size::Indirect`]), never from a readback. The box is fit before step 0
@@ -14,6 +16,9 @@
 //! A frame ([`latch`], §1.8.3, §1.8.5, M0-T22) records N steps under the latch: every dispatch of a step then takes its
 //! workgroup count from a buffer the latch's controller can zero, and the guard's and the re-fit's schedule is the GPU's
 //! step index, not this step's CPU count.
+//!
+//! The FFT and the zero-padded convolution over the box ([`fft`], shaders/fft.wgsl, M0-T30) are machinery, not a pass:
+//! P2 builds on them ([`grav`]), P7 when its lot builds it.
 //!
 //! The equation of state every pass shares (shaders/eos.wgsl) is prepended to a pass's shader ([`with_eos`]) and bound
 //! as group 1 from [`EosGpu`], built once per run from physics.json and elements.json: the species table, the cold
@@ -27,6 +32,8 @@
 
 pub mod boxfit;
 pub mod dt;
+pub mod fft;
+pub mod grav;
 pub mod latch;
 
 use std::cell::{Cell, RefCell};
@@ -34,9 +41,11 @@ use std::cell::{Cell, RefCell};
 use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
-use crate::state::{Booking, State, BOOK_GROUPS, TERMS};
+use crate::state::{Booking, SideFields, State, BOOK_GROUPS, TERMS};
 use boxfit::{BoxFit, BoxMode, BoxReport, ARGS_TILES, REFIT_EVERY};
 use dt::{Dt, DtReport, GUARD_EVERY};
+use fft::FftError;
+use grav::Gravity;
 use latch::Latch;
 
 /// The passes of one step, in §1.3.2's order.
@@ -101,11 +110,12 @@ pub enum Size {
     Indirect(wgpu::Buffer, u64),
 }
 
-/// The step: one dispatch list per pass, indexed as `Pass::ORDER`, the Δt record, the active box, the latch and the
-/// index of the next step.
+/// The step: one dispatch list per pass, indexed as `Pass::ORDER`, the Δt record, the active box, gravity's field when
+/// it runs P2, the latch and the index of the next step.
 pub struct Step {
     passes: [Vec<Dispatch>; 10],
     dt: Dt,
+    gravity: Option<Gravity>,
     boxfit: BoxFit,
     latch: Latch,
     next: Cell<u64>,
@@ -307,19 +317,54 @@ impl Step {
         physics: &Physics,
         mode: BoxMode,
     ) -> Step {
+        Step::build(device, state, booking, eos, physics, mode, None).expect("a step without gravity builds")
+    }
+
+    /// As [`Step::with_box`], with P2 gravity (§1.4; §2.12.1's `gravity` switch on): φ into `side`'s φ plane, g kept by
+    /// the step ([`Step::gravity_field`]), Δt's gravity term from g. Refused when a world axis pads past the FFT's
+    /// largest length (over 1024 cells).
+    pub fn with_gravity(
+        device: &wgpu::Device,
+        state: &State,
+        booking: &Booking,
+        eos: &EosGpu,
+        physics: &Physics,
+        mode: BoxMode,
+        side: &SideFields,
+    ) -> Result<Step, FftError> {
+        Step::build(device, state, booking, eos, physics, mode, Some(side))
+    }
+
+    fn build(
+        device: &wgpu::Device,
+        state: &State,
+        booking: &Booking,
+        eos: &EosGpu,
+        physics: &Physics,
+        mode: BoxMode,
+        side: Option<&SideFields>,
+    ) -> Result<Step, FftError> {
         let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
             label: Some("reduce.wgsl"),
             source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/reduce.wgsl")).into()),
         });
         let mut boxfit = BoxFit::new(device, state, physics, mode);
-        let mut dt = Dt::new(device, &module, state, eos, physics, &boxfit);
+        let mut gravity = side.map(|side| Gravity::new(device, state, side, physics, &boxfit)).transpose()?;
+        let mut dt = Dt::new(device, &module, state, eos, physics, &boxfit, gravity.as_ref().map(Gravity::field));
         boxfit.build(device, &module, state, dt.record());
         let mut passes: [Vec<Dispatch>; 10] = Default::default();
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
+        passes[Pass::Gravity as usize] = gravity.as_mut().map(|g| std::mem::take(&mut g.dispatches)).unwrap_or_default();
         passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
         let latch = Latch::new(device, &passes, &dt, &boxfit);
-        Step { passes, dt, boxfit, latch, next: Cell::new(0), timer: Timer::default() }
+        Ok(Step { passes, dt, gravity, boxfit, latch, next: Cell::new(0), timer: Timer::default() })
+    }
+
+    /// P2's g = −∇φ (the x plane, then the y plane, f32, row-major over the world) when the step runs gravity; φ is the
+    /// [`SideFields`] plane it was built with. Inside the box only: outside, the last values P2 wrote there.
+    pub fn gravity_field(&self) -> Option<&wgpu::Buffer> {
+        self.gravity.as_ref().map(Gravity::field)
     }
 
     /// How many dispatches each pass records on a step the guard skips, in `Pass::ORDER`.
@@ -384,9 +429,11 @@ impl Step {
             None => record_dispatches(cpass, list),
         };
         if n == 0 {
-            // The box fit to the initial state, then P9's Δt reduction over it; the reduce dispatches are P9's own list.
+            // The box fit to the initial state, P2 on it, then P9's Δt reduction over it; the dispatches are P2's and P9's
+            // own lists.
             let mut cpass = self.timer.begin(encoder, "P9 reductions (initial state)", Pass::Reductions as usize);
             record(&mut cpass, &self.boxfit.refit, REFIT_EVERY);
+            record(&mut cpass, &self.passes[Pass::Gravity as usize], 1);
             record(&mut cpass, &self.passes[Pass::Reductions as usize], 1);
         }
         for (pass, dispatches) in Pass::ORDER.iter().zip(&self.passes) {
