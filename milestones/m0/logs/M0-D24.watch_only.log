@@ -1,0 +1,12 @@
+== 2026-10-12T12:26:34-04:00 watch_only · task M0-D24 · box Laser2025-20 :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.11 s
+files scanned: 8 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+1 passed, 0 failed (8 files)
+=== GO ===
+
+watch_only  1/0/0        0.11 s  GO
+logs: milestones/m0/logs/M0-D24.<scope>.log · record: loop_times.jsonl · tree 13a6daaa8468+d8af7b7c4def
+anchor: 0 path×scope entries moved by this run
+anchor: 115 paths checked · 108 skipped (3 classes) · 0 never checked · 1 stale · 0 unclassified · 0 owed · 116 covered of 224 visible
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.11 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 3.28->2.86
+=== GO ===

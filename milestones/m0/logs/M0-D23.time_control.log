@@ -1,0 +1,30 @@
+== 2026-10-12T12:19:54-04:00 time_control · task M0-D23 · box Laser2025-20 :: bash tests/cpu.sh sr-physics time
+-- time_control · exit=0 · 8.84 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 8.27s
+     Running unittests src\lib.rs (build/target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 18 tests
+test time::tests::a_frame_runs_ceil_owed_over_dt ... ok
+test time::tests::an_empty_world_dt_is_survived ... ok
+test time::tests::cap_readout_at_30_of_the_last_60_frames ... ok
+test time::tests::latch_stopped_steps_are_not_owed ... ok
+test time::tests::nine_ladder_rungs_until_calibration ... ok
+test time::tests::n_max_from_the_16_frame_cost_average ... ok
+test time::tests::pause_and_step_once ... ok
+test time::tests::rungs_below_top_over_1_5_then_top ... ok
+test time::tests::slow_down_only_ever_slower ... ok
+test time::tests::select_faster_slower_stop_at_the_ends ... ok
+test time::tests::capped_10000_frames_then_slow_motion_holds ... ok
+test time::tests::slow_motion_owed_floored_at_minus_dt ... ok
+test time::tests::speed_text_formats ... ok
+test time::tests::slow_down_off_runs_through_events ... ok
+test time::tests::no_auto_return_after_the_banner ... ok
+test time::tests::the_switch_keeps_sim_time_per_wall_second ... ok
+test time::tests::starts_at_x1_running ... ok
+test time::tests::top_switches_to_30_at_30_of_60_and_back_after_120_quiet ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 42 filtered out; finished in 0.01s
+
+

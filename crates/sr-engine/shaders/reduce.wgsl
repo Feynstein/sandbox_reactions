@@ -15,6 +15,11 @@
 // and writes Δt_{n+1}. No atomic, no scheduling-dependent order. P1's `dt_advance` makes it step n + 1's Δt. An empty
 // box bounds nothing: Δt_{n+1} is the largest finite f32.
 //
+// The sim time (M0-D21): P1 adds each step's Δt to the record's clock, an f64 kept as its bits — WGSL has no f64 — by an
+// exact add on u32 words rounded to nearest, ties to even: the CPU's `t += f64::from(dt)`, bit for bit, in step order.
+// So the clock is a function of the steps run, whatever their grouping into frames, bare steps included; a step the
+// latch stopped runs no P1 and adds nothing, and neither does an empty box's Δt (the largest f32) or a Δt of 0.
+//
 // The non-finite guard (every 64 steps, §1.3.2 P9): `guard_scan` reads all 14 channels of every cell; a NaN or Inf is
 // told by its bits (exponent all ones), never by a float comparison WGSL may fold away. Each finding is atomicMax'd as
 // 0xFFFFFFFF − (cell · 16 + channel), order-independent (§1.3.4), so the lowest cell, then its lowest channel, wins.
@@ -42,7 +47,8 @@ struct DtParams {
 }
 
 // The Δt record, one per run (dt.rs `DtRecord`): Δt_n of the step in flight, Δt_{n+1} as P9 left it, the index of the
-// step in flight and the steps begun; the guard's running finding, then the recorded one (step, code) and its flag.
+// step in flight and the steps begun; the guard's running finding, then the recorded one (step, code) and its flag;
+// the sim time of the steps begun, an f64's bits (low word first).
 struct DtState {
     dt: f32,
     dt_next: f32,
@@ -52,6 +58,8 @@ struct DtState {
     bad_step: u32,
     bad_code: u32,
     flagged: u32,
+    time_lo: u32,
+    time_hi: u32,
 }
 
 @group(0) @binding(0) var<uniform> dims: Dims;
@@ -196,6 +204,85 @@ fn dt_advance() {
     rec.dt = rec.dt_next;
     rec.step = rec.steps;
     rec.steps = rec.steps + 1u;
+    let dt_bits = bitcast<u32>(rec.dt);
+    if (dt_bits != 0u && dt_bits < bitcast<u32>(DT_UNBOUNDED)) {
+        let t = clock_add(vec2<u32>(rec.time_lo, rec.time_hi), dt_bits);
+        rec.time_lo = t.x;
+        rec.time_hi = t.y;
+    }
+}
+
+// 64-bit words as (low, high). `v >> s`, every bit shifted out OR-ed into bit 0 (the sticky bit).
+fn shr_sticky(v: vec2<u32>, s: u32) -> vec2<u32> {
+    if (s == 0u) {
+        return v;
+    }
+    if (s >= 64u) {
+        return vec2<u32>(select(0u, 1u, any(v != vec2<u32>(0u))), 0u);
+    }
+    var out: vec2<u32>;
+    var lost: bool;
+    if (s < 32u) {
+        out = vec2<u32>((v.x >> s) | (v.y << (32u - s)), v.y >> s);
+        lost = (v.x << (32u - s)) != 0u;
+    } else if (s == 32u) {
+        out = vec2<u32>(v.y, 0u);
+        lost = v.x != 0u;
+    } else {
+        out = vec2<u32>(v.y >> (s - 32u), 0u);
+        lost = v.x != 0u || (v.y << (64u - s)) != 0u;
+    }
+    return vec2<u32>(out.x | select(0u, 1u, lost), out.y);
+}
+
+fn add64(a: vec2<u32>, b: vec2<u32>) -> vec2<u32> {
+    let lo = a.x + b.x;
+    return vec2<u32>(lo, a.y + b.y + select(0u, 1u, lo < a.x));
+}
+
+// The f64 `t` (bits, t ≥ 0) plus the positive f32 whose bits are `dt_bits`, rounded to nearest, ties to even. Each
+// operand is (biased f64 exponent, 53-bit significand placed at bits 62..10): the 10 bits below are the guard and the
+// sticky bits, and bit 63 takes the carry.
+fn clock_add(t: vec2<u32>, dt_bits: u32) -> vec2<u32> {
+    let te = (t.y >> 20u) & 0x7ffu;
+    let tm = vec2<u32>(t.x << 10u, (((t.y & 0xfffffu) | select(0u, 0x100000u, te != 0u)) << 10u) | (t.x >> 22u));
+    // The f32 normalised (a subnormal shifted up until its bit 23 is set), then widened: f64 exponent e32 + 896.
+    var small_e = ((dt_bits >> 23u) & 0xffu) + 896u;
+    var dm = dt_bits & 0x7fffffu;
+    if (small_e == 896u) {
+        let k = countLeadingZeros(dm) - 8u;
+        dm = dm << k;
+        small_e = 897u - k;
+    } else {
+        dm = dm | 0x800000u;
+    }
+    var big_e = max(te, 1u);
+    var big = tm;
+    var small = vec2<u32>(0u, dm << 7u);
+    if (small_e > big_e) {
+        let e = big_e;
+        big_e = small_e;
+        small_e = e;
+        let m = big;
+        big = small;
+        small = m;
+    }
+    var s = add64(big, shr_sticky(small, big_e - small_e));
+    var e = big_e;
+    if ((s.y & 0x80000000u) != 0u) {
+        s = shr_sticky(s, 1u);
+        e = e + 1u;
+    }
+    let rem = s.x & 0x3ffu;
+    var keep = vec2<u32>((s.x >> 10u) | (s.y << 22u), s.y >> 10u);
+    if (rem > 0x200u || (rem == 0x200u && (keep.x & 1u) == 1u)) {
+        keep = add64(keep, vec2<u32>(1u, 0u));
+        if (keep.y >= 0x200000u) {
+            keep = vec2<u32>((keep.x >> 1u) | (keep.y << 31u), keep.y >> 1u);
+            e = e + 1u;
+        }
+    }
+    return vec2<u32>(keep.x, (e << 20u) | (keep.y & 0xfffffu));
 }
 
 fn non_finite(v: f32) -> bool {

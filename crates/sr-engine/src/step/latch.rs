@@ -19,7 +19,7 @@ use std::cell::{Cell, RefCell};
 use std::sync::mpsc::{channel, Receiver, Sender};
 
 use super::boxfit::{BoxFit, REFIT_EVERY};
-use super::dt::{Dt, GUARD_EVERY};
+use super::dt::{self, Dt, GUARD_EVERY};
 use super::{compute_pipeline, init_buffer, record_sized, Batch, Dispatch, Size, Step, StepCost, FRAME_SLOT, QUERIES};
 use crate::dump::Resume;
 use crate::state::read_buffers;
@@ -31,8 +31,8 @@ const SLOW_DOWN_BYTE: u64 = 4;
 const SINCE_BYTE: u64 = 20;
 /// The window the latch re-arms after (§1.8.5), in t.u.: `since` starts there, so a new latch is armed.
 const WINDOW: f32 = 1.0;
-/// reduce.wgsl's `DtState`, copied after the latch record into each readback.
-const DT_WORDS: usize = 8;
+/// reduce.wgsl's `DtState`, copied after the latch record into each readback (the sim time with it).
+const DT_WORDS: usize = dt::RECORD_WORDS;
 const READBACK_BYTES: u64 = ((RECORD_WORDS + DT_WORDS) * 4) as u64;
 /// The two records, then room for a whole query set's timestamps.
 const READBACK_TIMED_BYTES: u64 = READBACK_BYTES + 8 * QUERIES as u64;
@@ -51,7 +51,8 @@ pub struct FrameReport {
     pub steps_run: u32,
     /// The sim time the frame advanced: its steps' Δt summed in order, f32.
     pub advanced: f32,
-    /// The sim time of every frame reported so far, summed in f64.
+    /// The sim time after the frame: every step's Δt since the state was made, added in step order in f64 on the GPU
+    /// (P1) — the same whatever the steps' grouping into frames (M0-D21).
     pub sim_time: f64,
     /// Δt of the frame's last step run, and the next step's (§1.3.2 P1, P9).
     pub dt: f32,
@@ -94,7 +95,6 @@ struct Readbacks {
     sent: Sender<(usize, Result<(), wgpu::BufferAsyncError>)>,
     ready: Receiver<(usize, Result<(), wgpu::BufferAsyncError>)>,
     frames: u64,
-    sim_time: f64,
 }
 
 impl Latch {
@@ -167,7 +167,7 @@ impl Latch {
             ],
             dt_record: dt.record().clone(),
             device: device.clone(),
-            readbacks: RefCell::new(Readbacks { slots: Vec::new(), sent, ready, frames: 0, sim_time: 0.0 }),
+            readbacks: RefCell::new(Readbacks { slots: Vec::new(), sent, ready, frames: 0 }),
             hooked: Cell::new(false),
             record,
             args,
@@ -291,13 +291,11 @@ impl Step {
         got.sort_by_key(|(frame, ..)| *frame);
         got.into_iter()
             .map(|(_, w, timed)| {
-                let advanced = f32::from_bits(w[6]);
-                rb.sim_time += f64::from(advanced);
                 let d = &w[RECORD_WORDS..];
                 FrameReport {
                     steps_run: w[3],
-                    advanced,
-                    sim_time: rb.sim_time,
+                    advanced: f32::from_bits(w[6]),
+                    sim_time: dt::sim_time(d),
                     dt: f32::from_bits(d[0]),
                     dt_next: f32::from_bits(d[1]),
                     steps: u64::from(d[3]),
@@ -329,7 +327,7 @@ impl Step {
     }
 
     /// What a state dump carries beyond the cells (§2.12.3, contract §0.5 [M0-T26]): the GPU's step count (the next
-    /// step's index), the sim time of the frames reported so far, and the records no cell holds — Δt_n and Δt_{n+1}, the
+    /// step's index), the sim time of those steps (the Δt record's, M0-D21), and the records no cell holds — Δt_n and Δt_{n+1}, the
     /// latch's sim time since its last set, the box's record and indirect sizes. Read at a step boundary, after every
     /// submitted step; blocks on the device (tests and headless runs only).
     pub fn resume_records(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> (u64, f64, Resume) {
@@ -342,23 +340,24 @@ impl Step {
             box_record: std::array::from_fn(|i| w[DT_WORDS + i]),
             box_args: std::array::from_fn(|i| w[DT_WORDS + 8 + i]),
         };
-        (u64::from(w[3]), self.latch.readbacks.borrow().sim_time, resume)
+        (u64::from(w[3]), dt::sim_time(&w), resume)
     }
 
     /// Restores [`Step::resume_records`] into a step that has recorded nothing yet: its next step is `step` (step 0 is
-    /// still preceded by the initial fit and reduction), the frames' sim time goes on from `sim_time`, the guard's finding
+    /// still preceded by the initial fit and reduction), the sim time goes on from `sim_time`, the guard's finding
     /// is clear and the latch's flag unset. Every later step then runs as it would have in the run the records came from.
     pub fn restore(&self, queue: &wgpu::Queue, step: u64, sim_time: f64, r: &Resume) {
         let steps = u32::try_from(step).expect("a step index within the GPU's u32 count");
         let bytes = |words: &[u32]| words.iter().flat_map(|w| w.to_le_bytes()).collect::<Vec<u8>>();
-        // reduce.wgsl's DtState: dt, dt_next, the step in flight (the last one run), the steps begun, a clear guard.
-        let dt = [r.dt.to_bits(), r.dt_next.to_bits(), steps.saturating_sub(1), steps, 0, 0, 0, 0];
+        // reduce.wgsl's DtState: dt, dt_next, the step in flight (the last one run), the steps begun, a clear guard, the
+        // sim time's bits.
+        let t = sim_time.to_bits();
+        let dt = [r.dt.to_bits(), r.dt_next.to_bits(), steps.saturating_sub(1), steps, 0, 0, 0, 0, t as u32, (t >> 32) as u32];
         queue.write_buffer(self.dt.record(), 0, &bytes(&dt));
         queue.write_buffer(self.boxfit.active(), 0, &bytes(&r.box_record));
         queue.write_buffer(self.boxfit.args(), 0, &bytes(&r.box_args));
         queue.write_buffer(&self.latch.record, 0, &bytes(&[0]));
         queue.write_buffer(&self.latch.record, SINCE_BYTE, &bytes(&[r.latch_since.to_bits()]));
-        self.latch.readbacks.borrow_mut().sim_time = sim_time;
         self.next.set(step);
     }
 }

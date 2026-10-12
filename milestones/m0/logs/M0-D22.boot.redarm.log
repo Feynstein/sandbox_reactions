@@ -1,0 +1,59 @@
+[M0-D22 boot --redarm] opened 2026-10-12T12:15:00-04:00
+==== 2026-10-12T12:15:01-04:00 boot · clean · a fresh scratch copy of the tree
+== 2026-10-12T12:15:06-04:00 boot · task M0-D22 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 41.73 s
+headless-boot: ready - exit 0, 2.9s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-g_z12_qh\arm0\milestones\m0\logs\M0-D22.launch.headless-boot.log)
+headless-boot: pid 8580 not signalled - gone
+headless-boot: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-g_z12_qh\arm0\milestones\m0\logs\M0-D22.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "unknown",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 6.0528215020895,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.1382713,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 31 s, booted and checked in 10 s
+=== GO ===
+
+==== 2026-10-12T12:15:01-04:00 boot · plant scene-refuse · a fresh scratch copy of the tree
+planted scene-refuse: tests/plants/scene-refuse.patch -> crates/sr-engine/src/scene.rs
+== 2026-10-12T12:15:06-04:00 boot · task M0-D22 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 53.99 s
+headless-boot: exited 4 (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-g_z12_qh\arm1\milestones\m0\logs\M0-D22.launch.headless-boot.log)
+headless-boot: pid 12580 not signalled - gone
+headless-boot: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-g_z12_qh\arm1\milestones\m0\logs\M0-D22.launch.headless-boot.log
+services: 1, ready: 0, failures: 1
+FAIL headless-boot: exited 4 (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-g_z12_qh\arm1\milestones\m0\logs\M0-D22.launch.headless-boot.log)
+=== NO-GO: launch.py smoke headless-boot did not end GO ===
+
+boot · clean · GO
+boot · plant scene-refuse · RED (proven: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope boot · 60.63 s · 2 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-D22.boot.redarm.log
+=== GO ===

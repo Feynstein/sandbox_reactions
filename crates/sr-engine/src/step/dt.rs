@@ -8,6 +8,7 @@
 //! Every 64 steps P9 also runs the non-finite guard (`guard_scan`, `guard_stamp`): the first NaN or Inf found, by step,
 //! cell and channel, stays in the record until the run reads it ([`Dt::read`]) and stops (exit 5, §3.3).
 //!
+//! P1 also adds each step's Δt to the record's sim time, an f64 summed on the GPU in step order (M0-D21, [`sim_time`]).
 //! Later passes read Δt_n from [`Dt::record`]'s first word (an f32). The reduction runs over the active box
 //! ([`super::boxfit`]): `dt_cells` takes its workgroup count from the box's indirect sizes and `dt_partials` the box's
 //! partials; the guard scans the whole world.
@@ -21,8 +22,9 @@ use crate::state::{read_buffers, State, CHANNELS};
 /// The guard runs at step indices ≡ 0 (mod `GUARD_EVERY`).
 pub const GUARD_EVERY: u64 = 64;
 
-/// reduce.wgsl's `DtState`: dt, dt_next, step, steps, found, bad_step, bad_code, flagged.
-const RECORD_WORDS: usize = 8;
+/// reduce.wgsl's `DtState`: dt, dt_next, step, steps, found, bad_step, bad_code, flagged, then the sim time (an f64's
+/// bits, low word first).
+pub(super) const RECORD_WORDS: usize = 10;
 const WG: u32 = 256;
 
 /// The first non-finite value the guard found: the step it was found at, the cell and the channel (§2.2's name).
@@ -43,6 +45,8 @@ pub struct DtReport {
     pub dt_next: f32,
     /// Steps run since the record was made.
     pub steps: u64,
+    /// The sim time of those steps: each one's Δt added in step order, in f64 (P1, M0-D21).
+    pub sim_time: f64,
     pub non_finite: Option<NonFinite>,
 }
 
@@ -150,6 +154,17 @@ impl Dt {
                 channel: CHANNELS[channel as usize],
             }
         });
-        DtReport { dt: f32::from_bits(w[0]), dt_next: f32::from_bits(w[1]), steps: u64::from(w[3]), non_finite }
+        DtReport {
+            dt: f32::from_bits(w[0]),
+            dt_next: f32::from_bits(w[1]),
+            steps: u64::from(w[3]),
+            sim_time: sim_time(&w),
+            non_finite,
+        }
     }
+}
+
+/// The sim time in a Δt record's words: the f64 whose bits are words 8 (low) and 9 (high).
+pub(super) fn sim_time(w: &[u32]) -> f64 {
+    f64::from_bits(u64::from(w[8]) | (u64::from(w[9]) << 32))
 }

@@ -497,10 +497,24 @@ def argv_of(cmd, man, root, case=None):
         toks.append(tok.replace("{case}", case) if case is not None else tok)
     if not toks:
         raise ValueError("an empty command")
-    exe = toks[0] if os.path.dirname(toks[0]) else shutil.which(toks[0])
+    exe = toks[0] if os.path.dirname(toks[0]) else shutil.which(toks[0], path=tool_path())
     if not exe:
         raise ValueError(f"{toks[0]!r} is not on PATH")
     return [exe] + toks[1:]
+
+
+def tool_path(environ=None):
+    """PATH for the commands this harness spawns. Windows (win-laptop, M0-D23): a plain PowerShell's `bash` is
+    System32's WSL relay, which has no /bin/bash - so Git's usr/bin (bash and the Unix tools the scripts call) and
+    ~/bin (rsync) go first, in the spawned commands only. Elsewhere PATH as is."""
+    path = (os.environ if environ is None else environ).get("PATH", os.defpath)
+    if os.name != "nt":
+        return path
+    git = shutil.which("git", path=path)
+    roots = [*(Path(git).parents if git else ()), Path(os.environ.get("ProgramFiles", r"C:\Program Files")) / "Git"]
+    usr = next((r / "usr" / "bin" for r in roots if (r / "usr" / "bin" / "bash.exe").is_file()), None)
+    first = [str(d) for d in (usr, Path.home() / "bin") if d and d.is_dir()]
+    return os.pathsep.join(first + [path])
 
 
 def case_env(task):
@@ -512,6 +526,7 @@ def case_env(task):
     env.setdefault("PYTHONIOENCODING", "utf-8")
     env.setdefault("PYTHONFAULTHANDLER", "1")
     env.setdefault("PB_PYTHON", sys.executable)
+    env["PATH"] = tool_path(env)
     return env
 
 

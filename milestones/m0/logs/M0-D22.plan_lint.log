@@ -1,0 +1,12 @@
+[M0-D22 plan_lint, late register fix] opened 2026-10-12T12:17:31-04:00
+== 2026-10-12T12:17:32-04:00 plan_lint · task M0-D22 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.48 s
+lint: checks=516 failed=0 warnings=0 · blocks=194 · flow_rows=194 · verify_fences=0 · history=0 · flow=per-task · header=456/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+=== GO ===
+
+plan_lint  516/0/0      0.48 s  GO
+logs: milestones/m0/logs/M0-D22.<scope>.log · record: loop_times.jsonl · tree 13a6daaa8468+06e3009690d9
+anchor: 1 path×scope entries moved by this run
+anchor: 116 paths checked · 107 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 116 covered of 223 visible
+verify: 516 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.51 s · mode scope · jobs 8 · box Laser2025-20 · python 3.13.14 · load 4.5->5.3
+=== GO ===

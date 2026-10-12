@@ -168,9 +168,14 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
   slow-down on → no later step of the frame runs, the box re-fit's dispatches included, and the frame's report names the
   step it fired after; the CPU then drops the rung (time control). The slow-down off → the frame runs through.
 - **`Step::poll(device)`** returns each submitted frame's `FrameReport` once, in order, from a readback mapped on submit
-  — never waiting on the GPU: `steps_run`, `advanced` (its steps' Δt summed in order, f32), `sim_time` (every frame so
-  far, f64), `dt`, `dt_next`, `steps` (the Δt record's count), `latch_fired`, and `cost` with timing on (the frame is one
+  — never waiting on the GPU: `steps_run`, `advanced` (its steps' Δt summed in order, f32 — the frame's own), `sim_time`
+  (the Δt record's clock after the frame), `dt`, `dt_next`, `steps` (the Δt record's count), `latch_fired`, and `cost` with timing on (the frame is one
   timing batch; its timestamps ride the same readback).
+- **The sim time** is a function of the steps run (M0-D21): P1 (`dt_advance`) adds each step's Δt to the Δt record's
+  clock, an f64 kept as its bits — WGSL has no f64 — by an exact add on u32 words rounded to nearest even, the CPU's
+  `t += f64::from(dt)` bit for bit. Frames, however grouped, and bare steps give one value; a step the latch stopped runs
+  no P1, and an empty box's Δt (the largest f32) or a Δt of 0 adds nothing. `DtReport`, `FrameReport`, the dump and the
+  summary all read that clock.
 - **Frames or bare steps, not both**: after a stopped frame the CPU's step count runs ahead of the GPU's, so a run uses
   one or the other (M0-T22). Headless runs bare steps (`Step::run`) today.
 - **Proof today**: the `latch` scope grades the mechanism on a test hook (`set_latch_hook`, a box-sized probe). **G-LATCH
@@ -197,15 +202,15 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
   header's `step` is the steps run since the scene (the next step's index); `resume` carries what no cell holds and a
   resumed run needs to stay bit-identical (§1.3.4): Δt_n and Δt_{n+1}, the latch's sim time since its last set, the box's
   record and indirect sizes — through `Step::resume_records` / `Step::restore` (`latch.rs`), with the GPU step count and
-  the frames' sim time. Not dumped: the booking (the ledger restarts). `sinks` is written empty until P3's block, and
+  the sim time (the Δt record's clock). Not dumped: the booking (the ledger restarts). `sinks` is written empty until P3's block, and
   `load_dump` refuses a dump holding any (the format reads up to §2.6's count). `--load-dump` takes the world and cells from the dump, the constants, edge and switches from the scene;
   `--dump-every` counts step indices from the scene, so a resumed run's dumps fall where a straight run's do.
   `Dump::from_bytes` refuses by name: a wrong magic, a file cut anywhere, bytes past the last plane, a non-UTF-8 or
   non-JSON header, an unknown or missing key, another version, a world §2.8 refuses, another channel list, more sinks than
   §2.6 allows. serde_json parses floats best-effort, so `sim_time` is re-read from its own token (M0-T26).
 - **Summary.** Every §2.12.2 key, filled as the blocks that compute it land: today `tool`, `git`, `adapter`, `scene`,
-  `world` {width, height, edge}, `steps`, `wall_s` and `until` (`steps:N`); `sim_time` is the run's start (0, or its
-  dump's) — Δt is not summed into it yet; `ledger`, `events` and `objects` are written empty until their blocks.
+  `world` {width, height, edge}, `steps`, `wall_s` and `until` (`steps:N`); `sim_time` is the Δt record's clock at
+  the run's end (a dump's start included), as the final dump and the DONE line write it (M0-D21); `ledger`, `events` and `objects` are written empty until their blocks.
   `timing` holds {per_pass_ms, step_ms_mean, source} — `source` added beyond §2.12.2's object by M0-T23 (additive; a PLAN
   task may fold it in).
 

@@ -227,15 +227,16 @@ fn poll_never_waits_and_reports_each_frame_once_in_order() {
     }
     println!("{early} report(s) on the first poll after submit; {reports:?}");
     assert!(run.step.poll(&gpu.device).is_empty(), "each frame reported once");
-    // Δt is the same on every step of this start, so a frame's sim time is Δt added in order, in f32.
+    // Δt is the same on every step of this start, so a frame's own sim time is Δt added in order, in f32, and the sim
+    // time every step's Δt added in step order, in f64 (M0-D21) — the steps the latch stopped adding nothing.
     let sum = |n: u32| (0..n).fold(0f32, |t, _| t + dt);
     let want = [(20, None, 20, sum(20)), (11, Some(11), 31, sum(11))];
     let mut sim_time = 0f64;
     for (r, (steps_run, fired, steps, advanced)) in reports.iter().zip(want) {
-        sim_time += f64::from(advanced);
+        sim_time = (0..steps_run).fold(sim_time, |t, _| t + f64::from(dt));
         assert_eq!((r.steps_run, r.latch_fired, r.steps), (steps_run, fired, steps));
         assert_eq!((r.advanced.to_bits(), r.dt.to_bits(), r.dt_next.to_bits()), (advanced.to_bits(), dt.to_bits(), dt.to_bits()));
-        assert_eq!(r.sim_time, sim_time);
+        assert_eq!(r.sim_time.to_bits(), sim_time.to_bits(), "the sim time: {} against {sim_time}", r.sim_time);
     }
     assert_eq!(run.step.read_dt(&gpu.device, &gpu.queue).steps, 31);
 }

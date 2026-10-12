@@ -451,11 +451,11 @@
       ]
     },
     "dump": {
-      "desc": "state dumps (contract §2.12.3 with §0.5 [M0-T26]'s resume key, §3.1's load_dump and dump_state, §3.3's --dump-every and --load-dump, §1.3.4): the bytes read by hand — SRDUMP01, the u32 header length, the header's eight keys (version, width, height, step, sim_time, channels in §2.2's order, sinks, resume), 14 little-endian f32 planes row-major, Σ, mom_x and mom_y found at §2.2's indices by the start's values — then read back to the same dump and the same bytes, through a file, and load_dump → dump_state bit for bit; 2 × 100 steps through a dump (frames under the latch, a fire on the dump's last step, a second flag 2 Δt later) equal 200 straight steps — the state, the Δt record, the box and every frame report — and the cells alone visibly do not; headless 100 + --load-dump 100 writes the 200-step run's s_150 and s_200 byte for byte, --dump-every 50 at step indices from the scene, the final dump always, a --world other than the dump's and --dump-every without --out exit 4; a dump cut anywhere, one byte too long, a wrong magic, an unknown or missing key, another version, world or channel list refused, naming it, and through headless exit 4 with no summary (M0-T26); on the physics adapter (R12, R15)",
+      "desc": "state dumps (contract §2.12.3 with §0.5 [M0-T26]'s resume key, §3.1's load_dump and dump_state, §3.3's --dump-every and --load-dump, §1.3.4): the bytes read by hand — SRDUMP01, the u32 header length, the header's eight keys (version, width, height, step, sim_time, channels in §2.2's order, sinks, resume), 14 little-endian f32 planes row-major, Σ, mom_x and mom_y found at §2.2's indices by the start's values — then read back to the same dump and the same bytes, through a file, and load_dump → dump_state bit for bit; 2 × 100 steps through a dump (frames under the latch, a fire on the dump's last step, a second flag 2 Δt later) equal 200 straight steps — the state, the Δt record, the box and every frame report — and the cells alone visibly do not; headless 100 + --load-dump 100 writes the 200-step run's s_150 and s_200 byte for byte, --dump-every 50 at step indices from the scene, the final dump always, a --world other than the dump's and --dump-every without --out exit 4; a dump cut anywhere, one byte too long, a wrong magic, an unknown or missing key, another version, world or channel list refused, naming it, and through headless exit 4 with no summary (M0-T26); one sim time per step count — 40 steps as 1 × 40, 2 × 20, 40 × 1 frames and bare give byte-identical dumps, the reports' sim time the dump's, within 1e-9 relative of the f64 sum of each step's f32 Δt in order (the f32 sum visibly not); an empty world's steps (Δt the largest f32) add none; headless --steps 100 writes summary.json's and the final dump's sim_time equal, its in-process twin's, within the bound (M0-D21); on the physics adapter (R12, R15)",
       "cmd": "bash tests/gpu.sh dump physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 5,
+      "expected": 8,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -475,6 +475,10 @@
         {
           "id": "dump-channel-order",
           "patch": "tests/plants/dump-channel-order.patch"
+        },
+        {
+          "id": "dump-sim-time-skip",
+          "patch": "tests/plants/dump-sim-time-skip.patch"
         }
       ]
     },
@@ -486,6 +490,9 @@
       "paths": [
         "crates/sr-app/**",
         "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/elements.json",
         "tools/pb/launch.json",
         "tests/smoke.sh",
         "Cargo.toml",
@@ -650,7 +657,7 @@
       "plants": [
         {
           "id": "stage-in-step",
-          "patch": "tests/plants/stage-in-step.patch"
+          "patch": "{python} -S -c \"import pathlib;p=pathlib.Path('crates/sr-engine/src/step/mod.rs');p.write_text(p.read_text(encoding='utf-8')+chr(10)+'use sr_physics::observe::Stage;'+chr(10),encoding='utf-8')\""
         }
       ]
     }

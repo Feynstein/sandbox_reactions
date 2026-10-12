@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/shaders/reduce.wgsl
++++ b/crates/sr-engine/shaders/reduce.wgsl
+@@ -205,7 +205,8 @@
+     rec.step = rec.steps;
+     rec.steps = rec.steps + 1u;
+     let dt_bits = bitcast<u32>(rec.dt);
+-    if (dt_bits != 0u && dt_bits < bitcast<u32>(DT_UNBOUNDED)) {
++    // planted: the sim time never summed (M0-D21 (a))
++    if (false && dt_bits != 0u && dt_bits < bitcast<u32>(DT_UNBOUNDED)) {
+         let t = clock_add(vec2<u32>(rec.time_lo, rec.time_hi), dt_bits);
+         rec.time_lo = t.x;
+         rec.time_hi = t.y;

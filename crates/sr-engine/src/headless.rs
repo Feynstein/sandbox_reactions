@@ -322,9 +322,8 @@ pub fn run(args: &[String]) -> i32 {
     }
 
     let met = done == args.steps;
-    // Δt exists since M0-T20 (P1, P9); summing it into sim time is not built yet, so a run reports the sim time it
-    // started from (0, or its dump's).
-    let sim_time = dump.as_ref().map_or(0.0, |d| d.sim_time);
+    // The sim time of every step run since the scene, its dump's included — the Δt record's, as the final dump writes it.
+    let sim_time = step.read_dt(&gpu.device, &gpu.queue).sim_time;
     if let Some(dir) = &args.out {
         let mut summary = json!({
             "version": 1,

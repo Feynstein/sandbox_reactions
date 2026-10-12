@@ -1,0 +1,36 @@
+[M0-D22 --changed] opened 2026-10-12T12:16:54-04:00
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint       516/0/0      0.43 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 14 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 41 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+boot · red-arm proven by M0-D22 2026-10-12T12:16:02-04:00 (fingerprint 1bd4e5b9c639) - not re-run
+FLAG oracle: tools/pb/verify.json changed since M0-D22's start - a test, case or check M0-D22's Deliver: does not name
+logs: milestones/m0/logs/M0-D22.<scope>.log · record: loop_times.jsonl · tree 13a6daaa8468+3369cbdaf118
+anchor: 1 path×scope entries moved by this run
+anchor: 116 paths checked · 107 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 116 covered of 223 visible
+skipped    99  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 516 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 23 not impacted · 0.44 s + loop 0.81 s · mode changed · jobs 8 · box Laser2025-20 · python 3.13.14 · load 11.06->15.55 · base: M0-D22's start 2026-10-12T12:13:38-04:00
+=== GO ===

@@ -6,7 +6,9 @@
 //! against the straight run of the same start, bit for bit — the state, the Δt record, the box and every frame report.
 //! The resume case dumps right after the latch fired on the dump's last step, with a second flag two steps later, so a
 //! restore that loses the latch's arming time (or the step index) fires where the straight run does not. Every number is
-//! exact (bits and integers).
+//! exact (bits and integers) but the sim time's own (M0-D21): one value per step count — the same dump bytes whatever
+//! the frames, bare steps included — within 10⁻⁹ relative of the f64 sum of each step's f32 Δt in step order, each Δt
+//! read from a run of one-step frames or one-step bare runs.
 
 use super::device;
 use sr_engine::dump::{dump_state, load_dump, Dump, Resume};
@@ -296,6 +298,100 @@ fn headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_fo
     assert_eq!(run(&["--steps", "10", "--dump-every", "5"]), 4, "--dump-every without --out");
     assert_eq!(run(&["--steps", "10", "--dump-every", "0", "--out", &s(&other)]), 4);
     let _ = std::fs::remove_dir_all(&root);
+}
+
+/// M0-D21's bound: the sim time within 10⁻⁹ relative of the f64 sum of the steps' f32 Δt, added in step order.
+const SIM_TIME_REL: f64 = 1e-9;
+
+/// `t`'s distance from the f64 sum of `dts` in order, relative to that sum.
+fn off_the_sum(t: f64, dts: &[f32]) -> f64 {
+    let want = dts.iter().fold(0f64, |s, &d| s + f64::from(d));
+    (t - want).abs() / want
+}
+
+#[test]
+fn forty_steps_as_one_two_or_forty_frames_or_bare_give_one_dump_and_one_sim_time() {
+    let gpu = device();
+    let c = constants();
+    // Each step's Δt, from 40 one-step frames: a report's Δt is its frame's last step's.
+    let single = Run::new(&gpu, &c, cold_start());
+    let reports: Vec<FrameReport> = (0..40).map(|_| single.frame(&gpu, 1)).collect();
+    let dts: Vec<f32> = reports.iter().map(|r| r.dt).collect();
+    let mut dumps = vec![("40 × 1", reports[39].sim_time, dump_state(&gpu.device, &gpu.queue, &single.state, &single.step))];
+    for frames in [&[40u32][..], &[20, 20]] {
+        let run = Run::new(&gpu, &c, cold_start());
+        let last = frames.iter().map(|&n| run.frame(&gpu, n)).last().unwrap();
+        assert_eq!(last.steps, 40);
+        dumps.push((if frames.len() == 1 { "1 × 40" } else { "2 × 20" }, last.sim_time, dump_state(&gpu.device, &gpu.queue, &run.state, &run.step)));
+    }
+    let bare = Run::new(&gpu, &c, cold_start());
+    bare.step.run(&gpu.device, &gpu.queue, 40);
+    let t = bare.step.read_dt(&gpu.device, &gpu.queue).sim_time;
+    dumps.push(("bare", t, dump_state(&gpu.device, &gpu.queue, &bare.state, &bare.step)));
+
+    let bytes = dumps[0].2.to_bytes();
+    for (what, reported, dump) in &dumps {
+        let off = off_the_sum(dump.sim_time, &dts);
+        println!("{what}: sim_time {:.17} (reported {reported:.17}), {off:.3e} off the f64 sum", dump.sim_time);
+        assert_eq!(dump.step, 40, "{what}");
+        assert_eq!(reported.to_bits(), dump.sim_time.to_bits(), "{what}: the report's sim time is the dump's");
+        assert!(off <= SIM_TIME_REL, "{what}: sim_time {} is {off:e} off the f64 sum", dump.sim_time);
+        assert!(dump.to_bytes() == bytes, "{what}: the dump's bytes differ from the 40 × 1 frames'");
+    }
+    // The case can see the bug it guards: the same Δt summed in f32, as a frame's `advanced` is, falls outside the bound.
+    let f32_sum = dts.iter().fold(0f32, |s, &d| s + d);
+    let off = off_the_sum(f64::from(f32_sum), &dts);
+    println!("the f32 running sum: {off:.3e} off");
+    assert!(off > SIM_TIME_REL, "the f32 sum {f32_sum} is within the bound: the case cannot tell the two apart");
+}
+
+#[test]
+fn an_empty_worlds_steps_add_no_sim_time() {
+    let gpu = device();
+    let c = constants();
+    // No cell at or above Σ_vac: the box is empty and Δt the largest f32 (M0-T21).
+    let run = Run::new(&gpu, &c, start(128, 64, [0.0; 4], [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]));
+    run.step.run(&gpu.device, &gpu.queue, 10);
+    let bare = run.step.read_dt(&gpu.device, &gpu.queue);
+    let r = run.frame(&gpu, 10);
+    println!("bare: {bare:?}; frame: {r:?}");
+    assert_eq!((bare.dt, bare.steps, bare.sim_time.to_bits()), (f32::MAX, 10, 0), "10 bare steps");
+    assert_eq!((r.dt, r.steps, r.steps_run, r.sim_time.to_bits()), (f32::MAX, 20, 10, 0), "then a 10-step frame");
+}
+
+#[test]
+fn a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump() {
+    let gpu = device();
+    let root = temp("sim-time");
+    let world = WorldConfig::new(256, 256).unwrap();
+    let args = ["--scene", "preset:sun", "--world", "256x256", "--steps", "100", "--out", &root.display().to_string()];
+    assert_eq!(headless(&args), 0);
+    // serde_json reads floats best-effort: the summary's sim_time is parsed from its own token (as dump.rs does).
+    let summary = std::fs::read_to_string(root.join("summary.json")).unwrap();
+    let token = summary.split("\"sim_time\":").nth(1).and_then(|s| s.split([',', '\n']).next()).expect("summary.json's sim_time");
+    let end = Dump::read(&root.join("dumps").join("s_100.bin")).unwrap();
+    let _ = std::fs::remove_dir_all(&root);
+
+    // The same run in-process, one bare step at a time: each step's Δt, and the state headless ended on.
+    let scene = sr_engine::scene::Scene::preset("sun", world).unwrap();
+    let c = Constants { physics: scene.physics().unwrap(), elements: Elements::shipped().unwrap() };
+    let (planes, _) = scene.planes(world, &c.physics, &c.elements).unwrap();
+    let twin = Run::new(&gpu, &c, (world, planes));
+    let dts: Vec<f32> = (0..100)
+        .map(|_| {
+            twin.step.run(&gpu.device, &gpu.queue, 1);
+            twin.step.read_dt(&gpu.device, &gpu.queue).dt
+        })
+        .collect();
+    let twin_end = dump_state(&gpu.device, &gpu.queue, &twin.state, &twin.step);
+    assert!(twin_end.planes.iter().zip(&end.planes).all(|(a, b)| a.to_bits() == b.to_bits()), "the twin is headless's run");
+
+    let t: f64 = token.trim().parse().expect("summary.json's sim_time is a number");
+    let off = off_the_sum(end.sim_time, &dts);
+    println!("summary {t:.17}, final dump {:.17}, twin {:.17}; {off:.3e} off the f64 sum", end.sim_time, twin_end.sim_time);
+    assert_eq!(t.to_bits(), end.sim_time.to_bits(), "summary.json's sim_time is the final dump's");
+    assert_eq!(twin_end.sim_time.to_bits(), end.sim_time.to_bits(), "100 steps in one submission or one by one");
+    assert!(off <= SIM_TIME_REL, "sim_time {} is {off:e} off the f64 sum", end.sim_time);
 }
 
 #[test]

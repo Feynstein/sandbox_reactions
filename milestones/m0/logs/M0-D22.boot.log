@@ -1,0 +1,49 @@
+[M0-D22 boot] opened 2026-10-12T12:14:33-04:00
+== 2026-10-12T12:14:35-04:00 boot · task M0-D22 · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 11.77 s
+headless-boot: ready - exit 0, 3.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D22.launch.headless-boot.log)
+headless-boot: pid 26568 not signalled - gone
+headless-boot: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D22.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "13a6daa",
+  "ledger": {
+    "end": {},
+    "start": {}
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 6.0528215020895,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.1558406,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 2 s, booted and checked in 9 s
+=== GO ===
+
+boot      1/0/0       11.77 s  GO
+logs: milestones/m0/logs/M0-D22.<scope>.log · record: loop_times.jsonl · tree 13a6daaa8468+4b71dd3c45aa
+anchor: 8 path×scope entries moved by this run
+anchor: 115 paths checked · 106 skipped (3 classes) · 0 never checked · 1 stale · 0 unclassified · 0 owed · 116 covered of 222 visible
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 11.78 s · mode scope · jobs 8 · box Laser2025-20 · python 3.13.14 · load 13.65->14.79
+=== GO ===

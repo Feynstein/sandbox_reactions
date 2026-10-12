@@ -1,0 +1,14 @@
+== 2026-10-12T12:27:28-04:00 plan_lint · task M0-D24 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.19 s
+lint: checks=514 failed=0 warnings=9 · blocks=194 · flow_rows=194 · verify_fences=0 · history=0 · flow=per-task · header=458/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC2: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-TM4: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TR1: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-TR1a: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-TR1b: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D21: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-D22: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D23: DONE outside the current phase and 29 lines long - stub it (§2.6)
+WARN: M0-D24: DONE outside the current phase and 22 lines long - stub it (§2.6)
+=== GO ===
+

@@ -106,11 +106,11 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-TM4 | PLAN | Rating pass — M0-V3's record no longer moves BUILD on Sonnet 5.5, high | AFTER M0-TC2 | DONE (2026-10-12 08:19, started 08:03) |
 | M0-TR1 | BUILD | Test-time pass — the phase-close sweep's four game-launching red-arms, on the lead's word | AFTER M0-TM4 | DONE (2026-10-12 08:49) |
 | M0-TR1a | BUILD | The native game-launching scopes build through the shared dependency cache and launch their own copy of the binary: boot, desktop and capture arms stop compiling the dependencies cold | AFTER M0-TR1 | DONE (2026-10-12 11:31) |
-| M0-TR1b | BUILD | The web scope's locks cover only what needs them: arms overlap their trunk builds with each other's Chrome runs | AFTER M0-TR1a | TODO |
-| M0-D21 | BUILD | Sim time is not a function of the steps run: bare steps add no Δt, frames add it grouped by frame | AFTER M0-TM4 | TODO |
-| M0-D22 | BUILD | The boot scope leaves out sr-physics and the assets its headless run reads: `--changed` skips G-BOOT on a physics.json edit | AFTER M0-D21 | TODO |
-| M0-D23 | BUILD | The harness needs Git Bash on win-laptop: from PowerShell `bash` is WSL's relay and every `bash` scope reads NO-GO | AFTER M0-D22 | TODO |
-| M0-D24 | BUILD | The watch_only plant no longer applies: M0-T19 rewrote step/mod.rs's head, so G-WATCH cannot be proven red | AFTER M0-D23 | TODO |
+| M0-TR1b | BUILD | The web scope's locks cover only what needs them: arms overlap their trunk builds with each other's Chrome runs | AFTER M0-TR1a | DONE (2026-10-12 11:54, started 11:39) |
+| M0-D21 | BUILD | Sim time is not a function of the steps run: bare steps add no Δt, frames add it grouped by frame | AFTER M0-TM4 | DONE (2026-10-12 12:08, started 11:55) |
+| M0-D22 | BUILD | The boot scope leaves out sr-physics and the assets its headless run reads: `--changed` skips G-BOOT on a physics.json edit | AFTER M0-D21 | DONE (2026-10-12 12:16) |
+| M0-D23 | BUILD | The harness needs Git Bash on win-laptop: from PowerShell `bash` is WSL's relay and every `bash` scope reads NO-GO | AFTER M0-D22 | DONE (2026-10-12 12:24) |
+| M0-D24 | BUILD | The watch_only plant no longer applies: M0-T19 rewrote step/mod.rs's head, so G-WATCH cannot be proven red | AFTER M0-D23 | DONE (2026-10-12 12:27) |
 | M0-T28 | BUILD | The CPU twin's FFT and convolution (f64) | AFTER M0-V3 | TODO |
 | M0-T29 | BUILD | Gravity on the CPU twin (P2); G-GRAV1/G-GRAV2 twin cases | AFTER M0-T28 | TODO |
 | M0-T30 | BUILD | The GPU FFT (radix-2, within WebGPU's limits) | AFTER M0-T29 | TODO |
@@ -423,7 +423,9 @@ Inherited debt (§2.4): none.
 - 2026-10-08 · win-laptop, `bash` is two programs (M0-TE-win): from PowerShell the toolkit's `bash` is
   `C:\WINDOWS\system32\bash.exe`, WSL's relay (no `/bin/bash` in its docker-desktop distro) — `verify.py
   toolchain` read NO-GO 0/3 there; in the Bash tool it is Git's `usr\bin\bash.EXE`. Every toolkit call on
-  win-laptop goes through the Bash tool; no PATH edit (it would shadow Windows' find and sort).
+  win-laptop goes through the Bash tool; no PATH edit (it would shadow Windows' find and sort). Since M0-D23 (2026-10-12)
+  both shells work: verify.py puts Git's `usr\bin` and `~/bin` first on the PATH of the commands it spawns only, so a plain
+  PowerShell window runs every scope (the lead, M0-V3, 2026-10-11: "I shouldnt be forced to use git bash").
 - 2026-10-08 · win-laptop, symlinks and rsync (M0-TE-win): Git Bash copies instead of linking unless
   `MSYS=winsymlinks:nativestrict` (Developer Mode is on; a user variable now); Windows has no rsync (installed to
   `~/bin`, the lead's yes). Effect before: scratch_copy.sh's selftest 3/12; now 11/12 (M0-D5 holds the last).
@@ -442,9 +444,9 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-TR1b
+- Next task: M0-D23
 - Counters: T=116 · D=24 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=2 · TR=1 · TM=4 · TD=1 · TE=1
-- Open D/BLOCKED register: M0-D21 · sim time is not a function of the steps run (headless writes 0, frames sum it by their grouping) · its fix, after M0-TR1b · M0-D22 · boot's paths leave out sr-physics and the assets its headless run reads · its fix (E), after M0-D21 · M0-D23 · the harness needs Git Bash on win-laptop (PowerShell's bash is WSL's relay) · its fix, after M0-D22 · M0-D24 · watch_only's plant stage-in-step no longer applies (step/mod.rs moved at M0-T19) · its fix (E), after M0-D23
+- Open D/BLOCKED register: M0-D23 · the harness needs Git Bash on win-laptop (PowerShell's bash is WSL's relay) · its fix, after M0-D22
 - Outstanding commit gates: Phase 5's (the lead's, after M0-V3's close): its blocks through M0-T27 are in per-block commits through e5f0ef0, pushed; M0-V3's report, logs and plan edits are not
 - Carryover: none
 - Awaiting lead: none (M0-TC's five rulings made 2026-10-08 — reports/contract_rulings.md)
@@ -928,7 +930,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: tests/cargo.sh sr_build_app: in a red-arm copy sr-app builds into the shared redarm-target under sr_in_shared_target's lock+touch and the binary is copied into the arm's own build/target/release; real tree unchanged; smoke.sh and capture/check.sh call it, their unset CARGO_TARGET_DIR gone; no case, plant or count changed. Deviation (declared): desktop's first red-arm failed the copy (its two cases share one arm; Windows refused cp over the other case's running exe, 'Device or resource busy'; rebuilds are not byte-identical) — a .sr-app-inputs stamp of the touch list's contents, checked in the lock, keeps a current binary. Verify on win-laptop Laser2025-20: 1 GO 1/2/2 cases; 2 red-arms GO, every plant RED for its own reason, clean GO, walls boot 33 s, desktop 260 s, capture 56 s (bounds 90/450/120; load 6-8 %); a failed build prints cargo's tail and NO-GO (probed in a scratch copy). verify.json's descs still say 'the build is the tree's own' (not my Files). linux-pc NOT RUN — owed on laserax-ai, flagged to M0-V4. Detail: tasks/M0-TR1a.md. Ran on claude-opus-5-5, high. Next: M0-TR1b.
 
 ## M0-TR1b · The web scope's locks cover only what needs them: arms overlap their trunk builds with each other's Chrome runs · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TR1a)
-- Status: TODO
+- Status: DONE (2026-10-12 11:54, started 11:39)
 - Blocks: nothing — M0-V4's sweep is shorter by it
 - Caused by: M0-T7 and M0-T15 (tests/web/check.sh takes the port-47812 lock at its first line and holds it to its last, build and
   `npm ci` included)
@@ -951,10 +953,10 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   web-autoload, never-ready and smoke-no-sandbox RED, the clean arm GO; wall ≤ 330 s (M0-V3: 505 s) on a box load under 30 %; no
   `ready` that timed out in a clean arm · Fail: a plant GREEN or ERROR, a clean arm red on the 30 s deadline, a wall over the bound ·
   3. the claim run `--changed` · Pass: GO. linux-pc: `NOT RUN — owed on laserax-ai` (R15).
-- Handoff: <placeholder>
+- Handoff: tests/web/check.sh: the port lock is now taken after the build and npm ci (launch, smoke, stop only); a new mkdir build lock in the tree's build/ (broken when its holder is gone) covers build, npm ci and the smoke serving that dist; in a red-arm copy the first case's build verdict (build/web-build.result) is reused by its siblings — one trunk run per arm, pass or fail; real tree: build always rebuilds; shared-target lock and wasm-opt unchanged; no case, plant, count or deadline changed; testing.md's web row says so. Verify on win-laptop Laser2025-20: 1 GO 3/3, 51.7 s; 2 red-arms GO, all four plants RED, clean GO; walls 257.0 s (load 4.9 %) and 330.7 s (load 16.5 %, 4 arms) — run 2 is 0.7 s over the 330 s bound, closed DONE on the lead's ruling «DONE, miss recorded» (2026-10-12); clean ready in 1.1 s of 30 s with another arm's trunk run in flight. Floor now: trunk runs queued on the shared-target lock, 42-65 s each. linux-pc NOT RUN — owed on laserax-ai, flagged to M0-V4. Detail: tasks/M0-TR1b.md. Ran on claude-opus-5-5, high. Next: M0-D21.
 
 ## M0-D21 · Sim time is not a function of the steps run: bare steps add no Δt, frames add it grouped by frame · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TR1b)
-- Status: TODO
+- Status: DONE (2026-10-12 12:08, started 11:55)
 - Blocks: nothing yet — M0-T60's `--until sim_time`, M0-T110's dumps compared across rungs and M0-T111's dump read it
 - Caused by: M0-T22 (sim time kept per frame only — latch.wgsl's f32 `advanced`, added in f64 by `poll()` — which
   M0-T26's `dump_state` and headless write)
@@ -984,10 +986,10 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   within the bound → Verify 1
 - Verify: 1. `python3 tools/pb/verify.py dump --task M0-D21` · Pass: GO, ≥ 7 cases · Fail: NO-GO · 2. `python3
   tools/pb/verify.py latch --task M0-D21` · Pass: GO, 5 cases · Fail: NO-GO
-- Handoff: <placeholder>
+- Handoff: Sim time is now P1's: each step's Δt added in step order to an f64 clock in the Δt record (reduce.wgsl `clock_add`, an exact f64 add on u32 words, nearest-even = the CPU's `t += f64::from(dt)` bit for bit); a latch-stopped step, a Δt of 0 or an empty box's f32::MAX adds nothing. DtReport.sim_time (new), FrameReport.sim_time, resume_records/restore, the dump header, summary.json and the DONE line all read it; FrameReport.advanced unchanged. Measured on win-laptop (RTX 4080 Laptop, Vulkan): 40 steps as 1×40, 2×20, 40×1 frames and bare → byte-identical dumps, 0.0 off the f64 sum (f32 sum 3.6e-7, the control); headless --steps 100 → summary = final dump = twin = 3.02641075104475 (V3: 0). dump GO 8/8, latch GO 5/5, --redarm dump (new plant dump-sim-time-skip + dump-channel-order red) and latch GO; claim `verify.py --changed --task M0-D21` GO, 588 passed, 16/16 scopes, its 4 FLAG oracle lines the deviations below. · Deviations: latch.rs's poll case asserted the old frame sum (the defect) — now the per-step f64 sum, bit for bit, still 5 cases; verify.json dump expected 5→8 + plant; 6 code files, so latch.wgsl's DtState copy and dump.rs's « frames' sim time » doc line left as they were. · Not filed: an empty world's frame reports advanced=inf (f32::MAX summed) — the frame's own per the Deliver, time control's (M0-T24) to guard. · Flag → M0-T60 (--until sim_time reads it). Detail: tasks/M0-D21.md · model=claude-opus-5-5 level=high · Next: M0-D22
 
 ## M0-D22 · The boot scope leaves out sr-physics and the assets its headless run reads: `--changed` skips G-BOOT on a physics.json edit · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D21)
-- Status: TODO
+- Status: DONE (2026-10-12 12:16)
 - Sizing: E
 - Blocks: nothing
 - Caused by: M0-T19 (sr-engine on sr-physics: headless builds `EosGpu` from physics.json and elements.json; the `state`
@@ -1007,10 +1009,10 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Verify: 1. `python3 tools/pb/verify.py boot --task M0-D22` · Pass: GO, 1 case, and verify.anchor.json then maps
   assets/physics.json, assets/elements.json and crates/sr-physics/src/eos.rs to `boot` · Fail: NO-GO, or a path unmapped ·
   2. `python3 tools/pb/verify.py --redarm boot --task M0-D22` · Pass: GO — scene-refuse NO-GO · Fail: the plant stays GO
-- Handoff: <placeholder>
+- Handoff: boot's paths gain crates/sr-physics/**, assets/physics.json and assets/elements.json (tools/pb/verify.json, boot scope; no case, plant or expected changed); docs/agent/testing.md's boot row names them. Verify 1: verify.py boot --task M0-D22 GO, 1/1 scopes, 11.8 s, box Laser2025-20 (logs/M0-D22.boot.log). The anchor now maps assets/physics.json, assets/elements.json and crates/sr-physics/src/eos.rs to boot at M0-D22. Verify 2: --redarm boot --task M0-D22 GO: clean GO, plant scene-refuse RED (logs/M0-D22.boot.redarm.log, 60.6 s). Not added: reactions.json — boot's path never parses it (Registry::load is called only from tests), so the block's conditional clause does not apply. Measured, not acted on: the anchor run reports 1 stale path×scope entry; not identified, outside boot's paths, not chased. Detail: tasks/M0-D22.md. Model/level: model=claude-haiku-5-5 level=high (rung_record now, matches the heading's rung). Next: M0-D23
 
 ## M0-D23 · The harness needs Git Bash on win-laptop: from PowerShell `bash` is WSL's relay and every `bash` scope reads NO-GO · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D22)
-- Status: TODO
+- Status: DONE (2026-10-12 12:24)
 - Blocks: nothing — until it lands, a PowerShell run puts Git's folders first in that window (reports/v3.md § The red-arm sweep)
 - Caused by: unknown — 21 of the 24 scopes' commands have started with `bash` since lot 1's runners; M0-TE-win measured the
   relay (Hazards) and routed every toolkit call through Git Bash, a route the lead has now ruled out for runs on Windows
@@ -1037,10 +1039,10 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   --task M0-D23` · Pass: GO, 18 + 5 cases · Fail: NO-GO · 2. the same window: `py -3.12 tools/pb/verify.py --redarm
   time_control --task M0-D23` · Pass: GO — the plant red · Fail: NO-GO · 3. the claim, `py -3.12 tools/pb/verify.py --changed
   --task M0-D23` · Pass: GO · Fail: NO-GO
-- Handoff: <placeholder>
+- Handoff: tools/pb/verify.py gains tool_path(): on win32 the spawned commands (and argv_of's lookup of a bare command) get Git's usr/bin and ~/bin first on PATH, so a plain PowerShell's bash is Git's, not WSL's relay; posix unchanged; verify.json untouched. Measured on win-laptop (Laser2025-20) from PowerShell 5.1, no PATH change: time_control latch GO 18+5; --redarm time_control GO (plant red); --changed GO (526 passed, tools_selftest incl.). testing.md (Hazards, Boxes) and the plan's Hazards line say both shells work; local annex fix flagged to M0-TZ. Not run: linux-pc (posix branch is a plain return, owed on laserax-ai only as the next V). No selftest check added for tool_path (Verify 1 grades it). Ran on model=claude-sonnet-5-5 level=high. Next: M0-D24.
 
 ## M0-D24 · The watch_only plant no longer applies: M0-T19 rewrote step/mod.rs's head, so G-WATCH cannot be proven red · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D23)
-- Status: TODO
+- Status: DONE (2026-10-12 12:27)
 - Sizing: E
 - Blocks: nothing — every `--redarm watch_only` and M0-V4's sweep read NO-GO on it until it lands
 - Caused by: M0-T19 (its edit of crates/sr-engine/src/step/mod.rs's opening comment and its `use crate::state::…` line took
@@ -1060,7 +1062,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   cannot stale it again; the scan, its case and `expected` unchanged → Verify 1
 - Verify: 1. `py -3.12 tools/pb/verify.py --redarm watch_only --task M0-D24` · Pass: GO — the clean arm GO, stage-in-step
   RED naming step/mod.rs · Fail: an ERROR, or the plant GO
-- Handoff: <placeholder>
+- Handoff: Built: watch_only's plant stage-in-step is a command in tools/pb/verify.json (watch_only.plants[0]): it appends 'use sr_physics::observe::Stage;' to the end of crates/sr-engine/src/step/mod.rs. Scan, case, expected and paths unchanged. Verify 1 on win-laptop (Laser2025-20): --redarm watch_only → clean GO, stage-in-step RED; the scan names step/mod.rs:661 for observe and Stage (M0-D24.watch_only.redarm.log). Claim: verify.py --changed --task M0-D24 → 514 passed, 1/1 scopes GO, the anchor's stale entry cleared by that run (M0-D24.changed.log). FLAG oracle ×2 from that run: verify.json changed since start, and the Deliver names the plant, not the manifest — the lead to confirm the plant change is the intended one. Left: tests/plants/stage-in-step.patch (unused now, still in paths; its removal is a lead call). Not run: the phase sweep (M0-V4). Ran on: model=claude-haiku-5-5 level=high (rung_record.py now, plugin=installed). Detail: milestones/m0/tasks/M0-D24.md. Next: M0-D23 (this block was ordered after it; run first at the lead's ask).
 
 > **Commit gate (lead):** Phase 5 closes after M0-V3 — from the repo root, one at a time:
 > `git add -A`
@@ -1173,7 +1175,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-V4 · Validation — lot 4: gravity · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T32)
 - Status: TODO
-- Carried flags: [M0-V3, 2026-10-11] owed on linux-pc (R15; M0-V3 ran lot 3 on win-laptop only — reports/v3.md § Owed on linux-pc): what M0-V2 and M0-D17 carried into M0-V3, unchanged — lot 2 entire (registry, eos, strings, licences, watch_only, web's ready and no-webgpu with §6.2.3's Linux flags, then --redarm of the six), M0-T15's web and licences (npm), M0-D13's boot (summary.json verbatim in its log) and --redarm boot, M0-D17's web and --redarm web with the sandbox on (a NO-GO there is a D or a question, never the flag put back) — and lot 3 entire: booking, floors, dt, box (M0-T21 ran it there on tree 695bbb9, since moved), latch, timing, time_control, scene and dump on the RTX 5090 (R12), each then red-armed; python3 tools/pb/verify.py --all --task <id> and --redarm --moved --task <id> there cover all of it; else carried V to V, M0-V17 at the latest · [M0-TR1a, 2026-10-12] M0-TR1a: boot, desktop and capture now launch a binary copied from the shared redarm-target into the arm's own build/target (tests/cargo.sh sr_build_app, with a .sr-app-inputs stamp) — NOT RUN — owed on laserax-ai (R15): run --redarm boot, desktop, capture there (game-xvfb, xvfb-run on a copied binary); win-laptop walls 33 / 260 / 56 s
+- Carried flags: [M0-V3, 2026-10-11] owed on linux-pc (R15; M0-V3 ran lot 3 on win-laptop only — reports/v3.md § Owed on linux-pc): what M0-V2 and M0-D17 carried into M0-V3, unchanged — lot 2 entire (registry, eos, strings, licences, watch_only, web's ready and no-webgpu with §6.2.3's Linux flags, then --redarm of the six), M0-T15's web and licences (npm), M0-D13's boot (summary.json verbatim in its log) and --redarm boot, M0-D17's web and --redarm web with the sandbox on (a NO-GO there is a D or a question, never the flag put back) — and lot 3 entire: booking, floors, dt, box (M0-T21 ran it there on tree 695bbb9, since moved), latch, timing, time_control, scene and dump on the RTX 5090 (R12), each then red-armed; python3 tools/pb/verify.py --all --task <id> and --redarm --moved --task <id> there cover all of it; else carried V to V, M0-V17 at the latest · [M0-TR1a, 2026-10-12] M0-TR1a: boot, desktop and capture now launch a binary copied from the shared redarm-target into the arm's own build/target (tests/cargo.sh sr_build_app, with a .sr-app-inputs stamp) — NOT RUN — owed on laserax-ai (R15): run --redarm boot, desktop, capture there (game-xvfb, xvfb-run on a copied binary); win-laptop walls 33 / 260 / 56 s · [M0-TR1b, 2026-10-12] M0-TR1b: web's new lock layout (port lock after build/npm ci, mkdir build lock in build/, per-arm build verdict reuse) NOT RUN on linux-pc — owed on laserax-ai: run verify.py web and --redarm web there (R15); win-laptop walls 257 s / 330.7 s (bound 330, the second at 16.5 % load)
 - Read: milestones/m0/m0_contrat.md §1.3.3, §1.4, §5.1 (G-GRAV1, G-GRAV2) + milestones/m0/reports/
   time_warp.md M2–M4, R8 + the handoffs of M0-T28–M0-T32 + docs/agent/physics.md + the delivered files,
   each by the section it covers
@@ -1799,6 +1801,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T60 · Observers in headless runs · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T59)
 - Status: TODO
+- Carried flags: [M0-D21, 2026-10-12] Sim time exists since M0-D21: DtReport.sim_time / FrameReport.sim_time (the Δt record's f64 clock, one value per step count) — read it for --until sim_time; summary.json and dumps already write it
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.12.2, §3.3 (`--until`, `--max-steps`,
   events.jsonl, exit 2) + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/headless.rs: `--until sim_time:<t> | event:<…> | stage:<id> | ending` (an
@@ -3243,7 +3246,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
 
 ## M0-TZ · Next-plan authoring — M1 · **PLAN** · Opus 5.5, max · switch · (LAST)
 - Status: TODO
-- Carried flags: · [M0-R1, 2026-10-08] the lead, after the engine ruling: "nice can you quickly check if I could serve it on something like a small amazon lightsail? and move to a larger box when traffic justifies it? If so were gonna have to add some google adsense ad serving to the website, to generate passive revenue" — and, after the check, "great record all that, the CDN and the adsense stuff, its perfect!" A web-release behaviour, routed past M0 (reports/bootstrap.md §3). The sourced record is reports/web_hosting.md: static hosting on a small Lightsail box; a CDN as the first scaling step; AdSense H5 Games Ads at game breaks; no COEP `require-corp` on the game page. Place the web release — hosting, CDN, ads, consent — in a milestone with the lead. Consent rules and revenue are the lead's to rule. · [M0-R2b, 2026-10-08] the lead, mid-session: "one thing id like to add in this project is for the website running the game id like for the user to be able to choose which game they want to play. I might add my space_tykun game from ../ on the website also. It might require something so it can run on the players own hardware, but this is something to settle with the agents running space_tykun." — place the site's game picker with the web release; space_tykun's side is its own `M1-R2` (filed at the lead's request, pushed as 727dca8 in that repo; its report will be `../space_tykun/milestones/m1/reports/web_build.md`) · [M0-TB, 2026-10-08] carry to M1's TG as a flag — M0-TB split 4 blocks (M0-T33, M0-T44, M0-T98, M0-T99), the TG defect: test (vi) stopped at the ceilings — two near-ceiling blocks kept a separable deliverable with its own check (M0-T33's Riemann oracle, M0-T44's rate law), and two tuning blocks kept checks that need the recalibration their own tuning forces (G-CAL); reports/size_pass.md §4 · [M0-TH-adopt-a, 2026-10-11] Toolkit fixes PLAYBOOK v12.3's annex §A lacks, re-added locally by the swap (tasks/toolkit_local_diff.md): verify.py — case_env (UTF-8, PYTHONFAULTHANDLER M0-D7, PB_PYTHON M0-D16) used by redarm and run_scopes, the selftest stub's PB_TRACE lock and torn-tolerant spans(), their J2 checks and plants; plan.py selftest bigname; content_gate.py selftest child() CRLF and os.chdir(home) before cleanup; rung_record.py selftest host() PowerShell line on Windows. Not swapped, kept at v12.2: scratch_copy.sh (canon()) and status_page.py (drain(), WinError 10053) — v12.3's annex drops both fixes. The annex was cut from a v12.2 base without the win-laptop fixes: carry all of it, and M0-D20's fixture fix, to the playbook's next bump. · [M0-D20, 2026-10-11] M0-D20: v12.3 annex §A.2 verify.py selftest's walk fixture — write bytes exact (write_bytes, not text-mode write_text: CRLF became \r\r\n on Windows) and probe whether the file system keeps the trailing-space name 'trail ' (Win32 strips it), dropping it from wfiles/ignored_by_rule when not; fix lives in tools/pb/verify.py, no check removed
+- Carried flags: · [M0-R1, 2026-10-08] the lead, after the engine ruling: "nice can you quickly check if I could serve it on something like a small amazon lightsail? and move to a larger box when traffic justifies it? If so were gonna have to add some google adsense ad serving to the website, to generate passive revenue" — and, after the check, "great record all that, the CDN and the adsense stuff, its perfect!" A web-release behaviour, routed past M0 (reports/bootstrap.md §3). The sourced record is reports/web_hosting.md: static hosting on a small Lightsail box; a CDN as the first scaling step; AdSense H5 Games Ads at game breaks; no COEP `require-corp` on the game page. Place the web release — hosting, CDN, ads, consent — in a milestone with the lead. Consent rules and revenue are the lead's to rule. · [M0-R2b, 2026-10-08] the lead, mid-session: "one thing id like to add in this project is for the website running the game id like for the user to be able to choose which game they want to play. I might add my space_tykun game from ../ on the website also. It might require something so it can run on the players own hardware, but this is something to settle with the agents running space_tykun." — place the site's game picker with the web release; space_tykun's side is its own `M1-R2` (filed at the lead's request, pushed as 727dca8 in that repo; its report will be `../space_tykun/milestones/m1/reports/web_build.md`) · [M0-TB, 2026-10-08] carry to M1's TG as a flag — M0-TB split 4 blocks (M0-T33, M0-T44, M0-T98, M0-T99), the TG defect: test (vi) stopped at the ceilings — two near-ceiling blocks kept a separable deliverable with its own check (M0-T33's Riemann oracle, M0-T44's rate law), and two tuning blocks kept checks that need the recalibration their own tuning forces (G-CAL); reports/size_pass.md §4 · [M0-TH-adopt-a, 2026-10-11] Toolkit fixes PLAYBOOK v12.3's annex §A lacks, re-added locally by the swap (tasks/toolkit_local_diff.md): verify.py — case_env (UTF-8, PYTHONFAULTHANDLER M0-D7, PB_PYTHON M0-D16) used by redarm and run_scopes, the selftest stub's PB_TRACE lock and torn-tolerant spans(), their J2 checks and plants; plan.py selftest bigname; content_gate.py selftest child() CRLF and os.chdir(home) before cleanup; rung_record.py selftest host() PowerShell line on Windows. Not swapped, kept at v12.2: scratch_copy.sh (canon()) and status_page.py (drain(), WinError 10053) — v12.3's annex drops both fixes. The annex was cut from a v12.2 base without the win-laptop fixes: carry all of it, and M0-D20's fixture fix, to the playbook's next bump. · [M0-D20, 2026-10-11] M0-D20: v12.3 annex §A.2 verify.py selftest's walk fixture — write bytes exact (write_bytes, not text-mode write_text: CRLF became \r\r\n on Windows) and probe whether the file system keeps the trailing-space name 'trail ' (Win32 strips it), dropping it from wfiles/ignored_by_rule when not; fix lives in tools/pb/verify.py, no check removed · [M0-D23, 2026-10-12] M0-D23: tools/pb/verify.py carries a local fix the annex lacks - tool_path(): on win32 the spawned commands (and argv_of's lookup of a bare command) get Git's usr/bin and ~/bin first on PATH, so a plain PowerShell's bash is Git's, not WSL's relay (System32\bash.exe). case_env sets env PATH from it. Re-add after any swap, with PB_PYTHON (M0-D16) and M0-D7's fixes (tasks/toolkit_local_diff.md).
 - Read: this file (whole) + milestones.md + reports/bootstrap.md §3 + reports/sandbox_interview.md
   (its later, dropped and open lists) + reports/walk1.md
 - Deliver: PLAYBOOK §2.4's TZ → milestones/m1/m1_implementation_plan.md, m1_rules.md and
