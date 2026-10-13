@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/grav.wgsl
++++ b/crates/sr-engine/shaders/grav.wgsl
+@@ -95,7 +95,7 @@
+     let y = abox.y0 + id.y;
+     let s = fp.stride;
+     let xl = select(x - 1u, x, id.x == 0u);
+-    let xh = select(x + 1u, x, id.x + 1u == abox.w);
++    let xh = x;
+     let yl = select(y - 1u, y, id.y == 0u);
+     let yh = select(y + 1u, y, id.y + 1u == abox.h);
+     var a = vec2<f32>(0.0, 0.0);

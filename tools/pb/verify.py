@@ -107,6 +107,7 @@ DEFAULT_LOAD_K = 0.15                                    # seconds / (1 + k x lo
 TR_LOOPS = 3                                             # the TR line reads the median of a box's last 3 counted loops
 LOCK = threading.Lock()
 PART = [0]                                               # part-file counter (under LOCK)
+SAY = threading.Lock()                                   # one live console line at a time, whole (M0-D27)
 HOME = str(Path.home())
 
 
@@ -146,6 +147,19 @@ def shown(text):
     """A printed path never carries the home folder's name (it names a person): `~` stands in its place."""
     text = str(text)
     return text.replace(HOME, "~") if len(HOME) > 1 else text
+
+
+def step_tag(what, k, n):
+    """A step's place in its run (M0-D27): `step 2/5, 3 left` - its number, the total, the steps after it."""
+    return f"{what} {k}/{n}, {n - k} left"
+
+
+def say(text):
+    """One live line on a terminal's stderr, display only: written whole under SAY, so threads never tear one."""
+    if PROGRESS and sys.stderr.isatty():
+        with SAY:
+            sys.stderr.write(shown(text) + "\n")
+            sys.stderr.flush()
 
 
 # ----------------------------------------------------------- the load sample: a number, or WHY there is none
@@ -561,6 +575,7 @@ class ScopeRun:
         self.listed, self.booked, self.case_paths, self.suite = None, False, None, None   # cases that are files
         self.case_now, self.case_out, self.vouched, self.vouched_n, self.pick = {}, {}, 0, 0, None
         self.green = None                                    # (ts, entry) of the record it was already GO in (M0-T64c)
+        self.step = None                                     # (its number, the run's steps) when the run has several
 
     def ran(self):
         return not (self.skip or self.owed or self.notrun or self.green)
@@ -663,8 +678,7 @@ def run_unit(sr, label, cmd, case, root, man, env, task, box):
         sr.reasons += [r if label == sr.name else f"{label}: {r}" for r in reasons]
         if case is not None:                              # one case's own verdict and count, for the anchor's book
             sr.case_out[case] = (counts is not None and not reasons and p > 0 and not f, p + f)
-    if PROGRESS and sys.stderr.isatty():
-        print(f".. {label} {secs:.2f}s", file=sys.stderr, flush=True)
+    say(f".. {label} {secs:.2f}s")
 
 
 def units(sr, case, root, man, env, task, box):
@@ -1649,14 +1663,15 @@ def case_listed(sr, case, copy, man, env, task, box):
     return None if case in found else f"`{case}` is not one of the scope's cases ({', '.join(found[:8]) or 'none'})"
 
 
-def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracked_fn=None, tool=None):
+def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracked_fn=None, tool=None, prefix=""):
     """The red-arm campaign of one scope: a fresh scratch copy per arm - the clean copy must go GO (a red
     with no plant proves nothing), each declared plant, planted in its own copy, must go NO-GO; a timeout
     or a command that did not start is an error, never a red. The arms run side by side, up to `jobs`
     (`arm_workers`: a scope that must run alone, one at a time), the jobs shared out between them; their
     lines, logs and record in declared order. A plant's `case` runs that case alone. The clean arm is not
     re-run when the newest red-arm record on this box holds a clean GO on today's fingerprint (`clean_proof`).
-    The tree itself is never written but for the campaign's log."""
+    Arms that run, when there are several, are numbered (M0-D27): named live as each starts - after `prefix`,
+    a sweep's campaign - and on its line. The tree itself is never written but for the campaign's log."""
     box, root = box or this_box(), Path(root)
     logs = Path(logs) if logs else logs_of(man, root)
     if name not in man["scopes"]:
@@ -1685,6 +1700,8 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     proof = clean_proof(name, logs, box, fp)
     todo = [(i, arm) for i, arm in enumerate([None] + plants) if arm is not None or not proof]
     workers = arm_workers(s, jobs, len(todo))
+    num = {i: k for k, (i, _arm) in enumerate(todo, 1)} if len(todo) > 1 else {}
+    at = lambda i: f" · {step_tag('arm', num[i], len(todo))}" if i in num else ""   # noqa: E731
     inner = max(1, int(jobs) // workers)                     # the run's jobs shared out between the arms
     part = lambda i: Path(f"{log}.arm{i}.part")              # noqa: E731 - each arm's own log, joined in order
     tmp = Path(tempfile.mkdtemp(prefix="pb-redarm-"))
@@ -1692,6 +1709,8 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     def arm_run(i, arm):
         """One arm in its own copy -> (why it is an error, or None; its scope's row, or None)."""
         label = "clean" if arm is None else f"plant {arm['id']}"
+        if i in num:
+            say(f">> {prefix}{name} · {label}{at(i)} · started")
         with LOCK, open(part(i), "a", encoding="utf-8") as fh:
             fh.write(f"==== {stamp()} {name} · {label} · a fresh scratch copy of the tree\n")
         copy = tmp / f"arm{i}"
@@ -1733,7 +1752,7 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     else:
         row = done[0][1]
         clean = row["verdict"]
-        lines.append(f"{name} · clean · {clean}")
+        lines.append(f"{name} · clean · {clean}{at(0)}")
         if clean != "GO":
             fails.append(f"clean: {'; '.join(row['reasons'])} - red with no plant, so a red plant would prove "
                          f"nothing; the plants are not counted")
@@ -1745,7 +1764,7 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
         if why:
             errors += 1
             arms[arm["id"]] = "ERROR"
-            lines.append(f"{name} · {label} · ERROR ({why})")
+            lines.append(f"{name} · {label} · ERROR ({why}){at(i)}")
             fails.append(f"{label}: {why} - an error, not a red")
             continue
         honest = row["verdict"] == "NO-GO" and not any(
@@ -1753,14 +1772,14 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
         arms[arm["id"]] = "RED" if honest else "GREEN" if row["verdict"] == "GO" else "ERROR"
         if honest:
             red += 1
-            lines.append(f"{name} · {label} · RED (proven: {'; '.join(row['reasons'])[:120]})")
+            lines.append(f"{name} · {label} · RED (proven: {'; '.join(row['reasons'])[:120]}){at(i)}")
         elif row["verdict"] == "GO":
             green += 1
-            lines.append(f"{name} · {label} · GREEN (unfailable)")
+            lines.append(f"{name} · {label} · GREEN (unfailable){at(i)}")
             fails.append(f"{label}: stayed GO - the scope cannot see this bug")
         else:
             errors += 1
-            lines.append(f"{name} · {label} · ERROR ({'; '.join(row['reasons'])})")
+            lines.append(f"{name} · {label} · ERROR ({'; '.join(row['reasons'])}){at(i)}")
             fails.append(f"{label}: {'; '.join(row['reasons'])} - an error, not a red")
     secs = round(time.monotonic() - t0, 2)
     if record:
@@ -1787,6 +1806,7 @@ def moved_sweep(man, root, task, jobs, box=None, logs=None, tool=None):
     """--redarm --moved, the heavy tier's re-proof sweep (PLAYBOOK §A.2): every armed scope the red-arm proof no
     longer vouches for on this box - no record, another fingerprint, a NO-GO, a plant not RED, the ids moved - is
     red-armed, one campaign each, each writing its own record; the rest are named with the proof they stand on.
+    The campaigns are counted first, so each is numbered among them, its arms within it (M0-D27).
     GO only when every campaign is GO; nothing moved is GO, named; no armed scope at all is NO-GO."""
     box, root = box or this_box(), Path(root)
     logs = Path(logs) if logs else logs_of(man, root)
@@ -1800,32 +1820,41 @@ def moved_sweep(man, root, task, jobs, box=None, logs=None, tool=None):
         raise Refused("the tree's files cannot be listed (a folder or .gitignore is unreadable) - no fingerprint, "
                       "so the sweep cannot tell a moved scope: nothing ran")
     t0, lines, fails, n = time.monotonic(), [], [], {"moved": 0, "here": 0, "red": 0, "green": 0, "errors": 0}
+    steps = []                      # declared order: (name, its line, its failure or None) - a campaign's line is None
     for name in armed:
         s = man["scopes"][name]
         if name in bl:
-            lines.append(f"{name} · NOT RUN ({bl[name]})")
-            fails.append(f"{name}: NOT RUN ({bl[name]}) - the sweep cannot vouch for a scope it cannot run")
+            steps.append((name, f"{name} · NOT RUN ({bl[name]})",
+                          f"{name}: NOT RUN ({bl[name]}) - the sweep cannot vouch for a scope it cannot run"))
             continue
         if "placeholder" in s:
-            lines.append(f"{name} · SKIP (placeholder until {s['placeholder']})")
+            steps.append((name, f"{name} · SKIP (placeholder until {s['placeholder']})", None))
             continue
         if owed_on(s, box):
-            lines.append(f"{name} · owed on {s['box']} (this box: {box}) - swept there, never NO-GO here")
+            steps.append((name, f"{name} · owed on {s['box']} (this box: {box}) - swept there, never NO-GO here", None))
             continue
         n["here"] += 1
         fp = fingerprint(man, name, root, visible, tool)
         proof = redarm_proof(man, name, logs, box, fp)
-        if proof:
-            lines.append(f"{name} · proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]}) - not moved")
+        steps.append((name, f"{name} · proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]}) - not moved"
+                      if proof else None, None))
+    total = sum(1 for _n, line, _f in steps if line is None)    # every campaign counted before one starts (M0-D27)
+    for name, line, fail in steps:
+        if line is not None:
+            lines.append(line)
+            fails += [fail] if fail else []
             continue
         n["moved"] += 1
+        at = step_tag("campaign", n["moved"], total) if total > 1 else ""
+        if at:
+            say(f">> {name} · {at} · started")
         try:
-            r = redarm(man, name, root, task, jobs, box=box, logs=logs, tool=tool)
+            r = redarm(man, name, root, task, jobs, box=box, logs=logs, tool=tool, prefix=f"{at} · " if at else "")
         except Refused as exc:
             lines.append(f"{name} · refused ({exc})")
             fails.append(f"redarm {name}: {exc}")
             continue
-        lines += r["lines"] + [r["counts"]]
+        lines += r["lines"] + [r["counts"] + (f" · {at}" if at else "")]
         for k in ("red", "green", "errors"):
             n[k] += r["data"].get(k, 0)
         fails += [f"redarm {name}: {x}" for x in (r["failures"] or ([r["nogo"]] if r["nogo"] else []))]
@@ -2122,7 +2151,8 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     on --all; one record appended; the anchor advanced by the green scopes; with `gate`, the anchor graded.
     `pick` ({"cases", "by_scope"}, --changed's): a scope whose cases are files runs the cases that moved.
     `reuse` (a scoped or `--case` run's, never the loop's): a scope the task's newest record on this box has GO on
-    today's tree id is not re-run, unless it declares `rerun` (M0-T64c)."""
+    today's tree id is not re-run, unless it declares `rerun` (M0-T64c). Several scopes that run: each a step,
+    numbered in the order it starts, named live as it starts and on its line (M0-D27)."""
     box, root = box or this_box(), Path(root)
     logs = Path(logs) if logs else logs_of(man, root)
     log_for = log_for or (lambda n: logs / f"{task}.{n}.log")
@@ -2181,11 +2211,17 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
                                                           + list(bs.get("gone", [])))
                     sr.vouched = len(sr.listed) - len(us)
             todo += [(sr,) + u for u in us]
+    steps = list(dict.fromkeys(u[0] for u in todo if not u[0].spec.get("exclusive")))   # a step: a scope that runs,
+    steps += list(dict.fromkeys(u[0] for u in todo if u[0].spec.get("exclusive")))      # in the order it starts (M0-D27)
+    for k, sr in enumerate(steps if len(steps) > 1 else [], 1):
+        sr.step = (k, len(steps))
 
     def one(u):
         sr, label, cmd, value = u
         with LOCK:
-            sr.started = sr.started or time.time()
+            first, sr.started = sr.started is None, sr.started or time.time()
+        if first and sr.step:
+            say(f">> {sr.name} · {step_tag('step', *sr.step)} · started")
         run_unit(sr, label, cmd, value, root, man, env, task, box)
         with LOCK:
             sr.ended = time.time()
@@ -2215,7 +2251,8 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     lines = manifest_lines(man) + [f"why {n}: {w}" for n, w in (why or {}).items()]
     lines += [f"{sr.name} {sr.pick}" for sr in runs if sr.pick]
     w = max([len(sr.name) for sr in runs] + [len(n) for n, _g in not_run] + [8]) + 2
-    lines += [sr.line(w, box) for sr in runs] + [f"{n:<{w}}NOT RUN ({g})" for n, g in not_run]
+    lines += [sr.line(w, box) + (f" · {step_tag('step', *sr.step)}" if sr.step else "") for sr in runs]
+    lines += [f"{n:<{w}}NOT RUN ({g})" for n, g in not_run]
     failures = [f"{sr.name}: {'; '.join(sr.red())} · log {rel(sr.log, root)}" for sr in reds]
     if mode in ("all", "changed"):              # a scoped run is judged on the scopes it ran; the loop is not complete
         failures += [f"{sr.name}: NOT RUN ({sr.notrun}) - " + ("the complete loop is not complete" if mode == "all"
@@ -2977,7 +3014,7 @@ def selftest():
                 plant_(f"a kept manifest's `{n}`: NOT RUN, named on its line, never run, --all NO-GO on it",
                        why in line and n not in ran_ and any(f.startswith(f"{n}: NOT RUN (") for f in fails), line or out[-300:])
             plant_("notes (`_` keys, desc, why, hint, reason, note) read, never acted on: `_expected: 99`, `_timeout_s` "
-                   "aside, the scope ran GO on its one case", re.search(r"^noted +1/0/0 .*GO$", out, re.M) is not None, out[-600:])
+                   "aside, the scope ran GO on its one case", re.search(r"^noted +1/0/0 .*GO( · step \d+/\d+, \d+ left)?$", out, re.M) is not None, out[-600:])
             check("a kept manifest: the scopes it understands ran; each NOT RUN scope counted, no log opened for it",
                   rc == 1 and ran_ == {"ok", "noted"} and len(fails) == len(planted) and f"{len(planted)} NOT RUN" in out
                   and not (logs / "T9.f_env.log").exists(), (ran_, fails[:3]))
@@ -4201,6 +4238,9 @@ def selftest():
                   (r["lines"], sp))
             check("... their lines in declared order, whatever order they ended in",
                   [ln.split(" · ")[1] for ln in r["lines"]] == ["clean", "plant p1", "plant p2", "plant p3"], r["lines"])
+            check("... each arm's line its number among the four and the arms left (M0-D27)",
+                  [ln.rsplit(" · ", 1)[1] for ln in r["lines"]] == [f"arm {k}/4, {4 - k} left" for k in (1, 2, 3, 4)],
+                  r["lines"])
             qlog = (qroot / "logs" / "Q1.par.redarm.log").read_text(encoding="utf-8")
             heads = [qlog.find(f"par · {x} · a fresh scratch copy") for x in ("clean", "plant p1", "plant p2", "plant p3")]
             check("... the campaign's log one arm after another in declared order, no part file left",
@@ -4225,18 +4265,19 @@ def selftest():
             (qroot / "data.txt").write_text("ok\nmore\n", encoding="utf-8")       # a file the plants patch, outside `paths`
             r, sp = qarm("par", "Q4")
             plant_("the clean arm re-runs when a file the plants patch, outside `paths`, changed",
-                   r["lines"][0] == "par · clean · GO" and len(sp) == 4 and not r["failures"], r["lines"])
+                   r["lines"][0].startswith("par · clean · GO") and len(sp) == 4 and not r["failures"], r["lines"])
             (qroot / "data.txt").write_text("ok\n", encoding="utf-8")
             rm, _sp = swap("clean_proof", lambda *_a, **_k: ("MUTANT", "0"), lambda: qarm("par", "Q5m", record=False))
             r, sp = qarm("par", "Q5")
             plant_("a clean arm skipped whatever the bytes: red - the moved-bytes case runs it",
-                   "proven by MUTANT" in rm["lines"][0] and r["lines"][0] == "par · clean · GO", (rm["lines"][0], r["lines"][0]))
+                   "proven by MUTANT" in rm["lines"][0] and r["lines"][0].startswith("par · clean · GO"), (rm["lines"][0], r["lines"][0]))
             last = json.loads(qrecs.read_text(encoding="utf-8").splitlines()[-1])
             last["task"], last["scopes"]["par"]["clean"] = "Q6x", "NO-GO"
             with open(qrecs, "a", encoding="utf-8") as fh:
                 fh.write(json.dumps(last) + "\n")
             r, _sp = qarm("par", "Q6", record=False)
-            plant_("the clean arm re-runs when the newest record's clean was NO-GO", r["lines"][0] == "par · clean · GO", r["lines"])
+            plant_("the clean arm re-runs when the newest record's clean was NO-GO", r["lines"][0].startswith("par · clean · GO"),
+                   r["lines"])
             leg = tmp / "legacy"
             leg.mkdir()
             (leg / "loop_times.jsonl").write_text(json.dumps({"ts": "t", "task": "OLD", "mode": "redarm", "box": "SELFBOX", "scopes": {
@@ -4280,6 +4321,9 @@ def selftest():
             check("--redarm --moved: no proof yet - every armed scope here red-armed, one campaign each; the owed one named",
                   r["counts"].startswith("moved: 2 of 2 armed scopes, plants RED 2, GREEN 0, ERROR 0") and not r["failures"]
                   and not r["nogo"] and any(x.startswith("far · owed on OTHERBOX") for x in r["lines"]), (r["counts"], r["lines"]))
+            check("... each campaign's line its number among the two and the campaigns left (M0-D27)",
+                  [x.rsplit(" · ", 1)[1] for x in r["lines"] if x.startswith("redarm: ")]
+                  == ["campaign 1/2, 1 left", "campaign 2/2, 0 left"], r["lines"])
             r = sw("Q12")
             check("--redarm --moved: nothing moved - GO, named, each scope on the proof it stands on",
                   r["counts"].startswith("moved: 0 of 2 armed scopes") and not r["failures"] and not r["nogo"]
@@ -4563,6 +4607,41 @@ def selftest():
             rc, out = run_(clean, "list")
             check("list: every scope and form, the counts line", rc == 0 and "placeholder until M9-T9" in out
                   and "cases from `cases_cmd`" in out and "box OTHERBOX" in out, out[-300:])
+
+            # -- L · the steps numbered on the console (M0-D27) ------------------------------------------------
+            three = {"s1": clean["a"], "s2": clean["a"], "s3": clean["alone"]}
+
+            def numbered(task):                 # a three-step run: 1/3, 2/3, 3/3, none left at the end
+                rc, out = run_(three, "s1", "s2", "s3", "-j", "2", task=task)
+                return (rc == 0 and all(re.search(rf"^s{k} .* GO · step {k}/3, {3 - k} left$", out, re.M) for k in (1, 2, 3))
+                        and out.rstrip().endswith("=== GO ===")), out[-500:]
+
+            ok, out = numbered("TS1")
+            check("a three-step run: each scope's line its step 1/3, 2/3, 3/3 (the exclusive last), none left at the end",
+                  ok, out)
+            check("... the counts line and the verdict as before: no number on them", ok and re.search(
+                r"^verify: 3 passed, 0 failed, 0 skipped · 3/3 scopes GO · ", out, re.M) is not None
+                and "step" not in out.splitlines()[-1] + out.splitlines()[-2], out)
+            rc, out = run_({"a": clean["a"]}, "a", task="TS2")
+            check("a one-step run's line carries no number", rc == 0 and " · step " not in out, out[-300:])
+            ok, out = swap_("step_tag", lambda what, k, n: f"{what} {k}/{n}, {n - k + 1} left", lambda: numbered("TS3"))
+            plant_("steps left counted off by one: red - the three-step run reads 1 left on its last", not ok, out)
+
+            class Tty(io.StringIO):
+                def isatty(self):
+                    return True
+
+            tty, PROGRESS = Tty(), True
+            try:
+                with contextlib.redirect_stderr(tty):
+                    run_scopes({**base_top, "scopes": three}, list(three), tmp, "TS4", 2)
+            finally:
+                PROGRESS = False
+            live = tty.getvalue().splitlines()
+            check("on a terminal each step is named as it starts, its number once, every line whole",
+                  sorted(ln for ln in live if ln.startswith(">> "))
+                  == [f">> s{k} · step {k}/3, {3 - k} left · started" for k in (1, 2, 3)]
+                  and all(re.fullmatch(r">> s\d · step \d/3, \d left · started|\.\. s\d \d+\.\d\ds", ln) for ln in live), live)
     except Exception as exc:                   # a crash is a failed check, never a traceback in place of the verdict
         failed.append(f"crashed after {len(checks)} checks: {type(exc).__name__}: {exc} "
                       f"({traceback.format_exc().strip().splitlines()[-3].strip()})")

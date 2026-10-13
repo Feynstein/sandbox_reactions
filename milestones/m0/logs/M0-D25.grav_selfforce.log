@@ -1,0 +1,92 @@
+== 2026-10-12T15:29:13-04:00 grav_selfforce · task M0-D25 · box Laser2025-20 :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=101 · 12.08 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+error[E0308]: mismatched types
+   --> crates\sr-engine\tests\gpu\grav.rs:232:69
+    |
+232 |         assert_eq!((solved.area.w, solved.area.h, solved.area.fft), (392, 64, (1024, 128)), "{:?}", solved.area);
+    |                                                                     ^^^^^^^^^^^^^^^^^^^^^^ expected `(u32, u32, [u32; 2])`, found `({integer}, {integer}, _)`
+    |
+    = note: expected tuple `(u32, u32, [u32; 2])`
+               found tuple `({integer}, {integer}, ({integer}, {integer}))`
+
+error[E0308]: mismatched types
+   --> crates\sr-engine\tests\gpu\grav.rs:242:69
+    |
+242 |         assert_eq!((solved.area.w, solved.area.h, solved.area.fft), (40, 344, (128, 1024)), "{:?}", solved.area);
+    |                                                                     ^^^^^^^^^^^^^^^^^^^^^^ expected `(u32, u32, [u32; 2])`, found `({integer}, {integer}, _)`
+    |
+    = note: expected tuple `(u32, u32, [u32; 2])`
+               found tuple `({integer}, {integer}, ({integer}, {integer}))`
+
+error[E0308]: mismatched types
+   --> crates\sr-engine\tests\gpu\grav.rs:253:69
+    |
+253 |         assert_eq!((solved.area.w, solved.area.h, solved.area.fft), (600, 400, (2048, 1024)), "{:?}", solved.area);
+    |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^ expected `(u32, u32, [u32; 2])`, found `({integer}, {integer}, _)`
+    |
+    = note: expected tuple `(u32, u32, [u32; 2])`
+               found tuple `({integer}, {integer}, ({integer}, {integer}))`
+
+error[E0308]: mismatched types
+   --> crates\sr-engine\tests\gpu\grav.rs:388:69
+    |
+388 |         assert_eq!((solved.area.w, solved.area.h, solved.area.fft), (box_wh.0, box_wh.1, fft), "{:?}", solved.area);
+    |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^ expected `(u32, u32, [u32; 2])`, found `(u32, u32, (u32, u32))`
+    |
+    = note: expected tuple `(_, _, [u32; 2])`
+               found tuple `(_, _, (u32, u32))`
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `sr-engine` (test "gpu") due to 4 previous errors
+
+== 2026-10-12T15:30:12-04:00 grav_selfforce · task M0-D25 · box Laser2025-20 :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=0 · 3.75 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates\sr-engine\tests\gpu\floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 0.31s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 5 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.093e-12, Σ m|g| = 2.767e3, ratio 3.949e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.151e-6, Σ m|g| = 2.767e3, ratio 2.223e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 1.25e-7, gx 1.57e-6, gy 1.57e-6
+ok
+test grav::selfforce::gpu_tall_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU tall box 128x512, box BoxReport { x0: 40, y0: 88, w: 40, h: 344, fft: [128, 1024], from_step: 1, fits: 2, tiles: [5, 43, 1], cells: [54, 1, 1] }: |Σ m·g| = 2.872e-4, Σ m|g| = 5.937e3, ratio 4.837e-8
+SR-GRAV-REF tall box, box 40x344 at (40, 88), FFT [128, 1024]: relative L1 against the twin φ 8.56e-8, gx 1.21e-6, gy 8.61e-6
+ok
+test grav::selfforce::gpu_wide_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU wide box 600x400, box BoxReport { x0: 120, y0: 168, w: 392, h: 64, fft: [1024, 128], from_step: 1, fits: 2, tiles: [49, 8, 1], cells: [98, 1, 1] }: |Σ m·g| = 4.516e-5, Σ m|g| = 4.766e3, ratio 9.475e-9
+SR-GRAV-REF wide box, box 392x64 at (120, 168), FFT [1024, 128]: relative L1 against the twin φ 1.18e-7, gx 3.20e-6, gy 3.13e-6
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 1.695e-16
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 86 filtered out; finished in 2.96s
+
+

@@ -1,0 +1,12 @@
+--- a/crates/sr-physics/src/reference/grav.rs
++++ b/crates/sr-physics/src/reference/grav.rs
+@@ -22,6 +22,9 @@
+     if dx == 0 && dy == 0 {
+         return -g * SELF_CELL;
+     }
++    if dx.abs() == 1 && dy.abs() == 1 {
++        return -g / 1.5;
++    }
+     let r2 = (dx * dx + dy * dy) as f64;
+     -g / r2.sqrt()
+ }

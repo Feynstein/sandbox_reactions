@@ -1,0 +1,7 @@
+M0-TC3 · compaction, Phase 6's close · MOVE · model=claude-haiku-5-5 level=high
+baseline: M0-TC3, 246 files, 2026-10-12T14:57:22-04:00
+lint before: header=465/600 · warnings=9 (the 9 DONE blocks named by the Deliver)
+stub: 15 blocks, 320 lines moved, 320 verified byte-for-byte (plan.py stub)
+lint after stub: header=465/600 · warnings=0
+de-dup (Repo facts → pointers to Hazards): 3 edits (disk free space, MSYS symlink variable, Store-alias Python)
+lint after edits: header=465/600 · warnings=0 · GO

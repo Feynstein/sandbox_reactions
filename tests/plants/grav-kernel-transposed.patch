@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/grav.wgsl
++++ b/crates/sr-engine/shaders/grav.wgsl
+@@ -73,7 +73,7 @@
+     }
+     dit(n, lid, false);
+     let row_len = nx / 2u + 1u;
+-    let base = koffsets[(countTrailingZeros(nx) - 5u) * gp.ny_sizes + log_n - 5u] + min(col, nx - col);
++    let base = koffsets[(log_n - 5u) * gp.ny_sizes + countTrailingZeros(nx) - 5u] + min(col, nx - col);
+     let scale = 1.0 / f32(nx * n);
+     for (var y = lid; y < n; y = y + WG) {
+         buf[y] = buf[y] * (kquarter[base + min(y, n - y) * row_len] * scale);

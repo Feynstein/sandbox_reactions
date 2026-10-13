@@ -101,19 +101,38 @@ pub fn match_adapter(list: &[AdapterDesc], query: &str) -> Result<usize, GpuErro
         .ok_or_else(|| GpuError::NoMatch { query: query.to_string(), seen: list.to_vec() })
 }
 
+/// The instance's flags, the headless one's and the app's: wgpu's for the build, less `VALIDATION_INDIRECT_CALL`
+/// (M0-D26), which wgpu keeps even in release builds — a hidden compute dispatch before every indirect dispatch that
+/// turns an over-limit size into a no-op, ~11–14 µs each on the RTX 4080 Laptop, seven a step on a Sun-sized box. Every
+/// indirect size the step reads is bounded by the world instead (the box's, the edit gate's, the latch's copies of fixed
+/// sizes or 0): the assertion below; a pass that adds one keeps it so. `WGPU_VALIDATION_INDIRECT_CALL=1` turns it back on.
+pub fn instance_flags() -> wgpu::InstanceFlags {
+    wgpu::InstanceFlags::from_build_config().difference(wgpu::InstanceFlags::VALIDATION_INDIRECT_CALL).with_env()
+}
+
+// The largest indirect size: a whole world's 256-cell workgroups (the re-fit's scan, under P0's gate), inside WebGPU's
+// default maxComputeWorkgroupsPerDimension.
+const _: () = assert!(crate::state::WorldConfig::MAX * crate::state::WorldConfig::MAX / 256 <= 65_535);
+
 /// The instance every headless device and adapter listing in this process comes from, created once (M0-D14). Each
 /// instance dropped unloads the Vulkan ICDs and each new one dlopens them again; on linux-pc every NVIDIA reload
 /// leaks part of glibc's static TLS, and from the 11th the load fails (« libnvidia-tls.so…: cannot allocate memory in
 /// static TLS block ») so wgpu silently lists no NVIDIA adapter. One live instance loads the ICDs once. On wasm an
 /// instance is not `Sync`, so each call makes its own (the browser loads no ICD).
 pub fn headless_instance() -> wgpu::Instance {
+    let new = || {
+        wgpu::Instance::new(wgpu::InstanceDescriptor {
+            flags: instance_flags(),
+            ..wgpu::InstanceDescriptor::new_without_display_handle()
+        })
+    };
     #[cfg(not(target_arch = "wasm32"))]
     {
         static INSTANCE: std::sync::OnceLock<wgpu::Instance> = std::sync::OnceLock::new();
-        INSTANCE.get_or_init(|| wgpu::Instance::new(wgpu::InstanceDescriptor::new_without_display_handle())).clone()
+        INSTANCE.get_or_init(new).clone()
     }
     #[cfg(target_arch = "wasm32")]
-    wgpu::Instance::new(wgpu::InstanceDescriptor::new_without_display_handle())
+    new()
 }
 
 /// Every adapter wgpu lists on the instance's backends, in wgpu's order (the no-op backend left out).

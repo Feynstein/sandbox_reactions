@@ -1,0 +1,114 @@
+M0-D26 log â€” win-laptop (Laser2025-20), started 2026-10-12T15:44:45-04:00
+    Finished `release` profile [optimized] target(s) in 0.43s
+before scenes/sun_disk.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0263, 'P1 dt': 0.0095, 'P2 gravity': 0.0794, 'P8 floors': 0.0601, 'P9 reductions': 0.0388} step_ms_mean 0.2602 wall/step 0.3648 ms (wall_s 200 0.1316, 2200 0.8611)
+before scenes/fill_world.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0262, 'P1 dt': 0.0095, 'P2 gravity': 0.85, 'P8 floors': 0.2111, 'P9 reductions': 0.099} step_ms_mean 1.2405 wall/step 1.3307 ms (wall_s 200 0.3240, 2200 2.9855)
+== sun_disk split (each dispatch its own pass), 200 steps
+D26 box_cells 0.0215
+D26 box_fit 0.0178
+D26 grav_rows 0.0235
+D26 grav_columns 0.0428
+D26 conv_rows_inverse 0.0183
+D26 grav_gradient 0.0208
+D26 dt_cells 0.0310
+D26 dt_partials 0.0108
+D26 box_gate 0.0113
+D26 dt_advance 0.0093
+D26 floor_cells 0.0375
+D26 renormalise_species 0.0352
+D26 guard_scan 0.0006
+D26 guard_stamp 0.0001
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.IpSlH9Z99H/summary.json'
+== fill_world split (each dispatch its own pass), 200 steps
+D26 box_cells 0.0182
+D26 box_fit 0.0178
+D26 grav_rows 0.1329
+D26 grav_columns 0.6115
+D26 conv_rows_inverse 0.1137
+D26 grav_gradient 0.0276
+D26 dt_cells 0.0869
+D26 dt_partials 0.0122
+D26 box_gate 0.0082
+D26 dt_advance 0.0092
+D26 floor_cells 0.1208
+D26 renormalise_species 0.1069
+D26 guard_scan 0.0035
+D26 guard_stamp 0.0001
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.IpSlH9Z99H/summary.json'
+== WGPU_VALIDATION_INDIRECT_CALL=1 sun_disk split
+D26 box_cells 0.0229 D26 box_fit 0.0178 D26 grav_rows 0.0189 D26 grav_columns 0.0398 D26 conv_rows_inverse 0.0184 D26 grav_gradient 0.0206 D26 dt_cells 0.0371 D26 dt_partials 0.0107 D26 box_gate 0.0097 D26 dt_advance 0.0094 D26 floor_cells 0.0343 D26 renormalise_species 0.0353 D26 guard_scan 0.0006 D26 guard_stamp 0.0001 
+== WGPU_VALIDATION_INDIRECT_CALL=0 sun_disk split
+D26 box_cells 0.0072 D26 box_fit 0.0067 D26 grav_rows 0.0190 D26 grav_columns 0.0397 D26 conv_rows_inverse 0.0183 D26 grav_gradient 0.0095 D26 dt_cells 0.0199 D26 dt_partials 0.0107 D26 box_gate 0.0082 D26 dt_advance 0.0094 D26 floor_cells 0.0235 D26 renormalise_species 0.0212 D26 guard_scan 0.0006 D26 guard_stamp 0.0002 
+Traceback (most recent call last):
+  File "C:\Users\YOHANB~1\AppData\Local\Temp/claude/c--workspace-sandbox-reactions/5c8f515d-87cf-4a9a-98f0-960fa78285b7/scratchpad/measure.py", line 23, in <module>
+    timed = [run(scene, 200, True) for _ in range(reps)]
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YOHANB~1\AppData\Local\Temp/claude/c--workspace-sandbox-reactions/5c8f515d-87cf-4a9a-98f0-960fa78285b7/scratchpad/measure.py", line 14, in run
+    p = subprocess.run(cmd, capture_output=True, text=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] Le fichier spécifié est introuvable
+exp:indirect-validation-off scenes/sun_disk.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0134, 'P1 dt': 0.0093, 'P2 gravity': 0.0693, 'P8 floors': 0.0445, 'P9 reductions': 0.0275} step_ms_mean 0.2142 wall/step 0.2636 ms (wall_s 200 0.0841, 2200 0.6114)
+exp:indirect-validation-off scenes/fill_world.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0135, 'P1 dt': 0.0093, 'P2 gravity': 0.8397, 'P8 floors': 0.1895, 'P9 reductions': 0.0876} step_ms_mean 1.1842 wall/step 1.2868 ms (wall_s 200 0.2878, 2200 2.8615)
+== SR_D26_ONE=1 (validation off)
+exp:SR_D26_ONE=1 scenes/sun_disk.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {} step_ms_mean 0.2527 wall/step 0.2062 ms (wall_s 200 0.0765, 2200 0.4888)
+== SR_D26_P2=256x96 (validation off)
+exp:SR_D26_P2=256x96 scenes/sun_disk.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0132, 'P1 dt': 0.0092, 'P2 gravity': 0.0642, 'P8 floors': 0.0395, 'P9 reductions': 0.0277} step_ms_mean 0.2083 wall/step 0.2943 ms (wall_s 200 0.1059, 2200 0.6944)
+== SR_D26_ONE=1 SR_D26_P2=256x96 (validation off)
+exp:SR_D26_ONE=1 SR_D26_P2=256x96 scenes/sun_disk.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {} step_ms_mean 0.2583 wall/step 0.1958 ms (wall_s 200 0.0599, 2200 0.4515)
+== X=1 validation=1
+D26cpu steps 256 encode_ms/step 0.1105 submit_ms/step 0.0067 gpu_wait_ms/step 0.2239
+D26cpu steps 256 encode_ms/step 0.0715 submit_ms/step 0.0054 gpu_wait_ms/step 0.2293
+D26cpu steps 256 encode_ms/step 0.0892 submit_ms/step 0.0079 gpu_wait_ms/step 0.2201
+D26cpu steps 256 encode_ms/step 0.0581 submit_ms/step 0.0038 gpu_wait_ms/step 0.2314
+== X=1 validation=0
+D26cpu steps 256 encode_ms/step 0.0552 submit_ms/step 0.0039 gpu_wait_ms/step 0.1850
+D26cpu steps 256 encode_ms/step 0.0454 submit_ms/step 0.0040 gpu_wait_ms/step 0.1944
+D26cpu steps 256 encode_ms/step 0.0449 submit_ms/step 0.0037 gpu_wait_ms/step 0.1871
+D26cpu steps 256 encode_ms/step 0.0425 submit_ms/step 0.0038 gpu_wait_ms/step 0.1832
+== SR_D26_ONE=1 validation=1
+D26cpu steps 256 encode_ms/step 0.0338 submit_ms/step 0.0015 gpu_wait_ms/step 0.1771
+D26cpu steps 256 encode_ms/step 0.0335 submit_ms/step 0.0015 gpu_wait_ms/step 0.1832
+D26cpu steps 256 encode_ms/step 0.0319 submit_ms/step 0.0014 gpu_wait_ms/step 0.1780
+D26cpu steps 256 encode_ms/step 0.0361 submit_ms/step 0.0012 gpu_wait_ms/step 0.1912
+== SR_D26_ONE=1 validation=0
+D26cpu steps 256 encode_ms/step 0.0317 submit_ms/step 0.0018 gpu_wait_ms/step 0.1433
+D26cpu steps 256 encode_ms/step 0.0193 submit_ms/step 0.0011 gpu_wait_ms/step 0.1429
+D26cpu steps 256 encode_ms/step 0.0221 submit_ms/step 0.0017 gpu_wait_ms/step 0.1432
+D26cpu steps 256 encode_ms/step 0.0211 submit_ms/step 0.0017 gpu_wait_ms/step 0.1475
+before exit 0
+after exit 0
+== sun_disk: dumps compared
+s_1000.bin identical
+s_250.bin identical
+s_500.bin identical
+s_750.bin identical
+before exit 0
+after exit 0
+== fill_world: dumps compared
+s_1000.bin identical
+s_250.bin identical
+s_500.bin identical
+s_750.bin identical
+before scenes/sun_disk.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0265, 'P1 dt': 0.0094, 'P2 gravity': 0.079, 'P8 floors': 0.0577, 'P9 reductions': 0.0386} step_ms_mean 0.2563 wall/step 0.3680 ms (wall_s 200 0.1242, 2200 0.8602)
+before scenes/fill_world.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0266, 'P1 dt': 0.0094, 'P2 gravity': 0.8501, 'P8 floors': 0.2087, 'P9 reductions': 0.1014} step_ms_mean 1.2418 wall/step 1.5165 ms (wall_s 200 0.3993, 2200 3.4323)
+after scenes/sun_disk.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0137, 'P1 dt': 0.0094, 'P2 gravity': 0.0705, 'P8 floors': 0.0477, 'P9 reductions': 0.0276} step_ms_mean 0.2174 wall/step 0.2601 ms (wall_s 200 0.0931, 2200 0.6133)
+after scenes/fill_world.json [SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA] per_pass_ms {'P0 edits': 0.0104, 'P1 dt': 0.0068, 'P2 gravity': 0.5228, 'P8 floors': 0.1219, 'P9 reductions': 0.0569} step_ms_mean 0.7558 wall/step 1.2495 ms (wall_s 200 0.3038, 2200 2.8028)
+before scenes/sun_disk.json rounds 7: wall/step median 0.5904 ms (min 0.2798, max 0.6668); step_ms_mean median 0.2554 (min 0.2267, max 0.2753); per_pass_ms {'P0 edits': 0.0264, 'P1 dt': 0.0093, 'P2 gravity': 0.0792, 'P8 floors': 0.0579, 'P9 reductions': 0.0388}
+after scenes/sun_disk.json rounds 7: wall/step median 0.2886 ms (min 0.1614, max 0.3739); step_ms_mean median 0.2150 (min 0.1866, max 0.2214); per_pass_ms {'P0 edits': 0.0137, 'P1 dt': 0.0093, 'P2 gravity': 0.0695, 'P8 floors': 0.0398, 'P9 reductions': 0.0276}
+before scenes/fill_world.json rounds 7: wall/step median 1.4749 ms (min 1.0604, max 1.5633); step_ms_mean median 1.2544 (min 1.2328, max 1.3010); per_pass_ms {'P0 edits': 0.0266, 'P1 dt': 0.0094, 'P2 gravity': 0.8554, 'P8 floors': 0.2164, 'P9 reductions': 0.1015}
+after scenes/fill_world.json rounds 7: wall/step median 1.2447 ms (min 1.1867, max 1.2828); step_ms_mean median 1.1956 (min 1.0637, max 1.2469); per_pass_ms {'P0 edits': 0.0135, 'P1 dt': 0.0094, 'P2 gravity': 0.8388, 'P8 floors': 0.1936, 'P9 reductions': 0.0878}
+long(200 vs 10200): before scenes/sun_disk.json rounds 5: wall/step median 0.1979 ms (min 0.1871, max 0.3312); step_ms_mean median 0.1747 (min 0.1708, max 0.2503); per_pass_ms {'P0 edits': 0.0188, 'P1 dt': 0.0066, 'P2 gravity': 0.05, 'P8 floors': 0.0391, 'P9 reductions': 0.0251}
+long(200 vs 10200): after scenes/sun_disk.json rounds 5: wall/step median 0.1131 ms (min 0.1082, max 0.1643); step_ms_mean median 0.1411 (min 0.1368, max 0.1649); per_pass_ms {'P0 edits': 0.0096, 'P1 dt': 0.0065, 'P2 gravity': 0.044, 'P8 floors': 0.0253, 'P9 reductions': 0.0184}
+long(200 vs 10200): before scenes/fill_world.json rounds 5: wall/step median 1.2957 ms (min 0.7906, max 1.3183); step_ms_mean median 1.2064 (min 0.8651, max 1.3330); per_pass_ms {'P0 edits': 0.0263, 'P1 dt': 0.0093, 'P2 gravity': 0.8228, 'P8 floors': 0.2096, 'P9 reductions': 0.0975}
+long(200 vs 10200): after scenes/fill_world.json rounds 5: wall/step median 1.1407 ms (min 0.9823, max 1.1836); step_ms_mean median 1.1750 (min 0.8555, max 1.2254); per_pass_ms {'P0 edits': 0.0146, 'P1 dt': 0.0093, 'P2 gravity': 0.8338, 'P8 floors': 0.1873, 'P9 reductions': 0.0851}

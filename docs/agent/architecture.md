@@ -57,8 +57,10 @@ directly (M0-T22's deviation); the app wires none of this until M0-T84.
 `step::Pass` is the contract's P0–P9 (`Pass::ORDER`; `Pass::label` gives "P0 edits" … "P9 reductions"). A `Step` holds one
 `Vec<Dispatch>` per pass, built once for the state's world by `Step::new` (or `Step::with_box`, below); a `Dispatch` is an
 entry point, its pipeline, its bind groups (group g at index g) and its `Size` — `Fixed` workgroups or `Indirect` (a
-buffer and a byte offset the GPU reads). `Step::encode` records one step: a compute pass per non-empty slot, in order,
-each labelled with its pass (P0 is always recorded, for the box's edit re-fit).
+buffer and a byte offset the GPU reads). `Step::encode` records one step: every non-empty slot in order (P0 is always
+recorded, for the box's edit re-fit) — a compute pass each, labelled with its pass, when the step's passes are timed;
+otherwise the whole step is one compute pass, the same dispatches in the same order (M0-D26: the pass boundaries cost
+~0.06 ms a step on a Sun-sized box).
 
 | Pass | Role (the contract's row has the formulas) | Dispatches today |
 |---|---|---|
@@ -87,10 +89,15 @@ each labelled with its pass (P0 is always recorded, for the box's edit re-fit).
   (which dispatches read the box's sizes, and at which offset). The `state`, `floors`, `dt`, `box` and `latch` scopes
   grade the lists through these (`docs/agent/testing.md`).
 - **The cost of a step** (§1.8.3's c_step, §2.12.2's `timing`): off until `Step::set_timing(…, Timing::Auto)`. Each
-  compute pass writes a timestamp at its beginning and end — pass boundaries only, never inside a pass (native-only,
-  §6.2.2) — where the device has `timestamp-query`, else the batch is timed by the wall clock and says so (`CostSource`;
+  pass of a timed step is a compute pass that writes a timestamp at its beginning and end — pass boundaries only, never
+  inside a pass (native-only, §6.2.2) — where the device has `timestamp-query`, else the batch is timed by the wall clock and says so (`CostSource`;
   wasm32 has no wall clock, so there the cost is none). `StepCost` carries the source, the steps timed, the span per step
   (first pass's beginning → last pass's end) and the time per pass (M0-T23).
+
+- **wgpu's indirect-call validation is off** (`gpu::instance_flags`, the headless instance's and the app's, M0-D26): it
+  puts a hidden dispatch before every indirect one (~11–14 µs each on the RTX 4080 Laptop). Every indirect size the
+  step reads is bounded by the world — at most 2048² / 256 = 16,384 workgroups, a compile-time assertion — so a pass
+  that adds one keeps it so; `WGPU_VALIDATION_INDIRECT_CALL=1` turns the validation back on.
 
 **What no pass may read:** the wall clock, the rung, the frame count, a label (§1.3.2). The step is a function of the
 state and the step count — that is what makes a run bit-identical on one adapter, driver and binary (§1.3.4, §6.7).

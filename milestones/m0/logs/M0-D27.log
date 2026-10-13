@@ -1,0 +1,63 @@
+M0-D27 · win-laptop (Laser2025-20) · opened 2026-10-12 before any run
+== 2026-10-12T15:09:28-04:00 py -3.12 tools/pb/verify.py selftest
+FAILED:
+  PLANT notes (`_` keys, desc, why, hint, reason, note) read, never acted on: `_expected: 99`, `_timeout_s` aside, the scope ran GO on its one case: pped · 2/2 scopes GO · 0 skipped · 0 owed · 18 NOT RUN · 0 not impacted · 0.08 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.10 · load 3.25->1.26 · base: none — every plant
+=== NO-GO: f_env: NOT RUN (unknown key `env`) - the complete loop is not complete; f_lane: NOT RUN (unknown keys `lane`, `vram_mib`) - the complete loop is not complete; f_inject: NOT RUN (unknown keys `inject`, `inject_cmd`) - the complete loop is not complete; f_requires: NOT RUN (unknown key `requires`) - the complete loop is not complete; f_arms: NOT RUN (unknown key `arms`) - the complete loop... ===
+
+selftest: checks=352 · failed=1 · plants=157/158 red
+=== NO-GO: 1 check(s) failed ===
+exit=1
+== 2026-10-12T15:12:32-04:00 py -3.12 tools/pb/verify.py selftest (after the notes regex)
+selftest: checks=352 · failed=0 · plants=158/158 red
+=== GO ===
+== 2026-10-12T15:15:10-04:00 py -3.12 tools/pb/verify.py plan_lint time_control --task M0-D27
+plan_lint     519/0/0      0.17 s  GO · step 1/2, 1 left
+time_control  18/0/0       0.45 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-D27.<scope>.log · record: loop_times.jsonl · tree b1938a8a4b02+97a072c5e5f1
+anchor: 1 path×scope entries moved by this run
+anchor: 129 paths checked · 117 skipped (3 classes) · 0 never checked · 1 stale · 0 unclassified · 0 owed · 130 covered of 247 visible
+verify: 537 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.45 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 0.38->2.02
+=== GO ===
+== 2026-10-12T15:15:18-04:00 py -3.12 tools/pb/verify.py --redarm tools_selftest --task M0-D27
+tools_selftest · clean · GO · arm 1/2, 1 left
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 176.42 s · 2 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-D27.tools_selftest.redarm.log
+=== GO ===
+== 2026-10-12T15:18:51-04:00 py -3.12 tools/pb/verify.py --changed --task M0-D27
+why tools_selftest: stale: tools/pb/verify.py
+tools_selftest  10/0/0     267.16 s  GO
+plan_lint       NOT RUN (not impacted: its 2 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+fft_twin        NOT RUN (not impacted: its 13 path(s) checked at the anchor)
+grav_force      NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+grav_selfforce  NOT RUN (not impacted: its 51 path(s) checked at the anchor)
+fft             NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 49 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 53 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 53 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 51 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 56 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-D27.<scope>.log · record: loop_times.jsonl · tree b1938a8a4b02+1d74609cc41a
+anchor: 1 path×scope entries moved by this run
+anchor: 130 paths checked · 117 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 130 covered of 247 visible
+skipped   109  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 10 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 27 not impacted · 157.89 s + loop 0.11 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 0.69->1.21 · base: M0-D27's start 2026-10-12T15:04:39-04:00
+=== GO ===

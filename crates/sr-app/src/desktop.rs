@@ -24,9 +24,11 @@ fn device_descriptor(_adapter: &wgpu::Adapter) -> wgpu::DeviceDescriptor<'static
     }
 }
 
-/// The wgpu setup both targets start from: the high-performance adapter, `device_descriptor`'s device.
+/// The wgpu setup both targets start from: the engine's instance flags, the high-performance adapter,
+/// `device_descriptor`'s device.
 pub fn wgpu_setup() -> egui_wgpu::WgpuSetupCreateNew {
     let mut setup = egui_wgpu::WgpuSetupCreateNew::without_display_handle();
+    setup.instance_descriptor.flags = sr_engine::gpu::instance_flags();
     setup.power_preference = wgpu::PowerPreference::HighPerformance;
     setup.device_descriptor = Arc::new(device_descriptor);
     setup

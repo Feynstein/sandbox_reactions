@@ -186,11 +186,11 @@
       ]
     },
     "grav_force": {
-      "desc": "gravity's force law on the CPU twin and on the GPU's P2, on the physics adapter (contract §1.4.2, §5.1's G-GRAV1, §2.3.5): K(0, 0) = −G·4 ln(1 + √2) = −3.525494 G asserted (closed form against a polar quadrature, 1e-12) with K = −G/r elsewhere, symmetric and linear in G, one unit of Σ giving that self cell and −G/r around it; a Maclaurin disk Σc√(1 − r²/a²) on a grid, φ = K ∗ Σ_src by the zero-padded FFT convolution and g = −∇φ by central differences: |Δg|/|g| ≤ 2 % at every cell with 0 < r ≤ 0.75a for a = 40 (the largest error and its cell printed; measured 0.30 %, so the direct force kernels stay unbuilt), the a = 20 over a = 40 largest error within [1.6, 2.4] (measured 1.93), a disk centred on a cell corner (the scene files' convention) within 2 % too (M0-T29); the GPU's P2 (step/grav.rs, shaders/grav.wgsl) on one step of the a = 40 disk in a 128 × 128 world within 2 % (measured 0.30 %), a = 20 over a = 40 within [1.6, 2.4] (1.93), φ and g over the fitted box within G-REF's 1e-3 relative L1 of the twin (measured ≤ 3e-6), P9's Δt_0 and Δt_1 = min(hydro term, η_g / √max|g|) within 1e-6 with the gravity term binding, and a frame's φ, g and Δt the bare steps', bit for bit (M0-T31)",
+      "desc": "gravity's force law on the CPU twin and on the GPU's P2, on the physics adapter (contract §1.4.2, §5.1's G-GRAV1, §2.3.5): K(0, 0) = −G·4 ln(1 + √2) = −3.525494 G asserted (closed form against a polar quadrature, 1e-12) with K = −G/r elsewhere, symmetric and linear in G, one unit of Σ giving that self cell and −G/r around it; a Maclaurin disk Σc√(1 − r²/a²) on a grid, φ = K ∗ Σ_src by the zero-padded FFT convolution and g = −∇φ by central differences: |Δg|/|g| ≤ 2 % at every cell with 0 < r ≤ 0.75a for a = 40 (the largest error and its cell printed; measured 0.30 %, so the direct force kernels stay unbuilt), the a = 20 over a = 40 largest error within [1.6, 2.4] (measured 1.93), a disk centred on a cell corner (the scene files' convention) within 2 % too (M0-T29); the GPU's P2 (step/grav.rs, shaders/grav.wgsl) on one step of the a = 40 disk in a 128 × 128 world within 2 % (measured 0.30 %), a = 20 over a = 40 within [1.6, 2.4] (1.93), φ and g over the fitted box within G-REF's 1e-3 relative L1 of the twin (measured ≤ 3e-6), P9's Δt_0 and Δt_1 = min(hydro term, η_g / √max|g|) within 1e-6 with the gravity term binding, and a frame's φ, g and Δt the bare steps', bit for bit (M0-T31); K(i, j) = −G/√(i² + j²) at every offset of a 64 × 64 box within 4e-16 relative, K(0, 0) exact; the GPU on a faint disk in sub-Σ_vac cells (the mask), on a wide box (392 × 64, FFT 1024 × 128), a tall one (40 × 344, 128 × 1024) and the whole 600 × 400 world (2048 × 1024): φ and g within G-REF's 1e-3 of the twin and φ at nine cells within 1e-4 of the kernel summed directly over the sources (M0-D25)",
       "cmd": "bash tests/gpu.sh grav::force physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 8,
+      "expected": 13,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -209,15 +209,27 @@
         {
           "id": "grav-kernel-exponent",
           "patch": "tests/plants/grav-kernel-exponent.patch"
+        },
+        {
+          "id": "grav-vacuum-mask-off",
+          "patch": "tests/plants/grav-vacuum-mask-off.patch"
+        },
+        {
+          "id": "grav-kernel-transposed",
+          "patch": "tests/plants/grav-kernel-transposed.patch"
+        },
+        {
+          "id": "grav-kernel-diagonal",
+          "patch": "tests/plants/grav-kernel-diagonal.patch"
         }
       ]
     },
     "grav_selfforce": {
-      "desc": "gravity's net self-force on the CPU twin and on the GPU's P2, on the physics adapter (contract §1.4.2, §5.1's G-GRAV2): scenes/asym_blob.json (a Maclaurin disk and an off-centre rectangle, 128 × 128) and a seeded scatter of masses in a 50 × 37 box, φ = K ∗ Σ_src and g = −∇φ by central differences: |Σ m·g| ≤ 1e-5 Σ m|g| (printed; measured 4e-16), the blob a real one (over 1500 cells, mass over 500, Σ m|g| over 100) (M0-T29); the blob through one GPU step with gravity on, over the fitted box: the same ratio (measured 2e-9 in f32) and φ and g within G-REF's 1e-3 relative L1 of the twin (M0-T31)",
+      "desc": "gravity's net self-force on the CPU twin and on the GPU's P2, on the physics adapter (contract §1.4.2, §5.1's G-GRAV2): scenes/asym_blob.json (a Maclaurin disk and an off-centre rectangle, 128 × 128) and a seeded scatter of masses in a 50 × 37 box, φ = K ∗ Σ_src and g = −∇φ by central differences: |Σ m·g| ≤ 1e-5 Σ m|g| (printed; measured 4e-16), the blob a real one (over 1500 cells, mass over 500, Σ m|g| over 100) (M0-T29); the blob through one GPU step with gravity on, over the fitted box: the same ratio (measured 2e-9 in f32) and φ and g within G-REF's 1e-3 relative L1 of the twin (M0-T31); a wide box (392 × 64, FFT 1024 × 128) and a tall one (40 × 344, 128 × 1024), each with an empty outermost ring: the same ratio and the same twin bound (M0-D25)",
       "cmd": "bash tests/gpu.sh grav::selfforce physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 3,
+      "expected": 5,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -237,6 +249,10 @@
         {
           "id": "grav-kernel-shift",
           "patch": "tests/plants/grav-kernel-shift.patch"
+        },
+        {
+          "id": "grav-gradient-backward",
+          "patch": "tests/plants/grav-gradient-backward.patch"
         }
       ]
     },

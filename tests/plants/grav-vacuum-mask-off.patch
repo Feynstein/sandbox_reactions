@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/grav.wgsl
++++ b/crates/sr-engine/shaders/grav.wgsl
+@@ -40,7 +40,7 @@
+         var v = 0.0;
+         if (x < abox.w) {
+             v = src[base + x];
+-            if (v < gp.sigma_vac) {
++            if (v < gp.sigma_vac * 0.0) {
+                 v = 0.0;
+             }
+         }

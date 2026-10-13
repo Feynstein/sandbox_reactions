@@ -24,10 +24,11 @@
 //! as group 1 from [`EosGpu`], built once per run from physics.json and elements.json: the species table, the cold
 //! pairs, M0-T12's u(x) table (sr_physics::eos::ColdTable) and the floors.
 //!
-//! The cost of a step (§1.8.3's c_step, §3.1, §2.12.2's `timing`; M0-T23), off until [`Step::set_timing`]: each compute
-//! pass writes a timestamp at its beginning and its end where the device has WebGPU's `timestamp-query` — at pass
-//! boundaries only, never inside a pass (wgpu's TIMESTAMP_QUERY_INSIDE_PASSES is native-only, §6.2.2) — else the batch
-//! is timed by the wall clock and says so ([`CostSource`]). A batch is a frame, or the bare steps recorded between two
+//! The cost of a step (§1.8.3's c_step, §3.1, §2.12.2's `timing`; M0-T23), off until [`Step::set_timing`]: each pass of
+//! a timed step is a compute pass of its own that writes a timestamp at its beginning and its end where the device has
+//! WebGPU's `timestamp-query` — at pass boundaries only, never inside a pass (wgpu's TIMESTAMP_QUERY_INSIDE_PASSES is
+//! native-only, §6.2.2) — else the batch is timed by the wall clock and says so ([`CostSource`]). A step nothing times
+//! is one compute pass (M0-D26). A batch is a frame, or the bare steps recorded between two
 //! [`Step::read_cost`] calls; it times as many whole steps as one query set holds.
 
 pub mod boxfit;
@@ -219,6 +220,11 @@ impl Timer {
         }
     }
 
+    /// Whether the step being recorded times its passes: each is then a compute pass of its own.
+    fn times_passes(&self) -> bool {
+        self.mode.get() == Some(CostSource::GpuTimestamp) && self.batch.borrow().open
+    }
+
     /// Begins a compute pass labelled `label`, its two timestamps booked to `slot` when the batch times it.
     fn begin<'e>(&self, encoder: &'e mut wgpu::CommandEncoder, label: &str, slot: usize) -> wgpu::ComputePass<'e> {
         let gpu = self.gpu.borrow();
@@ -408,7 +414,8 @@ impl Step {
         self.boxfit.edit_flag()
     }
 
-    /// Records the next step: a compute pass per non-empty slot, P0 to P9 — before step 0, the initial state's Δt. The
+    /// Records the next step: every non-empty slot, P0 to P9 — before step 0, the initial state's Δt — a compute pass
+    /// each when the step's passes are timed, else one for the step. The
     /// guard and the re-fit follow this step's CPU count; after a frame the latch stopped, that count runs ahead of the
     /// GPU's, so a run uses frames ([`Step::encode_frame`]) or bare steps, not both.
     pub fn encode(&self, encoder: &mut wgpu::CommandEncoder) {
@@ -421,42 +428,64 @@ impl Step {
     /// One step, bare (`latch` none) or under the latch: then every fixed-size dispatch reads its workgroup count from
     /// the latch's sizes, the guard and the re-fit are recorded on every step and opened by the GPU's step index, and the
     /// controller closes P9.
+    ///
+    /// The step's passes are compute passes of their own only when its passes are timed; otherwise the whole step is one
+    /// compute pass, the same dispatches in the same order (wgpu still orders each dispatch after the last that wrote
+    /// what it reads) — the pass boundaries cost ~0.06 ms a step on a Sun-sized box (M0-D26).
     fn encode_step(&self, encoder: &mut wgpu::CommandEncoder, latch: Option<&Latch>) {
         let n = self.next.get();
         self.timer.begin_step();
-        let record = |cpass: &mut wgpu::ComputePass<'_>, list: &[Dispatch], every: u64| match latch {
-            Some(l) => l.record(cpass, list, every),
-            None => record_dispatches(cpass, list),
-        };
+        let mut passes: Vec<(&'static str, usize, Lists<'_>)> = Vec::with_capacity(11);
         if n == 0 {
             // The box fit to the initial state, P2 on it, then P9's Δt reduction over it; the dispatches are P2's and P9's
             // own lists.
-            let mut cpass = self.timer.begin(encoder, "P9 reductions (initial state)", Pass::Reductions as usize);
-            record(&mut cpass, &self.boxfit.refit, REFIT_EVERY);
-            record(&mut cpass, &self.passes[Pass::Gravity as usize], 1);
-            record(&mut cpass, &self.passes[Pass::Reductions as usize], 1);
+            let lists = vec![
+                (&self.boxfit.refit[..], REFIT_EVERY, false),
+                (&self.passes[Pass::Gravity as usize][..], 1, false),
+                (&self.passes[Pass::Reductions as usize][..], 1, false),
+            ];
+            passes.push(("P9 reductions (initial state)", Pass::Reductions as usize, lists));
         }
         for (pass, dispatches) in Pass::ORDER.iter().zip(&self.passes) {
             let hooked = latch.is_some_and(|l| l.hooked()) && *pass == Pass::Reactions;
             if dispatches.is_empty() && *pass != Pass::Edits && !hooked {
                 continue;
             }
-            let mut cpass = self.timer.begin(encoder, pass.label(), *pass as usize);
-            record(&mut cpass, dispatches, 1);
+            let mut lists = vec![(&dispatches[..], 1, false)];
             if *pass == Pass::Edits {
-                record(&mut cpass, &self.boxfit.on_edit, 1);
+                lists.push((&self.boxfit.on_edit, 1, false));
             }
             if let (true, Some(l)) = (hooked, latch) {
-                l.record(&mut cpass, l.hook_dispatches(), 1);
+                lists.push((l.hook_dispatches(), 1, false));
             }
             if *pass == Pass::Reductions && (latch.is_some() || n.is_multiple_of(GUARD_EVERY)) {
-                record(&mut cpass, &self.dt.guard, GUARD_EVERY);
+                lists.push((&self.dt.guard, GUARD_EVERY, false));
             }
             if *pass == Pass::Reductions && (latch.is_some() || n.is_multiple_of(REFIT_EVERY)) {
-                record(&mut cpass, &self.boxfit.refit, REFIT_EVERY);
+                lists.push((&self.boxfit.refit, REFIT_EVERY, false));
             }
             if let (Pass::Reductions, Some(l)) = (*pass, latch) {
-                record_dispatches(&mut cpass, std::slice::from_ref(l.controller()));
+                lists.push((std::slice::from_ref(l.controller()), 1, true));
+            }
+            passes.push((pass.label(), *pass as usize, lists));
+        }
+        let record = |cpass: &mut wgpu::ComputePass<'_>, lists: &Lists<'_>| {
+            for &(list, every, bare) in lists {
+                match latch {
+                    Some(l) if !bare => l.record(cpass, list, every),
+                    _ => record_dispatches(cpass, list),
+                }
+            }
+        };
+        if self.timer.times_passes() {
+            for (label, slot, lists) in &passes {
+                record(&mut self.timer.begin(encoder, label, *slot), lists);
+            }
+        } else {
+            let mut cpass =
+                encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some("step"), timestamp_writes: None });
+            for (_, _, lists) in &passes {
+                record(&mut cpass, lists);
             }
         }
         self.next.set(n + 1);
@@ -541,6 +570,10 @@ impl Step {
         self.timer.cost(&batch, ticks.as_deref(), batch.steps)
     }
 }
+
+/// A pass's dispatch lists in order: (the dispatches, the schedule a frame's latch opens them on, recorded bare even
+/// under the latch — its controller).
+type Lists<'a> = Vec<(&'a [Dispatch], u64, bool)>;
 
 /// shaders/eos.wgsl, the helpers every pass shares.
 pub const EOS_WGSL: &str = include_str!("../../shaders/eos.wgsl");

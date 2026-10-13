@@ -6,6 +6,11 @@
 //! oracles on one step of a state with gravity on, over the box the step fits, and φ and g within G-REF's tolerance of
 //! the twin over that box (relative L1 ≤ 1e-3, §5.3; measured values printed as `SR-GRAV-REF`); P9's gravity term from
 //! the GPU's g; a frame's P2 the bare step's, bit for bit. Every GPU number names its adapter (R13).
+//!
+//! M0-D25 — what M0-V4's mutants of §1.4.2 found ungraded: K asserted at every offset of a 64 × 64 box, not seven;
+//! P2's vacuum mask on a box with sub-Σ_vac cells in it; P2 on a wide and a tall box (FFT 1024 × 128, 128 × 1024) and
+//! on the whole 600 × 400 world (2048 × 1024), against the twin and against a direct sum of the kernel over the sources
+//! (no FFT, no table), and G-GRAV2's ratio on the two boxes whose outermost ring is empty.
 
 use sr_physics::reference::grav::{self, Gravity, SELF_CELL};
 
@@ -125,6 +130,26 @@ mod force {
     }
 
     #[test]
+    fn kernel_is_minus_g_over_r_at_every_offset_of_a_64_box() {
+        // §1.4.2 at all of a 64 × 64 box's offsets (|i|, |j| ≤ 63): the table the GPU samples is this function, so a
+        // wrong value at a few offsets (the diagonal neighbours, say) is the same mistake twice and the GPU cases see none.
+        let mut checked = 0;
+        for j in -63isize..=63 {
+            for i in -63isize..=63 {
+                if (i, j) == (0, 0) {
+                    assert_eq!(grav::kernel(G, 0, 0), -SELF_CELL);
+                    continue;
+                }
+                let want = -G / (i as f64).hypot(j as f64);
+                let got = grav::kernel(G, i, j);
+                assert!((got - want).abs() <= 4e-16 * want.abs(), "K({i}, {j}) = {got}, −G/√(i² + j²) = {want}");
+                checked += 1;
+            }
+        }
+        assert_eq!(checked, 127 * 127 - 1);
+    }
+
+    #[test]
     fn maclaurin_disk_a40_force_is_within_2_percent_everywhere() {
         let (worst, at, count, centre_g) = worst_error(40.0, (0.0, 0.0));
         println!("SR-GRAV1 a=40 centred on a cell: largest |Δg|/|g| = {:.3e} ({:.2} %) at cell {at:?}, {count} cells with 0 < r ≤ 0.75a", worst, worst * 100.0);
@@ -183,6 +208,51 @@ mod force {
         let ratio = e20 / e40;
         println!("SR-GRAV1 GPU largest error a=20: {e20:.3e}; a=40: {e40:.3e}; ratio {ratio:.3}");
         assert!((1.6..=2.4).contains(&ratio), "G-GRAV1 (GPU): a=20 over a=40 = {ratio:.3}, first order wants 1.6 … 2.4");
+    }
+
+    #[test]
+    fn gpu_sub_vacuum_cells_are_no_source() {
+        // §1.4.2: Σ_src = 0 below Σ_vac. A faint disk (Σc = 1e-3, a = 20) in a world of 0.9 Σ_vac: the box is the disk's,
+        // and the ~2800 sub-vacuum cells inside it, masked, add nothing — unmasked they shift φ by 2.5e-3 relative L1.
+        let gpu = crate::device();
+        let (w, h, sigma) = super::gpu::faint_disk_in_sub_vacuum();
+        let solved = super::gpu::solve(&gpu, &sigma, w, h, 1, true);
+        let sigma_vac = Physics::shipped().unwrap().get("sigma_vac").unwrap();
+        let sub = solved.cropped().sigma.iter().filter(|&&s| s < sigma_vac).count();
+        assert!(sub > 1000, "{sub} sub-vacuum cells in the box: the case must have some to say anything");
+        solved.against_twin("sub-vacuum disk");
+        solved.against_direct_sum("sub-vacuum disk", 1e-4);
+    }
+
+    #[test]
+    fn gpu_wide_box_has_the_twins_and_the_kernels_potential() {
+        let gpu = crate::device();
+        let (w, h, sigma) = super::gpu::wide_scene();
+        let solved = super::gpu::solve(&gpu, &sigma, w, h, 1, true);
+        assert_eq!((solved.area.w, solved.area.h, solved.area.fft), (392, 64, [1024, 128]), "{:?}", solved.area);
+        solved.against_twin("wide box");
+        solved.against_direct_sum("wide box", 1e-4);
+    }
+
+    #[test]
+    fn gpu_tall_box_has_the_twins_and_the_kernels_potential() {
+        let gpu = crate::device();
+        let (w, h, sigma) = super::gpu::tall_scene();
+        let solved = super::gpu::solve(&gpu, &sigma, w, h, 1, true);
+        assert_eq!((solved.area.w, solved.area.h, solved.area.fft), (40, 344, [128, 1024]), "{:?}", solved.area);
+        solved.against_twin("tall box");
+        solved.against_direct_sum("tall box", 1e-4);
+    }
+
+    #[test]
+    fn gpu_whole_default_world_has_the_twins_and_the_kernels_potential() {
+        // 600 × 400, matter to every edge: the box is the world and the FFT the largest one a world takes, 2048 × 1024.
+        let gpu = crate::device();
+        let (w, h, sigma) = super::gpu::whole_world_scene();
+        let solved = super::gpu::solve(&gpu, &sigma, w, h, 1, true);
+        assert_eq!((solved.area.w, solved.area.h, solved.area.fft), (600, 400, [2048, 1024]), "{:?}", solved.area);
+        solved.against_twin("whole 600x400 world");
+        solved.against_direct_sum("whole 600x400 world", 1e-4);
     }
 
     #[test]
@@ -309,6 +379,32 @@ mod selfforce {
         assert!(ratio <= 1e-5, "G-GRAV2 (GPU): |Σ m·g| / Σ m|g| = {ratio:.3e}");
         solved.against_twin("asym_blob");
     }
+
+    /// G-GRAV2 on a non-square box whose outermost ring holds no matter: `scene` through one GPU step, the net force
+    /// against the pull, the box the shape and FFT the case is written for.
+    fn gpu_no_net_force_on(what: &str, (w, h, sigma): (u32, u32, Vec<f64>), box_wh: (u32, u32), fft: [u32; 2]) {
+        let gpu = crate::device();
+        let solved = super::gpu::solve(&gpu, &sigma, w, h, 1, true);
+        assert_eq!((solved.area.w, solved.area.h, solved.area.fft), (box_wh.0, box_wh.1, fft), "{:?}", solved.area);
+        let field = solved.cropped();
+        let src = grav::source(&field.sigma, Physics::shipped().unwrap().get("sigma_vac").unwrap());
+        let (net, scale) = net_and_scale(&src, &field.gx, &field.gy);
+        let ratio = net[0].hypot(net[1]) / scale;
+        println!("SR-GRAV2 GPU {what} {w}x{h}, box {:?}: |Σ m·g| = {:.3e}, Σ m|g| = {scale:.3e}, ratio {ratio:.3e}", solved.area, net[0].hypot(net[1]));
+        assert!(scale > 100.0, "Σ m|g| = {scale}: the matter must pull itself for the case to say anything");
+        assert!(ratio <= 1e-5, "G-GRAV2 (GPU, {what}): |Σ m·g| / Σ m|g| = {ratio:.3e}");
+        solved.against_twin(what);
+    }
+
+    #[test]
+    fn gpu_wide_box_has_no_net_self_force() {
+        gpu_no_net_force_on("wide box", super::gpu::wide_scene(), (392, 64), [1024, 128]);
+    }
+
+    #[test]
+    fn gpu_tall_box_has_no_net_self_force() {
+        gpu_no_net_force_on("tall box", super::gpu::tall_scene(), (40, 344), [128, 1024]);
+    }
 }
 
 /// P2 on the GPU, the cases' common part: a state uploaded, steps run with gravity on (or off), then the box, φ, g and
@@ -372,6 +468,91 @@ mod gpu {
             println!("SR-GRAV-REF {what}, box {}x{} at ({}, {}), FFT {:?}: relative L1 against the twin φ {phi:.2e}, gx {gx:.2e}, gy {gy:.2e}", b.w, b.h, b.x0, b.y0, b.fft);
             assert!(phi <= REF_L1 && gx <= REF_L1 && gy <= REF_L1, "{what}: the GPU against the twin over G-REF's {REF_L1}");
         }
+
+        /// φ at nine cells of the box against the kernel summed directly over the masked sources — φ(x) = Σ_y K(x − y)
+        /// Σ_src(y), no FFT, no table, no twin — each within `tol` relative. Printed as `SR-GRAV-DIRECT`.
+        pub fn against_direct_sum(&self, what: &str, tol: f64) {
+            let c = self.cropped();
+            let (w, h) = (self.area.w as usize, self.area.h as usize);
+            let src = grav::source(&c.sigma, Physics::shipped().unwrap().get("sigma_vac").unwrap());
+            let sources: Vec<(isize, isize, f64)> = src
+                .iter()
+                .enumerate()
+                .filter(|&(_, &m)| m > 0.0)
+                .map(|(k, &m)| ((k % w) as isize, (k / w) as isize, m))
+                .collect();
+            let cells = [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1), (w / 2, h / 2), (w / 3, h / 5), (2 * w / 3, 4 * h / 5), (w / 7, h / 2), (5 * w / 6, h / 3)];
+            let mut worst = (0.0f64, (0, 0));
+            for &(x, y) in &cells {
+                let direct: f64 = sources.iter().map(|&(sx, sy, m)| m * grav::kernel(G, x as isize - sx, y as isize - sy)).sum();
+                let err = (c.phi[y * w + x] - direct).abs() / direct.abs();
+                if err > worst.0 {
+                    worst = (err, (x, y));
+                }
+            }
+            println!("SR-GRAV-DIRECT {what}, {} sources: φ against the direct sum at {} cells, worst relative {:.2e} at box cell {:?}", sources.len(), cells.len(), worst.0, worst.1);
+            assert!(worst.0 <= tol, "{what}: φ against the direct sum of K over the sources, {:.2e} at box cell {:?} over {tol:e}", worst.0, worst.1);
+        }
+    }
+
+    /// The scenes of M0-V4's probes, each with a box of a shape no square case has. Σ in the world's cells, row-major.
+    ///
+    /// A Maclaurin disk (a = 20, Σc = 1) at (150, 200) and a block of Σ 0.5 at x 400–499, y 185–214, in 600 × 400: the
+    /// box 392 × 64 at an 8-cell margin, FFT 1024 × 128.
+    pub fn wide_scene() -> (u32, u32, Vec<f64>) {
+        let (w, h) = (600usize, 400usize);
+        let mut sigma = vec![0.0; w * h];
+        for j in 0..h {
+            for i in 0..w {
+                let r2 = ((i as f64 - 150.0).powi(2) + (j as f64 - 200.0).powi(2)) / 400.0;
+                if r2 < 1.0 {
+                    sigma[j * w + i] = (1.0 - r2).sqrt();
+                }
+                if (400..500).contains(&i) && (185..215).contains(&j) {
+                    sigma[j * w + i] += 0.5;
+                }
+            }
+        }
+        (w as u32, h as u32, sigma)
+    }
+
+    /// A column of Σ 0.3 + 0.001·y, x 50–69, y 100–419, in 128 × 512: the box 40 × 344, FFT 128 × 1024.
+    pub fn tall_scene() -> (u32, u32, Vec<f64>) {
+        let (w, h) = (128usize, 512usize);
+        let mut sigma = vec![0.0; w * h];
+        for j in 100..420 {
+            for i in 50..70 {
+                sigma[j * w + i] = 0.3 + 0.001 * j as f64;
+            }
+        }
+        (w as u32, h as u32, sigma)
+    }
+
+    /// Σ = 0.5 + 0.25·sin(x/37)·cos(y/23) in every cell of 600 × 400: the box is the world, FFT 2048 × 1024.
+    pub fn whole_world_scene() -> (u32, u32, Vec<f64>) {
+        let (w, h) = (600usize, 400usize);
+        let sigma = (0..w * h)
+            .map(|k| {
+                let (i, j) = ((k % w) as f64, (k / w) as f64);
+                0.5 + 0.25 * (i / 37.0).sin() * (j / 23.0).cos()
+            })
+            .collect();
+        (w as u32, h as u32, sigma)
+    }
+
+    /// A faint Maclaurin disk (Σc = 1e-3, a = 20, floored at 1 % of Σc) at (64, 64) of a 128 × 128 world of 0.9 Σ_vac.
+    pub fn faint_disk_in_sub_vacuum() -> (u32, u32, Vec<f64>) {
+        let (w, h) = (128usize, 128usize);
+        let mut sigma = vec![0.9 * Physics::shipped().unwrap().get("sigma_vac").unwrap(); w * h];
+        for j in 0..h {
+            for i in 0..w {
+                let r2 = ((i as f64 - 64.0).powi(2) + (j as f64 - 64.0).powi(2)) / 400.0;
+                if r2 < 1.0 {
+                    sigma[j * w + i] = 1e-3 * (1.0 - r2).sqrt().max(0.01);
+                }
+            }
+        }
+        (w as u32, h as u32, sigma)
     }
 
     /// 14 planes: Σ as given, x_H = 1, every other channel 0 (cold: the energy floors at T_floor).

@@ -85,3 +85,25 @@ The two left, root-caused (fixture, Windows only — the walk itself is right):
 
 `rung_record.py now` after the swap: `model=claude-opus-5-5 level=high plugin=stale` (box plugin 12.2.1, switch 12.3.1);
 the swapped switch's `RUNGS` holds all seven rungs of the 2026-10-11 ladder.
+
+## Local diffs after the swap — a future annex swap must carry them
+5. **verify.py — the steps numbered on the console (local, M0-D27, 2026-10-12; the lead at M0-V4: « the number of the
+   current step and the number of steps remaining »).** A run of several steps numbers each: `step k/N, m left` on a
+   scope's row (`--all`, `--changed`, a list of scopes; a step is a scope that runs, plain ones then `exclusive` ones,
+   the smoke last), `arm k/N, m left` on each arm's line of `--redarm <scope>`, `campaign k/N, m left` on each
+   campaign's `redarm:` line of `--redarm --moved` (its arms numbered within it). `m` counts the steps after this one,
+   so the last reads `0 left`; a one-step run, campaign or single arm carries no number. On a terminal (stderr a tty,
+   no `--no-progress`) each step is named live as it starts: `>> <scope> · step k/N, m left · started`, an arm
+   `>> [campaign k/N, m left · ]<scope> · <arm> · arm k/N, m left · started`, a campaign `>> <scope> · campaign … ·
+   started`. The counts line, the failure and skip lines, the verdict, the per-scope logs, loop_times.jsonl and the
+   anchor are unchanged.
+   Hunks: `SAY` (a lock) beside `PART`; `step_tag()` and `say()` after `shown()` — every live line, `run_unit`'s
+   `.. <label> <s>s` too, written whole under `SAY`; `ScopeRun.step`; `run_scopes` numbers the scopes in `todo`, `one()`
+   says a step's start once, its rows gain the tag; `redarm(..., prefix="")` numbers the arms in `todo`, says each
+   arm's start, its lines gain the tag; `moved_sweep` classifies every armed scope first (the same lines, the same
+   order, the same failures), then runs the campaigns numbered. Selftest: section « L · the steps numbered » (a
+   three-step run reads 1/3, 2/3, 3/3 and `0 left`, the counts line and verdict without a number, a one-step run
+   unnumbered, a fake tty's live lines one per step and whole) with its plant « steps left counted off by one »; the
+   arm and campaign checks after « their lines in declared order » and « --redarm --moved: no proof yet »; four
+   existing checks read a row's head rather than the whole row (`r["lines"][0].startswith("par · clean · GO")` ×3,
+   the `noted` row's `GO( · step …)?$`). Measured on win-laptop: selftest checks=352 · plants=158/158 red, GO.
