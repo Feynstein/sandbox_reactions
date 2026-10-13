@@ -107,3 +107,18 @@ the swapped switch's `RUNGS` holds all seven rungs of the 2026-10-11 ladder.
    arm and campaign checks after « their lines in declared order » and « --redarm --moved: no proof yet »; four
    existing checks read a row's head rather than the whole row (`r["lines"][0].startswith("par · clean · GO")` ×3,
    the `noted` row's `GO( · step …)?$`). Measured on win-laptop: selftest checks=352 · plants=158/158 red, GO.
+6. **rung_record.py — the handoff fallback reads the quoted `now` line first (local, M0-D32, 2026-10-13).** A DONE block
+   with no session file readable took the first ladder-rung string in its handoff's first line (`RUNG_RE`), so a handoff
+   quoting `model=claude-opus-5-5 level=max` after prose naming "Sonnet 5.5, high" read as Sonnet; one quoting with no
+   prose rung read `unknown` (69 of 71 quoting handoffs misread on this plan with no session read). Now `handoff_rung()`
+   reads the `- Handoff:` field (its line and the indented lines under it): the quoted `model=<id> level=<level>`
+   (`QUOTE_RE`) in the ladder's words (`rung_name`, a dated id loses its date) first, else the first line's prose rung as
+   before, else `unknown`; the row's `rung_basis` reads `no session; rung from the handoff's quote (model= level=)` · `…
+   the handoff's prose` · `… nothing: the handoff names none`. Hunks: `QUOTE_RE` beside `RUNG_RE`; the module docstring's
+   "keeps the rung of its handoff" sentence; `handoff_rung()` before `build()`; `build()`'s fallback calls it. Selftest:
+   `HANDOFF_PLAN` (five blocks: a prose rung before the quote, a gate quoted after a cheaper rung's prose, the quote on a
+   continuation line with a dated id, prose only, neither with a quote outside the handoff), `_prose_first` (the old
+   reading) and `_handoff_rows`; the check « clean: no session → the handoff's quoted model= level= … » after « a block
+   with no session keeps the rung of its handoff », with its plant « a handoff's quoted model= level= ignored, its prose's
+   first rung read ». The annex's §A.9 text ("No session file readable … → the rung from the handoff") and its plant count
+   (thirteen for `report`) lag by this one. Measured on win-laptop: selftest checks=72 · plants 30/30 red, GO.

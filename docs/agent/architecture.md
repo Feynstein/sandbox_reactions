@@ -66,9 +66,9 @@ otherwise the whole step is one compute pass, the same dispatches in the same or
 |---|---|---|
 | P0 edits | the player's queued edits at the step boundary; the box re-fit; ledger entries (§1.12) | the box's `box_gate`, `box_cells`, `box_fit` (sized by the edit gate — zero when no edit flagged); the edit pass itself lands with its lot (§1.12) |
 | P1 Δt | the step's Δt is the reduction P9 made at the end of the step before (§2.3.3) | `dt_advance` |
-| P2 gravity | the potential by FFT convolution over the box, on a cadence; sinks' potentials added (§1.4) | — (lands with its lot) |
+| P2 gravity | the potential by FFT convolution over the box, on a cadence; sinks' potentials added (§1.4) | when the step runs gravity (`Passes`): `grav_rows` (one workgroup a world row), `grav_columns` (fixed, the padded width), `conv_rows_inverse` (a workgroup a world row), `grav_gradient` (box tiles, indirect) — every step, the cadence and the sinks' potentials are not built |
 | P3 sinks | formation and accretion, then the sinks' kick-drift (§2.6) | — |
-| P4 hydro | the flux scheme with the gravity source, the radiation force and the edge ghosts (§2.3, §2.8) | — |
+| P4 hydro | the flux scheme with the gravity source, the radiation force and the edge ghosts (§2.3, §2.8) | when the step runs hydro (`Passes`): `hydro_update` (box tiles, indirect: one workgroup an 8 × 8 tile, predicted faces exchanged in workgroup memory; binds WebGPU's 8 storage buffers), `hydro_edges` (fixed, one invocation a boundary face; binds 7), `hydro_commit` (box tiles, indirect) |
 | P5 heat | flux-limited diffusion; radiated energy counted; the flux kept for the next step's P4 (§2.4) | — |
 | P6 reactions | every enabled registry record and neutrino cooling, sub-cycled per cell; the latch flag (§2.5, §1.8.5) | — (a test hook only, `set_latch_hook`) |
 | P7 neutrino heating | the neutrino share deposited through a kernel (§2.5.4) | — |

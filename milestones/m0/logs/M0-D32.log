@@ -1,0 +1,57 @@
+# M0-D32 on win-laptop (Laser2025-20), 2026-10-13T16:05:33-04:00
+## rung_record.py selftest
+selftest: checks=72 passed=72 failed=0 · plants red 30/30
+=== GO ===
+## Verify 1 (win-laptop)
+no session read (--sessions <empty>, linux-pc's condition, every row via handoff): 71 rows quote model= level=, 71 on the quote's rung (before the fix: 2 — M0-TM1, M0-D13; 69 misread: 6 on another rung, 63 unknown)
+report --json, this box's sessions: GO · 104 DONE rows · 41 via handoff · 23 quoting · 0 misread
+## Verify 2: verify.py --redarm tools_selftest --task M0-D32
+tools_selftest · clean · GO · arm 1/2, 1 left
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope tools_selftest · 180.75 s · 2 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-D32.tools_selftest.redarm.log
+=== GO ===
+## claim: verify.py --changed --task M0-D32
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why tools_selftest: stale: tools/pb/rung_record.py
+plan_lint       520/0/0      0.53 s  GO · step 1/2, 1 left
+tools_selftest  10/0/0     304.19 s  GO · step 2/2, 0 left
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 64 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+fft_twin        NOT RUN (not impacted: its 16 path(s) checked at the anchor)
+riemann         NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+sod             NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+edges           NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+collapse        NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+twin            NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+cpu_gpu         NOT RUN (not impacted: its 61 path(s) checked at the anchor)
+grav_force      NOT RUN (not impacted: its 65 path(s) checked at the anchor)
+grav_selfforce  NOT RUN (not impacted: its 66 path(s) checked at the anchor)
+fft             NOT RUN (not impacted: its 57 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 61 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 63 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-D32.<scope>.log · record: loop_times.jsonl · tree 93d0a1c934b3+16ff80671b44
+anchor: 2 path×scope entries moved by this run
+anchor: 157 paths checked · 135 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 157 covered of 292 visible
+skipped   127  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 530 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 32 not impacted · 172.26 s + loop 0.20 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 4.24->1.95 · base: M0-D32's start 2026-10-13T16:02:58-04:00
+=== GO ===

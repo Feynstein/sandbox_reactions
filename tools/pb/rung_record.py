@@ -15,7 +15,8 @@ the block `escalated` — its cost and the claim's verdict stay with the first r
 own per-model rates, a session with no cost line priced from its own tokens at the rate the folder's other sessions
 paid for that model, else at list prices (`priced from tokens`); and the D blocks whose `Caused by:` line names it.
 Then per class (type and E) and rung: blocks, first-try rate, cost per DONE block, and against `(usual)` the verdict
-§0's rule (4) reads. A block with no session file readable keeps the rung of its handoff and a null cost, named on the
+§0's rule (4) reads. A block with no session file readable keeps the rung of its handoff — the `model=… level=…` it quotes,
+else the first rung its prose names (M0-D32) — and a null cost, named on the
 counts line, apart from the sessions with no cost line. With no `--sessions`, a project that moved is found: the folders
 under the agent's projects folder whose slug ends with the project folder's own name are read for the sessions whose launch
 prompt names a block of the plan (and the plan's path tail where it carries one), a session another plan also claims counting
@@ -52,6 +53,7 @@ TAIL_RE = re.compile(r"milestones/(m[\d.]+[a-z]?)/([\w.-]+_implementation_plan\.
 CAUSE_RE = re.compile(r"\bM[\d.]+[a-z]?-[A-Za-z][A-Za-z0-9.-]*[A-Za-z0-9]")
 DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 DONE_RE = re.compile(r"DONE\b[^0-9]*(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})(?:, started (\d{2}:\d{2}))?")
+QUOTE_RE = re.compile(r"\bmodel=(claude-[a-z0-9-]+) level=(low|medium|high|xhigh|max)\b")
 RUNG_RE = re.compile(r"\b(Opus|Sonnet|Haiku|Fable) (\d+(?:\.\d+)?)\b[^\n]{0,40}?\b(low|medium|high|xhigh|max)\b")
 LADDER_RE = re.compile(r"^[-*\s]*\**Models:\**\s*(.*?)\s+—\s+strongest first")
 MARK_RE = re.compile(r"^(.+?, \w+)(?: \((gate|usual|gate, usual)\))?$")
@@ -454,6 +456,23 @@ def rung_of(parts, rec):
     return rung, mixed, why, later
 
 
+def handoff_rung(text):
+    """(rung, how) from a block's `- Handoff:` field (its line and the indented lines under it): the `now` line it quotes,
+    `model=<id> level=<level>`, in the ladder's words; else the first rung its first line's prose names; else `unknown`
+    (M0-D32: the prose's first rung is often another block's or the plan's, never the quoted one's)."""
+    lines, field = text.split("\n"), []
+    for ln in lines:
+        if ln.startswith("- Handoff") or (field and ln.startswith("  ")):
+            field.append(ln)
+        elif field:
+            break
+    q = QUOTE_RE.search("\n".join(field))
+    if q:
+        return rung_name(q.group(1), q.group(2)), "the handoff's quote (model= level=)"
+    h = RUNG_RE.search(field[0]) if field else None
+    return ("%s %s, %s" % h.groups(), "the handoff's prose") if h else ("unknown", "nothing: the handoff names none")
+
+
 def build(plan_path, since, sess_dirs, stats=None, moved=()):
     """`sess_dirs` are read whole; `moved` (a moved project's earlier folders) only for the sessions `claims` gives this plan,
     one that another plan also claims counting for neither (`stats["twice"]`); `stats["folders"]` the folders read."""
@@ -506,8 +525,9 @@ def build(plan_path, since, sess_dirs, stats=None, moved=()):
         parts.sort(key=lambda p: min((q["ts"] for q in p["reqs"] if q["ts"]), default=datetime.datetime.max))
         rec, fallback = claim_of(loops.get(bid, []))
         rung, mixed, why, later = rung_of(parts, rec) if parts else (None, False, "no session", [])
-        h = RUNG_RE.search("\n".join(l for l in b["text"].split("\n") if l.startswith("- Handoff")))
-        rung = rung or ("%s %s, %s" % h.groups() if h else "unknown")
+        if not rung:
+            rung, how = handoff_rung(b["text"])
+            why = "%s; rung from %s" % (why, how)
         cost = None if any(p["usd"] is None for p in parts) else sum(p["usd"] for p in parts)
         e = bool(re.search(r"^- Sizing: E\b", b["text"], re.M))
         rows[bid] = {"id": bid, "type": block_type(bid, kept, b["heading"]), "e": e, "rung": rung, "mixed": mixed,
@@ -856,6 +876,46 @@ def _fixture(tmp):
     return plan, sdir
 
 
+HANDOFF_PLAN = """# M9 - handoff fixture
+Models: Claude Code — Opus 5.5, max (gate) · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haiku 5.5, high — strongest first; read 2026-10-13 from the probe
+
+## M9-T1 · Prose names another rung first · **BUILD** · Sonnet 5.5, high
+- Status: DONE (2026-10-13 10:00)
+- Handoff: both Opus 5.5 high runs reproduced; ran on `model=claude-sonnet-5-5 level=high`.
+
+## M9-V1 · A gate quoted after a cheaper rung's prose · **CHECK** · Opus 5.5, max (gate)
+- Status: DONE (2026-10-13 10:10)
+- Handoff: re-rated 3 blocks to Sonnet 5.5, high. Model and level: `model=claude-opus-5-5 level=max`.
+
+## M9-T2 · The quote on the handoff's second line, a dated id · **BUILD** · Haiku 5.5, high
+- Status: DONE (2026-10-13 10:20)
+- Handoff: done.
+  Ran on model=claude-haiku-5-5-20261001 level=high (switch).
+
+## M9-T3 · Prose only · **BUILD** · Sonnet 5.5, medium
+- Status: DONE (2026-10-13 10:30)
+- Handoff: Ran on Sonnet 5.5, medium, another box.
+
+## M9-T4 · Neither, a quote outside the handoff · **BUILD** · Sonnet 5.5, high
+- Status: DONE (2026-10-13 10:40)
+- Handoff: done, nothing named.
+- Carried flags: model=claude-opus-5-5 level=max
+"""
+
+
+def _prose_first(text):
+    """The bug M0-D32 repaired: the first rung of the handoff's first line, its quoted `model=… level=…` never read."""
+    h = RUNG_RE.search("\n".join(l for l in text.split("\n") if l.startswith("- Handoff")))
+    return ("%s %s, %s" % h.groups() if h else "unknown"), "the handoff's prose"
+
+
+def _handoff_rows(tmp):
+    plan, none = os.path.join(tmp, "handoff", "m9_implementation_plan.md"), os.path.join(tmp, "handoff", "no_sessions")
+    _wr(plan, HANDOFF_PLAN)
+    os.makedirs(none, exist_ok=True)
+    return {r["id"]: r["rung"] for r in build(plan, None, [none])}
+
+
 def _rows(plan, sdir):
     return {r["id"]: r for r in build(plan, None, [sdir])}
 
@@ -1143,6 +1203,11 @@ def cmd_selftest(a):
               and token_cost([{"model": "claude-x-9", "u": (1, 0, 0, 0)}], {}) == (None, None))
         check("clean: a block with no session keeps the rung of its handoff, cost null",
               rows["M9-T4"]["cost_usd"] is None and rows["M9-T4"]["rung"] == "Sonnet 5.5, medium" and rows["M9-T4"]["via"] == "handoff")
+        quoted = lambda: _handoff_rows(tmp) == {"M9-T1": "Sonnet 5.5, high", "M9-V1": "Opus 5.5, max", "M9-T2": "Haiku 5.5, high",
+                                                "M9-T3": "Sonnet 5.5, medium", "M9-T4": "unknown"}
+        check("clean: no session → the handoff's quoted model= level= (on any of its lines, a dated id) ahead of its prose's rung; "
+              "the prose where none is quoted; `unknown` where neither names one, a quote outside the handoff not read", quoted())
+        plant("a handoff's quoted model= level= ignored, its prose's first rung read", "handoff_rung", _prose_first, quoted)
         check("clean: a block found by its stamps, cost the window's share of the session",
               rows["M9-T5"]["via"] == "stamps" and rows["M9-T5"]["sessions"] == ["s5"] and rows["M9-T5"]["cost_usd"] == 0.3
               and rows["M9-T5"]["rung"] == "Sonnet 5.5, medium")
