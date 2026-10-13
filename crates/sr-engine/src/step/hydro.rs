@@ -4,8 +4,8 @@
 //!
 //! Three dispatches: `hydro_update` over the box's 8 × 8 tiles ([`Size::Indirect`] at [`ARGS_TILES`]) writes the next
 //! state into P4's own planes — two buffers of [`NEXT_PLANES`] planes in §2.2's order — from the state as the step found it, each
-//! cell recomputing its neighbours' predicted faces instead of storing them (a stored face set is 60 words a cell, past
-//! WebGPU's 128 MiB binding at §2.8's largest worlds); `hydro_edges`, one invocation per boundary face (a fixed size),
+//! tile's predicted faces exchanged through 9,216 B of workgroup memory instead of stored (a stored face set is 60 words a
+//! cell, past WebGPU's 128 MiB binding at §2.8's largest worlds; M0-D30); `hydro_edges`, one invocation per boundary face (a fixed size),
 //! books what a leave edge lets out into the booking's `escaped` buffer from the same face flux the update applied;
 //! `hydro_commit` copies the next state back over the box. The update binds the state's three buffers, the next
 //! state's two, the Δt record, P2's g and eos.wgsl's table: WebGPU's 8 storage buffers per stage (§2.2, §6.2.2), all of

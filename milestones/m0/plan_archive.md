@@ -2023,3 +2023,313 @@
   scenes/sun_disk.json and scenes/fill_world.json, `--timing` on, and the 200 / 2,200-step wall difference with it off ·
   Pass: exit 0, SR-ADAPTER the named card, both costs below the Symptom's · Fail: no gain, or another adapter
 - Handoff: Built on win-laptop (RTX 4080 Laptop, Vulkan). Where the cost went (tasks/M0-D26.md, per dispatch and per pass): wgpu 30 keeps VALIDATION_INDIRECT_CALL in release builds — a hidden dispatch before each of the step's 7 indirect dispatches, ~11–14 µs each — and the pass boundaries, ~0.06 ms a step (CPU encoding + GPU). Cut: gpu::instance_flags() (headless and the app) drops that validation, every indirect size bounded by the world (a compile-time assertion); a step whose passes are not GPU-timed is one compute pass (Timer::times_passes); architecture.md updated. Dumps byte-identical before/after at steps 250–1000, both scenes. Verify 1 py -3.12 tools/pb/verify.py --changed --task M0-D26 [ALREADY RUN — PASS (GO, 102 passed, 19/19 scopes, 106 s) on win-laptop]. Verify 2 [ALREADY RUN — PASS (exit 0, SR-ADAPTER RTX 4080 Laptop) on win-laptop]: sun_disk step_ms_mean 0.257→0.217, wall/step 0.366→0.260 (warm card 0.198→0.113); fill_world 1.262→1.196, wall 1.276→1.245 (interleaved medians). Not built, measured: P2 sized by the box (~5 µs; needs resume.box_args), P0 gated by the CPU's edit queue (the edit lot). Measured, not filed: the laptop GPU's clocks move short-run timings (sun_disk 0.257 cold, 0.175 warm); a timed step still pays the pass boundaries → flagged M0-T84. Quadro owed on laserax-ai → flagged M0-V5. Deviations: none; the register's M0-D25 entry predates its close, left for its owner. Ran on claude-opus-5-5, high (rung_record.py now). Next: M0-T33a.
+
+## M0-TC3 · Compaction — Phase 6's close: fifteen DONE blocks to stub, more than ten (PLAYBOOK §8, §11) · **MOVE** · Haiku 5.5, high · switch · (AFTER M0-V4)
+- Status: DONE (2026-10-12 15:00)
+- Read: this file (rules + this task) + plan_archive.md § M0-V3 (one archived block: the shape to keep)
+- Deliver: `plan.py stub` over Phase 6's DONE blocks — M0-TC2, M0-TM4, M0-TR1, M0-TR1a, M0-TR1b, M0-D21, M0-D22, M0-D23,
+  M0-D24 (they ran after Phase 5's close and sit at its end), M0-T28, M0-T29, M0-T30, M0-T31, M0-T32 and M0-V4 — into
+  plan_archive.md, no TODO block touched (M0-D27, M0-D25, M0-D26 and lot 5 stay whole) · the Pipeline state back to a register of
+  pointers · lines repeated in three or more blocks hoisted, long Rules entries moved to m0_rules.md (index line kept, text
+  unchanged) · Repo facts de-duplicated · every moved line diffed byte-for-byte, counts reported · `plan.py lint`'s header
+  before and after in the handoff.
+- Pass: `plan.py lint` GO, header within budget, diff count = moved count. Fail: any TODO block touched, any rule
+  reworded, any fact dropped.
+- Handoff: claude-haiku-5-5 level=high (rung_record now, plugin=installed; matches the heading's rung). Stubbed Phase 6's 15 DONE blocks (M0-TC2, M0-TM4, M0-TR1, M0-TR1a, M0-TR1b, M0-D21..D24, M0-T28..M0-T32, M0-V4) into plan_archive.md: 320 lines moved, 320 verified by plan.py; my own check: all 15 archived blocks equal their originals line for line (non-blank). Header 465/600 before and after; lint warnings 9 -> 0. De-dup: 3 Repo-facts facts now point to Hazards, which keep them verbatim (disk free space, MSYS symlink variable, Store-alias Python). Declared, not done: no line repeats whole in 3+ blocks (wrapped Verify fail-arm fragments only); Rules rows are index lines, full text in m0_rules.md, none moved; Pipeline state already a register (only Next task changed); M0-D24's 4-line Phase 5 commit-gate quote stays under its stub (plan.py's choice). Measured, not acted on: Repo facts says every win-laptop toolkit call goes through the Bash tool, Hazard M0-D23 says both shells work; a fact conflict for the lead. Claim python3 tools/pb/verify.py --changed --task M0-TC3 [ALREADY RUN — PASS (GO, 519 passed, 1/1 scopes: plan_lint; 27 not impacted) on win-laptop]; deviation: run under python3 (3.13.14), not py -3.12 as R15 asks — a py -3.12 re-run answered NO-GO 'nothing changed, zero cases' (the anchor vouches for the tree), so not repeated. plan_lint alone read 520 passed; the claim 519 — unexplained, flagged. Detail: milestones/m0/tasks/M0-TC3.md. Next: M0-D27.
+
+## M0-D27 · verify.py's console never says which step a run is on or how many remain: a 20–40-minute sweep runs blind (the lead's word at M0-V4) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TC3)
+- Status: DONE (2026-10-12 15:21, started 15:04)
+- Blocks: nothing — M0-V5's sweep (the lead's run, over the 10-minute line) is the next long run it serves
+- Caused by: unknown — not a repair: verify.py as PLAYBOOK v12.3's annex §A.2 ships it (M0-TH-adopt-a's swap) prints
+  no step count; the lead's word
+- Files: tools/pb/verify.py (where it prints a scope's or an arm's line, and its own selftest),
+  milestones/m0/tasks/toolkit_local_diff.md (the project's local diff against the annex) — unverified, the executing
+  task confirms first
+- Read: this file (rules + this task) + PLAYBOOK.md §4 Rule 4 (the runner's output shape) and annex §A.2's section text +
+  tools/pb/verify.py's sections « a run » (lines 2117–2363), « --redarm » and « the red-arm proof » (1396–1838) and
+  « selftest » (2704–4581), by its `# ----` headers on 2026-10-12 — this block changes them, so it reads them, the one
+  exception to « never the tools' code » + milestones/m0/tasks/toolkit_local_diff.md
+- Symptom: the lead, 2026-10-12, while running M0-V4's sweep from PowerShell: « it could be nice to add in the verify.py
+  printout in the command line the number of the current step and the number of steps remaining ». Measured on
+  win-laptop (Laser2025-20) in M0-V4's runs (logs/M0-V4.log): `--redarm <scope>` prints a line per arm as it ends
+  (« fft_twin · clean · GO », « fft_twin · plant fft-twiddle-sign · RED (proven: 3 failed) ») and its counts line; `--all`
+  prints a row per scope (« grav_selfforce  3/0/0  3.08 s  GO ») and its counts line — no line names its step's number,
+  the total or how many remain. A sweep runs ~20 campaigns over 20–40 min here (M0-V3's: 14 campaigns, 37 min, its
+  slowest arm 652 s), and the lead cannot tell how far along it is.
+- Deliver: on the console a run is started from, verify.py names each step's number, the total and the steps left — the
+  lead's « the number of the current step and the number of steps remaining » — in every mode that runs more than one
+  step: `--all`, `--changed` and a list of scopes (a step: a scope), `--redarm <scope>` (an arm: the clean copy, then each
+  plant), `--redarm --moved` (the campaign's number among the campaigns, and the arm's within it); the step running now
+  is named when it starts, not only when it ends — an arm can run 11 minutes → Verify 1 · nothing else moves: the counts
+  line, the failure and skip lines and the closing `=== GO ===` / `=== NO-GO: … ===` read as today, the per-scope logs,
+  loop_times.jsonl and the anchor unchanged, with parallel jobs and arms each number printed once and no two lines
+  interleaved, an agent's captured run (no terminal) gaining only the numbers on lines it already prints → Verify 1, 2 ·
+  verify.py's own selftest gains a check on the numbering (a three-step run reads 1/3, 2/3, 3/3 and none left at the
+  end) and a plant that breaks it → Verify 2 · the change written into toolkit_local_diff.md as a local diff a future
+  annex swap must carry → Verify 3
+- Done when: on the box it runs on, a multi-step run's lines carry the step's number, the total and the steps left, every
+  closing line unchanged, `tools_selftest` red-armed
+- Verify: 1. `python3 tools/pb/verify.py plan_lint time_control --task M0-D27` · Pass: GO, each scope's line carrying its
+  number of 2 and the steps left, the counts line and `=== GO ===` as before · Fail: a line without its number, or a
+  closing line changed · 2. `python3 tools/pb/verify.py --redarm tools_selftest --task M0-D27` · Pass: GO — the clean copy
+  GO with the new check, every plant NO-GO · Fail: a plant GO · 3. `grep -c "M0-D27" milestones/m0/tasks/toolkit_local_diff.md`
+  · Pass: ≥ 1 · Fail: 0
+- Handoff: win-laptop (Laser2025-20), model=claude-opus-5-5 level=high (rung_record now — the heading's rung). Exists: verify.py numbers a run's steps — `step k/N, m left` on each scope row of a multi-scope run (--all, --changed, a scope list), `arm k/N, m left` on each --redarm arm line, `campaign k/N, m left` on each --redarm --moved campaign's redarm: line (arms numbered within); m = steps after this one, the last reads 0 left; a one-step run is unnumbered. On a terminal each step is named live as it starts (`>> <scope> · step k/N, m left · started`), every live line written whole under one lock (run_unit's `..` line too). Counts, failure and verdict lines, logs, loop_times.jsonl and the anchor unchanged. Detail: tasks/toolkit_local_diff.md item 5. Deviations (declared): moved_sweep now classifies every armed scope before its first campaign (same lines, order, failures) so the total is known; four existing selftest checks read a row's head, not the whole row (3× `par · clean · GO`, the `noted` row's `GO$`). verify.py selftest checks=352 · plants=158/158 red. Verify 1 py -3.12 tools/pb/verify.py plan_lint time_control --task M0-D27 [ALREADY RUN — PASS (GO, 537 passed, step 1/2 · 1 left, step 2/2 · 0 left) on win-laptop]; Verify 2 --redarm tools_selftest [ALREADY RUN — PASS (GO, clean GO arm 1/2, plant RED arm 2/2, 176 s) on win-laptop]; Verify 3 grep [ALREADY RUN — PASS (1) on win-laptop]; claim --changed --task M0-D27 [ALREADY RUN — PASS (GO, tools_selftest 10/10, 27 not impacted, 158 s) on win-laptop], run before this close (a plan-only edit). NOT PROVEN (synthetic): the live lines on a real console — a fake tty in the selftest only; the lead sees them at M0-V5's sweep. Next: M0-D25.
+
+## M0-T33a · Sod's exact solution — the Riemann oracle for γ = 2 · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V4)
+- Status: DONE (2026-10-13 07:58, started 07:56)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.3 (γ = 2), §5.1 (G-SOD) +
+  milestones/m0/reports/sim_models.md SM-O5 + docs/agent/testing.md
+- Deliver: crates/sr-physics/src/reference/riemann.rs (new, its `mod` line in reference/mod.rs): the exact
+  Riemann solution for an ideal γ = 2 gas — the star-region pressure and velocity, the wave pattern, the
+  solution sampled at x/t — the oracle M0-T33b's twin case and M0-T34's GPU case share → Verify 1 · its
+  tests in the module: the star-region pressure against an independent root-find (bisection on its own
+  pressure function, 10⁻¹⁰ relative), Sod's states (ρ 1 | 0.125, P 1 | 0.1, at rest) satisfying the
+  Rankine–Hugoniot jumps across the shock and the isentrope across the rarefaction (10⁻¹⁰), the mirrored
+  states giving the mirrored solution → scope `riemann` (`cargo test -p sr-physics --release --lib
+  reference::riemann::`) → Verify 1 · plant tests/plants/riemann-gamma.patch (new: γ = 2 → 1.4 in the
+  star-region solve only) → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py riemann --task M0-T33a` · Pass: GO, ≥ 3 cases · Fail: NO-GO ·
+  2. `python3 tools/pb/verify.py --redarm riemann --task M0-T33a` · Pass: GO — the plant NO-GO · Fail: the
+  plant stays GO
+- Adversarial: an oracle written by the same hand as the scheme agrees with its mistakes — it is written
+  first, in its own block, and its star-region pressure is checked by an independent root-find and by the
+  jump conditions, never by a scheme's output.
+- Handoff: reference/riemann.rs: the exact γ=2 Riemann solution (star p*/u* by safeguarded Newton in a bisection bracket, wave pattern, sample(ξ)/at(x,x0,t), breakpoints(), refusals BadState/Vacuum); scope riemann 8 cases GO (p* vs an independent bisection on an RH-mass-flux/Riemann-invariant pressure function 1e-10 on 7 wave pairs, RH jumps + isentrope + invariant, mirror, conservation by Simpson 1e-8, refusals); plant riemann-gamma red (5 failed); --changed GO, 17/17 scopes, 648 passed, linux-pc (laserax-ai). Deviation, declared: fft_twin's cmd narrowed 'reference' → 'reference::fft' (it filtered all of reference:: and would have counted riemann's tests; expected stays 10), re-red-armed RED, testing.md row 62 updated; the two oracle FLAGs on verify.json/fft_twin are that edit. testing.md has no riemann row yet (M0-T33-docs block owns it). Next teammate: M0-T33b reads Solution::solve(State{rho,u,p}, ..).at(x, x0, t); GAMMA = 2 const. Ran on claude-sonnet-5-5, high (rung_record.py now). Next: M0-T33b
+
+## M0-T33b · Gas flow on the CPU twin (P4) — G-SOD's twin case · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T33a)
+- Status: DONE (2026-10-13 08:10)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.7 (hydro), §2.3, §2.8 (bounce),
+  §5.1 (G-SOD) + milestones/m0/reports/sim_models.md SM-E13, SM-E14, SM-O5 + docs/agent/testing.md
+- Deliver: crates/sr-physics/src/reference/hydro.rs (new): MUSCL-Hancock with the monotonised-central
+  limiter on (Σ, u, v, Π, X_i), HLL with Davis speeds, unsplit, species advected with the mass flux, the
+  full EOS of M0-T12 (cold pressure off when its K's are 0), bounce ghosts (two per side, §2.8), Δt per
+  §2.3.5 → Verify 1 · tests/gpu/sod.rs (new, twin case) with scenes/sod.json (new: 400 × 4, bounce,
+  ρ 1 | 0.125, P 1 | 0.1, at rest, cold pressure off through `overrides` — the oracle is an ideal γ = 2
+  gas — read at t = 80): against M0-T33a's exact solution, the shock within 1 cell, L1 density error
+  ≤ 2 % → scope `sod`, its twin case → Verify 1 · plant tests/plants/hll-swap.patch (new, §5.1) → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py sod --task M0-T33b` · Pass: GO, ≥ 2 cases (the shock, the L1
+  error) · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm sod --task M0-T33b` · Pass: GO — the
+  plant NO-GO · Fail: the plant stays GO
+- Adversarial: an unsplit scheme graded on a strip along x hides a wrong y flux — M0-T34's y-oriented copy
+  of the strip and G-REF's collapsing disk (M0-T38) grade the second axis; the case reads M0-T33a's exact
+  solution, never the scheme's own output.
+- Handoff: reference/hydro.rs (the twin's P4: unsplit MUSCL-Hancock, MC limiter, HLL-Davis, species by the mass flux, full EOS, two bounce ghosts, Δt §2.3.5; State, Hydro::{dt, step, advance}), scenes/sod.json, tests/gpu/sod.rs (9 twin cases), scope sod (verify.json + testing.md row), plant hll-swap. Measured on linux-pc, CPU f64: shock 0.34 cell off (≤ 1), L1 density 0.32 % (≤ 2 %), mass and energy to 5e-16, walls' momentum exact, the y-oriented strip and the mirrored tube bit-equal; hll-swap RED (8 of 9 fail, 15.7 s). Deviation, declared: the scene's world is 400 × 64 (§2.8's floor, 64 identical rows) — the twin's 400 × 4 strip is its first four rows; flagged to M0-T34, T35, T36. Not acted on: testing.md has no riemann row (M0-T33a's), see tasks/M0-T33b.md. Model claude-sonnet-5-5, level high (rung_record). Next: M0-T34.
+
+## M0-T34 · Gas flow on the GPU (P4) with bounce walls · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T33b)
+- Status: DONE (2026-10-13 08:50)
+- Carried flags: [M0-T21, 2026-10-10] Run P4 over the box: Size::Indirect(boxfit.args(), ARGS_TILES) and the ActiveBox uniform (named abox — active is a WGSL reserved word). Ghosts at the box edge read cells P8 never floors: an uploaded vacuum cell may hold Σ = 0, not Σ_floor — treat Σ < Σ_vac as the floor state on read, as dt's cell_rates does (M0-T21). · [M0-T33b, 2026-10-13] scenes/sod.json is a 400 × 64 world (§2.8's floor of 64 cells a side), 64 identical rows, bounce, hydro only, overrides k1e = k2e = k1n = k2n = 0; G-SOD's 400 × 4 strip is its first four rows and exists on the twin only. The GPU case runs the 400 × 64 scene (rows must stay identical: a y-flux defect shows as a row mismatch), reads sim time at the first step ≥ 80 and grades that time against reference::riemann's exact solution with the twin's measures (shock halfway crossing within 1 cell, L1 of the cell-averaged exact density ≤ 2 %; twin: 0.34 cell, 0.32 %). The twin's API is reference::hydro::{State, Hydro::{dt, step, advance}}; its walls: mass, energy, species fluxes exactly 0, momentum flux = the face state's Π. tests/gpu/sod.rs holds the twin cases (9: add the GPU's as gpu_…, raise the scope's expected in verify.json, ≥ 4 cases twin and GPU as your Verify says)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P4), §2.2 (packing), §2.3,
+  §2.8 (bounce), §5.1 (G-SOD), §6.2.2 + docs/agent/testing.md
+- Deliver: crates/sr-engine/src/step/hydro.rs and shaders/hydro.wgsl (new): P4 per §2.3.4 over the box
+  and its ghosts — M0-T33b's scheme in f32 within 8 storage buffers per stage, eos.wgsl's pressure, the
+  bounce walls of §2.8, fused into as few dispatches as the limits allow (TW: dispatch-bound boxes) →
+  Verify 1 · tests/gpu/sod.rs: G-SOD's GPU case → Verify 1 · P4's ms per step on the Quadro for
+  scenes/sun_disk.json (`--timing`) in the handoff → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py sod --task M0-T34` · Pass: GO, ≥ 4 cases (twin and GPU) · Fail:
+  NO-GO · 2. `build/target/release/sandbox-reactions headless --scene scenes/sun_disk.json --steps 200
+  --timing --adapter "Quadro RTX 4000" --out build/m0-t34-timing` · Pass: exit 0, P4 in per_pass_ms ·
+  Fail: a non-zero exit or no P4 · 3. `python3 tools/pb/verify.py --redarm sod --task M0-T34` · Pass:
+  GO — hll-swap NO-GO on the GPU case too · Fail: the plant stays GO
+- Adversarial: the GPU passing Sod because the strip is 4 cells tall while the 2D unsplit fluxes are wrong
+  — G-REF's collapsing disk (M0-T38) grades the second axis; Sod's strip run along x only — a y-oriented
+  copy of the case.
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record now, the heading's rung). step/hydro.rs + shaders/hydro.wgsl: P4 on the GPU, the twin's scheme in f32 — hydro_update (each cell recomputes its neighbours' predicted faces, writes a next state, never the state it reads) then hydro_commit, over the box's tiles, at WebGPU's 8 storage buffers; Step::with_passes(Passes { mode, gravity, hydro }) — new/with_box/with_gravity keep P4 off; headless turns it on by the scene's hydro switch. tests/gpu/sod.rs +6 GPU cases (scope sod 9 → 15; hll-swap also plants the shader). RTX 5090: 824 steps to t = 80.0067 (the twin's count), shock 0.335 cell, L1 0.319 % (worst of 64 rows), rows within 1.8e-6, the y-laid tube within 2.1e-6, mass/energy ≤ 2e-8 — f32 tolerances fixed before the first run. Verify 1 GO 15/15; Verify 3 GO (hll-swap RED, 14 of 15, every GPU case); Verify 2 exit 0, P4 in per_pass_ms — Quadro RTX 4000 sun_disk P4 0.99–1.06 ms warm (first run 1.5) of a 1.2 ms step: P4 dominates (flagged to M0-V5). First claim NO-GO: timing's and dump's oracles rebuilt headless's step without P4 — they now build P2 + P4 (no case, count, plant or tolerance changed; both red-armed GO); the rating refresh fired → M0-TM5 filed, runs next; the second claim read web[ready] NO-GO once (ERR_CONNECTION_REFUSED, its sibling case stopping the shared server; GO twice on re-run) → M0-D28 filed after M0-TM5. Deviations: P4 bounces under leave too until M0-T35; no stored face set (memory at 2048²). Flags: M0-T35, T36, T43 (the 8-buffer budget), M0-V5. The claim (verify.py --changed --task M0-T34) is the last step, after this edit. tasks/M0-T34.md. Next: M0-TM5.
+
+## M0-TM5 · Rating pass — five carried flags on open BUILD blocks since 2026-10-12 · **PLAN** · Opus 5.5, max · switch · (AFTER M0-T34)
+- Status: DONE (2026-10-13 09:40, started 09:19)
+- Carried flags: [M0-T34, 2026-10-13] Filed by M0-T34 when `plan.py lint` read the rating refresh's threshold (Rules: 5 flags): M0-T33b's two (to M0-T35, M0-T36) and M0-T34's three (to M0-T35, M0-T36, M0-T43 — hydro_update at WebGPU's 8 storage buffers, the escaped booking, g and F each needing a slot) since `Model ratings: 2026-10-12 by M0-TM4`; M0-T34's flag to M0-V5 (P4's cost on the Quadro) is on a CHECK block and does not count
+- Read: this file (rules + this task) + PLAYBOOK.md §0 (the ladder, the rubric) and §B.3 (the
+  probe) + the agent's model pages the ladder cites + the record (`rung_record.py report`, the last
+  phase-closing V's table)
+- Deliver: the ladder re-read on the day — the probe and the model pages: a model retired,
+  renamed or added, a price or a level changed → the `Models:` line rewritten and dated, the
+  lead's answer first where a rung they run changes (§12) · every open block's rating re-derived
+  by §0's rubric from its heading, `Sizing:`, `Deliver:`, `Verify:` and `Carried flags:` and the
+  record — its rating segment rewritten, nothing else in the block · the register's `Model
+  ratings: <YYYY-MM-DD> by M0-TM5` line · in the handoff, the ratings changed, counted by rung.
+- Pass: `plan.py lint` GO; every open block on a rung of the ladder, each above the cheapest rung
+  that fits named in the task file with its rule; the diff touches rating segments, the `Models:`
+  line and the register's line only. Fail: any other byte changed; a BUILD or MOVE block above
+  the cheapest rung that fits with none of §0's rules (1)–(4) named; a CHECK or PLAN block below
+  `(gate)`.
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=max (rung_record now, the heading's rung). Ladder re-read 2026-10-13: the probe reads Claude Code 2.1.296, the version cited; auto mode refused the model pages (a find, "Auto-Mode Bypass"; the claude-api skill, "Credential Exploration"), not worked around (Hazards) → asked, the lead: «Re-date on the probe (Recommended)» → Models line re-dated and re-cited (2026-10-12 from the skill's table → 2026-10-13 from the probe, the table M0-TM4 read, and the lead's answer), rungs byte-identical; today's bundle = M0-TM4's read is NOT PROVEN (source only). The record, M0-V4's table: BUILD on Sonnet 5.5, high $1.64 (16 blocks) against (usual)'s $3.11 (29) → no class moves (today's linux-pc read agrees: $1.78 against $4.05); no trail (rule (1)). 109 open blocks re-derived; 3 changed, Sonnet 5.5, high → Opus 5.5, high: M0-T35, T36, T43, (3)'s list (c) → (5) — their M0-T34 flags: hydro_update binds all 8 of WebGPU's storage buffers, contract §2.2 leaves the packing to the builder, and the escaped booking, g and F need 3 more, each layout built on by the next. By rung: Opus 5.5 max 18 (0, rule (2)) · Opus 5.5 high 8 (+3; M0-T42, T46, T51, T56 by (e) and M0-D28 by (b), (e), as before) · Sonnet 5.5 high 76 (−3) · Haiku 5.5 high 7 (0, the E blocks) · Fable 5.1 high, Opus 5.5 xhigh, Sonnet 5.5 medium 0; every heading keeps · switch; the diff is the 3 rating segments, the Models line and the register's line. Measured, not filed (this diff is bounded): rung_record.py's handoff fallback misreads 6 of 7 rows on linux-pc (M0-TJ3, V2, TM2, TM3, TM4 quote opus-5-5 max and read as Sonnet rungs; M0-TR1 quotes sonnet-5-5 high and reads as Opus 5.5, high) — a D for the next filer before M0-V5 reads the record; the register's open-D line still names M0-D25 (DONE); one layout block ahead of M0-T35 would make the three a reuse (a re-scope: the lead's, or a PLAN block's). tasks/M0-TM5.md. Next: M0-D28.
+
+## M0-D28 · The web scope's `ready` case can smoke a server its sibling case is stopping: ERR_CONNECTION_REFUSED, intermittent · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TM5)
+- Status: DONE (2026-10-13 10:04)
+- Blocks: nothing — a flake: a claim or a sweep that reads it NO-GO re-runs `web` and gets GO
+- Caused by: unknown
+- Files: tests/web/check.sh (`take_port_lock`, the `_sr_exit` trap, the start → smoke → exit sequence), tools/pb/launch.py
+  (`start web` / `stop` — read only through its calls, never its code, unless this block's cause is there) — unverified,
+  the executing task confirms first
+- Read: this file (rules + this task) + tests/web/check.sh + milestones/m0/logs/M0-T34.web.log + docs/agent/testing.md's
+  `web` row + milestones/m0/tasks/M0-TR1b.md (the lock split this rides on)
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-13, M0-T34's second claim run (`verify.py --changed --task M0-T34`,
+  logs/M0-T34.web.log, from line 27): `web[ready]` and `web[no-webgpu]` both started 08:54:47; no-webgpu ended GO at
+  5.14 s; ready printed « web: ready on port 47812, 0.1s », then « === NO-GO: ready: page.goto: net::ERR_CONNECTION_REFUSED
+  at http://127.0.0.1:47812/ » at 6.74 s. The same scope was GO in M0-T34's first claim run (08:51) and in two re-runs
+  right after (`verify.py web --task M0-T34-web1`, `-web2`): 1 red in 4.
+- Repro: not yet deterministic — run `python3 tools/pb/verify.py web --task <id>` in a loop and count reds; a forced
+  overlap (no-webgpu's exit trap delayed between `launch.py stop` returning and the port closing) is the first thing to try.
+- Suspected cause: the port lock is released on no-webgpu's exit while its server is still closing — `launch.py stop`
+  returning before the port refuses — and ready's `launch.py start web`, under the same `--task` and pid file, probes the
+  port still open, reads the service as ready in 0.1 s without starting its own, and smokes a server that then goes away.
+- Deliver: the cause measured (a forced overlap that reds every time), then fixed where it lies — a stop that waits for
+  the port to close, or a start that never adopts a server it did not start — with that forced overlap kept as the
+  regression check → Verify 1, 2
+- Verify: 1. `python3 tools/pb/verify.py web --task M0-D28` · Pass: GO, 3 of 3 · Fail: NO-GO · 2. the forced overlap of
+  Deliver, red before the fix and GO after, in the task file with both logs · Pass: both recorded · Fail: either missing
+- Handoff: Cause measured, not the block's guess (start never adopts, stop waits for the port): launch.py's records are the box's, --task names only the log, so desktop[launcher]'s bare `launch.py stop` (start.sh, then tests/smoke.sh:54) stopped web's server mid-smoke in M0-T34's claim run.
+  Fixed (the lead, 2026-10-13: «Launchers stop their own (Recommended)», «One named exception (Recommended)»): start.sh/.bat/.ps1 and smoke.sh's launcher case stop their own service; check.sh's trap stops web alone; contract §0.5 [M0-D28], mirrored in Superseded.
+  Regression kept: desktop[launcher] runs beside a decoy web server (under web's port lock) that must survive — red 2/2 before, GO 3/3 after; plant launcher-stop-all; --redarm desktop GO 192 s (3/3 red); web GO 3/3; web+desktop in parallel GO ×3; claim GO 5/5 scopes, 528 passed — linux-pc laserax-ai.
+  Deviations: 9 files (named exception; start.ps1 and launcher-no-stop.patch's context came with the same line); the claim's oracle FLAGs on smoke.sh, check.sh, verify.json are that answer; a web-side overlap case + own --task, tried first, stayed red and was removed.
+  Owed: win-laptop NOT RUN (start.bat's line, the decoy's mkdir lock) → flagged M0-V5. Filed M0-D29 (smoke.mjs's NO-GO spans lines, verify loses the reason). Not measured: whether `launch.py smoke` stops only its own service.
+  Ran on model=claude-opus-5-5 level=high. Detail: tasks/M0-D28.md, logs/M0-D28.log. Next: M0-D29.
+
+## M0-D29 · web/smoke.mjs breaks its NO-GO line on playwright's multi-line error: verify loses the reason · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D28)
+- Status: DONE (2026-10-13 10:06)
+- Blocks: nothing — the verdict stays NO-GO; only the reason is lost from verify's summary
+- Caused by: M0-T15
+- Files: web/smoke.mjs (`nogo`, line 36, and the callers that pass a caught error's message) — unverified, the executing task
+  confirms first
+- Read: this file (rules + this task) + web/smoke.mjs + milestones/m0/logs/M0-D28-pre1.web.log
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-13, M0-D28 (logs/M0-D28-pre1.web.log; also logs/M0-T34.web.log, from line 27):
+  a refused `page.goto` prints « === NO-GO: no-webgpu: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:47812/?no-webgpu=1 »,
+  then playwright's « Call log: » lines, then « === » alone; verify.py reads « web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===`
+  line (exit 1) » and its summary drops the reason
+- Repro: `python3 tools/pb/launch.py stop web --task x` while nothing serves, then `node web/smoke.mjs no-webgpu --base
+  http://127.0.0.1:47812 --timeout-s 5` — the NO-GO spans lines
+- Suspected cause: `nogo(why)` prints `why` as is, and a playwright error's message carries newlines (its call log)
+- Deliver: `nogo` prints one line — the message's first line, the rest above it as plain log lines — with a forced refused-goto run
+  as the evidence → Verify 1, 2
+- Verify: 1. the Repro's run · Pass: one `=== NO-GO: … ===` line naming ERR_CONNECTION_REFUSED · Fail: a line break inside it · 2.
+  `python3 tools/pb/verify.py web --task M0-D29` · Pass: GO, 3 of 3 · Fail: NO-GO
+- Handoff: web/smoke.mjs's nogo now prints one verdict line: the reason's first line in `=== NO-GO: … ===`, its other non-blank lines (playwright's call log) above it as plain log lines; every caller goes through nogo, so the fix sits there alone (web/smoke.mjs:36-42). Verify 1 [ALREADY RUN — PASS on linux-pc (laserax-ai)]: the Repro (`launch.py stop web`, then `node web/smoke.mjs no-webgpu --base http://127.0.0.1:47812 --timeout-s 5`) prints `=== NO-GO: no-webgpu: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:47812/?no-webgpu=1 ===` on one line, exit 1 (logs/M0-D29.log). Verify 2 [ALREADY RUN — PASS on linux-pc]: `verify.py web --task M0-D29` GO 3/3; smoke.mjs is the scope's check, so `--redarm web` GO, 4 of 4 plants red (logs/M0-D29.web.redarm.log). Claim: `verify.py --changed --task M0-D29` (the run after this close). Deviations: none. Findings not acted on: none. Ran on model=claude-opus-5-5 level=high (rung_record). Next: M0-T35.
+
+## M0-T35 · The leave edge and escaped mass (G-EDGE) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T34)
+- Status: DONE (2026-10-13 10:27)
+- Carried flags: [M0-T25, 2026-10-11] Edge mode reaches headless as sr_engine::scene::EdgeMode (scene world.edge, else --edge), recorded in summary.json's world.edge but applied by no pass yet — set_edge_mode wires it (M0-T25) · [M0-T33b, 2026-10-13] reference/hydro.rs has Edge::Bounce only (an enum with one variant; ghosts filled in step()'s match, the wall flux in Hydro::wall) — Leave goes in the same match, with the escaped booking the twin's State does not yet carry (State::totals is the mass/momentum/energy sum a booking can be checked against) · [M0-T34, 2026-10-13] P4 is step/hydro.rs + shaders/hydro.wgsl: ghosts in read_at (mirror, normal velocity negated), wall faces in hydro_update's x == 0 / last_x / y == 0 / last_y branches through wall(); Passes::hydro carries the EdgeMode but P4 ignores it — both modes bounce today (sun_disk.json and every preset are leave scenes). hydro_update already binds WebGPU's 8 storage buffers (state ×3, next ×3, Δt record, eos table): the edge mode fits a uniform, but the escaped booking needs a slot — e.g. the next state in two buffers of 7 planes (≤ 117 MB each at 2048², under the 128 MiB binding), or a small third dispatch over the edge cells only
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.8, §2.9 (escaped), §5.1 (G-EDGE)
+  + docs/agent/testing.md
+- Deliver: crates/sr-engine/shaders/hydro.wgsl and src/step/hydro.rs, and the twin's
+  crates/sr-physics/src/reference/hydro.rs: *leave* ghosts (the edge cell copied with the outward velocity
+  clamped outward, the boundary face's mass flux clamped to outflow — inflow exactly 0), whatever crosses
+  booked `escaped` per mass, momentum, energy and species (M0-T18), `set_edge_mode` at the next step
+  boundary, a new world in leave (D1) → Verify 1 · tests/gpu/edges.rs (new) with scenes/edge_pulse.json
+  (new): bounce — the wall's mass flux exactly 0 and a pulse returning with its mass-weighted normal
+  velocity within 2 % of −v₀, leave — the grid's mass loss equal to `escaped` to 10⁻⁶ and inflow exactly
+  0, GPU and twin → scope `edges` (G-EDGE) → Verify 1 · plant tests/plants/wall-copy.patch (new, §5.1) →
+  Verify 2
+- Verify: 1. `python3 tools/pb/verify.py edges --task M0-T35` · Pass: GO, ≥ 4 cases · Fail: NO-GO · 2.
+  `python3 tools/pb/verify.py --redarm edges --task M0-T35` · Pass: GO — the plant NO-GO · Fail: the plant
+  stays GO
+- Adversarial: a leave edge that books escaped mass from the ghost's state rather than the face flux
+  drifts by the ghost's update — the case compares the grid's loss with the booked term to 10⁻⁶.
+- Handoff: linux-pc (laserax-ai), RTX 5090; model=claude-opus-5-5 level=high (rung_record now). Leave edge on the twin (Edge::Leave, State::escaped per boundary face in the GPU's EdgeFaces order) and on P4 (leave ghosts in read_at under an Edges uniform; shared boundary(); a third dispatch hydro_edges books booking.escaped from the same face flux, 6 storage buffers — hydro_update still binds all 8; Step::set_edge_mode writes the uniform between submissions). Scope edges, 7 cases: the twin bounce pulse within 0.001 % of −v0, the GPU 0.020 %; leave loss = escaped 1.2e-15 (twin) and 2.7e-8 (GPU) of escaped; no face ever books inflow; GPU vs twin ≤ 8e-8; set_edge_mode bit for bit at the step boundary. --redarm edges: wall-copy RED. Deviations, tasks/M0-T35.md: an inflow face is read as a wall (energy and species 0, momentum Π); the leave cases run an inline wind (39.6 % of the mass out), because the pulse's escape (1.2e-4 of the grid) is below what f32 resolves at 1e-6; inflow is graded per face per step (HLL diffusion lets 124 of 3540 out through the stagnant sides, never in). Finding: G-EDGE's 2 % pulse oracle cannot see wall-copy (copy ghosts leave it unchanged to 7 digits), so a case holds the GPU's bounce to the twin's mirrors at 1e-4 (wall-copy gives 2.6e-4…2.6e-3), and the plant goes in the shader only. A first GPU-vs-twin pulse check (1e-3) read 1.37e-3 (f32's floor at Mach 1e-3) and was removed, not loosened. Claim: see tasks/M0-T35.md. Next: M0-T36.
+
+## M0-T36 · Gravity's source in the flow — the cold collapse (G-COLL) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T35)
+- Status: DONE (2026-10-13 11:32)
+- Carried flags: [M0-T33b, 2026-10-13] the twin's Hancock predictor is Hydro::step's 'reconstruction and predictor' loop (delta = ½Δt · flux differences, added to every face state of the cell); gravity's Σg and Σu·g belong there time-centred on the half-step velocity, and in the final update's flux sum; Hydro::dt already takes g's planes for the η_g term; the scene overrides of a test that wants cold pressure off are the four K's (G-SOD uses them too) · [M0-T34, 2026-10-13] The GPU's Hancock predictor is hydro.wgsl's cell_faces (delta = half · flux differences, added to the four faces in evolved()); the update's flux sum is in hydro_update. hydro_update binds WebGPU's 8 storage buffers already: g needs a slot — the next state in two buffers of 7 planes frees one (M0-T35 may take it first for the escaped booking: read its handoff) · [M0-T35, 2026-10-13] escaped is booked by a third dispatch, hydro_edges (hydro.wgsl), not a slot in hydro_update, which still binds all 8 of WebGPU's storage buffers — g still needs the next-state repack. hydro_edges recomputes cell_faces() and boundary() for the edge cells, so if gravity's source goes into the Hancock predictor (cell_faces), hydro_edges must bind g too (it has room: 6 bound), or the booked flux drifts from the applied one and edges' loss = escaped (1e-6) goes red
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.2 (the sources), §2.7 (the K's),
+  §5.1 (G-COLL) + milestones/m0/reports/sim_models.md SM-O2, SM-C2 + docs/agent/testing.md
+- Deliver: crates/sr-engine/shaders/hydro.wgsl and the twin's reference/hydro.rs: P4's momentum source Σg
+  and energy source Σu·g, time-centred on the predictor's half-step velocity (§1.4.2) → Verify 1 ·
+  tests/gpu/collapse.rs (new) with scenes/cold_disk.json (new: T_floor, Σc = 1, a = 40, heat and reactions
+  off, cold pressure off through `overrides` — G-COLL's "pressure is negligible" holds only so: at Σ = 1
+  §2.7's K's give Π_cold ≈ 14 against Π_th ≈ 0.1, my arithmetic): r₅₀/r₅₀(0) = 0.8368 at 0.5 t_ff and
+  0.5279 at 0.8 t_ff within 3 %, GPU and twin → scope `collapse` (G-COLL) → Verify 1 · plant
+  tests/plants/grav-half.patch (new, §5.1) → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py collapse --task M0-T36` · Pass: GO, ≥ 4 cases · Fail: NO-GO —
+  red with the K's off is a D on the source terms, never a looser band · 2. `python3 tools/pb/verify.py
+  --redarm collapse --task M0-T36` · Pass: GO — the plant NO-GO · Fail: the plant stays GO
+- Adversarial: a collapse that passes because the override switched off more than cold pressure —
+  the scene's overrides list only the four K's, named in the handoff.
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record). Gravity's source in P4 (§1.4.2), twin then shader: the Hancock predictor kicks each face by ½Δt·g (momentum ½Δt·Σ_f g, energy ½Δt·Σ_f(u_f + ¼Δt·g)·g, so a face's thermal energy is untouched) and returns the centre's half-step (Σ, Σu, Σv); the update adds Δt·Σ_½g and Δt·(Σu)_½·g. Twin: Hydro::step_with(st, dt, Some((gx, gy))). GPU: g at binding 14 in hydro_update and hydro_edges, Edges.gravity flag (a placeholder bound without P2), the next state repacked 3 → 2 buffers of 7 planes (117 MB at 2048², const-asserted) to free the slot; with_passes hands Gravity::field to P4. scenes/cold_disk.json (overrides exactly k1e, k2e, k1n, k2n) + tests/gpu/collapse.rs (6 cases) + plant grav-half (g × 0.5 where both P4s read it) + scope collapse. Measured r50 ratio error: twin +0.17 % / +1.34 %, GPU +0.15 % / +1.34 % (RTX 5090) at 0.5 / 0.8 t_ff. Verify 1 [ALREADY RUN — PASS (GO 6/0/0) on linux-pc]; Verify 2 [ALREADY RUN — PASS (clean GO, grav-half RED 4 failed, 84 s) on linux-pc]; clippy -D warnings clean; the claim --changed is the last step, after this close (result in tasks/M0-T36.md). Deviations: step/hydro.rs, step/mod.rs, main.rs, verify.json touched beyond Deliver (the binding); per-face kick is my reading of the predictor's time-centring; §5.1's 0.5279 is 0.52796 cut (checked to 1e-4). Not acted on: testing.md rows (collapse; sod/edges binding text stale) → M0-T40; GPU Δt reads step n's g vs the twin loop's fresh g → M0-T38; collapse owed on win-laptop (R15). Detail: tasks/M0-T36.md. Next: M0-T37.
+
+## M0-T37 · The twin's step driver and `--cpu-reference` · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T36)
+- Status: DONE (2026-10-13 12:20)
+- Carried flags: [M0-T19, 2026-10-10] P8's f64 twin lives inline in crates/sr-engine/tests/gpu/floors.rs (p8_twin, on sr_physics::eos::Eos + Elements::composition): move it into reference/floors.rs and match contract §2.7 [M0-T19] — order vacuum reset, temperature floor, renormalise; μ/Y_e/X_n of the renormalised fractions; all ≤ 0 → pure H; the reset keeps the fractions; E_floor − E and the floor's energy both booked floor_added; Σ_vac and Σ_floor compared as f32 (the GPU's) · [M0-T25, 2026-10-11] Scene::planes(world, physics, elements) gives §2.2's canonical f32 planes and Scene.switches the parsed switches (all on by default), recorded not applied; Scene::physics() carries the overrides — the twin can start from the same scene (M0-T25) · [M0-T27, 2026-10-11] sr-app's USAGE line (crates/sr-app/src/main.rs) lists only M0-T4's headless flags — none of --scene FILE, --edge, --timing, --dump-every, --load-dump (M0-T23, M0-T25, M0-T26); bring it to the tree's flags when you add --cpu-reference (docs/agent/running.md lists them) · [M0-T36, 2026-10-13] the twin steps with gravity as tests/gpu/collapse.rs's twin_run does (M0-T36): each step g = reference::grav::Gravity::field(Σ plane, Σ_vac, w, h), Δt = Hydro::dt(st, Some((gx, gy))), then Hydro::step_with(st, Δt, Some((gx, gy))); Hydro::step is step_with(.., None)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2, §1.7 (every solver's twin),
+  §3.3 (`--cpu-reference`) + docs/agent/testing.md
+- Deliver: crates/sr-physics/src/reference/mod.rs (M0-T28's) and reference/floors.rs (new): the twin's state
+  (§2.2's channels in f64) and step — the passes built so far in §1.3.2's order, the scene's switches
+  honoured, P8's floors and Δt in f64 (later passes join with their twins) → Verify 1 ·
+  crates/sr-engine/src/headless.rs: `--cpu-reference` running the twin from the same scene (worlds up to
+  128 × 128, exit 4 above), the same summary.json and dumps → Verify 1 · tests/gpu/twin.rs (new): a 64 ×
+  64 disk run by `--cpu-reference` and in-process gives identical dumps, a 200 × 200 world refused → scope
+  `twin` → Verify 1 · plant tests/plants/twin-skip-floors.patch (new) → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py twin --task M0-T37` · Pass: GO, ≥ 2 cases · Fail: NO-GO · 2.
+  `python3 tools/pb/verify.py --redarm twin --task M0-T37` · Pass: GO — the plant NO-GO · Fail: the plant
+  stays GO
+- Adversarial: a twin that skips a pass the GPU runs agrees with nothing in G-REF — the driver's pass list
+  printed beside the GPU's in the log.
+- Handoff: Twin (sr_physics::reference::Twin) steps P1/P2/P4/P8/P9 in f64 the GPU's way (Δt_{n+1} from step n's own P2 g), switches honoured, worlds ≤ 128; reference::floors is P8 moved out of tests/gpu/floors.rs (§2.7 [M0-T19]); headless --cpu-reference writes the GPU run's summary.json and dumps (box record the whole world's) and refuses a world over 128, and --adapter, --timing, --load-dump with it, exit 4 (my defaults). Scope twin 6 cases GO 4.4 s, plant twin-skip-floors red (3 failed), floors red-armed again (6 failed); the driver's pass list prints beside the GPU's for all four switch pairs. Also USAGE line and running.md to the tree's flags. Claim: verify.py --changed 27/27 scopes GO, 711 passed on linux-pc (laserax-ai); its 4 FLAG oracle lines (floors.rs, main.rs, twin.rs, verify.json) are the carried flag's floors move, the module line and the new scope. 7 code files (ceiling 6: the flagged floors move and USAGE line). Not acted on: twin's whole-world P8 vs the GPU's box (flagged to M0-T38). Ran on claude-sonnet-5-5, high (rung_record). Next: M0-T38.
+
+## M0-T38 · GPU against the twin (G-REF) — the collapsing disk and the Sod strip · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T37)
+- Status: DONE (2026-10-13 12:29)
+- Carried flags: [M0-T36, 2026-10-13] P4 now takes gravity's source (M0-T36): the twin's Hydro::step_with(st, dt, Some((gx, gy))) with g from reference::grav::Gravity::field over the world. On the GPU, Δt_{n+1} (P9) reads g from step n's P2, while collapse.rs's twin loop takes g fresh from the state before each step — drive the twin the GPU's way (or measure the gap) before a step-for-step 1e-3 comparison of the collapsing disk · [M0-T37, 2026-10-13] [M0-T37, 2026-10-13] the twin driver is sr_physics::reference::Twin (Twin::new(physics, elements, Edge, Switches, w, h, f64 planes), step(), state, sim_time(), dt_next(); headless::twin_dump for a dump): it steps the GPU's way — Δt_{n+1} from step n's own P2 g — so M0-T36's gap is closed in the driver (tests/gpu/twin.rs pins it against a hand loop); it runs the whole world, no active box: the GPU leaves vacuum outside its fitted box at Σ = 0 where the twin's P8 resets it to Σ_floor (1e-8 per cell, M0-V3's G-BOX arithmetic), invisible at 1e-3 in Σ and E, visible in a per-cell look at vacuum cells or their X (tasks/M0-T37.md)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.7, §2.2 (canonical order), §5.1
+  (G-REF), §6.7 + docs/agent/testing.md
+- Deliver: tests/gpu/cpu_gpu.rs (new) with scenes/ref_disk.json and scenes/ref_sod.json (new, 64 × 64):
+  GPU f32 against the twin f64 over 200 steps — relative L1 difference ≤ 10⁻³ in Σ and E, ≤ 10⁻⁴ absolute
+  in each X (the burning field joins with M0-T48) → scope `cpu-gpu` (G-REF) → Verify 1 · plant
+  tests/plants/cfl-gpu.patch (new, §5.1: the GPU's CFL 0.4 → 0.39) → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py cpu-gpu --task M0-T38` · Pass: GO, 2 cases, the largest
+  difference per channel printed · Fail: NO-GO — G-REF is UNVERIFIED (§5.5): a red is a D, never a
+  looser band · 2. `python3 tools/pb/verify.py --redarm cpu-gpu --task M0-T38` · Pass: GO — the plant
+  NO-GO · Fail: the plant stays GO
+- Adversarial: a 200-step comparison too short to separate CFL 0.4 from 0.39 makes the plant unfailable —
+  the red-arm proves it fails, else the scene runs longer and the handoff says so.
+- Handoff: cpu_gpu scope (tests/gpu/cpu_gpu.rs, 2 cases) + scenes/ref_disk.json, ref_sod.json (64×64, H/He mixed) + plant cfl-gpu: GPU vs twin, 200 steps, RTX 5090 — GO: disk L1 Σ 4.4e-5, E 6.0e-5, |ΔX| 3.9e-6; Sod 1.7e-7, 2.3e-7, 7.5e-7 (bands 1e-3, 1e-3, 1e-4); --redarm: cfl-gpu RED on both (Σ 1.9e-2 / 1.1e-2). Declared: X read where both Σ ≥ 1e-4 (100×Σ_vac) — unmasked 5 rim cells at Σ≈3e-6 read 1.06e-3 (my reading: f32/f64 Σ_vac crossing mixes P8's floor H in; band unchanged); the disk's Δt is gravity-bound so the plant moves its sim time only 0.11 % — Sod carries the CFL separation (−2.45 %). Touched 6 files (+ main.rs module line, verify.json scope: oracle flags name them). --changed 23/23 GO, 651 passed. Flags filed to M0-T40 (testing.md row) and M0-T48 (third scene). Ran on Sonnet 5.5 high (rung_record), linux-pc RTX 5090. Detail: tasks/M0-T38.md. Next: M0-T39
+
+## M0-T39 · The box against the whole world (G-BOX) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T38)
+- Status: DONE (2026-10-13 13:08)
+- Carried flags: [M0-T21, 2026-10-10] tests/gpu/box.rs exists (module r#box, 6 cases, scope expected 6 — raise it); the switch is Step::with_box(…, BoxMode::WholeWorld) (M0-T21). · [M0-V3, 2026-10-11] G-BOX against the vacuum floor (source only, my arithmetic): a scene's uncovered cells are Σ = 0 (scene.rs Sums::planes) and P8 floors only inside the box (M0-T21), so under BoxMode::WholeWorld every vacuum cell becomes Σ_floor at step 0 and books vacuum_reset −Σ_floor while the box run floors only its box — sun_disk.json at 600 × 400: ≈ 2.30 × 10⁻³ more grid mass in the whole-world run, 6.9 × 10⁻⁷ of the Sun-like mass and 9.3 × 10⁻⁷ of its hydrogen (vacuum is pure H), inside §5.3's 10⁻⁶ by about 7 %; compare the conserved sums (vacuum_reset added, §2.9) or say which sum each case compares (M0-V3) · [M0-T39, 2026-10-13] [M0-T39, 2026-10-13] First try on Haiku 5.5, high ended red at the claim (verify.py --changed, NO-GO: box 2 failed; redarm box clean 2 failed; anchor 61 never checked, 2 of them new paths: scenes/box_blob.json, scenes/sun_disk.json). Built: two G-BOX cases in tests/gpu/box.rs (sun_disk_in_the_box_conserves_what_the_whole_world_does_after_2000_steps; a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode), scenes/box_blob.json (16 × 16 rect at (292, 192), H, Π 0.1, v −11.6, bounce), verify.json box: expected 6 → 8, scenes paths added. Sums compared = state + escaped.* + vacuum_reset (mass, x_H) − floor_added (energy), each to 1e-6 of its own scale. Measured RTX 5090: sun_disk mass 6.3e-8, species ≤ 3e-7, momentum x 3.1e-6, y 2.5e-6, energy 4.4e-6; blob mass 6.3e-8, energy 5e-8, species 6e-8, momentum x 3.4e-6 (y 5e-9); blob 0.31–0.33 cells per step. Escapes differ box vs whole: sun_disk escaped.mass 3.2381 vs 3.2409 (whole loses 2.75e-3 more through leave edges), cause not measured. The 1e-6 band is missed on momentum and energy on the f32 GPU; cause not measured (candidates: f32 round-off across FFT sizes; P8 zeroing u below Σ_vac with no booked momentum term). Not loosened. Question for the lead: keep 1e-6 and file a D on the cause, or set the f32 bands (M0-T34/T38 precedent: 1e-5 mass and energy, 1e-4 momentum).
+- Sizing: E
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.3, §5.3 (G-BOX) +
+  milestones/m0/reports/time_warp.md R5 + docs/agent/testing.md
+- Deliver: tests/gpu/box.rs: G-BOX's cases — scenes/sun_disk.json run 2,000 steps in the box against a
+  run under M0-T21's whole-world switch: mass, momentum, energy and each species' mass equal within 10⁻⁶
+  relative (f64 sums), a blob at 0.35 cells per step aimed at the box's edge (scenes/box_blob.json, new)
+  losing no mass in bounce mode (10⁻⁶) → scope `box` gains them → Verify 1 · margin-zero (M0-T21) now red
+  on the blob case too → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py box --task M0-T39` · Pass: GO, ≥ 7 cases · Fail: NO-GO · 2.
+  `python3 tools/pb/verify.py --redarm box --task M0-T39` · Pass: GO — margin-zero NO-GO on the blob
+  case · Fail: the plant stays GO
+- Adversarial: a blob slower than the CFL bound never tests the margin — 0.35 cells per step is §5.3's
+  speed, close to the 0.4 the margin was sized for (§1.3.3).
+- Handoff: DONE. tests/gpu/box.rs has G-BOX's two cases (scope box, 8). sun_disk box vs whole world: every sum at 1e-6 of its scale at step 200 (box asserted inside the world), mass and species at 2,000. The blob is graded on its masses, then its speed. Deviation, declared: contract §0.5 [M0-T39] + Superseded line, the lead's «1e-6 at step 200 (Recommended)». Measured on the RTX 5090: gravity off, box = world bit-identical at 2,000; gravity on, FFT round-off grows 1.7e-8 → 1.4e-7 → 3.1e-6 (momentum, steps 1/200/2000). The blob's momentum leaves unbooked through the vacuum reset (§2.7 [M0-T19]). margin-zero turns the blob case red on its mass (1.00 of scale). Not filed: NaN floor_added under off-spec Σ_floor 1e-12 (probe only); testing.md's box row is the docs block's (R11). Ran on model=claude-opus-5-5 level=high (rung_record, matched). Detail: tasks/M0-T39.md. Next: the plan's next TODO.
+
+## M0-T40 · Docs — physics.md (gas flow, edges, the CPU twin) and lot 5's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T39)
+- Status: DONE (2026-10-13 13:38)
+- Carried flags: [M0-T35, 2026-10-13] edges as built (tasks/M0-T35.md): a leave face whose HLL mass flux points inward is a wall (mass, energy and species 0, momentum Π, booked as escaped); HLL's diffusion lets a little out where gas lies stagnant against a leave edge, never in; escaped is booked per boundary face (twin State::escaped, GPU booking.escaped). The edges row in testing.md is written · [M0-T36, 2026-10-13] testing.md owes the collapse row (G-COLL, scope collapse: 6 cases, ≈ 4 s warm, --redarm ≈ 84 s, plant grav-half, linux-pc RTX 5090 2026-10-13; tasks/M0-T36.md has the numbers), and the sod and edges rows now misstate P4's bindings: since M0-T36 the next state is two buffers of 7 planes (next_lo, next_hi) and hydro_update binds g at 14 (8 storage buffers: state 3, next 2, Δt record, g, eos table); hydro_edges binds g too (7) · [M0-T37, 2026-10-13] [M0-T37, 2026-10-13] the twin page owes: Twin's order (Δt_n from step n−1, P9's g from step n's P2, whole world, MAX_WORLD 128), reference::floors (P8 moved from tests/gpu/floors.rs), --cpu-reference (exit 4 above 128; --adapter, --timing, --load-dump refused with it; summary adapter cpu-reference; the dump's box record the whole world's), and testing.md's twin row (6 cases, ≈ 4.4 s warm, --redarm ≈ 13 s, plant twin-skip-floors, linux-pc RTX 5090 2026-10-13; tasks/M0-T37.md); docs/agent/running.md already lists the flag · [M0-T38, 2026-10-13] [M0-T38, 2026-10-13] testing.md's cpu-gpu row: scope cpu_gpu (R17's name), 2 cases (ref_disk leave + gravity, ref_sod bounce), ≈ 7 s warm, --redarm ≈ 23 s, plant cfl-gpu (the GPU's cfl × 0.975 in step/dt.rs), linux-pc RTX 5090 2026-10-13; X read where both Σ ≥ 1e-4 (100 × Σ_vac): unmasked, 5 rim cells at Σ ≈ 3e-6 read |ΔX| 1.06e-3 (tasks/M0-T38.md)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.7, §2.3, §2.8, §7 + the handoffs of
+  M0-T33a–M0-T39
+- Deliver: docs/agent/physics.md § Gas flow, § Edges, § The CPU twin (the driver, `--cpu-reference`,
+  G-REF's role, the overrides the oracles need) → Verify 1 · docs/agent/testing.md: rows for riemann, sod,
+  edges, collapse, twin, cpu-gpu and box's new cases → Verify 2
+- Verify: 1. `grep -cE "^## (Gas flow|Edges|The CPU twin)" docs/agent/physics.md` · Pass: 3 · Fail:
+  fewer · 2. `grep -cE "^[|] .(riemann|sod|edges|collapse|twin|cpu-gpu). [|]" docs/agent/testing.md` ·
+  Pass: 6 · Fail: fewer
+- Adversarial: the overrides that switch cold pressure off in Sod and the collapse, left out of the page,
+  read later as a bug — the page names them and why.
+- Handoff: linux-pc (laserax-ai); model=claude-sonnet-5-5 level=high (rung_record now, matched). Docs only. physics.md: § Gas flow (scheme, gravity's face kick, Δt order, GPU layout: recompute, next state 2×7 planes, 8 buffers, g at 14; the cold-pressure overrides in Sod/collapse/G-REF named with why), § Edges (inflow-is-a-wall, per-face booking, hydro_edges, why the bounce oracle is two), § The CPU twin (Twin's order, MAX_WORLD, floors, --cpu-reference refusals, G-REF's role and choices). testing.md: lot-5 table riemann, collapse, twin, cpu_gpu; sod/edges binding text fixed; box row 6→8 cases. Verify 1 [ALREADY RUN — PASS (3) on linux-pc]. Verify 2 [ALREADY RUN — FAIL as written (5, not 6) on linux-pc]: the plan's pattern spells cpu-gpu, the scope and its row are cpu_gpu (R17); with cpu_gpu the same grep reads 6 — declared default, row not misnamed; the Verify line wants cpu_gpu. Not measured: win-laptop costs (owed on Laser2025-20). Detail: tasks/M0-T40.md. Claim (verify.py --changed) is the last step. Next: M0-V5.
+
+## M0-V5 · Validation — lot 5: gas flow · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T40)
+- Status: DONE (2026-10-13 14:28)
+- Carried flags: [M0-V4, 2026-10-12] owed on linux-pc (R15; M0-V4 ran lot 4 on win-laptop only — reports/v4.md § Owed on linux-pc): M0-V3's carried list unchanged — lot 2 entire (registry, eos, strings, licences, watch_only, web's ready and no-webgpu with §6.2.3's Linux flags, each red-armed), M0-T15's web and licences (npm), M0-D13's boot (summary.json verbatim in its log), M0-D17's web with the sandbox on, lot 3 entire on the RTX 5090 (booking, floors, dt, box, latch, timing, time_control, scene, dump, each red-armed); M0-TR1a's --redarm boot, desktop, capture (game-xvfb, xvfb-run on a copied binary); M0-TR1b's web and --redarm web; lot 4's fft_twin, fft, grav_force, grav_selfforce on the RTX 5090, each red-armed; and M0-T31's Verify 2 and 3 — the TP flag's step cost on the Quadro RTX 4000 (build/target/release/sandbox-reactions headless --scene scenes/fill_world.json, then scenes/sun_disk.json, --steps 200 --timing --adapter "Quadro RTX 4000" --out <dir>; the RTX 4080 Laptop read step 1.26 / 0.257 ms, reports/v4.md § The step's cost). python3 tools/pb/verify.py --all --task <id> and --redarm --moved --task <id> there cover all but the two headless commands; else carried V to V, M0-V17 at the latest · [M0-D26, 2026-10-12] M0-D26's Verify 2 on the Quadro RTX 4000, owed on laserax-ai (§6.6): headless --scene scenes/sun_disk.json and scenes/fill_world.json --steps 200 --timing --adapter "Quadro", and the wall per step from 200 vs 2,200 steps without --timing; WGPU_VALIDATION_INDIRECT_CALL=1 with --timing gives the before per-pass costs (tasks/M0-D26.md § Owed) · [M0-T34, 2026-10-13] P4's cost on the Quadro RTX 4000, sun_disk.json, 200 steps --timing: ≈ 1.0 ms of a 1.2 ms step (warm runs 0.99–1.06; a series' first run 1.4–1.5) — P4 now dominates (the 4080 Laptop's whole step was 0.257 ms before it). hydro_update recomputes each neighbour's predictor (≈ 5× work a cell); a tiled version (12 × 12 primitives in workgroup memory, 8 KB) is the known fix — whether it is owed is G-TOP / M0-R3's budget's call (tasks/M0-T34.md § Not acted on) · [M0-D28, 2026-10-13] win-laptop owes M0-D28 (NOT RUN — owed on Laser2025-20): `verify.py desktop` with start.bat's `launch.py stop %SERVICE%` line and the decoy web server's mkdir-lock path under Git Bash, and `--redarm desktop` (plant launcher-stop-all is start.sh only) · [M0-T35, 2026-10-13] G-EDGE's bounce oracle (2 % of −v0) cannot see its own plant wall-copy: the wall flux sets the impulse, and copy ghosts leave the twin's pulse unchanged to 7 digits. The scope grades the plant through gpu_bounce_walls_are_the_twins (GPU vs the twin's mirrors, 1e-4 relative L1; the plant is in the shader only). The leave cases run an inline wind rather than edge_pulse.json (the pulse's escape is 1.2e-4 of its grid, below f32 at 1e-6). Both are declared in tasks/M0-T35.md; judge them, or the contract row's wording · [M0-T40, 2026-10-13] M0-T40's Verify 2 grep (…|cpu-gpu). [|]) reads 5, not 6: the row is `cpu_gpu` (R17), the plan's pattern spells the contract's hyphen; with cpu_gpu it reads 6. Judge the docs by cpu_gpu; the Verify line is the PLAN's to respell. Also unread by M0-T40: docs/agent/architecture.md's P4 dispatch list against hydro_edges and the 2×7 next-state buffers (lot 5 never touched it).
+- Read: milestones/m0/m0_contrat.md §1.3.3, §1.4.2, §1.7, §2.3, §2.8, §5.1 (G-SOD, G-EDGE, G-COLL,
+  G-REF), §5.3 (G-BOX) + the handoffs of M0-T33a–M0-T40 + docs/agent/physics.md + the delivered files,
+  each by the section it covers
+- Deliver: contract-vs-code on lot 5 — the scheme against §2.3.4, the edges against §2.8, the gravity
+  sources, the twin's driver, G-REF and G-BOX, each defect its own D (E4), every scope the lot added
+  red-armed, the overrides the oracles need (cold pressure off) named as the only departures from the
+  contract's scenes → reports/v5.md → Verify 1 · Phase 7's close (stubs, the header budget, the complete
+  loop and its seconds, `rung_record.py report`'s table, a moved class → a TM<n>) → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py --all --task M0-V5` · Pass: GO, every scope present · Fail:
+  NO-GO — each red a D (E4)
+- Adversarial: G-COLL green only because more was switched off than cold pressure — the V diffs the
+  scene against §5.1's description.
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=max (rung_record now at launch and on the lead's prompt — the heading's rung). Verdict DEFECTS(2), reports/v5.md: lot 5 conforms to §2.3.4 (the twin and hydro.wgsl line for line), §2.3.5, §1.4.2, §2.8 (M0-T35's inflow-face-is-a-wall reading judged conforming), §2.9, §1.3.2/§1.7/§3.3; G-SOD, G-EDGE, G-COLL, G-REF, G-BOX green on the twin and the RTX 5090, the handoffs' 32 numbers re-read, kill rate 0. Adversarial: cold_disk.json overrides exactly the four K's (asserted); with the shipped K's G-COLL reads +4.95 % / +26.8 % (red); neutrinos and sinks on change no byte. Verify 1 python3 tools/pb/verify.py --all --task M0-V5 [ALREADY RUN — PASS (GO, 750 passed, 34/34 scopes, 32.97 s raw, 29.22 s idle; no TR) on linux-pc]; the sweep, the lead's run 14:12–14:26 [ALREADY RUN — PASS (GO: 33 campaigns, 46 plants RED, 0 GREEN, 0 ERROR; box on M0-T39's proof) on linux-pc].
+  The lead: «Amend G-REF (Recommended)», «Amend G-SOD (Recommended)» → contract §0.5 [M0-V5] ×2 + Superseded mirror; «File a P4-cost block now (Recommended)» → M0-D30 (Quadro RTX 4000: P4 0.906 of a 1.083 ms Sun-sized step, 14.60 of 16.04 ms on the whole world); « make sure the D25 and 26 warnings dont appear anymore » → both stubbed here (74 lines, byte-verified). Filed: M0-TC4 (the other 15 stubs, runs next), M0-D31 (architecture.md's P2 and P4 rows), M0-D32 (rung_record.py's handoff fallback: of 46 quoting rows, 6 read wrong, 39 unknown); flags → M0-T63, M0-T48, M0-T43, M0-V6 (win-laptop owes lot 5 and M0-D28's checks).
+  Phase 7's close: header 486/600; the record moves no class (BUILD on Sonnet 5.5, high $1.68 per DONE block against (usual)'s $4.03), no TM. Carried flags: M0-T31's Verify 2–3 and M0-D26's Verify 2 on the Quadro PASS (the 200/2,200 wall method no longer isolates one box — flagged to M0-T63); lots 2–4 on linux-pc discharged by Verify 1 and the sweep. Measured, not filed (reports/v5.md § Observations): G-REF's cold-off overrides unneeded (P4's cold path graded by sod and box — a probe mutant reds both), P4's floor read unbooked ≤ Σ_floor at step 0 (source only), the blob at 0.31–0.33 cells per step, the Sun-like preset's rim reaching the leave edges, M0-T33a's missing task file, box.rs's NaN print. Deviations: the contract and Superseded written by this CHECK block on the lead's answers (Changes by asking); probes in the session's scratchpad (tasks/M0-V5.md names it). Claim python3 tools/pb/verify.py --changed --task M0-V5 [ALREADY RUN — PASS (GO, 529 passed, 3/3 scopes: plan_lint, strings, watch_only; 31 not impacted; no FLAG) on linux-pc]. Detail: tasks/M0-V5.md. Next: M0-TC4.

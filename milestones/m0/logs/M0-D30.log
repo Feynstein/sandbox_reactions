@@ -1,0 +1,37 @@
+M0-D30 log â€” opened 2026-10-13T15:39:23-04:00 on Laser2025-20
+sun_disk run 1 exit 0 SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+  step_ms_mean 2.5968729600000002 per_pass_ms {'P0 edits': 0.025314879999999998, 'P1 dt': 0.012504160000000007, 'P2 gravity': 0.20946063999999998, 'P4 hydro': 2.166064159999999, 'P8 floors': 0.06080847999999996, 'P9 reductions': 0.051880000000000044} per_dispatch None
+sun_disk run 2 exit 0 SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+  step_ms_mean 1.4967727999999996 per_pass_ms {'P0 edits': 0.013489600000000008, 'P1 dt': 0.009325120000000003, 'P2 gravity': 0.08055647999999999, 'P4 hydro': 1.2670140799999998, 'P8 floors': 0.04129359999999999, 'P9 reductions': 0.028218559999999986} per_dispatch None
+sun_disk run 3 exit 0 SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+  step_ms_mean 1.5067385599999992 per_pass_ms {'P0 edits': 0.01354255999999999, 'P1 dt': 0.009221759999999996, 'P2 gravity': 0.08390608000000002, 'P4 hydro': 1.2714841600000002, 'P8 floors': 0.041360159999999986, 'P9 reductions': 0.030632959999999997} per_dispatch None
+fill_world run 1 exit 0 SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+  step_ms_mean 22.388486239999988 per_pass_ms {'P0 edits': 0.018827199999999995, 'P1 dt': 0.015849759999999997, 'P2 gravity': 0.8774948800000008, 'P4 hydro': 21.081582079999997, 'P8 floors': 0.20797328000000004, 'P9 reductions': 0.08768767999999998} per_dispatch None
+fill_world run 2 exit 0 SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+  step_ms_mean 23.76426687999999 per_pass_ms {'P0 edits': 0.02190944, 'P1 dt': 0.015333439999999993, 'P2 gravity': 0.9376774400000003, 'P4 hydro': 22.369589759999993, 'P8 floors': 0.23229136, 'P9 reductions': 0.09778991999999993} per_dispatch None
+fill_world run 3 exit 0 SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+  step_ms_mean 23.52710928 per_pass_ms {'P0 edits': 0.013990559999999992, 'P1 dt': 0.0215024, 'P2 gravity': 0.9198054400000005, 'P4 hydro': 22.15424191999999, 'P8 floors': 0.23128288000000008, 'P9 reductions': 0.10082032000000003} per_dispatch None
+sun_disk 1 step 1.695 {'P0 edits': 0.0135, 'P1 dt': 0.0097, 'P2 gravity': 0.093, 'P4 hydro': 1.3823, 'P5 heat': 0.0094, 'P6 reactions': 0.0247, 'P8 floors': 0.0414, 'P9 reductions': 0.0312}
+sun_disk 2 step 1.6102 {'P0 edits': 0.0135, 'P1 dt': 0.0095, 'P2 gravity': 0.0896, 'P4 hydro': 1.3137, 'P5 heat': 0.0094, 'P6 reactions': 0.0176, 'P8 floors': 0.0451, 'P9 reductions': 0.0285}
+sun_disk 3 step 1.7138 {'P0 edits': 0.0136, 'P1 dt': 0.0123, 'P2 gravity': 0.0808, 'P4 hydro': 1.4133, 'P5 heat': 0.0096, 'P6 reactions': 0.0177, 'P8 floors': 0.0442, 'P9 reductions': 0.0407}
+fill_world 1 step 23.4013 {'P0 edits': 0.0151, 'P1 dt': 0.026, 'P2 gravity': 0.9178, 'P4 hydro': 21.3798, 'P5 heat': 0.5779, 'P6 reactions': 0.0676, 'P8 floors': 0.2175, 'P9 reductions': 0.0956}
+fill_world 2 step 22.6494 {'P0 edits': 0.0192, 'P1 dt': 0.0267, 'P2 gravity': 0.8772, 'P4 hydro': 20.7237, 'P5 heat': 0.5399, 'P6 reactions': 0.0624, 'P8 floors': 0.2128, 'P9 reductions': 0.1037}
+fill_world 3 step 23.0582 {'P0 edits': 0.0137, 'P1 dt': 0.0178, 'P2 gravity': 0.8713, 'P4 hydro': 21.1033, 'P5 heat': 0.5688, 'P6 reactions': 0.0663, 'P8 floors': 0.22, 'P9 reductions': 0.1028}
+sun_disk run 1 exit 0	step_ms_mean 1.5595632000000001	'P4 hydro': 1.0378918400000001
+sun_disk run 2 exit 0	step_ms_mean 0.75464384	'P4 hydro': 0.51124672
+sun_disk run 3 exit 0	step_ms_mean 0.7196292799999996	'P4 hydro': 0.49040976000000003
+fill_world run 1 exit 0	step_ms_mean 8.80448736	'P4 hydro': 7.494161440000003
+fill_world run 2 exit 0	step_ms_mean 9.030727520000001	'P4 hydro': 7.724370719999997
+fill_world run 3 exit 0	step_ms_mean 8.535721919999995	'P4 hydro': 7.247843039999998
+sun_disk 1 step 0.754 {'P0 edits': 0.0135, 'P1 dt': 0.0094, 'P2 gravity': 0.0884, 'P4 hydro': 0.4682, 'P5 heat': 0.0095, 'P6 reactions': 0.0173, 'P8 floors': 0.0415, 'P9 reductions': 0.0282}
+sun_disk 2 step 0.7437 {'P0 edits': 0.0136, 'P1 dt': 0.0093, 'P2 gravity': 0.0884, 'P4 hydro': 0.4581, 'P5 heat': 0.0095, 'P6 reactions': 0.0172, 'P8 floors': 0.0415, 'P9 reductions': 0.0283}
+sun_disk 3 step 0.7555 {'P0 edits': 0.0135, 'P1 dt': 0.012, 'P2 gravity': 0.0855, 'P4 hydro': 0.4623, 'P5 heat': 0.0094, 'P6 reactions': 0.0175, 'P8 floors': 0.0466, 'P9 reductions': 0.0307}
+fill_world 1 step 8.8143 {'P0 edits': 0.0137, 'P1 dt': 0.0175, 'P2 gravity': 0.8678, 'P4 hydro': 6.9686, 'P5 heat': 0.5087, 'P6 reactions': 0.0513, 'P8 floors': 0.2055, 'P9 reductions': 0.0884}
+fill_world 2 step 9.7281 {'P0 edits': 0.0161, 'P1 dt': 0.0228, 'P2 gravity': 0.9123, 'P4 hydro': 7.7515, 'P5 heat': 0.565, 'P6 reactions': 0.0558, 'P8 floors': 0.2077, 'P9 reductions': 0.0962}
+fill_world 3 step 9.0892 {'P0 edits': 0.0136, 'P1 dt': 0.0123, 'P2 gravity': 0.8612, 'P4 hydro': 7.2206, 'P5 heat': 0.5362, 'P6 reactions': 0.0549, 'P8 floors': 0.197, 'P9 reductions': 0.0893}
+sun_disk (RTX 4080 Laptop, before vs after)
+  step 200 vs 200, sim_time 3.590745114721358 vs 3.590745232999325, identical planes: False
+  sigma max|d| 1.05e-05 relL1 3.54e-07 · mom_x max|d| 0.000123 · mom_y max|d| 0.000119 · energy max|d| 0.00366 relL1 4.69e-07 · x_H max|d| 9.54e-06 gas-max 4.77e-07 · x_He max|d| 9.01e-06 gas-max 5.07e-07 · x_C max|d| 3.33e-07 gas-max 2.33e-08 · x_O max|d| 2.8e-07 gas-max 1.86e-08 · x_Ne max|d| 0 gas-max 0 · x_Mg max|d| 0 gas-max 0 · x_Si max|d| 0 gas-max 0 · x_S max|d| 0 gas-max 0 · x_Fe max|d| 0 gas-max 0 · x_n max|d| 0 gas-max 0
+fill_world (RTX 4080 Laptop, before vs after)
+  step 200 vs 200, sim_time 13.39829558506608 vs 13.398295424878597, identical planes: False
+  sigma max|d| 7.45e-09 relL1 1.15e-07 · mom_x max|d| 6.98e-09 · mom_y max|d| 7.92e-09 · energy max|d| 2.61e-08 relL1 1.07e-07 · x_H max|d| 7.75e-07 gas-max 7.75e-07 · x_He max|d| 7.9e-07 gas-max 7.9e-07 · x_C max|d| 3.26e-08 gas-max 3.26e-08 · x_O max|d| 2.42e-08 gas-max 2.42e-08 · x_Ne max|d| 0 gas-max 0 · x_Mg max|d| 0 gas-max 0 · x_Si max|d| 0 gas-max 0 · x_S max|d| 0 gas-max 0 · x_Fe max|d| 0 gas-max 0 · x_n max|d| 0 gas-max 0

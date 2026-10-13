@@ -6,8 +6,10 @@
 // central limiter on the primitives (Σ, u, v, Π, X_i), the species slopes sharing one limiter factor so ΣX_i = 1 holds;
 // the Hancock predictor advances a cell's four face states by half a step with both axes' flux differences; HLL fluxes
 // with Davis speeds (c² = 2Π/Σ) join the predicted states across each face, the species riding the mass flux's upwind
-// side. A cell reads the faces of its four neighbours from their own predictors, recomputed here: no face state is
-// stored, so the dispatch needs no scratch beyond the next state. The update writes the next state, never the state it
+// side. One workgroup per 8 × 8 tile (M0-D30): the tile's 12 × 12 primitives are read once into workgroup memory, each
+// predictor runs once — the tile's 64 and the 32 of the ring around it whose faces the tile's faces need — and the
+// predicted faces cross between invocations through the same memory, one axis at a time; no face state is stored in a
+// buffer, so the dispatch needs no scratch beyond the next state. The update writes the next state, never the state it
 // reads — a neighbour's predictor must see the cells as the step found them — and `hydro_commit` copies it back.
 //
 // Edges (§2.8), the mode a uniform `set_edge_mode` writes between submissions (M0-T35). *bounce*: a cell outside the
@@ -310,11 +312,20 @@ fn kicked(delta: array<f32, 14>, p: Prim, g: vec2<f32>, half: f32) -> array<f32,
     return d;
 }
 
-// The predictor of the cell at (x, y): its four face states, [x−, x+, y−, y+], and its centre half a step on.
-fn cell_faces(x: i32, y: i32, half: f32) -> Predicted {
-    let c = read_at(x, y);
-    let sx = slope(read_at(x - 1, y), c, read_at(x + 1, y));
-    let sy = slope(read_at(x, y - 1), c, read_at(x, y + 1));
+// A cell's Hancock step: its four unevolved face states, [x−, x+, y−, y+], their conserved vectors, the flux delta,
+// its centre's (Σ, Σu, Σv) half a step on and its g.
+struct Hancock {
+    w: array<Prim, 4>,
+    u: array<array<f32, 14>, 4>,
+    delta: array<f32, 14>,
+    mid: vec3<f32>,
+    g: vec2<f32>,
+}
+
+// The Hancock step of the cell at (x, y) from its primitives `c` and its neighbours' on x (`xl`, `xr`) and y (`yl`, `yr`).
+fn hancock(c: Prim, xl: Prim, xr: Prim, yl: Prim, yr: Prim, x: i32, y: i32, half: f32) -> Hancock {
+    let sx = slope(xl, c, xr);
+    let sy = slope(yl, c, yr);
     let w = array<Prim, 4>(offset(c, sx, -0.5), offset(c, sx, 0.5), offset(c, sy, -0.5), offset(c, sy, 0.5));
     let u = array<array<f32, 14>, 4>(cons(w[0]), cons(w[1]), cons(w[2]), cons(w[3]));
     let fxl = flux(w[0], u[0][3], 0u);
@@ -326,18 +337,37 @@ fn cell_faces(x: i32, y: i32, half: f32) -> Predicted {
         delta[k] = half * ((fxl[k] - fxr[k]) + (fyl[k] - fyr[k]));
     }
     var mid = vec3<f32>(c.sigma + delta[0], c.sigma * c.u + delta[1], c.sigma * c.v + delta[2]);
-    if (edges.gravity == 0u) {
-        let faces = array<Face, 4>(evolved(w[0], u[0], delta), evolved(w[1], u[1], delta), evolved(w[2], u[2], delta),
-            evolved(w[3], u[3], delta));
-        return Predicted(faces, mid);
+    var g = vec2<f32>(0.0, 0.0);
+    if (edges.gravity != 0u) {
+        g = accel_at(x, y);
+        mid.y += half * c.sigma * g.x;
+        mid.z += half * c.sigma * g.y;
     }
-    let g = accel_at(x, y);
-    mid.y += half * c.sigma * g.x;
-    mid.z += half * c.sigma * g.y;
-    let faces = array<Face, 4>(evolved(w[0], u[0], kicked(delta, w[0], g, half)),
-        evolved(w[1], u[1], kicked(delta, w[1], g, half)), evolved(w[2], u[2], kicked(delta, w[2], g, half)),
-        evolved(w[3], u[3], kicked(delta, w[3], g, half)));
-    return Predicted(faces, mid);
+    return Hancock(w, u, delta, mid, g);
+}
+
+// The predicted face state from face `w` (conserved `u0`) of a Hancock step: advanced by its `delta`, kicked by its g
+// when the step runs P2.
+fn face_state(w: Prim, u0: array<f32, 14>, delta: array<f32, 14>, g: vec2<f32>, half: f32) -> Face {
+    if (edges.gravity == 0u) {
+        return evolved(w, u0, delta);
+    }
+    return evolved(w, u0, kicked(delta, w, g, half));
+}
+
+// A Hancock step's four predicted face states and its centre half a step on.
+fn predict(h: Hancock, half: f32) -> Predicted {
+    let faces = array<Face, 4>(face_state(h.w[0], h.u[0], h.delta, h.g, half),
+        face_state(h.w[1], h.u[1], h.delta, h.g, half), face_state(h.w[2], h.u[2], h.delta, h.g, half),
+        face_state(h.w[3], h.u[3], h.delta, h.g, half));
+    return Predicted(faces, h.mid);
+}
+
+// The predictor of the cell at (x, y), read from the state: its four face states, [x−, x+, y−, y+], and its centre half
+// a step on (`hydro_edges`; `hydro_update` reads its tile's primitives instead).
+fn cell_faces(x: i32, y: i32, half: f32) -> Predicted {
+    let c = read_at(x, y);
+    return predict(hancock(c, read_at(x - 1, y), read_at(x + 1, y), read_at(x, y - 1), read_at(x, y + 1), x, y, half), half);
 }
 
 // The HLL flux across a face normal to `dir` between `l` and `r` (Davis speeds), species by the mass flux's upwind side.
@@ -386,6 +416,29 @@ fn wall(face: Face, dir: u32) -> array<f32, 14> {
 // predicted face of the ghost beyond it, clamped to outflow — a face whose mass flux points into the world is a wall,
 // so inflow is exactly 0 and nothing else enters with it.
 fn boundary(x: i32, y: i32, side: u32, own: Face, half: f32) -> array<f32, 14> {
+    if (edges.leave == 0u) {
+        return wall(own, side / 2u);
+    }
+    var ghost: Face;
+    switch side {
+        case 0u: {
+            ghost = cell_faces(x - 1, y, half).faces[1];
+        }
+        case 1u: {
+            ghost = cell_faces(x + 1, y, half).faces[0];
+        }
+        case 2u: {
+            ghost = cell_faces(x, y - 1, half).faces[3];
+        }
+        default: {
+            ghost = cell_faces(x, y + 1, half).faces[2];
+        }
+    }
+    return edge_flux(side, own, ghost);
+}
+
+// `boundary`'s flux from the ghost's facing predicted face `ghost`, already in hand (`hydro_update`'s tile).
+fn edge_flux(side: u32, own: Face, ghost: Face) -> array<f32, 14> {
     let dir = side / 2u;
     if (edges.leave == 0u) {
         return wall(own, dir);
@@ -393,16 +446,16 @@ fn boundary(x: i32, y: i32, side: u32, own: Face, half: f32) -> array<f32, 14> {
     var f: array<f32, 14>;
     switch side {
         case 0u: {
-            f = hll(cell_faces(x - 1, y, half).faces[1], own, 0u);
+            f = hll(ghost, own, 0u);
         }
         case 1u: {
-            f = hll(own, cell_faces(x + 1, y, half).faces[0], 0u);
+            f = hll(own, ghost, 0u);
         }
         case 2u: {
-            f = hll(cell_faces(x, y - 1, half).faces[3], own, 1u);
+            f = hll(ghost, own, 1u);
         }
         default: {
-            f = hll(own, cell_faces(x, y + 1, half).faces[2], 1u);
+            f = hll(own, ghost, 1u);
         }
     }
     let high = (side & 1u) == 1u;
@@ -459,52 +512,219 @@ fn keep(cell: u32) {
     }
 }
 
-@compute @workgroup_size(8, 8)
-fn hydro_update(@builtin(global_invocation_id) id: vec3<u32>) {
-    if (id.x >= abox.w || id.y >= abox.h) {
-        return;
+// `hydro_update`'s tile (M0-D30): its 8 × 8 cells, the ring of 32 around them whose predicted faces the tile's faces
+// need (the ring's corners left out), and the ring beyond, which those predictors read — 12 × 12 primitives, slot
+// (b + 2) · SPAN + a + 2 for the tile's own coordinates (a, b) in −2 … 9.
+const TILE: u32 = 8u;
+const SPAN: u32 = 12u;
+const PRIM_SLOTS: u32 = 144u;
+// One axis's faces: the + face of the cells at −1 … 6 along it (slot (a + 1) · 8 + b), then the − face of those at 1 … 8
+// (slot 64 + (a − 1) · 8 + b), b the coordinate across.
+const FACE_SLOTS: u32 = 128u;
+// Workgroup memory, component-major: the primitives (144 slots × 14 words), then the same words reused for one axis's
+// faces at a time (128 slots × 18 words: the primitives' 14, then Σ, Σu, Σv, E) — 9,216 B of §6.2.2's 16,384.
+var<workgroup> tile: array<f32, 2304>;
+// Whether any cell of the tile moves (`hydro_update`): the invocations' votes, then the one value all of them read.
+var<workgroup> votes: atomic<u32>;
+var<workgroup> moving: u32;
+
+fn put_prim(s: u32, p: Prim) {
+    tile[s] = p.sigma;
+    tile[PRIM_SLOTS + s] = p.u;
+    tile[2u * PRIM_SLOTS + s] = p.v;
+    tile[3u * PRIM_SLOTS + s] = p.pi;
+    for (var i = 0u; i < N_SPECIES; i++) {
+        tile[(4u + i) * PRIM_SLOTS + s] = p.x[i];
     }
-    let x = i32(abox.x0 + id.x);
-    let y = i32(abox.y0 + id.y);
+}
+
+fn get_prim(s: u32) -> Prim {
+    var x: array<f32, 10>;
+    for (var i = 0u; i < N_SPECIES; i++) {
+        x[i] = tile[(4u + i) * PRIM_SLOTS + s];
+    }
+    return Prim(tile[s], tile[PRIM_SLOTS + s], tile[2u * PRIM_SLOTS + s], tile[3u * PRIM_SLOTS + s], x);
+}
+
+fn put_face(s: u32, f: Face) {
+    tile[s] = f.p.sigma;
+    tile[FACE_SLOTS + s] = f.p.u;
+    tile[2u * FACE_SLOTS + s] = f.p.v;
+    tile[3u * FACE_SLOTS + s] = f.p.pi;
+    for (var i = 0u; i < N_SPECIES; i++) {
+        tile[(4u + i) * FACE_SLOTS + s] = f.p.x[i];
+    }
+    for (var k = 0u; k < 4u; k++) {
+        tile[(14u + k) * FACE_SLOTS + s] = f.q[k];
+    }
+}
+
+fn get_face(s: u32) -> Face {
+    var x: array<f32, 10>;
+    for (var i = 0u; i < N_SPECIES; i++) {
+        x[i] = tile[(4u + i) * FACE_SLOTS + s];
+    }
+    let p = Prim(tile[s], tile[FACE_SLOTS + s], tile[2u * FACE_SLOTS + s], tile[3u * FACE_SLOTS + s], x);
+    let q = vec4<f32>(tile[14u * FACE_SLOTS + s], tile[15u * FACE_SLOTS + s], tile[16u * FACE_SLOTS + s],
+        tile[17u * FACE_SLOTS + s]);
+    return Face(p, q);
+}
+
+// The Hancock step of the tile's cell (a, b), from the tile's primitives; (x0, y0) is the tile's first cell.
+fn tile_hancock(a: i32, b: i32, x0: i32, y0: i32, half: f32) -> Hancock {
+    let s = u32((b + 2) * i32(SPAN) + a + 2);
+    return hancock(get_prim(s), get_prim(s - 1u), get_prim(s + 1u), get_prim(s - SPAN), get_prim(s + SPAN), x0 + a, y0 + b,
+        half);
+}
+
+// One workgroup per 8 × 8 tile of the box; every barrier is reached by all 64 invocations, those past the box's edge
+// included — their cells' predictors are their neighbours' faces.
+@compute @workgroup_size(8, 8)
+fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_invocation_index) li: u32,
+    @builtin(workgroup_id) wid: vec3<u32>) {
+    let x0 = i32(abox.x0 + TILE * wid.x);
+    let y0 = i32(abox.y0 + TILE * wid.y);
+    let a = i32(lid.x);
+    let b = i32(lid.y);
+    let x = x0 + a;
+    let y = y0 + b;
+    let inside = TILE * wid.x + lid.x < abox.w && TILE * wid.y + lid.y < abox.h;
     let cell = u32(y) * dims.width + u32(x);
     let n = dims.cells;
-    let empty_here = vacuum_at(x, y);
-    if (left_empty(x, y)) {
-        keep(cell);
+    // A cell outside the box is not written; one left empty is copied; a tile none of whose cells moves stops here.
+    let moves = inside && !left_empty(x, y);
+    if (moves) {
+        atomicOr(&votes, 1u);
+    }
+    workgroupBarrier();
+    if (li == 0u) {
+        moving = atomicLoad(&votes);
+    }
+    if (workgroupUniformLoad(&moving) == 0u) {
+        if (inside) {
+            keep(cell);
+        }
         return;
     }
 
+    // The primitives, each read once (`read_at`: ghosts beyond the world); the four 2 × 2 corners but their inner
+    // cells are read by no predictor.
+    for (var s = li; s < PRIM_SLOTS; s += TILE * TILE) {
+        let sa = s % SPAN;
+        let sb = s / SPAN;
+        let corner = (sa < 2u || sa >= SPAN - 2u) && (sb < 2u || sb >= SPAN - 2u);
+        let inner = (sa == 1u || sa == SPAN - 2u) && (sb == 1u || sb == SPAN - 2u);
+        if (!corner || inner) {
+            put_prim(s, read_at(x0 - 2 + i32(sa), y0 - 2 + i32(sb)));
+        }
+    }
+    workgroupBarrier();
+
     let dt = dt_rec[0];
     let half = 0.5 * dt;
-    let pred = cell_faces(x, y, half);
+    // The ring's predictors, invocations 0 … 31, each keeping the one face the tile needs: column −1's x+ (0 … 7),
+    // column 8's x− (8 … 15), row −1's y+ (16 … 23), row 8's y− (24 … 31). The face is chosen before it is evolved, so
+    // the four groups run one `evolved`.
+    var ring: Face;
+    if (li < 32u) {
+        let k = i32(li % TILE);
+        let side = li / TILE;
+        var ra = k;
+        var rb = k;
+        if (side == 0u) {
+            ra = -1;
+        } else if (side == 1u) {
+            ra = i32(TILE);
+        } else if (side == 2u) {
+            rb = -1;
+        } else {
+            rb = i32(TILE);
+        }
+        let h = tile_hancock(ra, rb, x0, y0, half);
+        var w = h.w[1];
+        var u0 = h.u[1];
+        if (side == 1u) {
+            w = h.w[0];
+            u0 = h.u[0];
+        } else if (side == 2u) {
+            w = h.w[3];
+            u0 = h.u[3];
+        } else if (side == 3u) {
+            w = h.w[2];
+            u0 = h.u[2];
+        }
+        ring = face_state(w, u0, h.delta, h.g, half);
+    }
+    let pred = predict(tile_hancock(a, b, x0, y0, half), half);
     let own = pred.faces;
+    workgroupBarrier();
+
     let last_x = i32(dims.width) - 1;
     let last_y = i32(dims.height) - 1;
-    // Face fluxes, each between the cell before it on its axis and the cell after: x−, x+, y−, y+.
+    // Face fluxes, each between the cell before it on its axis and the cell after: x−, x+, y−, y+ — the x faces through
+    // the tile's memory, then the y faces.
     var fxl: array<f32, 14>;
     var fxr: array<f32, 14>;
     var fyl: array<f32, 14>;
     var fyr: array<f32, 14>;
-    if (x == 0) {
-        fxl = boundary(x, y, 0u, own[0], half);
-    } else {
-        fxl = hll(cell_faces(x - 1, y, half).faces[1], own[0], 0u);
+    if (a < i32(TILE) - 1) {
+        put_face(u32(a + 1) * TILE + lid.y, own[1]);
     }
-    if (x == last_x) {
-        fxr = boundary(x, y, 1u, own[1], half);
-    } else {
-        fxr = hll(own[1], cell_faces(x + 1, y, half).faces[0], 0u);
+    if (a > 0) {
+        put_face(64u + u32(a - 1) * TILE + lid.y, own[0]);
     }
+    if (li < TILE) {
+        put_face(li, ring);
+    } else if (li < 2u * TILE) {
+        put_face(64u + (TILE - 1u) * TILE + li - TILE, ring);
+    }
+    workgroupBarrier();
+    if (moves) {
+        let before = get_face(lid.x * TILE + lid.y);
+        let after = get_face(64u + lid.x * TILE + lid.y);
+        if (x == 0) {
+            fxl = edge_flux(0u, own[0], before);
+        } else {
+            fxl = hll(before, own[0], 0u);
+        }
+        if (x == last_x) {
+            fxr = edge_flux(1u, own[1], after);
+        } else {
+            fxr = hll(own[1], after, 0u);
+        }
+    }
+    workgroupBarrier();
+    if (b < i32(TILE) - 1) {
+        put_face(u32(b + 1) * TILE + lid.x, own[3]);
+    }
+    if (b > 0) {
+        put_face(64u + u32(b - 1) * TILE + lid.x, own[2]);
+    }
+    if (li >= 2u * TILE && li < 3u * TILE) {
+        put_face(li - 2u * TILE, ring);
+    } else if (li >= 3u * TILE && li < 4u * TILE) {
+        put_face(64u + (TILE - 1u) * TILE + li - 3u * TILE, ring);
+    }
+    workgroupBarrier();
+    if (!moves) {
+        if (inside) {
+            keep(cell);
+        }
+        return;
+    }
+    let below = get_face(lid.y * TILE + lid.x);
+    let above = get_face(64u + lid.y * TILE + lid.x);
     if (y == 0) {
-        fyl = boundary(x, y, 2u, own[2], half);
+        fyl = edge_flux(2u, own[2], below);
     } else {
-        fyl = hll(cell_faces(x, y - 1, half).faces[3], own[2], 1u);
+        fyl = hll(below, own[2], 1u);
     }
     if (y == last_y) {
-        fyr = boundary(x, y, 3u, own[3], half);
+        fyr = edge_flux(3u, own[3], above);
     } else {
-        fyr = hll(own[3], cell_faces(x, y + 1, half).faces[2], 1u);
+        fyr = hll(own[3], above, 1u);
     }
+    let empty_here = vacuum_at(x, y);
 
     // The stored vector where there is gas (bit for bit what the planes hold), the floor state's below Σ_vac.
     var u: array<f32, 14>;
