@@ -1,0 +1,10 @@
+{"version": 1,
+ "world": {"width": 256, "height": 64, "edge": "bounce"},
+ "slowdown": false,
+ "switches": {"gravity": false, "hydro": true, "heat": false, "reactions": false, "neutrinos": false, "sinks": false},
+ "objects": [
+   {"kind": "rect", "x0": 0, "y0": 0, "w": 64, "h": 64, "sigma": 1.0, "pressure": 1.0, "composition": {"H": 1.0}, "v": [0, 0]},
+   {"kind": "rect", "x0": 64, "y0": 0, "w": 32, "h": 64, "sigma": 1.0014142136, "pressure": 1.0028284271, "composition": {"H": 1.0}, "v": [0.002, 0]},
+   {"kind": "rect", "x0": 96, "y0": 0, "w": 160, "h": 64, "sigma": 1.0, "pressure": 1.0, "composition": {"H": 1.0}, "v": [0, 0]}
+ ],
+ "overrides": {"k1e": 0, "k2e": 0, "k1n": 0, "k2n": 0}}

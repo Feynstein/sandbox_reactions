@@ -161,7 +161,7 @@
     },
     "fft_twin": {
       "desc": "the CPU twin's FFT and convolution, no GPU (contract §1.3.3, §1.4.2, §2.5.4): the radix-2 f64 FFT against a direct DFT on sizes 1…128 (1e-12 relative) and a delta and a plane wave exactly, inverse(forward) = identity at 32…2048 and in 2D, the 2D transform against the direct 2D DFT, Parseval at 16 × 8 and at 2048, the zero-padded convolution against direct summation on a 48 × 40 box with a kernel asymmetric in both axes (1e-10 relative, the box's edge cells checked rim by rim), mass in the four corners not wrapping, a single source reproducing the shifted kernel, the kernel's transform cached per padded size (sampled once for 48 × 40 and 50 × 41), padded sizes 32…2048 by the smallest power of two ≥ 2 × the axis and the refusals (M0-T28)",
-      "cmd": "bash tests/cpu.sh sr-physics reference",
+      "cmd": "bash tests/cpu.sh sr-physics reference::fft",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 10,
@@ -182,6 +182,88 @@
         {
           "id": "fft-twiddle-sign",
           "patch": "tests/plants/fft-twiddle-sign.patch"
+        }
+      ]
+    },
+    "riemann": {
+      "desc": "the exact Riemann solution for an ideal γ = 2 gas, no GPU (contract §2.3.1, G-SOD §5.1, SM-O5, R8): the star-region pressure against an independent bisection on a pressure function written through the Rankine–Hugoniot mass flux and the Riemann invariant (1e-10 relative, seven wave pairs — Sod's, two rarefactions, two shocks, a strong shock, the mirrored Sod, a moving contact, a collision), Sod's pattern (left rarefaction, right shock) ordered, the Rankine–Hugoniot jumps of mass, momentum and energy across every shock and the isentrope and Riemann invariant across every fan and along Sod's fan (1e-10; the fan is the characteristic ξ = u − c), the contact continuous in p and u, the mirrored states giving the mirrored solution on a ξ grid, mass, momentum and energy conserved by Simpson between the wave positions (1e-8), the initial states far from the waves, and the refusals (a bad state, a vacuum) (M0-T33a); the oracle M0-T33b's twin case and M0-T34's GPU case read",
+      "cmd": "bash tests/cpu.sh sr-physics reference::riemann",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 8,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/src/reference/**",
+        "crates/sr-physics/src/lib.rs",
+        "crates/sr-physics/Cargo.toml",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/riemann-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "riemann-gamma",
+          "patch": "tests/plants/riemann-gamma.patch"
+        }
+      ]
+    },
+    "sod": {
+      "desc": "gas flow on the CPU twin and on the GPU's P4 (contract §2.3.4, §2.8's bounce, §5.1's G-SOD, SM-O5, R8): sr_physics::reference::hydro — unsplit MUSCL-Hancock with the monotonised-central limiter on (Σ, u, v, Π, X_i), HLL with Davis speeds, species by the mass flux, the full EOS, two bounce ghosts a side — on Sod's tube cut from scenes/sod.json (a 400 × 64 world, §2.8's floor; ρ 1 | 0.125, P 1 | 0.1, at rest, cold pressure off by `overrides`; the twin's strip is its first four rows, 400 × 4) read at t = 80 against M0-T33a's exact Riemann solution: the shock within 1 cell (measured 0.34, from the density's halfway crossing) and the L1 density error ≤ 2 % (measured 0.32 %, against the exact density averaged over each cell); the scene file itself (Σ, Π, at rest, hydrogen, bounce, cold off, only hydro on); mass and energy conserved to 1e-12 and the x momentum the walls' pressure gives, (P_L − P_R)·t·rows, to 1e-10; the 64-row scene world's every row the strip's (1e-13), the tube mirrored in x giving the mirrored run and a strip laid along y (4 × 400) the x run, both within 1e-12 (the y fluxes graded); hydrogen | helium with the same Σ and Π leaving Σ, momenta and E as the pure-hydrogen run's (1e-12), ΣX_i = 1 (1e-12), X_H within [0, 1] and its half crossing within 2 cells of u*·t; with the shipped cold pressure on (electron share of Π over 20 %), Σ finite and positive, mass and energy to 1e-12 and the walls' momentum to 1e-10 (M0-T33b); the GPU's P4 (step/hydro.rs, shaders/hydro.wgsl, its update and commit over the box) on the physics adapter, the scene's 400 × 64 world to the first step at t ≥ 80, graded at that time: the shock within 1 cell and the L1 density error ≤ 2 % on every row (measured 0.335 cell, 0.319 %, RTX 5090), every row within 1e-5 of row 0 and |v| ≤ 1e-5 (a y-flux defect), mass and energy to 1e-5 relative and the walls' momentum to 1e-4, the tube laid along y (64 × 400) the x run step for step within 1e-5 (the adversarial case), the shipped cold pressure on to t = 20 finite, positive, conserving — f32 tolerances fixed before the first GPU run (M0-T34); hll-swap plants the left state in the twin's and the shader's HLL",
+      "cmd": "bash tests/gpu.sh sod physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 15,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "scenes/sod.json",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/hll-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "hll-swap",
+          "patch": "tests/plants/hll-swap.patch"
+        }
+      ]
+    },
+    "edges": {
+      "desc": "G-EDGE, both edges (contract §2.8, §2.9's escaped, §5.1, R8): on the CPU twin (sr_physics::reference::hydro, Edge::Leave — ghosts copying the edge cell with the normal velocity clamped outward, HLL against the ghost's predicted face, a face whose mass flux points inward made a wall, escaped booked per boundary face from that flux) and on the GPU's P4 (shaders/hydro.wgsl: leave ghosts in read_at, `boundary`, `hydro_edges` booking booking.escaped; step/hydro.rs's edge uniform, Step::set_edge_mode) on the physics adapter. Bounce: scenes/edge_pulse.json, a right-going acoustic pulse (v0 = 0.002, Mach 1.4e-3) in a 256 × 64 world at rest, read at t = 200 — the pulse's mass-weighted normal velocity within 2 % of −v0 (measured 0.001 % twin, 0.020 % GPU), the walls' mass flux 0 (mass 2e-16 twin, 1.5e-7 GPU) and nothing booked; the GPU's bounce against the twin's mirror ghosts on a Mach-0.5 wind against two walls to t = 20, Σ, Σu, Σv, E within 1e-4 relative L1 (measured ≤ 1.0e-6) — the pulse oracle cannot see the ghosts (copy in place of mirror moves it by < 1e-6), this case can (the twin moves 2.6e-4 … 2.6e-3). Leave: the wind (128 × 64 at (0.6, 0.4), a helium block riding it) to t = 40, 39.6 % of the mass out — the grid's mass loss equal to escaped to 1e-6 of escaped (measured 1.2e-15 twin, 2.7e-8 GPU; the twin every component to 1e-12), inflow exactly 0 (no face's booked mass ever falls in a step: the twin every step, the GPU's booking read every step), the GPU's escaped within G-REF's 1e-3 of the twin's (≤ 8e-8); set_edge_mode between two submissions — bounce 64 steps then leave 64 — bit for bit a leave run started at step 64; a world that names no edge leaves (D1) (M0-T35). wall-copy plants copy ghosts in the shader's bounce",
+      "cmd": "bash tests/gpu.sh edges physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 7,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "scenes/edge_pulse.json",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/wall-copy.patch"
+      ],
+      "plants": [
+        {
+          "id": "wall-copy",
+          "patch": "tests/plants/wall-copy.patch"
         }
       ]
     },
@@ -664,6 +746,10 @@
         {
           "id": "launcher-no-stop",
           "patch": "tests/plants/launcher-no-stop.patch"
+        },
+        {
+          "id": "launcher-stop-all",
+          "patch": "tests/plants/launcher-stop-all.patch"
         }
       ]
     },

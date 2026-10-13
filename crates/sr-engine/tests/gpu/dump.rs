@@ -13,11 +13,12 @@
 use super::device;
 use sr_engine::dump::{dump_state, load_dump, Dump, Resume};
 use sr_engine::gpu::Gpu;
-use sr_engine::state::{Booking, State, WorldConfig, N_CHANNELS};
-use sr_engine::step::boxfit::BoxReport;
+use sr_engine::scene::EdgeMode;
+use sr_engine::state::{Booking, SideFields, State, WorldConfig, N_CHANNELS};
+use sr_engine::step::boxfit::{BoxMode, BoxReport};
 use sr_engine::step::dt::DtReport;
 use sr_engine::step::latch::{FramePlan, FrameReport};
-use sr_engine::step::{EosGpu, Step};
+use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::registry::{Elements, Physics};
 
 /// §2.2's channels, written out from the contract (not from `state::CHANNELS`).
@@ -78,6 +79,18 @@ impl Run {
         let booking = Booking::new(&gpu.device, world).unwrap();
         let eos = EosGpu::new(&gpu.device, &c.physics, &c.elements);
         let step = Step::new(&gpu.device, &state, &booking, &eos, &c.physics);
+        Run { state, step }
+    }
+
+    /// The step headless builds for a scene with every switch on (P2, and P4 since M0-T34) on `edge`.
+    fn as_headless(gpu: &Gpu, c: &Constants, (world, planes): (WorldConfig, Vec<f32>), edge: EdgeMode) -> Run {
+        let state = State::new(&gpu.device, world).unwrap();
+        state.upload(&gpu.queue, &planes).unwrap();
+        let booking = Booking::new(&gpu.device, world).unwrap();
+        let eos = EosGpu::new(&gpu.device, &c.physics, &c.elements);
+        let side = SideFields::new(&gpu.device, world).unwrap();
+        let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(edge) };
+        let step = Step::with_passes(&gpu.device, &state, &booking, &eos, &c.physics, &passes).unwrap();
         Run { state, step }
     }
 
@@ -376,7 +389,7 @@ fn a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump() {
     let scene = sr_engine::scene::Scene::preset("sun", world).unwrap();
     let c = Constants { physics: scene.physics().unwrap(), elements: Elements::shipped().unwrap() };
     let (planes, _) = scene.planes(world, &c.physics, &c.elements).unwrap();
-    let twin = Run::new(&gpu, &c, (world, planes));
+    let twin = Run::as_headless(&gpu, &c, (world, planes), scene.edge);
     let dts: Vec<f32> = (0..100)
         .map(|_| {
             twin.step.run(&gpu.device, &gpu.queue, 1);

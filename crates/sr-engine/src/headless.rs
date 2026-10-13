@@ -2,8 +2,8 @@
 //! run summary (§2.12.2). Today: `--scene` reads a scene file or `preset:<name>` through [`crate::scene`] (M0-T25; every
 //! preset is the nominal Sun-like disk until M0-T74), `--world` and `--edge` stand over the scene's `world`, `--steps N`
 //! runs [`Step`] N times and `--timing` adds the steps' cost (M0-T23); `--until`, the ledger, events and objects arrive
-//! with their blocks. Of the scene's switches, `gravity` turns P2 on (M0-T31); the edge mode and the other switches are
-//! recorded, not yet applied (no pass reads them).
+//! with their blocks. Of the scene's switches, `gravity` turns P2 on (M0-T31) and `hydro` P4 (M0-T34) under the run's edge
+//! mode (M0-T35); the other switches are recorded, not yet applied (no pass reads them).
 //!
 //! State dumps (§2.12.3, [`crate::dump`], M0-T26): with `--out`, DIR/dumps/s_<step>.bin at the end of every run, and with
 //! `--dump-every N` at every step index that N divides — the index counts from the scene, so a resumed run's dumps fall
@@ -29,7 +29,7 @@ use crate::gpu::Gpu;
 use crate::scene::{EdgeMode, Scene};
 use crate::state::{Booking, SideFields, State, WorldConfig};
 use crate::step::boxfit::BoxMode;
-use crate::step::{CostSource, EosGpu, Pass, Step, StepCost, Timing};
+use crate::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
 
 pub const EXIT_DONE: i32 = 0;
 pub const EXIT_UNMET: i32 = 2;
@@ -259,16 +259,14 @@ pub fn run(args: &[String]) -> i32 {
     let booking = Booking::new(&gpu.device, world).expect("the state's world is valid");
     let eos = EosGpu::new(&gpu.device, &physics, &elements);
     let side = SideFields::new(&gpu.device, world).expect("the state's world is valid");
-    let step = if switches.gravity {
-        match Step::with_gravity(&gpu.device, &state, &booking, &eos, &physics, BoxMode::Fit, &side) {
-            Ok(s) => s,
-            Err(e) => {
-                say(&format!("SR-ERROR bad arguments: gravity over a {}x{} world: {e}", world.width, world.height));
-                return EXIT_ARGS;
-            }
+    let passes =
+        Passes { mode: BoxMode::Fit, gravity: switches.gravity.then_some(&side), hydro: switches.hydro.then_some(edge) };
+    let step = match Step::with_passes(&gpu.device, &state, &booking, &eos, &physics, &passes) {
+        Ok(s) => s,
+        Err(e) => {
+            say(&format!("SR-ERROR bad arguments: gravity over a {}x{} world: {e}", world.width, world.height));
+            return EXIT_ARGS;
         }
-    } else {
-        Step::new(&gpu.device, &state, &booking, &eos, &physics)
     };
     let first = match &dump {
         Some(d) => {

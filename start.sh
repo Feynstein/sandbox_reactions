@@ -7,4 +7,4 @@ asked=""; [ "$service" = "game" ] && asked="--asked"   # the double-click is the
 python3 tools/pb/launch.py start "$service" --task launcher $asked
 echo "Sandbox Reactions is running. Press Enter to close it."
 read -r _
-python3 tools/pb/launch.py stop --task launcher
+python3 tools/pb/launch.py stop "$service" --task launcher   # its own service only: a bare stop takes every service on the box (M0-D28)

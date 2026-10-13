@@ -1,0 +1,12 @@
+== 2026-10-13T09:49:03-04:00 web[overlap] · task M0-D28-pre3 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[overlap] · exit=1 · 1.34 s
+web: ready on port 47812, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D28-pre3-overlap.launch.web.log)
+services: 1, ready: 1
+overlap: a sibling's `launch.py stop --task M0-D28-pre3-overlap` ran between the start and the smoke
+web smoke no-webgpu: /usr/bin/google-chrome (155.0.8059.39) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+=== NO-GO: no-webgpu: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:47812/?no-webgpu=1
+Call log:
+  - navigating to "http://127.0.0.1:47812/?no-webgpu=1", waiting until "domcontentloaded"
+ ===
+

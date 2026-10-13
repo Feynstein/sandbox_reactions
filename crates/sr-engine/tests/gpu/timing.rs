@@ -12,10 +12,11 @@
 use super::device;
 use sr_engine::gpu::Gpu;
 use sr_engine::headless::sun_disk_planes;
+use sr_engine::scene::EdgeMode;
 use sr_engine::state::{Booking, SideFields, State, WorldConfig};
 use sr_engine::step::boxfit::BoxMode;
 use sr_engine::step::latch::{FramePlan, FrameReport};
-use sr_engine::step::{CostSource, EosGpu, Pass, Step, StepCost, Timing};
+use sr_engine::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
 use sr_physics::registry::{Elements, Physics};
 
 /// The block's tolerance: the passes' sum within 40 % of the step's cost.
@@ -30,7 +31,9 @@ fn disk(gpu: &Gpu, w: u32, h: u32) -> Step {
     let (physics, elements) = (Physics::shipped().unwrap(), Elements::shipped().unwrap());
     let booking = Booking::new(&gpu.device, world).unwrap();
     let (eos, side) = (EosGpu::new(&gpu.device, &physics, &elements), SideFields::new(&gpu.device, world).unwrap());
-    Step::with_gravity(&gpu.device, &state, &booking, &eos, &physics, BoxMode::Fit, &side).unwrap()
+    // The passes headless records for `preset:sun` (every switch on, a *leave* world): P2 and, since M0-T34, P4.
+    let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(EdgeMode::Leave) };
+    Step::with_passes(&gpu.device, &state, &booking, &eos, &physics, &passes).unwrap()
 }
 
 /// The source `Timing::Auto` must pick on this device, after checking the device holds no feature but timestamp-query

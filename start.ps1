@@ -6,4 +6,4 @@ $asked = @()
 if ($Service -eq "game") { $asked = @("--asked") }   # running this script is the ask (R4)
 py -3.12 tools/pb/launch.py start $Service --task launcher @asked
 Read-Host "Sandbox Reactions is running. Press Enter to close it" | Out-Null
-py -3.12 tools/pb/launch.py stop --task launcher
+py -3.12 tools/pb/launch.py stop $Service --task launcher

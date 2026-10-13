@@ -1,0 +1,17 @@
+# M0-T34 Verify 2 2026-10-13T08:54:03-04:00 on laserax-ai: headless --scene scenes/sun_disk.json --steps 200 --timing --adapter "Quadro RTX 4000"
+    Finished `release` profile [optimized] target(s) in 0.09s
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=4.875859 until=none
+exit=0
+P4 1.535 step 1.819 gpu-timestamp
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=4.875859 until=none
+exit=0
+P4 1.057 step 1.283 gpu-timestamp
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=4.875859 until=none
+exit=0
+P4 0.989 step 1.202 gpu-timestamp
+NVIDIA GeForce RTX 5090, 0 %
+Quadro RTX 4000, 5 %
+{'per_pass_ms': {'P0 edits': 0.00641952, 'P1 dt': 0.004345120000000001, 'P2 gravity': 0.10296399999999997, 'P4 hydro': 0.9893912, 'P8 floors': 0.018101439999999996, 'P9 reductions': 0.01291312}, 'source': 'gpu-timestamp', 'step_ms_mean': 1.2021502400000004}

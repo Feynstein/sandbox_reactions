@@ -1,0 +1,64 @@
+why build: never: .cargo/config.toml (+59)
+why registry: stale: crates/sr-physics/src/reference/hydro.rs
+why eos: stale: crates/sr-physics/src/reference/hydro.rs
+why fft_twin: stale: crates/sr-physics/src/reference/hydro.rs
+why riemann: stale: crates/sr-physics/src/reference/hydro.rs
+why sod: stale: crates/sr-physics/src/reference/hydro.rs
+why edges: stale: crates/sr-physics/src/reference/hydro.rs
+why grav_force: stale: crates/sr-physics/src/reference/hydro.rs
+why grav_selfforce: stale: crates/sr-physics/src/reference/hydro.rs
+why fft: stale: crates/sr-physics/src/reference/hydro.rs
+why state: stale: crates/sr-physics/src/reference/hydro.rs
+why floors: stale: crates/sr-physics/src/reference/hydro.rs
+why dt: stale: crates/sr-physics/src/reference/hydro.rs
+why box: stale: crates/sr-physics/src/reference/hydro.rs
+why latch: stale: crates/sr-physics/src/reference/hydro.rs
+why timing: stale: crates/sr-physics/src/reference/hydro.rs
+why scene: stale: crates/sr-physics/src/reference/hydro.rs
+why dump: stale: crates/sr-physics/src/reference/hydro.rs
+why boot: stale: crates/sr-physics/src/reference/hydro.rs
+build           2/0/0        9.80 s  GO · step 1/19, 18 left
+registry        29/0/0       2.02 s  GO · step 2/19, 17 left
+eos             13/0/0       2.02 s  GO · step 3/19, 16 left
+fft_twin        10/0/0       2.12 s  GO · step 4/19, 15 left
+riemann         8/0/0        2.02 s  GO · step 5/19, 14 left
+sod             15/0/0      26.01 s  GO · step 6/19, 13 left
+edges           7/0/0       25.31 s  GO · step 7/19, 12 left
+grav_force      13/0/0      16.49 s  GO · step 8/19, 11 left
+grav_selfforce  5/0/0        9.48 s  GO · step 9/19, 10 left
+fft             8/0/0       15.59 s  GO · step 10/19, 9 left
+state           6/0/0       11.33 s  GO · step 11/19, 8 left
+floors          7/0/0       15.24 s  GO · step 12/19, 7 left
+dt              6/0/0        7.12 s  GO · step 13/19, 6 left
+box             6/0/0        7.08 s  GO · step 14/19, 5 left
+latch           5/0/0        5.47 s  GO · step 15/19, 4 left
+timing          5/0/0       30.53 s  GO · step 16/19, 3 left
+scene           8/0/0        2.52 s  GO · step 17/19, 2 left
+dump            8/0/0        6.32 s  GO · step 18/19, 1 left
+boot            1/0/0        3.02 s  GO · step 19/19, 0 left
+plan_lint       NOT RUN (not impacted: its 2 path(s) checked at the anchor)
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 42 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 42 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 56 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 51 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+edges · clean · GO · arm 1/2, 1 left
+edges · plant wall-copy · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edges · 39.62 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T35.edges.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/edges.rs changed since M0-T35's start - a test, case or check M0-T35's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T35's start - a test, case or check M0-T35's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T35's start - a test, case or check M0-T35's Deliver: does not name
+logs: milestones/m0/logs/M0-T35.<scope>.log · record: loop_times.jsonl · tree cf0f7452dd4b+8a0421eaac89
+anchor: 78 path×scope entries moved by this run
+anchor: 146 paths checked · 125 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 146 covered of 271 visible
+skipped   117  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 162 passed, 0 failed, 0 skipped · 19/19 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 12 not impacted · 46.64 s + loop 39.67 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 16.49->14.94 · base: M0-T35's start 2026-10-13T10:07:18-04:00
+=== GO ===

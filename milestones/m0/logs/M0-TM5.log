@@ -1,0 +1,97 @@
+# M0-TM5 — rating pass, linux-pc (laserax-ai), started 2026-10-13T09:19:55-04:00
+now (launch prompt): model=claude-opus-5-5 level=max plugin=installed
+show: baseline: M0-TM5, 264 files, 2026-10-13T09:18:56-04:00 · checks=2 failed=0 warnings=0 · header=262 · === GO ===
+$ python3 tools/pb/plan.py status M0-TM5 "IN PROGRESS"
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+snapshot taken (scratchpad tm5/plan.snapshot.md)
+$ probe (§B.3)
+CLAUDECODE=1
+CLAUDE_EFFORT=xhigh
+AI_AGENT=claude-code_2-1-296_agent
+$ ladder re-read, the model pages: REFUSED by Claude Code's auto-mode classifier (2026-10-13T09:27:16-04:00) — (1) a find over the bundled-skills folder: 'Auto-Mode Bypass'; (2) the Skill tool, claude-api: 'Credential Exploration'. Not retried, not worked around (Hazards 2026-10-08: a refusal goes to the lead as a question).
+$ the lead's answer (2026-10-13T09:27:54-04:00), AskUserQuestion 'Model pages': «Re-date on the probe (Recommended)» — the Models line re-dated 2026-10-13 on the probe (Claude Code 2.1.296, the bundle M0-TM4 read 2026-10-12, cached 2026-10-06) and the lead's answer; rungs byte-identical
+$ python3 tools/pb/rung_record.py report  (2026-10-13T09:27:54-04:00)
+report: 91 DONE blocks · 16 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 60 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 3 D block(s) naming no cause in the record · $152.51 read from the sessions' own cost
+BUILD on Opus 5.5, high: 10 block(s) · first-try 4/6 · $4.05 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 11 block(s) · first-try 5/11 · $1.78 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 46 block(s) · first-try 37/46 · n/a per DONE block · off the ladder
+BUILD·E on Opus 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 2 block(s) · first-try 2/2 · $0.34 per DONE block · n<10
+BUILD·E on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+CHECK on Opus 5.5, max: 1 block(s) · first-try 1/1 · $11.23 per DONE block · above (usual)
+CHECK on Sonnet 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · n<10
+CHECK on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+MOVE on Sonnet 5.5, medium: 1 block(s) · first-try n/a · $0.27 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 6 block(s) · first-try 3/3 · $14.42 per DONE block · above (usual)
+PLAN on Sonnet 5.5, high: 3 block(s) · first-try 2/3 · n/a per DONE block · n<10
+PLAN on Sonnet 5.5, medium: 1 block(s) · first-try 1/1 · n/a per DONE block · n<10
+PLAN on unknown: 1 block(s) · first-try 1/1 · n/a per DONE block · off the ladder
+=== GO ===
+  record detail (--json, scratchpad tm5/report.json): lot 5 since M0-V4 — M0-T33a BUILD Sonnet 5.5, high GO $0.59 · M0-T33b BUILD Sonnet 5.5, high first claim NO-GO $2.58 (DONE; no escalation trail) · M0-T34 BUILD Opus 5.5, high first claim NO-GO $6.98
+  finding (measured, source of the record only): 7 blocks read 'via handoff' (no session file on linux-pc) take a rung from the handoff's prose, not its quoted model=/level=: M0-TR1 handoff model=claude-sonnet-5-5 level=high -> read 'Opus 5.5, high'; M0-TM3, M0-TM4, M0-V2 handoffs model=claude-opus-5-5 level=max -> read 'Sonnet 5.5, medium' / 'Sonnet 5.5, high' / 'Sonnet 5.5, high'
+  rule (4): M0-V4's table (the binding record, win-laptop 2026-10-12): BUILD on Sonnet 5.5, high 16 blocks 13/16 $1.64 vs BUILD on Opus 5.5, high (usual) 29 blocks 22/29 $3.11 -> no move; today's linux-pc read agrees ($1.78, 11 blocks, vs $4.05, 10 blocks, one of them M0-TR1 misread) -> no class moves
+$ checkdiff.py (scratchpad helper) against the post-status snapshot, after the 3 rating edits and the Models line (2026-10-13T09:36:31-04:00)
+rating=3 (M0-T35, T36, T43: Sonnet 5.5, high -> Opus 5.5, high) · models=1 · own=0 · register=0 · other=0
+=== GO ===
+  checkdiff red-tested on a mutated copy (a Read line's §2.9 -> §2.10, M0-T38's ' · switch' dropped): other=2, NO-GO, exit 1
+$ python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md  (after the edits, before the close; 2026-10-13T09:36:31-04:00)
+lint: checks=519 failed=0 warnings=4 · blocks=200 · flow_rows=200 · verify_fences=0 · history=0 · flow=per-task · header=467/600 · pipeline=9/60 · ladder=7 rungs · refresh=5/5
+WARN: M0-TC3: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-D27: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D25: DONE outside the current phase and 40 lines long - stub it (§2.6)
+WARN: M0-D26: DONE outside the current phase and 34 lines long - stub it (§2.6)
+=== GO ===
+  finding, re-measured (2026-10-13T09:38:41-04:00): report --json rows 'via: handoff' on linux-pc vs each handoff's quoted model=/level= — 6 of 7 MISREAD: M0-TJ3, V2, TM2, TM4 record 'Sonnet 5.5, high' (quote opus-5-5 max) · M0-TM3 'Sonnet 5.5, medium' (quote opus-5-5 max) · M0-TR1 'Opus 5.5, high' (quote sonnet-5-5 high; prose 'both Opus 5.5 high') · M0-D13 OK (opus-5-5 high); the record's rung = the first rung string in the prose in 5 of 6; cost per DONE block is the mean over non-null costs (BUILD on Opus 5.5, high: 36.4143/9 = 4.046), so the misread moves n and first-try, not cost
+$ python3 tools/pb/plan.py close M0-TM5 --status "DONE" --text "<handoff: scratchpad tm5/handoff.txt>" --set "Model ratings=2026-10-13 by M0-TM5"  (2026-10-13T09:40:05-04:00)
+close: checks=4 failed=0 warnings=0 · handoff_lines=1 · flow=per-task · set=1 · replaced=1 · appended=0
+=== GO ===
+$ checkdiff.py after the close (2026-10-13T09:40:10-04:00)
+rating  M0-T35: Sonnet 5.5, high -> Opus 5.5, high
+rating  M0-T36: Sonnet 5.5, high -> Opus 5.5, high
+rating  M0-T43: Sonnet 5.5, high -> Opus 5.5, high
+rating=3 · models=1 · own=3 · register=1 · other=0
+=== GO ===
+$ python3 tools/pb/verify.py --changed --task M0-TM5  (the claim, after the close; 2026-10-13T09:40:16-04:00)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint       518/0/0      0.11 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 22 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+fft_twin        NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+riemann         NOT RUN (not impacted: its 14 path(s) checked at the anchor)
+sod             NOT RUN (not impacted: its 55 path(s) checked at the anchor)
+grav_force      NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+grav_selfforce  NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+fft             NOT RUN (not impacted: its 52 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 41 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 41 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 64 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TM5.<scope>.log · record: loop_times.jsonl · tree cf0f7452dd4b+e70944bc0e28
+anchor: 1 path×scope entries moved by this run
+anchor: 142 paths checked · 123 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 142 covered of 265 visible
+skipped   115  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 518 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 29 not impacted · 0.12 s + loop 0.04 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 13.52->13.52 · base: M0-TM5's start 2026-10-13T09:18:56-04:00
+=== GO ===
+  claim: GO — 518 passed, plan_lint 1/1, 29 not impacted, base M0-TM5's start; results appended to tasks/M0-TM5.md (skip class) after it

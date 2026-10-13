@@ -2,8 +2,9 @@
 //! dispatches built once for the state's world. A step records the lists as they are — it reads no wall clock, no
 //! rung, no frame and no label — so the same state and step count give the same state, bit for bit (§1.3.4).
 //!
-//! Today P1, P2, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
-//! M0-T20), P2 gravity when the step is built with it ([`grav`], [`Step::with_gravity`], M0-T31), P8 the floors, then the
+//! Today P1, P2, P4, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
+//! M0-T20), P2 gravity when the step is built with it ([`grav`], [`Step::with_gravity`], M0-T31), P4 the gas flow when
+//! the step is built with it ([`hydro`], [`Step::with_passes`], M0-T34), P8 the floors, then the
 //! species renormalisation (shaders/floors.wgsl, M0-T19); every other pass is an empty slot its lot fills, in place,
 //! without reordering the others. A step knows its index — the guard runs on every 64th
 //! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction — after P2 on that state, so step 0's
@@ -35,6 +36,7 @@ pub mod boxfit;
 pub mod dt;
 pub mod fft;
 pub mod grav;
+pub mod hydro;
 pub mod latch;
 
 use std::cell::{Cell, RefCell};
@@ -42,6 +44,7 @@ use std::cell::{Cell, RefCell};
 use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
+use crate::scene::EdgeMode;
 use crate::state::{Booking, SideFields, State, BOOK_GROUPS, TERMS};
 use boxfit::{BoxFit, BoxMode, BoxReport, ARGS_TILES, REFIT_EVERY};
 use dt::{Dt, DtReport, GUARD_EVERY};
@@ -111,12 +114,23 @@ pub enum Size {
     Indirect(wgpu::Buffer, u64),
 }
 
+/// The optional passes a step is built with (§2.12.1's switches) and its box mode — [`Step::with_passes`].
+#[derive(Clone, Copy)]
+pub struct Passes<'a> {
+    pub mode: BoxMode,
+    /// P2 gravity, φ into these side fields.
+    pub gravity: Option<&'a SideFields>,
+    /// P4 hydro, starting in this edge mode ([`Step::set_edge_mode`] changes it).
+    pub hydro: Option<EdgeMode>,
+}
+
 /// The step: one dispatch list per pass, indexed as `Pass::ORDER`, the Δt record, the active box, gravity's field when
 /// it runs P2, the latch and the index of the next step.
 pub struct Step {
     passes: [Vec<Dispatch>; 10],
     dt: Dt,
     gravity: Option<Gravity>,
+    hydro: Option<hydro::Hydro>,
     boxfit: BoxFit,
     latch: Latch,
     next: Cell<u64>,
@@ -323,7 +337,8 @@ impl Step {
         physics: &Physics,
         mode: BoxMode,
     ) -> Step {
-        Step::build(device, state, booking, eos, physics, mode, None).expect("a step without gravity builds")
+        Step::with_passes(device, state, booking, eos, physics, &Passes { mode, gravity: None, hydro: None })
+            .expect("a step without gravity builds")
     }
 
     /// As [`Step::with_box`], with P2 gravity (§1.4; §2.12.1's `gravity` switch on): φ into `side`'s φ plane, g kept by
@@ -338,18 +353,20 @@ impl Step {
         mode: BoxMode,
         side: &SideFields,
     ) -> Result<Step, FftError> {
-        Step::build(device, state, booking, eos, physics, mode, Some(side))
+        Step::with_passes(device, state, booking, eos, physics, &Passes { mode, gravity: Some(side), hydro: None })
     }
 
-    fn build(
+    /// The step with the passes `passes` names beyond P1, P8 and P9: P2 gravity as [`Step::with_gravity`] (refused
+    /// likewise), P4 hydro (§2.3, §2.8; M0-T34).
+    pub fn with_passes(
         device: &wgpu::Device,
         state: &State,
         booking: &Booking,
         eos: &EosGpu,
         physics: &Physics,
-        mode: BoxMode,
-        side: Option<&SideFields>,
+        passes: &Passes<'_>,
     ) -> Result<Step, FftError> {
+        let (mode, side, edge) = (passes.mode, passes.gravity, passes.hydro);
         let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
             label: Some("reduce.wgsl"),
             source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/reduce.wgsl")).into()),
@@ -361,16 +378,26 @@ impl Step {
         let mut passes: [Vec<Dispatch>; 10] = Default::default();
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Gravity as usize] = gravity.as_mut().map(|g| std::mem::take(&mut g.dispatches)).unwrap_or_default();
+        let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, &boxfit, dt.record(), edge));
+        passes[Pass::Hydro as usize] = flow.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
         passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
         let latch = Latch::new(device, &passes, &dt, &boxfit);
-        Ok(Step { passes, dt, gravity, boxfit, latch, next: Cell::new(0), timer: Timer::default() })
+        Ok(Step { passes, dt, gravity, hydro: flow, boxfit, latch, next: Cell::new(0), timer: Timer::default() })
     }
 
     /// P2's g = −∇φ (the x plane, then the y plane, f32, row-major over the world) when the step runs gravity; φ is the
     /// [`SideFields`] plane it was built with. Inside the box only: outside, the last values P2 wrote there.
     pub fn gravity_field(&self) -> Option<&wgpu::Buffer> {
         self.gravity.as_ref().map(Gravity::field)
+    }
+
+    /// The edge mode (§2.8, §3.1) for every step submitted after this call — at the next step boundary, since a write
+    /// lands between submissions. Nothing to change when the step runs no P4.
+    pub fn set_edge_mode(&self, queue: &wgpu::Queue, edge: EdgeMode) {
+        if let Some(h) = &self.hydro {
+            h.set_edge_mode(queue, edge);
+        }
     }
 
     /// How many dispatches each pass records on a step the guard skips, in `Pass::ORDER`.

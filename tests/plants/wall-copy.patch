@@ -1,0 +1,19 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -151,14 +151,8 @@
+     } else if (y >= h) {
+         my = 2 * h - 1 - y;
+     }
+-    var p = read_cell(u32(my) * dims.width + u32(mx));
+-    if (mx != x) {
+-        p.u = -p.u;
+-    }
+-    if (my != y) {
+-        p.v = -p.v;
+-    }
+-    return p;
++    // Planted: the bounce ghost copies the edge cell instead of mirroring it.
++    return read_cell(u32(clamp(y, 0, h - 1)) * dims.width + u32(clamp(x, 0, w - 1)));
+ }
+ 
+ // Whether the cell at (x, y) holds less than Σ_vac; a cell outside the world counts as vacuum.

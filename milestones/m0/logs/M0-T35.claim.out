@@ -1,0 +1,134 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why registry: stale: crates/sr-physics/src/reference/hydro.rs
+why eos: stale: crates/sr-physics/src/reference/hydro.rs
+why fft_twin: stale: crates/sr-physics/src/reference/hydro.rs
+why riemann: stale: crates/sr-physics/src/reference/hydro.rs
+why sod: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why edges: stale: crates/sr-engine/src/headless.rs
+why grav_force: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why grav_selfforce: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why fft: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why adapter: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+4)
+why state: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why booking: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+4)
+why floors: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why dt: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why box: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why latch: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why timing: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why scene: never: crates/sr-engine/tests/gpu/edges.rs (+1) · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why dump: never: crates/sr-engine/tests/gpu/edges.rs (+1) · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why boot: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+5)
+why desktop: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+4)
+why web: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+4)
+why capture: never: crates/sr-engine/tests/gpu/edges.rs · stale: crates/sr-engine/shaders/hydro.wgsl (+4)
+why watch_only: stale: crates/sr-engine/shaders/hydro.wgsl (+2)
+plan_lint       518/0/0      0.12 s  GO · step 1/26, 25 left
+build           1/1/0        8.85 s  NO-GO · step 2/26, 24 left
+registry        29/0/0       1.97 s  GO · step 3/26, 23 left
+eos             13/0/0       2.02 s  GO · step 4/26, 22 left
+fft_twin        10/0/0       2.12 s  GO · step 5/26, 21 left
+riemann         8/0/0        1.97 s  GO · step 6/26, 20 left
+sod             15/0/0      40.31 s  GO · step 7/26, 19 left
+edges           7/0/0       25.46 s  GO · step 8/26, 18 left
+grav_force      13/0/0      16.29 s  GO · step 9/26, 17 left
+grav_selfforce  5/0/0        9.38 s  GO · step 10/26, 16 left
+fft             8/0/0       15.19 s  GO · step 11/26, 15 left
+adapter         10/0/0      12.03 s  GO · step 12/26, 14 left
+state           6/0/0       11.38 s  GO · step 13/26, 13 left
+booking         4/0/0        5.22 s  GO · step 14/26, 12 left
+floors          7/0/0        9.58 s  GO · step 15/26, 11 left
+dt              6/0/0        7.13 s  GO · step 16/26, 10 left
+box             6/0/0        7.13 s  GO · step 17/26, 9 left
+latch           5/0/0        6.32 s  GO · step 18/26, 8 left
+timing          5/0/0       30.08 s  GO · step 19/26, 7 left
+scene           8/0/0       22.36 s  GO · step 20/26, 6 left
+dump            8/0/0       26.88 s  GO · step 21/26, 5 left
+boot            1/0/0       21.07 s  GO · step 22/26, 4 left
+desktop         2/0/0       42.83 s  GO · step 23/26, 3 left
+web             3/0/0        9.72 s  GO · step 24/26, 2 left
+capture         2/0/0        0.88 s  GO · step 25/26, 1 left
+watch_only      1/0/0        0.06 s  GO · step 26/26, 0 left
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+edges · clean · GO · arm 1/2, 1 left
+edges · plant wall-copy · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edges · 33.46 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T35.edges.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/edges.rs changed since M0-T35's start - a test, case or check M0-T35's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T35's start - a test, case or check M0-T35's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T35's start - a test, case or check M0-T35's Deliver: does not name
+logs: milestones/m0/logs/M0-T35.<scope>.log · record: loop_times.jsonl · tree cf0f7452dd4b+cf051198491a
+anchor: 191 path×scope entries moved by this run
+anchor: 86 paths checked · 125 skipped (3 classes) · 60 never checked · 0 stale · 0 unclassified · 0 owed · 146 covered of 271 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for build)
+NEVER CHECKED  Cargo.lock  (no entry for build)
+NEVER CHECKED  Cargo.toml  (no entry for build)
+NEVER CHECKED  crates/sr-app/Cargo.toml  (no entry for build)
+NEVER CHECKED  crates/sr-app/src/capture.rs  (no entry for build)
+NEVER CHECKED  crates/sr-app/src/desktop.rs  (no entry for build)
+NEVER CHECKED  crates/sr-app/src/main.rs  (no entry for build)
+NEVER CHECKED  crates/sr-app/src/status.rs  (no entry for build)
+NEVER CHECKED  crates/sr-app/src/strings.rs  (no entry for build)
+NEVER CHECKED  crates/sr-app/src/web.rs  (no entry for build)
+NEVER CHECKED  crates/sr-app/tests/strings.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for build)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for build)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for build)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for build)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for build)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for build)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for build)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for build)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for build)
+NEVER CHECKED  rust-toolchain.toml  (no entry for build)
+NEVER CHECKED  tests/cargo.sh  (no entry for build)
+NEVER CHECKED  tests/plants/build-wasm-only.patch  (no entry for build)
+skipped   117  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  build: build[native]: 1 failed; build[native]: its own verdict NO-GO: cargo clippy -D warnings failed · log milestones/m0/logs/M0-T35.build.log
+  anchor: 60 never checked, 0 stale, 0 unclassified - every one named above
+verify: 701 passed, 1 failed, 0 skipped · 25/26 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 5 not impacted · 47.26 s + loop 33.50 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 28.63->23.66 · base: M0-T35's start 2026-10-13T10:07:18-04:00
+=== NO-GO: build: build[native]: 1 failed; build[native]: its own verdict NO-GO: cargo clippy -D warnings failed · log milestones/m0/logs/M0-T35.build.log; anchor: 60 never checked, 0 stale, 0 unclassified - every one named above ===

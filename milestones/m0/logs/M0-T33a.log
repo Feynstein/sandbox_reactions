@@ -1,0 +1,88 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 3.47s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-8ac46c43ceb83ace)
+
+running 8 tests
+test reference::riemann::tests::a_state_with_no_solution_is_refused ... ok
+test reference::riemann::tests::every_shock_and_fan_in_the_problems_satisfies_its_jump_or_its_isentrope ... ok
+test reference::riemann::tests::far_from_the_waves_the_solution_is_the_initial_states ... ok
+test reference::riemann::tests::mirrored_states_give_the_mirrored_solution ... ok
+test reference::riemann::tests::sod_satisfies_the_jumps_and_the_isentrope ... ok
+test reference::riemann::tests::sods_pattern_is_a_left_rarefaction_and_a_right_shock ... ok
+test reference::riemann::tests::star_pressure_matches_an_independent_bisection ... ok
+test reference::riemann::tests::the_solution_conserves_mass_momentum_and_energy ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 70 filtered out; finished in 0.00s
+
+riemann   8/0/0        0.11 s  GO
+logs: milestones/m0/logs/M0-T33a.<scope>.log · record: loop_times.jsonl · tree cf0f7452dd4b+d32e2778bd90
+anchor: 13 path×scope entries moved by this run
+anchor: 121 paths checked · 120 skipped (3 classes) · 1 never checked · 14 stale · 0 unclassified · 0 owed · 136 covered of 256 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 38.52->38.52
+=== GO ===
+riemann · clean · GO · arm 1/2, 1 left
+riemann · plant riemann-gamma · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope riemann · 3.49 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T33a.riemann.redarm.log
+=== GO ===
+fft_twin · clean · GO · arm 1/2, 1 left
+fft_twin · plant fft-twiddle-sign · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope fft_twin · 3.46 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T33a.fft_twin.redarm.log
+=== GO ===
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why registry: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why eos: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why fft_twin: never: crates/sr-physics/src/reference/riemann.rs · stale: .cargo/config.toml (+12)
+why grav_force: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why grav_selfforce: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why fft: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why state: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why floors: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why dt: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why box: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why latch: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why timing: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why scene: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why dump: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+why boot: never: crates/sr-physics/src/reference/riemann.rs · stale: crates/sr-physics/src/reference/mod.rs
+plan_lint       516/0/0      0.11 s  GO · step 1/17, 16 left
+build           2/0/0       10.95 s  GO · step 2/17, 15 left
+registry        29/0/0       4.53 s  GO · step 3/17, 14 left
+eos             13/0/0       0.47 s  GO · step 4/17, 13 left
+fft_twin        10/0/0       0.57 s  GO · step 5/17, 12 left
+grav_force      13/0/0       7.45 s  GO · step 6/17, 11 left
+grav_selfforce  5/0/0        6.29 s  GO · step 7/17, 10 left
+fft             8/0/0       14.56 s  GO · step 8/17, 9 left
+state           6/0/0       11.05 s  GO · step 9/17, 8 left
+floors          7/0/0       14.51 s  GO · step 10/17, 7 left
+dt              6/0/0       12.05 s  GO · step 11/17, 6 left
+box             6/0/0        9.24 s  GO · step 12/17, 5 left
+latch           5/0/0        6.58 s  GO · step 13/17, 4 left
+timing          5/0/0        8.03 s  GO · step 14/17, 3 left
+scene           8/0/0        4.72 s  GO · step 15/17, 2 left
+dump            8/0/0        5.17 s  GO · step 16/17, 1 left
+boot            1/0/0        2.77 s  GO · step 17/17, 0 left
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+riemann         NOT RUN (not impacted: its 13 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 51 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 56 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+fft_twin · red-arm proven by M0-T33a 2026-10-13T07:58:17-04:00 (fingerprint ec344e29409a) - not re-run
+riemann · red-arm proven by M0-T33a 2026-10-13T07:58:13-04:00 (fingerprint 6575ebe40df3) - not re-run
+FLAG oracle: tools/pb/verify.json changed since M0-T33a's start - a test, case or check M0-T33a's Deliver: does not name
+FLAG oracle: scope `fft_twin` changed in tools/pb/verify.json - M0-T33a's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-T33a.<scope>.log · record: loop_times.jsonl · tree cf0f7452dd4b+d32e2778bd90
+anchor: 45 path×scope entries moved by this run
+anchor: 136 paths checked · 120 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 136 covered of 256 visible
+skipped   112  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 648 passed, 0 failed, 0 skipped · 17/17 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 12 not impacted · 16.69 s + loop 0.06 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 32.63->26.99 · base: M0-T33a's start 2026-10-13T07:55:58-04:00
+=== GO ===

@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/hydro.rs
++++ b/crates/sr-physics/src/reference/hydro.rs
+@@ -327,6 +327,7 @@
+ 
+     /// The HLL flux across a face normal to `dir` between `l` and `r`, species by the mass flux's upwind side.
+     fn hll(l: &Face, r: &Face, dir: usize) -> [f64; COMPONENTS] {
++        let r = l;
+         let normal = |p: &Prim| if dir == 0 { p.u } else { p.v };
+         let (unl, unr) = (normal(&l.p), normal(&r.p));
+         let (cl, cr) = (Self::sound(&l.p), Self::sound(&r.p));
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -257,7 +257,8 @@
+ }
+ 
+ // The HLL flux across a face normal to `dir` between `l` and `r` (Davis speeds), species by the mass flux's upwind side.
+-fn hll(l: Face, r: Face, dir: u32) -> array<f32, 14> {
++fn hll(l: Face, right: Face, dir: u32) -> array<f32, 14> {
++    let r = l;
+     let unl = select(l.p.v, l.p.u, dir == 0u);
+     let unr = select(r.p.v, r.p.u, dir == 0u);
+     let cl = sqrt(max(wave_speed_sq(l.p.sigma, l.p.pi), 0.0));

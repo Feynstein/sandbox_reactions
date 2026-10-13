@@ -69,7 +69,8 @@ sr_lock() {
   echo $$ >"$1/pid"
 }
 _sr_exit() {
-  [ "$started" = 1 ] && $PY tools/pb/launch.py stop --task "$task" >/dev/null 2>&1
+  # web alone: launch.py's records are the box's, not the task's - a bare stop takes another scope's game too (M0-D28)
+  [ "$started" = 1 ] && $PY tools/pb/launch.py stop web --task "$task" >/dev/null 2>&1
   [ "$own_port" = 1 ] && rm -rf "$lock.d" 2>/dev/null
   [ "$own_build" = 1 ] && rm -rf "$build_lock" 2>/dev/null
 }

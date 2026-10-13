@@ -33,7 +33,13 @@ const kase = args.find((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1].s
 const base = flag('--base', 'http://127.0.0.1:47812').replace(/\/$/, '');
 const timeoutMs = Number(flag('--timeout-s', '30')) * 1000;
 
-const nogo = (why) => { console.log(`=== NO-GO: ${why} ===`); process.exit(1); };
+// The verdict stays one line (verify.py reads it): a multi-line reason (playwright's call log) prints its tail first, as log lines.
+const nogo = (why) => {
+  const [head, ...rest] = String(why).split(/\r?\n/);
+  for (const line of rest) if (line.trim()) console.log(line);
+  console.log(`=== NO-GO: ${head.trim()} ===`);
+  process.exit(1);
+};
 if (!CASES.includes(kase)) nogo(`usage: node web/smoke.mjs <${CASES.join('|')}> [--base <url>] [--timeout-s <n>]`);
 
 let chromium;

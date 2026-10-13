@@ -1,0 +1,5 @@
+--- a/start.sh
++++ b/start.sh
+@@ -10,1 +10,1 @@
+-python3 tools/pb/launch.py stop "$service" --task launcher   # its own service only: a bare stop takes every service on the box (M0-D28)
++python3 tools/pb/launch.py stop --task launcher

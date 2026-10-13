@@ -1,0 +1,136 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why registry: never: crates/sr-physics/src/reference/hydro.rs · stale: crates/sr-physics/src/reference/mod.rs
+why eos: never: crates/sr-physics/src/reference/hydro.rs · stale: crates/sr-physics/src/reference/mod.rs
+why fft_twin: never: crates/sr-physics/src/reference/hydro.rs · stale: crates/sr-physics/src/reference/mod.rs
+why riemann: never: crates/sr-physics/src/reference/hydro.rs · stale: crates/sr-physics/src/reference/mod.rs
+why sod: stale: crates/sr-physics/src/reference/hydro.rs
+why grav_force: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why grav_selfforce: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why fft: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why adapter: never: crates/sr-engine/tests/gpu/sod.rs · stale: crates/sr-engine/tests/gpu/main.rs
+why state: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why booking: never: crates/sr-engine/tests/gpu/sod.rs · stale: crates/sr-engine/tests/gpu/main.rs
+why floors: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why dt: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why box: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why latch: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why timing: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why scene: never: crates/sr-engine/tests/gpu/sod.rs (+2) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why dump: never: crates/sr-engine/tests/gpu/sod.rs (+2) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why boot: never: crates/sr-engine/tests/gpu/sod.rs (+1) · stale: crates/sr-engine/tests/gpu/main.rs (+1)
+why desktop: never: crates/sr-engine/tests/gpu/sod.rs · stale: crates/sr-engine/tests/gpu/main.rs
+why web: never: crates/sr-engine/tests/gpu/sod.rs · stale: crates/sr-engine/tests/gpu/main.rs
+why capture: never: crates/sr-engine/tests/gpu/sod.rs · stale: crates/sr-engine/tests/gpu/main.rs
+plan_lint       514/0/0      0.23 s  GO · step 1/24, 23 left
+build           1/1/0       14.74 s  NO-GO · step 2/24, 22 left
+registry        29/0/0       2.66 s  GO · step 3/24, 21 left
+eos             13/0/0       2.67 s  GO · step 4/24, 20 left
+fft_twin        10/0/0       2.80 s  GO · step 5/24, 19 left
+riemann         8/0/0        2.67 s  GO · step 6/24, 18 left
+sod             9/0/0       24.58 s  GO · step 7/24, 17 left
+grav_force      13/0/0      22.77 s  GO · step 8/24, 16 left
+grav_selfforce  5/0/0       15.74 s  GO · step 9/24, 15 left
+fft             8/0/0       20.41 s  GO · step 10/24, 14 left
+adapter         10/0/0      17.22 s  GO · step 11/24, 13 left
+state           6/0/0       16.40 s  GO · step 12/24, 12 left
+booking         4/0/0       14.79 s  GO · step 13/24, 11 left
+floors          7/0/0        9.81 s  GO · step 14/24, 10 left
+dt              6/0/0        7.82 s  GO · step 15/24, 9 left
+box             6/0/0        6.69 s  GO · step 16/24, 8 left
+latch           5/0/0        6.47 s  GO · step 17/24, 7 left
+timing          5/0/0        8.35 s  GO · step 18/24, 6 left
+scene           8/0/0        4.35 s  GO · step 19/24, 5 left
+dump            8/0/0        6.19 s  GO · step 20/24, 4 left
+boot            1/0/0        4.33 s  GO · step 21/24, 3 left
+desktop         1/1/0        7.54 s  NO-GO · step 22/24, 2 left
+web             3/0/0       25.68 s  GO · step 23/24, 1 left
+capture         2/0/0        3.97 s  GO · step 24/24, 0 left
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+sod · clean · GO · arm 1/2, 1 left
+sod · plant hll-swap · RED (proven: 8 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope sod · 14.47 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T33b.sod.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T33b's start - a test, case or check M0-T33b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/sod.rs changed since M0-T33b's start - a test, case or check M0-T33b's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T33b's start - a test, case or check M0-T33b's Deliver: does not name
+logs: milestones/m0/logs/M0-T33b.<scope>.log · record: loop_times.jsonl · tree cf0f7452dd4b+86a603844135
+anchor: 174 path×scope entries moved by this run
+anchor: 76 paths checked · 121 skipped (3 classes) · 64 never checked · 0 stale · 0 unclassified · 0 owed · 140 covered of 261 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for build, desktop)
+NEVER CHECKED  Cargo.lock  (no entry for build, desktop)
+NEVER CHECKED  Cargo.toml  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-app/Cargo.toml  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-app/src/capture.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-app/src/desktop.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-app/src/main.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-app/src/status.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-app/src/strings.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-app/src/web.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-app/tests/strings.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for build, desktop)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for build)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for build)
+NEVER CHECKED  rust-toolchain.toml  (no entry for build, desktop)
+NEVER CHECKED  start.bat  (no entry for desktop)
+NEVER CHECKED  start.ps1  (no entry for desktop)
+NEVER CHECKED  start.sh  (no entry for desktop)
+NEVER CHECKED  tests/cargo.sh  (no entry for build, desktop)
+NEVER CHECKED  tests/plants/build-wasm-only.patch  (no entry for build)
+NEVER CHECKED  tests/plants/launcher-no-stop.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/status-never-ready.patch  (no entry for desktop)
+NEVER CHECKED  tests/smoke.sh  (no entry for desktop)
+NEVER CHECKED  tools/pb/launch.json  (no entry for desktop)
+skipped   113  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  build: build[native]: 1 failed; build[native]: its own verdict NO-GO: cargo clippy -D warnings failed · log milestones/m0/logs/M0-T33b.build.log
+  desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready · log milestones/m0/logs/M0-T33b.desktop.log
+  anchor: 64 never checked, 0 stale, 0 unclassified - every one named above
+verify: 682 passed, 2 failed, 0 skipped · 22/24 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 6 not impacted · 36.20 s + loop 14.54 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 26.69->51.88 · base: M0-T33b's start 2026-10-13T07:59:22-04:00
+=== NO-GO: build: build[native]: 1 failed; build[native]: its own verdict NO-GO: cargo clippy -D warnings failed · log milestones/m0/logs/M0-T33b.build.log; desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready · log milestones/m0/logs/M0-T33b.desktop.log; anchor: 64 never checked, 0 stale, 0 unclassified - every one named above ===

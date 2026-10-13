@@ -60,6 +60,14 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     twin's; no M0 surface makes such a world (§2.8: the UI never changes it) — measured on win-laptop, 2026-10-12:
     `--world 1024x400` exit 0, `1032x400` and `2048x2048` exit 4 — the lead's answer at M0-V4, 2026-10-12: «Cap at 1024
     (Recommended)».
+  - [M0-D28] §3.6's launchers — start.sh « wait for Enter, `launch.py stop` », start.bat « `py -3.12 tools\pb\launch.py
+    stop` » · `launch.py stop <the service it started> --task launcher` (start.sh `"$service"`, start.bat `%SERVICE%`,
+    start.ps1 `$Service`), and
+    every test script's cleanup names its service too · launch.py's records are the box's, not the task's (`--task` names
+    only the log): a bare stop takes every service, a parallel scope's included — measured on linux-pc, 2026-10-13: the
+    desktop scope's launcher case stopped the web scope's server mid-smoke in M0-T34's claim run (ERR_CONNECTION_REFUSED),
+    and a decoy web server forced beside the launcher was stopped 2 of 2, untouched 3 of 3 after — the lead's answer at
+    M0-D28, 2026-10-13: «Launchers stop their own (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/riemann.rs
++++ b/crates/sr-physics/src/reference/riemann.rs
+@@ -85,7 +85,7 @@
+ 
+ /// The star pressure: the root of f_L + f_R + (u_R − u_L), a safeguarded Newton inside a bracket that bisection keeps.
+ fn star_pressure(l: &State, r: &State) -> Result<f64, RiemannError> {
+-    let gamma = GAMMA;
++    let gamma = 1.4;
+     let du = r.u - l.u;
+     let total = |p: f64| side_function(p, l, gamma).0 + side_function(p, r, gamma).0 + du;
+     if total(0.0) >= 0.0 {

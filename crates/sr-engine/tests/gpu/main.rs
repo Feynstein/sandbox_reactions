@@ -48,6 +48,12 @@ mod grav;
 /// M0-T30 — the GPU FFT and the convolution over the box (contract §1.3.3, §1.4.2, §6.2.2).
 mod fft;
 
+/// M0-T33b — gas flow on the CPU twin (contract §2.3.4, §2.8, §5.1's G-SOD); M0-T34 — P4 on the GPU, the same oracle.
+mod sod;
+
+/// M0-T35 — the leave and bounce edges and escaped mass, on the twin and on P4 (contract §2.8, §2.9, §5.1's G-EDGE).
+mod edges;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;

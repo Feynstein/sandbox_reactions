@@ -1,0 +1,22 @@
+== 2026-10-13T09:53:43-04:00 desktop[launcher] · task M0-D28-dpre1 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 0.92 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: pid 3435986 stopped; its X server :99, pid 3435985 stopped
+game-offscreen: nothing recorded
+web: pid 3435944 stopped
+services: 5, stopped: 5
+=== GO ===
+headless-boot stopped
+game stopped
+game-xvfb stopped
+game-offscreen stopped
+web stopped
+services: 5, running: 0
+=== GO ===
+=== NO-GO: the launcher stopped a service it did not start (the decoy web server) ===
+

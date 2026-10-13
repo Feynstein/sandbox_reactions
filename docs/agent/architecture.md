@@ -202,8 +202,8 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
   (`Scene::writes_calibration`). An object's `x`, `y` are points in cell units, cells sampled at their centres; objects add
   where they overlap; a `--world` resize keeps them about the world's centre; an object off the world is an `SR-WARN`
   (M0-T25's defaults, `milestones/m0/tasks/M0-T25.md`). Presets are scenes too (`Scene::preset`; every preset is the
-  Sun-like disk until M0-T74). The scene's edge and switches are recorded in the summary, not applied yet — no pass reads
-  them (M0-T35, M0-T37).
+  Sun-like disk until M0-T74). The scene's edge and switches are recorded in the summary; the edge mode is P4's since M0-T35
+  (`Step::set_edge_mode`), the `gravity` and `hydro` switches build P2 and P4, the others wait for their passes (M0-T37).
 - **Dump.** The magic, a little-endian u32 header length, the JSON header, then §2.2's channels as little-endian f32
   planes in §2.2's order, row-major — the state's canonical form, so `load_dump` → `dump_state` is bit for bit. The
   header's `step` is the steps run since the scene (the next step's index); `resume` carries what no cell holds and a

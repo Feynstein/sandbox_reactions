@@ -1,0 +1,49 @@
+== 2026-10-13T10:27:24-04:00 fft_twin · task M0-T35 · box laserax-ai :: bash tests/cpu.sh sr-physics reference::fft
+-- fft_twin · exit=0 · 2.12 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 1.92s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-8ac46c43ceb83ace)
+
+running 10 tests
+test reference::fft::tests::fft_of_a_delta_and_a_wave_are_exact ... ok
+test reference::fft::tests::padded_sizes_follow_the_box_rule_and_refuse_out_of_range_boxes ... ok
+test reference::fft::tests::inverse_undoes_forward_in_1d_and_2d ... ok
+test reference::fft::tests::fft2_matches_the_direct_2d_dft_and_obeys_parseval ... ok
+test reference::fft::tests::a_single_source_reproduces_the_kernel_shifted ... ok
+test reference::fft::tests::parseval_holds_at_the_largest_size ... ok
+test reference::fft::tests::fft_matches_the_direct_dft ... ok
+test reference::fft::tests::the_kernel_transform_is_cached_per_padded_size ... ok
+test reference::fft::tests::mass_in_the_corners_does_not_wrap_around ... ok
+test reference::fft::tests::convolution_matches_direct_summation_on_48_by_40_with_an_asymmetric_kernel ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 68 filtered out; finished in 0.12s
+
+
+== 2026-10-13T10:29:03-04:00 fft_twin · task M0-T35 · box laserax-ai :: bash tests/cpu.sh sr-physics reference::fft
+-- fft_twin · exit=0 · 2.12 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 1.97s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-8ac46c43ceb83ace)
+
+running 10 tests
+test reference::fft::tests::padded_sizes_follow_the_box_rule_and_refuse_out_of_range_boxes ... ok
+test reference::fft::tests::fft_of_a_delta_and_a_wave_are_exact ... ok
+test reference::fft::tests::parseval_holds_at_the_largest_size ... ok
+test reference::fft::tests::inverse_undoes_forward_in_1d_and_2d ... ok
+test reference::fft::tests::fft2_matches_the_direct_2d_dft_and_obeys_parseval ... ok
+test reference::fft::tests::a_single_source_reproduces_the_kernel_shifted ... ok
+test reference::fft::tests::fft_matches_the_direct_dft ... ok
+test reference::fft::tests::the_kernel_transform_is_cached_per_padded_size ... ok
+test reference::fft::tests::mass_in_the_corners_does_not_wrap_around ... ok
+test reference::fft::tests::convolution_matches_direct_summation_on_48_by_40_with_an_asymmetric_kernel ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 68 filtered out; finished in 0.08s
+
+

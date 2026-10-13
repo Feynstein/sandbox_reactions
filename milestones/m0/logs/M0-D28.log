@@ -1,0 +1,128 @@
+# M0-D28 | 2026-10-13T09:45:37-04:00 | linux-pc laserax-ai
+## probe 1: stop then port
+web: ready on port 47812, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D28-probe1.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: nothing recorded
+web: pid 3265944 stopped
+services: 5, stopped: 5
+=== GO ===
+refused after 0.0001s (ConnectionRefusedError)
+## probe 2: start while port already held by a foreign server
+web: port 47812 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL web: port 47812 held by a process we did not start - not reusing
+=== NO-GO: 1 failure(s) ===
+start rc=1
+cat: milestones/m0/logs/M0-D28-probe2.launch.web.log: No such file or directory
+refused after 0.0001s (ConnectionRefusedError)
+headless-boot stopped
+game stopped
+game-xvfb stopped
+game-offscreen stopped
+web stopped
+services: 5, running: 0
+=== GO ===
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: nothing recorded
+web: nothing recorded
+services: 5, stopped: 5
+=== GO ===
+## probe 3: second start, same task, server running
+web: ready on port 47812, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D28-probe3.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+web: already running as pid 3266974 - not restarting
+services: 1, ready: 0
+FAIL web: already running as pid 3266974 - not restarting
+=== NO-GO: 1 failure(s) ===
+start#2 rc=1
+ybelang+ 3266974    4457 23 09:45 ?        00:00:00 python3 -m http.server 47812 --bind 127.0.0.1 --directory web/dist
+web: pid 3266974 stopped
+services: 5, stopped: 5
+=== GO ===
+refused after 0.0002s (ConnectionRefusedError)
+no server left
+## probe 4: does verify.py stop the task's services when a case ends?
+web: ready on port 47812, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D28-probe4.launch.web.log)
+verify: 518 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 46.78->46.78
+=== GO ===
+ybelang+ 3273734    4457  8 09:46 ?        00:00:00 python3 -m http.server 47812 --bind 127.0.0.1 --directory web/dist
+web: pid 3273734 stopped
+services: 5, stopped: 5
+=== GO ===
+## probe 5: service-named stop leaves the other services
+web: ready on port 47812, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D28-probe5.launch.web.log)
+game-xvfb: nothing recorded
+services: 1, stopped: 1
+=== GO ===
+rc=0
+web still up
+web: pid 3323811 stopped
+services: 1, stopped: 1
+=== GO ===
+rc=0
+  web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-pre1.web.log
+verify: 0 passed, 0 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.58 s · mode case · PARTIAL, not the loop (--case overlap) · jobs 8 · box laserax-ai · python 3.12.3 · load 68.05->68.05
+=== NO-GO: web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-pre1.web.log ===
+  web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-pre2.web.log
+verify: 0 passed, 0 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.58 s · mode case · PARTIAL, not the loop (--case overlap) · jobs 8 · box laserax-ai · python 3.12.3 · load 68.05->68.05
+=== NO-GO: web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-pre2.web.log ===
+  web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-pre3.web.log
+verify: 0 passed, 0 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.35 s · mode case · PARTIAL, not the loop (--case overlap) · jobs 8 · box laserax-ai · python 3.12.3 · load 72.29->72.29
+=== NO-GO: web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-pre3.web.log ===
+=== NO-GO: web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-post1.web.log ===
+=== NO-GO: web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-post2.web.log ===
+=== NO-GO: web: web[overlap]: no `=== GO ===` / `=== NO-GO: ... ===` line (exit 1); 0 case(s) < expected 1 · log milestones/m0/logs/M0-D28-post3.web.log ===
+## probe 6: stop --task A while web runs under task A-web / under task Z
+web: ready on port 47812, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D28-p6-web.launch.web.log)
+web: pid 3354483 stopped
+services: 5, stopped: 5
+=== GO ===
+refused after 0.0001s (ConnectionRefusedError)
+web: nothing recorded
+services: 1, stopped: 1
+web: ready on port 47812, 0.2s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/ZZZ-p6b.launch.web.log)
+web: pid 3354560 stopped
+services: 5, stopped: 5
+=== GO ===
+refused after 0.0001s (ConnectionRefusedError)
+web: nothing recorded
+services: 1, stopped: 1
+=== NO-GO: desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start (the decoy web server) · log milestones/m0/logs/M0-D28-dpre1.desktop.log ===
+=== NO-GO: desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start (the decoy web server) · log milestones/m0/logs/M0-D28-dpre2.desktop.log ===
+=== GO ===
+=== GO ===
+=== GO ===
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 10.26 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 21.53->25.34
+=== GO ===
+verify: 5 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 11.54 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 25.34->32.9
+=== GO ===
+verify: 5 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.35 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 32.9->36.42
+=== GO ===
+verify: 5 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 9.68 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 36.42->33.79
+=== GO ===
+desktop · clean · GO · arm 1/4, 3 left
+desktop · plant status-never-ready · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[window]) · arm 2/4, 2 left
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb) · arm 3/4, 1 left
+desktop · plant launcher-stop-all · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start () · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope desktop · 192.01 s · 4 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D28.desktop.redarm.log
+=== GO ===
+## claim run 2026-10-13T10:00:33-04:00
+FLAG oracle: tests/smoke.sh changed since M0-D28's start - a test, case or check M0-D28's Deliver: does not name
+FLAG oracle: tests/web/check.sh changed since M0-D28's start - a test, case or check M0-D28's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D28's start - a test, case or check M0-D28's Deliver: does not name
+FLAG oracle: scope `desktop` changed in tools/pb/verify.json - M0-D28's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-D28.<scope>.log · record: loop_times.jsonl · tree cf0f7452dd4b+e6814aa46252
+anchor: 5 path×scope entries moved by this run
+anchor: 143 paths checked · 124 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 143 covered of 267 visible
+skipped   116  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 528 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 25 not impacted · 3.62 s + loop 188.35 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 12.58->12.58 · base: M0-D28's start 2026-10-13T09:44:11-04:00
+=== GO ===

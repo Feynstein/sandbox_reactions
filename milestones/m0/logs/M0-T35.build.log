@@ -1,0 +1,37 @@
+== 2026-10-13T10:27:24-04:00 build[native] · task M0-T35 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-13T10:27:24-04:00 build[wasm] · task M0-T35 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.82 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=1 · 8.03 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+    Checking sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+error: the loop variable `k` is used to index `f`
+   --> crates/sr-physics/src/reference/hydro.rs:599:38
+    |
+599 | ...                   for k in 0..COMPONENTS {
+    |                                ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+599 -                             for k in 0..COMPONENTS {
+599 +                             for (k, <item>) in f.iter().enumerate().take(COMPONENTS) {
+    |
+
+error: could not compile `sr-physics` (lib) due to 1 previous error
+=== NO-GO: cargo clippy -D warnings failed ===
+
+== 2026-10-13T10:29:03-04:00 build[native] · task M0-T35 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-13T10:29:03-04:00 build[wasm] · task M0-T35 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.82 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=0 · 8.98 s
+build native: 1.99.0 in 9 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+

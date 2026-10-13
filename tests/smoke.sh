@@ -47,16 +47,38 @@ if [ $launcher -eq 1 ]; then
     MINGW* | MSYS* | CYGWIN*) run_launcher() { printf '\n' | cmd //c ".\\start.bat $service" 2>&1; } ;;
     *) run_launcher() { printf '\n' | bash start.sh "$service" 2>&1; } ;;
   esac
+  # launch.py's records are the box's, not the task's: a bare `launch.py stop` stops every service, a parallel scope's
+  # included (M0-D28: it took the web scope's server mid-smoke). A decoy web server, started here under the web scope's
+  # port lock (its lock file, flock or mkdir as tests/web/check.sh takes it), must outlive the launcher.
+  decoy_task="${PB_TASK:-launcher}-decoy" web_lock="${TMPDIR:-/tmp}/sr-web-47812.lock" decoy=0
+  _sr_decoy_down() {
+    [ "$decoy" = 1 ] && $PY tools/pb/launch.py stop web --task "$decoy_task" >/dev/null 2>&1
+    [ -f "$web_lock.d/pid" ] && [ "$(cat "$web_lock.d/pid" 2>/dev/null)" = "$$" ] && rm -rf "$web_lock.d"
+  }
+  trap '_sr_decoy_down; _sr_unlock' EXIT
+  if command -v flock >/dev/null 2>&1; then
+    exec 9>"$web_lock" && flock 9
+  else
+    until mkdir "$web_lock.d" 2>/dev/null; do
+      holder="$(cat "$web_lock.d/pid" 2>/dev/null)"
+      [ -n "$holder" ] && ! kill -0 "$holder" 2>/dev/null && rm -rf "$web_lock.d"
+      sleep 1
+    done
+    echo $$ > "$web_lock.d/pid"
+  fi
+  decoy=1
+  dout="$($PY tools/pb/launch.py start web --task "$decoy_task" 2>&1)" || { echo "$dout"; echo "=== NO-GO: the decoy web server did not start ==="; exit 1; }
   out="$(run_launcher)"; rc=$?
   echo "$out"
   left="$($PY tools/pb/launch.py status --task "${PB_TASK:-launcher}" 2>&1)"
   # whatever the verdict, never leave a game or its Xvfb behind (a red-armed plant leaves one by design)
-  $PY tools/pb/launch.py stop --task "${PB_TASK:-launcher}" >/dev/null 2>&1
+  $PY tools/pb/launch.py stop "$service" --task "${PB_TASK:-launcher}" >/dev/null 2>&1
   [ $rc -eq 0 ] || { echo "=== NO-GO: the launcher exited $rc ==="; exit 1; }
   echo "$out" | grep -q "^$service: ready on " || { echo "=== NO-GO: the launcher never reached ready ==="; exit 1; }
   echo "$out" | grep -q "^$service: pid .* stopped" || { echo "=== NO-GO: the launcher did not stop $service ==="; exit 1; }
-  echo "$left" | grep -q "^services: .*, running: 0$" || { echo "$left"; echo "=== NO-GO: a process is left running after the launcher ==="; exit 1; }
-  echo "launcher $service: built in $built s, started, stopped, nothing left running"
+  echo "$left" | grep -q "^$service stopped$" || { echo "$left"; echo "=== NO-GO: a process is left running after the launcher ==="; exit 1; }
+  echo "$left" | grep -q "^web running " || { echo "$left"; echo "=== NO-GO: the launcher stopped a service it did not start (the decoy web server) ==="; exit 1; }
+  echo "launcher $service: built in $built s, started, stopped, nothing left running, the decoy web server untouched"
   echo "=== GO ==="
   exit 0
 fi

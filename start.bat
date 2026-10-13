@@ -9,4 +9,4 @@ if "%SERVICE%"=="game" set "ASKED=--asked"
 py -3.12 tools\pb\launch.py start %SERVICE% --task launcher %ASKED%
 echo Sandbox Reactions is running. Press Enter to close it.
 set /p "_="
-py -3.12 tools\pb\launch.py stop --task launcher
+py -3.12 tools\pb\launch.py stop %SERVICE% --task launcher

@@ -1,0 +1,31 @@
+== 2026-10-13T08:10:12-04:00 build[native] · task M0-T33b · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-13T08:10:12-04:00 build[wasm] · task M0-T33b · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.56 s
+build wasm: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=1 · 13.18 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+    Blocking waiting for file lock on build directory
+    Checking sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+error: the use of negated comparison operators on partially ordered types produces code that is hard to read and refactor, please consider using the `partial_cmp` method instead, to make it clear that the two values could be incomparable
+   --> crates/sr-physics/src/reference/hydro.rs:277:12
+    |
+277 |         if !(sigma > 0.0) || u.iter().any(|v| !v.is_finite()) {
+    |            ^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#neg_cmp_op_on_partial_ord
+    = note: `-D clippy::neg-cmp-op-on-partial-ord` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::neg_cmp_op_on_partial_ord)]`
+
+error: the use of negated comparison operators on partially ordered types produces code that is hard to read and refactor, please consider using the `partial_cmp` method instead, to make it clear that the two values could be incomparable
+   --> crates/sr-physics/src/reference/hydro.rs:287:12
+    |
+287 |         if !(raw > 0.0) {
+    |            ^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#neg_cmp_op_on_partial_ord
+
+error: could not compile `sr-physics` (lib) due to 2 previous errors
+=== NO-GO: cargo clippy -D warnings failed ===
+

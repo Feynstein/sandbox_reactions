@@ -1,0 +1,58 @@
+why build: never: .cargo/config.toml (+56)
+why registry: stale: crates/sr-physics/src/reference/hydro.rs
+why eos: stale: crates/sr-physics/src/reference/hydro.rs
+why fft_twin: stale: crates/sr-physics/src/reference/hydro.rs
+why riemann: stale: crates/sr-physics/src/reference/hydro.rs
+why sod: stale: crates/sr-physics/src/reference/hydro.rs
+why grav_force: stale: crates/sr-physics/src/reference/hydro.rs
+why grav_selfforce: stale: crates/sr-physics/src/reference/hydro.rs
+why fft: stale: crates/sr-physics/src/reference/hydro.rs
+why state: stale: crates/sr-physics/src/reference/hydro.rs
+why floors: stale: crates/sr-physics/src/reference/hydro.rs
+why dt: stale: crates/sr-physics/src/reference/hydro.rs
+why box: stale: crates/sr-physics/src/reference/hydro.rs
+why latch: stale: crates/sr-physics/src/reference/hydro.rs
+why timing: stale: crates/sr-physics/src/reference/hydro.rs
+why scene: stale: crates/sr-physics/src/reference/hydro.rs
+why dump: stale: crates/sr-physics/src/reference/hydro.rs
+why boot: stale: crates/sr-physics/src/reference/hydro.rs
+why desktop: never: .cargo/config.toml (+51)
+build           2/0/0       13.68 s  GO · step 1/19, 18 left
+registry        29/0/0       8.32 s  GO · step 2/19, 17 left
+eos             13/0/0       8.35 s  GO · step 3/19, 16 left
+fft_twin        10/0/0       8.42 s  GO · step 4/19, 15 left
+riemann         8/0/0        8.33 s  GO · step 5/19, 14 left
+sod             9/0/0       21.22 s  GO · step 6/19, 13 left
+grav_force      13/0/0       8.80 s  GO · step 7/19, 12 left
+grav_selfforce  5/0/0       13.00 s  GO · step 8/19, 11 left
+fft             8/0/0       12.32 s  GO · step 9/19, 10 left
+state           6/0/0        8.03 s  GO · step 10/19, 9 left
+floors          7/0/0       11.76 s  GO · step 11/19, 8 left
+dt              6/0/0       10.12 s  GO · step 12/19, 7 left
+box             6/0/0        9.55 s  GO · step 13/19, 6 left
+latch           5/0/0        6.88 s  GO · step 14/19, 5 left
+timing          5/0/0        7.37 s  GO · step 15/19, 4 left
+scene           8/0/0        4.35 s  GO · step 16/19, 3 left
+dump            8/0/0        4.79 s  GO · step 17/19, 2 left
+boot            1/0/0        3.34 s  GO · step 18/19, 1 left
+desktop         2/0/0        6.83 s  GO · step 19/19, 0 left
+plan_lint       NOT RUN (not impacted: its 2 path(s) checked at the anchor)
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 39 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 39 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 57 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 48 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+flags: M0-T33b-r2 is no block of a plan under milestones/ - no Deliver and no type to read them against
+logs: milestones/m0/logs/M0-T33b-r2.<scope>.log · record: loop_times.jsonl · tree cf0f7452dd4b+7ed3881e7bce
+anchor: 126 path×scope entries moved by this run
+anchor: 140 paths checked · 121 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 140 covered of 261 visible
+skipped   113  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 151 passed, 0 failed, 0 skipped · 19/19 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 11 not impacted · 23.17 s + loop 0.02 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 44.96->47.3 · base: M0-T34's start 2026-10-13T08:09:14-04:00 — no start for M0-T33b-r2
+=== GO ===
