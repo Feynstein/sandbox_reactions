@@ -352,6 +352,91 @@
         }
       ]
     },
+    "heat_gauss": {
+      "desc": "G-HEAT1 and the light leaving, on the CPU twin (contract §2.4, §1.7, §5.1, SM-O7, SM-E21, R8, R13; M0-T41; the GPU's cases join with M0-T42): sr_physics::reference::heat — one-temperature flux-limited diffusion stepped by RKL2, no adapter touched — on scenes/heat_pulse.json (128 × 128, bounce, heat only, test.constant_diffusivity 0.5, a background at T_floor) with a Gaussian of σ₀ = 4 added by the test: σ² per axis at t = 8, 16, 24 within 1 % of σ₀² + 2χt (measured 1e-12) and the total heat constant to 1e-5 (measured 1.4e-14); the flux kept equal to −χ·C·ΔT at x and y faces, positive toward +x, +y, the cell field the mean of a cell's two faces; a hot slab (T = 30, 32 × 32 at the world's left edge, vacuum around) whose booked `radiated` equals the heat the grid lost to 1e-6 (measured 0 at 1e-9), each cell's `emitted` nonzero exactly on the slab's ring and every vacuum cell untouched bit for bit; test.pin_temperature leaving the planes bit for bit and keeping F; scenes/heat_pulse.json and heat_spot.json carry what the oracles assume. chi-scale plants χ × 0.9 in the constant-diffusivity branch",
+      "cmd": "bash tests/gpu.sh heat::gauss physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 6,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "scenes/heat_pulse.json",
+        "scenes/heat_spot.json",
+        "tests/plants/chi-scale.patch"
+      ],
+      "plants": [
+        {
+          "id": "chi-scale",
+          "patch": "tests/plants/chi-scale.patch"
+        }
+      ]
+    },
+    "heat_rkl2": {
+      "desc": "G-HEAT2, RKL2 super-time-stepping on the CPU twin (contract §2.4.3, §5.1, SM-O8, SM-E18, R8, R13; M0-T41): one RKL2 pass over t = 24 (14 stages) and the explicit sub-steps the test writes (96 of Δt_p/2) both at σ² within 1 % of σ₀² + 2χt and of each other (measured 1e-12); six passes of Δt = 4 (6 stages) against the explicit field within 1 % of the pulse's peak (measured 2.7e-3) and the analytic Gaussian; the stage count against the contract's formula worked by hand for eight steps from 0.05 to 100 (the smallest s ≥ 2 with Δt_p (s² + s − 2)/4 ≥ Δt, Δt_p = 0.5), `SR-WARN heat stages 33` above 32 and not at 32; the adversarial case — a one-cell pulse, 15 passes of Δt = 6.4 Δt_p (5 stages, the step just over what 4 cover), read as the difference of two runs on a background of 2.0: σ² within 1 % of the explicit run's and of 2χt, total heat to 1e-6, the ringing (−2.3 % of the pulse, measured) bounded and gone by the end. rkl2-s-minus-one plants one stage fewer in the twin",
+      "cmd": "bash tests/gpu.sh heat::rkl2 physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 5,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "scenes/heat_pulse.json",
+        "tests/plants/rkl2-s-minus-one.patch"
+      ],
+      "plants": [
+        {
+          "id": "rkl2-s-minus-one",
+          "patch": "tests/plants/rkl2-s-minus-one.patch"
+        }
+      ]
+    },
+    "heat_limiter": {
+      "desc": "G-FLD, the flux limiter on the CPU twin (contract §2.4.1, §5.1, SM-E19, SM-E20, R8, R13; M0-T41): Levermore–Pomraning's λ(R) = (2 + R)/(6 + 3R + R²) at five closed-form points, λR < 1 and λ falling; scenes/heat_spot.json (64 × 64 thin gas, Σ = 10⁻⁴, a hot 8 × 8 spot at T = 2, leave edges) over 20 passes: |F| ≤ c_sb a_r T⁴ of the hotter side (1 + 10⁻⁶) at every face including the world's edges, and the limiter binding (worst ratio 0.98, measured); the same spot with test.flux_limiter off at 1,667 times the bound — the check can fail; thick gas (Σ = 100, κΣ = 200, a gentle gradient) carrying (4/3) a_r c_sb T³/(κΣ) within 1 % (measured 1e-6); the flag off giving c_sb ΔE/(3 κΣ_face) across a face of the spot to 1e-9. limiter-off plants λ ≡ 1/3",
+      "cmd": "bash tests/gpu.sh heat::limiter physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 4,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "scenes/heat_spot.json",
+        "tests/plants/limiter-off.patch"
+      ],
+      "plants": [
+        {
+          "id": "limiter-off",
+          "patch": "tests/plants/limiter-off.patch"
+        }
+      ]
+    },
     "grav_force": {
       "desc": "gravity's force law on the CPU twin and on the GPU's P2, on the physics adapter (contract §1.4.2, §5.1's G-GRAV1, §2.3.5): K(0, 0) = −G·4 ln(1 + √2) = −3.525494 G asserted (closed form against a polar quadrature, 1e-12) with K = −G/r elsewhere, symmetric and linear in G, one unit of Σ giving that self cell and −G/r around it; a Maclaurin disk Σc√(1 − r²/a²) on a grid, φ = K ∗ Σ_src by the zero-padded FFT convolution and g = −∇φ by central differences: |Δg|/|g| ≤ 2 % at every cell with 0 < r ≤ 0.75a for a = 40 (the largest error and its cell printed; measured 0.30 %, so the direct force kernels stay unbuilt), the a = 20 over a = 40 largest error within [1.6, 2.4] (measured 1.93), a disk centred on a cell corner (the scene files' convention) within 2 % too (M0-T29); the GPU's P2 (step/grav.rs, shaders/grav.wgsl) on one step of the a = 40 disk in a 128 × 128 world within 2 % (measured 0.30 %), a = 20 over a = 40 within [1.6, 2.4] (1.93), φ and g over the fitted box within G-REF's 1e-3 relative L1 of the twin (measured ≤ 3e-6), P9's Δt_0 and Δt_1 = min(hydro term, η_g / √max|g|) within 1e-6 with the gravity term binding, and a frame's φ, g and Δt the bare steps', bit for bit (M0-T31); K(i, j) = −G/√(i² + j²) at every offset of a 64 × 64 box within 4e-16 relative, K(0, 0) exact; the GPU on a faint disk in sub-Σ_vac cells (the mask), on a wide box (392 × 64, FFT 1024 × 128), a tall one (40 × 344, 128 × 1024) and the whole 600 × 400 world (2048 × 1024): φ and g within G-REF's 1e-3 of the twin and φ at nine cells within 1e-4 of the kernel summed directly over the sources (M0-D25)",
       "cmd": "bash tests/gpu.sh grav::force physics",

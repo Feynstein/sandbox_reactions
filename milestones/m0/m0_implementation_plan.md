@@ -138,7 +138,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D30 | BUILD | P4 is 84 % of a Sun-sized step on the Quadro: every cell recomputes its four neighbours' predicted faces (the lead's word at M0-V5) | AFTER M0-TC4 | DONE (2026-10-13 15:55) |
 | M0-D31 | BUILD | architecture.md's pass table says P2 and P4 have no dispatches: lot 4's four and lot 5's three were never written in | AFTER M0-D30 | DONE (2026-10-13 16:00) |
 | M0-D32 | BUILD | rung_record.py's report reads a block's rung from its handoff's prose, never its quoted model= level=: 6 of the 7 rungs it reads on linux-pc are wrong | AFTER M0-D31 | DONE (2026-10-13 16:09, started 16:03) |
-| M0-T41 | BUILD | Heat and light on the CPU twin (P5); G-HEAT1, G-HEAT2, G-FLD twin cases | AFTER M0-V5 | TODO |
+| M0-T41 | BUILD | Heat and light on the CPU twin (P5); G-HEAT1, G-HEAT2, G-FLD twin cases | AFTER M0-V5 | DONE (2026-10-13 16:48) |
 | M0-T42 | BUILD | Heat and light on the GPU (P5), radiated energy at vacuum and edges | AFTER M0-T41 | TODO |
 | M0-T43 | BUILD | The radiation force in the flow (§2.4.4) | AFTER M0-T42 | TODO |
 | M0-T44a | BUILD | The rate law: ω and its temperature table (split from M0-T44 by M0-TB) | AFTER M0-T43 | TODO |
@@ -472,7 +472,7 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-T41
+- Next task: M0-T42
 - Counters: T=116 · D=32 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=4 · TR=1 · TM=5 · TD=1 · TE=1
 - Open D/BLOCKED register: none
 - Outstanding commit gates: Phase 7's (the lead's, after M0-V5's close): M0-T33a … M0-T35 committed through 19e0d8e, pushed; M0-T36 … M0-T40 and M0-V5 (lot 5's last code, M0-V5's report, logs, plan, archive and contract edits) are not
@@ -1159,8 +1159,9 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 # Phase 8 — Lot 6 · heat, light and burning
 
-## M0-T41 · Heat and light on the CPU twin (P5) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V5)
-- Status: TODO
+## M0-T41 · Heat and light on the CPU twin (P5) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V5)
+- Status: DONE (2026-10-13 16:48)
+- Carried flags: [M0-T41, 2026-10-13] [M0-T41, 2026-10-13, Sonnet 5.5 high, Laser2025-20] first try ENDED by its claim run (PLAYBOOK section 0: a NO-GO claim below (usual) ends the try — no second attempt on that rung); rated (usual), back to TODO. The deliverable is on disk, nothing to rebuild: crates/sr-physics/src/reference/heat.rs (+ pub mod heat in reference/mod.rs), crates/sr-engine/tests/gpu/heat.rs (+ mod heat in main.rs), scenes/heat_pulse.json, scenes/heat_spot.json, tools/pb/verify.json (scopes heat_gauss 6 / heat_rkl2 5 / heat_limiter 4, R17 spelling), tests/plants/chi-scale.patch, rkl2-s-minus-one.patch, limiter-off.patch, detail in tasks/M0-T41.md. Verify 1 GO (15 cases) and the three red-arms proven (chi-scale 2 failed, rkl2-s-minus-one 5 failed, limiter-off 2 failed) before the claim. The claim: 'verify.py --changed --task M0-T41' = 718 passed, 27/28 scopes GO, ONE red: build[native], cargo clippy -D warnings, 2 errors, both clippy::neg_cmp_op_on_partial_ord at heat.rs:350 (if self.test.pin_temperature || !(max_rate > 0.0) || !(dt > 0.0)). The fix is those two tests only (e.g. max_rate.partial_cmp(&0.0) != Some(Greater), or invert to a positive condition) — keep it on one line so the plant hunks (rkl2-s-minus-one @@ -352) still apply, then re-run 'verify.py --redarm' on all three scopes if any line moved, then the plan edits and one --changed (it will re-run 27 scopes in ~175 s). Untested after the lint fix: nothing else; clippy stops at the first crate, so sr-engine's lib (unchanged by this block) is the only crate clippy did not reach. Next session: do not redo the design — read tasks/M0-T41.md (conductance form, RKL2 w1 = 4/(s2+s-2), vacuum = floor state, radiated on the RKL2 recursion, F = start-of-pass faces, pin_temperature default) and the flags already filed to M0-T42, T43, T48 (the Twin driver has no P5 and nobody owns adding it), T49.
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.4 (S1), §1.7 (heat), §2.4, §5.1
   (G-HEAT1, G-HEAT2, G-FLD) + milestones/m0/reports/sim_models.md SM-E18–SM-E22, SM-O7, SM-O8 +
   docs/agent/testing.md
@@ -1183,10 +1184,11 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   plant stays GO
 - Adversarial: a pulse wide enough that one stage too few still lands within 1 % makes rkl2-s-minus-one
   unfailable — the red-arm proves it, else the pulse narrows and the handoff says so.
-- Handoff: <placeholder>
+- Handoff: P5 on the CPU twin: reference/heat.rs (FLD with LP λ, κ with S1 dust term, RKL2 frozen at pass start, radiated on the RKL2 recursion, F kept, test flags), tests/gpu/heat.rs + scenes heat_pulse/heat_spot, scopes heat_gauss 6 / heat_rkl2 5 / heat_limiter 4, plants chi-scale / rkl2-s-minus-one / limiter-off all proven RED (first try, Sonnet 5.5 high). Second try fixed the claim's only red: clippy neg_cmp_op_on_partial_ord at heat.rs:350 → !(max_rate > 0.0 && dt > 0.0), same line, no plant hunk moved. Claim: verify.py --changed --task M0-T41 GO, 713 passed, 26/26 scopes, heat_rkl2 plant re-armed RED, on Laser2025-20 (win-laptop). Defaults taken: pin_temperature leaves planes alone, books nothing, keeps F (contract names only the key); the one-cell pulse stays (a smooth one cannot fail rkl2-s-minus-one — measured). Not acted on: six FLAG oracle lines from the claim, spelling only (Deliver: drops the crate prefix and writes scopes with '-', R17). Flags already filed: the Twin driver has no P5 (M0-T48), GPU port (M0-T42), P4 reads F (M0-T43), testing.md rows (M0-T49). Detail: tasks/M0-T41.md. Ran on model=claude-opus-5-5 level=high (rung_record). Next: M0-T42.
 
 ## M0-T42 · Heat and light on the GPU (P5) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T41)
 - Status: TODO
+- Carried flags: [M0-T41, 2026-10-13] P5's twin is crates/sr-physics/src/reference/heat.rs (Heat::step(&mut State, dt) -> Pass); its scopes are heat_gauss (6 cases), heat_rkl2 (5), heat_limiter (4) = 15 in tests/gpu/heat.rs, modules gauss/rkl2/limiter (R17: the plan's heat-gauss reads heat_gauss) — add the GPU cases to those modules and raise each scope's expected in tools/pb/verify.json. The scheme to port: per-face conductance K_f = c_sb lambda(R) a_r (T_a+T_b)(T_a^2+T_b^2)/(kappa Sigma)_f + k_cond, with kappa Sigma and a_r T^4 inside R the arithmetic means of the two cells', frozen at P5's start; RKL2 with w1 = 4/(s^2+s-2) (Meyer 2012; s^2+s-4 is a wrong memory that passed every first-order check), dt_p = 1/max_cells(sum_f K_f / C), C = Sigma/mu; a vacuum cell or the world's edge is the floor state (Sigma_floor, T_floor, the gas side's kappa and mu) and the vacuum cell is not updated; radiated rides RKL2's own recursion (R_j = mu_j R_(j-1) + nu_j R_(j-2) + mu~_j dt out(Y_(j-1)) + gamma~_j dt out(Y_0)) so it equals the grid's loss to rounding; F kept = the start-of-pass face fluxes. A smooth pulse cannot see a missing stage (sigma^2 stays exact at s-1): the one-cell pulse case does (tasks/M0-T41.md)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P5), §2.4, §5.1 (G-HEAT1,
   G-HEAT2, G-FLD), §6.2.2 + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/step/heat.rs and shaders/heat.wgsl (new): P5 per M0-T41 in f32 — RKL2's s
@@ -1205,7 +1207,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T43 · The radiation force in the flow · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T42)
 - Status: TODO
-- Carried flags: [M0-T34, 2026-10-13] hydro_update (shaders/hydro.wgsl) is at WebGPU's 8 storage buffers since M0-T34 (state ×3, next ×3, Δt, eos table) and M0-T35/T36 may each have taken a freed slot: the flux F needs one — read their handoffs before binding · [M0-V5, 2026-10-13] M0-D30 (the lead's word at M0-V5) tiles hydro_update before this block adds F to it: read its handoff for P4's new layout, its workgroup memory and its storage-buffer count before binding F · [M0-D30, 2026-10-13] [M0-D30] hydro_update is now one workgroup per 8x8 tile (9,216 B workgroup memory, barriers reached by all 64 invocations): the radiation force goes into hancock's kick and the update's source, and the update already binds WebGPU's 8 storage buffers (tasks/M0-D30.md)
+- Carried flags: [M0-T34, 2026-10-13] hydro_update (shaders/hydro.wgsl) is at WebGPU's 8 storage buffers since M0-T34 (state ×3, next ×3, Δt, eos table) and M0-T35/T36 may each have taken a freed slot: the flux F needs one — read their handoffs before binding · [M0-V5, 2026-10-13] M0-D30 (the lead's word at M0-V5) tiles hydro_update before this block adds F to it: read its handoff for P4's new layout, its workgroup memory and its storage-buffer count before binding F · [M0-D30, 2026-10-13] [M0-D30] hydro_update is now one workgroup per 8x8 tile (9,216 B workgroup memory, barriers reached by all 64 invocations): the radiation force goes into hancock's kick and the update's source, and the update already binds WebGPU's 8 storage buffers (tasks/M0-D30.md) · [M0-T41, 2026-10-13] F is heat::Flux (reference/heat.rs): face fluxes x (w+1) x h and y w x (h+1), positive toward +x/+y, from the start-of-pass temperatures; Flux::cells() gives the two cell-centred planes (the mean of a cell's two faces) that f = kappa Sigma F / c_sb is built from, edge faces included (they carry the light leaving)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P4), §2.4.4 +
   docs/agent/testing.md
 - Deliver: crates/sr-engine/shaders/hydro.wgsl and the twin's reference/hydro.rs: the force per area
@@ -1313,7 +1315,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T48 · The burning field in G-REF · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T47)
 - Status: TODO
-- Carried flags: [M0-T38, 2026-10-13] [M0-T38, 2026-10-13] G-REF's third scene, the burning field, joins tests/gpu/cpu_gpu.rs: grade() takes a scene file (Σ, E relative L1 ≤ 1e-3, each X ≤ 1e-4 where both Σ ≥ 1e-4); X is graded on mixed compositions (H | He) so a burning field's X is read the same way; the heat and reactions passes must be on the twin's Switches and the GPU's Passes (tasks/M0-T38.md) · [M0-V5, 2026-10-13] G-REF holds under the shipped EOS: ref_disk.json and ref_sod.json with their four K overrides removed (ref_sod's states by temperature, Σ 1 | 0.125 at T 2, H | He: P = 1 is below the shipped cold pressure at Σ = 1 and refused) read L1 Σ 3.8e-6 / 7.2e-7, E 3.8e-6 / 1.3e-6, |ΔX| 3.0e-5 / 1.7e-6 on the RTX 5090 — the burning field needs no cold-pressure override. Contract §0.5 [M0-V5]: X is compared where both runs hold Σ ≥ 100 × Σ_vac
+- Carried flags: [M0-T38, 2026-10-13] [M0-T38, 2026-10-13] G-REF's third scene, the burning field, joins tests/gpu/cpu_gpu.rs: grade() takes a scene file (Σ, E relative L1 ≤ 1e-3, each X ≤ 1e-4 where both Σ ≥ 1e-4); X is graded on mixed compositions (H | He) so a burning field's X is read the same way; the heat and reactions passes must be on the twin's Switches and the GPU's Passes (tasks/M0-T38.md) · [M0-V5, 2026-10-13] G-REF holds under the shipped EOS: ref_disk.json and ref_sod.json with their four K overrides removed (ref_sod's states by temperature, Σ 1 | 0.125 at T 2, H | He: P = 1 is below the shipped cold pressure at Σ = 1 and refused) read L1 Σ 3.8e-6 / 7.2e-7, E 3.8e-6 / 1.3e-6, |ΔX| 3.0e-5 / 1.7e-6 on the RTX 5090 — the burning field needs no cold-pressure override. Contract §0.5 [M0-V5]: X is compared where both runs hold Σ ≥ 100 × Σ_vac · [M0-T41, 2026-10-13] the twin driver (reference::Twin, reference/mod.rs) does not run P5: Switches has gravity and hydro only and no block's Deliver adds heat to it — the burning field in G-REF runs heat and reactions on both sides, so whoever builds it (this block or an earlier one) adds a heat switch, P5 between P4 and P8 in section 1.3.2's order, its pass-list label and Heat::step(&mut State, dt) with the scene's test flags; the GPU step's pass list must match (the twin scope compares them)
 - Sizing: E
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §5.1 (G-REF) + tests/gpu/cpu_gpu.rs
   (M0-T38's cases, the shape to copy)
@@ -1328,6 +1330,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T49 · Docs — physics.md (heat, light, reactions, neutrinos) and lot 6's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T48)
 - Status: TODO
+- Carried flags: [M0-T41, 2026-10-13] lot 6's rows from M0-T41: scopes heat_gauss (6 cases, red-arm 72 s), heat_rkl2 (5, 57 s), heat_limiter (4, 68 s) on Laser2025-20 (RTX 4080 Laptop; the twin cases touch no adapter), plants chi-scale, rkl2-s-minus-one, limiter-off; your Verify 2 greps the hyphen spelling (heat-) — R17 spells the scopes heat_ so the rows read heat_gauss; read the grep with that spelling
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6, §2.4, §2.5, §7 + the handoffs of
   M0-T41–M0-T48
 - Deliver: docs/agent/physics.md § Heat and light, § Reactions, § Neutrinos — S1's switch named (§1.6.4)

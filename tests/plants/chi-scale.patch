@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/heat.rs
++++ b/crates/sr-physics/src/reference/heat.rs
+@@ -224,7 +224,7 @@
+             return 0.0;
+         }
+         if let Some(chi) = self.test.constant_diffusivity {
+-            return chi * (0.5 * (a.c() + b.c()));
++            return 0.9 * chi * (0.5 * (a.c() + b.c()));
+         }
+         let (era, erb) = (self.a_r * a.t.powi(4), self.a_r * b.t.powi(4));
+         let face_er = 0.5 * (era + erb);

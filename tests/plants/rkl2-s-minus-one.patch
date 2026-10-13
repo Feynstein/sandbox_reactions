@@ -1,0 +1,10 @@
+--- a/crates/sr-physics/src/reference/heat.rs
++++ b/crates/sr-physics/src/reference/heat.rs
+@@ -352,6 +352,7 @@
+         }
+         let dt_p = 1.0 / max_rate;
+         let s = stages_for(dt_p, dt);
++        let s = if s > 2 { s - 1 } else { s };
+ 
+         let y0: Vec<f64> = sides.iter().map(|s| s.t).collect();
+         let (mut m0, mut out0) = (vec![0.0; n], vec![0.0; n]);

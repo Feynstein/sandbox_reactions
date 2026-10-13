@@ -1,7 +1,8 @@
 //! The CPU f64 twin (m0_contrat.md §1.1, R13): each pass's reference, written in f64 on the CPU before its GPU shader.
 //! `fft` is gravity's machinery (§1.4.2, the Hockney–Eastwood convolution) and the neutrino-heating kernel's (§2.5.4);
 //! `grav` is P2 on it (§1.4); `riemann` is the exact solution of the γ = 2 gas's shock tube (§2.3.1, G-SOD §5.1);
-//! `hydro` is P4, the gas flow, graded against it (§2.3.4, G-SOD); `floors` is P8 (§2.7).
+//! `hydro` is P4, the gas flow, graded against it (§2.3.4, G-SOD); `heat` is P5, flux-limited diffusion stepped by RKL2
+//! (§2.4, G-HEAT1, G-HEAT2, G-FLD); `floors` is P8 (§2.7).
 //!
 //! [`Twin`] is the step driver (M0-T37): the passes built so far, in §1.3.2's order, on the state's f64 planes, the scene's
 //! switches honoured — P1 Δt, P2 gravity, P4 hydro, P8 floors, P9 Δt_{n+1} — each pass joining with its twin. It steps the
@@ -13,6 +14,7 @@
 pub mod fft;
 pub mod floors;
 pub mod grav;
+pub mod heat;
 pub mod hydro;
 pub mod riemann;
 

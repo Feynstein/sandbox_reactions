@@ -63,6 +63,9 @@ mod twin;
 /// M0-T38 — the GPU against the CPU twin, 64 × 64 scenes, 200 steps (contract §5.1's G-REF, §6.7).
 mod cpu_gpu;
 
+/// M0-T41 — heat and light on the CPU twin (contract §2.4, §5.1's G-HEAT1, G-HEAT2, G-FLD); M0-T42 — P5 on the GPU, the same oracles.
+mod heat;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;

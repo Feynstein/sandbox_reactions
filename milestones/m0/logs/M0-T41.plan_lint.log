@@ -1,0 +1,27 @@
+== 2026-10-13T16:38:38-04:00 plan_lint · task M0-T41 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.74 s
+lint: checks=520 failed=0 warnings=4 · blocks=205 · flow_rows=205 · verify_fences=0 · history=0 · flow=per-task · header=486/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC4: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D30: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D31: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D32: DONE outside the current phase and 28 lines long - stub it (§2.6)
+=== GO ===
+
+== 2026-10-13T16:45:03-04:00 plan_lint · task M0-T41 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.50 s
+lint: checks=520 failed=0 warnings=4 · blocks=205 · flow_rows=205 · verify_fences=0 · history=0 · flow=per-task · header=486/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC4: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D30: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D31: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D32: DONE outside the current phase and 28 lines long - stub it (§2.6)
+=== GO ===
+
+== 2026-10-13T16:48:50-04:00 plan_lint · task M0-T41 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.17 s
+lint: checks=519 failed=0 warnings=4 · blocks=205 · flow_rows=205 · verify_fences=0 · history=0 · flow=per-task · header=486/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC4: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D30: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D31: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D32: DONE outside the current phase and 28 lines long - stub it (§2.6)
+=== GO ===
+

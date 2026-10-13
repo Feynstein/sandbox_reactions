@@ -1,0 +1,15 @@
+== 2026-10-13T16:40:24-04:00 capture[smoke] · task M0-T41 · box Laser2025-20 :: bash tests/capture/check.sh {case}
+== 2026-10-13T16:40:29-04:00 capture[refuse] · task M0-T41 · box Laser2025-20 :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=0 · 8.17 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-CAPTURE paused paused.png 2560x1410
+SR-CAPTURE running running.png 2560x1410
+SR-CAPTURE DONE 2 C:/Users/YOHANB~1/AppData/Local/Temp/tmp.IGVpoZYMcF
+2 PNGs of (2560, 1410) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[refuse] · exit=0 · 16.95 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+

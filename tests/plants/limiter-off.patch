@@ -1,0 +1,12 @@
+--- a/crates/sr-physics/src/reference/heat.rs
++++ b/crates/sr-physics/src/reference/heat.rs
+@@ -190,7 +190,8 @@
+         if !self.test.flux_limiter {
+             return 1.0 / 3.0;
+         }
+-        lambda(r)
++        let _ = r;
++        1.0 / 3.0
+     }
+ 
+     /// Cell `i` of `st` as one side of its faces: its temperature (the floor state below Σ_vac), κ and 1/μ.

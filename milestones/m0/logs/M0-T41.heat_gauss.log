@@ -1,0 +1,53 @@
+== 2026-10-13T16:31:46-04:00 heat_gauss · task M0-T41 · box Laser2025-20 :: bash tests/gpu.sh heat::gauss physics
+-- heat_gauss · exit=0 · 4.83 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 2.69s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 6 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 10141.028247164, radiated 10141.028247164, stages up to 5
+ok
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.37e-14 of the pulse, E 8.94e-14 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 3.03e-13
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 8.24e-13
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 9.78e-13
+SR-HEAT1 worst sigma2 error 9.78e-13
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 138 filtered out; finished in 0.64s
+
+
+== 2026-10-13T16:45:11-04:00 heat_gauss · task M0-T41 · box Laser2025-20 :: bash tests/gpu.sh heat::gauss physics
+-- heat_gauss · exit=0 · 17.89 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 16.86s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 6 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 10141.028247164, radiated 10141.028247164, stages up to 5
+ok
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.37e-14 of the pulse, E 8.94e-14 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 3.03e-13
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 8.24e-13
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 9.78e-13
+SR-HEAT1 worst sigma2 error 9.78e-13
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 138 filtered out; finished in 0.44s
+
+

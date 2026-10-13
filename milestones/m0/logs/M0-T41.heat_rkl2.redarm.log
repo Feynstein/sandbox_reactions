@@ -1,0 +1,154 @@
+==== 2026-10-13T16:33:14-04:00 heat_rkl2 · clean · a fresh scratch copy of the tree
+== 2026-10-13T16:33:19-04:00 heat_rkl2 · task M0-T41 · box Laser2025-20 :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=0 · 50.11 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-0d44o5qd\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-0d44o5qd\arm0\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 19.64s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 5 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-HEAT2 sharp pulse, 5 stages x 15: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, response in [-8.88e-16, 4.4711e-3], deepest ring -2.286e-2, heat 1.000000000
+ok
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... ok
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 14 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+ok
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... SR-HEAT2 six passes: largest |T_rkl2 - T_explicit| 2.737e-3, |T_rkl2 - analytic| 2.741e-3, peak 0.4027
+ok
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 139 filtered out; finished in 0.37s
+
+
+==== 2026-10-13T16:33:14-04:00 heat_rkl2 · plant rkl2-s-minus-one · a fresh scratch copy of the tree
+planted rkl2-s-minus-one: tests/plants/rkl2-s-minus-one.patch -> crates/sr-physics/src/reference/heat.rs
+== 2026-10-13T16:33:19-04:00 heat_rkl2 · task M0-T41 · box Laser2025-20 :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=101 · 28.48 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-0d44o5qd\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-0d44o5qd\arm1\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 26.36s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 5 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... 
+thread 'heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (22024) panicked at crates\sr-engine\tests\gpu\heat.rs:470:13:
+assertion `left == right` failed: dt/dt_p = 6.4
+  left: 4
+ right: 5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... 
+thread 'heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not' (27708) panicked at crates\sr-engine\tests\gpu\heat.rs:439:9:
+assertion `left == right` failed
+  left: (31, 32)
+ right: (32, 32)
+FAILED
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 13 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+
+thread 'heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (29232) panicked at crates\sr-engine\tests\gpu\heat.rs:372:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... 
+thread 'heat::rkl2::six_rkl2_passes_match_the_explicit_field' (19892) panicked at crates\sr-engine\tests\gpu\heat.rs:388:13:
+assertion `left == right` failed: dt/dt_p = 8
+  left: 5
+ right: 6
+FAILED
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... 
+thread 'heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt' (31940) panicked at crates\sr-engine\tests\gpu\heat.rs:420:13:
+assertion `left == right` failed: dt 0.5001
+  left: 2
+ right: 3
+FAILED
+
+failures:
+
+failures:
+    heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not
+    heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::rkl2::six_rkl2_passes_match_the_explicit_field
+    heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 139 filtered out; finished in 0.11s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-13T16:47:47-04:00 heat_rkl2 · clean · a fresh scratch copy of the tree
+== 2026-10-13T16:47:50-04:00 heat_rkl2 · task M0-T41 · box Laser2025-20 :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=0 · 18.17 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-k3_yvx2t\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-k3_yvx2t\arm0\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 16.51s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 5 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-HEAT2 sharp pulse, 5 stages x 15: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, response in [-8.88e-16, 4.4711e-3], deepest ring -2.286e-2, heat 1.000000000
+ok
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... ok
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 14 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+ok
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... SR-HEAT2 six passes: largest |T_rkl2 - T_explicit| 2.737e-3, |T_rkl2 - analytic| 2.741e-3, peak 0.4027
+ok
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 139 filtered out; finished in 0.23s
+
+
+==== 2026-10-13T16:47:47-04:00 heat_rkl2 · plant rkl2-s-minus-one · a fresh scratch copy of the tree
+planted rkl2-s-minus-one: tests/plants/rkl2-s-minus-one.patch -> crates/sr-physics/src/reference/heat.rs
+== 2026-10-13T16:47:50-04:00 heat_rkl2 · task M0-T41 · box Laser2025-20 :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=101 · 34.98 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-k3_yvx2t\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-k3_yvx2t\arm1\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 15.53s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 5 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... 
+thread 'heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (26928) panicked at crates\sr-engine\tests\gpu\heat.rs:470:13:
+assertion `left == right` failed: dt/dt_p = 6.4
+  left: 4
+ right: 5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... 
+thread 'heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not' (10472) panicked at crates\sr-engine\tests\gpu\heat.rs:439:9:
+assertion `left == right` failed
+  left: (31, 32)
+ right: (32, 32)
+FAILED
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 13 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+
+thread 'heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (35972) panicked at crates\sr-engine\tests\gpu\heat.rs:372:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... 
+thread 'heat::rkl2::six_rkl2_passes_match_the_explicit_field' (36240) panicked at crates\sr-engine\tests\gpu\heat.rs:388:13:
+assertion `left == right` failed: dt/dt_p = 8
+  left: 5
+ right: 6
+FAILED
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... 
+thread 'heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt' (34508) panicked at crates\sr-engine\tests\gpu\heat.rs:420:13:
+assertion `left == right` failed: dt 0.5001
+  left: 2
+ right: 3
+FAILED
+
+failures:
+
+failures:
+    heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not
+    heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::rkl2::six_rkl2_passes_match_the_explicit_field
+    heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 139 filtered out; finished in 0.07s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

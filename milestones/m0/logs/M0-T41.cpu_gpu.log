@@ -1,0 +1,41 @@
+== 2026-10-13T16:38:52-04:00 cpu_gpu · task M0-T41 · box Laser2025-20 :: bash tests/gpu.sh cpu_gpu physics
+-- cpu_gpu · exit=0 · 54.70 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 39.23s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 2 tests
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA: sim time GPU 2.69746 / twin 2.69747 (-0.000 %); relative L1 Σ 4.605e-5 (band 1e-3), E 6.173e-5 (band 1e-3); largest |ΔX| 4.171e-6 in x_H (band 1e-4)
+ok
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA: sim time GPU 19.52918 / twin 19.52918 (-0.000 %); relative L1 Σ 1.637e-7 (band 1e-3), E 2.061e-7 (band 1e-3); largest |ΔX| 7.718e-7 in x_He (band 1e-4)
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 142 filtered out; finished in 14.51s
+
+
+== 2026-10-13T16:45:11-04:00 cpu_gpu · task M0-T41 · box Laser2025-20 :: bash tests/gpu.sh cpu_gpu physics
+-- cpu_gpu · exit=0 · 28.94 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 16.77s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 2 tests
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA: sim time GPU 2.69746 / twin 2.69747 (-0.000 %); relative L1 Σ 4.605e-5 (band 1e-3), E 6.173e-5 (band 1e-3); largest |ΔX| 4.171e-6 in x_H (band 1e-4)
+ok
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA: sim time GPU 19.52918 / twin 19.52918 (-0.000 %); relative L1 Σ 1.637e-7 (band 1e-3), E 2.061e-7 (band 1e-3); largest |ΔX| 7.718e-7 in x_He (band 1e-4)
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 142 filtered out; finished in 11.50s
+
+
