@@ -1,0 +1,8 @@
+{"version": 1,
+ "world": {"width": 600, "height": 400, "edge": "bounce"},
+ "slowdown": false,
+ "switches": {"gravity": false, "heat": false, "reactions": false, "neutrinos": false, "sinks": false},
+ "objects": [
+   {"kind": "rect", "x0": 292, "y0": 192, "w": 16, "h": 16, "sigma": 1.0, "pressure": 0.1, "composition": {"H": 1.0}, "v": [-11.6, 0]}
+ ],
+ "overrides": {"k1e": 0, "k2e": 0, "k1n": 0, "k2n": 0}}

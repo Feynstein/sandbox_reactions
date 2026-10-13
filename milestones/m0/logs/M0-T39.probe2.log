@@ -1,0 +1,16 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.71s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+test r#box::probe_front ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+PROBE front chunk 0: front x 282, 0.6250 cells/step, box [280, 176, 40, 48], mass 2.559999151e2
+PROBE front chunk 1: front x 276, 0.3750 cells/step, box [272, 176, 48, 48], mass 2.559997916e2
+PROBE front chunk 2: front x 270, 0.3750 cells/step, box [264, 176, 56, 48], mass 2.559996360e2
+PROBE front chunk 3: front x 265, 0.3125 cells/step, box [256, 176, 64, 48], mass 2.559994216e2
+PROBE front chunk 4: front x 260, 0.3125 cells/step, box [256, 176, 64, 48], mass 2.559992230e2
+PROBE front chunk 5: front x 255, 0.3125 cells/step, box [248, 176, 72, 48], mass 2.559989736e2
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 131 filtered out; finished in 0.60s
+

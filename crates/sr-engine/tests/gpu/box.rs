@@ -1,5 +1,7 @@
-//! M0-T21 — the active box (contract §1.3.3, §1.3.2, §1.3.4; TW-R1 A2; G-BOX's box half — its conservation cases come
-//! with M0-T39).
+//! M0-T21 — the active box (contract §1.3.3, §1.3.2, §1.3.4; TW-R1 A2; G-BOX's box half). M0-T39 adds G-BOX's
+//! conservation cases at the end: the box against the whole world on scenes/sun_disk.json (every sum at step 200, the
+//! masses at 2,000 — contract §0.5 [M0-T39]), and a blob at 0.35 cells per step against the box's margin in bounce mode
+//! (scenes/box_blob.json).
 //!
 //! The oracle is §1.3.3 written here, in i64 from the uploaded f32 state, never the engine's constants: the bounding box
 //! of the cells with Σ ≥ Σ_vac, grown by 8 cells, rounded out to multiples of 8, clamped to the world (in that order);
@@ -8,10 +10,13 @@
 //! the box, is dt.rs's 1e-6 relative.
 
 use super::device;
+use std::path::{Path, PathBuf};
+
 use sr_engine::gpu::Gpu;
-use sr_engine::state::{Booking, State, WorldConfig, CHANNELS, N_CHANNELS};
+use sr_engine::scene::Scene;
+use sr_engine::state::{book_totals, Booking, SideFields, State, WorldConfig, CHANNELS, N_CHANNELS, N_TERMS, TERMS};
 use sr_engine::step::boxfit::{BoxMode, BoxReport, ARGS_CELLS, ARGS_TILES};
-use sr_engine::step::{EosGpu, Step};
+use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 /// §1.3.3 and §1.3.2, as the contract fixes them.
@@ -286,5 +291,204 @@ fn the_whole_world_switch_holds_the_box_at_the_world() {
             assert_eq!((rect(&r), r.fft, r.tiles), ([0, 0, 600, 400], [2048, 1024], [75, 50, 1]), "gas on {cells:?}");
             assert_eq!((r.from_step, r.fits), (from, fits), "gas on {cells:?}: the switch keeps the re-fit's schedule");
         }
+    }
+}
+
+// ---- M0-T39: G-BOX's conservation cases (contract §5.3, TW-R5 T2) ----
+
+/// §5.3's band: each conserved sum equal across the two runs to 10⁻⁶ of the sum's own scale (its cells' magnitudes summed,
+/// so a momentum that sums to ~0 is graded against the motion it is made of, not against itself).
+const CONSERVED_TOL: f64 = 1e-6;
+
+/// Contract §0.5 [M0-T39]: every sum compared at step 200, while the box is still inside the world; mass and each
+/// species' mass again at 2,000. Gravity's FFT sizes differ in round-off (1.7e-8 of momentum at step 1) and the collapse
+/// grows it (3.1e-6 of momentum and 4.4e-6 of energy at 2,000, RTX 5090); with gravity off the two runs are bit-identical.
+const EARLY: u32 = 200;
+const STEPS: u32 = 2000;
+
+/// The mass sums of `s` — Σ and each species' Σ·X_i — the ones a vacuum reset books and the gravity round-off leaves
+/// alone; momentum (a vacuum reset removes it unbooked, §2.7 [M0-T19]) and energy dropped.
+fn masses(s: Vec<Sum>) -> Vec<Sum> {
+    s.into_iter().enumerate().filter(|(k, _)| !(1..=3).contains(k)).map(|(_, x)| x).collect()
+}
+
+/// One conserved sum: the total in f64 and the scale it is graded against.
+struct Sum {
+    name: &'static str,
+    total: f64,
+    scale: f64,
+}
+
+/// The conserved sums of a planes readback, each over the cells in row order: mass, momentum x and y, energy, then each
+/// species' mass Σ·X_i in §1.5's order.
+fn sums(world: WorldConfig, p: &[f32]) -> Vec<Sum> {
+    let n = world.cells();
+    let ch = |c: usize, i: usize| f64::from(p[c * n + i]);
+    let quantity = |name: &'static str, f: &dyn Fn(usize) -> f64| {
+        let v: Vec<f64> = (0..n).map(f).collect();
+        Sum { name, total: v.iter().sum(), scale: v.iter().map(|x| x.abs()).sum() }
+    };
+    let mut out = vec![
+        quantity(CHANNELS[0], &|i| ch(0, i)),
+        quantity(CHANNELS[1], &|i| ch(1, i)),
+        quantity(CHANNELS[2], &|i| ch(2, i)),
+        quantity(CHANNELS[3], &|i| ch(3, i)),
+    ];
+    for c in 4..N_CHANNELS {
+        out.push(quantity(CHANNELS[c], &|i| ch(0, i) * ch(c, i)));
+    }
+    out
+}
+
+/// The booked total of the ledger term `name`.
+fn term(booked: &[f64; N_TERMS], name: &str) -> f64 {
+    booked[TERMS.iter().position(|t| t.name == name).unwrap()]
+}
+
+/// A run's sums as the physics conserves them: the state's, plus what left through the edges (`escaped.*`, booked
+/// positive), with P8's floor taken back out. The floor's booked rise leaves the state: vacuum_reset is −(the mass the
+/// floors added) and floor_added is +(the energy they added); the floor is pure hydrogen, so x_H gives back the same
+/// mass. Without this the whole-world run carries the vacuum's floor (M0-V3's arithmetic: ≈ 2.3 × 10⁻³ of mass on
+/// sun_disk), which the box run does not.
+fn physical(world: WorldConfig, planes: &[f32], booked: &[f64; N_TERMS]) -> Vec<Sum> {
+    let mut s = sums(world, planes);
+    let (mass, energy) = (term(booked, "mass.vacuum_reset"), term(booked, "energy.floor_added"));
+    s[0].total += mass + term(booked, "escaped.mass");
+    s[1].total += term(booked, "escaped.mom_x");
+    s[2].total += term(booked, "escaped.mom_y");
+    s[3].total += term(booked, "escaped.energy") - energy;
+    for k in 4..s.len() {
+        s[k].total += term(booked, &format!("escaped.mass.{}", s[k].name));
+    }
+    s[4].total += mass;
+    s
+}
+
+/// Every sum of `a` equal to `b`'s within the band: all printed first (SR-BOX), then asserted, so one run shows them all.
+fn compare(what: &str, a: &[Sum], b: &[Sum]) {
+    let mut red = vec![];
+    for (x, y) in a.iter().zip(b) {
+        let diff = (x.total - y.total).abs();
+        let scale = x.scale.max(y.scale);
+        println!("SR-BOX {what} {}: {:.12e} vs {:.12e}, |Δ| {diff:.3e} = {:.2e} of scale {scale:.4e}", x.name, x.total, y.total, diff / scale);
+        if diff > CONSERVED_TOL * scale {
+            red.push(format!("{} ({:.2e} of scale)", x.name, diff / scale));
+        }
+    }
+    assert!(red.is_empty(), "{what}: outside the 1e-6 band: {}", red.join(", "));
+}
+
+/// A scene run on the GPU with its switches, edge and physics as the file sets them, under `mode`.
+struct SceneRun {
+    world: WorldConfig,
+    state: State,
+    booking: Booking,
+    _side: SideFields,
+    step: Step,
+}
+
+impl SceneRun {
+    fn new(gpu: &Gpu, file: &str, mode: BoxMode) -> SceneRun {
+        let dir: PathBuf = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../scenes");
+        let scene = Scene::load(&dir.join(file)).unwrap_or_else(|e| panic!("{file}: {e}"));
+        let (world, physics) = (scene.world, scene.physics().unwrap());
+        let elements = Elements::shipped().unwrap();
+        let (planes, warnings) = scene.planes(world, &physics, &elements).unwrap();
+        assert!(warnings.is_empty(), "{file}: {warnings:?}");
+        let state = State::new(&gpu.device, world).unwrap();
+        state.upload(&gpu.queue, &planes).unwrap();
+        let booking = Booking::new(&gpu.device, world).unwrap();
+        let side = SideFields::new(&gpu.device, world).unwrap();
+        let eos = EosGpu::new(&gpu.device, &physics, &elements);
+        let passes = Passes {
+            mode,
+            gravity: scene.switches.gravity.then_some(&side),
+            hydro: scene.switches.hydro.then_some(scene.edge),
+        };
+        let step = Step::with_passes(&gpu.device, &state, &booking, &eos, &physics, &passes).unwrap();
+        SceneRun { world, state, booking, _side: side, step }
+    }
+
+    fn run(&self, gpu: &Gpu, steps: u32) {
+        self.step.run(&gpu.device, &gpu.queue, steps);
+    }
+
+    fn planes(&self, gpu: &Gpu) -> Vec<f32> {
+        self.state.readback(&gpu.device, &gpu.queue)
+    }
+
+    /// Every term's total over the run so far: the booking is not cleared between steps (the ledger, §2.9).
+    fn booked(&self, gpu: &Gpu) -> [f64; N_TERMS] {
+        book_totals(self.world, &self.booking.readback(&gpu.device, &gpu.queue))
+    }
+}
+
+/// The Σ-weighted centre of mass along x, in cells.
+fn centroid_x(world: WorldConfig, p: &[f32]) -> f64 {
+    let w = world.width as usize;
+    let cells = world.cells();
+    let (mut m, mut mx) = (0f64, 0f64);
+    for (i, &s) in p[..cells].iter().enumerate() {
+        m += f64::from(s);
+        mx += f64::from(s) * (i % w) as f64;
+    }
+    mx / m
+}
+
+#[test]
+fn sun_disk_in_the_box_matches_the_whole_world_at_step_200_and_its_masses_at_2000() {
+    let gpu = device();
+    let boxed = SceneRun::new(&gpu, "sun_disk.json", BoxMode::Fit);
+    let whole = SceneRun::new(&gpu, "sun_disk.json", BoxMode::WholeWorld);
+    let world = boxed.world;
+    let mut done = 0;
+    for at in [EARLY, STEPS] {
+        boxed.run(&gpu, at - done);
+        whole.run(&gpu, at - done);
+        done = at;
+        let r = boxed.step.read_box(&gpu.device, &gpu.queue);
+        let (bb, bw) = (boxed.booked(&gpu), whole.booked(&gpu));
+        println!(
+            "SR-BOX sun_disk step {at}: box {:?} FFT {:?}; vacuum_reset {:e} vs {:e}, escaped.mass {:e} vs {:e}",
+            rect(&r),
+            r.fft,
+            term(&bb, "mass.vacuum_reset"),
+            term(&bw, "mass.vacuum_reset"),
+            term(&bb, "escaped.mass"),
+            term(&bw, "escaped.mass"),
+        );
+        let (a, b) = (physical(world, &boxed.planes(&gpu), &bb), physical(world, &whole.planes(&gpu), &bw));
+        if at == EARLY {
+            assert!(r.w < world.width && r.h < world.height, "step {at}: the box {:?} is the world's width or height", rect(&r));
+            compare(&format!("sun_disk step {at}"), &a, &b);
+        } else {
+            compare(&format!("sun_disk step {at}, masses"), &masses(a), &masses(b));
+        }
+    }
+}
+
+#[test]
+fn a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode() {
+    let gpu = device();
+    let run = SceneRun::new(&gpu, "box_blob.json", BoxMode::Fit);
+    let start = physical(run.world, &run.planes(&gpu), &run.booked(&gpu));
+    // The blob moves 0.35 cells per step (the CFL bound is 0.4, §2.3.3): the margin of 8 holds 16 steps of it (5.6 cells)
+    // between re-fits; a margin of 0 would let it leave the box inside the first 16. Each 16-step chunk's speed is checked
+    // after the masses, so a box that holds the blob back shows its mass first.
+    let mut x = centroid_x(run.world, &run.planes(&gpu));
+    let mut speeds = vec![];
+    for chunk in 0..6 {
+        run.run(&gpu, 16);
+        let x_now = centroid_x(run.world, &run.planes(&gpu));
+        let speed = (x - x_now) / 16.0;
+        println!("SR-BOX box_blob chunk {chunk}: centroid at {x_now:.3}, {speed:.4} cells per step leftward");
+        speeds.push(speed);
+        x = x_now;
+    }
+    // §5.3 grades the blob's mass: a vacuum reset in its wake takes momentum out unbooked (§2.7 [M0-T19]).
+    let end = physical(run.world, &run.planes(&gpu), &run.booked(&gpu));
+    compare("box_blob, masses", &masses(end), &masses(start));
+    for speed in speeds {
+        assert!((0.30..=0.40).contains(&speed), "the blob moves {speed:.4} cells per step, not the 0.35 the margin is graded at");
     }
 }

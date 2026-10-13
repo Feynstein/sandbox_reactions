@@ -6,7 +6,7 @@
 //!
 //! The twin (`p8_twin`) is P8 in f64 from the same f32 inputs: the fractions renormalised (pure hydrogen when none is
 //! positive, §2.7 [M0-T19]); μ, Y_e and X_n of those; below Σ_vac the floor state Σ_floor, u = 0,
-//! E = Σ_floor (T_floor/μ + ε_cold(Σ_floor)); else Eos::thermal's floor. M0-T37 moves it into sr_physics::reference.
+//! E = Σ_floor (T_floor/μ + ε_cold(Σ_floor)); else Eos::thermal's floor. M0-T37 moved it into sr_physics::reference::floors.
 //!
 //! Tolerances, fixed before the first run (R8): a value read through the u(x) table — ε_cold, and every E or Π built
 //! on it — within 2 × 10⁻⁵ relative: the f32 position in the table carries |ln x − ln X_MIN| ≲ 37 at 2⁻²⁴ each, × 13.9
@@ -20,6 +20,7 @@ use super::device;
 use sr_engine::state::{book_totals, Booking, State, WorldConfig, BOOK_GROUPS, CHANNELS, N_CHANNELS, SPECIES, TERMS};
 use sr_engine::step::{with_eos, EosGpu, Pass, Step};
 use sr_physics::eos::Eos;
+use sr_physics::reference::floors::{self, Cell, Floors};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 const TABLE_TOL: f64 = 2e-5;
@@ -48,19 +49,15 @@ struct Constants {
     physics: Physics,
     elements: Elements,
     eos: Eos,
+    floors: Floors,
 }
 
 fn shipped() -> Constants {
     let physics = Physics::shipped().expect("shipped physics.json");
     let eos = Eos::from_physics(&physics).expect("shipped constants");
-    Constants { physics, elements: Elements::shipped().expect("shipped elements.json"), eos }
-}
-
-impl Constants {
-    /// A physics.json value as the GPU holds it (f32), back in f64.
-    fn f32_of(&self, key: &str) -> f64 {
-        self.physics.get(key).unwrap() as f32 as f64
-    }
+    let elements = Elements::shipped().expect("shipped elements.json");
+    let floors = Floors::new(&physics, &elements).expect("shipped constants");
+    Constants { physics, elements, eos, floors }
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -231,7 +228,8 @@ fn eos_helpers_equal_the_cpu_eos_with_the_cold_pairs_on_and_off() {
     assert!(on.eos.electron_table().is_some() && on.eos.neutron_table().is_some());
     let n = check_helpers(&on, "cold pairs on");
     let physics = on.physics.with(&[("k1e", 0.0), ("k2e", 0.0), ("k1n", 0.0), ("k2n", 0.0)]).expect("pairs off");
-    let off = Constants { eos: Eos::from_physics(&physics).unwrap(), physics, elements: on.elements };
+    let floors = Floors::new(&physics, &on.elements).unwrap();
+    let off = Constants { eos: Eos::from_physics(&physics).unwrap(), physics, elements: on.elements, floors };
     assert!(off.eos.electron_table().is_none() && off.eos.neutron_table().is_none());
     check_helpers(&off, "cold pairs off");
     assert!(n >= 13 * 37, "{n} cases");
@@ -259,67 +257,20 @@ impl Kind {
     }
 }
 
-/// The fractions as P8 leaves them, in f64: clamped ≥ 0 and divided by their sum; pure hydrogen when none is positive.
+/// The fractions as P8 leaves them, in f64 (reference::floors): clamped ≥ 0 and divided by their sum; pure hydrogen when
+/// none is positive.
 fn renormalised(x: &[f32]) -> [f64; N_SPECIES] {
-    let clamped: Vec<f64> = x.iter().map(|&v| (v as f64).max(0.0)).collect();
-    let sum: f64 = clamped.iter().sum();
-    let mut out = [0.0; N_SPECIES];
-    if sum > 0.0 {
-        for (o, v) in out.iter_mut().zip(&clamped) {
-            *o = v / sum;
-        }
-    } else {
-        out[0] = 1.0;
-    }
-    out
+    floors::renormalised(&std::array::from_fn(|k| f64::from(x[k])))
 }
 
 /// One cell after P8, in f64, and what P8 books for it.
-#[derive(Debug)]
-struct Twin {
-    sigma: f64,
-    mom: [f64; 2],
-    energy: f64,
-    x: [f64; N_SPECIES],
-    mass_out: f64,
-    energy_added: f64,
-    reset: bool,
-    floored: bool,
-}
+type Twin = Cell;
 
-/// P8's f64 twin for one cell of the canonical planes.
+/// P8's f64 twin (sr_physics::reference::floors, moved there by M0-T37) for one cell of the canonical planes.
 fn p8_twin(c: &Constants, planes: &[f32], cells: usize, i: usize) -> Twin {
-    let at = |ch: usize| planes[ch * cells + i] as f64;
-    let raw: Vec<f32> = SPECIES.map(|ch| planes[ch * cells + i]).collect();
-    let x = renormalised(&raw);
-    let comp = c.elements.composition(&x);
-    let mu = 1.0 / comp.inv_mu;
-    let (sigma, mom, energy) = (at(0), [at(1), at(2)], at(3));
-    if sigma < c.f32_of("sigma_vac") {
-        let s = c.f32_of("sigma_floor");
-        let e = s * (Eos::eps_th_of_t(c.eos.t_floor(), mu) + c.eos.eps_cold(s, comp.y_e, x[9]));
-        return Twin {
-            sigma: s,
-            mom: [0.0, 0.0],
-            energy: e,
-            x,
-            mass_out: sigma - s,
-            energy_added: e - energy,
-            reset: true,
-            floored: false,
-        };
-    }
-    let t = c.eos.thermal(energy, sigma, mom, comp.y_e, x[9], mu);
-    Twin {
-        sigma,
-        mom,
-        energy: energy + t.floor_added,
-        x,
-        mass_out: 0.0,
-        energy_added: t.floor_added,
-        reset: false,
-        floored: t.floor_added > 0.0,
-    }
+    let at = |ch: usize| f64::from(planes[ch * cells + i]);
+    let raw: [f64; N_SPECIES] = std::array::from_fn(|k| at(SPECIES.start + k));
+    c.floors.cell(at(0), [at(1), at(2)], at(3), raw)
 }
 
 /// 64 × 64 cells: the kinds by `Kind::of`, the fractions by (cell / 8) mod 4 — normalised (rich in H and n),

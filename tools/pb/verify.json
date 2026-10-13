@@ -267,6 +267,91 @@
         }
       ]
     },
+    "collapse": {
+      "desc": "G-COLL, the cold collapse (contract §1.4.2's gravity source, §5.1, SM-O2, SM-C2, R8): scenes/cold_disk.json — a cold Maclaurin disk (Σc = 1, a = 40, T_floor, at rest, hydrogen) about the centre of a 128 × 128 leave world, gravity and hydro on, heat, reactions, neutrinos and sinks off, the cold pressure off through `overrides` naming the four K's and nothing else (every other constant the shipped one: the adversarial case) — falls in homologously: r50(t)/r50(0) = cos²η at t/t_ff = (2/π)(η + ½ sin 2η), t_ff = ½√(a/GΣc) = 3.162, so 0.8368 at 0.5 t_ff and 0.5279 at 0.8 t_ff, each within 3 % (r50 about the centre of mass, each cell's mass over 4 × 4 points of its area). The CPU twin (reference::hydro's step_with: the Hancock predictor's half kick on every face state, the update's Δt·Σg and Δt·(Σu)·g from the predictor's half-step centre; g from reference::grav over the world each step; the last step cut to the read time) measured +0.17 % and +1.34 %; the GPU's P2 + P4 (hydro.wgsl's accel_at, kicked and the update's source, g bound at 14 in hydro_update and hydro_edges, the next state repacked into two buffers of 7 planes) on the physics adapter, read at the first step past each time, the oracle at that time, measured +0.15 % and +1.34 % (RTX 5090); the oracle's own arithmetic against §5.1's numbers (M0-T36). grav-half plants g × 0.5 where the twin's and the shader's P4 read it",
+      "cmd": "bash tests/gpu.sh collapse physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 6,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "scenes/cold_disk.json",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/grav-half.patch"
+      ],
+      "plants": [
+        {
+          "id": "grav-half",
+          "patch": "tests/plants/grav-half.patch"
+        }
+      ]
+    },
+    "twin": {
+      "desc": "the twin's step driver and `headless --cpu-reference` (contract §1.3.2, §1.7, §3.3, R13; M0-T37): sr_physics::reference::Twin runs the passes built so far in §1.3.2's order on f64 planes — P1 Δt, P2 gravity, P4 hydro, P8 floors, P9 Δt_{n+1}, the scene's switches honoured — and reference::floors is P8 moved out of tests/gpu/floors.rs per §2.7 [M0-T19]; a 64 × 64 sun-like disk (`--scene preset:sun --world 64x64`, every switch on) run by `--cpu-reference` writes dumps (every 8 of 24 steps) byte for byte the in-process twin's, summary.json's steps and sim_time the twin's and its adapter `cpu-reference`; a world of 200 × 200, 136 × 64 or 64 × 136 is refused with exit 4 and writes no summary, 128 × 128 runs; `--adapter`, `--timing` and `--load-dump` are refused with it (exit 4); the driver's pass list printed beside the GPU step's for each of the four gravity/hydro switch pairs, equal to it (the adversarial line: a twin that skips a pass the GPU runs agrees with nothing in G-REF); P8 in the driver books what it changes (hydro and gravity off: ΔΣ = −vacuum_reset and ΔE = floor_added over the disk's vacuum, per cell summed, 1e-9 relative, the corner cell the floor state, ΣX = 1); the driver steps the GPU's way — Δt_n from the end of step n − 1, P9's gravity term from step n's own P2 — bit for bit against a hand-written loop over scenes/cold_disk.json for 12 steps, and visibly not as the fresh-g loop of tests/gpu/collapse.rs (they differ by 4e-5 in Σ), on the physics adapter for the GPU step's pass list only (R12, R15). twin-skip-floors drops P8 from the driver's step",
+      "cmd": "bash tests/gpu.sh twin physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 6,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "scenes/cold_disk.json",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/twin-skip-floors.patch"
+      ],
+      "plants": [
+        {
+          "id": "twin-skip-floors",
+          "patch": "tests/plants/twin-skip-floors.patch"
+        }
+      ]
+    },
+    "cpu_gpu": {
+      "desc": "G-REF, the GPU against the CPU twin (contract §5.1, §2.2, §6.7, ES-E20, R8, R13; M0-T38): the GPU's f32 step (P2 + P4 + P8, the box fit, the scene's switches and edge) and sr_physics::reference::Twin's f64 step run the same scene for exactly 200 steps and their states are read side by side — relative L1 difference of Σ and of E at most 1e-3, the largest absolute difference of each X at most 1e-4 (read where both Σ ≥ Σ_floor / 1e-4 = 1e-4: below it P8's floor matter alone can move an X by the band) — on scenes/ref_disk.json (64 × 64, leave: a cold Maclaurin disk a = 24, Σc = 1, H 0.75 / He 0.25, gravity and hydro on, the four cold-pressure K's off by `overrides` and nothing else) and scenes/ref_sod.json (64 × 64, bounce: Sod's strip ρ 1 | 0.125, P 1 | 0.1, hydrogen | helium, the K's off, hydro only; the shock reflected inside the 200 steps), each case printing its sim times, both L1 differences and its largest |ΔX| (SR-REF), on the physics adapter (R12). The burning field joins with M0-T48. The twin's own CFL is read from physics.json and the GPU's from the same key in step/dt.rs: cfl-gpu plants 0.4 → 0.39 in the GPU's alone, 2.5 % short in sim time at step 200",
+      "cmd": "bash tests/gpu.sh cpu_gpu physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 2,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "scenes/ref_disk.json",
+        "scenes/ref_sod.json",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/cfl-gpu.patch"
+      ],
+      "plants": [
+        {
+          "id": "cfl-gpu",
+          "patch": "tests/plants/cfl-gpu.patch"
+        }
+      ]
+    },
     "grav_force": {
       "desc": "gravity's force law on the CPU twin and on the GPU's P2, on the physics adapter (contract §1.4.2, §5.1's G-GRAV1, §2.3.5): K(0, 0) = −G·4 ln(1 + √2) = −3.525494 G asserted (closed form against a polar quadrature, 1e-12) with K = −G/r elsewhere, symmetric and linear in G, one unit of Σ giving that self cell and −G/r around it; a Maclaurin disk Σc√(1 − r²/a²) on a grid, φ = K ∗ Σ_src by the zero-padded FFT convolution and g = −∇φ by central differences: |Δg|/|g| ≤ 2 % at every cell with 0 < r ≤ 0.75a for a = 40 (the largest error and its cell printed; measured 0.30 %, so the direct force kernels stay unbuilt), the a = 20 over a = 40 largest error within [1.6, 2.4] (measured 1.93), a disk centred on a cell corner (the scene files' convention) within 2 % too (M0-T29); the GPU's P2 (step/grav.rs, shaders/grav.wgsl) on one step of the a = 40 disk in a 128 × 128 world within 2 % (measured 0.30 %), a = 20 over a = 40 within [1.6, 2.4] (1.93), φ and g over the fitted box within G-REF's 1e-3 relative L1 of the twin (measured ≤ 3e-6), P9's Δt_0 and Δt_1 = min(hydro term, η_g / √max|g|) within 1e-6 with the gravity term binding, and a frame's φ, g and Δt the bare steps', bit for bit (M0-T31); K(i, j) = −G/√(i² + j²) at every offset of a 64 × 64 box within 4e-16 relative, K(0, 0) exact; the GPU on a faint disk in sub-Σ_vac cells (the mask), on a wide box (392 × 64, FFT 1024 × 128), a tall one (40 × 344, 128 × 1024) and the whole 600 × 400 world (2048 × 1024): φ and g within G-REF's 1e-3 of the twin and φ at nine cells within 1e-4 of the kernel summed directly over the sources (M0-D25)",
       "cmd": "bash tests/gpu.sh grav::force physics",
@@ -546,11 +631,11 @@
       ]
     },
     "box": {
-      "desc": "the active box (contract §1.3.3, §1.3.2, §1.3.4; G-BOX's box half, its conservation cases with M0-T39): the bounding box of Σ ≥ Σ_vac cells grown by 8, rounded out to 8, clamped to the world — blobs in the middle, on and off the 8-grid, at each edge and corner, a block, two far corners, Σ = Σ_vac and the next f32 below, the empty world — exactly; the FFT size per axis (smallest power of two ≥ 2 × the box, at least 32; up to 4096 on a 2048-wide world); the re-fit after P9 at step indices ≡ 0 (mod 16) only, and in P0 when the edit flag is set (cleared by the fit); P8's two dispatches and dt_cells sized indirectly from the box's buffer, P8 leaving the vacuum outside the box as uploaded, Δt over the box against the f64 formula (1e-6); the whole-world switch (M0-T21); on the physics adapter (R12, R15)",
+      "desc": "the active box (contract §1.3.3, §1.3.2, §1.3.4; G-BOX's box half, its conservation cases, M0-T39: scenes/sun_disk.json in the box against the whole world, every sum to 1e-6 of its scale at step 200 with the box inside the world and the masses at 2,000 (contract §0.5 [M0-T39]), and scenes/box_blob.json's blob at 0.35 cells per step in bounce mode, its masses to 1e-6): the bounding box of Σ ≥ Σ_vac cells grown by 8, rounded out to 8, clamped to the world — blobs in the middle, on and off the 8-grid, at each edge and corner, a block, two far corners, Σ = Σ_vac and the next f32 below, the empty world — exactly; the FFT size per axis (smallest power of two ≥ 2 × the box, at least 32; up to 4096 on a 2048-wide world); the re-fit after P9 at step indices ≡ 0 (mod 16) only, and in P0 when the edit flag is set (cleared by the fit); P8's two dispatches and dt_cells sized indirectly from the box's buffer, P8 leaving the vacuum outside the box as uploaded, Δt over the box against the f64 formula (1e-6); the whole-world switch (M0-T21); on the physics adapter (R12, R15)",
       "cmd": "bash tests/gpu.sh box physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 6,
+      "expected": 8,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -558,6 +643,8 @@
         "assets/physics.json",
         "assets/elements.json",
         "tests/gpu.sh",
+        "scenes/sun_disk.json",
+        "scenes/box_blob.json",
         "Cargo.toml",
         "Cargo.lock",
         "rust-toolchain.toml",

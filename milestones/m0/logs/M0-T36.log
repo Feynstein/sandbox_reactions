@@ -1,0 +1,134 @@
+== M0-T36 2026-10-13T11:26:34-04:00 cargo check (linux-pc)
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates/sr-engine/tests/gpu/floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 3.78s
+== M0-T36 2026-10-13T11:27:57-04:00 first run: bash tests/gpu.sh collapse physics (linux-pc)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates/sr-engine/tests/gpu/floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 1.65s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time' (680954) panicked at crates/sr-engine/tests/gpu/collapse.rs:269:17:
+a batch of 256 steps crossed t = 1.5811388300841898: DtReport { dt: 0.00093901687, dt_next: 0.0009241231, steps: 256, sim_time: 3.3315394383389503, non_finite: None }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test collapse::gpu_half_mass_radius_at_half_the_free_fall_time ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'collapse::gpu_half_mass_radius_at_half_the_free_fall_time' (683006) panicked at crates/sr-engine/tests/gpu/collapse.rs:269:17:
+a batch of 256 steps crossed t = 1.5811388300841898: DtReport { dt: 0.00093901687, dt_next: 0.0009241231, steps: 256, sim_time: 3.3315394383389503, non_finite: None }
+FAILED
+test collapse::the_oracle_gives_the_contracts_numbers ... 
+thread 'collapse::the_oracle_gives_the_contracts_numbers' (683109) panicked at crates/sr-engine/tests/gpu/collapse.rs:189:5:
+0.5279639105098982
+FAILED
+test collapse::the_scene_is_a_cold_maclaurin_disk_with_only_the_cold_pressure_off ... SR-COLL scene: 5024 cells, mass 3351.648 (2πΣc a²/3 = 3351.032), t_ff 3.1623
+ok
+test collapse::twin_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-COLL twin: t = 2.52982 (0.80000 t_ff), r50/r50(0) = 0.53504, homologous 0.52796, error +1.340 % (74 steps in the run)
+ok
+test collapse::twin_half_mass_radius_at_half_the_free_fall_time ... SR-COLL twin: t = 1.58114 (0.50000 t_ff), r50/r50(0) = 0.83822, homologous 0.83681, error +0.169 % (74 steps in the run)
+ok
+
+failures:
+
+failures:
+    collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time
+    collapse::gpu_half_mass_radius_at_half_the_free_fall_time
+    collapse::the_oracle_gives_the_contracts_numbers
+
+test result: FAILED. 3 passed; 3 failed; 0 ignored; 0 measured; 113 filtered out; finished in 16.96s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== M0-T36 2026-10-13T11:28:37-04:00 run 2: bash tests/gpu.sh collapse physics (linux-pc)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+warning: fields `sigma`, `mom`, `mass_out`, and `energy_added` are never read
+   --> crates/sr-engine/tests/gpu/floors.rs:280:5
+    |
+279 | struct Twin {
+    |        ---- fields in this struct
+280 |     sigma: f64,
+    |     ^^^^^
+281 |     mom: [f64; 2],
+    |     ^^^
+...
+284 |     mass_out: f64,
+    |     ^^^^^^^^
+285 |     energy_added: f64,
+    |     ^^^^^^^^^^^^
+    |
+    = note: `Twin` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (test "gpu") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 2.85s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-COLL gpu: t = 2.53764 (0.80247 t_ff), r50/r50(0) = 0.53128, homologous 0.52428, error +1.335 % (73 steps in the run; SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA)
+ok
+test collapse::gpu_half_mass_radius_at_half_the_free_fall_time ... SR-COLL gpu: t = 1.60979 (0.50906 t_ff), r50/r50(0) = 0.83165, homologous 0.83045, error +0.145 % (73 steps in the run; SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA)
+ok
+test collapse::the_oracle_gives_the_contracts_numbers ... 
+thread 'collapse::the_oracle_gives_the_contracts_numbers' (697037) panicked at crates/sr-engine/tests/gpu/collapse.rs:192:5:
+assertion failed: homologous(1.0) < 1e-12 && (homologous(0.0) - 1.0).abs() < 1e-12
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test collapse::the_scene_is_a_cold_maclaurin_disk_with_only_the_cold_pressure_off ... SR-COLL scene: 5024 cells, mass 3351.648 (2πΣc a²/3 = 3351.032), t_ff 3.1623
+ok
+test collapse::twin_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-COLL twin: t = 2.52982 (0.80000 t_ff), r50/r50(0) = 0.53504, homologous 0.52796, error +1.340 % (74 steps in the run)
+ok
+test collapse::twin_half_mass_radius_at_half_the_free_fall_time ... SR-COLL twin: t = 1.58114 (0.50000 t_ff), r50/r50(0) = 0.83822, homologous 0.83681, error +0.169 % (74 steps in the run)
+ok
+
+failures:
+
+failures:
+    collapse::the_oracle_gives_the_contracts_numbers
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 1.78s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+    Checking sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Checking sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 2.15s

@@ -1,0 +1,54 @@
+# M0-V5 probes — linux-pc (laserax-ai), 2026-10-13; binary build/target/release/sandbox-reactions (12:28, newer than every crate source)
+# scratch: /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/a53eed5c-77e0-4949-a72d-ff0839e43e87/scratchpad/probes (scenes/, tools/dumps.py, tools/r50.py, tools/run_mutant.sh, outputs) — the scenes are reproduced in tasks/M0-V5.md
+
+## 1. The Quadro RTX 4000 (M0-T31 Verify 2-3, M0-D26 Verify 2, M0-T34's flag): 3 reps each, timing on / WGPU_VALIDATION_INDIRECT_CALL=1 / wall at 200 and 2,200 steps
+$ headless --scene scenes/sun_disk.json --steps 200 --timing --adapter "Quadro RTX 4000" --out <dir>
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.590745 until=none
+$ headless --scene scenes/fill_world.json --steps 200 --timing --adapter "Quadro RTX 4000" --out <dir>
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=13.398295 until=none
+sun_disk timing: step_ms_mean [1.562, 1.063, 1.083]; per_pass_ms rep1 {'P0 edits': 0.008167199999999994, 'P1 dt': 0.005896640000000003, 'P2 gravity': 0.09513888, 'P4 hydro': 1.3369897599999996, 'P8 floors': 0.02374127999999999, 'P9 reductions': 0.01788592}
+sun_disk timing, validation on: step_ms_mean [1.094, 1.117, 1.137]; per_pass_ms rep1 {'P0 edits': 0.021342719999999992, 'P1 dt': 0.004402720000000002, 'P2 gravity': 0.07662639999999996, 'P4 hydro': 0.8835763200000002, 'P8 floors': 0.04324592, 'P9 reductions': 0.02036336}
+sun_disk wall per step (2,200 − 200)/2,000, validation off: [7.268, 7.465, 7.582] ms
+sun_disk wall per step (2,200 − 200)/2,000, validation on: [7.395, 8.139, 8.263] ms
+fill_world timing: step_ms_mean [15.543, 16.04, 16.557]; per_pass_ms rep1 {'P0 edits': 0.006773919999999992, 'P1 dt': 0.004907519999999999, 'P2 gravity': 1.093716, 'P4 hydro': 14.146808959999989, 'P8 floors': 0.15491456000000003, 'P9 reductions': 0.06844095999999998}
+fill_world timing, validation on: step_ms_mean [15.548, 16.114, 16.334]; per_pass_ms rep1 {'P0 edits': 0.021826720000000008, 'P1 dt': 0.004909760000000002, 'P2 gravity': 1.1168331199999992, 'P4 hydro': 14.096854879999999, 'P8 floors': 0.17413679999999998, 'P9 reductions': 0.07691824000000003}
+fill_world wall per step (2,200 − 200)/2,000, validation off: [15.958, 20.231, 17.643] ms
+fill_world wall per step (2,200 − 200)/2,000, validation on: [17.159, 17.988, 17.747] ms
+
+## 2. G-REF: GPU (RTX 5090) against --cpu-reference, 200 steps, dumps compared as tests/gpu/cpu_gpu.rs does (L1 Σ, L1 E, |ΔX| on Σ ≥ 1e-4 in both, and unmasked)
+ref_disk: {"steps": [200, 200], "sim_time": [2.6974641217384487, 2.6974675827814933], "L1_sigma": 4.368267798674056e-05, "L1_E": 5.9793923874502165e-05, "dX_masked": [3.874301910400391e-06, "x_H", [51, 39, 0.00017685761849861592, 0.00017730725812725723]], "dX_unmasked": [0.0021946579217910767, "x_He", [55, 31, 9.99999993922529e-09, 9.99999993922529e-09]]}
+ref_sod: {"steps": [200, 200], "sim_time": [19.52917843312025, 19.529181192375518], "L1_sigma": 1.6176555619203243e-07, "L1_E": 2.294175581598206e-07, "dX_masked": [7.152557373046875e-07, "x_He", [49, 21, 0.20835426449775696, 0.20835435390472412]], "dX_unmasked": [7.152557373046875e-07, "x_He", [49, 21, 0.20835426449775696, 0.20835435390472412]]}
+ref_disk_cold_on: {"steps": [200, 200], "sim_time": [3.818482916802168, 3.8184845307094792], "L1_sigma": 3.7693555332426383e-06, "L1_E": 3.816141510555012e-06, "dX_masked": [3.039836883544922e-05, "x_H", [28, 54, 0.00014316613669507205, 0.00014316479791887105]], "dX_unmasked": [0.0004565715789794922, "x_H", [6, 35, 9.99999993922529e-09, 9.99999993922529e-09]]}
+ref_sod_cold_on: {"steps": [200, 200], "sim_time": [5.226035658270121, 5.226033948263577], "L1_sigma": 7.212834687450427e-07, "L1_E": 1.2879043631708625e-06, "dX_masked": [1.7285346984863281e-06, "x_H", [56, 7, 0.3394554853439331, 0.3394555449485779]], "dX_unmasked": [1.7285346984863281e-06, "x_H", [56, 7, 0.3394554853439331, 0.3394555449485779]]}
+ref_disk_bg: {"steps": [200, 200], "sim_time": [2.6973394716333132, 2.697342914688756], "L1_sigma": 4.352553510070299e-05, "L1_E": 5.936412701518818e-05, "dX_masked": [4.76837158203125e-07, "x_H", [31, 29, 6.647890090942383, 6.647703647613525]], "dX_unmasked": [4.76837158203125e-07, "x_H", [31, 29, 6.647890090942383, 6.647703647613525]]}
+ref_disk by cell set: both Σ ≥ Σ_vac 1,608 cells, worst |ΔX| 1.061e-3 (x_H, (54, 31)), 5 cells over 1e-4 (Σ 2.8e-6..7.0e-6); every cell 4,096, worst 2.195e-3 (x_He, (55, 31), Σ 1e-8 both), 122 over; both Σ ≥ 1e-4 1,356 cells, worst 3.874e-6, none over
+ref_sod with the shipped K's and its file's pressures: $ headless --scene <ref_sod.json without overrides> --steps 1 --cpu-reference → exit 4: SR-ERROR bad scene: objects[0].pressure: 1 is below the cold pressure at cell (0, 0)
+
+## 3. G-COLL on the twin (headless --cpu-reference, the Twin driver: P2, P4, P8, P9 in the GPU's order), r50 as collapse.rs measures it
+scenes/cold_disk.json (cold off): step 27, 0.4996 t_ff, r50/r50(0) 0.8382, homologous 0.8371, error +0.14 % (band 3 %)
+scenes/cold_disk.json (cold off): step 72, 0.7978 t_ff, r50/r50(0) 0.5388, homologous 0.5312, error +1.42 % (band 3 %)
+cold_disk.json, overrides removed (the shipped K's): step 56, 0.5001 t_ff, r50/r50(0) 0.8782, homologous 0.8368, error +4.95 % (band 3 %)
+cold_disk.json, overrides removed (the shipped K's): step 105, 0.7985 t_ff, r50/r50(0) 0.6725, homologous 0.5302, error +26.83 % (band 3 %)
+cold_disk.json with neutrinos and sinks switched on: s_80.bin byte-identical to the scene's own
+
+## 4. The cold-path mutant: hydro.wgsl cons() without ε_cold (u[3] = Σε_th + ½Σ|u|²), scratch copy, its own CARGO_TARGET_DIR, RTX 5090
+build start 2026-10-13T14:07:45-04:00
+build end 2026-10-13T14:08:11-04:00
+scope sod (shipped scenes): test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 114 filtered out; finished in 58.31s
+thread 'sod::gpu_with_cold_pressure_on_a_flow_conserves_and_stays_physical' (2279212) panicked at crates/sr-engine/tests/gpu/sod.rs:548:5:
+scope edges (shipped scenes): test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 122 filtered out; finished in 26.16s
+scope collapse (shipped scenes): test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 123 filtered out; finished in 4.37s
+scope twin (shipped scenes): test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 123 filtered out; finished in 4.99s
+scope cpu_gpu (shipped scenes): test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 127 filtered out; finished in 4.60s
+scope box (shipped scenes): test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 121 filtered out; finished in 4.45s
+thread 'r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_200_and_its_masses_at_2000' (2315668) panicked at crates/sr-engine/tests/gpu/box.rs:378:5:
+scope dump (shipped scenes): test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 121 filtered out; finished in 4.74s
+scope timing (shipped scenes): test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 124 filtered out; finished in 6.63s
+cpu_gpu with the cold-on scenes: test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 127 filtered out; finished in 4.49s
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 3.47709 / twin 3.81848 (-8.941 %); relative L1 Σ 8.513e-1 (band 1e-3), E 6.869e-1 (band 1e-3); largest |ΔX| 9.016e-6 in x_He (band 1e-4)
+thread 'cpu_gpu::the_collapsing_disk_gpu_against_the_twin' (2328708) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:107:5:
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 5.25409 / twin 5.22603 (+0.537 %); relative L1 Σ 1.161e-1 (band 1e-3), E 1.192e-1 (band 1e-3); largest |ΔX| 7.052e-1 in x_H (band 1e-4)
+thread 'cpu_gpu::the_sod_strip_gpu_against_the_twin' (2329282) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:107:5:
+end 2026-10-13T14:10:14-04:00

@@ -1,0 +1,95 @@
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 2 tests
+test r#box::probe_blob ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+PROBE blob []: vacuum_reset 1.0103423799030509e-3, floor_added 8.104101204354482e0, mom lost 1.0211430492290674e-2, vacuum_reset × 11.6 = 1.171997160687539e-2
+PROBE blob [] sigma: 2.559999840e2 vs 2.560000000e2 |Δ| 1.604e-5 = 6.26e-8 of scale 2.5600e2
+PROBE blob [] mom_x: -2.969589886e3 vs -2.969600098e3 |Δ| 1.021e-2 = 3.44e-6 of scale 2.9696e3
+PROBE blob [] mom_y: 3.822937167e-8 vs 0.000000000e0 |Δ| 3.823e-8 = 4.53e-9 of scale 8.4368e0
+PROBE blob [] energy: 1.724927838e4 vs 1.724927930e4 |Δ| 9.189e-4 = 5.32e-8 of scale 1.7257e4
+PROBE blob [] x_H: 2.559999840e2 vs 2.560000000e2 |Δ| 1.604e-5 = 6.26e-8 of scale 2.5600e2
+PROBE blob [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)]: vacuum_reset 4.421446793509854e-8, floor_added NaN, mom lost 4.144094918956398e-5, vacuum_reset × 11.6 = 5.128878280471431e-7
+PROBE blob [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] sigma: 2.559999900e2 vs 2.560000000e2 |Δ| 9.953e-6 = 3.89e-8 of scale 2.5600e2
+PROBE blob [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] mom_x: -2.969600056e3 vs -2.969600098e3 |Δ| 4.144e-5 = 1.40e-8 of scale 2.9696e3
+PROBE blob [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] mom_y: -4.823874054e-8 vs 0.000000000e0 |Δ| 4.824e-8 = 5.56e-9 of scale 8.6744e0
+PROBE blob [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] energy: NaN vs 1.724927930e4 |Δ| NaN = NaN of scale 1.7249e4
+PROBE blob [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] x_H: 2.559999900e2 vs 2.560000000e2 |Δ| 9.953e-6 = 3.89e-8 of scale 2.5600e2
+ok
+test r#box::probe_sun ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+PROBE sun gravity=false [] step 1: box [248, 144, 104, 112] fft [256, 256], differing words 460032, escaped.mass 0e0 vs 0e0
+PROBE sun g=false [] @1 sigma: 3.351647972e3 vs 3.351647972e3 |Δ| 1.263e-8 = 3.77e-12 of scale 3.3517e3
+PROBE sun g=false [] @1 mom_x: -3.894092515e-8 vs -3.894092515e-8 |Δ| 0.000e0 = 0.00e0 of scale 7.5407e1
+PROBE sun g=false [] @1 mom_y: -3.894092734e-8 vs -3.894092734e-8 |Δ| 0.000e0 = 0.00e0 of scale 7.5407e1
+PROBE sun g=false [] @1 energy: 6.347270316e4 vs 6.347270316e4 |Δ| 3.609e-7 = 5.69e-12 of scale 6.3473e4
+PROBE sun g=false [] @1 x_H: 2.462120673e3 vs 2.462120673e3 |Δ| 1.231e-8 = 5.00e-12 of scale 2.4621e3
+PROBE sun gravity=false [] step 16: box [248, 144, 104, 112] fft [256, 256], differing words 456704, escaped.mass 0e0 vs 0e0
+PROBE sun g=false [] @16 sigma: 3.351647981e3 vs 3.351647981e3 |Δ| 1.255e-8 = 3.74e-12 of scale 3.3516e3
+PROBE sun g=false [] @16 mom_x: 4.300749765e-7 vs 4.300749765e-7 |Δ| 0.000e0 = 0.00e0 of scale 1.1223e3
+PROBE sun g=false [] @16 mom_y: -9.951974107e-7 vs -9.951974107e-7 |Δ| 0.000e0 = 0.00e0 of scale 1.1223e3
+PROBE sun g=false [] @16 energy: 6.347270318e4 vs 6.347270318e4 |Δ| 3.583e-7 = 5.64e-12 of scale 6.3473e4
+PROBE sun g=false [] @16 x_H: 2.462120901e3 vs 2.462120901e3 |Δ| 1.221e-8 = 4.96e-12 of scale 2.4621e3
+PROBE sun gravity=false [] step 200: box [208, 104, 184, 192] fft [512, 512], differing words 409344, escaped.mass 0e0 vs 0e0
+PROBE sun g=false [] @200 sigma: 3.351647966e3 vs 3.351647966e3 |Δ| 1.135e-8 = 3.39e-12 of scale 3.3516e3
+PROBE sun g=false [] @200 mom_x: 2.591702849e-5 vs 2.591702849e-5 |Δ| 0.000e0 = 0.00e0 of scale 8.8153e3
+PROBE sun g=false [] @200 mom_y: 2.052987338e-5 vs 2.052987338e-5 |Δ| 0.000e0 = 0.00e0 of scale 8.8153e3
+PROBE sun g=false [] @200 energy: 6.347270310e4 vs 6.347270310e4 |Δ| 3.160e-7 = 4.98e-12 of scale 6.3472e4
+PROBE sun g=false [] @200 x_H: 2.462125900e3 vs 2.462125900e3 |Δ| 1.098e-8 = 4.46e-12 of scale 2.4621e3
+PROBE sun gravity=false [] step 2000: box [0, 0, 600, 400] fft [2048, 1024], differing words 0, escaped.mass 1.7195612774193287e3 vs 1.7195612774193287e3
+PROBE sun g=false [] @2000 sigma: 3.351648007e3 vs 3.351648007e3 |Δ| 0.000e0 = 0.00e0 of scale 1.6318e3
+PROBE sun g=false [] @2000 mom_x: 2.416093557e-4 vs 2.416093557e-4 |Δ| 0.000e0 = 0.00e0 of scale 4.8195e3
+PROBE sun g=false [] @2000 mom_y: -9.264109758e-5 vs -9.264109758e-5 |Δ| 0.000e0 = 0.00e0 of scale 3.3453e3
+PROBE sun g=false [] @2000 energy: 6.347270377e4 vs 6.347270377e4 |Δ| 0.000e0 = 0.00e0 of scale 1.4583e4
+PROBE sun g=false [] @2000 x_H: 2.462187110e3 vs 2.462187110e3 |Δ| 0.000e0 = 0.00e0 of scale 1.1988e3
+PROBE sun gravity=true [] step 1: box [248, 144, 104, 112] fft [256, 256], differing words 472572, escaped.mass 0e0 vs 0e0
+PROBE sun g=true [] @1 sigma: 3.351647972e3 vs 3.351647970e3 |Δ| 1.238e-6 = 3.69e-10 of scale 3.3517e3
+PROBE sun g=true [] @1 mom_x: -2.011165621e-7 vs -2.408820365e-6 |Δ| 2.208e-6 = 1.69e-8 of scale 1.3056e2
+PROBE sun g=true [] @1 mom_y: -1.407493072e-7 vs -2.009750007e-6 |Δ| 1.869e-6 = 1.43e-8 of scale 1.3056e2
+PROBE sun g=true [] @1 energy: 6.348099563e4 vs 6.348099561e4 |Δ| 2.054e-5 = 3.24e-10 of scale 6.3481e4
+PROBE sun g=true [] @1 x_H: 2.462120670e3 vs 2.462120669e3 |Δ| 8.620e-7 = 3.50e-10 of scale 2.4621e3
+PROBE sun gravity=true [] step 16: box [248, 144, 104, 112] fft [256, 256], differing words 499565, escaped.mass 0e0 vs 0e0
+PROBE sun g=true [] @16 sigma: 3.351647970e3 vs 3.351647975e3 |Δ| 5.512e-6 = 1.64e-9 of scale 3.3516e3
+PROBE sun g=true [] @16 mom_x: 2.365885971e-5 vs -6.762191864e-5 |Δ| 9.128e-5 = 4.60e-8 of scale 1.9851e3
+PROBE sun g=true [] @16 mom_y: 2.320715134e-5 vs -5.089258832e-5 |Δ| 7.410e-5 = 3.73e-8 of scale 1.9851e3
+PROBE sun g=true [] @16 energy: 6.545906253e4 vs 6.545906291e4 |Δ| 3.848e-4 = 5.88e-9 of scale 6.5459e4
+PROBE sun g=true [] @16 x_H: 2.462120920e3 vs 2.462120927e3 |Δ| 6.301e-6 = 2.56e-9 of scale 2.4621e3
+PROBE sun gravity=true [] step 200: box [232, 136, 136, 128] fft [512, 256], differing words 518708, escaped.mass 0e0 vs 0e0
+PROBE sun g=true [] @200 sigma: 3.351647971e3 vs 3.351647997e3 |Δ| 2.624e-5 = 7.83e-9 of scale 3.3516e3
+PROBE sun g=true [] @200 mom_x: 8.561275520e-4 vs -8.389314993e-4 |Δ| 1.695e-3 = 1.42e-7 of scale 1.1976e4
+PROBE sun g=true [] @200 mom_y: 1.200968904e-3 vs -3.196612769e-4 |Δ| 1.521e-3 = 1.27e-7 of scale 1.1976e4
+PROBE sun g=true [] @200 energy: 3.801218954e5 vs 3.801219338e5 |Δ| 3.840e-2 = 1.01e-7 of scale 3.8012e5
+PROBE sun g=true [] @200 x_H: 2.462124052e3 vs 2.462124073e3 |Δ| 2.092e-5 = 8.50e-9 of scale 2.4621e3
+PROBE sun gravity=true [] step 2000: box [0, 0, 600, 400] fft [2048, 1024], differing words 1748086, escaped.mass 3.2380998344839043e0 vs 3.2408544604153917e0
+PROBE sun g=true [] @2000 sigma: 3.351648139e3 vs 3.351648350e3 |Δ| 2.114e-4 = 6.31e-8 of scale 3.3480e3
+PROBE sun g=true [] @2000 mom_x: 5.722372620e-3 vs -3.889150305e-3 |Δ| 9.612e-3 = 3.13e-6 of scale 3.0666e3
+PROBE sun g=true [] @2000 mom_y: 6.831919394e-3 vs -5.711447257e-4 |Δ| 7.403e-3 = 2.48e-6 of scale 2.9806e3
+PROBE sun g=true [] @2000 energy: 3.381424830e5 vs 3.381410293e5 |Δ| 1.454e0 = 4.36e-6 of scale 3.3332e5
+PROBE sun g=true [] @2000 x_H: 2.462228921e3 vs 2.462228884e3 |Δ| 3.713e-5 = 1.51e-8 of scale 2.4595e3
+PROBE sun gravity=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] step 1: box [248, 144, 104, 112] fft [256, 256], differing words 472640, escaped.mass 0e0 vs 0e0
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @1 sigma: 3.351647969e3 vs 3.351647968e3 |Δ| 1.267e-6 = 3.78e-10 of scale 3.3516e3
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @1 mom_x: -2.017277438e-7 vs -2.402970040e-6 |Δ| 2.201e-6 = 1.69e-8 of scale 1.3056e2
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @1 mom_y: -1.349862926e-7 vs -2.013330230e-6 |Δ| 1.878e-6 = 1.44e-8 of scale 1.3056e2
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @1 energy: 6.348099563e4 vs 6.348099561e4 |Δ| 2.009e-5 = 3.17e-10 of scale 6.3481e4
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @1 x_H: 2.462120668e3 vs 2.462120667e3 |Δ| 8.778e-7 = 3.57e-10 of scale 2.4621e3
+PROBE sun gravity=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] step 16: box [248, 144, 104, 112] fft [256, 256], differing words 499525, escaped.mass 0e0 vs 0e0
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @16 sigma: 3.351647974e3 vs 3.351647972e3 |Δ| 1.497e-6 = 4.47e-10 of scale 3.3516e3
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @16 mom_x: 8.512803102e-6 vs -7.062263502e-5 |Δ| 7.914e-5 = 3.99e-8 of scale 1.9839e3
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @16 mom_y: 4.385458411e-6 vs -5.294046689e-5 |Δ| 5.733e-5 = 2.89e-8 of scale 1.9839e3
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @16 energy: NaN vs NaN |Δ| NaN = NaN of scale NaN
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @16 x_H: 2.462120702e3 vs 2.462120702e3 |Δ| 4.441e-7 = 1.80e-10 of scale 2.4621e3
+PROBE sun gravity=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] step 200: box [240, 136, 120, 128] fft [256, 256], differing words 503630, escaped.mass 0e0 vs 0e0
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @200 sigma: 3.351647949e3 vs 3.351648003e3 |Δ| 5.405e-5 = 1.61e-8 of scale 3.3516e3
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @200 mom_x: 8.495262423e-4 vs -5.724827815e-4 |Δ| 1.422e-3 = 1.19e-7 of scale 1.1961e4
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @200 mom_y: 1.200442696e-3 vs -2.556602407e-4 |Δ| 1.456e-3 = 1.22e-7 of scale 1.1961e4
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @200 energy: NaN vs NaN |Δ| NaN = NaN of scale NaN
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @200 x_H: 2.462120884e3 vs 2.462120922e3 |Δ| 3.822e-5 = 1.55e-8 of scale 2.4621e3
+PROBE sun gravity=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] step 2000: box [64, 0, 472, 400] fft [1024, 1024], differing words 868205, escaped.mass 3.90144234785339e-6 vs 3.992595967616808e-6
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @2000 sigma: 3.351648324e3 vs 3.351647930e3 |Δ| 3.941e-4 = 1.18e-7 of scale 3.3516e3
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @2000 mom_x: 4.202637026e-3 vs -1.604669216e-3 |Δ| 5.807e-3 = 1.36e-6 of scale 4.2801e3
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @2000 mom_y: 5.174963695e-3 vs -2.391803845e-4 |Δ| 5.414e-3 = 1.26e-6 of scale 4.2801e3
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @2000 energy: NaN vs NaN |Δ| NaN = NaN of scale NaN
+PROBE sun g=true [("sigma_vac", 1e-10), ("sigma_floor", 1e-12)] @2000 x_H: 2.462122993e3 vs 2.462122835e3 |Δ| 1.582e-4 = 6.43e-8 of scale 2.4621e3
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 129 filtered out; finished in 61.66s
+

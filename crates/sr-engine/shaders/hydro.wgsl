@@ -18,6 +18,13 @@
 // what crosses each boundary face into `escaped` — the same `boundary` flux on the same state, so the grid's loss is
 // the booking; bounce books nothing.
 //
+// Gravity's source (§1.4.2; M0-T36), when the step runs P2 (`edges.gravity`): `cell_faces`' Hancock predictor kicks each
+// face state by half a step of the cell's g — velocity by ½Δt·g, energy by the work Σ(u + ¼Δt·g)·g·½Δt, leaving its
+// thermal energy as it was — beside the flux differences; `hydro_update` adds Δt·Σg to the momentum and Δt·(Σu)·g to
+// the energy, Σ and Σu the cell centre's half-step values from that same predictor: time-centred on the half-step
+// velocity. A ghost's g is its edge cell's. `hydro_edges` recomputes the same predictor, so it binds g too. The twin's
+// `Hydro::step_with` is the reference.
+//
 // A cell below Σ_vac reads as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20) — the box's ghost
 // ring included, where an uploaded vacuum cell may hold Σ = 0; a cell and its four neighbours all below Σ_vac are left
 // as they are. Δt is the Δt record's first word (P1). No atomic, no cross-invocation order: the same state gives the
@@ -48,10 +55,10 @@ struct ActiveBox {
 @group(0) @binding(1) var<storage, read> hydro: array<f32>;
 @group(0) @binding(2) var<storage, read> species_a: array<f32>;
 @group(0) @binding(3) var<storage, read> species_b: array<f32>;
-// The next state, packed as the state (step/hydro.rs).
-@group(0) @binding(4) var<storage, read_write> next_hydro: array<f32>;
-@group(0) @binding(5) var<storage, read_write> next_a: array<f32>;
-@group(0) @binding(6) var<storage, read_write> next_b: array<f32>;
+// The next state: the state's 14 planes in §2.2's order, the first 7 in `next_lo`, the last 7 in `next_hi` (step/hydro.rs)
+// — two buffers, so the update keeps a storage slot for g within WebGPU's 8.
+@group(0) @binding(4) var<storage, read_write> next_lo: array<f32>;
+@group(0) @binding(5) var<storage, read_write> next_hi: array<f32>;
 @group(0) @binding(7) var<uniform> abox: ActiveBox;
 // The Δt record (reduce.wgsl `DtState`): word 0 is Δt_n.
 @group(0) @binding(8) var<storage, read> dt_rec: array<f32>;
@@ -63,17 +70,22 @@ struct ActiveBox {
 // mass — of 2 (width + height) boundary-face slots each: x = 0 by y, x = width − 1 by y, y = 0 by x, y = height − 1 by x.
 @group(0) @binding(12) var<storage, read_write> escaped: array<f32>;
 
-// The edge mode: `leave` 1, bounce 0.
+// The edge mode: `leave` 1, bounce 0; `gravity` 1 when the step runs P2 (`grav` is then its g).
 struct Edges {
     leave: u32,
-    _a: u32,
+    gravity: u32,
     _b: u32,
     _c: u32,
 }
 @group(0) @binding(13) var<uniform> edges: Edges;
+// P2's g = −∇φ (step/grav.rs `field`): the x plane, then the y plane, row-major over the world — read only when
+// `edges.gravity` is 1 (else a placeholder is bound).
+@group(0) @binding(14) var<storage, read> grav: array<f32>;
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
+// The planes `next_lo` holds.
+const NEXT_LO: u32 = 7u;
 // Conserved components per cell: Σ, Σu, Σv, E, then Σ X_i.
 const COMPONENTS: u32 = 14u;
 
@@ -90,6 +102,12 @@ struct Prim {
 struct Face {
     p: Prim,
     q: vec4<f32>,
+}
+
+// A cell's predictor: its four face states, [x−, x+, y−, y+], and its centre's (Σ, Σu, Σv) half a step on.
+struct Predicted {
+    faces: array<Face, 4>,
+    mid: vec3<f32>,
 }
 
 // An Inf or a NaN, told by its exponent bits (floors.wgsl) — never a float comparison, which WGSL may fold away.
@@ -167,6 +185,15 @@ fn vacuum_at(x: i32, y: i32) -> bool {
         return true;
     }
     return hydro[u32(y) * dims.width + u32(x)] < eos.sigma_vac;
+}
+
+// g at (x, y), a ghost's its edge cell's; 0 when the step runs no P2.
+fn accel_at(x: i32, y: i32) -> vec2<f32> {
+    if (edges.gravity == 0u) {
+        return vec2<f32>(0.0, 0.0);
+    }
+    let cell = u32(clamp(y, 0, i32(dims.height) - 1)) * dims.width + u32(clamp(x, 0, i32(dims.width) - 1));
+    return vec2<f32>(grav[cell], grav[dims.cells + cell]);
 }
 
 // The monotonised-central slope: ½(r − l) limited to twice either one-sided difference, 0 at an extremum.
@@ -274,8 +301,17 @@ fn evolved(base: Prim, u0: array<f32, 14>, delta: array<f32, 14>) -> Face {
     return Face(p, vec4<f32>(u[0], u[1], u[2], u[3]));
 }
 
-// The four predicted face states of the cell at (x, y), [x−, x+, y−, y+].
-fn cell_faces(x: i32, y: i32, half: f32) -> array<Face, 4> {
+// The Hancock delta `delta` of a face state `p` with its half kick under g added (the header comment).
+fn kicked(delta: array<f32, 14>, p: Prim, g: vec2<f32>, half: f32) -> array<f32, 14> {
+    var d = delta;
+    d[1] += half * p.sigma * g.x;
+    d[2] += half * p.sigma * g.y;
+    d[3] += half * p.sigma * ((p.u + 0.5 * half * g.x) * g.x + (p.v + 0.5 * half * g.y) * g.y);
+    return d;
+}
+
+// The predictor of the cell at (x, y): its four face states, [x−, x+, y−, y+], and its centre half a step on.
+fn cell_faces(x: i32, y: i32, half: f32) -> Predicted {
     let c = read_at(x, y);
     let sx = slope(read_at(x - 1, y), c, read_at(x + 1, y));
     let sy = slope(read_at(x, y - 1), c, read_at(x, y + 1));
@@ -289,8 +325,19 @@ fn cell_faces(x: i32, y: i32, half: f32) -> array<Face, 4> {
     for (var k = 0u; k < COMPONENTS; k++) {
         delta[k] = half * ((fxl[k] - fxr[k]) + (fyl[k] - fyr[k]));
     }
-    return array<Face, 4>(evolved(w[0], u[0], delta), evolved(w[1], u[1], delta), evolved(w[2], u[2], delta),
-        evolved(w[3], u[3], delta));
+    var mid = vec3<f32>(c.sigma + delta[0], c.sigma * c.u + delta[1], c.sigma * c.v + delta[2]);
+    if (edges.gravity == 0u) {
+        let faces = array<Face, 4>(evolved(w[0], u[0], delta), evolved(w[1], u[1], delta), evolved(w[2], u[2], delta),
+            evolved(w[3], u[3], delta));
+        return Predicted(faces, mid);
+    }
+    let g = accel_at(x, y);
+    mid.y += half * c.sigma * g.x;
+    mid.z += half * c.sigma * g.y;
+    let faces = array<Face, 4>(evolved(w[0], u[0], kicked(delta, w[0], g, half)),
+        evolved(w[1], u[1], kicked(delta, w[1], g, half)), evolved(w[2], u[2], kicked(delta, w[2], g, half)),
+        evolved(w[3], u[3], kicked(delta, w[3], g, half)));
+    return Predicted(faces, mid);
 }
 
 // The HLL flux across a face normal to `dir` between `l` and `r` (Davis speeds), species by the mass flux's upwind side.
@@ -346,16 +393,16 @@ fn boundary(x: i32, y: i32, side: u32, own: Face, half: f32) -> array<f32, 14> {
     var f: array<f32, 14>;
     switch side {
         case 0u: {
-            f = hll(cell_faces(x - 1, y, half)[1], own, 0u);
+            f = hll(cell_faces(x - 1, y, half).faces[1], own, 0u);
         }
         case 1u: {
-            f = hll(own, cell_faces(x + 1, y, half)[0], 0u);
+            f = hll(own, cell_faces(x + 1, y, half).faces[0], 0u);
         }
         case 2u: {
-            f = hll(cell_faces(x, y - 1, half)[3], own, 1u);
+            f = hll(cell_faces(x, y - 1, half).faces[3], own, 1u);
         }
         default: {
-            f = hll(own, cell_faces(x, y + 1, half)[2], 1u);
+            f = hll(own, cell_faces(x, y + 1, half).faces[2], 1u);
         }
     }
     let high = (side & 1u) == 1u;
@@ -370,17 +417,31 @@ fn left_empty(x: i32, y: i32) -> bool {
     return vacuum_at(x, y) && vacuum_at(x - 1, y) && vacuum_at(x + 1, y) && vacuum_at(x, y - 1) && vacuum_at(x, y + 1);
 }
 
+// Plane `k` (§2.2's order) of the next state at cell `cell`: set, and read.
+fn put_next(k: u32, cell: u32, v: f32) {
+    let n = dims.cells;
+    if (k < NEXT_LO) {
+        next_lo[k * n + cell] = v;
+    } else {
+        next_hi[(k - NEXT_LO) * n + cell] = v;
+    }
+}
+
+fn get_next(k: u32, cell: u32) -> f32 {
+    let n = dims.cells;
+    if (k < NEXT_LO) {
+        return next_lo[k * n + cell];
+    }
+    return next_hi[(k - NEXT_LO) * n + cell];
+}
+
 // Writes conserved `u` as cell `cell` of the next state: Σ, the momenta, E and the mass fractions ΣX_i/Σ.
 fn write_next(cell: u32, u: array<f32, 14>) {
-    let n = dims.cells;
     for (var k = 0u; k < 4u; k++) {
-        next_hydro[k * n + cell] = u[k];
+        put_next(k, cell, u[k]);
     }
-    for (var i = 0u; i < PLANES_A; i++) {
-        next_a[i * n + cell] = u[4u + i] / u[0];
-    }
-    for (var i = 0u; i < PLANES_B; i++) {
-        next_b[i * n + cell] = u[4u + PLANES_A + i] / u[0];
+    for (var i = 0u; i < N_SPECIES; i++) {
+        put_next(4u + i, cell, u[4u + i] / u[0]);
     }
 }
 
@@ -388,13 +449,13 @@ fn write_next(cell: u32, u: array<f32, 14>) {
 fn keep(cell: u32) {
     let n = dims.cells;
     for (var k = 0u; k < 4u; k++) {
-        next_hydro[k * n + cell] = hydro[k * n + cell];
+        put_next(k, cell, hydro[k * n + cell]);
     }
     for (var i = 0u; i < PLANES_A; i++) {
-        next_a[i * n + cell] = species_a[i * n + cell];
+        put_next(4u + i, cell, species_a[i * n + cell]);
     }
     for (var i = 0u; i < PLANES_B; i++) {
-        next_b[i * n + cell] = species_b[i * n + cell];
+        put_next(4u + PLANES_A + i, cell, species_b[i * n + cell]);
     }
 }
 
@@ -415,7 +476,8 @@ fn hydro_update(@builtin(global_invocation_id) id: vec3<u32>) {
 
     let dt = dt_rec[0];
     let half = 0.5 * dt;
-    let own = cell_faces(x, y, half);
+    let pred = cell_faces(x, y, half);
+    let own = pred.faces;
     let last_x = i32(dims.width) - 1;
     let last_y = i32(dims.height) - 1;
     // Face fluxes, each between the cell before it on its axis and the cell after: x−, x+, y−, y+.
@@ -426,22 +488,22 @@ fn hydro_update(@builtin(global_invocation_id) id: vec3<u32>) {
     if (x == 0) {
         fxl = boundary(x, y, 0u, own[0], half);
     } else {
-        fxl = hll(cell_faces(x - 1, y, half)[1], own[0], 0u);
+        fxl = hll(cell_faces(x - 1, y, half).faces[1], own[0], 0u);
     }
     if (x == last_x) {
         fxr = boundary(x, y, 1u, own[1], half);
     } else {
-        fxr = hll(own[1], cell_faces(x + 1, y, half)[0], 0u);
+        fxr = hll(own[1], cell_faces(x + 1, y, half).faces[0], 0u);
     }
     if (y == 0) {
         fyl = boundary(x, y, 2u, own[2], half);
     } else {
-        fyl = hll(cell_faces(x, y - 1, half)[3], own[2], 1u);
+        fyl = hll(cell_faces(x, y - 1, half).faces[3], own[2], 1u);
     }
     if (y == last_y) {
         fyr = boundary(x, y, 3u, own[3], half);
     } else {
-        fyr = hll(own[3], cell_faces(x, y + 1, half)[2], 1u);
+        fyr = hll(own[3], cell_faces(x, y + 1, half).faces[2], 1u);
     }
 
     // The stored vector where there is gas (bit for bit what the planes hold), the floor state's below Σ_vac.
@@ -461,6 +523,13 @@ fn hydro_update(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     for (var k = 0u; k < COMPONENTS; k++) {
         u[k] -= dt * ((fxr[k] - fxl[k]) + (fyr[k] - fyl[k]));
+    }
+    // Gravity's source, time-centred on the predictor's half step (§1.4.2).
+    if (edges.gravity != 0u) {
+        let g = accel_at(x, y);
+        u[1] += dt * pred.mid.x * g.x;
+        u[2] += dt * pred.mid.x * g.y;
+        u[3] += dt * (pred.mid.y * g.x + pred.mid.z * g.y);
     }
     write_next(cell, u);
 }
@@ -505,7 +574,7 @@ fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     let dt = dt_rec[0];
     let half = 0.5 * dt;
-    var own = cell_faces(x, y, half);
+    var own = cell_faces(x, y, half).faces;
     let f = boundary(x, y, side, own[side], half);
     let s = select(-dt, dt, (side & 1u) == 1u);
     for (var k = 0u; k < COMPONENTS; k++) {
@@ -521,12 +590,12 @@ fn hydro_commit(@builtin(global_invocation_id) id: vec3<u32>) {
     let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
     let n = dims.cells;
     for (var k = 0u; k < 4u; k++) {
-        out_hydro[k * n + cell] = next_hydro[k * n + cell];
+        out_hydro[k * n + cell] = get_next(k, cell);
     }
     for (var i = 0u; i < PLANES_A; i++) {
-        out_a[i * n + cell] = next_a[i * n + cell];
+        out_a[i * n + cell] = get_next(4u + i, cell);
     }
     for (var i = 0u; i < PLANES_B; i++) {
-        out_b[i * n + cell] = next_b[i * n + cell];
+        out_b[i * n + cell] = get_next(4u + PLANES_A + i, cell);
     }
 }

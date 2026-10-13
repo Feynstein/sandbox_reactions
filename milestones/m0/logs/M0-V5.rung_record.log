@@ -1,0 +1,22 @@
+$ python3 tools/pb/rung_record.py report   (linux-pc, 2026-10-13, M0-V5)
+report: 100 DONE blocks · 17 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 60 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 4 D block(s) naming no cause in the record · $180.07 read from the sessions' own cost
+BUILD on Opus 5.5, high: 14 block(s) · first-try 7/10 · $4.03 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 14 block(s) · first-try 8/14 · $1.68 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 46 block(s) · first-try 37/46 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 1 block(s) · first-try 0/1 · $2.95 per DONE block · n<10
+BUILD·E on Opus 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 2 block(s) · first-try 2/2 · $0.34 per DONE block · n<10
+BUILD·E on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+CHECK on Opus 5.5, max: 1 block(s) · first-try 1/1 · $11.23 per DONE block · above (usual)
+CHECK on Sonnet 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · n<10
+CHECK on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+MOVE on Sonnet 5.5, medium: 1 block(s) · first-try n/a · $0.27 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 7 block(s) · first-try 4/4 · $13.04 per DONE block · above (usual)
+PLAN on Sonnet 5.5, high: 3 block(s) · first-try 2/3 · n/a per DONE block · n<10
+PLAN on Sonnet 5.5, medium: 1 block(s) · first-try 1/1 · n/a per DONE block · n<10
+PLAN on unknown: 1 block(s) · first-try 1/1 · n/a per DONE block · off the ladder
+=== GO ===
+
+# handoff-read rows against their quoted model= level= (report --json): 60 rows, 46 quoting; 1 right (M0-D13), 6 wrong (M0-TJ3, V2, TM2, TM4: opus-5-5 max read Sonnet 5.5, high; M0-TM3 the same read Sonnet 5.5, medium; M0-TR1 sonnet-5-5 high read Opus 5.5, high), 39 unknown

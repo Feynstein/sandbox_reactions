@@ -4,7 +4,7 @@ Written by M0-T17 (2026-10-10) for the first physics lot (M0-T10 – M0-T12); ea
 (contract §7). The page points: a value lives in `assets/physics.json`, `assets/elements.json`, `assets/reactions.json` or
 `assets/calibration.json` (§2.11) and in the contract section named beside it — **never copy one here**, it goes stale
 at the first tuning. A law's form (an exponent, an ordering) is stated; a constant's value is looked up.
-Pass order and module map: `architecture.md`. Scopes that grade these pages: `testing.md` (`registry`, `eos`; gravity's `fft_twin`, `fft`, `grav_force`, `grav_selfforce`).
+Pass order and module map: `architecture.md`. Scopes that grade these pages: `testing.md` (`registry`, `eos`; gravity's `fft_twin`, `fft`, `grav_force`, `grav_selfforce`; the flow's `riemann`, `sod`, `edges`, `collapse`; the twin's `twin`, `cpu_gpu`).
 
 ## Units (contract §2.1; `crates/sr-physics/src/units.rs`)
 - Sandbox units: length is one cell (Δx = Δy = 1), G = 1, the mass unit is fixed by the Sun-like preset's central surface
@@ -85,7 +85,7 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 - **Floor:** ε_th = E/Σ − ½|u|² − ε_cold, floored at T_floor/μ; `Eos::thermal` returns `Thermal {eps_th, floor_added}` and the caller books `floor_added`
   (energy per area) as the ledger's `floor_added` (§2.9). A pair at 0 has no table and contributes zero pressure and zero ε_cold; a half-on pair, a negative K or a
   non-positive T_floor is refused as a `RegistryError`.
-- **Scheme, step and Δt** (§2.3.4–§2.3.5) belong to the flow pass, not to this page until that pass lands (M0-T19+).
+- **Scheme, step and Δt** (§2.3.4–§2.3.5): § Gas flow below.
 
 ## Gravity (contract §1.4, P2; `crates/sr-physics/src/reference/{fft,grav}.rs` the f64 twin, `crates/sr-engine/src/step/{fft,grav}.rs` and `shaders/{fft,grav}.wgsl` the GPU)
 - **The law (§1.4.1, Q1 — FROZEN; the lead, 2026-10-08).** The world is a razor-thin sheet in 3D space: every cell pulls every other with the **3D** law — potential −Gm/r, r measured in the
@@ -114,6 +114,57 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 - **Not built.** The solve cadence k ∈ {1, 4} (§1.4.4) is a lever for M0-TG's budget; every step solves (k = 1). Sinks' potentials (§1.4.3) wait for P3.
 - **Cost.** The measurements — the RTX 4080 Laptop's smoke and the Quadro RTX 4000 figures owed on `laserax-ai` — live in `milestones/m0/tasks/M0-T31.md` and `M0-T30.md`; this page holds none.
 
+## Gas flow (contract §2.3.4–§2.3.5 and §1.4.2's source, P4; `crates/sr-physics/src/reference/{hydro,riemann}.rs` the f64 twin and its oracle, `crates/sr-engine/src/step/hydro.rs` and `shaders/hydro.wgsl` the GPU)
+- **The scheme (§2.3.4).** Unsplit finite volume, MUSCL-Hancock on primitives (Σ, u, v, Π, X_i): per cell a monotonised-central slope of each primitive; the face states go to conserved variables through the **full EOS**
+  (E = ε_cold + ε_th + kinetic, with ε_th from Π − Π_e − Π_n, floored at T_floor/μ); the Hancock half-step advances every face with **both** axes' flux differences, so the update is unsplit; a predicted state that is not a state
+  (Σ ≤ 0, no thermal energy left) falls back to the unevolved face state. The species slopes share **one** limiter factor (the smallest over the species), so Σ_i slope_i = 0 and ΣX_i = 1 holds to rounding.
+  Fluxes are HLL with Davis speeds from c² = 2Π/Σ (§2.3.3); a species flux is the HLL mass flux times the **upwind** side's X_i, so mass and species cannot disagree. A cell below Σ_vac is read as the floor state (Σ_floor, at rest,
+  T_floor); a cell and its four neighbours all below Σ_vac are left untouched (P8 owns vacuum).
+- **Gravity's source in the flow (§1.4.2).** The Hancock predictor kicks each **face state** by half a step of the cell's g — momentum += ½Δt·Σ_f·g, energy += ½Δt·Σ_f(u_f + ¼Δt·g)·g, i.e. the face's velocity moves by ½Δt·g and its thermal
+  energy is untouched (a centre kick could drive a face's ε_th to the floor in a cold disk: M0-T36's reading, not the contract's words) — and returns the cell centre's half-step (Σ, Σu, Σv); the update adds Δt·Σ_½·g to the momenta and
+  Δt·(Σu)_½·g to the energy. No gravity is a branch, not an added zero. The radiation force (§2.4.4) and heat are not in P4 yet (M0-T43, M0-T41).
+- **Δt (§2.3.5).** CFL term over (|u| + c)/Δx + (|v| + c)/Δy and the gravity term η_g/√max|g|. On the GPU Δt_{n+1} is reduced at the end of step n (P9) from step n's own P2 field — the pre-hydro state's — so the twin's driver
+  takes g the same way (§ The CPU twin); a loop that recomputes g from the state it reduces differs by 4e-5 in Σ after 12 steps of `cold_disk.json` and passes the collapse oracle either way.
+- **The GPU's layout (M0-T34, M0-T36).** Two entry points over the box's 8 × 8 tiles: `hydro_update` — every cell **recomputes its four neighbours' predicted faces** (≈ 5× the predictor per cell and 25 `read_cell` EOS evaluations; a stored face set is
+  ≈ 1 GB at the largest gravity-off world, past the 128 MiB binding) and writes a **next state**, never the state it reads, so no invocation sees a half-updated neighbour — then `hydro_commit` (next → state); between them `hydro_edges` (§ Edges).
+  `hydro_update` binds WebGPU's whole 8 storage buffers: the state's 3, the next state's 2 (`next_lo` = Σ, Σu, Σv, E, x_H, x_He, x_C; `next_hi` the other seven — 7 planes at 2048² stay under the 128 MiB binding, a const assert says so), the Δt record, g (binding 14;
+  a 2-word placeholder is bound without P2) and eos.wgsl's table. Flux arrays are indexed by constants only (`if dir == 0u`): an index from `dir` keeps a WGSL array out of registers. P4 is **opt-in** in the step API: `Step::with_passes(Passes { mode, gravity, hydro })`;
+  `new`, `with_box` and `with_gravity` keep it off, and `headless` turns it on by the scene's `hydro` switch (and hands P2's field to P4 when both are on).
+- **Cost, flagged.** P4 dominates the step (≈ 1.0 ms of ≈ 1.2 ms on the Quadro RTX 4000 for sun_disk, `tasks/M0-T34.md`). A tiled `hydro_update` (12 × 12 primitives in workgroup memory) is the known fix, unbuilt: whether it is owed is G-TOP's / M0-R3's budget's call. This page holds no figure.
+- **The oracles and the overrides they need.** `reference::riemann` is the exact γ = 2 solution (star p*, u* by a safeguarded Newton inside a bisection bracket; `Solution::solve(State{rho,u,p}, …).at(x, x0, t)`; refusals `BadState`, `Vacuum`), the test-side truth for G-SOD.
+  Two scenes switch **cold pressure off**, through `overrides` naming exactly `k1e`, `k2e`, `k1n`, `k2n` = 0 and nothing else, and a later reader must not take that for a bug: **Sod** (`scenes/sod.json`) because the exact solution is the *ideal gas's* — the shipped electron pressure at Σ = 1 sits above Sod's P = 1 (my arithmetic from the shipped K's, not a measured run) and would
+  make the gas not γ = 2 (the scope's own cold-*on* case, Σ 2 | 0.5 at T = 2 with electrons 90 % of Π, grades only conservation, never the shock); **the collapse** (`scenes/cold_disk.json`, G-COLL) because §5.1's oracle is a pressureless free fall ("pressure is negligible at T_floor") and a degenerate pressure at Σc = 1 would hold the disk up (the reading; no task ran the scene with the shipped K's).
+  `ref_disk.json` and `ref_sod.json` (G-REF) copy the same four overrides, and `edge_pulse.json` runs cold off too. The collapse scope **asserts** the scene's overrides are exactly those four keys and that every other physics key is the shipped value — G-COLL green because more was switched off would be the failure.
+  Sod's world is **400 × 64**, not 400 × 4 (§2.8's floor of 64 a side): 64 identical rows, the twin's strip is the first four.
+- **Not built.** Radiation force and heat's coupling (lot 6), sinks and burning's source terms, the tiled update.
+
+## Edges (contract §2.8, §2.9's escaped; P4's ghosts and `hydro_edges`, `Step::set_edge_mode`)
+- **Two modes, a setting.** A new world starts in *leave* (D1; a scene naming no edge leaves), the player or `headless --edge` may switch at any time; the mode reaches the GPU as a uniform (`Edges`, binding 13) written with `queue.write_buffer`, so a change lands at the next
+  step boundary, between submissions (§3.1) — a run that is *bounce* for 64 steps and *leave* for the rest equals a *leave* run from step 64 bit for bit (graded). Two ghost cells per side. Gravity is free space in both modes (§1.4.1); heat and light leave through the edge in both (P5, lot 6).
+- **Bounce.** Ghosts mirror the edge cell with the normal velocity negated; the wall face's mass, energy and species fluxes are exactly 0, its normal-momentum flux is the predicted face state's Π. Bounce books nothing.
+- **Leave.** Ghosts copy the edge cell with the normal velocity component clamped outward. The boundary face's flux is HLL between the edge cell's predicted face and the ghost's predicted face (the predictor is a method run on a ghost too: `Hydro::predicted`; the GPU's `boundary` function is shared by `hydro_update` and `hydro_edges`).
+  **A face whose HLL mass flux points into the world is a wall instead** — mass, energy and species 0, momentum Π — so inflow is exactly 0. That is M0-T35's reading of "clamped to outflow": clamping only the mass term would let energy and momentum cross without mass. The momentum through such a face is booked as escaped (in leave, all of a boundary face's flux is booked).
+  HLL's diffusion term still lets a little out where gas lies stagnant against the edge (s_L·s_R·(Σ_R − Σ_L) with the edge face denser than the ghost's), **never in**; so "inflow is 0" is graded per face per step, not as "the upwind sides book 0".
+- **Booking.** Escaped mass, momentum, energy and each species are booked **per boundary face**: 2 (w + h) slots, the booking's `Domain::EdgeFaces` order (the twin's `State::escaped` keeps the same slot order). On the GPU `hydro_edges` runs one invocation per slot, 64 a workgroup, at a fixed size (the latch can
+  replay it), between update and commit on the state as the step found it, skips faces outside the box or over empty cells, and adds ±Δt·flux into `booking.escaped`; it binds 7 storage buffers (g included; 6 before M0-T36). The twin books only for cells the update moved, from the flux the update applied.
+- **Why the bounce oracle is two oracles.** G-EDGE's pulse (a right-going acoustic pulse in `scenes/edge_pulse.json`, returning within 2 % of −v₀) cannot see its own plant `wall-copy`: the wall flux alone turns the pulse, and copy ghosts in place of mirrors leave it unchanged to 7 digits. The scope adds the GPU's bounce against the twin's mirrors on a wind
+  (relative L1 1e-4); the plant is in the shader only, so the twin's mirrors grade it. The leave cases run an inline wind rather than the pulse (the pulse's escape, ~1e-4 of its grid, is below what f32 resolves at 1e-6).
+- **Not built.** Light through the edge (`radiated`, lot 6).
+
+## The CPU twin (contract §1.7, §3.3, §5.1's G-REF, R13; `crates/sr-physics/src/reference/{mod,hydro,floors,riemann,grav,fft}.rs`; `headless --cpu-reference`)
+- **What it is.** `sr_physics::reference` holds the f64 twin of every pass built so far, a test oracle never shipped: the FFT and gravity (§ Gravity), the flow (§ Gas flow), P8 (`reference::floors`, §2.7 [M0-T19], moved there out of the GPU's floors test: `Floors::{cell, apply}`, `Booked {vacuum_reset, floor_added}`; Σ_vac and Σ_floor are
+  rounded to f32 as the GPU has them), and the exact Riemann solution. `State` is §2.2's 14 planes in f64, channel-major.
+- **The driver, `Twin` (M0-T37).** One step is §1.3.2's order on the whole world: P1 takes the Δt that P9 made at the end of the last step, **P2 on the state as it stands**, P4 with that g, P8, P9 reducing Δt_{n+1} from the **P2 field of the step just run** — the GPU's order, so the two take the same Δt every step.
+  Step 0 runs on a Δt reduced from the initial state with P2 run on it. `Twin::pass_list` / `passes_run` give the labels `Pass::label` gives the GPU's (the scope prints them beside the GPU's for each of the four gravity/hydro switch pairs); `first_non_finite` is P9's guard by cell then channel.
+  The scene's switches are honoured; passes not built yet (heat, burning, neutrinos, sinks) are simply absent from both lists. **A world over `MAX_WORLD` = 128 on an axis is `TwinError::TooLarge`**: the twin has no active box and its FFT and per-step cost are the whole world's.
+- **`headless --cpu-reference`.** Runs the twin from the same scene planes in place of the GPU and writes the same `summary.json` (adapter `cpu-reference`; the `SR-ADAPTER` line says `backend=cpu driver=sr_physics::reference`) and dumps, whose box record is the **whole world's** (`BoxMode::WholeWorld`'s form). A world over 128 on an axis is **exit 4**, no summary.
+  `--adapter` and `--timing` (they mean the GPU) and `--load-dump` (a dump holds no g, and Δt_{n+1} needs step n's, so the twin cannot resume bit for bit) are refused with it, exit 4 — declared defaults, cheap to reverse. The flag is listed in `running.md`.
+- **G-REF's role (scope `cpu_gpu`, M0-T38).** The twin's job is to be the GPU's check: the same scene, exactly 200 steps on each (not the same sim time — a shorter Δt reads as a state difference, which is how the plant `cfl-gpu` is seen), read side by side, relative L1 ≤ 1e-3 in Σ and in E and ≤ 1e-4 absolute in each X,
+  on a cold collapsing disk (leave, gravity + hydro) and Sod's strip (bounce, hydro) with **mixed** compositions (an all-hydrogen scene grades nothing in X). Agreement is within f32 against f64 — never bit for bit, and across adapters likewise (§6.7). Three declared choices: **X is read where both states hold Σ ≥ 100 × Σ_vac** (at the vacuum threshold whether a neighbour crossed Σ_vac this step
+  decides whether P8's pure-hydrogen floor matter mixes in, so rim cells read |ΔX| ~1e-3; the contract's G-REF does not say which cells); the disk's Δt is bound by gravity's term, not the CFL, so Sod carries the CFL separation; the burning field is the third scene and joins with burning (M0-T48).
+- **Where the twin and the box differ.** The twin runs the whole world; the GPU leaves vacuum outside the fitted box as uploaded (Σ = 0, x_H = 1) where the twin's P8 resets it to Σ_floor — negligible against G-REF's bands, but a per-cell comparison of vacuum cells (or of X in them) sees it. The overrides the oracles need (§ Gas flow) apply to the twin and the GPU alike.
+- **The twin's own scopes.** `riemann` (the oracle), `sod`'s and `edges`' and `collapse`'s twin cases (graded before the GPU's, with tolerances fixed before the first GPU run), `twin` (the driver and `--cpu-reference`), `cpu_gpu` (G-REF). Their costs and plants: `testing.md`.
+
 ## Where a number lives (so this page never holds one)
 | A value | Lives in | Checked by |
 |---|---|---|
@@ -123,3 +174,4 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 | Measured scales: max gas speed, core and mass thresholds, preset masses | `assets/calibration.json`, §2.11 | `calibration` (G-CAL, later) |
 | Display anchors (real Sun, years, kelvin) | §1.10 only | `readouts` (later) |
 | G, the kernel, K(0, 0), the FFT sizes | §2.1, §1.4.2, §1.3.3 (`grav::SELF_CELL` in code) | `grav_force`, `grav_selfforce`, `fft_twin`, `fft` |
+| The scheme's constants (C, η_g, the limiter, HLL), the edge modes, the twin's size cap | §2.3.4–§2.3.5, §2.8 (`MAX_WORLD` in code) | `sod`, `collapse`, `edges`, `twin`, `cpu_gpu` |

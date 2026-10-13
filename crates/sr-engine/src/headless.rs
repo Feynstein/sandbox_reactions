@@ -16,18 +16,26 @@
 //! Exit codes: 0 done · 2 `--steps` not reached within `--max-steps` · 3 no adapter or a GPU error · 4 bad arguments
 //! or scene · 5 a non-finite value in the state, found by P9's guard every 64 steps and read after each submission
 //! (the message names the step, cell and channel) · 101 a panic (Rust's own). 6 (calibration) arrives with its check.
+//!
+//! `--cpu-reference` (M0-T37) runs the CPU f64 twin ([`sr_physics::reference::Twin`]) from the same scene in place of the
+//! GPU, worlds up to 128 × 128 (exit 4 above), and writes the same summary.json and dumps: no adapter is touched, so the
+//! first line reads `SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference`, and `--adapter`, `--timing`
+//! and `--load-dump` (the GPU's own) are refused. The twin has no active box: its dumps carry the box record of the whole
+//! world, the GPU's `BoxMode::WholeWorld` form.
 
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Instant;
 
 use serde_json::json;
-use sr_physics::registry::Elements;
+use sr_physics::reference::hydro::Edge;
+use sr_physics::reference::{Switches as TwinSwitches, Twin, GUARD_EVERY};
+use sr_physics::registry::{Elements, Physics};
 
-use crate::dump::{dump_state, load_dump, Dump};
+use crate::dump::{dump_state, load_dump, Dump, Resume};
 use crate::gpu::Gpu;
-use crate::scene::{EdgeMode, Scene};
-use crate::state::{Booking, SideFields, State, WorldConfig};
+use crate::scene::{EdgeMode, Scene, Switches};
+use crate::state::{Booking, SideFields, State, WorldConfig, CHANNELS};
 use crate::step::boxfit::BoxMode;
 use crate::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
 
@@ -58,19 +66,25 @@ pub struct Args {
     pub dump_every: Option<u64>,
     /// `--load-dump FILE`: the run starts from this dump.
     pub load_dump: Option<PathBuf>,
+    /// `--cpu-reference`: the CPU f64 twin in place of the GPU.
+    pub cpu_reference: bool,
 }
 
-/// Parses what follows `headless`. `--flag value` or `--flag=value`, `--timing` alone; anything else is an error
+/// Parses what follows `headless`. `--flag value` or `--flag=value`, `--timing` and `--cpu-reference` alone; anything else is an error
 /// naming it.
 pub fn parse_args(args: &[String]) -> Result<Args, String> {
     let (mut scene, mut steps, mut world, mut edge, mut max_steps, mut out, mut adapter) =
         (None, None, None, None, DEFAULT_MAX_STEPS, None, None);
     let (mut dump_every, mut load_dump) = (None, None);
-    let mut timing = false;
+    let (mut timing, mut cpu_reference) = (false, false);
     let mut it = args.iter();
     while let Some(arg) = it.next() {
         if arg == "--timing" {
             timing = true;
+            continue;
+        }
+        if arg == "--cpu-reference" {
+            cpu_reference = true;
             continue;
         }
         let (flag, inline) = match arg.split_once('=') {
@@ -113,7 +127,13 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
     if dump_every.is_some() && out.is_none() {
         return Err("--dump-every needs --out (dumps go to DIR/dumps)".to_string());
     }
-    Ok(Args { scene, steps, world, edge, max_steps, out, adapter, timing, dump_every, load_dump })
+    if cpu_reference {
+        let refused = [("--adapter", adapter.is_some()), ("--timing", timing), ("--load-dump", load_dump.is_some())];
+        if let Some((flag, _)) = refused.iter().find(|(_, given)| *given) {
+            return Err(format!("{flag} is the GPU's: it has no meaning with --cpu-reference"));
+        }
+    }
+    Ok(Args { scene, steps, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, cpu_reference })
 }
 
 /// Reads `--scene` before any GPU is touched: `preset:<name>` (one preset at the world's centre), else a scene file
@@ -179,6 +199,128 @@ fn git_rev() -> String {
         .unwrap_or_else(|| "unknown".to_string())
 }
 
+/// The twin's state as a dump (§2.12.3): the planes in f32 as the GPU's are, the step index and sim time, and the step's
+/// records — Δt_n and Δt_{n+1} as f32, no latch, and the box record of the whole world with its FFT size per axis (§1.3.3:
+/// the smallest power of two ≥ 2 × the box, at least 32) and its indirect sizes, the twin having no active box.
+pub fn twin_dump(twin: &Twin, world: WorldConfig) -> Dump {
+    let fft = |n: u32| (2 * n).next_power_of_two().max(32);
+    let (w, h) = (world.width, world.height);
+    Dump {
+        world,
+        step: twin.step_index(),
+        sim_time: twin.sim_time(),
+        sinks: Vec::new(),
+        resume: Resume {
+            dt: twin.dt() as f32,
+            dt_next: twin.dt_next() as f32,
+            latch_since: 0.0,
+            box_record: [0, 0, w, h, fft(w), fft(h), 0, 0],
+            box_args: [w.div_ceil(8), h.div_ceil(8), 1, (world.cells() as u32).div_ceil(256), 1, 1],
+        },
+        planes: twin.state.planes.iter().map(|&v| v as f32).collect(),
+    }
+}
+
+/// `--cpu-reference`: the twin from the scene's planes, step by step, with the GPU run's outputs.
+#[allow(clippy::too_many_arguments)]
+fn run_twin(
+    args: &Args,
+    world: WorldConfig,
+    edge: EdgeMode,
+    physics: &Physics,
+    elements: &Elements,
+    planes: &[f32],
+    warnings: &[String],
+    switches: Switches,
+) -> i32 {
+    let edge_of = match edge {
+        EdgeMode::Leave => Edge::Leave,
+        EdgeMode::Bounce => Edge::Bounce,
+    };
+    let planes = planes.iter().map(|&v| f64::from(v)).collect();
+    let (w, h) = (world.width as usize, world.height as usize);
+    let mut twin =
+        match Twin::new(physics, elements, edge_of, TwinSwitches { gravity: switches.gravity, hydro: switches.hydro }, w, h, planes) {
+            Ok(t) => t,
+            Err(e) => {
+                say(&format!("SR-ERROR bad arguments: --cpu-reference: {e}"));
+                return EXIT_ARGS;
+            }
+        };
+    say("SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference");
+    for w in warnings {
+        say(&format!("SR-WARN {w}"));
+    }
+    let write_dump = |twin: &Twin, dir: &Path| {
+        let d = twin_dump(twin, world);
+        let path = dir.join("dumps").join(format!("s_{}.bin", d.step));
+        d.write(&path).map_err(|e| format!("SR-ERROR bad arguments: --out {}: {e}", path.display()))
+    };
+    let target = args.steps.min(args.max_steps);
+    let started = Instant::now();
+    for done in 0..target {
+        twin.step();
+        // P9's guard, on the step indices it runs on: the first non-finite value, by cell then channel.
+        if (twin.step_index() - 1).is_multiple_of(GUARD_EVERY) {
+            if let Some((cell, channel)) = twin.first_non_finite() {
+                say(&format!(
+                    "SR-ERROR non-finite value in the state at step {}, cell ({}, {}), channel {}",
+                    twin.step_index() - 1,
+                    cell % w,
+                    cell / w,
+                    CHANNELS[channel]
+                ));
+                return EXIT_NON_FINITE;
+            }
+        }
+        if let (Some(every), Some(dir)) = (args.dump_every, &args.out) {
+            if twin.step_index().is_multiple_of(every) && done + 1 < target {
+                if let Err(e) = write_dump(&twin, dir) {
+                    say(&e);
+                    return EXIT_ARGS;
+                }
+            }
+        }
+    }
+    let wall_s = started.elapsed().as_secs_f64();
+    if let Some(dir) = &args.out {
+        if let Err(e) = write_dump(&twin, dir) {
+            say(&e);
+            return EXIT_ARGS;
+        }
+    }
+    let met = target == args.steps;
+    let sim_time = twin.sim_time();
+    if let Some(dir) = &args.out {
+        let summary = json!({
+            "version": 1,
+            "tool": format!("sandbox-reactions {}", env!("CARGO_PKG_VERSION")),
+            "git": git_rev(),
+            "adapter": {"name": "cpu-reference", "backend": "cpu", "driver": "sr_physics::reference"},
+            "scene": args.scene,
+            "world": {"width": world.width, "height": world.height, "edge": edge.name()},
+            "steps": target,
+            "sim_time": sim_time,
+            "wall_s": wall_s,
+            "ledger": {"start": {}, "end": {}},
+            "events": [],
+            "objects": [],
+            "until": {"condition": format!("steps:{}", args.steps), "met": met},
+        });
+        let text = serde_json::to_string_pretty(&summary).expect("a json! value serialises");
+        if let Err(e) = std::fs::write(dir.join("summary.json"), text + "\n") {
+            say(&format!("SR-ERROR bad arguments: --out {}: {e}", dir.display()));
+            return EXIT_ARGS;
+        }
+    }
+    say(&format!("SR-HEADLESS DONE steps={target} sim_time={sim_time:.6} until={}", if met { "none" } else { "unmet" }));
+    if met {
+        EXIT_DONE
+    } else {
+        EXIT_UNMET
+    }
+}
+
 /// Runs the command; returns the process's exit code.
 pub fn run(args: &[String]) -> i32 {
     let args = match parse_args(args) {
@@ -229,6 +371,10 @@ pub fn run(args: &[String]) -> i32 {
             say(&format!("SR-ERROR bad arguments: --out {}: {e}", dir.display()));
             return EXIT_ARGS;
         }
+    }
+
+    if args.cpu_reference {
+        return run_twin(&args, world, edge, &physics, &elements, &planes, &warnings, switches);
     }
 
     let gpu = match pollster::block_on(Gpu::new_headless(args.adapter.as_deref())) {

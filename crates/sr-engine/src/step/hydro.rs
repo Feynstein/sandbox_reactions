@@ -3,37 +3,48 @@
 //! speeds, species by the mass flux, eos.wgsl's pressure, two ghosts a side — bounce or leave (§2.8; M0-T35).
 //!
 //! Three dispatches: `hydro_update` over the box's 8 × 8 tiles ([`Size::Indirect`] at [`ARGS_TILES`]) writes the next
-//! state into P4's own planes — packed as the state's three buffers — from the state as the step found it, each
+//! state into P4's own planes — two buffers of [`NEXT_PLANES`] planes in §2.2's order — from the state as the step found it, each
 //! cell recomputing its neighbours' predicted faces instead of storing them (a stored face set is 60 words a cell, past
 //! WebGPU's 128 MiB binding at §2.8's largest worlds); `hydro_edges`, one invocation per boundary face (a fixed size),
 //! books what a leave edge lets out into the booking's `escaped` buffer from the same face flux the update applied;
 //! `hydro_commit` copies the next state back over the box. The update binds the state's three buffers, the next
-//! state's three, the Δt record and eos.wgsl's table: WebGPU's 8 storage buffers per stage (§2.2, §6.2.2), all of them —
-//! hence the booking's own dispatch, which binds six.
+//! state's two, the Δt record, P2's g and eos.wgsl's table: WebGPU's 8 storage buffers per stage (§2.2, §6.2.2), all of
+//! them — hence the booking's own dispatch, which binds seven, and the next state in two buffers of seven planes, not
+//! three as the state (M0-T36: a slot for g; 7 planes at 2048 × 2048 still fit the 128 MiB binding).
 //!
 //! The edge mode is a uniform of P4's ([`Hydro::set_edge_mode`]): a write lands between two submissions, so a frame or a
-//! batch of steps runs whole under one mode and the next under the new one (§3.1: at the next step boundary).
-//!
-//! Gravity's source (§1.4.2) is M0-T36's, the radiation force (§2.4.4) M0-T43's.
+//! batch of steps runs whole under one mode and the next under the new one (§3.1: at the next step boundary). The same
+//! uniform says whether the step runs P2: gravity's source (§1.4.2; M0-T36) — the predictor's half kick and the update's
+//! time-centred Σg and Σu·g, hydro.wgsl's header — reads P2's g when it does, and a placeholder is bound when it does
+//! not. The radiation force (§2.4.4) is M0-T43's.
 
 use super::boxfit::{BoxFit, ARGS_TILES};
 use super::{compute_pipeline, init_buffer, with_eos, Dispatch, EosGpu, Pass, Size};
 use crate::scene::EdgeMode;
-use crate::state::{Booking, State, BOOK_GROUPS, GROUPS, GROUP_NAMES, TERMS};
+use crate::state::{Booking, State, WorldConfig, BOOK_GROUPS, N_CHANNELS, TERMS};
 
 /// The boundary-face slots one `hydro_edges` workgroup covers.
 const EDGE_GROUP: u32 = 64;
+/// The planes in each of the next state's two buffers (hydro.wgsl `NEXT_LO`).
+pub const NEXT_PLANES: usize = 7;
 
-/// P4: its dispatches and the edge mode's uniform.
+const _: () = {
+    assert!(2 * NEXT_PLANES == N_CHANNELS);
+    assert!(NEXT_PLANES as u64 * (WorldConfig::MAX as u64) * (WorldConfig::MAX as u64) * 4 <= 128 << 20);
+};
+
+/// P4: its dispatches, the edge mode's uniform and whether the step runs P2.
 pub struct Hydro {
     pub(super) dispatches: Vec<Dispatch>,
     edge: wgpu::Buffer,
+    gravity: bool,
 }
 
 impl Hydro {
     /// P4's three dispatches for `state`'s world over `boxfit`'s box under `edge`, reading Δt_n from the Δt record
-    /// `dt_record` (its first word) and booking escaped into `booking`; the next-state planes live as long as the bind
-    /// groups that hold them.
+    /// `dt_record` (its first word), gravity's source from P2's g `gravity` when the step runs P2, and booking escaped
+    /// into `booking`; the next-state planes live as long as the bind groups that hold them.
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         device: &wgpu::Device,
         state: &State,
@@ -41,24 +52,36 @@ impl Hydro {
         eos: &EosGpu,
         boxfit: &BoxFit,
         dt_record: &wgpu::Buffer,
+        gravity: Option<&wgpu::Buffer>,
         edge: EdgeMode,
     ) -> Hydro {
-        let mode = init_buffer(device, "hydro.edge", wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST, &words(edge));
-        Hydro { dispatches: dispatches(device, state, booking, eos, boxfit, dt_record, &mode), edge: mode }
+        let on = gravity.is_some();
+        let usage = wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST;
+        let mode = init_buffer(device, "hydro.edge", usage, &words(edge, on));
+        let placeholder;
+        let g = match gravity {
+            Some(g) => g,
+            None => {
+                placeholder = init_buffer(device, "hydro.no_gravity", wgpu::BufferUsages::STORAGE, &[0, 0]);
+                &placeholder
+            }
+        };
+        Hydro { dispatches: dispatches(device, state, booking, eos, boxfit, dt_record, g, &mode), edge: mode, gravity: on }
     }
 
     /// Sets the edge mode for every step submitted after this call (`queue.write_buffer`: ahead of the next submission).
     pub fn set_edge_mode(&self, queue: &wgpu::Queue, edge: EdgeMode) {
-        let bytes: Vec<u8> = words(edge).iter().flat_map(|w| w.to_le_bytes()).collect();
+        let bytes: Vec<u8> = words(edge, self.gravity).iter().flat_map(|w| w.to_le_bytes()).collect();
         queue.write_buffer(&self.edge, 0, &bytes);
     }
 }
 
-/// The edge uniform's words (hydro.wgsl `Edges`): leave 1, bounce 0.
-fn words(edge: EdgeMode) -> [u32; 4] {
-    [u32::from(edge == EdgeMode::Leave), 0, 0, 0]
+/// The edge uniform's words (hydro.wgsl `Edges`): leave 1, bounce 0; then 1 when the step runs P2.
+fn words(edge: EdgeMode, gravity: bool) -> [u32; 4] {
+    [u32::from(edge == EdgeMode::Leave), u32::from(gravity), 0, 0]
 }
 
+#[allow(clippy::too_many_arguments)]
 fn dispatches(
     device: &wgpu::Device,
     state: &State,
@@ -66,6 +89,7 @@ fn dispatches(
     eos: &EosGpu,
     boxfit: &BoxFit,
     dt_record: &wgpu::Buffer,
+    gravity: &wgpu::Buffer,
     edge: &wgpu::Buffer,
 ) -> Vec<Dispatch> {
     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
@@ -73,10 +97,10 @@ fn dispatches(
         source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/hydro.wgsl")).into()),
     });
     let cells = state.world().cells() as u64;
-    let next: [wgpu::Buffer; 3] = std::array::from_fn(|g| {
+    let next: [wgpu::Buffer; 2] = std::array::from_fn(|g| {
         device.create_buffer(&wgpu::BufferDescriptor {
-            label: Some(&format!("hydro.next.{}", GROUP_NAMES[g].trim_start_matches("state."))),
-            size: (GROUPS[g].end - GROUPS[g].start) as u64 * cells * 4,
+            label: Some(["hydro.next.lo", "hydro.next.hi"][g]),
+            size: NEXT_PLANES as u64 * cells * 4,
             usage: wgpu::BufferUsages::STORAGE,
             mapped_at_creation: false,
         })
@@ -93,10 +117,10 @@ fn dispatches(
             entry(3, state.group(2)),
             entry(4, &next[0]),
             entry(5, &next[1]),
-            entry(6, &next[2]),
             entry(7, boxfit.active()),
             entry(8, dt_record),
             entry(13, edge),
+            entry(14, gravity),
         ],
     });
     let eos_group = eos.bind_group(device, &update);
@@ -115,6 +139,7 @@ fn dispatches(
             entry(8, dt_record),
             entry(12, booking.group(book)),
             entry(13, edge),
+            entry(14, gravity),
         ],
     });
     let edges_eos = eos.bind_group(device, &edges);
@@ -129,7 +154,6 @@ fn dispatches(
             entry(0, state.dims()),
             entry(4, &next[0]),
             entry(5, &next[1]),
-            entry(6, &next[2]),
             entry(7, boxfit.active()),
             entry(9, state.group(0)),
             entry(10, state.group(1)),

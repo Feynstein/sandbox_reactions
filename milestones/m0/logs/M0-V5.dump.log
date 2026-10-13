@@ -1,0 +1,75 @@
+== 2026-10-13T13:53:19-04:00 dump · task M0-V5 · box laserax-ai :: bash tests/gpu.sh dump physics
+-- dump · exit=0 · 5.48 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test dump::a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.309568 until=none
+summary 2.30956806056201458, final dump 2.30956806056201458, twin 2.30956806056201458; 0.000e0 off the f64 sum
+ok
+test dump::a_truncated_dump_is_refused_wherever_it_is_cut ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+cut at 0: truncated: 0 bytes, the magic alone is 8
+cut at 5: truncated: 5 bytes, the magic alone is 8
+cut at 8: truncated in the header length
+cut at 11: truncated in the header length
+cut at 12: truncated in the header: 336 bytes announced, 0 present
+cut at 174: truncated in the header: 336 bytes announced, 162 present
+cut at 347: truncated in the header: 336 bytes announced, 335 present
+cut at 348: truncated in the planes: 0 of 229376 bytes
+cut at 351: truncated in the planes: 3 of 229376 bytes
+cut at 16732: truncated in the planes: 16384 of 229376 bytes
+cut at 229720: truncated in the planes: 229372 of 229376 bytes
+cut at 229723: truncated in the planes: 229375 of 229376 bytes
+SR-ERROR bad dump: truncated in the planes: 229375 of 229376 bytes
+ok
+test dump::a_wrong_magic_or_a_header_off_the_contract_is_refused ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+magic [83, 82, 68, 85, 77, 80, 48, 50]: not a state dump: magic "SRDUMP02", expected "SRDUMP01"
+magic [115, 114, 100, 117, 109, 112, 48, 49]: not a state dump: magic "srdump01", expected "SRDUMP01"
+magic [137, 80, 78, 71, 13, 10, 26, 10]: not a state dump: magic "�PNG\r\n\u{1a}\n", expected "SRDUMP01"
+magic [0, 0, 0, 0, 0, 0, 0, 0]: not a state dump: magic "\0\0\0\0\0\0\0\0", expected "SRDUMP01"
+header.extra: unknown key: header.extra: unknown key
+header.resume.box_args: missing: header.resume.box_args: missing
+header.resume: missing: header.resume: missing
+header.version: 2: header.version: 2, this build reads 1
+header.channels: header.channels: ["sigma","mom_y","mom_y","energy","x_H","x_He","x_C","x_O","x_Ne","x_Mg","x_Si","x_S","x_Fe","x_n"], expected §2.2's ["sigma", "mom_x", "mom_y", "energy", "x_H", "x_He", "x_C", "x_O", "x_Ne", "x_Mg", "x_Si", "x_S", "x_Fe", "x_n"] in that order
+header: world 60: header: world 60 × 64: width and height must be multiples of 8 within [64, 2048]
+header.resume.box: header.resume.box: not 8 whole numbers below 2^32: [1,2,3]
+SR-ERROR bad dump: not a state dump: magic "SRDUMP02", expected "SRDUMP01"
+ok
+test dump::an_empty_worlds_steps_add_no_sim_time ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+bare: DtReport { dt: 3.4028235e38, dt_next: 3.4028235e38, steps: 10, sim_time: 0.0, non_finite: None }; frame: FrameReport { steps_run: 10, advanced: inf, sim_time: 0.0, dt: 3.4028235e38, dt_next: 3.4028235e38, steps: 20, latch_fired: None, cost: None }
+ok
+test dump::forty_steps_as_one_two_or_forty_frames_or_bare_give_one_dump_and_one_sim_time ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+40 × 1: sim_time 17.88854479789733887 (reported 17.88854479789733887), 0.000e0 off the f64 sum
+1 × 40: sim_time 17.88854479789733887 (reported 17.88854479789733887), 0.000e0 off the f64 sum
+2 × 20: sim_time 17.88854479789733887 (reported 17.88854479789733887), 0.000e0 off the f64 sum
+bare: sim_time 17.88854479789733887 (reported 17.88854479789733887), 0.000e0 off the f64 sum
+the f32 running sum: 3.599e-7 off
+ok
+test dump::headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.590745 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.309568 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=3.590745 until=none
+SR-ERROR bad arguments: --world 128x128 against the dump's 256x256
+SR-ERROR bad arguments: --dump-every needs --out (dumps go to DIR/dumps)
+SR-ERROR bad arguments: --dump-every must be at least 1
+ok
+test dump::two_hundred_steps_through_a_dump_equal_two_hundred_straight_steps_state_and_reports ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+straight: [FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 22.360680997371674, dt: 0.44721362, dt_next: 0.44721362, steps: 50, latch_fired: None, cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 44.72136199474335, dt: 0.44721362, dt_next: 0.44721362, steps: 100, latch_fired: Some(50), cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 67.08204299211502, dt: 0.44721362, dt_next: 0.44721362, steps: 150, latch_fired: None, cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 89.4427239894867, dt: 0.44721362, dt_next: 0.44721362, steps: 200, latch_fired: None, cost: None }]
+resumed frame 2: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 67.08204299211502, dt: 0.44721362, dt_next: 0.44721362, steps: 150, latch_fired: None, cost: None }
+resumed frame 3: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 89.4427239894867, dt: 0.44721362, dt_next: 0.44721362, steps: 200, latch_fired: None, cost: None }
+cells only: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 22.360680997371674, dt: 0.44721362, dt_next: 0.44721362, steps: 50, latch_fired: None, cost: None }
+arming time lost: FrameReport { steps_run: 2, advanced: 0.89442724, sim_time: 45.615789234638214, dt: 0.44721362, dt_next: 0.44721362, steps: 102, latch_fired: Some(2), cost: None }
+ok
+test dump::write_then_read_gives_a_bit_identical_state_and_the_bytes_follow_2_12_3 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+header: {"channels":["sigma","mom_x","mom_y","energy","x_H","x_He","x_C","x_O","x_Ne","x_Mg","x_Si","x_S","x_Fe","x_n"],"height":64,"resume":{"box":[32,8,32,32,64,64,17,3],"box_args":[4,4,1,4,1,1],"dt":0.08713509887456894,"dt_next":0.08713509887456894,"latch_since":0.0},"sim_time":1.568431779742241,"sinks":[],"step":18,"version":1,"width":128}
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 121 filtered out; finished in 5.33s
+
+

@@ -18,8 +18,14 @@
 //! — both ghosts copy the edge cell with the normal velocity clamped outward, the boundary face's flux is HLL between the
 //! edge cell's predicted face and the ghost's, and a face whose mass flux points inward is a wall instead, so inflow is
 //! exactly 0; whatever crosses — mass, momentum, energy, each species' mass — is booked into [`State::escaped`] from that
-//! face flux, face by face in the GPU booking's layout. Bounce books nothing. Gravity's momentum and energy source (§1.4.2) is M0-T36's and the radiation
-//! force (§2.4.4) M0-T43's: this twin takes g only for Δt ([`Hydro::dt`]).
+//! face flux, face by face in the GPU booking's layout. Bounce books nothing.
+//!
+//! Gravity's source (§1.4.2; M0-T36), when a step is given P2's g ([`Hydro::step_with`]): the Hancock predictor kicks
+//! each face state by half a step of g — its velocity by ½Δt·g, its energy by the work Σ(u + ¼Δt·g)·g·½Δt, so the kick
+//! leaves its thermal energy as it was — beside the flux differences; the update adds Δt·Σg to the momentum and
+//! Δt·(Σu)·g to the energy, Σ and Σu the cell centre's half-step values from that same predictor (its flux differences
+//! and its half kick), so the source is time-centred on the half-step velocity. A ghost cell's g is its edge cell's. The
+//! radiation force (§2.4.4) is M0-T43's.
 //!
 //! A cell below Σ_vac is read as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20); a cell and its
 //! four neighbours all below Σ_vac are left as they are, so empty space is not filled by the floor.
@@ -425,9 +431,10 @@ impl Hydro {
         }
     }
 
-    /// The four predicted face states, [x−, x+, y−, y+], of the cell at index `gi` of the ghosted `grid` (rows of `pw`):
-    /// the cell's limited slopes on both axes, then the Hancock half step with both axes' flux differences.
-    fn predicted(&self, grid: &[Prim], pw: usize, gi: usize, half: f64) -> [Face; 4] {
+    /// The four predicted face states, [x−, x+, y−, y+], of the cell at index `gi` of the ghosted `grid` (rows of `pw`),
+    /// and the cell centre's (Σ, Σu, Σv) half a step on: the cell's limited slopes on both axes, then the Hancock half
+    /// step with both axes' flux differences and, under the cell's gravity `g`, each face's half kick (module doc).
+    fn predicted(&self, grid: &[Prim], pw: usize, gi: usize, half: f64, g: Option<[f64; 2]>) -> ([Face; 4], [f64; 3]) {
         let c = &grid[gi];
         let sx = slope(&grid[gi - 1], c, &grid[gi + 1]);
         let sy = slope(&grid[gi - pw], c, &grid[gi + pw]);
@@ -440,7 +447,20 @@ impl Hydro {
         for k in 0..COMPONENTS {
             delta[k] = half * ((fxl[k] - fxr[k]) + (fyl[k] - fyr[k]));
         }
-        w_faces.map(|p| self.evolved(&p, &delta))
+        let mut mid = [c.sigma + delta[0], c.sigma * c.u + delta[1], c.sigma * c.v + delta[2]];
+        let Some([gx, gy]) = g else {
+            return (w_faces.map(|p| self.evolved(&p, &delta)), mid);
+        };
+        mid[1] += half * c.sigma * gx;
+        mid[2] += half * c.sigma * gy;
+        let kicked = |p: &Prim| {
+            let mut d = delta;
+            d[1] += half * p.sigma * gx;
+            d[2] += half * p.sigma * gy;
+            d[3] += half * p.sigma * ((p.u + 0.5 * half * gx) * gx + (p.v + 0.5 * half * gy) * gy);
+            self.evolved(p, &d)
+        };
+        (w_faces.map(|p| kicked(&p)), mid)
     }
 
     /// Δt = min(C · min_cells [(|u| + c)/Δx + (|v| + c)/Δy]⁻¹, η_g · min_cells √(Δx/|g|)) (§2.3.5); Δx = Δy = 1. `gravity`
@@ -463,8 +483,14 @@ impl Hydro {
         dt
     }
 
-    /// One step of length `dt`, in place.
+    /// One step of length `dt`, in place, without gravity.
     pub fn step(&self, st: &mut State, dt: f64) {
+        self.step_with(st, dt, None);
+    }
+
+    /// One step of length `dt`, in place, with gravity's source when `gravity` holds P2's g (its x plane, then its y
+    /// plane, over the world) — module doc.
+    pub fn step_with(&self, st: &mut State, dt: f64, gravity: Option<(&[f64], &[f64])>) {
         let (w, h) = (st.width, st.height);
         let n = st.cells();
         let (pw, ph) = (w + 2 * GHOSTS, h + 2 * GHOSTS);
@@ -509,12 +535,25 @@ impl Hydro {
             }
         }
 
-        // The reconstruction and the Hancock predictor: every cell's four face states, [x−, x+, y−, y+].
+        // g on the ghosted grid: a ghost takes its edge cell's.
+        let accel = |gi: usize| {
+            gravity.map(|(gx, gy)| {
+                let x = (gi % pw).clamp(GHOSTS, GHOSTS + w - 1) - GHOSTS;
+                let y = (gi / pw).clamp(GHOSTS, GHOSTS + h - 1) - GHOSTS;
+                [gx[y * w + x], gy[y * w + x]]
+            })
+        };
+
+        // The reconstruction and the Hancock predictor: every cell's four face states, [x−, x+, y−, y+], and its centre
+        // half a step on.
         let half = 0.5 * dt;
         let mut faces: Vec<[Face; 4]> = Vec::with_capacity(n);
+        let mut mids: Vec<[f64; 3]> = Vec::with_capacity(n);
         for y in 0..h {
             for x in 0..w {
-                faces.push(self.predicted(&grid, pw, at(x, y), half));
+                let (f, mid) = self.predicted(&grid, pw, at(x, y), half, accel(at(x, y)));
+                faces.push(f);
+                mids.push(mid);
             }
         }
 
@@ -527,7 +566,7 @@ impl Hydro {
                 2 => cell - pw,
                 _ => cell + pw,
             };
-            self.boundary(side, own, || self.predicted(&grid, pw, ghost, half))
+            self.boundary(side, own, || self.predicted(&grid, pw, ghost, half, accel(ghost)).0)
         };
         let mut fx = vec![[0.0; COMPONENTS]; (w + 1) * h];
         for y in 0..h {
@@ -583,6 +622,13 @@ impl Hydro {
                 };
                 for k in 0..COMPONENTS {
                     u[k] -= dt * ((fx[y * (w + 1) + x + 1][k] - fx[y * (w + 1) + x][k]) + (fy[(y + 1) * w + x][k] - fy[y * w + x][k]));
+                }
+                // Gravity's source, time-centred on the predictor's half step (§1.4.2).
+                if let Some([gx, gy]) = accel(at(x, y)) {
+                    let [sigma, mx, my] = mids[i];
+                    u[1] += dt * sigma * gx;
+                    u[2] += dt * sigma * gy;
+                    u[3] += dt * (mx * gx + my * gy);
                 }
                 // Escaped, leaving (§2.8): each boundary face of a cell this step moved, its flux as the cell took it — the
                 // grid loses dt·f through a high face, −dt·f through a low one.

@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/step/dt.rs
++++ b/crates/sr-engine/src/step/dt.rs
+@@ -85,7 +85,7 @@ impl Dt {
+             device,
+             "dt.params",
+             wgpu::BufferUsages::UNIFORM,
+-            &[get("cfl").to_bits(), get("eta_g").to_bits(), partials, u32::from(g.is_some())],
++            &[(get("cfl") * 0.975).to_bits() /* planted: C 0.4 → 0.39 */, get("eta_g").to_bits(), partials, u32::from(g.is_some())],
+         );
+         let no_gravity = g.is_none().then(|| init_buffer(device, "dt.no_gravity", wgpu::BufferUsages::STORAGE, &[0; 2]));
+         let g = g.or(no_gravity.as_ref()).expect("P2's field or its stand-in");

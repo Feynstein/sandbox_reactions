@@ -1,0 +1,49 @@
+==== 2026-10-13T14:19:21-04:00 strings · clean · a fresh scratch copy of the tree
+== 2026-10-13T14:19:21-04:00 strings · task M0-V5 · box laserax-ai :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 3.69 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-sgcz52ox/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-sgcz52ox/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-sgcz52ox/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.61s
+     Running tests/strings.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/strings-1242a85bc172cc65)
+
+running 3 tests
+test texts_byte_identical ... ok
+test same_keys_both_ways ... ok
+test web_texts_verbatim_in_index_html ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+==== 2026-10-13T14:19:21-04:00 strings · plant string-typo · a fresh scratch copy of the tree
+planted string-typo: tests/plants/string-typo.patch -> crates/sr-app/src/strings.rs
+== 2026-10-13T14:19:21-04:00 strings · task M0-V5 · box laserax-ai :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=101 · 7.16 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-sgcz52ox/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-sgcz52ox/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-sgcz52ox/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.43s
+     Running tests/strings.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/strings-1242a85bc172cc65)
+
+running 3 tests
+test web_texts_verbatim_in_index_html ... ok
+test same_keys_both_ways ... ok
+test texts_byte_identical ... FAILED
+
+failures:
+
+---- texts_byte_identical stdout ----
+
+thread 'texts_byte_identical' (2579710) panicked at crates/sr-app/tests/strings.rs:83:5:
+texts that differ from §4.1:
+stage.supernova: STRINGS "Supernoba" ([53, 75, 70, 65, 72, 6e, 6f, 62, 61]), §4.1 "Supernova" ([53, 75, 70, 65, 72, 6e, 6f, 76, 61])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    texts_byte_identical
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --test strings`
+

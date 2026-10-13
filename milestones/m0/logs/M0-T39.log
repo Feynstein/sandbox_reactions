@@ -1,0 +1,167 @@
+box       6/2/0       22.53 s  NO-GO
+logs: milestones/m0/logs/M0-T39.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+79de094b6b56
+anchor: 59 path×scope entries moved by this run
+anchor: 95 paths checked · 128 skipped (3 classes) · 61 never checked · 1 stale · 0 unclassified · 0 owed · 157 covered of 285 visible
+FAILED:
+  box: 2 failed · log milestones/m0/logs/M0-T39.box.log
+verify: 6 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 22.53 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 11.92->11.33
+=== NO-GO: box: 2 failed · log milestones/m0/logs/M0-T39.box.log ===
+box       6/2/0       22.63 s  NO-GO
+logs: milestones/m0/logs/M0-T39.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+fda86afa2a61
+anchor: 0 path×scope entries moved by this run
+anchor: 95 paths checked · 128 skipped (3 classes) · 61 never checked · 1 stale · 0 unclassified · 0 owed · 157 covered of 285 visible
+FAILED:
+  box: 2 failed · log milestones/m0/logs/M0-T39.box.log
+verify: 6 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 22.63 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 10.96->13.48
+=== NO-GO: box: 2 failed · log milestones/m0/logs/M0-T39.box.log ===
+box       6/2/0       22.14 s  NO-GO
+logs: milestones/m0/logs/M0-T39.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+67177be2aee3
+anchor: 0 path×scope entries moved by this run
+anchor: 95 paths checked · 128 skipped (3 classes) · 61 never checked · 1 stale · 0 unclassified · 0 owed · 157 covered of 285 visible
+FAILED:
+  box: 2 failed · log milestones/m0/logs/M0-T39.box.log
+verify: 6 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 22.14 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 16.1->15.2
+=== NO-GO: box: 2 failed · log milestones/m0/logs/M0-T39.box.log ===
+box       6/2/0       23.34 s  NO-GO
+logs: milestones/m0/logs/M0-T39.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+3c650bf80a6d
+anchor: 0 path×scope entries moved by this run
+anchor: 95 paths checked · 128 skipped (3 classes) · 61 never checked · 1 stale · 0 unclassified · 0 owed · 157 covered of 285 visible
+FAILED:
+  box: 2 failed · log milestones/m0/logs/M0-T39.box.log
+verify: 6 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 23.35 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 15.34->19.88
+=== NO-GO: box: 2 failed · log milestones/m0/logs/M0-T39.box.log ===
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/tests/gpu/box.rs
+why sod: stale: crates/sr-engine/tests/gpu/box.rs
+why edges: stale: crates/sr-engine/tests/gpu/box.rs
+why collapse: stale: crates/sr-engine/tests/gpu/box.rs
+why twin: stale: crates/sr-engine/tests/gpu/box.rs
+why cpu_gpu: stale: crates/sr-engine/tests/gpu/box.rs
+why grav_force: stale: crates/sr-engine/tests/gpu/box.rs
+why grav_selfforce: stale: crates/sr-engine/tests/gpu/box.rs
+why fft: stale: crates/sr-engine/tests/gpu/box.rs
+why adapter: stale: crates/sr-engine/tests/gpu/box.rs
+why state: stale: crates/sr-engine/tests/gpu/box.rs
+why booking: stale: crates/sr-engine/tests/gpu/box.rs
+why floors: stale: crates/sr-engine/tests/gpu/box.rs
+why dt: stale: crates/sr-engine/tests/gpu/box.rs
+why box: never: .cargo/config.toml (+60)
+why latch: stale: crates/sr-engine/tests/gpu/box.rs
+why timing: stale: crates/sr-engine/tests/gpu/box.rs
+why scene: never: scenes/box_blob.json · stale: crates/sr-engine/tests/gpu/box.rs
+why dump: never: scenes/box_blob.json · stale: crates/sr-engine/tests/gpu/box.rs
+why boot: stale: crates/sr-engine/tests/gpu/box.rs
+why desktop: stale: crates/sr-engine/tests/gpu/box.rs
+why web: stale: crates/sr-engine/tests/gpu/box.rs
+why capture: stale: crates/sr-engine/tests/gpu/box.rs
+plan_lint       515/0/0      0.18 s  GO · step 1/24, 23 left
+build           2/0/0        2.01 s  GO · step 2/24, 22 left
+sod             15/0/0      18.59 s  GO · step 3/24, 21 left
+edges           7/0/0       21.24 s  GO · step 4/24, 20 left
+collapse        6/0/0        4.33 s  GO · step 5/24, 19 left
+twin            6/0/0        5.97 s  GO · step 6/24, 18 left
+cpu_gpu         2/0/0        5.72 s  GO · step 7/24, 17 left
+grav_force      13/0/0      12.09 s  GO · step 8/24, 16 left
+grav_selfforce  5/0/0        4.00 s  GO · step 9/24, 15 left
+fft             8/0/0       12.02 s  GO · step 10/24, 14 left
+adapter         10/0/0       9.10 s  GO · step 11/24, 13 left
+state           6/0/0        7.58 s  GO · step 12/24, 12 left
+booking         4/0/0        6.56 s  GO · step 13/24, 11 left
+floors          7/0/0       12.54 s  GO · step 14/24, 10 left
+dt              6/0/0        8.76 s  GO · step 15/24, 9 left
+box             6/2/0       25.61 s  NO-GO · step 16/24, 8 left
+latch           5/0/0        7.30 s  GO · step 17/24, 7 left
+timing          5/0/0       11.92 s  GO · step 18/24, 6 left
+scene           8/0/0        6.01 s  GO · step 19/24, 5 left
+dump            8/0/0        9.10 s  GO · step 20/24, 4 left
+boot            1/0/0        3.79 s  GO · step 21/24, 3 left
+desktop         2/0/0        8.51 s  GO · step 22/24, 2 left
+web             3/0/0       28.32 s  GO · step 23/24, 1 left
+capture         2/0/0        2.24 s  GO · step 24/24, 0 left
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+fft_twin        NOT RUN (not impacted: its 16 path(s) checked at the anchor)
+riemann         NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+box · clean · NO-GO · arm 1/2, 1 left
+redarm: 1 plants · 0 red · 0 green · 0 errors · scope box · 41.24 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T39.box.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/box.rs changed since M0-T39's start - a test, case or check M0-T39's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T39's start - a test, case or check M0-T39's Deliver: does not name
+logs: milestones/m0/logs/M0-T39.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+3c650bf80a6d
+anchor: 25 path×scope entries moved by this run
+anchor: 96 paths checked · 128 skipped (3 classes) · 61 never checked · 0 stale · 0 unclassified · 0 owed · 157 covered of 285 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for box)
+NEVER CHECKED  Cargo.lock  (no entry for box)
+NEVER CHECKED  Cargo.toml  (no entry for box)
+NEVER CHECKED  assets/elements.json  (no entry for box)
+NEVER CHECKED  assets/physics.json  (no entry for box)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for box)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for box)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for box)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for box)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for box)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for box)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for box)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for box)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for box)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for box)
+NEVER CHECKED  rust-toolchain.toml  (no entry for box)
+NEVER CHECKED  scenes/box_blob.json  (no entry for box)
+NEVER CHECKED  scenes/sun_disk.json  (no entry for box)
+NEVER CHECKED  tests/cargo.sh  (no entry for box)
+NEVER CHECKED  tests/gpu.sh  (no entry for box)
+NEVER CHECKED  tests/plants/margin-zero.patch  (no entry for box)
+skipped   120  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  box: 2 failed · log milestones/m0/logs/M0-T39.box.log
+  redarm box: clean: 2 failed - red with no plant, so a red plant would prove nothing; the plants are not counted
+  anchor: 61 never checked, 0 stale, 0 unclassified - every one named above
+verify: 652 passed, 2 failed, 0 skipped · 23/24 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 10 not impacted · 37.92 s + loop 41.30 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 23.92->39.75 · base: M0-T39's start 2026-10-13T12:31:28-04:00
+=== NO-GO: box: 2 failed · log milestones/m0/logs/M0-T39.box.log; redarm box: clean: 2 failed - red with no plant, so a red plant would prove nothing; the plants are not counted; anchor: 61 never checked, 0 stale, 0 unclassified - every one named above ===

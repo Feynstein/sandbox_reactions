@@ -68,6 +68,27 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     desktop scope's launcher case stopped the web scope's server mid-smoke in M0-T34's claim run (ERR_CONNECTION_REFUSED),
     and a decoy web server forced beside the launcher was stopped 2 of 2, untouched 3 of 3 after — the lead's answer at
     M0-D28, 2026-10-13: «Launchers stop their own (Recommended)».
+  - [M0-T39] §5.3 G-BOX's "The Sun-like preset, 2,000 steps, box against whole world: mass, momentum, energy and each
+    species' mass equal within 10⁻⁶ relative (f64 sums); a blob … loses no mass in bounce mode (10⁻⁶)" · every sum (mass,
+    momentum, energy, each species' mass) within 10⁻⁶ of its scale at step 200, the box then still inside the world
+    (asserted); mass and each species' mass within 10⁻⁶ at 2,000; the blob graded on its masses (momentum leaves its wake
+    unbooked, §2.7 [M0-T19]) · "FFT sizes differ in round-off only" holds per step, not over 2,000: on the RTX 5090
+    (2026-10-13) momentum differs by 1.7 × 10⁻⁸ of its scale at step 1, 1.4 × 10⁻⁷ at 200 and 3.1 × 10⁻⁶ at 2,000, energy
+    4.4 × 10⁻⁶ at 2,000 — the collapse grows gravity's round-off; with gravity off the two runs are bit-identical at 2,000,
+    and by 2,000 the box has grown to the whole world, so the late steps test none of it — the lead's answer at M0-T39,
+    2026-10-13: «1e-6 at step 200 (Recommended)».
+  - [M0-V5] §5.1 G-REF's "≤ 10⁻⁴ absolute in each X" · the same where both runs hold Σ ≥ 100 × Σ_vac (= Σ_floor / 10⁻⁴,
+    the cell set M0-T38 graded); the bands, scenes and steps unchanged · a vacuum cell holds P8's floor gas, its fractions
+    whatever the cell last held or pure hydrogen as uploaded, and which cells P8 resets turns on f32 against f64 at Σ_vac:
+    measured on linux-pc, 2026-10-13, RTX 5090, scenes/ref_disk.json, 200 steps — over every cell |ΔX| 2.2 × 10⁻³ (x_He, at
+    a cell holding Σ_floor in both runs), on the cell set 3.9 × 10⁻⁶; the same disk over a Σ_floor background carrying its
+    own composition (H 0.75, He 0.25), 4.8 × 10⁻⁷ over every cell — the lead's answer at M0-V5, 2026-10-13: «Amend G-REF
+    (Recommended)».
+  - [M0-V5] §5.1 G-SOD's "on a 400 × 4 strip (bounce edges)" · on a 400 × 64 world of identical rows (bounce edges), the
+    CPU twin graded on its first four rows (the 400 × 4 strip), the GPU on all 64, which must stay identical; the states,
+    γ, read time, oracle and tolerances unchanged · §2.8 keeps a world side at 64 cells or more (WorldConfig refuses less,
+    and every scene file is parsed through it), so the scene cannot be 400 × 4 (M0-T33b) — the lead's answer at M0-V5,
+    2026-10-13: «Amend G-SOD (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

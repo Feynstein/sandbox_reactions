@@ -1,0 +1,75 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-app/src/main.rs (+4)
+why registry: never: crates/sr-physics/src/reference/floors.rs · stale: crates/sr-physics/src/reference/mod.rs
+why eos: never: crates/sr-physics/src/reference/floors.rs · stale: crates/sr-physics/src/reference/mod.rs
+why fft_twin: never: crates/sr-physics/src/reference/floors.rs · stale: crates/sr-physics/src/reference/mod.rs
+why riemann: never: crates/sr-physics/src/reference/floors.rs · stale: crates/sr-physics/src/reference/mod.rs
+why sod: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why edges: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why collapse: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why twin: stale: crates/sr-engine/tests/gpu/twin.rs
+why grav_force: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why grav_selfforce: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why fft: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why adapter: never: crates/sr-engine/tests/gpu/twin.rs · stale: crates/sr-engine/src/headless.rs (+2)
+why state: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why booking: never: crates/sr-engine/tests/gpu/twin.rs · stale: crates/sr-engine/src/headless.rs (+2)
+why floors: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why dt: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why box: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why latch: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why timing: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why scene: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why dump: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why boot: never: crates/sr-engine/tests/gpu/twin.rs (+1) · stale: crates/sr-app/src/main.rs (+4)
+why desktop: never: crates/sr-engine/tests/gpu/twin.rs · stale: crates/sr-app/src/main.rs (+3)
+why web: never: crates/sr-engine/tests/gpu/twin.rs · stale: crates/sr-app/src/main.rs (+3)
+why capture: never: crates/sr-engine/tests/gpu/twin.rs · stale: crates/sr-app/src/main.rs (+3)
+plan_lint       516/0/0      0.12 s  GO · step 1/27, 26 left
+build           2/0/0        7.65 s  GO · step 2/27, 25 left
+registry        29/0/0       3.67 s  GO · step 3/27, 24 left
+eos             13/0/0       1.72 s  GO · step 4/27, 23 left
+fft_twin        10/0/0       1.82 s  GO · step 5/27, 22 left
+riemann         8/0/0        1.72 s  GO · step 6/27, 21 left
+sod             15/0/0      14.79 s  GO · step 7/27, 20 left
+edges           7/0/0       14.24 s  GO · step 8/27, 19 left
+collapse        6/0/0       27.19 s  GO · step 9/27, 18 left
+twin            6/0/0        7.03 s  GO · step 10/27, 17 left
+grav_force      13/0/0       8.88 s  GO · step 11/27, 16 left
+grav_selfforce  5/0/0        5.53 s  GO · step 12/27, 15 left
+fft             8/0/0        7.38 s  GO · step 13/27, 14 left
+adapter         10/0/0       3.92 s  GO · step 14/27, 13 left
+state           6/0/0        3.42 s  GO · step 15/27, 12 left
+booking         4/0/0        3.07 s  GO · step 16/27, 11 left
+floors          7/0/0        5.62 s  GO · step 17/27, 10 left
+dt              6/0/0        4.32 s  GO · step 18/27, 9 left
+box             6/0/0        4.32 s  GO · step 19/27, 8 left
+latch           5/0/0        3.47 s  GO · step 20/27, 7 left
+timing          5/0/0        6.43 s  GO · step 21/27, 6 left
+scene           8/0/0        2.42 s  GO · step 22/27, 5 left
+dump            8/0/0        4.42 s  GO · step 23/27, 4 left
+boot            1/0/0        2.77 s  GO · step 24/27, 3 left
+desktop         2/0/0        6.69 s  GO · step 25/27, 2 left
+web             3/0/0       23.99 s  GO · step 26/27, 1 left
+capture         2/0/0        2.48 s  GO · step 27/27, 0 left
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+twin · clean · GO · arm 1/2, 1 left
+twin · plant twin-skip-floors · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope twin · 12.07 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T37.twin.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/floors.rs changed since M0-T37's start - a test, case or check M0-T37's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T37's start - a test, case or check M0-T37's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/twin.rs changed since M0-T37's start - a test, case or check M0-T37's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T37's start - a test, case or check M0-T37's Deliver: does not name
+logs: milestones/m0/logs/M0-T37.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+1de6b43623da
+anchor: 131 path×scope entries moved by this run
+anchor: 152 paths checked · 127 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 152 covered of 279 visible
+skipped   119  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 711 passed, 0 failed, 0 skipped · 27/27 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 6 not impacted · 28.31 s + loop 12.12 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 26.23->25.08 · base: M0-T37's start 2026-10-13T12:11:47-04:00
+=== GO ===

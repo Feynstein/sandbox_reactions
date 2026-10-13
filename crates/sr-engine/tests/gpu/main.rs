@@ -54,6 +54,15 @@ mod sod;
 /// M0-T35 — the leave and bounce edges and escaped mass, on the twin and on P4 (contract §2.8, §2.9, §5.1's G-EDGE).
 mod edges;
 
+/// M0-T36 — gravity's source in the flow, graded by the cold collapse (contract §1.4.2, §5.1's G-COLL).
+mod collapse;
+
+/// M0-T37 — the twin's step driver and `headless --cpu-reference` (contract §1.3.2, §1.7, §3.3).
+mod twin;
+
+/// M0-T38 — the GPU against the CPU twin, 64 × 64 scenes, 200 steps (contract §5.1's G-REF, §6.7).
+mod cpu_gpu;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;

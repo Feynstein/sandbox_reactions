@@ -1,0 +1,12 @@
+--- a/crates/sr-physics/src/reference/mod.rs
++++ b/crates/sr-physics/src/reference/mod.rs
+@@ -187,8 +187,7 @@
+             let g = self.g.as_ref().map(|f| (&f.gx[..], &f.gy[..]));
+             self.hydro.step_with(&mut self.state, dt, g);
+         }
+-        self.ran.push("P8 floors");
+-        self.booked += self.floors.apply(&mut self.state);
++        // planted: P8 skipped, neither run nor listed
+         self.ran.push("P9 reductions");
+         self.dt_next = self.reduce_dt();
+         self.step += 1;

@@ -1,0 +1,111 @@
+# M0-V5 — lot 5's validation and Phase 7's close
+box: laserax-ai (Linux 7.0.0-38-generic); started 2026-10-13T13:53:04-04:00; model=claude-opus-5-5 level=max (rung_record.py now)
+load at start: 29.28 70.68 62.83 on 32 CPUs
+
+## verify.py --all --task M0-V5 (the complete loop; per-scope logs M0-V5.<scope>.log)
+plan_lint       513/0/0      0.12 s  GO · step 1/34, 33 left
+tools_selftest  10/0/0      21.38 s  GO · step 2/34, 32 left
+toolchain       3/0/0        0.44 s  GO · step 3/34, 31 left
+build           2/0/0        0.58 s  GO · step 4/34, 30 left
+registry        29/0/0       0.11 s  GO · step 5/34, 29 left
+eos             13/0/0       0.16 s  GO · step 6/34, 28 left
+fft_twin        10/0/0       0.26 s  GO · step 7/34, 27 left
+riemann         8/0/0        0.11 s  GO · step 8/34, 26 left
+sod             15/0/0      12.84 s  GO · step 9/34, 25 left
+edges           7/0/0       14.05 s  GO · step 10/34, 24 left
+collapse        6/0/0        1.62 s  GO · step 11/34, 23 left
+twin            6/0/0       24.17 s  GO · step 12/34, 22 left
+cpu_gpu         2/0/0        2.77 s  GO · step 13/34, 21 left
+grav_force      13/0/0       3.58 s  GO · step 14/34, 20 left
+grav_selfforce  5/0/0        1.87 s  GO · step 15/34, 19 left
+fft             8/0/0        4.37 s  GO · step 16/34, 18 left
+time_control    18/0/0       0.11 s  GO · step 17/34, 17 left
+strings         3/0/0        0.21 s  GO · step 18/34, 16 left
+adapter         10/0/0       3.62 s  GO · step 19/34, 15 left
+state           6/0/0        3.32 s  GO · step 20/34, 14 left
+booking         4/0/0        2.82 s  GO · step 21/34, 13 left
+floors          7/0/0        4.78 s  GO · step 22/34, 12 left
+dt              6/0/0        3.97 s  GO · step 23/34, 11 left
+box             8/0/0       24.89 s  GO · step 24/34, 10 left
+latch           5/0/0        2.92 s  GO · step 25/34, 9 left
+timing          5/0/0        7.63 s  GO · step 26/34, 8 left
+scene           8/0/0        2.37 s  GO · step 27/34, 7 left
+dump            8/0/0        5.48 s  GO · step 28/34, 6 left
+boot            1/0/0        2.47 s  GO · step 29/34, 5 left
+desktop         2/0/0       14.21 s  GO · step 30/34, 4 left
+web             3/0/0       44.95 s  GO · step 31/34, 3 left
+capture         2/0/0       10.20 s  GO · step 32/34, 2 left
+licences        3/0/0        3.86 s  GO · step 33/34, 1 left
+watch_only      1/0/0        0.06 s  GO · step 34/34, 0 left
+logs: milestones/m0/logs/M0-V5.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+013d98ece0e7
+anchor: 0 path×scope entries moved by this run
+anchor: 157 paths checked · 130 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 157 covered of 287 visible
+verify: 750 passed, 0 failed, 0 skipped · 34/34 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 32.97 s + loop 0.04 s · mode all · jobs 8 · box laserax-ai · python 3.12.3 · load 27.73->27.36 · base: M0-V5's start 2026-10-13T13:41:43-04:00
+=== GO ===
+exit=0
+
+## The complete loop, read (13:53:40): GO, 750 passed, 34/34 scopes, 32.966 s raw, 29.219 s idle (k 0.15, load 27.36/32,
+## getloadavg1) — a counted complete loop on laserax-ai (verify.py report counts six there: the last three's median 6.11 s raw, 5.69 s idle); budget 600 s; no TR.
+## The sweep (verify.py --redarm --moved --task M0-V5): handed to the lead (over 10 minutes: R12, PLAYBOOK §4 Rule 4).
+
+## Probes (scratch: /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/a53eed5c-77e0-4949-a72d-ff0839e43e87/scratchpad/probes)
+
+## The lead's answers (2026-10-13, AskUserQuestion, after the probes)
+- G-REF cells: «Amend G-REF (Recommended)» → contract §0.5 [M0-V5] (X where both runs hold Σ ≥ 100 × Σ_vac) + Superseded mirror
+- G-SOD world: «Amend G-SOD (Recommended)» → contract §0.5 [M0-V5] (400 × 64 identical rows; twin on the first four) + mirror
+- P4 cost: «File a P4-cost block now (Recommended)» → a D before lot 6 (the tiled P4; dumps byte-identical; Quadro re-measured)
+- Sweep: «Starting it now (Recommended)» → `python3 tools/pb/verify.py --redarm --moved --task M0-V5`, the lead's terminal
+
+## The lead, mid-run (2026-10-13 ~14:24): « can you make sure the D25 and 26 warnings dont appear anymore »
+- rung_record.py now: model=claude-opus-5-5 level=max plugin=installed (the heading's rung)
+- plan.py stub M0-D25 M0-D26 --by M0-V5: 74 lines moved, 74 verified byte-for-byte; Phase 6's commit-gate trailer kept under D26's stub
+- M0-TC4's heading, Flow row and Deliver: seventeen → fifteen, M0-D25 and M0-D26 out of its list
+- plan.py lint: GO, warnings 2 (M0-TC3, M0-D27 — the same WARN, TC4's), header 486/600
+
+## The claim: python3 tools/pb/verify.py --changed --task M0-V5 (14:27:40)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why strings: stale: milestones/m0/m0_contrat.md
+why watch_only: stale: milestones/m0/m0_contrat.md
+plan_lint       525/0/0      0.17 s  GO · step 1/3, 2 left
+strings         3/0/0        0.22 s  GO · step 2/3, 1 left
+watch_only      1/0/0        0.12 s  GO · step 3/3, 0 left
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 64 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+fft_twin        NOT RUN (not impacted: its 16 path(s) checked at the anchor)
+riemann         NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+sod             NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+edges           NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+collapse        NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+twin            NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+cpu_gpu         NOT RUN (not impacted: its 61 path(s) checked at the anchor)
+grav_force      NOT RUN (not impacted: its 65 path(s) checked at the anchor)
+grav_selfforce  NOT RUN (not impacted: its 66 path(s) checked at the anchor)
+fft             NOT RUN (not impacted: its 57 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 61 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 63 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-V5.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+b97a4b57e85b
+anchor: 3 path×scope entries moved by this run
+anchor: 157 paths checked · 132 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 157 covered of 289 visible
+skipped   124  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 529 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 31 not impacted · 0.22 s + loop 0.03 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 16.47->16.47 · base: M0-V5's start 2026-10-13T13:41:43-04:00
+=== GO ===
+exit=0

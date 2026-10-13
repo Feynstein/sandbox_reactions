@@ -4,7 +4,8 @@
 //!
 //! Today P1, P2, P4, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
 //! M0-T20), P2 gravity when the step is built with it ([`grav`], [`Step::with_gravity`], M0-T31), P4 the gas flow when
-//! the step is built with it ([`hydro`], [`Step::with_passes`], M0-T34), P8 the floors, then the
+//! the step is built with it ([`hydro`], [`Step::with_passes`], M0-T34; with gravity's source when P2 runs too,
+//! M0-T36), P8 the floors, then the
 //! species renormalisation (shaders/floors.wgsl, M0-T19); every other pass is an empty slot its lot fills, in place,
 //! without reordering the others. A step knows its index — the guard runs on every 64th
 //! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction — after P2 on that state, so step 0's
@@ -378,7 +379,8 @@ impl Step {
         let mut passes: [Vec<Dispatch>; 10] = Default::default();
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Gravity as usize] = gravity.as_mut().map(|g| std::mem::take(&mut g.dispatches)).unwrap_or_default();
-        let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, &boxfit, dt.record(), edge));
+        let g = gravity.as_ref().map(Gravity::field);
+        let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, &boxfit, dt.record(), g, edge));
         passes[Pass::Hydro as usize] = flow.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
         passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);

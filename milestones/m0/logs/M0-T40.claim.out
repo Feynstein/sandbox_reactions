@@ -1,0 +1,43 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint       513/0/0      0.11 s  GO
+tools_selftest  NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain       NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build           NOT RUN (not impacted: its 64 path(s) checked at the anchor)
+registry        NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+eos             NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+fft_twin        NOT RUN (not impacted: its 16 path(s) checked at the anchor)
+riemann         NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+sod             NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+edges           NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+collapse        NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+twin            NOT RUN (not impacted: its 60 path(s) checked at the anchor)
+cpu_gpu         NOT RUN (not impacted: its 61 path(s) checked at the anchor)
+grav_force      NOT RUN (not impacted: its 65 path(s) checked at the anchor)
+grav_selfforce  NOT RUN (not impacted: its 66 path(s) checked at the anchor)
+fft             NOT RUN (not impacted: its 57 path(s) checked at the anchor)
+time_control    NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings         NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+state           NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+booking         NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+floors          NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+dt              NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+box             NOT RUN (not impacted: its 61 path(s) checked at the anchor)
+latch           NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+timing          NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+scene           NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+dump            NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+boot            NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+desktop         NOT RUN (not impacted: its 59 path(s) checked at the anchor)
+web             NOT RUN (not impacted: its 63 path(s) checked at the anchor)
+capture         NOT RUN (not impacted: its 54 path(s) checked at the anchor)
+licences        NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only      NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-T40.<scope>.log · record: loop_times.jsonl · tree 19e0d8e8d44b+013d98ece0e7
+anchor: 1 path×scope entries moved by this run
+anchor: 157 paths checked · 130 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 157 covered of 287 visible
+skipped   122  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 513 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 33 not impacted · 0.12 s + loop 0.03 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 25.75->25.75 · base: M0-T40's start 2026-10-13T13:35:00-04:00
+=== GO ===

@@ -26,15 +26,18 @@ block that builds their feature and are refused with exit 4 until then:
   - `--capture` runs a scripted session, one PNG per step plus `captions.json`, then exits 0 (§3.3; the harness is
     `tests/capture/`). An action not built yet is refused with `SR-ERROR`, exit 4.
 - **Headless**: `headless --scene <scenes/FILE.json | preset:<sun|massive|giant>> --steps N [--world WxH]
-  [--edge leave|bounce] [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE] [--adapter S]` — the
+  [--edge leave|bounce] [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE]
+  [--adapter S | --cpu-reference]` — the
   same step with no surface and no display (§6.3); `DIR/summary.json` per §2.12.2 and, with `--out`, the final state dump
   `DIR/dumps/s_<step>.bin` (§2.12.3; `--dump-every` adds one at every step index N divides, counted from the scene;
   `--load-dump` starts from a dump, M0-T26). `--world` and `--edge` stand over the scene's `world` (M0-T25); `--timing`
-  adds `timing` to the summary (M0-T23). stdout: first line `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`,
+  adds `timing` to the summary (M0-T23). `--cpu-reference` (M0-T37) runs the CPU f64 twin from the same scene instead of
+  the GPU — worlds up to 128 × 128 (exit 4 above), the same summary.json and dumps (the box record the whole world's);
+  `--adapter`, `--timing` and `--load-dump` are the GPU's and refused with it. stdout: first line `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`,
   warnings `SR-WARN`. Exit codes: §3.3. The file formats: `docs/agent/architecture.md` § The files. sr-app's usage line
-  (`--help`) still lists only the M0-T4 flags — stale since M0-T23 (flagged to M0-T37); this list is the tree's.
+  (`--help`) lists these flags (M0-T37).
 - Later blocks add `bench`, `calibrate`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the
-  headless run's `--until`, `--frames-every`, `--edits`, `--cpu-reference` (§3.3).
+  headless run's `--until`, `--frames-every`, `--edits` (§3.3).
 
 ## launch.py — how a service is started, polled, stopped (`tools/pb/launch.py`, §3.4, §3.6)
 `python3 tools/pb/launch.py start|stop|status|smoke|list <service> --task <ID>` (`py -3.12 …` on win-laptop). A service's
