@@ -135,7 +135,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T40 | BUILD | Docs: physics.md gas flow, edges, the CPU twin; lot 5 rows | AFTER M0-T39 | DONE (2026-10-13 13:38) |
 | M0-V5 | CHECK | Validation, lot 5: gas flow | AFTER M0-T40 | DONE (2026-10-13 14:28) |
 | M0-TC4 | MOVE | Compaction — Phase 7's close: fifteen DONE blocks to stub, more than ten (PLAYBOOK §8, §11) | AFTER M0-V5 | DONE (2026-10-13 15:35) |
-| M0-D30 | BUILD | P4 is 84 % of a Sun-sized step on the Quadro: every cell recomputes its four neighbours' predicted faces (the lead's word at M0-V5) | AFTER M0-TC4 | TODO |
+| M0-D30 | BUILD | P4 is 84 % of a Sun-sized step on the Quadro: every cell recomputes its four neighbours' predicted faces (the lead's word at M0-V5) | AFTER M0-TC4 | DONE (2026-10-13 15:55) |
 | M0-D31 | BUILD | architecture.md's pass table says P2 and P4 have no dispatches: lot 4's four and lot 5's three were never written in | AFTER M0-D30 | TODO |
 | M0-D32 | BUILD | rung_record.py's report reads a block's rung from its handoff's prose, never its quoted model= level=: 6 of the 7 rungs it reads on linux-pc are wrong | AFTER M0-D31 | TODO |
 | M0-T41 | BUILD | Heat and light on the CPU twin (P5); G-HEAT1, G-HEAT2, G-FLD twin cases | AFTER M0-V5 | TODO |
@@ -472,9 +472,9 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-D30
+- Next task: M0-D31
 - Counters: T=116 · D=32 · V=17 · Q=0 · TI=0 · TJ=3 · TV=3 · TC=4 · TR=1 · TM=5 · TD=1 · TE=1
-- Open D/BLOCKED register: M0-D30 — P4 is 84 % of a Sun-sized step on the Quadro (the lead's word) — after M0-TC4 · M0-D31 — architecture.md's pass table omits P2's and P4's dispatches — after M0-D30 · M0-D32 — rung_record.py reads a handoff's prose, not its quoted model= level= — before M0-V6
+- Open D/BLOCKED register: M0-D31 — architecture.md's pass table omits P2's and P4's dispatches — after M0-D30 · M0-D32 — rung_record.py reads a handoff's prose, not its quoted model= level= — before M0-V6
 - Outstanding commit gates: Phase 7's (the lead's, after M0-V5's close): M0-T33a … M0-T35 committed through 19e0d8e, pushed; M0-T36 … M0-T40 and M0-V5 (lot 5's last code, M0-V5's report, logs, plan, archive and contract edits) are not
 - Carryover: none
 - Awaiting lead: none
@@ -1066,7 +1066,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: 15 DONE blocks stubbed into plan_archive.md (M0-TC3, M0-D27, M0-T33a, M0-T33b, M0-T34, M0-TM5, M0-D28, M0-D29, M0-T35, M0-T36, M0-T37, M0-T38, M0-T39, M0-T40, M0-V5): 295 lines moved, 295 verified byte-for-byte by plan.py; my own check: all 15 originals sit in the archive identically, the other 189 blocks unchanged, no TODO block touched. Lint: warnings 2 -> 0, GO 524 checks, header 486/600 before and after. Not done, measured: Rules rows are already index lines with full text in m0_rules.md (nothing long left in the plan to move); Pipeline state already a register; no whole line repeats in 3+ live blocks (the repeats are Verify fail-arm wording in TODO blocks, left alone); no Repo-facts sentence duplicates a Hazards sentence. Not acted on: the Rules intro says m0_rules.md was REJECTED as false economy (M0-TB), yet the file exists and this block moved text toward it; the lead to reconcile. Claim python3 tools/pb/verify.py --changed --task M0-TC4 [ALREADY RUN — PASS (GO, 524 passed, 1/1 scopes: plan_lint; 33 not impacted) on win-laptop]. Model: model=claude-haiku-5-5 level=high (rung_record now, plugin=installed; matches the heading's rung). Detail: scratchpad tc4 (before-copies). Next: M0-D30.
 
 ## M0-D30 · P4 is 84 % of a Sun-sized step on the Quadro: every cell recomputes its four neighbours' predicted faces (the lead's word at M0-V5) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TC4)
-- Status: TODO
+- Status: DONE (2026-10-13 15:55)
 - Blocks: nothing — but lot 6 adds the radiation force to the same kernel (M0-T43), and the lead's answer at M0-V5
   (2026-10-13, «File a P4-cost block now (Recommended)») puts this block before it
 - Caused by: M0-T34 (hydro_update's recompute layout, its declared deviation 2); how P4's time splits between the
@@ -1098,7 +1098,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   (scenes/sun_disk.json and scenes/fill_world.json, 200 steps, `--timing`, `--adapter "Quadro RTX 4000"`), medians of 3, before
   and after · Pass: exit 0, SR-ADAPTER the Quadro RTX 4000, P4 below the Symptom's on both scenes · Fail: no gain, or
   another adapter
-- Handoff: <placeholder>
+- Handoff: hydro.wgsl's hydro_update is one workgroup per 8x8 tile: 132 of its 12x12 primitives read once into 9,216 B of workgroup memory, each predictor once (64 + a 32-cell ring), faces exchanged one axis at a time; a tile with no moving cell copies and stops; scheme, buffers (8), dispatch sizes unchanged; docs: hydro.rs, physics.md, testing.md. Per dispatch before (Quadro): hydro_update 97% of sun_disk's P4. Verify 2 (Quadro RTX 4000, laserax-ai over ssh, medians of 3, same day): sun_disk P4 0.841 -> 0.240 ms, step 1.015 -> 0.414; fill_world P4 12.63 -> 3.776, step 13.91 -> 5.05 (RTX 4080 Laptop: 1.27 -> 0.51, 22.2 -> 7.49). Verify 1: the 8 P4 scopes GO on both boxes (42+15 here, 57 on the RTX 5090), --changed GO on laserax-ai (663, 25/25). Deviation: dumps at step 200 not byte-identical (f32 round-off of the new layout) — rel L1 <= 4.7e-7 in sigma/E, gas |dX| <= 7.9e-7, inside G-REF's bands, both adapters. Not acted on: still ~3x TW's 0.14 ms step (flagged M0-T63); hydro_edges 8% of P4 at leave edges; M0-T43 flagged on the tile layout. Per-dispatch timing was a scratch probe, never committed. Commits at the lead's word: dcc0991, 3a614eb (laserax-ai), and this close. Ran on claude-opus-5-5, high. Detail: tasks/M0-D30.md. Next: M0-D31.
 
 ## M0-D31 · architecture.md's pass table says P2 and P4 have no dispatches: lot 4's four and lot 5's three were never written in · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D30)
 - Status: TODO
@@ -1205,7 +1205,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T43 · The radiation force in the flow · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T42)
 - Status: TODO
-- Carried flags: [M0-T34, 2026-10-13] hydro_update (shaders/hydro.wgsl) is at WebGPU's 8 storage buffers since M0-T34 (state ×3, next ×3, Δt, eos table) and M0-T35/T36 may each have taken a freed slot: the flux F needs one — read their handoffs before binding · [M0-V5, 2026-10-13] M0-D30 (the lead's word at M0-V5) tiles hydro_update before this block adds F to it: read its handoff for P4's new layout, its workgroup memory and its storage-buffer count before binding F
+- Carried flags: [M0-T34, 2026-10-13] hydro_update (shaders/hydro.wgsl) is at WebGPU's 8 storage buffers since M0-T34 (state ×3, next ×3, Δt, eos table) and M0-T35/T36 may each have taken a freed slot: the flux F needs one — read their handoffs before binding · [M0-V5, 2026-10-13] M0-D30 (the lead's word at M0-V5) tiles hydro_update before this block adds F to it: read its handoff for P4's new layout, its workgroup memory and its storage-buffer count before binding F · [M0-D30, 2026-10-13] [M0-D30] hydro_update is now one workgroup per 8x8 tile (9,216 B workgroup memory, barriers reached by all 64 invocations): the radiation force goes into hancock's kick and the update's source, and the update already binds WebGPU's 8 storage buffers (tasks/M0-D30.md)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P4), §2.4.4 +
   docs/agent/testing.md
 - Deliver: crates/sr-engine/shaders/hydro.wgsl and the twin's reference/hydro.rs: the force per area
@@ -1631,7 +1631,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-T63 · The step-cost probe — a main sequence's steps and the box's cost on the Quadro · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T62)
 - Status: TODO
-- Carried flags: [M0-V5, 2026-10-13] The Quadro RTX 4000 with P4 in and before M0-D30 (medians of 3, headless --timing, 200 steps): sun_disk.json step 1.083 ms, P4 0.906, the other passes 0.108; fill_world.json 16.04 ms, P4 14.60. The wall per step from 200 against 2,200 steps no longer isolates one box: P4 moves gas, and sun_disk's box grows from 136 × 128 at step 200 to the whole world by 2,200 (7.46 ms a step over that span). reports/v5.md § The step's cost
+- Carried flags: [M0-V5, 2026-10-13] The Quadro RTX 4000 with P4 in and before M0-D30 (medians of 3, headless --timing, 200 steps): sun_disk.json step 1.083 ms, P4 0.906, the other passes 0.108; fill_world.json 16.04 ms, P4 14.60. The wall per step from 200 against 2,200 steps no longer isolates one box: P4 moves gas, and sun_disk's box grows from 136 × 128 at step 200 to the whole world by 2,200 (7.46 ms a step over that span). reports/v5.md § The step's cost · [M0-D30, 2026-10-13] [M0-D30] P4 tiled: Quadro RTX 4000 sun_disk P4 0.240 ms, step 0.414 (medians of 3, 2026-10-13) — still ~3x TW's scenario C (<= ~0.14 ms a step); fill_world step 5.05, hydro_edges 0.30 of P4's 3.78 once gas reaches leave edges (tasks/M0-D30.md § Not acted on)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.2, §1.8.6, §5.3 (G-FPS, G-TOP),
   §5.5 + milestones/m0/reports/time_warp.md (Summary, R1, R8) + milestones/m0/reports/plan_redteam.md RT6
   + reports/v4.md–v6.md (the passes' costs)

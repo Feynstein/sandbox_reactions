@@ -35,3 +35,74 @@ sun_disk (RTX 4080 Laptop, before vs after)
 fill_world (RTX 4080 Laptop, before vs after)
   step 200 vs 200, sim_time 13.39829558506608 vs 13.398295424878597, identical planes: False
   sigma max|d| 7.45e-09 relL1 1.15e-07 � mom_x max|d| 6.98e-09 � mom_y max|d| 7.92e-09 � energy max|d| 2.61e-08 relL1 1.07e-07 � x_H max|d| 7.75e-07 gas-max 7.75e-07 � x_He max|d| 7.9e-07 gas-max 7.9e-07 � x_C max|d| 3.26e-08 gas-max 3.26e-08 � x_O max|d| 2.42e-08 gas-max 2.42e-08 � x_Ne max|d| 0 gas-max 0 � x_Mg max|d| 0 gas-max 0 � x_Si max|d| 0 gas-max 0 � x_S max|d| 0 gas-max 0 � x_Fe max|d| 0 gas-max 0 � x_n max|d| 0 gas-max 0
+      6 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+sun_disk (Quadro RTX 4000, before vs after)
+  step 200 vs 200, sim_time 3.5907451827079058 vs 3.5907452069222927, identical planes: False
+  sigma max|d| 7.63e-06 relL1 3.19e-07 · mom_x max|d| 9.73e-05 · mom_y max|d| 0.000114 · energy max|d| 0.00269 relL1 4.06e-07 · x_H max|d| 9.42e-06 gas-max 5.36e-07 · x_He max|d| 8.91e-06 gas-max 4.92e-07 · x_C max|d| 3.34e-07 gas-max 2.14e-08 · x_O max|d| 2.78e-07 gas-max 1.82e-08 · x_Ne max|d| 0 gas-max 0 · x_Mg max|d| 0 gas-max 0 · x_Si max|d| 0 gas-max 0 · x_S max|d| 0 gas-max 0 · x_Fe max|d| 0 gas-max 0 · x_n max|d| 0 gas-max 0
+fill_world (Quadro RTX 4000, before vs after)
+  step 200 vs 200, sim_time 13.398295443505049 vs 13.398295305669308, identical planes: False
+  sigma max|d| 6.52e-09 relL1 1.13e-07 · mom_x max|d| 6.98e-09 · mom_y max|d| 6.87e-09 · energy max|d| 2.61e-08 relL1 1.05e-07 · x_H max|d| 7.75e-07 gas-max 7.75e-07 · x_He max|d| 7.15e-07 gas-max 7.15e-07 · x_C max|d| 2.98e-08 gas-max 2.98e-08 · x_O max|d| 2.28e-08 gas-max 2.28e-08 · x_Ne max|d| 0 gas-max 0 · x_Mg max|d| 0 gas-max 0 · x_Si max|d| 0 gas-max 0 · x_S max|d| 0 gas-max 0 · x_Fe max|d| 0 gas-max 0 · x_n max|d| 0 gas-max 0
+== laserax-ai, Quadro before (9e78450)
+sun_disk run 1 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 1.5942120000000002 per_pass_ms {'P0 edits': 0.009310240000000003, 'P1 dt': 0.0065166400000000015, 'P2 gravity': 0.09763279999999992, 'P4 hydro': 1.3523961599999998, 'P8 floors': 0.027536799999999993, 'P9 reductions': 0.021388800000000013} per_dispatch None
+sun_disk run 2 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 1.00624496 per_pass_ms {'P0 edits': 0.006499360000000001, 'P1 dt': 0.004320960000000001, 'P2 gravity': 0.06308016000000002, 'P4 hydro': 0.83231696, 'P8 floors': 0.016542400000000002, 'P9 reductions': 0.01209344} per_dispatch None
+sun_disk run 3 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 1.0153751999999998 per_pass_ms {'P0 edits': 0.006515040000000001, 'P1 dt': 0.004426400000000001, 'P2 gravity': 0.06289296000000004, 'P4 hydro': 0.84088992, 'P8 floors': 0.016476160000000004, 'P9 reductions': 0.012354079999999996} per_dispatch None
+fill_world run 1 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 13.847678079999996 per_pass_ms {'P0 edits': 0.006494559999999998, 'P1 dt': 0.0047217599999999985, 'P2 gravity': 0.9830311999999998, 'P4 hydro': 12.572170559999993, 'P8 floors': 0.14834111999999994, 'P9 reductions': 0.06571424000000001} per_dispatch None
+fill_world run 2 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 13.914635519999996 per_pass_ms {'P0 edits': 0.00652368, 'P1 dt': 0.004710559999999999, 'P2 gravity': 0.98868832, 'P4 hydro': 12.633564159999997, 'P8 floors': 0.14867936000000007, 'P9 reductions': 0.06582208000000002} per_dispatch None
+fill_world run 3 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 13.975178559999994 per_pass_ms {'P0 edits': 0.006578560000000003, 'P1 dt': 0.004706240000000001, 'P2 gravity': 0.9945315200000003, 'P4 hydro': 12.687460480000002, 'P8 floors': 0.14894528, 'P9 reductions': 0.06590064000000001} per_dispatch None
+== laserax-ai, split before (probe, scratch copy)
+sun_disk 1 step 1.4306 {'P0 edits': 0.0079, 'P1 dt': 0.0057, 'P2 gravity': 0.0858, 'P4 hydro': 1.1741, 'P5 heat': 0.0044, 'P6 reactions': 0.0112, 'P8 floors': 0.0219, 'P9 reductions': 0.0164}
+sun_disk 2 step 1.0393 {'P0 edits': 0.0065, 'P1 dt': 0.0046, 'P2 gravity': 0.0632, 'P4 hydro': 0.8333, 'P5 heat': 0.0035, 'P6 reactions': 0.0089, 'P8 floors': 0.0165, 'P9 reductions': 0.0123}
+sun_disk 3 step 1.0387 {'P0 edits': 0.0064, 'P1 dt': 0.0046, 'P2 gravity': 0.063, 'P4 hydro': 0.8325, 'P5 heat': 0.0035, 'P6 reactions': 0.009, 'P8 floors': 0.0163, 'P9 reductions': 0.0122}
+fill_world 1 step 14.1177 {'P0 edits': 0.0066, 'P1 dt': 0.0046, 'P2 gravity': 0.9817, 'P4 hydro': 12.4419, 'P5 heat': 0.2938, 'P6 reactions': 0.0777, 'P8 floors': 0.1491, 'P9 reductions': 0.0659}
+fill_world 2 step 14.1965 {'P0 edits': 0.0065, 'P1 dt': 0.0046, 'P2 gravity': 0.9874, 'P4 hydro': 12.513, 'P5 heat': 0.2951, 'P6 reactions': 0.0777, 'P8 floors': 0.1494, 'P9 reductions': 0.066}
+fill_world 3 step 14.2637 {'P0 edits': 0.0065, 'P1 dt': 0.0046, 'P2 gravity': 0.9921, 'P4 hydro': 12.5733, 'P5 heat': 0.2963, 'P6 reactions': 0.0777, 'P8 floors': 0.1497, 'P9 reductions': 0.066}
+== laserax-ai, after (dcc0991), split after, tests
+dcc0991 M0-TC4 done; M0-D30 tiled hydro_update (in progress, Quadro check owed on laserax-ai)
+== after, Quadro
+sun_disk run 1 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 0.7856399999999999 per_pass_ms {'P0 edits': 0.011814879999999998, 'P1 dt': 0.008235359999999999, 'P2 gravity': 0.12197680000000002, 'P4 hydro': 0.4834742399999999, 'P8 floors': 0.034599360000000016, 'P9 reductions': 0.03151359999999999} per_dispatch None
+sun_disk run 2 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 0.41032672 per_pass_ms {'P0 edits': 0.006371359999999997, 'P1 dt': 0.004056480000000003, 'P2 gravity': 0.06261359999999998, 'P4 hydro': 0.23768383999999995, 'P8 floors': 0.015483840000000004, 'P9 reductions': 0.011879679999999993} per_dispatch None
+sun_disk run 3 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 0.4141705600000001 per_pass_ms {'P0 edits': 0.006564800000000002, 'P1 dt': 0.004169120000000005, 'P2 gravity': 0.06265152000000002, 'P4 hydro': 0.24012960000000003, 'P8 floors': 0.015574879999999998, 'P9 reductions': 0.011747039999999993} per_dispatch None
+fill_world run 1 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 5.04381888 per_pass_ms {'P0 edits': 0.006558879999999994, 'P1 dt': 0.004702719999999999, 'P2 gravity': 0.9797982400000004, 'P4 hydro': 3.771166719999998, 'P8 floors': 0.14916720000000006, 'P9 reductions': 0.06572896} per_dispatch None
+fill_world run 2 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 5.051752320000001 per_pass_ms {'P0 edits': 0.0065324799999999985, 'P1 dt': 0.004668480000000001, 'P2 gravity': 0.9816360000000006, 'P4 hydro': 3.776498720000002, 'P8 floors': 0.14928048000000005, 'P9 reductions': 0.06582400000000001} per_dispatch None
+fill_world run 3 exit 0 SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+  step_ms_mean 5.051509760000001 per_pass_ms {'P0 edits': 0.006617439999999999, 'P1 dt': 0.0046696, 'P2 gravity': 0.9813020799999996, 'P4 hydro': 3.77554736, 'P8 floors': 0.14923472000000013, 'P9 reductions': 0.06585744000000003} per_dispatch None
+== split after, Quadro
+sun_disk 1 step 0.742 {'P0 edits': 0.0089, 'P1 dt': 0.0062, 'P2 gravity': 0.1147, 'P4 hydro': 0.4411, 'P5 heat': 0.0053, 'P6 reactions': 0.0104, 'P8 floors': 0.0265, 'P9 reductions': 0.0196}
+sun_disk 2 step 0.506 {'P0 edits': 0.0073, 'P1 dt': 0.0046, 'P2 gravity': 0.0753, 'P4 hydro': 0.2827, 'P5 heat': 0.004, 'P6 reactions': 0.0077, 'P8 floors': 0.0183, 'P9 reductions': 0.0139}
+sun_disk 3 step 0.4354 {'P0 edits': 0.0064, 'P1 dt': 0.0042, 'P2 gravity': 0.0632, 'P4 hydro': 0.2345, 'P5 heat': 0.0035, 'P6 reactions': 0.0067, 'P8 floors': 0.0156, 'P9 reductions': 0.0119}
+fill_world 1 step 5.2071 {'P0 edits': 0.0065, 'P1 dt': 0.0046, 'P2 gravity': 0.9825, 'P4 hydro': 3.5247, 'P5 heat': 0.2997, 'P6 reactions': 0.0772, 'P8 floors': 0.1493, 'P9 reductions': 0.0659}
+fill_world 2 step 5.2074 {'P0 edits': 0.0066, 'P1 dt': 0.0046, 'P2 gravity': 0.9818, 'P4 hydro': 3.5247, 'P5 heat': 0.3, 'P6 reactions': 0.0772, 'P8 floors': 0.1494, 'P9 reductions': 0.0659}
+fill_world 3 step 5.2206 {'P0 edits': 0.0065, 'P1 dt': 0.0046, 'P2 gravity': 0.9846, 'P4 hydro': 3.535, 'P5 heat': 0.3003, 'P6 reactions': 0.0772, 'P8 floors': 0.1494, 'P9 reductions': 0.0659}
+== tests
+edges     7/0/0       18.08 s  GO · step 2/8, 6 left
+collapse  6/0/0       12.91 s  GO · step 3/8, 5 left
+twin      6/0/0       12.86 s  GO · step 4/8, 4 left
+cpu_gpu   2/0/0       13.16 s  GO · step 5/8, 3 left
+box       8/0/0       15.52 s  GO · step 6/8, 2 left
+dump      8/0/0       15.22 s  GO · step 7/8, 1 left
+timing    5/0/0       15.01 s  GO · step 8/8, 0 left
+logs: milestones/m0/logs/M0-D30-lx.<scope>.log · record: loop_times.jsonl · tree dcc0991d9e11+51ff14b68c13
+anchor: 2 path×scope entries moved by this run
+anchor: 154 paths checked · 133 skipped (3 classes) · 0 never checked · 3 stale · 0 unclassified · 0 owed · 157 covered of 290 visible
+verify: 57 passed, 0 failed, 0 skipped · 8/8 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 18.08 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.22->7.85
+=== GO ===
+logs: milestones/m0/logs/M0-D30-lx.<scope>.log · record: loop_times.jsonl · tree dcc0991d9e11+51ff14b68c13
+anchor: 33 path×scope entries moved by this run
+anchor: 157 paths checked · 133 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 157 covered of 290 visible
+skipped   125  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 663 passed, 0 failed, 0 skipped · 25/25 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 9 not impacted · 19.09 s + loop 0.02 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 7.85->7.13 · base: commit 9e7845057265
+=== GO ===
+== done
