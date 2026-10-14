@@ -1,0 +1,14 @@
+34e41ca
+    Finished `release` profile [optimized] target(s) in 0.12s
+run 1 load: 14.31 18.22 19.25 15/3252 2502763
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.584063 until=none
+exit 0
+run 2 load: 14.26 18.08 19.19 13/3264 2502972
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.584063 until=none
+exit 0
+run 3 load: 14.26 18.08 19.19 13/3269 2503019
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.584063 until=none
+exit 0

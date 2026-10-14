@@ -1,0 +1,12 @@
+run 1 load: 0.33 6.33 13.75 2/3527 2532174
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.584063 until=none
+exit 0
+run 2 load: 0.33 6.33 13.75 1/3525 2532204
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.584063 until=none
+exit 0
+run 3 load: 0.38 6.24 13.69 1/3523 2532246
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.584063 until=none
+exit 0
