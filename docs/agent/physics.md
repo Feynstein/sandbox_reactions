@@ -52,9 +52,28 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 ## Reactions (contract §1.6; `assets/reactions.json`; `registry::Reactions`)
 - One mechanism for every reaction (B19): a record `{id, group, inputs, outputs, q_ratio, rate, enabled, standin}`; chemistry later adds
   records, never code (B23). The file is `{"version", "records": […]}`, the records in §1.6.2's table order.
-- **The rate law** (§1.6.1): ω = A · Σ^a · Π X_i^{n_i} · f(T) · g(Σ); f(T) sums power-law terms (T/T_k)^ν above a threshold temperature and is zero below
-  it; g gates a record on the electron column Y_eΣ (the neutronization only). Each input loses its share of ω, each output gains its share (mass fraction per
+- **The rate law** (§1.6.1): ω = A · Σ^a · Π X_i^{n_i} · f(T) · g(Σ); f(T) sums Gamow-shaped terms w (T/T_k)^{−2/3} exp(τ (1 − (T_k/T)^{1/3})), τ = 3ν + 2
+  (§0.5 [M0-D34], M0-D35: the power law (T/T_k)^ν's value and slope at T_k, its exponent then falling, ln f ≤ τ − 2 ln(τ/2) − 2 ≈ 112 for ν 40) above a threshold
+  temperature and is zero below it; g gates a record on the electron column Y_eΣ (the neutronization only). Each input loses its share of ω, each output gains its share (mass fraction per
   time), and the cell's thermal energy gains q·ω per unit mass with q = q_ratio · Q_H (`Record::q(&Physics)`); a negative q absorbs.
+- **Evaluating it** (`crates/sr-physics/src/rates.rs`, M0-T44a; `rates::Omega::new(&Record)`): `omega(Σ, x, T, Y_e)` is the whole law, `f`, `f_direct` and `g(Y_eΣ)` its
+  parts. f is tabulated on 256 log-spaced temperatures over **[T_thr, 2.5 T_thr]** (`TABLE_SPAN`, a declared default — the contract fixes the 256 and the 1e-4, not the
+  range) and read log-log; above the span the direct form answers, below T_thr f is exactly 0 and the table never starts under it. Log-log errs by ln f's curvature in ln T,
+  −(τ/9)(T_k/T)^{1/3} for one term (2.8e-5 for ν 40 at T_thr), more for H_burn's two (ν 4 and 18, terms crossing at T ≈ 119.5): the 2.5 span is the widest round figure whose worst
+  midpoint error stays in 1e-4 (measured 7.4e-5). The GPU reads `Omega::ln_f_nodes()`, `node_t()` and `step()` and takes the same Gamow direct form above the span
+  (react.wgsl `term_ln`); its f32 holds f past e^88 by a rate scale over the sub-step (the shift ≤ 52 under this law; the ratios between records kept, never one record's f
+  clipped — the react.wgsl header). The gate opens strictly above Σ_g.
+- **Burning on the twin** (`crates/sr-physics/src/reference/react.rs`, M0-T44b; `react::React::new(&Physics, &Elements, &Reactions, TestFlags)`, `step(&mut State, dt) -> Pass`): per cell,
+  flow and neighbours out of it, the step is sub-cycled by linearised backward Euler, `(I − hJ) ΔX = h S` with S = Σ_r ν_r ω_r and J = ∂S/∂X (T, Σ and Y_e held for the sub-step), a dense
+  10 × 10 solve. The conversion of each record is the one the linearisation implies, Δξ_r = h (ω_r + ∇ω_r · ΔX), so ΔX = Σ ν_r Δξ_r and the heat q_r Δξ_r is the heat of exactly the mass that
+  moved, booked per sub-step into the record's group (`Pass::nuclear`, `N_GROUPS` planes) and added to E the same sub-step — never once per step from the first rate. h is the least of the time
+  left, `burn_dx`/max|S| and `burn_dt`·T/|dT/dt| (the sub-step's heating and mean-weight change); the step is then *checked* and a sub-step that moved a fraction more than `burn_dx`, T more than
+  `burn_dt`, or a fraction below 0 is retried at half size (`Pass::retried`), then fractions are clamped ≥ 0 and renormalised. A cell where every ω is 0 is left bit for bit. E gains exactly
+  Σ·Σ q Δξ; the thermal part is what E leaves after the kinetic and the cold energy *of the new composition* (Y_e, X_n move as species convert), so that shift is paid from thermal energy.
+  `pin_temperature` holds T at the step's start for the rates and sets ε_th = T/μ of the new composition (heat still booked in full). **Declared defaults**: backward Euler is first order, so at the
+  shipped `burn_dx` = 0.1 a decay read down to X₀/10 is off by ≈ 3·10⁻² (H_burn, measured) — G-BURN's 1e-4 is held with `burn_dx` overridden to 1e-4 (measured 5·10⁻⁵), the limit's own check runs at
+  the shipped values; G-ORDER reads each group's instantaneous power on a fresh cell of equal parts at each ramp temperature (a cell left to burn along the ramp has C_alpha spend the carbon
+  C_burn would have used: the carbon group never passes ε*) — the crossings are H 147, He 164, C 244.5, Ne 335.5, O 351, Si 504 (the Gamow law, M0-D35).
 - **What a record may name.** `a_coef` is a physics.json key (A is a tuned constant); a term's ν is a number or a physics.json key (the late records name
   theirs, so a scene's override reaches them); `t_key` is one of the six temperatures; `sigma_key` is a physics.json key. N_Fe has no terms (f ≡ 1) and a
   null threshold factor; a burning record has terms and a threshold factor in (0, 1].

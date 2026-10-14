@@ -1,0 +1,20 @@
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+test d34ref::any_scene ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/bba378d2-6a8e-42a5-a19f-c6815e74f830/scratchpad/ref_burn_noheat.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 0.52591 / twin 0.52687 (-0.184 %); relative L1 Σ 0.000e0 (band 1e-3), E 8.488e-3 (band 1e-3); largest |ΔX| 2.266e-13 in x_He (band 1e-4)
+
+thread 'd34ref::any_scene' (2808843) panicked at crates/sr-engine/tests/gpu/d34ref.rs:118:5:
+/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/bba378d2-6a8e-42a5-a19f-c6815e74f830/scratchpad/ref_burn_noheat.json: relative L1 in E 8.488291478104619e-3 > 1e-3
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    d34ref::any_scene
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 195 filtered out; finished in 6.95s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

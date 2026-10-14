@@ -1,0 +1,26 @@
+--- a/crates/sr-engine/shaders/react.wgsl
++++ b/crates/sr-engine/shaders/react.wgsl
+@@ -245,12 +245,12 @@
+             return select(exp(-shift), 1.0, shift == 0.0);
+         }
+         case F_TABLE: {
+-            return exp(min(rec_ln_f[r] - shift, LN_F_LIVE));
++            return exp(min(rec_ln_f[r] - shift, LN_F_MAX));
+         }
+         case F_DIRECT: {
+             var f = 0.0;
+             for (var k = 0u; k < params.recs[r].head.z; k++) {
+-                f += exp(min(term_ln(r, k, t) - shift, LN_F_LIVE));
++                f += exp(min(term_ln(r, k, t) - shift, LN_F_MAX));
+             }
+             return f;
+         }
+@@ -310,7 +310,7 @@
+             top = max(top, read.x);
+         }
+     }
+-    shift = top - LN_F_MAX;
++    shift = 0.0; // planted: no rate scale, each record's ln f clipped at LN_F_MAX below
+     var qdot = 0.0;
+     var lit = 0.0;
+     for (var r = 0u; r < params.n_recs; r++) {

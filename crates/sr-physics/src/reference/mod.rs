@@ -2,7 +2,7 @@
 //! `fft` is gravity's machinery (§1.4.2, the Hockney–Eastwood convolution) and the neutrino-heating kernel's (§2.5.4);
 //! `grav` is P2 on it (§1.4); `riemann` is the exact solution of the γ = 2 gas's shock tube (§2.3.1, G-SOD §5.1);
 //! `hydro` is P4, the gas flow, graded against it (§2.3.4, G-SOD); `heat` is P5, flux-limited diffusion stepped by RKL2
-//! (§2.4, G-HEAT1, G-HEAT2, G-FLD); `floors` is P8 (§2.7).
+//! (§2.4, G-HEAT1, G-HEAT2, G-FLD); `react` is P6, burning by linearised backward-Euler sub-cycles (§2.5, G-BURN, G-ORDER); `floors` is P8 (§2.7).
 //!
 //! [`Twin`] is the step driver (M0-T37): the passes built so far, in §1.3.2's order, on the state's f64 planes, the scene's
 //! switches honoured — P1 Δt, P2 gravity, P4 hydro, P8 floors, P9 Δt_{n+1} — each pass joining with its twin. It steps the
@@ -16,14 +16,17 @@ pub mod floors;
 pub mod grav;
 pub mod heat;
 pub mod hydro;
+pub mod react;
 pub mod riemann;
 
 use std::fmt;
 
-use crate::registry::{Elements, Physics, RegistryError, N_SPECIES};
+use crate::registry::{Elements, Physics, RegistryError, Reactions, N_SPECIES};
 use floors::{Booked, Floors};
 use grav::{Field, Gravity};
+use heat::Heat;
 use hydro::{Edge, Hydro, State, COMPONENTS};
+use react::React;
 
 /// The largest world the twin runs on each axis (§3.3's `--cpu-reference`): it is a reference, not a player.
 pub const MAX_WORLD: usize = 128;
@@ -37,12 +40,27 @@ pub const GUARD_EVERY: u64 = 64;
 pub struct Switches {
     pub gravity: bool,
     pub hydro: bool,
+    /// P5 (M0-T48): on needs [`Burning`] at [`Twin::new`].
+    pub heat: bool,
+    /// P6 (M0-T48): on needs [`Burning`] at [`Twin::new`].
+    pub reactions: bool,
+}
+
+/// What P5 and P6 read beyond the switches (§2.12.1's `test`, the registry's records, the scene's `neutrinos`): given to
+/// [`Twin::new`] whenever `heat` or `reactions` is on, and ignored otherwise.
+pub struct Burning<'a> {
+    pub heat: heat::TestFlags,
+    pub react: react::TestFlags,
+    pub reactions: &'a Reactions,
+    pub neutrinos: bool,
 }
 
 #[derive(Debug)]
 pub enum TwinError {
     /// A world axis over [`MAX_WORLD`].
     TooLarge { width: usize, height: usize },
+    /// P5 or P6 switched on without the [`Burning`] they read.
+    NoBurning,
     Constants(RegistryError),
 }
 
@@ -52,6 +70,7 @@ impl fmt::Display for TwinError {
             TwinError::TooLarge { width, height } => {
                 write!(f, "a {width}x{height} world: the CPU twin runs up to {MAX_WORLD}x{MAX_WORLD}")
             }
+            TwinError::NoBurning => write!(f, "heat or reactions switched on without the burning setup (Burning)"),
             TwinError::Constants(e) => write!(f, "{e}"),
         }
     }
@@ -73,6 +92,11 @@ pub struct Twin {
     hydro: Hydro,
     floors: Floors,
     gravity: Option<Gravity>,
+    /// P5 and P6, when their switches are on.
+    heat: Option<Heat>,
+    react: Option<React>,
+    /// F of the last P5 pass, the next step's P4 radiation force (`None` before step 0: zero, as on the GPU).
+    flux: Option<(Vec<f64>, Vec<f64>)>,
     sigma_vac: f64,
     /// P2's g for the state the last step started from (the initial state's before step 0).
     g: Option<Field>,
@@ -87,11 +111,13 @@ pub struct Twin {
 impl Twin {
     /// A twin of `planes` (§2.2's canonical f64 planes of a `width` × `height` world) under `physics`: the step index 0,
     /// P2 run on the state and Δt_0 reduced from it.
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         physics: &Physics,
         elements: &Elements,
         edge: Edge,
         switches: Switches,
+        burning: Option<Burning<'_>>,
         width: usize,
         height: usize,
         planes: Vec<f64>,
@@ -99,6 +125,16 @@ impl Twin {
         if width > MAX_WORLD || height > MAX_WORLD {
             return Err(TwinError::TooLarge { width, height });
         }
+        if (switches.heat || switches.reactions) && burning.is_none() {
+            return Err(TwinError::NoBurning);
+        }
+        let (heat, react) = match burning {
+            Some(b) if switches.heat || switches.reactions => (
+                switches.heat.then(|| Heat::new(physics, elements, b.heat)).transpose()?,
+                switches.reactions.then(|| React::new(physics, elements, b.reactions, b.react).map(|r| r.with_neutrinos(b.neutrinos))).transpose()?,
+            ),
+            _ => (None, None),
+        };
         let mut twin = Twin {
             state: State::new(width, height, planes),
             booked: Booked::default(),
@@ -106,6 +142,9 @@ impl Twin {
             hydro: Hydro::new(physics, elements, edge)?,
             floors: Floors::new(physics, elements)?,
             gravity: switches.gravity.then(|| Gravity::new(G)),
+            heat,
+            react,
+            flux: None,
             sigma_vac: physics.get("sigma_vac").expect("physics.json key sigma_vac"),
             g: None,
             step: 0,
@@ -127,6 +166,12 @@ impl Twin {
         }
         if switches.hydro {
             list.push("P4 hydro");
+        }
+        if switches.heat {
+            list.push("P5 heat");
+        }
+        if switches.reactions {
+            list.push("P6 reactions");
         }
         list.extend(["P8 floors", "P9 reductions"]);
         list
@@ -187,7 +232,17 @@ impl Twin {
         if self.switches.hydro {
             self.ran.push("P4 hydro");
             let g = self.g.as_ref().map(|f| (&f.gx[..], &f.gy[..]));
-            self.hydro.step_with(&mut self.state, dt, g);
+            let radiation = self.flux.as_ref().map(|(x, y)| (&x[..], &y[..]));
+            self.hydro.step_forced(&mut self.state, dt, g, radiation);
+        }
+        if let Some(heat) = &self.heat {
+            self.ran.push("P5 heat");
+            let pass = heat.step(&mut self.state, dt);
+            self.flux = Some(pass.flux.cells());
+        }
+        if let Some(react) = &self.react {
+            self.ran.push("P6 reactions");
+            react.step(&mut self.state, dt);
         }
         self.ran.push("P8 floors");
         self.booked += self.floors.apply(&mut self.state);

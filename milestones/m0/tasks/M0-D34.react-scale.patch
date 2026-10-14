@@ -1,0 +1,310 @@
+--- a/crates/sr-engine/shaders/react.wgsl	2026-10-14 10:01:56.817046559 -0400
++++ b/crates/sr-engine/shaders/react.wgsl	2026-10-14 10:00:12.910772248 -0400
+@@ -15,11 +15,17 @@
+ // resolution of Δt_n still counts (a runaway's sub-steps reach 1e-9 Δt_n); each fraction, rounded to f32 once when it is
+ // written back, and its renormalisation, by the compensated excess of the sum over 1 (a fraction rounded every sub-step
+ // drifts 1.4e-5 over G-BURN's 9,000, measured); and the heat — the cell's energy and each group's accumulator. The rates
+-// read the fractions' rounded parts. Two guards the twin does not need: ln f is capped at LN_F_MAX (a
+-// runaway's f = (T/T_k)^40 overflows f32 — the twin's 18,000 against T_He's 140 is 10⁸⁴; at the cap the sub-step is already
+-// far below Δt_n), and a cell stops after MAX_ATTEMPTS attempts with its time left unburned, counted `unfinished`. The
+-// checks' margins are f32's: a fraction below −1e-7 is negative, a limit is passed beyond 1e-5 of itself; the half-size
+-// retry stops at the twin's MIN_H · Δt_n.
++// read the fractions' rounded parts. Two guards the twin does not need: the rate scale (a runaway's f = (T/T_k)^40
++// overflows f32 — the twin's 18,000 against T_He's 140 is 10⁸⁴), and a cell stops after MAX_ATTEMPTS attempts with its time
++// left unburned, counted `unfinished`. The scale (M0-D34): where a burning record's ln f (every input present) passes
++// LN_F_MAX, every ω, ∇ω, S, Σ qω and ε_ν of the sub-step is taken e^−shift times the true one, shift the least that brings the
++// largest back to LN_F_MAX, and h runs in that scaled time (the true h is h e^−shift, the time left t_rem e^shift) — the
++// ratios between records, so the branching and the heat, stay the twin's; capping each f at LN_F_MAX instead booked G-REF's
++// runaway 0.9 % hot. A record live by its gradient alone (one input of order 1 absent) is held to e^LN_F_LIVE in that scale:
++// past it h|∂ω/∂X| ≫ 1, backward Euler's limit (it takes all of the absent input the sub-step makes), so its exact size no
++// longer moves ΔX. The checks' margins are f32's: a fraction below −max(1e-12, 2.4e-7 |ΔX|) is negative (a flat −1e-7
++// retried less than the twin near a species' end, M0-D34), a limit is passed beyond 1e-5 of itself; the half-size retry
++// stops at the twin's MIN_H · Δt_n.
+ //
+ // Neutrinos (M0-T47, the scene's `neutrinos` switch): ε_ν = A_ν (T/T_ν)^m per unit mass for T ≥ T_ν is read at each
+ // sub-step's start T, taken from the cell's energy (E −= ε_ν h, with the nuclear heat), carried in dT/dt (−μ ε_ν) and added
+@@ -134,7 +140,12 @@
+ const MAX_ATTEMPTS: u32 = 65536u;
+ const MIN_H: f32 = 1e-14;
+ const LN_F_MAX: f32 = 60.0;
+-const NEGATIVE: f32 = -1e-7;
++const MIN_POSITIVE: f32 = 1.17549435e-38;
++const HJ_MAX: f32 = 1e30;
++const LN_F_LIVE: f32 = 80.0;
++// A fraction is negative below −max(1e-12, 4 f32 ulps of its ΔX): the twin's 1e-12 where the solve's own rounding allows.
++const NEGATIVE: f32 = 1e-12;
++const NEGATIVE_DX: f32 = 2.4e-7;
+ const MARGIN: f32 = 1e-5;
+ 
+ // The cell's fractions, the rates and their gradients at the sub-step's start (∂ω_r/∂X of input k at 4r + k), S, the
+@@ -148,6 +159,16 @@
+ var<private> dx: array<f32, 10>;
+ // Whether a latching record's rate was > 0 at any sub-step's start in this cell.
+ var<private> latched: bool;
++// The sub-step's rate scale (header): ≥ 0, and 0 unless a live record's ln f passes LN_F_MAX.
++var<private> shift: f32;
++// Per record, at the sub-step's start: ln f (the largest term's above the table's span), how f is read (F_* below),
++// A Σ^a, g, and whether its ω or its gradient can be nonzero (`live`, the records the scale is taken over).
++var<private> rec_ln_f: array<f32, 16>;
++var<private> rec_kind: array<u32, 16>;
++var<private> rec_a_sigma: array<f32, 16>;
++var<private> rec_g: array<f32, 16>;
++var<private> rec_live: array<bool, 16>;
++var<private> rec_whole: array<bool, 16>;
+ 
+ // x^n for x ≥ 0, as f64's powf: 1 at n = 0 (0⁰ included), 0 at x = 0 otherwise; a small whole n by products.
+ fn powr(x: f32, n: f32) -> f32 {
+@@ -175,29 +196,63 @@
+     return params.ln_f[at / 4u][at % 4u];
+ }
+ 
+-// f(T) of record r (rates.rs `Omega::f`): 1 without terms, 0 below T_thr, the table inside its span, the direct form above.
+-fn rate_f(r: u32, t: f32) -> f32 {
++// How record r's f(T) is read (rates.rs `Omega::f`): 0 below T_thr, 1 without terms, the table inside its span, the direct
++// form above.
++const F_ZERO: u32 = 0u;
++const F_ONE: u32 = 1u;
++const F_TABLE: u32 = 2u;
++const F_DIRECT: u32 = 3u;
++
++// One term of the direct form, ln(w (T/T_k)^ν).
++fn term_ln(r: u32, k: u32, t: f32) -> f32 {
++    let term = params.recs[r].terms[k];
++    return term.y * log(t / term.x) + log(term.z);
++}
++
++// Record r's f(T) read, as (ln f, kind): ln f is the table's, the largest term's in the direct form, 0 for F_ONE and F_ZERO.
++fn rate_ln(r: u32, t: f32) -> vec2<f32> {
+     let head = params.recs[r].head;
+     if ((head.w & HAS_TERMS) == 0u) {
+-        return 1.0;
++        return vec2<f32>(0.0, f32(F_ONE));
+     }
+     let t_thr = params.recs[r].coef.w;
+     if (t < t_thr) {
+-        return 0.0;
++        return vec2<f32>(0.0, f32(F_ZERO));
+     }
+     let pos = log(t / t_thr) * params.inv_step;
+     if (pos >= params.last_node) {
+-        var f = 0.0;
+-        for (var k = 0u; k < head.z; k++) {
+-            let term = params.recs[r].terms[k];
+-            f += exp(min(term.y * log(t / term.x) + log(term.z), LN_F_MAX));
++        var top = term_ln(r, 0u, t);
++        for (var k = 1u; k < head.z; k++) {
++            top = max(top, term_ln(r, k, t));
+         }
+-        return f;
++        return vec2<f32>(top, f32(F_DIRECT));
+     }
+     let i = min(u32(pos), TABLE_POINTS - 2u);
+     let a = ln_f_at(r * TABLE_POINTS + i);
+     let b = ln_f_at(r * TABLE_POINTS + i + 1u);
+-    return exp(min(a + (pos - f32(i)) * (b - a), LN_F_MAX));
++    return vec2<f32>(a + (pos - f32(i)) * (b - a), f32(F_TABLE));
++}
++
++// Record r's f(T) e^−shift, from what `rates` read of it, at most e^LN_F_LIVE (a record live by its gradient alone, header).
++fn rate_f_scaled(r: u32, t: f32) -> f32 {
++    switch (rec_kind[r]) {
++        case F_ONE: {
++            return select(exp(-shift), 1.0, shift == 0.0);
++        }
++        case F_TABLE: {
++            return exp(min(rec_ln_f[r] - shift, LN_F_LIVE));
++        }
++        case F_DIRECT: {
++            var f = 0.0;
++            for (var k = 0u; k < params.recs[r].head.z; k++) {
++                f += exp(min(term_ln(r, k, t) - shift, LN_F_LIVE));
++            }
++            return f;
++        }
++        default: {
++            return 0.0;
++        }
++    }
+ }
+ 
+ // g of record r at Y_e Σ: 1 ungated, ((Y_e Σ)/Σ_g − 1)^p above Σ_g, else 0.
+@@ -220,16 +275,42 @@
+     return params.a_nu * powr(t / params.t_nu, params.m_nu);
+ }
+ 
+-// ω_r, ∇ω_r and S at (Σ, `cx`, T, Y_e); returns Σ_r q_r ω_r, and whether any ω is nonzero.
++// ω_r, ∇ω_r and S at (Σ, `cx`, T, Y_e), each e^−shift times the true one (`shift` set here, header); returns Σ_r q_r ω_r
++// so scaled, and whether any true ω is nonzero.
+ fn rates(sigma: f32, t: f32, y_e: f32) -> vec2<f32> {
+     for (var i = 0u; i < N_SPECIES; i++) {
+         src[i] = 0.0;
+     }
++    // The scale, over the burning records (every input present). Live: ω, or its derivative in one absent input of order 1,
++    // can be nonzero — a record live by its gradient alone is not in the scale, and is held to e^LN_F_LIVE (header).
++    var top = LN_F_MAX;
++    for (var r = 0u; r < params.n_recs; r++) {
++        let rec = params.recs[r];
++        let read = rate_ln(r, t);
++        rec_ln_f[r] = read.x;
++        rec_kind[r] = u32(read.y);
++        rec_a_sigma[r] = rec.coef.x * powr(sigma, rec.coef.y);
++        rec_g[r] = rate_g(r, y_e * sigma);
++        var absent = 0u;
++        var stuck = false;
++        for (var k = 0u; k < rec.head.y; k++) {
++            if (rec.orders[k] != 0.0 && !(cx[rec.species[k]] > 0.0)) {
++                absent++;
++                stuck = stuck || rec.orders[k] != 1.0;
++            }
++        }
++        rec_whole[r] = absent == 0u;
++        rec_live[r] = rec_kind[r] != F_ZERO && rec_a_sigma[r] * rec_g[r] != 0.0 && (absent == 0u || (absent == 1u && !stuck));
++        if (rec_live[r] && rec_whole[r]) {
++            top = max(top, read.x);
++        }
++    }
++    shift = top - LN_F_MAX;
+     var qdot = 0.0;
+     var lit = 0.0;
+     for (var r = 0u; r < params.n_recs; r++) {
+         let rec = params.recs[r];
+-        let base = rec.coef.x * powr(sigma, rec.coef.y) * rate_f(r, t) * rate_g(r, y_e * sigma);
++        let base = rec_a_sigma[r] * select(0.0, rate_f_scaled(r, t), rec_live[r]) * rec_g[r];
+         var prod = base;
+         for (var k = 0u; k < rec.head.y; k++) {
+             prod *= powr(cx[rec.species[k]], rec.orders[k]);
+@@ -238,7 +319,8 @@
+         if (prod != 0.0) {
+             lit = 1.0;
+         }
+-        if (prod > 0.0 && (rec.head.w & LATCHES) != 0u) {
++        // A latching ω the scale took under f32's range is still > 0.
++        if ((prod > 0.0 || (prod == 0.0 && shift > 0.0 && rec_live[r] && rec_whole[r])) && (rec.head.w & LATCHES) != 0u) {
+             latched = true;
+         }
+         for (var k = 0u; k < MAX_INPUTS; k++) {
+@@ -264,13 +346,25 @@
+     return vec2<f32>(qdot, lit);
+ }
+ 
+-// ΔX into `dx` with (I − hJ) ΔX = hS, J = Σ_r ν_r ∇ω_r: Gauss with partial pivoting (the twin's `solve`).
++// ΔX into `dx` with (I − hJ) ΔX = hS, J = Σ_r ν_r ∇ω_r: Gauss with partial pivoting (the twin's `solve`). Where h|J| would
++// pass HJ_MAX — a scaled sub-step whose h is set by a small S beside a record live by its gradient alone (an input absent),
++// h|J| reaching 10⁵³ in G-REF's runaway, which f64 holds and f32 does not — the same system divided by h,
++// (I/h − J) ΔX = S, whose entries all stay in range (M0-D34).
+ fn solve(h: f32) {
++    var j_max = 0.0;
++    for (var r = 0u; r < params.n_recs; r++) {
++        for (var k = 0u; k < params.recs[r].head.y; k++) {
++            j_max = max(j_max, abs(grad[4u * r + k]));
++        }
++    }
++    let divided = !(h * j_max <= HJ_MAX);
++    let diag = select(1.0, 1.0 / h, divided);
++    let hs = select(h, 1.0, divided);
+     for (var i = 0u; i < N_SPECIES; i++) {
+         for (var j = 0u; j < N_SPECIES; j++) {
+-            mat[i][j] = select(0.0, 1.0, i == j);
++            mat[i][j] = select(0.0, diag, i == j);
+         }
+-        mat[i][N_SPECIES] = h * src[i];
++        mat[i][N_SPECIES] = hs * src[i];
+     }
+     for (var r = 0u; r < params.n_recs; r++) {
+         for (var k = 0u; k < params.recs[r].head.y; k++) {
+@@ -280,7 +374,7 @@
+             }
+             let j = params.recs[r].species[k];
+             for (var i = 0u; i < N_SPECIES; i++) {
+-                mat[i][j] -= h * nu_of(r, i) * g;
++                mat[i][j] -= hs * nu_of(r, i) * g;
+             }
+         }
+     }
+@@ -390,7 +484,9 @@
+     var de_sum = vec2<f32>(0.0, 0.0);
+     var lost_sum = vec2<f32>(0.0, 0.0);
+     var t_done = vec2<f32>(0.0, 0.0);
++    // The last sub-step's 2h, in the scaled time of its own shift.
+     var h_try = dt;
++    var shift_try = 0.0;
+     var attempts = 0u;
+     var substeps = 0u;
+     var retried = 0u;
+@@ -406,16 +502,20 @@
+             t = temp_of(sigma, e_tot, comp, cx[ID_N]);
+         }
+         let rate = rates(sigma, t, comp.y_e);
+-        let eps = eps_nu(t);
+-        if (rate.y == 0.0 && eps == 0.0) {
++        let eps_true = eps_nu(t);
++        if (rate.y == 0.0 && eps_true == 0.0) {
+             break;
+         }
+-        // The sub-step's size.
++        // e^±shift: 1 unscaled, e^shift +inf past f32's range (the time left then bounds nothing, as in the twin's f64).
++        let up = select(exp(shift), 1.0, shift == 0.0);
++        let down = select(exp(-shift), 1.0, shift == 0.0);
++        let eps = eps_true * down;
++        // The sub-step's size, in scaled time.
+         var s_max = 0.0;
+         for (var i = 0u; i < N_SPECIES; i++) {
+             s_max = max(s_max, abs(src[i]));
+         }
+-        var h = t_rem;
++        var h = t_rem * up;
+         if (s_max > 0.0) {
+             h = min(h, params.burn_dx / s_max);
+         }
+@@ -430,7 +530,9 @@
+                 h = min(h, params.burn_dt * t / abs(dt_dt));
+             }
+         }
+-        h = min(h, h_try);
++        // The last 2h carried to this sub-step's scale, floored as the twin's (f64::MIN_POSITIVE there, f32's here).
++        h = min(h, max(h_try * select(exp(shift - shift_try), 1.0, shift == shift_try), MIN_POSITIVE));
++        let t_rem_scaled = t_rem * up;
+         // Take it, check it, halve until it holds.
+         loop {
+             attempts++;
+@@ -438,8 +540,8 @@
+                 unfinished = true;
+                 break;
+             }
+-            let last = h >= t_rem;
+-            let h_use = min(h, t_rem);
++            let last = h >= t_rem_scaled;
++            let h_use = min(h, t_rem_scaled);
+             solve(h_use);
+             var x_new = array<f32, 10>();
+             var x_lo = array<f32, 10>();
+@@ -450,7 +552,7 @@
+                 x_new[i] = v.x;
+                 x_lo[i] = v.y;
+                 worst = max(worst, abs(dx[i]));
+-                negative = negative || v.x + v.y < NEGATIVE;
++                negative = negative || v.x + v.y < -max(NEGATIVE, NEGATIVE_DX * abs(dx[i]));
+             }
+             // Heat of the mass the linearisation moved, by record.
+             var de = 0.0;
+@@ -487,7 +589,7 @@
+                 dt_rel = abs(temp_of(sigma, e_new, composition(x_new), x_new[ID_N]) - t) / t;
+             }
+             let bad = worst > params.burn_dx * (1.0 + MARGIN) || dt_rel > params.burn_dt * (1.0 + MARGIN) || negative;
+-            if (bad && h_use > MIN_H * dt) {
++            if (bad && h_use > MIN_H * dt * up) {
+                 h = 0.5 * h_use;
+                 retried++;
+                 continue;
+@@ -504,9 +606,10 @@
+             if (last) {
+                 t_done = vec2<f32>(dt, 0.0);
+             } else {
+-                t_done = add2(t_done, h_use);
++                t_done = add2(t_done, h_use * down);
+             }
+             h_try = 2.0 * h_use;
++            shift_try = shift;
+             break;
+         }
+         if (unfinished) {

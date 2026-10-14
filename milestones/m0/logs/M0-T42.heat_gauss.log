@@ -1,0 +1,118 @@
+== 2026-10-14T07:20:30-04:00 heat_gauss · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::gauss physics
+-- heat_gauss · exit=0 · 3.52 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.37s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 10 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 10141.028247164, radiated 10141.028247164, stages up to 5
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 10141.033290, radiated 10141.028141, twin 10141.028247
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 3.73e-10 of a largest |F| 0.1487
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 24.000164, y 24.000164, expected 24, error 6.84e-6; heat 9.16e-8; |T - twin| 2.35e-7
+SR-HEAT1 GPU t = 16: sigma2 x 32.000170, y 32.000170, expected 32, error 5.30e-6; heat 1.48e-7; |T - twin| 2.83e-7
+SR-HEAT1 GPU t = 24: sigma2 x 40.000172, y 40.000172, expected 40, error 4.29e-6; heat 3.71e-9; |T - twin| 2.34e-7
+SR-HEAT1 GPU worst sigma2 error 6.84e-6
+ok
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.37e-14 of the pulse, E 8.94e-14 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 3.03e-13
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 8.24e-13
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 9.78e-13
+SR-HEAT1 worst sigma2 error 9.78e-13
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 143 filtered out; finished in 1.06s
+
+
+== 2026-10-14T07:23:27-04:00 heat_gauss · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::gauss physics
+-- heat_gauss · exit=0 · 3.52 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.49s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 10 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 10141.028247164, radiated 10141.028247164, stages up to 5
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 10141.033290, radiated 10141.028141, twin 10141.028247
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 3.73e-10 of a largest |F| 0.1487
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 24.000164, y 24.000164, expected 24, error 6.84e-6; heat 9.16e-8; |T - twin| 2.35e-7
+SR-HEAT1 GPU t = 16: sigma2 x 32.000170, y 32.000170, expected 32, error 5.30e-6; heat 1.48e-7; |T - twin| 2.83e-7
+SR-HEAT1 GPU t = 24: sigma2 x 40.000172, y 40.000172, expected 40, error 4.29e-6; heat 3.71e-9; |T - twin| 2.34e-7
+SR-HEAT1 GPU worst sigma2 error 6.84e-6
+ok
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.37e-14 of the pulse, E 8.94e-14 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 3.03e-13
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 8.24e-13
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 9.78e-13
+SR-HEAT1 worst sigma2 error 9.78e-13
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 143 filtered out; finished in 0.92s
+
+
+== 2026-10-14T07:26:11-04:00 heat_gauss · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::gauss physics
+-- heat_gauss · exit=0 · 6.48 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 4.32s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 10 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 10141.028247164, radiated 10141.028247164, stages up to 5
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 10141.033290, radiated 10141.028141, twin 10141.028247
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 3.73e-10 of a largest |F| 0.1487
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 24.000164, y 24.000164, expected 24, error 6.84e-6; heat 9.16e-8; |T - twin| 2.35e-7
+SR-HEAT1 GPU t = 16: sigma2 x 32.000170, y 32.000170, expected 32, error 5.30e-6; heat 1.48e-7; |T - twin| 2.83e-7
+SR-HEAT1 GPU t = 24: sigma2 x 40.000172, y 40.000172, expected 40, error 4.29e-6; heat 3.71e-9; |T - twin| 2.34e-7
+SR-HEAT1 GPU worst sigma2 error 6.84e-6
+ok
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.37e-14 of the pulse, E 8.94e-14 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 3.03e-13
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 8.24e-13
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 9.78e-13
+SR-HEAT1 worst sigma2 error 9.78e-13
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 143 filtered out; finished in 2.08s
+
+

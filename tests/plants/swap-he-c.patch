@@ -1,0 +1,14 @@
+--- a/crates/sr-physics/src/registry.rs
++++ b/crates/sr-physics/src/registry.rs
+@@ -693,6 +693,11 @@
+         if nu < NU_MIN {
+             return reaction_err(here, &format!("nu must be ≥ {NU_MIN} (K7: steep burning), got {nu}"));
+         }
++        let t_key = match t_key {
++            "t_he" => "t_c",
++            "t_c" => "t_he",
++            k => k,
++        }; // planted: T_He and T_C exchanged
+         let t_k = t_factor * physics_value(&here, physics, t_key)?;
+         terms.push(RateTerm { t_key: t_key.to_string(), t_factor, t_k, nu, w });
+     }

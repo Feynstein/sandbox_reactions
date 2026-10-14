@@ -1,0 +1,76 @@
+==== 2026-10-14T08:36:57-04:00 burn_cell · clean · a fresh scratch copy of the tree
+== 2026-10-14T08:36:57-04:00 burn_cell · task M0-T44b-r2 · box laserax-ai :: bash tests/gpu.sh burn::cell
+-- burn_cell · exit=0 · 10.64 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-ta8sptax/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-ta8sptax/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.00s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 9 tests
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 1240 sub-steps, max in one cell 265, retried 1
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0540, X_H = 0.100049 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 782957.589586 for q·Δm = 782957.589586 (rel 1.34e-15), sub-steps 9005
+Ne_burn: booked 4807.551699 for q·Δm = 4807.551699 (rel 3.59e-15), sub-steps 6302
+ok
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000000, booked 2610.000000, q·Δm 2610.000000, sub-steps 526
+ok
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070045 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0771, max ΔT/T 0.0499, sub-steps 269, retried 0, T 18034.2
+ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 158 filtered out; finished in 0.03s
+
+
+==== 2026-10-14T08:36:57-04:00 burn_cell · plant q-double · a fresh scratch copy of the tree
+planted q-double: tests/plants/q-double.patch -> crates/sr-physics/src/reference/react.rs
+== 2026-10-14T08:36:57-04:00 burn_cell · task M0-T44b-r2 · box laserax-ai :: bash tests/gpu.sh burn::cell
+-- burn_cell · exit=101 · 5.53 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-ta8sptax/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-ta8sptax/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.43s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 9 tests
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 1325 sub-steps, max in one cell 281, retried 0
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0540, X_H = 0.100049 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 1565915.179172 for q·Δm = 782957.589586 (rel 1.00e0), sub-steps 9005
+
+thread 'burn::cell::heat_booked_per_substep' (1708145) panicked at crates/sr-engine/tests/gpu/burn.rs:201:13:
+H_burn: booked 1565915.1791716146, q·Δm 782957.5895858062
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 7095.000, E gained 5220.000000, booked 5220.000000, q·Δm 2610.000000, sub-steps 608
+
+thread 'burn::cell::heat_enters_the_energy' (1708151) panicked at crates/sr-engine/tests/gpu/burn.rs:224:9:
+booked 5219.999999999991, q·Δm 2610
+FAILED
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070045 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0723, max ΔT/T 0.0500, sub-steps 292, retried 0, T 31289.7
+ok
+
+failures:
+
+failures:
+    burn::cell::heat_booked_per_substep
+    burn::cell::heat_enters_the_energy
+
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 158 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

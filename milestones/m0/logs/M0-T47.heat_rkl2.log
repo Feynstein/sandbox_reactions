@@ -1,0 +1,31 @@
+== 2026-10-14T09:23:32-04:00 heat_rkl2 · task M0-T47 · box laserax-ai :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=0 · 5.82 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.15s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-HEAT2 sharp pulse, 5 stages x 15: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, response in [-8.88e-16, 4.4711e-3], deepest ring -2.286e-2, heat 1.000000000
+ok
+test heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse (bg 2): sigma2 x 47.70734 y 47.70734, explicit x 48.00000 y 48.00000, deepest ring -2.286e-2, highest 4.4711e-3, heat 0.9982471 of 1.0000000
+SR-HEAT2 GPU sharp pulse run: lost 8228.556484, radiated 8228.575335
+SR-HEAT2 GPU sharp pulse run: lost 8228.552978, radiated 8228.575335
+ok
+test heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 14, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000922 y 40.000922, explicit x 40.000158 y 40.000158, expected 40
+ok
+test heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU at 131.76: HeatReport { stages: 32, need: 33, worst: 33, dt: 131.76, dt_p: Some(0.50053847) }, Some("SR-WARN heat stages 33"), sigma2 x 147.619, heat 6.88e-8
+ok
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... ok
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 14 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+ok
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... SR-HEAT2 six passes: largest |T_rkl2 - T_explicit| 2.737e-3, |T_rkl2 - analytic| 2.741e-3, peak 0.4027
+ok
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 185 filtered out; finished in 5.47s
+
+

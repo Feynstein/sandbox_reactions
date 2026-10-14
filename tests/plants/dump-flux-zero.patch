@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/dump.rs
++++ b/crates/sr-engine/src/dump.rs
+@@ -288,7 +288,8 @@
+     };
+     state.upload(queue, &dump.planes).map_err(|e| e.to_string())?;
+     if let Some((f, side)) = flux {
+-        let bytes: Vec<u8> = f.iter().flat_map(|v| v.to_le_bytes()).collect();
++        // planted: the resume drops F, uploading zeros
++        let bytes: Vec<u8> = f.iter().flat_map(|_| 0f32.to_le_bytes()).collect();
+         queue.write_buffer(side, 0, &bytes);
+     }
+     step.restore(queue, dump.step, dump.sim_time, &dump.resume);

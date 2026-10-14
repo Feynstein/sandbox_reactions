@@ -9,3 +9,14 @@
          }
          let (era, erb) = (self.a_r * a.t.powi(4), self.a_r * b.t.powi(4));
          let face_er = 0.5 * (era + erb);
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -190,7 +190,7 @@
+     }
+     var k: f32;
+     if ((params.flags & CONSTANT_DIFFUSIVITY) != 0u) {
+-        k = params.chi * (0.5 * (a.c + b.c));
++        k = 0.9 * params.chi * (0.5 * (a.c + b.c));
+     } else {
+         let tm = max(a.t, b.t);
+         let ra = a.t / tm;

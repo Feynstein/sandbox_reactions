@@ -159,6 +159,130 @@
         }
       ]
     },
+    "rates": {
+      "desc": "the rate law (contract §1.6.1, §2.5.1): omega = A Sigma^a Prod X_i^n_i f(T) g(Sigma) from a registry record; f(T) = sum w_k (T/T_k)^(-2/3) exp(tau_k (1 - (T_k/T)^(1/3))), tau_k = 3 nu_k + 2, from T_thr, else 0 (Gamow-shaped, contract §0.5 [M0-D34], M0-D35), tabulated on 256 log-spaced temperatures over [T_thr, 2.5 T_thr] and interpolated log-log (the direct form above), against the direct form at every node and every segment's midpoint and third-points within 1e-4 (H_burn's two terms bend: worst measured 7.4e-5 at T = 118, the crossing 119.5 hand-solved; one term errs by its curvature alone, h^2/8 tau/9 2^(1/3), asserted from both sides), f = 0 just below T_thr and the step's top at it, g on both sides of Sigma_g (N_Fe) and for p = 2, omega of each of reactions.json's ten records against the formula worked by hand (M0-T44a); the Gamow shape (the power law's value and slope at T_k, the exponent at 8 T_k) and the bound ln f <= tau - 2 ln(tau/2) - 2 (111.8 for nu 40, the largest of any shipped record; M0-D35)",
+      "cmd": "bash tests/cpu.sh sr-physics rates",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 8,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/reactions.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/rates-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "rates-table-shift",
+          "patch": "tests/plants/rates-table-shift.patch"
+        }
+      ]
+    },
+    "burn_cell": {
+      "desc": "G-BURN, the rate law integrated on the CPU twin (contract §1.6.1, §2.5.1, §2.5.2, §5.1, SM-O11, R8, R13; M0-T44b): sr_physics::reference::react — per-cell linearised backward-Euler sub-cycles under burn_dx and burn_dt on M0-T44a's ω, fractions clamped ≥ 0 and renormalised, q·ω into the energy at each sub-step, the nuclear energy booked per group — no adapter touched; one cell, T pinned, flow off, one record alone: H_burn (order 2) X = X₀/(1 + kX₀t), He_burn (order 3) X = X₀/√(1 + 2kX₀²t), Ne_burn (order 1) X = X₀e^{−kt}, each to X₀/10 within 1e-4 absolute (measured 5e-5 at burn_dx 1e-4: first-order BE at the shipped 0.1 reads 2.8e-2, bounded in shipped_limits_error), the products mass for mass, T held; the heat booked equals q·Δm of the mass the planes say moved within 1e-5 (measured 1e-15) for H_burn and Ne_burn over 9,000 sub-steps, no other group touched; in a free run E gains exactly what is booked and T rises; at the shipped burn_dx 0.1 and burn_dt 0.05 a runaway (T 100 → 18,000) holds ΔX ≤ 0.1 and ΔT/T ≤ 0.05 over 269 sub-steps and burn_dt binds (0.0499); ΣX = 1 within 1e-6 and every fraction ≥ 0 over six cells and all ten records at once; a cell burns alone — each cell of a 3 × 2 world bit for bit as the same cell in a 1 × 1 world, a vacuum cell and a cold cell untouched. The GPU's P6 (M0-T46, shaders/react.wgsl, the physics adapter): the twin's scheme in f32, with the time done, each fraction and the heat carried as compensated two-float sums (rounded per sub-step the fractions drifted 1.4e-5 and the heat 1.9e-5 over 9,000 sub-steps, measured) — the three laws to X₀/10 within 1e-4 (measured 4.6e-5 to 5.0e-5, 6,300–9,000 sub-steps, T held to 1e-5, the Fe spectator to 1e-6); heat booked q·Δm within 1e-5 for H_burn and Ne_burn in one pass each (4.0e-8, 2.1e-8), no other group; a free run's E gains what is booked and that is q·Δm, each 1e-5 (T 90 → 3615, the twin's); the runaway and six mixed cells at the shipped limits finish their pass (T 18,077), ΣX = 1 within 1e-6, nothing negative; a cell burns alone bit for bit, a cold cell untouched, a vacuum cell books nothing; a hot 8 × 8 core in a 40 × 40 cold field finishes its 1 t.u. pass (196 sub-steps at most) and the field books nothing, P6's ms printed; and the GPU's runaway against the twin (M0-D35, the Gamow law and the rate scale): G-REF's burning field marched by the twin at Δt 6.3056e-3 to the pass that runs away (47, T 143 → 18,800) and the same matter at T 2,520 — each group's booking within 1e-5 of the pass's nuclear energy (measured ≤ 1.2e-8; the trace groups C and Ne 1.3e-5 of their own value) and ΔE within 1e-5 (5.6e-8, 1.8e-8), finite, ΣX = 1, finished; M0-D34's open NaN (trace He 1e-13 in iron at T 47,000) and He_burn's peak (T 3.2e7, shift 52) finite, graded on the energy f32 resolves. q-double plants H_burn's q doubled in the twin and in the GPU's record upload; burn-clip-ln-f drops the rate scale and clips each record's ln f at 60 in the shader",
+      "cmd": "bash tests/gpu.sh burn::cell physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 16,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/q-double.patch",
+        "tests/plants/burn-clip-ln-f.patch"
+      ],
+      "plants": [
+        {
+          "id": "q-double",
+          "patch": "tests/plants/q-double.patch"
+        },
+        {
+          "id": "burn-clip-ln-f",
+          "patch": "tests/plants/burn-clip-ln-f.patch"
+        }
+      ]
+    },
+    "burn_order": {
+      "desc": "G-ORDER, the ignition order on the CPU twin (contract §1.6.3, §2.5.1, §5.1, SM-O12, K6, R8, R13; M0-T44b): a cell of equal parts H, He, C, O, Ne and Si, T raised at a steady rate (T = 40 + 100 t, sampled every 0.005 t.u.), each sample the instantaneous specific power of every group (one pass of 1e-9, no fuel spent in it) — the first T at which a group's power reaches ε* = 10⁻³ Q_H per t.u. is H 147, He 164, C 244.5, Ne 335.5, O 351, Si 504 under the Gamow law (M0-D35; H 145.5 … Si 501 under the power law), strictly in the order H, He, C, {Ne, O}, Si, H's power at its crossing equal to q A Σ X² f(T) by hand within 1e-6, nothing ignites below T_thr, the group N (no iron in the cell) never passes; every record alone books into its own group and no other (C_alpha into He, Mg_burn into O, S_burn into Si, N_Fe's q < 0 into N), the heat q·Δm of the mass the planes say moved within 1e-5. swap-he-c exchanges T_He and T_C where the registry resolves a term's temperature. The GPU's P6 (M0-T46, the physics adapter): the ramp's 1,121 samples as the cells of a 40 × 29 world, one pass of 1e-9 — the same crossings as the twin (H 147 … Si 504, each within one sample, asserted), the order, H's power by hand within 1e-4 (§1.6.1's table budget), N never; every record alone books into its own group, q·Δm within 1e-5 over a pass that burns about a fifth of its input (f32's planes resolve Δm there; the twin's 1e-3 moves 4e-6)",
+      "cmd": "bash tests/gpu.sh burn::order physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 4,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/swap-he-c.patch"
+      ],
+      "plants": [
+        {
+          "id": "swap-he-c",
+          "patch": "tests/plants/swap-he-c.patch"
+        }
+      ]
+    },
+    "neutrino": {
+      "desc": "neutrino cooling and the iron gate on the CPU twin (contract §2.5.3, §1.6.2's N_Fe, §1.8.5's latch trigger, SM-E24, R8, R13; M0-T45): sr_physics::reference::react's cooling term ε_ν = A_ν (T/T_ν)^m per unit mass for T ≥ T_ν (A_ν 10⁻³, T_ν 166, m 8) taken from E in each sub-step and from the sub-step's T limit, booked neutrino_lost, and the source S_ν = ε_νΣ kept where a cell leaves the pass with X_n ≥ 0.5 — no adapter touched; a cell held at T loses A_ν (T/T_ν)^8 Σ Δt within 1e-6 (measured 1e-15) at four temperatures and two densities; none below T_ν (0.999999 T_ν, 100, 1: bit for bit) nor with the switch off, A_ν Σ Δt just above it; S_ν = ε_νΣ in X_n 0.9 and 0.5 cells and 0 at 0.4999, 0.1, iron, the vacuum and under T_ν, the sum of S_ν Δt within what was lost; free cooling follows the ODE T⁻⁷ = T₀⁻⁷ + 7μA_νt/T_ν⁸ within 5e-3 of the drop (measured 1.8e-3, 229 sub-steps at burn_dt 10⁻³) and E loses exactly the booked loss; E gains the nuclear heat minus the loss with burning on (1e-9); N_Fe's gate on Y_eΣ: closed and bit for bit at Y_eΣ = 0.9999 Σ_N and at Σ = 160 ± 0.02 and 200 (above Σ_N, where a gate read on Σ would fire), open at 1.0001 Σ_N/Y_e for iron and for a half-hydrogen cell (Y_e 0.73) at its own threshold; N_Fe converts Fe → n mass for mass (1e-12), books q ΔX_n Σ with q = −1.14 Q_H into group N alone (1e-5), E gains it, T falls; the latch is any cell's N_Fe rate > 0, in any of five positions, unset when none; and on the GPU (M0-T47, the physics adapter, R12; step/react.rs, shaders/react.wgsl, `gpu::` cases): ε_ν taken from E in each sub-step and from the sub-step's T limit, booked into booking plane 7 of the reactions group and left in side.s_nu — a cell held at T loses A_ν (T/T_ν)^8 Σ Δt within 1e-4 (measured 9e-7) at four temperatures and two densities with T held within 1e-5, none below T_ν (0.9999 T_ν, 100, 1: bit for bit, nothing booked, S_ν 0) nor with the switch off (bit for bit, S_ν never written), A_ν Σ Δt just above; S_ν = ε_νΣ in X_n 0.9 and 0.5 cells within 1e-4 and exactly 0 at 0.4999, 0.1, iron, the vacuum and under T_ν, and rewritten every step (a cell that stopped being a source reads 0, not the last step's value); free cooling within 1e-2 of the ODE's drop (measured 1.6e-3, 272 sub-steps) with E losing the booked loss within 1e-4; E gains the nuclear heat minus the loss with burning on (1e-4); the gate on Y_eΣ in the twin's eight cases (closed cells bit for bit with the flag unset, open cells converting with it set); N_Fe converts Fe → n within 1e-6, books q ΔX_n Σ into group N alone (1e-4), E gains it; the latch flag (word 0 of Step::latch_flag, set by P6's `react_latch`) is any cell's N_Fe rate in any of five positions, and is set by a rate that closes within the step (iron 1 % over the gate, a 10⁶ t.u. step: the first sub-cycle moves 9 % of the iron and the gate shuts; a second step over the shut gate sets nothing); and a 40-step frame (two walls of cold iron, Σ = 150 at ±3 toward each other, P4 on, bounce edges) whose step 10 lifts Σ over Σ_N/Y_e stops after step 10 with the slow-down on, fired at 10 — the state, the Δt record and the box bit for bit the bare 10-step run's — and runs all 40 with it off. nfe-gate-off ignores the gate in the rate law (the twin's and the shader's), nfe-gate-sigma reads it on Σ instead of Y_eΣ (both), nfe-latch-last sets the latch from the last sub-cycle's rate only (the shader)",
+      "cmd": "bash tests/gpu.sh neutrino physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 18,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/nfe-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "nfe-gate-off",
+          "patch": "tests/plants/nfe-gate-off.patch"
+        },
+        {
+          "id": "nfe-gate-sigma",
+          "patch": "tests/plants/nfe-gate-sigma.patch"
+        },
+        {
+          "id": "nfe-latch-last",
+          "patch": "tests/plants/nfe-latch-last.patch"
+        }
+      ]
+    },
     "fft_twin": {
       "desc": "the CPU twin's FFT and convolution, no GPU (contract §1.3.3, §1.4.2, §2.5.4): the radix-2 f64 FFT against a direct DFT on sizes 1…128 (1e-12 relative) and a delta and a plane wave exactly, inverse(forward) = identity at 32…2048 and in 2D, the 2D transform against the direct 2D DFT, Parseval at 16 × 8 and at 2048, the zero-padded convolution against direct summation on a 48 × 40 box with a kernel asymmetric in both axes (1e-10 relative, the box's edge cells checked rim by rim), mass in the four corners not wrapping, a single source reproducing the shifted kernel, the kernel's transform cached per padded size (sampled once for 48 × 40 and 50 × 41), padded sizes 32…2048 by the smallest power of two ≥ 2 × the axis and the refusals (M0-T28)",
       "cmd": "bash tests/cpu.sh sr-physics reference::fft",
@@ -324,17 +448,18 @@
       ]
     },
     "cpu_gpu": {
-      "desc": "G-REF, the GPU against the CPU twin (contract §5.1, §2.2, §6.7, ES-E20, R8, R13; M0-T38): the GPU's f32 step (P2 + P4 + P8, the box fit, the scene's switches and edge) and sr_physics::reference::Twin's f64 step run the same scene for exactly 200 steps and their states are read side by side — relative L1 difference of Σ and of E at most 1e-3, the largest absolute difference of each X at most 1e-4 (read where both Σ ≥ Σ_floor / 1e-4 = 1e-4: below it P8's floor matter alone can move an X by the band) — on scenes/ref_disk.json (64 × 64, leave: a cold Maclaurin disk a = 24, Σc = 1, H 0.75 / He 0.25, gravity and hydro on, the four cold-pressure K's off by `overrides` and nothing else) and scenes/ref_sod.json (64 × 64, bounce: Sod's strip ρ 1 | 0.125, P 1 | 0.1, hydrogen | helium, the K's off, hydro only; the shock reflected inside the 200 steps), each case printing its sim times, both L1 differences and its largest |ΔX| (SR-REF), on the physics adapter (R12). The burning field joins with M0-T48. The twin's own CFL is read from physics.json and the GPU's from the same key in step/dt.rs: cfl-gpu plants 0.4 → 0.39 in the GPU's alone, 2.5 % short in sim time at step 200",
+      "desc": "G-REF, the GPU against the CPU twin (contract §5.1, §2.2, §6.7, ES-E20, R8, R13; M0-T38): the GPU's f32 step (P2 + P4 + P8, the box fit, the scene's switches and edge) and sr_physics::reference::Twin's f64 step run the same scene for exactly 200 steps and their states are read side by side — relative L1 difference of Σ and of E at most 1e-3, the largest absolute difference of each X at most 1e-4 (read where both Σ ≥ Σ_floor / 1e-4 = 1e-4: below it P8's floor matter alone can move an X by the band) — on scenes/ref_disk.json (64 × 64, leave: a cold Maclaurin disk a = 24, Σc = 1, H 0.75 / He 0.25, gravity and hydro on, the four cold-pressure K's off by `overrides` and nothing else) and scenes/ref_sod.json (64 × 64, bounce: Sod's strip ρ 1 | 0.125, P 1 | 0.1, hydrogen | helium, the K's off, hydro only; the shock reflected inside the 200 steps), each case printing its sim times, both L1 differences and its largest |ΔX| (SR-REF), on the physics adapter (R12). The burning field (scenes/ref_burn.json, M0-T48: a hot H | He field under P5 heat and P6 reactions, H's mass in the twin falling at least 1 %) is the third, on the same bands. The twin's own CFL is read from physics.json and the GPU's from the same key in step/dt.rs: cfl-gpu plants 0.4 → 0.39 in the GPU's alone, 2.5 % short in sim time at step 200",
       "cmd": "bash tests/gpu.sh cpu_gpu physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 2,
+      "expected": 3,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
         "scenes/ref_disk.json",
         "scenes/ref_sod.json",
+        "scenes/ref_burn.json",
         "assets/physics.json",
         "assets/elements.json",
         "Cargo.toml",
@@ -353,11 +478,11 @@
       ]
     },
     "heat_gauss": {
-      "desc": "G-HEAT1 and the light leaving, on the CPU twin (contract §2.4, §1.7, §5.1, SM-O7, SM-E21, R8, R13; M0-T41; the GPU's cases join with M0-T42): sr_physics::reference::heat — one-temperature flux-limited diffusion stepped by RKL2, no adapter touched — on scenes/heat_pulse.json (128 × 128, bounce, heat only, test.constant_diffusivity 0.5, a background at T_floor) with a Gaussian of σ₀ = 4 added by the test: σ² per axis at t = 8, 16, 24 within 1 % of σ₀² + 2χt (measured 1e-12) and the total heat constant to 1e-5 (measured 1.4e-14); the flux kept equal to −χ·C·ΔT at x and y faces, positive toward +x, +y, the cell field the mean of a cell's two faces; a hot slab (T = 30, 32 × 32 at the world's left edge, vacuum around) whose booked `radiated` equals the heat the grid lost to 1e-6 (measured 0 at 1e-9), each cell's `emitted` nonzero exactly on the slab's ring and every vacuum cell untouched bit for bit; test.pin_temperature leaving the planes bit for bit and keeping F; scenes/heat_pulse.json and heat_spot.json carry what the oracles assume. chi-scale plants χ × 0.9 in the constant-diffusivity branch",
+      "desc": "G-HEAT1 and the light leaving, on the CPU twin (contract §2.4, §1.7, §5.1, SM-O7, SM-E21, R8, R13; M0-T41; the GPU's cases join with M0-T42): sr_physics::reference::heat — one-temperature flux-limited diffusion stepped by RKL2, no adapter touched — on scenes/heat_pulse.json (128 × 128, bounce, heat only, test.constant_diffusivity 0.5, a background at T_floor) with a Gaussian of σ₀ = 4 added by the test: σ² per axis at t = 8, 16, 24 within 1 % of σ₀² + 2χt (measured 1e-12) and the total heat constant to 1e-5 (measured 1.4e-14); the flux kept equal to −χ·C·ΔT at x and y faces, positive toward +x, +y, the cell field the mean of a cell's two faces; a hot slab (T = 30, 32 × 32 at the world's left edge, vacuum around) whose booked `radiated` equals the heat the grid lost to 1e-6 (measured 0 at 1e-9), each cell's `emitted` nonzero exactly on the slab's ring and every vacuum cell untouched bit for bit; test.pin_temperature leaving the planes bit for bit and keeping F; scenes/heat_pulse.json and heat_spot.json carry what the oracles assume. The GPU's P5 (M0-T42: step/heat.rs, shaders/heat.wgsl, P5 alone between P1, P8 and P9 on the physics adapter, Δt written into the Δt record between steps): the same pulse, 24 passes of 3 stages, σ² within 1 % (measured 6.8e-6), the heat to 1e-5 (1.5e-7), T within 1e-4 of the peak of the twin from the same f32 start (2.8e-7); every face's F within 1e-4 of the twin's largest (3.7e-10 of 0.149) and side.flux the mean of a cell's two faces; the slab's radiated = the heat lost to 1e-5 (5.1e-7) and the twin's to 1e-4, booked exactly on its ring; pin_temperature: no stage, nothing booked, the planes bit for bit, F the free pass's. chi-scale plants χ × 0.9 in the constant-diffusivity branch of the twin and of the shader",
       "cmd": "bash tests/gpu.sh heat::gauss physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 6,
+      "expected": 10,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -382,11 +507,11 @@
       ]
     },
     "heat_rkl2": {
-      "desc": "G-HEAT2, RKL2 super-time-stepping on the CPU twin (contract §2.4.3, §5.1, SM-O8, SM-E18, R8, R13; M0-T41): one RKL2 pass over t = 24 (14 stages) and the explicit sub-steps the test writes (96 of Δt_p/2) both at σ² within 1 % of σ₀² + 2χt and of each other (measured 1e-12); six passes of Δt = 4 (6 stages) against the explicit field within 1 % of the pulse's peak (measured 2.7e-3) and the analytic Gaussian; the stage count against the contract's formula worked by hand for eight steps from 0.05 to 100 (the smallest s ≥ 2 with Δt_p (s² + s − 2)/4 ≥ Δt, Δt_p = 0.5), `SR-WARN heat stages 33` above 32 and not at 32; the adversarial case — a one-cell pulse, 15 passes of Δt = 6.4 Δt_p (5 stages, the step just over what 4 cover), read as the difference of two runs on a background of 2.0: σ² within 1 % of the explicit run's and of 2χt, total heat to 1e-6, the ringing (−2.3 % of the pulse, measured) bounded and gone by the end. rkl2-s-minus-one plants one stage fewer in the twin",
+      "desc": "G-HEAT2, RKL2 super-time-stepping on the CPU twin (contract §2.4.3, §5.1, SM-O8, SM-E18, R8, R13; M0-T41): one RKL2 pass over t = 24 (14 stages) and the explicit sub-steps the test writes (96 of Δt_p/2) both at σ² within 1 % of σ₀² + 2χt and of each other (measured 1e-12); six passes of Δt = 4 (6 stages) against the explicit field within 1 % of the pulse's peak (measured 2.7e-3) and the analytic Gaussian; the stage count against the contract's formula worked by hand for eight steps from 0.05 to 100 (the smallest s ≥ 2 with Δt_p (s² + s − 2)/4 ≥ Δt, Δt_p = 0.5), `SR-WARN heat stages 33` above 32 and not at 32; the adversarial case — a one-cell pulse, 15 passes of Δt = 6.4 Δt_p (5 stages, the step just over what 4 cover), read as the difference of two runs on a background of 2.0: σ² within 1 % of the explicit run's and of 2χt, total heat to 1e-6, the ringing (−2.3 % of the pulse, measured) bounded and gone by the end. The GPU's P5 (M0-T42): one pass of 14 stages against the explicit run, σ² within 1 % (measured 40.0009 against 40.0002); s and Δt_p the twin's for nine steps from 0.05 to 131.75 (32 stages); at 131.76 the step needs 33 — every stiff cell's faces capped (contract §0.5 [M0-T42]), 32 stages over the whole Δt, `SR-WARN heat stages 33`, the heat to 1e-5 (6.9e-8); the one-cell pulse, 15 passes of 5 stages, two GPU runs on a background of 2.0: σ² within 1 % of the explicit run's (47.71 against 48.00 — f32 at T = 2), each run's heat lost = its radiated to 1e-5, the ring bounded. rkl2-s-minus-one plants one stage fewer in the twin and in the shader's heat_plan",
       "cmd": "bash tests/gpu.sh heat::rkl2 physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 5,
+      "expected": 8,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -410,11 +535,11 @@
       ]
     },
     "heat_limiter": {
-      "desc": "G-FLD, the flux limiter on the CPU twin (contract §2.4.1, §5.1, SM-E19, SM-E20, R8, R13; M0-T41): Levermore–Pomraning's λ(R) = (2 + R)/(6 + 3R + R²) at five closed-form points, λR < 1 and λ falling; scenes/heat_spot.json (64 × 64 thin gas, Σ = 10⁻⁴, a hot 8 × 8 spot at T = 2, leave edges) over 20 passes: |F| ≤ c_sb a_r T⁴ of the hotter side (1 + 10⁻⁶) at every face including the world's edges, and the limiter binding (worst ratio 0.98, measured); the same spot with test.flux_limiter off at 1,667 times the bound — the check can fail; thick gas (Σ = 100, κΣ = 200, a gentle gradient) carrying (4/3) a_r c_sb T³/(κΣ) within 1 % (measured 1e-6); the flag off giving c_sb ΔE/(3 κΣ_face) across a face of the spot to 1e-9. limiter-off plants λ ≡ 1/3",
+      "desc": "G-FLD, the flux limiter on the CPU twin (contract §2.4.1, §5.1, SM-E19, SM-E20, R8, R13; M0-T41): Levermore–Pomraning's λ(R) = (2 + R)/(6 + 3R + R²) at five closed-form points, λR < 1 and λ falling; scenes/heat_spot.json (64 × 64 thin gas, Σ = 10⁻⁴, a hot 8 × 8 spot at T = 2, leave edges) over 20 passes: |F| ≤ c_sb a_r T⁴ of the hotter side (1 + 10⁻⁶) at every face including the world's edges, and the limiter binding (worst ratio 0.98, measured); the same spot with test.flux_limiter off at 1,667 times the bound — the check can fail; thick gas (Σ = 100, κΣ = 200, a gentle gradient) carrying (4/3) a_r c_sb T³/(κΣ) within 1 % (measured 1e-6); the flag off giving c_sb ΔE/(3 κΣ_face) across a face of the spot to 1e-9. The GPU's P5 (M0-T42): the spot over 20 passes of Δt = 0.002 (up to 26 stages, no cap), every face under c_sb a_r T⁴ (1 + 1e-6) (worst 0.81), the first pass's F the twin's within 1e-4; thick gas within 1 % of (4/3) a_r c_sb T³/(κΣ) (2.4e-5); the flag off at c_sb ΔE/(3 κΣ_face) within 1e-5, 1,667 times the bound. limiter-off plants λ ≡ 1/3 in the twin and in the shader",
       "cmd": "bash tests/gpu.sh heat::limiter physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 4,
+      "expected": 6,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -434,6 +559,33 @@
         {
           "id": "limiter-off",
           "patch": "tests/plants/limiter-off.patch"
+        }
+      ]
+    },
+    "radiation_force": {
+      "desc": "The radiation force in the flow (contract §2.4.4, §1.3.2's P4, §2.3.4, SM-E22, R8, R13; M0-T43): f = κΣF/c_sb from the previous step's flux F is P4's momentum source, E unchanged (the work comes out of the thermal energy). A hot slab in a uniform medium (64 × 64 bounce, hydrogen at rest, Σ 1 at T 1 | Σ 0.1 at T 10, Π = 2 both sides, the cold pressure off), P5 pinned (F computed, E untouched): each of 8 steps of Δt 0.02 against the same step without the force from the same state — the momentum gained in each half of the world (x left/right, y top/bottom) equals Σ Δt·f, κ = κ₀(1 + X_H), F as side.flux held at the step's start, within 1e-6 relative; Σ, E and every species bit for bit the force-free step's. The twin (reference::hydro's step_forced, F from reference::heat pinned) and the GPU (hydro.wgsl's update, F bound at 6, the Δt record a uniform) on the physics adapter. Adversarial: one step on an F written by hand (the previous one negated) — the momentum gained is that F's force, not the force of the F P5 writes after P4. Plant radforce-zero zeroes f in P4, twin and shader.",
+      "cmd": "bash tests/gpu.sh radforce physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 3,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/radforce-zero.patch"
+      ],
+      "plants": [
+        {
+          "id": "radforce-zero",
+          "patch": "tests/plants/radforce-zero.patch"
         }
       ]
     },
@@ -827,7 +979,7 @@
       ]
     },
     "dump": {
-      "desc": "state dumps (contract §2.12.3 with §0.5 [M0-T26]'s resume key, §3.1's load_dump and dump_state, §3.3's --dump-every and --load-dump, §1.3.4): the bytes read by hand — SRDUMP01, the u32 header length, the header's eight keys (version, width, height, step, sim_time, channels in §2.2's order, sinks, resume), 14 little-endian f32 planes row-major, Σ, mom_x and mom_y found at §2.2's indices by the start's values — then read back to the same dump and the same bytes, through a file, and load_dump → dump_state bit for bit; 2 × 100 steps through a dump (frames under the latch, a fire on the dump's last step, a second flag 2 Δt later) equal 200 straight steps — the state, the Δt record, the box and every frame report — and the cells alone visibly do not; headless 100 + --load-dump 100 writes the 200-step run's s_150 and s_200 byte for byte, --dump-every 50 at step indices from the scene, the final dump always, a --world other than the dump's and --dump-every without --out exit 4; a dump cut anywhere, one byte too long, a wrong magic, an unknown or missing key, another version, world or channel list refused, naming it, and through headless exit 4 with no summary (M0-T26); one sim time per step count — 40 steps as 1 × 40, 2 × 20, 40 × 1 frames and bare give byte-identical dumps, the reports' sim time the dump's, within 1e-9 relative of the f64 sum of each step's f32 Δt in order (the f32 sum visibly not); an empty world's steps (Δt the largest f32) add none; headless --steps 100 writes summary.json's and the final dump's sim_time equal, its in-process twin's, within the bound (M0-D21); on the physics adapter (R12, R15)",
+      "desc": "state dumps (contract §2.12.3 with §0.5 [M0-T26]'s resume key, §3.1's load_dump and dump_state, §3.3's --dump-every and --load-dump, §1.3.4): the bytes read by hand — SRDUMP01, the u32 header length, the header's eight keys (version, width, height, step, sim_time, channels in §2.2's order, sinks, resume), 14 little-endian f32 planes row-major, Σ, mom_x and mom_y found at §2.2's indices by the start's values — then read back to the same dump and the same bytes, through a file, and load_dump → dump_state bit for bit; 2 × 100 steps through a dump (frames under the latch, a fire on the dump's last step, a second flag 2 Δt later) equal 200 straight steps — the state, the Δt record, the box and every frame report — and the cells alone visibly do not; headless 100 + --load-dump 100 writes the 200-step run's s_150 and s_200 byte for byte, --dump-every 50 at step indices from the scene, the final dump always, a --world other than the dump's and --dump-every without --out exit 4; a dump cut anywhere, one byte too long, a wrong magic, an unknown or missing key, another version, world or channel list refused, naming it, and through headless exit 4 with no summary (M0-T26); one sim time per step count — 40 steps as 1 × 40, 2 × 20, 40 × 1 frames and bare give byte-identical dumps, the reports' sim time the dump's, within 1e-9 relative of the f64 sum of each step's f32 Δt in order (the f32 sum visibly not); an empty world's steps (Δt the largest f32) add none; headless --steps 100 writes summary.json's and the final dump's sim_time equal, its in-process twin's, within the bound (M0-D21); with P5 (preset:sun) F's 2 planes follow the channels, `resume.flux` true, F non-zero at step 100 and the final dump's F side.flux's bit for bit, the resume byte for byte through it, a flag the planes disagree with, F into a step without P5 and P5 without F refused (§0.5 [M0-D33]); on the physics adapter (R12, R15)",
       "cmd": "bash tests/gpu.sh dump physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
@@ -855,6 +1007,10 @@
         {
           "id": "dump-sim-time-skip",
           "patch": "tests/plants/dump-sim-time-skip.patch"
+        },
+        {
+          "id": "dump-flux-zero",
+          "patch": "tests/plants/dump-flux-zero.patch"
         }
       ]
     },

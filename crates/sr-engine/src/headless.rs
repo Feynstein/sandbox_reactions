@@ -2,8 +2,10 @@
 //! run summary (§2.12.2). Today: `--scene` reads a scene file or `preset:<name>` through [`crate::scene`] (M0-T25; every
 //! preset is the nominal Sun-like disk until M0-T74), `--world` and `--edge` stand over the scene's `world`, `--steps N`
 //! runs [`Step`] N times and `--timing` adds the steps' cost (M0-T23); `--until`, the ledger, events and objects arrive
-//! with their blocks. Of the scene's switches, `gravity` turns P2 on (M0-T31) and `hydro` P4 (M0-T34) under the run's edge
-//! mode (M0-T35); the other switches are recorded, not yet applied (no pass reads them).
+//! with their blocks. Of the scene's switches, `gravity` turns P2 on (M0-T31), `hydro` P4 (M0-T34) under the run's edge
+//! mode (M0-T35) and `heat` P5 with the scene's `test` flags (M0-T42; a step that needs more than 32 heat stages prints
+//! `SR-WARN heat stages <s>`, once for each new largest s) and `reactions` P6 with the registry's enabled records and
+//! the scene's `pin_temperature` (M0-T46); the other switches are recorded, not yet applied.
 //!
 //! State dumps (§2.12.3, [`crate::dump`], M0-T26): with `--out`, DIR/dumps/s_<step>.bin at the end of every run, and with
 //! `--dump-every N` at every step index that N divides — the index counts from the scene, so a resumed run's dumps fall
@@ -30,13 +32,15 @@ use std::time::Instant;
 use serde_json::json;
 use sr_physics::reference::hydro::Edge;
 use sr_physics::reference::{Switches as TwinSwitches, Twin, GUARD_EVERY};
-use sr_physics::registry::{Elements, Physics};
+use sr_physics::registry::{Elements, Physics, Reactions};
 
 use crate::dump::{dump_state, load_dump, Dump, Resume};
 use crate::gpu::Gpu;
 use crate::scene::{EdgeMode, Scene, Switches};
 use crate::state::{Booking, SideFields, State, WorldConfig, CHANNELS};
 use crate::step::boxfit::BoxMode;
+use crate::step::heat::HeatSetup;
+use crate::step::react::ReactSetup;
 use crate::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
 
 pub const EXIT_DONE: i32 = 0;
@@ -201,7 +205,8 @@ fn git_rev() -> String {
 
 /// The twin's state as a dump (§2.12.3): the planes in f32 as the GPU's are, the step index and sim time, and the step's
 /// records — Δt_n and Δt_{n+1} as f32, no latch, and the box record of the whole world with its FFT size per axis (§1.3.3:
-/// the smallest power of two ≥ 2 × the box, at least 32) and its indirect sizes, the twin having no active box.
+/// the smallest power of two ≥ 2 × the box, at least 32) and its indirect sizes, the twin having no active box; no F, the
+/// twin running no P5 (M0-T48).
 pub fn twin_dump(twin: &Twin, world: WorldConfig) -> Dump {
     let fft = |n: u32| (2 * n).next_power_of_two().max(32);
     let (w, h) = (world.width, world.height);
@@ -218,6 +223,7 @@ pub fn twin_dump(twin: &Twin, world: WorldConfig) -> Dump {
             box_args: [w.div_ceil(8), h.div_ceil(8), 1, (world.cells() as u32).div_ceil(256), 1, 1],
         },
         planes: twin.state.planes.iter().map(|&v| v as f32).collect(),
+        flux: None,
     }
 }
 
@@ -239,8 +245,9 @@ fn run_twin(
     };
     let planes = planes.iter().map(|&v| f64::from(v)).collect();
     let (w, h) = (world.width as usize, world.height as usize);
-    let mut twin =
-        match Twin::new(physics, elements, edge_of, TwinSwitches { gravity: switches.gravity, hydro: switches.hydro }, w, h, planes) {
+    // The twin's passes are gravity and hydro (its scope's expectation); the scene's heat and reactions are not applied here.
+    let twin_switches = TwinSwitches { gravity: switches.gravity, hydro: switches.hydro, heat: false, reactions: false };
+    let mut twin = match Twin::new(physics, elements, edge_of, twin_switches, None, w, h, planes) {
             Ok(t) => t,
             Err(e) => {
                 say(&format!("SR-ERROR bad arguments: --cpu-reference: {e}"));
@@ -352,15 +359,22 @@ pub fn run(args: &[String]) -> i32 {
         let elements = Elements::shipped().map_err(|e| e.to_string())?;
         let edge = args.edge.unwrap_or(scene.edge);
         if let Some(d) = &dump {
-            return Ok((d.world, edge, physics, elements, Vec::new(), scene.warnings(), scene.switches));
+            return Ok((d.world, edge, physics, elements, Vec::new(), scene.warnings(), (scene.switches, scene.test)));
         }
         let world = args.world.unwrap_or(scene.world);
         let (planes, mut warnings) = scene.planes(world, &physics, &elements)?;
         warnings.splice(0..0, scene.warnings());
-        Ok((world, edge, physics, elements, planes, warnings, scene.switches))
+        Ok((world, edge, physics, elements, planes, warnings, (scene.switches, scene.test)))
     });
-    let (world, edge, physics, elements, planes, warnings, switches) = match prepared {
+    let (world, edge, physics, elements, planes, warnings, (switches, test)) = match prepared {
         Ok(p) => p,
+        Err(e) => {
+            say(&format!("SR-ERROR bad scene: {e}"));
+            return EXIT_ARGS;
+        }
+    };
+    let reactions = match Reactions::shipped(&elements, &physics) {
+        Ok(r) => r,
         Err(e) => {
             say(&format!("SR-ERROR bad scene: {e}"));
             return EXIT_ARGS;
@@ -407,7 +421,9 @@ pub fn run(args: &[String]) -> i32 {
     let side = SideFields::new(&gpu.device, world).expect("the state's world is valid");
     let passes =
         Passes { mode: BoxMode::Fit, gravity: switches.gravity.then_some(&side), hydro: switches.hydro.then_some(edge) };
-    let step = match Step::with_passes(&gpu.device, &state, &booking, &eos, &physics, &passes) {
+    let heat = switches.heat.then_some(HeatSetup { side: &side, test });
+    let react = switches.reactions.then_some(ReactSetup { reactions: &reactions, test, neutrinos: switches.neutrinos, side: &side });
+    let step = match Step::with_reactions(&gpu.device, &state, &booking, &eos, &physics, &passes, heat.as_ref(), react.as_ref()) {
         Ok(s) => s,
         Err(e) => {
             say(&format!("SR-ERROR bad arguments: gravity over a {}x{} world: {e}", world.width, world.height));
@@ -439,6 +455,7 @@ pub fn run(args: &[String]) -> i32 {
     let target = args.steps.min(args.max_steps);
     let started = Instant::now();
     let mut done = 0u64;
+    let mut warned = 0u32;
     while done < target {
         let mut n = (target - done).min(CHUNK);
         if let Some(every) = args.dump_every {
@@ -450,6 +467,12 @@ pub fn run(args: &[String]) -> i32 {
             return EXIT_GPU;
         }
         done += n;
+        if let Some(report) = step.read_heat(&gpu.device, &gpu.queue).filter(|r| r.worst > warned) {
+            if let Some(w) = report.warning() {
+                say(&w);
+                warned = report.worst;
+            }
+        }
         if let Some(c) = step.read_cost(&gpu.device, &gpu.queue) {
             cost.add(&c);
         }

@@ -1,0 +1,236 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.10s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+test d34::lockstep ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+D34 sens n 0 eps 6e-8: ΔE 1.607383e1
+D34 sens n 0 eps -6e-8: ΔE 1.607380e1
+D34 sens n 0 eps 1e-7: ΔE 1.607384e1
+D34 sens n 0 eps 3e-7: ΔE 1.607389e1
+D34 n 0 heat Some((2, 2, 0.0067543774)) dt 6.7544e-3 E_in 1.473912e4 heatΔ 0.0000e0 | ΔE gpu 1.607324e1 cpu 1.607382e1 (rel -3.587e-5) nucCPU 1.607382e1 | GPU book Δ total nuc 6.583428e4 heat 1.7548e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749938 He 0.250062] cpu [H 0.749938 He 0.250062]
+D34 sens n 1 eps 6e-8: ΔE 1.633551e1
+D34 sens n 1 eps -6e-8: ΔE 1.633548e1
+D34 sens n 1 eps 1e-7: ΔE 1.633552e1
+D34 sens n 1 eps 3e-7: ΔE 1.633557e1
+D34 n 1 heat Some((2, 2, 0.006750223)) dt 6.7502e-3 E_in 1.475519e4 heatΔ 0.0000e0 | ΔE gpu 1.633496e1 cpu 1.633550e1 (rel -3.296e-5) nucCPU 1.633550e1 | GPU book Δ total nuc 6.690317e4 heat 1.7763e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749876 He 0.250124] cpu [H 0.749876 He 0.250124]
+D34 sens n 2 eps 6e-8: ΔE 1.660755e1
+D34 sens n 2 eps -6e-8: ΔE 1.660752e1
+D34 sens n 2 eps 1e-7: ΔE 1.660756e1
+D34 sens n 2 eps 3e-7: ΔE 1.660761e1
+D34 n 2 heat Some((2, 2, 0.0067460113)) dt 6.7460e-3 E_in 1.477153e4 heatΔ 0.0000e0 | ΔE gpu 1.660742e1 cpu 1.660753e1 (rel -6.800e-6) nucCPU 1.660753e1 | GPU book Δ total nuc 6.801358e4 heat 1.7984e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749812 He 0.250188] cpu [H 0.749812 He 0.250188]
+D34 sens n 3 eps 6e-8: ΔE 1.689067e1
+D34 sens n 3 eps -6e-8: ΔE 1.689064e1
+D34 sens n 3 eps 1e-7: ΔE 1.689068e1
+D34 sens n 3 eps 3e-7: ΔE 1.689073e1
+D34 n 3 heat Some((2, 2, 0.006741731)) dt 6.7417e-3 E_in 1.478814e4 heatΔ 0.0000e0 | ΔE gpu 1.689062e1 cpu 1.689065e1 (rel -1.776e-6) nucCPU 1.689065e1 | GPU book Δ total nuc 6.917101e4 heat 1.8211e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749748 He 0.250253] cpu [H 0.749747 He 0.250253]
+D34 sens n 4 eps 6e-8: ΔE 1.718565e1
+D34 sens n 4 eps -6e-8: ΔE 1.718562e1
+D34 sens n 4 eps 1e-7: ΔE 1.718566e1
+D34 sens n 4 eps 3e-7: ΔE 1.718571e1
+D34 n 4 heat Some((2, 2, 0.0067373873)) dt 6.7374e-3 E_in 1.480503e4 heatΔ 0.0000e0 | ΔE gpu 1.718555e1 cpu 1.718563e1 (rel -5.078e-6) nucCPU 1.718563e1 | GPU book Δ total nuc 7.037609e4 heat 1.8443e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749682 He 0.250318] cpu [H 0.749682 He 0.250318]
+D34 sens n 5 eps 6e-8: ΔE 1.749344e1
+D34 sens n 5 eps -6e-8: ΔE 1.749341e1
+D34 sens n 5 eps 1e-7: ΔE 1.749345e1
+D34 sens n 5 eps 3e-7: ΔE 1.749351e1
+D34 n 5 heat Some((2, 2, 0.0067329793)) dt 6.7330e-3 E_in 1.482221e4 heatΔ 0.0000e0 | ΔE gpu 1.749316e1 cpu 1.749343e1 (rel -1.506e-5) nucCPU 1.749343e1 | GPU book Δ total nuc 7.163241e4 heat 1.8682e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749615 He 0.250385 C 0.000000] cpu [H 0.749615 He 0.250385 C 0.000000]
+D34 sens n 6 eps 6e-8: ΔE 1.781498e1
+D34 sens n 6 eps -6e-8: ΔE 1.781495e1
+D34 sens n 6 eps 1e-7: ΔE 1.781499e1
+D34 sens n 6 eps 3e-7: ΔE 1.781505e1
+D34 n 6 heat Some((2, 2, 0.0067285053)) dt 6.7285e-3 E_in 1.483971e4 heatΔ 0.0000e0 | ΔE gpu 1.781445e1 cpu 1.781496e1 (rel -2.865e-5) nucCPU 1.781496e1 | GPU book Δ total nuc 7.294387e4 heat 1.8927e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749546 He 0.250454 C 0.000000] cpu [H 0.749546 He 0.250454 C 0.000000]
+D34 sens n 7 eps 6e-8: ΔE 1.815138e1
+D34 sens n 7 eps -6e-8: ΔE 1.815135e1
+D34 sens n 7 eps 1e-7: ΔE 1.815139e1
+D34 sens n 7 eps 3e-7: ΔE 1.815145e1
+D34 n 7 heat Some((2, 2, 0.006723954)) dt 6.7240e-3 E_in 1.485752e4 heatΔ 0.0000e0 | ΔE gpu 1.815137e1 cpu 1.815137e1 (rel +7.433e-8) nucCPU 1.815137e1 | GPU book Δ total nuc 7.431717e4 heat 1.9179e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749477 He 0.250523 C 0.000000] cpu [H 0.749477 He 0.250523 C 0.000000]
+D34 sens n 8 eps 6e-8: ΔE 1.850380e1
+D34 sens n 8 eps -6e-8: ΔE 1.850376e1
+D34 sens n 8 eps 1e-7: ΔE 1.850381e1
+D34 sens n 8 eps 3e-7: ΔE 1.850387e1
+D34 n 8 heat Some((2, 2, 0.006719326)) dt 6.7193e-3 E_in 1.487567e4 heatΔ 0.0000e0 | ΔE gpu 1.850293e1 cpu 1.850378e1 (rel -4.587e-5) nucCPU 1.850378e1 | GPU book Δ total nuc 7.575514e4 heat 1.9437e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749406 He 0.250594 C 0.000000] cpu [H 0.749406 He 0.250594 C 0.000000]
+D34 sens n 9 eps 6e-8: ΔE 1.887360e1
+D34 sens n 9 eps -6e-8: ΔE 1.887356e1
+D34 sens n 9 eps 1e-7: ΔE 1.887361e1
+D34 sens n 9 eps 3e-7: ΔE 1.887367e1
+D34 n 9 heat Some((2, 2, 0.006714611)) dt 6.7146e-3 E_in 1.489417e4 heatΔ 0.0000e0 | ΔE gpu 1.887402e1 cpu 1.887358e1 (rel +2.347e-5) nucCPU 1.887358e1 | GPU book Δ total nuc 7.726645e4 heat 1.9703e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749334 He 0.250666 C 0.000000] cpu [H 0.749334 He 0.250666 C 0.000000]
+D34 sens n 10 eps 6e-8: ΔE 1.926231e1
+D34 sens n 10 eps -6e-8: ΔE 1.926227e1
+D34 sens n 10 eps 1e-7: ΔE 1.926232e1
+D34 sens n 10 eps 3e-7: ΔE 1.926238e1
+D34 n 10 heat Some((2, 2, 0.006709819)) dt 6.7098e-3 E_in 1.491305e4 heatΔ 0.0000e0 | ΔE gpu 1.926270e1 cpu 1.926229e1 (rel +2.097e-5) nucCPU 1.926229e1 | GPU book Δ total nuc 7.885249e4 heat 1.9978e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749260 He 0.250740 C 0.000000] cpu [H 0.749260 He 0.250740 C 0.000000]
+D34 sens n 11 eps 6e-8: ΔE 1.967157e1
+D34 sens n 11 eps -6e-8: ΔE 1.967153e1
+D34 sens n 11 eps 1e-7: ΔE 1.967158e1
+D34 sens n 11 eps 3e-7: ΔE 1.967165e1
+D34 n 11 heat Some((2, 2, 0.00670494)) dt 6.7049e-3 E_in 1.493231e4 heatΔ 0.0000e0 | ΔE gpu 1.967188e1 cpu 1.967155e1 (rel +1.646e-5) nucCPU 1.967155e1 | GPU book Δ total nuc 8.052202e4 heat 2.0260e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749184 He 0.250816 C 0.000000] cpu [H 0.749184 He 0.250816 C 0.000000]
+D34 sens n 12 eps 6e-8: ΔE 2.010328e1
+D34 sens n 12 eps -6e-8: ΔE 2.010324e1
+D34 sens n 12 eps 1e-7: ΔE 2.010329e1
+D34 sens n 12 eps 3e-7: ΔE 2.010336e1
+D34 n 12 heat Some((2, 2, 0.0066999733)) dt 6.7000e-3 E_in 1.495198e4 heatΔ 0.0000e0 | ΔE gpu 2.010254e1 cpu 2.010326e1 (rel -3.577e-5) nucCPU 2.010326e1 | GPU book Δ total nuc 8.228077e4 heat 2.0551e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749107 He 0.250893 C 0.000000] cpu [H 0.749107 He 0.250893 C 0.000000]
+D34 sens n 13 eps 6e-8: ΔE 2.055989e1
+D34 sens n 13 eps -6e-8: ΔE 2.055985e1
+D34 sens n 13 eps 1e-7: ΔE 2.055991e1
+D34 sens n 13 eps 3e-7: ΔE 2.055997e1
+D34 n 13 heat Some((2, 2, 0.006694894)) dt 6.6949e-3 E_in 1.497209e4 heatΔ 0.0000e0 | ΔE gpu 2.056055e1 cpu 2.055987e1 (rel +3.287e-5) nucCPU 2.055987e1 | GPU book Δ total nuc 8.414611e4 heat 2.0851e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749029 He 0.250971 C 0.000000] cpu [H 0.749029 He 0.250971 C 0.000000]
+D34 sens n 14 eps 6e-8: ΔE 2.104392e1
+D34 sens n 14 eps -6e-8: ΔE 2.104388e1
+D34 sens n 14 eps 1e-7: ΔE 2.104394e1
+D34 sens n 14 eps 3e-7: ΔE 2.104401e1
+D34 n 14 heat Some((2, 2, 0.0066897334)) dt 6.6897e-3 E_in 1.499265e4 heatΔ 0.0000e0 | ΔE gpu 2.104297e1 cpu 2.104390e1 (rel -4.429e-5) nucCPU 2.104390e1 | GPU book Δ total nuc 8.611479e4 heat 2.1161e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748948 He 0.251052 C 0.000000] cpu [H 0.748948 He 0.251052 C 0.000000]
+D34 sens n 15 eps 6e-8: ΔE 2.155766e1
+D34 sens n 15 eps -6e-8: ΔE 2.155761e1
+D34 sens n 15 eps 1e-7: ΔE 2.155767e1
+D34 sens n 15 eps 3e-7: ΔE 2.155775e1
+D34 n 15 heat Some((2, 2, 0.00668445)) dt 6.6844e-3 E_in 1.501369e4 heatΔ 0.0000e0 | ΔE gpu 2.155664e1 cpu 2.155764e1 (rel -4.622e-5) nucCPU 2.155764e1 | GPU book Δ total nuc 8.820904e4 heat 2.1482e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748865 He 0.251135 C 0.000000] cpu [H 0.748865 He 0.251135 C 0.000000]
+D34 sens n 16 eps 6e-8: ΔE 2.210432e1
+D34 sens n 16 eps -6e-8: ΔE 2.210427e1
+D34 sens n 16 eps 1e-7: ΔE 2.210433e1
+D34 sens n 16 eps 3e-7: ΔE 2.210441e1
+D34 n 16 heat Some((2, 2, 0.006679047)) dt 6.6790e-3 E_in 1.503525e4 heatΔ 0.0000e0 | ΔE gpu 2.210352e1 cpu 2.210429e1 (rel -3.519e-5) nucCPU 2.210429e1 | GPU book Δ total nuc 9.043817e4 heat 2.1813e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748781 He 0.251219 C 0.000000] cpu [H 0.748781 He 0.251219 C 0.000000]
+D34 sens n 17 eps 6e-8: ΔE 2.268738e1
+D34 sens n 17 eps -6e-8: ΔE 2.268734e1
+D34 sens n 17 eps 1e-7: ΔE 2.268740e1
+D34 sens n 17 eps 3e-7: ΔE 2.268748e1
+D34 n 17 heat Some((2, 2, 0.0066735237)) dt 6.6735e-3 E_in 1.505735e4 heatΔ 0.0000e0 | ΔE gpu 2.268750e1 cpu 2.268736e1 (rel +6.139e-6) nucCPU 2.268736e1 | GPU book Δ total nuc 9.281428e4 heat 2.2157e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748694 He 0.251306 C 0.000000] cpu [H 0.748694 He 0.251306 C 0.000000]
+D34 sens n 18 eps 6e-8: ΔE 2.331089e1
+D34 sens n 18 eps -6e-8: ΔE 2.331084e1
+D34 sens n 18 eps 1e-7: ΔE 2.331091e1
+D34 sens n 18 eps 3e-7: ΔE 2.331099e1
+D34 n 18 heat Some((2, 2, 0.0066678748)) dt 6.6679e-3 E_in 1.508004e4 heatΔ 0.0000e0 | ΔE gpu 2.330957e1 cpu 2.331087e1 (rel -5.561e-5) nucCPU 2.331087e1 | GPU book Δ total nuc 9.535236e4 heat 2.2513e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748604 He 0.251395 C 0.000000] cpu [H 0.748605 He 0.251395 C 0.000000]
+D34 sens n 19 eps 6e-8: ΔE 2.398161e1
+D34 sens n 19 eps -6e-8: ΔE 2.398156e1
+D34 sens n 19 eps 1e-7: ΔE 2.398163e1
+D34 sens n 19 eps 3e-7: ΔE 2.398172e1
+D34 n 19 heat Some((2, 2, 0.0066620745)) dt 6.6621e-3 E_in 1.510335e4 heatΔ 0.0000e0 | ΔE gpu 2.398145e1 cpu 2.398158e1 (rel -5.812e-6) nucCPU 2.398158e1 | GPU book Δ total nuc 9.808631e4 heat 2.2883e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748513 He 0.251487 C 0.000000] cpu [H 0.748513 He 0.251487 C 0.000000]
+D34 sens n 20 eps 6e-8: ΔE 2.470339e1
+D34 sens n 20 eps -6e-8: ΔE 2.470333e1
+D34 sens n 20 eps 1e-7: ΔE 2.470341e1
+D34 sens n 20 eps 3e-7: ΔE 2.470350e1
+D34 n 20 heat Some((2, 2, 0.0066561275)) dt 6.6561e-3 E_in 1.512733e4 heatΔ 0.0000e0 | ΔE gpu 2.470312e1 cpu 2.470336e1 (rel -9.555e-6) nucCPU 2.470336e1 | GPU book Δ total nuc 1.010261e5 heat 2.3268e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748418 He 0.251582 C 0.000000] cpu [H 0.748418 He 0.251582 C 0.000000]
+D34 sens n 21 eps 6e-8: ΔE 2.548244e1
+D34 sens n 21 eps -6e-8: ΔE 2.548239e1
+D34 sens n 21 eps 1e-7: ΔE 2.548246e1
+D34 sens n 21 eps 3e-7: ΔE 2.548256e1
+D34 n 21 heat Some((2, 2, 0.0066500255)) dt 6.6500e-3 E_in 1.515203e4 heatΔ 0.0000e0 | ΔE gpu 2.548145e1 cpu 2.548241e1 (rel -3.803e-5) nucCPU 2.548241e1 | GPU book Δ total nuc 1.041945e5 heat 2.3668e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748320 He 0.251680 C 0.000000] cpu [H 0.748320 He 0.251680 C 0.000000]
+D34 sens n 22 eps 6e-8: ΔE 2.632846e1
+D34 sens n 22 eps -6e-8: ΔE 2.632840e1
+D34 sens n 22 eps 1e-7: ΔE 2.632848e1
+D34 sens n 22 eps 3e-7: ΔE 2.632858e1
+D34 n 22 heat Some((2, 2, 0.006643747)) dt 6.6437e-3 E_in 1.517751e4 heatΔ 0.0000e0 | ΔE gpu 2.632715e1 cpu 2.632843e1 (rel -4.869e-5) nucCPU 2.632843e1 | GPU book Δ total nuc 1.076342e5 heat 2.4085e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748219 He 0.251781 C 0.000000] cpu [H 0.748219 He 0.251781 C 0.000000]
+D34 sens n 23 eps 6e-8: ΔE 2.724997e1
+D34 sens n 23 eps -6e-8: ΔE 2.724991e1
+D34 sens n 23 eps 1e-7: ΔE 2.724999e1
+D34 sens n 23 eps 3e-7: ΔE 2.725010e1
+D34 n 23 heat Some((2, 2, 0.0066372673)) dt 6.6373e-3 E_in 1.520384e4 heatΔ 0.0000e0 | ΔE gpu 2.725000e1 cpu 2.724994e1 (rel +2.262e-6) nucCPU 2.724994e1 | GPU book Δ total nuc 1.113862e5 heat 2.4520e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748115 He 0.251885 C 0.000000] cpu [H 0.748115 He 0.251885 C 0.000000]
+D34 sens n 24 eps 6e-8: ΔE 2.825680e1
+D34 sens n 24 eps -6e-8: ΔE 2.825673e1
+D34 sens n 24 eps 1e-7: ΔE 2.825683e1
+D34 sens n 24 eps 3e-7: ΔE 2.825694e1
+D34 n 24 heat Some((2, 2, 0.006630588)) dt 6.6306e-3 E_in 1.523109e4 heatΔ 0.0000e0 | ΔE gpu 2.825684e1 cpu 2.825677e1 (rel +2.398e-6) nucCPU 2.825677e1 | GPU book Δ total nuc 1.154803e5 heat 2.4976e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748007 He 0.251993 C 0.000000] cpu [H 0.748007 He 0.251993 C 0.000000]
+D34 sens n 25 eps 6e-8: ΔE 2.936646e1
+D34 sens n 25 eps -6e-8: ΔE 2.936639e1
+D34 sens n 25 eps 1e-7: ΔE 2.936649e1
+D34 sens n 25 eps 3e-7: ΔE 2.936661e1
+D34 n 25 heat Some((2, 2, 0.0066236863)) dt 6.6237e-3 E_in 1.525935e4 heatΔ 0.0000e0 | ΔE gpu 2.936523e1 cpu 2.936643e1 (rel -4.060e-5) nucCPU 2.936643e1 | GPU book Δ total nuc 1.199874e5 heat 2.5454e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747894 He 0.252106 C 0.000000] cpu [H 0.747894 He 0.252106 C 0.000000]
+D34 sens n 26 eps 6e-8: ΔE 3.059039e1
+D34 sens n 26 eps -6e-8: ΔE 3.059031e1
+D34 sens n 26 eps 1e-7: ΔE 3.059041e1
+D34 sens n 26 eps 3e-7: ΔE 3.059054e1
+D34 n 26 heat Some((2, 2, 0.006616536)) dt 6.6165e-3 E_in 1.528871e4 heatΔ 0.0000e0 | ΔE gpu 3.058887e1 cpu 3.059035e1 (rel -4.845e-5) nucCPU 3.059035e1 | GPU book Δ total nuc 1.249579e5 heat 2.5957e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747777 He 0.252223 C 0.000000] cpu [H 0.747777 He 0.252223 C 0.000000]
+D34 sens n 27 eps 6e-8: ΔE 3.195419e1
+D34 sens n 27 eps -6e-8: ΔE 3.195411e1
+D34 sens n 27 eps 1e-7: ΔE 3.195422e1
+D34 sens n 27 eps 3e-7: ΔE 3.195436e1
+D34 n 27 heat Some((2, 2, 0.006609103)) dt 6.6091e-3 E_in 1.531930e4 heatΔ 0.0000e0 | ΔE gpu 3.195410e1 cpu 3.195415e1 (rel -1.485e-6) nucCPU 3.195415e1 | GPU book Δ total nuc 1.304994e5 heat 2.6485e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747655 He 0.252345 C 0.000000] cpu [H 0.747655 He 0.252345 C 0.000000]
+D34 sens n 28 eps 6e-8: ΔE 3.347994e1
+D34 sens n 28 eps -6e-8: ΔE 3.347985e1
+D34 sens n 28 eps 1e-7: ΔE 3.347997e1
+D34 sens n 28 eps 3e-7: ΔE 3.348012e1
+D34 n 28 heat Some((2, 2, 0.0066013723)) dt 6.6014e-3 E_in 1.535125e4 heatΔ 0.0000e0 | ΔE gpu 3.347949e1 cpu 3.347989e1 (rel -1.200e-5) nucCPU 3.347989e1 | GPU book Δ total nuc 1.366902e5 heat 2.7044e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747526 He 0.252474 C 0.000000] cpu [H 0.747526 He 0.252474 C 0.000000]
+D34 sens n 29 eps 6e-8: ΔE 3.519910e1
+D34 sens n 29 eps -6e-8: ΔE 3.519900e1
+D34 sens n 29 eps 1e-7: ΔE 3.519913e1
+D34 sens n 29 eps 3e-7: ΔE 3.519929e1
+D34 n 29 heat Some((2, 2, 0.006593305)) dt 6.5933e-3 E_in 1.538473e4 heatΔ 0.0000e0 | ΔE gpu 3.519824e1 cpu 3.519905e1 (rel -2.300e-5) nucCPU 3.519905e1 | GPU book Δ total nuc 1.436607e5 heat 2.7637e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747392 He 0.252608 C 0.000000] cpu [H 0.747392 He 0.252608 C 0.000000]
+D34 sens n 30 eps 6e-8: ΔE 3.715752e1
+D34 sens n 30 eps -6e-8: ΔE 3.715741e1
+D34 sens n 30 eps 1e-7: ΔE 3.715755e1
+D34 sens n 30 eps 3e-7: ΔE 3.715772e1
+D34 n 30 heat Some((2, 2, 0.00658485)) dt 6.5849e-3 E_in 1.541993e4 heatΔ 0.0000e0 | ΔE gpu 3.715625e1 cpu 3.715746e1 (rel -3.267e-5) nucCPU 3.715746e1 | GPU book Δ total nuc 1.515977e5 heat 2.8266e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747249 He 0.252751 C 0.000000] cpu [H 0.747249 He 0.252751 C 0.000000]
+D34 sens n 31 eps 6e-8: ΔE 3.940562e1
+D34 sens n 31 eps -6e-8: ΔE 3.940551e1
+D34 sens n 31 eps 1e-7: ΔE 3.940566e1
+D34 sens n 31 eps 3e-7: ΔE 3.940585e1
+D34 n 31 heat Some((2, 2, 0.0065759644)) dt 6.5760e-3 E_in 1.545709e4 heatΔ 0.0000e0 | ΔE gpu 3.940430e1 cpu 3.940556e1 (rel -3.212e-5) nucCPU 3.940556e1 | GPU book Δ total nuc 1.606992e5 heat 2.8938e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747098 He 0.252902 C 0.000000] cpu [H 0.747098 He 0.252902 C 0.000000]
+D34 sens n 32 eps 6e-8: ΔE 4.201426e1
+D34 sens n 32 eps -6e-8: ΔE 4.201413e1
+D34 sens n 32 eps 1e-7: ΔE 4.201430e1
+D34 sens n 32 eps 3e-7: ΔE 4.201451e1
+D34 n 32 heat Some((2, 2, 0.0065665767)) dt 6.5666e-3 E_in 1.549649e4 heatΔ 0.0000e0 | ΔE gpu 4.201270e1 cpu 4.201420e1 (rel -3.574e-5) nucCPU 4.201420e1 | GPU book Δ total nuc 1.712540e5 heat 2.9659e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746937 He 0.253063 C 0.000000] cpu [H 0.746937 He 0.253063 C 0.000000]
+D34 sens n 33 eps 6e-8: ΔE 4.507894e1
+D34 sens n 33 eps -6e-8: ΔE 4.507880e1
+D34 sens n 33 eps 1e-7: ΔE 4.507898e1
+D34 sens n 33 eps 3e-7: ΔE 4.507921e1
+D34 n 33 heat Some((2, 2, 0.0065566115)) dt 6.5566e-3 E_in 1.553851e4 heatΔ 0.0000e0 | ΔE gpu 4.507715e1 cpu 4.507887e1 (rel -3.811e-5) nucCPU 4.507887e1 | GPU book Δ total nuc 1.836438e5 heat 3.0435e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746765 He 0.253235 C 0.000000] cpu [H 0.746765 He 0.253235 C 0.000000]
+D34 sens n 34 eps 6e-8: ΔE 4.873200e1
+D34 sens n 34 eps -6e-8: ΔE 4.873184e1
+D34 sens n 34 eps 1e-7: ΔE 4.873205e1
+D34 sens n 34 eps 3e-7: ΔE 4.873231e1
+D34 n 34 heat Some((2, 2, 0.0065459716)) dt 6.5460e-3 E_in 1.558358e4 heatΔ 0.0000e0 | ΔE gpu 4.872949e1 cpu 4.873192e1 (rel -4.985e-5) nucCPU 4.873192e1 | GPU book Δ total nuc 1.983927e5 heat 3.1276e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746578 He 0.253422 C 0.000000] cpu [H 0.746578 He 0.253422 C 0.000000]
+D34 sens n 35 eps 6e-8: ΔE 5.316746e1
+D34 sens n 35 eps -6e-8: ΔE 5.316728e1
+D34 sens n 35 eps 1e-7: ΔE 5.316752e1
+D34 sens n 35 eps 3e-7: ΔE 5.316781e1
+D34 n 35 heat Some((2, 2, 0.006534522)) dt 6.5345e-3 E_in 1.563231e4 heatΔ 0.0000e0 | ΔE gpu 5.316699e1 cpu 5.316737e1 (rel -7.101e-6) nucCPU 5.316737e1 | GPU book Δ total nuc 2.162871e5 heat 3.2195e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746374 He 0.253625 C 0.000001] cpu [H 0.746374 He 0.253625 C 0.000001]
+D34 sens n 36 eps 6e-8: ΔE 5.865076e1
+D34 sens n 36 eps -6e-8: ΔE 5.865056e1
+D34 sens n 36 eps 1e-7: ΔE 5.865083e1
+D34 sens n 36 eps 3e-7: ΔE 5.865117e1
+D34 n 36 heat Some((2, 2, 0.0065221004)) dt 6.5221e-3 E_in 1.568548e4 heatΔ 0.0000e0 | ΔE gpu 5.865039e1 cpu 5.865066e1 (rel -4.565e-6) nucCPU 5.865066e1 | GPU book Δ total nuc 2.383715e5 heat 3.3205e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746149 He 0.253850 C 0.000001] cpu [H 0.746149 He 0.253850 C 0.000001]
+D34 sens n 37 eps 6e-8: ΔE 6.561542e1
+D34 sens n 37 eps -6e-8: ΔE 6.561519e1
+D34 sens n 37 eps 1e-7: ΔE 6.561550e1
+D34 sens n 37 eps 3e-7: ΔE 6.561588e1
+D34 n 37 heat Some((2, 2, 0.006508488)) dt 6.5085e-3 E_in 1.574413e4 heatΔ 0.0000e0 | ΔE gpu 6.561230e1 cpu 6.561530e1 (rel -4.570e-5) nucCPU 6.561530e1 | GPU book Δ total nuc 2.663601e5 heat 3.4328e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.745898 He 0.254101 C 0.000001] cpu [H 0.745898 He 0.254101 C 0.000001]
+D34 sens n 38 eps 6e-8: ΔE 7.472836e1
+D34 sens n 38 eps -6e-8: ΔE 7.472808e1
+D34 sens n 38 eps 1e-7: ΔE 7.472845e1
+D34 sens n 38 eps 3e-7: ΔE 7.472892e1
+D34 n 38 heat Some((2, 2, 0.0064933593)) dt 6.4934e-3 E_in 1.580974e4 heatΔ 0.0000e0 | ΔE gpu 7.472168e1 cpu 7.472822e1 (rel -8.753e-5) nucCPU 7.472822e1 | GPU book Δ total nuc 3.029100e5 heat 3.5588e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.745612 He 0.254387 C 0.000001] cpu [H 0.745612 He 0.254387 C 0.000001]
+D34 sens n 39 eps 6e-8: ΔE 8.714731e1
+D34 sens n 39 eps -6e-8: ΔE 8.714697e1
+D34 sens n 39 eps 1e-7: ΔE 8.714742e1
+D34 sens n 39 eps 3e-7: ΔE 8.714798e1
+D34 n 39 heat Some((2, 2, 0.0064762468)) dt 6.4762e-3 E_in 1.588446e4 heatΔ 0.0000e0 | ΔE gpu 8.714355e1 cpu 8.714714e1 (rel -4.115e-5) nucCPU 8.714714e1 | GPU book Δ total nuc 3.526234e5 heat 3.7025e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.745278 He 0.254720 C 0.000002] cpu [H 0.745278 He 0.254720 C 0.000002]
+D34 sens n 40 eps 6e-8: ΔE 1.049579e2
+D34 sens n 40 eps -6e-8: ΔE 1.049575e2
+D34 sens n 40 eps 1e-7: ΔE 1.049581e2
+D34 sens n 40 eps 3e-7: ΔE 1.049588e2
+D34 n 40 heat Some((2, 2, 0.0064564566)) dt 6.4565e-3 E_in 1.597161e4 heatΔ 0.0000e0 | ΔE gpu 1.049619e2 cpu 1.049577e2 (rel +4.002e-5) nucCPU 1.049577e2 | GPU book Δ total nuc 4.237229e5 heat 3.8693e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.744876 He 0.255121 C 0.000003] cpu [H 0.744876 He 0.255121 C 0.000003]
+D34 sens n 41 eps 6e-8: ΔE 1.324436e2
+D34 sens n 41 eps -6e-8: ΔE 1.324431e2
+D34 sens n 41 eps 1e-7: ΔE 1.324438e2
+D34 sens n 41 eps 3e-7: ΔE 1.324447e2
+D34 n 41 heat Some((2, 2, 0.0064328755)) dt 6.4329e-3 E_in 1.607657e4 heatΔ 0.0000e0 | ΔE gpu 1.324404e2 cpu 1.324433e2 (rel -2.192e-5) nucCPU 1.324433e2 | GPU book Δ total nuc 5.329606e5 heat 4.0672e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.744369 He 0.255625 C 0.000006] cpu [H 0.744369 He 0.255625 C 0.000006]
+D34 sens n 42 eps 6e-8: ΔE 1.795624e2
+D34 sens n 42 eps -6e-8: ΔE 1.795616e2
+D34 sens n 42 eps 1e-7: ΔE 1.795626e2
+D34 sens n 42 eps 3e-7: ΔE 1.795639e2
+D34 n 42 heat Some((2, 2, 0.0064034807)) dt 6.4035e-3 E_in 1.620901e4 heatΔ 1.8190e-12 | ΔE gpu 1.795566e2 cpu 1.795620e2 (rel -2.970e-5) nucCPU 1.795620e2 | GPU book Δ total nuc 7.193559e5 heat 4.3093e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.743681 He 0.256306 C 0.000012] cpu [H 0.743681 He 0.256306 C 0.000012]
+D34 sens n 43 eps 6e-8: ΔE 2.750971e2
+D34 sens n 43 eps -6e-8: ΔE 2.750959e2
+D34 sens n 43 eps 1e-7: ΔE 2.750975e2
+D34 sens n 43 eps 3e-7: ΔE 2.750996e2
+D34 n 43 heat Some((2, 2, 0.0063642636)) dt 6.3643e-3 E_in 1.638857e4 heatΔ 0.0000e0 | ΔE gpu 2.750859e2 cpu 2.750965e2 (rel -3.836e-5) nucCPU 2.750965e2 | GPU book Δ total nuc 1.094908e6 heat 4.6178e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.742629 He 0.257339 C 0.000032] cpu [H 0.742629 He 0.257339 C 0.000032]
+D34 sens n 44 eps 6e-8: ΔE 2.584506e5
+D34 sens n 44 eps -6e-8: ΔE 2.584506e5
+D34 sens n 44 eps 1e-7: ΔE 2.584506e5
+D34 sens n 44 eps 3e-7: ΔE 2.584506e5
+D34 n 44 heat Some((2, 2, 0.00630555)) dt 6.3056e-3 E_in 1.666365e4 heatΔ 0.0000e0 | ΔE gpu 2.586080e5 cpu 2.584506e5 (rel +6.089e-4) nucCPU 2.584506e5 | GPU book Δ total nuc 9.941435e8 heat 5.0343e2 floors 0.0000e0 0.0000e0 | CPU subs 275 retried 103800 | X gpu [H 0.000000 Fe 1.000000] cpu [Fe 1.000000]
+D34 cumulative ΔE cell 2080: gpu 2.605325e5 cpu-lockstep 2.603752e5
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 194 filtered out; finished in 11.63s
+

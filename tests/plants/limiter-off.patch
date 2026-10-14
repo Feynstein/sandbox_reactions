@@ -10,3 +10,14 @@
      }
  
      /// Cell `i` of `st` as one side of its faces: its temperature (the floor state below Σ_vac), κ and 1/μ.
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -172,7 +172,7 @@
+     if ((params.flags & FLUX_LIMITER) == 0u) {
+         return 1.0 / 3.0;
+     }
+-    return (2.0 + r) / (6.0 + 3.0 * r + r * r);
++    return 1.0 / 3.0 + 0.0 * r;
+ }
+ 
+ // (K, F) of the face from `a_in` to `b_in`.

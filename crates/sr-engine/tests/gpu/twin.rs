@@ -66,11 +66,11 @@ fn widened(planes: &[f32]) -> Vec<f64> {
 
 fn twin_of((world, physics, planes): (WorldConfig, Physics, Vec<f32>), switches: Switches) -> (WorldConfig, Physics, Twin) {
     let (w, h) = (world.width as usize, world.height as usize);
-    let twin = Twin::new(&physics, &elements(), Edge::Leave, switches, w, h, widened(&planes)).unwrap();
+    let twin = Twin::new(&physics, &elements(), Edge::Leave, switches, None, w, h, widened(&planes)).unwrap();
     (world, physics, twin)
 }
 
-const ALL: Switches = Switches { gravity: true, hydro: true };
+const ALL: Switches = Switches { gravity: true, hydro: true, heat: false, reactions: false };
 
 #[test]
 fn cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time() {
@@ -131,7 +131,7 @@ fn the_drivers_pass_list_is_the_gpus() {
     let gpu = super::device();
     let (world, physics, planes) = sun(64);
     for (gravity, hydro) in [(true, true), (true, false), (false, true), (false, false)] {
-        let switches = Switches { gravity, hydro };
+        let switches = Switches { gravity, hydro, heat: false, reactions: false };
         let state = GpuState::new(&gpu.device, world).unwrap();
         state.upload(&gpu.queue, &planes).unwrap();
         let booking = Booking::new(&gpu.device, world).unwrap();
@@ -155,7 +155,7 @@ fn p8_in_the_driver_books_what_it_changes() {
     // Hydro and gravity off: the one step changes the state through P8 alone.
     let (world, physics, planes) = sun(64);
     let before = widened(&planes);
-    let mut twin = Twin::new(&physics, &elements(), Edge::Leave, Switches { gravity: false, hydro: false }, 64, 64, before.clone()).unwrap();
+    let mut twin = Twin::new(&physics, &elements(), Edge::Leave, Switches { gravity: false, hydro: false, heat: false, reactions: false }, None, 64, 64, before.clone()).unwrap();
     twin.step();
     let n = world.cells();
     // Each cell's change, then summed: the planes' own sums (~3 × 10³) would drown a change of 10⁻⁶ in rounding.

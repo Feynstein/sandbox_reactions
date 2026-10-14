@@ -1,0 +1,10 @@
+verify: refused - nothing run
+=== NO-GO: unknown scope(s): cpu-gpu - `list` shows them (plan_lint, tools_selftest, toolchain, build, registry, eos, rates, burn_cell, burn_order, neutrino, fft_twin, riemann, sod, edges, collapse, twin, cpu_gpu, heat_gauss, heat_rkl2, heat_limiter, radiation_force, grav_force, grav_selfforce, fft, time_control, strings, adapter, state, booking, floors, dt, box, latch, timing, scene, dump, boot, d... ===
+cpu_gpu   2/1/0       12.57 s  NO-GO
+logs: milestones/m0/logs/M0-T48.<scope>.log · record: loop_times.jsonl · tree 4eb47e04d92c+be904da15d1d
+anchor: 72 path×scope entries moved by this run
+anchor: 108 paths checked · 145 skipped (3 classes) · 73 never checked · 1 stale · 0 unclassified · 0 owed · 182 covered of 327 visible
+FAILED:
+  cpu_gpu: 1 failed · log milestones/m0/logs/M0-T48.cpu_gpu.log
+verify: 2 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.57 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 24.99->25.89
+=== NO-GO: cpu_gpu: 1 failed · log milestones/m0/logs/M0-T48.cpu_gpu.log ===

@@ -1,0 +1,45 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 3.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+the twin's field runs away in pass 47 at Δt 0.0063056, from T 142.91
+GPU runaway, pass 47: T 142.9 → twin 18813.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.583247e5 twin 2.583247e5 (rel 5.60e-8); sub-steps GPU 180 twin 180, retried 19 / 19
+  pass 47 group H: GPU 1.9370066e5 twin 1.9370065e5 (rel 1.60e-8)
+  pass 47 group He: GPU 3.6000180e4 twin 3.6000179e4 (rel 5.63e-9)
+  pass 47 group C: GPU 4.2004475e-1 twin 4.2003932e-1 (rel 1.29e-5)
+  pass 47 group Ne: GPU 9.2557214e-2 twin 9.2556032e-2 (rel 1.28e-5)
+  pass 47 group O: GPU 2.0714285e4 twin 2.0714286e4 (rel 2.69e-8)
+  pass 47 group Si: GPU 7.9090908e3 twin 7.9090909e3 (rel 1.12e-8)
+  pass 47 group N: GPU 0.0000000e0 twin 0.0000000e0 (rel 0.00e0)
+GPU runaway, T 2,520: T 2520.0 → twin 27283.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603751e5 twin 2.603751e5 (rel 1.84e-8); sub-steps GPU 151 twin 151, retried 0 / 0
+  T 2,520 group H: GPU 1.9575000e5 twin 1.9575000e5 (rel 3.00e-14)
+  T 2,520 group He: GPU 3.6001711e4 twin 3.6001712e4 (rel 3.86e-8)
+  T 2,520 group C: GPU 8.7336957e-7 twin 8.7337190e-7 (rel 2.67e-6)
+  T 2,520 group Ne: GPU 1.9244774e-7 twin 1.9244826e-7 (rel 2.71e-6)
+  T 2,520 group O: GPU 2.0714285e4 twin 2.0714286e4 (rel 2.69e-8)
+  T 2,520 group Si: GPU 7.9090908e3 twin 7.9090909e3 (rel 1.12e-8)
+  T 2,520 group N: GPU 0.0000000e0 twin 0.0000000e0 (rel 0.00e0)
+GPU runaway, edge: T 47000.0 → twin 47000.0, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 0.000000e0 twin 6.402843e-9 (rel 1.00e0); sub-steps GPU 1 twin 12, retried 13 / 0
+  edge group H: GPU 0.0000000e0 twin 0.0000000e0 (rel 0.00e0)
+  edge group He: GPU -1.6479381e-8 twin 3.5726504e-9 (rel 5.61e0)
+  edge group C: GPU -7.4006508e-25 twin -3.9973148e-22 (rel 9.98e-1)
+  edge group Ne: GPU 0.0000000e0 twin -8.8081182e-23 (rel 1.00e0)
+  edge group O: GPU 0.0000000e0 twin 2.0554605e-9 (rel 1.00e0)
+  edge group Si: GPU 0.0000000e0 twin 7.8481192e-10 (rel 1.00e0)
+  edge group N: GPU 0.0000000e0 twin 0.0000000e0 (rel 0.00e0)
+
+thread 'burn::cell::gpu_the_runaway_books_as_the_twin' (3164480) panicked at crates/sr-engine/tests/gpu/burn.rs:716:13:
+edge: ΔE 0e0 on the GPU, 6.402842700481415e-9 in the twin
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test burn::cell::gpu_the_runaway_books_as_the_twin ... FAILED
+
+failures:
+
+failures:
+    burn::cell::gpu_the_runaway_books_as_the_twin
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 195 filtered out; finished in 0.46s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

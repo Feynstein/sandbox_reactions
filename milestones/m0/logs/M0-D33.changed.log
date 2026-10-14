@@ -1,0 +1,79 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/src/dump.rs (+3)
+why sod: stale: crates/sr-engine/src/dump.rs (+3)
+why edges: stale: crates/sr-engine/src/dump.rs (+3)
+why collapse: stale: crates/sr-engine/src/dump.rs (+3)
+why twin: stale: crates/sr-engine/src/dump.rs (+3)
+why cpu_gpu: stale: crates/sr-engine/src/dump.rs (+3)
+why heat_gauss: stale: crates/sr-engine/src/dump.rs (+3)
+why heat_rkl2: stale: crates/sr-engine/src/dump.rs (+3)
+why heat_limiter: stale: crates/sr-engine/src/dump.rs (+3)
+why radiation_force: stale: crates/sr-engine/src/dump.rs (+3)
+why grav_force: stale: crates/sr-engine/src/dump.rs (+3)
+why grav_selfforce: stale: crates/sr-engine/src/dump.rs (+3)
+why fft: stale: crates/sr-engine/src/dump.rs (+3)
+why strings: stale: milestones/m0/m0_contrat.md
+why adapter: stale: crates/sr-engine/src/dump.rs (+3)
+why state: stale: crates/sr-engine/src/dump.rs (+3)
+why booking: stale: crates/sr-engine/src/dump.rs (+3)
+why floors: stale: crates/sr-engine/src/dump.rs (+3)
+why dt: stale: crates/sr-engine/src/dump.rs (+3)
+why box: stale: crates/sr-engine/src/dump.rs (+3)
+why latch: stale: crates/sr-engine/src/dump.rs (+3)
+why timing: stale: crates/sr-engine/src/dump.rs (+3)
+why scene: stale: crates/sr-engine/src/dump.rs (+3)
+why dump: never: tests/plants/dump-flux-zero.patch
+why boot: stale: crates/sr-engine/src/dump.rs (+3)
+why desktop: stale: crates/sr-engine/src/dump.rs (+3)
+why web: stale: crates/sr-engine/src/dump.rs (+3)
+why capture: stale: crates/sr-engine/src/dump.rs (+3)
+why watch_only: stale: crates/sr-engine/src/step/heat.rs (+1)
+plan_lint        522/0/0      0.12 s  GO · step 1/30, 29 left
+build            2/0/0        4.84 s  GO · step 2/30, 28 left
+sod              15/0/0      12.24 s  GO · step 3/30, 27 left
+edges            7/0/0       17.15 s  GO · step 4/30, 26 left
+collapse         6/0/0        5.42 s  GO · step 5/30, 25 left
+twin             6/0/0        5.77 s  GO · step 6/30, 24 left
+cpu_gpu          2/0/0        6.98 s  GO · step 7/30, 23 left
+heat_gauss       10/0/0       5.98 s  GO · step 8/30, 22 left
+heat_rkl2        8/0/0        5.18 s  GO · step 9/30, 21 left
+heat_limiter     6/0/0        1.92 s  GO · step 10/30, 20 left
+radiation_force  3/0/0        1.57 s  GO · step 11/30, 19 left
+grav_force       13/0/0       7.53 s  GO · step 12/30, 18 left
+grav_selfforce   5/0/0        2.52 s  GO · step 13/30, 17 left
+fft              8/0/0        7.94 s  GO · step 14/30, 16 left
+strings          3/0/0        0.51 s  GO · step 15/30, 15 left
+adapter          10/0/0       5.07 s  GO · step 16/30, 14 left
+state            6/0/0        4.43 s  GO · step 17/30, 13 left
+booking          4/0/0        4.28 s  GO · step 18/30, 12 left
+floors           7/0/0        7.98 s  GO · step 19/30, 11 left
+dt               6/0/0        5.37 s  GO · step 20/30, 10 left
+box              8/0/0        7.53 s  GO · step 21/30, 9 left
+latch            5/0/0        4.82 s  GO · step 22/30, 8 left
+timing           5/0/0        7.23 s  GO · step 23/30, 7 left
+scene            8/0/0        3.67 s  GO · step 24/30, 6 left
+dump             8/0/0        6.29 s  GO · step 25/30, 5 left
+boot             1/0/0        3.04 s  GO · step 26/30, 4 left
+desktop          2/0/0        7.82 s  GO · step 27/30, 3 left
+web              3/0/0       26.81 s  GO · step 28/30, 2 left
+capture          2/0/0        1.66 s  GO · step 29/30, 1 left
+watch_only       1/0/0        0.07 s  GO · step 30/30, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 16 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+dump · red-arm proven by M0-D33 2026-10-14T08:16:25-04:00 (fingerprint 5ee23edd3e73) - not re-run
+FLAG oracle: tests/plants/dump-flux-zero.patch changed since M0-D33's start - a test, case or check M0-D33's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D33's start - a test, case or check M0-D33's Deliver: does not name
+logs: milestones/m0/logs/M0-D33.<scope>.log · record: loop_times.jsonl · tree 4eb47e04d92c+dca7bc074e56
+anchor: 109 path×scope entries moved by this run
+anchor: 169 paths checked · 139 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 169 covered of 308 visible
+skipped   131  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 692 passed, 0 failed, 0 skipped · 30/30 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 8 not impacted · 28.79 s + loop 0.06 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 9.45->19.12 · base: M0-D33's start 2026-10-14T08:12:27-04:00
+=== GO ===

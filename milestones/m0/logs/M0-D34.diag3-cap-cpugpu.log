@@ -1,0 +1,26 @@
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 3 tests
+test cpu_gpu::the_burning_field_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 0.98408 / twin 1.01303 (-2.858 %); relative L1 Σ 0.000e0 (band 1e-3), E 2.832e-2 (band 1e-3); largest |ΔX| 2.178e-12 in x_Fe (band 1e-4)
+
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (2437874) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:137:5:
+ref_burn.json: relative L1 in E 2.831519075879624e-2 > 1e-3
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 2.69746 / twin 2.69747 (-0.000 %); relative L1 Σ 4.369e-5 (band 1e-3), E 5.979e-5 (band 1e-3); largest |ΔX| 3.850e-6 in x_H (band 1e-4)
+ok
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 19.52918 / twin 19.52918 (-0.000 %); relative L1 Σ 1.695e-7 (band 1e-3), E 2.337e-7 (band 1e-3); largest |ΔX| 7.451e-7 in x_He (band 1e-4)
+ok
+
+failures:
+
+failures:
+    cpu_gpu::the_burning_field_gpu_against_the_twin
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 192 filtered out; finished in 10.58s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

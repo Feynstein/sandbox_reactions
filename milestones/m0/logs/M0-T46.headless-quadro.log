@@ -1,0 +1,6 @@
+    Finished `release` profile [optimized] target(s) in 0.10s
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-WARN heat stages 3800
+SR-HEADLESS DONE steps=200 sim_time=3.584303 until=none
+exit 0
+{"per_pass_ms": {"P0 edits": 0.014630080000000005, "P1 dt": 0.006813280000000001, "P2 gravity": 0.11457184, "P4 hydro": 0.5781118399999996, "P5 heat": 0.22653088000000007, "P6 reactions": 0.15762975999999992, "P8 floors": 0.032540000000000006, "P9 reductions": 0.026039840000000036}, "source": "gpu-timestamp", "step_ms_mean": 1.2808352000000003}

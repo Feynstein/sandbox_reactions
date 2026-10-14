@@ -1,0 +1,8 @@
+{"version": 1,
+ "world": {"width": 64, "height": 64, "edge": "bounce"},
+ "slowdown": false,
+ "switches": {"gravity": false, "hydro": false, "heat": true, "reactions": true, "neutrinos": false, "sinks": false},
+ "test": {"pin_temperature": false, "constant_diffusivity": null, "flux_limiter": true},
+ "objects": [
+   {"kind": "rect", "x0": 0, "y0": 0, "w": 64, "h": 64, "sigma": 30.0, "t": 100.0, "composition": {"H": 0.75, "He": 0.25}, "v": [0, 0]}
+ ]}

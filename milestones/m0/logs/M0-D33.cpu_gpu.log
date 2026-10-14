@@ -1,0 +1,21 @@
+== 2026-10-14T08:16:55-04:00 cpu_gpu · task M0-D33 · box laserax-ai :: bash tests/gpu.sh cpu_gpu physics
+-- cpu_gpu · exit=0 · 6.98 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 3.03s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 2 tests
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 2.69746 / twin 2.69747 (-0.000 %); relative L1 Σ 4.369e-5 (band 1e-3), E 5.979e-5 (band 1e-3); largest |ΔX| 3.850e-6 in x_H (band 1e-4)
+ok
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 19.52918 / twin 19.52918 (-0.000 %); relative L1 Σ 1.695e-7 (band 1e-3), E 2.337e-7 (band 1e-3); largest |ΔX| 7.451e-7 in x_He (band 1e-4)
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 154 filtered out; finished in 3.80s
+
+

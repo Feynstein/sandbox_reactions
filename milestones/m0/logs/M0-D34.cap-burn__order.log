@@ -1,0 +1,35 @@
+    Finished `release` profile [optimized] target(s) in 0.15s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 4 tests
+test burn::order::gpu_ignition_order ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU ε* crossings at T: H 145.5, He 163, C 242.5, Ne 333, O 343, Si 501.00000000000006
+ok
+test burn::order::gpu_records_book_into_their_group ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU H_burn: group H, ΔX 0.154 over 4.734e1, booked 2.685580e3, q·Δm 2.685580e3
+GPU He_burn: group He, ΔX 0.141 over 3.462e-2, booked 2.276677e2, q·Δm 2.276677e2
+GPU C_alpha: group He, ΔX 0.116 over 3.633e-1, booked 1.841006e2, q·Δm 1.841007e2
+GPU C_burn: group C, ΔX 0.154 over 4.217e-1, booked 1.711815e2, q·Δm 1.711815e2
+GPU Ne_burn: group Ne, ΔX 0.174 over 4.215e-1, booked 5.300126e1, q·Δm 5.300126e1
+GPU O_burn: group O, ΔX 0.154 over 4.217e-1, booked 2.132970e2, q·Δm 2.132970e2
+GPU Mg_burn: group O, ΔX 0.174 over 4.215e-1, booked 2.397673e2, q·Δm 2.397673e2
+GPU Si_burn: group Si, ΔX 0.174 over 4.215e-1, booked 9.154842e1, q·Δm 9.154841e1
+GPU S_burn: group Si, ΔX 0.174 over 4.215e-1, booked 9.154789e1, q·Δm 9.154788e1
+GPU N_Fe: group N, ΔX 0.157 over 2.699e2, booked -9.354025e5, q·Δm -9.354025e5
+ok
+test burn::order::ignition_order ... ε* crossings at T: H 145.5, He 163, C 242.5, Ne 333, O 343, Si 501.00000000000006
+ok
+test burn::order::records_book_into_their_group ... H_burn: group H, booked 7.351803e-2, q·Δm 7.351803e-2
+He_burn: group He, booked 9.307699e0, q·Δm 9.307699e0
+C_alpha: group He, booked 6.561438e-1, q·Δm 6.561438e-1
+C_burn: group C, booked 5.256598e-1, q·Δm 5.256598e-1
+Ne_burn: group Ne, booked 1.448557e-1, q·Δm 1.448557e-1
+O_burn: group O, booked 6.549889e-1, q·Δm 6.549889e-1
+Mg_burn: group O, booked 6.552997e-1, q·Δm 6.552997e-1
+Si_burn: group Si, booked 2.502053e-1, q·Δm 2.502053e-1
+S_burn: group Si, booked 2.502053e-1, q·Δm 2.502053e-1
+N_Fe: group N, booked -4.409965e0, q·Δm -4.409965e0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 191 filtered out; finished in 1.55s
+

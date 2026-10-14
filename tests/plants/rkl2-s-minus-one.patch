@@ -8,3 +8,14 @@
  
          let y0: Vec<f64> = sides.iter().map(|s| s.t).collect();
          let (mut m0, mut out0) = (vec![0.0; n], vec![0.0; n]);
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -428,7 +428,7 @@
+     }
+     let need = stages_for(4.0 * dt * max(bitcast<f32>(atomicLoad(&rec.raw)), rate));
+     let capped = stages_for(4.0 * dt * rate);
+-    let s = min(capped, MAX_STAGES);
++    let s = min(select(capped, capped - 1u, capped > 2u), MAX_STAGES);
+     rec.need = need;
+     rec.worst = max(rec.worst, need);
+     rec.s = s;

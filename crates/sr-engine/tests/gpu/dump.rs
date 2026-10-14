@@ -1,5 +1,5 @@
-//! M0-T26 — state dumps (contract §2.12.3 with §0.5 [M0-T26]'s `resume`, §3.1's `load_dump` and `dump_state`, §3.3's
-//! `--dump-every` and `--load-dump`, §1.3.4).
+//! M0-T26 — state dumps (contract §2.12.3 with §0.5 [M0-T26]'s `resume` and [M0-D33]'s F, §3.1's `load_dump` and
+//! `dump_state`, §3.3's `--dump-every` and `--load-dump`, §1.3.4).
 //!
 //! The oracles: the format is read back by hand from the bytes (§2.12.3's offsets, §2.2's channel order — Σ, mom_x and
 //! mom_y identified by the values the start gave them), never through the reader under test; a resumed run is graded
@@ -8,14 +8,16 @@
 //! restore that loses the latch's arming time (or the step index) fires where the straight run does not. Every number is
 //! exact (bits and integers) but the sim time's own (M0-D21): one value per step count — the same dump bytes whatever
 //! the frames, bare steps included — within 10⁻⁹ relative of the f64 sum of each step's f32 Δt in step order, each Δt
-//! read from a run of one-step frames or one-step bare runs.
+//! read from a run of one-step frames or one-step bare runs. A run with P5 (preset:sun) carries F after the channels
+//! (M0-D33): its headless resume is graded byte for byte, so a resume whose first step pushes with F = 0 fails it.
 
 use super::device;
 use sr_engine::dump::{dump_state, load_dump, Dump, Resume};
 use sr_engine::gpu::Gpu;
-use sr_engine::scene::EdgeMode;
+use sr_engine::scene::{EdgeMode, TestSettings};
 use sr_engine::state::{Booking, SideFields, State, WorldConfig, N_CHANNELS};
 use sr_engine::step::boxfit::{BoxMode, BoxReport};
+use sr_engine::step::heat::HeatSetup;
 use sr_engine::step::dt::DtReport;
 use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::{EosGpu, Passes, Step};
@@ -82,7 +84,7 @@ impl Run {
         Run { state, step }
     }
 
-    /// The step headless builds for a scene with every switch on (P2, and P4 since M0-T34) on `edge`.
+    /// The step headless builds for a scene with every switch on (P2, P4 since M0-T34, P5 since M0-T42) on `edge`.
     fn as_headless(gpu: &Gpu, c: &Constants, (world, planes): (WorldConfig, Vec<f32>), edge: EdgeMode) -> Run {
         let state = State::new(&gpu.device, world).unwrap();
         state.upload(&gpu.queue, &planes).unwrap();
@@ -90,7 +92,8 @@ impl Run {
         let eos = EosGpu::new(&gpu.device, &c.physics, &c.elements);
         let side = SideFields::new(&gpu.device, world).unwrap();
         let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(edge) };
-        let step = Step::with_passes(&gpu.device, &state, &booking, &eos, &c.physics, &passes).unwrap();
+        let heat = HeatSetup { side: &side, test: TestSettings::default() };
+        let step = Step::with_heat(&gpu.device, &state, &booking, &eos, &c.physics, &passes, Some(&heat)).unwrap();
         Run { state, step }
     }
 
@@ -122,7 +125,7 @@ fn small_dump() -> Dump {
         box_record: [8, 16, 24, 32, 64, 64, 17, 3],
         box_args: [3, 4, 1, 3, 1, 1],
     };
-    Dump { world, step: 17, sim_time: 7.123456789012345, sinks: Vec::new(), resume, planes }
+    Dump { world, step: 17, sim_time: 7.123456789012345, sinks: Vec::new(), resume, planes, flux: None }
 }
 
 /// The header's bytes and the planes' offset, read by hand.
@@ -175,6 +178,7 @@ fn write_then_read_gives_a_bit_identical_state_and_the_bytes_follow_2_12_3() {
     assert_eq!(header["channels"], serde_json::json!(SPEC_CHANNELS));
     assert_eq!(header["sinks"], serde_json::json!([]));
     assert_eq!(header["resume"]["latch_since"].as_f64(), Some(0.0), "the latch set on the dump's last step");
+    assert_eq!((header["resume"]["flux"].as_bool(), dump.flux.is_none()), (Some(false), true), "no P5, no F");
     let (w, cells) = (128usize, 128 * 64);
     assert_eq!(bytes.len(), base + 4 * N_CHANNELS * cells, "nothing past the last plane");
     let at = |ch: usize, x: usize, y: usize| {
@@ -275,7 +279,7 @@ fn two_hundred_steps_through_a_dump_equal_two_hundred_straight_steps_state_and_r
 
 #[test]
 fn headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte() {
-    let _gpu = device();
+    let gpu = device();
     let root = temp("headless");
     let (a, b, c) = (root.join("straight"), root.join("first"), root.join("resumed"));
     let base = ["--scene", "preset:sun", "--world", "256x256"];
@@ -303,6 +307,30 @@ fn headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_fo
     }
     let end = Dump::from_bytes(&read(&c, "s_200.bin")).unwrap();
     assert_eq!((end.step, end.world), (200, WorldConfig::new(256, 256).unwrap()));
+
+    // P5 runs (preset:sun, heat on): F's 2 planes follow the 14 channels, flagged, and the light leaving the star is
+    // not 0 — else the byte-for-byte resume above could not tell a lost F (M0-D33).
+    let bytes = read(&b, "s_100.bin");
+    let (header, base) = split(&bytes);
+    let cells = 256 * 256;
+    assert_eq!(header["resume"]["flux"].as_bool(), Some(true), "P5 runs: the flag");
+    assert_eq!(bytes.len(), base + 4 * (N_CHANNELS + 2) * cells, "F's 2 planes after the 14 channels");
+    let f: Vec<f32> = bytes[base + 4 * N_CHANNELS * cells..].as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect();
+    let (fx, fy) = f.split_at(cells);
+    let lit = |p: &[f32]| p.iter().filter(|v| **v != 0.0).count();
+    println!("s_100.bin: F_x non-zero in {} cells, F_y in {}", lit(fx), lit(fy));
+    assert!(lit(fx) > 0 && lit(fy) > 0, "F is 0 at step 100: the resume cannot see it lost");
+    // A step that cannot take the dump's F, or would start P5 without it, refuses it.
+    let c = constants();
+    let dump = Dump::from_bytes(&bytes).unwrap();
+    let no_p5 = Run::new(&gpu, &c, (dump.world, dump.planes.clone()));
+    let err = load_dump(&gpu.queue, &no_p5.state, &no_p5.step, &dump).unwrap_err();
+    println!("F into a step without P5: {err}");
+    assert!(err.contains("holds F"), "{err}");
+    let with_p5 = Run::as_headless(&gpu, &c, (dump.world, dump.planes.clone()), EdgeMode::Leave);
+    let err = load_dump(&gpu.queue, &with_p5.state, &with_p5.step, &Dump { flux: None, ..dump.clone() }).unwrap_err();
+    println!("no F into a step with P5: {err}");
+    assert!(err.contains("holds no F"), "{err}");
 
     // A --world other than the dump's is refused before any step, as are the flags' misuses.
     let other = root.join("other");
@@ -398,6 +426,8 @@ fn a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump() {
         .collect();
     let twin_end = dump_state(&gpu.device, &gpu.queue, &twin.state, &twin.step);
     assert!(twin_end.planes.iter().zip(&end.planes).all(|(a, b)| a.to_bits() == b.to_bits()), "the twin is headless's run");
+    let bits = |d: &Dump| d.flux.as_ref().map(|f| f.iter().map(|v| v.to_bits()).collect::<Vec<u32>>());
+    assert!(bits(&end).is_some() && bits(&twin_end) == bits(&end), "the final dump's F is side.flux after step 100");
 
     let t: f64 = token.trim().parse().expect("summary.json's sim_time is a number");
     let off = off_the_sum(end.sim_time, &dts);
@@ -456,7 +486,7 @@ fn a_wrong_magic_or_a_header_off_the_contract_is_refused() {
         Dump::from_bytes(&out)
     };
     assert_eq!(with(&|_| {}).unwrap(), small_dump(), "the header rewritten unchanged reads the same");
-    let cases: [(&str, &dyn Fn(&mut serde_json::Value)); 7] = [
+    let cases: [(&str, &dyn Fn(&mut serde_json::Value)); 10] = [
         ("header.extra: unknown key", &|h| h["extra"] = 1.into()),
         ("header.resume.box_args: missing", &|h| {
             h["resume"].as_object_mut().unwrap().remove("box_args");
@@ -468,12 +498,37 @@ fn a_wrong_magic_or_a_header_off_the_contract_is_refused() {
         ("header.channels", &|h| h["channels"][1] = "mom_y".into()),
         ("header: world 60", &|h| h["width"] = 60.into()),
         ("header.resume.box", &|h| h["resume"]["box"] = serde_json::json!([1, 2, 3])),
+        ("header.resume.flux: missing", &|h| {
+            h["resume"].as_object_mut().unwrap().remove("flux");
+        }),
+        ("header.resume.flux: not true or false", &|h| h["resume"]["flux"] = 1.into()),
+        ("header.resume.flux: true, but no F planes", &|h| h["resume"]["flux"] = true.into()),
     ];
     for (want, edit) in cases {
         let err = with(edit).unwrap_err();
         println!("{want}: {err}");
         assert!(err.starts_with(want), "expected {want:?}, got {err:?}");
     }
+    // F (M0-D33): carried and read back; its flag cleared, or a plane cut, refused.
+    let cells = 64 * 64;
+    let with_f = Dump { flux: Some((0..2 * cells).map(|i| i as f32 * -0.25).collect()), ..small_dump() };
+    let f_bytes = with_f.to_bytes();
+    let (f_header, f_base) = split(&f_bytes);
+    assert_eq!((f_header["resume"]["flux"].as_bool(), f_bytes.len()), (Some(true), f_base + 4 * (N_CHANNELS + 2) * cells));
+    assert_eq!(Dump::from_bytes(&f_bytes).unwrap(), with_f, "a dump with F reads back the same");
+    let mut cleared = f_header.clone();
+    cleared["resume"]["flux"] = false.into();
+    let text = cleared.to_string();
+    let mut out = b"SRDUMP01".to_vec();
+    out.extend((text.len() as u32).to_le_bytes());
+    out.extend(text.as_bytes());
+    out.extend(&f_bytes[f_base..]);
+    let err = Dump::from_bytes(&out).unwrap_err();
+    println!("flag cleared: {err}");
+    assert!(err.starts_with("header.resume.flux: false, but F's 2 planes"), "{err}");
+    let err = Dump::from_bytes(&f_bytes[..f_bytes.len() - 4 * cells]).unwrap_err();
+    println!("F_y cut: {err}");
+    assert!(err.contains("truncated"), "{err}");
 
     let root = temp("magic");
     let file = root.join("png.bin");

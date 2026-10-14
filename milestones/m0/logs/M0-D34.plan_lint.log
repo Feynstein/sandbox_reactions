@@ -1,0 +1,21 @@
+== 2026-10-14T10:15:04-04:00 plan_lint · task M0-D34 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=1 · 0.17 s
+lint: checks=525 failed=1 warnings=5 · blocks=210 · flow_rows=210 · verify_fences=0 · history=0 · flow=per-task · header=504/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+FAIL: M0-D36: typed **PLAN**, but its id makes it BUILD (PLAYBOOK §0; BUILDER, JUDGE and HUMAN are read as aliases; a pre-v12 id keeps another kind only by a `Kind kept: M0-D36 = <TYPE> (...)` line in Repo facts)
+WARN: M0-TC4: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D30: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D31: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D32: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D34 1 · M0-D35 1 · M0-D36 5
+=== NO-GO: 1 violation(s) ===
+
+== 2026-10-14T10:16:59-04:00 plan_lint · task M0-D34 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=525 failed=0 warnings=5 · blocks=210 · flow_rows=210 · verify_fences=0 · history=0 · flow=per-task · header=504/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC4: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D30: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D31: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D32: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D34 1
+=== GO ===
+

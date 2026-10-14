@@ -1,0 +1,22 @@
+== 2026-10-14T08:46:03-04:00 rates · task M0-T45 · box laserax-ai :: bash tests/cpu.sh sr-physics rates
+-- rates · exit=0 · 2.17 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 2.11s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-8ac46c43ceb83ace)
+
+running 7 tests
+test rates::tests::above_the_span_is_the_direct_form ... ok
+test rates::tests::f_is_zero_below_the_threshold ... ok
+test rates::tests::table_geometry ... ok
+test rates::tests::gate_on_both_sides_of_sigma_g ... ok
+test rates::tests::two_terms_are_not_exact ... ok
+test rates::tests::omega_of_each_record_by_hand ... ok
+test rates::tests::table_against_direct_form_at_nodes_and_midpoints ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 78 filtered out; finished in 0.00s
+
+

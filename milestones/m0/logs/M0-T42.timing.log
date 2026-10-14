@@ -1,0 +1,90 @@
+== 2026-10-14T07:25:38-04:00 timing · task M0-T42 · box laserax-ai :: bash tests/gpu.sh timing physics
+-- timing · exit=0 · 14.76 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+a 1000-step frame: StepCost { source: GpuTimestamp, steps: 291, step_ms: 0.16421597250859107, pass_ms: [Some(0.005069085910652921), Some(0.0023018006872852228), Some(0.017122749140893498), None, Some(0.031107408934707818), Some(0.0632872027491409), None, None, Some(0.00845349828178694), Some(0.011237498281786952)], frame_ms: Some(0.006208) }
+a 1000-step frame: passes sum 0.138579 ms, step 0.164216 ms, off by 15.6 %
+the next frame starts a fresh query set: StepCost { source: GpuTimestamp, steps: 10, step_ms: 0.1938176, pass_ms: [Some(0.005097600000000001), Some(0.0024352), Some(0.016896), None, Some(0.0715584), Some(0.0544608), None, None, Some(0.0086464), Some(0.011014399999999999)], frame_ms: Some(0.006496) }
+the next frame starts a fresh query set: passes sum 0.170109 ms, step 0.193818 ms, off by 12.2 %
+ok
+test timing::bare_steps_time_every_pass_at_its_boundaries ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+recorded passes: ["P0 edits", "P1 dt", "P2 gravity", "P4 hydro", "P5 heat", "P8 floors", "P9 reductions"]
+steps 0–63: StepCost { source: GpuTimestamp, steps: 64, step_ms: 0.180064, pass_ms: [Some(0.004618999999999999), Some(0.002318), Some(0.017437999999999995), None, Some(0.03140550000000002), Some(0.08319349999999995), None, None, Some(0.0084875), Some(0.0072445)], frame_ms: None }
+steps 0–63: passes sum 0.154706 ms, step 0.180064 ms, off by 14.1 %
+steps 64–78: StepCost { source: GpuTimestamp, steps: 15, step_ms: 0.15896746666666667, pass_ms: [Some(0.004529066666666667), Some(0.0022336), Some(0.01817173333333333), None, Some(0.03109333333333333), Some(0.06287786666666667), None, None, Some(0.008445866666666666), Some(0.0071744)], frame_ms: None }
+steps 64–78: passes sum 0.134526 ms, step 0.158967 ms, off by 15.4 %
+ok
+test timing::frames_report_their_cost_per_step_and_per_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+frame 0: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.18843200000000004, pass_ms: [Some(0.004883200000000001), Some(0.0023824000000000002), Some(0.017570400000000003), None, Some(0.031376799999999996), Some(0.0873976), None, None, Some(0.008547999999999998), Some(0.0112824)], frame_ms: Some(0.006336) }
+frame 0: passes sum 0.163441 ms, step 0.188432 ms, off by 13.3 %
+frame 1: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.16819200000000004, pass_ms: [Some(0.0077047999999999995), Some(0.002548), Some(0.017744000000000003), None, Some(0.0338872), Some(0.0603624), None, None, Some(0.012096800000000001), Some(0.011347999999999995)], frame_ms: Some(0.006784) }
+frame 1: passes sum 0.145691 ms, step 0.168192 ms, off by 13.4 %
+frame 2: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.16129599999999997, pass_ms: [Some(0.004517600000000001), Some(0.0025904000000000005), Some(0.0182632), None, Some(0.031404800000000004), Some(0.0625936), None, None, Some(0.008637599999999999), Some(0.011127999999999999)], frame_ms: Some(0.004512) }
+frame 2: passes sum 0.139135 ms, step 0.161296 ms, off by 13.7 %
+ok
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-WARN heat stages 3869
+SR-HEADLESS DONE steps=300 sim_time=4.532417 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-WARN heat stages 3869
+SR-HEADLESS DONE steps=300 sim_time=4.532417 until=none
+summary.json timing: {"per_pass_ms":{"P0 edits":0.004700266666666662,"P1 dt":0.002319573333333334,"P2 gravity":0.020230399999999985,"P4 hydro":0.031135146666666606,"P5 heat":0.06488864000000008,"P8 floors":0.008460373333333333,"P9 reductions":0.007328106666666665},"source":"gpu-timestamp","step_ms_mean":0.16385781333333335}
+headless: passes sum 0.139063 ms, step 0.163858 ms, off by 15.1 %
+ok
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+bare, wall: StepCost { source: Wall, steps: 20, step_ms: 0.26254189999999655, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+frame, wall: StepCost { source: Wall, steps: 20, step_ms: 0.6700733500000069, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 148 filtered out; finished in 14.62s
+
+
+== 2026-10-14T07:26:25-04:00 timing · task M0-T42 · box laserax-ai :: bash tests/gpu.sh timing physics
+-- timing · exit=0 · 6.73 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+a 1000-step frame: StepCost { source: GpuTimestamp, steps: 291, step_ms: 0.17753501030927832, pass_ms: [Some(0.00482199312714777), Some(0.0024576219931271475), Some(0.01943829553264607), None, Some(0.03866138831615117), Some(0.06436959450171821), None, None, Some(0.009004096219931285), Some(0.013424494845360836)], frame_ms: Some(0.0060160000000000005) }
+a 1000-step frame: passes sum 0.152177 ms, step 0.177535 ms, off by 14.3 %
+the next frame starts a fresh query set: StepCost { source: GpuTimestamp, steps: 10, step_ms: 0.194448, pass_ms: [Some(0.004828799999999999), Some(0.0024703999999999998), Some(0.017103999999999998), None, Some(0.07163520000000001), Some(0.05529920000000001), None, None, Some(0.008611200000000001), Some(0.010927999999999998)], frame_ms: Some(0.0072) }
+the next frame starts a fresh query set: passes sum 0.170877 ms, step 0.194448 ms, off by 12.1 %
+ok
+test timing::bare_steps_time_every_pass_at_its_boundaries ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+recorded passes: ["P0 edits", "P1 dt", "P2 gravity", "P4 hydro", "P5 heat", "P8 floors", "P9 reductions"]
+steps 0–63: StepCost { source: GpuTimestamp, steps: 64, step_ms: 0.4376384999999999, pass_ms: [Some(0.0046775), Some(0.0022695000000000002), Some(0.017776500000000004), None, Some(0.07053399999999999), Some(0.24670650000000002), None, None, Some(0.06335049999999999), Some(0.007311500000000001)], frame_ms: None }
+steps 0–63: passes sum 0.412626 ms, step 0.437638 ms, off by 5.7 %
+steps 64–78: StepCost { source: GpuTimestamp, steps: 15, step_ms: 0.321568, pass_ms: [Some(0.0047744), Some(0.0021589333333333336), Some(0.017664), None, Some(0.10965973333333334), Some(0.14669226666666668), None, None, Some(0.0085312), Some(0.007374933333333333)], frame_ms: None }
+steps 64–78: passes sum 0.296855 ms, step 0.321568 ms, off by 7.7 %
+ok
+test timing::frames_report_their_cost_per_step_and_per_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+frame 0: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.18615279999999995, pass_ms: [Some(0.0049808000000000005), Some(0.0022728), Some(0.0175424), None, Some(0.03147439999999999), Some(0.0856064), None, None, Some(0.008474400000000003), Some(0.0110272)], frame_ms: Some(0.006432) }
+frame 0: passes sum 0.161378 ms, step 0.186153 ms, off by 13.3 %
+frame 1: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.15951600000000002, pass_ms: [Some(0.004527999999999999), Some(0.002557600000000001), Some(0.018014400000000003), None, Some(0.03133279999999999), Some(0.06038079999999998), None, None, Some(0.008743200000000001), Some(0.0113016)], frame_ms: Some(0.006208) }
+frame 1: passes sum 0.136858 ms, step 0.159516 ms, off by 14.2 %
+frame 2: StepCost { source: GpuTimestamp, steps: 40, step_ms: 0.1543344, pass_ms: [Some(0.004584), Some(0.0025704000000000005), Some(0.0184328), None, Some(0.031352000000000005), Some(0.055236799999999975), None, None, Some(0.0086968), Some(0.011112000000000002)], frame_ms: Some(0.004384) }
+frame 2: passes sum 0.131985 ms, step 0.154334 ms, off by 14.5 %
+ok
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-WARN heat stages 3869
+SR-HEADLESS DONE steps=300 sim_time=4.532417 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-WARN heat stages 3869
+SR-HEADLESS DONE steps=300 sim_time=4.532417 until=none
+summary.json timing: {"per_pass_ms":{"P0 edits":0.004719680000000001,"P1 dt":0.00232256,"P2 gravity":0.01975114666666663,"P4 hydro":0.031166613333333298,"P5 heat":0.06842464000000002,"P8 floors":0.008514879999999996,"P9 reductions":0.006903893333333337},"source":"gpu-timestamp","step_ms_mean":0.16738154666666671}
+headless: passes sum 0.141803 ms, step 0.167382 ms, off by 15.3 %
+ok
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+bare, wall: StepCost { source: Wall, steps: 20, step_ms: 0.2765619499999957, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+frame, wall: StepCost { source: Wall, steps: 20, step_ms: 0.5623546999999689, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 148 filtered out; finished in 6.54s
+
+

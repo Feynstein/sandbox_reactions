@@ -1,0 +1,55 @@
+== 2026-10-14T07:52:58-04:00 desktop[window] · task M0-T43 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-14T07:52:59-04:00 desktop[launcher] · task M0-T43 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 12.16 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.5s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T43.launch.game-xvfb.log)
+game-xvfb: pid 1350813 stopped; its X server :99, pid 1350811 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T43.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 0 s, booted and checked in 12 s
+=== GO ===
+
+-- desktop[launcher] · exit=1 · 11.30 s
+web: port 47812 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL web: port 47812 held by a process we did not start - not reusing
+=== NO-GO: 1 failure(s) ===
+=== NO-GO: the decoy web server did not start ===
+
+== 2026-10-14T07:53:58-04:00 desktop[window] · task M0-T43 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-14T07:53:58-04:00 desktop[launcher] · task M0-T43 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 0.67 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T43.launch.game-xvfb.log)
+game-xvfb: pid 1355754 stopped; its X server :99, pid 1355753 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T43.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 0 s, booted and checked in 0 s
+=== GO ===
+
+-- desktop[launcher] · exit=1 · 0.77 s
+web: port 47812 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL web: port 47812 held by a process we did not start - not reusing
+=== NO-GO: 1 failure(s) ===
+=== NO-GO: the decoy web server did not start ===
+
+== 2026-10-14T07:54:45-04:00 desktop[window] · task M0-T43 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-14T07:54:45-04:00 desktop[launcher] · task M0-T43 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 0.92 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 1362291 stopped; its X server :99, pid 1362290 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 0 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[window] · exit=0 · 1.32 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T43.launch.game-xvfb.log)
+game-xvfb: pid 1362412 stopped; its X server :99, pid 1362411 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T43.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 0 s, booted and checked in 1 s
+=== GO ===
+

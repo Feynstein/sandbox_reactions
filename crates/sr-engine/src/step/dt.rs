@@ -98,7 +98,8 @@ impl Dt {
         let record = init_buffer(
             device,
             "dt.record",
-            wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST,
+            // UNIFORM: P4's update reads Δt_n as a uniform, its storage slots all taken (hydro.wgsl, M0-T43).
+            wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST,
             &[0; RECORD_WORDS],
         );
 

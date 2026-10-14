@@ -66,6 +66,15 @@ mod cpu_gpu;
 /// M0-T41 — heat and light on the CPU twin (contract §2.4, §5.1's G-HEAT1, G-HEAT2, G-FLD); M0-T42 — P5 on the GPU, the same oracles.
 mod heat;
 
+/// M0-T43 — the radiation force in the flow, on the twin and on P4 (contract §2.4.4, §1.3.2).
+mod radforce;
+
+/// M0-T44b — burning on the CPU twin (contract §1.6, §2.5.2, §5.1's G-BURN and G-ORDER).
+mod burn;
+
+/// M0-T45 — neutrino cooling and the iron gate on the CPU twin (contract §2.5.3, §1.6.2's N_Fe, §1.8.5's latch trigger).
+mod neutrino;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;

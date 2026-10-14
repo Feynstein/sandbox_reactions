@@ -1,0 +1,154 @@
+M0-TJ4 — scratch models of P5's implicit step (NOT PROVEN — synthetic). linux-pc (laserax-ai), 2026-10-14, CPU only (pure
+Python 3.12, no numpy; the box at load ~120 from other work — counts and errors, never timings). Scripts in the session
+scratchpad (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/a68ab7ed-140e-4d0e-be10-7f98dbe65e5c/scratchpad/:
+be_iters.py, be_acc.py, fld_be.py, fld_picard.py, hot_cool.py, enewton.py, unl32.py, heat2_be.py, gstiff.py), never in the
+repo; tasks/M0-TJ4.md § The models describes them well enough to rebuild. Raw output follows, in run order.
+
+== 1. be_iters.py — linear BE (T-form), 64x64, PCG iterations to (r,z) <= (1e-6)^2 sum D T0^2, f64 ==
+typical (uniform, s=4): max dt*sumK/C = 4.5 (RKL2 s = 4)
+   Jacobi-PCG                            17 iterations   energy defect dt*sum(r)/sum(C T0) = -5.70e-07
+   Jacobi-DPCG tiles 16                  16 iterations   energy defect dt*sum(r)/sum(C T0) = -5.85e-18
+   Jacobi-DPCG tiles 8                   15 iterations   energy defect dt*sum(r)/sum(C T0) = +4.77e-18
+   blockSGS2-PCG tiles 16                 8 iterations   energy defect dt*sum(r)/sum(C T0) = +2.90e-08
+   blockSGS8-PCG tiles 16                 8 iterations   energy defect dt*sum(r)/sum(C T0) = -9.43e-08
+   blockSGS2+coarse16 (additive)         10 iterations   energy defect dt*sum(r)/sum(C T0) = +5.36e-08
+   blockSGS2-DPCG tiles 16                9 iterations   energy defect dt*sum(r)/sum(C T0) = -4.49e-18
+   blockSGS8+coarse16 (additive)         10 iterations   energy defect dt*sum(r)/sum(C T0) = +7.82e-09
+   blockSGS8-DPCG tiles 16                8 iterations   energy defect dt*sum(r)/sum(C T0) = -1.39e-17
+hot field (uniform, s~35): max dt*sumK/C = 306 (RKL2 s = 35)
+   Jacobi-PCG                            83 iterations   energy defect dt*sum(r)/sum(C T0) = +1.49e-08
+   Jacobi-DPCG tiles 16                  54 iterations   energy defect dt*sum(r)/sum(C T0) = +1.27e-15
+   Jacobi-DPCG tiles 8                   30 iterations   energy defect dt*sum(r)/sum(C T0) = +1.16e-15
+   blockSGS2-PCG tiles 16                38 iterations   energy defect dt*sum(r)/sum(C T0) = +2.10e-07
+   blockSGS8-PCG tiles 16                27 iterations   energy defect dt*sum(r)/sum(C T0) = -1.84e-08
+   blockSGS2+coarse16 (additive)         32 iterations   energy defect dt*sum(r)/sum(C T0) = +1.04e-06
+   blockSGS2-DPCG tiles 16               27 iterations   energy defect dt*sum(r)/sum(C T0) = +1.05e-15
+   blockSGS8+coarse16 (additive)         26 iterations   energy defect dt*sum(r)/sum(C T0) = +3.05e-06
+   blockSGS8-DPCG tiles 16               21 iterations   energy defect dt*sum(r)/sum(C T0) = +1.52e-15
+hot field (uniform, s~549): max dt*sumK/C = 7.54e+04 (RKL2 s = 549)
+   Jacobi-PCG                           109 iterations   energy defect dt*sum(r)/sum(C T0) = -1.40e-04
+   Jacobi-DPCG tiles 16                  52 iterations   energy defect dt*sum(r)/sum(C T0) = +1.38e-13
+   Jacobi-DPCG tiles 8                   31 iterations   energy defect dt*sum(r)/sum(C T0) = -3.53e-13
+   blockSGS2-PCG tiles 16                50 iterations   energy defect dt*sum(r)/sum(C T0) = -3.25e-05
+   blockSGS8-PCG tiles 16                36 iterations   energy defect dt*sum(r)/sum(C T0) = -4.97e-05
+   blockSGS2+coarse16 (additive)         37 iterations   energy defect dt*sum(r)/sum(C T0) = -4.14e-04
+   blockSGS2-DPCG tiles 16               25 iterations   energy defect dt*sum(r)/sum(C T0) = +1.44e-13
+   blockSGS8+coarse16 (additive)         30 iterations   energy defect dt*sum(r)/sum(C T0) = -1.03e-04
+   blockSGS8-DPCG tiles 16               19 iterations   energy defect dt*sum(r)/sum(C T0) = +1.13e-13
+star R=20 + thin rim w=4 (C 1e-6): max dt*sumK/C = 3.7e+06 (RKL2 s = 3847)
+   Jacobi-PCG                            25 iterations   energy defect dt*sum(r)/sum(C T0) = -4.67e-07
+   Jacobi-DPCG tiles 16                  24 iterations   energy defect dt*sum(r)/sum(C T0) = +7.89e-17
+   Jacobi-DPCG tiles 8                   22 iterations   energy defect dt*sum(r)/sum(C T0) = -2.83e-16
+   blockSGS2-PCG tiles 16                13 iterations   energy defect dt*sum(r)/sum(C T0) = +6.41e-08
+   blockSGS8-PCG tiles 16                11 iterations   energy defect dt*sum(r)/sum(C T0) = +4.49e-08
+   blockSGS2+coarse16 (additive)         15 iterations   energy defect dt*sum(r)/sum(C T0) = +1.23e-07
+   blockSGS2-DPCG tiles 16               12 iterations   energy defect dt*sum(r)/sum(C T0) = +8.43e-17
+   blockSGS8+coarse16 (additive)         13 iterations   energy defect dt*sum(r)/sum(C T0) = +9.21e-08
+   blockSGS8-DPCG tiles 16               10 iterations   energy defect dt*sum(r)/sum(C T0) = +7.02e-17
+star R=20 + thin rim w=12 (C 1e-6): max dt*sumK/C = 3.7e+06 (RKL2 s = 3847)
+   Jacobi-PCG                            48 iterations   energy defect dt*sum(r)/sum(C T0) = +1.76e-07
+   Jacobi-DPCG tiles 16                  41 iterations   energy defect dt*sum(r)/sum(C T0) = +4.13e-16
+   Jacobi-DPCG tiles 8                   32 iterations   energy defect dt*sum(r)/sum(C T0) = -1.26e-15
+   blockSGS2-PCG tiles 16                24 iterations   energy defect dt*sum(r)/sum(C T0) = -1.63e-07
+   blockSGS8-PCG tiles 16                18 iterations   energy defect dt*sum(r)/sum(C T0) = -5.24e-09
+   blockSGS2+coarse16 (additive)         25 iterations   energy defect dt*sum(r)/sum(C T0) = -3.27e-08
+   blockSGS2-DPCG tiles 16               21 iterations   energy defect dt*sum(r)/sum(C T0) = +3.53e-16
+   blockSGS8+coarse16 (additive)         20 iterations   energy defect dt*sum(r)/sum(C T0) = -1.16e-07
+   blockSGS8-DPCG tiles 16               17 iterations   energy defect dt*sum(r)/sum(C T0) = +2.10e-16
+
+== 2. be_acc.py — the stop rule's reference (D: sum D T0^2; C: sum (C/dt) T0^2), f64 and emulated f32 (vectors rounded,
+fixed-order f32 tree dots), error against a 1e-13 solve: C-weighted L1 of T over the heat, and of the heat moved ==
+typical s=4: sum C|dT| / sum C T = 4.82e-02
+   Jacobi-DPCG tiles 8 ref C eps 1e-05 f32: 13 it  C-L1(T) 6.1e-06 (of heat moved 1.3e-04)  max|dT|/T 2.4e-05
+   blockSGS2-DPCG tiles 16 ref C eps 1e-05 f32: 8 it  C-L1(T) 1.3e-06 (of heat moved 2.8e-05)  max|dT|/T 1.3e-05
+hot s~549 n=64: sum C|dT| / sum C T = 1.14e+02 (the field radiates ~99.7 % of its heat in the one step)
+   Jacobi-DPCG tiles 8 ref D eps 1e-06 f32: 31 it  C-L1(T) 6.6e-04 (of heat moved 5.8e-06)  dE_th +4.2e-05
+   Jacobi-DPCG tiles 8 ref C eps 1e-05 f32: 42 it  C-L1(T) 2.4e-05  dE_th -4.0e-06
+   Jacobi-DPCG tiles 8 ref C eps 1e-06 f32: 3000 it (stalled, then diverged: C-L1 3.7e+05)
+   blockSGS2-DPCG tiles 16 ref D eps 1e-06 f32: 25 it  C-L1(T) 2.0e-03  dE_th +1.8e-03
+   blockSGS2-DPCG tiles 16 ref C eps 1e-05 f32: 37 it  C-L1(T) 6.9e-05  dE_th +6.7e-05
+   blockSGS2-DPCG tiles 16 ref C eps 1e-06 f32: 3000 it (stalled, then diverged: C-L1 8.1e+05)
+rim w=12: sum C|dT| / sum C T = 1.41e-02
+   Jacobi-DPCG tiles 8 ref C eps 1e-05 f32: 29 it  C-L1(T) 2.9e-06
+   blockSGS2-DPCG tiles 16 ref C eps 1e-05 f32: 18 it  C-L1(T) 3.0e-06
+   (full table in the session; the lines kept here are the ones the spec reads: the reference must be the heat's own scale,
+   and 1e-6 is past what f32 can hold on the stiffest field — 1e-5 it is)
+
+== 3. fld_be.py — heat_spot.json (64x64, Sigma 1e-4, H, spot 8x8 at T 2 in T 0.05, leave), BE with K lagged (T-form),
+tight solve; the SOLVED flux against c_sb a_r T^4 of the face's hotter side ==
+dt 0.002: 20 BE passes: worst |F_solved| / (c a T_hot^4): start temps 847.9243 at (0, ('x', 27, 31)), max(start, end) 525.0977; Tmax 1.9401; tight-CG iterations up to 16
+dt 0.05: 20 BE passes: worst |F_solved| / (c a T_hot^4): start temps 18407.0382 at (0, ('x', 27, 31)), max(start, end) 404.0551; Tmax 1.3104; tight-CG iterations up to 38
+
+== 4. fld_picard.py — the same with K re-evaluated at the latest iterate (Picard, T-form) ==
+dt 0.002: 20 passes, Picard iterations per pass [4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; worst |K(T')dT'| / c a T'_hot^4 = 0.8095; total CG 874
+dt 0.05: 10 passes, Picard iterations per pass [8, 5, 5, 5, 5, 5, 5, 5, 6, 6]; worst |K(T')dT'| / c a T'_hot^4 = 0.9795; total CG 1372
+
+== 5. hot_cool.py — a ref_burn-like burnt field (32x32, Sigma 30, kappa 1, 1/mu 0.5, T 18,800, leave), dt 6.3e-3 ==
+n 32, T 18800.0: lagged (80 CG): heat left 0.0049, T centre 167.9, T corner 11.1
+   Picard (40 passes, changes 1.7e+03, 1.0e+00, 1.7e+03, 1.0e+00, ...): no convergence — a 2-cycle
+   reference, 16 lagged sub-steps: heat left 0.0723, T centre 2134.4, T corner 169.1
+   reference, 64 lagged sub-steps: heat left 0.1519, T centre 3678.1, T corner 997.3
+   reference, 256 lagged sub-steps: heat left 0.1618, T centre 3915.3, T corner 1071.6
+
+== 6. enewton.py — u = a_r T^4, Newton on C T(u), Picard on lambda, T within x2 per pass, tight f64 ==
+hot n 32: E-form Newton/Picard: 5 passes (changes 5.0e-01, 5.0e-01, 5.0e-01, 2.0e-02, 4.5e-06), 337 CG; heat left 0.2986, T centre 7058.5, corner 2303.0
+   nonlinear BE in 4 sub-steps: heat left 0.1984, T centre 4798.8
+   nonlinear BE in 16 sub-steps: heat left 0.1723, T centre 4171.0
+heat_spot dt 0.002: passes per step [4, 4, 4, 4, 3, 3, ...]; worst |F(T')| / c a T'_hot^4 0.8095; Tmax 1.9402
+
+== 7. unl32.py — the candidate in emulated f32: inner Jacobi-PCG to (r, D^-1 r) <= eps^2 sum c_i u_i^2, outer end
+sum C|dT| <= 1e-6 sum C T0 and max |dT|/T <= 1e-3; "full" iterates lambda too, "lambda lagged" freezes D ==
+typical (Sigma 1, T 100-150, dt K/C ~ 1.1): exact 7 passes; heat moved 1.49e-02 of the heat
+   full, f32 eps 1e-05: 4 passes, inner [18, 13, 4, 0] = 35; C-L1(T) vs exact 9.1e-07 (of heat moved 6.1e-05); max |dT|/T 1.2e-05
+   lambda-lagged exact (5 passes) vs full: C-L1 2.9e-05 (of heat moved 1.9e-03), max |dT|/T 2.7e-04
+   lambda lagged, f32 eps 1e-05: 4 passes, inner [18, 13, 4, 0] = 35; vs its exact C-L1 1.1e-06; max |dT|/T 1.3e-05
+heat_spot first pass (dt 0.002): exact 14 passes; heat moved 1.23e-03 of the heat
+   full, f32 eps 1e-05: 4 passes, inner [10, 5, 1, 0] = 16
+   lambda-lagged exact (5 passes) vs full: C-L1 3.5e-06 (of heat moved 2.8e-03), max |dT|/T 2.0e-04
+   lambda lagged, f32 eps 1e-05: 2 passes, inner [10, 0] = 10; vs its exact C-L1 1.3e-04; max |dT|/T 2.3e-02
+star + thin rim w=4 (Sigma 2e-6, T 5), dt 0.01: exact 37 passes; heat moved 8.56e-04 of the heat
+   full, f32 eps 1e-05: 19 passes, inner [6, 4, 24, 38, 38, 47, 44, 9, 7, 6, 6, 6, 2, 2, 2, 2, 2, 1, 0] = 246; max |dT|/T 6.1e-01
+   full, f32 eps 1e-06: 4 passes, inner [43, 42, 1, 0] = 86; max |dT|/T 3.1e-02
+   lambda-lagged exact (4 passes) vs full: C-L1 8.7e-06 (of heat moved 1.0e-02), max |dT|/T 3.6e-02
+   lambda lagged, f32 eps 1e-05: 3 passes, inner [6, 3, 0] = 9; vs its exact C-L1 2.5e-05; max |dT|/T 6.9e-01
+   lambda lagged, f32 eps 1e-05 + per-cell 1e-05: 3 passes, inner [42, 41, 0] = 83; max |dT|/T 4.7e-04
+star + thin rim w=12 (Sigma 2e-6, T 5), dt 0.01: exact 80 passes; heat moved 8.61e-04 of the heat
+   full, f32 eps 1e-05: 32 passes, inner ... = 987; max |dT|/T 7.1e-02
+   full, f32 eps 1e-06: 4 passes, inner [72, 72, 3, 1] = 148; max |dT|/T 3.0e-02
+   lambda-lagged exact (5 passes) vs full: C-L1 8.8e-06 (of heat moved 1.0e-02), max |dT|/T 3.5e-02
+   lambda lagged, f32 eps 1e-05: 3 passes, inner [6, 3, 0] = 9; vs its exact C-L1 2.0e-05; max |dT|/T 6.7e-01
+   lambda lagged, f32 eps 1e-05 + per-cell 1e-05: 3 passes, inner [69, 12, 0] = 81; max |dT|/T 3.4e-01
+hot field 32x32 (Sigma 30, T 18,800, dt 6.3e-3): exact 7 passes; heat moved 2.35e+00 of the heat
+   full, f32 eps 1e-05: 5 passes, inner [53, 51, 48, 36, 1] = 189; C-L1(T) vs exact 3.8e-07
+   lambda-lagged exact (6 passes) vs full: C-L1 1.1e-05 (of heat moved 4.5e-06), max |dT|/T 2.9e-05
+   lambda lagged, f32 eps 1e-05: 5 passes, inner [53, 51, 48, 36, 1] = 189; vs its exact C-L1 3.7e-07; max |dT|/T 1.9e-06
+
+== 8. heat2_be.py — G-HEAT2's pulse (sigma0 4, peak 1, chi 0.5, reflecting edges, 64x64 window), t = 24 ==
+explicit dt 0.25 (the test's) vs fine: max 1.4135e-03
+BE  3 passes (dt  8.00, dt/dt_p  16.0): max |T - T_ref| 4.5494e-02 of the peak; peak 0.44691 (ref 0.40142); sigma_x^2 39.9927 (40)
+BE  6 passes (dt  4.00, dt/dt_p   8.0): max |T - T_ref| 2.3560e-02 of the peak; peak 0.42498 (ref 0.40142); sigma_x^2 39.9982 (40)
+BE 12 passes (dt  2.00, dt/dt_p   4.0): max |T - T_ref| 1.1996e-02 of the peak; peak 0.41341 (ref 0.40142); sigma_x^2 39.9994 (40)
+BE 24 passes (dt  1.00, dt/dt_p   2.0): max |T - T_ref| 6.0827e-03 of the peak; peak 0.40750 (ref 0.40142); sigma_x^2 39.9997 (40)
+BE 48 passes (dt  0.50, dt/dt_p   1.0): max |T - T_ref| 3.0971e-03 of the peak; peak 0.40451 (ref 0.40142); sigma_x^2 39.9998 (40)
+   ratio e(3)/e(6) = 1.931
+   ratio e(6)/e(12) = 1.964
+   ratio e(12)/e(24) = 1.972
+   ratio e(24)/e(48) = 1.964
+
+== 9. gstiff.py — G-STIFF's planned scenes, lambda lagged (the spec's scheme), f64 exact and f32 at 1e-5 ==
+heat_hot 32x32 He Sigma 30 T 18800 dt 0.02: RKL2 would need s = 580 (dt*max sumK/C = 8.4e+04); one pass: 7 Newton passes, heat left 0.2521; 64 passes of dt/64: heat left 0.1291 (275 Newton passes); ratio 1.952; T range [1930, 5969] vs start max 1.88e+04; f32 eps 1e-5: 5 passes, 198 rounds [54, 52, 49, 40, 3], C-L1 vs exact 3.1e-07, max rel where Sigma>=1e-4 5.3e-06
+heat_rim 64x64 H disk Sigma 1 T 100 a=20, ring w 12 Sigma 2e-6 T 5, dt 0.01: RKL2 would need s = 11547 (dt*max sumK/C = 3.33e+07); one pass: 7 Newton passes, heat left 0.9928; 64 passes of dt/64: heat left 0.9912 (259 Newton passes); ratio 1.002; T range [64.94, 100] vs start max 100; f32 eps 1e-5: 5 passes, 320 rounds [80, 79, 80, 80, 1], C-L1 vs exact 3.4e-07, max rel where Sigma>=1e-4 2.5e-06
+heat_hot 64x64 He Sigma 30 T 18800 dt 0.02: RKL2 would need s = 580 (dt*max sumK/C = 8.4e+04); one pass: 7 Newton passes, heat left 0.3422; 64 passes of dt/64: heat left 0.2030 (271 Newton passes); ratio 1.686; T range [1974, 8108] vs start max 1.88e+04; f32 eps 1e-5: 5 passes, 361 rounds [105, 100, 92, 63, 1], C-L1 vs exact 7.5e-07, max rel where Sigma>=1e-4 5.5e-05
+
+== 10. unl32.py again — the inner stop rule's measure, lambda lagged, emulated f32 (found re-reading the spec: the u-space
+measure alone weighs a cell by ~C T^5 and missed heat_spot's cold front) ==
+typical: u-energy 1e-5: 35 rounds, 7.2e-05 of heat moved · T-heat 1e-5: 25, 5.0e-04 · T-heat 1e-6: 35, 7.2e-05
+heat_spot: u-energy 1e-5: 10 rounds, 1.1e-01 of heat moved (C-L1 1.3e-04, max |dT|/T 2.3e-02) · T-heat 1e-5: 16, 1.8e-03 · T-heat 1e-6: 23, 7.4e-05
+rim w=4: u-energy 1e-5: 9 rounds, 2.9e-02 of heat moved (max |dT|/T 6.9e-01, thin cells) · T-heat 1e-5: 5, 3.2e-02 · T-heat 1e-6: 9, 2.9e-02
+rim w=12: u-energy 1e-5: 9, 2.4e-02 · T-heat 1e-5: 5, 2.7e-02 · T-heat 1e-6: 9, 2.4e-02
+hot 32x32: u-energy 1e-5: 189 rounds, C-L1 3.7e-07 · T-heat 1e-5: 124, C-L1 1.5e-04 · T-heat 1e-6: 159, C-L1 5.6e-06
+Both measures at 1e-5 (the spec's rule):
+typical: both norms 1e-5: 4 passes, rounds [18, 13, 4, 0] = 35; C-L1 1.1e-06 (of heat moved 7.2e-05)
+heat_spot: both norms 1e-5: 3 passes, rounds [11, 5, 0] = 16; C-L1 2.2e-06 (of heat moved 1.8e-03)
+heat_hot 64x64 He Sigma 30 T 18800 dt 0.02: RKL2 would need s = 580 … f32 eps 1e-5 both norms: 5 passes, 361 rounds [105, 100, 92, 63, 1], C-L1 vs exact 7.5e-07, max rel where Sigma>=1e-4 5.5e-05
+heat_rim 64x64 H disk Sigma 1 T 100 a=20, ring w 12 Sigma 2e-6 T 5, dt 0.01: RKL2 would need s = 11547 … f32 eps 1e-5 both norms: 5 passes, 320 rounds [80, 79, 80, 80, 1], C-L1 vs exact 3.4e-07, max rel where Sigma>=1e-4 2.5e-06

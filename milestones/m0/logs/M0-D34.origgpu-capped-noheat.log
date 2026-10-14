@@ -1,0 +1,12 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.73s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+test d34ref::any_scene ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/bba378d2-6a8e-42a5-a19f-c6815e74f830/scratchpad/ref_burn_noheat.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 0.52591 / twin 0.52591 (+0.000 %); relative L1 Σ 0.000e0 (band 1e-3), E 6.295e-8 (band 1e-3); largest |ΔX| 1.292e-13 in x_Fe (band 1e-4)
+SR-REF /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/bba378d2-6a8e-42a5-a19f-c6815e74f830/scratchpad/ref_burn_noheat.json: H mass in the twin fell 100.000 % (at least 1 % required)
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 195 filtered out; finished in 5.61s
+

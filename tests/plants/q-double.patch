@@ -1,0 +1,23 @@
+--- a/crates/sr-physics/src/reference/react.rs
++++ b/crates/sr-physics/src/reference/react.rs
+@@ -139,7 +139,7 @@
+                 Rec {
+                     omega: Omega::new(r),
+                     group: GROUPS.iter().position(|g| *g == r.group).expect("a record's group is one of GROUPS (registry load)"),
+-                    q: r.q(physics),
++                    q: if r.id == "H_burn" { 2.0 * r.q(physics) } else { r.q(physics) }, // planted: H_burn's heat applied twice
+                     nu,
+                     inputs: r.inputs.iter().zip(&r.rate.orders).map(|(s, &n)| (s.species, n)).collect(),
+                 }
+--- a/crates/sr-engine/src/step/react.rs
++++ b/crates/sr-engine/src/step/react.rs
+@@ -77,7 +77,8 @@
+             (species[k], orders[k]) = (s.species as u32, f(n));
+         }
+         w.extend(species.into_iter().chain(orders));
+-        w.extend([f(rate.a_coef), f(rate.a), f(rec.q(physics)), f(rate.t_thr.unwrap_or(0.0))]);
++        let q = if rec.id == "H_burn" { 2.0 * rec.q(physics) } else { rec.q(physics) }; // planted: H_burn's heat applied twice
++        w.extend([f(rate.a_coef), f(rate.a), f(q), f(rate.t_thr.unwrap_or(0.0))]);
+         let (sigma_g, p) = rate.gate.as_ref().map_or((0.0, 0.0), |g| (g.sigma_g, g.p));
+         w.extend([f(sigma_g), f(p), 0, 0]);
+         for k in 0..MAX_TERMS {

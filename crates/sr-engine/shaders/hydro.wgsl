@@ -27,6 +27,12 @@
 // velocity. A ghost's g is its edge cell's. `hydro_edges` recomputes the same predictor, so it binds g too. The twin's
 // `Hydro::step_with` is the reference.
 //
+// The radiation force (§2.4.4; M0-T43), when the step runs P5 (`edges.radiation`): `hydro_update` adds Δt·f to a gas
+// cell's momentum, f = κΣF/c_sb from the cell as the step found it and F as P5 left it in `side.flux` at the end of the
+// last step — the previous step's flux, since P5 runs after P4 —, after the flux differences and gravity's source; E is
+// left as it is (the work comes out of the thermal energy). The predictor is not kicked and the boundary fluxes do not
+// see it, so `hydro_edges` binds no F. The twin's `Hydro::step_forced` is the reference.
+//
 // A cell below Σ_vac reads as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20) — the box's ghost
 // ring included, where an uploaded vacuum cell may hold Σ = 0; a cell and its four neighbours all below Σ_vac are left
 // as they are. Δt is the Δt record's first word (P1). No atomic, no cross-invocation order: the same state gives the
@@ -61,9 +67,13 @@ struct ActiveBox {
 // — two buffers, so the update keeps a storage slot for g within WebGPU's 8.
 @group(0) @binding(4) var<storage, read_write> next_lo: array<f32>;
 @group(0) @binding(5) var<storage, read_write> next_hi: array<f32>;
+// P5's flux F (state.rs `side.flux`): the x plane, then the y plane, cell-centred, row-major — read only when
+// `edges.radiation` is 1 (else a placeholder is bound). The update's eighth storage buffer.
+@group(0) @binding(6) var<storage, read> rad_flux: array<f32>;
 @group(0) @binding(7) var<uniform> abox: ActiveBox;
-// The Δt record (reduce.wgsl `DtState`): word 0 is Δt_n.
-@group(0) @binding(8) var<storage, read> dt_rec: array<f32>;
+// The Δt record (reduce.wgsl `DtState`), its first four words as a uniform — so the update keeps a storage slot for F
+// (M0-T43): word 0 is Δt_n.
+@group(0) @binding(8) var<uniform> dt_rec: vec4<f32>;
 // `hydro_commit`'s writable view of the state.
 @group(0) @binding(9) var<storage, read_write> out_hydro: array<f32>;
 @group(0) @binding(10) var<storage, read_write> out_a: array<f32>;
@@ -72,12 +82,17 @@ struct ActiveBox {
 // mass — of 2 (width + height) boundary-face slots each: x = 0 by y, x = width − 1 by y, y = 0 by x, y = height − 1 by x.
 @group(0) @binding(12) var<storage, read_write> escaped: array<f32>;
 
-// The edge mode: `leave` 1, bounce 0; `gravity` 1 when the step runs P2 (`grav` is then its g).
+// The edge mode: `leave` 1, bounce 0; `gravity` 1 when the step runs P2 (`grav` is then its g); `radiation` 1 when it
+// runs P5 (`rad_flux` is then its F); then the radiation force's constants (physics.json, §2.4.2).
 struct Edges {
     leave: u32,
     gravity: u32,
-    _b: u32,
+    radiation: u32,
     _c: u32,
+    kappa0: f32,
+    c_sb: f32,
+    kappa_dust: f32,
+    t_dust: f32,
 }
 @group(0) @binding(13) var<uniform> edges: Edges;
 // P2's g = −∇φ (step/grav.rs `field`): the x plane, then the y plane, row-major over the world — read only when
@@ -187,6 +202,28 @@ fn vacuum_at(x: i32, y: i32) -> bool {
         return true;
     }
     return hydro[u32(y) * dims.width + u32(x)] < eos.sigma_vac;
+}
+
+// The radiation force per area f = κΣF/c_sb on gas cell `cell` (§2.4.4), κ = κ₀(1 + X_H) plus κ_dust Z_met where
+// T < T_dust (§2.4.2, as heat.wgsl's `heat_cells`), from the state as the step found it.
+fn radiation_force(cell: u32) -> vec2<f32> {
+    let n = dims.cells;
+    let sigma = hydro[cell];
+    var kappa = edges.kappa0 * (1.0 + species_a[ID_H * n + cell]);
+    if (edges.kappa_dust != 0.0) {
+        var x: array<f32, 10>;
+        for (var i = 0u; i < PLANES_A; i++) {
+            x[i] = species_a[i * n + cell];
+            x[PLANES_A + i] = species_b[i * n + cell];
+        }
+        let comp = composition(x);
+        let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
+        let eps = max(eps_th_raw(sigma, mom, hydro[3u * n + cell], comp.y_e, x[ID_N]), eps_th_floor(comp.inv_mu));
+        if (temperature(eps, comp.inv_mu) < edges.t_dust) {
+            kappa += edges.kappa_dust * comp.z_met;
+        }
+    }
+    return kappa * sigma * vec2<f32>(rad_flux[cell], rad_flux[n + cell]) / edges.c_sb;
 }
 
 // g at (x, y), a ghost's its edge cell's; 0 when the step runs no P2.
@@ -620,7 +657,7 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     }
     workgroupBarrier();
 
-    let dt = dt_rec[0];
+    let dt = dt_rec.x;
     let half = 0.5 * dt;
     // The ring's predictors, invocations 0 … 31, each keeping the one face the tile needs: column −1's x+ (0 … 7),
     // column 8's x− (8 … 15), row −1's y+ (16 … 23), row 8's y− (24 … 31). The face is chosen before it is evolved, so
@@ -751,6 +788,12 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         u[2] += dt * pred.mid.x * g.y;
         u[3] += dt * (pred.mid.y * g.x + pred.mid.z * g.y);
     }
+    // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
+    if (edges.radiation != 0u && !empty_here) {
+        let f = radiation_force(cell);
+        u[1] += dt * f.x;
+        u[2] += dt * f.y;
+    }
     write_next(cell, u);
 }
 
@@ -792,7 +835,7 @@ fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
     if (left_empty(x, y)) {
         return;
     }
-    let dt = dt_rec[0];
+    let dt = dt_rec.x;
     let half = 0.5 * dt;
     var own = cell_faces(x, y, half).faces;
     let f = boundary(x, y, side, own[side], half);

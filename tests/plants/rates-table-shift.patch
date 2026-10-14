@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/rates.rs
++++ b/crates/sr-physics/src/rates.rs
+@@ -92,7 +92,7 @@
+         if pos >= (TABLE_POINTS - 1) as f64 {
+             return f_sum(&self.terms, t);
+         }
+-        let i = pos.floor() as usize;
++        let i = (pos.floor() as usize).saturating_sub(1); // planted: the table read one node off
+         let frac = pos - i as f64;
+         (self.ln_f[i] + frac * (self.ln_f[i + 1] - self.ln_f[i])).exp()
+     }

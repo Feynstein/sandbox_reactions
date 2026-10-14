@@ -8,23 +8,30 @@
 //! and `resume` (contract §0.5 [M0-T26]): the step's own records, which no cell holds and a resumed run needs to go on
 //! bit for bit (§1.3.4) — Δt_n and Δt_{n+1} (`dt`, `dt_next`), the latch's sim time since its last set (`latch_since`,
 //! its arming, §1.8.5), the active box's record (`box`: x0, y0, w, h, fft_w, fft_h, from_step, fits) and its indirect
-//! sizes (`box_args`, §1.3.3). f32 values are written as JSON numbers, which carry them exactly.
+//! sizes (`box_args`, §1.3.3), and whether F follows the channels (`flux`, §0.5 [M0-D33]). f32 values are written as
+//! JSON numbers, which carry them exactly.
+//!
+//! When the run runs P5, F's two f32 planes (`side.flux`: F_x, then F_y, row-major) follow the fourteen channels and
+//! `resume.flux` is true (contract §0.5 [M0-D33]): the next step's P4 pushes the gas with them (§2.4.4), and P5 took them
+//! from the temperatures after P4, not from the dumped cells, so no resume can rebuild them.
 //!
 //! [`Dump::from_bytes`] refuses, naming the cause: a wrong magic, a file cut anywhere, bytes past the last plane, a
 //! header that is not UTF-8 JSON, an unknown or missing key, another version, a world §2.8 refuses, a channel list other
-//! than §2.2's, more than 16 sinks.
+//! than §2.2's, more than 16 sinks, a `flux` flag the planes disagree with.
 
 use std::path::Path;
 
 use serde_json::{json, Map, Value};
 
-use crate::state::{State, WorldConfig, CHANNELS, N_CHANNELS};
+use crate::state::{read_buffers, SideFields, State, WorldConfig, CHANNELS, N_CHANNELS};
 use crate::step::Step;
 
 pub const MAGIC: &[u8; 8] = b"SRDUMP01";
 pub const VERSION: u64 = 1;
 /// §2.6: up to 16 sinks.
 pub const MAX_SINKS: usize = 16;
+/// F's planes after the channels when the run runs P5 (§0.5 [M0-D33]).
+const FLUX_PLANES: usize = SideFields::FLUX_PLANES;
 
 /// A sink as the header holds it (§2.6): position and velocity in cells and cells per t.u., mass in sandbox units.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -55,6 +62,8 @@ pub struct Dump {
     pub sinks: Vec<Sink>,
     pub resume: Resume,
     pub planes: Vec<f32>,
+    /// F's two planes (F_x, then F_y) when the run runs P5 (§0.5 [M0-D33]); the header's `resume.flux` says which.
+    pub flux: Option<Vec<f32>>,
 }
 
 impl Dump {
@@ -77,6 +86,7 @@ impl Dump {
                 "latch_since": f64::from(r.latch_since),
                 "box": r.box_record,
                 "box_args": r.box_args,
+                "flux": self.flux.is_some(),
             },
         })
     }
@@ -86,7 +96,9 @@ impl Dump {
         let header = self.header().to_string();
         let cells = self.world.cells();
         assert_eq!(self.planes.len(), N_CHANNELS * cells, "a dump holds 14 planes of its world");
-        let mut out = Vec::with_capacity(12 + header.len() + 4 * self.planes.len());
+        let flux = self.flux.as_deref().unwrap_or_default();
+        assert!(self.flux.is_none() || flux.len() == FLUX_PLANES * cells, "F is 2 planes of its world");
+        let mut out = Vec::with_capacity(12 + header.len() + 4 * (self.planes.len() + flux.len()));
         out.extend_from_slice(MAGIC);
         out.extend_from_slice(&(header.len() as u32).to_le_bytes());
         out.extend_from_slice(header.as_bytes());
@@ -94,6 +106,9 @@ impl Dump {
             for v in &self.planes[c * cells..(c + 1) * cells] {
                 out.extend_from_slice(&v.to_le_bytes());
             }
+        }
+        for v in flux {
+            out.extend_from_slice(&v.to_le_bytes());
         }
         out
     }
@@ -111,18 +126,28 @@ impl Dump {
         })?;
         let text = std::str::from_utf8(text).map_err(|e| format!("header: not UTF-8: {e}"))?;
         let header: Value = serde_json::from_str(text).map_err(|e| format!("header: not JSON: {e}"))?;
-        let mut dump = parse_header(&header)?;
+        let (mut dump, flux) = parse_header(&header)?;
         dump.sim_time = exact_number(text, "sim_time").unwrap_or(dump.sim_time);
 
+        // §2.2's 14 planes, then F's 2 when the flag says so: a body the other flag would fit is the flag's refusal.
         let body = &bytes[12 + len..];
-        let want = N_CHANNELS * dump.world.cells() * 4;
+        let plane = dump.world.cells() * 4;
+        let (channels, want) = (N_CHANNELS * plane, (N_CHANNELS + usize::from(flux) * FLUX_PLANES) * plane);
+        if flux && body.len() == channels {
+            return Err("header.resume.flux: true, but no F planes follow §2.2's 14".to_string());
+        }
+        if !flux && body.len() == channels + FLUX_PLANES * plane {
+            return Err("header.resume.flux: false, but F's 2 planes follow §2.2's 14".to_string());
+        }
         if body.len() < want {
             return Err(format!("truncated in the planes: {} of {want} bytes", body.len()));
         }
         if body.len() > want {
             return Err(format!("{} bytes past the last plane", body.len() - want));
         }
-        dump.planes = body.as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect();
+        let mut values: Vec<f32> = body.as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect();
+        dump.flux = flux.then(|| values.split_off(channels / 4));
+        dump.planes = values;
         Ok(dump)
     }
 
@@ -179,8 +204,8 @@ fn words<const N: usize>(m: &Map<String, Value>, at: &str, k: &str) -> Result<[u
     Ok(out)
 }
 
-/// The header's values; the planes are left empty for the caller.
-fn parse_header(v: &Value) -> Result<Dump, String> {
+/// The header's values and its `resume.flux` flag; the planes are left empty for the caller.
+fn parse_header(v: &Value) -> Result<(Dump, bool), String> {
     let at = "header";
     let keys = ["version", "width", "height", "step", "sim_time", "channels", "sinks", "resume"];
     let m = object(v, at, &keys)?;
@@ -209,7 +234,8 @@ fn parse_header(v: &Value) -> Result<Dump, String> {
         })
         .collect::<Result<Vec<Sink>, String>>()?;
     let at_r = "header.resume";
-    let r = object(&m["resume"], at_r, &["dt", "dt_next", "latch_since", "box", "box_args"])?;
+    let r = object(&m["resume"], at_r, &["dt", "dt_next", "latch_since", "box", "box_args", "flux"])?;
+    let flux = r["flux"].as_bool().ok_or_else(|| format!("{at_r}.flux: not true or false: {}", r["flux"]))?;
     let f32_of = |k: &str| number(r, at_r, k).map(|v| v as f32);
     let resume = Resume {
         dt: f32_of("dt")?,
@@ -218,26 +244,30 @@ fn parse_header(v: &Value) -> Result<Dump, String> {
         box_record: words(r, at_r, "box")?,
         box_args: words(r, at_r, "box_args")?,
     };
-    Ok(Dump {
+    let dump = Dump {
         world,
         step: whole(m, at, "step")?,
         sim_time: number(m, at, "sim_time")?,
         sinks,
         resume,
         planes: Vec::new(),
-    })
+        flux: None,
+    };
+    Ok((dump, flux))
 }
 
-/// §3.1 `dump_state()`: the state, the step index, the frames' sim time and the step's records, read back after every
-/// submitted step. Blocks on the device (tests and headless runs only, §6.3).
+/// §3.1 `dump_state()`: the state, the step index, the frames' sim time, the step's records and, when the step runs P5,
+/// F (§0.5 [M0-D33]), read back after every submitted step. Blocks on the device (tests and headless runs only, §6.3).
 pub fn dump_state(device: &wgpu::Device, queue: &wgpu::Queue, state: &State, step: &Step) -> Dump {
     let (index, sim_time, resume) = step.resume_records(device, queue);
-    Dump { world: state.world(), step: index, sim_time, sinks: Vec::new(), resume, planes: state.readback(device, queue) }
+    let flux = step.side_flux().map(|f| read_buffers(device, queue, "side.flux.readback", std::iter::once(f)));
+    Dump { world: state.world(), step: index, sim_time, sinks: Vec::new(), resume, planes: state.readback(device, queue), flux }
 }
 
 /// §3.1 `load_dump(dump)`: writes the dump's cells into `state` and its records into `step`, whose next step is then
-/// the dump's `step`. Call it before `step` records anything. Refused: another world than the state's, a step index past
-/// the GPU's u32 count, any sink (P3 holds none until its block).
+/// the dump's `step`; its F, when it holds one, goes into the step's `side.flux` (§0.5 [M0-D33]). Call it before `step`
+/// records anything. Refused: another world than the state's, a step index past the GPU's u32 count, any sink (P3 holds
+/// none until its block), F without P5 to read it, P5 without F (its first step would push with F = 0).
 pub fn load_dump(queue: &wgpu::Queue, state: &State, step: &Step, dump: &Dump) -> Result<(), String> {
     if dump.world != state.world() {
         let (d, s) = (dump.world, state.world());
@@ -249,7 +279,18 @@ pub fn load_dump(queue: &wgpu::Queue, state: &State, step: &Step, dump: &Dump) -
     if !dump.sinks.is_empty() {
         return Err(format!("dump holds {} sink(s): no sink state before P3's block", dump.sinks.len()));
     }
+    let flux = match (&dump.flux, step.side_flux()) {
+        (Some(f), Some(side)) if f.len() == FLUX_PLANES * dump.world.cells() => Some((f, side)),
+        (Some(f), Some(_)) => return Err(format!("dump F: {} values, 2 planes of its world hold {}", f.len(), FLUX_PLANES * dump.world.cells())),
+        (Some(_), None) => return Err("dump holds F, and this step runs no P5 to keep it (heat off)".to_string()),
+        (None, Some(_)) => return Err("dump holds no F, and this step runs P5: its first step would push with F = 0".to_string()),
+        (None, None) => None,
+    };
     state.upload(queue, &dump.planes).map_err(|e| e.to_string())?;
+    if let Some((f, side)) = flux {
+        let bytes: Vec<u8> = f.iter().flat_map(|v| v.to_le_bytes()).collect();
+        queue.write_buffer(side, 0, &bytes);
+    }
     step.restore(queue, dump.step, dump.sim_time, &dump.resume);
     Ok(())
 }

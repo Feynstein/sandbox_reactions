@@ -8,15 +8,20 @@
 //! cell, past WebGPU's 128 MiB binding at §2.8's largest worlds; M0-D30); `hydro_edges`, one invocation per boundary face (a fixed size),
 //! books what a leave edge lets out into the booking's `escaped` buffer from the same face flux the update applied;
 //! `hydro_commit` copies the next state back over the box. The update binds the state's three buffers, the next
-//! state's two, the Δt record, P2's g and eos.wgsl's table: WebGPU's 8 storage buffers per stage (§2.2, §6.2.2), all of
-//! them — hence the booking's own dispatch, which binds seven, and the next state in two buffers of seven planes, not
-//! three as the state (M0-T36: a slot for g; 7 planes at 2048 × 2048 still fit the 128 MiB binding).
+//! state's two, P2's g, P5's F and eos.wgsl's table: WebGPU's 8 storage buffers per stage (§2.2, §6.2.2), all of
+//! them — hence the booking's own dispatch, the next state in two buffers of seven planes, not three as the state (M0-T36:
+//! a slot for g; 7 planes at 2048 × 2048 still fit the 128 MiB binding), and the Δt record bound as a uniform (M0-T43: a
+//! slot for F; P9 writes it in another dispatch, as the box fit writes the box).
 //!
 //! The edge mode is a uniform of P4's ([`Hydro::set_edge_mode`]): a write lands between two submissions, so a frame or a
 //! batch of steps runs whole under one mode and the next under the new one (§3.1: at the next step boundary). The same
 //! uniform says whether the step runs P2: gravity's source (§1.4.2; M0-T36) — the predictor's half kick and the update's
 //! time-centred Σg and Σu·g, hydro.wgsl's header — reads P2's g when it does, and a placeholder is bound when it does
-//! not. The radiation force (§2.4.4) is M0-T43's.
+//! not. Likewise whether it runs P5: the radiation force f = κΣF/c_sb (§2.4.4; M0-T43) added to the update's momentum
+//! from the F P5 left in `side.flux` at the end of the last step, with physics.json's κ₀, c_sb, κ_dust and T_dust in the
+//! same uniform.
+
+use sr_physics::registry::Physics;
 
 use super::boxfit::{BoxFit, ARGS_TILES};
 use super::{compute_pipeline, init_buffer, with_eos, Dispatch, EosGpu, Pass, Size};
@@ -33,52 +38,77 @@ const _: () = {
     assert!(NEXT_PLANES as u64 * (WorldConfig::MAX as u64) * (WorldConfig::MAX as u64) * 4 <= 128 << 20);
 };
 
-/// P4: its dispatches, the edge mode's uniform and whether the step runs P2.
+/// P4: its dispatches, the edge mode's uniform and the rest of its words (whether the step runs P2 and P5, the radiation
+/// force's constants).
 pub struct Hydro {
     pub(super) dispatches: Vec<Dispatch>,
     edge: wgpu::Buffer,
-    gravity: bool,
+    sources: [u32; 7],
 }
 
 impl Hydro {
     /// P4's three dispatches for `state`'s world over `boxfit`'s box under `edge`, reading Δt_n from the Δt record
-    /// `dt_record` (its first word), gravity's source from P2's g `gravity` when the step runs P2, and booking escaped
-    /// into `booking`; the next-state planes live as long as the bind groups that hold them.
+    /// `dt_record` (its first word), gravity's source from P2's g `gravity` when the step runs P2, the radiation force from
+    /// P5's F `flux` (side.flux) when it runs P5 with `physics`' constants, and booking escaped into `booking`; the
+    /// next-state planes live as long as the bind groups that hold them.
     #[allow(clippy::too_many_arguments)]
     pub fn new(
         device: &wgpu::Device,
         state: &State,
         booking: &Booking,
         eos: &EosGpu,
+        physics: &Physics,
         boxfit: &BoxFit,
         dt_record: &wgpu::Buffer,
         gravity: Option<&wgpu::Buffer>,
+        flux: Option<&wgpu::Buffer>,
         edge: EdgeMode,
     ) -> Hydro {
-        let on = gravity.is_some();
+        let get = |k: &str| physics.get(k).unwrap_or_else(|| panic!("physics.json key {k}")) as f32;
+        let sources = [
+            u32::from(gravity.is_some()),
+            u32::from(flux.is_some()),
+            0,
+            get("kappa0").to_bits(),
+            get("c_sb").to_bits(),
+            get("kappa_dust").to_bits(),
+            get("t_dust").to_bits(),
+        ];
         let usage = wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST;
-        let mode = init_buffer(device, "hydro.edge", usage, &words(edge, on));
-        let placeholder;
+        let mode = init_buffer(device, "hydro.edge", usage, &words(edge, &sources));
+        let (no_gravity, no_flux);
         let g = match gravity {
             Some(g) => g,
             None => {
-                placeholder = init_buffer(device, "hydro.no_gravity", wgpu::BufferUsages::STORAGE, &[0, 0]);
-                &placeholder
+                no_gravity = init_buffer(device, "hydro.no_gravity", wgpu::BufferUsages::STORAGE, &[0, 0]);
+                &no_gravity
             }
         };
-        Hydro { dispatches: dispatches(device, state, booking, eos, boxfit, dt_record, g, &mode), edge: mode, gravity: on }
+        let flux = match flux {
+            Some(f) => f,
+            None => {
+                no_flux = init_buffer(device, "hydro.no_flux", wgpu::BufferUsages::STORAGE, &[0, 0]);
+                &no_flux
+            }
+        };
+        let dispatches = dispatches(device, state, booking, eos, boxfit, dt_record, g, flux, &mode);
+        Hydro { dispatches, edge: mode, sources }
     }
 
     /// Sets the edge mode for every step submitted after this call (`queue.write_buffer`: ahead of the next submission).
     pub fn set_edge_mode(&self, queue: &wgpu::Queue, edge: EdgeMode) {
-        let bytes: Vec<u8> = words(edge, self.gravity).iter().flat_map(|w| w.to_le_bytes()).collect();
+        let bytes: Vec<u8> = words(edge, &self.sources).iter().flat_map(|w| w.to_le_bytes()).collect();
         queue.write_buffer(&self.edge, 0, &bytes);
     }
 }
 
-/// The edge uniform's words (hydro.wgsl `Edges`): leave 1, bounce 0; then 1 when the step runs P2.
-fn words(edge: EdgeMode, gravity: bool) -> [u32; 4] {
-    [u32::from(edge == EdgeMode::Leave), u32::from(gravity), 0, 0]
+/// The edge uniform's words (hydro.wgsl `Edges`): leave 1, bounce 0; then the sources' words — 1 when the step runs P2,
+/// 1 when it runs P5, a pad, κ₀, c_sb, κ_dust and T_dust as f32 bits.
+fn words(edge: EdgeMode, sources: &[u32; 7]) -> [u32; 8] {
+    let mut w = [0; 8];
+    w[0] = u32::from(edge == EdgeMode::Leave);
+    w[1..].copy_from_slice(sources);
+    w
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -90,6 +120,7 @@ fn dispatches(
     boxfit: &BoxFit,
     dt_record: &wgpu::Buffer,
     gravity: &wgpu::Buffer,
+    flux: &wgpu::Buffer,
     edge: &wgpu::Buffer,
 ) -> Vec<Dispatch> {
     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
@@ -117,6 +148,7 @@ fn dispatches(
             entry(3, state.group(2)),
             entry(4, &next[0]),
             entry(5, &next[1]),
+            entry(6, flux),
             entry(7, boxfit.active()),
             entry(8, dt_record),
             entry(13, edge),

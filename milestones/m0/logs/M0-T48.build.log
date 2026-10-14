@@ -1,0 +1,48 @@
+== 2026-10-14T09:32:38-04:00 build[wasm] · task M0-T48 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T09:32:38-04:00 build[native] · task M0-T48 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.82 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=1 · 5.99 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Checking sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+error: this function has too many arguments (8/7)
+   --> crates/sr-physics/src/reference/mod.rs:114:5
+    |
+114 | /     pub fn new(
+115 | |         physics: &Physics,
+116 | |         elements: &Elements,
+117 | |         edge: Edge,
+...   |
+122 | |         planes: Vec<f64>,
+123 | |     ) -> Result<Twin, TwinError> {
+    | |________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_arguments
+    = note: `-D clippy::too-many-arguments` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+
+error: could not compile `sr-physics` (lib) due to 1 previous error
+=== NO-GO: cargo clippy -D warnings failed ===
+
+== 2026-10-14T09:33:53-04:00 build[native] · task M0-T48 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T09:33:53-04:00 build[wasm] · task M0-T48 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.72 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=0 · 7.80 s
+build native: 1.99.0 in 8 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+build     2/0/0        8.52 s  GO
+logs: milestones/m0/logs/M0-T48.<scope>.log · record: loop_times.jsonl · tree 4eb47e04d92c+eb8b9361421e
+anchor: 75 path×scope entries moved by this run
+anchor: 109 paths checked · 145 skipped (3 classes) · 73 never checked · 0 stale · 0 unclassified · 0 owed · 182 covered of 327 visible
+verify: 2 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 7.80 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 28.73->34.2
+=== GO ===

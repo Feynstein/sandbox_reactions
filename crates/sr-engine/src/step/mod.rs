@@ -2,10 +2,11 @@
 //! dispatches built once for the state's world. A step records the lists as they are — it reads no wall clock, no
 //! rung, no frame and no label — so the same state and step count give the same state, bit for bit (§1.3.4).
 //!
-//! Today P1, P2, P4, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
+//! Today P1, P2, P4, P5, P6, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
 //! M0-T20), P2 gravity when the step is built with it ([`grav`], [`Step::with_gravity`], M0-T31), P4 the gas flow when
 //! the step is built with it ([`hydro`], [`Step::with_passes`], M0-T34; with gravity's source when P2 runs too,
-//! M0-T36), P8 the floors, then the
+//! M0-T36), P5 heat when the step is built with it ([`heat`], [`Step::with_heat`], M0-T42), P6 burning when the step is
+//! built with it ([`react`], [`Step::with_reactions`], M0-T46), P8 the floors, then the
 //! species renormalisation (shaders/floors.wgsl, M0-T19); every other pass is an empty slot its lot fills, in place,
 //! without reordering the others. A step knows its index — the guard runs on every 64th
 //! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction — after P2 on that state, so step 0's
@@ -37,8 +38,10 @@ pub mod boxfit;
 pub mod dt;
 pub mod fft;
 pub mod grav;
+pub mod heat;
 pub mod hydro;
 pub mod latch;
+pub mod react;
 
 use std::cell::{Cell, RefCell};
 
@@ -51,7 +54,9 @@ use boxfit::{BoxFit, BoxMode, BoxReport, ARGS_TILES, REFIT_EVERY};
 use dt::{Dt, DtReport, GUARD_EVERY};
 use fft::FftError;
 use grav::Gravity;
+use heat::HeatSetup;
 use latch::Latch;
+use react::ReactSetup;
 
 /// The passes of one step, in §1.3.2's order.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -132,6 +137,8 @@ pub struct Step {
     dt: Dt,
     gravity: Option<Gravity>,
     hydro: Option<hydro::Hydro>,
+    heat: Option<heat::Heat>,
+    react: Option<react::React>,
     boxfit: BoxFit,
     latch: Latch,
     next: Cell<u64>,
@@ -367,6 +374,37 @@ impl Step {
         physics: &Physics,
         passes: &Passes<'_>,
     ) -> Result<Step, FftError> {
+        Step::with_heat(device, state, booking, eos, physics, passes, None)
+    }
+
+    /// As [`Step::with_passes`], with P5 heat when `heat` is given (§2.4; §2.12.1's `heat` switch on; M0-T42): F kept in
+    /// its side fields, the scene's test flags applied; P4, when the step runs it, pushes the gas with the F the last step
+    /// left there (§2.4.4; M0-T43).
+    pub fn with_heat(
+        device: &wgpu::Device,
+        state: &State,
+        booking: &Booking,
+        eos: &EosGpu,
+        physics: &Physics,
+        passes: &Passes<'_>,
+        heat: Option<&HeatSetup<'_>>,
+    ) -> Result<Step, FftError> {
+        Step::with_reactions(device, state, booking, eos, physics, passes, heat, None)
+    }
+
+    /// As [`Step::with_heat`], with P6 burning when `react` is given (§2.5.1, §2.5.2; §2.12.1's `reactions` switch on;
+    /// M0-T46): the enabled records of `react.reactions`, the scene's `pin_temperature`.
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_reactions(
+        device: &wgpu::Device,
+        state: &State,
+        booking: &Booking,
+        eos: &EosGpu,
+        physics: &Physics,
+        passes: &Passes<'_>,
+        heat: Option<&HeatSetup<'_>>,
+        react: Option<&ReactSetup<'_>>,
+    ) -> Result<Step, FftError> {
         let (mode, side, edge) = (passes.mode, passes.gravity, passes.hydro);
         let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
             label: Some("reduce.wgsl"),
@@ -380,12 +418,22 @@ impl Step {
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Gravity as usize] = gravity.as_mut().map(|g| std::mem::take(&mut g.dispatches)).unwrap_or_default();
         let g = gravity.as_ref().map(Gravity::field);
-        let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, &boxfit, dt.record(), g, edge));
+        let flux = heat.map(|h| h.side.flux());
+        let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, physics, &boxfit, dt.record(), g, flux, edge));
         passes[Pass::Hydro as usize] = flow.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
+        let mut warm = heat.map(|h| heat::Heat::new(device, state, booking, eos, physics, &boxfit, dt.record(), h));
+        passes[Pass::Heat as usize] = warm.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
+        let mut burn = react.map(|r| react::React::new(device, state, booking, eos, physics, &boxfit, dt.record(), r));
+        passes[Pass::Reactions as usize] = burn.as_mut().map(|r| std::mem::take(&mut r.dispatches)).unwrap_or_default();
         passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
         let latch = Latch::new(device, &passes, &dt, &boxfit);
-        Ok(Step { passes, dt, gravity, hydro: flow, boxfit, latch, next: Cell::new(0), timer: Timer::default() })
+        // P6 sets the latch after its cells: its flag copy needs the latch's record, so it joins the list now (one fixed
+        // invocation, a size the latch already holds a slot for).
+        if let Some(b) = &burn {
+            passes[Pass::Reactions as usize].push(b.latch_dispatch(device, latch.flag()));
+        }
+        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, boxfit, latch, next: Cell::new(0), timer: Timer::default() })
     }
 
     /// P2's g = −∇φ (the x plane, then the y plane, f32, row-major over the world) when the step runs gravity; φ is the

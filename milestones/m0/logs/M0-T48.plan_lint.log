@@ -1,0 +1,11 @@
+plan_lint  519/0/0      0.11 s  GO
+logs: milestones/m0/logs/M0-T48.<scope>.log · record: loop_times.jsonl · tree 4eb47e04d92c+c7359189eb89
+anchor: 1 path×scope entries moved by this run
+anchor: 109 paths checked · 146 skipped (3 classes) · 73 never checked · 0 stale · 0 unclassified · 0 owed · 182 covered of 328 visible
+verify: 519 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 58.15->58.15
+=== GO ===
+31: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D32: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D34 1
+=== GO ===
+

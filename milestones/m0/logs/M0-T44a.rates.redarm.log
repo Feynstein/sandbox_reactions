@@ -1,0 +1,70 @@
+==== 2026-10-14T08:21:01-04:00 rates · clean · a fresh scratch copy of the tree
+== 2026-10-14T08:21:01-04:00 rates · task M0-T44a · box laserax-ai :: bash tests/cpu.sh sr-physics rates
+-- rates · exit=0 · 3.78 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5zlno45s/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 1.63s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-8ac46c43ceb83ace)
+
+running 7 tests
+test rates::tests::above_the_span_is_the_direct_form ... ok
+test rates::tests::f_is_zero_below_the_threshold ... ok
+test rates::tests::omega_of_each_record_by_hand ... ok
+test rates::tests::table_geometry ... ok
+test rates::tests::gate_on_both_sides_of_sigma_g ... ok
+test rates::tests::two_terms_are_not_exact ... ok
+test rates::tests::table_against_direct_form_at_nodes_and_midpoints ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 78 filtered out; finished in 0.00s
+
+
+==== 2026-10-14T08:21:01-04:00 rates · plant rates-table-shift · a fresh scratch copy of the tree
+planted rates-table-shift: tests/plants/rates-table-shift.patch -> crates/sr-physics/src/rates.rs
+== 2026-10-14T08:21:01-04:00 rates · task M0-T44a · box laserax-ai :: bash tests/cpu.sh sr-physics rates
+-- rates · exit=101 · 2.12 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5zlno45s/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.02s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-8ac46c43ceb83ace)
+
+running 7 tests
+test rates::tests::above_the_span_is_the_direct_form ... FAILED
+test rates::tests::omega_of_each_record_by_hand ... FAILED
+test rates::tests::f_is_zero_below_the_threshold ... ok
+test rates::tests::table_geometry ... ok
+test rates::tests::table_against_direct_form_at_nodes_and_midpoints ... FAILED
+test rates::tests::gate_on_both_sides_of_sigma_g ... ok
+test rates::tests::two_terms_are_not_exact ... FAILED
+
+failures:
+
+---- rates::tests::above_the_span_is_the_direct_form stdout ----
+
+thread 'rates::tests::above_the_span_is_the_direct_form' (1556433) panicked at crates/sr-physics/src/rates.rs:254:13:
+T = 124.999999875
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- rates::tests::omega_of_each_record_by_hand stdout ----
+
+thread 'rates::tests::omega_of_each_record_by_hand' (1556436) panicked at crates/sr-physics/src/rates.rs:314:13:
+H_burn: table 1.3732924185313829e-3 against 1.3734835001870428e-3
+
+---- rates::tests::table_against_direct_form_at_nodes_and_midpoints stdout ----
+
+thread 'rates::tests::table_against_direct_form_at_nodes_and_midpoints' (1556437) panicked at crates/sr-physics/src/rates.rs:195:13:
+H_burn: at the nodes 6.32407247008389e-4
+
+---- rates::tests::two_terms_are_not_exact stdout ----
+
+thread 'rates::tests::two_terms_are_not_exact' (1556439) panicked at crates/sr-physics/src/rates.rs:219:9:
+worst 2.372104463671387e-4 at T = 119.93990455213464
+
+
+failures:
+    rates::tests::above_the_span_is_the_direct_form
+    rates::tests::omega_of_each_record_by_hand
+    rates::tests::table_against_direct_form_at_nodes_and_midpoints
+    rates::tests::two_terms_are_not_exact
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 78 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

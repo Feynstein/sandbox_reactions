@@ -1,0 +1,236 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.16s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+test d34::lockstep ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+D34 react n 0: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 0: gpu Δ ["1.607350e1", "3.280918e-6", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 0: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0033
+D34 groups n 0: cpu   ["1.607382e1", "3.281432e-6", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 0 heat Some((2, 2, 0.0067543774)) dt 6.7544e-3 E_in 1.473912e4 heatΔ 0.0000e0 | ΔE gpu 1.607324e1 cpu 1.607382e1 (rel -3.587e-5) nucCPU 1.607382e1 | GPU book Δ total nuc 6.583428e4 heat 1.7548e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749938 He 0.250062] cpu [H 0.749938 He 0.250062]
+D34 react n 1: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 1: gpu Δ ["1.633519e1", "3.750250e-6", "3.847584e-28", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 1: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0034
+D34 groups n 1: cpu   ["1.633550e1", "3.750776e-6", "3.848371e-28", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 1 heat Some((2, 2, 0.006750223)) dt 6.7502e-3 E_in 1.475519e4 heatΔ 0.0000e0 | ΔE gpu 1.633496e1 cpu 1.633550e1 (rel -3.296e-5) nucCPU 1.633550e1 | GPU book Δ total nuc 6.690317e4 heat 1.7763e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749876 He 0.250124] cpu [H 0.749876 He 0.250124]
+D34 react n 2: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 2: gpu Δ ["1.660708e1", "4.293800e-6", "1.321183e-27", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 2: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0034
+D34 groups n 2: cpu   ["1.660753e1", "4.294701e-6", "1.321540e-27", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 2 heat Some((2, 2, 0.0067460113)) dt 6.7460e-3 E_in 1.477153e4 heatΔ 0.0000e0 | ΔE gpu 1.660742e1 cpu 1.660753e1 (rel -6.800e-6) nucCPU 1.660753e1 | GPU book Δ total nuc 6.801358e4 heat 1.7984e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749812 He 0.250188] cpu [H 0.749812 He 0.250188]
+D34 react n 3: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 3: gpu Δ ["1.689051e1", "4.926073e-6", "3.196062e-27", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 3: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0035
+D34 groups n 3: cpu   ["1.689065e1", "4.926412e-6", "3.196320e-27", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 3 heat Some((2, 2, 0.006741731)) dt 6.7417e-3 E_in 1.478814e4 heatΔ 0.0000e0 | ΔE gpu 1.689062e1 cpu 1.689065e1 (rel -1.776e-6) nucCPU 1.689065e1 | GPU book Δ total nuc 6.917101e4 heat 1.8211e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749748 He 0.250253] cpu [H 0.749747 He 0.250253]
+D34 react n 4: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 4: gpu Δ ["1.718563e1", "5.661550e-6", "6.623577e-27", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 4: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0035
+D34 groups n 4: cpu   ["1.718563e1", "5.661551e-6", "6.623571e-27", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 4 heat Some((2, 2, 0.0067373873)) dt 6.7374e-3 E_in 1.480503e4 heatΔ 0.0000e0 | ΔE gpu 1.718555e1 cpu 1.718563e1 (rel -5.078e-6) nucCPU 1.718563e1 | GPU book Δ total nuc 7.037609e4 heat 1.8443e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749682 He 0.250318] cpu [H 0.749682 He 0.250318]
+D34 react n 5: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 5: gpu Δ ["1.749334e1", "6.518976e-6", "1.257349e-26", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 5: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0036
+D34 groups n 5: cpu   ["1.749342e1", "6.519187e-6", "1.257398e-26", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 5 heat Some((2, 2, 0.0067329793)) dt 6.7330e-3 E_in 1.482221e4 heatΔ 0.0000e0 | ΔE gpu 1.749316e1 cpu 1.749343e1 (rel -1.506e-5) nucCPU 1.749343e1 | GPU book Δ total nuc 7.163241e4 heat 1.8682e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749615 He 0.250385 C 0.000000] cpu [H 0.749615 He 0.250385 C 0.000000]
+D34 react n 6: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 6: gpu Δ ["1.781459e1", "7.520781e-6", "2.257135e-26", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 6: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0036
+D34 groups n 6: cpu   ["1.781496e1", "7.521933e-6", "2.257502e-26", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 6 heat Some((2, 2, 0.0067285053)) dt 6.7285e-3 E_in 1.483971e4 heatΔ 0.0000e0 | ΔE gpu 1.781445e1 cpu 1.781496e1 (rel -2.865e-5) nucCPU 1.781496e1 | GPU book Δ total nuc 7.294387e4 heat 1.8927e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749546 He 0.250454 C 0.000000] cpu [H 0.749546 He 0.250454 C 0.000000]
+D34 react n 7: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 7: gpu Δ ["1.815103e1", "8.696341e-6", "3.902243e-26", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 7: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0037
+D34 groups n 7: cpu   ["1.815136e1", "8.697482e-6", "3.902802e-26", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 7 heat Some((2, 2, 0.006723954)) dt 6.7240e-3 E_in 1.485752e4 heatΔ 0.0000e0 | ΔE gpu 1.815137e1 cpu 1.815137e1 (rel +7.433e-8) nucCPU 1.815137e1 | GPU book Δ total nuc 7.431717e4 heat 1.9179e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749477 He 0.250523 C 0.000000] cpu [H 0.749477 He 0.250523 C 0.000000]
+D34 react n 8: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 8: gpu Δ ["1.850340e1", "1.007746e-5", "6.569938e-26", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 8: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0037
+D34 groups n 8: cpu   ["1.850377e1", "1.007891e-5", "6.570945e-26", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 8 heat Some((2, 2, 0.006719326)) dt 6.7193e-3 E_in 1.487567e4 heatΔ 0.0000e0 | ΔE gpu 1.850293e1 cpu 1.850378e1 (rel -4.587e-5) nucCPU 1.850378e1 | GPU book Δ total nuc 7.575514e4 heat 1.9437e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749406 He 0.250594 C 0.000000] cpu [H 0.749406 He 0.250594 C 0.000000]
+D34 react n 9: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 9: gpu Δ ["1.887375e1", "1.170785e-5", "1.085722e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 9: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0038
+D34 groups n 9: cpu   ["1.887357e1", "1.170703e-5", "1.085642e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 9 heat Some((2, 2, 0.006714611)) dt 6.7146e-3 E_in 1.489417e4 heatΔ 0.0000e0 | ΔE gpu 1.887402e1 cpu 1.887358e1 (rel +2.347e-5) nucCPU 1.887358e1 | GPU book Δ total nuc 7.726645e4 heat 1.9703e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749334 He 0.250666 C 0.000000] cpu [H 0.749334 He 0.250666 C 0.000000]
+D34 react n 10: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 10: gpu Δ ["1.926245e1", "1.363224e-5", "1.769971e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 10: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0039
+D34 groups n 10: cpu   ["1.926228e1", "1.363135e-5", "1.769847e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 10 heat Some((2, 2, 0.006709819)) dt 6.7098e-3 E_in 1.491305e4 heatΔ 0.0000e0 | ΔE gpu 1.926270e1 cpu 1.926229e1 (rel +2.097e-5) nucCPU 1.926229e1 | GPU book Δ total nuc 7.885249e4 heat 1.9978e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749260 He 0.250740 C 0.000000] cpu [H 0.749260 He 0.250740 C 0.000000]
+D34 react n 11: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 11: gpu Δ ["1.967169e1", "1.591346e-5", "2.858382e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 11: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0039
+D34 groups n 11: cpu   ["1.967154e1", "1.591263e-5", "2.858232e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 11 heat Some((2, 2, 0.00670494)) dt 6.7049e-3 E_in 1.493231e4 heatΔ 0.0000e0 | ΔE gpu 1.967188e1 cpu 1.967155e1 (rel +1.646e-5) nucCPU 1.967155e1 | GPU book Δ total nuc 8.052202e4 heat 2.0260e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749184 He 0.250816 C 0.000000] cpu [H 0.749184 He 0.250816 C 0.000000]
+D34 react n 12: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 12: gpu Δ ["2.010286e1", "1.862348e-5", "4.586489e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 12: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0040
+D34 groups n 12: cpu   ["2.010324e1", "1.862593e-5", "4.587105e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 12 heat Some((2, 2, 0.0066999733)) dt 6.7000e-3 E_in 1.495198e4 heatΔ 0.0000e0 | ΔE gpu 2.010254e1 cpu 2.010326e1 (rel -3.577e-5) nucCPU 2.010326e1 | GPU book Δ total nuc 8.228077e4 heat 2.0551e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749107 He 0.250893 C 0.000000] cpu [H 0.749107 He 0.250893 C 0.000000]
+D34 react n 13: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 13: gpu Δ ["2.056030e1", "2.186662e-5", "7.334802e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 13: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0041
+D34 groups n 13: cpu   ["2.055985e1", "2.186339e-5", "7.333691e-25", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 13 heat Some((2, 2, 0.006694894)) dt 6.6949e-3 E_in 1.497209e4 heatΔ 0.0000e0 | ΔE gpu 2.056055e1 cpu 2.055987e1 (rel +3.287e-5) nucCPU 2.055987e1 | GPU book Δ total nuc 8.414611e4 heat 2.0851e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.749029 He 0.250971 C 0.000000] cpu [H 0.749029 He 0.250971 C 0.000000]
+D34 react n 14: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 14: gpu Δ ["2.104309e1", "2.573503e-5", "1.170381e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 14: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0042
+D34 groups n 14: cpu   ["2.104388e1", "2.574129e-5", "1.170669e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 14 heat Some((2, 2, 0.0066897334)) dt 6.6897e-3 E_in 1.499265e4 heatΔ 0.0000e0 | ΔE gpu 2.104297e1 cpu 2.104390e1 (rel -4.429e-5) nucCPU 2.104390e1 | GPU book Δ total nuc 8.611479e4 heat 2.1161e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748948 He 0.251052 C 0.000000] cpu [H 0.748948 He 0.251052 C 0.000000]
+D34 react n 15: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 15: gpu Δ ["2.155682e1", "3.039527e-5", "1.868247e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 15: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0042
+D34 groups n 15: cpu   ["2.155761e1", "3.040270e-5", "1.868713e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 15 heat Some((2, 2, 0.00668445)) dt 6.6844e-3 E_in 1.501369e4 heatΔ 0.0000e0 | ΔE gpu 2.155664e1 cpu 2.155764e1 (rel -4.622e-5) nucCPU 2.155764e1 | GPU book Δ total nuc 8.820904e4 heat 2.1482e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748865 He 0.251135 C 0.000000] cpu [H 0.748865 He 0.251135 C 0.000000]
+D34 react n 16: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 16: gpu Δ ["2.210385e1", "3.602575e-5", "2.987741e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 16: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0043
+D34 groups n 16: cpu   ["2.210426e1", "3.602991e-5", "2.988098e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 16 heat Some((2, 2, 0.006679047)) dt 6.6790e-3 E_in 1.503525e4 heatΔ 0.0000e0 | ΔE gpu 2.210352e1 cpu 2.210429e1 (rel -3.519e-5) nucCPU 2.210429e1 | GPU book Δ total nuc 9.043817e4 heat 2.1813e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748781 He 0.251219 C 0.000000] cpu [H 0.748781 He 0.251219 C 0.000000]
+D34 react n 17: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 17: gpu Δ ["2.268698e1", "4.284775e-5", "4.792597e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 17: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0044
+D34 groups n 17: cpu   ["2.268732e1", "4.285198e-5", "4.793074e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 17 heat Some((2, 2, 0.0066735237)) dt 6.6735e-3 E_in 1.505735e4 heatΔ 0.0000e0 | ΔE gpu 2.268750e1 cpu 2.268736e1 (rel +6.139e-6) nucCPU 2.268736e1 | GPU book Δ total nuc 9.281428e4 heat 2.2157e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748694 He 0.251306 C 0.000000] cpu [H 0.748694 He 0.251306 C 0.000000]
+D34 react n 18: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 18: gpu Δ ["2.330991e1", "5.114867e-5", "7.720484e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 18: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0045
+D34 groups n 18: cpu   ["2.331082e1", "5.116105e-5", "7.722400e-24", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 18 heat Some((2, 2, 0.0066678748)) dt 6.6679e-3 E_in 1.508004e4 heatΔ 0.0000e0 | ΔE gpu 2.330957e1 cpu 2.331087e1 (rel -5.561e-5) nucCPU 2.331087e1 | GPU book Δ total nuc 9.535236e4 heat 2.2513e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748604 He 0.251395 C 0.000000] cpu [H 0.748605 He 0.251395 C 0.000000]
+D34 react n 19: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 19: gpu Δ ["2.398129e1", "6.132788e-5", "1.251132e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 19: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0046
+D34 groups n 19: cpu   ["2.398152e1", "6.133118e-5", "1.251201e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 19 heat Some((2, 2, 0.0066620745)) dt 6.6621e-3 E_in 1.510335e4 heatΔ 0.0000e0 | ΔE gpu 2.398145e1 cpu 2.398158e1 (rel -5.812e-6) nucCPU 2.398158e1 | GPU book Δ total nuc 9.808631e4 heat 2.2883e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748513 He 0.251487 C 0.000000] cpu [H 0.748513 He 0.251487 C 0.000000]
+D34 react n 20: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 20: gpu Δ ["2.470328e1", "7.384643e-5", "2.041319e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 20: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0048
+D34 groups n 20: cpu   ["2.470329e1", "7.384641e-5", "2.041322e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 20 heat Some((2, 2, 0.0066561275)) dt 6.6561e-3 E_in 1.512733e4 heatΔ 0.0000e0 | ΔE gpu 2.470312e1 cpu 2.470336e1 (rel -9.555e-6) nucCPU 2.470336e1 | GPU book Δ total nuc 1.010261e5 heat 2.3268e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748418 He 0.251582 C 0.000000] cpu [H 0.748418 He 0.251582 C 0.000000]
+D34 react n 21: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 21: gpu Δ ["2.548163e1", "8.932306e-5", "3.356945e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 21: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0049
+D34 groups n 21: cpu   ["2.548232e1", "8.933705e-5", "3.357496e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 21 heat Some((2, 2, 0.0066500255)) dt 6.6500e-3 E_in 1.515203e4 heatΔ 0.0000e0 | ΔE gpu 2.548145e1 cpu 2.548241e1 (rel -3.803e-5) nucCPU 2.548241e1 | GPU book Δ total nuc 1.041945e5 heat 2.3668e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748320 He 0.251680 C 0.000000] cpu [H 0.748320 He 0.251680 C 0.000000]
+D34 react n 22: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 22: gpu Δ ["2.632709e1", "1.085994e-4", "5.572166e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 22: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0050
+D34 groups n 22: cpu   ["2.632832e1", "1.086283e-4", "5.573700e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 22 heat Some((2, 2, 0.006643747)) dt 6.6437e-3 E_in 1.517751e4 heatΔ 0.0000e0 | ΔE gpu 2.632715e1 cpu 2.632843e1 (rel -4.869e-5) nucCPU 2.632843e1 | GPU book Δ total nuc 1.076342e5 heat 2.4085e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748219 He 0.251781 C 0.000000] cpu [H 0.748219 He 0.251781 C 0.000000]
+D34 react n 23: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 23: gpu Δ ["2.724954e1", "1.328096e-4", "9.350680e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 23: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0052
+D34 groups n 23: cpu   ["2.724981e1", "1.328163e-4", "9.351206e-23", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 23 heat Some((2, 2, 0.0066372673)) dt 6.6373e-3 E_in 1.520384e4 heatΔ 0.0000e0 | ΔE gpu 2.725000e1 cpu 2.724994e1 (rel +2.262e-6) nucCPU 2.724994e1 | GPU book Δ total nuc 1.113862e5 heat 2.4520e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748115 He 0.251885 C 0.000000] cpu [H 0.748115 He 0.251885 C 0.000000]
+D34 react n 24: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 24: gpu Δ ["2.825635e1", "1.633660e-4", "1.587892e-22", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 24: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0053
+D34 groups n 24: cpu   ["2.825660e1", "1.633734e-4", "1.587970e-22", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 24 heat Some((2, 2, 0.006630588)) dt 6.6306e-3 E_in 1.523109e4 heatΔ 0.0000e0 | ΔE gpu 2.825684e1 cpu 2.825677e1 (rel +2.398e-6) nucCPU 2.825677e1 | GPU book Δ total nuc 1.154803e5 heat 2.4976e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.748007 He 0.251993 C 0.000000] cpu [H 0.748007 He 0.251993 C 0.000000]
+D34 react n 25: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 25: gpu Δ ["2.936542e1", "2.022558e-4", "2.732818e-22", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 25: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0055
+D34 groups n 25: cpu   ["2.936622e1", "2.022855e-4", "2.733245e-22", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 25 heat Some((2, 2, 0.0066236863)) dt 6.6237e-3 E_in 1.525935e4 heatΔ 0.0000e0 | ΔE gpu 2.936523e1 cpu 2.936643e1 (rel -4.060e-5) nucCPU 2.936643e1 | GPU book Δ total nuc 1.199874e5 heat 2.5454e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747894 He 0.252106 C 0.000000] cpu [H 0.747894 He 0.252106 C 0.000000]
+D34 react n 26: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 26: gpu Δ ["3.058868e1", "2.522194e-4", "4.774974e-22", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 26: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0057
+D34 groups n 26: cpu   ["3.059010e1", "2.522768e-4", "4.776121e-22", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 26 heat Some((2, 2, 0.006616536)) dt 6.6165e-3 E_in 1.528871e4 heatΔ 0.0000e0 | ΔE gpu 3.058887e1 cpu 3.059035e1 (rel -4.845e-5) nucCPU 3.059035e1 | GPU book Δ total nuc 1.249579e5 heat 2.5957e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747777 He 0.252223 C 0.000000] cpu [H 0.747777 He 0.252223 C 0.000000]
+D34 react n 27: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 27: gpu Δ ["3.195374e1", "3.171340e-4", "8.488570e-22", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 27: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0060
+D34 groups n 27: cpu   ["3.195383e1", "3.171385e-4", "8.488752e-22", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 27 heat Some((2, 2, 0.006609103)) dt 6.6091e-3 E_in 1.531930e4 heatΔ 0.0000e0 | ΔE gpu 3.195410e1 cpu 3.195415e1 (rel -1.485e-6) nucCPU 3.195415e1 | GPU book Δ total nuc 1.304994e5 heat 2.6485e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747655 He 0.252345 C 0.000000] cpu [H 0.747655 He 0.252345 C 0.000000]
+D34 react n 28: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 28: gpu Δ ["3.347919e1", "4.022126e-4", "1.537924e-21", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 28: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0062
+D34 groups n 28: cpu   ["3.347949e1", "4.022322e-4", "1.538005e-21", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 28 heat Some((2, 2, 0.0066013723)) dt 6.6014e-3 E_in 1.535125e4 heatΔ 0.0000e0 | ΔE gpu 3.347949e1 cpu 3.347989e1 (rel -1.200e-5) nucCPU 3.347989e1 | GPU book Δ total nuc 1.366902e5 heat 2.7044e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747526 He 0.252474 C 0.000000] cpu [H 0.747526 He 0.252474 C 0.000000]
+D34 react n 29: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 29: gpu Δ ["3.519763e1", "5.151636e-4", "2.846867e-21", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 29: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0065
+D34 groups n 29: cpu   ["3.519854e1", "5.152256e-4", "2.847248e-21", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 29 heat Some((2, 2, 0.006593305)) dt 6.5933e-3 E_in 1.538473e4 heatΔ 0.0000e0 | ΔE gpu 3.519824e1 cpu 3.519905e1 (rel -2.300e-5) nucCPU 3.519905e1 | GPU book Δ total nuc 1.436607e5 heat 2.7637e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747392 He 0.252608 C 0.000000] cpu [H 0.747392 He 0.252608 C 0.000000]
+D34 react n 30: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 30: gpu Δ ["3.715588e1", "6.672905e-4", "5.400631e-21", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 30: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0001 max_dt_rel 0.0068
+D34 groups n 30: cpu   ["3.715680e1", "6.673683e-4", "5.401313e-21", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 30 heat Some((2, 2, 0.00658485)) dt 6.5849e-3 E_in 1.541993e4 heatΔ 0.0000e0 | ΔE gpu 3.715625e1 cpu 3.715746e1 (rel -3.267e-5) nucCPU 3.715746e1 | GPU book Δ total nuc 1.515977e5 heat 2.8266e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747249 He 0.252751 C 0.000000] cpu [H 0.747249 He 0.252751 C 0.000000]
+D34 react n 31: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 31: gpu Δ ["3.940314e1", "8.752777e-4", "1.053369e-20", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 31: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0002 max_dt_rel 0.0072
+D34 groups n 31: cpu   ["3.940469e1", "8.754320e-4", "1.053572e-20", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 31 heat Some((2, 2, 0.0065759644)) dt 6.5760e-3 E_in 1.545709e4 heatΔ 0.0000e0 | ΔE gpu 3.940430e1 cpu 3.940556e1 (rel -3.212e-5) nucCPU 3.940556e1 | GPU book Δ total nuc 1.606992e5 heat 2.8938e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.747098 He 0.252902 C 0.000000] cpu [H 0.747098 He 0.252902 C 0.000000]
+D34 react n 32: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 32: gpu Δ ["4.201129e1", "1.164944e-3", "2.121436e-20", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 32: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0002 max_dt_rel 0.0076
+D34 groups n 32: cpu   ["4.201303e1", "1.165146e-3", "2.121854e-20", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 32 heat Some((2, 2, 0.0065665767)) dt 6.5666e-3 E_in 1.549649e4 heatΔ 0.0000e0 | ΔE gpu 4.201270e1 cpu 4.201420e1 (rel -3.574e-5) nucCPU 4.201420e1 | GPU book Δ total nuc 1.712540e5 heat 2.9659e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746937 He 0.253063 C 0.000000] cpu [H 0.746937 He 0.253063 C 0.000000]
+D34 react n 33: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 33: gpu Δ ["4.507574e1", "1.576749e-3", "4.433984e-20", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 33: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0002 max_dt_rel 0.0081
+D34 groups n 33: cpu   ["4.507729e1", "1.576970e-3", "4.434691e-20", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 33 heat Some((2, 2, 0.0065566115)) dt 6.5566e-3 E_in 1.553851e4 heatΔ 0.0000e0 | ΔE gpu 4.507715e1 cpu 4.507887e1 (rel -3.811e-5) nucCPU 4.507887e1 | GPU book Δ total nuc 1.836438e5 heat 3.0435e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746765 He 0.253235 C 0.000000] cpu [H 0.746765 He 0.253235 C 0.000000]
+D34 react n 34: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 34: gpu Δ ["4.872766e1", "2.176395e-3", "9.678301e-20", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 34: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0002 max_dt_rel 0.0087
+D34 groups n 34: cpu   ["4.872974e1", "2.176748e-3", "9.680091e-20", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 34 heat Some((2, 2, 0.0065459716)) dt 6.5460e-3 E_in 1.558358e4 heatΔ 0.0000e0 | ΔE gpu 4.872949e1 cpu 4.873192e1 (rel -4.985e-5) nucCPU 4.873192e1 | GPU book Δ total nuc 1.983927e5 heat 3.1276e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746578 He 0.253422 C 0.000000] cpu [H 0.746578 He 0.253422 C 0.000000]
+D34 react n 35: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 35: gpu Δ ["5.316370e1", "3.075453e-3", "2.224585e-19", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 35: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0002 max_dt_rel 0.0094
+D34 groups n 35: cpu   ["5.316429e1", "3.075581e-3", "2.224694e-19", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 35 heat Some((2, 2, 0.006534522)) dt 6.5345e-3 E_in 1.563231e4 heatΔ 0.0000e0 | ΔE gpu 5.316699e1 cpu 5.316737e1 (rel -7.101e-6) nucCPU 5.316737e1 | GPU book Δ total nuc 2.162871e5 heat 3.2195e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746374 He 0.253625 C 0.000001] cpu [H 0.746374 He 0.253625 C 0.000001]
+D34 react n 36: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 36: gpu Δ ["5.864630e1", "4.470125e-3", "5.441368e-19", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 36: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0002 max_dt_rel 0.0102
+D34 groups n 36: cpu   ["5.864619e1", "4.470088e-3", "5.441328e-19", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 36 heat Some((2, 2, 0.0065221004)) dt 6.5221e-3 E_in 1.568548e4 heatΔ 0.0000e0 | ΔE gpu 5.865039e1 cpu 5.865066e1 (rel -4.565e-6) nucCPU 5.865066e1 | GPU book Δ total nuc 2.383715e5 heat 3.3205e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.746149 He 0.253850 C 0.000001] cpu [H 0.746149 He 0.253850 C 0.000001]
+D34 react n 37: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 37: gpu Δ ["6.560571e1", "6.725648e-3", "1.436424e-18", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 37: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0003 max_dt_rel 0.0114
+D34 groups n 37: cpu   ["6.560858e1", "6.726681e-3", "1.436688e-18", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 37 heat Some((2, 2, 0.006508488)) dt 6.5085e-3 E_in 1.574413e4 heatΔ 0.0000e0 | ΔE gpu 6.561230e1 cpu 6.561530e1 (rel -4.570e-5) nucCPU 6.561530e1 | GPU book Δ total nuc 2.663601e5 heat 3.4328e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.745898 He 0.254101 C 0.000001] cpu [H 0.745898 He 0.254101 C 0.000001]
+D34 react n 38: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 38: gpu Δ ["7.471130e1", "1.057320e-2", "4.175024e-18", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 38: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0003 max_dt_rel 0.0128
+D34 groups n 38: cpu   ["7.471764e1", "1.057610e-2", "4.176438e-18", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 38 heat Some((2, 2, 0.0064933593)) dt 6.4934e-3 E_in 1.580974e4 heatΔ 0.0000e0 | ΔE gpu 7.472168e1 cpu 7.472822e1 (rel -8.753e-5) nucCPU 7.472822e1 | GPU book Δ total nuc 3.029100e5 heat 3.5588e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.745612 He 0.254387 C 0.000001] cpu [H 0.745612 He 0.254387 C 0.000001]
+D34 react n 39: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 39: gpu Δ ["8.712561e1", "1.760098e-2", "1.375321e-17", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 39: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0003 max_dt_rel 0.0147
+D34 groups n 39: cpu   ["8.712954e1", "1.760351e-2", "1.375568e-17", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 39 heat Some((2, 2, 0.0064762468)) dt 6.4762e-3 E_in 1.588446e4 heatΔ 0.0000e0 | ΔE gpu 8.714355e1 cpu 8.714714e1 (rel -4.115e-5) nucCPU 8.714714e1 | GPU book Δ total nuc 3.526234e5 heat 3.7025e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.745278 He 0.254720 C 0.000002] cpu [H 0.745278 He 0.254720 C 0.000002]
+D34 react n 40: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 40: gpu Δ ["1.049301e2", "3.165209e-2", "5.363593e-17", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 40: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0004 max_dt_rel 0.0175
+D34 groups n 40: cpu   ["1.049261e2", "3.164837e-2", "5.362766e-17", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 40 heat Some((2, 2, 0.0064564566)) dt 6.4565e-3 E_in 1.597161e4 heatΔ 0.0000e0 | ΔE gpu 1.049619e2 cpu 1.049577e2 (rel +4.002e-5) nucCPU 1.049577e2 | GPU book Δ total nuc 4.237229e5 heat 3.8693e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.744876 He 0.255121 C 0.000003] cpu [H 0.744876 He 0.255121 C 0.000003]
+D34 react n 41: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 41: gpu Δ ["1.323773e2", "6.347340e-2", "2.655034e-16", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 41: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0005 max_dt_rel 0.0217
+D34 groups n 41: cpu   ["1.323799e2", "6.347658e-2", "2.655215e-16", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 41 heat Some((2, 2, 0.0064328755)) dt 6.4329e-3 E_in 1.607657e4 heatΔ 0.0000e0 | ΔE gpu 1.324404e2 cpu 1.324433e2 (rel -2.192e-5) nucCPU 1.324433e2 | GPU book Δ total nuc 5.329606e5 heat 4.0672e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.744369 He 0.255625 C 0.000006] cpu [H 0.744369 He 0.255625 C 0.000006]
+D34 react n 42: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 42: gpu Δ ["1.794062e2", "1.503651e-1", "1.889281e-15", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 42: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0007 max_dt_rel 0.0288
+D34 groups n 42: cpu   ["1.794116e2", "1.503772e-1", "1.889500e-15", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 42 heat Some((2, 2, 0.0064034807)) dt 6.4035e-3 E_in 1.620901e4 heatΔ 1.8190e-12 | ΔE gpu 1.795566e2 cpu 1.795620e2 (rel -2.970e-5) nucCPU 1.795620e2 | GPU book Δ total nuc 7.193559e5 heat 4.3093e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.743681 He 0.256306 C 0.000012] cpu [H 0.743681 He 0.256306 C 0.000012]
+D34 react n 43: Some(ReactReport { substeps: 4096, retried: 0, max_substeps: 1, worst: 1, unfinished: 0, unfinished_run: 0 })
+D34 groups n 43: gpu Δ ["2.746151e2", "4.715079e-1", "2.472647e-14", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 43: substeps 4096 retried 0 max_substeps 1 unfinished 0 max_dx 0.0011 max_dt_rel 0.0430
+D34 groups n 43: cpu   ["2.746249e2", "4.715504e-1", "2.472982e-14", "0.000000e0", "0.000000e0", "0.000000e0", "0.000000e0"]
+D34 n 43 heat Some((2, 2, 0.0063642636)) dt 6.3643e-3 E_in 1.638857e4 heatΔ 0.0000e0 | ΔE gpu 2.750859e2 cpu 2.750965e2 (rel -3.836e-5) nucCPU 2.750965e2 | GPU book Δ total nuc 1.094908e6 heat 4.6178e2 floors 0.0000e0 0.0000e0 | CPU subs 1 retried 0 | X gpu [H 0.742629 He 0.257339 C 0.000032] cpu [H 0.742629 He 0.257339 C 0.000032]
+D34 react n 44: Some(ReactReport { substeps: 707536, retried: 99932, max_substeps: 184, worst: 184, unfinished: 0, unfinished_run: 0 })
+D34 groups n 44: gpu Δ ["1.938262e5", "3.615825e4", "7.871155e-2", "1.734416e-2", "2.071429e4", "7.909091e3", "0.000000e0", "0.000000e0"]
+D34 cpu pass n 44: substeps 1053520 retried 103800 max_substeps 275 unfinished 0 max_dx 0.0782 max_dt_rel 0.0495
+D34 groups n 44: cpu   ["1.938262e5", "3.600089e4", "7.871144e-2", "1.734413e-2", "2.071429e4", "7.909091e3", "0.000000e0"]
+D34 n 44 heat Some((2, 2, 0.00630555)) dt 6.3056e-3 E_in 1.666365e4 heatΔ 0.0000e0 | ΔE gpu 2.586080e5 cpu 2.584506e5 (rel +6.089e-4) nucCPU 2.584506e5 | GPU book Δ total nuc 9.941435e8 heat 5.0343e2 floors 0.0000e0 0.0000e0 | CPU subs 275 retried 103800 | X gpu [H 0.000000 Fe 1.000000] cpu [Fe 1.000000]
+D34 cumulative ΔE cell 2080: gpu 2.605325e5 cpu-lockstep 2.603752e5
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 194 filtered out; finished in 3.70s
+

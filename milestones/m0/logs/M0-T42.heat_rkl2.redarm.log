@@ -1,0 +1,345 @@
+==== 2026-10-14T07:21:23-04:00 heat_rkl2 · clean · a fresh scratch copy of the tree
+== 2026-10-14T07:21:23-04:00 heat_rkl2 · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=0 · 12.29 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-euimgslk/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-euimgslk/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.75s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-HEAT2 sharp pulse, 5 stages x 15: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, response in [-8.88e-16, 4.4711e-3], deepest ring -2.286e-2, heat 1.000000000
+ok
+test heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse (bg 2): sigma2 x 47.70734 y 47.70734, explicit x 48.00000 y 48.00000, deepest ring -2.286e-2, highest 4.4711e-3, heat 0.9982471 of 1.0000000
+SR-HEAT2 GPU sharp pulse run: lost 8228.556484, radiated 8228.575335
+SR-HEAT2 GPU sharp pulse run: lost 8228.552978, radiated 8228.575335
+ok
+test heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 14, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000922 y 40.000922, explicit x 40.000158 y 40.000158, expected 40
+ok
+test heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU at 131.76: HeatReport { stages: 32, need: 33, worst: 33, dt: 131.76, dt_p: Some(0.50053847) }, Some("SR-WARN heat stages 33"), sigma2 x 147.619, heat 6.88e-8
+ok
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... ok
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 14 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+ok
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... SR-HEAT2 six passes: largest |T_rkl2 - T_explicit| 2.737e-3, |T_rkl2 - analytic| 2.741e-3, peak 0.4027
+ok
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.90s
+
+
+==== 2026-10-14T07:21:23-04:00 heat_rkl2 · plant rkl2-s-minus-one · a fresh scratch copy of the tree
+planted rkl2-s-minus-one: tests/plants/rkl2-s-minus-one.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-14T07:21:23-04:00 heat_rkl2 · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=101 · 6.58 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-euimgslk/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-euimgslk/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.75s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... 
+thread 'heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (1114607) panicked at crates/sr-engine/tests/gpu/heat.rs:685:13:
+assertion `left == right` failed: dt/dt_p = 6.4
+  left: 4
+ right: 5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (1114617) panicked at crates/sr-engine/tests/gpu/heat.rs:766:13:
+assertion `left == right` failed
+  left: 4
+ right: 5
+FAILED
+test heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 13, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000455 y 40.000455, explicit x 40.000158 y 40.000158, expected 40
+
+thread 'heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (1114676) panicked at crates/sr-engine/tests/gpu/heat.rs:717:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32' (1114718) panicked at crates/sr-engine/tests/gpu/heat.rs:734:13:
+assertion `left == right` failed: dt 0.5001: HeatReport { stages: 2, need: 3, worst: 3, dt: 0.5001, dt_p: Some(0.5) }
+  left: (2, 3)
+ right: (2, 2)
+FAILED
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... 
+thread 'heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not' (1114737) panicked at crates/sr-engine/tests/gpu/heat.rs:654:9:
+assertion `left == right` failed
+  left: (31, 32)
+ right: (32, 32)
+FAILED
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 13 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+
+thread 'heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (1114738) panicked at crates/sr-engine/tests/gpu/heat.rs:587:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... 
+thread 'heat::rkl2::six_rkl2_passes_match_the_explicit_field' (1114739) panicked at crates/sr-engine/tests/gpu/heat.rs:603:13:
+assertion `left == right` failed: dt/dt_p = 8
+  left: 5
+ right: 6
+FAILED
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... 
+thread 'heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt' (1114740) panicked at crates/sr-engine/tests/gpu/heat.rs:635:13:
+assertion `left == right` failed: dt 0.5001
+  left: 2
+ right: 3
+FAILED
+
+failures:
+
+failures:
+    heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32
+    heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not
+    heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::rkl2::six_rkl2_passes_match_the_explicit_field
+    heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.71s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-14T07:23:44-04:00 heat_rkl2 · clean · a fresh scratch copy of the tree
+== 2026-10-14T07:23:44-04:00 heat_rkl2 · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=0 · 5.68 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-b0jbygw9/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-b0jbygw9/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.63s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-HEAT2 sharp pulse, 5 stages x 15: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, response in [-8.88e-16, 4.4711e-3], deepest ring -2.286e-2, heat 1.000000000
+ok
+test heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse (bg 2): sigma2 x 47.70734 y 47.70734, explicit x 48.00000 y 48.00000, deepest ring -2.286e-2, highest 4.4711e-3, heat 0.9982471 of 1.0000000
+SR-HEAT2 GPU sharp pulse run: lost 8228.556484, radiated 8228.575335
+SR-HEAT2 GPU sharp pulse run: lost 8228.552978, radiated 8228.575335
+ok
+test heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 14, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000922 y 40.000922, explicit x 40.000158 y 40.000158, expected 40
+ok
+test heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU at 131.76: HeatReport { stages: 32, need: 33, worst: 33, dt: 131.76, dt_p: Some(0.50053847) }, Some("SR-WARN heat stages 33"), sigma2 x 147.619, heat 6.88e-8
+ok
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... ok
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 14 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+ok
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... SR-HEAT2 six passes: largest |T_rkl2 - T_explicit| 2.737e-3, |T_rkl2 - analytic| 2.741e-3, peak 0.4027
+ok
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.92s
+
+
+==== 2026-10-14T07:23:44-04:00 heat_rkl2 · plant rkl2-s-minus-one · a fresh scratch copy of the tree
+planted rkl2-s-minus-one: tests/plants/rkl2-s-minus-one.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-14T07:23:44-04:00 heat_rkl2 · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=101 · 10.59 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-b0jbygw9/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-b0jbygw9/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.16s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... 
+thread 'heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (1142534) panicked at crates/sr-engine/tests/gpu/heat.rs:685:13:
+assertion `left == right` failed: dt/dt_p = 6.4
+  left: 4
+ right: 5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (1142535) panicked at crates/sr-engine/tests/gpu/heat.rs:766:13:
+assertion `left == right` failed
+  left: 4
+ right: 5
+FAILED
+test heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 13, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000455 y 40.000455, explicit x 40.000158 y 40.000158, expected 40
+
+thread 'heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (1142638) panicked at crates/sr-engine/tests/gpu/heat.rs:717:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32' (1142657) panicked at crates/sr-engine/tests/gpu/heat.rs:734:13:
+assertion `left == right` failed: dt 0.5001: HeatReport { stages: 2, need: 3, worst: 3, dt: 0.5001, dt_p: Some(0.5) }
+  left: (2, 3)
+ right: (2, 2)
+FAILED
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... 
+thread 'heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not' (1142676) panicked at crates/sr-engine/tests/gpu/heat.rs:654:9:
+assertion `left == right` failed
+  left: (31, 32)
+ right: (32, 32)
+FAILED
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 13 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+
+thread 'heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (1142677) panicked at crates/sr-engine/tests/gpu/heat.rs:587:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... 
+thread 'heat::rkl2::six_rkl2_passes_match_the_explicit_field' (1142678) panicked at crates/sr-engine/tests/gpu/heat.rs:603:13:
+assertion `left == right` failed: dt/dt_p = 8
+  left: 5
+ right: 6
+FAILED
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... 
+thread 'heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt' (1142679) panicked at crates/sr-engine/tests/gpu/heat.rs:635:13:
+assertion `left == right` failed: dt 0.5001
+  left: 2
+ right: 3
+FAILED
+
+failures:
+
+failures:
+    heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32
+    heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not
+    heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::rkl2::six_rkl2_passes_match_the_explicit_field
+    heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.70s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-14T07:26:57-04:00 heat_rkl2 · clean · a fresh scratch copy of the tree
+== 2026-10-14T07:26:57-04:00 heat_rkl2 · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=0 · 9.54 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5oc3l_44/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-5oc3l_44/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.08s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-HEAT2 sharp pulse, 5 stages x 15: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, response in [-8.88e-16, 4.4711e-3], deepest ring -2.286e-2, heat 1.000000000
+ok
+test heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse (bg 2): sigma2 x 47.70734 y 47.70734, explicit x 48.00000 y 48.00000, deepest ring -2.286e-2, highest 4.4711e-3, heat 0.9982471 of 1.0000000
+SR-HEAT2 GPU sharp pulse run: lost 8228.556484, radiated 8228.575335
+SR-HEAT2 GPU sharp pulse run: lost 8228.552978, radiated 8228.575335
+ok
+test heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 14, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000922 y 40.000922, explicit x 40.000158 y 40.000158, expected 40
+ok
+test heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU at 131.76: HeatReport { stages: 32, need: 33, worst: 33, dt: 131.76, dt_p: Some(0.50053847) }, Some("SR-WARN heat stages 33"), sigma2 x 147.619, heat 6.88e-8
+ok
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... ok
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 14 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+ok
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... SR-HEAT2 six passes: largest |T_rkl2 - T_explicit| 2.737e-3, |T_rkl2 - analytic| 2.741e-3, peak 0.4027
+ok
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.90s
+
+
+==== 2026-10-14T07:26:57-04:00 heat_rkl2 · plant rkl2-s-minus-one · a fresh scratch copy of the tree
+planted rkl2-s-minus-one: tests/plants/rkl2-s-minus-one.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-14T07:26:57-04:00 heat_rkl2 · task M0-T42 · box laserax-ai :: bash tests/gpu.sh heat::rkl2 physics
+-- heat_rkl2 · exit=101 · 4.48 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5oc3l_44/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-5oc3l_44/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 3.62s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... 
+thread 'heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (1164342) panicked at crates/sr-engine/tests/gpu/heat.rs:685:13:
+assertion `left == right` failed: dt/dt_p = 6.4
+  left: 4
+ right: 5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (1164343) panicked at crates/sr-engine/tests/gpu/heat.rs:766:13:
+assertion `left == right` failed
+  left: 4
+ right: 5
+FAILED
+test heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 13, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000455 y 40.000455, explicit x 40.000158 y 40.000158, expected 40
+
+thread 'heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (1164392) panicked at crates/sr-engine/tests/gpu/heat.rs:717:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32' (1164424) panicked at crates/sr-engine/tests/gpu/heat.rs:734:13:
+assertion `left == right` failed: dt 0.5001: HeatReport { stages: 2, need: 3, worst: 3, dt: 0.5001, dt_p: Some(0.5) }
+  left: (2, 3)
+ right: (2, 2)
+FAILED
+test heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not ... 
+thread 'heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not' (1164448) panicked at crates/sr-engine/tests/gpu/heat.rs:654:9:
+assertion `left == right` failed
+  left: (31, 32)
+ right: (32, 32)
+FAILED
+test heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-HEAT2 13 stages for dt/dt_p = 48: RKL2 sigma2 x 40.000000 y 40.000000, explicit x 40.000000 y 40.000000, expected 40
+
+thread 'heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (1164449) panicked at crates/sr-engine/tests/gpu/heat.rs:587:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::rkl2::six_rkl2_passes_match_the_explicit_field ... 
+thread 'heat::rkl2::six_rkl2_passes_match_the_explicit_field' (1164450) panicked at crates/sr-engine/tests/gpu/heat.rs:603:13:
+assertion `left == right` failed: dt/dt_p = 8
+  left: 5
+ right: 6
+FAILED
+test heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt ... 
+thread 'heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt' (1164451) panicked at crates/sr-engine/tests/gpu/heat.rs:635:13:
+assertion `left == right` failed: dt 0.5001
+  left: 2
+ right: 3
+FAILED
+
+failures:
+
+failures:
+    heat::rkl2::a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::rkl2::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::rkl2::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::rkl2::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32
+    heat::rkl2::more_than_32_stages_prints_the_warning_and_32_does_not
+    heat::rkl2::one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::rkl2::six_rkl2_passes_match_the_explicit_field
+    heat::rkl2::the_stage_count_is_the_smallest_that_covers_dt
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.75s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

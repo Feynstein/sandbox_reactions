@@ -1,0 +1,5 @@
+# M0-T48 | launch headless-boot | 2026-10-14T09:32:54-0400
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-glzj4cq1
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-WARN heat stages 3800
+SR-HEADLESS DONE steps=200 sim_time=3.584303 until=none

@@ -1,0 +1,30 @@
+== 2026-10-14T08:36:32-04:00 burn_order · task M0-T44b-r2 · box laserax-ai :: bash tests/gpu.sh burn::order
+-- burn_order · exit=0 · 5.84 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.67s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 2 tests
+test burn::order::ignition_order ... ε* crossings at T: H 145.5, He 163, C 242.5, Ne 333, O 343, Si 501.00000000000006
+ok
+test burn::order::records_book_into_their_group ... H_burn: group H, booked 7.351803e-2, q·Δm 7.351803e-2
+He_burn: group He, booked 9.307699e0, q·Δm 9.307699e0
+C_alpha: group He, booked 6.561438e-1, q·Δm 6.561438e-1
+C_burn: group C, booked 5.256598e-1, q·Δm 5.256598e-1
+Ne_burn: group Ne, booked 1.448557e-1, q·Δm 1.448557e-1
+O_burn: group O, booked 6.549889e-1, q·Δm 6.549889e-1
+Mg_burn: group O, booked 6.552997e-1, q·Δm 6.552997e-1
+Si_burn: group Si, booked 2.502053e-1, q·Δm 2.502053e-1
+S_burn: group Si, booked 2.502053e-1, q·Δm 2.502053e-1
+N_Fe: group N, booked -4.409965e0, q·Δm -4.409965e0
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 165 filtered out; finished in 0.07s
+
+

@@ -1,0 +1,10 @@
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+GPU hot core: P6 42.3991 ms against 0.1007 ms all cold; 12544 sub-steps, at most 196 in one cell, retried 640
+test burn::cell::gpu_a_hot_core_in_a_cold_field ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 182 filtered out; finished in 0.70s
+

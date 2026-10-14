@@ -1,0 +1,13 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.48s
+== 2026-10-14T07:52:36-04:00 build[native] · task M0-T43 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T07:52:36-04:00 build[wasm] · task M0-T43 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.07 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=0 · 9.03 s
+build native: 1.99.0 in 9 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+

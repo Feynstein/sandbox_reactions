@@ -1,0 +1,13 @@
+--- a/crates/sr-engine/shaders/react.wgsl
++++ b/crates/sr-engine/shaders/react.wgsl
+@@ -238,8 +238,8 @@
+         if (prod != 0.0) {
+             lit = 1.0;
+         }
+-        if (prod > 0.0 && (rec.head.w & LATCHES) != 0u) {
+-            latched = true;
++        if ((rec.head.w & LATCHES) != 0u) {
++            latched = prod > 0.0; // planted: the latch reads the last sub-cycle's rate only
+         }
+         for (var k = 0u; k < MAX_INPUTS; k++) {
+             grad[4u * r + k] = 0.0;

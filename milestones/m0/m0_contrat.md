@@ -89,6 +89,114 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     γ, read time, oracle and tolerances unchanged · §2.8 keeps a world side at 64 cells or more (WorldConfig refuses less,
     and every scene file is parsed through it), so the scene cannot be 400 × 4 (M0-T33b) — the lead's answer at M0-V5,
     2026-10-13: «Amend G-SOD (Recommended)».
+  - [M0-T42] §2.4.3's "If s > 32 in any step the run prints `SR-WARN heat stages <s>` … an implicit solver is a PLAN decision,
+    never a silent switch" · the same warning, with s the stages Δt needed; the GPU's P5 records 32 stage dispatches, and a cell
+    whose own Σ_f K_f / C would alone need more than 32 stages over Δt has each face it touches capped at
+    K ≤ 0.999 · (32² + 32 − 2)/(4Δt) · C/4 (C the smaller gas side's), so every cell fits 32 stages over the full Δt and only the
+    stiff cells' heat lags (energy kept, F the capped flux); a step with no such cell is §2.4.3's scheme untouched; the real
+    fallback stays a PLAN decision · measured on linux-pc, 2026-10-14, RTX 5090 and Quadro RTX 4000, scenes/sun_disk.json:
+    the flow spreads thin hot gas into the vacuum rim (Σ ≈ 2 × 10⁻⁶, T ≈ 5) — 54 stages needed at step 1, up to 3,803 within
+    200 steps, 31 of the 200 over 32 (all in the first ~80) — and the GPU cannot record a step's s without reading it back —
+    the lead's answer at M0-T42, 2026-10-14: «Throttle stiff faces (Recommended)».
+  - [M0-D33] §2.12.3's "then each channel as a little-endian f32 plane in §2.2's order, row-major" with [M0-T26]'s `resume`
+    keys · the same, then — when the run runs P5 — F's two little-endian f32 planes (`side.flux`: F_x, then F_y, row-major)
+    after the 14 channels, flagged by one more `resume` key, `"flux": true|false` (always written; missing or not a boolean
+    refused); a body the flag disagrees with is refused naming the flag; `load_dump` writes F into `side.flux`, and refuses F
+    into a step without P5 or a step with P5 from a dump without F; version stays 1 · §2.4.4's push in step n + 1 reads the F
+    step n's P5 took from the temperatures after P4, which no dumped cell can rebuild, so a heat run resumed without it pushes
+    with F = 0 on its first step — measured on linux-pc, 2026-10-14, RTX 5090, M0-T43's claim: `dump`'s headless resume
+    (preset:sun, 256 × 256) s_150.bin differs from the straight run's — the lead's answer at M0-T43, 2026-10-14: «Dump
+    carries F (Recommended)».
+  - [M0-D34] §1.6.1's "f(T) = Σ_k w_k (T / T_k)^{ν_k} for T ≥ T_thr, else 0" · each term Gamow-shaped, the non-resonant
+    fusion rate's form: f(T) = Σ_k w_k (T/T_k)^{−2/3} exp(τ_k (1 − (T_k/T)^{1/3})), τ_k = 3ν_k + 2, for T ≥ T_thr, else 0 —
+    equal to the power law at T_k in value and slope, its exponent then falling as real charged-particle rates' do
+    (ν(T) = −2/3 + (τ_k/3)(T_k/T)^{1/3}: He 40 at T_He, ≈ 20 at 8 T_He) and bounded (ln f ≤ τ_k − 2 ln(τ_k/2) − 2, ≈ 112 for
+    ν = 40); ν_k, T_k, w_k and §1.6.2's table unchanged; both sides, the twin and the GPU, read this law, and the GPU holds
+    rates past f32's e^88 by a rate scale, never by clipping one record's f · measured on linux-pc, 2026-10-14, RTX 5090,
+    scenes/ref_burn.json (64 × 64, Σ 30, T 100, H | He) with heat off: the power law reaches e^194 (T ≈ 18,000) in the
+    runaway, the GPU clipped ln f at 60 per record and the twin did not, E relative L1 8.5 × 10⁻³ after 200 steps (He group
+    booked 0.44 % apart, every other group within 10⁻⁷); with the same clip on both, 6.3 × 10⁻⁸ — the lead's answer at
+    M0-D34, 2026-10-14: «Gamow-shaped terms (Recommended)», after "whats the most physically realistic way to solve this, I
+    want that"; built by M0-D35.
+  - [M0-D34] §2.4.3's "an implicit solver is a PLAN decision" and [M0-T42]'s face cap · P5 runs unthrottled: an implicit
+    (backward-Euler) diffusion solve on the GPU, iterative over the box, specified by M0-TJ4 (method, tolerance, oracles, the
+    per-step cost on the Quadro) and built after it; until then [M0-T42]'s cap stands · it must hold the 60 fps target on
+    the player's mid-range hardware (the lead, 2026-10-14: "make sure itll be able to run on the players hardware however
+    haha") · measured on linux-pc, 2026-10-14, RTX 5090, ref_burn.json: after the runaway, steps 45–54 need 35–549 stages,
+    the GPU capped at 32 and the twin did not, so E relative L1 stays 2.8 × 10⁻² with P6 matched; from step 55 (≤ 32
+    stages) the two agree to ~10⁻⁵ — the lead's answer at M0-D34, 2026-10-14: «Implicit solver (Recommended)», after "I
+    want the most physically realistic outcome for that".
+  - [M0-TJ4] §2.4.3's stepping (RKL2: Δt_p, the stage count s, "coefficients frozen at the start of P5", `SR-WARN heat
+    stages <s>`), [M0-T42]'s face cap, [M0-D34]'s "specified by M0-TJ4", §1.3.2's P5 row ("stepped by RKL2 with s stages")
+    and §1.7's heat row ("+ RKL2", "s from Δt") · P5 is one implicit step, the same on the GPU and the twin:
+    (1) **the law** — each gas cell's heat potential u = a_r T⁴ (u = T under the scene's `test.constant_diffusivity`); a face
+    carries F = −D_f (u_b − u_a), positive toward +x, +y, D_f = c_sb λ(R_f)/(κΣ)_f + k_cond/(a_r (T_a + T_b)(T_a² + T_b²)) —
+    §2.4.1's law as the twin wrote it (its K_f = D_f a_r (T_a + T_b)(T_a² + T_b²)), R_f and (κΣ)_f as there, the vacuum
+    state beyond a gas cell's vacuum or edge face (Σ_floor, T_floor, the gas side's κ and μ; u_vac = a_r T_floor⁴), vacuum
+    cells not updated; under `constant_diffusivity` χ, D_f = χ C_f (C_f the two heat capacities' mean); `flux_limiter`
+    false, λ ≡ 1/3; `pin_temperature`, F from the start state and nothing booked;
+    (2) **the step** — backward Euler over the pass's Δt, the light law frozen and the heat exact: D_f taken once from the
+    pass's start state (as RKL2's coefficients were), then for every gas cell C_i (T(u_i) − T_i⁰) + Δt Σ_f F_f(u) = 0
+    (outflow positive), T(u) = (u/a_r)^{1/4} (= u under `constant_diffusivity`), C_i = Σ_i/μ_i;
+    (3) **Newton passes** k = 1, 2, … — T(u) linearised at the latest iterate, T ≈ T^{k−1} + (u − u^{k−1})/(4 a_r
+    (T^{k−1})³), so each pass is one symmetric positive-definite system: diagonal c_i + Σ_f D_f, c_i = C_i/(4 a_r
+    (T_i^{k−1})³ Δt) (C_i/Δt under `constant_diffusivity`), −D_f between gas cells; the first iterate is the pass's start
+    state (nothing kept from the previous step: a dump resumes bit-identical on [M0-T26]'s keys); a pass moves no cell's T
+    by more than a factor 2 and keeps u ≥ u_vac; the passes end after the first one with Σ_i C_i |T_i^k − T_i^{k−1}| ≤ 10⁻⁶
+    Σ_i C_i T_i⁰ and every |T_i^k − T_i^{k−1}| ≤ 10⁻³ T_i^{k−1} (the twin: 10⁻¹² and 10⁻¹⁰);
+    (4) **the solve** of each pass — on the GPU, Jacobi-preconditioned conjugate gradients over the box's gas cells in f32,
+    every reduction a fixed-order tree (§1.3.4), ending at the first round with both (r, D⁻¹r) ≤ (10⁻⁵)² Σ_i c_i
+    (u_i^{k−1})² and Σ_i (C_i/Δt) ê_i² ≤ (10⁻⁵)² Σ_i (C_i/Δt) (T_i^{k−1})², ê_i = r_i/(4 a_r (T_i^{k−1})³ D_ii) (r_i/D_ii under
+    `constant_diffusivity`) — D the system's diagonal; the error in u, and each cell's heat error by its Jacobi estimate,
+    both held to 10⁻⁵ of the heat's own scale (the first alone weighs a cell by ~C T⁵ and lets a cold front's heat go: 11 %
+    of the heat heat_spot's first pass moved, in the scratch model); on the twin, the same in f64 to 10⁻¹² — so G-REF
+    compares one discretisation;
+    (5) **the commit** — F_f = −D_f (u_b − u_a) at the solved u, the flux the step moved, kept for step n + 1's P4 push
+    (§2.4.4), in `side.flux` and in the dump's F ([M0-D33]); R = Δt Σ of F through the gas cells' vacuum and edge faces,
+    booked `radiated` and per emitting cell into §1.9.1's accumulator; E_i += C_i ((1 + δ) T(u_i) − T_i⁰) in gas cells,
+    δ = −(Σ_i C_i (T(u_i) − T_i⁰) + R)/Σ_i C_i T(u_i) — the step's heat balance closed to f32's sums, δ of the order of (4)'s
+    tolerance when the step converged;
+    (6) **no throttle: speed gives first** — a step's P5 runs until (3)'s passes end; how many rounds a submission records
+    for a step is the engine's choice, and a step whose P5 has not ended when they run out continues in the next
+    submission: every later dispatch of that submission zeroed (as §1.8.5's latch zeroes them), the next one starting with
+    that step's remaining rounds, its commit and its P6–P9; nothing a step computes depends on where a submission ends
+    (G-WARP holds across it), and the time control counts a carried step's cost and sim time as any step's (§1.8.3–§1.8.4:
+    N_max falls, the readout shows `running ×`); the only ceiling, 16 passes or 4,096 rounds in one step, commits the last
+    iterate with (5)'s closure and prints `SR-WARN heat unconverged step <n> passes <k> rounds <r>` — never silent;
+    (7) **the cost** — P5's mean ≤ 0.5 ms per step on the Quadro RTX 4000 (R12) for scenes/sun_disk.json (the Sun-like
+    preset in the 600 × 400 world), 200 steps, `headless --timing`'s `P5 heat`, the median of 3 runs with the box's load
+    named; a red goes back to the lead (§0.4)
+    · M0-D34 ruled an implicit P5; measured on scratch models of the twin's law (NOT PROVEN — synthetic; tasks/M0-TJ4.md),
+    linux-pc, 2026-10-14: a ref_burn-like burnt field (Σ 30, T 18,800, 32 × 32, Δt 6.3 × 10⁻³) keeps 0.5 % of its heat
+    after one pass with every coefficient frozen (RKL2's way), 30 % under (2)–(3), 16 % in 256 sub-steps — the frozen T³
+    cools a runaway ~30× too fast; iterating the light law too (Picard on λ) moves ≤ 3 × 10⁻⁵ of the heat but took 86–987
+    rounds instead of 9 around a thin star edge, converging erratically; f32 Jacobi-PCG to (4)'s 10⁻⁵ lands within
+    3 × 10⁻⁷–2.5 × 10⁻⁵ of the f64 answer's heat in 9–361 rounds a step (35 in a mild one); the Quadro is dispatch-bound (2.65 µs a
+    dispatch, M0-R3; P5's 39 dispatches 0.19–0.26 ms, M0-T42), so one dispatch a round outweighs a stronger, costlier
+    round — the lead's answers at M0-TJ4, 2026-10-14: «Re-solve heat, light law fixed (Recommended)», «≤ 0.5 ms per step
+    (Recommended)», «Speed gives first (Recommended)»; built by M0-T117 (the twin), M0-T118 and M0-T119 (the GPU), M0-T120
+    (G-STIFF), M0-T121 (the carry-over) and M0-T122 (the cost).
+  - [M0-TJ4] §5.1 G-HEAT2's "RKL2 matches explicit. The same pulse by RKL2 against explicit sub-steps: σ² within 1 % … Scope
+    `heat-rkl2`. Plant `rkl2-s-minus-one`: one stage too few." · G-HEAT2 · the implicit step, on G-HEAT1's pulse
+    (scenes/heat_pulse.json, χ = 0.5, σ₀ = 4): (a) one pass of Δt = 24 (48 Δt_p) is its own system's solution — the twin
+    within 10⁻¹⁰ of the pulse's peak of an independent tight solve written in the test, the GPU within 10⁻⁴ of the peak of
+    the twin from the same f32 start — with σ² within 1 % of σ₀² + 2χt; (b) backward Euler's order, on the twin: the pulse
+    to t = 24 in 6, 12 and 24 passes against explicit sub-steps of Δt = 1/64 (1,536): the largest |ΔT| e(6) ≤ 0.03 of the
+    peak, e(6)/e(12) and e(12)/e(24) each within [1.8, 2.2] (computed 0.0236, 1.96 and 1.97 on a scratch copy of the
+    pulse; the test's present explicit run, Δt = 0.25, is itself 1.4 × 10⁻³ of the peak off). *Standard* (backward Euler is
+    first order; its σ² exact by the moment property). Scope `heat_implicit` (`heat_rkl2` renamed). Plant
+    `solve-two-rounds`: each pass's solve ends after two rounds · RKL2 is retired by the line above; its stage count and
+    the 32-stage warning have nothing left to grade — same pulse, same σ² band, a check that bites on the solve instead.
+  - [M0-TJ4] §5.1 G-FLD's "|F| ≤ c_sb a_r T⁴ (1 + 10⁻⁶) at every face (SM-E19). *By construction*." · on heat_spot.json, over
+    20 passes, the law each pass freezes holds the bound at every face — D_f |u_b − u_a| on the pass's start state ≤ c_sb
+    max(u_a, u_b) (1 + 10⁻⁶), the limiter binding (above 0.3 of it at some face) — *by construction* (λR < 1); thick gas
+    carries (4/3) a_r c_sb T³/(κΣ) within 1 % in the solved F; the solved F itself is not bounded where cold thin gas heats
+    within a pass; scope `heat_limiter` and plant `limiter-off` unchanged · F is now the flux the step moved (the line
+    above, (5)), and with the light law frozen at the pass's start a face whose two cells started equal carries λ = 1/3:
+    measured on a scratch model of heat_spot.json (NOT PROVEN — synthetic), 2026-10-14, the first pass of Δt = 0.002 moves
+    up to 850 × c_sb a_r T⁴ across the cold front's faces (T 0.05 → 0.056), 3 × 10⁻⁸ of the spot's heat; RKL2 moved the
+    same energy and reported its start flux, which is what G-FLD has always bounded — the lead's first answer at M0-TJ4,
+    2026-10-14: «Re-solve heat, light law fixed (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1149,6 +1257,20 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   1 % (SM-O8, SM-E18). *Standard*. Scope `heat-rkl2`. Plant `rkl2-s-minus-one`: one stage too few.
 - **G-FLD · the flux limiter.** Thin gas (Σ = 10⁻⁴) around a hot spot: |F| ≤ c_sb a_r T⁴ (1 + 10⁻⁶)
   at every face (SM-E19). *By construction*. Scope `heat-limiter`. Plant `limiter-off`: λ ≡ 1/3.
+- **G-STIFF · stiff heat** [M0-TJ4]. P5 alone (heat only), one pass of §0.5 [M0-TJ4]'s implicit step, on two scenes whose
+  cells would need ≥ 500 RKL2 stages by §2.4.3's count on the start state (computed in the test):
+  scenes/heat_hot.json — 64 × 64 helium, Σ 30, T 18,800, leave edges, the cold pressure off; Δt = 0.02, ~580 stages — and
+  scenes/heat_rim.json — 64 × 64, a hydrogen disk (Σ 1, T 100, a = 20) ringed by 12 cells of Σ 2 × 10⁻⁶ at T 5, vacuum
+  beyond, the cold pressure off; Δt = 0.01, ~11,500 stages. (a) T_floor ≤ T ≤ (1 + 10⁻⁵) max T⁰ in every gas cell (backward
+  Euler's maximum principle); (b) the heat the grid lost equals the booked `radiated` within 10⁻⁶ on the twin, 10⁻⁵ on the
+  GPU; (c) the twin's T solves the step: every gas cell's |C_i (T_i − T_i⁰) + Δt Σ_f F_f| ≤ 10⁻⁸ (C_i T_i⁰ + Δt Σ_f |F_f|);
+  (d) the GPU's T against the twin's from the same f32 start — C-weighted relative L1 ≤ 10⁻⁴, every cell with Σ ≥ 10⁻⁴
+  within 10⁻³ — and bit for bit the same when the step is carried over submissions of 8 rounds; (e) heat_hot's heat left
+  (Σ C T over gas cells, after over before) within [1.0, 2.2] × the twin's after 64 passes of Δt/64 — backward Euler cools
+  no faster than its refinement (computed 1.69 on a scratch model of the scene, 1.95 on a 32 × 32 copy; ≥ 2.46 with one
+  damped Newton pass, 0.03 with the T³ frozen). *Standard* (backward Euler's L-stability and maximum principle), (e)'s
+  band from the scratch model (milestones/m0/tasks/M0-TJ4.md). Scope `heat_stiff`. Plant `newton-one-pass`: P5 ends after
+  its first Newton pass.
 - **G-CORE · the cold ceiling.** Cold C/O disks: at 0.95 m_ch_sb, R₉₀ steady within 3 % over
   10 τ_dyn; at 1.1 m_ch_sb, R₉₀ below 50 % of its start within 10 τ_dyn; the GPU's m_ch within 5 % of
   the CPU twin's; with the relativistic branch removed (pure Σ²), R₉₀(M) flat within 3 % over

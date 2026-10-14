@@ -197,6 +197,11 @@ impl Latch {
         &self.check
     }
 
+    /// The latch record, whose first word is the flag P6 and P3 OR into.
+    pub(super) fn flag(&self) -> &wgpu::Buffer {
+        &self.record
+    }
+
     pub(super) fn hooked(&self) -> bool {
         self.hooked.get()
     }

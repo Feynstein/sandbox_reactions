@@ -1,0 +1,2 @@
+# M0-T42-decoy | launch web | 2026-10-14T07:26:30-0400
+$ python3 -m http.server 47812 --bind 127.0.0.1 --directory web/dist

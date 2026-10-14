@@ -1,0 +1,21 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.37s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU runaway, step 44: T 140.3 → twin 160.1, X_Fe twin 0.000000 GPU 0.000000; ΔE GPU 1.001414e3 twin 1.001504e3 (rel 8.94e-5); sub-steps GPU 5 twin 5, retried 4 / 4
+
+thread 'burn::cell::gpu_the_runaway_books_as_the_twin' (3139391) panicked at crates/sr-engine/tests/gpu/burn.rs:685:13:
+step 44: the twin's cell did not run away to iron (0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test burn::cell::gpu_the_runaway_books_as_the_twin ... FAILED
+
+failures:
+
+failures:
+    burn::cell::gpu_the_runaway_books_as_the_twin
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 195 filtered out; finished in 0.35s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

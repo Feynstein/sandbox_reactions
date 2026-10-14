@@ -1,0 +1,29 @@
+== 2026-10-14T09:23:36-04:00 grav_selfforce · task M0-T47 · box laserax-ai :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=0 · 4.17 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.12s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 5 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.509e-12, Σ m|g| = 2.767e3, ratio 5.452e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 4.026e-6, Σ m|g| = 2.767e3, ratio 1.455e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 1.17e-7, gx 1.61e-6, gy 1.61e-6
+ok
+test grav::selfforce::gpu_tall_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU tall box 128x512, box BoxReport { x0: 40, y0: 88, w: 40, h: 344, fft: [128, 1024], from_step: 1, fits: 2, tiles: [5, 43, 1], cells: [54, 1, 1] }: |Σ m·g| = 1.408e-4, Σ m|g| = 5.937e3, ratio 2.371e-8
+SR-GRAV-REF tall box, box 40x344 at (40, 88), FFT [128, 1024]: relative L1 against the twin φ 8.12e-8, gx 1.23e-6, gy 8.53e-6
+ok
+test grav::selfforce::gpu_wide_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU wide box 600x400, box BoxReport { x0: 120, y0: 168, w: 392, h: 64, fft: [1024, 128], from_step: 1, fits: 2, tiles: [49, 8, 1], cells: [98, 1, 1] }: |Σ m·g| = 7.648e-5, Σ m|g| = 4.766e3, ratio 1.605e-8
+SR-GRAV-REF wide box, box 392x64 at (120, 168), FFT [1024, 128]: relative L1 against the twin φ 1.14e-7, gx 3.21e-6, gy 3.10e-6
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 2.355e-16
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 188 filtered out; finished in 3.93s
+
+

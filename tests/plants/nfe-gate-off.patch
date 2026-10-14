@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/rates.rs
++++ b/crates/sr-physics/src/rates.rs
+@@ -102,7 +102,7 @@
+         match &self.gate {
+             None => 1.0,
+             Some(g) if y_e_sigma > g.sigma_g => (y_e_sigma / g.sigma_g - 1.0).powf(g.p),
+-            Some(_) => 0.0,
++            Some(_) => 1.0, // planted: the gate ignored, N_Fe burns at any density
+         }
+     }
+ 
+--- a/crates/sr-engine/shaders/react.wgsl
++++ b/crates/sr-engine/shaders/react.wgsl
+@@ -209,7 +209,7 @@
+     if (y_e_sigma > gate.x) {
+         return powr(y_e_sigma / gate.x - 1.0, gate.y);
+     }
+-    return 0.0;
++    return 1.0; // planted: the gate ignored, N_Fe burns at any density
+ }
+ 
+ // ε_ν at T (§2.5.3): A_ν (T/T_ν)^m per unit mass from T_ν up, 0 below it and with the switch off.

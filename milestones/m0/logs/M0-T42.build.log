@@ -1,0 +1,20 @@
+== 2026-10-14T07:25:29-04:00 build[native] · task M0-T42 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T07:25:29-04:00 build[wasm] · task M0-T42 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.27 s
+build wasm: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=0 · 1.62 s
+build native: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+== 2026-10-14T07:26:11-04:00 build[native] · task M0-T42 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T07:26:11-04:00 build[wasm] · task M0-T42 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.77 s
+build wasm: 1.99.0 in 0 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=0 · 7.64 s
+build native: 1.99.0 in 7 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+

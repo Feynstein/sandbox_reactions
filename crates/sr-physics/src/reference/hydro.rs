@@ -24,8 +24,14 @@
 //! each face state by half a step of g — its velocity by ½Δt·g, its energy by the work Σ(u + ¼Δt·g)·g·½Δt, so the kick
 //! leaves its thermal energy as it was — beside the flux differences; the update adds Δt·Σg to the momentum and
 //! Δt·(Σu)·g to the energy, Σ and Σu the cell centre's half-step values from that same predictor (its flux differences
-//! and its half kick), so the source is time-centred on the half-step velocity. A ghost cell's g is its edge cell's. The
-//! radiation force (§2.4.4) is M0-T43's.
+//! and its half kick), so the source is time-centred on the half-step velocity. A ghost cell's g is its edge cell's.
+//!
+//! The radiation force (§2.4.4; M0-T43), when a step is given the previous step's flux F ([`Hydro::step_forced`]: P5's
+//! cell-centred planes, `heat::Flux::cells`): every gas cell (Σ ≥ Σ_vac) gains Δt·f of momentum, f = κΣF/c_sb from the
+//! cell as the step found it (κ = κ₀(1 + X_H) plus κ_dust Z_met where T < T_dust, §2.4.2), added in the update after the
+//! flux differences and gravity's source; E is left as it is, so the work comes out of the thermal energy. The predictor
+//! is not kicked: F already lags a step, so the force is first order in time either way, and the one-step difference a
+//! force makes is Δt·f in each cell, nothing else.
 //!
 //! A cell below Σ_vac is read as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20); a cell and its
 //! four neighbours all below Σ_vac are left as they are, so empty space is not filled by the floor.
@@ -257,6 +263,11 @@ pub struct Hydro {
     cfl: f64,
     eta_g: f64,
     edge: Edge,
+    /// The radiation force's constants (§2.4.2, §2.4.4).
+    kappa0: f64,
+    c_sb: f64,
+    kappa_dust: f64,
+    t_dust: f64,
 }
 
 impl Hydro {
@@ -271,7 +282,31 @@ impl Hydro {
             cfl: get("cfl"),
             eta_g: get("eta_g"),
             edge,
+            kappa0: get("kappa0"),
+            c_sb: get("c_sb"),
+            kappa_dust: get("kappa_dust"),
+            t_dust: get("t_dust"),
         })
+    }
+
+    /// The radiation force per area f = κΣF/c_sb on cell `i` of `st` under the cell-centred flux (`fx`, `fy`): κ from the
+    /// cell's mass fractions and temperature (§2.4.2, as P5's); 0 below Σ_vac.
+    fn radiation_force(&self, st: &State, i: usize, fx: f64, fy: f64) -> [f64; 2] {
+        let sigma = st.get(0, i);
+        if sigma < self.sigma_vac {
+            return [0.0, 0.0];
+        }
+        let x: [f64; NS] = std::array::from_fn(|s| st.get(4 + s, i));
+        let mut kappa = self.kappa0 * (1.0 + x[0]);
+        if self.kappa_dust != 0.0 {
+            let comp = self.elements.composition(&x);
+            let mu = 1.0 / comp.inv_mu;
+            let th = self.eos.thermal(st.get(3, i), sigma, [st.get(1, i), st.get(2, i)], comp.y_e, Self::x_n(&x), mu);
+            if Eos::temperature(th.eps_th, mu) < self.t_dust {
+                kappa += self.kappa_dust * comp.z_met;
+            }
+        }
+        [kappa * sigma * fx / self.c_sb, kappa * sigma * fy / self.c_sb]
     }
 
     /// 1/μ and Y_e of mass fractions `x`.
@@ -491,6 +526,12 @@ impl Hydro {
     /// One step of length `dt`, in place, with gravity's source when `gravity` holds P2's g (its x plane, then its y
     /// plane, over the world) — module doc.
     pub fn step_with(&self, st: &mut State, dt: f64, gravity: Option<(&[f64], &[f64])>) {
+        self.step_forced(st, dt, gravity, None);
+    }
+
+    /// As [`Hydro::step_with`], with the radiation force when `radiation` holds the previous step's F (its x plane, then
+    /// its y plane, cell-centred, over the world) — module doc.
+    pub fn step_forced(&self, st: &mut State, dt: f64, gravity: Option<(&[f64], &[f64])>, radiation: Option<(&[f64], &[f64])>) {
         let (w, h) = (st.width, st.height);
         let n = st.cells();
         let (pw, ph) = (w + 2 * GHOSTS, h + 2 * GHOSTS);
@@ -629,6 +670,12 @@ impl Hydro {
                     u[1] += dt * sigma * gx;
                     u[2] += dt * sigma * gy;
                     u[3] += dt * (mx * gx + my * gy);
+                }
+                // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
+                if let Some((fx, fy)) = radiation {
+                    let [ax, ay] = self.radiation_force(st, i, fx[i], fy[i]);
+                    u[1] += dt * ax;
+                    u[2] += dt * ay;
                 }
                 // Escaped, leaving (§2.8): each boundary face of a cell this step moved, its flux as the cell took it — the
                 // grid loses dt·f through a high face, −dt·f through a low one.

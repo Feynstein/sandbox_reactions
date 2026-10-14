@@ -1,6 +1,7 @@
 //! M0-T41 — heat and light on the CPU twin (contract §2.4, §1.7, §5.1's G-HEAT1, G-HEAT2 and G-FLD, R8, R13): P5's f64
-//! reference, `sr_physics::reference::heat`, one-temperature flux-limited diffusion stepped by RKL2. No adapter is touched;
-//! the GPU's cases join this file with M0-T42, the same oracles on `step/heat.rs`.
+//! reference, `sr_physics::reference::heat`, one-temperature flux-limited diffusion stepped by RKL2; the twin's cases touch
+//! no adapter. M0-T42 — the GPU's P5 (`step/heat.rs`, shaders/heat.wgsl), cases `gpu_…`, the same oracles on the physics
+//! adapter (R12), P5 alone between P1, P8 and P9 ([`OnGpu`]).
 //!
 //! Three scopes, one module each. `gauss` — G-HEAT1: a Gaussian heat pulse in a uniform medium whose diffusivity is the
 //! scene's `test.constant_diffusivity` (scenes/heat_pulse.json), the variance per axis σ²(t) = σ₀² + 2χt within 1 % (SM-O7,
@@ -16,10 +17,21 @@
 //!
 //! The oracles are written here from the contract, never read from the scheme: temperatures from E with the cold pressure
 //! off and the gas at rest and pure hydrogen (μ = 1/2), the explicit stepping, the moments, the closed forms.
+//!
+//! The GPU's f32 tolerances, fixed before its first run: the contract's own where a row names one (σ² 1 %, total heat 1e-5,
+//! |F| ≤ c_sb a_r T⁴ (1 + 1e-6)); against the twin from the same f32 start, T within 1e-4 of the pulse's peak and F within
+//! 1e-4 of the largest face flux; the stage count and its warning exact, Δt_p within 1e-6; `radiated` against the heat lost
+//! within 1e-5; the one-cell pulse's heat within 1e-4 (two runs' difference, f32 at T = 2). Above 32 stages a cell's faces
+//! are capped (contract §0.5 [M0-T42]): the 33-stage step runs 32 over the full Δt.
 
 use std::path::{Path, PathBuf};
 
-use sr_engine::scene::Scene;
+use sr_engine::gpu::Gpu;
+use sr_engine::scene::{Scene, TestSettings};
+use sr_engine::state::{Booking, SideFields, State as GpuState, WorldConfig, BOOK_GROUPS, TERMS};
+use sr_engine::step::boxfit::BoxMode;
+use sr_engine::step::heat::{HeatReport, HeatSetup};
+use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::reference::heat::{lambda, stages_for, Heat, Pass, TestFlags, MAX_STAGES};
 use sr_physics::reference::hydro::State;
 use sr_physics::registry::{Elements, Physics};
@@ -175,6 +187,102 @@ fn stats(t: &[f64], w: usize, bg: f64, half: usize) -> (f64, f64, f64) {
 /// The scene's pulse is far from every edge: nothing may leave, and what leaves is a failure of the set-up.
 fn assert_inside(p: &Pass) {
     assert!(p.radiated.abs() < 1e-12, "radiated {}", p.radiated);
+}
+
+/// `st` as the GPU holds it: each plane rounded to f32 (the twin then starts where the GPU does).
+fn rounded(st: &State) -> State {
+    State::new(st.width, st.height, st.planes.iter().map(|&v| f64::from(v as f32)).collect())
+}
+
+/// The largest |a − b| over two fields.
+fn largest_gap(a: &[f64], b: &[f64]) -> f64 {
+    a.iter().zip(b).map(|(x, y)| (x - y).abs()).fold(0.0, f64::max)
+}
+
+/// A whole buffer read back as f32 (COPY_SRC buffers: the side fields).
+fn read(gpu: &Gpu, buffer: &wgpu::Buffer) -> Vec<f32> {
+    let staging = gpu.device.create_buffer(&wgpu::BufferDescriptor {
+        label: Some("heat.test.read"),
+        size: buffer.size(),
+        usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
+        mapped_at_creation: false,
+    });
+    let mut encoder = gpu.device.create_command_encoder(&Default::default());
+    encoder.copy_buffer_to_buffer(buffer, 0, &staging, 0, buffer.size());
+    gpu.queue.submit([encoder.finish()]);
+    staging.map_async(wgpu::MapMode::Read, .., |r| r.expect("mapped"));
+    gpu.device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
+    let view = staging.get_mapped_range(..).unwrap();
+    view.as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect()
+}
+
+/// P5 alone on the physics adapter (M0-T42): gravity and hydro off, the box fit, P1, P8 and P9 around it, from `first` under
+/// the test flags `test`. Each [`OnGpu::pass`] is one step at a Δt the test picks, written as the Δt record's Δt_{n+1}
+/// (reduce.wgsl `DtState`'s second word) between submissions — P1 makes it the step's Δt. Step 0 takes the initial
+/// reduction's Δt instead, so it runs first and `first` is uploaded again (the box, fit to Σ alone, is the same).
+struct OnGpu {
+    gpu: Gpu,
+    state: GpuState,
+    booking: Booking,
+    side: SideFields,
+    step: Step,
+    first: State,
+}
+
+impl OnGpu {
+    fn new(physics: &Physics, test: TestFlags, first: &State) -> OnGpu {
+        let gpu = super::device();
+        let world = WorldConfig::new(first.width as u32, first.height as u32).unwrap();
+        let state = GpuState::new(&gpu.device, world).unwrap();
+        let booking = Booking::new(&gpu.device, world).unwrap();
+        let side = SideFields::new(&gpu.device, world).unwrap();
+        let eos = EosGpu::new(&gpu.device, physics, &elements());
+        let test = TestSettings { pin_temperature: test.pin_temperature, constant_diffusivity: test.constant_diffusivity, flux_limiter: test.flux_limiter };
+        let passes = Passes { mode: BoxMode::Fit, gravity: None, hydro: None };
+        let step = Step::with_heat(&gpu.device, &state, &booking, &eos, physics, &passes, Some(&HeatSetup { side: &side, test })).unwrap();
+        let run = OnGpu { gpu, state, booking, side, step, first: rounded(first) };
+        run.restart();
+        run.step.run(&run.gpu.device, &run.gpu.queue, 1);
+        run.restart();
+        run
+    }
+
+    /// `first` uploaded again, the booking cleared.
+    fn restart(&self) {
+        let planes: Vec<f32> = self.first.planes.iter().map(|&v| v as f32).collect();
+        self.state.upload(&self.gpu.queue, &planes).unwrap();
+        let mut encoder = self.gpu.device.create_command_encoder(&Default::default());
+        self.booking.clear(&mut encoder);
+        self.gpu.queue.submit([encoder.finish()]);
+    }
+
+    /// One step whose P5 runs over `dt`; its record.
+    fn pass(&self, dt: f64) -> HeatReport {
+        self.gpu.queue.write_buffer(self.step.dt_record(), 4, &(dt as f32).to_le_bytes());
+        self.step.run(&self.gpu.device, &self.gpu.queue, 1);
+        assert_eq!(self.step.read_dt(&self.gpu.device, &self.gpu.queue).dt, dt as f32, "P1 took the Δt written");
+        self.step.read_heat(&self.gpu.device, &self.gpu.queue).expect("the step runs P5")
+    }
+
+    fn planes(&self) -> State {
+        let planes = self.state.readback(&self.gpu.device, &self.gpu.queue).iter().map(|&v| f64::from(v)).collect();
+        State::new(self.first.width, self.first.height, planes)
+    }
+
+    /// `radiated` per cell since the last restart (booking.heat's plane).
+    fn radiated(&self) -> Vec<f64> {
+        let book = self.booking.readback(&self.gpu.device, &self.gpu.queue);
+        let world = self.state.world();
+        let group = BOOK_GROUPS.iter().position(|g| TERMS[g.terms.start].name == "radiated").unwrap();
+        let base: usize = BOOK_GROUPS[..group].iter().map(|g| g.terms.len() * g.domain.slots(world)).sum();
+        book[base..base + world.cells()].iter().map(|&v| f64::from(v)).collect()
+    }
+
+    /// The last P5's face fluxes, the twin's `Flux` layout.
+    fn faces(&self) -> (Vec<f64>, Vec<f64>) {
+        let (x, y) = self.step.read_heat_flux(&self.gpu.device, &self.gpu.queue).unwrap();
+        (x.iter().map(|&v| f64::from(v)).collect(), y.iter().map(|&v| f64::from(v)).collect())
+    }
 }
 
 /// G-HEAT1: σ²(t) = σ₀² + 2χt per axis within 1 %, total heat constant to 1e-5, F at a face.
@@ -350,6 +458,113 @@ mod gauss {
         free.step(&mut moved, 1.0);
         assert_ne!(moved, before, "the free pass moves heat");
     }
+
+    /// G-HEAT1 on the GPU: 24 passes of Δt = 1 (3 stages each), σ² at t = 8, 16, 24 within 1 %, the heat to 1e-5, and the
+    /// field the twin's within 1e-4 of the peak.
+    #[test]
+    fn gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept() {
+        let scene = scene("heat_pulse.json");
+        let (st, heat, bg) = gaussian(&scene, SIGMA0, PEAK);
+        let gpu = OnGpu::new(&scene.physics().unwrap(), flags(&scene), &st);
+        let mut twin = gpu.first.clone();
+        let (h0, _, _) = moments(&gpu.first, bg);
+        let mut worst: f64 = 0.0;
+        for pass in 1..=24 {
+            let r = gpu.pass(1.0);
+            assert_eq!((r.stages, r.need), (3, 3), "{r:?}");
+            assert_eq!(heat.step(&mut twin, 1.0).stages, 3);
+            if pass % 8 == 0 {
+                let got = gpu.planes();
+                let t = f64::from(pass);
+                let want = SIGMA0 * SIGMA0 + 2.0 * CHI * t;
+                let (h, vx, vy) = moments(&got, bg);
+                let err = ((vx - want).abs() / want).max((vy - want).abs() / want);
+                let gap = largest_gap(&temps(&got), &temps(&twin));
+                println!("SR-HEAT1 GPU t = {t}: sigma2 x {vx:.6}, y {vy:.6}, expected {want}, error {err:.2e}; heat {:.2e}; |T - twin| {gap:.2e}", (h - h0).abs() / h0);
+                assert!(err <= 0.01, "t = {t}: σ² x {vx}, y {vy}, expected {want}");
+                assert!((h - h0).abs() <= 1e-5 * h0, "heat {h} against {h0}");
+                assert!(gap <= 1e-4 * PEAK, "T against the twin: {gap}");
+                worst = worst.max(err);
+            }
+        }
+        assert!(gpu.radiated().iter().all(|&r| r.abs() < 1e-9), "nothing reaches the edges");
+        println!("SR-HEAT1 GPU worst sigma2 error {worst:.2e}");
+    }
+
+    /// F kept on the GPU: every face the twin's within 1e-4 of the largest, −χ·C·ΔT signs; side.flux the mean of a cell's two
+    /// faces (the field step n + 1's P4 reads).
+    #[test]
+    fn gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean() {
+        let scene = scene("heat_pulse.json");
+        let (st, heat, _) = gaussian(&scene, SIGMA0, PEAK);
+        let gpu = OnGpu::new(&scene.physics().unwrap(), flags(&scene), &st);
+        gpu.pass(1.0);
+        let p = heat.step(&mut gpu.first.clone(), 1.0);
+        let (fx, fy) = gpu.faces();
+        let scale = p.flux.x.iter().chain(&p.flux.y).fold(0.0f64, |m, f| m.max(f.abs()));
+        let gap = largest_gap(&fx, &p.flux.x).max(largest_gap(&fy, &p.flux.y));
+        println!("SR-HEAT1 GPU flux: largest |F - twin| {gap:.2e} of a largest |F| {scale:.4}");
+        assert!(scale > 0.1 && gap <= 1e-4 * scale, "{gap} of {scale}");
+        let w = gpu.first.width;
+        assert!(fx[64 * (w + 1) + 70] > 0.0 && fx[64 * (w + 1) + 58] < 0.0 && fy[70 * w + 64] > 0.0 && fy[58 * w + 64] < 0.0);
+        let side = read(&gpu.gpu, gpu.side.flux());
+        let n = gpu.first.cells();
+        let h = gpu.first.height;
+        for y in 0..h {
+            for x in 0..w {
+                let i = y * w + x;
+                let (cx, cy) = (0.5 * (fx[y * (w + 1) + x] + fx[y * (w + 1) + x + 1]), 0.5 * (fy[y * w + x] + fy[(y + 1) * w + x]));
+                assert!((f64::from(side[i]) - cx).abs() <= 1e-6 * (scale + cx.abs()), "F_x at ({x}, {y}): {} vs {cx}", side[i]);
+                assert!((f64::from(side[n + i]) - cy).abs() <= 1e-6 * (scale + cy.abs()), "F_y at ({x}, {y}): {} vs {cy}", side[n + i]);
+            }
+        }
+    }
+
+    /// The hot slab on the GPU: `radiated` equals the heat the grid lost within 1e-5 and the twin's within 1e-4, booked
+    /// exactly on the slab's ring.
+    #[test]
+    fn gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost() {
+        let scene = rect_world(64, 64, [0, 16, 32, 32], 1.0, 30.0);
+        let (st, physics, heat) = world(&scene);
+        let gpu = OnGpu::new(&physics, flags(&scene), &st);
+        let mut twin = gpu.first.clone();
+        let mut twin_radiated = 0.0;
+        for _ in 0..12 {
+            let r = gpu.pass(2.0);
+            let p = heat.step(&mut twin, 2.0);
+            assert_eq!(r.stages as usize, p.stages, "{r:?}");
+            twin_radiated += p.radiated;
+        }
+        let emitted = gpu.radiated();
+        let radiated: f64 = emitted.iter().sum();
+        let lost = energy(&gpu.first) - energy(&gpu.planes());
+        println!("SR-HEAT-RAD GPU: lost {lost:.6}, radiated {radiated:.6}, twin {twin_radiated:.6}");
+        assert!((lost - radiated).abs() <= 1e-5 * radiated, "lost {lost}, radiated {radiated}");
+        assert!((radiated - twin_radiated).abs() <= 1e-4 * twin_radiated, "{radiated} vs the twin's {twin_radiated}");
+        for (i, &e) in emitted.iter().enumerate() {
+            let (x, y) = (i % 64, i / 64);
+            let ring = x < 32 && (16..48).contains(&y) && (x == 0 || x == 31 || y == 16 || y == 47);
+            assert!(if ring { e > 0.0 } else { e == 0.0 }, "cell ({x}, {y}) emitted {e}");
+        }
+    }
+
+    /// `test.pin_temperature` on the GPU: no stage runs, nothing is booked, the planes are the start's bit for bit, F is the
+    /// free pass's.
+    #[test]
+    fn gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux() {
+        let scene = scene("heat_pulse.json");
+        let (st, _, _) = gaussian(&scene, SIGMA0, PEAK);
+        let physics = scene.physics().unwrap();
+        let pinned = OnGpu::new(&physics, TestFlags { pin_temperature: true, ..flags(&scene) }, &st);
+        let r = pinned.pass(1.0);
+        assert_eq!((r.stages, r.need, r.dt_p), (0, 0, Some(0.5)), "{r:?}");
+        let after = pinned.planes();
+        assert!(after.planes.iter().zip(&pinned.first.planes).all(|(a, b)| a.to_bits() == b.to_bits()), "the planes moved");
+        assert!(pinned.radiated().iter().all(|&e| e == 0.0));
+        let free = OnGpu::new(&physics, flags(&scene), &st);
+        assert_eq!(free.pass(1.0).stages, 3);
+        assert_eq!(pinned.faces(), free.faces(), "F is the same pass's");
+    }
 }
 
 /// G-HEAT2: RKL2 against explicit sub-steps; the stage count; the warning above 32.
@@ -485,6 +700,89 @@ mod rkl2 {
         // Bounded: the ringing is a few percent of the one-cell pulse at most (never growing), the response ends smooth.
         assert!(ring >= -0.05 * PEAK && lowest >= -1e-9 && highest <= 0.01, "ring {ring}, [{lowest}, {highest}]");
     }
+
+    /// G-HEAT2 on the GPU: one pass over t = 24 (14 stages) against 96 explicit sub-steps, σ² within 1 % of them and of
+    /// σ₀² + 2χt.
+    #[test]
+    fn gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared() {
+        let scene = scene("heat_pulse.json");
+        let (st, _, bg) = gaussian(&scene, SIGMA0, PEAK);
+        let gpu = OnGpu::new(&scene.physics().unwrap(), flags(&scene), &st);
+        let explicit_t = explicit(&temps(&gpu.first), st.width, st.height, CHI, 0.25, 96);
+        let (_, ex, ey) = stats(&explicit_t, st.width, bg, usize::MAX);
+        let r = gpu.pass(24.0);
+        let (_, vx, vy) = moments(&gpu.planes(), bg);
+        let want = SIGMA0 * SIGMA0 + 2.0 * CHI * 24.0;
+        println!("SR-HEAT2 GPU {r:?}: sigma2 x {vx:.6} y {vy:.6}, explicit x {ex:.6} y {ey:.6}, expected {want}");
+        assert_eq!(r.stages, 14);
+        assert!((vx - ex).abs() / ex <= 0.01 && (vy - ey).abs() / ey <= 0.01, "GPU {vx} {vy}, explicit {ex} {ey}");
+        assert!((vx - want).abs() / want <= 0.01 && (vy - want).abs() / want <= 0.01, "{vx} {vy} vs {want}");
+    }
+
+    /// The GPU's s and Δt_p are the twin's for steps from 0.05 to 131.75 (s = 32); at 131.76 the step needs 33: every cell's
+    /// faces are capped (contract §0.5 [M0-T42]) and 32 stages run over the whole Δt, the warning says 33, the heat is kept.
+    #[test]
+    fn gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32() {
+        let scene = scene("heat_pulse.json");
+        let (st, heat, bg) = gaussian(&scene, SIGMA0, PEAK);
+        let gpu = OnGpu::new(&scene.physics().unwrap(), flags(&scene), &st);
+        for dt in [0.05, 0.4999, 0.5, 0.5001, 1.0, 3.0, 24.0, 100.0, 131.75] {
+            gpu.restart();
+            let r = gpu.pass(dt);
+            let p = heat.step(&mut gpu.first.clone(), f64::from(dt as f32));
+            let dt_p = f64::from(r.dt_p.unwrap());
+            assert_eq!((r.stages as usize, r.need as usize), (p.stages, p.stages), "dt {dt}: {r:?}");
+            assert!((dt_p - p.dt_p).abs() <= 1e-6 * p.dt_p && r.dt == dt as f32, "dt {dt}: {r:?}");
+            assert_eq!(r.warning(), None);
+        }
+        gpu.restart();
+        let (h0, _, _) = moments(&gpu.first, bg);
+        let r = gpu.pass(131.76);
+        let (h, vx, _) = moments(&gpu.planes(), bg);
+        println!("SR-HEAT2 GPU at 131.76: {r:?}, {:?}, sigma2 x {vx:.3}, heat {:.2e}", r.warning(), (h - h0).abs() / h0);
+        assert_eq!((r.stages, r.need, r.worst), (32, 33, 33), "{r:?}");
+        assert_eq!(r.warning().as_deref(), Some("SR-WARN heat stages 33"));
+        assert_eq!(r.dt, 131.76f32, "the capped faces cover the whole step");
+        assert!((h - h0).abs() <= 1e-5 * h0, "heat {h} against {h0}");
+        assert!(vx > SIGMA0 * SIGMA0 + 2.0 * CHI * 120.0, "the capped pass still diffuses: {vx}");
+    }
+
+    /// The adversarial case on the GPU (the twin's, above): a one-cell pulse, 15 passes of Δt = 6.4 Δt_p (5 stages), read
+    /// as the difference of two GPU runs on a background of 2.0 — σ² within 1 % of an explicit run's and of 2χt, bounded.
+    /// Each run's heat is graded on itself (the background loses heat through the edges: E lost = `radiated`, 1e-5): the
+    /// difference's total measures f32 at T = 2, not P5 — E ≈ 4 in each of 16,384 cells rounds by up to 2.4e-7 a pass, 2.5e-6
+    /// of each run's heat over 15 passes, which is 1.75e-3 of a pulse 3 × 10⁻⁵ of the world's (RTX 5090, M0-T42).
+    #[test]
+    fn gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer() {
+        let scene = scene("heat_pulse.json");
+        let physics = scene.physics().unwrap();
+        let (st_with, _, bg) = gaussian_on(&scene, Some(2.0), 0.01, PEAK);
+        let (st_without, _, _) = gaussian_on(&scene, Some(2.0), 0.01, 0.0);
+        let (with, without) = (OnGpu::new(&physics, flags(&scene), &st_with), OnGpu::new(&physics, flags(&scene), &st_without));
+        let (w, h) = (st_with.width, st_with.height);
+        let pulse: Vec<f64> = temps(&with.first).iter().zip(temps(&without.first)).map(|(a, b)| a - b).collect();
+        let mut ring: f64 = 0.0;
+        for _ in 0..15 {
+            assert_eq!(with.pass(3.2).stages, 5);
+            assert_eq!(without.pass(3.2).stages, 5);
+            let low = temps(&with.planes()).iter().zip(temps(&without.planes())).map(|(a, b)| a - b).fold(f64::MAX, f64::min);
+            ring = ring.min(low);
+        }
+        let response: Vec<f64> = temps(&with.planes()).iter().zip(temps(&without.planes())).map(|(a, b)| a - b).collect();
+        let (_, ex, ey) = stats(&explicit(&pulse, w, h, CHI, 0.2, 240), w, 0.0, usize::MAX);
+        let (total, vx, vy) = stats(&response, w, 0.0, usize::MAX);
+        let (p0, _, _) = stats(&pulse, w, 0.0, usize::MAX);
+        let highest = response.iter().cloned().fold(f64::MIN, f64::max);
+        println!("SR-HEAT2 GPU sharp pulse (bg {bg}): sigma2 x {vx:.5} y {vy:.5}, explicit x {ex:.5} y {ey:.5}, deepest ring {ring:.3e}, highest {highest:.4e}, heat {total:.7} of {p0:.7}");
+        assert!((vx - ex).abs() / ex <= 0.01 && (vy - ey).abs() / ey <= 0.01, "{vx} {vy} vs {ex} {ey}");
+        assert!((vx - 48.0).abs() / 48.0 <= 0.01, "{vx} vs 2 chi t = 48");
+        for run in [&with, &without] {
+            let (lost, radiated) = (energy(&run.first) - energy(&run.planes()), run.radiated().iter().sum::<f64>());
+            println!("SR-HEAT2 GPU sharp pulse run: lost {lost:.6}, radiated {radiated:.6}");
+            assert!(radiated > 1.0 && (lost - radiated).abs() <= 1e-5 * radiated, "lost {lost}, radiated {radiated}");
+        }
+        assert!(ring >= -0.05 * p0 && highest <= 0.01, "ring {ring}, highest {highest}");
+    }
 }
 
 /// G-FLD: |F| ≤ c_sb a_r T⁴ in thin gas; the radiative conductivity in thick gas; λ.
@@ -611,5 +909,75 @@ mod limiter {
         assert!(f_off.abs() > 1000.0 * bound);
         assert!(f_on.abs() <= bound * (1.0 + 1e-6) && f_on.abs() > 0.1 * bound, "{f_on}");
         assert!(f_on * f_off > 0.0, "the same direction");
+    }
+
+    /// G-FLD on the GPU: heat_spot.json over 20 passes of Δt = 0.002 (no cap: the twin's 0.05 needs 131 stages), every face
+    /// under c_sb a_r T⁴ of its hotter side (1 + 1e-6), the limiter binding, the first pass's F the twin's within 1e-4.
+    #[test]
+    fn gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4() {
+        let (st, physics, heat) = world(&scene("heat_spot.json"));
+        let (a_r, c_sb) = constants(&physics);
+        let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
+        let (w, h) = (st.width, st.height);
+        let (mut worst, mut stages): (f64, u32) = (0.0, 0);
+        for pass in 0..20 {
+            let t = temps(&gpu.planes());
+            let r = gpu.pass(0.002);
+            assert!(r.need <= 32 && r.stages == r.need, "pass {pass}: {r:?}");
+            stages = stages.max(r.stages);
+            let (x, y) = gpu.faces();
+            let fluxes = Pass { stages: 0, dt_p: 0.0, radiated: 0.0, emitted: Vec::new(), flux: sr_physics::reference::heat::Flux { width: w, height: h, x, y } };
+            if pass == 0 {
+                let p = heat.step(&mut gpu.first.clone(), f64::from(0.002f32));
+                let scale = p.flux.x.iter().chain(&p.flux.y).fold(0.0f64, |m, f| m.max(f.abs()));
+                let gap = largest_gap(&fluxes.flux.x, &p.flux.x).max(largest_gap(&fluxes.flux.y, &p.flux.y));
+                assert_eq!(r.stages as usize, p.stages);
+                assert!(gap <= 1e-4 * scale, "F against the twin: {gap} of {scale}");
+            }
+            let ratio = worst_ratio(&fluxes, &t, w, h, a_r, c_sb);
+            assert!(ratio <= 1.0 + 1e-6, "pass {pass}: |F| = {ratio} c_sb a_r T^4");
+            worst = worst.max(ratio);
+        }
+        println!("SR-FLD GPU worst |F| / (c_sb a_r T^4) {worst:.6} over 20 passes, up to {stages} stages");
+        assert!(worst > 0.3, "the limiter binds: {worst}");
+    }
+
+    /// Thick gas on the GPU carries (4/3) a_r c_sb T³/(κΣ) within 1 %; with `flux_limiter` off a face of the spot carries
+    /// c_sb ΔE/(3 κΣ_face) within 1e-5, a thousand times the bound.
+    #[test]
+    fn gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off() {
+        let thick = rect_world(64, 64, [0, 0, 64, 64], 100.0, 10.0);
+        let (mut st, physics, _) = world(&thick);
+        let (a_r, c_sb) = constants(&physics);
+        let w = st.width;
+        let t: Vec<f64> = (0..w * st.height).map(|i| 10.0 + 0.02 * (i % w) as f64).collect();
+        set_temps(&mut st, &t);
+        let gpu = OnGpu::new(&physics, flags(&thick), &st);
+        gpu.pass(0.001);
+        let (fx, _) = gpu.faces();
+        let t = temps(&gpu.first);
+        let mut worst: f64 = 0.0;
+        for y in 1..st.height - 1 {
+            for x in 1..w {
+                let mid = 0.5 * (t[y * w + x - 1] + t[y * w + x]);
+                let want = -(4.0 / 3.0) * a_r * c_sb * mid.powi(3) / (KAPPA_H * 100.0) * (t[y * w + x] - t[y * w + x - 1]);
+                worst = worst.max((fx[y * (w + 1) + x] - want).abs() / want.abs());
+            }
+        }
+        println!("SR-FLD GPU thick gas: worst relative error {worst:.2e}");
+        assert!(worst <= 0.01, "{worst}");
+
+        let (st, physics, _) = world(&scene("heat_spot.json"));
+        let off = OnGpu::new(&physics, TestFlags { flux_limiter: false, ..TestFlags::default() }, &st);
+        off.pass(1e-6);
+        let t = temps(&off.first);
+        let (x, y, w) = (28usize, 30usize, st.width);
+        let (ta, tb) = (t[y * w + x - 1], t[y * w + x]);
+        let ks = KAPPA_H * 0.5 * (off.first.get(0, y * w + x - 1) + off.first.get(0, y * w + x));
+        let thick = -c_sb / (3.0 * ks) * a_r * (tb.powi(4) - ta.powi(4));
+        let got = off.faces().0[y * (w + 1) + x];
+        println!("SR-FLD GPU limiter off: {got:.4e} against {thick:.4e}, bound {:.4e}", c_sb * a_r * tb.powi(4));
+        assert!((got - thick).abs() <= 1e-5 * thick.abs(), "{got} vs {thick}");
+        assert!(got.abs() > 1000.0 * c_sb * a_r * tb.powi(4));
     }
 }

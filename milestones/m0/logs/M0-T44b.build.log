@@ -1,0 +1,35 @@
+== 2026-10-14T08:35:42-04:00 build[native] · task M0-T44b · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T08:35:42-04:00 build[wasm] · task M0-T44b · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.57 s
+build wasm: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=1 · 5.43 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+    |
+277 |                 for g in 0..N_GROUPS {
+    |                          ^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+277 -                 for g in 0..N_GROUPS {
+277 +                 for (g, <item>) in by_group.iter().enumerate().take(N_GROUPS) {
+    |
+
+error: the loop variable `k` is only used to index `a`
+   --> crates/sr-physics/src/reference/react.rs:333:30
+    |
+333 |                     for k in col..=NS {
+    |                              ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator
+    |
+333 -                     for k in col..=NS {
+333 +                     for <item> in a.iter_mut().take(NS + 1).skip(col) {
+    |
+
+error: could not compile `sr-physics` (lib) due to 3 previous errors
+=== NO-GO: cargo clippy -D warnings failed ===
+
