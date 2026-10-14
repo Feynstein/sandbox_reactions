@@ -1,0 +1,80 @@
+==== 2026-10-14T13:49:36-04:00 heat_limiter · clean · a fresh scratch copy of the tree
+== 2026-10-14T13:49:36-04:00 heat_limiter · task M0-T119 · box laserax-ai :: bash tests/gpu.sh heat::limiter physics
+-- heat_limiter · exit=0 · 7.19 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-goai4a0z/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-goai4a0z/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.57s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU first pass: law |F - twin| 4.25e-11 of 6.3994e-4; solved |F - twin| 1.06e-6 of 5.5553e-4; |T - twin| 1.93e-5; HeatReport { dt: 0.05, passes: 6, rounds: 66, converged: true, delta: -6.072572e-6 }, the twin 8 passes, 128 rounds
+SR-FLD GPU solved F: Δt |F - twin| 8.05e-7 of the heat 6.5920e-2 (1.91e-3 of the largest face)
+SR-FLD GPU worst |F| / (c_sb a_r T^4) 0.979932 over 20 passes, up to 6 Newton passes and 66 rounds
+ok
+test heat::limiter::gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU thick gas: worst relative error 4.42e-5; HeatReport { dt: 0.001, passes: 1, rounds: 0, converged: true, delta: 2.7020972e-9 }
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU limiter off: -2.1333e0 against -2.1333e0, bound 1.2800e-3
+ok
+test heat::limiter::in_thick_gas_the_flux_is_the_radiative_conductivity ... SR-FLD thick gas: worst |F - (4/3) a c T^3/(kappa Sigma) (-dT)| / |F| = 9.98e-7
+ok
+test heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... SR-FLD worst |F| / (c_sb a_r T^4) 0.979928 over 20 passes of 64x64 thin gas, up to 8 Newton passes and 135 rounds
+SR-FLD limiter off: |F| = 1666.7 c_sb a_r T^4
+ok
+test heat::limiter::lambda_is_levermore_pomraning ... ok
+test heat::limiter::the_scene_flag_turns_the_limiter_into_one_third ... SR-FLD face of the spot: unlimited -2.1333e0 (thick form -2.1333e0), limited -6.3994e-4, bound 1.2800e-3
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 187 filtered out; finished in 1.52s
+
+
+==== 2026-10-14T13:49:36-04:00 heat_limiter · plant limiter-off · a fresh scratch copy of the tree
+planted limiter-off: tests/plants/limiter-off.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-14T13:49:36-04:00 heat_limiter · task M0-T119 · box laserax-ai :: bash tests/gpu.sh heat::limiter physics
+-- heat_limiter · exit=101 · 13.35 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-goai4a0z/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-goai4a0z/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.22s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU first pass: law |F - twin| 1.75e-7 of 2.1333e0; solved |F - twin| 3.43e-8 of 1.1645e-2; |T - twin| 1.76e-5; HeatReport { dt: 0.05, passes: 12, rounds: 181, converged: true, delta: 6.6401986e-7 }, the twin 14 passes, 335 rounds
+SR-FLD GPU solved F: Δt |F - twin| 2.60e-8 of the heat 6.5920e-2 (2.95e-6 of the largest face)
+
+thread 'heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4' (1291915) panicked at crates/sr-engine/tests/gpu/heat.rs:989:13:
+pass 0: |F| = 1666.6661947965624 c_sb a_r T^4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::limiter::gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU thick gas: worst relative error 4.42e-5; HeatReport { dt: 0.001, passes: 1, rounds: 0, converged: true, delta: 2.7020903e-9 }
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU limiter off: -2.1333e0 against -2.1333e0, bound 1.2800e-3
+ok
+test heat::limiter::in_thick_gas_the_flux_is_the_radiative_conductivity ... SR-FLD thick gas: worst |F - (4/3) a c T^3/(kappa Sigma) (-dT)| / |F| = 9.98e-7
+ok
+test heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... 
+thread 'heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4' (1292006) panicked at crates/sr-engine/tests/gpu/heat.rs:858:13:
+pass 0: |F| = 1666.6660577285259 c_sb a_r T^4
+FAILED
+test heat::limiter::lambda_is_levermore_pomraning ... ok
+test heat::limiter::the_scene_flag_turns_the_limiter_into_one_third ... SR-FLD face of the spot: unlimited -2.1333e0 (thick form -2.1333e0), limited -2.1333e0, bound 1.2800e-3
+
+thread 'heat::limiter::the_scene_flag_turns_the_limiter_into_one_third' (1292019) panicked at crates/sr-engine/tests/gpu/heat.rs:938:9:
+-2.133332553892513
+FAILED
+
+failures:
+
+failures:
+    heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4
+    heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4
+    heat::limiter::the_scene_flag_turns_the_limiter_into_one_third
+
+test result: FAILED. 3 passed; 3 failed; 0 ignored; 0 measured; 187 filtered out; finished in 0.86s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

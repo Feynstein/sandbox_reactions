@@ -1,0 +1,13 @@
+M0-D36 start 2026-10-14T14:31:20-04:00 linux-pc
+iter: heat scopes 2026-10-14T14:37:44-04:00
+anchor: 4 path×scope entries moved by this run
+anchor: 184 paths checked · 154 skipped (3 classes) · 0 never checked · 2 stale · 0 unclassified · 0 owed · 186 covered of 340 visible
+verify: 28 passed, 0 failed, 0 skipped · 4/4 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 25.01 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 55.83->93.85
+=== GO ===
+claim: verify.py --changed 2026-10-14T14:39:20-04:00
+anchor: 186 paths checked · 155 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 186 covered of 341 visible
+skipped   147  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 721 passed, 0 failed, 0 skipped · 29/29 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 14 not impacted · 95.96 s + loop 0.07 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 93.64->93.88 · base: M0-D36's start 2026-10-14T14:27:49-04:00
+=== GO ===

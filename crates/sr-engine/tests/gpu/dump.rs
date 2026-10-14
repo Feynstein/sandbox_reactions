@@ -10,18 +10,21 @@
 //! the frames, bare steps included — within 10⁻⁹ relative of the f64 sum of each step's f32 Δt in step order, each Δt
 //! read from a run of one-step frames or one-step bare runs. A run with P5 (preset:sun) carries F after the channels
 //! (M0-D33): its headless resume is graded byte for byte, so a resume whose first step pushes with F = 0 fails it.
+//! P5's carry (§0.5 [M0-TJ4] (6), M0-T121): scenes/sun_disk.json's 200 steps with every submission recording 8 of P5's
+//! slots — bare, and in frames under the latch — dump the bytes of the run at the engine's own choice.
 
 use super::device;
 use sr_engine::dump::{dump_state, load_dump, Dump, Resume};
 use sr_engine::gpu::Gpu;
-use sr_engine::scene::{EdgeMode, TestSettings};
+use sr_engine::scene::{EdgeMode, Scene, TestSettings};
 use sr_engine::state::{Booking, SideFields, State, WorldConfig, N_CHANNELS};
 use sr_engine::step::boxfit::{BoxMode, BoxReport};
-use sr_engine::step::heat::HeatSetup;
+use sr_engine::step::heat::{HeatSetup, MIN_ROUNDS};
+use sr_engine::step::react::ReactSetup;
 use sr_engine::step::dt::DtReport;
 use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::{EosGpu, Passes, Step};
-use sr_physics::registry::{Elements, Physics};
+use sr_physics::registry::{Elements, Physics, Reactions};
 
 /// §2.2's channels, written out from the contract (not from `state::CHANNELS`).
 const SPEC_CHANNELS: [&str; 14] =
@@ -94,6 +97,26 @@ impl Run {
         let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(edge) };
         let heat = HeatSetup { side: &side, test: TestSettings::default() };
         let step = Step::with_heat(&gpu.device, &state, &booking, &eos, &c.physics, &passes, Some(&heat)).unwrap();
+        Run { state, step }
+    }
+
+    /// The step headless builds for scenes/sun_disk.json (its switches: P2, P4, P5, P6), from the scene's state.
+    fn sun_disk(gpu: &Gpu) -> Run {
+        let scene = Scene::load(&std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../scenes/sun_disk.json")).unwrap();
+        let (physics, elements) = (scene.physics().unwrap(), Elements::shipped().unwrap());
+        let reactions = Reactions::shipped(&elements, &physics).unwrap();
+        let world = scene.world;
+        let state = State::new(&gpu.device, world).unwrap();
+        state.upload(&gpu.queue, &scene.planes(world, &physics, &elements).unwrap().0).unwrap();
+        let booking = Booking::new(&gpu.device, world).unwrap();
+        let eos = EosGpu::new(&gpu.device, &physics, &elements);
+        let side = SideFields::new(&gpu.device, world).unwrap();
+        let on = scene.switches;
+        assert!(on.heat, "sun_disk runs P5");
+        let passes = Passes { mode: BoxMode::Fit, gravity: on.gravity.then_some(&side), hydro: on.hydro.then_some(scene.edge) };
+        let heat = HeatSetup { side: &side, test: scene.test };
+        let react = on.reactions.then_some(ReactSetup { reactions: &reactions, test: scene.test, neutrinos: on.neutrinos, side: &side });
+        let step = Step::with_reactions(&gpu.device, &state, &booking, &eos, &physics, &passes, Some(&heat), react.as_ref()).unwrap();
         Run { state, step }
     }
 
@@ -537,4 +560,43 @@ fn a_wrong_magic_or_a_header_off_the_contract_is_refused() {
     std::fs::write(&file, bad).unwrap();
     assert_eq!(headless(&["--scene", "preset:sun", "--load-dump", &file.display().to_string(), "--steps", "1"]), 4);
     let _ = std::fs::remove_dir_all(&root);
+}
+
+/// §0.5 [M0-TJ4] (6): nothing a step computes depends on where a submission ends. scenes/sun_disk.json (the Sun-like preset
+/// in the 600 × 400 world), 200 steps at the engine's own choice of P5's slots, then with every submission recording 8 —
+/// the fewest a submission carries — as bare runs and as frames of up to 50 steps under the latch: the three dumps (the
+/// cells, F, the Δt record, the box, the latch's arming time) byte for byte. Adversarial: the 8-round runs carry (more
+/// submissions than steps; frames that end with a step held), so a carry that drops or repeats a round, or lets a dispatch
+/// after it run, shows in the bytes.
+#[test]
+fn sun_disk_200_steps_carried_over_submissions_of_8_rounds_dump_the_engines_own_choice_byte_for_byte() {
+    let gpu = device();
+    let engine = Run::sun_disk(&gpu);
+    let own = engine.step.run_counted(&gpu.device, &gpu.queue, 200);
+    let want = dump_state(&gpu.device, &gpu.queue, &engine.state, &engine.step);
+    assert_eq!(want.step, 200);
+    let want = want.to_bytes();
+
+    let bare = Run::sun_disk(&gpu);
+    bare.step.set_heat_rounds(Some(MIN_ROUNDS));
+    assert_eq!(bare.step.heat_rounds(), Some(8), "the contract's smallest carry");
+    let eight = bare.step.run_counted(&gpu.device, &gpu.queue, 200);
+    let got = dump_state(&gpu.device, &gpu.queue, &bare.state, &bare.step).to_bytes();
+
+    let framed = Run::sun_disk(&gpu);
+    framed.step.set_heat_rounds(Some(MIN_ROUNDS));
+    let (mut ended, mut frames, mut held) = (0u64, 0u32, 0u32);
+    while ended < 200 {
+        let r = framed.frame(&gpu, (200 - ended).min(50) as u32);
+        assert_eq!(r.latch_fired, None, "{r:?}");
+        ended = r.steps - u64::from(r.carried);
+        frames += 1;
+        held += u32::from(r.carried);
+    }
+    let in_frames = dump_state(&gpu.device, &gpu.queue, &framed.state, &framed.step).to_bytes();
+    println!("sun_disk 200 steps: {own} submission(s) at the engine's choice; {eight} bare submissions of 8 rounds; {frames} frames of 8 rounds, {held} ending with a step held");
+    assert!(eight > 200, "8 rounds a submission carried no step: {eight} submissions for 200 steps");
+    assert!(held > 0, "no frame ended with a step held");
+    assert!(got == want, "the bare run at 8 rounds a submission: its dump's bytes differ from the engine's own choice");
+    assert!(in_frames == want, "the frames at 8 rounds a submission: their dump's bytes differ from the engine's own choice");
 }

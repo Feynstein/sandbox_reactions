@@ -10,9 +10,15 @@
 // (§1.8.5; their lots) — and the controller, `latch_check` after each step's P9, takes it (atomicExchange). The latch is
 // armed when the flag was not set during the last WINDOW of sim time: `since` is the sim time since the last set, the
 // step's Δt added before the test, held at WINDOW (armed from the start). An armed latch set with the slow-down on
-// fires: every later indirect size of the frame is zeroed — the slots, the box's sizes (kept, then restored by
+// fires (`stopped` 1): every later indirect size of the frame is zeroed — the slots, the box's sizes (kept, then restored by
 // `latch_end`), P0's gate — so no later step runs, the box re-fit included. A set re-arms nothing: `since` restarts
 // at 0 on every set, fired or not. The slow-down off, a set never fires. Δt is never read to decide a size (§1.8.7).
+//
+// P5's carry (§0.5 [M0-TJ4] (6), M0-T121), on a step with P5 — frames and bare runs alike (latch.rs): each step records
+// `latch_hold` first and `latch_carry` after the rounds it records. A step whose rounds are still running there is
+// carried: `stopped` 2, every later size of the submission zeroed as a fired latch zeroes them, `held` set. The next
+// submission's first step is its continuation: `latch_hold` closes its P0–P5 opening (no new step begins) and starts the
+// rounds again; its `latch_carry`, once the rounds end, opens the sizes for its commit and P6–P9 at its own index.
 
 struct LatchState {
     flag: atomic<u32>,
@@ -22,7 +28,8 @@ struct LatchState {
     fired_at: u32,
     since: f32,
     advanced: f32,
-    _pad: u32,
+    // A step's P5 carried over into the next submission (§0.5 [M0-TJ4] (6)).
+    held: u32,
     // The two indirect buffers' sizes as they stood when the latch fired (box args, then P0's gate).
     saved: array<u32, 12>,
     _pad1: vec4<u32>,
@@ -57,6 +64,14 @@ struct Hook {
 @group(0) @binding(4) var<storage, read_write> box_args: array<u32, 6>;
 @group(0) @binding(5) var<storage, read_write> gate_args: array<u32, 6>;
 @group(0) @binding(6) var<storage, read_write> hook: Hook;
+// P5's (step/heat.rs): heat.wgsl's `Machines` as words, and its slots' sizes of parity 0.
+@group(0) @binding(7) var<storage, read_write> heat: array<u32>;
+@group(0) @binding(8) var<storage, read_write> rounds_even: array<u32>;
+
+// Words of `heat`: the parity-1 record's tiles across and down, and the report's `live`.
+const REC_TX: u32 = 22u;
+const REC_TY: u32 = 23u;
+const LIVE: u32 = 40u;
 
 // §1.8.5: armed when not set during the last 1.0 t.u.
 const WINDOW: f32 = 1.0;
@@ -120,10 +135,49 @@ fn latch_check() {
 @compute @workgroup_size(1)
 fn latch_end() {
     if (latch.stopped != 0u) {
-        for (var i = 0u; i < 6u; i++) {
-            box_args[i] = latch.saved[i];
-            gate_args[i] = latch.saved[6u + i];
+        restore_sizes();
+    }
+}
+
+// The sizes saved by `zero_sizes` back.
+fn restore_sizes() {
+    for (var i = 0u; i < 6u; i++) {
+        box_args[i] = latch.saved[i];
+        gate_args[i] = latch.saved[6u + i];
+    }
+}
+
+// Before a step's P0: a held step continues — no new step begins (every size zeroed, the box's kept) and its rounds start
+// again at slot 0.
+@compute @workgroup_size(1)
+fn latch_hold() {
+    if (latch.stopped != 0u || latch.held == 0u) {
+        return;
+    }
+    zero_sizes();
+    rounds_even[0] = heat[REC_TX];
+    rounds_even[1] = heat[REC_TY];
+    rounds_even[2] = 1u;
+}
+
+// After the rounds a step records (and heat.wgsl's `heat_park`, which zeroed their words): still running → carried, the
+// rest of the submission zeroed; ended after a hold → the box back and the sizes opened for the commit and P6–P9 at the
+// step's index (P1 counted it).
+@compute @workgroup_size(1)
+fn latch_carry() {
+    if (latch.stopped != 0u) {
+        return;
+    }
+    if (heat[LIVE] != 0u) {
+        if (latch.held == 0u) {
+            zero_sizes();
         }
+        latch.held = 1u;
+        latch.stopped = 2u;
+    } else if (latch.held != 0u) {
+        latch.held = 0u;
+        restore_sizes();
+        open_sizes(dt.steps - 1u);
     }
 }
 

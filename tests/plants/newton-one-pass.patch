@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/heat.rs
++++ b/crates/sr-physics/src/reference/heat.rs
+@@ -489,7 +489,7 @@
+                 t[i] = next;
+                 u[i] = self.u_of(next);
+             }
+-            if moved <= NEWTON_HEAT * heat0 && every {
++            if (moved <= NEWTON_HEAT * heat0 && every) || passes == 1 {
+                 converged = true;
+                 break;
+             }
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -506,7 +506,7 @@
+                 next.heat0 = total.x;
+             }
+             let empty = rec.passes == 0u && !(total.x > 0.0);
+-            converged = empty || (rec.passes > 0u && total.x <= NEWTON_HEAT * rec.heat0 && total.y == 0.0);
++            converged = empty || rec.passes == 1u || (rec.passes > 0u && total.x <= NEWTON_HEAT * rec.heat0 && total.y == 0.0);
+             finish = converged || rec.passes == MAX_PASSES || rec.rounds >= MAX_ROUNDS;
+             if (!finish) {
+                 action = CELL_RESID;

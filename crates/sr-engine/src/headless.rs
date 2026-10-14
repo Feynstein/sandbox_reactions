@@ -3,8 +3,9 @@
 //! preset is the nominal Sun-like disk until M0-T74), `--world` and `--edge` stand over the scene's `world`, `--steps N`
 //! runs [`Step`] N times and `--timing` adds the steps' cost (M0-T23); `--until`, the ledger, events and objects arrive
 //! with their blocks. Of the scene's switches, `gravity` turns P2 on (M0-T31), `hydro` P4 (M0-T34) under the run's edge
-//! mode (M0-T35) and `heat` P5 with the scene's `test` flags (M0-T42; a step that needs more than 32 heat stages prints
-//! `SR-WARN heat stages <s>`, once for each new largest s) and `reactions` P6 with the registry's enabled records and
+//! mode (M0-T35) and `heat` P5 with the scene's `test` flags (M0-T42; a step whose implicit P5 hit its ceiling prints
+//! `SR-WARN heat unconverged step <n> passes <k> rounds <r>` — read at the last step of each submission, M0-T119; every
+//! step's is M0-T121's) and `reactions` P6 with the registry's enabled records and
 //! the scene's `pin_temperature` (M0-T46); the other switches are recorded, not yet applied.
 //!
 //! State dumps (§2.12.3, [`crate::dump`], M0-T26): with `--out`, DIR/dumps/s_<step>.bin at the end of every run, and with
@@ -51,8 +52,9 @@ pub const EXIT_NON_FINITE: i32 = 5;
 
 /// §3.3: `--max-steps` defaults to 2,000,000.
 pub const DEFAULT_MAX_STEPS: u64 = 2_000_000;
-/// Steps recorded per submission: the queue never holds more than this many at once.
+/// Steps recorded per submission: the queue never holds more than this many at once — nor P5's log of unconverged steps.
 const CHUNK: u64 = 256;
+const _: () = assert!(CHUNK as usize <= crate::step::heat::LOG);
 
 #[derive(Debug, PartialEq)]
 pub struct Args {
@@ -152,7 +154,8 @@ fn load_scene(arg: &str, world: Option<WorldConfig>) -> Result<Scene, String> {
 
 /// The disk builder moved into the scene loader (M0-T25); kept here for the callers that name it so.
 pub use crate::scene::sun_disk_planes;
-/// The run's cost (`--timing`): each batch's means weighted by the steps it timed.
+/// The run's cost (`--timing`): each batch's means weighted by the steps it ended — a step carried over submissions
+/// (§0.5 [M0-TJ4] (6)) counted once, with its rounds in all of them.
 #[derive(Default)]
 struct Costs {
     source: Option<CostSource>,
@@ -163,9 +166,9 @@ struct Costs {
 
 impl Costs {
     fn add(&mut self, c: &StepCost) {
-        let w = f64::from(c.steps);
+        let w = f64::from(c.ended);
         self.source = Some(c.source);
-        self.steps += u64::from(c.steps);
+        self.steps += u64::from(c.ended);
         self.step_ms += c.step_ms * w;
         for (sum, p) in self.pass_ms.iter_mut().zip(c.pass_ms) {
             if let Some(ms) = p {
@@ -455,7 +458,6 @@ pub fn run(args: &[String]) -> i32 {
     let target = args.steps.min(args.max_steps);
     let started = Instant::now();
     let mut done = 0u64;
-    let mut warned = 0u32;
     while done < target {
         let mut n = (target - done).min(CHUNK);
         if let Some(every) = args.dump_every {
@@ -467,11 +469,9 @@ pub fn run(args: &[String]) -> i32 {
             return EXIT_GPU;
         }
         done += n;
-        if let Some(report) = step.read_heat(&gpu.device, &gpu.queue).filter(|r| r.worst > warned) {
-            if let Some(w) = report.warning() {
-                say(&w);
-                warned = report.worst;
-            }
+        // Every step of the chunk that reached P5's ceiling (§0.5 [M0-TJ4] (6)); a chunk is never longer than the log.
+        for w in step.heat_warnings(&gpu.device, &gpu.queue) {
+            say(&w);
         }
         if let Some(c) = step.read_cost(&gpu.device, &gpu.queue) {
             cost.add(&c);

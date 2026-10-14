@@ -1,0 +1,88 @@
+== 2026-10-14T14:39:20-04:00 burn_cell · task M0-D36 · box laserax-ai :: bash tests/gpu.sh burn::cell physics
+-- burn_cell · exit=0 · 5.94 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.49s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 16 tests
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 827 sub-steps, max in one cell 173, retried 36
+ok
+test burn::cell::gpu_a_hot_core_in_a_cold_field ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU hot core: P6 11.9822 ms against 0.0311 ms all cold; 10816 sub-steps, at most 169 in one cell, retried 0
+ok
+test burn::cell::gpu_cells_burn_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test burn::cell::gpu_fractions_stay_physical_at_the_shipped_limits ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU shipped limits: 831 + 368 sub-steps, most in one cell 173 / 181, retried 36, the runaway at T 18034.2
+ok
+test burn::cell::gpu_heat_booked_per_substep ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU H_burn: booked 782957.562500 for q·Δm = 782957.548052 (rel 1.85e-8), sub-steps 9005, retried 0
+GPU Ne_burn: booked 4807.542480 for q·Δm = 4807.542568 (rel 1.83e-8), sub-steps 6302, retried 0
+ok
+test burn::cell::gpu_heat_enters_the_energy ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000000, booked 2610.000000, q·Δm 2610.000104, sub-steps 489
+ok
+test burn::cell::gpu_the_runaway_books_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+the twin's field runs away in pass 47 at Δt 0.0063056, from T 142.91
+GPU runaway, pass 47: T 142.9 → twin 18813.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.583247e5 twin 2.583247e5, f32 resolves 2.0e-3; sub-steps GPU 180 twin 180, retried 19 / 19
+  group H: GPU 1.9370066e5 twin 1.9370065e5 (1.60e-8 of the group, 1.20e-8 of the pass)
+  group He: GPU 3.6000180e4 twin 3.6000179e4 (5.63e-9 of the group, 7.84e-10 of the pass)
+  group C: GPU 4.2004475e-1 twin 4.2003932e-1 (1.29e-5 of the group, 2.10e-11 of the pass)
+  group Ne: GPU 9.2557214e-2 twin 9.2556032e-2 (1.28e-5 of the group, 4.58e-12 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.16e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.44e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, T 2,520: T 2520.0 → twin 27283.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603751e5 twin 2.603751e5, f32 resolves 1.6e-2; sub-steps GPU 151 twin 151, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (3.00e-14 of the group, 2.26e-14 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.86e-8 of the group, 5.34e-9 of the pass)
+  group C: GPU 8.7336957e-7 twin 8.7337190e-7 (2.67e-6 of the group, 8.94e-18 of the pass)
+  group Ne: GPU 1.9244774e-7 twin 1.9244826e-7 (2.71e-6 of the group, 2.00e-18 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, trace He in iron, T 47,000: T 47000.0 → twin 47000.0, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 0.000000e0 twin 6.402843e-9, f32 resolves 8.1e-2; sub-steps GPU 1 twin 12, retried 13 / 0
+  group H: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+  group He: GPU -1.6479381e-8 twin 3.5726504e-9 (5.61e0 of the group, 3.13e0 of the pass)
+  group C: GPU -7.4006508e-25 twin -3.9973148e-22 (9.98e-1 of the group, 6.22e-14 of the pass)
+  group Ne: GPU 0.0000000e0 twin -8.8081182e-23 (1.00e0 of the group, 1.37e-14 of the pass)
+  group O: GPU 0.0000000e0 twin 2.0554605e-9 (1.00e0 of the group, 3.21e-1 of the pass)
+  group Si: GPU 0.0000000e0 twin 7.8481192e-10 (1.00e0 of the group, 1.22e-1 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, He_burn's peak, T 3.2e7: T 31777340.0 → twin 111239153.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603520e5 twin 2.603751e5, f32 resolves 1.9e2; sub-steps GPU 171 twin 171, retried 0 / 0
+  group H: GPU 1.9574998e5 twin 1.9575000e5 (7.98e-8 of the group, 6.00e-8 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.86e-8 of the group, 5.34e-9 of the pass)
+  group C: GPU 1.1832237e-9 twin 1.1832204e-9 (2.84e-6 of the group, 1.29e-20 of the pass)
+  group Ne: GPU 2.6072441e-10 twin 2.6072365e-10 (2.94e-6 of the group, 2.94e-21 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+ok
+test burn::cell::gpu_the_three_laws_follow_their_closed_forms ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU H_burn: worst |ΔX| 4.87e-5 (limit 1e-4), X = 0.100049, sub-steps 9008, T 100.0000
+GPU He_burn: worst |ΔX| 4.98e-5 (limit 1e-4), X = 0.100050, sub-steps 9009, T 140.0000
+GPU Ne_burn: worst |ΔX| 4.61e-5 (limit 1e-4), X = 0.070046, sub-steps 6304, T 274.0000
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0538, X_H = 0.100049 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 782957.547477 for q·Δm = 782957.547477 (rel 1.19e-15), sub-steps 9005
+Ne_burn: booked 4807.544398 for q·Δm = 4807.544398 (rel 3.22e-15), sub-steps 6302
+ok
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000000, booked 2610.000000, q·Δm 2610.000000, sub-steps 489
+ok
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070046 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0716, max ΔT/T 0.0500, sub-steps 182, retried 0, T 18034.2
+ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 183 filtered out; finished in 5.30s
+
+

@@ -1,0 +1,13 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 2.77s
+== 2026-10-14T13:51:57-04:00 build[native] · task M0-T119 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T13:51:57-04:00 build[wasm] · task M0-T119 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.52 s
+build wasm: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=0 · 2.67 s
+build native: 1.99.0 in 3 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+

@@ -1,0 +1,20 @@
+== 2026-10-14T14:23:11-04:00 plan_lint · task M0-T120 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.33 s
+lint: checks=540 failed=0 warnings=6 · blocks=217 · flow_rows=217 · verify_fences=0 · history=0 · flow=per-task · header=523/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC4: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D30: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D31: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D32: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-D36: `Read:` names crates/sr-engine/tests/gpu/heat.rs whole (1310 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D36 4
+=== GO ===
+
+== 2026-10-14T14:59:07-04:00 plan_lint · task M0-T120 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=538 failed=0 warnings=4 · blocks=217 · flow_rows=217 · verify_fences=0 · history=0 · flow=per-task · header=523/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC4: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D30: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D31: DONE outside the current phase and 22 lines long - stub it (§2.6)
+WARN: M0-D32: DONE outside the current phase and 28 lines long - stub it (§2.6)
+=== GO ===
+

@@ -1,0 +1,288 @@
+==== 2026-10-14T11:53:07-04:00 heat_implicit · clean · a fresh scratch copy of the tree
+== 2026-10-14T11:53:08-04:00 heat_implicit · task M0-T117 · box laserax-ai :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=0 · 49.32 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-94376nnm/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-94376nnm/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 19.78s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -4.741e-12, highest 3.5743e-3, heat 1.000000000
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse (bg 2): sigma2 x 47.70734 y 47.70734, explicit x 48.00000 y 48.00000, deepest ring -2.286e-2, highest 4.4711e-3, heat 0.9982471 of 1.0000000
+SR-HEAT2 GPU sharp pulse run: lost 8228.556484, radiated 8228.575335
+SR-HEAT2 GPU sharp pulse run: lost 8228.552978, radiated 8228.575335
+ok
+test heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 14, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000922 y 40.000922, explicit x 40.000158 y 40.000158, expected 40
+ok
+test heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU at 131.76: HeatReport { stages: 32, need: 33, worst: 33, dt: 131.76, dt_p: Some(0.50053847) }, Some("SR-WARN heat stages 33"), sigma2 x 147.619, heat 6.88e-8
+ok
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 2 Newton passes, 108 rounds, delta -4.7e-13; |T - tight solve| 4.77e-13; sigma2 x 39.999878 y 39.999878, expected 40
+ok
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 5 Newton passes, 130 rounds, delta 8.9e-14; worst balance 3.28e-12; lost 1974.389489 of radiated 1974.389489
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 187 filtered out; finished in 3.59s
+
+
+==== 2026-10-14T11:53:07-04:00 heat_implicit · plant solve-two-rounds · a fresh scratch copy of the tree
+planted solve-two-rounds: tests/plants/solve-two-rounds.patch -> crates/sr-physics/src/reference/heat.rs
+== 2026-10-14T11:53:08-04:00 heat_implicit · task M0-T117 · box laserax-ai :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=101 · 10.68 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-94376nnm/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-94376nnm/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.12s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... 
+thread 'heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t' (322433) panicked at crates/sr-engine/tests/gpu/heat.rs:678:13:
+assertion failed: heat.step(&mut with, 3.2).converged && heat.step(&mut without, 3.2).converged
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::implicit::backward_euler_is_first_order_in_the_step ... 
+thread 'heat::implicit::backward_euler_is_first_order_in_the_step' (322474) panicked at crates/sr-engine/tests/gpu/heat.rs:655:21:
+assertion failed: heat.step(&mut s, 24.0 / f64::from(k)).converged
+FAILED
+test heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse (bg 2): sigma2 x 47.70734 y 47.70734, explicit x 48.00000 y 48.00000, deepest ring -2.286e-2, highest 4.4711e-3, heat 0.9982471 of 1.0000000
+SR-HEAT2 GPU sharp pulse run: lost 8228.556484, radiated 8228.575335
+SR-HEAT2 GPU sharp pulse run: lost 8228.552978, radiated 8228.575335
+ok
+test heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 14, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000922 y 40.000922, explicit x 40.000158 y 40.000158, expected 40
+ok
+test heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU at 131.76: HeatReport { stages: 32, need: 33, worst: 33, dt: 131.76, dt_p: Some(0.50053847) }, Some("SR-WARN heat stages 33"), sigma2 x 147.619, heat 6.88e-8
+ok
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 16 Newton passes, 32 rounds, delta -5.5e-7; |T - tight solve| 5.52e-4; sigma2 x 39.359467 y 39.359921, expected 40
+
+thread 'heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared' (323034) panicked at crates/sr-engine/tests/gpu/heat.rs:634:9:
+16 passes
+FAILED
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 16 Newton passes, 32 rounds, delta -2.2e-7; worst balance 1.62e-6; lost 1974.389697 of radiated 1974.389697
+
+thread 'heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell' (323214) panicked at crates/sr-engine/tests/gpu/heat.rs:719:9:
+16 passes
+FAILED
+
+failures:
+
+failures:
+    heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t
+    heat::implicit::backward_euler_is_first_order_in_the_step
+    heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared
+    heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 187 filtered out; finished in 1.39s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-14T11:53:07-04:00 heat_implicit · plant rkl2-s-minus-one · a fresh scratch copy of the tree
+planted rkl2-s-minus-one: tests/plants/rkl2-s-minus-one.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-14T11:53:08-04:00 heat_implicit · task M0-T117 · box laserax-ai :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=101 · 25.77 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-94376nnm/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-94376nnm/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.30s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -4.741e-12, highest 3.5743e-3, heat 1.000000000
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (326957) panicked at crates/sr-engine/tests/gpu/heat.rs:786:13:
+assertion `left == right` failed
+  left: 4
+ right: 5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 13, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000455 y 40.000455, explicit x 40.000158 y 40.000158, expected 40
+
+thread 'heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (327137) panicked at crates/sr-engine/tests/gpu/heat.rs:737:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32' (327208) panicked at crates/sr-engine/tests/gpu/heat.rs:754:13:
+assertion `left == right` failed: dt 0.5001: HeatReport { stages: 2, need: 3, worst: 3, dt: 0.5001, dt_p: Some(0.5) }
+  left: (2, 3)
+ right: (2, 2)
+FAILED
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 2 Newton passes, 108 rounds, delta -4.7e-13; |T - tight solve| 4.77e-13; sigma2 x 39.999878 y 39.999878, expected 40
+ok
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 5 Newton passes, 130 rounds, delta 8.9e-14; worst balance 3.28e-12; lost 1974.389489 of radiated 1974.389489
+ok
+
+failures:
+
+failures:
+    heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32
+
+test result: FAILED. 4 passed; 3 failed; 0 ignored; 0 measured; 187 filtered out; finished in 3.35s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-14T11:57:43-04:00 heat_implicit · clean · a fresh scratch copy of the tree
+== 2026-10-14T11:57:43-04:00 heat_implicit · task M0-T117 · box laserax-ai :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=0 · 8.54 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5mxb8e13/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-5mxb8e13/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.04s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -4.741e-12, highest 3.5743e-3, heat 1.000000000
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse (bg 2): sigma2 x 47.70734 y 47.70734, explicit x 48.00000 y 48.00000, deepest ring -2.286e-2, highest 4.4711e-3, heat 0.9982471 of 1.0000000
+SR-HEAT2 GPU sharp pulse run: lost 8228.556484, radiated 8228.575335
+SR-HEAT2 GPU sharp pulse run: lost 8228.552978, radiated 8228.575335
+ok
+test heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 14, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000922 y 40.000922, explicit x 40.000158 y 40.000158, expected 40
+ok
+test heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU at 131.76: HeatReport { stages: 32, need: 33, worst: 33, dt: 131.76, dt_p: Some(0.50053847) }, Some("SR-WARN heat stages 33"), sigma2 x 147.619, heat 6.88e-8
+ok
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 2 Newton passes, 108 rounds, delta -4.7e-13; |T - tight solve| 4.77e-13; sigma2 x 39.999878 y 39.999878, expected 40
+ok
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 5 Newton passes, 130 rounds, delta 8.9e-14; worst balance 3.28e-12; lost 1974.389489 of radiated 1974.389489
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 187 filtered out; finished in 1.40s
+
+
+==== 2026-10-14T11:57:43-04:00 heat_implicit · plant solve-two-rounds · a fresh scratch copy of the tree
+planted solve-two-rounds: tests/plants/solve-two-rounds.patch -> crates/sr-physics/src/reference/heat.rs
+== 2026-10-14T11:57:43-04:00 heat_implicit · task M0-T117 · box laserax-ai :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=101 · 24.07 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5mxb8e13/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-5mxb8e13/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.08s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... 
+thread 'heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t' (424538) panicked at crates/sr-engine/tests/gpu/heat.rs:678:13:
+assertion failed: heat.step(&mut with, 3.2).converged && heat.step(&mut without, 3.2).converged
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::implicit::backward_euler_is_first_order_in_the_step ... 
+thread 'heat::implicit::backward_euler_is_first_order_in_the_step' (424540) panicked at crates/sr-engine/tests/gpu/heat.rs:655:21:
+assertion failed: heat.step(&mut s, 24.0 / f64::from(k)).converged
+FAILED
+test heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse (bg 2): sigma2 x 47.70734 y 47.70734, explicit x 48.00000 y 48.00000, deepest ring -2.286e-2, highest 4.4711e-3, heat 0.9982471 of 1.0000000
+SR-HEAT2 GPU sharp pulse run: lost 8228.556484, radiated 8228.575335
+SR-HEAT2 GPU sharp pulse run: lost 8228.552978, radiated 8228.575335
+ok
+test heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 14, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000922 y 40.000922, explicit x 40.000158 y 40.000158, expected 40
+ok
+test heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU at 131.76: HeatReport { stages: 32, need: 33, worst: 33, dt: 131.76, dt_p: Some(0.50053847) }, Some("SR-WARN heat stages 33"), sigma2 x 147.619, heat 6.88e-8
+ok
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 16 Newton passes, 32 rounds, delta -5.5e-7; |T - tight solve| 5.52e-4; sigma2 x 39.359467 y 39.359921, expected 40
+
+thread 'heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared' (424792) panicked at crates/sr-engine/tests/gpu/heat.rs:634:9:
+16 passes
+FAILED
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 16 Newton passes, 32 rounds, delta -2.2e-7; worst balance 1.62e-6; lost 1974.389697 of radiated 1974.389697
+
+thread 'heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell' (424813) panicked at crates/sr-engine/tests/gpu/heat.rs:719:9:
+16 passes
+FAILED
+
+failures:
+
+failures:
+    heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t
+    heat::implicit::backward_euler_is_first_order_in_the_step
+    heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared
+    heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 187 filtered out; finished in 0.97s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-14T11:57:43-04:00 heat_implicit · plant rkl2-s-minus-one · a fresh scratch copy of the tree
+planted rkl2-s-minus-one: tests/plants/rkl2-s-minus-one.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-14T11:57:43-04:00 heat_implicit · task M0-T117 · box laserax-ai :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=101 · 16.96 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5mxb8e13/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-5mxb8e13/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.84s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -4.741e-12, highest 3.5743e-3, heat 1.000000000
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer' (421983) panicked at crates/sr-engine/tests/gpu/heat.rs:786:13:
+assertion `left == right` failed
+  left: 4
+ right: 5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU HeatReport { stages: 13, need: 14, worst: 14, dt: 24.0, dt_p: Some(0.5) }: sigma2 x 40.000455 y 40.000455, explicit x 40.000158 y 40.000158, expected 40
+
+thread 'heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared' (422205) panicked at crates/sr-engine/tests/gpu/heat.rs:737:9:
+assertion `left == right` failed
+  left: 13
+ right: 14
+FAILED
+test heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32' (422241) panicked at crates/sr-engine/tests/gpu/heat.rs:754:13:
+assertion `left == right` failed: dt 0.5001: HeatReport { stages: 2, need: 3, worst: 3, dt: 0.5001, dt_p: Some(0.5) }
+  left: (2, 3)
+ right: (2, 2)
+FAILED
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 2 Newton passes, 108 rounds, delta -4.7e-13; |T - tight solve| 4.77e-13; sigma2 x 39.999878 y 39.999878, expected 40
+ok
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 5 Newton passes, 130 rounds, delta 8.9e-14; worst balance 3.28e-12; lost 1974.389489 of radiated 1974.389489
+ok
+
+failures:
+
+failures:
+    heat::implicit::gpu_a_sharp_pulse_stays_stable_at_a_step_just_over_one_stage_fewer
+    heat::implicit::gpu_one_rkl2_pass_matches_explicit_sub_steps_in_sigma_squared
+    heat::implicit::gpu_the_stage_count_is_the_twins_and_a_33_stage_step_is_capped_to_32
+
+test result: FAILED. 4 passed; 3 failed; 0 ignored; 0 measured; 187 filtered out; finished in 1.50s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

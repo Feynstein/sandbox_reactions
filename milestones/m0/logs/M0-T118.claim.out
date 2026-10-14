@@ -1,0 +1,160 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why burn_cell: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why burn_order: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why neutrino: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why sod: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why edges: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why collapse: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why twin: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why cpu_gpu: never: .cargo/config.toml (+72)
+why heat_limiter: never: tests/plants/rkl2-s-minus-one.patch · stale: crates/sr-engine/shaders/heat.wgsl (+5)
+why radiation_force: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why grav_force: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why grav_selfforce: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why fft: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why adapter: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why state: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why booking: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why floors: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why dt: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why box: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why latch: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why timing: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why scene: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why dump: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why boot: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why desktop: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why web: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why capture: stale: crates/sr-engine/shaders/heat.wgsl (+4)
+why watch_only: stale: crates/sr-engine/shaders/heat.wgsl (+3)
+plan_lint        538/0/0      0.12 s  GO · step 1/30, 29 left
+build            2/0/0        4.04 s  GO · step 2/30, 28 left
+burn_cell        16/0/0       5.07 s  GO · step 3/30, 27 left
+burn_order       4/0/0        3.62 s  GO · step 4/30, 26 left
+neutrino         18/0/0       5.92 s  GO · step 5/30, 25 left
+sod              15/0/0      14.84 s  GO · step 6/30, 24 left
+edges            7/0/0       12.94 s  GO · step 7/30, 23 left
+collapse         6/0/0        3.47 s  GO · step 8/30, 22 left
+twin             6/0/0        4.57 s  GO · step 9/30, 21 left
+cpu_gpu          2/1/0        8.78 s  NO-GO · step 10/30, 20 left
+heat_limiter     6/0/0        2.52 s  GO · step 11/30, 19 left
+radiation_force  3/0/0        1.87 s  GO · step 12/30, 18 left
+grav_force       13/0/0       6.53 s  GO · step 13/30, 17 left
+grav_selfforce   5/0/0        2.72 s  GO · step 14/30, 16 left
+fft              8/0/0        6.27 s  GO · step 15/30, 15 left
+adapter          10/0/0       4.47 s  GO · step 16/30, 14 left
+state            6/0/0        4.17 s  GO · step 17/30, 13 left
+booking          4/0/0        3.22 s  GO · step 18/30, 12 left
+floors           7/0/0        6.37 s  GO · step 19/30, 11 left
+dt               6/0/0        5.02 s  GO · step 20/30, 10 left
+box              8/0/0        6.88 s  GO · step 21/30, 9 left
+latch            5/0/0        4.02 s  GO · step 22/30, 8 left
+timing           5/0/0        7.23 s  GO · step 23/30, 7 left
+scene            8/0/0        3.87 s  GO · step 24/30, 6 left
+dump             8/0/0        6.38 s  GO · step 25/30, 5 left
+boot             1/0/0        3.27 s  GO · step 26/30, 4 left
+desktop          2/0/0        6.75 s  GO · step 27/30, 3 left
+web              3/0/0       22.72 s  GO · step 28/30, 2 left
+capture          2/0/0        1.73 s  GO · step 29/30, 1 left
+watch_only       1/0/0        0.11 s  GO · step 30/30, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 25 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 18 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+heat_implicit · red-arm proven by M0-T118 2026-10-14T13:32:14-04:00 (fingerprint 11e2eb797589) - not re-run
+heat_limiter · red-arm proven by M0-T118 2026-10-14T13:32:48-04:00 (fingerprint c6993190ec50) - not re-run
+FLAG oracle: tests/plants/limiter-off.patch changed since M0-T118's start - a test, case or check M0-T118's Deliver: does not name
+FLAG oracle: tests/plants/rkl2-s-minus-one.patch changed since M0-T118's start - a test, case or check M0-T118's Deliver: does not name
+logs: milestones/m0/logs/M0-T118.<scope>.log · record: loop_times.jsonl · tree 30df0ff71a31+ece56119f999
+anchor: 142 path×scope entries moved by this run
+anchor: 111 paths checked · 152 skipped (3 classes) · 73 never checked · 0 stale · 0 unclassified · 0 owed · 184 covered of 336 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for cpu_gpu)
+NEVER CHECKED  Cargo.lock  (no entry for cpu_gpu)
+NEVER CHECKED  Cargo.toml  (no entry for cpu_gpu)
+NEVER CHECKED  assets/elements.json  (no entry for cpu_gpu)
+NEVER CHECKED  assets/physics.json  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for cpu_gpu)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for cpu_gpu)
+NEVER CHECKED  rust-toolchain.toml  (no entry for cpu_gpu)
+NEVER CHECKED  scenes/ref_burn.json  (no entry for cpu_gpu)
+NEVER CHECKED  scenes/ref_disk.json  (no entry for cpu_gpu)
+NEVER CHECKED  scenes/ref_sod.json  (no entry for cpu_gpu)
+NEVER CHECKED  tests/cargo.sh  (no entry for cpu_gpu)
+NEVER CHECKED  tests/gpu.sh  (no entry for cpu_gpu)
+NEVER CHECKED  tests/plants/cfl-gpu.patch  (no entry for cpu_gpu)
+skipped   144  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  cpu_gpu: 1 failed · log milestones/m0/logs/M0-T118.cpu_gpu.log
+  anchor: 73 never checked, 0 stale, 0 unclassified - every one named above
+verify: 725 passed, 1 failed, 0 skipped · 29/30 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 12 not impacted · 26.15 s + loop 0.10 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 9.03->11.01 · base: M0-T118's start 2026-10-14T13:11:37-04:00
+=== NO-GO: cpu_gpu: 1 failed · log milestones/m0/logs/M0-T118.cpu_gpu.log; anchor: 73 never checked, 0 stale, 0 unclassified - every one named above ===

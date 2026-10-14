@@ -1,0 +1,45 @@
+== 2026-10-14T11:55:27-04:00 build[native] · task M0-T117 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T11:55:27-04:00 build[wasm] · task M0-T117 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 3.28 s
+build wasm: 1.99.0 in 3 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=1 · 11.14 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+   --> crates/sr-physics/src/reference/heat.rs:533:59
+    |
+533 |         if self.test.pin_temperature || gas.is_empty() || !(dt > 0.0) {
+    |                                                           ^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#neg_cmp_op_on_partial_ord
+    = note: `-D clippy::neg-cmp-op-on-partial-ord` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::neg_cmp_op_on_partial_ord)]`
+
+error: the loop variable `i` is used to index `m`
+   --> crates/sr-physics/src/reference/heat.rs:617:22
+    |
+617 |             for i in 0..n {
+    |                      ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+617 -             for i in 0..n {
+617 +             for (i, <item>) in m.iter_mut().enumerate().take(n) {
+    |
+
+error: could not compile `sr-physics` (lib) due to 2 previous errors
+=== NO-GO: cargo clippy -D warnings failed ===
+
+== 2026-10-14T11:56:30-04:00 build[native] · task M0-T117 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-14T11:56:30-04:00 build[wasm] · task M0-T117 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.72 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+
+-- build[native] · exit=0 · 3.88 s
+build native: 1.99.0 in 4 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.4G)
+=== GO ===
+

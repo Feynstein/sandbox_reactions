@@ -18,7 +18,9 @@
 //!
 //! A frame ([`latch`], §1.8.3, §1.8.5, M0-T22) records N steps under the latch: every dispatch of a step then takes its
 //! workgroup count from a buffer the latch's controller can zero, and the guard's and the re-fit's schedule is the GPU's
-//! step index, not this step's CPU count.
+//! step index, not this step's CPU count. A step with P5 records its bare runs under the latch too, the slow-down off:
+//! its P5 may carry over into the next submission (§0.5 [M0-TJ4] (6), M0-T121), so [`Step::run`] submits until its
+//! steps have ended.
 //!
 //! The FFT and the zero-padded convolution over the box ([`fft`], shaders/fft.wgsl, M0-T30) are machinery, not a pass:
 //! P2 builds on them ([`grav`]), P7 when its lot builds it.
@@ -118,6 +120,10 @@ pub struct Dispatch {
 pub enum Size {
     Fixed([u32; 3]),
     Indirect(wgpu::Buffer, u64),
+    /// Read from a buffer its own pass writes: a chain of dispatches, each sized by the one before it, every size zeroed
+    /// at the pass's end — P5's rounds ([`heat`], M0-T118). The latch reaches the chain through the fixed-size dispatch
+    /// that opens it, so it needs no slot of its own.
+    Chained(wgpu::Buffer, u64),
 }
 
 /// The optional passes a step is built with (§2.12.1's switches) and its box mode — [`Step::with_passes`].
@@ -172,18 +178,24 @@ impl CostSource {
     }
 }
 
-/// The cost of a batch's timed steps (§1.8.3's c_step input, §3.1).
+/// The cost of a batch's steps (§1.8.3's c_step input, §3.1).
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct StepCost {
     pub source: CostSource,
-    /// Steps timed: the batch's first whole steps, as many as the query set holds; every step under wall time.
+    /// Steps timed: the batch's first whole recorded steps, as many as the query set holds; every step under wall time.
+    /// A step whose P5 carried over records again in the next submission, and each recording counts here.
     pub steps: u32,
-    /// Mean ms per timed step, from its first pass's beginning to its last pass's end (the gaps between passes
-    /// included); under wall time, the batch's wall time ÷ its steps — recording, submission and readback included.
+    /// Steps the batch ended (§0.5 [M0-TJ4] (6)): its recorded steps but those a frame's latch stopped and the recordings
+    /// a carried step took before the one it ended in.
+    pub ended: u32,
+    /// Mean ms per step ended, from each recorded step's first pass's beginning to its last pass's end (the gaps between
+    /// passes included): the timed steps' mean scaled by the recorded steps over the ended ones, so a carried step's rounds
+    /// in every submission are its own; under wall time, the batch's wall time ÷ its ended steps — recording, submission
+    /// and readback included.
     pub step_ms: f64,
-    /// Mean ms per timed step spent in each pass, in `Pass::ORDER` (step 0's initial reduction is P9's); none for a pass
-    /// the step does not record, and every pass under wall time. A step a frame's latch stopped is recorded with its
-    /// dispatches zero-sized, so it is counted at its near-zero cost.
+    /// Mean ms per step ended spent in each pass, in `Pass::ORDER` (step 0's initial reduction is P9's), scaled likewise;
+    /// none for a pass the step does not record, and every pass under wall time. A recorded step a frame's latch or a
+    /// carry stopped runs its dispatches zero-sized: their near-zero cost lands on the steps that ended.
     pub pass_ms: [Option<f64>; 10],
     /// A frame's own passes, `frame begin` + `frame end`, in ms; none for bare steps and under wall time.
     pub frame_ms: Option<f64>,
@@ -219,6 +231,8 @@ pub(crate) struct Batch {
     live: bool,
     passes: Vec<(usize, Option<u32>)>,
     steps: u32,
+    /// The steps a gated bare batch ended ([`Step::run`]); none when every recorded step ends.
+    ended: Option<u32>,
     timed: u32,
     open: bool,
     started_ms: Option<f64>,
@@ -287,14 +301,14 @@ impl Timer {
     }
 
     /// The cost of a finished batch: from its resolved timestamps (`ticks`), or from the wall clock now when it has
-    /// none; `steps` is how many steps it ran (a frame's, after the latch).
-    fn cost(&self, batch: &Batch, ticks: Option<&[u64]>, steps: u32) -> Option<StepCost> {
+    /// none; `ended` is how many steps it ended (a frame's, after the latch and a carry).
+    fn cost(&self, batch: &Batch, ticks: Option<&[u64]>, ended: u32) -> Option<StepCost> {
         let period_ns = self.gpu.borrow().as_ref().map_or(0.0, |g| g.period_ns);
         let Some(ticks) = ticks else {
             let ms = wall_ms()? - batch.started_ms?;
-            let steps = steps.max(1);
+            let steps = ended.max(1);
             let step_ms = ms / f64::from(steps);
-            return Some(StepCost { source: CostSource::Wall, steps, step_ms, pass_ms: [None; 10], frame_ms: None });
+            return Some(StepCost { source: CostSource::Wall, steps, ended, step_ms, pass_ms: [None; 10], frame_ms: None });
         };
         let ms = |b: u64, e: u64| e.saturating_sub(b) as f64 * period_ns / 1e6;
         let (mut pass_ms, mut frame_ms) = ([None::<f64>; 10], None::<f64>);
@@ -310,10 +324,11 @@ impl Timer {
                 None => *frame_ms.get_or_insert(0.0) += ms(b, e),
             }
         }
-        let n = f64::from(batch.timed.max(1));
+        // Per timed recording, then per step ended: the batch's recordings over the steps they ended.
+        let n = f64::from(batch.timed.max(1)) * f64::from(ended.max(1)) / f64::from(batch.steps.max(1));
         let step_ms = spans.iter().map(|&(b, e)| ms(b, e)).sum::<f64>() / n;
         let pass_ms = pass_ms.map(|p| p.map(|v| v / n));
-        Some(StepCost { source: CostSource::GpuTimestamp, steps: batch.timed, step_ms, pass_ms, frame_ms })
+        Some(StepCost { source: CostSource::GpuTimestamp, steps: batch.timed, ended, step_ms, pass_ms, frame_ms })
     }
 }
 
@@ -427,7 +442,7 @@ impl Step {
         passes[Pass::Reactions as usize] = burn.as_mut().map(|r| std::mem::take(&mut r.dispatches)).unwrap_or_default();
         passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
-        let latch = Latch::new(device, &passes, &dt, &boxfit);
+        let latch = Latch::new(device, &passes, &dt, &boxfit, warm.as_ref().map(heat::Heat::gate_buffers));
         // P6 sets the latch after its cells: its flag copy needs the latch's record, so it joins the list now (one fixed
         // invocation, a size the latch already holds a slot for).
         if let Some(b) = &burn {
@@ -491,11 +506,11 @@ impl Step {
         self.boxfit.edit_flag()
     }
 
-    /// Records the next step: every non-empty slot, P0 to P9 — before step 0, the initial state's Δt — a compute pass
-    /// each when the step's passes are timed, else one for the step. The
+    /// Records the next bare step of a step without P5: every non-empty slot, P0 to P9 — before step 0, the initial
+    /// state's Δt — a compute pass each when the step's passes are timed, else one for the step. The
     /// guard and the re-fit follow this step's CPU count; after a frame the latch stopped, that count runs ahead of the
     /// GPU's, so a run uses frames ([`Step::encode_frame`]) or bare steps, not both.
-    pub fn encode(&self, encoder: &mut wgpu::CommandEncoder) {
+    fn encode(&self, encoder: &mut wgpu::CommandEncoder) {
         if !self.timer.batch.borrow().live {
             self.timer.start();
         }
@@ -504,7 +519,8 @@ impl Step {
 
     /// One step, bare (`latch` none) or under the latch: then every fixed-size dispatch reads its workgroup count from
     /// the latch's sizes, the guard and the re-fit are recorded on every step and opened by the GPU's step index, and the
-    /// controller closes P9.
+    /// controller closes P9. With P5, its gate too: `latch_hold` opens P0, and `heat_park` and `latch_carry` follow the
+    /// slots P5 records ([`heat`]'s rounds), its commit after them.
     ///
     /// The step's passes are compute passes of their own only when its passes are timed; otherwise the whole step is one
     /// compute pass, the same dispatches in the same order (wgpu still orders each dispatch after the last that wrote
@@ -523,6 +539,7 @@ impl Step {
             ];
             passes.push(("P9 reductions (initial state)", Pass::Reductions as usize, lists));
         }
+        let gate = latch.and_then(Latch::gate);
         for (pass, dispatches) in Pass::ORDER.iter().zip(&self.passes) {
             let hooked = latch.is_some_and(|l| l.hooked()) && *pass == Pass::Reactions;
             if dispatches.is_empty() && *pass != Pass::Edits && !hooked {
@@ -530,7 +547,16 @@ impl Step {
             }
             let mut lists = vec![(&dispatches[..], 1, false)];
             if *pass == Pass::Edits {
+                if let Some((hold, _)) = gate {
+                    lists.insert(0, (std::slice::from_ref(hold), 1, true));
+                }
                 lists.push((&self.boxfit.on_edit, 1, false));
+            }
+            if let (Pass::Heat, Some((_, carry)), Some(h)) = (*pass, gate, &self.heat) {
+                let (head, rest) = dispatches.split_at(heat::HEAD);
+                let (rounds, tail) = rest.split_at(heat::SLOTS);
+                let park = std::slice::from_ref(&h.park);
+                lists = vec![(head, 1, false), (&rounds[..h.rounds()], 1, false), (park, 1, true), (std::slice::from_ref(carry), 1, true), (tail, 1, false)];
             }
             if let (true, Some(l)) = (hooked, latch) {
                 lists.push((l.hook_dispatches(), 1, false));
@@ -579,13 +605,24 @@ impl Step {
         self.dt.record()
     }
 
-    /// Records and submits `steps` steps, in order, in one submission.
+    /// Runs `steps` steps, in order: one submission for a step without P5 (submitted, not waited for); with P5, a
+    /// submission of the steps left under the latch's gate, the slow-down off, until they have ended — after a carry the
+    /// next submission holds the carried step alone (§0.5 [M0-TJ4] (6)), each waited for (tests and headless).
     pub fn run(&self, device: &wgpu::Device, queue: &wgpu::Queue, steps: u32) {
+        self.run_counted(device, queue, steps);
+    }
+
+    /// [`Step::run`], returning the submissions it took.
+    pub fn run_counted(&self, device: &wgpu::Device, queue: &wgpu::Queue, steps: u32) -> u32 {
+        if self.heat.is_some() {
+            return self.run_gated(device, queue, steps);
+        }
         let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("step") });
         for _ in 0..steps {
             self.encode(&mut encoder);
         }
         queue.submit([encoder.finish()]);
+        1
     }
 
     /// Turns the cost measurement on or off from the next batch on, and returns the source it will use: GPU timestamps
@@ -644,7 +681,7 @@ impl Step {
         if ticks.is_none() {
             device.poll(wgpu::PollType::wait_indefinitely()).expect("the device waits");
         }
-        self.timer.cost(&batch, ticks.as_deref(), batch.steps)
+        self.timer.cost(&batch, ticks.as_deref(), batch.ended.unwrap_or(batch.steps))
     }
 }
 
@@ -754,7 +791,7 @@ fn record_sized(cpass: &mut wgpu::ComputePass<'_>, d: &Dispatch, size: &Size) {
     }
     match size {
         Size::Fixed([x, y, z]) => cpass.dispatch_workgroups(*x, *y, *z),
-        Size::Indirect(buffer, offset) => cpass.dispatch_workgroups_indirect(buffer, *offset),
+        Size::Indirect(buffer, offset) | Size::Chained(buffer, offset) => cpass.dispatch_workgroups_indirect(buffer, *offset),
     }
 }
 

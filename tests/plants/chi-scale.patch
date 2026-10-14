@@ -1,6 +1,6 @@
 --- a/crates/sr-physics/src/reference/heat.rs
 +++ b/crates/sr-physics/src/reference/heat.rs
-@@ -224,7 +224,7 @@
+@@ -244,7 +244,7 @@
              return 0.0;
          }
          if let Some(chi) = self.test.constant_diffusivity {
@@ -11,12 +11,12 @@
          let face_er = 0.5 * (era + erb);
 --- a/crates/sr-engine/shaders/heat.wgsl
 +++ b/crates/sr-engine/shaders/heat.wgsl
-@@ -190,7 +190,7 @@
+@@ -147,7 +147,7 @@
      }
-     var k: f32;
+     var d: f32;
      if ((params.flags & CONSTANT_DIFFUSIVITY) != 0u) {
--        k = params.chi * (0.5 * (a.c + b.c));
-+        k = 0.9 * params.chi * (0.5 * (a.c + b.c));
+-        d = params.chi * (0.5 * (a.c + b.c));
++        d = 0.9 * params.chi * (0.5 * (a.c + b.c));
      } else {
          let tm = max(a.t, b.t);
          let ra = a.t / tm;

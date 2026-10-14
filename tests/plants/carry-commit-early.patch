@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/latch.wgsl
++++ b/crates/sr-engine/shaders/latch.wgsl
+@@ -168,7 +168,7 @@
+     if (latch.stopped != 0u) {
+         return;
+     }
+-    if (heat[LIVE] != 0u) {
++    if (false && heat[LIVE] != 0u) {
+         if (latch.held == 0u) {
+             zero_sizes();
+         }

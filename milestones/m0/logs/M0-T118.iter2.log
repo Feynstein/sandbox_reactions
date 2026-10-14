@@ -1,0 +1,11 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.72s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 6.35e-7 of the peak; sigma2 x 47.96808 y 47.96817, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5744e-1; heat 100.0008780 of 100.0000031; up to 8 Newton passes, 141 rounds
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 192 filtered out; finished in 0.84s
+

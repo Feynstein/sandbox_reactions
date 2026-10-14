@@ -1,0 +1,53 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 16.37s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 0.00e0, [1e-4, 0.1) 0.00e0, ≥ 0.1 -1.00e0; signed heat over the twin's -1.00e0
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 4.84e-7 4.84e-7
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 1, rounds: 105, converged: true, delta: -80.805786 }, the twin 1 passes, 152 rounds; T in [0.0500, 0.0500]; lost 1.732603392e9 of radiated 7.086868070e10 (twin 7.086864637e10); C-weighted L1 against the twin -1.00e0, worst cell with Σ ≥ 1e-4 0.00e0
+
+thread 'heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost' (1519987) panicked at crates/sr-engine/tests/gpu/heat.rs:1155:13:
+(a) T 0.049999999999999996 below the floor 0.05
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 3.90e-10, [1e-4, 0.1) 2.42e-5, ≥ 0.1 8.62e-4; signed heat over the twin's -3.01e-10
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 3.32e-7 3.32e-7, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 1, rounds: 105, converged: true, delta: 0.012123904 }, the twin 1 passes, 142 rounds; T in [10.1212, 101.2125]; lost 1.024049353e0 of radiated 1.023999214e0 (twin 1.023998875e0); C-weighted L1 against the twin 8.86e-4, worst cell with Σ ≥ 1e-4 1.26e-2
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost' (1520177) panicked at crates/sr-engine/tests/gpu/heat.rs:1156:13:
+(a) T 101.21253425337537 above (1 + 1e-5) max T0 = 100.00081443399864
+FAILED
+test heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more ... SR-STIFF heat_hot heat left: one pass -39.9029, 64 passes of Δt/64 0.1918 (up to 1 Newton passes, 144 rounds a pass), ratio -208.055
+
+thread 'heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more' (1520237) panicked at crates/sr-engine/tests/gpu/heat.rs:1258:9:
+(e) one pass keeps -208.0553581914139 × the refinement's heat
+FAILED
+test heat::stiff::the_scenes_are_stiff_for_rkl2_and_carry_what_the_oracles_assume ... SR-STIFF RKL2 would need 580 stages on heat_hot (Δt 0.02) and 11547 on heat_rim (Δt 0.01)
+ok
+test heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_hot.json: 1 Newton passes, 152 rounds, converged true, delta -8.1e1; T in [-750174.0447, -750174.0447]; lost 7.086864796e10 of radiated 7.086864796e10; worst balance 4.09e1
+
+thread 'heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance' (1520325) panicked at crates/sr-engine/tests/gpu/heat.rs:1217:9:
+(c) the balance of a cell: 40.90287471712517
+FAILED
+test heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_rim.json: 1 Newton passes, 142 rounds, converged true, delta 1.3e-2; T in [10.1270, 101.2700]; lost 1.023998899e0 of radiated 1.023998898e0; worst balance 1.03e0
+
+thread 'heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance' (1520326) panicked at crates/sr-engine/tests/gpu/heat.rs:1217:9:
+(c) the balance of a cell: 1.0254036729519933
+FAILED
+
+failures:
+
+failures:
+    heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost
+    heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more
+    heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance
+    heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance
+
+test result: FAILED. 1 passed; 5 failed; 0 ignored; 0 measured; 193 filtered out; finished in 1.71s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

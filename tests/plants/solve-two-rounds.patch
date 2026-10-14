@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/heat.rs
++++ b/crates/sr-physics/src/reference/heat.rs
+@@ -415,7 +415,7 @@
+             if rz <= self.u_bound && e_heat <= self.t_bound {
+                 return (rounds, true);
+             }
+-            if rounds == max_rounds {
++            if rounds == max_rounds || rounds == 2 {
+                 return (rounds, false);
+             }
+             self.net.matvec(&self.diag, &p, &mut q);
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -529,7 +529,7 @@
+                 eta = total.y - beta * beta * rec.eta;
+             }
+             var stop = (gamma <= rec.u_bound && total.z <= rec.t_bound) || !(eta > 0.0);
+-            stop = stop || rec.rounds >= MAX_ROUNDS;
++            stop = stop || rec.rounds >= MAX_ROUNDS || rec.k == 2u;
+             if (stop) {
+                 action = CELL_UPDATE;
+                 next.mode = DO_RESID;

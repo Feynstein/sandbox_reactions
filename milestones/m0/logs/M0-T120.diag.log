@@ -1,0 +1,36 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.33s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 -0.00e0, [1e-4, 0.1) -0.00e0, ≥ 0.1 2.27e-6; signed heat over the twin's -2.26e-6
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 4.58e-6 1.22e-6
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 5, rounds: 362, converged: true, delta: -2.1585843e-6 }, the twin 7 passes, 686 rounds; T in [1974.1972, 8108.3319]; lost 1.139628208e9 of radiated 1.139628260e9 (twin 1.139626867e9); C-weighted L1 against the twin 2.27e-6, worst cell with Σ ≥ 1e-4 2.33e-5
+ok
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 1.05e-8, [1e-4, 0.1) 9.72e-7, ≥ 0.1 1.32e-4; signed heat over the twin's -1.13e-4
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 1.01e-2 1.01e-2, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 6, rounds: 495, converged: true, delta: -0.00013931902 }, the twin 7 passes, 766 rounds; T in [65.4046, 99.9859]; lost 1.875073974e3 of radiated 1.875074280e3 (twin 1.856400452e3); C-weighted L1 against the twin 1.33e-4, worst cell with Σ ≥ 1e-4 5.01e-4
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost' (1505357) panicked at crates/sr-engine/tests/gpu/heat.rs:1295:9:
+(d) C-weighted L1 0.00013271190616707937
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more ... SR-STIFF heat_hot heat left: one pass 0.3422, 64 passes of Δt/64 0.2030 (up to 6 Newton passes, 530 rounds a pass), ratio 1.686
+ok
+test heat::stiff::the_scenes_are_stiff_for_rkl2_and_carry_what_the_oracles_assume ... SR-STIFF RKL2 would need 580 stages on heat_hot (Δt 0.02) and 11547 on heat_rim (Δt 0.01)
+ok
+test heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_hot.json: 7 Newton passes, 686 rounds, converged true, delta 1.2e-12; T in [1974.1512, 8108.3516]; lost 1.139626870e9 of radiated 1.139626870e9; worst balance 8.51e-12
+ok
+test heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_rim.json: 7 Newton passes, 745 rounds, converged true, delta 1.6e-12; T in [65.2506, 99.9998]; lost 1.856400482e3 of radiated 1.856400482e3; worst balance 1.01e-9
+ok
+
+failures:
+
+failures:
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 193 filtered out; finished in 2.24s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

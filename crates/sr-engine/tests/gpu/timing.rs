@@ -15,7 +15,7 @@ use sr_engine::headless::sun_disk_planes;
 use sr_engine::scene::{EdgeMode, TestSettings};
 use sr_engine::state::{Booking, SideFields, State, WorldConfig};
 use sr_engine::step::boxfit::BoxMode;
-use sr_engine::step::heat::HeatSetup;
+use sr_engine::step::heat::{HeatSetup, SLOTS};
 use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::react::ReactSetup;
 use sr_engine::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
@@ -143,6 +143,8 @@ fn frames_report_their_cost_per_step_and_per_pass() {
 fn a_frame_longer_than_the_query_set_times_its_first_whole_steps() {
     let gpu = device();
     let step = disk(&gpu, 128, 128);
+    // Every P5 slot recorded, so no step carries over (§0.5 [M0-TJ4] (6)): the disk's step 330 needs ~1,500 (M0-T121).
+    step.set_heat_rounds(Some(SLOTS));
     assert_eq!(step.set_timing(&gpu.device, &gpu.queue, Timing::Auto), Some(CostSource::GpuTimestamp));
     let passes = recorded(&step);
     // 4096 queries, two per pass: frame begin, step 0's five passes, then four per step, 24 kept free and frame end's 2.

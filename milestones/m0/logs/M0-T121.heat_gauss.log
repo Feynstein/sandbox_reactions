@@ -1,0 +1,38 @@
+== 2026-10-14T15:32:10-04:00 heat_gauss · task M0-T121 · box laserax-ai :: bash tests/gpu.sh heat::gauss physics
+-- heat_gauss · exit=0 · 4.35 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.12s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 10 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 9555.020372351, radiated 9555.020372351, Newton passes up to 5, |delta| up to 1.07e-13
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 9554.964131, radiated 9554.964424, twin 9555.020372; |T - twin| 9.06e-4; up to 4 Newton passes, 35 rounds, |delta| 2.4e-6
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 5.53e-6 of a largest |F| 0.1375
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 23.995268, y 23.995268, expected 24, error 1.97e-4; heat 1.62e-7; |T - twin| 1.02e-5
+SR-HEAT1 GPU t = 16: sigma2 x 31.986639, y 31.986653, expected 32, error 4.18e-4; heat 1.95e-7; |T - twin| 3.59e-5
+SR-HEAT1 GPU t = 24: sigma2 x 39.972500, y 39.972544, expected 40, error 6.87e-4; heat 1.97e-7; |T - twin| 4.88e-5
+SR-HEAT1 GPU worst sigma2 error 6.87e-4; up to 2 Newton passes, 5 rounds, |delta| 5.6e-9
+ok
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.88e-14 of the pulse, E 1.41e-13 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 9.56e-11
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 1.41e-10
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 2.07e-10
+SR-HEAT1 worst sigma2 error 2.07e-10
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 190 filtered out; finished in 3.94s
+
+

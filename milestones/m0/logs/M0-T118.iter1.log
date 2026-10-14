@@ -1,0 +1,24 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.40s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 2 tests
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse, 15 passes: sigma2 x 46.82436 y 46.82736, explicit x 48.00000 y 48.00000, lowest 0.000e0, highest 3.5840e-3, heat 1.0013640 of 1.0000000; up to 4 Newton passes, 41 rounds
+
+thread 'heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t' (1095068) panicked at crates/sr-engine/tests/gpu/heat.rs:789:9:
+46.824359710112276 46.82736473258183 vs 47.99999999998272 47.999999999956344
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { stages: 0, need: 0, worst: 0, dt: 24.0, dt_p: None, passes: 2, rounds: 38, converged: true, delta: 8.8778654e-7 }; the twin 2 passes, 116 rounds; |T - twin| 2.86e-6 of the peak; sigma2 x 39.967304 y 39.967335, expected 40
+ok
+
+failures:
+
+failures:
+    heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 191 filtered out; finished in 0.97s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

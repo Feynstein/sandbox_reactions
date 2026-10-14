@@ -6,14 +6,21 @@
 //! from a buffer the controller can zero: a fixed-size one from its slot in [`Latch::args`] (one slot per size and
 //! schedule — the guard's every 64 steps and the re-fit's every 16 open on the GPU's step index), a box-sized one from
 //! the box's sizes, P0's re-fit from its gate. [`Latch::new`] refuses a step holding any other indirect buffer: a pass
-//! that adds one adds it to latch.wgsl first, or the latch would not reach it.
+//! that adds one adds it to latch.wgsl first, or the latch would not reach it — a [`Size::Chained`] chain excepted, which
+//! runs only when its pass's own fixed-size opener starts it.
 //!
 //! The flag is the latch record's first word ([`Step::latch_flag`]): P6 and P3 set it with atomicOr (their lots). When an
 //! armed latch is set with the slow-down on, no later step of the frame runs — the box re-fit's dispatches included — and
 //! the frame's report says so; the CPU then drops the rung to ×0.1 (sr_physics::time). [`Step::poll`] returns each
 //! submitted frame's report once, from a readback mapped on submit, and never waits for the GPU. With timing on
 //! ([`Step::set_timing`], M0-T23) a frame is one timing batch: its resolved timestamps ride in the same readback, after
-//! the latch record and the Δt record, and the report carries the frame's cost per step and per pass.
+//! the latch record, the Δt record and P5's most slots a step used, and the report carries the frame's cost per step and
+//! per pass.
+//!
+//! P5's carry (§0.5 [M0-TJ4] (6), M0-T121): a step with P5 records `latch_hold` before P0 and `latch_carry` after the
+//! slots P5 records, frames and bare runs alike ([`Step::run`] records its submissions under the latch, the slow-down
+//! off). A step still in its rounds there is carried — the rest of the submission zeroed, the record's `held` set — and
+//! the next submission's first step continues it; a frame's report says so, and a dump is refused until it has ended.
 
 use std::cell::{Cell, RefCell};
 use std::sync::mpsc::{channel, Receiver, Sender};
@@ -31,9 +38,15 @@ const SLOW_DOWN_BYTE: u64 = 4;
 const SINCE_BYTE: u64 = 20;
 /// The window the latch re-arms after (§1.8.5), in t.u.: `since` starts there, so a new latch is armed.
 const WINDOW: f32 = 1.0;
-/// reduce.wgsl's `DtState`, copied after the latch record into each readback (the sim time with it).
+/// The record's `held` word: a step's P5 carried over (latch.wgsl).
+const HELD_WORD: usize = 7;
+/// reduce.wgsl's `DtState`, copied after the latch record into each readback (the sim time with it), then P5's `most`
+/// (one word) for the engine's choice of rounds.
 const DT_WORDS: usize = dt::RECORD_WORDS;
-const READBACK_BYTES: u64 = ((RECORD_WORDS + DT_WORDS) * 4) as u64;
+const READ_WORDS: usize = RECORD_WORDS + DT_WORDS + 1;
+const READBACK_BYTES: u64 = (READ_WORDS * 4) as u64;
+/// A bare run's submissions, at most, per step and slot ([`Step::run`]): far past what the ceiling lets a step use.
+const SUBMISSIONS_PER_SLOT: u32 = 2;
 /// The two records, then room for a whole query set's timestamps.
 const READBACK_TIMED_BYTES: u64 = READBACK_BYTES + 8 * QUERIES as u64;
 
@@ -61,6 +74,9 @@ pub struct FrameReport {
     pub steps: u64,
     /// The frame's step (1 for its first) after which the latch fired; none when it did not.
     pub latch_fired: Option<u32>,
+    /// A step's P5 carried over into the next frame (§0.5 [M0-TJ4] (6)): `steps` counts it begun, `steps_run` will count
+    /// it in the frame it ends in.
+    pub carried: bool,
     /// The frame's cost per step and per pass (§1.8.3's c_step input); none while timing is off.
     pub cost: Option<StepCost>,
 }
@@ -80,6 +96,8 @@ pub struct Latch {
     end: Dispatch,
     /// P6 under the hook: `latch_hook`, `latch_probe` (sized by the box).
     hook_dispatches: Vec<Dispatch>,
+    /// P5's gate when the step runs P5: `latch_hold` and `latch_carry`, and the buffer P5's report is read from.
+    gate: Option<(Dispatch, Dispatch, wgpu::Buffer)>,
     dt_record: wgpu::Buffer,
     /// For the readback buffers: one per frame in flight, made when none is free.
     device: wgpu::Device,
@@ -99,8 +117,9 @@ struct Readbacks {
 
 impl Latch {
     /// The latch for a step made of `passes`, `dt`'s guard and `boxfit`'s re-fits: one slot per fixed size and schedule,
-    /// every indirect buffer the step reads checked to be one the controller zeroes.
-    pub(super) fn new(device: &wgpu::Device, passes: &[Vec<Dispatch>; 10], dt: &Dt, boxfit: &BoxFit) -> Latch {
+    /// every indirect buffer the step reads checked to be one the controller zeroes; with P5's gate on `heat` (its
+    /// `Machines`, then its slots' sizes of parity 0) when the step runs P5.
+    pub(super) fn new(device: &wgpu::Device, passes: &[Vec<Dispatch>; 10], dt: &Dt, boxfit: &BoxFit, heat: Option<[&wgpu::Buffer; 2]>) -> Latch {
         let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
             label: Some("latch.wgsl"),
             source: wgpu::ShaderSource::Wgsl(include_str!("../../shaders/latch.wgsl").into()),
@@ -141,7 +160,8 @@ impl Latch {
                 3 => dt.record().as_entire_binding(),
                 4 => boxfit.args().as_entire_binding(),
                 5 => gate.as_entire_binding(),
-                _ => hook.as_entire_binding(),
+                6 => hook.as_entire_binding(),
+                b => heat.expect("P5's gate binds P5's buffers")[b as usize - 7].as_entire_binding(),
             }
         };
         let dispatch = |label: &'static str, bindings: &[u32], size: Size| {
@@ -165,6 +185,9 @@ impl Latch {
                 dispatch("latch_hook", &[0, 3, 6], one()),
                 dispatch("latch_probe", &[6], Size::Indirect(boxfit.args().clone(), super::boxfit::ARGS_TILES)),
             ],
+            gate: heat.map(|h| {
+                (dispatch("latch_hold", &[0, 1, 2, 4, 5, 7, 8], one()), dispatch("latch_carry", &[0, 1, 2, 3, 4, 5, 7], one()), h[0].clone())
+            }),
             dt_record: dt.record().clone(),
             device: device.clone(),
             readbacks: RefCell::new(Readbacks { slots: Vec::new(), sent, ready, frames: 0 }),
@@ -187,7 +210,7 @@ impl Latch {
                     let slot = self.slots.iter().position(|x| *x == (*s, every)).expect("a slot for every fixed size");
                     record_sized(cpass, d, &Size::Indirect(self.args.clone(), slot as u64 * 12));
                 }
-                Size::Indirect(..) => record_sized(cpass, d, &d.size),
+                Size::Indirect(..) | Size::Chained(..) => record_sized(cpass, d, &d.size),
             }
         }
     }
@@ -209,6 +232,11 @@ impl Latch {
     pub(super) fn hook_dispatches(&self) -> &[Dispatch] {
         &self.hook_dispatches
     }
+
+    /// P5's gate, `latch_hold` and `latch_carry`, recorded bare; none without P5.
+    pub(super) fn gate(&self) -> Option<(&Dispatch, &Dispatch)> {
+        self.gate.as_ref().map(|(hold, carry, _)| (hold, carry))
+    }
 }
 
 impl Step {
@@ -216,19 +244,8 @@ impl Step {
     /// the frame's report, read back when the submission completes ([`Step::poll`]).
     pub fn encode_frame(&self, plan: &FramePlan, encoder: &mut wgpu::CommandEncoder) {
         let latch = &self.latch;
-        encoder.copy_buffer_to_buffer(&latch.switch[usize::from(plan.slow_down)], 0, &latch.record, SLOW_DOWN_BYTE, 4);
         self.timer.start();
-        {
-            let mut cpass = self.timer.begin(encoder, "frame begin", FRAME_SLOT);
-            super::record_dispatches(&mut cpass, std::slice::from_ref(&latch.begin));
-        }
-        for _ in 0..plan.steps {
-            self.encode_step(encoder, Some(latch));
-        }
-        {
-            let mut cpass = self.timer.begin(encoder, "frame end", FRAME_SLOT);
-            super::record_dispatches(&mut cpass, std::slice::from_ref(&latch.end));
-        }
+        self.encode_latched(encoder, plan, true);
         let timed = self.timer.finish(encoder);
 
         let mut rb = latch.readbacks.borrow_mut();
@@ -251,6 +268,9 @@ impl Step {
         let buffer = buffer.clone();
         encoder.copy_buffer_to_buffer(&latch.record, 0, &buffer, 0, (RECORD_WORDS * 4) as u64);
         encoder.copy_buffer_to_buffer(&latch.dt_record, 0, &buffer, (RECORD_WORDS * 4) as u64, (DT_WORDS * 4) as u64);
+        if let Some((_, _, machine)) = &latch.gate {
+            encoder.copy_buffer_to_buffer(machine, super::heat::MOST_BYTE, &buffer, ((RECORD_WORDS + DT_WORDS) * 4) as u64, 4);
+        }
         *busy = Some((
             frame,
             timed.map(|(batch, resolved)| {
@@ -271,13 +291,13 @@ impl Step {
     pub fn poll(&self, device: &wgpu::Device) -> Vec<FrameReport> {
         let _ = device.poll(wgpu::PollType::Poll);
         let mut rb = self.latch.readbacks.borrow_mut();
-        type Got = (u64, [u32; RECORD_WORDS + DT_WORDS], Option<(Batch, Option<Vec<u64>>)>);
+        type Got = (u64, [u32; READ_WORDS], Option<(Batch, Option<Vec<u64>>)>);
         let mut got: Vec<Got> = Vec::new();
         while let Ok((i, result)) = rb.ready.try_recv() {
             let (buffer, busy) = &mut rb.slots[i];
             let (frame, timed) = busy.take().expect("a readback in flight");
             result.unwrap_or_else(|e| panic!("latch readback: map failed: {e}"));
-            let mut w = [0u32; RECORD_WORDS + DT_WORDS];
+            let mut w = [0u32; READ_WORDS];
             let timed = {
                 let view = buffer.get_mapped_range(..).expect("mapped for reading");
                 let (records, stamps) = view.split_at(READBACK_BYTES as usize);
@@ -294,9 +314,13 @@ impl Step {
             got.push((frame, w, timed));
         }
         got.sort_by_key(|(frame, ..)| *frame);
+        drop(rb);
         got.into_iter()
             .map(|(_, w, timed)| {
                 let d = &w[RECORD_WORDS..];
+                if let Some(heat) = &self.heat {
+                    heat.learn(w[READ_WORDS - 1]);
+                }
                 FrameReport {
                     steps_run: w[3],
                     advanced: f32::from_bits(w[6]),
@@ -304,7 +328,8 @@ impl Step {
                     dt: f32::from_bits(d[0]),
                     dt_next: f32::from_bits(d[1]),
                     steps: u64::from(d[3]),
-                    latch_fired: (w[2] != 0).then_some(w[4]),
+                    latch_fired: (w[2] == 1).then_some(w[4]),
+                    carried: w[HELD_WORD] != 0,
                     cost: timed.and_then(|(batch, ticks)| self.timer.cost(&batch, ticks.as_deref(), w[3])),
                 }
             })
@@ -338,6 +363,7 @@ impl Step {
     pub fn resume_records(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> (u64, f64, Resume) {
         let buffers = [self.dt.record(), self.boxfit.active(), self.boxfit.args(), &self.latch.record];
         let w: Vec<u32> = read_buffers(device, queue, "dump.records", buffers.into_iter()).iter().map(|v| v.to_bits()).collect();
+        assert_eq!(w[DT_WORDS + 8 + 6 + HELD_WORD], 0, "a dump at a step's end only: a step's P5 is carried over (§0.5 [M0-TJ4] (6))");
         let resume = Resume {
             dt: f32::from_bits(w[0]),
             dt_next: f32::from_bits(w[1]),
@@ -346,6 +372,58 @@ impl Step {
             box_args: std::array::from_fn(|i| w[DT_WORDS + 8 + i]),
         };
         (u64::from(w[3]), dt::sim_time(&w), resume)
+    }
+
+    /// Records a submission's steps under the latch (`plan`): the slow-down word, `latch_begin`, the steps, `latch_end` —
+    /// the frame's own passes timed when `framed`, else untimed (a bare run's); P5's `most` cleared first.
+    fn encode_latched(&self, encoder: &mut wgpu::CommandEncoder, plan: &FramePlan, framed: bool) {
+        let latch = &self.latch;
+        encoder.copy_buffer_to_buffer(&latch.switch[usize::from(plan.slow_down)], 0, &latch.record, SLOW_DOWN_BYTE, 4);
+        if let Some((_, _, machine)) = &latch.gate {
+            encoder.clear_buffer(machine, super::heat::MOST_BYTE, Some(4));
+        }
+        let own = |encoder: &mut wgpu::CommandEncoder, label: &str, d: &Dispatch| {
+            let mut cpass = if framed {
+                self.timer.begin(encoder, label, FRAME_SLOT)
+            } else {
+                encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some(label), timestamp_writes: None })
+            };
+            super::record_dispatches(&mut cpass, std::slice::from_ref(d));
+        };
+        own(encoder, "frame begin", &latch.begin);
+        for _ in 0..plan.steps {
+            self.encode_step(encoder, Some(latch));
+        }
+        own(encoder, "frame end", &latch.end);
+    }
+
+    /// [`Step::run`] for a step with P5: submissions under the latch, the slow-down off, until `steps` steps have ended —
+    /// each waited for, its record read back (the steps it ended, whether one is held) with P5's most slots a step used
+    /// (the engine's choice of rounds); a submission after a carry holds the carried step alone. Returns the submissions.
+    pub(super) fn run_gated(&self, device: &wgpu::Device, queue: &wgpu::Queue, steps: u32) -> u32 {
+        let (_, _, machine) = self.latch.gate.as_ref().expect("P5's gate");
+        let heat = self.heat.as_ref().expect("the step runs P5");
+        if !self.timer.batch.borrow().live {
+            self.timer.start();
+        }
+        let ceiling = steps.saturating_mul(SUBMISSIONS_PER_SLOT * super::heat::SLOTS as u32);
+        let (mut left, mut held, mut submissions) = (steps, false, 0u32);
+        while left > 0 {
+            assert!(submissions < ceiling, "{steps} steps still {left} short after {submissions} submissions: P5's carry never ends");
+            let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("step") });
+            self.encode_latched(&mut encoder, &FramePlan { steps: if held { 1 } else { left }, slow_down: false }, false);
+            queue.submit([encoder.finish()]);
+            submissions += 1;
+            let w: Vec<u32> = read_buffers(device, queue, "latch.run", [&self.latch.record, machine].into_iter()).iter().map(|v| v.to_bits()).collect();
+            let most = w[RECORD_WORDS + super::heat::MOST_BYTE as usize / 4];
+            heat.learn(most);
+            let ended = w[3];
+            held = w[HELD_WORD] != 0;
+            left = left.saturating_sub(ended);
+            let mut b = self.timer.batch.borrow_mut();
+            b.ended = Some(b.ended.unwrap_or(0) + ended);
+        }
+        submissions
     }
 
     /// Restores [`Step::resume_records`] into a step that has recorded nothing yet: its next step is `step` (step 0 is

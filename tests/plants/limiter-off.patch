@@ -1,6 +1,6 @@
 --- a/crates/sr-physics/src/reference/heat.rs
 +++ b/crates/sr-physics/src/reference/heat.rs
-@@ -190,7 +190,8 @@
+@@ -186,7 +186,8 @@
          if !self.test.flux_limiter {
              return 1.0 / 3.0;
          }
@@ -12,7 +12,7 @@
      /// Cell `i` of `st` as one side of its faces: its temperature (the floor state below Σ_vac), κ and 1/μ.
 --- a/crates/sr-engine/shaders/heat.wgsl
 +++ b/crates/sr-engine/shaders/heat.wgsl
-@@ -172,7 +172,7 @@
+@@ -129,7 +129,7 @@
      if ((params.flags & FLUX_LIMITER) == 0u) {
          return 1.0 / 3.0;
      }
@@ -20,4 +20,4 @@
 +    return 1.0 / 3.0 + 0.0 * r;
  }
  
- // (K, F) of the face from `a_in` to `b_in`.
+ // (D_f, F) of the face from `a_in` to `b_in`, the law on the two sides' start state.
