@@ -157,8 +157,10 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D36 | BUILD | P5's f32 solve: a thin ring's light leaving is 1 % off the twin's, and the closure δ pushes it onto the disk (G-STIFF (d) on heat_rim) | AFTER M0-T119 | DONE (2026-10-14 14:39) |
 | M0-T120 | BUILD | G-STIFF — stiff heat on both sides: a burnt field and a thin ring | AFTER M0-T119 | DONE (2026-10-14 14:59) |
 | M0-T121 | BUILD | P5's hard steps carry over into the next submission — speed gives first | AFTER M0-T120 | DONE (2026-10-14 15:31) |
-| M0-T122 | BUILD | P5's cost on the Quadro against the lead's 0.5 ms a step | AFTER M0-T121 | BLOCKED |
-| M0-D37 | BUILD | P5's Newton passes hit the 16-pass ceiling on sun_disk (steps 4 and 340–347): unconverged steps, ~1,500 slots each | AFTER M0-T122 | TODO |
+| M0-T122 | BUILD | P5's cost on the Quadro against the lead's 0.5 ms a step | AFTER M0-T121 | DONE (2026-10-14 17:46) |
+| M0-D37 | BUILD | P5's Newton passes hit the 16-pass ceiling on sun_disk (steps 4 and 340–347): unconverged steps, ~1,500 slots each | AFTER M0-T122 | DONE (2026-10-14 18:29) |
+| M0-D38 | BUILD | heat_gauss's GPU pulse case books `radiated` at the edges on win-laptop (RTX 4080 Laptop): "nothing reaches the edges" red | AFTER M0-D37 | DONE (2026-10-14 18:42, started 18:32) |
+| M0-D39 | BUILD | timing's 1000-step frame at SLOTS rounds hangs or loses the device on win-laptop (RTX 4080 Laptop) | AFTER M0-D38 | TODO |
 | M0-T48 | BUILD | The burning field in G-REF (edit job) | AFTER M0-T122 | TODO |
 | M0-T49 | BUILD | Docs: physics.md heat, light, reactions, neutrinos; lot 6 rows | AFTER M0-T48 | TODO |
 | M0-V6 | CHECK | Validation, lot 6: heat, light and burning | AFTER M0-T49 | TODO |
@@ -364,9 +366,13 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
   heat balance closed, a hard step carried into the next submission, P5 ≤ 0.5 ms a step on the Quadro (the lead, 2026-10-14,
   M0-TJ4: «Re-solve heat, light law fixed (Recommended)», «≤ 0.5 ms per step (Recommended)», «Speed gives first
   (Recommended)»); built by M0-T117–M0-T122, the cap standing until M0-T119 lands.
+- Contract §0.5 [M0-TJ4] (7)'s "P5's mean ≤ 0.5 ms per step on the Quadro RTX 4000" (and the line above's "P5 ≤ 0.5 ms a step on the Quadro") — superseded by contract §0.5 [M0-T122]: the cost is accepted as measured, 0.6189 ms a step (idle Quadro, median of 3), no ceiling and no cost block (the lead, 2026-10-14, M0-T122: "I accept the timing as it is … no need to write a D task for that. Just make sure it is known").
 - Contract §5.1 G-HEAT2's "RKL2 matches explicit … Scope `heat-rkl2`. Plant `rkl2-s-minus-one`" — superseded by contract §0.5
   [M0-TJ4]: the implicit step against its own system's solve, backward Euler's first order, scope `heat_implicit`, plant
   `solve-two-rounds` (the same answers).
+- Contract §0.5 [M0-TJ4] (6)'s "the only ceiling, 16 passes or 4,096 rounds in one step" — superseded by contract §0.5 [M0-D37]:
+  64 passes or 4,096 rounds, GPU and twin, no tolerance changed — a heating front through cold gas moves about a cell a pass
+  (sun_disk's steps 340–347: 17–37 passes on the GPU) (the lead, 2026-10-14, M0-D37: «Raise to 64 (Recommended)»).
 - Contract §5.1 G-FLD's "|F| ≤ c_sb a_r T⁴ (1 + 10⁻⁶) at every face" read on F — superseded by contract §0.5 [M0-TJ4]: the bound
   on the law each pass freezes (its start-state flux); F, now the flux the step moved, is not bounded where cold thin gas heats
   within a pass (the same answers).
@@ -510,9 +516,9 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-T122
-- Counters: T=122 · D=37 · V=17 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=4 · TR=1 · TM=6 · TD=1 · TE=1
-- Open D/BLOCKED register: M0-D37 (TODO, after M0-T122: sun_disk's unconverged Newton steps, filed by M0-T121)
+- Next task: M0-D39
+- Counters: T=122 · D=39 · V=17 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=4 · TR=1 · TM=6 · TD=1 · TE=1
+- Open D/BLOCKED register: M0-D39 (TODO, after M0-D38: timing's 1000-step frame at SLOTS hangs or loses the device on win-laptop, filed by M0-D37)
 - Outstanding commit gates: Phase 7's (the lead's, after M0-V5's close): M0-T33a … M0-T35 committed through 19e0d8e, pushed; M0-T36 … M0-T40 and M0-V5 (lot 5's last code, M0-V5's report, logs, plan, archive and contract edits) are not
 - Carryover: none
 - Awaiting lead: none — M0-TJ4's three answers recorded (contract §0.5 [M0-TJ4])
@@ -1664,7 +1670,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 - Handoff: Built §0.5 [M0-TJ4] (6): a step with P5 records under the latch's gate, frames and bare runs alike. latch_hold continues a held step, heat_park + latch_carry carry a still-live chain and zero the rest of the submission, and Step::run submits until its steps end. Engine's choice of slots: 128 first, then learnt from each submission's most (set_heat_rounds fixes it). FrameReport.carried; StepCost.ended, costs per step ended; dumps refused mid-carry; headless warns for every unconverged step (256-entry log). Tests: G-STIFF (d) carried bit for bit in ⌈slots/8⌉ submissions (41 each); sun_disk 200 steps at 8 rounds, bare and in frames, byte for byte the engine's choice; new plant carry-commit-early. · Deviations: 9 code files against the ceiling (both shaders; timing.rs's 1000-step frame fixed at SLOTS on the lead's answer); verify.json dump expected 8→9 and the plant; bare P5 runs now run latch_check (slow-down off). · Measured, not acted on: sun_disk hits the 16-pass Newton ceiling at steps 4 and 340–347 (RTX 5090), predates T121 → M0-D37. · Verify 1 GO 4/4 (25 passed); red-arms heat_stiff, dump, timing GO; claim run in the final message. Detail: tasks/M0-T121.md. Ran on claude-opus-5-5, high. · Next: M0-T122
 
 ## M0-T122 · P5's cost on the Quadro against the lead's 0.5 ms a step · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T121)
-- Status: BLOCKED
+- Status: DONE (2026-10-14 17:46)
 - Carried flags: [M0-T118, 2026-10-14] M0-T118 records 4,146 heat_round dispatches a step (Size::Chained, zero workgroups once converged) on constant-diffusivity scenes; their idle cost and the O(tiles²) partial sums a round are unmeasured on the Quadro. · [M0-T119, 2026-10-14] Baseline before M0-T121: sun_disk 200 steps on the Quadro, P5 heat 20.42 ms a step (21.48 ms a step), every one of the 4,146 heat_round slots recorded, box load 11.7–16.5 (logs/M0-T119.timing.log, build/m0-t119-timing/summary.json). · [M0-D36, 2026-10-14] M0-D36 (2026-10-14): P5's RESID slot now evaluates free_at on each cell and its four neighbours once a pass (the deflated start); rounds fell 495 → 306 on heat_rim, 362 → 304 on heat_hot — sun_disk's P5 ms is yours to read with it · [M0-T121, 2026-10-14] P5 now records only the engine's choice of slots a step (step/heat.rs Heat::learn: 128 first, then the submission's most slots + 1/4 + 4, falling at most 1/4 a read; Step::set_heat_rounds fixes it, Step::heat_rounds reads it); the zeroed slots recorded beyond a step's need are the cost you measure — FIRST_ROUNDS and the two quarters are the knobs. headless --timing's per_pass_ms are now per step ended (a carried step's rounds summed across submissions, StepCost.ended). sun_disk on the RTX 5090: <= 84 slots a step over steps 0-255 (step 4 hits the 16-pass ceiling, M0-D37); steps 340-347 up to ~1,500.
 - Rating: rule (3) — a timing measurement, no reason from §0's list (M0-TJ4)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 (the [M0-TJ4] lines, (7) above all), §1.8.3,
@@ -1684,10 +1690,10 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   Pass: 4 · Fail: fewer, or a number without its command and adapter
 - Adversarial: a run on the RTX 5090 looks several times faster than the promise's card — every number names the Quadro;
   a loaded box (M0-T42's ran at load 12–30) inflates the cost — each run names its load.
-- Handoff: linux-pc (laserax-ai, Quadro RTX 4000), model=claude-sonnet-5-5 level=high (rung_record, matches the heading). RED: P5 heat median of 3 idle runs 0.6189 ms a step > contract §0.5 [M0-TJ4] (7) 0.5 ms (load 0.33-0.38; runs 0.8067/0.6189/0.6162; an earlier set at load 14 read 0.6148, so load is not the cause); step_ms_mean 1.1833 (11.0 steps in 13 ms). Rounds per step (probe, 200 steps): passes median 1 / p95 3 / max 12, rounds median 0 / p95 1 / max 46, 0 unconverged, 2 carried steps. Verify 1 [ALREADY RUN - PASS (3 runs exit 0) on laserax-ai Quadro]; Verify 2 [ALREADY RUN - FAIL (0.6189 > 0.5) on laserax-ai Quadro]; Verify 3 [ALREADY RUN - PASS (4) on laserax-ai]. Back to the lead (§0.4), no looser number. Deviation: a throwaway per-step probe (tests/gpu/p5probe.rs) in a scratch copy ~/private/scratch_t122, not in the tree, because headless prints no per-step passes or rounds. Not acted on: where the 0.62 ms goes (zero-workgroup heat_round slots vs Newton-pass gaps) is unmeasured, P5 is one timed pass. Detail: reports/p5_cost.md. Next: the lead rules (a P5 cost D, or a ceiling change); M0-D37 and M0-T48 wait on this block.
+- Handoff: linux-pc (laserax-ai, Quadro RTX 4000), model=claude-sonnet-5-5 level=high (rung_record, matches the heading). P5 heat median of 3 idle runs 0.6189 ms a step (runs 0.8067/0.6189/0.6162, load 0.33-0.38; at load ~14: 0.6148) against contract §0.5 [M0-TJ4] (7)'s 0.5 ms: red, put to the lead, who accepted it as measured, no D (2026-10-14: 'I accept the timing as it is ... Just make sure it is known'). Declared: one override line in contract §0.5 ([M0-T122]) and its mirror in Superseded; no ceiling stands for P5's cost. step_ms_mean 1.1833 (11 steps in 13 ms). Per step, 200 steps (probe): passes median 1 / p95 3 / max 12, rounds median 0 / p95 1 / max 46, 0 unconverged, 2 carried steps. Verify 1 [ALREADY RUN - PASS (3 runs exit 0) on laserax-ai Quadro]; Verify 2 [ALREADY RUN - FAIL (0.6189 > 0.5), accepted by the lead] ; Verify 3 [ALREADY RUN - PASS (4) on laserax-ai]. Deviation: a throwaway per-step probe in a scratch copy (~/private/scratch_t122), not in the tree. Not acted on: where the 0.62 ms goes (zero-workgroup heat_round slots vs Newton-pass gaps) is unmeasured, the lead declined a D. Detail: reports/p5_cost.md, tasks/M0-T122.md. Next: M0-D37, M0-T48.
 
 ## M0-D37 · P5's Newton passes hit the 16-pass ceiling on sun_disk (steps 4 and 340–347): unconverged steps, ~1,500 slots each · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T122)
-- Status: TODO
+- Status: DONE (2026-10-14 18:29)
 - Caused by: unknown — the GPU's Newton passes as M0-T119 built them (§0.5 [M0-TJ4] (3)); not measured to a line
 - Rating: (usual) — the cause is not measured
 - Sizing: M
@@ -1718,6 +1724,61 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   each · Fail: NO-GO
 - Adversarial: a fix that ends the passes earlier by a weaker per-cell test hides the flip rather than ending it —
   G-STIFF (a)–(e) and the twin's 10⁻¹⁰ stay the graders
+- Handoff: Cause measured (tasks/M0-D37.md): steps 340–347 are a heating front crossing cold gas in one step, about one cell a Newton pass — the f64 twin needs 20–41 passes on the GPU's own frozen systems (clamp or update variable not the cause); step 4 is f32 drift of the disk's thin corner cells (GPU only, 24 passes). Lead's answer «Raise to 64 (Recommended)» → contract §0.5 [M0-D37] + Superseded line; MAX_PASSES 64 in heat.wgsl and reference/heat.rs (SLOTS 4,146 → 4,290), no tolerance changed. On win-laptop (RTX 4080 Laptop): sun_disk 1000 steps print no SR-WARN heat unconverged; all 9 hard steps converge in 17–37 passes, δ ≤ 1.1e-6. Verify 1: heat_stiff, heat_implicit, heat_limiter, dump GO; heat_gauss NO-GO → filed M0-D38. Claim (--changed): 33/35 GO, timing NO-GO → filed M0-D39. Both red at 16 passes too, so not this change; first win-laptop runs since the implicit step. Owed: Verify 1 on linux-pc (RTX 5090), flagged to M0-V6. Not acted on: the twin's 4,096-round ceiling would stop its 1e-12 solve on such fronts (it never runs sun_disk). Model claude-opus-5-5, level high (rung_record). Next: M0-D38.
+
+## M0-D38 · heat_gauss's GPU pulse case books `radiated` at the edges on win-laptop (RTX 4080 Laptop): "nothing reaches the edges" red · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D37)
+- Status: DONE (2026-10-14 18:42, started 18:32)
+- Caused by: unknown — the case came with the GPU's implicit step (M0-T118); green on linux-pc's RTX 5090 since (M0-D36's log: 10 passed), not run on win-laptop since RKL2 (M0-T41's 6 cases)
+- Rating: (usual) — the cause is not measured
+- Sizing: S
+- Ordering: after M0-D37 — measured there, independent of its ceiling (16 and 64 passes read the same numbers); runs on win-laptop (R15)
+- Files: crates/sr-engine/tests/gpu/heat.rs (`gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept`, its
+  line 519 assert), crates/sr-engine/shaders/heat.wgsl (`heat_close`'s `emitted`, `d_sums`, under `constant_diffusivity`),
+  scenes/heat_pulse.json — unverified, the executing task confirms first
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §5.1 G-HEAT1 and §0.5 [M0-TJ4] (1), (5) + milestones/m0/tasks/M0-D37.md
+  § Measured, not acted on
+- Symptom: measured on win-laptop (Laser2025-20, RTX 4080 Laptop, Vulkan), 2026-10-14, M0-D37: `verify.py heat_gauss` 9/1 NO-GO —
+  the case's σ², heat and twin checks pass at t = 8, 16, 24 (σ² error 7.09 × 10⁻⁴, heat 2.48 × 10⁻⁸, |T − twin| 5.05 × 10⁻⁵),
+  then `gpu.radiated()` holds some cell with |r| ≥ 10⁻⁹: panic "nothing reaches the edges" (heat.rs:519); identical with
+  MAX_PASSES 16 (logs/M0-D37-head.heat_gauss.log) and 64 (logs/M0-D37.heat_gauss.log)
+- Repro: `py -3.12 tools/pb/verify.py heat_gauss --task M0-D38` on win-laptop → 1 failed
+- Suspected cause (not measured): the largest |radiated| and its cell are not printed — read them first; candidates: an f32
+  edge cell a hair off the vacuum's state, so `heat_close`'s Δt Σ_vac D_f (u − u_vac) books ~10⁻⁹ there on this adapter
+  (a tolerance question → the lead), or a booking buffer not cleared before the case (a defect)
+- Deliver: the measured value and cell, and a fix if it is a defect, or the finding and a proposed bound for the lead (the
+  question tool) before anything is built, no tolerance of G-HEAT1 loosened (§0.4) → Verify 1
+- Done when: heat_gauss GO on win-laptop (RTX 4080 Laptop) and on linux-pc (RTX 5090; owed there, R15), or the lead has answered
+- Verify: 1. `py -3.12 tools/pb/verify.py heat_gauss --task M0-D38` · Pass: GO · Fail: NO-GO
+- Adversarial: a bound raised to fit this adapter hides a leak at the edges — the leak's size against the pulse's heat decides
+- Handoff: Measured on win-laptop (RTX 4080 Laptop): f32 round-off of the solve at the floor, not a leak — edge cells 1–3 ulps above T_floor (0.05), kept by (3)'s u ≥ u_vac clamp, each ulp at an edge face booking ~1.9e-9 a pass, over the test's 1e-9; largest 3.35e-8 at (0, 127), sum 6.0e-7 = 3.0e-9 of the pulse, no cell inside; |δ| ≤ 3.4e-9, not the cause. The lead (2026-10-14): «Against the pulse (Recommended)» — the case's check now Σ|radiated| ≤ 1e-7 of the pulse's heat, nothing booked off the edge (tests/gpu/heat.rs); G-HEAT1 and the contract unchanged. heat_gauss GO 10/0 on win-laptop; redarm GO (chi-scale RED), and an injected 1.6e-6 leak trips only the new bound (restored). Owed: heat_gauss on linux-pc's RTX 5090 → M0-V6. Ran on claude-opus-5-5, high. Detail: tasks/M0-D38.md. Next: M0-D39.
+
+## M0-D39 · timing's 1000-step frame at SLOTS rounds hangs or loses the device on win-laptop (RTX 4080 Laptop) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D38)
+- Status: TODO
+- Caused by: unknown — the case's rounds fixed at `SLOTS` by M0-T121 (the lead's answer there), run on linux-pc only since
+- Rating: (usual) — the cause is not measured
+- Sizing: S
+- Ordering: after M0-D38 — measured by M0-D37 on win-laptop; independent of its ceiling (red at 16 and 64 passes); runs on win-laptop (R15)
+- Files: crates/sr-engine/tests/gpu/timing.rs (`a_frame_longer_than_the_query_set_times_its_first_whole_steps`),
+  crates/sr-engine/src/step/heat.rs (`SLOTS`), crates/sr-engine/src/step/mod.rs (frames' submission) — unverified, the
+  executing task confirms first
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TJ4] (6) and [M0-D37] + milestones/m0/tasks/M0-T121.md
+  § Tests + milestones/m0/tasks/M0-D37.md § Measured, not acted on
+- Symptom: measured on win-laptop (Laser2025-20, RTX 4080 Laptop, Vulkan), 2026-10-14, M0-D37: `verify.py timing` — with
+  MAX_PASSES 16 (`SLOTS` 4,146) the first case runs past the scope's 900 s and the scope times out, 0 cases
+  (logs/M0-D37-head.timing.log); with 64 (`SLOTS` 4,290) it panics at 106 s, "Error in Device::poll: Validation Error",
+  and the 4 cases after it fail "refused the device: Parent device is lost" (logs/M0-D37.timing.log). The scope is GO on
+  linux-pc (M0-T121)
+- Repro: `py -3.12 tools/pb/verify.py timing --task M0-D39` on win-laptop
+- Suspected cause (not measured): one submission of 1000 steps × `SLOTS` recorded `heat_round` dispatches (~4.3 M, most
+  zero-sized) runs past Windows' GPU timeout (TDR, 2 s by default) — the device reset; whether 16's hang is the same reset
+  unreported is not known. R12 keeps timing figures on the Quadro, but the scope still runs here
+- Deliver: the measured cause, and a fix that keeps the case's intent (a frame longer than the query set, rounds fixed so it
+  never carries) within one submission the box survives — or the finding and a proposal for the lead (the question tool:
+  e.g. the case owed on linux-pc only, R15) before anything is built → Verify 1
+- Done when: timing GO on win-laptop and on linux-pc (owed there, R15), or the lead has answered
+- Verify: 1. `py -3.12 tools/pb/verify.py timing --task M0-D39` · Pass: GO · Fail: NO-GO
+- Adversarial: shrinking the frame until it fits drops the "longer than the query set" the case exists for — keep a frame
+  that outruns the query set
 - Handoff: <placeholder>
 
 ## M0-T48 · The burning field in G-REF · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T122)
@@ -1752,7 +1813,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 
 ## M0-V6 · Validation — lot 6: heat, light and burning · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T49)
 - Status: TODO
-- Carried flags: [M0-V5, 2026-10-13] owed on win-laptop (R15; M0-V5 ran lot 5 on linux-pc only): lot 5's scopes riemann, sod, edges, collapse, twin and cpu_gpu and box's two new cases on the RTX 4080 Laptop, each red-armed — py -3.12 tools/pb/verify.py --all and --redarm --moved there cover them; and M0-D28's item (verify.py desktop with start.bat's launch.py stop %SERVICE% and the decoy's mkdir lock under Git Bash, --redarm desktop); else carried V to V, M0-V17 at the latest · [M0-D32, 2026-10-13] M0-D32: rung_record.py report's handoff rows now read the quoted model= level= first — re-run `python3 tools/pb/rung_record.py report --json` on linux-pc: each via-handoff row that quotes on its quote's rung (owed there; measured on win-laptop 71/71 with no session read) · [M0-T46, 2026-10-14] M0-T46 measured P6's divergent-loop cost: a hot 8×8 core (a runaway, shipped limits) in a 40×40 cold field, one 1 t.u. step — P6 42.4 ms on the Quadro (0.10 ms all cold), 196 serial sub-steps in one tile ≈ 0.22 ms each; sun_disk's 200-step run (barely burning) reads P6 0.127 ms of 1.056 ms. Not optimised (candidate: solve only the species a record touches) — weigh against the 60 fps budget (tasks/M0-T46.md) · [M0-T47, 2026-10-14] M0-T47 findings for the V: (1) the gate-blind linearisation (twin and GPU alike) overshoots N_Fe's own closure — iron 1 % over Σ_N, one burn_dx-limited sub-step converts 9.09 % where the gate shuts at 0.99 %; weigh against the contract. (2) A flag set during bare steps sits in the latch record until a frame's controller takes it. (3) win-laptop owes the neutrino scope and its three plants (tasks/M0-T47.md). · [M0-TJ4, 2026-10-14] lot 6's P5 is contract §0.5 [M0-TJ4]'s implicit step (M0-T117–M0-T122): contract-vs-code on the Newton passes, the solve's end tests, the closure δ and the carry-over; heat_implicit and heat_stiff red-armed; P5's cost on the Quadro is M0-T122's reports/p5_cost.md against the lead's ≤ 0.5 ms a step
+- Carried flags: [M0-V5, 2026-10-13] owed on win-laptop (R15; M0-V5 ran lot 5 on linux-pc only): lot 5's scopes riemann, sod, edges, collapse, twin and cpu_gpu and box's two new cases on the RTX 4080 Laptop, each red-armed — py -3.12 tools/pb/verify.py --all and --redarm --moved there cover them; and M0-D28's item (verify.py desktop with start.bat's launch.py stop %SERVICE% and the decoy's mkdir lock under Git Bash, --redarm desktop); else carried V to V, M0-V17 at the latest · [M0-D32, 2026-10-13] M0-D32: rung_record.py report's handoff rows now read the quoted model= level= first — re-run `python3 tools/pb/rung_record.py report --json` on linux-pc: each via-handoff row that quotes on its quote's rung (owed there; measured on win-laptop 71/71 with no session read) · [M0-T46, 2026-10-14] M0-T46 measured P6's divergent-loop cost: a hot 8×8 core (a runaway, shipped limits) in a 40×40 cold field, one 1 t.u. step — P6 42.4 ms on the Quadro (0.10 ms all cold), 196 serial sub-steps in one tile ≈ 0.22 ms each; sun_disk's 200-step run (barely burning) reads P6 0.127 ms of 1.056 ms. Not optimised (candidate: solve only the species a record touches) — weigh against the 60 fps budget (tasks/M0-T46.md) · [M0-T47, 2026-10-14] M0-T47 findings for the V: (1) the gate-blind linearisation (twin and GPU alike) overshoots N_Fe's own closure — iron 1 % over Σ_N, one burn_dx-limited sub-step converts 9.09 % where the gate shuts at 0.99 %; weigh against the contract. (2) A flag set during bare steps sits in the latch record until a frame's controller takes it. (3) win-laptop owes the neutrino scope and its three plants (tasks/M0-T47.md). · [M0-TJ4, 2026-10-14] lot 6's P5 is contract §0.5 [M0-TJ4]'s implicit step (M0-T117–M0-T122): contract-vs-code on the Newton passes, the solve's end tests, the closure δ and the carry-over; heat_implicit and heat_stiff red-armed; P5's cost on the Quadro is M0-T122's reports/p5_cost.md against the lead's ≤ 0.5 ms a step · [M0-D37, 2026-10-14] M0-D37 (2026-10-14): P5's pass ceiling is 64 (contract §0.5 [M0-D37]); its Verify 1 (heat_stiff heat_implicit heat_gauss heat_limiter dump) is owed on linux-pc (RTX 5090) — run on win-laptop only, where heat_gauss (M0-D38) and timing (M0-D39) are red at 16 passes too · [M0-D38, 2026-10-14] heat_gauss on linux-pc (RTX 5090), owed by M0-D38 (R15): the GPU pulse case's edge check is now Σ|radiated| ≤ 1e-7 of the pulse's heat and nothing booked off the edge (the lead, 2026-10-14); green on win-laptop only
 - Read: milestones/m0/m0_contrat.md §1.6, §1.7, §1.8.5, §2.4, §2.5, §5.1 (G-HEAT1, G-HEAT2, G-FLD, G-BURN,
   G-ORDER, G-REF) + the handoffs of M0-T41–M0-T49 + docs/agent/physics.md + the delivered files, each by
   the section it covers

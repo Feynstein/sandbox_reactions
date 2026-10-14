@@ -516,7 +516,19 @@ mod gauss {
                 worst = worst.max(err);
             }
         }
-        assert!(gpu.radiated().iter().all(|&r| r.abs() < 1e-9), "nothing reaches the edges");
+        // Nothing reaches the edges but f32's round-off: the solve's noise at the floor, kept where it lands above u_vac,
+        // books ~2e-9 an ulp at an edge face a pass (M0-D38: 3e-9 of the pulse on the RTX 4080 Laptop) — so the edges' sum is
+        // held to 1e-7 of the pulse's heat, and a cell off the edge books nothing (the lead, 2026-10-14, M0-D38).
+        let rad = gpu.radiated();
+        let w = gpu.first.width;
+        let h = gpu.first.height;
+        let leak: f64 = rad.iter().map(|r| r.abs()).sum();
+        println!("SR-HEAT1 GPU radiated {leak:.2e}, {:.2e} of the pulse", leak / h0);
+        assert!(leak <= 1e-7 * h0, "the edges radiated {leak} of a pulse of {h0}");
+        for (i, &r) in rad.iter().enumerate() {
+            let (x, y) = (i % w, i / w);
+            assert!(r == 0.0 || x == 0 || y == 0 || x == w - 1 || y == h - 1, "cell ({x}, {y}) off the edge booked {r}");
+        }
         println!("SR-HEAT1 GPU worst sigma2 error {worst:.2e}; up to {passes} Newton passes, {rounds} rounds, |delta| {delta:.1e}");
     }
 

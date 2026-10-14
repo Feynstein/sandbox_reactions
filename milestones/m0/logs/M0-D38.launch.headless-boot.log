@@ -1,0 +1,4 @@
+# M0-D38 | launch headless-boot | 2026-10-14T18:44:18-0400
+$ build\target\release\sandbox-reactions.exe headless --scene preset:sun --steps 200 --out C:\Users\YOHANB~1\AppData\Local\Temp\pb-launch-headless-boot-epbqter3
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.583200 until=none

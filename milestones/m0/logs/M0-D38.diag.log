@@ -1,0 +1,214 @@
+== 2026-10-14T18:33:45-04:00 M0-D38 diagnostic · box Laser2025-20 :: bash tests/gpu.sh heat::gauss::gpu_the_variance physics
+   Compiling sr-physics v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 34.14s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 200 filtered out; finished in 0.00s
+
+== 2026-10-14T18:34:27-04:00 M0-D38 diagnostic · box Laser2025-20 :: bash tests/gpu.sh heat::gauss physics (filtered by the scope's module)
+    Finished `release` profile [optimized] target(s) in 0.33s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 10 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 9555.020372351, radiated 9555.020372351, Newton passes up to 5, |delta| up to 1.07e-13
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 9554.966689, radiated 9554.968220, twin 9555.020372; |T - twin| 8.53e-4; up to 4 Newton passes, 35 rounds, |delta| 2.5e-6
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 5.55e-6 of a largest |F| 0.1375
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 23.995310, y 23.995314, expected 24, error 1.95e-4; heat 5.98e-8; |T - twin| 9.52e-6
+SR-HEAT1 GPU t = 16: sigma2 x 31.985809, y 31.985822, expected 32, error 4.43e-4; heat 3.31e-8; |T - twin| 4.03e-5
+SR-HEAT1 GPU t = 24: sigma2 x 39.971644, y 39.971698, expected 40, error 7.09e-4; heat 2.48e-8; |T - twin| 5.05e-5
+D38 bg 5e-2; max |radiated| 3.3527612686157227e-8 at (0, 127), T there 5.000000074505806e-2; cells >= 1e-9: 58, nonzero 58 (interior 0); sum 5.997717380523682e-7; heat h0 2.0106194996689484e2; edge T - bg now 1.1920928952302567e-8, at start 7.450580569168253e-10
+
+thread 'heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept' (37740) panicked at crates\sr-engine\tests\gpu\heat.rs:532:9:
+nothing reaches the edges
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.88e-14 of the pulse, E 1.41e-13 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 9.56e-11
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 1.41e-10
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 2.07e-10
+SR-HEAT1 worst sigma2 error 2.07e-10
+ok
+
+failures:
+
+failures:
+    heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 190 filtered out; finished in 4.57s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== 2026-10-14T18:35:38-04:00 M0-D38 diagnostic 2 (per pass) · box Laser2025-20 :: bash tests/gpu.sh heat::gauss physics
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 16.13s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 10 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 9555.020372351, radiated 9555.020372351, Newton passes up to 5, |delta| up to 1.07e-13
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 9554.966689, radiated 9554.968220, twin 9555.020372; |T - twin| 8.53e-4; up to 4 Newton passes, 35 rounds, |delta| 2.5e-6
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 5.55e-6 of a largest |F| 0.1375
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+D38 pass 1: passes 2 rounds 3 delta 1.7092744e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 8 cells; far inside max 0e0 in 0 cells; radiated sum 1.4901161193847656e-8
+D38 pass 2: passes 2 rounds 4 delta 1.5391568e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 12 cells; far inside max 0e0 in 0 cells; radiated sum 4.470348358154297e-8
+D38 pass 3: passes 2 rounds 4 delta -1.4014429e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 8 cells; far inside max 3.725290298461914e-9 in 2 cells; radiated sum 5.960464477539063e-8
+D38 pass 4: passes 2 rounds 4 delta -1.7315515e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 14 cells; far inside max 3.725290298461914e-9 in 4 cells; radiated sum 8.568167686462402e-8
+D38 pass 5: passes 2 rounds 4 delta -1.1624685e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 10 cells; far inside max 1.1175870895385742e-8 in 14 cells; radiated sum 1.0803341865539551e-7
+D38 pass 6: passes 2 rounds 4 delta -2.3188613e-9; edge T - T_floor(f32) max 7.450580596923828e-9 in 12 cells; far inside max 7.450580596923828e-9 in 18 cells; radiated sum 1.4156103134155273e-7
+D38 pass 7: passes 2 rounds 4 delta -3.2018512e-9; edge T - T_floor(f32) max 7.450580596923828e-9 in 18 cells; far inside max 1.1175870895385742e-8 in 26 cells; radiated sum 1.8998980522155762e-7
+D38 pass 8: passes 2 rounds 5 delta -1.6201653e-11; edge T - T_floor(f32) max 7.450580596923828e-9 in 10 cells; far inside max 1.1175870895385742e-8 in 34 cells; radiated sum 2.1979212760925293e-7
+SR-HEAT1 GPU t = 8: sigma2 x 23.995310, y 23.995314, expected 24, error 1.95e-4; heat 5.98e-8; |T - twin| 9.52e-6
+D38 pass 9: passes 2 rounds 4 delta 3.3537417e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 16 cells; far inside max 1.1175870895385742e-8 in 42 cells; radiated sum 2.4959444999694824e-7
+D38 pass 10: passes 2 rounds 4 delta 6.683182e-11; edge T - T_floor(f32) max 1.1175870895385742e-8 in 12 cells; far inside max 1.4901161193847656e-8 in 48 cells; radiated sum 3.0547380447387695e-7
+D38 pass 11: passes 2 rounds 4 delta 7.06797e-10; edge T - T_floor(f32) max 3.725290298461914e-9 in 20 cells; far inside max 1.1175870895385742e-8 in 60 cells; radiated sum 3.46451997756958e-7
+D38 pass 12: passes 2 rounds 4 delta 2.8636418e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 4 cells; far inside max 1.4901161193847656e-8 in 72 cells; radiated sum 3.5390257835388184e-7
+D38 pass 13: passes 2 rounds 4 delta 7.392003e-10; edge T - T_floor(f32) max 3.725290298461914e-9 in 6 cells; far inside max 1.1175870895385742e-8 in 76 cells; radiated sum 3.650784492492676e-7
+D38 pass 14: passes 2 rounds 4 delta 2.4261975e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 4 cells; far inside max 1.1175870895385742e-8 in 88 cells; radiated sum 3.725290298461914e-7
+D38 pass 15: passes 2 rounds 3 delta 2.7684575e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 2 cells; far inside max 1.4901161193847656e-8 in 100 cells; radiated sum 3.762543201446533e-7
+D38 pass 16: passes 2 rounds 3 delta -2.7401046e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 2 cells; far inside max 1.4901161193847656e-8 in 116 cells; radiated sum 3.7997961044311523e-7
+SR-HEAT1 GPU t = 16: sigma2 x 31.985809, y 31.985822, expected 32, error 4.43e-4; heat 3.31e-8; |T - twin| 4.03e-5
+D38 pass 17: passes 2 rounds 3 delta 7.554021e-10; edge T - T_floor(f32) max 3.725290298461914e-9 in 6 cells; far inside max 1.862645149230957e-8 in 132 cells; radiated sum 3.91155481338501e-7
+D38 pass 18: passes 2 rounds 3 delta 1.3568883e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 4 cells; far inside max 1.862645149230957e-8 in 148 cells; radiated sum 3.986060619354248e-7
+D38 pass 19: passes 2 rounds 3 delta -1.8368624e-9; edge T - T_floor(f32) max 3.725290298461914e-9 in 6 cells; far inside max 1.862645149230957e-8 in 160 cells; radiated sum 4.0978193283081055e-7
+D38 pass 20: passes 2 rounds 3 delta -1.518905e-9; edge T - T_floor(f32) max 7.450580596923828e-9 in 10 cells; far inside max 1.862645149230957e-8 in 172 cells; radiated sum 4.3213367462158203e-7
+D38 pass 21: passes 2 rounds 3 delta -1.4176445e-11; edge T - T_floor(f32) max 7.450580596923828e-9 in 12 cells; far inside max 1.862645149230957e-8 in 180 cells; radiated sum 4.5821070671081543e-7
+D38 pass 22: passes 2 rounds 3 delta -4.4149503e-10; edge T - T_floor(f32) max 1.1175870895385742e-8 in 16 cells; far inside max 1.862645149230957e-8 in 182 cells; radiated sum 4.954636096954346e-7
+D38 pass 23: passes 2 rounds 3 delta 6.2173844e-10; edge T - T_floor(f32) max 1.1175870895385742e-8 in 18 cells; far inside max 1.862645149230957e-8 in 186 cells; radiated sum 5.438923835754395e-7
+D38 pass 24: passes 2 rounds 3 delta 9.923513e-11; edge T - T_floor(f32) max 1.1175870895385742e-8 in 20 cells; far inside max 1.862645149230957e-8 in 192 cells; radiated sum 5.997717380523682e-7
+SR-HEAT1 GPU t = 24: sigma2 x 39.971644, y 39.971698, expected 40, error 7.09e-4; heat 2.48e-8; |T - twin| 5.05e-5
+D38 bg 5e-2; max |radiated| 3.3527612686157227e-8 at (0, 127), T there 5.000000074505806e-2; cells >= 1e-9: 58, nonzero 58 (interior 0); sum 5.997717380523682e-7; heat h0 2.0106194996689484e2; edge T - bg now 1.1920928952302567e-8, at start 7.450580569168253e-10
+
+thread 'heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept' (18896) panicked at crates\sr-engine\tests\gpu\heat.rs:544:9:
+nothing reaches the edges
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.88e-14 of the pulse, E 1.41e-13 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 9.56e-11
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 1.41e-10
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 2.07e-10
+SR-HEAT1 worst sigma2 error 2.07e-10
+ok
+
+failures:
+
+failures:
+    heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 190 filtered out; finished in 5.12s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== 2026-10-14T18:40:52-04:00 M0-D38 injected leak (emitted's u_vac at 0.999 T_floor) · box Laser2025-20 :: bash tests/gpu.sh heat::gauss physics
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 21.10s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 10 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 9555.020372351, radiated 9555.020372351, Newton passes up to 5, |delta| up to 1.07e-13
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 9554.966689, radiated 9554.968220, twin 9555.020372; |T - twin| 8.53e-4; up to 4 Newton passes, 35 rounds, |delta| 2.5e-6
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 5.55e-6 of a largest |F| 0.1375
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 23.987625, y 23.987626, expected 24, error 5.16e-4; heat 1.11e-4; |T - twin| 4.02e-5
+
+thread 'heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept' (22900) panicked at crates\sr-engine\tests\gpu\heat.rs:514:17:
+heat 201.0396778122059 against 201.06194996689484
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.88e-14 of the pulse, E 1.41e-13 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 9.56e-11
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 1.41e-10
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 2.07e-10
+SR-HEAT1 worst sigma2 error 2.07e-10
+ok
+
+failures:
+
+failures:
+    heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 190 filtered out; finished in 4.45s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== 2026-10-14T18:41:33-04:00 M0-D38 injected leak 2 (emitted's u_vac at 0.999999 T_floor) · box Laser2025-20 :: bash tests/gpu.sh heat::gauss physics
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 22.81s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 10 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 9555.020372351, radiated 9555.020372351, Newton passes up to 5, |delta| up to 1.07e-13
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 9554.966689, radiated 9554.968220, twin 9555.020372; |T - twin| 8.53e-4; up to 4 Newton passes, 35 rounds, |delta| 2.5e-6
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 5.55e-6 of a largest |F| 0.1375
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 23.995310, y 23.995314, expected 24, error 1.95e-4; heat 5.98e-8; |T - twin| 9.52e-6
+SR-HEAT1 GPU t = 16: sigma2 x 31.985809, y 31.985822, expected 32, error 4.43e-4; heat 3.31e-8; |T - twin| 4.03e-5
+SR-HEAT1 GPU t = 24: sigma2 x 39.971644, y 39.971698, expected 40, error 7.09e-4; heat 2.48e-8; |T - twin| 5.05e-5
+SR-HEAT1 GPU radiated 3.21e-4, 1.60e-6 of the pulse
+
+thread 'heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept' (35168) panicked at crates\sr-engine\tests\gpu\heat.rs:527:9:
+the edges radiated 0.00032103434205055237 of a pulse of 201.06194996689484
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.88e-14 of the pulse, E 1.41e-13 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 9.56e-11
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 1.41e-10
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 2.07e-10
+SR-HEAT1 worst sigma2 error 2.07e-10
+ok
+
+failures:
+
+failures:
+    heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 190 filtered out; finished in 4.76s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

@@ -222,7 +222,7 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // the update keeps u ≥ u_vac and moves no T by more than a factor 2; the passes end after the first
 // one that moves Σ C|ΔT| by at most 10⁻⁶ Σ C T⁰ and every cell by at most 10⁻³ of its T. On the linear law the second pass
 // is the check: its residual is recomputed from the solved u, so a recursive residual that drifted from the true one is
-// solved again, not committed. The ceiling (16 passes, 4,096 rounds) commits the last iterate unconverged.
+// solved again, not committed. The ceiling (64 passes, 4,096 rounds; §0.5 [M0-D37]) commits the last iterate unconverged.
 //
 // One dispatch a round (Chronopoulos–Gear's form of the method: one reduction point a round): `heat_round` is recorded
 // MAX_ROUNDS + 3 MAX_PASSES + 2 times, each slot reading its workgroup count from a word the slot before it wrote — the
@@ -314,7 +314,7 @@ struct Parity {
 const SOLVE_TOL: f32 = 1.0e-5;
 const NEWTON_HEAT: f32 = 1.0e-6;
 const NEWTON_CELL: f32 = 1.0e-3;
-const MAX_PASSES: u32 = 16u;
+const MAX_PASSES: u32 = 64u;
 const MAX_ROUNDS: u32 = 4096u;
 const TILE: u32 = 16u;
 // A gas cell whose heat term c_i is at most this share of its faces' Σ_f D_f is heat-free (`free_at`).

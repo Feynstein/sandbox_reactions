@@ -1,0 +1,46 @@
+== 2026-10-14T18:10:57-04:00 timing · task M0-D37 · box Laser2025-20 :: bash tests/gpu.sh timing physics
+-- timing · exit=101 · 108.27 s
+    Finished `release` profile [optimized] target(s) in 0.58s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps' (13040) panicked at C:\Users\YohanBelanger\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\wgpu-30.0.1\src\backend\wgpu_core.rs:1924:30:
+Error in Device::poll: Validation Error
+
+Caused by:
+  Parent device is lost
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test timing::bare_steps_time_every_pass_at_its_boundaries ... 
+thread 'timing::bare_steps_time_every_pass_at_its_boundaries' (35248) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::frames_report_their_cost_per_step_and_per_pass ... 
+thread 'timing::frames_report_their_cost_per_step_and_per_pass' (29356) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... 
+thread 'timing::headless_timing_writes_every_pass_of_the_nominal_disk' (7204) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... 
+thread 'timing::the_wall_clock_fallback_is_named_and_times_no_pass' (33900) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+
+failures:
+
+failures:
+    timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps
+    timing::bare_steps_time_every_pass_at_its_boundaries
+    timing::frames_report_their_cost_per_step_and_per_pass
+    timing::headless_timing_writes_every_pass_of_the_nominal_disk
+    timing::the_wall_clock_fallback_is_named_and_times_no_pass
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 195 filtered out; finished in 105.93s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

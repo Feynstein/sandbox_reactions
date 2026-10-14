@@ -1,0 +1,428 @@
+M0-D37 log — win-laptop (Laser2025-20), RTX 4080 Laptop; started 2026-10-14T17:49:17-04:00
+   Compiling sr-physics v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 32.67s
+build exit 0
+== repro 400 steps, RTX 4080 Laptop
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 4 passes 16 rounds 34
+SR-WARN heat unconverged step 340 passes 16 rounds 348
+SR-WARN heat unconverged step 341 passes 16 rounds 442
+SR-WARN heat unconverged step 342 passes 16 rounds 633
+SR-WARN heat unconverged step 343 passes 16 rounds 956
+SR-WARN heat unconverged step 344 passes 16 rounds 1329
+SR-WARN heat unconverged step 345 passes 16 rounds 1368
+SR-WARN heat unconverged step 346 passes 16 rounds 1532
+SR-WARN heat unconverged step 347 passes 16 rounds 1444
+SR-HEADLESS DONE steps=400 sim_time=5.317343 until=none
+exit 0
+== probe from s_4
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 4 passes 16 rounds 34
+D37-PROBE Some(HeatReport { dt: 0.025071565, passes: 16, rounds: 34, converged: false, delta: -6.3692276e-8 })
+SR-HEADLESS DONE steps=1 sim_time=0.139989 until=none
+== probe from s_340
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 340 passes 16 rounds 348
+D37-PROBE Some(HeatReport { dt: 0.009511731, passes: 16, rounds: 348, converged: false, delta: 2.839794e-7 })
+SR-HEADLESS DONE steps=1 sim_time=4.914858 until=none
+== probe from s_344
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 344 passes 16 rounds 1329
+D37-PROBE Some(HeatReport { dt: 0.009470117, passes: 16, rounds: 1329, converged: false, delta: 2.2001159e-5 })
+SR-HEADLESS DONE steps=1 sim_time=4.952835 until=none
+gas cells 5712, box rows [157 242], cols [257 342]
+Traceback (most recent call last):
+  File "C:\Users\YohanBelanger\AppData\Local\Temp\claude\c--workspace-sandbox-reactions\34757558-e480-4dd0-98cc-119bb920dea9\scratchpad\d37.py", line 26, in <module>
+    print(f"last pass: \u03a3 C|\u0394T| / \u03a3 C T0 = {moved / heat0:.3e}; cells over 1e-3: {bad.sum()}")
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u03a3' in position 11: character maps to <undefined>
+gas cells 5712, box rows [157 242], cols [257 342]
+Traceback (most recent call last):
+  File "C:\Users\YohanBelanger\AppData\Local\Temp\claude\c--workspace-sandbox-reactions\34757558-e480-4dd0-98cc-119bb920dea9\scratchpad\d37.py", line 26, in <module>
+    print(f"last pass: \u03a3 C|\u0394T| / \u03a3 C T0 = {moved / heat0:.3e}; cells over 1e-3: {bad.sum()}")
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u03a3' in position 11: character maps to <undefined>
+gas cells 5712, box rows [157 242], cols [257 342]
+last pass: Σ C|ΔT| / Σ C T0 = 6.611e-10; cells over 1e-3: 20
+  (330,229) T0 2.3178 T15 1.80385 T16 1.80118 rel 1.481e-03 C 2.195e-06 c/ΣD 5.117e-05 gasnb 2 ratio16/15 0.9985
+  (329,230) T0 2.3178 T15 1.80431 T16 1.80164 rel 1.480e-03 C 2.195e-06 c/ΣD 5.094e-05 gasnb 2 ratio16/15 0.9985
+  (269,170) T0 2.3178 T15 1.8041 T16 1.80143 rel 1.480e-03 C 2.195e-06 c/ΣD 5.109e-05 gasnb 2 ratio16/15 0.9985
+  (330,170) T0 2.3178 T15 1.80433 T16 1.80166 rel 1.480e-03 C 2.195e-06 c/ΣD 5.095e-05 gasnb 2 ratio16/15 0.9985
+  (329,169) T0 2.3178 T15 1.80452 T16 1.80185 rel 1.479e-03 C 2.195e-06 c/ΣD 5.086e-05 gasnb 2 ratio16/15 0.9985
+  (270,230) T0 2.3178 T15 1.80452 T16 1.80185 rel 1.479e-03 C 2.195e-06 c/ΣD 5.088e-05 gasnb 2 ratio16/15 0.9985
+  (269,229) T0 2.3178 T15 1.80499 T16 1.80232 rel 1.478e-03 C 2.195e-06 c/ΣD 5.063e-05 gasnb 2 ratio16/15 0.9985
+  (270,169) T0 2.3178 T15 1.80527 T16 1.8026 rel 1.478e-03 C 2.195e-06 c/ΣD 5.049e-05 gasnb 2 ratio16/15 0.9985
+  (330,228) T0 2.3172 T15 1.80316 T16 1.8005 rel 1.475e-03 C 4.909e-05 c/ΣD 1.155e-03 gasnb 3 ratio16/15 0.9985
+  (328,230) T0 2.3172 T15 1.80362 T16 1.80096 rel 1.475e-03 C 4.909e-05 c/ΣD 1.149e-03 gasnb 3 ratio16/15 0.9985
+  (269,171) T0 2.3172 T15 1.8034 T16 1.80074 rel 1.474e-03 C 4.909e-05 c/ΣD 1.153e-03 gasnb 3 ratio16/15 0.9985
+  (330,171) T0 2.3172 T15 1.80364 T16 1.80098 rel 1.474e-03 C 4.909e-05 c/ΣD 1.150e-03 gasnb 3 ratio16/15 0.9985
+  (328,169) T0 2.3172 T15 1.80382 T16 1.80116 rel 1.474e-03 C 4.909e-05 c/ΣD 1.148e-03 gasnb 3 ratio16/15 0.9985
+  (271,230) T0 2.3172 T15 1.80382 T16 1.80116 rel 1.473e-03 C 4.909e-05 c/ΣD 1.148e-03 gasnb 3 ratio16/15 0.9985
+  (269,228) T0 2.3172 T15 1.80429 T16 1.80163 rel 1.473e-03 C 4.909e-05 c/ΣD 1.143e-03 gasnb 3 ratio16/15 0.9985
+  (271,169) T0 2.3172 T15 1.80457 T16 1.80191 rel 1.472e-03 C 4.909e-05 c/ΣD 1.139e-03 gasnb 3 ratio16/15 0.9985
+  (329,229) T0 2.2447 T15 1.81672 T16 1.81447 rel 1.239e-03 C 6.619e-05 c/ΣD 8.227e-02 gasnb 4 ratio16/15 0.9988
+  (329,170) T0 2.2447 T15 1.81701 T16 1.81476 rel 1.238e-03 C 6.619e-05 c/ΣD 8.222e-02 gasnb 4 ratio16/15 0.9988
+  (270,170) T0 2.2447 T15 1.81723 T16 1.81498 rel 1.238e-03 C 6.619e-05 c/ΣD 8.220e-02 gasnb 4 ratio16/15 0.9988
+  (270,229) T0 2.2447 T15 1.81728 T16 1.81504 rel 1.237e-03 C 6.619e-05 c/ΣD 8.219e-02 gasnb 4 ratio16/15 0.9988
+f64 twin (1e-12 solve, 1e-12 heat, 1e-10 cell):
+    pass 1: rounds 188 ΣC|ΔT|/ΣCT0 8.66e-06 max rel 3.94e-01 cells>tol 5664
+    pass 2: rounds 164 ΣC|ΔT|/ΣCT0 3.16e-07 max rel 1.02e-01 cells>tol 1320
+    pass 3: rounds 157 ΣC|ΔT|/ΣCT0 1.47e-08 max rel 1.36e-02 cells>tol 896
+    pass 4: rounds 90 ΣC|ΔT|/ΣCT0 9.19e-11 max rel 2.51e-04 cells>tol 664
+    pass 5: rounds 2 ΣC|ΔT|/ΣCT0 3.15e-14 max rel 8.58e-08 cells>tol 247
+    pass 6: rounds 0 ΣC|ΔT|/ΣCT0 1.70e-23 max rel 1.37e-16 cells>tol 0
+  -> passes 6 converged True
+f64 with the GPU's tolerances (1e-5 solve, 1e-6 heat, 1e-3 cell):
+    pass 1: rounds 27 ΣC|ΔT|/ΣCT0 8.70e-06 max rel 5.00e-01 cells>tol 656
+    pass 2: rounds 3 ΣC|ΔT|/ΣCT0 3.58e-07 max rel 2.12e-01 cells>tol 449
+    pass 3: rounds 0 ΣC|ΔT|/ΣCT0 9.93e-22 max rel 1.26e-16 cells>tol 0
+  -> passes 3 converged True
+GPU T16 vs f64 answer: C-weighted L1 6.321e-08, max rel 4.165e-01, cells >1e-3 300
+  at the failing cells: rel err of T16 [0.0486 0.0481 0.0476 0.0481 0.0479 0.0391 0.039  0.048  0.0474 0.0475]; T15 [0.0501 0.0496 0.0492 0.0497 0.0494 0.0404 0.0402 0.0496 0.0489 0.0491]
+== p340 0.009511731
+gas cells 10708, box rows [143 256], cols [243 356]
+last pass: Σ C|ΔT| / Σ C T0 = 2.385e-07; cells over 1e-3: 72
+  (333,233) T0 0.17459 T15 0.191715 T16 0.226069 rel 1.792e-01 C 6.647e-03 c/ΣD 1.851e+04 gasnb 4 ratio16/15 1.1792
+  (333,166) T0 0.17459 T15 0.191703 T16 0.226047 rel 1.792e-01 C 6.647e-03 c/ΣD 1.852e+04 gasnb 4 ratio16/15 1.1792
+  (266,233) T0 0.17459 T15 0.191701 T16 0.226041 rel 1.791e-01 C 6.647e-03 c/ΣD 1.852e+04 gasnb 4 ratio16/15 1.1791
+  (266,166) T0 0.17459 T15 0.191688 T16 0.226015 rel 1.791e-01 C 6.647e-03 c/ΣD 1.852e+04 gasnb 4 ratio16/15 1.1791
+  (334,232) T0 0.17512 T15 0.188191 T16 0.214856 rel 1.417e-01 C 6.672e-03 c/ΣD 1.828e+04 gasnb 4 ratio16/15 1.1417
+  (332,234) T0 0.17512 T15 0.18819 T16 0.214853 rel 1.417e-01 C 6.672e-03 c/ΣD 1.828e+04 gasnb 4 ratio16/15 1.1417
+  (334,167) T0 0.17512 T15 0.188182 T16 0.214837 rel 1.416e-01 C 6.672e-03 c/ΣD 1.828e+04 gasnb 4 ratio16/15 1.1416
+  (332,165) T0 0.17512 T15 0.188183 T16 0.214838 rel 1.416e-01 C 6.672e-03 c/ΣD 1.828e+04 gasnb 4 ratio16/15 1.1416
+  (265,232) T0 0.17512 T15 0.188183 T16 0.214837 rel 1.416e-01 C 6.672e-03 c/ΣD 1.828e+04 gasnb 4 ratio16/15 1.1416
+  (267,234) T0 0.17512 T15 0.18818 T16 0.214831 rel 1.416e-01 C 6.672e-03 c/ΣD 1.829e+04 gasnb 4 ratio16/15 1.1416
+  (265,167) T0 0.17512 T15 0.188173 T16 0.214816 rel 1.416e-01 C 6.672e-03 c/ΣD 1.829e+04 gasnb 4 ratio16/15 1.1416
+  (267,165) T0 0.17512 T15 0.188173 T16 0.214816 rel 1.416e-01 C 6.672e-03 c/ΣD 1.829e+04 gasnb 4 ratio16/15 1.1416
+  (267,166) T0 0.18497 T15 2.82937 T16 3.22499 rel 1.398e-01 C 7.346e-03 c/ΣD 6.001e+00 gasnb 4 ratio16/15 1.1398
+  (266,167) T0 0.18497 T15 2.82935 T16 3.22496 rel 1.398e-01 C 7.346e-03 c/ΣD 6.002e+00 gasnb 4 ratio16/15 1.1398
+  (333,167) T0 0.18497 T15 2.8298 T16 3.22537 rel 1.398e-01 C 7.346e-03 c/ΣD 5.999e+00 gasnb 4 ratio16/15 1.1398
+  (267,233) T0 0.18497 T15 2.82965 T16 3.22519 rel 1.398e-01 C 7.346e-03 c/ΣD 6.000e+00 gasnb 4 ratio16/15 1.1398
+  (332,166) T0 0.18497 T15 2.82982 T16 3.22539 rel 1.398e-01 C 7.346e-03 c/ΣD 5.999e+00 gasnb 4 ratio16/15 1.1398
+  (266,232) T0 0.18497 T15 2.82969 T16 3.22523 rel 1.398e-01 C 7.346e-03 c/ΣD 5.999e+00 gasnb 4 ratio16/15 1.1398
+  (332,233) T0 0.18497 T15 2.83006 T16 3.22552 rel 1.397e-01 C 7.346e-03 c/ΣD 5.997e+00 gasnb 4 ratio16/15 1.1397
+  (333,232) T0 0.18497 T15 2.83006 T16 3.22552 rel 1.397e-01 C 7.346e-03 c/ΣD 5.997e+00 gasnb 4 ratio16/15 1.1397
+  (268,165) T0 0.18426 T15 2.23393 T16 2.5284 rel 1.318e-01 C 7.322e-03 c/ΣD 1.105e+01 gasnb 4 ratio16/15 1.1318
+  (265,168) T0 0.18426 T15 2.23403 T16 2.52851 rel 1.318e-01 C 7.322e-03 c/ΣD 1.105e+01 gasnb 4 ratio16/15 1.1318
+  (268,234) T0 0.18426 T15 2.23425 T16 2.52873 rel 1.318e-01 C 7.322e-03 c/ΣD 1.105e+01 gasnb 4 ratio16/15 1.1318
+  (334,168) T0 0.18426 T15 2.23428 T16 2.52875 rel 1.318e-01 C 7.322e-03 c/ΣD 1.105e+01 gasnb 4 ratio16/15 1.1318
+  (265,231) T0 0.18426 T15 2.23431 T16 2.52877 rel 1.318e-01 C 7.322e-03 c/ΣD 1.105e+01 gasnb 4 ratio16/15 1.1318
+f64 twin (1e-12 solve, 1e-12 heat, 1e-10 cell):
+    pass 1: rounds 138 ΣC|ΔT|/ΣCT0 3.43e-03 max rel 1.00e+00 cells>tol 10645
+    pass 2: rounds 137 ΣC|ΔT|/ΣCT0 6.99e-04 max rel 1.00e+00 cells>tol 5552
+    pass 3: rounds 141 ΣC|ΔT|/ΣCT0 2.31e-04 max rel 1.00e+00 cells>tol 5192
+    pass 4: rounds 136 ΣC|ΔT|/ΣCT0 1.09e-04 max rel 1.00e+00 cells>tol 5212
+    pass 5: rounds 128 ΣC|ΔT|/ΣCT0 6.59e-05 max rel 1.00e+00 cells>tol 5260
+    pass 6: rounds 116 ΣC|ΔT|/ΣCT0 5.43e-05 max rel 1.00e+00 cells>tol 5332
+    pass 7: rounds 118 ΣC|ΔT|/ΣCT0 3.20e-05 max rel 1.00e+00 cells>tol 5368
+    pass 8: rounds 112 ΣC|ΔT|/ΣCT0 1.29e-05 max rel 1.00e+00 cells>tol 5300
+    pass 9: rounds 96 ΣC|ΔT|/ΣCT0 8.07e-06 max rel 1.00e+00 cells>tol 5188
+    pass 10: rounds 98 ΣC|ΔT|/ΣCT0 5.89e-06 max rel 1.00e+00 cells>tol 5180
+    pass 11: rounds 90 ΣC|ΔT|/ΣCT0 3.42e-06 max rel 1.00e+00 cells>tol 5104
+    pass 12: rounds 88 ΣC|ΔT|/ΣCT0 2.69e-06 max rel 1.00e+00 cells>tol 5024
+    pass 13: rounds 90 ΣC|ΔT|/ΣCT0 1.93e-06 max rel 1.00e+00 cells>tol 5016
+    pass 14: rounds 86 ΣC|ΔT|/ΣCT0 8.74e-07 max rel 6.56e-01 cells>tol 4856
+    pass 15: rounds 76 ΣC|ΔT|/ΣCT0 4.57e-07 max rel 3.45e-01 cells>tol 4564
+    pass 16: rounds 70 ΣC|ΔT|/ΣCT0 2.13e-07 max rel 1.76e-01 cells>tol 4364
+    pass 17: rounds 62 ΣC|ΔT|/ΣCT0 3.89e-08 max rel 6.49e-02 cells>tol 3328
+    pass 18: rounds 40 ΣC|ΔT|/ΣCT0 1.30e-09 max rel 6.67e-03 cells>tol 664
+    pass 19: rounds 15 ΣC|ΔT|/ΣCT0 4.20e-12 max rel 6.69e-05 cells>tol 236
+    pass 20: rounds 0 ΣC|ΔT|/ΣCT0 3.54e-19 max rel 2.12e-16 cells>tol 0
+  -> passes 20 converged True
+f64 with the GPU's tolerances (1e-5 solve, 1e-6 heat, 1e-3 cell):
+    pass 1: rounds 60 ΣC|ΔT|/ΣCT0 3.43e-03 max rel 1.00e+00 cells>tol 4428
+    pass 2: rounds 53 ΣC|ΔT|/ΣCT0 6.99e-04 max rel 1.00e+00 cells>tol 4244
+    pass 3: rounds 49 ΣC|ΔT|/ΣCT0 2.31e-04 max rel 1.00e+00 cells>tol 2848
+    pass 4: rounds 45 ΣC|ΔT|/ΣCT0 1.09e-04 max rel 1.00e+00 cells>tol 1524
+    pass 5: rounds 32 ΣC|ΔT|/ΣCT0 6.56e-05 max rel 1.00e+00 cells>tol 936
+    pass 6: rounds 28 ΣC|ΔT|/ΣCT0 5.41e-05 max rel 1.00e+00 cells>tol 852
+    pass 7: rounds 28 ΣC|ΔT|/ΣCT0 3.22e-05 max rel 1.00e+00 cells>tol 848
+    pass 8: rounds 24 ΣC|ΔT|/ΣCT0 1.31e-05 max rel 1.00e+00 cells>tol 748
+    pass 9: rounds 6 ΣC|ΔT|/ΣCT0 8.01e-06 max rel 1.00e+00 cells>tol 488
+    pass 10: rounds 6 ΣC|ΔT|/ΣCT0 5.97e-06 max rel 1.00e+00 cells>tol 392
+    pass 11: rounds 5 ΣC|ΔT|/ΣCT0 3.43e-06 max rel 1.00e+00 cells>tol 276
+    pass 12: rounds 3 ΣC|ΔT|/ΣCT0 2.64e-06 max rel 1.00e+00 cells>tol 244
+    pass 13: rounds 4 ΣC|ΔT|/ΣCT0 1.93e-06 max rel 1.00e+00 cells>tol 208
+    pass 14: rounds 3 ΣC|ΔT|/ΣCT0 9.07e-07 max rel 7.10e-01 cells>tol 168
+    pass 15: rounds 1 ΣC|ΔT|/ΣCT0 4.37e-07 max rel 3.76e-01 cells>tol 92
+    pass 16: rounds 1 ΣC|ΔT|/ΣCT0 2.29e-07 max rel 1.83e-01 cells>tol 72
+    pass 17: rounds 0 ΣC|ΔT|/ΣCT0 3.55e-19 max rel 2.12e-16 cells>tol 0
+  -> passes 17 converged True
+GPU T16 vs f64 answer: C-weighted L1 3.013e-07, max rel 2.283e-01, cells >1e-3 112
+  at the failing cells: rel err of T16 [0.0035 0.0047 0.0034 0.0034 0.0047 0.0035 0.0645 0.0183 0.0183 0.0645]; T15 [0.0071 0.0323 0.0048 0.0048 0.0323 0.0071 0.1118 0.1065 0.1065 0.1119]
+== p344 0.009470117
+gas cells 10724, box rows [143 256], cols [243 356]
+last pass: Σ C|ΔT| / Σ C T0 = 4.068e-06; cells over 1e-3: 808
+  (271,147) T0 0.05 T15 0.1 T16 0.2 rel 1.000e+00 C 1.079e-04 c/ΣD 2.704e+00 gasnb 2 ratio16/15 2.0000
+  (279,150) T0 0.097003 T15 0.186076 T16 0.372151 rel 1.000e+00 C 2.965e-03 c/ΣD 8.640e+03 gasnb 4 ratio16/15 2.0000
+  (320,150) T0 0.097003 T15 0.186097 T16 0.372193 rel 1.000e+00 C 2.965e-03 c/ΣD 8.637e+03 gasnb 4 ratio16/15 2.0000
+  (321,150) T0 0.099491 T15 0.438125 T16 0.876251 rel 1.000e+00 C 2.891e-03 c/ΣD 3.547e+02 gasnb 4 ratio16/15 2.0000
+  (322,150) T0 0.098155 T15 1.19402 T16 2.38804 rel 1.000e+00 C 2.565e-03 c/ΣD 1.860e+01 gasnb 4 ratio16/15 2.0000
+  (323,150) T0 0.091076 T15 1.79492 T16 3.58983 rel 1.000e+00 C 2.131e-03 c/ΣD 9.453e+00 gasnb 4 ratio16/15 2.0000
+  (324,150) T0 0.08293 T15 2.77653 T16 5.55305 rel 1.000e+00 C 1.748e-03 c/ΣD 2.014e+00 gasnb 4 ratio16/15 2.0000
+  (323,250) T0 0.083181 T15 0.131966 T16 0.263931 rel 1.000e+00 C 1.736e-03 c/ΣD 2.132e+04 gasnb 4 ratio16/15 2.0000
+  (327,250) T0 0.064008 T15 2.24675 T16 4.4935 rel 1.000e+00 C 8.270e-04 c/ΣD 1.216e+00 gasnb 4 ratio16/15 2.0000
+  (324,250) T0 0.07702 T15 0.251774 T16 0.503548 rel 1.000e+00 C 1.412e-03 c/ΣD 2.392e+03 gasnb 4 ratio16/15 2.0000
+  (325,250) T0 0.071714 T15 0.617705 T16 1.23541 rel 1.000e+00 C 1.165e-03 c/ΣD 1.133e+02 gasnb 4 ratio16/15 2.0000
+  (326,250) T0 0.067341 T15 1.14643 T16 2.29287 rel 1.000e+00 C 9.720e-04 c/ΣD 1.260e+01 gasnb 4 ratio16/15 2.0000
+  (328,147) T0 0.05 T15 0.1 T16 0.2 rel 1.000e+00 C 1.079e-04 c/ΣD 2.704e+00 gasnb 2 ratio16/15 2.0000
+  (271,252) T0 0.05 T15 0.1 T16 0.2 rel 1.000e+00 C 1.079e-04 c/ΣD 2.704e+00 gasnb 2 ratio16/15 2.0000
+  (273,149) T0 0.067342 T15 1.14606 T16 2.29211 rel 1.000e+00 C 9.720e-04 c/ΣD 1.261e+01 gasnb 4 ratio16/15 2.0000
+  (272,149) T0 0.064009 T15 2.24542 T16 4.49085 rel 1.000e+00 C 8.270e-04 c/ΣD 1.219e+00 gasnb 4 ratio16/15 2.0000
+  (349,223) T0 0.091077 T15 1.79536 T16 3.59072 rel 1.000e+00 C 2.131e-03 c/ΣD 9.446e+00 gasnb 4 ratio16/15 2.0000
+  (250,220) T0 0.097002 T15 0.186076 T16 0.372151 rel 1.000e+00 C 2.965e-03 c/ΣD 8.640e+03 gasnb 4 ratio16/15 2.0000
+  (274,149) T0 0.071715 T15 0.617501 T16 1.235 rel 1.000e+00 C 1.164e-03 c/ΣD 1.134e+02 gasnb 4 ratio16/15 2.0000
+  (275,149) T0 0.07702 T15 0.251585 T16 0.503169 rel 1.000e+00 C 1.412e-03 c/ΣD 2.397e+03 gasnb 4 ratio16/15 2.0000
+  (276,149) T0 0.08318 T15 0.131903 T16 0.263806 rel 1.000e+00 C 1.736e-03 c/ΣD 2.135e+04 gasnb 4 ratio16/15 2.0000
+  (270,251) T0 0.050368 T15 1.67853 T16 3.35707 rel 1.000e+00 C 1.590e-04 c/ΣD 1.557e-01 gasnb 3 ratio16/15 2.0000
+  (271,251) T0 0.05 T15 0.595566 T16 1.19113 rel 1.000e+00 C 3.840e-04 c/ΣD 4.484e-01 gasnb 4 ratio16/15 2.0000
+  (348,219) T0 0.10125 T15 0.9654 T16 1.9308 rel 1.000e+00 C 3.413e-03 c/ΣD 1.045e+02 gasnb 4 ratio16/15 2.0000
+  (250,223) T0 0.091076 T15 1.7943 T16 3.5886 rel 1.000e+00 C 2.131e-03 c/ΣD 9.462e+00 gasnb 4 ratio16/15 2.0000
+f64 twin (1e-12 solve, 1e-12 heat, 1e-10 cell):
+    pass 1: rounds 261 ΣC|ΔT|/ΣCT0 3.24e-03 max rel 1.00e+00 cells>tol 10676
+    pass 2: rounds 265 ΣC|ΔT|/ΣCT0 6.66e-04 max rel 1.00e+00 cells>tol 8648
+    pass 3: rounds 258 ΣC|ΔT|/ΣCT0 1.86e-04 max rel 1.00e+00 cells>tol 8364
+    pass 4: rounds 237 ΣC|ΔT|/ΣCT0 1.00e-04 max rel 1.00e+00 cells>tol 8348
+    pass 5: rounds 262 ΣC|ΔT|/ΣCT0 5.62e-05 max rel 1.00e+00 cells>tol 8388
+    pass 6: rounds 267 ΣC|ΔT|/ΣCT0 5.52e-05 max rel 1.00e+00 cells>tol 8476
+    pass 7: rounds 264 ΣC|ΔT|/ΣCT0 5.24e-05 max rel 1.00e+00 cells>tol 8532
+    pass 8: rounds 236 ΣC|ΔT|/ΣCT0 3.31e-05 max rel 1.00e+00 cells>tol 8580
+    pass 9: rounds 223 ΣC|ΔT|/ΣCT0 2.18e-05 max rel 1.00e+00 cells>tol 8588
+    pass 10: rounds 247 ΣC|ΔT|/ΣCT0 2.11e-05 max rel 1.00e+00 cells>tol 8620
+    pass 11: rounds 275 ΣC|ΔT|/ΣCT0 1.71e-05 max rel 1.00e+00 cells>tol 8712
+    pass 12: rounds 260 ΣC|ΔT|/ΣCT0 1.07e-05 max rel 1.00e+00 cells>tol 8720
+    pass 13: rounds 251 ΣC|ΔT|/ΣCT0 7.47e-06 max rel 1.00e+00 cells>tol 8704
+    pass 14: rounds 212 ΣC|ΔT|/ΣCT0 6.07e-06 max rel 1.00e+00 cells>tol 8672
+    pass 15: rounds 210 ΣC|ΔT|/ΣCT0 5.33e-06 max rel 1.00e+00 cells>tol 8688
+    pass 16: rounds 195 ΣC|ΔT|/ΣCT0 4.10e-06 max rel 1.00e+00 cells>tol 8688
+    pass 17: rounds 197 ΣC|ΔT|/ΣCT0 3.46e-06 max rel 1.00e+00 cells>tol 8704
+    pass 18: rounds 198 ΣC|ΔT|/ΣCT0 2.85e-06 max rel 1.00e+00 cells>tol 8740
+    pass 19: rounds 200 ΣC|ΔT|/ΣCT0 2.29e-06 max rel 1.00e+00 cells>tol 8728
+    pass 20: rounds 202 ΣC|ΔT|/ΣCT0 1.91e-06 max rel 1.00e+00 cells>tol 8723
+    pass 21: rounds 198 ΣC|ΔT|/ΣCT0 1.73e-06 max rel 1.00e+00 cells>tol 8714
+    pass 22: rounds 202 ΣC|ΔT|/ΣCT0 1.05e-06 max rel 1.00e+00 cells>tol 8705
+    pass 23: rounds 197 ΣC|ΔT|/ΣCT0 8.99e-07 max rel 1.00e+00 cells>tol 8678
+    pass 24: rounds 172 ΣC|ΔT|/ΣCT0 7.86e-07 max rel 1.00e+00 cells>tol 8670
+    pass 25: rounds 200 ΣC|ΔT|/ΣCT0 5.54e-07 max rel 1.00e+00 cells>tol 8625
+    pass 26: rounds 201 ΣC|ΔT|/ΣCT0 3.45e-07 max rel 1.00e+00 cells>tol 8554
+    pass 27: rounds 181 ΣC|ΔT|/ΣCT0 2.63e-07 max rel 1.00e+00 cells>tol 8414
+    pass 28: rounds 166 ΣC|ΔT|/ΣCT0 2.52e-07 max rel 1.00e+00 cells>tol 8450
+    pass 29: rounds 153 ΣC|ΔT|/ΣCT0 1.42e-07 max rel 1.00e+00 cells>tol 8348
+    pass 30: rounds 141 ΣC|ΔT|/ΣCT0 8.08e-08 max rel 1.00e+00 cells>tol 8024
+    pass 31: rounds 135 ΣC|ΔT|/ΣCT0 9.40e-08 max rel 1.00e+00 cells>tol 8126
+    pass 32: rounds 131 ΣC|ΔT|/ΣCT0 6.30e-08 max rel 1.00e+00 cells>tol 8064
+    pass 33: rounds 138 ΣC|ΔT|/ΣCT0 2.78e-08 max rel 9.75e-01 cells>tol 7764
+    pass 34: rounds 121 ΣC|ΔT|/ΣCT0 6.70e-09 max rel 6.17e-01 cells>tol 3435
+    pass 35: rounds 87 ΣC|ΔT|/ΣCT0 2.41e-09 max rel 4.46e-01 cells>tol 960
+    pass 36: rounds 26 ΣC|ΔT|/ΣCT0 8.67e-10 max rel 2.02e-01 cells>tol 440
+    pass 37: rounds 11 ΣC|ΔT|/ΣCT0 2.52e-10 max rel 5.05e-02 cells>tol 232
+    pass 38: rounds 4 ΣC|ΔT|/ΣCT0 1.83e-11 max rel 3.48e-03 cells>tol 152
+    pass 39: rounds 2 ΣC|ΔT|/ΣCT0 8.94e-14 max rel 1.70e-05 cells>tol 96
+    pass 40: rounds 1 ΣC|ΔT|/ΣCT0 1.13e-15 max rel 2.41e-07 cells>tol 91
+    pass 41: rounds 0 ΣC|ΔT|/ΣCT0 1.96e-19 max rel 1.48e-16 cells>tol 0
+  -> passes 41 converged True
+f64 with the GPU's tolerances (1e-5 solve, 1e-6 heat, 1e-3 cell):
+    pass 1: rounds 97 ΣC|ΔT|/ΣCT0 3.24e-03 max rel 1.00e+00 cells>tol 7448
+    pass 2: rounds 93 ΣC|ΔT|/ΣCT0 6.66e-04 max rel 1.00e+00 cells>tol 7252
+    pass 3: rounds 89 ΣC|ΔT|/ΣCT0 1.86e-04 max rel 1.00e+00 cells>tol 5832
+    pass 4: rounds 90 ΣC|ΔT|/ΣCT0 1.00e-04 max rel 1.00e+00 cells>tol 4664
+    pass 5: rounds 87 ΣC|ΔT|/ΣCT0 5.63e-05 max rel 1.00e+00 cells>tol 3084
+    pass 6: rounds 95 ΣC|ΔT|/ΣCT0 5.52e-05 max rel 1.00e+00 cells>tol 2688
+    pass 7: rounds 93 ΣC|ΔT|/ΣCT0 5.24e-05 max rel 1.00e+00 cells>tol 2588
+    pass 8: rounds 83 ΣC|ΔT|/ΣCT0 3.32e-05 max rel 1.00e+00 cells>tol 2140
+    pass 9: rounds 85 ΣC|ΔT|/ΣCT0 2.19e-05 max rel 1.00e+00 cells>tol 1844
+    pass 10: rounds 86 ΣC|ΔT|/ΣCT0 2.11e-05 max rel 1.00e+00 cells>tol 1780
+    pass 11: rounds 86 ΣC|ΔT|/ΣCT0 1.70e-05 max rel 1.00e+00 cells>tol 1752
+    pass 12: rounds 78 ΣC|ΔT|/ΣCT0 1.07e-05 max rel 1.00e+00 cells>tol 1448
+    pass 13: rounds 68 ΣC|ΔT|/ΣCT0 7.45e-06 max rel 1.00e+00 cells>tol 1192
+    pass 14: rounds 70 ΣC|ΔT|/ΣCT0 6.12e-06 max rel 1.00e+00 cells>tol 984
+    pass 15: rounds 77 ΣC|ΔT|/ΣCT0 5.33e-06 max rel 1.00e+00 cells>tol 840
+    pass 16: rounds 48 ΣC|ΔT|/ΣCT0 4.05e-06 max rel 1.00e+00 cells>tol 824
+    pass 17: rounds 35 ΣC|ΔT|/ΣCT0 3.42e-06 max rel 1.00e+00 cells>tol 824
+    pass 18: rounds 30 ΣC|ΔT|/ΣCT0 2.82e-06 max rel 1.00e+00 cells>tol 792
+    pass 19: rounds 21 ΣC|ΔT|/ΣCT0 2.28e-06 max rel 1.00e+00 cells>tol 744
+    pass 20: rounds 22 ΣC|ΔT|/ΣCT0 1.91e-06 max rel 1.00e+00 cells>tol 744
+    pass 21: rounds 56 ΣC|ΔT|/ΣCT0 1.87e-06 max rel 1.00e+00 cells>tol 792
+    pass 22: rounds 22 ΣC|ΔT|/ΣCT0 1.05e-06 max rel 1.00e+00 cells>tol 664
+    pass 23: rounds 18 ΣC|ΔT|/ΣCT0 8.70e-07 max rel 1.00e+00 cells>tol 552
+    pass 24: rounds 19 ΣC|ΔT|/ΣCT0 7.87e-07 max rel 1.00e+00 cells>tol 615
+    pass 25: rounds 18 ΣC|ΔT|/ΣCT0 5.57e-07 max rel 1.00e+00 cells>tol 489
+    pass 26: rounds 14 ΣC|ΔT|/ΣCT0 3.42e-07 max rel 1.00e+00 cells>tol 392
+    pass 27: rounds 52 ΣC|ΔT|/ΣCT0 2.96e-07 max rel 1.00e+00 cells>tol 311
+    pass 28: rounds 5 ΣC|ΔT|/ΣCT0 2.17e-07 max rel 1.00e+00 cells>tol 272
+    pass 29: rounds 5 ΣC|ΔT|/ΣCT0 1.46e-07 max rel 1.00e+00 cells>tol 254
+    pass 30: rounds 2 ΣC|ΔT|/ΣCT0 6.99e-08 max rel 1.00e+00 cells>tol 192
+    pass 31: rounds 2 ΣC|ΔT|/ΣCT0 7.97e-08 max rel 1.00e+00 cells>tol 184
+    pass 32: rounds 1 ΣC|ΔT|/ΣCT0 3.67e-08 max rel 6.89e-01 cells>tol 144
+    pass 33: rounds 0 ΣC|ΔT|/ΣCT0 3.16e-19 max rel 2.11e-16 cells>tol 0
+  -> passes 33 converged True
+GPU T16 vs f64 answer: C-weighted L1 1.690e-05, max rel 9.928e-01, cells >1e-3 1184
+  at the failing cells: rel err of T16 [0.8826 0.991  0.9923 0.9923 0.991  0.8826 0.0681 0.3845 0.5957 0.9601]; T15 [0.9413 0.9912 0.9923 0.9923 0.9912 0.9413 0.0924 0.6922 0.7979 0.98  ]
+== p4 0.025071565 clamps
+reference: clamp [0.5, 2] tight, passes 6 converged True
+  clamp [0.5, 2] twin: passes 6 converged True rounds 601 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  clamp [0.5, 2] gpu-tol: passes 3 converged True rounds 30 | vs reference C-L1 8.79e-08 max rel 4.72e-01
+  clamp [0.5, 4] twin: passes 6 converged True rounds 601 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  clamp [0.5, 4] gpu-tol: passes 3 converged True rounds 30 | vs reference C-L1 8.79e-08 max rel 4.72e-01
+  clamp [0.5, 16] twin: passes 6 converged True rounds 601 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  clamp [0.5, 16] gpu-tol: passes 3 converged True rounds 30 | vs reference C-L1 8.79e-08 max rel 4.72e-01
+  clamp [0.5, 1e+30] twin: passes 6 converged True rounds 601 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  clamp [0.5, 1e+30] gpu-tol: passes 3 converged True rounds 30 | vs reference C-L1 8.79e-08 max rel 4.72e-01
+  clamp [0.25, 1e+30] twin: passes 6 converged True rounds 601 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  clamp [0.25, 1e+30] gpu-tol: passes 4 converged True rounds 31 | vs reference C-L1 7.38e-08 max rel 5.77e-01
+== p340 0.009511731 clamps
+reference: clamp [0.5, 2] tight, passes 20 converged True
+  clamp [0.5, 2] twin: passes 20 converged True rounds 1837 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  clamp [0.5, 2] gpu-tol: passes 17 converged True rounds 348 | vs reference C-L1 2.57e-07 max rel 2.26e-01
+  clamp [0.5, 4] twin: passes 19 converged True rounds 1612 | vs reference C-L1 2.20e-14 max rel 3.85e-08
+  clamp [0.5, 4] gpu-tol: passes 15 converged True rounds 328 | vs reference C-L1 1.45e-07 max rel 1.76e-01
+  clamp [0.5, 16] twin: passes 19 converged True rounds 1612 | vs reference C-L1 2.20e-14 max rel 3.85e-08
+  clamp [0.5, 16] gpu-tol: passes 15 converged True rounds 328 | vs reference C-L1 1.45e-07 max rel 1.76e-01
+  clamp [0.5, 1e+30] twin: passes 19 converged True rounds 1612 | vs reference C-L1 2.20e-14 max rel 3.85e-08
+  clamp [0.5, 1e+30] gpu-tol: passes 15 converged True rounds 328 | vs reference C-L1 1.45e-07 max rel 1.76e-01
+  clamp [0.25, 1e+30] twin: passes 19 converged True rounds 1612 | vs reference C-L1 2.20e-14 max rel 3.85e-08
+  clamp [0.25, 1e+30] gpu-tol: passes 15 converged True rounds 328 | vs reference C-L1 1.45e-07 max rel 1.76e-01
+== p344 0.009470117 clamps
+reference: clamp [0.5, 2] tight, passes 41 converged True
+  clamp [0.5, 2] twin: passes 41 converged True rounds 7187 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  clamp [0.5, 2] gpu-tol: passes 33 converged True rounds 1647 | vs reference C-L1 1.49e-07 max rel 8.45e-01
+  clamp [0.5, 4] twin: passes 31 converged True rounds 5365 | vs reference C-L1 1.45e-15 max rel 1.59e-07
+  clamp [0.5, 4] gpu-tol: passes 26 converged True rounds 1124 | vs reference C-L1 5.57e-08 max rel 7.59e-01
+  clamp [0.5, 16] twin: passes 31 converged True rounds 5276 | vs reference C-L1 1.09e-15 max rel 6.63e-07
+  clamp [0.5, 16] gpu-tol: passes 26 converged True rounds 1078 | vs reference C-L1 1.78e-07 max rel 7.62e-01
+  clamp [0.5, 1e+30] twin: passes 31 converged True rounds 5276 | vs reference C-L1 1.09e-15 max rel 6.63e-07
+  clamp [0.5, 1e+30] gpu-tol: passes 26 converged True rounds 1078 | vs reference C-L1 1.78e-07 max rel 7.62e-01
+  clamp [0.25, 1e+30] twin: passes 31 converged True rounds 5276 | vs reference C-L1 1.09e-15 max rel 6.63e-07
+  clamp [0.25, 1e+30] gpu-tol: passes 26 converged True rounds 1078 | vs reference C-L1 1.78e-07 max rel 7.62e-01
+== p4 0.025071565 update modes
+reference: clamp [0.5, 2] tight, passes 6 converged True
+  u clamp [0.5, 2] twin: passes 6 converged True rounds 601 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  u clamp [0.5, 2] gpu-tol: passes 3 converged True rounds 30 | vs reference C-L1 8.79e-08 max rel 4.72e-01
+  T clamp [0.5, 2] twin: passes 6 converged True rounds 760 | vs reference C-L1 1.79e-14 max rel 3.43e-07
+  T clamp [0.5, 2] gpu-tol: passes 3 converged True rounds 33 | vs reference C-L1 6.88e-08 max rel 4.75e-01
+  mix clamp [0.5, 2] twin: passes 5 converged True rounds 584 | vs reference C-L1 8.67e-15 max rel 1.08e-07
+  mix clamp [0.5, 2] gpu-tol: passes 4 converged True rounds 31 | vs reference C-L1 7.94e-08 max rel 4.72e-01
+  mix clamp [0.5, 4] twin: passes 5 converged True rounds 584 | vs reference C-L1 8.67e-15 max rel 1.08e-07
+  mix clamp [0.5, 4] gpu-tol: passes 4 converged True rounds 31 | vs reference C-L1 7.94e-08 max rel 4.72e-01
+== p340 0.009511731 update modes
+reference: clamp [0.5, 2] tight, passes 20 converged True
+  u clamp [0.5, 2] twin: passes 20 converged True rounds 1837 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  u clamp [0.5, 2] gpu-tol: passes 17 converged True rounds 348 | vs reference C-L1 2.57e-07 max rel 2.26e-01
+  T clamp [0.5, 2] twin: passes 17 converged True rounds 1642 | vs reference C-L1 1.07e-14 max rel 3.65e-08
+  T clamp [0.5, 2] gpu-tol: passes 15 converged True rounds 340 | vs reference C-L1 1.04e-07 max rel 7.95e-02
+  mix clamp [0.5, 2] twin: passes 17 converged True rounds 1646 | vs reference C-L1 1.24e-14 max rel 3.64e-08
+  mix clamp [0.5, 2] gpu-tol: passes 15 converged True rounds 339 | vs reference C-L1 1.09e-07 max rel 6.23e-02
+  mix clamp [0.5, 4] twin: passes 13 converged True rounds 1207 | vs reference C-L1 1.62e-14 max rel 6.27e-08
+  mix clamp [0.5, 4] gpu-tol: passes 11 converged True rounds 274 | vs reference C-L1 1.70e-07 max rel 5.48e-02
+== p344 0.009470117 update modes
+reference: clamp [0.5, 2] tight, passes 41 converged True
+  u clamp [0.5, 2] twin: passes 41 converged True rounds 7187 | vs reference C-L1 0.00e+00 max rel 0.00e+00
+  u clamp [0.5, 2] gpu-tol: passes 33 converged True rounds 1647 | vs reference C-L1 1.49e-07 max rel 8.45e-01
+  T clamp [0.5, 2] twin: passes 35 converged True rounds 6844 | vs reference C-L1 8.14e-16 max rel 2.96e-07
+  T clamp [0.5, 2] gpu-tol: passes 33 converged True rounds 1567 | vs reference C-L1 8.16e-08 max rel 5.35e-01
+  mix clamp [0.5, 2] twin: passes 35 converged True rounds 6807 | vs reference C-L1 1.85e-15 max rel 6.63e-07
+  mix clamp [0.5, 2] gpu-tol: passes 32 converged True rounds 1477 | vs reference C-L1 7.08e-08 max rel 7.45e-01
+  mix clamp [0.5, 4] twin: passes 24 converged True rounds 4516 | vs reference C-L1 1.55e-15 max rel 2.36e-07
+  mix clamp [0.5, 4] gpu-tol: passes 22 converged True rounds 1019 | vs reference C-L1 5.38e-08 max rel 2.13e+00
+twin: passes 41 converged True
+  pass 1 start: clamped x2 816, x0.5 0, u<u_vac 98
+  pass 2 start: clamped x2 688, x0.5 0, u<u_vac 95
+  pass 3 start: clamped x2 576, x0.5 0, u<u_vac 95
+  pass 4 start: clamped x2 512, x0.5 0, u<u_vac 95
+  pass 5 start: clamped x2 548, x0.5 0, u<u_vac 95
+  pass 6 start: clamped x2 536, x0.5 0, u<u_vac 95
+  pass 7 start: clamped x2 607, x0.5 0, u<u_vac 95
+  pass 8 start: clamped x2 528, x0.5 0, u<u_vac 95
+  pass 9 start: clamped x2 472, x0.5 0, u<u_vac 95
+  pass 10 start: clamped x2 400, x0.5 0, u<u_vac 95
+  pass 11 start: clamped x2 304, x0.5 0, u<u_vac 95
+  pass 12 start: clamped x2 264, x0.5 0, u<u_vac 95
+  pass 13 start: clamped x2 216, x0.5 0, u<u_vac 95
+  pass 14 start: clamped x2 176, x0.5 0, u<u_vac 95
+  pass 15 start: clamped x2 152, x0.5 0, u<u_vac 95
+  pass 16 start: clamped x2 160, x0.5 0, u<u_vac 95
+  pass 17 start: clamped x2 152, x0.5 0, u<u_vac 95
+  pass 18 start: clamped x2 96, x0.5 0, u<u_vac 95
+  pass 19 start: clamped x2 104, x0.5 0, u<u_vac 95
+  pass 20 start: clamped x2 120, x0.5 0, u<u_vac 97
+  pass 21 start: clamped x2 88, x0.5 0, u<u_vac 96
+  pass 22 start: clamped x2 88, x0.5 0, u<u_vac 91
+  pass 23 start: clamped x2 56, x0.5 0, u<u_vac 86
+  pass 24 start: clamped x2 56, x0.5 0, u<u_vac 85
+  pass 25 start: clamped x2 48, x0.5 0, u<u_vac 83
+  pass 26 start: clamped x2 64, x0.5 0, u<u_vac 78
+  pass 27 start: clamped x2 24, x0.5 0, u<u_vac 78
+  pass 28 start: clamped x2 24, x0.5 0, u<u_vac 78
+  pass 29 start: clamped x2 16, x0.5 0, u<u_vac 72
+  pass 30 start: clamped x2 16, x0.5 0, u<u_vac 72
+  pass 31 start: clamped x2 8, x0.5 0, u<u_vac 72
+  pass 32 start: clamped x2 8, x0.5 0, u<u_vac 72
+  pass 33 start: clamped x2 0, x0.5 0, u<u_vac 72
+  pass 34 start: clamped x2 0, x0.5 0, u<u_vac 72
+  pass 35 start: clamped x2 0, x0.5 0, u<u_vac 72
+  pass 36 start: clamped x2 0, x0.5 0, u<u_vac 72
+  pass 37 start: clamped x2 0, x0.5 0, u<u_vac 72
+  pass 38 start: clamped x2 0, x0.5 0, u<u_vac 72
+  pass 39 start: clamped x2 0, x0.5 0, u<u_vac 72
+  pass 40 start: clamped x2 0, x0.5 0, u<u_vac 72
+  pass 41 start: clamped x2 0, x0.5 0, u<u_vac 0
+  (324,150) T0 0.08293 C 1.748e-03 answer 13.59: 0.08293 0.08293 0.08293 0.08293 0.08293 0.08293 0.08293 0.08293 0.08293 0.08324 0.09509 0.1718 0.3435 0.6871 1.374 2.748 5.496 10.99 12.05 12.39 12.81 13.18 13.34 13.43 13.51 13.56 13.57 13.58 13.58 13.59 13.59 13.59 13.59 13.59 13.59 13.59 13.59 13.59 13.59 13.59 13.59
+  (271,147) T0 0.05 C 1.079e-04 answer 1.7037: 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05014 0.05617 0.1123 0.2247 0.4494 0.8987 1.419 1.465 1.529 1.592 1.64 1.668 1.684 1.695 1.7 1.701 1.702 1.703 1.703 1.703 1.704 1.704 1.704 1.704 1.704 1.704 1.704 1.704 1.704
+  (279,150) T0 0.097 C 2.965e-03 answer 7.5343: 0.097 0.097 0.097 0.097 0.097 0.097 0.097 0.097 0.097 0.097 0.097 0.097 0.09704 0.09811 0.1104 0.1875 0.375 0.75 1.5 3 5.506 6.912 7.178 7.298 7.404 7.471 7.502 7.51 7.524 7.531 7.532 7.533 7.534 7.534 7.534 7.534 7.534 7.534 7.534 7.534 7.534
+  (323,250) T0 0.08318 C 1.736e-03 answer 9.8314: 0.08318 0.08318 0.08318 0.08318 0.08318 0.08318 0.08318 0.08318 0.08318 0.08318 0.08318 0.08318 0.08318 0.08336 0.08924 0.1315 0.2629 0.5259 1.052 2.103 4.207 8.117 9.126 9.328 9.545 9.698 9.765 9.783 9.811 9.824 9.826 9.828 9.83 9.831 9.831 9.831 9.831 9.831 9.831 9.831 9.831
+  (300,150) T0 0.08221 C 4.138e-03 answer 0.082214: 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221 0.08221
+  (300,147) T0 0.05314 C 2.445e-03 answer 0.053145: 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314 0.05314
+s_341 D37-PROBE Some(HeatReport { dt: 0.009538374, passes: 16, rounds: 442, converged: false, delta: 2.353133e-6 })
+s_342 D37-PROBE Some(HeatReport { dt: 0.009496818, passes: 16, rounds: 633, converged: false, delta: 1.6582904e-5 })
+s_343 D37-PROBE Some(HeatReport { dt: 0.009471533, passes: 16, rounds: 956, converged: false, delta: 5.4807268e-5 })
+s_345 D37-PROBE Some(HeatReport { dt: 0.009485084, passes: 16, rounds: 1368, converged: false, delta: 2.0678279e-5 })
+s_346 D37-PROBE Some(HeatReport { dt: 0.009511157, passes: 16, rounds: 1532, converged: false, delta: 3.15674e-5 })
+s_347 D37-PROBE Some(HeatReport { dt: 0.009491993, passes: 16, rounds: 1444, converged: false, delta: 1.278035e-6 })
+== p341 0.009538374
+last pass: Σ C|ΔT| / Σ C T0 = 1.427e-06; cells over 1e-3: 160
+  twin: passes 25 converged True rounds 2485
+  gpu-tol: passes 21 converged True rounds 452
+== p342 0.009496818
+last pass: Σ C|ΔT| / Σ C T0 = 2.837e-06; cells over 1e-3: 488
+  twin: passes 39 converged True rounds 4537
+  gpu-tol: passes 33 converged True rounds 788
+== p343 0.009471533
+last pass: Σ C|ΔT| / Σ C T0 = 4.030e-06; cells over 1e-3: 947
+  twin: passes 41 converged True rounds 6418
+  gpu-tol: passes 36 converged True rounds 1663
+== p345 0.009485084
+last pass: Σ C|ΔT| / Σ C T0 = 4.366e-06; cells over 1e-3: 799
+  twin: passes 32 converged True rounds 6341
+  gpu-tol: passes 28 converged True rounds 1444
+== p346 0.009511157
+last pass: Σ C|ΔT| / Σ C T0 = 6.947e-06; cells over 1e-3: 688
+  twin: passes 34 converged True rounds 11979
+  gpu-tol: passes 30 converged True rounds 1931
+== p347 0.009491993
+last pass: Σ C|ΔT| / Σ C T0 = 1.452e-07; cells over 1e-3: 112
+  twin: passes 20 converged True rounds 6371
+  gpu-tol: passes 18 converged True rounds 1449
+== probe MAX_PASSES 64 (GPU)
+s_4 D37-PROBE Some(HeatReport { dt: 0.025071565, passes: 24, rounds: 40, converged: true, delta: -6.2934504e-8 })
+s_340 D37-PROBE Some(HeatReport { dt: 0.009511731, passes: 17, rounds: 348, converged: true, delta: 2.849917e-7 })
+s_341 D37-PROBE Some(HeatReport { dt: 0.009538374, passes: 21, rounds: 452, converged: true, delta: 2.872323e-7 })
+s_342 D37-PROBE Some(HeatReport { dt: 0.009496818, passes: 33, rounds: 793, converged: true, delta: 2.05237e-7 })
+s_343 D37-PROBE Some(HeatReport { dt: 0.009471533, passes: 37, rounds: 1678, converged: true, delta: 4.9343683e-8 })
+s_344 D37-PROBE Some(HeatReport { dt: 0.009470117, passes: 33, rounds: 1661, converged: true, delta: 3.219676e-7 })
+s_345 D37-PROBE Some(HeatReport { dt: 0.009485084, passes: 26, rounds: 1444, converged: true, delta: 1.0578214e-7 })
+s_346 D37-PROBE Some(HeatReport { dt: 0.009511157, passes: 31, rounds: 1940, converged: true, delta: 4.2857388e-7 })
+s_347 D37-PROBE Some(HeatReport { dt: 0.009491993, passes: 17, rounds: 1444, converged: true, delta: 1.0872451e-6 })
+== 1000 steps, probe build MAX_PASSES 64, RTX 4080 Laptop
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=9.607501 until=none
+exit 0
+== final build: 1000 steps, RTX 4080 Laptop
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=9.607501 until=none
+exit 0

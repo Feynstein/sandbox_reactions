@@ -1,0 +1,21 @@
+== 2026-10-14T18:44:15-04:00 desktop[window] · task M0-D38 · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-14T18:44:16-04:00 desktop[launcher] · task M0-D38 · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 32.38 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 2.6s (log C:\workspace\sandbox_reactions\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-offscreen: pid 23560 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-offscreen: built in 2 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[window] · exit=0 · 39.47 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 2.9s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D38.launch.game-offscreen.log)
+game-offscreen: pid 36072 stopped
+game-offscreen: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D38.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 1 s, booted and checked in 38 s
+=== GO ===
+
