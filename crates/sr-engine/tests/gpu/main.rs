@@ -75,6 +75,9 @@ mod burn;
 /// M0-T45 — neutrino cooling and the iron gate on the CPU twin (contract §2.5.3, §1.6.2's N_Fe, §1.8.5's latch trigger).
 mod neutrino;
 
+/// M0-T50 — sinks on the CPU twin (contract §1.4.3, §2.6, §5.1's G-SINK); M0-T51 — P3 on the GPU, the same cases.
+mod sink;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;
@@ -239,3 +242,6 @@ mod adapter {
         }
     }
 }
+
+/// M0-T53 — neutrino heating on the CPU twin (contract §2.5.4, §1.6.4); M0-T54 — P7 on the GPU, the same cases.
+mod nuheat;

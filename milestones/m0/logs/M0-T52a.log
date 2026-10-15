@@ -1,0 +1,88 @@
+why build: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why burn_cell: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why burn_order: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why neutrino: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why sod: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why edges: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why collapse: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why twin: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why cpu_gpu: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why heat_gauss: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why heat_implicit: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why heat_limiter: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why heat_stiff: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why radiation_force: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why grav_force: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why grav_selfforce: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why fft: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why adapter: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why state: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why booking: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why floors: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why dt: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why box: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why timing: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why scene: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why dump: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why boot: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why desktop: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why web: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why capture: stale: crates/sr-engine/shaders/grav.wgsl (+5)
+why watch_only: stale: crates/sr-engine/shaders/grav.wgsl (+4)
+build            2/0/0       12.20 s  GO · step 1/31, 30 left
+burn_cell        16/0/0      10.52 s  GO · step 2/31, 29 left
+burn_order       4/0/0        6.31 s  GO · step 3/31, 28 left
+neutrino         18/0/0      13.18 s  GO · step 4/31, 27 left
+sod              15/0/0      29.80 s  GO · step 5/31, 26 left
+edges            7/0/0       27.80 s  GO · step 6/31, 25 left
+collapse         6/0/0        6.94 s  GO · step 7/31, 24 left
+twin             6/0/0       11.41 s  GO · step 8/31, 23 left
+cpu_gpu          3/0/0       21.89 s  GO · step 9/31, 22 left
+heat_gauss       10/0/0       9.72 s  GO · step 10/31, 21 left
+heat_implicit    6/0/0        7.04 s  GO · step 11/31, 20 left
+heat_limiter     6/0/0        7.98 s  GO · step 12/31, 19 left
+heat_stiff       6/0/0        6.75 s  GO · step 13/31, 18 left
+radiation_force  3/0/0        5.89 s  GO · step 14/31, 17 left
+grav_force       13/0/0      13.00 s  GO · step 15/31, 16 left
+grav_selfforce   5/0/0        6.16 s  GO · step 16/31, 15 left
+fft              8/0/0       11.45 s  GO · step 17/31, 14 left
+adapter          10/0/0       9.68 s  GO · step 18/31, 13 left
+state            6/0/0        7.06 s  GO · step 19/31, 12 left
+booking          4/0/0        6.98 s  GO · step 20/31, 11 left
+floors           7/0/0       12.22 s  GO · step 21/31, 10 left
+dt               6/0/0       11.33 s  GO · step 22/31, 9 left
+box              8/0/0       13.22 s  GO · step 23/31, 8 left
+timing           5/0/0       13.74 s  GO · step 24/31, 7 left
+scene            8/0/0       10.00 s  GO · step 25/31, 6 left
+dump             9/0/0       16.68 s  GO · step 26/31, 5 left
+boot             1/0/0       11.45 s  GO · step 27/31, 4 left
+desktop          2/0/0       15.84 s  GO · step 28/31, 3 left
+web              3/0/0       28.70 s  GO · step 29/31, 2 left
+capture          2/0/0        3.57 s  GO · step 30/31, 1 left
+watch_only       1/0/0        0.11 s  GO · step 31/31, 0 left
+plan_lint        NOT RUN (not impacted: its 2 path(s) checked at the anchor)
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 27 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+sink             NOT RUN (not impacted: its 77 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 18 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+latch            NOT RUN (not impacted: its 74 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+sink · red-arm proven by M0-T52a 2026-10-15T12:11:45-04:00 (fingerprint 4c36a0e1076e) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/sink.rs changed since M0-T52a's start - a test, case or check M0-T52a's Deliver: does not name
+FLAG oracle: tests/plants/sink-latch-off.patch changed since M0-T52a's start - a test, case or check M0-T52a's Deliver: does not name
+FLAG oracle: tests/plants/sink-phi-skip.patch changed since M0-T52a's start - a test, case or check M0-T52a's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T52a's start - a test, case or check M0-T52a's Deliver: does not name
+logs: milestones/m0/logs/M0-T52a.<scope>.log · record: loop_times.jsonl · tree eaa28454aab2+ba770a65ff88
+anchor: 185 path×scope entries moved by this run
+anchor: 195 paths checked · 172 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 195 covered of 367 visible
+skipped   164  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 206 passed, 0 failed, 0 skipped · 31/31 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 13 not impacted · 51.32 s + loop 0.06 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 119.77->133.36 · base: M0-T52a's start 2026-10-15T12:04:46-04:00
+=== GO ===

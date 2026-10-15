@@ -1,0 +1,63 @@
+==== 2026-10-15T12:26:42-04:00 nu_heat · clean · a fresh scratch copy of the tree
+== 2026-10-15T12:26:42-04:00 nu_heat · task M0-T53 · box laserax-ai :: bash tests/gpu.sh nuheat physics
+-- nu_heat · exit=0 · 5.80 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_zb5naqr/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_zb5naqr/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.71s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test nuheat::a_lone_gas_cell_takes_exactly_f_dep ... ok
+test nuheat::deposited_is_f_dep_of_emitted ... ok
+test nuheat::f_dep_above_the_bound_is_refused ... ok
+test nuheat::matches_the_direct_sum ... ok
+test nuheat::nearer_and_denser_receive_more ... ok
+test nuheat::none_inside_the_neutron_star ... ok
+test nuheat::nothing_when_nothing_is_emitted_or_taken ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 228 filtered out; finished in 0.00s
+
+
+==== 2026-10-15T12:26:42-04:00 nu_heat · plant nuheat-no-cap · a fresh scratch copy of the tree
+planted nuheat-no-cap: tests/plants/nuheat-no-cap.patch -> crates/sr-physics/src/reference/nuheat.rs
+== 2026-10-15T12:26:42-04:00 nu_heat · task M0-T53 · box laserax-ai :: bash tests/gpu.sh nuheat physics
+-- nu_heat · exit=101 · 11.62 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_zb5naqr/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_zb5naqr/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.82s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test nuheat::a_lone_gas_cell_takes_exactly_f_dep ... 
+thread 'nuheat::a_lone_gas_cell_takes_exactly_f_dep' (2502042) panicked at crates/sr-engine/tests/gpu/nuheat.rs:179:5:
+the lone cell got 2.2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test nuheat::deposited_is_f_dep_of_emitted ... 
+thread 'nuheat::deposited_is_f_dep_of_emitted' (2502043) panicked at crates/sr-engine/tests/gpu/nuheat.rs:90:9:
+f_dep 0.05: deposited 8.19999999999999 against 4.1000000000000005
+FAILED
+test nuheat::f_dep_above_the_bound_is_refused ... ok
+test nuheat::matches_the_direct_sum ... 
+thread 'nuheat::matches_the_direct_sum' (2502045) panicked at crates/sr-engine/tests/gpu/nuheat.rs:117:5:
+worst cell off by 9.399713770033653e-2 of 1.8799427540067312e-1
+FAILED
+test nuheat::nearer_and_denser_receive_more ... 
+thread 'nuheat::nearer_and_denser_receive_more' (2502046) panicked at crates/sr-engine/tests/gpu/nuheat.rs:161:5:
+assertion failed: rel(pass.q.iter().sum::<f64>(), 0.05 * 7.0) < 1e-9
+FAILED
+test nuheat::none_inside_the_neutron_star ... ok
+test nuheat::nothing_when_nothing_is_emitted_or_taken ... ok
+
+failures:
+
+failures:
+    nuheat::a_lone_gas_cell_takes_exactly_f_dep
+    nuheat::deposited_is_f_dep_of_emitted
+    nuheat::matches_the_direct_sum
+    nuheat::nearer_and_denser_receive_more
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 228 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

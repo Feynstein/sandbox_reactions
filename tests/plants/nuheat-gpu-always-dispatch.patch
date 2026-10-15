@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/nuheat.wgsl
++++ b/crates/sr-engine/shaders/nuheat.wgsl
+@@ -131,7 +131,7 @@
+     let ty = (abox.h + 7u) / 8u;
+     let emitted = tiles_sum(0u, tx * ty, lid);
+     if (lid == 0u) {
+-        let open = emitted > 0.0;
++        let open = emitted >= 0.0;
+         st.steps = st.steps + 1u;
+         st.open = select(0u, 1u, open);
+         st.emitted = emitted;

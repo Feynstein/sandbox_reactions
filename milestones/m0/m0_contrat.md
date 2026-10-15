@@ -215,6 +215,20 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     X_H 0.12761 against 0.1 (2.76 × 10⁻²), at 10⁻⁴ within 5 × 10⁻⁵ (H, He and Ne, the twin and the GPU) — measured on
     linux-pc, 2026-10-15 (M0-V6's Verify 1, `burn_cell`, the RTX 5090; M0-T44b first, 2026-10-14) — the lead's answer at
     M0-V6, 2026-10-15: «Amend G-BURN (Recommended)».
+  - [M0-V7] §2.6's Motion, "kick-drift-kick with the grid's g at the sink (bilinear) plus the other sinks' pull softened by
+    r_acc" · kick-drift-kick with, at each sink, the exact reaction of its own softened pull (§1.4.3) on every gas cell —
+    a_s = Σ_cells G m d / (|d|² + r_acc,s²)^{3/2}, m a cell's mass (Σ; a cell is one unit of area), d from the sink to the cell's
+    centre, over every cell with Σ ≥ Σ_vac (the cells P2's Σ_src holds; on the GPU the box holds them all), a fixed-order sum
+    (§1.3.4) — plus each other sink's pull softened by the pair's larger r_acc, so every pull between a sink and a cell or
+    another sink is equal and opposite; graded as G-GRAV2 is, twin and GPU, in scope `sink`: |Σ_s M_s a_s + Σ_cells m g_s| ≤
+    10⁻⁵ (Σ_s M_s |a_s| + Σ_cells m |g_s|), g_s the sinks' pull at a cell; §1.4.3's potential and the gas's own g unchanged ·
+    the grid's g is the gas's unsoftened field (§1.4.2's K, central differences) while a sink pulls the gas softened:
+    measured on linux-pc, 2026-10-15 (M0-V7, the CPU twin; reports/v7.md § The sinks' pull) — a sink of 100 and one gas cell
+    at 2, 4 and 8 cells, the net force 73.5 %, 32.9 % and 10.1 % of the pull on the sink; two sinks of r_acc 2 and 5 at 8
+    cells, 33.2 %; scenes/sink_cloud.json through P2 + P3 + P4, 40 steps, grid + sink momentum off by 15.4 % (the sink at the
+    centre) and 67.7 % (off it) of its start, 0.39 % with no sink; and a sink outside the box read a g P2 never wrote
+    (velocity 0 on the RTX 5090 against the twin's −3.78 × 10⁻⁴), which a sum over the gas cells also reaches — the lead's
+    answer at M0-V7, 2026-10-15: «Equal and opposite (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

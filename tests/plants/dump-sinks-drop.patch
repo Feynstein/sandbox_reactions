@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/dump.rs
++++ b/crates/sr-engine/src/dump.rs
+@@ -283,6 +283,7 @@
+     let (index, sim_time, resume) = step.resume_records(device, queue);
+     let flux = step.side_flux().map(|f| read_buffers(device, queue, "side.flux.readback", std::iter::once(f)));
+-    let sinks = step.read_sinks(device, queue).map(|r| r.sinks).unwrap_or_default();
++    // planted: the dump drops the sinks, resuming a world without its black hole
++    let sinks: Vec<Sink> = Vec::new();
+     Dump { world: state.world(), step: index, sim_time, sinks, resume, planes: state.readback(device, queue), flux }
+ }
+ 

@@ -1,0 +1,24 @@
+--- a/crates/sr-physics/src/reference/sinks.rs
++++ b/crates/sr-physics/src/reference/sinks.rs
+@@ -218,8 +218,8 @@
+                     }
+                     let (m, p) = self.take(st, i);
+                     dm += m;
+-                    dp[0] += p[0];
+-                    dp[1] += p[1];
++                    dp[0] += 0.0 * p[0];
++                    dp[1] += 0.0 * p[1];
+                 }
+             }
+             let m = s.m + dm;
+--- a/crates/sr-engine/shaders/sinks.wgsl
++++ b/crates/sr-engine/shaders/sinks.wgsl
+@@ -379,7 +379,7 @@
+         if (li == 0u && k < st.count) {
+             let dm = part[0].x;
+             let m = sink_mass(k);
+-            let p = m * st.sinks[k].vel + part[0].yz;
++            let p = m * st.sinks[k].vel + 0.0 * part[0].yz;
+             add_mass(k, dm);
+             st.sinks[k].vel = p / sink_mass(k);
+             st.accreted += dm;

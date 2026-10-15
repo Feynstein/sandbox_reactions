@@ -2,11 +2,13 @@
 //! dispatches built once for the state's world. A step records the lists as they are — it reads no wall clock, no
 //! rung, no frame and no label — so the same state and step count give the same state, bit for bit (§1.3.4).
 //!
-//! Today P1, P2, P4, P5, P6, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
-//! M0-T20), P2 gravity when the step is built with it ([`grav`], [`Step::with_gravity`], M0-T31), P4 the gas flow when
+//! Today P1, P2, P3, P4, P5, P6, P7, P8 and P9 hold dispatches: P1 and P9 the Δt and the non-finite guard (shaders/reduce.wgsl, [`dt`],
+//! M0-T20), P2 gravity when the step is built with it ([`grav`], [`Step::with_gravity`], M0-T31), P3 the sinks when the
+//! step is built with them ([`sinks`], [`Step::with_sinks`], M0-T51), P4 the gas flow when
 //! the step is built with it ([`hydro`], [`Step::with_passes`], M0-T34; with gravity's source when P2 runs too,
 //! M0-T36), P5 heat when the step is built with it ([`heat`], [`Step::with_heat`], M0-T42), P6 burning when the step is
-//! built with it ([`react`], [`Step::with_reactions`], M0-T46), P8 the floors, then the
+//! built with it ([`react`], [`Step::with_reactions`], M0-T46), P7 neutrino heating when the step is built with it
+//! ([`nuheat`], [`Step::with_neutrino_heating`], M0-T54), P8 the floors, then the
 //! species renormalisation (shaders/floors.wgsl, M0-T19); every other pass is an empty slot its lot fills, in place,
 //! without reordering the others. A step knows its index — the guard runs on every 64th
 //! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction — after P2 on that state, so step 0's
@@ -23,7 +25,7 @@
 //! steps have ended.
 //!
 //! The FFT and the zero-padded convolution over the box ([`fft`], shaders/fft.wgsl, M0-T30) are machinery, not a pass:
-//! P2 builds on them ([`grav`]), P7 when its lot builds it.
+//! P2 builds on them ([`grav`]) and P7 ([`nuheat`]).
 //!
 //! The equation of state every pass shares (shaders/eos.wgsl) is prepended to a pass's shader ([`with_eos`]) and bound
 //! as group 1 from [`EosGpu`], built once per run from physics.json and elements.json: the species table, the cold
@@ -43,7 +45,9 @@ pub mod grav;
 pub mod heat;
 pub mod hydro;
 pub mod latch;
+pub mod nuheat;
 pub mod react;
+pub mod sinks;
 
 use std::cell::{Cell, RefCell};
 
@@ -58,7 +62,9 @@ use fft::FftError;
 use grav::Gravity;
 use heat::HeatSetup;
 use latch::Latch;
+use nuheat::NuHeatSetup;
 use react::ReactSetup;
+use sinks::SinkSetup;
 
 /// The passes of one step, in §1.3.2's order.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -145,6 +151,8 @@ pub struct Step {
     hydro: Option<hydro::Hydro>,
     heat: Option<heat::Heat>,
     react: Option<react::React>,
+    sinks: Option<sinks::Sinks>,
+    nuheat: Option<nuheat::NuHeat>,
     boxfit: BoxFit,
     latch: Latch,
     next: Cell<u64>,
@@ -420,19 +428,59 @@ impl Step {
         heat: Option<&HeatSetup<'_>>,
         react: Option<&ReactSetup<'_>>,
     ) -> Result<Step, FftError> {
+        Step::with_sinks(device, state, booking, eos, physics, passes, heat, react, None)
+    }
+
+    /// As [`Step::with_reactions`], with P3 sinks when `sinks` is given (§2.6; §2.12.1's `sinks` switch on; M0-T51): φ
+    /// from `sinks.side`, g from P2 when the step runs it, else zeros (a test's synthetic world).
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_sinks(
+        device: &wgpu::Device,
+        state: &State,
+        booking: &Booking,
+        eos: &EosGpu,
+        physics: &Physics,
+        passes: &Passes<'_>,
+        heat: Option<&HeatSetup<'_>>,
+        react: Option<&ReactSetup<'_>>,
+        sinks: Option<&SinkSetup<'_>>,
+    ) -> Result<Step, FftError> {
+        Step::with_neutrino_heating(device, state, booking, eos, physics, passes, heat, react, sinks, None)
+    }
+
+    /// As [`Step::with_sinks`], with P7 neutrino heating when `nuheat` is given (§2.5.4; §2.12.1's `neutrinos` switch on;
+    /// M0-T54): S_ν from `nuheat.side` (P6's plane, or a test's), E and `neutrino_deposited` after P6. Refused likewise when
+    /// a world axis pads past the FFT's largest length.
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_neutrino_heating(
+        device: &wgpu::Device,
+        state: &State,
+        booking: &Booking,
+        eos: &EosGpu,
+        physics: &Physics,
+        passes: &Passes<'_>,
+        heat: Option<&HeatSetup<'_>>,
+        react: Option<&ReactSetup<'_>>,
+        sinks: Option<&SinkSetup<'_>>,
+        nuheat: Option<&NuHeatSetup<'_>>,
+    ) -> Result<Step, FftError> {
         let (mode, side, edge) = (passes.mode, passes.gravity, passes.hydro);
         let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
             label: Some("reduce.wgsl"),
             source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/reduce.wgsl")).into()),
         });
         let mut boxfit = BoxFit::new(device, state, physics, mode);
-        let mut gravity = side.map(|side| Gravity::new(device, state, side, physics, &boxfit)).transpose()?;
+        let sink_state = sinks.map(|_| sinks::state_buffer(device, state));
+        let mut gravity = side.map(|side| Gravity::new(device, state, side, physics, &boxfit, sink_state.as_ref())).transpose()?;
         let mut dt = Dt::new(device, &module, state, eos, physics, &boxfit, gravity.as_ref().map(Gravity::field));
         boxfit.build(device, &module, state, dt.record());
         let mut passes: [Vec<Dispatch>; 10] = Default::default();
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Gravity as usize] = gravity.as_mut().map(|g| std::mem::take(&mut g.dispatches)).unwrap_or_default();
         let g = gravity.as_ref().map(Gravity::field);
+        let gas_g = gravity.as_ref().map(Gravity::gas_field);
+        let mut sink = sinks.zip(sink_state).map(|(s, buf)| sinks::Sinks::new(device, state, booking, eos, physics, &boxfit, dt.record(), buf, gas_g, s));
+        passes[Pass::Sinks as usize] = sink.as_mut().map(|s| std::mem::take(&mut s.dispatches)).unwrap_or_default();
         let flux = heat.map(|h| h.side.flux());
         let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, physics, &boxfit, dt.record(), g, flux, edge));
         passes[Pass::Hydro as usize] = flow.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
@@ -440,6 +488,8 @@ impl Step {
         passes[Pass::Heat as usize] = warm.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
         let mut burn = react.map(|r| react::React::new(device, state, booking, eos, physics, &boxfit, dt.record(), r));
         passes[Pass::Reactions as usize] = burn.as_mut().map(|r| std::mem::take(&mut r.dispatches)).unwrap_or_default();
+        let mut heating = nuheat.map(|n| nuheat::NuHeat::new(device, state, booking, physics, &boxfit, dt.record(), n)).transpose()?;
+        passes[Pass::NeutrinoHeating as usize] = heating.as_mut().map(|p| std::mem::take(&mut p.dispatches)).unwrap_or_default();
         passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
         let latch = Latch::new(device, &passes, &dt, &boxfit, warm.as_ref().map(heat::Heat::gate_buffers));
@@ -448,13 +498,24 @@ impl Step {
         if let Some(b) = &burn {
             passes[Pass::Reactions as usize].push(b.latch_dispatch(device, latch.flag()));
         }
-        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, boxfit, latch, next: Cell::new(0), timer: Timer::default() })
+        // P3 likewise: a formation sets the flag after its sink_update (§1.8.5, M0-T52a).
+        if let Some(s) = &sink {
+            passes[Pass::Sinks as usize].push(s.latch_dispatch(device, latch.flag()));
+        }
+        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, sinks: sink, nuheat: heating, boxfit, latch, next: Cell::new(0), timer: Timer::default() })
     }
 
     /// P2's g = −∇φ (the x plane, then the y plane, f32, row-major over the world) when the step runs gravity; φ is the
-    /// [`SideFields`] plane it was built with. Inside the box only: outside, the last values P2 wrote there.
+    /// [`SideFields`] plane it was built with. With P3 the sinks' pull is in g and their potential in φ (§1.4.3). Inside
+    /// the box only: outside, the last values P2 wrote there.
     pub fn gravity_field(&self) -> Option<&wgpu::Buffer> {
         self.gravity.as_ref().map(Gravity::field)
+    }
+
+    /// The gas's own g, the sinks' pull left out: [`Step::gravity_field`] in a step without P3. P3's kick-drift-kick reads
+    /// this one.
+    pub fn gravity_gas_field(&self) -> Option<&wgpu::Buffer> {
+        self.gravity.as_ref().map(Gravity::gas_field)
     }
 
     /// The edge mode (§2.8, §3.1) for every step submitted after this call — at the next step boundary, since a write

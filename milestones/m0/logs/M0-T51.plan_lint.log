@@ -1,0 +1,22 @@
+== 2026-10-15T11:00:17-04:00 plan_lint · task M0-T51 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=550 failed=0 warnings=6 · blocks=226 · flow_rows=226 · verify_fences=0 · history=0 · flow=per-task · header=542/600 · pipeline=9/60 · ladder=7 rungs · refresh=3/5
+WARN: M0-TC5: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D40: DONE outside the current phase and 40 lines long - stub it (§2.6)
+WARN: M0-D41: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-D42: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-D43: DONE outside the current phase and 23 lines long - stub it (§2.6)
+WARN: M0-D44: `Read:` names crates/sr-engine/shaders/hydro.wgsl whole (864 lines > 500) - name a section or a line range
+=== GO ===
+
+== 2026-10-15T11:01:07-04:00 plan_lint · task M0-T51 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.27 s
+lint: checks=550 failed=0 warnings=6 · blocks=226 · flow_rows=226 · verify_fences=0 · history=0 · flow=per-task · header=542/600 · pipeline=9/60 · ladder=7 rungs · refresh=3/5
+WARN: M0-TC5: DONE outside the current phase and 13 lines long - stub it (§2.6)
+WARN: M0-D40: DONE outside the current phase and 40 lines long - stub it (§2.6)
+WARN: M0-D41: DONE outside the current phase and 32 lines long - stub it (§2.6)
+WARN: M0-D42: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-D43: DONE outside the current phase and 23 lines long - stub it (§2.6)
+WARN: M0-D44: `Read:` names crates/sr-engine/shaders/hydro.wgsl whole (864 lines > 500) - name a section or a line range
+=== GO ===
+

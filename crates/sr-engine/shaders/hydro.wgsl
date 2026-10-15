@@ -35,7 +35,8 @@
 //
 // A cell below Σ_vac reads as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20) — the box's ghost
 // ring included, where an uploaded vacuum cell may hold Σ = 0; a cell and its four neighbours all below Σ_vac are left
-// as they are. Δt is the Δt record's first word (P1). No atomic, no cross-invocation order: the same state gives the
+// as they are. A face state's Σ is held between its cell's and the neighbour's on that side, as MC keeps it in exact
+// arithmetic — in f32 it rounds to 0 beside such a cell (`bracketed`, M0-D44). Δt is the Δt record's first word (P1). No atomic, no cross-invocation order: the same state gives the
 // same next state, bit for bit (§1.3.4).
 
 struct Dims {
@@ -272,6 +273,15 @@ fn offset(c: Prim, s: Prim, f: f32) -> Prim {
     return Prim(c.sigma + f * s.sigma, c.u + f * s.u, c.v + f * s.v, c.pi + f * s.pi, x);
 }
 
+// Face state `w` of cell `c` with its Σ held between `c`'s and the neighbour `n`'s on that side (M0-D44). The MC slope keeps
+// it there in exact arithmetic; in f32, c − ½·2(c − n) is exactly 0 when n is below half of c's ulp (a dense cell facing a
+// floor cell, its far neighbour ≥ 4 × denser), and `cons` would divide by it — the twin's f64 face is n.
+fn bracketed(w: Prim, c: Prim, n: Prim) -> Prim {
+    var b = w;
+    b.sigma = clamp(w.sigma, min(c.sigma, n.sigma), max(c.sigma, n.sigma));
+    return b;
+}
+
 // The conserved vector of primitives: E = Σ(ε_th + ε_cold) + ½Σ|u|², ε_th = (Π − Π_e − Π_n)/Σ floored at T_floor/μ.
 fn cons(p: Prim) -> array<f32, 14> {
     let comp = composition(p.x);
@@ -363,7 +373,8 @@ struct Hancock {
 fn hancock(c: Prim, xl: Prim, xr: Prim, yl: Prim, yr: Prim, x: i32, y: i32, half: f32) -> Hancock {
     let sx = slope(xl, c, xr);
     let sy = slope(yl, c, yr);
-    let w = array<Prim, 4>(offset(c, sx, -0.5), offset(c, sx, 0.5), offset(c, sy, -0.5), offset(c, sy, 0.5));
+    let w = array<Prim, 4>(bracketed(offset(c, sx, -0.5), c, xl), bracketed(offset(c, sx, 0.5), c, xr),
+        bracketed(offset(c, sy, -0.5), c, yl), bracketed(offset(c, sy, 0.5), c, yr));
     let u = array<array<f32, 14>, 4>(cons(w[0]), cons(w[1]), cons(w[2]), cons(w[3]));
     let fxl = flux(w[0], u[0][3], 0u);
     let fxr = flux(w[1], u[1][3], 0u);

@@ -62,6 +62,35 @@ pub fn acceleration(phi: &[f64], w: usize, h: usize) -> Result<(Vec<f64>, Vec<f6
     Ok((gx, gy))
 }
 
+/// A sink as P2 sees it (§1.4.3): its position in cells (cell (i, j) spans [i, i + 1] × [j, j + 1], its centre at
+/// (i + ½, j + ½)), its mass and its softening length r_acc (§2.6).
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct SinkSource {
+    pub x: f64,
+    pub y: f64,
+    pub m: f64,
+    pub r_acc: f64,
+}
+
+/// Adds the sinks' pull to a field (§1.4.3): φ at each cell's centre gains −G M_s / √(r² + r_acc²), r from the sink's
+/// position, and g gains its exact gradient −G M_s d / (r² + r_acc²)^{3/2}, d the vector from the sink to the cell
+/// centre (toward the sink). The sink's term is analytic, not convolved: the gas feels it in full inside r_acc.
+pub fn add_sinks(field: &mut Field, w: usize, h: usize, g: f64, sinks: &[SinkSource]) {
+    for s in sinks {
+        for y in 0..h {
+            for x in 0..w {
+                let (dx, dy) = (x as f64 + 0.5 - s.x, y as f64 + 0.5 - s.y);
+                let soft = dx * dx + dy * dy + s.r_acc * s.r_acc;
+                let i = y * w + x;
+                field.phi[i] -= g * s.m / soft.sqrt();
+                let pull = g * s.m / (soft * soft.sqrt());
+                field.gx[i] -= pull * dx;
+                field.gy[i] -= pull * dy;
+            }
+        }
+    }
+}
+
 /// The gravity pass: one convolver, its kernel's transform cached per padded size.
 pub struct Gravity {
     conv: Convolver,
@@ -83,5 +112,12 @@ impl Gravity {
         let phi = self.potential(&source(sigma, sigma_vac), w, h)?;
         let (gx, gy) = acceleration(&phi, w, h)?;
         Ok(Field { phi, gx, gy })
+    }
+
+    /// [`Gravity::field`] with the sinks' potential and pull added ([`add_sinks`], §1.4.3).
+    pub fn field_with_sinks(&mut self, sigma: &[f64], sigma_vac: f64, w: usize, h: usize, g: f64, sinks: &[SinkSource]) -> Result<Field, FftError> {
+        let mut field = self.field(sigma, sigma_vac, w, h)?;
+        add_sinks(&mut field, w, h, g, sinks);
+        Ok(field)
     }
 }

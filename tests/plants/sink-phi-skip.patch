@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/grav.wgsl
++++ b/crates/sr-engine/shaders/grav.wgsl
+@@ -164,7 +164,7 @@
+         let d = c - sink_state.sinks[k].pos;
+         let soft = dot(d, d) + ra * ra;
+         let inv = inverseSqrt(soft);
+-        p -= gp.grav * m * inv;
++        p -= 0.0 * gp.grav * m * inv;
+         a -= (gp.grav * m * inv / soft) * d;
+     }
+     dst[cell] = p;

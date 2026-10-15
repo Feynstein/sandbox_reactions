@@ -1,0 +1,16 @@
+==== 2026-10-15T13:55:09-04:00 watch_only · clean · a fresh scratch copy of the tree
+== 2026-10-15T13:55:09-04:00 watch_only · task M0-V7 · box laserax-ai :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.06 s
+files scanned: 22 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+1 passed, 0 failed (22 files)
+=== GO ===
+
+==== 2026-10-15T13:55:09-04:00 watch_only · plant stage-in-step · a fresh scratch copy of the tree
+planted stage-in-step: {python} -S -c "import pathlib;p=pathlib.Path('crates/sr-engine/src/step/mod.rs');p.write_text(p.read_text(encoding='utf-8')+chr(10)+'use sr_physics::observe::Stage;'+chr(10),encoding='utf-8')" -> exit 0
+== 2026-10-15T13:55:09-04:00 watch_only · task M0-V7 · box laserax-ai :: {python} tests/watch/check.py
+-- watch_only · exit=1 · 0.07 s
+files scanned: 22 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+crates/sr-engine/src/step/mod.rs:916: names `observe`
+crates/sr-engine/src/step/mod.rs:916: names `Stage`
+=== NO-GO: 2 name(s) a label or a calibration value in the step code ===
+

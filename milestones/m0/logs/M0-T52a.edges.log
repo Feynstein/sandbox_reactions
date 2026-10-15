@@ -1,0 +1,37 @@
+== 2026-10-15T12:12:06-04:00 edges · task M0-T52a · box laserax-ai :: bash tests/gpu.sh edges physics
+-- edges · exit=0 · 27.80 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 1.67s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test edges::a_new_world_starts_in_leave ... ok
+test edges::gpu_bounce_returns_the_pulse ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-BOUNCE gpu 256x64: 1417 steps to t = 200.1105, v at 0 2.000000e-3, at the end -1.999610e-3, 0.020 % from -v0; mass 1.5e-7 relative
+ok
+test edges::gpu_bounce_walls_are_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-WALLS gpu 128x64 bounce: 209 steps to t = 20.0311; against the twin (Σ, Σu, Σv, E) relative L1 1.53e-7 2.89e-7 1.04e-6 1.43e-7 ≤ 1e-4
+ok
+test edges::gpu_leave_books_what_crosses ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-LEAVE gpu 128x64: 384 steps to t = 40.0638, escaped mass 3545.3454 of 8960.0000 (39.6 %), loss − escaped 2.73e-8 of escaped; against the twin's escaped (Σ, Σu, Σv, E, H, He) 4.19e-8 3.57e-8 8.02e-8 1.09e-8 4.10e-8 2.43e-8; the least mass a face booked in a step 0e0
+ok
+test edges::gpu_set_edge_mode_lands_at_the_step_boundary ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-SWITCH gpu: bounce 64 then leave 64 — state bit for bit, escaped bit for bit (mass 4.5452) against a leave run from step 64
+ok
+test edges::twin_bounce_returns_the_pulse ... SR-EDGE-BOUNCE twin 256x4: 1417 steps to t = 200, v at 0 2.000000e-3 (v0 0.002), at 200 -2.000013e-3, 0.001 % from -v0; mass 2.2e-16 relative, escaped 0.0
+ok
+test edges::twin_leave_books_what_crosses ... SR-EDGE-LEAVE twin 128x64: 384 steps to t = 40, escaped mass 3540.1971 of 8960.0000 (39.5 %), loss − escaped 1.16e-15 of escaped, worst component 1.30e-15; by side [40.410683745030184, 1593.4087293297164, 83.63581938233126, 1822.7418222728545]; a face's mass fell 0 times
+SR-EDGE-SPECIES twin: Σ species escaped 3540.197066 for mass 3540.197055, the scene's |ΣX − 1| ≤ 3.0e-8
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 220 filtered out; finished in 25.79s
+
+

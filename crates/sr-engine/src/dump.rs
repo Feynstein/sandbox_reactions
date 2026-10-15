@@ -4,7 +4,7 @@
 //! A dump is the eight bytes `SRDUMP01`, a little-endian u32 header length, a UTF-8 JSON header, then §2.2's fourteen
 //! channels, each a little-endian f32 plane in §2.2's order, row-major — the state's canonical form ([`crate::state`]).
 //! The header: `version` (1), `width`, `height`, `step` (the steps run since the scene was written — the next step's
-//! index), `sim_time`, `channels` (§2.2's names, in order), `sinks` (`x`, `y`, `vx`, `vy`, `m`; none until P3's block),
+//! index), `sim_time`, `channels` (§2.2's names, in order), `sinks` (`x`, `y`, `vx`, `vy`, `m`; P3's sinks, none when the step runs no P3, M0-T52b),
 //! and `resume` (contract §0.5 [M0-T26]): the step's own records, which no cell holds and a resumed run needs to go on
 //! bit for bit (§1.3.4) — Δt_n and Δt_{n+1} (`dt`, `dt_next`), the latch's sim time since its last set (`latch_since`,
 //! its arming, §1.8.5), the active box's record (`box`: x0, y0, w, h, fft_w, fft_h, from_step, fits) and its indirect
@@ -128,6 +128,7 @@ impl Dump {
         let header: Value = serde_json::from_str(text).map_err(|e| format!("header: not JSON: {e}"))?;
         let (mut dump, flux) = parse_header(&header)?;
         dump.sim_time = exact_number(text, "sim_time").unwrap_or(dump.sim_time);
+        dump.sinks = exact_sinks(text).unwrap_or(dump.sinks);
 
         // §2.2's 14 planes, then F's 2 when the flag says so: a body the other flag would fit is the flag's refusal.
         let body = &bytes[12 + len..];
@@ -172,6 +173,26 @@ fn exact_number(text: &str, key: &str) -> Option<f64> {
     let rest = text[text.find(&quoted)? + quoted.len()..].trim_start().strip_prefix(':')?.trim_start();
     let end = rest.find(|c: char| !(c.is_ascii_digit() || "+-.eE".contains(c))).unwrap_or(rest.len());
     rest[..end].parse().ok().filter(|v: &f64| v.is_finite())
+}
+
+/// The header's sinks, each of its five numbers read as [`exact_number`] reads sim_time: a sink's mass is an f32 pair's
+/// sum (M0-T51), so its 17-digit f64 must come back bit for bit. The header holds no list inside a sink, so the list ends
+/// at the first `]`.
+fn exact_sinks(text: &str) -> Option<Vec<Sink>> {
+    let from = &text[text.find("\"sinks\"")?..];
+    let list = &from[from.find('[')? + 1..from.find(']')?];
+    list.split('}')
+        .filter(|object| object.contains('{'))
+        .map(|o| {
+            Some(Sink {
+                x: exact_number(o, "x")?,
+                y: exact_number(o, "y")?,
+                vx: exact_number(o, "vx")?,
+                vy: exact_number(o, "vy")?,
+                m: exact_number(o, "m")?,
+            })
+        })
+        .collect()
 }
 
 /// The header's object at `at`, holding exactly `keys`.
@@ -261,13 +282,15 @@ fn parse_header(v: &Value) -> Result<(Dump, bool), String> {
 pub fn dump_state(device: &wgpu::Device, queue: &wgpu::Queue, state: &State, step: &Step) -> Dump {
     let (index, sim_time, resume) = step.resume_records(device, queue);
     let flux = step.side_flux().map(|f| read_buffers(device, queue, "side.flux.readback", std::iter::once(f)));
-    Dump { world: state.world(), step: index, sim_time, sinks: Vec::new(), resume, planes: state.readback(device, queue), flux }
+    let sinks = step.read_sinks(device, queue).map(|r| r.sinks).unwrap_or_default();
+    Dump { world: state.world(), step: index, sim_time, sinks, resume, planes: state.readback(device, queue), flux }
 }
 
 /// §3.1 `load_dump(dump)`: writes the dump's cells into `state` and its records into `step`, whose next step is then
-/// the dump's `step`; its F, when it holds one, goes into the step's `side.flux` (§0.5 [M0-D33]). Call it before `step`
-/// records anything. Refused: another world than the state's, a step index past the GPU's u32 count, any sink (P3 holds
-/// none until its block), F without P5 to read it, P5 without F (its first step would push with F = 0).
+/// the dump's `step`; its sinks, when the step runs P3, go into P3's state (M0-T52b); its F, when it holds one, goes into
+/// the step's `side.flux` (§0.5 [M0-D33]). Call it before `step` records anything. Refused: another world than the state's,
+/// a step index past the GPU's u32 count, sinks into a step that runs no P3, F without P5 to read it, P5 without F (its
+/// first step would push with F = 0).
 pub fn load_dump(queue: &wgpu::Queue, state: &State, step: &Step, dump: &Dump) -> Result<(), String> {
     if dump.world != state.world() {
         let (d, s) = (dump.world, state.world());
@@ -276,8 +299,11 @@ pub fn load_dump(queue: &wgpu::Queue, state: &State, step: &Step, dump: &Dump) -
     if dump.step > u64::from(u32::MAX) {
         return Err(format!("dump step {}: past the GPU's u32 step count", dump.step));
     }
-    if !dump.sinks.is_empty() {
-        return Err(format!("dump holds {} sink(s): no sink state before P3's block", dump.sinks.len()));
+    if !dump.sinks.is_empty() && !step.runs_sinks() {
+        return Err(format!("dump holds {} sink(s), and this step runs no P3 to keep them", dump.sinks.len()));
+    }
+    if step.runs_sinks() {
+        step.set_sinks(queue, &dump.sinks)?;
     }
     let flux = match (&dump.flux, step.side_flux()) {
         (Some(f), Some(side)) if f.len() == FLUX_PLANES * dump.world.cells() => Some((f, side)),

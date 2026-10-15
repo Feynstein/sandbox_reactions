@@ -1,0 +1,6 @@
+== 2026-10-15T12:39:37-04:00 watch_only · task M0-T54 · box laserax-ai :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.12 s
+files scanned: 22 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 13 calibration keys)
+1 passed, 0 failed (22 files)
+=== GO ===
+

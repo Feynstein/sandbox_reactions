@@ -1,0 +1,48 @@
+M0-D44 start 2026-10-15T11:56:59-04:00 linux-pc
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 1 test
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+PROBE face sigma <= 0 at (31,30): c 2.760265e-1 faces [0.552053, 0.0, 0.548393, 0.0036599934] x-row 1.1160388e0 1e-8 y-col 1.089466e0 1e-8
+PROBE face sigma <= 0 at (34,33): c 2.6058593e-1 faces [0.0, 0.52117187, 0.03733918, 0.4838327] x-row 1e-8 1.0664485e0 y-col 3.7339173e-2 1.0514668e0
+PROBE cell (31,30) sigma 2.7602648735046387e-1
+PROBE cell (32,30) sigma 9.99999993922529e-9
+PROBE cell (33,33) sigma 9.99999993922529e-9
+PROBE cell (34,33) sigma 2.605859339237213e-1
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+PROBE P2+P4 from after-P3: Some(NonFinite { step: 0, x: 31, y: 30, channel: "sigma" })
+test sink::d44_probe ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 224 filtered out; finished in 0.92s
+
+error: unexpected argument 'sink::gpu_the_cloud_falls' found
+
+Usage: cargo test [OPTIONS] [TESTNAME] [-- [ARGS]...]
+
+For more information, try '--help'.
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.39s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 2 tests
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+PROBE face sigma <= 0 at (31,30): c 2.7603054e-1 faces [0.5520611, 0.0, 0.54839754, 0.00366354] x-row 1.1160421e0 1e-8 y-col 1.089468e0 1e-8
+PROBE face sigma <= 0 at (34,33): c 2.6058963e-1 faces [0.0, 0.52117926, 0.037339628, 0.48383963] x-row 1e-8 1.0664502e0 y-col 3.7339628e-2 1.05147e0
+PROBE cell (31,30) sigma 2.760305404663086e-1
+PROBE cell (32,30) sigma 9.99999993922529e-9
+PROBE cell (33,33) sigma 9.99999993922529e-9
+PROBE cell (34,33) sigma 2.605896294116974e-1
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+PROBE P2+P4 from after-P3: None
+test sink::d44_probe ... ok
+SR-SINK gpu fall: after 40 steps the sink holds 2014.1426 (2000 + 14.1426)
+test sink::gpu_the_cloud_falls_into_a_sink_with_mass_conserved_each_step ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 223 filtered out; finished in 13.50s
+
+M0-D44 end 2026-10-15T12:02:01-04:00: Verify 1 GO 48 passed; redarm sink RED; --changed GO 736 passed 30/30 scopes (linux-pc, RTX 5090)

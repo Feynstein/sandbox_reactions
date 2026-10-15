@@ -1,0 +1,4 @@
+M0-T51 2026-10-15T10:56:39-04:00 linux-pc: verify.py sink
+M0-T51 2026-10-15T10:56:51-04:00 linux-pc: verify.py --redarm sink
+M0-T51 2026-10-15T10:58:46-04:00 linux-pc: verify.py --redarm sink (after add_mass renormalised)
+M0-T51 2026-10-15T11:00:16-04:00 linux-pc: verify.py --changed (claim)

@@ -283,6 +283,77 @@
         }
       ]
     },
+    "sink": {
+      "desc": "G-SINK, sinks on the CPU twin (contract §1.4.3, §2.6, §2.9, §5.1, SM-E28, SM-E29; M0-T50): scenes/sink_cloud.json — a 40 × 40 square of hydrogen at Σ = 1 drifting at (0.3, −0.2) in a 64 × 64 world, the cold pressure off by `overrides` — with a sink of mass 2000 at its centre: accretion takes the 13 cells within r_acc = 2 (r_acc = max(2, 2GM/c_sb²), c_sb = 200), grid + sink mass and momentum constant to 1e-6 relative, no cell beyond r_acc touched and no Σ raised (no mass outward across r_acc), the gas's thermal energy booked `swallowed` (0.1 per mass), gas that is hot, fast or unbound in the sink's frame refused and bound again in a sink riding with it; the cloud falling in through P2 (gas field + the sink's softened pull, §1.4.3) and P4 for 40 steps holds grid + sink mass to 1e-6 each step; formation with all four criteria at one cell on synthetic bowls of φ (Σ ≥ Σ_BH, ∇·u < 0, φ no greater than at the 8 neighbours, ½|u|² + ε_th + φ < 0), each criterion its own refusal case (the bouncing core of SM-E28's warning among them), the densest forming first, ties the lowest y then x, one a step, none past 16; kick-drift-kick exact in a uniform g, g bilinear at the sink, two sinks' softened pull with total momentum kept, merging within the larger r_acc with mass and momentum summed, the sinks' potential and exact pull in grav::add_sinks; synthetic oracles beyond the cloud's mass and momentum are NOT PROVEN (synthetic); P3 on the GPU (M0-T51: Step::with_sinks, shaders/sinks.wgsl's sink_candidates over the box's tiles and sink_update in one workgroup, on the physics adapter) graded against the twin from the same f32 start and on the conservation itself — accretion in the cloud (13 cells, mass and momentum to 1e-6, swallowed to 1e-5 of the twin's, every cell beyond r_acc bit for bit with the sinkless step, a second run bit for bit), hot, fast and unbound gas refused and a riding sink taking it, two sinks' r_acc over one pair of cells taking each once (the first sink's), formation where all four criteria hold and each refused alone on 64 × 64 bowls with φ uploaded, the densest first, ties the lowest y then x, one a step, none past 16, the first sink's potential taking a shallow second well's minimum, kick-drift-kick in P2's gas field with the softened pull and merging step by step against the twin's advance and merge; the 40-step fall through P2 + P3 + P4 holding grid + sink mass to 1e-6 each step (M0-D44: P4's f32 face Σ held between the cell and its neighbour, no longer 0 beside the hole the sink digs); P2's `grav_sinks` (M0-T52a): a test mass's g near a sink against −GM d/(r² + r_acc²)^{3/2} and φ against the twin's with the sinks' potential, on a lone 2 × 2 test mass with one sink and with two (r_acc 2 and 3) and on the cloud, the gas's own g bit for bit the sinkless step's (P3 reads the gas's g alone); a formation inside a frame stopping it with the slow-down on — one step run, the state and the sink a one-step run's — all steps with it off, and sinks accreting through a frame never setting the latch; sink-momentum plants the twin and the shader alike, sink-phi-skip the sinks' potential left out of φ (g only), sink-latch-off the formation's latch bit never set",
+      "cmd": "bash tests/gpu.sh sink physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 27,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "scenes/sink_cloud.json",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/sink-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "sink-momentum",
+          "patch": "tests/plants/sink-momentum.patch"
+        },
+        {
+          "id": "sink-phi-skip",
+          "patch": "tests/plants/sink-phi-skip.patch"
+        },
+        {
+          "id": "sink-latch-off",
+          "patch": "tests/plants/sink-latch-off.patch"
+        }
+      ]
+    },
+    "nu_heat": {
+      "desc": "neutrino heating on the CPU twin (contract §2.5.4, §1.6.4, §2.7's f_dep, §2.9, R8, R13; M0-T53): sr_physics::reference::nuheat's P7 — D(x) = Σ(x)(S_ν ∗ K_ν)(x) with K_ν(r) = 1/(r² + 1) through the twin's FFT convolution, D = 0 where X_n ≥ 0.5, q(x) = f_dep(ΣS_ν)D(x)/ΣD — no adapter touched; on a 24 × 20 world with a 4 × 4 neutron star: Σq = f_dep ΣS_ν within 1e-9 at f_dep 0.05, 0.1 and 0.01 (0 at 0), `apply` adding exactly ΣqΔt to E and booking it; every cell within 1e-9 of the contract's direct double sum (no FFT); exactly 0 where X_n ≥ 0.5 (1 and 0.5), the share at 0.4999; nearer and denser receiving more (the kernel's ratio (64 + 1)/(9 + 1) between 3 and 8 cells, twice the Σ twice the share); a lone gas cell taking exactly f_dep of the emitted (the energy case: normalised over ΣD, never per cell); nothing when ΣS_ν = 0 (E bit for bit, nothing booked) and nothing when every cell is neutron star (ΣD = 0); f_dep above 0.1 refused by the registry while S2 is off (§1.6.4). P7 on the GPU (M0-T54: Step::with_neutrino_heating, shaders/nuheat.wgsl appended to fft.wgsl — nu_tiles and nu_gate sum S_ν in a fixed order and size the Chained rest, conv_rows / nu_columns / conv_rows_inverse the convolution on P2's kernel quarters, nu_deposit, nu_share, nu_apply, nu_close; on the physics adapter, the cold pressure off) on the 64 × 64 world with a 4 × 4 star in a 40 × 40 square of gas, from the same f32 start: q per cell as booked within 1e-4 of the twin's top over the fit box and the whole world, a second run bit for bit, nothing in the star or the vacuum; Σ q Δt = f_dep ΣS_ν Δt within 1e-5 at f_dep 0.05, 0.1 and 0.01 (measured 4e-8), E raised by what was booked to 2 ulp, f_dep 0 leaving the state a P7-less step's bit for bit; nothing inside the star (X_n 1 and 0.5 exactly, bit for bit) and the share at 0.4999; the kernel's ratio 6.5 and Σ twice twice within 1e-3; a lone gas cell 50 cells away taking f_dep of the emitted to 1e-5; no dispatch when nothing is emitted — the chain's nu_share never runs (the report's `ran`), the state and booking a P7-less step's bit for bit, the gate not sticky, and P7 costing under half the pass that convolves in the timing report (512 × 512, where the device has timestamp-query); an all-star world (ΣD = 0) depositing nothing, finite; a frame the latch stops running P7 on the steps it ran and no later one (the Chained sizes, §1.8.5). nuheat-no-cap applies f_dep twice in q on the twin; nuheat-gpu-no-cap the same in nu_share, nuheat-gpu-always-dispatch opens the chain when nothing is emitted. Synthetic worlds: the formula is proven, a collapsed star's heating is NOT PROVEN (synthetic)",
+      "cmd": "bash tests/gpu.sh nuheat physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 15,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/nuheat-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "nuheat-no-cap",
+          "patch": "tests/plants/nuheat-no-cap.patch"
+        },
+        {
+          "id": "nuheat-gpu-no-cap",
+          "patch": "tests/plants/nuheat-gpu-no-cap.patch"
+        },
+        {
+          "id": "nuheat-gpu-always-dispatch",
+          "patch": "tests/plants/nuheat-gpu-always-dispatch.patch"
+        }
+      ]
+    },
     "fft_twin": {
       "desc": "the CPU twin's FFT and convolution, no GPU (contract §1.3.3, §1.4.2, §2.5.4): the radix-2 f64 FFT against a direct DFT on sizes 1…128 (1e-12 relative) and a delta and a plane wave exactly, inverse(forward) = identity at 32…2048 and in 2D, the 2D transform against the direct 2D DFT, Parseval at 16 × 8 and at 2048, the zero-padded convolution against direct summation on a 48 × 40 box with a kernel asymmetric in both axes (1e-10 relative, the box's edge cells checked rim by rim), mass in the four corners not wrapping, a single source reproducing the shifted kernel, the kernel's transform cached per padded size (sampled once for 48 × 40 and 50 × 41), padded sizes 32…2048 by the smallest power of two ≥ 2 × the axis and the refusals (M0-T28)",
       "cmd": "bash tests/cpu.sh sr-physics reference::fft",
@@ -1013,11 +1084,11 @@
       ]
     },
     "dump": {
-      "desc": "state dumps (contract §2.12.3 with §0.5 [M0-T26]'s resume key, §3.1's load_dump and dump_state, §3.3's --dump-every and --load-dump, §1.3.4): the bytes read by hand — SRDUMP01, the u32 header length, the header's eight keys (version, width, height, step, sim_time, channels in §2.2's order, sinks, resume), 14 little-endian f32 planes row-major, Σ, mom_x and mom_y found at §2.2's indices by the start's values — then read back to the same dump and the same bytes, through a file, and load_dump → dump_state bit for bit; 2 × 100 steps through a dump (frames under the latch, a fire on the dump's last step, a second flag 2 Δt later) equal 200 straight steps — the state, the Δt record, the box and every frame report — and the cells alone visibly do not; headless 100 + --load-dump 100 writes the 200-step run's s_150 and s_200 byte for byte, --dump-every 50 at step indices from the scene, the final dump always, a --world other than the dump's and --dump-every without --out exit 4; a dump cut anywhere, one byte too long, a wrong magic, an unknown or missing key, another version, world or channel list refused, naming it, and through headless exit 4 with no summary (M0-T26); one sim time per step count — 40 steps as 1 × 40, 2 × 20, 40 × 1 frames and bare give byte-identical dumps, the reports' sim time the dump's, within 1e-9 relative of the f64 sum of each step's f32 Δt in order (the f32 sum visibly not); an empty world's steps (Δt the largest f32) add none; headless --steps 100 writes summary.json's and the final dump's sim_time equal, its in-process twin's, within the bound (M0-D21); with P5 (preset:sun) F's 2 planes follow the channels, `resume.flux` true, F non-zero at step 100 and the final dump's F side.flux's bit for bit, the resume byte for byte through it, a flag the planes disagree with, F into a step without P5 and P5 without F refused (§0.5 [M0-D33]); scenes/sun_disk.json 200 steps with every submission recording 8 of P5's slots, bare and in frames of up to 50 (steps carried over submissions, frames ending held), dump the bytes of the run at the engine's own choice (§0.5 [M0-TJ4] (6), M0-T121); on the physics adapter (R12, R15)",
+      "desc": "state dumps (contract §2.12.3 with §0.5 [M0-T26]'s resume key, §3.1's load_dump and dump_state, §3.3's --dump-every and --load-dump, §1.3.4): the bytes read by hand — SRDUMP01, the u32 header length, the header's eight keys (version, width, height, step, sim_time, channels in §2.2's order, sinks, resume), 14 little-endian f32 planes row-major, Σ, mom_x and mom_y found at §2.2's indices by the start's values — then read back to the same dump and the same bytes, through a file, and load_dump → dump_state bit for bit; 2 × 100 steps through a dump (frames under the latch, a fire on the dump's last step, a second flag 2 Δt later) equal 200 straight steps — the state, the Δt record, the box and every frame report — and the cells alone visibly do not; headless 100 + --load-dump 100 writes the 200-step run's s_150 and s_200 byte for byte, --dump-every 50 at step indices from the scene, the final dump always, a --world other than the dump's and --dump-every without --out exit 4; a dump cut anywhere, one byte too long, a wrong magic, an unknown or missing key, another version, world or channel list refused, naming it, and through headless exit 4 with no summary (M0-T26); one sim time per step count — 40 steps as 1 × 40, 2 × 20, 40 × 1 frames and bare give byte-identical dumps, the reports' sim time the dump's, within 1e-9 relative of the f64 sum of each step's f32 Δt in order (the f32 sum visibly not); an empty world's steps (Δt the largest f32) add none; headless --steps 100 writes summary.json's and the final dump's sim_time equal, its in-process twin's, within the bound (M0-D21); with P5 (preset:sun) F's 2 planes follow the channels, `resume.flux` true, F non-zero at step 100 and the final dump's F side.flux's bit for bit, the resume byte for byte through it, a flag the planes disagree with, F into a step without P5 and P5 without F refused (§0.5 [M0-D33]); scenes/sun_disk.json 200 steps with every submission recording 8 of P5's slots, bare and in frames of up to 50 (steps carried over submissions, frames ending held), dump the bytes of the run at the engine's own choice (§0.5 [M0-TJ4] (6), M0-T121); two sinks' state bit for bit through the header and load_dump (M0-T52b); on the physics adapter (R12, R15)",
       "cmd": "bash tests/gpu.sh dump physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 9,
+      "expected": 10,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -1045,6 +1116,10 @@
         {
           "id": "dump-flux-zero",
           "patch": "tests/plants/dump-flux-zero.patch"
+        },
+        {
+          "id": "dump-sinks-drop",
+          "patch": "tests/plants/dump-sinks-drop.patch"
         }
       ]
     },

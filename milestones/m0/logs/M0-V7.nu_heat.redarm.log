@@ -1,0 +1,214 @@
+==== 2026-10-15T12:57:24-04:00 nu_heat · clean: proven by M0-T54 2026-10-15T12:38:20-04:00 (fingerprint b000a5ee28cf)
+==== 2026-10-15T12:56:10-04:00 nu_heat · plant nuheat-no-cap · a fresh scratch copy of the tree
+planted nuheat-no-cap: tests/plants/nuheat-no-cap.patch -> crates/sr-physics/src/reference/nuheat.rs
+== 2026-10-15T12:56:10-04:00 nu_heat · task M0-V7 · box laserax-ai :: bash tests/gpu.sh nuheat physics
+-- nu_heat · exit=101 · 20.86 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-rfbnwb2n/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-rfbnwb2n/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 14.76s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 15 tests
+test nuheat::a_lone_gas_cell_takes_exactly_f_dep ... 
+thread 'nuheat::a_lone_gas_cell_takes_exactly_f_dep' (2715506) panicked at crates/sr-engine/tests/gpu/nuheat.rs:192:5:
+the lone cell got 2.2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test nuheat::deposited_is_f_dep_of_emitted ... 
+thread 'nuheat::deposited_is_f_dep_of_emitted' (2715507) panicked at crates/sr-engine/tests/gpu/nuheat.rs:103:9:
+f_dep 0.05: deposited 8.19999999999999 against 4.1000000000000005
+FAILED
+test nuheat::f_dep_above_the_bound_is_refused ... ok
+test nuheat::gpu_a_lone_gas_cell_takes_exactly_f_dep ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT the lone cell took 1.100000 of 1.100000
+ok
+test nuheat::gpu_a_stopped_frame_runs_no_p7_after_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_an_all_star_world_deposits_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_deposited_is_f_dep_of_emitted_and_e_rises_by_what_was_booked ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.05: booked 5.586143e-1 against 5.586143e-1, off by 3.88e-8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.1: booked 1.117229e0 against 1.117229e0, off by 3.88e-8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.01: booked 1.117229e-1 against 1.117229e-1, off by 3.72e-8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_nearer_and_denser_receive_more ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT nearer/farther 6.5000 (6.5), denser/thinner 2.0000 (2)
+ok
+test nuheat::gpu_no_dispatch_when_nothing_is_emitted ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT P7 costs 0.0153 ms with nothing emitted, 0.0860 ms with a star (512 × 512)
+ok
+test nuheat::gpu_none_inside_the_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_q_matches_the_twin_cell_by_cell_over_the_box_and_the_world_and_a_second_run_is_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT q against the twin (Fit): worst cell off by 5.000e-1 of the top 1.414e-1
+
+thread 'nuheat::gpu_q_matches_the_twin_cell_by_cell_over_the_box_and_the_world_and_a_second_run_is_bit_for_bit' (2715930) panicked at crates/sr-engine/tests/gpu/nuheat.rs:393:9:
+Fit: worst cell off by 7.068129457978617e-2 of 1.4136259105064067e-1
+FAILED
+test nuheat::matches_the_direct_sum ... 
+thread 'nuheat::matches_the_direct_sum' (2715940) panicked at crates/sr-engine/tests/gpu/nuheat.rs:130:5:
+worst cell off by 9.399713770033653e-2 of 1.8799427540067312e-1
+FAILED
+test nuheat::nearer_and_denser_receive_more ... 
+thread 'nuheat::nearer_and_denser_receive_more' (2715941) panicked at crates/sr-engine/tests/gpu/nuheat.rs:174:5:
+assertion failed: rel(pass.q.iter().sum::<f64>(), 0.05 * 7.0) < 1e-9
+FAILED
+test nuheat::none_inside_the_neutron_star ... ok
+test nuheat::nothing_when_nothing_is_emitted_or_taken ... ok
+
+failures:
+
+failures:
+    nuheat::a_lone_gas_cell_takes_exactly_f_dep
+    nuheat::deposited_is_f_dep_of_emitted
+    nuheat::gpu_q_matches_the_twin_cell_by_cell_over_the_box_and_the_world_and_a_second_run_is_bit_for_bit
+    nuheat::matches_the_direct_sum
+    nuheat::nearer_and_denser_receive_more
+
+test result: FAILED. 10 passed; 5 failed; 0 ignored; 0 measured; 228 filtered out; finished in 5.91s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-15T12:56:10-04:00 nu_heat · plant nuheat-gpu-no-cap · a fresh scratch copy of the tree
+planted nuheat-gpu-no-cap: tests/plants/nuheat-gpu-no-cap.patch -> crates/sr-engine/shaders/nuheat.wgsl
+== 2026-10-15T12:56:10-04:00 nu_heat · task M0-V7 · box laserax-ai :: bash tests/gpu.sh nuheat physics
+-- nu_heat · exit=101 · 46.64 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-rfbnwb2n/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-rfbnwb2n/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 20.63s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 15 tests
+test nuheat::a_lone_gas_cell_takes_exactly_f_dep ... ok
+test nuheat::deposited_is_f_dep_of_emitted ... ok
+test nuheat::f_dep_above_the_bound_is_refused ... ok
+test nuheat::gpu_a_lone_gas_cell_takes_exactly_f_dep ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT the lone cell took 2.200000 of 1.100000
+
+thread 'nuheat::gpu_a_lone_gas_cell_takes_exactly_f_dep' (2717128) panicked at crates/sr-engine/tests/gpu/nuheat.rs:518:5:
+the lone cell got 2.200000273954503
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test nuheat::gpu_a_stopped_frame_runs_no_p7_after_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_an_all_star_world_deposits_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_deposited_is_f_dep_of_emitted_and_e_rises_by_what_was_booked ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.05: booked 1.117229e0 against 5.586143e-1, off by 1.00e0
+
+thread 'nuheat::gpu_deposited_is_f_dep_of_emitted_and_e_rises_by_what_was_booked' (2717279) panicked at crates/sr-engine/tests/gpu/nuheat.rs:424:9:
+f_dep 0.05: deposited 1.1172286914406868 against 0.5586143240332604
+FAILED
+test nuheat::gpu_nearer_and_denser_receive_more ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT nearer/farther 6.5000 (6.5), denser/thinner 2.0000 (2)
+
+thread 'nuheat::gpu_nearer_and_denser_receive_more' (2717287) panicked at crates/sr-engine/tests/gpu/nuheat.rs:496:5:
+assertion failed: rel(q.iter().sum::<f64>(), 0.05 * 7.0) < 1e-5
+FAILED
+test nuheat::gpu_no_dispatch_when_nothing_is_emitted ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT P7 costs 0.0154 ms with nothing emitted, 0.0851 ms with a star (512 × 512)
+ok
+test nuheat::gpu_none_inside_the_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_q_matches_the_twin_cell_by_cell_over_the_box_and_the_world_and_a_second_run_is_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT q against the twin (Fit): worst cell off by 1.000e0 of the top 7.068e-2
+
+thread 'nuheat::gpu_q_matches_the_twin_cell_by_cell_over_the_box_and_the_world_and_a_second_run_is_bit_for_bit' (2717427) panicked at crates/sr-engine/tests/gpu/nuheat.rs:393:9:
+Fit: worst cell off by 7.068129741638866e-2 of 7.068129552532033e-2
+FAILED
+test nuheat::matches_the_direct_sum ... ok
+test nuheat::nearer_and_denser_receive_more ... ok
+test nuheat::none_inside_the_neutron_star ... ok
+test nuheat::nothing_when_nothing_is_emitted_or_taken ... ok
+
+failures:
+
+failures:
+    nuheat::gpu_a_lone_gas_cell_takes_exactly_f_dep
+    nuheat::gpu_deposited_is_f_dep_of_emitted_and_e_rises_by_what_was_booked
+    nuheat::gpu_nearer_and_denser_receive_more
+    nuheat::gpu_q_matches_the_twin_cell_by_cell_over_the_box_and_the_world_and_a_second_run_is_bit_for_bit
+
+test result: FAILED. 11 passed; 4 failed; 0 ignored; 0 measured; 228 filtered out; finished in 4.58s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-15T12:56:10-04:00 nu_heat · plant nuheat-gpu-always-dispatch · a fresh scratch copy of the tree
+planted nuheat-gpu-always-dispatch: tests/plants/nuheat-gpu-always-dispatch.patch -> crates/sr-engine/shaders/nuheat.wgsl
+== 2026-10-15T12:56:10-04:00 nu_heat · task M0-V7 · box laserax-ai :: bash tests/gpu.sh nuheat physics
+-- nu_heat · exit=101 · 73.48 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-rfbnwb2n/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-rfbnwb2n/arm3/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 20.41s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 15 tests
+test nuheat::a_lone_gas_cell_takes_exactly_f_dep ... ok
+test nuheat::deposited_is_f_dep_of_emitted ... ok
+test nuheat::f_dep_above_the_bound_is_refused ... ok
+test nuheat::gpu_a_lone_gas_cell_takes_exactly_f_dep ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT the lone cell took 1.100000 of 1.100000
+ok
+test nuheat::gpu_a_stopped_frame_runs_no_p7_after_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_an_all_star_world_deposits_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_deposited_is_f_dep_of_emitted_and_e_rises_by_what_was_booked ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.05: booked 5.586143e-1 against 5.586143e-1, off by 3.88e-8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.1: booked 1.117229e0 against 1.117229e0, off by 3.88e-8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.01: booked 1.117229e-1 against 1.117229e-1, off by 3.72e-8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_nearer_and_denser_receive_more ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT nearer/farther 6.5000 (6.5), denser/thinner 2.0000 (2)
+ok
+test nuheat::gpu_no_dispatch_when_nothing_is_emitted ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'nuheat::gpu_no_dispatch_when_nothing_is_emitted' (2718866) panicked at crates/sr-engine/tests/gpu/nuheat.rs:534:5:
+assertion `left == right` failed: NuHeatReport { steps: 3, opened: true, ran: true, emitted: 0.0, total: 0.0, scale: 0.0 }
+  left: (3, true, true)
+ right: (3, false, false)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test nuheat::gpu_none_inside_the_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_q_matches_the_twin_cell_by_cell_over_the_box_and_the_world_and_a_second_run_is_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT q against the twin (Fit): worst cell off by 1.114e-7 of the top 7.068e-2
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT q against the twin (WholeWorld): worst cell off by 1.114e-7 of the top 7.068e-2
+ok
+test nuheat::matches_the_direct_sum ... ok
+test nuheat::nearer_and_denser_receive_more ... ok
+test nuheat::none_inside_the_neutron_star ... ok
+test nuheat::nothing_when_nothing_is_emitted_or_taken ... ok
+
+failures:
+
+failures:
+    nuheat::gpu_no_dispatch_when_nothing_is_emitted
+
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 228 filtered out; finished in 6.15s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

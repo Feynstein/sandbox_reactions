@@ -14,7 +14,7 @@
 //! slots — bare, and in frames under the latch — dump the bytes of the run at the engine's own choice.
 
 use super::device;
-use sr_engine::dump::{dump_state, load_dump, Dump, Resume};
+use sr_engine::dump::{dump_state, load_dump, Dump, Resume, Sink};
 use sr_engine::gpu::Gpu;
 use sr_engine::scene::{EdgeMode, Scene, TestSettings};
 use sr_engine::state::{Booking, SideFields, State, WorldConfig, N_CHANNELS};
@@ -23,6 +23,7 @@ use sr_engine::step::heat::{HeatSetup, MIN_ROUNDS};
 use sr_engine::step::react::ReactSetup;
 use sr_engine::step::dt::DtReport;
 use sr_engine::step::latch::{FramePlan, FrameReport};
+use sr_engine::step::sinks::SinkSetup;
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::registry::{Elements, Physics, Reactions};
 
@@ -599,4 +600,66 @@ fn sun_disk_200_steps_carried_over_submissions_of_8_rounds_dump_the_engines_own_
     assert!(held > 0, "no frame ended with a step held");
     assert!(got == want, "the bare run at 8 rounds a submission: its dump's bytes differ from the engine's own choice");
     assert!(in_frames == want, "the frames at 8 rounds a submission: their dump's bytes differ from the engine's own choice");
+}
+
+/// A world of [`mixed_start`]'s gas with P3's sinks and nothing else on (M0-T52b): the step P3 runs, its sinks set by the
+/// test.
+fn sinking(gpu: &Gpu, c: &Constants, (world, planes): (WorldConfig, Vec<f32>)) -> Run {
+    let state = State::new(&gpu.device, world).unwrap();
+    state.upload(&gpu.queue, &planes).unwrap();
+    let booking = Booking::new(&gpu.device, world).unwrap();
+    let eos = EosGpu::new(&gpu.device, &c.physics, &c.elements);
+    let side = SideFields::new(&gpu.device, world).unwrap();
+    let passes = Passes { mode: BoxMode::Fit, gravity: None, hydro: None };
+    let step = Step::with_sinks(&gpu.device, &state, &booking, &eos, &c.physics, &passes, None, None, Some(&SinkSetup { side: &side })).unwrap();
+    Run { state, step }
+}
+
+/// Each sink's five numbers as bits: the comparison is of the values themselves, not of their printing.
+fn sink_bits(sinks: &[Sink]) -> Vec<[u64; 5]> {
+    sinks.iter().map(|s| [s.x, s.y, s.vx, s.vy, s.m].map(f64::to_bits)).collect()
+}
+
+/// M0-T52b — the sinks in the dump (contract §2.12.3's `sinks`, §3.1's `load_dump`): two sinks, one in the gas and one in
+/// the vacuum, after steps that move them, dump with their state bit for bit: the header lists both, the file reads back
+/// to the same dump, and a fresh step loaded from it holds the sinks the run held and dumps the same bytes again. A dump
+/// that drops the sinks fails the first comparison.
+#[test]
+fn a_dump_carries_two_sinks_bit_for_bit_through_the_file_and_the_load() {
+    let gpu = device();
+    let c = constants();
+    let (world, planes) = mixed_start();
+    let run = sinking(&gpu, &c, (world, planes));
+    run.step.set_sinks(&gpu.queue, &[
+        Sink { x: 45.5, y: 25.5, vx: 0.125, vy: -0.0625, m: 2.1 },
+        Sink { x: 100.25, y: 40.75, vx: 0.0, vy: 0.5, m: 1.75 },
+    ]).unwrap();
+    run.step.run(&gpu.device, &gpu.queue, 3);
+    let before = run.step.read_sinks(&gpu.device, &gpu.queue).unwrap().sinks;
+    assert_eq!(before.len(), 2, "two sinks after 3 steps: {before:?}");
+
+    let dump = dump_state(&gpu.device, &gpu.queue, &run.state, &run.step);
+    assert_eq!(sink_bits(&dump.sinks), sink_bits(&before), "dump_state reads the sinks the step holds");
+    let bytes = dump.to_bytes();
+    let (header, _) = split(&bytes);
+    assert_eq!(header["sinks"].as_array().map(Vec::len), Some(2), "the header lists both sinks: {}", header["sinks"]);
+
+    // Through the file and back: the same dump, the same bytes, the sinks bit for bit.
+    let read = Dump::from_bytes(&bytes).expect("its own dump is read");
+    assert_eq!(sink_bits(&read.sinks), sink_bits(&before), "the header's sinks read back bit for bit");
+    assert_eq!(read, dump);
+    assert_eq!(read.to_bytes(), bytes);
+    let dir = temp("sinks");
+    let path = dir.join("s_3.bin");
+    dump.write(&path).unwrap();
+    assert_eq!(Dump::read(&path).unwrap().to_bytes(), bytes);
+    let _ = std::fs::remove_dir_all(&dir);
+
+    // Loaded into a fresh step, the sinks are the run's again, and dumped again: the same bytes.
+    let fresh = sinking(&gpu, &c, (world, vec![0.0; N_CHANNELS * world.cells()]));
+    load_dump(&gpu.queue, &fresh.state, &fresh.step, &read).unwrap();
+    let restored = fresh.step.read_sinks(&gpu.device, &gpu.queue).unwrap().sinks;
+    assert_eq!(sink_bits(&restored), sink_bits(&before), "load_dump restores the sinks");
+    let again = dump_state(&gpu.device, &gpu.queue, &fresh.state, &fresh.step);
+    assert_eq!(again.to_bytes(), bytes, "load_dump then dump_state");
 }

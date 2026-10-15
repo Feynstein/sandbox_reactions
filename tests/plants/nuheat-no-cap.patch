@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/nuheat.rs
++++ b/crates/sr-physics/src/reference/nuheat.rs
+@@ -73,7 +73,7 @@ impl NuHeat {
+         let d: Vec<f64> = (0..n).map(|i| if x_n[i] >= X_N_STAR { 0.0 } else { (sigma[i] * reach[i]).max(0.0) }).collect();
+         let total: f64 = d.iter().sum();
+         if total > 0.0 {
+-            let power = self.f_dep * emitted / total;
++            let power = (self.f_dep + self.f_dep) * emitted / total;
+             for (out, d) in q.iter_mut().zip(&d) {
+                 *out = power * d;
+             }

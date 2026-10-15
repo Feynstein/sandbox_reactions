@@ -1,0 +1,59 @@
+== M0-V7 log opened 2026-10-15T12:52:36-04:00 on laserax-ai
+Linux laserax-ai 7.0.0-38-generic #38~24.04.4-Ubuntu SMP PREEMPT_DYNAMIC Mon Sep 14 16:37:11 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+32
+ 12:52:36 up 1 day, 21:57,  2 users,  load average: 50.06, 33.47, 26.38
+NVIDIA GeForce RTX 5090, 0 %, 11157 MiB, 32607 MiB
+Quadro RTX 4000, 0 %, 1809 MiB, 8192 MiB
+eaa2845 M0-D43 done
+ab24993 M0-D38 done
+8d97fb6 M0-T122 blocked: P5 0.6189 ms a step on the Quadro (idle), over contract (7)'s 0.5 ms
+eaa28454aab2f6590ac07a3ea545f31d1a66c1de
+== 2026-10-15T13:00:28-04:00 F1 probe: headless, the runner's passes (P3, P7)
+-- sink_cloud
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=0.607991 until=none
+per_pass_ms keys: ['P0 edits', 'P1 dt', 'P2 gravity', 'P4 hydro', 'P8 floors', 'P9 reductions']
+step_ms_mean 0.0919728
+-- sun_disk
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=0.565465 until=none
+per_pass_ms keys: ['P0 edits', 'P1 dt', 'P2 gravity', 'P4 hydro', 'P5 heat', 'P6 reactions', 'P8 floors', 'P9 reductions']
+step_ms_mean 0.7553472
+== 2026-10-15T13:05:03-04:00 probes (scratch copy /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/d96e8775-c39e-43d2-8928-59e4cb4664dc/scratchpad/v7/probe, sink.rs + 5 v7_probe cases; RTX 5090)
+test sink::v7_probe_action_reaction ... V7-PROBE action-reaction d    1: on the sink -1.51275e2, on the gas +8.94427e0, net -1.4233e2 = 94.1 % of the pull on the sink
+V7-PROBE action-reaction d    2: on the sink -3.33333e1, on the gas +8.83883e0, net -2.4494e1 = 73.5 % of the pull on the sink
+V7-PROBE action-reaction d    3: on the sink -1.25000e1, on the gas +6.40039e0, net -6.0996e0 = 48.8 % of the pull on the sink
+V7-PROBE action-reaction d    4: on the sink -6.66667e0, on the gas +4.47214e0, net -2.1945e0 = 32.9 % of the pull on the sink
+V7-PROBE action-reaction d    6: on the sink -2.85714e0, on the gas +2.37171e0, net -4.8543e-1 = 17.0 % of the pull on the sink
+V7-PROBE action-reaction d    8: on the sink -1.58730e0, on the gas +1.42668e0, net -1.6062e-1 = 10.1 % of the pull on the sink
+V7-PROBE action-reaction d   16: on the sink -3.92157e-1, on the gas +3.81645e-1, net -1.0512e-2 = 2.7 % of the pull on the sink
+V7-PROBE action-reaction d   32: on the sink -9.77517e-2, on the gas +9.70868e-2, net -6.6488e-4 = 0.7 % of the pull on the sink
+V7-PROBE gpu fall, centred (32.5, 32.5): worst |Δp| over 40 steps 7.5898e1 = 1.316e-1 of |p0| 576.89; sink [Sink { x: 32.5000114440918, y: 32.499942779541016, vx: -0.001460937550291419, vy: -0.0026897212956100702, m: 2106.95849609375 }]
+V7-PROBE gpu fall, off-centre (24.5, 30.5): worst |Δp| over 40 steps 3.9016e2 = 6.763e-1 of |p0| 576.89; sink [Sink { x: 24.558853149414063, y: 30.500085830688477, vx: 0.27997541427612305, vy: -0.02096378430724144, m: 2113.1806640625 }]
+V7-PROBE box inside the box: box x0 0 y0 0 w 24 h 24; sink at (20.5, 20.5); after one step (Δt 0.13087) GPU v (-4.381676e-2, -4.381667e-2), twin v (-4.381673e-2, -4.381673e-2)
+V7-PROBE box outside the box: box x0 0 y0 0 w 24 h 24; sink at (100.5, 100.5); after one step (Δt 0.13087) GPU v (+0.000000e0, +0.000000e0), twin v (-3.782706e-4, -3.782706e-4)
+test sink::v7_probe_twin_fall_momentum ... V7-PROBE twin fall, no sink: after 40 steps |Δp| 2.2628e0, worst 2.2628e0 — 3.922e-3 of |p0| 576.89, 3.922e-3 of Σm|u| 576.89; sinks []
+V7-PROBE twin fall, centred (32.5, 32.5): after 40 steps |Δp| 7.7523e1, worst 8.8669e1 — 1.537e-1 of |p0| 576.89, 1.537e-1 of Σm|u| 576.89; sinks [Sink { x: 32.4999733397504, y: 32.499975211328376, vx: -0.006378477659823584, vy: 0.00152421990889346, m: 2109.943754352484 }]
+V7-PROBE twin fall, off-centre (24.5, 30.5): after 40 steps |Δp| 3.9035e2, worst 3.9035e2 — 6.766e-1 of |p0| 576.89, 6.766e-1 of Σm|u| 576.89; sinks [Sink { x: 24.55887432125633, y: 30.500085234038778, vx: 0.2800117887247774, vy: -0.02102739662274263, m: 2113.2174130344956 }]
+test sink::v7_probe_twin_forms_on_a_standing_sink ... V7-PROBE re-formation: Report { formed: Some((8, 8)), accreted: 1199.99999988, merged: 1 }; sinks after [Sink { x: 8.5, y: 8.5, vx: 0.0, vy: 0.0, m: 12199.99999987 }]
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 243 filtered out; finished in 2.82s
+exit 0
+== 2026-10-15T13:08:31-04:00 probe (6): the no-sink control
+test sink::v7_probe_no_sink_momentum_gravity_on_and_off ... V7-PROBE twin, no sink, gravity true: 40 steps (0.7310 t.u.), worst |Δp| 2.2628e0 = 3.922e-3 of |p0| 576.89
+V7-PROBE gpu, no sink, gravity true: 40 steps, worst |Δp| 2.2490e0 = 3.898e-3 of |p0|
+V7-PROBE twin, no sink, gravity false: 40 steps (5.5840 t.u.), worst |Δp| 6.2286e-4 = 1.080e-6 of |p0| 576.89
+V7-PROBE gpu, no sink, gravity false: 40 steps, worst |Δp| 6.0687e-4 = 1.052e-6 of |p0|
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 248 filtered out; finished in 3.89s
+exit 0
+== 2026-10-15T13:09:58-04:00 probe (7): the sink pair
+test sink::v7_probe_twin_sink_pair_action_reaction ... V7-PROBE sink pair d    6 (r_acc 2 and 5): on the light +5.03752e5, on the heavy -9.48683e5, net -4.4493e5 = 46.9 % of the larger
+V7-PROBE sink pair d    8 (r_acc 2 and 5): on the light +3.81123e5, on the heavy -5.70672e5, net -1.8955e5 = 33.2 % of the larger
+V7-PROBE sink pair d   12 (r_acc 2 and 5): on the light +2.18480e5, on the heavy -2.66593e5, net -4.8113e4 = 18.0 % of the larger
+V7-PROBE sink pair d   20 (r_acc 2 and 5): on the light +9.13075e4, on the heavy -9.85185e4, net -7.2110e3 = 7.3 % of the larger
+V7-PROBE sink pair d   40 (r_acc 2 and 5): on the light +2.44253e4, on the heavy -2.49065e4, net -4.8124e2 = 1.9 % of the larger
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 249 filtered out; finished in 0.00s
+exit 0
+== 2026-10-15T13:27:52-04:00 M0-T55's greps re-read
+3
+2
+1

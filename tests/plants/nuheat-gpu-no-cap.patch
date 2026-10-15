@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/nuheat.wgsl
++++ b/crates/sr-engine/shaders/nuheat.wgsl
+@@ -214,7 +214,7 @@
+     let total = tiles_sum(np.tiles, tiles_across() * ((abox.h + 7u) / 8u), lid);
+     if (lid == 0u) {
+         st.total = total;
+-        st.scale = select(0.0, np.f_dep * st.emitted / total, total > 0.0);
++        st.scale = select(0.0, (np.f_dep + np.f_dep) * st.emitted / total, total > 0.0);
+         st.share_stamp = st.steps;
+     }
+ }

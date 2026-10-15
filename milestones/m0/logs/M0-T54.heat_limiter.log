@@ -1,0 +1,31 @@
+== 2026-10-15T12:39:13-04:00 heat_limiter · task M0-T54 · box laserax-ai :: bash tests/gpu.sh heat::limiter physics
+-- heat_limiter · exit=0 · 5.28 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU first pass: law |F - twin| 4.25e-11 of 6.3994e-4; solved |F - twin| 7.19e-7 of 5.5553e-4; |T - twin| 3.28e-5; HeatReport { dt: 0.05, passes: 6, rounds: 48, converged: true, delta: 1.7414877e-6 }, the twin 8 passes, 128 rounds
+SR-FLD GPU solved F: Δt |F - twin| 5.45e-7 of the heat 6.5920e-2 (1.29e-3 of the largest face)
+SR-FLD GPU worst |F| / (c_sb a_r T^4) 0.979940 over 20 passes, up to 6 Newton passes and 70 rounds
+ok
+test heat::limiter::gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU thick gas: worst relative error 4.42e-5; HeatReport { dt: 0.001, passes: 1, rounds: 0, converged: true, delta: 2.7020972e-9 }
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU limiter off: -2.1333e0 against -2.1333e0, bound 1.2800e-3
+ok
+test heat::limiter::in_thick_gas_the_flux_is_the_radiative_conductivity ... SR-FLD thick gas: worst |F - (4/3) a c T^3/(kappa Sigma) (-dT)| / |F| = 9.98e-7
+ok
+test heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... SR-FLD worst |F| / (c_sb a_r T^4) 0.979928 over 20 passes of 64x64 thin gas, up to 8 Newton passes and 135 rounds
+SR-FLD limiter off: |F| = 1666.7 c_sb a_r T^4
+ok
+test heat::limiter::lambda_is_levermore_pomraning ... ok
+test heat::limiter::the_scene_flag_turns_the_limiter_into_one_third ... SR-FLD face of the spot: unlimited -2.1333e0 (thick form -2.1333e0), limited -6.3994e-4, bound 1.2800e-3
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 237 filtered out; finished in 5.03s
+
+

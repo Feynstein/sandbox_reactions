@@ -1,0 +1,88 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/src/dump.rs (+2)
+why burn_cell: stale: crates/sr-engine/src/dump.rs (+2)
+why burn_order: stale: crates/sr-engine/src/dump.rs (+2)
+why neutrino: stale: crates/sr-engine/src/dump.rs (+2)
+why sink: stale: crates/sr-engine/src/dump.rs (+2)
+why sod: stale: crates/sr-engine/src/dump.rs (+2)
+why edges: stale: crates/sr-engine/src/dump.rs (+2)
+why collapse: stale: crates/sr-engine/src/dump.rs (+2)
+why twin: stale: crates/sr-engine/src/dump.rs (+2)
+why cpu_gpu: stale: crates/sr-engine/src/dump.rs (+2)
+why heat_gauss: stale: crates/sr-engine/src/dump.rs (+2)
+why heat_implicit: stale: crates/sr-engine/src/dump.rs (+2)
+why heat_limiter: stale: crates/sr-engine/src/dump.rs (+2)
+why heat_stiff: stale: crates/sr-engine/src/dump.rs (+2)
+why radiation_force: stale: crates/sr-engine/src/dump.rs (+2)
+why grav_force: stale: crates/sr-engine/src/dump.rs (+2)
+why grav_selfforce: stale: crates/sr-engine/src/dump.rs (+2)
+why fft: stale: crates/sr-engine/src/dump.rs (+2)
+why adapter: stale: crates/sr-engine/src/dump.rs (+2)
+why state: stale: crates/sr-engine/src/dump.rs (+2)
+why booking: stale: crates/sr-engine/src/dump.rs (+2)
+why floors: stale: crates/sr-engine/src/dump.rs (+2)
+why dt: stale: crates/sr-engine/src/dump.rs (+2)
+why box: stale: crates/sr-engine/src/dump.rs (+2)
+why latch: stale: crates/sr-engine/src/dump.rs (+2)
+why timing: stale: crates/sr-engine/src/dump.rs (+2)
+why scene: stale: crates/sr-engine/src/dump.rs (+2)
+why boot: stale: crates/sr-engine/src/dump.rs (+2)
+why desktop: stale: crates/sr-engine/src/dump.rs (+2)
+why web: stale: crates/sr-engine/src/dump.rs (+2)
+why capture: stale: crates/sr-engine/src/dump.rs (+2)
+why watch_only: stale: crates/sr-engine/src/step/sinks.rs
+plan_lint        547/0/0      0.12 s  GO · step 1/33, 32 left
+build            2/0/0        3.54 s  GO · step 2/33, 31 left
+burn_cell        16/0/0       4.52 s  GO · step 3/33, 30 left
+burn_order       4/0/0        4.07 s  GO · step 4/33, 29 left
+neutrino         18/0/0       5.78 s  GO · step 5/33, 28 left
+sink             27/0/0      18.80 s  GO · step 6/33, 27 left
+sod              15/0/0       9.38 s  GO · step 7/33, 26 left
+edges            7/0/0       10.43 s  GO · step 8/33, 25 left
+collapse         6/0/0        3.32 s  GO · step 9/33, 24 left
+twin             6/0/0        2.12 s  GO · step 10/33, 23 left
+cpu_gpu          3/0/0       13.54 s  GO · step 11/33, 22 left
+heat_gauss       10/0/0       3.47 s  GO · step 12/33, 21 left
+heat_implicit    6/0/0        1.97 s  GO · step 13/33, 20 left
+heat_limiter     6/0/0        2.97 s  GO · step 14/33, 19 left
+heat_stiff       6/0/0        2.22 s  GO · step 15/33, 18 left
+radiation_force  3/0/0        1.77 s  GO · step 16/33, 17 left
+grav_force       13/0/0       6.23 s  GO · step 17/33, 16 left
+grav_selfforce   5/0/0        2.52 s  GO · step 18/33, 15 left
+fft              8/0/0        6.02 s  GO · step 19/33, 14 left
+adapter          10/0/0       4.57 s  GO · step 20/33, 13 left
+state            6/0/0        4.07 s  GO · step 21/33, 12 left
+booking          4/0/0        3.42 s  GO · step 22/33, 11 left
+floors           7/0/0        6.32 s  GO · step 23/33, 10 left
+dt               6/0/0        4.42 s  GO · step 24/33, 9 left
+box              8/0/0        5.57 s  GO · step 25/33, 8 left
+latch            5/0/0        3.87 s  GO · step 26/33, 7 left
+timing           5/0/0        5.93 s  GO · step 27/33, 6 left
+scene            8/0/0        3.02 s  GO · step 28/33, 5 left
+boot             1/0/0        3.62 s  GO · step 29/33, 4 left
+desktop          2/0/0        8.37 s  GO · step 30/33, 3 left
+web              3/0/0       20.61 s  GO · step 31/33, 2 left
+capture          2/0/0        1.33 s  GO · step 32/33, 1 left
+watch_only       1/0/0        0.06 s  GO · step 33/33, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 27 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 18 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+dump             NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+dump · red-arm proven by M0-T52b 2026-10-15T12:21:24-04:00 (fingerprint 61744700e858) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/dump.rs changed since M0-T52b's start - a test, case or check M0-T52b's Deliver: does not name
+FLAG oracle: tests/plants/dump-sinks-drop.patch changed since M0-T52b's start - a test, case or check M0-T52b's Deliver: does not name
+logs: milestones/m0/logs/M0-T52b.<scope>.log · record: loop_times.jsonl · tree eaa28454aab2+662037674108
+anchor: 95 path×scope entries moved by this run
+anchor: 196 paths checked · 174 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 196 covered of 370 visible
+skipped   166  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 776 passed, 0 failed, 0 skipped · 33/33 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 11 not impacted · 26.69 s + loop 0.05 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 5.29->6.12 · base: M0-T52b's start 2026-10-15T12:16:49-04:00
+=== GO ===

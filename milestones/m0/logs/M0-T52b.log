@@ -1,0 +1,6 @@
+dump      10/0/0       9.08 s  GO
+logs: milestones/m0/logs/M0-T52b.<scope>.log · record: loop_times.jsonl · tree eaa28454aab2+74169914cce8
+anchor: 1 path×scope entries moved by this run
+anchor: 192 paths checked · 173 skipped (3 classes) · 0 never checked · 4 stale · 0 unclassified · 0 owed · 196 covered of 369 visible
+verify: 10 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 9.09 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 15.22->13.91
+=== GO ===

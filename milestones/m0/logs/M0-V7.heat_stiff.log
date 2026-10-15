@@ -1,0 +1,30 @@
+== 2026-10-15T12:53:13-04:00 heat_stiff · task M0-V7 · box laserax-ai :: bash tests/gpu.sh heat::stiff physics
+-- heat_stiff · exit=0 · 5.72 s
+    Finished `release` profile [optimized] target(s) in 0.18s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 -0.00e0, [1e-4, 0.1) -0.00e0, ≥ 0.1 8.84e-7; signed heat over the twin's -7.36e-7
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 3.98e-6 4.28e-7
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 5, rounds: 304, converged: true, delta: -4.3171696e-7 }, the twin 7 passes, 686 rounds; T in [1974.1934, 8108.3417]; lost 1.139627304e9 of radiated 1.139627355e9 (twin 1.139626867e9); C-weighted L1 against the twin 8.84e-7, worst cell with Σ ≥ 1e-4 2.14e-5
+SR-STIFF GPU heat_hot.json carried: 41 submissions of 8 rounds for the step's 321 slots, HeatReport { dt: 0.02, passes: 5, rounds: 304, converged: true, delta: -4.3171696e-7 }
+ok
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 1.08e-10, [1e-4, 0.1) 2.53e-8, ≥ 0.1 2.49e-6; signed heat over the twin's 1.20e-6
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 1.07e-4 -1.07e-4, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 6, rounds: 306, converged: true, delta: 2.5124914e-6 }, the twin 7 passes, 766 rounds; T in [65.2490, 100.0001]; lost 1.856201998e3 of radiated 1.856202574e3 (twin 1.856400452e3); C-weighted L1 against the twin 2.52e-6, worst cell with Σ ≥ 1e-4 1.41e-5
+SR-STIFF GPU heat_rim.json carried: 41 submissions of 8 rounds for the step's 326 slots, HeatReport { dt: 0.01, passes: 6, rounds: 306, converged: true, delta: 2.5124914e-6 }
+ok
+test heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more ... SR-STIFF heat_hot heat left: one pass 0.3422, 64 passes of Δt/64 0.2030 (up to 6 Newton passes, 530 rounds a pass), ratio 1.686
+ok
+test heat::stiff::the_scenes_are_stiff_for_rkl2_and_carry_what_the_oracles_assume ... SR-STIFF RKL2 would need 580 stages on heat_hot (Δt 0.02) and 11547 on heat_rim (Δt 0.01)
+ok
+test heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_hot.json: 7 Newton passes, 686 rounds, converged true, delta 1.2e-12; T in [1974.1512, 8108.3516]; lost 1.139626870e9 of radiated 1.139626870e9; worst balance 8.51e-12
+ok
+test heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_rim.json: 7 Newton passes, 745 rounds, converged true, delta 1.6e-12; T in [65.2506, 99.9998]; lost 1.856400482e3 of radiated 1.856400482e3; worst balance 1.01e-9
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 237 filtered out; finished in 5.26s
+
+

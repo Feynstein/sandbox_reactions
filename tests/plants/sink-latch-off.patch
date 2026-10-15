@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/sinks.wgsl
++++ b/crates/sr-engine/shaders/sinks.wgsl
+@@ -443,7 +443,7 @@
+ // this step — `sink_update` has no binding left for the flag (7 storage buffers here + the EOS table = WebGPU's 8).
+ @compute @workgroup_size(1)
+ fn sink_latch() {
+-    if (st.formed != 0u) {
++    if (st.formed == 0xffffffffu) {
+         atomicOr(&latch_flag[0], 1u);
+     }
+ }

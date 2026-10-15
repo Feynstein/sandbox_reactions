@@ -2,7 +2,7 @@
 //! `fft` is gravity's machinery (§1.4.2, the Hockney–Eastwood convolution) and the neutrino-heating kernel's (§2.5.4);
 //! `grav` is P2 on it (§1.4); `riemann` is the exact solution of the γ = 2 gas's shock tube (§2.3.1, G-SOD §5.1);
 //! `hydro` is P4, the gas flow, graded against it (§2.3.4, G-SOD); `heat` is P5, flux-limited diffusion stepped implicitly
-//! (§2.4, G-HEAT1, G-HEAT2, G-FLD); `react` is P6, burning by linearised backward-Euler sub-cycles (§2.5, G-BURN, G-ORDER); `floors` is P8 (§2.7).
+//! (§2.4, G-HEAT1, G-HEAT2, G-FLD); `react` is P6, burning by linearised backward-Euler sub-cycles (§2.5, G-BURN, G-ORDER); `floors` is P8 (§2.7); `sinks` is P3, the black holes' formation, accretion and motion (§2.6, G-SINK), not yet in the twin's step; `nuheat` is P7, the neutron star's neutrinos deposited in the gas around it (§2.5.4), not yet in the twin's step either.
 //!
 //! [`Twin`] is the step driver (M0-T37): the passes built so far, in §1.3.2's order, on the state's f64 planes, the scene's
 //! switches honoured — P1 Δt, P2 gravity, P4 hydro, P5 heat, P6 reactions, P8 floors, P9 Δt_{n+1} — each pass joining with its twin. It steps the
@@ -16,8 +16,10 @@ pub mod floors;
 pub mod grav;
 pub mod heat;
 pub mod hydro;
+pub mod nuheat;
 pub mod react;
 pub mod riemann;
+pub mod sinks;
 
 use std::fmt;
 

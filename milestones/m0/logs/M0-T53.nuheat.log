@@ -1,0 +1,16 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.53s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test nuheat::a_lone_gas_cell_takes_exactly_f_dep ... ok
+test nuheat::deposited_is_f_dep_of_emitted ... ok
+test nuheat::f_dep_above_the_bound_is_refused ... ok
+test nuheat::matches_the_direct_sum ... ok
+test nuheat::nearer_and_denser_receive_more ... ok
+test nuheat::none_inside_the_neutron_star ... ok
+test nuheat::nothing_when_nothing_is_emitted_or_taken ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 228 filtered out; finished in 0.00s
+
