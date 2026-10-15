@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/summary.wgsl
++++ b/crates/sr-engine/shaders/summary.wgsl
+@@ -90,7 +90,7 @@
+ fn block_base(gid: vec3<u32>) -> u32 {
+     let bw = abox.w / BLOCK;
+     let bh = abox.h / BLOCK;
+-    if (gid.x >= bw || gid.y >= bh) {
++    if (gid.x >= bw || gid.y + 1u >= bh) {
+         return 0xffffffffu;
+     }
+     return (gid.y * bw + gid.x) * FIELDS;

@@ -1,0 +1,22 @@
+== 2026-10-15T15:10:59-04:00 build[native] · task M0-T56 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-15T15:10:59-04:00 build[wasm] · task M0-T56 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.88 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.6G)
+=== GO ===
+
+-- build[native] · exit=1 · 6.86 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+error: using `chunks_exact` with a constant chunk size
+   --> crates/sr-engine/src/summary.rs:260:28
+    |
+260 |             blocks: blocks.chunks_exact(FIELDS).take((columns * rows) as usize).map(Block::from_words).collect(),
+    |                            ^^^^^^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<FIELDS>().0.iter()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+    = note: `-D clippy::chunks-exact-to-as-chunks` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::chunks_exact_to_as_chunks)]`
+
+error: could not compile `sr-engine` (lib) due to 1 previous error
+=== NO-GO: cargo clippy -D warnings failed ===
+

@@ -184,7 +184,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-TM7 | PLAN | Rating pass — five carried flags on open BUILD blocks since 2026-10-14 | AFTER M0-D46 | DONE (2026-10-15 14:34, started 14:30) |
 | M0-D47 | BUILD | headless builds no P3 or P7: a scene's `sinks` switch is read nowhere and `neutrinos` turns on P6's S_ν alone | AFTER M0-D46 | DONE (2026-10-15 14:48) |
 | M0-D48 | BUILD | The pages agents read instead of the module miss lot 7's code: architecture.md's P3 and P7 record no dispatch and its side-field, latch and dump lines predate lot 7, physics.md calls the sinks' pull on the gas unbuilt, testing.md's dump row leaves a case undescribed | AFTER M0-D47 | DONE (2026-10-15 14:53) |
-| M0-T56 | BUILD | The block summary (§1.9.1) | AFTER M0-V7 | TODO |
+| M0-T56 | BUILD | The block summary (§1.9.1) | AFTER M0-V7 | DONE (2026-10-15 15:10) |
 | M0-T57 | BUILD | The ledger (§2.9): f64 sums and the short invariants | AFTER M0-T56 | TODO |
 | M0-T58 | BUILD | Objects: 8-connected blocks, identity, per-object quantities (§1.9.2) | AFTER M0-T57 | TODO |
 | M0-T59 | BUILD | Stages and events (§1.9.3, §1.9.4) | AFTER M0-T58 | TODO |
@@ -1546,7 +1546,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
 # Phase 10 — Lot 8 · watching the star
 
 ## M0-T56 · The block summary · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V7)
-- Status: TODO
+- Status: DONE (2026-10-15 15:10)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.4, §1.9.1, §3.1 (encode_frame's
   summary, poll) + docs/agent/testing.md
 - Deliver: crates/sr-engine/src/summary.rs and shaders/summary.wgsl (new): after each frame's last step,
@@ -1563,7 +1563,7 @@ Shared by every block below: Rules R10–R14, full text in m0_rules.md — hoist
   plant stays GO
 - Adversarial: a box whose height is not a multiple of 4 drops a partial block row — the box is a
   multiple of 8 (§1.3.3), and the plant drops a row to prove the check sees it.
-- Handoff: <placeholder>
+- Handoff: Built the block summary (§1.9.1): crates/sr-engine/src/summary.rs and shaders/summary.wgsl (two box-sized dispatches, one 4 × 4 block an invocation, f32 in row-major order, no atomic: summary_cells for the state, φ and the max-Σ cell; summary_book for the accumulators and the sinks' slot mask). encode_frame records it after latch_end, outside the frame's timing, in the frame's own readback; Step::poll_frames() returns Frame { report, summary }, and poll() is unchanged (FrameReport stays Copy). Scope summary: 7 cases GO, each field against an f64 sum of the dump within K · 2⁻²⁴ · S (worst ε_cold 57 of 288). Red-arm GO, summary-skip-row RED (2 failed). Claim (--changed, linux-pc): NO-GO, 34/35 GO, build red on one clippy lint in summary.rs's decode; after the fix, build GO and summary GO (--task M0-T56-r2). Readings, declared (tasks/M0-T56.md): the accumulators reset at the next frame's start, so the booking holds them between frames (an end-of-frame reset breaks nu_heat's stopped-frame booking check); a P5-carried frame is summarised as the state stands; no φ reads as 0. Not acted on: the whole world's blocks buffer is copied every frame (2.9 MB at 600 × 400, 48 MiB at 2048²), its cost unmeasured and outside the frame's cost. Sizing: ≈ 925 new lines in 7 code files, over §2.1's 600 / 6 (the Deliver's three files are that size), not split. Ran on claude-opus-5-5 level=high (rung_record now). Next: M0-TM7.
 
 ## M0-T57 · The ledger · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T56)
 - Status: TODO

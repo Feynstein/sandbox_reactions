@@ -245,3 +245,6 @@ mod adapter {
 
 /// M0-T53 — neutrino heating on the CPU twin (contract §2.5.4, §1.6.4); M0-T54 — P7 on the GPU, the same cases.
 mod nuheat;
+
+/// M0-T56 — the block summary (contract §1.9.1, §1.3.4, §3.1).
+mod summary;

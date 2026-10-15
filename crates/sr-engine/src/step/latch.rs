@@ -21,6 +21,10 @@
 //! slots P5 records, frames and bare runs alike ([`Step::run`] records its submissions under the latch, the slow-down
 //! off). A step still in its rounds there is carried — the rest of the submission zeroed, the record's `held` set — and
 //! the next submission's first step continues it; a frame's report says so, and a dump is refused until it has ended.
+//!
+//! The block summary (§1.9.1, [`crate::summary`], M0-T56) closes every frame, after `latch_end` and outside the frame's
+//! timing: its accumulators cleared at the next frame's start, its bytes in the frame's readback after the timestamps'
+//! room, so [`Step::poll_frames`] returns it with the frame's report.
 
 use std::cell::{Cell, RefCell};
 use std::sync::mpsc::{channel, Receiver, Sender};
@@ -30,6 +34,7 @@ use super::dt::{self, Dt, GUARD_EVERY};
 use super::{compute_pipeline, init_buffer, record_sized, Batch, Dispatch, Size, Step, StepCost, FRAME_SLOT, QUERIES};
 use crate::dump::Resume;
 use crate::state::read_buffers;
+use crate::summary::{Frame, Summary};
 
 /// latch.wgsl's `LatchState`: flag, slow_down, stopped, steps_run, fired_at, since, advanced, a pad word, the 12 saved
 /// sizes, 4 pad words.
@@ -244,6 +249,7 @@ impl Step {
     /// the frame's report, read back when the submission completes ([`Step::poll`]).
     pub fn encode_frame(&self, plan: &FramePlan, encoder: &mut wgpu::CommandEncoder) {
         let latch = &self.latch;
+        self.summary.encode_reset(encoder);
         self.timer.start();
         self.encode_latched(encoder, plan, true);
         let timed = self.timer.finish(encoder);
@@ -256,7 +262,7 @@ impl Step {
             None => {
                 let buffer = latch.device.create_buffer(&wgpu::BufferDescriptor {
                     label: Some("latch.readback"),
-                    size: READBACK_TIMED_BYTES,
+                    size: READBACK_TIMED_BYTES + self.summary.bytes(),
                     usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
                     mapped_at_creation: false,
                 });
@@ -280,6 +286,7 @@ impl Step {
                 (batch, resolved.is_some())
             }),
         ));
+        self.summary.encode(encoder, &buffer, READBACK_TIMED_BYTES);
         let sent = rb.sent.clone();
         encoder.map_buffer_on_submit(&buffer, wgpu::MapMode::Read, .., move |r| {
             let _ = sent.send((i, r));
@@ -287,41 +294,55 @@ impl Step {
     }
 
     /// The reports of the frames whose readback has arrived since the last call, in submission order. Never blocks:
-    /// it polls the device without waiting (§3.1).
+    /// it polls the device without waiting (§3.1). Their block summaries are dropped ([`Step::poll_frames`] keeps them).
     pub fn poll(&self, device: &wgpu::Device) -> Vec<FrameReport> {
+        self.drain(device, false).into_iter().map(|(report, _)| report).collect()
+    }
+
+    /// [`Step::poll`] with each frame's block summary (§1.9.1, §3.1).
+    pub fn poll_frames(&self, device: &wgpu::Device) -> Vec<Frame> {
+        let frames = self.drain(device, true).into_iter();
+        frames.map(|(report, summary)| Frame { report, summary: summary.expect("decoded") }).collect()
+    }
+
+    /// The frames whose readback has arrived, in submission order, each summary decoded when `summaries`.
+    fn drain(&self, device: &wgpu::Device, summaries: bool) -> Vec<(FrameReport, Option<crate::summary::BlockSummary>)> {
         let _ = device.poll(wgpu::PollType::Poll);
         let mut rb = self.latch.readbacks.borrow_mut();
-        type Got = (u64, [u32; READ_WORDS], Option<(Batch, Option<Vec<u64>>)>);
+        type Got = (u64, [u32; READ_WORDS], Option<(Batch, Option<Vec<u64>>)>, Option<crate::summary::BlockSummary>);
         let mut got: Vec<Got> = Vec::new();
         while let Ok((i, result)) = rb.ready.try_recv() {
             let (buffer, busy) = &mut rb.slots[i];
             let (frame, timed) = busy.take().expect("a readback in flight");
             result.unwrap_or_else(|e| panic!("latch readback: map failed: {e}"));
             let mut w = [0u32; READ_WORDS];
-            let timed = {
+            let (timed, summary) = {
                 let view = buffer.get_mapped_range(..).expect("mapped for reading");
-                let (records, stamps) = view.split_at(READBACK_BYTES as usize);
+                let (latched, summary) = view.split_at(READBACK_TIMED_BYTES as usize);
+                let summary = summaries.then(|| Summary::decode(summary));
+                let (records, stamps) = latched.split_at(READBACK_BYTES as usize);
                 for (k, b) in records.as_chunks::<4>().0.iter().enumerate() {
                     w[k] = u32::from_le_bytes(*b);
                 }
-                timed.map(|(batch, stamped)| {
+                let timed = timed.map(|(batch, stamped)| {
                     let n = 2 * batch.passes.len();
                     let ticks = stamped.then(|| stamps.as_chunks::<8>().0[..n].iter().map(|b| u64::from_le_bytes(*b)).collect());
                     (batch, ticks)
-                })
+                });
+                (timed, summary)
             };
             buffer.unmap();
-            got.push((frame, w, timed));
+            got.push((frame, w, timed, summary));
         }
         got.sort_by_key(|(frame, ..)| *frame);
         drop(rb);
         got.into_iter()
-            .map(|(_, w, timed)| {
+            .map(|(_, w, timed, summary)| {
                 let d = &w[RECORD_WORDS..];
                 if let Some(heat) = &self.heat {
                     heat.learn(w[READ_WORDS - 1]);
                 }
-                FrameReport {
+                let report = FrameReport {
                     steps_run: w[3],
                     advanced: f32::from_bits(w[6]),
                     sim_time: dt::sim_time(d),
@@ -331,7 +352,8 @@ impl Step {
                     latch_fired: (w[2] == 1).then_some(w[4]),
                     carried: w[HELD_WORD] != 0,
                     cost: timed.and_then(|(batch, ticks)| self.timer.cost(&batch, ticks.as_deref(), w[3])),
-                }
+                };
+                (report, summary)
             })
             .collect()
     }

@@ -56,6 +56,7 @@ use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::scene::EdgeMode;
 use crate::state::{Booking, SideFields, State, BOOK_GROUPS, TERMS};
+use crate::summary::Summary;
 use boxfit::{BoxFit, BoxMode, BoxReport, ARGS_TILES, REFIT_EVERY};
 use dt::{Dt, DtReport, GUARD_EVERY};
 use fft::FftError;
@@ -155,6 +156,7 @@ pub struct Step {
     nuheat: Option<nuheat::NuHeat>,
     boxfit: BoxFit,
     latch: Latch,
+    summary: Summary,
     next: Cell<u64>,
     timer: Timer,
 }
@@ -478,6 +480,9 @@ impl Step {
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Gravity as usize] = gravity.as_mut().map(|g| std::mem::take(&mut g.dispatches)).unwrap_or_default();
         let g = gravity.as_ref().map(Gravity::field);
+        // The block summary's φ: P2's plane, else the one P3 reads (a test's synthetic world), else none.
+        let phi = side.or(sinks.map(|s| s.side)).map(SideFields::phi);
+        let summary = Summary::new(device, state, booking, eos, &boxfit, phi, sink_state.as_ref());
         let mut sink = sinks.zip(sink_state).map(|(s, buf)| sinks::Sinks::new(device, state, booking, eos, physics, &boxfit, dt.record(), buf, s));
         passes[Pass::Sinks as usize] = sink.as_mut().map(|s| std::mem::take(&mut s.dispatches)).unwrap_or_default();
         let flux = heat.map(|h| h.side.flux());
@@ -501,7 +506,7 @@ impl Step {
         if let Some(s) = &sink {
             passes[Pass::Sinks as usize].push(s.latch_dispatch(device, latch.flag()));
         }
-        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, sinks: sink, nuheat: heating, boxfit, latch, next: Cell::new(0), timer: Timer::default() })
+        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, sinks: sink, nuheat: heating, boxfit, latch, summary, next: Cell::new(0), timer: Timer::default() })
     }
 
     /// P2's g = −∇φ (the x plane, then the y plane, f32, row-major over the world) when the step runs gravity; φ is the
@@ -823,7 +828,7 @@ impl EosGpu {
 }
 
 /// A buffer created holding `words`, little-endian.
-fn init_buffer(device: &wgpu::Device, label: &str, usage: wgpu::BufferUsages, words: &[u32]) -> wgpu::Buffer {
+pub(crate) fn init_buffer(device: &wgpu::Device, label: &str, usage: wgpu::BufferUsages, words: &[u32]) -> wgpu::Buffer {
     let bytes: Vec<u8> = words.iter().flat_map(|w| w.to_le_bytes()).collect();
     let buffer = device.create_buffer(&wgpu::BufferDescriptor {
         label: Some(label),
@@ -837,7 +842,7 @@ fn init_buffer(device: &wgpu::Device, label: &str, usage: wgpu::BufferUsages, wo
 }
 
 /// Sets each dispatch's pipeline and bind groups and dispatches it, in order.
-fn record_dispatches(cpass: &mut wgpu::ComputePass<'_>, dispatches: &[Dispatch]) {
+pub(crate) fn record_dispatches(cpass: &mut wgpu::ComputePass<'_>, dispatches: &[Dispatch]) {
     for d in dispatches {
         record_sized(cpass, d, &d.size);
     }
@@ -855,7 +860,7 @@ fn record_sized(cpass: &mut wgpu::ComputePass<'_>, d: &Dispatch, size: &Size) {
     }
 }
 
-fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModule, entry: &'static str) -> wgpu::ComputePipeline {
+pub(crate) fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModule, entry: &'static str) -> wgpu::ComputePipeline {
     device.create_compute_pipeline(&wgpu::ComputePipelineDescriptor {
         label: Some(entry),
         layout: None,

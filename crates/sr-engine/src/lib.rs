@@ -6,3 +6,4 @@ pub mod headless;
 pub mod scene;
 pub mod state;
 pub mod step;
+pub mod summary;
