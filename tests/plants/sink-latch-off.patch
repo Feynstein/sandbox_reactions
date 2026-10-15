@@ -1,7 +1,7 @@
 --- a/crates/sr-engine/shaders/sinks.wgsl
 +++ b/crates/sr-engine/shaders/sinks.wgsl
-@@ -443,7 +443,7 @@
- // this step — `sink_update` has no binding left for the flag (7 storage buffers here + the EOS table = WebGPU's 8).
+@@ -524,7 +524,7 @@
+ // formed this step — built apart (step/sinks.rs `latch_dispatch`) because the latch is made from the finished pass lists.
  @compute @workgroup_size(1)
  fn sink_latch() {
 -    if (st.formed != 0u) {

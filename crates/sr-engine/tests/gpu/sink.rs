@@ -9,6 +9,11 @@
 //! cell, each with its own refusal case (SM-E28's warning: a density threshold alone forms sinks in a bouncing core).
 //! The synthetic worlds of the formation cases are a bowl of φ with the gas converging (or not) on its bottom: a source
 //! read alone, `NOT PROVEN (synthetic)` for anything beyond the criteria themselves.
+//!
+//! Motion (§0.5 [M0-V7]): the sinks pull the gas and are pulled by it as equal and opposite — each sink's acceleration is
+//! the sum over the gas of its softened pull's reaction, graded by the no-net-force bound on the twin (M0-D45) and on the
+//! GPU (M0-D46: P3 sums the box's tiles, so a sink outside the box feels the gas too); the `gpu_*` cases grade P3 against
+//! the twin's `step` and `advance`.
 
 use std::path::{Path, PathBuf};
 
@@ -203,6 +208,7 @@ fn the_cloud_falls_into_a_sink_with_mass_conserved_each_step() {
     let mut s = sinks();
     s.sinks.push(sink(32.5, 32.5, 0.0, 0.0, 2000.0));
     let total = grid_totals(&st).0 + s.mass();
+    let p0 = grid_totals(&st).1;
     let mut last = s.mass();
     for step in 0..40 {
         let grid = gravity.field(st.plane(0), 1e-6, w, h).unwrap();
@@ -217,7 +223,8 @@ fn the_cloud_falls_into_a_sink_with_mass_conserved_each_step() {
         assert!(s.mass() >= last, "step {step}: the sink lost mass");
         last = s.mass();
     }
-    println!("SR-SINK fall: after 40 steps the sink holds {:.4} (2000 + {:.4})", s.mass(), s.mass() - 2000.0);
+    let (gp, sp) = (grid_totals(&st).1, s.momentum());
+    println!("SR-SINK fall: after 40 steps the sink holds {:.4} (2000 + {:.4}); grid + sink momentum ({:.4}, {:.4}) from ({:.4}, {:.4})", s.mass(), s.mass() - 2000.0, gp[0] + sp[0], gp[1] + sp[1], p0[0], p0[1]);
     assert!(s.mass() > 2000.0, "the cloud reached the sink");
 }
 
@@ -352,42 +359,84 @@ fn no_seventeenth_sink_forms() {
 
 // ---- motion and merging ----
 
-#[test]
-fn kick_drift_kick_is_exact_in_a_uniform_field_and_reads_g_bilinearly() {
-    let (w, h) = (32, 32);
-    let mut field = zero_field(w, h);
-    field.gx.iter_mut().for_each(|v| *v = 0.01);
-    field.gy.iter_mut().for_each(|v| *v = -0.02);
-    let mut s = sinks();
-    s.sinks.push(sink(10.5, 20.5, 0.4, 0.1, 50.0));
-    let (dt, steps) = (0.25, 40);
-    for _ in 0..steps {
-        s.advance(&field, w, h, dt);
-    }
-    let t = dt * steps as f64;
-    let k = s.sinks[0];
-    assert!((k.x - (10.5 + 0.4 * t + 0.5 * 0.01 * t * t)).abs() < 1e-9, "x {}", k.x);
-    assert!((k.y - (20.5 + 0.1 * t - 0.5 * 0.02 * t * t)).abs() < 1e-9, "y {}", k.y);
-    assert!((k.vx - (0.4 + 0.01 * t)).abs() < 1e-12 && (k.vy - (0.1 - 0.02 * t)).abs() < 1e-12, "v {} {}", k.vx, k.vy);
-    // Bilinear: gx = (cell index) is linear in x, so g at a sink at p is p − ½ exactly; a tiny Δt shows it in v.
-    let mut ramp = zero_field(w, h);
-    for y in 0..h {
-        for x in 0..w {
-            ramp.gx[y * w + x] = x as f64;
-            ramp.gy[y * w + x] = 2.0 * y as f64;
+/// The direct sum, written here and not in the twin: the pull of the gas cells at Σ ≥ Σ_vac on a sink at `at`, softened by
+/// `ra` — Σ_cells G m d / (|d|² + ra²)^{3/2}, d from the sink to the cell's centre.
+fn gas_pull(st: &State, at: [f64; 2], ra: f64) -> [f64; 2] {
+    let mut a = [0.0; 2];
+    for y in 0..st.height {
+        for x in 0..st.width {
+            let m = st.get(0, y * st.width + x);
+            if m < 1e-6 {
+                continue;
+            }
+            let (dx, dy) = (x as f64 + 0.5 - at[0], y as f64 + 0.5 - at[1]);
+            let k = m / (dx * dx + dy * dy + ra * ra).powf(1.5);
+            a[0] += k * dx;
+            a[1] += k * dy;
         }
     }
-    let mut s = sinks();
-    s.sinks.push(sink(7.9, 12.3, 0.0, 0.0, 50.0));
-    s.advance(&ramp, w, h, 1e-6);
-    let k = s.sinks[0];
-    assert!((k.vx / 1e-6 - 7.4).abs() < 1e-5 && (k.vy / 1e-6 - 2.0 * 11.8).abs() < 1e-5, "g at the sink: {} {}", k.vx / 1e-6, k.vy / 1e-6);
+    a
+}
+
+/// A vacuum world at the cloud's size (every cell the cloud's corner cell: Σ_floor, below Σ_vac).
+fn vacuum() -> State {
+    vacuum_sized(64, 64)
+}
+
+/// A `w` × `h` vacuum world, every cell the cloud's corner cell.
+fn vacuum_sized(w: usize, h: usize) -> State {
+    let cloud = cloud();
+    let (n, vacuum) = (w * h, (0..COMPONENTS).map(|c| cloud.get(c, 0)).collect::<Vec<_>>());
+    let mut planes = vec![0.0; COMPONENTS * n];
+    for c in 0..COMPONENTS {
+        planes[c * n..(c + 1) * n].fill(vacuum[c]);
+    }
+    State::new(w, h, planes)
+}
+
+/// A vacuum world with a 5 × 3 blob of Σ = 4 on cells (10..15, 40..43), off-centre of the 64 × 64 world.
+fn blob() -> State {
+    let mut st = vacuum();
+    let (w, n) = (st.width, st.cells());
+    for y in 40..43 {
+        for x in 10..15 {
+            st.planes[y * w + x] = 4.0;
+            st.planes[3 * n + y * w + x] = 4.0 * 0.1;
+        }
+    }
+    st
 }
 
 #[test]
-fn two_sinks_pull_each_other_softened_by_r_acc_and_keep_their_total_momentum() {
-    let (w, h) = (64, 64);
-    let field = zero_field(w, h);
+fn kick_drift_kick_pulls_by_the_softened_sum_over_the_gas_at_both_ends_of_the_step() {
+    // A sink beside the blob: one step of Δt = 0.5 is v₀ + ½Δt (a(p₀) + a(p₁)) and p₀ + Δt (v₀ + ½Δt a(p₀)), the pull a
+    // direct sum written here (r_acc = 2 for 50: max(2, 2·50/200²)).
+    let st = blob();
+    let mut s = sinks();
+    let (p0, v0, dt) = ([20.5, 38.5], [0.3, 0.1], 0.5);
+    s.sinks.push(sink(p0[0], p0[1], v0[0], v0[1], 50.0));
+    let a0 = gas_pull(&st, p0, 2.0);
+    assert!(a0[0].hypot(a0[1]) > 0.05, "the blob pulls: {a0:?}");
+    let p1 = [p0[0] + dt * (v0[0] + 0.5 * dt * a0[0]), p0[1] + dt * (v0[1] + 0.5 * dt * a0[1])];
+    let a1 = gas_pull(&st, p1, 2.0);
+    s.advance(&st, dt);
+    let k = s.sinks[0];
+    let want = [(p1[0], p1[1]), (v0[0] + 0.5 * dt * (a0[0] + a1[0]), v0[1] + 0.5 * dt * (a0[1] + a1[1]))];
+    assert!((k.x - want[0].0).abs() < 1e-12 && (k.y - want[0].1).abs() < 1e-12, "position ({}, {}) against {:?}", k.x, k.y, want[0]);
+    assert!((k.vx - want[1].0).abs() < 1e-12 && (k.vy - want[1].1).abs() < 1e-12, "velocity ({}, {}) against {:?}", k.vx, k.vy, want[1]);
+    // A cell below Σ_vac pulls nothing: the vacuum alone leaves a lone sink on its line.
+    let mut s = sinks();
+    s.sinks.push(sink(10.5, 20.5, 0.4, 0.1, 50.0));
+    for _ in 0..40 {
+        s.advance(&vacuum(), 0.25);
+    }
+    let k = s.sinks[0];
+    assert!((k.x - 14.5).abs() < 1e-9 && (k.y - 21.5).abs() < 1e-9 && (k.vx - 0.4).abs() < 1e-15 && (k.vy - 0.1).abs() < 1e-15, "{k:?}");
+}
+
+#[test]
+fn two_sinks_pull_each_other_softened_by_the_larger_r_acc_and_keep_their_total_momentum() {
+    let st = vacuum();
     let mut s = sinks();
     s.sinks.push(sink(20.5, 30.5, 0.0, 0.1, 400.0));
     s.sinks.push(sink(40.5, 30.5, 0.0, -0.1, 400.0));
@@ -396,14 +445,85 @@ fn two_sinks_pull_each_other_softened_by_r_acc_and_keep_their_total_momentum() {
     let a = 400.0 * 20.0 / (20.0f64.powi(2) + 4.0).powf(1.5);
     let mut probe = sinks();
     probe.sinks = s.sinks.clone();
-    probe.advance(&field, w, h, 1e-6);
+    probe.advance(&st, 1e-6);
     assert!((probe.sinks[0].vx / 1e-6 - a).abs() < 1e-3 * a && (probe.sinks[1].vx / 1e-6 + a).abs() < 1e-3 * a, "{} against {a}", probe.sinks[0].vx / 1e-6);
     for _ in 0..50 {
-        s.advance(&field, w, h, 0.1);
+        s.advance(&st, 0.1);
     }
     let p1 = s.momentum();
     assert!((p1[0] - p0[0]).abs() < 1e-9 && (p1[1] - p0[1]).abs() < 1e-9, "momentum {p1:?} against {p0:?}");
     assert!(s.sinks[0].x > 20.5 && s.sinks[1].x < 40.5, "they fall toward each other");
+    // Two sinks of r_acc 2 and 5 (400 and 100,000 at c_sb = 200): each is pulled softened by 5, the larger — M a is equal and opposite.
+    let mut s = sinks();
+    s.sinks.push(sink(20.5, 30.5, 0.0, 0.0, 400.0));
+    s.sinks.push(sink(28.5, 30.5, 0.0, 0.0, 100_000.0));
+    assert_eq!((s.r_acc(0), s.r_acc(1)), (2.0, 5.0));
+    let a = s.pull(&st);
+    let soft: f64 = 64.0 + 25.0;
+    assert!(rel(a[0][0], 100_000.0 * 8.0 / soft.powf(1.5)) < 1e-12 && rel(a[1][0], -400.0 * 8.0 / soft.powf(1.5)) < 1e-12, "{a:?}");
+    assert!((400.0 * a[0][0] + 100_000.0 * a[1][0]).abs() < 1e-12 * 400.0 * a[0][0].abs(), "M a, equal and opposite");
+}
+
+/// [M0-V7]'s bound, graded as G-GRAV2 is: |Σ_s M_s a_s + Σ_cells m g_s| ≤ 1e-5 (Σ_s M_s |a_s| + Σ_cells m |g_s|), a_s the
+/// sink's acceleration from `Sinks::pull`, g_s the sinks' pull at a cell from `add_sinks` (P2's, the cells' side), over the
+/// cells with Σ ≥ Σ_vac. Returns the ratio.
+fn net_force_ratio(s: &Sinks, st: &State) -> f64 {
+    let (w, h) = (st.width, st.height);
+    let mut field = zero_field(w, h);
+    add_sinks(&mut field, w, h, 1.0, &s.sources());
+    let (mut net, mut scale) = ([0.0; 2], 0.0);
+    for (sink, a) in s.sinks.iter().zip(s.pull(st)) {
+        net[0] += sink.m * a[0];
+        net[1] += sink.m * a[1];
+        scale += sink.m * a[0].hypot(a[1]);
+    }
+    for i in 0..st.cells() {
+        let m = st.get(0, i);
+        if m < 1e-6 {
+            continue;
+        }
+        net[0] += m * field.gx[i];
+        net[1] += m * field.gy[i];
+        scale += m * field.gx[i].hypot(field.gy[i]);
+    }
+    net[0].hypot(net[1]) / scale
+}
+
+#[test]
+fn the_sinks_pull_on_the_gas_is_equal_and_opposite_on_asymmetric_worlds() {
+    let mut worst = 0.0f64;
+    let mut check = |name: &str, s: &Sinks, st: &State| {
+        let ratio = net_force_ratio(s, st);
+        println!("SR-SINK no net force: {name}: |Σ M a + Σ m g| / scale = {ratio:.3e}");
+        assert!(ratio <= 1e-5, "{name}: {ratio:.3e}");
+        worst = worst.max(ratio);
+    };
+    // One sink beside the off-centre blob, 2, 4, 8 and 16 cells off its edge (the V7 probe's distances).
+    for d in [2.0, 4.0, 8.0, 16.0] {
+        let mut s = sinks();
+        s.sinks.push(sink(12.5 + d + 3.0, 41.5, 0.0, 0.0, 100.0));
+        check(&format!("one sink {d} beside the blob"), &s, &blob());
+    }
+    // Two sinks of r_acc 2 and 5 beside it: each pulled softened by its own r_acc by the gas, the pair by the larger.
+    let mut s = sinks();
+    s.sinks.push(sink(24.5, 41.5, 0.0, 0.0, 400.0));
+    s.sinks.push(sink(30.5, 30.5, 0.0, 0.0, 100_000.0));
+    assert_eq!((s.r_acc(0), s.r_acc(1)), (2.0, 5.0));
+    check("two sinks of r_acc 2 and 5 beside the blob", &s, &blob());
+    // The cloud's corner, the sink off its cell's centre so the cells it takes are no symmetric disc: it accretes in the step it is graded, so the sum counts the cells accretion left — those it
+    // took sit at Σ_floor, below Σ_vac, and pull nothing; the sum before accretion would not close.
+    let mut st = cloud();
+    let mut s = sinks();
+    s.sinks.push(sink(13.2, 13.7, 0.0, 0.0, 2000.0));
+    let stale = s.pull(&st);
+    let taken = s.accrete(&mut st);
+    assert!(taken > 3.0, "the sink takes the corner's gas: {taken}");
+    check("the sink at the cloud's corner, after accretion", &s, &st);
+    let fresh = s.pull(&st);
+    let moved = (stale[0][0] - fresh[0][0]).hypot(stale[0][1] - fresh[0][1]) / fresh[0][0].hypot(fresh[0][1]);
+    println!("SR-SINK no net force: accretion moves the sink's pull by {moved:.3e} of its value");
+    assert!(moved > 1e-4, "the case is sensitive to the cells accretion took: {moved:.3e}");
+    println!("SR-SINK no net force: worst ratio {worst:.3e}");
 }
 
 #[test]
@@ -514,7 +634,7 @@ impl Rig {
         book_totals(self.booking.world(), &self.booking.readback(&self.gpu.device, &self.gpu.queue))[at]
     }
 
-    /// The gas's g as the last step's P3 read it (φ left at 0: the twin's `advance` reads g only).
+    /// The gas's own g, P2's gas field (φ left at 0).
     fn field(&self) -> Field {
         self.read_g(self.step.gravity_gas_field().expect("a step with P2"))
     }
@@ -549,6 +669,15 @@ fn gpu_momentum(r: &SinkReport) -> [f64; 2] {
     r.sinks.iter().fold([0.0; 2], |p, s| [p[0] + s.m * s.vx, p[1] + s.m * s.vy])
 }
 
+/// The sinks' momentum before the step's kick-drift-kick: M v less M ½Δt (a_start + a_drifted), the pulls P3 kicked with
+/// (a step that merged nothing).
+fn unkicked(r: &SinkReport, dt: f64) -> [f64; 2] {
+    assert_eq!(r.merged, 0, "{r:?}");
+    let p = gpu_momentum(r);
+    let kick = r.sinks.iter().zip(&r.pulls).fold([0.0; 2], |k, (s, [a0, a1])| [k[0] + s.m * 0.5 * dt * (a0[0] + a1[0]), k[1] + s.m * 0.5 * dt * (a0[1] + a1[1])]);
+    [p[0] - kick[0], p[1] - kick[1]]
+}
+
 /// Each GPU sink against the twin's: mass and momentum to `tol` relative, position to `tol` cells.
 fn same_sinks(name: &str, gpu: &SinkReport, twin: &Sinks, tol: f64) {
     assert_eq!(gpu.sinks.len(), twin.sinks.len(), "{name}: {:?} against {:?}", gpu.sinks, twin.sinks);
@@ -579,11 +708,13 @@ fn gpu_accretion_matches_the_twin_keeps_mass_and_momentum_and_touches_nothing_be
     println!("SR-SINK gpu accretion: took {:.6} (twin {:.6}); sink {:?}; swallowed {:.6} (twin {:.6})", report.accreted, tr.accreted, report.sinks[0], r.swallowed(), twin.swallowed);
     assert!(report.formed.is_none() && report.merged == 0 && report.accreted > 10.0, "{report:?}");
     assert!(rel(report.accreted, tr.accreted) < 1e-6, "accreted {} against the twin's {}", report.accreted, tr.accreted);
-    same_sinks("accretion", &report, &twin, 1e-6);
+    // The motion is the f32 sum over the cloud's cells, graded as [M0-V7] grades it (1e-5); the mass at 1e-6 above.
+    same_sinks("accretion", &report, &twin, 1e-5);
     assert!(rel(r.swallowed(), twin.swallowed) < 1e-5, "swallowed {} against the twin's {}", r.swallowed(), twin.swallowed);
-    // Grid + sink: the mass and the momentum as they were (G-SINK, 1e-6 relative).
+    // Grid + sink: the mass and the momentum as they were (G-SINK, 1e-6 relative), the sink's momentum before the gas's
+    // pull kicked it (P3's motion; the gas's reaction is P4's).
     let (mass1, mom1) = grid_totals(&after);
-    let (sm, sp) = (gpu_mass(&report), gpu_momentum(&report));
+    let (sm, sp) = (gpu_mass(&report), unkicked(&report, r.dt()));
     assert!(rel(mass1 + sm, mass0 + 2000.0) < 1e-6, "mass {} against {}", mass1 + sm, mass0 + 2000.0);
     assert!(rel(mom1[0] + sp[0], mom0[0]) < 1e-6 && rel(mom1[1] + sp[1], mom0[1]) < 1e-6, "momentum {mom1:?} + {sp:?} against {mom0:?}");
     // The same step with no sink: every cell beyond r_acc bit for bit, no Σ raised anywhere (nothing crosses r_acc outward).
@@ -648,7 +779,7 @@ fn gpu_two_sinks_over_one_cell_take_it_once() {
     assert!((report.sinks[0].m - 14.0).abs() < 1e-3 && (report.sinks[1].m - 12.0).abs() < 1e-3, "{:?}", report.sinks);
     same_sinks("shared cells", &report, &twin, 1e-6);
     let (mass1, mom1) = grid_totals(&r.cells());
-    let (sm, sp) = (gpu_mass(&report), gpu_momentum(&report));
+    let (sm, sp) = (gpu_mass(&report), unkicked(&report, r.dt()));
     assert!(rel(mass1 + sm, mass0 + 2.0) < 1e-6, "mass {} against {}: a cell taken twice", mass1 + sm, mass0 + 2.0);
     assert!(rel(mom1[0] + sp[0], mom0[0]) < 1e-6 && rel(mom1[1] + sp[1], mom0[1]) < 1e-6, "momentum {mom1:?} + {sp:?} against {mom0:?}");
 }
@@ -670,7 +801,9 @@ fn gpu_formation_matches_the_twin_where_all_four_criteria_hold() {
     println!("SR-SINK gpu formation: {report:?}; twin {tr:?}, {:?}; swallowed {:.4} (twin {:.4})", twin.sinks, r.swallowed(), twin.swallowed);
     assert_eq!(report.formed, Some((32, 32)));
     assert_eq!(tr.formed, Some((32, 32)));
-    same_sinks("formation", &report, &twin, 1e-6);
+    // The new sink's mass at 1e-6; its motion, the f32 sum over the bowl's cells, at [M0-V7]'s 1e-5.
+    assert!(rel(report.sinks[0].m, twin.sinks[0].m) < 1e-6, "{report:?}");
+    same_sinks("formation", &report, &twin, 1e-5);
     assert!(rel(r.swallowed(), twin.swallowed) < 1e-5, "swallowed {} against {}", r.swallowed(), twin.swallowed);
     assert!(rel(grid_totals(&r.cells()).0 + gpu_mass(&report), mass0) < 1e-6, "mass");
     // The cell is left at the floor; a second step forms nothing more (no other candidate).
@@ -741,11 +874,12 @@ fn gpu_the_densest_forms_first_ties_the_lowest_y_then_x_one_a_step_none_past_16(
     assert_eq!((report.formed, report.sinks.len()), (Some((32, 32)), 16), "15 stand: the sixteenth forms");
 }
 
-/// Kick-drift-kick in the gas's own field (P2 over the cloud), the sinks' softened pull and merging, step by step against
-/// the twin given the GPU's g and Δt: light sinks in the gas (m = 0.01 binds nothing: ε_th = 0.1 > GM/½), a pair 1.5 apart
-/// that merges on the first step, and a heavy pair in the vacuum pulling on each other.
+/// Kick-drift-kick by the sum over the cloud's cells (§0.5 [M0-V7]), the sinks' pull softened by the pair's larger r_acc
+/// and merging, step by step against the twin's `advance` given the GPU's Δt: light sinks in the gas (m = 0.01 binds
+/// nothing: ε_th = 0.1 > GM/½), a pair 1.5 apart that merges on the first step, and a heavy pair in the vacuum pulling on
+/// each other.
 #[test]
-fn gpu_kick_drift_kick_and_merging_match_the_twin_in_the_gas_field() {
+fn gpu_kick_drift_kick_and_merging_match_the_twin_in_the_gas() {
     let st = cloud();
     let start = [
         sink(20.5, 24.5, 0.3, 0.1, 0.01),
@@ -759,8 +893,8 @@ fn gpu_kick_drift_kick_and_merging_match_the_twin_in_the_gas_field() {
     twin.sinks.extend(start);
     for step in 0..6 {
         let report = r.run(1);
-        let (field, dt) = (r.field(), r.dt());
-        twin.advance(&field, 64, 64, dt);
+        let dt = r.dt();
+        twin.advance(&st, dt);
         let merged = twin.merge();
         assert_eq!(report.accreted, 0.0, "step {step}: {report:?}");
         assert_eq!(report.merged as usize, merged, "step {step}");
@@ -780,17 +914,112 @@ fn gpu_the_cloud_falls_into_a_sink_with_mass_conserved_each_step() {
     let st = cloud();
     let r = rig(&st, None, true, Some(EdgeMode::Bounce), &[sink(32.5, 32.5, 0.0, 0.0, 2000.0)]);
     let total = grid_totals(&st).0 + 2000.0;
-    let mut last = 2000.0;
+    let (p0, scale) = (grid_totals(&st).1, (0..st.cells()).map(|i| st.get(1, i).hypot(st.get(2, i))).sum::<f64>());
+    let (mut last, mut p) = (2000.0, [0.0; 2]);
     for step in 0..40 {
         let report = r.run(1);
-        let now = grid_totals(&r.cells()).0 + gpu_mass(&report);
+        let cells = r.cells();
+        let now = grid_totals(&cells).0 + gpu_mass(&report);
         assert!(report.formed.is_none() && report.merged == 0, "step {step}: {report:?}");
         assert!(rel(now, total) < 1e-6, "step {step}: grid + sink mass {now} against {total}");
         assert!(gpu_mass(&report) >= last, "step {step}: the sink lost mass");
         last = gpu_mass(&report);
+        let (gp, sp) = (grid_totals(&cells).1, gpu_momentum(&report));
+        p = [gp[0] + sp[0], gp[1] + sp[1]];
     }
-    println!("SR-SINK gpu fall: after 40 steps the sink holds {last:.4} (2000 + {:.4})", last - 2000.0);
+    let off = (p[0] - p0[0]).hypot(p[1] - p0[1]);
+    println!("SR-SINK gpu fall: after 40 steps the sink holds {last:.4} (2000 + {:.4}); grid + sink momentum ({:.4}, {:.4}) from ({:.4}, {:.4}), {:.2} % of Σ m|u| = {scale:.2}", last - 2000.0, p[0], p[1], p0[0], p0[1], 100.0 * off / scale);
     assert!(last > 2000.0 + 10.0, "the cloud reached the sink");
+}
+
+/// [M0-V7]'s bound on the GPU: one step of P3 over `st` with `start` standing, then |Σ_s M_s a_s + Σ_cells m g_s| ≤ 1e-5
+/// (Σ_s M_s |a_s| + Σ_cells m |g_s|) — a_s the pull of P3's closing half-kick, summed in f32 over the box's tiles at the
+/// drifted position on the gas accretion left, g_s each sink's softened pull at a cell in f64 from the sinks P3 left, over
+/// the cells with Σ ≥ Σ_vac. Also against the twin's `pull` from the same sinks and cells. Returns the ratio.
+fn gpu_net_force(name: &str, st: &State, start: &[Sink]) -> f64 {
+    let sigma_vac = physics().get("sigma_vac").unwrap();
+    let (w, h) = (st.width, st.height);
+    let r = rig(st, None, false, None, start);
+    let report = r.run(1);
+    assert_eq!((report.formed, report.merged, report.sinks.len()), (None, 0, start.len()), "{name}: {report:?}");
+    let cells = r.cells();
+    let mut twin = self::sinks();
+    twin.sinks = report.sinks.iter().map(|s| sink(s.x, s.y, s.vx, s.vy, s.m)).collect();
+    let mut field = zero_field(w, h);
+    add_sinks(&mut field, w, h, 1.0, &twin.sources());
+    let (mut net, mut scale, mut gap) = ([0.0; 2], 0.0, 0.0f64);
+    for ((s, [_, a]), want) in report.sinks.iter().zip(&report.pulls).zip(twin.pull(&cells)) {
+        net[0] += s.m * a[0];
+        net[1] += s.m * a[1];
+        scale += s.m * a[0].hypot(a[1]);
+        gap = gap.max((a[0] - want[0]).hypot(a[1] - want[1]) / want[0].hypot(want[1]));
+    }
+    for i in (0..w * h).filter(|&i| cells.get(0, i) >= sigma_vac) {
+        let m = cells.get(0, i);
+        net[0] += m * field.gx[i];
+        net[1] += m * field.gy[i];
+        scale += m * field.gx[i].hypot(field.gy[i]);
+    }
+    let ratio = net[0].hypot(net[1]) / scale;
+    println!("SR-SINK gpu no net force: {name}: |Σ M a + Σ m g| / scale = {ratio:.3e}; the pull against the twin's, {gap:.3e} relative");
+    assert!(ratio <= 1e-5, "{name}: {ratio:.3e}");
+    assert!(gap <= 1e-5, "{name}: the GPU's pull {:?} against the twin's {:?}", report.pulls, twin.pull(&cells));
+    ratio
+}
+
+#[test]
+fn gpu_the_sinks_pull_on_the_gas_is_equal_and_opposite_on_asymmetric_worlds() {
+    let mut worst = 0.0f64;
+    // M0-D45's worlds: one sink 2, 4, 8 and 16 cells off the blob's edge (the last outside the box), two of r_acc 2 and 5.
+    for d in [2.0, 4.0, 8.0, 16.0] {
+        worst = worst.max(gpu_net_force(&format!("one sink {d} beside the blob"), &blob(), &[sink(12.5 + d + 3.0, 41.5, 0.0, 0.0, 100.0)]));
+    }
+    let pair = [sink(24.5, 41.5, 0.0, 0.0, 400.0), sink(30.5, 30.5, 0.0, 0.0, 100_000.0)];
+    worst = worst.max(gpu_net_force("two sinks of r_acc 2 and 5 beside the blob", &blob(), &pair));
+    // The sink at the cloud's corner accretes in the step it is graded: a sum over the gas before accretion would count the
+    // cells it took (the twin: 3.6e-2 of the pull), and the step's velocity against the twin's `step` catches a first
+    // half-kick read before accretion.
+    let corner = sink(13.2, 13.7, 0.0, 0.0, 2000.0);
+    worst = worst.max(gpu_net_force("the sink at the cloud's corner, after accretion", &cloud(), &[corner]));
+    let r = rig(&cloud(), None, false, None, &[corner]);
+    let report = r.run(1);
+    let mut twin = self::sinks();
+    twin.sinks.push(corner);
+    let tr = twin.step(&mut cloud(), &zero_field(64, 64), r.dt());
+    assert!(report.accreted > 3.0 && rel(report.accreted, tr.accreted) < 1e-6, "{report:?} against {tr:?}");
+    same_sinks("the corner's step", &report, &twin, 1e-5);
+    println!("SR-SINK gpu no net force: worst ratio {worst:.3e}; the corner's sink {:?} (twin {:?})", report.sinks[0], twin.sinks[0]);
+}
+
+/// §0.5 [M0-V7]'s sum reaches a sink outside the box (P2 writes g over the box only, so a grid read there was stale or 0,
+/// M0-V7 § A sink outside the box): a 128 × 128 world, an 8 × 8 blob of Σ = 1 on cells 8–15, a light sink at (100.5, 100.5)
+/// and at (20.5, 20.5) inside the box, one step of P2 + P3 against the twin's `step` from the same start.
+#[test]
+fn gpu_a_sink_outside_the_box_moves_as_the_twins() {
+    let mut st = vacuum_sized(128, 128);
+    let (w, n) = (st.width, st.cells());
+    for y in 8..16 {
+        for x in 8..16 {
+            st.planes[y * w + x] = 1.0;
+            st.planes[3 * n + y * w + x] = 0.1;
+        }
+    }
+    for (name, at, outside) in [("outside the box", 100.5, true), ("inside the box", 20.5, false)] {
+        let start = sink(at, at, 0.0, 0.0, 1e-3);
+        let r = rig(&st, None, true, None, &[start]);
+        let report = r.run(1);
+        let b = r.step.read_box(&r.gpu.device, &r.gpu.queue);
+        assert_eq!((b.x0, b.y0, b.w, b.h), (0, 0, 24, 24), "the blob's box");
+        assert_eq!(at > f64::from(b.x0 + b.w), outside, "{name}");
+        let mut twin = self::sinks();
+        twin.sinks.push(start);
+        twin.step(&mut rounded(&st), &zero_field(128, 128), r.dt());
+        let (g, t) = (report.sinks[0], twin.sinks[0]);
+        println!("SR-SINK gpu {name}: velocity ({:.6e}, {:.6e}), the twin's ({:.6e}, {:.6e})", g.vx, g.vy, t.vx, t.vy);
+        assert!(t.vx < -1e-4 && t.vy < -1e-4, "{name}: the blob pulls the twin's sink: {t:?}");
+        assert!((g.vx - t.vx).hypot(g.vy - t.vy) <= 1e-5 * t.vx.hypot(t.vy), "{name}: GPU {g:?} against the twin's {t:?}");
+        same_sinks(name, &report, &twin, 1e-5);
+    }
 }
 
 
@@ -799,19 +1028,14 @@ fn gpu_the_cloud_falls_into_a_sink_with_mass_conserved_each_step() {
 /// A vacuum world at the cloud's size with a 2 × 2 test mass (Σ = 10⁻³, above Σ_vac, at ε_th = 0.1 as the formation bowls,
 /// the vacuum's fractions, at rest) on cells (20..22, 20..22): too light to pull on anything, so what its cells feel is the sinks'.
 fn test_mass() -> State {
-    let cloud = cloud();
-    let (w, h, n) = (cloud.width, cloud.height, cloud.cells());
-    let vacuum: Vec<f64> = (0..COMPONENTS).map(|c| cloud.get(c, 0)).collect();
-    let mut planes = vec![0.0; COMPONENTS * n];
-    for c in 0..COMPONENTS {
-        planes[c * n..(c + 1) * n].fill(vacuum[c]);
-    }
+    let mut st = vacuum();
+    let (w, n) = (st.width, st.cells());
     for (x, y) in [(20, 20), (21, 20), (20, 21), (21, 21)] {
         let i = y * w + x;
-        planes[i] = 1e-3;
-        planes[3 * n + i] = 1e-3 * 0.1;
+        st.planes[i] = 1e-3;
+        st.planes[3 * n + i] = 1e-3 * 0.1;
     }
-    State::new(w, h, planes)
+    st
 }
 
 /// One step of P2 + P3 over `st` with `start` standing, against the twin's φ and g with the sinks added

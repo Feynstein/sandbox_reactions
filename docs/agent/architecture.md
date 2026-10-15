@@ -66,12 +66,12 @@ otherwise the whole step is one compute pass, the same dispatches in the same or
 |---|---|---|
 | P0 edits | the player's queued edits at the step boundary; the box re-fit; ledger entries (§1.12) | the box's `box_gate`, `box_cells`, `box_fit` (sized by the edit gate — zero when no edit flagged); the edit pass itself lands with its lot (§1.12) |
 | P1 Δt | the step's Δt is the reduction P9 made at the end of the step before (§2.3.3) | `dt_advance` |
-| P2 gravity | the potential by FFT convolution over the box, on a cadence; sinks' potentials added (§1.4) | when the step runs gravity (`Passes`): `grav_rows` (one workgroup a world row), `grav_columns` (fixed, the padded width), `conv_rows_inverse` (a workgroup a world row), `grav_gradient` (box tiles, indirect) — every step, the cadence and the sinks' potentials are not built |
-| P3 sinks | formation and accretion, then the sinks' kick-drift (§2.6) | — |
+| P2 gravity | the potential by FFT convolution over the box, on a cadence; sinks' potentials added (§1.4) | when the step runs gravity (`Passes`): `grav_rows` (one workgroup a world row), `grav_columns` (fixed, the padded width), `conv_rows_inverse` (a workgroup a world row), `grav_gradient` (box tiles, indirect), and in a step that runs P3 a fifth, `grav_sinks` (box tiles, indirect: the sinks' potentials and pulls, M0-T52a) — every step, the cadence is not built |
+| P3 sinks | formation and accretion, then the sinks' kick-drift (§2.6) | when the step runs sinks (`Step::with_sinks`; headless builds it from the scene's `sinks` switch, M0-D47): `sink_candidates` (box tiles, indirect), `sink_update` (fixed, one workgroup), `sink_pull` (box tiles, indirect), `sink_kick_drift` (fixed, one workgroup), `sink_pull` again (box tiles, indirect) and `sink_kick_merge` (fixed, one workgroup) — the motion of §0.5 [M0-V7], M0-D46; `sink_latch` last (fixed, one invocation — built once the step's latch exists, a formation sets the flag there) |
 | P4 hydro | the flux scheme with the gravity source, the radiation force and the edge ghosts (§2.3, §2.8) | when the step runs hydro (`Passes`): `hydro_update` (box tiles, indirect: one workgroup an 8 × 8 tile, predicted faces exchanged in workgroup memory; binds WebGPU's 8 storage buffers), `hydro_edges` (fixed, one invocation a boundary face; binds 7), `hydro_commit` (box tiles, indirect) |
 | P5 heat | flux-limited diffusion; radiated energy counted; the flux kept for the next step's P4 (§2.4) | when the step runs heat (`Step::with_heat`): `heat_cells` (box tiles, indirect), `heat_law` (box tiles), `heat_open` (fixed, one invocation — the latch reaches the chain through it), `heat_round` × `SLOTS` (chained: each sized by a word the round before wrote, so a converged step's later rounds have no workgroups; a step records only the first `Step::heat_rounds` of them), `heat_close` (box tiles), `heat_sum` (fixed, one workgroup), `heat_apply` (box tiles); around them `latch_hold` before P0 and `heat_park`, `latch_carry` after the rounds (fixed, one invocation each — a step still in its rounds is carried into the next submission, M0-T121) |
 | P6 reactions | every enabled registry record and neutrino cooling, sub-cycled per cell; the latch flag (§2.5, §1.8.5) | when the step runs reactions (`Step::with_reactions`): `react_begin` (fixed, one invocation), `react_cells` (box tiles, indirect), `react_latch` (fixed, one invocation — built once the step's latch exists; the test hook `set_latch_hook` sets the flag there too) |
-| P7 neutrino heating | the neutrino share deposited through a kernel (§2.5.4) | — |
+| P7 neutrino heating | the neutrino share deposited through a kernel (§2.5.4) | when the step runs neutrino heating (`Step::with_neutrino_heating`; headless builds it with `reactions` and `neutrinos` both on, S_ν being P6's, M0-D47): `nu_tiles` (box tiles, indirect), `nu_gate` (fixed, one workgroup — the sum of S_ν over the tiles opens or closes the chain), then chained on it: `conv_rows`, `nu_columns`, `conv_rows_inverse` (a workgroup a world row, a column, a world row), `nu_deposit` (box tiles), `nu_share` (one workgroup), `nu_apply` (box tiles); `nu_close` last (fixed, one invocation) — zero chained dispatches when ΣS_ν = 0 |
 | P8 floors | vacuum reset, temperature floor, species renormalised; ledger floor terms (§2.7) | `floor_cells`, then `renormalise_species` (both box-sized) |
 | P9 reductions | the next Δt, the non-finite guard, the per-cell frame accumulators (§2.3.3, §3.3, §1.9.1) | `dt_cells` (box-sized), `dt_partials`; `guard_scan`, `guard_stamp` on the guard's steps; the re-fit `box_cells`, `box_fit` on the re-fit's steps; under a frame, or on a step with P5, `latch_check` last |
 
@@ -113,7 +113,7 @@ Beside the state, never part of it (`state.rs`):
   species a, species b), which leaves a stage's other storage slots to the passes (§6.2.2). Upload and readback go
   through the canonical form only.
 - **The side fields** (`SideFields`) — φ (1 plane, P2's), the heat flux F (2 planes, F_x and F_y, P5's, read by the next
-  step's P4) and S_ν (1 plane, P6's, read by P7). φ is written by P2, F by P5 (M0-T42) and S_ν by P6 (M0-T47, with the scene's `neutrinos` switch); P7, S_ν's reader, lands with lot 7.
+  step's P4) and S_ν (1 plane, P6's, read by P7). φ is written by P2, F by P5 (M0-T42) and S_ν by P6 (M0-T47, with the scene's `neutrinos` switch); P7 reads it (`nu_tiles`, `nu_deposit`, M0-T54).
 - **The booking** (`Booking`, `TERMS`, `BOOK_GROUPS`) — every §2.9 booked term and §1.9.1 frame accumulator, a `Term`
   each, with the one pass that writes it (`Term::writer`) and whether the block summary sums it as an accumulator. The
   state-derived ledger terms (grid mass, kinetic, thermal, cold, W, the sinks) are not here: they come from the state and
@@ -170,7 +170,7 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
   gate (`latch_end` restores what it zeroed). `Latch::new` refuses a step holding any other indirect buffer: a pass that
   adds one adds it to `latch.wgsl` first, or the latch would not reach it.
 - **The flag** is the latch record's first word (`Step::latch_flag`): P6 sets it when a cell's iron-group rate is
-  positive, P3 when a sink forms — both with `atomicOr`, both in their lots (today only the test hook sets it). **Armed**
+  positive, P3 when a sink forms — both with `atomicOr`, P6 in `react_latch` and P3 in `sink_latch` (the test hook sets it too). **Armed**
   when no set happened in the last sim-time span §1.8.5 names (every set restarts the span). An armed set with the
   slow-down on → no later step of the frame runs, the box re-fit's dispatches included, and the frame's report names the
   step it fired after; the CPU then drops the rung (time control). The slow-down off → the frame runs through.
@@ -209,8 +209,8 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
   header's `step` is the steps run since the scene (the next step's index); `resume` carries what no cell holds and a
   resumed run needs to stay bit-identical (§1.3.4): Δt_n and Δt_{n+1}, the latch's sim time since its last set, the box's
   record and indirect sizes — through `Step::resume_records` / `Step::restore` (`latch.rs`), with the GPU step count and
-  the sim time (the Δt record's clock). Not dumped: the booking (the ledger restarts). `sinks` is written empty until P3's block, and
-  `load_dump` refuses a dump holding any (the format reads up to §2.6's count). `--load-dump` takes the world and cells from the dump, the constants, edge and switches from the scene;
+  the sim time (the Δt record's clock). Not dumped: the booking (the ledger restarts). `sinks` is P3's, read from `Step::read_sinks` (empty when the step runs no P3, M0-T52b); `load_dump`
+  restores them through `Step::set_sinks` and refuses a dump holding any into a step that runs no P3 (the format reads up to §2.6's count). `--load-dump` takes the world and cells from the dump, the constants, edge and switches from the scene;
   `--dump-every` counts step indices from the scene, so a resumed run's dumps fall where a straight run's do.
   `Dump::from_bytes` refuses by name: a wrong magic, a file cut anywhere, bytes past the last plane, a non-UTF-8 or
   non-JSON header, an unknown or missing key, another version, a world §2.8 refuses, another channel list, more sinks than

@@ -3063,3 +3063,305 @@
   Fail: any other · 2. `python3 tools/pb/verify.py --redarm tools_selftest --task M0-D32` · Pass: GO — every plant NO-GO ·
   Fail: a plant GO · 3. `grep -c "M0-D32" milestones/m0/tasks/toolkit_local_diff.md` · Pass: ≥ 1 · Fail: 0
 - Handoff: rung_record.py's no-session fallback now reads the handoff's quoted `model=… level=…` first (`handoff_rung()`, the whole `- Handoff:` field, a dated id mapped by `rung_name`), the first line's prose rung only where none is quoted, `unknown` where neither; `rung_basis` names which. Cause confirmed: `RUNG_RE`'s first prose match, the quote never parsed. Measured on win-laptop: with no session read (linux-pc's condition, all 104 DONE rows) 71 handoffs quote, 71/71 on the quote's rung (was 2/71: 6 another rung, 63 unknown); `report --json` with this box's sessions GO, 23/23 quoting handoff rows right. Selftest +1 check, +1 plant (72 checks, 30/30 red); `--redarm tools_selftest` GO (181 s). Local diff: toolkit_local_diff.md item 6 (annex §A.9's text lags — M0-TZ). Owed on linux-pc: the literal Verify 1 (flagged to M0-V6). Detail: tasks/M0-D32.md. Ran on model=claude-opus-5-5 level=high. Next: M0-T41.
+
+## M0-T50 · Sinks on the CPU twin (P3) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V6)
+- Status: DONE (2026-10-15 10:39)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.3, §1.7 (sinks), §2.6, §2.9
+  (swallowed), §5.1 (G-SINK) + milestones/m0/reports/sim_models.md SM-E28, SM-E29 +
+  docs/agent/testing.md
+- Deliver: crates/sr-physics/src/reference/sinks.rs (new): formation (all four criteria at one cell, the
+  densest candidate, ties lowest y then x, at most one per step), accretion within r_acc = max(2,
+  2GM_s/c_sb²) of gas bound to the sink, its energy booked `swallowed`, kick-drift-kick with the grid's g
+  (bilinear) plus the other sinks' pull softened by r_acc, merging, up to 16 sinks, and in
+  reference/grav.rs the sinks' potential −GM_s/√(r² + r_acc²) (§1.4.3) → Verify 1 · tests/gpu/sink.rs
+  (new, twin cases) with scenes/sink_cloud.json (new): grid + sink mass and momentum constant to 10⁻⁶,
+  no mass outward across r_acc, formation refused when any one criterion fails (four cases) → scope `sink`
+  (G-SINK), its twin cases → Verify 1 · plant tests/plants/sink-momentum.patch (new, §5.1) → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py sink --task M0-T50` · Pass: GO, ≥ 6 cases · Fail: NO-GO · 2.
+  `python3 tools/pb/verify.py --redarm sink --task M0-T50` · Pass: GO — the plant NO-GO · Fail: the plant
+  stays GO
+- Adversarial: a density threshold alone forming sinks in a bouncing core (SM-E28's warning) — each of the
+  other three criteria has its own refusal case.
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record at launch; matches the heading). Built reference/sinks.rs (form with all four criteria, densest then lowest y/x, one a step, ≤16; accrete per sink in index order, r_acc = max(2, 2GM/c²), bound gas only, 'swallowed' booked; KDK with bilinear g + softened sink pull; merge) and grav.rs add_sinks/field_with_sinks (§1.4.3); scene sink_cloud.json; tests/gpu/sink.rs 16 twin cases (each criterion its own refusal); scope sink; plant sink-momentum. Verify 1 python3 tools/pb/verify.py sink --task M0-T50 [ALREADY RUN — PASS (GO, 16 cases) on linux-pc]; Verify 2 --redarm sink [ALREADY RUN — PASS (clean GO, sink-momentum RED, 1 failed) on linux-pc]; claim --changed [ALREADY RUN — PASS (GO, 827 passed, 37/37 scopes) on linux-pc], run before this plan edit (the plan_lint scope after it is separate). Declared readings (cell-centre position, share 1 − Σ_floor/Σ taken, merge at the mass-weighted centre, outer-ring cells never form): tasks/M0-T50.md. Not done: Twin does not call P3 yet; formation's GPU, latch and dump are T51–T52b. FLAG oracle lines = my own sink.rs, main.rs, verify.json. Next: M0-T51.
+
+## M0-T51 · Sinks on the GPU (P3) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T50)
+- Status: DONE (2026-10-15 11:00)
+- Carried flags: [M0-T50, 2026-10-15] Match M0-T50's declared readings (tasks/M0-T50.md): sink position in cell units with cell (i, j) centred at (i + ½, j + ½) and g bilinear between centres; the share taken from a cell is 1 − Σ_floor/Σ of Σ, momentum and E (remnant keeps velocity, energy per mass, fractions), swallowed = that share's E − ½|mom|²/Σ; accretion per sink in index order with the sink's M and v frozen for its pass; outer-ring cells never form; formation's φ includes existing sinks' term; merge lowest pair first, strictly closer than the larger r_acc, at the mass-weighted centre into the lower slot. The twin is reference/sinks.rs (Sinks::step), the oracle for G-SINK's GPU cases.
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P3), §1.3.4, §2.6, §5.1
+  (G-SINK) + docs/agent/testing.md
+- Deliver: crates/sr-engine/src/step/sinks.rs and shaders/sinks.wgsl (new): the sink state in a small
+  buffer, candidates by a fixed-order reduction, accretion per sink in fixed order (§1.3.4), KDK and
+  merging in one small dispatch — no CPU round trip inside a frame, `swallowed` booked (M0-T18) → Verify 1
+  · tests/gpu/sink.rs: G-SINK's GPU cases → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py sink --task M0-T51` · Pass: GO, ≥ 12 cases (twin and GPU) ·
+  Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm sink --task M0-T51` · Pass: GO — the plant NO-GO
+  on the GPU cases · Fail: the plant stays GO
+- Adversarial: two sinks reducing into each other's accretion in parallel take the same cell twice — the
+  case puts two sinks' r_acc over one cell and checks the mass once.
+- Handoff: linux-pc (laserax-ai), RTX 5090, model=claude-opus-5-5 level=high (rung_record now at launch; matches the heading). Built P3 on the GPU: shaders/sinks.wgsl (sink_candidates over the box's tiles, each tile's best by a fixed tree; sink_update, one workgroup: the tiles' best, formation, accretion sink by sink with fixed-tree sums and a storage barrier between sinks, KDK, merging; no atomic), step/sinks.rs (the sinks' small buffer, Step::with_sinks, set_sinks/read_sinks), 8 GPU cases in tests/gpu/sink.rs against the twin and on conservation, the adversarial shared cells taken once; sink-momentum plants the shader too. Verify 1 python3 tools/pb/verify.py sink --task M0-T51 [ALREADY RUN — PASS (GO, 23 passed, 1 ignored) on linux-pc]; Verify 2 python3 tools/pb/verify.py --redarm sink --task M0-T51 [ALREADY RUN — PASS (clean GO, sink-momentum RED: 3 failed, 2 of them GPU cases) on linux-pc]; claim python3 tools/pb/verify.py --changed --task M0-T51 [ALREADY RUN — PASS (GO, 761 passed, 33/33 scopes, sink's green run reused on the same code tree) on linux-pc], run after the close; this handoff line re-written after it. Deviation: the 40-step P2 + P3 + P4 fall is #[ignore]d — P4 writes NaN beside the sink's hole on step 32 (P3-free repro; the twin's P4 finite) → filed M0-D44. Declared: a taken cell left at Σ_floor exactly; a sink's mass an f32 pair kept canonical; no runner (headless, app) builds P3 yet. Flags to M0-T52a (φ term, gas-only g, one storage slot) and M0-T52b. Detail: tasks/M0-T51.md. Next: M0-D44.
+
+## M0-D44 · P4 writes NaN at a face beside a vacuum cell inside the gas (a sink's hole): the twin's P4 from the same state is finite · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T51)
+- Status: DONE (2026-10-15 12:01)
+- Blocks: `sink`'s 40-step fall through P2 + P3 + P4 (`gpu_the_cloud_falls_into_a_sink_with_mass_conserved_each_step`, `#[ignore]`d
+  by M0-T51); any run where a sink accretes inside gas, or the eraser carves a hole in it (§1.12), may hit P9's non-finite guard
+- Caused by: unknown — suspected M0-T34's P4 in f32 (never fed a cell below Σ_vac inside gas before P3 dug one); not P3: the state
+  after P3, uploaded into a step with P2 + P4 alone and no sink, does it too
+- Files: crates/sr-engine/shaders/hydro.wgsl (`read_cell`'s floor reading, `evolved`, `hll`; read only, not changed),
+  crates/sr-engine/tests/gpu/sink.rs (the ignored case) — opened by M0-T51
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.3.3–§2.3.4 + crates/sr-engine/shaders/hydro.wgsl +
+  sr_physics::reference::hydro (`step_with`, the oracle) + docs/agent/testing.md's `sink` row
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-15, M0-T51: scenes/sink_cloud.json in a 64 × 64 bounce world,
+  P2 + P3 + P4 (`Step::with_sinks`), one sink of 2000 at (32.5, 32.5), one step per submission — steps 1–31 hold grid + sink
+  mass to 1e-6; on the 32nd, P3 takes cell (32, 30) (Σ 4.4e-5 → Σ_floor, inside r_acc = 2) and P4 writes NaN into (31, 30) and
+  (32, 30), and into (33, 33) and (34, 33) — two pairs of cells, each sharing a face, one cell of each below Σ_vac; the run is
+  deterministic (four 25-step runs bit for bit, in one submission or 25). From the same state (the GPU's after 31 steps, f32 widened), the same P3 result
+  (accreted 4.5309e-4, the twin's to 1e-8), Δt and g, the twin's `Hydro::step_with` is finite with no Σ < 0; that state after P3
+  uploaded into a P2 + P4 step without sinks: P9's guard reads `NonFinite { step: 0, x: 31, y: 30, channel: "sigma" }`.
+  Zeroing the remnant's momentum in P3's `take` changes nothing (the same four cells)
+- Repro: un-ignore the case, or run it ignored: `bash -c 'source tests/cargo.sh; cd $_sr_root && SR_TEST_ADAPTER="RTX 5090" cargo
+  test --release --locked -p sr-engine --test gpu sink::gpu_the_cloud_falls -- --ignored --nocapture'` — `step 31: grid + sink
+  mass NaN against 3600`
+- Suspected cause: not measured — a predicted face state or an HLL speed in f32 at a dense cell (Σ ≈ 0.28, u ≈ (−1.0, −1.8))
+  facing a cell read as the floor state; `evolved` and `hll` guard Σ ≤ 0, a non-finite u and c² < 0 on reading, so the NaN's
+  first appearance (which dispatch, which face quantity) is the first thing to measure
+- Deliver: the NaN's source measured and fixed in hydro.wgsl, the twin's scheme unchanged → Verify 1 · the case un-ignored, its
+  40 steps holding grid + sink mass to 1e-6 → Verify 1
+- Done when: the case passes un-ignored; `sink` reads 24 passed, 0 ignored (verify.json's expected raised to 24)
+- Verify: 1. `python3 tools/pb/verify.py sink sod collapse cpu_gpu --task M0-D44` · Pass: GO, `sink` 24 passed and 0 ignored ·
+  Fail: NO-GO, or the case still ignored
+- Handoff: Measured (linux-pc, RTX 5090): from step 32 a dense cell beside the sink's hole ((31,30) Σ 0.276, (34,33) Σ 0.261), with a cell ≥ 4 × denser behind it, predicted an f32 MC face Σ of exactly 0.0 toward the hole: c − (c − 1e-8) rounds to 0, so cons divided by Σ = 0 and HLL wrote NaN across that face. The twin's f64 face is 1e-8. Fix: hydro.wgsl's `bracketed` holds each face's Σ between the cell's and its neighbour's (MC's exact-arithmetic bound; the twin is unchanged). The fall case is un-ignored, sink expected 23 → 24, testing.md row updated. Verify 1 GO, 48 passed (sink 24/0 ignored, sod 15, collapse 6, cpu_gpu 3); redarm sink RED under sink-momentum. Only Σ is bracketed: Π's face rounds to ≥ 0, which stays finite. Detail: tasks/M0-D44.md. Model: claude-opus-5-5, level high. Next: M0-T52a.
+
+## M0-T52a · The sinks' pull and the latch on formation · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T51)
+- Status: DONE (2026-10-15 12:13)
+- Carried flags: [M0-T22, 2026-10-10] P3 sets the latch on formation by atomicOr(1) into word 0 of Step::latch_flag() (M0-T22). · [M0-T51, 2026-10-15] sinks.wgsl's phi_full adds the sinks' potential to φ for formation only — once P2 adds it to side.phi, drop it there or it counts twice; P3's kick-drift-kick must keep reading the gas's g alone (the twin's advance) — a g carrying the sinks' pull makes a sink pull on itself through the bilinear read; sink_update binds 7 of 8 storage buffers (EOS table included), one left for the latch flag (tasks/M0-T51.md).
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.3, §1.8.5, §2.6 +
+  docs/agent/testing.md
+- Deliver: crates/sr-engine/shaders/grav.wgsl: the sinks' potential −GM_s/√(r² + r_acc²) added to φ in
+  P2 (§1.4.3) → Verify 1 · crates/sr-engine/shaders/sinks.wgsl: the latch set when a sink forms (M0-T22)
+  → Verify 1 · tests/gpu/sink.rs: a test mass's g near a sink against −GM_s r/(r² + r_acc²)^{3/2}, φ
+  carrying the same term, and a formation inside a frame stopping it with the slow-down on → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py sink latch --task M0-T52a` · Pass: GO, ≥ 15 cases in sink ·
+  Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm sink --task M0-T52a` · Pass: GO — the plant
+  NO-GO · Fail: the plant stays GO
+- Adversarial: a sink's pull added to g but not to φ leaves W wrong in the ledger and the virial — the
+  case reads both.
+- Handoff: linux-pc (laserax-ai, RTX 5090), model=claude-sonnet-5-5 level=high (rung_record at launch; matches the heading). P2's new fifth dispatch grav_sinks adds each sink's −GM/√(r² + r_acc²) to φ in place and its analytic pull to g — into a second field: Step::gravity_field (P4, Δt) carries every pull, new Step::gravity_gas_field (P3's KDK) the gas's alone, bit for bit the sinkless step's; sinks.wgsl dropped phi_full (no double count) and sink_latch ORs a formation into the latch flag (Sinks::latch_dispatch, like P6's). 3 new cases (sink 27): test mass near one and two sinks (r_acc 2 and 3) and the cloud — g against −GM d/(r²+r_acc²)^1.5 and φ against the twin's, both; a formation stops a frame with the slow-down on (one step, a one-step run's bits), not with it off, and accretion never fires it. Deviations: T51's 'one a step' and 'shallow bowls' cases rewrite φ with the twin's add_sinks each step (a step without P2 carries no sinks' term); plants sink-phi-skip and sink-latch-off added, verify.json sink expected 24 → 27 (the claim's FLAG oracle lines name them and sink.rs: mine). Verify 1 [ALREADY RUN — PASS (sink 27/0/0, latch 5/0/0) on laserax-ai]; Verify 2 [ALREADY RUN — PASS (clean GO; sink-momentum, sink-phi-skip, sink-latch-off RED) on laserax-ai]; claim --changed [ALREADY RUN — PASS (206 passed, 31/31 scopes GO) on laserax-ai]. Not acted on: no runner builds P3 yet (T51's finding stands); the box covers only Σ ≥ Σ_vac, so grav_sinks reaches only the gas. Detail tasks/M0-T52a.md. Next: M0-T52b.
+
+## M0-T52b · Sinks in the state dump · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-T52a)
+- Status: DONE (2026-10-15 12:21)
+- Carried flags: [M0-T51, 2026-10-15] Step::set_sinks and Step::read_sinks (dump::Sink, f64) are the restore and the read; each sink's mass is an f32 pair kept canonical (m = fl(m + m_lo)), so its f64 sum restores bit for bit through set_sinks (tasks/M0-T51.md).
+- Sizing: E
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.12.3 (sinks) +
+  crates/sr-engine/src/dump.rs (M0-T26's writer and reader)
+- Deliver: crates/sr-engine/src/dump.rs: the header's `sinks` list — x, y, vx, vy and m per sink —
+  written and restored (§2.12.3), and tests/gpu/dump.rs: a round trip with two sinks, bit-identical, its
+  case joining the `dump` scope (the expected count raised in tools/pb/verify.json) → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py dump --task M0-T52b` · Pass: GO, ≥ 5 cases · Fail: NO-GO
+- Adversarial: a dump that restores the cells but drops the sinks resumes a world without its black
+  hole — the round trip compares the sinks' state too.
+- Handoff: linux-pc (laserax-ai, RTX 5090), model=claude-haiku-5-5 level=high (rung_record now at launch; matches the heading). Built: dump.rs writes the header sinks from Step::read_sinks and restores them in load_dump through Step::set_sinks (sinks into a step that runs no P3 refused, naming it; Step::runs_sinks in step/sinks.rs). exact_sinks reads x, y, vx, vy, m as exact_number reads sim_time (serde_json float path is not exact at 17 digits; a sink m is an f32 pair sum). Test a_dump_carries_two_sinks_bit_for_bit_through_the_file_and_the_load (tests/gpu/dump.rs). verify.json dump expected 9 to 10; plant dump-sinks-drop. Deviation: set_sinks sits before the flux match (keeps dump-flux-zero hunk intact). Verify 1 python3 tools/pb/verify.py dump --task M0-T52b [ALREADY RUN — PASS (GO, 10 passed, 0 failed) on laserax-ai]; --redarm dump [ALREADY RUN — PASS (clean GO, 4 of 4 plants red) on laserax-ai]; claim python3 tools/pb/verify.py --changed --task M0-T52b [ALREADY RUN — PASS (GO, 776 passed, 33/33 scopes) on laserax-ai]. Not done: no headless runner builds P3, so --load-dump with sinks is not exercised end to end. Detail: tasks/M0-T52b.md. Next: M0-T53.
+
+## M0-T53 · Neutrino heating on the CPU twin (P7) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T52b)
+- Status: DONE (2026-10-15 12:27)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.4 (S2), §2.5.4, §2.7 (f_dep) +
+  docs/agent/testing.md
+- Deliver: crates/sr-physics/src/reference/nuheat.rs (new): D(x) = Σ(x)·(S_ν ∗ K_ν)(x) with K_ν(r) =
+  1/(r² + 1) through M0-T28's convolution, D = 0 where X_n ≥ 0.5, q(x) = f_dep·(Σ S_ν)·D(x)/Σ D — exactly
+  f_dep of the emitted power — booked `neutrino_deposited`, nothing when Σ S_ν = 0 (§2.5.4) → Verify 1 ·
+  tests/gpu/nuheat.rs (new, twin cases): deposited = f_dep × emitted to 10⁻⁹, none inside the neutron
+  star, nearer and denser cells receiving more, f_dep above 0.1 refused by the registry while S2 is off
+  (§1.6.4) → scope `nu-heat` → Verify 1 · plant tests/plants/nuheat-no-cap.patch (new: f_dep applied
+  twice) → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py nu-heat --task M0-T53` · Pass: GO, ≥ 4 cases · Fail: NO-GO · 2.
+  `python3 tools/pb/verify.py --redarm nu-heat --task M0-T53` · Pass: GO — the plant NO-GO · Fail: the
+  plant stays GO
+- Adversarial: a deposit normalised per cell instead of over ΣD exceeds what the core emitted — the
+  energy case is exact by construction and must stay so.
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record now; matches the heading). Built reference/nuheat.rs (NuHeat::heating/apply: D = Σ·(S_ν∗1/(r²+1)) through fft::Convolver, D = 0 at X_n ≥ 0.5, q = f_dep·ΣS_ν·D/ΣD, ΣS_ν = 0 or ΣD = 0 → nothing), 7 twin cases in tests/gpu/nuheat.rs, scope nu_heat, plant nuheat-no-cap (f_dep counted twice: 4 failed). Verify 1 [ALREADY RUN — PASS (nu_heat 7/0/0, 3.4 s) on linux-pc]; Verify 2 [ALREADY RUN — PASS (clean GO, plant RED) on linux-pc]; claim --changed [ALREADY RUN — PASS (853 passed, 38/38 scopes) on linux-pc], its FLAG oracle lines = main.rs, nuheat.rs, verify.json (registration + scope). Deviation: scope is nu_heat (R17), the block says nu-heat. Declared: q is power per cell (cell = unit area); D clamped ≥ 0 after FFT round-off; vacuum not excluded; Twin does not run P7 yet. Not acted on: T55's grep for a nu-heat row will miss nu_heat (flagged). Detail: milestones/m0/tasks/M0-T53.md. Next: M0-T54.
+
+## M0-T54 · Neutrino heating on the GPU (P7) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T53)
+- Status: DONE (2026-10-15 12:38)
+- Carried flags: [M0-T22, 2026-10-10] P7's own indirect sizes are a third indirect buffer: Latch::new asserts the step reads exactly box.args and P0's gate — add a binding to latch.wgsl's zero_sizes/latch_end (save, zero, restore) and widen the assert, or the latch would not reach P7 (M0-T22). · [M0-T53, 2026-10-15] the scope is nu_heat (R17; Verify spells nu-heat) and already holds M0-T53's 7 twin cases in tests/gpu/nuheat.rs — add the GPU cases there (expected count 7 → 15 in verify.json); NuHeat::heating/apply is the oracle, ΣD = 0 deposits nothing, D clamped ≥ 0 (M0-T53)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P7), §2.5.4 +
+  docs/agent/testing.md
+- Deliver: crates/sr-engine/src/step/nuheat.rs and shaders/nuheat.wgsl (new): P7 through M0-T30's
+  convolution, zero dispatches when Σ S_ν = 0 (the indirect sizes zeroed from P6's sum, on the GPU) →
+  Verify 1 · tests/gpu/nuheat.rs: the GPU cases (deposited = f_dep × emitted within 10⁻⁵ in f32, no
+  dispatch when nothing is emitted, read from the timing report) → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py nu-heat --task M0-T54` · Pass: GO, ≥ 8 cases · Fail: NO-GO · 2.
+  `python3 tools/pb/verify.py --redarm nu-heat --task M0-T54` · Pass: GO — the plant NO-GO on the GPU
+  cases · Fail: the plant stays GO
+- Adversarial: a P7 that always dispatches costs two FFTs a step through every life without a neutron
+  star — the zero-dispatch case.
+- Handoff: linux-pc (laserax-ai), RTX 5090, model=claude-sonnet-5-5 level=high (rung_record now; matches the heading). P7 on the GPU: shaders/nuheat.wgsl (appended to fft.wgsl) + step/nuheat.rs — nu_tiles/nu_gate sum S_ν in a fixed order and size the rest (zero when ΣS_ν = 0), conv_rows/nu_columns/conv_rows_inverse on P2's kernel-quarter tables (grav::spectra_of), nu_deposit/nu_share/nu_apply (E += qΔt, booked neutrino_deposited), nu_close; Step::with_neutrino_heating + read_nuheat; no atomic. Verify 1 [ALREADY RUN — PASS (GO, 15 cases: 7 twin + 8 GPU) on linux-pc]; Verify 2 [ALREADY RUN — PASS (clean GO; nuheat-no-cap RED 5, nuheat-gpu-no-cap RED 4, nuheat-gpu-always-dispatch RED 1) on linux-pc]; claim --changed [ALREADY RUN — PASS (GO, 867 passed, 40/40 scopes) on linux-pc]. Measured: q within 1.1e-7 of the twin's top (tolerance 1e-4), Σ q Δt = f_dep ΣS_ν Δt to 3.9e-8 (1e-5), P7 0.015 ms silent vs 0.086 ms with a star at 512 × 512. Deviations: the carried latch flag asked for a third indirect buffer in latch.wgsl; I used Size::Chained (P5's way: nu_gate and nu_close are fixed-size, so a stopped frame runs neither; latch.rs untouched, proven by a stopped-frame case); files beyond Deliver: step/mod.rs, grav.rs (spectra_of), reference/nuheat.rs (kernel pub), verify.json (nu_heat 7→15, two plants), two plants. Found, not filed: no runner builds P7 (headless/app call with_reactions; as P3) — flagged to M0-V7 with the win-laptop owed list; M0-T55 flagged the design for the docs. Detail tasks/M0-T54.md. Next: M0-T55
+
+## M0-T55 · Docs — physics.md (sinks, neutrino heating, the stand-ins) and lot 7's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T54)
+- Status: DONE (2026-10-15 12:44)
+- Carried flags: [M0-T52a, 2026-10-15] P2's grav_sinks adds the sinks' potential to φ and their pull to g (§1.4.3); Step::gravity_field carries every pull (P4, Δt), Step::gravity_gas_field the gas's alone (P3's kick-drift-kick — a sink reading its own pull would pull on itself); a formation sets the latch through sink_latch (§1.8.5); a step without P2 has no sinks' term in φ (tasks/M0-T52a.md) · [M0-T53, 2026-10-15] scope is nu_heat (R17), not nu-heat: Verify 2's grep for a '| nu-heat |' row in docs/agent/testing.md must read nu_heat (M0-T53; tasks/M0-T53.md) · [M0-T54, 2026-10-15] P7's design for § Neutrino heating: nu_tiles + nu_gate sum S_ν in a fixed order and write the Chained sizes of the convolution (zero when ΣS_ν = 0), K_ν's transform is P2's real-quarter table (grav::spectra_of), q = f_dep ΣS_ν D/ΣD with ΣD over the box, E += qΔt only where q > 0, booked neutrino_deposited; the latch reaches it through nu_gate and nu_close (Size::Chained, P5's way), latch.rs untouched; Step::with_neutrino_heating / read_nuheat are the API (M0-T54; tasks/M0-T54.md)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.4, §2.5.4, §2.6, §7 + the
+  handoffs of M0-T50–M0-T54
+- Deliver: docs/agent/physics.md § Sinks, § Neutrino heating, § The stand-ins (S1, S2: their switches,
+  their measured triggers, who enables them — §1.6.4) → Verify 1 · docs/agent/testing.md: rows for sink
+  and nu-heat → Verify 2
+- Verify: 1. `grep -cE "^## (Sinks|Neutrino heating|The stand-ins)" docs/agent/physics.md` · Pass: 3 ·
+  Fail: fewer · 2. `grep -cE "^[|] .(sink|nu-heat). [|]" docs/agent/testing.md` · Pass: 2 · Fail: fewer
+- Adversarial: the stand-ins described as on — the page says they ship disabled and only a PLAN amendment
+  citing a measured failure enables them.
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record now; matches the heading). Docs only. physics.md: § Sinks (P3's four criteria, accretion, motion, the GPU's P3, P2's grav_sinks and its two fields, the latch on formation, the dump, M0-D44's face), § Neutrino heating (P7's law, twin and GPU chain, the Chained latch, the declared readings), § The stand-ins (S1, S2: disabled, only a PLAN amendment citing a measured failure enables them, none measured, M0-TJ1 DEFERRED); stale 'not built' lines in § Gravity, § Neutrinos, § The CPU twin fixed. testing.md: a lot 7 table (sink row moved unchanged, new nu_heat row: 15 cases, 3 plants) and the dump row's sink case. Verify 1 [ALREADY RUN — PASS (3) on laserax-ai]; Verify 2 as written (nu-heat) [ALREADY RUN — FAIL (1, the row is nu_heat per R17; the Verify line is the plan's) on laserax-ai], with nu_heat [ALREADY RUN — PASS (2) on laserax-ai]; claim --changed [ALREADY RUN — PASS (GO, 545 passed, 1/1 scopes) on laserax-ai]. Not acted on: the dump row lacked its ninth case (dump-flux-zero), left undescribed; no runner builds P3/P7 (said in both sections, flagged to M0-V7). Detail: tasks/M0-T55.md. Next: M0-V7.
+
+## M0-V7 · Validation — lot 7: black holes and neutrino heating · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T55)
+- Status: DONE (2026-10-15 13:56)
+- Carried flags: [M0-V6, 2026-10-15] owed on win-laptop (R15; M0-V6 ran lot 6 on linux-pc only): lot 6's scopes on the RTX 4080 Laptop, each red-armed — heat_gauss, heat_implicit, heat_limiter, heat_stiff, radiation_force, rates, burn_cell, burn_order, neutrino (its three plants, M0-T47), cpu_gpu's ref_burn (M0-T48) and timing at ROUNDS 256 (M0-D39: Pass GO 5/5) — with M0-V5's list (lot 5's riemann, sod, edges, collapse, twin, cpu_gpu and box's two new cases; M0-D28's desktop with start.bat's launch.py stop %SERVICE% and the decoy's mkdir lock under Git Bash, --redarm desktop): py -3.12 tools/pb/verify.py --all and --redarm --moved there cover them; else carried V to V, M0-V17 at the latest (reports/v6.md § Owed) · [M0-T54, 2026-10-15] owed on win-laptop (R15; M0-T54 ran linux-pc only): scope nu_heat — 15 cases, its three plants red-armed (nuheat-no-cap, nuheat-gpu-no-cap, nuheat-gpu-always-dispatch); the timing witness reads NOT RUN where the device has no timestamp-query. Also: no runner builds P7 (headless.rs and the app call Step::with_reactions; Step::with_neutrino_heating exists since M0-T54, as with_sinks since M0-T51), so the neutrinos switch still only turns on P6's S_ν — name it in the V, wiring is a block of its own (M0-T54; tasks/M0-T54.md) · [M0-T55, 2026-10-15] [M0-T55, 2026-10-15] docs now say 'not built' for P3 and P7 (physics.md § Sinks, § Neutrino heating: no runner builds either; Twin runs neither) — V7 reads them against the code; testing.md's lot 7 table holds sink (27 cases) and nu_heat (15), the plan's Verify 2 grep spells it nu-heat and reads 1 not 2 (the scope is nu_heat, R17); the dump row's ninth case (dump-flux-zero) is undescribed (M0-T55; tasks/M0-T55.md)
+- Read: milestones/m0/m0_contrat.md §1.4.3, §1.6.4, §1.8.5, §2.5.4, §2.6, §2.12.3, §5.1 (G-SINK) + the
+  handoffs of M0-T50–M0-T55 + docs/agent/physics.md + the delivered files, each by the section it covers
+- Deliver: contract-vs-code on lot 7 — sink formation's four criteria, accretion, motion, merging, their
+  pull, the latch on formation, P7's share and cap, S2 held at f_dep ≤ 0.1, each defect its own D (E4),
+  every scope the lot added red-armed → reports/v7.md → Verify 1 · Phase 9's close (stubs, the header
+  budget, the complete loop and its seconds, `rung_record.py report`'s table, a moved class → a TM<n>) →
+  Verify 1
+- Verify: 1. `python3 tools/pb/verify.py --all --task M0-V7` · Pass: GO, every scope present · Fail:
+  NO-GO — each red a D (E4)
+- Adversarial: Σ_BH's bound (≥ 4 × ns_sigma_max_sb) cannot be checked before calibration — the V names it
+  owed to M0-V9, not proven.
+- Handoff: linux-pc (laserax-ai, RTX 5090), model=claude-opus-5-5 level=max (rung_record now at launch and on the lead's prompt — the heading's rung). Verdict DEFECTS(4), reports/v7.md: lot 7 builds §2.6's formation (four criteria, each refused alone), accretion, motion and merging, §1.4.3's pull, §1.8.5's latch on formation, §2.5.4's P7 share (f_dep of the emitted power, 3.9e-8) and §1.6.4's S2 cap as written, twin and GPU alike; the text's sink pull is not equal and opposite (net 73.5 % of the force at 2 cells; G-SINK's cloud's momentum off 15–68 % in 40 steps; a sink outside the box reads a stale g) → contract §0.5 [M0-V7] (the lead: «Equal and opposite (Recommended)», mirrored in Superseded; the contract edit is that approved amendment) → M0-D45 (twin), M0-D46 (GPU); headless builds no P3 or P7 → M0-D47 (blocks M0-T68); pre-lot-7 page lines → M0-D48; Σ_BH's bound NOT PROVEN, owed to M0-V9. Verify 1 python3 tools/pb/verify.py --all --task M0-V7 [ALREADY RUN — PASS (GO, 903 passed, 45/45 scopes) on linux-pc] 63.18 s at load 50, not counted (budget median 23.23 s idle, no TR); --redarm sink, nu_heat, dump [ALREADY RUN — PASS (10 plants red) on linux-pc]; the sweep --redarm --moved [ALREADY RUN — PASS (GO, 38 campaigns, 52 red, 0 green, 0 error; M0-D42/D43's plants bite) on linux-pc, the lead's terminal]. Phase 9's close: M0-TC6 filed (14 stubs, runs next), header 551/600, Pipeline 9/60, rung_record moves no class (no TM). Flags: M0-V8 (owed on win-laptop), M0-T57 and M0-T106 (source-term gravity's momentum, 3.9e-3 in 0.73 t.u. with no sink — lot 5's, a contract question; the sinks' energy terms), M0-T64 (architecture.md's owner); refresh 4/5. Not filed (§ Observations, each with its E1 test): P7's silent step is zero work, not zero dispatches; a sink re-forms on a standing one; a sink leaving the world; the twin's driver. Probes in a scratch copy, commands in tasks/M0-V7.md. Next: M0-TC6.
+
+## M0-TC5 · Compaction — Phase 8's close: thirty DONE blocks to stub, more than ten (PLAYBOOK §8, §11) · **MOVE** · Haiku 5.5, high · switch · (AFTER M0-V6)
+- Status: DONE (2026-10-15 10:16, started 10:15)
+- Read: this file (rules + this task) + plan_archive.md § M0-V5 (one archived block: the shape to keep)
+- Deliver: `plan.py stub` over Phase 8's DONE blocks — M0-T41, M0-T42, M0-T43, M0-TM6, M0-D33, M0-T44a, M0-T44b, M0-T45,
+  M0-T46, M0-T47, M0-D34, M0-D35, M0-TJ4, M0-T117, M0-T118, M0-T119, M0-D36, M0-T120, M0-T121, M0-T122, M0-D37, M0-D38,
+  M0-D39, M0-T48, M0-T49 and M0-V6 — and Phase 7's four that ran after its close (M0-TC4, M0-D30, M0-D31, M0-D32: the lint's
+  four WARNs at M0-V6) into plan_archive.md, no TODO block touched (M0-D40 … M0-D43 and lot 7 stay whole) · the Pipeline state
+  back to a register of pointers · lines repeated in three or more blocks hoisted, long Rules entries moved to m0_rules.md
+  (index line kept, text unchanged) · Repo facts de-duplicated · every moved line diffed byte-for-byte, counts reported ·
+  `plan.py lint`'s header before and after in the handoff.
+- Pass: `plan.py lint` GO, header within budget, diff count = moved count. Fail: any TODO block touched, any rule
+  reworded, any fact dropped.
+- Handoff: Stubbed 30 DONE blocks into plan_archive.md (Phase 8's 26: M0-T41 … M0-V6; Phase 7's four: M0-TC4, M0-D30, M0-D31, M0-D32): 700 lines moved, 700 verified byte-for-byte by plan.py (archive +730 lines, 0 deleted; git numstat). Plan 3670 → 3090 lines; lint warnings 4 → 0, GO 554 checks, header 541/600 before and after. Rules: long rows R9–R13, R15–R17 → pointers 'full text: m0_rules.md § Rn' (text already there; titles kept; R10–R14's wording there was reworded at M0-TB, facts checked by reading). Pipeline: Next task → M0-D40; M0-V6 awaiting-lead line → pointer to the archive. Repo facts: 0 of 53 sentences repeat in Hazards; one 3x line (NO-GO · Fail: the plant stays GO) left, hoisting it edits TODO blocks. Not acted on: plan's Rules intro still says m0_rules.md was REJECTED (M0-TB) — the lead to reconcile. Claim: verify.py --changed --task M0-TC5 [ALREADY RUN — PASS (GO, 554 passed, 1/1 scopes: plan_lint; 42 not impacted) on linux-pc]. Model: model=claude-haiku-5-5 level=high (rung_record now, plugin=installed; matches the heading). Detail: milestones/m0/tasks/M0-TC5.md. Next: M0-D40.
+
+## M0-D40 · The pages agents read instead of the module miss lot 6's code: architecture.md's P5 and P6 record no dispatch, physics.md caps P6's ln f at 60 and calls the tiled P4 unbuilt, the twin's module doc says RKL2 · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TC5)
+- Status: DONE (2026-10-15 10:19)
+- Blocks: nothing — but lot 7 (M0-T50 on) builds P3 and P7 beside these passes, and an agent that reads the page for a module
+  instead of the module (the instruction file's rule) is told P5 and P6 record nothing
+- Caused by: M0-T42, M0-T46, M0-T47 and M0-T118–M0-T121 (P5's and P6's dispatches, never written into architecture.md's pass
+  table — lot 6's docs block, M0-T49, named physics.md and testing.md only) · M0-D35 (the ln f cap retired, physics.md
+  § Reactions' item (4) left) · M0-T117 and M0-T48 (reference/mod.rs's module doc) · M0-D30 (physics.md § Gas flow's cost
+  bullet; measured by M0-D31, not filed)
+- Rating: rule (3) — a docs block, no reason from §0's list; not E: no scope grades a page (M0-V5's reading for M0-D31)
+- Files: docs/agent/architecture.md (the step's pass table: the P5, P6 and P9 rows; § the side fields), docs/agent/physics.md
+  (§ Reactions' "Burning on the GPU" item (4); § Gas flow's "Cost, flagged" bullet), docs/agent/testing.md (the `heat_gauss`
+  row's citation), crates/sr-physics/src/reference/mod.rs (the module doc, lines 4 and 7–8), crates/sr-engine/src/step/heat.rs
+  (`MIN_ROUNDS`' doc comment) — opened by M0-V6, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2, §7 + docs/agent/architecture.md § the step's pass
+  table + crates/sr-engine/src/step/heat.rs and step/react.rs (their dispatch lists and sizes only) +
+  crates/sr-engine/shaders/react.wgsl lines 1–44 (the header: the rate scale) and latch.wgsl lines 1–21 (P5's carry) +
+  milestones/m0/reports/v6.md § The step's cost
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-15, M0-V6: architecture.md lines 72–73 read « | P5 heat | … | — | » and
+  « | P6 reactions | … | — (a test hook only, `set_latch_hook`) | », while the step records `heat_cells`, `heat_law`,
+  `heat_open`, `heat_round` × `SLOTS` (chained), `heat_close`, `heat_sum` and `heat_apply` (with `heat_park`, `latch_hold` and
+  `latch_carry` around them) for P5 and `react_begin`, `react_cells` and `react_latch` for P6; line 116 « Sized today; their
+  writers land with their passes » (P5 writes F and P6 S_ν since M0-T42 and M0-T47); the P9 row's « under a frame,
+  `latch_check` last » (a step with P5 records it on bare runs too since M0-T121). physics.md line 79 « (4) ln f capped at 60
+  (the runaway's f ≈ 1e84 overflows f32 …) » against line 64 and react.wgsl's header (a rate scale since M0-D35, no record's f
+  clipped); line 157 « P4 dominates the step (≈ 1.0 ms of ≈ 1.2 ms …). A tiled `hydro_update` … is the known fix, unbuilt »
+  against line 152 (built by M0-D30; P4 0.267 of a 1.203 ms Sun-sized step on the Quadro today, reports/v6.md). reference/mod.rs
+  line 4 « `heat` is P5, flux-limited diffusion stepped by RKL2 » and lines 7–8, the Twin's passes « P1 Δt, P2 gravity, P4
+  hydro, P8 floors, P9 Δt_{n+1} » (RKL2 retired by M0-T119; the Twin runs P5 and P6 since M0-T48). step/heat.rs's `MIN_ROUNDS`
+  doc (« the engine's first choice before any step was read back: past the 84 … ») describes `FIRST_ROUNDS` (128). testing.md's
+  `heat_gauss` row cites SM-O9 (G-CORE's) for G-HEAT1, whose oracle is SM-O7 (§5.1)
+- Suspected cause: known — each block above changed the code and no block that owned the page wrote the change in
+- Deliver: each line above brought to the code as it stands, nothing else on the pages moving — architecture.md's P5 and P6
+  rows naming every dispatch with its size (box tiles, fixed, chained) as the P2 and P4 rows do (M0-D31), the P9 row and the
+  side-fields line → Verify 1 · physics.md's two lines → Verify 2 · reference/mod.rs's module doc → Verify 3 · the
+  `MIN_ROUNDS` comment and testing.md's citation → none — two words each, read in the diff
+- Done when: on linux-pc the three greps below read the pages and the module doc as the code stands
+- Verify: 1. `grep -oE "heat_cells|heat_law|heat_open|heat_round|heat_close|heat_sum|heat_apply|react_begin|react_cells|react_latch" docs/agent/architecture.md | sort -u | wc -l`
+  · Pass: 10 · Fail: fewer · 2. `grep -cE "capped at 60|known fix, unbuilt" docs/agent/physics.md` · Pass: 0 · Fail: 1 or
+  more · 3. `grep -c "RKL2" crates/sr-physics/src/reference/mod.rs` · Pass: 0 · Fail: 1 or more
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record now; matches the heading's rung). Pages brought to the code: architecture.md's P5 row (heat_cells, heat_law, heat_open, heat_round × SLOTS chained, heat_close, heat_sum, heat_apply; heat_park, latch_hold, latch_carry around them) and P6 row (react_begin, react_cells, react_latch), P9 row's latch_check on a P5 step, side-fields line (writers named; P7 lot 7); physics.md § Reactions (4) now the rate scale (M0-D35) and § Gas flow's cost bullet the built tiled P4 (M0-D30); reference/mod.rs's module doc (RKL2 out, P5 and P6 in the Twin's passes); heat.rs MIN_ROUNDS doc (FIRST_ROUNDS named); testing.md heat_gauss SM-O9 → SM-O7. Verify 1 [ALREADY RUN — PASS (10) on linux-pc] · 2 [ALREADY RUN — PASS (0) on linux-pc] · 3 [ALREADY RUN — PASS (0) on linux-pc]; claim verify.py --changed --task M0-D40 [ALREADY RUN — PASS (832 passed, 38/38 scopes GO, 61 s) on linux-pc]. Not acted on: physics.md and testing.md carry other tasks' uncommitted edits in the same diff (M0-T49 etc.), only my lines are D40's. Next: M0-D41.
+
+## M0-D41 · rung_record.py's report reads an archived block from its stub, whose one-line handoff drops a quote on a continuation line: M0-D5 and M0-T19 read `unknown` · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D40)
+- Status: DONE (2026-10-15 10:23)
+- Sizing: E
+- Blocks: nothing — but M0-V7, the next phase-closing V, keeps the record §0's rule (4) rates from, and every `TC<n>` adds stubs
+- Caused by: M0-D32 — its fallback reads the `- Handoff:` field of the plan's block; a stub keeps « Handoff (one line) », the
+  handoff's first line (PLAYBOOK §11), and points to the rest with `Full block: plan_archive.md § <id>`
+- Rating: rule (3) — `Sizing: E` (one function and its selftest named, two files, verified by the existing `tools_selftest`): the
+  ladder's lowest rung
+- Files: tools/pb/rung_record.py (`handoff_rung` and the report's no-session fallback that calls it; its selftest),
+  milestones/m0/tasks/toolkit_local_diff.md — unverified, the executing task confirms first
+- Read: this file (rules + this task) + PLAYBOOK.md §11 (the stub's shape) and annex §A's rung_record.py section text +
+  tools/pb/rung_record.py lines 459–557 (`handoff_rung`, `build`), 906–922 (`_prose_first`, `_handoff_rows`) and 1151–1413
+  (`cmd_selftest`) — this block changes them, so it reads them (M0-D32's exception) + milestones/m0/tasks/M0-D32.md +
+  milestones/m0/tasks/toolkit_local_diff.md (item 6)
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-15, M0-V6 (`logs/M0-V6.d32check.log`): `python3 tools/pb/rung_record.py
+  report --json` reads 68 of its 130 DONE blocks from their handoffs; 53 of those quote `model=… level=…` in their full block
+  (the plan's, or plan_archive.md's for a stub), 51 read on the quote's rung, and M0-D5 and M0-T19 read `unknown` ("no session;
+  rung from nothing: the handoff names none") — each quotes `model=claude-opus-5-5 level=high` on a continuation line of its
+  handoff (plan_archive.md § M0-D5 « Model: model=claude-opus-5-5 level=high (rung_record now) », § M0-T19 « Ran on
+  model=claude-opus-5-5 level=high »), which its stub (M0-TC1, M0-TC2) dropped
+- Suspected cause: measured to the line's class — the fallback reads the plan's block; for a stub it never follows `Full block:`
+- Deliver: the fallback reads the full handoff the stub's `Full block: <file> § <id>` points to where the plan holds a stub, the
+  stub's one line where the file or the block is missing — the 68 rows re-read → Verify 1 · rung_record.py's selftest gains a
+  stubbed-block case (a quote on the archived handoff's second line) and a plant that breaks it → Verify 2 · the change in
+  toolkit_local_diff.md, a local diff a future annex swap must carry → Verify 3
+- Done when: on linux-pc every handoff-read row whose full handoff quotes a model and level reads that rung; `tools_selftest`
+  red-armed
+- Verify: 1. `python3 tools/pb/rung_record.py report --json` · Pass: M0-D5 and M0-T19 on Opus 5.5, high, every other row that
+  quotes on its quote's rung · Fail: any other · 2. `python3 tools/pb/verify.py --redarm tools_selftest --task M0-D41` · Pass:
+  GO — every plant NO-GO · Fail: a plant GO · 3. `grep -c "M0-D41" milestones/m0/tasks/toolkit_local_diff.md` · Pass: 1 or more ·
+  Fail: 0
+- Handoff: Fixed: rung_record.py's handoff fallback follows a stub's `Full block:` into the archived block's handoff (its quote first, else the stub's quote, else the archived prose, else the stub's one line where the file or block is missing). The 68 no-session rows re-read: M0-D5 and M0-T19 Opus 5.5, high; 53 of 53 quoting handoff rows on their quote's rung (was 51). Selftest checks=73, plants 31/31 red (new plant « a stub's archived block never followed »), GO; verify.py --redarm tools_selftest GO on linux-pc. Local diff item 7 in tasks/toolkit_local_diff.md. Deviation (declared): a stub's quote is kept where the archive quotes nothing. Measured, not acted on: the annex's §A.9 text and plant count lag (items 6 and 7, for M0-TZ). Ran on model=claude-haiku-5-5 level=high (rung_record now). Detail: tasks/M0-D41.md. Next: M0-V7.
+
+## M0-D42 · Two of `neutrino`'s plants no longer apply: nfe-gate-sigma's and nfe-latch-last's shader hunks miss react.wgsl since M0-D35's rate scale · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D41)
+- Status: DONE (2026-10-15 10:26)
+- Sizing: E
+- Blocks: nothing — but the `neutrino` scope's gate-on-Σ and last-sub-cycle latch checks are not proven red on today's code
+  until it lands (the phase's sweep: NO-GO on them)
+- Caused by: M0-D35 — its rate scale rewrote the lines both plants patch (`rec_g[r] = rate_g(r, y_e * sigma);` and the latch
+  test with the scale's arm); the plants were last proven by M0-T47, before it
+- Rating: rule (3) — `Sizing: E` (two patch files, each hunk's target named, verified by the existing `neutrino` scope's red-arm):
+  the ladder's lowest rung
+- Files: tests/plants/nfe-gate-sigma.patch (its react.wgsl hunk; its reference/react.rs hunk still applies),
+  tests/plants/nfe-latch-last.patch — opened by M0-V6, not changed
+- Read: this file (rules + this task) + crates/sr-engine/shaders/react.wgsl lines 283–352 (`rates`) + the two patches +
+  docs/agent/testing.md's `neutrino` row (what each plant breaks)
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-15, M0-V6's sweep (`python3 tools/pb/verify.py --redarm --moved --task
+  M0-V6`, `logs/M0-V6.neutrino.redarm.log`): `neutrino` clean GO, nfe-gate-off RED (6 failed), and « nfe-gate-sigma · ERROR (the
+  patch tests/plants/nfe-gate-sigma.patch does not apply: crates/sr-engine/shaders/react.wgsl @@ -229,7 +229,7 @@: its old
+  lines appear 0 times in the file, not once) » and the same for nfe-latch-last at @@ -238,8 +238,8 @@ — the hunks expect
+  `let base = … * rate_f(r, t) * rate_g(r, y_e * sigma);` and `if (prod > 0.0 && (rec.head.w & LATCHES) != 0u) { latched = true; }`,
+  where the shader now reads `rec_g[r] = rate_g(r, y_e * sigma);` (line 298) and `if ((prod > 0.0 || (prod == 0.0 && shift > 0.0
+  && rec_live[r] && rec_whole[r])) && (rec.head.w & LATCHES) != 0u) {` (line 328)
+- Suspected cause: measured — the hunks' old lines are pre-M0-D35 text
+- Deliver: nfe-gate-sigma's shader hunk re-aimed at today's line, the planted bug unchanged (the gate reads Σ, not Y_eΣ:
+  `rate_g(r, sigma)`), its twin hunk kept byte for byte → Verify 1 · nfe-latch-last's hunk re-aimed the same way (the latch
+  reads the last sub-cycle's rate only: `latched` assigned the test's value instead of set when it holds) → Verify 1
+- Done when: on linux-pc `--redarm neutrino` is GO with each of its three plants NO-GO
+- Verify: 1. `python3 tools/pb/verify.py --redarm neutrino --task M0-D42` · Pass: GO — the clean copy GO, nfe-gate-off,
+  nfe-gate-sigma and nfe-latch-last each NO-GO · Fail: a plant GO or not applying
+- Handoff: linux-pc (laserax-ai), model=claude-haiku-5-5 level=high (rung_record now, plugin=installed; matches the heading's rung). Re-aimed two plant hunks at today's shader lines, planted bugs unchanged: nfe-gate-sigma's react.wgsl hunk → rec_g[r] = rate_g(r, sigma) (line 298; its react.rs hunk byte for byte); nfe-latch-last → the latch test's if (line 328), latched = (the test's value) instead of set. Both patches dry-run apply (git apply --check). Verify 1 --redarm neutrino [ALREADY RUN — PASS (clean GO; nfe-gate-off RED 6, nfe-gate-sigma RED 6, nfe-latch-last RED 1; 0 errors; 33.5 s) on laserax-ai]. Claim --changed --task M0-D42 [ALREADY RUN — PASS (GO, 18 passed, 1/1 scopes; the two FLAG lines are the two patch files this task edits, named in Files) on laserax-ai]. Log: milestones/m0/logs/M0-D42.log. Next: M0-V7 (D41's Next).
+
+## M0-D43 · `twin`'s only plant no longer applies: twin-skip-floors' hunk misses reference/mod.rs since M0-T48 put P5 and P6 in the twin's step · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D42)
+- Status: DONE (2026-10-15 10:28)
+- Sizing: E
+- Blocks: nothing — but the `twin` scope has no plant proven red on today's code until it lands (the phase's sweep: NO-GO on it)
+- Caused by: M0-T48 — the twin's driver gained `Hydro::step_forced` and P5 and P6 between P4 and P8, the lines the plant's hunk
+  takes as context; the plant was last proven by M0-V5, before it
+- Rating: rule (3) — `Sizing: E` (one patch file, its target named, verified by the existing `twin` scope's red-arm): the
+  ladder's lowest rung
+- Files: tests/plants/twin-skip-floors.patch — opened by M0-V6, not changed
+- Read: this file (rules + this task) + crates/sr-physics/src/reference/mod.rs lines 160–260 (`Twin::pass_list`, `Twin::step`) +
+  the patch + docs/agent/testing.md's `twin` row
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-15, M0-V6's sweep (`logs/M0-V6.twin.redarm.log`): `twin` clean GO and
+  « twin-skip-floors · ERROR (the patch tests/plants/twin-skip-floors.patch does not apply: crates/sr-physics/src/reference/mod.rs
+  @@ -187,8 +187,7 @@: its old lines appear 0 times in the file, not once) » — the hunk's context is P4's
+  `self.hydro.step_with(&mut self.state, dt, g);` then P8's two lines, where the step now runs `step_forced` (line 236), P5
+  (239) and P6 (244) before `self.ran.push("P8 floors");` and `self.booked += self.floors.apply(&mut self.state);` (247–248)
+- Suspected cause: measured — the hunk's context is pre-M0-T48 text
+- Deliver: the hunk re-aimed at today's P8 lines, the planted bug unchanged (P8 neither run nor listed in the passes run) →
+  Verify 1
+- Done when: on linux-pc `--redarm twin` is GO with twin-skip-floors NO-GO
+- Verify: 1. `python3 tools/pb/verify.py --redarm twin --task M0-D43` · Pass: GO — the clean copy GO, twin-skip-floors NO-GO ·
+  Fail: the plant GO or not applying
+- Handoff: laserax-ai, model=claude-haiku-5-5 level=high (rung_record now, plugin=installed; matches the heading). Re-aimed tests/plants/twin-skip-floors.patch from M0-V6's stale context (P4 step_with + P8 lines, gone since M0-T48) to today's P6 react block: @@ -244,8 +244,7 @@ drops P8's two lines; the planted bug unchanged (P8 neither run nor listed). git apply --check clean. Verify 1 [ALREADY RUN — PASS (--redarm twin: clean GO; twin-skip-floors RED, 3 failed; 39.8 s) on laserax-ai] logs: milestones/m0/logs/M0-D43.log, milestones/m0/logs/M0-D43.twin.redarm.log. Claim [ALREADY RUN — PASS (verify.py --changed --task M0-D43: 555 passed, 0 failed, 2/2 scopes GO, base M0-D43's start 10:27:08) on laserax-ai]; its FLAG oracle line names the patch itself as changed since start (the Files line names it; Deliver says « the hunk »), read as the intended edit, not a red. Not acted on: none. Next: the plan's next TODO block after M0-D43.

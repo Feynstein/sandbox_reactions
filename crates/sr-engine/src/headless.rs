@@ -6,7 +6,8 @@
 //! mode (M0-T35) and `heat` P5 with the scene's `test` flags (M0-T42; a step whose implicit P5 hit its ceiling prints
 //! `SR-WARN heat unconverged step <n> passes <k> rounds <r>` — read at the last step of each submission, M0-T119; every
 //! step's is M0-T121's) and `reactions` P6 with the registry's enabled records and
-//! the scene's `pin_temperature` (M0-T46); the other switches are recorded, not yet applied.
+//! the scene's `pin_temperature` (M0-T46), `sinks` P3 (M0-T51) and `neutrinos` P7 (M0-T54; M0-D47) — P7 reads the S_ν plane P6 writes,
+//! so with `reactions` off it is not built, not a gate run every step over a zero plane.
 //!
 //! State dumps (§2.12.3, [`crate::dump`], M0-T26): with `--out`, DIR/dumps/s_<step>.bin at the end of every run, and with
 //! `--dump-every N` at every step index that N divides — the index counts from the scene, so a resumed run's dumps fall
@@ -41,7 +42,9 @@ use crate::scene::{EdgeMode, Scene, Switches};
 use crate::state::{Booking, SideFields, State, WorldConfig, CHANNELS};
 use crate::step::boxfit::BoxMode;
 use crate::step::heat::HeatSetup;
+use crate::step::nuheat::NuHeatSetup;
 use crate::step::react::ReactSetup;
+use crate::step::sinks::SinkSetup;
 use crate::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
 
 pub const EXIT_DONE: i32 = 0;
@@ -426,7 +429,21 @@ pub fn run(args: &[String]) -> i32 {
         Passes { mode: BoxMode::Fit, gravity: switches.gravity.then_some(&side), hydro: switches.hydro.then_some(edge) };
     let heat = switches.heat.then_some(HeatSetup { side: &side, test });
     let react = switches.reactions.then_some(ReactSetup { reactions: &reactions, test, neutrinos: switches.neutrinos, side: &side });
-    let step = match Step::with_reactions(&gpu.device, &state, &booking, &eos, &physics, &passes, heat.as_ref(), react.as_ref()) {
+    // P3 reads φ from P2's plane; P7 reads S_ν from P6's, so it needs P6 (§2.12.1; M0-D47).
+    let sink = switches.sinks.then_some(SinkSetup { side: &side });
+    let nuheat = (switches.reactions && switches.neutrinos).then_some(NuHeatSetup { side: &side });
+    let step = match Step::with_neutrino_heating(
+        &gpu.device,
+        &state,
+        &booking,
+        &eos,
+        &physics,
+        &passes,
+        heat.as_ref(),
+        react.as_ref(),
+        sink.as_ref(),
+        nuheat.as_ref(),
+    ) {
         Ok(s) => s,
         Err(e) => {
             say(&format!("SR-ERROR bad arguments: gravity over a {}x{} world: {e}", world.width, world.height));

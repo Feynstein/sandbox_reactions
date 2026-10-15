@@ -1,0 +1,7 @@
+sink · clean · GO · arm 1/5, 4 left
+sink · plant sink-momentum · RED (proven: 3 failed) · arm 2/5, 3 left
+sink · plant sink-phi-skip · RED (proven: 2 failed) · arm 3/5, 2 left
+sink · plant sink-latch-off · RED (proven: 1 failed) · arm 4/5, 1 left
+sink · plant sink-pull-grid · RED (proven: 2 failed) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope sink · 43.69 s · 5 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D45.sink.redarm.log
+=== GO ===

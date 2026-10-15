@@ -1,5 +1,5 @@
-// P3 sinks (m0_contrat.md §1.3.2, §1.3.4, §2.6, §2.9): M0-T50's twin (sr_physics::reference::sinks) in f32, two dispatches,
-// compiled with eos.wgsl prepended (group 1); step/sinks.rs builds them.
+// P3 sinks (m0_contrat.md §1.3.2, §1.3.4, §2.6, §2.9, §0.5 [M0-V7]): M0-T50's twin (sr_physics::reference::sinks) in f32, six
+// dispatches, compiled with eos.wgsl prepended (group 1); step/sinks.rs builds them.
 //
 // - `sink_candidates`, over the box's 8 × 8 tiles: each cell tests §2.6's four criteria — Σ ≥ Σ_BH; ∇·u < 0 by central
 //   differences of the velocity (a neighbour below Σ_vac at rest); φ no greater than at its 8 neighbours, φ the plane P2
@@ -9,10 +9,15 @@
 // - `sink_update`, one workgroup: the tiles' best by a strided scan and a fixed tree, then the formation (at most one, none
 //   past 16); accretion sink by sink in index order — each sink's square of cells split over the invocations in a fixed
 //   stride, the taken mass and momentum summed by a fixed tree, the sink's M and v frozen for its pass, a storage barrier
-//   before the next sink so a cell two sinks reach goes to the first (left at Σ_floor, the next refuses it); then
-//   kick-drift-kick over all sinks together, g bilinear between cell centres plus the other sinks' pull softened by their
-//   r_acc; then merging, the lowest pair closer than the larger r_acc first, into the lower slot, at the mass-weighted
-//   centre. No atomic anywhere: the same state gives the same bits (§1.3.4).
+//   before the next sink so a cell two sinks reach goes to the first (left at Σ_floor, the next refuses it).
+// - Kick-drift-kick over all sinks together (§0.5 [M0-V7]), on the gas accretion left: `sink_pull` over the box's tiles —
+//   each cell with Σ ≥ Σ_vac pulls each sink by the reaction of the sink's softened pull on it, G m d/(|d|² + r_acc²)^{3/2},
+//   each tile's partial per sink by a fixed tree into `pull`; `sink_kick_drift`, one workgroup — the tiles' partials summed
+//   per sink by a fixed-order stride and tree, plus the other sinks' pull softened by the pair's larger r_acc, the first
+//   half-kick and the drift; `sink_pull` again at the drifted positions; `sink_kick_merge` — the closing half-kick, then
+//   merging, the lowest pair closer than the larger r_acc first, into the lower slot, at the mass-weighted centre. The box
+//   holds every cell with Σ ≥ Σ_vac (§1.3.3), so a sink anywhere — outside the box too — feels all the gas, and no grid g
+//   is read. No atomic anywhere: the same state gives the same bits (§1.3.4).
 //
 // A cell gives the share 1 − f, f = Σ_floor/Σ, of its Σ, momentum and E: it keeps Σ_floor exactly, f of its momentum and
 // E, its fractions — so its velocity and its energy per mass. Its thermal and cold energy, the share's E − ½|mom|²/Σ, is
@@ -46,6 +51,11 @@ struct SinkParams {
     c2: f32,
     // the slots of `st.cand`: the world's 8 × 8 tiles
     tiles: u32,
+    // Σ_vac: the cells that pull a sink (eos.wgsl's, here so the motion's dispatches need no EOS group)
+    sigma_vac: f32,
+    _pad0: f32,
+    _pad1: f32,
+    _pad2: f32,
 }
 
 struct Sink {
@@ -86,8 +96,9 @@ struct SinkState {
 @group(0) @binding(8) var<storage, read_write> st: SinkState;
 // φ as P2 left it (side.phi): the gas's and the sinks' (`grav_sinks`)
 @group(0) @binding(9) var<storage, read> phi: array<f32>;
-// g = −∇φ of the gas alone: the x plane, then the y plane (P2's `gas_field`; zeros in a step without P2)
-@group(0) @binding(10) var<storage, read> grav_g: array<f32>;
+// The motion's pull: the head, each slot's acceleration at the step's start and at its drifted position ([PULL_START + k],
+// [PULL_END + k]: the gas's and the other sinks'); then each box tile's partials, MAX_SINKS a tile (`sink_pull`).
+@group(0) @binding(10) var<storage, read_write> pull: array<vec2<f32>>;
 // The latch record's first word, the flag (latch.wgsl `LatchState`), used by `sink_latch` alone
 @group(0) @binding(11) var<storage, read_write> latch_flag: array<atomic<u32>>;
 
@@ -96,6 +107,10 @@ const NONE: u32 = 0xffffffffu;
 // The smallest r in the bound test's −GM/max(r, ½) (§2.6).
 const R_MIN: f32 = 0.5;
 const WG: u32 = 256u;
+// `pull`'s head: the start's accelerations, the drifted ones, then the tiles' partials.
+const PULL_START: u32 = 0u;
+const PULL_END: u32 = MAX_SINKS;
+const PULL_TILES: u32 = 2u * MAX_SINKS;
 
 fn sink_mass(k: u32) -> f32 {
     return st.sinks[k].m + st.sinks[k].m_lo;
@@ -191,7 +206,7 @@ fn tree_best(li: u32, n: u32) {
     }
 }
 
-// 1 of 2: each box tile's best candidate into st.cand[tile].
+// 1 of 6: each box tile's best candidate into st.cand[tile].
 @compute @workgroup_size(8, 8)
 fn sink_candidates(
     @builtin(local_invocation_id) lid: vec3<u32>,
@@ -251,51 +266,14 @@ fn add_mass(k: u32, dm: f32) {
     st.sinks[k].m_lo = lo - (hi - s);
 }
 
-// A cell-centred plane of g at `p` in cells, bilinear between centres, clamped to the first and last (the twin's).
-fn bilinear(plane: u32, p: vec2<f32>) -> f32 {
-    let w = dims.width;
-    let h = dims.height;
-    let fx = clamp(p.x - 0.5, 0.0, f32(w - 1u));
-    let fy = clamp(p.y - 0.5, 0.0, f32(h - 1u));
-    let x0 = u32(floor(fx));
-    let y0 = u32(floor(fy));
-    let x1 = min(x0 + 1u, w - 1u);
-    let y1 = min(y0 + 1u, h - 1u);
-    let tx = fx - f32(x0);
-    let ty = fy - f32(y0);
-    let base = plane * dims.cells;
-    let a = grav_g[base + y0 * w + x0];
-    let b = grav_g[base + y0 * w + x1];
-    let c = grav_g[base + y1 * w + x0];
-    let d = grav_g[base + y1 * w + x1];
-    return (1.0 - ty) * ((1.0 - tx) * a + tx * b) + ty * ((1.0 - tx) * c + tx * d);
-}
-
 var<workgroup> part: array<vec3<f32>, 256>;
-var<workgroup> at: array<vec2<f32>, 16>;
-var<workgroup> acc: array<vec2<f32>, 16>;
 
-// The pull on sink i at the positions `at`: the gas's g plus the other sinks' softened pull.
-fn accel(i: u32, count: u32) -> vec2<f32> {
-    var a = vec2<f32>(bilinear(0u, at[i]), bilinear(1u, at[i]));
-    for (var j = 0u; j < count; j++) {
-        if (j != i) {
-            let d = at[j] - at[i];
-            let ra = r_acc(sink_mass(j));
-            let soft = dot(d, d) + ra * ra;
-            a += sp.grav * sink_mass(j) / (soft * sqrt(soft)) * d;
-        }
-    }
-    return a;
-}
-
-// 2 of 2: formation, accretion, kick-drift-kick and merging, one workgroup.
+// 2 of 6: formation and accretion, one workgroup.
 @compute @workgroup_size(256)
 fn sink_update(@builtin(local_invocation_index) li: u32) {
     let n = dims.cells;
     let w = dims.width;
     let h = dims.height;
-    let dt = dt_rec.x;
 
     // The box's tiles' best: each invocation its stride, in order, then the tree.
     let tiles = ((abox.w + 7u) / 8u) * ((abox.h + 7u) / 8u);
@@ -380,30 +358,133 @@ fn sink_update(@builtin(local_invocation_index) li: u32) {
         storageBarrier();
         workgroupBarrier();
     }
+}
 
-    // Kick-drift-kick over all sinks together.
+var<workgroup> tile_pull: array<vec2<f32>, 64>;
+
+// 3 and 5 of 6: over the box's 8 × 8 tiles, each tile's pull on each sink at its position now — the reaction of the sink's
+// softened pull on every cell with Σ ≥ Σ_vac (§0.5 [M0-V7], §1.4.3), G m d/(|d|² + r_acc²)^{3/2}, d from the sink to the
+// cell's centre, m the cell's Σ — summed over the tile by a fixed tree into pull[PULL_TILES + tile × MAX_SINKS + k]. The
+// slots run to MAX_SINKS so every barrier is in uniform control flow.
+@compute @workgroup_size(8, 8)
+fn sink_pull(
+    @builtin(local_invocation_id) lid: vec3<u32>,
+    @builtin(workgroup_id) wg: vec3<u32>,
+    @builtin(local_invocation_index) li: u32,
+) {
+    let bx = wg.x * 8u + lid.x;
+    let by = wg.y * 8u + lid.y;
+    let x = abox.x0 + bx;
+    let y = abox.y0 + by;
+    var m = 0.0;
+    if (bx < abox.w && by < abox.h) {
+        let sigma = hydro[y * dims.width + x];
+        if (sigma >= sp.sigma_vac) {
+            m = sigma;
+        }
+    }
+    let centre = vec2<f32>(f32(x) + 0.5, f32(y) + 0.5);
+    let tile = wg.y * ((abox.w + 7u) / 8u) + wg.x;
+    for (var k = 0u; k < MAX_SINKS; k++) {
+        var a = vec2<f32>(0.0, 0.0);
+        if (m > 0.0 && k < st.count) {
+            let d = centre - st.sinks[k].pos;
+            let ra = r_acc(sink_mass(k));
+            let soft = dot(d, d) + ra * ra;
+            a = sp.grav * m / (soft * sqrt(soft)) * d;
+        }
+        tile_pull[li] = a;
+        workgroupBarrier();
+        for (var q = 32u; q > 0u; q = q / 2u) {
+            if (li < q) {
+                tile_pull[li] += tile_pull[li + q];
+            }
+            workgroupBarrier();
+        }
+        if (li == 0u) {
+            pull[PULL_TILES + tile * MAX_SINKS + k] = tile_pull[0];
+        }
+        workgroupBarrier();
+    }
+}
+
+var<workgroup> wide: array<vec2<f32>, 256>;
+var<workgroup> at: array<vec2<f32>, 16>;
+var<workgroup> acc: array<vec2<f32>, 16>;
+
+// The gas's pull on each sink into `acc`: the box's tiles' partials, each invocation its stride in order, then a fixed tree.
+fn gas_pull(li: u32) {
+    let tiles = ((abox.w + 7u) / 8u) * ((abox.h + 7u) / 8u);
+    for (var k = 0u; k < MAX_SINKS; k++) {
+        var a = vec2<f32>(0.0, 0.0);
+        for (var t = li; t < tiles; t += WG) {
+            a += pull[PULL_TILES + t * MAX_SINKS + k];
+        }
+        wide[li] = a;
+        workgroupBarrier();
+        for (var q = WG / 2u; q > 0u; q = q / 2u) {
+            if (li < q) {
+                wide[li] += wide[li + q];
+            }
+            workgroupBarrier();
+        }
+        if (li == 0u) {
+            acc[k] = wide[0];
+        }
+        workgroupBarrier();
+    }
+}
+
+// The other sinks' pull on sink i at the positions `at`, each pair softened by its larger r_acc (§0.5 [M0-V7]).
+fn pair_pull(i: u32, count: u32) -> vec2<f32> {
+    var a = vec2<f32>(0.0, 0.0);
+    for (var j = 0u; j < count; j++) {
+        if (j != i) {
+            let d = at[j] - at[i];
+            let ra = max(r_acc(sink_mass(i)), r_acc(sink_mass(j)));
+            let soft = dot(d, d) + ra * ra;
+            a += sp.grav * sink_mass(j) / (soft * sqrt(soft)) * d;
+        }
+    }
+    return a;
+}
+
+// Each sink's acceleration at the positions `at` (the gas's, from `gas_pull`, and the other sinks'), kept at pull[slot + i].
+fn kick_pull(li: u32, count: u32, slot: u32) -> vec2<f32> {
+    let a = acc[li] + pair_pull(li, count);
+    pull[slot + li] = a;
+    return a;
+}
+
+// 4 of 6: the first half-kick and the drift, one workgroup.
+@compute @workgroup_size(256)
+fn sink_kick_drift(@builtin(local_invocation_index) li: u32) {
+    gas_pull(li);
+    let dt = dt_rec.x;
     let count = min(st.count, MAX_SINKS);
     if (li < count) {
         at[li] = st.sinks[li].pos;
     }
     workgroupBarrier();
     if (li < count) {
-        acc[li] = accel(li, count);
-    }
-    workgroupBarrier();
-    if (li < count) {
-        let v = st.sinks[li].vel + 0.5 * dt * acc[li];
+        let v = st.sinks[li].vel + 0.5 * dt * kick_pull(li, count, PULL_START);
         st.sinks[li].vel = v;
         st.sinks[li].pos = at[li] + dt * v;
     }
-    storageBarrier();
-    workgroupBarrier();
+}
+
+// 6 of 6: the closing half-kick at the drifted positions, then merging, one workgroup.
+@compute @workgroup_size(256)
+fn sink_kick_merge(@builtin(local_invocation_index) li: u32) {
+    gas_pull(li);
+    let dt = dt_rec.x;
+    let count = min(st.count, MAX_SINKS);
     if (li < count) {
         at[li] = st.sinks[li].pos;
     }
     workgroupBarrier();
     if (li < count) {
-        st.sinks[li].vel += 0.5 * dt * accel(li, count);
+        st.sinks[li].vel += 0.5 * dt * kick_pull(li, count, PULL_END);
     }
     storageBarrier();
 
@@ -439,8 +520,8 @@ fn sink_update(@builtin(local_invocation_index) li: u32) {
     }
 }
 
-// The collapse latch (§1.8.5): after `sink_update`, one invocation ORs 1 into word 0 of the latch record when a sink formed
-// this step — `sink_update` has no binding left for the flag (7 storage buffers here + the EOS table = WebGPU's 8).
+// The collapse latch (§1.8.5): after P3's six dispatches, one invocation ORs 1 into word 0 of the latch record when a sink
+// formed this step — built apart (step/sinks.rs `latch_dispatch`) because the latch is made from the finished pass lists.
 @compute @workgroup_size(1)
 fn sink_latch() {
     if (st.formed != 0u) {

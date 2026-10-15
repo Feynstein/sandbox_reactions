@@ -1,0 +1,94 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why registry: stale: crates/sr-physics/src/reference/sinks.rs
+why eos: stale: crates/sr-physics/src/reference/sinks.rs
+why rates: stale: crates/sr-physics/src/reference/sinks.rs
+why burn_cell: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why burn_order: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why neutrino: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why sink: never: tests/plants/sink-pull-grid.patch
+why nu_heat: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why fft_twin: stale: crates/sr-physics/src/reference/sinks.rs
+why riemann: stale: crates/sr-physics/src/reference/sinks.rs
+why sod: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why edges: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why collapse: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why twin: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why cpu_gpu: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why heat_gauss: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why heat_implicit: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why heat_limiter: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why heat_stiff: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why radiation_force: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why grav_force: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why grav_selfforce: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why fft: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why adapter: stale: crates/sr-engine/tests/gpu/sink.rs
+why state: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why booking: stale: crates/sr-engine/tests/gpu/sink.rs
+why floors: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why dt: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why box: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why latch: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why timing: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why scene: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why dump: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why boot: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why desktop: stale: crates/sr-engine/tests/gpu/sink.rs
+why web: stale: crates/sr-engine/tests/gpu/sink.rs
+why capture: stale: crates/sr-engine/tests/gpu/sink.rs
+plan_lint        557/0/0      0.12 s  GO · step 1/39, 38 left
+build            2/0/0        6.20 s  GO · step 2/39, 37 left
+registry         29/0/0       1.92 s  GO · step 3/39, 36 left
+eos              13/0/0       1.92 s  GO · step 4/39, 35 left
+rates            8/0/0        1.92 s  GO · step 5/39, 34 left
+burn_cell        16/0/0       4.07 s  GO · step 6/39, 33 left
+burn_order       4/0/0        5.98 s  GO · step 7/39, 32 left
+neutrino         18/0/0      11.09 s  GO · step 8/39, 31 left
+sink             28/0/0      27.27 s  GO · step 9/39, 30 left
+nu_heat          15/0/0      16.20 s  GO · step 10/39, 29 left
+fft_twin         10/0/0       2.27 s  GO · step 11/39, 28 left
+riemann          8/0/0        2.17 s  GO · step 12/39, 27 left
+sod              15/0/0       8.28 s  GO · step 13/39, 26 left
+edges            7/0/0        9.88 s  GO · step 14/39, 25 left
+collapse         6/0/0        3.17 s  GO · step 15/39, 24 left
+twin             6/0/0        2.87 s  GO · step 16/39, 23 left
+cpu_gpu          3/0/0        7.33 s  GO · step 17/39, 22 left
+heat_gauss       10/0/0       4.42 s  GO · step 18/39, 21 left
+heat_implicit    6/0/0        3.12 s  GO · step 19/39, 20 left
+heat_limiter     6/0/0        3.67 s  GO · step 20/39, 19 left
+heat_stiff       6/0/0        2.52 s  GO · step 21/39, 18 left
+radiation_force  3/0/0        2.02 s  GO · step 22/39, 17 left
+grav_force       13/0/0       8.83 s  GO · step 23/39, 16 left
+grav_selfforce   5/0/0        3.87 s  GO · step 24/39, 15 left
+fft              8/0/0        9.48 s  GO · step 25/39, 14 left
+adapter          10/0/0       7.53 s  GO · step 26/39, 13 left
+state            6/0/0        5.62 s  GO · step 27/39, 12 left
+booking          4/0/0        5.17 s  GO · step 28/39, 11 left
+floors           7/0/0        8.75 s  GO · step 29/39, 10 left
+dt               6/0/0        6.58 s  GO · step 30/39, 9 left
+box              8/0/0        8.08 s  GO · step 31/39, 8 left
+latch            5/0/0        5.28 s  GO · step 32/39, 7 left
+timing           5/0/0        8.39 s  GO · step 33/39, 6 left
+scene            8/0/0        4.42 s  GO · step 34/39, 5 left
+dump             10/0/0      10.84 s  GO · step 35/39, 4 left
+boot             1/0/0        4.32 s  GO · step 36/39, 3 left
+desktop          2/0/0        9.01 s  GO · step 37/39, 2 left
+web              3/0/0       18.78 s  GO · step 38/39, 1 left
+capture          2/0/0        1.24 s  GO · step 39/39, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 25 path(s) checked at the anchor)
+sink · red-arm proven by M0-D45 2026-10-15T14:07:03-04:00 (fingerprint edb5eef09ed6) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/sink.rs changed since M0-D45's start - a test, case or check M0-D45's Deliver: does not name
+logs: milestones/m0/logs/M0-D45.<scope>.log · record: loop_times.jsonl · tree a2bed96f1172+a9e7dc395dad
+anchor: 66 path×scope entries moved by this run
+anchor: 204 paths checked · 180 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 204 covered of 384 visible
+skipped   172  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 879 passed, 0 failed, 0 skipped · 39/39 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 6 not impacted · 35.03 s + loop 0.06 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 4.18->10.4 · base: M0-D45's start 2026-10-15T14:03:05-04:00
+=== GO ===

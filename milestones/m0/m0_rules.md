@@ -6,6 +6,7 @@ over 10 minutes, a visible or foreground-stealing window, or anything irreversib
 every time (§13 OPT-C). Grants buy execution, never acceptance.
 
 ## R1 · The Python venv
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): A Python `.venv/` at the repo root is allowed when a task needs one (the lead, 2026-10-08)
 - The lead, 2026-10-08: "we can create a .venv here in this folder for python if we need it".
 - Scope: one `.venv/` at the repo root, git-ignored, created when a task's `Deliver:` needs Python
   packages. The playbook's own tools need none (standard library only, annex §A.0).
@@ -13,6 +14,7 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   never copied into a scratch copy — `tools/pb/scratch_copy.sh` symlinks it (§11).
 
 ## R2 · Grant — BUILD lane (OPT-C)
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): Grant, BUILD lane: compile, run the deterministic suites and the smokes, fetch approved libraries — no ask; $0
 - The lead, 2026-10-08, picked "Build and test (Recommended)", shown as: "Compile, run the test
   suites and fetch the approved libraries on their own."
 - Scope: on linux-pc, and on win-laptop once it is in play: compile the game and its tools; run
@@ -25,6 +27,7 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
 - Ceiling: $0.
 
 ## R3 · Grant — installs, on both PCs
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): Grant, installs: the approved table's tools, user-level, on linux-pc and win-laptop; on win-laptop the agent does the setup itself; $0
 - The lead, 2026-10-08: "this pc only for now, but I also work on a windows laptop, so when an
   agent finds out hes on windows, he drains the installs and the setup" — my reading: on the
   Windows laptop, the agent does the installs and the setup itself — then picked "Install
@@ -42,6 +45,7 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
 - Ceiling: $0.
 
 ## R4 · Grant — DEBUG lane (OPT-C)
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): Grant, DEBUG lane: run your own build headless or off-screen to check it — on win-laptop the window placed off-screen, never focused, out of the taskbar (M0-TJ3) — never acceptance; a visible window still asks
 - The lead, 2026-10-08, picked "Run the game off-screen (Recommended)", shown as: "Agents run their
   own build headless to check their work — never as your acceptance. Opening a visible window
   still asks you each time."
@@ -58,6 +62,7 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
 - Ceiling: $0.
 
 ## R5 · Boxes [amended by M0-TJ3, 2026-10-08 — the old text in the plan's Superseded section]
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): Boxes: linux-pc and win-laptop both in play — any block, lot V's included, runs on the box the lead is on (M0-TJ3); probe the box first; every verdict names its box
 - The lead, 2026-10-08: "this pc only for now, but I also work on a windows laptop"; then, at M0-TJ3,
   "Build and close lots anywhere", shown as: "A lot can also be validated on the laptop: PC-only checks
   are marked owed, the next validation on the PC runs them, and the final one (M0-V17) runs them all.
@@ -72,6 +77,7 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   names its box.
 
 ## R6 · Modules assumed at bootstrap
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): Modules: OPT-B on; OPT-A, D, E, F, G off — assumed at bootstrap, confirmed by the lead at M0-TP (2026-10-08)
 - OPT-B (show-off demo) on: the lead asked for the star's life "As a first demo"; M0-TG places a TD
   after the final V.
 - Off: OPT-A (no measurement campaign yet; a later plan may turn it on for performance work) ·
@@ -81,6 +87,7 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   assumed (Recommended)" (reports/plan_redteam.md §8).
 
 ## R7 · Copyleft
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): No copyleft code (GPL family) in the game: studied for ideas, never copied or translated — the lead's ruling at M0-TP (2026-10-08)
 - The lead, 2026-10-08, at M0-TP: "No copyleft code (Recommended)", shown as: "The game stays
   closed-source and sellable on Steam with no duty to publish its code. GPL projects like The
   Powder Toy are studied for ideas only, never copied or translated; an LGPL library only as a
@@ -93,6 +100,7 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   game, which copied copyleft code would oblige to publish its source.
 
 ## R8 · Physics oracles
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): Physics oracles: a physics behaviour passes only against a cited reference result within a stated tolerance
 - Every physics behaviour the contract fixes names its oracle — an analytic solution, a published
   relation or a measured value, with its source — and a tolerance; a harness scope checks the
   engine against it and is red-armed by a planted bug (§8). A capture that looks right is
@@ -167,6 +175,7 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   (M0-R3's and M0-TC's flags).
 
 ### R14 · Every V
+- Index row, moved verbatim from the plan's Rules table (M0-TC6): Every V is done when its verdict is recorded, its D's created and the register updated (PLAYBOOK §14.3); a V that adds to that says so on its own `Done when:` line
 - **Every V below** is done when its verdict is recorded, its D's created and the register updated
   (PLAYBOOK §14.3's V template); a V that adds to that says so on its own `Done when:` line.
 

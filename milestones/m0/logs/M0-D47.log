@@ -1,0 +1,64 @@
+ 8836
+F into a step without P5: dump holds F, and this step runs no P5 to keep it (heat off)
+no F into a step with P5: dump holds no F, and this step runs P5: its first step would push with F = 0
+SR-ERROR bad arguments: --world 128x128 against the dump's 256x256
+SR-ERROR bad arguments: --dump-every needs --out (dumps go to DIR/dumps)
+SR-ERROR bad arguments: --dump-every must be at least 1
+ok
+test dump::sun_disk_200_steps_carried_over_submissions_of_8_rounds_dump_the_engines_own_choice_byte_for_byte ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sun_disk 200 steps: 1 submission(s) at the engine's choice; 204 bare submissions of 8 rounds; 125 frames of 8 rounds, 122 ending with a step held
+ok
+test dump::two_hundred_steps_through_a_dump_equal_two_hundred_straight_steps_state_and_reports ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+straight: [FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 22.360680997371674, dt: 0.44721362, dt_next: 0.44721362, steps: 50, latch_fired: None, carried: false, cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 44.72136199474335, dt: 0.44721362, dt_next: 0.44721362, steps: 100, latch_fired: Some(50), carried: false, cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 67.08204299211502, dt: 0.44721362, dt_next: 0.44721362, steps: 150, latch_fired: None, carried: false, cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 89.4427239894867, dt: 0.44721362, dt_next: 0.44721362, steps: 200, latch_fired: None, carried: false, cost: None }]
+resumed frame 2: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 67.08204299211502, dt: 0.44721362, dt_next: 0.44721362, steps: 150, latch_fired: None, carried: false, cost: None }
+resumed frame 3: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 89.4427239894867, dt: 0.44721362, dt_next: 0.44721362, steps: 200, latch_fired: None, carried: false, cost: None }
+cells only: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 22.360680997371674, dt: 0.44721362, dt_next: 0.44721362, steps: 50, latch_fired: None, carried: false, cost: None }
+arming time lost: FrameReport { steps_run: 2, advanced: 0.89442724, sim_time: 45.615789234638214, dt: 0.44721362, dt_next: 0.44721362, steps: 102, latch_fired: Some(2), carried: false, cost: None }
+ok
+test dump::write_then_read_gives_a_bit_identical_state_and_the_bytes_follow_2_12_3 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+header: {"channels":["sigma","mom_x","mom_y","energy","x_H","x_He","x_C","x_O","x_Ne","x_Mg","x_Si","x_S","x_Fe","x_n"],"height":64,"resume":{"box":[32,8,32,32,64,64,17,3],"box_args":[4,4,1,4,1,1],"dt":0.08713509887456894,"dt_next":0.08713509887456894,"flux":false,"latch_since":0.0},"sim_time":1.568431779742241,"sinks":[],"step":18,"version":1,"width":128}
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 236 filtered out; finished in 5.79s
+
+dump      11/0/0      26.30 s  GO · step 1/3, 2 left
+sink      30/0/0      24.35 s  GO · step 2/3, 1 left
+nu_heat   15/0/0      18.37 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-D47.<scope>.log · record: loop_times.jsonl · tree a2bed96f1172+e76e12ab11e4
+anchor: 101 path×scope entries moved by this run
+anchor: 203 paths checked · 183 skipped (3 classes) · 0 never checked · 2 stale · 0 unclassified · 0 owed · 205 covered of 388 visible
+verify: 56 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 26.30 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 20.6->20.95
+=== GO ===
+dump · clean · GO · arm 1/6, 5 left
+dump · plant dump-channel-order · RED (proven: 6 failed) · arm 2/6, 4 left
+dump · plant dump-sim-time-skip · RED (proven: 3 failed) · arm 3/6, 3 left
+dump · plant dump-flux-zero · RED (proven: 1 failed) · arm 4/6, 2 left
+dump · plant dump-sinks-drop · RED (proven: 2 failed) · arm 5/6, 1 left
+dump · plant headless-no-sinks · RED (proven: 1 failed) · arm 6/6, 0 left
+redarm: 5 plants · 5 red · 0 green · 0 errors · scope dump · 101.04 s · 6 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D47.dump.redarm.log
+=== GO ===
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for timing)
+NEVER CHECKED  rust-toolchain.toml  (no entry for timing)
+NEVER CHECKED  tests/cargo.sh  (no entry for timing)
+NEVER CHECKED  tests/gpu.sh  (no entry for timing)
+NEVER CHECKED  tests/plants/timing-skip-pass.patch  (no entry for timing)
+skipped   175  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  timing: 1 failed · log milestones/m0/logs/M0-D47.timing.log
+  anchor: 78 never checked, 0 stale, 0 unclassified - every one named above
+verify: 200 passed, 1 failed, 0 skipped · 29/30 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 15 not impacted · 30.07 s + loop 0.08 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 26.63->24.19 · base: M0-D47's start 2026-10-15T14:36:00-04:00
+=== NO-GO: timing: 1 failed · log milestones/m0/logs/M0-D47.timing.log; anchor: 78 never checked, 0 stale, 0 unclassified - every one named above ===

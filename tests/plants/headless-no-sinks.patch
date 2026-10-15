@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -430,7 +430,8 @@ pub fn run(args: &[String]) -> i32 {
+     let heat = switches.heat.then_some(HeatSetup { side: &side, test });
+     let react = switches.reactions.then_some(ReactSetup { reactions: &reactions, test, neutrinos: switches.neutrinos, side: &side });
+     // P3 reads φ from P2's plane; P7 reads S_ν from P6's, so it needs P6 (§2.12.1; M0-D47).
+-    let sink = switches.sinks.then_some(SinkSetup { side: &side });
++    // planted: the step is built without P3, whatever the scene's `sinks` switch says
++    let sink: Option<SinkSetup> = None;
+     let nuheat = (switches.reactions && switches.neutrinos).then_some(NuHeatSetup { side: &side });
+     let step = match Step::with_neutrino_heating(
+         &gpu.device,

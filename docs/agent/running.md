@@ -31,7 +31,9 @@ block that builds their feature and are refused with exit 4 until then:
   same step with no surface and no display (§6.3); `DIR/summary.json` per §2.12.2 and, with `--out`, the final state dump
   `DIR/dumps/s_<step>.bin` (§2.12.3; `--dump-every` adds one at every step index N divides, counted from the scene;
   `--load-dump` starts from a dump, M0-T26). `--world` and `--edge` stand over the scene's `world` (M0-T25); `--timing`
-  adds `timing` to the summary (M0-T23). `--cpu-reference` (M0-T37) runs the CPU f64 twin from the same scene instead of
+  adds `timing` to the summary (M0-T23). The scene's `switches` (§2.12.1, each on when left out) build the step's passes:
+  `gravity` P2, `hydro` P4, `heat` P5, `reactions` P6, `sinks` P3 and `neutrinos` P7 — P7 only with `reactions` on, S_ν being
+  P6's (M0-D47); `--timing` lists the passes built. `--cpu-reference` (M0-T37) runs the CPU f64 twin from the same scene instead of
   the GPU — worlds up to 128 × 128 (exit 4 above), the same summary.json and dumps (the box record the whole world's);
   `--adapter`, `--timing` and `--load-dump` are the GPU's and refused with it. stdout: first line `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`,
   warnings `SR-WARN`. Exit codes: §3.3. The file formats: `docs/agent/architecture.md` § The files. sr-app's usage line

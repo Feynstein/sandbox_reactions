@@ -20,9 +20,12 @@
 //! goes with the momentum. The cells of a sink are read and written in row-major order, one sink after the other (§1.3.4:
 //! a fixed order, so a cell two sinks reach goes to the first).
 //!
-//! *Motion* — kick-drift-kick over all sinks together: ½Δt of a, Δt of v, ½Δt of a again at the new positions, a the grid's
-//! g at the sink (bilinear between cell centres, clamped at the rim; the gas alone, so a sink never pulls on itself) plus
-//! the other sinks' pull G M_j d / (d² + r_acc,j²)^{3/2}, softened as §1.4.3's potential is. *Merging*: two sinks closer than
+//! *Motion* (§0.5 [M0-V7]) — kick-drift-kick over all sinks together: ½Δt of a, Δt of v, ½Δt of a again at the new positions,
+//! a the exact reaction of the sink's own softened pull (§1.4.3) on the gas: Σ_cells G m d / (|d|² + r_acc²)^{3/2}, m a cell's
+//! mass (Σ; a cell is one unit of area), d from the sink to the cell's centre, over every cell with Σ ≥ Σ_vac, row-major, on
+//! the state after accretion (a cell P3 took this step is left at Σ_floor, below Σ_vac), plus every other sink's pull
+//! G M_j d / (d² + r²)^{3/2}, r the pair's larger r_acc — so each pull between a sink and a cell, or two sinks, is equal and
+//! opposite and no grid g is read for the motion (formation keeps φ); P3's shader has the same law since M0-D46. *Merging*: two sinks closer than
 //! the larger of their r_acc merge — the lowest pair first, again until none is — into the lower slot with the masses and the
 //! momenta summed, at the mass-weighted centre. The latch flag P3 sets on a formation is the engine's (M0-T52a).
 
@@ -229,12 +232,32 @@ impl Sinks {
         total
     }
 
-    /// The pull on sink `i` at the positions `at`: the grid's g (bilinear) plus every other sink's softened pull.
-    fn acceleration(&self, i: usize, at: &[[f64; 2]], grid: &Field, w: usize, h: usize) -> [f64; 2] {
-        let mut a = [bilinear(&grid.gx, w, h, at[i]), bilinear(&grid.gy, w, h, at[i])];
+    /// The pull on sink `i` at the positions `at` ([M0-V7]): the sum over the gas of its softened pull's reaction, plus every
+    /// other sink's pull softened by the pair's larger r_acc.
+    fn acceleration(&self, i: usize, at: &[[f64; 2]], st: &State) -> [f64; 2] {
+        let (w, ra) = (st.width, self.r_acc(i));
+        let mut a = [0.0; 2];
+        for c in 0..st.cells() {
+            let sigma = st.get(0, c);
+            if sigma < self.sigma_vac {
+                continue;
+            }
+            let (dx, dy) = ((c % w) as f64 + 0.5 - at[i][0], (c / w) as f64 + 0.5 - at[i][1]);
+            let soft = dx * dx + dy * dy + ra * ra;
+            let pull = self.g * sigma / (soft * soft.sqrt());
+            a[0] += pull * dx;
+            a[1] += pull * dy;
+        }
+        let [bx, by] = self.pair_pull(i, at);
+        [a[0] + bx, a[1] + by]
+    }
+
+    /// The other sinks' pull on sink `i` at the positions `at`, a pair softened by its larger r_acc.
+    fn pair_pull(&self, i: usize, at: &[[f64; 2]]) -> [f64; 2] {
+        let mut a = [0.0; 2];
         for j in (0..self.sinks.len()).filter(|&j| j != i) {
             let (dx, dy) = (at[j][0] - at[i][0], at[j][1] - at[i][1]);
-            let ra = self.r_acc(j);
+            let ra = self.r_acc(i).max(self.r_acc(j));
             let soft = dx * dx + dy * dy + ra * ra;
             let pull = self.g * self.sinks[j].m / (soft * soft.sqrt());
             a[0] += pull * dx;
@@ -243,11 +266,22 @@ impl Sinks {
         a
     }
 
-    /// Kick-drift-kick over all sinks by Δt in the gas's field `grid` (a `w` × `h` world's g, the sinks' own terms not in it).
-    pub fn advance(&mut self, grid: &Field, w: usize, h: usize, dt: f64) {
+    /// Each sink's acceleration at its position in the gas `st` (the state after accretion): what [`Sinks::advance`] kicks with.
+    pub fn pull(&self, st: &State) -> Vec<[f64; 2]> {
+        let at: Vec<[f64; 2]> = self.sinks.iter().map(|s| [s.x, s.y]).collect();
+        (0..self.sinks.len()).map(|i| self.acceleration(i, &at, st)).collect()
+    }
+
+    /// Kick-drift-kick over all sinks by Δt in the gas `st` (§0.5 [M0-V7]): the pull is the sum over its cells, read at the
+    /// start positions and again at the drifted ones.
+    pub fn advance(&mut self, st: &State, dt: f64) {
+        self.kick_drift_kick(dt, |s, i, at| s.acceleration(i, at, st));
+    }
+
+    fn kick_drift_kick(&mut self, dt: f64, pull: impl Fn(&Sinks, usize, &[[f64; 2]]) -> [f64; 2]) {
         let n = self.sinks.len();
         let at: Vec<[f64; 2]> = self.sinks.iter().map(|s| [s.x, s.y]).collect();
-        let a: Vec<[f64; 2]> = (0..n).map(|i| self.acceleration(i, &at, grid, w, h)).collect();
+        let a: Vec<[f64; 2]> = (0..n).map(|i| pull(self, i, &at)).collect();
         for (s, a) in self.sinks.iter_mut().zip(&a) {
             s.vx += 0.5 * dt * a[0];
             s.vy += 0.5 * dt * a[1];
@@ -255,7 +289,7 @@ impl Sinks {
             s.y += dt * s.vy;
         }
         let at: Vec<[f64; 2]> = self.sinks.iter().map(|s| [s.x, s.y]).collect();
-        let a: Vec<[f64; 2]> = (0..n).map(|i| self.acceleration(i, &at, grid, w, h)).collect();
+        let a: Vec<[f64; 2]> = (0..n).map(|i| pull(self, i, &at)).collect();
         for (s, a) in self.sinks.iter_mut().zip(&a) {
             s.vx += 0.5 * dt * a[0];
             s.vy += 0.5 * dt * a[1];
@@ -288,28 +322,20 @@ impl Sinks {
         }
     }
 
-    /// One P3 step on the gas's field `grid` (φ and g of the grid's mass alone): formation against φ with the sinks'
-    /// potential added, accretion, then the kick-drift and merging.
+    /// One P3 step ([M0-V7]): formation against φ of the gas's `grid` with the sinks' potential added, accretion, then the
+    /// kick-drift-kick in the gas that accretion left, and merging.
     pub fn step(&mut self, st: &mut State, grid: &Field, dt: f64) -> Report {
+        let (formed, accreted) = self.form_and_accrete(st, grid);
+        self.advance(st, dt);
+        let merged = self.merge();
+        Report { formed, accreted, merged }
+    }
+
+    fn form_and_accrete(&mut self, st: &mut State, grid: &Field) -> (Option<(usize, usize)>, f64) {
         let (w, h) = (st.width, st.height);
         let mut full = grid.clone();
         super::grav::add_sinks(&mut full, w, h, self.g, &self.sources());
         let formed = self.form(st, &full.phi);
-        let accreted = self.accrete(st);
-        self.advance(grid, w, h, dt);
-        let merged = self.merge();
-        Report { formed, accreted, merged }
+        (formed, self.accrete(st))
     }
-}
-
-/// The bilinear value of a cell-centred plane at the position `p` in cells (a cell's centre at (i + ½, j + ½)), clamped
-/// to the first and last centres.
-fn bilinear(plane: &[f64], w: usize, h: usize, p: [f64; 2]) -> f64 {
-    let fx = (p[0] - 0.5).clamp(0.0, (w - 1) as f64);
-    let fy = (p[1] - 0.5).clamp(0.0, (h - 1) as f64);
-    let (x0, y0) = (fx.floor() as usize, fy.floor() as usize);
-    let (x1, y1) = ((x0 + 1).min(w - 1), (y0 + 1).min(h - 1));
-    let (tx, ty) = (fx - x0 as f64, fy - y0 as f64);
-    let at = |x: usize, y: usize| plane[y * w + x];
-    (1.0 - ty) * ((1.0 - tx) * at(x0, y0) + tx * at(x1, y0)) + ty * ((1.0 - tx) * at(x0, y1) + tx * at(x1, y1))
 }

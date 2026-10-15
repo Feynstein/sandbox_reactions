@@ -1,0 +1,46 @@
+--- a/crates/sr-physics/src/reference/sinks.rs
++++ b/crates/sr-physics/src/reference/sinks.rs
+@@ -235,19 +235,18 @@
+     /// The pull on sink `i` at the positions `at` ([M0-V7]): the sum over the gas of its softened pull's reaction, plus every
+     /// other sink's pull softened by the pair's larger r_acc.
+     fn acceleration(&self, i: usize, at: &[[f64; 2]], st: &State) -> [f64; 2] {
+-        let (w, ra) = (st.width, self.r_acc(i));
+-        let mut a = [0.0; 2];
+-        for c in 0..st.cells() {
+-            let sigma = st.get(0, c);
+-            if sigma < self.sigma_vac {
+-                continue;
+-            }
+-            let (dx, dy) = ((c % w) as f64 + 0.5 - at[i][0], (c / w) as f64 + 0.5 - at[i][1]);
+-            let soft = dx * dx + dy * dy + ra * ra;
+-            let pull = self.g * sigma / (soft * soft.sqrt());
+-            a[0] += pull * dx;
+-            a[1] += pull * dy;
+-        }
++        let (w, h) = (st.width, st.height);
++        let grid = super::grav::Gravity::new(self.g).field(st.plane(0), self.sigma_vac, w, h).unwrap();
++        let bilinear = |plane: &[f64]| {
++            let fx = (at[i][0] - 0.5).clamp(0.0, (w - 1) as f64);
++            let fy = (at[i][1] - 0.5).clamp(0.0, (h - 1) as f64);
++            let (x0, y0) = (fx.floor() as usize, fy.floor() as usize);
++            let (x1, y1) = ((x0 + 1).min(w - 1), (y0 + 1).min(h - 1));
++            let (tx, ty) = (fx - x0 as f64, fy - y0 as f64);
++            let v = |x: usize, y: usize| plane[y * w + x];
++            (1.0 - ty) * ((1.0 - tx) * v(x0, y0) + tx * v(x1, y0)) + ty * ((1.0 - tx) * v(x0, y1) + tx * v(x1, y1))
++        };
++        let a = [bilinear(&grid.gx), bilinear(&grid.gy)];
+         let [bx, by] = self.pair_pull(i, at);
+         [a[0] + bx, a[1] + by]
+     }
+--- a/crates/sr-engine/shaders/sinks.wgsl
++++ b/crates/sr-engine/shaders/sinks.wgsl
+@@ -389,8 +389,7 @@
+         var a = vec2<f32>(0.0, 0.0);
+         if (m > 0.0 && k < st.count) {
+             let d = centre - st.sinks[k].pos;
+-            let ra = r_acc(sink_mass(k));
+-            let soft = dot(d, d) + ra * ra;
++            let soft = max(dot(d, d), R_MIN * R_MIN);
+             a = sp.grav * m / (soft * sqrt(soft)) * d;
+         }
+         tile_pull[li] = a;

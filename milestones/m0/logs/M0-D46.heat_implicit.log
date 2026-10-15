@@ -1,0 +1,25 @@
+== 2026-10-15T14:22:23-04:00 heat_implicit · task M0-D46 · box laserax-ai :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=0 · 4.52 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -4.741e-12, highest 3.5743e-3, heat 1.000000000
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 6.35e-7 of the peak; sigma2 x 47.96846 y 47.96854, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5744e-1; heat 100.0009266 of 100.0000031; up to 8 Newton passes, 141 rounds
+ok
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 2, rounds: 38, converged: true, delta: 8.8778654e-7 }; the twin 2 passes, 116 rounds; |T - twin| 2.86e-6 of the peak; sigma2 x 39.967304 y 39.967335, expected 40
+ok
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 2 Newton passes, 108 rounds, delta -4.7e-13; |T - tight solve| 4.77e-13; sigma2 x 39.999878 y 39.999878, expected 40
+ok
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 5 Newton passes, 130 rounds, delta 8.9e-14; worst balance 3.28e-12; lost 1974.389489 of radiated 1974.389489
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 240 filtered out; finished in 4.29s
+
+

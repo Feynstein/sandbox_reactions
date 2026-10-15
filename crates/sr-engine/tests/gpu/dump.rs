@@ -88,7 +88,8 @@ impl Run {
         Run { state, step }
     }
 
-    /// The step headless builds for a scene with every switch on (P2, P4 since M0-T34, P5 since M0-T42) on `edge`.
+    /// The step headless builds for a scene with every switch on, but for P6, P3 and P7 (P2, P4 since M0-T34, P5 since M0-T42) on
+    /// `edge`: preset:sun's first 100 steps burn and sink nothing, so its state is headless's.
     fn as_headless(gpu: &Gpu, c: &Constants, (world, planes): (WorldConfig, Vec<f32>), edge: EdgeMode) -> Run {
         let state = State::new(&gpu.device, world).unwrap();
         state.upload(&gpu.queue, &planes).unwrap();
@@ -101,7 +102,8 @@ impl Run {
         Run { state, step }
     }
 
-    /// The step headless builds for scenes/sun_disk.json (its switches: P2, P4, P5, P6), from the scene's state.
+    /// The step headless builds for scenes/sun_disk.json but for P3 and P7 (its switches: P2, P4, P5, P6, and since M0-D47 P3 and
+    /// P7, which this one leaves out: P5's carry is what the case grades), from the scene's state.
     fn sun_disk(gpu: &Gpu) -> Run {
         let scene = Scene::load(&std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../scenes/sun_disk.json")).unwrap();
         let (physics, elements) = (scene.physics().unwrap(), Elements::shipped().unwrap());
@@ -662,4 +664,84 @@ fn a_dump_carries_two_sinks_bit_for_bit_through_the_file_and_the_load() {
     assert_eq!(sink_bits(&restored), sink_bits(&before), "load_dump restores the sinks");
     let again = dump_state(&gpu.device, &gpu.queue, &fresh.state, &fresh.step);
     assert_eq!(again.to_bytes(), bytes, "load_dump then dump_state");
+}
+
+/// A scene file in `dir`: a rect of hydrogen in a `w` × `h` world with the given `switches` object (§2.12.1), its path.
+fn scene_file(dir: &std::path::Path, name: &str, (w, h): (u32, u32), switches: &str) -> String {
+    let text = format!(
+        r#"{{"version": 1, "world": {{"width": {w}, "height": {h}, "edge": "leave"}}, "switches": {switches},
+ "objects": [{{"kind": "rect", "x0": 40, "y0": 20, "w": 10, "h": 10, "sigma": 1.0, "t": 2.0, "composition": {{"H": 1.0}}, "v": [0, 0]}}]}}"#
+    );
+    let path = dir.join(name);
+    std::fs::write(&path, text).unwrap();
+    path.display().to_string()
+}
+
+/// The passes `--timing` listed for a run of `scene`: `per_pass_ms`'s keys in summary.json (§2.12.2), and its source.
+fn timed_passes(dir: &std::path::Path, scene: &str) -> Vec<String> {
+    let out = dir.join(format!("out-{}", dir.read_dir().unwrap().count()));
+    assert_eq!(headless(&["--scene", scene, "--steps", "5", "--timing", "--out", &out.display().to_string()]), 0, "{scene}");
+    let summary: serde_json::Value = serde_json::from_slice(&std::fs::read(out.join("summary.json")).unwrap()).unwrap();
+    let timing = &summary["timing"];
+    assert_eq!(timing["source"], "gpu-timestamp", "per-pass timing needs the adapter's timestamps: {timing}");
+    timing["per_pass_ms"].as_object().unwrap().keys().cloned().collect()
+}
+
+/// M0-D47 — headless builds P3 and P7 from the scene's switches (§2.12.1): `sinks` is P3 and `neutrinos` P7, which reads
+/// the S_ν plane P6 writes, so with `reactions` off it is not built (the case names that choice). The per-pass timing of
+/// five steps lists each pass the step recorded; and a dump holding two sinks (M0-T52b's) loaded into a scene with
+/// `sinks` on runs on with them and writes them in its final dump, and into a scene with `sinks` off is refused, exit 4,
+/// naming P3. A headless that builds no P3 or P7 fails the timing lists and the resume.
+#[test]
+fn headless_builds_p3_and_p7_from_the_scenes_switches_and_resumes_a_dump_holding_sinks() {
+    let gpu = device();
+    let root = temp("switches");
+    let (p3, p7) = ("P3 sinks", "P7 neutrino heating");
+    let size = (256, 256);
+    let listed = |switches: &str, name: &str| timed_passes(&root, &scene_file(&root, name, size, switches));
+
+    let all_on = listed("{}", "on.json");
+    assert!(all_on.iter().any(|p| p == p3) && all_on.iter().any(|p| p == p7), "every switch on lists P3 and P7: {all_on:?}");
+    let all_off = listed(r#"{"sinks": false, "neutrinos": false}"#, "off.json");
+    assert!(!all_off.iter().any(|p| p == p3 || p == p7), "sinks and neutrinos off list neither: {all_off:?}");
+    let sinks_only = listed(r#"{"neutrinos": false}"#, "sinks.json");
+    assert!(sinks_only.iter().any(|p| p == p3) && !sinks_only.iter().any(|p| p == p7), "sinks alone: P3 only: {sinks_only:?}");
+    let nu_only = listed(r#"{"sinks": false}"#, "nu.json");
+    assert!(nu_only.iter().any(|p| p == p7) && !nu_only.iter().any(|p| p == p3), "neutrinos alone: P7 only: {nu_only:?}");
+    // P7 with no P6 to fill S_ν would run its gate every step over a zero plane: not built.
+    let no_p6 = listed(r#"{"reactions": false}"#, "no-p6.json");
+    assert!(!no_p6.iter().any(|p| p == p7) && no_p6.iter().any(|p| p == p3), "reactions off: P3, no P7: {no_p6:?}");
+
+    // Two sinks dumped from a P3 step, loaded through headless.
+    let c = constants();
+    let (world, planes) = mixed_start();
+    let run = sinking(&gpu, &c, (world, planes));
+    let held = [
+        Sink { x: 45.5, y: 25.5, vx: 0.125, vy: -0.0625, m: 2.1 },
+        Sink { x: 100.25, y: 40.75, vx: 0.0, vy: 0.5, m: 1.75 },
+    ];
+    run.step.set_sinks(&gpu.queue, &held).unwrap();
+    run.step.run(&gpu.device, &gpu.queue, 3);
+    let dump = dump_state(&gpu.device, &gpu.queue, &run.state, &run.step);
+    assert_eq!(dump.sinks.len(), 2, "two sinks dumped: {:?}", dump.sinks);
+    let file = root.join("s_3.bin");
+    dump.write(&file).unwrap();
+    let from = file.display().to_string();
+
+    let small = (128, 64);
+    let on = scene_file(&root, "resume-on.json", small, r#"{"heat": false}"#);
+    let off = scene_file(&root, "resume-off.json", small, r#"{"heat": false, "sinks": false}"#);
+    let (out, refused) = (root.join("resumed"), root.join("refused"));
+    assert_eq!(headless(&["--scene", &on, "--load-dump", &from, "--steps", "2", "--out", &out.display().to_string()]), 0);
+    let end = Dump::read(&out.join("dumps").join("s_5.bin")).unwrap();
+    assert_eq!(end.sinks.len(), 2, "the final dump holds the two sinks the run carried: {:?}", end.sinks);
+    assert!(end.sinks.iter().zip(&dump.sinks).all(|(a, b)| a.m.to_bits() != 0 && (a.x - b.x).abs() < 1.0), "the sinks ran on");
+    println!("sinks after 2 more steps: {:?}", end.sinks);
+    assert_eq!(headless(&["--scene", &off, "--load-dump", &from, "--steps", "2", "--out", &refused.display().to_string()]), 4);
+    assert!(!refused.join("summary.json").exists(), "refused before any step: no summary");
+    // The refusal names P3 (load_dump's message, read in-process).
+    let no_p3 = Run::new(&gpu, &c, (world, vec![0.0; N_CHANNELS * world.cells()]));
+    let err = load_dump(&gpu.queue, &no_p3.state, &no_p3.step, &dump).unwrap_err();
+    assert!(err.contains("P3"), "{err}");
+    let _ = std::fs::remove_dir_all(&root);
 }

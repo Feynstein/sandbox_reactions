@@ -432,7 +432,7 @@ impl Step {
     }
 
     /// As [`Step::with_reactions`], with P3 sinks when `sinks` is given (§2.6; §2.12.1's `sinks` switch on; M0-T51): φ
-    /// from `sinks.side`, g from P2 when the step runs it, else zeros (a test's synthetic world).
+    /// from `sinks.side` (P2's when the step runs it, else a test's synthetic world); the motion reads no g (M0-D46).
     #[allow(clippy::too_many_arguments)]
     pub fn with_sinks(
         device: &wgpu::Device,
@@ -478,8 +478,7 @@ impl Step {
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Gravity as usize] = gravity.as_mut().map(|g| std::mem::take(&mut g.dispatches)).unwrap_or_default();
         let g = gravity.as_ref().map(Gravity::field);
-        let gas_g = gravity.as_ref().map(Gravity::gas_field);
-        let mut sink = sinks.zip(sink_state).map(|(s, buf)| sinks::Sinks::new(device, state, booking, eos, physics, &boxfit, dt.record(), buf, gas_g, s));
+        let mut sink = sinks.zip(sink_state).map(|(s, buf)| sinks::Sinks::new(device, state, booking, eos, physics, &boxfit, dt.record(), buf, s));
         passes[Pass::Sinks as usize] = sink.as_mut().map(|s| std::mem::take(&mut s.dispatches)).unwrap_or_default();
         let flux = heat.map(|h| h.side.flux());
         let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, physics, &boxfit, dt.record(), g, flux, edge));
@@ -512,8 +511,8 @@ impl Step {
         self.gravity.as_ref().map(Gravity::field)
     }
 
-    /// The gas's own g, the sinks' pull left out: [`Step::gravity_field`] in a step without P3. P3's kick-drift-kick reads
-    /// this one.
+    /// The gas's own g, the sinks' pull left out: [`Step::gravity_field`] in a step without P3. Since M0-D46 no pass reads
+    /// it (P3's motion sums the gas's cells, §0.5 [M0-V7]); the tests read it.
     pub fn gravity_gas_field(&self) -> Option<&wgpu::Buffer> {
         self.gravity.as_ref().map(Gravity::gas_field)
     }

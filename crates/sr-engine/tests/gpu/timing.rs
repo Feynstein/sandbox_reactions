@@ -17,7 +17,9 @@ use sr_engine::state::{Booking, SideFields, State, WorldConfig};
 use sr_engine::step::boxfit::BoxMode;
 use sr_engine::step::heat::HeatSetup;
 use sr_engine::step::latch::{FramePlan, FrameReport};
+use sr_engine::step::nuheat::NuHeatSetup;
 use sr_engine::step::react::ReactSetup;
+use sr_engine::step::sinks::SinkSetup;
 use sr_engine::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
 use sr_physics::registry::{Elements, Physics, Reactions};
 
@@ -34,12 +36,14 @@ fn disk(gpu: &Gpu, w: u32, h: u32) -> Step {
     let booking = Booking::new(&gpu.device, world).unwrap();
     let (eos, side) = (EosGpu::new(&gpu.device, &physics, &elements), SideFields::new(&gpu.device, world).unwrap());
     // The passes headless records for `preset:sun` (every switch on, a *leave* world): P2 and, since M0-T34, P4; P5 since
-    // M0-T42; P6 since M0-T46.
+    // M0-T42; P6 since M0-T46; P3 and P7 since M0-D47.
     let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(EdgeMode::Leave) };
     let heat = HeatSetup { side: &side, test: TestSettings::default() };
     let reactions = Reactions::shipped(&elements, &physics).unwrap();
     let react = ReactSetup { reactions: &reactions, test: TestSettings::default(), neutrinos: true, side: &side };
-    Step::with_reactions(&gpu.device, &state, &booking, &eos, &physics, &passes, Some(&heat), Some(&react)).unwrap()
+    let (sinks, nuheat) = (SinkSetup { side: &side }, NuHeatSetup { side: &side });
+    Step::with_neutrino_heating(&gpu.device, &state, &booking, &eos, &physics, &passes, Some(&heat), Some(&react), Some(&sinks), Some(&nuheat))
+        .unwrap()
 }
 
 /// The source `Timing::Auto` must pick on this device, after checking the device holds no feature but timestamp-query
