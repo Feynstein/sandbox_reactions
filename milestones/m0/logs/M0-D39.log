@@ -1,0 +1,129 @@
+M0-D39 2026-10-15T08:05:02-04:00 linux-pc baseline: timing scope on the RTX 5090
+== 2026-10-15T08:06:27-04:00 single case alone, RTX 5090
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 71.56s
+wall 72.22 s
+== 2026-10-15T08:07:55-04:00 probe (temporary eprintln in frame()), RTX 5090, load 26.31
+D39-PROBE steps=1000 rounds=Some(4290) encode=56.264s submit=11.189s wait=0.067s
+D39-PROBE steps=10 rounds=Some(4290) encode=0.103s submit=0.098s wait=0.018s
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 68.43s
+== 2026-10-15T08:09:40-04:00 probe 2 (cost printed), RTX 5090, load 27.04
+D39-PROBE steps=1000 rounds=Some(4290) encode=34.516s submit=10.506s wait=0.053s
+D39-PROBE cost=Some(StepCost { source: GpuTimestamp, steps: 255, ended: 1000, step_ms: 9.99667952941176, pass_ms: [Some(0.00905072941176471), Some(0.0024199529411764705), Some(0.01757126274509805), None, Some(0.032900015686274445), Some(9.843657411764706), Some(0.0387269019607843), None, Some(0.008614901960784314), Some(0.01227733333333334)], frame_ms: Some(0.014176) })
+D39-PROBE steps=10 rounds=Some(4290) encode=0.069s submit=0.087s wait=0.014s
+D39-PROBE cost=Some(StepCost { source: GpuTimestamp, steps: 10, ended: 10, step_ms: 9.6417856, pass_ms: [Some(0.0090176), Some(0.0025536000000000005), Some(0.016950399999999997), None, Some(0.07330239999999999), Some(9.4570336), Some(0.0330912), None, Some(0.008403200000000001), Some(0.011526399999999997)], frame_ms: Some(0.006912) })
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 45.65s
+== 2026-10-15T08:11:17-04:00 probe 3: slots per step, 128x128 disk, steps 0-419, RTX 5090
+D39-SLOTS step 19 passes 3 rounds 1 slots~12 conv true most (79, 2)
+D39-SLOTS step 39 passes 1 rounds 0 slots~5 conv true most (79, 2)
+D39-SLOTS step 59 passes 1 rounds 0 slots~5 conv true most (79, 2)
+D39-SLOTS step 79 passes 1 rounds 0 slots~5 conv true most (79, 2)
+D39-SLOTS step 99 passes 1 rounds 0 slots~5 conv true most (79, 2)
+D39-SLOTS step 119 passes 1 rounds 0 slots~5 conv true most (79, 2)
+D39-SLOTS step 139 passes 1 rounds 0 slots~5 conv true most (79, 2)
+D39-SLOTS step 159 passes 2 rounds 1 slots~9 conv true most (79, 2)
+D39-SLOTS step 179 passes 2 rounds 1 slots~9 conv true most (79, 2)
+D39-SLOTS step 199 passes 2 rounds 1 slots~9 conv true most (79, 2)
+D39-SLOTS step 219 passes 2 rounds 1 slots~9 conv true most (79, 2)
+D39-SLOTS step 239 passes 2 rounds 1 slots~9 conv true most (79, 2)
+D39-SLOTS step 259 passes 3 rounds 3 slots~14 conv true most (79, 2)
+D39-SLOTS step 279 passes 5 rounds 11 slots~28 conv true most (79, 2)
+D39-SLOTS step 299 passes 6 rounds 26 slots~46 conv true most (79, 2)
+D39-SLOTS step 319 passes 7 rounds 60 slots~83 conv true most (83, 319)
+D39-SLOTS step 336 passes 11 rounds 187 slots~222 conv true most (222, 336)
+D39-SLOTS step 337 passes 12 rounds 213 slots~251 conv true most (251, 337)
+D39-SLOTS step 338 passes 14 rounds 244 slots~288 conv true most (288, 338)
+D39-SLOTS step 339 passes 15 rounds 292 slots~339 conv true most (339, 339)
+D39-SLOTS step 340 passes 17 rounds 358 slots~411 conv true most (411, 340)
+D39-SLOTS step 341 passes 22 rounds 455 slots~523 conv true most (523, 341)
+D39-SLOTS step 342 passes 37 rounds 803 slots~916 conv true most (916, 342)
+D39-SLOTS step 343 passes 33 rounds 1216 slots~1317 conv true most (1317, 343)
+D39-SLOTS step 344 passes 33 rounds 1448 slots~1549 conv true most (1549, 344)
+D39-SLOTS step 345 passes 25 rounds 1172 slots~1249 conv true most (1549, 344)
+D39-SLOTS step 346 passes 27 rounds 1544 slots~1627 conv true most (1627, 346)
+D39-SLOTS step 347 passes 16 rounds 1170 slots~1220 conv true most (1627, 346)
+D39-SLOTS step 348 passes 5 rounds 425 slots~442 conv true most (1627, 346)
+D39-SLOTS step 349 passes 6 rounds 548 slots~568 conv true most (1627, 346)
+D39-SLOTS step 350 passes 3 rounds 315 slots~326 conv true most (1627, 346)
+D39-SLOTS step 351 passes 3 rounds 262 slots~273 conv true most (1627, 346)
+D39-SLOTS step 352 passes 3 rounds 245 slots~256 conv true most (1627, 346)
+D39-SLOTS step 353 passes 3 rounds 192 slots~203 conv true most (1627, 346)
+D39-SLOTS step 354 passes 3 rounds 229 slots~240 conv true most (1627, 346)
+D39-SLOTS step 355 passes 3 rounds 221 slots~232 conv true most (1627, 346)
+D39-SLOTS step 356 passes 3 rounds 229 slots~240 conv true most (1627, 346)
+D39-SLOTS step 357 passes 3 rounds 242 slots~253 conv true most (1627, 346)
+D39-SLOTS step 358 passes 3 rounds 223 slots~234 conv true most (1627, 346)
+D39-SLOTS step 359 passes 3 rounds 225 slots~236 conv true most (1627, 346)
+D39-SLOTS step 361 passes 3 rounds 210 slots~221 conv true most (1627, 346)
+D39-SLOTS step 362 passes 3 rounds 490 slots~501 conv true most (1627, 346)
+D39-SLOTS step 363 passes 3 rounds 300 slots~311 conv true most (1627, 346)
+D39-SLOTS step 364 passes 3 rounds 390 slots~401 conv true most (1627, 346)
+D39-SLOTS step 365 passes 3 rounds 222 slots~233 conv true most (1627, 346)
+D39-SLOTS step 366 passes 3 rounds 208 slots~219 conv true most (1627, 346)
+D39-SLOTS step 367 passes 3 rounds 223 slots~234 conv true most (1627, 346)
+D39-SLOTS step 368 passes 3 rounds 199 slots~210 conv true most (1627, 346)
+D39-SLOTS step 369 passes 3 rounds 228 slots~239 conv true most (1627, 346)
+D39-SLOTS step 370 passes 3 rounds 199 slots~210 conv true most (1627, 346)
+D39-SLOTS step 371 passes 3 rounds 196 slots~207 conv true most (1627, 346)
+D39-SLOTS step 373 passes 3 rounds 314 slots~325 conv true most (1627, 346)
+D39-SLOTS step 374 passes 3 rounds 271 slots~282 conv true most (1627, 346)
+D39-SLOTS step 375 passes 3 rounds 254 slots~265 conv true most (1627, 346)
+D39-SLOTS step 376 passes 3 rounds 224 slots~235 conv true most (1627, 346)
+D39-SLOTS step 377 passes 3 rounds 218 slots~229 conv true most (1627, 346)
+D39-SLOTS step 378 passes 3 rounds 200 slots~211 conv true most (1627, 346)
+D39-SLOTS step 379 passes 3 rounds 191 slots~202 conv true most (1627, 346)
+D39-SLOTS step 380 passes 3 rounds 198 slots~209 conv true most (1627, 346)
+D39-SLOTS step 381 passes 3 rounds 202 slots~213 conv true most (1627, 346)
+D39-SLOTS step 382 passes 3 rounds 298 slots~309 conv true most (1627, 346)
+D39-SLOTS step 383 passes 3 rounds 242 slots~253 conv true most (1627, 346)
+D39-SLOTS step 384 passes 3 rounds 225 slots~236 conv true most (1627, 346)
+D39-SLOTS step 385 passes 3 rounds 212 slots~223 conv true most (1627, 346)
+D39-SLOTS step 386 passes 3 rounds 223 slots~234 conv true most (1627, 346)
+D39-SLOTS step 387 passes 3 rounds 221 slots~232 conv true most (1627, 346)
+D39-SLOTS step 388 passes 3 rounds 194 slots~205 conv true most (1627, 346)
+D39-SLOTS step 389 passes 3 rounds 195 slots~206 conv true most (1627, 346)
+D39-SLOTS step 390 passes 3 rounds 328 slots~339 conv true most (1627, 346)
+D39-SLOTS step 391 passes 3 rounds 258 slots~269 conv true most (1627, 346)
+D39-SLOTS step 392 passes 3 rounds 211 slots~222 conv true most (1627, 346)
+D39-SLOTS step 393 passes 3 rounds 211 slots~222 conv true most (1627, 346)
+D39-SLOTS step 394 passes 3 rounds 213 slots~224 conv true most (1627, 346)
+D39-SLOTS step 395 passes 3 rounds 209 slots~220 conv true most (1627, 346)
+D39-SLOTS step 396 passes 3 rounds 212 slots~223 conv true most (1627, 346)
+D39-SLOTS step 397 passes 3 rounds 440 slots~451 conv true most (1627, 346)
+D39-SLOTS step 398 passes 3 rounds 239 slots~250 conv true most (1627, 346)
+D39-SLOTS step 399 passes 3 rounds 224 slots~235 conv true most (1627, 346)
+D39-SLOTS step 400 passes 3 rounds 220 slots~231 conv true most (1627, 346)
+D39-SLOTS step 401 passes 3 rounds 211 slots~222 conv true most (1627, 346)
+D39-SLOTS step 402 passes 3 rounds 215 slots~226 conv true most (1627, 346)
+D39-SLOTS step 403 passes 3 rounds 582 slots~593 conv true most (1627, 346)
+D39-SLOTS step 404 passes 3 rounds 280 slots~291 conv true most (1627, 346)
+D39-SLOTS step 405 passes 3 rounds 276 slots~287 conv true most (1627, 346)
+D39-SLOTS step 406 passes 3 rounds 249 slots~260 conv true most (1627, 346)
+D39-SLOTS step 407 passes 3 rounds 238 slots~249 conv true most (1627, 346)
+D39-SLOTS step 408 passes 3 rounds 238 slots~249 conv true most (1627, 346)
+D39-SLOTS step 409 passes 3 rounds 625 slots~636 conv true most (1627, 346)
+D39-SLOTS step 410 passes 3 rounds 292 slots~303 conv true most (1627, 346)
+D39-SLOTS step 411 passes 3 rounds 302 slots~313 conv true most (1627, 346)
+D39-SLOTS step 412 passes 3 rounds 241 slots~252 conv true most (1627, 346)
+D39-SLOTS step 413 passes 3 rounds 233 slots~244 conv true most (1627, 346)
+D39-SLOTS step 414 passes 3 rounds 473 slots~484 conv true most (1627, 346)
+D39-SLOTS step 415 passes 3 rounds 310 slots~321 conv true most (1627, 346)
+D39-SLOTS step 416 passes 3 rounds 315 slots~326 conv true most (1627, 346)
+D39-SLOTS step 417 passes 3 rounds 266 slots~277 conv true most (1627, 346)
+D39-SLOTS step 418 passes 3 rounds 253 slots~264 conv true most (1627, 346)
+D39-SLOTS step 419 passes 3 rounds 258 slots~269 conv true most (1627, 346)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 200 filtered out; finished in 9.79s
+== 2026-10-15T08:12:33-04:00 fix: FRAME 300 at ROUNDS 256; verify.py timing, linux-pc RTX 5090, load 30.44
+anchor: 184 paths checked · 160 skipped (3 classes) · 0 never checked · 3 stale · 0 unclassified · 0 owed · 187 covered of 347 visible
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 8.35 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 30.44->29.69
+=== GO ===
+== 2026-10-15T08:12:47-04:00 redarm timing, linux-pc
+timing · clean · GO · arm 1/2, 1 left
+timing · plant timing-skip-pass · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope timing · 26.34 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D39.timing.redarm.log
+=== GO ===
+== 2026-10-15T08:14:30-04:00 claim: verify.py --changed, linux-pc
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 747 passed, 0 failed, 0 skipped · 31/31 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 12 not impacted · 88.76 s + loop 0.27 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 62.54->110.34 · base: M0-D39's start 2026-10-15T08:03:44-04:00
+=== GO ===

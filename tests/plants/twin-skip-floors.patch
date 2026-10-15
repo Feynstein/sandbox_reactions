@@ -1,8 +1,8 @@
 --- a/crates/sr-physics/src/reference/mod.rs
 +++ b/crates/sr-physics/src/reference/mod.rs
-@@ -187,8 +187,7 @@
-             let g = self.g.as_ref().map(|f| (&f.gx[..], &f.gy[..]));
-             self.hydro.step_with(&mut self.state, dt, g);
+@@ -244,8 +244,7 @@
+             self.ran.push("P6 reactions");
+             react.step(&mut self.state, dt);
          }
 -        self.ran.push("P8 floors");
 -        self.booked += self.floors.apply(&mut self.state);

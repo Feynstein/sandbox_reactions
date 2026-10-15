@@ -11,12 +11,10 @@
                  // ω = 0 may still have a nonzero derivative (an absent input of order 1): the gradient is always built.
 --- a/crates/sr-engine/shaders/react.wgsl
 +++ b/crates/sr-engine/shaders/react.wgsl
-@@ -229,7 +229,7 @@
-     var lit = 0.0;
-     for (var r = 0u; r < params.n_recs; r++) {
-         let rec = params.recs[r];
--        let base = rec.coef.x * powr(sigma, rec.coef.y) * rate_f(r, t) * rate_g(r, y_e * sigma);
-+        let base = rec.coef.x * powr(sigma, rec.coef.y) * rate_f(r, t) * rate_g(r, sigma); // planted: the gate reads Σ, not Y_eΣ
-         var prod = base;
-         for (var k = 0u; k < rec.head.y; k++) {
-             prod *= powr(cx[rec.species[k]], rec.orders[k]);
+@@ -296,5 +296,5 @@
+         rec_kind[r] = u32(read.y);
+         rec_a_sigma[r] = rec.coef.x * powr(sigma, rec.coef.y);
+-        rec_g[r] = rate_g(r, y_e * sigma);
++        rec_g[r] = rate_g(r, sigma); // planted: the gate reads Σ, not Y_eΣ
+         var absent = 0u;
+         var stuck = false;

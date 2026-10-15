@@ -69,11 +69,11 @@ otherwise the whole step is one compute pass, the same dispatches in the same or
 | P2 gravity | the potential by FFT convolution over the box, on a cadence; sinks' potentials added (§1.4) | when the step runs gravity (`Passes`): `grav_rows` (one workgroup a world row), `grav_columns` (fixed, the padded width), `conv_rows_inverse` (a workgroup a world row), `grav_gradient` (box tiles, indirect) — every step, the cadence and the sinks' potentials are not built |
 | P3 sinks | formation and accretion, then the sinks' kick-drift (§2.6) | — |
 | P4 hydro | the flux scheme with the gravity source, the radiation force and the edge ghosts (§2.3, §2.8) | when the step runs hydro (`Passes`): `hydro_update` (box tiles, indirect: one workgroup an 8 × 8 tile, predicted faces exchanged in workgroup memory; binds WebGPU's 8 storage buffers), `hydro_edges` (fixed, one invocation a boundary face; binds 7), `hydro_commit` (box tiles, indirect) |
-| P5 heat | flux-limited diffusion; radiated energy counted; the flux kept for the next step's P4 (§2.4) | — |
-| P6 reactions | every enabled registry record and neutrino cooling, sub-cycled per cell; the latch flag (§2.5, §1.8.5) | — (a test hook only, `set_latch_hook`) |
+| P5 heat | flux-limited diffusion; radiated energy counted; the flux kept for the next step's P4 (§2.4) | when the step runs heat (`Step::with_heat`): `heat_cells` (box tiles, indirect), `heat_law` (box tiles), `heat_open` (fixed, one invocation — the latch reaches the chain through it), `heat_round` × `SLOTS` (chained: each sized by a word the round before wrote, so a converged step's later rounds have no workgroups; a step records only the first `Step::heat_rounds` of them), `heat_close` (box tiles), `heat_sum` (fixed, one workgroup), `heat_apply` (box tiles); around them `latch_hold` before P0 and `heat_park`, `latch_carry` after the rounds (fixed, one invocation each — a step still in its rounds is carried into the next submission, M0-T121) |
+| P6 reactions | every enabled registry record and neutrino cooling, sub-cycled per cell; the latch flag (§2.5, §1.8.5) | when the step runs reactions (`Step::with_reactions`): `react_begin` (fixed, one invocation), `react_cells` (box tiles, indirect), `react_latch` (fixed, one invocation — built once the step's latch exists; the test hook `set_latch_hook` sets the flag there too) |
 | P7 neutrino heating | the neutrino share deposited through a kernel (§2.5.4) | — |
 | P8 floors | vacuum reset, temperature floor, species renormalised; ledger floor terms (§2.7) | `floor_cells`, then `renormalise_species` (both box-sized) |
-| P9 reductions | the next Δt, the non-finite guard, the per-cell frame accumulators (§2.3.3, §3.3, §1.9.1) | `dt_cells` (box-sized), `dt_partials`; `guard_scan`, `guard_stamp` on the guard's steps; the re-fit `box_cells`, `box_fit` on the re-fit's steps; under a frame, `latch_check` last |
+| P9 reductions | the next Δt, the non-finite guard, the per-cell frame accumulators (§2.3.3, §3.3, §1.9.1) | `dt_cells` (box-sized), `dt_partials`; `guard_scan`, `guard_stamp` on the guard's steps; the re-fit `box_cells`, `box_fit` on the re-fit's steps; under a frame, or on a step with P5, `latch_check` last |
 
 - **Before step 0**: the box is fit to the initial state, then P9's Δt reduction runs over it, recorded once as a compute
   pass labelled "P9 reductions (initial state)" — so step 0 runs on the initial state's Δt and step n on the value P9
@@ -113,7 +113,7 @@ Beside the state, never part of it (`state.rs`):
   species a, species b), which leaves a stage's other storage slots to the passes (§6.2.2). Upload and readback go
   through the canonical form only.
 - **The side fields** (`SideFields`) — φ (1 plane, P2's), the heat flux F (2 planes, F_x and F_y, P5's, read by the next
-  step's P4) and S_ν (1 plane, P6's, read by P7). Sized today; their writers land with their passes.
+  step's P4) and S_ν (1 plane, P6's, read by P7). φ is written by P2, F by P5 (M0-T42) and S_ν by P6 (M0-T47, with the scene's `neutrinos` switch); P7, S_ν's reader, lands with lot 7.
 - **The booking** (`Booking`, `TERMS`, `BOOK_GROUPS`) — every §2.9 booked term and §1.9.1 frame accumulator, a `Term`
   each, with the one pass that writes it (`Term::writer`) and whether the block summary sums it as an accumulator. The
   state-derived ledger terms (grid mass, kinetic, thermal, cold, W, the sinks) are not here: they come from the state and

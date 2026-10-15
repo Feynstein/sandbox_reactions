@@ -1,0 +1,60 @@
+# M0-D43 log — 2026-10-15T10:27:36-04:00 on laserax-ai
+# command: python3 tools/pb/verify.py --redarm twin --task M0-D43
+twin · clean · GO · arm 1/2, 1 left
+twin · plant twin-skip-floors · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope twin · 39.80 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D43.twin.redarm.log
+=== GO ===
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why twin: stale: tests/plants/twin-skip-floors.patch
+plan_lint        549/0/0      0.11 s  GO · step 1/2, 1 left
+twin             6/0/0        2.96 s  GO · step 2/2, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build            NOT RUN (not impacted: its 75 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 25 path(s) checked at the anchor)
+burn_cell        NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+burn_order       NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+neutrino         NOT RUN (not impacted: its 73 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 18 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+sod              NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+edges            NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+collapse         NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+cpu_gpu          NOT RUN (not impacted: its 73 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+heat_limiter     NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+heat_stiff       NOT RUN (not impacted: its 73 path(s) checked at the anchor)
+radiation_force  NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+grav_force       NOT RUN (not impacted: its 76 path(s) checked at the anchor)
+grav_selfforce   NOT RUN (not impacted: its 77 path(s) checked at the anchor)
+fft              NOT RUN (not impacted: its 68 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter          NOT RUN (not impacted: its 53 path(s) checked at the anchor)
+state            NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+booking          NOT RUN (not impacted: its 53 path(s) checked at the anchor)
+floors           NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+dt               NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+box              NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+latch            NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+timing           NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+scene            NOT RUN (not impacted: its 85 path(s) checked at the anchor)
+dump             NOT RUN (not impacted: its 86 path(s) checked at the anchor)
+boot             NOT RUN (not impacted: its 80 path(s) checked at the anchor)
+desktop          NOT RUN (not impacted: its 67 path(s) checked at the anchor)
+web              NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+capture          NOT RUN (not impacted: its 62 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+FLAG oracle: tests/plants/twin-skip-floors.patch changed since M0-D43's start - a test, case or check M0-D43's Deliver: does not name
+logs: milestones/m0/logs/M0-D43.<scope>.log · record: loop_times.jsonl · tree ab24993d0926+7a9bcfac6b92
+anchor: 2 path×scope entries moved by this run
+anchor: 187 paths checked · 169 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 187 covered of 356 visible
+skipped   161  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 555 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 41 not impacted · 2.96 s + loop 0.05 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 99.81->95.42 · base: M0-D43's start 2026-10-15T10:27:08-04:00
+=== GO ===

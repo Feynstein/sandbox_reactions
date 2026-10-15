@@ -199,6 +199,22 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     2026-10-14: «Re-solve heat, light law fixed (Recommended)».
   - [M0-T122] §0.5 [M0-TJ4] (7)'s "P5's mean ≤ 0.5 ms per step on the Quadro RTX 4000" · P5's cost is accepted as measured: 0.6189 ms a step (median of 3 `headless --timing` runs of scenes/sun_disk.json, 200 steps, on the idle Quadro RTX 4000, laserax-ai, load 0.33–0.38, SHA 34e41ca; reports/p5_cost.md), 0.6148 ms at load ~14; no ceiling stands for P5's cost, and no cost block is filed — the lead's answer at M0-T122, 2026-10-14: "I accept the timing as it is … no need to write a D task for that. Just make sure it is known". The whole sun_disk step is 1.1833 ms: 11 steps in a 60-fps frame's 13 ms (M0-R3).
   - [M0-D37] §0.5 [M0-TJ4] (6)'s "the only ceiling, 16 passes or 4,096 rounds in one step" · the ceiling is 64 passes or 4,096 rounds in one step, on the GPU and the twin; every tolerance of (3) and (4) unchanged · measured 2026-10-14 on win-laptop (Laser2025-20, RTX 4080 Laptop) from sun_disk's dumps, P5's own frozen system read off the GPU (tasks/M0-D37.md): at steps 340–347 a heating front crosses cold gas within one step (cells from T ≈ 0.08 to 13) and each Newton pass moves it about one cell, so an f64 model of the twin needs 20–41 passes at its 10⁻¹² / 10⁻¹⁰ tests on the same systems (the factor-2 clamp and the update's variable are not the cause: no clamp still needs 31); step 4 is f32 drift of the disk's thin corner cells, ~0.15 % a pass (the f64 model: 6 passes). With 64 the GPU converges every one in 17–37 passes with 0–15 more rounds (348–1,940), δ ≤ 1.1 × 10⁻⁶ (up to 5.5 × 10⁻⁵ at 16), and sun_disk's 1,000 steps print no `SR-WARN heat unconverged` — the lead's answer at M0-D37, 2026-10-14: «Raise to 64 (Recommended)».
+  - [M0-V6] §5.1 G-ORDER's "A cell of equal parts H, He, C, O, Ne and Si heated at a steady rate: each group's specific power
+    first passes ε* = 10⁻³ Q_H per t.u. in the order H, He, C, {Ne, O}, Si" · the cell's composition held at equal parts while
+    its T rises at a steady rate, each group's instantaneous specific power read at each temperature of the ramp (a pass short
+    enough to spend no fuel) — first ≥ ε* in that order, exact; the scope `burn_order` and plant `swap-he-c` unchanged · a cell
+    left to burn as it heats defines no order: C_alpha spends the carbon C_burn would use, so the carbon group never passes ε*
+    at any ramp rate from 100 to 1 per t.u., and at 0.1 no group passes (measured on the twin by M0-T44b, 2026-10-14, a scratch
+    run under the power law), while "*By construction* (§2.5.1's order bound)" is the temperature ladder's at a held
+    composition — measured on linux-pc, 2026-10-15 (M0-V6's Verify 1, the twin and the RTX 5090): first ≥ ε* at T = H 147,
+    He 164, C 244.5, Ne 335.5, O 351, Si 504 on both — the lead's answer at M0-V6, 2026-10-15: «Amend G-ORDER (Recommended)».
+  - [M0-V6] §5.1 G-BURN's "X within 10⁻⁴ absolute down to X₀/10" (no burn_dx named) · the same band with burn_dx = 10⁻⁴ (a
+    scene override of physics.json's key, as heat_pulse.json sets `test.constant_diffusivity`); the heat (10⁻⁵ relative), ΣX
+    (10⁻⁶), the oracles, the plant `q-double` and the shipped burn_dx 0.1 and burn_dt 0.05 — whose own sub-cycle limits the
+    scope checks at those values — unchanged · backward Euler is first order: at the shipped 0.1, H_burn's decay to X₀/10 reads
+    X_H 0.12761 against 0.1 (2.76 × 10⁻²), at 10⁻⁴ within 5 × 10⁻⁵ (H, He and Ne, the twin and the GPU) — measured on
+    linux-pc, 2026-10-15 (M0-V6's Verify 1, `burn_cell`, the RTX 5090; M0-T44b first, 2026-10-14) — the lead's answer at
+    M0-V6, 2026-10-15: «Amend G-BURN (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

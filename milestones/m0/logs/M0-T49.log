@@ -1,0 +1,19 @@
+heat_gauss       10/0/0       8.54 s  GO · step 1/10, 9 left
+heat_implicit    6/0/0        6.19 s  GO · step 2/10, 8 left
+heat_limiter     6/0/0        6.98 s  GO · step 3/10, 7 left
+heat_stiff       6/0/0        6.33 s  GO · step 4/10, 6 left
+radiation_force  3/0/0        1.12 s  GO · step 5/10, 5 left
+neutrino         18/0/0       9.30 s  GO · step 6/10, 4 left
+cpu_gpu          3/0/0        9.74 s  GO · step 7/10, 3 left
+rates            8/0/0        2.42 s  GO · step 8/10, 2 left
+burn_cell        16/0/0       7.98 s  GO · step 9/10, 1 left
+burn_order       4/0/0        3.37 s  GO · step 10/10, 0 left
+logs: milestones/m0/logs/M0-T49.<scope>.log · record: loop_times.jsonl · tree ab24993d0926+d5e748442c5d
+anchor: 0 path×scope entries moved by this run
+anchor: 187 paths checked · 161 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 187 covered of 348 visible
+verify: 80 passed, 0 failed, 0 skipped · 10/10 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 9.74 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 42.24->39.89
+=== GO ===
+
+real	0m10.011s
+user	0m17.530s
+sys	0m10.187s

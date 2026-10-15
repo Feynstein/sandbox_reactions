@@ -1,0 +1,115 @@
+== sigma 10 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.44787 / twin 1.44785 (+0.001 %); relative L1 Σ 0.000e0 (band 1e-3), E 2.244e-5 (band 1e-3); largest |ΔX| 2.822e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 4.16s
+== sigma 3 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.92089 / twin 1.92092 (-0.001 %); relative L1 Σ 0.000e0 (band 1e-3), E 5.150e-5 (band 1e-3); largest |ΔX| 8.906e-7 in x_H (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.273 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (546454) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 2.09s
+== sigma 1 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 2.07632 / twin 2.07642 (-0.004 %); relative L1 Σ 0.000e0 (band 1e-3), E 1.160e-4 (band 1e-3); largest |ΔX| 7.135e-7 in x_He (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.059 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (546696) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.73s
+== sigma 4 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.85699 / twin 1.85701 (-0.001 %); relative L1 Σ 0.000e0 (band 1e-3), E 6.289e-5 (band 1e-3); largest |ΔX| 1.563e-6 in x_He (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.439 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (547383) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.59s
+== sigma 5 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.79448 / twin 1.79452 (-0.002 %); relative L1 Σ 0.000e0 (band 1e-3), E 4.960e-4 (band 1e-3); largest |ΔX| 2.543e-5 in x_H (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.971 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (547496) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.46s
+== sigma 6 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.66434 / twin 1.66437 (-0.002 %); relative L1 Σ 0.000e0 (band 1e-3), E 2.750e-6 (band 1e-3); largest |ΔX| 4.390e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 3.18s
+== sigma 7 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.59624 / twin 1.59625 (-0.001 %); relative L1 Σ 0.000e0 (band 1e-3), E 8.021e-6 (band 1e-3); largest |ΔX| 3.175e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 3.56s
+== sigma 8 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.54117 / twin 1.54116 (+0.000 %); relative L1 Σ 0.000e0 (band 1e-3), E 1.317e-5 (band 1e-3); largest |ΔX| 1.803e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 5.90s
+== sigma 1 t 150
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 3.47483 / twin 3.47470 (+0.004 %); relative L1 Σ 0.000e0 (band 1e-3), E 8.845e-5 (band 1e-3); largest |ΔX| 1.085e-9 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 3.85s
+== sigma 1 t 200
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 3.60136 / twin 3.60120 (+0.004 %); relative L1 Σ 0.000e0 (band 1e-3), E 9.625e-5 (band 1e-3); largest |ΔX| 6.182e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 4.36s
+== sigma 1 t 300
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 3.60872 / twin 3.60856 (+0.004 %); relative L1 Σ 0.000e0 (band 1e-3), E 9.448e-5 (band 1e-3); largest |ΔX| 3.250e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 3.67s
+== sigma 0.3 t 300
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 5.74937 / twin 5.74912 (+0.004 %); relative L1 Σ 0.000e0 (band 1e-3), E 9.410e-5 (band 1e-3); largest |ΔX| 4.877e-11 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 5.97s
+== sigma 0.3 t 500
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 5.76175 / twin 5.76150 (+0.004 %); relative L1 Σ 0.000e0 (band 1e-3), E 9.406e-5 (band 1e-3); largest |ΔX| 1.398e-11 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 5.97s
+== bg sigma 4 t 100, core 16x16 sigma 4 t 130
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.74864 / twin 1.74865 (-0.001 %); relative L1 Σ 0.000e0 (band 1e-3), E 5.328e-5 (band 1e-3); largest |ΔX| 1.386e-6 in x_H (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.394 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (553400) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 2.73s
+== bg sigma 4 t 100, core 16x16 sigma 30 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.39600 / twin 1.39600 (+0.000 %); relative L1 Σ 0.000e0 (band 1e-3), E 2.230e-5 (band 1e-3); largest |ΔX| 7.388e-7 in x_H (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.280 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (553608) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.66s
+== bg sigma 3 t 80, core 16x16 sigma 30 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.38150 / twin 1.38150 (-0.000 %); relative L1 Σ 0.000e0 (band 1e-3), E 3.805e-5 (band 1e-3); largest |ΔX| 7.232e-7 in x_He (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.280 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (553741) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.47s
+== bg sigma 5 t 100, core 8x8 sigma 5 t 120
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.73812 / twin 1.73809 (+0.002 %); relative L1 Σ 0.000e0 (band 1e-3), E 1.840e-4 (band 1e-3); largest |ΔX| 8.217e-6 in x_H (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.711 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (553875) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.75s
+== bg sigma 4 t 100, core 16x16 sigma 30 t 120
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.22371 / twin 1.22374 (-0.003 %); relative L1 Σ 0.000e0 (band 1e-3), E 1.324e-5 (band 1e-3); largest |ΔX| 2.408e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 3.70s
+== bg sigma 4 t 100, core 16x16 sigma 30 t 140
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.24196 / twin 1.24196 (-0.001 %); relative L1 Σ 0.000e0 (band 1e-3), E 1.124e-4 (band 1e-3); largest |ΔX| 2.431e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 5.02s
+== bg sigma 4 t 100, core 32x32 sigma 30 t 110
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.35522 / twin 1.35522 (-0.000 %); relative L1 Σ 0.000e0 (band 1e-3), E 2.148e-5 (band 1e-3); largest |ΔX| 1.153e-6 in x_H (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.625 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (555515) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.79s
+== bg sigma 4 t 100, core 32x32 sigma 30 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.39601 / twin 1.39600 (+0.000 %); relative L1 Σ 0.000e0 (band 1e-3), E 9.183e-6 (band 1e-3); largest |ΔX| 7.779e-7 in x_H (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.280 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (555667) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.48s
+== bg sigma 4 t 100, core 16x16 sigma 60 t 100
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.14781 / twin 1.14781 (-0.001 %); relative L1 Σ 0.000e0 (band 1e-3), E 3.231e-5 (band 1e-3); largest |ΔX| 5.559e-6 in x_He (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 0.692 % (at least 1 % required)
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (555782) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:143:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 199 filtered out; finished in 1.94s
+== bg sigma 1 t 50, core 16x16 sigma 30 t 120
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.36371 / twin 1.36386 (-0.011 %); relative L1 Σ 0.000e0 (band 1e-3), E 3.041e-4 (band 1e-3); largest |ΔX| 9.540e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 5.80s
+== bg sigma 1 t 20, core 16x16 sigma 30 t 120
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.35785 / twin 1.35746 (+0.029 %); relative L1 Σ 0.000e0 (band 1e-3), E 1.921e-4 (band 1e-3); largest |ΔX| 5.010e-10 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 8.93s
+== bg sigma 0.5 t 20, core 16x16 sigma 30 t 150
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.42852 / twin 1.42491 (+0.253 %); relative L1 Σ 0.000e0 (band 1e-3), E 3.624e-4 (band 1e-3); largest |ΔX| 1.611e-11 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 9.41s
+== bg sigma 1 t 50, core 16x16 sigma 30 t 150
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 1.40652 / twin 1.40670 (-0.013 %); relative L1 Σ 0.000e0 (band 1e-3), E 3.004e-4 (band 1e-3); largest |ΔX| 5.770e-12 in x_Fe (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 199 filtered out; finished in 6.55s

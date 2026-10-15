@@ -1,0 +1,353 @@
+# M0-V6 — session log (linux-pc laserax-ai), opened 2026-10-15T08:46:56-04:00
+model=claude-opus-5-5 level=max plugin=installed (rung_record now at launch)
+baseline: M0-V6, 349 files, 2026-10-15T08:39:24-04:00
+
+## 2026-10-15T08:46:56-04:00 Verify 1: python3 tools/pb/verify.py --all --task M0-V6
+uptime:  08:46:56 up 1 day, 17:51,  2 users,  load average: 27.38, 24.96, 25.87
+plan_lint        540/0/0      0.12 s  GO · step 1/43, 42 left
+tools_selftest   10/0/0      20.45 s  GO · step 2/43, 41 left
+toolchain        3/0/0        0.64 s  GO · step 3/43, 40 left
+build            2/0/0        1.13 s  GO · step 4/43, 39 left
+registry         29/0/0       0.11 s  GO · step 5/43, 38 left
+eos              13/0/0       0.16 s  GO · step 6/43, 37 left
+rates            8/0/0        0.11 s  GO · step 7/43, 36 left
+burn_cell        16/0/0       5.22 s  GO · step 8/43, 35 left
+burn_order       4/0/0        2.27 s  GO · step 9/43, 34 left
+neutrino         18/0/0       5.48 s  GO · step 10/43, 33 left
+fft_twin         10/0/0       0.26 s  GO · step 11/43, 32 left
+riemann          8/0/0        0.21 s  GO · step 12/43, 31 left
+sod              15/0/0       7.68 s  GO · step 13/43, 30 left
+edges            7/0/0        8.98 s  GO · step 14/43, 29 left
+collapse         6/0/0        2.27 s  GO · step 15/43, 28 left
+twin             6/0/0        2.22 s  GO · step 16/43, 27 left
+cpu_gpu          3/0/0        6.83 s  GO · step 17/43, 26 left
+heat_gauss       10/0/0       2.92 s  GO · step 18/43, 25 left
+heat_implicit    6/0/0        2.07 s  GO · step 19/43, 24 left
+heat_limiter     6/0/0        2.22 s  GO · step 20/43, 23 left
+heat_stiff       6/0/0        2.12 s  GO · step 21/43, 22 left
+radiation_force  3/0/0        1.72 s  GO · step 22/43, 21 left
+grav_force       13/0/0       4.53 s  GO · step 23/43, 20 left
+grav_selfforce   5/0/0        1.77 s  GO · step 24/43, 19 left
+fft              8/0/0        6.43 s  GO · step 25/43, 18 left
+time_control     18/0/0       0.11 s  GO · step 26/43, 17 left
+strings          3/0/0        0.42 s  GO · step 27/43, 16 left
+adapter          10/0/0       5.18 s  GO · step 28/43, 15 left
+state            6/0/0        3.82 s  GO · step 29/43, 14 left
+booking          4/0/0        3.77 s  GO · step 30/43, 13 left
+floors           7/0/0        7.03 s  GO · step 31/43, 12 left
+dt               6/0/0        5.58 s  GO · step 32/43, 11 left
+box              8/0/0        7.33 s  GO · step 33/43, 10 left
+latch            5/0/0        4.52 s  GO · step 34/43, 9 left
+timing           5/0/0        7.33 s  GO · step 35/43, 8 left
+scene            8/0/0        3.42 s  GO · step 36/43, 7 left
+dump             9/0/0        8.29 s  GO · step 37/43, 6 left
+boot             1/0/0        3.47 s  GO · step 38/43, 5 left
+desktop          2/0/0        6.21 s  GO · step 39/43, 4 left
+web              3/0/0       17.85 s  GO · step 40/43, 3 left
+capture          2/0/0        0.99 s  GO · step 41/43, 2 left
+licences         3/0/0        0.90 s  GO · step 42/43, 1 left
+watch_only       1/0/0        0.12 s  GO · step 43/43, 0 left
+logs: milestones/m0/logs/M0-V6.<scope>.log · record: loop_times.jsonl · tree ab24993d0926+90f65c571414
+anchor: 0 path×scope entries moved by this run
+anchor: 187 paths checked · 162 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 187 covered of 349 visible
+verify: 856 passed, 0 failed, 0 skipped · 43/43 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 25.71 s + loop 0.08 s · mode all · jobs 8 · box laserax-ai · python 3.12.3 · load 27.38->23.46 · base: M0-V6's start 2026-10-15T08:39:24-04:00
+=== GO ===
+
+real	0m25.988s
+user	1m10.662s
+sys	0m39.671s
+M0-TH: 4 all · 0 changed · 3 scope · 0 case · 5 redarm · first run GO
+M0-TG: 0 all · 2 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TB: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run GO
+M0-TE-win: 2 all · 1 changed · 1 scope · 0 case · 1 redarm · first run NO-GO
+M0-D2: 0 all · 1 changed · 1 scope · 1 case · 1 redarm · first run GO
+M0-D3: 0 all · 1 changed · 1 scope · 1 case · 1 redarm · first run GO
+M0-D4: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run NO-GO
+M0-D5: 0 all · 1 changed · 0 scope · 1 case · 1 redarm · first run GO
+M0-TE-win-r2: 1 all · 0 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-TE-win-r3: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D6: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run NO-GO
+M0-D7: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-TJ3: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D8: 0 all · 1 changed · 0 scope · 1 case · 1 redarm · first run GO
+M0-T1: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T2: 0 all · 2 changed · 2 scope · 0 case · 2 redarm · first run GO
+M0-D9: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T3: 0 all · 2 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-T4: 0 all · 1 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-T4b: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TM1: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T5: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T6: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run NO-GO
+M0-T6d: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T7: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T8: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T8d: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T9: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TV1: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-V1: 1 all · 0 changed · 0 scope · 0 case · 7 redarm · first run GO
+M0-D10: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-D11: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-D12: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D14: 0 all · 2 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-D12-r2: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-D13b: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D15: 0 all · 1 changed · 1 scope · 0 case · 2 redarm · first run GO
+M0-D16: 0 all · 1 changed · 1 scope · 3 case · 1 redarm · first run NO-GO
+M0-D13c: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T10: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T11: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T12: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T13: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T14: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T15: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run GO
+M0-T15-r2: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-T15-r4: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T16: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run NO-GO
+M0-T17: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-V2: 1 all · 0 changed · 0 scope · 0 case · 10 redarm · first run GO
+M0-D17: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-TM2: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T18: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run GO
+M0-T19: 0 all · 1 changed · 4 scope · 0 case · 2 redarm · first run NO-GO
+M0-T20: 0 all · 1 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-D18: 0 all · 1 changed · 3 scope · 0 case · 1 redarm · first run GO
+M0-T21: 0 all · 1 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-T21-linux: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-D19: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T22: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-TE-V12.3: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TM3: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TH-adopt-a: 0 all · 2 changed · 0 scope · 0 case · 0 redarm · first run NO-GO
+M0-D20: 0 all · 1 changed · 0 scope · 0 case · 1 redarm · first run GO
+M0-T23: 0 all · 2 changed · 1 scope · 0 case · 2 redarm · first run GO
+M0-T24: 0 all · 1 changed · 2 scope · 0 case · 1 redarm · first run NO-GO
+M0-T25: 0 all · 1 changed · 1 scope · 0 case · 2 redarm · first run GO
+M0-T26: 0 all · 1 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-T27: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-V3: 1 all · 0 changed · 0 scope · 0 case · 23 redarm · first run GO
+M0-TC2: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TM4: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TR1: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-TR1a: 0 all · 1 changed · 6 scope · 0 case · 5 redarm · first run GO
+M0-TR1b: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-D21: 0 all · 1 changed · 2 scope · 0 case · 2 redarm · first run GO
+M0-D22: 0 all · 1 changed · 2 scope · 0 case · 1 redarm · first run GO
+M0-D23: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-D24: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T28: 0 all · 2 changed · 3 scope · 0 case · 2 redarm · first run GO
+M0-T29: 0 all · 1 changed · 1 scope · 0 case · 2 redarm · first run GO
+M0-T30: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T31: 0 all · 1 changed · 2 scope · 0 case · 3 redarm · first run GO
+M0-T32: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-V4: 1 all · 1 changed · 0 scope · 0 case · 28 redarm · first run GO
+M0-TC3: 0 all · 1 changed · 1 scope · 0 case · 0 redarm · first run GO
+M0-D27: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-D25: 0 all · 1 changed · 2 scope · 0 case · 2 redarm · first run NO-GO
+M0-D26: 0 all · 1 changed · 1 scope · 0 case · 0 redarm · first run GO
+M0-T33a: 0 all · 1 changed · 1 scope · 0 case · 2 redarm · first run GO
+M0-T33b: 0 all · 1 changed · 1 scope · 0 case · 2 redarm · first run GO
+M0-T33b-r2: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-T34: 0 all · 4 changed · 2 scope · 0 case · 3 redarm · first run GO
+M0-TM5: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-D28: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-D29: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T35: 0 all · 2 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T36: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T37: 0 all · 1 changed · 1 scope · 0 case · 2 redarm · first run GO
+M0-T38: 0 all · 1 changed · 1 scope · 0 case · 1 redarm · first run GO
+M0-T39: 0 all · 2 changed · 6 scope · 0 case · 2 redarm · first run NO-GO
+M0-T40: 0 all · 1 changed · 1 scope · 0 case · 0 redarm · first run GO
+M0-V5: 1 all · 1 changed · 0 scope · 0 case · 33 redarm · first run GO
+M0-TC4: 0 all · 1 changed · 0 scope · 0 case · 0 redarm · first run GO
+M0-D30: 0 all · 1 changed · 2 scope · 0 case · 0 redarm · first run GO
+M0-D30-lx: 0 all · 1 changed · 1 scope · 0 case · 0 redarm · first run GO
+M0-D32: 0 all · 1 changed · 0 scope · 0 case · 1 r## q ratios: assets/reactions.json against contract §1.6.2 (x Q_H = 8700 )
+  H_burn   file 1.0                    table 1.0                    equal  q = 8700
+  He_burn  file 0.09259259259259259    table 0.09259259259259259    equal  q = 805.556
+  C_alpha  file 0.0684931506849315     table 0.0684931506849315     equal  q = 595.89
+  C_burn   file 0.06369426751592357    table 0.06369426751592357    equal  q = 554.14
+  Ne_burn  file 0.017543859649122806   table 0.017543859649122806   equal  q = 152.632
+  O_burn   file 0.07936507936507936    table 0.07936507936507936    equal  q = 690.476
+  Mg_burn  file 0.07936507936507936    table 0.07936507936507936    equal  q = 690.476
+  Si_burn  file 0.030303030303030304   table 0.030303030303030304   equal  q = 263.636
+  S_burn   file 0.030303030303030304   table 0.030303030303030304   equal  q = 263.636
+  N_Fe     file -1.14                  table -1.14                  equal  q = -9918
+  10/10 equal to f64; records in file: 10
+## 2026-10-15T08:56:04-04:00 M0-D37's repro on linux-pc (RTX 5090): headless sun_disk 1000 steps
+$ build/target/release/sandbox-reactions headless --scene scenes/sun_disk.json --steps 1000 --adapter "RTX 5090" --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/843d16a5-d48a-49e7-95c6-fa49449613c9/scratchpad/v6/out/d37-sun1000
+      1 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+unconverged lines: 0
+
+## 2026-10-15T09:16:15-04:00 The Quadro runs (scratchpad v6/run_quadro.sh, v6/run_burn.sh; GPU timestamps)
+== sun_disk  (steps=200, sim_time=3.58406, wall_s=[0.4, 0.32, 0.32])
+  P0 edits       median   0.0116  runs 0.0139, 0.0116, 0.0112
+  P1 dt          median   0.0050  runs 0.0064, 0.0050, 0.0049
+  P2 gravity     median   0.0684  runs 0.0987, 0.0658, 0.0684
+  P4 hydro       median   0.2669  runs 0.4069, 0.2660, 0.2669
+  P5 heat        median   0.6306  runs 0.7696, 0.6306, 0.6146
+  P6 reactions   median   0.0959  runs 0.1231, 0.0950, 0.0959
+  P8 floors      median   0.0201  runs 0.0292, 0.0201, 0.0200
+  P9 reductions  median   0.0221  runs 0.0323, 0.0221, 0.0221
+  step           median   1.2031  runs 1.5865, 1.2031, 1.1899
+  world {'edge': 'leave', 'height': 400, 'width': 600}
+== fill_world  (steps=200, sim_time=13.5297, wall_s=[1.65, 1.64, 1.66])
+  P0 edits       median   0.0113  runs 0.0113, 0.0113, 0.0114
+  P1 dt          median   0.0049  runs 0.0049, 0.0049, 0.0050
+  P2 gravity     median   1.0110  runs 1.0072, 1.0110, 1.0126
+  P4 hydro       median   3.8634  runs 3.8407, 3.8634, 3.9086
+  P5 heat        median   1.3848  runs 1.3751, 1.3848, 1.4013
+  P6 reactions   median   1.2251  runs 1.2251, 1.2177, 1.2547
+  P8 floors      median   0.1534  runs 0.1534, 0.1521, 0.1541
+  P9 reductions  median   0.0764  runs 0.0762, 0.0764, 0.0774
+  step           median   7.8139  runs 7.7855, 7.8139, 7.9199
+  world {'edge': 'leave', 'height': 400, 'width': 600}
+== sun_noheat  (steps=200, sim_time=3.59075, wall_s=[0.15, 0.15, 0.14])
+  P0 edits       median   0.0064  runs 0.0065, 0.0064, 0.0064
+  P1 dt          median   0.0046  runs 0.0046, 0.0046, 0.0047
+  P2 gravity     median   0.0655  runs 0.0643, 0.0655, 0.0663
+  P4 hydro       median   0.2646  runs 0.2617, 0.2646, 0.2648
+  P6 reactions   median   0.0946  runs 0.0942, 0.0966, 0.0946
+  P8 floors      median   0.0202  runs 0.0202, 0.0201, 0.0203
+  P9 reductions  median   0.0128  runs 0.0127, 0.0134, 0.0128
+  step           median   0.5460  runs 0.5421, 0.5481, 0.5460
+  world {'edge': 'leave', 'height': 400, 'width': 600}
+== ref_burn windows (one run each): total ms = mean x N
+  N= 40 sim_time 0.26588 step_mean 0.9006  P5 mean 0.6563  P6 mean 0.1299
+  N= 44 sim_time 0.29158 step_mean 0.8783  P5 mean 0.6328  P6 mean 0.1291  | steps 40..43: P5 0.397 ms/step, P6 0.121 ms/step
+  N= 46 sim_time 0.30416 step_mean 1.9689  P5 mean 0.8234  P6 mean 0.9896  | steps 44..45: P5 5.017 ms/step, P6 19.922 ms/step
+  N= 48 sim_time 0.30666 step_mean 3.7717  P5 mean 1.6874  P6 mean 1.8438  | steps 46..47: P5 21.558 ms/step, P6 21.490 ms/step
+  N= 50 sim_time 0.31087 step_mean 2.3406  P5 mean 1.1435  P6 mean 1.0306  | steps 48..49: P5 -11.909 ms/step, P6 -18.488 ms/step
+  N= 52 sim_time 0.31581 step_mean 2.2428  P5 mean 1.1912  P6 mean 0.9212  | steps 50..51: P5 2.383 ms/step, P6 -1.813 ms/step
+  N= 56 sim_time 0.32707 step_mean 2.4359  P5 mean 1.4257  P6 mean 0.8642  | steps 52..55: P5 4.474 ms/step, P6 0.123 ms/step
+  N= 60 sim_time 0.33957 step_mean 2.4959  P5 mean 1.5527  P6 mean 0.8038  | steps 56..59: P5 3.330 ms/step, P6 -0.042 ms/step
+  N= 80 sim_time 0.41247 step_mean 2.9359  P5 mean 2.1388  P6 mean 0.6430  | steps 60..79: P5 3.897 ms/step, P6 0.161 ms/step
+  N=120 sim_time 0.58512 step_mean 3.3467  P5 mean 2.6992  P6 mean 0.4793  | steps 80..119: P5 3.820 ms/step, P6 0.152 ms/step
+  N=200 sim_time 0.98332 step_mean 3.5155  P5 mean 2.9797  P6 mean 0.3561  | steps 120..199: P5 3.401 ms/step, P6 0.171 ms/step
+### ref_burn windows, medians over reps (v6/windows.py)
+N= 40 reps 4 adapter Quadro RTX 4000 sim 0.26588 totals ms: P5    27.63 P6     6.04 step    38.72
+N= 44 reps 4 adapter Quadro RTX 4000 sim 0.29158 totals ms: P5    29.59 P6     6.67 step    41.78 | steps 40..43: P5   0.489 P6   0.159 step   0.766 ms/step
+N= 45 reps 3 adapter Quadro RTX 4000 sim 0.29792 totals ms: P5    31.77 P6     8.00 step    45.68 | steps 44..44: P5   2.180 P6   1.322 step   3.891 ms/step
+N= 46 reps 4 adapter Quadro RTX 4000 sim 0.30416 totals ms: P5    37.90 P6    49.30 step    94.37 | steps 45..45: P5   6.131 P6  41.308 step  48.698 ms/step
+N= 47 reps 3 adapter Quadro RTX 4000 sim 0.30564 totals ms: P5    51.71 P6    76.90 step   136.13 | steps 46..46: P5  13.811 P6  27.596 step  41.753 ms/step
+N= 48 reps 4 adapter Quadro RTX 4000 sim 0.30666 totals ms: P5    56.42 P6    64.31 step   127.73 | steps 47..47: P5   4.715 P6 -12.587 step  -8.396 ms/step
+N= 49 reps 3 adapter Quadro RTX 4000 sim 0.30866 totals ms: P5    52.02 P6    50.59 step   108.87 | steps 48..48: P5  -4.406 P6 -13.723 step -18.866 ms/step
+N= 50 reps 4 adapter Quadro RTX 4000 sim 0.31087 totals ms: P5    54.56 P6    49.94 step   111.84 | steps 49..49: P5   2.542 P6  -0.654 step   2.974 ms/step
+N= 52 reps 4 adapter Quadro RTX 4000 sim 0.31581 totals ms: P5    61.34 P6    47.63 step   115.90 | steps 50..51: P5   3.391 P6  -1.153 step   2.032 ms/step
+N= 56 reps 4 adapter Quadro RTX 4000 sim 0.32707 totals ms: P5    77.66 P6    47.87 step   133.35 | steps 52..55: P5   4.080 P6   0.061 step   4.362 ms/step
+N= 60 reps 4 adapter Quadro RTX 4000 sim 0.33957 totals ms: P5    94.68 P6    47.88 step   150.91 | steps 56..59: P5   4.254 P6   0.002 step   4.389 ms/step
+N=200 reps 4 adapter Quadro RTX 4000 sim 0.98332 totals ms: P5   600.62 P6    70.79 step   706.36 | steps 60..199: P5   3.614 P6   0.164 step   3.967 ms/step
+window 44..49:
+### run headers (time, scene, steps, rep, load, Quadro util)
+burn_runs.log:### 2026-10-15T08:49:48-04:00 ref_burn steps=40 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:49-04:00 ref_burn steps=44 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:49-04:00 ref_burn steps=45 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:49-04:00 ref_burn steps=46 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:50-04:00 ref_burn steps=47 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:50-04:00 ref_burn steps=48 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:51-04:00 ref_burn steps=49 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:51-04:00 ref_burn steps=50 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:51-04:00 ref_burn steps=52 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:52-04:00 ref_burn steps=56 rep=2 load=9.44 17.98 23.05
+burn_runs.log:### 2026-10-15T08:49:52-04:00 ref_burn steps=60 rep=2 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:53-04:00 ref_burn steps=200 rep=2 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:54-04:00 ref_burn steps=40 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:54-04:00 ref_burn steps=44 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:54-04:00 ref_burn steps=45 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:55-04:00 ref_burn steps=46 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:55-04:00 ref_burn steps=47 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:55-04:00 ref_burn steps=48 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:56-04:00 ref_burn steps=49 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:56-04:00 ref_burn steps=50 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:56-04:00 ref_burn steps=52 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:57-04:00 ref_burn steps=56 rep=3 load=9.33 17.82 22.96
+burn_runs.log:### 2026-10-15T08:49:57-04:00 ref_burn steps=60 rep=3 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:49:58-04:00 ref_burn steps=200 rep=3 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:49:59-04:00 ref_burn steps=40 rep=4 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:49:59-04:00 ref_burn steps=44 rep=4 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:50:00-04:00 ref_burn steps=45 rep=4 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:50:00-04:00 ref_burn steps=46 rep=4 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:50:00-04:00 ref_burn steps=47 rep=4 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:50:01-04:00 ref_burn steps=48 rep=4 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:50:01-04:00 ref_burn steps=49 rep=4 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:50:02-04:00 ref_burn steps=50 rep=4 load=9.22 17.65 22.88
+burn_runs.log:### 2026-10-15T08:50:02-04:00 ref_burn steps=52 rep=4 load=9.36 17.54 22.82
+burn_runs.log:### 2026-10-15T08:50:03-04:00 ref_burn steps=56 rep=4 load=9.36 17.54 22.82
+burn_runs.log:### 2026-10-15T08:50:03-04:00 ref_burn steps=60 rep=4 load=9.36 17.54 22.82
+burn_runs.log:### 2026-10-15T08:50:03-04:00 ref_burn steps=200 rep=4 load=9.36 17.54 22.82
+quadro_runs.log:### 2026-10-15T08:48:53-04:00 sun_disk steps=200 rep=1 load=11.20 19.95 23.95 gpu=2%
+quadro_runs.log:### 2026-10-15T08:48:54-04:00 fill_world steps=200 rep=1 load=11.20 19.95 23.95 gpu=59%
+quadro_runs.log:### 2026-10-15T08:48:56-04:00 sun_noheat steps=200 rep=1 load=11.20 19.95 23.95 gpu=75%
+quadro_runs.log:### 2026-10-15T08:48:57-04:00 sun_disk steps=200 rep=2 load=11.20 19.95 23.95 gpu=33%
+quadro_runs.log:### 2026-10-15T08:48:58-04:00 fill_world steps=200 rep=2 load=11.03 19.77 23.87 gpu=54%
+quadro_runs.log:### 2026-10-15T08:49:00-04:00 sun_noheat steps=200 rep=2 load=11.03 19.77 23.87 gpu=76%
+quadro_runs.log:### 2026-10-15T08:49:01-04:00 sun_disk steps=200 rep=3 load=11.03 19.77 23.87 gpu=37%
+quadro_runs.log:### 2026-10-15T08:49:01-04:00 fill_world steps=200 rep=3 load=11.03 19.77 23.87 gpu=55%
+quadro_runs.log:### 2026-10-15T08:49:04-04:00 sun_noheat steps=200 rep=3 load=10.78 19.57 23.78 gpu=52%
+quadro_runs.log:### 2026-10-15T08:49:04-04:00 ref_burn steps=40 rep=1 load=10.78 19.57 23.78 gpu=39%
+quadro_runs.log:### 2026-10-15T08:49:05-04:00 ref_burn steps=44 rep=1 load=10.78 19.57 23.78 gpu=14%
+quadro_runs.log:### 2026-10-15T08:49:05-04:00 ref_burn steps=46 rep=1 load=10.78 19.57 23.78 gpu=11%
+quadro_runs.log:### 2026-10-15T08:49:06-04:00 ref_burn steps=48 rep=1 load=10.78 19.57 23.78 gpu=39%
+quadro_runs.log:### 2026-10-15T08:49:07-04:00 ref_burn steps=50 rep=1 load=10.78 19.57 23.78 gpu=68%
+quadro_runs.log:### 2026-10-15T08:49:07-04:00 ref_burn steps=52 rep=1 load=10.78 19.57 23.78 gpu=49%
+quadro_runs.log:### 2026-10-15T08:49:08-04:00 ref_burn steps=56 rep=1 load=10.64 19.39 23.70 gpu=41%
+quadro_runs.log:### 2026-10-15T08:49:08-04:00 ref_burn steps=60 rep=1 load=10.64 19.39 23.70 gpu=37%
+quadro_runs.log:### 2026-10-15T08:49:09-04:00 ref_burn steps=80 rep=1 load=10.64 19.39 23.70 gpu=39%
+quadro_runs.log:### 2026-10-15T08:49:09-04:00 ref_burn steps=120 rep=1 load=10.64 19.39 23.70 gpu=49%
+quadro_runs.log:### 2026-10-15T08:49:10-04:00 ref_burn steps=200 rep=1 load=10.64 19.39 23.70 gpu=40%
+
+## 2026-10-15T09:48:36-04:00 the claim: python3 tools/pb/verify.py --changed --task M0-V6
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why strings: stale: milestones/m0/m0_contrat.md
+why watch_only: stale: milestones/m0/m0_contrat.md
+plan_lint        555/0/0      0.11 s  GO · step 1/3, 2 left
+strings          3/0/0        0.11 s  GO · step 2/3, 1 left
+watch_only       1/0/0        0.06 s  GO · step 3/3, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build            NOT RUN (not impacted: its 75 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 25 path(s) checked at the anchor)
+burn_cell        NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+burn_order       NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+neutrino         NOT RUN (not impacted: its 73 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 18 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+sod              NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+edges            NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+collapse         NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+twin             NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+cpu_gpu          NOT RUN (not impacted: its 73 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+heat_limiter     NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+heat_stiff       NOT RUN (not impacted: its 73 path(s) checked at the anchor)
+radiation_force  NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+grav_force       NOT RUN (not impacted: its 76 path(s) checked at the anchor)
+grav_selfforce   NOT RUN (not impacted: its 77 path(s) checked at the anchor)
+fft              NOT RUN (not impacted: its 68 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter          NOT RUN (not impacted: its 53 path(s) checked at the anchor)
+state            NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+booking          NOT RUN (not impacted: its 53 path(s) checked at the anchor)
+floors           NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+dt               NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+box              NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+latch            NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+timing           NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+scene            NOT RUN (not impacted: its 85 path(s) checked at the anchor)
+dump             NOT RUN (not impacted: its 86 path(s) checked at the anchor)
+boot             NOT RUN (not impacted: its 80 path(s) checked at the anchor)
+desktop          NOT RUN (not impacted: its 67 path(s) checked at the anchor)
+web              NOT RUN (not impacted: its 71 path(s) checked at the anchor)
+capture          NOT RUN (not impacted: its 62 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-V6.<scope>.log · record: loop_times.jsonl · tree ab24993d0926+bccdb30d2dec
+anchor: 3 path×scope entries moved by this run
+anchor: 187 paths checked · 164 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 187 covered of 351 visible
+skipped   156  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 559 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 40 not impacted · 0.12 s + loop 0.03 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 2.44->2.44 · base: M0-V6's start 2026-10-15T08:39:24-04:00
+=== GO ===

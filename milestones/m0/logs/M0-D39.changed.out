@@ -1,0 +1,84 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why burn_cell: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why burn_order: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why neutrino: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why sod: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why edges: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why collapse: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why twin: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why cpu_gpu: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why heat_gauss: stale: crates/sr-engine/tests/gpu/timing.rs
+why heat_implicit: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why heat_limiter: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why heat_stiff: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why radiation_force: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why grav_force: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why grav_selfforce: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why fft: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why adapter: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why state: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why booking: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why floors: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why dt: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why box: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why latch: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why scene: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why dump: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why boot: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why desktop: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why web: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+why capture: stale: crates/sr-engine/tests/gpu/heat.rs (+1)
+plan_lint        542/0/0      0.29 s  GO · step 1/31, 30 left
+build            2/0/0       21.50 s  GO · step 2/31, 29 left
+burn_cell        16/0/0       9.05 s  GO · step 3/31, 28 left
+burn_order       4/0/0        4.46 s  GO · step 4/31, 27 left
+neutrino         18/0/0       9.57 s  GO · step 5/31, 26 left
+sod              15/0/0      38.72 s  GO · step 6/31, 25 left
+edges            7/0/0       22.96 s  GO · step 7/31, 24 left
+collapse         6/0/0        7.37 s  GO · step 8/31, 23 left
+twin             6/0/0       19.84 s  GO · step 9/31, 22 left
+cpu_gpu          3/0/0       52.10 s  GO · step 10/31, 21 left
+heat_gauss       10/0/0      15.92 s  GO · step 11/31, 20 left
+heat_implicit    6/0/0       13.84 s  GO · step 12/31, 19 left
+heat_limiter     6/0/0       10.18 s  GO · step 13/31, 18 left
+heat_stiff       6/0/0        7.84 s  GO · step 14/31, 17 left
+radiation_force  3/0/0        6.05 s  GO · step 15/31, 16 left
+grav_force       13/0/0      14.49 s  GO · step 16/31, 15 left
+grav_selfforce   5/0/0        5.08 s  GO · step 17/31, 14 left
+fft              8/0/0       14.16 s  GO · step 18/31, 13 left
+adapter          10/0/0       8.94 s  GO · step 19/31, 12 left
+state            6/0/0        8.94 s  GO · step 20/31, 11 left
+booking          4/0/0        7.59 s  GO · step 21/31, 10 left
+floors           7/0/0       15.76 s  GO · step 22/31, 9 left
+dt               6/0/0       12.73 s  GO · step 23/31, 8 left
+box              8/0/0       15.02 s  GO · step 24/31, 7 left
+latch            5/0/0       11.20 s  GO · step 25/31, 6 left
+scene            8/0/0        8.86 s  GO · step 26/31, 5 left
+dump             9/0/0       29.06 s  GO · step 27/31, 4 left
+boot             1/0/0        9.30 s  GO · step 28/31, 3 left
+desktop          2/0/0       11.53 s  GO · step 29/31, 2 left
+web              3/0/0      106.49 s  GO · step 30/31, 1 left
+capture          2/0/0       17.04 s  GO · step 31/31, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 25 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 18 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 17 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+timing           NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+FLAG oracle: crates/sr-engine/tests/gpu/timing.rs changed since M0-D39's start - a test, case or check M0-D39's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D39's start - a test, case or check M0-D39's Deliver: does not name
+logs: milestones/m0/logs/M0-D39.<scope>.log · record: loop_times.jsonl · tree ab24993d0926+9d032c61b9fd
+anchor: 60 path×scope entries moved by this run
+anchor: 187 paths checked · 161 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 187 covered of 348 visible
+skipped   153  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 747 passed, 0 failed, 0 skipped · 31/31 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 12 not impacted · 88.76 s + loop 0.27 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 62.54->110.34 · base: M0-D39's start 2026-10-15T08:03:44-04:00
+=== GO ===

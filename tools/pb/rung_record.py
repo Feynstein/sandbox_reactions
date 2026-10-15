@@ -54,6 +54,7 @@ CAUSE_RE = re.compile(r"\bM[\d.]+[a-z]?-[A-Za-z][A-Za-z0-9.-]*[A-Za-z0-9]")
 DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 DONE_RE = re.compile(r"DONE\b[^0-9]*(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})(?:, started (\d{2}:\d{2}))?")
 QUOTE_RE = re.compile(r"\bmodel=(claude-[a-z0-9-]+) level=(low|medium|high|xhigh|max)\b")
+FULL_RE = re.compile(r"^- Full block: (\S+) § (\S+)\s*$", re.M)
 RUNG_RE = re.compile(r"\b(Opus|Sonnet|Haiku|Fable) (\d+(?:\.\d+)?)\b[^\n]{0,40}?\b(low|medium|high|xhigh|max)\b")
 LADDER_RE = re.compile(r"^[-*\s]*\**Models:\**\s*(.*?)\s+—\s+strongest first")
 MARK_RE = re.compile(r"^(.+?, \w+)(?: \((gate|usual|gate, usual)\))?$")
@@ -456,19 +457,38 @@ def rung_of(parts, rec):
     return rung, mixed, why, later
 
 
-def handoff_rung(text):
-    """(rung, how) from a block's `- Handoff:` field (its line and the indented lines under it): the `now` line it quotes,
-    `model=<id> level=<level>`, in the ladder's words; else the first rung its first line's prose names; else `unknown`
-    (M0-D32: the prose's first rung is often another block's or the plan's, never the quoted one's)."""
-    lines, field = text.split("\n"), []
+def _field(lines):
+    """A `- Handoff` line and the indented lines under it."""
+    field = []
     for ln in lines:
         if ln.startswith("- Handoff") or (field and ln.startswith("  ")):
             field.append(ln)
         elif field:
             break
-    q = QUOTE_RE.search("\n".join(field))
+    return field
+
+
+def _archived_field(path, bid):
+    """The `- Handoff` field of block `bid` in the archive at `path`; [] where the file or the block is missing."""
+    if not os.path.exists(path):
+        return []
+    lines = P.read_text(path)[0].split("\n")
+    b = next((b for b in P.find_blocks(lines, P.fence_mask(lines)) if b.id == bid), None)
+    return _field(b.body) if b else []
+
+
+def handoff_rung(text, folder="."):
+    """(rung, how) from a block's `- Handoff:` field (its line and the indented lines under it): the `now` line it quotes,
+    `model=<id> level=<level>`, in the ladder's words; else the first rung its first line's prose names; else `unknown`
+    (M0-D32: the prose's first rung is often another block's or the plan's, never the quoted one's). A stub keeps one line
+    of its handoff, so the archived block its `Full block: <file> § <id>` names is read first (M0-D41): its quote wins, else
+    the stub's quote, else the archived block's first line's prose; the stub's one line where the file or the block is missing."""
+    stub, full = _field(text.split("\n")), FULL_RE.search(text)
+    arch = _archived_field(os.path.join(folder, full.group(1)), full.group(2)) if full else []
+    q = QUOTE_RE.search("\n".join(arch)) or QUOTE_RE.search("\n".join(stub))
     if q:
         return rung_name(q.group(1), q.group(2)), "the handoff's quote (model= level=)"
+    field = arch or stub
     h = RUNG_RE.search(field[0]) if field else None
     return ("%s %s, %s" % h.groups(), "the handoff's prose") if h else ("unknown", "nothing: the handoff names none")
 
@@ -526,7 +546,7 @@ def build(plan_path, since, sess_dirs, stats=None, moved=()):
         rec, fallback = claim_of(loops.get(bid, []))
         rung, mixed, why, later = rung_of(parts, rec) if parts else (None, False, "no session", [])
         if not rung:
-            rung, how = handoff_rung(b["text"])
+            rung, how = handoff_rung(b["text"], os.path.dirname(plan_path) or ".")
             why = "%s; rung from %s" % (why, how)
         cost = None if any(p["usd"] is None for p in parts) else sum(p["usd"] for p in parts)
         e = bool(re.search(r"^- Sizing: E\b", b["text"], re.M))
@@ -900,10 +920,28 @@ Models: Claude Code — Opus 5.5, max (gate) · Opus 5.5, high (usual) · Sonnet
 - Status: DONE (2026-10-13 10:40)
 - Handoff: done, nothing named.
 - Carried flags: model=claude-opus-5-5 level=max
+
+## M9-T5 · A stub whose archived handoff quotes on its second line · **BUILD** · Opus 5.5, high
+- Status: DONE (2026-10-13 10:50) · archived by M9-TC1, 2026-10-13
+- Handoff (one line): Ran on Sonnet 5.5, medium, another box.
+- Full block: plan_archive.md § M9-T5
+
+## M9-T6 · A stub whose archive holds no block · **BUILD** · Haiku 5.5, high
+- Status: DONE (2026-10-13 10:55) · archived by M9-TC1, 2026-10-13
+- Handoff (one line): Ran on Haiku 5.5, high, another box.
+- Full block: plan_archive.md § M9-T6
+"""
+
+HANDOFF_ARCHIVE = """# M9 - archive fixture
+
+## M9-T5 · A stub whose archived handoff quotes on its second line · **BUILD** · Opus 5.5, high
+- Status: DONE (2026-10-13 10:50)
+- Handoff: done, the quote on its second line.
+  Model: model=claude-opus-5-5 level=high (rung_record now).
 """
 
 
-def _prose_first(text):
+def _prose_first(text, folder="."):
     """The bug M0-D32 repaired: the first rung of the handoff's first line, its quoted `model=… level=…` never read."""
     h = RUNG_RE.search("\n".join(l for l in text.split("\n") if l.startswith("- Handoff")))
     return ("%s %s, %s" % h.groups() if h else "unknown"), "the handoff's prose"
@@ -912,6 +950,7 @@ def _prose_first(text):
 def _handoff_rows(tmp):
     plan, none = os.path.join(tmp, "handoff", "m9_implementation_plan.md"), os.path.join(tmp, "handoff", "no_sessions")
     _wr(plan, HANDOFF_PLAN)
+    _wr(os.path.join(tmp, "handoff", "plan_archive.md"), HANDOFF_ARCHIVE)
     os.makedirs(none, exist_ok=True)
     return {r["id"]: r["rung"] for r in build(plan, None, [none])}
 
@@ -1204,10 +1243,16 @@ def cmd_selftest(a):
         check("clean: a block with no session keeps the rung of its handoff, cost null",
               rows["M9-T4"]["cost_usd"] is None and rows["M9-T4"]["rung"] == "Sonnet 5.5, medium" and rows["M9-T4"]["via"] == "handoff")
         quoted = lambda: _handoff_rows(tmp) == {"M9-T1": "Sonnet 5.5, high", "M9-V1": "Opus 5.5, max", "M9-T2": "Haiku 5.5, high",
-                                                "M9-T3": "Sonnet 5.5, medium", "M9-T4": "unknown"}
+                                                "M9-T3": "Sonnet 5.5, medium", "M9-T4": "unknown",
+                                                "M9-T5": "Opus 5.5, high", "M9-T6": "Haiku 5.5, high"}
         check("clean: no session → the handoff's quoted model= level= (on any of its lines, a dated id) ahead of its prose's rung; "
-              "the prose where none is quoted; `unknown` where neither names one, a quote outside the handoff not read", quoted())
+              "the prose where none is quoted; `unknown` where neither names one, a quote outside the handoff not read; "
+              "a stub's archived handoff read ahead of its one line (M9-T5's quote on its second line), the one line where the archive holds no block (M9-T6)",
+              quoted())
+        real_handoff_rung = handoff_rung
         plant("a handoff's quoted model= level= ignored, its prose's first rung read", "handoff_rung", _prose_first, quoted)
+        plant("a stub's archived block never followed, its one line read", "handoff_rung",
+              lambda text, folder=".": real_handoff_rung(FULL_RE.sub("", text), folder), quoted)
         check("clean: a block found by its stamps, cost the window's share of the session",
               rows["M9-T5"]["via"] == "stamps" and rows["M9-T5"]["sessions"] == ["s5"] and rows["M9-T5"]["cost_usd"] == 0.3
               and rows["M9-T5"]["rung"] == "Sonnet 5.5, medium")

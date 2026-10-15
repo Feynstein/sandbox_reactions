@@ -51,8 +51,9 @@ pub const LOG: usize = 256;
 pub const SLOTS: usize = MAX_ROUNDS + 3 * MAX_PASSES + 2;
 /// P5's dispatches before its slots (`heat_cells`, `heat_law`, `heat_open`).
 pub(super) const HEAD: usize = 3;
-/// The fewest slots a step records, and the engine's first choice before any step was read back: past the 84 the Sun-like
-/// disk's hardest early step uses (12 passes, 46 rounds; measured on the RTX 5090, M0-T121).
+/// The fewest slots a step records (8 is the fewest a submission carries, G-STIFF (d)); [`FIRST_ROUNDS`] is the engine's
+/// first choice before any step was read back, past the 84 the Sun-like disk's hardest early step uses (12 passes, 46
+/// rounds; measured on the RTX 5090, M0-T121).
 pub const MIN_ROUNDS: usize = 8;
 const FIRST_ROUNDS: usize = 128;
 /// heat.wgsl's flag bits.

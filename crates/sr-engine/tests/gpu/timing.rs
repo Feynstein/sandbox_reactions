@@ -15,7 +15,7 @@ use sr_engine::headless::sun_disk_planes;
 use sr_engine::scene::{EdgeMode, TestSettings};
 use sr_engine::state::{Booking, SideFields, State, WorldConfig};
 use sr_engine::step::boxfit::BoxMode;
-use sr_engine::step::heat::{HeatSetup, SLOTS};
+use sr_engine::step::heat::HeatSetup;
 use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::react::ReactSetup;
 use sr_engine::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
@@ -143,18 +143,24 @@ fn frames_report_their_cost_per_step_and_per_pass() {
 fn a_frame_longer_than_the_query_set_times_its_first_whole_steps() {
     let gpu = device();
     let step = disk(&gpu, 128, 128);
-    // Every P5 slot recorded, so no step carries over (§0.5 [M0-TJ4] (6)): the disk's step 330 needs ~1,500 (M0-T121).
-    step.set_heat_rounds(Some(SLOTS));
+    // Rounds fixed so no step carries over (§0.5 [M0-TJ4] (6), M0-T121), and few enough that the frame's one submission
+    // stays far inside Windows' 2 s GPU timeout (M0-D39): at SLOTS a step's P5 is 9.8 ms on the RTX 5090, ~2.3 µs a
+    // recorded round, so 1000 steps were ~10 s and the RTX 4080 Laptop lost its device. The fresh disk's steps 0–335 use at
+    // most 83 slots (its front from step 336 up to 1,627, RTX 5090, M0-D39), so FRAME steps at ROUNDS never carry.
+    const FRAME: u32 = 300;
+    const ROUNDS: usize = 256;
+    step.set_heat_rounds(Some(ROUNDS));
     assert_eq!(step.set_timing(&gpu.device, &gpu.queue, Timing::Auto), Some(CostSource::GpuTimestamp));
     let passes = recorded(&step);
     // 4096 queries, two per pass: frame begin, step 0's five passes, then four per step, 24 kept free and frame end's 2.
     let per_step = 2 * passes.len() as u32;
     let fits = (wgpu::QUERY_SET_MAX_QUERIES - 2 - 2 * (passes.len() as u32 + 1) - 24 - 2) / per_step + 2;
-    let r = frame(&gpu, &step, 1000);
-    assert_eq!(r.steps_run, 1000);
+    assert!(fits + 20 < FRAME, "the frame must outrun the query set: {FRAME} steps, ≈ {fits} fit");
+    let r = frame(&gpu, &step, FRAME);
+    assert_eq!(r.steps_run, FRAME);
     let cost = r.cost.expect("a cost");
-    assert!(cost.steps < 1000 && cost.steps + 2 >= fits && cost.steps <= fits + 2, "{} steps timed, ≈ {fits} fit", cost.steps);
-    check_timed(&cost, &passes, cost.steps, "a 1000-step frame");
+    assert!(cost.steps < FRAME && cost.steps + 2 >= fits && cost.steps <= fits + 2, "{} steps timed, ≈ {fits} fit", cost.steps);
+    check_timed(&cost, &passes, cost.steps, &format!("a {FRAME}-step frame"));
     assert!(cost.frame_ms.is_some_and(|ms| ms > 0.0), "frame end still timed: {cost:?}");
     let next = frame(&gpu, &step, 10).cost.expect("a cost");
     check_timed(&next, &passes, 10, "the next frame starts a fresh query set");

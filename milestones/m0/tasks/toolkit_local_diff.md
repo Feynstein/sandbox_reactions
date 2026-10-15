@@ -122,3 +122,15 @@ the swapped switch's `RUNGS` holds all seven rungs of the 2026-10-11 ladder.
    with no session keeps the rung of its handoff », with its plant « a handoff's quoted model= level= ignored, its prose's
    first rung read ». The annex's §A.9 text ("No session file readable … → the rung from the handoff") and its plant count
    (thirteen for `report`) lag by this one. Measured on win-laptop: selftest checks=72 · plants 30/30 red, GO.
+7. **rung_record.py — a stub's handoff is read from its archived block (local, M0-D41, 2026-10-15).** A stub keeps one line
+   of its block's handoff, which can drop the quote the archived block holds on a continuation line; with no session file
+   the fallback read that one line, so M0-D5 and M0-T19 read `unknown`. Now `handoff_rung(text, folder)` follows the stub's
+   `- Full block: <file> § <id>` (`FULL_RE`) to that archived block's `- Handoff` field (`_archived_field`, through
+   `P.find_blocks`): its quote first, else the stub's quote, else the archived field's first line's prose, else the stub's
+   one line where the file or the block is missing. `build()` passes the plan's folder. Hunks: `FULL_RE` beside `QUOTE_RE`;
+   `_field` and `_archived_field` before `handoff_rung`; `handoff_rung`'s signature and body; `build()`'s call; `_prose_first`
+   takes `folder`; the selftest's `HANDOFF_PLAN` (stubs M9-T5 and M9-T6), `HANDOFF_ARCHIVE` (M9-T5's full block, quoted on
+   its second line), `_handoff_rows` (writes the archive), the `quoted` check and its plant « a stub's archived block never
+   followed, its one line read ». The annex's §A.9 text and its plant count lag by this one, as item 6's do. Measured on
+   linux-pc: selftest checks=73 · plants 31/31 red, GO; `report --json` GO, M0-D5 and M0-T19 on Opus 5.5, high, and 53 of 53
+   quoting handoff rows on their quote's rung (was 51 of 53).

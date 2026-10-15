@@ -1,0 +1,4 @@
+blocks 130 via: Counter({'handoff': 68, 'prompt': 62}) rung_basis kinds: [('session of the claim run', 53), ('no session; rung from the hand', 51), ('no session; rung from nothing:', 17), ('first session: no claim record', 9)]
+via handoff: 68 rows; quoting model= level=: 53; on the quote's rung: 51; other: 2
+   ('M0-D5', 'unknown', 'Opus 5.5, high', 'no session; rung from nothing: the handoff names none')
+   ('M0-T19', 'unknown', 'Opus 5.5, high', 'no session; rung from nothing: the handoff names none')

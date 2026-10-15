@@ -1,0 +1,54 @@
+==== 2026-10-15T09:35:52-04:00 booking · clean · a fresh scratch copy of the tree
+== 2026-10-15T09:35:52-04:00 booking · task M0-V6 · box laserax-ai :: bash tests/gpu.sh booking physics
+-- booking · exit=0 · 4.68 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jkqo8sf1/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-jkqo8sf1/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 3.91s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+37 terms, 5548000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 196 filtered out; finished in 0.66s
+
+
+==== 2026-10-15T09:35:52-04:00 booking · plant booking-row-skip · a fresh scratch copy of the tree
+planted booking-row-skip: tests/plants/booking-row-skip.patch -> crates/sr-engine/src/state.rs
+== 2026-10-15T09:35:52-04:00 booking · task M0-V6 · box laserax-ai :: bash tests/gpu.sh booking physics
+-- booking · exit=101 · 10.06 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jkqo8sf1/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-jkqo8sf1/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.37s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'booking::every_terms_f64_total_equals_the_expected_total_over_16_steps' (1011484) panicked at crates/sr-engine/tests/gpu/booking.rs:165:9:
+mass.painted (P0 edits): total 478800, expected 480003.96875 (relative 2.5082474904016094e-3)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    booking::every_terms_f64_total_equals_the_expected_total_over_16_steps
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 196 filtered out; finished in 0.94s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

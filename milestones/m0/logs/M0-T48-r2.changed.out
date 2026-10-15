@@ -1,0 +1,84 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md · moved since ab24993: milestones/m0/m0_implementation_plan.md
+why build: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why burn_cell: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why burn_order: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why neutrino: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why sod: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why edges: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why collapse: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why twin: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why cpu_gpu: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why heat_gauss: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why heat_implicit: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why heat_limiter: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why heat_stiff: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why radiation_force: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why grav_force: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why grav_selfforce: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why fft: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why adapter: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why state: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why booking: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why floors: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why dt: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why box: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why latch: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why timing: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why scene: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why dump: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why boot: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why desktop: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why web: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+why capture: moved since ab24993: crates/sr-engine/tests/gpu/timing.rs
+plan_lint        541/0/0      0.12 s  GO · step 1/32, 31 left
+build            2/0/0        1.35 s  GO · step 2/32, 30 left
+burn_cell        16/0/0       6.69 s  GO · step 3/32, 29 left
+burn_order       4/0/0        2.89 s  GO · step 4/32, 28 left
+neutrino         18/0/0       7.59 s  GO · step 5/32, 27 left
+sod              15/0/0       8.74 s  GO · step 6/32, 26 left
+edges            7/0/0       15.25 s  GO · step 7/32, 25 left
+collapse         6/0/0        2.42 s  GO · step 8/32, 24 left
+twin             6/0/0        3.32 s  GO · step 9/32, 23 left
+cpu_gpu          3/0/0        9.73 s  GO · step 10/32, 22 left
+heat_gauss       10/0/0       4.68 s  GO · step 11/32, 21 left
+heat_implicit    6/0/0        2.57 s  GO · step 12/32, 20 left
+heat_limiter     6/0/0        3.32 s  GO · step 13/32, 19 left
+heat_stiff       6/0/0        3.12 s  GO · step 14/32, 18 left
+radiation_force  3/0/0        1.82 s  GO · step 15/32, 17 left
+grav_force       13/0/0       8.28 s  GO · step 16/32, 16 left
+grav_selfforce   5/0/0        2.92 s  GO · step 17/32, 15 left
+fft              8/0/0        8.33 s  GO · step 18/32, 14 left
+adapter          10/0/0       5.87 s  GO · step 19/32, 13 left
+state            6/0/0        5.02 s  GO · step 20/32, 12 left
+booking          4/0/0        4.62 s  GO · step 21/32, 11 left
+floors           7/0/0        7.88 s  GO · step 22/32, 10 left
+dt               6/0/0        6.43 s  GO · step 23/32, 9 left
+box              8/0/0        7.54 s  GO · step 24/32, 8 left
+latch            5/0/0        4.47 s  GO · step 25/32, 7 left
+timing           5/0/0        7.59 s  GO · step 26/32, 6 left
+scene            8/0/0        3.27 s  GO · step 27/32, 5 left
+dump             9/0/0        9.19 s  GO · step 28/32, 4 left
+boot             1/0/0        3.78 s  GO · step 29/32, 3 left
+desktop          2/0/0        6.66 s  GO · step 30/32, 2 left
+web              3/0/0       16.41 s  GO · step 31/32, 1 left
+capture          2/0/0        1.09 s  GO · step 32/32, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since ab24993)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor, none moved since ab24993)
+registry         NOT RUN (not impacted: its 26 path(s) checked at the anchor, none moved since ab24993)
+eos              NOT RUN (not impacted: its 23 path(s) checked at the anchor, none moved since ab24993)
+rates            NOT RUN (not impacted: its 25 path(s) checked at the anchor, none moved since ab24993)
+fft_twin         NOT RUN (not impacted: its 18 path(s) checked at the anchor, none moved since ab24993)
+riemann          NOT RUN (not impacted: its 17 path(s) checked at the anchor, none moved since ab24993)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor, none moved since ab24993)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor, none moved since ab24993)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor, none moved since ab24993)
+watch_only       NOT RUN (not impacted: its 21 path(s) checked at the anchor, none moved since ab24993)
+flags: M0-T48-r2 is no block of a plan under milestones/ - no Deliver and no type to read them against
+logs: milestones/m0/logs/M0-T48-r2.<scope>.log · record: loop_times.jsonl · tree ab24993d0926+e19ed93e039b
+anchor: 1 path×scope entries moved by this run
+anchor: 187 paths checked · 161 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 187 covered of 348 visible
+skipped   153  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 751 passed, 0 failed, 0 skipped · 32/32 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 11 not impacted · 26.12 s + loop 0.03 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 15.85->18.83 · base: commit ab24993d0926
+=== GO ===

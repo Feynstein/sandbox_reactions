@@ -1,0 +1,124 @@
+==== 2026-10-15T09:34:13-04:00 fft · clean · a fresh scratch copy of the tree
+== 2026-10-15T09:34:14-04:00 fft · task M0-V6 · box laserax-ai :: bash tests/gpu.sh fft physics
+-- fft · exit=0 · 10.45 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-95vma_qw/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-95vma_qw/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.64s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test fft::convolution_matches_the_twin_with_an_asymmetric_kernel_on_boxes_inside_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 48x40 at (24, 16) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.41e-7 (limit 1e-5)
+SR-FFT convolution box 40x33 at (0, 0) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.08e-7 (limit 1e-5)
+SR-FFT convolution box 64x48 at (96, 72) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.06e-7 (limit 1e-5)
+SR-FFT convolution box 150x1 at (8, 100) padded 512x32: 3 dispatches (+2 once per size for the kernel); rel L2 1.10e-7 (limit 1e-5)
+ok
+test fft::convolution_of_gravity_over_the_whole_600_by_400_world_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 600x400 at (0, 0) padded 2048x1024: 3 dispatches (+2 once per size for the kernel); rel L2 8.00e-8 (limit 1e-5)
+ok
+test fft::cost_per_convolution_in_the_log ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT-COST box 64x64 padded 128x128: 0.150 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M4: whole step 0.11 ms at 128x128
+SR-FFT-COST box 160x160 padded 512x512: 0.198 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M3: gravity 0.17 ms at 512x512
+SR-FFT-COST box 600x400 padded 2048x1024: 0.113 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M2: gravity 1.24 ms at 2048x1024
+ok
+test fft::the_kernel_transform_is_cached_per_padded_size ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 48x40 at (8, 8) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.45e-7 (limit 1e-5)
+SR-FFT convolution box 50x41 at (0, 16) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.35e-7 (limit 1e-5)
+SR-FFT convolution box 20x10 at (40, 50) padded 64x32: 3 dispatches (+2 once per size for the kernel); rel L2 7.97e-8 (limit 1e-5)
+ok
+test fft::transform_2048_by_1024_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT 2048x1024 transform: 2 dispatches each way; forward rel L2 1.72e-7, inverse 1.72e-7 (limit 1e-5)
+ok
+test fft::transform_256_by_128_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT 256x128 transform: 2 dispatches each way; forward rel L2 1.44e-7, inverse 1.43e-7 (limit 1e-5)
+ok
+test fft::transform_64_by_64_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT 64x64 transform: 2 dispatches each way; forward rel L2 1.28e-7, inverse 1.25e-7 (limit 1e-5)
+ok
+test fft::transform_every_length_32_to_2048_on_both_axes_and_the_refusals ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT 32x2048 transform: 2 dispatches each way; forward rel L2 1.48e-7, inverse 1.47e-7 (limit 1e-5)
+SR-FFT 2048x32 transform: 2 dispatches each way; forward rel L2 1.48e-7, inverse 1.47e-7 (limit 1e-5)
+SR-FFT 64x512 transform: 2 dispatches each way; forward rel L2 1.43e-7, inverse 1.42e-7 (limit 1e-5)
+SR-FFT 512x64 transform: 2 dispatches each way; forward rel L2 1.44e-7, inverse 1.43e-7 (limit 1e-5)
+SR-FFT 128x1024 transform: 2 dispatches each way; forward rel L2 1.54e-7, inverse 1.53e-7 (limit 1e-5)
+SR-FFT 1024x128 transform: 2 dispatches each way; forward rel L2 1.53e-7, inverse 1.53e-7 (limit 1e-5)
+SR-FFT 256x256 transform: 2 dispatches each way; forward rel L2 1.50e-7, inverse 1.49e-7 (limit 1e-5)
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 192 filtered out; finished in 4.51s
+
+
+==== 2026-10-15T09:34:13-04:00 fft · plant fft-gpu-bitreverse · a fresh scratch copy of the tree
+planted fft-gpu-bitreverse: tests/plants/fft-gpu-bitreverse.patch -> crates/sr-engine/shaders/fft.wgsl
+== 2026-10-15T09:34:14-04:00 fft · task M0-V6 · box laserax-ai :: bash tests/gpu.sh fft physics
+-- fft · exit=101 · 32.55 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-95vma_qw/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-95vma_qw/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 17.54s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test fft::convolution_matches_the_twin_with_an_asymmetric_kernel_on_boxes_inside_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 48x40 at (24, 16) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 9.09e-1 (limit 1e-5)
+
+thread 'fft::convolution_matches_the_twin_with_an_asymmetric_kernel_on_boxes_inside_a_world' (1003943) panicked at crates/sr-engine/tests/gpu/fft.rs:198:5:
+convolution over Region { x0: 24, y0: 16, w: 48, h: 40 }: relative L2 9.088527213639408e-1 over 1e-5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test fft::convolution_of_gravity_over_the_whole_600_by_400_world_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 600x400 at (0, 0) padded 2048x1024: 3 dispatches (+2 once per size for the kernel); rel L2 1.52e0 (limit 1e-5)
+
+thread 'fft::convolution_of_gravity_over_the_whole_600_by_400_world_matches_the_twin' (1003988) panicked at crates/sr-engine/tests/gpu/fft.rs:198:5:
+convolution over Region { x0: 0, y0: 0, w: 600, h: 400 }: relative L2 1.5238595363270313e0 over 1e-5
+FAILED
+test fft::cost_per_convolution_in_the_log ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT-COST box 64x64 padded 128x128: 0.024 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M4: whole step 0.11 ms at 128x128
+SR-FFT-COST box 160x160 padded 512x512: 0.034 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M3: gravity 0.17 ms at 512x512
+SR-FFT-COST box 600x400 padded 2048x1024: 0.112 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M2: gravity 1.24 ms at 2048x1024
+ok
+test fft::the_kernel_transform_is_cached_per_padded_size ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 48x40 at (8, 8) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 9.12e-1 (limit 1e-5)
+
+thread 'fft::the_kernel_transform_is_cached_per_padded_size' (1004062) panicked at crates/sr-engine/tests/gpu/fft.rs:198:5:
+convolution over Region { x0: 8, y0: 8, w: 48, h: 40 }: relative L2 9.123334188141713e-1 over 1e-5
+FAILED
+test fft::transform_2048_by_1024_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT 2048x1024 transform: 2 dispatches each way; forward rel L2 1.12e0, inverse 1.12e0 (limit 1e-5)
+
+thread 'fft::transform_2048_by_1024_matches_the_twin' (1004083) panicked at crates/sr-engine/tests/gpu/fft.rs:98:5:
+2048 × 1024 forward: relative L2 1.1181121374660157e0 over 1e-5
+FAILED
+test fft::transform_256_by_128_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT 256x128 transform: 2 dispatches each way; forward rel L2 1.12e0, inverse 1.12e0 (limit 1e-5)
+
+thread 'fft::transform_256_by_128_matches_the_twin' (1004116) panicked at crates/sr-engine/tests/gpu/fft.rs:98:5:
+256 × 128 forward: relative L2 1.1174543142004638e0 over 1e-5
+FAILED
+test fft::transform_64_by_64_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT 64x64 transform: 2 dispatches each way; forward rel L2 1.12e0, inverse 1.12e0 (limit 1e-5)
+
+thread 'fft::transform_64_by_64_matches_the_twin' (1004124) panicked at crates/sr-engine/tests/gpu/fft.rs:98:5:
+64 × 64 forward: relative L2 1.1161361453419256e0 over 1e-5
+FAILED
+test fft::transform_every_length_32_to_2048_on_both_axes_and_the_refusals ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-FFT 32x2048 transform: 2 dispatches each way; forward rel L2 1.12e0, inverse 1.12e0 (limit 1e-5)
+
+thread 'fft::transform_every_length_32_to_2048_on_both_axes_and_the_refusals' (1004158) panicked at crates/sr-engine/tests/gpu/fft.rs:98:5:
+32 × 2048 forward: relative L2 1.1181750021557486e0 over 1e-5
+FAILED
+
+failures:
+
+failures:
+    fft::convolution_matches_the_twin_with_an_asymmetric_kernel_on_boxes_inside_a_world
+    fft::convolution_of_gravity_over_the_whole_600_by_400_world_matches_the_twin
+    fft::the_kernel_transform_is_cached_per_padded_size
+    fft::transform_2048_by_1024_matches_the_twin
+    fft::transform_256_by_128_matches_the_twin
+    fft::transform_64_by_64_matches_the_twin
+    fft::transform_every_length_32_to_2048_on_both_axes_and_the_refusals
+
+test result: FAILED. 1 passed; 7 failed; 0 ignored; 0 measured; 192 filtered out; finished in 4.23s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

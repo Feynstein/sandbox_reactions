@@ -1,0 +1,89 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/src/step/heat.rs (+1)
+why registry: stale: crates/sr-physics/src/reference/mod.rs
+why eos: stale: crates/sr-physics/src/reference/mod.rs
+why rates: stale: crates/sr-physics/src/reference/mod.rs
+why burn_cell: stale: crates/sr-engine/src/step/heat.rs (+1)
+why burn_order: stale: crates/sr-engine/src/step/heat.rs (+1)
+why neutrino: stale: crates/sr-engine/src/step/heat.rs (+1)
+why fft_twin: stale: crates/sr-physics/src/reference/mod.rs
+why riemann: stale: crates/sr-physics/src/reference/mod.rs
+why sod: stale: crates/sr-engine/src/step/heat.rs (+1)
+why edges: stale: crates/sr-engine/src/step/heat.rs (+1)
+why collapse: stale: crates/sr-engine/src/step/heat.rs (+1)
+why twin: stale: crates/sr-engine/src/step/heat.rs (+1)
+why cpu_gpu: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_gauss: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_implicit: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_limiter: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_stiff: stale: crates/sr-engine/src/step/heat.rs (+1)
+why radiation_force: stale: crates/sr-engine/src/step/heat.rs (+1)
+why grav_force: stale: crates/sr-engine/src/step/heat.rs (+1)
+why grav_selfforce: stale: crates/sr-engine/src/step/heat.rs (+1)
+why fft: stale: crates/sr-engine/src/step/heat.rs (+1)
+why adapter: stale: crates/sr-engine/src/step/heat.rs
+why state: stale: crates/sr-engine/src/step/heat.rs (+1)
+why booking: stale: crates/sr-engine/src/step/heat.rs
+why floors: stale: crates/sr-engine/src/step/heat.rs (+1)
+why dt: stale: crates/sr-engine/src/step/heat.rs (+1)
+why box: stale: crates/sr-engine/src/step/heat.rs (+1)
+why latch: stale: crates/sr-engine/src/step/heat.rs (+1)
+why timing: stale: crates/sr-engine/src/step/heat.rs (+1)
+why scene: stale: crates/sr-engine/src/step/heat.rs (+1)
+why dump: stale: crates/sr-engine/src/step/heat.rs (+1)
+why boot: stale: crates/sr-engine/src/step/heat.rs (+1)
+why desktop: stale: crates/sr-engine/src/step/heat.rs
+why web: stale: crates/sr-engine/src/step/heat.rs
+why capture: stale: crates/sr-engine/src/step/heat.rs
+why watch_only: stale: crates/sr-engine/src/step/heat.rs
+plan_lint        553/0/0      0.18 s  GO · step 1/38, 37 left
+build            2/0/0       29.14 s  GO · step 2/38, 36 left
+registry         29/0/0       4.90 s  GO · step 3/38, 35 left
+eos              13/0/0      18.53 s  GO · step 4/38, 34 left
+rates            8/0/0       18.51 s  GO · step 5/38, 33 left
+burn_cell        16/0/0      23.38 s  GO · step 6/38, 32 left
+burn_order       4/0/0       21.10 s  GO · step 7/38, 31 left
+neutrino         18/0/0      33.14 s  GO · step 8/38, 30 left
+fft_twin         10/0/0      21.83 s  GO · step 9/38, 29 left
+riemann          8/0/0       19.11 s  GO · step 10/38, 28 left
+sod              15/0/0      23.78 s  GO · step 11/38, 27 left
+edges            7/0/0       27.00 s  GO · step 12/38, 26 left
+collapse         6/0/0        6.40 s  GO · step 13/38, 25 left
+twin             6/0/0        5.51 s  GO · step 14/38, 24 left
+cpu_gpu          3/0/0       13.82 s  GO · step 15/38, 23 left
+heat_gauss       10/0/0       6.70 s  GO · step 16/38, 22 left
+heat_implicit    6/0/0        4.55 s  GO · step 17/38, 21 left
+heat_limiter     6/0/0        5.60 s  GO · step 18/38, 20 left
+heat_stiff       6/0/0        4.55 s  GO · step 19/38, 19 left
+radiation_force  3/0/0        2.88 s  GO · step 20/38, 18 left
+grav_force       13/0/0       9.62 s  GO · step 21/38, 17 left
+grav_selfforce   5/0/0        3.85 s  GO · step 22/38, 16 left
+fft              8/0/0       10.64 s  GO · step 23/38, 15 left
+adapter          10/0/0       7.16 s  GO · step 24/38, 14 left
+state            6/0/0        6.35 s  GO · step 25/38, 13 left
+booking          4/0/0        5.25 s  GO · step 26/38, 12 left
+floors           7/0/0       10.28 s  GO · step 27/38, 11 left
+dt               6/0/0        7.56 s  GO · step 28/38, 10 left
+box              8/0/0        9.48 s  GO · step 29/38, 9 left
+latch            5/0/0        6.66 s  GO · step 30/38, 8 left
+timing           5/0/0        9.32 s  GO · step 31/38, 7 left
+scene            8/0/0        5.50 s  GO · step 32/38, 6 left
+dump             9/0/0       11.79 s  GO · step 33/38, 5 left
+boot             1/0/0        4.14 s  GO · step 34/38, 4 left
+desktop          2/0/0        5.90 s  GO · step 35/38, 3 left
+web              3/0/0       30.57 s  GO · step 36/38, 2 left
+capture          2/0/0        4.00 s  GO · step 37/38, 1 left
+watch_only       1/0/0        0.06 s  GO · step 38/38, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-D40.<scope>.log · record: loop_times.jsonl · tree ab24993d0926+569d1e7af972
+anchor: 64 path×scope entries moved by this run
+anchor: 187 paths checked · 165 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 187 covered of 352 visible
+skipped   157  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 832 passed, 0 failed, 0 skipped · 38/38 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 5 not impacted · 61.13 s + loop 0.07 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 38.77->39.51 · base: M0-D40's start 2026-10-15T10:17:14-04:00
+=== GO ===

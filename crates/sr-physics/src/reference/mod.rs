@@ -1,11 +1,11 @@
 //! The CPU f64 twin (m0_contrat.md §1.1, R13): each pass's reference, written in f64 on the CPU before its GPU shader.
 //! `fft` is gravity's machinery (§1.4.2, the Hockney–Eastwood convolution) and the neutrino-heating kernel's (§2.5.4);
 //! `grav` is P2 on it (§1.4); `riemann` is the exact solution of the γ = 2 gas's shock tube (§2.3.1, G-SOD §5.1);
-//! `hydro` is P4, the gas flow, graded against it (§2.3.4, G-SOD); `heat` is P5, flux-limited diffusion stepped by RKL2
+//! `hydro` is P4, the gas flow, graded against it (§2.3.4, G-SOD); `heat` is P5, flux-limited diffusion stepped implicitly
 //! (§2.4, G-HEAT1, G-HEAT2, G-FLD); `react` is P6, burning by linearised backward-Euler sub-cycles (§2.5, G-BURN, G-ORDER); `floors` is P8 (§2.7).
 //!
 //! [`Twin`] is the step driver (M0-T37): the passes built so far, in §1.3.2's order, on the state's f64 planes, the scene's
-//! switches honoured — P1 Δt, P2 gravity, P4 hydro, P8 floors, P9 Δt_{n+1} — each pass joining with its twin. It steps the
+//! switches honoured — P1 Δt, P2 gravity, P4 hydro, P5 heat, P6 reactions, P8 floors, P9 Δt_{n+1} — each pass joining with its twin. It steps the
 //! GPU's way: Δt_n is the reduction P9 made at the end of step n − 1 (step 0's, the initial state's after P2 on it, so it
 //! has its gravity term), and P9's gravity term reads g from the same step's P2 — the field of the state the step started
 //! from — not from the state P9 reduces. The twin runs the whole world, no active box (§1.3.3); outside the GPU's box the
