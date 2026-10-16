@@ -1,0 +1,153 @@
+# M0-V8 probe P3: the scratch copy's watch.rs printing each frame's objects under SR_V8_PROBE (copy: /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8copy; RTX 5090; 2026-10-16 11:50; headless --scene preset:sun --until stage:h_shell --max-steps 1200, 16-step frames)
+V8PROBE frame step 1 t 0.0303 dt 0.03027 box [248, 144]+[104, 112] objects 1 L_box 3.5932e0 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.03 L 3.5865e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6390 Munb/M 0.0000 R 35.00 v_r/v -0.0053 T_c 4.733 S_c 1.000 X_H 0.7346 2P/W 0.469 raw Some(FailedStar) shown None ign Some(false)
+V8PROBE frame step 17 t 0.4813 dt 0.45099 box [240, 144]+[120, 112] objects 1 L_box 2.2101e-1 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.03 L 2.1924e-1 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6386 Munb/M 0.0000 R 34.87 v_r/v -0.0849 T_c 4.847 S_c 1.024 X_H 0.7346 2P/W 0.468 raw Some(FailedStar) shown None ign Some(false)
+V8PROBE frame step 33 t 0.9118 dt 0.43057 box [240, 144]+[120, 112] objects 1 L_box 3.7411e-3 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.02 L 3.3994e-3 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6376 Munb/M 0.0000 R 34.58 v_r/v -0.1620 T_c 5.164 S_c 1.091 X_H 0.7346 2P/W 0.471 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 49 t 1.2975 dt 0.38569 box [240, 144]+[120, 112] objects 1 L_box 1.2664e-4 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.03 L 1.2427e-4 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6361 Munb/M 0.0000 R 33.90 v_r/v -0.2319 T_c 5.685 S_c 1.200 X_H 0.7346 2P/W 0.480 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 65 t 1.6449 dt 0.34741 box [240, 136]+[120, 128] objects 1 L_box 6.3510e-6 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.01 L 5.0526e-6 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6340 Munb/M 0.0000 R 33.32 v_r/v -0.2970 T_c 6.449 S_c 1.361 X_H 0.7346 2P/W 0.495 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 81 t 1.9599 dt 0.31497 box [240, 136]+[120, 128] objects 1 L_box 1.8546e-6 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.03 L 1.7632e-6 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6312 Munb/M 0.0000 R 32.07 v_r/v -0.3545 T_c 7.540 S_c 1.592 X_H 0.7346 2P/W 0.516 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 97 t 2.2465 dt 0.28663 box [240, 136]+[120, 128] objects 1 L_box 1.0331e-6 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.02 L 9.0763e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6274 Munb/M 0.0000 R 31.00 v_r/v -0.4082 T_c 9.116 S_c 1.923 X_H 0.7346 2P/W 0.544 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 113 t 2.5077 dt 0.26120 box [240, 136]+[120, 128] objects 1 L_box 7.2862e-7 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.02 L 6.5678e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6226 Munb/M 0.0000 R 30.34 v_r/v -0.4599 T_c 11.452 S_c 2.415 X_H 0.7346 2P/W 0.581 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 129 t 2.7457 dt 0.23800 box [232, 136]+[136, 128] objects 1 L_box 5.2942e-7 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3350.99 L 3.5605e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6161 Munb/M 0.0000 R 29.23 v_r/v -0.5016 T_c 15.032 S_c 3.168 X_H 0.7346 2P/W 0.629 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 145 t 2.9624 dt 0.21667 box [232, 136]+[136, 128] objects 1 L_box 4.0083e-7 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3350.99 L 2.7315e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6077 Munb/M 0.0000 R 27.97 v_r/v -0.5311 T_c 20.619 S_c 4.343 X_H 0.7346 2P/W 0.691 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 161 t 3.1598 dt 0.19741 box [232, 136]+[136, 128] objects 1 L_box 3.4986e-7 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3350.98 L 2.3573e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5980 Munb/M 0.0000 R 26.59 v_r/v -0.5417 T_c 28.722 S_c 6.060 X_H 0.7346 2P/W 0.769 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 177 t 3.3412 dt 0.18144 box [232, 136]+[136, 128] objects 1 L_box 3.3482e-7 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3351.01 L 2.8749e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5893 Munb/M 0.0000 R 25.76 v_r/v -0.5335 T_c 38.097 S_c 8.070 X_H 0.7346 2P/W 0.862 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 193 t 3.5116 dt 0.17038 box [232, 136]+[136, 128] objects 1 L_box 3.0218e-7 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3350.99 L 2.3285e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5837 Munb/M 0.0000 R 24.25 v_r/v -0.4926 T_c 45.243 S_c 9.620 X_H 0.7346 2P/W 0.959 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 209 t 3.6742 dt 0.16260 box [232, 136]+[136, 128] objects 1 L_box 2.8860e-7 LH_box 0.0000e0 unbound_box 0.000
+V8PROBE   id 1 M 3350.97 L 1.8587e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5803 Munb/M 0.0000 R 22.78 v_r/v -0.4327 T_c 49.834 S_c 10.618 X_H 0.7346 2P/W 1.052 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+V8PROBE frame step 225 t 3.8313 dt 0.15709 box [232, 136]+[136, 128] objects 1 L_box 2.7291e-7 LH_box 2.7724e2 unbound_box 0.000
+V8PROBE   id 1 M 3351.01 L 2.1182e-7 L_H 2.7724e2 L_nuc 2.7724e2 d_c 0.5774 Munb/M 0.0000 R 21.94 v_r/v -0.3651 T_c 53.425 S_c 11.372 X_H 0.7346 2P/W 1.135 raw Some(MainSequence) shown Some(FailedStar) ign Some(true)
+V8PROBE frame step 241 t 3.9844 dt 0.15308 box [232, 136]+[136, 128] objects 1 L_box 2.6194e-7 LH_box 9.2426e2 unbound_box 0.000
+V8PROBE   id 1 M 3351.00 L 1.7046e-7 L_H 9.2426e2 L_nuc 9.2426e2 d_c 0.5748 Munb/M 0.0000 R 19.85 v_r/v -0.2782 T_c 56.301 S_c 11.959 X_H 0.7345 2P/W 1.211 raw Some(MainSequence) shown Some(FailedStar) ign Some(true)
+V8PROBE frame step 257 t 4.1347 dt 0.15034 box [232, 136]+[136, 128] objects 1 L_box 2.3653e-7 LH_box 1.5815e3 unbound_box 0.000
+V8PROBE   id 1 M 3350.98 L 1.1208e-7 L_H 1.5815e3 L_nuc 1.5815e3 d_c 0.5727 Munb/M 0.0000 R 18.50 v_r/v -0.1907 T_c 58.322 S_c 12.351 X_H 0.7345 2P/W 1.279 raw Some(MainSequence) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 273 t 4.2836 dt 0.14886 box [232, 136]+[136, 128] objects 1 L_box 2.1486e-7 LH_box 2.2312e3 unbound_box 0.000
+V8PROBE   id 1 M 3350.96 L 8.7260e-8 L_H 2.2312e3 L_nuc 2.2312e3 d_c 0.5711 Munb/M 0.0000 R 17.03 v_r/v -0.0997 T_c 59.458 S_c 12.544 X_H 0.7345 2P/W 1.327 raw Some(MainSequence) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 289 t 4.4314 dt 0.14784 box [232, 128]+[136, 144] objects 1 L_box 2.3483e-7 LH_box 2.4094e3 unbound_box 0.000
+V8PROBE   id 1 M 3350.94 L 7.6941e-8 L_H 2.4094e3 L_nuc 2.4094e3 d_c 0.5698 Munb/M 0.0000 R 14.28 v_r/v -0.0120 T_c 60.276 S_c 12.668 X_H 0.7344 2P/W 1.349 raw Some(MainSequence) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 305 t 4.5767 dt 0.14527 box [232, 128]+[136, 144] objects 1 L_box 2.4048e-7 LH_box 1.9323e3 unbound_box 0.000
+V8PROBE   id 1 M 3350.92 L 7.8290e-8 L_H 1.9323e3 L_nuc 1.9323e3 d_c 0.5705 Munb/M 0.0000 R 14.37 v_r/v 0.0622 T_c 58.033 S_c 12.144 X_H 0.7344 2P/W 1.347 raw Some(MainSequence) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 321 t 4.7242 dt 0.14755 box [232, 128]+[136, 144] objects 1 L_box 2.3980e-7 LH_box 1.0606e3 unbound_box 0.000
+V8PROBE   id 1 M 3350.90 L 7.7631e-8 L_H 1.0606e3 L_nuc 1.0606e3 d_c 0.5736 Munb/M 0.0000 R 14.78 v_r/v 0.1268 T_c 52.895 S_c 11.033 X_H 0.7343 2P/W 1.327 raw Some(MainSequence) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 337 t 4.8774 dt 0.15311 box [232, 128]+[136, 144] objects 1 L_box 2.0797e-7 LH_box 2.3172e2 unbound_box 0.000
+V8PROBE   id 1 M 3350.88 L 7.4115e-8 L_H 2.3172e2 L_nuc 2.3172e2 d_c 0.5777 Munb/M 0.0000 R 16.24 v_r/v 0.1840 T_c 47.387 S_c 9.872 X_H 0.7343 2P/W 1.292 raw Some(MainSequence) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 353 t 5.0254 dt 0.14800 box [232, 128]+[136, 144] objects 1 L_box 2.0105e4 LH_box 6.7615e1 unbound_box 6.433
+V8PROBE   id 1 M 3350.85 L 3.2242e3 L_H 6.7615e1 L_nuc 6.7615e1 d_c 0.5817 Munb/M 0.0019 R 17.40 v_r/v 0.2248 T_c 42.664 S_c 8.887 X_H 0.7343 2P/W 1.242 raw Some(Cloud) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 369 t 5.1367 dt 0.11138 box [232, 128]+[136, 144] objects 1 L_box 3.8734e4 LH_box 2.9763e1 unbound_box 2.110
+V8PROBE   id 1 M 3350.77 L 4.0422e3 L_H 2.9763e1 L_nuc 2.9763e1 d_c 0.5844 Munb/M 0.0006 R 18.18 v_r/v 0.2469 T_c 39.608 S_c 8.251 X_H 0.7343 2P/W 1.195 raw Some(WhiteDwarf) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 385 t 5.2318 dt 0.09510 box [232, 128]+[136, 144] objects 1 L_box 2.9966e4 LH_box 1.0031e1 unbound_box 1.711
+V8PROBE   id 1 M 3350.66 L 0.0000e0 L_H 1.0031e1 L_nuc 1.0031e1 d_c 0.5866 Munb/M 0.0004 R 18.45 v_r/v 0.2583 T_c 37.299 S_c 7.771 X_H 0.7343 2P/W 1.156 raw Some(Cloud) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 401 t 5.3204 dt 0.08855 box [224, 128]+[152, 144] objects 1 L_box 2.3912e4 LH_box 2.1948e-1 unbound_box 1.685
+V8PROBE   id 1 M 3350.52 L 0.0000e0 L_H 2.1948e-1 L_nuc 2.1948e-1 d_c 0.5885 Munb/M 0.0004 R 19.38 v_r/v 0.2702 T_c 35.374 S_c 7.371 X_H 0.7343 2P/W 1.122 raw Some(Cloud) shown Some(MainSequence) ign Some(true)
+V8PROBE frame step 417 t 5.4059 dt 0.08550 box [224, 120]+[152, 160] objects 1 L_box 1.9376e4 LH_box 0.0000e0 unbound_box 1.775
+V8PROBE   id 1 M 3350.30 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5901 Munb/M 0.0003 R 19.94 v_r/v 0.2766 T_c 33.702 S_c 7.023 X_H 0.7343 2P/W 1.091 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 433 t 5.4901 dt 0.08420 box [224, 120]+[152, 160] objects 1 L_box 1.5832e4 LH_box 0.0000e0 unbound_box 13.659
+V8PROBE   id 1 M 3350.13 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5917 Munb/M 0.0038 R 20.91 v_r/v 0.2835 T_c 32.221 S_c 6.715 X_H 0.7343 2P/W 1.062 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 449 t 5.5744 dt 0.08433 box [216, 120]+[168, 160] objects 1 L_box 1.2933e4 LH_box 0.0000e0 unbound_box 41.703
+V8PROBE   id 1 M 3349.95 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5931 Munb/M 0.0121 R 21.87 v_r/v 0.2882 T_c 30.894 S_c 6.440 X_H 0.7343 2P/W 1.035 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 465 t 5.6605 dt 0.08609 box [216, 112]+[168, 176] objects 1 L_box 1.0479e4 LH_box 0.0000e0 unbound_box 56.315
+V8PROBE   id 1 M 3350.02 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5944 Munb/M 0.0165 R 22.37 v_r/v 0.2880 T_c 29.687 S_c 6.189 X_H 0.7343 2P/W 1.009 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 481 t 5.7479 dt 0.08738 box [208, 112]+[184, 176] objects 1 L_box 8.5013e3 LH_box 0.0000e0 unbound_box 64.767
+V8PROBE   id 1 M 3349.83 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5957 Munb/M 0.0190 R 22.73 v_r/v 0.2852 T_c 28.602 S_c 5.964 X_H 0.7343 2P/W 0.985 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 497 t 5.8373 dt 0.08938 box [208, 112]+[184, 176] objects 1 L_box 6.8630e3 LH_box 0.0000e0 unbound_box 75.432
+V8PROBE   id 1 M 3349.61 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5968 Munb/M 0.0221 R 23.33 v_r/v 0.2825 T_c 27.623 S_c 5.760 X_H 0.7343 2P/W 0.963 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 513 t 5.9281 dt 0.09084 box [208, 104]+[184, 192] objects 1 L_box 5.5245e3 LH_box 0.0000e0 unbound_box 86.434
+V8PROBE   id 1 M 3349.47 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5979 Munb/M 0.0254 R 24.58 v_r/v 0.2822 T_c 26.750 S_c 5.579 X_H 0.7343 2P/W 0.942 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 529 t 6.0207 dt 0.09262 box [200, 104]+[200, 192] objects 1 L_box 4.4475e3 LH_box 0.0000e0 unbound_box 93.272
+V8PROBE   id 1 M 3349.34 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5988 Munb/M 0.0274 R 25.41 v_r/v 0.2779 T_c 25.971 S_c 5.418 X_H 0.7343 2P/W 0.922 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 545 t 6.1155 dt 0.09480 box [200, 104]+[200, 192] objects 1 L_box 3.5558e3 LH_box 0.0000e0 unbound_box 101.779
+V8PROBE   id 1 M 3349.14 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5997 Munb/M 0.0298 R 26.05 v_r/v 0.2713 T_c 25.282 S_c 5.275 X_H 0.7343 2P/W 0.904 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 561 t 6.2124 dt 0.09686 box [200, 96]+[200, 208] objects 1 L_box 2.8311e3 LH_box 0.0000e0 unbound_box 107.325
+V8PROBE   id 1 M 3349.07 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6004 Munb/M 0.0315 R 26.51 v_r/v 0.2626 T_c 24.677 S_c 5.149 X_H 0.7343 2P/W 0.887 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 577 t 6.3113 dt 0.09887 box [192, 96]+[216, 208] objects 1 L_box 2.2460e3 LH_box 0.0000e0 unbound_box 112.667
+V8PROBE   id 1 M 3348.91 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6011 Munb/M 0.0330 R 27.15 v_r/v 0.2538 T_c 24.158 S_c 5.042 X_H 0.7343 2P/W 0.872 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 593 t 6.4122 dt 0.10092 box [192, 96]+[216, 208] objects 1 L_box 1.7702e3 LH_box 0.0000e0 unbound_box 118.168
+V8PROBE   id 1 M 3348.73 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6017 Munb/M 0.0346 R 28.29 v_r/v 0.2462 T_c 23.736 S_c 4.955 X_H 0.7343 2P/W 0.858 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 609 t 6.5148 dt 0.10264 box [192, 88]+[216, 224] objects 1 L_box 1.3877e3 LH_box 0.0000e0 unbound_box 120.957
+V8PROBE   id 1 M 3348.45 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6021 Munb/M 0.0354 R 29.13 v_r/v 0.2362 T_c 23.402 S_c 4.886 X_H 0.7343 2P/W 0.846 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 625 t 6.6188 dt 0.10402 box [184, 88]+[232, 224] objects 1 L_box 1.0730e3 LH_box 0.0000e0 unbound_box 125.703
+V8PROBE   id 1 M 3348.25 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6025 Munb/M 0.0367 R 29.90 v_r/v 0.2251 T_c 23.126 S_c 4.829 X_H 0.7343 2P/W 0.835 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 641 t 6.7243 dt 0.10548 box [184, 88]+[232, 224] objects 1 L_box 8.2074e2 LH_box 0.0000e0 unbound_box 128.201
+V8PROBE   id 1 M 3348.25 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6028 Munb/M 0.0375 R 30.49 v_r/v 0.2127 T_c 22.886 S_c 4.780 X_H 0.7343 2P/W 0.826 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 657 t 6.8313 dt 0.10701 box [184, 80]+[232, 240] objects 1 L_box 6.2866e2 LH_box 0.0000e0 unbound_box 129.465
+V8PROBE   id 1 M 3348.16 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6031 Munb/M 0.0378 R 31.04 v_r/v 0.1997 T_c 22.695 S_c 4.741 X_H 0.7343 2P/W 0.818 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 673 t 6.9401 dt 0.10881 box [176, 80]+[248, 240] objects 1 L_box 4.7009e2 LH_box 0.0000e0 unbound_box 132.151
+V8PROBE   id 1 M 3347.96 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6034 Munb/M 0.0386 R 31.72 v_r/v 0.1864 T_c 22.558 S_c 4.713 X_H 0.7343 2P/W 0.811 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 689 t 7.0507 dt 0.11060 box [176, 80]+[248, 240] objects 1 L_box 3.4423e2 LH_box 0.0000e0 unbound_box 132.974
+V8PROBE   id 1 M 3347.65 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6035 Munb/M 0.0388 R 32.68 v_r/v 0.1733 T_c 22.474 S_c 4.697 X_H 0.7343 2P/W 0.806 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 705 t 7.1635 dt 0.11274 box [176, 72]+[248, 256] objects 1 L_box 2.5597e2 LH_box 0.0000e0 unbound_box 134.348
+V8PROBE   id 1 M 3347.61 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6036 Munb/M 0.0392 R 33.57 v_r/v 0.1595 T_c 22.452 S_c 4.694 X_H 0.7343 2P/W 0.802 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 721 t 7.2785 dt 0.11506 box [168, 72]+[264, 256] objects 1 L_box 1.8912e2 LH_box 0.0000e0 unbound_box 136.075
+V8PROBE   id 1 M 3347.82 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6036 Munb/M 0.0397 R 34.04 v_r/v 0.1442 T_c 22.501 S_c 4.705 X_H 0.7343 2P/W 0.800 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 737 t 7.3957 dt 0.11718 box [168, 64]+[264, 272] objects 1 L_box 1.3948e2 LH_box 0.0000e0 unbound_box 136.268
+V8PROBE   id 1 M 3348.20 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6035 Munb/M 0.0399 R 34.73 v_r/v 0.1292 T_c 22.610 S_c 4.729 X_H 0.7343 2P/W 0.799 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 753 t 7.5151 dt 0.11938 box [168, 64]+[264, 272] objects 1 L_box 1.0391e2 LH_box 0.0000e0 unbound_box 136.751
+V8PROBE   id 1 M 3348.33 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6033 Munb/M 0.0401 R 35.07 v_r/v 0.1132 T_c 22.793 S_c 4.768 X_H 0.7343 2P/W 0.799 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 769 t 7.6366 dt 0.12147 box [160, 64]+[280, 272] objects 1 L_box 7.8294e1 LH_box 0.0000e0 unbound_box 137.266
+V8PROBE   id 1 M 3348.61 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6030 Munb/M 0.0403 R 36.04 v_r/v 0.0982 T_c 23.076 S_c 4.829 X_H 0.7343 2P/W 0.801 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 785 t 7.7604 dt 0.12381 box [160, 56]+[280, 288] objects 1 L_box 5.9150e1 LH_box 0.0000e0 unbound_box 137.703
+V8PROBE   id 1 M 3348.78 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6026 Munb/M 0.0405 R 37.01 v_r/v 0.0828 T_c 23.433 S_c 4.905 X_H 0.7343 2P/W 0.804 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 801 t 7.8864 dt 0.12599 box [160, 56]+[280, 288] objects 1 L_box 4.4973e1 LH_box 0.0000e0 unbound_box 137.582
+V8PROBE   id 1 M 3348.95 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6022 Munb/M 0.0405 R 37.51 v_r/v 0.0671 T_c 23.858 S_c 4.996 X_H 0.7343 2P/W 0.809 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 817 t 8.0145 dt 0.12815 box [152, 56]+[296, 288] objects 1 L_box 3.4211e1 LH_box 0.0000e0 unbound_box 137.920
+V8PROBE   id 1 M 3349.17 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6017 Munb/M 0.0407 R 38.20 v_r/v 0.0518 T_c 24.352 S_c 5.102 X_H 0.7343 2P/W 0.815 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 833 t 8.1448 dt 0.13025 box [152, 48]+[296, 304] objects 1 L_box 2.6311e1 LH_box 0.0000e0 unbound_box 138.853
+V8PROBE   id 1 M 3349.26 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6011 Munb/M 0.0410 R 38.72 v_r/v 0.0369 T_c 24.912 S_c 5.221 X_H 0.7343 2P/W 0.823 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 849 t 8.2772 dt 0.13246 box [144, 48]+[312, 304] objects 1 L_box 1.9890e1 LH_box 0.0000e0 unbound_box 138.663
+V8PROBE   id 1 M 3349.30 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6004 Munb/M 0.0409 R 39.08 v_r/v 0.0226 T_c 25.545 S_c 5.357 X_H 0.7343 2P/W 0.833 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 865 t 8.4118 dt 0.13460 box [144, 48]+[312, 304] objects 1 L_box 1.5548e1 LH_box 0.0000e0 unbound_box 139.050
+V8PROBE   id 1 M 3349.46 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5997 Munb/M 0.0411 R 39.77 v_r/v 0.0094 T_c 26.248 S_c 5.507 X_H 0.7343 2P/W 0.844 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 881 t 8.5483 dt 0.13644 box [144, 40]+[312, 320] objects 1 L_box 1.2663e1 LH_box 0.0000e0 unbound_box 139.893
+V8PROBE   id 1 M 3349.58 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5989 Munb/M 0.0414 R 40.34 v_r/v -0.0026 T_c 27.017 S_c 5.671 X_H 0.7343 2P/W 0.856 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 897 t 8.6864 dt 0.13811 box [136, 40]+[328, 320] objects 1 L_box 1.0604e1 LH_box 0.0000e0 unbound_box 139.443
+V8PROBE   id 1 M 3349.63 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5981 Munb/M 0.0413 R 41.13 v_r/v -0.0131 T_c 27.842 S_c 5.848 X_H 0.7343 2P/W 0.870 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 913 t 8.8259 dt 0.13955 box [136, 32]+[328, 336] objects 1 L_box 8.9195e0 LH_box 0.0000e0 unbound_box 139.917
+V8PROBE   id 1 M 3349.60 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5972 Munb/M 0.0414 R 41.76 v_r/v -0.0220 T_c 28.717 S_c 6.035 X_H 0.7343 2P/W 0.885 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 929 t 8.9667 dt 0.14080 box [128, 32]+[344, 336] objects 1 L_box 7.4174e0 LH_box 0.0000e0 unbound_box 140.140
+V8PROBE   id 1 M 3349.72 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5963 Munb/M 0.0415 R 42.24 v_r/v -0.0286 T_c 29.628 S_c 6.231 X_H 0.7343 2P/W 0.901 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 945 t 9.1090 dt 0.14224 box [128, 32]+[344, 336] objects 1 L_box 6.1625e0 LH_box 0.0000e0 unbound_box 140.012
+V8PROBE   id 1 M 3349.78 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5954 Munb/M 0.0415 R 42.52 v_r/v -0.0328 T_c 30.565 S_c 6.432 X_H 0.7343 2P/W 0.918 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 961 t 9.2528 dt 0.14387 box [128, 24]+[344, 352] objects 1 L_box 5.1234e0 LH_box 0.0000e0 unbound_box 140.638
+V8PROBE   id 1 M 3349.81 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5946 Munb/M 0.0417 R 42.80 v_r/v -0.0344 T_c 31.512 S_c 6.636 X_H 0.7343 2P/W 0.935 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 977 t 9.3981 dt 0.14524 box [120, 24]+[360, 352] objects 1 L_box 4.2512e0 LH_box 0.0000e0 unbound_box 140.432
+V8PROBE   id 1 M 3349.62 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5938 Munb/M 0.0416 R 43.14 v_r/v -0.0333 T_c 32.446 S_c 6.837 X_H 0.7343 2P/W 0.953 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 993 t 9.5450 dt 0.14694 box [120, 16]+[360, 368] objects 1 L_box 3.6527e0 LH_box 0.0000e0 unbound_box 140.565
+V8PROBE   id 1 M 3349.77 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5930 Munb/M 0.0416 R 43.59 v_r/v -0.0290 T_c 33.337 S_c 7.030 X_H 0.7343 2P/W 0.970 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1009 t 9.6936 dt 0.14857 box [112, 16]+[376, 368] objects 1 L_box 3.1362e0 LH_box 0.0000e0 unbound_box 141.200
+V8PROBE   id 1 M 3349.74 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5923 Munb/M 0.0418 R 43.92 v_r/v -0.0218 T_c 34.161 S_c 7.209 X_H 0.7343 2P/W 0.987 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1025 t 9.8436 dt 0.15007 box [112, 8]+[376, 384] objects 1 L_box 2.6999e0 LH_box 0.0000e0 unbound_box 140.723
+V8PROBE   id 1 M 3349.61 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5917 Munb/M 0.0416 R 44.55 v_r/v -0.0115 T_c 34.898 S_c 7.370 X_H 0.7343 2P/W 1.003 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1041 t 9.9954 dt 0.15178 box [112, 8]+[376, 384] objects 1 L_box 2.3004e0 LH_box 0.0000e0 unbound_box 141.048
+V8PROBE   id 1 M 3349.05 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5912 Munb/M 0.0416 R 44.86 v_r/v 0.0014 T_c 35.522 S_c 7.506 X_H 0.7343 2P/W 1.017 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1057 t 10.1490 dt 0.15358 box [104, 8]+[392, 384] objects 1 L_box 1.9152e0 LH_box 0.0000e0 unbound_box 140.970
+V8PROBE   id 1 M 3348.71 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5909 Munb/M 0.0415 R 45.26 v_r/v 0.0171 T_c 36.001 S_c 7.612 X_H 0.7343 2P/W 1.030 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1073 t 10.3044 dt 0.15540 box [104, 0]+[392, 400] objects 1 L_box 1.5624e0 LH_box 0.0000e0 unbound_box 141.064
+V8PROBE   id 1 M 3348.03 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5907 Munb/M 0.0413 R 45.32 v_r/v 0.0346 T_c 36.327 S_c 7.687 X_H 0.7343 2P/W 1.040 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1089 t 10.4616 dt 0.15720 box [96, 0]+[408, 400] objects 1 L_box 1.3481e0 LH_box 0.0000e0 unbound_box 141.632
+V8PROBE   id 1 M 3347.49 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5907 Munb/M 0.0413 R 45.38 v_r/v 0.0535 T_c 36.511 S_c 7.731 X_H 0.7343 2P/W 1.047 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1105 t 10.6205 dt 0.15895 box [96, 0]+[408, 400] objects 1 L_box 1.0452e0 LH_box 0.0000e0 unbound_box 141.365
+V8PROBE   id 1 M 3346.77 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5908 Munb/M 0.0410 R 45.40 v_r/v 0.0730 T_c 36.532 S_c 7.742 X_H 0.7343 2P/W 1.051 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1121 t 10.7815 dt 0.16093 box [88, 0]+[424, 400] objects 1 L_box 8.0018e-1 LH_box 0.0000e0 unbound_box 141.711
+V8PROBE   id 1 M 3345.86 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5911 Munb/M 0.0409 R 45.41 v_r/v 0.0923 T_c 36.384 S_c 7.716 X_H 0.7343 2P/W 1.051 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1137 t 10.9446 dt 0.16316 box [88, 0]+[424, 400] objects 1 L_box 5.8035e-1 LH_box 0.0000e0 unbound_box 141.480
+V8PROBE   id 1 M 3345.30 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5916 Munb/M 0.0407 R 45.43 v_r/v 0.1111 T_c 36.038 S_c 7.648 X_H 0.7343 2P/W 1.049 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1153 t 11.1102 dt 0.16552 box [88, 0]+[424, 400] objects 1 L_box 4.4169e-1 LH_box 0.0000e0 unbound_box 141.555
+V8PROBE   id 1 M 3344.61 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5923 Munb/M 0.0405 R 45.40 v_r/v 0.1281 T_c 35.517 S_c 7.543 X_H 0.7343 2P/W 1.043 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1169 t 11.2778 dt 0.16766 box [80, 0]+[440, 400] objects 1 L_box 3.1056e-1 LH_box 0.0000e0 unbound_box 141.697
+V8PROBE   id 1 M 3343.44 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5930 Munb/M 0.0402 R 45.33 v_r/v 0.1426 T_c 34.896 S_c 7.416 X_H 0.7343 2P/W 1.035 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1185 t 11.4477 dt 0.16987 box [80, 0]+[440, 400] objects 1 L_box 2.0637e-1 LH_box 0.0000e0 unbound_box 141.721
+V8PROBE   id 1 M 3342.66 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5938 Munb/M 0.0400 R 45.27 v_r/v 0.1547 T_c 34.228 S_c 7.279 X_H 0.7343 2P/W 1.024 raw Some(Cloud) shown Some(Cloud) ign Some(true)
+V8PROBE frame step 1200 t 11.6076 dt 0.15994 box [80, 0]+[440, 400] objects 1 L_box 1.6815e-1 LH_box 0.0000e0 unbound_box 141.973
+V8PROBE   id 1 M 3341.39 L 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5947 Munb/M 0.0397 R 44.62 v_r/v 0.1619 T_c 33.511 S_c 7.131 X_H 0.7343 2P/W 1.014 raw Some(Cloud) shown Some(Cloud) ign Some(true)

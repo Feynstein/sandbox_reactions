@@ -1,0 +1,73 @@
+==== 2026-10-16T12:05:52-04:00 collapse · clean · a fresh scratch copy of the tree
+== 2026-10-16T12:05:52-04:00 collapse · task M0-V8 · box laserax-ai :: bash tests/gpu.sh collapse physics
+-- collapse · exit=0 · 32.18 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-qgas4ipt/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-qgas4ipt/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 14.79s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-COLL gpu: t = 2.53764 (0.80247 t_ff), r50/r50(0) = 0.53128, homologous 0.52428, error +1.335 % (73 steps in the run; SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA)
+ok
+test collapse::gpu_half_mass_radius_at_half_the_free_fall_time ... SR-COLL gpu: t = 1.60979 (0.50906 t_ff), r50/r50(0) = 0.83165, homologous 0.83045, error +0.145 % (73 steps in the run; SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA)
+ok
+test collapse::the_oracle_gives_the_contracts_numbers ... ok
+test collapse::the_scene_is_a_cold_maclaurin_disk_with_only_the_cold_pressure_off ... SR-COLL scene: 5024 cells, mass 3351.648 (2πΣc a²/3 = 3351.032), t_ff 3.1623
+ok
+test collapse::twin_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-COLL twin: t = 2.52982 (0.80000 t_ff), r50/r50(0) = 0.53504, homologous 0.52796, error +1.340 % (74 steps in the run)
+ok
+test collapse::twin_half_mass_radius_at_half_the_free_fall_time ... SR-COLL twin: t = 1.58114 (0.50000 t_ff), r50/r50(0) = 0.83822, homologous 0.83681, error +0.169 % (74 steps in the run)
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 267 filtered out; finished in 2.42s
+
+
+==== 2026-10-16T12:05:52-04:00 collapse · plant grav-half · a fresh scratch copy of the tree
+planted grav-half: tests/plants/grav-half.patch -> crates/sr-physics/src/reference/hydro.rs, crates/sr-engine/shaders/hydro.wgsl
+== 2026-10-16T12:05:52-04:00 collapse · task M0-V8 · box laserax-ai :: bash tests/gpu.sh collapse physics
+-- collapse · exit=101 · 14.88 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-qgas4ipt/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-qgas4ipt/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 13.89s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 6 tests
+test collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-COLL gpu: t = 2.53649 (0.80211 t_ff), r50/r50(0) = 0.78794, homologous 0.52482, error +50.135 % (36 steps in the run; SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA)
+
+thread 'collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time' (2180845) panicked at crates/sr-engine/tests/gpu/collapse.rs:143:5:
+gpu: r50 ratio 0.7879377366042231 against 0.5248199040029634 at 0.8021101309095212 t_ff: 50.135 % > 3 %
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test collapse::gpu_half_mass_radius_at_half_the_free_fall_time ... SR-COLL gpu: t = 1.61035 (0.50924 t_ff), r50/r50(0) = 0.91842, homologous 0.83032, error +10.610 % (36 steps in the run; SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA)
+
+thread 'collapse::gpu_half_mass_radius_at_half_the_free_fall_time' (2180872) panicked at crates/sr-engine/tests/gpu/collapse.rs:143:5:
+gpu: r50 ratio 0.9184232060654389 against 0.8303220915346042 at 0.5092381916478405 t_ff: 10.610 % > 3 %
+FAILED
+test collapse::the_oracle_gives_the_contracts_numbers ... ok
+test collapse::the_scene_is_a_cold_maclaurin_disk_with_only_the_cold_pressure_off ... SR-COLL scene: 5024 cells, mass 3351.648 (2πΣc a²/3 = 3351.032), t_ff 3.1623
+ok
+test collapse::twin_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-COLL twin: t = 2.52982 (0.80000 t_ff), r50/r50(0) = 0.78927, homologous 0.52796, error +49.493 % (37 steps in the run)
+
+thread 'collapse::twin_half_mass_radius_at_0_8_of_the_free_fall_time' (2180875) panicked at crates/sr-engine/tests/gpu/collapse.rs:143:5:
+twin: r50 ratio 0.7892677959425254 against 0.5279639105098981 at 0.8000000000000002 t_ff: 49.493 % > 3 %
+FAILED
+test collapse::twin_half_mass_radius_at_half_the_free_fall_time ... SR-COLL twin: t = 1.58114 (0.50000 t_ff), r50/r50(0) = 0.92129, homologous 0.83681, error +10.096 % (37 steps in the run)
+
+thread 'collapse::twin_half_mass_radius_at_half_the_free_fall_time' (2180879) panicked at crates/sr-engine/tests/gpu/collapse.rs:143:5:
+twin: r50 ratio 0.9212893451431452 against 0.8368060145916074 at 0.5 t_ff: 10.096 % > 3 %
+FAILED
+
+failures:
+
+failures:
+    collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time
+    collapse::gpu_half_mass_radius_at_half_the_free_fall_time
+    collapse::twin_half_mass_radius_at_0_8_of_the_free_fall_time
+    collapse::twin_half_mass_radius_at_half_the_free_fall_time
+
+test result: FAILED. 2 passed; 4 failed; 0 ignored; 0 measured; 267 filtered out; finished in 0.87s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

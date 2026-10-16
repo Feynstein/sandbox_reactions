@@ -1,0 +1,156 @@
+# M0-TM8 — rating pass, linux-pc (laserax-ai), 2026-10-16T10:49:15-04:00
+## rung_record.py now (launch prompt): model=claude-opus-5-5 level=max plugin=installed
+## plan.py status M0-TM8 IN PROGRESS
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+## the probe (PLAYBOOK §B.3)
+CLAUDECODE=1
+CLAUDE_EFFORT=xhigh
+AI_AGENT=claude-code_2-1-301_agent
+## shared/models.md and SKILL.md across the bundles on disk
+/tmp/claude-1000/bundled-skills/2.1.301/
+2.1.301 models.md(LF) c1af1f093d46fd58e50ef3e8e28d339650f333059bfc49a63d01d0175675161b · SKILL.md(LF) absent
+## rung_record.py report (linux-pc)
+report: 159 DONE blocks · 12 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 68 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 4 D block(s) naming no cause in the record · $401.66 read from the sessions' own cost
+BUILD on Opus 5.5, high: 55 block(s) · first-try 31/51 · $6.50 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 51 block(s) · first-try 36/49 · $1.98 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 13 block(s) · first-try 11/13 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 8 block(s) · first-try 6/8 · $1.06 per DONE block · n<10
+BUILD·E on Opus 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 2 block(s) · first-try 2/2 · $0.34 per DONE block · n<10
+CHECK on Opus 5.5, max: 7 block(s) · first-try 7/7 · $17.98 per DONE block · above (usual)
+MOVE on Haiku 5.5, high: 3 block(s) · first-try 3/3 · $0.17 per DONE block · n<10
+MOVE on Sonnet 5.5, medium: 1 block(s) · first-try n/a · $0.27 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 15 block(s) · first-try 9/12 · $12.24 per DONE block · above (usual)
+=== GO ===
+exit=0
+## Models: line re-dated and re-cited (file-edit tool, one edit); lint
+lint: checks=553 failed=0 warnings=6 · blocks=234 · flow_rows=234 · verify_fences=0 · history=0 · flow=per-task · header=558/600 · pipeline=9/60 · ladder=7 rungs · refresh=9/5
+WARN: M0-TC6: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-D45: DONE outside the current phase and 40 lines long - stub it (§2.6)
+WARN: M0-D46: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-TM7: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D47: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-D48: DONE outside the current phase and 36 lines long - stub it (§2.6)
+=== GO ===
+exit=0
+## plan.py register --set Model ratings=2026-10-16 by M0-TM8; lint
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+exit=0
+lint: checks=553 failed=0 warnings=6 · blocks=234 · flow_rows=234 · verify_fences=0 · history=0 · flow=per-task · header=558/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC6: DONE outside the current phase and 12 lines long - stub it (§2.6)
+## checkdiff.py — mutant (a rating changed, a ' · switch' dropped, a Read: line edited): must be NO-GO
+  models   - Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haik
+           + Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haik
+  register - - Model ratings: 2026-10-15 by M0-TM7
+           + - Model ratings: 2026-10-16 by M0-TM8
+  rating   - ## M0-T65 · The calibration file, its physics hash and the refusal (G-CAL) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V8)
+           + ## M0-T65 · The calibration file, its physics hash and the refusal (G-CAL) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V8)
+  other    - ## M0-T66 · The `calibrate` command and items 1–2 — the cold ceilings · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T65)
+           + ## M0-T66 · The `calibrate` command and items 1–2 — the cold ceilings · **BUILD** · Sonnet 5.5, high · (AFTER M0-T65)
+  other    - - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.1 (K9), §2.3.2, §5.1 (G-CORE),
+           + - Read: MUTATED this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.1 (K9), §2.3.2, §5.1 (G-CORE),
+checkdiff: rating=1 · models=1 · register=1 · own=0 · other=2
+=== NO-GO: 2 line(s) outside rating segments, the Models: line, the register's line and the block's own lines ===
+exit=1
+## checkdiff.py — the control (the Models: line alone, from the pre-edit snapshot with only that line changed)
+  models   - Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haik
+           + Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haik
+checkdiff: rating=0 · models=1 · register=0 · own=0 · other=0
+=== GO ===
+exit=0
+## checkdiff.py — the plan now against the post-status snapshot
+  models   - Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haik
+           + Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haik
+  register - - Model ratings: 2026-10-15 by M0-TM7
+           + - Model ratings: 2026-10-16 by M0-TM8
+checkdiff: rating=0 · models=1 · register=1 · own=0 · other=0
+=== GO ===
+exit=0
+## checkdiff.py — the plan now against the pre-status snapshot (the start)
+checkdiff: rating=0 · models=1 · register=1 · own=2 · other=0
+=== GO ===
+## the claim run: verify.py --changed --task M0-TM8 (2026-10-16T10:55:29-04:00)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint        553/0/0      0.11 s  GO
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build            NOT RUN (not impacted: its 95 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+burn_cell        NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+burn_order       NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+neutrino         NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+sink             NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+nu_heat          NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+summary          NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+ledger           NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+preset_cloud     NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+observe_run      NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+objects          NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+classify         NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+sod              NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+edges            NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+collapse         NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+jeans            NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+twin             NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+cpu_gpu          NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+heat_limiter     NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+heat_stiff       NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+radiation_force  NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+grav_force       NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+grav_selfforce   NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+fft              NOT RUN (not impacted: its 88 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter          NOT RUN (not impacted: its 68 path(s) checked at the anchor)
+state            NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+booking          NOT RUN (not impacted: its 68 path(s) checked at the anchor)
+floors           NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+dt               NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+box              NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+latch            NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+timing           NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+scene            NOT RUN (not impacted: its 107 path(s) checked at the anchor)
+dump             NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+boot             NOT RUN (not impacted: its 100 path(s) checked at the anchor)
+desktop          NOT RUN (not impacted: its 82 path(s) checked at the anchor)
+web              NOT RUN (not impacted: its 86 path(s) checked at the anchor)
+capture          NOT RUN (not impacted: its 77 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TM8.<scope>.log · record: loop_times.jsonl · tree 60dc024b5d2e+a700e9c00625
+anchor: 1 path×scope entries moved by this run
+anchor: 225 paths checked · 192 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 225 covered of 417 visible
+skipped   184  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 553 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 51 not impacted · 0.12 s + loop 0.07 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 43.16->43.16 · base: M0-TM8's start 2026-10-16T10:48:13-04:00
+=== GO ===
+exit=0
+## plan.py close M0-TM8 --status DONE (2026-10-16T10:58:35-04:00)
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+exit=0
+## after the close: checkdiff.py against the post-status snapshot
+checkdiff: rating=0 · models=1 · register=1 · own=3 · other=0
+=== GO ===
+## after the close: checkdiff.py against the start's snapshot
+checkdiff: rating=0 · models=1 · register=1 · own=3 · other=0
+=== GO ===
+## after the close: lint
+lint: checks=552 failed=0 warnings=6 · blocks=234 · flow_rows=234 · verify_fences=0 · history=0 · flow=per-task · header=558/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+=== GO ===
+## after the close: plan_lint re-verified scoped (§4 Rule 4 step 7)
+anchor: 225 paths checked · 193 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 225 covered of 418 visible
+verify: 552 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 31.05->31.05
+=== GO ===
+exit=0

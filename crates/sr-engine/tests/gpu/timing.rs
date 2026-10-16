@@ -64,11 +64,14 @@ fn recorded(step: &Step) -> Vec<Pass> {
     Pass::ORDER.iter().copied().filter(|&p| p == Pass::Edits || counts[p as usize] > 0).collect()
 }
 
-/// A GPU-timed cost: `steps` steps, every recorded pass positive and finite, no other pass, the sum within 40 %.
+/// A GPU-timed cost: `steps` steps ended (a step whose P5 carries over submissions records again, so the recordings
+/// are printed, not asserted; a batch longer than the query set times only its first recordings), every recorded pass
+/// positive and finite, no other pass, the sum within 40 %.
 fn check_timed(cost: &StepCost, passes: &[Pass], steps: u32, what: &str) {
     println!("{what}: {cost:?}");
+    println!("{what}: {} steps recorded for {} ended", cost.steps, cost.ended);
     assert_eq!(cost.source, CostSource::GpuTimestamp, "{what}: the source");
-    assert_eq!(cost.steps, steps, "{what}: steps timed");
+    assert_eq!(cost.ended, steps, "{what}: steps ended");
     assert!(cost.step_ms.is_finite() && cost.step_ms > 0.0, "{what}: step_ms {}", cost.step_ms);
     let mut sum = 0.0;
     for p in Pass::ORDER {
@@ -164,7 +167,7 @@ fn a_frame_longer_than_the_query_set_times_its_first_whole_steps() {
     assert_eq!(r.steps_run, FRAME);
     let cost = r.cost.expect("a cost");
     assert!(cost.steps < FRAME && cost.steps + 2 >= fits && cost.steps <= fits + 2, "{} steps timed, ≈ {fits} fit", cost.steps);
-    check_timed(&cost, &passes, cost.steps, &format!("a {FRAME}-step frame"));
+    check_timed(&cost, &passes, FRAME, &format!("a {FRAME}-step frame"));
     assert!(cost.frame_ms.is_some_and(|ms| ms > 0.0), "frame end still timed: {cost:?}");
     let next = frame(&gpu, &step, 10).cost.expect("a cost");
     check_timed(&next, &passes, 10, "the next frame starts a fresh query set");

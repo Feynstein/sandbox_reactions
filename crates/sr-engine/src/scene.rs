@@ -16,6 +16,7 @@ use std::path::Path;
 
 use serde_json::{Map, Value};
 use sr_physics::eos::Eos;
+use sr_physics::reference::grav::Gravity;
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::state::{WorldConfig, N_CHANNELS, SPECIES};
@@ -29,6 +30,10 @@ pub const SUN_MIX: [f64; N_SPECIES] = [0.7346, 0.2485, 0.0092, 0.0077, 0.0, 0.0,
 /// §2.1: the nominal cloud has Σc = 1 at radius a = 40 cells.
 const SUN_SIGMA_C: f64 = 1.0;
 const SUN_RADIUS: f64 = 40.0;
+/// §2.10: a preset cloud never grows past this radius; its Σc grows instead.
+pub const MAX_RADIUS: f64 = 150.0;
+/// §2.1's unit mass M₀ = 2πΣc a²/3 (≈ 3,351): the nominal cloud's, and what a preset loads until calibration.
+pub const UNIT_MASS: f64 = 2.0 * std::f64::consts::PI * SUN_SIGMA_C * SUN_RADIUS * SUN_RADIUS / 3.0;
 /// §2.10: the uniform temperature is set so that U_th = 0.1 |W|.
 const THERMAL_OVER_W: f64 = 0.1;
 /// A composition's fractions must sum to 1 within this.
@@ -106,8 +111,9 @@ pub struct Gas {
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum Object {
-    /// The nominal Sun-like disk (§2.1, §2.10) centred at (x, y), whatever the preset, until M0-T74.
-    Preset { preset: String, x: f64, y: f64 },
+    /// The preset cloud (§2.10) of `mass` centred at (x, y); a scene file's is the nominal [`UNIT_MASS`], whatever the
+    /// preset, until M0-T74.
+    Preset { preset: String, x: f64, y: f64, mass: f64 },
     /// A Maclaurin disk Σ(r) = Σc √(1 − r²/a²) inside r < a.
     Disk { x: f64, y: f64, a: f64, sigma_c: f64, gas: Gas },
     /// A uniform Σ over w × h cells from (x0, y0).
@@ -241,7 +247,7 @@ fn parse_object(value: &Value, at: &str, elements: &Elements) -> Result<Object, 
             if !PRESETS.contains(&name) {
                 return Err(format!("{}: unknown preset {name:?} (known: {})", f.path("preset"), PRESETS.join(", ")));
             }
-            Object::Preset { preset: name.to_string(), x: f.required("x")?, y: f.required("y")? }
+            Object::Preset { preset: name.to_string(), x: f.required("x")?, y: f.required("y")?, mass: UNIT_MASS }
         }
         Some("disk") => {
             let f = Fields::new(value, at, &["kind", "x", "y", "a", "sigma_c", "t", "pressure", "composition", "v"])?;
@@ -265,6 +271,14 @@ fn parse_object(value: &Value, at: &str, elements: &Elements) -> Result<Object, 
 impl Scene {
     /// The scene `--scene preset:<name>` stands for: one preset at the world's centre, everything else as a new game.
     pub fn preset(name: &str, world: WorldConfig) -> Result<Scene, String> {
+        Scene::preset_mass(name, UNIT_MASS, world)
+    }
+
+    /// [`Scene::preset`] with the cloud's mass given, in sandbox units (§2.10; the calibrated `preset_mass_sb`).
+    pub fn preset_mass(name: &str, mass: f64, world: WorldConfig) -> Result<Scene, String> {
+        if !(mass.is_finite() && mass > 0.0) {
+            return Err(format!("preset {name}: the mass must be a finite number > 0, got {mass}"));
+        }
         if !PRESETS.contains(&name) {
             return Err(format!("unknown preset {name:?} (known: {})", PRESETS.join(", ")));
         }
@@ -275,7 +289,7 @@ impl Scene {
             slowdown: true,
             switches: Switches::default(),
             test: TestSettings::default(),
-            objects: vec![Object::Preset { preset: name.to_string(), x, y }],
+            objects: vec![Object::Preset { preset: name.to_string(), x, y, mass }],
             overrides: Vec::new(),
         })
     }
@@ -397,7 +411,7 @@ impl Scene {
                 continue;
             }
             let gas = match object {
-                Object::Preset { .. } => sun_gas(&cells, elements),
+                Object::Preset { .. } => sun_gas(&cells, physics, elements)?,
                 Object::Disk { gas, .. } | Object::Rect { gas, .. } => *gas,
             };
             let comp = elements.composition(&gas.composition);
@@ -472,24 +486,23 @@ impl Sums {
 
 /// The cells an object covers in a w × h world, shifted by `shift`, with its Σ there: (x, y, Σ).
 fn cells_of(object: &Object, shift: [i64; 2], w: usize, h: usize) -> Vec<(usize, usize, f64)> {
-    let disk = |x: f64, y: f64, a: f64, sigma_c: f64| {
-        let (x, y) = (x + shift[0] as f64, y + shift[1] as f64);
-        let clamp = |v: f64, n: usize| v.clamp(0.0, n as f64) as usize;
-        let mut cells = Vec::new();
-        for j in clamp((y - a).floor(), h)..clamp((y + a).ceil(), h) {
-            for i in clamp((x - a).floor(), w)..clamp((x + a).ceil(), w) {
-                let (dx, dy) = (i as f64 + 0.5 - x, j as f64 + 0.5 - y);
-                let r2 = (dx * dx + dy * dy) / (a * a);
-                if r2 < 1.0 {
-                    cells.push((i, j, sigma_c * (1.0 - r2).sqrt()));
-                }
-            }
-        }
-        cells
-    };
+    let shifted = |x: f64, y: f64| (x + shift[0] as f64, y + shift[1] as f64);
     match *object {
-        Object::Preset { x, y, .. } => disk(x, y, SUN_RADIUS, SUN_SIGMA_C),
-        Object::Disk { x, y, a, sigma_c, .. } => disk(x, y, a, sigma_c),
+        Object::Preset { x, y, mass, .. } => {
+            let CloudShape { a, sigma_c } = cloud_shape(mass);
+            let (x, y) = shifted(x, y);
+            // The cells sample the profile at their centres, so their sum is not exactly M (off by up to 2√2 a^-3/2 of
+            // it): every cell scaled so the whole cloud, wherever the world clips it, holds the mass it is named for.
+            let whole: f64 = disk_samples(x, y, a, sigma_c).map(|c| c.2).sum();
+            let k = if whole > 0.0 { mass / whole } else { 1.0 };
+            let mut cells = disk_cells(x, y, a, sigma_c, w, h);
+            cells.iter_mut().for_each(|c| c.2 *= k);
+            cells
+        }
+        Object::Disk { x, y, a, sigma_c, .. } => {
+            let (x, y) = shifted(x, y);
+            disk_cells(x, y, a, sigma_c, w, h)
+        }
         Object::Rect { x0, y0, w: rw, h: rh, sigma, .. } => {
             let span = |start: i64, len: i64, n: usize| {
                 (start.clamp(0, n as i64) as usize)..((start + len).clamp(0, n as i64) as usize)
@@ -500,25 +513,61 @@ fn cells_of(object: &Object, shift: [i64; 2], w: usize, h: usize) -> Vec<(usize,
     }
 }
 
+/// Σ of a Maclaurin disk Σ(r) = Σc √(1 − r²/a²) about (x, y) at the centre of each cell it covers: (i, j, Σ) over the
+/// whole plane, indices signed.
+fn disk_samples(x: f64, y: f64, a: f64, sigma_c: f64) -> impl Iterator<Item = (i64, i64, f64)> {
+    let (j0, j1, i0, i1) = ((y - a).floor() as i64, (y + a).ceil() as i64, (x - a).floor() as i64, (x + a).ceil() as i64);
+    (j0..j1).flat_map(move |j| {
+        (i0..i1).filter_map(move |i| {
+            let (dx, dy) = (i as f64 + 0.5 - x, j as f64 + 0.5 - y);
+            let r2 = (dx * dx + dy * dy) / (a * a);
+            (r2 < 1.0).then(|| (i, j, sigma_c * (1.0 - r2).sqrt()))
+        })
+    })
+}
+
+/// [`disk_samples`] clipped to a `w` × `h` world.
+fn disk_cells(x: f64, y: f64, a: f64, sigma_c: f64, w: usize, h: usize) -> Vec<(usize, usize, f64)> {
+    disk_samples(x, y, a, sigma_c)
+        .filter(|&(i, j, _)| i >= 0 && j >= 0 && (i as usize) < w && (j as usize) < h)
+        .map(|(i, j, m)| (i as usize, j as usize, m))
+        .collect()
+}
+
+/// The preset cloud's Maclaurin profile (§2.10): radius a and central Σc.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct CloudShape {
+    pub a: f64,
+    pub sigma_c: f64,
+}
+
+/// §2.10's cloud of mass `mass` (sandbox units): a = 40 √(M/M₀) cells, capped at [`MAX_RADIUS`], and Σc = 3M/(2π a²)
+/// (§2.1) — 1 at M₀ and growing once the cap holds the radius.
+pub fn cloud_shape(mass: f64) -> CloudShape {
+    let a = (SUN_RADIUS * (mass / UNIT_MASS).sqrt()).min(MAX_RADIUS);
+    CloudShape { a, sigma_c: 3.0 * mass / (2.0 * std::f64::consts::PI * a * a) }
+}
+
 /// The preset's gas (§2.10): the Sun's mix, at rest, at the uniform temperature that makes U_th = Σ m ε_th = 0.1 |W|
-/// over its own cells, W = ½ Σ m φ by §1.4.2's kernel (a cell's own term −4 ln(1 + √2), else −1/r).
-fn sun_gas(cells: &[(usize, usize, f64)], elements: &Elements) -> Gas {
-    let self_term = -4.0 * (1.0 + 2f64.sqrt()).ln();
-    let (mut w_sum, mut mass) = (0.0, 0.0);
-    for &(xi, yi, mi) in cells {
-        let phi: f64 = cells
-            .iter()
-            .map(|&(xj, yj, mj)| {
-                let r = ((xi as f64 - xj as f64).powi(2) + (yi as f64 - yj as f64).powi(2)).sqrt();
-                mj * if r == 0.0 { self_term } else { -1.0 / r }
-            })
-            .sum();
-        w_sum += 0.5 * mi * phi;
-        mass += mi;
+/// over its own cells. W = ½ Σ m φ is the grid's own: φ is one solve of §1.4.2's kernel over the cloud's cells, vacuum
+/// (Σ < σ_vac) no source, as P2 solves it — never the Maclaurin disk's closed form, which the grid's W differs from.
+fn sun_gas(cells: &[(usize, usize, f64)], physics: &Physics, elements: &Elements) -> Result<Gas, String> {
+    let sigma_vac = physics.get("sigma_vac").ok_or("physics.json has no sigma_vac")?;
+    let (x0, x1) = cells.iter().fold((usize::MAX, 0), |(lo, hi), c| (lo.min(c.0), hi.max(c.0)));
+    let (y0, y1) = cells.iter().fold((usize::MAX, 0), |(lo, hi), c| (lo.min(c.1), hi.max(c.1)));
+    let (bw, bh) = (x1 - x0 + 1, y1 - y0 + 1);
+    let mut source = vec![0.0; bw * bh];
+    for &(x, y, m) in cells {
+        if m >= sigma_vac {
+            source[(y - y0) * bw + (x - x0)] = m;
+        }
     }
+    let phi = Gravity::new(1.0).potential(&source, bw, bh).map_err(|e| e.to_string())?;
+    let w_sum: f64 = 0.5 * source.iter().zip(&phi).map(|(m, p)| m * p).sum::<f64>();
+    let mass: f64 = cells.iter().map(|c| c.2).sum();
     let eps_th = THERMAL_OVER_W * w_sum.abs() / mass;
     let mu = 1.0 / elements.composition(&SUN_MIX).inv_mu;
-    Gas { heat: Heat::T(mu * eps_th), composition: SUN_MIX, v: [0.0, 0.0] }
+    Ok(Gas { heat: Heat::T(mu * eps_th), composition: SUN_MIX, v: [0.0, 0.0] })
 }
 
 /// The nominal Sun-like disk alone, centred in `world`, with the shipped constants — the `preset:sun` scene's planes.

@@ -1,0 +1,6 @@
+preset_cloud  5/0/0      148.13 s  GO
+logs: milestones/m0/logs/M0-T61.<scope>.log · record: loop_times.jsonl · tree 60dc024b5d2e+476cd351128a
+anchor: 89 path×scope entries moved by this run
+anchor: 218 paths checked · 190 skipped (3 classes) · 1 never checked · 3 stale · 0 unclassified · 0 owed · 222 covered of 412 visible
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 148.14 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 76.89->209.78
+=== GO ===

@@ -1,0 +1,32 @@
+    Finished `release` profile [optimized] target(s) in 0.10s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 5 tests
+test jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-JEANS end: step 159, t = 3.1925, Σ_max 110.440: 1 object(s) of mass 3351.6 (at most 1 in any summary); largest secondary peak 0.0000 of Σ_max at the end, 1.0000 in any summary
+ok
+test jeans::the_collapse_reaches_a_hundred_times_the_central_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.1287 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   2.2325: Σmax    2.608, J 0.1265 at (62, 65), 1 object(s) of mass 3351.6, secondary peak 0.9586 of Σmax
+SR-JEANS step   147 t   3.1186: Σmax   40.170, J 0.1165 at (63, 63), 1 object(s) of mass 3351.6, secondary peak 0.0000 of Σmax
+SR-JEANS step   159 t   3.1925: Σmax  110.440, J 0.1117 at (63, 63), 1 object(s) of mass 3351.6, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 110.440 after 159 steps, t = 3.1925 (start 0.9998, target 100.0); 27 summaries
+ok
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 0.1287 (bound 0.25) at step 0, t = 0.0000, cell (63, 63), Σ_max then 1.014; over 27 summaries
+ok
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+ok
+test jeans::the_scene_is_the_disk_cloud_with_a_tenth_of_w_in_heat_and_a_deterministic_one_percent_ripple ... 
+thread 'jeans::the_scene_is_the_disk_cloud_with_a_tenth_of_w_in_heat_and_a_deterministic_one_percent_ripple' (1431958) panicked at crates/sr-engine/tests/gpu/jeans.rs:263:5:
+the shipped constants: [("k1e", 0.0), ("k1n", 0.0), ("k2e", 0.0), ("k2n", 0.0)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    jeans::the_scene_is_the_disk_cloud_with_a_tenth_of_w_in_heat_and_a_deterministic_one_percent_ripple
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 268 filtered out; finished in 0.65s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

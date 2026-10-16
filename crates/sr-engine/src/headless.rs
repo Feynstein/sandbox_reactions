@@ -1,8 +1,13 @@
 //! `sandbox-reactions headless` (m0_contrat.md §3.3, §6.3): load a scene, run N steps on a surfaceless device, write the
 //! run summary (§2.12.2). Today: `--scene` reads a scene file or `preset:<name>` through [`crate::scene`] (M0-T25; every
 //! preset is the nominal Sun-like disk until M0-T74), `--world` and `--edge` stand over the scene's `world`, `--steps N`
-//! runs [`Step`] N times and `--timing` adds the steps' cost (M0-T23); `--until`, the ledger, events and objects arrive
-//! with their blocks. Of the scene's switches, `gravity` turns P2 on (M0-T31), `hydro` P4 (M0-T34) under the run's edge
+//! runs [`Step`] N times and `--timing` adds the steps' cost (M0-T23); the ledger (§2.9, [`crate::ledger`], M0-T57) is
+//! sampled after every chunk of steps and written as summary.json's `ledger`. The observers ([`crate::watch`], M0-T60) read
+//! the same summary after every chunk — a frame: objects, stages, events and `ending` — and write summary.json's `events`
+//! and `objects` and DIR/events.jsonl; `--until sim_time:<t> | event:<kind> | stage:<id> | ending` stops the run at the frame
+//! whose summary meets it (`sim_time` at the first step past `t`; the others up to one frame of [`FRAME`] steps past the
+//! step they first held — with `--until` a frame is that long, without it a chunk is [`CHUNK`]), `--max-steps` bounding it (exit 2, `until=unmet`). The ledger starts after the run's first step (the box and
+//! φ exist only then), so that step is a chunk of its own. Of the scene's switches, `gravity` turns P2 on (M0-T31), `hydro` P4 (M0-T34) under the run's edge
 //! mode (M0-T35) and `heat` P5 with the scene's `test` flags (M0-T42; a step whose implicit P5 hit its ceiling prints
 //! `SR-WARN heat unconverged step <n> passes <k> rounds <r>` — read at the last step of each submission, M0-T119; every
 //! step's is M0-T121's) and `reactions` P6 with the registry's enabled records and
@@ -16,15 +21,15 @@
 //! constants, the edge and the switches. `--steps N` is then N more steps. A dump refused is exit 4.
 //!
 //! stdout: the first line `SR-ADAPTER …`; the last, when the run ends without an error (exit 0 or 2), `SR-HEADLESS DONE
-//! steps=<n> sim_time=<t> until=<met|unmet|none>`; every error line starts `SR-ERROR`, every warning `SR-WARN`.
-//! Exit codes: 0 done · 2 `--steps` not reached within `--max-steps` · 3 no adapter or a GPU error · 4 bad arguments
+//! steps=<n> sim_time=<t> until=<met|unmet|none>` (`none` for a run on `--steps`, which `--max-steps` may cut: `unmet`); every error line starts `SR-ERROR`, every warning `SR-WARN`.
+//! Exit codes: 0 done · 2 `--steps` or `--until` not reached within `--max-steps` · 3 no adapter or a GPU error · 4 bad arguments
 //! or scene · 5 a non-finite value in the state, found by P9's guard every 64 steps and read after each submission
 //! (the message names the step, cell and channel) · 101 a panic (Rust's own). 6 (calibration) arrives with its check.
 //!
 //! `--cpu-reference` (M0-T37) runs the CPU f64 twin ([`sr_physics::reference::Twin`]) from the same scene in place of the
 //! GPU, worlds up to 128 × 128 (exit 4 above), and writes the same summary.json and dumps: no adapter is touched, so the
 //! first line reads `SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference`, and `--adapter`, `--timing`
-//! and `--load-dump` (the GPU's own) are refused. The twin has no active box: its dumps carry the box record of the whole
+//! `--load-dump` (the GPU's own) and `--until` (the twin has no block summary to observe) are refused. The twin has no active box: its dumps carry the box record of the whole
 //! world, the GPU's `BoxMode::WholeWorld` form.
 
 use std::path::{Path, PathBuf};
@@ -38,6 +43,7 @@ use sr_physics::registry::{Elements, Physics, Reactions};
 
 use crate::dump::{dump_state, load_dump, Dump, Resume};
 use crate::gpu::Gpu;
+use crate::ledger::{take_booked, At, Ledger};
 use crate::scene::{EdgeMode, Scene, Switches};
 use crate::state::{Booking, SideFields, State, WorldConfig, CHANNELS};
 use crate::step::boxfit::BoxMode;
@@ -46,6 +52,7 @@ use crate::step::nuheat::NuHeatSetup;
 use crate::step::react::ReactSetup;
 use crate::step::sinks::SinkSetup;
 use crate::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
+use crate::watch::{Until, Watch};
 
 pub const EXIT_DONE: i32 = 0;
 pub const EXIT_UNMET: i32 = 2;
@@ -57,12 +64,18 @@ pub const EXIT_NON_FINITE: i32 = 5;
 pub const DEFAULT_MAX_STEPS: u64 = 2_000_000;
 /// Steps recorded per submission: the queue never holds more than this many at once — nor P5's log of unconverged steps.
 const CHUNK: u64 = 256;
+/// A frame while `--until` watches, in steps (untuned): the cold disk's whole collapse is some 250 steps, so a stage that
+/// must show for 3 frames (§1.9.3) needs frames of a few steps — 16 shows `collapsing` at step 49, 64 never does; shorter
+/// frames cost more (fill_world, 800 steps on the RTX 5090: 2.5 s at 256, 3.1 s at 16, 4.6 s at 4).
+const FRAME: u64 = 16;
 const _: () = assert!(CHUNK as usize <= crate::step::heat::LOG);
 
 #[derive(Debug, PartialEq)]
 pub struct Args {
     pub scene: String,
-    pub steps: u64,
+    /// `--steps N` or `--until <condition>`, one of the two.
+    pub steps: Option<u64>,
+    pub until: Option<Until>,
     /// `--world` and `--edge`: over the scene's own `world` when given.
     pub world: Option<WorldConfig>,
     pub edge: Option<EdgeMode>,
@@ -84,7 +97,7 @@ pub struct Args {
 pub fn parse_args(args: &[String]) -> Result<Args, String> {
     let (mut scene, mut steps, mut world, mut edge, mut max_steps, mut out, mut adapter) =
         (None, None, None, None, DEFAULT_MAX_STEPS, None, None);
-    let (mut dump_every, mut load_dump) = (None, None);
+    let (mut dump_every, mut load_dump, mut until) = (None, None, None);
     let (mut timing, mut cpu_reference) = (false, false);
     let mut it = args.iter();
     while let Some(arg) = it.next() {
@@ -100,7 +113,7 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
             Some((f, v)) => (f, Some(v.to_string())),
             None => (arg.as_str(), None),
         };
-        let known = ["--scene", "--steps", "--world", "--edge", "--max-steps", "--out", "--adapter", "--dump-every", "--load-dump"];
+        let known = ["--scene", "--steps", "--world", "--edge", "--max-steps", "--out", "--adapter", "--dump-every", "--load-dump", "--until"];
         if !known.contains(&flag) {
             return Err(format!("unknown argument {arg:?}"));
         }
@@ -113,6 +126,7 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
             "--scene" => scene = Some(value),
             "--steps" => steps = Some(count(&value)?),
             "--max-steps" => max_steps = count(&value)?,
+            "--until" => until = Some(Until::parse(&value)?),
             "--out" => out = Some(PathBuf::from(value)),
             "--adapter" => adapter = Some(value),
             "--dump-every" => dump_every = Some(count(&value)?),
@@ -126,8 +140,10 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
         }
     }
     let scene = scene.ok_or("--scene is required (a scene file, or preset:sun)")?;
-    let steps = steps.ok_or("--steps is required (--until arrives with its block)")?;
-    if steps == 0 {
+    if steps.is_some() == until.is_some() {
+        return Err("give --steps N or --until <condition>, one of the two".to_string());
+    }
+    if steps == Some(0) {
         return Err("--steps must be at least 1".to_string());
     }
     if dump_every == Some(0) {
@@ -137,12 +153,13 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
         return Err("--dump-every needs --out (dumps go to DIR/dumps)".to_string());
     }
     if cpu_reference {
-        let refused = [("--adapter", adapter.is_some()), ("--timing", timing), ("--load-dump", load_dump.is_some())];
+        let refused =
+            [("--adapter", adapter.is_some()), ("--timing", timing), ("--load-dump", load_dump.is_some()), ("--until", until.is_some())];
         if let Some((flag, _)) = refused.iter().find(|(_, given)| *given) {
             return Err(format!("{flag} is the GPU's: it has no meaning with --cpu-reference"));
         }
     }
-    Ok(Args { scene, steps, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, cpu_reference })
+    Ok(Args { scene, steps, until, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, cpu_reference })
 }
 
 /// Reads `--scene` before any GPU is touched: `preset:<name>` (one preset at the world's centre), else a scene file
@@ -195,8 +212,22 @@ impl Costs {
     }
 }
 
+/// The lines `say` has printed since [`run_captured`] began, while it runs.
+static CAPTURE: std::sync::Mutex<Option<Vec<String>>> = std::sync::Mutex::new(None);
+
 fn say(line: &str) {
     println!("{line}");
+    if let Some(lines) = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).as_mut() {
+        lines.push(line.to_string());
+    }
+}
+
+/// [`run`], and the stdout lines it printed — how the tests read the `SR-HEADLESS DONE` line (one run at a time).
+pub fn run_captured(args: &[String]) -> (i32, Vec<String>) {
+    *CAPTURE.lock().unwrap_or_else(|e| e.into_inner()) = Some(Vec::new());
+    let code = run(args);
+    let lines = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).take().unwrap_or_default();
+    (code, lines)
 }
 
 fn git_rev() -> String {
@@ -269,7 +300,9 @@ fn run_twin(
         let path = dir.join("dumps").join(format!("s_{}.bin", d.step));
         d.write(&path).map_err(|e| format!("SR-ERROR bad arguments: --out {}: {e}", path.display()))
     };
-    let target = args.steps.min(args.max_steps);
+    // --until is refused with --cpu-reference (parse_args), so --steps is given.
+    let wanted = args.steps.expect("--cpu-reference runs --steps");
+    let target = wanted.min(args.max_steps);
     let started = Instant::now();
     for done in 0..target {
         twin.step();
@@ -302,7 +335,7 @@ fn run_twin(
             return EXIT_ARGS;
         }
     }
-    let met = target == args.steps;
+    let met = target == wanted;
     let sim_time = twin.sim_time();
     if let Some(dir) = &args.out {
         let summary = json!({
@@ -318,10 +351,11 @@ fn run_twin(
             "ledger": {"start": {}, "end": {}},
             "events": [],
             "objects": [],
-            "until": {"condition": format!("steps:{}", args.steps), "met": met},
+            "until": {"condition": format!("steps:{wanted}"), "met": met},
         });
         let text = serde_json::to_string_pretty(&summary).expect("a json! value serialises");
-        if let Err(e) = std::fs::write(dir.join("summary.json"), text + "\n") {
+        let written = std::fs::write(dir.join("summary.json"), text + "\n").and_then(|()| std::fs::write(dir.join("events.jsonl"), ""));
+        if let Err(e) = written {
             say(&format!("SR-ERROR bad arguments: --out {}: {e}", dir.display()));
             return EXIT_ARGS;
         }
@@ -421,7 +455,7 @@ pub fn run(args: &[String]) -> i32 {
             return EXIT_ARGS;
         }
     };
-    // The physics is the shipped constants with the scene's overrides; the ledger reads the booking (its lot).
+    // The physics is the shipped constants with the scene's overrides; the ledger reads the booking.
     let booking = Booking::new(&gpu.device, world).expect("the state's world is valid");
     let eos = EosGpu::new(&gpu.device, &physics, &elements);
     let side = SideFields::new(&gpu.device, world).expect("the state's world is valid");
@@ -472,11 +506,27 @@ pub fn run(args: &[String]) -> i32 {
         d.write(&path).map_err(|e| format!("SR-ERROR bad arguments: --out {}: {e}", path.display()))
     };
 
-    let target = args.steps.min(args.max_steps);
+    let target = args.steps.unwrap_or(args.max_steps).min(args.max_steps);
     let started = Instant::now();
     let mut done = 0u64;
+    let mut ledger = Ledger::new(world, &physics);
+    // The observers read each chunk's summary as a frame; the run's sim time starts at the dump's, else 0.
+    let start_sim = dump.as_ref().map_or(0.0, |d| d.sim_time);
+    let mut watch = Watch::new(&physics, world.width, start_sim);
+    let mut until_met = false;
+    // The Δt record's sim time and next Δt after the last chunk: they size the chunks of `--until sim_time`.
+    let (mut sim, mut dt_next) = (start_sim, 0.0f64);
     while done < target {
-        let mut n = (target - done).min(CHUNK);
+        let mut n = (target - done).min(if args.until.is_some() { FRAME } else { CHUNK });
+        // The ledger's start: the first step alone, then the state after it is the ledger's zero.
+        if ledger.start().is_none() {
+            n = 1;
+        }
+        // `--until sim_time:<t>` stops at the first step past t: a chunk covers at most half the time left at the next
+        // step's Δt, so the last steps are single ones (a chunk longer than that is a Δt that doubled inside it).
+        if let (Some(Until::SimTime(t)), true) = (args.until, dt_next > 0.0) {
+            n = n.min(((t - sim) / (2.0 * dt_next)).floor().max(1.0) as u64);
+        }
         if let Some(every) = args.dump_every {
             n = n.min(every - (first + done) % every);
         }
@@ -493,12 +543,28 @@ pub fn run(args: &[String]) -> i32 {
         if let Some(c) = step.read_cost(&gpu.device, &gpu.queue) {
             cost.add(&c);
         }
-        if let Some(bad) = step.read_dt(&gpu.device, &gpu.queue).non_finite {
+        let dt = step.read_dt(&gpu.device, &gpu.queue);
+        if let Some(bad) = dt.non_finite {
             say(&format!(
                 "SR-ERROR non-finite value in the state at step {}, cell ({}, {}), channel {}",
                 bad.step, bad.x, bad.y, bad.channel
             ));
             return EXIT_NON_FINITE;
+        }
+        // The ledger: the booked terms since the last chunk, the summary of the state after it.
+        let booked = take_booked(&gpu.device, &gpu.queue, &booking);
+        let summary = step.summarise(&gpu.device, &gpu.queue);
+        let at_step = At { step: first + done, sim_time: dt.sim_time };
+        if ledger.start().is_none() {
+            ledger.restart(&summary, at_step);
+        } else {
+            ledger.update(&summary, &booked, at_step);
+        }
+        let fresh = watch.update(&summary, at_step);
+        (sim, dt_next) = (dt.sim_time, f64::from(dt.dt_next));
+        if args.until.is_some_and(|u| watch.holds(u, &fresh)) {
+            until_met = true;
+            break;
         }
         let at = first + done;
         if let (Some(every), Some(dir)) = (args.dump_every, &args.out) {
@@ -519,7 +585,13 @@ pub fn run(args: &[String]) -> i32 {
         }
     }
 
-    let met = done == args.steps;
+    let (condition, met) = match (args.until, args.steps) {
+        (Some(u), _) => (u.condition(), until_met),
+        (None, wanted) => {
+            let wanted = wanted.expect("--steps or --until is given");
+            (format!("steps:{wanted}"), done == wanted)
+        }
+    };
     // The sim time of every step run since the scene, its dump's included — the Δt record's, as the final dump writes it.
     let sim_time = step.read_dt(&gpu.device, &gpu.queue).sim_time;
     if let Some(dir) = &args.out {
@@ -533,24 +605,29 @@ pub fn run(args: &[String]) -> i32 {
             "steps": done,
             "sim_time": sim_time,
             "wall_s": wall_s,
-            "ledger": {"start": {}, "end": {}},
-            "events": [],
-            "objects": [],
-            "until": {"condition": format!("steps:{}", args.steps), "met": met},
+            "ledger": ledger.json(),
+            "events": watch.events().iter().map(|e| e.json()).collect::<Vec<_>>(),
+            "objects": watch.objects_json(),
+            "until": {"condition": condition, "met": met},
         });
         if let Some(timing) = cost.summary() {
             summary["timing"] = timing;
         }
         let text = serde_json::to_string_pretty(&summary).expect("a json! value serialises");
-        if let Err(e) = std::fs::write(dir.join("summary.json"), text + "\n") {
+        let written = std::fs::write(dir.join("summary.json"), text + "\n")
+            .and_then(|()| std::fs::write(dir.join("events.jsonl"), watch.events_jsonl()));
+        if let Err(e) = written {
             say(&format!("SR-ERROR bad arguments: --out {}: {e}", dir.display()));
             return EXIT_ARGS;
         }
     }
-    say(&format!(
-        "SR-HEADLESS DONE steps={done} sim_time={sim_time:.6} until={}",
-        if met { "none" } else { "unmet" }
-    ));
+    // `none`: a run on --steps has no condition to meet; with --until, met or unmet.
+    let verdict = match (args.until, met) {
+        (None, true) => "none",
+        (_, true) => "met",
+        (_, false) => "unmet",
+    };
+    say(&format!("SR-HEADLESS DONE steps={done} sim_time={sim_time:.6} until={verdict}"));
     if met {
         EXIT_DONE
     } else {

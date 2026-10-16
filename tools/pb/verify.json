@@ -385,6 +385,138 @@
         }
       ]
     },
+    "ledger": {
+      "desc": "the ledger (contract §2.9, §2.12.2, §5.3's G-CONS; M0-T57): crates/sr-engine/src/ledger.rs, Step::summarise and headless's summary.json `ledger` {start, end} — the mass, energy and momentum terms in f64 from the block summary's fixed-order partials, the sinks it carries, and the booked terms read and cleared after every chunk of steps (take_booked), cumulative since the ledger started (the run's first step: the box and φ exist only after it), the three invariants in each record; `bash tests/gpu.sh ledger physics` on the physics adapter, 128 × 128, 500 steps of a cold disk (a = 24, Σc = 1, the cold pressure off through `overrides`): at rest in a bounce world — mass invariant 1e-6 of the mass, momentum (grid + sinks + escaped) 1e-6 of Σm|u| (read from the final dump), nothing escaped, the energy drift reported; drifting out of a leave world's edge with gravity on — 7.5 % of the mass escapes (asserted over 0.1 % and printed), mass 1e-6, momentum held to 5e-3 of Σm|u| (source-term gravity does not conserve momentum, M0-V7 observation 1: measured 3.1e-3) a band that leaving the escaped momentum out (off by 0.23) would break; the same disk with gravity off — mass 1e-6, momentum to 1e-6 plus what a vacuum reset removes (booked nowhere, §2.7 [M0-T19]: `vacuum_reset` × the fastest gas, read from the run); in every run the ledger's grid mass and momentum against an f64 sum of the final dump's planes (independent of the summary and of the box, whose outside the ledger fills with the floor state); the arithmetic of every term and invariant on a hand-made summary (NOT PROVEN (synthetic) past the arithmetic). The energy invariant is reported, never graded here (G-CONS grades it over whole lives, M0-T106). ledger-no-escaped drops `escaped` from the mass sum",
+      "cmd": "bash tests/gpu.sh ledger physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 4,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/ledger-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "ledger-no-escaped",
+          "patch": "tests/plants/ledger-no-escaped.patch"
+        }
+      ]
+    },
+    "preset_cloud": {
+      "desc": "the preset cloud at a given mass (contract §2.1, §2.10; M0-T61): crates/sr-engine/src/scene.rs's cloud_shape and Object::Preset { mass }, Scene::preset_mass; `bash tests/gpu.sh preset` — no GPU, the scene's own planes at 0.3, 1, 3, 9, 20 and 60 M₀ in the 600 × 400 world: the cells hold M within 1e-6 (the centre-sampled disk scaled to the mass it is named for); a = 40√(M/M₀) capped at 150 and Σc = 3M/(2πa²) per formula (1 at M₀, growing past the cap), read back from the planes (the cloud's span 2a within 2 cells, the centre cell's Σ within the edge bound 2√2 a^-3/2 of Σc); U_th/|W| = 0.1 within 1e-4 with W = ½ Σ m φ from one solve of the stored planes through the CPU twin's gravity (the grid's own W, never the Maclaurin closed form); the Sun's composition summing to 1 in every covered cell, at rest, T uniform over the dense core, vacuum x_H = 1; scene-file presets staying the nominal M₀, a non-positive, NaN or infinite mass and an unknown preset refused. preset-uth-half sets U_th = 0.05|W|",
+      "cmd": "bash tests/gpu.sh preset",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 5,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/preset-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "preset-uth-half",
+          "patch": "tests/plants/preset-uth-half.patch"
+        }
+      ]
+    },
+    "observe_run": {
+      "desc": "the observers in headless runs (contract §1.9, §2.12.2, §3.3; M0-T60): crates/sr-engine/src/watch.rs and headless.rs — `--until sim_time:<t> | event:<kind> | stage:<id> | ending`, `--max-steps`, DIR/events.jsonl and summary.json's `events`, `objects` and `until` on the engine's own block summary (the tracker and the stages ran on synthetic summaries alone before); `bash tests/gpu.sh observe physics`, every run through headless::run_captured on the physics adapter, its stdout lines kept: scenes/cold_disk.json `--until stage:collapsing` met (step 49, the stop on a frame boundary — the first step, then 16 a frame —, the object showing the stage from that step, the run one frame shorter unmet); `--until sim_time:5` met at the first step past 5 (step 1355 at 5.00284; the run one step shorter at 4.99722); an unmet `--until stage:black_hole --max-steps 100` exit 2 with the DONE line reading `until=unmet`, summary.json's until met false, and a `--steps` run cut by --max-steps `unmet` as before, a complete one `none`; scenes/sink_cloud.json with a sink the test drops into the middle of a seed run's dump (--load-dump): events.jsonl one JSON object a line with the §2.12.2 keys, the same as summary.json's events — sink_formed, then `ending` when the black hole has been displayed 10 t.u. (10.06 held), the run one frame shorter with no ending; the arguments (both --steps and --until, neither, a condition of no form, an unknown stage, `event:ending`, a negative time, --until with --cpu-reference) refused exit 4 before a device is touched. The overshoot allowed: sim_time none past the step, the rest one frame (16 steps) — untuned (headless's FRAME), asserted. A frame is 16 steps with --until, 256 without. objects' `mass_suns`, `predicted_ending`, `ending` and `age_years` come with M0-T69, M0-T72, M0-T73. until-never-met reads the stop condition only when the run is already at its cap",
+      "cmd": "bash tests/gpu.sh observe physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 5,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "scenes/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/until-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "until-never-met",
+          "patch": "tests/plants/until-never-met.patch"
+        }
+      ]
+    },
+    "objects": {
+      "desc": "objects (contract §1.9.2, §2.7, §3.1; M0-T58): sr_physics::observe::Tracker::update on synthetic block summaries (no GPU) — 8-connected blocks holding a cell at Σ ≥ Σ_obj (a diagonal neighbour joins, one empty block between separates, Σ just under Σ_obj does not join), wisps under 1 % of the Sun-like mass left out, ids stable across frames for two blobs, a box whose origin moves and a blob shifted by two blocks a frame (four frames), the heavier id surviving a merge and the larger part a split (a part under 25 % of the old weight takes a fresh id, ids never reused), and each quantity on a field of known answer: R₉₀ with its interpolation and τ_dyn = √(R³/GM) (and the half-block floor), L, L_g, L_nuc (L_N ≤ 0 left out), L_ν over the frame's sim time (none at 0), U, K, P, W = ½Σmφ, M_unb, Σ_c, T_c, X_c, d_c at the centre block, v_r (outward and inward blocks, mass-weighted), a sink as centre with the sink mass and a sink-only block, the envelope outside twice R_core of the dominant burning group (none when nothing burns). Synthetic block summaries only: NOT PROVEN on the engine's own summary until the observers run in headless (M0-T60). one-object plants the tracker linking blocks across one empty block",
+      "cmd": "bash tests/cpu.sh sr-physics observe::tracker",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 15,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/one-object.patch"
+      ],
+      "plants": [
+        {
+          "id": "one-object",
+          "patch": "tests/plants/one-object.patch"
+        }
+      ]
+    },
+    "classify": {
+      "desc": "classify (contract §1.9.3, §1.9.4; M0-T59): sr_physics::observe::stages on synthetic objects (no GPU) — each of §1.9.3's 19 rows matching on an object built for it and not matching one step either side of its threshold, the table's order (black_hole before neutron_star, supernova before core_collapse, si_burn · o_burn · ne_burn · c_burn on a tie, collapsing before protostar — disjoint as written, so graded as the table's order), failed_star only for an object that never ignited and the same object ignited a white dwarf, the supernova's 20 t.u. window after a core collapse, the display hold (a stage shows after 3 identical results, a different result restarts the count, core collapse and supernova show at once), the ignited flag (turns on at L_H ≥ 0.5 L, stays on, this frame's result already reads it) and each event — ignition, core collapse, supernova, sink formed — once per object, in object order. Synthetic objects only: NOT PROVEN on the engine's own summary until the observers run in headless (M0-T60). classify-order plants protostar tested ahead of collapsing in the table",
+      "cmd": "bash tests/cpu.sh sr-physics observe::stages",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 30,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/classify-order.patch"
+      ],
+      "plants": [
+        {
+          "id": "classify-order",
+          "patch": "tests/plants/classify-order.patch"
+        }
+      ]
+    },
     "fft_twin": {
       "desc": "the CPU twin's FFT and convolution, no GPU (contract §1.3.3, §1.4.2, §2.5.4): the radix-2 f64 FFT against a direct DFT on sizes 1…128 (1e-12 relative) and a delta and a plane wave exactly, inverse(forward) = identity at 32…2048 and in 2D, the 2D transform against the direct 2D DFT, Parseval at 16 × 8 and at 2048, the zero-padded convolution against direct summation on a 48 × 40 box with a kernel asymmetric in both axes (1e-10 relative, the box's edge cells checked rim by rim), mass in the four corners not wrapping, a single source reproducing the shifted kernel, the kernel's transform cached per padded size (sampled once for 48 × 40 and 50 × 41), padded sizes 32…2048 by the smallest power of two ≥ 2 × the axis and the refusals (M0-T28)",
       "cmd": "bash tests/cpu.sh sr-physics reference::fft",
@@ -518,6 +650,34 @@
         {
           "id": "grav-half",
           "patch": "tests/plants/grav-half.patch"
+        }
+      ]
+    },
+    "jeans": {
+      "desc": "G-JEANS, no artificial fragmentation (contract §2.3.5, §1.9.2, §5.1, SM-O6, SM-E16, R8; M0-T62): scenes/jeans_ripple.json — a disk cloud (a = 40, Σc = 1, the Sun's mix, T 2.3666 so U_th = 0.05|W| with W the grid's own — the lead's ruling at M0-T62, contract §0.5 [M0-T62]: §5.1's 0.1|W| turns round at Σ_max 62.7 and never meets 100 ×, 0.02|W| fragments) in a 128 × 128 leave world, gravity and hydro on, the rest off, the cold pressure off through `overrides` naming the four K's and nothing else (G-COLL's isolation; the shipped K's halt the cloud at Σ_max 12.7) — with the test's deterministic ripple Σ·(1 + 0.01(cos 3θ + cos 5θ)) (E rebuilt at each cell's ε_th, at rest), collapsing on the GPU's P2 + P4 on the physics adapter until its central Σ is 100 × the start's; a block summary every 8 steps (2 past Σ_max 30): J = GΣ²/(2Π) ≤ 1/4 in every gas cell of every summary (Π from the EOS twin on the state read back); at the end exactly one object (observe::Tracker on the engine's own summary) and no secondary Σ peak (a 5 × 5 local maximum other than the global one) above 10 % of the central Σ; and the adversarial case — a collapse that stops short of 100 × reports the largest Σ reached and fails, never passing on the 20,000-step cap. Also the scene's U_th/|W| = 0.05 within 1e-4, the ripple's arithmetic and the checks' own (J's bound, the peak finder and the tracker's object count on hand-made data, NOT PROVEN on a star). no-pressure-flux drops the pressure term from the momentum flux in hydro.wgsl",
+      "cmd": "bash tests/gpu.sh jeans physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 5,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "scenes/jeans_ripple.json",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/no-pressure-flux.patch"
+      ],
+      "plants": [
+        {
+          "id": "no-pressure-flux",
+          "patch": "tests/plants/no-pressure-flux.patch"
         }
       ]
     },

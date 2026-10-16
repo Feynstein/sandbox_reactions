@@ -1,0 +1,14 @@
+--- a/crates/sr-physics/src/observe/stages.rs	2026-10-16 09:25:27.190645146 -0400
++++ b/crates/sr-physics/src/observe/stages.rs	2026-10-16 09:25:27.199008040 -0400
+@@ -158,10 +158,10 @@
+     (Stage::HeShell, |c| c.h.ignited && c.o.x_c[X_HE] < SPENT && c.o.x_c[X_H] < SPENT && !carbon_burns(c.o)),
+     (Stage::HShell, |c| c.h.ignited && c.o.x_c[X_H] < SPENT && c.o.l_group[G_HE] < 0.1 * c.o.luminosity),
+     (Stage::MainSequence, |c| hydrogen_leads(c.o) && c.o.x_c[X_H] >= SPENT),
+-    (Stage::Collapsing, |c| !c.h.ignited && c.o.v_r <= -0.1 * c.v_dyn),
+     (Stage::Protostar, |c| {
+         !c.h.ignited && c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * c.o.pressure / c.o.potential.abs() >= 0.8
+     }),
++    (Stage::Collapsing, |c| !c.h.ignited && c.o.v_r <= -0.1 * c.v_dyn),
+     (Stage::Cloud, |_| true),
+ ];
+ 

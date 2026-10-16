@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/ledger.rs
++++ b/crates/sr-engine/src/ledger.rs
+@@ -84,7 +84,7 @@
+ impl Mass {
+     /// §2.9: grid + sinks + escaped + erased + vacuum_reset − painted − preset_dropped.
+     pub fn invariant(&self) -> f64 {
+-        self.grid + self.sinks + self.escaped + self.erased + self.vacuum_reset - self.painted - self.preset_dropped
++        self.grid + self.sinks + self.erased + self.vacuum_reset - self.painted - self.preset_dropped
+     }
+ }
+ 

@@ -217,7 +217,7 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
   §2.6 allows. serde_json parses floats best-effort, so `sim_time` is re-read from its own token (M0-T26).
 - **Summary.** Every §2.12.2 key, filled as the blocks that compute it land: today `tool`, `git`, `adapter`, `scene`,
   `world` {width, height, edge}, `steps`, `wall_s` and `until` (`steps:N`); `sim_time` is the Δt record's clock at
-  the run's end (a dump's start included), as the final dump and the DONE line write it (M0-D21); `ledger`, `events` and `objects` are written empty until their blocks.
+  the run's end (a dump's start included), as the final dump and the DONE line write it (M0-D21); `ledger` (M0-T57), `events`, `objects` and `until` (M0-T60) are filled by the observers (`docs/agent/readouts.md`), with `DIR/events.jsonl` beside; `mass_suns`, `predicted_ending`, `ending` and `age_years` are left out of an object until M0-T69, M0-T72 and M0-T73.
   `timing` holds {per_pass_ms, step_ms_mean, source} — `source` added beyond §2.12.2's object by M0-T23 (additive; a PLAN
   task may fold it in).
 
@@ -256,6 +256,10 @@ step produced. The arrow goes one way:
   readout can never alter a state value: the star's life comes out of the physics, never a script.
 - The one sanctioned feedback is **time control**: the frame loop may slow down at an event (the latch, the
   automatic slow-down — §1.8), but it changes how many steps run, never what a step does (§1.8.7).
+- **In a headless run** the observers sit in `sr_engine::watch`, outside `step/`: `Watch::update` takes each frame's block
+  summary (`Step::poll_frames`), widens it to f64 and feeds `Tracker` and `StageTracker`; `headless` writes what they keep and
+  stops on `--until`. The frame's chunk size (`headless::FRAME`) is the one thing the observers' condition changes — it sets how
+  many steps a frame runs, never what a step does. Details: `docs/agent/readouts.md`.
 - **G-WATCH** (the `watch_only` scope's static scan, M0-T16; contract §5) is the check that grades this boundary.
 
 ## Where a number lives

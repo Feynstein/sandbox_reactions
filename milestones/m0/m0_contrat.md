@@ -229,6 +229,15 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     centre) and 67.7 % (off it) of its start, 0.39 % with no sink; and a sink outside the box read a g P2 never wrote
     (velocity 0 on the RTX 5090 against the twin's −3.78 × 10⁻⁴), which a sum over the gas cells also reaches — the lead's
     answer at M0-V7, 2026-10-15: «Equal and opposite (Recommended)».
+  - [M0-T62] §5.1 G-JEANS's "A disk cloud (U_th = 0.1|W|, a = 40) with a deterministic 1 % ripple (cos 3θ + cos 5θ), collapsing
+    with J ≤ 1/4 everywhere until its central Σ is 100 × the start" · the same with U_th = 0.05|W| (a = 40, Σc = 1, the Sun's mix,
+    at rest, a uniform T — scenes/jeans_ripple.json, T 2.3666 on the grid's own W) and the cold pressure off through `overrides`
+    (the four K's and nothing else, as G-COLL); the ripple, J's 1/4, 100 ×, one object and the 10 % bar unchanged; §2.10's preset
+    keeps 0.1|W| · a γ = 2 gas heats as Σ while |W| grows as Σ^½, so U_th/|W| = 0.1 (Σ/Σ₀)^½ and the cloud turns round near
+    25–60 × — measured on linux-pc, 2026-10-16, RTX 5090 (M0-T62): the 0.1|W| cloud peaks at Σ_max 62.7 with the cold pressure
+    off (60.7 with P5 on; 12.7 with the shipped K's) and never meets 100 ×; at 0.05|W| it reaches 110 × at t = 3.19 (159 steps)
+    with J ≤ 0.129, one object and no secondary peak; at 0.02|W| it fragments (J = 3.97, a second peak at 100 % of the central Σ)
+    — the lead's answer at M0-T62, 2026-10-16: «U_th = 0.05|W|, keep 100× (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

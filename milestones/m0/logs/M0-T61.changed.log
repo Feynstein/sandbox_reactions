@@ -1,0 +1,196 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why burn_cell: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why burn_order: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why neutrino: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why sink: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why nu_heat: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why summary: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why ledger: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why observe_run: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why sod: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why edges: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why collapse: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why twin: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why cpu_gpu: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why heat_gauss: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why heat_implicit: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why heat_limiter: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why heat_stiff: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why radiation_force: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why grav_force: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why grav_selfforce: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why fft: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why adapter: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why state: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why booking: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why floors: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why dt: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why box: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why latch: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why timing: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why scene: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why dump: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why boot: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why desktop: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why web: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+why capture: never: crates/sr-engine/tests/gpu/preset.rs · stale: crates/sr-engine/src/scene.rs (+1)
+plan_lint        0/549/0      0.12 s  NO-GO · step 1/37, 36 left
+build            2/0/0        6.85 s  GO · step 2/37, 35 left
+burn_cell        16/0/0      11.59 s  GO · step 3/37, 34 left
+burn_order       4/0/0        6.83 s  GO · step 4/37, 33 left
+neutrino         18/0/0       2.47 s  GO · step 5/37, 32 left
+sink             30/0/0      35.46 s  GO · step 6/37, 31 left
+nu_heat          15/0/0      18.31 s  GO · step 7/37, 30 left
+summary          7/0/0       12.59 s  GO · step 8/37, 29 left
+ledger           4/0/0        6.88 s  GO · step 9/37, 28 left
+observe_run      5/0/0       12.39 s  GO · step 10/37, 27 left
+sod              15/0/0      15.85 s  GO · step 11/37, 26 left
+edges            7/0/0       17.60 s  GO · step 12/37, 25 left
+collapse         6/0/0        3.22 s  GO · step 13/37, 24 left
+twin             6/0/0        2.37 s  GO · step 14/37, 23 left
+cpu_gpu          3/0/0       11.39 s  GO · step 15/37, 22 left
+heat_gauss       10/0/0       3.87 s  GO · step 16/37, 21 left
+heat_implicit    6/0/0        2.57 s  GO · step 17/37, 20 left
+heat_limiter     6/0/0        3.57 s  GO · step 18/37, 19 left
+heat_stiff       6/0/0        3.07 s  GO · step 19/37, 18 left
+radiation_force  3/0/0        2.42 s  GO · step 20/37, 17 left
+grav_force       13/0/0       6.98 s  GO · step 21/37, 16 left
+grav_selfforce   5/0/0        2.57 s  GO · step 22/37, 15 left
+fft              8/0/0        7.18 s  GO · step 23/37, 14 left
+adapter          10/0/0       5.07 s  GO · step 24/37, 13 left
+state            6/0/0        4.77 s  GO · step 25/37, 12 left
+booking          4/0/0        4.37 s  GO · step 26/37, 11 left
+floors           7/0/0        9.06 s  GO · step 27/37, 10 left
+dt               6/0/0        6.89 s  GO · step 28/37, 9 left
+box              8/0/0        9.62 s  GO · step 29/37, 8 left
+latch            5/0/0        5.44 s  GO · step 30/37, 7 left
+timing           4/1/0       11.19 s  NO-GO · step 31/37, 6 left
+scene            8/0/0        4.23 s  GO · step 32/37, 5 left
+dump             11/0/0      16.88 s  GO · step 33/37, 4 left
+boot             1/0/0        5.14 s  GO · step 34/37, 3 left
+desktop          2/0/0       10.95 s  GO · step 35/37, 2 left
+web              3/0/0       31.99 s  GO · step 36/37, 1 left
+capture          2/0/0        1.84 s  GO · step 37/37, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+preset_cloud     NOT RUN (not impacted: its 89 path(s) checked at the anchor)
+objects          NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+classify         NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+preset_cloud · red-arm proven by M0-T61 2026-10-16T09:59:35-04:00 (fingerprint a30a659bd134) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T61's start - a test, case or check M0-T61's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/preset.rs changed since M0-T61's start - a test, case or check M0-T61's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T61's start - a test, case or check M0-T61's Deliver: does not name
+FLAG oracle: scope `preset_cloud` added in tools/pb/verify.json - M0-T61's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-T61.<scope>.log · record: loop_times.jsonl · tree 60dc024b5d2e+fe7e8ba351eb
+anchor: 195 path×scope entries moved by this run
+anchor: 131 paths checked · 191 skipped (3 classes) · 91 never checked · 0 stale · 0 unclassified · 0 owed · 222 covered of 413 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for timing)
+NEVER CHECKED  Cargo.lock  (no entry for timing)
+NEVER CHECKED  Cargo.toml  (no entry for timing)
+NEVER CHECKED  assets/elements.json  (no entry for timing)
+NEVER CHECKED  assets/physics.json  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/observe/mod.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/observe/stages.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/observe/tracker.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for timing)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for timing)
+NEVER CHECKED  milestones/m0/m0_implementation_plan.md  (no entry for plan_lint)
+NEVER CHECKED  milestones/m0/m0_rules.md  (no entry for plan_lint)
+NEVER CHECKED  rust-toolchain.toml  (no entry for timing)
+NEVER CHECKED  tests/cargo.sh  (no entry for timing)
+NEVER CHECKED  tests/gpu.sh  (no entry for timing)
+NEVER CHECKED  tests/plants/timing-skip-pass.patch  (no entry for timing)
+skipped   183  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  plan_lint: 549 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-T61.plan_lint.log
+  timing: 1 failed · log milestones/m0/logs/M0-T61.timing.log
+  anchor: 91 never checked, 0 stale, 0 unclassified - every one named above
+verify: 272 passed, 550 failed, 0 skipped · 35/37 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 14 not impacted · 46.91 s + loop 0.13 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 43.72->33.1 · base: M0-T61's start 2026-10-16T09:43:21-04:00
+=== NO-GO: plan_lint: 549 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-T61.plan_lint.log; timing: 1 failed · log milestones/m0/logs/M0-T61.timing.log; anchor: 91 never checked, 0 stale, 0 unclassified - every one named above ===

@@ -1,0 +1,55 @@
+== 2026-10-16T10:00:30-04:00 scene · task M0-T61 · box laserax-ai :: bash tests/gpu.sh scene physics
+-- scene · exit=0 · 4.23 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test scene::a_disks_mass_is_the_maclaurin_integral_within_its_sampling_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+disk a = 40 at (300, 200): M = 3351.6480, 2πΣc a²/3 = 3351.0322, off 1.84e-4 ≤ bound 1.12e-2
+disk a = 12 at (100.3, 57.8): M = 150.8166, 2πΣc a²/3 = 150.7964, off 1.34e-4 ≤ bound 6.80e-2
+disk a = 25.5 at (420, 300.25): M = 2722.4639, 2πΣc a²/3 = 2723.7608, off 4.76e-4 ≤ bound 2.20e-2
+disk a = 150 at (300.5, 200.5): M = 4712.2922, 2πΣc a²/3 = 4712.3890, off 2.05e-5 ≤ bound 1.54e-3
+ok
+test scene::every_scene_file_parses ... /home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/asym_blob.json: 2 objects, 128x128, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/box_blob.json: 1 objects, 600x400, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/cold_disk.json: 1 objects, 128x128, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/edge_pulse.json: 3 objects, 256x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/fill_world.json: 1 objects, 600x400, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/heat_hot.json: 1 objects, 64x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/heat_pulse.json: 1 objects, 128x128, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/heat_rim.json: 2 objects, 64x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/heat_spot.json: 5 objects, 64x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/ref_burn.json: 1 objects, 64x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/ref_disk.json: 1 objects, 64x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/ref_sod.json: 2 objects, 64x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/sink_cloud.json: 1 objects, 64x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/sod.json: 2 objects, 400x64, no warning: true
+/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/sun_disk.json: 1 objects, 600x400, no warning: true
+ok
+test scene::headless_runs_a_scene_file_as_given ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.140003 until=none
+summary: scene "/home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/sun_disk.json" world {"edge":"bounce","height":256,"width":256} steps 5
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.030267 until=none
+SR-ERROR bad arguments: --edge must be "leave" or "bounce", got "wrap"
+ok
+test scene::objects_land_where_section_2_12_4_puts_them ... ok
+test scene::overrides_are_physics_keys_within_their_bounds ... ok
+test scene::t_and_pressure_are_one_or_the_other ... ok
+test scene::t_and_pressure_set_the_energy_through_the_eos ... t = 3: E = 68.83882141113281, expected 68.83882420307782
+pressure 500: Π = 500.000001275184
+ok
+test scene::unknown_keys_are_refused_at_every_level ... refused: switches.hydor: unknown key
+refused: colour: unknown key
+refused: world.depth: unknown key
+refused: test.pin_temp: unknown key
+refused: objects[0].radius: unknown key
+refused: objects[0].composition.Hx: unknown key
+refused: objects[1].colour: unknown key
+refused: objects[2].mass: unknown key
+SR-ERROR bad scene: scene "/tmp/sr-scene-901504/hydor.json": /tmp/sr-scene-901504/hydor.json: switches.hydor: unknown key
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 260 filtered out; finished in 4.01s
+
+

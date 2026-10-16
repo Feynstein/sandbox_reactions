@@ -1,0 +1,298 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.60s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 5 tests
+test jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak' (1422260) panicked at crates/sr-engine/tests/gpu/jeans.rs:429:5:
+the collapse never reached 100 ×: its largest Σ was 60.736
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test jeans::the_collapse_reaches_a_hundred_times_the_central_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.0643 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   1.9919: Σmax    1.828, J 0.0634 at (62, 65), 1 object(s) of mass 3351.0, secondary peak 0.9925 of Σmax
+SR-JEANS step   153 t   3.0825: Σmax   19.355, J 0.0621 at (63, 64), 1 object(s) of mass 3350.9, secondary peak 0.0000 of Σmax
+SR-JEANS step   179 t   3.2752: Σmax   55.593, J 0.0619 at (63, 64), 1 object(s) of mass 3350.9, secondary peak 0.0000 of Σmax
+SR-JEANS step   199 t   3.4005: Σmax   60.655, J 0.0609 at (63, 64), 1 object(s) of mass 3350.8, secondary peak 0.0000 of Σmax
+SR-JEANS step   219 t   3.5157: Σmax   50.036, J 0.0602 at (64, 64), 1 object(s) of mass 3350.8, secondary peak 0.0000 of Σmax
+SR-JEANS step   239 t   3.6267: Σmax   35.443, J 0.0600 at (64, 64), 1 object(s) of mass 3350.8, secondary peak 0.0000 of Σmax
+SR-JEANS step   277 t   3.8166: Σmax   24.508, J 0.0600 at (64, 64), 1 object(s) of mass 3350.6, secondary peak 0.0000 of Σmax
+SR-JEANS step   357 t   4.1550: Σmax   19.419, J 0.0600 at (64, 63), 1 object(s) of mass 3350.1, secondary peak 0.0000 of Σmax
+SR-JEANS step   437 t   4.5156: Σmax   19.785, J 0.0600 at (64, 64), 1 object(s) of mass 3349.4, secondary peak 0.0000 of Σmax
+SR-JEANS step   517 t   4.9326: Σmax   22.988, J 0.0594 at (64, 64), 1 object(s) of mass 3348.8, secondary peak 0.0000 of Σmax
+SR-JEANS step   597 t   5.4852: Σmax   25.662, J 0.0580 at (64, 64), 1 object(s) of mass 3347.1, secondary peak 0.0000 of Σmax
+SR-JEANS step   677 t   6.0791: Σmax   23.248, J 0.0567 at (64, 64), 1 object(s) of mass 3264.3, secondary peak 0.0000 of Σmax
+SR-JEANS step   757 t   6.7164: Σmax   20.873, J 0.0558 at (64, 64), 1 object(s) of mass 3142.4, secondary peak 0.0000 of Σmax
+SR-JEANS step   837 t   7.5141: Σmax   21.473, J 0.0547 at (64, 64), 1 object(s) of mass 3028.7, secondary peak 0.0000 of Σmax
+SR-JEANS step   917 t   8.3114: Σmax   20.838, J 0.0536 at (63, 64), 1 object(s) of mass 2956.9, secondary peak 0.0000 of Σmax
+SR-JEANS step   997 t   9.1239: Σmax   19.766, J 0.0528 at (63, 64), 1 object(s) of mass 2911.2, secondary peak 0.0025 of Σmax
+SR-JEANS step  1077 t   9.9440: Σmax   19.497, J 0.0521 at (63, 64), 1 object(s) of mass 2882.2, secondary peak 0.0023 of Σmax
+SR-JEANS step  1157 t  10.7647: Σmax   19.138, J 0.0514 at (63, 64), 1 object(s) of mass 2863.6, secondary peak 0.0022 of Σmax
+SR-JEANS step  1237 t  11.5900: Σmax   18.573, J 0.0507 at (63, 64), 1 object(s) of mass 2851.7, secondary peak 0.0021 of Σmax
+SR-JEANS step  1317 t  12.4209: Σmax   18.127, J 0.0500 at (63, 64), 1 object(s) of mass 2844.0, secondary peak 0.0016 of Σmax
+SR-JEANS step  1397 t  13.2551: Σmax   17.771, J 0.0493 at (63, 64), 1 object(s) of mass 2839.3, secondary peak 0.0014 of Σmax
+SR-JEANS step  1477 t  14.0925: Σmax   17.392, J 0.0487 at (63, 64), 1 object(s) of mass 2836.5, secondary peak 0.0011 of Σmax
+SR-JEANS step  1557 t  14.9343: Σmax   17.030, J 0.0481 at (64, 64), 1 object(s) of mass 2831.8, secondary peak 0.0009 of Σmax
+SR-JEANS step  1637 t  15.7801: Σmax   16.715, J 0.0476 at (64, 64), 1 object(s) of mass 2822.2, secondary peak 0.0007 of Σmax
+SR-JEANS step  1717 t  16.6294: Σmax   16.415, J 0.0471 at (64, 64), 1 object(s) of mass 2815.8, secondary peak 0.0006 of Σmax
+SR-JEANS step  1797 t  17.4823: Σmax   16.117, J 0.0467 at (63, 64), 1 object(s) of mass 2811.8, secondary peak 0.0005 of Σmax
+SR-JEANS step  1877 t  18.3390: Σmax   15.857, J 0.0463 at (63, 64), 1 object(s) of mass 2809.6, secondary peak 0.0004 of Σmax
+SR-JEANS step  1957 t  19.1989: Σmax   15.631, J 0.0459 at (63, 64), 1 object(s) of mass 2808.5, secondary peak 0.0004 of Σmax
+SR-JEANS step  2037 t  20.0619: Σmax   15.405, J 0.0456 at (63, 64), 1 object(s) of mass 2807.8, secondary peak 0.0003 of Σmax
+SR-JEANS step  2117 t  20.9282: Σmax   15.190, J 0.0452 at (63, 64), 1 object(s) of mass 2807.5, secondary peak 0.0002 of Σmax
+SR-JEANS step  2197 t  21.7972: Σmax   14.988, J 0.0449 at (63, 64), 1 object(s) of mass 2807.3, secondary peak 0.0002 of Σmax
+SR-JEANS step  2277 t  22.6687: Σmax   14.802, J 0.0446 at (63, 64), 1 object(s) of mass 2807.1, secondary peak 0.0003 of Σmax
+SR-JEANS step  2357 t  23.5426: Σmax   14.617, J 0.0443 at (63, 64), 1 object(s) of mass 2807.0, secondary peak 0.0003 of Σmax
+SR-JEANS step  2437 t  24.4191: Σmax   14.438, J 0.0440 at (63, 64), 1 object(s) of mass 2807.0, secondary peak 0.0003 of Σmax
+SR-JEANS step  2517 t  25.2980: Σmax   14.267, J 0.0437 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0003 of Σmax
+SR-JEANS step  2597 t  26.1792: Σmax   14.113, J 0.0435 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0003 of Σmax
+SR-JEANS step  2677 t  27.0627: Σmax   13.965, J 0.0432 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0002 of Σmax
+SR-JEANS step  2757 t  27.9486: Σmax   13.820, J 0.0430 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  2837 t  28.8369: Σmax   13.690, J 0.0428 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  2917 t  29.7273: Σmax   13.573, J 0.0426 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  2997 t  30.6195: Σmax   13.464, J 0.0424 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  3077 t  31.5136: Σmax   13.362, J 0.0423 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  3157 t  32.4095: Σmax   13.261, J 0.0421 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  3237 t  33.3073: Σmax   13.163, J 0.0420 at (63, 64), 1 object(s) of mass 2806.8, secondary peak 0.0000 of Σmax
+SR-JEANS step  3317 t  34.2067: Σmax   13.067, J 0.0418 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  3397 t  35.1078: Σmax   12.975, J 0.0417 at (63, 64), 1 object(s) of mass 2806.4, secondary peak 0.0000 of Σmax
+SR-JEANS step  3477 t  36.0105: Σmax   12.886, J 0.0416 at (63, 64), 1 object(s) of mass 2806.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  3557 t  36.9148: Σmax   12.799, J 0.0414 at (63, 64), 1 object(s) of mass 2806.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  3637 t  37.8206: Σmax   12.717, J 0.0413 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  3717 t  38.7279: Σmax   12.633, J 0.0411 at (63, 64), 1 object(s) of mass 2806.8, secondary peak 0.0000 of Σmax
+SR-JEANS step  3797 t  39.6367: Σmax   12.549, J 0.0410 at (63, 64), 1 object(s) of mass 2806.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  3877 t  40.5472: Σmax   12.469, J 0.0409 at (63, 64), 1 object(s) of mass 2806.8, secondary peak 0.0000 of Σmax
+SR-JEANS step  3957 t  41.4593: Σmax   12.393, J 0.0408 at (63, 64), 1 object(s) of mass 2806.8, secondary peak 0.0000 of Σmax
+SR-JEANS step  4037 t  42.3728: Σmax   12.322, J 0.0407 at (63, 64), 1 object(s) of mass 2806.8, secondary peak 0.0000 of Σmax
+SR-JEANS step  4117 t  43.2878: Σmax   12.251, J 0.0406 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4197 t  44.2042: Σmax   12.183, J 0.0404 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0001 of Σmax
+SR-JEANS step  4277 t  45.1221: Σmax   12.116, J 0.0403 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0001 of Σmax
+SR-JEANS step  4357 t  46.0415: Σmax   12.052, J 0.0403 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4437 t  46.9621: Σmax   11.991, J 0.0402 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4517 t  47.8841: Σmax   11.930, J 0.0401 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4597 t  48.8074: Σmax   11.869, J 0.0400 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4677 t  49.7320: Σmax   11.809, J 0.0399 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4757 t  50.6579: Σmax   11.749, J 0.0398 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4837 t  51.5850: Σmax   11.692, J 0.0397 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4917 t  52.5134: Σmax   11.636, J 0.0396 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  4997 t  53.4431: Σmax   11.581, J 0.0395 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5077 t  54.3739: Σmax   11.527, J 0.0395 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5157 t  55.3061: Σmax   11.475, J 0.0394 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5237 t  56.2394: Σmax   11.426, J 0.0393 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5317 t  57.1739: Σmax   11.380, J 0.0392 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5397 t  58.1095: Σmax   11.336, J 0.0392 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5477 t  59.0461: Σmax   11.294, J 0.0391 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5557 t  59.9838: Σmax   11.254, J 0.0391 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5637 t  60.9224: Σmax   11.216, J 0.0390 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5717 t  61.8620: Σmax   11.177, J 0.0390 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5797 t  62.8026: Σmax   11.139, J 0.0389 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5877 t  63.7441: Σmax   11.100, J 0.0388 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  5957 t  64.6866: Σmax   11.061, J 0.0388 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  6037 t  65.6302: Σmax   11.021, J 0.0387 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  6117 t  66.5747: Σmax   10.981, J 0.0387 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  6197 t  67.5202: Σmax   10.943, J 0.0386 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  6277 t  68.4667: Σmax   10.906, J 0.0386 at (63, 64), 1 object(s) of mass 2806.6, secondary peak 0.0000 of Σmax
+SR-JEANS step  6357 t  69.4142: Σmax   10.869, J 0.0385 at (63, 64), 1 object(s) of mass 2806.6, secondary peak 0.0000 of Σmax
+SR-JEANS step  6437 t  70.3627: Σmax   10.835, J 0.0385 at (63, 64), 1 object(s) of mass 2806.6, secondary peak 0.0000 of Σmax
+SR-JEANS step  6517 t  71.3121: Σmax   10.802, J 0.0384 at (63, 64), 1 object(s) of mass 2806.6, secondary peak 0.0000 of Σmax
+SR-JEANS step  6597 t  72.2623: Σmax   10.770, J 0.0384 at (63, 64), 1 object(s) of mass 2806.6, secondary peak 0.0000 of Σmax
+SR-JEANS step  6677 t  73.2135: Σmax   10.739, J 0.0383 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  6757 t  74.1655: Σmax   10.710, J 0.0383 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  6837 t  75.1183: Σmax   10.683, J 0.0383 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  6917 t  76.0719: Σmax   10.655, J 0.0382 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  6997 t  77.0263: Σmax   10.627, J 0.0382 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7077 t  77.9815: Σmax   10.600, J 0.0382 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7157 t  78.9375: Σmax   10.573, J 0.0381 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7237 t  79.8942: Σmax   10.548, J 0.0381 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7317 t  80.8517: Σmax   10.522, J 0.0381 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7397 t  81.8099: Σmax   10.497, J 0.0380 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7477 t  82.7689: Σmax   10.472, J 0.0380 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7557 t  83.7286: Σmax   10.447, J 0.0380 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7637 t  84.6890: Σmax   10.422, J 0.0379 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7717 t  85.6502: Σmax   10.398, J 0.0379 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7797 t  86.6121: Σmax   10.373, J 0.0379 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7877 t  87.5747: Σmax   10.349, J 0.0378 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  7957 t  88.5381: Σmax   10.326, J 0.0378 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8037 t  89.5022: Σmax   10.305, J 0.0378 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8117 t  90.4669: Σmax   10.285, J 0.0377 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8197 t  91.4323: Σmax   10.266, J 0.0377 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8277 t  92.3983: Σmax   10.247, J 0.0377 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8357 t  93.3649: Σmax   10.229, J 0.0377 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8437 t  94.3321: Σmax   10.211, J 0.0377 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8517 t  95.2998: Σmax   10.194, J 0.0376 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8597 t  96.2682: Σmax   10.177, J 0.0376 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8677 t  97.2371: Σmax   10.161, J 0.0376 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8757 t  98.2065: Σmax   10.144, J 0.0376 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8837 t  99.1765: Σmax   10.127, J 0.0376 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8917 t 100.1470: Σmax   10.110, J 0.0375 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  8997 t 101.1182: Σmax   10.093, J 0.0375 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9077 t 102.0899: Σmax   10.077, J 0.0375 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9157 t 103.0621: Σmax   10.060, J 0.0375 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9237 t 104.0349: Σmax   10.044, J 0.0375 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9317 t 105.0083: Σmax   10.029, J 0.0375 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9397 t 105.9822: Σmax   10.014, J 0.0374 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9477 t 106.9566: Σmax   10.000, J 0.0374 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9557 t 107.9315: Σmax    9.986, J 0.0374 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9637 t 108.9069: Σmax    9.973, J 0.0374 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9717 t 109.8828: Σmax    9.961, J 0.0374 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9797 t 110.8591: Σmax    9.948, J 0.0374 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9877 t 111.8359: Σmax    9.936, J 0.0374 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  9957 t 112.8132: Σmax    9.924, J 0.0374 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10037 t 113.7909: Σmax    9.913, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10117 t 114.7690: Σmax    9.902, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10197 t 115.7475: Σmax    9.890, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10277 t 116.7265: Σmax    9.879, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10357 t 117.7059: Σmax    9.867, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10437 t 118.6858: Σmax    9.856, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10517 t 119.6661: Σmax    9.844, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10597 t 120.6468: Σmax    9.833, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10677 t 121.6280: Σmax    9.822, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10757 t 122.6096: Σmax    9.811, J 0.0373 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10837 t 123.5916: Σmax    9.800, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10917 t 124.5740: Σmax    9.789, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 10997 t 125.5569: Σmax    9.779, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11077 t 126.5401: Σmax    9.769, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11157 t 127.5237: Σmax    9.759, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11237 t 128.5077: Σmax    9.750, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11317 t 129.4921: Σmax    9.740, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11397 t 130.4769: Σmax    9.730, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11477 t 131.4621: Σmax    9.721, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11557 t 132.4476: Σmax    9.711, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11637 t 133.4335: Σmax    9.701, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11717 t 134.4198: Σmax    9.691, J 0.0372 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11797 t 135.4065: Σmax    9.681, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11877 t 136.3936: Σmax    9.670, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 11957 t 137.3811: Σmax    9.659, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12037 t 138.3690: Σmax    9.649, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12117 t 139.3572: Σmax    9.639, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12197 t 140.3459: Σmax    9.628, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12277 t 141.3349: Σmax    9.618, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12357 t 142.3244: Σmax    9.608, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12437 t 143.3142: Σmax    9.597, J 0.0371 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12517 t 144.3044: Σmax    9.587, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12597 t 145.2951: Σmax    9.577, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12677 t 146.2860: Σmax    9.566, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12757 t 147.2774: Σmax    9.556, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12837 t 148.2692: Σmax    9.546, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12917 t 149.2613: Σmax    9.536, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 12997 t 150.2538: Σmax    9.526, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13077 t 151.2467: Σmax    9.515, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13157 t 152.2400: Σmax    9.503, J 0.0370 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13237 t 153.2338: Σmax    9.492, J 0.0369 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13317 t 154.2279: Σmax    9.481, J 0.0369 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13397 t 155.2225: Σmax    9.471, J 0.0369 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13477 t 156.2174: Σmax    9.461, J 0.0369 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13557 t 157.2127: Σmax    9.450, J 0.0369 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13637 t 158.2084: Σmax    9.439, J 0.0369 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13717 t 159.2044: Σmax    9.428, J 0.0369 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13797 t 160.2009: Σmax    9.417, J 0.0368 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13877 t 161.1978: Σmax    9.406, J 0.0368 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 13957 t 162.1951: Σmax    9.395, J 0.0368 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14037 t 163.1928: Σmax    9.384, J 0.0368 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14117 t 164.1909: Σmax    9.373, J 0.0368 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14197 t 165.1894: Σmax    9.363, J 0.0368 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14277 t 166.1883: Σmax    9.352, J 0.0368 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14357 t 167.1876: Σmax    9.341, J 0.0368 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14437 t 168.1873: Σmax    9.330, J 0.0367 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14517 t 169.1874: Σmax    9.319, J 0.0367 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14597 t 170.1879: Σmax    9.308, J 0.0367 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14677 t 171.1888: Σmax    9.297, J 0.0367 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14757 t 172.1901: Σmax    9.286, J 0.0367 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14837 t 173.1918: Σmax    9.275, J 0.0367 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14917 t 174.1939: Σmax    9.264, J 0.0367 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 14997 t 175.1965: Σmax    9.253, J 0.0366 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15077 t 176.1994: Σmax    9.242, J 0.0366 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15157 t 177.2027: Σmax    9.232, J 0.0366 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15237 t 178.2064: Σmax    9.221, J 0.0366 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15317 t 179.2104: Σmax    9.210, J 0.0366 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15397 t 180.2149: Σmax    9.199, J 0.0366 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15477 t 181.2198: Σmax    9.188, J 0.0366 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15557 t 182.2251: Σmax    9.177, J 0.0365 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15637 t 183.2308: Σmax    9.166, J 0.0365 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15717 t 184.2368: Σmax    9.155, J 0.0365 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15797 t 185.2433: Σmax    9.145, J 0.0365 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15877 t 186.2502: Σmax    9.134, J 0.0365 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 15957 t 187.2575: Σmax    9.123, J 0.0365 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16037 t 188.2652: Σmax    9.112, J 0.0365 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16117 t 189.2732: Σmax    9.101, J 0.0364 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16197 t 190.2817: Σmax    9.090, J 0.0364 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16277 t 191.2906: Σmax    9.079, J 0.0364 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16357 t 192.2998: Σmax    9.069, J 0.0364 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16437 t 193.3095: Σmax    9.058, J 0.0364 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16517 t 194.3195: Σmax    9.047, J 0.0364 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16597 t 195.3300: Σmax    9.036, J 0.0363 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16677 t 196.3408: Σmax    9.026, J 0.0363 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16757 t 197.3520: Σmax    9.015, J 0.0363 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16837 t 198.3636: Σmax    9.004, J 0.0363 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16917 t 199.3756: Σmax    8.993, J 0.0363 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 16997 t 200.3880: Σmax    8.982, J 0.0363 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17077 t 201.4008: Σmax    8.971, J 0.0363 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17157 t 202.4140: Σmax    8.961, J 0.0362 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17237 t 203.4276: Σmax    8.950, J 0.0362 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17317 t 204.4416: Σmax    8.939, J 0.0362 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17397 t 205.4559: Σmax    8.929, J 0.0362 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17477 t 206.4707: Σmax    8.918, J 0.0362 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17557 t 207.4858: Σmax    8.907, J 0.0362 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17637 t 208.5014: Σmax    8.897, J 0.0361 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17717 t 209.5173: Σmax    8.886, J 0.0361 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17797 t 210.5336: Σmax    8.876, J 0.0361 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17877 t 211.5503: Σmax    8.865, J 0.0361 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 17957 t 212.5673: Σmax    8.855, J 0.0361 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18037 t 213.5848: Σmax    8.844, J 0.0361 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18117 t 214.6027: Σmax    8.834, J 0.0361 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18197 t 215.6209: Σmax    8.823, J 0.0360 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18277 t 216.6395: Σmax    8.813, J 0.0360 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18357 t 217.6585: Σmax    8.803, J 0.0360 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18437 t 218.6779: Σmax    8.792, J 0.0360 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18517 t 219.6976: Σmax    8.782, J 0.0360 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18597 t 220.7177: Σmax    8.772, J 0.0360 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18677 t 221.7383: Σmax    8.762, J 0.0360 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18757 t 222.7591: Σmax    8.752, J 0.0359 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18837 t 223.7804: Σmax    8.742, J 0.0359 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18917 t 224.8020: Σmax    8.732, J 0.0359 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 18997 t 225.8240: Σmax    8.722, J 0.0359 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19077 t 226.8464: Σmax    8.712, J 0.0359 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19157 t 227.8691: Σmax    8.702, J 0.0359 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19237 t 228.8922: Σmax    8.692, J 0.0358 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19317 t 229.9157: Σmax    8.683, J 0.0358 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19397 t 230.9395: Σmax    8.673, J 0.0358 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19477 t 231.9637: Σmax    8.664, J 0.0358 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19557 t 232.9883: Σmax    8.654, J 0.0358 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19637 t 234.0132: Σmax    8.644, J 0.0358 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19717 t 235.0384: Σmax    8.635, J 0.0358 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19797 t 236.0641: Σmax    8.626, J 0.0357 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19877 t 237.0901: Σmax    8.616, J 0.0357 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 19957 t 238.1164: Σmax    8.607, J 0.0357 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS step 20005 t 238.7324: Σmax    8.601, J 0.0357 at (63, 64), 1 object(s) of mass 2806.7, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 8.601 after 20005 steps, t = 238.7324 (start 0.9997, target 100.0); 2537 summaries
+
+thread 'jeans::the_collapse_reaches_a_hundred_times_the_central_sigma' (1425722) panicked at crates/sr-engine/tests/gpu/jeans.rs:394:5:
+the collapse never reached 100 × the central Σ (100.0): the largest Σ was 60.736 after 20005 steps (t = 238.7324) — stopped by pressure, or cut by the 20000-step cap
+FAILED
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... 
+thread 'jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary' (1425723) panicked at crates/sr-engine/tests/gpu/jeans.rs:407:5:
+the collapse never reached 100 ×: its largest Σ was 60.736
+FAILED
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+ok
+test jeans::the_scene_is_the_disk_cloud_with_a_tenth_of_w_in_heat_and_a_deterministic_one_percent_ripple ... 
+thread 'jeans::the_scene_is_the_disk_cloud_with_a_tenth_of_w_in_heat_and_a_deterministic_one_percent_ripple' (1425725) panicked at crates/sr-engine/tests/gpu/jeans.rs:263:5:
+the shipped constants: [("k1e", 0.0), ("k1n", 0.0), ("k2e", 0.0), ("k2n", 0.0)]
+FAILED
+
+failures:
+
+failures:
+    jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak
+    jeans::the_collapse_reaches_a_hundred_times_the_central_sigma
+    jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary
+    jeans::the_scene_is_the_disk_cloud_with_a_tenth_of_w_in_heat_and_a_deterministic_one_percent_ripple
+
+test result: FAILED. 1 passed; 4 failed; 0 ignored; 0 measured; 268 filtered out; finished in 17.07s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+real	0m23.760s
+user	0m32.096s
+sys	0m0.979s

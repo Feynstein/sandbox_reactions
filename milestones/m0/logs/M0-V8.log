@@ -1,0 +1,96 @@
+== 2026-10-16T11:30:59-04:00 d_c probe on M0-T63's dumps (Quadro run, build/m0-t63-dumps)
+step    100 t    2.298  Σc   2.0017  Tc    9.489  X_H,c 0.7346  d_c 0.6266  Π_th    31.630  Π_e    53.082  cell (300,200)  mass 3351.026
+step    200 t    3.584  Σc  10.1032  Tc   47.462  X_H,c 0.7346  d_c 0.5821  Π_th   798.525  Π_e  1112.144  cell (300,199)  mass 3351.020
+step    300 t    4.532  Σc  12.3909  Tc   59.132  X_H,c 0.7344  d_c 0.5700  Π_th  1219.943  Π_e  1616.834  cell (299,200)  mass 3351.015
+step    400 t    5.315  Σc   7.3923  Tc   35.477  X_H,c 0.7343  d_c 0.5884  Π_th   436.635  Π_e   624.083  cell (299,200)  mass 3351.007
+step    500 t    5.854  Σc   5.7252  Tc   27.453  X_H,c 0.7343  d_c 0.5970  Π_th   261.683  Π_e   387.689  cell (299,200)  mass 3350.991
+step    600 t    6.457  Σc   4.9225  Tc   23.580  X_H,c 0.7343  d_c 0.6019  Π_th   193.248  Π_e   292.156  cell (300,199)  mass 3350.970
+step    700 t    7.127  Σc   4.6929  Tc   22.451  X_H,c 0.7343  d_c 0.6036  Π_th   175.416  Π_e   267.095  cell (299,200)  mass 3350.946
+step    800 t    7.878  Σc   4.9896  Tc   23.827  X_H,c 0.7343  d_c 0.6022  Π_th   197.934  Π_e   299.672  cell (300,199)  mass 3350.919
+step    900 t    8.712  Σc   5.8814  Tc   27.998  X_H,c 0.7343  d_c 0.5979  Π_th   274.157  Π_e   407.687  cell (300,200)  mass 3350.888
+step   1000 t    9.608  Σc   7.1085  Tc   33.698  X_H,c 0.7343  d_c 0.5927  Π_th   398.821  Π_e   580.326  cell (299,199)  mass 3350.853
+step   1100 t   10.570  Σc   7.7419  Tc   36.542  X_H,c 0.7343  d_c 0.5908  Π_th   471.010  Π_e   679.962  cell (300,199)  mass 3350.812
+step   1200 t   11.608  Σc   7.1300  Tc   33.507  X_H,c 0.7343  d_c 0.5947  Π_th   397.760  Π_e   583.592  cell (300,199)  mass 3350.761
+step   1300 t   12.675  Σc   6.0490  Tc   28.327  X_H,c 0.7343  d_c 0.6010  Π_th   285.279  Π_e   429.644  cell (300,199)  mass 3350.687
+step   1400 t   13.744  Σc   5.8842  Tc   27.446  X_H,c 0.7343  d_c 0.6028  Π_th   268.885  Π_e   408.057  cell (300,199)  mass 3350.136
+step   1500 t   14.806  Σc   6.3405  Tc   29.461  X_H,c 0.7343  d_c 0.6013  Π_th   311.003  Π_e   469.082  cell (300,199)  mass 3347.870
+step   1600 t   15.844  Σc   6.8778  Tc   31.828  X_H,c 0.7343  d_c 0.5996  Π_th   364.463  Π_e   545.787  cell (300,199)  mass 3344.107
+step   1700 t   16.875  Σc   6.9972  Tc   32.241  X_H,c 0.7343  d_c 0.6001  Π_th   375.606  Π_e   563.550  cell (299,199)  mass 3339.272
+step   1800 t   17.913  Σc   6.6564  Tc   30.554  X_H,c 0.7343  d_c 0.6026  Π_th   338.606  Π_e   513.546  cell (299,199)  mass 3333.370
+step   1900 t   18.966  Σc   6.3621  Tc   29.098  X_H,c 0.7343  d_c 0.6050  Π_th   308.223  Π_e   472.064  cell (299,199)  mass 3326.609
+step   2000 t   20.038  Σc   6.3506  Tc   28.946  X_H,c 0.7343  d_c 0.6059  Π_th   306.053  Π_e   470.471  cell (300,200)  mass 3318.696
+step   2100 t   21.251  Σc   6.5599  Tc   29.799  X_H,c 0.7343  d_c 0.6056  Π_th   325.454  Π_e   499.772  cell (300,200)  mass 3309.012
+step   2200 t   22.501  Σc   6.7149  Tc   30.407  X_H,c 0.7343  d_c 0.6056  Π_th   339.947  Π_e   521.987  cell (300,200)  mass 3299.050
+step   2300 t   23.748  Σc   6.6424  Tc   29.994  X_H,c 0.7343  d_c 0.6066  Π_th   331.702  Π_e   511.537  cell (300,200)  mass 3289.311
+step   2400 t   25.007  Σc   6.5111  Tc   29.326  X_H,c 0.7343  d_c 0.6079  Π_th   317.908  Π_e   492.866  cell (300,200)  mass 3279.880
+step   2500 t   26.274  Σc   6.4923  Tc   29.172  X_H,c 0.7343  d_c 0.6086  Π_th   315.326  Π_e   490.218  cell (299,199)  mass 3270.929
+step   2600 t   27.538  Σc   6.5570  Tc   29.413  X_H,c 0.7343  d_c 0.6086  Π_th   321.104  Π_e   499.365  cell (299,199)  mass 3262.615
+step   2700 t   28.797  Σc   6.5949  Tc   29.552  X_H,c 0.7343  d_c 0.6087  Π_th   324.486  Π_e   504.755  cell (299,199)  mass 3254.984
+step   2800 t   30.056  Σc   6.5641  Tc   29.392  X_H,c 0.7343  d_c 0.6090  Π_th   321.218  Π_e   500.368  cell (299,199)  mass 3248.002
+step   2900 t   31.319  Σc   6.5140  Tc   29.154  X_H,c 0.7343  d_c 0.6094  Π_th   316.186  Π_e   493.278  cell (299,199)  mass 3241.627
+step   3000 t   32.586  Σc   6.4933  Tc   29.054  X_H,c 0.7343  d_c 0.6096  Π_th   314.105  Π_e   490.365  cell (299,199)  mass 3235.704
+== 2026-10-16T11:37:04-04:00 p1: build/target/release/sandbox-reactions headless --scene preset:sun --steps 3000 --adapter RTX 5090 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/p1 (load 41.80)
+SR-ERROR bad arguments: unknown argument "5090"
+rc=4 wall=0 s
+== 2026-10-16T11:37:04-04:00 p0: build/target/release/sandbox-reactions headless --scene /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/sun_shipped.json --until stage:h_shell --max-steps 6000 --dump-every 500 --adapter RTX 5090 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/p0 (load 41.80)
+SR-ERROR bad arguments: unknown argument "5090"
+rc=4 wall=0 s
+== 2026-10-16T11:37:04-04:00 p2: build/target/release/sandbox-reactions headless --scene /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/sun_k1e_quarter.json --until stage:h_shell --max-steps 6000 --dump-every 500 --adapter RTX 5090 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/p2 (load 41.80)
+SR-ERROR bad arguments: unknown argument "5090"
+rc=4 wall=0 s
+== 2026-10-16T11:37:26-04:00 p1: build/target/release/sandbox-reactions headless --scene preset:sun --steps 3000 --adapter RTX 5090 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/p1 (load 43.49)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=32.596389 until=none
+p1: rc=0 wall=30 s, SR-WARN heat lines: 0
+== 2026-10-16T11:37:56-04:00 p0: build/target/release/sandbox-reactions headless --scene /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/sun_shipped.json --until stage:h_shell --max-steps 6000 --dump-every 500 --adapter RTX 5090 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/p0 (load 47.56)
+steps 3000 sim 32.59638911858201 until {'condition': 'steps:3000', 'met': True}
+events [{"detail": {"mass_sb": 3350.983170366846}, "kind": "ignition", "object": 1, "sim_time": 4.134727789089084, "step": 257}]
+objects [{"id": 1, "mass_sb": 3158.1116296201944, "stage": "cloud", "stages": [{"from_step": 1793, "sim_time": 17.84844935592264, "stage": "cloud"}]}]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=6000 sim_time=71.015649 until=unmet
+p0: rc=2 wall=43 s, SR-WARN heat lines: 0
+== 2026-10-16T11:38:39-04:00 p2: build/target/release/sandbox-reactions headless --scene /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/sun_k1e_quarter.json --until stage:h_shell --max-steps 6000 --dump-every 500 --adapter RTX 5090 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/p2 (load 64.88)
+SR-ERROR bad scene: scene "/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/sun_k1e_quarter.json": /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/sun_k1e_quarter.json: overrides: physics.json: sigma_n: must be ≥ 2 (k2e/k1e)² = 1266.4859265136988 (§2.5.1), got 160
+p2: rc=4 wall=0 s, SR-WARN heat lines: 0
+== 2026-10-16T11:38:56-04:00 p2: build/target/release/sandbox-reactions headless --scene /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/sun_k1e_quarter.json --until stage:h_shell --max-steps 6000 --dump-every 500 --adapter RTX 5090 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8probe/p2 (load 63.32)
+P0 steps 6000 sim 71.016 until {'condition': 'stage:h_shell', 'met': False}
+events [{"detail": {"mass_sb": 3351.0098953805864}, "kind": "ignition", "object": 1, "sim_time": 3.831307116895914, "step": 225}]
+objects [{"id": 1, "mass_sb": 3094.97384695895, "stage": "cloud", "stages": [{"from_step": 33, "sim_time": 0.9118240103125572, "stage": "failed_star"}, {"from_step": 257, "sim_time": 4.134727789089084, "stage": "main_sequence"}, {"from_step": 417, "sim_time": 5.405875446274877, "stage": "cloud"}]}]
+nuclear_released start/end 0.0 1598.1007700689831 radiated end 22497.784937347948
+step    500 t    5.854  Σc   5.7249  Tc   27.452  X_H,c 0.7343  d_c 0.5970  Π_th   261.654  Π_e   387.647  cell (300,200)  mass 3350.991
+step   1000 t    9.610  Σc   7.1101  Tc   33.706  X_H,c 0.7343  d_c 0.5927  Π_th   398.999  Π_e   580.561  cell (299,199)  mass 3350.852
+step   1500 t   14.809  Σc   6.3422  Tc   29.469  X_H,c 0.7343  d_c 0.6013  Π_th   311.174  Π_e   469.316  cell (300,200)  mass 3347.861
+step   2000 t   20.047  Σc   6.3514  Tc   28.950  X_H,c 0.7343  d_c 0.6059  Π_th   306.135  Π_e   470.585  cell (300,200)  mass 3318.609
+step   2500 t   26.284  Σc   6.4924  Tc   29.173  X_H,c 0.7343  d_c 0.6085  Π_th   315.345  Π_e   490.236  cell (299,199)  mass 3270.851
+step   3000 t   32.596  Σc   6.4931  Tc   29.054  X_H,c 0.7343  d_c 0.6095  Π_th   314.094  Π_e   490.336  cell (300,200)  mass 3235.647
+step   3500 t   38.936  Σc   6.4463  Tc   28.908  X_H,c 0.7343  d_c 0.6093  Π_th   310.257  Π_e   483.779  cell (300,200)  mass 3204.401
+step   4000 t   45.303  Σc   6.3719  Tc   28.776  X_H,c 0.7343  d_c 0.6080  Π_th   305.276  Π_e   473.423  cell (299,200)  mass 3182.614
+step   4500 t   51.696  Σc   6.2892  Tc   28.681  X_H,c 0.7343  d_c 0.6061  Π_th   300.323  Π_e   462.027  cell (299,200)  mass 3165.073
+step   5000 t   58.116  Σc   6.2090  Tc   28.620  X_H,c 0.7343  d_c 0.6039  Π_th   295.864  Π_e   451.102  cell (299,200)  mass 3154.136
+step   5500 t   64.558  Σc   6.1412  Tc   28.580  X_H,c 0.7343  d_c 0.6020  Π_th   292.218  Π_e   441.952  cell (300,200)  mass 3146.265
+step   6000 t   71.016  Σc   6.0955  Tc   28.578  X_H,c 0.7343  d_c 0.6004  Π_th   290.022  Π_e   435.835  cell (300,200)  mass 3140.588
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=6000 sim_time=243.530869 until=unmet
+p2: rc=2 wall=45 s, SR-WARN heat lines: 3
+P2 steps 6000 sim 243.531 until {'condition': 'stage:h_shell', 'met': False}
+events [{"detail": {"mass_sb": 3350.9447001921944}, "kind": "ignition", "object": 1, "sim_time": 3.1783481296151876, "step": 161}]
+objects []
+nuclear_released end 28573189.704782356 radiated end 388731.8549382991 escaped mass 3348.566150019047
+== P2 (k1e 5.325) 2026-10-16T11:41:05-04:00
+step    500 t    4.564  Σc   1.2915  Tc   36.525  X_H,c 0.0000  d_c 0.0755  Π_th    22.743  Π_e     1.857  cell (300,230)  mass 3350.969
+step   1000 t    7.093  Σc   0.4707  Tc   12.462  X_H,c 0.0000  d_c 0.0811  Π_th     2.828  Π_e     0.250  cell (300,266)  mass 3350.790
+step   1500 t   10.602  Σc   0.3838  Tc    9.676  X_H,c 0.0000  d_c 0.0850  Π_th     1.790  Π_e     0.166  cell (300,310)  mass 3350.493
+step   2000 t   15.409  Σc   0.3879  Tc    9.768  X_H,c 0.0000  d_c 0.0851  Π_th     1.827  Π_e     0.170  cell (300,368)  mass 3339.022
+step   2500 t   22.200  Σc   0.2780  Tc    6.844  X_H,c 0.0000  d_c 0.0870  Π_th     0.917  Π_e     0.087  cell (55,199)  mass 2277.428
+step   3000 t   31.899  Σc   0.1230  Tc    2.969  X_H,c 0.0000  d_c 0.0890  Π_th     0.176  Π_e     0.017  cell (546,0)  mass 558.658
+step   3500 t   43.457  Σc   0.0006  Tc    0.412  X_H,c 0.0000  d_c 0.0032  Π_th     0.000  Π_e     0.000  cell (77,398)  mass 65.141
+step   4000 t   60.788  Σc   0.0001  Tc    0.050  X_H,c 0.0000  d_c 0.0061  Π_th     0.000  Π_e     0.000  cell (1,398)  mass 30.537
+step   4500 t   86.665  Σc   0.0001  Tc    0.050  X_H,c 0.0000  d_c 0.0029  Π_th     0.000  Π_e     0.000  cell (1,398)  mass 14.298
+step   5000 t  123.400  Σc   0.0000  Tc    0.050  X_H,c 0.0000  d_c 0.0014  Π_th     0.000  Π_e     0.000  cell (1,398)  mass 6.833
+step   5500 t  174.432  Σc   0.0000  Tc    0.050  X_H,c 0.0000  d_c 0.0007  Π_th     0.000  Π_e     0.000  cell (1,398)  mass 3.353
+step   6000 t  243.531  Σc   0.0000  Tc    0.050  X_H,c 0.0000  d_c 0.0003  Π_th     0.000  Π_e     0.000  cell (1,398)  mass 1.699
+== 2026-10-16T11:50:20-04:00 V8PROBE build in the scratch copy /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4db0ea20-b004-4934-af8a-e1fbecfc1170/scratchpad/v8copy (watch.rs: an eprintln under SR_V8_PROBE)
+== 2026-10-16T11:50:27-04:00 V8PROBE run: headless --scene preset:sun --until stage:h_shell --max-steps 1200 --adapter "RTX 5090" (load 42.85)
+rc=2
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1200 sim_time=11.607627 until=unmet

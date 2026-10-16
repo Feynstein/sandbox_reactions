@@ -1,0 +1,16 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -308,11 +308,11 @@
+     f[0] = mass;
+     // Constant indices: an index from `dir` would keep the array out of registers.
+     if (dir == 0u) {
+-        f[1] = mass * un + p.pi;
++        f[1] = mass * un;
+         f[2] = mass * ut;
+     } else {
+         f[1] = mass * ut;
+-        f[2] = mass * un + p.pi;
++        f[2] = mass * un;
+     }
+     f[3] = (energy + p.pi) * un;
+     for (var i = 0u; i < N_SPECIES; i++) {

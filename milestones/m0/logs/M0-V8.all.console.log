@@ -1,0 +1,63 @@
+2026-10-16T11:23:36-04:00
+ 11:23:36 up  2:35,  1 user,  load average: 27.88, 28.37, 32.71
+plan_lint        550/0/0      0.12 s  GO · step 1/52, 51 left
+tools_selftest   10/0/0      21.70 s  GO · step 2/52, 50 left
+toolchain        3/0/0        0.50 s  GO · step 3/52, 49 left
+build            2/0/0        0.84 s  GO · step 4/52, 48 left
+registry         29/0/0       0.17 s  GO · step 5/52, 47 left
+eos              13/0/0       0.17 s  GO · step 6/52, 46 left
+rates            8/0/0        0.17 s  GO · step 7/52, 45 left
+burn_cell        16/0/0       6.29 s  GO · step 8/52, 44 left
+burn_order       4/0/0        2.27 s  GO · step 9/52, 43 left
+neutrino         18/0/0       7.95 s  GO · step 10/52, 42 left
+sink             30/0/0      25.77 s  GO · step 11/52, 41 left
+nu_heat          15/0/0      12.41 s  GO · step 12/52, 40 left
+summary          7/0/0        7.99 s  GO · step 13/52, 39 left
+ledger           4/0/0        3.07 s  GO · step 14/52, 38 left
+preset_cloud     5/0/0       55.46 s  GO · step 15/52, 37 left
+observe_run      5/0/0        8.40 s  GO · step 16/52, 36 left
+objects          15/0/0       0.11 s  GO · step 17/52, 35 left
+classify         30/0/0       0.12 s  GO · step 18/52, 34 left
+fft_twin         10/0/0       0.17 s  GO · step 19/52, 33 left
+riemann          8/0/0        0.12 s  GO · step 20/52, 32 left
+sod              15/0/0      12.62 s  GO · step 21/52, 31 left
+edges            7/0/0       16.30 s  GO · step 22/52, 30 left
+collapse         6/0/0        3.33 s  GO · step 23/52, 29 left
+jeans            5/0/0        1.33 s  GO · step 24/52, 28 left
+twin             6/0/0        2.42 s  GO · step 25/52, 27 left
+cpu_gpu          3/0/0       11.01 s  GO · step 26/52, 26 left
+heat_gauss       10/0/0       3.38 s  GO · step 27/52, 25 left
+heat_implicit    6/0/0        2.53 s  GO · step 28/52, 24 left
+heat_limiter     6/0/0        2.38 s  GO · step 29/52, 23 left
+heat_stiff       6/0/0        2.42 s  GO · step 30/52, 22 left
+radiation_force  3/0/0        2.12 s  GO · step 31/52, 21 left
+grav_force       13/0/0       6.50 s  GO · step 32/52, 20 left
+grav_selfforce   5/0/0        2.92 s  GO · step 33/52, 19 left
+fft              8/0/0        7.19 s  GO · step 34/52, 18 left
+time_control     18/0/0       0.22 s  GO · step 35/52, 17 left
+strings          3/0/0        0.17 s  GO · step 36/52, 16 left
+adapter          10/0/0       4.33 s  GO · step 37/52, 15 left
+state            6/0/0        4.43 s  GO · step 38/52, 14 left
+booking          4/0/0        3.97 s  GO · step 39/52, 13 left
+floors           7/0/0        6.93 s  GO · step 40/52, 12 left
+dt               6/0/0        5.12 s  GO · step 41/52, 11 left
+box              8/0/0        7.04 s  GO · step 42/52, 10 left
+latch            5/0/0        4.07 s  GO · step 43/52, 9 left
+timing           5/0/0        9.95 s  GO · step 44/52, 8 left
+scene            8/0/0        3.57 s  GO · step 45/52, 7 left
+dump             11/0/0      14.34 s  GO · step 46/52, 6 left
+boot             1/0/0        4.04 s  GO · step 47/52, 5 left
+desktop          1/1/0        9.76 s  NO-GO · step 48/52, 4 left
+web              3/0/0       22.83 s  GO · step 49/52, 3 left
+capture          2/0/0        1.59 s  GO · step 50/52, 2 left
+licences         3/0/0        0.95 s  GO · step 51/52, 1 left
+watch_only       1/0/0        0.12 s  GO · step 52/52, 0 left
+logs: milestones/m0/logs/M0-V8.<scope>.log · record: loop_times.jsonl · tree 60dc024b5d2e+a09a55ab58e6
+anchor: 83 path×scope entries moved by this run
+anchor: 143 paths checked · 197 skipped (3 classes) · 82 never checked · 0 stale · 0 unclassified · 0 owed · 225 covered of 422 visible
+FAILED:
+  desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready · log milestones/m0/logs/M0-V8.desktop.log
+verify: 983 passed, 1 failed, 0 skipped · 51/52 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 59.85 s + loop 0.08 s · mode all · jobs 8 · box laserax-ai · python 3.12.3 · load 27.88->29.92 · base: M0-V8's start 2026-10-16T11:17:40-04:00
+=== NO-GO: desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready · log milestones/m0/logs/M0-V8.desktop.log ===
+2026-10-16T11:24:36-04:00
+ 11:24:36 up  2:36,  1 user,  load average: 29.92, 28.82, 32.58

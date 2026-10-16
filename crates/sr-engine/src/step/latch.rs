@@ -305,6 +305,31 @@ impl Step {
         frames.map(|(report, summary)| Frame { report, summary: summary.expect("decoded") }).collect()
     }
 
+    /// The block summary of the state as it stands, outside a frame (M0-T57): one submission, waited for — headless and the
+    /// tests, which run bare steps. The frame accumulators it summed are cleared in the same submission, so the next
+    /// summary holds what accrued after this one. Blocks on the device (native and headless only, §6.3).
+    pub fn summarise(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> crate::summary::BlockSummary {
+        let staging = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("summary.snapshot"),
+            size: self.summary.bytes(),
+            usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+        });
+        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("summary.snapshot") });
+        self.summary.encode(&mut encoder, &staging, 0);
+        self.summary.encode_reset(&mut encoder);
+        queue.submit([encoder.finish()]);
+        let (tx, rx) = std::sync::mpsc::channel();
+        staging.map_async(wgpu::MapMode::Read, .., move |r| {
+            let _ = tx.send(r);
+        });
+        device.poll(wgpu::PollType::wait_indefinitely()).unwrap_or_else(|e| panic!("summary.snapshot: device lost: {e}"));
+        rx.recv().expect("map callback dropped").unwrap_or_else(|e| panic!("summary.snapshot: map failed: {e}"));
+        let summary = Summary::decode(&staging.get_mapped_range(..).expect("mapped for reading"));
+        staging.unmap();
+        summary
+    }
+
     /// The frames whose readback has arrived, in submission order, each summary decoded when `summaries`.
     fn drain(&self, device: &wgpu::Device, summaries: bool) -> Vec<(FrameReport, Option<crate::summary::BlockSummary>)> {
         let _ = device.poll(wgpu::PollType::Poll);

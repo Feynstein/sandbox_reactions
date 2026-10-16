@@ -1,0 +1,136 @@
+== 2026-10-16T09:11:49-04:00 boot · task M0-T58b · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 5.02 s
+headless-boot: ready - exit 0, 2.7s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T58b.launch.headless-boot.log)
+headless-boot: pid 343658 not signalled - gone
+headless-boot: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T58b.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "Quadro RTX 4000"
+  },
+  "events": [],
+  "git": "60dc024",
+  "ledger": {
+    "end": {
+      "energy": {
+        "cold": 179624.4790416194,
+        "escaped": 0.0,
+        "floor_added": -0.11384435964836859,
+        "invariant": -200902.1508152788,
+        "kinetic": 71259.3627957074,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 0.0,
+        "potential": -578402.9649096305,
+        "radiated": 0.10133053171939763,
+        "swallowed": 0.0,
+        "thermal": 126616.75708213354,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3351.6381806767413,
+        "invariant": 3351.6502798015886,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.012099124847282816
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          0.0008687051374636212,
+          0.0014647823829818662
+        ],
+        "invariant": [
+          0.0008687051374636212,
+          0.0014647823829818662
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 3.583197556436062,
+      "step": 200
+    },
+    "start": {
+      "energy": {
+        "cold": 37049.51038437028,
+        "escaped": 0.0,
+        "floor_added": 0.0,
+        "invariant": -200698.12675196584,
+        "kinetic": 11.164854073897004,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 0.0,
+        "potential": -264179.01435107546,
+        "radiated": 0.0,
+        "swallowed": 0.0,
+        "thermal": 26420.21236066545,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3351.6502770749216,
+        "invariant": 3351.6502770749216,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.0
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          1.5386904124170542e-6,
+          -4.4726766645908356e-7
+        ],
+        "invariant": [
+          1.5386904124170542e-6,
+          -4.4726766645908356e-7
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 0.030264107510447502,
+      "step": 1
+    }
+  },
+  "objects": [],
+  "scene": "preset:sun",
+  "sim_time": 3.583197556436062,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 0.875692337,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 0 s, booted and checked in 5 s
+=== GO ===
+
