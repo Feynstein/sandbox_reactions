@@ -238,6 +238,20 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     off (60.7 with P5 on; 12.7 with the shipped K's) and never meets 100 ×; at 0.05|W| it reaches 110 × at t = 3.19 (159 steps)
     with J ≤ 0.129, one object and no secondary peak; at 0.02|W| it fragments (J = 3.97, a second peak at 100 % of the central Σ)
     — the lead's answer at M0-T62, 2026-10-16: «U_th = 0.05|W|, keep 100× (Recommended)».
+  - [M0-D53] §1.9.2's "L (radiated ÷ the frame's sim time)" summed over the object's own blocks, §1.9.4's "*Ignition*: the
+    object's `ignited` flag first turns on, at L_H ≥ 0.5 L" and §1.9.3's main_sequence row "L_H ≥ 0.5 L and X_H,c ≥ 10⁻³" ·
+    **the nearest star**: L is the light leaving the object's own blocks plus the light of every block outside every listed
+    object (a halo under Σ_obj, a wisp's blocks), each such block's credited whole to the listed object whose member block is
+    nearest (block centres, Euclidean; a tie to the heavier object, then the lower id), ÷ the frame's sim time — a box with no
+    listed object credits none; **burning matches light**: ignition and main_sequence's hydrogen test read 0.5 L ≤ L_H ≤ 2 L
+    (L > 0), X_H,c ≥ 10⁻³ kept on the row; every other row's comparison with L unchanged · §2.4.4 books the light at the
+    emitting cell, the last gas before vacuum, which on a real star sits in a halo between Σ_vac and Σ_obj: measured on
+    win-laptop (Laser2025-20, RTX 4080 Laptop), 2026-10-16, `preset:sun --until stage:h_shell --max-steps 1200` (M0-D53,
+    logs/M0-D53.probe.log; M0-V8 first on the RTX 5090) — the object's own blocks radiate 4.4 % of the box's light over the
+    run (99.5 % to step 337, 4.4 % after the bounce, none from step 385), so L read 0 and the stage `cloud` while the box
+    shone 3.0 × 10⁴; and before the bounce L ≈ 2.7 × 10⁻⁷, so a flash of L_H 277 at step 225 that burned 0.04 % of the
+    centre's hydrogen turned `ignited` on — the lead's answers at M0-V18, 2026-10-16: «Nearest star (Recommended)»,
+    «Burning matches light (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

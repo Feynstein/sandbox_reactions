@@ -10,6 +10,12 @@
 //!   by the shared weight, largest first, ties by the lower id, each id once — so on a merge the heavier id survives and
 //!   on a split the larger part keeps it;
 //! - K is the gas's kinetic energy (the sinks' ½Mv² is not in it), and v_r weights the sinks in with their mass.
+//!
+//! L, the nearest star (contract §0.5 [M0-D53]; the lead at M0-V18, «Nearest star (Recommended)»): the light a block outside
+//! every listed object radiates — a halo under Σ_obj, a wisp's blocks — is credited to the listed object whose member block
+//! is nearest (block centres, Euclidean); ties go to the heavier object, then the lower id. Declared in M0-D53's handoff:
+//! only an object's edge blocks are searched (an inner block always has a nearer neighbour of its own object), and a box
+//! with no listed object credits its light to none.
 
 use std::collections::BTreeMap;
 
@@ -64,8 +70,10 @@ pub struct Object {
     pub radius: f64,
     /// τ_dyn = √(R³/GM).
     pub tau_dyn: f64,
-    /// L, the frame's radiated energy ÷ its sim time.
+    /// L, the frame's radiated energy ÷ its sim time: its own blocks' and the light credited to it as the nearest star.
     pub luminosity: f64,
+    /// The part of L that left the object's own member blocks.
+    pub luminosity_own: f64,
     /// L_g by group ([`GROUPS`]; L_N ≤ 0 is the neutronization's absorbed power).
     pub l_group: [f64; 7],
     /// L_nuc: the sum of the positive L_g.
@@ -123,18 +131,22 @@ impl Tracker {
 
     /// A frame's report in: its objects out, by id. Every id is new or inherited by §1.9.2's rule, never reused.
     pub fn update(&mut self, report: &Report) -> &[Object] {
-        let mut found: Vec<(Object, Weights)> = components(&self.config, report)
+        let mut found: Vec<(Object, Weights, Vec<usize>)> = components(&self.config, report)
             .into_iter()
-            .map(|c| measure(&self.config, report, &c))
-            .filter(|(o, _)| o.mass >= self.config.wisp_mass)
+            .map(|c| {
+                let (object, weights) = measure(&self.config, report, &c);
+                (object, weights, c)
+            })
+            .filter(|(o, _, _)| o.mass >= self.config.wisp_mass)
             .collect();
-        let ids = self.inherit(&found.iter().map(|(_, b)| b).collect::<Vec<_>>());
+        let ids = self.inherit(&found.iter().map(|(_, b, _)| b).collect::<Vec<_>>());
         let mut previous = Vec::with_capacity(found.len());
-        for ((object, blocks), id) in found.iter_mut().zip(ids) {
+        for ((object, blocks, _), id) in found.iter_mut().zip(ids) {
             object.id = id;
             previous.push(Previous { id, weight: blocks.values().sum(), blocks: std::mem::take(blocks) });
         }
-        self.objects = found.into_iter().map(|(o, _)| o).collect();
+        credit_light(report, &mut found);
+        self.objects = found.into_iter().map(|(o, _, _)| o).collect();
         self.objects.sort_by_key(|o| o.id);
         self.previous = previous;
         &self.objects
@@ -211,6 +223,65 @@ fn components(config: &TrackerConfig, report: &Report) -> Vec<Vec<usize>> {
         out.push(list);
     }
     out
+}
+
+/// The nearest star's light (§0.5 [M0-D53]): each block outside every listed object adds its radiated energy to the L of
+/// the listed object whose member block is nearest; ties to the heavier object, then the lower id.
+fn credit_light(report: &Report, objects: &mut [(Object, Weights, Vec<usize>)]) {
+    let columns = report.columns as i64;
+    if columns == 0 || objects.is_empty() || report.sim_dt <= 0.0 {
+        return;
+    }
+    let rows = report.blocks.len() as i64 / columns;
+    let mut owner: Vec<Option<usize>> = vec![None; report.blocks.len()];
+    for (k, (_, _, list)) in objects.iter().enumerate() {
+        for &i in list {
+            owner[i] = Some(k);
+        }
+    }
+    // Each object's edge blocks: an 8-neighbour outside the box or not its own.
+    let edge: Vec<(i64, i64, usize)> = objects
+        .iter()
+        .enumerate()
+        .flat_map(|(k, (_, _, list))| list.iter().map(move |&i| (k, i)))
+        .filter(|&(k, i)| {
+            let (x, y) = (i as i64 % columns, i as i64 / columns);
+            (-1..=1).any(|dy| {
+                (-1..=1).any(|dx| {
+                    let (nx, ny) = (x + dx, y + dy);
+                    nx < 0 || ny < 0 || nx >= columns || ny >= rows || owner[(ny * columns + nx) as usize] != Some(k)
+                })
+            })
+        })
+        .map(|(k, i)| (i as i64 % columns, i as i64 / columns, k))
+        .collect();
+    let mut credited = vec![0.0; objects.len()];
+    for (i, b) in report.blocks.iter().enumerate() {
+        if owner[i].is_some() || b.radiated == 0.0 {
+            continue;
+        }
+        let (x, y) = (i as i64 % columns, i as i64 / columns);
+        let mut best: Option<(i64, usize)> = None;
+        for &(ex, ey, k) in &edge {
+            let d = (ex - x).pow(2) + (ey - y).pow(2);
+            let better = match best {
+                None => true,
+                Some((bd, bk)) => {
+                    let (o, ob) = (&objects[k].0, &objects[bk].0);
+                    d < bd || (d == bd && (o.mass > ob.mass || (o.mass == ob.mass && o.id < ob.id)))
+                }
+            };
+            if better {
+                best = Some((d, k));
+            }
+        }
+        if let Some((_, k)) = best {
+            credited[k] += b.radiated;
+        }
+    }
+    for ((object, _, _), extra) in objects.iter_mut().zip(credited) {
+        object.luminosity = object.luminosity_own + extra / report.sim_dt;
+    }
 }
 
 /// The radius about the centre holding `fraction` of the weight of `(distance, weight)` entries: the distance where the
@@ -308,6 +379,8 @@ fn measure(config: &TrackerConfig, report: &Report, list: &[usize]) -> (Object, 
     let sum = |f: &dyn Fn(&BlockData) -> f64| -> f64 { list.iter().map(|&i| f(at(i))).sum() };
     let l_group: [f64; 7] = std::array::from_fn(|g| per_time(sum(&|b| b.nuclear[g])));
     let l_nuc: f64 = l_group.iter().filter(|l| **l > 0.0).sum();
+    // The light credited from outside the object is added by `credit_light` once every object is known.
+    let luminosity_own = per_time(sum(&|b| b.radiated));
 
     // The dominant burning group's core and the envelope outside twice its radius.
     let dominant = (0..GROUPS.len())
@@ -342,7 +415,8 @@ fn measure(config: &TrackerConfig, report: &Report, list: &[usize]) -> (Object, 
         centre,
         radius,
         tau_dyn,
-        luminosity: per_time(sum(&|b| b.radiated)),
+        luminosity: luminosity_own,
+        luminosity_own,
         l_group,
         l_nuc,
         l_nu: per_time(sum(&|b| b.neutrino_lost)),
@@ -604,6 +678,65 @@ mod tests {
         r.sim_dt = 0.0;
         let o = Tracker::new(cfg()).update(&r).to_vec();
         assert_eq!((o[0].luminosity, o[0].l_nuc, o[0].l_nu), (0.0, 0.0, 0.0));
+    }
+
+    /// A ring of halo blocks around (`col`, `row`) at Chebyshev distance `ring`: under Σ_obj, a little mass, `radiated` each.
+    fn halo(r: &mut Report, col: u32, row: u32, ring: u32, radiated: f64) -> f64 {
+        let mut total = 0.0;
+        for y in row - ring..=row + ring {
+            for x in col - ring..=col + ring {
+                if x.abs_diff(col).max(y.abs_diff(row)) == ring {
+                    let b = &mut r.blocks[(y * r.columns + x) as usize];
+                    b.mass = 1e-3;
+                    b.max_sigma = 5e-4;
+                    b.radiated = radiated;
+                    total += radiated;
+                }
+            }
+        }
+        total
+    }
+
+    #[test]
+    fn a_halo_s_light_is_the_nearest_object_s() {
+        // M0-V8's star: the light leaves where a halo under Σ_obj meets vacuum, none from the object's own blocks.
+        let mut r = report(12, 12);
+        r.sim_dt = 2.0;
+        rect(&mut r, 4..7, 4..7, 400.0);
+        let lit = halo(&mut r, 5, 5, 3, 3.0) + halo(&mut r, 5, 5, 2, 1.0);
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        assert_eq!(o.len(), 1, "the halo is not an object of its own");
+        assert_eq!(o[0].luminosity_own, 0.0);
+        assert_eq!(o[0].luminosity, lit / 2.0, "the box's whole light, over the frame's sim time");
+        // Its own blocks' light and the halo's add.
+        r.blocks[5 * 12 + 5].radiated = 8.0;
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        assert_eq!((o[0].luminosity_own, o[0].luminosity), (4.0, 4.0 + lit / 2.0));
+        // A wisp's own blocks are no star's: their light goes to the nearest listed object.
+        put(&mut r, 11, 0, 10.0);
+        r.blocks[11].radiated = 6.0;
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        assert_eq!(o.len(), 1, "the wisp is not listed");
+        assert_eq!(o[0].luminosity, 4.0 + (lit + 6.0) / 2.0);
+    }
+
+    #[test]
+    fn two_stars_each_keep_their_own_halo_s_light() {
+        // G-MULTI's adversary: every block's light given to the heaviest object would hide the lighter star's.
+        let mut r = report(24, 12);
+        rect(&mut r, 4..7, 4..7, 400.0);
+        rect(&mut r, 18..20, 5..7, 100.0);
+        let heavy = halo(&mut r, 5, 5, 2, 1.0);
+        let light = halo(&mut r, 18, 5, 2, 5.0);
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        assert_eq!(o.len(), 2);
+        let (a, b) = if o[0].mass > o[1].mass { (&o[0], &o[1]) } else { (&o[1], &o[0]) };
+        assert_eq!((a.luminosity, b.luminosity), (heavy, light), "each its own halo's, none lost");
+        // A block exactly between the two stars' edges goes to the heavier one.
+        r.blocks[5 * 24 + 12].radiated = 7.0;
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        let (a, b) = if o[0].mass > o[1].mass { (&o[0], &o[1]) } else { (&o[1], &o[0]) };
+        assert_eq!((a.luminosity, b.luminosity), (heavy + 7.0, light), "a tie: the heavier");
     }
 
     #[test]

@@ -1,0 +1,159 @@
+# M0-D53 probe: watch.rs (temporary, SR_D53_PROBE) printing each frame's objects; win-laptop Laser2025-20; 2026-10-16T16:25:36-04:00; headless --scene preset:sun --until stage:h_shell --max-steps 1200 (16-step frames)
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+D53PROBE frame step 1 t 0.0303 objects 1 L_box 3.5932e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.03 L 3.5932e0 L_own 3.5865e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6390 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown None ign Some(false)
+D53PROBE frame step 17 t 0.4811 objects 1 L_box 2.2095e-1 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.03 L 2.2095e-1 L_own 2.1917e-1 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6386 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown None ign Some(false)
+D53PROBE frame step 33 t 0.9117 objects 1 L_box 3.7554e-3 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.02 L 3.7554e-3 L_own 3.4125e-3 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6376 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 49 t 1.2974 objects 1 L_box 1.2714e-4 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.03 L 1.2714e-4 L_own 1.2476e-4 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6361 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 65 t 1.6448 objects 1 L_box 6.3676e-6 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.01 L 6.3676e-6 L_own 5.0657e-6 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6340 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 81 t 1.9598 objects 1 L_box 1.8567e-6 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.03 L 1.8567e-6 L_own 1.7652e-6 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6312 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 97 t 2.2465 objects 1 L_box 1.0335e-6 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.02 L 1.0335e-6 L_own 9.0798e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6274 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 113 t 2.5077 objects 1 L_box 7.2872e-7 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.02 L 7.2872e-7 L_own 6.5689e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6226 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 129 t 2.7457 objects 1 L_box 5.3449e-7 LH_box 0.0000e0
+D53PROBE   id 1 M 3350.99 L 5.3449e-7 L_own 3.5795e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6161 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 145 t 2.9623 objects 1 L_box 4.0048e-7 LH_box 0.0000e0
+D53PROBE   id 1 M 3350.99 L 4.0048e-7 L_own 2.7291e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6077 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 161 t 3.1598 objects 1 L_box 3.4965e-7 LH_box 0.0000e0
+D53PROBE   id 1 M 3350.98 L 3.4965e-7 L_own 2.3550e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5980 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 177 t 3.3412 objects 1 L_box 3.3461e-7 LH_box 0.0000e0
+D53PROBE   id 1 M 3351.01 L 3.3461e-7 L_own 2.8732e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5893 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 193 t 3.5116 objects 1 L_box 3.0246e-7 LH_box 0.0000e0
+D53PROBE   id 1 M 3350.99 L 3.0246e-7 L_own 2.3248e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5837 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 209 t 3.6742 objects 1 L_box 2.8849e-7 LH_box 0.0000e0
+D53PROBE   id 1 M 3350.97 L 2.8849e-7 L_own 1.8588e-7 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5803 Munb/M 0.0000 X_H 0.7346 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 225 t 3.8313 objects 1 L_box 2.7280e-7 LH_box 2.7721e2
+D53PROBE   id 1 M 3351.01 L 2.7280e-7 L_own 2.1175e-7 L_H 2.7721e2 L_nuc 2.7721e2 d_c 0.5774 Munb/M 0.0000 X_H 0.7346 raw Some(Collapsing) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 241 t 3.9843 objects 1 L_box 2.6270e-7 LH_box 9.2417e2
+D53PROBE   id 1 M 3351.00 L 2.6270e-7 L_own 1.7019e-7 L_H 9.2417e2 L_nuc 9.2417e2 d_c 0.5748 Munb/M 0.0000 X_H 0.7345 raw Some(Collapsing) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 257 t 4.1347 objects 1 L_box 2.3672e-7 LH_box 1.5813e3
+D53PROBE   id 1 M 3350.98 L 2.3672e-7 L_own 1.1227e-7 L_H 1.5813e3 L_nuc 1.5813e3 d_c 0.5727 Munb/M 0.0000 X_H 0.7345 raw Some(Collapsing) shown Some(Collapsing) ign Some(false)
+D53PROBE frame step 273 t 4.2835 objects 1 L_box 2.1495e-7 LH_box 2.2311e3
+D53PROBE   id 1 M 3350.96 L 2.1495e-7 L_own 8.7220e-8 L_H 2.2311e3 L_nuc 2.2311e3 d_c 0.5711 Munb/M 0.0000 X_H 0.7345 raw Some(Cloud) shown Some(Collapsing) ign Some(false)
+D53PROBE frame step 289 t 4.4314 objects 1 L_box 2.3492e-7 LH_box 2.4094e3
+D53PROBE   id 1 M 3350.94 L 2.3492e-7 L_own 7.6902e-8 L_H 2.4094e3 L_nuc 2.4094e3 d_c 0.5698 Munb/M 0.0000 X_H 0.7344 raw Some(Protostar) shown Some(Collapsing) ign Some(false)
+D53PROBE frame step 305 t 4.5767 objects 1 L_box 2.4057e-7 LH_box 1.9324e3
+D53PROBE   id 1 M 3350.92 L 2.4057e-7 L_own 7.8246e-8 L_H 1.9324e3 L_nuc 1.9324e3 d_c 0.5705 Munb/M 0.0000 X_H 0.7344 raw Some(Cloud) shown Some(Collapsing) ign Some(false)
+D53PROBE frame step 321 t 4.7242 objects 1 L_box 2.3986e-7 LH_box 1.0607e3
+D53PROBE   id 1 M 3350.90 L 2.3986e-7 L_own 7.7579e-8 L_H 1.0607e3 L_nuc 1.0607e3 d_c 0.5736 Munb/M 0.0000 X_H 0.7343 raw Some(Cloud) shown Some(Collapsing) ign Some(false)
+D53PROBE frame step 337 t 4.8773 objects 1 L_box 2.0859e-7 LH_box 2.3175e2
+D53PROBE   id 1 M 3350.88 L 2.0859e-7 L_own 7.4083e-8 L_H 2.3175e2 L_nuc 2.3175e2 d_c 0.5777 Munb/M 0.0000 X_H 0.7343 raw Some(Cloud) shown Some(Cloud) ign Some(false)
+D53PROBE frame step 353 t 5.0253 objects 1 L_box 2.0089e4 LH_box 6.7622e1
+D53PROBE   id 1 M 3350.85 L 2.0089e4 L_own 3.2083e3 L_H 6.7622e1 L_nuc 6.7622e1 d_c 0.5817 Munb/M 0.0019 X_H 0.7343 raw Some(FailedStar) shown Some(Cloud) ign Some(false)
+D53PROBE frame step 369 t 5.1367 objects 1 L_box 3.8747e4 LH_box 2.9766e1
+D53PROBE   id 1 M 3350.77 L 3.8747e4 L_own 4.0371e3 L_H 2.9766e1 L_nuc 2.9766e1 d_c 0.5844 Munb/M 0.0006 X_H 0.7343 raw Some(FailedStar) shown Some(Cloud) ign Some(false)
+D53PROBE frame step 385 t 5.2319 objects 1 L_box 2.9952e4 LH_box 1.0030e1
+D53PROBE   id 1 M 3350.66 L 2.9952e4 L_own 0.0000e0 L_H 1.0030e1 L_nuc 1.0030e1 d_c 0.5866 Munb/M 0.0004 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 401 t 5.3204 objects 1 L_box 2.3910e4 LH_box 2.1760e-1
+D53PROBE   id 1 M 3350.52 L 2.3910e4 L_own 0.0000e0 L_H 2.1760e-1 L_nuc 2.1760e-1 d_c 0.5885 Munb/M 0.0004 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 417 t 5.4059 objects 1 L_box 1.9375e4 LH_box 0.0000e0
+D53PROBE   id 1 M 3350.30 L 1.9375e4 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5901 Munb/M 0.0003 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 433 t 5.4901 objects 1 L_box 1.5832e4 LH_box 0.0000e0
+D53PROBE   id 1 M 3350.13 L 1.5832e4 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5917 Munb/M 0.0038 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 449 t 5.5745 objects 1 L_box 1.2924e4 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.95 L 1.2924e4 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5931 Munb/M 0.0121 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 465 t 5.6606 objects 1 L_box 1.0485e4 LH_box 0.0000e0
+D53PROBE   id 1 M 3350.02 L 1.0485e4 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5944 Munb/M 0.0165 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 481 t 5.7479 objects 1 L_box 8.5027e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.83 L 8.5027e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5957 Munb/M 0.0190 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 497 t 5.8373 objects 1 L_box 6.8577e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.61 L 6.8577e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5968 Munb/M 0.0221 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 513 t 5.9282 objects 1 L_box 5.5243e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.47 L 5.5243e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5979 Munb/M 0.0254 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 529 t 6.0208 objects 1 L_box 4.4470e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.34 L 4.4470e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5988 Munb/M 0.0274 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 545 t 6.1156 objects 1 L_box 3.5590e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.14 L 3.5590e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5997 Munb/M 0.0298 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 561 t 6.2125 objects 1 L_box 2.8304e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.07 L 2.8304e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6004 Munb/M 0.0315 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 577 t 6.3113 objects 1 L_box 2.2455e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.91 L 2.2455e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6011 Munb/M 0.0330 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 593 t 6.4123 objects 1 L_box 1.7649e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.73 L 1.7649e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6017 Munb/M 0.0346 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 609 t 6.5149 objects 1 L_box 1.3865e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.45 L 1.3865e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6021 Munb/M 0.0354 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 625 t 6.6189 objects 1 L_box 1.0744e3 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.25 L 1.0744e3 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6025 Munb/M 0.0367 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 641 t 6.7244 objects 1 L_box 8.2371e2 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.25 L 8.2371e2 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6028 Munb/M 0.0375 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 657 t 6.8314 objects 1 L_box 6.2973e2 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.16 L 6.2973e2 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6031 Munb/M 0.0378 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 673 t 6.9402 objects 1 L_box 4.7110e2 LH_box 0.0000e0
+D53PROBE   id 1 M 3347.96 L 4.7110e2 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6034 Munb/M 0.0386 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 689 t 7.0507 objects 1 L_box 3.4595e2 LH_box 0.0000e0
+D53PROBE   id 1 M 3347.65 L 3.4595e2 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6035 Munb/M 0.0388 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 705 t 7.1634 objects 1 L_box 2.5816e2 LH_box 0.0000e0
+D53PROBE   id 1 M 3347.61 L 2.5816e2 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6036 Munb/M 0.0392 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 721 t 7.2785 objects 1 L_box 1.8786e2 LH_box 0.0000e0
+D53PROBE   id 1 M 3347.82 L 1.8786e2 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6036 Munb/M 0.0397 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 737 t 7.3958 objects 1 L_box 1.3742e2 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.20 L 1.3742e2 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6035 Munb/M 0.0399 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 753 t 7.5152 objects 1 L_box 1.0272e2 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.33 L 1.0272e2 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6033 Munb/M 0.0401 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 769 t 7.6367 objects 1 L_box 7.8046e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.61 L 7.8046e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6030 Munb/M 0.0403 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 785 t 7.7606 objects 1 L_box 5.8897e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.78 L 5.8897e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6026 Munb/M 0.0405 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 801 t 7.8866 objects 1 L_box 4.5278e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.95 L 4.5278e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6022 Munb/M 0.0405 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 817 t 8.0147 objects 1 L_box 3.5316e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.17 L 3.5316e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6017 Munb/M 0.0407 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 833 t 8.1449 objects 1 L_box 2.6757e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.26 L 2.6757e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6011 Munb/M 0.0410 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 849 t 8.2774 objects 1 L_box 2.0260e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.30 L 2.0260e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.6004 Munb/M 0.0409 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 865 t 8.4120 objects 1 L_box 1.5687e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.46 L 1.5687e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5997 Munb/M 0.0411 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 881 t 8.5484 objects 1 L_box 1.2884e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.58 L 1.2884e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5989 Munb/M 0.0414 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 897 t 8.6864 objects 1 L_box 1.0754e1 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.63 L 1.0754e1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5981 Munb/M 0.0413 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 913 t 8.8259 objects 1 L_box 9.0772e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.60 L 9.0772e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5972 Munb/M 0.0414 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 929 t 8.9666 objects 1 L_box 7.5542e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.72 L 7.5542e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5963 Munb/M 0.0415 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 945 t 9.1089 objects 1 L_box 6.2404e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.78 L 6.2404e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5955 Munb/M 0.0415 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 961 t 9.2526 objects 1 L_box 5.1768e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.81 L 5.1768e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5946 Munb/M 0.0417 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 977 t 9.3979 objects 1 L_box 4.3749e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.62 L 4.3749e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5938 Munb/M 0.0416 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 993 t 9.5447 objects 1 L_box 3.7682e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.77 L 3.7682e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5930 Munb/M 0.0416 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1009 t 9.6932 objects 1 L_box 3.1888e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.74 L 3.1888e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5923 Munb/M 0.0418 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1025 t 9.8434 objects 1 L_box 2.7756e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.61 L 2.7756e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5917 Munb/M 0.0416 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1041 t 9.9953 objects 1 L_box 2.3353e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3349.08 L 2.3353e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5912 Munb/M 0.0416 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1057 t 10.1489 objects 1 L_box 1.9931e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3348.71 L 1.9931e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5909 Munb/M 0.0415 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1073 t 10.3044 objects 1 L_box 1.6173e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3347.96 L 1.6173e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5907 Munb/M 0.0413 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1089 t 10.4617 objects 1 L_box 1.3720e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3347.46 L 1.3720e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5907 Munb/M 0.0413 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1105 t 10.6207 objects 1 L_box 1.1042e0 LH_box 0.0000e0
+D53PROBE   id 1 M 3346.77 L 1.1042e0 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5908 Munb/M 0.0410 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1121 t 10.7818 objects 1 L_box 8.3724e-1 LH_box 0.0000e0
+D53PROBE   id 1 M 3345.86 L 8.3724e-1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5911 Munb/M 0.0409 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1137 t 10.9451 objects 1 L_box 5.5375e-1 LH_box 0.0000e0
+D53PROBE   id 1 M 3345.30 L 5.5375e-1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5916 Munb/M 0.0407 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1153 t 11.1109 objects 1 L_box 4.3867e-1 LH_box 0.0000e0
+D53PROBE   id 1 M 3344.57 L 4.3867e-1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5923 Munb/M 0.0405 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1169 t 11.2787 objects 1 L_box 3.0490e-1 LH_box 0.0000e0
+D53PROBE   id 1 M 3343.44 L 3.0490e-1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5930 Munb/M 0.0402 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1185 t 11.4489 objects 1 L_box 2.0389e-1 LH_box 0.0000e0
+D53PROBE   id 1 M 3342.69 L 2.0389e-1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5938 Munb/M 0.0400 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+D53PROBE frame step 1200 t 11.6089 objects 1 L_box 1.5836e-1 LH_box 0.0000e0
+D53PROBE   id 1 M 3341.38 L 1.5836e-1 L_own 0.0000e0 L_H 0.0000e0 L_nuc -0.0000e0 d_c 0.5947 Munb/M 0.0397 X_H 0.7343 raw Some(FailedStar) shown Some(FailedStar) ign Some(false)
+SR-HEADLESS DONE steps=1200 sim_time=11.608851 until=unmet
+exit 2
+D53SHARE whole run: box 2.1145e+04 own 9.2477e+02 share 0.0437
+D53SHARE steps 1-337: box 2.1015e-01 own 2.0899e-01 share 0.9945
+D53SHARE steps 353-1200: box 2.1144e+04 own 9.2456e+02 share 0.0437

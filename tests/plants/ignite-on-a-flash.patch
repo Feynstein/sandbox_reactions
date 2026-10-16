@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -113,7 +113,7 @@
+ /// L_H between half and twice L, with some light to share: a flash inside a dark cloud is not a star.
+ fn hydrogen_leads(o: &Object) -> bool {
+     let l_h = o.l_group[G_H];
+-    o.luminosity > 0.0 && l_h >= HYDROGEN_SHARE * o.luminosity && l_h <= HYDROGEN_SHARE_MAX * o.luminosity
++    o.luminosity > 0.0 && l_h >= HYDROGEN_SHARE * o.luminosity && HYDROGEN_SHARE_MAX > 0.0
+ }
+ 
+ /// Group `g` is the largest of the burning groups and at least a tenth of L_nuc, its fuel at the centre still there.

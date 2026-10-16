@@ -14,8 +14,10 @@ use super::tracker::Object;
 const HOLD: u32 = 3;
 /// A supernova row is open this long (t.u.) after the object last passed core collapse.
 const SUPERNOVA_WINDOW: f64 = 20.0;
-/// L_H ≥ this share of L ignites an object, and holds the main sequence (§1.9.3, §1.9.4).
+/// L_H between these shares of L ignites an object, and holds the main sequence: a star shines what it burns (§1.9.3,
+/// §1.9.4 as §0.5 [M0-D53] reads them; the lead at M0-V18, «Burning matches light (Recommended)»).
 const HYDROGEN_SHARE: f64 = 0.5;
+const HYDROGEN_SHARE_MAX: f64 = 2.0;
 /// An abundance at the centre under this is spent; a fuel at or above it still feeds its stage (§1.9.3).
 const SPENT: f64 = 1e-3;
 /// A group is a burning stage's when it is the largest and at least this share of L_nuc.
@@ -93,7 +95,7 @@ impl Stage {
 /// What an object remembers between frames: the `ignited` flag (§1.9.4) and the last time its row said core collapse.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct History {
-    /// First turned on at L_H ≥ 0.5 L, never off again.
+    /// First turned on at 0.5 L ≤ L_H ≤ 2 L, never off again.
     pub ignited: bool,
     /// The sim time (t.u.) of the last frame whose result was core collapse.
     pub last_collapse: Option<f64>,
@@ -108,9 +110,10 @@ struct Ctx<'a> {
     v_dyn: f64,
 }
 
-/// L_H ≥ half of L, with some light to share.
+/// L_H between half and twice L, with some light to share: a flash inside a dark cloud is not a star.
 fn hydrogen_leads(o: &Object) -> bool {
-    o.luminosity > 0.0 && o.l_group[G_H] >= HYDROGEN_SHARE * o.luminosity
+    let l_h = o.l_group[G_H];
+    o.luminosity > 0.0 && l_h >= HYDROGEN_SHARE * o.luminosity && l_h <= HYDROGEN_SHARE_MAX * o.luminosity
 }
 
 /// Group `g` is the largest of the burning groups and at least a tenth of L_nuc, its fuel at the centre still there.
@@ -177,7 +180,7 @@ pub fn classify(o: &Object, h: &History, now: f64) -> Stage {
     ROWS.iter().find(|(_, test)| test(&c)).map(|(s, _)| *s).unwrap_or(Stage::Cloud)
 }
 
-/// Whether the object's L_H has reached half its L: the frame the `ignited` flag turns on (§1.9.4).
+/// Whether the object's L_H is between half and twice its L: the frame the `ignited` flag turns on (§1.9.4, §0.5 [M0-D53]).
 pub fn ignites(o: &Object) -> bool {
     hydrogen_leads(o)
 }
@@ -306,6 +309,7 @@ mod tests {
             radius: 10.0,
             tau_dyn: 10.0,
             luminosity: 10.0,
+            luminosity_own: 10.0,
             l_group: [0.0; 7],
             l_nuc: 0.0,
             l_nu: 0.0,
@@ -570,6 +574,45 @@ mod tests {
         o.l_group[0] = 5.0;
         with_x(&mut o, X_H, 0.0009);
         assert_ne!(stage_of(&o, &ignited()), Stage::MainSequence, "the centre's hydrogen spent");
+    }
+
+    #[test]
+    fn the_main_sequence_shines_what_it_burns() {
+        // §0.5 [M0-D53]: 0.5 L ≤ L_H ≤ 2 L, both ends within.
+        let mut o = cloud();
+        o.l_group = [20.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+        o.l_nuc = 20.0;
+        assert_eq!(stage_of(&o, &ignited()), Stage::MainSequence, "L_H = 2 L");
+        o.l_group[0] = 20.1;
+        o.l_nuc = 20.1;
+        assert_ne!(stage_of(&o, &ignited()), Stage::MainSequence, "burning more than twice the light it shines");
+    }
+
+    #[test]
+    fn a_flash_inside_a_dark_cloud_does_not_ignite() {
+        // M0-V8's step 225: L_H = 277 against L = 2.1 × 10⁻⁷ — no ignition, the cloud's rows still open.
+        let mut t = StageTracker::new();
+        let mut flash = cloud();
+        flash.luminosity = 2.1e-7;
+        flash.l_group = [277.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+        flash.l_nuc = 277.0;
+        flash.v_r = -1.0;
+        assert!(t.update(&[flash.clone()], 1.0).is_empty(), "no ignition event");
+        let s = t.stage(1).unwrap();
+        assert!(!s.history.ignited);
+        assert_eq!(s.raw, Stage::Collapsing, "a never-ignited cloud falling in");
+        // The same burning once the light matches it: L_H = 2 L ignites.
+        flash.luminosity = 138.5;
+        assert_eq!(kinds(&t.update(&[flash.clone()], 2.0)), vec![EventKind::Ignition]);
+        assert_eq!(t.stage(1).unwrap().raw, Stage::MainSequence);
+        let mut t = StageTracker::new();
+        flash.luminosity = 138.4;
+        assert!(t.update(&[flash.clone()], 1.0).is_empty(), "L_H just over 2 L");
+        flash.luminosity = 554.0;
+        assert_eq!(kinds(&t.update(&[flash.clone()], 2.0)), vec![EventKind::Ignition], "L_H = 0.5 L");
+        let mut t = StageTracker::new();
+        flash.luminosity = 554.1;
+        assert!(t.update(&[flash], 1.0).is_empty(), "L_H just under 0.5 L");
     }
 
     #[test]

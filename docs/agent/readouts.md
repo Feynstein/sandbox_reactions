@@ -72,6 +72,11 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
   gas plus its sinks, the shared weight the per-block minimum of the two frames', matched greedily (ties: the lower id); the
   centre's Σ, T, X and d come from the centre's block (the heaviest sink's block, else the max-Σ block); v_r includes the
   sinks; R_core and the envelope are `None` while nothing but N burns.
+- **L is the nearest star's** (contract §0.5 [M0-D53], the lead at M0-V18): the light of every block outside the listed
+  objects — a halo under the object density, a wisp's blocks — is added whole to the listed object whose member block is
+  nearest (block centres; a tie to the heavier object, then the lower id). `luminosity` is that total; `luminosity_own` the
+  part that left the object's own blocks. Why: §2.4.4 books light at the last gas before vacuum, and on the Sun-like preset
+  that gas is a halo outside the object — its own blocks held 4.4 % of the run's light (`milestones/m0/tasks/M0-D53.md`).
 - **Evidence.** The `objects` scope grades `Tracker` on synthetic block summaries (`NOT PROVEN (synthetic)` on a star);
   the engine's own summary has run it since M0-T60 (below), and the star's own objects across a life are G-STAGES and
   G-END's to grade (lot 10).
@@ -89,7 +94,8 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
 - **Readings declared** (`milestones/m0/tasks/M0-T59.md`): the speed scale √(GM/R) is R/τ_dyn; a ratio against L needs L > 0
   where a comparison would read 0 ≥ 0 true, but `L_nuc < c·L` is literal (a remnant radiating nothing is not a white dwarf);
   "the largest L_g" ties in Si, O, Ne, C order; "no carbon burning" is not (L_C > 0 and ≥ a tenth of L_nuc); "passed core
-  collapse" is a frame whose result was core collapse, the last such time kept. **Collapsing and protostar are disjoint as
+  collapse" is a frame whose result was core collapse, the last such time kept. **Ignition and main_sequence's hydrogen test
+  are a band** (§0.5 [M0-D53]): L_H between half and twice L — a flash inside a cloud that barely shines does not ignite it. **Collapsing and protostar are disjoint as
   written** (their v_r bands do not meet), so `classify-order` grades the table's order, not a behaviour.
 - **Not here:** the fuel column of φ (§1.10.4), the "Supergiant" label and the stage's text (§4.6) — a label and the age
   clock's blocks.
@@ -97,7 +103,7 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
 ## Events (§1.9.4)
 | Kind | Fires when | Notes |
 |---|---|---|
-| `ignition` | the object's `ignited` flag first turns on (the L_H share §1.9.4 names) | once per object; `ignited` never turns off |
+| `ignition` | the object's `ignited` flag first turns on (L_H within the band of L that §0.5 [M0-D53] names) | once per object; `ignited` never turns off |
 | `core_collapse` | the stage row's own condition, L_N < 0 | the engine's latch flag is **not** read (G-WATCH); the latch's own P6 condition is the same |
 | `supernova` | the supernova stage is entered | |
 | `sink_formed` | the first frame an object has a sink | logged only — the latch covers the slow-down |

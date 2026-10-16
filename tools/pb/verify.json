@@ -468,11 +468,11 @@
       ]
     },
     "objects": {
-      "desc": "objects (contract §1.9.2, §2.7, §3.1; M0-T58): sr_physics::observe::Tracker::update on synthetic block summaries (no GPU) — 8-connected blocks holding a cell at Σ ≥ Σ_obj (a diagonal neighbour joins, one empty block between separates, Σ just under Σ_obj does not join), wisps under 1 % of the Sun-like mass left out, ids stable across frames for two blobs, a box whose origin moves and a blob shifted by two blocks a frame (four frames), the heavier id surviving a merge and the larger part a split (a part under 25 % of the old weight takes a fresh id, ids never reused), and each quantity on a field of known answer: R₉₀ with its interpolation and τ_dyn = √(R³/GM) (and the half-block floor), L, L_g, L_nuc (L_N ≤ 0 left out), L_ν over the frame's sim time (none at 0), U, K, P, W = ½Σmφ, M_unb, Σ_c, T_c, X_c, d_c at the centre block, v_r (outward and inward blocks, mass-weighted), a sink as centre with the sink mass and a sink-only block, the envelope outside twice R_core of the dominant burning group (none when nothing burns). Synthetic block summaries only: NOT PROVEN on the engine's own summary until the observers run in headless (M0-T60). one-object plants the tracker linking blocks across one empty block",
+      "desc": "objects (contract §1.9.2, §2.7, §3.1; M0-T58): sr_physics::observe::Tracker::update on synthetic block summaries (no GPU) — 8-connected blocks holding a cell at Σ ≥ Σ_obj (a diagonal neighbour joins, one empty block between separates, Σ just under Σ_obj does not join), wisps under 1 % of the Sun-like mass left out, ids stable across frames for two blobs, a box whose origin moves and a blob shifted by two blocks a frame (four frames), the heavier id surviving a merge and the larger part a split (a part under 25 % of the old weight takes a fresh id, ids never reused), and each quantity on a field of known answer: R₉₀ with its interpolation and τ_dyn = √(R³/GM) (and the half-block floor), L, L_g, L_nuc (L_N ≤ 0 left out), L_ν over the frame's sim time (none at 0), U, K, P, W = ½Σmφ, M_unb, Σ_c, T_c, X_c, d_c at the centre block, v_r (outward and inward blocks, mass-weighted), a sink as centre with the sink mass and a sink-only block, the envelope outside twice R_core of the dominant burning group (none when nothing burns); L as the nearest star's (§0.5 [M0-D53]): a halo under Σ_obj radiating while the object's own blocks do not (L the box's whole light over the frame's sim time, L_own 0), its own and the halo's light added, a wisp's light to the nearest listed object, and two stars each keeping its own halo's light, a block equidistant from both to the heavier. Synthetic block summaries only: NOT PROVEN on the engine's own summary until the observers run in headless (M0-T60). one-object plants the tracker linking blocks across one empty block; light-to-heaviest plants every outside block's light given to the heaviest object",
       "cmd": "bash tests/cpu.sh sr-physics observe::tracker",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 15,
+      "expected": 17,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -483,21 +483,26 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/cpu.sh",
-        "tests/plants/one-object.patch"
+        "tests/plants/one-object.patch",
+        "tests/plants/light-to-heaviest.patch"
       ],
       "plants": [
         {
           "id": "one-object",
           "patch": "tests/plants/one-object.patch"
+        },
+        {
+          "id": "light-to-heaviest",
+          "patch": "tests/plants/light-to-heaviest.patch"
         }
       ]
     },
     "classify": {
-      "desc": "classify (contract §1.9.3, §1.9.4; M0-T59): sr_physics::observe::stages on synthetic objects (no GPU) — each of §1.9.3's 19 rows matching on an object built for it and not matching one step either side of its threshold, the table's order (black_hole before neutron_star, supernova before core_collapse, si_burn · o_burn · ne_burn · c_burn on a tie, collapsing before protostar — disjoint as written, so graded as the table's order), failed_star only for an object that never ignited and the same object ignited a white dwarf, the supernova's 20 t.u. window after a core collapse, the display hold (a stage shows after 3 identical results, a different result restarts the count, core collapse and supernova show at once), the ignited flag (turns on at L_H ≥ 0.5 L, stays on, this frame's result already reads it) and each event — ignition, core collapse, supernova, sink formed — once per object, in object order. Synthetic objects only: NOT PROVEN on the engine's own summary until the observers run in headless (M0-T60). classify-order plants protostar tested ahead of collapsing in the table",
+      "desc": "classify (contract §1.9.3, §1.9.4; M0-T59): sr_physics::observe::stages on synthetic objects (no GPU) — each of §1.9.3's 19 rows matching on an object built for it and not matching one step either side of its threshold, the table's order (black_hole before neutron_star, supernova before core_collapse, si_burn · o_burn · ne_burn · c_burn on a tie, collapsing before protostar — disjoint as written, so graded as the table's order), failed_star only for an object that never ignited and the same object ignited a white dwarf, the supernova's 20 t.u. window after a core collapse, the display hold (a stage shows after 3 identical results, a different result restarts the count, core collapse and supernova show at once), the ignited flag (turns on at 0.5 L ≤ L_H ≤ 2 L — §0.5 [M0-D53] —, stays on, this frame's result already reads it; a flash of L_H 277 against L 2.1 × 10⁻⁷ does not ignite and the cloud reads collapsing, each end of the band within and a hair outside it not) and main_sequence on the same band, and each event — ignition, core collapse, supernova, sink formed — once per object, in object order. Synthetic objects only: NOT PROVEN on the engine's own summary until the observers run in headless (M0-T60). classify-order plants protostar tested ahead of collapsing in the table; ignite-on-a-flash plants the band's upper end dropped (L_H ≥ 0.5 L alone)",
       "cmd": "bash tests/cpu.sh sr-physics observe::stages",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 30,
+      "expected": 32,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -508,12 +513,17 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/cpu.sh",
-        "tests/plants/classify-order.patch"
+        "tests/plants/classify-order.patch",
+        "tests/plants/ignite-on-a-flash.patch"
       ],
       "plants": [
         {
           "id": "classify-order",
           "patch": "tests/plants/classify-order.patch"
+        },
+        {
+          "id": "ignite-on-a-flash",
+          "patch": "tests/plants/ignite-on-a-flash.patch"
         }
       ]
     },

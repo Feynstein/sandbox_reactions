@@ -1,0 +1,176 @@
+==== 2026-10-16T16:29:32-04:00 classify · clean · a fresh scratch copy of the tree
+== 2026-10-16T16:29:44-04:00 classify · task M0-D53 · box Laser2025-20 :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=0 · 20.48 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-t68_h0cs\arm0\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 17.63s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 32 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_main_sequence_shines_what_it_burns ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 103 filtered out; finished in 0.01s
+
+
+==== 2026-10-16T16:29:32-04:00 classify · plant classify-order · a fresh scratch copy of the tree
+planted classify-order: tests/plants/classify-order.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-10-16T16:29:44-04:00 classify · task M0-D53 · box Laser2025-20 :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 39.23 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-t68_h0cs\arm1\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 7.51s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 32 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... FAILED
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_main_sequence_shines_what_it_burns ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... FAILED
+
+failures:
+
+---- observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts stdout ----
+
+thread 'observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts' (20900) panicked at crates\sr-physics\src\observe\stages.rs:653:9:
+assertion failed: pos(Stage::Collapsing) < pos(Stage::Protostar)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::the_rows_are_in_the_contracts_order stdout ----
+
+thread 'observe::stages::tests::the_rows_are_in_the_contracts_order' (3044) panicked at crates\sr-physics\src\observe\stages.rs:367:9:
+assertion `left == right` failed
+  left: ["black_hole", "neutron_star", "supernova", "core_collapse", "white_dwarf", "failed_star", "planetary_nebula", "iron_core", "si_burn", "o_burn", "ne_burn", "c_burn", "he_core", "he_shell", "h_shell", "main_sequence", "protostar", "collapsing", "cloud"]
+ right: ["black_hole", "neutron_star", "supernova", "core_collapse", "white_dwarf", "failed_star", "planetary_nebula", "iron_core", "si_burn", "o_burn", "ne_burn", "c_burn", "he_core", "he_shell", "h_shell", "main_sequence", "collapsing", "protostar", "cloud"]
+
+
+failures:
+    observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts
+    observe::stages::tests::the_rows_are_in_the_contracts_order
+
+test result: FAILED. 30 passed; 2 failed; 0 ignored; 0 measured; 103 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-16T16:29:32-04:00 classify · plant ignite-on-a-flash · a fresh scratch copy of the tree
+planted ignite-on-a-flash: tests/plants/ignite-on-a-flash.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-10-16T16:29:44-04:00 classify · task M0-D53 · box Laser2025-20 :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 30.89 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-t68_h0cs\arm2\crates\sr-physics)
+    Finished `release` profile [optimized] target(s) in 9.33s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_physics-dfda0d2b393312b1.exe)
+
+running 32 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... FAILED
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_main_sequence_shines_what_it_burns ... FAILED
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite stdout ----
+
+thread 'observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite' (8380) panicked at crates\sr-physics\src\observe\stages.rs:600:9:
+no ignition event
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::the_main_sequence_shines_what_it_burns stdout ----
+
+thread 'observe::stages::tests::the_main_sequence_shines_what_it_burns' (30264) panicked at crates\sr-physics\src\observe\stages.rs:588:9:
+assertion `left != right` failed: burning more than twice the light it shines
+  left: MainSequence
+ right: MainSequence
+
+
+failures:
+    observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite
+    observe::stages::tests::the_main_sequence_shines_what_it_burns
+
+test result: FAILED. 30 passed; 2 failed; 0 ignored; 0 measured; 103 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
