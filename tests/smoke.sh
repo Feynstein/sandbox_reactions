@@ -6,7 +6,8 @@
 # checked, verbatim, into its own output (the folder goes at exit, launch.py removes its own --out), so the scope's log
 # keeps the text a V reads. `window` is the desktop scope's case (G-DESK, M0-T5): the box's route —
 # `game-xvfb` (the private Xvfb, lavapipe) on linux-pc, `game-offscreen` on win-laptop (R15; contract §6.6) — whose
-# /status must read "ready". Ends in `=== GO ===` or `=== NO-GO: <reason> ===`.
+# /status must read "ready". `race` is its third (M0-D51): the port lock's hand-over, raced on purpose. Ends in
+# `=== GO ===` or `=== NO-GO: <reason> ===`.
 source "$(dirname "${BASH_SOURCE[0]}")/cargo.sh"
 service="${1:-}"
 [ -n "$service" ] || { echo "=== NO-GO: usage: bash tests/smoke.sh <service> ==="; exit 1; }
@@ -16,6 +17,7 @@ case "$(uname -s)" in
 esac
 [ "$service" = "window" ] && service="$window"
 launcher=0; [ "$service" = "launcher" ] && { launcher=1; service="$window"; }
+race=0; [ "$service" = "race" ] && { race=1; service="$window"; }
 cd "$_sr_root" || exit 1
 start=$SECONDS
 sr_build_app "$exe" || { echo "=== NO-GO: cargo build --release -p sr-app failed ==="; exit 1; }
@@ -26,16 +28,75 @@ built=$((SECONDS - start))
 # broken when its holder is gone (Git Bash has no flock).
 lock="${TMPDIR:-/tmp}/sr-boot-47811.lock"
 _sr_unlock() { rm -rf "${dir:-}"; rm -rf "$lock.d" 2>/dev/null; }
-if command -v flock >/dev/null 2>&1; then
-  exec 8>"$lock" && flock 8
-else
-  until mkdir "$lock.d" 2>/dev/null; do
-    holder="$(cat "$lock.d/pid" 2>/dev/null)"
-    [ -n "$holder" ] && ! kill -0 "$holder" 2>/dev/null && rm -rf "$lock.d"
-    sleep 1
-  done
-  echo $$ > "$lock.d/pid"
-  trap _sr_unlock EXIT
+_sr_lock() {
+  if command -v flock >/dev/null 2>&1; then
+    exec 8>"$lock" && flock 8
+  else
+    until mkdir "$lock.d" 2>/dev/null; do
+      holder="$(cat "$lock.d/pid" 2>/dev/null)"
+      [ -n "$holder" ] && ! kill -0 "$holder" 2>/dev/null && rm -rf "$lock.d"
+      sleep 1
+    done
+    echo $$ > "$lock.d/pid"
+  fi
+}
+# A case hands a port's lock on only once the port can be bound again (M0-D51): launch.py's « stopped » comes first — on
+# win-laptop the stopped game's socket still took connections 2 ms – 3 s after it, its pid already gone
+# (logs/M0-D51.holder.log) — and the next case's start read « port 47811 held by a process we did not start ». A bind,
+# as the game binds (SO_REUSEADDR on POSIX, as Rust's std; none on Windows), never a connect: a listener whose backlog is
+# full refuses connections yet still holds the port (M0-D51: the game's own bind then failed, os error 10048).
+# Bounded: 30 s, then the case says so.
+_sr_port_closed() {
+  $PY -I - "$1" <<'PY'
+import os, socket, sys, time
+port, end = int(sys.argv[1]), time.monotonic() + 30
+while time.monotonic() < end:
+    with socket.socket() as s:
+        if os.name != "nt":
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            s.bind(("127.0.0.1", port))
+            sys.exit(0)
+        except OSError:
+            pass
+    time.sleep(0.05)
+sys.exit(1)
+PY
+}
+_sr_release() { [ "$service" = "headless-boot" ] || _sr_port_closed 47811; _sr_unlock; }
+
+_sr_lock; trap _sr_release EXIT
+
+if [ $race -eq 1 ]; then
+  # `race` (M0-D51): the hand-over raced on purpose, under the lock throughout so no other case slips in between. A
+  # listener launch.py did not start holds 47811 for 10 s — the stopped game's socket, the measured gap made long and
+  # certain; the case waits for the port as every case's hand-over does, then starts the window route straight behind
+  # it, which must reach ready.
+  up="build/.sr-race-$$.up"; rm -f "$up"
+  $PY -I - "$up" 8>&- <<'PY' &
+import os, socket, sys, time
+s = socket.socket()
+if os.name != "nt":
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # the game's own TIME_WAITs on 47811 (Linux only)
+s.bind(("127.0.0.1", 47811)); s.listen()
+open(sys.argv[1], "w").close()
+time.sleep(10)
+PY
+  lingerer=$!
+  while [ ! -e "$up" ] && kill -0 $lingerer 2>/dev/null; do sleep 0.1; done
+  [ -e "$up" ] || { echo "=== NO-GO: the listener on 47811 never came up (the port taken?) ==="; exit 1; }
+  rm -f "$up"
+  _sr_port_closed 47811; held=$?
+  out="$($PY tools/pb/launch.py start "$service" --task "${PB_TASK:-boot}-race" 2>&1)"; rc=$?
+  $PY tools/pb/launch.py stop "$service" --task "${PB_TASK:-boot}-race" >/dev/null 2>&1
+  echo "$out" | grep -v '^=== '
+  wait $lingerer
+  [ $held -eq 0 ] || { echo "=== NO-GO: the listener's port 47811 still bound 30 s on ==="; exit 1; }
+  [ $rc -eq 0 ] || { echo "=== NO-GO: $service, started straight behind the hand-over, did not reach ready ==="; exit 1; }
+  _sr_port_closed 47811 || { echo "=== NO-GO: port 47811 still bound 30 s after $service stopped ==="; exit 1; }
+  echo "race $service: built in $built s, started straight behind a hand-over whose port outlived its holder, stopped"
+  echo "=== GO ==="
+  exit 0
 fi
 
 if [ $launcher -eq 1 ]; then
@@ -52,10 +113,10 @@ if [ $launcher -eq 1 ]; then
   # port lock (its lock file, flock or mkdir as tests/web/check.sh takes it), must outlive the launcher.
   decoy_task="${PB_TASK:-launcher}-decoy" web_lock="${TMPDIR:-/tmp}/sr-web-47812.lock" decoy=0
   _sr_decoy_down() {
-    [ "$decoy" = 1 ] && $PY tools/pb/launch.py stop web --task "$decoy_task" >/dev/null 2>&1
+    [ "$decoy" = 1 ] && { $PY tools/pb/launch.py stop web --task "$decoy_task" >/dev/null 2>&1; _sr_port_closed 47812; }
     [ -f "$web_lock.d/pid" ] && [ "$(cat "$web_lock.d/pid" 2>/dev/null)" = "$$" ] && rm -rf "$web_lock.d"
   }
-  trap '_sr_decoy_down; _sr_unlock' EXIT
+  trap '_sr_decoy_down; _sr_release' EXIT
   if command -v flock >/dev/null 2>&1; then
     exec 9>"$web_lock" && flock 9
   else
@@ -77,6 +138,7 @@ if [ $launcher -eq 1 ]; then
   echo "$out" | grep -q "^$service: ready on " || { echo "=== NO-GO: the launcher never reached ready ==="; exit 1; }
   echo "$out" | grep -q "^$service: pid .* stopped" || { echo "=== NO-GO: the launcher did not stop $service ==="; exit 1; }
   echo "$left" | grep -q "^$service stopped$" || { echo "$left"; echo "=== NO-GO: a process is left running after the launcher ==="; exit 1; }
+  _sr_port_closed 47811 || { echo "=== NO-GO: port 47811 still bound 30 s after the launcher stopped $service ==="; exit 1; }
   echo "$left" | grep -q "^web running " || { echo "$left"; echo "=== NO-GO: the launcher stopped a service it did not start (the decoy web server) ==="; exit 1; }
   echo "launcher $service: built in $built s, started, stopped, nothing left running, the decoy web server untouched"
   echo "=== GO ==="
@@ -86,10 +148,11 @@ fi
 out="$($PY tools/pb/launch.py smoke "$service" --task "${PB_TASK:-boot}" 2>&1)"; rc=$?
 echo "$out" | grep -v '^=== '
 [ $rc -eq 0 ] || { echo "=== NO-GO: launch.py smoke $service did not end GO ==="; exit 1; }
+[ "$service" = "headless-boot" ] || _sr_port_closed 47811 \
+  || { echo "=== NO-GO: port 47811 still bound 30 s after launch.py stopped $service ==="; exit 1; }
 
 if [ "$service" = "headless-boot" ]; then
   dir="$(mktemp -d)"
-  trap _sr_unlock EXIT
   run="$(build/target/release/sandbox-reactions$exe headless --scene preset:sun --steps 200 --out "$dir" 2>&1)" \
     || { echo "$run"; echo "=== NO-GO: the headless run exited non-zero ==="; exit 1; }
   echo "$run" | head -n 1 | grep -q '^SR-ADAPTER ' || { echo "$run"; echo "=== NO-GO: stdout's first line is not SR-ADAPTER ==="; exit 1; }

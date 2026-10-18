@@ -1,0 +1,16 @@
+--- a/crates/sr-physics/src/time.rs
++++ b/crates/sr-physics/src/time.rs
+@@ -279,12 +279,9 @@
+         }
+         push(&mut self.walls, est.wall_s, CAP_WINDOW);
+         let at_max = self.at_max();
+-        if !at_max {
+-            self.owed += self.rungs[self.rung].value / self.f_target as f64;
+-        }
++        self.owed += self.rungs[self.rung].value / self.f_target as f64;
+         let n_max = self.n_max(self.f_target);
+         let (steps, planned, bind) = match self.dt_est {
+-            _ if at_max => (n_max, 0.0, false),
+             Some(dt) => {
+                 let need = steps_for(self.owed, dt);
+                 (need.min(n_max), need.min(n_max) as f64 * dt, need > n_max)

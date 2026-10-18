@@ -1,0 +1,97 @@
+# M0-TJ2 log — win-laptop Laser2025-20, 2026-10-18T11:30:47-04:00
+## build check: cargo build --release
+    Finished `release` profile [optimized] target(s) in 0.44s
+-rwxr-xr-x 2 AzureAD+YohanBelanger 4096 14082560 Oct 18 11:12 build/target/release/sandbox-reactions.exe
+## run 1 (started 2026-10-18T11:30:57-04:00): headless --scene preset:sun --steps 5000 --dump-every 1000 --timing --adapter "RTX 4080" --out build/m0-tj2-sun
+/usr/bin/bash: line 1: /usr/bin/time: No such file or directory
+exit 127 at 2026-10-18T11:30:57-04:00
+## run 1 retry (started 2026-10-18T11:31:11-04:00): same command without /usr/bin/time (absent in Git Bash)
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5000 sim_time=59.025242 until=none
+exit 0 at 2026-10-18T11:33:53-04:00
+dumps\s_1000.bin step 1000 t 12.556 dt 0.012575446628034115 box [120, 24, 360, 352, 1024, 1024, 993, 64]
+dumps\s_2000.bin step 2000 t 24.541 dt 0.011874761432409286 box [24, 0, 552, 400, 2048, 1024, 1985, 126]
+dumps\s_3000.bin step 3000 t 36.149 dt 0.011511044576764107 box [0, 0, 600, 400, 2048, 1024, 2993, 189]
+dumps\s_4000.bin step 4000 t 47.614 dt 0.011417961679399014 box [0, 0, 600, 400, 2048, 1024, 3985, 251]
+dumps\s_5000.bin step 5000 t 59.025 dt 0.011393879540264606 box [0, 0, 600, 400, 2048, 1024, 4993, 314]
+## timing 1 (started 2026-10-18T11:34:52-04:00): headless --scene preset:sun --load-dump build/m0-tj2-sun/dumps/s_5000.bin --steps 200 --timing --adapter "RTX 4080" --out build/m0-tj2-at5000-1
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=61.304034 until=none
+exit 0
+## timing 2 (started 2026-10-18T11:34:58-04:00): headless --scene preset:sun --load-dump build/m0-tj2-sun/dumps/s_5000.bin --steps 200 --timing --adapter "RTX 4080" --out build/m0-tj2-at5000-2
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=61.304034 until=none
+exit 0
+## timing 3 (started 2026-10-18T11:35:04-04:00): headless --scene preset:sun --load-dump build/m0-tj2-sun/dumps/s_5000.bin --steps 200 --timing --adapter "RTX 4080" --out build/m0-tj2-at5000-3
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=61.304034 until=none
+exit 0
+run 1: wall_s 4.35 step_ms_mean 17.392 src gpu-timestamp | P0 0.028 P1 0.019 P2 0.741 P3 0.673 P4 8.064 P5 5.937 P6 1.425 P7 0.061 P8 0.203 P9 0.099
+run 2: wall_s 4.33 step_ms_mean 17.377 src gpu-timestamp | P0 0.031 P1 0.012 P2 0.744 P3 0.678 P4 8.065 P5 5.904 P6 1.440 P7 0.058 P8 0.207 P9 0.096
+run 3: wall_s 4.44 step_ms_mean 17.621 src gpu-timestamp | P0 0.028 P1 0.012 P2 0.784 P3 0.684 P4 8.220 P5 5.994 P6 1.399 P7 0.055 P8 0.211 P9 0.095
+## claim (started 2026-10-18T12:17:52-04:00): py -3.12 tools/pb/verify.py --changed --task M0-TJ2
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why strings: stale: milestones/m0/m0_contrat.md
+why watch_only: stale: milestones/m0/m0_contrat.md
+plan_lint        578/0/0      7.11 s  GO · step 1/3, 2 left
+strings          3/0/0      141.00 s  GO · step 2/3, 1 left
+watch_only       1/0/0        1.09 s  GO · step 3/3, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build            NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+burn_cell        NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+burn_order       NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+neutrino         NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+sink             NOT RUN (not impacted: its 95 path(s) checked at the anchor)
+nu_heat          NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+summary          NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+ledger           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+preset_cloud     NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+observe_run      NOT RUN (not impacted: its 107 path(s) checked at the anchor)
+objects          NOT RUN (not impacted: its 29 path(s) checked at the anchor)
+classify         NOT RUN (not impacted: its 29 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+sod              NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+edges            NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+collapse         NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+jeans            NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+sun_burn         NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin             NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+cpu_gpu          NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+heat_limiter     NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+heat_stiff       NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+radiation_force  NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+grav_force       NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+grav_selfforce   NOT RUN (not impacted: its 98 path(s) checked at the anchor)
+fft              NOT RUN (not impacted: its 89 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter          NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+state            NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+booking          NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+floors           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+dt               NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+box              NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+latch            NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+timing           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+scene            NOT RUN (not impacted: its 108 path(s) checked at the anchor)
+dump             NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+boot             NOT RUN (not impacted: its 101 path(s) checked at the anchor)
+desktop          NOT RUN (not impacted: its 83 path(s) checked at the anchor)
+web              NOT RUN (not impacted: its 87 path(s) checked at the anchor)
+capture          NOT RUN (not impacted: its 78 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TJ2.<scope>.log · record: loop_times.jsonl · tree 454209d1f2f4+52787ee9f8d9
+anchor: 3 path×scope entries moved by this run
+anchor: 230 paths checked · 211 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 230 covered of 441 visible
+skipped   203  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 582 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 50 not impacted · 141.11 s + loop 9.17 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 19.16->19.7 · base: M0-TJ2's start 2026-10-18T11:25:19-04:00
+=== GO ===
+## final lint after close: 2026-10-18T12:22:03-04:00

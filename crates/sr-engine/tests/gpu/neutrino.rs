@@ -3,7 +3,8 @@
 //! adapter. One scope, `neutrino`.
 //!
 //! The oracles are written here from the contract. §2.5.3: ε_ν = A_ν (T/T_ν)^m per unit mass for T ≥ T_ν, else 0, with
-//! A_ν = 10⁻³, T_ν = 166, m = 8 (physics.json); booked `neutrino_lost` (energy per area, Σ ε_ν Δt in a cell held at T);
+//! A_ν = 10⁻³, m = 8 (physics.json) and T_ν = 166 (M0-TC's: §0.5 [M0-D50] ships 93, so the cooling's cases pin 166 through
+//! [`cooling`], M0-D55); booked `neutrino_lost` (energy per area, Σ ε_ν Δt in a cell held at T);
 //! S_ν = ε_νΣ in cells with X_n ≥ 0.5. §1.6.2: N_Fe, Fe → n, q = −1.14 Q_H, a = 0, f ≡ 1, g = (Y_eΣ/Σ_N − 1) for Y_eΣ > Σ_N
 //! (Σ_N = 160, p = 1) and 0 at or below it; §1.8.5: the latch is set when any cell's N_Fe rate is > 0. The cold pressure is
 //! off (the four K's 0) so T = μE/Σ for a cell at rest, and a record is alone when the others are disabled in the registry text.
@@ -24,7 +25,7 @@ use sr_physics::reference::react::{Pass, React, TestFlags, N_GROUPS};
 use sr_physics::registry::{Elements, Physics, Reactions, GROUPS, N_SPECIES};
 
 const NS: usize = N_SPECIES;
-/// §2.5.3 / physics.json.
+/// §2.5.3 / physics.json; T_ν as M0-TC wrote it, the one the closed forms below are written at (pinned by [`cooling`]).
 const A_NU: f64 = 1e-3;
 const T_NU: f64 = 166.0;
 const M_NU: i32 = 8;
@@ -42,6 +43,14 @@ fn physics(extra: &[(&str, f64)]) -> Physics {
     let mut keys = vec![("k1e", 0.0), ("k2e", 0.0), ("k1n", 0.0), ("k2n", 0.0)];
     keys.extend_from_slice(extra);
     Physics::shipped().unwrap().with(&keys).unwrap()
+}
+
+/// [`physics`] with T_ν pinned at [`T_NU`] (G-COLL's pattern): the law A_ν (T/T_ν)^m graded at the T_ν its closed forms and
+/// temperatures (170 … 500 above it, 100 below) were written for; the gate, N_Fe and the latch read the shipped T_ν.
+fn cooling(extra: &[(&str, f64)]) -> Physics {
+    let mut keys = vec![("t_nu", T_NU)];
+    keys.extend_from_slice(extra);
+    physics(&keys)
 }
 
 /// assets/reactions.json with only `ids` enabled (none: cooling alone).
@@ -129,7 +138,7 @@ mod neutrino {
     /// temperatures and two densities; T, Σ and the composition stay as they were and no nuclear group is touched.
     #[test]
     fn cooling_closed_form_at_pinned_t() {
-        let physics = physics(&[]);
+        let physics = cooling(&[]);
         let r = react(&physics, &only(&[], &physics), true, true);
         let fe = x_of(&[("Fe", 1.0)]);
         let dt = 0.3;
@@ -153,7 +162,7 @@ mod neutrino {
     /// loses A_ν Σ Δt; with the switch off (the default of [`React::new`]) a cell at 500 is left bit for bit too.
     #[test]
     fn none_below_t_nu_and_none_with_the_switch_off() {
-        let physics = physics(&[]);
+        let physics = cooling(&[]);
         let reactions = only(&[], &physics);
         let on = react(&physics, &reactions, false, true);
         let fe = x_of(&[("Fe", 1.0)]);
@@ -183,7 +192,7 @@ mod neutrino {
     /// deposited share P7 may take (the sum of S_ν Δt) never exceeds the emitted loss.
     #[test]
     fn source_only_where_x_n_is_half_or_more() {
-        let physics = physics(&[]);
+        let physics = cooling(&[]);
         let r = react(&physics, &only(&[], &physics), true, true);
         let dt = 0.25;
         let sigma = 80.0;
@@ -219,7 +228,7 @@ mod neutrino {
     /// energy taken from E is exactly the booked loss (1e-9), no mass moved, sub-cycled (cooling binds `burn_dt`).
     #[test]
     fn cooling_unpinned_follows_the_ode() {
-        let physics = physics(&[("burn_dt", 1e-3)]);
+        let physics = cooling(&[("burn_dt", 1e-3)]);
         let r = react(&physics, &only(&[], &physics), false, true);
         let fe = x_of(&[("Fe", 1.0)]);
         let (sigma, t0, t): (f64, f64, f64) = (50.0, 500.0, 20.0);
@@ -506,7 +515,7 @@ mod gpu {
     #[test]
     fn gpu_cooling_closed_form_at_pinned_t() {
         let gpu = device();
-        let physics = physics(&[]);
+        let physics = cooling(&[]);
         let dt = 0.3;
         for &(sigma, t) in &[(50.0, 170.0), (50.0, 200.0), (50.0, 300.0), (120.0, 500.0)] {
             let block = world(1, 1, &[(sigma, t, fe())]);
@@ -529,7 +538,7 @@ mod gpu {
     #[test]
     fn gpu_none_below_t_nu_and_none_with_the_switch_off() {
         let gpu = device();
-        let physics = physics(&[]);
+        let physics = cooling(&[]);
         let reactions = only(&[], &physics);
         let neutron_rich = x_of(&[("n", 0.9), ("Fe", 0.1)]);
         let block = world(1, 1, &[(50.0, 300.0, neutron_rich)]);
@@ -567,7 +576,7 @@ mod gpu {
     #[test]
     fn gpu_source_only_where_x_n_is_half_or_more() {
         let gpu = device();
-        let physics = physics(&[]);
+        let physics = cooling(&[]);
         let (dt, sigma) = (0.25, 80.0);
         let mut cells = vec![
             (sigma, 300.0, x_of(&[("n", 0.9), ("Fe", 0.1)])),
@@ -609,7 +618,7 @@ mod gpu {
     #[test]
     fn gpu_cooling_unpinned_follows_the_ode() {
         let gpu = device();
-        let physics = physics(&[("burn_dt", 1e-3)]);
+        let physics = cooling(&[("burn_dt", 1e-3)]);
         let (sigma, t0, t): (f64, f64, f64) = (50.0, 500.0, 20.0);
         let mu = 1.0 / inv_mu(&fe());
         let t_end = (t0.powi(-7) + 7.0 * mu * A_NU * t / T_NU.powi(8)).powf(-1.0 / 7.0);

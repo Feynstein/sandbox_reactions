@@ -830,18 +830,19 @@ mod tests {
         assert_eq!(Elements::parse(&root.to_string()).unwrap_err().key, "species");
     }
 
+    /// §2.7's initial values as amended by §0.5 [M0-D50]: the ladder × 0.56, a_r 4 × 10⁻⁵ and T_ν 93.
     #[test]
     fn physics_initial_values_verbatim() {
         let expected: [(&str, f64); 52] = [
-            ("t_h", 100.0), ("t_he", 140.0), ("t_c", 196.0), ("t_ne", 274.0), ("t_o", 300.0), ("t_si", 420.0),
+            ("t_h", 56.0), ("t_he", 78.4), ("t_c", 109.8), ("t_ne", 153.4), ("t_o", 168.0), ("t_si", 235.2),
             ("q_h", 8700.0), ("a_h_burn", 5e-4), ("a_he_burn", 1e-3), ("a_c_alpha", 1e-3), ("a_c_burn", 1e-3),
             ("a_ne_burn", 1e-3), ("a_o_burn", 1e-3), ("a_mg_burn", 1e-3), ("a_si_burn", 1e-3), ("a_s_burn", 1e-3),
             ("a_n_fe", 1e-3), ("nu_c_burn", 30.0), ("nu_ne_burn", 30.0), ("nu_o_burn", 30.0), ("nu_mg_burn", 30.0),
             ("nu_si_burn", 30.0), ("nu_s_burn", 30.0), ("sigma_n", 160.0), ("burn_dx", 0.1), ("burn_dt", 0.05),
             ("sigma_floor", 1e-8), ("sigma_vac", 1e-6), ("t_floor", 0.05), ("sigma_obj", 1e-3), ("paint_sigma", 0.02),
             ("paint_t", 2.0), ("heat_factor", 1.05), ("cool_factor", 0.95), ("k1e", 21.3), ("k2e", 134.0),
-            ("k1n", 2.67), ("k2n", 58.2), ("a_r", 4e-7), ("c_sb", 200.0), ("kappa0", 1.0), ("k_cond", 0.0),
-            ("a_nu", 1e-3), ("t_nu", 166.0), ("m_nu", 8.0), ("f_dep", 0.05), ("sigma_bh", 4000.0), ("cfl", 0.4),
+            ("k1n", 2.67), ("k2n", 58.2), ("a_r", 4e-5), ("c_sb", 200.0), ("kappa0", 1.0), ("k_cond", 0.0),
+            ("a_nu", 1e-3), ("t_nu", 93.0), ("m_nu", 8.0), ("f_dep", 0.05), ("sigma_bh", 4000.0), ("cfl", 0.4),
             ("eta_g", 0.3), ("kappa_dust", 0.0), ("t_dust", 0.0), ("block", 4.0),
         ];
         let p = phys();
@@ -888,30 +889,34 @@ mod tests {
         assert_eq!(refused_key(phys().with(&[("cfl", f64::NAN)])), "cfl");
     }
 
+    /// The ladder's edges (K6) are built from the shipped neighbours, so they grade the rule at whatever ladder ships.
     #[test]
     fn ladder_is_strict_where_the_contract_says_less_than() {
-        let eps = 1e-9;
+        let (eps, p) = (1e-9, phys());
+        let t = |key: &str| p.get(key).unwrap();
         // T_H < T_He < T_C < T_Ne and T_O < T_Si: equal to the one below is refused, a hair above is not.
-        for (key, below, value) in [("t_he", "t_h", 100.0), ("t_c", "t_he", 140.0), ("t_ne", "t_c", 196.0), ("t_si", "t_o", 300.0)] {
-            assert_eq!(refused_key(phys().with(&[(key, value)])), key, "{key} == {below}");
-            accepted(phys().with(&[(key, value + eps)]));
+        for (key, below) in [("t_he", "t_h"), ("t_c", "t_he"), ("t_ne", "t_c"), ("t_si", "t_o")] {
+            assert_eq!(refused_key(p.with(&[(key, t(below))])), key, "{key} == {below}");
+            accepted(p.with(&[(key, t(below) + eps)]));
         }
         // Raising T_H onto T_He breaks the first step.
-        assert_eq!(refused_key(phys().with(&[("t_h", 140.0)])), "t_he");
-        // T_He > T_C (swapped) is refused.
-        assert_eq!(refused_key(phys().with(&[("t_he", 200.0)])), "t_c");
+        assert_eq!(refused_key(p.with(&[("t_h", t("t_he"))])), "t_he");
+        // T_He between T_C and T_Ne (swapped with T_C) is refused.
+        assert_eq!(refused_key(p.with(&[("t_he", 0.5 * (t("t_c") + t("t_ne")))])), "t_c");
     }
 
     #[test]
     fn neon_and_oxygen_may_tie_but_not_invert() {
-        accepted(phys().with(&[("t_o", 274.0)]));
-        assert_eq!(refused_key(phys().with(&[("t_o", 274.0 - 1e-9)])), "t_o");
+        let t_ne = phys().get("t_ne").unwrap();
+        accepted(phys().with(&[("t_o", t_ne)]));
+        assert_eq!(refused_key(phys().with(&[("t_o", t_ne - 1e-9)])), "t_o");
     }
 
     #[test]
     fn silicon_over_hydrogen_at_most_ten() {
-        accepted(phys().with(&[("t_si", 1000.0)]));
-        assert_eq!(refused_key(phys().with(&[("t_si", 1000.0 + 1e-9)])), "t_si");
+        let top = 10.0 * phys().get("t_h").unwrap();
+        accepted(phys().with(&[("t_si", top)]));
+        assert_eq!(refused_key(phys().with(&[("t_si", top + 1e-9)])), "t_si");
     }
 
     #[test]
@@ -1086,17 +1091,17 @@ mod tests {
         let p = phys();
         let r = reactions();
         let h = r.get("H_burn").unwrap();
-        // T_k = t_factor · T_H; T_thr = 0.5 · the first term's T_k; A from a_h_burn.
-        assert_eq!((h.rate.terms[0].t_k, h.rate.terms[1].t_k), (100.0, 1.15 * 100.0));
-        assert_eq!((h.rate.t_thr, h.rate.a_key.as_str(), h.rate.a_coef), (Some(50.0), "a_h_burn", 5e-4));
+        // T_k = t_factor · T_H; T_thr = 0.5 · the first term's T_k; A from a_h_burn (§0.5 [M0-D50]'s T_H 56, T_Si 235.2).
+        assert_eq!((h.rate.terms[0].t_k, h.rate.terms[1].t_k), (56.0, 1.15 * 56.0));
+        assert_eq!((h.rate.t_thr, h.rate.a_key.as_str(), h.rate.a_coef), (Some(28.0), "a_h_burn", 5e-4));
         let si = r.get("Si_burn").unwrap();
-        assert_eq!((si.rate.terms[0].t_k, si.rate.t_thr, si.rate.a_coef, si.rate.terms[0].nu), (420.0, Some(210.0), 1e-3, 30.0));
+        assert_eq!((si.rate.terms[0].t_k, si.rate.t_thr, si.rate.a_coef, si.rate.terms[0].nu), (235.2, Some(0.5 * 235.2), 1e-3, 30.0));
         assert_eq!(r.get("N_Fe").unwrap().rate.t_thr, None);
-        // A scene's overrides reach the records: a tuned ν and A and a moved temperature.
-        let tuned = p.with(&[("nu_c_burn", 35.0), ("a_c_burn", 2e-3), ("t_c", 200.0)]).unwrap();
+        // A scene's overrides reach the records: a tuned ν and A and a moved temperature (between T_He 78.4 and T_Ne 153.4).
+        let tuned = p.with(&[("nu_c_burn", 35.0), ("a_c_burn", 2e-3), ("t_c", 120.0)]).unwrap();
         let r = Reactions::shipped(&Elements::shipped().unwrap(), &tuned).unwrap();
         let c = r.get("C_burn").unwrap();
-        assert_eq!((c.rate.terms[0].nu, c.rate.a_coef, c.rate.terms[0].t_k, c.rate.t_thr), (35.0, 2e-3, 200.0, Some(100.0)));
+        assert_eq!((c.rate.terms[0].nu, c.rate.a_coef, c.rate.terms[0].t_k, c.rate.t_thr), (35.0, 2e-3, 120.0, Some(60.0)));
         // q = q_ratio · Q_H: hydrogen's own, helium's tenth-ish, and N_Fe absorbing.
         let q = |id: &str| reactions().get(id).unwrap().q(&p);
         assert_eq!(q("H_burn"), 8700.0);

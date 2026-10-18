@@ -15,7 +15,7 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
   a FROZEN clause prevails over §5, and §5 over the rest; where a research report disagrees with
   this contract, this contract wins and the report is history.
 - **0.2 FROZEN at authoring** — the lead's rulings, each beside the lead's words: Q1 gravity (§1.4.1),
-  Q2 the top rung's frame rate (§1.8.6), Q3 stand-in laws (§1.6.4), Q4 browsers without WebGPU
+  Q2 the top rung's frame rate (§1.8.6; the top speed itself ruled at M0-TJ2, §0.5), Q3 stand-in laws (§1.6.4), Q4 browsers without WebGPU
   (§6.2.4), Q5 the dependency gate (§1.2). They change only by a new question to the lead.
 - **0.3 Amendments** happen in place, by a PLAN task, tagged `[M0-<id>]`. A §5 clause counts as
   frozen once its scope has a GO `verify.py --redarm` record; the next PLAN task marks it
@@ -252,6 +252,43 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     shone 3.0 × 10⁴; and before the bounce L ≈ 2.7 × 10⁻⁷, so a flash of L_H 277 at step 225 that burned 0.04 % of the
     centre's hydrogen turned `ignited` on — the lead's answers at M0-V18, 2026-10-16: «Nearest star (Recommended)»,
     «Burning matches light (Recommended)».
+  - [M0-D50] §2.5.1's initial ladder "T_H 100" and "T_He, T_C, T_Ne, T_O, T_Si 140, 196, 274, 300, 420" with T_H's role "the
+    settled Sun-like core runs near μc²/2 ≈ 114 for SM's c ≈ 19.5", §2.5.3's "T_ν initial 166" and §2.7's "A_ν, T_ν, m 1 × 10⁻³,
+    166, 8" and "a_r, c_sb, κ₀, k_cond 4 × 10⁻⁷, 200, 1, 0" · physics.json's ladder × 0.56, all of it together — T_H 56, T_He
+    78.4, T_C 109.8, T_Ne 153.4, T_O 168, T_Si 235.2 (K6's order, T_Si/T_H 4.2) and T_ν 93 (still between T_He and T_C) — and
+    a_r 4 × 10⁻⁵; every bound unchanged, and K₁ₑ, K₂ₑ, Q_H, every A (H_burn 5 × 10⁻⁴), every ν, Σ_N, c_sb, κ₀, k_cond, A_ν and m;
+    the settled Sun-like core runs near T_c 36, not 114 · on M0-TC's values the Sun-like preset never lives a main sequence:
+    the electrons' cold pressure holds its centre at T_c ≈ 29 after a bounce to 59, against H_burn's threshold 0.5 T_H = 50,
+    and a_r 4 × 10⁻⁷ lets the cloud shine 2–4 × 10⁻⁷, so it can neither burn nor cool and contract (M0-V8, RTX 5090; M0-T63,
+    Quadro RTX 4000); K₁ₑ ÷ 4 burns all its hydrogen at once and blows it apart. Measured on win-laptop (Laser2025-20, RTX
+    4080 Laptop), 2026-10-16 and 2026-10-18 (M0-D50, reports/ignition.md): §2.10's cloud as a disk at M₀ on these values,
+    8,000 steps — a mild flash at the bounce (T_c 57, X_H,c 0.7346 → 0.7315), then X_H,c 0.7276 → 0.7067 from step 2,000 to
+    8,000 at T_c 33.3–36.5, L_nuc/L 0.62–0.81, M_unb/M ≤ 0.004, `main_sequence` from step 3,000; the ladder × 0.5 or × 0.56 at
+    a_r 4 × 10⁻⁷ runs away, a_r × 100 damps the bounce's flash (× 30 still runs away) and sets L ≈ 2,300 for the burn to
+    match, A_H 1 × 10⁻³ runs away and 7 × 10⁻⁴ holds — the lead's answer at M0-V18, 2026-10-16: «Keep white dwarfs, D50
+    writes (Recommended)» (as put: D50 prefers sets that leave the cold pressure alone, mainly by lowering the burning
+    temperatures, the whole ladder moving together; D50 writes the working set and tells the lead after).
+  - [M0-TJ2] §1.8.2's "then TOP itself" and "a Sun-like life in ~10 s at the top rung (B9)", §1.8.6's "At TOP only, f_target
+    becomes 30 when N_max at 60 binds in ≥ 30 of the last 60 frames, and returns to 60 after 120 consecutive frames …" and "If
+    TOP cannot hold at 30 either (G-TOP red on the Quadro), the build stops and the lead is asked again …; shortcut jumps and a
+    slower top speed stay unruled", and §5.3 G-TOP's "life_wall_s ≤ 12 … Red at 30 frames, the build stops for the lead
+    (§1.8.6)" · the top rung is **Max**, as fast as the card goes: each frame N_max steps at f_target 30, no sim time owed, the
+    readout always the running speed; TOP only caps the numbered rungs; no performance number stops the build or holds a
+    lot; G-TOP grades Max's plan and reports life_wall_s — amended in place (§1.8.2–§1.8.4, §1.8.6, §3.2, §3.3, §4.2–§4.3,
+    §4.10, §4.12, §5.3) · measured (reports/top_speed.md): a Sun-like life on [M0-D50]'s constants ≈ 2 × 10⁵ steps (8,000
+    run, the rest extrapolated — UNVERIFIED), the burning star's box the whole world from step 3,000, its step 17.4 ms on the
+    RTX 4080 Laptop (GPU timestamps, 2026-10-18) and the whole world's 10.7 ms on the Quadro (M0-T63): a ~10 s life needs
+    ≈ 670 steps a frame at 30 frames, each ≈ 240× cheaper; the Quadro runs the burning star at ≈ ×0.7 — the lead's answer at
+    M0-TJ2, 2026-10-18: «we go as fast as the card goes. We dont compromise physics over performance for now, maybe later in
+    another milestone will we optimize further but not now, we do not block anything on performance».
+  - [M0-TJ2] §5.3 G-FPS's "p95 frame ≤ 16.7 ms … p95 ≤ 16.7 ms, or ≤ 33.3 ms once §1.8.6's switch engaged; the slowest frame
+    ≤ 50 ms at any rung" · the frame times measured and reported beside those targets, never a NO-GO; graded: no frame plans
+    more than its N_max (§1.8.3, bench.json's `off_cap` = 0; plant `no-clamp` unchanged) · the same answer: «we do not block
+    anything on performance».
+  - [M0-TJ2] §1.4.4's cadence ("a lever, built only if M0-TG's budget needs it"), §5.3 G-CAD and its plant `cadence-16` · not
+    built in M0: gravity re-solved at every step (k = 1), no scope `cadence` — routed past M0 (reports/top_speed.md § Routed)
+    · the cadence trades gravity's accuracy for speed (G-CAD's drift ≤ 10⁻³ |W| per τ_dyn) — the same answer: «We dont
+    compromise physics over performance for now, maybe later in another milestone will we optimize further but not now».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -360,7 +397,8 @@ sizes (§1.3.3). g = −∇φ by central differences. P4 adds the momentum sourc
 **1.4.4 Cadence (TW-R1 A3) — a lever, built only if M0-TG's budget needs it.** k ∈ {1, 4}: k = 4
 only when, over the last 16 steps, no non-vacuum cell's Σ changed by more than 0.1 % and the latch
 saw no neutronization or sink formation in the last 1.0 t.u.; decided at step ≡ 0 (mod 16) from the
-state; otherwise k = 1. Guarded by G-CAD.
+state; otherwise k = 1. Guarded by G-CAD. [M0-TJ2] Not built in M0: k = 1 at every step — the cadence trades gravity's
+accuracy for speed, which the lead's ruling leaves to a later milestone (§1.8.6, §0.5).
 
 ### 1.5 Element registry — `assets/elements.json`
 Schema: `{"version": 1, "species": [{"key", "name", "symbol", "a", "z", "paintable", "color"}]}`;
@@ -472,11 +510,12 @@ switch (§2.12) that turns it off for unit scenes.
 **1.8.1 ×1** = one sandbox time unit per wall second — about one dynamical time √(R³/GM) of the
 settled Sun-like star (≈ 1.0 for M = 3351, R = 15, SM's worked example; my arithmetic) (D8).
 
-**1.8.2 Rungs.** The ladder ×0.1 · ×0.3 · ×1 · ×3 · ×10 · ×30 · ×100 · ×300 · ×1000, keeping the
-rungs below TOP / 1.5, then TOP itself. TOP = `life_sun_sb` (calibration: sim time from dropping the
-Sun-like preset to its white-dwarf stage) ÷ 10 s, rounded to two significant digits — a Sun-like
-life in ~10 s at the top rung (B9). Keys 1…n select a rung in order; + faster, − slower (§4.10). The
-game starts at ×1, running.
+**1.8.2 Rungs** [M0-TJ2]. The ladder ×0.1 · ×0.3 · ×1 · ×3 · ×10 · ×30 · ×100 · ×300 · ×1000, keeping the
+rungs below TOP / 1.5 (all nine until a calibration exists), then **Max**, the top rung: as fast as the card
+goes (§1.8.3, §1.8.6). TOP = `life_sun_sb` (calibration: sim time from dropping the Sun-like preset to its
+white-dwarf stage) ÷ 10 s, rounded to two significant digits — the speed of a Sun-like life in ~10 s (B9),
+which caps the numbered rungs and is never a rung itself. Keys 1…9 select the numbered rungs in order and
+0 selects Max; + faster, − slower (§4.10). The game starts at ×1, running.
 
 **1.8.3 A frame.** owed += rung / f_target (sandbox time owed this frame); N = min(N_max,
 ⌈owed / Δt_est⌉) steps, Δt_est the last Δt read back (≤ 2 frames late); owed −= the sim time
@@ -484,11 +523,13 @@ actually advanced (read back), owed ≥ −Δt_est. N_max = max(1, ⌊(1000 / f_
 with c_step the 16-frame moving average of the GPU-timestamped cost per step and R_reserve the
 calibration's `render_reserve_ms` (3.0 until the first drawing lot measures it — TW §3's
 reservation, opinion there). When less than one step per frame is owed (slow motion), the renderer
-draws the interpolation between the last two states with α = owed / Δt_est (TW-E4).
+draws the interpolation between the last two states with α = owed / Δt_est (TW-E4). [M0-TJ2] At Max
+no sim time is owed: N = N_max in every frame, whatever sim time those steps advance.
 
 **1.8.4 The cap is never silent** (TW-R2): when N_max binds in ≥ 30 of the last 60 frames, the
 speed readout reads "Speed ×{rung} (running ×{actual})" (§4.3), actual = the sim time advanced over
-the last 60 frames ÷ their wall time.
+the last 60 frames ÷ their wall time. [M0-TJ2] At Max the readout always shows it: `time.speed_max`,
+"Speed max (running ×{actual})" (§4.3).
 
 **1.8.5 Pause, step, the slow-down and its latch.** Pause stops stepping. Step: while paused, exactly
 one step; while running, it pauses. The automatic slow-down (B11), setting "Slow down for big
@@ -501,13 +542,16 @@ controller dispatch zeroes every later indirect dispatch of that frame (TW-E16),
 runs; the CPU then sets ×0.1 and the latch re-arms by the rule. With the setting off, steps run
 through events at the chosen rung and the "running ×" readout shows any shortfall.
 
-**1.8.6 The top rung at 30 frames a second (Q2) — FROZEN.** The lead, 2026-10-08 11:23 EDT:
-**"30 pictures/s at top speed (Recommended)"**. f_target = 60 at every rung. At TOP only, f_target
-becomes 30 when N_max at 60 binds in ≥ 30 of the last 60 frames, and returns to 60 after 120
-consecutive frames that needed fewer than half of N_max at 60. The sim time per wall second does
-not change with the switch. If TOP cannot hold at 30 either (G-TOP red on the Quadro), the build
-stops and the lead is asked again ("If even that is not enough, we come back to you"); shortcut
-jumps and a slower top speed stay unruled — neither is ever a silent fallback.
+**1.8.6 The top rung at 30 frames a second (Q2) — FROZEN; the top speed as fast as the card goes —
+FROZEN [M0-TJ2].** The lead, 2026-10-08 11:23 EDT: **"30 pictures/s at top speed (Recommended)"**; the lead,
+2026-10-18, at M0-TJ2: **"we go as fast as the card goes. We dont compromise physics over performance for
+now, maybe later in another milestone will we optimize further but not now, we do not block anything on
+performance"**. f_target = 60 at every numbered rung and 30 at Max, the top speed; at Max the sim time per
+wall second is what the card advances, shown by the readout (§1.8.4). No performance number stops the
+build or holds a lot: G-FPS's frame times and G-TOP's life wall time are measured and reported, never
+graded (§5.3). Shortcut jumps (TW R6), a fixed slower top speed and every lever that trades physics for
+speed (the gravity cadence, §1.4.4) wait for a later milestone (reports/top_speed.md § Routed) — none is
+ever a silent fallback.
 
 **1.8.7 Time never touches the physics** (TW-R2): Δt is the CFL step computed from the state;
 rungs, the latch, the frame rate and the 30-frames switch change only how many steps a frame runs
@@ -936,11 +980,11 @@ No save format in M0 — saving is a later milestone (B24, answer 16).
   stage, readouts and events (§1.9, §1.10).
 
 ### 3.2 The time-control API (`sr_physics::time`, no GPU)
-`TimeControl` holds the rungs (from calibration's top_rung), the selected rung, paused, the slow-down
-setting, f_target and owed sim time; `select(k)`, `faster()`, `slower()`, `toggle_pause()`,
-`step_once()`, `plan_frame(estimates) → {steps, f_target}`, `on_report(report)`,
-`on_event(event)`, and `speed_text() → (rung label, running speed or none, paused)`. Unit-tested
-without a GPU against §1.8.
+`TimeControl` holds the rungs (the numbered rungs capped by calibration's top_rung, then Max [M0-TJ2]), the
+selected rung, paused, the slow-down setting, f_target and owed sim time; `select(k)`, `faster()`, `slower()`,
+`toggle_pause()`, `step_once()`, `plan_frame(estimates) → {steps, f_target}`, `on_report(report)`,
+`on_event(event)`, and `speed_text() → (rung label, running speed or none — always at Max, paused)`.
+Unit-tested without a GPU against §1.8.
 
 ### 3.3 The binary `sandbox-reactions`
 - **Desktop** (no subcommand): `sandbox-reactions [--adapter <name substring>] [--world <W>x<H>]
@@ -965,13 +1009,14 @@ without a GPU against §1.8.
   - Exit codes: 0 done · 2 condition not met within --max-steps (default 2,000,000) · 3 no adapter
     or a GPU error · 4 bad arguments or scene · 5 a non-finite value in the state (the message names
     the step, cell and channel) · 6 calibration failed (§2.11) · 101 a panic.
-- **Bench:** `sandbox-reactions bench --scene … --rung <label|top> (--frames N | --until <condition>)
-  --adapter S [--slowdown on|off] [--load-dump FILE] --out DIR` — §1.8's frame loop with every frame
-  rendered offscreen at the default window's world size (1200 × 800, Glow view with glow; the UI
-  panels' cost is R_reserve), no vsync. Writes DIR/bench.json: `{"adapter", "rung", "frames",
-  "f_target_switches", "frame_ms": {"p50", "p95", "max"}, "steps_per_frame": {"p50", "max"},
+- **Bench:** `sandbox-reactions bench --scene … --rung <label|max> (--frames N | --until <condition>)
+  --adapter S [--slowdown on|off] [--load-dump FILE] --out DIR` [M0-TJ2: `max`, was `top`] — §1.8's frame loop
+  with every frame rendered offscreen at the default window's world size (1200 × 800, Glow view with glow;
+  the UI panels' cost is R_reserve), no vsync. Writes DIR/bench.json: `{"adapter", "rung", "frames",
+  "f_target_switches", "frame_ms": {"p50", "p95", "max"}, "steps_per_frame": {"p50", "max"}, "off_cap",
   "sim_time", "life_wall_s", "until": {…}}`, life_wall_s = Σ_frames max(frame_ms, 1000/f_target) /
-  1000 — the wall time the run would take on screen.
+  1000 — the wall time the run would take on screen; `off_cap` [M0-TJ2] — the frames whose planned steps
+  exceeded that frame's N_max, or at Max differed from it.
 - **Calibrate:** `sandbox-reactions calibrate --adapter S --out assets/calibration.json
   [--only <item>]` — §2.11; `--only` re-measures one item and keeps the rest.
 - **Capture** (TV passes, PLAYBOOK §8 — "game engines feed their own captures"): `--capture
@@ -1042,6 +1087,8 @@ time.step = "Step"
 time.rung = "×{rung}"
 time.speed = "Speed ×{rung}"
 time.speed_capped = "Speed ×{rung} (running ×{actual})"
+time.rung_max = "Max"
+time.speed_max = "Speed max (running ×{actual})"
 time.paused = "Paused"
 time.slowdown = "Slow down for big events"
 banner.ignition = "Slowed down: hydrogen ignition — press + to speed up again"
@@ -1159,9 +1206,10 @@ since 147); a later amendment updates it when that page changes.
 
 ### 4.2 Layout (desktop; the web build draws the same into its canvas)
 - Default window 1760 × 940 logical px (fits a 1920 × 1080 screen), title `app.title`.
-- **Top bar** (44 px), left to right: Pause/Play · Step · the rung buttons (`time.rung`, rungs above
-  TOP never shown) · the speed readout (`time.speed`, `time.speed_capped` or `time.paused`) · the
-  `time.slowdown` checkbox · `edge.label` with its two choices · `world.clear`.
+- **Top bar** (44 px), left to right: Pause/Play · Step · the rung buttons (`time.rung`, rungs at or
+  above TOP / 1.5 never shown; then Max's, `time.rung_max` [M0-TJ2]) · the speed readout (`time.speed`, `time.speed_capped`,
+  `time.speed_max` at Max [M0-TJ2] or `time.paused`) · the `time.slowdown` checkbox · `edge.label` with its two
+  choices · `world.clear`.
 - **Left panel** (220 px): `tools.heading` — Brush, Eraser, Heat, Cool (one selected), the
   `tools.brush_size` slider (1–40 cells); `tools.element_heading` — the nine paintable elements with
   colour swatches (§1.5; neutron matter is never listed); `presets.heading` — three buttons, each
@@ -1180,7 +1228,9 @@ since 147); a later amendment updates it when that page changes.
 Rung buttons in ladder order; keys 1…n (§4.10). The banner key matches the event: ignition →
 `banner.ignition`, core collapse → `banner.core_collapse`, supernova → `banner.supernova`.
 `time.speed_capped` replaces `time.speed` under §1.8.4's rule; `{actual}` takes two significant
-digits.
+digits. [M0-TJ2] Max's button reads `time.rung_max` and, at Max, the readout is always `time.speed_max`. The two
+keys join §4.1's block and strings.rs together, in M0-T125 (before any build shows them), exactly: `time.rung_max = "Max"` and
+`time.speed_max = "Speed max (running ×{actual})"`.
 
 ### 4.4 Tools, brush and elements
 Brush, Eraser, Heat and Cool act on the cells under a disk of `tools.brush_size` cells radius (1–40,
@@ -1218,7 +1268,7 @@ heading, then `web.no_webgpu_body` and `web.no_webgpu_browsers` as paragraphs, i
 |---|---|
 | Space | Pause / Play |
 | . (period) | Step |
-| 1 … 9 | select rung n (§1.8.2) |
+| 1 … 9 · 0 | select numbered rung n · Max (§1.8.2) [M0-TJ2] |
 | + or = / − | faster / slower |
 | B · E · H · C | Brush · Eraser · Heat · Cool |
 | [ / ] | brush size −2 / +2 |
@@ -1257,8 +1307,8 @@ Maps interpolate linearly in linear RGB between stops and clamp outside.
 - **Age and rate:** the largest unit whose value is ≥ 1 — trillion, billion, million, thousand
   years, years, days (1 year = 365.25 days), seconds, milliseconds — at 3 significant digits
   ("4.57 billion years", "18.0 days", "3.00 milliseconds").
-- **Speeds:** ladder rungs as written (×0.1 … ×1000); TOP and `{actual}` at 2 significant digits
-  ("×42", "×0.83").
+- **Speeds:** ladder rungs as written (×0.1 … ×1000); `{actual}` at 2 significant digits ("×42",
+  "×0.83"); Max as `time.rung_max` [M0-TJ2 — TOP is no longer a rung, so never shown].
 - **Inspector numbers:** 3 significant digits; scientific notation (1.23e-5) below 0.001 or at
   100,000 and above. **Mix percentages:** 3 significant digits ("73.5", "0.770").
 - **fps** and **steps per frame:** integers.
@@ -1400,30 +1450,34 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
 
 ### 5.3 Time, performance, determinism
 - **G-WARP · warps never touch the physics** (TW-R2 T1). 2,000 steps of the Sun-like preset at ×0.1,
-  ×1 and TOP, slow-down on and off: bit-identical dumps on one adapter. *By construction* (§1.3.4,
+  ×1 and Max [M0-TJ2, was TOP], slow-down on and off: bit-identical dumps on one adapter. *By construction* (§1.3.4,
   §1.8.7). Scope `warp`. Plant `dt-from-frame`: Δt taken from the frame's owed time.
 - **G-BOX · the box equals the world** (TW-R5 T2). The Sun-like preset, 2,000 steps, box against
   whole world: mass, momentum, energy and each species' mass equal within 10⁻⁶ relative (f64 sums);
   a blob at 0.35 cells per step aimed at the box's edge loses no mass in bounce mode (10⁻⁶). *By
   construction* (vacuum is static; FFT sizes differ in round-off only). Scope `box`. Plant
   `margin-zero`: the margin 8 → 0.
-- **G-CAD · the gravity cadence** (TW-R5 T3) — only if §1.4.4 is built. k = 4 against k = 1 on the
+- **G-CAD · the gravity cadence** (TW-R5 T3) — only if §1.4.4 is built; [M0-TJ2] not built in M0 (§1.4.4): no
+  scope `cadence`, no plant `cadence-16`. k = 4 against k = 1 on the
   settled Sun-like star: energy-ledger drift ≤ 10⁻³ |W| per τ_dyn; k = 1 whenever §1.4.4's conditions
   fail. *UNVERIFIED*. Scope `cadence`. Plant `cadence-16`: k = 16 with the quiet test off.
 - **G-LATCH · the collapse caught within one step** (TW-R4). The Massive preset from an iron-core
-  dump at TOP, slow-down on: no step runs after the first step whose N_Fe rate is > 0 within that
+  dump at Max [M0-TJ2, was TOP], slow-down on: no step runs after the first step whose N_Fe rate is > 0 within that
   frame; the next frame runs at ×0.1 with `banner.core_collapse`. Exact. *By construction*. Scope
   `latch`. Plant `latch-off`: the controller never zeroes the dispatches.
-- **G-FPS · the frame rate** (RT16; B14, I4). `bench` on linux-pc, adapter "Quadro RTX 4000" (the
-  mid-range card: an RTX 2070 by its chip, ES-E21–E23), the Sun-like preset: from a
-  mid-main-sequence dump, 600 frames at each rung below TOP — p95 frame ≤ 16.7 ms; the whole life at
-  TOP — p95 ≤ 16.7 ms, or ≤ 33.3 ms once §1.8.6's switch engaged; the slowest frame ≤ 50 ms at any
-  rung. *UNVERIFIED* (TW: holds only with the box and a small K1 gap). Box: linux-pc. Scope `fps` ⏱.
-  Plant `no-clamp`: N_max ignored.
-- **G-TOP · a Sun-like life in about 10 s** (B9; Q2). The same bench at TOP until
-  `stage:white_dwarf`: life_wall_s ≤ 12. *UNVERIFIED* (TW-R8: not shown held). Red at 30 frames,
-  the build stops for the lead (§1.8.6). Box: linux-pc, Quadro. Scope `top-speed` ⏱. Plant
-  `owed-half`: owed grows by rung/120 per frame.
+- **G-FPS · the frame rate** (RT16; B14, I4) [M0-TJ2]. `bench` on linux-pc, adapter "Quadro RTX 4000" (the
+  mid-range card: an RTX 2070 by its chip, ES-E21–E23), the Sun-like preset: from a mid-main-sequence dump,
+  600 frames at each numbered rung, and the whole life at Max: no frame plans more steps than its N_max
+  (§1.8.3; bench.json's `off_cap` = 0) — exact; p50, p95 and the slowest frame at each rung measured and
+  reported beside the targets — p95 ≤ 16.7 ms at a numbered rung, ≤ 33.3 ms at Max, the slowest ≤ 50 ms —
+  never a NO-GO and never a D (§1.8.6: "we do not block anything on performance"). *UNVERIFIED* (the clamp on
+  the Quadro's real loop). Box: linux-pc. Scope `fps` ⏱. Plant `no-clamp`: N_max ignored.
+- **G-TOP · the top speed, as fast as the card goes** (B9; Q2) [M0-TJ2]. The same bench at Max, the
+  slow-down off, from the drop until `stage:white_dwarf`: every frame plans exactly N_max steps at f_target
+  30 (bench.json's `off_cap` = 0) — exact; life_wall_s and the mean speed (sim_time ÷ life_wall_s) printed and
+  reported, never bounded (§1.8.6). *UNVERIFIED* (a whole life at Max on the Quadro — the lead's run when over
+  10 minutes, §6.4). Box: linux-pc, Quadro. Scope `top_speed` ⏱. Plant `max-half`: Max plans ⌊N_max / 2⌋
+  steps.
 
 ### 5.4 The product surface
 - **G-WATCH · labels watch, never drive** (I2; B7's "every stage must come out of the physics, not a
@@ -1472,7 +1526,8 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
 
 ### 5.5 UNVERIFIED — the satisfiability register
 G-VIR, G-JEANS, G-CORE, G-CONS (energy), G-THERMO, G-REF, G-SQUEEZE, G-END, G-STAGES, G-TOUCH,
-G-FIT, G-CAD, G-FPS, G-TOP, G-DESK, G-WEB rest on runs not yet made, and on the model risks behind
+G-FIT, G-FPS, G-TOP (their controller checks; the frame times and the life's wall time are reported,
+never graded, and G-CAD is not built in M0 — [M0-TJ2]), G-DESK, G-WEB rest on runs not yet made, and on the model risks behind
 them: a red giant forming at all in the sheet; shell ejection (S1's trigger); the explosion (S2's
 trigger); the onion of burning shells in a ~60-cell star; K1's gap of 10; the post-main-sequence
 cost per unit time; the sheet's Jeans length (SM, TW UNVERIFIED lists). Each is first measured by

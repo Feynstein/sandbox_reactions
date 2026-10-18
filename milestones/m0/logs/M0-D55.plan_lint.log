@@ -1,0 +1,11 @@
+== 2026-10-18T10:40:22-04:00 plan_lint · task M0-D55 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.64 s
+lint: checks=572 failed=0 warnings=1 · blocks=243 · flow_rows=243 · verify_fences=0 · history=0 · flow=per-task · header=575/600 · pipeline=9/60 · ladder=7 rungs · refresh=2/5
+WARN: M0-D56: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (840 lines > 500) - name a section or a line range
+=== GO ===
+
+== 2026-10-18T11:23:52-04:00 plan_lint · task M0-D55 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.33 s
+lint: checks=570 failed=0 warnings=0 · blocks=243 · flow_rows=243 · verify_fences=0 · history=0 · flow=per-task · header=575/600 · pipeline=9/60 · ladder=7 rungs · refresh=3/5
+=== GO ===
+

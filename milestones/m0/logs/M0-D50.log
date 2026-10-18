@@ -5,3 +5,18 @@ real	0m0.729s
 user	0m0.000s
 sys	0m0.062s
 2026-10-16T21:27:09Z paused by the lead; runs in logs/M0-D50.runs.log, state in tasks/M0-D50.md
+2026-10-18T13:09:01Z resumed by the task agent (model=claude-opus-5-5 level=xhigh, rung_record); step 2: continuous W2 disk run, 8000 steps
+2026-10-18T13:09:40Z [w2-cont] headless --scene <scratch>/d50/w2.json --steps 8000 --dump-every 2000 --adapter 'RTX 4080'
+user	0m0.016s
+sys	0m0.031s
+exit 0
+2026-10-18T13:14:06Z [w2-cont] done: exit 0, 3m26.5s (dumps every 1000, not 2000 as the line above says); X_H,c 0.7276/0.7214/0.7143/0.7067 at 2/4/6/8k, main_sequence from step 3000 (summary.json); runs.log § w2cont
+2026-10-18T13:14:07Z [margins] s58r100b and s54r100b as continuous runs, 4000 steps each, on a copy of the binary (<scratch>/sr-probe.exe)
+2026-10-18T13:19:35Z [margins] done, exit 0 both: x0.58 X_H,c 0.7290->0.7236 (2k->4k), x0.54 0.7258->0.7187; both bound, T_c 35.5; runs.log § s58cont / s54cont
+2026-10-18T13:23:08Z step 4: sunburn.rs written; compiling the gpu test binary
+2026-10-18T13:26:55Z scope sun_burn added; Verify 1: verify.py sun_burn
+2026-10-18T13:29:17Z Verify 1 GO (4/0/0, 127.7 s, RTX 4080 Laptop); Verify 2: verify.py --redarm sun_burn
+2026-10-18T13:42:00Z Verify 2 GO: clean GO (151.6 s), stall-constants RED (3 failed: X_H,c flat 0.73433, L_nuc/L 0, bound 0.944), burn-runaway RED (3 failed: X_H,c 0, T_c 165, bound 0.78); 726.1 s wall, 3 arms at a time — over the 10-minute line (the arms' builds queue on the shared red-arm target; the runaway arm's run 296 s)
+2026-10-18T13:42:18Z claim: verify.py --changed --task M0-D50
+2026-10-18T13:49:56Z claim NO-GO: 924 passed, 29 failed, 38/46 scopes GO, 276.05 s — registry 5, rates 5, burn_cell 6, burn_order 2, neutrino 8 (oracles pinning M0-TC's values), heat_limiter 1, heat_stiff 1, timing 1 (under a_r x100); filed as M0-D55
+2026-10-18T13:51:48Z closed DONE; M0-D55 filed; flags M0-V9, M0-TJ2, M0-T98a, M0-T70; plan lint after the close

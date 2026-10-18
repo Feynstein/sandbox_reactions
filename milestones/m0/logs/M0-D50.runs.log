@@ -498,3 +498,30 @@ step   1800 t    22.36 L       3956 Lnuc       1896 nuc       2216 | Σc   7.510
 step   1900 t    23.54 L       3776 Lnuc       1709 nuc       2010 | Σc   7.217 Tc   33.985 Tmax    33.99 XHc 0.7261 XHcore 0.7302 d_c 0.593 Munb/M 0.0048 M 3350.3 |   2.5s warn 0 stage [None]
 step   2000 t    24.75 L       2881 Lnuc       1214 nuc       1454 | Σc   7.093 Tc   33.098 Tmax    33.10 XHc 0.7258 XHcore 0.7300 d_c 0.596 Munb/M 0.0046 M 3349.8 |   2.2s warn 0 stage [None]
 step   2100 t    25.96 L       2337 Lnuc       1286 nuc       1532 | Σc   7.372 Tc   34.172 Tmax    34.17 XHc 0.7255 XHcore 0.7299 d_c 0.596 Munb/M 0.0045 M 3349.1 |   2.4s warn 0 stage [None]
+# w2cont — W2 as one continuous run (M0-D50 resumed 2026-10-18, win-laptop Laser2025-20, RTX 4080 Laptop, Vulkan; tree 454209d, binary build/target/release/sandbox-reactions.exe)
+# cmd: sandbox-reactions headless --scene <scratch>/w2.json --steps 8000 --dump-every 1000 --out <scratch>/w2cont --adapter "RTX 4080"  (scene: mk.py w2.json t_h=56 t_he=78.4 t_c=109.8 t_ne=153.4 t_o=168 t_si=235.2 t_nu=93 a_r=4e-5 a_h_burn=5e-4); wall 3m26.5s
+step   1000 t   12.549  Σc   6.0414  Tc   28.926  Tmax    28.927  X_H,c 0.7299  d_c 0.595  M   3351.43  M_unb/M 0.0007  M_core(r≤8)   994.90 X_H,core 0.7319  X_H(bound) 0.7334  cell (299, 199)
+step   2000 t   24.533  Σc   7.6032  Tc   33.310  Tmax    33.310  X_H,c 0.7276  d_c 0.609  M   3350.11  M_unb/M 0.0039  M_core(r≤8)  1211.25 X_H,core 0.7310  X_H(bound) 0.7330  cell (299, 199)
+step   3000 t   36.141  Σc   8.2873  Tc   35.083  Tmax    35.083  X_H,c 0.7247  d_c 0.614  M   3342.75  M_unb/M 0.0024  M_core(r≤8)  1304.67 X_H,core 0.7297  X_H(bound) 0.7324  cell (299, 199)
+step   4000 t   47.606  Σc   8.5063  Tc   35.628  Tmax    35.630  X_H,c 0.7214  d_c 0.615  M   3336.83  M_unb/M 0.0010  M_core(r≤8)  1333.72 X_H,core 0.7282  X_H(bound) 0.7317  cell (300, 199)
+step   5000 t   59.017  Σc   8.5889  Tc   35.859  Tmax    35.861  X_H,c 0.7179  d_c 0.615  M   3333.97  M_unb/M 0.0004  M_core(r≤8)  1343.63 X_H,core 0.7266  X_H(bound) 0.7311  cell (299, 199)
+step   6000 t   70.407  Σc   8.6358  Tc   36.086  Tmax    36.088  X_H,c 0.7143  d_c 0.615  M   3332.62  M_unb/M 0.0001  M_core(r≤8)  1348.70 X_H,core 0.7249  X_H(bound) 0.7304  cell (299, 199)
+step   7000 t   81.788  Σc   8.6665  Tc   36.311  Tmax    36.314  X_H,c 0.7105  d_c 0.613  M   3331.97  M_unb/M 0.0000  M_core(r≤8)  1351.43 X_H,core 0.7232  X_H(bound) 0.7297  cell (299, 199)
+step   8000 t   93.169  Σc   8.6776  Tc   36.490  Tmax    36.493  X_H,c 0.7067  d_c 0.612  M   3331.63  M_unb/M 0.0000  M_core(r≤8)  1351.14 X_H,core 0.7215  X_H(bound) 0.7290  cell (299, 199)
+# summary.json: SR-HEADLESS DONE steps=8000 sim_time=93.169206; stages [cloud from 1512, main_sequence from 3000]; events [ignition step 769, t 9.826]; ledger end nuclear_released 163573.0, radiated 309278.5, mass grid 3331.63 escaped 19.17 vacuum_reset 0.85
+# s58cont / s54cont — W2 with the ladder × 0.58 (t_h 58, t_he 81.2, t_c 113.7, t_ne 158.9, t_o 174, t_si 243.6, t_nu 96.3) and × 0.54 (t_h 54 … as s54r100b), a_r 4e-5, A_H 5e-4; continuous, 4000 steps, --dump-every 1000, RTX 4080 Laptop, Laser2025-20, 2026-10-18, binary of tree 454209d (a copy in the scratch dir)
+== s58
+real	2m58.807s
+exit 0
+step   1000 t   12.519  Σc   6.2893  Tc   28.724  Tmax    28.725  X_H,c 0.7308  d_c 0.605  M   3351.43  M_unb/M 0.0007  M_core(r≤8)  1026.44 X_H,core 0.7324  X_H(bound) 0.7336  cell (299, 199)
+step   2000 t   24.363  Σc   8.0783  Tc   33.430  Tmax    33.430  X_H,c 0.7290  d_c 0.620  M   3350.29  M_unb/M 0.0036  M_core(r≤8)  1270.84 X_H,core 0.7318  X_H(bound) 0.7333  cell (300, 199)
+step   3000 t   35.795  Σc   8.8844  Tc   35.125  Tmax    35.126  X_H,c 0.7264  d_c 0.627  M   3343.96  M_unb/M 0.0023  M_core(r≤8)  1377.19 X_H,core 0.7308  X_H(bound) 0.7328  cell (300, 200)
+step   4000 t   47.061  Σc   9.1372  Tc   35.462  Tmax    35.463  X_H,c 0.7236  d_c 0.631  M   3338.57  M_unb/M 0.0010  M_core(r≤8)  1409.08 X_H,core 0.7296  X_H(bound) 0.7323  cell (299, 200)
+== s54
+real	1m29.188s
+exit 0
+step   1000 t   12.589  Σc   5.7596  Tc   29.256  Tmax    29.257  X_H,c 0.7283  d_c 0.582  M   3351.43  M_unb/M 0.0012  M_core(r≤8)   957.24 X_H,core 0.7311  X_H(bound) 0.7331  cell (299, 200)
+step   2000 t   24.754  Σc   7.0928  Tc   33.098  Tmax    33.098  X_H,c 0.7258  d_c 0.596  M   3349.75  M_unb/M 0.0046  M_core(r≤8)  1144.86 X_H,core 0.7300  X_H(bound) 0.7326  cell (299, 200)
+step   3000 t   36.567  Σc   7.6876  Tc   34.921  Tmax    34.923  X_H,c 0.7225  d_c 0.599  M   3340.74  M_unb/M 0.0027  M_core(r≤8)  1228.26 X_H,core 0.7284  X_H(bound) 0.7319  cell (300, 199)
+step   4000 t   48.254  Σc   7.8707  Tc   35.560  Tmax    35.563  X_H,c 0.7187  d_c 0.600  M   3333.90  M_unb/M 0.0011  M_core(r≤8)  1253.38 X_H,core 0.7266  X_H(bound) 0.7311  cell (300, 200)
+[exited with code 0]

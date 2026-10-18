@@ -148,6 +148,19 @@ mod tests {
         Registry::load().expect("shipped registries load")
     }
 
+    /// M0-TC's ladder (§2.5.1 before §0.5 [M0-D50]), the temperatures the hand values below were written at: T_thr 50, the
+    /// crossing 119.5, He_burn's slope at 140, ω at T_k 100 … 420. f reads T/T_k alone, so the law graded at it is the
+    /// shipped law; the table's cases (its budget at every node and past the span) read the shipped ladder.
+    const TC_LADDER: [(&str, f64); 6] = [("t_h", 100.0), ("t_he", 140.0), ("t_c", 196.0), ("t_ne", 274.0), ("t_o", 300.0), ("t_si", 420.0)];
+
+    /// The registries with [`TC_LADDER`] pinned through `Physics::with` (G-COLL's pattern), every other constant shipped.
+    fn pinned() -> Registry {
+        let elements = Elements::shipped().unwrap();
+        let physics = Physics::shipped().unwrap().with(&TC_LADDER).expect("M0-TC's ladder passes K6");
+        let reactions = Reactions::shipped(&elements, &physics).unwrap();
+        Registry { elements, physics, reactions }
+    }
+
     fn law(r: &Registry, id: &str) -> Omega {
         Omega::new(r.reactions.get(id).unwrap_or_else(|| panic!("record {id}")))
     }
@@ -175,7 +188,7 @@ mod tests {
     #[test]
     fn table_geometry() {
         assert_eq!(TABLE_POINTS, 256);
-        let r = registry();
+        let r = pinned();
         let h = law(&r, "H_burn");
         let t_thr = h.t_thr().expect("H_burn has a threshold");
         assert!(rel(t_thr, 50.0) < 1e-12, "T_thr = 0.5 T_H");
@@ -226,7 +239,7 @@ mod tests {
     /// error sits near its bend, where the terms cross — measured, not assumed.
     #[test]
     fn two_terms_are_not_exact() {
-        let r = registry();
+        let r = pinned();
         let h = law(&r, "H_burn");
         let t_thr = h.t_thr().unwrap();
         let mut worst = (0.0_f64, 0.0_f64);
@@ -251,7 +264,7 @@ mod tests {
     /// f = 0 below T_thr, the direct form at and above it; the table is not smeared across the step.
     #[test]
     fn f_is_zero_below_the_threshold() {
-        let r = registry();
+        let r = pinned();
         for rec in burning(&r) {
             let omega = Omega::new(rec);
             let t_thr = omega.t_thr().unwrap();
@@ -311,11 +324,11 @@ mod tests {
         assert!(rel(n2.g(480.0), 4.0) < 1e-12, "(3 − 1)² = 4");
     }
 
-    /// The shipped constants as the formula is worked by hand: ω for every record of reactions.json at a hot, dense
-    /// cell and at a cold one, against its own line written out below (A, T_k and ν copied from physics.json).
+    /// The formula worked by hand: ω for every record of reactions.json at a hot, dense cell and at a cold one, against its
+    /// own line written out below (A and ν copied from physics.json, T_k from [`TC_LADDER`]).
     #[test]
     fn omega_of_each_record_by_hand() {
-        let r = registry();
+        let r = pinned();
         let (sigma, y_e) = (3.0_f64, 0.5);
         let x = x_of(&r, &[("H", 0.6), ("He", 0.3), ("C", 0.2), ("Ne", 0.15), ("O", 0.25), ("Mg", 0.1), ("Si", 0.4), ("S", 0.05), ("Fe", 0.7)]);
         // (id, T, ω by hand)
@@ -354,7 +367,7 @@ mod tests {
     /// reached at T = T_k (τ/2)³ (≈ 111.8 for ν 40 at 3.2 × 10⁷), so no record's f passes e^112 at any temperature.
     #[test]
     fn gamow_shape_and_bound() {
-        let r = registry();
+        let r = pinned();
         let slope = |o: &Omega, t: f64| {
             let d = 1e-5;
             (o.f_direct(t * (1.0 + d)).ln() - o.f_direct(t * (1.0 - d)).ln()) / ((1.0 + d) / (1.0 - d)).ln()

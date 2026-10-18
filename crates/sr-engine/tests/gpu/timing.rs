@@ -152,9 +152,10 @@ fn a_frame_longer_than_the_query_set_times_its_first_whole_steps() {
     let step = disk(&gpu, 128, 128);
     // Rounds fixed so no step carries over (§0.5 [M0-TJ4] (6), M0-T121), and few enough that the frame's one submission
     // stays far inside Windows' 2 s GPU timeout (M0-D39): at SLOTS a step's P5 is 9.8 ms on the RTX 5090, ~2.3 µs a
-    // recorded round, so 1000 steps were ~10 s and the RTX 4080 Laptop lost its device. The fresh disk's steps 0–335 use at
-    // most 83 slots (its front from step 336 up to 1,627, RTX 5090, M0-D39), so FRAME steps at ROUNDS never carry.
-    const FRAME: u32 = 300;
+    // recorded round, so 1000 steps were ~10 s and the RTX 4080 Laptop lost its device. Under the shipped constants the
+    // fresh disk's steps 0–266 use at most 256 slots (its front from step 267 up to 2,912 slots; RTX 4080 Laptop, M0-D55 —
+    // step 336 under M0-TC's, M0-D39), so FRAME steps at ROUNDS never carry, and FRAME still outruns the query set (≈ 204).
+    const FRAME: u32 = 240;
     const ROUNDS: usize = 256;
     step.set_heat_rounds(Some(ROUNDS));
     assert_eq!(step.set_timing(&gpu.device, &gpu.queue, Timing::Auto), Some(CostSource::GpuTimestamp));
@@ -164,7 +165,7 @@ fn a_frame_longer_than_the_query_set_times_its_first_whole_steps() {
     let fits = (wgpu::QUERY_SET_MAX_QUERIES - 2 - 2 * (passes.len() as u32 + 1) - 24 - 2) / per_step + 2;
     assert!(fits + 20 < FRAME, "the frame must outrun the query set: {FRAME} steps, ≈ {fits} fit");
     let r = frame(&gpu, &step, FRAME);
-    assert_eq!(r.steps_run, FRAME);
+    assert_eq!(r.steps_run, FRAME, "a step carried past ROUNDS inside the frame: the disk's front moved before step {FRAME}");
     let cost = r.cost.expect("a cost");
     assert!(cost.steps < FRAME && cost.steps + 2 >= fits && cost.steps <= fits + 2, "{} steps timed, ≈ {fits} fit", cost.steps);
     check_timed(&cost, &passes, FRAME, &format!("a {FRAME}-step frame"));

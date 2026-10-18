@@ -220,7 +220,11 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // cells (`free_at`), by the Galerkin step zᵀr/zᵀA z (M0-D36: a thin ring's common level, which the rounds barely move and
 // the measures do not see, set once a pass — its emission 1 % high and the closure δ −1.4 × 10⁻⁴ on heat_rim without it);
 // the update keeps u ≥ u_vac and moves no T by more than a factor 2; the passes end after the first
-// one that moves Σ C|ΔT| by at most 10⁻⁶ Σ C T⁰ and every cell by at most 10⁻³ of its T. On the linear law the second pass
+// one that moves Σ C|ΔT| by at most 10⁻⁶ Σ C T⁰ and every cell by at most 10⁻³ of its T. Where Σ_f D_f is 10⁵ c_i (thin gas
+// at the shipped a_r; heat_spot) f32 must not lose what the measures weigh (M0-D56): every product with A and the residual
+// are taken face by face, c_i v_i + Σ_f D_f (v_i − v_f), and the iterate's u lives in two words (x + lo) from pass to pass —
+// f32's ε of u alone leaves b − A x ~20× the u-measure's bound, so every pass ran a round and the passes never ended (64 on
+// heat_spot's first step, the twin 8). On the linear law the second pass
 // is the check: its residual is recomputed from the solved u, so a recursive residual that drifted from the true one is
 // solved again, not committed. The ceiling (64 passes, 4,096 rounds; §0.5 [M0-D37]) commits the last iterate unconverged.
 //
@@ -299,7 +303,7 @@ struct Parity {
     _c: u32,
 }
 
-// The iterate's u (x), its T, CG's p, the diagonal and the right side, one plane each.
+// The iterate's u (x), its T, CG's p, the diagonal and u's low word (x + lo is the iterate's u), one plane each.
 @group(0) @binding(14) var<storage, read_write> solve: array<f32>;
 // r, w and s, each in two parities: a slot writes its own and reads the other, which neighbours do not change under it.
 @group(0) @binding(15) var<storage, read_write> krylov: array<f32>;
@@ -328,7 +332,7 @@ const SV_X: u32 = 0u;
 const SV_T: u32 = 1u;
 const SV_P: u32 = 2u;
 const SV_D: u32 = 3u;
-const SV_B: u32 = 4u;
+const SV_L: u32 = 4u;
 const KR_R: u32 = 0u;
 const KR_W: u32 = 2u;
 const KR_S: u32 = 4u;
@@ -413,10 +417,14 @@ fn free_at(x: u32, y: u32, dt: f32) -> bool {
     if (!gas_at(x, y)) {
         return false;
     }
+    return heat_term(y * dims.width + x, dt) <= FREE_SHARE * d_sums(x, y).x;
+}
+
+// c_i of gas cell i, this pass's heat term (C_i/Δt) dT/du at the iterate's T: the diagonal less Σ_f D_f, taken from C_i and
+// T, never as that difference (f32 holds the diagonal to ε of Σ_f D_f, a few % of c_i in thin gas at the shipped a_r).
+fn heat_term(i: u32, dt: f32) -> f32 {
     let n = dims.cells;
-    let i = y * dims.width + x;
-    let c = frozen[CAP * n + i] / dt * slope(solve[SV_T * n + i]);
-    return c <= FREE_SHARE * d_sums(x, y).x;
+    return frozen[CAP * n + i] / dt * slope(solve[SV_T * n + i]);
 }
 
 // (s_k, r_{k+1}) of cell j in a round: s_k = w_k + β s_{k−1} (w_k at a solve's first round), r_{k+1} = r_k − α s_k.
@@ -429,45 +437,55 @@ fn advance(j: u32, old: u32, a: f32, b: f32, first: bool) -> vec2<f32> {
     return vec2<f32>(s, krylov[(KR_R + old) * n + j] - a * s);
 }
 
-// v_j of a neighbour: 0 the iterate's x, 1 D⁻¹r of parity `old` once the start's shift `a` moved it (r − a A z, A z in
-// p's plane), 2 D⁻¹r_{k+1} of the round (α, β).
+// v_j of a neighbour: 1 D⁻¹r of parity `old` once the start's shift `a` moved it (r − a A z, A z in p's plane), 2 D⁻¹r_{k+1}
+// of the round (α, β).
 fn value(j: u32, which: u32, old: u32, a: f32, b: f32, first: bool) -> f32 {
     let n = dims.cells;
-    if (which == 0u) {
-        return solve[SV_X * n + j];
-    }
     if (which == 1u) {
         return (krylov[(KR_R + old) * n + j] - a * solve[SV_P * n + j]) / solve[SV_D * n + j];
     }
     return advance(j, old, a, b, first).y / solve[SV_D * n + j];
 }
 
-// Σ_f D_f v_j over cell (x, y)'s gas neighbours: the off-diagonal part of A v.
-fn coupled(x: u32, y: u32, which: u32, old: u32, a: f32, b: f32, first: bool) -> f32 {
+// (A v)_i of gas cell (x, y), v_i = `own`, c_i = `c`, the gas neighbours' v from `value`: c_i v_i + Σ_f D_f (v_i − v_f), v_f = 0
+// beyond a vacuum or edge face — face by face (M0-D56): on a smooth v, where A v is ~c_i v_i and Σ_f D_f is 10⁵ c_i (thin gas
+// at the shipped a_r), d v_i − Σ_f D_f v_j cancels away f32's digits and the rounds' r drifts 10³ from b − A x.
+fn applied(x: u32, y: u32, c: f32, own: f32, which: u32, old: u32, a: f32, b: f32, first: bool) -> f32 {
     var d = face_d(x, y);
     var nb = neighbours(x, y);
-    var sum = 0.0;
+    var sum = c * own;
     for (var f = 0u; f < 4u; f++) {
         let o = nb[f];
+        var far = 0.0;
         if (gas_at(o.x, o.y)) {
-            sum += d[f] * value(o.y * dims.width + o.x, which, old, a, b, first);
+            far = value(o.y * dims.width + o.x, which, old, a, b, first);
         }
+        sum += d[f] * (own - far);
     }
     return sum;
 }
 
-// Gas cell (x, y)'s pass system at the iterate T = t into `solve`; returns (c u², (C/Δt) T²), the bounds' terms.
+// x_i += v in its two words, hi + lo (Fast2Sum: |v| and lo far under hi in a solve's rounds), so the iterate keeps u to
+// ~ε² — f32's ε of u alone leaves b − A x ~20× (4)'s bound where Σ_f D_f is 10⁵ c_i (M0-D56).
+fn raise(i: u32, v: f32) {
+    let n = dims.cells;
+    let hi = solve[SV_X * n + i];
+    let lo = solve[SV_L * n + i] + v;
+    let s = hi + lo;
+    solve[SV_L * n + i] = lo - (s - hi);
+    solve[SV_X * n + i] = s;
+}
+
+// Gas cell (x, y)'s pass system at the iterate T = t into `solve` (the caller writes its u); returns (c u², (C/Δt) T²), the
+// bounds' terms.
 fn build(x: u32, y: u32, t: f32, dt: f32) -> vec2<f32> {
     let n = dims.cells;
     let i = y * dims.width + x;
     let heat = frozen[CAP * n + i] / dt;
     let c = heat * slope(t);
-    let ds = d_sums(x, y);
     let u = u_of(t);
     solve[SV_T * n + i] = t;
-    solve[SV_X * n + i] = u;
-    solve[SV_D * n + i] = c + ds.x;
-    solve[SV_B * n + i] = c * u - heat * (t - frozen[T0 * n + i]) + ds.y * u_of(params.t_floor);
+    solve[SV_D * n + i] = c + d_sums(x, y).x;
     return vec2<f32>(c * u * u, heat * t * t);
 }
 
@@ -603,51 +621,61 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
         switch action {
             case CELL_BUILD: {
                 let t0 = frozen[T0 * n + i];
+                solve[SV_X * n + i] = u_of(t0);
+                solve[SV_L * n + i] = 0.0;
                 let q = build(x, y, t0, rec.dt);
                 part = vec4<f32>(c * t0, 0.0, q.x, q.y);
             }
             case CELL_RESID: {
-                let d = solve[SV_D * n + i];
-                let xi = solve[SV_X * n + i];
-                krylov[(KR_R + me) * n + i] = solve[SV_B * n + i] - (d * xi - coupled(x, y, 0u, old, 0.0, 0.0, true));
+                // r = b − A x at the iterate (x = u, its two words): −(C_i/Δt)(T_i − T_i⁰) − Σ_f D_f (u_i − u_f), u_f = u_vac
+                // beyond a vacuum or edge face — the step's own residual, face by face (M0-D56).
                 // The start's Galerkin shift along z (`free_at`): (A z)_i into p's plane, which the solve's first round
                 // overwrites, and this cell's share of zᵀr and zᵀA z — taken face by face over the faces leaving the
                 // heat-free cells, so the huge D_f between two of them cancel exactly instead of in f32's sum of r.
+                let xi = solve[SV_X * n + i];
+                let lo = solve[SV_L * n + i];
                 var fd = face_d(x, y);
                 var nb = neighbours(x, y);
                 let free = free_at(x, y, rec.dt);
+                let kept = -heat * (solve[SV_T * n + i] - frozen[T0 * n + i]);
+                var r = kept;
+                var zr = kept;
                 var az = 0.0;
-                var zax = 0.0;
                 if (free) {
-                    az = heat * slope(solve[SV_T * n + i]);
-                    zax = az * xi;
+                    az = heat_term(i, rec.dt);
                 }
                 for (var f = 0u; f < 4u; f++) {
                     let o = nb[f];
                     let other = free_at(o.x, o.y, rec.dt);
+                    var far = u_of(params.t_floor);
+                    var far_lo = 0.0;
+                    if (gas_at(o.x, o.y)) {
+                        far = solve[SV_X * n + o.y * dims.width + o.x];
+                        far_lo = solve[SV_L * n + o.y * dims.width + o.x];
+                    }
+                    let out = fd[f] * ((xi - far) + (lo - far_lo));
+                    r -= out;
                     if (free && !other) {
                         az += fd[f];
-                        zax += fd[f] * xi;
-                        if (gas_at(o.x, o.y)) {
-                            zax -= fd[f] * solve[SV_X * n + o.y * dims.width + o.x];
-                        }
+                        zr -= out;
                     } else if (!free && other) {
                         az -= fd[f];
                     }
                 }
+                krylov[(KR_R + me) * n + i] = r;
                 solve[SV_P * n + i] = az;
                 if (free) {
-                    part = vec4<f32>(solve[SV_B * n + i] - zax, az, 0.0, 0.0);
+                    part = vec4<f32>(zr, az, 0.0, 0.0);
                 }
             }
             case CELL_START: {
                 let d = solve[SV_D * n + i];
                 let r = krylov[(KR_R + old) * n + i] - shift * solve[SV_P * n + i];
                 if (free_at(x, y, rec.dt)) {
-                    solve[SV_X * n + i] += shift;
+                    raise(i, shift);
                 }
                 let u = r / d;
-                let w = d * u - coupled(x, y, 1u, old, shift, 0.0, true);
+                let w = applied(x, y, heat_term(i, rec.dt), u, 1u, old, shift, 0.0, true);
                 krylov[(KR_R + me) * n + i] = r;
                 krylov[(KR_W + me) * n + i] = w;
                 let e = r * slope(solve[SV_T * n + i]) / d;
@@ -661,10 +689,10 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 }
                 let sr = advance(i, old, alpha, beta, first);
                 solve[SV_P * n + i] = p;
-                solve[SV_X * n + i] += alpha * p;
+                raise(i, alpha * p);
                 let r = sr.y;
                 let u = r / d;
-                let w = d * u - coupled(x, y, 2u, old, alpha, beta, first);
+                let w = applied(x, y, heat_term(i, rec.dt), u, 2u, old, alpha, beta, first);
                 krylov[(KR_S + me) * n + i] = sr.x;
                 krylov[(KR_R + me) * n + i] = r;
                 krylov[(KR_W + me) * n + i] = w;
@@ -673,7 +701,15 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
             }
             case CELL_UPDATE: {
                 let t = solve[SV_T * n + i];
-                let moved = clamp(t_of(max(solve[SV_X * n + i], u_of(params.t_floor))), 0.5 * t, 2.0 * t);
+                let u = solve[SV_X * n + i] + solve[SV_L * n + i];
+                let u_vac = u_of(params.t_floor);
+                let free_t = t_of(max(u, u_vac));
+                let moved = clamp(free_t, 0.5 * t, 2.0 * t);
+                // The next pass starts from the solved u in its two words, unless the floor or the factor 2 moved it.
+                if (moved != free_t || !(u >= u_vac)) {
+                    solve[SV_X * n + i] = u_of(moved);
+                    solve[SV_L * n + i] = 0.0;
+                }
                 let dif = abs(moved - t);
                 let q = build(x, y, moved, rec.dt);
                 part = vec4<f32>(c * dif, select(0.0, 1.0, dif > NEWTON_CELL * t), q.x, q.y);

@@ -1,0 +1,697 @@
+== 2026-10-18T10:52:11-04:00 probe heat::limiter::probe_d56_spot (temporary test + PROBE-D56 shader log, removed after) — Laser2025-20 RTX 4080 Laptop — the shipped solver
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 51.65s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 278 filtered out; finished in 0.00s
+
+exit 0
+== 2026-10-18T10:53:21-04:00 rerun, filter probe_d56_spot (tests/gpu.sh appends '::')
+    Finished `release` profile [optimized] target(s) in 1.04s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 1 test
+test heat::limiter::probe_d56_spot ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+PROBE step 0: HeatReport { dt: 0.05, passes: 64, rounds: 3059, converged: false, delta: -9.453388e-5 }
+PROBE   heat0 6.592000e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 3.732e7, flux form 3.732e7
+PROBE   solve ends: rounds   34 gamma/u_bound 2.057e-3 heat-measure/t_bound 7.175e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 2.173e-1 (bound 1e-6) cells over 1e-3 848
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 3.882e6, flux form 3.885e6
+PROBE   solve ends: rounds   41 gamma/u_bound 1.197e-2 heat-measure/t_bound 4.959e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 8.443e-2 (bound 1e-6) cells over 1e-3 1224
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 6.768e4, flux form 6.765e4
+PROBE   solve ends: rounds   46 gamma/u_bound 9.305e-3 heat-measure/t_bound 5.358e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 5.589e-2 (bound 1e-6) cells over 1e-3 1568
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 4.690e3, flux form 4.683e3
+PROBE   solve ends: rounds   46 gamma/u_bound 1.540e-2 heat-measure/t_bound 6.804e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 2.587e-2 (bound 1e-6) cells over 1e-3 1640
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 1.764e2, flux form 1.817e2
+PROBE   solve ends: rounds   51 gamma/u_bound 2.329e-2 heat-measure/t_bound 6.345e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 4.934e-3 (bound 1e-6) cells over 1e-3 1536
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 2.405e1, flux form 2.440e1
+PROBE   solve ends: rounds   45 gamma/u_bound 3.288e-2 heat-measure/t_bound 9.450e-1
+PROBE   pass  6 end test: sum C|dT|/heat0 2.872e-4 (bound 1e-6) cells over 1e-3 468
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 5.526e1, flux form 5.127e1
+PROBE   solve ends: rounds   49 gamma/u_bound 2.051e-2 heat-measure/t_bound 6.949e-1
+PROBE   pass  7 end test: sum C|dT|/heat0 1.587e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  8 true residual u-measure / u_bound: shipped form 5.245e1, flux form 5.024e1
+PROBE   solve ends: rounds   51 gamma/u_bound 2.876e-2 heat-measure/t_bound 9.297e-1
+PROBE   pass  8 end test: sum C|dT|/heat0 1.378e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  9 true residual u-measure / u_bound: shipped form 3.990e1, flux form 4.278e1
+PROBE   solve ends: rounds   48 gamma/u_bound 3.112e-2 heat-measure/t_bound 9.985e-1
+PROBE   pass  9 end test: sum C|dT|/heat0 8.021e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 10 true residual u-measure / u_bound: shipped form 3.690e1, flux form 3.713e1
+PROBE   solve ends: rounds   53 gamma/u_bound 2.036e-2 heat-measure/t_bound 6.744e-1
+PROBE   pass 10 end test: sum C|dT|/heat0 1.087e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 11 true residual u-measure / u_bound: shipped form 7.187e1, flux form 6.326e1
+PROBE   solve ends: rounds   45 gamma/u_bound 3.267e-2 heat-measure/t_bound 9.537e-1
+PROBE   pass 11 end test: sum C|dT|/heat0 8.654e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 12 true residual u-measure / u_bound: shipped form 7.541e1, flux form 7.707e1
+PROBE   solve ends: rounds   49 gamma/u_bound 1.052e-2 heat-measure/t_bound 4.008e-1
+PROBE   pass 12 end test: sum C|dT|/heat0 8.306e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 13 true residual u-measure / u_bound: shipped form 6.710e1, flux form 6.591e1
+PROBE   solve ends: rounds   43 gamma/u_bound 1.024e-2 heat-measure/t_bound 3.730e-1
+PROBE   pass 13 end test: sum C|dT|/heat0 1.660e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 14 true residual u-measure / u_bound: shipped form 6.048e1, flux form 5.877e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.308e-2 heat-measure/t_bound 8.085e-1
+PROBE   pass 14 end test: sum C|dT|/heat0 1.047e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 15 true residual u-measure / u_bound: shipped form 4.784e1, flux form 4.508e1
+PROBE   solve ends: rounds   52 gamma/u_bound 1.893e-2 heat-measure/t_bound 6.609e-1
+PROBE   pass 15 end test: sum C|dT|/heat0 8.736e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 16 true residual u-measure / u_bound: shipped form 7.830e1, flux form 6.531e1
+PROBE   solve ends: rounds   47 gamma/u_bound 2.454e-2 heat-measure/t_bound 7.198e-1
+PROBE   pass 16 end test: sum C|dT|/heat0 1.232e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 17 true residual u-measure / u_bound: shipped form 8.263e1, flux form 8.263e1
+PROBE   solve ends: rounds   50 gamma/u_bound 2.776e-2 heat-measure/t_bound 9.146e-1
+PROBE   pass 17 end test: sum C|dT|/heat0 1.033e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 18 true residual u-measure / u_bound: shipped form 4.355e1, flux form 4.337e1
+PROBE   solve ends: rounds   51 gamma/u_bound 3.178e-2 heat-measure/t_bound 9.697e-1
+PROBE   pass 18 end test: sum C|dT|/heat0 5.301e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 19 true residual u-measure / u_bound: shipped form 4.961e1, flux form 4.547e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.313e-2 heat-measure/t_bound 5.509e-1
+PROBE   pass 19 end test: sum C|dT|/heat0 6.297e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 20 true residual u-measure / u_bound: shipped form 4.771e1, flux form 4.666e1
+PROBE   solve ends: rounds   50 gamma/u_bound 2.959e-2 heat-measure/t_bound 8.146e-1
+PROBE   pass 20 end test: sum C|dT|/heat0 5.112e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 21 true residual u-measure / u_bound: shipped form 4.964e1, flux form 5.173e1
+PROBE   solve ends: rounds   50 gamma/u_bound 3.529e-2 heat-measure/t_bound 9.058e-1
+PROBE   pass 21 end test: sum C|dT|/heat0 4.005e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 22 true residual u-measure / u_bound: shipped form 6.462e1, flux form 6.910e1
+PROBE   solve ends: rounds   49 gamma/u_bound 2.470e-2 heat-measure/t_bound 7.130e-1
+PROBE   pass 22 end test: sum C|dT|/heat0 8.673e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 23 true residual u-measure / u_bound: shipped form 6.346e1, flux form 5.960e1
+PROBE   solve ends: rounds   50 gamma/u_bound 3.187e-2 heat-measure/t_bound 9.690e-1
+PROBE   pass 23 end test: sum C|dT|/heat0 1.109e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 24 true residual u-measure / u_bound: shipped form 5.716e1, flux form 5.875e1
+PROBE   solve ends: rounds   50 gamma/u_bound 3.286e-2 heat-measure/t_bound 9.138e-1
+PROBE   pass 24 end test: sum C|dT|/heat0 4.652e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 25 true residual u-measure / u_bound: shipped form 5.198e1, flux form 5.136e1
+PROBE   solve ends: rounds   52 gamma/u_bound 2.431e-2 heat-measure/t_bound 9.225e-1
+PROBE   pass 25 end test: sum C|dT|/heat0 6.668e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 26 true residual u-measure / u_bound: shipped form 5.570e1, flux form 5.837e1
+PROBE   solve ends: rounds   46 gamma/u_bound 2.940e-2 heat-measure/t_bound 6.615e-1
+PROBE   pass 26 end test: sum C|dT|/heat0 6.449e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 27 true residual u-measure / u_bound: shipped form 8.823e1, flux form 9.282e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.221e-2 heat-measure/t_bound 7.096e-1
+PROBE   pass 27 end test: sum C|dT|/heat0 5.917e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 28 true residual u-measure / u_bound: shipped form 7.983e1, flux form 8.111e1
+PROBE   solve ends: rounds   46 gamma/u_bound 3.762e-2 heat-measure/t_bound 8.875e-1
+PROBE   pass 28 end test: sum C|dT|/heat0 4.958e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 29 true residual u-measure / u_bound: shipped form 6.528e1, flux form 6.715e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.274e-2 heat-measure/t_bound 8.285e-1
+PROBE   pass 29 end test: sum C|dT|/heat0 5.885e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 30 true residual u-measure / u_bound: shipped form 5.572e1, flux form 6.102e1
+PROBE   solve ends: rounds   44 gamma/u_bound 2.764e-2 heat-measure/t_bound 7.319e-1
+PROBE   pass 30 end test: sum C|dT|/heat0 7.459e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 31 true residual u-measure / u_bound: shipped form 4.835e1, flux form 5.038e1
+PROBE   solve ends: rounds   48 gamma/u_bound 3.178e-2 heat-measure/t_bound 8.670e-1
+PROBE   pass 31 end test: sum C|dT|/heat0 8.745e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 32 true residual u-measure / u_bound: shipped form 3.754e1, flux form 3.733e1
+PROBE   solve ends: rounds   52 gamma/u_bound 3.087e-2 heat-measure/t_bound 9.594e-1
+PROBE   pass 32 end test: sum C|dT|/heat0 9.032e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 33 true residual u-measure / u_bound: shipped form 4.163e1, flux form 3.964e1
+PROBE   solve ends: rounds   47 gamma/u_bound 3.819e-2 heat-measure/t_bound 9.856e-1
+PROBE   pass 33 end test: sum C|dT|/heat0 8.614e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 34 true residual u-measure / u_bound: shipped form 5.565e1, flux form 5.416e1
+PROBE   solve ends: rounds   51 gamma/u_bound 2.299e-2 heat-measure/t_bound 6.866e-1
+PROBE   pass 34 end test: sum C|dT|/heat0 7.210e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 35 true residual u-measure / u_bound: shipped form 4.183e1, flux form 4.659e1
+PROBE   solve ends: rounds   46 gamma/u_bound 3.962e-2 heat-measure/t_bound 9.404e-1
+PROBE   pass 35 end test: sum C|dT|/heat0 9.989e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 36 true residual u-measure / u_bound: shipped form 5.280e1, flux form 5.500e1
+PROBE   solve ends: rounds   49 gamma/u_bound 2.928e-2 heat-measure/t_bound 8.989e-1
+PROBE   pass 36 end test: sum C|dT|/heat0 6.584e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 37 true residual u-measure / u_bound: shipped form 5.466e1, flux form 5.500e1
+PROBE   solve ends: rounds   49 gamma/u_bound 2.797e-2 heat-measure/t_bound 8.530e-1
+PROBE   pass 37 end test: sum C|dT|/heat0 8.388e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 38 true residual u-measure / u_bound: shipped form 4.123e1, flux form 3.955e1
+PROBE   solve ends: rounds   49 gamma/u_bound 2.097e-2 heat-measure/t_bound 7.142e-1
+PROBE   pass 38 end test: sum C|dT|/heat0 1.271e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 39 true residual u-measure / u_bound: shipped form 6.056e1, flux form 6.127e1
+PROBE   solve ends: rounds   47 gamma/u_bound 2.514e-2 heat-measure/t_bound 7.254e-1
+PROBE   pass 39 end test: sum C|dT|/heat0 7.711e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 40 true residual u-measure / u_bound: shipped form 6.939e1, flux form 7.467e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.474e-2 heat-measure/t_bound 9.714e-1
+PROBE   pass 40 end test: sum C|dT|/heat0 5.343e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 41 true residual u-measure / u_bound: shipped form 5.680e1, flux form 5.464e1
+PROBE   solve ends: rounds   40 gamma/u_bound 4.438e-2 heat-measure/t_bound 9.454e-1
+PROBE   pass 41 end test: sum C|dT|/heat0 6.190e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 42 true residual u-measure / u_bound: shipped form 5.066e1, flux form 4.833e1
+PROBE   solve ends: rounds   51 gamma/u_bound 2.465e-2 heat-measure/t_bound 7.947e-1
+PROBE   pass 42 end test: sum C|dT|/heat0 1.274e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 43 true residual u-measure / u_bound: shipped form 7.447e1, flux form 7.511e1
+PROBE   solve ends: rounds   47 gamma/u_bound 2.894e-2 heat-measure/t_bound 8.404e-1
+PROBE   pass 43 end test: sum C|dT|/heat0 1.470e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 44 true residual u-measure / u_bound: shipped form 5.901e1, flux form 5.821e1
+PROBE   solve ends: rounds   49 gamma/u_bound 2.353e-2 heat-measure/t_bound 9.760e-1
+PROBE   pass 44 end test: sum C|dT|/heat0 8.645e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 45 true residual u-measure / u_bound: shipped form 7.242e1, flux form 7.126e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.796e-2 heat-measure/t_bound 6.730e-1
+PROBE   pass 45 end test: sum C|dT|/heat0 9.428e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 46 true residual u-measure / u_bound: shipped form 7.212e1, flux form 7.179e1
+PROBE   solve ends: rounds   49 gamma/u_bound 3.870e-2 heat-measure/t_bound 9.515e-1
+PROBE   pass 46 end test: sum C|dT|/heat0 5.515e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 47 true residual u-measure / u_bound: shipped form 6.020e1, flux form 5.990e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.420e-2 heat-measure/t_bound 6.129e-1
+PROBE   pass 47 end test: sum C|dT|/heat0 8.470e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 48 true residual u-measure / u_bound: shipped form 4.692e1, flux form 4.868e1
+PROBE   solve ends: rounds   50 gamma/u_bound 3.178e-2 heat-measure/t_bound 9.751e-1
+PROBE   pass 48 end test: sum C|dT|/heat0 1.015e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 49 true residual u-measure / u_bound: shipped form 5.029e1, flux form 5.103e1
+PROBE   solve ends: rounds   45 gamma/u_bound 3.843e-2 heat-measure/t_bound 9.113e-1
+PROBE   pass 49 end test: sum C|dT|/heat0 7.636e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 50 true residual u-measure / u_bound: shipped form 3.780e1, flux form 4.035e1
+PROBE   solve ends: rounds   51 gamma/u_bound 2.889e-2 heat-measure/t_bound 8.452e-1
+PROBE   pass 50 end test: sum C|dT|/heat0 1.041e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 51 true residual u-measure / u_bound: shipped form 4.906e1, flux form 4.723e1
+PROBE   solve ends: rounds   46 gamma/u_bound 2.241e-2 heat-measure/t_bound 5.799e-1
+PROBE   pass 51 end test: sum C|dT|/heat0 1.120e-4 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 52 true residual u-measure / u_bound: shipped form 5.819e1, flux form 5.536e1
+PROBE   solve ends: rounds   47 gamma/u_bound 1.630e-2 heat-measure/t_bound 5.547e-1
+PROBE   pass 52 end test: sum C|dT|/heat0 3.935e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 53 true residual u-measure / u_bound: shipped form 6.153e1, flux form 5.944e1
+PROBE   solve ends: rounds   45 gamma/u_bound 2.446e-2 heat-measure/t_bound 5.554e-1
+PROBE   pass 53 end test: sum C|dT|/heat0 5.196e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 54 true residual u-measure / u_bound: shipped form 6.414e1, flux form 6.639e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.115e-2 heat-measure/t_bound 7.477e-1
+PROBE   pass 54 end test: sum C|dT|/heat0 5.957e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 55 true residual u-measure / u_bound: shipped form 6.410e1, flux form 6.905e1
+PROBE   solve ends: rounds   45 gamma/u_bound 4.146e-2 heat-measure/t_bound 9.498e-1
+PROBE   pass 55 end test: sum C|dT|/heat0 7.227e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 56 true residual u-measure / u_bound: shipped form 6.038e1, flux form 6.355e1
+PROBE   solve ends: rounds   52 gamma/u_bound 1.446e-2 heat-measure/t_bound 4.957e-1
+PROBE   pass 56 end test: sum C|dT|/heat0 5.704e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 57 true residual u-measure / u_bound: shipped form 4.067e1, flux form 4.156e1
+PROBE   solve ends: rounds   47 gamma/u_bound 2.022e-2 heat-measure/t_bound 6.421e-1
+PROBE   pass 57 end test: sum C|dT|/heat0 6.499e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 58 true residual u-measure / u_bound: shipped form 5.457e1, flux form 5.222e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.902e-2 heat-measure/t_bound 8.480e-1
+PROBE   pass 58 end test: sum C|dT|/heat0 5.495e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 59 true residual u-measure / u_bound: shipped form 3.134e1, flux form 2.983e1
+PROBE   solve ends: rounds   48 gamma/u_bound 2.522e-2 heat-measure/t_bound 8.773e-1
+PROBE   pass 59 end test: sum C|dT|/heat0 4.325e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 60 true residual u-measure / u_bound: shipped form 5.085e1, flux form 5.123e1
+PROBE   solve ends: rounds   50 gamma/u_bound 2.852e-2 heat-measure/t_bound 9.768e-1
+PROBE   pass 60 end test: sum C|dT|/heat0 7.272e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 61 true residual u-measure / u_bound: shipped form 4.023e1, flux form 4.039e1
+PROBE   solve ends: rounds   46 gamma/u_bound 3.899e-2 heat-measure/t_bound 9.396e-1
+PROBE   pass 61 end test: sum C|dT|/heat0 8.693e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 62 true residual u-measure / u_bound: shipped form 6.686e1, flux form 6.156e1
+PROBE   solve ends: rounds   49 gamma/u_bound 2.663e-2 heat-measure/t_bound 8.406e-1
+PROBE   pass 62 end test: sum C|dT|/heat0 8.803e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 63 true residual u-measure / u_bound: shipped form 6.299e1, flux form 6.291e1
+PROBE   solve ends: rounds   45 gamma/u_bound 3.833e-2 heat-measure/t_bound 9.156e-1
+PROBE   pass 63 end test: sum C|dT|/heat0 9.588e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 64 true residual u-measure / u_bound: shipped form 5.452e1, flux form 5.218e1
+PROBE   solve ends: rounds   49 gamma/u_bound 2.035e-2 heat-measure/t_bound 5.218e-1
+PROBE   pass 64 end test: sum C|dT|/heat0 8.960e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   SR-WARN heat unconverged step 1 passes 64 rounds 3059
+PROBE step 1: HeatReport { dt: 0.05, passes: 26, rounds: 395, converged: true, delta: -3.0753542e-6 }
+PROBE   heat0 6.592074e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 2.457e8, flux form 2.457e8
+PROBE   solve ends: rounds   58 gamma/u_bound 1.749e-2 heat-measure/t_bound 4.263e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 8.376e-2 (bound 1e-6) cells over 1e-3 528
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 2.699e7, flux form 2.699e7
+PROBE   solve ends: rounds   71 gamma/u_bound 2.528e-2 heat-measure/t_bound 2.726e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 3.279e-2 (bound 1e-6) cells over 1e-3 276
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 2.468e6, flux form 2.468e6
+PROBE   solve ends: rounds   60 gamma/u_bound 5.254e-2 heat-measure/t_bound 4.959e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 1.062e-2 (bound 1e-6) cells over 1e-3 284
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 3.254e4, flux form 3.254e4
+PROBE   solve ends: rounds   63 gamma/u_bound 3.958e-2 heat-measure/t_bound 4.552e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 1.407e-3 (bound 1e-6) cells over 1e-3 180
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 2.960e1, flux form 2.884e1
+PROBE   solve ends: rounds   21 gamma/u_bound 3.556e-1 heat-measure/t_bound 8.575e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 5.544e-5 (bound 1e-6) cells over 1e-3 2
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 1.225e1, flux form 1.236e1
+PROBE   solve ends: rounds    4 gamma/u_bound 7.258e-1 heat-measure/t_bound 6.795e-2
+PROBE   pass  6 end test: sum C|dT|/heat0 1.763e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 6.915e0, flux form 7.496e0
+PROBE   solve ends: rounds    9 gamma/u_bound 5.636e-1 heat-measure/t_bound 4.187e-1
+PROBE   pass  7 end test: sum C|dT|/heat0 1.410e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  8 true residual u-measure / u_bound: shipped form 9.041e0, flux form 9.812e0
+PROBE   solve ends: rounds    4 gamma/u_bound 7.335e-1 heat-measure/t_bound 5.447e-2
+PROBE   pass  8 end test: sum C|dT|/heat0 7.773e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  9 true residual u-measure / u_bound: shipped form 9.424e0, flux form 9.033e0
+PROBE   solve ends: rounds    9 gamma/u_bound 8.057e-1 heat-measure/t_bound 6.163e-1
+PROBE   pass  9 end test: sum C|dT|/heat0 1.211e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 10 true residual u-measure / u_bound: shipped form 7.665e0, flux form 8.417e0
+PROBE   solve ends: rounds    4 gamma/u_bound 6.587e-1 heat-measure/t_bound 5.342e-2
+PROBE   pass 10 end test: sum C|dT|/heat0 7.048e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 11 true residual u-measure / u_bound: shipped form 5.438e0, flux form 5.797e0
+PROBE   solve ends: rounds   15 gamma/u_bound 3.235e-1 heat-measure/t_bound 4.497e-1
+PROBE   pass 11 end test: sum C|dT|/heat0 6.813e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 12 true residual u-measure / u_bound: shipped form 1.074e1, flux form 1.124e1
+PROBE   solve ends: rounds    3 gamma/u_bound 5.928e-1 heat-measure/t_bound 2.975e-2
+PROBE   pass 12 end test: sum C|dT|/heat0 4.805e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 13 true residual u-measure / u_bound: shipped form 6.146e0, flux form 5.913e0
+PROBE   solve ends: rounds    3 gamma/u_bound 8.840e-1 heat-measure/t_bound 2.247e-2
+PROBE   pass 13 end test: sum C|dT|/heat0 2.917e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 14 true residual u-measure / u_bound: shipped form 8.903e0, flux form 9.729e0
+PROBE   solve ends: rounds    9 gamma/u_bound 5.328e-1 heat-measure/t_bound 2.593e-1
+PROBE   pass 14 end test: sum C|dT|/heat0 7.120e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 15 true residual u-measure / u_bound: shipped form 8.329e0, flux form 9.897e0
+PROBE   solve ends: rounds    3 gamma/u_bound 7.855e-1 heat-measure/t_bound 3.348e-2
+PROBE   pass 15 end test: sum C|dT|/heat0 3.253e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 16 true residual u-measure / u_bound: shipped form 6.099e0, flux form 6.319e0
+PROBE   solve ends: rounds    8 gamma/u_bound 6.925e-1 heat-measure/t_bound 1.961e-1
+PROBE   pass 16 end test: sum C|dT|/heat0 5.447e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 17 true residual u-measure / u_bound: shipped form 9.179e0, flux form 9.879e0
+PROBE   solve ends: rounds    8 gamma/u_bound 6.148e-1 heat-measure/t_bound 1.652e-1
+PROBE   pass 17 end test: sum C|dT|/heat0 4.400e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 18 true residual u-measure / u_bound: shipped form 8.948e0, flux form 8.367e0
+PROBE   solve ends: rounds    8 gamma/u_bound 6.046e-1 heat-measure/t_bound 1.803e-1
+PROBE   pass 18 end test: sum C|dT|/heat0 3.902e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 19 true residual u-measure / u_bound: shipped form 1.131e1, flux form 1.123e1
+PROBE   solve ends: rounds    8 gamma/u_bound 9.224e-1 heat-measure/t_bound 2.044e-1
+PROBE   pass 19 end test: sum C|dT|/heat0 3.690e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 20 true residual u-measure / u_bound: shipped form 9.093e0, flux form 8.423e0
+PROBE   solve ends: rounds    4 gamma/u_bound 9.871e-1 heat-measure/t_bound 2.396e-2
+PROBE   pass 20 end test: sum C|dT|/heat0 3.316e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 21 true residual u-measure / u_bound: shipped form 6.582e0, flux form 6.409e0
+PROBE   solve ends: rounds    2 gamma/u_bound 6.603e-1 heat-measure/t_bound 5.051e-3
+PROBE   pass 21 end test: sum C|dT|/heat0 1.085e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 22 true residual u-measure / u_bound: shipped form 7.036e0, flux form 7.484e0
+PROBE   solve ends: rounds   13 gamma/u_bound 7.668e-1 heat-measure/t_bound 3.382e-1
+PROBE   pass 22 end test: sum C|dT|/heat0 4.758e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 23 true residual u-measure / u_bound: shipped form 5.715e0, flux form 5.237e0
+PROBE   solve ends: rounds    2 gamma/u_bound 7.891e-1 heat-measure/t_bound 1.746e-2
+PROBE   pass 23 end test: sum C|dT|/heat0 3.104e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 24 true residual u-measure / u_bound: shipped form 7.333e0, flux form 6.822e0
+PROBE   solve ends: rounds    2 gamma/u_bound 8.145e-1 heat-measure/t_bound 1.303e-2
+PROBE   pass 24 end test: sum C|dT|/heat0 1.326e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 25 true residual u-measure / u_bound: shipped form 4.961e0, flux form 5.164e0
+PROBE   solve ends: rounds    2 gamma/u_bound 9.061e-1 heat-measure/t_bound 8.770e-3
+PROBE   pass 25 end test: sum C|dT|/heat0 1.120e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 26 true residual u-measure / u_bound: shipped form 7.700e0, flux form 9.405e0
+PROBE   solve ends: rounds    2 gamma/u_bound 7.599e-1 heat-measure/t_bound 4.740e-3
+PROBE   pass 26 end test: sum C|dT|/heat0 8.315e-7 (bound 1e-6) cells over 1e-3 0
+PROBE step 2: HeatReport { dt: 0.05, passes: 12, rounds: 331, converged: true, delta: -8.065552e-6 }
+PROBE   heat0 6.592073e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 2.113e8, flux form 2.113e8
+PROBE   solve ends: rounds  121 gamma/u_bound 5.744e-2 heat-measure/t_bound 6.838e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 4.655e-2 (bound 1e-6) cells over 1e-3 520
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 2.140e6, flux form 2.140e6
+PROBE   solve ends: rounds   66 gamma/u_bound 1.726e-1 heat-measure/t_bound 8.925e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 1.031e-2 (bound 1e-6) cells over 1e-3 243
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 1.674e4, flux form 1.674e4
+PROBE   solve ends: rounds   67 gamma/u_bound 9.426e-2 heat-measure/t_bound 5.603e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 6.418e-4 (bound 1e-6) cells over 1e-3 128
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 1.159e1, flux form 1.150e1
+PROBE   solve ends: rounds   61 gamma/u_bound 1.689e-1 heat-measure/t_bound 7.164e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 6.472e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 9.981e0, flux form 1.031e1
+PROBE   solve ends: rounds    2 gamma/u_bound 6.639e-1 heat-measure/t_bound 9.406e-2
+PROBE   pass  5 end test: sum C|dT|/heat0 1.121e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 6.203e0, flux form 6.296e0
+PROBE   solve ends: rounds    2 gamma/u_bound 7.506e-1 heat-measure/t_bound 3.339e-2
+PROBE   pass  6 end test: sum C|dT|/heat0 6.093e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 5.663e0, flux form 5.293e0
+PROBE   solve ends: rounds    2 gamma/u_bound 7.164e-1 heat-measure/t_bound 1.518e-2
+PROBE   pass  7 end test: sum C|dT|/heat0 3.804e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  8 true residual u-measure / u_bound: shipped form 4.325e0, flux form 4.267e0
+PROBE   solve ends: rounds    2 gamma/u_bound 6.102e-1 heat-measure/t_bound 8.650e-3
+PROBE   pass  8 end test: sum C|dT|/heat0 2.498e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  9 true residual u-measure / u_bound: shipped form 3.336e0, flux form 3.532e0
+PROBE   solve ends: rounds    2 gamma/u_bound 5.391e-1 heat-measure/t_bound 5.461e-3
+PROBE   pass  9 end test: sum C|dT|/heat0 1.960e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 10 true residual u-measure / u_bound: shipped form 4.548e0, flux form 4.935e0
+PROBE   solve ends: rounds    2 gamma/u_bound 5.992e-1 heat-measure/t_bound 3.940e-3
+PROBE   pass 10 end test: sum C|dT|/heat0 1.376e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 11 true residual u-measure / u_bound: shipped form 4.649e0, flux form 4.589e0
+PROBE   solve ends: rounds    2 gamma/u_bound 6.657e-1 heat-measure/t_bound 3.183e-3
+PROBE   pass 11 end test: sum C|dT|/heat0 1.152e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 12 true residual u-measure / u_bound: shipped form 4.874e0, flux form 4.250e0
+PROBE   solve ends: rounds    2 gamma/u_bound 6.114e-1 heat-measure/t_bound 2.442e-3
+PROBE   pass 12 end test: sum C|dT|/heat0 9.753e-7 (bound 1e-6) cells over 1e-3 0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 277 filtered out; finished in 4.01s
+
+exit 0
+== 2026-10-18T10:57:41-04:00 probe_d56_spot — the products and the residual face by face (fix candidate 1); RESID's u-measure printed twice (one form)
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 53.21s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 1 test
+test heat::limiter::probe_d56_spot ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+PROBE step 0: HeatReport { dt: 0.05, passes: 48, rounds: 203, converged: true, delta: 4.4505952e-5 }
+PROBE   heat0 6.592000e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 3.732e7, flux form 3.732e7
+PROBE   solve ends: rounds   34 gamma/u_bound 1.892e-3 heat-measure/t_bound 7.356e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 2.173e-1 (bound 1e-6) cells over 1e-3 848
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 3.885e6, flux form 3.885e6
+PROBE   solve ends: rounds   40 gamma/u_bound 1.803e-2 heat-measure/t_bound 7.003e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 8.446e-2 (bound 1e-6) cells over 1e-3 1240
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 6.759e4, flux form 6.759e4
+PROBE   solve ends: rounds   42 gamma/u_bound 6.769e-3 heat-measure/t_bound 4.702e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 5.580e-2 (bound 1e-6) cells over 1e-3 1560
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 4.670e3, flux form 4.670e3
+PROBE   solve ends: rounds   23 gamma/u_bound 3.418e-2 heat-measure/t_bound 5.722e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 2.579e-2 (bound 1e-6) cells over 1e-3 1668
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 1.654e2, flux form 1.654e2
+PROBE   solve ends: rounds   19 gamma/u_bound 7.648e-2 heat-measure/t_bound 9.073e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 4.867e-3 (bound 1e-6) cells over 1e-3 1480
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 5.828e1, flux form 5.828e1
+PROBE   solve ends: rounds    3 gamma/u_bound 2.732e-1 heat-measure/t_bound 9.886e-1
+PROBE   pass  6 end test: sum C|dT|/heat0 5.346e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 2.165e1, flux form 2.165e1
+PROBE   solve ends: rounds    1 gamma/u_bound 2.114e-1 heat-measure/t_bound 8.748e-1
+PROBE   pass  7 end test: sum C|dT|/heat0 6.834e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  8 true residual u-measure / u_bound: shipped form 2.164e1, flux form 2.164e1
+PROBE   solve ends: rounds    1 gamma/u_bound 2.055e-1 heat-measure/t_bound 7.799e-1
+PROBE   pass  8 end test: sum C|dT|/heat0 6.413e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  9 true residual u-measure / u_bound: shipped form 2.164e1, flux form 2.164e1
+PROBE   solve ends: rounds    1 gamma/u_bound 2.004e-1 heat-measure/t_bound 6.971e-1
+PROBE   pass  9 end test: sum C|dT|/heat0 6.051e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 10 true residual u-measure / u_bound: shipped form 2.163e1, flux form 2.163e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.958e-1 heat-measure/t_bound 6.245e-1
+PROBE   pass 10 end test: sum C|dT|/heat0 5.719e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 11 true residual u-measure / u_bound: shipped form 2.163e1, flux form 2.163e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.917e-1 heat-measure/t_bound 5.605e-1
+PROBE   pass 11 end test: sum C|dT|/heat0 5.407e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 12 true residual u-measure / u_bound: shipped form 2.162e1, flux form 2.162e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.880e-1 heat-measure/t_bound 5.038e-1
+PROBE   pass 12 end test: sum C|dT|/heat0 5.120e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 13 true residual u-measure / u_bound: shipped form 2.162e1, flux form 2.162e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.848e-1 heat-measure/t_bound 4.535e-1
+PROBE   pass 13 end test: sum C|dT|/heat0 4.850e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 14 true residual u-measure / u_bound: shipped form 2.162e1, flux form 2.162e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.818e-1 heat-measure/t_bound 4.088e-1
+PROBE   pass 14 end test: sum C|dT|/heat0 4.598e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 15 true residual u-measure / u_bound: shipped form 2.161e1, flux form 2.161e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.792e-1 heat-measure/t_bound 3.689e-1
+PROBE   pass 15 end test: sum C|dT|/heat0 4.361e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 16 true residual u-measure / u_bound: shipped form 2.161e1, flux form 2.161e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.768e-1 heat-measure/t_bound 3.332e-1
+PROBE   pass 16 end test: sum C|dT|/heat0 4.137e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 17 true residual u-measure / u_bound: shipped form 2.161e1, flux form 2.161e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.746e-1 heat-measure/t_bound 3.013e-1
+PROBE   pass 17 end test: sum C|dT|/heat0 3.930e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 18 true residual u-measure / u_bound: shipped form 2.161e1, flux form 2.161e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.727e-1 heat-measure/t_bound 2.727e-1
+PROBE   pass 18 end test: sum C|dT|/heat0 3.735e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 19 true residual u-measure / u_bound: shipped form 2.161e1, flux form 2.161e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.709e-1 heat-measure/t_bound 2.470e-1
+PROBE   pass 19 end test: sum C|dT|/heat0 3.552e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 20 true residual u-measure / u_bound: shipped form 2.160e1, flux form 2.160e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.692e-1 heat-measure/t_bound 2.239e-1
+PROBE   pass 20 end test: sum C|dT|/heat0 3.377e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 21 true residual u-measure / u_bound: shipped form 2.160e1, flux form 2.160e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.678e-1 heat-measure/t_bound 2.032e-1
+PROBE   pass 21 end test: sum C|dT|/heat0 3.214e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 22 true residual u-measure / u_bound: shipped form 2.160e1, flux form 2.160e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.664e-1 heat-measure/t_bound 1.846e-1
+PROBE   pass 22 end test: sum C|dT|/heat0 3.062e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 23 true residual u-measure / u_bound: shipped form 2.160e1, flux form 2.160e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.652e-1 heat-measure/t_bound 1.678e-1
+PROBE   pass 23 end test: sum C|dT|/heat0 2.915e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 24 true residual u-measure / u_bound: shipped form 2.160e1, flux form 2.160e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.640e-1 heat-measure/t_bound 1.526e-1
+PROBE   pass 24 end test: sum C|dT|/heat0 2.777e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 25 true residual u-measure / u_bound: shipped form 2.160e1, flux form 2.160e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.630e-1 heat-measure/t_bound 1.390e-1
+PROBE   pass 25 end test: sum C|dT|/heat0 2.647e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 26 true residual u-measure / u_bound: shipped form 2.160e1, flux form 2.160e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.620e-1 heat-measure/t_bound 1.267e-1
+PROBE   pass 26 end test: sum C|dT|/heat0 2.527e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 27 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.611e-1 heat-measure/t_bound 1.155e-1
+PROBE   pass 27 end test: sum C|dT|/heat0 2.412e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 28 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.603e-1 heat-measure/t_bound 1.055e-1
+PROBE   pass 28 end test: sum C|dT|/heat0 2.304e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 29 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.595e-1 heat-measure/t_bound 9.637e-2
+PROBE   pass 29 end test: sum C|dT|/heat0 2.200e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 30 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.588e-1 heat-measure/t_bound 8.812e-2
+PROBE   pass 30 end test: sum C|dT|/heat0 2.102e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 31 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.582e-1 heat-measure/t_bound 8.065e-2
+PROBE   pass 31 end test: sum C|dT|/heat0 2.010e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 32 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.576e-1 heat-measure/t_bound 7.388e-2
+PROBE   pass 32 end test: sum C|dT|/heat0 1.921e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 33 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.570e-1 heat-measure/t_bound 6.773e-2
+PROBE   pass 33 end test: sum C|dT|/heat0 1.839e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 34 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.565e-1 heat-measure/t_bound 6.216e-2
+PROBE   pass 34 end test: sum C|dT|/heat0 1.761e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 35 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.561e-1 heat-measure/t_bound 5.709e-2
+PROBE   pass 35 end test: sum C|dT|/heat0 1.685e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 36 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.556e-1 heat-measure/t_bound 5.248e-2
+PROBE   pass 36 end test: sum C|dT|/heat0 1.614e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 37 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.552e-1 heat-measure/t_bound 4.829e-2
+PROBE   pass 37 end test: sum C|dT|/heat0 1.550e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 38 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.548e-1 heat-measure/t_bound 4.447e-2
+PROBE   pass 38 end test: sum C|dT|/heat0 1.486e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 39 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.545e-1 heat-measure/t_bound 4.098e-2
+PROBE   pass 39 end test: sum C|dT|/heat0 1.425e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 40 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.541e-1 heat-measure/t_bound 3.781e-2
+PROBE   pass 40 end test: sum C|dT|/heat0 1.367e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 41 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.538e-1 heat-measure/t_bound 3.491e-2
+PROBE   pass 41 end test: sum C|dT|/heat0 1.313e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 42 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.535e-1 heat-measure/t_bound 3.226e-2
+PROBE   pass 42 end test: sum C|dT|/heat0 1.261e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 43 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.532e-1 heat-measure/t_bound 2.984e-2
+PROBE   pass 43 end test: sum C|dT|/heat0 1.212e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 44 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.530e-1 heat-measure/t_bound 2.762e-2
+PROBE   pass 44 end test: sum C|dT|/heat0 1.165e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 45 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.527e-1 heat-measure/t_bound 2.559e-2
+PROBE   pass 45 end test: sum C|dT|/heat0 1.121e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 46 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.525e-1 heat-measure/t_bound 2.373e-2
+PROBE   pass 46 end test: sum C|dT|/heat0 1.078e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 47 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.523e-1 heat-measure/t_bound 2.203e-2
+PROBE   pass 47 end test: sum C|dT|/heat0 1.039e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass 48 true residual u-measure / u_bound: shipped form 2.159e1, flux form 2.159e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.521e-1 heat-measure/t_bound 2.046e-2
+PROBE   pass 48 end test: sum C|dT|/heat0 9.994e-7 (bound 1e-6) cells over 1e-3 0
+PROBE step 1: HeatReport { dt: 0.05, passes: 7, rounds: 236, converged: true, delta: 9.717029e-6 }
+PROBE   heat0 6.592000e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 2.458e8, flux form 2.458e8
+PROBE   solve ends: rounds   56 gamma/u_bound 8.723e-3 heat-measure/t_bound 3.199e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 8.376e-2 (bound 1e-6) cells over 1e-3 528
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 2.702e7, flux form 2.702e7
+PROBE   solve ends: rounds   59 gamma/u_bound 1.969e-2 heat-measure/t_bound 1.753e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 3.279e-2 (bound 1e-6) cells over 1e-3 276
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 2.469e6, flux form 2.469e6
+PROBE   solve ends: rounds   60 gamma/u_bound 3.296e-2 heat-measure/t_bound 3.818e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 1.058e-2 (bound 1e-6) cells over 1e-3 284
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 3.239e4, flux form 3.239e4
+PROBE   solve ends: rounds   56 gamma/u_bound 4.054e-2 heat-measure/t_bound 3.990e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 1.392e-3 (bound 1e-6) cells over 1e-3 180
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 2.960e1, flux form 2.960e1
+PROBE   solve ends: rounds    3 gamma/u_bound 8.289e-1 heat-measure/t_bound 1.061e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 2.830e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 6.768e0, flux form 6.768e0
+PROBE   solve ends: rounds    1 gamma/u_bound 8.391e-1 heat-measure/t_bound 3.079e-2
+PROBE   pass  6 end test: sum C|dT|/heat0 1.479e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 7.674e0, flux form 7.674e0
+PROBE   solve ends: rounds    1 gamma/u_bound 9.582e-1 heat-measure/t_bound 1.440e-2
+PROBE   pass  7 end test: sum C|dT|/heat0 8.937e-7 (bound 1e-6) cells over 1e-3 0
+PROBE step 2: HeatReport { dt: 0.05, passes: 9, rounds: 212, converged: true, delta: -4.0178866e-6 }
+PROBE   heat0 6.591985e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 2.114e8, flux form 2.114e8
+PROBE   solve ends: rounds   71 gamma/u_bound 7.277e-2 heat-measure/t_bound 3.086e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 4.655e-2 (bound 1e-6) cells over 1e-3 520
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 2.139e6, flux form 2.139e6
+PROBE   solve ends: rounds   67 gamma/u_bound 1.395e-1 heat-measure/t_bound 6.217e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 1.032e-2 (bound 1e-6) cells over 1e-3 242
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 1.681e4, flux form 1.681e4
+PROBE   solve ends: rounds   67 gamma/u_bound 1.567e-1 heat-measure/t_bound 7.240e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 6.372e-4 (bound 1e-6) cells over 1e-3 128
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 1.087e1, flux form 1.087e1
+PROBE   solve ends: rounds    2 gamma/u_bound 2.795e-1 heat-measure/t_bound 6.877e-2
+PROBE   pass  4 end test: sum C|dT|/heat0 1.040e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 3.149e0, flux form 3.149e0
+PROBE   solve ends: rounds    1 gamma/u_bound 3.602e-1 heat-measure/t_bound 4.373e-2
+PROBE   pass  5 end test: sum C|dT|/heat0 1.937e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 7.128e0, flux form 7.128e0
+PROBE   solve ends: rounds    1 gamma/u_bound 8.537e-1 heat-measure/t_bound 3.107e-2
+PROBE   pass  6 end test: sum C|dT|/heat0 1.482e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 4.566e0, flux form 4.566e0
+PROBE   solve ends: rounds    1 gamma/u_bound 8.755e-1 heat-measure/t_bound 2.253e-2
+PROBE   pass  7 end test: sum C|dT|/heat0 1.315e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  8 true residual u-measure / u_bound: shipped form 5.916e0, flux form 5.916e0
+PROBE   solve ends: rounds    1 gamma/u_bound 8.097e-1 heat-measure/t_bound 1.691e-2
+PROBE   pass  8 end test: sum C|dT|/heat0 1.085e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  9 true residual u-measure / u_bound: shipped form 5.089e0, flux form 5.089e0
+PROBE   solve ends: rounds    1 gamma/u_bound 9.639e-1 heat-measure/t_bound 1.298e-2
+PROBE   pass  9 end test: sum C|dT|/heat0 9.427e-7 (bound 1e-6) cells over 1e-3 0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 277 filtered out; finished in 2.99s
+
+exit 0
+== 2026-10-18T11:00:49-04:00 probe_d56_spot — DIAGNOSTIC: candidate 1 with the u-measure dropped from the solve's stop (not a fix)
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 30.12s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 1 test
+test heat::limiter::probe_d56_spot ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+PROBE step 0: HeatReport { dt: 0.05, passes: 7, rounds: 161, converged: true, delta: 0.00016142616 }
+PROBE   heat0 6.592000e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 3.732e7, flux form 3.732e7
+PROBE   solve ends: rounds   34 gamma/u_bound 1.892e-3 heat-measure/t_bound 7.356e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 2.173e-1 (bound 1e-6) cells over 1e-3 848
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 3.885e6, flux form 3.885e6
+PROBE   solve ends: rounds   40 gamma/u_bound 1.803e-2 heat-measure/t_bound 7.003e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 8.446e-2 (bound 1e-6) cells over 1e-3 1240
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 6.759e4, flux form 6.759e4
+PROBE   solve ends: rounds   42 gamma/u_bound 6.769e-3 heat-measure/t_bound 4.702e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 5.580e-2 (bound 1e-6) cells over 1e-3 1560
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 4.670e3, flux form 4.670e3
+PROBE   solve ends: rounds   23 gamma/u_bound 3.418e-2 heat-measure/t_bound 5.722e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 2.579e-2 (bound 1e-6) cells over 1e-3 1668
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 1.654e2, flux form 1.654e2
+PROBE   solve ends: rounds   19 gamma/u_bound 7.648e-2 heat-measure/t_bound 9.073e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 4.867e-3 (bound 1e-6) cells over 1e-3 1480
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 5.828e1, flux form 5.828e1
+PROBE   solve ends: rounds    3 gamma/u_bound 2.732e-1 heat-measure/t_bound 9.886e-1
+PROBE   pass  6 end test: sum C|dT|/heat0 5.346e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 2.165e1, flux form 2.165e1
+PROBE   solve ends: rounds    0 gamma/u_bound 2.165e1 heat-measure/t_bound 9.873e-1
+PROBE   pass  7 end test: sum C|dT|/heat0 6.442e-9 (bound 1e-6) cells over 1e-3 0
+PROBE step 1: HeatReport { dt: 0.05, passes: 6, rounds: 234, converged: true, delta: 1.9319174e-5 }
+PROBE   heat0 6.591998e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 2.459e8, flux form 2.459e8
+PROBE   solve ends: rounds   56 gamma/u_bound 1.762e-2 heat-measure/t_bound 5.569e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 8.379e-2 (bound 1e-6) cells over 1e-3 528
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 2.702e7, flux form 2.702e7
+PROBE   solve ends: rounds   59 gamma/u_bound 4.185e-2 heat-measure/t_bound 4.213e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 3.281e-2 (bound 1e-6) cells over 1e-3 276
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 2.470e6, flux form 2.470e6
+PROBE   solve ends: rounds   60 gamma/u_bound 5.953e-2 heat-measure/t_bound 7.931e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 1.059e-2 (bound 1e-6) cells over 1e-3 284
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 3.239e4, flux form 3.239e4
+PROBE   solve ends: rounds   57 gamma/u_bound 7.848e-2 heat-measure/t_bound 8.303e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 1.406e-3 (bound 1e-6) cells over 1e-3 188
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 3.457e1, flux form 3.457e1
+PROBE   solve ends: rounds    2 gamma/u_bound 2.967e0 heat-measure/t_bound 3.577e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 2.723e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 5.962e0, flux form 5.962e0
+PROBE   solve ends: rounds    0 gamma/u_bound 6.007e0 heat-measure/t_bound 3.582e-1
+PROBE   pass  6 end test: sum C|dT|/heat0 3.382e-8 (bound 1e-6) cells over 1e-3 0
+PROBE step 2: HeatReport { dt: 0.05, passes: 5, rounds: 206, converged: true, delta: -5.1186375e-6 }
+PROBE   heat0 6.591966e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 2.115e8, flux form 2.115e8
+PROBE   solve ends: rounds   71 gamma/u_bound 1.561e-1 heat-measure/t_bound 7.800e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 4.657e-2 (bound 1e-6) cells over 1e-3 531
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 2.139e6, flux form 2.139e6
+PROBE   solve ends: rounds   67 gamma/u_bound 1.621e-1 heat-measure/t_bound 7.890e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 1.033e-2 (bound 1e-6) cells over 1e-3 240
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 1.679e4, flux form 1.679e4
+PROBE   solve ends: rounds   67 gamma/u_bound 2.321e-1 heat-measure/t_bound 8.919e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 6.492e-4 (bound 1e-6) cells over 1e-3 128
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 1.418e1, flux form 1.418e1
+PROBE   solve ends: rounds    1 gamma/u_bound 1.516e0 heat-measure/t_bound 3.164e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 7.976e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 6.116e0, flux form 6.116e0
+PROBE   solve ends: rounds    0 gamma/u_bound 6.157e0 heat-measure/t_bound 3.165e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 1.589e-8 (bound 1e-6) cells over 1e-3 0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 277 filtered out; finished in 1.21s
+
+exit 0
+== 2026-10-18T11:03:04-04:00 probe_d56_spot — candidate 2: candidate 1 + the iterate's u carried in two f32 words through the passes (every tolerance as shipped)
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 25.38s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 1 test
+test heat::limiter::probe_d56_spot ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+PROBE step 0: HeatReport { dt: 0.05, passes: 9, rounds: 163, converged: true, delta: 0.0001378261 }
+PROBE   heat0 6.592000e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 3.732e7, flux form 3.732e7
+PROBE   solve ends: rounds   34 gamma/u_bound 1.892e-3 heat-measure/t_bound 7.356e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 2.173e-1 (bound 1e-6) cells over 1e-3 848
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 3.885e6, flux form 3.885e6
+PROBE   solve ends: rounds   40 gamma/u_bound 1.748e-2 heat-measure/t_bound 6.690e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 8.446e-2 (bound 1e-6) cells over 1e-3 1240
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 6.757e4, flux form 6.757e4
+PROBE   solve ends: rounds   42 gamma/u_bound 6.814e-3 heat-measure/t_bound 4.874e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 5.580e-2 (bound 1e-6) cells over 1e-3 1560
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 4.688e3, flux form 4.688e3
+PROBE   solve ends: rounds   23 gamma/u_bound 3.495e-2 heat-measure/t_bound 5.479e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 2.579e-2 (bound 1e-6) cells over 1e-3 1660
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 1.173e2, flux form 1.173e2
+PROBE   solve ends: rounds   19 gamma/u_bound 7.300e-2 heat-measure/t_bound 8.758e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 4.869e-3 (bound 1e-6) cells over 1e-3 1480
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 1.617e1, flux form 1.617e1
+PROBE   solve ends: rounds    3 gamma/u_bound 2.566e-1 heat-measure/t_bound 7.917e-1
+PROBE   pass  6 end test: sum C|dT|/heat0 6.418e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 1.922e0, flux form 1.922e0
+PROBE   solve ends: rounds    1 gamma/u_bound 1.487e-1 heat-measure/t_bound 6.902e-1
+PROBE   pass  7 end test: sum C|dT|/heat0 7.230e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  8 true residual u-measure / u_bound: shipped form 1.520e0, flux form 1.520e0
+PROBE   solve ends: rounds    1 gamma/u_bound 1.541e-1 heat-measure/t_bound 6.161e-1
+PROBE   pass  8 end test: sum C|dT|/heat0 5.949e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  9 true residual u-measure / u_bound: shipped form 5.281e-1, flux form 5.281e-1
+PROBE   solve ends: rounds    0 gamma/u_bound 5.281e-1 heat-measure/t_bound 6.160e-1
+PROBE   pass  9 end test: sum C|dT|/heat0 0.000e0 (bound 1e-6) cells over 1e-3 0
+PROBE step 1: HeatReport { dt: 0.05, passes: 7, rounds: 236, converged: true, delta: 1.4428211e-5 }
+PROBE   heat0 6.591999e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 2.459e8, flux form 2.459e8
+PROBE   solve ends: rounds   56 gamma/u_bound 2.824e-2 heat-measure/t_bound 9.672e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 8.379e-2 (bound 1e-6) cells over 1e-3 528
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 2.702e7, flux form 2.702e7
+PROBE   solve ends: rounds   59 gamma/u_bound 4.470e-2 heat-measure/t_bound 4.970e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 3.280e-2 (bound 1e-6) cells over 1e-3 276
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 2.470e6, flux form 2.470e6
+PROBE   solve ends: rounds   60 gamma/u_bound 5.337e-2 heat-measure/t_bound 6.329e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 1.058e-2 (bound 1e-6) cells over 1e-3 284
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 3.239e4, flux form 3.239e4
+PROBE   solve ends: rounds   57 gamma/u_bound 6.158e-2 heat-measure/t_bound 8.063e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 1.406e-3 (bound 1e-6) cells over 1e-3 180
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 2.324e1, flux form 2.324e1
+PROBE   solve ends: rounds    3 gamma/u_bound 7.581e-1 heat-measure/t_bound 1.336e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 3.725e-5 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  6 true residual u-measure / u_bound: shipped form 1.524e0, flux form 1.524e0
+PROBE   solve ends: rounds    1 gamma/u_bound 5.692e-1 heat-measure/t_bound 3.603e-2
+PROBE   pass  6 end test: sum C|dT|/heat0 2.073e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  7 true residual u-measure / u_bound: shipped form 5.295e-1, flux form 5.295e-1
+PROBE   solve ends: rounds    0 gamma/u_bound 6.013e-1 heat-measure/t_bound 3.644e-2
+PROBE   pass  7 end test: sum C|dT|/heat0 3.092e-8 (bound 1e-6) cells over 1e-3 0
+PROBE step 2: HeatReport { dt: 0.05, passes: 5, rounds: 205, converged: true, delta: 2.853931e-6 }
+PROBE   heat0 6.591970e-2
+PROBE   pass  1 true residual u-measure / u_bound: shipped form 2.114e8, flux form 2.114e8
+PROBE   solve ends: rounds   71 gamma/u_bound 6.547e-2 heat-measure/t_bound 4.769e-1
+PROBE   pass  1 end test: sum C|dT|/heat0 4.656e-2 (bound 1e-6) cells over 1e-3 528
+PROBE   pass  2 true residual u-measure / u_bound: shipped form 2.141e6, flux form 2.141e6
+PROBE   solve ends: rounds   66 gamma/u_bound 1.292e-1 heat-measure/t_bound 9.946e-1
+PROBE   pass  2 end test: sum C|dT|/heat0 1.030e-2 (bound 1e-6) cells over 1e-3 242
+PROBE   pass  3 true residual u-measure / u_bound: shipped form 1.673e4, flux form 1.673e4
+PROBE   solve ends: rounds   67 gamma/u_bound 9.150e-2 heat-measure/t_bound 5.395e-1
+PROBE   pass  3 end test: sum C|dT|/heat0 6.511e-4 (bound 1e-6) cells over 1e-3 128
+PROBE   pass  4 true residual u-measure / u_bound: shipped form 6.604e0, flux form 6.604e0
+PROBE   solve ends: rounds    1 gamma/u_bound 7.678e-1 heat-measure/t_bound 2.087e-1
+PROBE   pass  4 end test: sum C|dT|/heat0 7.189e-6 (bound 1e-6) cells over 1e-3 0
+PROBE   pass  5 true residual u-measure / u_bound: shipped form 8.594e-1, flux form 8.594e-1
+PROBE   solve ends: rounds    0 gamma/u_bound 9.039e-1 heat-measure/t_bound 2.088e-1
+PROBE   pass  5 end test: sum C|dT|/heat0 1.564e-8 (bound 1e-6) cells over 1e-3 0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 277 filtered out; finished in 1.18s
+
+exit 0

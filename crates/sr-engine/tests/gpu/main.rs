@@ -260,3 +260,6 @@ mod preset;
 
 /// M0-T62 — no artificial fragmentation: the rippled disk cloud collapsing to 100 × its central Σ (contract §2.3.5, §1.9.2, §5.1's G-JEANS).
 mod jeans;
+
+/// M0-D50 — the Sun-like preset's main sequence on the shipped constants (contract §0.5 [M0-D50], §2.5.1, §2.7, §2.10).
+mod sunburn;

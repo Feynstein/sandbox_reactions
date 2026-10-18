@@ -1,0 +1,232 @@
+== iter 1 12:50:37.681
+game-offscreen: ready on http://127.0.0.1:47811/status, 4.7s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+services: 1, ready: 1
+listener pid before stop: 36228
+game-offscreen: pid 36228 stopped
+services: 1, stopped: 1
+stop returned after 5462 ms
+first poll after stop (+2467 ms):
+  TCP    127.0.0.1:47811        127.0.0.1:53378        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53379        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53380        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53381        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53382        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53383        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53384        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53385        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53386        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53387        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53388        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53389        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53390        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53391        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53392        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53393        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53394        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53395        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53396        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53397        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53398        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53399        TIME_WAIT       0
+after stop: listener gone at +2467 ms, pid 36228 gone at +2467 ms
+states on :47811 now:      22 TIME_WAIT 
+== iter 2 12:50:59.979
+game-offscreen: ready on http://127.0.0.1:47811/status, 5.3s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+services: 1, ready: 1
+listener pid before stop: 25196
+game-offscreen: pid 25196 stopped
+services: 1, stopped: 1
+stop returned after 3829 ms
+first poll after stop (+1526 ms):
+  TCP    127.0.0.1:47811        127.0.0.1:53378        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53379        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53380        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53381        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53382        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53383        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53384        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53385        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53386        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53387        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53388        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53389        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53390        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53391        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53392        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53393        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53394        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53395        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53396        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53397        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53398        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53399        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53405        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53406        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53407        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53408        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53409        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53410        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53411        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53412        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53413        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53414        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53415        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53416        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53417        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53418        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53419        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53420        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53421        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53422        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53423        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53424        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53425        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53426        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53427        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53428        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53429        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53430        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53431        TIME_WAIT       0
+after stop: listener gone at +1526 ms, pid 25196 gone at +1526 ms
+states on :47811 now:      49 TIME_WAIT 
+== iter 3 12:51:17.593
+game-offscreen: ready on http://127.0.0.1:47811/status, 4.7s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+services: 1, ready: 1
+listener pid before stop: 33832
+game-offscreen: pid 33832 stopped
+services: 1, stopped: 1
+stop returned after 5294 ms
+first poll after stop (+1995 ms):
+  TCP    127.0.0.1:47811        127.0.0.1:53378        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53379        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53380        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53381        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53382        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53383        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53384        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53385        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53386        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53387        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53388        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53389        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53390        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53391        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53392        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53393        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53394        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53395        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53396        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53397        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53398        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53399        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53405        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53406        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53407        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53408        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53409        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53410        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53411        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53412        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53413        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53414        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53415        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53416        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53417        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53418        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53419        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53420        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53421        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53422        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53423        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53424        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53425        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53426        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53427        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53428        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53429        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53430        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53431        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53853        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53854        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53855        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53856        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53857        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53858        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53859        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53860        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53861        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53862        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53863        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53864        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53865        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53867        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53868        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53869        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53870        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53871        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53872        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53873        TIME_WAIT       0
+  TCP    127.0.0.1:47811        127.0.0.1:53874        TIME_WAIT       0
+after stop: listener gone at +1995 ms, pid 33832 gone at +1995 ms
+states on :47811 now:      70 TIME_WAIT 
+######## python probe, 2026-10-18T12:53:29-04:00, box Laser2025-20
+== iter 1 load=0: game-offscreen: ready on http://127.0.0.1:47811/status, 4.8s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+   stop: game-offscreen: pid 27016 stopped · ran 4682 ms
+   last connect() accepted on :47811: +25 ms · pid 27016 last alive: never · polls 200
+   >>> the listener OUTLIVED « stopped » by 25 ms
+== iter 2 load=0: stop ran 4649 ms, immediate restart: game-offscreen: ready on http://127.0.0.1:47811/status, 5.3s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+== iter 3 load=0: game-offscreen: ready on http://127.0.0.1:47811/status, 6.0s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+   stop: game-offscreen: pid 28388 stopped · ran 3563 ms
+   last connect() accepted on :47811: +60 ms · pid 28388 last alive: never · polls 182
+   >>> the listener OUTLIVED « stopped » by 60 ms
+== iter 4 load=0: stop ran 4114 ms, immediate restart: game-offscreen: ready on http://127.0.0.1:47811/status, 4.7s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+== iter 1 load=22: game-offscreen: ready on http://127.0.0.1:47811/status, 11.3s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+   stop: game-offscreen: pid 11876 stopped · ran 15447 ms
+   last connect() accepted on :47811: +2962 ms · pid 11876 last alive: never · polls 162
+   >>> the listener OUTLIVED « stopped » by 2962 ms
+== iter 2 load=22: stop ran 24698 ms, immediate restart: game-offscreen: ready on http://127.0.0.1:47811/status, 5.8s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+== iter 3 load=22: game-offscreen: ready on http://127.0.0.1:47811/status, 22.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+   stop: game-offscreen: pid 29040 stopped · ran 28993 ms
+   last connect() accepted on :47811: -276 ms · pid 29040 last alive: never · polls 275
+== iter 4 load=22: stop ran 17695 ms, immediate restart: game-offscreen: ready on http://127.0.0.1:47811/status, 68.8s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+######## python probe 2 (holder), 2026-10-18T13:01:00-04:00, box Laser2025-20
+Exception in thread Thread-6 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+  File "C:\Users\YohanBelanger\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x90 in position 79: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\YOHANB~1\AppData\Local\Temp\claude\c--workspace-sandbox-reactions\89eb19d2-bf9e-4d5f-98fa-7cc2a2f2980d\scratchpad\holder_probe.py", line 104, in <module>
+    seen = f"+{(time.perf_counter() - t_exit) * 1000:.0f} ms: {holder()}"
+                                                               ^^^^^^^^
+  File "C:\Users\YOHANB~1\AppData\Local\Temp\claude\c--workspace-sandbox-reactions\89eb19d2-bf9e-4d5f-98fa-7cc2a2f2980d\scratchpad\holder_probe.py", line 45, in holder
+    owners = {l.split()[-1] for l in ns.splitlines() if f":{port} " in l and "LISTENING" in l}
+                                     ^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'splitlines'
+######## python probe 2 re-run (holder), 2026-10-18T13:01:49-04:00, box Laser2025-20
+== iter 1 load=22: game-offscreen: ready on http://127.0.0.1:47811/status, 9.8s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+   stop: game-offscreen: pid 15520 stopped · ran 9101 ms
+   last connect() accepted on :47811: +6 ms · pid 15520 last alive: never · polls 122
+   >>> the listener OUTLIVED « stopped » by 6 ms
+   >>> its holder, first seen after « stopped » at +6 ms: no LISTENING socket in netstat
+== iter 2 load=22: stop ran 7309 ms, immediate restart: game-offscreen: ready on http://127.0.0.1:47811/status, 22.9s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+== iter 3 load=22: game-offscreen: ready on http://127.0.0.1:47811/status, 14.8s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+   stop: game-offscreen: pid 604 stopped · ran 15585 ms
+   last connect() accepted on :47811: +2 ms · pid 604 last alive: never · polls 194
+   >>> the listener OUTLIVED « stopped » by 2 ms
+   >>> its holder, first seen after « stopped » at +2 ms: no LISTENING socket in netstat
+== iter 4 load=22: stop ran 7462 ms, immediate restart: game-offscreen: ready on http://127.0.0.1:47811/status, 17.8s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+== iter 5 load=22: game-offscreen: ready on http://127.0.0.1:47811/status, 20.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)
+   stop: game-offscreen: pid 3652 stopped (needed SIGKILL) · ran 13342 ms
+   last connect() accepted on :47811: +13 ms · pid 3652 last alive: never · polls 131
+   >>> the listener OUTLIVED « stopped » by 13 ms
+   >>> its holder, first seen after « stopped » at +13 ms: no LISTENING socket in netstat
+== iter 6 load=22: stop ran 14459 ms, immediate restart: game-offscreen: ready on http://127.0.0.1:47811/status, 16.2s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D51-probe.launch.game-offscreen.log)

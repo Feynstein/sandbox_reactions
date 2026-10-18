@@ -1,6 +1,6 @@
-# Time control — the rungs, the frame plan, the cap, pause and step, the slow-down, the 30-frames switch
+# Time control — the rungs and Max, the frame plan, the cap, pause and step, the slow-down
 
-Written by M0-T27 (2026-10-11) from `milestones/m0/m0_contrat.md` §1.8, §3.2, §4.3 and the handoffs of M0-T22–M0-T24.
+Written by M0-T27 (2026-10-11), Max by M0-T123 (2026-10-18), from `milestones/m0/m0_contrat.md` §1.8, §3.2, §4.3 and the handoffs of M0-T22–M0-T24.
 The contract owns every number, formula and string; this page names the parts and points to the section that fixes
 them, never a value §1.8 or `assets/calibration.json` holds. The app's frame loop is not wired yet: it lands with M0-T84
 (the frame loop) and M0-T85 (the top bar), and M0-T88 adds it here. The step side of a frame — `encode_frame`, the
@@ -22,20 +22,26 @@ wall time and each read-back frame; it hands back how many steps the next frame 
 | `speed_text()` | `speed_text() → SpeedText { rung, running, paused }` |
 | the slow-down setting | `slow_down()`, `set_slow_down(on)` — on at start (§1.8.5) |
 
-Helpers: `top_rung_from_life(life_sun_sb)` (§1.8.2's TOP) and `sig2(x)` (two significant digits, §4.12 — TOP's label
-and `{actual}`). `Plan` carries `slow_down` so the engine's `FramePlan { steps, slow_down }` is built from it alone.
+Helpers: `top_rung_from_life(life_sun_sb)` (§1.8.2's TOP, which caps the numbered rungs) and `sig2(x)` (two significant
+digits, §4.12 — `{actual}`). `Plan` carries `slow_down` so the engine's `FramePlan { steps, slow_down }` is built from it alone.
 
 ## The rungs (§1.8.1, §1.8.2)
 - ×1 is one sandbox time unit per wall second (§1.8.1). The ladder is `time::LADDER` (value, label), §1.8.2's list.
-- **Before calibration** (`top_rung` none): the whole ladder. **After**: the ladder rungs below TOP / 1.5, then TOP itself,
-  labelled with `sig2` (TOP from `life_sun_sb`, §1.8.2, §2.11). A top rung that is not a positive finite number is
-  refused (`new` returns `Err`), as is a negative or non-finite render reserve.
+- **Before calibration** (`top_rung` none): the whole ladder, then **Max**. **After**: the ladder rungs below TOP / 1.5
+  (TOP from `life_sun_sb`, §1.8.2, §2.11 — it caps the numbered rungs and is no rung), then Max. A top rung that is not
+  a positive finite number is refused (`new` returns `Err`), as is a negative or non-finite render reserve.
+- **Max** (M0-TJ2, §1.8.2) is the last rung of `rungs()`: label `MAX_LABEL` ("Max"), value `f64::INFINITY`, so it sorts
+  above every numbered rung for `select`, `faster`, `slower` and the slow-down's "only ever slower". Key 0 is the app's:
+  `select(rungs().len() − 1)`. `faster` at Max stays; `slower` leaves it for the numbered rung below.
 - The game starts at ×1, running, the slow-down on. The labels are what `time.rung` shows (§4.3), not thousands-grouped
   (§4.12's "ladder rungs as written").
 
 ## A frame — the plan (§1.8.3)
 Each frame, running: `owed += rung / f_target`; `N = min(N_max, ⌈owed / Δt_est⌉)`; the plan's steps go to the engine,
-and the frame's report, when it comes back (≤ 2 frames late, `Step::poll`), books what was actually advanced.
+and the frame's report, when it comes back (≤ 2 frames late, `Step::poll`), books what was actually advanced. **At Max
+none of that is owed**: N = N_max in every frame, `owed` is 0 and stays 0 (set on selecting Max, never added to, its
+reports book nothing), whatever sim time the steps advance. Max's infinite value is never put through the arithmetic
+(⌈∞ / Δt⌉ would plan `u32::MAX` steps, ∞ − ∞ a NaN).
 - **Δt_est** is the last `dt_next` read back. None before the first report and while the world is empty (an empty box's
   Δt is the largest f32, M0-T21): then one step a frame while anything is owed, and an empty world's frame resets owed
   instead of booking its sim time.
@@ -57,8 +63,10 @@ and the frame's report, when it comes back (≤ 2 frames late, `Step::poll`), bo
 A frame **binds** when N_max < ⌈owed / Δt_est⌉. When it bound in at least `CAP_BINDS` of the last `CAP_WINDOW` frames
 (§1.8.4's counts), `speed_text().running` is `Some(actual)`: the sim time the last reports advanced ÷ the wall time of the
 last running plans, through `sig2` — the readout "Speed ×{rung} (running ×{actual})" (`time.speed_capped`, §4.3).
-A rung change, by the player or the slow-down, clears the cap's window, `{actual}`'s and the switch's, and sets f_target
-back to 60; the cost window is kept (cost per step is the physics', not the rung's).
+**At Max the readout always carries it** (`running` is `Some`, "0" before any frame advanced), the string being
+`time.speed_max` (§4.3, M0-T125). A rung change, by the player or the slow-down, clears the cap's window and
+`{actual}`'s and sets f_target (60 at a numbered rung, 30 at Max, from Max's first frame); the cost window is kept (cost
+per step is the physics', not the rung's).
 
 ## Pause and step (§1.8.5)
 - `toggle_pause()` stops stepping: a paused `plan_frame` plans 0 steps and records nothing in any window.
@@ -78,15 +86,15 @@ back to 60; the cost window is kept (cost per step is the physics', not the rung
 - **G-LATCH is NOT PROVEN (synthetic)** until M0-T111: the `latch` scope proves the mechanism on a test hook; the
   contract's scenario (the Massive preset from an iron-core dump) is M0-T111's.
 
-## The 30-frames switch at the top rung (§1.8.6 — FROZEN, Q2)
-f_target is 60 at every rung (`F_TARGET`). At TOP only, it becomes `F_TARGET_TOP` when N_max at 60 binds in at least
-`CAP_BINDS` of the last `CAP_WINDOW` frames, and returns to 60 after `QUIET_FRAMES` consecutive frames that needed fewer
-than half of N_max at 60 (§1.8.6's counts). The test is need₆₀ = ⌈(TOP / 60) / Δt_est⌉ against N_max at 60, so it reads
-the same at 30 and 60 frames a second. owed per frame follows f_target, so the sim time per wall second does not change
-with the switch. If TOP cannot hold at 30 either (G-TOP red on the Quadro), the build stops and the lead is asked again —
-never a silent fallback (§1.8.6).
+## The 30 frames at Max (§1.8.6 — FROZEN, Q2; M0-TJ2)
+f_target is 60 at every numbered rung (`F_TARGET`) and 30 at Max (`F_TARGET_MAX`) — no switch, no window: selecting Max
+sets it, leaving Max sets it back, so N_max = ⌊(1000 / 30 − R_reserve) / c_step⌋ from Max's first frame. The sim time per
+wall second at Max is what the card advances, shown by the readout; no performance number stops the build or holds a
+lot (the lead, 2026-10-18, M0-TJ2: «we do not block anything on performance»). The earlier 30-frames switch at TOP
+(`F_TARGET_TOP`, `QUIET_FRAMES`, the 30-of-60 and 120-quiet counts) is removed.
 
 ## What grades it
-The `time_control` scope (`bash tests/cpu.sh sr-physics time`, no GPU; R17 spells §5's `time-control` so) — 18 cases
-over §1.8 and §3.2 with a zero-latency driver, plant `slowdown-auto-return` (`docs/agent/testing.md`). G-WARP (M0-T110),
+The `time_control` scope (`bash tests/cpu.sh sr-physics time`, no GPU; R17 spells §5's `time-control` so) — 23 cases
+over §1.8 and §3.2 with a zero-latency driver, plants `slowdown-auto-return` and `time-max-paced` (Max paced like a
+numbered rung, `docs/agent/testing.md`). G-WARP (M0-T110),
 G-TOP and G-FPS (⏱, the Quadro only, R12) grade it in the running game later.

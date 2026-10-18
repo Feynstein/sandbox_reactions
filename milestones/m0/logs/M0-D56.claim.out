@@ -1,0 +1,96 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why burn_cell: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why burn_order: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why neutrino: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why sink: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why nu_heat: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why summary: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ledger: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why preset_cloud: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why observe_run: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why sod: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why edges: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why collapse: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why jeans: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why twin: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why radiation_force: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why grav_force: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why grav_selfforce: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why fft: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why adapter: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why state: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why booking: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why floors: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why dt: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why box: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why latch: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why timing: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why scene: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why dump: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why boot: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why desktop: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why web: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why capture: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why watch_only: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+plan_lint        571/0/0      0.77 s  GO · step 1/35, 34 left
+build            2/0/0       75.47 s  GO · step 2/35, 33 left
+burn_cell        16/0/0      28.31 s  GO · step 3/35, 32 left
+burn_order       4/0/0       12.53 s  GO · step 4/35, 31 left
+neutrino         18/0/0      32.61 s  GO · step 5/35, 30 left
+sink             30/0/0     172.44 s  GO · step 6/35, 29 left
+nu_heat          15/0/0      49.11 s  GO · step 7/35, 28 left
+summary          7/0/0       70.02 s  GO · step 8/35, 27 left
+ledger           4/0/0       41.27 s  GO · step 9/35, 26 left
+preset_cloud     5/0/0      260.09 s  GO · step 10/35, 25 left
+observe_run      5/0/0       56.09 s  GO · step 11/35, 24 left
+sod              15/0/0      93.48 s  GO · step 12/35, 23 left
+edges            7/0/0       87.22 s  GO · step 13/35, 22 left
+collapse         6/0/0       15.05 s  GO · step 14/35, 21 left
+jeans            5/0/0        7.47 s  GO · step 15/35, 20 left
+twin             6/0/0       17.33 s  GO · step 16/35, 19 left
+radiation_force  3/0/0       12.45 s  GO · step 17/35, 18 left
+grav_force       13/0/0      33.11 s  GO · step 18/35, 17 left
+grav_selfforce   5/0/0       18.66 s  GO · step 19/35, 16 left
+fft              8/0/0       37.56 s  GO · step 20/35, 15 left
+adapter          10/0/0      38.95 s  GO · step 21/35, 14 left
+state            6/0/0       27.30 s  GO · step 22/35, 13 left
+booking          4/0/0       25.08 s  GO · step 23/35, 12 left
+floors           7/0/0       38.58 s  GO · step 24/35, 11 left
+dt               6/0/0       27.78 s  GO · step 25/35, 10 left
+box              8/0/0       45.61 s  GO · step 26/35, 9 left
+latch            5/0/0       24.55 s  GO · step 27/35, 8 left
+timing           5/0/0       59.64 s  GO · step 28/35, 7 left
+scene            8/0/0       22.20 s  GO · step 29/35, 6 left
+dump             11/0/0      95.27 s  GO · step 30/35, 5 left
+boot             1/0/0       33.11 s  GO · step 31/35, 4 left
+desktop          2/0/0       88.55 s  GO · step 32/35, 3 left
+web              3/0/0      258.14 s  GO · step 33/35, 2 left
+capture          2/0/0       14.53 s  GO · step 34/35, 1 left
+watch_only       1/0/0        0.59 s  GO · step 35/35, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+objects          NOT RUN (not impacted: its 29 path(s) checked at the anchor)
+classify         NOT RUN (not impacted: its 29 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+sun_burn         NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+cpu_gpu          NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+heat_limiter     NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+heat_stiff       NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-D56.<scope>.log · record: loop_times.jsonl · tree 454209d1f2f4+8a20b35b940d
+anchor: 69 path×scope entries moved by this run
+anchor: 230 paths checked · 209 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 230 covered of 439 visible
+skipped   201  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 824 passed, 0 failed, 0 skipped · 35/35 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 18 not impacted · 279.77 s + loop 0.25 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 2.99->1.31 · base: M0-D56's start 2026-10-18T10:47:47-04:00
+=== GO ===

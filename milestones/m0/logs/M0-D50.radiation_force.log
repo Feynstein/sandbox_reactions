@@ -1,0 +1,31 @@
+== 2026-10-18T09:44:03-04:00 radiation_force · task M0-D50 · box Laser2025-20 :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 9.92 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 1.20s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 3 tests
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -5.821058579e-1, Σ Δt·f -5.821058636e-1, relative 9.83e-9
+SR-RADFORCE gpu x, right: gained 5.821057743e-1, Σ Δt·f 5.821057957e-1, relative 3.67e-8
+SR-RADFORCE gpu y, top: gained -4.277434570e-2, Σ Δt·f -4.277434612e-2, relative 9.80e-9
+SR-RADFORCE gpu y, bottom: gained 4.277434522e-2, Σ Δt·f 4.277434675e-2, relative 3.57e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.47e-10 of the largest Δt·f 8.32e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 7.433507796e-2, the hand F's 7.433508135e-2 (4.56e-8), P5's F after -6.854871154e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -7.433507796e-2, the hand F's -7.433508135e-2 (4.56e-8), P5's F after 6.854871154e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 5.403412628e-3, the hand F's 5.403412646e-3 (3.26e-9), P5's F after -5.353670209e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -5.403412628e-3, the hand F's -5.403412646e-3 (3.26e-9), P5's F after 5.353670209e-3 (2.01e0)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -6.604207666e-1, Σ Δt·f -6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin x, right: gained 6.604207666e-1, Σ Δt·f 6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -4.347429519e-2, Σ Δt·f -4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin y, bottom: gained 4.347429519e-2, Σ Δt·f 4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin cells: worst |gained − Δt·f| 4.34e-19 of the largest Δt·f 1.88e-3; Σ, E, species 0e0 from the free step
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 274 filtered out; finished in 7.32s
+
+

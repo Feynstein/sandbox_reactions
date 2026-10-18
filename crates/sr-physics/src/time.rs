@@ -1,6 +1,6 @@
-//! Time control (m0_contrat.md §1.8, §3.2): the rungs, how many steps a frame runs, the cap and its readout, pause and
-//! step, the automatic slow-down and the top rung's 30-frames switch. Pure logic, no GPU: the app hands it each frame's
-//! wall time and each read-back frame, and passes its plan to the engine's `encode_frame` (M0-T22). Time never touches
+//! Time control (m0_contrat.md §1.8, §3.2): the rungs and Max, the top rung (as fast as the card goes), how many steps a
+//! frame runs, the cap and its readout, pause and step and the automatic slow-down. Pure logic, no GPU: the app hands
+//! it each frame's wall time and each read-back frame, and passes its plan to the engine's `encode_frame` (M0-T22). Time never touches
 //! the physics (§1.8.7) — nothing here reaches Δt, only how many steps a frame runs.
 
 use std::collections::VecDeque;
@@ -17,23 +17,23 @@ pub const LADDER: [(f64, &str); 9] = [
     (300.0, "300"),
     (1000.0, "1000"),
 ];
-/// The frame rate every rung aims at, and the top rung's once its switch engages (§1.8.6, Q2 — FROZEN).
+/// The frame rate every numbered rung aims at, and Max's (§1.8.6, Q2 — FROZEN; [M0-TJ2]).
 pub const F_TARGET: u32 = 60;
-pub const F_TARGET_TOP: u32 = 30;
+pub const F_TARGET_MAX: u32 = 30;
+/// The top rung's label (§4.12): Max sorts above every numbered rung, its value infinite.
+pub const MAX_LABEL: &str = "Max";
 /// R_reserve until calibration's `render_reserve_ms` exists (§1.8.3).
 pub const RENDER_RESERVE_MS: f64 = 3.0;
 /// c_step's moving average, in frames (§1.8.3).
 const COST_FRAMES: usize = 16;
-/// The cap's window and how many of its frames must bind (§1.8.4); the switch reads N_max at 60 the same way (§1.8.6).
+/// The cap's window and how many of its frames must bind (§1.8.4).
 const CAP_WINDOW: usize = 60;
 const CAP_BINDS: usize = 30;
-/// Consecutive frames needing fewer than half of N_max at 60 that return the top rung to 60 frames a second (§1.8.6).
-const QUIET_FRAMES: u32 = 120;
 /// A Δt at or above this is not a CFL step: an all-vacuum world's box is empty and its Δt reduces to the largest finite
 /// f32 (M0-T21). Such a frame carries no estimate and owes nothing.
 const DT_EMPTY: f64 = f32::MAX as f64;
 
-/// A speed setting: sandbox time units per wall second, and the label `time.rung` shows (§4.3, §4.12).
+/// A speed setting: sandbox time units per wall second (infinite at Max), and the label `time.rung` shows (§4.3, §4.12).
 #[derive(Clone, Debug, PartialEq)]
 pub struct Rung {
     pub value: f64,
@@ -91,7 +91,7 @@ pub struct Report {
     pub latch_fired: bool,
 }
 
-/// What the speed readout shows (§4.3): the rung's label, the running speed while the cap binds, and paused.
+/// What the speed readout shows (§4.3): the rung's label, the running speed while the cap binds (always at Max), and paused.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct SpeedText {
     pub rung: String,
@@ -99,7 +99,7 @@ pub struct SpeedText {
     pub paused: bool,
 }
 
-/// §1.8.2: TOP = life_sun_sb ÷ 10 s, rounded to two significant digits.
+/// §1.8.2: TOP = life_sun_sb ÷ 10 s, rounded to two significant digits; it caps the numbered rungs, never a rung itself.
 pub fn top_rung_from_life(life_sun_sb: f64) -> f64 {
     round_sig2(life_sun_sb / 10.0)
 }
@@ -112,7 +112,7 @@ fn round_sig2(x: f64) -> f64 {
     (x / scale).round() * scale
 }
 
-/// Two significant digits, as TOP and `{actual}` are shown (§4.12): "42", "0.83", "1.0", "1200".
+/// Two significant digits, as `{actual}` is shown (§4.12): "42", "0.83", "1.0", "1200".
 pub fn sig2(x: f64) -> String {
     let r = round_sig2(x);
     if !r.is_finite() || r <= 0.0 {
@@ -164,35 +164,35 @@ pub struct TimeControl {
     binds: VecDeque<bool>,
     walls: VecDeque<f64>,
     advanced: VecDeque<f64>,
-    top_binds: VecDeque<bool>,
-    quiet: u32,
 }
 
 impl TimeControl {
     /// `top_rung` and `render_reserve_ms` from calibration (§2.11); until it exists the nine ladder rungs and 3.0 ms.
-    /// The game starts at ×1, running, the slow-down on.
+    /// The numbered rungs are followed by Max, the last rung. The game starts at ×1, running, the slow-down on.
     pub fn new(top_rung: Option<f64>, render_reserve_ms: Option<f64>) -> Result<TimeControl, String> {
-        let rungs: Vec<Rung> = match top_rung {
-            None => LADDER.iter().map(|&(value, label)| Rung { value, label: label.to_string() }).collect(),
-            Some(top) if top.is_finite() && top > 0.0 => LADDER
-                .iter()
-                .filter(|&&(value, _)| value < top / 1.5)
-                .map(|&(value, label)| Rung { value, label: label.to_string() })
-                .chain(std::iter::once(Rung { value: top, label: sig2(top) }))
-                .collect(),
+        let cap = match top_rung {
+            None => f64::INFINITY,
+            Some(top) if top.is_finite() && top > 0.0 => top / 1.5,
             Some(top) => return Err(format!("top_rung: {top} is not a positive finite number")),
         };
+        let rungs: Vec<Rung> = LADDER
+            .iter()
+            .filter(|&&(value, _)| value < cap)
+            .map(|&(value, label)| Rung { value, label: label.to_string() })
+            .chain(std::iter::once(Rung { value: f64::INFINITY, label: MAX_LABEL.to_string() }))
+            .collect();
         let reserve_ms = render_reserve_ms.unwrap_or(RENDER_RESERVE_MS);
         if !reserve_ms.is_finite() || reserve_ms < 0.0 {
             return Err(format!("render_reserve_ms: {reserve_ms} is not a finite number ≥ 0"));
         }
         let rung = rungs.iter().rposition(|r| r.value <= 1.0).unwrap_or(0);
+        let f_target = if rung == rungs.len() - 1 { F_TARGET_MAX } else { F_TARGET };
         Ok(TimeControl {
             rungs,
             rung,
             paused: false,
             slow_down: true,
-            f_target: F_TARGET,
+            f_target,
             owed: 0.0,
             reserve_ms,
             dt_est: None,
@@ -203,8 +203,6 @@ impl TimeControl {
             binds: VecDeque::new(),
             walls: VecDeque::new(),
             advanced: VecDeque::new(),
-            top_binds: VecDeque::new(),
-            quiet: 0,
         })
     }
 
@@ -236,7 +234,7 @@ impl TimeControl {
         self.slow_down = on;
     }
 
-    /// Selects rung `k` of `rungs()` (keys 1…n are k = 0…n−1); out of range is ignored.
+    /// Selects rung `k` of `rungs()` (keys 1…n are k = 0…n−1, key 0 is Max, k = len − 1); out of range is ignored.
     pub fn select(&mut self, k: usize) {
         if k < self.rungs.len() {
             self.set_rung(k, None);
@@ -266,7 +264,8 @@ impl TimeControl {
     }
 
     /// One frame (§1.8.3): owed += rung / f_target, N = min(N_max, ⌈owed / Δt_est⌉), what N planned taken off owed
-    /// until its report books what it advanced. No estimate yet (the first frames, an empty world): one step.
+    /// until its report books what it advanced. No estimate yet (the first frames, an empty world): one step. At Max
+    /// nothing is owed (its rung value is infinite) and N = N_max in every frame, whatever sim time those steps advance.
     pub fn plan_frame(&mut self, est: Estimates) -> Plan {
         let (f_target, slow_down) = (self.f_target, self.slow_down);
         let plan = move |steps| Plan { steps, f_target, slow_down };
@@ -279,9 +278,13 @@ impl TimeControl {
             return plan(1);
         }
         push(&mut self.walls, est.wall_s, CAP_WINDOW);
-        self.owed += self.rungs[self.rung].value / self.f_target as f64;
+        let at_max = self.at_max();
+        if !at_max {
+            self.owed += self.rungs[self.rung].value / self.f_target as f64;
+        }
         let n_max = self.n_max(self.f_target);
         let (steps, planned, bind) = match self.dt_est {
+            _ if at_max => (n_max, 0.0, false),
             Some(dt) => {
                 let need = steps_for(self.owed, dt);
                 (need.min(n_max), need.min(n_max) as f64 * dt, need > n_max)
@@ -291,10 +294,9 @@ impl TimeControl {
         self.owed -= planned;
         push(&mut self.binds, bind, CAP_WINDOW);
         let out = plan(steps);
-        self.update_switch();
         self.bound_owed();
         if steps > 0 {
-            self.in_flight.push_back(Some(planned));
+            self.in_flight.push_back((!at_max).then_some(planned));
         }
         out
     }
@@ -306,7 +308,7 @@ impl TimeControl {
         if report.steps_run == 0 {
             return;
         }
-        let planned = self.in_flight.pop_front().flatten();
+        let planned = self.in_flight.pop_front().flatten().filter(|_| !self.at_max());
         if !real(report.advanced) {
             // The empty world's frame: its sim time is not time anything owes.
             self.owed = 0.0;
@@ -335,11 +337,13 @@ impl TimeControl {
         }
     }
 
-    /// The readout (§4.3): `{rung}`, `{actual}` when N_max bound in ≥ 30 of the last 60 frames (§1.8.4), paused.
+    /// The readout (§4.3): `{rung}`, `{actual}` when N_max bound in ≥ 30 of the last 60 frames (§1.8.4) and always at
+    /// Max, paused.
     pub fn speed_text(&self) -> SpeedText {
         let capped = self.binds.iter().filter(|&&b| b).count() >= CAP_BINDS;
         let wall: f64 = self.walls.iter().sum();
-        let running = (capped && wall > 0.0).then(|| sig2(self.advanced.iter().sum::<f64>() / wall));
+        let actual = || sig2(self.advanced.iter().sum::<f64>() / wall);
+        let running = if self.at_max() { Some(actual()) } else { (capped && wall > 0.0).then(actual) };
         SpeedText { rung: self.rungs[self.rung].label.clone(), running, paused: self.paused }
     }
 
@@ -354,26 +358,8 @@ impl TimeControl {
         n.clamp(1.0, u32::MAX as f64) as u32
     }
 
-    fn at_top(&self) -> bool {
+    fn at_max(&self) -> bool {
         self.rung == self.rungs.len() - 1
-    }
-
-    /// §1.8.6: at TOP, 30 frames a second once N_max at 60 binds in ≥ 30 of the last 60 frames; back to 60 after 120
-    /// consecutive frames needing fewer than half of N_max at 60. owed per frame follows f_target, so the sim time per
-    /// wall second does not change.
-    fn update_switch(&mut self) {
-        let Some(dt) = self.dt_est.filter(|_| self.at_top()) else { return };
-        let n60 = self.n_max(F_TARGET) as u64;
-        let need60 = steps_for(self.rungs[self.rung].value / F_TARGET as f64, dt) as u64;
-        push(&mut self.top_binds, need60 > n60, CAP_WINDOW);
-        self.quiet = if 2 * need60 < n60 { self.quiet + 1 } else { 0 };
-        if self.f_target == F_TARGET && self.top_binds.iter().filter(|&&b| b).count() >= CAP_BINDS {
-            self.f_target = F_TARGET_TOP;
-            self.quiet = 0;
-        } else if self.f_target == F_TARGET_TOP && self.quiet >= QUIET_FRAMES {
-            self.f_target = F_TARGET;
-            self.top_binds.clear();
-        }
     }
 
     fn set_rung(&mut self, k: usize, banner: Option<Event>) {
@@ -382,12 +368,13 @@ impl TimeControl {
         }
         self.rung = k;
         self.banner = banner;
-        self.f_target = F_TARGET;
+        self.f_target = if self.at_max() { F_TARGET_MAX } else { F_TARGET };
         self.binds.clear();
         self.walls.clear();
         self.advanced.clear();
-        self.top_binds.clear();
-        self.quiet = 0;
+        if self.at_max() {
+            self.owed = 0.0;
+        }
         self.bound_owed();
     }
 
@@ -411,7 +398,7 @@ mod tests {
     }
 
     impl Driver {
-        /// c_step filled at 1 ms (20 frames at TOP), then a rung change clears the windows and lands on rung `k`.
+        /// c_step filled at 1 ms (20 frames at Max), then a rung change clears the windows and lands on rung `k`.
         fn primed(top: Option<f64>, k: usize) -> Driver {
             let mut d = Driver { tc: TimeControl::new(top, None).unwrap(), last: None, ms: 1.0 };
             d.tc.select(d.tc.rungs().len() - 1);
@@ -454,19 +441,22 @@ mod tests {
     }
 
     #[test]
-    fn nine_ladder_rungs_until_calibration() {
+    fn nine_ladder_rungs_then_max_until_calibration() {
         let tc = TimeControl::new(None, None).unwrap();
         let labels: Vec<&str> = tc.rungs().iter().map(|r| r.label.as_str()).collect();
-        assert_eq!(labels, LADDER.map(|(_, l)| l));
+        let mut want = LADDER.map(|(_, l)| l).to_vec();
+        want.push("Max");
+        assert_eq!(labels, want);
     }
 
     #[test]
-    fn rungs_below_top_over_1_5_then_top() {
+    fn rungs_below_top_over_1_5_then_max() {
         let values = |top| TimeControl::new(Some(top), None).unwrap().rungs().iter().map(|r| r.value).collect::<Vec<_>>();
-        assert_eq!(values(45.0), [0.1, 0.3, 1.0, 3.0, 10.0, 45.0], "30 = 45 / 1.5 is not below it");
-        assert_eq!(values(45.1), [0.1, 0.3, 1.0, 3.0, 10.0, 30.0, 45.1]);
-        assert_eq!(values(4200.0).len(), 10);
-        assert_eq!(TimeControl::new(Some(42.0), None).unwrap().rungs().last().unwrap().label, "42");
+        let max = f64::INFINITY;
+        assert_eq!(values(45.0), [0.1, 0.3, 1.0, 3.0, 10.0, max], "30 = 45 / 1.5 is not below it, and TOP is no rung");
+        assert_eq!(values(45.1), [0.1, 0.3, 1.0, 3.0, 10.0, 30.0, max]);
+        assert_eq!(values(4200.0).len(), 10, "all nine, then Max");
+        assert_eq!(TimeControl::new(Some(42.0), None).unwrap().rungs().last().unwrap().label, "Max");
         assert!(TimeControl::new(Some(f64::NAN), None).unwrap_err().starts_with("top_rung"));
         assert_eq!([423.0, 425.0, 4249.0].map(top_rung_from_life), [42.0, 43.0, 420.0]);
     }
@@ -474,10 +464,12 @@ mod tests {
     #[test]
     fn select_faster_slower_stop_at_the_ends() {
         let mut tc = TimeControl::new(None, None).unwrap();
-        tc.select(9);
+        tc.select(10);
         assert_eq!(tc.rung(), 2, "out of range is ignored");
-        tc.select(8);
+        tc.select(9);
         tc.faster();
+        assert_eq!(tc.rung(), 9, "faster at Max stays");
+        tc.slower();
         assert_eq!(tc.rung(), 8);
         tc.select(0);
         tc.slower();
@@ -619,34 +611,106 @@ mod tests {
         assert!(d.tc.plan_frame(Estimates { wall_s: 1.0 / 60.0 }).steps <= 1);
     }
 
-    #[test]
-    fn top_switches_to_30_at_30_of_60_and_back_after_120_quiet() {
-        let mut d = Driver::primed(None, 8);
-        (0..31).for_each(|_| _ = d.frame(1.5)); // need 12 of N_max 13: neither binding nor quiet
-        (0..29).for_each(|_| _ = d.frame(0.447)); // need 38: binds
-        assert_eq!(d.tc.f_target(), 60, "29 of 60");
-        d.frame(0.447);
-        assert_eq!(d.tc.f_target(), 30, "30 of 60");
-        (0..119).for_each(|_| _ = d.frame(4.0)); // need 5, under half of 13
-        assert_eq!(d.tc.f_target(), 30, "119 quiet frames");
-        d.frame(4.0);
-        assert_eq!(d.tc.f_target(), 60, "120 quiet frames");
-        let mut below = Driver::primed(None, 7);
-        (0..100).for_each(|_| _ = below.frame(0.001));
-        assert_eq!(below.tc.f_target(), 60, "below TOP, never");
+    /// The last rung of the ladder, Max, by its index in `rungs()`.
+    fn max_index(top: Option<f64>) -> usize {
+        TimeControl::new(top, None).unwrap().rungs().len() - 1
     }
 
     #[test]
-    fn the_switch_keeps_sim_time_per_wall_second() {
-        let per_second = |f_target| {
-            let mut tc = TimeControl::new(None, None).unwrap();
-            tc.select(8);
-            cost(&mut tc, 0.01, false);
-            tc.dt_est = Some(1.0);
-            tc.f_target = f_target;
-            tc.plan_frame(Estimates { wall_s: 1.0 / f_target as f64 }).steps * f_target
-        };
-        assert_eq!(per_second(30), per_second(60), "34 × 30 = 17 × 60 steps of 1.0 at ×1000");
+    fn max_is_above_every_numbered_rung_and_f_target_is_60_below_it() {
+        for top in [None, Some(45.0), Some(4200.0)] {
+            let mut tc = TimeControl::new(top, None).unwrap();
+            let values: Vec<f64> = tc.rungs().iter().map(|r| r.value).collect();
+            assert!(values.windows(2).all(|w| w[0] < w[1]), "strictly rising, Max last: {values:?}");
+            for k in 0..tc.rungs().len() - 1 {
+                tc.select(k);
+                assert_eq!(tc.f_target(), 60, "numbered rung {k}");
+            }
+            tc.select(max_index(top));
+            assert_eq!((tc.rungs()[tc.rung()].label.as_str(), tc.f_target()), ("Max", 30));
+        }
+    }
+
+    #[test]
+    fn max_selected_by_its_index_plans_n_max_at_30_from_its_first_frame() {
+        let mut d = Driver::primed(None, 2);
+        assert_eq!(d.tc.f_target(), 60);
+        d.tc.select(max_index(None));
+        assert_eq!(d.tc.f_target(), 30, "before the first Max frame is planned");
+        let plan = d.tc.plan_frame(Estimates { wall_s: 1.0 / 30.0 });
+        assert_eq!((plan.steps, plan.f_target), (30, 30), "⌊(33.3 − 3) / 1 ms⌋, c_step kept across the change");
+        d.tc.select(2);
+        assert_eq!(d.tc.f_target(), 60, "a numbered rung is back at 60");
+    }
+
+    #[test]
+    fn max_owes_nothing_over_10000_frames_whatever_dt_is() {
+        for top in [None, Some(45.0)] {
+            let mut d = Driver::primed(top, max_index(top));
+            for i in 0..10_000 {
+                let dt = [1e-6, 0.001, 0.447, 1e6, DT_EMPTY][i % 5];
+                assert_eq!(d.frame(dt), 30, "frame {i}: N_max at Δt {dt}, never ⌈owed / Δt⌉");
+                assert_eq!(d.tc.owed, 0.0, "frame {i}");
+            }
+        }
+        let mut tc = TimeControl::new(None, None).unwrap();
+        tc.select(9);
+        assert_eq!(tc.plan_frame(Estimates { wall_s: 1.0 / 30.0 }).steps, 1, "no cost read back yet: N_max is 1");
+        assert_eq!(tc.owed, 0.0);
+    }
+
+    #[test]
+    fn max_leaves_no_backlog_for_the_rung_after_it() {
+        let mut d = Driver::primed(None, 9);
+        (0..200).for_each(|_| _ = d.frame(0.001));
+        d.tc.select(0);
+        let steps: u32 = (0..200).map(|_| d.frame(0.447)).sum();
+        assert!(steps <= 1, "×0.1 after Max repays nothing: {steps} steps in 200 frames");
+    }
+
+    #[test]
+    fn max_readout_is_always_the_running_speed() {
+        let mut d = Driver::primed(None, 9);
+        assert_eq!(d.tc.speed_text(), SpeedText { rung: "Max".into(), running: Some("0".into()), paused: false });
+        d.frame(0.001);
+        assert!(d.tc.speed_text().running.is_some(), "from the first frame");
+        (0..200).for_each(|_| _ = d.frame(0.001));
+        assert_eq!(d.tc.speed_text().running.as_deref(), Some("0.90"), "30 steps × 0.001 per 1/30 s");
+        d.tc.toggle_pause();
+        assert_eq!(d.tc.speed_text().rung, "Max");
+        assert!(d.tc.speed_text().paused && d.tc.speed_text().running.is_some());
+        let mut numbered = Driver::primed(None, 8);
+        (0..200).for_each(|_| _ = numbered.frame(1e6));
+        assert_eq!(numbered.tc.speed_text().running, None, "a numbered rung only when the cap binds");
+    }
+
+    #[test]
+    fn the_slow_down_from_max_lands_on_x1_or_x0_1_never_on_a_numbered_rung_above() {
+        for top in [None, Some(45.0)] {
+            let mut d = Driver::primed(top, max_index(top));
+            d.tc.on_event(Event::Ignition);
+            assert_eq!((d.value(), d.tc.banner(), d.tc.f_target()), (1.0, Some(Event::Ignition), 60), "{top:?}");
+            let mut d = Driver::primed(top, max_index(top));
+            d.tc.on_event(Event::CoreCollapse);
+            assert_eq!((d.value(), d.tc.banner(), d.tc.f_target()), (0.1, Some(Event::CoreCollapse), 60), "{top:?}");
+            let mut d = Driver::primed(top, max_index(top));
+            d.tc.on_event(Event::Supernova);
+            assert_eq!(d.value(), 0.1, "{top:?}");
+            let mut off = Driver::primed(top, max_index(top));
+            off.tc.set_slow_down(false);
+            off.tc.on_event(Event::CoreCollapse);
+            assert_eq!((off.tc.rungs()[off.tc.rung()].label.as_str(), off.tc.banner()), ("Max", None), "off: nothing");
+        }
+    }
+
+    #[test]
+    fn faster_at_max_stays_and_slower_leaves_it() {
+        let mut d = Driver::primed(Some(45.0), 5);
+        assert_eq!(d.tc.rungs()[d.tc.rung()].label, "Max");
+        d.tc.faster();
+        assert_eq!((d.tc.rung(), d.tc.f_target()), (5, 30));
+        d.tc.slower();
+        assert_eq!((d.value(), d.tc.f_target()), (10.0, 60));
     }
 
     #[test]
@@ -666,8 +730,8 @@ mod tests {
     fn speed_text_formats() {
         assert_eq!([0.834, 42.0, 1.0, 1234.0, 9.96].map(sig2), ["0.83", "42", "1.0", "1200", "10"]);
         let mut tc = TimeControl::new(Some(42.0), None).unwrap();
-        tc.select(5);
+        tc.select(4);
         tc.toggle_pause();
-        assert_eq!(tc.speed_text(), SpeedText { rung: "42".into(), running: None, paused: true });
+        assert_eq!(tc.speed_text(), SpeedText { rung: "10".into(), running: None, paused: true });
     }
 }

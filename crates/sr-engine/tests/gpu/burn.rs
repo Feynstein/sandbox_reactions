@@ -11,7 +11,9 @@
 //! power first passes ε* = 10⁻³ Q_H per t.u. in the order H, He, C, {Ne, O}, Si; every record books into its own group.
 //!
 //! The oracles are written here from the contract: f(T) from §1.6.2's terms with §2.5.1's temperatures, k from A, Σ and f,
-//! q = q_ratio · Q_H from the table, T from E with the cold pressure off and the gas at rest (T = E/Σ/(1/μ)).
+//! q = q_ratio · Q_H from the table, T from E with the cold pressure off and the gas at rest (T = E/Σ/(1/μ)). G-BURN's closed
+//! forms were written at M0-TC's ladder (T_H 100, T_He 140, T_Ne 274) and pin it (`cell::LADDER`, M0-D55); G-ORDER grades
+//! the shipped ladder, §0.5 [M0-D50]'s (T_H 56, T_He 78.4).
 //!
 //! Tolerances: the contract's own — X within 1e-4 absolute, heat within 1e-5 relative, ΣX = 1 within 1e-6, the order exact.
 //! G-BURN's runs set `burn_dx` to 1e-4 (physics.json's key, a scene's `overrides`): backward Euler is first order, and a
@@ -24,11 +26,8 @@ use sr_physics::reference::react::{Pass, React, TestFlags, N_GROUPS};
 use sr_physics::registry::{Elements, Physics, Reactions, GROUPS, N_SPECIES};
 
 const NS: usize = N_SPECIES;
-/// §2.5.1: Q_H, and the ladder's temperatures.
+/// §2.5.1: Q_H.
 const Q_H: f64 = 8_700.0;
-const T_H: f64 = 100.0;
-const T_HE: f64 = 140.0;
-const T_NE: f64 = 274.0;
 
 fn elements() -> Elements {
     Elements::shipped().unwrap()
@@ -100,11 +99,11 @@ fn gamow(t: f64, t_k: f64, nu: f64) -> f64 {
 }
 
 /// f(T) of H_burn from §1.6.2's terms (T_H, 4) and (1.15 T_H, 18), each Gamow-shaped, above 0.5 T_H.
-fn f_h(t: f64) -> f64 {
-    if t < 0.5 * T_H {
+fn f_h(t: f64, t_h: f64) -> f64 {
+    if t < 0.5 * t_h {
         return 0.0;
     }
-    gamow(t, T_H, 4.0) + gamow(t, 1.15 * T_H, 18.0)
+    gamow(t, t_h, 4.0) + gamow(t, 1.15 * t_h, 18.0)
 }
 
 fn sum_x(st: &State, i: usize) -> f64 {
@@ -240,6 +239,21 @@ mod cell {
     const DX: f64 = 1e-4;
     /// X within this, absolute (§5.1).
     const X_TOL: f64 = 1e-4;
+    /// M0-TC's ladder (§2.5.1 before §0.5 [M0-D50]), the one the closed forms were written at: T pinned at T_H, T_He or
+    /// T_Ne, k from f there. The analytic runs and the heat they book pin it through `Physics::with` (G-COLL's pattern);
+    /// f reads T/T_k alone, so the law graded is the shipped one. The shipped limits' runaway, the mixed cells and the
+    /// free run read the shipped ladder.
+    const LADDER: [(&str, f64); 6] = [("t_h", 100.0), ("t_he", 140.0), ("t_c", 196.0), ("t_ne", 274.0), ("t_o", 300.0), ("t_si", 420.0)];
+    const T_H: f64 = 100.0;
+    const T_HE: f64 = 140.0;
+    const T_NE: f64 = 274.0;
+
+    /// [`physics`] with [`LADDER`] pinned, and `extra`.
+    fn pinned(extra: &[(&str, f64)]) -> Physics {
+        let mut keys = LADDER.to_vec();
+        keys.extend_from_slice(extra);
+        physics(&keys)
+    }
 
     /// Steps `st` (one cell, T pinned) over the checkpoints `(t_i)`, the twin's T pinned, `oracle(t)` the analytic X of the
     /// burning species; X within [`X_TOL`] at each, ΣX = 1 within 1e-6. Returns the last pass.
@@ -260,10 +274,10 @@ mod cell {
     /// H_burn, order 2: X = X₀/(1 + kX₀t), k = A Σ f(T), down to X₀/10.
     #[test]
     fn h_burn_second_order() {
-        let physics = physics(&[("burn_dx", DX)]);
+        let physics = pinned(&[("burn_dx", DX)]);
         let r = react(&physics, &only(&["H_burn"], &physics), true);
-        let (sigma, t, x0) = (100.0, 100.0, 1.0);
-        let k = 5e-4 * sigma * f_h(t);
+        let (sigma, t, x0) = (100.0, T_H, 1.0);
+        let k = 5e-4 * sigma * f_h(t, T_H);
         let mut st = world(1, 1, &[(sigma, t, x_of(&[("H", x0)]))]);
         let at: Vec<f64> = [0.5, 1.0, 2.0, 4.0, 6.0, 9.0].iter().map(|v| v / (k * x0)).collect();
         let pass = follow(&mut st, &r, "H", &at, |t| x0 / (1.0 + k * x0 * t));
@@ -276,7 +290,7 @@ mod cell {
     /// He_burn, order 3: X = X₀/√(1 + 2kX₀²t), k = A Σ² f(T), f = (T/T_He)⁴⁰ = 1 at T = T_He.
     #[test]
     fn he_burn_third_order() {
-        let physics = physics(&[("burn_dx", DX)]);
+        let physics = pinned(&[("burn_dx", DX)]);
         let r = react(&physics, &only(&["He_burn"], &physics), true);
         let (sigma, t, x0) = (10.0, T_HE, 1.0);
         let k = 1e-3 * sigma * sigma;
@@ -291,7 +305,7 @@ mod cell {
     /// Ne_burn, order 1: X = X₀e^{−kt}, with an inert spectator (Fe: no record burns it below the gate).
     #[test]
     fn ne_burn_first_order() {
-        let physics = physics(&[("burn_dx", DX)]);
+        let physics = pinned(&[("burn_dx", DX)]);
         let r = react(&physics, &only(&["Ne_burn"], &physics), true);
         let (sigma, t, x0) = (50.0, T_NE, 0.7);
         let k = 1e-3 * sigma;
@@ -311,10 +325,10 @@ mod cell {
     #[test]
     fn heat_booked_per_substep() {
         for (id, group, q_ratio, parts, sigma, t, run) in [
-            ("H_burn", "H", 1.0, vec![("H", 1.0)], 100.0, 100.0, 9.0 / (5e-4 * 100.0 * f_h(100.0))),
+            ("H_burn", "H", 1.0, vec![("H", 1.0)], 100.0, T_H, 9.0 / (5e-4 * 100.0 * f_h(T_H, T_H))),
             ("Ne_burn", "Ne", 1.0 / 57.0, vec![("Ne", 0.7), ("Fe", 0.3)], 50.0, T_NE, 10f64.ln() / (1e-3 * 50.0)),
         ] {
-            let physics = physics(&[("burn_dx", DX)]);
+            let physics = pinned(&[("burn_dx", DX)]);
             let r = react(&physics, &only(&[id], &physics), true);
             let mut st = world(1, 1, &[(sigma, t, x_of(&parts))]);
             let before = frac(&st, parts[0].0, 0);
@@ -371,13 +385,14 @@ mod cell {
     /// What the shipped burn_dx = 0.1 costs in accuracy, measured and only bounded: backward Euler at ΔX = 0.1 per sub-step
     /// reads H_burn's X₀/10 within a few percent of X₀ — far above G-BURN's 1e-4, which is why the analytic cases tighten
     /// burn_dx (module doc). The twin at the shipped limits stays on the right side of the closed form (BE overestimates a
-    /// decay's remainder) and within 0.05.
+    /// decay's remainder) and within 0.05. The limits are the shipped ones; the ladder the closed form's (a decay graded in
+    /// k t, the same at any k).
     #[test]
     fn shipped_limits_error() {
-        let physics = physics(&[]);
+        let physics = pinned(&[]);
         let r = react(&physics, &only(&["H_burn"], &physics), true);
-        let (sigma, t, x0) = (100.0, 100.0, 1.0);
-        let k = 5e-4 * sigma * f_h(t);
+        let (sigma, t, x0) = (100.0, T_H, 1.0);
+        let k = 5e-4 * sigma * f_h(t, T_H);
         let run = 9.0 / (k * x0);
         let mut st = world(1, 1, &[(sigma, t, x_of(&[("H", x0)]))]);
         let pass = r.step(&mut st, run);
@@ -468,13 +483,13 @@ mod cell {
     #[test]
     fn gpu_the_three_laws_follow_their_closed_forms() {
         let gpu = super::super::device();
-        let physics = physics(&[("burn_dx", DX)]);
-        let k_h = 5e-4 * 100.0 * f_h(100.0);
+        let physics = pinned(&[("burn_dx", DX)]);
+        let k_h = 5e-4 * 100.0 * f_h(T_H, T_H);
         let k_he = 1e-3 * 10.0 * 10.0;
         let k_ne = 1e-3 * 50.0;
         type Oracle = Box<dyn Fn(f64) -> f64>;
         let cases: [(&str, &str, (f64, f64, [f64; NS]), Vec<f64>, Oracle); 3] = [
-            ("H_burn", "H", (100.0, 100.0, x_of(&[("H", 1.0)])), [0.5, 1.0, 2.0, 4.0, 6.0, 9.0].iter().map(|v| v / k_h).collect(), Box::new(move |t| 1.0 / (1.0 + k_h * t))),
+            ("H_burn", "H", (100.0, T_H, x_of(&[("H", 1.0)])), [0.5, 1.0, 2.0, 4.0, 6.0, 9.0].iter().map(|v| v / k_h).collect(), Box::new(move |t| 1.0 / (1.0 + k_h * t))),
             ("He_burn", "He", (10.0, T_HE, x_of(&[("He", 1.0)])), [1.25, 2.0, 4.0, 9.0, 25.0, 100.0].iter().map(|m| (m - 1.0) / (2.0 * k_he)).collect(), Box::new(move |t| 1.0 / (1.0 + 2.0 * k_he * t).sqrt())),
             ("Ne_burn", "Ne", (50.0, T_NE, x_of(&[("Ne", 0.7), ("Fe", 0.3)])), [0.2, 0.5, 1.0, 1.5, 2.0, 10f64.ln()].iter().map(|v| v / k_ne).collect(), Box::new(move |t| 0.7 * (-k_ne * t).exp())),
         ];
@@ -497,10 +512,10 @@ mod cell {
     fn gpu_heat_booked_per_substep() {
         let gpu = super::super::device();
         for (id, group, q_ratio, parts, sigma, t, run) in [
-            ("H_burn", "H", 1.0, vec![("H", 1.0)], 100.0, 100.0, 9.0 / (5e-4 * 100.0 * f_h(100.0))),
+            ("H_burn", "H", 1.0, vec![("H", 1.0)], 100.0, T_H, 9.0 / (5e-4 * 100.0 * f_h(T_H, T_H))),
             ("Ne_burn", "Ne", 1.0 / 57.0, vec![("Ne", 0.7), ("Fe", 0.3)], 50.0, T_NE, 10f64.ln() / (1e-3 * 50.0)),
         ] {
-            let physics = physics(&[("burn_dx", DX)]);
+            let physics = pinned(&[("burn_dx", DX)]);
             let block = world(1, 1, &[(sigma, t, x_of(&parts))]);
             let r = rig::OnGpu::new(&gpu, &physics, &only(&[id], &physics), true, &block);
             let before = frac(&r.planes(), parts[0].0, 0);
@@ -539,8 +554,10 @@ mod cell {
         assert!((booked - Q_H * dm).abs() <= 1e-5 * Q_H * dm, "booked {booked}, q·Δm {}", Q_H * dm);
     }
 
-    /// The shipped limits on the GPU (§2.5.1): the twin's runaway (T 100, the Sun's mix, every record) and the six mixed
-    /// cells over every record finish their pass, sub-cycled, ΣX = 1 within 1e-6 and every fraction ≥ 0.
+    /// The shipped limits on the GPU (§2.5.1): a runaway (the Sun's mix from T_H, every record) and the six mixed cells over
+    /// every record finish their pass, sub-cycled, ΣX = 1 within 1e-6 and every fraction ≥ 0. The runaway starts at the
+    /// shipped T_H so it falls in the second pass (measured, M0-D55, twin and GPU alike: from T_H 56, T 67.1 after the first
+    /// 5 t.u. in 4 sub-steps, then 198 to T 17,882; from 100, M0-TC's T_H, it runs away inside the first pass).
     #[test]
     fn gpu_fractions_stay_physical_at_the_shipped_limits() {
         let gpu = super::super::device();
@@ -549,7 +566,8 @@ mod cell {
         let mix = x_of(&[("H", 0.2), ("He", 0.2), ("C", 0.15), ("O", 0.15), ("Ne", 0.1), ("Mg", 0.05), ("Si", 0.05), ("S", 0.04), ("Fe", 0.06)]);
         let sun = x_of(&[("H", 0.7346), ("He", 0.2485), ("O", 0.0077), ("C", 0.0092)]);
         let mut cells: Vec<_> = [(1.0, 150.0), (10.0, 300.0), (100.0, 450.0), (400.0, 520.0), (0.5, 60.0), (30.0, 250.0)].iter().map(|&(s, t)| (s, t, mix)).collect();
-        cells.extend([(1.0, 100.0, sun), (1.0, 100.0, sun)]);
+        let t_h = physics.get("t_h").unwrap();
+        cells.extend([(1.0, t_h, sun), (1.0, t_h, sun)]);
         let block = world(4, 2, &cells);
         let r = rig::OnGpu::new(&gpu, &physics, &all, false, &block);
         let report = r.pass(5.0);
@@ -737,6 +755,10 @@ mod order {
 
     /// ε* = 10⁻³ Q_H per t.u., specific power (§5.1).
     const EPS_STAR: f64 = 1e-3 * Q_H;
+    /// The shipped ladder's T_H and T_He (§0.5 [M0-D50]): G-ORDER grades the order the game's constants give, H's power at
+    /// its crossing by hand at them.
+    const T_H: f64 = 56.0;
+    const T_HE: f64 = 78.4;
     /// The ramp: T = T₀ + rate · t, sampled every `DT_RAMP` t.u.; each sample reads the power of a fresh cell of equal parts
     /// from one pass of `DT_BURN`, short enough that no fuel is spent in it (the rate over the fraction, times 10⁻⁹, is far
     /// under 1 at every crossing): the instantaneous power at the sample's T. A cell left to burn along the ramp would not
@@ -786,7 +808,7 @@ mod order {
         assert!(ne.max(o) < si, "Ne {ne} and O {o} before Si {si}");
         // The measure itself: H's power at its crossing is the formula's, q A Σ X² f(T), from §1.6.2 and §2.5.1 by hand.
         let ih = GROUPS.iter().position(|g| *g == "H").unwrap();
-        let (got, want) = (powers(&r, h)[ih], Q_H * 5e-4 * (1.0 / 36.0) * f_h(h));
+        let (got, want) = (powers(&r, h)[ih], Q_H * 5e-4 * (1.0 / 36.0) * f_h(h, T_H));
         assert!((got - want).abs() <= 1e-6 * want, "H's power at T = {h}: {got}, by hand {want}");
         // Each rung sits at or above its own reference temperature's order: no group lights below T_thr of its first term.
         assert!(h >= 0.5 * T_H && he >= 0.5 * T_HE, "ignition below T_thr: H {h}, He {he}");
@@ -851,7 +873,7 @@ mod order {
         let ((h_t, h_k), (he, _), (c, _), (ne, _), (o, _), (si, _)) = (at("H"), at("He"), at("C"), at("Ne"), at("O"), at("Si"));
         println!("GPU ε* crossings at T: H {h_t}, He {he}, C {c}, Ne {ne}, O {o}, Si {si}");
         assert!(h_t < he && he < c && c < ne.min(o) && ne.max(o) < si, "the order H, He, C, {{Ne, O}}, Si");
-        let want = Q_H * 5e-4 * (1.0 / 36.0) * f_h(h_t);
+        let want = Q_H * 5e-4 * (1.0 / 36.0) * f_h(h_t, T_H);
         assert!((power(0, h_k) - want).abs() <= 1e-4 * want, "H's power at T = {h_t}: {}, by hand {want}", power(0, h_k));
         assert!(first[GROUPS.iter().position(|g| *g == "N").unwrap()].is_none(), "a cell with no iron books N");
     }

@@ -1,0 +1,9 @@
+--- a/assets/physics.json
++++ b/assets/physics.json
+@@ -7,5 +7,5 @@
+   "t_si": 235.2,
+   "q_h": 8700,
+-  "a_h_burn": 5e-4,
++  "a_h_burn": 1e-3,
+   "a_he_burn": 1e-3,
+   "a_c_alpha": 1e-3,

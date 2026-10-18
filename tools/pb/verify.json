@@ -691,6 +691,33 @@
         }
       ]
     },
+    "sun_burn": {
+      "desc": "The Sun-like preset's main sequence on the shipped constants (contract §0.5 [M0-D50], §2.5.1, §2.7, §2.10, R8, R12; M0-D50, the lead's ruling at M0-V18): `headless --scene preset:sun` (600 × 400, leave) on the physics adapter, 3,000 steps straight (the collapse, the bounce near step 300 and its flash, the settling), then 2,000 more resumed from its end dump with a dump every 1,000; read in f64 from the window's three dumps (the EOS twin, the twin's gravity) and the second run's ledger, never from the stage label: the centre's X_H (the densest cell) falls ≥ 0.002 over the window and ≥ 0.001 in each 1,000 steps and stays ≥ 0.5; the bound gas (Σ ≥ σ_vac, ½|u|² + ε_th + φ < 0) holds ≥ 95 % of the preset's mass at each dump, no sink; 0.5 L ≤ L_nuc ≤ 2 L over the window (§0.5 [M0-D53]'s band) and every gas cell under 0.5 T_He (He_burn's and C_alpha's threshold) at each dump, so L_nuc is L_H; plus the readings' own arithmetic on hand-made planes (NOT PROVEN on a star). ≈ 2.5 min on the RTX 4080 Laptop. Paths: its own test and plants and the three registries whose balance it grades — not crates/** (its cost; the complete loop covers code changes), declared by M0-D50. stall-constants puts physics.json's ladder, T_ν and a_r back to M0-TC's (the stall of M0-V8); burn-runaway sets a_h_burn to 1e-3 (the runaway measured at M0-D50)",
+      "cmd": "bash tests/gpu.sh sunburn physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 4,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/tests/gpu/sunburn.rs",
+        "assets/physics.json",
+        "assets/reactions.json",
+        "assets/elements.json",
+        "tests/gpu.sh",
+        "tests/plants/stall-constants.patch",
+        "tests/plants/burn-runaway.patch"
+      ],
+      "plants": [
+        {
+          "id": "stall-constants",
+          "patch": "tests/plants/stall-constants.patch"
+        },
+        {
+          "id": "burn-runaway",
+          "patch": "tests/plants/burn-runaway.patch"
+        }
+      ]
+    },
     "twin": {
       "desc": "the twin's step driver and `headless --cpu-reference` (contract §1.3.2, §1.7, §3.3, R13; M0-T37): sr_physics::reference::Twin runs the passes built so far in §1.3.2's order on f64 planes — P1 Δt, P2 gravity, P4 hydro, P8 floors, P9 Δt_{n+1}, the scene's switches honoured — and reference::floors is P8 moved out of tests/gpu/floors.rs per §2.7 [M0-T19]; a 64 × 64 sun-like disk (`--scene preset:sun --world 64x64`, every switch on) run by `--cpu-reference` writes dumps (every 8 of 24 steps) byte for byte the in-process twin's, summary.json's steps and sim_time the twin's and its adapter `cpu-reference`; a world of 200 × 200, 136 × 64 or 64 × 136 is refused with exit 4 and writes no summary, 128 × 128 runs; `--adapter`, `--timing` and `--load-dump` are refused with it (exit 4); the driver's pass list printed beside the GPU step's for each of the four gravity/hydro switch pairs, equal to it (the adversarial line: a twin that skips a pass the GPU runs agrees with nothing in G-REF); P8 in the driver books what it changes (hydro and gravity off: ΔΣ = −vacuum_reset and ΔE = floor_added over the disk's vacuum, per cell summed, 1e-9 relative, the corner cell the floor state, ΣX = 1); the driver steps the GPU's way — Δt_n from the end of step n − 1, P9's gravity term from step n's own P2 — bit for bit against a hand-written loop over scenes/cold_disk.json for 12 steps, and visibly not as the fresh-g loop of tests/gpu/collapse.rs (they differ by 4e-5 in Σ), on the physics adapter for the GPU step's pass list only (R12, R15). twin-skip-floors drops P8 from the driver's step",
       "cmd": "bash tests/gpu.sh twin physics",
@@ -992,11 +1019,11 @@
       ]
     },
     "time_control": {
-      "desc": "time control, no GPU (contract §1.8, §3.2, §4.3, §4.12): the ladder and TOP / 1.5, the game at ×1 running, select/faster/slower at the ends, N = min(N_max, ⌈owed/Δt_est⌉) with owed booked from read-back frames and bounded to [−Δt_est, one frame], N_max from the 16-frame c_step average and R_reserve, the cap readout at 30 of the last 60 frames, 10,000 capped frames then ×0.1 with no backlog, pause and one step per press, the slow-down only ever slower with no auto-return, the latch's stopped steps never owed, the 30-frames switch at TOP (30 of 60, 120 quiet), the empty world's Δt survived, speed text at two significant digits (M0-T24)",
+      "desc": "time control, no GPU (contract §1.8, §3.2, §4.3, §4.12): the ladder below TOP / 1.5 then Max [M0-TJ2], the game at ×1 running, select/faster/slower at the ends, N = min(N_max, ⌈owed/Δt_est⌉) with owed booked from read-back frames and bounded to [−Δt_est, one frame], N_max from the 16-frame c_step average and R_reserve, the cap readout at 30 of the last 60 frames, 10,000 capped frames then ×0.1 with no backlog, Max planning N_max at 30 frames from its first frame and owing nothing over 10,000 frames, its readout always the running speed, the slow-down from Max landing on ×1 or ×0.1, pause and one step per press, the slow-down only ever slower with no auto-return, the latch's stopped steps never owed, the empty world's Δt survived, speed text at two significant digits (M0-T24)",
       "cmd": "bash tests/cpu.sh sr-physics time",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 18,
+      "expected": 23,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/src/time.rs",
@@ -1008,12 +1035,17 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/cpu.sh",
-        "tests/plants/slowdown-*.patch"
+        "tests/plants/slowdown-*.patch",
+        "tests/plants/time-max-*.patch"
       ],
       "plants": [
         {
           "id": "slowdown-auto-return",
           "patch": "tests/plants/slowdown-auto-return.patch"
+        },
+        {
+          "id": "time-max-paced",
+          "patch": "tests/plants/time-max-paced.patch"
         }
       ]
     },
@@ -1357,13 +1389,14 @@
       ]
     },
     "desktop": {
-      "desc": "the desktop boot (contract §3.3, §3.4, §3.6, §5.4 G-DESK): launch.py smoke of the box's window route — game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) — reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); the build is the tree's own",
+      "desc": "the desktop boot (contract §3.3, §3.4, §3.6, §5.4 G-DESK): launch.py smoke of the box's window route — game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) — reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); a case hands the port lock on only once 47811 binds again, and `race`, under the lock throughout, starts the window route straight behind a hand-over whose port a listener launch.py did not start holds for 10 s (M0-D51); the build is the tree's own",
       "cases": [
         "window",
-        "launcher"
+        "launcher",
+        "race"
       ],
       "case_cmd": "bash tests/smoke.sh {case}",
-      "expected": 2,
+      "expected": 3,
       "timeout_s": 900,
       "paths": [
         "crates/sr-app/**",
@@ -1379,9 +1412,14 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/plants/status-*.patch",
-        "tests/plants/launcher-*.patch"
+        "tests/plants/launcher-*.patch",
+        "tests/plants/port-*.patch"
       ],
       "plants": [
+        {
+          "id": "port-handover-early",
+          "patch": "tests/plants/port-handover-early.patch"
+        },
         {
           "id": "status-never-ready",
           "patch": "tests/plants/status-never-ready.patch"

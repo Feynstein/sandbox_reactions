@@ -1,0 +1,5 @@
+--- a/tests/smoke.sh
++++ b/tests/smoke.sh
+@@ -49 +49 @@
+-_sr_port_closed() {
++_sr_port_closed() { return 0  # planted (M0-D51): the lock handed on at "stopped", its port still open

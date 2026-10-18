@@ -32,7 +32,7 @@ use crate::state::{read_buffers, Booking, SideFields, State, WorldConfig, BOOK_G
 
 /// heat.wgsl's frozen planes (T0 … KS).
 const FROZEN_PLANES: u64 = 5;
-/// heat.wgsl's `solve` (x, T, p, the diagonal, the right side) and `krylov` (r, w, s in two parities) planes.
+/// heat.wgsl's `solve` (x, T, p, the diagonal, x's low word) and `krylov` (r, w, s in two parities) planes.
 const SOLVE_PLANES: u64 = 5;
 const KRYLOV_PLANES: u64 = 6;
 /// heat.wgsl's `Machines`: two `Machine` records (Δt the ninth word of each), the `Report`, then the log of [`LOG`]

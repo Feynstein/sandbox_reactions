@@ -1,0 +1,103 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-physics/src/time.rs
+why registry: stale: crates/sr-physics/src/time.rs
+why eos: stale: crates/sr-physics/src/time.rs
+why rates: stale: crates/sr-physics/src/time.rs
+why burn_cell: stale: crates/sr-physics/src/time.rs
+why burn_order: stale: crates/sr-physics/src/time.rs
+why neutrino: stale: crates/sr-physics/src/time.rs
+why sink: stale: crates/sr-physics/src/time.rs
+why nu_heat: stale: crates/sr-physics/src/time.rs
+why summary: stale: crates/sr-physics/src/time.rs
+why ledger: stale: crates/sr-physics/src/time.rs
+why preset_cloud: stale: crates/sr-physics/src/time.rs
+why observe_run: stale: crates/sr-physics/src/time.rs
+why objects: stale: crates/sr-physics/src/time.rs
+why classify: stale: crates/sr-physics/src/time.rs
+why sod: stale: crates/sr-physics/src/time.rs
+why edges: stale: crates/sr-physics/src/time.rs
+why collapse: stale: crates/sr-physics/src/time.rs
+why jeans: stale: crates/sr-physics/src/time.rs
+why twin: stale: crates/sr-physics/src/time.rs
+why cpu_gpu: stale: crates/sr-physics/src/time.rs
+why heat_gauss: stale: crates/sr-physics/src/time.rs
+why heat_implicit: stale: crates/sr-physics/src/time.rs
+why heat_limiter: stale: crates/sr-physics/src/time.rs
+why heat_stiff: stale: crates/sr-physics/src/time.rs
+why radiation_force: stale: crates/sr-physics/src/time.rs
+why grav_force: stale: crates/sr-physics/src/time.rs
+why grav_selfforce: stale: crates/sr-physics/src/time.rs
+why fft: stale: crates/sr-physics/src/time.rs
+why time_control: stale: tests/plants/slowdown-auto-return.patch
+why state: stale: crates/sr-physics/src/time.rs
+why floors: stale: crates/sr-physics/src/time.rs
+why dt: stale: crates/sr-physics/src/time.rs
+why box: stale: crates/sr-physics/src/time.rs
+why latch: stale: crates/sr-physics/src/time.rs
+why timing: stale: crates/sr-physics/src/time.rs
+why scene: stale: crates/sr-physics/src/time.rs
+why dump: stale: crates/sr-physics/src/time.rs
+why boot: stale: crates/sr-physics/src/time.rs
+plan_lint        577/0/0      0.51 s  GO · step 1/40, 39 left
+build            2/0/0      152.86 s  GO · step 2/40, 38 left
+registry         29/0/0      28.80 s  GO · step 3/40, 37 left
+eos              13/0/0      28.83 s  GO · step 4/40, 36 left
+rates            8/0/0       28.78 s  GO · step 5/40, 35 left
+burn_cell        16/0/0      90.91 s  GO · step 6/40, 34 left
+burn_order       4/0/0       79.49 s  GO · step 7/40, 33 left
+neutrino         18/0/0      91.66 s  GO · step 8/40, 32 left
+sink             30/0/0     124.88 s  GO · step 9/40, 31 left
+nu_heat          15/0/0      89.66 s  GO · step 10/40, 30 left
+summary          7/0/0       80.83 s  GO · step 11/40, 29 left
+ledger           4/0/0       48.64 s  GO · step 12/40, 28 left
+preset_cloud     5/0/0      127.49 s  GO · step 13/40, 27 left
+observe_run      5/0/0       25.24 s  GO · step 14/40, 26 left
+objects          17/0/0       1.32 s  GO · step 15/40, 25 left
+classify         32/0/0       0.98 s  GO · step 16/40, 24 left
+sod              15/0/0      41.37 s  GO · step 17/40, 23 left
+edges            7/0/0       40.20 s  GO · step 18/40, 22 left
+collapse         6/0/0        6.43 s  GO · step 19/40, 21 left
+jeans            5/0/0        3.66 s  GO · step 20/40, 20 left
+twin             6/0/0        6.97 s  GO · step 21/40, 19 left
+cpu_gpu          3/0/0       28.16 s  GO · step 22/40, 18 left
+heat_gauss       10/0/0      11.69 s  GO · step 23/40, 17 left
+heat_implicit    6/0/0        9.87 s  GO · step 24/40, 16 left
+heat_limiter     6/0/0       10.85 s  GO · step 25/40, 15 left
+heat_stiff       6/0/0        8.03 s  GO · step 26/40, 14 left
+radiation_force  3/0/0        6.01 s  GO · step 27/40, 13 left
+grav_force       13/0/0      17.43 s  GO · step 28/40, 12 left
+grav_selfforce   5/0/0        7.84 s  GO · step 29/40, 11 left
+fft              8/0/0       18.57 s  GO · step 30/40, 10 left
+time_control     23/0/0       1.26 s  GO · step 31/40, 9 left
+state            6/0/0       11.03 s  GO · step 32/40, 8 left
+floors           7/0/0       17.21 s  GO · step 33/40, 7 left
+dt               6/0/0       14.06 s  GO · step 34/40, 6 left
+box              8/0/0       24.75 s  GO · step 35/40, 5 left
+latch            5/0/0       10.31 s  GO · step 36/40, 4 left
+timing           5/0/0       22.36 s  GO · step 37/40, 3 left
+scene            8/0/0        7.12 s  GO · step 38/40, 2 left
+dump             11/0/0      33.98 s  GO · step 39/40, 1 left
+boot             1/0/0       12.25 s  GO · step 40/40, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+sun_burn         NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter          NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+booking          NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+desktop          NOT RUN (not impacted: its 83 path(s) checked at the anchor)
+web              NOT RUN (not impacted: its 87 path(s) checked at the anchor)
+capture          NOT RUN (not impacted: its 78 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+time_control · red-arm proven by M0-T123 2026-10-18T12:32:52-04:00 (fingerprint 723599d92b86) - not re-run
+FLAG oracle: tests/plants/slowdown-auto-return.patch changed since M0-T123's start - a test, case or check M0-T123's Deliver: does not name
+logs: milestones/m0/logs/M0-T123.<scope>.log · record: loop_times.jsonl · tree 454209d1f2f4+86799ae9d14b
+anchor: 40 path×scope entries moved by this run
+anchor: 231 paths checked · 211 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 231 covered of 442 visible
+skipped   203  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 961 passed, 0 failed, 0 skipped · 40/40 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 13 not impacted · 207.01 s + loop 0.67 s · mode changed · jobs 8 · box Laser2025-20 · python 3.13.14 · load 0.82->4.21 · base: M0-T123's start 2026-10-18T12:23:27-04:00
+=== GO ===

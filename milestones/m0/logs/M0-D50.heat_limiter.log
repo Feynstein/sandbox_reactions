@@ -1,0 +1,36 @@
+== 2026-10-18T09:43:51-04:00 heat_limiter · task M0-D50 · box Laser2025-20 :: bash tests/gpu.sh heat::limiter physics
+-- heat_limiter · exit=101 · 15.01 s
+    Finished `release` profile [optimized] target(s) in 1.02s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 6 tests
+test heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4' (36984) panicked at crates\sr-engine\tests\gpu\heat.rs:983:13:
+pass 0: HeatReport { dt: 0.05, passes: 64, rounds: 3059, converged: false, delta: -9.453388e-5 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::limiter::gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-FLD GPU thick gas: worst relative error 5.57e-5; HeatReport { dt: 0.001, passes: 1, rounds: 0, converged: true, delta: 1.0876244e-8 }
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-FLD GPU limiter off: -2.1333e2 against -2.1333e2, bound 1.2800e-1
+ok
+test heat::limiter::in_thick_gas_the_flux_is_the_radiative_conductivity ... SR-FLD thick gas: worst |F - (4/3) a c T^3/(kappa Sigma) (-dT)| / |F| = 9.98e-7
+ok
+test heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... SR-FLD worst |F| / (c_sb a_r T^4) 0.979929 over 20 passes of 64x64 thin gas, up to 8 Newton passes and 472 rounds
+SR-FLD limiter off: |F| = 1666.7 c_sb a_r T^4
+ok
+test heat::limiter::lambda_is_levermore_pomraning ... ok
+test heat::limiter::the_scene_flag_turns_the_limiter_into_one_third ... SR-FLD face of the spot: unlimited -2.1333e2 (thick form -2.1333e2), limited -6.3994e-2, bound 1.2800e-1
+ok
+
+failures:
+
+failures:
+    heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 271 filtered out; finished in 12.41s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

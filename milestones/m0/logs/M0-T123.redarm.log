@@ -1,0 +1,5 @@
+time_control · clean · GO · arm 1/3, 2 left
+time_control · plant slowdown-auto-return · RED (proven: 1 failed) · arm 2/3, 1 left
+time_control · plant time-max-paced · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope time_control · 63.85 s · 3 arm(s) at a time · box Laser2025-20 · log milestones/m0/logs/M0-T123.time_control.redarm.log
+=== GO ===

@@ -12,6 +12,8 @@ pub const STRINGS: &[(&str, &str)] = &[
     ("time.rung", "×{rung}"),
     ("time.speed", "Speed ×{rung}"),
     ("time.speed_capped", "Speed ×{rung} (running ×{actual})"),
+    ("time.rung_max", "Max"),
+    ("time.speed_max", "Speed max (running ×{actual})"),
     ("time.paused", "Paused"),
     ("time.slowdown", "Slow down for big events"),
     ("banner.ignition", "Slowed down: hydrogen ignition — press + to speed up again"),

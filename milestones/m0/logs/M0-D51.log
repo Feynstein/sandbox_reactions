@@ -1,0 +1,11 @@
+== 2026-10-18T12:50:36-04:00 M0-D51 · box Laser2025-20 · holder probe: game-offscreen start/stop, 47811 polled after « stopped » (log M0-D51.holder.log)
+rc=0
+== 2026-10-18T12:53:29-04:00 holder probe (python): connect()/pid polled at 10 ms around launch.py stop, load 0 then 22 (log M0-D51.holder.log)
+== 2026-10-18T13:01:00-04:00 holder probe 2: the listener's owner (netstat + CIM) after « stopped », load 22 (log M0-D51.holder.log)
+== 2026-10-18T13:01:49-04:00 holder probe 2, re-run (cp1252 decode fixed in the probe)
+== 2026-10-18T13:14:19-04:00 Verify 1: verify.py desktop --task M0-D51 (log M0-D51.desktop.log)
+== 2026-10-18T13:17:03-04:00 Verify 1 re-run: the hand-over probe is a bind (a connect read a full backlog as free: race red, game bind os error 10048)
+== 2026-10-18T13:18:05-04:00 Verify 2: verify.py --redarm desktop --task M0-D51 (log M0-D51.desktop.redarm.log)
+== 2026-10-18T13:29:16-04:00 Verify 1 re-run: race under the lock throughout (the two-holder race went GO under its plant, 5 arms contending)
+== 2026-10-18T13:30:02-04:00 Verify 2 re-run: verify.py --redarm desktop --task M0-D51
+== 2026-10-18T13:40:00-04:00 claim: verify.py --changed --task M0-D51
