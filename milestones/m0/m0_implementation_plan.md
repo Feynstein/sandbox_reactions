@@ -579,10 +579,10 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-D57 (then M0-D52, M0-D54 — three open D)
+- Next task: M0-T65 (Phase 11 · lot 9, calibration — no D open)
 - Counters: T=125 · D=57 · V=18 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=7 · TR=1 · TM=8 · TD=1 · TE=1
-- Open D/BLOCKED register: three open — M0-D57 (desktop's launcher-stop-all plant blind on win-laptop) — TODO · M0-D52 (the pages' lot-8 lines) — TODO · M0-D54 (boot's plant no longer applies) — TODO
-- Outstanding commit gates: Phase 10's committed and pushed (a0f18d9, after M0-V8's close); M0-TC7's, M0-V18's and M0-D53's edits and M0-D50's paused state committed by the lead since (18b3a13, 454209d); uncommitted since: M0-D50's edits (assets/physics.json, the contract, the plan, crates/sr-engine/tests/gpu/, tests/plants/, tools/pb/verify.json, tools/pb/verify.anchor.json, docs/agent/testing.md, reports/, tasks/, logs/) and M0-D55's (crates/sr-physics/src/registry.rs and rates.rs, crates/sr-engine/tests/gpu/burn.rs, neutrino.rs, heat.rs and timing.rs, docs/agent/physics.md and testing.md, the plan, tasks/, logs/); and M0-D56's (crates/sr-engine/shaders/heat.wgsl, crates/sr-engine/src/step/heat.rs, docs/agent/physics.md, the plan, tasks/, logs/); and M0-TJ2's (milestones/m0/m0_contrat.md, the plan, reports/top_speed.md, tasks/M0-TJ2.md, logs/M0-TJ2*, logs/loop_times.jsonl, tools/pb/verify.anchor.json); and M0-D51's (tests/smoke.sh, tests/plants/port-handover-early.patch, tools/pb/verify.json, docs/agent/testing.md, the plan with M0-D57 filed, tasks/M0-D51.md, logs/M0-D51*)
+- Open D/BLOCKED register: none open — M0-D57, M0-D52, M0-D54 closed 2026-10-19
+- Outstanding commit gates: none — everything through M0-D54 committed (acb693d)
 - Carryover: none
 - Awaiting lead: none — M0-TJ2's answers: reports/top_speed.md § Ruling
 - Model ratings: 2026-10-16 by M0-TM8

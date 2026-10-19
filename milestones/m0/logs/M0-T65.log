@@ -1,0 +1,6 @@
+M0-T65 — calibration file, physics hash (SHA-256, canonical JSON) and refusal (G-CAL)
+box: linux-pc
+rung: plan heading Sonnet 5.5, high; rung_record.py now → model=claude-haiku-5-5 level=high (MISMATCH, carried on)
+Planned runs:
+  python3 tools/pb/verify.py calibration --task M0-T65
+  python3 tools/pb/verify.py --redarm calibration --task M0-T65
