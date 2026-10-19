@@ -171,6 +171,31 @@ fn the_suns_life_the_top_rung_and_t_eff_come_from_the_sun_like_life() {
 }
 
 #[test]
+fn a_transient_white_dwarf_before_the_main_sequence_is_not_the_suns_life_and_books_no_duration() {
+    // M0-D61: the shipped preset shows failed_star, then a white dwarf at its bounce, before its main sequence; the ending is
+    // the white dwarf the life holds at its end.
+    let mut asked = Vec::new();
+    let mut stub = stub(&mut asked, 1234.5);
+    let mut sun = |name: &str, mass: f64| -> Result<PresetRun, CalError> {
+        let mut r = stub(name, mass)?;
+        if name == "sun" {
+            r.stages = [("failed_star", 8.0), ("collapsing", 78.0), ("white_dwarf", 579.0), ("cloud", 906.0), ("main_sequence", 1000.0), ("white_dwarf", 5000.0)]
+                .map(|(s, t)| (s.to_string(), t))
+                .to_vec();
+        }
+        Ok(r)
+    };
+    let presets = measure_presets(ANCHORS, &physics(), &mut sun, &mut |_| {}).expect("a clean set of lives");
+    assert_eq!(presets.life_sun_sb, 5000.0, "life_sun_sb is the start of the white dwarf the ending closes, not the bounce's at 579");
+    assert_eq!(presets.top_rung, 500.0, "TOP = 5000 / 10");
+    let d = &presets.stage_durations_sb;
+    for stage in ["white_dwarf", "failed_star"] {
+        assert!(!d.contains_key(stage), "{stage} is a remnant stage: no duration, shown at the bounce or not: {d:?}");
+    }
+    assert_eq!(d["main_sequence"][0], (presets.masses[0], 4000.0));
+}
+
+#[test]
 fn the_stage_durations_are_one_pair_a_life_with_the_remnant_left_out() {
     let presets = measure_presets(ANCHORS, &physics(), &mut stub(&mut Vec::new(), 1234.5), &mut |_| {}).unwrap();
     let d = &presets.stage_durations_sb;

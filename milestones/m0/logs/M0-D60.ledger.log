@@ -1,0 +1,24 @@
+== 2026-10-19T17:18:21-04:00 ledger · task M0-D60 · box Laser2025-20 :: bash tests/gpu.sh ledger physics
+-- ledger · exit=0 · 31.01 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 5.79s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-74d6808ad45f7bb5.exe)
+
+running 4 tests
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=2.920952 until=none
+bounce: steps 1..500, mass drift 3.897e-8, momentum drift 9.743e-8 of Σm|u| = 3.286e4, energy drift 8.848e-1 (reported), escaped 0
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.167412 until=none
+leave: escaped mass 7.751173e1 of 1.017366e3 (7.619e-2), momentum escaped Array [Number(1846.326456429736), Number(-0.005382544653901533)], mass drift 1.351e-8, momentum drift 3.072e-3 of Σm|u| = 7.729e3, energy drift 4.279e-1 (reported), escaped energy 2.573259e4
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=44.838695 until=none
+leave without gravity: escaped mass 6.853257e2 of 1.013886e3, escaped x momentum 4.753657e2, vacuum_reset 2.105e-2 × u_max 2.678 → bound 4.250e-4; mass drift 1.671e-7, momentum drift 2.936e-4 of Σm|u| = 1.330e2
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 332 filtered out; finished in 24.30s
+
+

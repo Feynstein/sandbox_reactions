@@ -31,10 +31,13 @@ pub const EXIT_CALIBRATION: i32 = 6;
 /// §2.11's schema version.
 pub const VERSION: u64 = 1;
 
-/// The calibration compiled into the binary. `None` until M0-V9's run writes `assets/calibration.json`; the line
-/// becomes `Some(include_str!("../../../assets/calibration.json"))` in that task, and every engine start then checks it
-/// against the assets it embeds ([`resolve`]).
-pub const EMBEDDED: Option<&str> = None;
+#[path = "calibration_embed.rs"]
+pub mod embed;
+
+/// The calibration compiled into the binary: `assets/calibration.json` whenever the file exists when the crate builds,
+/// else `None` (build.rs and [`embed`], M0-D62 — no hand edit after a calibration). Every engine start checks it against
+/// the assets it embeds ([`resolve`]).
+pub const EMBEDDED: Option<&str> = include!(concat!(env!("OUT_DIR"), "/embedded_calibration.rs"));
 
 // ---------------------------------------------------------------------------------------------------------------
 // SHA-256 (FIPS 180-4 §6.2)
@@ -251,7 +254,9 @@ pub struct Calibration {
     pub top_rung: f64,
     /// Stage id → (mass_sb, sim time) pairs.
     pub stage_durations_sb: BTreeMap<String, Vec<(f64, f64)>>,
-    pub render_reserve_ms: f64,
+    /// R_reserve (§1.8.3), written by the drawing lot's `--measure-ui` (§2.11 item 7) and kept by `calibrate`; `None` until
+    /// then, and [`TimeControl::new`](crate::time::TimeControl::new) takes it as it is (3.0 ms while `None`, M0-D62).
+    pub render_reserve_ms: Option<f64>,
     pub max_gas_speed: f64,
 }
 
@@ -325,8 +330,9 @@ fn join(at: &str, key: &str) -> String {
 }
 
 impl Calibration {
-    /// §2.11's file, parsed and validated: every key present and no other, each number finite and > 0 (the render
-    /// reserve ≥ 0), the hash 64 lowercase hex digits, and the order the procedure's item 5 demands (K9).
+    /// §2.11's file, parsed and validated: every key present and no other — `render_reserve_ms` alone may be absent, until
+    /// the drawing lot's item 7 writes it (M0-D62) — each number finite and > 0 (the render reserve ≥ 0), the hash 64
+    /// lowercase hex digits, and the order the procedure's item 5 demands (K9).
     pub fn parse(text: &str) -> Result<Calibration, CalibrationError> {
         let root: Value = serde_json::from_str(text).map_err(|e| CalibrationError::invalid("<json>", e.to_string()))?;
         let top = Fields::new(&root, "", &KEYS)?;
@@ -380,7 +386,7 @@ impl Calibration {
             life_sun_sb: top.number("life_sun_sb", false)?,
             top_rung: top.number("top_rung", false)?,
             stage_durations_sb,
-            render_reserve_ms: top.number("render_reserve_ms", true)?,
+            render_reserve_ms: top.map.contains_key("render_reserve_ms").then(|| top.number("render_reserve_ms", true)).transpose()?,
             max_gas_speed: top.number("max_gas_speed", false)?,
         };
         cal.check_order()?;
@@ -416,14 +422,15 @@ impl Calibration {
         Ok(())
     }
 
-    /// The file's JSON, keys sorted, with a trailing newline — what `calibrate` writes (M0-T66).
+    /// The file's JSON, keys sorted, with a trailing newline — what `calibrate` writes (M0-T66); without
+    /// `render_reserve_ms` while it is `None`.
     pub fn to_json(&self) -> String {
         let stages: Map<String, Value> = self
             .stage_durations_sb
             .iter()
             .map(|(id, pairs)| (id.clone(), Value::Array(pairs.iter().map(|&(m, t)| json!([m, t])).collect())))
             .collect();
-        let value = json!({
+        let mut value = json!({
             "version": VERSION,
             "physics_hash": self.physics_hash,
             "measured": {
@@ -446,6 +453,9 @@ impl Calibration {
             "render_reserve_ms": self.render_reserve_ms,
             "max_gas_speed": self.max_gas_speed,
         });
+        if self.render_reserve_ms.is_none() {
+            value.as_object_mut().expect("an object").remove("render_reserve_ms");
+        }
         let mut text = serde_json::to_string_pretty(&value).expect("a Value always serialises");
         text.push('\n');
         text
@@ -468,7 +478,7 @@ impl Calibration {
             life_sun_sb: 1200.0,
             top_rung: 1000.0,
             stage_durations_sb: BTreeMap::from([("main_sequence".to_string(), vec![(3351.0, 900.0)])]),
-            render_reserve_ms: 3.0,
+            render_reserve_ms: Some(3.0),
             max_gas_speed: 20.0,
         }
     }

@@ -97,7 +97,7 @@ struct Edges {
     t_dust: f32,
 }
 @group(0) @binding(13) var<uniform> edges: Edges;
-// P2's g = −∇φ (step/grav.rs `field`): the x plane, then the y plane, row-major over the world — read only when
+// P2's g = −∇φ (step/grav.rs `field`): the x plane, the y plane, then φ's, row-major over the world — read only when
 // `edges.gravity` is 1 (else a placeholder is bound).
 @group(0) @binding(14) var<storage, read> grav: array<f32>;
 
@@ -263,6 +263,26 @@ fn accel_at(x: i32, y: i32) -> vec2<f32> {
     }
     let cell = u32(clamp(y, 0, i32(dims.height) - 1)) * dims.width + u32(clamp(x, 0, i32(dims.width) - 1));
     return vec2<f32>(grav[cell], grav[dims.cells + cell]);
+}
+
+// φ at (x, y), a ghost's its edge cell's (so no work is done across the world's edge); read only when the step runs P2.
+fn phi_at(x: i32, y: i32) -> f32 {
+    let cell = u32(clamp(y, 0, i32(dims.height) - 1)) * dims.width + u32(clamp(x, 0, i32(dims.width) - 1));
+    return grav[2u * dims.cells + cell];
+}
+
+// Gravity's energy source at one face of a cell (the header comment): `q` the face's mass flux toward the neighbour
+// (along +x or +y), `pi`, `pj` the cell's and the neighbour's half-step momentum on that axis, `si`, `sj` their half-step
+// Σ, `d` = φ_cell − φ_neighbour for the + face (φ_neighbour − φ_cell for the − face). The cell's share of the face's
+// work q·d: its own ½ pi·d, plus its mass's share of what the face moved beyond the two cells' own momenta.
+fn grav_share(q: f32, pi: f32, pj: f32, si: f32, sj: f32, d: f32) -> f32 {
+    let a = max(si, 0.0);
+    let b = max(sj, 0.0);
+    var w = 0.5;
+    if (a + b > 0.0) {
+        w = a / (a + b);
+    }
+    return (0.5 * pi + w * (q - 0.5 * (pi + pj))) * d;
 }
 
 // The monotonised-central slope: ½(r − l) limited to twice either one-sided difference, 0 at an extremum.
@@ -603,6 +623,9 @@ const FACE_SLOTS: u32 = 128u;
 var<workgroup> tile: array<f32, 2304>;
 // Whether any cell of the tile moves (`hydro_update`): the invocations' votes, then the one value all of them read.
 var<workgroup> votes: atomic<u32>;
+// The half-step centres (Σ, Σu, Σv) of the tile's cells (slot b · 8 + a), then of its ring's (64 + the ring invocation's
+// index): gravity's energy source reads each cell's four neighbours'.
+var<workgroup> mids: array<vec3<f32>, 96>;
 var<workgroup> moving: u32;
 
 fn put_prim(s: u32, p: Prim) {
@@ -731,9 +754,11 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
             u0 = h.u[2];
         }
         ring = face_state(w, u0, h.delta, h.g, half);
+        mids[64u + li] = h.mid;
     }
     let pred = predict(tile_hancock(a, b, x0, y0, half), half);
     let own = pred.faces;
+    mids[lid.y * TILE + lid.x] = pred.mid;
     workgroupBarrier();
 
     let last_x = i32(dims.width) - 1;
@@ -826,7 +851,16 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         let g = accel_at(x, y);
         u[1] += dt * pred.mid.x * g.x;
         u[2] += dt * pred.mid.x * g.y;
-        u[3] += dt * (pred.mid.y * g.x + pred.mid.z * g.y);
+        let p = phi_at(x, y);
+        let m = pred.mid;
+        let ml = mids[select(64u + lid.y, lid.y * TILE + lid.x - 1u, lid.x > 0u)];
+        let mr = mids[select(72u + lid.y, lid.y * TILE + lid.x + 1u, lid.x + 1u < TILE)];
+        let mu = mids[select(80u + lid.x, (lid.y - 1u) * TILE + lid.x, lid.y > 0u)];
+        let md = mids[select(88u + lid.x, (lid.y + 1u) * TILE + lid.x, lid.y + 1u < TILE)];
+        u[3] += dt * (grav_share(fxr[0], m.y, mr.y, m.x, mr.x, p - phi_at(x + 1, y))
+            + grav_share(fxl[0], m.y, ml.y, m.x, ml.x, phi_at(x - 1, y) - p)
+            + grav_share(fyr[0], m.z, md.z, m.x, md.x, p - phi_at(x, y + 1))
+            + grav_share(fyl[0], m.z, mu.z, m.x, mu.x, phi_at(x, y - 1) - p));
     }
     // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
     if (edges.radiation != 0u && !empty_here) {

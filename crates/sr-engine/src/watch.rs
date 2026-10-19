@@ -280,6 +280,12 @@ impl Watch {
         self.max_gas_speed
     }
 
+    /// The stage the run's heaviest object shows now (`None` before one has held) — a progress line's `stage=`.
+    pub fn heaviest_stage(&self) -> Option<&'static str> {
+        let star = self.tracker.objects().iter().max_by(|a, b| a.mass.total_cmp(&b.mass))?;
+        self.stages.stage(star.id).and_then(|s| s.shown).map(Stage::id)
+    }
+
     /// DIR/events.jsonl: one JSON object a line, none for a run without events.
     pub fn events_jsonl(&self) -> String {
         self.events.iter().map(|e| e.json().to_string() + "\n").collect()

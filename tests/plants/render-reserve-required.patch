@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/calibration.rs
++++ b/crates/sr-physics/src/calibration.rs
+@@ -386,7 +386,7 @@
+             life_sun_sb: top.number("life_sun_sb", false)?,
+             top_rung: top.number("top_rung", false)?,
+             stage_durations_sb,
+-            render_reserve_ms: top.map.contains_key("render_reserve_ms").then(|| top.number("render_reserve_ms", true)).transpose()?,
++            render_reserve_ms: Some(top.number("render_reserve_ms", true)?),
+             max_gas_speed: top.number("max_gas_speed", false)?,
+         };
+         cal.check_order()?;

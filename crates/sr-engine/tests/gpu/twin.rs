@@ -190,7 +190,7 @@ fn by_hand(steps: usize, fresh: bool) -> (State, f64) {
     for _ in 0..steps {
         t += dt;
         field = gravity.field(st.plane(0), vac, w, h).unwrap();
-        hydro.step_with(&mut st, dt, Some((&field.gx, &field.gy)));
+        hydro.step_with(&mut st, dt, Some(&field));
         floors.apply(&mut st);
         if fresh {
             field = gravity.field(st.plane(0), vac, w, h).unwrap();

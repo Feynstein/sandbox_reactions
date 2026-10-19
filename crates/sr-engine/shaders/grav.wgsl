@@ -140,6 +140,7 @@ fn grav_gradient(@builtin(global_invocation_id) id: vec3<u32>) {
     let cell = y * s + x;
     g[cell] = a.x;
     g[gp.cells + cell] = a.y;
+    g[2u * gp.cells + cell] = phi[cell];
 }
 
 // An optional 5th, only in a step that runs P3 (§1.4.3): every sink's softened potential −G M / √(r² + r_acc²) added to φ, and its
@@ -170,4 +171,5 @@ fn grav_sinks(@builtin(global_invocation_id) id: vec3<u32>) {
     dst[cell] = p;
     g_total[cell] = a.x;
     g_total[gp.cells + cell] = a.y;
+    g_total[2u * gp.cells + cell] = p;
 }

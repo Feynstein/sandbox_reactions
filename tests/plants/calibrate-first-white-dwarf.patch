@@ -1,0 +1,9 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -773,5 +773,5 @@
+             // The last entry of the ending's stage: the `ending` event closes a hold of 10 t.u. that a change of stage breaks, so
+             // an earlier, transient showing of the same stage (a bounce's white dwarf) is not the life's end.
+-            life_sun = run.stages.iter().rev().find(|(stage, _)| stage == ending).map(|s| s.1).ok_or_else(|| {
++            life_sun = run.stages.iter().find(|(stage, _)| stage == ending).map(|s| s.1).ok_or_else(|| {
+                 CalError::Failed(format!("life_sun_sb: the Sun-like life never showed {ending} (stages {:?})", run.stages))
+             })?;

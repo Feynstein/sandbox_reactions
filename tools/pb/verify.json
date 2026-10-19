@@ -1590,11 +1590,11 @@
       ]
     },
     "calibration": {
-      "desc": "G-CAL, the calibration file and its physics hash (contract §2.11, §3.1, §3.3, §5.4; M0-T65): SHA-256 against FIPS 180-4's vectors (empty, abc, the 448- and 896-bit messages, a million a's, the padding edges); the physics hash over the canonical bytes (keys sorted, compact, numbers as f64) of elements.json + reactions.json + physics.json — a small triple by hand, a reformatted or re-ordered physics.json keeping its hash, a changed constant, key, element or reaction not; §2.11's schema parsed (every key, unknown and missing keys and bad values refused naming the key) and K9's order checked; a calibration written from the embedded assets accepted and a stale one refused with exit 6 (`SR-ERROR calibration out of date`), a scene with no preset running on it, a preset with none refused as missing, c_sb ≤ 2 × max_gas_speed refused; assets/calibration.json (once M0-V9 writes it) against the assets' hash, the assets' hash against its pin until then — NOT PROVEN against a real calibration; headless on a scene with no preset running with none",
+      "desc": "G-CAL, the calibration file and its physics hash (contract §2.11, §3.1, §3.3, §5.4; M0-T65): SHA-256 against FIPS 180-4's vectors (empty, abc, the 448- and 896-bit messages, a million a's, the padding edges); the physics hash over the canonical bytes (keys sorted, compact, numbers as f64) of elements.json + reactions.json + physics.json — a small triple by hand, a reformatted or re-ordered physics.json keeping its hash, a changed constant, key, element or reaction not; §2.11's schema parsed (every key, unknown and missing keys and bad values refused naming the key) and K9's order checked; a calibration written from the embedded assets accepted and a stale one refused with exit 6 (`SR-ERROR calibration out of date`), a scene with no preset running on it, a preset with none refused as missing, c_sb ≤ 2 × max_gas_speed refused; assets/calibration.json (once M0-V9 writes it) against the assets' hash, the assets' hash against its pin until then — NOT PROVEN against a real calibration; headless on a scene with no preset running with none; [M0-D62] a calibration without render_reserve_ms (before the drawing lot's item 7) accepted, written back without the key, a preset run's gate open on it and its time control on §1.8.3's 3.0, a present reserve still finite and ≥ 0; the file embedded whenever it exists (build.rs's choice on a folder with and without it, and this binary following the tree's file). Plant render-reserve-required: the key required again",
       "cmd": "bash tests/gpu.sh calibration",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 10,
+      "expected": 12,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -1607,12 +1607,17 @@
         "rust-toolchain.toml",
         ".cargo/**",
         "tests/cargo.sh",
-        "tests/plants/const-drift.patch"
+        "tests/plants/const-drift.patch",
+        "tests/plants/render-reserve-required.patch"
       ],
       "plants": [
         {
           "id": "const-drift",
           "patch": "tests/plants/const-drift.patch"
+        },
+        {
+          "id": "render-reserve-required",
+          "patch": "tests/plants/render-reserve-required.patch"
         }
       ]
     },
@@ -1676,11 +1681,11 @@
       ]
     },
     "calibrate_bisect": {
-      "desc": "`calibrate` items 3–4, the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4; M0-T68), no GPU and no life run — every run a stub: `calibrate::bisect` on a stubbed outcome closes on a known threshold from five masses inside a 100–20,000 bracket within BISECT_TOLERANCE (2 %: bracket width ≤ 2 %, value within 1 %, the threshold inside the final bracket, BISECT_TOLERANCE itself 0.02), asks the bracket's low then high end first, stays inside the bracket and spends exactly 2 + ⌈log₂(ln(200)/ln 1.02)⌉ runs (a bracket already within 2 % spends 2); a bracket whose ends agree (both Heavy, both Light) or run the wrong way round is refused after two runs naming `--bracket`, a bad bracket or tolerance is exit 4 with no run; a failing run stops the bisection with its own error (exit 6) and no run after it; each item's side of a life (`side_ign`: ignition over, failed_star under · `side_up`: core collapse over, white_dwarf under · `side_bh`: black_hole over, neutron_star under, anything else refused); `measure` over a stub physics finds m_ign, m_up and m_bh within 1 % and logs one `SR-CALIBRATE run` line per run with mass, side, ending, steps and wall time, an unplaced run logged with side=none and refused; `--bracket` outside one bisected item, an inverted or malformed bracket, `--max-steps 0`, a bad name in a `--only` list and a not-yet-built item are exit 4 before any GPU is touched. Plant bisect-tolerance: BISECT_TOLERANCE 0.02 → 0.2 (the driver stops at 20 %).",
+      "desc": "`calibrate` items 3–4, the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4; M0-T68; M0-D60), no GPU and no life run but the last case — every other run a stub: `calibrate::bisect` on a stubbed outcome closes on a known threshold from five masses inside a 100–20,000 bracket within BISECT_TOLERANCE (2 %: bracket width ≤ 2 %, value within 1 %, the threshold inside the final bracket, BISECT_TOLERANCE itself 0.02), asks the bracket's low then high end first, stays inside the bracket and spends exactly 2 + ⌈log₂(ln(200)/ln 1.02)⌉ runs (a bracket already within 2 % spends 2); a bracket whose ends agree (both Heavy, both Light) or run the wrong way round is refused after two runs naming `--bracket`, a bad bracket or tolerance is exit 4 with no run; a failing run stops the bisection with its own error (exit 6) and no run after it; each item's side of a life (`side_ign`: ignition over, failed_star under · `side_up`: core collapse over, white_dwarf under · `side_bh`: black_hole over, neutron_star under, anything else refused); `measure` over a stub physics finds m_ign, m_up and m_bh within 1 % and logs one `SR-CALIBRATE run` line per run with mass, side, ending, steps and wall time, an unplaced run logged with side=none and refused; `--bracket` outside one bisected item, an inverted or malformed bracket, `--max-steps 0`, a bad name in a `--only` list and a not-yet-built item are exit 4 before any GPU is touched. Plant bisect-tolerance: BISECT_TOLERANCE 0.02 → 0.2 (the driver stops at 20 %). M0-D60, two short real lives on the test adapter (the nominal cloud and 1.02 × it, ignition ends each; m_ign's bracket refused after two runs): each run line closes on `record=<dir>` under build/calibrate_runs/, where summary.json (with its ignition event) and events.jsonl stay and no dumps/ does, the two folders differ, `SR-CALIBRATE progress item= mass= step= sim_time= stage=` lines come every 50 steps before the first run line, and a third life cut at --max-steps 64 is exit 6 whose error names its kept record. Plant calibrate-record-removed: the run's whole folder removed after it is read.",
       "cmd": "bash tests/gpu.sh calibrate_bisect",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 7,
+      "expected": 8,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -1693,21 +1698,26 @@
         "rust-toolchain.toml",
         ".cargo/**",
         "tests/cargo.sh",
-        "tests/plants/bisect-tolerance.patch"
+        "tests/plants/bisect-tolerance.patch",
+        "tests/plants/calibrate-record-removed.patch"
       ],
       "plants": [
         {
           "id": "bisect-tolerance",
           "patch": "tests/plants/bisect-tolerance.patch"
+        },
+        {
+          "id": "calibrate-record-removed",
+          "patch": "tests/plants/calibrate-record-removed.patch"
         }
       ]
     },
     "calibrate_order": {
-      "desc": "`calibrate` items 5–6, the order and the presets' lives (contract §2.11 items 5–7, §1.8.2, §1.10.1, §3.3, §6.4; M0-T70), no GPU and no life run — every preset life a stub: `check_order` passes a table in order (the ratio 1.4 and 2.0 inside) and refuses each inequality with its own message and exit 6 — m_ign < m_ch, m_ch < m_up, m_up < m_bh, m_ch < m_tov (ties included), m_tov/m_ch outside [1.4, 2.0] (1.39, 2.01, 1.0001), sigma_bh under ns_sigma_max_sb — and `check_speed` refuses a gas speed whose double reaches c_sb; `measure_presets` asks 1, 15 and 40 Suns at MassScale::to_sb of the four anchors (sun, massive, giant in order, each inside its band), takes life_sun_sb from the white-dwarf stage's first frame, top_rung from it ÷ 10 to two significant digits (423 → 42, 1,260 → 130, 9,990 → 1,000, 56 → 5.6, 98,700 → 9,900) and t_eff_sun_sb from the L and R at X_H,c 0.35, builds stage_durations_sb as one pair a life per stage with the remnants left out, and keeps the largest gas speed; a preset that ends as another ending, a T_eff over T_H or under T_floor, a Sun that never burned down to 0.35 and a Sun with no white dwarf are exit 6 and the following lives are not run; through `run_with`, a file out of order (m_ign over m_ch) is exit 6 on K9 with no GPU, no life and nothing written, a file without the four anchors cannot place the presets (exit 6), `--only render_reserve_ms` is exit 4 naming `--measure-ui`, a re-run of m_ch_sb keeps render_reserve_ms and the file's other items, and a file's max_gas_speed of 100 against c_sb 200 is exit 6 with nothing written. Plant calibrate-order-skip: the m_tov/m_ch band left unchecked.",
+      "desc": "`calibrate` items 5–6, the order and the presets' lives (contract §2.11 items 5–7, §1.8.2, §1.10.1, §3.3, §6.4; M0-T70), no GPU and no life run — every preset life a stub: `check_order` passes a table in order (the ratio 1.4 and 2.0 inside) and refuses each inequality with its own message and exit 6 — m_ign < m_ch, m_ch < m_up, m_up < m_bh, m_ch < m_tov (ties included), m_tov/m_ch outside [1.4, 2.0] (1.39, 2.01, 1.0001), sigma_bh under ns_sigma_max_sb — and `check_speed` refuses a gas speed whose double reaches c_sb; `measure_presets` asks 1, 15 and 40 Suns at MassScale::to_sb of the four anchors (sun, massive, giant in order, each inside its band), takes life_sun_sb from the first frame of the white-dwarf stage the life ends in (the last one shown, never a transient bounce's before the main sequence; M0-D61), top_rung from it ÷ 10 to two significant digits (423 → 42, 1,260 → 130, 9,990 → 1,000, 56 → 5.6, 98,700 → 9,900) and t_eff_sun_sb from the L and R at X_H,c 0.35, builds stage_durations_sb as one pair a life per stage with the remnant stages left out wherever they come (a transient white_dwarf or failed_star books none), and keeps the largest gas speed; a preset that ends as another ending, a T_eff over T_H or under T_floor, a Sun that never burned down to 0.35 and a Sun with no white dwarf are exit 6 and the following lives are not run; through `run_with`, a file out of order (m_ign over m_ch) is exit 6 on K9 with no GPU, no life and nothing written, a file without the four anchors cannot place the presets (exit 6), `--only render_reserve_ms` is exit 4 naming `--measure-ui`, a re-run of m_ch_sb keeps render_reserve_ms and the file's other items, and a file's max_gas_speed of 100 against c_sb 200 is exit 6 with nothing written. Plant calibrate-order-skip: the m_tov/m_ch band left unchecked. Plant calibrate-first-white-dwarf: life_sun_sb read from the first white_dwarf shown again.",
       "cmd": "bash tests/gpu.sh calibrate_order",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 11,
+      "expected": 12,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -1720,12 +1730,17 @@
         "rust-toolchain.toml",
         ".cargo/**",
         "tests/cargo.sh",
-        "tests/plants/calibrate-order-skip.patch"
+        "tests/plants/calibrate-order-skip.patch",
+        "tests/plants/calibrate-first-white-dwarf.patch"
       ],
       "plants": [
         {
           "id": "calibrate-order-skip",
           "patch": "tests/plants/calibrate-order-skip.patch"
+        },
+        {
+          "id": "calibrate-first-white-dwarf",
+          "patch": "tests/plants/calibrate-first-white-dwarf.patch"
         }
       ]
     },

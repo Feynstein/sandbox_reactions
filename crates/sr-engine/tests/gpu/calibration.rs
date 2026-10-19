@@ -3,10 +3,12 @@
 
 use serde_json::{json, Value};
 use sr_engine::headless::{calibration_gate, run_captured};
+use sr_physics::calibration::embed::{embedded_source, FILE as EMBED_FILE};
 use sr_physics::calibration::{
     canonical_json, physics_hash, physics_hash_of, resolve, resolve_against, sha256_hex, Calibration, CalibrationError,
     EMBEDDED, EXIT_CALIBRATION,
 };
+use sr_physics::time::{TimeControl, RENDER_RESERVE_MS};
 
 const ELEMENTS: &str = include_str!("../../../../assets/elements.json");
 const REACTIONS: &str = include_str!("../../../../assets/reactions.json");
@@ -182,6 +184,59 @@ fn a_calibration_written_from_the_embedded_assets_is_accepted() {
 }
 
 #[test]
+fn a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it() {
+    // M0-D62: `calibrate` writes every key but render_reserve_ms, which the drawing lot's `--measure-ui` adds (§2.11 item 7);
+    // until then R_reserve is §1.8.3's 3.0. The file is a calibration, a preset run starts on it, and a round trip keeps
+    // the key absent.
+    let text = file_with(|v| {
+        v.as_object_mut().unwrap().remove("render_reserve_ms");
+    });
+    let cal = Calibration::parse(&text).expect("a calibration before item 7 is valid");
+    assert_eq!(cal.render_reserve_ms, None);
+    let back = cal.to_json();
+    let keys: Value = serde_json::from_str(&back).unwrap();
+    assert!(!keys.as_object().unwrap().contains_key("render_reserve_ms"), "written back without the key: {back}");
+    assert_eq!(Calibration::parse(&back).expect("its own output parses"), cal, "a round trip");
+    assert_eq!(resolve(Some(&text), true).expect("its hash is the assets'"), Some(cal.clone()));
+    assert_eq!(calibration_gate(Some(&text), true), Ok(()), "a preset run starts on it");
+    // The time control on it runs at 3.0 ms, the same as one given 3.0.
+    let on_file = TimeControl::new(Some(cal.top_rung), cal.render_reserve_ms).expect("its numbers are a time control's");
+    let on_three = TimeControl::new(Some(cal.top_rung), Some(RENDER_RESERVE_MS)).unwrap();
+    assert_eq!(RENDER_RESERVE_MS, 3.0);
+    assert_eq!(format!("{on_file:?}"), format!("{on_three:?}"));
+    // A reserve that is there is still checked: finite and ≥ 0, a number.
+    assert_eq!(invalid_key(&file_with(|v| v["render_reserve_ms"] = json!(-0.1))), "render_reserve_ms", "a negative reserve");
+    assert_eq!(invalid_key(&file_with(|v| v["render_reserve_ms"] = Value::Null)), "render_reserve_ms", "null is not absent");
+    assert_eq!(invalid_key(&file_with(|v| v["render_reserve_ms"] = json!("3"))), "render_reserve_ms");
+    let measured = Calibration::parse(&file_with(|v| v["render_reserve_ms"] = json!(4.25))).unwrap();
+    assert_eq!(measured.render_reserve_ms, Some(4.25));
+    assert!(measured.to_json().contains("\"render_reserve_ms\": 4.25"), "a measured reserve is written back");
+}
+
+#[test]
+fn the_binary_embeds_the_calibration_file_whenever_it_exists() {
+    // M0-D62: build.rs embeds assets/calibration.json when the crate builds with it, else nothing — no hand edit after a
+    // calibration. The choice, on a folder without the file and with it:
+    let dir = std::env::temp_dir().join(format!("sr-calibration-embed-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).expect("a scratch directory");
+    assert_eq!(embedded_source(&dir), "None", "no file, nothing embedded (the tree still builds)");
+    let file = dir.join(EMBED_FILE);
+    std::fs::write(&file, "{}").unwrap();
+    let source = embedded_source(&dir);
+    let literal = source
+        .strip_prefix("Some(include_str!(")
+        .and_then(|s| s.strip_suffix("))"))
+        .unwrap_or_else(|| panic!("the file present, it is included: {source}"));
+    let named: String = serde_json::from_str(literal).expect("a quoted path");
+    assert_eq!(std::path::Path::new(&named), file, "the literal names the file");
+    let _ = std::fs::remove_dir_all(&dir);
+    // And this binary, built from the tree, follows the tree's file.
+    let assets = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets");
+    assert_eq!(EMBEDDED.is_some(), assets.join(EMBED_FILE).is_file(), "EMBEDDED follows assets/calibration.json");
+}
+
+#[test]
 fn a_mismatched_calibration_is_refused_with_exit_6() {
     // One physics.json constant changed after the calibration was written: its hash is no longer the assets'.
     let mut drifted: Value = serde_json::from_str(PHYSICS).unwrap();
@@ -233,7 +288,7 @@ fn the_calibration_the_binary_embeds_matches_the_assets() {
     let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets/calibration.json");
     match std::fs::read_to_string(&path) {
         Ok(text) => {
-            assert!(EMBEDDED.is_some(), "assets/calibration.json exists but the engine does not embed it (calibration.rs)");
+            assert!(EMBEDDED.is_some(), "assets/calibration.json exists but the engine does not embed it (sr-physics build.rs)");
             let cal = Calibration::parse(&text).expect("assets/calibration.json is §2.11's");
             assert_eq!(cal.physics_hash, hash(), "calibration.json is out of date: change a constant, calibrate again");
             assert_eq!(EMBEDDED, Some(text.as_str()), "the embedded text is the file");

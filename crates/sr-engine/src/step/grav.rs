@@ -148,7 +148,7 @@ impl Gravity {
         let plane = |label| {
             device.create_buffer(&wgpu::BufferDescriptor {
                 label: Some(label),
-                size: 2 * u64::from(cells) * 4,
+                size: 3 * u64::from(cells) * 4,
                 usage: storage | wgpu::BufferUsages::COPY_SRC,
                 mapped_at_creation: false,
             })

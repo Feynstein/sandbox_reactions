@@ -214,7 +214,7 @@ fn twin_run() -> &'static Run {
                 let g = Some((&field.gx[..], &field.gy[..]));
                 let dt = hydro.dt(&st, g).min(until - t);
                 assert!(dt.is_finite() && dt > 1e-9, "Δt collapsed to {dt} at t = {t} after {steps} steps");
-                hydro.step_with(&mut st, dt, g);
+                hydro.step_with(&mut st, dt, Some(&field));
                 t += dt;
                 steps += 1;
             }

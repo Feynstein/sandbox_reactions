@@ -1,0 +1,13 @@
+M0-D62 · win-laptop Laser2025-20 · started 2026-10-19T17:46:34-04:00
+rung: model=claude-opus-5-5 level=high plugin=installed
+== e2e: scratch C:\Users\YOHANB~1\AppData\Local\Temp/claude/d62-e2e, reserve-less assets/calibration.json embedded by build.rs (4m14s build)
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.030267 until=none
+exit=0
+== e2e stale: the same file, physics_hash 0000…, rebuilt with no other edit
+SR-ERROR calibration out of date: its physics_hash is 00003959cee177c48914a95ac94d66ea21849dd7866b50bf2691b3137da1f306, the assets' is 556e3959cee177c48914a95ac94d66ea21849dd7866b50bf2691b3137da1f306 (change a constant, calibrate again: sandbox-reactions calibrate)
+exit=6
+== cold_core without M0-D62's edits (scratch copy, HEAD's calibration.rs ×2, no build.rs)
+scenes/cold_co_disk.json is stale (object 0: Rect { x0: 26, y0: 7, w: 1, h: 1, sigma: 4.470082681687129e-6, gas: Gas { heat: T(0.05), composition: [0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], v
+scenes/cold_co_disk.json is stale (object 0: Rect { x0: 26, y0: 7, w: 1, h: 1, sigma: 4.470082681687129e-6, gas: Gas { heat: T(0.05), composition: [0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], v
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 329 filtered out; finished in 1.52s

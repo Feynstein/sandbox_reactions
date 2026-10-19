@@ -320,6 +320,18 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     the guard scans only step indices ≡ 0 (mod 64), so a run ending between two scans exited 0 and printed `SR-HEADLESS DONE`
     on a world with NaN in E (M0-D58's repro: NaN from step 12, `until=met` at step 17) — measured on linux-pc, 2026-10-19, RTX
     5090 (tasks/M0-D59.md) — the lead's answer at M0-D58, 2026-10-19: «Scan the last step (Recommended)».
+  - [M0-D64] §1.4.2's "P4 adds the momentum source Σg and the energy source Σu·g, time-centred on the predictor's half-step velocity"
+    · the momentum source unchanged; the energy source is the work the step's mass fluxes do across φ: a face whose mass flux q
+    (along +x or +y) joins cell i to j does Δt·q·(φ_i − φ_j), cell i taking (½p_i + w_i(q − ½(p_i + p_j)))(φ_i − φ_j)Δt — p the two
+    cells' half-step momenta on that axis, w_i = Σ_i/(Σ_i + Σ_j) of their half-step Σ — and j the rest; a ghost's φ is its edge
+    cell's (no work across the world's edge); GPU (P2 copies φ into a third plane of its g buffer) and twin alike · Σu·g left
+    HLL's diffusive mass flux lifting mass up φ with nothing paid from E: the Sun-like life's invariant +137 |W|₀ over 510,496
+    steps (M0-V9 M9); with the face work, steps 5,000–6,000 of preset:sun unbooked +4,968 → +16 (2 × 10⁻⁶ |W| per t.u.), a hot
+    compact disk (Σc 8.8, a 9, T 50, 128 × 128, 1,000 steps) 0.171 → 6 × 10⁻⁴ |W| per t.u.; the ½/½ split of the textbook form
+    overheated thin gas beside a dense cell (4.7 × 10⁹ radiated and floor-refilled in 2,000 steps); the remainder is first
+    order in Δt, φ lagging the half step (a collapsing cold disk −3.9 × 10⁻³ |W| per t.u., −1.8 × 10⁻³ at cfl 0.2), recorded,
+    not built — measured on win-laptop, 2026-10-19, RTX 4080 Laptop (tasks/M0-D64.md) — the lead's answers at M0-D64,
+    2026-10-19: «Face work, mass-shared (Recommended)», «Record it, no build (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

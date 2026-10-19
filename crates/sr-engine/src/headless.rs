@@ -401,7 +401,7 @@ pub fn calibration_gate(embedded: Option<&str>, names_preset: bool) -> Result<()
 /// Runs the command; returns the process's exit code.
 pub fn run(args: &[String]) -> i32 {
     match parse_args(args) {
-        Ok(a) => execute(a, None),
+        Ok(a) => execute(a, None, None),
         Err(e) => {
             say(&format!("SR-ERROR bad arguments: {e}"));
             EXIT_ARGS
@@ -409,17 +409,25 @@ pub fn run(args: &[String]) -> i32 {
     }
 }
 
+/// A run's progress hook (M0-D60): `tick(step, sim_time, stage)` is called each time the run's step count passes a multiple of
+/// `every`, `stage` being the heaviest object's shown stage (`none` before one has held).
+pub struct Progress<'a> {
+    pub every: u64,
+    pub tick: &'a mut dyn FnMut(u64, f64, &str),
+}
+
 /// A run of `scene`, built in code, under `args` ([`Args::scene`] is only the label summary.json records), and the stdout
-/// lines it printed — `calibrate`'s way to a preset cloud of a given mass (M0-T68), which a scene file cannot name (§2.12.1).
-/// The scene reads no calibration, so the gate of §2.11 is not applied: `calibrate` runs on a stale one.
-pub fn run_scene_captured(args: Args, scene: Scene) -> (i32, Vec<String>) {
+/// lines it printed — `calibrate`'s way to a preset cloud of a given mass (M0-T68), which a scene file cannot name (§2.12.1),
+/// with `progress` called along the way. The scene reads no calibration, so the gate of §2.11 is not applied: `calibrate`
+/// runs on a stale one.
+pub fn run_scene_captured(args: Args, scene: Scene, progress: Option<Progress>) -> (i32, Vec<String>) {
     *CAPTURE.lock().unwrap_or_else(|e| e.into_inner()) = Some(Vec::new());
-    let code = execute(args, Some(scene));
+    let code = execute(args, Some(scene), progress);
     let lines = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).take().unwrap_or_default();
     (code, lines)
 }
 
-fn execute(args: Args, given: Option<Scene>) -> i32 {
+fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> i32 {
     // A dump to start from, read and checked before anything else (exit 4).
     let dump = match args.load_dump.as_deref().map(Dump::read).transpose() {
         Ok(d) => d,
@@ -568,6 +576,8 @@ fn execute(args: Args, given: Option<Scene>) -> i32 {
     let mut until_met = false;
     // The Δt record's sim time and next Δt after the last chunk: they size the chunks of `--until sim_time`.
     let (mut sim, mut dt_next) = (start_sim, 0.0f64);
+    // The progress hook's last multiple of `every` (M0-D60): the run's start is not a tick.
+    let mut ticked = progress.as_ref().map_or(0, |p| first / p.every.max(1));
     while done < target {
         let mut n = (target - done).min(if args.until.is_some() { FRAME } else { CHUNK });
         // The ledger's start: the first step alone, then the state after it is the ledger's zero.
@@ -611,6 +621,12 @@ fn execute(args: Args, given: Option<Scene>) -> i32 {
         }
         let fresh = watch.update(&summary, at_step);
         (sim, dt_next) = (dt.sim_time, f64::from(dt.dt_next));
+        if let Some(p) = progress.as_mut() {
+            if at_step.step / p.every.max(1) > ticked {
+                ticked = at_step.step / p.every.max(1);
+                (p.tick)(at_step.step, dt.sim_time, watch.heaviest_stage().unwrap_or("none"));
+            }
+        }
         if args.until.is_some_and(|u| watch.holds(u, &fresh)) {
             until_met = true;
             break;

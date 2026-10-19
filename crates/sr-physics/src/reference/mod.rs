@@ -234,9 +234,8 @@ impl Twin {
         }
         if self.switches.hydro {
             self.ran.push("P4 hydro");
-            let g = self.g.as_ref().map(|f| (&f.gx[..], &f.gy[..]));
             let radiation = self.flux.as_ref().map(|(x, y)| (&x[..], &y[..]));
-            self.hydro.step_forced(&mut self.state, dt, g, radiation);
+            self.hydro.step_forced(&mut self.state, dt, self.g.as_ref(), radiation);
         }
         if let Some(heat) = &self.heat {
             self.ran.push("P5 heat");

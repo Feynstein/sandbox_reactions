@@ -17,8 +17,11 @@
 //! m_ign_sb stops each run at the first of the ignition and the ending (`Until::IgnitionOrEnding`): the failed star's ending is
 //! the stage held for [`ENDING_HOLD`](crate::watch::ENDING_HOLD) (§1.9.5, 10 t.u. ≈ 10 τ_dyn at τ_dyn ≈ 1), where §2.11 says 20 τ_dyn.
 //! The default bracket of each item is in units of the nominal M₀ ([`UNIT_MASS`]); `--bracket LO,HI` (sandbox mass, with one
-//! `--only` item) replaces it. Every run's mass, side, ending, steps and wall time is a `SR-CALIBRATE run` line. `measured.adapter`
-//! names the adapter the first of them opened. Runs are whole lives: the lead's, in M0-V9's window (§6.4).
+//! `--only` item) replaces it. Every run's mass, side, ending, steps and wall time is a `SR-CALIBRATE run` line, closing on
+//! `record=<dir>`: the life's summary.json and events.jsonl are kept there, under `build/calibrate_runs/<stamp>/<item>-<NN>/`
+//! (git-ignored; the final dump goes, a failed life's record stays and its error names it), and while a life runs a
+//! `SR-CALIBRATE progress item=… mass=… step=… sim_time=… stage=…` line comes every [`PROGRESS_EVERY`] steps (M0-D60).
+//! `measured.adapter` names the adapter the first of them opened. Runs are whole lives: the lead's, in M0-V9's window (§6.4).
 //!
 //! **Item 5 [M0-T70]: the order (K9)** — [`check_order`] over the merged file: m_ign < m_ch < m_up < m_bh, m_ch < m_tov,
 //! m_tov/m_ch in [1.4, 2.0] and sigma_bh at or over ns_sigma_max_sb; each inequality is checked when both its sides are in the
@@ -28,7 +31,7 @@
 //! **Item 6 [M0-T70]: the presets' lives** — [`measure_presets`]. `preset_mass_sb` is the inverse of the mass translation
 //! (§1.10.1, M0-T69's [`MassScale`]) at 1, 15 and 40 Suns; each of the three is run to its ending (`Until::Ending`) and must
 //! end as the preset promises (white dwarf, neutron star, black hole) — else exit 6. From the Sun-like life: `life_sun_sb`
-//! (drop → the white-dwarf stage's first frame), `top_rung` (`sr_physics::time::top_rung_from_life`, ÷ 10 s to two significant
+//! (drop → the first frame of the white-dwarf stage the `ending` closes, not a transient one before the main sequence), `top_rung` (`sr_physics::time::top_rung_from_life`, ÷ 10 s to two significant
 //! digits, §1.8.2) and `t_eff_sun_sb` (§1.10.3's T_eff = (L / 2πRσ)^¼ from the L and R of the first frame whose central
 //! hydrogen is at or under [`T_EFF_X_H`](crate::watch::T_EFF_X_H) = 0.35, summary.json's `at_x_h`; refused unless it sits
 //! between T_floor and T_H, the temperature scale's own condition). `stage_durations_sb` is, per stage, the sim time the three
@@ -40,9 +43,9 @@
 //! **The file.** `--out` is plain JSON with §2.11's keys — `version`, `physics_hash` (the assets' now), `measured` {date, git,
 //! adapter, box} and the items measured so far. A file already there under this physics hash is the base: `--only`
 //! re-measures one item and keeps the rest; a file under another hash is dropped whole (`SR-WARN`), its numbers belong to
-//! other constants. It is a complete [`Calibration`](sr_physics::calibration::Calibration) once every item has run and the drawing
-//! lot has written `render_reserve_ms`; until then `Calibration::parse` refuses it. `calibrate` needs no calibration itself
-//! and runs on a stale one.
+//! other constants. It is a complete [`Calibration`](sr_physics::calibration::Calibration) once every item has run; until the
+//! drawing lot writes `render_reserve_ms` it has none, and R_reserve is §1.8.3's 3.0 (M0-D62). The next build embeds it
+//! (`sr-physics`'s build.rs). `calibrate` needs no calibration itself and runs on a stale one.
 //!
 //! **What exits 6** (reported, never re-tuned inside the run, nothing written): a sheet that has no ceiling
 //! ([`SheetError`](sr_physics::reference::sheet::SheetError)), the order of item 5, a preset that does not end as promised, a
@@ -56,6 +59,7 @@
 //! stdout: one `SR-CALIBRATE item=… value=… wall_s=…` per item, last `SR-CALIBRATE DONE …`. Exit codes as `headless`'s: 0 done
 //! · 4 bad arguments · 6 the calibration failed.
 
+use std::cell::RefCell;
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
@@ -71,7 +75,7 @@ use sr_physics::registry::{Elements, Physics, N_SPECIES};
 use sr_physics::units::G;
 
 use crate::headless::{
-    git_rev, run_scene_captured, Args, DEFAULT_MAX_STEPS, EXIT_ARGS, EXIT_CALIBRATION, EXIT_DONE, EXIT_GPU, EXIT_NON_FINITE,
+    git_rev, run_scene_captured, Args, Progress, DEFAULT_MAX_STEPS, EXIT_ARGS, EXIT_CALIBRATION, EXIT_DONE, EXIT_GPU, EXIT_NON_FINITE,
     EXIT_UNMET,
 };
 use crate::scene::{EdgeMode, Gas, Heat, Object, Scene, Switches, TestSettings, UNIT_MASS};
@@ -519,21 +523,29 @@ pub fn measure(
 }
 
 /// A life from the lines and the exit code of a headless run: exit 2 is no ending within `--max-steps`.
-fn life_error(code: i32, lines: &[String], max_steps: u64, mass: f64) -> CalError {
+fn life_error(code: i32, lines: &[String], max_steps: u64, mass: f64, record: &Path) -> CalError {
     let last_error = lines.iter().rev().find(|l| l.starts_with("SR-ERROR")).map(|l| l.trim_start_matches("SR-ERROR ").to_string());
     let said = last_error.unwrap_or_else(|| format!("exit {code}"));
+    let kept = format!(" (record kept: {})", record.display());
     match code {
-        EXIT_UNMET => CalError::Failed(format!("the run at mass {mass:.3} reached no ending within --max-steps {max_steps} — reported, not guessed")),
+        EXIT_UNMET => CalError::Failed(format!("the run at mass {mass:.3} reached no ending within --max-steps {max_steps} — reported, not guessed{kept}")),
         EXIT_GPU => CalError::Gpu(said),
-        EXIT_NON_FINITE => CalError::NonFinite(format!("the run at mass {mass:.3}: {said}")),
-        _ => CalError::Failed(format!("the run at mass {mass:.3}: headless {said}")),
+        EXIT_NON_FINITE => CalError::NonFinite(format!("the run at mass {mass:.3}: {said}{kept}")),
+        _ => CalError::Failed(format!("the run at mass {mass:.3}: headless {said}{kept}")),
     }
 }
 
-/// The preset cloud of `mass` run on the GPU until `until`, its summary.json read back. `dir` holds the run's files and is
-/// removed after it. The adapter's name is `adapter_used` once a run has opened one.
+/// How often a life says where it is: one `SR-CALIBRATE progress` line every this many steps (M0-D60).
+pub const PROGRESS_EVERY: u64 = 10_000;
+
+/// The preset cloud of `mass` run on the GPU until `until`, its summary.json read back. `dir` holds the invocation's runs, one
+/// folder each (`<item>-<NN>`) that keeps summary.json and events.jsonl — the final dump alone is removed — and `record` is the
+/// last run's folder, which the run line names. The adapter's name is `adapter_used` once a run has opened one.
 struct Lives<'a> {
     dir: PathBuf,
+    say: &'a dyn Fn(&str),
+    record: &'a RefCell<String>,
+    progress_every: u64,
     adapter: Option<String>,
     adapter_used: Option<String>,
     max_steps: u64,
@@ -572,9 +584,16 @@ impl Lives<'_> {
             load_dump: None,
             cpu_reference: false,
         };
-        let (code, lines) = run_scene_captured(args, scene);
+        let say = self.say;
+        let mut tick = |step: u64, sim_time: f64, stage: &str| {
+            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} stage={stage}"));
+        };
+        let progress = Progress { every: self.progress_every, tick: &mut tick };
+        let (code, lines) = run_scene_captured(args, scene, Some(progress));
+        *self.record.borrow_mut() = out.display().to_string();
         let read = (code == EXIT_DONE).then(|| read_life(&out, mass));
-        let _ = std::fs::remove_dir_all(&out);
+        // The final dump is 13.4 MB a life; summary.json and events.jsonl stay (M0-D60).
+        let _ = std::fs::remove_dir_all(out.join("dumps"));
         match read {
             Some(run) => {
                 let (run, adapter) = run?;
@@ -582,7 +601,7 @@ impl Lives<'_> {
                 self.gas_peak = self.gas_peak.max(run.max_gas_speed);
                 Ok(run)
             }
-            None => Err(life_error(code, &lines, self.max_steps, mass)),
+            None => Err(life_error(code, &lines, self.max_steps, mass, &out)),
         }
     }
 }
@@ -704,13 +723,17 @@ impl Presets {
     }
 }
 
-/// The sim time each stage of one life was shown (a stage shown twice adds up), from its first frame to the next stage's. The
-/// last stage has no next one, so a remnant — whose clock is §1.10.4's 10⁸ years per t.u. — gets none.
+/// The stages that end a life or look like it for a while (`watch::is_remnant`, by id): their clock is §1.10.4's 10⁸ years per
+/// t.u., so no duration is booked for them, the ending's or a transient one's (a bounce's dark centre shows `white_dwarf`).
+const REMNANT_IDS: [&str; 4] = ["white_dwarf", "neutron_star", "black_hole", "failed_star"];
+
+/// The sim time each stage of one life was shown (a stage shown twice adds up), from its first frame to the next stage's.
+/// Remnant stages get none, wherever they come in the life.
 pub fn stage_times(stages: &[(String, f64)]) -> BTreeMap<String, f64> {
     let mut out = BTreeMap::new();
     for pair in stages.windows(2) {
         let (stage, next) = (&pair[0], &pair[1]);
-        if next.1 > stage.1 {
+        if next.1 > stage.1 && !REMNANT_IDS.contains(&stage.0.as_str()) {
             *out.entry(stage.0.clone()).or_insert(0.0) += next.1 - stage.1;
         }
     }
@@ -747,7 +770,9 @@ pub fn measure_presets(
             durations.entry(stage).or_default().push((mass, time));
         }
         if k == 0 {
-            life_sun = run.stages.iter().find(|(stage, _)| stage == ending).map(|s| s.1).ok_or_else(|| {
+            // The last entry of the ending's stage: the `ending` event closes a hold of 10 t.u. that a change of stage breaks, so
+            // an earlier, transient showing of the same stage (a bounce's white dwarf) is not the life's end.
+            life_sun = run.stages.iter().rev().find(|(stage, _)| stage == ending).map(|s| s.1).ok_or_else(|| {
                 CalError::Failed(format!("life_sun_sb: the Sun-like life never showed {ending} (stages {:?})", run.stages))
             })?;
             let (l, r) = run.at_x_h.ok_or_else(|| {
@@ -891,7 +916,12 @@ fn parse_args(args: &[String]) -> Result<Opts, CalError> {
 /// `calibrate`'s run on the shipped constants with `overrides` on top (tests only: a run with overrides never writes,
 /// §2.12.1), behind `say`; returns the exit code. The file is written only when every measurement and check passed.
 pub fn run_with(args: &[String], overrides: &[(String, f64)], say: &mut dyn FnMut(&str)) -> i32 {
-    match run_inner(args, overrides, say) {
+    run_with_progress(args, overrides, PROGRESS_EVERY, say)
+}
+
+/// [`run_with`] with a life's progress line every `progress_every` steps instead of [`PROGRESS_EVERY`] (a test's short life).
+pub fn run_with_progress(args: &[String], overrides: &[(String, f64)], progress_every: u64, say: &mut dyn FnMut(&str)) -> i32 {
+    match run_inner(args, overrides, progress_every, say) {
         Ok(()) => EXIT_DONE,
         Err(e) => {
             say(&e.line());
@@ -905,7 +935,10 @@ pub fn run(args: &[String]) -> i32 {
     run_with(args, &[], &mut |line| println!("{line}"))
 }
 
-fn run_inner(args: &[String], overrides: &[(String, f64)], say: &mut dyn FnMut(&str)) -> Result<(), CalError> {
+fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, say: &mut dyn FnMut(&str)) -> Result<(), CalError> {
+    // `say` is shared by the command and the lives it runs (their progress lines come while they run).
+    let say_cell = RefCell::new(say);
+    let say = |line: &str| (say_cell.borrow_mut())(line);
     let opts = parse_args(args)?;
     let all = opts.only.is_empty();
     let asked = |job: Job| all || opts.only.contains(&job);
@@ -934,8 +967,13 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], say: &mut dyn FnMut(&
         }
     }
     // Items 3–4: whole lives on the GPU, in the order of the ladder (m_bh's default bracket reads m_up_sb).
+    let record = RefCell::new(String::new());
+    let stamp = utc_iso(SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs())).replace(':', "-");
     let mut lives = Lives {
-        dir: opts.out.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new(".")).join("calibrate_runs"),
+        dir: Path::new("build").join("calibrate_runs").join(stamp),
+        say: &say,
+        record: &record,
+        progress_every,
         adapter: opts.adapter.clone(),
         adapter_used: None,
         max_steps: opts.max_steps,
@@ -943,10 +981,18 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], say: &mut dyn FnMut(&
         runs: 0,
         gas_peak: 0.0,
     };
+    // A run line names the folder its life's record is kept in.
+    let run_say = |line: &str| {
+        if line.starts_with("SR-CALIBRATE run") {
+            say(&format!("{line} record={}", record.borrow()));
+        } else {
+            say(line);
+        }
+    };
     for threshold in thresholds {
         let bracket = opts.bracket.unwrap_or_else(|| threshold.default_bracket(&file));
         let t0 = Instant::now();
-        let found = measure(threshold, bracket, &mut |t, mass| lives.live(t, mass), say)?;
+        let found = measure(threshold, bracket, &mut |t, mass| lives.live(t, mass), &mut |l| run_say(l))?;
         file.insert(threshold.item().to_string(), json!(found.value));
         say(&format!(
             "SR-CALIBRATE item={} value={:.3} bracket={:.3}..{:.3} runs={} wall_s={:.1}",
@@ -967,7 +1013,7 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], say: &mut dyn FnMut(&
             return Err(CalError::Failed("preset_mass_sb needs m_ign_sb, m_ch_sb, m_up_sb and m_bh_sb in the file: measure them first".into()));
         };
         let t0 = Instant::now();
-        let presets = measure_presets([ign, ch, up, bh], &physics, &mut |name, mass| lives.preset(name, mass), say)?;
+        let presets = measure_presets([ign, ch, up, bh], &physics, &mut |name, mass| lives.preset(name, mass), &mut |l| run_say(l))?;
         presets.insert_into(&mut file);
         say(&format!(
             "SR-CALIBRATE item=presets preset_mass_sb={:.1}/{:.1}/{:.1} t_eff_sun_sb={:.5} life_sun_sb={:.3} top_rung={} stages={} wall_s={:.1}",
@@ -981,7 +1027,6 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], say: &mut dyn FnMut(&
             t0.elapsed().as_secs_f64()
         ));
     }
-    let _ = std::fs::remove_dir(&lives.dir);
     // The fastest gas of every run made, kept against the file's (the same constants measured it): c_sb must beat twice it.
     if lives.runs > 0 {
         let peak = file.get("max_gas_speed").and_then(Value::as_f64).unwrap_or(0.0).max(lives.gas_peak);

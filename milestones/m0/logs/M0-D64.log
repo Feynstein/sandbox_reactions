@@ -1,0 +1,604 @@
+# M0-D64 log — win-laptop (Laser2025-20), RTX 4080 Laptop, 2026-10-19T18:10:13-04:00
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10000 sim_time=115.966246 until=none
+SR-HEADLESS DONE steps=1000 sim_time=70.413214 until=none
+build/d64/w5k_base: steps 5001-6000 dt 11.378 |W| 6.362e+05 dInv 4968 per_tu/|W| 6.864e-04
+   dK -20.97 dU 146.5 dcold 695.8 dW -1871 rad 2.598e+04 nuc 1.999e+04 nu 0 esc 30.11 floor 0 swal 0
+SR-ERROR bad dump: dump holds F, and this step runs no P5 to keep it (heat off)
+Traceback (most recent call last):
+  File "C:\Users\YOHANB~1\AppData\Local\Temp\claude\c--workspace-sandbox-reactions\b019de9f-acd5-462b-b7ee-c05aeb494a4d\scratchpad\led.py", line 3, in <module>
+    s=json.load(open(d+'/summary.json'))
+                ~~~~^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'build/d64/w5k_heat/summary.json'
+SR-HEADLESS DONE steps=1000 sim_time=70.201643 until=none
+build/d64/w5k_reactions: steps 5001-6000 dt 11.166 |W| 6.362e+05 dInv 6467 per_tu/|W| 9.103e-04
+   dK -7.404 dU -70.04 dcold 2.874e+04 dW -4.971e+04 rad 2.748e+04 nuc 0 nu 0 esc 30.12 floor 0 swal 0
+build/d64/w5k_heat: steps 5001-6000 dt 11.397 |W| 6.362e+05 dInv 3732 per_tu/|W| 5.146e-04
+   dK -27.15 dU 171.7 dcold -3.829e+04 dW 6.993e+04 rad 0 nuc 2.807e+04 nu 0 esc 26.23 floor 0 swal 0
+build/d64/w5k_hg: steps 5001-6000 dt 11.248 |W| 6.362e+05 dInv 5179 per_tu/|W| 7.237e-04
+   dK -27.59 dU 2463 dcold -3947 dW 6665 rad 0 nuc 0 nu 0 esc 26.07 floor 0 swal 0
+SR-HEADLESS DONE steps=1000 sim_time=70.230348 until=none
+build/d64/p1_hg: steps 5001-6000 dt 11.195 |W| 6.362e+05 dInv 12.24 per_tu/|W| 1.718e-06
+   dK -23.88 dU 2540 dcold 2659 dW -5189 rad 0 nuc 0 nu 0 esc 26.01 floor 0 swal 0
+SR-HEADLESS DONE steps=1000 sim_time=70.365291 until=none
+build/d64/p1_base: steps 5001-6000 dt 11.330 |W| 6.362e+05 dInv -22.93 per_tu/|W| -3.181e-06
+   dK -20.22 dU 394.6 dcold 6137 dW -1.187e+04 rad 2.586e+04 nuc 2.055e+04 nu 0 esc 30.05 floor 0 swal 0
+build/d64/rem_new: steps 1-4000 dt 32.673 |W| 2.33e+05 dInv 5497 per_tu/|W| 7.222e-04
+   dK 8.043e+04 dU -4.827e+04 dcold 5.375e+04 dW -1.264e+05 rad 8.893e+07 nuc 0 nu 0 esc 1555 floor 8.888e+07 swal 0
+build/d64/rem5_new: steps 1-2000 dt 15.986 |W| 2.331e+05 dInv -1.993e+04 per_tu/|W| -5.349e-03
+   dK 7.866e+04 dU 1103 dcold 9.011e+04 dW -2.006e+05 rad 2.873e+05 nuc 0 nu 0 esc 0 floor 2.764e+05 swal 0
+build/d64/rem5_old: steps 1-2000 dt 19.972 |W| 2.331e+05 dInv 9.823e+05 per_tu/|W| 2.110e-01
+   dK 191.6 dU 6.371e+04 dcold 7.828e+04 dW -1.755e+05 rad 1.014e+06 nuc 0 nu 0 esc 1794 floor -8.689 swal 0
+SR-HEADLESS DONE steps=2000 sim_time=19.471972 until=none
+build/d64/rem5hg_old: steps 1-2000 dt 19.449 |W| 2.331e+05 dInv 1.891e+05 per_tu/|W| 4.171e-02
+   dK -24.99 dU 2.891e+04 dcold -2.779e+04 dW 1.317e+05 rad 0 nuc 0 nu 0 esc 5.612e+04 floor -198.3 swal 0
+SR-HEADLESS DONE steps=2000 sim_time=14.941124 until=none
+build/d64/rem5hg_new: steps 1-2000 dt 14.918 |W| 2.331e+05 dInv -1.855e+04 per_tu/|W| -5.336e-03
+   dK 1348 dU 7.69e+04 dcold 6.689e+04 dW -1.55e+05 rad 0 nuc 0 nu 0 esc 3175 floor 1.185e+04 swal 0
+build/d64/rem5hg_phi: steps 1-2000 dt 15.027 |W| 2.331e+05 dInv -1.451e+04 per_tu/|W| -4.142e-03
+   dK 499.1 dU 7.431e+04 dcold 6.576e+04 dW -1.495e+05 rad 0 nuc 0 nu 0 esc 4825 floor 1.044e+04 swal 0
+build/d64/rem5_phi: steps 1-8000 dt 82.229 |W| 2.331e+05 dInv -2.974e+04 per_tu/|W| -1.552e-03
+   dK 6.938e+04 dU -945.7 dcold 1.905e+04 dW -3.659e+04 rad 5.355e+09 nuc 0 nu 0 esc 220.8 floor 5.355e+09 swal 0
+1
+0
+build/d64/rem5w_4000: steps 4001-4500 dt 5.507 |W| 3.211e+05 dInv -3.05 per_tu/|W| -1.725e-06
+   dK -848.9 dU -257.1 dcold -7124 dW 1.65e+04 rad 496 nuc 0 nu 0 esc 0 floor 8768 swal 0
+0
+build/d64/rem5w_6000: steps 6001-6500 dt 5.839 |W| 2.823e+05 dInv -2799 per_tu/|W| -1.697e-03
+   dK -3270 dU 1434 dcold -1765 dW 5507 rad 895.1 nuc 0 nu 0 esc 54.95 floor 5654 swal 0
+build/d64/rem5w_6000b: steps 6001-8000 dt 23.646 |W| 2.823e+05 dInv -7680 per_tu/|W| -1.150e-03
+   dK -5345 dU 1274 dcold -2221 dW 1.268e+04 rad 2838 nuc 0 nu 0 esc 97.44 floor 1.701e+04 swal 0
+SR-WARN heat unconverged step 1201 passes 3 rounds 4096
+SR-WARN heat unconverged step 1493 passes 2 rounds 4096
+SR-WARN heat unconverged step 1494 passes 4 rounds 4096
+SR-WARN heat unconverged step 1495 passes 6 rounds 4096
+SR-WARN heat unconverged step 1496 passes 3 rounds 4096
+SR-WARN heat unconverged step 1527 passes 2 rounds 4096
+SR-WARN heat unconverged step 1528 passes 4 rounds 4096
+SR-WARN heat unconverged step 1529 passes 4 rounds 4096
+SR-WARN heat unconverged step 1558 passes 1 rounds 4096
+SR-WARN heat unconverged step 1559 passes 6 rounds 4096
+SR-WARN heat unconverged step 1645 passes 6 rounds 4096
+SR-WARN heat unconverged step 1646 passes 2 rounds 4096
+SR-WARN heat unconverged step 1647 passes 2 rounds 4096
+SR-WARN heat unconverged step 1648 passes 2 rounds 4096
+SR-WARN heat unconverged step 1649 passes 2 rounds 4096
+SR-WARN heat unconverged step 1650 passes 3 rounds 4096
+SR-WARN heat unconverged step 1673 passes 1 rounds 4096
+SR-WARN heat unconverged step 1674 passes 4 rounds 4096
+SR-WARN heat unconverged step 1675 passes 7 rounds 4096
+SR-WARN heat unconverged step 1697 passes 2 rounds 4096
+SR-WARN heat unconverged step 1698 passes 3 rounds 4096
+SR-WARN heat unconverged step 1699 passes 2 rounds 4096
+SR-WARN heat unconverged step 1700 passes 2 rounds 4096
+SR-WARN heat unconverged step 1701 passes 3 rounds 4096
+SR-WARN heat unconverged step 1722 passes 2 rounds 4096
+SR-WARN heat unconverged step 1723 passes 4 rounds 4096
+SR-WARN heat unconverged step 1724 passes 5 rounds 4096
+SR-WARN heat unconverged step 1744 passes 2 rounds 4096
+SR-WARN heat unconverged step 1745 passes 3 rounds 4096
+SR-WARN heat unconverged step 1755 passes 2 rounds 4096
+SR-WARN heat unconverged step 1756 passes 3 rounds 4096
+SR-WARN heat unconverged step 1803 passes 2 rounds 4096
+SR-WARN heat unconverged step 1804 passes 2 rounds 4096
+SR-WARN heat unconverged step 1812 passes 2 rounds 4096
+SR-WARN heat unconverged step 1813 passes 3 rounds 4096
+SR-WARN heat unconverged step 1849 passes 2 rounds 4096
+SR-WARN heat unconverged step 1850 passes 3 rounds 4096
+SR-WARN heat unconverged step 1851 passes 2 rounds 4096
+SR-WARN heat unconverged step 1852 passes 3 rounds 4096
+SR-WARN heat unconverged step 1853 passes 2 rounds 4096
+SR-WARN heat unconverged step 1854 passes 3 rounds 4096
+SR-WARN heat unconverged step 1863 passes 2 rounds 4096
+SR-WARN heat unconverged step 1864 passes 2 rounds 4096
+SR-WARN heat unconverged step 1879 passes 8 rounds 4096
+SR-WARN heat unconverged step 1880 passes 8 rounds 4096
+SR-WARN heat unconverged step 1881 passes 9 rounds 4096
+SR-WARN heat unconverged step 1883 passes 7 rounds 4096
+SR-WARN heat unconverged step 1885 passes 6 rounds 4096
+SR-WARN heat unconverged step 1886 passes 2 rounds 4096
+SR-WARN heat unconverged step 1887 passes 2 rounds 4096
+SR-WARN heat unconverged step 1888 passes 2 rounds 4096
+SR-WARN heat unconverged step 1889 passes 2 rounds 4096
+SR-WARN heat unconverged step 1890 passes 3 rounds 4096
+SR-WARN heat unconverged step 1891 passes 7 rounds 4096
+SR-WARN heat unconverged step 1892 passes 3 rounds 4096
+SR-WARN heat unconverged step 1893 passes 3 rounds 4096
+SR-WARN heat unconverged step 1894 passes 3 rounds 4096
+SR-WARN heat unconverged step 1895 passes 2 rounds 4096
+SR-WARN heat unconverged step 1896 passes 2 rounds 4096
+SR-WARN heat unconverged step 1897 passes 2 rounds 4096
+SR-WARN heat unconverged step 1898 passes 2 rounds 4096
+SR-WARN heat unconverged step 1899 passes 2 rounds 4096
+SR-WARN heat unconverged step 1900 passes 7 rounds 4096
+SR-WARN heat unconverged step 1901 passes 3 rounds 4096
+SR-WARN heat unconverged step 1902 passes 3 rounds 4096
+SR-WARN heat unconverged step 1903 passes 2 rounds 4096
+SR-WARN heat unconverged step 1904 passes 2 rounds 4096
+SR-WARN heat unconverged step 1905 passes 3 rounds 4096
+SR-WARN heat unconverged step 1906 passes 7 rounds 4096
+SR-WARN heat unconverged step 1907 passes 7 rounds 4096
+SR-WARN heat unconverged step 1908 passes 3 rounds 4096
+SR-WARN heat unconverged step 1909 passes 3 rounds 4096
+SR-WARN heat unconverged step 1910 passes 7 rounds 4096
+SR-WARN heat unconverged step 1911 passes 8 rounds 4096
+SR-WARN heat unconverged step 1912 passes 3 rounds 4096
+SR-WARN heat unconverged step 1913 passes 2 rounds 4096
+SR-WARN heat unconverged step 1914 passes 2 rounds 4096
+SR-WARN heat unconverged step 1915 passes 7 rounds 4096
+SR-WARN heat unconverged step 1916 passes 8 rounds 4096
+SR-WARN heat unconverged step 1917 passes 7 rounds 4096
+SR-WARN heat unconverged step 1918 passes 3 rounds 4096
+SR-WARN heat unconverged step 1919 passes 8 rounds 4096
+SR-WARN heat unconverged step 1920 passes 7 rounds 4096
+SR-WARN heat unconverged step 1921 passes 2 rounds 4096
+SR-WARN heat unconverged step 1922 passes 2 rounds 4096
+SR-WARN heat unconverged step 1923 passes 2 rounds 4096
+SR-WARN heat unconverged step 1924 passes 2 rounds 4096
+SR-WARN heat unconverged step 1925 passes 2 rounds 4096
+SR-WARN heat unconverged step 1926 passes 2 rounds 4096
+SR-WARN heat unconverged step 1927 passes 2 rounds 4096
+SR-WARN heat unconverged step 1928 passes 3 rounds 4096
+SR-WARN heat unconverged step 1929 passes 2 rounds 4096
+SR-WARN heat unconverged step 1930 passes 3 rounds 4096
+SR-WARN heat unconverged step 1931 passes 2 rounds 4096
+SR-WARN heat unconverged step 1932 passes 2 rounds 4096
+SR-WARN heat unconverged step 1933 passes 2 rounds 4096
+SR-WARN heat unconverged step 1934 passes 2 rounds 4096
+SR-WARN heat unconverged step 1935 passes 2 rounds 4096
+SR-WARN heat unconverged step 1936 passes 2 rounds 4096
+SR-WARN heat unconverged step 1937 passes 2 rounds 4096
+SR-WARN heat unconverged step 1938 passes 2 rounds 4096
+SR-WARN heat unconverged step 1939 passes 2 rounds 4096
+SR-WARN heat unconverged step 1940 passes 3 rounds 4096
+SR-WARN heat unconverged step 1941 passes 3 rounds 4096
+SR-WARN heat unconverged step 1942 passes 4 rounds 4096
+SR-WARN heat unconverged step 1943 passes 6 rounds 4096
+SR-WARN heat unconverged step 1944 passes 3 rounds 4096
+SR-WARN heat unconverged step 1945 passes 2 rounds 4096
+SR-WARN heat unconverged step 1946 passes 1 rounds 4096
+SR-WARN heat unconverged step 1947 passes 2 rounds 4096
+SR-WARN heat unconverged step 1948 passes 3 rounds 4096
+SR-WARN heat unconverged step 1949 passes 2 rounds 4096
+SR-WARN heat unconverged step 1950 passes 2 rounds 4096
+SR-WARN heat unconverged step 1951 passes 1 rounds 4096
+SR-WARN heat unconverged step 1953 passes 2 rounds 4096
+SR-WARN heat unconverged step 1954 passes 1 rounds 4096
+SR-WARN heat unconverged step 1955 passes 2 rounds 4096
+SR-WARN heat unconverged step 1956 passes 3 rounds 4096
+SR-WARN heat unconverged step 1957 passes 1 rounds 4096
+SR-WARN heat unconverged step 1958 passes 3 rounds 4096
+SR-WARN heat unconverged step 1959 passes 1 rounds 4096
+SR-WARN heat unconverged step 1960 passes 3 rounds 4096
+SR-WARN heat unconverged step 1961 passes 1 rounds 4096
+SR-WARN heat unconverged step 1962 passes 2 rounds 4096
+SR-WARN heat unconverged step 1963 passes 1 rounds 4096
+SR-WARN heat unconverged step 1964 passes 2 rounds 4096
+SR-WARN heat unconverged step 1965 passes 2 rounds 4096
+SR-WARN heat unconverged step 1966 passes 1 rounds 4096
+SR-WARN heat unconverged step 1967 passes 2 rounds 4096
+SR-WARN heat unconverged step 1968 passes 1 rounds 4096
+SR-WARN heat unconverged step 1970 passes 1 rounds 4096
+SR-WARN heat unconverged step 1971 passes 2 rounds 4096
+SR-WARN heat unconverged step 1972 passes 1 rounds 4096
+SR-WARN heat unconverged step 1973 passes 8 rounds 4096
+SR-WARN heat unconverged step 1974 passes 11 rounds 4096
+SR-WARN heat unconverged step 1975 passes 4 rounds 4096
+SR-WARN heat unconverged step 1976 passes 5 rounds 4096
+SR-WARN heat unconverged step 1977 passes 3 rounds 4096
+SR-WARN heat unconverged step 1978 passes 2 rounds 4096
+SR-WARN heat unconverged step 1979 passes 10 rounds 4096
+SR-WARN heat unconverged step 1980 passes 4 rounds 4096
+SR-WARN heat unconverged step 1981 passes 2 rounds 4096
+SR-WARN heat unconverged step 1982 passes 1 rounds 4096
+SR-WARN heat unconverged step 1983 passes 7 rounds 4096
+SR-WARN heat unconverged step 1984 passes 5 rounds 4096
+SR-WARN heat unconverged step 1985 passes 3 rounds 4096
+SR-WARN heat unconverged step 1986 passes 2 rounds 4096
+SR-WARN heat unconverged step 1987 passes 2 rounds 4096
+SR-WARN heat unconverged step 1988 passes 1 rounds 4096
+SR-WARN heat unconverged step 1989 passes 4 rounds 4096
+SR-WARN heat unconverged step 1990 passes 8 rounds 4096
+SR-WARN heat unconverged step 1991 passes 4 rounds 4096
+SR-WARN heat unconverged step 1992 passes 2 rounds 4096
+SR-WARN heat unconverged step 1993 passes 2 rounds 4096
+SR-WARN heat unconverged step 1994 passes 2 rounds 4096
+SR-WARN heat unconverged step 1995 passes 2 rounds 4096
+SR-WARN heat unconverged step 1996 passes 2 rounds 4096
+SR-WARN heat unconverged step 1997 passes 3 rounds 4096
+SR-WARN heat unconverged step 1998 passes 2 rounds 4096
+SR-WARN heat unconverged step 1999 passes 2 rounds 4096
+build/d64/rem5p_2000: steps 1-2000 dt 15.349 |W| 2.331e+05 dInv -1.689e+04 per_tu/|W| -4.721e-03
+   dK 3.04e+04 dU -4603 dcold 3.018e+05 dW -5.26e+05 rad 4.669e+09 nuc 0 nu 0 esc 17.73 floor 4.669e+09 swal 0
+SR-WARN heat unconverged step 1201 passes 3 rounds 4096
+SR-WARN heat unconverged step 1493 passes 2 rounds 4096
+SR-WARN heat unconverged step 1494 passes 4 rounds 4096
+SR-WARN heat unconverged step 1495 passes 6 rounds 4096
+SR-WARN heat unconverged step 1496 passes 3 rounds 4096
+SR-WARN heat unconverged step 1527 passes 2 rounds 4096
+SR-WARN heat unconverged step 1528 passes 4 rounds 4096
+SR-WARN heat unconverged step 1529 passes 4 rounds 4096
+SR-WARN heat unconverged step 1558 passes 1 rounds 4096
+SR-WARN heat unconverged step 1559 passes 6 rounds 4096
+SR-WARN heat unconverged step 1645 passes 6 rounds 4096
+SR-WARN heat unconverged step 1646 passes 2 rounds 4096
+SR-WARN heat unconverged step 1647 passes 2 rounds 4096
+SR-WARN heat unconverged step 1648 passes 2 rounds 4096
+SR-WARN heat unconverged step 1649 passes 2 rounds 4096
+SR-WARN heat unconverged step 1650 passes 3 rounds 4096
+SR-WARN heat unconverged step 1673 passes 1 rounds 4096
+SR-WARN heat unconverged step 1674 passes 4 rounds 4096
+SR-WARN heat unconverged step 1675 passes 7 rounds 4096
+SR-WARN heat unconverged step 1697 passes 2 rounds 4096
+SR-WARN heat unconverged step 1698 passes 3 rounds 4096
+SR-WARN heat unconverged step 1699 passes 2 rounds 4096
+SR-WARN heat unconverged step 1700 passes 2 rounds 4096
+SR-WARN heat unconverged step 1701 passes 3 rounds 4096
+SR-WARN heat unconverged step 1722 passes 2 rounds 4096
+SR-WARN heat unconverged step 1723 passes 4 rounds 4096
+SR-WARN heat unconverged step 1724 passes 5 rounds 4096
+SR-WARN heat unconverged step 1744 passes 2 rounds 4096
+SR-WARN heat unconverged step 1745 passes 3 rounds 4096
+SR-WARN heat unconverged step 1755 passes 2 rounds 4096
+SR-WARN heat unconverged step 1756 passes 3 rounds 4096
+SR-WARN heat unconverged step 1803 passes 2 rounds 4096
+SR-WARN heat unconverged step 1804 passes 2 rounds 4096
+SR-WARN heat unconverged step 1812 passes 2 rounds 4096
+SR-WARN heat unconverged step 1813 passes 3 rounds 4096
+SR-WARN heat unconverged step 1849 passes 2 rounds 4096
+SR-WARN heat unconverged step 1850 passes 3 rounds 4096
+SR-WARN heat unconverged step 1851 passes 2 rounds 4096
+SR-WARN heat unconverged step 1852 passes 3 rounds 4096
+SR-WARN heat unconverged step 1853 passes 2 rounds 4096
+SR-WARN heat unconverged step 1854 passes 3 rounds 4096
+SR-WARN heat unconverged step 1863 passes 2 rounds 4096
+SR-WARN heat unconverged step 1864 passes 2 rounds 4096
+SR-WARN heat unconverged step 1879 passes 8 rounds 4096
+SR-WARN heat unconverged step 1880 passes 8 rounds 4096
+SR-WARN heat unconverged step 1881 passes 9 rounds 4096
+SR-WARN heat unconverged step 1883 passes 7 rounds 4096
+SR-WARN heat unconverged step 1885 passes 6 rounds 4096
+SR-WARN heat unconverged step 1886 passes 2 rounds 4096
+SR-WARN heat unconverged step 1887 passes 2 rounds 4096
+SR-WARN heat unconverged step 1888 passes 2 rounds 4096
+SR-WARN heat unconverged step 1889 passes 2 rounds 4096
+SR-WARN heat unconverged step 1890 passes 3 rounds 4096
+SR-WARN heat unconverged step 1891 passes 7 rounds 4096
+SR-WARN heat unconverged step 1892 passes 3 rounds 4096
+SR-WARN heat unconverged step 1893 passes 3 rounds 4096
+SR-WARN heat unconverged step 1894 passes 3 rounds 4096
+SR-WARN heat unconverged step 1895 passes 2 rounds 4096
+SR-WARN heat unconverged step 1896 passes 2 rounds 4096
+SR-WARN heat unconverged step 1897 passes 2 rounds 4096
+SR-WARN heat unconverged step 1898 passes 2 rounds 4096
+SR-WARN heat unconverged step 1899 passes 2 rounds 4096
+SR-WARN heat unconverged step 1900 passes 7 rounds 4096
+SR-WARN heat unconverged step 1901 passes 3 rounds 4096
+SR-WARN heat unconverged step 1902 passes 3 rounds 4096
+SR-WARN heat unconverged step 1903 passes 2 rounds 4096
+SR-WARN heat unconverged step 1904 passes 2 rounds 4096
+SR-WARN heat unconverged step 1905 passes 3 rounds 4096
+SR-WARN heat unconverged step 1906 passes 7 rounds 4096
+SR-WARN heat unconverged step 1907 passes 7 rounds 4096
+SR-WARN heat unconverged step 1908 passes 3 rounds 4096
+SR-WARN heat unconverged step 1909 passes 3 rounds 4096
+SR-WARN heat unconverged step 1910 passes 7 rounds 4096
+SR-WARN heat unconverged step 1911 passes 8 rounds 4096
+SR-WARN heat unconverged step 1912 passes 3 rounds 4096
+SR-WARN heat unconverged step 1913 passes 2 rounds 4096
+SR-WARN heat unconverged step 1914 passes 2 rounds 4096
+SR-WARN heat unconverged step 1915 passes 7 rounds 4096
+SR-WARN heat unconverged step 1916 passes 8 rounds 4096
+SR-WARN heat unconverged step 1917 passes 7 rounds 4096
+SR-WARN heat unconverged step 1918 passes 3 rounds 4096
+SR-WARN heat unconverged step 1919 passes 8 rounds 4096
+SR-WARN heat unconverged step 1920 passes 7 rounds 4096
+SR-WARN heat unconverged step 1921 passes 2 rounds 4096
+SR-WARN heat unconverged step 1922 passes 2 rounds 4096
+SR-WARN heat unconverged step 1923 passes 2 rounds 4096
+SR-WARN heat unconverged step 1924 passes 2 rounds 4096
+SR-WARN heat unconverged step 1925 passes 2 rounds 4096
+SR-WARN heat unconverged step 1926 passes 2 rounds 4096
+SR-WARN heat unconverged step 1927 passes 2 rounds 4096
+SR-WARN heat unconverged step 1928 passes 3 rounds 4096
+SR-WARN heat unconverged step 1929 passes 2 rounds 4096
+SR-WARN heat unconverged step 1930 passes 3 rounds 4096
+SR-WARN heat unconverged step 1931 passes 2 rounds 4096
+SR-WARN heat unconverged step 1932 passes 2 rounds 4096
+SR-WARN heat unconverged step 1933 passes 2 rounds 4096
+SR-WARN heat unconverged step 1934 passes 2 rounds 4096
+SR-WARN heat unconverged step 1935 passes 2 rounds 4096
+SR-WARN heat unconverged step 1936 passes 2 rounds 4096
+SR-WARN heat unconverged step 1937 passes 2 rounds 4096
+SR-WARN heat unconverged step 1938 passes 2 rounds 4096
+SR-WARN heat unconverged step 1939 passes 2 rounds 4096
+SR-WARN heat unconverged step 1940 passes 3 rounds 4096
+SR-WARN heat unconverged step 1941 passes 3 rounds 4096
+SR-WARN heat unconverged step 1942 passes 4 rounds 4096
+SR-WARN heat unconverged step 1943 passes 6 rounds 4096
+SR-WARN heat unconverged step 1944 passes 3 rounds 4096
+SR-WARN heat unconverged step 1945 passes 2 rounds 4096
+SR-WARN heat unconverged step 1946 passes 1 rounds 4096
+SR-WARN heat unconverged step 1947 passes 2 rounds 4096
+SR-WARN heat unconverged step 1948 passes 3 rounds 4096
+SR-WARN heat unconverged step 1949 passes 2 rounds 4096
+SR-WARN heat unconverged step 1950 passes 2 rounds 4096
+SR-WARN heat unconverged step 1951 passes 1 rounds 4096
+SR-WARN heat unconverged step 1953 passes 2 rounds 4096
+SR-WARN heat unconverged step 1954 passes 1 rounds 4096
+SR-WARN heat unconverged step 1955 passes 2 rounds 4096
+SR-WARN heat unconverged step 1956 passes 3 rounds 4096
+SR-WARN heat unconverged step 1957 passes 1 rounds 4096
+SR-WARN heat unconverged step 1958 passes 3 rounds 4096
+SR-WARN heat unconverged step 1959 passes 1 rounds 4096
+SR-WARN heat unconverged step 1960 passes 3 rounds 4096
+SR-WARN heat unconverged step 1961 passes 1 rounds 4096
+SR-WARN heat unconverged step 1962 passes 2 rounds 4096
+SR-WARN heat unconverged step 1963 passes 1 rounds 4096
+SR-WARN heat unconverged step 1964 passes 2 rounds 4096
+SR-WARN heat unconverged step 1965 passes 2 rounds 4096
+SR-WARN heat unconverged step 1966 passes 1 rounds 4096
+SR-WARN heat unconverged step 1967 passes 2 rounds 4096
+SR-WARN heat unconverged step 1968 passes 1 rounds 4096
+SR-WARN heat unconverged step 1970 passes 1 rounds 4096
+SR-WARN heat unconverged step 1971 passes 2 rounds 4096
+SR-WARN heat unconverged step 1972 passes 1 rounds 4096
+SR-WARN heat unconverged step 1973 passes 8 rounds 4096
+SR-WARN heat unconverged step 1974 passes 11 rounds 4096
+SR-WARN heat unconverged step 1975 passes 4 rounds 4096
+SR-WARN heat unconverged step 1976 passes 5 rounds 4096
+SR-WARN heat unconverged step 1977 passes 3 rounds 4096
+SR-WARN heat unconverged step 1978 passes 2 rounds 4096
+SR-WARN heat unconverged step 1979 passes 10 rounds 4096
+SR-WARN heat unconverged step 1980 passes 4 rounds 4096
+SR-WARN heat unconverged step 1981 passes 2 rounds 4096
+SR-WARN heat unconverged step 1982 passes 1 rounds 4096
+SR-WARN heat unconverged step 1983 passes 7 rounds 4096
+SR-WARN heat unconverged step 1984 passes 5 rounds 4096
+SR-WARN heat unconverged step 1985 passes 3 rounds 4096
+SR-WARN heat unconverged step 1986 passes 2 rounds 4096
+SR-WARN heat unconverged step 1987 passes 2 rounds 4096
+SR-WARN heat unconverged step 1988 passes 1 rounds 4096
+SR-WARN heat unconverged step 1989 passes 4 rounds 4096
+SR-WARN heat unconverged step 1990 passes 8 rounds 4096
+SR-WARN heat unconverged step 1991 passes 4 rounds 4096
+SR-WARN heat unconverged step 1992 passes 2 rounds 4096
+SR-WARN heat unconverged step 1993 passes 2 rounds 4096
+SR-WARN heat unconverged step 1994 passes 2 rounds 4096
+SR-WARN heat unconverged step 1995 passes 2 rounds 4096
+SR-WARN heat unconverged step 1996 passes 2 rounds 4096
+SR-WARN heat unconverged step 1997 passes 3 rounds 4096
+SR-WARN heat unconverged step 1998 passes 2 rounds 4096
+SR-WARN heat unconverged step 1999 passes 2 rounds 4096
+SR-WARN heat unconverged step 2000 passes 2 rounds 4096
+SR-WARN heat unconverged step 2001 passes 2 rounds 4096
+SR-WARN heat unconverged step 2002 passes 3 rounds 4096
+SR-WARN heat unconverged step 2003 passes 6 rounds 4096
+SR-WARN heat unconverged step 2005 passes 1 rounds 4096
+SR-WARN heat unconverged step 2006 passes 2 rounds 4096
+SR-WARN heat unconverged step 2007 passes 3 rounds 4096
+SR-WARN heat unconverged step 2025 passes 6 rounds 4096
+SR-WARN heat unconverged step 2031 passes 6 rounds 4096
+SR-WARN heat unconverged step 2032 passes 7 rounds 4096
+SR-WARN heat unconverged step 2033 passes 7 rounds 4096
+SR-WARN heat unconverged step 2034 passes 1 rounds 4096
+SR-WARN heat unconverged step 2035 passes 3 rounds 4096
+SR-WARN heat unconverged step 2036 passes 3 rounds 4096
+SR-WARN heat unconverged step 2037 passes 2 rounds 4096
+SR-WARN heat unconverged step 2038 passes 2 rounds 4096
+SR-WARN heat unconverged step 2040 passes 2 rounds 4096
+SR-WARN heat unconverged step 2041 passes 2 rounds 4096
+SR-WARN heat unconverged step 2042 passes 2 rounds 4096
+SR-WARN heat unconverged step 2044 passes 3 rounds 4096
+SR-WARN heat unconverged step 2045 passes 2 rounds 4096
+SR-WARN heat unconverged step 2046 passes 2 rounds 4096
+SR-WARN heat unconverged step 2047 passes 3 rounds 4096
+SR-WARN heat unconverged step 2048 passes 2 rounds 4096
+SR-WARN heat unconverged step 2049 passes 3 rounds 4096
+SR-WARN heat unconverged step 2050 passes 2 rounds 4096
+SR-WARN heat unconverged step 2052 passes 16 rounds 4096
+SR-WARN heat unconverged step 2053 passes 4 rounds 4096
+SR-WARN heat unconverged step 2054 passes 3 rounds 4096
+SR-WARN heat unconverged step 2055 passes 4 rounds 4096
+SR-WARN heat unconverged step 2056 passes 3 rounds 4096
+SR-WARN heat unconverged step 2057 passes 2 rounds 4096
+SR-WARN heat unconverged step 2058 passes 2 rounds 4096
+SR-WARN heat unconverged step 2059 passes 2 rounds 4096
+SR-WARN heat unconverged step 2060 passes 2 rounds 4096
+SR-WARN heat unconverged step 2061 passes 2 rounds 4096
+SR-WARN heat unconverged step 2062 passes 2 rounds 4096
+SR-WARN heat unconverged step 2063 passes 2 rounds 4096
+SR-WARN heat unconverged step 2064 passes 3 rounds 4096
+SR-WARN heat unconverged step 2065 passes 10 rounds 4096
+SR-WARN heat unconverged step 2066 passes 3 rounds 4096
+SR-WARN heat unconverged step 2067 passes 2 rounds 4096
+SR-WARN heat unconverged step 2068 passes 2 rounds 4096
+SR-WARN heat unconverged step 2069 passes 3 rounds 4096
+SR-WARN heat unconverged step 2070 passes 3 rounds 4096
+SR-WARN heat unconverged step 2071 passes 3 rounds 4096
+SR-WARN heat unconverged step 2072 passes 2 rounds 4096
+SR-WARN heat unconverged step 2073 passes 2 rounds 4096
+SR-WARN heat unconverged step 2074 passes 2 rounds 4096
+SR-WARN heat unconverged step 2075 passes 9 rounds 4096
+SR-WARN heat unconverged step 2076 passes 6 rounds 4096
+SR-WARN heat unconverged step 2077 passes 2 rounds 4096
+SR-WARN heat unconverged step 2078 passes 2 rounds 4096
+SR-WARN heat unconverged step 2079 passes 2 rounds 4096
+SR-WARN heat unconverged step 2080 passes 2 rounds 4096
+SR-WARN heat unconverged step 2081 passes 7 rounds 4096
+SR-WARN heat unconverged step 2082 passes 7 rounds 4096
+SR-WARN heat unconverged step 2083 passes 3 rounds 4096
+SR-WARN heat unconverged step 2084 passes 3 rounds 4096
+SR-WARN heat unconverged step 2085 passes 3 rounds 4096
+SR-WARN heat unconverged step 2086 passes 2 rounds 4096
+SR-WARN heat unconverged step 2087 passes 2 rounds 4096
+SR-WARN heat unconverged step 2088 passes 3 rounds 4096
+SR-WARN heat unconverged step 2089 passes 7 rounds 4096
+SR-WARN heat unconverged step 2090 passes 6 rounds 4096
+SR-WARN heat unconverged step 2091 passes 7 rounds 4096
+SR-WARN heat unconverged step 2092 passes 8 rounds 4096
+SR-WARN heat unconverged step 2094 passes 7 rounds 4096
+SR-WARN heat unconverged step 2096 passes 6 rounds 4096
+SR-WARN heat unconverged step 2097 passes 8 rounds 4096
+SR-WARN heat unconverged step 2098 passes 8 rounds 4096
+SR-WARN heat unconverged step 2099 passes 8 rounds 4096
+SR-WARN heat unconverged step 2100 passes 7 rounds 4096
+SR-WARN heat unconverged step 2101 passes 8 rounds 4096
+SR-WARN heat unconverged step 2102 passes 4 rounds 4096
+SR-WARN heat unconverged step 2103 passes 2 rounds 4096
+SR-WARN heat unconverged step 2104 passes 4 rounds 4096
+SR-WARN heat unconverged step 2105 passes 6 rounds 4096
+SR-WARN heat unconverged step 2106 passes 2 rounds 4096
+SR-WARN heat unconverged step 2107 passes 2 rounds 4096
+SR-WARN heat unconverged step 2108 passes 2 rounds 4096
+SR-WARN heat unconverged step 2109 passes 2 rounds 4096
+SR-WARN heat unconverged step 2110 passes 2 rounds 4096
+SR-WARN heat unconverged step 2111 passes 1 rounds 4096
+SR-WARN heat unconverged step 2112 passes 2 rounds 4096
+SR-WARN heat unconverged step 2113 passes 2 rounds 4096
+SR-WARN heat unconverged step 2114 passes 3 rounds 4096
+SR-WARN heat unconverged step 2115 passes 2 rounds 4096
+SR-WARN heat unconverged step 2116 passes 2 rounds 4096
+SR-WARN heat unconverged step 2117 passes 4 rounds 4096
+SR-WARN heat unconverged step 2118 passes 2 rounds 4096
+SR-WARN heat unconverged step 2119 passes 3 rounds 4096
+SR-WARN heat unconverged step 2120 passes 3 rounds 4096
+SR-WARN heat unconverged step 2121 passes 2 rounds 4096
+SR-WARN heat unconverged step 2122 passes 2 rounds 4096
+SR-WARN heat unconverged step 2123 passes 2 rounds 4096
+SR-WARN heat unconverged step 2124 passes 2 rounds 4096
+SR-WARN heat unconverged step 2125 passes 1 rounds 4096
+SR-WARN heat unconverged step 2126 passes 2 rounds 4096
+SR-WARN heat unconverged step 2127 passes 7 rounds 4096
+SR-WARN heat unconverged step 2128 passes 3 rounds 4096
+SR-WARN heat unconverged step 2129 passes 2 rounds 4096
+SR-WARN heat unconverged step 2130 passes 3 rounds 4096
+SR-WARN heat unconverged step 2131 passes 2 rounds 4096
+SR-WARN heat unconverged step 2132 passes 3 rounds 4096
+SR-WARN heat unconverged step 2133 passes 3 rounds 4096
+SR-WARN heat unconverged step 2134 passes 2 rounds 4096
+SR-WARN heat unconverged step 2135 passes 2 rounds 4096
+SR-WARN heat unconverged step 2136 passes 2 rounds 4096
+SR-WARN heat unconverged step 2137 passes 2 rounds 4096
+SR-WARN heat unconverged step 2138 passes 2 rounds 4096
+SR-WARN heat unconverged step 2139 passes 2 rounds 4096
+SR-WARN heat unconverged step 2140 passes 2 rounds 4096
+SR-WARN heat unconverged step 2141 passes 2 rounds 4096
+SR-WARN heat unconverged step 2142 passes 3 rounds 4096
+SR-WARN heat unconverged step 2143 passes 2 rounds 4096
+SR-WARN heat unconverged step 2144 passes 2 rounds 4096
+SR-WARN heat unconverged step 2145 passes 2 rounds 4096
+SR-WARN heat unconverged step 2146 passes 2 rounds 4096
+SR-WARN heat unconverged step 2147 passes 2 rounds 4096
+SR-WARN heat unconverged step 2148 passes 3 rounds 4096
+SR-WARN heat unconverged step 2149 passes 7 rounds 4096
+SR-WARN heat unconverged step 2150 passes 3 rounds 4096
+SR-WARN heat unconverged step 2151 passes 8 rounds 4096
+SR-WARN heat unconverged step 2152 passes 6 rounds 4096
+SR-WARN heat unconverged step 2153 passes 6 rounds 4096
+SR-WARN heat unconverged step 2154 passes 5 rounds 4096
+SR-WARN heat unconverged step 2155 passes 8 rounds 4096
+SR-WARN heat unconverged step 2158 passes 3 rounds 4096
+SR-WARN heat unconverged step 2159 passes 6 rounds 4096
+SR-WARN heat unconverged step 2160 passes 7 rounds 4096
+SR-WARN heat unconverged step 2161 passes 8 rounds 4096
+SR-WARN heat unconverged step 2162 passes 8 rounds 4096
+SR-WARN heat unconverged step 2163 passes 8 rounds 4096
+SR-WARN heat unconverged step 2164 passes 8 rounds 4096
+SR-WARN heat unconverged step 2165 passes 5 rounds 4096
+SR-WARN heat unconverged step 2166 passes 8 rounds 4096
+SR-WARN heat unconverged step 2167 passes 7 rounds 4096
+SR-WARN heat unconverged step 2168 passes 8 rounds 4096
+SR-WARN heat unconverged step 2169 passes 4 rounds 4096
+SR-WARN heat unconverged step 2170 passes 8 rounds 4096
+SR-WARN heat unconverged step 2171 passes 8 rounds 4096
+SR-WARN heat unconverged step 2172 passes 3 rounds 4096
+SR-WARN heat unconverged step 2181 passes 3 rounds 4096
+SR-WARN heat unconverged step 2191 passes 3 rounds 4096
+SR-WARN heat unconverged step 2533 passes 3 rounds 4096
+SR-WARN heat unconverged step 2703 passes 2 rounds 4096
+SR-WARN heat unconverged step 2765 passes 3 rounds 4096
+SR-WARN heat unconverged step 2766 passes 6 rounds 4096
+SR-WARN heat unconverged step 2772 passes 2 rounds 4096
+SR-WARN heat unconverged step 2775 passes 2 rounds 4096
+SR-WARN heat unconverged step 2782 passes 2 rounds 4096
+SR-WARN heat unconverged step 2783 passes 2 rounds 4096
+SR-WARN heat unconverged step 2784 passes 2 rounds 4096
+SR-WARN heat unconverged step 2789 passes 2 rounds 4096
+SR-WARN heat unconverged step 2793 passes 2 rounds 4096
+SR-WARN heat unconverged step 2795 passes 2 rounds 4096
+SR-WARN heat unconverged step 2796 passes 2 rounds 4096
+SR-WARN heat unconverged step 2797 passes 2 rounds 4096
+SR-WARN heat unconverged step 2798 passes 2 rounds 4096
+SR-WARN heat unconverged step 2799 passes 2 rounds 4096
+SR-WARN heat unconverged step 2800 passes 5 rounds 4096
+SR-WARN heat unconverged step 2801 passes 2 rounds 4096
+SR-WARN heat unconverged step 2802 passes 2 rounds 4096
+SR-WARN heat unconverged step 2803 passes 2 rounds 4096
+SR-WARN heat unconverged step 2804 passes 2 rounds 4096
+SR-WARN heat unconverged step 2805 passes 3 rounds 4096
+SR-WARN heat unconverged step 2856 passes 2 rounds 4096
+SR-WARN heat unconverged step 2857 passes 3 rounds 4096
+SR-WARN heat unconverged step 2922 passes 3 rounds 4096
+SR-WARN heat unconverged step 2924 passes 3 rounds 4096
+SR-WARN heat unconverged step 2925 passes 3 rounds 4096
+SR-WARN heat unconverged step 2932 passes 3 rounds 4096
+SR-WARN heat unconverged step 2933 passes 3 rounds 4096
+SR-WARN heat unconverged step 2936 passes 3 rounds 4096
+SR-WARN heat unconverged step 2938 passes 2 rounds 4096
+SR-WARN heat unconverged step 2945 passes 2 rounds 4096
+SR-WARN heat unconverged step 2948 passes 2 rounds 4096
+SR-WARN heat unconverged step 2949 passes 3 rounds 4096
+SR-WARN heat unconverged step 2952 passes 6 rounds 4096
+SR-WARN heat unconverged step 2953 passes 8 rounds 4096
+SR-WARN heat unconverged step 2958 passes 2 rounds 4096
+SR-WARN heat unconverged step 2959 passes 2 rounds 4096
+SR-WARN heat unconverged step 2962 passes 2 rounds 4096
+SR-WARN heat unconverged step 2963 passes 3 rounds 4096
+SR-WARN heat unconverged step 2965 passes 3 rounds 4096
+SR-WARN heat unconverged step 2966 passes 1 rounds 4096
+SR-WARN heat unconverged step 2967 passes 1 rounds 4096
+SR-WARN heat unconverged step 2968 passes 3 rounds 4096
+SR-WARN heat unconverged step 2969 passes 2 rounds 4096
+SR-WARN heat unconverged step 2970 passes 1 rounds 4096
+SR-WARN heat unconverged step 2972 passes 2 rounds 4096
+SR-WARN heat unconverged step 2973 passes 2 rounds 4096
+SR-WARN heat unconverged step 2974 passes 2 rounds 4096
+SR-WARN heat unconverged step 2977 passes 2 rounds 4096
+SR-WARN heat unconverged step 2978 passes 3 rounds 4096
+SR-WARN heat unconverged step 2980 passes 1 rounds 4096
+build/d64/rem5p_3000: steps 1-3000 dt 24.445 |W| 2.331e+05 dInv -1.747e+04 per_tu/|W| -3.067e-03
+   dK 8.484e+04 dU -4185 dcold 5.985e+04 dW -1.439e+05 rad 5.355e+09 nuc 0 nu 0 esc 17.79 floor 5.355e+09 swal 0
+build/d64/rem5h_3000: steps 1-3000 dt 26.994 |W| 2.331e+05 dInv -1.419e+04 per_tu/|W| -2.256e-03
+   dK 8.357e+04 dU -4454 dcold 3.583e+04 dW -9.239e+04 rad 4.135e+05 nuc 0 nu 0 esc 0 floor 4.502e+05 swal 0
+build/d64/rem5o_3000: steps 1-3000 dt 30.088 |W| 2.331e+05 dInv 1.45e+06 per_tu/|W| 2.067e-01
+   dK 173.7 dU 6.372e+04 dcold 7.83e+04 dW -1.755e+05 rad 1.481e+06 nuc 0 nu 0 esc 1811 floor -8.689 swal 0
+0
+build/d64/hyb_hg: steps 5001-6000 dt 11.194 |W| 6.362e+05 dInv 24.26 per_tu/|W| 3.406e-06
+   dK -23.41 dU 2650 dcold 2776 dW -5404 rad 0 nuc 0 nu 0 esc 25.98 floor 0 swal 0
+0
+build/d64/hyb_base: steps 5001-6000 dt 11.330 |W| 6.362e+05 dInv 16.42 per_tu/|W| 2.277e-06
+   dK -20.17 dU 394.2 dcold 6094 dW -1.18e+04 rad 2.585e+04 nuc 2.053e+04 nu 0 esc 30.05 floor 0 swal 0
+build/d64/rem5hg_c2: steps 1-4000 dt 12.389 |W| 2.33e+05 dInv -5311 per_tu/|W| -1.840e-03
+   dK 611.6 dU 7.872e+04 dcold 7.443e+04 dW -1.638e+05 rad 0 nuc 0 nu 0 esc 8420 floor 3661 swal 0
+build/d64/rem5h_8000: steps 1-8000 dt 86.244 |W| 2.331e+05 dInv -3.123e+04 per_tu/|W| -1.554e-03
+   dK 6.573e+04 dU 1923 dcold 1.321e+04 dW -2.394e+04 rad 4.163e+05 nuc 0 nu 0 esc 169.3 floor 5.046e+05 swal 0
+0
+build/d64/rem5hw_3000: steps 3001-4000 dt 11.605 |W| 3.254e+05 dInv -1272 per_tu/|W| -3.367e-04
+   dK -1.143e+04 dU 3121 dcold -1.1e+04 dW 3.738e+04 rad 395.4 nuc 0 nu 0 esc 0 floor 1.974e+04 swal 0
+   K 72259 U 4126 cold 68795 W -288022 maxv 16.07971237813216
+0
+build/d64/rem5hw_5000: steps 5001-6000 dt 11.854 |W| 2.771e+05 dInv -3637 per_tu/|W| -1.107e-03
+   dK -1653 dU 428.9 dcold -3053 dW 8724 rad 592.1 nuc 0 nu 0 esc 72.06 floor 8748 swal 0
+   K 68842 U 6015 cold 60944 W -268383 maxv 14.291798820279864
+0
+build/d64/rem5hw_7000: steps 7001-8000 dt 12.089 |W| 2.625e+05 dInv -3581 per_tu/|W| -1.128e-03
+   dK -1471 dU 490.6 dcold -1838 dW 5532 rad 551.9 nuc 0 nu 0 esc 0.3782 floor 6848 swal 0
+   K 65855 U 7381 cold 57196 W -257005 maxv 14.247441951025795
+0
+build/d64/r50_hyb: steps 1-1000 dt 8.108 |W| 2.33e+05 dInv -1163 per_tu/|W| -6.157e-04
+   dK 5386 dU -3.229e+04 dcold 3.014e+05 dW -5.136e+05 rad 2.363e+05 nuc 0 nu 0 esc 1535 floor -9.369 swal 0
+0
+build/d64/r50_old: steps 1-1000 dt 9.164 |W| 2.33e+05 dInv 3.657e+05 per_tu/|W| 1.713e-01
+   dK 387.6 dU 1.616e+04 dcold 7.604e+04 dW -1.684e+05 rad 4.391e+05 nuc 0 nu 0 esc 2445 floor -9.788 swal 0
+    Finished `release` profile [optimized] target(s) in 13.47s

@@ -217,7 +217,7 @@ fn the_cloud_falls_into_a_sink_with_mass_conserved_each_step() {
         let dt = hydro.dt(&st, Some((&full.gx[..], &full.gy[..])));
         let report = s.step(&mut st, &grid, dt);
         assert!(report.formed.is_none() && report.merged == 0, "step {step}: {report:?}");
-        hydro.step_with(&mut st, dt, Some((&full.gx[..], &full.gy[..])));
+        hydro.step_with(&mut st, dt, Some(&full));
         let now = grid_totals(&st).0 + s.mass();
         assert!(rel(now, total) < 1e-6, "step {step}: grid + sink mass {now} against {total}");
         assert!(s.mass() >= last, "step {step}: the sink lost mass");

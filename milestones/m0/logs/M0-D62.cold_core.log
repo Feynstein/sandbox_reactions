@@ -1,0 +1,44 @@
+== 2026-10-19T18:04:21-04:00 cold_core · task M0-D62 · box Laser2025-20 :: bash tests/gpu.sh cold_core physics
+-- cold_core · exit=101 · 13.94 s
+    Finished `release` profile [optimized] target(s) in 1.00s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 8 tests
+test cold_core::an_equilibrium_exists_at_095_m_ch_sb_and_none_at_11 ... SR-CORE (b) scan of 17 half decades: M from 22.78 to 3207.36; m_ch_sb 3216.42
+SR-CORE (b) 0.95 m_ch_sb = 3055.60: Σ_c 3.0781e5, R₉₀ 0.0994 cells, virial 5.0e-5
+SR-CORE (b) 1.1 m_ch_sb = 3538.06: none; the heaviest disk to Σ_c 10⁸ is 3207.36
+ok
+test cold_core::c_sheet_from_the_pure_law_is_1_4331_at_two_resolutions ... SR-CORE (a) c_sheet at 100 annuli: 1.43322
+SR-CORE (a) c_sheet at 200 annuli: 1.43307
+ok
+test cold_core::carbon_oxygen_m_ch_sb_is_c_sheet_k2_squared ... SR-CORE (a) C/O: m_ch_sb 3216.420, c_sheet K₂′²/G² 3216.861 (K₂′ 47.3762)
+SR-CORE (a) C/O: M(10⁰) 22.78 … M(10⁸) 3207.04, limit 3216.42, written 3216.42
+ok
+test cold_core::neutron_m_tov_sb_is_c_sheet_k2_squared_and_k9_holds ... SR-CORE (a) neutron: m_tov_sb 4853.170, c_sheet K₂ₙ²/G² 4854.658, m_tov/m_ch 1.5089
+SR-CORE (a) neutron: M(10⁰) 6.64 … M(10⁸) 4819.27, limit 4853.17, written 4853.17
+ok
+test cold_core::the_grid_holds_a_resolved_cold_disk_on_the_gpu_and_the_twin ... 
+thread 'cold_core::the_grid_holds_a_resolved_cold_disk_on_the_gpu_and_the_twin' (10888) panicked at crates\sr-engine\tests\gpu\cold_core.rs:349:13:
+scenes/cold_co_disk.json is stale (object 0: Rect { x0: 26, y0: 7, w: 1, h: 1, sigma: 4.470082681687129e-6, gas: Gas { heat: T(0.05), composition: [0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], v: [0.0, 0.0] } } against Rect { x0: 26, y0: 7, w: 1, h: 1, sigma: 4.470082681669271e-6, gas: Gas { heat: T(0.05), composition: [0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], v: [0.0, 0.0] } }) — SR_WRITE_SCENES=1 bash tests/gpu.sh cold_core physics rewrites it
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test cold_core::the_ring_kernel_gives_the_maclaurin_disks_potential ... SR-CORE (a) Maclaurin potential: worst error 6.37e-5 of |φ_c| (bound 1e-4)
+ok
+test cold_core::the_scene_file_is_the_current_grid_disk ... 
+thread 'cold_core::the_scene_file_is_the_current_grid_disk' (24916) panicked at crates\sr-engine\tests\gpu\cold_core.rs:349:13:
+scenes/cold_co_disk.json is stale (object 0: Rect { x0: 26, y0: 7, w: 1, h: 1, sigma: 4.470082681687129e-6, gas: Gas { heat: T(0.05), composition: [0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], v: [0.0, 0.0] } } against Rect { x0: 26, y0: 7, w: 1, h: 1, sigma: 4.470082681669271e-6, gas: Gas { heat: T(0.05), composition: [0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], v: [0.0, 0.0] } }) — SR_WRITE_SCENES=1 bash tests/gpu.sh cold_core physics rewrites it
+FAILED
+test cold_core::without_the_relativistic_branch_r90_is_flat_in_mass ... SR-CORE (c) pure Σ²: R₉₀ at ¼, ½, 1 × m_ch_sb = [3.6863502976737297, 3.686350284273426, 3.6863502807964843] cells
+SR-CORE (c) full law: R₉₀ 1.884 cells at ¼ m_ch_sb, 0.099 at 0.95
+ok
+
+failures:
+
+failures:
+    cold_core::the_grid_holds_a_resolved_cold_disk_on_the_gpu_and_the_twin
+    cold_core::the_scene_file_is_the_current_grid_disk
+
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 331 filtered out; finished in 11.83s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

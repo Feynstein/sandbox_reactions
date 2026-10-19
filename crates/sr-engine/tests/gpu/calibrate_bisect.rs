@@ -1,12 +1,13 @@
-//! M0-T68 — `calibrate` items 3–4: the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4). No test
-//! here touches a GPU or runs a life — every run is a stub — and the module lives in the one test binary (R11) so the scope
-//! runs through `tests/gpu.sh`. The real lives are the lead's, in M0-V9's window.
+//! M0-T68 — `calibrate` items 3–4: the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4). Every
+//! test here but the last runs no life — every run is a stub — and the module lives in the one test binary (R11) so the scope
+//! runs through `tests/gpu.sh`. The real lives are the lead's, in M0-V9's window; the last test (M0-D60) runs two short real
+//! ones, a few hundred steps each, on the test adapter (`SR_TEST_ADAPTER`), to see what a life leaves behind.
 //!
 //! The driver is graded on stubbed outcomes: a threshold at a known mass, the runs it spends and the masses it asks for. The
 //! items' mapping from a life to a side is graded through [`measure`], the same call `calibrate` makes with a real run.
 //! Plant: `bisect-tolerance` (the driver stops at 20 %).
 
-use sr_engine::calibrate::{bisect, measure, run_with, side_bh, side_ign, side_up, CalError, Life, Side, Threshold, BISECT_TOLERANCE};
+use sr_engine::calibrate::{bisect, measure, run_with, run_with_progress, side_bh, side_ign, side_up, CalError, Life, Side, Threshold, BISECT_TOLERANCE};
 
 /// A stub that is Light under `threshold` and Heavy from it, recording every mass asked for.
 fn stub(threshold: f64, asked: &mut Vec<f64>) -> impl FnMut(f64) -> Result<Side, CalError> + '_ {
@@ -172,4 +173,67 @@ fn the_command_checks_the_new_arguments_before_any_run() {
         assert!(lines.iter().all(|l| !l.starts_with("SR-ADAPTER")), "no GPU was touched: {lines:?}");
     }
     assert!(!std::path::Path::new(out).exists());
+}
+
+/// M0-D60: a life's summary.json and events.jsonl outlive it (its final dump does not), a run line names them, a failed life's
+/// record stays and its error names it, and a progress line comes while a life runs. Two real lives of the nominal cloud and
+/// of 1.02 × it: both ignite within a few hundred steps, so m_ign's bracket is refused after two runs, with both runs logged.
+#[test]
+fn a_life_keeps_its_record_and_says_where_it_is() {
+    let m0 = sr_engine::scene::UNIT_MASS;
+    let bracket = format!("{},{}", m0, 1.02 * m0);
+    let out_dir = std::env::temp_dir().join(format!("sr-calibrate-record-{}", std::process::id()));
+    std::fs::create_dir_all(&out_dir).unwrap();
+    let out = out_dir.join("calibration.json");
+    let mut args: Vec<String> = ["--out", out.to_str().unwrap(), "--only", "m_ign_sb", "--bracket", bracket.as_str()].map(String::from).to_vec();
+    if let Some(adapter) = std::env::var("SR_TEST_ADAPTER").ok().filter(|a| !a.trim().is_empty()) {
+        args.extend(["--adapter".to_string(), adapter]);
+    }
+    let record_of = |line: &str| line.split("record=").nth(1).map(|r| std::path::PathBuf::from(r.trim()));
+    let mut stamps = Vec::new();
+    let mut clean = |records: &[std::path::PathBuf]| {
+        stamps.extend(records.iter().filter_map(|r| r.parent().map(|p| p.to_path_buf())));
+    };
+
+    // Two whole lives (ignition ends each), a progress line every 50 steps, the bracket's ends agreeing.
+    let mut lines = Vec::new();
+    let code = run_with_progress(&args, &[], 50, &mut |l| lines.push(l.to_string()));
+    let runs: Vec<&String> = lines.iter().filter(|l| l.starts_with("SR-CALIBRATE run")).collect();
+    assert_eq!(code, 6, "the ends agree: {lines:?}");
+    assert_eq!(runs.len(), 2, "{lines:?}");
+    let records: Vec<_> = runs.iter().map(|l| record_of(l).unwrap_or_else(|| panic!("a run line names its record: {l}"))).collect();
+    clean(&records);
+    for (record, line) in records.iter().zip(&runs) {
+        assert!(line.contains("ignited=true"), "{line}");
+        assert!(record.join("summary.json").is_file() && record.join("events.jsonl").is_file(), "{record:?} keeps summary.json and events.jsonl");
+        assert!(!record.join("dumps").exists(), "{record:?}: the final dump goes");
+        let summary: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(record.join("summary.json")).unwrap()).unwrap();
+        assert!(summary["events"].as_array().is_some_and(|e| e.iter().any(|e| e["kind"] == "ignition")), "{record:?}");
+    }
+    assert_ne!(records[0], records[1], "each life has its own folder");
+    let progress: Vec<&String> = lines.iter().filter(|l| l.starts_with("SR-CALIBRATE progress")).collect();
+    assert!(!progress.is_empty(), "a life of a few hundred steps shows a progress line every 50: {lines:?}");
+    for l in &progress {
+        for key in ["item=m_ign_sb", "mass=", "step=", "sim_time=", "stage="] {
+            assert!(l.contains(key), "{key} in {l}");
+        }
+    }
+    let first_run = lines.iter().position(|l| l.starts_with("SR-CALIBRATE run")).unwrap();
+    assert!(lines[..first_run].iter().any(|l| l.starts_with("SR-CALIBRATE progress")), "progress comes while the life runs, before its run line: {lines:?}");
+
+    // A life that fails (no ending within 64 steps) leaves its record, and the error names it.
+    let mut failing = args.clone();
+    failing.extend(["--max-steps".to_string(), "64".to_string()]);
+    let mut lines = Vec::new();
+    let code = run_with_progress(&failing, &[], 50, &mut |l| lines.push(l.to_string()));
+    assert_eq!(code, 6, "{lines:?}");
+    let error = lines.iter().find(|l| l.starts_with("SR-ERROR")).unwrap_or_else(|| panic!("{lines:?}"));
+    let record = std::path::PathBuf::from(error.split("record kept: ").nth(1).unwrap_or_else(|| panic!("the error names the record: {error}")).trim_end_matches(')'));
+    clean(&[record.clone()]);
+    assert!(record.join("summary.json").is_file() && record.join("events.jsonl").is_file(), "{record:?} is kept for a failed life");
+    assert!(!record.join("dumps").exists());
+    for stamp in stamps {
+        let _ = std::fs::remove_dir_all(stamp);
+    }
+    let _ = std::fs::remove_dir_all(&out_dir);
 }

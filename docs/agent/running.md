@@ -122,8 +122,10 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   **`--bracket LO,HI`** replaces the default bracket of one bisected item (items 3–4 only, so `--only` names exactly one of
   them); the defaults and what a bracket whose ends agree means are in `calibrate.rs` and §2.11 — a bracket whose ends agree
   is refused after two runs, widen it.
-- **What a run prints.** One `SR-CALIBRATE run …` line per life (mass, side, ending, steps, wall time) so a crash or a kill
-  leaves a trace; the bisection stops at 2 % (§2.11). `measured.adapter` in the file names the adapter the lives ran on
+- **What a run prints.** One `SR-CALIBRATE run …` line per life (mass, side, ending, steps, wall time, `record=<dir>`) so a
+  crash or a kill leaves a trace, and while a life runs a `SR-CALIBRATE progress item= mass= step= sim_time= stage=` line every
+  10,000 steps. Each life's summary.json and events.jsonl are kept in `build/calibrate_runs/<UTC stamp>/<item>-<NN>/`
+  (git-ignored; the final dump goes; a failed life's record stays and its error names it) — read them to trace a value to its life. The bisection stops at 2 % (§2.11). `measured.adapter` in the file names the adapter the lives ran on
   (`cpu` while only items 1–2 are in it). Item 5 (K9, `check_order`) runs **before** the preset lives, so a broken order
   costs seconds, not hours. Exit codes: §3.3 — 4 bad arguments, 6 a failed check or a life that proves nothing.
 - **Who runs it.** Items 1–2 are the agents' (CPU, seconds). `m_ign_sb` is minutes on the RTX 5090; `m_up_sb`, `m_bh_sb` and the
@@ -140,10 +142,11 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   test or calibrate run whose scene names no preset runs without one. Editing any constant — `sigma_bh` moved it at
   M0-T66b — means re-running `calibrate`, and `PINNED_HASH` in `crates/sr-engine/tests/gpu/calibration.rs` re-pinned until
   the file is embedded (the `calibration` scope's message names the new hash).
-- **Embedding.** After the first write, `EMBEDDED` in `crates/sr-physics/src/calibration.rs` is set to
-  `Some(include_str!("../../../assets/calibration.json"))` (M0-V9's step; until then it is `None` and exit 6 from the real
-  binary is NOT PROVEN). `Calibration::parse` refuses a file without `render_reserve_ms`, so a calibration is complete only
-  after the drawing lot's `--measure-ui`.
+- **Embedding.** The next build after `calibrate` writes `assets/calibration.json` embeds it — no hand edit (M0-D62):
+  `crates/sr-physics/build.rs` sets `calibration::EMBEDDED` to the file whenever it exists, `None` without it (a tree
+  without the file still builds; exit 6 from the real binary is NOT PROVEN until a file is there). The file is a
+  calibration without `render_reserve_ms`: that key stays absent until the drawing lot's `--measure-ui` writes it, and the
+  time control uses §1.8.3's 3.0 ms meanwhile; a reserve that is there must be finite and ≥ 0.
 - **If a run exits 6.** K9's order or band, Σ_BH against ns_sigma_max_sb, c_sb against twice `max_gas_speed`, a preset not ending
   as a white dwarf, neutron star or black hole, or the Sun-like life never reaching X_H,c 0.35 (`t_eff_sun_sb`): each names what
   failed. It is a defect to file or a question to the lead, never a looser number (§0.4), and never re-tuned inside the run (§2.11
