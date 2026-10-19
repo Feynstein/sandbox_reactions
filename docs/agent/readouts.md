@@ -12,6 +12,7 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
 ## The pipeline, in one line
 ```
  Step::encode_frame ─► summary.wgsl (GPU, per frame) ─► Frame {report, summary} (poll_frames, ≤ 2 frames late)
+ Step::run (headless, bare steps) ─► Step::summarise after each chunk ─► the same block summary, read at once
       ─► ledger.rs (f64, + take_booked)           ─► summary.json `ledger`
       ─► watch.rs: Report (f64) ─► Tracker ─► StageTracker ─► objects · stages · events ─► summary.json, events.jsonl
 ```
@@ -79,7 +80,7 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
   that gas is a halo outside the object — its own blocks held 4.4 % of the run's light (`milestones/m0/tasks/M0-D53.md`).
 - **Evidence.** The `objects` scope grades `Tracker` on synthetic block summaries (`NOT PROVEN (synthetic)` on a star);
   the engine's own summary has run it since M0-T60 (below), and the star's own objects across a life are G-STAGES and
-  G-END's to grade (lot 10).
+  G-END's to grade (lot 15: M0-T103, M0-T104).
 
 ## Stages (§1.9.3, M0-T59)
 - **The table is `ROWS`** (`observe/stages.rs`, 19 rows) and the contract's §1.9.3 table is its source: **thresholds are not
@@ -131,7 +132,7 @@ a run resumed from a dump counts on from the dump's step — while `summary.json
   `sink_cloud` scene with a sink dropped into a seed dump giving `sink_formed` and, 10.06 t.u. later, `ending` (the scene
   never forms a sink by itself in 20,000 steps — M0-T52's `sink` scope owns real formation). A **star's** whole sequence of stages is not yet
   proven here: the Sun-like preset on the Quadro left the main sequence at step 416 and sat in `cloud` to step 25,000, h_shell
-  never met (`reports/step_cost.md`, M0-T63) — a finding for the lot's V, not a defect filed.
+  never met (`reports/step_cost.md`, M0-T63) — measured before M0-D50 retuned the constants (`reports/ignition.md`); a star's sequence is G-STAGES's, lot 15.
 - **The preset cloud** (§2.10, M0-T61) is a scene object, not an observer: `Object::Preset { mass }`, `cloud_shape(mass)`
   (radius and Σc), `Scene::preset_mass(name, mass, world)`. The cells hold the mass exactly (so the nominal cloud's Σ is a
   hair under 1); W is one FFT solve of the cells' own, so U_th / |W| is the ratio §2.10 names to six digits. Scope

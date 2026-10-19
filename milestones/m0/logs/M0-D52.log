@@ -1,0 +1,63 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why desktop: stale: tests/plants/launcher-stop-all.patch
+plan_lint        576/0/0      0.12 s  GO · step 1/2, 1 left
+desktop          3/0/0       52.38 s  GO · step 2/2, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build            NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+burn_cell        NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+burn_order       NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+neutrino         NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+sink             NOT RUN (not impacted: its 95 path(s) checked at the anchor)
+nu_heat          NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+summary          NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+ledger           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+preset_cloud     NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+observe_run      NOT RUN (not impacted: its 107 path(s) checked at the anchor)
+objects          NOT RUN (not impacted: its 29 path(s) checked at the anchor)
+classify         NOT RUN (not impacted: its 29 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+sod              NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+edges            NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+collapse         NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+jeans            NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+sun_burn         NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin             NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+cpu_gpu          NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+heat_limiter     NOT RUN (not impacted: its 92 path(s) checked at the anchor)
+heat_stiff       NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+radiation_force  NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+grav_force       NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+grav_selfforce   NOT RUN (not impacted: its 98 path(s) checked at the anchor)
+fft              NOT RUN (not impacted: its 89 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter          NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+state            NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+booking          NOT RUN (not impacted: its 69 path(s) checked at the anchor)
+floors           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+dt               NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+box              NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+latch            NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+timing           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+scene            NOT RUN (not impacted: its 108 path(s) checked at the anchor)
+dump             NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+boot             NOT RUN (not impacted: its 101 path(s) checked at the anchor)
+web              NOT RUN (not impacted: its 87 path(s) checked at the anchor)
+capture          NOT RUN (not impacted: its 78 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-D52.<scope>.log · record: loop_times.jsonl · tree 36122ac9ad6a+28dab35e4011
+anchor: 2 path×scope entries moved by this run
+anchor: 232 paths checked · 215 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 232 covered of 447 visible
+skipped   207  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 579 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 51 not impacted · 18.41 s + loop 0.12 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 9.29->19.57 · base: M0-D52's start 2026-10-19T08:01:12-04:00
+=== GO ===

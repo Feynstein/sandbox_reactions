@@ -162,7 +162,9 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
 
 ## A frame and the latch (§1.8.3, §1.8.5, §1.8.7, `step::latch`)
 - **A frame** is `Step::encode_frame(&FramePlan { steps, slow_down }, encoder)`: N steps in one encoder, one submission,
-  between `latch_begin` and `latch_end`, the controller `latch_check` closing each step's P9. How many steps, and why, is
+  between `latch_begin` and `latch_end`, the controller `latch_check` closing each step's P9. After `latch_end`,
+  outside the frame's timing, `encode_frame` records the frame's block summary (`summary.encode`) into the frame's own
+  readback; the accumulators it summed are cleared at the next frame's start. How many steps, and why, is
   `sr_physics::time`'s business (`docs/agent/time_control.md`) — the frame never learns why.
 - **Every dispatch of a frame's step is zeroable**: it reads its workgroup count from a buffer the controller can zero —
   a fixed-size dispatch from its slot in `Latch::args` (one slot per size and schedule; the guard's and the re-fit's open
@@ -177,7 +179,8 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
 - **`Step::poll(device)`** returns each submitted frame's `FrameReport` once, in order, from a readback mapped on submit
   — never waiting on the GPU: `steps_run`, `advanced` (its steps' Δt summed in order, f32 — the frame's own), `sim_time`
   (the Δt record's clock after the frame), `dt`, `dt_next`, `steps` (the Δt record's count), `latch_fired`, and `cost` with timing on (the frame is one
-  timing batch; its timestamps ride the same readback).
+  timing batch; its timestamps ride the same readback). **`Step::poll_frames(device)`** is `poll` with each frame's block
+  summary: `Frame { report, summary }` (§1.9.1); `poll` drops the summary.
 - **The sim time** is a function of the steps run (M0-D21): P1 (`dt_advance`) adds each step's Δt to the Δt record's
   clock, an f64 kept as its bits — WGSL has no f64 — by an exact add on u32 words rounded to nearest even, the CPU's
   `t += f64::from(dt)` bit for bit. Frames, however grouped, and bare steps give one value; a step the latch stopped runs
@@ -256,9 +259,10 @@ step produced. The arrow goes one way:
   readout can never alter a state value: the star's life comes out of the physics, never a script.
 - The one sanctioned feedback is **time control**: the frame loop may slow down at an event (the latch, the
   automatic slow-down — §1.8), but it changes how many steps run, never what a step does (§1.8.7).
-- **In a headless run** the observers sit in `sr_engine::watch`, outside `step/`: `Watch::update` takes each frame's block
-  summary (`Step::poll_frames`), widens it to f64 and feeds `Tracker` and `StageTracker`; `headless` writes what they keep and
-  stops on `--until`. The frame's chunk size (`headless::FRAME`) is the one thing the observers' condition changes — it sets how
+- **In a headless run** the observers sit in `sr_engine::watch`, outside `step/`: `Watch::update` takes a block summary,
+  widens it to f64 and feeds `Tracker` and `StageTracker`. A frame loop gets it from `Step::poll_frames`; headless runs
+  bare steps (`Step::run`) and takes `Step::summarise` after each chunk of them (one submission, waited for). `headless`
+  writes what the observers keep and stops on `--until`. The frame's chunk size (`headless::FRAME`) is the one thing the observers' condition changes — it sets how
   many steps a frame runs, never what a step does. Details: `docs/agent/readouts.md`.
 - **G-WATCH** (the `watch_only` scope's static scan, M0-T16; contract §5) is the check that grades this boundary.
 

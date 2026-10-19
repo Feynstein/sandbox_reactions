@@ -3,3 +3,8 @@
 @@ -10,1 +10,1 @@
 -python3 tools/pb/launch.py stop "$service" --task launcher   # its own service only: a bare stop takes every service on the box (M0-D28)
 +python3 tools/pb/launch.py stop --task launcher
+--- a/start.bat
++++ b/start.bat
+@@ -12,1 +12,1 @@
+-py -3.12 tools\pb\launch.py stop %SERVICE% --task launcher
++py -3.12 tools\pb\launch.py stop --task launcher

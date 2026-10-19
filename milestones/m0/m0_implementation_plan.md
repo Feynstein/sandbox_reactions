@@ -206,9 +206,9 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T123 | BUILD | The top rung is Max — as fast as the card goes, in `sr_physics::time` | AFTER M0-TJ2 | DONE (2026-10-18 12:37) |
 | M0-T125 | BUILD | Max's two strings — §4.1's block and strings.rs | AFTER M0-T123 | DONE (2026-10-18 12:41) |
 | M0-D51 | BUILD | The desktop scope's `launcher` case reads « port 47811 held by a process we did not start » under the complete loop: an intermittent NO-GO right after its sibling `window` case's stop | AFTER M0-T125 | DONE (2026-10-18 13:49) |
-| M0-D57 | BUILD | `desktop`'s plant `launcher-stop-all` stays GO on win-laptop: it plants the bare stop in start.sh only, and win-laptop's `launcher` case runs start.bat | AFTER M0-D51 | TODO |
-| M0-D52 | BUILD | The pages agents read miss lot 8's summary path: architecture.md never records the block summary encode_frame appends and says headless's observers read poll_frames, readouts.md names lot 10 for G-STAGES and G-END, verify.json's objects and classify still read NOT PROVEN until M0-T60 | AFTER M0-D51 | TODO |
-| M0-D54 | BUILD | `boot`'s only plant no longer applies: scene-refuse's hunk misses scene.rs since M0-T61 moved the preset check into `Scene::preset_mass` | AFTER M0-D52 | TODO |
+| M0-D57 | BUILD | `desktop`'s plant `launcher-stop-all` stays GO on win-laptop: it plants the bare stop in start.sh only, and win-laptop's `launcher` case runs start.bat | AFTER M0-D51 | DONE (2026-10-19 08:00, started 07:54) |
+| M0-D52 | BUILD | The pages agents read miss lot 8's summary path: architecture.md never records the block summary encode_frame appends and says headless's observers read poll_frames, readouts.md names lot 10 for G-STAGES and G-END, verify.json's objects and classify still read NOT PROVEN until M0-T60 | AFTER M0-D51 | DONE (2026-10-19 08:02) |
+| M0-D54 | BUILD | `boot`'s only plant no longer applies: scene-refuse's hunk misses scene.rs since M0-T61 moved the preset check into `Scene::preset_mass` | AFTER M0-D52 | DONE (2026-10-19 08:09) |
 | M0-T65 | BUILD | The calibration file, its physics hash and the refusal (G-CAL) | AFTER M0-V8 | TODO |
 | M0-T66 | BUILD | The calibrate command and items 1-2: the cold ceilings | AFTER M0-T65 | TODO |
 | M0-T67 | BUILD | The cold ceiling holds (G-CORE) | AFTER M0-T66 | TODO |
@@ -1829,7 +1829,7 @@ on M0-D50. M0-D51 before M0-V9's complete loop; M0-D52 after M0-D53, M0-D50, M0-
 - Handoff: On win-laptop (Laser2025-20): the holder measured black-box — after launch.py's « stopped » (pid already exited) the stopped game's own socket still takes connections 2 ms – 3 s (logs/M0-D51.holder.log); the runner released the port lock at the case's exit, inside that gap. Fix, tests/smoke.sh only: every case hands a port's lock on (47811, and the decoy's 47812) only once the port binds again as the game binds it, 30 s bound, else NO-GO; a connect probe was tried first and read a full backlog as free (os error 10048). Reproduction: case `race` (lock held throughout, a 10 s listener launch.py did not start, the window route straight behind the wait) + plant `port-handover-early`; a two-holder race went GREEN under 5 contending arms first. [ALREADY RUN — PASS (Verify 1: desktop GO 3/0/0, 36.3 s) on Laser2025-20] · [ALREADY RUN — FAIL (Verify 2: --redarm desktop NO-GO 579 s — port-handover-early RED with « port 47811 held by a process we did not start », launcher-stop-all GREEN: pre-existing, start.sh-only patch vs start.bat → filed M0-D57) on Laser2025-20] · [ALREADY RUN — FAIL (claim --changed: 579 passed, plan_lint + boot GO, NO-GO only on launcher-stop-all) on Laser2025-20] · [NOT RUN — owed on laserax-ai: Verify 1, Verify 2 (flock route) and the holder at a refusal there]. Findings not acted on: tests/web/check.sh hands its 47812 lock on right after its stop (same gap toward the decoy, unmeasured — the web scope's runner); the mkdir lock's stale-holder break can remove a fresh holder's lock (NOT PROVEN, source only). Detail: tasks/M0-D51.md. Model and level: model=claude-opus-5-5 level=high. Next: M0-D57.
 
 ## M0-D57 · `desktop`'s plant `launcher-stop-all` stays GO on win-laptop: it plants the bare stop in start.sh only, and win-laptop's `launcher` case runs start.bat · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D51)
-- Status: TODO
+- Status: DONE (2026-10-19 08:00, started 07:54)
 - Sizing: E
 - Blocks: nothing — but `--redarm desktop` reads NO-GO on win-laptop until it lands (the phase's sweep there, every desktop
   red-arm a win-laptop block runs)
@@ -1852,10 +1852,10 @@ on M0-D50. M0-D51 before M0-V9's complete loop; M0-D52 after M0-D53, M0-D50, M0-
   it did not start (the decoy web server) »); on linux-pc the same, owed there
 - Verify: 1. `py -3.12 tools/pb/verify.py --redarm desktop --task M0-D57` · Pass: launcher-stop-all RED with the decoy's
   NO-GO line · Fail: GREEN, or the patch not applying
-- Handoff: <placeholder>
+- Handoff: Plant launcher-stop-all now covers both launchers: tests/plants/launcher-stop-all.patch keeps the start.sh hunk (line 10) and adds a start.bat hunk (line 12: stop %SERVICE% --task launcher -> stop --task launcher), LF-only per the launcher-no-stop precedent. [ALREADY RUN — PASS on laserax-ai (linux-pc): python3 tools/pb/verify.py --redarm desktop --task M0-D57; 4 plants, 4 red, 0 green, 0 errors, 332.61 s, clean GO; launcher-stop-all RED: "the launcher stopped a service it did not start (the decoy web server)", applied to start.sh, start.bat. Logs: milestones/m0/logs/M0-D57.desktop.redarm.log, milestones/m0/logs/M0-D57.log] [NOT RUN — owed on win-laptop: py -3.12 tools/pb/verify.py --redarm desktop --task M0-D57, the Done-when arm there]. Measured, not acted on: GNU patch and exact git apply reject the LF-only start.bat hunk against the CRLF worktree copy (scratch test; the existing launcher-no-stop start.bat hunk fails the same way); linux-pc applies both, so the redarm copy is not an exact-match CRLF copy, or it applies tolerantly. Win-laptop run decides; no D filed. Model and level: rung_record line model=claude-haiku-5-5 level=high plugin=installed, matching the heading. Next: M0-D52, then M0-D54.
 
 ## M0-D52 · The pages agents read miss lot 8's summary path: architecture.md never records the block summary encode_frame appends and says headless's observers read poll_frames, readouts.md names lot 10 for G-STAGES and G-END, verify.json's objects and classify still read NOT PROVEN until M0-T60 · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D51)
-- Status: TODO
+- Status: DONE (2026-10-19 08:02)
 - Blocks: nothing — but an agent that reads the page for a module instead of the module (the instruction file's rule) is told a
   frame ends at `latch_end`, that headless's observers take `Step::poll_frames`' summary (they take `Step::summarise`'s, after
   bare steps), that the star's stages are lot 10's to grade (lot 15's: M0-T103, M0-T104), and that the tracker and the stages are
@@ -1891,10 +1891,10 @@ on M0-D50. M0-D51 before M0-V9's complete loop; M0-D52 after M0-D53, M0-D50, M0-
   (the frame bullet's `poll_frames`, the observer line's `Step::summarise`) · Fail: fewer
 - Adversarial: a page rewritten from the plan's words rather than the code repeats the drift — each line cites the function it
   describes, and no number §1.9 or calibration holds is copied in.
-- Handoff: <placeholder>
+- Handoff: DONE on linux-pc (laserax-ai), 2026-10-19; model=claude-sonnet-5-5 level=high by rung_record (matches the heading). architecture.md: the frame bullet names the summary encode_frame records after latch_end, poll_frames beside poll, the observer line reads Step::summarise after each chunk of bare steps; readouts.md: pipeline names both routes, lot 15 (M0-T103, M0-T104), the step-cost line points to M0-D50; verify.json: objects and classify desc tails read that observe_run runs them on the engine's own summary (M0-T60). Verify 1: 0/0/0; Verify 2: 3; verify.py --changed GO, 579 passed. Not done: docs/agent/testing.md:107 (classify row) still reads G-STAGES's (lot 10) — outside Files, a one-line fix for the next docs block. Detail: tasks/M0-D52.md. Next: M0-D54.
 
 ## M0-D54 · `boot`'s only plant no longer applies: scene-refuse's hunk misses scene.rs since M0-T61 moved the preset check into `Scene::preset_mass` · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D52)
-- Status: TODO
+- Status: DONE (2026-10-19 08:09)
 - Sizing: E
 - Blocks: nothing — but the `boot` scope (G-BOOT) has no plant proven red on today's code until it lands (the phase's sweep:
   NO-GO on it)
@@ -1916,7 +1916,7 @@ on M0-D50. M0-D51 before M0-V9's complete loop; M0-D52 after M0-D53, M0-D50, M0-
 - Done when: on linux-pc `--redarm boot` is GO with scene-refuse NO-GO
 - Verify: 1. `python3 tools/pb/verify.py --redarm boot --task M0-D54` · Pass: GO — the clean copy GO, scene-refuse NO-GO · Fail:
   the plant GO or not applying
-- Handoff: <placeholder>
+- Handoff: Re-aimed tests/plants/scene-refuse.patch from Scene::preset to Scene::preset_mass (its mass-check then PRESETS check, scene.rs:282); planted line unchanged. Patch applies (git apply --check). Verify: verify.py --redarm boot --task M0-D54 → clean boot GO, scene-refuse RED (cause: headless-boot ran preset:sun, refused — log line 124 scene 'preset:sun'); === GO ===, on linux-pc. Claim run verify.py --changed --task M0-D54: 584 passed, 0 failed, 3/3 scopes GO. Flag from the claim run: 'tests/plants/scene-refuse.patch changed since M0-D54's start' — Deliver names this hunk re-aim, so I read it as covered; lead to confirm. Ordering: block says AFTER M0-D52 (register: TODO); ran at the lead's direct request, D52 untouched. Harness wrote tools/pb/verify.anchor.json (3 entries moved). Rung: model=claude-haiku-5-5 level=high (rung_record.py now, plugin=installed; matches heading, no MISMATCH). Logs: milestones/m0/logs/M0-D54.log, M0-D54.boot.redarm.log. Next: M0-D57 per register.
 
 > **Commit gate (lead):** Phase 10 closes after M0-V8 — from the repo root, one at a time:
 > `git add -A`
