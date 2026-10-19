@@ -842,7 +842,7 @@ mod tests {
             ("sigma_floor", 1e-8), ("sigma_vac", 1e-6), ("t_floor", 0.05), ("sigma_obj", 1e-3), ("paint_sigma", 0.02),
             ("paint_t", 2.0), ("heat_factor", 1.05), ("cool_factor", 0.95), ("k1e", 21.3), ("k2e", 134.0),
             ("k1n", 2.67), ("k2n", 58.2), ("a_r", 4e-5), ("c_sb", 200.0), ("kappa0", 1.0), ("k_cond", 0.0),
-            ("a_nu", 1e-3), ("t_nu", 93.0), ("m_nu", 8.0), ("f_dep", 0.05), ("sigma_bh", 4000.0), ("cfl", 0.4),
+            ("a_nu", 1e-3), ("t_nu", 93.0), ("m_nu", 8.0), ("f_dep", 0.05), ("sigma_bh", 6000.0), ("cfl", 0.4),
             ("eta_g", 0.3), ("kappa_dust", 0.0), ("t_dust", 0.0), ("block", 4.0),
         ];
         let p = phys();

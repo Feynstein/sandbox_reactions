@@ -579,6 +579,36 @@
         }
       ]
     },
+    "sheet": {
+      "desc": "the sheet's cold equilibria in the continuum, no GPU (contract §1.4.1, §2.3.2–§2.3.3, §2.11 items 1–2 [M0-R4], R8): sr_physics::reference::sheet — the ring kernel (K by the AGM, each annulus by 8-point Gauss–Legendre split at the field point) gives the Maclaurin disk's potential within 1e-4 (r ≤ 0.95a); Hachisu's SCF for γ = 3 gives the Maclaurin profile within 1e-3 and K = π²/6 within 1e-3; the critical sheet Π = KΣ^{3/2} gives M G²/K² = c_sheet within 1e-3 of 1.4331 at 100 and 200 annuli with its virial within 1e-4; the enthalpy table against Π = KΣ²'s closed form and inverted; γ = 2's R₉₀ flat within 3 % over Σ_c = 0.25, 0.5, 1; the shipped C/O and neutron-matter sequences M(Σ_c), Σ_c = 10⁰ … 10⁸, rising at every decade with every virial inside 1e-3, their limits within 0.5 % of 3,216.4 and 4,853.2 and of the critical sheet's c_sheet K₂′² (a second iteration, Σ_max fixed), m_tov/m_ch in K9's [1.4, 2.0]; a γ_UR = 1.6 law refused as having no ceiling (M0-T66)",
+      "cmd": "bash tests/cpu.sh sr-physics reference::sheet",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 7,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/src/reference/**",
+        "crates/sr-physics/src/eos.rs",
+        "crates/sr-physics/src/registry.rs",
+        "crates/sr-physics/src/lib.rs",
+        "crates/sr-physics/Cargo.toml",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/sheet-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "sheet-ring-kernel",
+          "patch": "tests/plants/sheet-ring-kernel.patch"
+        }
+      ]
+    },
     "sod": {
       "desc": "gas flow on the CPU twin and on the GPU's P4 (contract §2.3.4, §2.8's bounce, §5.1's G-SOD, SM-O5, R8): sr_physics::reference::hydro — unsplit MUSCL-Hancock with the monotonised-central limiter on (Σ, u, v, Π, X_i), HLL with Davis speeds, species by the mass flux, the full EOS, two bounce ghosts a side — on Sod's tube cut from scenes/sod.json (a 400 × 64 world, §2.8's floor; ρ 1 | 0.125, P 1 | 0.1, at rest, cold pressure off by `overrides`; the twin's strip is its first four rows, 400 × 4) read at t = 80 against M0-T33a's exact Riemann solution: the shock within 1 cell (measured 0.34, from the density's halfway crossing) and the L1 density error ≤ 2 % (measured 0.32 %, against the exact density averaged over each cell); the scene file itself (Σ, Π, at rest, hydrogen, bounce, cold off, only hydro on); mass and energy conserved to 1e-12 and the x momentum the walls' pressure gives, (P_L − P_R)·t·rows, to 1e-10; the 64-row scene world's every row the strip's (1e-13), the tube mirrored in x giving the mirrored run and a strip laid along y (4 × 400) the x run, both within 1e-12 (the y fluxes graded); hydrogen | helium with the same Σ and Π leaving Σ, momenta and E as the pure-hydrogen run's (1e-12), ΣX_i = 1 (1e-12), X_H within [0, 1] and its half crossing within 2 cells of u*·t; with the shipped cold pressure on (electron share of Π over 20 %), Σ finite and positive, mass and energy to 1e-12 and the walls' momentum to 1e-10 (M0-T33b); the GPU's P4 (step/hydro.rs, shaders/hydro.wgsl, its update and commit over the box) on the physics adapter, the scene's 400 × 64 world to the first step at t ≥ 80, graded at that time: the shock within 1 cell and the L1 density error ≤ 2 % on every row (measured 0.335 cell, 0.319 %, RTX 5090), every row within 1e-5 of row 0 and |v| ≤ 1e-5 (a y-flux defect), mass and energy to 1e-5 relative and the walls' momentum to 1e-4, the tube laid along y (64 × 400) the x run step for step within 1e-5 (the adversarial case), the shipped cold pressure on to t = 20 finite, positive, conserving — f32 tolerances fixed before the first GPU run (M0-T34); hll-swap plants the left state in the twin's and the shader's HLL",
       "cmd": "bash tests/gpu.sh sod physics",
@@ -896,11 +926,11 @@
       ]
     },
     "radiation_force": {
-      "desc": "The radiation force in the flow (contract §2.4.4, §1.3.2's P4, §2.3.4, SM-E22, R8, R13; M0-T43): f = κΣF/c_sb from the previous step's flux F is P4's momentum source, E unchanged (the work comes out of the thermal energy). A hot slab in a uniform medium (64 × 64 bounce, hydrogen at rest, Σ 1 at T 1 | Σ 0.1 at T 10, Π = 2 both sides, the cold pressure off), P5 pinned (F computed, E untouched): each of 8 steps of Δt 0.02 against the same step without the force from the same state — the momentum gained in each half of the world (x left/right, y top/bottom) equals Σ Δt·f, κ = κ₀(1 + X_H), F as side.flux held at the step's start, within 1e-6 relative; Σ, E and every species bit for bit the force-free step's. The twin (reference::hydro's step_forced, F from reference::heat pinned) and the GPU (hydro.wgsl's update, F bound at 6, the Δt record a uniform) on the physics adapter. Adversarial: one step on an F written by hand (the previous one negated) — the momentum gained is that F's force, not the force of the F P5 writes after P4. Plant radforce-zero zeroes f in P4, twin and shader.",
+      "desc": "The radiation force in the flow (contract §2.4.4, §1.3.2's P4, §2.3.4, SM-E22, R8, R13; M0-T43): f = κΣF/c_sb from the previous step's flux F is P4's momentum source, E unchanged (the work comes out of the thermal energy). A hot slab in a uniform medium (64 × 64 bounce, hydrogen at rest, Σ 1 at T 1 | Σ 0.1 at T 10, Π = 2 both sides, the cold pressure off), P5 pinned (F computed, E untouched): each of 8 steps of Δt 0.02 against the same step without the force from the same state — the momentum gained in each half of the world (x left/right, y top/bottom) equals Σ Δt·f, κ = κ₀(1 + X_H), F as side.flux held at the step's start, within 1e-6 relative; Σ, E and every species bit for bit the force-free step's. The twin (reference::hydro's step_forced, F from reference::heat pinned) and the GPU (hydro.wgsl's update, F bound at 6, the Δt record a uniform) on the physics adapter. Adversarial: one step on an F written by hand (the previous one negated) — the momentum gained is that F's force, not the force of the F P5 writes after P4. Plant radforce-zero zeroes f in P4, twin and shader. M0-D58 (§0.5 [M0-D58]): the push's work capped at the heat above the floor — on the slab at T 1,000 in a medium at T 0.06 (one step of Δt 2e-3) the x momentum gained per half equals Σ s·Δt·f, s the oracle's share from the free step's cell (twin 1e-9, GPU 1e-5), E per cell the free step's (1e-12, 1e-5), the cap binding in ≥ 4 columns; D58's block (2 × 2 C/O, Σ 1,250 at T_floor, 64 × 64 bounce, gravity, hydro, heat) 50 steps on the twin and through headless: every value finite, the mass invariant within 1e-6. Plant push-uncapped: s ≡ 1, twin and shader.",
       "cmd": "bash tests/gpu.sh radforce physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 3,
+      "expected": 7,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -913,12 +943,17 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/gpu.sh",
-        "tests/plants/radforce-zero.patch"
+        "tests/plants/radforce-zero.patch",
+        "tests/plants/push-uncapped.patch"
       ],
       "plants": [
         {
           "id": "radforce-zero",
           "patch": "tests/plants/radforce-zero.patch"
+        },
+        {
+          "id": "push-uncapped",
+          "patch": "tests/plants/push-uncapped.patch"
         }
       ]
     },
@@ -1179,11 +1214,11 @@
       ]
     },
     "dt": {
-      "desc": "P1 Δt, P9's Δt reduction and the non-finite guard (contract §1.3.2 P1 and P9, §1.3.4, §2.3.3, §2.3.5, §3.3): P1 holds dt_advance, P9 dt_cells and dt_partials, plus guard_scan and guard_stamp every 64th step; Δt against §2.3.5's formula in f64 (C = 0.4, η_g = 0.3, the gravity term infinite until P2) on fields of known u and c, the cold pairs off, 64 × 64, 72 × 88 and 600 × 400, within 1e-6 relative; step 0 on the initial state's reduction and step n on the value P9 made at the end of step n − 1; Δt and the state bit-identical over two 130-step runs on 600 × 400; a NaN and an Inf planted at known cells and steps → the guard's step, cell and channel (M0-T20); a NaN x_C planted before step 0 → named by step 0's scan, its cell's fractions as planted (M0-D18); on the physics adapter (R12, R15)",
+      "desc": "P1 Δt, P9's Δt reduction and the non-finite guard (contract §1.3.2 P1 and P9, §1.3.4, §2.3.3, §2.3.5, §3.3): P1 holds dt_advance, P9 dt_cells and dt_partials, plus guard_scan and guard_stamp every 64th step; Δt against §2.3.5's formula in f64 (C = 0.4, η_g = 0.3, the gravity term infinite until P2) on fields of known u and c, the cold pairs off, 64 × 64, 72 × 88 and 600 × 400, within 1e-6 relative; step 0 on the initial state's reduction and step n on the value P9 made at the end of step n − 1; Δt and the state bit-identical over two 130-step runs on 600 × 400; a NaN and an Inf planted at known cells and steps → the guard's step, cell and channel (M0-T20); a NaN x_C planted before step 0 → named by step 0's scan, its cell's fractions as planted (M0-D18); a run ending between two scans on a planted NaN \u2192 exit 5 naming the last step, cell and channel, the unplanted twin exit 0 (M0-D59); on the physics adapter (R12, R15)",
       "cmd": "bash tests/gpu.sh dt physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 6,
+      "expected": 7,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -1202,6 +1237,10 @@
         {
           "id": "dt-cfl-one",
           "patch": "tests/plants/dt-cfl-one.patch"
+        },
+        {
+          "id": "dt-last-scan-off",
+          "patch": "tests/plants/dt-last-scan-off.patch"
         }
       ]
     },
@@ -1547,6 +1586,173 @@
         {
           "id": "stage-in-step",
           "patch": "{python} -S -c \"import pathlib;p=pathlib.Path('crates/sr-engine/src/step/mod.rs');p.write_text(p.read_text(encoding='utf-8')+chr(10)+'use sr_physics::observe::Stage;'+chr(10),encoding='utf-8')\""
+        }
+      ]
+    },
+    "calibration": {
+      "desc": "G-CAL, the calibration file and its physics hash (contract §2.11, §3.1, §3.3, §5.4; M0-T65): SHA-256 against FIPS 180-4's vectors (empty, abc, the 448- and 896-bit messages, a million a's, the padding edges); the physics hash over the canonical bytes (keys sorted, compact, numbers as f64) of elements.json + reactions.json + physics.json — a small triple by hand, a reformatted or re-ordered physics.json keeping its hash, a changed constant, key, element or reaction not; §2.11's schema parsed (every key, unknown and missing keys and bad values refused naming the key) and K9's order checked; a calibration written from the embedded assets accepted and a stale one refused with exit 6 (`SR-ERROR calibration out of date`), a scene with no preset running on it, a preset with none refused as missing, c_sb ≤ 2 × max_gas_speed refused; assets/calibration.json (once M0-V9 writes it) against the assets' hash, the assets' hash against its pin until then — NOT PROVEN against a real calibration; headless on a scene with no preset running with none",
+      "cmd": "bash tests/gpu.sh calibration",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 10,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/**",
+        "scenes/**",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/const-drift.patch"
+      ],
+      "plants": [
+        {
+          "id": "const-drift",
+          "patch": "tests/plants/const-drift.patch"
+        }
+      ]
+    },
+    "calibrate_cold": {
+      "desc": "`calibrate` items 1–2, the cold ceilings from the sheet (contract §2.11 items 1–2 and 5 [M0-R4], §2.6, §2.7, §3.3; M0-T66b), no GPU: `sandbox-reactions calibrate --out` through `calibrate::run_with`, read from the file it writes — the values written equal sr_physics::reference::sheet's limits on the test's own composition (C/O and neutron matter, bit for bit) and sit within 0.5 % of reports/cold_ceiling.md's 3,216.5 and 4,853.2, ns_sigma_max_sb = m_tov_sb, the frame (version, physics_hash, measured.adapter cpu, no adapter opened) and no key of a later item; `--only m_ch_sb` re-measures that item and keeps the file's others; a file under another physics_hash (or not JSON) is dropped with an SR-WARN; a run with overrides measures and checks and writes nothing, an existing file untouched; K9's order and band (m_tov under m_ch, ratio 1.03, ratio 2.18) exit 6 naming the rule with the file untouched and 4,800 passing; a sigma_bh of 4,853 against the sheet's 4,853.17 is exit 6 naming sigma_bh and ns_sigma_max_sb, 4,854 passes, the shipped 6,000 read from physics.json's own text clears the written ns_sigma_max_sb; bad arguments exit 4 and --adapter is accepted without opening one; the grid's SCF disk (cold_disk_scene, M = 100 C/O, k1e × 6) has the mass, R₉₀ 18–19.6 cells (contract §5.1: 18.8) and the scene G-CORE (d) needs. Plant calibrate-cold-matter: item 1 computed on neutron matter's composition (K9's ratio reads 1.0)",
+      "cmd": "bash tests/gpu.sh calibrate_cold",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 8,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/**",
+        "scenes/**",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/calibrate-cold-matter.patch"
+      ],
+      "plants": [
+        {
+          "id": "calibrate-cold-matter",
+          "patch": "tests/plants/calibrate-cold-matter.patch"
+        }
+      ]
+    },
+    "cold_core": {
+      "desc": "G-CORE, the cold ceiling holds (contract §5.1 [M0-R4], §1.4.1's K9, §2.3.2, §2.11 items 1–2; M0-T67; reports/cold_ceiling.md M3, M4, M6): (a) the sheet's ring kernel gives the Maclaurin disk's potential within 1e-4; c_sheet (the pure Π = KΣ^{3/2} sheet, Hachisu with Σ_max and the edge fixed, the test's own solver) within 1e-3 of 1.4331 at 100 and 200 annuli; the sequence M(Σ_c) at Σ_c = 10⁰ … 10⁸ rises at every decade with each |2∫Π dA/W + 1| ≤ 1e-3 and calibrate's m_ch_sb / m_tov_sb, read from the file `calibrate::run_with` writes, are within 0.5 % of c_sheet (K₂ₑ Y_e^{3/2})²/G² and c_sheet K₂ₙ²/G², K9's order and band, ns_sigma_max_sb = m_tov_sb, sigma_bh above it; (b) a fresh half-decade scan on 100 annuli: an equilibrium at 0.95 m_ch_sb, none at 1.1 m_ch_sb (above every mass reached, none over 1.005 m_ch_sb); (c) the pure Σ² law, R₉₀ flat within 3 % over ¼, ½, 1 × m_ch_sb and falling by over 3× on the full law between ¼ and 0.95; (d) scenes/cold_co_disk.json (M = 100 C/O, k1e × 6, 64 × 64 bounce, gravity and hydro only; the test rebuilds it with calibrate::cold_disk_scene and refuses a stale file, SR_WRITE_SCENES=1 rewrites it) holds R₉₀ within 3 % of its start at every dump (each 50 steps) over 10 τ_dyn on the GPU (the physics adapter) and on the CPU twin run the same steps, the mass kept to 1e-4 and the GPU's final R₉₀ within 1 % of the twin's — the grid's statics and hydro, never the ceiling. Plants cold-exponent (eos.rs's relativistic exponent 3/2 → 1.6: no ceiling) and cold-gpu-pressure (eos.wgsl's cold pressure × 0.9: (d))",
+      "cmd": "bash tests/gpu.sh cold_core physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 8,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/**",
+        "scenes/cold_co_disk.json",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/cold-exponent.patch",
+        "tests/plants/cold-gpu-pressure.patch"
+      ],
+      "plants": [
+        {
+          "id": "cold-exponent",
+          "patch": "tests/plants/cold-exponent.patch"
+        },
+        {
+          "id": "cold-gpu-pressure",
+          "patch": "tests/plants/cold-gpu-pressure.patch"
+        }
+      ]
+    },
+    "calibrate_bisect": {
+      "desc": "`calibrate` items 3–4, the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4; M0-T68), no GPU and no life run — every run a stub: `calibrate::bisect` on a stubbed outcome closes on a known threshold from five masses inside a 100–20,000 bracket within BISECT_TOLERANCE (2 %: bracket width ≤ 2 %, value within 1 %, the threshold inside the final bracket, BISECT_TOLERANCE itself 0.02), asks the bracket's low then high end first, stays inside the bracket and spends exactly 2 + ⌈log₂(ln(200)/ln 1.02)⌉ runs (a bracket already within 2 % spends 2); a bracket whose ends agree (both Heavy, both Light) or run the wrong way round is refused after two runs naming `--bracket`, a bad bracket or tolerance is exit 4 with no run; a failing run stops the bisection with its own error (exit 6) and no run after it; each item's side of a life (`side_ign`: ignition over, failed_star under · `side_up`: core collapse over, white_dwarf under · `side_bh`: black_hole over, neutron_star under, anything else refused); `measure` over a stub physics finds m_ign, m_up and m_bh within 1 % and logs one `SR-CALIBRATE run` line per run with mass, side, ending, steps and wall time, an unplaced run logged with side=none and refused; `--bracket` outside one bisected item, an inverted or malformed bracket, `--max-steps 0`, a bad name in a `--only` list and a not-yet-built item are exit 4 before any GPU is touched. Plant bisect-tolerance: BISECT_TOLERANCE 0.02 → 0.2 (the driver stops at 20 %).",
+      "cmd": "bash tests/gpu.sh calibrate_bisect",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 7,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/**",
+        "scenes/**",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/bisect-tolerance.patch"
+      ],
+      "plants": [
+        {
+          "id": "bisect-tolerance",
+          "patch": "tests/plants/bisect-tolerance.patch"
+        }
+      ]
+    },
+    "calibrate_order": {
+      "desc": "`calibrate` items 5–6, the order and the presets' lives (contract §2.11 items 5–7, §1.8.2, §1.10.1, §3.3, §6.4; M0-T70), no GPU and no life run — every preset life a stub: `check_order` passes a table in order (the ratio 1.4 and 2.0 inside) and refuses each inequality with its own message and exit 6 — m_ign < m_ch, m_ch < m_up, m_up < m_bh, m_ch < m_tov (ties included), m_tov/m_ch outside [1.4, 2.0] (1.39, 2.01, 1.0001), sigma_bh under ns_sigma_max_sb — and `check_speed` refuses a gas speed whose double reaches c_sb; `measure_presets` asks 1, 15 and 40 Suns at MassScale::to_sb of the four anchors (sun, massive, giant in order, each inside its band), takes life_sun_sb from the white-dwarf stage's first frame, top_rung from it ÷ 10 to two significant digits (423 → 42, 1,260 → 130, 9,990 → 1,000, 56 → 5.6, 98,700 → 9,900) and t_eff_sun_sb from the L and R at X_H,c 0.35, builds stage_durations_sb as one pair a life per stage with the remnants left out, and keeps the largest gas speed; a preset that ends as another ending, a T_eff over T_H or under T_floor, a Sun that never burned down to 0.35 and a Sun with no white dwarf are exit 6 and the following lives are not run; through `run_with`, a file out of order (m_ign over m_ch) is exit 6 on K9 with no GPU, no life and nothing written, a file without the four anchors cannot place the presets (exit 6), `--only render_reserve_ms` is exit 4 naming `--measure-ui`, a re-run of m_ch_sb keeps render_reserve_ms and the file's other items, and a file's max_gas_speed of 100 against c_sb 200 is exit 6 with nothing written. Plant calibrate-order-skip: the m_tov/m_ch band left unchecked.",
+      "cmd": "bash tests/gpu.sh calibrate_order",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 11,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/**",
+        "scenes/**",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/calibrate-order-skip.patch"
+      ],
+      "plants": [
+        {
+          "id": "calibrate-order-skip",
+          "patch": "tests/plants/calibrate-order-skip.patch"
+        }
+      ]
+    },
+    "readouts": {
+      "desc": "G-READ, the real-equivalent translations (contract §1.10.1–§1.10.3, §5.4; M0-T69), no GPU: mass → Suns and temperature → kelvins, piecewise log-linear (ln y straight in ln x) through the contract's anchors on the test calibration and the shipped physics.json — both maps strictly increasing over their whole range (temperature from T_floor up, 10 K at and below it), each anchor exact to 10⁻⁹ relative and its inverse exact, a midpoint case per segment (the geometric mean of the real ends, not the linear mean), the end segments extended (mass below M_ign and above M_BH, the O–Si segment above T_Si), the presets 1, 15 and 40 Suns read 1.00, 15.0 and 40.0 as the inverse translation of them and the Sun by hand, the Sun-like surface at t_eff_sun_sb through L = 2πRσT⁴ (σ = a_r c_sb / 4) reading 5,772 K within 1 %, a non-monotonic or non-positive anchor set refused; assets/calibration.json (once M0-V9 writes it) read for its presets and T_eff — NOT PROVEN against a real calibration until then. Plant anchor-reverse: the 8 and 25 Suns anchors swapped (the map refused, the cases that build it red).",
+      "cmd": "bash tests/gpu.sh readouts",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 9,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/**",
+        "scenes/**",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/anchor-reverse.patch"
+      ],
+      "plants": [
+        {
+          "id": "anchor-reverse",
+          "patch": "tests/plants/anchor-reverse.patch"
         }
       ]
     }

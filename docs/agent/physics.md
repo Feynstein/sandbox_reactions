@@ -43,9 +43,9 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 - **Pairs.** K₁/K₂ for electrons and for neutron matter are each *on* (both > 0) or *off* (both 0 — a scene that needs cold pressure off, M0-T33b/T36);
   half a pair is refused.
 - **Not checked at load:** `c_sb` against calibration's `max_gas_speed` (needs calibration.json, G-CAL) and the K1 timescale gap
-  (τ_nuc against τ_KH; measured by G-SQUEEZE). Both are measured numbers, not file checks. Also `sigma_bh` against 4 × calibration's `ns_sigma_max_sb` (§2.6:
-  a black hole's density must clear any stable neutron star's): the loader holds `sigma_bh` only to > 0 (the `Pos` class), so the bound is not enforced at load — M0-V7 names
-  it, M0-V9 runs it.
+  (τ_nuc against τ_KH; measured by G-SQUEEZE). Both are measured numbers, not file checks. Also `sigma_bh` against calibration's `ns_sigma_max_sb` (§2.6, §2.7 [M0-R4]:
+  a black hole's density must clear any stable neutron star's, Σ_BH ≥ ns_sigma_max_sb): the loader holds `sigma_bh` only to > 0 (the `Pos` class), so the bound is not enforced at load —
+  `calibrate` checks it on the merged file (item 5, exit 6, nothing written), § Calibration.
 - Retuning is by editing the file and re-running calibration (G-CAL refuses a stale `physics_hash`, §2.11). A tuned value is a PLAN-visible change
   only where the contract marks it fixed (the q ratios, K8); ν, T_k and A are tuning within the bounds above.
 
@@ -226,7 +226,7 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 - **The GPU's buffers (M0-T46, M0-T47).** `react_cells` binds 7 storage buffers (state 3, booking, Δt record, report, `s_nu`) and the EOS table — WebGPU's 8 are full, which is why the latch is a bit in the report plus a one-invocation copy, not a binding of the cells pass.
 
 ## Sinks (contract §1.4.3, §2.6, §2.9, §1.8.5, P3; `crates/sr-physics/src/reference/{sinks,grav}.rs` the f64 twin, `crates/sr-engine/src/step/sinks.rs` and `shaders/sinks.wgsl` the GPU, `grav_sinks` in P2)
-- **What a sink is (§2.6).** A black hole: a point with position and velocity (cells, cells per t.u.) and mass M_s, **up to 16**, **at most one forming per step**. Matter that crosses into it leaves the grid and is counted in the ledger's `sinks` mass term (§2.9); the thermal and cold energy it carried in is booked **`swallowed`**. `sigma_bh` (Σ_BH) is in `assets/physics.json`; its bound — at least 4 × calibration's `ns_sigma_max_sb`, so no stable neutron star can trip it — cannot be checked before calibration (M0-V9's).
+- **What a sink is (§2.6).** A black hole: a point with position and velocity (cells, cells per t.u.) and mass M_s, **up to 16**, **at most one forming per step**. Matter that crosses into it leaves the grid and is counted in the ledger's `sinks` mass term (§2.9); the thermal and cold energy it carried in is booked **`swallowed`**. `sigma_bh` (Σ_BH) is in `assets/physics.json`; its bound — at least calibration's `ns_sigma_max_sb` (§2.6, §2.7 [M0-R4]), so no stable neutron star can trip it — is checked by `calibrate` (item 5, exit 6; § Calibration).
 - **Formation — all four at one cell (SM-E28: "a sole density threshold … is insufficient").** Σ ≥ Σ_BH; ∇·u < 0; φ no greater than at any of its 8 neighbours; bound, ½|u|² + ε_th + φ < 0. The densest candidate forms (ties: the lowest y, then the lowest x); the sink takes the cell's mass above Σ_floor and its momentum. **Each criterion has its own refusal case** (the density just below Σ_BH, an expanding core, a lower neighbour, unbound gas — `testing.md`, `sink`): a density-only rule would pass the first three. The φ the test reads includes the standing sinks' own term, so a cell beside a sink is not a minimum.
 - **Accretion (every step).** r_acc = max(2 cells, 2GM_s/c_sb²) (SM-E29's form: SP-E20's r_s = 2GM/c² with the sandbox's light speed). A cell whose centre lies within r_acc and whose gas is **bound to the sink** (½|u − v_s|² + ε_th − GM_s/max(r, 0.5) < 0, in the sink's own frame) gives the sink its mass above the floor and that mass's momentum; hot, fast or unbound gas stays. One fixed-order reduction per sink, sinks in index order, a sink's M and v frozen for its own pass; **a cell two sinks both reach is taken once, by the first** (the adversarial case: the GPU leaves a taken cell at Σ_floor *exactly*, so the second sink's own test refuses it).
 - **Motion** (§0.5 [M0-V7]; the twin since M0-D45, the GPU since M0-D46). Kick-drift-kick; a sink's acceleration is the exact reaction of its own softened pull on the gas: Σ_cells G m d/(|d|² + r_acc²)^{3/2} over every cell with Σ ≥ Σ_vac on the state after accretion (a cell P3 took is left at Σ_floor, below Σ_vac), read at the start and at the drifted position, plus each other sink softened by the pair's larger r_acc — every pull is equal and opposite, graded by |Σ M_s a_s + Σ m g_s| ≤ 1e-5 of its scale (measured ~1e-16 on the twin, ≤ 7.6e-8 on the GPU's f32 sum). No grid g is read for the motion (the old law's was the gas's unsoftened field, which a sink never felt equal and opposite). Two sinks closer than the larger r_acc merge (mass and momentum summed; at the mass-weighted centre, into the lower slot). The pre-[M0-V7] motion is retired (M0-D46).
@@ -269,14 +269,48 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 - **Where the twin and the box differ.** The twin runs the whole world; the GPU leaves vacuum outside the fitted box as uploaded (Σ = 0, x_H = 1) where the twin's P8 resets it to Σ_floor — negligible against G-REF's bands, but a per-cell comparison of vacuum cells (or of X in them) sees it. The overrides the oracles need (§ Gas flow) apply to the twin and the GPU alike.
 - **The twin's own scopes.** `riemann` (the oracle), `sod`'s and `edges`' and `collapse`'s twin cases (graded before the GPU's, with tolerances fixed before the first GPU run), `twin` (the driver and `--cpu-reference`), `cpu_gpu` (G-REF), and the lot-6 twin cases inside `heat_*`, `burn_*`, `neutrino` and `radiation_force`. Their costs and plants: `testing.md`.
 
+## Calibration (contract §2.11, §1.4.1's K9, §2.6, §2.7 [M0-R4], G-CAL, G-CORE; `assets/calibration.json`; `crates/sr-physics/src/calibration.rs`, `reference/sheet.rs`, `crates/sr-engine/src/calibrate.rs`)
+The sandbox's own scales, **measured** rather than chosen, so a mass or a threshold is never typed into a page or a pass. `assets/calibration.json`
+holds them; **this page names the keys and their bounds and points there — read the file for a value** (a copy here is stale at the next calibration).
+The step never reads it (G-WATCH): the time control, the observers, the translations and the preset clouds do.
+| Key (§2.11) | What it is | Measured by (`calibrate --only …`; `running.md` § Calibrating) |
+|---|---|---|
+| `m_ch_sb`, `m_tov_sb`, `ns_sigma_max_sb` | the cold ceilings of C/O matter and of neutron matter; `ns_sigma_max_sb` = `m_tov_sb` per cell area, the densest a holding neutron star can make one cell | items 1–2, on the CPU in f64: `reference::sheet`'s thin-disk equilibria through `eos`, no adapter, no grid (M0-R4); graded by `sheet`, `calibrate_cold`, `cold_core` |
+| `m_ign_sb` | the mass above which the preset cloud ignites rather than failing as a star | item 3, bisection to 2 % over whole lives on the GPU (`calibrate_bisect`) |
+| `m_up_sb`, `m_bh_sb` | white dwarf against core collapse; neutron star against black hole | item 4, the same bisection, lives run to their ending |
+| `preset_mass_sb` | the sun / massive / giant clouds' masses = the inverse translation of 1, 15 and 40 Suns (§1.10.1) | item 6, from the four mass anchors |
+| `t_eff_sun_sb`, `life_sun_sb`, `top_rung`, `stage_durations_sb`, `max_gas_speed` | the Sun-like life's surface temperature at X_H,c 0.35 (a temperature anchor, §1.10.2); its length (drop → white dwarf, §1.8.2) and the top rung it sets; each stage's sandbox duration by mass (the age clock's non-fuel stages, §1.10.4); the fastest gas of every run | item 6, one job over the three preset lives (`calibrate_order`) |
+| `render_reserve_ms` | the drawing lot's frame reserve | not `calibrate`'s: the drawing lot's `--measure-ui`; `calibrate` keeps it |
+| `physics_hash`, `measured` {date, git, adapter, box} | the SHA-256 of the canonical JSON of the three asset files; where and when it was measured | every write |
+- **Bounds — §2.11's, checked by `calibrate` and on load (exit 6; a failure is reported, never re-tuned inside the run).** K9's order m_ign < m_ch <
+  m_up < m_bh, m_ch < m_tov, and m_tov/m_ch inside the contract's interval; **Σ_BH ≥ `ns_sigma_max_sb`** (§2.6, §2.7 [M0-R4] — not 4 ×; checked on the
+  merged file, so a `sigma_bh` under the measured neutron-star ceiling stops the write); preset masses in the order sun < massive < giant; the
+  temperature anchors strictly increasing (`TempScale` refuses otherwise, §1.10.2); **c_sb > 2 × `max_gas_speed`**. `max_gas_speed` is a lower bound:
+  the block summary holds each block's kinetic energy and mass, so the value is the largest block rms speed √(2K/m), not the fastest cell. Each preset
+  must end as a white dwarf, a neutron star or a black hole at its `preset_mass_sb`, and the Sun-like life must reach X_H,c 0.35 for `t_eff_sun_sb`
+  (M0-D50's flag: a helium ignition may come first — exit 6, never a guess).
+- **The cold ceiling is the sheet's, not the grid's** [M0-R4]: no grid run reaches it, so the ceilings come from the continuum disk
+  `reference::sheet` solves. G-CORE (`cold_core`) grades the grid's side — that its statics and hydro hold a cold disk at the sheet's radius over
+  10 τ_dyn, on the GPU and on the twin — never the ceiling itself.
+- **The hash and the refusal (G-CAL).** `physics_hash` is the SHA-256 (written in `calibration.rs` against FIPS 180-4's vectors; §1.2's table holds
+  no hash crate) of the canonical JSON — keys sorted, compact, every number as its f64's shortest text — of `{"elements","physics","reactions"}`. A
+  reformatted or re-ordered `physics.json` keeps its hash; a changed constant, element or reaction does not. The engine refuses a calibration whose
+  hash differs from its embedded assets: `SR-ERROR calibration out of date`, exit 6 — **change a constant, calibrate again**. A run that names no
+  preset (a test's scene, `calibrate` itself) runs without a valid file.
+- **Not proven until M0-V9's run.** The lead's whole calibration writes `assets/calibration.json`; until then `EMBEDDED` is `None`, exit 6 from the
+  real binary and the translations' real-calibration case are `NOT PROVEN`, and `readouts` runs on `Calibration::test_calibration`. The S1 and S2
+  stand-ins' triggers (§1.6.4) are read in the preset lives and noted for M0-T97 and M0-TJ1.
+- **Across adapters.** A calibration is measured on one adapter (`measured.adapter`) and used on every other by leaning on G-REF's tolerance
+  (§6.7), never on bit identity.
+
 ## Where a number lives (so this page never holds one)
 | A value | Lives in | Checked by |
 |---|---|---|
 | Burning, floors, tools, optics, neutrino, stand-in and step constants | `assets/physics.json`, symbols in §2.5.1 and §2.7 | `registry` (bounds), `eos` (EOS use) |
 | Species A, Z, colours, paintability | `assets/elements.json`, §1.5 | `registry` (verbatim against §1.5) |
 | Record shares, q ratios, rate terms, gate | `assets/reactions.json`, §1.6.2 | `registry` (shapes and mass conservation) |
-| Measured scales: max gas speed, core and mass thresholds, preset masses | `assets/calibration.json`, §2.11 | `calibration` (G-CAL, later) |
-| Display anchors (real Sun, years, kelvin) | §1.10 only | `readouts` (later) |
+| Measured scales: max gas speed, core and mass thresholds, preset masses | `assets/calibration.json`, §2.11 (§ Calibration) | `calibration` (G-CAL), `calibrate_cold`, `calibrate_bisect`, `calibrate_order`, `cold_core` |
+| Display anchors (real Sun, years, kelvin) | §1.10 only (`observe::translate`: `MASS_SUNS`, `TEMP_KELVIN`; `readouts.md` § Translations) | `readouts` |
 | G, the kernel, K(0, 0), the FFT sizes | §2.1, §1.4.2, §1.3.3 (`grav::SELF_CELL` in code) | `grav_force`, `grav_selfforce`, `fft_twin`, `fft` |
 | The scheme's constants (C, η_g, the limiter, HLL), the edge modes, the twin's size cap | §2.3.4–§2.3.5, §2.8 (`MAX_WORLD` in code) | `sod`, `collapse`, `edges`, `twin`, `cpu_gpu` |
 | Light and opacity: a_r, c_sb, κ₀, k_cond, κ_dust, T_dust; the radiation force's coefficient | `assets/physics.json`, §2.4.1–§2.4.2 | `heat_gauss`, `heat_limiter`, `radiation_force` |

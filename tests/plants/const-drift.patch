@@ -1,0 +1,9 @@
+--- a/assets/physics.json
++++ b/assets/physics.json
+@@ -31,5 +31,5 @@
+   "sigma_obj": 1e-3,
+   "paint_sigma": 0.02,
+-  "paint_t": 2.0,
++  "paint_t": 2.5,
+   "heat_factor": 1.05,
+   "cool_factor": 0.95,

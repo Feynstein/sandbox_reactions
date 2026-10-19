@@ -1,0 +1,18 @@
+== M0-D58 repro 2026-10-19T09:59:22-04:00 laserax-ai
+    Finished `release` profile [optimized] target(s) in 0.11s
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 9 passes 19 rounds 4096
+SR-WARN heat unconverged step 11 passes 64 rounds 0
+SR-WARN heat unconverged step 12 passes 64 rounds 0
+SR-HEADLESS DONE steps=17 sim_time=0.922189 until=met
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=20 sim_time=0.042744 until=none
+    Finished `release` profile [optimized] target(s) in 2.74s
+== after the fix 2026-10-19T10:15:15-04:00 laserax-ai, RTX 5090
+block exit=0 0 unconverged | SR-HEADLESS DONE steps=105 sim_time=0.504622 until=met | mass 5000.000040320003 -> 5000.000176519229 floor_added 504230.26308206853
+co8000_h exit=0 0 unconverged | SR-HEADLESS DONE steps=106 sim_time=0.503182 until=met | mass 8000.000162390315 -> 8000.000007124865 floor_added 109486.27982131417
+co12000_h exit=0 0 unconverged | SR-HEADLESS DONE steps=171 sim_time=0.501981 until=met | mass 12000.000280140628 -> 11999.999524011673 floor_added 3248489.0411540414
+n8000_h exit=0 0 unconverged | SR-HEADLESS DONE steps=106 sim_time=0.503791 until=met | mass 8000.000040320003 -> 8000.000398610963 floor_added -2.4556891520639397
+co5000_off steps 270 floor_added -40.92342364859566 radiated 0.0 thermal start 2605529.750000956 cold start 7435158.625 kinetic start 321250.296875 invariant -7065380.330241552 -> 696608.8359084288
+fix_block steps 105 floor_added 504230.26308206853 radiated 124662.20824622456 thermal start 1802845.8437509614 cold start 7435158.625 kinetic start 321250.296875 invariant -7868064.236491546 -> -1019960.7272988715

@@ -1,0 +1,455 @@
+calibrate_cold  8/0/0        6.93 s  GO
+logs: milestones/m0/logs/M0-T66b.<scope>.log · record: loop_times.jsonl · tree e788da44e8ee+2a633f02395c
+anchor: 113 path×scope entries moved by this run
+anchor: 233 paths checked · 225 skipped (3 classes) · 2 never checked · 7 stale · 0 unclassified · 0 owed · 242 covered of 467 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.93 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 10.39->10.04
+=== GO ===
+calibrate_cold · clean · GO · arm 1/2, 1 left
+calibrate_cold · plant calibrate-cold-matter · RED (proven: 6 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope calibrate_cold · 13.99 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T66b.calibrate_cold.redarm.log
+=== GO ===
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=build/calibration.partial.json wall_s=0.0
+
+real	0m0.032s
+user	0m0.030s
+sys	0m0.003s
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=build/calibration.partial.json wall_s=0.0
+
+real	0m0.042s
+user	0m0.040s
+sys	0m0.002s
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=build/calibration.partial.json wall_s=0.0
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/src/calibrate.rs (+1) · stale: crates/sr-app/src/main.rs (+4)
+why registry: stale: assets/physics.json
+why eos: stale: assets/physics.json
+why rates: stale: assets/physics.json
+why burn_cell: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why burn_order: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why neutrino: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why sink: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why nu_heat: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why summary: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why ledger: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why preset_cloud: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why observe_run: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why objects: stale: assets/physics.json
+why classify: stale: assets/physics.json
+why sheet: stale: assets/physics.json
+why sod: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why edges: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why collapse: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why jeans: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why sun_burn: stale: assets/physics.json (+1)
+why twin: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why cpu_gpu: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why heat_gauss: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why heat_implicit: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why heat_limiter: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why heat_stiff: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why radiation_force: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why grav_force: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why grav_selfforce: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why fft: never: crates/sr-engine/src/calibrate.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why adapter: never: crates/sr-engine/src/calibrate.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why state: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why booking: never: crates/sr-engine/src/calibrate.rs (+1) · stale: crates/sr-engine/src/headless.rs (+3)
+why floors: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why dt: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why box: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why latch: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why timing: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why scene: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why dump: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why boot: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+5)
+why desktop: never: crates/sr-engine/src/calibrate.rs (+1) · stale: crates/sr-app/src/main.rs (+4)
+why web: never: crates/sr-engine/src/calibrate.rs (+1) · stale: crates/sr-app/src/main.rs (+4)
+why capture: never: crates/sr-engine/src/calibrate.rs (+1) · stale: crates/sr-app/src/main.rs (+4)
+why calibration: never: crates/sr-engine/src/calibrate.rs (+1) · stale: assets/physics.json (+4)
+why calibrate_cold: stale: crates/sr-engine/tests/gpu/calibration.rs
+plan_lint        585/0/0      0.12 s  GO · step 1/48, 47 left
+build            2/0/0        7.00 s  GO · step 2/48, 46 left
+registry         28/1/0       1.97 s  NO-GO · step 3/48, 45 left
+eos              13/0/0       1.97 s  GO · step 4/48, 44 left
+rates            8/0/0        1.97 s  GO · step 5/48, 43 left
+burn_cell        16/0/0      12.74 s  GO · step 6/48, 42 left
+burn_order       4/0/0        8.28 s  GO · step 7/48, 41 left
+neutrino         18/0/0      13.74 s  GO · step 8/48, 40 left
+sink             21/9/0      22.36 s  NO-GO · step 9/48, 39 left
+nu_heat          15/0/0      15.64 s  GO · step 10/48, 38 left
+summary          7/0/0       11.49 s  GO · step 11/48, 37 left
+ledger           4/0/0        7.38 s  GO · step 12/48, 36 left
+preset_cloud     5/0/0       42.31 s  GO · step 13/48, 35 left
+observe_run      5/0/0        8.93 s  GO · step 14/48, 34 left
+objects          17/0/0       0.11 s  GO · step 15/48, 33 left
+classify         32/0/0       0.11 s  GO · step 16/48, 32 left
+sheet            7/0/0        0.16 s  GO · step 17/48, 31 left
+sod              15/0/0       8.48 s  GO · step 18/48, 30 left
+edges            7/0/0        8.63 s  GO · step 19/48, 29 left
+collapse         6/0/0        1.87 s  GO · step 20/48, 28 left
+jeans            5/0/0        1.12 s  GO · step 21/48, 27 left
+sun_burn         4/0/0       45.77 s  GO · step 22/48, 26 left
+twin             6/0/0        1.82 s  GO · step 23/48, 25 left
+cpu_gpu          3/0/0        6.98 s  GO · step 24/48, 24 left
+heat_gauss       10/0/0       2.92 s  GO · step 25/48, 23 left
+heat_implicit    6/0/0        2.32 s  GO · step 26/48, 22 left
+heat_limiter     6/0/0        2.47 s  GO · step 27/48, 21 left
+heat_stiff       6/0/0        2.37 s  GO · step 28/48, 20 left
+radiation_force  7/0/0        4.12 s  GO · step 29/48, 19 left
+grav_force       13/0/0       5.27 s  GO · step 30/48, 18 left
+grav_selfforce   5/0/0        2.07 s  GO · step 31/48, 17 left
+fft              8/0/0        5.62 s  GO · step 32/48, 16 left
+adapter          10/0/0       4.72 s  GO · step 33/48, 15 left
+state            6/0/0        3.72 s  GO · step 34/48, 14 left
+booking          4/0/0        3.62 s  GO · step 35/48, 13 left
+floors           7/0/0        6.18 s  GO · step 36/48, 12 left
+dt               7/0/0        6.83 s  GO · step 37/48, 11 left
+box              8/0/0        6.18 s  GO · step 38/48, 10 left
+latch            5/0/0        3.37 s  GO · step 39/48, 9 left
+timing           5/0/0       10.38 s  GO · step 40/48, 8 left
+scene            8/0/0        2.87 s  GO · step 41/48, 7 left
+dump             11/0/0      16.11 s  GO · step 42/48, 6 left
+boot             1/0/0        4.17 s  GO · step 43/48, 5 left
+desktop          3/0/0       21.55 s  GO · step 44/48, 4 left
+web              3/0/0       21.61 s  GO · step 45/48, 3 left
+capture          2/0/0        0.99 s  GO · step 46/48, 2 left
+calibration      10/0/0       0.17 s  GO · step 47/48, 1 left
+calibrate_cold   8/0/0        1.38 s  GO · step 48/48, 0 left
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+calibrate_cold · clean · GO · arm 1/2, 1 left
+calibrate_cold · plant calibrate-cold-matter · RED (proven: 6 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope calibrate_cold · 14.21 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T66b.calibrate_cold.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/calibrate_cold.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/calibration.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: tests/plants/stall-constants.patch changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+logs: milestones/m0/logs/M0-T66b.<scope>.log · record: loop_times.jsonl · tree e788da44e8ee+2850116ed8ee
+anchor: 404 path×scope entries moved by this run
+anchor: 138 paths checked · 225 skipped (3 classes) · 104 never checked · 0 stale · 0 unclassified · 0 owed · 242 covered of 467 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for registry, sink)
+NEVER CHECKED  Cargo.lock  (no entry for registry, sink)
+NEVER CHECKED  Cargo.toml  (no entry for registry, sink)
+NEVER CHECKED  assets/elements.json  (no entry for registry, sink)
+NEVER CHECKED  assets/physics.json  (no entry for registry, sink)
+NEVER CHECKED  assets/reactions.json  (no entry for registry)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/calibration.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/observe/mod.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/observe/stages.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/observe/tracker.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/sheet.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for registry, sink)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for registry, sink)
+NEVER CHECKED  rust-toolchain.toml  (no entry for registry, sink)
+NEVER CHECKED  scenes/sink_cloud.json  (no entry for sink)
+NEVER CHECKED  tests/cargo.sh  (no entry for registry, sink)
+NEVER CHECKED  tests/cpu.sh  (no entry for registry)
+NEVER CHECKED  tests/gpu.sh  (no entry for sink)
+NEVER CHECKED  tests/plants/registry-order-unchecked.patch  (no entry for registry)
+NEVER CHECKED  tests/plants/registry-shares-unchecked.patch  (no entry for registry)
+NEVER CHECKED  tests/plants/sink-latch-off.patch  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-momentum.patch  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-phi-skip.patch  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-pull-grid.patch  (no entry for sink)
+skipped   217  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  registry: 1 failed · log milestones/m0/logs/M0-T66b.registry.log
+  sink: 9 failed · log milestones/m0/logs/M0-T66b.sink.log
+  anchor: 104 never checked, 0 stale, 0 unclassified - every one named above
+verify: 992 passed, 10 failed, 0 skipped · 46/48 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 8 not impacted · 60.75 s + loop 14.28 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 6.8->6.96 · base: M0-T66b's start 2026-10-19T10:50:23-04:00
+=== NO-GO: registry: 1 failed · log milestones/m0/logs/M0-T66b.registry.log; sink: 9 failed · log milestones/m0/logs/M0-T66b.sink.log; anchor: 104 never checked, 0 stale, 0 unclassified - every one named above ===
+registry  29/0/0       1.82 s  GO · step 1/2, 1 left
+sink      29/1/0      12.74 s  NO-GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-T66b.<scope>.log · record: loop_times.jsonl · tree e788da44e8ee+6e94dc75ae4c
+anchor: 33 path×scope entries moved by this run
+anchor: 142 paths checked · 225 skipped (3 classes) · 100 never checked · 0 stale · 0 unclassified · 0 owed · 242 covered of 467 visible
+FAILED:
+  sink: 1 failed · log milestones/m0/logs/M0-T66b.sink.log
+verify: 58 passed, 1 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.75 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.23->5.54
+=== NO-GO: sink: 1 failed · log milestones/m0/logs/M0-T66b.sink.log ===
+why build: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why eos: stale: crates/sr-physics/src/registry.rs
+why rates: stale: crates/sr-physics/src/registry.rs
+why burn_cell: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why burn_order: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why neutrino: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why sink: never: .cargo/config.toml (+99)
+why nu_heat: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why summary: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why ledger: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why preset_cloud: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why observe_run: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why objects: stale: crates/sr-physics/src/registry.rs
+why classify: stale: crates/sr-physics/src/registry.rs
+why sheet: stale: crates/sr-physics/src/registry.rs
+why sod: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why edges: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why collapse: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why jeans: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why twin: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why cpu_gpu: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why heat_gauss: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why heat_implicit: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why heat_limiter: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why heat_stiff: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why radiation_force: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why grav_force: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why grav_selfforce: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why fft: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why adapter: stale: crates/sr-engine/tests/gpu/sink.rs
+why state: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why booking: stale: crates/sr-engine/tests/gpu/sink.rs
+why floors: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why dt: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why box: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why latch: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why timing: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why scene: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why dump: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why boot: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why desktop: stale: crates/sr-engine/tests/gpu/sink.rs
+why web: stale: crates/sr-engine/tests/gpu/sink.rs
+why capture: stale: crates/sr-engine/tests/gpu/sink.rs
+why calibration: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+why calibrate_cold: stale: crates/sr-engine/tests/gpu/sink.rs (+1)
+build            2/0/0        8.45 s  GO · step 1/45, 44 left
+eos              13/0/0       0.27 s  GO · step 2/45, 43 left
+rates            8/0/0        0.37 s  GO · step 3/45, 42 left
+burn_cell        16/0/0       9.93 s  GO · step 4/45, 41 left
+burn_order       4/0/0        6.08 s  GO · step 5/45, 40 left
+neutrino         18/0/0      11.74 s  GO · step 6/45, 39 left
+sink             30/0/0      32.12 s  GO · step 7/45, 38 left
+nu_heat          15/0/0      18.65 s  GO · step 8/45, 37 left
+summary          7/0/0       13.39 s  GO · step 9/45, 36 left
+ledger           4/0/0        8.53 s  GO · step 10/45, 35 left
+preset_cloud     5/0/0       42.95 s  GO · step 11/45, 34 left
+observe_run      5/0/0        8.88 s  GO · step 12/45, 33 left
+objects          17/0/0       0.11 s  GO · step 13/45, 32 left
+classify         32/0/0       0.06 s  GO · step 14/45, 31 left
+sheet            7/0/0        0.16 s  GO · step 15/45, 30 left
+sod              15/0/0       8.18 s  GO · step 16/45, 29 left
+edges            7/0/0        9.58 s  GO · step 17/45, 28 left
+collapse         6/0/0        1.87 s  GO · step 18/45, 27 left
+jeans            5/0/0        0.97 s  GO · step 19/45, 26 left
+twin             6/0/0        2.02 s  GO · step 20/45, 25 left
+cpu_gpu          3/0/0        7.33 s  GO · step 21/45, 24 left
+heat_gauss       10/0/0       3.82 s  GO · step 22/45, 23 left
+heat_implicit    6/0/0        2.72 s  GO · step 23/45, 22 left
+heat_limiter     6/0/0        3.52 s  GO · step 24/45, 21 left
+heat_stiff       6/0/0        2.62 s  GO · step 25/45, 20 left
+radiation_force  7/0/0        6.13 s  GO · step 26/45, 19 left
+grav_force       13/0/0       8.23 s  GO · step 27/45, 18 left
+grav_selfforce   5/0/0        3.17 s  GO · step 28/45, 17 left
+fft              8/0/0        8.63 s  GO · step 29/45, 16 left
+adapter          10/0/0       6.28 s  GO · step 30/45, 15 left
+state            6/0/0        5.57 s  GO · step 31/45, 14 left
+booking          4/0/0        4.87 s  GO · step 32/45, 13 left
+floors           7/0/0        7.48 s  GO · step 33/45, 12 left
+dt               7/0/0        7.08 s  GO · step 34/45, 11 left
+box              8/0/0        6.98 s  GO · step 35/45, 10 left
+latch            5/0/0        4.27 s  GO · step 36/45, 9 left
+timing           5/0/0       10.63 s  GO · step 37/45, 8 left
+scene            8/0/0        3.67 s  GO · step 38/45, 7 left
+dump             11/0/0      13.10 s  GO · step 39/45, 6 left
+boot             1/0/0        4.82 s  GO · step 40/45, 5 left
+desktop          3/0/0       22.99 s  GO · step 41/45, 4 left
+web              3/0/0       19.04 s  GO · step 42/45, 3 left
+capture          2/0/0        1.08 s  GO · step 43/45, 2 left
+calibration      10/0/0       0.22 s  GO · step 44/45, 1 left
+calibrate_cold   8/0/0        1.43 s  GO · step 45/45, 0 left
+plan_lint        NOT RUN (not impacted: its 2 path(s) checked at the anchor)
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 33 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sun_burn         NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+calibrate_cold · clean · GO · arm 1/2, 1 left
+calibrate_cold · plant calibrate-cold-matter · RED (proven: 6 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope calibrate_cold · 15.16 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T66b.calibrate_cold.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/calibrate_cold.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/calibration.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/sink.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: tests/plants/stall-constants.patch changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+logs: milestones/m0/logs/M0-T66b.<scope>.log · record: loop_times.jsonl · tree e788da44e8ee+8d0db6d96adf
+anchor: 178 path×scope entries moved by this run
+anchor: 242 paths checked · 225 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 242 covered of 467 visible
+skipped   217  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 384 passed, 0 failed, 0 skipped · 45/45 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 11 not impacted · 49.04 s + loop 15.23 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 4.28->7.2 · base: M0-T66b's start 2026-10-19T10:50:23-04:00
+=== GO ===
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint        584/0/0      0.06 s  GO
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build            NOT RUN (not impacted: its 101 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 33 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+burn_cell        NOT RUN (not impacted: its 98 path(s) checked at the anchor)
+burn_order       NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+neutrino         NOT RUN (not impacted: its 99 path(s) checked at the anchor)
+sink             NOT RUN (not impacted: its 100 path(s) checked at the anchor)
+nu_heat          NOT RUN (not impacted: its 98 path(s) checked at the anchor)
+summary          NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+ledger           NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+preset_cloud     NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+observe_run      NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+objects          NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+classify         NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet            NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod              NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+edges            NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+collapse         NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+jeans            NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+sun_burn         NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin             NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+cpu_gpu          NOT RUN (not impacted: its 99 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 98 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+heat_limiter     NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+heat_stiff       NOT RUN (not impacted: its 99 path(s) checked at the anchor)
+radiation_force  NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+grav_force       NOT RUN (not impacted: its 102 path(s) checked at the anchor)
+grav_selfforce   NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+fft              NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter          NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+state            NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+booking          NOT RUN (not impacted: its 72 path(s) checked at the anchor)
+floors           NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+dt               NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+box              NOT RUN (not impacted: its 98 path(s) checked at the anchor)
+latch            NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+timing           NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+scene            NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+dump             NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+boot             NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+desktop          NOT RUN (not impacted: its 87 path(s) checked at the anchor)
+web              NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+capture          NOT RUN (not impacted: its 81 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+calibration      NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+calibrate_cold   NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+calibrate_cold · clean · GO · arm 1/2, 1 left
+calibrate_cold · plant calibrate-cold-matter · RED (proven: 6 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope calibrate_cold · 15.77 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T66b.calibrate_cold.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/calibrate_cold.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/calibration.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/sink.rs changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: tests/plants/stall-constants.patch changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T66b's start - a test, case or check M0-T66b's Deliver: does not name
+logs: milestones/m0/logs/M0-T66b.<scope>.log · record: loop_times.jsonl · tree e788da44e8ee+8a42af1b988d
+anchor: 1 path×scope entries moved by this run
+anchor: 242 paths checked · 226 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 242 covered of 468 visible
+skipped   218  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 584 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 55 not impacted · 0.07 s + loop 15.84 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 5.09->5.09 · base: M0-T66b's start 2026-10-19T10:50:23-04:00
+=== GO ===

@@ -1,0 +1,425 @@
+== 2026-10-19T09:27:42-04:00 laserax-ai CPU f64 twin, scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/r4
+R4-TWIN matter=c/o M=300 k1x=1 limiter=mc R90_0=2.8039 tau=0.27107 W0=-2.88878e4 virial0=0.9894 cold0/|W|=0.5527
+  t/tau=0.55 step=9 R/R0=1.0718 Eth+/|W|=5.9177e-2 K/|W|=8.3391e-3 virial=1.0613 mach=2.244 smax=17.5240
+  t/tau=1.06 step=17 R/R0=1.2241 Eth+/|W|=8.6801e-2 K/|W|=1.9978e-2 virial=1.0684 mach=3.045 smax=15.0530
+  t/tau=1.52 step=24 R/R0=1.3827 Eth+/|W|=9.7095e-2 K/|W|=2.7442e-2 virial=1.0388 mach=3.369 smax=12.5768
+  t/tau=2.02 step=31 R/R0=1.5039 Eth+/|W|=9.9708e-2 K/|W|=2.9417e-2 virial=0.9863 mach=3.364 smax=10.4231
+  t/tau=2.56 step=38 R/R0=1.6645 Eth+/|W|=9.8700e-2 K/|W|=2.5653e-2 virial=0.9238 mach=3.332 smax=8.7583
+  t/tau=3.05 step=44 R/R0=1.7664 Eth+/|W|=9.6884e-2 K/|W|=1.9351e-2 virial=0.8708 mach=3.321 smax=7.6664
+  t/tau=3.56 step=50 R/R0=1.8628 Eth+/|W|=9.5284e-2 K/|W|=1.2099e-2 virial=0.8249 mach=3.078 smax=6.8499
+  t/tau=4.09 step=56 R/R0=1.9422 Eth+/|W|=9.4524e-2 K/|W|=5.6960e-3 virial=0.7908 mach=3.019 smax=6.3007
+  t/tau=4.54 step=61 R/R0=1.9907 Eth+/|W|=9.4816e-2 K/|W|=2.0246e-3 virial=0.7738 mach=2.589 smax=6.0285
+  t/tau=5.09 step=67 R/R0=2.0185 Eth+/|W|=9.6514e-2 K/|W|=2.1141e-4 virial=0.7682 mach=2.107 smax=5.8678
+  t/tau=5.55 step=72 R/R0=2.0145 Eth+/|W|=9.9200e-2 K/|W|=8.8312e-4 virial=0.7759 mach=1.730 smax=5.8665
+  t/tau=6.00 step=77 R/R0=1.9907 Eth+/|W|=1.0323e-1 K/|W|=3.1316e-3 virial=0.7938 mach=1.432 smax=5.9771
+  t/tau=6.54 step=83 R/R0=1.9397 Eth+/|W|=1.0979e-1 K/|W|=7.1574e-3 virial=0.8265 mach=2.107 smax=6.2318
+  t/tau=7.05 step=89 R/R0=1.8628 Eth+/|W|=1.1823e-1 K/|W|=1.1598e-2 virial=0.8687 mach=3.950 smax=6.6387
+  t/tau=7.55 step=95 R/R0=1.7799 Eth+/|W|=1.2883e-1 K/|W|=1.5012e-2 virial=0.9170 mach=6.742 smax=7.1329
+  t/tau=8.03 step=101 R/R0=1.7208 Eth+/|W|=1.4217e-1 K/|W|=1.6203e-2 virial=0.9682 mach=10.608 smax=7.6494
+  t/tau=8.57 step=108 R/R0=1.6356 Eth+/|W|=1.6135e-1 K/|W|=1.4055e-2 virial=1.0278 mach=11.292 smax=8.2536
+  t/tau=9.02 step=114 R/R0=1.5762 Eth+/|W|=1.7974e-1 K/|W|=9.5620e-3 virial=1.0745 mach=11.570 smax=8.7670
+  t/tau=9.52 step=121 R/R0=1.5249 Eth+/|W|=2.0052e-1 K/|W|=3.3905e-3 virial=1.1182 mach=14.741 smax=9.2322
+  t/tau=10.02 step=128 R/R0=1.5249 Eth+/|W|=2.1495e-1 K/|W|=7.5999e-4 virial=1.1448 mach=15.285 smax=9.3938
+R4-TWIN-END M=300 limiter=mc steps=128 dev=1.0185 min=1.0000 max=2.0185 end=1.5249
+
+real	0m2.618s
+user	0m1.978s
+sys	0m0.018s
+R4-TWIN matter=c/o M=30 k1x=1 limiter=mc R90_0=3.5576 tau=1.22509 W0=-2.22875e2 virial0=0.9854 cold0/|W|=0.5050
+  t/tau=0.53 step=11 R/R0=1.0482 Eth+/|W|=2.5916e-2 K/|W|=2.5643e-3 virial=1.0040 mach=2.051 smax=1.1307
+  t/tau=1.02 step=21 R/R0=1.1167 Eth+/|W|=4.2111e-2 K/|W|=5.7439e-3 virial=0.9909 mach=2.365 smax=1.0359
+  t/tau=1.53 step=31 R/R0=1.2130 Eth+/|W|=5.2240e-2 K/|W|=7.0606e-3 virial=0.9599 mach=2.700 smax=0.9382
+  t/tau=2.01 step=40 R/R0=1.3005 Eth+/|W|=5.8682e-2 K/|W|=5.9674e-3 virial=0.9270 mach=2.352 smax=0.8464
+  t/tau=2.51 step=49 R/R0=1.3708 Eth+/|W|=6.3195e-2 K/|W|=3.8003e-3 virial=0.8980 mach=2.574 smax=0.7777
+  t/tau=3.03 step=58 R/R0=1.4063 Eth+/|W|=6.7390e-2 K/|W|=1.6821e-3 virial=0.8794 mach=2.064 smax=0.7369
+  t/tau=3.55 step=67 R/R0=1.4444 Eth+/|W|=7.2656e-2 K/|W|=4.4762e-4 virial=0.8741 mach=1.131 smax=0.7087
+  t/tau=4.02 step=75 R/R0=1.4444 Eth+/|W|=7.8502e-2 K/|W|=3.8480e-4 virial=0.8810 mach=0.957 smax=0.6915
+  t/tau=4.54 step=84 R/R0=1.4410 Eth+/|W|=8.6482e-2 K/|W|=1.1708e-3 virial=0.9007 mach=2.081 smax=0.6924
+  t/tau=5.00 step=92 R/R0=1.4133 Eth+/|W|=9.5239e-2 K/|W|=1.9294e-3 virial=0.9259 mach=3.158 smax=0.7027
+  t/tau=5.51 step=101 R/R0=1.3993 Eth+/|W|=1.0684e-1 K/|W|=2.1542e-3 virial=0.9585 mach=3.238 smax=0.7163
+  t/tau=6.02 step=110 R/R0=1.3780 Eth+/|W|=1.1909e-1 K/|W|=1.4706e-3 virial=0.9898 mach=4.538 smax=0.7290
+  t/tau=6.51 step=119 R/R0=1.3744 Eth+/|W|=1.2994e-1 K/|W|=5.9135e-4 virial=1.0146 mach=5.550 smax=0.7391
+  t/tau=7.00 step=128 R/R0=1.3815 Eth+/|W|=1.3802e-1 K/|W|=5.1080e-4 virial=1.0291 mach=5.043 smax=0.7430
+  t/tau=7.55 step=138 R/R0=1.4063 Eth+/|W|=1.4369e-1 K/|W|=1.6223e-3 virial=1.0303 mach=1.280 smax=0.7294
+  t/tau=8.04 step=147 R/R0=1.4614 Eth+/|W|=1.4600e-1 K/|W|=3.2658e-3 virial=1.0180 mach=1.998 smax=0.6927
+  t/tau=8.55 step=156 R/R0=1.5243 Eth+/|W|=1.4581e-1 K/|W|=4.7130e-3 virial=0.9956 mach=2.082 smax=0.6445
+  t/tau=9.02 step=164 R/R0=1.5878 Eth+/|W|=1.4418e-1 K/|W|=5.2028e-3 virial=0.9708 mach=2.235 smax=0.6038
+  t/tau=9.56 step=173 R/R0=1.6518 Eth+/|W|=1.4195e-1 K/|W|=4.5995e-3 virial=0.9420 mach=2.302 smax=0.5650
+  t/tau=10.05 step=181 R/R0=1.6960 Eth+/|W|=1.4040e-1 K/|W|=3.3737e-3 virial=0.9190 mach=2.012 smax=0.5355
+R4-TWIN-END M=30 limiter=mc steps=181 dev=0.6960 min=1.0000 max=1.6960 end=1.6960
+R4-TWIN matter=c/o M=300 k1x=1 limiter=mc R90_0=2.8039 tau=0.27107 W0=-2.88878e4 virial0=0.9894 cold0/|W|=0.5527
+  t/tau=0.55 step=9 R/R0=1.0718 Eth+/|W|=5.9177e-2 K/|W|=8.3391e-3 virial=1.0613 mach=2.244 smax=17.5240
+  t/tau=1.06 step=17 R/R0=1.2241 Eth+/|W|=8.6801e-2 K/|W|=1.9978e-2 virial=1.0684 mach=3.045 smax=15.0530
+  t/tau=1.52 step=24 R/R0=1.3827 Eth+/|W|=9.7095e-2 K/|W|=2.7442e-2 virial=1.0388 mach=3.369 smax=12.5768
+  t/tau=2.02 step=31 R/R0=1.5039 Eth+/|W|=9.9708e-2 K/|W|=2.9417e-2 virial=0.9863 mach=3.364 smax=10.4231
+  t/tau=2.56 step=38 R/R0=1.6645 Eth+/|W|=9.8700e-2 K/|W|=2.5653e-2 virial=0.9238 mach=3.332 smax=8.7583
+  t/tau=3.05 step=44 R/R0=1.7664 Eth+/|W|=9.6884e-2 K/|W|=1.9351e-2 virial=0.8708 mach=3.321 smax=7.6664
+  t/tau=3.56 step=50 R/R0=1.8628 Eth+/|W|=9.5284e-2 K/|W|=1.2099e-2 virial=0.8249 mach=3.078 smax=6.8499
+  t/tau=4.09 step=56 R/R0=1.9422 Eth+/|W|=9.4524e-2 K/|W|=5.6960e-3 virial=0.7908 mach=3.019 smax=6.3007
+  t/tau=4.54 step=61 R/R0=1.9907 Eth+/|W|=9.4816e-2 K/|W|=2.0246e-3 virial=0.7738 mach=2.589 smax=6.0285
+  t/tau=5.09 step=67 R/R0=2.0185 Eth+/|W|=9.6514e-2 K/|W|=2.1141e-4 virial=0.7682 mach=2.107 smax=5.8678
+  t/tau=5.55 step=72 R/R0=2.0145 Eth+/|W|=9.9200e-2 K/|W|=8.8312e-4 virial=0.7759 mach=1.730 smax=5.8665
+  t/tau=6.00 step=77 R/R0=1.9907 Eth+/|W|=1.0323e-1 K/|W|=3.1316e-3 virial=0.7938 mach=1.432 smax=5.9771
+  t/tau=6.54 step=83 R/R0=1.9397 Eth+/|W|=1.0979e-1 K/|W|=7.1574e-3 virial=0.8265 mach=2.107 smax=6.2318
+  t/tau=7.05 step=89 R/R0=1.8628 Eth+/|W|=1.1823e-1 K/|W|=1.1598e-2 virial=0.8687 mach=3.950 smax=6.6387
+  t/tau=7.55 step=95 R/R0=1.7799 Eth+/|W|=1.2883e-1 K/|W|=1.5012e-2 virial=0.9170 mach=6.742 smax=7.1329
+  t/tau=8.03 step=101 R/R0=1.7208 Eth+/|W|=1.4217e-1 K/|W|=1.6203e-2 virial=0.9682 mach=10.608 smax=7.6494
+  t/tau=8.57 step=108 R/R0=1.6356 Eth+/|W|=1.6135e-1 K/|W|=1.4055e-2 virial=1.0278 mach=11.292 smax=8.2536
+  t/tau=9.02 step=114 R/R0=1.5762 Eth+/|W|=1.7974e-1 K/|W|=9.5620e-3 virial=1.0745 mach=11.570 smax=8.7670
+  t/tau=9.52 step=121 R/R0=1.5249 Eth+/|W|=2.0052e-1 K/|W|=3.3905e-3 virial=1.1182 mach=14.741 smax=9.2322
+  t/tau=10.02 step=128 R/R0=1.5249 Eth+/|W|=2.1495e-1 K/|W|=7.5999e-4 virial=1.1448 mach=15.285 smax=9.3938
+R4-TWIN-END M=300 limiter=mc steps=128 dev=1.0185 min=1.0000 max=2.0185 end=1.5249
+R4-TWIN matter=c/o M=1000 k1x=1 limiter=mc R90_0=1.9121 tau=0.08361 W0=-4.80297e5 virial0=0.9861 cold0/|W|=0.6178
+  t/tau=0.56 step=6 R/R0=1.2160 Eth+/|W|=1.5836e-1 K/|W|=3.4647e-2 virial=1.2727 mach=3.187 smax=99.7984
+  t/tau=1.03 step=11 R/R0=1.4639 Eth+/|W|=1.9787e-1 K/|W|=8.0712e-2 virial=1.3661 mach=3.407 smax=77.5200
+  t/tau=1.53 step=16 R/R0=1.6972 Eth+/|W|=2.0447e-1 K/|W|=1.2472e-1 virial=1.3891 mach=3.891 smax=58.2630
+  t/tau=2.08 step=21 R/R0=2.0276 Eth+/|W|=1.9360e-1 K/|W|=1.6221e-1 virial=1.3676 mach=4.229 smax=42.5269
+  t/tau=2.54 step=25 R/R0=2.2664 Eth+/|W|=1.7725e-1 K/|W|=1.8720e-1 virial=1.3304 mach=4.257 smax=32.3365
+  t/tau=3.02 step=29 R/R0=2.5234 Eth+/|W|=1.5926e-1 K/|W|=2.0409e-1 virial=1.2801 mach=4.467 smax=24.6628
+  t/tau=3.53 step=33 R/R0=2.7812 Eth+/|W|=1.4273e-1 K/|W|=2.1162e-1 virial=1.2201 mach=4.588 smax=19.1510
+  t/tau=4.05 step=37 R/R0=3.0564 Eth+/|W|=1.2909e-1 K/|W|=2.1128e-1 virial=1.1570 mach=4.530 smax=15.3643
+  t/tau=4.60 step=41 R/R0=3.3037 Eth+/|W|=1.1780e-1 K/|W|=2.0522e-1 virial=1.0921 mach=4.699 smax=12.6694
+  t/tau=5.03 step=44 R/R0=3.4839 Eth+/|W|=1.1064e-1 K/|W|=1.9790e-1 virial=1.0433 mach=4.547 smax=11.1541
+  t/tau=5.62 step=48 R/R0=3.7268 Eth+/|W|=1.0252e-1 K/|W|=1.8550e-1 virial=0.9789 mach=4.502 smax=9.6135
+  t/tau=6.07 step=51 R/R0=3.9234 Eth+/|W|=9.7411e-2 K/|W|=1.7495e-1 virial=0.9324 mach=4.763 smax=8.7370
+  t/tau=6.54 step=54 R/R0=4.1190 Eth+/|W|=9.2919e-2 K/|W|=1.6356e-1 virial=0.8869 mach=4.972 smax=8.0263
+  t/tau=7.01 step=57 R/R0=4.2889 Eth+/|W|=8.8981e-2 K/|W|=1.5166e-1 virial=0.8428 mach=5.208 smax=7.4492
+  t/tau=7.65 step=61 R/R0=4.5281 Eth+/|W|=8.4535e-2 K/|W|=1.3568e-1 virial=0.7876 mach=5.497 smax=6.8500
+  t/tau=8.14 step=64 R/R0=4.6786 Eth+/|W|=8.1722e-2 K/|W|=1.2391e-1 virial=0.7492 mach=5.634 smax=6.5006
+  t/tau=8.62 step=67 R/R0=4.8402 Eth+/|W|=7.9260e-2 K/|W|=1.1236e-1 virial=0.7129 mach=6.047 smax=6.2149
+  t/tau=9.11 step=70 R/R0=5.0000 Eth+/|W|=7.7121e-2 K/|W|=1.0122e-1 virial=0.6789 mach=6.169 smax=5.9831
+  t/tau=9.60 step=73 R/R0=5.1362 Eth+/|W|=7.5270e-2 K/|W|=9.0603e-2 virial=0.6475 mach=6.416 smax=5.7968
+  t/tau=10.09 step=76 R/R0=5.2761 Eth+/|W|=7.3693e-2 K/|W|=8.0691e-2 virial=0.6189 mach=6.469 smax=5.6505
+R4-TWIN-END M=1000 limiter=mc steps=76 dev=4.2761 min=1.0000 max=5.2761 end=5.2761
+R4-TWIN matter=c/o M=2500 k1x=1 limiter=mc R90_0=1.0753 tau=0.02230 W0=-4.86922e6 virial0=0.8970 cold0/|W|=0.6373
+  t/tau=0.53 step=3 R/R0=1.7476 Eth+/|W|=4.2300e-1 K/|W|=5.4538e-2 virial=1.7227 mach=2.418 smax=384.3414
+  t/tau=1.00 step=7 R/R0=1.9242 Eth+/|W|=5.0731e-1 K/|W|=1.3602e-1 virial=2.0078 mach=4.193 smax=299.4445
+  t/tau=1.54 step=12 R/R0=2.3538 Eth+/|W|=5.1979e-1 K/|W|=2.5065e-1 virial=2.2140 mach=4.190 smax=235.2197
+  t/tau=2.05 step=17 R/R0=2.6963 Eth+/|W|=4.9965e-1 K/|W|=3.6575e-1 virial=2.3618 mach=4.291 smax=187.4539
+  t/tau=2.56 step=22 R/R0=3.0888 Eth+/|W|=4.6706e-1 K/|W|=4.8794e-1 virial=2.5002 mach=4.607 smax=148.5190
+  t/tau=3.04 step=27 R/R0=3.4680 Eth+/|W|=4.2706e-1 K/|W|=6.1047e-1 virial=2.6285 mach=5.338 smax=117.8589
+  t/tau=3.51 step=32 R/R0=3.8379 Eth+/|W|=3.8510e-1 K/|W|=7.3091e-1 virial=2.7519 mach=5.621 smax=93.6566
+  t/tau=4.08 step=38 R/R0=4.3403 Eth+/|W|=3.3918e-1 K/|W|=8.6777e-1 virial=2.8968 mach=6.551 smax=71.8233
+  t/tau=4.56 step=43 R/R0=4.7448 Eth+/|W|=3.0694e-1 K/|W|=9.7162e-1 virial=3.0128 mach=7.405 smax=58.5588
+  t/tau=5.03 step=48 R/R0=5.1491 Eth+/|W|=2.7977e-1 K/|W|=1.0674e0 virial=3.1256 mach=8.225 smax=48.4904
+  t/tau=5.51 step=53 R/R0=5.5239 Eth+/|W|=2.5652e-1 K/|W|=1.1573e0 virial=3.2371 mach=8.835 smax=40.6412
+  t/tau=6.09 step=59 R/R0=6.0650 Eth+/|W|=2.3296e-1 K/|W|=1.2589e0 virial=3.3692 mach=11.220 smax=33.3855
+  t/tau=6.58 step=64 R/R0=6.4452 Eth+/|W|=2.1606e-1 K/|W|=1.3401e0 virial=3.4798 mach=14.811 smax=28.6092
+  t/tau=7.09 step=69 R/R0=6.9067 Eth+/|W|=2.0115e-1 K/|W|=1.4191e0 virial=3.5911 mach=327.368 smax=24.7018
+  t/tau=7.50 step=73 R/R0=7.2503 Eth+/|W|=1.9056e-1 K/|W|=1.4804e0 virial=3.6801 mach=356.238 smax=22.0982
+  t/tau=8.03 step=78 R/R0=7.6635 Eth+/|W|=1.7854e-1 K/|W|=1.5562e0 virial=3.7930 mach=321.219 smax=19.3209
+  t/tau=8.56 step=83 R/R0=8.1224 Eth+/|W|=1.6785e-1 K/|W|=1.6303e0 virial=3.9063 mach=340.477 smax=17.0095
+  t/tau=9.10 step=88 R/R0=8.5819 Eth+/|W|=1.5835e-1 K/|W|=1.7026e0 virial=4.0194 mach=367.589 smax=15.0801
+  t/tau=9.54 step=92 R/R0=8.9680 Eth+/|W|=1.5135e-1 K/|W|=1.7603e0 virial=4.1115 mach=333.804 smax=13.7355
+  t/tau=10.10 step=97 R/R0=9.4168 Eth+/|W|=1.4347e-1 K/|W|=1.8307e0 virial=4.2255 mach=367.115 smax=12.2995
+R4-TWIN-END M=2500 limiter=mc steps=97 dev=8.4168 min=1.0000 max=9.4168 end=9.4168
+R4-TWIN matter=c/o M=30 k1x=1 limiter=central R90_0=3.5576 tau=1.22509 W0=-2.22875e2 virial0=0.9854 cold0/|W|=0.5050
+R4-TWIN non-finite at step 1215 (1756, 3)
+R4-TWIN matter=c/o M=300 k1x=1 limiter=central R90_0=2.8039 tau=0.27107 W0=-2.88878e4 virial0=0.9894 cold0/|W|=0.5527
+  t/tau=0.56 step=9 R/R0=1.1011 Eth+/|W|=4.0719e-2 K/|W|=7.7016e-3 virial=1.0068 mach=0.981 smax=17.7122
+  t/tau=1.02 step=16 R/R0=1.2750 Eth+/|W|=5.9531e-2 K/|W|=1.7358e-2 virial=0.9907 mach=1.627 smax=15.2314
+  t/tau=1.50 step=23 R/R0=1.4168 Eth+/|W|=6.0422e-2 K/|W|=2.1821e-2 virial=0.9437 mach=14.445 smax=13.4063
+  t/tau=2.02 step=33 R/R0=1.5762 Eth+/|W|=5.9550e-2 K/|W|=1.9483e-2 virial=0.8873 mach=5.078 smax=11.7745
+  t/tau=2.51 step=48 R/R0=1.6976 Eth+/|W|=5.9880e-2 K/|W|=1.3776e-2 virial=0.8401 mach=35.641 smax=10.4806
+  t/tau=3.01 step=65 R/R0=1.7664 Eth+/|W|=6.0598e-2 K/|W|=9.4575e-3 virial=0.8077 mach=61.711 smax=9.6240
+  t/tau=3.52 step=83 R/R0=1.8196 Eth+/|W|=6.2615e-2 K/|W|=4.6994e-3 virial=0.7879 mach=68.149 smax=9.1401
+R4-TWIN non-finite at step 622 (1703, 3)
+R4-TWIN matter=c/o M=1000 k1x=1 limiter=central R90_0=1.9121 tau=0.08361 W0=-4.80297e5 virial0=0.9861 cold0/|W|=0.6178
+R4-TWIN non-finite at step 554 (1567, 3)
+R4-TWIN matter=c/o M=2500 k1x=1 limiter=central R90_0=1.0753 tau=0.02230 W0=-4.86922e6 virial0=0.8970 cold0/|W|=0.6373
+  t/tau=0.53 step=3 R/R0=1.7476 Eth+/|W|=1.4938e-1 K/|W|=1.2905e-1 virial=1.3996 mach=1.163 smax=438.6215
+  t/tau=1.07 step=7 R/R0=2.2118 Eth+/|W|=1.4723e-1 K/|W|=2.6980e-1 virial=1.6270 mach=1.995 smax=319.7772
+  t/tau=1.51 step=11 R/R0=2.5733 Eth+/|W|=1.2512e-1 K/|W|=3.4917e-1 virial=1.7042 mach=4.106 smax=255.2151
+  t/tau=2.01 step=17 R/R0=3.0000 Eth+/|W|=1.0406e-1 K/|W|=4.2652e-1 virial=1.7705 mach=3.479 smax=200.8538
+  t/tau=2.52 step=28 R/R0=3.4680 Eth+/|W|=8.8373e-2 K/|W|=4.8695e-1 virial=1.8174 mach=5.205 smax=162.7351
+  t/tau=3.02 step=50 R/R0=3.9077 Eth+/|W|=7.7240e-2 K/|W|=5.3209e-1 virial=1.8484 mach=773.606 smax=135.2814
+  t/tau=3.51 step=72 R/R0=4.3527 Eth+/|W|=6.9478e-2 K/|W|=5.7067e-1 virial=1.8779 mach=721.729 smax=115.3164
+  t/tau=4.00 step=91 R/R0=4.7789 Eth+/|W|=6.3484e-2 K/|W|=6.0049e-1 virial=1.8973 mach=746.666 smax=100.2338
+R4-TWIN non-finite at step 702 (1879, 3)
+R4-TWIN matter=c/o M=30 k1x=1 limiter=first R90_0=3.5576 tau=1.22509 W0=-2.22875e2 virial0=0.9854 cold0/|W|=0.5050
+  t/tau=0.55 step=11 R/R0=1.2591 Eth+/|W|=1.9624e-1 K/|W|=9.9905e-3 virial=1.2413 mach=2.687 smax=0.9127
+  t/tau=1.01 step=20 R/R0=1.5308 Eth+/|W|=3.0597e-1 K/|W|=3.4553e-2 virial=1.4048 mach=3.176 smax=0.7315
+  t/tau=1.54 step=30 R/R0=1.8705 Eth+/|W|=3.7361e-1 K/|W|=8.0565e-2 virial=1.5268 mach=3.801 smax=0.5396
+  t/tau=2.04 step=39 R/R0=2.2004 Eth+/|W|=3.9382e-1 K/|W|=1.3123e-1 virial=1.5892 mach=4.219 smax=0.4055
+  t/tau=2.52 step=48 R/R0=2.5362 Eth+/|W|=3.9156e-1 K/|W|=1.7952e-1 virial=1.6203 mach=4.567 smax=0.3138
+  t/tau=3.04 step=58 R/R0=2.9182 Eth+/|W|=3.7774e-1 K/|W|=2.2601e-1 virial=1.6340 mach=4.900 smax=0.2450
+  t/tau=3.51 step=67 R/R0=3.2679 Eth+/|W|=3.6174e-1 K/|W|=2.6073e-1 virial=1.6356 mach=5.193 smax=0.2021
+  t/tau=4.03 step=77 R/R0=3.6328 Eth+/|W|=3.4328e-1 K/|W|=2.9232e-1 virial=1.6304 mach=5.474 smax=0.1676
+  t/tau=4.55 step=87 R/R0=4.0052 Eth+/|W|=3.2566e-1 K/|W|=3.1763e-1 virial=1.6210 mach=5.732 smax=0.1424
+  t/tau=5.03 step=97 R/R0=4.3390 Eth+/|W|=3.1061e-1 K/|W|=3.3648e-1 virial=1.6098 mach=5.834 smax=0.1246
+  t/tau=5.51 step=108 R/R0=4.6733 Eth+/|W|=2.9753e-1 K/|W|=3.5108e-1 virial=1.5975 mach=5.901 smax=0.1107
+  t/tau=6.02 step=121 R/R0=5.0197 Eth+/|W|=2.8684e-1 K/|W|=3.6160e-1 virial=1.5833 mach=5.978 smax=0.0988
+  t/tau=6.53 step=135 R/R0=5.3622 Eth+/|W|=2.8064e-1 K/|W|=3.6624e-1 virial=1.5686 mach=6.063 smax=0.0891
+  t/tau=7.03 step=149 R/R0=5.6815 Eth+/|W|=2.7869e-1 K/|W|=3.6578e-1 virial=1.5544 mach=6.154 smax=0.0816
+  t/tau=7.50 step=163 R/R0=5.9911 Eth+/|W|=2.7971e-1 K/|W|=3.6184e-1 virial=1.5408 mach=6.212 smax=0.0755
+  t/tau=8.03 step=180 R/R0=6.3232 Eth+/|W|=2.8390e-1 K/|W|=3.5391e-1 virial=1.5259 mach=6.330 smax=0.0698
+  t/tau=8.51 step=200 R/R0=6.6252 Eth+/|W|=2.8966e-1 K/|W|=3.4445e-1 virial=1.5128 mach=6.090 smax=0.0654
+  t/tau=9.01 step=224 R/R0=6.9327 Eth+/|W|=2.9811e-1 K/|W|=3.3199e-1 virial=1.4995 mach=5.600 smax=0.0615
+  t/tau=9.51 step=244 R/R0=7.2379 Eth+/|W|=3.0907e-1 K/|W|=3.1695e-1 virial=1.4868 mach=5.442 smax=0.0581
+  t/tau=10.02 step=263 R/R0=7.5531 Eth+/|W|=3.2245e-1 K/|W|=2.9936e-1 virial=1.4743 mach=5.057 smax=0.0551
+R4-TWIN-END M=30 limiter=first steps=263 dev=6.5531 min=1.0000 max=7.5531 end=7.5531
+R4-TWIN matter=c/o M=300 k1x=1 limiter=first R90_0=2.8039 tau=0.27107 W0=-2.88878e4 virial0=0.9894 cold0/|W|=0.5527
+  t/tau=0.51 step=8 R/R0=1.3240 Eth+/|W|=2.5145e-1 K/|W|=1.5853e-2 virial=1.3601 mach=2.781 smax=13.9117
+  t/tau=1.03 step=16 R/R0=1.7023 Eth+/|W|=4.0486e-1 K/|W|=6.6757e-2 virial=1.6404 mach=3.582 smax=9.8605
+  t/tau=1.52 step=24 R/R0=2.0958 Eth+/|W|=4.6787e-1 K/|W|=1.4362e-1 virial=1.8207 mach=4.190 smax=6.9990
+  t/tau=2.05 step=33 R/R0=2.5221 Eth+/|W|=4.8126e-1 K/|W|=2.3583e-1 virial=1.9494 mach=4.692 smax=4.9925
+  t/tau=2.55 step=42 R/R0=2.9712 Eth+/|W|=4.7021e-1 K/|W|=3.2212e-1 virial=2.0382 mach=5.117 smax=3.7463
+  t/tau=3.05 step=51 R/R0=3.4098 Eth+/|W|=4.5065e-1 K/|W|=3.9900e-1 virial=2.1053 mach=5.473 smax=2.9312
+  t/tau=3.54 step=60 R/R0=3.8458 Eth+/|W|=4.2905e-1 K/|W|=4.6680e-1 virial=2.1600 mach=5.803 smax=2.3695
+  t/tau=4.02 step=69 R/R0=4.2634 Eth+/|W|=4.0804e-1 K/|W|=5.2649e-1 virial=2.2068 mach=6.118 smax=1.9668
+  t/tau=4.50 step=78 R/R0=4.6863 Eth+/|W|=3.8875e-1 K/|W|=5.7874e-1 virial=2.2478 mach=6.326 smax=1.6713
+  t/tau=5.05 step=89 R/R0=5.1594 Eth+/|W|=3.6875e-1 K/|W|=6.3197e-1 virial=2.2905 mach=6.412 smax=1.4157
+  t/tau=5.50 step=99 R/R0=5.5513 Eth+/|W|=3.5397e-1 K/|W|=6.7184e-1 virial=2.3238 mach=6.490 smax=1.2490
+  t/tau=6.01 step=111 R/R0=5.9721 Eth+/|W|=3.4069e-1 K/|W|=7.1054e-1 virial=2.3586 mach=6.585 smax=1.1012
+  t/tau=6.52 step=124 R/R0=6.4001 Eth+/|W|=3.3240e-1 K/|W|=7.4254e-1 virial=2.3919 mach=6.707 smax=0.9806
+  t/tau=7.04 step=138 R/R0=6.8287 Eth+/|W|=3.3017e-1 K/|W|=7.6727e-1 virial=2.4244 mach=6.841 smax=0.8801
+  t/tau=7.53 step=152 R/R0=7.2394 Eth+/|W|=3.3394e-1 K/|W|=7.8365e-1 virial=2.4542 mach=6.970 smax=0.8003
+  t/tau=8.01 step=166 R/R0=7.6286 Eth+/|W|=3.4223e-1 K/|W|=7.9362e-1 virial=2.4817 mach=7.070 smax=0.7356
+  t/tau=8.52 step=184 R/R0=8.0406 Eth+/|W|=3.5659e-1 K/|W|=7.9797e-1 virial=2.5105 mach=6.764 smax=0.6758
+  t/tau=9.02 step=205 R/R0=8.4419 Eth+/|W|=3.7558e-1 K/|W|=7.9642e-1 virial=2.5377 mach=6.418 smax=0.6255
+  t/tau=9.51 step=224 R/R0=8.8321 Eth+/|W|=3.9846e-1 K/|W|=7.8972e-1 virial=2.5634 mach=6.081 smax=0.5830
+  t/tau=10.02 step=243 R/R0=9.2317 Eth+/|W|=4.2732e-1 K/|W|=7.7689e-1 virial=2.5892 mach=5.953 smax=0.5444
+R4-TWIN-END M=300 limiter=first steps=243 dev=8.2317 min=1.0000 max=9.2317 end=9.2317
+R4-TWIN matter=c/o M=1000 k1x=1 limiter=first R90_0=1.9121 tau=0.08361 W0=-4.80297e5 virial0=0.9861 cold0/|W|=0.6178
+  t/tau=0.56 step=6 R/R0=1.5387 Eth+/|W|=4.1783e-1 K/|W|=4.1379e-2 virial=1.7129 mach=2.600 smax=75.4786
+  t/tau=1.07 step=12 R/R0=2.0379 Eth+/|W|=5.9698e-1 K/|W|=1.4912e-1 virial=2.1674 mach=3.403 smax=48.3577
+  t/tau=1.52 step=18 R/R0=2.5234 Eth+/|W|=6.5467e-1 K/|W|=2.8270e-1 virial=2.4690 mach=4.158 smax=34.0185
+  t/tau=2.00 step=25 R/R0=3.0284 Eth+/|W|=6.6328e-1 K/|W|=4.4112e-1 virial=2.7341 mach=4.772 smax=24.3846
+  t/tau=2.53 step=33 R/R0=3.6103 Eth+/|W|=6.4504e-1 K/|W|=6.1279e-1 virial=2.9818 mach=5.251 smax=17.8365
+  t/tau=3.05 step=41 R/R0=4.1889 Eth+/|W|=6.1785e-1 K/|W|=7.7200e-1 virial=3.1998 mach=5.639 smax=13.7074
+  t/tau=3.56 step=49 R/R0=4.7726 Eth+/|W|=5.8924e-1 K/|W|=9.2035e-1 virial=3.4021 mach=5.989 smax=10.9082
+  t/tau=4.01 step=56 R/R0=5.2567 Eth+/|W|=5.6520e-1 K/|W|=1.0423e0 virial=3.5707 mach=6.268 smax=9.1341
+  t/tau=4.51 step=64 R/R0=5.8214 Eth+/|W|=5.3978e-1 K/|W|=1.1736e0 virial=3.7560 mach=6.521 smax=7.6165
+  t/tau=5.01 step=72 R/R0=6.3683 Eth+/|W|=5.1673e-1 K/|W|=1.2975e0 virial=3.9352 mach=6.720 smax=6.4705
+  t/tau=5.55 step=81 R/R0=6.9608 Eth+/|W|=4.9424e-1 K/|W|=1.4258e0 virial=4.1259 mach=6.760 smax=5.5092
+  t/tau=6.01 step=89 R/R0=7.4564 Eth+/|W|=4.7726e-1 K/|W|=1.5298e0 virial=4.2844 mach=6.817 smax=4.8631
+  t/tau=6.55 step=99 R/R0=8.0432 Eth+/|W|=4.5994e-1 K/|W|=1.6470e0 virial=4.4681 mach=6.896 smax=4.2476
+  t/tau=7.04 step=109 R/R0=8.5760 Eth+/|W|=4.4742e-1 K/|W|=1.7507e0 virial=4.6373 mach=6.992 smax=3.7796
+  t/tau=7.52 step=119 R/R0=9.0888 Eth+/|W|=4.4088e-1 K/|W|=1.8419e0 virial=4.7954 mach=7.091 smax=3.4094
+  t/tau=8.01 step=130 R/R0=9.6152 Eth+/|W|=4.4120e-1 K/|W|=1.9290e0 virial=4.9596 mach=7.189 smax=3.0805
+  t/tau=8.53 step=142 R/R0=10.1565 Eth+/|W|=4.5035e-1 K/|W|=2.0095e0 virial=5.1290 mach=7.313 smax=2.7892
+  t/tau=9.02 step=154 R/R0=10.6719 Eth+/|W|=4.6790e-1 K/|W|=2.0767e0 virial=5.2898 mach=7.440 smax=2.5497
+  t/tau=9.53 step=167 R/R0=11.2109 Eth+/|W|=4.9467e-1 K/|W|=2.1369e0 virial=5.4555 mach=7.400 smax=2.3341
+  t/tau=10.00 step=181 R/R0=11.7105 Eth+/|W|=5.2764e-1 K/|W|=2.1827e0 virial=5.6061 mach=7.121 smax=2.1611
+R4-TWIN-END M=1000 limiter=first steps=181 dev=10.7105 min=1.0000 max=11.7105 end=11.7105
+R4-TWIN matter=c/o M=2500 k1x=1 limiter=first R90_0=1.0753 tau=0.02230 W0=-4.86922e6 virial0=0.8970 cold0/|W|=0.6373
+  t/tau=0.53 step=3 R/R0=1.8380 Eth+/|W|=4.9075e-1 K/|W|=6.3307e-2 virial=1.8613 mach=1.673 smax=368.0836
+  t/tau=1.05 step=7 R/R0=2.5733 Eth+/|W|=7.9012e-1 K/|W|=1.6938e-1 virial=2.5856 mach=2.944 smax=238.8614
+  t/tau=1.51 step=11 R/R0=3.1408 Eth+/|W|=9.2322e-1 K/|W|=3.1284e-1 virial=3.0810 mach=3.866 smax=173.1839
+  t/tau=2.04 step=16 R/R0=3.7090 Eth+/|W|=9.8982e-1 K/|W|=5.1490e-1 virial=3.5645 mach=4.385 smax=125.1844
+  t/tau=2.55 step=21 R/R0=4.3527 Eth+/|W|=1.0058e0 K/|W|=7.2769e-1 virial=3.9790 mach=4.797 smax=95.0684
+  t/tau=3.05 step=26 R/R0=5.0000 Eth+/|W|=9.9794e-1 K/|W|=9.4036e-1 virial=4.3529 mach=5.100 smax=74.9431
+  t/tau=3.54 step=31 R/R0=5.5846 Eth+/|W|=9.7918e-1 K/|W|=1.1494e0 virial=4.7030 mach=5.372 smax=60.7606
+  t/tau=4.03 step=36 R/R0=6.1972 Eth+/|W|=9.5587e-1 K/|W|=1.3538e0 virial=5.0390 mach=5.628 smax=50.3430
+  t/tau=4.51 step=41 R/R0=6.8122 Eth+/|W|=9.3106e-1 K/|W|=1.5537e0 virial=5.3657 mach=5.869 smax=42.4485
+  t/tau=5.09 step=47 R/R0=7.5283 Eth+/|W|=9.0148e-1 K/|W|=1.7880e0 virial=5.7505 mach=6.116 smax=35.2396
+  t/tau=5.57 step=52 R/R0=8.0957 Eth+/|W|=8.7789e-1 K/|W|=1.9784e0 virial=6.0658 mach=6.331 smax=30.5854
+  t/tau=6.05 step=57 R/R0=8.7193 Eth+/|W|=8.5552e-1 K/|W|=2.1655e0 virial=6.3787 mach=6.540 smax=26.8079
+  t/tau=6.53 step=62 R/R0=9.2780 Eth+/|W|=8.3450e-1 K/|W|=2.3495e0 virial=6.6896 mach=6.720 smax=23.7020
+  t/tau=7.01 step=67 R/R0=9.8981 Eth+/|W|=8.1477e-1 K/|W|=2.5311e0 virial=6.9995 mach=6.893 smax=21.1098
+  t/tau=7.59 step=73 R/R0=10.5894 Eth+/|W|=7.9300e-1 K/|W|=2.7441e0 virial=7.3669 mach=6.942 smax=18.5509
+  t/tau=8.05 step=78 R/R0=11.1464 Eth+/|W|=7.7653e-1 K/|W|=2.9158e0 virial=7.6661 mach=6.951 smax=16.7965
+  t/tau=8.51 step=83 R/R0=11.7232 Eth+/|W|=7.6155e-1 K/|W|=3.0816e0 virial=7.9576 mach=6.972 smax=15.3172
+  t/tau=9.04 step=89 R/R0=12.3518 Eth+/|W|=7.4544e-1 K/|W|=3.2722e0 virial=8.2958 mach=7.009 smax=13.8345
+  t/tau=9.55 step=95 R/R0=12.9625 Eth+/|W|=7.3136e-1 K/|W|=3.4532e0 virial=8.6199 mach=7.057 smax=12.6078
+  t/tau=10.04 step=101 R/R0=13.5736 Eth+/|W|=7.1933e-1 K/|W|=3.6246e0 virial=8.9301 mach=7.114 smax=11.5815
+R4-TWIN-END M=2500 limiter=first steps=101 dev=12.5736 min=1.0000 max=13.5736 end=13.5736
+== resolution sweep 2026-10-19T09:29:22-04:00
+R4-TWIN matter=c/o M=100 k1x=1 limiter=mc R90_0=3.2452 tau=0.58460 W0=-2.69177e3 virial0=0.9771 cold0/|W|=0.5181
+  t/tau=0.53 step=10 R/R0=1.0577 Eth+/|W|=3.3380e-2 K/|W|=3.1695e-3 virial=1.0079 mach=1.892 smax=4.3917
+  t/tau=1.02 step=19 R/R0=1.1543 Eth+/|W|=5.4415e-2 K/|W|=7.1826e-3 virial=1.0055 mach=2.530 smax=3.9830
+  t/tau=1.53 step=28 R/R0=1.2576 Eth+/|W|=6.6490e-2 K/|W|=1.0211e-2 virial=0.9810 mach=3.269 smax=3.5947
+  t/tau=2.01 step=36 R/R0=1.3618 Eth+/|W|=7.3660e-2 K/|W|=9.9941e-3 virial=0.9483 mach=2.896 smax=3.2151
+  t/tau=2.50 step=44 R/R0=1.4381 Eth+/|W|=7.8558e-2 K/|W|=7.7553e-3 virial=0.9127 mach=2.821 smax=2.8442
+  t/tau=3.02 step=52 R/R0=1.5106 Eth+/|W|=8.1701e-2 K/|W|=4.6970e-3 virial=0.8815 mach=2.622 smax=2.5760
+  t/tau=3.55 step=60 R/R0=1.5625 Eth+/|W|=8.4580e-2 K/|W|=2.0168e-3 virial=0.8613 mach=2.283 smax=2.4298
+  t/tau=4.02 step=67 R/R0=1.5835 Eth+/|W|=8.8025e-2 K/|W|=6.1000e-4 virial=0.8550 mach=1.657 smax=2.3610
+  t/tau=4.56 step=75 R/R0=1.6021 Eth+/|W|=9.3538e-2 K/|W|=3.6596e-4 virial=0.8609 mach=0.885 smax=2.3113
+  t/tau=5.04 step=82 R/R0=1.5910 Eth+/|W|=9.9719e-2 K/|W|=1.1874e-3 virial=0.8765 mach=1.444 smax=2.3037
+  t/tau=5.51 step=89 R/R0=1.5722 Eth+/|W|=1.0744e-1 K/|W|=2.4244e-3 virial=0.9001 mach=2.563 smax=2.3309
+  t/tau=6.03 step=97 R/R0=1.5340 Eth+/|W|=1.1833e-1 K/|W|=3.4968e-3 virial=0.9337 mach=4.833 smax=2.3836
+  t/tau=6.55 step=105 R/R0=1.5067 Eth+/|W|=1.3109e-1 K/|W|=3.4287e-3 virial=0.9700 mach=6.712 smax=2.4441
+  t/tau=7.06 step=113 R/R0=1.4868 Eth+/|W|=1.4449e-1 K/|W|=2.1930e-3 virial=1.0044 mach=7.698 smax=2.5071
+  t/tau=7.50 step=120 R/R0=1.4748 Eth+/|W|=1.5467e-1 K/|W|=1.0011e-3 virial=1.0285 mach=7.621 smax=2.5594
+  t/tau=8.06 step=129 R/R0=1.4868 Eth+/|W|=1.6419e-1 K/|W|=6.4565e-4 virial=1.0476 mach=4.529 smax=2.6015
+  t/tau=8.54 step=137 R/R0=1.5106 Eth+/|W|=1.6916e-1 K/|W|=1.7245e-3 virial=1.0513 mach=1.816 smax=2.5815
+  t/tau=9.04 step=145 R/R0=1.5494 Eth+/|W|=1.7135e-1 K/|W|=3.8378e-3 virial=1.0424 mach=3.036 smax=2.4669
+  t/tau=9.55 step=153 R/R0=1.6132 Eth+/|W|=1.7081e-1 K/|W|=6.1139e-3 virial=1.0222 mach=2.507 smax=2.2915
+  t/tau=10.00 step=160 R/R0=1.6816 Eth+/|W|=1.6849e-1 K/|W|=7.4933e-3 virial=0.9978 mach=2.235 smax=2.1285
+R4-TWIN-END M=100 limiter=mc steps=160 dev=0.6816 min=1.0000 max=1.6816 end=1.6816
+R4-TWIN matter=c/o M=100 k1x=2 limiter=mc R90_0=6.3369 tau=1.59520 W0=-1.38995e3 virial0=0.9890 cold0/|W|=0.5240
+  t/tau=0.50 step=19 R/R0=1.0108 Eth+/|W|=4.5241e-3 K/|W|=2.4349e-4 virial=0.9897 mach=1.217 smax=1.2852
+  t/tau=1.01 step=38 R/R0=1.0352 Eth+/|W|=8.7488e-3 K/|W|=5.7541e-4 virial=0.9816 mach=0.653 smax=1.2448
+  t/tau=1.53 step=57 R/R0=1.0634 Eth+/|W|=1.2312e-2 K/|W|=6.6337e-4 virial=0.9694 mach=1.390 smax=1.1931
+  t/tau=2.02 step=75 R/R0=1.0894 Eth+/|W|=1.5124e-2 K/|W|=4.8278e-4 virial=0.9589 mach=1.770 smax=1.1588
+  t/tau=2.53 step=93 R/R0=1.1106 Eth+/|W|=1.7799e-2 K/|W|=2.1932e-4 virial=0.9528 mach=0.753 smax=1.1393
+  t/tau=3.00 step=110 R/R0=1.1245 Eth+/|W|=2.0528e-2 K/|W|=9.5667e-5 virial=0.9523 mach=0.654 smax=1.1287
+  t/tau=3.51 step=128 R/R0=1.1245 Eth+/|W|=2.3825e-2 K/|W|=1.4976e-4 virial=0.9575 mach=1.376 smax=1.1253
+  t/tau=4.02 step=146 R/R0=1.1232 Eth+/|W|=2.7434e-2 K/|W|=2.6489e-4 virial=0.9672 mach=1.986 smax=1.1333
+  t/tau=4.52 step=164 R/R0=1.1162 Eth+/|W|=3.1130e-2 K/|W|=2.9570e-4 virial=0.9786 mach=2.330 smax=1.1497
+  t/tau=5.02 step=182 R/R0=1.1148 Eth+/|W|=3.4772e-2 K/|W|=2.4781e-4 virial=0.9883 mach=4.284 smax=1.1635
+  t/tau=5.52 step=200 R/R0=1.1190 Eth+/|W|=3.8098e-2 K/|W|=2.7383e-4 virial=0.9935 mach=0.511 smax=1.1664
+  t/tau=6.01 step=218 R/R0=1.1259 Eth+/|W|=4.0949e-2 K/|W|=4.5876e-4 virial=0.9929 mach=0.547 smax=1.1545
+  t/tau=6.52 step=236 R/R0=1.1478 Eth+/|W|=4.3287e-2 K/|W|=6.9485e-4 virial=0.9870 mach=0.521 smax=1.1301
+  t/tau=7.03 step=254 R/R0=1.1733 Eth+/|W|=4.5243e-2 K/|W|=8.0709e-4 virial=0.9777 mach=0.502 smax=1.0993
+  t/tau=7.51 step=271 R/R0=1.1995 Eth+/|W|=4.6915e-2 K/|W|=7.3711e-4 virial=0.9683 mach=1.090 smax=1.0696
+  t/tau=8.01 step=288 R/R0=1.2112 Eth+/|W|=4.8551e-2 K/|W|=5.7505e-4 virial=0.9608 mach=0.377 smax=1.0445
+  t/tau=8.50 step=305 R/R0=1.2303 Eth+/|W|=5.0306e-2 K/|W|=4.3800e-4 virial=0.9570 mach=0.597 smax=1.0274
+  t/tau=9.00 step=322 R/R0=1.2353 Eth+/|W|=5.2359e-2 K/|W|=4.0149e-4 virial=0.9577 mach=0.891 smax=1.0213
+  t/tau=9.50 step=339 R/R0=1.2353 Eth+/|W|=5.4872e-2 K/|W|=4.6096e-4 virial=0.9625 mach=1.192 smax=1.0205
+  t/tau=10.03 step=357 R/R0=1.2303 Eth+/|W|=5.7983e-2 K/|W|=5.4177e-4 virial=0.9710 mach=1.902 smax=1.0234
+R4-TWIN-END M=100 limiter=mc steps=357 dev=0.2391 min=1.0000 max=1.2391 end=1.2303
+R4-TWIN matter=c/o M=100 k1x=3 limiter=mc R90_0=9.4091 tau=2.88617 W0=-9.35778e2 virial0=0.9929 cold0/|W|=0.5252
+  t/tau=0.51 step=29 R/R0=1.0049 Eth+/|W|=1.3766e-3 K/|W|=5.3307e-5 virial=0.9921 mach=0.482 smax=0.5901
+  t/tau=1.01 step=57 R/R0=1.0168 Eth+/|W|=2.6855e-3 K/|W|=1.2946e-4 virial=0.9872 mach=1.806 smax=0.5823
+  t/tau=1.52 step=85 R/R0=1.0285 Eth+/|W|=3.9370e-3 K/|W|=1.4327e-4 virial=0.9807 mach=2.497 smax=0.5705
+  t/tau=2.01 step=112 R/R0=1.0401 Eth+/|W|=5.0410e-3 K/|W|=1.0672e-4 virial=0.9756 mach=2.166 smax=0.5604
+  t/tau=2.52 step=140 R/R0=1.0503 Eth+/|W|=6.1866e-3 K/|W|=6.0758e-5 virial=0.9736 mach=1.764 smax=0.5591
+  t/tau=3.01 step=167 R/R0=1.0516 Eth+/|W|=7.3851e-3 K/|W|=5.4326e-5 virial=0.9750 mach=3.287 smax=0.5584
+  t/tau=3.50 step=194 R/R0=1.0503 Eth+/|W|=8.7240e-3 K/|W|=9.0109e-5 virial=0.9792 mach=3.348 smax=0.5597
+  t/tau=4.01 step=222 R/R0=1.0442 Eth+/|W|=1.0224e-2 K/|W|=1.1436e-4 virial=0.9854 mach=3.430 smax=0.5652
+  t/tau=4.52 step=250 R/R0=1.0422 Eth+/|W|=1.1674e-2 K/|W|=1.0348e-4 virial=0.9912 mach=1.513 smax=0.5705
+  t/tau=5.00 step=277 R/R0=1.0422 Eth+/|W|=1.2930e-2 K/|W|=1.1128e-4 virial=0.9946 mach=2.270 smax=0.5733
+  t/tau=5.51 step=305 R/R0=1.0503 Eth+/|W|=1.4103e-2 K/|W|=1.7578e-4 virial=0.9945 mach=2.860 smax=0.5723
+  t/tau=6.01 step=333 R/R0=1.0536 Eth+/|W|=1.5177e-2 K/|W|=2.6292e-4 virial=0.9907 mach=0.708 smax=0.5657
+  t/tau=6.50 step=360 R/R0=1.0676 Eth+/|W|=1.6084e-2 K/|W|=3.1905e-4 virial=0.9852 mach=0.930 smax=0.5563
+  t/tau=7.02 step=388 R/R0=1.0781 Eth+/|W|=1.6909e-2 K/|W|=3.2868e-4 virial=0.9796 mach=0.455 smax=0.5480
+  t/tau=7.51 step=415 R/R0=1.0886 Eth+/|W|=1.7692e-2 K/|W|=3.1501e-4 virial=0.9761 mach=0.491 smax=0.5440
+  t/tau=8.01 step=442 R/R0=1.0931 Eth+/|W|=1.8603e-2 K/|W|=3.2176e-4 virial=0.9753 mach=0.575 smax=0.5411
+  t/tau=8.51 step=469 R/R0=1.0931 Eth+/|W|=1.9727e-2 K/|W|=3.6506e-4 virial=0.9773 mach=0.828 smax=0.5409
+  t/tau=9.01 step=496 R/R0=1.0899 Eth+/|W|=2.1004e-2 K/|W|=4.1041e-4 virial=0.9818 mach=1.189 smax=0.5436
+  t/tau=9.51 step=523 R/R0=1.0868 Eth+/|W|=2.2328e-2 K/|W|=4.1836e-4 virial=0.9874 mach=1.219 smax=0.5479
+  t/tau=10.00 step=550 R/R0=1.0827 Eth+/|W|=2.3591e-2 K/|W|=3.9181e-4 virial=0.9924 mach=1.030 smax=0.5527
+R4-TWIN-END M=100 limiter=mc steps=550 dev=0.0931 min=1.0000 max=1.0931 end=1.0827
+R4-TWIN matter=c/o M=100 k1x=5 limiter=mc R90_0=15.6495 tau=6.19084 W0=-5.64124e2 virial0=0.9958 cold0/|W|=0.5247
+  t/tau=0.50 step=47 R/R0=1.0018 Eth+/|W|=2.8138e-4 K/|W|=7.4043e-6 virial=0.9953 mach=0.482 smax=0.2159
+  t/tau=1.00 step=94 R/R0=1.0056 Eth+/|W|=5.6495e-4 K/|W|=1.8890e-5 virial=0.9932 mach=0.788 smax=0.2148
+  t/tau=1.50 step=141 R/R0=1.0099 Eth+/|W|=8.3693e-4 K/|W|=2.0647e-5 virial=0.9905 mach=1.692 smax=0.2135
+  t/tau=2.01 step=188 R/R0=1.0132 Eth+/|W|=1.0998e-3 K/|W|=1.6792e-5 virial=0.9883 mach=1.326 smax=0.2115
+  t/tau=2.50 step=234 R/R0=1.0160 Eth+/|W|=1.3804e-3 K/|W|=1.6564e-5 virial=0.9877 mach=1.519 smax=0.2118
+  t/tau=3.01 step=281 R/R0=1.0160 Eth+/|W|=1.7028e-3 K/|W|=2.1745e-5 virial=0.9886 mach=1.378 smax=0.2119
+  t/tau=3.51 step=328 R/R0=1.0137 Eth+/|W|=2.0532e-3 K/|W|=3.0009e-5 virial=0.9907 mach=1.388 smax=0.2123
+  t/tau=4.00 step=374 R/R0=1.0117 Eth+/|W|=2.4264e-3 K/|W|=3.3612e-5 virial=0.9934 mach=1.631 smax=0.2135
+  t/tau=4.51 step=421 R/R0=1.0099 Eth+/|W|=2.7964e-3 K/|W|=2.7916e-5 virial=0.9957 mach=1.533 smax=0.2145
+  t/tau=5.01 step=468 R/R0=1.0094 Eth+/|W|=3.1176e-3 K/|W|=2.6643e-5 virial=0.9967 mach=1.455 smax=0.2147
+  t/tau=5.51 step=515 R/R0=1.0117 Eth+/|W|=3.4118e-3 K/|W|=3.4754e-5 virial=0.9961 mach=1.415 smax=0.2145
+  t/tau=6.00 step=561 R/R0=1.0154 Eth+/|W|=3.6741e-3 K/|W|=4.4928e-5 virial=0.9940 mach=1.081 smax=0.2134
+  t/tau=6.50 step=608 R/R0=1.0182 Eth+/|W|=3.9057e-3 K/|W|=5.1986e-5 virial=0.9914 mach=1.300 smax=0.2116
+  t/tau=7.01 step=655 R/R0=1.0235 Eth+/|W|=4.1212e-3 K/|W|=5.6290e-5 virial=0.9892 mach=1.018 smax=0.2107
+  t/tau=7.50 step=701 R/R0=1.0259 Eth+/|W|=4.3531e-3 K/|W|=6.2018e-5 virial=0.9882 mach=0.791 smax=0.2103
+  t/tau=8.00 step=747 R/R0=1.0259 Eth+/|W|=4.6201e-3 K/|W|=7.9442e-5 virial=0.9886 mach=0.804 smax=0.2101
+  t/tau=8.51 step=794 R/R0=1.0257 Eth+/|W|=4.9283e-3 K/|W|=1.0611e-4 virial=0.9904 mach=1.000 smax=0.2106
+  t/tau=9.00 step=840 R/R0=1.0217 Eth+/|W|=5.2459e-3 K/|W|=1.2886e-4 virial=0.9930 mach=0.866 smax=0.2118
+  t/tau=9.51 step=887 R/R0=1.0197 Eth+/|W|=5.5578e-3 K/|W|=1.4631e-4 virial=0.9954 mach=0.805 smax=0.2127
+  t/tau=10.01 step=934 R/R0=1.0195 Eth+/|W|=5.8511e-3 K/|W|=1.6329e-4 virial=0.9967 mach=1.350 smax=0.2133
+R4-TWIN-END M=100 limiter=mc steps=934 dev=0.0259 min=1.0000 max=1.0259 end=1.0195
+R4-TWIN matter=c/o M=1000 k1x=1 limiter=mc R90_0=1.9121 tau=0.08361 W0=-4.80297e5 virial0=0.9861 cold0/|W|=0.6178
+  t/tau=0.56 step=6 R/R0=1.2160 Eth+/|W|=1.5836e-1 K/|W|=3.4647e-2 virial=1.2727 mach=3.187 smax=99.7984
+  t/tau=1.03 step=11 R/R0=1.4639 Eth+/|W|=1.9787e-1 K/|W|=8.0712e-2 virial=1.3661 mach=3.407 smax=77.5200
+  t/tau=1.53 step=16 R/R0=1.6972 Eth+/|W|=2.0447e-1 K/|W|=1.2472e-1 virial=1.3891 mach=3.891 smax=58.2630
+  t/tau=2.08 step=21 R/R0=2.0276 Eth+/|W|=1.9360e-1 K/|W|=1.6221e-1 virial=1.3676 mach=4.229 smax=42.5269
+  t/tau=2.54 step=25 R/R0=2.2664 Eth+/|W|=1.7725e-1 K/|W|=1.8720e-1 virial=1.3304 mach=4.257 smax=32.3365
+  t/tau=3.02 step=29 R/R0=2.5234 Eth+/|W|=1.5926e-1 K/|W|=2.0409e-1 virial=1.2801 mach=4.467 smax=24.6628
+  t/tau=3.53 step=33 R/R0=2.7812 Eth+/|W|=1.4273e-1 K/|W|=2.1162e-1 virial=1.2201 mach=4.588 smax=19.1510
+  t/tau=4.05 step=37 R/R0=3.0564 Eth+/|W|=1.2909e-1 K/|W|=2.1128e-1 virial=1.1570 mach=4.530 smax=15.3643
+  t/tau=4.60 step=41 R/R0=3.3037 Eth+/|W|=1.1780e-1 K/|W|=2.0522e-1 virial=1.0921 mach=4.699 smax=12.6694
+  t/tau=5.03 step=44 R/R0=3.4839 Eth+/|W|=1.1064e-1 K/|W|=1.9790e-1 virial=1.0433 mach=4.547 smax=11.1541
+  t/tau=5.62 step=48 R/R0=3.7268 Eth+/|W|=1.0252e-1 K/|W|=1.8550e-1 virial=0.9789 mach=4.502 smax=9.6135
+  t/tau=6.07 step=51 R/R0=3.9234 Eth+/|W|=9.7411e-2 K/|W|=1.7495e-1 virial=0.9324 mach=4.763 smax=8.7370
+  t/tau=6.54 step=54 R/R0=4.1190 Eth+/|W|=9.2919e-2 K/|W|=1.6356e-1 virial=0.8869 mach=4.972 smax=8.0263
+  t/tau=7.01 step=57 R/R0=4.2889 Eth+/|W|=8.8981e-2 K/|W|=1.5166e-1 virial=0.8428 mach=5.208 smax=7.4492
+  t/tau=7.65 step=61 R/R0=4.5281 Eth+/|W|=8.4535e-2 K/|W|=1.3568e-1 virial=0.7876 mach=5.497 smax=6.8500
+  t/tau=8.14 step=64 R/R0=4.6786 Eth+/|W|=8.1722e-2 K/|W|=1.2391e-1 virial=0.7492 mach=5.634 smax=6.5006
+  t/tau=8.62 step=67 R/R0=4.8402 Eth+/|W|=7.9260e-2 K/|W|=1.1236e-1 virial=0.7129 mach=6.047 smax=6.2149
+  t/tau=9.11 step=70 R/R0=5.0000 Eth+/|W|=7.7121e-2 K/|W|=1.0122e-1 virial=0.6789 mach=6.169 smax=5.9831
+  t/tau=9.60 step=73 R/R0=5.1362 Eth+/|W|=7.5270e-2 K/|W|=9.0603e-2 virial=0.6475 mach=6.416 smax=5.7968
+  t/tau=10.09 step=76 R/R0=5.2761 Eth+/|W|=7.3693e-2 K/|W|=8.0691e-2 virial=0.6189 mach=6.469 smax=5.6505
+R4-TWIN-END M=1000 limiter=mc steps=76 dev=4.2761 min=1.0000 max=5.2761 end=5.2761
+R4-TWIN matter=c/o M=1000 k1x=2 limiter=mc R90_0=3.6531 tau=0.22080 W0=-2.48465e5 virial0=0.9833 cold0/|W|=0.6182
+  t/tau=0.51 step=11 R/R0=1.0569 Eth+/|W|=3.1733e-2 K/|W|=2.9970e-3 virial=1.0297 mach=0.410 smax=39.5091
+  t/tau=1.03 step=22 R/R0=1.1255 Eth+/|W|=5.2507e-2 K/|W|=9.2067e-3 virial=1.0461 mach=5.934 smax=34.9700
+  t/tau=1.52 step=32 R/R0=1.2441 Eth+/|W|=6.1486e-2 K/|W|=1.5308e-2 virial=1.0358 mach=3.163 smax=30.4069
+  t/tau=2.04 step=42 R/R0=1.3627 Eth+/|W|=6.4574e-2 K/|W|=1.8929e-2 virial=1.0063 mach=3.564 smax=25.8025
+  t/tau=2.53 step=51 R/R0=1.4907 Eth+/|W|=6.4723e-2 K/|W|=1.8857e-2 virial=0.9695 mach=3.716 smax=22.3138
+  t/tau=3.05 step=60 R/R0=1.6086 Eth+/|W|=6.3870e-2 K/|W|=1.5878e-2 virial=0.9286 mach=3.982 smax=19.4304
+  t/tau=3.53 step=68 R/R0=1.6881 Eth+/|W|=6.3078e-2 K/|W|=1.1706e-2 virial=0.8937 mach=4.338 smax=17.3387
+  t/tau=4.02 step=76 R/R0=1.7615 Eth+/|W|=6.2457e-2 K/|W|=7.1904e-3 virial=0.8637 mach=4.567 smax=15.7514
+  t/tau=4.54 step=84 R/R0=1.8216 Eth+/|W|=6.2336e-2 K/|W|=3.3538e-3 virial=0.8417 mach=3.132 smax=14.6898
+  t/tau=5.06 step=92 R/R0=1.8547 Eth+/|W|=6.2944e-2 K/|W|=9.5138e-4 virial=0.8299 mach=2.598 smax=14.0863
+  t/tau=5.52 step=99 R/R0=1.8698 Eth+/|W|=6.4201e-2 K/|W|=3.0204e-4 virial=0.8285 mach=2.043 smax=13.8949
+  t/tau=6.04 step=107 R/R0=1.8623 Eth+/|W|=6.6609e-2 K/|W|=1.1781e-3 virial=0.8371 mach=1.792 smax=14.0478
+  t/tau=6.56 step=115 R/R0=1.8318 Eth+/|W|=7.0152e-2 K/|W|=3.3732e-3 virial=0.8552 mach=2.848 smax=14.4315
+  t/tau=7.01 step=122 R/R0=1.7931 Eth+/|W|=7.4246e-2 K/|W|=5.8937e-3 virial=0.8775 mach=4.477 smax=14.9240
+  t/tau=7.51 step=130 R/R0=1.7347 Eth+/|W|=8.0019e-2 K/|W|=8.8162e-3 virial=0.9086 mach=9.348 smax=15.7393
+  t/tau=8.05 step=139 R/R0=1.6460 Eth+/|W|=8.8191e-2 K/|W|=1.1134e-2 virial=0.9480 mach=16.086 smax=16.9427
+  t/tau=8.52 step=147 R/R0=1.5827 Eth+/|W|=9.7169e-2 K/|W|=1.1457e-2 virial=0.9846 mach=17.307 smax=18.1039
+  t/tau=9.03 step=156 R/R0=1.5126 Eth+/|W|=1.0946e-1 K/|W|=9.4136e-3 virial=1.0246 mach=22.553 smax=19.3890
+  t/tau=9.53 step=165 R/R0=1.4558 Eth+/|W|=1.2284e-1 K/|W|=5.5062e-3 virial=1.0598 mach=24.129 smax=20.6405
+  t/tau=10.01 step=174 R/R0=1.4232 Eth+/|W|=1.3437e-1 K/|W|=1.9052e-3 virial=1.0860 mach=27.208 smax=21.7551
+R4-TWIN-END M=1000 limiter=mc steps=174 dev=0.8698 min=1.0000 max=1.8698 end=1.4232
+R4-TWIN matter=c/o M=1000 k1x=3 limiter=mc R90_0=5.3180 tau=0.38781 W0=-1.70119e5 virial0=0.9874 cold0/|W|=0.6224
+  t/tau=0.50 step=16 R/R0=1.0175 Eth+/|W|=1.0063e-2 K/|W|=6.7413e-4 virial=0.9999 mach=0.479 smax=20.2314
+  t/tau=1.01 step=32 R/R0=1.0622 Eth+/|W|=1.8660e-2 K/|W|=2.0036e-3 virial=1.0020 mach=1.941 smax=19.0467
+  t/tau=1.50 step=47 R/R0=1.1110 Eth+/|W|=2.4389e-2 K/|W|=3.3487e-3 virial=0.9947 mach=2.545 smax=17.7327
+  t/tau=2.00 step=62 R/R0=1.1710 Eth+/|W|=2.8195e-2 K/|W|=4.0795e-3 virial=0.9803 mach=2.515 smax=16.2462
+  t/tau=2.52 step=77 R/R0=1.2460 Eth+/|W|=3.0739e-2 K/|W|=3.8431e-3 virial=0.9619 mach=2.768 smax=14.9173
+  t/tau=3.01 step=91 R/R0=1.2947 Eth+/|W|=3.2652e-2 K/|W|=2.9089e-3 virial=0.9446 mach=2.129 smax=13.7939
+  t/tau=3.52 step=105 R/R0=1.3383 Eth+/|W|=3.4444e-2 K/|W|=1.7150e-3 virial=0.9302 mach=2.377 smax=12.8387
+  t/tau=4.01 step=118 R/R0=1.3645 Eth+/|W|=3.6131e-2 K/|W|=8.0692e-4 virial=0.9218 mach=0.990 smax=12.2538
+  t/tau=4.53 step=132 R/R0=1.3838 Eth+/|W|=3.8293e-2 K/|W|=3.6257e-4 virial=0.9197 mach=2.326 smax=11.9590
+  t/tau=5.02 step=145 R/R0=1.3838 Eth+/|W|=4.0839e-2 K/|W|=5.1124e-4 virial=0.9246 mach=3.826 smax=11.8992
+  t/tau=5.50 step=158 R/R0=1.3689 Eth+/|W|=4.3972e-2 K/|W|=1.0419e-3 virial=0.9354 mach=9.940 smax=12.0204
+  t/tau=6.02 step=172 R/R0=1.3432 Eth+/|W|=4.8037e-2 K/|W|=1.6810e-3 virial=0.9520 mach=7.284 smax=12.3643
+  t/tau=6.53 step=186 R/R0=1.3184 Eth+/|W|=5.2832e-2 K/|W|=2.0075e-3 virial=0.9712 mach=2.435 smax=12.8126
+  t/tau=7.03 step=200 R/R0=1.2959 Eth+/|W|=5.8191e-2 K/|W|=1.8473e-3 virial=0.9903 mach=1.933 smax=13.2483
+  t/tau=7.53 step=214 R/R0=1.2741 Eth+/|W|=6.3746e-2 K/|W|=1.3280e-3 virial=1.0071 mach=2.199 smax=13.6018
+  t/tau=8.02 step=228 R/R0=1.2671 Eth+/|W|=6.8817e-2 K/|W|=8.5356e-4 virial=1.0191 mach=2.506 smax=13.7890
+  t/tau=8.50 step=242 R/R0=1.2749 Eth+/|W|=7.2832e-2 K/|W|=8.6842e-4 virial=1.0250 mach=2.736 smax=13.7688
+  t/tau=9.03 step=257 R/R0=1.3032 Eth+/|W|=7.5662e-2 K/|W|=1.5748e-3 virial=1.0238 mach=2.568 smax=13.4634
+  t/tau=9.52 step=271 R/R0=1.3400 Eth+/|W|=7.6811e-2 K/|W|=2.5752e-3 virial=1.0154 mach=2.305 smax=12.8122
+  t/tau=10.03 step=285 R/R0=1.3886 Eth+/|W|=7.6791e-2 K/|W|=3.4547e-3 virial=1.0012 mach=2.470 smax=11.9819
+R4-TWIN-END M=1000 limiter=mc steps=285 dev=0.3886 min=1.0000 max=1.3886 end=1.3886
+R4-TWIN matter=c/o M=1000 k1x=5 limiter=mc R90_0=8.6693 tau=0.80719 W0=-1.04780e5 virial0=0.9923 cold0/|W|=0.6272
+  t/tau=0.51 step=27 R/R0=1.0041 Eth+/|W|=2.3817e-3 K/|W|=1.0113e-4 virial=0.9942 mach=0.785 smax=8.0606
+  t/tau=1.01 step=53 R/R0=1.0214 Eth+/|W|=4.5264e-3 K/|W|=2.8493e-4 virial=0.9924 mach=0.809 smax=7.8523
+  t/tau=1.52 step=79 R/R0=1.0400 Eth+/|W|=6.4330e-3 K/|W|=4.4607e-4 virial=0.9881 mach=1.186 smax=7.6506
+  t/tau=2.01 step=104 R/R0=1.0605 Eth+/|W|=7.9250e-3 K/|W|=5.1853e-4 virial=0.9823 mach=1.758 smax=7.3898
+  t/tau=2.50 step=129 R/R0=1.0838 Eth+/|W|=9.2268e-3 K/|W|=4.6821e-4 virial=0.9762 mach=2.312 smax=7.1730
+  t/tau=3.00 step=154 R/R0=1.1058 Eth+/|W|=1.0502e-2 K/|W|=3.4657e-4 virial=0.9710 mach=2.755 smax=6.9956
+  t/tau=3.51 step=179 R/R0=1.1178 Eth+/|W|=1.1835e-2 K/|W|=2.3788e-4 virial=0.9678 mach=3.157 smax=6.8239
+  t/tau=4.02 step=204 R/R0=1.1230 Eth+/|W|=1.3222e-2 K/|W|=2.0893e-4 virial=0.9675 mach=1.287 smax=6.7135
+  t/tau=4.51 step=228 R/R0=1.1237 Eth+/|W|=1.4622e-2 K/|W|=2.8180e-4 virial=0.9701 mach=1.527 smax=6.6991
+  t/tau=5.01 step=253 R/R0=1.1215 Eth+/|W|=1.6194e-2 K/|W|=4.1950e-4 virial=0.9755 mach=1.442 smax=6.7850
+  t/tau=5.52 step=278 R/R0=1.1156 Eth+/|W|=1.7904e-2 K/|W|=5.4451e-4 virial=0.9824 mach=2.180 smax=6.9123
+  t/tau=6.00 step=302 R/R0=1.1081 Eth+/|W|=1.9650e-2 K/|W|=6.3021e-4 virial=0.9890 mach=3.019 smax=7.0123
+  t/tau=6.50 step=327 R/R0=1.1028 Eth+/|W|=2.1500e-2 K/|W|=7.0278e-4 virial=0.9946 mach=2.449 smax=7.0641
+  t/tau=7.00 step=352 R/R0=1.1028 Eth+/|W|=2.3256e-2 K/|W|=7.8619e-4 virial=0.9981 mach=1.056 smax=7.0580
+  t/tau=7.50 step=377 R/R0=1.1103 Eth+/|W|=2.4780e-2 K/|W|=9.2919e-4 virial=0.9988 mach=2.502 smax=6.9902
+  t/tau=8.00 step=402 R/R0=1.1223 Eth+/|W|=2.5993e-2 K/|W|=1.1314e-3 virial=0.9967 mach=0.619 smax=6.8754
+  t/tau=8.51 step=427 R/R0=1.1421 Eth+/|W|=2.6939e-2 K/|W|=1.3202e-3 virial=0.9922 mach=1.089 smax=6.7136
+  t/tau=9.02 step=452 R/R0=1.1637 Eth+/|W|=2.7707e-2 K/|W|=1.4220e-3 virial=0.9860 mach=0.975 smax=6.5166
+  t/tau=9.51 step=476 R/R0=1.1822 Eth+/|W|=2.8392e-2 K/|W|=1.4132e-3 virial=0.9797 mach=0.979 smax=6.3009
+  t/tau=10.02 step=500 R/R0=1.1996 Eth+/|W|=2.9064e-2 K/|W|=1.3256e-3 virial=0.9741 mach=1.453 smax=6.1094
+R4-TWIN-END M=1000 limiter=mc steps=500 dev=0.1996 min=1.0000 max=1.1996 end=1.1996
+R4-TWIN matter=c/o M=100 k1x=6 limiter=mc R90_0=18.8091 tau=8.15739 W0=-4.70068e2 virial0=0.9965 cold0/|W|=0.5239
+  t/tau=0.50 step=57 R/R0=1.0012 Eth+/|W|=1.6079e-4 K/|W|=3.7441e-6 virial=0.9961 mach=0.514 smax=0.1501
+  t/tau=1.01 step=114 R/R0=1.0037 Eth+/|W|=3.1832e-4 K/|W|=9.1881e-6 virial=0.9946 mach=0.713 smax=0.1496
+  t/tau=1.51 step=170 R/R0=1.0058 Eth+/|W|=4.6223e-4 K/|W|=1.0157e-5 virial=0.9926 mach=1.214 smax=0.1490
+  t/tau=2.00 step=226 R/R0=1.0083 Eth+/|W|=6.0579e-4 K/|W|=8.5556e-6 virial=0.9911 mach=1.070 smax=0.1479
+  t/tau=2.50 step=282 R/R0=1.0090 Eth+/|W|=7.6877e-4 K/|W|=8.6508e-6 virial=0.9907 mach=1.132 smax=0.1482
+  t/tau=3.01 step=339 R/R0=1.0090 Eth+/|W|=9.5995e-4 K/|W|=1.2348e-5 virial=0.9914 mach=1.259 smax=0.1482
+  t/tau=3.51 step=395 R/R0=1.0076 Eth+/|W|=1.1665e-3 K/|W|=1.7244e-5 virial=0.9929 mach=1.288 smax=0.1484
+  t/tau=4.00 step=451 R/R0=1.0062 Eth+/|W|=1.3922e-3 K/|W|=1.9769e-5 virial=0.9949 mach=1.491 smax=0.1491
+  t/tau=4.50 step=507 R/R0=1.0046 Eth+/|W|=1.6104e-3 K/|W|=1.7093e-5 virial=0.9965 mach=1.805 smax=0.1496
+  t/tau=5.01 step=564 R/R0=1.0046 Eth+/|W|=1.8004e-3 K/|W|=1.6410e-5 virial=0.9972 mach=1.399 smax=0.1497
+  t/tau=5.50 step=620 R/R0=1.0058 Eth+/|W|=1.9718e-3 K/|W|=2.0103e-5 virial=0.9967 mach=1.424 smax=0.1496
+  t/tau=6.01 step=677 R/R0=1.0083 Eth+/|W|=2.1253e-3 K/|W|=2.4053e-5 virial=0.9951 mach=1.778 smax=0.1490
+  t/tau=6.50 step=733 R/R0=1.0114 Eth+/|W|=2.2531e-3 K/|W|=2.5989e-5 virial=0.9932 mach=1.282 smax=0.1481
+  t/tau=7.00 step=789 R/R0=1.0142 Eth+/|W|=2.3784e-3 K/|W|=2.5707e-5 virial=0.9917 mach=1.090 smax=0.1477
+  t/tau=7.50 step=845 R/R0=1.0161 Eth+/|W|=2.5209e-3 K/|W|=2.6895e-5 virial=0.9910 mach=0.987 smax=0.1475
+  t/tau=8.00 step=901 R/R0=1.0158 Eth+/|W|=2.6892e-3 K/|W|=3.4662e-5 virial=0.9914 mach=1.038 smax=0.1474
+  t/tau=8.50 step=957 R/R0=1.0147 Eth+/|W|=2.8809e-3 K/|W|=4.7377e-5 virial=0.9928 mach=1.128 smax=0.1478
+  t/tau=9.01 step=1014 R/R0=1.0132 Eth+/|W|=3.0863e-3 K/|W|=5.8831e-5 virial=0.9947 mach=1.782 smax=0.1484
+  t/tau=9.51 step=1070 R/R0=1.0107 Eth+/|W|=3.2761e-3 K/|W|=6.7855e-5 virial=0.9964 mach=1.357 smax=0.1489
+  t/tau=10.00 step=1126 R/R0=1.0107 Eth+/|W|=3.4507e-3 K/|W|=7.8570e-5 virial=0.9973 mach=1.076 smax=0.1491
+R4-TWIN-END M=100 limiter=mc steps=1126 dev=0.0165 min=1.0000 max=1.0165 end=1.0107

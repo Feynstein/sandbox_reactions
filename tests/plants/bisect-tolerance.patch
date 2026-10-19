@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -316,7 +316,7 @@
+ // Items 3–4: the thresholds, by bisection over whole lives (M0-T68)
+ 
+ /// §2.11 items 3–4: a bisection is done when the bracket is within this share of its lower end.
+-pub const BISECT_TOLERANCE: f64 = 0.02;
++pub const BISECT_TOLERANCE: f64 = 0.2;
+ 
+ /// Which side of a threshold a run's mass fell on.
+ #[derive(Clone, Copy, Debug, PartialEq, Eq)]

@@ -1,0 +1,724 @@
+== 2026-10-19T09:34:04-04:00 laserax-ai GPU headless RTX 5090 from SCF scenes
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co300_off/scene.json matter=c/o M=300 cells=44 sigma_max=20.2236 iterations=143
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=128 sim_time=2.714839 until=met
+  step=     4 t=0.0664 R90=2.8777 R/R0=1.0000 smax=18.761 grid=300 sinks=0 sink_mass=0
+  step=     8 t=0.1329 R90=2.9851 R/R0=1.0373 smax=17.79 grid=300 sinks=0 sink_mass=0
+  step=    12 t=0.2003 R90=3.1869 R/R0=1.1074 smax=16.68 grid=300 sinks=0 sink_mass=0
+  step=    16 t=0.2692 R90=3.3958 R/R0=1.1800 smax=15.4 grid=300 sinks=0 sink_mass=0
+  step=    20 t=0.3399 R90=3.6443 R/R0=1.2664 smax=13.982 grid=300 sinks=0 sink_mass=0
+  step=    24 t=0.4132 R90=3.8770 R/R0=1.3473 smax=12.577 grid=300 sinks=0 sink_mass=0
+  step=    28 t=0.4893 R90=4.0350 R/R0=1.4022 smax=11.287 grid=300 sinks=0 sink_mass=0
+  step=    32 t=0.5687 R90=4.3048 R/R0=1.4959 smax=10.156 grid=300 sinks=0 sink_mass=0
+  step=    36 t=0.6512 R90=4.5449 R/R0=1.5793 smax=9.1875 grid=300 sinks=0 sink_mass=0
+  step=    40 t=0.7369 R90=4.7709 R/R0=1.6579 smax=8.3628 grid=300 sinks=0 sink_mass=0
+  step=    44 t=0.8257 R90=4.9529 R/R0=1.7211 smax=7.6664 grid=300 sinks=0 sink_mass=0
+  step=    48 t=0.9174 R90=5.1387 R/R0=1.7857 smax=7.092 grid=300 sinks=0 sink_mass=0
+  step=    52 t=1.0118 R90=5.3180 R/R0=1.8480 smax=6.6378 grid=300 sinks=0 sink_mass=0
+  step=    56 t=1.1083 R90=5.4458 R/R0=1.8924 smax=6.3008 grid=300 sinks=0 sink_mass=0
+  step=    60 t=1.2064 R90=5.5481 R/R0=1.9279 smax=6.0711 grid=300 sinks=0 sink_mass=0
+  step=    64 t=1.3055 R90=5.6375 R/R0=1.9590 smax=5.93 grid=300 sinks=0 sink_mass=0
+  step=    68 t=1.4049 R90=5.6596 R/R0=1.9667 smax=5.8565 grid=300 sinks=0 sink_mass=0
+  step=    72 t=1.5043 R90=5.6486 R/R0=1.9629 smax=5.8665 grid=300 sinks=0 sink_mass=0
+  step=    76 t=1.6029 R90=5.6153 R/R0=1.9513 smax=5.9476 grid=300 sinks=0 sink_mass=0
+  step=    80 t=1.7001 R90=5.4915 R/R0=1.9083 smax=6.0863 grid=300 sinks=0 sink_mass=0
+  step=    84 t=1.7958 R90=5.4112 R/R0=1.8804 smax=6.2899 grid=300 sinks=0 sink_mass=0
+  step=    88 t=1.8893 R90=5.2470 R/R0=1.8233 smax=6.5625 grid=300 sinks=0 sink_mass=0
+  step=    92 t=1.9805 R90=5.1265 R/R0=1.7815 smax=6.8798 grid=300 sinks=0 sink_mass=0
+  step=    96 t=2.0693 R90=4.9561 R/R0=1.7222 smax=7.2186 grid=300 sinks=0 sink_mass=0
+  step=   100 t=2.1559 R90=4.8321 R/R0=1.6791 smax=7.5632 grid=300 sinks=0 sink_mass=0
+  step=   104 t=2.2405 R90=4.6804 R/R0=1.6264 smax=7.9076 grid=300 sinks=0 sink_mass=0
+  step=   108 t=2.3231 R90=4.5860 R/R0=1.5936 smax=8.2536 grid=300 sinks=0 sink_mass=0
+  step=   112 t=2.4040 R90=4.4335 R/R0=1.5406 smax=8.6001 grid=300 sinks=0 sink_mass=0
+  step=   116 t=2.4832 R90=4.3768 R/R0=1.5209 smax=8.9228 grid=300 sinks=0 sink_mass=0
+  step=   120 t=2.5612 R90=4.3048 R/R0=1.4959 smax=9.1813 grid=300 sinks=0 sink_mass=0
+  step=   124 t=2.6382 R90=4.2757 R/R0=1.4858 smax=9.3427 grid=300 sinks=0 sink_mass=0
+  step=   128 t=2.7148 R90=4.2757 R/R0=1.4858 smax=9.3938 grid=300 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co300_off dumps=32 R90_0=2.8777 dev=0.9667 min=1.0000 max=1.9667 end=1.4858 smax=18.761 sinks_max=0
+
+real	0m1.693s
+user	0m0.670s
+sys	0m0.327s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co300_heat/scene.json matter=c/o M=300 cells=44 sigma_max=20.2236 iterations=143
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=130 sim_time=2.723947 until=met
+  step=     4 t=0.0664 R90=2.8777 R/R0=1.0000 smax=18.761 grid=300 sinks=0 sink_mass=0
+  step=     8 t=0.1329 R90=2.9633 R/R0=1.0297 smax=17.788 grid=300 sinks=0 sink_mass=0
+  step=    12 t=0.2003 R90=3.1869 R/R0=1.1074 smax=16.672 grid=300 sinks=0 sink_mass=0
+  step=    16 t=0.2692 R90=3.3773 R/R0=1.1736 smax=15.383 grid=300 sinks=0 sink_mass=0
+  step=    20 t=0.3400 R90=3.6272 R/R0=1.2604 smax=13.928 grid=300 sinks=0 sink_mass=0
+  step=    24 t=0.4134 R90=3.8420 R/R0=1.3351 smax=12.492 grid=300 sinks=0 sink_mass=0
+  step=    28 t=0.4898 R90=3.9726 R/R0=1.3805 smax=11.193 grid=300 sinks=0 sink_mass=0
+  step=    32 t=0.5695 R90=4.2168 R/R0=1.4653 smax=10.083 grid=300 sinks=0 sink_mass=0
+  step=    36 t=0.6524 R90=4.4616 R/R0=1.5504 smax=9.16 grid=300 sinks=0 sink_mass=0
+  step=    40 t=0.7383 R90=4.6804 R/R0=1.6264 smax=8.3992 grid=300 sinks=0 sink_mass=0
+  step=    44 t=0.8270 R90=4.8894 R/R0=1.6991 smax=7.7768 grid=300 sinks=0 sink_mass=0
+  step=    48 t=0.9183 R90=5.0280 R/R0=1.7472 smax=7.2804 grid=300 sinks=0 sink_mass=0
+  step=    52 t=1.0117 R90=5.1751 R/R0=1.7983 smax=6.9044 grid=300 sinks=0 sink_mass=0
+  step=    56 t=1.1068 R90=5.3180 R/R0=1.8480 smax=6.641 grid=300 sinks=0 sink_mass=0
+  step=    60 t=1.2028 R90=5.4112 R/R0=1.8804 smax=6.4766 grid=300 sinks=0 sink_mass=0
+  step=    64 t=1.2995 R90=5.4458 R/R0=1.8924 smax=6.3875 grid=300 sinks=0 sink_mass=0
+  step=    68 t=1.3961 R90=5.4572 R/R0=1.8964 smax=6.3753 grid=300 sinks=0 sink_mass=0
+  step=    72 t=1.4922 R90=5.4458 R/R0=1.8924 smax=6.4419 grid=300 sinks=0 sink_mass=0
+  step=    76 t=1.5874 R90=5.4112 R/R0=1.8804 smax=6.5636 grid=300 sinks=0 sink_mass=0
+  step=    80 t=1.6812 R90=5.3180 R/R0=1.8480 smax=6.7295 grid=300 sinks=0 sink_mass=0
+  step=    84 t=1.7735 R90=5.2231 R/R0=1.8150 smax=6.9449 grid=300 sinks=0 sink_mass=0
+  step=    88 t=1.8641 R90=5.1265 R/R0=1.7815 smax=7.2125 grid=300 sinks=0 sink_mass=0
+  step=    92 t=1.9527 R90=4.9781 R/R0=1.7299 smax=7.5161 grid=300 sinks=0 sink_mass=0
+  step=    96 t=2.0393 R90=4.8766 R/R0=1.6946 smax=7.837 grid=300 sinks=0 sink_mass=0
+  step=   100 t=2.1241 R90=4.7599 R/R0=1.6540 smax=8.163 grid=300 sinks=0 sink_mass=0
+  step=   104 t=2.2073 R90=4.6402 R/R0=1.6125 smax=8.4845 grid=300 sinks=0 sink_mass=0
+  step=   108 t=2.2888 R90=4.5311 R/R0=1.5746 smax=8.7886 grid=300 sinks=0 sink_mass=0
+  step=   112 t=2.3691 R90=4.4256 R/R0=1.5379 smax=9.0525 grid=300 sinks=0 sink_mass=0
+  step=   116 t=2.4484 R90=4.3514 R/R0=1.5121 smax=9.2355 grid=300 sinks=0 sink_mass=0
+  step=   120 t=2.5271 R90=4.3048 R/R0=1.4959 smax=9.3144 grid=300 sinks=0 sink_mass=0
+  step=   124 t=2.6057 R90=4.2757 R/R0=1.4858 smax=9.311 grid=300 sinks=0 sink_mass=0
+  step=   128 t=2.6845 R90=4.3048 R/R0=1.4959 smax=9.2623 grid=300 sinks=0 sink_mass=0
+  step=   130 t=2.7239 R90=4.3048 R/R0=1.4959 smax=9.2295 grid=300 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co300_heat dumps=33 R90_0=2.8777 dev=0.8964 min=1.0000 max=1.8964 end=1.4959 smax=18.761 sinks_max=0
+
+real	0m2.020s
+user	0m1.089s
+sys	0m0.348s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co1000_off/scene.json matter=c/o M=1000 cells=16 sigma_max=139.3974 iterations=153
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=77 sim_time=0.841073 until=met
+  step=     2 t=0.0157 R90=1.9764 R/R0=1.0000 smax=121.18 grid=1000 sinks=0 sink_mass=0
+  step=     4 t=0.0312 R90=2.1287 R/R0=1.0770 smax=110.14 grid=1000 sinks=0 sink_mass=0
+  step=     6 t=0.0466 R90=2.3251 R/R0=1.1764 smax=100.16 grid=1000 sinks=0 sink_mass=0
+  step=     8 t=0.0621 R90=2.5311 R/R0=1.2806 smax=90.806 grid=1000 sinks=0 sink_mass=0
+  step=    10 t=0.0779 R90=2.6984 R/R0=1.3653 smax=81.9 grid=1000 sinks=0 sink_mass=0
+  step=    12 t=0.0941 R90=2.8777 R/R0=1.4560 smax=73.459 grid=1000 sinks=0 sink_mass=0
+  step=    14 t=0.1108 R90=3.0052 R/R0=1.5205 smax=65.537 grid=1000 sinks=0 sink_mass=0
+  step=    16 t=0.1281 R90=3.2452 R/R0=1.6420 smax=58.229 grid=1000 sinks=0 sink_mass=0
+  step=    18 t=0.1460 R90=3.5223 R/R0=1.7821 smax=51.534 grid=1000 sinks=0 sink_mass=0
+  step=    20 t=0.1643 R90=3.7291 R/R0=1.8868 smax=45.353 grid=1000 sinks=0 sink_mass=0
+  step=    22 t=0.1831 R90=3.9251 R/R0=1.9860 smax=39.694 grid=1000 sinks=0 sink_mass=0
+  step=    24 t=0.2022 R90=4.2019 R/R0=2.1260 smax=34.595 grid=1000 sinks=0 sink_mass=0
+  step=    26 t=0.2218 R90=4.4335 R/R0=2.2432 smax=30.121 grid=1000 sinks=0 sink_mass=0
+  step=    28 t=0.2419 R90=4.6804 R/R0=2.3681 smax=26.302 grid=1000 sinks=0 sink_mass=0
+  step=    30 t=0.2623 R90=4.9149 R/R0=2.4868 smax=23.107 grid=1000 sinks=0 sink_mass=0
+  step=    32 t=0.2835 R90=5.1387 R/R0=2.6000 smax=20.402 grid=1000 sinks=0 sink_mass=0
+  step=    34 t=0.3048 R90=5.4122 R/R0=2.7384 smax=18.168 grid=1000 sinks=0 sink_mass=0
+  step=    36 t=0.3267 R90=5.6596 R/R0=2.8636 smax=16.281 grid=1000 sinks=0 sink_mass=0
+  step=    38 t=0.3488 R90=5.8870 R/R0=2.9786 smax=14.718 grid=1000 sinks=0 sink_mass=0
+  step=    40 t=0.3713 R90=6.1365 R/R0=3.1048 smax=13.389 grid=1000 sinks=0 sink_mass=0
+  step=    42 t=0.3946 R90=6.3860 R/R0=3.2311 smax=12.249 grid=1000 sinks=0 sink_mass=0
+  step=    44 t=0.4180 R90=6.6356 R/R0=3.3574 smax=11.291 grid=1000 sinks=0 sink_mass=0
+  step=    46 t=0.4420 R90=6.8852 R/R0=3.4837 smax=10.467 grid=1000 sinks=0 sink_mass=0
+  step=    48 t=0.4665 R90=7.1173 R/R0=3.6011 smax=9.754 grid=1000 sinks=0 sink_mass=0
+  step=    50 t=0.4908 R90=7.3336 R/R0=3.7105 smax=9.1533 grid=1000 sinks=0 sink_mass=0
+  step=    52 t=0.5159 R90=7.5932 R/R0=3.8419 smax=8.6251 grid=1000 sinks=0 sink_mass=0
+  step=    54 t=0.5414 R90=7.7962 R/R0=3.9446 smax=8.1656 grid=1000 sinks=0 sink_mass=0
+  step=    56 t=0.5670 R90=8.0098 R/R0=4.0527 smax=7.7691 grid=1000 sinks=0 sink_mass=0
+  step=    58 t=0.5927 R90=8.2253 R/R0=4.1617 smax=7.426 grid=1000 sinks=0 sink_mass=0
+  step=    60 t=0.6186 R90=8.4502 R/R0=4.2755 smax=7.1271 grid=1000 sinks=0 sink_mass=0
+  step=    62 t=0.6445 R90=8.6693 R/R0=4.3863 smax=6.8671 grid=1000 sinks=0 sink_mass=0
+  step=    64 t=0.6704 R90=8.8829 R/R0=4.4944 smax=6.6409 grid=1000 sinks=0 sink_mass=0
+  step=    66 t=0.6963 R90=9.0433 R/R0=4.5756 smax=6.4433 grid=1000 sinks=0 sink_mass=0
+  step=    68 t=0.7223 R90=9.2348 R/R0=4.6725 smax=6.271 grid=1000 sinks=0 sink_mass=0
+  step=    70 t=0.7484 R90=9.4290 R/R0=4.7707 smax=6.1199 grid=1000 sinks=0 sink_mass=0
+  step=    72 t=0.7746 R90=9.6258 R/R0=4.8703 smax=5.988 grid=1000 sinks=0 sink_mass=0
+  step=    74 t=0.8011 R90=9.7868 R/R0=4.9518 smax=5.8732 grid=1000 sinks=0 sink_mass=0
+  step=    76 t=0.8275 R90=9.9389 R/R0=5.0287 smax=5.7743 grid=1000 sinks=0 sink_mass=0
+  step=    77 t=0.8411 R90=10.0328 R/R0=5.0762 smax=5.7295 grid=1000 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co1000_off dumps=39 R90_0=1.9764 dev=4.0762 min=1.0000 max=5.0762 end=5.0762 smax=121.18 sinks_max=0
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co1000_heat/scene.json matter=c/o M=1000 cells=16 sigma_max=139.3974 iterations=153
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=63 sim_time=0.843381 until=met
+  step=     2 t=0.0157 R90=1.9764 R/R0=1.0000 smax=121.18 grid=1000 sinks=0 sink_mass=0
+  step=     4 t=0.0312 R90=2.1167 R/R0=1.0710 smax=110.14 grid=1000 sinks=0 sink_mass=0
+  step=     6 t=0.0466 R90=2.3251 R/R0=1.1764 smax=100.01 grid=1000 sinks=0 sink_mass=0
+  step=     8 t=0.0621 R90=2.5311 R/R0=1.2806 smax=90.272 grid=1000 sinks=0 sink_mass=0
+  step=    10 t=0.0781 R90=2.6984 R/R0=1.3653 smax=80.583 grid=1000 sinks=0 sink_mass=0
+  step=    12 t=0.0948 R90=2.8777 R/R0=1.4560 smax=70.963 grid=1000 sinks=0 sink_mass=0
+  step=    14 t=0.1121 R90=3.0259 R/R0=1.5310 smax=61.61 grid=1000 sinks=0 sink_mass=0
+  step=    16 t=0.1299 R90=3.3025 R/R0=1.6709 smax=52.742 grid=1000 sinks=0 sink_mass=0
+  step=    18 t=0.1482 R90=3.5751 R/R0=1.8089 smax=44.823 grid=1000 sinks=0 sink_mass=0
+  step=    20 t=0.1670 R90=3.7956 R/R0=1.9204 smax=38.254 grid=1000 sinks=0 sink_mass=0
+  step=    22 t=0.1864 R90=3.9773 R/R0=2.0124 smax=32.922 grid=1000 sinks=0 sink_mass=0
+  step=    24 t=0.2067 R90=4.2757 R/R0=2.1633 smax=28.59 grid=1000 sinks=0 sink_mass=0
+  step=    26 t=0.2281 R90=4.5860 R/R0=2.3203 smax=25.06 grid=1000 sinks=0 sink_mass=0
+  step=    28 t=0.2508 R90=4.8638 R/R0=2.4609 smax=22.177 grid=1000 sinks=0 sink_mass=0
+  step=    30 t=0.2746 R90=5.1265 R/R0=2.5938 smax=19.827 grid=1000 sinks=0 sink_mass=0
+  step=    32 t=0.2997 R90=5.4112 R/R0=2.7379 smax=17.909 grid=1000 sinks=0 sink_mass=0
+  step=    34 t=0.3260 R90=5.6926 R/R0=2.8803 smax=16.329 grid=1000 sinks=0 sink_mass=0
+  step=    36 t=0.3537 R90=5.9817 R/R0=3.0265 smax=15.024 grid=1000 sinks=0 sink_mass=0
+  step=    38 t=0.3829 R90=6.2815 R/R0=3.1782 smax=13.948 grid=1000 sinks=0 sink_mass=0
+  step=    40 t=0.4136 R90=6.6262 R/R0=3.3526 smax=13.061 grid=1000 sinks=0 sink_mass=0
+  step=    42 t=0.4460 R90=6.9033 R/R0=3.4928 smax=12.331 grid=1000 sinks=0 sink_mass=0
+  step=    44 t=0.4801 R90=7.2133 R/R0=3.6497 smax=11.739 grid=1000 sinks=0 sink_mass=0
+  step=    46 t=0.5161 R90=7.5270 R/R0=3.8084 smax=11.265 grid=1000 sinks=0 sink_mass=0
+  step=    48 t=0.5539 R90=7.8521 R/R0=3.9729 smax=10.911 grid=1000 sinks=0 sink_mass=0
+  step=    50 t=0.5925 R90=8.1336 R/R0=4.1153 smax=10.682 grid=1000 sinks=0 sink_mass=0
+  step=    52 t=0.6313 R90=8.3983 R/R0=4.2492 smax=10.539 grid=1000 sinks=0 sink_mass=0
+  step=    54 t=0.6701 R90=8.6693 R/R0=4.3863 smax=10.458 grid=1000 sinks=0 sink_mass=0
+  step=    56 t=0.7089 R90=8.8970 R/R0=4.5016 smax=10.431 grid=1000 sinks=0 sink_mass=0
+  step=    58 t=0.7476 R90=9.1327 R/R0=4.6208 smax=10.454 grid=1000 sinks=0 sink_mass=0
+  step=    60 t=0.7861 R90=9.3692 R/R0=4.7405 smax=10.526 grid=1000 sinks=0 sink_mass=0
+  step=    62 t=0.8244 R90=9.5607 R/R0=4.8374 smax=10.663 grid=1000 sinks=0 sink_mass=0
+  step=    63 t=0.8434 R90=9.6453 R/R0=4.8802 smax=10.762 grid=1000 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co1000_heat dumps=32 R90_0=1.9764 dev=3.8802 min=1.0000 max=4.8802 end=4.8802 smax=121.18 sinks_max=0
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co100k3_off/scene.json matter=c/o M=100 cells=484 sigma_max=0.5954 iterations=121
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=550 sim_time=28.869688 until=met
+  step=     8 t=0.4101 R90=9.4157 R/R0=1.0000 smax=0.59355 grid=100 sinks=0 sink_mass=0
+  step=    16 t=0.8195 R90=9.4290 R/R0=1.0014 smax=0.59311 grid=100 sinks=0 sink_mass=0
+  step=    24 t=1.2294 R90=9.4423 R/R0=1.0028 smax=0.59139 grid=100 sinks=0 sink_mass=0
+  step=    32 t=1.6399 R90=9.4753 R/R0=1.0063 smax=0.58935 grid=100 sinks=0 sink_mass=0
+  step=    40 t=2.0511 R90=9.4951 R/R0=1.0084 smax=0.58709 grid=100 sinks=0 sink_mass=0
+  step=    48 t=2.4631 R90=9.5345 R/R0=1.0126 smax=0.5848 grid=100 sinks=0 sink_mass=0
+  step=    56 t=2.8757 R90=9.5607 R/R0=1.0154 smax=0.58257 grid=100 sinks=0 sink_mass=0
+  step=    64 t=3.2891 R90=9.5868 R/R0=1.0182 smax=0.58002 grid=100 sinks=0 sink_mass=0
+  step=    72 t=3.7035 R90=9.6258 R/R0=1.0223 smax=0.57681 grid=100 sinks=0 sink_mass=0
+  step=    80 t=4.1190 R90=9.6647 R/R0=1.0264 smax=0.573 grid=100 sinks=0 sink_mass=0
+  step=    88 t=4.5359 R90=9.6841 R/R0=1.0285 smax=0.56899 grid=100 sinks=0 sink_mass=0
+  step=    96 t=4.9541 R90=9.7227 R/R0=1.0326 smax=0.56532 grid=100 sinks=0 sink_mass=0
+  step=   104 t=5.3734 R90=9.7420 R/R0=1.0346 smax=0.56237 grid=100 sinks=0 sink_mass=0
+  step=   112 t=5.7934 R90=9.7868 R/R0=1.0394 smax=0.56039 grid=100 sinks=0 sink_mass=0
+  step=   120 t=6.2138 R90=9.8059 R/R0=1.0414 smax=0.55941 grid=100 sinks=0 sink_mass=0
+  step=   128 t=6.6344 R90=9.8250 R/R0=1.0435 smax=0.55914 grid=100 sinks=0 sink_mass=0
+  step=   136 t=7.0549 R90=9.8758 R/R0=1.0489 smax=0.5591 grid=100 sinks=0 sink_mass=0
+  step=   144 t=7.4755 R90=9.8821 R/R0=1.0495 smax=0.559 grid=100 sinks=0 sink_mass=0
+  step=   152 t=7.8961 R90=9.8911 R/R0=1.0505 smax=0.55877 grid=100 sinks=0 sink_mass=0
+  step=   160 t=8.3168 R90=9.8948 R/R0=1.0509 smax=0.55853 grid=100 sinks=0 sink_mass=0
+  step=   168 t=8.7375 R90=9.8948 R/R0=1.0509 smax=0.55836 grid=100 sinks=0 sink_mass=0
+  step=   176 t=9.1583 R90=9.8948 R/R0=1.0509 smax=0.55836 grid=100 sinks=0 sink_mass=0
+  step=   184 t=9.5791 R90=9.8821 R/R0=1.0495 smax=0.5587 grid=100 sinks=0 sink_mass=0
+  step=   192 t=9.9996 R90=9.8821 R/R0=1.0495 smax=0.55944 grid=100 sinks=0 sink_mass=0
+  step=   200 t=10.4197 R90=9.8821 R/R0=1.0495 smax=0.56055 grid=100 sinks=0 sink_mass=0
+  step=   208 t=10.8394 R90=9.8758 R/R0=1.0489 smax=0.56204 grid=100 sinks=0 sink_mass=0
+  step=   216 t=11.2585 R90=9.8568 R/R0=1.0468 smax=0.56381 grid=100 sinks=0 sink_mass=0
+  step=   224 t=11.6769 R90=9.8250 R/R0=1.0435 smax=0.56565 grid=100 sinks=0 sink_mass=0
+  step=   232 t=12.0948 R90=9.8187 R/R0=1.0428 smax=0.56737 grid=100 sinks=0 sink_mass=0
+  step=   240 t=12.5122 R90=9.8146 R/R0=1.0424 smax=0.5689 grid=100 sinks=0 sink_mass=0
+  step=   248 t=12.9291 R90=9.8059 R/R0=1.0414 smax=0.57022 grid=100 sinks=0 sink_mass=0
+  step=   256 t=13.3456 R90=9.8059 R/R0=1.0414 smax=0.5713 grid=100 sinks=0 sink_mass=0
+  step=   264 t=13.7618 R90=9.8059 R/R0=1.0414 smax=0.57218 grid=100 sinks=0 sink_mass=0
+  step=   272 t=14.1778 R90=9.8059 R/R0=1.0414 smax=0.57293 grid=100 sinks=0 sink_mass=0
+  step=   280 t=14.5935 R90=9.8059 R/R0=1.0414 smax=0.57347 grid=100 sinks=0 sink_mass=0
+  step=   288 t=15.0092 R90=9.8187 R/R0=1.0428 smax=0.57363 grid=100 sinks=0 sink_mass=0
+  step=   296 t=15.4250 R90=9.8568 R/R0=1.0468 smax=0.57329 grid=100 sinks=0 sink_mass=0
+  step=   304 t=15.8409 R90=9.8821 R/R0=1.0495 smax=0.57242 grid=100 sinks=0 sink_mass=0
+  step=   312 t=16.2573 R90=9.8823 R/R0=1.0495 smax=0.57111 grid=100 sinks=0 sink_mass=0
+  step=   320 t=16.6743 R90=9.9011 R/R0=1.0515 smax=0.56939 grid=100 sinks=0 sink_mass=0
+  step=   328 t=17.0919 R90=9.9137 R/R0=1.0529 smax=0.56726 grid=100 sinks=0 sink_mass=0
+  step=   336 t=17.5103 R90=9.9389 R/R0=1.0556 smax=0.56478 grid=100 sinks=0 sink_mass=0
+  step=   344 t=17.9296 R90=9.9703 R/R0=1.0589 smax=0.56204 grid=100 sinks=0 sink_mass=0
+  step=   352 t=18.3498 R90=10.0078 R/R0=1.0629 smax=0.55916 grid=100 sinks=0 sink_mass=0
+  step=   360 t=18.7711 R90=10.0452 R/R0=1.0669 smax=0.55631 grid=100 sinks=0 sink_mass=0
+  step=   368 t=19.1933 R90=10.0825 R/R0=1.0708 smax=0.55361 grid=100 sinks=0 sink_mass=0
+  step=   376 t=19.6163 R90=10.1196 R/R0=1.0748 smax=0.55113 grid=100 sinks=0 sink_mass=0
+  step=   384 t=20.0402 R90=10.1319 R/R0=1.0761 smax=0.54898 grid=100 sinks=0 sink_mass=0
+  step=   392 t=20.4647 R90=10.1566 R/R0=1.0787 smax=0.54723 grid=100 sinks=0 sink_mass=0
+  step=   400 t=20.8897 R90=10.1873 R/R0=1.0819 smax=0.5459 grid=100 sinks=0 sink_mass=0
+  step=   408 t=21.3151 R90=10.2179 R/R0=1.0852 smax=0.54485 grid=100 sinks=0 sink_mass=0
+  step=   416 t=21.7408 R90=10.2424 R/R0=1.0878 smax=0.54392 grid=100 sinks=0 sink_mass=0
+  step=   424 t=22.1668 R90=10.2546 R/R0=1.0891 smax=0.54295 grid=100 sinks=0 sink_mass=0
+  step=   432 t=22.5932 R90=10.2668 R/R0=1.0904 smax=0.542 grid=100 sinks=0 sink_mass=0
+  step=   440 t=23.0198 R90=10.2850 R/R0=1.0923 smax=0.54122 grid=100 sinks=0 sink_mass=0
+  step=   448 t=23.4467 R90=10.2850 R/R0=1.0923 smax=0.54071 grid=100 sinks=0 sink_mass=0
+  step=   456 t=23.8737 R90=10.2850 R/R0=1.0923 smax=0.54053 grid=100 sinks=0 sink_mass=0
+  step=   464 t=24.3006 R90=10.2850 R/R0=1.0923 smax=0.54065 grid=100 sinks=0 sink_mass=0
+  step=   472 t=24.7274 R90=10.2850 R/R0=1.0923 smax=0.54106 grid=100 sinks=0 sink_mass=0
+  step=   480 t=25.1540 R90=10.2850 R/R0=1.0923 smax=0.54174 grid=100 sinks=0 sink_mass=0
+  step=   488 t=25.5803 R90=10.2668 R/R0=1.0904 smax=0.54262 grid=99.999 sinks=0 sink_mass=0
+  step=   496 t=26.0063 R90=10.2546 R/R0=1.0891 smax=0.54362 grid=99.999 sinks=0 sink_mass=0
+  step=   504 t=26.4319 R90=10.2485 R/R0=1.0884 smax=0.54473 grid=99.999 sinks=0 sink_mass=0
+  step=   512 t=26.8570 R90=10.2424 R/R0=1.0878 smax=0.54596 grid=99.999 sinks=0 sink_mass=0
+  step=   520 t=27.2817 R90=10.2302 R/R0=1.0865 smax=0.54731 grid=99.999 sinks=0 sink_mass=0
+  step=   528 t=27.7059 R90=10.2179 R/R0=1.0852 smax=0.54876 grid=99.999 sinks=0 sink_mass=0
+  step=   536 t=28.1295 R90=10.2111 R/R0=1.0845 smax=0.55025 grid=99.999 sinks=0 sink_mass=0
+  step=   544 t=28.5526 R90=10.1996 R/R0=1.0832 smax=0.55169 grid=99.999 sinks=0 sink_mass=0
+  step=   550 t=28.8697 R90=10.1873 R/R0=1.0819 smax=0.55268 grid=99.999 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co100k3_off dumps=69 R90_0=9.4157 dev=0.0923 min=1.0000 max=1.0923 end=1.0819 smax=0.59355 sinks_max=0
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co100k3_heat/scene.json matter=c/o M=100 cells=484 sigma_max=0.5954 iterations=121
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=550 sim_time=28.866168 until=met
+  step=     8 t=0.4101 R90=9.4157 R/R0=1.0000 smax=0.59355 grid=100 sinks=0 sink_mass=0
+  step=    16 t=0.8195 R90=9.4290 R/R0=1.0014 smax=0.59311 grid=100 sinks=0 sink_mass=0
+  step=    24 t=1.2294 R90=9.4423 R/R0=1.0028 smax=0.59139 grid=100 sinks=0 sink_mass=0
+  step=    32 t=1.6399 R90=9.4753 R/R0=1.0063 smax=0.58935 grid=100 sinks=0 sink_mass=0
+  step=    40 t=2.0511 R90=9.4951 R/R0=1.0084 smax=0.58709 grid=100 sinks=0 sink_mass=0
+  step=    48 t=2.4631 R90=9.5345 R/R0=1.0126 smax=0.5848 grid=100 sinks=0 sink_mass=0
+  step=    56 t=2.8757 R90=9.5607 R/R0=1.0154 smax=0.58257 grid=100 sinks=0 sink_mass=0
+  step=    64 t=3.2891 R90=9.5868 R/R0=1.0182 smax=0.58002 grid=100 sinks=0 sink_mass=0
+  step=    72 t=3.7035 R90=9.6258 R/R0=1.0223 smax=0.57681 grid=100 sinks=0 sink_mass=0
+  step=    80 t=4.1190 R90=9.6647 R/R0=1.0264 smax=0.57299 grid=100 sinks=0 sink_mass=0
+  step=    88 t=4.5359 R90=9.6841 R/R0=1.0285 smax=0.56899 grid=100 sinks=0 sink_mass=0
+  step=    96 t=4.9541 R90=9.7227 R/R0=1.0326 smax=0.56531 grid=100 sinks=0 sink_mass=0
+  step=   104 t=5.3734 R90=9.7420 R/R0=1.0346 smax=0.56236 grid=100 sinks=0 sink_mass=0
+  step=   112 t=5.7934 R90=9.7868 R/R0=1.0394 smax=0.56041 grid=100 sinks=0 sink_mass=0
+  step=   120 t=6.2138 R90=9.8059 R/R0=1.0414 smax=0.55948 grid=100 sinks=0 sink_mass=0
+  step=   128 t=6.6343 R90=9.8250 R/R0=1.0435 smax=0.55922 grid=100 sinks=0 sink_mass=0
+  step=   136 t=7.0548 R90=9.8758 R/R0=1.0489 smax=0.55913 grid=100 sinks=0 sink_mass=0
+  step=   144 t=7.4754 R90=9.8821 R/R0=1.0495 smax=0.55897 grid=100 sinks=0 sink_mass=0
+  step=   152 t=7.8960 R90=9.8821 R/R0=1.0495 smax=0.5587 grid=100 sinks=0 sink_mass=0
+  step=   160 t=8.3168 R90=9.8948 R/R0=1.0509 smax=0.55846 grid=100 sinks=0 sink_mass=0
+  step=   168 t=8.7376 R90=9.8948 R/R0=1.0509 smax=0.55834 grid=100 sinks=0 sink_mass=0
+  step=   176 t=9.1583 R90=9.8871 R/R0=1.0501 smax=0.55844 grid=100 sinks=0 sink_mass=0
+  step=   184 t=9.5790 R90=9.8821 R/R0=1.0495 smax=0.55884 grid=100 sinks=0 sink_mass=0
+  step=   192 t=9.9995 R90=9.8821 R/R0=1.0495 smax=0.55958 grid=100 sinks=0 sink_mass=0
+  step=   200 t=10.4196 R90=9.8758 R/R0=1.0489 smax=0.56061 grid=100 sinks=0 sink_mass=0
+  step=   208 t=10.8393 R90=9.8568 R/R0=1.0468 smax=0.56203 grid=100 sinks=0 sink_mass=0
+  step=   216 t=11.2584 R90=9.8250 R/R0=1.0435 smax=0.56379 grid=100 sinks=0 sink_mass=0
+  step=   224 t=11.6768 R90=9.8187 R/R0=1.0428 smax=0.56567 grid=100 sinks=0 sink_mass=0
+  step=   232 t=12.0947 R90=9.8187 R/R0=1.0428 smax=0.56747 grid=100 sinks=0 sink_mass=0
+  step=   240 t=12.5120 R90=9.8059 R/R0=1.0414 smax=0.56909 grid=100 sinks=0 sink_mass=0
+  step=   248 t=12.9288 R90=9.8059 R/R0=1.0414 smax=0.57051 grid=100 sinks=0 sink_mass=0
+  step=   256 t=13.3452 R90=9.8059 R/R0=1.0414 smax=0.5717 grid=100 sinks=0 sink_mass=0
+  step=   264 t=13.7612 R90=9.8059 R/R0=1.0414 smax=0.57267 grid=100 sinks=0 sink_mass=0
+  step=   272 t=14.1770 R90=9.8059 R/R0=1.0414 smax=0.57342 grid=100 sinks=0 sink_mass=0
+  step=   280 t=14.5927 R90=9.8059 R/R0=1.0414 smax=0.57387 grid=100 sinks=0 sink_mass=0
+  step=   288 t=15.0082 R90=9.8187 R/R0=1.0428 smax=0.57393 grid=100 sinks=0 sink_mass=0
+  step=   296 t=15.4239 R90=9.8250 R/R0=1.0435 smax=0.5735 grid=100 sinks=0 sink_mass=0
+  step=   304 t=15.8398 R90=9.8758 R/R0=1.0489 smax=0.57256 grid=100 sinks=0 sink_mass=0
+  step=   312 t=16.2562 R90=9.8821 R/R0=1.0495 smax=0.57117 grid=100 sinks=0 sink_mass=0
+  step=   320 t=16.6731 R90=9.8948 R/R0=1.0509 smax=0.5693 grid=100 sinks=0 sink_mass=0
+  step=   328 t=17.0908 R90=9.9137 R/R0=1.0529 smax=0.56705 grid=100 sinks=0 sink_mass=0
+  step=   336 t=17.5093 R90=9.9336 R/R0=1.0550 smax=0.56453 grid=100 sinks=0 sink_mass=0
+  step=   344 t=17.9287 R90=9.9640 R/R0=1.0582 smax=0.56186 grid=100 sinks=0 sink_mass=0
+  step=   352 t=18.3490 R90=10.0078 R/R0=1.0629 smax=0.55915 grid=100 sinks=0 sink_mass=0
+  step=   360 t=18.7702 R90=10.0328 R/R0=1.0655 smax=0.55653 grid=100 sinks=0 sink_mass=0
+  step=   368 t=19.1922 R90=10.0763 R/R0=1.0702 smax=0.55406 grid=100 sinks=0 sink_mass=0
+  step=   376 t=19.6151 R90=10.1011 R/R0=1.0728 smax=0.55175 grid=100 sinks=0 sink_mass=0
+  step=   384 t=20.0387 R90=10.1258 R/R0=1.0754 smax=0.54965 grid=100 sinks=0 sink_mass=0
+  step=   392 t=20.4630 R90=10.1443 R/R0=1.0774 smax=0.54783 grid=100 sinks=0 sink_mass=0
+  step=   400 t=20.8878 R90=10.1750 R/R0=1.0806 smax=0.54632 grid=100 sinks=0 sink_mass=0
+  step=   408 t=21.3131 R90=10.2179 R/R0=1.0852 smax=0.54506 grid=100 sinks=0 sink_mass=0
+  step=   416 t=21.7388 R90=10.2302 R/R0=1.0865 smax=0.54395 grid=100 sinks=0 sink_mass=0
+  step=   424 t=22.1648 R90=10.2485 R/R0=1.0884 smax=0.5429 grid=100 sinks=0 sink_mass=0
+  step=   432 t=22.5912 R90=10.2546 R/R0=1.0891 smax=0.54192 grid=100 sinks=0 sink_mass=0
+  step=   440 t=23.0179 R90=10.2668 R/R0=1.0904 smax=0.54116 grid=100 sinks=0 sink_mass=0
+  step=   448 t=23.4448 R90=10.2850 R/R0=1.0923 smax=0.54074 grid=100 sinks=0 sink_mass=0
+  step=   456 t=23.8717 R90=10.2850 R/R0=1.0923 smax=0.54065 grid=100 sinks=0 sink_mass=0
+  step=   464 t=24.2986 R90=10.2850 R/R0=1.0923 smax=0.54082 grid=100 sinks=0 sink_mass=0
+  step=   472 t=24.7254 R90=10.2668 R/R0=1.0904 smax=0.54122 grid=100 sinks=0 sink_mass=0
+  step=   480 t=25.1519 R90=10.2546 R/R0=1.0891 smax=0.54187 grid=100 sinks=0 sink_mass=0
+  step=   488 t=25.5782 R90=10.2546 R/R0=1.0891 smax=0.54276 grid=100 sinks=0 sink_mass=0
+  step=   496 t=26.0041 R90=10.2485 R/R0=1.0884 smax=0.54383 grid=100 sinks=0 sink_mass=0
+  step=   504 t=26.4295 R90=10.2302 R/R0=1.0865 smax=0.54505 grid=100 sinks=0 sink_mass=0
+  step=   512 t=26.8545 R90=10.2302 R/R0=1.0865 smax=0.54641 grid=100 sinks=0 sink_mass=0
+  step=   520 t=27.2790 R90=10.2179 R/R0=1.0852 smax=0.54789 grid=100 sinks=0 sink_mass=0
+  step=   528 t=27.7029 R90=10.1996 R/R0=1.0832 smax=0.54943 grid=100 sinks=0 sink_mass=0
+  step=   536 t=28.1263 R90=10.1783 R/R0=1.0810 smax=0.55094 grid=100 sinks=0 sink_mass=0
+  step=   544 t=28.5493 R90=10.1627 R/R0=1.0793 smax=0.55231 grid=100 sinks=0 sink_mass=0
+  step=   550 t=28.8662 R90=10.1627 R/R0=1.0793 smax=0.5532 grid=100 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co100k3_heat dumps=69 R90_0=9.4157 dev=0.0923 min=1.0000 max=1.0923 end=1.0793 smax=0.59355 sinks_max=0
+== above the ceiling, heat+sinks 2026-10-19T09:34:46-04:00
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co2500_hs/scene.json matter=c/o M=2500 cells=4 sigma_max=625.0000 iterations=47
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=120 sim_time=0.500569 until=met
+  step=    20 t=0.0733 R90=5.6153 R/R0=1.0000 smax=28.997 grid=2500 sinks=0 sink_mass=0
+  step=    40 t=0.1528 R90=10.1566 R/R0=1.8087 smax=8.9607 grid=2500 sinks=0 sink_mass=0
+  step=    60 t=0.2370 R90=14.9049 R/R0=2.6544 smax=4.3594 grid=2500 sinks=0 sink_mass=0
+  step=    80 t=0.3235 R90=19.7302 R/R0=3.5137 smax=2.5881 grid=2500 sinks=0 sink_mass=0
+  step=   100 t=0.4115 R90=24.5862 R/R0=4.3785 smax=1.7195 grid=2500 sinks=0 sink_mass=0
+  step=   120 t=0.5006 R90=29.4518 R/R0=5.2449 smax=1.2489 grid=2500 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co2500_hs dumps=6 R90_0=5.6153 dev=4.2449 min=1.0000 max=5.2449 end=5.2449 smax=28.997 sinks_max=0
+
+real	0m3.592s
+user	0m1.240s
+sys	0m0.369s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co5000_hs/scene.json matter=c/o M=5000 cells=4 sigma_max=1250.0000 iterations=38
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=17 sim_time=0.922189 until=met
+  step=    17 t=0.9222 R90=0.0000 R/R0=0.0000 smax=1e-08 grid=nan sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co5000_hs dumps=1 R90_0=1.0000 dev=1.0000 min=0.0000 max=1.0000 end=0.0000 smax=1e-08 sinks_max=0
+
+real	0m1.712s
+user	0m0.534s
+sys	0m0.349s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co8000_hs/scene.json matter=c/o M=8000 cells=4 sigma_max=2000.0000 iterations=36
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=17 sim_time=3.586448 until=met
+  step=    17 t=3.5864 R90=0.0000 R/R0=0.0000 smax=1e-08 grid=nan sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co8000_hs dumps=1 R90_0=1.0000 dev=1.0000 min=0.0000 max=1.0000 end=0.0000 smax=1e-08 sinks_max=0
+
+real	0m1.661s
+user	0m0.610s
+sys	0m0.357s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co12000_hs/scene.json matter=c/o M=12000 cells=1 sigma_max=12000.0000 iterations=3267
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=17 sim_time=2.687523 until=met
+  step=    17 t=2.6875 R90=0.0000 R/R0=0.0000 smax=1e-08 grid=nan sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co12000_hs dumps=1 R90_0=1.0000 dev=1.0000 min=0.0000 max=1.0000 end=0.0000 smax=1e-08 sinks_max=0
+
+real	0m10.105s
+user	0m6.581s
+sys	0m0.377s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co8000_s/scene.json matter=c/o M=8000 cells=4 sigma_max=2000.0000 iterations=36
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=398 sim_time=0.500109 until=met
+  step=    20 t=0.0373 R90=2.9422 R/R0=1.0000 smax=561.78 grid=8000 sinks=0 sink_mass=0
+  step=    40 t=0.0664 R90=4.4194 R/R0=1.5021 smax=246.9 grid=8000 sinks=0 sink_mass=0
+  step=    60 t=0.0939 R90=5.7798 R/R0=1.9645 smax=126.95 grid=8000 sinks=0 sink_mass=0
+  step=    80 t=0.1208 R90=7.0708 R/R0=2.4033 smax=78.588 grid=8000 sinks=0 sink_mass=0
+  step=   100 t=0.1479 R90=8.3385 R/R0=2.8342 smax=54.432 grid=8000 sinks=0 sink_mass=0
+  step=   120 t=0.1755 R90=9.6063 R/R0=3.2651 smax=40.562 grid=8000 sinks=0 sink_mass=0
+  step=   140 t=0.2034 R90=10.8354 R/R0=3.6828 smax=31.898 grid=8000 sinks=0 sink_mass=0
+  step=   160 t=0.2319 R90=12.0221 R/R0=4.0862 smax=26.061 grid=8000 sinks=0 sink_mass=0
+  step=   180 t=0.2603 R90=13.2019 R/R0=4.4872 smax=21.978 grid=8000 sinks=0 sink_mass=0
+  step=   200 t=0.2844 R90=14.1660 R/R0=4.8148 smax=19.397 grid=8000 sinks=0 sink_mass=0
+  step=   220 t=0.3062 R90=15.0385 R/R0=5.1114 smax=17.523 grid=8000 sinks=0 sink_mass=0
+  step=   240 t=0.3299 R90=15.9480 R/R0=5.4205 smax=15.867 grid=8000 sinks=0 sink_mass=0
+  step=   260 t=0.3534 R90=16.8532 R/R0=5.7282 smax=14.509 grid=8000 sinks=0 sink_mass=0
+  step=   280 t=0.3781 R90=17.7843 R/R0=6.0447 smax=13.32 grid=8000 sinks=0 sink_mass=0
+  step=   300 t=0.4041 R90=18.7292 R/R0=6.3658 smax=12.27 grid=8000 sinks=0 sink_mass=0
+  step=   320 t=0.4305 R90=19.6763 R/R0=6.6877 smax=11.366 grid=8000 sinks=0 sink_mass=0
+  step=   340 t=0.4526 R90=20.4764 R/R0=6.9597 smax=10.715 grid=8000 sinks=0 sink_mass=0
+  step=   360 t=0.4693 R90=21.0631 R/R0=7.1591 smax=10.273 grid=8000 sinks=0 sink_mass=0
+  step=   380 t=0.4857 R90=21.6340 R/R0=7.3531 smax=9.8768 grid=8000 sinks=0 sink_mass=0
+  step=   398 t=0.5001 R90=22.1282 R/R0=7.5211 smax=9.5564 grid=8000 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co8000_s dumps=20 R90_0=2.9422 dev=6.5211 min=1.0000 max=7.5211 end=7.5211 smax=561.78 sinks_max=0
+
+real	0m4.313s
+user	0m0.993s
+sys	0m0.310s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n2000_hs/scene.json matter=n M=2000 cells=4 sigma_max=500.0000 iterations=40
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=70 sim_time=0.507911 until=met
+  step=    20 t=0.1084 R90=4.6670 R/R0=1.0000 smax=44.6 grid=2000 sinks=0 sink_mass=0
+  step=    40 t=0.2511 R90=8.2177 R/R0=1.7608 smax=19.565 grid=2000 sinks=0 sink_mass=0
+  step=    60 t=0.4179 R90=11.6900 R/R0=2.5048 smax=15.907 grid=2000 sinks=0 sink_mass=0
+  step=    70 t=0.5079 R90=13.3803 R/R0=2.8670 smax=16.894 grid=2000 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n2000_hs dumps=4 R90_0=4.6670 dev=1.8670 min=1.0000 max=2.8670 end=2.8670 smax=44.6 sinks_max=0
+
+real	0m1.810s
+user	0m0.353s
+sys	0m0.281s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n3500_hs/scene.json matter=n M=3500 cells=4 sigma_max=875.0000 iterations=37
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=84 sim_time=0.502502 until=met
+  step=    20 t=0.0875 R90=4.7599 R/R0=1.0000 smax=74.4 grid=3500 sinks=0 sink_mass=0
+  step=    40 t=0.2064 R90=8.1337 R/R0=1.7088 smax=51.166 grid=3500 sinks=0 sink_mass=0
+  step=    60 t=0.3491 R90=11.2430 R/R0=2.3621 smax=97.637 grid=3500 sinks=0 sink_mass=0
+  step=    80 t=0.4777 R90=13.5520 R/R0=2.8471 smax=142.35 grid=3500 sinks=0 sink_mass=0
+  step=    84 t=0.5025 R90=13.9430 R/R0=2.9293 smax=99.049 grid=3500 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n3500_hs dumps=5 R90_0=4.7599 dev=1.9293 min=1.0000 max=2.9293 end=2.9293 smax=142.35 sinks_max=0
+
+real	0m2.878s
+user	0m0.435s
+sys	0m0.312s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n5000_hs/scene.json matter=n M=5000 cells=4 sigma_max=1250.0000 iterations=36
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=127 sim_time=0.500058 until=met
+  step=    20 t=0.0637 R90=5.2231 R/R0=1.0000 smax=74.811 grid=5000 sinks=0 sink_mass=0
+  step=    40 t=0.1364 R90=9.1327 R/R0=1.7485 smax=29.534 grid=5000 sinks=0 sink_mass=0
+  step=    60 t=0.2153 R90=13.0064 R/R0=2.4902 smax=17.69 grid=5000 sinks=0 sink_mass=0
+  step=    80 t=0.2979 R90=16.8421 R/R0=3.2245 smax=12.647 grid=5000 sinks=0 sink_mass=0
+  step=   100 t=0.3828 R90=20.6314 R/R0=3.9500 smax=10.071 grid=5000 sinks=0 sink_mass=0
+  step=   120 t=0.4694 R90=24.3676 R/R0=4.6653 smax=8.6562 grid=5000 sinks=0 sink_mass=0
+  step=   127 t=0.5001 R90=25.6619 R/R0=4.9131 smax=8.3321 grid=5000 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n5000_hs dumps=7 R90_0=5.2231 dev=3.9131 min=1.0000 max=4.9131 end=4.9131 smax=74.811 sinks_max=0
+
+real	0m4.419s
+user	0m1.045s
+sys	0m0.354s
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n8000_hs/scene.json matter=n M=8000 cells=4 sigma_max=2000.0000 iterations=35
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=17 sim_time=0.905937 until=met
+  step=    17 t=0.9059 R90=0.0000 R/R0=0.0000 smax=1e-08 grid=nan sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n8000_hs dumps=1 R90_0=1.0000 dev=1.0000 min=0.0000 max=1.0000 end=0.0000 smax=1e-08 sinks_max=0
+
+real	0m2.437s
+user	0m0.541s
+sys	0m0.364s
+== mass loss repro 2026-10-19T09:35:45-04:00
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co5000_h1/scene.json matter=c/o M=5000 cells=4 sigma_max=1250.0000 iterations=38
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=17 sim_time=0.922189 until=met
+  step=     1 t=0.0039 R90=1.6298 R/R0=1.0000 smax=1020.9 grid=5000 sinks=0 sink_mass=0
+  step=     2 t=0.0072 R90=1.7885 R/R0=1.0974 smax=875.93 grid=5000 sinks=0 sink_mass=0
+  step=     3 t=0.0092 R90=1.9121 R/R0=1.1732 smax=771.89 grid=5000 sinks=0 sink_mass=0
+  step=     4 t=0.0113 R90=1.9764 R/R0=1.2127 smax=678.64 grid=5000 sinks=0 sink_mass=0
+  step=     5 t=0.0123 R90=2.1866 R/R0=1.3416 smax=387.95 grid=5000 sinks=0 sink_mass=0
+  step=     6 t=0.0132 R90=2.6517 R/R0=1.6270 smax=278.22 grid=5000 sinks=0 sink_mass=0
+  step=     7 t=0.0139 R90=2.8777 R/R0=1.7657 smax=240.51 grid=5000 sinks=0 sink_mass=0
+  step=     8 t=0.0142 R90=3.0259 R/R0=1.8566 smax=224.48 grid=5000 sinks=0 sink_mass=0
+  step=     9 t=0.0145 R90=3.3213 R/R0=2.0379 smax=221.7 grid=5000 sinks=0 sink_mass=0
+  step=    10 t=0.0145 R90=3.7109 R/R0=2.2769 smax=126.24 grid=5000 sinks=0 sink_mass=0
+  step=    11 t=0.0146 R90=3.8931 R/R0=2.3887 smax=119.49 grid=5000 sinks=0 sink_mass=0
+  step=    12 t=0.0146 R90=3.9250 R/R0=2.4082 smax=117.7 grid=5000 sinks=0 sink_mass=0
+  step=    13 t=0.0146 R90=3.9726 R/R0=2.4375 smax=120.29 grid=5000 sinks=0 sink_mass=0
+  step=    14 t=0.0146 R90=7.9658 R/R0=4.8876 smax=0.00050388 grid=nan sinks=0 sink_mass=0
+  step=    15 t=0.0278 R90=0.0000 R/R0=0.0000 smax=1e-08 grid=nan sinks=0 sink_mass=0
+  step=    16 t=0.4750 R90=0.0000 R/R0=0.0000 smax=1e-08 grid=nan sinks=0 sink_mass=0
+  step=    17 t=0.9222 R90=0.0000 R/R0=0.0000 smax=1e-08 grid=nan sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co5000_h1 dumps=17 R90_0=1.6298 dev=3.8876 min=0.0000 max=4.8876 end=0.0000 smax=1020.9 sinks_max=0
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co5000_off/scene.json matter=c/o M=5000 cells=4 sigma_max=1250.0000 iterations=38
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=270 sim_time=0.501199 until=met
+  step=    20 t=0.0427 R90=3.0052 R/R0=1.0000 smax=340.7 grid=5000 sinks=0 sink_mass=0
+  step=    40 t=0.0756 R90=4.5311 R/R0=1.5078 smax=148.13 grid=5000 sinks=0 sink_mass=0
+  step=    60 t=0.1078 R90=5.9398 R/R0=1.9765 smax=74.943 grid=5000 sinks=0 sink_mass=0
+  step=    80 t=0.1412 R90=7.4603 R/R0=2.4825 smax=44.286 grid=5000 sinks=0 sink_mass=0
+  step=   100 t=0.1759 R90=9.0087 R/R0=2.9977 smax=29.198 grid=5000 sinks=0 sink_mass=0
+  step=   120 t=0.2119 R90=10.5668 R/R0=3.5162 smax=20.771 grid=5000 sinks=0 sink_mass=0
+  step=   140 t=0.2501 R90=12.1411 R/R0=4.0400 smax=15.508 grid=5000 sinks=0 sink_mass=0
+  step=   160 t=0.2905 R90=13.7942 R/R0=4.5901 smax=12.029 grid=5000 sinks=0 sink_mass=0
+  step=   180 t=0.3329 R90=15.4849 R/R0=5.1527 smax=9.6222 grid=5000 sinks=0 sink_mass=0
+  step=   200 t=0.3772 R90=17.2019 R/R0=5.7240 smax=7.883 grid=5000 sinks=0 sink_mass=0
+  step=   220 t=0.4195 R90=18.8390 R/R0=6.2688 smax=6.6812 grid=5000 sinks=0 sink_mass=0
+  step=   240 t=0.4519 R90=20.0538 R/R0=6.6730 smax=5.9633 grid=5000 sinks=0 sink_mass=0
+  step=   260 t=0.4855 R90=21.3139 R/R0=7.0923 smax=5.3514 grid=5000 sinks=0 sink_mass=0
+  step=   270 t=0.5012 R90=21.8925 R/R0=7.2849 smax=5.1022 grid=5000 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co5000_off dumps=14 R90_0=3.0052 dev=6.2849 min=1.0000 max=7.2849 end=7.2849 smax=340.7 sinks_max=0
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co12000_s/scene.json matter=c/o M=12000 cells=1 sigma_max=12000.0000 iterations=3267
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=1156 sim_time=0.300270 until=met
+  step=    10 t=0.0110 R90=2.2981 R/R0=1.0000 smax=1830.5 grid=12000 sinks=0 sink_mass=0
+  step=    20 t=0.0184 R90=3.0873 R/R0=1.3434 smax=1039.6 grid=12000 sinks=0 sink_mass=0
+  step=    30 t=0.0245 R90=3.7291 R/R0=1.6227 smax=746.64 grid=12000 sinks=0 sink_mass=0
+  step=    40 t=0.0296 R90=4.3048 R/R0=1.8732 smax=599.54 grid=12000 sinks=0 sink_mass=0
+  step=    50 t=0.0344 R90=4.8251 R/R0=2.0996 smax=502.57 grid=12000 sinks=0 sink_mass=0
+  step=    60 t=0.0392 R90=5.3765 R/R0=2.3395 smax=431.86 grid=12000 sinks=0 sink_mass=0
+  step=    70 t=0.0438 R90=5.8763 R/R0=2.5570 smax=379.38 grid=12000 sinks=0 sink_mass=0
+  step=    80 t=0.0485 R90=6.4056 R/R0=2.7873 smax=338.59 grid=12000 sinks=0 sink_mass=0
+  step=    90 t=0.0531 R90=6.9034 R/R0=3.0039 smax=305.93 grid=12000 sinks=0 sink_mass=0
+  step=   100 t=0.0577 R90=7.4267 R/R0=3.2317 smax=279.39 grid=12000 sinks=0 sink_mass=0
+  step=   110 t=0.0623 R90=7.9156 R/R0=3.4444 smax=257.46 grid=12000 sinks=0 sink_mass=0
+  step=   120 t=0.0669 R90=8.3983 R/R0=3.6545 smax=239.03 grid=12000 sinks=0 sink_mass=0
+  step=   130 t=0.0715 R90=8.8900 R/R0=3.8684 smax=223.46 grid=12000 sinks=0 sink_mass=0
+  step=   140 t=0.0760 R90=9.3825 R/R0=4.0827 smax=210.17 grid=12000 sinks=0 sink_mass=0
+  step=   150 t=0.0806 R90=9.8821 R/R0=4.3001 smax=198.64 grid=12000 sinks=0 sink_mass=0
+  step=   160 t=0.0851 R90=10.3668 R/R0=4.5110 smax=188.64 grid=12000 sinks=0 sink_mass=0
+  step=   170 t=0.0897 R90=10.8354 R/R0=4.7150 smax=179.93 grid=12000 sinks=0 sink_mass=0
+  step=   180 t=0.0941 R90=11.3144 R/R0=4.9234 smax=172.56 grid=12000 sinks=0 sink_mass=0
+  step=   190 t=0.0980 R90=11.7007 R/R0=5.0915 smax=166.62 grid=12000 sinks=0 sink_mass=0
+  step=   200 t=0.1014 R90=12.0636 R/R0=5.2494 smax=162.04 grid=12000 sinks=0 sink_mass=0
+  step=   210 t=0.1046 R90=12.3908 R/R0=5.3918 smax=158.14 grid=12000 sinks=0 sink_mass=0
+  step=   220 t=0.1078 R90=12.7292 R/R0=5.5390 smax=154.44 grid=12000 sinks=0 sink_mass=0
+  step=   230 t=0.1114 R90=13.1304 R/R0=5.7136 smax=150.71 grid=12000 sinks=0 sink_mass=0
+  step=   240 t=0.1152 R90=13.4919 R/R0=5.8709 smax=147.22 grid=12000 sinks=0 sink_mass=0
+  step=   250 t=0.1187 R90=13.8756 R/R0=6.0379 smax=144.23 grid=12000 sinks=0 sink_mass=0
+  step=   260 t=0.1218 R90=14.1830 R/R0=6.1716 smax=141.84 grid=12000 sinks=0 sink_mass=0
+  step=   270 t=0.1244 R90=14.4659 R/R0=6.2947 smax=140.03 grid=12000 sinks=0 sink_mass=0
+  step=   280 t=0.1264 R90=14.6682 R/R0=6.3828 smax=138.66 grid=12000 sinks=0 sink_mass=0
+  step=   290 t=0.1285 R90=14.8797 R/R0=6.4748 smax=137.36 grid=12000 sinks=0 sink_mass=0
+  step=   300 t=0.1304 R90=15.0924 R/R0=6.5673 smax=136.22 grid=12000 sinks=0 sink_mass=0
+  step=   310 t=0.1324 R90=15.2858 R/R0=6.6515 smax=135.09 grid=12000 sinks=0 sink_mass=0
+  step=   320 t=0.1340 R90=15.4364 R/R0=6.7170 smax=134.22 grid=12000 sinks=0 sink_mass=0
+  step=   330 t=0.1358 R90=15.6375 R/R0=6.8045 smax=133.32 grid=12000 sinks=0 sink_mass=0
+  step=   340 t=0.1373 R90=15.7966 R/R0=6.8738 smax=132.6 grid=12000 sinks=0 sink_mass=0
+  step=   350 t=0.1390 R90=15.9580 R/R0=6.9440 smax=131.86 grid=12000 sinks=0 sink_mass=0
+  step=   360 t=0.1405 R90=16.1294 R/R0=7.0186 smax=131.2 grid=12000 sinks=0 sink_mass=0
+  step=   370 t=0.1421 R90=16.2874 R/R0=7.0873 smax=130.55 grid=12000 sinks=0 sink_mass=0
+  step=   380 t=0.1437 R90=16.4554 R/R0=7.1604 smax=129.91 grid=12000 sinks=0 sink_mass=0
+  step=   390 t=0.1454 R90=16.6255 R/R0=7.2345 smax=129.3 grid=12000 sinks=0 sink_mass=0
+  step=   400 t=0.1471 R90=16.8086 R/R0=7.3141 smax=128.74 grid=12000 sinks=0 sink_mass=0
+  step=   410 t=0.1487 R90=16.9641 R/R0=7.3818 smax=128.23 grid=12000 sinks=0 sink_mass=0
+  step=   420 t=0.1504 R90=17.1510 R/R0=7.4631 smax=127.71 grid=12000 sinks=0 sink_mass=0
+  step=   430 t=0.1521 R90=17.3250 R/R0=7.5388 smax=127.21 grid=12000 sinks=0 sink_mass=0
+  step=   440 t=0.1540 R90=17.5045 R/R0=7.6170 smax=126.73 grid=12000 sinks=0 sink_mass=0
+  step=   450 t=0.1559 R90=17.6997 R/R0=7.7019 smax=126.29 grid=12000 sinks=0 sink_mass=0
+  step=   460 t=0.1578 R90=17.8861 R/R0=7.7830 smax=125.87 grid=12000 sinks=0 sink_mass=0
+  step=   470 t=0.1597 R90=18.1003 R/R0=7.8762 smax=125.48 grid=12000 sinks=0 sink_mass=0
+  step=   480 t=0.1616 R90=18.2802 R/R0=7.9545 smax=125.11 grid=12000 sinks=0 sink_mass=0
+  step=   490 t=0.1635 R90=18.4701 R/R0=8.0371 smax=124.77 grid=12000 sinks=0 sink_mass=0
+  step=   500 t=0.1654 R90=18.6587 R/R0=8.1192 smax=124.45 grid=12000 sinks=0 sink_mass=0
+  step=   510 t=0.1672 R90=18.8751 R/R0=8.2133 smax=124.16 grid=12000 sinks=0 sink_mass=0
+  step=   520 t=0.1691 R90=19.0634 R/R0=8.2953 smax=123.91 grid=12000 sinks=0 sink_mass=0
+  step=   530 t=0.1709 R90=19.2424 R/R0=8.3732 smax=123.7 grid=12000 sinks=0 sink_mass=0
+  step=   540 t=0.1728 R90=19.4262 R/R0=8.4532 smax=123.55 grid=12000 sinks=0 sink_mass=0
+  step=   550 t=0.1746 R90=19.6248 R/R0=8.5396 smax=123.45 grid=12000 sinks=0 sink_mass=0
+  step=   560 t=0.1765 R90=19.8006 R/R0=8.6161 smax=123.41 grid=12000 sinks=0 sink_mass=0
+  step=   570 t=0.1783 R90=19.9876 R/R0=8.6975 smax=123.41 grid=12000 sinks=0 sink_mass=0
+  step=   580 t=0.1802 R90=20.1752 R/R0=8.7791 smax=123.46 grid=12000 sinks=0 sink_mass=0
+  step=   590 t=0.1821 R90=20.3766 R/R0=8.8667 smax=123.55 grid=12000 sinks=0 sink_mass=0
+  step=   600 t=0.1840 R90=20.5592 R/R0=8.9462 smax=123.7 grid=12000 sinks=0 sink_mass=0
+  step=   610 t=0.1860 R90=20.7609 R/R0=9.0339 smax=123.89 grid=12000 sinks=0 sink_mass=0
+  step=   620 t=0.1880 R90=20.9657 R/R0=9.1231 smax=124.13 grid=12000 sinks=0 sink_mass=0
+  step=   630 t=0.1900 R90=21.1859 R/R0=9.2189 smax=124.41 grid=12000 sinks=0 sink_mass=0
+  step=   640 t=0.1921 R90=21.3911 R/R0=9.3082 smax=124.74 grid=12000 sinks=0 sink_mass=0
+  step=   650 t=0.1942 R90=21.6010 R/R0=9.3995 smax=125.13 grid=12000 sinks=0 sink_mass=0
+  step=   660 t=0.1963 R90=21.8159 R/R0=9.4930 smax=125.55 grid=12000 sinks=0 sink_mass=0
+  step=   670 t=0.1983 R90=22.0058 R/R0=9.5757 smax=125.96 grid=12000 sinks=0 sink_mass=0
+  step=   680 t=0.2002 R90=22.2004 R/R0=9.6603 smax=126.36 grid=12000 sinks=0 sink_mass=0
+  step=   690 t=0.2020 R90=22.3817 R/R0=9.7392 smax=126.74 grid=12000 sinks=0 sink_mass=0
+  step=   700 t=0.2037 R90=22.5503 R/R0=9.8126 smax=127.11 grid=12000 sinks=0 sink_mass=0
+  step=   710 t=0.2053 R90=22.7143 R/R0=9.8840 smax=127.47 grid=12000 sinks=0 sink_mass=0
+  step=   720 t=0.2069 R90=22.8797 R/R0=9.9560 smax=127.83 grid=12000 sinks=0 sink_mass=0
+  step=   730 t=0.2085 R90=23.0365 R/R0=10.0241 smax=128.19 grid=12000 sinks=0 sink_mass=0
+  step=   740 t=0.2100 R90=23.1959 R/R0=10.0935 smax=128.55 grid=12000 sinks=0 sink_mass=0
+  step=   750 t=0.2115 R90=23.3415 R/R0=10.1569 smax=128.92 grid=12000 sinks=0 sink_mass=0
+  step=   760 t=0.2130 R90=23.4899 R/R0=10.2214 smax=129.31 grid=12000 sinks=0 sink_mass=0
+  step=   770 t=0.2144 R90=23.6412 R/R0=10.2873 smax=129.71 grid=12000 sinks=0 sink_mass=0
+  step=   780 t=0.2159 R90=23.7792 R/R0=10.3473 smax=130.13 grid=12000 sinks=0 sink_mass=0
+  step=   790 t=0.2173 R90=23.9258 R/R0=10.4111 smax=130.57 grid=12000 sinks=0 sink_mass=0
+  step=   800 t=0.2187 R90=24.0831 R/R0=10.4796 smax=131.04 grid=12000 sinks=0 sink_mass=0
+  step=   810 t=0.2202 R90=24.2212 R/R0=10.5397 smax=131.52 grid=12000 sinks=0 sink_mass=0
+  step=   820 t=0.2215 R90=24.3671 R/R0=10.6032 smax=132.01 grid=12000 sinks=0 sink_mass=0
+  step=   830 t=0.2229 R90=24.4841 R/R0=10.6541 smax=132.52 grid=12000 sinks=0 sink_mass=0
+  step=   840 t=0.2243 R90=24.6340 R/R0=10.7193 smax=133.05 grid=12000 sinks=0 sink_mass=0
+  step=   850 t=0.2256 R90=24.7673 R/R0=10.7773 smax=133.59 grid=12000 sinks=0 sink_mass=0
+  step=   860 t=0.2270 R90=24.9063 R/R0=10.8378 smax=134.15 grid=12000 sinks=0 sink_mass=0
+  step=   870 t=0.2283 R90=25.0443 R/R0=10.8979 smax=134.75 grid=12000 sinks=0 sink_mass=0
+  step=   880 t=0.2298 R90=25.1818 R/R0=10.9577 smax=135.4 grid=12000 sinks=0 sink_mass=0
+  step=   890 t=0.2312 R90=25.3359 R/R0=11.0247 smax=136.09 grid=12000 sinks=0 sink_mass=0
+  step=   900 t=0.2327 R90=25.4724 R/R0=11.0841 smax=136.81 grid=12000 sinks=0 sink_mass=0
+  step=   910 t=0.2342 R90=25.6337 R/R0=11.1543 smax=137.56 grid=12000 sinks=0 sink_mass=0
+  step=   920 t=0.2357 R90=25.7805 R/R0=11.2182 smax=138.33 grid=12000 sinks=0 sink_mass=0
+  step=   930 t=0.2372 R90=25.9243 R/R0=11.2808 smax=139.14 grid=12000 sinks=0 sink_mass=0
+  step=   940 t=0.2387 R90=26.0976 R/R0=11.3562 smax=140 grid=12000 sinks=0 sink_mass=0
+  step=   950 t=0.2403 R90=26.2413 R/R0=11.4187 smax=140.92 grid=12000 sinks=0 sink_mass=0
+  step=   960 t=0.2419 R90=26.4000 R/R0=11.4878 smax=141.86 grid=12000 sinks=0 sink_mass=0
+  step=   970 t=0.2435 R90=26.5633 R/R0=11.5588 smax=142.82 grid=12000 sinks=0 sink_mass=0
+  step=   980 t=0.2451 R90=26.7177 R/R0=11.6260 smax=143.8 grid=12000 sinks=0 sink_mass=0
+  step=   990 t=0.2467 R90=26.8886 R/R0=11.7004 smax=144.82 grid=12000 sinks=0 sink_mass=0
+  step=  1000 t=0.2483 R90=27.0493 R/R0=11.7703 smax=145.86 grid=12000 sinks=0 sink_mass=0
+  step=  1010 t=0.2499 R90=27.2111 R/R0=11.8407 smax=146.92 grid=12000 sinks=0 sink_mass=0
+  step=  1020 t=0.2515 R90=27.3708 R/R0=11.9102 smax=147.99 grid=12000 sinks=0 sink_mass=0
+  step=  1030 t=0.2531 R90=27.5274 R/R0=11.9783 smax=149.11 grid=12000 sinks=0 sink_mass=0
+  step=  1040 t=0.2549 R90=27.6946 R/R0=12.0511 smax=150.33 grid=12000 sinks=0 sink_mass=0
+  step=  1050 t=0.2568 R90=27.9016 R/R0=12.1412 smax=151.74 grid=12000 sinks=0 sink_mass=0
+  step=  1060 t=0.2591 R90=28.1300 R/R0=12.2405 smax=153.43 grid=12000 sinks=0 sink_mass=0
+  step=  1070 t=0.2621 R90=28.4254 R/R0=12.3691 smax=155.76 grid=12000 sinks=0 sink_mass=0
+  step=  1080 t=0.2664 R90=28.8592 R/R0=12.5579 smax=159.21 grid=12000 sinks=0 sink_mass=0
+  step=  1090 t=0.2707 R90=29.2917 R/R0=12.7460 smax=162.9 grid=12000 sinks=0 sink_mass=0
+  step=  1100 t=0.2751 R90=29.7138 R/R0=12.9297 smax=166.85 grid=12000 sinks=0 sink_mass=0
+  step=  1110 t=0.2795 R90=30.1075 R/R0=13.1011 smax=171.07 grid=12000 sinks=0 sink_mass=0
+  step=  1120 t=0.2840 R90=30.4297 R/R0=13.2413 smax=175.58 grid=12000 sinks=0 sink_mass=0
+  step=  1130 t=0.2884 R90=30.6929 R/R0=13.3558 smax=180.39 grid=12000 sinks=0 sink_mass=0
+  step=  1140 t=0.2929 R90=30.9135 R/R0=13.4518 smax=185.51 grid=12000 sinks=0 sink_mass=0
+  step=  1150 t=0.2975 R90=31.0925 R/R0=13.5297 smax=190.94 grid=12000 sinks=0 sink_mass=0
+  step=  1156 t=0.3003 R90=31.1675 R/R0=13.5623 smax=194.34 grid=12000 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co12000_s dumps=116 R90_0=2.2981 dev=12.5623 min=1.0000 max=13.5623 end=13.5623 smax=1830.5 sinks_max=0
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n5000_s/scene.json matter=n M=5000 cells=4 sigma_max=1250.0000 iterations=36
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=153 sim_time=0.300753 until=met
+  step=    10 t=0.0262 R90=2.2989 R/R0=1.0000 smax=524.36 grid=5000 sinks=0 sink_mass=0
+  step=    20 t=0.0464 R90=3.0052 R/R0=1.3072 smax=338.03 grid=5000 sinks=0 sink_mass=0
+  step=    30 t=0.0650 R90=3.7291 R/R0=1.6221 smax=225.8 grid=5000 sinks=0 sink_mass=0
+  step=    40 t=0.0830 R90=4.4194 R/R0=1.9224 smax=151.5 grid=5000 sinks=0 sink_mass=0
+  step=    50 t=0.1007 R90=5.0280 R/R0=2.1871 smax=107.23 grid=5000 sinks=0 sink_mass=0
+  step=    60 t=0.1187 R90=5.6926 R/R0=2.4762 smax=79.66 grid=5000 sinks=0 sink_mass=0
+  step=    70 t=0.1368 R90=6.3762 R/R0=2.7736 smax=61.829 grid=5000 sinks=0 sink_mass=0
+  step=    80 t=0.1552 R90=6.9754 R/R0=3.0342 smax=49.698 grid=5000 sinks=0 sink_mass=0
+  step=    90 t=0.1737 R90=7.6342 R/R0=3.3208 smax=41.128 grid=5000 sinks=0 sink_mass=0
+  step=   100 t=0.1927 R90=8.2329 R/R0=3.5812 smax=34.79 grid=5000 sinks=0 sink_mass=0
+  step=   110 t=0.2119 R90=8.8829 R/R0=3.8639 smax=30.017 grid=5000 sinks=0 sink_mass=0
+  step=   120 t=0.2317 R90=9.4753 R/R0=4.1216 smax=26.279 grid=5000 sinks=0 sink_mass=0
+  step=   130 t=0.2519 R90=10.1011 R/R0=4.3938 smax=23.313 grid=5000 sinks=0 sink_mass=0
+  step=   140 t=0.2728 R90=10.6844 R/R0=4.6476 smax=20.906 grid=5000 sinks=0 sink_mass=0
+  step=   150 t=0.2942 R90=11.3151 R/R0=4.9219 smax=18.935 grid=5000 sinks=0 sink_mass=0
+  step=   153 t=0.3008 R90=11.4905 R/R0=4.9982 smax=18.411 grid=5000 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/n5000_s dumps=16 R90_0=2.2989 dev=3.9982 min=1.0000 max=4.9982 end=4.9982 smax=524.36 sinks_max=0
+== resolved hold, GPU 2026-10-19T09:39:55-04:00
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co100k5/scene.json matter=c/o M=100 cells=1380 sigma_max=0.2166 iterations=125
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=934 sim_time=61.960942 until=met
+  step=    16 t=1.0537 R90=15.6535 R/R0=1.0000 smax=0.21643 grid=100 sinks=0 sink_mass=0
+  step=    32 t=2.1073 R90=15.6654 R/R0=1.0008 smax=0.21623 grid=100 sinks=0 sink_mass=0
+  step=    48 t=3.1614 R90=15.6774 R/R0=1.0015 smax=0.21593 grid=100 sinks=0 sink_mass=0
+  step=    64 t=4.2163 R90=15.7053 R/R0=1.0033 smax=0.21555 grid=100 sinks=0 sink_mass=0
+  step=    80 t=5.2721 R90=15.7252 R/R0=1.0046 smax=0.21515 grid=100 sinks=0 sink_mass=0
+  step=    96 t=6.3288 R90=15.7371 R/R0=1.0053 smax=0.21474 grid=100 sinks=0 sink_mass=0
+  step=   112 t=7.3862 R90=15.7609 R/R0=1.0069 smax=0.2144 grid=100 sinks=0 sink_mass=0
+  step=   128 t=8.4445 R90=15.7807 R/R0=1.0081 smax=0.21404 grid=100 sinks=0 sink_mass=0
+  step=   144 t=9.5038 R90=15.8163 R/R0=1.0104 smax=0.2134 grid=99.999 sinks=0 sink_mass=0
+  step=   160 t=10.5650 R90=15.8316 R/R0=1.0114 smax=0.21256 grid=99.999 sinks=0 sink_mass=0
+  step=   176 t=11.6279 R90=15.8440 R/R0=1.0122 smax=0.21183 grid=99.999 sinks=0 sink_mass=0
+  step=   192 t=12.6921 R90=15.8637 R/R0=1.0134 smax=0.2114 grid=99.999 sinks=0 sink_mass=0
+  step=   208 t=13.7566 R90=15.8794 R/R0=1.0144 smax=0.21137 grid=99.999 sinks=0 sink_mass=0
+  step=   224 t=14.8208 R90=15.8873 R/R0=1.0149 smax=0.21163 grid=99.999 sinks=0 sink_mass=0
+  step=   240 t=15.8843 R90=15.8991 R/R0=1.0157 smax=0.21192 grid=99.999 sinks=0 sink_mass=0
+  step=   256 t=16.9473 R90=15.9030 R/R0=1.0159 smax=0.21202 grid=99.999 sinks=0 sink_mass=0
+  step=   272 t=18.0104 R90=15.9030 R/R0=1.0159 smax=0.21195 grid=99.999 sinks=0 sink_mass=0
+  step=   288 t=19.0737 R90=15.8912 R/R0=1.0152 smax=0.21191 grid=99.999 sinks=0 sink_mass=0
+  step=   304 t=20.1368 R90=15.8873 R/R0=1.0149 smax=0.21201 grid=99.999 sinks=0 sink_mass=0
+  step=   320 t=21.1996 R90=15.8755 R/R0=1.0142 smax=0.21222 grid=99.999 sinks=0 sink_mass=0
+  step=   336 t=22.2618 R90=15.8558 R/R0=1.0129 smax=0.2125 grid=99.999 sinks=0 sink_mass=0
+  step=   352 t=23.3232 R90=15.8440 R/R0=1.0122 smax=0.21288 grid=99.999 sinks=0 sink_mass=0
+  step=   368 t=24.3838 R90=15.8321 R/R0=1.0114 smax=0.2133 grid=99.999 sinks=0 sink_mass=0
+  step=   384 t=25.4433 R90=15.8282 R/R0=1.0112 smax=0.21375 grid=99.999 sinks=0 sink_mass=0
+  step=   400 t=26.5019 R90=15.8163 R/R0=1.0104 smax=0.21415 grid=99.999 sinks=0 sink_mass=0
+  step=   416 t=27.5597 R90=15.8045 R/R0=1.0096 smax=0.21446 grid=99.999 sinks=0 sink_mass=0
+  step=   432 t=28.6170 R90=15.7966 R/R0=1.0091 smax=0.21463 grid=99.999 sinks=0 sink_mass=0
+  step=   448 t=29.6742 R90=15.7966 R/R0=1.0091 smax=0.21469 grid=99.999 sinks=0 sink_mass=0
+  step=   464 t=30.7313 R90=15.7966 R/R0=1.0091 smax=0.2147 grid=99.999 sinks=0 sink_mass=0
+  step=   480 t=31.7883 R90=15.8045 R/R0=1.0096 smax=0.2147 grid=99.999 sinks=0 sink_mass=0
+  step=   496 t=32.8454 R90=15.8163 R/R0=1.0104 smax=0.21466 grid=99.999 sinks=0 sink_mass=0
+  step=   512 t=33.9028 R90=15.8321 R/R0=1.0114 smax=0.2145 grid=99.999 sinks=0 sink_mass=0
+  step=   528 t=34.9607 R90=15.8558 R/R0=1.0129 smax=0.21423 grid=99.998 sinks=0 sink_mass=0
+  step=   544 t=36.0193 R90=15.8755 R/R0=1.0142 smax=0.21386 grid=99.998 sinks=0 sink_mass=0
+  step=   560 t=37.0789 R90=15.8912 R/R0=1.0152 smax=0.21339 grid=99.998 sinks=0 sink_mass=0
+  step=   576 t=38.1397 R90=15.9148 R/R0=1.0167 smax=0.21281 grid=99.998 sinks=0 sink_mass=0
+  step=   592 t=39.2018 R90=15.9266 R/R0=1.0174 smax=0.21219 grid=99.998 sinks=0 sink_mass=0
+  step=   608 t=40.2653 R90=15.9344 R/R0=1.0179 smax=0.21162 grid=99.998 sinks=0 sink_mass=0
+  step=   624 t=41.3299 R90=15.9580 R/R0=1.0195 smax=0.21118 grid=99.998 sinks=0 sink_mass=0
+  step=   640 t=42.3953 R90=15.9853 R/R0=1.0212 smax=0.21089 grid=99.998 sinks=0 sink_mass=0
+  step=   656 t=43.4611 R90=16.0166 R/R0=1.0232 smax=0.21073 grid=99.998 sinks=0 sink_mass=0
+  step=   672 t=44.5273 R90=16.0439 R/R0=1.0249 smax=0.21059 grid=99.998 sinks=0 sink_mass=0
+  step=   688 t=45.5938 R90=16.0517 R/R0=1.0254 smax=0.21042 grid=99.998 sinks=0 sink_mass=0
+  step=   704 t=46.6606 R90=16.0556 R/R0=1.0257 smax=0.21026 grid=99.998 sinks=0 sink_mass=0
+  step=   720 t=47.7278 R90=16.0556 R/R0=1.0257 smax=0.21016 grid=99.997 sinks=0 sink_mass=0
+  step=   736 t=48.7951 R90=16.0556 R/R0=1.0257 smax=0.21011 grid=99.997 sinks=0 sink_mass=0
+  step=   752 t=49.8624 R90=16.0556 R/R0=1.0257 smax=0.21014 grid=99.997 sinks=0 sink_mass=0
+  step=   768 t=50.9296 R90=16.0517 R/R0=1.0254 smax=0.21024 grid=99.997 sinks=0 sink_mass=0
+  step=   784 t=51.9964 R90=16.0517 R/R0=1.0254 smax=0.21043 grid=99.997 sinks=0 sink_mass=0
+  step=   800 t=53.0626 R90=16.0439 R/R0=1.0249 smax=0.21072 grid=99.997 sinks=0 sink_mass=0
+  step=   816 t=54.1280 R90=16.0283 R/R0=1.0239 smax=0.21109 grid=99.997 sinks=0 sink_mass=0
+  step=   832 t=55.1925 R90=15.9932 R/R0=1.0217 smax=0.21152 grid=99.997 sinks=0 sink_mass=0
+  step=   848 t=56.2560 R90=15.9854 R/R0=1.0212 smax=0.21197 grid=99.997 sinks=0 sink_mass=0
+  step=   864 t=57.3186 R90=15.9853 R/R0=1.0212 smax=0.21234 grid=99.997 sinks=0 sink_mass=0
+  step=   880 t=58.3805 R90=15.9590 R/R0=1.0195 smax=0.21261 grid=99.997 sinks=0 sink_mass=0
+  step=   896 t=59.4419 R90=15.9579 R/R0=1.0195 smax=0.21282 grid=99.997 sinks=0 sink_mass=0
+  step=   912 t=60.5028 R90=15.9540 R/R0=1.0192 smax=0.21303 grid=99.997 sinks=0 sink_mass=0
+  step=   928 t=61.5633 R90=15.9540 R/R0=1.0192 smax=0.2132 grid=99.997 sinks=0 sink_mass=0
+  step=   934 t=61.9609 R90=15.9540 R/R0=1.0192 smax=0.21325 grid=99.997 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co100k5 dumps=59 R90_0=15.6535 dev=0.0257 min=1.0000 max=1.0257 end=1.0192 smax=0.21643 sinks_max=0
+R4-SCENE /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co100k6/scene.json matter=c/o M=100 cells=2000 sigma_max=0.1504 iterations=126
+headless exit=0 SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA | SR-HEADLESS DONE steps=1132 sim_time=82.025052 until=met
+  step=    16 t=1.1539 R90=18.8157 R/R0=1.0000 smax=0.15037 grid=100 sinks=0 sink_mass=0
+  step=    32 t=2.3076 R90=18.8157 R/R0=1.0000 smax=0.15031 grid=100 sinks=0 sink_mass=0
+  step=    48 t=3.4616 R90=18.8290 R/R0=1.0007 smax=0.1502 grid=100 sinks=0 sink_mass=0
+  step=    64 t=4.6160 R90=18.8323 R/R0=1.0009 smax=0.15006 grid=100 sinks=0 sink_mass=0
+  step=    80 t=5.7710 R90=18.8390 R/R0=1.0012 smax=0.1499 grid=100 sinks=0 sink_mass=0
+  step=    96 t=6.9265 R90=18.8688 R/R0=1.0028 smax=0.14974 grid=100 sinks=0 sink_mass=0
+  step=   112 t=8.0826 R90=18.8787 R/R0=1.0033 smax=0.14957 grid=100 sinks=0 sink_mass=0
+  step=   128 t=9.2393 R90=18.8907 R/R0=1.0040 smax=0.14941 grid=99.999 sinks=0 sink_mass=0
+  step=   144 t=10.3964 R90=18.9052 R/R0=1.0048 smax=0.14929 grid=99.999 sinks=0 sink_mass=0
+  step=   160 t=11.5540 R90=18.9171 R/R0=1.0054 smax=0.14915 grid=99.999 sinks=0 sink_mass=0
+  step=   176 t=12.7123 R90=18.9250 R/R0=1.0058 smax=0.14889 grid=99.999 sinks=0 sink_mass=0
+  step=   192 t=13.8718 R90=18.9283 R/R0=1.0060 smax=0.14852 grid=99.999 sinks=0 sink_mass=0
+  step=   208 t=15.0325 R90=18.9481 R/R0=1.0070 smax=0.14817 grid=99.999 sinks=0 sink_mass=0
+  step=   224 t=16.1943 R90=18.9646 R/R0=1.0079 smax=0.14792 grid=99.999 sinks=0 sink_mass=0
+  step=   240 t=17.3566 R90=18.9679 R/R0=1.0081 smax=0.14785 grid=99.999 sinks=0 sink_mass=0
+  step=   256 t=18.5187 R90=18.9745 R/R0=1.0084 smax=0.14795 grid=99.999 sinks=0 sink_mass=0
+  step=   272 t=19.6803 R90=18.9778 R/R0=1.0086 smax=0.14811 grid=99.999 sinks=0 sink_mass=0
+  step=   288 t=20.8414 R90=18.9778 R/R0=1.0086 smax=0.14823 grid=99.999 sinks=0 sink_mass=0
+  step=   304 t=22.0022 R90=18.9778 R/R0=1.0086 smax=0.14826 grid=99.998 sinks=0 sink_mass=0
+  step=   320 t=23.1632 R90=18.9778 R/R0=1.0086 smax=0.14822 grid=99.998 sinks=0 sink_mass=0
+  step=   336 t=24.3243 R90=18.9778 R/R0=1.0086 smax=0.14818 grid=99.998 sinks=0 sink_mass=0
+  step=   352 t=25.4854 R90=18.9745 R/R0=1.0084 smax=0.14819 grid=99.998 sinks=0 sink_mass=0
+  step=   368 t=26.6464 R90=18.9679 R/R0=1.0081 smax=0.14824 grid=99.998 sinks=0 sink_mass=0
+  step=   384 t=27.8071 R90=18.9571 R/R0=1.0075 smax=0.14833 grid=99.998 sinks=0 sink_mass=0
+  step=   400 t=28.9674 R90=18.9481 R/R0=1.0070 smax=0.14847 grid=99.998 sinks=0 sink_mass=0
+  step=   416 t=30.1272 R90=18.9448 R/R0=1.0069 smax=0.14866 grid=99.998 sinks=0 sink_mass=0
+  step=   432 t=31.2862 R90=18.9283 R/R0=1.0060 smax=0.14887 grid=99.998 sinks=0 sink_mass=0
+  step=   448 t=32.4444 R90=18.9250 R/R0=1.0058 smax=0.14908 grid=99.998 sinks=0 sink_mass=0
+  step=   464 t=33.6020 R90=18.9184 R/R0=1.0055 smax=0.14925 grid=99.998 sinks=0 sink_mass=0
+  step=   480 t=34.7591 R90=18.9085 R/R0=1.0049 smax=0.1494 grid=99.998 sinks=0 sink_mass=0
+  step=   496 t=35.9157 R90=18.9052 R/R0=1.0048 smax=0.14952 grid=99.998 sinks=0 sink_mass=0
+  step=   512 t=37.0720 R90=18.8953 R/R0=1.0042 smax=0.14961 grid=99.998 sinks=0 sink_mass=0
+  step=   528 t=38.2280 R90=18.8953 R/R0=1.0042 smax=0.14967 grid=99.998 sinks=0 sink_mass=0
+  step=   544 t=39.3839 R90=18.8953 R/R0=1.0042 smax=0.1497 grid=99.998 sinks=0 sink_mass=0
+  step=   560 t=40.5397 R90=18.8953 R/R0=1.0042 smax=0.14971 grid=99.998 sinks=0 sink_mass=0
+  step=   576 t=41.6956 R90=18.8953 R/R0=1.0042 smax=0.1497 grid=99.998 sinks=0 sink_mass=0
+  step=   592 t=42.8515 R90=18.9052 R/R0=1.0048 smax=0.14967 grid=99.997 sinks=0 sink_mass=0
+  step=   608 t=44.0076 R90=18.9085 R/R0=1.0049 smax=0.14962 grid=99.997 sinks=0 sink_mass=0
+  step=   624 t=45.1639 R90=18.9250 R/R0=1.0058 smax=0.14953 grid=99.997 sinks=0 sink_mass=0
+  step=   640 t=46.3206 R90=18.9283 R/R0=1.0060 smax=0.14941 grid=99.997 sinks=0 sink_mass=0
+  step=   656 t=47.4778 R90=18.9481 R/R0=1.0070 smax=0.14926 grid=99.997 sinks=0 sink_mass=0
+  step=   672 t=48.6356 R90=18.9646 R/R0=1.0079 smax=0.14907 grid=99.997 sinks=0 sink_mass=0
+  step=   688 t=49.7942 R90=18.9731 R/R0=1.0084 smax=0.14884 grid=99.997 sinks=0 sink_mass=0
+  step=   704 t=50.9536 R90=18.9778 R/R0=1.0086 smax=0.14858 grid=99.997 sinks=0 sink_mass=0
+  step=   720 t=52.1139 R90=18.9975 R/R0=1.0097 smax=0.14832 grid=99.997 sinks=0 sink_mass=0
+  step=   736 t=53.2751 R90=19.0238 R/R0=1.0111 smax=0.14808 grid=99.996 sinks=0 sink_mass=0
+  step=   752 t=54.4371 R90=19.0403 R/R0=1.0119 smax=0.14789 grid=99.996 sinks=0 sink_mass=0
+  step=   768 t=55.5995 R90=19.0632 R/R0=1.0132 smax=0.14778 grid=99.996 sinks=0 sink_mass=0
+  step=   784 t=56.7622 R90=19.0763 R/R0=1.0139 smax=0.14772 grid=99.996 sinks=0 sink_mass=0
+  step=   800 t=57.9250 R90=19.0927 R/R0=1.0147 smax=0.14768 grid=99.996 sinks=0 sink_mass=0
+  step=   816 t=59.0880 R90=19.0992 R/R0=1.0151 smax=0.14764 grid=99.996 sinks=0 sink_mass=0
+  step=   832 t=60.2511 R90=19.1058 R/R0=1.0154 smax=0.14758 grid=99.996 sinks=0 sink_mass=0
+  step=   848 t=61.4146 R90=19.1123 R/R0=1.0158 smax=0.1475 grid=99.996 sinks=0 sink_mass=0
+  step=   864 t=62.5783 R90=19.1196 R/R0=1.0162 smax=0.14742 grid=99.996 sinks=0 sink_mass=0
+  step=   880 t=63.7422 R90=19.1123 R/R0=1.0158 smax=0.14738 grid=99.996 sinks=0 sink_mass=0
+  step=   896 t=64.9061 R90=19.1073 R/R0=1.0155 smax=0.14738 grid=99.995 sinks=0 sink_mass=0
+  step=   912 t=66.0700 R90=19.1025 R/R0=1.0152 smax=0.14742 grid=99.995 sinks=0 sink_mass=0
+  step=   928 t=67.2336 R90=19.0992 R/R0=1.0151 smax=0.14752 grid=99.995 sinks=0 sink_mass=0
+  step=   944 t=68.3967 R90=19.0927 R/R0=1.0147 smax=0.14765 grid=99.995 sinks=0 sink_mass=0
+  step=   960 t=69.5594 R90=19.0839 R/R0=1.0143 smax=0.1478 grid=99.995 sinks=0 sink_mass=0
+  step=   976 t=70.7215 R90=19.0763 R/R0=1.0139 smax=0.14797 grid=99.995 sinks=0 sink_mass=0
+  step=   992 t=71.8829 R90=19.0665 R/R0=1.0133 smax=0.14814 grid=99.995 sinks=0 sink_mass=0
+  step=  1008 t=73.0438 R90=19.0632 R/R0=1.0132 smax=0.1483 grid=99.995 sinks=0 sink_mass=0
+  step=  1024 t=74.2042 R90=19.0534 R/R0=1.0126 smax=0.14846 grid=99.995 sinks=0 sink_mass=0
+  step=  1040 t=75.3640 R90=19.0337 R/R0=1.0116 smax=0.14862 grid=99.995 sinks=0 sink_mass=0
+  step=  1056 t=76.5232 R90=19.0238 R/R0=1.0111 smax=0.14877 grid=99.995 sinks=0 sink_mass=0
+  step=  1072 t=77.6820 R90=19.0107 R/R0=1.0104 smax=0.14889 grid=99.995 sinks=0 sink_mass=0
+  step=  1088 t=78.8405 R90=19.0107 R/R0=1.0104 smax=0.14899 grid=99.995 sinks=0 sink_mass=0
+  step=  1104 t=79.9986 R90=18.9975 R/R0=1.0097 smax=0.14905 grid=99.995 sinks=0 sink_mass=0
+  step=  1120 t=81.1566 R90=18.9975 R/R0=1.0097 smax=0.1491 grid=99.995 sinks=0 sink_mass=0
+  step=  1132 t=82.0251 R90=19.0107 R/R0=1.0104 smax=0.14911 grid=99.995 sinks=0 sink_mass=0
+R4-DUMPS /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/runs/co100k6 dumps=71 R90_0=18.8157 dev=0.0162 min=1.0000 max=1.0162 end=1.0104 smax=0.15037 sinks_max=0

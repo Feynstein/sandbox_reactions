@@ -1,0 +1,85 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.96s
+== M0-T66 log (2026-10-19, linux-pc, RTX 5090): the draft's runs; detail in tasks/M0-T66.md
+== recipe as written: calibrate --adapter 'RTX 5090' --only m_ch_sb (a = 12)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=3972.765 holds=false deviation=0.0486 r90_start=10.643 tau_dyn=0.5509 sim_time=0.162 steps=9 sigma_max=14.968
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=2648.510 holds=false deviation=0.0469 r90_start=10.643 tau_dyn=0.6747 sim_time=0.195 steps=9 sigma_max=9.919
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=1765.673 holds=false deviation=0.0452 r90_start=10.643 tau_dyn=0.8263 sim_time=0.235 steps=9 sigma_max=6.579
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=1177.116 holds=false deviation=0.0402 r90_start=10.643 tau_dyn=1.0121 sim_time=0.283 steps=9 sigma_max=4.367
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=784.744 holds=false deviation=0.0388 r90_start=10.643 tau_dyn=1.2395 sim_time=0.343 steps=9 sigma_max=2.900
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=523.162 holds=false deviation=0.0377 r90_start=10.643 tau_dyn=1.5181 sim_time=0.415 steps=9 sigma_max=1.927
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=348.775 holds=false deviation=0.0365 r90_start=10.643 tau_dyn=1.8593 sim_time=0.504 steps=9 sigma_max=1.282
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=232.517 holds=false deviation=0.0365 r90_start=10.643 tau_dyn=2.2771 sim_time=0.612 steps=9 sigma_max=0.852
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=155.011 holds=false deviation=0.0337 r90_start=10.643 tau_dyn=2.7889 sim_time=0.744 steps=9 sigma_max=0.567
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=103.341 holds=false deviation=0.0337 r90_start=10.643 tau_dyn=3.4157 sim_time=0.904 steps=9 sigma_max=0.377
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=68.894 holds=false deviation=0.0331 r90_start=10.643 tau_dyn=4.1834 sim_time=1.099 steps=9 sigma_max=0.251
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=45.929 holds=false deviation=0.0325 r90_start=10.643 tau_dyn=5.1236 sim_time=1.335 steps=9 sigma_max=0.167
+SR-CALIBRATE trial item=m_ch_sb matter=c/o mass=30.619 holds=false deviation=0.0556 r90_start=10.643 tau_dyn=6.2751 sim_time=2.230 steps=13 sigma_max=0.121
+SR-ERROR calibration failed: no bracket: no mass down to 30.619 holds (started at 3972.8)
+== exit 6, 1.9 s (the other probes: SR_CAL_PROBE traces, in the task file's tables)
+== claim: verify.py --changed --task M0-T66 (after the plan edits)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint        581/0/0      0.11 s  GO
+tools_selftest   NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain        NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build            NOT RUN (not impacted: its 98 path(s) checked at the anchor)
+registry         NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+eos              NOT RUN (not impacted: its 29 path(s) checked at the anchor)
+rates            NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+burn_cell        NOT RUN (not impacted: its 95 path(s) checked at the anchor)
+burn_order       NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+neutrino         NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+sink             NOT RUN (not impacted: its 97 path(s) checked at the anchor)
+nu_heat          NOT RUN (not impacted: its 95 path(s) checked at the anchor)
+summary          NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+ledger           NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+preset_cloud     NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+observe_run      NOT RUN (not impacted: its 109 path(s) checked at the anchor)
+objects          NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+classify         NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+fft_twin         NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+riemann          NOT RUN (not impacted: its 19 path(s) checked at the anchor)
+sod              NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+edges            NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+collapse         NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+jeans            NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+sun_burn         NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin             NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+cpu_gpu          NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+heat_gauss       NOT RUN (not impacted: its 95 path(s) checked at the anchor)
+heat_implicit    NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+heat_limiter     NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+heat_stiff       NOT RUN (not impacted: its 96 path(s) checked at the anchor)
+radiation_force  NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+grav_force       NOT RUN (not impacted: its 99 path(s) checked at the anchor)
+grav_selfforce   NOT RUN (not impacted: its 100 path(s) checked at the anchor)
+fft              NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+time_control     NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings          NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter          NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+state            NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+booking          NOT RUN (not impacted: its 70 path(s) checked at the anchor)
+floors           NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+dt               NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+box              NOT RUN (not impacted: its 95 path(s) checked at the anchor)
+latch            NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+timing           NOT RUN (not impacted: its 93 path(s) checked at the anchor)
+scene            NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+dump             NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+boot             NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+desktop          NOT RUN (not impacted: its 85 path(s) checked at the anchor)
+web              NOT RUN (not impacted: its 88 path(s) checked at the anchor)
+capture          NOT RUN (not impacted: its 79 path(s) checked at the anchor)
+licences         NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only       NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+calibration      NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-T66.<scope>.log · record: loop_times.jsonl · tree e788da44e8ee+3026143d5c3e
+anchor: 1 path×scope entries moved by this run
+anchor: 235 paths checked · 220 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 235 covered of 455 visible
+skipped   212  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 581 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 53 not impacted · 0.12 s + loop 0.06 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 32.23->32.23 · base: M0-T66's start 2026-10-19T08:32:45-04:00
+=== GO ===

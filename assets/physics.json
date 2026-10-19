@@ -45,7 +45,7 @@
   "t_nu": 93,
   "m_nu": 8,
   "f_dep": 0.05,
-  "sigma_bh": 4000,
+  "sigma_bh": 6000,
   "cfl": 0.4,
   "eta_g": 0.3,
   "kappa_dust": 0,

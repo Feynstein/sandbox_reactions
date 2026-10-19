@@ -1,0 +1,34 @@
+== 2026-10-19T10:17:57-04:00 build[native] · task M0-D58 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-19T10:17:57-04:00 build[wasm] · task M0-D58 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.57 s
+build wasm: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+
+-- build[native] · exit=1 · 4.63 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Checking sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+error: the use of negated comparison operators on partially ordered types produces code that is hard to read and refactor, please consider using the `partial_cmp` method instead, to make it clear that the two values could be incomparable
+   --> crates/sr-physics/src/reference/hydro.rs:330:12
+    |
+330 |         if !(a > 0.0) {
+    |            ^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#neg_cmp_op_on_partial_ord
+    = note: `-D clippy::neg-cmp-op-on-partial-ord` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::neg_cmp_op_on_partial_ord)]`
+
+error: could not compile `sr-physics` (lib) due to 1 previous error
+=== NO-GO: cargo clippy -D warnings failed ===
+
+== 2026-10-19T10:19:08-04:00 build[native] · task M0-D58 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-19T10:19:08-04:00 build[wasm] · task M0-D58 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.14 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+
+-- build[native] · exit=0 · 23.07 s
+build native: 1.99.0 in 23 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+

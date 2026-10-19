@@ -1,0 +1,11 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=273 sim_time=4.243910 until=met
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.000 ignited=true core_collapse=false ending=none steps=273 sim_time=4.244 wall_s=1.7
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=689 sim_time=8.767875 until=met
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3500.000 ignited=true core_collapse=false ending=none steps=689 sim_time=8.768 wall_s=5.8
+SR-ERROR calibration failed: the bracket 3351.0..3500.0: its ends agree (3351.0 is Heavy, 3500.0 is Heavy), so the threshold is not in it — widen it with --bracket (two runs spent)
+
+real	0m11.978s
+user	0m3.196s
+sys	0m0.610s

@@ -1,0 +1,58 @@
+== 2026-10-19T08:28:24-04:00 radiation_force · task M0-T65 · box laserax-ai :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 3.99 s
+    Finished `release` profile [optimized] target(s) in 0.11s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 3 tests
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -5.821057713e-1, Σ Δt·f -5.821057815e-1, relative 1.75e-8
+SR-RADFORCE gpu x, right: gained 5.821057531e-1, Σ Δt·f 5.821057807e-1, relative 4.74e-8
+SR-RADFORCE gpu y, top: gained -4.277437968e-2, Σ Δt·f -4.277438144e-2, relative 4.11e-8
+SR-RADFORCE gpu y, bottom: gained 4.277438045e-2, Σ Δt·f 4.277438146e-2, relative 2.35e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.31e-10 of the largest Δt·f 8.32e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 7.433507645e-2, the hand F's 7.433508002e-2 (4.81e-8), P5's F after -6.854871313e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -7.433507645e-2, the hand F's -7.433508002e-2 (4.81e-8), P5's F after 6.854871313e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 5.403410824e-3, the hand F's 5.403410890e-3 (1.22e-8), P5's F after -5.353674023e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -5.403410824e-3, the hand F's -5.403410890e-3 (1.22e-8), P5's F after 5.353674023e-3 (2.01e0)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -6.604207666e-1, Σ Δt·f -6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin x, right: gained 6.604207666e-1, Σ Δt·f 6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -4.347429519e-2, Σ Δt·f -4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin y, bottom: gained 4.347429519e-2, Σ Δt·f 4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin cells: worst |gained − Δt·f| 4.34e-19 of the largest Δt·f 1.88e-3; Σ, E, species 0e0 from the free step
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 284 filtered out; finished in 3.53s
+
+
+== 2026-10-19T08:30:22-04:00 radiation_force · task M0-T65 · box laserax-ai :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 2.17 s
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 3 tests
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -5.821057713e-1, Σ Δt·f -5.821057815e-1, relative 1.75e-8
+SR-RADFORCE gpu x, right: gained 5.821057531e-1, Σ Δt·f 5.821057807e-1, relative 4.74e-8
+SR-RADFORCE gpu y, top: gained -4.277437968e-2, Σ Δt·f -4.277438144e-2, relative 4.11e-8
+SR-RADFORCE gpu y, bottom: gained 4.277438045e-2, Σ Δt·f 4.277438146e-2, relative 2.35e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.31e-10 of the largest Δt·f 8.32e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 7.433507645e-2, the hand F's 7.433508002e-2 (4.81e-8), P5's F after -6.854871313e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -7.433507645e-2, the hand F's -7.433508002e-2 (4.81e-8), P5's F after 6.854871313e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 5.403410824e-3, the hand F's 5.403410890e-3 (1.22e-8), P5's F after -5.353674023e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -5.403410824e-3, the hand F's -5.403410890e-3 (1.22e-8), P5's F after 5.353674023e-3 (2.01e0)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -6.604207666e-1, Σ Δt·f -6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin x, right: gained 6.604207666e-1, Σ Δt·f 6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -4.347429519e-2, Σ Δt·f -4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin y, bottom: gained 4.347429519e-2, Σ Δt·f 4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin cells: worst |gained − Δt·f| 4.34e-19 of the largest Δt·f 1.88e-3; Σ, E, species 0e0 from the free step
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 284 filtered out; finished in 1.96s
+
+

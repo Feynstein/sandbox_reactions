@@ -289,6 +289,37 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     built in M0: gravity re-solved at every step (k = 1), no scope `cadence` — routed past M0 (reports/top_speed.md § Routed)
     · the cadence trades gravity's accuracy for speed (G-CAD's drift ≤ 10⁻³ |W| per τ_dyn) — the same answer: «We dont
     compromise physics over performance for now, maybe later in another milestone will we optimize further but not now».
+  - [M0-R4] §2.11 items 1–2 ("a cold disk (T_floor; C 0.5 + O 0.5, so Y_e = 0.5; a = 12 cells) run 10 τ_dyn: it holds when R₉₀
+    changes by < 3 %; bisection on M to 0.5 %", "ns_sigma_max_sb = the largest Σ_c among holding runs", "the CPU twin may stand in for
+    items 1–2"), §2.3.2's "M_ch ≈ 1.77 K₂'²/G² for a uniform disk … calibration measures the real value (§2.11)", §2.7's K₁ₑ/K₂ₑ,
+    K₁ₙ/K₂ₙ and sigma_bh rows (sigma_bh 4,000), §2.6's "Σ_BH: initial 4,000 (opinion); bound ≥ 4 × calibration's `ns_sigma_max_sb`",
+    §3.3's Calibrate line and §5.1's G-CORE · items 1–2 computed on the CPU in f64 from this EoS in the continuum (an axisymmetric
+    thin-disk SCF sequence M(Σ_c), its limit extrapolated), M_ch = c_sheet K₂′²/G² with c_sheet = 1.4331, ns_sigma_max_sb = m_tov_sb per
+    cell area, Σ_BH 6,000 with the bound Σ_BH ≥ ns_sigma_max_sb checked by `calibrate`, G-CORE graded on the sequence and on one resolved
+    grid hold — amended in place (§2.3.2, §2.6, §2.7, §2.11, §3.3, §5.1, §5.5) · on the shipped grid a cold disk's R₉₀ is under one cell
+    from 0.51 M_ch (R ≈ R₀(1 − √(M/M_ch)), R₀ = 3K₁′/4G ≈ 4 cells) and nothing collapses or forms a sink at any mass to 12,000, so §2.11's
+    runs have no bracket; the grid's cold disks swell by the scheme's numerical heating (MUSCL-Hancock with gravity as a source is not
+    well-balanced: a fixed-g atmosphere's spurious speed is first order in Δx/H), converging to a 3 % hold over 10 τ_dyn only at R₉₀ ≳ 15
+    cells; the sheet's own equilibrium profile has its ceiling at 1.4331 K₂′²/G² (3,216.5 C/O, 4,854 neutron matter, ratio 1.509), the
+    uniform disk's 9π/16 ≈ 1.767 being no equilibrium; a stable neutron star cannot put more than m_tov_sb into one cell, which the
+    shipped 4,000 is below — measured on linux-pc, 2026-10-19, CPU f64 twin, stdlib solvers and RTX 5090 (reports/cold_ceiling.md
+    M1–M10) — the lead's answers at M0-R4, 2026-10-19: «Continuum SCF (Recommended)», «Raise to 6,000 (Recommended)».
+  - [M0-D58] §2.4.4's "E is unchanged by it (the work comes out of thermal energy)" read with no bound · the work is capped at the
+    heat the cell holds above its floor: with the cell's momentum p₀ after P4's flux differences and gravity's source, its thermal
+    energy above the floor A = Σ(ε_th − T_floor/μ) and the impulse d = Δt·f, the cell gains s·d, s = min(1, s*), s* the positive
+    root of |p₀ + s d|² − |p₀|² = 2ΣA (s = 0 when A ≤ 0), on the GPU and the twin; E still unchanged — amended in place (§2.4.4) ·
+    the radiation energy a_r T⁴ is not in E, and where it is far above the gas's heat (7,400× on the rim of a 2 × 2 C/O block of
+    Σ 1,250 after its first step, T ≈ 2,300) the uncapped push gave a cell more kinetic energy than E held, P8's floor refilled the
+    deficit (6.4 × 10⁶ at step 2, 6.7 × 10¹⁰ at step 9) and E ran to NaN by step 12, the world emptied unbooked — the f64 twin
+    alike, so not f32; push off or capped, every P5 converges and the block cools; in radiation-dominated gas the capped push is
+    weaker than nature's (the photons' own energy would pay) — measured on linux-pc, 2026-10-19, RTX 5090 and the CPU f64 twin
+    (tasks/M0-D58.md) — the lead's answer at M0-D58, 2026-10-19: «Cap the work (Recommended)».
+  - [M0-D59] §1.3.2 P9's "non-finite guard every 64 steps" and §3.3's exit 5 read as the only scan · `headless` (GPU and
+    `--cpu-reference`) and `bench` also scan the state after a run's last step, read back anyway for the final dump, and a
+    non-finite world exits 5 with the same `SR-ERROR` line (step = the last step, cell, channel) — amended in place (§3.3) ·
+    the guard scans only step indices ≡ 0 (mod 64), so a run ending between two scans exited 0 and printed `SR-HEADLESS DONE`
+    on a world with NaN in E (M0-D58's repro: NaN from step 12, `until=met` at step 17) — measured on linux-pc, 2026-10-19, RTX
+    5090 (tasks/M0-D59.md) — the lead's answer at M0-D58, 2026-10-19: «Scan the last step (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -738,9 +769,11 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   blended (opinion, SM M6). Electrons: Π_e = P(Y_eΣ; K₁ₑ, K₂ₑ); neutron matter: Π_n = P(X_nΣ; K₁ₙ,
   K₂ₙ). Their energy per area, u(x) = x ∫₀^x P(s)/s² ds, is tabulated once on the CPU (512 points
   log-spaced over x ∈ [10⁻⁸, 10⁸]) and interpolated log-log on CPU and GPU alike; ε_cold =
-  (u_e + u_n)/Σ. In the ultra-relativistic limit the ceiling is M_ch ≈ 1.77 K₂'²/G² for a uniform
-  disk, K₂' = K₂Y_e^{3/2} (SM M6's arithmetic, × my Y_e scaling) — calibration measures the real
-  value (§2.11).
+  (u_e + u_n)/Σ. [M0-R4] In the ultra-relativistic limit the sheet has a ceiling, M_ch = c_sheet
+  K₂′²/G², K₂′ = K₂Y_e^{3/2}, c_sheet = 1.4331, the critical sheet's mass for its own equilibrium
+  profile (reports/cold_ceiling.md M3; a uniform disk, which is no equilibrium, gives 9π/16 ≈ 1.767).
+  The disk's radius falls to zero at it, R ≈ R₀(1 − √(M/M_ch)), R₀ = 3K₁′/4G, so no grid run can show
+  it: calibration computes it from this EoS in the continuum (§2.11).
 - **2.3.3** Π = Π_th + Π_e + Π_n. Wave-speed bound for fluxes and Δt: c² = 2Π/Σ (every term's
   log-slope in Σ is ≤ 2). ε_th = E/Σ − ½|u|² − ε_cold, floored at T_floor/μ; the floor's energy is
   booked (§2.9).
@@ -771,7 +804,10 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
 - **2.4.4 Light leaving, and its push.** The flux into a vacuum cell, or through the world edge in
   either edge mode (D1), is radiated: booked `radiated`, and added to the emitting cell's frame
   accumulator (§1.9.1). The radiation force per area f = κΣF/c_sb (SM-E22) is P4's momentum source
-  in the next step; E is unchanged by it (the work comes out of thermal energy).
+  in the next step; E is unchanged by it (the work comes out of thermal energy). [M0-D58] The work is capped at the heat
+  the cell holds above its floor: the cell gains s·Δt·f, s = min(1, s*), s* the positive root of
+  |p₀ + s Δt f|² − |p₀|² = 2ΣA, with p₀ and A = Σ(ε_th − T_floor/μ) the cell's momentum and heat above its floor after
+  P4's other terms (s = 0 when A ≤ 0).
 - **2.4.5** No photon particles: luminosity is the heat flux leaving the gas (SM M4), and the glow is
   drawn from T (§1.11).
 
@@ -819,8 +855,9 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   sink.
 - **Motion:** kick-drift-kick with the grid's g at the sink (bilinear) plus the other sinks' pull
   softened by r_acc; two sinks closer than the larger r_acc merge (mass and momentum summed).
-- Σ_BH: initial 4,000 (opinion); bound ≥ 4 × calibration's `ns_sigma_max_sb` (no stable neutron
-  star can trip it).
+- Σ_BH: 6,000 (§2.7) [M0-R4]; bound ≥ calibration's `ns_sigma_max_sb` = m_tov_sb per cell area: a
+  holding neutron star (M < m_tov) cannot put more than its mass into one cell, so none can trip it;
+  checked by `calibrate` (§2.11 item 5).
 
 ### 2.7 Floors, objects, tools and the remaining constants — physics.json
 | Constant | Initial | Bound / role |
@@ -832,12 +869,12 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
 | paint_sigma | 0.02 per frame held | the brush's deposit, ≈ 1.2 Σ per second |
 | paint_t | 2.0 | painted gas temperature, cloud-like |
 | heat_factor, cool_factor | 1.05, 0.95 per frame held | the heat and cool tools |
-| K₁ₑ, K₂ₑ | 21.3, 134 | electrons: with Y_e = 0.5, M_ch ≈ 1.77 × 134² / 8 ≈ 3,970 ≈ 1.2 × the Sun-like mass, and a cold disk radius 2K₁Y_e²/(παG) ≈ 4.0 cells (SM M2-B's R = 2K₁/(παG), α = 8/3π; my arithmetic) |
-| K₁ₙ, K₂ₙ | 2.67, 58.2 | neutron matter: M_tov ≈ 1.77 × 58.2² ≈ 6,000 ≈ 1.5 M_ch, radius ≈ 2.0 cells; bound m_tov/m_ch ∈ [1.4, 2.0] (K9's real 1.4–2: SP-E12, SP-E13) |
+| K₁ₑ, K₂ₑ | 21.3, 134 | [M0-R4] electrons: with Y_e = 0.5, M_ch = 1.4331 × (134 × 0.5^{3/2})² ≈ 3,217 ≈ 0.96 × the Sun-like mass (§2.3.2); a cold disk's radius 3K₁Y_e²/(4G) ≈ 4.0 cells at low mass, its R₉₀ under one cell from M ≈ 0.5 M_ch (reports/cold_ceiling.md M2) |
+| K₁ₙ, K₂ₙ | 2.67, 58.2 | [M0-R4] neutron matter: M_tov = 1.4331 × 58.2² ≈ 4,854 ≈ 1.51 M_ch, radius ≈ 2.0 cells at low mass; bound m_tov/m_ch ∈ [1.4, 2.0] (K9's real 1.4–2: SP-E12, SP-E13) |
 | a_r, c_sb, κ₀, k_cond | 4 × 10⁻⁷, 200, 1, 0 | heat and light; tuned for K1's gaps (G-SQUEEZE); c_sb > 2 × calibration's `max_gas_speed` |
 | A_ν, T_ν, m | 1 × 10⁻³, 166, 8 | neutrino cooling (§2.5.3) |
 | f_dep | 0.05 | ≤ 0.1 (§2.5.4); ≤ 1.0 under S2 |
-| sigma_bh | 4,000 | §2.6 |
+| sigma_bh | 6,000 [M0-R4] | ≥ calibration's ns_sigma_max_sb (§2.6, §2.11 item 5) |
 | cfl, eta_g | 0.4, 0.3 | §2.3.5 |
 | kappa_dust, t_dust | 0, 0 | S1, disabled (§1.6.4) |
 | block | 4 | summary block edge in cells (§1.9.1) |
@@ -898,17 +935,26 @@ fractions; every energy P8 changes — the vacuum reset's E_floor − E as well 
   "m_tov_sb", "ns_sigma_max_sb", "m_ign_sb", "m_up_sb", "m_bh_sb", "preset_mass_sb": {"sun",
   "massive", "giant"}, "t_eff_sun_sb", "life_sun_sb", "top_rung", "stage_durations_sb":
   {"<stage id>": [[mass_sb, t.u.], …]}, "render_reserve_ms", "max_gas_speed"}`.
-- **Procedure** (headless runs on any adapter; the CPU twin may stand in for items 1–2):
-  1. m_ch_sb — a cold disk (T_floor; C 0.5 + O 0.5, so Y_e = 0.5; a = 12 cells) run 10 τ_dyn: it
-     holds when R₉₀ changes by < 3 %; bisection on M to 0.5 % (SM-O9).
-  2. m_tov_sb, ns_sigma_max_sb — the same with X_n = 1; ns_sigma_max_sb = the largest Σ_c among
-     holding runs.
+- **Procedure** (headless runs on any adapter; items 1–2 run on the CPU [M0-R4]):
+  1. [M0-R4] m_ch_sb — the sheet's cold ceiling for this EoS, computed on the CPU in f64 (no adapter,
+     no grid; `sr_physics::reference::sheet`): a cold axisymmetric thin disk (T_floor; C 0.5 + O 0.5,
+     so Y_e = 0.5) in hydrostatic equilibrium, h(Σ) + φ = const, h(Σ) = ∫ Π′(s)/s ds of §2.3.3's Π
+     through `sr_physics::eos`, φ(r) = −G ∫ Σ(r′) 4r′/(r + r′) K(k) dr′, k² = 4rr′/(r + r′)² (§1.4.1's
+     law, axisymmetric); Hachisu's self-consistent field with the central Σ_c fixed — 200 equal annuli
+     out to the edge, the disk's radius solved for, each annulus's integral split at the field point,
+     rounds until no Σ moves by 10⁻¹¹ Σ_c; the sequence M_k = M(Σ_c = 10^k), k = 0 … 8, and m_ch_sb =
+     M₈ + (M₈ − M₇)/(√10 − 1) (the deficit falls as Σ_c^{−1/2}). Exit 6 unless M_k rises at every k,
+     every equilibrium's |2∫Π dA/W + 1| ≤ 10⁻³, and the same limit from k = 6, 7 lies within 0.5 %
+     (SM-O9).
+  2. [M0-R4] m_tov_sb — the same with X_n = 1. ns_sigma_max_sb = m_tov_sb per cell area: the densest
+     a holding neutron star can make one cell.
   3. m_ign_sb — the preset cloud at mass M (solar mix, §2.10) until it ignites or fails (fails: d_c ≥
      0.5 and L_H < 0.01 L held for 20 τ_dyn); bisection to 2 %.
   4. m_up_sb (white dwarf against core collapse) and m_bh_sb (neutron star against black hole) —
      preset clouds run to their ending; bisection to 2 %.
-  5. The order (K9): m_ign < m_ch < m_up < m_bh, m_ch < m_tov and m_tov/m_ch ∈ [1.4, 2.0] — else
-     exit 6, and a K9 failure is reported, never re-tuned inside the run.
+  5. The order (K9): m_ign < m_ch < m_up < m_bh, m_ch < m_tov and m_tov/m_ch ∈ [1.4, 2.0], and
+     sigma_bh ≥ ns_sigma_max_sb (§2.6) [M0-R4] — else exit 6, and a K9 failure is reported, never
+     re-tuned inside the run.
   6. Then preset_mass_sb (§1.10.1); t_eff_sun_sb at the Sun-like preset's X_H,c = 0.35; life_sun_sb
      (drop → white_dwarf) and top_rung (§1.8.2); stage_durations_sb from the three preset lives;
      max_gas_speed over every run (c_sb must exceed twice it — else exit 6).
@@ -1007,8 +1053,8 @@ Unit-tested without a GPU against §1.8.
     error line begins
     `SR-ERROR`, every warning `SR-WARN`.
   - Exit codes: 0 done · 2 condition not met within --max-steps (default 2,000,000) · 3 no adapter
-    or a GPU error · 4 bad arguments or scene · 5 a non-finite value in the state (the message names
-    the step, cell and channel) · 6 calibration failed (§2.11) · 101 a panic.
+    or a GPU error · 4 bad arguments or scene · 5 a non-finite value in the state, found by P9's guard or [M0-D59] by
+    the scan of the run's last step (the message names the step, cell and channel) · 6 calibration failed (§2.11) · 101 a panic.
 - **Bench:** `sandbox-reactions bench --scene … --rung <label|max> (--frames N | --until <condition>)
   --adapter S [--slowdown on|off] [--load-dump FILE] --out DIR` [M0-TJ2: `max`, was `top`] — §1.8's frame loop
   with every frame rendered offscreen at the default window's world size (1200 × 800, Glow view with glow;
@@ -1018,7 +1064,9 @@ Unit-tested without a GPU against §1.8.
   1000 — the wall time the run would take on screen; `off_cap` [M0-TJ2] — the frames whose planned steps
   exceeded that frame's N_max, or at Max differed from it.
 - **Calibrate:** `sandbox-reactions calibrate --adapter S --out assets/calibration.json
-  [--only <item>]` — §2.11; `--only` re-measures one item and keeps the rest.
+  [--only <item>]` — §2.11; `--only` re-measures one item and keeps the rest. [M0-R4] Items 1–2 run on
+  the CPU in f64 and open no adapter; `--adapter` is needed only when an item that runs the GPU is
+  measured (`measured.adapter` names it, or `cpu` when none did).
 - **Capture** (TV passes, PLAYBOOK §8 — "game engines feed their own captures"): `--capture
   <script.json> --out <dir>` runs a scripted desktop session, writes one PNG per step and
   captions.json in review_page.py's shape (PLAYBOOK §A.4), then exits 0. Script: a list of
@@ -1376,12 +1424,23 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   damped Newton pass, 0.03 with the T³ frozen). *Standard* (backward Euler's L-stability and maximum principle), (e)'s
   band from the scratch model (milestones/m0/tasks/M0-TJ4.md). Scope `heat_stiff`. Plant `newton-one-pass`: P5 ends after
   its first Newton pass.
-- **G-CORE · the cold ceiling.** Cold C/O disks: at 0.95 m_ch_sb, R₉₀ steady within 3 % over
-  10 τ_dyn; at 1.1 m_ch_sb, R₉₀ below 50 % of its start within 10 τ_dyn; the GPU's m_ch within 5 % of
-  the CPU twin's; with the relativistic branch removed (pure Σ²), R₉₀(M) flat within 3 % over
-  M ∈ {0.25, 0.5, 1} × m_ch_sb (SM-O9; SM-E4: "For D=2, the radius is independent on mass" — the
-  sheet's analogue, SM M2-B). *UNVERIFIED* (the sheet's ceiling is SM's arithmetic). Scope
-  `cold-core`. Plant `cold-exponent`: the relativistic exponent 3/2 → 1.6.
+- **G-CORE · the cold ceiling** [M0-R4]. (a) The sequence: on the CPU in f64, §2.11 item 1's cold
+  C/O disk has M(Σ_c) rising at every decade Σ_c = 10⁰ … 10⁸, each equilibrium's |2∫Π dA/W + 1| ≤
+  10⁻³, and calibration's m_ch_sb within 0.5 % of c_sheet (K₂ₑ Y_e^{3/2})²/G², c_sheet the pure
+  Π = KΣ^{3/2} sheet's eigen-mass computed in the test by an independent solver (Hachisu with Σ_max
+  and the edge fixed) and within 10⁻³ of 1.4331; the same for neutron matter (m_tov_sb, K₂ₙ); the
+  ring kernel gives the Maclaurin disk's potential within 10⁻⁴ (r ≤ 0.95a). (b) The ceiling: an
+  equilibrium exists at 0.95 m_ch_sb, and none at 1.1 m_ch_sb (above every M_k). (c) With the
+  relativistic branch removed (pure Σ²), R₉₀(M) flat within 3 % over M ∈ {0.25, 0.5, 1} × m_ch_sb
+  (SM-O9; SM-E4: "For D=2, the radius is independent on mass" — the sheet's analogue, SM M2-B). (d) The
+  grid holds a resolved cold disk: scenes/cold_co_disk.json — the grid's own SCF equilibrium (§1.4.2's
+  kernel) of M = 100 C/O at T_floor with k1e × 6 by `overrides` (R₉₀ 18.8 cells), 64 × 64, bounce,
+  gravity and hydro only: R₉₀ within 3 % of its start over 10 τ_dyn on the GPU and the twin, the GPU's
+  final R₉₀ within 1 % of the twin's. The ceiling is a continuum limit (R → 0), so no grid run grades
+  it (reports/cold_ceiling.md). (a)–(c) *Standard* (the SCF method; M3's values), (d) *measured*
+  (1.62 % GPU, 1.65 % twin, RTX 5090, 2026-10-19). Scope `cold_core`. Plants `cold-exponent`: the
+  relativistic exponent 3/2 → 1.6 in the EoS (no ceiling: M past 10⁵ at Σ_c 10⁸); `cold-gpu-pressure`:
+  the GPU's cold pressure × 0.9 (d).
 - **G-CONS · conservation.** A whole Sun-like life (bounce) and a supernova (leave; the Massive
   preset from its iron core): the mass invariant of §2.9 constant to 10⁻⁶ relative; momentum (grid
   + sinks + escaped) to 10⁻⁶ of Σm|u|; the energy invariant drifting ≤ 10⁻³ |W| per τ_dyn (SM-O10).
@@ -1525,7 +1584,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   set to "ready".
 
 ### 5.5 UNVERIFIED — the satisfiability register
-G-VIR, G-JEANS, G-CORE, G-CONS (energy), G-THERMO, G-REF, G-SQUEEZE, G-END, G-STAGES, G-TOUCH,
+G-VIR, G-JEANS, G-CONS (energy), G-THERMO, G-REF, G-SQUEEZE, G-END, G-STAGES, G-TOUCH,
 G-FIT, G-FPS, G-TOP (their controller checks; the frame times and the life's wall time are reported,
 never graded, and G-CAD is not built in M0 — [M0-TJ2]), G-DESK, G-WEB rest on runs not yet made, and on the model risks behind
 them: a red giant forming at all in the sheet; shell ejection (S1's trigger); the explosion (S2's

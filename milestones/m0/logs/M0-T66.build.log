@@ -1,0 +1,45 @@
+== 2026-10-19T10:38:57-04:00 build[native] · task M0-T66 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-19T10:38:57-04:00 build[wasm] · task M0-T66 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 3.04 s
+build wasm: 1.99.0 in 3 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+
+-- build[native] · exit=1 · 22.59 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+   |
+41 |     (0.183_434_642_495_649_8, 0.362_683_783_378_362_0),
+   |                               ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#excessive_precision
+help: consider changing the type or truncating it to
+   |
+41 -     (0.183_434_642_495_649_8, 0.362_683_783_378_362_0),
+41 +     (0.183_434_642_495_649_8, 0.362_683_783_378_362),
+   |
+
+error: float has excessive precision
+  --> crates/sr-physics/src/reference/sheet.rs:42:6
+   |
+42 |     (0.525_532_409_916_329_0, 0.313_706_645_877_887_3),
+   |      ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#excessive_precision
+help: consider changing the type or truncating it to
+   |
+42 -     (0.525_532_409_916_329_0, 0.313_706_645_877_887_3),
+42 +     (0.525_532_409_916_329, 0.313_706_645_877_887_3),
+   |
+
+error: could not compile `sr-physics` (lib) due to 4 previous errors
+=== NO-GO: cargo clippy -D warnings failed ===
+
+== 2026-10-19T10:43:53-04:00 build[native] · task M0-T66 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-19T10:43:53-04:00 build[wasm] · task M0-T66 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 2.03 s
+build wasm: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+
+-- build[native] · exit=0 · 14.94 s
+build native: 1.99.0 in 15 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+

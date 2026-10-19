@@ -1,0 +1,640 @@
+==== 2026-10-19T10:55:26-04:00 calibrate_cold · clean · a fresh scratch copy of the tree
+== 2026-10-19T10:55:26-04:00 calibrate_cold · task M0-T66b · box laserax-ai :: bash tests/gpu.sh calibrate_cold
+-- calibrate_cold · exit=0 · 13.64 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_he94_zm/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_he94_zm/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.87s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn ... SR-WARN /tmp/sr-calibrate-cold-3779719-hash/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779719-hash/calibration.json wall_s=0.0
+SR-WARN /tmp/sr-calibrate-cold-3779719-hash/calibration.json is not a JSON object: replaced
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779719-hash/calibration.json wall_s=0.0
+ok
+test calibrate_cold::a_run_with_overrides_writes_nothing ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+ok
+test calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: sigma_bh 4853 is under ns_sigma_max_sb 4853.2 — a holding neutron star could trip a black hole (§2.6); raise sigma_bh (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779719-sigma-bh/calibration.json wall_s=0.0
+ok
+test calibrate_cold::arguments_are_checked_and_adapter_is_accepted ... SR-ERROR bad arguments: --out is required (the calibration file to write)
+SR-ERROR bad arguments: unknown argument "--bogus"
+SR-ERROR bad arguments: --out needs a value
+SR-ERROR bad arguments: --only "nonsense": not an item of §2.11 (built: m_ch_sb, m_tov_sb, ns_sigma_max_sb)
+SR-ERROR bad arguments: --only m_ign_sb: not built yet (M0-T68 and M0-T70 build items 3–6); built: m_ch_sb, m_tov_sb, ns_sigma_max_sb
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779719-args/calibration.json wall_s=0.0
+ok
+test calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 3000.0, m_tov/m_ch 0.933 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 3300.0, m_tov/m_ch 1.026 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 7000.0, m_tov/m_ch 2.176 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779719-k9/calibration.json wall_s=0.0
+ok
+test calibrate_cold::only_re_measures_one_item_and_keeps_the_rest ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779719-only/calibration.json wall_s=0.0
+ok
+test calibrate_cold::the_grid_disk_is_an_equilibrium_start_for_g_core_d ... ok
+test calibrate_cold::the_values_written_are_the_sheets_limits ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779719-limits/calibration.json wall_s=0.0
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 292 filtered out; finished in 1.01s
+
+
+==== 2026-10-19T10:55:26-04:00 calibrate_cold · plant calibrate-cold-matter · a fresh scratch copy of the tree
+planted calibrate-cold-matter: tests/plants/calibrate-cold-matter.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-19T10:55:26-04:00 calibrate_cold · task M0-T66b · box laserax-ai :: bash tests/gpu.sh calibrate_cold
+-- calibrate_cold · exit=101 · 6.78 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_he94_zm/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_he94_zm/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.87s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn ... SR-WARN /tmp/sr-calibrate-cold-3779010-hash/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779010-hash/calibration.json wall_s=0.0
+
+thread 'calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn' (3779011) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:53:5:
+m_ch_sb: 4853.169981814195 is not within 0.005 of 3216.5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_cold::a_run_with_overrides_writes_nothing ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::a_run_with_overrides_writes_nothing' (3779013) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:151:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+test calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it' (3779015) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:191:5:
+the message names both: SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+FAILED
+test calibrate_cold::arguments_are_checked_and_adapter_is_accepted ... SR-ERROR bad arguments: --out is required (the calibration file to write)
+SR-ERROR bad arguments: unknown argument "--bogus"
+SR-ERROR bad arguments: --out needs a value
+SR-ERROR bad arguments: --only "nonsense": not an item of §2.11 (built: m_ch_sb, m_tov_sb, ns_sigma_max_sb)
+SR-ERROR bad arguments: --only m_ign_sb: not built yet (M0-T68 and M0-T70 build items 3–6); built: m_ch_sb, m_tov_sb, ns_sigma_max_sb
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779010-args/calibration.json wall_s=0.0
+ok
+test calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 3000.0, m_tov/m_ch 0.618 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 3300.0, m_tov/m_ch 0.680 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779010-k9/calibration.json wall_s=0.0
+
+thread 'calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written' (3779067) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:173:9:
+assertion `left == right` failed: ratio 2.18 over 2.0: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3779010-k9/calibration.json wall_s=0.0"]
+  left: 0
+ right: 6
+FAILED
+test calibrate_cold::only_re_measures_one_item_and_keeps_the_rest ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4800.0, m_tov/m_ch 0.989 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::only_re_measures_one_item_and_keeps_the_rest' (3779069) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:114:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4800.0, m_tov/m_ch 0.989 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+test calibrate_cold::the_grid_disk_is_an_equilibrium_start_for_g_core_d ... ok
+test calibrate_cold::the_values_written_are_the_sheets_limits ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::the_values_written_are_the_sheets_limits' (3779127) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:69:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn
+    calibrate_cold::a_run_with_overrides_writes_nothing
+    calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it
+    calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written
+    calibrate_cold::only_re_measures_one_item_and_keeps_the_rest
+    calibrate_cold::the_values_written_are_the_sheets_limits
+
+test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 292 filtered out; finished in 0.82s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-19T10:57:09-04:00 calibrate_cold · clean · a fresh scratch copy of the tree
+== 2026-10-19T10:57:09-04:00 calibrate_cold · task M0-T66b · box laserax-ai :: bash tests/gpu.sh calibrate_cold
+-- calibrate_cold · exit=0 · 13.85 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-3q8w8j6j/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-3q8w8j6j/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.95s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn ... SR-WARN /tmp/sr-calibrate-cold-3791302-hash/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3791302-hash/calibration.json wall_s=0.0
+SR-WARN /tmp/sr-calibrate-cold-3791302-hash/calibration.json is not a JSON object: replaced
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3791302-hash/calibration.json wall_s=0.0
+ok
+test calibrate_cold::a_run_with_overrides_writes_nothing ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+ok
+test calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: sigma_bh 4853 is under ns_sigma_max_sb 4853.2 — a holding neutron star could trip a black hole (§2.6); raise sigma_bh (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3791302-sigma-bh/calibration.json wall_s=0.0
+ok
+test calibrate_cold::arguments_are_checked_and_adapter_is_accepted ... SR-ERROR bad arguments: --out is required (the calibration file to write)
+SR-ERROR bad arguments: unknown argument "--bogus"
+SR-ERROR bad arguments: --out needs a value
+SR-ERROR bad arguments: --only "nonsense": not an item of §2.11 (built: m_ch_sb, m_tov_sb, ns_sigma_max_sb)
+SR-ERROR bad arguments: --only m_ign_sb: not built yet (M0-T68 and M0-T70 build items 3–6); built: m_ch_sb, m_tov_sb, ns_sigma_max_sb
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3791302-args/calibration.json wall_s=0.0
+ok
+test calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 3000.0, m_tov/m_ch 0.933 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 3300.0, m_tov/m_ch 1.026 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 7000.0, m_tov/m_ch 2.176 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3791302-k9/calibration.json wall_s=0.0
+ok
+test calibrate_cold::only_re_measures_one_item_and_keeps_the_rest ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3791302-only/calibration.json wall_s=0.0
+ok
+test calibrate_cold::the_grid_disk_is_an_equilibrium_start_for_g_core_d ... ok
+test calibrate_cold::the_values_written_are_the_sheets_limits ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3791302-limits/calibration.json wall_s=0.0
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 292 filtered out; finished in 1.05s
+
+
+==== 2026-10-19T10:57:09-04:00 calibrate_cold · plant calibrate-cold-matter · a fresh scratch copy of the tree
+planted calibrate-cold-matter: tests/plants/calibrate-cold-matter.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-19T10:57:09-04:00 calibrate_cold · task M0-T66b · box laserax-ai :: bash tests/gpu.sh calibrate_cold
+-- calibrate_cold · exit=101 · 6.83 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-3q8w8j6j/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-3q8w8j6j/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.94s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn ... SR-WARN /tmp/sr-calibrate-cold-3790706-hash/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3790706-hash/calibration.json wall_s=0.0
+
+thread 'calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn' (3790707) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:53:5:
+m_ch_sb: 4853.169981814195 is not within 0.005 of 3216.5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_cold::a_run_with_overrides_writes_nothing ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::a_run_with_overrides_writes_nothing' (3790709) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:151:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+test calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it' (3790710) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:191:5:
+the message names both: SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+FAILED
+test calibrate_cold::arguments_are_checked_and_adapter_is_accepted ... SR-ERROR bad arguments: --out is required (the calibration file to write)
+SR-ERROR bad arguments: unknown argument "--bogus"
+SR-ERROR bad arguments: --out needs a value
+SR-ERROR bad arguments: --only "nonsense": not an item of §2.11 (built: m_ch_sb, m_tov_sb, ns_sigma_max_sb)
+SR-ERROR bad arguments: --only m_ign_sb: not built yet (M0-T68 and M0-T70 build items 3–6); built: m_ch_sb, m_tov_sb, ns_sigma_max_sb
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3790706-args/calibration.json wall_s=0.0
+ok
+test calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 3000.0, m_tov/m_ch 0.618 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 3300.0, m_tov/m_ch 0.680 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3790706-k9/calibration.json wall_s=0.0
+
+thread 'calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written' (3790717) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:173:9:
+assertion `left == right` failed: ratio 2.18 over 2.0: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3790706-k9/calibration.json wall_s=0.0"]
+  left: 0
+ right: 6
+FAILED
+test calibrate_cold::only_re_measures_one_item_and_keeps_the_rest ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4800.0, m_tov/m_ch 0.989 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::only_re_measures_one_item_and_keeps_the_rest' (3790719) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:114:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4800.0, m_tov/m_ch 0.989 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+test calibrate_cold::the_grid_disk_is_an_equilibrium_start_for_g_core_d ... ok
+test calibrate_cold::the_values_written_are_the_sheets_limits ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::the_values_written_are_the_sheets_limits' (3790786) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:69:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn
+    calibrate_cold::a_run_with_overrides_writes_nothing
+    calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it
+    calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written
+    calibrate_cold::only_re_measures_one_item_and_keeps_the_rest
+    calibrate_cold::the_values_written_are_the_sheets_limits
+
+test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 292 filtered out; finished in 0.81s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-19T10:59:49-04:00 calibrate_cold · clean · a fresh scratch copy of the tree
+== 2026-10-19T10:59:49-04:00 calibrate_cold · task M0-T66b · box laserax-ai :: bash tests/gpu.sh calibrate_cold
+-- calibrate_cold · exit=0 · 14.80 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-a7gh5y2p/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-a7gh5y2p/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.37s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn ... SR-WARN /tmp/sr-calibrate-cold-3807796-hash/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807796-hash/calibration.json wall_s=0.0
+SR-WARN /tmp/sr-calibrate-cold-3807796-hash/calibration.json is not a JSON object: replaced
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807796-hash/calibration.json wall_s=0.0
+ok
+test calibrate_cold::a_run_with_overrides_writes_nothing ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+ok
+test calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: sigma_bh 4853 is under ns_sigma_max_sb 4853.2 — a holding neutron star could trip a black hole (§2.6); raise sigma_bh (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807796-sigma-bh/calibration.json wall_s=0.0
+ok
+test calibrate_cold::arguments_are_checked_and_adapter_is_accepted ... SR-ERROR bad arguments: --out is required (the calibration file to write)
+SR-ERROR bad arguments: unknown argument "--bogus"
+SR-ERROR bad arguments: --out needs a value
+SR-ERROR bad arguments: --only "nonsense": not an item of §2.11 (built: m_ch_sb, m_tov_sb, ns_sigma_max_sb)
+SR-ERROR bad arguments: --only m_ign_sb: not built yet (M0-T68 and M0-T70 build items 3–6); built: m_ch_sb, m_tov_sb, ns_sigma_max_sb
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807796-args/calibration.json wall_s=0.0
+ok
+test calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 3000.0, m_tov/m_ch 0.933 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 3300.0, m_tov/m_ch 1.026 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 7000.0, m_tov/m_ch 2.176 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807796-k9/calibration.json wall_s=0.0
+ok
+test calibrate_cold::only_re_measures_one_item_and_keeps_the_rest ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807796-only/calibration.json wall_s=0.0
+ok
+test calibrate_cold::the_grid_disk_is_an_equilibrium_start_for_g_core_d ... ok
+test calibrate_cold::the_values_written_are_the_sheets_limits ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807796-limits/calibration.json wall_s=0.0
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 292 filtered out; finished in 1.03s
+
+
+==== 2026-10-19T10:59:49-04:00 calibrate_cold · plant calibrate-cold-matter · a fresh scratch copy of the tree
+planted calibrate-cold-matter: tests/plants/calibrate-cold-matter.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-19T10:59:49-04:00 calibrate_cold · task M0-T66b · box laserax-ai :: bash tests/gpu.sh calibrate_cold
+-- calibrate_cold · exit=101 · 7.33 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-a7gh5y2p/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-a7gh5y2p/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.43s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn ... SR-WARN /tmp/sr-calibrate-cold-3807190-hash/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807190-hash/calibration.json wall_s=0.0
+
+thread 'calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn' (3807191) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:53:5:
+m_ch_sb: 4853.169981814195 is not within 0.005 of 3216.5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_cold::a_run_with_overrides_writes_nothing ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::a_run_with_overrides_writes_nothing' (3807193) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:151:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+test calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it' (3807194) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:191:5:
+the message names both: SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+FAILED
+test calibrate_cold::arguments_are_checked_and_adapter_is_accepted ... SR-ERROR bad arguments: --out is required (the calibration file to write)
+SR-ERROR bad arguments: unknown argument "--bogus"
+SR-ERROR bad arguments: --out needs a value
+SR-ERROR bad arguments: --only "nonsense": not an item of §2.11 (built: m_ch_sb, m_tov_sb, ns_sigma_max_sb)
+SR-ERROR bad arguments: --only m_ign_sb: not built yet (M0-T68 and M0-T70 build items 3–6); built: m_ch_sb, m_tov_sb, ns_sigma_max_sb
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807190-args/calibration.json wall_s=0.0
+ok
+test calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 3000.0, m_tov/m_ch 0.618 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 3300.0, m_tov/m_ch 0.680 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807190-k9/calibration.json wall_s=0.0
+
+thread 'calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written' (3807197) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:173:9:
+assertion `left == right` failed: ratio 2.18 over 2.0: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3807190-k9/calibration.json wall_s=0.0"]
+  left: 0
+ right: 6
+FAILED
+test calibrate_cold::only_re_measures_one_item_and_keeps_the_rest ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4800.0, m_tov/m_ch 0.989 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::only_re_measures_one_item_and_keeps_the_rest' (3807220) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:114:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4800.0, m_tov/m_ch 0.989 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+test calibrate_cold::the_grid_disk_is_an_equilibrium_start_for_g_core_d ... ok
+test calibrate_cold::the_values_written_are_the_sheets_limits ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::the_values_written_are_the_sheets_limits' (3807226) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:69:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn
+    calibrate_cold::a_run_with_overrides_writes_nothing
+    calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it
+    calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written
+    calibrate_cold::only_re_measures_one_item_and_keeps_the_rest
+    calibrate_cold::the_values_written_are_the_sheets_limits
+
+test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 292 filtered out; finished in 0.82s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-19T11:01:17-04:00 calibrate_cold · clean · a fresh scratch copy of the tree
+== 2026-10-19T11:01:17-04:00 calibrate_cold · task M0-T66b · box laserax-ai :: bash tests/gpu.sh calibrate_cold
+-- calibrate_cold · exit=0 · 15.41 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-2trvz1l2/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-2trvz1l2/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.87s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn ... SR-WARN /tmp/sr-calibrate-cold-3814199-hash/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3814199-hash/calibration.json wall_s=0.0
+SR-WARN /tmp/sr-calibrate-cold-3814199-hash/calibration.json is not a JSON object: replaced
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3814199-hash/calibration.json wall_s=0.0
+ok
+test calibrate_cold::a_run_with_overrides_writes_nothing ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+ok
+test calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: sigma_bh 4853 is under ns_sigma_max_sb 4853.2 — a holding neutron star could trip a black hole (§2.6); raise sigma_bh (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3814199-sigma-bh/calibration.json wall_s=0.0
+ok
+test calibrate_cold::arguments_are_checked_and_adapter_is_accepted ... SR-ERROR bad arguments: --out is required (the calibration file to write)
+SR-ERROR bad arguments: unknown argument "--bogus"
+SR-ERROR bad arguments: --out needs a value
+SR-ERROR bad arguments: --only "nonsense": not an item of §2.11 (built: m_ch_sb, m_tov_sb, ns_sigma_max_sb)
+SR-ERROR bad arguments: --only m_ign_sb: not built yet (M0-T68 and M0-T70 build items 3–6); built: m_ch_sb, m_tov_sb, ns_sigma_max_sb
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3814199-args/calibration.json wall_s=0.0
+ok
+test calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 3000.0, m_tov/m_ch 0.933 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 3300.0, m_tov/m_ch 1.026 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 3216.4, m_tov_sb 7000.0, m_tov/m_ch 2.176 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3814199-k9/calibration.json wall_s=0.0
+ok
+test calibrate_cold::only_re_measures_one_item_and_keeps_the_rest ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3814199-only/calibration.json wall_s=0.0
+ok
+test calibrate_cold::the_grid_disk_is_an_equilibrium_start_for_g_core_d ... ok
+test calibrate_cold::the_values_written_are_the_sheets_limits ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3814199-limits/calibration.json wall_s=0.0
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 292 filtered out; finished in 1.04s
+
+
+==== 2026-10-19T11:01:17-04:00 calibrate_cold · plant calibrate-cold-matter · a fresh scratch copy of the tree
+planted calibrate-cold-matter: tests/plants/calibrate-cold-matter.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-19T11:01:17-04:00 calibrate_cold · task M0-T66b · box laserax-ai :: bash tests/gpu.sh calibrate_cold
+-- calibrate_cold · exit=101 · 7.44 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-2trvz1l2/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-2trvz1l2/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.47s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 8 tests
+test calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn ... SR-WARN /tmp/sr-calibrate-cold-3813516-hash/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3813516-hash/calibration.json wall_s=0.0
+
+thread 'calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn' (3813517) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:53:5:
+m_ch_sb: 4853.169981814195 is not within 0.005 of 3216.5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_cold::a_run_with_overrides_writes_nothing ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::a_run_with_overrides_writes_nothing' (3813519) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:151:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+test calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it' (3813520) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:191:5:
+the message names both: SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+FAILED
+test calibrate_cold::arguments_are_checked_and_adapter_is_accepted ... SR-ERROR bad arguments: --out is required (the calibration file to write)
+SR-ERROR bad arguments: unknown argument "--bogus"
+SR-ERROR bad arguments: --out needs a value
+SR-ERROR bad arguments: --only "nonsense": not an item of §2.11 (built: m_ch_sb, m_tov_sb, ns_sigma_max_sb)
+SR-ERROR bad arguments: --only m_ign_sb: not built yet (M0-T68 and M0-T70 build items 3–6); built: m_ch_sb, m_tov_sb, ns_sigma_max_sb
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3813516-args/calibration.json wall_s=0.0
+ok
+test calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 3000.0, m_tov/m_ch 0.618 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 3300.0, m_tov/m_ch 0.680 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3813516-k9/calibration.json wall_s=0.0
+
+thread 'calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written' (3813555) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:173:9:
+assertion `left == right` failed: ratio 2.18 over 2.0: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE DONE out=/tmp/sr-calibrate-cold-3813516-k9/calibration.json wall_s=0.0"]
+  left: 0
+ right: 6
+FAILED
+test calibrate_cold::only_re_measures_one_item_and_keeps_the_rest ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4800.0, m_tov/m_ch 0.989 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::only_re_measures_one_item_and_keeps_the_rest' (3813578) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:114:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4800.0, m_tov/m_ch 0.989 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+test calibrate_cold::the_grid_disk_is_an_equilibrium_start_for_g_core_d ... ok
+test calibrate_cold::the_values_written_are_the_sheets_limits ... SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)
+
+thread 'calibrate_cold::the_values_written_are_the_sheets_limits' (3813594) panicked at crates/sr-engine/tests/gpu/calibrate_cold.rs:69:5:
+assertion `left == right` failed: ["SR-CALIBRATE item=m_ch_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0", "SR-ERROR calibration failed: K9: m_ch_sb 4853.2, m_tov_sb 4853.2, m_tov/m_ch 1.000 — needs m_ch < m_tov and the ratio in [1.4, 2] (reported, never re-tuned)"]
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    calibrate_cold::a_file_under_another_hash_is_dropped_with_sr_warn
+    calibrate_cold::a_run_with_overrides_writes_nothing
+    calibrate_cold::a_sigma_bh_under_ns_sigma_max_sb_is_exit_6_naming_it
+    calibrate_cold::k9s_order_and_band_are_exit_6_with_nothing_written
+    calibrate_cold::only_re_measures_one_item_and_keeps_the_rest
+    calibrate_cold::the_values_written_are_the_sheets_limits
+
+test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 292 filtered out; finished in 0.89s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,228 @@
+# M0-V9 log — linux-pc (laserax-ai), started 2026-10-19T12:39:43-04:00
+## M2 — calibrate's life directories after a run (2026-10-19)
+++ build/target/release/sandbox-reactions calibrate --only m_ign_sb --bracket 2900,3100 --max-steps 64 --adapter 'RTX 5090' --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m2/cal.json
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.548349 until=unmet
+SR-ERROR calibration failed: the run at mass 2900.000 reached no ending within --max-steps 64 — reported, not guessed
+++ echo exit=6
+exit=6
+++ ls -la /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m2
+total 12
+drwxrwxr-x 3 ybelanger ybelanger 4096 Oct 19 12:39 .
+drwxrwxr-x 3 ybelanger ybelanger 4096 Oct 19 12:39 ..
+drwxrwxr-x 2 ybelanger ybelanger 4096 Oct 19 12:39 calibrate_runs
+++ ls -la /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m2/calibrate_runs
+total 8
+drwxrwxr-x 2 ybelanger ybelanger 4096 Oct 19 12:39 .
+drwxrwxr-x 3 ybelanger ybelanger 4096 Oct 19 12:39 ..
+## M3 — max_gas_speed (block rms) against the fastest cell: preset:sun, 1,200 steps, a dump every 50 (2026-10-19)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1200 sim_time=15.054181 until=none
+
+real	0m6.766s
+user	0m5.632s
+sys	0m0.432s
+++ echo exit=0
+exit=0
+summary.json max_gas_speed (block rms, max over frames): 21.60049510769157
+step    50 t   1.1879 | block rms max    8.3605 | cell max |u| (sigma>=1e-6)    8.8098 at (265, 164, 1.4929365761418012e-06) | (>=1e-3)    7.4114 | (>=0.1)    3.0409
+step   100 t   2.1996 | block rms max    8.5313 | cell max |u| (sigma>=1e-6)    8.5313 at (340, 240, 8.904413334676065e-06) | (>=1e-3)    5.8220 | (>=0.1)    5.5223
+step   150 t   2.9536 | block rms max    8.1865 | cell max |u| (sigma>=1e-6)    8.2313 at (341, 247, 2.8466067760746228e-06) | (>=1e-3)    7.3964 | (>=0.1)    7.3964
+step   200 t   3.5282 | block rms max    9.5756 | cell max |u| (sigma>=1e-6)    9.6516 at (315, 201, 0.9326896667480469) | (>=1e-3)    9.6516 | (>=0.1)    9.6516
+step   250 t   4.0242 | block rms max   12.0501 | cell max |u| (sigma>=1e-6)   12.2437 at (285, 196, 0.5307692289352417) | (>=1e-3)   12.2437 | (>=0.1)   12.2437
+step   300 t   4.5032 | block rms max   17.0521 | cell max |u| (sigma>=1e-6)   18.6671 at (242, 151, 2.515621645216015e-06) | (>=1e-3)    8.0149 | (>=0.1)    8.0149
+step   350 t   4.9788 | block rms max   21.6918 | cell max |u| (sigma>=1e-6)   22.1547 at (227, 173, 2.255291292385664e-06) | (>=1e-3)    6.2740 | (>=0.1)    6.2740
+step   400 t   5.4626 | block rms max   21.0923 | cell max |u| (sigma>=1e-6)   22.0523 at (379, 171, 3.383209559615352e-06) | (>=1e-3)    6.8515 | (>=0.1)    6.8515
+step   450 t   5.9701 | block rms max   20.5725 | cell max |u| (sigma>=1e-6)   21.4021 at (300, 289, 4.597309271048289e-06) | (>=1e-3)    6.7395 | (>=0.1)    6.7395
+step   500 t   6.5109 | block rms max   20.3104 | cell max |u| (sigma>=1e-6)   20.4531 at (301, 297, 2.352996489207726e-06) | (>=1e-3)    6.4181 | (>=0.1)    6.4181
+step   550 t   7.0865 | block rms max   19.3870 | cell max |u| (sigma>=1e-6)   19.4439 at (294, 95, 2.182283651563921e-06) | (>=1e-3)    5.9314 | (>=0.1)    5.9314
+step   600 t   7.6996 | block rms max   18.5581 | cell max |u| (sigma>=1e-6)   18.7315 at (293, 86, 1.0200523092862568e-06) | (>=1e-3)    5.3672 | (>=0.1)    3.5697
+step   650 t   8.3476 | block rms max   17.5124 | cell max |u| (sigma>=1e-6)   17.9533 at (308, 321, 4.701920261140913e-06) | (>=1e-3)    4.8094 | (>=0.1)    3.0964
+step   700 t   9.0007 | block rms max   16.6472 | cell max |u| (sigma>=1e-6)   17.1702 at (307, 330, 3.37241522174736e-06) | (>=1e-3)    4.9349 | (>=0.1)    4.9349
+step   750 t   9.6073 | block rms max   16.1201 | cell max |u| (sigma>=1e-6)   16.3312 at (437, 191, 3.257504886278184e-06) | (>=1e-3)    6.4152 | (>=0.1)    6.4152
+step   800 t  10.1835 | block rms max   15.2050 | cell max |u| (sigma>=1e-6)   15.6698 at (309, 343, 4.228114903526148e-06) | (>=1e-3)    7.4811 | (>=0.1)    7.4811
+step   850 t  10.7501 | block rms max   16.9735 | cell max |u| (sigma>=1e-6)   17.2268 at (364, 335, 3.1761596801516134e-06) | (>=1e-3)    7.9974 | (>=0.1)    7.2883
+step   900 t  11.3307 | block rms max   17.2512 | cell max |u| (sigma>=1e-6)   17.3827 at (369, 339, 2.1241210106381914e-06) | (>=1e-3)    7.5149 | (>=0.1)    4.0499
+step   950 t  11.9345 | block rms max   16.9729 | cell max |u| (sigma>=1e-6)   17.2329 at (276, 356, 2.2132858248369303e-06) | (>=1e-3)    7.6576 | (>=0.1)    2.1512
+step  1000 t  12.5532 | block rms max   16.8405 | cell max |u| (sigma>=1e-6)   16.8855 at (324, 363, 2.2372964849637356e-06) | (>=1e-3)    7.9385 | (>=0.1)    1.8119
+step  1050 t  13.1868 | block rms max   16.5137 | cell max |u| (sigma>=1e-6)   16.6212 at (145, 116, 2.134661144737038e-06) | (>=1e-3)    8.1262 | (>=0.1)    1.2765
+step  1100 t  13.8280 | block rms max   15.9000 | cell max |u| (sigma>=1e-6)   16.2212 at (178, 341, 2.1441994704218814e-06) | (>=1e-3)    8.2779 | (>=0.1)    1.0985
+step  1150 t  14.4512 | block rms max   15.9980 | cell max |u| (sigma>=1e-6)   16.0545 at (169, 342, 2.1353864667617017e-06) | (>=1e-3)    8.4473 | (>=0.1)    2.0097
+step  1200 t  15.0542 | block rms max   15.8391 | cell max |u| (sigma>=1e-6)   15.9893 at (451, 70, 2.203714302595472e-06) | (>=1e-3)    8.1701 | (>=0.1)    2.7887
+over the dumps: block rms max 21.6918 · cell max |u| at sigma>=1e-6 22.1547, >=1e-3 12.2437, >=0.1 12.2437
+ratio cell(>=1e-6)/block rms: 1.02 · cell(>=1e-3)/block rms: 0.56
+## M1 — a calibration without render_reserve_ms (the shape calibrate writes before the drawing lot): items 1–2 measured, the rest stand-ins (2026-10-19)
+++ build/target/release/sandbox-reactions calibrate --only m_ch_sb,m_tov_sb --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m1/items12.json
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m1/items12.json wall_s=0.0
+++ echo exit=0
+exit=0
+++ cat /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m1/items12.json
+{
+  "m_ch_sb": 3216.4199210979236,
+  "m_tov_sb": 4853.169981814195,
+  "measured": {
+    "adapter": "cpu",
+    "box": "laserax-ai",
+    "date": "2026-10-19T16:41:11Z",
+    "git": "e788da4"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "556e3959cee177c48914a95ac94d66ea21849dd7866b50bf2691b3137da1f306",
+  "version": 1
+}
+wrote copy/assets/calibration.json keys 15 presets {'sun': 3188.077560971752, 'massive': 50266.5483319869, 'giant': 134113.01299843873} False
+### M1a — readouts on the reserve-less file (scratch copy)
+test readouts::a_translation_that_would_not_be_monotonic_is_refused ... ok
+test readouts::between_anchors_the_map_is_log_linear_not_linear ... ok
+test readouts::every_anchor_maps_exactly_and_the_inverse_returns_it ... ok
+test readouts::mass_increases_strictly_over_its_whole_range ... ok
+test readouts::temperature_increases_strictly_from_its_floor_up ... ok
+test readouts::the_end_segments_are_extended ... ok
+test readouts::the_presets_read_one_fifteen_and_forty_suns ... ok
+test readouts::the_real_calibration_reads_the_presets_and_the_sun ... 
+thread 'readouts::the_real_calibration_reads_the_presets_and_the_sun' (877595) panicked at crates/sr-engine/tests/gpu/readouts.rs:237:41:
+assets/calibration.json parses: Invalid { key: "render_reserve_ms", message: "missing" }
+test readouts::the_sun_like_surface_reads_5772_kelvin ... ok
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 326 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+real	0m7.693s
+user	0m38.848s
+sys	0m1.085s
+### M1b — calibration scope on the reserve-less file, EMBEDDED None (scratch copy)
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (878493) panicked at crates/sr-engine/tests/gpu/calibration.rs:236:13:
+assets/calibration.json exists but the engine does not embed it (calibration.rs)
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 325 filtered out; finished in 0.03s
+wrote copy/assets/calibration.json keys 16 presets {'sun': 3188.077560971752, 'massive': 50266.5483319869, 'giant': 134113.01299843873} True
+### M1c — readouts with render_reserve_ms 3.0 added (scratch copy)
+test readouts::the_real_calibration_reads_the_presets_and_the_sun ... ok
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 326 filtered out; finished in 0.00s
+### M1d — EMBEDDED = the reserve-less file, headless preset:sun --steps 1 (scratch copy, test binary)
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (882105) panicked at crates/sr-engine/tests/gpu/calibration.rs:237:49:
+V9-PROBE exit=6 lines=["SR-ERROR calibration invalid: render_reserve_ms: missing"]
+V9-PROBE gate(true)=Err((6, "SR-ERROR calibration invalid: render_reserve_ms: missing"))
+V9-PROBE gate(false)=Ok(())
+    calibration::the_calibration_the_binary_embeds_matches_the_assets
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 325 filtered out; finished in 0.04s
+## M4 — m_ign_sb with the endings' τ_dyn printed (scratch copy: one eprintln in watch.rs; RTX 5090; 2026-10-19 12:45)
+V9-PROBE ending stage=failed_star at_step=209 sim_time=11.2472 since=1.1362 held_t=10.1110 mass=167.125 radius=23.2162 tau_dyn=8.65297 hold_over_tau=1.17
+SR-CALIBRATE run item=m_ign_sb side=Light mass=167.552 ignited=false core_collapse=false ending=failed_star steps=209 sim_time=11.247 wall_s=0.2
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.032 ignited=true core_collapse=false ending=none steps=273 sim_time=4.244 wall_s=0.5
+V9-PROBE ending stage=failed_star at_step=545 sim_time=11.1028 since=1.0255 held_t=10.0773 mass=748.470 radius=14.5455 tau_dyn=2.02772 hold_over_tau=4.97
+SR-CALIBRATE run item=m_ign_sb side=Light mass=749.314 ignited=false core_collapse=false ending=failed_star steps=545 sim_time=11.103 wall_s=1.8
+V9-PROBE ending stage=failed_star at_step=721 sim_time=11.1146 since=0.9447 held_t=10.1699 mass=1582.284 radius=14.2668 tau_dyn=1.35472 hold_over_tau=7.51
+SR-CALIBRATE run item=m_ign_sb side=Light mass=1584.605 ignited=false core_collapse=false ending=failed_star steps=721 sim_time=11.115 wall_s=2.4
+V9-PROBE ending stage=failed_star at_step=1089 sim_time=15.2648 since=5.1488 held_t=10.1160 mass=2296.218 radius=16.9559 tau_dyn=1.45705 hold_over_tau=6.94
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2304.357 ignited=false core_collapse=false ending=failed_star steps=1089 sim_time=15.265 wall_s=3.6
+V9-PROBE ending stage=failed_star at_step=1697 sim_time=21.9639 since=11.8265 held_t=10.1374 mass=2752.240 radius=15.1619 tau_dyn=1.12535 hold_over_tau=9.01
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2778.844 ignited=false core_collapse=false ending=failed_star steps=1697 sim_time=21.964 wall_s=7.0
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3051.556 ignited=true core_collapse=false ending=none steps=689 sim_time=9.064 wall_s=3.3
+V9-PROBE ending stage=failed_star at_step=3057 sim_time=37.8215 since=27.6472 held_t=10.1743 mass=2892.322 radius=14.3565 tau_dyn=1.01146 hold_over_tau=10.06
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2912.010 ignited=false core_collapse=false ending=failed_star steps=3057 sim_time=37.822 wall_s=29.9
+V9-PROBE ending stage=failed_star at_step=5809 sim_time=68.7426 since=58.7161 held_t=10.0265 mass=2964.643 radius=14.0456 tau_dyn=0.96677 hold_over_tau=10.37
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2980.967 ignited=false core_collapse=false ending=failed_star steps=5809 sim_time=68.743 wall_s=47.3
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3016.055 ignited=true core_collapse=false ending=none steps=689 sim_time=9.092 wall_s=6.8
+SR-CALIBRATE item=m_ign_sb value=2998.459 bracket=2980.967..3016.055 runs=10 wall_s=115.3
+SR-CALIBRATE item=max_gas_speed value=22.3543
+SR-CALIBRATE DONE out=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m4/cal.json wall_s=115.3
+
+real	1m55.371s
+user	0m45.381s
+sys	0m1.743s
+exit=0
+## M4b — m_ign_sb with a failed star held max(10 t.u., 20 τ_dyn) (scratch copy; RTX 5090; 12:47)
+V9-PROBE ending stage=failed_star at_step=1953 sim_time=94.6691 since=1.1362 held_t=93.5329 mass=160.263 radius=15.1384 tau_dyn=4.65268 hold_over_tau=20.10
+SR-CALIBRATE run item=m_ign_sb side=Light mass=167.552 ignited=false core_collapse=false ending=failed_star steps=1953 sim_time=94.669 wall_s=8.8
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.032 ignited=true core_collapse=false ending=none steps=273 sim_time=4.244 wall_s=0.7
+V9-PROBE ending stage=failed_star at_step=1841 sim_time=40.5666 since=1.0255 held_t=39.5411 mass=747.460 radius=14.2645 tau_dyn=1.97057 hold_over_tau=20.07
+SR-CALIBRATE run item=m_ign_sb side=Light mass=749.314 ignited=false core_collapse=false ending=failed_star steps=1841 sim_time=40.567 wall_s=7.2
+V9-PROBE ending stage=failed_star at_step=1905 sim_time=30.1441 since=0.9447 held_t=29.1994 mass=1575.484 radius=14.8227 tau_dyn=1.43775 hold_over_tau=20.31
+SR-CALIBRATE run item=m_ign_sb side=Light mass=1584.605 ignited=false core_collapse=false ending=failed_star steps=1905 sim_time=30.144 wall_s=8.3
+V9-PROBE ending stage=failed_star at_step=2065 sim_time=28.3595 since=5.1488 held_t=23.2107 mass=2289.322 radius=14.5377 tau_dyn=1.15848 hold_over_tau=20.04
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2304.357 ignited=false core_collapse=false ending=failed_star steps=2065 sim_time=28.359 wall_s=9.0
+V9-PROBE ending stage=failed_star at_step=2593 sim_time=32.8695 since=11.8265 held_t=21.0430 mass=2759.664 radius=14.4743 tau_dyn=1.04826 hold_over_tau=20.07
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2778.844 ignited=false core_collapse=false ending=failed_star steps=2593 sim_time=32.870 wall_s=11.4
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3051.556 ignited=true core_collapse=false ending=none steps=689 sim_time=9.064 wall_s=3.0
+V9-PROBE ending stage=failed_star at_step=3905 sim_time=47.6010 since=27.6472 held_t=19.9538 mass=2894.505 radius=14.1911 tau_dyn=0.99366 hold_over_tau=20.08
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2912.010 ignited=false core_collapse=false ending=failed_star steps=3905 sim_time=47.601 wall_s=20.4
+V9-PROBE ending stage=failed_star at_step=6593 sim_time=77.4469 since=58.7161 held_t=18.7308 mass=2965.056 radius=13.7374 tau_dyn=0.93506 hold_over_tau=20.03
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2980.967 ignited=false core_collapse=false ending=failed_star steps=6593 sim_time=77.447 wall_s=31.3
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3016.055 ignited=true core_collapse=false ending=none steps=689 sim_time=9.092 wall_s=10.6
+SR-CALIBRATE item=m_ign_sb value=2998.459 bracket=2980.967..3016.055 runs=10 wall_s=123.3
+SR-CALIBRATE item=max_gas_speed value=22.3543
+SR-CALIBRATE DONE out=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m4b/cal.json wall_s=123.3
+
+real	2m3.442s
+user	0m53.947s
+sys	0m1.952s
+exit=0
+## M5 — a GPU item without --adapter (§3.3: --adapter is needed when an item runs the GPU) (12:50)
+++ build/target/release/sandbox-reactions calibrate --only m_ign_sb --bracket 2900,3100 --max-steps 16 --out /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/50cbc32c-ce59-4702-a804-6d829bb7ac36/scratchpad/v9/m5/cal.json
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=16 sim_time=0.397739 until=unmet
+SR-ERROR calibration failed: the run at mass 2900.000 reached no ending within --max-steps 16 — reported, not guessed
+++ echo exit=6
+exit=6
+## M7 — the watcher's test run: preset:sun --until ending --max-steps 6000 --dump-every 2000 (RTX 5090, 13:06); exit 2 (no ending in 6,000 steps)
+objects 1 heaviest id 1 mass 3326.36 stage main_sequence
+stages shown: failed_star (step 33, t 0.78) -> collapsing (step 209, t 3.62) -> cloud (step 321, t 4.70) -> white_dwarf (step 433, t 5.79) -> cloud (step 705, t 9.06) -> main_sequence (step 2096, t 25.67) -> cloud (step 2192, t 26.78) -> main_sequence (step 2464, t 29.95)
+events: [('ignition', 273, 4.24)]
+first white_dwarf shown at t 5.793699968606234 -> calibrate.rs measure_presets: life_sun_sb = that; top_rung = round_sig2(life/10)
+## pause — 2026-10-19T13:15:19-04:00: D60–D62 filed above V9, D63 after; V9 BLOCKED (the lead: fix first); probe life handed to the lead
+## M8 — the probe's P5 burst (steps 19,494–19,770) replayed from its s_15000 dump (RTX 5090, 14:18; the lead's probe still running)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4400 sim_time=223.588523 until=none
+real	0m39.659s
+user	0m38.213s
+sys	0m0.460s
+step   19420 t    223.82 | centre T 38.490 X_H 0.6603 | star M  3329.2 cells  3745 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 168262 world M 3330.6 | thin gas T_max    6.279 (164517 cells)
+step   19440 t    224.05 | centre T 38.495 X_H 0.6602 | star M  3329.2 cells  3748 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 164519 world M 3330.6 | thin gas T_max    6.296 (160771 cells)
+step   19460 t    224.28 | centre T 38.497 X_H 0.6601 | star M  3329.2 cells  3748 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 161066 world M 3330.6 | thin gas T_max    6.308 (157318 cells)
+step   19480 t    224.51 | centre T 38.498 X_H 0.6600 | star M  3329.2 cells  3748 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 157778 world M 3330.6 | thin gas T_max    6.322 (154030 cells)
+step   19500 t    224.74 | centre T 38.504 X_H 0.6599 | star M  3329.2 cells  3748 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 154667 world M 3330.6 | thin gas T_max    5.819 (150919 cells)
+step   19520 t    224.97 | centre T 38.506 X_H 0.6599 | star M  3329.2 cells  3748 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 150970 world M 3330.6 | thin gas T_max    6.160 (147222 cells)
+step   19540 t    225.20 | centre T 38.509 X_H 0.6598 | star M  3329.2 cells  3749 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 147319 world M 3330.6 | thin gas T_max    6.117 (143570 cells)
+step   19560 t    225.43 | centre T 38.510 X_H 0.6597 | star M  3329.2 cells  3749 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 143714 world M 3330.6 | thin gas T_max    6.108 (139965 cells)
+step   19580 t    225.66 | centre T 38.512 X_H 0.6596 | star M  3329.1 cells  3747 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 140182 world M 3330.6 | thin gas T_max    6.109 (136435 cells)
+step   19600 t    225.89 | centre T 38.514 X_H 0.6595 | star M  3329.2 cells  3748 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 136709 world M 3330.5 | thin gas T_max    6.119 (132961 cells)
+step   19620 t    226.12 | centre T 38.517 X_H 0.6594 | star M  3329.1 cells  3745 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 133303 world M 3330.5 | thin gas T_max    6.131 (129558 cells)
+step   19640 t    226.35 | centre T 38.520 X_H 0.6593 | star M  3329.1 cells  3742 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 130000 world M 3330.5 | thin gas T_max    6.143 (126258 cells)
+step   19660 t    226.58 | centre T 38.524 X_H 0.6593 | star M  3329.1 cells  3741 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 126813 world M 3330.5 | thin gas T_max    6.158 (123072 cells)
+step   19680 t    226.81 | centre T 38.526 X_H 0.6592 | star M  3329.1 cells  3740 R90  16.4 x[265,334] y[165,234]| gas box x[0,599] y[0,399] cells 123676 world M 3330.5 | thin gas T_max    6.175 (119936 cells)
+step   19700 t    227.04 | centre T 38.528 X_H 0.6591 | star M  3329.1 cells  3737 R90  16.4 x[265,334] y[165,233]| gas box x[0,599] y[0,399] cells 120687 world M 3330.5 | thin gas T_max    6.191 (116950 cells)
+step   19720 t    227.27 | centre T 38.530 X_H 0.6590 | star M  3329.1 cells  3736 R90  16.4 x[265,334] y[166,233]| gas box x[0,599] y[0,399] cells 117846 world M 3330.5 | thin gas T_max    6.208 (114110 cells)
+step   19740 t    227.50 | centre T 38.533 X_H 0.6589 | star M  3329.1 cells  3733 R90  16.4 x[265,334] y[166,233]| gas box x[0,599] y[6,394] cells 115079 world M 3330.5 | thin gas T_max    6.225 (111346 cells)
+step   19760 t    227.73 | centre T 38.536 X_H 0.6588 | star M  3329.1 cells  3727 R90  16.4 x[265,334] y[166,233]| gas box x[0,599] y[11,389] cells 112524 world M 3330.5 | thin gas T_max    6.240 (108797 cells)
+step   19780 t    227.96 | centre T 38.537 X_H 0.6588 | star M  3329.1 cells  3726 R90  16.4 x[265,333] y[166,233]| gas box x[0,599] y[14,386] cells 110021 world M 3330.5 | thin gas T_max    6.085 (106295 cells)
+step   19800 t    228.19 | centre T 38.541 X_H 0.6587 | star M  3329.1 cells  3724 R90  16.4 x[266,333] y[166,233]| gas box x[0,599] y[17,382] cells 107500 world M 3330.5 | thin gas T_max    6.133 (103776 cells)
+## M9 — the probe life's energy ledger, by 5,000-step windows resumed from its dumps (RTX 5090, 14:55)
+w5000 exit=0 0 warns
+w50000 exit=0 0 warns
+w100000 exit=0 0 warns
+w150000 exit=0 0 warns
+w200000 exit=0 0 warns
+w300000 exit=0 0 warns
+w450000 exit=0 0 warns
+          window   Δt.u.  Δinvariant    radiated     ν lost     nuclear Δ(K+U+cold)        ΔW   escaped    floor rad/nuc Δinv/|W| per t.u./|W|
+   5000–10000       56.9   2.506e+04   1.301e+05          0   1.039e+05         351 -1.54e+03      52.4        0    1.25    0.039     6.92e-04
+  50000–55000       58.9   3.325e+04   1.892e+05          0   1.561e+05       -1111  1.16e+03         0    -49.5    1.21    0.054     9.13e-04
+ 100000–105000      58.5   9.076e+04   3.286e+05          0   2.391e+05       -3149  4.22e+03     0.521     -169    1.37    0.144     2.46e-03
+ 150000–155000      57.2   2.654e+05   4.273e+05          0   1.808e+05  -1.688e+04  3.36e+04  2.16e+03        0    2.36    0.481     8.40e-03
+ 200000–205000      59.9   3.351e+05   3.631e+05          0   3.825e+04       -7506  1.52e+04  2.52e+03        0    9.49    1.038     1.73e-02
+ 300000–305000      60.6   2.616e+05   2.995e+05          0   3.677e+04        1817 -2.98e+03         0    -1.89    8.14    0.946     1.56e-02
+ 450000–455000      53.9    7.47e+05   8.118e+05          0   6.318e+04        1177 -2.87e+03         0    -2.94   12.85    2.183     4.05e-02
+## 2026-10-19 15:08 · the lead: «Fix before calibrating (Recommended)» → M0-D64 and M0-V19 (E6) filed; V9 BLOCKED on D60, D61, D62, D64; plan_lint GO 597

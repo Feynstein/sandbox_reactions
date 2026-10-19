@@ -31,6 +31,10 @@ use crate::summary::BlockSummary;
 
 /// `--until ending` and the `ending` event: a remnant stage held this long (t.u.), §3.3.
 pub const ENDING_HOLD: f64 = 10.0;
+/// §1.10.2's Sun-like anchor: T_eff is read at the first frame whose object has central hydrogen at or under this.
+pub const T_EFF_X_H: f64 = 0.35;
+/// Hydrogen's slot in an object's central composition (§1.5's first species).
+const X_H: usize = 0;
 
 /// `--until`'s condition (§3.3).
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -43,6 +47,9 @@ pub enum Until {
     Stage(Stage),
     /// Any object holds a remnant stage for [`ENDING_HOLD`].
     Ending,
+    /// The first of the `ignition` event and the `ending` event: `calibrate`'s m_ign_sb run (§2.11 item 3), which stops at
+    /// either side of the threshold. Built in code by `calibrate`; `--until` does not parse it.
+    IgnitionOrEnding,
 }
 
 impl Until {
@@ -77,6 +84,7 @@ impl Until {
             Until::Event(kind) => format!("event:{}", kind.id()),
             Until::Stage(stage) => format!("stage:{}", stage.id()),
             Until::Ending => "ending".to_string(),
+            Until::IgnitionOrEnding => "ignition|ending".to_string(),
         }
     }
 }
@@ -169,6 +177,19 @@ pub struct Watch {
     lives: BTreeMap<u32, Vec<StageEntry>>,
     remnants: BTreeMap<u32, Remnant>,
     ended: BTreeSet<u32>,
+    /// Each object's L and R at the first frame its central hydrogen fell to [`T_EFF_X_H`] (§1.10.2's T_eff anchor).
+    marks: BTreeMap<u32, XhMark>,
+    /// The largest block rms gas speed any frame showed (§2.11 item 6): √(2 K / m) over the box's blocks, K being the
+    /// block's kinetic energy and m its mass — a bound from below on the fastest cell, which the summary does not hold.
+    max_gas_speed: f64,
+}
+
+/// An object's state at [`T_EFF_X_H`].
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct XhMark {
+    pub sim_time: f64,
+    pub luminosity: f64,
+    pub radius: f64,
 }
 
 impl Watch {
@@ -184,6 +205,8 @@ impl Watch {
             lives: BTreeMap::new(),
             remnants: BTreeMap::new(),
             ended: BTreeSet::new(),
+            marks: BTreeMap::new(),
+            max_gas_speed: 0.0,
         }
     }
 
@@ -191,7 +214,13 @@ impl Watch {
     pub fn update(&mut self, summary: &BlockSummary, at: At) -> Vec<RunEvent> {
         let sim_dt = at.sim_time - self.last_sim;
         self.last_sim = at.sim_time;
-        let objects = self.tracker.update(&report(summary, self.world_width, sim_dt)).to_vec();
+        let report = report(summary, self.world_width, sim_dt);
+        let rms = report.blocks.iter().filter(|b| b.mass > 0.0).map(|b| (2.0 * b.kinetic / b.mass).sqrt());
+        self.max_gas_speed = rms.fold(self.max_gas_speed, f64::max);
+        let objects = self.tracker.update(&report).to_vec();
+        for o in objects.iter().filter(|o| o.x_c[X_H] <= T_EFF_X_H) {
+            self.marks.entry(o.id).or_insert(XhMark { sim_time: at.sim_time, luminosity: o.luminosity, radius: o.radius });
+        }
         let mut fresh: Vec<RunEvent> = self
             .stages
             .update(&objects, at.sim_time)
@@ -238,11 +267,17 @@ impl Watch {
             Until::Event(kind) => fresh.iter().any(|e| e.kind == kind.id()),
             Until::Stage(stage) => self.tracker.objects().iter().any(|o| self.stages.stage(o.id).and_then(|s| s.shown) == Some(stage)),
             Until::Ending => fresh.iter().any(|e| e.kind == "ending"),
+            Until::IgnitionOrEnding => fresh.iter().any(|e| e.kind == "ending" || e.kind == "ignition"),
         }
     }
 
     pub fn events(&self) -> &[RunEvent] {
         &self.events
+    }
+
+    /// summary.json's `max_gas_speed`: the fastest block rms gas speed of the run.
+    pub fn max_gas_speed(&self) -> f64 {
+        self.max_gas_speed
     }
 
     /// DIR/events.jsonl: one JSON object a line, none for a run without events.
@@ -265,7 +300,11 @@ impl Watch {
                     .flatten()
                     .map(|l| json!({"stage": l.stage.id(), "from_step": l.from_step, "sim_time": l.sim_time}))
                     .collect();
-                json!({"id": o.id, "stage": shown.map(Stage::id), "mass_sb": o.mass, "stages": stages})
+                let mut object = json!({"id": o.id, "stage": shown.map(Stage::id), "mass_sb": o.mass, "stages": stages});
+                if let Some(m) = self.marks.get(&o.id) {
+                    object["at_x_h"] = json!({"x_h_c": T_EFF_X_H, "sim_time": m.sim_time, "luminosity": m.luminosity, "radius": m.radius});
+                }
+                object
             })
             .collect()
     }

@@ -258,7 +258,7 @@ fn world(w: usize, h: usize, wells: &[(usize, usize, f64)], sign: f64, offset: f
 
 #[test]
 fn a_dense_converging_bound_potential_minimum_forms_a_sink_and_books_the_cell() {
-    let (mut st, phi) = world(16, 16, &[(8, 8, 5000.0)], -1.0, 0.0);
+    let (mut st, phi) = world(16, 16, &[(8, 8, 7000.0)], -1.0, 0.0);
     let (mass0, _) = grid_totals(&st);
     let e0: f64 = st.plane(3).iter().sum();
     let mut s = sinks();
@@ -269,11 +269,11 @@ fn a_dense_converging_bound_potential_minimum_forms_a_sink_and_books_the_cell() 
     // The sink takes the cell's mass above the floor; the cell keeps the floor's share, its fractions, its velocity.
     let floor = physics().get("sigma_floor").unwrap();
     let i = 8 * 16 + 8;
-    assert!(rel(k.m, 5000.0 - floor) < 1e-12 && rel(st.get(0, i), floor) < 1e-9, "sink {} cell {}", k.m, st.get(0, i));
+    assert!(rel(k.m, 7000.0 - floor) < 1e-12 && rel(st.get(0, i), floor) < 1e-9, "sink {} cell {}", k.m, st.get(0, i));
     assert_eq!(st.get(4, i), 1.0);
     assert!(rel(grid_totals(&st).0 + s.mass(), mass0) < 1e-12, "mass");
-    // Thermal and cold energy booked `swallowed`: 5000 × 0.1; the energy leaving the grid is that and nothing else here.
-    assert!(rel(s.swallowed, 500.0) < 1e-9, "swallowed {}", s.swallowed);
+    // Thermal and cold energy booked `swallowed`: 7000 × 0.1; the energy leaving the grid is that and nothing else here.
+    assert!(rel(s.swallowed, 700.0) < 1e-9, "swallowed {}", s.swallowed);
     let e1: f64 = st.plane(3).iter().sum();
     assert!(rel(e0 - e1, s.swallowed) < 1e-9, "the grid's energy fell by {} for {} booked", e0 - e1, s.swallowed);
 }
@@ -289,7 +289,7 @@ fn refused(name: &str, st: &mut State, phi: &[f64]) {
 #[test]
 fn formation_refused_below_the_density_threshold() {
     let bh = physics().get("sigma_bh").unwrap();
-    assert_eq!(bh, 4000.0);
+    assert_eq!(bh, 6000.0);
     let (mut st, phi) = world(16, 16, &[(8, 8, bh * (1.0 - 1e-6))], -1.0, 0.0);
     refused("Σ just below Σ_BH", &mut st, &phi);
     // The same world just above it forms: the threshold is the whole difference.
@@ -300,13 +300,13 @@ fn formation_refused_below_the_density_threshold() {
 #[test]
 fn formation_refused_in_a_bouncing_core_with_only_the_density_threshold_met() {
     // SM-E28's warning: dense, a potential minimum and bound, but the gas is expanding (∇·u > 0).
-    let (mut st, phi) = world(16, 16, &[(8, 8, 5000.0)], 1.0, 0.0);
+    let (mut st, phi) = world(16, 16, &[(8, 8, 7000.0)], 1.0, 0.0);
     refused("∇·u > 0", &mut st, &phi);
 }
 
 #[test]
 fn formation_refused_when_the_cell_is_not_the_potential_minimum() {
-    let (mut st, mut phi) = world(16, 16, &[(8, 8, 5000.0)], -1.0, 0.0);
+    let (mut st, mut phi) = world(16, 16, &[(8, 8, 7000.0)], -1.0, 0.0);
     // One of the eight neighbours, the diagonal one, lower; that neighbour is below Σ_BH, so it cannot form instead.
     phi[7 * 16 + 9] = phi[8 * 16 + 8] - 1.0;
     refused("a lower neighbour", &mut st, &phi);
@@ -315,12 +315,12 @@ fn formation_refused_when_the_cell_is_not_the_potential_minimum() {
 #[test]
 fn formation_refused_when_the_gas_is_not_bound() {
     // The bowl lifted to φ = +100: still a minimum, still dense and converging, ½|u|² + ε_th + φ > 0.
-    let (mut st, phi) = world(16, 16, &[(8, 8, 5000.0)], -1.0, 200.0);
+    let (mut st, phi) = world(16, 16, &[(8, 8, 7000.0)], -1.0, 200.0);
     refused("½|u|² + ε_th + φ > 0", &mut st, &phi);
     // And just past the edge of boundness: φ = −ε_th + 0.01 (the bowl's bottom at u = 0).
-    let (mut st, phi) = world(16, 16, &[(8, 8, 5000.0)], -1.0, 100.0 - 0.1 + 0.01);
+    let (mut st, phi) = world(16, 16, &[(8, 8, 7000.0)], -1.0, 100.0 - 0.1 + 0.01);
     refused("½|u|² + ε_th + φ = 0.01", &mut st, &phi);
-    let (mut st, phi) = world(16, 16, &[(8, 8, 5000.0)], -1.0, 100.0 - 0.1 - 0.01);
+    let (mut st, phi) = world(16, 16, &[(8, 8, 7000.0)], -1.0, 100.0 - 0.1 - 0.01);
     assert_eq!(sinks().form(&mut st, &phi), Some((8, 8)), "and just inside it forms");
 }
 
@@ -329,25 +329,25 @@ fn the_densest_candidate_forms_ties_go_to_the_lowest_y_then_x_and_one_forms_a_st
     let phys = physics();
     let floor = phys.get("sigma_floor").unwrap();
     // Equal densities: the lowest y wins, whatever the x.
-    let (mut st, phi) = world(24, 16, &[(18, 4, 5000.0), (5, 11, 5000.0)], -1.0, 0.0);
+    let (mut st, phi) = world(24, 16, &[(18, 4, 7000.0), (5, 11, 7000.0)], -1.0, 0.0);
     let mut s = sinks();
     assert_eq!(s.form(&mut st, &phi), Some((18, 4)), "ties: the lowest y");
     // At most one per step: the other candidate waits for the next call, and the first cell, now at the floor, is not one.
     assert_eq!(s.sinks.len(), 1);
     assert_eq!(s.form(&mut st, &phi), Some((5, 11)));
     assert_eq!(s.form(&mut st, &phi), None, "nothing is left to form");
-    assert!(s.sinks.iter().all(|k| rel(k.m, 5000.0 - floor) < 1e-12));
+    assert!(s.sinks.iter().all(|k| rel(k.m, 7000.0 - floor) < 1e-12));
     // The same row: the lowest x.
-    let (mut st, phi) = world(24, 16, &[(18, 4, 5000.0), (5, 4, 5000.0)], -1.0, 0.0);
+    let (mut st, phi) = world(24, 16, &[(18, 4, 7000.0), (5, 4, 7000.0)], -1.0, 0.0);
     assert_eq!(sinks().form(&mut st, &phi), Some((5, 4)), "ties: then the lowest x");
     // Denser beats lower: the candidate with more mass forms first, wherever it sits.
-    let (mut st, phi) = world(24, 16, &[(5, 4, 5000.0), (18, 11, 6000.0)], -1.0, 0.0);
+    let (mut st, phi) = world(24, 16, &[(5, 4, 7000.0), (18, 11, 8000.0)], -1.0, 0.0);
     assert_eq!(sinks().form(&mut st, &phi), Some((18, 11)), "the densest");
 }
 
 #[test]
 fn no_seventeenth_sink_forms() {
-    let (mut st, phi) = world(16, 16, &[(8, 8, 5000.0)], -1.0, 0.0);
+    let (mut st, phi) = world(16, 16, &[(8, 8, 7000.0)], -1.0, 0.0);
     let mut s = sinks();
     for k in 0..MAX_SINKS {
         s.sinks.push(sink(100.0 + 10.0 * k as f64, 1.0, 0.0, 0.0, 1.0));
@@ -792,7 +792,7 @@ fn world64(wells: &[(usize, usize, f64)], sign: f64, offset: f64) -> (State, Vec
 
 #[test]
 fn gpu_formation_matches_the_twin_where_all_four_criteria_hold() {
-    let (st, phi) = world64(&[(32, 32, 5000.0)], -1.0, 0.0);
+    let (st, phi) = world64(&[(32, 32, 7000.0)], -1.0, 0.0);
     let (mass0, _) = grid_totals(&st);
     let r = rig(&st, Some(&phi), false, None, &[]);
     let report = r.run(1);
@@ -819,13 +819,13 @@ fn gpu_formation_refuses_each_criterion_alone() {
         assert!(report.formed.is_none() && report.sinks.is_empty(), "{name}: {report:?}");
     };
     refuse("Σ just below Σ_BH", world64(&[(32, 32, bh * (1.0 - 1e-6))], -1.0, 0.0));
-    refuse("∇·u > 0", world64(&[(32, 32, 5000.0)], 1.0, 0.0));
-    let (st, mut phi) = world64(&[(32, 32, 5000.0)], -1.0, 0.0);
+    refuse("∇·u > 0", world64(&[(32, 32, 7000.0)], 1.0, 0.0));
+    let (st, mut phi) = world64(&[(32, 32, 7000.0)], -1.0, 0.0);
     phi[31 * 64 + 33] = phi[32 * 64 + 32] - 1.0;
     refuse("a lower neighbour", (st, phi));
-    refuse("½|u|² + ε_th + φ = 0.01", world64(&[(32, 32, 5000.0)], -1.0, 100.0 - 0.1 + 0.01));
+    refuse("½|u|² + ε_th + φ = 0.01", world64(&[(32, 32, 7000.0)], -1.0, 100.0 - 0.1 + 0.01));
     // Each refusal is the one criterion: the threshold met and just inside boundness, it forms.
-    for (name, w) in [("Σ = Σ_BH", world64(&[(32, 32, bh)], -1.0, 0.0)), ("bound by 0.01", world64(&[(32, 32, 5000.0)], -1.0, 100.0 - 0.1 - 0.01))] {
+    for (name, w) in [("Σ = Σ_BH", world64(&[(32, 32, bh)], -1.0, 0.0)), ("bound by 0.01", world64(&[(32, 32, 7000.0)], -1.0, 100.0 - 0.1 - 0.01))] {
         let report = rig(&w.0, Some(&w.1), false, None, &[]).run(1);
         assert_eq!(report.formed, Some((32, 32)), "{name}");
     }
@@ -837,12 +837,12 @@ fn gpu_the_densest_forms_first_ties_the_lowest_y_then_x_one_a_step_none_past_16(
         let (st, phi) = world64(wells, -1.0, 0.0);
         rig(&st, Some(&phi), false, None, &[]).run(1).formed
     };
-    assert_eq!(first(&[(50, 10, 5000.0), (12, 40, 5000.0)]), Some((50, 10)), "ties: the lowest y");
-    assert_eq!(first(&[(50, 10, 5000.0), (12, 10, 5000.0)]), Some((12, 10)), "ties: then the lowest x");
-    assert_eq!(first(&[(12, 10, 5000.0), (50, 40, 6000.0)]), Some((50, 40)), "the densest");
+    assert_eq!(first(&[(50, 10, 7000.0), (12, 40, 7000.0)]), Some((50, 10)), "ties: the lowest y");
+    assert_eq!(first(&[(50, 10, 7000.0), (12, 10, 7000.0)]), Some((12, 10)), "ties: then the lowest x");
+    assert_eq!(first(&[(12, 10, 7000.0), (50, 40, 8000.0)]), Some((50, 40)), "the densest");
     // One a step: the second candidate forms on the next, as the twin's — the bowls steepened ×100, so the first sink's
     // potential (§1.4.3: a pull of 6 200/48² ≈ 2.7 per cell at the second well) leaves the second its minimum.
-    let (st, phi) = world64(&[(50, 10, 5000.0), (12, 40, 5000.0)], -1.0, 0.0);
+    let (st, phi) = world64(&[(50, 10, 7000.0), (12, 40, 7000.0)], -1.0, 0.0);
     let phi: Vec<f64> = phi.iter().map(|&v| f64::from((100.0 * v) as f32)).collect();
     let r = rig(&st, Some(&phi), false, None, &[]);
     let field = Field { phi, gx: vec![0.0; 4096], gy: vec![0.0; 4096] };
@@ -857,7 +857,7 @@ fn gpu_the_densest_forms_first_ties_the_lowest_y_then_x_one_a_step_none_past_16(
         same_sinks("one a step", &report, &twin, 1e-5);
     }
     // At the shallow bowls the first sink's potential takes that minimum away: neither forms the second.
-    let (st, phi) = world64(&[(50, 10, 5000.0), (12, 40, 5000.0)], -1.0, 0.0);
+    let (st, phi) = world64(&[(50, 10, 7000.0), (12, 40, 7000.0)], -1.0, 0.0);
     let r = rig(&st, Some(&phi), false, None, &[]);
     let field = Field { phi: phi.clone(), gx: vec![0.0; 4096], gy: vec![0.0; 4096] };
     let (mut twin, mut st64) = (self::sinks(), st.clone());
@@ -867,7 +867,7 @@ fn gpu_the_densest_forms_first_ties_the_lowest_y_then_x_one_a_step_none_past_16(
     }
     assert_eq!(twin.sinks.len(), 1, "the second well, beside a sink of 6 200, is not a minimum");
     // 16 sinks stand (off the world, light): none forms; 15: the sixteenth does.
-    let (st, phi) = world64(&[(32, 32, 5000.0)], -1.0, 0.0);
+    let (st, phi) = world64(&[(32, 32, 7000.0)], -1.0, 0.0);
     let far: Vec<Sink> = (0..MAX_SINKS).map(|k| sink(100.0 + 10.0 * k as f64, 1.0, 0.0, 0.0, 1.0)).collect();
     assert_eq!(rig(&st, Some(&phi), false, None, &far).run(1).formed, None, "16 sinks stand");
     let report = rig(&st, Some(&phi), false, None, &far[..15]).run(1);
@@ -1104,7 +1104,7 @@ fn gpu_the_sinks_pull_reaches_the_cloud_in_g_and_phi_and_the_gas_g_stays_the_gas
 
 #[test]
 fn gpu_a_formation_inside_a_frame_stops_it_with_the_slow_down_on_and_only_a_formation() {
-    let (st, phi) = world64(&[(32, 32, 5000.0)], -1.0, 0.0);
+    let (st, phi) = world64(&[(32, 32, 7000.0)], -1.0, 0.0);
     let start = |slow_down: bool, steps: u32| {
         let r = rig(&st, Some(&phi), false, None, &[]);
         let report = r.frame(steps, slow_down);

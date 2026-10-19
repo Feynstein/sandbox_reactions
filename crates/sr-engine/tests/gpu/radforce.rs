@@ -20,16 +20,29 @@
 //! taken from this step's F (P5's, after P4) instead of the previous one would change the scheme's order silently, so one
 //! step runs on an F written by hand — the previous step's negated — and the momentum gained must be that F's force, not
 //! the force of the F P5 leaves at the step's end.
+//!
+//! M0-D58 — the work is capped at the heat above the floor (§0.5 [M0-D58]). The oracle, from the contract's words: the cell
+//! gains s·Δt·f with s the largest share ≤ 1 whose work (|p₀ + s d|² − |p₀|²)/2Σ is at most Σ(ε_th − T_floor/μ), p₀ and ε_th
+//! the force-free step's (0 when that is not positive), so P8 adds no energy for the push. On the slab made hot enough
+//! (T 1,000 in a medium at T 0.06: the impulse's work ~10⁸ against a heat of 0.02 a cell) the cap binds at the slab's edges
+//! and the momentum gained is s·Δt·f, E the free step's. Then D58's block itself — a 2 × 2 C/O block of Σ 1,250 at T_floor,
+//! heat on, 64 × 64 bounce, gravity and hydro, the shipped constants — 50 steps on the twin and through `headless` on the
+//! GPU: every value finite and the mass invariant within 10⁻⁶ (uncapped, E runs to NaN by step 12 and the world empties).
 
+use std::path::PathBuf;
+
+use serde_json::Value;
+use sr_engine::dump::Dump;
 use sr_engine::gpu::Gpu;
-use sr_engine::scene::{EdgeMode, TestSettings};
+use sr_engine::scene::{EdgeMode, Scene, TestSettings};
 use sr_engine::state::{Booking, SideFields, State as GpuState, WorldConfig};
 use sr_engine::step::boxfit::BoxMode;
 use sr_engine::step::heat::HeatSetup;
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::reference::heat::{Heat, TestFlags};
 use sr_physics::reference::hydro::{Edge, Hydro, State};
-use sr_physics::registry::{Elements, Physics};
+use sr_physics::reference::{react, Burning, Switches, Twin};
+use sr_physics::registry::{Elements, Physics, Reactions};
 
 const W: usize = 64;
 const H: usize = 64;
@@ -63,10 +76,15 @@ fn pinned() -> TestFlags {
 
 /// The hot slab in its medium, every plane rounded to f32 (the GPU's start, so the twin starts where it does).
 fn slab() -> State {
+    slab_of(MEDIUM, HOT)
+}
+
+/// A slab of (Σ, T) `hot` in a medium of (Σ, T) `medium`, as [`slab`].
+fn slab_of(medium: (f64, f64), hot: (f64, f64)) -> State {
     let n = W * H;
     let mut planes = vec![0.0; 14 * n];
     for i in 0..n {
-        let (sigma, t) = if SLAB.contains(&(i % W)) { HOT } else { MEDIUM };
+        let (sigma, t) = if SLAB.contains(&(i % W)) { hot } else { medium };
         planes[i] = sigma;
         planes[3 * n + i] = sigma * INV_MU * t;
         planes[4 * n + i] = 1.0;
@@ -312,4 +330,168 @@ fn gpu_p4_reads_the_previous_steps_flux() {
         }
     }
     assert_eq!(by_hand.other, 0.0, "Σ, E and the species as the free step's");
+}
+
+/// The cap's slab: the medium just above the floor (Σ 1, T 0.06: 0.02 of heat above it a cell), the slab at T 1,000 (Σ 0.1).
+const CAP_MEDIUM: (f64, f64) = (1.0, 0.06);
+const CAP_HOT: (f64, f64) = (0.1, 1000.0);
+/// One step's Δt there (CFL 0.4 allows 6.3e-3 in the slab, c² = 2Π/Σ = 4,000).
+const CAP_DT: f64 = 2e-3;
+/// The cap's tolerances, fixed before the first run: the momentum gained per half of the world against Σ s·Δt·f, and E
+/// per cell against the free step's (P8's rounding where the push spends the heat to the floor) — twin, GPU.
+const CAP_TOL: (f64, f64) = (1e-9, 1e-5);
+const CAP_E_TOL: (f64, f64) = (1e-12, 1e-5);
+
+/// The oracle's share s of the impulse `d` in a cell whose force-free state is (Σ, p₀, E): the largest s ≤ 1 with
+/// (|p₀ + s d|² − |p₀|²)/2Σ ≤ A = Σ(E/Σ − |p₀|²/2Σ² − T_floor/μ) — hydrogen, the cold pressure off (ε_cold = 0) — the
+/// quadratic's positive root; 0 when A is not positive.
+fn share(physics: &Physics, sigma: f64, p0: [f64; 2], energy: f64, d: [f64; 2]) -> f64 {
+    let d2 = d[0] * d[0] + d[1] * d[1];
+    if d2 == 0.0 {
+        return 1.0;
+    }
+    let p2 = p0[0] * p0[0] + p0[1] * p0[1];
+    let a = energy - 0.5 * p2 / sigma - sigma * physics.get("t_floor").unwrap() * INV_MU;
+    if a <= 0.0 {
+        return 0.0;
+    }
+    let q = p0[0] * d[0] + p0[1] * d[1];
+    ((-q + (q * q + 2.0 * sigma * a * d2).sqrt()) / d2).min(1.0)
+}
+
+/// The cap graded on one step: `forced` and `free` ran from the same state at `dt`, the first under the force `f`. Per half
+/// of the world (x left/right), the x momentum gained equals Σ s·Δt·f within `tol` relative, s from the free step's cell;
+/// E per cell is the free step's within `e_tol`; the cap binds (s < 1/2) in at least two columns of cells on each side.
+fn check_cap(label: &str, physics: &Physics, forced: &State, free: &State, f: &[Vec<f64>; 2], dt: f64, (tol, e_tol): (f64, f64)) {
+    let n = forced.cells();
+    let (mut gained, mut expected, mut uncapped) = ([0.0; 2], [0.0; 2], [0.0; 2]);
+    let (mut bound, mut e_gap) = (0, 0.0f64);
+    for i in 0..n {
+        let d = [dt * f[0][i], dt * f[1][i]];
+        let s = share(physics, free.planes[i], [free.planes[n + i], free.planes[2 * n + i]], free.planes[3 * n + i], d);
+        let half = usize::from(i % W >= W / 2);
+        gained[half] += forced.planes[n + i] - free.planes[n + i];
+        expected[half] += s * d[0];
+        uncapped[half] += d[0];
+        bound += usize::from(s < 0.5);
+        e_gap = e_gap.max((forced.planes[3 * n + i] - free.planes[3 * n + i]).abs() / free.planes[3 * n + i].abs());
+    }
+    for h in 0..2 {
+        let rel = (gained[h] - expected[h]).abs() / expected[h].abs();
+        println!(
+            "SR-RADFORCE {label} cap, x {}: gained {:.9e}, Σ s·Δt·f {:.9e} ({rel:.2e}), uncapped Σ Δt·f {:.3e}",
+            ["left", "right"][h],
+            gained[h],
+            expected[h],
+            uncapped[h]
+        );
+        assert!(rel <= tol, "{label}: the momentum gained {} against Σ s·Δt·f {} ({rel:e} > {tol:e})", gained[h], expected[h]);
+        // The set-up guard: the uncapped impulse is ≥ 10× the capped one, ≥ 100× its work (measured 425× and 1,720×).
+        assert!(uncapped[h].abs() > 10.0 * expected[h].abs(), "{label}: the slab must ask far more work than the heat holds");
+    }
+    println!("SR-RADFORCE {label} cap: {bound} cells capped below half the impulse; E's largest relative gap from the free step {e_gap:.2e}");
+    assert!(bound >= 4 * H, "{label}: the cap binds in {bound} cells, expected at least 4 columns");
+    assert!(e_gap <= e_tol, "{label}: E moved {e_gap:e} from the free step (P8 refilled a heat the push spent)");
+}
+
+/// The twin's P4: the push's work capped at the heat above the floor (§0.5 [M0-D58]).
+#[test]
+fn twin_the_push_spends_no_more_than_the_heat_above_the_floor() {
+    let physics = physics();
+    let hydro = Hydro::new(&physics, &elements(), Edge::Bounce).unwrap();
+    let heat = Heat::new(&physics, &elements(), pinned()).unwrap();
+    let mut st = slab_of(CAP_MEDIUM, CAP_HOT);
+    let flux = heat.step(&mut st.clone(), CAP_DT).flux.cells();
+    let f = force(&physics, &st, &flux.0, &flux.1);
+    let mut free = st.clone();
+    hydro.step(&mut free, CAP_DT);
+    hydro.step_forced(&mut st, CAP_DT, None, Some((&flux.0, &flux.1)));
+    check_cap("twin", &physics, &st, &free, &f, CAP_DT, (CAP_TOL.0, CAP_E_TOL.0));
+}
+
+/// The GPU's P4: the same, F as side.flux holds it at the step's start.
+#[test]
+fn gpu_the_push_spends_no_more_than_the_heat_above_the_floor() {
+    let physics = physics();
+    let pair = Pair::new(&physics, &slab_of(CAP_MEDIUM, CAP_HOT));
+    let dt = f64::from(CAP_DT as f32);
+    let (fx, fy) = pair.flux();
+    let (start, forced, free) = pair.step(dt);
+    check_cap("gpu", &physics, &forced, &free, &force(&physics, &start, &fx, &fy), dt, (CAP_TOL.1, CAP_E_TOL.1));
+}
+
+/// M0-D58's block: 50 steps, the shipped constants.
+const BLOCK_STEPS: u64 = 50;
+/// The mass invariant's band over them (G-CONS, §5.3), relative.
+const BLOCK_BAND: f64 = 1e-6;
+
+/// The block of M0-D58 (M0-R4 M9's C/O 5,000): a 2 × 2 rect of Σ 1,250 at T_floor at the centre of a 64 × 64 bounce world,
+/// gravity, hydro and heat on.
+fn block_scene() -> String {
+    r#"{"version": 1, "world": {"width": 64, "height": 64, "edge": "bounce"}, "slowdown": false,
+ "switches": {"gravity": true, "hydro": true, "heat": true, "reactions": false, "neutrinos": false, "sinks": false},
+ "objects": [{"kind": "rect", "x0": 31, "y0": 31, "w": 2, "h": 2, "sigma": 1250, "t": 0.05, "v": [0, 0],
+              "composition": {"C": 0.5, "O": 0.5}}]}"#
+        .to_string()
+}
+
+/// The twin on the block: 50 steps with every pass the scene runs, every value finite, the grid's mass plus what P8's
+/// vacuum reset removed constant within 10⁻⁶ (bounce: nothing escapes).
+#[test]
+fn twin_a_dense_hot_block_stays_finite_and_keeps_its_mass() {
+    let elements = elements();
+    let scene = Scene::parse(&block_scene(), &elements).unwrap();
+    let physics = scene.physics().unwrap();
+    let (planes, _) = scene.planes(scene.world, &physics, &elements).unwrap();
+    let records = Reactions::shipped(&elements, &physics).unwrap();
+    let burning = Burning { heat: TestFlags::default(), react: react::TestFlags { pin_temperature: false }, reactions: &records, neutrinos: false };
+    let switches = Switches { gravity: true, hydro: true, heat: true, reactions: false };
+    let mut twin = Twin::new(&physics, &elements, Edge::Bounce, switches, Some(burning), W, H, planes.iter().map(|&v| f64::from(v)).collect()).unwrap();
+    let n = W * H;
+    let mass = |t: &Twin| t.state.planes[..n].iter().sum::<f64>() + t.booked.vacuum_reset;
+    let before = mass(&twin);
+    for _ in 0..BLOCK_STEPS {
+        twin.step();
+    }
+    let after = mass(&twin);
+    let energy: f64 = twin.state.planes[3 * n..4 * n].iter().sum();
+    let drift = (after - before).abs() / before;
+    println!(
+        "SR-RADFORCE twin block: {BLOCK_STEPS} steps to sim time {:.5}, E {energy:.4e}, floor_added {:.4e}, mass invariant {before:.9} → {after:.9} ({drift:.2e})",
+        twin.sim_time(),
+        twin.booked.floor_added
+    );
+    assert_eq!(twin.first_non_finite(), None, "the block's state went non-finite");
+    assert!(drift <= BLOCK_BAND, "the mass invariant drifted {drift:e}");
+}
+
+/// The GPU on the block, through `headless` in-process on the physics adapter: 50 steps, exit 0, every value of the final
+/// dump finite (F's planes included), summary.json's mass invariant within 10⁻⁶ from the ledger's start to its end.
+#[test]
+fn gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass() {
+    let dir: PathBuf = std::env::temp_dir().join(format!("sr-radforce-{}-block", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).unwrap();
+    let file = dir.join("scene.json");
+    std::fs::write(&file, block_scene()).unwrap();
+    let out = dir.join("out");
+    let mut args: Vec<String> =
+        ["--scene", &file.display().to_string(), "--steps", &BLOCK_STEPS.to_string(), "--out", &out.display().to_string()].map(String::from).to_vec();
+    if let Ok(a) = std::env::var("SR_TEST_ADAPTER") {
+        args.extend(["--adapter".to_string(), a]);
+    }
+    assert_eq!(sr_engine::headless::run(&args), 0, "headless");
+    let summary: Value = serde_json::from_slice(&std::fs::read(out.join("summary.json")).unwrap()).unwrap();
+    let dump = Dump::read(&out.join("dumps").join(format!("s_{BLOCK_STEPS}.bin"))).unwrap();
+    let mass = |at: &str| summary["ledger"][at]["mass"]["invariant"].as_f64().expect("summary.json's mass invariant");
+    let (start, end) = (mass("start"), mass("end"));
+    let drift = (end - start).abs() / start;
+    let non_finite = dump.planes.iter().chain(dump.flux.iter().flatten()).filter(|v| !v.is_finite()).count();
+    println!(
+        "SR-RADFORCE gpu block: {} steps, sim time {}, mass invariant {start:.9} → {end:.9} ({drift:.2e}), floor_added {}, {non_finite} non-finite values in the final dump",
+        summary["steps"], summary["sim_time"], summary["ledger"]["end"]["energy"]["floor_added"]
+    );
+    assert_eq!(non_finite, 0, "the block's final state holds non-finite values");
+    assert!(drift <= BLOCK_BAND, "the mass invariant drifted {drift:e}");
+    let _ = std::fs::remove_dir_all(&dir);
 }

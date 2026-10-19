@@ -13,7 +13,8 @@ mod web;
 #[cfg(not(target_arch = "wasm32"))]
 const USAGE: &str = "usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] | \
 sandbox-reactions headless --scene <FILE|preset:<sun|massive|giant>> --steps N [--world WxH] [--edge leave|bounce] \
-[--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE] [--adapter S | --cpu-reference]";
+[--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE] [--adapter S | --cpu-reference] | \
+sandbox-reactions calibrate --out FILE [--adapter S] [--only ITEM]";
 
 /// The web build (§3.5): trunk's wasm-bindgen start runs `main`, which hands the canvas to the app and returns.
 #[cfg(target_arch = "wasm32")]
@@ -26,6 +27,7 @@ fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let code = match args.first().map(String::as_str) {
         Some("headless") => sr_engine::headless::run(&args[1..]),
+        Some("calibrate") => sr_engine::calibrate::run(&args[1..]),
         Some("-h" | "--help") => {
             println!("{USAGE}");
             0

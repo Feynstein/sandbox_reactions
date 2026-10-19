@@ -1,0 +1,63 @@
+==== 2026-10-19T11:22:26-04:00 calibrate_bisect · clean · a fresh scratch copy of the tree
+== 2026-10-19T11:22:27-04:00 calibrate_bisect · task M0-T68 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect
+-- calibrate_bisect · exit=0 · 21.92 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-mucfib99/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-mucfib99/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 21.70s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 308 filtered out; finished in 0.02s
+
+
+==== 2026-10-19T11:22:26-04:00 calibrate_bisect · plant bisect-tolerance · a fresh scratch copy of the tree
+planted bisect-tolerance: tests/plants/bisect-tolerance.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-19T11:22:27-04:00 calibrate_bisect · task M0-T68 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect
+-- calibrate_bisect · exit=101 · 54.48 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-mucfib99/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-mucfib99/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 32.35s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... 
+thread 'calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs' (4181246) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:45:5:
+assertion `left == right` failed: runs for a 200-fold bracket at 2 %
+  left: 7
+ right: 11
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... 
+thread 'calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run' (4181248) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:139:9:
+m_ign_sb: 283.65220128778736 against 280
+FAILED
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... 
+thread 'calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold' (4181254) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:25:5:
+assertion `left == right` failed: §2.11: bisection to 2 %
+  left: 0.2
+ right: 0.02
+FAILED
+
+failures:
+
+failures:
+    calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs
+    calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run
+    calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold
+
+test result: FAILED. 4 passed; 3 failed; 0 ignored; 0 measured; 308 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

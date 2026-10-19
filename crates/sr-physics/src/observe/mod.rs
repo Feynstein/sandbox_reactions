@@ -6,6 +6,7 @@
 
 pub mod stages;
 pub mod tracker;
+pub mod translate;
 
 pub use stages::{classify, Event, EventKind, History, Stage, StageTracker};
 pub use tracker::{Object, Tracker, TrackerConfig};

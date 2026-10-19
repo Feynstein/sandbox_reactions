@@ -38,8 +38,11 @@ block that builds their feature and are refused with exit 4 until then:
   `--adapter`, `--timing` and `--load-dump` are the GPU's and refused with it. stdout: first line `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`,
   warnings `SR-WARN`. Exit codes: §3.3. The file formats: `docs/agent/architecture.md` § The files. sr-app's usage line
   (`--help`) lists these flags (M0-T37).
-- Later blocks add `bench`, `calibrate`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the
-  headless run's `--until`, `--frames-every`, `--edits` (§3.3).
+- **`calibrate`** (M0-T66b–M0-T70): `calibrate --out FILE [--adapter S] [--only a,b] [--max-steps N] [--bracket LO,HI]` —
+  § Calibrating below. (sr-app's usage line lists `--only` only; the other two flags are refused with exit 4 where they
+  do not apply.)
+- Later blocks add `bench`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the headless run's
+  `--until`, `--frames-every`, `--edits` (§3.3).
 
 ## launch.py — how a service is started, polled, stopped (`tools/pb/launch.py`, §3.4, §3.6)
 `python3 tools/pb/launch.py start|stop|status|smoke|list <service> --task <ID>` (`py -3.12 …` on win-laptop). A service's
@@ -97,3 +100,51 @@ Results agree across adapters within G-REF's tolerances, never bit for bit (§6.
 ## Long runs (§6.4)
 `calibrate`, the ⏱ scopes and benches at low rungs can pass 10 minutes on the Quadro: **the lead's**, in one visible
 terminal, placed in the V windows. A run over 10 minutes is never an agent's (PLAYBOOK §4 Rule 4).
+
+## Calibrating (§2.11, §3.3, §6.4; `crates/sr-engine/src/calibrate.rs`)
+`calibrate` measures the sandbox's own scales — the cold ceilings, the ignition and ending masses, the presets' masses and
+lives — and writes `assets/calibration.json`. The file's schema and every bound are §2.11's; its values are never copied
+into a page — read the file (`docs/agent/physics.md` § Calibration says what each key is). Commands run from the repo root,
+the binary built first (top of this page).
+```
+build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out assets/calibration.json
+```
+- **`--out FILE`** is merged, never rewritten blind: the file's other items are kept, so one item re-run leaves the rest.
+  A file under another `physics_hash` (or not JSON) is dropped with `SR-WARN` and its items are measured again. K9's order
+  and Σ_BH ≥ ns_sigma_max_sb are checked on the merged file **before anything is written**; a failure is exit 6 and the file
+  is untouched. A run with `overrides` (a test's) measures and writes nothing.
+- **`--only a,b`** takes a comma list of items: `m_ch_sb`, `m_tov_sb`, `ns_sigma_max_sb` (items 1–2, the sheet on the CPU, no
+  adapter — a second or less), `m_ign_sb` (item 3), `m_up_sb`, `m_bh_sb` (item 4), and the six item-6 names `preset_mass_sb`,
+  `t_eff_sun_sb`, `life_sun_sb`, `top_rung`, `stage_durations_sb`, `max_gas_speed` — **one job**: the three preset lives
+  measure all six. `render_reserve_ms` is refused with exit 4: the drawing lot's `--measure-ui` writes it (a visible window,
+  the lead's each time, R4) and `calibrate` keeps it across a re-run. A bare `calibrate` runs every item.
+- **`--max-steps N`** raises the step ceiling of each life (a run that reaches no ending within it is exit 6, never a guess).
+  **`--bracket LO,HI`** replaces the default bracket of one bisected item (items 3–4 only, so `--only` names exactly one of
+  them); the defaults and what a bracket whose ends agree means are in `calibrate.rs` and §2.11 — a bracket whose ends agree
+  is refused after two runs, widen it.
+- **What a run prints.** One `SR-CALIBRATE run …` line per life (mass, side, ending, steps, wall time) so a crash or a kill
+  leaves a trace; the bisection stops at 2 % (§2.11). `measured.adapter` in the file names the adapter the lives ran on
+  (`cpu` while only items 1–2 are in it). Item 5 (K9, `check_order`) runs **before** the preset lives, so a broken order
+  costs seconds, not hours. Exit codes: §3.3 — 4 bad arguments, 6 a failed check or a life that proves nothing.
+- **Who runs it.** Items 1–2 are the agents' (CPU, seconds). `m_ign_sb` is minutes on the RTX 5090; `m_up_sb`, `m_bh_sb` and the
+  preset lives are **whole stellar lives** — hours at the defaults — so the whole calibration is **the lead's**, in one visible
+  terminal, in M0-V9's window (§6.4; PLAYBOOK §4 Rule 4). Item by item (`--only`) is how it splits. An agent runs no life
+  here; the scopes `calibrate_cold`, `calibrate_bisect`, `calibrate_order`, `cold_core` and `calibration` (`testing.md`) grade
+  the code on stubs and the CPU.
+- **Which adapter.** Physics numbers are measured on the RTX 5090 (`--adapter "RTX 5090"`, §6.4) and named in the file;
+  they are used on every other adapter by leaning on G-REF's cross-adapter tolerance (§6.7), not on identity. Timing is
+  never part of it.
+- **The hash rule: change a constant, calibrate again.** The file carries a `physics_hash` of the canonical JSON of
+  elements.json + reactions.json + physics.json (whitespace and key order do not move it). A binary whose embedded
+  calibration holds another hash refuses a preset scene with `SR-ERROR calibration out of date`, exit 6 (G-CAL); a headless,
+  test or calibrate run whose scene names no preset runs without one. Editing any constant — `sigma_bh` moved it at
+  M0-T66b — means re-running `calibrate`, and `PINNED_HASH` in `crates/sr-engine/tests/gpu/calibration.rs` re-pinned until
+  the file is embedded (the `calibration` scope's message names the new hash).
+- **Embedding.** After the first write, `EMBEDDED` in `crates/sr-physics/src/calibration.rs` is set to
+  `Some(include_str!("../../../assets/calibration.json"))` (M0-V9's step; until then it is `None` and exit 6 from the real
+  binary is NOT PROVEN). `Calibration::parse` refuses a file without `render_reserve_ms`, so a calibration is complete only
+  after the drawing lot's `--measure-ui`.
+- **If a run exits 6.** K9's order or band, Σ_BH against ns_sigma_max_sb, c_sb against twice `max_gas_speed`, a preset not ending
+  as a white dwarf, neutron star or black hole, or the Sun-like life never reaching X_H,c 0.35 (`t_eff_sun_sb`): each names what
+  failed. It is a defect to file or a question to the lead, never a looser number (§0.4), and never re-tuned inside the run (§2.11
+  item 5).

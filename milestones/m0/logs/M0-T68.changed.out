@@ -1,0 +1,218 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why burn_cell: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why burn_order: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why neutrino: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why sink: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why nu_heat: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why summary: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why ledger: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why preset_cloud: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why observe_run: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why sod: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why edges: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why collapse: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why jeans: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why twin: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why cpu_gpu: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why heat_gauss: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why heat_implicit: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why heat_limiter: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why heat_stiff: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why radiation_force: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why grav_force: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why grav_selfforce: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why fft: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why adapter: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why state: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why booking: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why floors: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why dt: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why box: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why latch: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why timing: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why scene: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why dump: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why boot: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why desktop: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why web: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why capture: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why calibration: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why calibrate_cold: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+why cold_core: never: crates/sr-engine/tests/gpu/calibrate_bisect.rs · stale: crates/sr-engine/src/calibrate.rs (+4)
+plan_lint         583/0/0      0.12 s  GO · step 1/42, 41 left
+build             2/0/0        4.44 s  GO · step 2/42, 40 left
+burn_cell         16/0/0       9.48 s  GO · step 3/42, 39 left
+burn_order        4/0/0        4.21 s  GO · step 4/42, 38 left
+neutrino          18/0/0      11.53 s  GO · step 5/42, 37 left
+sink              30/0/0      35.58 s  GO · step 6/42, 36 left
+nu_heat           15/0/0      15.71 s  GO · step 7/42, 35 left
+summary           7/0/0       10.90 s  GO · step 8/42, 34 left
+ledger            4/0/0        4.64 s  GO · step 9/42, 33 left
+preset_cloud      5/0/0       66.50 s  GO · step 10/42, 32 left
+observe_run       5/0/0       10.63 s  GO · step 11/42, 31 left
+sod               15/0/0      13.09 s  GO · step 12/42, 30 left
+edges             7/0/0       15.92 s  GO · step 13/42, 29 left
+collapse          6/0/0        2.33 s  GO · step 14/42, 28 left
+jeans             5/0/0        1.27 s  GO · step 15/42, 27 left
+twin              6/0/0        1.98 s  GO · step 16/42, 26 left
+cpu_gpu           3/0/0       12.30 s  GO · step 17/42, 25 left
+heat_gauss        10/0/0       3.96 s  GO · step 18/42, 24 left
+heat_implicit     6/0/0        2.78 s  GO · step 19/42, 23 left
+heat_limiter      6/0/0        3.43 s  GO · step 20/42, 22 left
+heat_stiff        6/0/0        3.40 s  GO · step 21/42, 21 left
+radiation_force   7/0/0        6.18 s  GO · step 22/42, 20 left
+grav_force        13/0/0       8.65 s  GO · step 23/42, 19 left
+grav_selfforce    5/0/0        3.44 s  GO · step 24/42, 18 left
+fft               8/0/0        9.76 s  GO · step 25/42, 17 left
+adapter           10/0/0       7.22 s  GO · step 26/42, 16 left
+state             6/0/0        6.24 s  GO · step 27/42, 15 left
+booking           4/0/0        5.77 s  GO · step 28/42, 14 left
+floors            7/0/0       10.59 s  GO · step 29/42, 13 left
+dt                7/0/0       11.11 s  GO · step 30/42, 12 left
+box               8/0/0       10.11 s  GO · step 31/42, 11 left
+latch             5/0/0        6.22 s  GO · step 32/42, 10 left
+timing            5/0/0       15.06 s  GO · step 33/42, 9 left
+scene             8/0/0        5.45 s  GO · step 34/42, 8 left
+dump              11/0/0      23.29 s  GO · step 35/42, 7 left
+boot              1/0/0        5.70 s  GO · step 36/42, 6 left
+desktop           3/0/0       29.80 s  GO · step 37/42, 5 left
+web               3/0/0       40.50 s  GO · step 38/42, 4 left
+capture           2/0/0        2.61 s  GO · step 39/42, 3 left
+calibration       10/0/0       0.22 s  GO · step 40/42, 2 left
+calibrate_cold    8/0/0        2.55 s  GO · step 41/42, 1 left
+cold_core         0/0/0      900.01 s  NO-GO · step 42/42, 0 left
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 33 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 32 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 31 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+calibrate_bisect · red-arm proven by M0-T68 2026-10-19T11:23:22-04:00 (fingerprint 7038d989ae38) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/calibrate_bisect.rs changed since M0-T68's start - a test, case or check M0-T68's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/calibrate_cold.rs changed since M0-T68's start - a test, case or check M0-T68's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T68's start - a test, case or check M0-T68's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T68's start - a test, case or check M0-T68's Deliver: does not name
+FLAG oracle: scope `calibrate_bisect` added in tools/pb/verify.json - M0-T68's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-T68.<scope>.log · record: loop_times.jsonl · tree e788da44e8ee+f7a79755b7fc
+anchor: 341 path×scope entries moved by this run
+anchor: 147 paths checked · 227 skipped (3 classes) · 101 never checked · 0 stale · 0 unclassified · 0 owed · 248 covered of 475 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for cold_core)
+NEVER CHECKED  Cargo.lock  (no entry for cold_core)
+NEVER CHECKED  Cargo.toml  (no entry for cold_core)
+NEVER CHECKED  assets/elements.json  (no entry for cold_core)
+NEVER CHECKED  assets/physics.json  (no entry for cold_core)
+NEVER CHECKED  assets/reactions.json  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/calibration.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/observe/mod.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/observe/stages.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/observe/tracker.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/sheet.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for cold_core)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for cold_core)
+NEVER CHECKED  rust-toolchain.toml  (no entry for cold_core)
+NEVER CHECKED  scenes/cold_co_disk.json  (no entry for cold_core)
+NEVER CHECKED  tests/cargo.sh  (no entry for cold_core)
+NEVER CHECKED  tests/gpu.sh  (no entry for cold_core)
+NEVER CHECKED  tests/plants/cold-exponent.patch  (no entry for cold_core)
+NEVER CHECKED  tests/plants/cold-gpu-pressure.patch  (no entry for cold_core)
+skipped   219  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  cold_core: timed out after 900 s; 0 case(s) < expected 8 · log milestones/m0/logs/M0-T68.cold_core.log
+  anchor: 101 never checked, 0 stale, 0 unclassified - every one named above
+verify: 890 passed, 0 failed, 0 skipped · 41/42 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 16 not impacted · 946.83 s + loop 0.10 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 164.25->13.4 · base: M0-T68's start 2026-10-19T11:14:26-04:00
+=== NO-GO: cold_core: timed out after 900 s; 0 case(s) < expected 8 · log milestones/m0/logs/M0-T68.cold_core.log; anchor: 101 never checked, 0 stale, 0 unclassified - every one named above ===

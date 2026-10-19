@@ -1,0 +1,66 @@
+== 2026-10-19T09:30:34-04:00 laserax-ai CPU f64 twin hydro, fixed g, scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/307c9bc4-f704-4bcf-8637-d329238076cd/scratchpad/r4
+R4-ATMO L=4 sigma_b=200 g0=2.71345e2 c_b=28.6809 t_cross=0.1395 H_mid=1.804 limiter=mc
+  t/t_cross=1.0 steps=25 max|v|/c_b=3.195e-1 L1(Σ)/M=2.676e-2 Eth+/Ucold=3.215e-1
+  t/t_cross=2.0 steps=53 max|v|/c_b=3.475e-1 L1(Σ)/M=2.574e-1 Eth+/Ucold=7.298e-1
+  t/t_cross=3.0 steps=83 max|v|/c_b=1.923e-1 L1(Σ)/M=5.336e-1 Eth+/Ucold=9.919e-1
+  t/t_cross=4.0 steps=113 max|v|/c_b=5.029e-1 L1(Σ)/M=5.424e-1 Eth+/Ucold=1.209e0
+  t/t_cross=8.0 steps=247 max|v|/c_b=7.395e-1 L1(Σ)/M=6.930e-1 Eth+/Ucold=2.075e0
+  t/t_cross=12.0 steps=390 max|v|/c_b=3.993e-1 L1(Σ)/M=7.996e-1 Eth+/Ucold=2.795e0
+  t/t_cross=16.0 steps=541 max|v|/c_b=5.818e-1 L1(Σ)/M=8.847e-1 Eth+/Ucold=3.420e0
+  t/t_cross=20.0 steps=702 max|v|/c_b=1.867e-1 L1(Σ)/M=9.972e-1 Eth+/Ucold=4.005e0
+
+real	0m4.104s
+user	0m1.534s
+sys	0m0.005s
+R4-ATMO L=8 sigma_b=200 g0=1.26628e2 c_b=28.6809 t_cross=0.2789 H_mid=3.419 limiter=mc
+  t/t_cross=1.0 steps=45 max|v|/c_b=1.187e-1 L1(Σ)/M=1.876e-2 Eth+/Ucold=9.624e-2
+  t/t_cross=2.0 steps=93 max|v|/c_b=1.927e-1 L1(Σ)/M=1.015e-1 Eth+/Ucold=1.827e-1
+  t/t_cross=3.0 steps=142 max|v|/c_b=1.397e-1 L1(Σ)/M=1.763e-1 Eth+/Ucold=2.589e-1
+  t/t_cross=4.0 steps=192 max|v|/c_b=1.215e-1 L1(Σ)/M=1.914e-1 Eth+/Ucold=3.299e-1
+  t/t_cross=8.0 steps=403 max|v|/c_b=1.067e-1 L1(Σ)/M=3.070e-1 Eth+/Ucold=5.811e-1
+  t/t_cross=12.0 steps=627 max|v|/c_b=1.037e-1 L1(Σ)/M=4.111e-1 Eth+/Ucold=8.031e-1
+  t/t_cross=16.0 steps=866 max|v|/c_b=9.332e-2 L1(Σ)/M=5.055e-1 Eth+/Ucold=9.988e-1
+  t/t_cross=20.0 steps=1115 max|v|/c_b=9.317e-2 L1(Σ)/M=5.827e-1 Eth+/Ucold=1.176e0
+
+real	0m9.567s
+user	0m2.947s
+sys	0m0.007s
+R4-ATMO L=16 sigma_b=200 g0=6.12716e1 c_b=28.6809 t_cross=0.5579 H_mid=6.582 limiter=mc
+  t/t_cross=1.0 steps=85 max|v|/c_b=6.689e-2 L1(Σ)/M=1.219e-2 Eth+/Ucold=2.477e-2
+  t/t_cross=2.0 steps=172 max|v|/c_b=6.964e-2 L1(Σ)/M=3.112e-2 Eth+/Ucold=4.841e-2
+  t/t_cross=3.0 steps=261 max|v|/c_b=1.562e-1 L1(Σ)/M=5.425e-2 Eth+/Ucold=7.019e-2
+  t/t_cross=4.0 steps=350 max|v|/c_b=6.487e-2 L1(Σ)/M=6.561e-2 Eth+/Ucold=9.097e-2
+  t/t_cross=8.0 steps=718 max|v|/c_b=6.234e-2 L1(Σ)/M=1.208e-1 Eth+/Ucold=1.657e-1
+  t/t_cross=12.0 steps=1100 max|v|/c_b=5.773e-2 L1(Σ)/M=1.717e-1 Eth+/Ucold=2.320e-1
+  t/t_cross=16.0 steps=1496 max|v|/c_b=1.665e-1 L1(Σ)/M=2.167e-1 Eth+/Ucold=2.921e-1
+  t/t_cross=20.0 steps=1907 max|v|/c_b=1.715e-1 L1(Σ)/M=2.557e-1 Eth+/Ucold=3.454e-1
+
+real	0m14.224s
+user	0m7.870s
+sys	0m0.016s
+R4-ATMO L=32 sigma_b=200 g0=3.01495e1 c_b=28.6809 t_cross=1.1157 H_mid=12.870 limiter=mc
+  t/t_cross=1.0 steps=165 max|v|/c_b=3.440e-2 L1(Σ)/M=4.324e-3 Eth+/Ucold=6.375e-3
+  t/t_cross=2.0 steps=332 max|v|/c_b=3.444e-2 L1(Σ)/M=8.782e-3 Eth+/Ucold=1.264e-2
+  t/t_cross=3.0 steps=499 max|v|/c_b=4.456e-2 L1(Σ)/M=1.502e-2 Eth+/Ucold=1.864e-2
+  t/t_cross=4.0 steps=668 max|v|/c_b=3.387e-2 L1(Σ)/M=1.986e-2 Eth+/Ucold=2.455e-2
+  t/t_cross=8.0 steps=1352 max|v|/c_b=3.268e-2 L1(Σ)/M=3.868e-2 Eth+/Ucold=4.655e-2
+  t/t_cross=12.0 steps=2049 max|v|/c_b=8.785e-2 L1(Σ)/M=5.806e-2 Eth+/Ucold=6.704e-2
+  t/t_cross=16.0 steps=2757 max|v|/c_b=3.593e-2 L1(Σ)/M=7.422e-2 Eth+/Ucold=8.639e-2
+  t/t_cross=20.0 steps=3475 max|v|/c_b=3.109e-2 L1(Σ)/M=8.762e-2 Eth+/Ucold=1.047e-1
+
+real	0m37.425s
+user	0m23.219s
+sys	0m0.017s
+R4-ATMO L=64 sigma_b=200 g0=1.49561e1 c_b=28.6809 t_cross=2.2315 H_mid=25.423 limiter=mc
+  t/t_cross=1.0 steps=325 max|v|/c_b=1.742e-2 L1(Σ)/M=1.391e-3 Eth+/Ucold=1.629e-3
+  t/t_cross=2.0 steps=651 max|v|/c_b=1.746e-2 L1(Σ)/M=2.406e-3 Eth+/Ucold=3.262e-3
+  t/t_cross=3.0 steps=978 max|v|/c_b=2.405e-2 L1(Σ)/M=4.133e-3 Eth+/Ucold=4.826e-3
+  t/t_cross=4.0 steps=1306 max|v|/c_b=1.731e-2 L1(Σ)/M=5.653e-3 Eth+/Ucold=6.432e-3
+  t/t_cross=8.0 steps=2627 max|v|/c_b=1.704e-2 L1(Σ)/M=1.117e-2 Eth+/Ucold=1.249e-2
+  t/t_cross=12.0 steps=3958 max|v|/c_b=1.683e-2 L1(Σ)/M=1.698e-2 Eth+/Ucold=1.839e-2
+  t/t_cross=16.0 steps=5300 max|v|/c_b=4.185e-2 L1(Σ)/M=2.250e-2 Eth+/Ucold=2.398e-2
+  t/t_cross=20.0 steps=6650 max|v|/c_b=1.869e-2 L1(Σ)/M=2.760e-2 Eth+/Ucold=2.954e-2
+
+real	1m44.356s
+user	1m2.905s
+sys	0m0.065s

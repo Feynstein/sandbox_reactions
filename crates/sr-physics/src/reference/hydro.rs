@@ -31,7 +31,11 @@
 //! cell as the step found it (κ = κ₀(1 + X_H) plus κ_dust Z_met where T < T_dust, §2.4.2), added in the update after the
 //! flux differences and gravity's source; E is left as it is, so the work comes out of the thermal energy. The predictor
 //! is not kicked: F already lags a step, so the force is first order in time either way, and the one-step difference a
-//! force makes is Δt·f in each cell, nothing else.
+//! force makes is Δt·f in each cell, nothing else. The work is capped at the heat the cell holds above its floor (§0.5
+//! [M0-D58]): with the updated cell's momentum p₀, its thermal energy Σ(ε_th − T_floor/μ) = A and the impulse d = Δt·f,
+//! the cell gains s·d, s = min(1, s*) with s* the root of |p₀ + s d|² − |p₀|² = 2ΣA (0 when A ≤ 0) — `push_share`. Where
+//! a_r T⁴ is far above the gas's heat (the radiation energy is not in E), the uncapped push took ε_th below the floor and
+//! P8's refill fed it back, step after step, to NaN (M0-D58).
 //!
 //! A cell below Σ_vac is read as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20); a cell and its
 //! four neighbours all below Σ_vac are left as they are, so empty space is not filled by the floor.
@@ -307,6 +311,29 @@ impl Hydro {
             }
         }
         [kappa * sigma * fx / self.c_sb, kappa * sigma * fy / self.c_sb]
+    }
+
+    /// The share s ∈ [0, 1] of the impulse `d` the updated cell `u` can pay for (§0.5 [M0-D58]): the push's work
+    /// (|p₀ + s d|² − |p₀|²)/2Σ at most the cell's thermal energy above its floor, A = Σ(ε_th − T_floor/μ); 0 when A is not
+    /// positive. The root is taken in the form without cancellation on each sign of p₀·d.
+    fn push_share(&self, u: &[f64; COMPONENTS], d: [f64; 2]) -> f64 {
+        let d2 = d[0] * d[0] + d[1] * d[1];
+        if d2 == 0.0 {
+            return 1.0;
+        }
+        let sigma = u[0];
+        let x: [f64; NS] = std::array::from_fn(|s| u[4 + s] / sigma);
+        let (inv_mu, y_e) = self.thermo(&x);
+        let th = self.eos.thermal(u[3], sigma, [u[1], u[2]], y_e, Self::x_n(&x), 1.0 / inv_mu);
+        let raw = th.eps_th - th.floor_added / sigma;
+        let a = sigma * (raw - self.eos.t_floor() * inv_mu);
+        if a.is_nan() || a <= 0.0 {
+            return 0.0;
+        }
+        let q = u[1] * d[0] + u[2] * d[1];
+        let disc = (q * q + 2.0 * sigma * a * d2).sqrt();
+        let root = if q >= 0.0 { 2.0 * sigma * a / (q + disc) } else { (disc - q) / d2 };
+        root.min(1.0)
     }
 
     /// 1/μ and Y_e of mass fractions `x`.
@@ -674,8 +701,10 @@ impl Hydro {
                 // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
                 if let Some((fx, fy)) = radiation {
                     let [ax, ay] = self.radiation_force(st, i, fx[i], fy[i]);
-                    u[1] += dt * ax;
-                    u[2] += dt * ay;
+                    let d = [dt * ax, dt * ay];
+                    let s = self.push_share(&u, d);
+                    u[1] += s * d[0];
+                    u[2] += s * d[1];
                 }
                 // Escaped, leaving (§2.8): each boundary face of a cell this step moved, its flux as the cell took it — the
                 // grid loses dt·f through a high face, −dt·f through a low one.

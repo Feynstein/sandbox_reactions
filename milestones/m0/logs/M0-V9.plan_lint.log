@@ -1,0 +1,92 @@
+== 2026-10-19T13:13:46-04:00 plan_lint · task M0-V9 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=591 failed=0 warnings=15 · blocks=256 · flow_rows=256 · verify_fences=1 · history=0 · flow=per-task · header=611/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC7: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-V18: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D53: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-D50: DONE outside the current phase and 63 lines long - stub it (§2.6)
+WARN: M0-D55: DONE outside the current phase and 53 lines long - stub it (§2.6)
+WARN: M0-D56: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-TJ2: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T123: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T125: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D51: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D57: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D52: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D54: DONE outside the current phase and 24 lines long - stub it (§2.6)
+WARN: a line in 3 blocks (M0-D60 · M0-D61 · M0-D63): '- Rating: rule (3) — a BUILD block, its cause measured, no reason from t...' - state it once in Rules and cite it
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D60 2 · M0-D61 1 · M0-D62 4
+=== GO ===
+
+== 2026-10-19T13:16:02-04:00 plan_lint · task M0-V9 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.22 s
+lint: checks=591 failed=0 warnings=13 · blocks=256 · flow_rows=256 · verify_fences=1 · history=0 · flow=per-task · header=611/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC7: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-V18: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D53: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-D50: DONE outside the current phase and 63 lines long - stub it (§2.6)
+WARN: M0-D55: DONE outside the current phase and 53 lines long - stub it (§2.6)
+WARN: M0-D56: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-TJ2: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T123: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T125: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D51: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D57: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D52: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D54: DONE outside the current phase and 24 lines long - stub it (§2.6)
+=== GO ===
+
+== 2026-10-19T15:08:19-04:00 plan_lint · task M0-V9 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=597 failed=0 warnings=13 · blocks=258 · flow_rows=258 · verify_fences=1 · history=0 · flow=per-task · header=613/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC7: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-V18: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D53: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-D50: DONE outside the current phase and 63 lines long - stub it (§2.6)
+WARN: M0-D55: DONE outside the current phase and 53 lines long - stub it (§2.6)
+WARN: M0-D56: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-TJ2: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T123: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T125: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D51: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D57: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D52: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D54: DONE outside the current phase and 24 lines long - stub it (§2.6)
+=== GO ===
+
+== 2026-10-19T15:08:36-04:00 plan_lint · task M0-V9 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=597 failed=0 warnings=13 · blocks=258 · flow_rows=258 · verify_fences=1 · history=0 · flow=per-task · header=613/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC7: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-V18: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D53: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-D50: DONE outside the current phase and 63 lines long - stub it (§2.6)
+WARN: M0-D55: DONE outside the current phase and 53 lines long - stub it (§2.6)
+WARN: M0-D56: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-TJ2: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T123: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T125: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D51: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D57: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D52: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D54: DONE outside the current phase and 24 lines long - stub it (§2.6)
+=== GO ===
+
+== 2026-10-19T15:08:48-04:00 plan_lint · task M0-V9 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=597 failed=0 warnings=13 · blocks=258 · flow_rows=258 · verify_fences=1 · history=0 · flow=per-task · header=613/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC7: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-V18: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D53: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-D50: DONE outside the current phase and 63 lines long - stub it (§2.6)
+WARN: M0-D55: DONE outside the current phase and 53 lines long - stub it (§2.6)
+WARN: M0-D56: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-TJ2: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T123: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T125: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D51: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D57: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D52: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D54: DONE outside the current phase and 24 lines long - stub it (§2.6)
+=== GO ===
+

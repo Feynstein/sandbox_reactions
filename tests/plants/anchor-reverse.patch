@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/translate.rs
++++ b/crates/sr-physics/src/observe/translate.rs
+@@ -16,7 +16,7 @@
+ use crate::registry::Physics;
+ 
+ /// §1.10.1's real masses in Suns, for the sandbox anchors `M_ign`, `M_Ch`, `M_up`, `M_BH` in this order.
+-pub const MASS_SUNS: [f64; 4] = [0.08, 1.44, 8.0, 25.0];
++pub const MASS_SUNS: [f64; 4] = [0.08, 1.44, 25.0, 8.0];
+ 
+ /// §1.10.2's real temperatures in kelvins, for the sandbox anchors `T_floor`, the Sun-like preset's T_eff, `T_H`, `T_He`,
+ /// `T_C`, `T_Ne`, `T_O`, `T_Si` in this order.

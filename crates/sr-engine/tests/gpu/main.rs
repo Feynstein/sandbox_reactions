@@ -263,3 +263,21 @@ mod jeans;
 
 /// M0-D50 — the Sun-like preset's main sequence on the shipped constants (contract §0.5 [M0-D50], §2.5.1, §2.7, §2.10).
 mod sunburn;
+
+/// M0-T65 — the calibration file, its physics hash and the refusal (contract §2.11, §3.3, §5.4's G-CAL); no GPU.
+mod calibration;
+
+/// M0-T66b — `calibrate`, items 1–2: the cold ceilings from the sheet, the `--out` merge, K9 and sigma_bh (contract §2.11, §2.6, §3.3); no GPU.
+mod calibrate_cold;
+
+/// M0-T67 — the cold ceiling holds: the sheet's sequence and limit, the ceiling's two sides, the pure Σ² radius, and one resolved grid disk held on the GPU and the twin (contract §5.1's G-CORE [M0-R4]).
+mod cold_core;
+
+/// M0-T68 — `calibrate`, items 3–4: the bisection driver on stubbed outcomes, each item's sides, the new arguments (contract §2.11, §3.3); no GPU.
+mod calibrate_bisect;
+
+/// M0-T69 — the real-equivalent translations: mass and temperature, their anchors, inverse and extensions (contract §1.10, §5.4's G-READ); no GPU.
+mod readouts;
+
+/// M0-T70 — `calibrate`, items 5–6: the order (K9), the presets' masses, the Sun's life, the top rung, the stage durations and the gas speed, on stubbed lives (contract §2.11, §1.8.2, §1.10.1); no GPU.
+mod calibrate_order;

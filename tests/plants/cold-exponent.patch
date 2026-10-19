@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/eos.rs
++++ b/crates/sr-physics/src/eos.rs
+@@ -10,7 +10,7 @@
+ use crate::registry::{Physics, RegistryError};
+ 
+ /// The ultra-relativistic exponent of the cold pressure, P ~ K₂ x^{3/2} (SM-E5).
+-const P_UR_EXPONENT: f64 = 1.5;
++const P_UR_EXPONENT: f64 = 1.6;
+ /// Points of the u(x) table (§2.3.2).
+ pub const TABLE_POINTS: usize = 512;
+ /// The table's range in x = Y_eΣ or X_nΣ (§2.3.2).

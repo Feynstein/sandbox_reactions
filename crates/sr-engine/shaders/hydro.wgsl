@@ -30,8 +30,9 @@
 // The radiation force (§2.4.4; M0-T43), when the step runs P5 (`edges.radiation`): `hydro_update` adds Δt·f to a gas
 // cell's momentum, f = κΣF/c_sb from the cell as the step found it and F as P5 left it in `side.flux` at the end of the
 // last step — the previous step's flux, since P5 runs after P4 —, after the flux differences and gravity's source; E is
-// left as it is (the work comes out of the thermal energy). The predictor is not kicked and the boundary fluxes do not
-// see it, so `hydro_edges` binds no F. The twin's `Hydro::step_forced` is the reference.
+// left as it is (the work comes out of the thermal energy), capped at the heat the cell holds above its floor (§0.5
+// [M0-D58], `push_share`). The predictor is not kicked and the boundary fluxes do not see it, so `hydro_edges` binds no F.
+// The twin's `Hydro::step_forced` is the reference.
 //
 // A cell below Σ_vac reads as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20) — the box's ghost
 // ring included, where an uploaded vacuum cell may hold Σ = 0; a cell and its four neighbours all below Σ_vac are left
@@ -225,6 +226,34 @@ fn radiation_force(cell: u32) -> vec2<f32> {
         }
     }
     return kappa * sigma * vec2<f32>(rad_flux[cell], rad_flux[n + cell]) / edges.c_sb;
+}
+
+// The share s ∈ [0, 1] of the impulse `d` the updated cell `u` can pay for (§0.5 [M0-D58]): the push's work
+// (|p₀ + s d|² − |p₀|²)/2Σ at most the thermal energy above the floor, A = Σ(ε_th − T_floor/μ); 0 when A is not
+// positive. The root is taken in the form without cancellation on each sign of p₀·d (the twin's `push_share`).
+fn push_share(u: array<f32, 14>, d: vec2<f32>) -> f32 {
+    let d2 = dot(d, d);
+    if (d2 == 0.0) {
+        return 1.0;
+    }
+    let sigma = u[0];
+    var x: array<f32, 10>;
+    for (var i = 0u; i < 10u; i++) {
+        x[i] = u[4u + i] / sigma;
+    }
+    let comp = composition(x);
+    let p0 = vec2<f32>(u[1], u[2]);
+    let a = sigma * (eps_th_raw(sigma, p0, u[3], comp.y_e, x[ID_N]) - eps_th_floor(comp.inv_mu));
+    if (!(a > 0.0)) {
+        return 0.0;
+    }
+    let q = dot(p0, d);
+    let disc = sqrt(q * q + 2.0 * sigma * a * d2);
+    var root = (disc - q) / d2;
+    if (q >= 0.0) {
+        root = 2.0 * sigma * a / (q + disc);
+    }
+    return min(root, 1.0);
 }
 
 // g at (x, y), a ghost's its edge cell's; 0 when the step runs no P2.
@@ -802,8 +831,10 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
     if (edges.radiation != 0u && !empty_here) {
         let f = radiation_force(cell);
-        u[1] += dt * f.x;
-        u[2] += dt * f.y;
+        let d = dt * f;
+        let s = push_share(u, d);
+        u[1] += s * d.x;
+        u[2] += s * d.y;
     }
     write_next(cell, u);
 }

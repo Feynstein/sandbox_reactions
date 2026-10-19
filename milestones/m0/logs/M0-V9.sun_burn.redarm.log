@@ -1,0 +1,127 @@
+==== 2026-10-19T12:52:38-04:00 sun_burn · clean · a fresh scratch copy of the tree
+== 2026-10-19T12:52:39-04:00 sun_burn · task M0-V9 · box laserax-ai :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=0 · 187.60 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-bhfz6lc1/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-bhfz6lc1/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.70s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=36.146067 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=59.022067 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 36.146: centre (299, 199) Σ 8.290 T 35.075 X_H 0.72472; T_max 35.076; bound 3334.09 of 3342.16 (0.9949 of the preset's 3351.03); sinks 0
+SR-SUNBURN step 4000 t 47.610: centre (299, 199) Σ 8.509 T 35.615 X_H 0.72141; T_max 35.618; bound 3332.84 of 3336.24 (0.9946 of the preset's 3351.03); sinks 0
+SR-SUNBURN step 5000 t 59.022: centre (299, 199) Σ 8.590 T 35.853 X_H 0.71791; T_max 35.853; bound 3331.98 of 3333.38 (0.9943 of the preset's 3351.03); sinks 0
+SR-SUNBURN X_H,c: [0.72472, 0.72141, 0.71791]; falls [0.00331, 0.00350] (each ≥ 0.001), 0.00682 over the window (≥ 0.002); least ≥ 0.5
+ok
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 22.864, L 2376.9, L_nuc 1663.7, L_nuc/L 0.7000 (band (0.5, 2.0)); T_max [35.076, 35.618, 35.853] against 0.5 T_He = 39.2
+ok
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 3334.09 of the preset's 3351.03 (0.9949), grid 3342.16, sinks 0
+SR-SUNBURN bound at step 4000: 3332.84 of the preset's 3351.03 (0.9946), grid 3336.24, sinks 0
+SR-SUNBURN bound at step 5000: 3331.98 of the preset's 3351.03 (0.9943), grid 3333.38, sinks 0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 331 filtered out; finished in 40.96s
+
+
+==== 2026-10-19T12:52:38-04:00 sun_burn · plant stall-constants · a fresh scratch copy of the tree
+planted stall-constants: tests/plants/stall-constants.patch -> assets/physics.json
+== 2026-10-19T12:52:39-04:00 sun_burn · task M0-V9 · box laserax-ai :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=101 · 215.73 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-bhfz6lc1/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-bhfz6lc1/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.68s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=32.564708 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=58.083349 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 32.565: centre (300, 200) Σ 6.493 T 29.056 X_H 0.73433; T_max 29.056; bound 3163.55 of 3235.80 (0.9441 of the preset's 3351.03); sinks 0
+SR-SUNBURN step 4000 t 45.271: centre (299, 200) Σ 6.373 T 28.777 X_H 0.73433; T_max 28.777; bound 3148.17 of 3182.70 (0.9395 of the preset's 3351.03); sinks 0
+SR-SUNBURN step 5000 t 58.083: centre (299, 200) Σ 6.210 T 28.621 X_H 0.73433; T_max 28.621; bound 3139.87 of 3154.16 (0.9370 of the preset's 3351.03); sinks 0
+SR-SUNBURN X_H,c: [0.73433, 0.73433, 0.73433]; falls [-0.00000, -0.00000] (each ≥ 0.001), -0.00000 over the window (≥ 0.002); least ≥ 0.5
+
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (962708) panicked at crates/sr-engine/tests/gpu/sunburn.rs:246:9:
+X_H,c fell -0.00000 from step 3000 to 4000, under 0.001: no steady burn
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 25.506, L 15.9, L_nuc 0.0, L_nuc/L 0.0000 (band (0.5, 2.0)); T_max [29.056, 28.777, 28.621] against 0.5 T_He = 70
+
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (964288) panicked at crates/sr-engine/tests/gpu/sunburn.rs:279:5:
+L_nuc/L = 0.0000 over the window (L 15.9, L_nuc 0.0), outside (0.5, 2.0)
+FAILED
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 3163.55 of the preset's 3351.03 (0.9441), grid 3235.80, sinks 0
+
+thread 'sunburn::the_star_stays_bound' (964290) panicked at crates/sr-engine/tests/gpu/sunburn.rs:258:9:
+the bound gas holds 0.9441 of the preset's mass at step 3000 (< 0.95)
+FAILED
+
+failures:
+
+failures:
+    sunburn::hydrogen_burns_steadily_at_the_centre
+    sunburn::it_shines_what_it_burns_and_only_hydrogen_burns
+    sunburn::the_star_stays_bound
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 331 filtered out; finished in 19.29s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-19T12:52:38-04:00 sun_burn · plant burn-runaway · a fresh scratch copy of the tree
+planted burn-runaway: tests/plants/burn-runaway.patch -> assets/physics.json
+== 2026-10-19T12:52:39-04:00 sun_burn · task M0-V9 · box laserax-ai :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=101 · 136.74 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-bhfz6lc1/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-bhfz6lc1/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.70s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-bb767fea81f24730)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=21.198199 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=34.772053 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 21.198: centre (299, 199) Σ 99.908 T 166.709 X_H 0.00000; T_max 166.709; bound 2644.43 of 2906.24 (0.7891 of the preset's 3351.03); sinks 0
+SR-SUNBURN step 4000 t 28.112: centre (299, 199) Σ 105.946 T 166.444 X_H 0.00000; T_max 166.444; bound 2642.50 of 2645.59 (0.7886 of the preset's 3351.03); sinks 0
+SR-SUNBURN step 5000 t 34.772: centre (300, 199) Σ 104.950 T 166.227 X_H 0.00000; T_max 166.227; bound 2640.48 of 2642.85 (0.7880 of the preset's 3351.03); sinks 0
+SR-SUNBURN X_H,c: [0.00000, 0.00000, 0.00000]; falls [0.00000, -0.00000] (each ≥ 0.001), 0.00000 over the window (≥ 0.002); least ≥ 0.5
+
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (933134) panicked at crates/sr-engine/tests/gpu/sunburn.rs:242:9:
+X_H,c 0.00000 < 0.5 at step 3000: the centre's hydrogen burnt out
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 13.567, L 331135.7, L_nuc 400.3, L_nuc/L 0.0012 (band (0.5, 2.0)); T_max [166.709, 166.444, 166.227] against 0.5 T_He = 39.2
+
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (957130) panicked at crates/sr-engine/tests/gpu/sunburn.rs:277:9:
+T_max 166.709 ≥ 0.5 T_He = 39.2 at step 3000: helium can burn
+FAILED
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 2644.43 of the preset's 3351.03 (0.7891), grid 2906.24, sinks 0
+
+thread 'sunburn::the_star_stays_bound' (957132) panicked at crates/sr-engine/tests/gpu/sunburn.rs:258:9:
+the bound gas holds 0.7891 of the preset's mass at step 3000 (< 0.95)
+FAILED
+
+failures:
+
+failures:
+    sunburn::hydrogen_burns_steadily_at_the_centre
+    sunburn::it_shines_what_it_burns_and_only_hydrogen_burns
+    sunburn::the_star_stays_bound
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 331 filtered out; finished in 127.58s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

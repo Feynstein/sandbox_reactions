@@ -11,6 +11,7 @@
 //! sums (≈ 10⁻⁷) — the max itself is exact. Bit-identity across runs: exact.
 
 use super::device;
+use sr_engine::dump::Dump;
 use sr_engine::gpu::Gpu;
 use sr_engine::state::{Booking, State, WorldConfig, CHANNELS, N_CHANNELS, SPECIES};
 use sr_engine::step::dt::{DtReport, NonFinite, GUARD_EVERY};
@@ -275,4 +276,62 @@ fn the_guard_names_a_nan_fraction_that_p8_would_renormalise_away() {
         let (b, a) = (start[ch * cells + i], planes[ch * cells + i]);
         assert_eq!(a.to_bits(), b.to_bits(), "(20, 10) {}: {b} → {a}, P8 renormalised a NaN cell", CHANNELS[ch]);
     }
+}
+
+#[test]
+fn a_run_ending_between_two_scans_exits_5_on_a_non_finite_world() {
+    // M0-D59: P9 scans only the step indices ≡ 0 (mod 64); `headless` also scans the state after the run's last step. A
+    // scene with every physics off (P8 and P9 only, so a planted value stays at its cell), run 3 steps to a dump; a NaN
+    // energy planted at (25, 25) in it; the dump resumed for 5 steps (indices 3–7: no scan of P9's between) and by
+    // `--until` (the same run, ended by its condition) → exit 5, the line naming step 7, the cell and the channel; the
+    // unplanted dump over the same 5 steps → exit 0 and `SR-HEADLESS DONE`.
+    let _gpu = device();
+    let root = std::env::temp_dir().join(format!("sr-dt-{}-last-scan", std::process::id()));
+    let _ = std::fs::remove_dir_all(&root);
+    std::fs::create_dir_all(&root).unwrap();
+    let scene = root.join("block.json");
+    std::fs::write(
+        &scene,
+        r#"{"version": 1, "world": {"width": 64, "height": 64, "edge": "leave"},
+            "switches": {"gravity": false, "hydro": false, "heat": false, "reactions": false, "neutrinos": false, "sinks": false},
+            "objects": [{"kind": "rect", "x0": 20, "y0": 20, "w": 10, "h": 10, "sigma": 1.0, "t": 2.0,
+                         "composition": {"H": 1.0}, "v": [0, 0]}]}"#,
+    )
+    .unwrap();
+    let headless = |extra: &[&str]| {
+        let mut args: Vec<String> = ["--scene", &scene.display().to_string()].iter().map(|s| s.to_string()).collect();
+        args.extend(extra.iter().map(|s| s.to_string()));
+        if let Ok(a) = std::env::var("SR_TEST_ADAPTER") {
+            args.extend(["--adapter".to_string(), a]);
+        }
+        sr_engine::headless::run_captured(&args)
+    };
+    let (start, clean_file, nan_file) = (root.join("start"), root.join("clean.bin"), root.join("nan.bin"));
+    assert_eq!(headless(&["--steps", "3", "--out", &start.display().to_string()]).0, 0);
+    let mut dump = Dump::read(&start.join("dumps").join("s_3.bin")).unwrap();
+    assert_eq!(dump.step, 3);
+    dump.write(&clean_file).unwrap();
+    let energy = CHANNELS.iter().position(|&n| n == "energy").unwrap();
+    let cells = dump.world.cells();
+    assert!(dump.planes[energy * cells..(energy + 1) * cells].iter().all(|v| v.is_finite()), "the start is finite");
+    dump.planes[energy * cells + 25 * 64 + 25] = f32::NAN;
+    dump.write(&nan_file).unwrap();
+
+    let (clean, nan) = (clean_file.display().to_string(), nan_file.display().to_string());
+    let (code, lines) = headless(&["--load-dump", &clean, "--steps", "5"]);
+    assert_eq!(code, 0, "{lines:?}");
+    assert!(lines.last().unwrap().starts_with("SR-HEADLESS DONE steps=5 "), "{lines:?}");
+
+    let want = "SR-ERROR non-finite value in the state at step 7, cell (25, 25), channel energy";
+    let (code, lines) = headless(&["--load-dump", &nan, "--steps", "5"]);
+    assert_eq!(code, 5, "a run ending at step 7 read a non-finite world as finite: {lines:?}");
+    assert_eq!(lines.last().unwrap(), want);
+    assert!(lines.iter().all(|l| !l.starts_with("SR-HEADLESS DONE")), "{lines:?}");
+
+    // The same planted value through an `--until` run, the condition met before the next scan (M0-D58's repro).
+    let (code, lines) = headless(&["--load-dump", &nan, "--until", "sim_time:0.0000001"]);
+    assert_eq!(code, 5, "{lines:?}");
+    let last = lines.last().unwrap();
+    assert!(last.starts_with("SR-ERROR non-finite value in the state at step ") && last.ends_with("cell (25, 25), channel energy"), "{last}");
+    let _ = std::fs::remove_dir_all(&root);
 }

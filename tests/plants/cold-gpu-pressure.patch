@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/eos.wgsl
++++ b/crates/sr-engine/shaders/eos.wgsl
+@@ -66,7 +66,7 @@
+     if (x <= 0.0) {
+         return 0.0;
+     }
+-    return k1 * x * x / (1.0 + k1 * sqrt(x) / k2);
++    return 0.9 * k1 * x * x / (1.0 + k1 * sqrt(x) / k2);
+ }
+ 
+ // u(x) of table `t` (TABLE_E or TABLE_N), interpolated log-log as ColdTable::u; 0 for x ≤ 0.

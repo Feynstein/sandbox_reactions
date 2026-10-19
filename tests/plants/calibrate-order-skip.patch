@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -652,7 +652,7 @@
+     }
+     if let (Some(ch), Some(tov)) = (item("m_ch_sb"), item("m_tov_sb")) {
+         let ratio = tov / ch;
+-        if ch >= tov || !(K9_RATIO.0..=K9_RATIO.1).contains(&ratio) {
++        if ch >= tov {
+             return fail(format!(
+                 "m_ch_sb {ch:.1}, m_tov_sb {tov:.1}, m_tov/m_ch {ratio:.3} — needs m_ch < m_tov and the ratio in [{:.1}, {:.1}]",
+                 K9_RATIO.0, K9_RATIO.1

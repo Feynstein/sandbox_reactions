@@ -1,0 +1,45 @@
+== 2026-10-19T08:27:49-04:00 build[native] · task M0-T65 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-19T08:27:49-04:00 build[wasm] · task M0-T65 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 7.08 s
+build wasm: 1.99.0 in 7 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+
+-- build[native] · exit=1 · 15.31 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+   |
+64 |     for block in msg.chunks_exact(64) {
+   |                      ^^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<64>().0`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+   = note: `-D clippy::chunks-exact-to-as-chunks` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::chunks_exact_to_as_chunks)]`
+
+error: using `chunks_exact` with a constant chunk size
+  --> crates/sr-physics/src/calibration.rs:66:32
+   |
+66 |         for (i, word) in block.chunks_exact(4).enumerate() {
+   |                                ^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<4>().0.iter()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+
+error: using `chunks_exact_mut` with a constant chunk size
+  --> crates/sr-physics/src/calibration.rs:96:30
+   |
+96 |     for (bytes, word) in out.chunks_exact_mut(4).zip(h) {
+   |                              ^^^^^^^^^^^^^^^^^^^ help: consider using `as_chunks_mut` instead: `as_chunks_mut::<4>().0.iter_mut()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+
+error: could not compile `sr-physics` (lib) due to 3 previous errors
+=== NO-GO: cargo clippy -D warnings failed ===
+
+== 2026-10-19T08:29:56-04:00 build[native] · task M0-T65 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-19T08:29:56-04:00 build[wasm] · task M0-T65 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.39 s
+build wasm: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+
+-- build[native] · exit=0 · 4.79 s
+build native: 1.99.0 in 5 s, target /home/ybelanger/private/sandbox_reactions/build/target (2.7G)
+=== GO ===
+

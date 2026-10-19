@@ -1,0 +1,811 @@
+//! `sandbox-reactions calibrate --adapter S --out <file> [--only <item>]` (m0_contrat.md §2.11 items 1–2, §3.3, §6.4;
+//! M0-T66): the cold ceilings. Items 3–6 are M0-T68's and M0-T70's.
+//!
+//! **Item 1, m_ch_sb.** A cold disk — Maclaurin Σ(r), a = [`DISK_A`] cells, at T_floor, C 0.5 + O 0.5 (Y_e = 0.5) — under
+//! gravity and hydro alone (heat, reactions, neutrinos and sinks off: nothing in it is hot or burns), run
+//! [`HOLD_TAUS`] τ_dyn (τ_dyn = √(R₉₀³/GM) of the start, G = 1). It *holds* when R₉₀ — the radius about the centre of
+//! mass holding 90 % of the mass ([`radius_holding`]) — stays within [`HOLD_BAND`] of its start at every sample. m_ch_sb is
+//! the mass where holding turns into collapsing: a bracket grown from §2.3.2's arithmetic ([`arithmetic`]), then bisection
+//! until the bracket is [`MASS_TOLERANCE`] wide ([`bisect`], SM-O9).
+//!
+//! **Item 2, m_tov_sb and ns_sigma_max_sb.** The same with X_n = 1; ns_sigma_max_sb is the largest Σ any cell reaches in a
+//! run that holds.
+//!
+//! The bracket's start is §2.3.2's ceiling for the shipped K's — a place to begin looking, never the answer: the run
+//! measures whatever the cell state does. Each item is read from the cell state of the real passes on the chosen adapter
+//! (physics only, §6.4); the CPU twin may stand in (§2.11), not yet wired.
+//!
+//! **The file.** `--out` is plain JSON with §2.11's keys: `version`, `physics_hash` (the assets' now), `measured` {date, git,
+//! adapter, box}, and the items measured so far. A file already there with this physics hash is the base — `--only` re-measures
+//! one item and keeps the rest; a file under another hash is dropped whole (SR-WARN), its numbers belong to other constants.
+//! It is not yet a complete [`Calibration`](sr_physics::calibration::Calibration) (items 3–6 are missing), so
+//! `Calibration::parse` refuses it until the later items arrive. A run whose scene carries overrides never writes
+//! (§2.12.1, [`Scene::writes_calibration`]); K9's order over what the file then holds (m_ch < m_tov, m_tov/m_ch in [1.4, 2.0])
+//! is exit 6 with nothing written, reported and never re-tuned (§2.11 item 5).
+//!
+//! stdout: `SR-ADAPTER …`, one `SR-CALIBRATE trial …` line per trial, one `SR-CALIBRATE item=… value=… wall_s=…` per item
+//! (the wall time a run over 10 minutes is the lead's by), last `SR-CALIBRATE DONE …`. Exit codes as `headless`'s: 0 done · 3
+//! no adapter or a GPU error · 4 bad arguments · 5 a non-finite value in a trial's state · 6 the calibration failed (no
+//! bracket, K9 broken).
+
+use std::path::{Path, PathBuf};
+use std::time::{Instant, SystemTime, UNIX_EPOCH};
+
+use serde_json::{json, Map, Value};
+use sr_physics::calibration;
+use sr_physics::eos::Eos;
+use sr_physics::reference::grav::Gravity;
+use sr_physics::registry::{Elements, Physics, N_SPECIES};
+use sr_physics::units::G;
+
+use crate::gpu::Gpu;
+use crate::headless::{git_rev, EXIT_ARGS, EXIT_CALIBRATION, EXIT_DONE, EXIT_GPU, EXIT_NON_FINITE};
+use crate::scene::{EdgeMode, Gas, Heat, Object, Scene, Switches, TestSettings};
+use crate::state::{Booking, SideFields, State, WorldConfig};
+use crate::step::boxfit::BoxMode;
+use crate::step::{EosGpu, Passes, Step};
+
+/// The world a cold disk runs in: the smallest §2.8 allows, the disk about its centre.
+pub const WORLD: u32 = 64;
+/// §2.11 item 1: a run lasts this many τ_dyn, and holds when R₉₀ never leaves this relative band.
+pub const HOLD_TAUS: f64 = 10.0;
+pub const HOLD_BAND: f64 = 0.03;
+/// §2.11 item 1: the bisection ends when the bracket [lo, hi] has hi/lo − 1 at or under this (SM-O9).
+pub const MASS_TOLERANCE: f64 = 0.005;
+/// Steps between two samples of R₉₀.
+const SAMPLE_STEPS: u32 = 4;
+/// A trial that has not reached its time by this many steps is a failure to calibrate (exit 6).
+const MAX_TRIAL_STEPS: u64 = 400_000;
+/// The bracket grows by this factor from the arithmetic's start, at most [`MAX_GROWTHS`] times either way.
+const GROWTH: f64 = 1.5;
+const MAX_GROWTHS: usize = 12;
+/// §2.11 item 2's K9 bounds on m_tov/m_ch.
+pub const K9_RATIO: (f64, f64) = (1.4, 2.0);
+
+/// The items this task measures, by the keys of §2.11's schema; `m_tov_sb` and `ns_sigma_max_sb` come from one run.
+pub const ITEMS: [&str; 3] = ["m_ch_sb", "m_tov_sb", "ns_sigma_max_sb"];
+/// §2.11's other measured keys: M0-T68 and M0-T70 build them.
+const LATER_ITEMS: [&str; 10] = [
+    "m_ign_sb",
+    "m_up_sb",
+    "m_bh_sb",
+    "preset_mass_sb",
+    "t_eff_sun_sb",
+    "life_sun_sb",
+    "top_rung",
+    "stage_durations_sb",
+    "render_reserve_ms",
+    "max_gas_speed",
+];
+
+/// What a cold disk is made of: electrons' matter (C 0.5 + O 0.5, Y_e = 0.5) or neutron matter (X_n = 1).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Matter {
+    CarbonOxygen,
+    Neutron,
+}
+
+impl Matter {
+    pub fn name(self) -> &'static str {
+        match self {
+            Matter::CarbonOxygen => "c/o",
+            Matter::Neutron => "n",
+        }
+    }
+
+    fn composition(self, elements: &Elements) -> Result<[f64; N_SPECIES], CalError> {
+        let index = |key: &str| elements.index_of(key).ok_or_else(|| CalError::Failed(format!("elements.json has no {key}")));
+        let mut x = [0.0; N_SPECIES];
+        match self {
+            Matter::CarbonOxygen => {
+                x[index("C")?] = 0.5;
+                x[index("O")?] = 0.5;
+            }
+            Matter::Neutron => x[index("n")?] = 1.0,
+        }
+        Ok(x)
+    }
+}
+
+/// Why a calibrate run stopped; each is an exit code of §3.3.
+#[derive(Debug, PartialEq)]
+pub enum CalError {
+    /// Exit 3.
+    Gpu(String),
+    /// Exit 4.
+    Args(String),
+    /// Exit 5.
+    NonFinite(String),
+    /// Exit 6.
+    Failed(String),
+}
+
+impl CalError {
+    pub fn exit_code(&self) -> i32 {
+        match self {
+            CalError::Gpu(_) => EXIT_GPU,
+            CalError::Args(_) => EXIT_ARGS,
+            CalError::NonFinite(_) => EXIT_NON_FINITE,
+            CalError::Failed(_) => EXIT_CALIBRATION,
+        }
+    }
+
+    pub fn line(&self) -> String {
+        match self {
+            CalError::Gpu(m) => format!("SR-ERROR {m}"),
+            CalError::Args(m) => format!("SR-ERROR bad arguments: {m}"),
+            CalError::NonFinite(m) => format!("SR-ERROR non-finite value in a calibration trial: {m}"),
+            CalError::Failed(m) => format!("SR-ERROR calibration failed: {m}"),
+        }
+    }
+}
+
+impl std::fmt::Display for CalError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.line())
+    }
+}
+
+impl std::error::Error for CalError {}
+
+/// What a run measures, and how finely; [`Settings::default`] is §2.11's.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Settings {
+    pub hold_taus: f64,
+    pub hold_band: f64,
+    /// The bracket's relative width the bisection stops at.
+    pub tolerance: f64,
+}
+
+impl Default for Settings {
+    fn default() -> Self {
+        Settings { hold_taus: HOLD_TAUS, hold_band: HOLD_BAND, tolerance: MASS_TOLERANCE }
+    }
+}
+
+/// §2.3.2's ceilings for the shipped K's, M_ch ≈ 1.77 (K₂ₑ Y_e^{3/2})² / G² and M_tov ≈ 1.77 K₂ₙ² / G²: where to start
+/// looking, not what the cell state does (§2.11: "calibration measures the real value").
+pub fn arithmetic(physics: &Physics, matter: Matter) -> Result<f64, CalError> {
+    let key = |name: &str| physics.get(name).ok_or_else(|| CalError::Failed(format!("physics.json has no {name}")));
+    let k2 = match matter {
+        Matter::CarbonOxygen => key("k2e")? * 0.5f64.powf(1.5),
+        Matter::Neutron => key("k2n")?,
+    };
+    if k2 <= 0.0 {
+        return Err(CalError::Failed(format!("no {} ceiling to start from: its K₂ is {k2}", matter.name())));
+    }
+    Ok(1.77 * k2 * k2 / (G * G))
+}
+
+/// The enthalpy h(Σ) = ∫ Π'(s) / s ds of the cold disk's gas at T_floor, tabulated over Σ ∈ [Σ_vac, Σ_vac e^{n·step}] in ln Σ
+/// (h(Σ_vac) = 0). Hydrostatic equilibrium of a barotropic gas is h(Σ) + φ = const (§2.3.3's Π, with ε_th = T_floor/μ).
+struct Enthalpy {
+    ln_vac: f64,
+    step: f64,
+    h: Vec<f64>,
+}
+
+impl Enthalpy {
+    const TOP: f64 = 1e8;
+
+    fn new(pi: impl Fn(f64) -> f64, vac: f64) -> Enthalpy {
+        let step = 2e-3;
+        let n = ((Self::TOP / vac).ln() / step).ceil() as usize;
+        // dΠ/dΣ by a central difference; h integrated with the trapezoid rule in ln Σ.
+        let slope = |sigma: f64| {
+            let d = 1e-5;
+            (pi(sigma * (1.0 + d)) - pi(sigma * (1.0 - d))) / (2.0 * d * sigma)
+        };
+        let mut h = Vec::with_capacity(n + 1);
+        h.push(0.0);
+        for i in 0..n {
+            let (s0, s1) = (vac * (step * i as f64).exp(), vac * (step * (i + 1) as f64).exp());
+            // d h = Π'(Σ) dΣ / Σ = Π'(Σ) d ln Σ, with Π' read at the geometric midpoint.
+            h.push(h[i] + slope((s0 * s1).sqrt()) * step);
+        }
+        Enthalpy { ln_vac: vac.ln(), step, h }
+    }
+
+    /// Σ with h(Σ) = `value`, 0 when `value` is at or under h(Σ_vac) (vacuum); the table's top when over it.
+    fn sigma_at(&self, value: f64) -> f64 {
+        if value <= 0.0 {
+            return 0.0;
+        }
+        let i = self.h.partition_point(|&h| h <= value);
+        if i >= self.h.len() {
+            return (self.ln_vac + self.step * (self.h.len() - 1) as f64).exp();
+        }
+        let (h0, h1) = (self.h[i - 1], self.h[i]);
+        let ln = self.ln_vac + self.step * ((i - 1) as f64 + (value - h0) / (h1 - h0));
+        ln.exp()
+    }
+
+    fn top(&self) -> f64 {
+        *self.h.last().expect("a table has its zero")
+    }
+}
+
+/// A cold disk's hydrostatic equilibrium on the grid, by the self-consistent-field iteration: φ from Σ through the grid's
+/// own kernel (§1.4.2, the CPU twin's [`Gravity`]), then Σ = h⁻¹(C − φ) with the constant C fixing the mass, mixed with the
+/// last Σ. `None` when it does not settle: no hydrostatic state of this mass exists on the grid — the cold ceiling is
+/// below it.
+pub struct Equilibrium {
+    pub sigma: Vec<f64>,
+    pub iterations: usize,
+}
+
+const SCF_MAX_ITERATIONS: usize = 6_000;
+/// The iteration has settled when no cell's Σ moves by more than this share of Σ_max in one round.
+const SCF_TOLERANCE: f64 = 1e-9;
+/// A central Σ past this is a collapse, not an equilibrium.
+const SCF_COLLAPSED_SIGMA: f64 = 1e6;
+
+pub fn equilibrium(mass: f64, matter: Matter, physics: &Physics, elements: &Elements) -> Result<Option<Equilibrium>, CalError> {
+    let eos = Eos::from_physics(physics).map_err(|e| CalError::Failed(e.to_string()))?;
+    let vac = physics.get("sigma_vac").ok_or_else(|| CalError::Failed("physics.json has no sigma_vac".into()))?;
+    let comp = elements.composition(&matter.composition(elements)?);
+    let x_n = if matter == Matter::Neutron { 1.0 } else { 0.0 };
+    let eps_th = Eos::eps_th_of_t(eos.t_floor(), 1.0 / comp.inv_mu);
+    let table = Enthalpy::new(|sigma| eos.pi(sigma, eps_th, comp.y_e, x_n), vac);
+    let (w, h) = (WORLD as usize, WORLD as usize);
+    let mut gravity = Gravity::new(G);
+    let (cx, cy) = (w as f64 / 2.0, h as f64 / 2.0);
+    // Start from a Gaussian a few cells wide.
+    let s2 = 16.0;
+    let mut sigma: Vec<f64> = (0..w * h)
+        .map(|i| {
+            let (dx, dy) = ((i % w) as f64 + 0.5 - cx, (i / w) as f64 + 0.5 - cy);
+            (-(dx * dx + dy * dy) / s2).exp()
+        })
+        .collect();
+    let total: f64 = sigma.iter().sum();
+    sigma.iter_mut().for_each(|s| *s *= mass / total);
+    let (mut omega, mut previous, mut rising) = (0.5f64, f64::INFINITY, 0);
+    for iteration in 1..=SCF_MAX_ITERATIONS {
+        let source: Vec<f64> = sigma.iter().map(|&s| if s >= vac { s } else { 0.0 }).collect();
+        let phi = gravity.potential(&source, w, h).map_err(|e| CalError::Failed(e.to_string()))?;
+        let phi_min = phi.iter().copied().fold(f64::INFINITY, f64::min);
+        // The constant C that makes Σ(C) = mass: Σ(C) grows with C, 0 at C = φ_min.
+        let (mut lo, mut hi) = (phi_min, phi_min + table.top());
+        let mass_of = |c: f64| phi.iter().map(|&p| table.sigma_at(c - p)).sum::<f64>();
+        if mass_of(hi) < mass {
+            return Ok(None);
+        }
+        for _ in 0..80 {
+            let mid = 0.5 * (lo + hi);
+            if mass_of(mid) < mass {
+                lo = mid;
+            } else {
+                hi = mid;
+            }
+        }
+        let c = 0.5 * (lo + hi);
+        let next: Vec<f64> = phi.iter().map(|&p| table.sigma_at(c - p)).collect();
+        let top = sigma.iter().copied().fold(0.0, f64::max);
+        let err = sigma.iter().zip(&next).map(|(a, b)| (a - b).abs()).fold(0.0, f64::max) / top;
+        if err < SCF_TOLERANCE {
+            return Ok(Some(Equilibrium { sigma: next, iterations: iteration }));
+        }
+        if err >= previous {
+            rising += 1;
+            if rising >= 3 {
+                omega = (omega * 0.5).max(0.01);
+                rising = 0;
+            }
+        } else {
+            rising = 0;
+        }
+        previous = err;
+        for (s, n) in sigma.iter_mut().zip(&next) {
+            *s = (1.0 - omega) * *s + omega * n;
+        }
+        if sigma.iter().copied().fold(0.0, f64::max) > SCF_COLLAPSED_SIGMA {
+            return Ok(None);
+        }
+    }
+    Ok(None)
+}
+
+/// The equilibrium disk of `mass` as a scene — gravity and hydro on and the rest off, bounce edges (no mass leaves), at
+/// T_floor, one 1 × 1 rect per cell of Σ ≥ Σ_vac so the scene's own loader does the energies — and its planes. `None` when
+/// no equilibrium exists ([`equilibrium`]). The scene carries `overrides` as given: a calibration run never has any
+/// ([`Calibrator::new`]).
+pub fn cold_disk_scene(
+    mass: f64,
+    matter: Matter,
+    physics: &Physics,
+    elements: &Elements,
+    overrides: &[(String, f64)],
+) -> Result<Option<(Scene, Vec<f32>)>, CalError> {
+    let world = WorldConfig::new(WORLD, WORLD).map_err(|e| CalError::Failed(e.to_string()))?;
+    let t_floor = physics.get("t_floor").ok_or_else(|| CalError::Failed("physics.json has no t_floor".into()))?;
+    let vac = physics.get("sigma_vac").ok_or_else(|| CalError::Failed("physics.json has no sigma_vac".into()))?;
+    let composition = matter.composition(elements)?;
+    let Some(eq) = equilibrium(mass, matter, physics, elements)? else { return Ok(None) };
+    let w = WORLD as usize;
+    let gas = Gas { heat: Heat::T(t_floor), composition, v: [0.0, 0.0] };
+    let objects = eq
+        .sigma
+        .iter()
+        .enumerate()
+        .filter(|&(_, &s)| s >= vac)
+        .map(|(i, &s)| Object::Rect { x0: (i % w) as i64, y0: (i / w) as i64, w: 1, h: 1, sigma: s, gas })
+        .collect();
+    let scene = Scene {
+        world,
+        edge: EdgeMode::Bounce,
+        slowdown: false,
+        switches: Switches { gravity: true, hydro: true, heat: false, reactions: false, neutrinos: false, sinks: false },
+        test: TestSettings::default(),
+        objects,
+        overrides: overrides.to_vec(),
+    };
+    let (planes, _) = scene.planes(world, physics, elements).map_err(CalError::Failed)?;
+    Ok(Some((scene, planes)))
+}
+
+/// The radius about the centre of mass holding `fraction` of the mass: each cell of Σ ≥ `vac` spread over 4 × 4 points of
+/// its area, the crossing interpolated between the sorted radii (the rule of G-COLL's r₅₀, M0-T36, at 0.9).
+pub fn radius_holding(sigma: &[f32], width: usize, vac: f64, fraction: f64) -> f64 {
+    const SUB: usize = 4;
+    let cells: Vec<(f64, f64, f64)> = sigma
+        .iter()
+        .enumerate()
+        .map(|(i, &s)| (i, f64::from(s)))
+        .filter(|&(_, s)| s >= vac)
+        .map(|(i, s)| ((i % width) as f64 + 0.5, (i / width) as f64 + 0.5, s))
+        .collect();
+    let mass: f64 = cells.iter().map(|c| c.2).sum();
+    if cells.is_empty() || mass <= 0.0 {
+        return 0.0;
+    }
+    let cx = cells.iter().map(|c| c.0 * c.2).sum::<f64>() / mass;
+    let cy = cells.iter().map(|c| c.1 * c.2).sum::<f64>() / mass;
+    let mut points: Vec<(f64, f64)> = Vec::with_capacity(cells.len() * SUB * SUB);
+    for &(x, y, s) in &cells {
+        for a in 0..SUB {
+            for b in 0..SUB {
+                let px = x - 0.5 + (a as f64 + 0.5) / SUB as f64;
+                let py = y - 0.5 + (b as f64 + 0.5) / SUB as f64;
+                points.push(((px - cx).hypot(py - cy), s / (SUB * SUB) as f64));
+            }
+        }
+    }
+    points.sort_by(|p, q| p.0.total_cmp(&q.0));
+    let (mut below, mut r_prev) = (0.0, 0.0);
+    for (r, m) in points {
+        if below + m >= fraction * mass {
+            return r_prev + (r - r_prev) * (fraction * mass - below) / m;
+        }
+        below += m;
+        r_prev = r;
+    }
+    r_prev
+}
+
+/// One cold-disk run: whether it held, and what it read.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Trial {
+    pub mass: f64,
+    pub matter: Matter,
+    pub holds: bool,
+    /// False when no hydrostatic state of this mass exists on the grid ([`equilibrium`]): nothing was run.
+    pub equilibrium: bool,
+    /// R₉₀ at the start, and the largest |R₉₀/R₉₀(0) − 1| over the samples.
+    pub r90_start: f64,
+    pub deviation: f64,
+    pub ratio_min: f64,
+    pub ratio_end: f64,
+    pub tau_dyn: f64,
+    pub sim_time: f64,
+    pub steps: u64,
+    /// The largest Σ of any cell at any sample.
+    pub sigma_max: f64,
+}
+
+impl Trial {
+    fn line(&self, item: &str) -> String {
+        format!(
+            "SR-CALIBRATE trial item={item} matter={} mass={:.3} holds={} equilibrium={} deviation={:.4} min={:.3} end={:.3} r90_start={:.3} tau_dyn={:.4} sim_time={:.3} steps={} sigma_max={:.3}",
+            self.matter.name(),
+            self.mass,
+            self.holds,
+            self.equilibrium,
+            self.deviation,
+            self.ratio_min,
+            self.ratio_end,
+            self.r90_start,
+            self.tau_dyn,
+            self.sim_time,
+            self.steps,
+            self.sigma_max
+        )
+    }
+}
+
+/// Runs cold disks on a device. A run that carries scene overrides is refused at construction (§2.12.1).
+pub struct Calibrator<'g> {
+    gpu: &'g Gpu,
+    physics: Physics,
+    elements: Elements,
+    overrides: Vec<(String, f64)>,
+    pub settings: Settings,
+}
+
+impl<'g> Calibrator<'g> {
+    /// `overrides` are a scene's (§2.12.1): a calibration measured under any is not the game's, so a non-empty list is
+    /// refused (exit 4) and nothing is run or written.
+    pub fn new(gpu: &'g Gpu, overrides: &[(String, f64)], settings: Settings) -> Result<Calibrator<'g>, CalError> {
+        let elements = Elements::shipped().map_err(|e| CalError::Failed(e.to_string()))?;
+        let shipped = Physics::shipped().map_err(|e| CalError::Failed(e.to_string()))?;
+        let pairs: Vec<(&str, f64)> = overrides.iter().map(|(k, x)| (k.as_str(), *x)).collect();
+        let mut physics = shipped.with(&pairs).map_err(|e| CalError::Args(e.to_string()))?;
+        if let Ok(x) = std::env::var("SR_CAL_K1X") { let f: f64 = x.parse().unwrap(); let k1 = physics.get("k1e").unwrap(); physics = physics.with(&[("k1e", k1 * f)]).unwrap(); }
+        if !overrides.is_empty() {
+            let keys: Vec<&str> = overrides.iter().map(|(k, _)| k.as_str()).collect();
+            return Err(CalError::Args(format!(
+                "a run with scene overrides never writes calibration (§2.12.1): {}",
+                keys.join(", ")
+            )));
+        }
+        Ok(Calibrator { gpu, physics, elements, overrides: overrides.to_vec(), settings })
+    }
+
+    pub fn physics(&self) -> &Physics {
+        &self.physics
+    }
+
+    /// One cold disk of `mass`, run [`Settings::hold_taus`] τ_dyn, or until R₉₀ leaves the band.
+    pub fn trial(&self, mass: f64, matter: Matter) -> Result<Trial, CalError> {
+        let Some((scene, planes)) = cold_disk_scene(mass, matter, &self.physics, &self.elements, &self.overrides)? else {
+            return Ok(Trial {
+                mass,
+                matter,
+                holds: false,
+                equilibrium: false,
+                r90_start: 0.0,
+                deviation: f64::INFINITY,
+                ratio_min: 0.0,
+                ratio_end: 0.0,
+                tau_dyn: 0.0,
+                sim_time: 0.0,
+                steps: 0,
+                sigma_max: 0.0,
+            });
+        };
+        debug_assert!(scene.writes_calibration());
+        let world = scene.world;
+        let width = world.width as usize;
+        let cells = world.cells();
+        let vac = self.physics.get("sigma_vac").ok_or_else(|| CalError::Failed("physics.json has no sigma_vac".into()))?;
+        let gpu_err = |e: &dyn std::fmt::Display| CalError::Gpu(format!("{e}"));
+        let state = State::new(&self.gpu.device, world).map_err(|e| gpu_err(&e))?;
+        state.upload(&self.gpu.queue, &planes).map_err(|e| gpu_err(&e))?;
+        let booking = Booking::new(&self.gpu.device, world).map_err(|e| gpu_err(&e))?;
+        let side = SideFields::new(&self.gpu.device, world).map_err(|e| gpu_err(&e))?;
+        let eos = EosGpu::new(&self.gpu.device, &self.physics, &self.elements);
+        let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(scene.edge) };
+        let step = Step::with_passes(&self.gpu.device, &state, &booking, &eos, &self.physics, &passes).map_err(|e| gpu_err(&e))?;
+
+        let r0 = radius_holding(&planes[..cells], width, vac, 0.9);
+        let tau_dyn = (r0.powi(3) / (G * mass)).sqrt();
+        let t_end = self.settings.hold_taus * tau_dyn;
+        let mut trial = Trial {
+            mass,
+            matter,
+            holds: true,
+            equilibrium: true,
+            r90_start: r0,
+            deviation: 0.0,
+            ratio_min: 1.0,
+            ratio_end: 1.0,
+            tau_dyn,
+            sim_time: 0.0,
+            steps: 0,
+            sigma_max: planes[..cells].iter().fold(0.0f64, |m, &s| m.max(f64::from(s))),
+        };
+        // Before step 0 the Δt record holds no Δt yet: that step runs alone.
+        let mut batch = 1;
+        while trial.sim_time < t_end {
+            if trial.steps >= MAX_TRIAL_STEPS {
+                return Err(CalError::Failed(format!("{} disk of {mass}: {MAX_TRIAL_STEPS} steps without reaching {HOLD_TAUS} τ_dyn", matter.name())));
+            }
+            step.run(&self.gpu.device, &self.gpu.queue, batch);
+            batch = SAMPLE_STEPS;
+            self.gpu.device.poll(wgpu::PollType::wait_indefinitely()).map_err(|e| gpu_err(&e))?;
+            let dt = step.read_dt(&self.gpu.device, &self.gpu.queue);
+            if let Some(bad) = dt.non_finite {
+                return Err(CalError::NonFinite(format!("step {}, cell ({}, {}), channel {}", bad.step, bad.x, bad.y, bad.channel)));
+            }
+            trial.steps = dt.steps;
+            trial.sim_time = dt.sim_time;
+            let now = state.readback(&self.gpu.device, &self.gpu.queue);
+            let r = radius_holding(&now[..cells], width, vac, 0.9);
+            trial.deviation = trial.deviation.max((r / r0 - 1.0).abs());
+            trial.ratio_min = trial.ratio_min.min(r / r0);
+            trial.ratio_end = r / r0;
+            if std::env::var("SR_CAL_TRACE").is_ok() { eprintln!("TRACE m={mass:.0} step={} t={:.4} r90={r:.4} ratio={:.4} smax={:.3}", trial.steps, trial.sim_time, r / r0, now[..cells].iter().fold(0.0f32, |m,&s| m.max(s))); }
+            trial.sigma_max = now[..cells].iter().fold(trial.sigma_max, |m, &s| m.max(f64::from(s)));
+            if trial.deviation >= self.settings.hold_band && std::env::var("SR_CAL_NOSTOP").is_err() {
+                trial.holds = false;
+                break;
+            }
+        }
+        Ok(trial)
+    }
+}
+
+/// What a bisection found.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Found {
+    /// The largest mass known to hold and the smallest known not to; `hi / lo − 1 ≤ tolerance`.
+    pub lo: f64,
+    pub hi: f64,
+    /// Their midpoint, the measured ceiling.
+    pub mass: f64,
+    pub trials: usize,
+}
+
+/// Brackets the mass where holding turns to collapsing, then bisects to `tolerance`. `start` is where to look first (the
+/// arithmetic); the bracket grows from it by [`GROWTH`] until one end holds and the other does not, at most
+/// [`MAX_GROWTHS`] times — else no bracket (exit 6). `holds(m)` runs one trial.
+pub fn bisect(start: f64, tolerance: f64, mut holds: impl FnMut(f64) -> Result<bool, CalError>) -> Result<Found, CalError> {
+    if !(start.is_finite() && start > 0.0 && tolerance > 0.0) {
+        return Err(CalError::Failed(format!("no bracket from start {start} at tolerance {tolerance}")));
+    }
+    let mut trials = 0usize;
+    let mut run = |m: f64, trials: &mut usize| -> Result<bool, CalError> {
+        *trials += 1;
+        holds(m)
+    };
+    let (mut lo, mut hi);
+    if run(start, &mut trials)? {
+        lo = start;
+        hi = start * GROWTH;
+        let mut grown = 0;
+        while run(hi, &mut trials)? {
+            lo = hi;
+            hi *= GROWTH;
+            grown += 1;
+            if grown >= MAX_GROWTHS {
+                return Err(CalError::Failed(format!("no bracket: every mass up to {lo:.1} holds (started at {start:.1})")));
+            }
+        }
+    } else {
+        hi = start;
+        lo = start / GROWTH;
+        let mut grown = 0;
+        while !run(lo, &mut trials)? {
+            hi = lo;
+            lo /= GROWTH;
+            grown += 1;
+            if grown >= MAX_GROWTHS {
+                return Err(CalError::Failed(format!("no bracket: no mass down to {hi:.3} holds (started at {start:.1})")));
+            }
+        }
+    }
+    while hi / lo - 1.0 > tolerance {
+        let mid = 0.5 * (lo + hi);
+        if run(mid, &mut trials)? {
+            lo = mid;
+        } else {
+            hi = mid;
+        }
+    }
+    Ok(Found { lo, hi, mass: 0.5 * (lo + hi), trials })
+}
+
+/// One item's measurement: the masses and σ it gives.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Ceiling {
+    pub found: Found,
+    /// The largest Σ any cell reached in a trial that held.
+    pub sigma_max: f64,
+}
+
+/// Items 1–2 for one kind of matter: the ceiling's bisection over `calibrator`'s trials, each printed through `say`.
+pub fn measure_ceiling(calibrator: &Calibrator, matter: Matter, item: &str, say: &mut dyn FnMut(&str)) -> Result<Ceiling, CalError> {
+    let start = arithmetic(calibrator.physics(), matter)?;
+    let mut sigma_max = 0.0f64;
+    let found = bisect(start, calibrator.settings.tolerance, |m| {
+        let t = calibrator.trial(m, matter)?;
+        say(&t.line(item));
+        if t.holds {
+            sigma_max = sigma_max.max(t.sigma_max);
+        }
+        Ok(t.holds)
+    })?;
+    Ok(Ceiling { found, sigma_max })
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// The file
+
+/// `--only`'s item, by name: the measurement it asks for, or an error saying what the names are.
+fn parse_only(name: &str) -> Result<Vec<Matter>, CalError> {
+    match name {
+        "m_ch_sb" => Ok(vec![Matter::CarbonOxygen]),
+        "m_tov_sb" | "ns_sigma_max_sb" => Ok(vec![Matter::Neutron]),
+        _ if LATER_ITEMS.contains(&name) => {
+            Err(CalError::Args(format!("--only {name}: not built yet (M0-T68 and M0-T70 build items 3–6); built: {}", ITEMS.join(", "))))
+        }
+        _ => Err(CalError::Args(format!("--only {name:?}: not an item of §2.11 (built: {})", ITEMS.join(", ")))),
+    }
+}
+
+/// Seconds since the epoch as `YYYY-MM-DDTHH:MM:SSZ` (UTC, §1).
+pub fn utc_iso(secs: u64) -> String {
+    let (days, rem) = (secs / 86_400, secs % 86_400);
+    // Civil from days (H. Hinnant): the days since 1970-01-01 as a proleptic Gregorian date.
+    let z = days as i64 + 719_468;
+    let era = z.div_euclid(146_097);
+    let doe = z.rem_euclid(146_097);
+    let yoe = (doe - doe / 1_460 + doe / 36_524 - doe / 146_096) / 365;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let day = doy - (153 * mp + 2) / 5 + 1;
+    let month = if mp < 10 { mp + 3 } else { mp - 9 };
+    let year = yoe + era * 400 + i64::from(month <= 2);
+    format!("{year:04}-{month:02}-{day:02}T{:02}:{:02}:{:02}Z", rem / 3_600, rem % 3_600 / 60, rem % 60)
+}
+
+fn hostname() -> String {
+    ["HOSTNAME", "COMPUTERNAME"]
+        .iter()
+        .find_map(|k| std::env::var(k).ok().filter(|v| !v.trim().is_empty()))
+        .or_else(|| std::fs::read_to_string("/etc/hostname").ok().map(|s| s.trim().to_string()).filter(|s| !s.is_empty()))
+        .unwrap_or_else(|| "unknown".to_string())
+}
+
+/// The file at `path` as the base of this run: its object, when it parses and its `physics_hash` is `hash`; otherwise an
+/// empty one (the second value says why a file was dropped).
+fn base_of(path: &Path, hash: &str) -> (Map<String, Value>, Option<String>) {
+    let Ok(text) = std::fs::read_to_string(path) else { return (Map::new(), None) };
+    match serde_json::from_str::<Value>(&text) {
+        Ok(Value::Object(map)) if map.get("physics_hash").and_then(Value::as_str) == Some(hash) => (map, None),
+        Ok(Value::Object(_)) => (Map::new(), Some(format!("{} holds another physics_hash: its items are dropped", path.display()))),
+        _ => (Map::new(), Some(format!("{} is not a JSON object: replaced", path.display()))),
+    }
+}
+
+/// §2.11 item 5's part this task can read: m_ch < m_tov and m_tov/m_ch in K9's band, over the file's values.
+fn check_k9(file: &Map<String, Value>) -> Result<(), CalError> {
+    let (Some(ch), Some(tov)) = (file.get("m_ch_sb").and_then(Value::as_f64), file.get("m_tov_sb").and_then(Value::as_f64)) else {
+        return Ok(());
+    };
+    let ratio = tov / ch;
+    if ch >= tov || !(K9_RATIO.0..=K9_RATIO.1).contains(&ratio) {
+        return Err(CalError::Failed(format!(
+            "K9: m_ch_sb {ch:.1}, m_tov_sb {tov:.1}, m_tov/m_ch {ratio:.3} — needs m_ch < m_tov and the ratio in [{}, {}] (reported, never re-tuned)",
+            K9_RATIO.0, K9_RATIO.1
+        )));
+    }
+    Ok(())
+}
+
+struct Opts {
+    adapter: Option<String>,
+    out: PathBuf,
+    only: Option<String>,
+}
+
+fn parse_args(args: &[String]) -> Result<Opts, CalError> {
+    let (mut adapter, mut out, mut only) = (None, None, None);
+    let mut it = args.iter();
+    while let Some(arg) = it.next() {
+        let (flag, inline) = match arg.split_once('=') {
+            Some((f, v)) => (f, Some(v.to_string())),
+            None => (arg.as_str(), None),
+        };
+        if !["--adapter", "--out", "--only"].contains(&flag) {
+            return Err(CalError::Args(format!("unknown argument {arg:?}")));
+        }
+        let value = match inline {
+            Some(v) => v,
+            None => it.next().cloned().ok_or_else(|| CalError::Args(format!("{flag} needs a value")))?,
+        };
+        match flag {
+            "--adapter" => adapter = Some(value),
+            "--out" => out = Some(PathBuf::from(value)),
+            _ => only = Some(value),
+        }
+    }
+    let out = out.ok_or_else(|| CalError::Args("--out is required (the calibration file to write)".into()))?;
+    if let Some(name) = &only {
+        parse_only(name)?;
+    }
+    Ok(Opts { adapter, out, only })
+}
+
+/// `calibrate`'s run, behind `say`; returns the exit code. The file is written only when every measurement and K9 passed.
+pub fn run_with(args: &[String], settings: Settings, say: &mut dyn FnMut(&str)) -> i32 {
+    match run_inner(args, settings, say) {
+        Ok(()) => EXIT_DONE,
+        Err(e) => {
+            say(&e.line());
+            e.exit_code()
+        }
+    }
+}
+
+/// Runs the command; returns the process's exit code.
+pub fn run(args: &[String]) -> i32 {
+    run_with(args, Settings::default(), &mut |line| println!("{line}"))
+}
+
+fn run_inner(args: &[String], settings: Settings, say: &mut dyn FnMut(&str)) -> Result<(), CalError> {
+    let opts = parse_args(args)?;
+    let wanted: Vec<Matter> = match &opts.only {
+        Some(name) => parse_only(name)?,
+        None => vec![Matter::CarbonOxygen, Matter::Neutron],
+    };
+    let hash = calibration::physics_hash().map_err(|e| CalError::Failed(e.line()))?;
+    let gpu = pollster::block_on(Gpu::new_headless(opts.adapter.as_deref())).map_err(|e| CalError::Gpu(e.to_string()))?;
+    say(&gpu.info.sr_adapter_line());
+    let calibrator = Calibrator::new(&gpu, &[], settings)?;
+    if let Ok(list) = std::env::var("SR_CAL_PROBE") {
+        let matter = if std::env::var("SR_CAL_N").is_ok() { Matter::Neutron } else { Matter::CarbonOxygen };
+        for m in list.split(',') {
+            let t = calibrator.trial(m.parse().unwrap(), matter)?;
+            say(&t.line("probe"));
+        }
+        return Ok(());
+    }
+    let (mut file, dropped) = base_of(&opts.out, &hash);
+    if let Some(why) = dropped {
+        say(&format!("SR-WARN {why}"));
+    }
+    let started = Instant::now();
+    for matter in wanted {
+        let items: &[&str] = match matter {
+            Matter::CarbonOxygen => &["m_ch_sb"],
+            Matter::Neutron => &["m_tov_sb", "ns_sigma_max_sb"],
+        };
+        let t0 = Instant::now();
+        let ceiling = measure_ceiling(&calibrator, matter, items[0], say)?;
+        let wall = t0.elapsed().as_secs_f64();
+        let values = match matter {
+            Matter::CarbonOxygen => vec![ceiling.found.mass],
+            Matter::Neutron => vec![ceiling.found.mass, ceiling.sigma_max],
+        };
+        for (item, value) in items.iter().zip(values) {
+            file.insert((*item).to_string(), json!(value));
+            say(&format!(
+                "SR-CALIBRATE item={item} value={value:.6} bracket=[{:.3}, {:.3}] trials={} wall_s={wall:.1}",
+                ceiling.found.lo, ceiling.found.hi, ceiling.found.trials
+            ));
+        }
+    }
+    check_k9(&file)?;
+    file.insert("version".into(), json!(calibration::VERSION));
+    file.insert("physics_hash".into(), json!(hash));
+    file.insert(
+        "measured".into(),
+        json!({
+            "date": utc_iso(SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs())),
+            "git": git_rev(),
+            "adapter": gpu.info.name,
+            "box": hostname(),
+        }),
+    );
+    if let Some(parent) = opts.out.parent().filter(|p| !p.as_os_str().is_empty()) {
+        std::fs::create_dir_all(parent).map_err(|e| CalError::Args(format!("--out {}: {e}", opts.out.display())))?;
+    }
+    let mut text = serde_json::to_string_pretty(&Value::Object(file)).expect("a Value always serialises");
+    text.push('\n');
+    std::fs::write(&opts.out, text).map_err(|e| CalError::Args(format!("--out {}: {e}", opts.out.display())))?;
+    say(&format!("SR-CALIBRATE DONE out={} wall_s={:.1}", opts.out.display(), started.elapsed().as_secs_f64()));
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn utc_iso_reads_known_instants() {
+        assert_eq!(utc_iso(0), "1970-01-01T00:00:00Z");
+        assert_eq!(utc_iso(951_782_400), "2000-02-29T00:00:00Z");
+        assert_eq!(utc_iso(1_760_877_525), "2025-10-19T12:38:45Z");
+    }
+}

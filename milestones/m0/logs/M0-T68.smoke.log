@@ -1,0 +1,7 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.295018 until=unmet
+SR-ERROR calibration failed: the run at mass 300.000 reached no ending within --max-steps 40 — reported, not guessed
+
+real	0m3.115s
+user	0m0.508s
+sys	0m0.397s

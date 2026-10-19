@@ -1,0 +1,7 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -615,3 +615,3 @@
+     // would exit 0 on a non-finite world. The scan finds what P9's would, by cell then channel, and names the last step.
+-    if done > 0 {
++    if done > u64::MAX { // planted: the last step is never scanned
+         let planes = state.readback(&gpu.device, &gpu.queue);

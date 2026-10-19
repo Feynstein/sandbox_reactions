@@ -3,8 +3,8 @@
 Written by M0-T64 (2026-10-16) from `milestones/m0/m0_contrat.md` §1.9, §2.9, §2.12.2, §3.3 and the handoffs of
 M0-T56–M0-T63. The contract owns every number, threshold, formula and string; this page names the parts and points to
 the section that fixes them, never a value §1.9, §2.7 or `assets/calibration.json` holds. What waits for later lots is
-said where it comes up: the translations to real units (§1.10), the predicted ending (§1.9.5), the selected star
-(§1.9.6) and the readout strings (§4) are not built yet — M0-T69, M0-T72, M0-T73 and the drawing lots own them.
+said where it comes up: the mass and temperature translations (§1.10.1–§1.10.3) are § Translations (M0-T69, M0-T71); the age clock, the predicted
+ending (§1.9.5), the selected star (§1.9.6) and the readout strings (§4) are not built yet — M0-T72, M0-T73 and the drawing lots own them.
 
 The one rule (I2, G-WATCH): **observers watch, never drive.** Everything here reads what a step produced and changes
 nothing in it. The boundary is in `docs/agent/architecture.md` § The observer boundary.
@@ -142,7 +142,32 @@ a run resumed from a dump counts on from the dump's step — while `summary.json
   ruling, contract §0.5 [M0-T62]: the 0.1|W| Sun-like cloud turns round at Σ_max 62.7 and never meets 100 ×. The preset's own
   collapse to ignition and the heat-on case are G-END's and G-STAGES's to grade, not proven by `jeans`.
 
+## Translations (§1.10.1–§1.10.3, G-READ, M0-T69; `crates/sr-physics/src/observe/translate.rs`)
+Display functions only: **the physics never reads them** (G-WATCH, I2). A readout, the inspector and the colours show a sandbox number through
+them; nothing a step computes depends on one. They live in `sr_physics::observe::translate` beside the observers and read calibration
+(`assets/calibration.json`) and `physics.json`, never the grid.
+- **Mass → Suns** (`MassScale::new(m_ign, m_ch, m_up, m_bh)`; `to_suns`, `to_sb`). Four sandbox anchors — calibration's `m_ign_sb`, `m_ch_sb`,
+  `m_up_sb`, `m_bh_sb` — paired with the contract's real masses (`MASS_SUNS`, §1.10.1's 0.08, 1.44, 8, 25). `to_sb` is the exact inverse: the preset
+  masses are `to_sb` of `PRESET_SUNS` (1, 15, 40 Suns, §2.10), which is how `calibrate` writes `preset_mass_sb`. A mass of 0 reads 0.
+- **Temperature → kelvins** (`TempScale::new([t_floor, t_eff_sun_sb, t_h, t_he, t_c, t_ne, t_o, t_si])`; `to_kelvin`, `to_sb`). Eight sandbox
+  anchors — `t_floor` and the ladder from `physics.json`, the Sun-like preset's T_eff from calibration — paired with `TEMP_KELVIN` (§1.10.2's
+  10 K, 5,772 K and the ladder). At and below T_floor the reading is 10 K, and the inverse of any reading at or under 10 K is T_floor
+  (the map is flat there, so "strictly increasing" is graded from T_floor up).
+- **Surface temperature** (`surface_temperature_sb(l, r, a_r, c_sb)`; `Translations::surface_kelvin(l, r)`): T_eff from L = 2πRσT⁴ with
+  σ = a_r c_sb / 4 (§1.10.3), then translated. A luminosity or radius not positive reads 0.
+- **`Translations::new(&Calibration, &Physics)`** builds both scales (and σ's two constants) once; it is what the readouts, the inspector and the
+  colours hold. A set of anchors that is not finite and positive, or not strictly increasing on either side, is `TranslateError` — which is how
+  §1.10.2's "calibration fails otherwise" reads here.
+- **The segment rule, declared at M0-T69 (cheap to reverse).** The contract says "piecewise log-linear"; it is read as **ln y straight in ln x**
+  on each segment (a power law per segment), the only reading that keeps both sides positive across nine orders of magnitude. The end segments are
+  extended (a power law below M_ign and above M_BH; the O–Si segment above T_Si). A midpoint therefore reads the *geometric* mean of the real
+  ends, never the linear one — the check `readouts` makes.
+- **The anchors' values are the contract's and calibration's** — read `MASS_SUNS`, `TEMP_KELVIN`, §1.10 and `assets/calibration.json`; this page
+  copies none. The scope `readouts` (`testing.md`) runs on `Calibration::test_calibration`, and its real-calibration case stays **NOT PROVEN**
+  until M0-V9's run writes `assets/calibration.json`.
+- **Not wired yet.** summary.json's `mass_suns` and the readout strings come with M0-T72, M0-T73 and the drawing lots; nothing in the engine
+  consumes `Translations` today but `calibrate` (the preset masses, the Sun-like T_eff check). The age clock (§1.10.4) is not built.
+
 ## What is not here yet
-The mass → Suns, temperature → kelvins and age → years translations (§1.10; M0-T69–M0-T73), the predicted ending and its
-"close call" (§1.9.5), the selected star (§1.9.6), the labels (§4.6) and the readout panel (the drawing lots). When they
-land their sections go on this page; a number that calibration holds is pointed to, never copied.
+The age → years clock (§1.10.4; M0-T73), the predicted ending and its "close call" (§1.9.5), the selected star (§1.9.6), the labels (§4.6) and the
+readout panel (the drawing lots). When they land their sections go on this page; a number that calibration holds is pointed to, never copied.

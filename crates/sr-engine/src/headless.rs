@@ -23,8 +23,9 @@
 //! stdout: the first line `SR-ADAPTER …`; the last, when the run ends without an error (exit 0 or 2), `SR-HEADLESS DONE
 //! steps=<n> sim_time=<t> until=<met|unmet|none>` (`none` for a run on `--steps`, which `--max-steps` may cut: `unmet`); every error line starts `SR-ERROR`, every warning `SR-WARN`.
 //! Exit codes: 0 done · 2 `--steps` or `--until` not reached within `--max-steps` · 3 no adapter or a GPU error · 4 bad arguments
-//! or scene · 5 a non-finite value in the state, found by P9's guard every 64 steps and read after each submission
-//! (the message names the step, cell and channel) · 101 a panic (Rust's own). 6 (calibration) arrives with its check.
+//! or scene · 5 a non-finite value in the state, found by P9's guard every 64 steps and read after each submission, or by
+//! the scan of the run's last step (M0-D59) (the message names the step, cell and channel) · 6 a calibration out of date, invalid or missing for a scene that names a preset (§2.11, G-CAL, M0-T65:
+//! [`calibration_gate`]; with no calibration embedded yet that gate has nothing to read) · 101 a panic (Rust's own).
 //!
 //! `--cpu-reference` (M0-T37) runs the CPU f64 twin ([`sr_physics::reference::Twin`]) from the same scene in place of the
 //! GPU, worlds up to 128 × 128 (exit 4 above), and writes the same summary.json and dumps: no adapter is touched, so the
@@ -37,6 +38,7 @@ use std::sync::Arc;
 use std::time::Instant;
 
 use serde_json::json;
+use sr_physics::calibration;
 use sr_physics::reference::hydro::Edge;
 use sr_physics::reference::{Switches as TwinSwitches, Twin, GUARD_EVERY};
 use sr_physics::registry::{Elements, Physics, Reactions};
@@ -44,7 +46,7 @@ use sr_physics::registry::{Elements, Physics, Reactions};
 use crate::dump::{dump_state, load_dump, Dump, Resume};
 use crate::gpu::Gpu;
 use crate::ledger::{take_booked, At, Ledger};
-use crate::scene::{EdgeMode, Scene, Switches};
+use crate::scene::{EdgeMode, Object, Scene, Switches};
 use crate::state::{Booking, SideFields, State, WorldConfig, CHANNELS};
 use crate::step::boxfit::BoxMode;
 use crate::step::heat::HeatSetup;
@@ -59,6 +61,7 @@ pub const EXIT_UNMET: i32 = 2;
 pub const EXIT_GPU: i32 = 3;
 pub const EXIT_ARGS: i32 = 4;
 pub const EXIT_NON_FINITE: i32 = 5;
+pub const EXIT_CALIBRATION: i32 = sr_physics::calibration::EXIT_CALIBRATION;
 
 /// §3.3: `--max-steps` defaults to 2,000,000.
 pub const DEFAULT_MAX_STEPS: u64 = 2_000_000;
@@ -230,7 +233,7 @@ pub fn run_captured(args: &[String]) -> (i32, Vec<String>) {
     (code, lines)
 }
 
-fn git_rev() -> String {
+pub fn git_rev() -> String {
     std::process::Command::new("git")
         .args(["rev-parse", "--short", "HEAD"])
         .output()
@@ -238,6 +241,18 @@ fn git_rev() -> String {
         .filter(|o| o.status.success())
         .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
         .unwrap_or_else(|| "unknown".to_string())
+}
+
+/// The exit-5 line (§3.3): the step the value was found at, its cell and its channel's §2.2 name.
+fn non_finite_line(step: u64, x: u64, y: u64, channel: &str) -> String {
+    format!("SR-ERROR non-finite value in the state at step {step}, cell ({x}, {y}), channel {channel}")
+}
+
+/// The first non-finite value in `planes` (§2.2's channel-major layout) by cell and then channel, as P9's guard finds
+/// it: (cell, channel).
+fn first_non_finite(planes: &[f32]) -> Option<(usize, usize)> {
+    let n = planes.len() / CHANNELS.len();
+    (0..n).find_map(|i| (0..CHANNELS.len()).find(|&c| !planes[c * n + i].is_finite()).map(|c| (i, c)))
 }
 
 /// The twin's state as a dump (§2.12.3): the planes in f32 as the GPU's are, the step index and sim time, and the step's
@@ -304,18 +319,16 @@ fn run_twin(
     let wanted = args.steps.expect("--cpu-reference runs --steps");
     let target = wanted.min(args.max_steps);
     let started = Instant::now();
+    // P9's guard names the first non-finite value, by cell then channel, at the step it found it.
+    let non_finite = |twin: &Twin| {
+        twin.first_non_finite().map(|(cell, channel)| non_finite_line(twin.step_index() - 1, (cell % w) as u64, (cell / w) as u64, CHANNELS[channel]))
+    };
     for done in 0..target {
         twin.step();
-        // P9's guard, on the step indices it runs on: the first non-finite value, by cell then channel.
+        // P9's guard, on the step indices it runs on.
         if (twin.step_index() - 1).is_multiple_of(GUARD_EVERY) {
-            if let Some((cell, channel)) = twin.first_non_finite() {
-                say(&format!(
-                    "SR-ERROR non-finite value in the state at step {}, cell ({}, {}), channel {}",
-                    twin.step_index() - 1,
-                    cell % w,
-                    cell / w,
-                    CHANNELS[channel]
-                ));
+            if let Some(line) = non_finite(&twin) {
+                say(&line);
                 return EXIT_NON_FINITE;
             }
         }
@@ -329,6 +342,13 @@ fn run_twin(
         }
     }
     let wall_s = started.elapsed().as_secs_f64();
+    // The last step's state is scanned too (M0-D59): a run ending between two of P9's scans still exits 5 on a non-finite world.
+    if target > 0 {
+        if let Some(line) = non_finite(&twin) {
+            say(&line);
+            return EXIT_NON_FINITE;
+        }
+    }
     if let Some(dir) = &args.out {
         if let Err(e) = write_dump(&twin, dir) {
             say(&e);
@@ -368,15 +388,38 @@ fn run_twin(
     }
 }
 
+/// §2.11's refusal as the run sees it: `embedded` is the calibration compiled in ([`calibration::EMBEDDED`]), `names_preset`
+/// whether the scene names a preset. `Ok` for a run that needs none, and — until M0-V9 embeds a file — for a run with none
+/// to check; otherwise [`calibration::resolve`]'s verdict as `(exit 6, the SR-ERROR line)`.
+pub fn calibration_gate(embedded: Option<&str>, names_preset: bool) -> Result<(), (i32, String)> {
+    if embedded.is_none() {
+        return Ok(());
+    }
+    calibration::resolve(embedded, names_preset).map(|_| ()).map_err(|e| (e.exit_code(), e.line()))
+}
+
 /// Runs the command; returns the process's exit code.
 pub fn run(args: &[String]) -> i32 {
-    let args = match parse_args(args) {
-        Ok(a) => a,
+    match parse_args(args) {
+        Ok(a) => execute(a, None),
         Err(e) => {
             say(&format!("SR-ERROR bad arguments: {e}"));
-            return EXIT_ARGS;
+            EXIT_ARGS
         }
-    };
+    }
+}
+
+/// A run of `scene`, built in code, under `args` ([`Args::scene`] is only the label summary.json records), and the stdout
+/// lines it printed — `calibrate`'s way to a preset cloud of a given mass (M0-T68), which a scene file cannot name (§2.12.1).
+/// The scene reads no calibration, so the gate of §2.11 is not applied: `calibrate` runs on a stale one.
+pub fn run_scene_captured(args: Args, scene: Scene) -> (i32, Vec<String>) {
+    *CAPTURE.lock().unwrap_or_else(|e| e.into_inner()) = Some(Vec::new());
+    let code = execute(args, Some(scene));
+    let lines = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).take().unwrap_or_default();
+    (code, lines)
+}
+
+fn execute(args: Args, given: Option<Scene>) -> i32 {
     // A dump to start from, read and checked before anything else (exit 4).
     let dump = match args.load_dump.as_deref().map(Dump::read).transpose() {
         Ok(d) => d,
@@ -394,7 +437,10 @@ pub fn run(args: &[String]) -> i32 {
     }
     // The scene, its world and constants and the state it starts from, all before any GPU is touched (exit 4); a dump
     // gives the world and the cells instead.
-    let prepared = load_scene(&args.scene, args.world).and_then(|scene| {
+    let mut names_preset = false;
+    let built = given.is_some();
+    let prepared = given.map_or_else(|| load_scene(&args.scene, args.world), Ok).and_then(|scene| {
+        names_preset = !built && scene.objects.iter().any(|o| matches!(o, Object::Preset { .. }));
         let physics = scene.physics()?;
         let elements = Elements::shipped().map_err(|e| e.to_string())?;
         let edge = args.edge.unwrap_or(scene.edge);
@@ -413,6 +459,12 @@ pub fn run(args: &[String]) -> i32 {
             return EXIT_ARGS;
         }
     };
+    // §2.11 (G-CAL): a scene that names a preset reads calibration, so a stale one stops the run here (exit 6) — before
+    // the registry, the GPU or any output; a scene that names none never reads it, and runs without one.
+    if let Err((code, line)) = calibration_gate(calibration::EMBEDDED, names_preset) {
+        say(&line);
+        return code;
+    }
     let reactions = match Reactions::shipped(&elements, &physics) {
         Ok(r) => r,
         Err(e) => {
@@ -545,10 +597,7 @@ pub fn run(args: &[String]) -> i32 {
         }
         let dt = step.read_dt(&gpu.device, &gpu.queue);
         if let Some(bad) = dt.non_finite {
-            say(&format!(
-                "SR-ERROR non-finite value in the state at step {}, cell ({}, {}), channel {}",
-                bad.step, bad.x, bad.y, bad.channel
-            ));
+            say(&non_finite_line(bad.step, u64::from(bad.x), u64::from(bad.y), bad.channel));
             return EXIT_NON_FINITE;
         }
         // The ledger: the booked terms since the last chunk, the summary of the state after it.
@@ -577,6 +626,16 @@ pub fn run(args: &[String]) -> i32 {
         }
     }
     let wall_s = started.elapsed().as_secs_f64();
+    // The last step's state is scanned too (M0-D59): P9 scans only every 64th step, and a run ending between two scans
+    // would exit 0 on a non-finite world. The scan finds what P9's would, by cell then channel, and names the last step.
+    if done > 0 {
+        let planes = state.readback(&gpu.device, &gpu.queue);
+        if let Some((cell, channel)) = first_non_finite(&planes) {
+            let w = world.width as usize;
+            say(&non_finite_line(first + done - 1, (cell % w) as u64, (cell / w) as u64, CHANNELS[channel]));
+            return EXIT_NON_FINITE;
+        }
+    }
     // The final dump, always (§3.3).
     if let Some(dir) = &args.out {
         if let Err(e) = write_dump(dir) {
@@ -608,6 +667,7 @@ pub fn run(args: &[String]) -> i32 {
             "ledger": ledger.json(),
             "events": watch.events().iter().map(|e| e.json()).collect::<Vec<_>>(),
             "objects": watch.objects_json(),
+            "max_gas_speed": watch.max_gas_speed(),
             "until": {"condition": condition, "met": met},
         });
         if let Some(timing) = cost.summary() {

@@ -1,0 +1,36 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=209 sim_time=11.247249 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=167.552 ignited=false core_collapse=false ending=failed_star steps=209 sim_time=11.247 wall_s=0.6
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=273 sim_time=4.243860 until=met
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.032 ignited=true core_collapse=false ending=none steps=273 sim_time=4.244 wall_s=1.4
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=545 sim_time=11.102767 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=749.314 ignited=false core_collapse=false ending=failed_star steps=545 sim_time=11.103 wall_s=3.8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=721 sim_time=11.114563 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=1584.605 ignited=false core_collapse=false ending=failed_star steps=721 sim_time=11.115 wall_s=7.7
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1089 sim_time=15.264808 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2304.357 ignited=false core_collapse=false ending=failed_star steps=1089 sim_time=15.265 wall_s=9.0
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1697 sim_time=21.963873 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2778.844 ignited=false core_collapse=false ending=failed_star steps=1697 sim_time=21.964 wall_s=14.5
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=689 sim_time=9.063666 until=met
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3051.556 ignited=true core_collapse=false ending=none steps=689 sim_time=9.064 wall_s=7.0
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3057 sim_time=37.821504 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2912.010 ignited=false core_collapse=false ending=failed_star steps=3057 sim_time=37.822 wall_s=34.8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5809 sim_time=68.742614 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2980.967 ignited=false core_collapse=false ending=failed_star steps=5809 sim_time=68.743 wall_s=40.8
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=689 sim_time=9.091934 until=met
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3016.055 ignited=true core_collapse=false ending=none steps=689 sim_time=9.092 wall_s=4.6
+SR-CALIBRATE item=m_ign_sb value=2998.459 bracket=2980.967..3016.055 runs=10 wall_s=139.2
+SR-CALIBRATE DONE out=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/057b6088-ca8d-4f26-a8c8-cf9e0dde9e53/scratchpad/cal3.json wall_s=139.2
+
+real	2m19.252s
+user	0m40.303s
+sys	0m2.031s

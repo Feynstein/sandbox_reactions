@@ -1,0 +1,70 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.59s
+  Executable tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 11 tests
+test calibrate_order::a_preset_that_does_not_end_as_promised_is_exit_6_and_stops_the_lives ... ok
+test calibrate_order::a_t_eff_off_the_temperature_scale_or_a_sun_that_never_burned_down_is_refused ... ok
+test calibrate_order::a_table_in_order_passes_and_each_inequality_has_its_own_refusal ... ok
+test calibrate_order::render_reserve_ms_is_kept_across_a_rerun_and_the_gas_speed_bound_is_enforced_on_the_file ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=max_gas_speed value=20.0000
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-order-665157-keep/calibration.json wall_s=0.0
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=max_gas_speed value=100.0000
+SR-ERROR calibration failed: max_gas_speed 100.000: c_sb 200 must exceed twice it, 200.000 (§2.11 item 6) — reported, never re-tuned
+ok
+test calibrate_order::sigma_bh_must_not_sit_under_the_densest_holding_neutron_star ... ok
+test calibrate_order::the_command_checks_the_order_before_it_runs_any_preset_life ... SR-ERROR calibration failed: K9: m_ign_sb 3300.0 must be under m_ch_sb 3200.0 (reported, never re-tuned)
+SR-ERROR calibration failed: preset_mass_sb needs m_ign_sb, m_ch_sb, m_up_sb and m_bh_sb in the file: measure them first
+SR-ERROR bad arguments: --only render_reserve_ms: the drawing lot's `--measure-ui` run writes it (§2.11 item 7, §3.3); calibrate keeps it
+ok
+test calibrate_order::the_gas_speed_must_stay_under_half_the_speed_of_light ... ok
+test calibrate_order::the_presets_are_asked_at_the_inverse_translation_of_1_15_and_40_suns ... ok
+test calibrate_order::the_stage_durations_are_one_pair_a_life_with_the_remnant_left_out ... ok
+test calibrate_order::the_suns_life_the_top_rung_and_t_eff_come_from_the_sun_like_life ... 
+thread 'calibrate_order::the_suns_life_the_top_rung_and_t_eff_come_from_the_sun_like_life' (665168) panicked at crates/sr-engine/tests/gpu/calibrate_order.rs:169:9:
+assertion `left == right` failed: life_sun_sb 56
+  left: 5.6000000000000005
+ right: 5.6
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_order::the_tov_over_chandrasekhar_ratio_is_held_to_1_4_through_2 ... ok
+
+failures:
+
+failures:
+    calibrate_order::the_suns_life_the_top_rung_and_t_eff_come_from_the_sun_like_life
+
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 324 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 3.89s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 11 tests
+test calibrate_order::a_preset_that_does_not_end_as_promised_is_exit_6_and_stops_the_lives ... ok
+test calibrate_order::a_t_eff_off_the_temperature_scale_or_a_sun_that_never_burned_down_is_refused ... ok
+test calibrate_order::a_table_in_order_passes_and_each_inequality_has_its_own_refusal ... ok
+test calibrate_order::render_reserve_ms_is_kept_across_a_rerun_and_the_gas_speed_bound_is_enforced_on_the_file ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=max_gas_speed value=20.0000
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-order-666028-keep/calibration.json wall_s=0.0
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=max_gas_speed value=100.0000
+SR-ERROR calibration failed: max_gas_speed 100.000: c_sb 200 must exceed twice it, 200.000 (§2.11 item 6) — reported, never re-tuned
+ok
+test calibrate_order::sigma_bh_must_not_sit_under_the_densest_holding_neutron_star ... ok
+test calibrate_order::the_command_checks_the_order_before_it_runs_any_preset_life ... SR-ERROR calibration failed: K9: m_ign_sb 3300.0 must be under m_ch_sb 3200.0 (reported, never re-tuned)
+SR-ERROR calibration failed: preset_mass_sb needs m_ign_sb, m_ch_sb, m_up_sb and m_bh_sb in the file: measure them first
+SR-ERROR bad arguments: --only render_reserve_ms: the drawing lot's `--measure-ui` run writes it (§2.11 item 7, §3.3); calibrate keeps it
+ok
+test calibrate_order::the_gas_speed_must_stay_under_half_the_speed_of_light ... ok
+test calibrate_order::the_presets_are_asked_at_the_inverse_translation_of_1_15_and_40_suns ... ok
+test calibrate_order::the_stage_durations_are_one_pair_a_life_with_the_remnant_left_out ... ok
+test calibrate_order::the_suns_life_the_top_rung_and_t_eff_come_from_the_sun_like_life ... ok
+test calibrate_order::the_tov_over_chandrasekhar_ratio_is_held_to_1_4_through_2 ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 324 filtered out; finished in 0.05s
+

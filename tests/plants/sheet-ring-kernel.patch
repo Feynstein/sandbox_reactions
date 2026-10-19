@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/sheet.rs
++++ b/crates/sr-physics/src/reference/sheet.rs
+@@ -90,7 +90,7 @@
+     if s == 0.0 {
+         return 0.0;
+     }
+-    4.0 * rp / s * ellk((r - rp).abs() / s)
++    2.0 * rp / s * ellk((r - rp).abs() / s)
+ }
+ 
+ fn gauss(f: impl Fn(f64) -> f64, a: f64, b: f64) -> f64 {

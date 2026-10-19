@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/hydro.rs
++++ b/crates/sr-physics/src/reference/hydro.rs
+@@ -702,7 +702,7 @@
+                 if let Some((fx, fy)) = radiation {
+                     let [ax, ay] = self.radiation_force(st, i, fx[i], fy[i]);
+                     let d = [dt * ax, dt * ay];
+-                    let s = self.push_share(&u, d);
++                    let s = 1.0;
+                     u[1] += s * d[0];
+                     u[2] += s * d[1];
+                 }
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -832,7 +832,7 @@
+     if (edges.radiation != 0u && !empty_here) {
+         let f = radiation_force(cell);
+         let d = dt * f;
+-        let s = push_share(u, d);
++        let s = 1.0;
+         u[1] += s * d.x;
+         u[2] += s * d.y;
+     }

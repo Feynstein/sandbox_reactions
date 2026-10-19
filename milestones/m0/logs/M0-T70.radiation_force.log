@@ -1,0 +1,88 @@
+== 2026-10-19T12:10:12-04:00 radiation_force · task M0-T70 · box laserax-ai :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 3.77 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.207421 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.2074214736931026, mass invariant 5000.000040320 → 4999.999923795 (2.33e-8), floor_added 501120.3672546243, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -5.821057847e-1, Σ Δt·f -5.821057815e-1, relative 5.46e-9
+SR-RADFORCE gpu x, right: gained 5.821057649e-1, Σ Δt·f 5.821057807e-1, relative 2.71e-8
+SR-RADFORCE gpu y, top: gained -4.277438015e-2, Σ Δt·f -4.277438144e-2, relative 3.01e-8
+SR-RADFORCE gpu y, bottom: gained 4.277438046e-2, Σ Δt·f 4.277438146e-2, relative 2.34e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.31e-10 of the largest Δt·f 8.32e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 7.433507645e-2, the hand F's 7.433508002e-2 (4.81e-8), P5's F after -6.854871313e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -7.433507645e-2, the hand F's -7.433508002e-2 (4.81e-8), P5's F after 6.854871313e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 5.403410824e-3, the hand F's 5.403410890e-3 (1.22e-8), P5's F after -5.353674023e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -5.403410824e-3, the hand F's -5.403410890e-3 (1.23e-8), P5's F after 5.353674023e-3 (2.01e0)
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178547063e3, Σ s·Δt·f -1.178546999e3 (5.45e-8), uncapped Σ Δt·f -5.005e5
+SR-RADFORCE gpu cap, x right: gained 1.178547063e3, Σ s·Δt·f 1.178546999e3 (5.45e-8), uncapped Σ Δt·f 5.005e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 1.49e-7
+ok
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.20742, E 1.6313e6, floor_added 5.0113e5, mass invariant 5000.000000000 → 5000.000000094 (1.87e-11)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -6.604207666e-1, Σ Δt·f -6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin x, right: gained 6.604207666e-1, Σ Δt·f 6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -4.347429519e-2, Σ Δt·f -4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin y, bottom: gained 4.347429519e-2, Σ Δt·f 4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin cells: worst |gained − Δt·f| 4.34e-19 of the largest Δt·f 1.88e-3; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -7.698094182e2, Σ s·Δt·f -7.698094182e2 (0.00e0), uncapped Σ Δt·f -1.324e6
+SR-RADFORCE twin cap, x right: gained 7.698094182e2, Σ s·Δt·f 7.698094182e2 (0.00e0), uncapped Σ Δt·f 1.324e6
+SR-RADFORCE twin cap: 284 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 328 filtered out; finished in 3.59s
+
+
+== 2026-10-19T12:11:52-04:00 radiation_force · task M0-T70 · box laserax-ai :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 3.72 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-bb767fea81f24730)
+
+running 7 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.207421 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.2074214736931026, mass invariant 5000.000040320 → 4999.999923795 (2.33e-8), floor_added 501120.3672546243, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -5.821057847e-1, Σ Δt·f -5.821057815e-1, relative 5.46e-9
+SR-RADFORCE gpu x, right: gained 5.821057649e-1, Σ Δt·f 5.821057807e-1, relative 2.71e-8
+SR-RADFORCE gpu y, top: gained -4.277438015e-2, Σ Δt·f -4.277438144e-2, relative 3.01e-8
+SR-RADFORCE gpu y, bottom: gained 4.277438046e-2, Σ Δt·f 4.277438146e-2, relative 2.34e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.31e-10 of the largest Δt·f 8.32e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 7.433507645e-2, the hand F's 7.433508002e-2 (4.81e-8), P5's F after -6.854871313e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -7.433507645e-2, the hand F's -7.433508002e-2 (4.81e-8), P5's F after 6.854871313e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 5.403410824e-3, the hand F's 5.403410890e-3 (1.22e-8), P5's F after -5.353674023e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -5.403410824e-3, the hand F's -5.403410890e-3 (1.23e-8), P5's F after 5.353674023e-3 (2.01e0)
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178547063e3, Σ s·Δt·f -1.178546999e3 (5.45e-8), uncapped Σ Δt·f -5.005e5
+SR-RADFORCE gpu cap, x right: gained 1.178547063e3, Σ s·Δt·f 1.178546999e3 (5.45e-8), uncapped Σ Δt·f 5.005e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 1.49e-7
+ok
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.20742, E 1.6313e6, floor_added 5.0113e5, mass invariant 5000.000000000 → 5000.000000094 (1.87e-11)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -6.604207666e-1, Σ Δt·f -6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin x, right: gained 6.604207666e-1, Σ Δt·f 6.604207666e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -4.347429519e-2, Σ Δt·f -4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin y, bottom: gained 4.347429519e-2, Σ Δt·f 4.347429519e-2, relative 3.19e-16
+SR-RADFORCE twin cells: worst |gained − Δt·f| 4.34e-19 of the largest Δt·f 1.88e-3; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -7.698094182e2, Σ s·Δt·f -7.698094182e2 (0.00e0), uncapped Σ Δt·f -1.324e6
+SR-RADFORCE twin cap, x right: gained 7.698094182e2, Σ s·Δt·f 7.698094182e2 (0.00e0), uncapped Σ Δt·f 1.324e6
+SR-RADFORCE twin cap: 284 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 328 filtered out; finished in 3.52s
+
+

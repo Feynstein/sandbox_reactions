@@ -1,0 +1,15 @@
+# M0-V19 — E6 triage, log (linux-pc laserax-ai)
+## 2026-10-19 15:15:40 EDT · start; rung_record now: model=claude-opus-5-5 level=max plugin=installed
+## code sites unchanged since M0-V9 (sources last touched 12:11; V9 started 12:29): calibrate.rs:577 remove_dir_all(&out) (D60) · calibrate.rs:750 stages.iter().find (D61) · calibration.rs:37 EMBEDDED None, :383 number("render_reserve_ms", true) (D62) · headless.rs:236 git_rev rev-parse --short HEAD (D63)
+## 15:21:39 · GPU: RTX 5090 100 %, 17.9 GB, two other projects (vision_ai_demo live_recon pid 2540106, weldqualification m2_mapfit pid 2474368) — D64 repro not re-run (V9 M9 on the same tree and binary stands)
+## plan edits: flags M0-T106, M0-T95; ordering note appended then restored (lint WARN M0-T71 handoff 10/8 with +2 lines; 13 WARNs restored); plan.py lint GO 597
+## 15:21:39 · claim: verify.py --changed --task M0-V19
+logs: milestones/m0/logs/M0-V19.<scope>.log · record: loop_times.jsonl · tree e788da44e8ee+dd8a3c4fed20
+anchor: 1 path×scope entries moved by this run
+anchor: 253 paths checked · 234 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 253 covered of 487 visible
+skipped   226  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 597 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 59 not impacted · 0.17 s + loop 0.07 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 40.82->40.82 · base: M0-V19's start 2026-10-19T15:11:07-04:00
+=== GO ===
+## 15:22:18 · claim GO (597 passed, 1/1 scopes); plan.py close M0-V19 DONE (set=2); post-close lint run

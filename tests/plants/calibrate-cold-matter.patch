@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -432,7 +432,7 @@
+     for matter in wanted {
+         let items: &[&str] = if matter == Matter::Neutron { &["m_tov_sb", "ns_sigma_max_sb"] } else { &["m_ch_sb"] };
+         let t0 = Instant::now();
+-        let ceiling = sheet::ceiling(&eos, matter.cold(&elements)?, vac).map_err(|e| CalError::Failed(format!("{}: {e}", items[0])))?;
++        let ceiling = sheet::ceiling(&eos, Matter::Neutron.cold(&elements)?, vac).map_err(|e| CalError::Failed(format!("{}: {e}", items[0])))?;
+         let wall = t0.elapsed().as_secs_f64();
+         let worst_virial = ceiling.sequence.iter().map(|e| e.virial().abs()).fold(0.0, f64::max);
+         // ns_sigma_max_sb: m_tov_sb per cell area, a cell's area being 1.
