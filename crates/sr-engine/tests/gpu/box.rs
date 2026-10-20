@@ -1,5 +1,5 @@
 //! M0-T21 — the active box (contract §1.3.3, §1.3.2, §1.3.4; TW-R1 A2; G-BOX's box half). M0-T39 adds G-BOX's
-//! conservation cases at the end: the box against the whole world on scenes/sun_disk.json (every sum at step 200, the
+//! conservation cases at the end: the box against the whole world on scenes/sun_disk.json (every sum at step 100, the
 //! masses at 2,000 — contract §0.5 [M0-T39]), and a blob at 0.35 cells per step against the box's margin in bounce mode
 //! (scenes/box_blob.json).
 //!
@@ -300,10 +300,12 @@ fn the_whole_world_switch_holds_the_box_at_the_world() {
 /// so a momentum that sums to ~0 is graded against the motion it is made of, not against itself).
 const CONSERVED_TOL: f64 = 1e-6;
 
-/// Contract §0.5 [M0-T39]: every sum compared at step 200, while the box is still inside the world; mass and each
+/// Contract §0.5 [M0-T39], [M0-D66]: every sum compared at step 100, while the box is still inside the world; mass and each
 /// species' mass again at 2,000. Gravity's FFT sizes differ in round-off (1.7e-8 of momentum at step 1) and the collapse
 /// grows it (3.1e-6 of momentum and 4.4e-6 of energy at 2,000, RTX 5090); with gravity off the two runs are bit-identical.
-const EARLY: u32 = 200;
+/// M0-T39 graded step 200; on §0.5 [M0-D64]'s face work the core heats fast there while the runs' clocks drift apart by Δt's
+/// round-off (1.7e-6 of sim time at 200), so energy reads 5.4e-6 at 200 and 1.6e-7 at 100 (the lead, 2026-10-20, M0-D66).
+const EARLY: u32 = 100;
 const STEPS: u32 = 2000;
 
 /// The mass sums of `s` — Σ and each species' Σ·X_i — the ones a vacuum reset books and the gravity round-off leaves
@@ -436,7 +438,7 @@ fn centroid_x(world: WorldConfig, p: &[f32]) -> f64 {
 }
 
 #[test]
-fn sun_disk_in_the_box_matches_the_whole_world_at_step_200_and_its_masses_at_2000() {
+fn sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000() {
     let gpu = device();
     let boxed = SceneRun::new(&gpu, "sun_disk.json", BoxMode::Fit);
     let whole = SceneRun::new(&gpu, "sun_disk.json", BoxMode::WholeWorld);

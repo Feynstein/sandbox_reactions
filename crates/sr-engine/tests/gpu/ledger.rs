@@ -1,7 +1,8 @@
 //! M0-T57 — the ledger (contract §2.9, §2.12.2, §5.3's G-CONS; crates/sr-engine/src/ledger.rs): mass, energy and momentum in
 //! f64 from the block summary's partials and the booked terms, cumulative since the ledger started, through `headless`'s
-//! summary.json. Two runs of 500 steps of a cold collapsing disk (128 × 128, gravity and hydro, the cold pressure off through
-//! `overrides` as scenes/cold_disk.json does, on the physics adapter, R12): at rest in the middle of a *bounce* world, then
+//! summary.json. Two runs of 500 steps of a collapsing disk (128 × 128, gravity and hydro, T 2.3 — U_th ≈ 0.1|W|₀ —, the cold
+//! pressure off through `overrides` as scenes/cold_disk.json does, on the physics adapter, R12): at rest in the middle of a
+//! *bounce* world, then
 //! drifting out of a *leave* world's edge, so that mass escapes inside the 500 steps (the adversarial line: a leave run
 //! where nothing reaches the edge cannot see the escaped term, so the escaped total is asserted and printed).
 //!
@@ -11,10 +12,14 @@
 //! The collapse at rest is symmetric, which is why its momentum holds: source-term gravity does not conserve momentum
 //! (M0-V7 observation 1), so the drifting run's momentum is read as the ledger gives it and graded at the band the flag
 //! measured, not at 10⁻⁶ — see `LEAVE_MOMENTUM`.
+//!
+//! M0-D64: the energy invariant graded on a hot compact remnant radiating into vacuum, where gravity's energy source must pay
+//! for the mass HLL's diffusion moves across φ (§0.5 [M0-D64]) — G-CONS's bound, 10⁻³ |W| per τ_dyn, over 1,000 steps.
 
 use std::path::PathBuf;
 
 use serde_json::Value;
+use sr_engine::calibrate::radius_holding;
 use sr_engine::dump::{Dump, Sink};
 use sr_engine::ledger::{At, Ledger};
 use sr_engine::state::{WorldConfig, N_TERMS, TERMS};
@@ -28,6 +33,11 @@ const BAND: f64 = 1e-6;
 /// The drifting run's momentum band, relative to Σm|u|: a cloud that moves is held by source-term gravity's momentum error
 /// (M0-V7 observation 1: 3.9 × 10⁻³ on sink_cloud), so the number is reported and bounded by the measured error, not 10⁻⁶.
 const LEAVE_MOMENTUM: f64 = 5e-3;
+/// The disk's T: U_th ≈ 0.1|W|₀ (M0-D66, the lead's «Disk T 2.3 + edge D», 2026-10-20). At M0-T57's T 0.05 the pressureless
+/// disk falls to a point; once §0.5 [M0-D64]'s face work stopped the Σu·g source heating it there, it stays collapsed:
+/// bounce's Σm|u| fell 9 × under an alike drift (2.8e-6), and leave's collapse beside the world's edge, where the box's outer
+/// ring takes a one-sided g, drifts 5.7e-2 (21 in a 256-wide world, M0-D66's D).
+const DISK_T: f64 = 2.3;
 
 fn scene(edge: &str, x: f64, v: f64, gravity: bool) -> String {
     format!(
@@ -36,7 +46,7 @@ fn scene(edge: &str, x: f64, v: f64, gravity: bool) -> String {
  "slowdown": false,
  "switches": {{"gravity": {gravity}, "hydro": true, "heat": false, "reactions": false, "neutrinos": false, "sinks": false}},
  "objects": [
-   {{"kind": "disk", "x": {x}, "y": 64, "a": 24, "sigma_c": 1.0, "t": 0.05, "composition": {{"H": 1.0}}, "v": [{v}, 0]}}
+   {{"kind": "disk", "x": {x}, "y": 64, "a": 24, "sigma_c": 1.0, "t": {DISK_T}, "composition": {{"H": 1.0}}, "v": [{v}, 0]}}
  ],
  "overrides": {{"k1e": 0, "k2e": 0, "k1n": 0, "k2n": 0}}}}"#
     )
@@ -57,18 +67,23 @@ struct Out {
 
 /// Runs `headless` in-process on `scene_json` for [`STEPS`] steps and reads back its summary.json and final dump.
 fn run(name: &str, scene_json: &str) -> Out {
+    run_for(name, scene_json, STEPS)
+}
+
+/// As [`run`], for `steps` steps.
+fn run_for(name: &str, scene_json: &str, steps: u64) -> Out {
     let dir = temp(name);
     let file = dir.join("scene.json");
     std::fs::write(&file, scene_json).unwrap();
     let out = dir.join("out");
     let mut args: Vec<String> =
-        ["--scene", &file.display().to_string(), "--steps", &STEPS.to_string(), "--out", &out.display().to_string()].map(String::from).to_vec();
+        ["--scene", &file.display().to_string(), "--steps", &steps.to_string(), "--out", &out.display().to_string()].map(String::from).to_vec();
     if let Ok(a) = std::env::var("SR_TEST_ADAPTER") {
         args.extend(["--adapter".to_string(), a]);
     }
     assert_eq!(sr_engine::headless::run(&args), 0, "headless");
     let summary: Value = serde_json::from_slice(&std::fs::read(out.join("summary.json")).unwrap()).unwrap();
-    let dump = Dump::read(&out.join("dumps").join(format!("s_{STEPS}.bin"))).unwrap();
+    let dump = Dump::read(&out.join("dumps").join(format!("s_{steps}.bin"))).unwrap();
     Out { summary, dump }
 }
 
@@ -215,6 +230,54 @@ fn leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_rem
     assert!(d.mass <= BAND, "mass invariant drift {:.3e}", d.mass);
     assert!(d.momentum <= bound, "momentum drift {:.3e} of Σm|u| against {bound:.3e}", d.momentum);
     assert_grid_matches_the_state(&out);
+}
+
+/// G-CONS's energy bound (§5.3): the invariant's drift at most 10⁻³ |W| per τ_dyn.
+const CONS_PER_TAU: f64 = 1e-3;
+
+/// M0-D64: a hot compact disk of helium with some carbon and oxygen (the Sun-like life's remnant, made small), heat on and
+/// burning off, in a leave world: it contracts, radiates into vacuum and HLL's diffusion moves mass up its steep φ every step.
+/// The energy invariant (§2.9) is graded over 1,000 steps at G-CONS's bound, τ_dyn = √(R₉₀³ / G M) of the end state (G = 1,
+/// the tracker's rule) — Σu·g alone (the source before §0.5 [M0-D64]) read 0.171 |W| per sim time unit here.
+#[test]
+fn a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons() {
+    let scene = format!(
+        r#"{{"version": 1,
+ "world": {{"width": {N}, "height": {N}, "edge": "leave"}},
+ "slowdown": false,
+ "switches": {{"gravity": true, "hydro": true, "heat": true, "reactions": false, "neutrinos": false, "sinks": false}},
+ "objects": [
+   {{"kind": "disk", "x": 64, "y": 64, "a": 9, "sigma_c": 8.8, "t": 50, "composition": {{"He": 0.9, "C": 0.05, "O": 0.05}}}}
+ ]}}"#
+    );
+    let steps = 1000;
+    let out = run_for("remnant", &scene, steps);
+    let (s, e) = (out.start(), out.end());
+    let cells = out.dump.world.cells();
+    let vac = Physics::shipped().unwrap().get("sigma_vac").expect("sigma_vac is a physics.json key");
+    let sigma = &out.dump.planes[..cells];
+    let mass: f64 = sigma.iter().filter(|&&v| f64::from(v) >= vac).map(|&v| f64::from(v)).sum();
+    let r90 = radius_holding(sigma, out.dump.world.width as usize, vac, 0.9);
+    let tau_dyn = (r90.powi(3) / mass).sqrt();
+    let w0 = num(s, &["energy", "potential"]).abs();
+    let span = num(e, &["sim_time"]) - num(s, &["sim_time"]);
+    let d_inv = num(e, &["energy", "invariant"]) - num(s, &["energy", "invariant"]);
+    let per_tau = d_inv.abs() / w0 / (span / tau_dyn);
+    let term = |v: &Value, k: &str| num(v, &["energy", k]);
+    println!(
+        "remnant: steps {}..{}, sim time {span:.3}, R₉₀ {r90:.3}, M {mass:.1}, τ_dyn {tau_dyn:.4}, |W|₀ {w0:.4e}; Δinvariant {d_inv:.4e} → \
+         {per_tau:.3e} |W| per τ_dyn (bound {CONS_PER_TAU:.0e}); radiated {:.4e}, floor_added {:.4e}, escaped {:.4e}, ΔW {:.4e}",
+        num(s, &["step"]),
+        num(e, &["step"]),
+        term(e, "radiated") - term(s, "radiated"),
+        term(e, "floor_added") - term(s, "floor_added"),
+        term(e, "escaped") - term(s, "escaped"),
+        term(e, "potential") - term(s, "potential"),
+    );
+    assert_eq!(num(e, &["step"]), steps as f64);
+    // The adversarial line: a remnant that neither shines nor contracts cannot show the leak.
+    assert!(term(e, "radiated") - term(s, "radiated") > 1e-2 * w0, "the remnant radiated");
+    assert!(per_tau <= CONS_PER_TAU, "energy invariant drift {per_tau:.3e} |W| per τ_dyn (Δ {d_inv:.4e}, |W|₀ {w0:.4e}, τ_dyn {tau_dyn:.4})");
 }
 
 fn block(mass: f32, px: f32, py: f32, kinetic: f32) -> Block {

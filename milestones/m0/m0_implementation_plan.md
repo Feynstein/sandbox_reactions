@@ -225,10 +225,16 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D60 | BUILD | `calibrate` throws each life away: a life's summary.json, events and final dump are deleted once read, and nothing shows a life's progress — hours of lives leave one line each | AFTER M0-T71 | DONE (2026-10-19 17:23) |
 | M0-D61 | BUILD | Item 6 takes the first white dwarf a Sun-like life shows as its end: the shipped preset shows `white_dwarf` for 3.3 t.u. at its bounce (t 5.8), so life_sun_sb would read ≈ 5.8 and top_rung 0.58, not the life | AFTER M0-D60 | DONE (2026-10-19 17:39) |
 | M0-D62 | BUILD | The engine refuses the calibration `calibrate` writes: `Calibration::parse` requires render_reserve_ms, which only lot 13's `--measure-ui` writes, so the lead's file turns `readouts` and `calibration` red and, embedded, makes every preset run exit 6 | AFTER M0-D61 | DONE (2026-10-19 18:00) |
-| M0-D64 | BUILD | The energy books don't balance over a star's life: the Sun-like preset radiates 1.2× what it burns on its main sequence and 8–13× as a remnant — 3.6 × 10⁷ (137× the start's binding energy) booked nowhere, G-CONS's drift 2.5–40× its bound after step ~100,000 | AFTER M0-D62 | IN PROGRESS (2026-10-19 19:07) |
+| M0-D66 | BUILD | M0-D64's gravity energy source turns four checks red that were tuned on collapses the old Σu | AFTER M0-D64 | DONE (2026-10-20 11:01, started 10:05) |
+| M0-D67 | BUILD | The late remnant's light is half floor energy: in M0-V9's probe life at step 450,000, on M0-D64's source, P8's floors add 1.48 × 10⁵ while the remnant radiates 2.78 × 10⁵ — booked, so the invariant holds, but light made from nothing | AFTER M0-D66 | N/A — superseded by the lead's ruling 2026-10-20 at M0-D67 («Revert, file well-balanced D (Recommended)», «After M0-V9 (Recommended)»): cure filed as M0-D71 |
+| M0-D64 | BUILD | The energy books don't balance over a star's life: the Sun-like preset radiates 1.2× what it burns on its main sequence and 8–13× as a remnant — 3.6 × 10⁷ (137× the start's binding energy) booked nowhere, G-CONS's drift 2.5–40× its bound after step ~100,000 | AFTER M0-D62 | BLOCKED |
 | M0-V9 | CHECK | Validation, lot 9: calibration; the lead's calibrate run | AFTER M0-T71 | BLOCKED (on M0-D60, M0-D61, M0-D62, M0-D64 — the lead: «we fix first», «Fix before calibrating»; resumes from tasks/M0-V9.md) |
 | M0-D63 | BUILD | A run's `git` names the checkout's HEAD with no mark for uncommitted work: M0-V9's items 1–2, measured on lot 9's uncommitted code, wrote `measured.git` "e788da4", a commit that holds none of it | AFTER M0-V9 | TODO |
 | M0-D65 | BUILD | `cold_core` is red on win-laptop: scenes/cold_co_disk.json, written on linux-pc, is "stale" against the disk rebuilt here — σ 4 × 10⁻¹² apart, over `same_disk`'s 10⁻¹² — so the scope's two scene cases fail on a tree that changed nothing in them | AFTER M0-D63 | TODO |
+| M0-D68 | BUILD | M0-D64's face-work energy source cools a cold collapse below its adiabat: the diffusive mass flux's work comes out of the cells' thermal energy, and G-JEANS's cloud at U_th = 0.05 W loses 8× its entropy on the ripple's spoke (J 0.129 → 1.04) | AFTER M0-D65 | TODO |
+| M0-D69 | BUILD | Gravity's momentum leaks where gas sits on the world's edge: the box's outer ring takes a one-sided g with no matching pull back, so the ledger's cold disk collapsing 12 cells from a leave edge drifts 266 in momentum against 21 in a wider world | AFTER M0-D68 | TODO | | |
+| M0-D70 | BUILD | A black hole that has eaten its gas is no object: §1.9.2 builds objects from gas blocks alone, so a sink with no gas around it shows no stage and its ending never comes — sink_cloud at T 3 swallows its whole cloud and `--until ending` never meets | AFTER M0-D69 | TODO | | |
+| M0-D71 | BUILD | P4 is not well-balanced at a hydrostatic core: HLL's diffusion lifts mass out of a degenerate remnant's well every step while spurious inflow momenta carry it back, so the gravity split pumps energy from a heatless centre and P8's floor pays half the late remnant's light (1.48 × 10⁵ of 2.78 × 10⁵ at step 450,000) | AFTER M0-D70 | TODO | | |
 | M0-T72 | BUILD | The predicted ending and the close call (§1.9.5) | AFTER M0-V9 | TODO |
 | M0-T73 | BUILD | The age clock: a stage clock that never runs backwards (§1.10.4) | AFTER M0-T72 | TODO |
 | M0-T74 | BUILD | The three presets and several clouds (G-MULTI) | AFTER M0-T73 | TODO |
@@ -463,6 +469,9 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
 - Contract §1.4.2's "the energy source Σu·g, time-centred on the predictor's half-step velocity" — superseded by contract §0.5
   [M0-D64]: the work each face's mass flux does across φ, each cell keeping its own Σu·g share and the rest shared by mass
   (the lead, 2026-10-19, M0-D64: «Face work, mass-shared (Recommended)», «Record it, no build (Recommended)»).
+- Contract §0.5 [M0-T62]'s "U_th = 0.05|W| … T 2.3666" (G-JEANS) and §0.5 [M0-T39]'s "every sum … within 10⁻⁶ of its scale at step
+  200" (G-BOX) — superseded by contract §0.5 [M0-D66]: G-JEANS's cloud at 0.07|W|, G-BOX's every sum at step 100 (the lead,
+  2026-10-20, M0-D66: «0.07|W| + file a D (Recommended)», «Grade at step 100 (Recommended)»).
 Inherited debt (§2.4): none.
 
 ## Repo facts (so you don't explore)
@@ -603,12 +612,12 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-D64 — above M0-V9 at the lead's «we fix first» and «Fix before calibrating», order kept by M0-V19 (E6); M0-V9 resumes after it, M0-D63 after M0-V9 (ordering note above M0-V19)
-- Counters: T=125 · D=65 · V=19 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=7 · TR=1 · TM=9 · TD=1 · TE=1 · R=4
-- Open D/BLOCKED register: M0-D64 open (before M0-V9's calibration and loop, 2026-10-19), M0-D63 and M0-D65 open (after M0-V9; M0-D65 filed by M0-D62: cold_core red on win-laptop only) — three open, M0-D63/D64 triaged by M0-V19 2026-10-19 (E6); M0-V9 BLOCKED on M0-D64 — M0-D62, M0-D61, M0-D60, M0-D59, M0-D58, M0-D57, M0-D52, M0-D54 closed 2026-10-19
+- Next task: M0-D64 (BLOCKED on M0-D66, landed 2026-10-20: resumes for its claim), then M0-V9, then M0-D63, M0-D65, M0-D68, M0-D69, M0-D70, M0-D71 (ordering note above M0-V19)
+- Counters: T=125 · D=71 · V=19 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=7 · TR=1 · TM=9 · TD=1 · TE=1 · R=4
+- Open D/BLOCKED register: M0-D63, M0-D65, M0-D68, M0-D69, M0-D70 and M0-D71 open (after M0-V9; M0-D68–D70 filed by M0-D66 2026-10-20: the face work's entropy loss, the world edge's momentum, a gas-free sink no object; M0-D71 filed by M0-D67 2026-10-20: P4 not well-balanced at a remnant's core, its light floor-fed) — six open; M0-D64 BLOCKED on M0-D66 (landed), M0-V9 BLOCKED on M0-D66 (landed) — M0-D67 closed N/A 2026-10-20 (measured; the lead's revert), M0-D66 closed 2026-10-20; M0-D62, M0-D61, M0-D60, M0-D59, M0-D58, M0-D57, M0-D52, M0-D54 closed 2026-10-19
 - Outstanding commit gates: Phase 11's, after M0-V9 — M0-T65 onward uncommitted (HEAD e788da4); M0-V9 makes a WIP commit before the calibration (the lead, 2026-10-19: «you can git add -A, commit and push if needed»)
 - Carryover: none
-- Awaiting lead: none — M0-V9's probe life ran (build/v9-sun-life, the lead's terminal, 14:14–14:51); M0-V9's calibration comes after M0-D64
+- Awaiting lead: none — M0-V9's probe life ran (build/v9-sun-life); M0-V9's calibration comes after M0-D64's claim
 - Model ratings: 2026-10-19 by M0-TM9
 
 # Tasks
@@ -2327,8 +2336,82 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
   For M0-V9 (flagged): after `calibrate` writes the file, rebuild — no `EMBEDDED` edit; readouts' real-calibration case stays NOT PROVEN until that file exists.
   Scratch: %TEMP%/claude/d62-e2e and d62-target (deletable). Model: claude-opus-5-5, level high (rung_record). Next: M0-D64.
 
-## M0-D64 · The energy books don't balance over a star's life: the Sun-like preset radiates 1.2× what it burns on its main sequence and 8–13× as a remnant — 3.6 × 10⁷ (137× the start's binding energy) booked nowhere, G-CONS's drift 2.5–40× its bound after step ~100,000 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D62)
-- Status: IN PROGRESS (2026-10-19 19:07)
+## M0-D66 · M0-D64's gravity energy source turns four checks red that were tuned on collapses the old Σu·g leak heated — ledger's two momentum bands, jeans' J ≤ ¼, box's energy at 10⁻⁶ and observe_run's black-hole ending · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D62)
+- Status: DONE (2026-10-20 11:01, started 10:05)
+- Blocks: M0-V9 — the lead, 2026-10-20, at M0-D64: «Split into a new D (Recommended)»: M0-D64 closes BLOCKED on this D, which lands
+  before M0-V9's calibration; every `--changed` touching crates/sr-engine/** reads NO-GO on these four scopes until it lands
+- Caused by: M0-D64 (§0.5 [M0-D64]'s face-work source in hydro.wgsl and reference/hydro.rs) — the four checks were measured on M0-T36's
+  Σu·g, which created energy in every collapse (M0-D64's plant `ledger-cell-grav-work`)
+- Rating: (usual) — rule (3)'s list: a D whose cause is not measured per check (a band set on the old dynamics vs a defect the fix
+  exposed is not separated for box and observe_run)
+- Files: opened by M0-D64 — crates/sr-engine/tests/gpu/ledger.rs (the bounce and leave cases), observe.rs
+  (`events_jsonl_and_the_ending_of_a_black_hole`), box.rs (`physical`, `compare`); named, not opened — crates/sr-engine/tests/gpu/jeans.rs
+  (the J assertion, line 428), scenes/sink_cloud.json, the jeans scene
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-D64], §1.4.2, §5.1 G-JEANS (with §0.5 [M0-T62]), §5.3 G-BOX
+  (with §0.5 [M0-T39]) and G-CONS + milestones/m0/tasks/M0-D64.md § Moved checks + milestones/m0/logs/M0-D64-r2.log + docs/agent/testing.md
+  (the four rows)
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-20, M0-D64's claim (`verify.py --changed --base d818dbc`): 51/55 scopes
+  GO; the same tree with the old source (the plant applied in a scratch copy) GO on all four. ledger 3/2 — bounce: momentum 2.79 × 10⁻⁶
+  of Σm|u| (band 10⁻⁶; old 1.7 × 10⁻⁷), leave: 5.69 × 10⁻² (band 5 × 10⁻³; old 3.1 × 10⁻³); Σm|u| at step 500 is 3.6 × 10³ against the
+  old 3.3 × 10⁴ — the pressureless a = 24 disk falls to a point near step 100, where the old source created +5.5 × 10⁵ (≈ 10 |W|₀) and threw
+  the gas out and the fix loses 6.3 × 10⁴ (≈ 1.1 |W|₀, the φ lag §0.5 [M0-D64] records); bounce's absolute drift is alike (1.0 × 10⁻² vs
+  5.6 × 10⁻³), leave's is 11× the old (266 vs 24; escaped mass 3.8 % vs 7.5 %). jeans 4/1 — J = 1.038 at step 165 (t 3.19), cell (81, 64),
+  Σ_max 106.3. box 7/1 — sun_disk's energy 5.38 × 10⁻⁶ of scale at step 200 (old 8.7 × 10⁻⁸), every sum diverging more (σ 1.5 × 10⁻⁸ vs
+  3.7 × 10⁻¹⁰); clamping φ's read to the active box changed no bit (no work crosses the box's edge); sun_disk's E at step 200 is 2.86 × 10⁵
+  against the old 3.80 × 10⁵. observe_run 4/1 — `until=unmet` at 20,000 steps (t 27.6) from the seeded sink.
+- Repro: `python3 tools/pb/verify.py <scope> --task <ID>` for ledger, jeans, box, observe_run (each < 20 s on the RTX 5090); the old
+  source: tests/plants/ledger-cell-grav-work.patch applied in a `tools/pb/scratch_copy.sh` copy
+- Deliver: each of the four checks measured under the fixed source and either (a) its scene or band re-set, the reason measured and the
+  lead's yes taken before the number is chosen (§0.4; G-JEANS's ¼, G-BOX's 10⁻⁶ and G-CONS's momentum 10⁻⁶ are contract numbers — a §0.5
+  override the lead rules), or (b) a defect the fix exposed, fixed in its owner or filed as a D · M0-D64's remnant case and its plant
+  unchanged · each changed scope red-armed on its own plants
+- Verify: 1. `python3 tools/pb/verify.py ledger --task <ID>`, then `jeans`, `box`, `observe_run` · Pass: GO each · Fail: NO-GO · 2.
+  `python3 tools/pb/verify.py --redarm <each scope changed> --task <ID>` · Pass: GO — every plant NO-GO, `ledger-cell-grav-work` included ·
+  Fail: a plant GO
+- Done when: ledger, jeans, box and observe_run GO on linux-pc with M0-D64's source in the tree; win-laptop `owed` until a task runs there
+- Handoff: ledger, jeans, box, observe_run GO on linux-pc (laserax-ai, RTX 5090) with M0-D64's source; each red-armed GO, every plant red (ledger-cell-grav-work 2 failed). Causes measured per check (tasks/M0-D66.md): jeans — the ruled split pays HLL's diffusive flux work from thermal energy, the cold collapse loses entropy (J 0.129 → 1.04, Δt-independent) → M0-D68; ledger bounce — Σm|u| 9× smaller, drift alike; leave — the world edge's one-sided g (266 vs 21 in a wider world) → M0-D69; box — the runs' clocks drift by Δt round-off while the core heats fast; observe — the cold sheet fragments, and a sink that ate its gas is no object (§1.9.2) → M0-D70.
+  The lead's answers 2026-10-20 built: contract §0.5 [M0-D66] (G-JEANS 0.07|W|, T 3.3132; G-BOX every sum at step 100) + Superseded line; ledger's disk T 2.3; observe's ending case on its own cloud at T 0.5 (sink_cloud.json unchanged); testing.md and verify.json rows. M0-D64's remnant case and plant unchanged.
+  Deviation: tests/plants/until-never-met.patch regenerated — the same one-line mutation; its context had moved under M0-D60's progress tick in headless.rs, so the plant no longer applied (an error, not a red).
+  Claim: `verify.py --changed` 46/47 GO, plan_lint red on M0-D68's Flow row (its title's |W| pipes) → heading reworded, plan_lint GO alone. Header 625/600, inside the margin (617 at HEAD).
+  M0-D68–D70 sit after M0-D65, above Phase 11's commit gate (where the tool put them) — move if they belong past it. win-laptop owed on all four scopes.
+  Model claude-opus-5-5, level high (rung_record.py now). Next: M0-D67, then M0-D64 resumes for its claim.
+
+## M0-D67 · The late remnant's light is half floor energy: in M0-V9's probe life at step 450,000, on M0-D64's source, P8's floors add 1.48 × 10⁵ while the remnant radiates 2.78 × 10⁵ — booked, so the invariant holds, but light made from nothing · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D66)
+- Status: N/A — superseded by the lead's ruling 2026-10-20 at M0-D67 («Revert, file well-balanced D (Recommended)», «After M0-V9 (Recommended)»): cure filed as M0-D71
+- Blocks: nothing by itself — filed above M0-V9 because the calibration's lives run through this remnant phase (the lead, 2026-10-19,
+  at M0-V9: «Fix before calibrating (Recommended)»); the lead may order it after M0-V9
+- Caused by: unknown — P5's commit (§0.5 [M0-TJ4] (5): R, δ) drawing heat below what P8's floors restore (§2.7 [M0-T19]), or P8's refill
+  itself — not separated
+- Rating: (usual) — rule (3)'s list: a D whose cause is not measured
+- Files: none opened for this; named, not opened — crates/sr-engine/src/step/heat.rs and shaders/heat.wgsl (P5's commit), the P8 floor
+  pass, crates/sr-engine/src/ledger.rs (`floor_added`), sr_physics::reference (the twin)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TJ4] (5), §2.7 [M0-T19], §2.9 (floor_added) +
+  milestones/m0/tasks/M0-D64.md § Findings (F1) + milestones/m0/logs/M0-D64-r2.log § the seven windows
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-20, M0-D64: the probe life's windows (build/v9-sun-life) resumed for
+  5,000 steps on M0-D64's source read floor_added 0, −32, −143 and 0 at steps 5,000–150,000, 5,359 at 200,000, −0.6 at 300,000 and
+  1.478 × 10⁵ at 450,000 — there radiated 2.777 × 10⁵, nuclear 1.45 × 10⁴, thermal −3.80 × 10⁴, cold +1.88 × 10⁵, W −2.67 × 10⁵, R₉₀
+  6.0 → 3.3 (the remnant contracting into degeneracy). The invariant holds (1.0 × 10⁻⁵ |W| per τ_dyn) because the floor's energy is
+  booked. Earlier, on win-laptop (M0-D64's F1, a rejected variant): a hot T 50 disk read radiated 8.89 × 10⁷ ≈ floor_added 8.89 × 10⁷
+  over steps 1,000–4,000.
+- Repro: `build/target/release/sandbox-reactions headless --scene preset:sun --load-dump build/v9-sun-life/dumps/s_450000.bin --steps 5000
+  --adapter "RTX 5090" --out <dir>` (≈ 22 s) → summary.json's `ledger` end − start, `energy.floor_added` against `energy.radiated`
+- Suspected cause: in a remnant held mostly by its cold (degenerate) pressure, P5 removes heat as light down to — or below — what the
+  floors keep, and P8 refills the difference every step, so the floor pays for the light. Not measured: which cells, which pass, per step.
+- Deliver: the floor's energy measured on the repro (per pass, per cell class) and fixed in its owner so a cooling remnant's light is paid
+  by its own heat — the window's floor_added a small share of its radiated, the share's bound asked of the lead before it is set (§0.4),
+  the invariant unchanged · a case in the owning scope: a degenerate remnant radiating into vacuum keeps floor_added within that share over
+  its window, red under the unfixed code · its plant
+- Verify: 1. `python3 tools/pb/verify.py <the owning scope> --task <ID>` · Pass: GO with the new case · Fail: NO-GO · 2. `python3
+  tools/pb/verify.py --redarm <the owning scope> --task <ID>` · Pass: GO — the plant NO-GO · Fail: the plant GO
+- Done when: the step-450,000 window's floor_added within the lead's share of its radiated, on linux-pc
+- Handoff: linux-pc (laserax-ai), RTX 5090; model=claude-opus-5-5 level=high (rung_record now = the heading's rung). MEASURED, no code lands: the floor-fed light is P4, not P5 or P8 — one cell, the remnant's heatless centre at the potential minimum, short ≈ 50 after P4 every step (gravity off: 0; radiation push off: unchanged), D64's mass-shared split charging it 55 % of lifting what HLL diffuses out of the well while its neighbours' inflow momenta keep their gain (CPU twin, passes by hand on a 128² crop, matches the GPU: radiated 2.601e4 vs 2.598e4). Repro bit-exact (floor 1.478e5 of radiated 2.777e5); reactions off 1.61e5; gravity+hydro alone 725; onset at step ≈ 451,500, then floor ≈ radiated ≈ 2.3e4 per 500 steps.
+  Ruled fix (sitting 1: heat-shared, bound ≤ 15 %) built on GPU + twin and MISSED: gains by heat blew up (radiated 5.6e18, P5 unconverged — D64's thin-gas hazard); costs by heat, gains by mass read 90 % (ruled split 53 %) — floor −60 % for 2,500 steps, then the core cools to no heat, the share falls back to mass, the remnant bounces on the floor. Cause: P4 not well-balanced at a hydrostatic core; a split only moves who pays (Σu·g created the same energy unbooked). Sitting 2: reverted by inverse edits (hydro.rs no diff vs HEAD, hydro.wgsl the start's 8+/3−; the repro re-run bit-identical), M0-D71 filed after M0-D70. The dual-energy D proposed in sitting 1 dropped (it would hide the energy unbooked).
+  Claim: verify.py --changed GO (plan_lint, 613 passed) on linux-pc. Flags → M0-V9 (calibrate on today's source, late light ≈ half floor-fed), M0-D64 (your F1 answered), M0-D68 (two splits measured; read M0-D71 first). Detail: tasks/M0-D67.md, logs/M0-D67.log; scratch runs not kept.
+  Next: M0-D64 (resumes for its claim).
+
+## M0-D64 · The energy books don't balance over a star's life: the Sun-like preset radiates 1.2× what it burns on its main sequence and 8–13× as a remnant — 3.6 × 10⁷ (137× the start's binding energy) booked nowhere, G-CONS's drift 2.5–40× its bound after step ~100,000 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D67)
+- Status: BLOCKED
+- Carried flags: [M0-D66, 2026-10-20] M0-D66 landed 2026-10-20: ledger, jeans, box, observe_run GO with your source (linux-pc, RTX 5090) — your claim's four reds are discharged; re-run `verify.py --changed`. The ledger's remnant case and `ledger-cell-grav-work` are unchanged (plant red, 2 failed). Your testing.md ledger sentence 'owned by M0-D66' is replaced. · [M0-D67, 2026-10-20] Your F1 measured by M0-D67: the floor-fed light is P4's gravity split at the remnant's heatless centre (one cell, ≈ 50 a step), the scheme not well-balanced at a hydrostatic core — not P5, not P8; no code change (the lead's revert), cure filed as M0-D71 after M0-V9. Your source and its ledger case unchanged; tasks/M0-D67.md
 - Blocks: M0-V9 — its calibration measures lives this source shapes; the lead, 2026-10-19, at M0-V9, asked whether the fix goes in
   before the 12–24 hour calibration: «Fix before calibrating (Recommended)»
 - Caused by: unknown — P5's commit and its `radiated` booking (§0.5 [M0-TJ4] (5); M0-T117–M0-T121, M0-D56), P8's floors (§2.7
@@ -2362,11 +2445,11 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
 - Verify: 1. `python3 tools/pb/verify.py <the owning scope> --task M0-D64` · Pass: GO with the new case · Fail: NO-GO · 2. `python3
   tools/pb/verify.py --redarm <the owning scope> --task M0-D64` · Pass: GO — the plant NO-GO · Fail: the plant stays GO
 - Done when: the probe's step-450,000 window drifts within G-CONS's bound (≤ 10⁻³ |W| per τ_dyn), on linux-pc
-- Handoff: IN PROGRESS (wound down at the lead's request). Source measured (win-laptop, RTX 4080): P4's gravity energy source Σu·g — HLL's diffusive mass flux lifts mass up φ unpaid; heat off, reactions off and gravity+flow alone all leak alike. The lead ruled §0.5 [M0-D64]: face work, mass-shared; time lag recorded, not built. Fix written on GPU (grav.wgsl, grav.rs, hydro.wgsl) and twin (reference/hydro.rs, mod.rs, 3 test call sites) — compiles; preset:sun steps 5,000–6,000 +4,968 → +16 unbooked, a hot compact disk 0.171 → 6e-4 |W|/t.u. Not done: header comments, the ledger case + plant ledger-cell-grav-work, testing.md, verify.py ledger/--redarm/--changed (all NOT RUN), the s_450000 window (owed on linux-pc). Deviation: 9 code files, 3 of them one-line call updates. Findings F1–F3 (floor feeding light on a hot disk, a resume GPU error on a rejected variant, escaped mass's φ unbooked) in tasks/M0-D64.md. Ran on claude-opus-5-5, high. Next: M0-D64 resumes from tasks/M0-D64.md § Left to do.
+- Handoff: BLOCKED on M0-D66 (the lead, 2026-10-20: «Split into a new D (Recommended)»). linux-pc (laserax-ai), RTX 5090; model=claude-opus-5-5 level=high (rung_record now). Exists: §0.5 [M0-D64]'s face-work, mass-shared source on GPU (hydro.wgsl; φ as g's third plane, grav.wgsl/grav.rs) and twin (reference/hydro.rs); the ledger scope's case a_hot_compact_remnant… (expected 5) and plant ledger-cell-grav-work; testing.md's row. [ALREADY RUN — PASS on linux-pc] the case 6.2e-5 |W| per τ_dyn (bound 1e-3), its plant arm red at 5.0e-2; Done-when met: the s_450000 window 1.0e-5 per τ_dyn (the old source 1.55e-2), the seven windows 8e-7–3.1e-5. [ALREADY RUN — FAIL on linux-pc] the claim, --changed --base d818dbc (the lead's WIP commit b502cda landed mid-task, so the recorded start postdates the fix): 51/55 — ledger's bounce and leave momentum bands, jeans, box, observe_run, each GO with the old source → M0-D66; --redarm ledger NO-GO «clean: 2 failed» for the same reason. Filed M0-D67: F1 reproduced, the late remnant's light half floor energy (floor_added 1.48e5 vs radiated 2.78e5 at step 450,000); F2, F3 unfiled, why in tasks/M0-D64.md. Deviation: over the 6-file ceiling — session 1's 9 code files (3 one-line call sites) plus ledger.rs, verify.json, the plant and testing.md. Next: M0-D66, then M0-D67, then M0-V9.
 
 ## M0-V9 · Validation — lot 9: calibration · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T71)
 - Status: BLOCKED (on M0-D60, M0-D61, M0-D62, M0-D64 — the lead: «we fix first», «Fix before calibrating»; resumes from tasks/M0-V9.md)
-- Carried flags: [M0-V8, 2026-10-16] [M0-V8, 2026-10-16] owed on win-laptop (R15; M0-V8 ran on linux-pc only): lot 8's scopes on the RTX 4080 Laptop, each red-armed — summary (7; summary-skip-row), ledger (4; ledger-no-escaped), observe_run (5; until-never-met), jeans (5; no-pressure-flux), and on its CPU objects (15; one-object), classify (30; classify-order), preset_cloud (5; preset-uth-half), with timing's M0-D49 check — beside M0-V7's carried list (lot 7's sink, nu_heat, dump's sink round trip; lot 6's and lot 5's lists; M0-D28's desktop and start.bat checks): py -3.12 tools/pb/verify.py --all and --redarm --moved there cover them; else carried V to V, M0-V17 at the latest (reports/v8.md § Owed) · [M0-D50, 2026-10-18] Owed on laserax-ai: `sun_burn` (new, M0-D50) — Verify 1 (`python3 tools/pb/verify.py sun_burn --task <ID>`, GO 4/0/0 in 127.7 s on the RTX 4080 Laptop) and its red-arm (GO there, 726 s with 3 arms — over the 10-minute line on win-laptop, so a lead's run unless the 5090 is faster); M0-D50's Done when names linux-pc · [M0-D55, 2026-10-18] M0-D55 (2026-10-18): registry, rates, burn_cell, burn_order, neutrino, heat_stiff and timing changed and red-armed on win-laptop only — their linux-pc runs and red-arms owed (R15); heat_limiter red on every box until M0-D56 · [M0-T65, 2026-10-19] [M0-T65, 2026-10-19] assets/calibration.json is not embedded yet: after your calibrate write, set `EMBEDDED` in crates/sr-physics/src/calibration.rs to `Some(include_str!("../../../assets/calibration.json"))` — the `calibration` scope's last case then reads the file (it demands EMBEDDED, a parseable §2.11 file and its physics_hash = the assets'); until then it compares the assets' hash to PINNED_HASH in crates/sr-engine/tests/gpu/calibration.rs. Real-binary exit 6 stays NOT PROVEN until then. · [M0-T66b, 2026-10-19] owed on win-laptop (R15): M0-T66b changed sigma_bh 4,000 → 6,000 (physics hash 556e3959…) and re-pinned registry.rs, sink.rs, calibration.rs and stall-constants.patch; run calibrate_cold, registry, sink, calibration there; the sun_burn red-arm (stall-constants context line) is not run anywhere since the edit — git apply --check only · [M0-T70, 2026-10-19] calibrate items 5–6 are built and unrun on real lives: the lead's full run is `sandbox-reactions calibrate --adapter "RTX 5090" --out assets/calibration.json` (hours; defaults m_up 1–14 M₀, m_bh 1.25×m_up_sb–20 M₀, widen with --bracket; each preset life is a whole life, --max-steps raises the ceiling). Read first: max_gas_speed is the largest block rms speed √(2K/m) (a lower bound of the fastest cell, summary.json 'max_gas_speed'); t_eff_sun_sb needs the Sun-like life to reach X_H,c 0.35 (exit 6 if not — M0-D50's helium question); exit 6 on any preset not ending white_dwarf/neutron_star/black_hole at preset_mass_sb. After the write: set EMBEDDED in calibration.rs (T65's flag) and render_reserve_ms stays absent until the drawing lot's --measure-ui, so Calibration::parse refuses the file until then · [M0-D62, 2026-10-19] No EMBEDDED edit after calibrate: sr-physics's build.rs embeds assets/calibration.json at the next build, and a file without render_reserve_ms is a valid calibration until lot 13's --measure-ui (3.0 ms meanwhile) — re-run calibration and readouts on the lead's file
+- Carried flags: [M0-V8, 2026-10-16] [M0-V8, 2026-10-16] owed on win-laptop (R15; M0-V8 ran on linux-pc only): lot 8's scopes on the RTX 4080 Laptop, each red-armed — summary (7; summary-skip-row), ledger (4; ledger-no-escaped), observe_run (5; until-never-met), jeans (5; no-pressure-flux), and on its CPU objects (15; one-object), classify (30; classify-order), preset_cloud (5; preset-uth-half), with timing's M0-D49 check — beside M0-V7's carried list (lot 7's sink, nu_heat, dump's sink round trip; lot 6's and lot 5's lists; M0-D28's desktop and start.bat checks): py -3.12 tools/pb/verify.py --all and --redarm --moved there cover them; else carried V to V, M0-V17 at the latest (reports/v8.md § Owed) · [M0-D50, 2026-10-18] Owed on laserax-ai: `sun_burn` (new, M0-D50) — Verify 1 (`python3 tools/pb/verify.py sun_burn --task <ID>`, GO 4/0/0 in 127.7 s on the RTX 4080 Laptop) and its red-arm (GO there, 726 s with 3 arms — over the 10-minute line on win-laptop, so a lead's run unless the 5090 is faster); M0-D50's Done when names linux-pc · [M0-D55, 2026-10-18] M0-D55 (2026-10-18): registry, rates, burn_cell, burn_order, neutrino, heat_stiff and timing changed and red-armed on win-laptop only — their linux-pc runs and red-arms owed (R15); heat_limiter red on every box until M0-D56 · [M0-T65, 2026-10-19] [M0-T65, 2026-10-19] assets/calibration.json is not embedded yet: after your calibrate write, set `EMBEDDED` in crates/sr-physics/src/calibration.rs to `Some(include_str!("../../../assets/calibration.json"))` — the `calibration` scope's last case then reads the file (it demands EMBEDDED, a parseable §2.11 file and its physics_hash = the assets'); until then it compares the assets' hash to PINNED_HASH in crates/sr-engine/tests/gpu/calibration.rs. Real-binary exit 6 stays NOT PROVEN until then. · [M0-T66b, 2026-10-19] owed on win-laptop (R15): M0-T66b changed sigma_bh 4,000 → 6,000 (physics hash 556e3959…) and re-pinned registry.rs, sink.rs, calibration.rs and stall-constants.patch; run calibrate_cold, registry, sink, calibration there; the sun_burn red-arm (stall-constants context line) is not run anywhere since the edit — git apply --check only · [M0-T70, 2026-10-19] calibrate items 5–6 are built and unrun on real lives: the lead's full run is `sandbox-reactions calibrate --adapter "RTX 5090" --out assets/calibration.json` (hours; defaults m_up 1–14 M₀, m_bh 1.25×m_up_sb–20 M₀, widen with --bracket; each preset life is a whole life, --max-steps raises the ceiling). Read first: max_gas_speed is the largest block rms speed √(2K/m) (a lower bound of the fastest cell, summary.json 'max_gas_speed'); t_eff_sun_sb needs the Sun-like life to reach X_H,c 0.35 (exit 6 if not — M0-D50's helium question); exit 6 on any preset not ending white_dwarf/neutron_star/black_hole at preset_mass_sb. After the write: set EMBEDDED in calibration.rs (T65's flag) and render_reserve_ms stays absent until the drawing lot's --measure-ui, so Calibration::parse refuses the file until then · [M0-D62, 2026-10-19] No EMBEDDED edit after calibrate: sr-physics's build.rs embeds assets/calibration.json at the next build, and a file without render_reserve_ms is a valid calibration until lot 13's --measure-ui (3.0 ms meanwhile) — re-run calibration and readouts on the lead's file · [M0-D64, 2026-10-20] M0-D64 (2026-10-20): blocked now on M0-D66 (four checks its gravity source moved), M0-D67 above it too; the fixed source changes every life the calibration measures — the Sun-like star contracts more on the main sequence (ΔW −11,870 vs −1,871 over steps 5,000–6,000, win-laptop) and its remnant contracts R₉₀ 6.0 → 3.3 in the step-450,000 window: build/v9-sun-life's dumps are the old source's · [M0-D67, 2026-10-20] M0-D67 closed with no code change (the lead, 2026-10-20: «Revert, file well-balanced D», «After M0-V9»): the late remnant's light stays ≈ half floor-fed — s_450000's window floor_added 1.478e5 of radiated 2.777e5, booked, G-CONS holds. Calibrate on today's source; the cure is M0-D71 (a well-balanced P4), after this block; tasks/M0-D67.md
 - Read: milestones/m0/m0_contrat.md §0.4, §1.6.4, §1.10, §2.6 (Σ_BH's bound), §2.11, §5.1 (G-CORE), §5.4
   (G-CAL, G-READ), §5.5, §6.4 + the handoffs of M0-T65–M0-T71 + docs/agent/running.md + the delivered
   files, each by the section it covers
@@ -2441,6 +2524,114 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
   on linux-pc · Pass: GO on both (one box's run `NOT RUN — owed on <box>` if the lead is on the other) · Fail: NO-GO · 2.
   `--redarm cold_core` · Pass: GO — `cold-exponent` and `cold-gpu-pressure` still NO-GO · Fail: a plant GO
 - Done when: `cold_core` GO on win-laptop with the scene check still refusing a disk that moved, on linux-pc unchanged
+- Handoff: <placeholder>
+
+## M0-D68 · M0-D64's face-work energy source cools a cold collapse below its adiabat: the diffusive mass flux's work comes out of the cells' thermal energy, and G-JEANS's cloud at U_th = 0.05 W loses 8× its entropy on the ripple's spoke (J 0.129 → 1.04) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D65)
+- Status: TODO
+- Carried flags: [M0-D67, 2026-10-20] M0-D67 measured two splits of the diffusive flux's work on the late remnant (tasks/M0-D67.md § Fix candidates): by heat above the floor, and mass-shared capped at ¼ of each side's heat per face — both cut the floor 60–70 % while the core holds heat, then fall back; a gain shared by heat overheats a thin hot surface cell (radiated 5.6e18). At a hydrostatic core any split only moves who pays — read M0-D71 (a well-balanced P4) before choosing one
+- Blocks: nothing today — G-JEANS's scene moved to 0.07|W| at the lead's word (M0-D66, 2026-10-20, «0.07|W| + file a D (Recommended)»),
+  where J still rises 0.092 → 0.159; a calibration measured before this lands moves again when the energy split changes
+- Caused by: M0-D64 (§0.5 [M0-D64]'s split: cell i takes (½p_i + w_i(q − ½(p_i + p_j)))(φ_i − φ_j)Δt, w_i = Σ_i/(Σ_i + Σ_j))
+- Rating: (usual) — rule (3)'s list: a design the spec leaves open (who pays the diffusive flux's work) and numeric semantics
+- Files: opened by M0-D66 — crates/sr-engine/shaders/hydro.wgsl (`grav_share` 283–291, the energy update 855–869),
+  crates/sr-engine/tests/gpu/jeans.rs; named, not opened — crates/sr-physics/src/reference/hydro.rs (the twin's `grav_share`)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-D64], [M0-D66], §1.4.2, §5.1 G-JEANS + milestones/m0/tasks/M0-D66.md
+  § jeans + milestones/m0/tasks/M0-D64.md § Measured (the variants already tried)
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-20 (M0-D66): scenes/jeans_ripple.json at 0.05|W| (T 2.3666, heat off,
+  γ = 2, so J = GΣ²/(2Π) = G/(2K) is constant along an adiabat and only an energy sink can raise it): on the Σu·g source J never passes
+  its start, 0.129; on the face work J reaches 0.79 at step 153 and 1.04 at step 165 (cells (84, 64), (81, 64) — the ripple's +x spoke,
+  r ≈ 17–20; earlier at (100, 61), r ≈ 36), 0.99 at CFL 0.2 — not φ's lag (first order in Δt). Old and new differ per cell by
+  exactly Σ_faces w_i(q − p̄)(φ_i − φ_j)Δt (the ½p_i parts sum to the old Δt·p·g), so that term is the sink. At 0.07|W| J 0.092 → 0.159.
+- Repro: in a `tools/pb/scratch_copy.sh` copy, scenes/jeans_ripple.json's "t" back to 2.3666 and jeans.rs's `U_OVER_W` to 0.05, then
+  `bash tests/gpu.sh jeans physics` (≈ 2 s warm) — the J case prints its worst cell
+- Deliver: an energy source that keeps §0.5 [M0-D64]'s books (W's change paid, the ledger case's 1e-3 |W| per τ_dyn) without driving
+  a cell below its adiabat — measured candidates (e.g. the donor cell paying, the work taken from the moved mass's kinetic energy
+  with a matching momentum term) put to the lead before one is built (§0.4; the split is a contract formula), GPU and twin alike ·
+  a check of its own: on the 0.05|W| scene, J never above (1 + 10⁻²) × its start (a bound the lead rules) · the thin-gas overheating
+  §0.5 [M0-D64] recorded for the ½/½ split not reintroduced
+- Verify: 1. `python3 tools/pb/verify.py jeans --task <ID>`, `ledger`, `twin`, `cpu_gpu` · Pass: GO each · Fail: NO-GO · 2.
+  `--redarm` on each scope changed · Pass: GO — `ledger-cell-grav-work` and `no-pressure-flux` still NO-GO · Fail: a plant GO
+- Done when: the 0.05|W| cloud collapses to 100 × with J at its start's within the ruled bound on linux-pc; win-laptop `owed`
+- Handoff: <placeholder>
+
+## M0-D69 · Gravity's momentum leaks where gas sits on the world's edge: the box's outer ring takes a one-sided g with no matching pull back, so the ledger's cold disk collapsing 12 cells from a leave edge drifts 266 in momentum against 21 in a wider world · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D68)
+- Status: TODO
+- Blocks: nothing today — the ledger's disk moved to T 2.3 at the lead's word (M0-D66, 2026-10-20, «Disk T 2.3 + edge D (Recommended)»),
+  where leave reads 8.1e-4 of Σm|u| against 5e-3; G-CONS's supernova in leave mode (scope `conservation`, 1e-6 of Σm|u|) will meet it
+- Caused by: M0-T29 and M0-T31 (the twin's gradient rule and grav.wgsl's `grav_gradient`, commit b1938a8: "one-sided on the box's outermost ring (the twin's rule; the box's margin keeps matter
+  off it, §1.3.3)" — at a world edge the box is clamped and matter sits on the ring)
+- Rating: (usual) — rule (3)'s list: numeric semantics (the free-space φ beyond the world, the gradient's stencil at the edge)
+- Files: opened by M0-D66 — crates/sr-engine/shaders/grav.wgsl (`grav_gradient` 122–144), crates/sr-engine/tests/gpu/ledger.rs;
+  named, not opened — sr_physics::reference::grav (the twin's rule), step/grav.rs
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.1–§1.4.2, §1.3.3, §2.8, §5.1 G-CONS + milestones/m0/tasks/M0-D66.md § ledger
+  + reports/v7.md (observation 1)
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-20 (M0-D66; logs/M0-D66.log exp3–exp5): the ledger's leave scene (disk
+  a = 24, Σc 1, T 0.05, x = 116 in a 128-wide leave world, v 0.5, cold pressure off) on M0-D64's source: |Δp| 9.7 at step 50, 236 at 100
+  (the collapse, Σ_max 81), 266 at 500; the same disk in a 256-wide world (no edge at 128): 8.4, 1.1, 21; centred at x = 64: 8.4, 1.1,
+  21. On the Σu·g source: 24 at the edge, 54 in the wider world. Σ Σ_i g_i vanishes in exact arithmetic for the central stencil (the
+  kernel is even); the ring's one-sided stencil breaks the pairing.
+- Repro: the ledger's leave case with `DISK_T` back to 0.05 (crates/sr-engine/tests/gpu/ledger.rs) in a scratch copy, `bash tests/gpu.sh
+  ledger physics`; or `headless` on that scene at 128 and 256 wide (the scratch driver M0-D66 used is in its task file)
+- Deliver: the momentum error at a world edge measured per stencil (the free-space convolution's φ one cell past the world — the
+  zero-padded FFT holds it — against the one-sided rule), the fix put to the lead if it changes §1.4.2's stencil, GPU and twin alike ·
+  the ledger's leave case at T 0.05 within its 5e-3 again, or the measured reason it cannot be
+- Verify: 1. `python3 tools/pb/verify.py ledger --task <ID>`, `grav_force`, `grav_selfforce`, `box`, `twin` · Pass: GO each · Fail: NO-GO ·
+  2. `--redarm` on each scope changed · Pass: GO · Fail: a plant GO
+- Done when: a collapse beside a leave edge drifts in momentum no more than the same collapse away from it (within the ruled bound)
+  on linux-pc; win-laptop `owed`
+- Handoff: <placeholder>
+
+## M0-D70 · A black hole that has eaten its gas is no object: §1.9.2 builds objects from gas blocks alone, so a sink with no gas around it shows no stage and its ending never comes — sink_cloud at T 3 swallows its whole cloud and `--until ending` never meets · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D69)
+- Status: TODO
+- Blocks: nothing today — observe_run's ending case runs its own cloud at T 0.5 at the lead's word (M0-D66, 2026-10-20, «Case's own T 0.5
+  + D (Recommended)»), whose sink leaves 0.038 of gas; G-END's black-hole ending and the readout's ending (§1.9.5) depend on it
+- Caused by: unknown — §1.9.2's text as written (M0-T58's tracker follows it)
+- Rating: (usual) — rule (3)'s list: a design the spec leaves open (whether and how a sink alone is an object)
+- Files: opened by M0-D66 — crates/sr-engine/tests/gpu/observe.rs (`events_jsonl_and_the_ending_of_a_black_hole`); named, not opened —
+  sr_physics::observe::tracker, sr_engine::watch
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.2–§1.9.5, §2.6, §5.2 G-END + milestones/m0/tasks/M0-D66.md § observe_run
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-20 (M0-D66; logs/M0-D66.log exp7, exp9): scenes/sink_cloud.json with a 50
+  sink dropped at the centre after 40 steps, `--until ending --max-steps 20000`: at T 3 one sink forms and accretes everything (grid mass
+  4 × 10⁻⁵, sinks 1,650) — no object at the end, `until=unmet` at t 11.0; at T 0.05 (M0-D64's source) 7 sinks form, 21 % escapes, grid
+  4 × 10⁻⁵, no object; at T 0.5 the ending is met (one sink, 0.038 of gas left).
+- Repro: observe.rs's `ENDING_T` set to 3.0 in a scratch copy, `bash tests/gpu.sh observe physics` (≈ 7 s warm)
+- Deliver: the lead's ruling on §1.9.2 (asked with the question tool: e.g. a sink outside every gas object is an object of its own,
+  M = the sink's, stage black_hole) and its build in the tracker, the stages and the readout, synthetic and engine cases · the case at T 3
+  meeting its ending
+- Verify: 1. `python3 tools/pb/verify.py objects --task <ID>`, `classify`, `observe_run` · Pass: GO each · Fail: NO-GO · 2. `--redarm` on
+  each scope changed · Pass: GO · Fail: a plant GO
+- Done when: a sink that has eaten its cloud shows black_hole and its ending on linux-pc; win-laptop `owed`
+- Handoff: <placeholder>
+
+## M0-D71 · P4 is not well-balanced at a hydrostatic core: HLL's diffusion lifts mass out of a degenerate remnant's well every step while spurious inflow momenta carry it back, so the gravity split pumps energy from a heatless centre and P8's floor pays half the late remnant's light (1.48 × 10⁵ of 2.78 × 10⁵ at step 450,000) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D70)
+- Status: TODO
+- Blocks: nothing today — booked, so G-CONS holds (1.0 × 10⁻⁵ |W| per τ_dyn); filed after M0-V9 at the lead's word (2026-10-20, M0-D67:
+  «Revert, file well-balanced D (Recommended)», «After M0-V9 (Recommended)»): the calibration's late remnants shine ≈ half on floor energy
+- Caused by: M0-T34 and M0-T36 (P4's MUSCL-Hancock + HLL with gravity as a source term: no hydrostatic balance in the reconstruction),
+  exposed by M0-D64 (§0.5 [M0-D64]'s split books what Σu·g created unbooked)
+- Rating: (usual) — rule (3)'s list: numeric semantics (the reconstruction's balance) and a design the spec leaves open
+- Files: opened by M0-D67 — crates/sr-physics/src/reference/hydro.rs (`step_forced`, `grav_share`), crates/sr-engine/shaders/hydro.wgsl
+  (`grav_share`, `hydro_update`'s `mids`); named, not opened — the reconstruction (`predicted`, hydro.wgsl's `hancock`)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.4.2, §0.5 [M0-D64], §2.3, §2.7 [M0-T19] + milestones/m0/tasks/M0-D67.md
+  (§ Measured, § Fix candidates, § Cause) + M0-D68's block (the same question at a collapse)
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-20 (M0-D67): from build/v9-sun-life/dumps/s_450000.bin, 5,000 steps,
+  floor_added 1.478e5, radiated 2.777e5; from step ≈ 451,500 a steady state, floor ≈ radiated ≈ 2.3e4 per 500 steps. The CPU twin
+  (128 × 128 crop, passes by hand) puts it all in one cell, the remnant's centre (Σ 85.8, φ −1098 against −986…−1028, heat ≈ 1e-12),
+  short ≈ 50 after P4 every step, 0 with gravity off: its four neighbours hold steady momenta of 58–71 toward it while the face mass
+  fluxes are 1–10 (HLL diffusion out, advection in); the pair's work q·Δφ sums +383 per unit Δt, the split moves −5.9e3 of it out of
+  the centre. Splitting by heat instead (M0-D67's candidates) cuts the floor 60–70 % while the core holds heat, then the core cools to
+  none, the share falls back and the remnant bounces on the floor (GPU window: 90 % of radiated).
+- Repro: `build/target/release/sandbox-reactions headless --scene preset:sun --load-dump build/v9-sun-life/dumps/s_450000.bin --steps 5000
+  --adapter "RTX 5090" --out <dir>` (≈ 22 s) → summary.json's `ledger` end − start: floor_added 1.478e5 against radiated 2.777e5
+- Deliver: a well-balanced P4 put to the lead before it is built (§0.4; it changes §1.4.2 and §2.3's scheme): measured candidates —
+  e.g. reconstructing the pressure's deviation from hydrostatic balance within each cell (so a static core carries no HLL diffusion),
+  or the gravity source in a form whose discrete equilibrium has zero momentum — on the twin first (M0-D67's probe: a crop of the dump,
+  passes by hand), GPU and twin alike once ruled; a split into PLAN + BUILD blocks if it exceeds one task's ceiling · a check of its
+  own: a degenerate remnant at rest stays at rest (|u| and floor_added bounds the lead rules) · the step-450,000 window's floor_added
+  a small share of its radiated (the lead's 15 % at M0-D67) · G-REF, G-CONS, the ledger case and M0-D68's J bound not worsened
+- Verify: 1. `python3 tools/pb/verify.py <the owning scope> --task <ID>`, `ledger`, `twin`, `cpu_gpu`, `jeans`, `collapse` · Pass: GO
+  each · Fail: NO-GO · 2. `--redarm` on each scope changed · Pass: GO — the new plant NO-GO · Fail: a plant GO
+- Done when: the step-450,000 window's floor_added ≤ 15 % of its radiated on linux-pc (or the lead's later bound); win-laptop `owed`
 - Handoff: <placeholder>
 
 > **Commit gate (lead):** Phase 11 closes after M0-V9 — from the repo root, one at a time:
@@ -3256,7 +3447,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
 
 ## M0-T106 · Conservation over whole lives (G-CONS) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T105)
 - Status: TODO
-- Carried flags: [M0-T35, 2026-10-13] Bounce books no escaped: the walls' pressure impulse changes the grid's momentum unbooked (G-CONS's invariants are mass and energy only). In leave, every boundary face's flux is booked, including momentum Π through faces closed against inflow · [M0-V7, 2026-10-15] G-CONS marks momentum by construction (§5.1), but source-term gravity does not conserve it: scenes/sink_cloud.json with no sink, P2 + P4, 40 steps (0.73 t.u.) — grid momentum off by 3.9e-3 of Σm|u| (twin and RTX 5090), 1.1e-6 with gravity off; a red here is the lead's (§0.4, §5.1: a conservative gravity formulation, never a looser bound) (reports/v7.md § Observations 1) · [M0-T57, 2026-10-16] M0-T57's ledger (crates/sr-engine/src/ledger.rs, summary.json ledger {start, end}; tasks/M0-T57.md): it starts after a run's first step; momentum holds to 1e-6 only on a symmetric collapse — a drifting cloud with gravity reads 3e-3 of Σm|u| (source-term gravity, M0-V7 obs. 1) and 2.9e-4 without it (a vacuum reset's momentum, booked nowhere, §2.7 [M0-T19]); the energy invariant drifted 0.4–0.9 of its scale on pressureless collapses (a cell-sized singular collapse, cause not measured) — G-CONS's energy band needs a scene that resolves its collapse; the sinks' mφ is not in W and no ledger run has a sink · [M0-V8, 2026-10-16] [M0-V8, 2026-10-16] the ledger's W is ½Σ_cells m·φ with φ holding the sinks' potential (§1.4.3); the sinks' own M·φ(x_s) is not summed, so with a sink W leaves out half of each gas–sink pair's energy and the sink–sink pair term (−G M_i M_j/√(d² + max r_acc²), §0.5 [M0-V7]) — §2.9 reads 'W = ½Σmφ (sinks included)'; ledger.rs declares it (M0-T57: NOT PROVEN, no sink in any ledger run); a life with a black hole graded by G-CONS needs it (reports/v8.md § Observations) · [M0-D58, 2026-10-19] M0-D58: with heat on, P8 refills heat in cold fast gas P5 leaves near the floor — floor_added 5.0e5 over 105 steps on D58's 2 × 2 C/O block (28 % of its start's thermal energy; −41 over 270 steps heat off), booked, not growing; G-CONS's energy over whole lives reads it as a term (tasks/M0-D58.md § Findings) · [M0-V19, 2026-10-19] M0-D64 (runs before M0-V9) owns the whole-life energy drift M0-V9 measured on preset:sun (RTX 5090, build/v9-sun-life): the invariant −2.006 × 10⁵ → +3.587 × 10⁷ over 510,496 steps (t 5,915, 37 min wall), within G-CONS to ~50,000 steps and 2.5–40× over after (logs/M0-V9.log § M9). Read D64's handoff (the source, its fix, its window case and scope) before building `conservation`: your Fail line's «more drift is a D for a conservative gravity» may be answered there, and a whole Sun-like life as a case ran 37 min on the 5090 before that fix — over the 10-minute line, the lead's
+- Carried flags: [M0-T35, 2026-10-13] Bounce books no escaped: the walls' pressure impulse changes the grid's momentum unbooked (G-CONS's invariants are mass and energy only). In leave, every boundary face's flux is booked, including momentum Π through faces closed against inflow · [M0-V7, 2026-10-15] G-CONS marks momentum by construction (§5.1), but source-term gravity does not conserve it: scenes/sink_cloud.json with no sink, P2 + P4, 40 steps (0.73 t.u.) — grid momentum off by 3.9e-3 of Σm|u| (twin and RTX 5090), 1.1e-6 with gravity off; a red here is the lead's (§0.4, §5.1: a conservative gravity formulation, never a looser bound) (reports/v7.md § Observations 1) · [M0-T57, 2026-10-16] M0-T57's ledger (crates/sr-engine/src/ledger.rs, summary.json ledger {start, end}; tasks/M0-T57.md): it starts after a run's first step; momentum holds to 1e-6 only on a symmetric collapse — a drifting cloud with gravity reads 3e-3 of Σm|u| (source-term gravity, M0-V7 obs. 1) and 2.9e-4 without it (a vacuum reset's momentum, booked nowhere, §2.7 [M0-T19]); the energy invariant drifted 0.4–0.9 of its scale on pressureless collapses (a cell-sized singular collapse, cause not measured) — G-CONS's energy band needs a scene that resolves its collapse; the sinks' mφ is not in W and no ledger run has a sink · [M0-V8, 2026-10-16] [M0-V8, 2026-10-16] the ledger's W is ½Σ_cells m·φ with φ holding the sinks' potential (§1.4.3); the sinks' own M·φ(x_s) is not summed, so with a sink W leaves out half of each gas–sink pair's energy and the sink–sink pair term (−G M_i M_j/√(d² + max r_acc²), §0.5 [M0-V7]) — §2.9 reads 'W = ½Σmφ (sinks included)'; ledger.rs declares it (M0-T57: NOT PROVEN, no sink in any ledger run); a life with a black hole graded by G-CONS needs it (reports/v8.md § Observations) · [M0-D58, 2026-10-19] M0-D58: with heat on, P8 refills heat in cold fast gas P5 leaves near the floor — floor_added 5.0e5 over 105 steps on D58's 2 × 2 C/O block (28 % of its start's thermal energy; −41 over 270 steps heat off), booked, not growing; G-CONS's energy over whole lives reads it as a term (tasks/M0-D58.md § Findings) · [M0-V19, 2026-10-19] M0-D64 (runs before M0-V9) owns the whole-life energy drift M0-V9 measured on preset:sun (RTX 5090, build/v9-sun-life): the invariant −2.006 × 10⁵ → +3.587 × 10⁷ over 510,496 steps (t 5,915, 37 min wall), within G-CONS to ~50,000 steps and 2.5–40× over after (logs/M0-V9.log § M9). Read D64's handoff (the source, its fix, its window case and scope) before building `conservation`: your Fail line's «more drift is a D for a conservative gravity» may be answered there, and a whole Sun-like life as a case ran 37 min on the 5090 before that fix — over the 10-minute line, the lead's · [M0-D64, 2026-10-20] M0-D64 (2026-10-20): the ledger scope grades G-CONS's energy bound on one window (a hot compact remnant, 1,000 steps: 6.2e-5 |W| per τ_dyn); the probe life's seven 5,000-step windows read 8e-7–3.1e-5 on the fix (tasks/M0-D64.md § Done-when) — a whole-life grade starts from there
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §2.9, §5.1 (G-CONS), §5.5 +
   milestones/m0/reports/lives.md (the dumps) + docs/agent/testing.md
 - Deliver: tests/gpu/conservation.rs (new): a whole Sun-like life in bounce and a supernova in leave (the

@@ -1,0 +1,333 @@
+M0-D67 on linux-pc (laserax-ai), 2026-10-20T11:37:55-04:00, claude-opus-5-5 high; HEAD b502cda
+== build 2026-10-20T11:38:02-04:00
+    Finished `release` profile [optimized] target(s) in 0.06s
+== repro s_450000 5000 steps 2026-10-20T11:38:07-04:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5000 sim_time=5315.055231 until=none
+== s_450000 window, 5000 steps: reactions off; heat off (F stripped) 2026-10-20T11:40:04-04:00
+SR-HEADLESS DONE steps=5000 sim_time=5314.347746 until=none
+SR-HEADLESS DONE steps=5000 sim_time=5328.954870 until=none
+r0 steps 450001 455000 invari -966.2 kineti 834.9 therma -3.802e+04 cold 1.882e+05 potent -2.674e+05 radiat 2.777e+05 nuclea 1.448e+04 escape 0 floor_ 1.478e+05
+r_noreact steps 450001 455000 invari -1323 kineti 788.6 therma -4.405e+04 cold 2.072e+05 potent -2.897e+05 radiat 2.857e+05 nuclea 0 escape 0 floor_ 1.612e+05
+r_noheat steps 450001 455000 invari 1513 kineti 143.8 therma -4.429e+04 cold -1.036e+05 potent 2.96e+05 radiat 0 nuclea 4.914e+06 escape 8.359e+04 floor_ -526.5
+== s_450000 window, 5000 steps: gravity+hydro only (F stripped) 2026-10-20T11:40:37-04:00
+SR-HEADLESS DONE steps=5000 sim_time=5323.196258 until=none
+r_hg steps 450001 455000 invari -851.1 kineti -6.205 therma 6803 cold 8688 potent -1.561e+04 radiat 0 nuclea 0 escape 0 floor_ 724.5
+== twin probe (scratch, f64, 128² crop), 200 steps 2026-10-20T11:42:16-04:00
+crop at (236,132), heat true, dt0 1.0790e-2
+step     1: dt 1.0790e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.6331e-4  radiated 1.5813e2
+step     2: dt 1.0794e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.6285e-4  radiated 1.5818e2
+step     3: dt 1.0797e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.6295e-4  radiated 1.5724e2
+step     4: dt 1.0801e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.6252e-4  radiated 1.5675e2
+step     5: dt 1.0806e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.6239e-4  radiated 1.5572e2
+step    20: dt 1.0839e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.5056e-4  radiated 1.3734e2
+step    40: dt 1.0734e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.2746e-4  radiated 1.2224e2
+step    60: dt 1.0546e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.1977e-4  radiated 1.3253e2
+step    80: dt 1.0356e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.2627e-4  radiated 1.5382e2
+step   100: dt 1.0216e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.2845e-4  radiated 1.5855e2
+step   120: dt 1.0150e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -5.1878e-4  radiated 1.4360e2
+step   140: dt 1.0122e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -4.9818e-4  radiated 1.2158e2
+step   160: dt 1.0095e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -4.7452e-4  radiated 1.0476e2
+step   180: dt 1.0042e-2 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -4.5583e-4  radiated 9.8709e1
+step   200: dt 9.9600e-3 P4 deficit 0.0000e0 (0 cells)  after P5 0.0000e0 (0 cells)  booked -4.4289e-4  radiated 9.8534e1
+TOTAL over 200: after-P4 deficit 0.00000e0  after-P5 deficit 0.00000e0  booked floor -1.02014e-1 (resets -1.020e-1)  radiated 2.60102e4
+by class (cell-steps): key  after-P4  after-P5  count
+
+real	0m28.647s
+user	0m28.605s
+sys	0m0.036s
+SR-HEADLESS DONE steps=200 sim_time=5273.663904 until=none
+r200 steps 450001 450200 invari 111.6 kineti 326 therma -1287 cold 3.322e+04 potent -5.564e+04 radiat 2.598e+04 nuclea 2478 escape 0 floor_ -0.1017
+== 500-step windows from each dump of the 450k window 2026-10-20T11:43:18-04:00
+w450000 steps 450001 450500 invari -8.599 kineti 652.6 therma -3874 cold 6.959e+04 potent -1.113e+05 radiat 5.106e+04 nuclea 6143 escape 0 floor_ -0.2076
+w450500 steps 450501 451000 invari -328.8 kineti 261.4 therma -1.102e+04 cold 4.213e+04 potent -5.903e+04 radiat 3.143e+04 nuclea 4097 escape 0 floor_ -0.1405
+w451000 steps 451001 451500 invari -970.2 kineti -281.7 therma -1.166e+04 cold 4.316e+04 potent -5.608e+04 radiat 2.519e+04 nuclea 1306 escape 0 floor_ -0.07819
+w451500 steps 451501 452000 invari -34.44 kineti -213.2 therma -4663 cold 1.857e+04 potent -2.306e+04 radiat 2.545e+04 nuclea 396.5 escape 0 floor_ 1.573e+04
+w452000 steps 452001 452500 invari -2.565 kineti -12.4 therma 762.7 cold -3672 potent 4632 radiat 2.324e+04 nuclea 397.8 escape 0 floor_ 2.456e+04
+w452500 steps 452501 453000 invari 3.313 kineti 13.03 therma 223.4 cold -998.5 potent 1292 radiat 2.295e+04 nuclea 455 escape 0 floor_ 2.302e+04
+w453000 steps 453001 453500 invari 0.9148 kineti 0.6742 therma -1.86 cold 44.96 potent -27.97 radiat 2.295e+04 nuclea 465.2 escape 0 floor_ 2.25e+04
+w453500 steps 453501 454000 invari -5.707 kineti -4.72 therma 7.755 cold 241.5 potent -281.3 radiat 2.325e+04 nuclea 463.9 escape 0 floor_ 2.276e+04
+w454000 steps 454001 454500 invari 8.084 kineti 45.16 therma -1123 cold 3239 potent -4024 radiat 2.411e+04 nuclea 442.6 escape 0 floor_ 2.179e+04
+w454500 steps 454501 455000 invari 3.615 kineti 385.3 therma -6610 cold 1.572e+04 potent -1.926e+04 radiat 2.72e+04 nuclea 287.3 escape 0 floor_ 1.715e+04
+== twin probe from GPU s_452000, 100 steps 2026-10-20T11:43:47-04:00
+crop at (240,136), heat true, dt0 8.4590e-3
+step     1: dt 8.4590e-3 P4 deficit 5.0259e1 (1 cells)  after P5 5.0237e1 (1 cells)  booked 5.0237e1  radiated 4.7188e1
+step     2: dt 8.4589e-3 P4 deficit 5.0255e1 (1 cells)  after P5 5.0234e1 (1 cells)  booked 5.0234e1  radiated 4.7029e1
+step     3: dt 8.4588e-3 P4 deficit 5.0264e1 (1 cells)  after P5 5.0242e1 (1 cells)  booked 5.0242e1  radiated 4.6481e1
+step     4: dt 8.4588e-3 P4 deficit 5.0281e1 (1 cells)  after P5 5.0259e1 (1 cells)  booked 5.0259e1  radiated 4.6636e1
+step     5: dt 8.4587e-3 P4 deficit 5.0281e1 (1 cells)  after P5 5.0259e1 (1 cells)  booked 5.0259e1  radiated 4.7198e1
+step    10: dt 8.4591e-3 P4 deficit 5.0275e1 (1 cells)  after P5 5.0253e1 (1 cells)  booked 5.0253e1  radiated 4.6681e1
+step    20: dt 8.4617e-3 P4 deficit 5.0229e1 (1 cells)  after P5 5.0207e1 (1 cells)  booked 5.0207e1  radiated 4.7009e1
+step    30: dt 8.4649e-3 P4 deficit 5.0140e1 (1 cells)  after P5 5.0119e1 (1 cells)  booked 5.0119e1  radiated 4.6358e1
+step    40: dt 8.4675e-3 P4 deficit 4.9988e1 (1 cells)  after P5 4.9966e1 (1 cells)  booked 4.9966e1  radiated 4.6264e1
+step    50: dt 8.4688e-3 P4 deficit 4.9891e1 (1 cells)  after P5 4.9869e1 (1 cells)  booked 4.9869e1  radiated 4.5734e1
+step    60: dt 8.4685e-3 P4 deficit 4.9871e1 (1 cells)  after P5 4.9849e1 (1 cells)  booked 4.9849e1  radiated 4.6263e1
+step    70: dt 8.4669e-3 P4 deficit 4.9898e1 (1 cells)  after P5 4.9876e1 (1 cells)  booked 4.9876e1  radiated 4.6092e1
+step    80: dt 8.4649e-3 P4 deficit 4.9968e1 (1 cells)  after P5 4.9946e1 (1 cells)  booked 4.9946e1  radiated 4.6759e1
+step    90: dt 8.4635e-3 P4 deficit 5.0051e1 (1 cells)  after P5 5.0028e1 (1 cells)  booked 5.0028e1  radiated 4.6301e1
+step   100: dt 8.4633e-3 P4 deficit 5.0144e1 (1 cells)  after P5 5.0121e1 (1 cells)  booked 5.0121e1  radiated 4.7584e1
+TOTAL over 100: after-P4 deficit 5.00513e3  after-P5 deficit 5.00292e3  booked floor 5.00292e3 (resets 2.763e-5)  radiated 4.66005e3
+by class (cell-steps): key  after-P4  after-P5  count
+  inner lgS+1    5.0051e3 5.0029e3 100
+== twin probe P4 variants, s_452000, 2 steps 2026-10-20T11:44:23-04:00
+crop at (240,136), heat true, dt0 8.4590e-3
+step 0: max-deficit cell (61, 60) [world (301, 196)]: full 5.0259e1 | no radiation force 5.0259e1 | no gravity 0.0000e0
+   before: sigma, E, deficit (85.7984848022461, 29200.9453125, 0.0)
+   after full: (85.80000895600107, 29151.74162457235, 50.258925000610915)
+   neighbours sigma [70.37582397460938, 70.56654357910156, 68.05409240722656, 73.72193145751953]
+   phi c,l,r,u,d [-1097.9534905953776, -1004.9187850585853, -1006.2382808902314, -985.9589437326698, -1028.002149808186]
+   momentum x,y 1.0544e0 4.1584e1; F x,y Some((0.014571219682693481, -0.2383795976638794))
+   world totals: full 5.0259e1 no-rad 5.0259e1 no-grav 0.0000e0
+step 1: max-deficit cell (61, 60) [world (301, 196)]: full 5.0255e1 | no radiation force 5.0255e1 | no gravity 0.0000e0
+   before: sigma, E, deficit (85.80000895600107, 29202.000549572964, 9.924603842196689e-13)
+   after full: (85.8009482676244, 29152.442910166323, 50.25548413248728)
+   neighbours sigma [70.3776271610265, 70.5679756462683, 68.05346155410591, 73.72236558304226]
+   phi c,l,r,u,d [-1097.9554936437949, -1004.9245250512315, -1006.2401510438476, -985.9485332500011, -1028.000151280076]
+   momentum x,y 1.0502e0 4.1610e1; F x,y Some((0.014265101719023898, -0.23877484639681168))
+   world totals: full 5.0255e1 no-rad 5.0255e1 no-grav 0.0000e0
+TOTAL over 2: after-P4 deficit 1.00514e2  after-P5 deficit 1.00471e2  booked floor 1.00471e2 (resets 5.623e-7)  radiated 9.42176e1
+by class (cell-steps): key  after-P4  after-P5  count
+  inner lgS+1    1.0051e2 1.0047e2 2
+== per-face breakdown of the centre cell, s_452000 2026-10-20T11:45:35-04:00
+crop at (240,136), heat true, dt0 8.4590e-3
+  face x+: q +1.1862e0 p_i +1.3036e0 p_j -6.3526e1 Σ_i 86.342 Σ_j 70.673 w 0.550 d -91.715  own ½p_i·d -5.9779e1  extra·w·d -1.6289e3  face total q·d -1.0879e2
+  face x-: q -1.2337e0 p_i +1.3036e0 p_j +6.3673e1 Σ_i 86.342 Σ_j 70.480 w 0.551 d +93.035  own ½p_i·d +6.0639e1  extra·w·d -1.7273e3  face total q·d -1.1478e2
+  face y+: q +7.4987e0 p_i +4.9608e1 p_j -5.7888e1 Σ_i 86.342 Σ_j 73.899 w 0.539 d -69.951  own ½p_i·d -1.7351e3  extra·w·d -4.3867e2  face total q·d -5.2454e2
+  face y-: q +1.0099e1 p_i +4.9608e1 p_j +7.0688e1 Σ_i 86.342 Σ_j 68.160 w 0.559 d +111.995  own ½p_i·d +2.7779e3  extra·w·d -3.1324e3  face total q·d +1.1310e3
+  energy flux divergence ×dt -5.6567e-1, mass -1.5242e-3; mid Σ 86.3418 p (+1.3036e0, +4.9608e1); g (+0.660, +21.022)
+step 0: max-deficit cell (61, 60) [world (301, 196)]: full 5.0259e1 | no radiation force 5.0259e1 | no gravity 0.0000e0
+   before: sigma, E, deficit (85.7984848022461, 29200.9453125, 0.0)
+   after full: (85.80000895600107, 29151.74162457235, 50.258925000610915)
+   neighbours sigma [70.37582397460938, 70.56654357910156, 68.05409240722656, 73.72193145751953]
+   phi c,l,r,u,d [-1097.9534905953776, -1004.9187850585853, -1006.2382808902314, -985.9589437326698, -1028.002149808186]
+   momentum x,y 1.0544e0 4.1584e1; F x,y Some((0.014571219682693481, -0.2383795976638794))
+   world totals: full 5.0259e1 no-rad 5.0259e1 no-grav 0.0000e0
+TOTAL over 1: after-P4 deficit 5.02589e1  after-P5 deficit 5.02371e1  booked floor 5.02371e1 (resets 2.823e-7)  radiated 4.71883e1
+== twin share variants (0 mass-shared = the ruling, 1 heat-above-floor-shared), 500 steps 2026-10-20T11:47:19-04:00
+variant 0 from s_451000: 
+variant 0 from s_452000: TOTAL over 500: after-P4 deficit 2.48510e4  after-P5 deficit 2.48393e4  booked floor 2.48393e4 (resets 1.343e-4)  radiated 2.32770e4
+variant 1 from s_451000: 
+variant 1 from s_452000: 
+== twin share variants (0 mass-shared = the ruling, 1 heat-above-floor-shared), 500 steps 2026-10-20T11:47:51-04:00
+variant 0 from s_451000: TOTAL over 500: after-P4 deficit 4.44269e-6  after-P5 deficit 3.85395e-6  booked floor -7.73931e-2 (resets -7.740e-2)  radiated 2.60732e4
+variant 0 from s_452000: TOTAL over 500: after-P4 deficit 2.48510e4  after-P5 deficit 2.48393e4  booked floor 2.48393e4 (resets 1.343e-4)  radiated 2.32770e4
+variant 1 from s_451000: TOTAL over 500: after-P4 deficit 3.71621e-6  after-P5 deficit 3.10877e-6  booked floor -7.84385e-2 (resets -7.844e-2)  radiated 2.71632e4
+variant 1 from s_452000: TOTAL over 500: after-P4 deficit 2.59489e3  after-P5 deficit 2.59461e3  booked floor 2.59461e3 (resets -1.349e-3)  radiated 2.20747e4
+== twin variant 2 (mass-shared extra, each side capped at ¼ of its start heat per face), 500 steps 2026-10-20T11:49:12-04:00
+variant 2 from s_451000: TOTAL over 500: after-P4 deficit 4.80987e-6  after-P5 deficit 4.30564e-6  booked floor -7.74676e-2 (resets -7.747e-2)  radiated 2.61767e4
+variant 2 from s_452000: TOTAL over 500: after-P4 deficit 4.06616e3  after-P5 deficit 4.06600e3  booked floor 4.06600e3 (resets -1.666e-3)  radiated 2.28677e4
+== twin, ruled share + P8 borrowing from neighbours' heat (¼ cap), 500 steps 2026-10-20T11:50:54-04:00
+borrow from s_451000: TOTAL over 500: after-P4 deficit 4.44399e-6  after-P5 deficit 3.85520e-6  booked floor -7.78979e-2 (resets -7.790e-2)  radiated 2.61346e4 | borrowed from neighbours 3.85520e-6
+borrow from s_452000: TOTAL over 500: after-P4 deficit 4.23591e4  after-P5 deficit 4.23409e4  booked floor 7.32887e3 (resets -3.501e4)  radiated 2.36693e4 | borrowed from neighbours 3.50120e4
+== twin 2500-step windows from s_450000, variants 0/1/2, started 2026-10-20T11:51:45-04:00 (outputs /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/ed83b7ae-c0fe-4d74-9aae-448b9700c336/scratchpad/L{0,1,2}.txt)
+variant 0: TOTAL over 2500: after-P4 deficit 4.86603e4  after-P5 deficit 4.86548e4  booked floor 4.86543e4 (resets -4.313e-1)  radiated 1.59080e5 | END densest cell (65, 64) Σ 85.389 u (-0.025, 0.998) heat 1.050e-12 deficit 0.000e0; grid kinetic 7.8914e2
+variant 1: TOTAL over 2500: after-P4 deficit 1.36741e4  after-P5 deficit 1.36207e4  booked floor 1.36203e4 (resets -3.527e-1)  radiated 1.51434e5 | END densest cell (65, 64) Σ 99.904 u (0.102, 0.862) heat 3.266e-12 deficit 0.000e0; grid kinetic 1.3190e3
+variant 2: TOTAL over 2500: after-P4 deficit 1.57397e4  after-P5 deficit 1.57267e4  booked floor 1.57263e4 (resets -4.490e-1)  radiated 1.52023e5 | END densest cell (65, 64) Σ 98.692 u (0.442, 0.973) heat 0.000e0 deficit 4.234e-12; grid kinetic 1.3175e3
+== build after the heat-shared split 2026-10-20T12:39:51-04:00
+    Finished `release` profile [optimized] target(s) in 3.08s
+== Done-when: s_450000 window, 5000 steps, heat-shared split, RTX 5090 2026-10-20T12:40:00-04:00
+SR-WARN heat unconverged step 453253 passes 1 rounds 4096
+SR-WARN heat unconverged step 453305 passes 2 rounds 4096
+SR-WARN heat unconverged step 453321 passes 1 rounds 4096
+SR-WARN heat unconverged step 453524 passes 2 rounds 4096
+SR-WARN heat unconverged step 453726 passes 1 rounds 4096
+SR-WARN heat unconverged step 454103 passes 64 rounds 2906
+SR-WARN heat unconverged step 454147 passes 64 rounds 1564
+SR-WARN heat unconverged step 454154 passes 1 rounds 4096
+SR-WARN heat unconverged step 454274 passes 10 rounds 4096
+SR-WARN heat unconverged step 454275 passes 8 rounds 4096
+SR-WARN heat unconverged step 454277 passes 9 rounds 4096
+SR-WARN heat unconverged step 454279 passes 9 rounds 4096
+SR-WARN heat unconverged step 454281 passes 7 rounds 4096
+SR-WARN heat unconverged step 454283 passes 7 rounds 4096
+SR-WARN heat unconverged step 454287 passes 6 rounds 4096
+SR-WARN heat unconverged step 454289 passes 7 rounds 4096
+SR-WARN heat unconverged step 454316 passes 10 rounds 4096
+SR-WARN heat unconverged step 454317 passes 9 rounds 4096
+SR-WARN heat unconverged step 454319 passes 12 rounds 4096
+SR-WARN heat unconverged step 454331 passes 9 rounds 4096
+SR-WARN heat unconverged step 454333 passes 9 rounds 4096
+SR-WARN heat unconverged step 454335 passes 1 rounds 4096
+SR-WARN heat unconverged step 454344 passes 10 rounds 4096
+SR-WARN heat unconverged step 454347 passes 10 rounds 4096
+SR-WARN heat unconverged step 454352 passes 10 rounds 4096
+SR-WARN heat unconverged step 454353 passes 10 rounds 4096
+SR-WARN heat unconverged step 454356 passes 10 rounds 4096
+SR-WARN heat unconverged step 454360 passes 10 rounds 4096
+SR-WARN heat unconverged step 454363 passes 10 rounds 4096
+SR-WARN heat unconverged step 454364 passes 9 rounds 4096
+SR-WARN heat unconverged step 454366 passes 1 rounds 4096
+SR-WARN heat unconverged step 454468 passes 64 rounds 3188
+SR-WARN heat unconverged step 454476 passes 10 rounds 4096
+SR-WARN heat unconverged step 454507 passes 7 rounds 4096
+SR-WARN heat unconverged step 454509 passes 13 rounds 4096
+SR-WARN heat unconverged step 454510 passes 10 rounds 4096
+SR-WARN heat unconverged step 454511 passes 9 rounds 4096
+SR-WARN heat unconverged step 454524 passes 10 rounds 4096
+SR-WARN heat unconverged step 454525 passes 11 rounds 4096
+SR-WARN heat unconverged step 454527 passes 11 rounds 4096
+SR-WARN heat unconverged step 454528 passes 6 rounds 4096
+SR-WARN heat unconverged step 454530 passes 17 rounds 4096
+SR-WARN heat unconverged step 454531 passes 5 rounds 4096
+SR-WARN heat unconverged step 454532 passes 7 rounds 4096
+SR-WARN heat unconverged step 454533 passes 8 rounds 4096
+SR-WARN heat unconverged step 454538 passes 9 rounds 4096
+SR-WARN heat unconverged step 454539 passes 7 rounds 4096
+SR-WARN heat unconverged step 454571 passes 7 rounds 4096
+SR-WARN heat unconverged step 454823 passes 5 rounds 4096
+SR-WARN heat unconverged step 454824 passes 5 rounds 4096
+SR-WARN heat unconverged step 454825 passes 4 rounds 4096
+SR-WARN heat unconverged step 454828 passes 5 rounds 4096
+SR-WARN heat unconverged step 454829 passes 4 rounds 4096
+SR-WARN heat unconverged step 454861 passes 6 rounds 4096
+SR-WARN heat unconverged step 454862 passes 6 rounds 4096
+SR-WARN heat unconverged step 454864 passes 7 rounds 4096
+SR-WARN heat unconverged step 454865 passes 6 rounds 4096
+SR-WARN heat unconverged step 454866 passes 6 rounds 4096
+SR-WARN heat unconverged step 454867 passes 5 rounds 4096
+SR-WARN heat unconverged step 454868 passes 6 rounds 4096
+SR-WARN heat unconverged step 454869 passes 2 rounds 4096
+SR-WARN heat unconverged step 454871 passes 4 rounds 4096
+SR-WARN heat unconverged step 454872 passes 3 rounds 4096
+SR-WARN heat unconverged step 454892 passes 4 rounds 4096
+SR-WARN heat unconverged step 454894 passes 5 rounds 4096
+SR-WARN heat unconverged step 454898 passes 10 rounds 4096
+SR-WARN heat unconverged step 454899 passes 5 rounds 4096
+SR-WARN heat unconverged step 454905 passes 10 rounds 4096
+SR-WARN heat unconverged step 454906 passes 9 rounds 4096
+SR-WARN heat unconverged step 454907 passes 7 rounds 4096
+SR-WARN heat unconverged step 454913 passes 11 rounds 4096
+SR-HEADLESS DONE steps=5000 sim_time=5312.982585 until=none
+f0 steps 450001 455000 invari -1.806e+11 kineti 6.493e+04 therma -5.957e+04 cold 1.875e+04 potent -3.21e+04 radiat 5.629e+18 nuclea 1.118e+04 escape 0 floor_ 5.629e+18
+floor_added / radiated = 1.0000 (bound 0.15)
+== Done-when run 2: costs by heat, gains by mass 2026-10-20T12:41:47-04:00
+SR-WARN heat unconverged step 451006 passes 5 rounds 4096
+SR-HEADLESS DONE steps=5000 sim_time=5315.923975 until=none
+f1 steps 450001 455000 invari -1484 kineti 6.429e+04 therma -5.977e+04 cold 1.891e+04 potent -3.255e+04 radiat 1.915e+05 nuclea 1.127e+04 escape 0 floor_ 1.726e+05
+floor_added / radiated = 0.9013 (bound 0.15)
+== run 2's 500-step pieces (GPU) 2026-10-20T12:43:05-04:00
+g450000 steps 450001 450500 invari -25.09 kineti 651.1 therma -4176 cold 7.049e+04 potent -1.126e+05 radiat 5.173e+04 nuclea 6115 escape 0 floor_ -0.209
+g450500 steps 450501 451000 invari -296.6 kineti 504.6 therma -1.139e+04 cold 4.705e+04 potent -6.546e+04 radiat 3.289e+04 nuclea 3903 escape 0 floor_ -0.1416
+SR-WARN heat unconverged step 451006 passes 5 rounds 4096
+g451000 steps 451001 451500 invari -1558 kineti -349.8 therma -1.277e+04 cold 4.377e+04 potent -5.643e+04 radiat 2.528e+04 nuclea 1059 escape 0 floor_ -0.07918
+g451500 steps 451501 452000 invari -60.14 kineti -92.57 therma -1.266e+04 cold 4.239e+04 potent -5.163e+04 radiat 2.464e+04 nuclea 161.6 escape 0 floor_ 2548
+g452000 steps 452001 452500 invari -74.7 kineti 218.1 therma -5664 cold 1.42e+04 potent -1.676e+04 radiat 2.117e+04 nuclea 17.76 escape 0 floor_ 1.321e+04
+g452500 steps 452501 453000 invari 18.95 kineti 1139 therma -5362 cold 7979 potent -9578 radiat 1.61e+04 nuclea 0.4143 escape 0 floor_ 1.025e+04
+g453000 steps 453001 453500 invari -122.7 kineti 9908 therma -3949 cold -1.8e+04 potent 2.108e+04 radiat 1.21e+04 nuclea 0 escape 0 floor_ 2.127e+04
+g453500 steps 453501 454000 invari -34.47 kineti 4.103e+04 therma -2829 cold -1.195e+05 potent 1.538e+05 radiat 4842 nuclea 0 escape 0 floor_ 7.736e+04
+g454000 steps 454001 454500 invari -25.48 kineti 7189 therma -289.9 cold -4.319e+04 potent 6.316e+04 radiat 1267 nuclea 0 escape 0 floor_ 2.816e+04
+g454500 steps 454501 455000 invari 1.165 kineti 3994 therma -587.1 cold -2.621e+04 potent 4.185e+04 radiat 474.1 nuclea 0 escape 0 floor_ 1.952e+04
+== twin probe (repo twin, costs by heat) from run 2's s_453500, 100 steps 2026-10-20T12:44:07-04:00
+crop at (240,136), heat true, dt0 8.2727e-3
+step 0: max-deficit cell (62, 64) [world (302, 200)]: full 1.8130e1 | no radiation force 1.8130e1 | no gravity 0.0000e0
+   before: sigma, E, deficit (0.23271474242210388, 29.15508460998535, 0.0)
+   after full: (0.23506670786760775, 11.0495933441068, 18.130091538312186)
+   neighbours sigma [1.0421391725540161, 9.99999993922529e-9, 12.447078704833984, 9.99999993922529e-9]
+   phi c,l,r,u,d [-388.9192963566928, -405.7459983778754, -354.4839980451927, -544.57616849388, -305.39305414781063]
+   momentum x,y 2.1977e0 -2.9125e0; F x,y Some((4.985179901123047, 0.001430816133506596))
+   world totals: full 1.0207e2 no-rad 1.0207e2 no-grav 2.5094e0
+step    10: dt 8.2969e-3 P4 deficit 9.0546e1 (6 cells)  after P5 9.0339e1 (5 cells)  booked 1.0565e2  radiated 1.8125e1
+step    20: dt 8.3327e-3 P4 deficit 9.8564e1 (7 cells)  after P5 9.8559e1 (7 cells)  booked 9.8559e1  radiated 1.7735e1
+step    30: dt 8.3634e-3 P4 deficit 9.8727e1 (8 cells)  after P5 9.8721e1 (8 cells)  booked 9.8721e1  radiated 1.6400e1
+step    40: dt 8.3860e-3 P4 deficit 1.1227e2 (9 cells)  after P5 1.1227e2 (9 cells)  booked 1.1227e2  radiated 1.6008e1
+step    50: dt 8.4006e-3 P4 deficit 1.0866e2 (12 cells)  after P5 1.0817e2 (12 cells)  booked 1.0817e2  radiated 1.5579e1
+step    60: dt 8.4038e-3 P4 deficit 1.0144e2 (12 cells)  after P5 1.0143e2 (11 cells)  booked 1.0143e2  radiated 1.4110e1
+step    70: dt 8.4102e-3 P4 deficit 1.3963e2 (12 cells)  after P5 1.3912e2 (12 cells)  booked 1.3912e2  radiated 1.3748e1
+step    80: dt 8.4223e-3 P4 deficit 1.5224e2 (13 cells)  after P5 1.5196e2 (13 cells)  booked 1.5196e2  radiated 1.4866e1
+step    90: dt 8.4518e-3 P4 deficit 1.4289e2 (9 cells)  after P5 1.4274e2 (9 cells)  booked 1.4274e2  radiated 1.6388e1
+step 99: max-deficit cell (61, 60) [world (301, 196)]: full 5.0674e1 | no radiation force 5.0674e1 | no gravity 0.0000e0
+   before: sigma, E, deficit (85.63563113784657, 29127.29970049714, 0.0)
+   after full: (85.50109941972777, 28984.02983668335, 50.673754835911126)
+   neighbours sigma [72.7532521722931, 72.07932184109734, 72.99759346987636, 71.83225543415854]
+   phi c,l,r,u,d [-1112.5773915998775, -1026.6199576643673, -1022.5516257686958, -1028.6236788463314, -1020.3708639998649]
+   momentum x,y 4.6624e0 -1.0002e1; F x,y Some((7.038083863259263e-11, 1.201494307404354e-10))
+   world totals: full 1.5941e2 no-rad 1.5941e2 no-grav 0.0000e0
+step   100: dt 8.4804e-3 P4 deficit 1.5941e2 (14 cells)  after P5 1.5890e2 (14 cells)  booked 1.5890e2  radiated 1.6313e1
+TOTAL over 100: after-P4 deficit 1.39197e4  after-P5 deficit 1.38075e4  booked floor 1.39117e4 (resets 1.042e2)  radiated 1.61229e3
+END densest cell (61, 60) Σ 85.501 u (0.058, -0.116) heat 1.604e-12 deficit 0.000e0; grid kinetic 2.0819e4
+borrowed from neighbours 0.00000e0
+by class (cell-steps): key  after-P4  after-P5  count
+  emit lgS+0     1.0128e2 9.3716e1 33
+  emit lgS-1     2.4163e3 2.3563e3 204
+  emit lgS-2     3.9977e1 3.9211e1 18
+  emit lgS-3     5.6795e2 5.6761e2 140
+  emit lgS-4     8.6263e1 8.6256e1 50
+  emit lgS-5     5.4202e1 5.4202e1 19
+  emit lgS-6     4.3039e-5 3.9714e-5 8
+  inner lgS+0    4.8114e2 4.5870e2 122
+  inner lgS+1    1.0173e4 1.0151e4 647
+== after the revert: the repro window again 2026-10-20T12:46:28-04:00
+SR-HEADLESS DONE steps=5000 sim_time=5315.055231 until=none
+r0 steps 450001 455000 invari -966.2 kineti 834.9 therma -3.802e+04 cold 1.882e+05 potent -2.674e+05 radiat 2.777e+05 nuclea 1.448e+04 escape 0 floor_ 1.478e+05
+rr steps 450001 455000 invari -966.2 kineti 834.9 therma -3.802e+04 cold 1.882e+05 potent -2.674e+05 radiat 2.777e+05 nuclea 1.448e+04 escape 0 floor_ 1.478e+05
+ledger identical to the task-start run
+== claim: verify.py --changed 2026-10-20T12:48:46-04:00
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint         613/0/0      0.11 s  GO
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 108 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 36 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 33 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 107 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 109 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 101 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 76 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 76 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 85 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-D67.<scope>.log · record: loop_times.jsonl · tree b502cda8f985+ae1df4d0d303
+anchor: 1 path×scope entries moved by this run
+anchor: 259 paths checked · 240 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 259 covered of 499 visible
+skipped   232  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 613 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 59 not impacted · 0.12 s + loop 0.05 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 2.65->2.65 · base: M0-D67's start 2026-10-20T11:37:25-04:00
+=== GO ===

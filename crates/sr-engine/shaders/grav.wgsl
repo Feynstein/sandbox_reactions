@@ -51,9 +51,9 @@ const MAX_SINKS: u32 = 16u;
 @group(0) @binding(9) var<storage, read> koffsets: array<u32>;
 // φ as conv_rows_inverse wrote it into `dst` (the same buffer, never bound both ways in one dispatch)
 @group(0) @binding(10) var<storage, read> phi: array<f32>;
-// g = −∇φ: the x plane, then the y plane — the gas's alone when the step runs P3 (`gas_field`), else the field itself
+// g = −∇φ: the x plane, the y plane, then φ's (P4's energy source reads it, §0.5 [M0-D64]) — the gas's alone when the step runs P3 (`gas_field`), else the field itself
 @group(0) @binding(11) var<storage, read_write> g: array<f32>;
-// the sinks (P3's buffer) and g with their pull added (the field P4 and Δt read), used by `grav_sinks` alone
+// the sinks (P3's buffer) and g and φ with their pull added (the field P4 and Δt read), used by `grav_sinks` alone
 @group(0) @binding(12) var<storage, read> sink_state: SinkState;
 @group(0) @binding(13) var<storage, read_write> g_total: array<f32>;
 

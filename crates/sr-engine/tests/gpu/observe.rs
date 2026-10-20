@@ -140,16 +140,25 @@ fn an_unmet_condition_is_exit_2_with_until_unmet() {
     assert_eq!(plain.summary["until"]["condition"], "steps:20");
 }
 
-/// events.jsonl on an engine run with events: scenes/sink_cloud.json (a 40 × 40 square of cold gas, whose steps are ~0.0165
-/// t.u. apiece — the cold disk's collapse shrinks Δt until 20,000 steps pass only 6) with a sink dropped into its middle (the
-/// dump written by the test)
+/// events.jsonl on an engine run with events: scenes/sink_cloud.json (a 40 × 40 square of gas, whose steps are ~0.0165
+/// t.u. apiece — the cold disk's collapse shrinks Δt until 20,000 steps pass only 6) at [`ENDING_T`], with a sink dropped
+/// into its middle (the dump written by the test)
 /// — `sink_formed` at the first frame, the object a black hole, and `--until ending` stopping when that remnant has been
 /// displayed 10 t.u. Every line of the file is one JSON object with the §2.12.2 keys, the same as summary.json's `events`;
 /// the run one frame shorter has no `ending` yet.
+/// The ending case's cloud T, the scene's 0.05 raised (M0-D66, the lead's «Case's own T 0.5 + D», 2026-10-20; the scene file,
+/// the `sink` scope's, unchanged): at T 0.05 the cold sheet is Jeans-unresolved, and once §0.5 [M0-D64]'s face work stopped
+/// the Σu·g source heating it, it fragments into 7 sinks that eat the gas, leaving no object to show `black_hole`; at 0.5 one
+/// sink forms and the ending comes at t 11.21 (RTX 5090). A sink that has eaten all its gas is no object (§1.9.2): M0-D66's D.
+const ENDING_T: f64 = 0.5;
+
 #[test]
 fn events_jsonl_and_the_ending_of_a_black_hole() {
     let dir = temp("ending");
-    let scene = scenes_dir().join("sink_cloud.json");
+    let mut cloud: Value = serde_json::from_slice(&std::fs::read(scenes_dir().join("sink_cloud.json")).unwrap()).unwrap();
+    cloud["objects"][0]["t"] = ENDING_T.into();
+    let scene = dir.join("sink_cloud.json");
+    std::fs::write(&scene, cloud.to_string()).unwrap();
 
     let seed = go("ending-seed", &scene, &["--steps", "40"]);
     assert_eq!(seed.code, 0, "{:?}", seed.lines);

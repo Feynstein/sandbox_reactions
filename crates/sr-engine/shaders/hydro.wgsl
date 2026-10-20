@@ -22,9 +22,14 @@
 //
 // Gravity's source (§1.4.2; M0-T36), when the step runs P2 (`edges.gravity`): `cell_faces`' Hancock predictor kicks each
 // face state by half a step of the cell's g — velocity by ½Δt·g, energy by the work Σ(u + ¼Δt·g)·g·½Δt, leaving its
-// thermal energy as it was — beside the flux differences; `hydro_update` adds Δt·Σg to the momentum and Δt·(Σu)·g to
-// the energy, Σ and Σu the cell centre's half-step values from that same predictor: time-centred on the half-step
-// velocity. A ghost's g is its edge cell's. `hydro_edges` recomputes the same predictor, so it binds g too. The twin's
+// thermal energy as it was — beside the flux differences; `hydro_update` adds Δt·Σg to the momentum, Σ the cell centre's
+// half-step value from that same predictor. The energy source is the work the step's mass fluxes do across φ (§0.5
+// [M0-D64]): a face whose mass flux q joins the cell i to its neighbour j does Δt·q·(φ_i − φ_j), i taking
+// (½ p_i + w_i (q − ½(p_i + p_j)))·(φ_i − φ_j)·Δt of it (`grav_share`) — p the two cells' half-step momenta on that axis,
+// w_i = Σ_i/(Σ_i + Σ_j) their half-step masses' share — so each cell keeps the Δt·(Σu)·g its own momentum pays for and the
+// mass HLL's diffusion moves is paid by the two cells' masses; the neighbours' half-step centres cross through `mids`.
+// Summed, the energy gained is what the moved mass does to W at the step's φ. A ghost's g and φ are its edge cell's, so
+// no work is done across the world's edge. `hydro_edges` recomputes the same predictor, so it binds g too. The twin's
 // `Hydro::step_with` is the reference.
 //
 // The radiation force (§2.4.4; M0-T43), when the step runs P5 (`edges.radiation`): `hydro_update` adds Δt·f to a gas

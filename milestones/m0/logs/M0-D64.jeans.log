@@ -1,0 +1,37 @@
+== 2026-10-20T09:47:19-04:00 jeans · task M0-D64 · box laserax-ai :: bash tests/gpu.sh jeans physics
+-- jeans · exit=101 · 0.73 s
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-JEANS end: step 165, t = 3.1867, Σ_max 106.269: 1 object(s) of mass 3351.5 (at most 1 in any summary); largest secondary peak 0.0000 of Σ_max at the end, 1.0000 in any summary
+ok
+test jeans::the_collapse_reaches_a_hundred_times_the_central_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.1286 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   2.1285: Σmax    2.307, J 0.2054 at (28, 59), 1 object(s) of mass 3351.6, secondary peak 0.9639 of Σmax
+SR-JEANS step   153 t   3.1123: Σmax   38.077, J 0.7885 at (84, 64), 1 object(s) of mass 3351.5, secondary peak 0.0000 of Σmax
+SR-JEANS step   165 t   3.1867: Σmax  106.269, J 1.0380 at (81, 64), 1 object(s) of mass 3351.5, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 106.269 at the end (largest 106.269) after 165 steps, t = 3.1867 (start 0.9998, target 100.0); 27 summaries
+ok
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 1.0380 (bound 0.25) at step 165, t = 3.1867, cell (81, 64), Σ_max then 106.269; over 27 summaries
+
+thread 'jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary' (37764) panicked at crates/sr-engine/tests/gpu/jeans.rs:428:5:
+J = 1.0380 > 0.25 at step 165 (t = 3.1867) in cell (81, 64), Σ_max 106.269
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+ok
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 13208.96, U_th/|W| 0.050000
+SR-JEANS ripple: worst |Σ'/Σ − (1 + 0.01(cos 3θ + cos 5θ))| = 5.77e-8, mass 3351.648 → 3351.648
+ok
+
+failures:
+
+failures:
+    jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 335 filtered out; finished in 0.45s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

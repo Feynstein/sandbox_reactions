@@ -1,0 +1,82 @@
+M0-D64 resume on linux-pc (laserax-ai), 2026-10-20T09:36:57-04:00, claude-opus-5-5 high; HEAD b502cda
+== new case alone (fix, HEAD+comments) 2026-10-20T09:38:32-04:00
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.53s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 1 test
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.124889 until=none
+remnant: steps 1..1000, sim time 8.108, R₉₀ 2.716, M 1486.7, τ_dyn 0.1161, |W|₀ 2.3296e5; Δinvariant -1.0116e3 →          6.217e-5 |W| per τ_dyn (bound 1e-3); radiated 2.3650e5, floor_added -9.3717e0, escaped 1.5348e3, ΔW -5.1405e5
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 339 filtered out; finished in 15.24s
+
+/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/ed5d3b7d-d725-4197-a2fc-a1b18df6ec85/scratchpad/b/fix100 steps 1 100 dt 2.399
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '123.5'}
+  end   {'floor_added': '1.177e+04', 'invariant': '-1.195e+05', 'kinetic': '2.133e+04', 'potential': '-6.288e+05', 'thermal': '4.998e+05'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '0.0002625'}
+/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/ed5d3b7d-d725-4197-a2fc-a1b18df6ec85/scratchpad/b/fix500 steps 1 500 dt 2.992
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '123.5'}
+  end   {'floor_added': '1.139e+04', 'invariant': '-1.123e+05', 'kinetic': '2.858e+04', 'potential': '-1.703e+05', 'thermal': '4.085e+04'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '0.02246'}
+== bounce cold disk a24, fix vs plant (Σu·g)
+fix20 steps 1 20 dt 1.177
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '123.5'}
+  end   {'floor_added': '99.3', 'invariant': '-5.661e+04', 'kinetic': '1.266e+04', 'potential': '-6.946e+04', 'thermal': '295.5'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '-9.413e-06'}
+plant20 steps 1 20 dt 1.194
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '121'}
+  end   {'floor_added': '5.028', 'invariant': '-5.66e+04', 'kinetic': '1.312e+04', 'potential': '-6.99e+04', 'thermal': '183.8'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '-1.711e-05'}
+fix50 steps 1 50 dt 1.906
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '123.5'}
+  end   {'floor_added': '376.7', 'invariant': '-5.682e+04', 'kinetic': '5.648e+04', 'potential': '-1.143e+05', 'thermal': '1409'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '5.416e-05'}
+plant50 steps 1 50 dt 1.93
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '121'}
+  end   {'floor_added': '50.75', 'invariant': '-5.689e+04', 'kinetic': '6.056e+04', 'potential': '-1.181e+05', 'thermal': '712.3'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '5.435e-05'}
+fix100 steps 1 100 dt 2.399
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '123.5'}
+  end   {'floor_added': '1.177e+04', 'invariant': '-1.195e+05', 'kinetic': '2.133e+04', 'potential': '-6.288e+05', 'thermal': '4.998e+05'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '0.0002625'}
+plant100 steps 1 100 dt 2.398
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '121'}
+  end   {'floor_added': '995.1', 'invariant': '4.908e+05', 'kinetic': '2.514e+05', 'potential': '-4.983e+05', 'thermal': '7.387e+05'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '0.0002458'}
+fix500 steps 1 500 dt 2.992
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '123.5'}
+  end   {'floor_added': '1.139e+04', 'invariant': '-1.123e+05', 'kinetic': '2.858e+04', 'potential': '-1.703e+05', 'thermal': '4.085e+04'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '0.02246'}
+plant500 steps 1 500 dt 2.784
+  start {'invariant': '-5.68e+04', 'kinetic': '107.9', 'potential': '-5.703e+04', 'thermal': '121'}
+  end   {'floor_added': '103', 'invariant': '5.194e+05', 'kinetic': '5.702e+05', 'potential': '-6.585e+04', 'thermal': '1.514e+04'}
+  mass end {'grid': '1206', 'invariant': '1206', 'vacuum_reset': '0.02136'}
+== s_450000 window, 5,000 steps, RTX 5090
+w450_fix: steps 450001..455000 span 43.457 |W| 3.421e+05 R90 3.290 M 1495.3 tau 0.1543 dInv -966.2 -> 1.003e-05 |W| per tau_dyn (bound 1e-3); kineti 834.9 therma -3.802e+04 cold 1.882e+05 potent -2.674e+05 radiat 2.777e+05 nuclea 1.448e+04 neutri 0 escape 0 floor_ 1.478e+05
+w450_plant: steps 450001..455000 span 53.858 |W| 3.421e+05 R90 6.027 M 1495.2 tau 0.3827 dInv 7.47e+05 -> 1.551e-02 |W| per tau_dyn (bound 1e-3); kineti 4.985 therma 422.5 cold 749.8 potent -2870 radiat 8.118e+05 nuclea 6.318e+04 neutri 0 escape 0 floor_ -2.944
+== the seven windows on the fix, 5,000 steps each, RTX 5090
+w5000_fix: steps 5001..10000 span 56.299 |W| 6.363e+05 R90 15.573 M 3330.8 tau 1.0648 dInv 27.36 -> 8.134e-07 |W| per tau_dyn (bound 1e-3); kineti -38.3 therma 1564 cold 1.013e+04 potent -2.154e+04 radiat 1.213e+05 nuclea 1.114e+05 neutri 0 escape 51.88 floor_ 0
+w50000_fix: steps 50001..55000 span 58.028 |W| 6.184e+05 R90 16.570 M 3323.6 tau 1.1700 dInv 50.37 -> 1.643e-06 |W| per tau_dyn (bound 1e-3); kineti -0.6391 therma 2390 cold 9865 potent -2.287e+04 radiat 1.813e+05 nuclea 1.707e+05 neutri 0 escape 0 floor_ -31.87
+w100000_fix: steps 100001..105000 span 56.915 |W| 6.309e+05 R90 16.917 M 3291.9 tau 1.2127 dInv 73.72 -> 2.490e-06 |W| per tau_dyn (bound 1e-3); kineti 25.38 therma 5330 cold 1.859e+04 potent -4.57e+04 radiat 3.142e+05 nuclea 2.925e+05 neutri 0 escape 0 floor_ -142.7
+w150000_fix: steps 150001..155000 span 54.044 |W| 5.517e+05 R90 16.259 M 2908.1 tau 1.2158 dInv 755.8 -> 3.082e-05 |W| per tau_dyn (bound 1e-3); kineti -139 therma 9727 cold 3.559e+04 potent -8.725e+04 radiat 4.067e+05 nuclea 3.659e+05 neutri 0 escape 2009 floor_ 0
+w200000_fix: steps 200001..205000 span 53.310 |W| 3.228e+05 R90 7.223 M 1849.9 tau 0.4514 dInv 408.5 -> 1.071e-05 |W| per tau_dyn (bound 1e-3); kineti 33.08 therma -8063 cold 8.509e+04 potent -1.327e+05 radiat 1.477e+05 nuclea 8.778e+04 neutri 0 escape 1441 floor_ 5359
+w300000_fix: steps 300001..305000 span 52.067 |W| 2.765e+05 R90 4.970 M 1498.3 tau 0.2863 dInv -725.4 -> 1.442e-05 |W| per tau_dyn (bound 1e-3); kineti 197.6 therma -1.851e+04 cold 1.079e+05 potent -1.517e+05 radiat 8.522e+04 nuclea 2.386e+04 neutri 0 escape 0 floor_ -0.6097
+w450_fix: steps 450001..455000 span 43.457 |W| 3.421e+05 R90 3.290 M 1495.3 tau 0.1543 dInv -966.2 -> 1.003e-05 |W| per tau_dyn (bound 1e-3); kineti 834.9 therma -3.802e+04 cold 1.882e+05 potent -2.674e+05 radiat 2.777e+05 nuclea 1.448e+04 neutri 0 escape 0 floor_ 1.478e+05
+== box, jeans, observe on the plant copy (HEAD with Σu·g), 2026-10-20T09:54:21-04:00
+box: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 332 filtered out; finished in 4.10s
+jeans: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 335 filtered out; finished in 0.32s
+observe: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 335 filtered out; finished in 3.39s
+== experiment: phi_at clamped to the active box, 2026-10-20T09:56:43-04:00
+SR-BOX sun_disk step 200 energy: 2.864140303846e5 vs 2.864124882529e5, |Δ| 1.542e0 = 5.38e-6 of scale 2.8641e5
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 332 filtered out; finished in 9.12s
+SR-HEADLESS DONE steps=20000 sim_time=250.867607 until=unmet
+fix []
+  objects [(1, 1317.85, 'protostar')]
+  dInv -1.291e+04 |W|0 9.495e+04 swallowed 0 sinks mass 0
+SR-HEADLESS DONE steps=20000 sim_time=330.441487 until=unmet
+plant []
+  objects [(1, 1273.55, 'protostar')]
+  dInv 8.466e+04 |W|0 9.495e+04 swallowed 0 sinks mass 0

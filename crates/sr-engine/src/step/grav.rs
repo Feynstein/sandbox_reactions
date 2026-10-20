@@ -198,8 +198,8 @@ impl Gravity {
         Ok(Gravity { field, gas, dispatches })
     }
 
-    /// g = −∇φ, f32: the x plane, then the y plane, row-major over the world (y down, §2.12.4); with sinks, their pull
-    /// (§1.4.3) included — the field P4 and Δt read.
+    /// g = −∇φ, f32: the x plane, the y plane, then φ's (P4's energy source, §0.5 [M0-D64]), row-major over the world (y
+    /// down, §2.12.4); with sinks, their pull (§1.4.3) included — the field P4 and Δt read.
     pub fn field(&self) -> &wgpu::Buffer {
         &self.field
     }

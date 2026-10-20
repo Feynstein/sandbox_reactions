@@ -1,9 +1,9 @@
 --- a/crates/sr-engine/src/headless.rs
 +++ b/crates/sr-engine/src/headless.rs
-@@ -562,7 +562,7 @@
+@@ -627,7 +627,7 @@
+                 (p.tick)(at_step.step, dt.sim_time, watch.heaviest_stage().unwrap_or("none"));
+             }
          }
-         let fresh = watch.update(&summary, at_step);
-         (sim, dt_next) = (dt.sim_time, f64::from(dt.dt_next));
 -        if args.until.is_some_and(|u| watch.holds(u, &fresh)) {
 +        if args.until.is_some_and(|u| watch.holds(u, &fresh)) && done >= target {
              until_met = true;

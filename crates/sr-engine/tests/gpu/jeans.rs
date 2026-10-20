@@ -2,9 +2,11 @@
 //! the Sun's mix, at rest, a uniform T) with a deterministic ripple, collapsing on the GPU's P2 + P4 until its central Σ is
 //! 100 × the start's. scenes/jeans_ripple.json: a 128 × 128 leave world, gravity and hydro on, the rest off, and the cold
 //! pressure off through `overrides` — the four K's and nothing else (G-COLL's isolation; the shipped K's halt this cloud at
-//! Σ_max 12.7, measured). **U_th = 0.05|W|, not §5.1's 0.1|W|** — contract §0.5 [M0-T62]: a γ = 2 gas heats as Σ while |W|
-//! grows as Σ^½, so a cloud at 0.1|W| turns round at Σ_max 62.7 (cold pressure off; 60.7 with P5 on) and never meets 100 ×;
-//! at 0.05|W| it reaches ≥ 100 × in ~160 steps, at 0.02|W| it fragments (J ≈ 4). The lead's ruling at M0-T62, 2026-10-16.
+//! Σ_max 12.7, measured). **U_th = 0.07|W|, not §5.1's 0.1|W|** — contract §0.5 [M0-T62], [M0-D66]: a γ = 2 gas heats as Σ
+//! while |W| grows as Σ^½, so a cloud at 0.1|W| turns round at Σ_max 62.7 (cold pressure off; 60.7 with P5 on; 61.1 on
+//! M0-D64's source) and never meets 100 ×; at 0.02|W| it fragments (J ≈ 4). M0-T62 ruled 0.05|W| (the lead, 2026-10-16), J ≤
+//! 0.129 on the Σu·g source; on §0.5 [M0-D64]'s face work the diffusive mass flux's work comes out of thermal energy and the
+//! collapse loses entropy, J 1.04 at 0.05|W|, so M0-D66 raised it to 0.07|W| (the lead, 2026-10-20): ≥ 100 × in ~190 steps.
 //! Graded at each block summary the run takes (every 8 steps, every 2 once Σ_max ≥ 30) and at the end:
 //!
 //! - **J ≤ ¼ everywhere** — the Jeans number of §2.3.5, Δx/λ_J with λ_J = c²/(GΣ), c² = 2Π/Σ (§2.3.3), Δx = 1: J = GΣ²/(2Π),
@@ -44,8 +46,8 @@ const CENTRE: f64 = 64.0;
 const J_MAX: f64 = 0.25;
 const PEAK_SHARE: f64 = 0.10;
 const FACTOR: f64 = 100.0;
-/// U_th/|W| of the cloud (the lead's ruling at M0-T62; §5.1 reads 0.1, which never reaches 100 ×).
-const U_OVER_W: f64 = 0.05;
+/// U_th/|W| of the cloud (the lead's rulings at M0-T62 and M0-D66; §5.1 reads 0.1, which never reaches 100 ×).
+const U_OVER_W: f64 = 0.07;
 /// The ripple's amplitude (1 %) on each of its two modes.
 const RIPPLE: f64 = 0.01;
 /// The run's cap in steps — far past the collapse's few hundred: a run that is stopped by the cap reports its largest Σ.
@@ -263,7 +265,7 @@ fn print_series(run: &Run) {
 // ---- the scene, the ripple and the checks' own arithmetic ----
 
 #[test]
-fn the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple() {
+fn the_scene_is_the_disk_cloud_at_seven_hundredths_of_w_with_a_deterministic_one_percent_ripple() {
     let scene = scene();
     // Only the four K's are overridden — G-COLL's isolation of gravity and gas from the cold pressure, which at Σ ~ 12 stops
     // any collapse (measured: the shipped constants halt this cloud at Σ_max 12.7, M0-T62); every other constant is shipped.
@@ -283,7 +285,7 @@ fn the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_
     let comp = elements.composition(&SUN_MIX);
     let (cells, vac) = (N * N, physics.get("sigma_vac").unwrap());
 
-    // The cloud: a = 40 (it spans 80 cells about (64, 64)), Σc = 1, U_th = 0.05|W| (the ruling; §5.1 says 0.1|W|) with W
+    // The cloud: a = 40 (it spans 80 cells about (64, 64)), Σc = 1, U_th = 0.07|W| (the ruling; §5.1 says 0.1|W|) with W
     // the grid's own solve — the scene file's T has four decimals, so the ratio is graded to 1e-4 relative.
     let p = cloud_planes();
     let sigma: Vec<f64> = p[..cells].iter().map(|&s| f64::from(s)).collect();

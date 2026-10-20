@@ -332,6 +332,17 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     order in Δt, φ lagging the half step (a collapsing cold disk −3.9 × 10⁻³ |W| per t.u., −1.8 × 10⁻³ at cfl 0.2), recorded,
     not built — measured on win-laptop, 2026-10-19, RTX 4080 Laptop (tasks/M0-D64.md) — the lead's answers at M0-D64,
     2026-10-19: «Face work, mass-shared (Recommended)», «Record it, no build (Recommended)».
+  - [M0-D66] §0.5 [M0-T62]'s "the same with U_th = 0.05|W| … T 2.3666 on the grid's own W" (§5.1 G-JEANS) and §0.5 [M0-T39]'s
+    "every sum (mass, momentum, energy, each species' mass) within 10⁻⁶ of its scale at step 200" (§5.3 G-BOX) · G-JEANS's cloud
+    at U_th = 0.07|W| (T 3.3132), J's 1/4, 100 ×, one object and the 10 % bar unchanged; G-BOX's every sum within 10⁻⁶ at step
+    100, the box inside the world (asserted), the masses at 2,000 unchanged · on [M0-D64]'s face work the diffusive mass flux's
+    work comes out of the cells' thermal energy and the cold collapse loses entropy: at 0.05|W| J rises 0.129 → 1.04 on the
+    ripple's +x spoke (0.99 at CFL 0.2 — not φ's lag; on Σu·g J never passed 0.129), at 0.07|W| 102 × at step 193, J ≤ 0.159,
+    one object (0.1|W| still turns round at 61.1 ×); the defect is M0-D66's D, not the scene's; sun_disk's core heats fast
+    by step 200 (a core cell's E 171 → 1,188 over steps 150–200) while the two runs' clocks drift apart by Δt's f32 round-off
+    (1.7 × 10⁻⁶ of sim time at 200), so equal steps are no longer equal states: energy 5.4 × 10⁻⁶ at 200, 1.6 × 10⁻⁷ at 100
+    (momentum 4.0 × 10⁻⁸, mass 5.5 × 10⁻⁹) — measured on linux-pc, 2026-10-20, RTX 5090 (tasks/M0-D66.md) — the lead's answers
+    at M0-D66, 2026-10-20: «0.07|W| + file a D (Recommended)», «Grade at step 100 (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

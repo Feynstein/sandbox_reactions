@@ -1,0 +1,569 @@
+M0-D66 on linux-pc (laserax-ai), 2026-10-20T10:05:57-04:00, claude-opus-5-5 high; HEAD b502cda
+== verify ledger 2026-10-20T10:06:00-04:00
+anchor: 0 path×scope entries moved by this run
+anchor: 134 paths checked · 238 skipped (3 classes) · 124 never checked · 1 stale · 0 unclassified · 0 owed · 259 covered of 497 visible
+FAILED:
+  ledger: 2 failed · log milestones/m0/logs/M0-D66.ledger.log
+verify: 3 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 85.60 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 40.27->174.25
+=== NO-GO: ledger: 2 failed · log milestones/m0/logs/M0-D66.ledger.log ===
+== verify jeans 2026-10-20T10:07:26-04:00
+anchor: 0 path×scope entries moved by this run
+anchor: 134 paths checked · 238 skipped (3 classes) · 124 never checked · 1 stale · 0 unclassified · 0 owed · 259 covered of 497 visible
+FAILED:
+  jeans: 1 failed · log milestones/m0/logs/M0-D66.jeans.log
+verify: 4 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.84 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 174.25->180.0
+=== NO-GO: jeans: 1 failed · log milestones/m0/logs/M0-D66.jeans.log ===
+== verify box 2026-10-20T10:07:29-04:00
+anchor: 0 path×scope entries moved by this run
+anchor: 134 paths checked · 238 skipped (3 classes) · 124 never checked · 1 stale · 0 unclassified · 0 owed · 259 covered of 497 visible
+FAILED:
+  box: 1 failed · log milestones/m0/logs/M0-D66.box.log
+verify: 7 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 10.03 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 180.0->184.77
+=== NO-GO: box: 1 failed · log milestones/m0/logs/M0-D66.box.log ===
+== verify observe_run 2026-10-20T10:07:40-04:00
+anchor: 0 path×scope entries moved by this run
+anchor: 134 paths checked · 238 skipped (3 classes) · 124 never checked · 1 stale · 0 unclassified · 0 owed · 259 covered of 497 visible
+FAILED:
+  observe_run: 1 failed · log milestones/m0/logs/M0-D66.observe_run.log
+verify: 4 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 13.29 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 184.77->191.2
+=== NO-GO: observe_run: 1 failed · log milestones/m0/logs/M0-D66.observe_run.log ===
+== exp1 jeans cfl 0.2 (scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/9f70639d-68c0-4509-a11b-d3a6754f509e/scratchpad/w) 2026-10-20T10:10:01-04:00
+SR-JEANS end: step 349, t = 3.1729, Σ_max 102.780: 1 object(s) of mass 3351.4 (at most 1 in any summary); largest secondary peak 0.0000 of Σ_max at the end, 1.0000 in any summary
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.1286 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   1.3002: Σmax    1.290, J 0.1274 at (68, 63), 1 object(s) of mass 3351.6, secondary peak 0.9887 of Σmax
+SR-JEANS step   153 t   1.9950: Σmax    2.025, J 0.1838 at (100, 61), 1 object(s) of mass 3351.6, secondary peak 0.9695 of Σmax
+SR-JEANS step   233 t   2.6443: Σmax    5.455, J 0.3307 at (93, 62), 1 object(s) of mass 3351.5, secondary peak 0.9345 of Σmax
+SR-JEANS step   313 t   3.0542: Σmax   24.562, J 0.6448 at (86, 65), 1 object(s) of mass 3351.5, secondary peak 1.0000 of Σmax
+SR-JEANS step   339 t   3.1440: Σmax   67.802, J 0.8860 at (83, 63), 1 object(s) of mass 3351.5, secondary peak 0.0000 of Σmax
+SR-JEANS step   349 t   3.1729: Σmax  102.780, J 0.9923 at (82, 63), 1 object(s) of mass 3351.4, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 102.780 at the end (largest 102.780) after 349 steps, t = 3.1729 (start 0.9998, target 100.0); 56 summaries
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 0.9923 (bound 0.25) at step 349, t = 3.1729, cell (82, 63), Σ_max then 102.780; over 56 summaries
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 13208.96, U_th/|W| 0.050000
+SR-JEANS ripple: worst |Σ'/Σ − (1 + 0.01(cos 3θ + cos 5θ))| = 5.77e-8, mass 3351.648 → 3351.648
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 335 filtered out; finished in 0.78s
+== exp2 jeans T 4.7332 (U_th/|W| = 0.1), fix 2026-10-20T10:10:52-04:00
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.0643 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   1.6420: Σmax    1.460, J 0.0635 at (68, 63), 1 object(s) of mass 3351.6, secondary peak 0.9940 of Σmax
+SR-JEANS step   153 t   2.6807: Σmax    4.318, J 0.0630 at (63, 64), 1 object(s) of mass 3351.3, secondary peak 0.0000 of Σmax
+SR-JEANS step   209 t   3.2252: Σmax   48.305, J 0.0619 at (63, 64), 1 object(s) of mass 3351.1, secondary peak 0.0000 of Σmax
+SR-JEANS step   229 t   3.3531: Σmax   60.796, J 0.0614 at (64, 64), 1 object(s) of mass 3351.1, secondary peak 0.0000 of Σmax
+SR-JEANS step   249 t   3.4784: Σmax   57.430, J 0.0615 at (64, 64), 1 object(s) of mass 3350.9, secondary peak 0.0000 of Σmax
+SR-JEANS step   269 t   3.5872: Σmax   43.906, J 0.0614 at (64, 64), 1 object(s) of mass 3350.9, secondary peak 0.0000 of Σmax
+SR-JEANS step   289 t   3.6807: Σmax   34.979, J 0.0617 at (64, 64), 1 object(s) of mass 3350.9, secondary peak 0.0000 of Σmax
+SR-JEANS step   309 t   3.7669: Σmax   30.334, J 0.0617 at (64, 64), 1 object(s) of mass 3350.9, secondary peak 0.0000 of Σmax
+SR-JEANS step   377 t   4.0231: Σmax   24.404, J 0.0621 at (64, 64), 1 object(s) of mass 3350.8, secondary peak 0.0000 of Σmax
+SR-JEANS step   457 t   4.2620: Σmax   23.720, J 0.0625 at (64, 64), 1 object(s) of mass 3350.8, secondary peak 0.0000 of Σmax
+SR-JEANS step   537 t   4.4156: Σmax   24.662, J 0.0626 at (64, 64), 1 object(s) of mass 3351.4, secondary peak 0.0000 of Σmax
+SR-JEANS step   617 t   4.4868: Σmax   25.293, J 0.0626 at (64, 64), 1 object(s) of mass 3351.0, secondary peak 0.0000 of Σmax
+SR-JEANS step   697 t   4.5502: Σmax   25.941, J 0.0626 at (64, 64), 1 object(s) of mass 3350.4, secondary peak 0.0000 of Σmax
+SR-JEANS step   777 t   4.6292: Σmax   26.816, J 0.0626 at (64, 64), 1 object(s) of mass 3349.0, secondary peak 0.0000 of Σmax
+SR-JEANS step   857 t   4.7496: Σmax   28.146, J 0.0626 at (64, 64), 1 object(s) of mass 3344.3, secondary peak 0.0000 of Σmax
+SR-JEANS step   937 t   4.9272: Σmax   29.771, J 0.0624 at (64, 64), 1 object(s) of mass 3331.9, secondary peak 0.0000 of Σmax
+SR-JEANS step   969 t   5.0175: Σmax   30.354, J 0.0623 at (64, 64), 1 object(s) of mass 3323.3, secondary peak 0.0000 of Σmax
+SR-JEANS step   989 t   5.0800: Σmax   30.654, J 0.0623 at (64, 64), 1 object(s) of mass 3316.7, secondary peak 0.0000 of Σmax
+SR-JEANS step  1009 t   5.1474: Σmax   30.875, J 0.0622 at (64, 64), 1 object(s) of mass 3308.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  1029 t   5.2199: Σmax   31.001, J 0.0621 at (64, 64), 1 object(s) of mass 3300.1, secondary peak 0.0000 of Σmax
+SR-JEANS step  1049 t   5.2978: Σmax   31.014, J 0.0620 at (64, 64), 1 object(s) of mass 3290.2, secondary peak 0.0000 of Σmax
+SR-JEANS step  1069 t   5.3813: Σmax   30.908, J 0.0619 at (64, 64), 1 object(s) of mass 3279.2, secondary peak 0.0000 of Σmax
+SR-JEANS step  1089 t   5.4708: Σmax   30.664, J 0.0618 at (64, 64), 1 object(s) of mass 3267.1, secondary peak 0.0000 of Σmax
+SR-JEANS step  1109 t   5.5664: Σmax   30.345, J 0.0618 at (64, 64), 1 object(s) of mass 3254.0, secondary peak 0.0000 of Σmax
+SR-JEANS step  1135 t   5.7006: Σmax   29.804, J 0.0616 at (64, 64), 1 object(s) of mass 3235.6, secondary peak 0.0000 of Σmax
+SR-JEANS step  1215 t   6.1919: Σmax   27.938, J 0.0613 at (64, 64), 1 object(s) of mass 3172.3, secondary peak 0.0000 of Σmax
+SR-JEANS step  1295 t   6.8270: Σmax   28.193, J 0.0609 at (64, 64), 1 object(s) of mass 3107.6, secondary peak 0.0000 of Σmax
+SR-JEANS step  1375 t   7.5544: Σmax   28.353, J 0.0601 at (64, 64), 1 object(s) of mass 3056.2, secondary peak 0.0000 of Σmax
+SR-JEANS step  1455 t   8.2855: Σmax   27.650, J 0.0597 at (63, 64), 1 object(s) of mass 3022.1, secondary peak 0.0018 of Σmax
+SR-JEANS step  1535 t   9.0208: Σmax   27.634, J 0.0594 at (63, 64), 1 object(s) of mass 2999.5, secondary peak 0.0014 of Σmax
+SR-JEANS step  1615 t   9.7534: Σmax   27.530, J 0.0589 at (63, 64), 1 object(s) of mass 2984.4, secondary peak 0.0010 of Σmax
+SR-JEANS step  1695 t  10.4875: Σmax   27.077, J 0.0585 at (63, 64), 1 object(s) of mass 2974.3, secondary peak 0.0008 of Σmax
+SR-JEANS step  1775 t  11.2223: Σmax   26.962, J 0.0580 at (63, 64), 1 object(s) of mass 2967.4, secondary peak 0.0013 of Σmax
+SR-JEANS step  1855 t  11.9555: Σmax   26.741, J 0.0575 at (63, 64), 1 object(s) of mass 2962.8, secondary peak 0.0026 of Σmax
+SR-JEANS step  1935 t  12.6907: Σmax   26.414, J 0.0571 at (63, 64), 1 object(s) of mass 2959.8, secondary peak 0.0023 of Σmax
+SR-JEANS step  2015 t  13.4265: Σmax   26.314, J 0.0567 at (63, 64), 1 object(s) of mass 2957.9, secondary peak 0.0022 of Σmax
+SR-JEANS step  2095 t  14.1622: Σmax   26.121, J 0.0563 at (63, 64), 1 object(s) of mass 2956.8, secondary peak 0.0021 of Σmax
+SR-JEANS step  2175 t  14.8993: Σmax   25.929, J 0.0561 at (63, 64), 1 object(s) of mass 2956.1, secondary peak 0.0018 of Σmax
+SR-JEANS step  2255 t  15.6367: Σmax   25.822, J 0.0558 at (63, 64), 1 object(s) of mass 2955.7, secondary peak 0.0015 of Σmax
+SR-JEANS step  2335 t  16.3745: Σmax   25.674, J 0.0555 at (63, 64), 1 object(s) of mass 2955.4, secondary peak 0.0002 of Σmax
+SR-JEANS step  2415 t  17.1132: Σmax   25.524, J 0.0553 at (63, 64), 1 object(s) of mass 2955.2, secondary peak 0.0012 of Σmax
+SR-JEANS step  2495 t  17.8519: Σmax   25.421, J 0.0551 at (63, 64), 1 object(s) of mass 2954.8, secondary peak 0.0011 of Σmax
+SR-JEANS step  2575 t  18.5910: Σmax   25.256, J 0.0549 at (63, 64), 1 object(s) of mass 2954.4, secondary peak 0.0012 of Σmax
+SR-JEANS step  2655 t  19.3307: Σmax   25.114, J 0.0546 at (63, 64), 1 object(s) of mass 2954.4, secondary peak 0.0010 of Σmax
+SR-JEANS step  2735 t  20.0704: Σmax   25.007, J 0.0544 at (63, 64), 1 object(s) of mass 2953.9, secondary peak 0.0009 of Σmax
+SR-JEANS step  2815 t  20.8103: Σmax   24.860, J 0.0541 at (63, 64), 1 object(s) of mass 2953.9, secondary peak 0.0008 of Σmax
+SR-JEANS step  2895 t  21.5508: Σmax   24.708, J 0.0539 at (63, 64), 1 object(s) of mass 2953.7, secondary peak 0.0007 of Σmax
+SR-JEANS step  2975 t  22.2917: Σmax   24.596, J 0.0536 at (63, 64), 1 object(s) of mass 2953.5, secondary peak 0.0008 of Σmax
+SR-JEANS step  3055 t  23.0327: Σmax   24.470, J 0.0534 at (63, 64), 1 object(s) of mass 2953.0, secondary peak 0.0007 of Σmax
+SR-JEANS step  3135 t  23.7741: Σmax   24.334, J 0.0532 at (63, 64), 1 object(s) of mass 2952.7, secondary peak 0.0006 of Σmax
+SR-JEANS step  3215 t  24.5160: Σmax   24.219, J 0.0529 at (63, 64), 1 object(s) of mass 2952.2, secondary peak 0.0019 of Σmax
+SR-JEANS step  3295 t  25.2580: Σmax   24.093, J 0.0527 at (63, 64), 1 object(s) of mass 2951.8, secondary peak 0.0017 of Σmax
+SR-JEANS step  3375 t  26.0003: Σmax   23.962, J 0.0525 at (63, 64), 1 object(s) of mass 2951.5, secondary peak 0.0015 of Σmax
+SR-JEANS step  3455 t  26.7428: Σmax   23.845, J 0.0523 at (63, 64), 1 object(s) of mass 2951.2, secondary peak 0.0013 of Σmax
+SR-JEANS step  3535 t  27.4855: Σmax   23.722, J 0.0521 at (63, 64), 1 object(s) of mass 2950.6, secondary peak 0.0012 of Σmax
+SR-JEANS step  3615 t  28.2285: Σmax   23.591, J 0.0518 at (63, 64), 1 object(s) of mass 2949.9, secondary peak 0.0012 of Σmax
+SR-JEANS step  3695 t  28.9719: Σmax   23.474, J 0.0516 at (63, 64), 1 object(s) of mass 2949.3, secondary peak 0.0012 of Σmax
+SR-JEANS step  3775 t  29.7156: Σmax   23.363, J 0.0514 at (63, 64), 1 object(s) of mass 2948.8, secondary peak 0.0004 of Σmax
+SR-JEANS step  3855 t  30.4596: Σmax   23.252, J 0.0512 at (63, 64), 1 object(s) of mass 2948.4, secondary peak 0.0002 of Σmax
+SR-JEANS step  3935 t  31.2041: Σmax   23.146, J 0.0510 at (63, 64), 1 object(s) of mass 2948.3, secondary peak 0.0003 of Σmax
+SR-JEANS step  4015 t  31.9489: Σmax   23.057, J 0.0508 at (63, 64), 1 object(s) of mass 2948.1, secondary peak 0.0010 of Σmax
+SR-JEANS step  4095 t  32.6937: Σmax   22.965, J 0.0507 at (63, 64), 1 object(s) of mass 2947.7, secondary peak 0.0002 of Σmax
+SR-JEANS step  4175 t  33.4387: Σmax   22.886, J 0.0505 at (63, 64), 1 object(s) of mass 2947.3, secondary peak 0.0002 of Σmax
+SR-JEANS step  4255 t  34.1839: Σmax   22.796, J 0.0504 at (63, 64), 1 object(s) of mass 2946.7, secondary peak 0.0002 of Σmax
+SR-JEANS step  4335 t  34.9300: Σmax   22.735, J 0.0503 at (63, 64), 1 object(s) of mass 2946.4, secondary peak 0.0002 of Σmax
+SR-JEANS step  4415 t  35.6759: Σmax   22.678, J 0.0501 at (63, 64), 1 object(s) of mass 2945.9, secondary peak 0.0005 of Σmax
+SR-JEANS step  4495 t  36.4223: Σmax   22.597, J 0.0500 at (63, 64), 1 object(s) of mass 2945.4, secondary peak 0.0001 of Σmax
+SR-JEANS step  4575 t  37.1691: Σmax   22.540, J 0.0499 at (63, 64), 1 object(s) of mass 2944.9, secondary peak 0.0001 of Σmax
+SR-JEANS step  4655 t  37.9159: Σmax   22.464, J 0.0498 at (63, 64), 1 object(s) of mass 2944.8, secondary peak 0.0001 of Σmax
+SR-JEANS step  4735 t  38.6630: Σmax   22.381, J 0.0496 at (63, 64), 1 object(s) of mass 2945.1, secondary peak 0.0002 of Σmax
+SR-JEANS step  4815 t  39.4093: Σmax   22.321, J 0.0495 at (63, 64), 1 object(s) of mass 2945.5, secondary peak 0.0001 of Σmax
+SR-JEANS step  4895 t  40.0277: Σmax   22.281, J 0.0494 at (63, 64), 1 object(s) of mass 2945.4, secondary peak 0.0002 of Σmax
+SR-JEANS step  4975 t  40.1599: Σmax   22.242, J 0.0494 at (63, 64), 1 object(s) of mass 2945.5, secondary peak 0.0002 of Σmax
+SR-JEANS step  5055 t  40.3602: Σmax   22.246, J 0.0494 at (63, 64), 1 object(s) of mass 2945.6, secondary peak 0.0001 of Σmax
+SR-JEANS step  5135 t  40.7269: Σmax   22.260, J 0.0493 at (63, 64), 1 object(s) of mass 2945.9, secondary peak 0.0001 of Σmax
+SR-JEANS step  5215 t  41.1603: Σmax   22.247, J 0.0492 at (63, 64), 1 object(s) of mass 2945.6, secondary peak 0.0001 of Σmax
+SR-JEANS step  5295 t  41.5540: Σmax   22.135, J 0.0492 at (63, 64), 1 object(s) of mass 2945.4, secondary peak 0.0001 of Σmax
+SR-JEANS step  5375 t  41.7565: Σmax   22.088, J 0.0492 at (63, 64), 1 object(s) of mass 2945.6, secondary peak 0.0001 of Σmax
+SR-JEANS step  5455 t  41.9636: Σmax   22.085, J 0.0491 at (63, 64), 1 object(s) of mass 2945.6, secondary peak 0.0002 of Σmax
+SR-JEANS step  5535 t  42.2949: Σmax   22.118, J 0.0491 at (63, 64), 1 object(s) of mass 2945.5, secondary peak 0.0002 of Σmax
+SR-JEANS step  5615 t  42.6679: Σmax   22.086, J 0.0490 at (63, 64), 1 object(s) of mass 2945.3, secondary peak 0.0001 of Σmax
+SR-JEANS step  5695 t  43.0688: Σmax   22.064, J 0.0490 at (63, 63), 1 object(s) of mass 2945.4, secondary peak 0.0001 of Σmax
+SR-JEANS step  5775 t  43.4355: Σmax   22.065, J 0.0489 at (63, 63), 1 object(s) of mass 2945.4, secondary peak 0.0002 of Σmax
+SR-JEANS step  5855 t  43.8192: Σmax   22.019, J 0.0489 at (63, 64), 1 object(s) of mass 2945.5, secondary peak 0.0001 of Σmax
+SR-JEANS step  5935 t  44.1589: Σmax   21.904, J 0.0488 at (63, 64), 1 object(s) of mass 2945.6, secondary peak 0.0001 of Σmax
+SR-JEANS step  6015 t  44.4925: Σmax   21.903, J 0.0487 at (63, 64), 1 object(s) of mass 2945.7, secondary peak 0.0001 of Σmax
+SR-JEANS step  6095 t  44.8616: Σmax   21.954, J 0.0487 at (63, 64), 1 object(s) of mass 2945.8, secondary peak 0.0001 of Σmax
+SR-JEANS step  6175 t  45.2062: Σmax   21.957, J 0.0486 at (63, 64), 1 object(s) of mass 2945.9, secondary peak 0.0001 of Σmax
+SR-JEANS step  6255 t  45.6848: Σmax   21.855, J 0.0486 at (63, 64), 1 object(s) of mass 2945.9, secondary peak 0.0001 of Σmax
+SR-JEANS step  6335 t  46.1099: Σmax   21.806, J 0.0485 at (63, 64), 1 object(s) of mass 2946.1, secondary peak 0.0001 of Σmax
+SR-JEANS step  6415 t  46.4402: Σmax   21.746, J 0.0484 at (63, 64), 1 object(s) of mass 2946.2, secondary peak 0.0001 of Σmax
+SR-JEANS step  6495 t  46.8378: Σmax   21.770, J 0.0484 at (63, 64), 1 object(s) of mass 2946.3, secondary peak 0.0001 of Σmax
+SR-JEANS step  6575 t  47.3025: Σmax   21.773, J 0.0483 at (63, 64), 1 object(s) of mass 2946.4, secondary peak 0.0001 of Σmax
+SR-JEANS step  6655 t  47.6602: Σmax   21.728, J 0.0482 at (63, 64), 1 object(s) of mass 2946.6, secondary peak 0.0001 of Σmax
+SR-JEANS step  6735 t  48.2904: Σmax   21.682, J 0.0481 at (63, 64), 1 object(s) of mass 2946.8, secondary peak 0.0000 of Σmax
+SR-JEANS step  6815 t  48.9781: Σmax   21.563, J 0.0480 at (63, 64), 1 object(s) of mass 2947.1, secondary peak 0.0000 of Σmax
+SR-JEANS step  6895 t  49.7256: Σmax   21.575, J 0.1167 at (52, 68), 1 object(s) of mass 2947.4, secondary peak 0.0000 of Σmax
+SR-JEANS step  6975 t  50.4592: Σmax   21.554, J 0.0479 at (63, 63), 1 object(s) of mass 2947.6, secondary peak 0.0000 of Σmax
+SR-JEANS step  7055 t  51.1745: Σmax   21.518, J 0.0478 at (63, 63), 1 object(s) of mass 2947.8, secondary peak 0.0000 of Σmax
+SR-JEANS step  7135 t  51.9026: Σmax   21.442, J 0.2425 at (75, 67), 1 object(s) of mass 2947.9, secondary peak 0.0000 of Σmax
+SR-JEANS step  7215 t  52.5987: Σmax   21.462, J 0.1521 at (75, 60), 1 object(s) of mass 2948.0, secondary peak 0.0000 of Σmax
+SR-JEANS step  7295 t  53.2762: Σmax   21.444, J 0.4598 at (60, 75), 1 object(s) of mass 2948.1, secondary peak 0.0000 of Σmax
+SR-JEANS step  7375 t  53.9318: Σmax   21.335, J 0.4038 at (67, 75), 1 object(s) of mass 2948.2, secondary peak 0.0000 of Σmax
+SR-JEANS step  7455 t  54.6319: Σmax   21.321, J 0.3548 at (75, 60), 1 object(s) of mass 2948.2, secondary peak 0.0000 of Σmax
+SR-JEANS step  7535 t  55.3188: Σmax   21.383, J 0.0917 at (59, 52), 1 object(s) of mass 2948.3, secondary peak 0.0000 of Σmax
+SR-JEANS step  7615 t  56.0098: Σmax   21.287, J 0.2182 at (57, 53), 1 object(s) of mass 2948.3, secondary peak 0.0000 of Σmax
+SR-JEANS step  7695 t  56.6732: Σmax   21.247, J 0.4668 at (67, 52), 1 object(s) of mass 2948.4, secondary peak 0.0000 of Σmax
+SR-JEANS step  7775 t  57.3068: Σmax   21.328, J 0.1827 at (59, 52), 1 object(s) of mass 2948.4, secondary peak 0.0000 of Σmax
+SR-JEANS step  7855 t  57.9675: Σmax   21.267, J 0.4616 at (53, 70), 1 object(s) of mass 2948.4, secondary peak 0.0000 of Σmax
+SR-JEANS step  7935 t  58.6043: Σmax   21.181, J 0.3880 at (52, 59), 1 object(s) of mass 2948.4, secondary peak 0.0000 of Σmax
+SR-JEANS step  8015 t  59.2940: Σmax   21.206, J 0.7010 at (52, 67), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8095 t  59.9655: Σmax   21.235, J 0.8798 at (75, 65), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8175 t  60.6651: Σmax   21.135, J 0.2605 at (75, 61), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8255 t  61.3103: Σmax   21.134, J 0.8982 at (66, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8335 t  61.9879: Σmax   21.183, J 0.6923 at (75, 65), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8415 t  62.6666: Σmax   21.094, J 0.5275 at (75, 62), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8495 t  63.3284: Σmax   21.131, J 0.5766 at (66, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8575 t  64.0460: Σmax   21.075, J 0.8776 at (73, 56), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8655 t  64.7000: Σmax   21.103, J 0.3827 at (75, 66), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8735 t  65.4062: Σmax   21.050, J 0.3694 at (53, 57), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8815 t  66.0180: Σmax   21.128, J 0.2090 at (62, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8895 t  66.7148: Σmax   21.089, J 0.3392 at (71, 54), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  8975 t  67.4171: Σmax   21.107, J 0.1502 at (75, 66), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9055 t  68.1625: Σmax   21.040, J 0.1555 at (66, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9135 t  68.9113: Σmax   21.063, J 0.3097 at (75, 62), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9215 t  69.6607: Σmax   21.106, J 0.7152 at (75, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9295 t  70.4104: Σmax   21.029, J 0.3332 at (75, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9375 t  71.1595: Σmax   21.053, J 0.2141 at (75, 62), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9455 t  71.9087: Σmax   21.072, J 0.3770 at (65, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9535 t  72.6583: Σmax   20.996, J 0.2687 at (52, 60), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9615 t  73.4071: Σmax   21.024, J 0.2922 at (52, 67), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9695 t  74.1563: Σmax   21.069, J 0.5800 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9775 t  74.9059: Σmax   20.979, J 0.3778 at (75, 65), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9855 t  75.6550: Σmax   21.027, J 0.6236 at (75, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step  9935 t  76.4043: Σmax   21.025, J 0.3444 at (75, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10015 t  77.1541: Σmax   20.983, J 0.3897 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10095 t  77.9035: Σmax   21.020, J 0.2328 at (73, 71), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10175 t  78.6527: Σmax   21.061, J 0.6789 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10255 t  79.4027: Σmax   21.004, J 0.5432 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10335 t  80.1521: Σmax   21.031, J 0.2742 at (52, 60), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10415 t  80.9016: Σmax   21.031, J 0.2899 at (66, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10495 t  81.6512: Σmax   21.017, J 0.3478 at (75, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10575 t  82.4009: Σmax   21.072, J 0.2665 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10655 t  83.1474: Σmax   21.034, J 0.3272 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10735 t  83.8955: Σmax   21.032, J 0.2220 at (57, 74), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10815 t  84.6451: Σmax   21.029, J 0.6086 at (62, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10895 t  85.3943: Σmax   21.046, J 0.2725 at (73, 56), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 10975 t  86.1439: Σmax   21.024, J 0.4279 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11055 t  86.8939: Σmax   21.018, J 0.2231 at (52, 68), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11135 t  87.6430: Σmax   21.036, J 0.2711 at (66, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11215 t  88.3925: Σmax   21.072, J 0.1185 at (62, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11295 t  89.1426: Σmax   21.085, J 0.6621 at (65, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11375 t  89.8910: Σmax   21.020, J 0.1845 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11455 t  90.6407: Σmax   21.075, J 0.2968 at (74, 69), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11535 t  91.3898: Σmax   21.018, J 0.4666 at (72, 55), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11615 t  92.1395: Σmax   21.092, J 0.3762 at (65, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11695 t  92.8891: Σmax   21.057, J 0.3125 at (75, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11775 t  93.6362: Σmax   21.060, J 0.3309 at (53, 57), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11855 t  94.3863: Σmax   21.061, J 0.3747 at (71, 54), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 11935 t  95.1361: Σmax   21.129, J 0.2360 at (73, 56), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12015 t  95.8862: Σmax   21.053, J 0.3956 at (72, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12095 t  96.6364: Σmax   21.053, J 0.1379 at (61, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12175 t  97.3824: Σmax   21.087, J 0.4621 at (61, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12255 t  98.1313: Σmax   21.093, J 0.1296 at (67, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12335 t  98.8815: Σmax   21.115, J 0.4211 at (60, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12415 t  99.6318: Σmax   21.081, J 0.1718 at (67, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12495 t 100.3815: Σmax   21.109, J 0.3927 at (61, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12575 t 101.1317: Σmax   21.083, J 0.4460 at (72, 55), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12655 t 101.8822: Σmax   21.175, J 0.3173 at (60, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12735 t 102.6308: Σmax   21.066, J 0.4079 at (72, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12815 t 103.3811: Σmax   21.122, J 0.3382 at (62, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12895 t 104.1317: Σmax   21.116, J 0.4216 at (72, 55), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 12975 t 104.8826: Σmax   21.165, J 0.3606 at (57, 53), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13055 t 105.6331: Σmax   21.125, J 0.2982 at (74, 58), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13135 t 106.3840: Σmax   21.153, J 0.3422 at (52, 59), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13215 t 107.1348: Σmax   21.121, J 0.4405 at (66, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13295 t 107.8857: Σmax   21.156, J 0.4931 at (65, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13375 t 108.6367: Σmax   21.178, J 0.1462 at (59, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13455 t 109.3874: Σmax   21.132, J 0.2611 at (72, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13535 t 110.1383: Σmax   21.132, J 0.3664 at (61, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13615 t 110.8875: Σmax   21.157, J 0.2749 at (74, 69), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13695 t 111.6382: Σmax   21.195, J 0.5189 at (60, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13775 t 112.3891: Σmax   21.199, J 0.3217 at (74, 58), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13855 t 113.1404: Σmax   21.171, J 0.4502 at (57, 74), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 13935 t 113.8911: Σmax   21.152, J 0.1574 at (54, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14015 t 114.6427: Σmax   21.220, J 0.1535 at (55, 54), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14095 t 115.3941: Σmax   21.223, J 0.3409 at (59, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14175 t 116.1447: Σmax   21.263, J 0.1570 at (66, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14255 t 116.8970: Σmax   21.209, J 0.4134 at (60, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14335 t 117.6483: Σmax   21.178, J 0.2295 at (54, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14415 t 118.3988: Σmax   21.270, J 0.3887 at (55, 54), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14495 t 119.1511: Σmax   21.290, J 0.3986 at (61, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14575 t 119.9022: Σmax   21.140, J 0.3919 at (57, 74), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14655 t 120.6531: Σmax   21.336, J 0.5251 at (61, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14735 t 121.4057: Σmax   21.214, J 0.1635 at (67, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14815 t 122.1561: Σmax   21.164, J 0.2053 at (59, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14895 t 122.9078: Σmax   21.446, J 0.8664 at (64, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 14975 t 123.6598: Σmax   21.128, J 0.1828 at (72, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15055 t 124.4103: Σmax   21.206, J 0.4145 at (54, 55), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15135 t 125.1626: Σmax   21.385, J 0.3937 at (61, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15215 t 125.9138: Σmax   21.170, J 0.2628 at (74, 68), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15295 t 126.6645: Σmax   21.330, J 0.5621 at (62, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15375 t 127.4169: Σmax   21.321, J 0.2691 at (72, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15455 t 128.1681: Σmax   21.164, J 0.1593 at (54, 55), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15535 t 128.9194: Σmax   21.422, J 0.6348 at (61, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15615 t 129.6713: Σmax   21.254, J 0.1736 at (52, 58), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15695 t 130.4225: Σmax   21.236, J 0.2036 at (51, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15775 t 131.1740: Σmax   21.281, J 0.3613 at (59, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15855 t 131.9256: Σmax   21.283, J 0.2782 at (66, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 15935 t 132.6776: Σmax   21.222, J 0.7960 at (63, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16015 t 133.4289: Σmax   21.286, J 0.2858 at (74, 59), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16095 t 134.1803: Σmax   21.299, J 0.1498 at (51, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16175 t 134.9322: Σmax   21.155, J 0.4028 at (65, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16255 t 135.6836: Σmax   21.256, J 0.2845 at (52, 58), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16335 t 136.4361: Σmax   21.335, J 0.6739 at (60, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16415 t 137.1868: Σmax   21.171, J 0.2535 at (59, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16495 t 137.9385: Σmax   21.362, J 0.3622 at (54, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16575 t 138.6911: Σmax   21.193, J 0.4780 at (61, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16655 t 139.4385: Σmax   21.156, J 0.3337 at (54, 55), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16735 t 140.1907: Σmax   21.452, J 0.3776 at (63, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16815 t 140.9423: Σmax   21.201, J 0.2095 at (60, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16895 t 141.6927: Σmax   21.246, J 0.4002 at (51, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 16975 t 142.4455: Σmax   21.319, J 0.2179 at (59, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17055 t 143.1940: Σmax   21.150, J 0.2370 at (73, 70), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17135 t 143.9445: Σmax   21.377, J 0.3916 at (51, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17215 t 144.6971: Σmax   21.259, J 0.4590 at (60, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17295 t 145.4480: Σmax   21.184, J 0.2201 at (72, 55), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17375 t 146.2001: Σmax   21.384, J 0.7786 at (64, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17455 t 146.9523: Σmax   21.239, J 0.0912 at (56, 53), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17535 t 147.7039: Σmax   21.306, J 0.4345 at (51, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17615 t 148.4558: Σmax   21.362, J 0.2619 at (65, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17695 t 149.2080: Σmax   21.230, J 0.3299 at (62, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17775 t 149.9601: Σmax   21.374, J 0.7923 at (63, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17855 t 150.7121: Σmax   21.344, J 0.2269 at (71, 54), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 17935 t 151.4642: Σmax   21.341, J 0.2276 at (54, 72), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18015 t 152.2161: Σmax   21.302, J 0.6765 at (64, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18095 t 152.9677: Σmax   21.308, J 0.2693 at (52, 58), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18175 t 153.7202: Σmax   21.373, J 0.3402 at (51, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18255 t 154.4685: Σmax   21.287, J 0.1981 at (67, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18335 t 155.2200: Σmax   21.357, J 0.1635 at (59, 52), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18415 t 155.9731: Σmax   21.231, J 0.7810 at (63, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18495 t 156.7244: Σmax   21.261, J 0.4107 at (62, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18575 t 157.4768: Σmax   21.465, J 0.5490 at (51, 64), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18655 t 158.2296: Σmax   21.244, J 0.1913 at (65, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18735 t 158.9811: Σmax   21.358, J 0.2619 at (72, 55), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18815 t 159.7343: Σmax   21.415, J 0.7775 at (63, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18895 t 160.4863: Σmax   21.238, J 0.2856 at (63, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 18975 t 161.2386: Σmax   21.508, J 0.1966 at (73, 56), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19055 t 161.9916: Σmax   21.337, J 0.5198 at (62, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19135 t 162.7434: Σmax   21.212, J 0.2652 at (71, 54), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19215 t 163.4962: Σmax   21.489, J 0.2767 at (74, 58), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19295 t 164.2493: Σmax   21.343, J 0.5204 at (64, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19375 t 165.0003: Σmax   21.342, J 0.2498 at (53, 56), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19455 t 165.7542: Σmax   21.481, J 0.8096 at (62, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19535 t 166.5064: Σmax   21.216, J 0.2461 at (74, 68), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19615 t 167.2584: Σmax   21.411, J 0.3263 at (71, 54), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19695 t 168.0123: Σmax   21.533, J 0.6727 at (62, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19775 t 168.7643: Σmax   21.355, J 0.4502 at (51, 63), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19855 t 169.5165: Σmax   21.451, J 0.2654 at (65, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 19935 t 170.2706: Σmax   21.355, J 0.1851 at (74, 68), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS step 20007 t 170.9482: Σmax   21.370, J 0.3689 at (63, 75), 1 object(s) of mass 2948.5, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 21.370 at the end (largest 61.087) after 20007 steps, t = 170.9482 (start 0.9998, target 100.0); 2610 summaries
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 26417.92, U_th/|W| 0.100001
+test result: FAILED. 1 passed; 4 failed; 0 ignored; 0 measured; 335 filtered out; finished in 8.22s
+== exp2 jeans T 3.31324 (U_th/|W| = 0.07), fix 2026-10-20T10:11:39-04:00
+SR-JEANS end: step 193, t = 3.2568, Σ_max 102.185: 1 object(s) of mass 3351.3 (at most 1 in any summary); largest secondary peak 0.0000 of Σ_max at the end, 1.0000 in any summary
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.0919 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   1.8669: Σmax    1.733, J 0.0906 at (68, 64), 1 object(s) of mass 3351.6, secondary peak 0.9824 of Σmax
+SR-JEANS step   153 t   2.9684: Σmax   11.429, J 0.1269 at (97, 66), 1 object(s) of mass 3351.4, secondary peak 1.0000 of Σmax
+SR-JEANS step   185 t   3.2123: Σmax   84.289, J 0.1570 at (94, 62), 1 object(s) of mass 3351.3, secondary peak 0.0000 of Σmax
+SR-JEANS step   193 t   3.2568: Σmax  102.185, J 0.1562 at (94, 61), 1 object(s) of mass 3351.3, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 102.185 at the end (largest 102.185) after 193 steps, t = 3.2568 (start 0.9998, target 100.0); 35 summaries
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 0.1591 (bound 0.25) at step 191, t = 3.2460, cell (94, 66), Σ_max then 99.006; over 35 summaries
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 18492.55, U_th/|W| 0.070000
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 335 filtered out; finished in 17.48s
+== exp3 ledger momentum series, fix vs old binary 2026-10-20T10:13:58-04:00
+fix-bounce-50  steps   50: |Δp| 1.868e-04  Σm|u| 1.093e+04  rel 1.709e-08  Σmax 4.47  escaped 0  vac_reset 5.416e-05  E.inv -5.682e+04
+fix-bounce-100 steps  100: |Δp| 6.458e-03  Σm|u| 6.087e+03  rel 1.061e-06  Σmax 143  escaped 0  vac_reset 2.625e-04  E.inv -1.195e+05
+fix-bounce-200 steps  200: |Δp| 9.450e-03  Σm|u| 8.397e+03  rel 1.125e-06  Σmax 21.4  escaped 0  vac_reset 5.942e-04  E.inv -1.124e+05
+fix-bounce-300 steps  300: |Δp| 9.865e-03  Σm|u| 6.754e+03  rel 1.461e-06  Σmax 17.4  escaped 0  vac_reset 4.798e-03  E.inv -1.124e+05
+fix-bounce-500 steps  500: |Δp| 9.983e-03  Σm|u| 3.580e+03  rel 2.788e-06  Σmax 16.5  escaped 0  vac_reset 2.246e-02  E.inv -1.123e+05
+old-bounce-50  steps   50: |Δp| 1.691e-04  Σm|u| 1.129e+04  rel 1.498e-08  Σmax 4.76  escaped 0  vac_reset 5.435e-05  E.inv -5.689e+04
+old-bounce-100 steps  100: |Δp| 5.471e-03  Σm|u| 2.102e+04  rel 2.603e-07  Σmax 94.4  escaped 0  vac_reset 2.458e-04  E.inv 4.908e+05
+old-bounce-200 steps  200: |Δp| 6.259e-03  Σm|u| 3.387e+04  rel 1.848e-07  Σmax 7.44  escaped 0  vac_reset 5.606e-04  E.inv 5.193e+05
+old-bounce-300 steps  300: |Δp| 6.168e-03  Σm|u| 3.359e+04  rel 1.836e-07  Σmax 4.75  escaped 0  vac_reset 4.906e-03  E.inv 5.193e+05
+old-bounce-500 steps  500: |Δp| 5.625e-03  Σm|u| 3.286e+04  rel 1.712e-07  Σmax 1.8  escaped 0  vac_reset 2.136e-02  E.inv 5.194e+05
+fix-leave-50   steps   50: |Δp| 9.712e+00  Σm|u| 8.993e+03  rel 1.080e-03  Σmax 9.99  escaped 0.0002935  vac_reset 7.828e-05  E.inv -4.484e+04
+fix-leave-100  steps  100: |Δp| 2.363e+02  Σm|u| 1.030e+04  rel 2.293e-02  Σmax 80.9  escaped 0.0002935  vac_reset 3.042e-04  E.inv -5.289e+04
+fix-leave-200  steps  200: |Δp| 2.693e+02  Σm|u| 8.650e+03  rel 3.114e-02  Σmax 24.5  escaped 0.00472  vac_reset 8.839e-04  E.inv -5.691e+04
+fix-leave-300  steps  300: |Δp| 2.682e+02  Σm|u| 7.638e+03  rel 3.511e-02  Σmax 15.5  escaped 0.7631  vac_reset 2.803e-03  E.inv -5.691e+04
+fix-leave-500  steps  500: |Δp| 2.664e+02  Σm|u| 4.680e+03  rel 5.692e-02  Σmax 9.4  escaped 39.02  vac_reset 1.436e-02  E.inv -5.314e+04
+old-leave-50   steps   50: |Δp| 1.380e+01  Σm|u| 8.573e+03  rel 1.610e-03  Σmax 8.51  escaped 0.0003193  vac_reset 5.552e-05  E.inv -4.14e+04
+old-leave-100  steps  100: |Δp| 2.700e+01  Σm|u| 9.378e+03  rel 2.879e-03  Σmax 46.5  escaped 0.0003193  vac_reset 2.537e-04  E.inv -2.11e+04
+old-leave-200  steps  200: |Δp| 3.011e+01  Σm|u| 9.640e+03  rel 3.124e-03  Σmax 28.5  escaped 0.0004253  vac_reset -2.602e-04  E.inv 8528
+old-leave-300  steps  300: |Δp| 2.878e+01  Σm|u| 1.006e+04  rel 2.861e-03  Σmax 18.8  escaped 2.487  vac_reset 1.477e-03  E.inv 1.154e+04
+old-leave-500  steps  500: |Δp| 2.395e+01  Σm|u| 7.780e+03  rel 3.078e-03  Σmax 6.71  escaped 75.9  vac_reset 1.056e-02  E.inv 1.901e+04
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/9f70639d-68c0-4509-a11b-d3a6754f509e/scratchpad/mom.py", line 22, in <module>
+    which = sys.argv[1]; edges = sys.argv[2].split(','); steps = [int(x) for x in sys.argv[3].split(',')]
+            ~~~~~~~~^^^
+IndexError: list index out of range
+== exp4 (the traceback above is a driver slip) the drifting disk centred, x 64 v 0.5 leave, 2026-10-20T10:15:08-04:00
+fix-leavemid-50 steps   50: |Δp| 8.394e+00  Σm|u| 1.041e+04  rel 8.064e-04  Σmax 3.99  escaped 0  vac_reset 1.120e-04  E.inv -5.664e+04
+fix-leavemid-100 steps  100: |Δp| 1.084e+00  Σm|u| 5.494e+03  rel 1.974e-04  Σmax 209  escaped 0  vac_reset 2.869e-04  E.inv -1.122e+05
+fix-leavemid-200 steps  200: |Δp| 1.915e+01  Σm|u| 8.757e+03  rel 2.187e-03  Σmax 31.2  escaped 0  vac_reset 4.253e-04  E.inv -1.105e+05
+fix-leavemid-500 steps  500: |Δp| 2.107e+01  Σm|u| 5.913e+03  rel 3.564e-03  Σmax 30.6  escaped 0.001257  vac_reset 1.886e-02  E.inv -1.102e+05
+old-leavemid-50 steps   50: |Δp| 8.483e+00  Σm|u| 1.063e+04  rel 7.980e-04  Σmax 4.14  escaped 0  vac_reset 1.029e-04  E.inv -5.669e+04
+old-leavemid-100 steps  100: |Δp| 3.910e+01  Σm|u| 1.326e+04  rel 2.950e-03  Σmax 151  escaped 0  vac_reset 2.706e-04  E.inv 3.972e+05
+old-leavemid-200 steps  200: |Δp| 5.414e+01  Σm|u| 3.196e+04  rel 1.694e-03  Σmax 9.84  escaped 0  vac_reset 4.230e-04  E.inv 4.628e+05
+old-leavemid-500 steps  500: |Δp| 5.421e+01  Σm|u| 3.075e+04  rel 1.763e-03  Σmax 2.74  escaped 0.003199  vac_reset 1.924e-02  E.inv 4.629e+05
+== exp5 the leave scene in a 256-wide world (no edge at x 128), 2026-10-20T10:15:50-04:00
+fix-leavewide-50 steps   50: |Δp| 8.394e+00  Σm|u| 1.041e+04  rel 8.064e-04  Σmax 3.99  escaped 0  vac_reset 1.235e-04  E.inv -5.664e+04
+fix-leavewide-100 steps  100: |Δp| 1.087e+00  Σm|u| 5.494e+03  rel 1.978e-04  Σmax 209  escaped 0  vac_reset 2.984e-04  E.inv -1.122e+05
+fix-leavewide-500 steps  500: |Δp| 2.103e+01  Σm|u| 5.914e+03  rel 3.556e-03  Σmax 30.6  escaped 0  vac_reset 1.905e-02  E.inv -1.102e+05
+old-leavewide-50 steps   50: |Δp| 8.483e+00  Σm|u| 1.063e+04  rel 7.980e-04  Σmax 4.14  escaped 0  vac_reset 1.144e-04  E.inv -5.669e+04
+old-leavewide-100 steps  100: |Δp| 3.909e+01  Σm|u| 1.326e+04  rel 2.949e-03  Σmax 151  escaped 0  vac_reset 2.821e-04  E.inv 3.972e+05
+old-leavewide-500 steps  500: |Δp| 5.422e+01  Σm|u| 3.075e+04  rel 1.763e-03  Σmax 2.74  escaped 3.59e-05  vac_reset 1.959e-02  E.inv 4.629e+05
+== exp6 box series (scratch variant: compare printed at steps 1..200), fix 2026-10-20T10:16:51-04:00
+SR-BOX sun_disk step 1 sigma |Δ| 7.731e-7 = 2.31e-10 of scale 3.3510e3
+SR-BOX sun_disk step 1 mom_x |Δ| 4.373e-6 = 3.35e-8 of scale 1.3052e2
+SR-BOX sun_disk step 1 energy |Δ| 8.528e-5 = 1.34e-9 of scale 6.3453e4
+SR-BOX sun_disk step 10 sigma |Δ| 1.746e-7 = 5.21e-11 of scale 3.3510e3
+SR-BOX sun_disk step 10 mom_x |Δ| 4.749e-5 = 3.71e-8 of scale 1.2789e3
+SR-BOX sun_disk step 10 energy |Δ| 1.461e-4 = 2.27e-9 of scale 6.4234e4
+SR-BOX sun_disk step 25 sigma |Δ| 5.596e-6 = 1.67e-9 of scale 3.3510e3
+SR-BOX sun_disk step 25 mom_x |Δ| 1.177e-4 = 4.03e-8 of scale 2.9207e3
+SR-BOX sun_disk step 25 energy |Δ| 8.092e-5 = 1.19e-9 of scale 6.8096e4
+SR-BOX sun_disk step 50 sigma |Δ| 9.583e-7 = 2.86e-10 of scale 3.3510e3
+SR-BOX sun_disk step 50 mom_x |Δ| 2.530e-4 = 4.83e-8 of scale 5.2393e3
+SR-BOX sun_disk step 50 energy |Δ| 2.359e-3 = 2.92e-8 of scale 8.0881e4
+SR-BOX sun_disk step 100 sigma |Δ| 1.836e-5 = 5.48e-9 of scale 3.3510e3
+SR-BOX sun_disk step 100 mom_x |Δ| 3.329e-4 = 4.03e-8 of scale 8.2654e3
+SR-BOX sun_disk step 100 energy |Δ| 1.800e-2 = 1.60e-7 of scale 1.1230e5
+SR-BOX sun_disk step 150 sigma |Δ| 3.411e-5 = 1.02e-8 of scale 3.3510e3
+SR-BOX sun_disk step 150 mom_x |Δ| 5.236e-4 = 4.70e-8 of scale 1.1146e4
+SR-BOX sun_disk step 150 energy |Δ| 8.954e-1 = 5.43e-6 of scale 1.6490e5
+SR-BOX sun_disk step 200 sigma |Δ| 5.067e-5 = 1.51e-8 of scale 3.3510e3
+SR-BOX sun_disk step 200 mom_x |Δ| 1.006e-3 = 7.64e-8 of scale 1.3178e4
+SR-BOX sun_disk step 200 energy |Δ| 1.542e0 = 5.38e-6 of scale 2.8641e5
+== exp6b box series, old source (plant ledger-cell-grav-work in the scratch copy)
+SR-BOX sun_disk step 1 sigma |Δ| 7.731e-7 = 2.31e-10 of scale 3.3510e3
+SR-BOX sun_disk step 1 mom_x |Δ| 4.373e-6 = 3.35e-8 of scale 1.3052e2
+SR-BOX sun_disk step 1 energy |Δ| 7.962e-5 = 1.25e-9 of scale 6.3458e4
+SR-BOX sun_disk step 10 sigma |Δ| 2.176e-6 = 6.49e-10 of scale 3.3510e3
+SR-BOX sun_disk step 10 mom_x |Δ| 5.217e-5 = 4.08e-8 of scale 1.2788e3
+SR-BOX sun_disk step 10 energy |Δ| 1.729e-4 = 2.69e-9 of scale 6.4237e4
+SR-BOX sun_disk step 25 sigma |Δ| 9.389e-6 = 2.80e-9 of scale 3.3510e3
+SR-BOX sun_disk step 25 mom_x |Δ| 1.295e-4 = 4.39e-8 of scale 2.9478e3
+SR-BOX sun_disk step 25 energy |Δ| 6.925e-4 = 1.02e-8 of scale 6.8169e4
+SR-BOX sun_disk step 50 sigma |Δ| 1.300e-5 = 3.88e-9 of scale 3.3510e3
+SR-BOX sun_disk step 50 mom_x |Δ| 2.086e-4 = 3.96e-8 of scale 5.2697e3
+SR-BOX sun_disk step 50 energy |Δ| 4.636e-4 = 5.72e-9 of scale 8.1033e4
+SR-BOX sun_disk step 100 sigma |Δ| 9.212e-6 = 2.75e-9 of scale 3.3510e3
+SR-BOX sun_disk step 100 mom_x |Δ| 4.123e-4 = 4.36e-8 of scale 9.4490e3
+SR-BOX sun_disk step 100 energy |Δ| 7.883e-4 = 6.06e-9 of scale 1.3016e5
+SR-BOX sun_disk step 150 sigma |Δ| 3.046e-6 = 9.09e-10 of scale 3.3510e3
+SR-BOX sun_disk step 150 mom_x |Δ| 8.659e-4 = 6.77e-8 of scale 1.2793e4
+SR-BOX sun_disk step 150 energy |Δ| 2.249e-2 = 1.00e-7 of scale 2.2391e5
+SR-BOX sun_disk step 200 sigma |Δ| 1.251e-6 = 3.73e-10 of scale 3.3510e3
+SR-BOX sun_disk step 200 mom_x |Δ| 1.504e-3 = 1.26e-7 of scale 1.1972e4
+SR-BOX sun_disk step 200 energy |Δ| 3.309e-2 = 8.71e-8 of scale 3.7998e5
+-- old source, floor_added per run
+step 1 floor_added 4.732010373320605e-6 vs 2.3474851460614232e-4, escaped.energy 0e0 vs 0e0
+step 10 floor_added -8.378883966328687e-3 vs -8.150531962896612e-3, escaped.energy 0e0 vs 0e0
+step 25 floor_added -2.8652134015174746e-2 vs -2.8425584854005703e-2, escaped.energy 0e0 vs 0e0
+step 50 floor_added -5.268612849820864e-2 vs -5.245958263083861e-2, escaped.energy 0e0 vs 0e0
+step 100 floor_added -7.836870351030278e-2 vs -7.81440520199187e-2, escaped.energy 0e0 vs 0e0
+step 150 floor_added -9.646469911474675e-2 vs -9.625344623043086e-2, escaped.energy 0e0 vs 0e0
+step 200 floor_added -1.0270564915086189e-1 vs -1.0249395610284318e-1, escaped.energy 0e0 vs 0e0
+-- fix, floor_added per run
+step 1 floor_added 4.732010373320605e-6 vs 2.3474851460614232e-4, escaped.energy 0e0 vs 0e0
+step 10 floor_added -8.840773692338932e-3 vs -8.61241904784682e-3, escaped.energy 0e0 vs 0e0
+step 25 floor_added -3.770671836529449e-2 vs -3.7480140407305185e-2, escaped.energy 0e0 vs 0e0
+step 50 floor_added -9.782410078214643e-2 vs -9.759946200329972e-2, escaped.energy 0e0 vs 0e0
+step 100 floor_added -5.023145063921285e-1 vs -5.020886791132882e-1, escaped.energy 0e0 vs 0e0
+step 150 floor_added -1.0233314100460809e0 vs -1.0230920002655894e0, escaped.energy 0e0 vs 0e0
+step 200 floor_added -1.360665187540493e0 vs -1.36042638527792e0, escaped.energy 0e0 vs 0e0
+SR-DE step 25: sum|dE| 2.466e-2, of which in cells with sigma < 1e-3: 2.291e-4
+SR-DE step 25: (293,204) |dE| 7.057e-5  sigma 1.0315e0 vs 1.0315e0  E 2.425816e1 vs 2.425823e1  mx 5.031e-1
+SR-DE step 25: (301,198) |dE| 6.104e-5  sigma 1.0525e0 vs 1.0525e0  E 2.489061e1 vs 2.489055e1  mx -1.192e-1
+SR-DE step 25: (301,201) |dE| 6.104e-5  sigma 1.0525e0 vs 1.0525e0  E 2.489056e1 vs 2.489062e1  mx -1.192e-1
+SR-DE step 25: (288,209) |dE| 6.104e-5  sigma 9.7123e-1 vs 9.7123e-1  E 2.242102e1 vs 2.242096e1  mx 8.223e-1
+SR-DE step 25: (304,193) |dE| 5.913e-5  sigma 1.0315e0 vs 1.0315e0  E 2.425824e1 vs 2.425818e1  mx -3.483e-1
+SR-DE step 25: (303,195) |dE| 5.913e-5  sigma 1.0424e0 vs 1.0424e0  E 2.458794e1 vs 2.458800e1  mx -2.747e-1
+SR-DE step 50: sum|dE| 3.380e-2, of which in cells with sigma < 1e-3: 2.313e-4
+SR-DE step 50: (307,198) |dE| 7.629e-5  sigma 1.1823e0 vs 1.1823e0  E 3.236083e1 vs 3.236091e1  mx -1.381e0
+SR-DE step 50: (301,207) |dE| 7.248e-5  sigma 1.1823e0 vs 1.1823e0  E 3.236082e1 vs 3.236090e1  mx -2.763e-1
+SR-DE step 50: (302,202) |dE| 6.866e-5  sigma 1.2065e0 vs 1.2065e0  E 3.277998e1 vs 3.278004e1  mx -4.731e-1
+SR-DE step 50: (289,213) |dE| 6.866e-5  sigma 1.0512e0 vs 1.0512e0  E 2.938473e1 vs 2.938466e1  mx 1.647e0
+SR-DE step 50: (285,210) |dE| 6.676e-5  sigma 1.0344e0 vs 1.0344e0  E 2.892426e1 vs 2.892419e1  mx 2.224e0
+SR-DE step 50: (305,211) |dE| 6.294e-5  sigma 1.1259e0 vs 1.1259e0  E 3.122273e1 vs 3.122267e1  mx -9.485e-1
+SR-DE step 100: sum|dE| 5.286e-2, of which in cells with sigma < 1e-3: 2.374e-4
+SR-DE step 100: (302,198) |dE| 1.373e-4  sigma 1.6743e0 vs 1.6743e0  E 6.279516e1 vs 6.279530e1  mx -1.313e0
+SR-DE step 100: (305,191) |dE| 1.335e-4  sigma 1.5509e0 vs 1.5509e0  E 6.177373e1 vs 6.177360e1  mx -2.590e0
+SR-DE step 100: (305,205) |dE| 1.335e-4  sigma 1.6070e0 vs 1.6070e0  E 6.249950e1 vs 6.249936e1  mx -2.725e0
+SR-DE step 100: (305,185) |dE| 1.183e-4  sigma 1.3544e0 vs 1.3544e0  E 5.627747e1 vs 5.627736e1  mx -2.122e0
+SR-DE step 100: (305,186) |dE| 1.183e-4  sigma 1.3960e0 vs 1.3960e0  E 5.778557e1 vs 5.778545e1  mx -2.220e0
+SR-DE step 100: (294,194) |dE| 1.183e-4  sigma 1.6070e0 vs 1.6070e0  E 6.249946e1 vs 6.249934e1  mx 2.725e0
+SR-DE step 150: sum|dE| 1.265e0, of which in cells with sigma < 1e-3: 2.869e-4
+SR-DE step 150: (298,204) |dE| 3.113e-3  sigma 2.7126e0 vs 2.7126e0  E 1.710844e2 vs 1.710813e2  mx 2.347e0
+SR-DE step 150: (298,203) |dE| 3.082e-3  sigma 2.7602e0 vs 2.7602e0  E 1.728415e2 vs 1.728385e2  mx 2.410e0
+SR-DE step 150: (304,198) |dE| 3.036e-3  sigma 2.7126e0 vs 2.7126e0  E 1.710843e2 vs 1.710812e2  mx -7.040e0
+SR-DE step 150: (304,201) |dE| 3.036e-3  sigma 2.7126e0 vs 2.7126e0  E 1.710843e2 vs 1.710813e2  mx -7.040e0
+SR-DE step 150: (300,200) |dE| 3.006e-3  sigma 2.8430e0 vs 2.8430e0  E 1.754361e2 vs 1.754330e2  mx -8.610e-1
+SR-DE step 150: (299,201) |dE| 3.006e-3  sigma 2.8311e0 vs 2.8310e0  E 1.750603e2 vs 1.750573e2  mx 8.560e-1
+SR-DE step 200: sum|dE| 1.997e0, of which in cells with sigma < 1e-3: 2.454e-4
+SR-DE step 200: (299,199) |dE| 2.222e-2  sigma 7.6018e0 vs 7.6018e0  E 1.188667e3 vs 1.188645e3  mx 3.428e0
+SR-DE step 200: (299,200) |dE| 2.197e-2  sigma 7.6018e0 vs 7.6018e0  E 1.188667e3 vs 1.188645e3  mx 3.428e0
+SR-DE step 200: (300,199) |dE| 2.173e-2  sigma 7.6018e0 vs 7.6018e0  E 1.188667e3 vs 1.188645e3  mx -3.428e0
+SR-DE step 200: (300,200) |dE| 2.112e-2  sigma 7.6018e0 vs 7.6018e0  E 1.188667e3 vs 1.188645e3  mx -3.428e0
+SR-DE step 200: (299,201) |dE| 1.978e-2  sigma 7.4188e0 vs 7.4187e0  E 1.139932e3 vs 1.139913e3  mx 3.346e0
+SR-DE step 200: (298,200) |dE| 1.892e-2  sigma 7.4188e0 vs 7.4187e0  E 1.139932e3 vs 1.139913e3  mx 8.527e0
+SR-T step 1: sim_time 3.026678971946e-2 vs 3.026678971946e-2 (rel 0.000e0); dt 3.026678972e-2 vs 3.026678972e-2
+SR-T step 10: sim_time 3.000073283911e-1 vs 3.000073246658e-1 (rel 1.242e-8); dt 2.953954041e-2 vs 2.953953855e-2
+SR-T step 25: sim_time 7.154270149767e-1 vs 7.154269702733e-1 (rel 6.249e-8); dt 2.690589242e-2 vs 2.690589428e-2
+SR-T step 50: sim_time 1.330111755058e0 vs 1.330111756921e0 (rel -1.400e-9); dt 2.207363397e-2 vs 2.207363769e-2
+SR-T step 100: sim_time 2.054104898125e0 vs 2.054104465060e0 (rel 2.108e-7); dt 1.009314042e-2 vs 1.009312365e-2
+SR-T step 150: sim_time 2.656683245674e0 vs 2.656675669365e0 (rel 2.852e-6); dt 1.471927296e-2 vs 1.471932232e-2
+SR-T step 200: sim_time 3.293558293022e0 vs 3.293552580290e0 (rel 1.735e-6); dt 1.112074126e-2 vs 1.112077385e-2
+== exp7 observe_run's black-hole ending, fix vs old binary 2026-10-20T10:23:53-04:00
+old seed (0, 'SR-HEADLESS DONE steps=40 sim_time=0.732976 until=none')
+old run (0, 'SR-HEADLESS DONE steps=1809 sim_time=11.170863 until=met')
+  events [('sink_formed', 41, 0.74), ('ending', 1849, 11.17)]
+  object 1 black_hole 1644.0 [('black_hole', 73, 1.11)]
+  sinks end 1643.9666748046875 escaped 5.6948581934425535 grid 0.32957011057817454
+fix seed (0, 'SR-HEADLESS DONE steps=40 sim_time=1.430479 until=none')
+fix run (2, 'SR-HEADLESS DONE steps=20000 sim_time=27.621895 until=unmet')
+  events [('sink_formed', 41, 1.45), ('sink_formed', 1337, 7.29), ('sink_formed', 1529, 8.55), ('sink_formed', 2841, 16.35), ('sink_formed', 3097, 17.61), ('sink_formed', 4537, 24.32), ('sink_formed', 4905, 26.27)]
+  sinks end 1300.5760498046875 escaped 349.3690381774695 grid 4.096e-05
+== exp8 ledger's disk warmer (fix), 500 steps, the bands unchanged 2026-10-20T10:25:19-04:00
+T 0.5 fix-bounce-100 steps  100: |Δp| 7.921e-05  Σm|u| 8.265e+03  rel 9.584e-09  Σmax 2.71  escaped 0  vac_reset 1.276e-03  E.inv -5.551e+04
+T 0.5 fix-bounce-500 steps  500: |Δp| 1.605e-03  Σm|u| 4.210e+03  rel 3.813e-07  Σmax 22.8  escaped 0  vac_reset 1.897e-02  E.inv -8.433e+04
+T 0.5 fix-leave-100  steps  100: |Δp| 1.856e+02  Σm|u| 9.443e+03  rel 1.966e-02  Σmax 68.8  escaped 0.004617  vac_reset 2.818e-04  E.inv -4.92e+04
+T 0.5 fix-leave-500  steps  500: |Δp| 2.260e+02  Σm|u| 5.650e+03  rel 4.001e-02  Σmax 12.1  escaped 11.74  vac_reset 1.320e-02  E.inv -5.16e+04
+T 2.3 fix-bounce-100 steps  100: |Δp| 1.638e-04  Σm|u| 1.173e+04  rel 1.397e-08  Σmax 20.7  escaped 0  vac_reset 5.716e-03  E.inv -5.124e+04
+T 2.3 fix-bounce-500 steps  500: |Δp| 7.841e-04  Σm|u| 3.507e+03  rel 2.236e-07  Σmax 16.7  escaped 0  vac_reset 3.515e-02  E.inv -5.638e+04
+T 2.3 fix-leave-100  steps  100: |Δp| 1.943e+01  Σm|u| 8.096e+03  rel 2.400e-03  Σmax 21.8  escaped 0.1588  vac_reset 3.065e-03  E.inv -3.95e+04
+T 2.3 fix-leave-500  steps  500: |Δp| 4.005e+00  Σm|u| 4.927e+03  rel 8.130e-04  Σmax 11.1  escaped 5.269  vac_reset 1.306e-02  E.inv -4.152e+04
+== exp9 observe_run's cloud warmer (fix) 2026-10-20T10:25:44-04:00
+fix seed (0, 'SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none')
+T 0.5 fix run (0, 'SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met')
+  events [('sink_formed', 41, 0.65), ('ending', 2121, 11.21)]
+  object 1 black_hole 1649.1 [('black_hole', 73, 1.18)]
+  sinks end 1649.052978515625 escaped 0.8913170769742177 grid 0.03768662692145597
+fix seed (0, 'SR-HEADLESS DONE steps=40 sim_time=1.164809 until=none')
+T 3 fix run (2, 'SR-HEADLESS DONE steps=20000 sim_time=11.000352 until=unmet')
+  events [('sink_formed', 41, 1.19)]
+  sinks end 1649.9715576171875 escaped 0.007916201530539013 grid 4.096e-05
+== the lead's answers, 2026-10-20: jeans «0.07|W| + file a D (Recommended)» · ledger «Disk T 2.3 + edge D (Recommended)» · box «Grade at step 100 (Recommended)» · observe «Case's own T 0.5 + D (Recommended)»
+== jeans at 0.07|W| in the tree 2026-10-20T10:49:49-04:00
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 4.42 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.57->5.64
+=== GO ===
+SR-JEANS end: step 193, t = 3.2568, Σ_max 102.187: 1 object(s) of mass 3351.3 (at most 1 in any summary); largest secondary peak 0.0000 of Σ_max at the end, 1.0000 in any summary
+SR-JEANS reach: Σ_max 102.187 at the end (largest 102.187) after 193 steps, t = 3.2568 (start 0.9998, target 100.0); 35 summaries
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 0.1591 (bound 0.25) at step 191, t = 3.2460, cell (94, 66), Σ_max then 99.007; over 35 summaries
+test jeans::the_scene_is_the_disk_cloud_at_seven_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 18492.32, U_th/|W| 0.070000
+== ledger at disk T 2.3 in the tree 2026-10-20T10:50:10-04:00
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.50 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.76->4.07
+=== GO ===
+remnant: steps 1..1000, sim time 8.108, R₉₀ 2.716, M 1486.7, τ_dyn 0.1161, |W|₀ 2.3296e5; Δinvariant -1.0116e3 → 6.217e-5 |W| per τ_dyn (bound 1e-3); radiated 2.3650e5, floor_added -9.3717e0, escaped 1.5348e3, ΔW -5.1405e5
+bounce: steps 1..500, mass drift 3.759e-8, momentum drift 2.236e-7 of Σm|u| = 3.507e3, energy drift -1.993e-2 (reported), escaped 0
+leave: escaped mass 5.269420e0 of 1.017436e3 (5.179e-3), momentum escaped Array [Number(117.76965925130516), Number(0.00002975604292743128)], mass drift 3.883e-8, momentum drift 8.130e-4 of Σm|u| = 4.927e3, energy drift -1.204e-2 (reported), escaped energy 4.351122e2
+leave without gravity: escaped mass 2.987876e2 of 1.017169e3, escaped x momentum 1.310419e3, vacuum_reset 1.763e-2 × u_max 6.876 → bound 7.953e-5; mass drift 9.736e-8, momentum drift 5.290e-5 of Σm|u| = 1.544e3
+== box graded at step 100 in the tree 2026-10-20T10:50:38-04:00
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.54 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.45->4.77
+=== GO ===
+SR-BOX sun_disk step 200: box [232, 128, 136, 144] FFT [512, 512]; vacuum_reset 1.7462365726375495e-2 vs 1.5257758378316666e-2, escaped.mass 0e0 vs 0e0
+SR-BOX sun_disk step 100: box [240, 136, 120, 128] FFT [256, 256]; vacuum_reset 7.9681617835341e-3 vs 5.721744957543962e-3, escaped.mass 0e0 vs 0e0
+SR-BOX sun_disk step 100 sigma: 3.351032185453e3 vs 3.351032203818e3, |Δ| 1.836e-5 = 5.48e-9 of scale 3.3510e3
+SR-BOX sun_disk step 100 mom_x: 4.664063067139e-5 vs -2.862630536811e-4, |Δ| 3.329e-4 = 4.03e-8 of scale 8.2654e3
+SR-BOX sun_disk step 100 mom_y: 8.688012621860e-5 vs -2.318945544175e-4, |Δ| 3.188e-4 = 3.86e-8 of scale 8.2654e3
+SR-BOX sun_disk step 100 energy: 1.123023927022e5 vs 1.123023747020e5, |Δ| 1.800e-2 = 1.60e-7 of scale 1.1230e5
+SR-BOX sun_disk step 2000: box [0, 0, 600, 400] FFT [2048, 1024]; vacuum_reset 5.181584415959088e-1 vs 5.181467339733912e-1, escaped.mass 1.3287750807544114e0 vs 1.3286798113640117e0
+== observe_run, the ending case at T 0.5 in the tree 2026-10-20T10:51:03-04:00
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.58 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.48->3.44
+=== GO ===
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ending at step 2121: black_hole shown from step 73, held 10.033 t.u.
+SR-HEADLESS DONE steps=2065 sim_time=11.130040 until=unmet
+== redarm jeans 2026-10-20T10:51:20-04:00
+jeans · clean · GO · arm 1/2, 1 left
+jeans · plant no-pressure-flux · RED (proven: 2 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope jeans · 26.46 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D66.jeans.redarm.log
+=== GO ===
+== redarm ledger 2026-10-20T10:51:47-04:00
+ledger · plant ledger-no-escaped · RED (proven: 3 failed) · arm 2/3, 1 left
+ledger · plant ledger-cell-grav-work · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope ledger · 66.50 s · 3 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D66.ledger.redarm.log
+=== GO ===
+== redarm box 2026-10-20T10:52:53-04:00
+box · clean · GO · arm 1/2, 1 left
+box · plant margin-zero · RED (proven: 7 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope box · 18.03 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D66.box.redarm.log
+=== GO ===
+== redarm observe_run 2026-10-20T10:53:11-04:00
+FAILED:
+  plant until-never-met: the patch tests/plants/until-never-met.patch does not apply: crates/sr-engine/src/headless.rs @@ -562,7 +562,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+redarm: 1 plants · 0 red · 0 green · 1 errors · scope observe_run · 12.47 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D66.observe_run.redarm.log
+=== NO-GO: plant until-never-met: the patch tests/plants/until-never-met.patch does not apply: crates/sr-engine/src/headless.rs @@ -562,7 +562,7 @@: its old lines appear 0 times in the file, not once - an error, not a red ===
+== redarms done 2026-10-20T10:53:24-04:00
+== the plant until-never-met regenerated on today's headless.rs (same one-line mutation; its context had moved under M0-D60's progress tick); redarm observe_run again 2026-10-20T10:54:28-04:00
+observe_run · clean · GO · arm 1/2, 1 left
+observe_run · plant until-never-met · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope observe_run · 234.26 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D66.observe_run.redarm.log
+=== GO ===
+== claim: verify.py --changed 2026-10-20T10:58:50-04:00
+anchor: 257 paths checked · 239 skipped (3 classes) · 2 never checked · 0 stale · 0 unclassified · 0 owed · 259 covered of 498 visible
+NEVER CHECKED  milestones/m0/m0_implementation_plan.md  (no entry for plan_lint)
+NEVER CHECKED  milestones/m0/m0_rules.md  (no entry for plan_lint)
+skipped   231  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  plan_lint: 611 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-D66.plan_lint.log
+  anchor: 2 never checked, 0 stale, 0 unclassified - every one named above
+verify: 351 passed, 611 failed, 0 skipped · 46/47 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 13 not impacted · 55.95 s + loop 0.06 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 44.08->43.54 · base: M0-D66's start 2026-10-20T10:05:27-04:00
+=== NO-GO: plan_lint: 611 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-D66.plan_lint.log; anchor: 2 never checked, 0 stale, 0 unclassified - every one named above ===
+exit 1
+== late fix (M0-D68's heading had |W| pipes breaking its Flow row): plan_lint alone 2026-10-20T11:00:41-04:00
+anchor: 259 paths checked · 239 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 259 covered of 498 visible
+verify: 611 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 52.1->52.1
+=== GO ===
