@@ -107,3 +107,4 @@ skipped     1  the harness's own manifest and anchor - a wrong entry shows as a 
 verify: 611 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 59 not impacted · 0.28 s + loop 0.73 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 8.55->5.83 · base: M0-V9's start 2026-10-20T13:48:01-04:00 — no start for M0-V9-r2
 === GO ===
 ## WIP commit and push (2026-10-20T14:18:25-04:00): git add -A; commit 'M0 WIP: lot 9 before the calibration'; push origin main
+## Handoff line replaced (plan.py handoff), plan_lint re-run GO 611/0 (--task M0-V9-r3); second WIP commit and push (2026-10-20T14:19:54-04:00)
