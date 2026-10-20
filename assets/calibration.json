@@ -1,0 +1,15 @@
+{
+  "m_ch_sb": 3216.4199210979236,
+  "m_ign_sb": 2515.741187124804,
+  "m_tov_sb": 4853.169981814195,
+  "max_gas_speed": 21.71939923854999,
+  "measured": {
+    "adapter": "NVIDIA GeForce RTX 5090",
+    "box": "laserax-ai",
+    "date": "2026-10-20T19:07:29Z",
+    "git": "22f087d"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "556e3959cee177c48914a95ac94d66ea21849dd7866b50bf2691b3137da1f306",
+  "version": 1
+}
