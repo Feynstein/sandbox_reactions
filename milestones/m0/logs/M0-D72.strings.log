@@ -1,0 +1,14 @@
+== 2026-10-20T15:40:46-04:00 strings · task M0-D72 · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 5.78 s
+   Compiling sr-app v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 4.87s
+     Running tests\strings.rs (build/target\release\deps\strings-0b09fe16b8ffc41a.exe)
+
+running 3 tests
+test web_texts_verbatim_in_index_html ... ok
+test same_keys_both_ways ... ok
+test texts_byte_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+

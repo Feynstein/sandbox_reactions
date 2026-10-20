@@ -108,3 +108,11 @@ verify: 611 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed 
 === GO ===
 ## WIP commit and push (2026-10-20T14:18:25-04:00): git add -A; commit 'M0 WIP: lot 9 before the calibration'; push origin main
 ## Handoff line replaced (plan.py handoff), plan_lint re-run GO 611/0 (--task M0-V9-r3); second WIP commit and push (2026-10-20T14:19:54-04:00)
+
+## P3 (the lead: «is there anything possible to do so that the long runs can be resumable?») — calibrate has no resume path (2026-10-20T15:17:03-04:00)
+SR-ERROR bad arguments: unknown argument "--resume"
+exit=4
+usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] | sandbox-reactions headless --scene <FILE|preset:<sun|massive|giant>> --steps N [--world WxH] [--edge leave|bounce] [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE] [--adapter S | --cpu-reference] | sandbox-reactions calibrate --out FILE [--adapter S] [--only ITEM]
+## Filed M0-D72 (plan.py append after M0-D64), register (D=72, Next, open-D), flag into M0-D72 (the lead's git route), V9 handoff; plan_lint re-run --task M0-V9-r4 (2026-10-20T15:19:07-04:00)
+verify: 614 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.20 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 5.12->0.92
+=== GO ===

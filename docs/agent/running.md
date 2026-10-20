@@ -38,8 +38,8 @@ block that builds their feature and are refused with exit 4 until then:
   `--adapter`, `--timing` and `--load-dump` are the GPU's and refused with it. stdout: first line `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`,
   warnings `SR-WARN`. Exit codes: §3.3. The file formats: `docs/agent/architecture.md` § The files. sr-app's usage line
   (`--help`) lists these flags (M0-T37).
-- **`calibrate`** (M0-T66b–M0-T70): `calibrate --out FILE [--adapter S] [--only a,b] [--max-steps N] [--bracket LO,HI]` —
-  § Calibrating below. (sr-app's usage line lists `--only` only; the other two flags are refused with exit 4 where they
+- **`calibrate`** (M0-T66b–M0-T70): `calibrate --out FILE [--adapter S] [--only a,b] [--max-steps N] [--bracket LO,HI] [--resume DIR]` —
+  § Calibrating below. (sr-app's usage line lists `--only` and `--resume`; `--max-steps` and `--bracket` are refused with exit 4 where they
   do not apply.)
 - Later blocks add `bench`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the headless run's
   `--until`, `--frames-every`, `--edits` (§3.3).
@@ -122,6 +122,14 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   **`--bracket LO,HI`** replaces the default bracket of one bisected item (items 3–4 only, so `--only` names exactly one of
   them); the defaults and what a bracket whose ends agree means are in `calibrate.rs` and §2.11 — a bracket whose ends agree
   is refused after two runs, widen it.
+- **`--resume DIR`** (M0-D72) picks an item up where it stopped. DIR is an earlier invocation's
+  `build/calibrate_runs/<stamp>/` (the newest: `ls -t build/calibrate_runs | head -1`); run again the same command — the same
+  `--only`, `--bracket`, `--adapter`, `--out` — with `--resume DIR` added. Run NN reads `DIR/<item>-<NN>/summary.json` instead of
+  running a life when it parses, its `until.met` is true and its `scene` names this run's item and mass (to 3 decimals); its run
+  line says `replayed`. The first run with no finished record, and every run after it, runs fresh in DIR (a life cut part-way
+  loses only itself). A record of another item or mass, an adapter `--adapter` does not match, or a DIR without this item's
+  first life is exit 4 (`DIR is not this calibration's: start without --resume`) before any life runs, a DIR that is not a folder
+  too; items 1–2 run no life and ignore it. Without it nothing changes.
 - **What a run prints.** One `SR-CALIBRATE run …` line per life (mass, side, ending, steps, wall time, `record=<dir>`) so a
   crash or a kill leaves a trace, and while a life runs a `SR-CALIBRATE progress item= mass= step= sim_time= stage=` line every
   10,000 steps. Each life's summary.json and events.jsonl are kept in `build/calibrate_runs/<UTC stamp>/<item>-<NN>/`

@@ -343,6 +343,13 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     (1.7 × 10⁻⁶ of sim time at 200), so equal steps are no longer equal states: energy 5.4 × 10⁻⁶ at 200, 1.6 × 10⁻⁷ at 100
     (momentum 4.0 × 10⁻⁸, mass 5.5 × 10⁻⁹) — measured on linux-pc, 2026-10-20, RTX 5090 (tasks/M0-D66.md) — the lead's answers
     at M0-D66, 2026-10-20: «0.07|W| + file a D (Recommended)», «Grade at step 100 (Recommended)».
+  - [M0-D72] §3.3's Calibrate line `calibrate --adapter S --out FILE [--only <item>]` · gains `[--resume <dir>]`, an earlier
+    invocation's `build/calibrate_runs/<stamp>/` whose finished lives are read back instead of run; nothing else in §2.11 or §3.3
+    changes (the file, its keys, the exit codes) · an item's lives run in one process and a stop part-way (Ctrl+C, a logout, a
+    shutdown) threw away every life it had finished — a Sun-like life is ~37 min on the RTX 5090 and m_up_sb and m_bh_sb are
+    ~8–10 whole lives each, so an item runs for hours — the lead, 2026-10-20, at M0-V9, the calibration's first long item
+    running on linux-pc: «is there anything possible to do so that the long runs can be resumable? I started the first long run
+    and I probably will need to leave», and «Tell me if I have to exit it for you to modify the code to make it resumable for me».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1087,7 +1094,12 @@ Unit-tested without a GPU against §1.8.
   1000 — the wall time the run would take on screen; `off_cap` [M0-TJ2] — the frames whose planned steps
   exceeded that frame's N_max, or at Max differed from it.
 - **Calibrate:** `sandbox-reactions calibrate --adapter S --out assets/calibration.json
-  [--only <item>]` — §2.11; `--only` re-measures one item and keeps the rest. [M0-R4] Items 1–2 run on
+  [--only <item>] [--resume <dir>]` — §2.11; `--only` re-measures one item and keeps the rest. [M0-D72] `--resume <dir>`,
+  an earlier invocation's `build/calibrate_runs/<stamp>/`, reads that invocation's finished lives back instead of running
+  them (run NN ← `<dir>/<label>-<NN>/summary.json`, when it parses, its `until.met` is true and its `scene` is this run's
+  `calibrate:<label>:<mass to 3 decimals>`; its run line says `replayed`), runs the first life with no such record and every
+  one after it fresh in `<dir>`; a record of another label or mass, an adapter `--adapter` does not match, a `<dir>` with no
+  first life of the run's label or one that is not a folder is exit 4 before any life runs; items 1–2 ignore it. [M0-R4] Items 1–2 run on
   the CPU in f64 and open no adapter; `--adapter` is needed only when an item that runs the GPU is
   measured (`measured.adapter` names it, or `cpu` when none did).
 - **Capture** (TV passes, PLAYBOOK §8 — "game engines feed their own captures"): `--capture

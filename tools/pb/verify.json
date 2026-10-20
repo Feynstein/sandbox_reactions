@@ -1685,11 +1685,11 @@
       ]
     },
     "calibrate_bisect": {
-      "desc": "`calibrate` items 3–4, the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4; M0-T68; M0-D60), no GPU and no life run but the last case — every other run a stub: `calibrate::bisect` on a stubbed outcome closes on a known threshold from five masses inside a 100–20,000 bracket within BISECT_TOLERANCE (2 %: bracket width ≤ 2 %, value within 1 %, the threshold inside the final bracket, BISECT_TOLERANCE itself 0.02), asks the bracket's low then high end first, stays inside the bracket and spends exactly 2 + ⌈log₂(ln(200)/ln 1.02)⌉ runs (a bracket already within 2 % spends 2); a bracket whose ends agree (both Heavy, both Light) or run the wrong way round is refused after two runs naming `--bracket`, a bad bracket or tolerance is exit 4 with no run; a failing run stops the bisection with its own error (exit 6) and no run after it; each item's side of a life (`side_ign`: ignition over, failed_star under · `side_up`: core collapse over, white_dwarf under · `side_bh`: black_hole over, neutron_star under, anything else refused); `measure` over a stub physics finds m_ign, m_up and m_bh within 1 % and logs one `SR-CALIBRATE run` line per run with mass, side, ending, steps and wall time, an unplaced run logged with side=none and refused; `--bracket` outside one bisected item, an inverted or malformed bracket, `--max-steps 0`, a bad name in a `--only` list and a not-yet-built item are exit 4 before any GPU is touched. Plant bisect-tolerance: BISECT_TOLERANCE 0.02 → 0.2 (the driver stops at 20 %). M0-D60, two short real lives on the test adapter (the nominal cloud and 1.02 × it, ignition ends each; m_ign's bracket refused after two runs): each run line closes on `record=<dir>` under build/calibrate_runs/, where summary.json (with its ignition event) and events.jsonl stay and no dumps/ does, the two folders differ, `SR-CALIBRATE progress item= mass= step= sim_time= stage=` lines come every 50 steps before the first run line, and a third life cut at --max-steps 64 is exit 6 whose error names its kept record. Plant calibrate-record-removed: the run's whole folder removed after it is read.",
+      "desc": "`calibrate` items 3–4, the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4; M0-T68; M0-D60; M0-D72), no GPU and no life run but the last case — every other run a stub: `calibrate::bisect` on a stubbed outcome closes on a known threshold from five masses inside a 100–20,000 bracket within BISECT_TOLERANCE (2 %: bracket width ≤ 2 %, value within 1 %, the threshold inside the final bracket, BISECT_TOLERANCE itself 0.02), asks the bracket's low then high end first, stays inside the bracket and spends exactly 2 + ⌈log₂(ln(200)/ln 1.02)⌉ runs (a bracket already within 2 % spends 2); a bracket whose ends agree (both Heavy, both Light) or run the wrong way round is refused after two runs naming `--bracket`, a bad bracket or tolerance is exit 4 with no run; a failing run stops the bisection with its own error (exit 6) and no run after it; each item's side of a life (`side_ign`: ignition over, failed_star under · `side_up`: core collapse over, white_dwarf under · `side_bh`: black_hole over, neutron_star under, anything else refused); `measure` over a stub physics finds m_ign, m_up and m_bh within 1 % and logs one `SR-CALIBRATE run` line per run with mass, side, ending, steps and wall time, an unplaced run logged with side=none and refused; `--bracket` outside one bisected item, an inverted or malformed bracket, `--max-steps 0`, a bad name in a `--only` list and a not-yet-built item are exit 4 before any GPU is touched. Plant bisect-tolerance: BISECT_TOLERANCE 0.02 → 0.2 (the driver stops at 20 %). M0-D60, two short real lives on the test adapter (the nominal cloud and 1.02 × it, ignition ends each; m_ign's bracket refused after two runs): each run line closes on `record=<dir>` under build/calibrate_runs/, where summary.json (with its ignition event) and events.jsonl stay and no dumps/ does, the two folders differ, `SR-CALIBRATE progress item= mass= step= sim_time= stage=` lines come every 50 steps before the first run line, and a third life cut at --max-steps 64 is exit 6 whose error names its kept record. Plant calibrate-record-removed: the run's whole folder removed after it is read. M0-D72, `--resume DIR` on the same short lives: resumed whole, both run lines say `replayed`, equal the unbroken ones, no progress line and the same exit 6; cut during the second life (its record gone, or half-written) the first is replayed and only the second run, in the same folder; a record of another mass (at run 1 or run 2), another adapter or another item, and a folder that is not one, are exit 4 before any life runs; items 1–2 ignore the flag. Plant calibrate-resume-any-mass: a record replayed whatever its mass.",
       "cmd": "bash tests/gpu.sh calibrate_bisect",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 8,
+      "expected": 9,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -1703,7 +1703,8 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/plants/bisect-tolerance.patch",
-        "tests/plants/calibrate-record-removed.patch"
+        "tests/plants/calibrate-record-removed.patch",
+        "tests/plants/calibrate-resume-any-mass.patch"
       ],
       "plants": [
         {
@@ -1713,6 +1714,10 @@
         {
           "id": "calibrate-record-removed",
           "patch": "tests/plants/calibrate-record-removed.patch"
+        },
+        {
+          "id": "calibrate-resume-any-mass",
+          "patch": "tests/plants/calibrate-resume-any-mass.patch"
         }
       ]
     },

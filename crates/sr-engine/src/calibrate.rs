@@ -59,7 +59,7 @@
 //! stdout: one `SR-CALIBRATE item=… value=… wall_s=…` per item, last `SR-CALIBRATE DONE …`. Exit codes as `headless`'s: 0 done
 //! · 4 bad arguments · 6 the calibration failed.
 
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
@@ -553,6 +553,10 @@ struct Lives<'a> {
     runs: usize,
     /// The largest rms gas speed any run of this process showed (§2.11 item 6).
     gas_peak: f64,
+    /// `--resume`: `dir` is an earlier invocation's, and its finished lives are read back until one is missing (M0-D72).
+    replaying: bool,
+    /// Whether the run just made was read back instead of run; the run line says so.
+    replayed: &'a Cell<bool>,
 }
 
 impl Lives<'_> {
@@ -568,6 +572,18 @@ impl Lives<'_> {
     fn run(&mut self, label: &str, preset: &str, until: Until, mass: f64) -> Result<PresetRun, CalError> {
         self.runs += 1;
         let out = self.dir.join(format!("{label}-{:02}", self.runs));
+        self.replayed.set(false);
+        if self.replaying {
+            match self.replay(&out, label, mass)? {
+                Some(run) => {
+                    self.replayed.set(true);
+                    *self.record.borrow_mut() = out.display().to_string();
+                    return Ok(run);
+                }
+                // The first run with no finished record, and every run after it, runs fresh in `dir`.
+                None => self.replaying = false,
+            }
+        }
         let mut scene = Scene::preset_mass(preset, mass, WorldConfig::default()).map_err(CalError::Failed)?;
         scene.overrides = self.overrides.to_vec();
         let args = Args {
@@ -606,11 +622,45 @@ impl Lives<'_> {
     }
 }
 
+impl Lives<'_> {
+    /// `--resume` (M0-D72): the life a finished record in `out` holds, when `out/summary.json` parses and its `until` was met; none
+    /// when there is no such record (a file cut while it was written does not parse: the life runs fresh). A record whose `scene`
+    /// is not this run's label and mass, or whose adapter `--adapter` does not match, is not this calibration's: refused (exit 4)
+    /// before any life runs, as is a folder with no first life of this run's label. The match on every run is the guard, never
+    /// the run number alone.
+    fn replay(&mut self, out: &Path, label: &str, mass: f64) -> Result<Option<PresetRun>, CalError> {
+        let foreign = || CalError::Args(format!("{} is not this calibration's: start without --resume", self.dir.display()));
+        let Ok(text) = std::fs::read_to_string(out.join("summary.json")) else {
+            // The first life's folder is made before it runs: a folder without it is another item's, never this one's.
+            return if self.runs == 1 && !out.is_dir() { Err(foreign()) } else { Ok(None) };
+        };
+        let Ok(summary) = serde_json::from_str::<Value>(&text) else { return Ok(None) };
+        if summary["until"]["met"] != true {
+            return Ok(None);
+        }
+        if summary["scene"].as_str() != Some(format!("calibrate:{label}:{mass:.3}").as_str()) {
+            return Err(foreign());
+        }
+        let (run, adapter) = life_of(&summary, mass);
+        if self.adapter.as_ref().is_some_and(|q| !adapter.to_lowercase().contains(&q.to_lowercase())) {
+            return Err(foreign());
+        }
+        self.adapter_used.get_or_insert(adapter);
+        self.gas_peak = self.gas_peak.max(run.max_gas_speed);
+        Ok(Some(run))
+    }
+}
+
 /// summary.json of a finished run (§2.12.2): the events it fired and its cost, and the adapter's name.
 fn read_life(dir: &Path, mass: f64) -> Result<(PresetRun, String), CalError> {
     let path = dir.join("summary.json");
     let text = std::fs::read_to_string(&path).map_err(|e| CalError::Failed(format!("{}: {e}", path.display())))?;
     let summary: Value = serde_json::from_str(&text).map_err(|e| CalError::Failed(format!("{}: {e}", path.display())))?;
+    Ok(life_of(&summary, mass))
+}
+
+/// What a parsed summary.json says of the life at `mass`, and the adapter's name.
+fn life_of(summary: &Value, mass: f64) -> (PresetRun, String) {
     let events: &[Value] = summary["events"].as_array().map_or(&[], Vec::as_slice);
     let fired = |kind: &str| events.iter().any(|e| e["kind"] == kind);
     let ending = events.iter().find(|e| e["kind"] == "ending").and_then(|e| e["detail"]["stage"].as_str()).map(str::to_string);
@@ -634,7 +684,7 @@ fn read_life(dir: &Path, mass: f64) -> Result<(PresetRun, String), CalError> {
         .collect();
     let at_x_h = star.and_then(|o| Some((o["at_x_h"]["luminosity"].as_f64()?, o["at_x_h"]["radius"].as_f64()?)));
     let adapter = summary["adapter"]["name"].as_str().unwrap_or("unknown").to_string();
-    Ok((PresetRun { life, stages, at_x_h, max_gas_speed: summary["max_gas_speed"].as_f64().unwrap_or(0.0) }, adapter))
+    (PresetRun { life, stages, at_x_h, max_gas_speed: summary["max_gas_speed"].as_f64().unwrap_or(0.0) }, adapter)
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -866,18 +916,21 @@ struct Opts {
     adapter: Option<String>,
     max_steps: u64,
     bracket: Option<(f64, f64)>,
+    /// `--resume DIR`: an earlier invocation's `build/calibrate_runs/<stamp>/`, whose finished lives are read back (M0-D72).
+    resume: Option<PathBuf>,
 }
 
-/// `--adapter` names the GPU for items 3–4 and 6 and is otherwise unused (§3.3); `--only` takes one item or a comma list.
+/// `--adapter` names the GPU for items 3–4 and 6 and is otherwise unused (§3.3); `--only` takes one item or a comma list;
+/// `--resume` is for the items that run lives and is ignored by items 1–2.
 fn parse_args(args: &[String]) -> Result<Opts, CalError> {
-    let (mut out, mut only, mut adapter, mut max_steps, mut bracket) = (None, Vec::new(), None, DEFAULT_MAX_STEPS, None);
+    let (mut out, mut only, mut adapter, mut max_steps, mut bracket, mut resume) = (None, Vec::new(), None, DEFAULT_MAX_STEPS, None, None);
     let mut it = args.iter();
     while let Some(arg) = it.next() {
         let (flag, inline) = match arg.split_once('=') {
             Some((f, v)) => (f, Some(v.to_string())),
             None => (arg.as_str(), None),
         };
-        if !["--adapter", "--out", "--only", "--max-steps", "--bracket"].contains(&flag) {
+        if !["--adapter", "--out", "--only", "--max-steps", "--bracket", "--resume"].contains(&flag) {
             return Err(CalError::Args(format!("unknown argument {arg:?}")));
         }
         let value = match inline {
@@ -895,6 +948,7 @@ fn parse_args(args: &[String]) -> Result<Opts, CalError> {
                 }
             }
             "--adapter" => adapter = Some(value),
+            "--resume" => resume = Some(PathBuf::from(value)),
             "--max-steps" => {
                 max_steps = value.parse::<u64>().ok().filter(|n| *n > 0).ok_or_else(|| CalError::Args(format!("--max-steps takes a whole number above 0, got {value:?}")))?
             }
@@ -910,7 +964,7 @@ fn parse_args(args: &[String]) -> Result<Opts, CalError> {
     if bracket.is_some() && !matches!(only.as_slice(), [Job::Bisect(_)]) {
         return Err(CalError::Args("--bracket belongs to one bisected item: give --only m_ign_sb, m_up_sb or m_bh_sb".into()));
     }
-    Ok(Opts { out, only, adapter, max_steps, bracket })
+    Ok(Opts { out, only, adapter, max_steps, bracket, resume })
 }
 
 /// `calibrate`'s run on the shipped constants with `overrides` on top (tests only: a run with overrides never writes,
@@ -968,9 +1022,15 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, 
     }
     // Items 3–4: whole lives on the GPU, in the order of the ladder (m_bh's default bracket reads m_up_sb).
     let record = RefCell::new(String::new());
+    let replayed = Cell::new(false);
     let stamp = utc_iso(SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs())).replace(':', "-");
+    // `--resume` names the folder an earlier invocation made and continues in it; it is checked before any life runs.
+    let runs_lives = !thresholds.is_empty() || asked(Job::Presets);
+    if let Some(dir) = opts.resume.as_ref().filter(|d| runs_lives && !d.is_dir()) {
+        return Err(CalError::Args(format!("--resume {}: not a folder — it is an earlier run's build/calibrate_runs/<stamp>/", dir.display())));
+    }
     let mut lives = Lives {
-        dir: Path::new("build").join("calibrate_runs").join(stamp),
+        dir: opts.resume.clone().unwrap_or_else(|| Path::new("build").join("calibrate_runs").join(stamp)),
         say: &say,
         record: &record,
         progress_every,
@@ -980,11 +1040,14 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, 
         overrides,
         runs: 0,
         gas_peak: 0.0,
+        replaying: opts.resume.is_some(),
+        replayed: &replayed,
     };
     // A run line names the folder its life's record is kept in.
     let run_say = |line: &str| {
         if line.starts_with("SR-CALIBRATE run") {
-            say(&format!("{line} record={}", record.borrow()));
+            let replay = if replayed.get() { " replayed" } else { "" };
+            say(&format!("{line}{replay} record={}", record.borrow()));
         } else {
             say(line);
         }

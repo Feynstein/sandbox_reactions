@@ -1,0 +1,198 @@
+==== 2026-10-20T15:29:40-04:00 calibrate_bisect · clean · a fresh scratch copy of the tree
+== 2026-10-20T15:30:01-04:00 calibrate_bisect · task M0-D72 · box Laser2025-20 :: bash tests/gpu.sh calibrate_bisect
+-- calibrate_bisect · exit=0 · 201.68 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-83w2tp2j\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-83w2tp2j\arm0\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 38.36s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 9 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.655757 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491779 until=unmet
+ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.655757 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 332 filtered out; finished in 49.24s
+
+
+==== 2026-10-20T15:29:40-04:00 calibrate_bisect · plant bisect-tolerance · a fresh scratch copy of the tree
+planted bisect-tolerance: tests/plants/bisect-tolerance.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T15:30:01-04:00 calibrate_bisect · task M0-D72 · box Laser2025-20 :: bash tests/gpu.sh calibrate_bisect
+-- calibrate_bisect · exit=101 · 369.63 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-83w2tp2j\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-83w2tp2j\arm1\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 1m 10s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 9 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.655757 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491779 until=unmet
+ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.655757 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... 
+thread 'calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs' (38072) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:46:5:
+assertion `left == right` failed: runs for a 200-fold bracket at 2 %
+  left: 7
+ right: 11
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... 
+thread 'calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run' (39964) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:140:9:
+m_ign_sb: 283.65220128778736 against 280
+FAILED
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... 
+thread 'calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold' (33440) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:26:5:
+assertion `left == right` failed: §2.11: bisection to 2 %
+  left: 0.2
+ right: 0.02
+FAILED
+
+failures:
+
+failures:
+    calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs
+    calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run
+    calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold
+
+test result: FAILED. 6 passed; 3 failed; 0 ignored; 0 measured; 332 filtered out; finished in 91.64s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-20T15:29:40-04:00 calibrate_bisect · plant calibrate-record-removed · a fresh scratch copy of the tree
+planted calibrate-record-removed: tests/plants/calibrate-record-removed.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T15:30:01-04:00 calibrate_bisect · task M0-D72 · box Laser2025-20 :: bash tests/gpu.sh calibrate_bisect
+-- calibrate_bisect · exit=101 · 111.83 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-83w2tp2j\arm2\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-83w2tp2j\arm2\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 1m 17s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 9 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.655757 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+
+thread 'calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is' (6820) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:208:9:
+"build\\calibrate_runs\\2026-10-20T19-31-23Z\\m_ign_sb-01" keeps summary.json and events.jsonl
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.655757 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+
+thread 'calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life' (36156) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:279:72:
+called `Result::unwrap()` on an `Err` value: Os { code: 3, kind: NotFound, message: "Le chemin d’accès spécifié est introuvable." }
+FAILED
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is
+    calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life
+
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 332 filtered out; finished in 29.73s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-20T15:29:40-04:00 calibrate_bisect · plant calibrate-resume-any-mass · a fresh scratch copy of the tree
+planted calibrate-resume-any-mass: tests/plants/calibrate-resume-any-mass.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T15:30:01-04:00 calibrate_bisect · task M0-D72 · box Laser2025-20 :: bash tests/gpu.sh calibrate_bisect
+-- calibrate_bisect · exit=101 · 525.42 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-83w2tp2j\arm3\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-83w2tp2j\arm3\crates\sr-engine)
+warning: unused variable: `label`
+   --> crates\sr-engine\src\calibrate.rs:631:38
+    |
+631 |     fn replay(&mut self, out: &Path, label: &str, mass: f64) -> Result<Option<PresetRun>, CalError> {
+    |                                      ^^^^^ help: if this is intentional, prefix it with an underscore: `_label`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning (run `cargo fix --lib -p sr-engine` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 1m 46s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 9 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.655757 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491779 until=unmet
+ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.655757 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.611594 until=met
+
+thread 'calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life' (16800) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:324:9:
+assertion `left == right` failed: another mass at run 1: ["SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3015.929 ignited=true core_collapse=false ending=none steps=673 sim_time=8.656 wall_s=5.6 replayed record=build\\calibrate_runs\\2026-10-20T19-38-19Z\\m_ign_sb-01", "SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3418.053 ignited=true core_collapse=false ending=none steps=673 sim_time=8.612 wall_s=5.9 replayed record=build\\calibrate_runs\\2026-10-20T19-38-19Z\\m_ign_sb-02", "SR-ERROR calibration failed: the bracket 3015.9..3418.1: its ends agree (3015.9 is Heavy, 3418.1 is Heavy), so the threshold is not in it — widen it with --bracket (two runs spent)"]
+  left: 6
+ right: 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life
+
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 332 filtered out; finished in 43.72s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

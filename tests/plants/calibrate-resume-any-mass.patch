@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -638,9 +638,6 @@
+         if summary["until"]["met"] != true {
+             return Ok(None);
+         }
+-        if summary["scene"].as_str() != Some(format!("calibrate:{label}:{mass:.3}").as_str()) {
+-            return Err(foreign());
+-        }
+         let (run, adapter) = life_of(&summary, mass);
+         if self.adapter.as_ref().is_some_and(|q| !adapter.to_lowercase().contains(&q.to_lowercase())) {
+             return Err(foreign());

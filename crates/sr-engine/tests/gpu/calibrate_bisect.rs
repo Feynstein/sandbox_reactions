@@ -237,3 +237,105 @@ fn a_life_keeps_its_record_and_says_where_it_is() {
     }
     let _ = std::fs::remove_dir_all(&out_dir);
 }
+
+/// M0-D72: `--resume DIR` reads an earlier invocation's finished lives back instead of running them. Real short lives as M0-D60's
+/// (the nominal cloud and 1.02 × it, ignition ends each): an invocation resumed whole replays both lives, its run lines and error
+/// the unbroken invocation's; one cut during its second life (the record gone, or cut while it was written) replays the first and
+/// runs only the second, in the same folder; a record of another mass or an adapter `--adapter` does not match is exit 4 before
+/// any life runs; a folder that is not one is exit 4; items 1–2 ignore the flag.
+#[test]
+fn a_stopped_item_resumes_without_rerunning_a_finished_life() {
+    let m0 = sr_engine::scene::UNIT_MASS;
+    let bracket = format!("{},{}", m0, 1.02 * m0);
+    let out_dir = std::env::temp_dir().join(format!("sr-calibrate-resume-{}", std::process::id()));
+    std::fs::create_dir_all(&out_dir).unwrap();
+    let out = out_dir.join("calibration.json");
+    let mut args: Vec<String> = ["--out", out.to_str().unwrap(), "--only", "m_ign_sb", "--bracket", bracket.as_str()].map(String::from).to_vec();
+    if let Some(adapter) = std::env::var("SR_TEST_ADAPTER").ok().filter(|a| !a.trim().is_empty()) {
+        args.extend(["--adapter".to_string(), adapter]);
+    }
+    let with = |extra: &[&str]| -> Vec<String> { args.iter().cloned().chain(extra.iter().map(|s| s.to_string())).collect() };
+    let go = |args: &[String]| {
+        let mut lines = Vec::new();
+        let code = run_with_progress(args, &[], 50, &mut |l| lines.push(l.to_string()));
+        (code, lines)
+    };
+    let runs_of = |lines: &[String]| lines.iter().filter(|l| l.starts_with("SR-CALIBRATE run")).cloned().collect::<Vec<_>>();
+    // A run line without its wall time and its resume mark: what the unbroken invocation said of the same life.
+    let same_life = |line: &str| line.replace(" replayed", "").split(" wall_s=").next().unwrap().to_string();
+    let error_of = |lines: &[String]| lines.iter().find(|l| l.starts_with("SR-ERROR")).cloned().unwrap_or_default();
+
+    // The unbroken invocation: two lives, the ends agree (exit 6).
+    let (code, unbroken) = go(&args);
+    assert_eq!(code, 6, "{unbroken:?}");
+    let first = runs_of(&unbroken);
+    assert_eq!(first.len(), 2, "{unbroken:?}");
+    let record_of = |line: &str| std::path::PathBuf::from(line.split("record=").nth(1).unwrap().trim());
+    let (rec1, rec2) = (record_of(&first[0]), record_of(&first[1]));
+    let dir = rec1.parent().unwrap().to_path_buf();
+    let dir_arg = dir.to_str().unwrap().to_string();
+    let resumed = |extra: &[&str]| go(&with(&[&["--resume", dir_arg.as_str()], extra].concat()));
+    let ran_nothing = |lines: &[String]| lines.iter().all(|l| !l.starts_with("SR-CALIBRATE progress") && !l.starts_with("SR-ADAPTER"));
+    let summary_1 = std::fs::read_to_string(rec1.join("summary.json")).unwrap();
+
+    // Resumed whole: both lives read back, no life run, the same lines and the same refusal, in the same folder.
+    let (code, lines) = resumed(&[]);
+    let runs = runs_of(&lines);
+    assert_eq!(code, 6, "{lines:?}");
+    assert!(ran_nothing(&lines), "a replay opens no adapter and shows no progress: {lines:?}");
+    assert_eq!(runs.len(), 2, "{lines:?}");
+    assert!(runs.iter().all(|l| l.contains(" replayed record=")), "{runs:?}");
+    assert_eq!(runs.iter().map(|l| same_life(l)).collect::<Vec<_>>(), first.iter().map(|l| same_life(l)).collect::<Vec<_>>());
+    assert_eq!(runs.iter().map(|l| l.split("wall_s=").nth(1).unwrap().split(' ').next().unwrap().to_string()).collect::<Vec<_>>(), first.iter().map(|l| l.split("wall_s=").nth(1).unwrap().split(' ').next().unwrap().to_string()).collect::<Vec<_>>(), "a replayed life says the wall time it took");
+    assert_eq!(error_of(&lines), error_of(&unbroken));
+    assert_eq!(std::fs::read_to_string(rec1.join("summary.json")).unwrap(), summary_1, "a record read back is not rewritten");
+
+    // Cut during the second life — its record gone, then cut while it was written: life 1 read back, life 2 run, in `dir`.
+    for cut in [None, Some("{\"version\": 1, \"adapter\": {\"na")] {
+        match cut {
+            None => std::fs::remove_file(rec2.join("summary.json")).unwrap(),
+            Some(half) => std::fs::write(rec2.join("summary.json"), half).unwrap(),
+        }
+        let (code, lines) = resumed(&[]);
+        let runs = runs_of(&lines);
+        assert_eq!(code, 6, "{lines:?}");
+        assert_eq!(runs.len(), 2, "{lines:?}");
+        assert!(runs[0].contains(" replayed record=") && !runs[1].contains("replayed"), "{runs:?}");
+        assert_eq!(runs.iter().map(|l| same_life(l)).collect::<Vec<_>>(), first.iter().map(|l| same_life(l)).collect::<Vec<_>>(), "the run sequence is the unbroken one's");
+        assert_eq!(record_of(&runs[1]), rec2, "the life runs in the numbering's own folder");
+        assert!(lines.iter().filter(|l| l.starts_with("SR-CALIBRATE progress")).all(|l| l.contains(&format!("mass={:.3}", 1.02 * m0))), "only the second life ran: {lines:?}");
+        assert!(lines.iter().any(|l| l.starts_with("SR-CALIBRATE progress")), "{lines:?}");
+        assert_eq!(error_of(&lines), error_of(&unbroken));
+        let summary: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(rec2.join("summary.json")).unwrap()).unwrap();
+        assert!(summary["until"]["met"] == true && summary["scene"] == format!("calibrate:m_ign_sb:{:.3}", 1.02 * m0), "{summary}");
+        assert_eq!(std::fs::read_to_string(rec1.join("summary.json")).unwrap(), summary_1);
+    }
+
+    // Not this calibration's: another mass at the first run or at the second, an adapter that does not match — exit 4, no life run.
+    let other_first = format!("{},{}", 0.9 * m0, 1.02 * m0);
+    let other_second = format!("{},{}", m0, 1.04 * m0);
+    let mut foreign = vec![("another mass at run 1", with(&["--resume", dir_arg.as_str(), "--bracket", other_first.as_str()])), ("another mass at run 2", with(&["--resume", dir_arg.as_str(), "--bracket", other_second.as_str()]))];
+    foreign.push(("another adapter", with(&["--resume", dir_arg.as_str(), "--adapter", "no such adapter"])));
+    let mut other_label = args.clone();
+    other_label[args.iter().position(|a| a == "m_ign_sb").unwrap()] = "m_up_sb".to_string();
+    foreign.push(("another item", [other_label, vec!["--resume".to_string(), dir_arg.clone()]].concat()));
+    for (what, args) in foreign {
+        let (code, lines) = go(&args);
+        assert_eq!(code, 4, "{what}: {lines:?}");
+        assert!(error_of(&lines).contains("is not this calibration's: start without --resume"), "{what}: {lines:?}");
+        assert!(ran_nothing(&lines), "{what}: no life ran: {lines:?}");
+    }
+    assert_eq!(std::fs::read_to_string(rec1.join("summary.json")).unwrap(), summary_1, "a refused resume leaves the records");
+
+    // A folder that is not one is refused before any run; items 1–2 run no life and ignore the flag.
+    let nothing = out_dir.join("no-such-run");
+    let (code, lines) = go(&with(&["--resume", nothing.to_str().unwrap()]));
+    assert_eq!(code, 4, "{lines:?}");
+    assert!(error_of(&lines).contains("--resume") && error_of(&lines).contains("not a folder") && ran_nothing(&lines), "{lines:?}");
+    let sheet: Vec<String> = ["--out", out_dir.join("sheet.json").to_str().unwrap(), "--only", "m_ch_sb", "--resume", nothing.to_str().unwrap()].map(String::from).to_vec();
+    let (code, lines) = go(&sheet);
+    assert_eq!(code, 0, "{lines:?}");
+
+    let _ = std::fs::remove_dir_all(&dir);
+    let _ = std::fs::remove_dir_all(&out_dir);
+}
