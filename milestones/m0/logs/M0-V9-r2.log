@@ -1,0 +1,109 @@
+# M0-V9 r2 — win-laptop (Laser2025-20), resumed 2026-10-20 after M0-D60..D62, M0-D64, M0-D66 (M0-D67 N/A)
+# start: plan.py show baseline 2026-10-20T13:48:01-04:00, 499 files; rung_record now: model=claude-opus-5-5 level=max plugin=installed
+# HEAD a740549; dirty (no code):  M milestones/m0/logs/loop_times.jsonl; M milestones/m0/m0_implementation_plan.md; M milestones/m0/tasks/M0-D64.md; M tools/pb/verify.anchor.json;?? milestones/m0/logs/M0-D64-r3.ledger.redarm.log;?? milestones/m0/logs/M0-D64-r3.log;?? milestones/m0/logs/M0-D64-r3.plan_lint.log;?? milestones/m0/logs/M0-V9-r2.log;
+
+## B1 release build (2026-10-20T13:54:10-04:00)
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 1m 37s
+
+real	1m38.992s
+user	0m0.046s
+sys	0m0.092s
+exit=0
+
+## P1 calibrate items 1-2 to scratch (2026-10-20T13:56:01-04:00)
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.1
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.1
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.1
+SR-CALIBRATE DONE out=C:/Users/YOHANB~1/AppData/Local/Temp/claude/c--workspace-sandbox-reactions/bc6dca0a-d2e3-4d7c-8a9a-91a881dfee4b/scratchpad/v9/p1_cal.json wall_s=0.5
+
+real	0m0.851s
+user	0m0.000s
+sys	0m0.281s
+exit=0
+
+## P2 preset:sun 6000 steps on the RTX 4080 Laptop, dump every 2000 (2026-10-20T13:56:26-04:00)
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=6000 sim_time=69.694215 until=none
+
+real	2m40.366s
+user	0m0.015s
+sys	0m0.000s
+exit=0
+SR-WARN heat lines: 0
+
+## The lead's answer (2026-10-20): «linux-pc's RTX 5090 (Recommended)» — the WIP commit and push from here, the calibration on linux-pc
+
+## Claim: verify.py --changed --task M0-V9-r2 (2026-10-20T14:18:00-04:00)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint         611/0/0      0.28 s  GO
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 108 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 36 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 33 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 107 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 109 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 101 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 76 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 76 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 85 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+flags: M0-V9-r2 is no block of a plan under milestones/ - no Deliver and no type to read them against
+logs: milestones/m0/logs/M0-V9-r2.<scope>.log · record: loop_times.jsonl · tree a74054937889+9892f65bbf45
+anchor: 1 path×scope entries moved by this run
+anchor: 259 paths checked · 240 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 259 covered of 499 visible
+skipped   232  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 611 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 59 not impacted · 0.28 s + loop 0.73 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 8.55->5.83 · base: M0-V9's start 2026-10-20T13:48:01-04:00 — no start for M0-V9-r2
+=== GO ===
+## WIP commit and push (2026-10-20T14:18:25-04:00): git add -A; commit 'M0 WIP: lot 9 before the calibration'; push origin main
