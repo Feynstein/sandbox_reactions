@@ -1,0 +1,87 @@
+==== 2026-10-20T17:58:50-04:00 calibrate_status · clean · a fresh scratch copy of the tree
+== 2026-10-20T17:58:50-04:00 calibrate_status · task M0-D73 · box laserax-ai :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=0 · 0.06 s
+11 passed, 0 failed
+=== GO ===
+
+==== 2026-10-20T17:58:50-04:00 calibrate_status · plant calibrate-status-one-short · a fresh scratch copy of the tree
+planted calibrate-status-one-short: {python} -S -c "import pathlib;p=pathlib.Path('tools/calibrate_status.py');t=p.read_text(encoding='utf-8');assert '    runs = 2' in t;p.write_text(t.replace('    runs = 2','    runs = 1',1),encoding='utf-8')" -> exit 0
+== 2026-10-20T17:58:50-04:00 calibrate_status · task M0-D73 · box laserax-ai :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=1 · 0.11 s
+FAIL case_finished_lives: AssertionError: item m_up_sb · tmpmw32kd2g · 3 finished
+  life 01  mass 3351.032  white_dwarf  142801 steps  8m30s
+  life 02  mass 46914.448  black_hole  1000 steps  7m00s
+  life 03  mass 12000.000  white_dwarf  1000 steps  36m40s
+  no life running in m_up_sb
+lives left 6 of 9 · bracket from lives 1 and 2
+ETA 42m00s to 3h40m, mean 1h44m
+FAIL case_running_life: AssertionError: item m_ign_sb · tmp93ji1xke · 2 finished
+  life 01  mass 167.552  white_dwarf  1000 steps  1s
+  life 02  mass 3351.032  white_dwarf  1000 steps  3s
+  life 03 running: its folder was made 1m30s ago (a stopped item reads the same)
+lives left 7 of 9 · bracket from lives 1 and 2
+ETA 6s to 18s, mean 12s (a guess: 2 of 3 lives needed)
+FAIL case_bracket_unknown: AssertionError: (None, ['item m_up_sb · tmpvrdaq_7v · 1 finished', '  life 01  mass 3351.032  white_dwarf  1000 steps  10m00s', '  no life running in m_up_sb', "lives left 8 of 9 · bracket from the item's default", 'ETA 1h20m to 1h20m, mean 1h20m (a guess: 1 of 3 lives needed)'])
+FAIL case_bh_no_default_lo: AssertionError: (None, ['item m_bh_sb · tmp54u5b5lh · 0 finished', '  life 01 running: its folder was made 1m30s ago (a stopped item reads the same)', 'lives left 9 of 9 · bracket from --bracket', "ETA: none yet, no life has finished (a Sun-like life is ~37 min, a heavy one ~8: the lead's measure)"])
+FAIL case_bisect_count: AssertionError: (0.05, 1.0, 9, 10)
+6 passed, 5 failed
+=== NO-GO: 5 case(s) failed ===
+
+==== 2026-10-20T18:00:11-04:00 calibrate_status · clean · a fresh scratch copy of the tree
+== 2026-10-20T18:00:11-04:00 calibrate_status · task M0-D73 · box laserax-ai :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=0 · 0.06 s
+12 passed, 0 failed
+=== GO ===
+
+==== 2026-10-20T18:00:11-04:00 calibrate_status · plant calibrate-status-one-short · a fresh scratch copy of the tree
+planted calibrate-status-one-short: {python} -S -c "import pathlib;p=pathlib.Path('tools/calibrate_status.py');t=p.read_text(encoding='utf-8');assert '    runs = 2' in t;p.write_text(t.replace('    runs = 2','    runs = 1',1),encoding='utf-8')" -> exit 0
+== 2026-10-20T18:00:11-04:00 calibrate_status · task M0-D73 · box laserax-ai :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=1 · 0.06 s
+FAIL case_finished_lives: AssertionError: item m_up_sb · tmp9morciek · 3 finished
+  life 01  mass 3351.032  white_dwarf  142801 steps  8m30s
+  life 02  mass 46914.448  black_hole  1000 steps  7m00s
+  life 03  mass 12000.000  white_dwarf  1000 steps  36m40s
+  no life running in m_up_sb
+lives left 6 of 9 · bracket from lives 1 and 2
+ETA 42m00s to 3h40m, mean 1h44m
+FAIL case_running_life: AssertionError: item m_ign_sb · tmpwi9rmxmp · 2 finished
+  life 01  mass 167.552  white_dwarf  1000 steps  1s
+  life 02  mass 3351.032  white_dwarf  1000 steps  3s
+  life 03 running: its folder was made 1m30s ago (a stopped item reads the same)
+lives left 7 of 9 · bracket from lives 1 and 2
+ETA 6s to 18s, mean 12s (a guess: 2 of 3 lives needed)
+FAIL case_bracket_unknown: AssertionError: (None, ['item m_up_sb · tmphn2wobgf · 1 finished', '  life 01  mass 3351.032  white_dwarf  1000 steps  10m00s', '  no life running in m_up_sb', "lives left 8 of 9 · bracket from the item's default", 'ETA 1h20m to 1h20m, mean 1h20m (a guess: 1 of 3 lives needed)'])
+FAIL case_bh_no_default_lo: AssertionError: (None, ['item m_bh_sb · tmp8z9673p1 · 0 finished', '  life 01 running: its folder was made 1m30s ago (a stopped item reads the same)', 'lives left 9 of 9 · bracket from --bracket', "ETA: none yet, no life has finished (a Sun-like life is ~37 min, a heavy one ~8: the lead's measure)"])
+FAIL case_bisect_count: AssertionError: (0.05, 1.0, 9, 10)
+7 passed, 5 failed
+=== NO-GO: 5 case(s) failed ===
+
+==== 2026-10-20T18:01:15-04:00 calibrate_status · clean · a fresh scratch copy of the tree
+== 2026-10-20T18:01:16-04:00 calibrate_status · task M0-D73 · box laserax-ai :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=0 · 0.06 s
+12 passed, 0 failed
+=== GO ===
+
+==== 2026-10-20T18:01:15-04:00 calibrate_status · plant calibrate-status-one-short · a fresh scratch copy of the tree
+planted calibrate-status-one-short: {python} -S -c "import pathlib;p=pathlib.Path('tools/calibrate_status.py');t=p.read_text(encoding='utf-8');assert '    runs = 2' in t;p.write_text(t.replace('    runs = 2','    runs = 1',1),encoding='utf-8')" -> exit 0
+== 2026-10-20T18:01:16-04:00 calibrate_status · task M0-D73 · box laserax-ai :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=1 · 0.06 s
+FAIL case_finished_lives: AssertionError: item m_up_sb · tmpppv7uo0n · 3 finished
+  life 01  mass 3351.032  white_dwarf  142801 steps  8m30s
+  life 02  mass 46914.448  black_hole  1000 steps  7m00s
+  life 03  mass 12000.000  white_dwarf  1000 steps  36m40s
+  no life running in m_up_sb
+lives left 6 of 9 · bracket from lives 1 and 2
+ETA 42m00s to 3h40m, mean 1h44m
+FAIL case_running_life: AssertionError: item m_ign_sb · tmp_7hba3vg · 2 finished
+  life 01  mass 167.552  white_dwarf  1000 steps  1s
+  life 02  mass 3351.032  white_dwarf  1000 steps  3s
+  life 03 running: its folder was made 1m30s ago (a stopped item, or a life re-run by --resume in an old folder, reads the same)
+lives left 7 of 9 · bracket from lives 1 and 2
+ETA 6s to 18s, mean 12s (a guess: 2 of 3 lives needed)
+FAIL case_bracket_unknown: AssertionError: (None, ['item m_up_sb · tmpypfrht1j · 1 finished', '  life 01  mass 3351.032  white_dwarf  1000 steps  10m00s', '  no life running in m_up_sb', "lives left 8 of 9 · bracket from the item's default", 'ETA 1h20m to 1h20m, mean 1h20m (a guess: 1 of 3 lives needed)'])
+FAIL case_bh_no_default_lo: AssertionError: (None, ['item m_bh_sb · tmpcpx_8sl7 · 0 finished', '  life 01 running: its folder was made 1m30s ago (a stopped item, or a life re-run by --resume in an old folder, reads the same)', 'lives left 9 of 9 · bracket from --bracket', "ETA: none yet, no life has finished (a Sun-like life is ~37 min, a heavy one ~8: the lead's measure)"])
+FAIL case_bisect_count: AssertionError: (0.05, 1.0, 9, 10)
+7 passed, 5 failed
+=== NO-GO: 5 case(s) failed ===
+

@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -781,9 +781,6 @@
+         if v["version"] != 1 {
+             return Err(format!("{} is version {}, this build reads 1", file.display(), v["version"]));
+         }
+-        if v["step"].as_u64() != Some(step) {
+-            return Err(format!("{} holds step {}, beside a dump of step {step}", file.display(), v["step"]));
+-        }
+         if v["scene"].as_str() != Some(scene) {
+             return Err(format!("the checkpoint is of {}, this life is {scene:?}", v["scene"]));
+         }

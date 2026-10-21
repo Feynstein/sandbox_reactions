@@ -22,7 +22,7 @@ use std::collections::{BTreeMap, BTreeSet};
 
 use serde_json::{json, Value};
 use sr_physics::observe::stages::stage_order;
-use sr_physics::observe::tracker::SUN_MASS_NOMINAL;
+use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole, SUN_MASS_NOMINAL};
 use sr_physics::observe::{BlockData, EventKind, Object, Report, SinkData, Stage, StageTracker, Tracker, TrackerConfig};
 use sr_physics::registry::Physics;
 
@@ -50,6 +50,10 @@ pub enum Until {
     /// The first of the `ignition` event and the `ending` event: `calibrate`'s m_ign_sb run (§2.11 item 3), which stops at
     /// either side of the threshold. Built in code by `calibrate`; `--until` does not parse it.
     IgnitionOrEnding,
+    /// The first frame where the `core_collapse` event fires or any object shows `neutron_star` or `black_hole`, else the
+    /// `ending` event: `calibrate`'s m_up_sb runs (§2.11 item 4, M0-D75), whose side is known from the collapse on. Built in
+    /// code by `calibrate`; `--until` does not parse it.
+    CollapseOrEnding,
 }
 
 impl Until {
@@ -85,6 +89,7 @@ impl Until {
             Until::Stage(stage) => format!("stage:{}", stage.id()),
             Until::Ending => "ending".to_string(),
             Until::IgnitionOrEnding => "ignition|ending".to_string(),
+            Until::CollapseOrEnding => "collapse|ending".to_string(),
         }
     }
 }
@@ -265,10 +270,18 @@ impl Watch {
         match until {
             Until::SimTime(t) => self.last_sim >= t,
             Until::Event(kind) => fresh.iter().any(|e| e.kind == kind.id()),
-            Until::Stage(stage) => self.tracker.objects().iter().any(|o| self.stages.stage(o.id).and_then(|s| s.shown) == Some(stage)),
+            Until::Stage(stage) => self.shows(stage),
             Until::Ending => fresh.iter().any(|e| e.kind == "ending"),
             Until::IgnitionOrEnding => fresh.iter().any(|e| e.kind == "ending" || e.kind == "ignition"),
+            Until::CollapseOrEnding => {
+                fresh.iter().any(|e| e.kind == "ending" || e.kind == "core_collapse") || self.shows(Stage::NeutronStar) || self.shows(Stage::BlackHole)
+            }
         }
+    }
+
+    /// Whether any object displays `stage` now.
+    fn shows(&self, stage: Stage) -> bool {
+        self.tracker.objects().iter().any(|o| self.stages.stage(o.id).and_then(|s| s.shown) == Some(stage))
     }
 
     pub fn events(&self) -> &[RunEvent] {
@@ -289,6 +302,96 @@ impl Watch {
     /// DIR/events.jsonl: one JSON object a line, none for a run without events.
     pub fn events_jsonl(&self) -> String {
         self.events.iter().map(|e| e.json().to_string() + "\n").collect()
+    }
+
+    /// Everything the next frame and summary.json read, for the observers' snapshot beside a dump (§0.5 [M0-D76]): the
+    /// tracker, the stages, the last frame's sim time, the events, each object's stage trail, the remnant holds, the objects
+    /// ended, the at_x_h marks and max_gas_speed — every f64 [`exact`].
+    pub fn snapshot(&self) -> Value {
+        let by_id = |entries: Vec<(u32, Value)>| entries.into_iter().map(|(id, v)| json!([id, v])).collect::<Vec<_>>();
+        let events: Vec<Value> = self
+            .events
+            .iter()
+            .map(|e| {
+                // The detail's numbers as exact strings; its one string, a stage id, stays one.
+                let detail: serde_json::Map<String, Value> =
+                    e.detail.as_object().into_iter().flatten().map(|(k, v)| (k.clone(), v.as_f64().map_or(v.clone(), exact))).collect();
+                json!({"step": e.step, "sim_time": exact(e.sim_time), "kind": e.kind, "object": e.object, "detail": detail})
+            })
+            .collect();
+        let lives = self.lives.iter().map(|(&id, life)| {
+            (id, life.iter().map(|l| json!([l.stage.id(), l.from_step, exact(l.sim_time)])).collect::<Value>())
+        });
+        let remnants = self.remnants.iter().map(|(&id, r)| (id, json!([r.stage.id(), exact(r.since)])));
+        let marks = self.marks.iter().map(|(&id, m)| (id, json!([exact(m.sim_time), exact(m.luminosity), exact(m.radius)])));
+        json!({
+            "tracker": self.tracker.snapshot(),
+            "stages": self.stages.snapshot(),
+            "last_sim": exact(self.last_sim),
+            "events": events,
+            "lives": by_id(lives.collect()),
+            "remnants": by_id(remnants.collect()),
+            "ended": self.ended,
+            "marks": by_id(marks.collect()),
+            "max_gas_speed": exact(self.max_gas_speed),
+        })
+    }
+
+    /// The observers [`Watch::snapshot`] wrote, for a run in a world `world_width` cells wide under `physics`.
+    pub fn restore(physics: &Physics, world_width: u32, v: &Value) -> Result<Watch, String> {
+        let config = TrackerConfig::from_physics(physics, SUN_MASS_NOMINAL);
+        let id = |v: &Value| v.as_u64().and_then(|n| u32::try_from(n).ok()).ok_or_else(|| format!("not an object id: {v}"));
+        // `[id, value]` pairs into a map, each value read by `read`.
+        fn by_id<T>(v: &Value, key: &str, read: impl Fn(&Value) -> Result<T, String>) -> Result<BTreeMap<u32, T>, String> {
+            read_list(v, key)?
+                .iter()
+                .map(|pair| {
+                    let id = pair[0].as_u64().and_then(|n| u32::try_from(n).ok()).ok_or_else(|| format!("{key}: not [id, …]: {pair}"))?;
+                    Ok((id, read(&pair[1])?))
+                })
+                .collect()
+        }
+        let kinds = ["ignition", "core_collapse", "supernova", "sink_formed", "ending"];
+        let events = read_list(v, "events")?
+            .iter()
+            .map(|e| {
+                let kind = kinds.into_iter().find(|k| Some(*k) == e["kind"].as_str()).ok_or_else(|| format!("events.kind: {}", e["kind"]))?;
+                let detail = e["detail"].as_object().ok_or_else(|| format!("events.detail: not an object: {}", e["detail"]))?;
+                let detail = detail
+                    .iter()
+                    .map(|(k, x)| Ok((k.clone(), if k == "stage" || x.is_null() { x.clone() } else { json!(read_exact(x, "events.detail")?) })))
+                    .collect::<Result<serde_json::Map<String, Value>, String>>()?;
+                let at = read_exact(&e["sim_time"], "events.sim_time")?;
+                Ok(RunEvent { step: read_whole(e, "step")?, sim_time: at, kind, object: id(&e["object"])?, detail: Value::Object(detail) })
+            })
+            .collect::<Result<Vec<_>, String>>()?;
+        let lives = by_id(v, "lives", |life| {
+            life.as_array()
+                .ok_or_else(|| format!("lives: not a list: {life}"))?
+                .iter()
+                .map(|l| {
+                    let from_step = l[1].as_u64().ok_or_else(|| format!("lives: not [stage, step, time]: {l}"))?;
+                    Ok(StageEntry { stage: Stage::from_id(&l[0])?, from_step, sim_time: read_exact(&l[2], "lives.sim_time")? })
+                })
+                .collect()
+        })?;
+        let remnants = by_id(v, "remnants", |r| Ok(Remnant { stage: Stage::from_id(&r[0])?, since: read_exact(&r[1], "remnants.since")? }))?;
+        let marks = by_id(v, "marks", |m| {
+            let n = |k: usize| read_exact(&m[k], "marks");
+            Ok(XhMark { sim_time: n(0)?, luminosity: n(1)?, radius: n(2)? })
+        })?;
+        Ok(Watch {
+            world_width,
+            tracker: Tracker::restore(config, &v["tracker"])?,
+            stages: StageTracker::restore(&v["stages"])?,
+            last_sim: read_exact(&v["last_sim"], "last_sim")?,
+            events,
+            lives,
+            remnants,
+            ended: read_list(v, "ended")?.iter().map(id).collect::<Result<_, String>>()?,
+            marks,
+            max_gas_speed: read_exact(&v["max_gas_speed"], "max_gas_speed")?,
+        })
     }
 
     /// summary.json's `objects` (§2.12.2): the last frame's, with the stages each displayed. `mass_suns`,

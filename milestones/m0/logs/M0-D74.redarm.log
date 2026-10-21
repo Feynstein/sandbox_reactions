@@ -1,0 +1,15 @@
+the calls:
+  python3 tools/pb/verify.py <scope>... --task <ID>
+  python3 tools/pb/verify.py --all --task <ID>
+  python3 tools/pb/verify.py <scope> --case <id> --task <ID>
+  python3 tools/pb/verify.py --changed [--base <commit>] --task <ID>
+  python3 tools/pb/verify.py --force <scope>... --task <ID>
+  python3 tools/pb/verify.py --redarm <scope> --task <ID>
+  python3 tools/pb/verify.py --redarm --moved --task <ID>
+  python3 tools/pb/verify.py list
+  python3 tools/pb/verify.py report [--since YYYY-MM-DD] [--budget <s>]
+  python3 tools/pb/verify.py start [--fresh] --task <ID>
+  python3 tools/pb/verify.py touched [--task <ID>] [--path <glob>]
+  python3 tools/pb/verify.py selftest
+verify: wrong call - nothing run
+=== NO-GO: --redarm names its one scope itself: --redarm <scope> - the calls are listed above ===

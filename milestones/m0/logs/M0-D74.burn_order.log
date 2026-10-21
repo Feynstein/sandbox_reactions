@@ -1,0 +1,43 @@
+== 2026-10-20T18:22:05-04:00 burn_order · task M0-D74 · box laserax-ai :: bash tests/gpu.sh burn::order physics
+-- burn_order · exit=0 · 6.48 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 2.79s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 4 tests
+test burn::order::gpu_ignition_order ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU ε* crossings at T: H 82.5, He 92, C 137, Ne 188, O 196.5, Si 282.5
+ok
+test burn::order::gpu_records_book_into_their_group ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+GPU H_burn: group H, ΔX 0.154 over 4.806e1, booked 2.685582e3, q·Δm 2.685582e3
+GPU He_burn: group He, ΔX 0.141 over 4.303e-2, booked 2.271125e2, q·Δm 2.271126e2
+GPU C_alpha: group He, ΔX 0.116 over 4.529e-1, booked 1.840688e2, q·Δm 1.840689e2
+GPU C_burn: group C, ΔX 0.154 over 4.980e-1, booked 1.711621e2, q·Δm 1.711621e2
+GPU Ne_burn: group Ne, ΔX 0.174 over 4.978e-1, booked 5.299807e1, q·Δm 5.299807e1
+GPU O_burn: group O, ΔX 0.154 over 4.980e-1, booked 2.132734e2, q·Δm 2.132734e2
+GPU Mg_burn: group O, ΔX 0.174 over 4.978e-1, booked 2.397524e2, q·Δm 2.397524e2
+GPU Si_burn: group Si, ΔX 0.174 over 4.978e-1, booked 9.154259e1, q·Δm 9.154260e1
+GPU S_burn: group Si, ΔX 0.174 over 4.978e-1, booked 9.154259e1, q·Δm 9.154260e1
+GPU N_Fe: group N, ΔX 0.157 over 2.699e2, booked -9.354025e5, q·Δm -9.354025e5
+ok
+test burn::order::ignition_order ... ε* crossings at T: H 82.5, He 92, C 137, Ne 188, O 196.5, Si 282.5
+ok
+test burn::order::records_book_into_their_group ... H_burn: group H, booked 7.240546e-2, q·Δm 7.240546e-2
+He_burn: group He, booked 7.489166e0, q·Δm 7.489166e0
+C_alpha: group He, booked 5.262486e-1, q·Δm 5.262486e-1
+C_burn: group C, booked 4.450900e-1, q·Δm 4.450900e-1
+Ne_burn: group Ne, booked 1.226442e-1, q·Δm 1.226442e-1
+O_burn: group O, booked 5.545962e-1, q·Δm 5.545962e-1
+Mg_burn: group O, booked 5.548191e-1, q·Δm 5.548191e-1
+Si_burn: group Si, booked 2.118400e-1, q·Δm 2.118400e-1
+S_burn: group Si, booked 2.118400e-1, q·Δm 2.118400e-1
+N_Fe: group N, booked -4.409965e0, q·Δm -4.409965e0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 338 filtered out; finished in 3.54s
+
+

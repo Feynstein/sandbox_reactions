@@ -1,0 +1,7 @@
+calibrate_status · clean · GO · arm 1/5, 4 left
+calibrate_status · plant calibrate-status-one-short · RED (proven: 12 failed; its own verdict NO-GO: 6 case(s) failed; 12 case(s) < expected 18) · arm 2/5, 3 left
+calibrate_status · plant calibrate-status-wrong-stage · RED (proven: 17 failed; its own verdict NO-GO: 1 case(s) failed; 17 case(s) < expected 18) · arm 3/5, 2 left
+calibrate_status · plant calibrate-status-continued-total-steps · RED (proven: 17 failed; its own verdict NO-GO: 1 case(s) failed; 17 case(s) < expected 18) · arm 4/5, 1 left
+calibrate_status · plant calibrate-status-flat-stale · RED (proven: 16 failed; its own verdict NO-GO: 2 case(s) failed; 16 case(s) < expected 18) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope calibrate_status · 1.55 s · 5 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D77.calibrate_status.redarm.log
+=== GO ===

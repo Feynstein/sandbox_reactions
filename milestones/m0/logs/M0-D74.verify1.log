@@ -1,0 +1,7 @@
+calibrate_status  16/0/0       0.06 s  GO · step 1/2, 1 left
+calibrate_bisect  10/0/0      41.64 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-D74.<scope>.log · record: loop_times.jsonl · tree a226fc5140f5+298e5835caf0
+anchor: 126 path×scope entries moved by this run
+anchor: 140 paths checked · 242 skipped (3 classes) · 124 never checked · 2 stale · 0 unclassified · 0 owed · 266 covered of 508 visible
+verify: 26 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 41.64 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.2->1.39
+=== GO ===

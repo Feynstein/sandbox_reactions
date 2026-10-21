@@ -21,6 +21,7 @@
 //!   starts after its first step and `start.step` says which.
 
 use serde_json::{json, Value};
+use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole};
 use sr_physics::registry::Physics;
 
 use crate::state::{book_totals, Booking, WorldConfig, BOOK_GROUPS, N_TERMS, TERMS};
@@ -111,22 +112,66 @@ impl Momentum {
 impl Record {
     /// The record as summary.json's `ledger.start` / `ledger.end` (§2.12.2): every term and the three invariants.
     pub fn json(&self) -> Value {
+        self.json_with(|x| json!(x))
+    }
+
+    /// [`Record::json`]'s layout with every f64 written by `num` — the observers' snapshot writes [`exact`] (§0.5 [M0-D76]).
+    fn json_with(&self, num: impl Fn(f64) -> Value) -> Value {
         let (m, e, p) = (&self.mass, &self.energy, &self.momentum);
+        let pair = |v: [f64; 2]| json!([num(v[0]), num(v[1])]);
         json!({
             "step": self.at.step,
-            "sim_time": self.at.sim_time,
+            "sim_time": num(self.at.sim_time),
             "mass": {
-                "grid": m.grid, "sinks": m.sinks, "escaped": m.escaped, "painted": m.painted, "erased": m.erased,
-                "preset_dropped": m.preset_dropped, "vacuum_reset": m.vacuum_reset, "cleared": m.cleared,
-                "invariant": m.invariant(),
+                "grid": num(m.grid), "sinks": num(m.sinks), "escaped": num(m.escaped), "painted": num(m.painted),
+                "erased": num(m.erased), "preset_dropped": num(m.preset_dropped), "vacuum_reset": num(m.vacuum_reset),
+                "cleared": num(m.cleared), "invariant": num(m.invariant()),
             },
             "energy": {
-                "kinetic": e.kinetic, "thermal": e.thermal, "cold": e.cold, "potential": e.potential,
-                "radiated": e.radiated, "neutrino_lost": e.neutrino_lost, "neutrino_deposited": e.neutrino_deposited,
-                "escaped": e.escaped, "swallowed": e.swallowed, "nuclear_released": e.nuclear_released,
-                "floor_added": e.floor_added, "tools": e.tools, "invariant": e.invariant(),
+                "kinetic": num(e.kinetic), "thermal": num(e.thermal), "cold": num(e.cold), "potential": num(e.potential),
+                "radiated": num(e.radiated), "neutrino_lost": num(e.neutrino_lost),
+                "neutrino_deposited": num(e.neutrino_deposited), "escaped": num(e.escaped), "swallowed": num(e.swallowed),
+                "nuclear_released": num(e.nuclear_released), "floor_added": num(e.floor_added), "tools": num(e.tools),
+                "invariant": num(e.invariant()),
             },
-            "momentum": {"grid": p.grid, "sinks": p.sinks, "escaped": p.escaped, "invariant": p.invariant()},
+            "momentum": {"grid": pair(p.grid), "sinks": pair(p.sinks), "escaped": pair(p.escaped), "invariant": pair(p.invariant())},
+        })
+    }
+
+    /// The record the snapshot wrote with [`exact`] numbers (the invariants are recomputed, not read).
+    fn restore(v: &Value) -> Result<Record, String> {
+        let n = |group: &str, k: &str| read_exact(&v[group][k], &format!("ledger.{group}.{k}"));
+        let pair = |k: &str| -> Result<[f64; 2], String> {
+            let at = format!("ledger.momentum.{k}");
+            Ok([read_exact(&v["momentum"][k][0], &at)?, read_exact(&v["momentum"][k][1], &at)?])
+        };
+        Ok(Record {
+            at: At { step: read_whole(v, "step")?, sim_time: read_exact(&v["sim_time"], "ledger.sim_time")? },
+            mass: Mass {
+                grid: n("mass", "grid")?,
+                sinks: n("mass", "sinks")?,
+                escaped: n("mass", "escaped")?,
+                painted: n("mass", "painted")?,
+                erased: n("mass", "erased")?,
+                preset_dropped: n("mass", "preset_dropped")?,
+                vacuum_reset: n("mass", "vacuum_reset")?,
+                cleared: n("mass", "cleared")?,
+            },
+            energy: Energy {
+                kinetic: n("energy", "kinetic")?,
+                thermal: n("energy", "thermal")?,
+                cold: n("energy", "cold")?,
+                potential: n("energy", "potential")?,
+                radiated: n("energy", "radiated")?,
+                neutrino_lost: n("energy", "neutrino_lost")?,
+                neutrino_deposited: n("energy", "neutrino_deposited")?,
+                escaped: n("energy", "escaped")?,
+                swallowed: n("energy", "swallowed")?,
+                nuclear_released: n("energy", "nuclear_released")?,
+                floor_added: n("energy", "floor_added")?,
+                tools: n("energy", "tools")?,
+            },
+            momentum: Momentum { grid: pair("grid")?, sinks: pair("sinks")?, escaped: pair("escaped")? },
         })
     }
 }
@@ -194,6 +239,40 @@ impl Ledger {
 
     pub fn last(&self) -> Option<&Record> {
         self.last.as_ref()
+    }
+
+    /// The ledger for the observers' snapshot beside a dump (§0.5 [M0-D76]): the booked terms' and the accumulators'
+    /// cumulative, the start and the latest record, every f64 [`exact`].
+    pub fn snapshot(&self) -> Value {
+        let record = |r: &Option<Record>| r.as_ref().map_or(Value::Null, |r| r.json_with(exact));
+        json!({
+            "booked": self.booked.iter().map(|&x| exact(x)).collect::<Vec<_>>(),
+            "radiated": exact(self.radiated),
+            "nuclear": exact(self.nuclear),
+            "neutrino_lost": exact(self.neutrino_lost),
+            "neutrino_deposited": exact(self.neutrino_deposited),
+            "start": record(&self.start),
+            "last": record(&self.last),
+        })
+    }
+
+    /// The ledger [`Ledger::snapshot`] wrote, in `world` under `physics` (the run's own).
+    pub fn restore(world: WorldConfig, physics: &Physics, v: &Value) -> Result<Ledger, String> {
+        let mut ledger = Ledger::new(world, physics);
+        let booked = read_list(v, "booked")?;
+        if booked.len() != N_TERMS {
+            return Err(format!("ledger.booked: {} terms, expected {N_TERMS}", booked.len()));
+        }
+        for (slot, x) in ledger.booked.iter_mut().zip(booked) {
+            *slot = read_exact(x, "ledger.booked")?;
+        }
+        ledger.radiated = read_exact(&v["radiated"], "ledger.radiated")?;
+        ledger.nuclear = read_exact(&v["nuclear"], "ledger.nuclear")?;
+        ledger.neutrino_lost = read_exact(&v["neutrino_lost"], "ledger.neutrino_lost")?;
+        ledger.neutrino_deposited = read_exact(&v["neutrino_deposited"], "ledger.neutrino_deposited")?;
+        let record = |k: &str| if v[k].is_null() { Ok(None) } else { Record::restore(&v[k]).map(Some) };
+        (ledger.start, ledger.last) = (record("start")?, record("last")?);
+        Ok(ledger)
     }
 
     /// summary.json's `ledger` (§2.12.2): `{start, end}`, both empty before the ledger started.

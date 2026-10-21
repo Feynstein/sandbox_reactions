@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -694,7 +694,7 @@
+             checkpoint_step.set(Some(step));
+             note(step, sim_time, stage);
+         };
+-        let progress = Progress { every, tick: &mut tick, checkpoint_every: Some(self.checkpoint_every), saved: &mut saved };
++        let progress = Progress { every, tick: &mut tick, checkpoint_every: Some(every), saved: &mut saved };
+         let (code, lines) = run_scene_captured(args, scene, Some(progress));
+         *self.record.borrow_mut() = out.display().to_string();
+         let read = (code == EXIT_DONE).then(|| read_life(&out, mass));

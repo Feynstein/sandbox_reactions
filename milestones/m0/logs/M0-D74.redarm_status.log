@@ -1,0 +1,9 @@
+calibrate_status · clean · GO · arm 1/3, 2 left
+calibrate_status · plant calibrate-status-one-short · RED (proven: 10 failed; its own verdict NO-GO: 6 case(s) failed; 10 case(s) < expected 16) · arm 2/3, 1 left
+calibrate_status · plant calibrate-status-wrong-stage · RED (proven: 15 failed; its own verdict NO-GO: 1 case(s) failed; 15 case(s) < expected 16) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope calibrate_status · 0.82 s · 3 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D74.calibrate_status.redarm.log
+=== GO ===
+
+real	0m0.956s
+user	0m0.732s
+sys	0m0.896s

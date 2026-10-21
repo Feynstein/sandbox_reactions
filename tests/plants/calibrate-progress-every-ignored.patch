@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -1221,7 +1221,7 @@
+         dir: opts.resume.clone().unwrap_or_else(|| Path::new("build").join("calibrate_runs").join(stamp)),
+         say: &say,
+         record: &record,
+-        progress_every: opts.progress_every.unwrap_or(progress_every),
++        progress_every,
+         checkpoint_every: opts.checkpoint_every.unwrap_or(CHECKPOINT_EVERY),
+         adapter: opts.adapter.clone(),
+         adapter_used: None,

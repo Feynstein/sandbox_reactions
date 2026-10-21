@@ -19,8 +19,32 @@
 
 use std::collections::BTreeMap;
 
+use serde_json::{json, Map, Value};
+
 use super::{BlockData, Report, GROUPS, GROUP_N};
 use crate::registry::Physics;
+
+/// An f64 as the observers' snapshot writes it (contract §0.5 [M0-D76]): Rust's shortest round-trip form, as a JSON string.
+/// serde_json reads a number best-effort (its `float_roundtrip` feature is off, §1.2's table unchanged), so a 17-digit f64
+/// may come back one ulp off; a string read by Rust's correctly rounded parser comes back bit for bit, ±inf and NaN too.
+pub fn exact(x: f64) -> Value {
+    Value::String(format!("{x:?}"))
+}
+
+/// An f64 [`exact`] wrote; `at` names it in the refusal.
+pub fn read_exact(v: &Value, at: &str) -> Result<f64, String> {
+    v.as_str().and_then(|s| s.parse().ok()).ok_or_else(|| format!("{at}: not an f64 written as a string: {v}"))
+}
+
+/// A whole number of the snapshot at `v[key]`.
+pub fn read_whole(v: &Value, key: &str) -> Result<u64, String> {
+    v[key].as_u64().ok_or_else(|| format!("{key}: not a whole number: {}", v[key]))
+}
+
+/// A list of the snapshot at `v[key]`.
+pub fn read_list<'a>(v: &'a Value, key: &str) -> Result<&'a Vec<Value>, String> {
+    v[key].as_array().ok_or_else(|| format!("{key}: not a list: {}", v[key]))
+}
 
 /// The Sun-like preset's unit mass, 2πΣc a²/3 with Σc = 1 and a = 40 (§2.1), before the calibration's exact figure.
 pub const SUN_MASS_NOMINAL: f64 = 2.0 * std::f64::consts::PI * 40.0 * 40.0 / 3.0;
@@ -55,7 +79,7 @@ impl TrackerConfig {
 }
 
 /// One object after a frame, in sandbox units (§2.1).
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Object {
     pub id: u32,
     /// M: gas and sinks, and the two parts.
@@ -181,6 +205,116 @@ impl Tracker {
                 })
             })
             .collect()
+    }
+
+    /// What the next frame reads, for the observers' snapshot (§0.5 [M0-D76]): the next id, the last frame's blocks by
+    /// object and its objects.
+    pub fn snapshot(&self) -> Value {
+        let previous: Vec<Value> = self
+            .previous
+            .iter()
+            .map(|p| {
+                let blocks: Vec<Value> = p.blocks.iter().map(|(&(x, y), &w)| json!([x, y, exact(w)])).collect();
+                json!({"id": p.id, "weight": exact(p.weight), "blocks": blocks})
+            })
+            .collect();
+        json!({"next_id": self.next_id, "previous": previous, "objects": self.objects.iter().map(Object::snapshot).collect::<Vec<_>>()})
+    }
+
+    /// The tracker [`Tracker::snapshot`] wrote, under `config` (the run's constants).
+    pub fn restore(config: TrackerConfig, v: &Value) -> Result<Tracker, String> {
+        let id = |v: &Value, key: &str| read_whole(v, key).and_then(|n| u32::try_from(n).map_err(|_| format!("{key}: {n}")));
+        let previous = read_list(v, "previous")?
+            .iter()
+            .map(|p| {
+                let blocks = read_list(p, "blocks")?
+                    .iter()
+                    .map(|b| match (b[0].as_i64(), b[1].as_i64()) {
+                        (Some(x), Some(y)) => Ok(((x, y), read_exact(&b[2], "previous.blocks")?)),
+                        _ => Err(format!("previous.blocks: not [x, y, weight]: {b}")),
+                    })
+                    .collect::<Result<Weights, String>>()?;
+                Ok(Previous { id: id(p, "id")?, weight: read_exact(&p["weight"], "previous.weight")?, blocks })
+            })
+            .collect::<Result<Vec<_>, String>>()?;
+        let objects = read_list(v, "objects")?.iter().map(Object::restore).collect::<Result<Vec<_>, String>>()?;
+        Ok(Tracker { config, next_id: id(v, "next_id")?, previous, objects })
+    }
+}
+
+impl Object {
+    /// Every f64 field by name, the snapshot's table both ways.
+    fn reals(&mut self) -> [(&'static str, &mut f64); 19] {
+        [
+            ("mass", &mut self.mass),
+            ("gas_mass", &mut self.gas_mass),
+            ("sink_mass", &mut self.sink_mass),
+            ("radius", &mut self.radius),
+            ("tau_dyn", &mut self.tau_dyn),
+            ("luminosity", &mut self.luminosity),
+            ("luminosity_own", &mut self.luminosity_own),
+            ("l_nuc", &mut self.l_nuc),
+            ("l_nu", &mut self.l_nu),
+            ("l_nu_deposited", &mut self.l_nu_deposited),
+            ("sigma_c", &mut self.sigma_c),
+            ("t_c", &mut self.t_c),
+            ("d_c", &mut self.d_c),
+            ("v_r", &mut self.v_r),
+            ("thermal", &mut self.thermal),
+            ("kinetic", &mut self.kinetic),
+            ("pressure", &mut self.pressure),
+            ("potential", &mut self.potential),
+            ("unbound", &mut self.unbound),
+        ]
+    }
+
+    /// Every f64 list by name.
+    fn lists(&mut self) -> [(&'static str, &mut [f64]); 3] {
+        [("centre", &mut self.centre[..]), ("l_group", &mut self.l_group[..]), ("x_c", &mut self.x_c[..])]
+    }
+
+    /// The object as the observers' snapshot holds it, every field.
+    pub fn snapshot(&self) -> Value {
+        let mut o = self.clone();
+        let mut m = Map::new();
+        m.insert("id".into(), json!(o.id));
+        m.insert("sinks".into(), json!(o.sinks));
+        m.insert("core_group".into(), json!(o.core_group));
+        m.insert("r_core".into(), o.r_core.map_or(Value::Null, exact));
+        m.insert("envelope_mass".into(), o.envelope_mass.map_or(Value::Null, exact));
+        for (k, x) in o.reals() {
+            m.insert(k.into(), exact(*x));
+        }
+        for (k, xs) in o.lists() {
+            m.insert(k.into(), xs.iter().map(|x| exact(*x)).collect());
+        }
+        Value::Object(m)
+    }
+
+    /// The object [`Object::snapshot`] wrote.
+    pub fn restore(v: &Value) -> Result<Object, String> {
+        let optional = |key: &str| if v[key].is_null() { Ok(None) } else { read_exact(&v[key], key).map(Some) };
+        let mut o = Object {
+            id: u32::try_from(read_whole(v, "id")?).map_err(|_| "objects.id: past u32".to_string())?,
+            sinks: read_whole(v, "sinks")? as usize,
+            core_group: if v["core_group"].is_null() { None } else { Some(read_whole(v, "core_group")? as usize) },
+            r_core: optional("r_core")?,
+            envelope_mass: optional("envelope_mass")?,
+            ..Object::default()
+        };
+        for (k, x) in o.reals() {
+            *x = read_exact(&v[k], k)?;
+        }
+        for (k, xs) in o.lists() {
+            let list = read_list(v, k)?;
+            if list.len() != xs.len() {
+                return Err(format!("objects.{k}: {} values, expected {}", list.len(), xs.len()));
+            }
+            for (x, s) in xs.iter_mut().zip(list) {
+                *x = read_exact(s, k)?;
+            }
+        }
+        Ok(o)
     }
 }
 

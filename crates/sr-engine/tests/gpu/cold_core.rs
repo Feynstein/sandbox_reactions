@@ -385,6 +385,8 @@ fn r90_of(planes: &[f32]) -> (f64, f64) {
 fn series(dir: &Path) -> Vec<(u64, f64, f64, f64)> {
     let mut dumps: Vec<(u64, f64, f64, f64)> = std::fs::read_dir(dir.join("dumps"))
         .expect("the run's dumps")
+        // Each dump's observers' snapshot sits beside it (M0-D76).
+        .filter(|e| e.as_ref().unwrap().path().extension().is_some_and(|x| x == "bin"))
         .map(|e| {
             let d = Dump::read(&e.unwrap().path()).expect("a dump");
             let (r90, mass) = r90_of(&d.planes);

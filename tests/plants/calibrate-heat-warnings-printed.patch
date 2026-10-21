@@ -1,0 +1,10 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -239,7 +239,6 @@
+ pub fn say(line: &str) {
+     if COUNT_HEAT_WARNINGS.load(std::sync::atomic::Ordering::Relaxed) && line.starts_with(HEAT_UNCONVERGED_LINE) {
+         HEAT_UNCONVERGED.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+-        return;
+     }
+     println!("{line}");
+     if let Some(lines) = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).as_mut() {

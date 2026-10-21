@@ -1,0 +1,599 @@
+==== 2026-10-20T19:10:32-04:00 calibrate_bisect · clean · a fresh scratch copy of the tree
+== 2026-10-20T19:10:34-04:00 calibrate_bisect · task M0-D75 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=0 · 58.89 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.68s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 14 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178915 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 332 filtered out; finished in 52.08s
+
+
+==== 2026-10-20T19:10:32-04:00 calibrate_bisect · plant bisect-tolerance · a fresh scratch copy of the tree
+planted bisect-tolerance: tests/plants/bisect-tolerance.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T19:10:34-04:00 calibrate_bisect · task M0-D75 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 329.75 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.78s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 14 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178915 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... 
+thread 'calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs' (3069446) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:52:5:
+assertion `left == right` failed: runs for a 200-fold bracket at 2 %
+  left: 7
+ right: 11
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... 
+thread 'calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run' (3069448) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:146:9:
+m_ign_sb: 283.65220128778736 against 280
+FAILED
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... 
+thread 'calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold' (3069874) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:32:5:
+assertion `left == right` failed: §2.11: bisection to 2 %
+  left: 0.2
+ right: 0.02
+FAILED
+
+failures:
+
+failures:
+    calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs
+    calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run
+    calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold
+
+test result: FAILED. 11 passed; 3 failed; 0 ignored; 0 measured; 332 filtered out; finished in 49.77s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-20T19:10:32-04:00 calibrate_bisect · plant calibrate-record-removed · a fresh scratch copy of the tree
+planted calibrate-record-removed: tests/plants/calibrate-record-removed.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T19:10:34-04:00 calibrate_bisect · task M0-D75 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 159.18 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.58s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 14 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+
+thread 'calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is' (3064646) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:221:9:
+"build/calibrate_runs/2026-10-20T23-12-35Z/m_ign_sb-01" keeps summary.json and events.jsonl
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178915 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+
+thread 'calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life' (3064863) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:308:72:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+
+thread 'calibrate_bisect::progress_every_sets_the_lives_tick' (3065063) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:517:115:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is
+    calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life
+    calibrate_bisect::progress_every_sets_the_lives_tick
+
+test result: FAILED. 11 passed; 3 failed; 0 ignored; 0 measured; 332 filtered out; finished in 38.21s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-20T19:10:32-04:00 calibrate_bisect · plant calibrate-resume-any-mass · a fresh scratch copy of the tree
+planted calibrate-resume-any-mass: tests/plants/calibrate-resume-any-mass.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T19:10:34-04:00 calibrate_bisect · task M0-D75 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 273.13 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm3/crates/sr-engine)
+warning: unused variable: `label`
+   --> crates/sr-engine/src/calibrate.rs:668:38
+    |
+668 |     fn replay(&mut self, out: &Path, label: &str, mass: f64) -> Result<Option<PresetRun>, CalError> {
+    |                                      ^^^^^ help: if this is intentional, prefix it with an underscore: `_label`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning (run `cargo fix --lib -p sr-engine` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 6.64s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 14 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178915 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+
+thread 'calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life' (3067607) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:353:9:
+assertion `left == right` failed: another mass at run 1: ["SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3015.929 ignited=true core_collapse=false ending=none steps=673 sim_time=8.652 wall_s=3.6 replayed record=build/calibrate_runs/2026-10-20T23-14-31Z/m_ign_sb-01", "SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3418.053 ignited=true core_collapse=false ending=none steps=673 sim_time=8.608 wall_s=4.0 replayed record=build/calibrate_runs/2026-10-20T23-14-31Z/m_ign_sb-02", "SR-ERROR calibration failed: the bracket 3015.9..3418.1: its ends agree (3015.9 is Heavy, 3418.1 is Heavy), so the threshold is not in it — widen it with --bracket (two runs spent)"]
+  left: 6
+ right: 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 332 filtered out; finished in 47.64s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-20T19:10:32-04:00 calibrate_bisect · plant calibrate-progress-wrong-stage · a fresh scratch copy of the tree
+planted calibrate-progress-wrong-stage: tests/plants/calibrate-progress-wrong-stage.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T19:10:34-04:00 calibrate_bisect · task M0-D75 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 443.14 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm4/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm4/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.74s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 14 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+
+thread 'calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is' (3071683) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:256:5:
+assertion `left == right` failed: progress.json's stage is the terminal line's: SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=64 sim_time=1.492 heat_unconverged=0 stage=failed_star
+  left: "wrong_stage"
+ right: "failed_star"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178915 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 332 filtered out; finished in 50.20s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-20T19:10:32-04:00 calibrate_bisect · plant calibrate-heat-warnings-printed · a fresh scratch copy of the tree
+planted calibrate-heat-warnings-printed: tests/plants/calibrate-heat-warnings-printed.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-20T19:10:34-04:00 calibrate_bisect · task M0-D75 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 218.77 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm5/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm5/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.69s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 14 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178915 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+
+thread 'calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed' (3066139) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:385:5:
+assertion `left == right` failed: only the progress line and the other warning are said: ["SR-WARN heat unconverged step 10275 passes 13 rounds 4096", "SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud", "SR-WARN heat unconverged step 10275 passes 13 rounds 4096", "SR-WARN overrides given: measured and checked, nothing written (§2.12.1)"]
+  left: 4
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 332 filtered out; finished in 52.82s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-20T19:10:32-04:00 calibrate_bisect · plant calibrate-up-until-ending · a fresh scratch copy of the tree
+planted calibrate-up-until-ending: tests/plants/calibrate-up-until-ending.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T19:10:34-04:00 calibrate_bisect · task M0-D75 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 386.11 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm6/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm6/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.74s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 14 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178915 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... 
+thread 'calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions' (3070902) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:397:5:
+assertion `left == right` failed
+  left: Ending
+ right: CollapseOrEnding
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 332 filtered out; finished in 49.51s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-20T19:10:32-04:00 calibrate_bisect · plant calibrate-progress-every-ignored · a fresh scratch copy of the tree
+planted calibrate-progress-every-ignored: tests/plants/calibrate-progress-every-ignored.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-20T19:10:34-04:00 calibrate_bisect · task M0-D75 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 114.31 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm7/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-scv8zt3k/arm7/crates/sr-engine)
+warning: field `progress_every` is never read
+   --> crates/sr-engine/src/calibrate.rs:969:5
+    |
+958 | struct Opts {
+    |        ---- field in this struct
+...
+969 |     progress_every: Option<u64>,
+    |     ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 6.66s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 14 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491792 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178915 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.211957 until=met
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.608241 until=met
+
+thread 'calibrate_bisect::progress_every_sets_the_lives_tick' (3063955) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:506:5:
+a life of a few hundred steps shows a line every 16: ["SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.032 ignited=true core_collapse=false ending=none steps=673 sim_time=8.652 wall_s=4.1 record=build/calibrate_runs/2026-10-20T23-12-19Z/m_ign_sb-01", "SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3418.053 ignited=true core_collapse=false ending=none steps=673 sim_time=8.608 wall_s=4.6 record=build/calibrate_runs/2026-10-20T23-12-19Z/m_ign_sb-02", "SR-ERROR calibration failed: the bracket 3351.0..3418.1: its ends agree (3351.0 is Heavy, 3418.1 is Heavy), so the threshold is not in it — widen it with --bracket (two runs spent)"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::progress_every_sets_the_lives_tick
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 332 filtered out; finished in 48.68s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -491,8 +491,7 @@
+     pub fn until(self) -> Until {
+         match self {
+             Threshold::Ign => Until::IgnitionOrEnding,
+-            Threshold::Up => Until::CollapseOrEnding,
+-            Threshold::Bh => Until::Ending,
++            Threshold::Up | Threshold::Bh => Until::Ending,
+         }
+     }
+ 

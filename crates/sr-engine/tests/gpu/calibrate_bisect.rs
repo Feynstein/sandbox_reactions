@@ -6,8 +6,16 @@
 //! The driver is graded on stubbed outcomes: a threshold at a known mass, the runs it spends and the masses it asks for. The
 //! items' mapping from a life to a side is graded through [`measure`], the same call `calibrate` makes with a real run.
 //! Plant: `bisect-tolerance` (the driver stops at 20 %).
+//!
+//! M0-D75: m_up_sb's lives stop once their side is known (`Until::CollapseOrEnding`) and `--progress-every N` sets a life's tick.
+//! M0-D77: `--checkpoint-every M` saves a running life's checkpoint apart from the tick, and `--resume` continues a cut life from it.
+//! Plants: `calibrate-checkpoint-without-observers`, `calibrate-checkpoint-on-the-tick`, `calibrate-checkpoint-step-unchecked`.
 
+use sr_engine::headless::{capturing, run_captured, run_scene_captured, say, unconverged_steps, Args};
 use sr_engine::calibrate::{bisect, measure, run_with, run_with_progress, side_bh, side_ign, side_up, CalError, Life, Side, Threshold, BISECT_TOLERANCE};
+use sr_engine::scene::Scene;
+use sr_engine::watch::{RunEvent, Until, Watch};
+use sr_physics::registry::Physics;
 
 /// A stub that is Light under `threshold` and Heavy from it, recording every mass asked for.
 fn stub(threshold: f64, asked: &mut Vec<f64>) -> impl FnMut(f64) -> Result<Side, CalError> + '_ {
@@ -18,7 +26,7 @@ fn stub(threshold: f64, asked: &mut Vec<f64>) -> impl FnMut(f64) -> Result<Side,
 }
 
 fn life(mass: f64, ignited: bool, core_collapse: bool, ending: Option<&str>) -> Life {
-    Life { mass, ignited, core_collapse, ending: ending.map(str::to_string), steps: 1000, sim_time: 50.0, wall_s: 1.0 }
+    Life { mass, ignited, core_collapse, collapsed: false, ending: ending.map(str::to_string), steps: 1000, sim_time: 50.0, wall_s: 1.0 }
 }
 
 #[test]
@@ -165,6 +173,20 @@ fn the_command_checks_the_new_arguments_before_any_run() {
         (vec!["--out", out, "--only", "m_up_sb", "--max-steps", "0"], "--max-steps"),
         (vec!["--out", out, "--only", "m_ign_sb,nonsense"], "not an item"),
         (vec!["--out", out, "--only", "render_reserve_ms"], "--measure-ui"),
+        // M0-D75: a tick is a whole number of steps above 0.
+        (vec!["--out", out, "--only", "m_up_sb", "--progress-every", "0"], "--progress-every"),
+        (vec!["--out", out, "--only", "m_up_sb", "--progress-every", "-5"], "--progress-every"),
+        (vec!["--out", out, "--only", "m_up_sb", "--progress-every", "often"], "--progress-every"),
+        (vec!["--out", out, "--only", "m_up_sb", "--progress-every", "1.5"], "--progress-every"),
+        (vec!["--out", out, "--only", "m_ch_sb", "--progress-every", "0"], "--progress-every"),
+        (vec!["--out", out, "--only", "m_up_sb", "--progress-every"], "--progress-every needs a value"),
+        // M0-D77: a save interval is a whole number of steps above 0, as the tick is.
+        (vec!["--out", out, "--only", "m_up_sb", "--checkpoint-every", "0"], "--checkpoint-every"),
+        (vec!["--out", out, "--only", "m_up_sb", "--checkpoint-every", "-5"], "--checkpoint-every"),
+        (vec!["--out", out, "--only", "m_up_sb", "--checkpoint-every", "often"], "--checkpoint-every"),
+        (vec!["--out", out, "--only", "m_up_sb", "--checkpoint-every", "1.5"], "--checkpoint-every"),
+        (vec!["--out", out, "--only", "m_ch_sb", "--checkpoint-every", "0"], "--checkpoint-every"),
+        (vec!["--out", out, "--only", "m_up_sb", "--checkpoint-every"], "--checkpoint-every needs a value"),
     ] {
         let mut lines = Vec::new();
         let code = run_with(&args.iter().map(|s| s.to_string()).collect::<Vec<_>>(), &[], &mut |l| lines.push(l.to_string()));
@@ -207,6 +229,7 @@ fn a_life_keeps_its_record_and_says_where_it_is() {
         assert!(line.contains("ignited=true"), "{line}");
         assert!(record.join("summary.json").is_file() && record.join("events.jsonl").is_file(), "{record:?} keeps summary.json and events.jsonl");
         assert!(!record.join("dumps").exists(), "{record:?}: the final dump goes");
+        assert!(!record.join("progress.json").exists(), "{record:?}: a finished life's progress.json goes (M0-D74)");
         let summary: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(record.join("summary.json")).unwrap()).unwrap();
         assert!(summary["events"].as_array().is_some_and(|e| e.iter().any(|e| e["kind"] == "ignition")), "{record:?}");
     }
@@ -232,6 +255,21 @@ fn a_life_keeps_its_record_and_says_where_it_is() {
     clean(&[record.clone()]);
     assert!(record.join("summary.json").is_file() && record.join("events.jsonl").is_file(), "{record:?} is kept for a failed life");
     assert!(!record.join("dumps").exists());
+    // M0-D74: the failed life's progress.json stays as the trace of where it stopped, and says what the terminal's last progress
+    // line of the life said — the same stage and step — with the heat-warning count, the stages shown and the life's start.
+    let last = lines.iter().rev().find(|l| l.starts_with("SR-CALIBRATE progress")).unwrap_or_else(|| panic!("a tick before the ceiling: {lines:?}"));
+    let said = |key: &str| last.split(&format!("{key}=")).nth(1).and_then(|v| v.split(' ').next()).unwrap_or_else(|| panic!("{key} in {last}")).to_string();
+    let progress: serde_json::Value =
+        serde_json::from_str(&std::fs::read_to_string(record.join("progress.json")).unwrap_or_else(|e| panic!("{record:?} keeps progress.json: {e}"))).unwrap();
+    assert_eq!(progress["item"], "m_ign_sb");
+    assert_eq!(progress["stage"].as_str().unwrap(), said("stage"), "progress.json's stage is the terminal line's: {last}");
+    assert_eq!(progress["step"].as_u64().unwrap().to_string(), said("step"), "{last}");
+    assert!(progress["sim_time"].as_f64().is_some_and(f64::is_finite) && progress["mass"].as_f64().is_some(), "{progress}");
+    assert_eq!(progress["heat_unconverged"].as_u64().unwrap().to_string(), said("heat_unconverged"), "{last}");
+    assert_eq!(progress["stages"].as_array().and_then(|s| s.last()).map(|s| s["stage"].clone()), Some(progress["stage"].clone()), "the trail ends on the stage now: {progress}");
+    assert!(progress["started"].as_str().is_some_and(|t| t.ends_with('Z') && t.len() == 20), "started is UTC: {progress}");
+    assert!(!record.join("progress.json.tmp").exists(), "the temp file is renamed away");
+    assert!(lines.iter().all(|l| !l.starts_with("SR-WARN heat unconverged")), "a life's heat warnings are counted, not printed: {lines:?}");
     for stamp in stamps {
         let _ = std::fs::remove_dir_all(stamp);
     }
@@ -338,4 +376,457 @@ fn a_stopped_item_resumes_without_rerunning_a_finished_life() {
 
     let _ = std::fs::remove_dir_all(&dir);
     let _ = std::fs::remove_dir_all(&out_dir);
+}
+
+/// M0-D74: a `calibrate` life's `SR-WARN heat unconverged` lines are counted, not printed or kept — a long life reaches P5's
+/// ceiling thousands of times and they bury `calibrate`'s own lines; every other line is said as before, and a run that does not
+/// count (headless's own, the tests') says them all, never silent.
+#[test]
+fn a_lifes_heat_warnings_are_counted_not_printed() {
+    let warn = "SR-WARN heat unconverged step 10275 passes 13 rounds 4096";
+    let ((), kept) = capturing(true, || {
+        say(warn);
+        say("SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud");
+        say(warn);
+        say("SR-WARN overrides given: measured and checked, nothing written (§2.12.1)");
+    });
+    assert_eq!(unconverged_steps(), 2, "both heat warnings counted");
+    assert_eq!(kept.len(), 2, "only the progress line and the other warning are said: {kept:?}");
+    assert!(kept.iter().all(|l| !l.contains("heat unconverged step")), "{kept:?}");
+    assert!(kept.iter().any(|l| l.starts_with("SR-WARN overrides")), "another SR-WARN still shows: {kept:?}");
+    let ((), kept) = capturing(false, || say(warn));
+    assert_eq!((kept.as_slice(), unconverged_steps()), ([warn.to_string()].as_slice(), 0), "a run that does not count says it, and counts nothing");
+}
+
+/// M0-D75: each item's `until`, and what the observers say of it on events — no GPU. m_up_sb's lives stop at the first frame that
+/// fires `core_collapse` (or ends), m_ign_sb's at the ignition, m_bh_sb's and the presets' only at their ending: a neutron star
+/// can still become a black hole, so m_bh_sb waits for the stage to hold its 10 t.u.
+#[test]
+fn m_up_stops_at_a_collapse_and_the_others_keep_their_conditions() {
+    assert_eq!(Threshold::Up.until(), Until::CollapseOrEnding);
+    assert_eq!(Threshold::Ign.until(), Until::IgnitionOrEnding);
+    assert_eq!(Threshold::Bh.until(), Until::Ending, "m_bh_sb waits for the ending");
+    assert_eq!(Until::CollapseOrEnding.condition(), "collapse|ending");
+    assert!(Until::parse("collapse|ending").is_err(), "--until does not parse the built-in condition");
+    let watch = Watch::new(&Physics::shipped().expect("the shipped physics"), 600, 0.0);
+    let event = |kind: &'static str| RunEvent { step: 100, sim_time: 5.0, kind, object: 1, detail: serde_json::json!({"mass_sb": 1.0}) };
+    for (kind, collapse_or_ending, ending) in [
+        ("core_collapse", true, false),
+        ("ending", true, true),
+        ("ignition", false, false),
+        ("supernova", false, false),
+        ("sink_formed", false, false),
+    ] {
+        assert_eq!(watch.holds(Until::CollapseOrEnding, &[event(kind)]), collapse_or_ending, "{kind} under m_up_sb's condition");
+        assert_eq!(watch.holds(Until::Ending, &[event(kind)]), ending, "{kind} under the ending's");
+    }
+    assert!(!watch.holds(Until::CollapseOrEnding, &[]), "a frame with no event and no remnant shown does not stop it");
+}
+
+/// M0-D75: a life's side from the record the engine wrote — read back by `--resume`, no GPU. A record of the binary before
+/// M0-D75 (run to its ending) sides as it did; one cut at the core collapse (no `ending` event) sides heavy; so does one that
+/// shows a neutron star or a black hole without the event; a white dwarf's ending stays light.
+#[test]
+fn a_record_sides_the_same_whichever_condition_stopped_it() {
+    let dir = std::env::temp_dir().join(format!("sr-calibrate-sides-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    let (lo, hi) = (3351.0, 3380.0);
+    let record = |nn: u32, mass: f64, condition: &str, events: &[&str], stages: &[&str], ending: Option<&str>| {
+        let mut events: Vec<serde_json::Value> = events.iter().map(|k| serde_json::json!({"step": 9, "sim_time": 1.0, "kind": k, "object": 1, "detail": {}})).collect();
+        if let Some(stage) = ending {
+            events.push(serde_json::json!({"step": 99, "sim_time": 11.0, "kind": "ending", "object": 1, "detail": {"stage": stage}}));
+        }
+        let stages: Vec<serde_json::Value> = stages.iter().map(|s| serde_json::json!({"stage": s, "from_step": 5, "sim_time": 0.5})).collect();
+        let summary = serde_json::json!({
+            "scene": format!("calibrate:m_up_sb:{mass:.3}"), "until": {"condition": condition, "met": true}, "steps": 1000, "sim_time": 50.0, "wall_s": 1.0,
+            "adapter": {"name": "test adapter"}, "max_gas_speed": 1.0, "events": events,
+            "objects": [{"id": 1, "stage": null, "mass_sb": mass, "stages": stages}],
+        });
+        let folder = dir.join(format!("m_up_sb-{nn:02}"));
+        std::fs::create_dir_all(&folder).unwrap();
+        std::fs::write(folder.join("summary.json"), summary.to_string()).unwrap();
+    };
+    // Life 01: a white dwarf, light. Life 02 under each way a record ends; every one sides heavy.
+    type Heavy = (&'static str, &'static str, &'static [&'static str], &'static [&'static str], Option<&'static str>);
+    let heavy: [Heavy; 4] = [
+        ("to its ending, before M0-D75", "ending", &["core_collapse", "supernova"], &["neutron_star"], Some("neutron_star")),
+        ("at the core collapse", "collapse|ending", &["core_collapse"], &["collapsing"], None),
+        ("at a neutron star shown, no event", "collapse|ending", &["supernova"], &["neutron_star"], None),
+        ("at a black hole shown, no event", "collapse|ending", &["sink_formed"], &["black_hole"], None),
+    ];
+    for (what, condition, events, stages, ending) in heavy {
+        record(1, lo, "ending", &["ignition"], &["main_sequence", "white_dwarf"], Some("white_dwarf"));
+        record(2, hi, condition, events, stages, ending);
+        let out = dir.join("calibration.json");
+        let args: Vec<String> = ["--out", out.to_str().unwrap(), "--only", "m_up_sb", "--bracket", "3351,3380", "--resume", dir.to_str().unwrap()].map(String::from).to_vec();
+        let mut lines = Vec::new();
+        let code = run_with(&args, &[], &mut |l| lines.push(l.to_string()));
+        assert_eq!(code, 0, "{what}: {lines:?}");
+        let runs: Vec<&String> = lines.iter().filter(|l| l.starts_with("SR-CALIBRATE run")).collect();
+        assert_eq!(runs.len(), 2, "{what}: {lines:?}");
+        assert!(runs[0].contains("side=Light") && runs[0].contains("ending=white_dwarf") && runs[0].contains(" replayed"), "{what}: {}", runs[0]);
+        assert!(runs[1].contains("side=Heavy") && runs[1].contains(" replayed"), "{what}: {}", runs[1]);
+        assert!(lines.iter().any(|l| l.starts_with("SR-CALIBRATE item=m_up_sb value=")), "{what}: the item closes: {lines:?}");
+        let _ = std::fs::remove_file(&out);
+    }
+    // A record with a collapse remnant that is not a white dwarf, no event and no ending, is on no side: still refused.
+    record(1, lo, "ending", &["ignition"], &["main_sequence", "white_dwarf"], Some("white_dwarf"));
+    record(2, hi, "collapse|ending", &["supernova"], &["main_sequence"], None);
+    let args: Vec<String> = ["--out", dir.join("calibration.json").to_str().unwrap(), "--only", "m_up_sb", "--bracket", "3351,3380", "--resume", dir.to_str().unwrap()].map(String::from).to_vec();
+    let mut lines = Vec::new();
+    assert_eq!(run_with(&args, &[], &mut |l| lines.push(l.to_string())), 6, "{lines:?}");
+    assert!(lines.iter().any(|l| l.contains("neither side of the threshold")), "{lines:?}");
+    let _ = std::fs::remove_dir_all(&dir);
+}
+
+/// M0-D75: `--progress-every N` sets the tick of every life of the invocation — a progress line and a progress.json write each
+/// time the step count passes a multiple of N, the file saying N — and items 1–2 (no lives) ignore it. Two real short lives
+/// (the nominal cloud and 1.02 × it, ignition ends each) on the test adapter; the default tick, 10,000, shows none in them.
+#[test]
+fn progress_every_sets_the_lives_tick() {
+    let m0 = sr_engine::scene::UNIT_MASS;
+    let bracket = format!("{},{}", m0, 1.02 * m0);
+    let out_dir = std::env::temp_dir().join(format!("sr-calibrate-tick-{}", std::process::id()));
+    std::fs::create_dir_all(&out_dir).unwrap();
+    let out = out_dir.join("calibration.json");
+    let mut args: Vec<String> = ["--out", out.to_str().unwrap(), "--only", "m_ign_sb", "--bracket", bracket.as_str()].map(String::from).to_vec();
+    if let Some(adapter) = std::env::var("SR_TEST_ADAPTER").ok().filter(|a| !a.trim().is_empty()) {
+        args.extend(["--adapter".to_string(), adapter]);
+    }
+    let progress_steps = |lines: &[String]| -> Vec<u64> {
+        lines.iter().filter(|l| l.starts_with("SR-CALIBRATE progress")).map(|l| l.split(" step=").nth(1).unwrap().split(' ').next().unwrap().parse().unwrap()).collect()
+    };
+    let mut stamps = Vec::new();
+    let mut note = |lines: &[String]| {
+        stamps.extend(lines.iter().filter_map(|l| l.split("record=").nth(1)).filter_map(|r| std::path::Path::new(r.trim()).parent().map(|p| p.to_path_buf())));
+    };
+
+    // The default tick: a few hundred steps say nothing. `--progress-every 16`: one line a frame of 16 steps, a life at a time.
+    let mut lines = Vec::new();
+    assert_eq!(run_with(&args, &[], &mut |l| lines.push(l.to_string())), 6, "the ends agree: {lines:?}");
+    note(&lines);
+    assert!(progress_steps(&lines).is_empty(), "the default tick is 10,000 steps: {lines:?}");
+    let mut sixteen = args.clone();
+    sixteen.extend(["--progress-every".to_string(), "16".to_string()]);
+    let mut lines = Vec::new();
+    assert_eq!(run_with(&sixteen, &[], &mut |l| lines.push(l.to_string())), 6, "{lines:?}");
+    note(&lines);
+    let first_life: Vec<u64> = progress_steps(&lines[..lines.iter().position(|l| l.starts_with("SR-CALIBRATE run")).unwrap()]);
+    assert!(first_life.len() >= 3, "a life of a few hundred steps shows a line every 16: {lines:?}");
+    assert!(first_life.windows(2).all(|w| w[1] - w[0] == 16), "a line every 16 steps: {first_life:?}");
+
+    // A life that fails keeps its progress.json, which names the tick it was written at.
+    let mut failing = sixteen.clone();
+    failing.extend(["--max-steps".to_string(), "64".to_string()]);
+    let mut lines = Vec::new();
+    assert_eq!(run_with(&failing, &[], &mut |l| lines.push(l.to_string())), 6, "{lines:?}");
+    let error = lines.iter().find(|l| l.starts_with("SR-ERROR")).unwrap_or_else(|| panic!("{lines:?}"));
+    let record = std::path::PathBuf::from(error.split("record kept: ").nth(1).unwrap_or_else(|| panic!("{error}")).trim_end_matches(')'));
+    stamps.extend(record.parent().map(|p| p.to_path_buf()));
+    let progress: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(record.join("progress.json")).unwrap()).unwrap();
+    assert_eq!(progress["progress_every"], 16, "{progress}");
+    assert!(progress["step"].as_u64().is_some_and(|s| (17..=64).contains(&s)), "the last tick is one the 64-step life reached: {progress}");
+
+    // Items 1–2 run no life and ignore the flag.
+    let sheet: Vec<String> = ["--out", out_dir.join("sheet.json").to_str().unwrap(), "--only", "m_ch_sb", "--progress-every", "16"].map(String::from).to_vec();
+    let mut lines = Vec::new();
+    assert_eq!(run_with(&sheet, &[], &mut |l| lines.push(l.to_string())), 0, "{lines:?}");
+    assert!(progress_steps(&lines).is_empty(), "{lines:?}");
+    for stamp in stamps {
+        let _ = std::fs::remove_dir_all(stamp);
+    }
+    let _ = std::fs::remove_dir_all(&out_dir);
+}
+
+/// M0-D75: a life that shows a black hole without the `core_collapse` event is over for m_up_sb the frame it shows it — the run
+/// stops there, `until.met`, with no `ending` (the stage had not held 10 t.u.) — where `Until::Ending` runs on to the hold. The
+/// observe scope's seeded cloud (a sink of 50 in the sink_cloud scene at T 0.5), under `calibrate`'s own condition.
+#[test]
+fn a_life_showing_a_black_hole_stops_before_its_ending() {
+    let dir = std::env::temp_dir().join(format!("sr-calibrate-collapse-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).unwrap();
+    let scenes = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../scenes");
+    let mut cloud: serde_json::Value = serde_json::from_slice(&std::fs::read(scenes.join("sink_cloud.json")).unwrap()).unwrap();
+    cloud["objects"][0]["t"] = 0.5.into();
+    let scene = dir.join("sink_cloud.json");
+    std::fs::write(&scene, cloud.to_string()).unwrap();
+    let adapter = std::env::var("SR_TEST_ADAPTER").ok().filter(|a| !a.trim().is_empty());
+
+    let seed_out = dir.join("seed");
+    let mut seed: Vec<String> = ["--scene", scene.to_str().unwrap(), "--steps", "40", "--out", seed_out.to_str().unwrap()].map(String::from).to_vec();
+    seed.extend(adapter.iter().flat_map(|a| ["--adapter".to_string(), a.clone()]));
+    let (code, lines) = run_captured(&seed);
+    assert_eq!(code, 0, "{lines:?}");
+    let mut dump = sr_engine::dump::Dump::read(&seed_out.join("dumps").join("s_40.bin")).expect("the seed run's dump");
+    let c = (dump.world.width / 2, dump.world.height / 2);
+    dump.sinks = vec![sr_engine::dump::Sink { x: f64::from(c.0) + 0.5, y: f64::from(c.1) + 0.5, vx: 0.0, vy: 0.0, m: 50.0 }];
+    let seeded = dir.join("seeded.bin");
+    dump.write(&seeded).unwrap();
+
+    let go = |name: &str, until: Until| {
+        let out = dir.join(name);
+        let args = Args {
+            scene: format!("calibrate:m_up_sb:{name}"),
+            steps: None,
+            until: Some(until),
+            world: None,
+            edge: None,
+            max_steps: 20_000,
+            out: Some(out.clone()),
+            adapter: adapter.clone(),
+            timing: false,
+            dump_every: None,
+            load_dump: Some(seeded.clone()),
+            continue_life: false,
+            cpu_reference: false,
+        };
+        let (code, lines) = run_scene_captured(args, Scene::load(&scene).unwrap(), None);
+        assert_eq!(code, 0, "{name}: {lines:?}");
+        serde_json::from_slice::<serde_json::Value>(&std::fs::read(out.join("summary.json")).unwrap()).unwrap()
+    };
+    let stopped = go("collapse", Until::CollapseOrEnding);
+    assert_eq!(stopped["until"], serde_json::json!({"condition": "collapse|ending", "met": true}), "{}", stopped["until"]);
+    let kinds: Vec<&str> = stopped["events"].as_array().unwrap().iter().map(|e| e["kind"].as_str().unwrap()).collect();
+    assert!(!kinds.contains(&"ending") && !kinds.contains(&"core_collapse"), "no ending, no collapse event: the black hole's showing stopped it: {kinds:?}");
+    let shows_black_hole = stopped["objects"].as_array().unwrap().iter().any(|o| o["stages"].as_array().unwrap().iter().any(|s| s["stage"] == "black_hole"));
+    assert!(shows_black_hole, "an object shows black_hole: {}", stopped["objects"]);
+    let waited = go("ending", Until::Ending);
+    assert!(waited["steps"].as_u64() > stopped["steps"].as_u64(), "the ending's run goes on past it: {} against {}", waited["steps"], stopped["steps"]);
+    assert!(waited["events"].as_array().unwrap().iter().any(|e| e["kind"] == "ending"), "{}", waited["events"]);
+    let _ = std::fs::remove_dir_all(&dir);
+}
+
+/// Copies the folder `from` and what it holds into `to` (a test's scratch; no links).
+fn copy_tree(from: &std::path::Path, to: &std::path::Path) {
+    std::fs::create_dir_all(to).unwrap();
+    for entry in std::fs::read_dir(from).unwrap().flatten() {
+        let target = to.join(entry.file_name());
+        if entry.path().is_dir() {
+            copy_tree(&entry.path(), &target);
+        } else {
+            std::fs::copy(entry.path(), &target).unwrap();
+        }
+    }
+}
+
+/// M0-D77: `--checkpoint-every M` is the save interval, a flag of its own beside `--progress-every N` (the display interval), and a
+/// life cut part-way is continued by `--resume` from its last checkpoint instead of from step 0. Two real short lives (the
+/// nominal cloud and 1.02 × it, ignition ends each): the unbroken invocation; the same cut at `--max-steps 130` with the two
+/// intervals set apart (progress lines every frame of 16 steps, a checkpoint every 48) — the folder holds the last whole pair and
+/// progress.json says where it is; `--resume` continues the first life from it and writes the record of the unbroken life
+/// (`wall_s` aside); a checkpoint of another mass, of other physics, a snapshot of another step beside its dump, a torn dump
+/// and a dump with no snapshot are not used and the life runs from step 0 saying why; a torn newer pair leaves the older one.
+#[test]
+fn a_cut_life_resumes_at_its_last_checkpoint() {
+    let m0 = sr_engine::scene::UNIT_MASS;
+    let bracket = format!("{},{}", m0, 1.02 * m0);
+    let out_dir = std::env::temp_dir().join(format!("sr-calibrate-checkpoint-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&out_dir);
+    std::fs::create_dir_all(&out_dir).unwrap();
+    let out = out_dir.join("calibration.json");
+    let mut args: Vec<String> = ["--out", out.to_str().unwrap(), "--only", "m_ign_sb", "--bracket", bracket.as_str()].map(String::from).to_vec();
+    let adapter = std::env::var("SR_TEST_ADAPTER").ok().filter(|a| !a.trim().is_empty());
+    if let Some(adapter) = &adapter {
+        args.extend(["--adapter".to_string(), adapter.clone()]);
+    }
+    let with = |extra: &[&str]| -> Vec<String> { args.iter().cloned().chain(extra.iter().map(|s| s.to_string())).collect() };
+    let go = |args: &[String]| {
+        let mut lines = Vec::new();
+        let code = run_with_progress(args, &[], 10_000, &mut |l| lines.push(l.to_string()));
+        (code, lines)
+    };
+    let runs_of = |lines: &[String]| lines.iter().filter(|l| l.starts_with("SR-CALIBRATE run")).cloned().collect::<Vec<_>>();
+    // A run line up to its wall time: what the unbroken invocation said of the same life.
+    let same_life = |line: &str| line.split(" wall_s=").next().unwrap().to_string();
+    let record_of = |line: &str| std::path::PathBuf::from(line.split("record=").nth(1).unwrap().trim());
+    let error_of = |lines: &[String]| lines.iter().find(|l| l.starts_with("SR-ERROR")).cloned().unwrap_or_default();
+    let steps_of = |lines: &[String]| -> Vec<u64> {
+        lines.iter().filter(|l| l.starts_with("SR-CALIBRATE progress")).map(|l| l.split(" step=").nth(1).unwrap().split(' ').next().unwrap().parse().unwrap()).collect()
+    };
+    let json_of = |path: std::path::PathBuf| -> serde_json::Value { serde_json::from_str(&std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()))).unwrap() };
+    // A summary.json without the wall time, which a continued life sums over its segments.
+    let unwalled = |mut v: serde_json::Value| {
+        v.as_object_mut().unwrap().remove("wall_s");
+        v
+    };
+    let mut stamps = Vec::new();
+
+    // The unbroken invocation, the defaults: two lives, the ends agree (exit 6), no checkpoint left behind.
+    let (code, unbroken) = go(&args);
+    assert_eq!(code, 6, "{unbroken:?}");
+    let first = runs_of(&unbroken);
+    assert_eq!(first.len(), 2, "{unbroken:?}");
+    let (rec1, rec2) = (record_of(&first[0]), record_of(&first[1]));
+    stamps.extend(rec1.parent().map(|p| p.to_path_buf()));
+    let unbroken_summary = json_of(rec1.join("summary.json"));
+    let steps_1 = unbroken_summary["steps"].as_u64().unwrap();
+    assert!(steps_1 > 150, "the nominal cloud's life must outlast the cut at 130 steps: {steps_1}");
+    assert!(!rec1.join("checkpoint").exists() && !rec2.join("checkpoint").exists(), "a finished life leaves no checkpoint");
+
+    // Cut at 130 steps, progress every 16 and a checkpoint every 48 (frames end at 1 + 16k: the saves come at 49 and 97).
+    let (code, cut) = go(&with(&["--progress-every", "16", "--checkpoint-every", "48", "--max-steps", "130"]));
+    assert_eq!(code, 6, "{cut:?}");
+    let life_dir = record_of(&format!("record={}", error_of(&cut).split("record kept: ").nth(1).unwrap_or_else(|| panic!("{cut:?}")).trim_end_matches(')')));
+    let cut_dir = life_dir.parent().unwrap().to_path_buf();
+    stamps.push(cut_dir.clone());
+    let listing = |dir: &std::path::Path| -> Vec<String> {
+        let mut names: Vec<String> = std::fs::read_dir(dir).unwrap().flatten().map(|e| e.file_name().to_string_lossy().into_owned()).collect();
+        names.sort();
+        names
+    };
+    assert_eq!(listing(&life_dir.join("checkpoint")), ["s_97.bin", "s_97.observers.json"], "one whole pair, the last save's");
+    let ticks = steps_of(&cut);
+    assert!(ticks.first() == Some(&17) && ticks.last() == Some(&129) && ticks.windows(2).all(|w| w[1] - w[0] == 16), "progress lines at their own 16: {ticks:?}");
+    let note = json_of(life_dir.join("progress.json"));
+    assert_eq!((note["step"].as_u64(), note["checkpoint_step"].as_u64(), note["continued_from_step"].is_null()), (Some(129), Some(97), true), "{note}");
+    let snapshot = json_of(life_dir.join("checkpoint").join("s_97.observers.json"));
+    assert!(snapshot["physics_hash"].as_str().is_some_and(|h| h.len() == 64) && snapshot["adapter"].is_string(), "{snapshot}");
+
+    // Not used: each runs from step 0 on its own copy of the cut invocation, and says why.
+    let reasons: Vec<(&str, Vec<String>)> = vec![
+        ("another mass", with(&["--bracket", &format!("{},{}", 0.9 * m0, 1.02 * m0)])),
+        ("physics_hash", with(&[])),
+        ("another step", with(&[])),
+        ("torn dump", with(&[])),
+        ("no snapshot", with(&[])),
+        ("another adapter", with(&["--adapter", "no such adapter"])),
+    ];
+    for (what, base) in reasons {
+        let copy = out_dir.join(format!("copy-{}", what.replace(' ', "-")));
+        copy_tree(&cut_dir, &copy);
+        let checkpoint = copy.join("m_ign_sb-01").join("checkpoint");
+        let snapshot_path = checkpoint.join("s_97.observers.json");
+        let edit = |key: &str, value: serde_json::Value| {
+            let mut v = json_of(snapshot_path.clone());
+            v[key] = value;
+            std::fs::write(&snapshot_path, v.to_string()).unwrap();
+        };
+        let needle = match what {
+            "physics_hash" => {
+                edit("physics_hash", "0".repeat(64).into());
+                "physics_hash"
+            }
+            "another step" => {
+                edit("step", 81.into());
+                "holds step 81, beside a dump of step 97"
+            }
+            "torn dump" => {
+                let bin = checkpoint.join("s_97.bin");
+                let bytes = std::fs::read(&bin).unwrap();
+                std::fs::write(&bin, &bytes[..bytes.len() / 2]).unwrap();
+                "s_97.bin"
+            }
+            "no snapshot" => {
+                std::fs::remove_file(&snapshot_path).unwrap();
+                "no snapshot beside it"
+            }
+            "another adapter" => "--adapter names",
+            _ => "this life is",
+        };
+        // (for "another adapter" the later --adapter wins over the test adapter's)
+        let argv = [base, vec!["--resume".to_string(), copy.to_str().unwrap().to_string(), "--progress-every".to_string(), "16".to_string(), "--max-steps".to_string(), "130".to_string()]].concat();
+        let (code, lines) = go(&argv);
+        let warn = lines.iter().find(|l| l.starts_with("SR-WARN checkpoint not used")).unwrap_or_else(|| panic!("{what}: a checkpoint not used says so: {lines:?}"));
+        assert!(warn.contains(needle), "{what}: should say {needle:?}: {warn}");
+        assert!(lines.iter().all(|l| !l.starts_with("SR-CALIBRATE continue")), "{what}: {lines:?}");
+        if what == "another adapter" {
+            assert_ne!(code, 0, "{what}: no such adapter opens: {lines:?}");
+        } else {
+            assert_eq!(code, 6, "{what}: the life ran fresh into the cut again: {lines:?}");
+            assert_eq!(steps_of(&lines).first(), Some(&17), "{what}: from step 0: {lines:?}");
+        }
+        let _ = std::fs::remove_dir_all(&copy);
+    }
+
+    // A torn newer pair (its dump half-written, no snapshot yet) leaves the older whole one: the life continues from it.
+    let torn = out_dir.join("copy-torn-newer");
+    copy_tree(&cut_dir, &torn);
+    let checkpoint = torn.join("m_ign_sb-01").join("checkpoint");
+    let bytes = std::fs::read(checkpoint.join("s_97.bin")).unwrap();
+    std::fs::write(checkpoint.join("s_113.bin"), &bytes[..bytes.len() / 3]).unwrap();
+    let (code, lines) = go(&with(&["--resume", torn.to_str().unwrap()]));
+    assert_eq!(code, 6, "{lines:?}");
+    assert!(runs_of(&lines)[0].contains(" continued from step 97"), "{lines:?}");
+    let _ = std::fs::remove_dir_all(&torn);
+
+    // A continued life cut again: progress.json says where this process began and the checkpoint it saved, and the stage trail
+    // of the cut run carries over.
+    let again = out_dir.join("copy-cut-again");
+    copy_tree(&cut_dir, &again);
+    let (code, lines) = go(&with(&["--resume", again.to_str().unwrap(), "--progress-every", "16", "--checkpoint-every", "16", "--max-steps", "125"]));
+    assert_eq!(code, 6, "{lines:?}");
+    assert!(lines.iter().any(|l| l.starts_with("SR-CALIBRATE continue item=m_ign_sb") && l.contains("from step 97")), "{lines:?}");
+    assert_eq!(steps_of(&lines), [113], "no line at the step it continued from: {lines:?}");
+    let note = json_of(again.join("m_ign_sb-01").join("progress.json"));
+    assert_eq!((note["continued_from_step"].as_u64(), note["checkpoint_step"].as_u64(), note["step"].as_u64()), (Some(97), Some(113), Some(113)), "{note}");
+    let trail = |v: &serde_json::Value| v["stages"].as_array().unwrap().iter().map(|s| (s["stage"].as_str().unwrap().to_string(), s["since_step"].as_u64().unwrap())).collect::<Vec<_>>();
+    let before = trail(&json_of(life_dir.join("progress.json")));
+    let after = trail(&note);
+    assert!(!before.is_empty() && after.starts_with(&before.iter().filter(|(_, at)| *at <= 97).cloned().collect::<Vec<_>>()), "the cut run's trail goes on: {before:?} then {after:?}");
+    let _ = std::fs::remove_dir_all(&again);
+
+    // `--resume`: the first life continues from step 97 and is the unbroken life's — its summary.json but for `wall_s`, its
+    // events.jsonl byte for byte — the second runs fresh, the invocation says what the unbroken one did.
+    let (code, lines) = go(&with(&["--resume", cut_dir.to_str().unwrap(), "--progress-every", "16"]));
+    assert_eq!(code, 6, "{lines:?}");
+    let runs = runs_of(&lines);
+    assert_eq!(runs.len(), 2, "{lines:?}");
+    assert!(runs[0].contains(" continued from step 97") && !runs[1].contains("continued"), "{runs:?}");
+    assert!(lines.iter().any(|l| l.starts_with("SR-CALIBRATE continue item=m_ign_sb") && l.contains("from step 97")), "{lines:?}");
+    assert_eq!(runs.iter().map(|l| same_life(l)).collect::<Vec<_>>(), first.iter().map(|l| same_life(l)).collect::<Vec<_>>(), "the run sequence is the unbroken one's");
+    assert_eq!(record_of(&runs[0]), life_dir);
+    let continued_summary = json_of(life_dir.join("summary.json"));
+    assert_eq!(unwalled(continued_summary.clone()), unwalled(unbroken_summary.clone()), "the continued life is the unbroken life's");
+    assert_eq!(std::fs::read(life_dir.join("events.jsonl")).unwrap(), std::fs::read(rec1.join("events.jsonl")).unwrap());
+    assert!(continued_summary["wall_s"].as_f64().unwrap() > 0.0);
+    assert_eq!(steps_of(&lines).first(), Some(&113), "no line at or before the checkpoint's step: {lines:?}");
+    assert!(!life_dir.join("checkpoint").exists() && !life_dir.join("progress.json").exists(), "a finished life leaves no checkpoint and no progress.json");
+    for stamp in stamps {
+        let _ = std::fs::remove_dir_all(stamp);
+    }
+    let _ = std::fs::remove_dir_all(&out_dir);
+}
+
+/// M0-D77: a continued life whose restored state already meets its `until` ends at once — the condition is read on a frame's
+/// fresh events, and an event fired before the cut never fires again. The nominal cloud run to its ignition; a second run that
+/// continues from the dump it left (the same label and `until`) stops where it started, `until.met`, not at `--max-steps`.
+#[test]
+fn a_continued_life_that_already_met_its_until_ends_at_once() {
+    let dir = std::env::temp_dir().join(format!("sr-calibrate-ends-at-once-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).unwrap();
+    let adapter = std::env::var("SR_TEST_ADAPTER").ok().filter(|a| !a.trim().is_empty());
+    let scene = || Scene::preset_mass("sun", sr_engine::scene::UNIT_MASS, sr_engine::state::WorldConfig::default()).unwrap();
+    let go = |name: &str, load: Option<std::path::PathBuf>| {
+        let out = dir.join(name);
+        let args = Args {
+            scene: "calibrate:ends_at_once:m0".to_string(),
+            steps: None,
+            until: Some(Until::parse("event:ignition").unwrap()),
+            world: None,
+            edge: None,
+            max_steps: 20_000,
+            out: Some(out.clone()),
+            adapter: adapter.clone(),
+            timing: false,
+            dump_every: None,
+            continue_life: load.is_some(),
+            load_dump: load,
+            cpu_reference: false,
+        };
+        let (code, lines) = run_scene_captured(args, scene(), None);
+        (code, lines, out)
+    };
+    let (code, lines, first) = go("first", None);
+    assert_eq!(code, 0, "{lines:?}");
+    let summary: serde_json::Value = serde_json::from_slice(&std::fs::read(first.join("summary.json")).unwrap()).unwrap();
+    let steps = summary["steps"].as_u64().unwrap();
+    let dump = first.join("dumps").join(format!("s_{steps}.bin"));
+    let (code, lines, second) = go("second", Some(dump));
+    assert_eq!(code, 0, "the restored life met its until already: {lines:?}");
+    let again: serde_json::Value = serde_json::from_slice(&std::fs::read(second.join("summary.json")).unwrap()).unwrap();
+    assert_eq!((again["steps"].as_u64(), &again["until"]["met"]), (Some(steps), &serde_json::json!(true)), "{again}");
+    assert_eq!(again["events"], summary["events"]);
+    let _ = std::fs::remove_dir_all(&dir);
 }

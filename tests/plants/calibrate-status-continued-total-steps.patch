@@ -1,0 +1,20 @@
+--- a/tools/calibrate_status.py
++++ b/tools/calibrate_status.py
+@@ -164,7 +164,7 @@
+     ran = None
+     if progress["started"] is not None:
+         ran = (now - progress["age"]) - progress["started"]
+-    own = progress["step"] - progress["continued"]  # this process's steps: a continued life did not run the ones before its checkpoint
++    own = progress["step"]  # this process's steps: a continued life did not run the ones before its checkpoint
+     if not ran or ran <= 0 or own <= 0 or progress["every"] <= 0:
+         return STALE_S
+     return max(STALE_S, STALE_TICKS * progress["every"] * ran / own)
+@@ -182,7 +182,7 @@
+     """(the running life's progress line, its seconds left or None). The life is sized by the finished life nearest in mass —
+     a guess: lives of other masses differ — and its pace is this life's own steps over the time it has run."""
+     step = progress["step"]
+-    own = step - progress["continued"]
++    own = step
+     rate = own / elapsed if elapsed and elapsed > 0 and own > 0 else None
+     pace = " at {:.0f} steps/s".format(rate) if rate else ""
+     if progress["save_known"]:

@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/ledger.rs
++++ b/crates/sr-engine/src/ledger.rs
+@@ -271,7 +271,7 @@
+         ledger.neutrino_lost = read_exact(&v["neutrino_lost"], "ledger.neutrino_lost")?;
+         ledger.neutrino_deposited = read_exact(&v["neutrino_deposited"], "ledger.neutrino_deposited")?;
+         let record = |k: &str| if v[k].is_null() { Ok(None) } else { Record::restore(&v[k]).map(Some) };
+-        (ledger.start, ledger.last) = (record("start")?, record("last")?);
++        (ledger.start, ledger.last) = (None, record("last")?);
+         Ok(ledger)
+     }
+ 

@@ -10,7 +10,7 @@
 //! φ exist only then), so that step is a chunk of its own. Of the scene's switches, `gravity` turns P2 on (M0-T31), `hydro` P4 (M0-T34) under the run's edge
 //! mode (M0-T35) and `heat` P5 with the scene's `test` flags (M0-T42; a step whose implicit P5 hit its ceiling prints
 //! `SR-WARN heat unconverged step <n> passes <k> rounds <r>` — read at the last step of each submission, M0-T119; every
-//! step's is M0-T121's) and `reactions` P6 with the registry's enabled records and
+//! step's is M0-T121's; a `calibrate` life counts them instead, M0-D74) and `reactions` P6 with the registry's enabled records and
 //! the scene's `pin_temperature` (M0-T46), `sinks` P3 (M0-T51) and `neutrinos` P7 (M0-T54; M0-D47) — P7 reads the S_ν plane P6 writes,
 //! so with `reactions` off it is not built, not a gate run every step over a zero plane.
 //!
@@ -19,6 +19,12 @@
 //! where a straight run's do. `--load-dump FILE` starts from a dump instead of the scene's objects: its world (a
 //! `--world` other than it is refused) and cells, its step index and the step's records; the scene still gives the
 //! constants, the edge and the switches. `--steps N` is then N more steps. A dump refused is exit 4.
+//!
+//! Beside every dump of a GPU run, the observers' snapshot `dumps/s_<step>.observers.json` (contract §0.5 [M0-D76]): the
+//! [`Watch`], the [`Ledger`], the steps done since the run's start and its wall time, the next Δt and P5's unconverged
+//! steps, under the dump's step, sim time, scene label and world. `--load-dump FILE --continue` reads it back and goes on as
+//! the cut run would have — the same chunks and frames, summary.json the whole life's; `--steps` and `--max-steps` then
+//! count from the life's start. A missing snapshot, or one of another step, scene or world, is exit 4.
 //!
 //! stdout: the first line `SR-ADAPTER …`; the last, when the run ends without an error (exit 0 or 2), `SR-HEADLESS DONE
 //! steps=<n> sim_time=<t> until=<met|unmet|none>` (`none` for a run on `--steps`, which `--max-steps` may cut: `unmet`); every error line starts `SR-ERROR`, every warning `SR-WARN`.
@@ -39,6 +45,7 @@ use std::time::Instant;
 
 use serde_json::json;
 use sr_physics::calibration;
+use sr_physics::observe::tracker::{exact, read_exact, read_whole};
 use sr_physics::reference::hydro::Edge;
 use sr_physics::reference::{Switches as TwinSwitches, Twin, GUARD_EVERY};
 use sr_physics::registry::{Elements, Physics, Reactions};
@@ -91,17 +98,20 @@ pub struct Args {
     pub dump_every: Option<u64>,
     /// `--load-dump FILE`: the run starts from this dump.
     pub load_dump: Option<PathBuf>,
+    /// `--continue` (needs `--load-dump`): the run goes on as the one that wrote the dump would have, from the observers'
+    /// snapshot beside it (§0.5 [M0-D76]).
+    pub continue_life: bool,
     /// `--cpu-reference`: the CPU f64 twin in place of the GPU.
     pub cpu_reference: bool,
 }
 
-/// Parses what follows `headless`. `--flag value` or `--flag=value`, `--timing` and `--cpu-reference` alone; anything else is an error
-/// naming it.
+/// Parses what follows `headless`. `--flag value` or `--flag=value`, `--timing`, `--continue` and `--cpu-reference` alone;
+/// anything else is an error naming it.
 pub fn parse_args(args: &[String]) -> Result<Args, String> {
     let (mut scene, mut steps, mut world, mut edge, mut max_steps, mut out, mut adapter) =
         (None, None, None, None, DEFAULT_MAX_STEPS, None, None);
     let (mut dump_every, mut load_dump, mut until) = (None, None, None);
-    let (mut timing, mut cpu_reference) = (false, false);
+    let (mut timing, mut cpu_reference, mut continue_life) = (false, false, false);
     let mut it = args.iter();
     while let Some(arg) = it.next() {
         if arg == "--timing" {
@@ -110,6 +120,10 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
         }
         if arg == "--cpu-reference" {
             cpu_reference = true;
+            continue;
+        }
+        if arg == "--continue" {
+            continue_life = true;
             continue;
         }
         let (flag, inline) = match arg.split_once('=') {
@@ -155,6 +169,9 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
     if dump_every.is_some() && out.is_none() {
         return Err("--dump-every needs --out (dumps go to DIR/dumps)".to_string());
     }
+    if continue_life && load_dump.is_none() {
+        return Err("--continue needs --load-dump (the dump it goes on from)".to_string());
+    }
     if cpu_reference {
         let refused =
             [("--adapter", adapter.is_some()), ("--timing", timing), ("--load-dump", load_dump.is_some()), ("--until", until.is_some())];
@@ -162,7 +179,59 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
             return Err(format!("{flag} is the GPU's: it has no meaning with --cpu-reference"));
         }
     }
-    Ok(Args { scene, steps, until, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, cpu_reference })
+    Ok(Args { scene, steps, until, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, continue_life, cpu_reference })
+}
+
+/// The observers' snapshot beside the dump at `dump` (§0.5 [M0-D76]): `dumps/s_<step>.observers.json`.
+pub fn observers_path(dump: &Path) -> PathBuf {
+    dump.with_extension("observers.json")
+}
+
+/// What a cut run goes on with under `--continue` (§0.5 [M0-D76]), read from the observers' snapshot beside its dump: the
+/// steps it ran since its own start (the scene, or the dump it was loaded from), its wall time, the next Δt its chunks were
+/// sized by, the steps that reached P5's ceiling, and the observers.
+struct Carried {
+    done: u64,
+    wall_s: f64,
+    dt_next: f64,
+    heat_unconverged: u64,
+    watch: Watch,
+    ledger: Ledger,
+}
+
+/// The snapshot beside `path` for `dump`, refused unless it is the same step (index and sim time, bit for bit), scene label
+/// and world as the run.
+fn read_carried(path: &Path, dump: &Dump, scene: &str, physics: &Physics) -> Result<Carried, String> {
+    let file = observers_path(path);
+    let text = std::fs::read_to_string(&file).map_err(|e| format!("--continue: {}: {e}", file.display()))?;
+    let v: serde_json::Value = serde_json::from_str(&text).map_err(|e| format!("--continue: {}: not JSON: {e}", file.display()))?;
+    let refused = |what: String| format!("--continue: {} is {what}", file.display());
+    if v["version"] != 1 {
+        return Err(refused(format!("version {}, this build reads 1", v["version"])));
+    }
+    let sim_time = read_exact(&v["sim_time"], "sim_time").map_err(refused)?;
+    if v["step"].as_u64() != Some(dump.step) || sim_time.to_bits() != dump.sim_time.to_bits() {
+        return Err(refused(format!("step {} at {sim_time}, the dump's {} at {}", v["step"], dump.step, dump.sim_time)));
+    }
+    if v["scene"].as_str() != Some(scene) {
+        return Err(refused(format!("scene {}, the run's {scene:?}", v["scene"])));
+    }
+    if v["world"] != json!([dump.world.width, dump.world.height]) {
+        return Err(refused(format!("world {}, the dump's {}x{}", v["world"], dump.world.width, dump.world.height)));
+    }
+    let done = read_whole(&v, "done").map_err(refused)?;
+    if done > dump.step {
+        return Err(refused(format!("{done} steps done past the dump's step {}", dump.step)));
+    }
+    let world_width = dump.world.width;
+    Ok(Carried {
+        done,
+        wall_s: read_exact(&v["wall_s"], "wall_s").map_err(refused)?,
+        dt_next: read_exact(&v["dt_next"], "dt_next").map_err(refused)?,
+        heat_unconverged: read_whole(&v, "heat_unconverged").map_err(refused)?,
+        watch: Watch::restore(physics, world_width, &v["watch"]).map_err(refused)?,
+        ledger: Ledger::restore(dump.world, physics, &v["ledger"]).map_err(refused)?,
+    })
 }
 
 /// Reads `--scene` before any GPU is touched: `preset:<name>` (one preset at the world's centre), else a scene file
@@ -218,19 +287,50 @@ impl Costs {
 /// The lines `say` has printed since [`run_captured`] began, while it runs.
 static CAPTURE: std::sync::Mutex<Option<Vec<String>>> = std::sync::Mutex::new(None);
 
-fn say(line: &str) {
+/// The start of the warning line P5's ceiling prints (§0.5 [M0-TJ4] (6)).
+const HEAT_UNCONVERGED_LINE: &str = "SR-WARN heat unconverged";
+
+/// While a [`run_scene_captured`] life runs (M0-D74): its `SR-WARN heat unconverged` lines are counted here, not printed or kept —
+/// a long life can hit the ceiling thousands of times and they bury `calibrate`'s own lines. `calibrate` says the count in its
+/// progress and run lines instead, so it is never silent. [`unconverged_steps`] reads it; each captured run starts it at 0.
+static HEAT_UNCONVERGED: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+
+/// Whether the run in progress counts its heat warnings instead of printing them: only a [`capturing`] run that asks for it.
+static COUNT_HEAT_WARNINGS: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// The steps that reached P5's ceiling in the current or last [`capturing`] run that counted them.
+pub fn unconverged_steps() -> u64 {
+    HEAT_UNCONVERGED.load(std::sync::atomic::Ordering::Relaxed)
+}
+
+/// One line of the run's output: printed and kept while a run is captured — but a heat-unconverged warning of a run that counts
+/// them is only counted ([`capturing`]).
+pub fn say(line: &str) {
+    if COUNT_HEAT_WARNINGS.load(std::sync::atomic::Ordering::Relaxed) && line.starts_with(HEAT_UNCONVERGED_LINE) {
+        HEAT_UNCONVERGED.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        return;
+    }
     println!("{line}");
     if let Some(lines) = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).as_mut() {
         lines.push(line.to_string());
     }
 }
 
+/// What `f` said through [`say`], kept while it runs (one run at a time); `count_heat` has its `SR-WARN heat unconverged` lines
+/// counted into [`unconverged_steps`] (from 0) instead of printed and kept (M0-D74).
+pub fn capturing<R>(count_heat: bool, f: impl FnOnce() -> R) -> (R, Vec<String>) {
+    *CAPTURE.lock().unwrap_or_else(|e| e.into_inner()) = Some(Vec::new());
+    HEAT_UNCONVERGED.store(0, std::sync::atomic::Ordering::Relaxed);
+    COUNT_HEAT_WARNINGS.store(count_heat, std::sync::atomic::Ordering::Relaxed);
+    let result = f();
+    COUNT_HEAT_WARNINGS.store(false, std::sync::atomic::Ordering::Relaxed);
+    let lines = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).take().unwrap_or_default();
+    (result, lines)
+}
+
 /// [`run`], and the stdout lines it printed — how the tests read the `SR-HEADLESS DONE` line (one run at a time).
 pub fn run_captured(args: &[String]) -> (i32, Vec<String>) {
-    *CAPTURE.lock().unwrap_or_else(|e| e.into_inner()) = Some(Vec::new());
-    let code = run(args);
-    let lines = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).take().unwrap_or_default();
-    (code, lines)
+    capturing(false, || run(args))
 }
 
 pub fn git_rev() -> String {
@@ -414,6 +514,27 @@ pub fn run(args: &[String]) -> i32 {
 pub struct Progress<'a> {
     pub every: u64,
     pub tick: &'a mut dyn FnMut(u64, f64, &str),
+    /// M0-D77: the run saves a checkpoint — a dump and the observers' snapshot, the last pair alone kept in `<out>/checkpoint/` —
+    /// at the first frame boundary at or past each multiple of this many steps, apart from `every` and from `--dump-every`
+    /// (no chunk is shortened: nothing the life computes moves). `saved(step, sim_time, stage)` follows each save.
+    pub checkpoint_every: Option<u64>,
+    pub saved: &'a mut dyn FnMut(u64, f64, &str),
+}
+
+/// `<out>/checkpoint/` (M0-D77): where a run's checkpoint pair lives, `s_<step>.bin` and `s_<step>.observers.json`.
+pub const CHECKPOINT_DIR: &str = "checkpoint";
+
+/// Removes every file in `folder` that does not belong to the pair of `step` — the older pairs, a temp file left by a crash —
+/// once the pair of `step` is whole (the snapshot is renamed into place after its dump, so a reader finds this pair or the
+/// previous one).
+fn prune_checkpoints(folder: &Path, step: u64) {
+    let keep = format!("s_{step}.");
+    for entry in std::fs::read_dir(folder).into_iter().flatten().flatten() {
+        let name = entry.file_name().to_string_lossy().into_owned();
+        if name.starts_with("s_") && !name.starts_with(&keep) {
+            let _ = std::fs::remove_file(entry.path());
+        }
+    }
 }
 
 /// A run of `scene`, built in code, under `args` ([`Args::scene`] is only the label summary.json records), and the stdout
@@ -421,10 +542,8 @@ pub struct Progress<'a> {
 /// with `progress` called along the way. The scene reads no calibration, so the gate of §2.11 is not applied: `calibrate`
 /// runs on a stale one.
 pub fn run_scene_captured(args: Args, scene: Scene, progress: Option<Progress>) -> (i32, Vec<String>) {
-    *CAPTURE.lock().unwrap_or_else(|e| e.into_inner()) = Some(Vec::new());
-    let code = execute(args, Some(scene), progress);
-    let lines = CAPTURE.lock().unwrap_or_else(|e| e.into_inner()).take().unwrap_or_default();
-    (code, lines)
+    // A life can reach P5's ceiling thousands of times: its warnings are counted (M0-D74), `calibrate` says the count.
+    capturing(true, || execute(args, Some(scene), progress))
 }
 
 fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> i32 {
@@ -466,6 +585,17 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
             say(&format!("SR-ERROR bad scene: {e}"));
             return EXIT_ARGS;
         }
+    };
+    // `--continue`: the observers' snapshot beside the dump, of its step, scene and world (exit 4 otherwise).
+    let carried = match (&dump, &args.load_dump) {
+        (Some(d), Some(path)) if args.continue_life => match read_carried(path, d, &args.scene, &physics) {
+            Ok(c) => Some(c),
+            Err(e) => {
+                say(&format!("SR-ERROR bad dump: {e}"));
+                return EXIT_ARGS;
+            }
+        },
+        _ => None,
     };
     // §2.11 (G-CAL): a scene that names a preset reads calibration, so a stale one stops the run here (exit 6) — before
     // the registry, the GPU or any output; a scene that names none never reads it, and runs without one.
@@ -559,26 +689,62 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
     };
     let timing = if args.timing { Timing::Auto } else { Timing::Off };
     let mut cost = Costs { source: step.set_timing(&gpu.device, &gpu.queue, timing), ..Costs::default() };
-    // A dump of the state as it stands, named by its step index; a failed write is exit 4, as a bad --out.
-    let write_dump = |dir: &Path| {
+    // A dump of the state as it stands, named by its step index, and beside it the observers' snapshot (§0.5 [M0-D76]):
+    // `observers` with the dump's step and sim time, the scene label and the world, so that a reader never pairs a dump with
+    // another step's; renamed into place once written. A failed write is exit 4, as a bad --out.
+    // The adapter, its driver and the physics hash ride in the snapshot (§0.5 [M0-D77]): `calibrate`'s checkpoint is used
+    // only on the adapter and the constants it was made on.
+    let physics_hash = calibration::physics_hash().ok();
+    let write_dump = |folder: &Path, mut observers: serde_json::Value| {
         let d = dump_state(&gpu.device, &gpu.queue, &state, &step);
-        let path = dir.join("dumps").join(format!("s_{}.bin", d.step));
-        d.write(&path).map_err(|e| format!("SR-ERROR bad arguments: --out {}: {e}", path.display()))
+        let path = folder.join(format!("s_{}.bin", d.step));
+        observers["adapter"] = json!(gpu.info.name);
+        observers["driver"] = json!(gpu.info.driver);
+        observers["physics_hash"] = json!(physics_hash);
+        observers["version"] = json!(1);
+        observers["step"] = json!(d.step);
+        observers["sim_time"] = exact(d.sim_time);
+        observers["scene"] = json!(args.scene);
+        observers["world"] = json!([d.world.width, d.world.height]);
+        let (file, temp) = (observers_path(&path), path.with_extension("observers.json.tmp"));
+        d.write(&path)
+            .and_then(|()| std::fs::write(&temp, observers.to_string() + "\n"))
+            .and_then(|()| std::fs::rename(&temp, &file))
+            .map_err(|e| format!("SR-ERROR bad arguments: --out {}: {e}", path.display()))
     };
 
     let target = args.steps.unwrap_or(args.max_steps).min(args.max_steps);
     let started = Instant::now();
-    let mut done = 0u64;
-    let mut ledger = Ledger::new(world, &physics);
-    // The observers read each chunk's summary as a frame; the run's sim time starts at the dump's, else 0.
+    // The run's sim time starts at the dump's, else 0. Under `--continue` the cut run's count, wall time, next Δt, P5's
+    // unconverged steps and observers go on: `--steps` and `--max-steps` count the whole life, and step indices from its start.
     let start_sim = dump.as_ref().map_or(0.0, |d| d.sim_time);
-    let mut watch = Watch::new(&physics, world.width, start_sim);
+    let fresh = || (0, 0.0, 0.0, 0, Watch::new(&physics, world.width, start_sim), Ledger::new(world, &physics));
+    let continued = carried.is_some();
+    let (mut done, wall_before, mut dt_next, mut unconverged, mut watch, mut ledger) =
+        carried.map_or_else(fresh, |c| (c.done, c.wall_s, c.dt_next, c.heat_unconverged, c.watch, c.ledger));
+    if COUNT_HEAT_WARNINGS.load(std::sync::atomic::Ordering::Relaxed) {
+        HEAT_UNCONVERGED.fetch_add(unconverged, std::sync::atomic::Ordering::Relaxed);
+    }
+    let first = first - done;
     let mut until_met = false;
-    // The Δt record's sim time and next Δt after the last chunk: they size the chunks of `--until sim_time`.
-    let (mut sim, mut dt_next) = (start_sim, 0.0f64);
+    // The Δt record's sim time after the last chunk: with the next Δt, it sizes the chunks of `--until sim_time`.
+    let mut sim = start_sim;
     // The progress hook's last multiple of `every` (M0-D60): the run's start is not a tick.
-    let mut ticked = progress.as_ref().map_or(0, |p| first / p.every.max(1));
-    while done < target {
+    let mut ticked = progress.as_ref().map_or(0, |p| (first + done) / p.every.max(1));
+    // The checkpoint's last multiple of `checkpoint_every`, likewise.
+    let mut saved = progress.as_ref().and_then(|p| p.checkpoint_every).map_or(0, |e| (first + done) / e.max(1));
+    // A continued life whose restored state already meets its `until` ends at once (M0-D77): the condition is otherwise read
+    // on a frame's fresh events, and an event fired before the cut never fires again.
+    if let (true, Some(until)) = (continued, args.until) {
+        until_met = watch.holds(until, watch.events());
+    }
+    // What the observers' snapshot carries beside the observers.
+    let carry = |done: u64, dt_next: f64, unconverged: u64, watch: &Watch, ledger: &Ledger| {
+        let wall_s = wall_before + started.elapsed().as_secs_f64();
+        json!({"done": done, "wall_s": exact(wall_s), "dt_next": exact(dt_next), "heat_unconverged": unconverged,
+               "watch": watch.snapshot(), "ledger": ledger.snapshot()})
+    };
+    while done < target && !until_met {
         let mut n = (target - done).min(if args.until.is_some() { FRAME } else { CHUNK });
         // The ledger's start: the first step alone, then the state after it is the ledger's zero.
         if ledger.start().is_none() {
@@ -600,6 +766,7 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         done += n;
         // Every step of the chunk that reached P5's ceiling (§0.5 [M0-TJ4] (6)); a chunk is never longer than the log.
         for w in step.heat_warnings(&gpu.device, &gpu.queue) {
+            unconverged += 1;
             say(&w);
         }
         if let Some(c) = step.read_cost(&gpu.device, &gpu.queue) {
@@ -634,14 +801,32 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         let at = first + done;
         if let (Some(every), Some(dir)) = (args.dump_every, &args.out) {
             if at.is_multiple_of(every) && done < target {
-                if let Err(e) = write_dump(dir) {
+                if let Err(e) = write_dump(&dir.join("dumps"), carry(done, dt_next, unconverged, &watch, &ledger)) {
                     say(&e);
                     return EXIT_ARGS;
                 }
             }
         }
+        // The checkpoint: after the `until` is read, so that no pair holds a state that already met it.
+        if let (Some(p), Some(dir)) = (progress.as_mut(), &args.out) {
+            if let Some(every) = p.checkpoint_every {
+                if at / every.max(1) > saved {
+                    saved = at / every.max(1);
+                    let folder = dir.join(CHECKPOINT_DIR);
+                    let written = std::fs::create_dir_all(&folder)
+                        .map_err(|e| format!("SR-ERROR bad arguments: --out {}: {e}", folder.display()))
+                        .and_then(|()| write_dump(&folder, carry(done, dt_next, unconverged, &watch, &ledger)));
+                    if let Err(e) = written {
+                        say(&e);
+                        return EXIT_ARGS;
+                    }
+                    prune_checkpoints(&folder, at);
+                    (p.saved)(at, dt.sim_time, watch.heaviest_stage().unwrap_or("none"));
+                }
+            }
+        }
     }
-    let wall_s = started.elapsed().as_secs_f64();
+    let wall_s = wall_before + started.elapsed().as_secs_f64();
     // The last step's state is scanned too (M0-D59): P9 scans only every 64th step, and a run ending between two scans
     // would exit 0 on a non-finite world. The scan finds what P9's would, by cell then channel, and names the last step.
     if done > 0 {
@@ -654,7 +839,7 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
     }
     // The final dump, always (§3.3).
     if let Some(dir) = &args.out {
-        if let Err(e) = write_dump(dir) {
+        if let Err(e) = write_dump(&dir.join("dumps"), carry(done, dt_next, unconverged, &watch, &ledger)) {
             say(&e);
             return EXIT_ARGS;
         }

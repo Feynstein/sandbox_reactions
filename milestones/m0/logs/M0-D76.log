@@ -1,0 +1,21 @@
+# M0-D76 iteration log (laserax-ai, RTX 5090) 2026-10-20T19:30:26-04:00
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.28s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 1 test
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1184 sim_time=14.835619 until=met
+unbroken: 1184 steps, events [{"detail":{"mass_sb":3344.9254700830206},"kind":"ignition","object":1,"sim_time":8.639022109098732,"step":672}]
+stages [{"from_step":33,"sim_time":0.7752113901078701,"stage":"failed_star"},{"from_step":209,"sim_time":3.6139827501028776,"stage":"collapsing"},{"from_step":336,"sim_time":4.843234358355403,"stage":"cloud"},{"from_step":432,"sim_time":5.779908215627074,"stage":"failed_star"},{"from_step":720,"sim_time":9.236940717324616,"stage":"cloud"},{"from_step":1184,"sim_time":14.835619175806642,"stage":"main_sequence"}]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=768 sim_time=9.799374 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1184 sim_time=14.835619 until=met
+SR-ERROR bad dump: --continue: /tmp/sr-observe-3094081-continue/cut/dumps/s_768.observers.json is step 512 at 6.643184031359851, the dump's 768 at 9.799374215304852
+SR-ERROR bad dump: --continue: /tmp/sr-observe-3094081-continue/cut/dumps/s_768.observers.json: No such file or directory (os error 2)
+SR-ERROR bad arguments: --continue needs --load-dump (the dump it goes on from)
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 346 filtered out; finished in 14.68s
+

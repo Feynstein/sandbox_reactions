@@ -444,11 +444,11 @@
       ]
     },
     "observe_run": {
-      "desc": "the observers in headless runs (contract §1.9, §2.12.2, §3.3; M0-T60): crates/sr-engine/src/watch.rs and headless.rs — `--until sim_time:<t> | event:<kind> | stage:<id> | ending`, `--max-steps`, DIR/events.jsonl and summary.json's `events`, `objects` and `until` on the engine's own block summary (the tracker and the stages ran on synthetic summaries alone before); `bash tests/gpu.sh observe physics`, every run through headless::run_captured on the physics adapter, its stdout lines kept: scenes/cold_disk.json `--until stage:collapsing` met (step 49, the stop on a frame boundary — the first step, then 16 a frame —, the object showing the stage from that step, the run one frame shorter unmet); `--until sim_time:5` met at the first step past 5 (step 1355 at 5.00284; the run one step shorter at 4.99722); an unmet `--until stage:black_hole --max-steps 100` exit 2 with the DONE line reading `until=unmet`, summary.json's until met false, and a `--steps` run cut by --max-steps `unmet` as before, a complete one `none`; scenes/sink_cloud.json at T 0.5 (the case's own copy, M0-D66; T 0.05 fragments, M0-D70) with a sink the test drops into the middle of a seed run's dump (--load-dump): events.jsonl one JSON object a line with the §2.12.2 keys, the same as summary.json's events — sink_formed, then `ending` when the black hole has been displayed 10 t.u. (10.03 held), the run one frame shorter with no ending; the arguments (both --steps and --until, neither, a condition of no form, an unknown stage, `event:ending`, a negative time, --until with --cpu-reference) refused exit 4 before a device is touched. The overshoot allowed: sim_time none past the step, the rest one frame (16 steps) — untuned (headless's FRAME), asserted. A frame is 16 steps with --until, 256 without. objects' `mass_suns`, `predicted_ending`, `ending` and `age_years` come with M0-T69, M0-T72, M0-T73. until-never-met reads the stop condition only when the run is already at its cap",
+      "desc": "the observers in headless runs (contract §1.9, §2.12.2, §3.3; M0-T60): crates/sr-engine/src/watch.rs and headless.rs — `--until sim_time:<t> | event:<kind> | stage:<id> | ending`, `--max-steps`, DIR/events.jsonl and summary.json's `events`, `objects` and `until` on the engine's own block summary (the tracker and the stages ran on synthetic summaries alone before); `bash tests/gpu.sh observe physics`, every run through headless::run_captured on the physics adapter, its stdout lines kept: scenes/cold_disk.json `--until stage:collapsing` met (step 49, the stop on a frame boundary — the first step, then 16 a frame —, the object showing the stage from that step, the run one frame shorter unmet); `--until sim_time:5` met at the first step past 5 (step 1355 at 5.00284; the run one step shorter at 4.99722); an unmet `--until stage:black_hole --max-steps 100` exit 2 with the DONE line reading `until=unmet`, summary.json's until met false, and a `--steps` run cut by --max-steps `unmet` as before, a complete one `none`; scenes/sink_cloud.json at T 0.5 (the case's own copy, M0-D66; T 0.05 fragments, M0-D70) with a sink the test drops into the middle of a seed run's dump (--load-dump): events.jsonl one JSON object a line with the §2.12.2 keys, the same as summary.json's events — sink_formed, then `ending` when the black hole has been displayed 10 t.u. (10.03 held), the run one frame shorter with no ending; the arguments (both --steps and --until, neither, a condition of no form, an unknown stage, `event:ending`, a negative time, --until with --cpu-reference) refused exit 4 before a device is touched. The overshoot allowed: sim_time none past the step, the rest one frame (16 steps) — untuned (headless's FRAME), asserted. A frame is 16 steps with --until, 256 without. objects' `mass_suns`, `predicted_ending`, `ending` and `age_years` come with M0-T69, M0-T72, M0-T73. until-never-met reads the stop condition only when the run is already at its cap. M0-D76 (§0.5 [M0-D76]): every dump of a GPU run has its observers' snapshot beside it (dumps/s_<step>.observers.json — the Watch, the Ledger, the steps done, wall time, next Δt and P5's unconverged count, every f64 an exact string), and `--load-dump FILE --continue` goes on as the cut run would have: the Sun-like preset built in code (run_scene_captured, as calibrate builds a life — it reads no calibration, O13) `--until stage:main_sequence --dump-every 256 --max-steps 1600` unbroken (ignition at step 672, cloud shown from 720, main_sequence at 1184 on the RTX 5090) and the same life cut at 768 by --max-steps and continued from s_768 write the same summary.json line for line but wall_s, the same events.jsonl and the final dump byte for byte; a snapshot of another step beside the dump, none beside it and --continue without --load-dump are exit 4. continue-ignited-left-out writes every snapshot's `ignited` false; continue-ledger-start-lost restores the ledger without its start",
       "cmd": "bash tests/gpu.sh observe physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 5,
+      "expected": 6,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -462,12 +462,21 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/gpu.sh",
-        "tests/plants/until-*.patch"
+        "tests/plants/until-*.patch",
+        "tests/plants/continue-*.patch"
       ],
       "plants": [
         {
           "id": "until-never-met",
           "patch": "tests/plants/until-never-met.patch"
+        },
+        {
+          "id": "continue-ignited-left-out",
+          "patch": "tests/plants/continue-ignited-left-out.patch"
+        },
+        {
+          "id": "continue-ledger-start-lost",
+          "patch": "tests/plants/continue-ledger-start-lost.patch"
         }
       ]
     },
@@ -1684,12 +1693,45 @@
         }
       ]
     },
+    "calibrate_status": {
+      "desc": "`tools/calibrate_status.py`, a running `calibrate` item's progress read from disk (M0-D73, M0-D74): `{python} tools/calibrate_status_cases.py`, stdlib only, no GPU, no engine. On fixture invocation folders (`<label>-<NN>/summary.json`): finished lives listed with mass, ending, steps and wall time, lives left and an ETA as a range (shortest–longest) and a mean, marked a guess while fewer than 3 lives have finished; a life running (no summary.json: its folder's age), a torn summary.json and a cut life (`until.met` false) are not finished lives; a bracketed item's life count is `calibrate::bisect`'s loop (`2 +` one per halving to 2 %, the closed form 2 + ceil(log2(ln(HI/LO)/ln 1.02)) agreeing off the tolerance's edge) for seven brackets, HI from life 02 once it has finished, else `--bracket`, else the item's default named, m_bh_sb with neither is NO-GO; `preset_mass_sb` is three fixed lives; `--log FILE` adds the running life's last `SR-CALIBRATE progress` stage (a later `run` line, another item's line, a missing log handled); an unknown `--item`, an empty or missing folder is NO-GO naming it; item complete prints the total wall time; the script run as a process prints ≤ 8 lines, ends `=== GO ===` and leaves the folder's listing (names, sizes, mtimes) equal; UNIT_MASS and the default brackets read against scene.rs and calibrate.rs. The running life's progress.json (M0-D74), as `calibrate` writes it: its stage, step and sim_time on the running line \"from progress.json\" with how old the file is, the life's age read from `started` (not the folder's mtime: a life re-run by --resume keeps an old folder), the stage trail with the heat-unconverged count, the life sized by the finished life nearest in mass (a bar, a percent, its pace in steps/s, a guess at the time left) and the item's ETA built on it; a missing, torn, wrongly-typed or another item's file, and a finished life's leftover, are never read as the running stage, a file is marked stale past max(15 minutes, 3 × the tick's expected interval — `progress_every` over the life's pace from `started` to the file's last write; M0-D75: 20 minutes old at a 16-minute interval reads not stale, 50 minutes old stale, a file without `progress_every` reads the default 10,000-step tick, a fast tick keeps the 15-minute floor), `--log` still wins; the keys the script reads are the ones calibrate.rs writes (progress_every among them). Plants calibrate-status-one-short: the count starts at one life instead of two; calibrate-status-wrong-stage: the running life's stage is read as `cloud`; calibrate-status-flat-stale: the stale limit is the flat 15 minutes whatever the tick. M0-D77, a life continued from a checkpoint (progress.json's `continued_from_step` and `checkpoint_step`): paced on this process's own steps (10,000 in 100 s since step 50,000 is 100 steps/s, not 600), its line says what a stop would lose (the steps since the checkpoint), says there is no checkpoint yet, says nothing for a file without the keys, and goes stale on its own tick (a file 2 h old after 10,000 steps in an hour is not stale); the keys read are the ones calibrate.rs writes. Plant calibrate-status-continued-total-steps: the pace and the tick taken over the life's total steps.",
+      "cmd": "{python} tools/calibrate_status_cases.py",
+      "count": "(?P<n>\\d+) passed",
+      "expected": 18,
+      "timeout_s": 120,
+      "paths": [
+        "tools/calibrate_status.py",
+        "tools/calibrate_status_cases.py",
+        "crates/sr-engine/src/scene.rs",
+        "crates/sr-engine/src/calibrate.rs",
+        "tests/plants/calibrate-status-wrong-stage.patch",
+        "tests/plants/calibrate-status-continued-total-steps.patch"
+      ],
+      "plants": [
+        {
+          "id": "calibrate-status-one-short",
+          "patch": "{python} -S -c \"import pathlib;p=pathlib.Path('tools/calibrate_status.py');t=p.read_text(encoding='utf-8');assert '    runs = 2' in t;p.write_text(t.replace('    runs = 2','    runs = 1',1),encoding='utf-8')\""
+        },
+        {
+          "id": "calibrate-status-wrong-stage",
+          "patch": "tests/plants/calibrate-status-wrong-stage.patch"
+        },
+        {
+          "id": "calibrate-status-continued-total-steps",
+          "patch": "tests/plants/calibrate-status-continued-total-steps.patch"
+        },
+        {
+          "id": "calibrate-status-flat-stale",
+          "patch": "{python} -S -c \"import pathlib;p=pathlib.Path('tools/calibrate_status.py');t=p.read_text(encoding='utf-8');a='STALE_TICKS * progress[\\\"every\\\"] * ran / own';assert a in t;p.write_text(t.replace(a,'0',1),encoding='utf-8')\""
+        }
+      ]
+    },
     "calibrate_bisect": {
-      "desc": "`calibrate` items 3–4, the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4; M0-T68; M0-D60; M0-D72), no GPU and no life run but the last case — every other run a stub: `calibrate::bisect` on a stubbed outcome closes on a known threshold from five masses inside a 100–20,000 bracket within BISECT_TOLERANCE (2 %: bracket width ≤ 2 %, value within 1 %, the threshold inside the final bracket, BISECT_TOLERANCE itself 0.02), asks the bracket's low then high end first, stays inside the bracket and spends exactly 2 + ⌈log₂(ln(200)/ln 1.02)⌉ runs (a bracket already within 2 % spends 2); a bracket whose ends agree (both Heavy, both Light) or run the wrong way round is refused after two runs naming `--bracket`, a bad bracket or tolerance is exit 4 with no run; a failing run stops the bisection with its own error (exit 6) and no run after it; each item's side of a life (`side_ign`: ignition over, failed_star under · `side_up`: core collapse over, white_dwarf under · `side_bh`: black_hole over, neutron_star under, anything else refused); `measure` over a stub physics finds m_ign, m_up and m_bh within 1 % and logs one `SR-CALIBRATE run` line per run with mass, side, ending, steps and wall time, an unplaced run logged with side=none and refused; `--bracket` outside one bisected item, an inverted or malformed bracket, `--max-steps 0`, a bad name in a `--only` list and a not-yet-built item are exit 4 before any GPU is touched. Plant bisect-tolerance: BISECT_TOLERANCE 0.02 → 0.2 (the driver stops at 20 %). M0-D60, two short real lives on the test adapter (the nominal cloud and 1.02 × it, ignition ends each; m_ign's bracket refused after two runs): each run line closes on `record=<dir>` under build/calibrate_runs/, where summary.json (with its ignition event) and events.jsonl stay and no dumps/ does, the two folders differ, `SR-CALIBRATE progress item= mass= step= sim_time= stage=` lines come every 50 steps before the first run line, and a third life cut at --max-steps 64 is exit 6 whose error names its kept record. Plant calibrate-record-removed: the run's whole folder removed after it is read. M0-D72, `--resume DIR` on the same short lives: resumed whole, both run lines say `replayed`, equal the unbroken ones, no progress line and the same exit 6; cut during the second life (its record gone, or half-written) the first is replayed and only the second run, in the same folder; a record of another mass (at run 1 or run 2), another adapter or another item, and a folder that is not one, are exit 4 before any life runs; items 1–2 ignore the flag. Plant calibrate-resume-any-mass: a record replayed whatever its mass.",
-      "cmd": "bash tests/gpu.sh calibrate_bisect",
+      "desc": "`calibrate` items 3–4, the bisection driver and the items' sides (contract §2.11 items 3–4, §3.3, §6.4; M0-T68; M0-D60; M0-D72), no GPU and no life run but the last case — every other run a stub: `calibrate::bisect` on a stubbed outcome closes on a known threshold from five masses inside a 100–20,000 bracket within BISECT_TOLERANCE (2 %: bracket width ≤ 2 %, value within 1 %, the threshold inside the final bracket, BISECT_TOLERANCE itself 0.02), asks the bracket's low then high end first, stays inside the bracket and spends exactly 2 + ⌈log₂(ln(200)/ln 1.02)⌉ runs (a bracket already within 2 % spends 2); a bracket whose ends agree (both Heavy, both Light) or run the wrong way round is refused after two runs naming `--bracket`, a bad bracket or tolerance is exit 4 with no run; a failing run stops the bisection with its own error (exit 6) and no run after it; each item's side of a life (`side_ign`: ignition over, failed_star under · `side_up`: core collapse over, white_dwarf under · `side_bh`: black_hole over, neutron_star under, anything else refused); `measure` over a stub physics finds m_ign, m_up and m_bh within 1 % and logs one `SR-CALIBRATE run` line per run with mass, side, ending, steps and wall time, an unplaced run logged with side=none and refused; `--bracket` outside one bisected item, an inverted or malformed bracket, `--max-steps 0`, a bad name in a `--only` list and a not-yet-built item are exit 4 before any GPU is touched. Plant bisect-tolerance: BISECT_TOLERANCE 0.02 → 0.2 (the driver stops at 20 %). M0-D60, two short real lives on the test adapter (the nominal cloud and 1.02 × it, ignition ends each; m_ign's bracket refused after two runs): each run line closes on `record=<dir>` under build/calibrate_runs/, where summary.json (with its ignition event) and events.jsonl stay and no dumps/ does, the two folders differ, `SR-CALIBRATE progress item= mass= step= sim_time= stage=` lines come every 50 steps before the first run line, and a third life cut at --max-steps 64 is exit 6 whose error names its kept record. Plant calibrate-record-removed: the run's whole folder removed after it is read. M0-D72, `--resume DIR` on the same short lives: resumed whole, both run lines say `replayed`, equal the unbroken ones, no progress line and the same exit 6; cut during the second life (its record gone, or half-written) the first is replayed and only the second run, in the same folder; a record of another mass (at run 1 or run 2), another adapter or another item, and a folder that is not one, are exit 4 before any life runs; items 1–2 ignore the flag. M0-D74, the failed life's `progress.json` (a finished life's goes): its item, stage and step are the terminal's last `SR-CALIBRATE progress` line's, its `heat_unconverged` count that line's, the trail of stages ends on the stage now, `started` is UTC and no `.tmp` is left, and the life's `SR-WARN heat unconverged` lines are counted into the line, never printed. Plant calibrate-resume-any-mass: a record replayed whatever its mass. And `headless::capturing(true, …)`: a life's `SR-WARN heat unconverged` lines are counted into `unconverged_steps()` and neither printed nor kept while every other line is, a run that does not count says them all. Plants calibrate-progress-wrong-stage: progress.json written with a stage the terminal did not say; calibrate-heat-warnings-printed: the lines counted and printed too. M0-D75: m_up_sb's lives stop once their side is known — `Threshold::until` is `CollapseOrEnding` for m_up_sb, `IgnitionOrEnding` for m_ign_sb and `Ending` for m_bh_sb, the condition reads `collapse|ending` and `--until` does not parse it, and `Watch::holds` is true on a `core_collapse` or an `ending` event and false on `ignition`, `supernova` and `sink_formed`, where `Ending` holds on the ending alone; the records `--resume` reads back side as they should whichever condition stopped them (a record of the binary before M0-D75, run to its ending, heavy; one cut at the core collapse with no `ending` event heavy; one showing a neutron star or a black hole without the event heavy; a white dwarf's ending light; a collapse-less, ending-less record refused); `--progress-every N` gives a life a progress line each frame of 16 steps at N = 16 (the default 10,000 shows none in a short life), progress.json carries `progress_every`, items 1–2 ignore it, and 0, a negative, a fraction, a word or no value is exit 4 before any GPU; one real life seeded with a black hole (the observe scope's sink cloud) stops under `CollapseOrEnding` the frame it shows `black_hole` — `until.met`, no `ending` — where `Ending` runs on to the ending. Plants calibrate-up-until-ending: m_up_sb's until left `Ending`; calibrate-progress-every-ignored: `--progress-every` parsed and not passed to the lives. M0-D77, `--checkpoint-every M` (the save interval, apart from `--progress-every N`) and `--resume` continuing a cut life, two real short lives (the nominal cloud and 1.02 × it): the unbroken invocation leaves no checkpoint; the same cut at `--max-steps 130` with progress every 16 and a checkpoint every 48 keeps one whole pair `checkpoint/s_97.bin` + `.observers.json` (saves at the first frame boundary past each multiple: 49, 97), progress lines at 17, 33 … 129 and a progress.json with `checkpoint_step` 97; `--resume` continues the first life from it — `SR-CALIBRATE continue … from step 97`, the run line says `continued from step 97`, no progress line at or before it, the run lines equal the unbroken ones' and the life's summary.json but for `wall_s` and its events.jsonl byte for byte the unbroken life's, no checkpoint or progress.json left — and runs the second fresh; a continued life cut again says `continued_from_step` 97 and its new `checkpoint_step` and carries the cut run's stage trail; a checkpoint of another mass, of another physics_hash or adapter, a snapshot of another step beside its dump, a torn dump and a dump with no snapshot are not used (`SR-WARN checkpoint not used (…)`, the life runs from step 0), a torn newer pair leaves the older whole one; `--checkpoint-every` 0, a negative, a fraction, a word or no value is exit 4 before any GPU; and a continued life whose restored state already met its `until` (the nominal cloud's ignition) ends at once, `until.met`, at the step it began. Plants calibrate-checkpoint-without-observers: the checkpoint loaded without `--continue` (the observers start over); calibrate-checkpoint-on-the-tick: the checkpoint written on the progress tick (the two flags tied); calibrate-checkpoint-step-unchecked: the pair's step check removed (a snapshot of another step used); continue-until-unchecked: a continued life's restored `until` not read.",
+      "cmd": "bash tests/gpu.sh calibrate_bisect physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 9,
+      "expected": 16,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -1704,7 +1746,15 @@
         "tests/cargo.sh",
         "tests/plants/bisect-tolerance.patch",
         "tests/plants/calibrate-record-removed.patch",
-        "tests/plants/calibrate-resume-any-mass.patch"
+        "tests/plants/calibrate-resume-any-mass.patch",
+        "tests/plants/calibrate-progress-wrong-stage.patch",
+        "tests/plants/calibrate-heat-warnings-printed.patch",
+        "tests/plants/calibrate-up-until-ending.patch",
+        "tests/plants/calibrate-progress-every-ignored.patch",
+        "tests/plants/calibrate-checkpoint-without-observers.patch",
+        "tests/plants/calibrate-checkpoint-on-the-tick.patch",
+        "tests/plants/calibrate-checkpoint-step-unchecked.patch",
+        "tests/plants/continue-until-unchecked.patch"
       ],
       "plants": [
         {
@@ -1718,6 +1768,38 @@
         {
           "id": "calibrate-resume-any-mass",
           "patch": "tests/plants/calibrate-resume-any-mass.patch"
+        },
+        {
+          "id": "calibrate-progress-wrong-stage",
+          "patch": "tests/plants/calibrate-progress-wrong-stage.patch"
+        },
+        {
+          "id": "calibrate-heat-warnings-printed",
+          "patch": "tests/plants/calibrate-heat-warnings-printed.patch"
+        },
+        {
+          "id": "calibrate-up-until-ending",
+          "patch": "tests/plants/calibrate-up-until-ending.patch"
+        },
+        {
+          "id": "calibrate-progress-every-ignored",
+          "patch": "tests/plants/calibrate-progress-every-ignored.patch"
+        },
+        {
+          "id": "calibrate-checkpoint-without-observers",
+          "patch": "tests/plants/calibrate-checkpoint-without-observers.patch"
+        },
+        {
+          "id": "calibrate-checkpoint-on-the-tick",
+          "patch": "tests/plants/calibrate-checkpoint-on-the-tick.patch"
+        },
+        {
+          "id": "calibrate-checkpoint-step-unchecked",
+          "patch": "tests/plants/calibrate-checkpoint-step-unchecked.patch"
+        },
+        {
+          "id": "continue-until-unchecked",
+          "patch": "tests/plants/continue-until-unchecked.patch"
         }
       ]
     },

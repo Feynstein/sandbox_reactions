@@ -8,7 +8,9 @@
 
 use std::collections::BTreeMap;
 
-use super::tracker::Object;
+use serde_json::{json, Value};
+
+use super::tracker::{exact, read_exact, read_whole, Object};
 
 /// The display hold: a stage other than core collapse and supernova shows after this many identical results (§1.9.3).
 const HOLD: u32 = 3;
@@ -290,6 +292,50 @@ impl StageTracker {
     /// An object's stage after the last [`update`](StageTracker::update), none for an id not in that frame.
     pub fn stage(&self, id: u32) -> Option<ObjectStage> {
         self.states.get(&id).map(|s| ObjectStage { raw: s.raw, shown: s.shown, history: s.history })
+    }
+
+    /// What the next frame reads, for the observers' snapshot (§0.5 [M0-D76]): per object its history (`ignited`, the last
+    /// core collapse), the last result and its streak, the shown stage and the events fired.
+    pub fn snapshot(&self) -> Value {
+        let states: Vec<Value> = self
+            .states
+            .iter()
+            .map(|(id, s)| {
+                json!({
+                    "id": id,
+                    "ignited": s.history.ignited,
+                    "last_collapse": s.history.last_collapse.map_or(Value::Null, exact),
+                    "raw": s.raw.id(),
+                    "streak": s.streak,
+                    "shown": s.shown.map(Stage::id),
+                    "fired": s.fired,
+                })
+            })
+            .collect();
+        Value::Array(states)
+    }
+
+    /// The stages [`StageTracker::snapshot`] wrote.
+    pub fn restore(v: &Value) -> Result<StageTracker, String> {
+        let mut states = BTreeMap::new();
+        for s in v.as_array().ok_or_else(|| format!("stages: not a list: {v}"))? {
+            let id = u32::try_from(read_whole(s, "id")?).map_err(|_| "stages.id: past u32".to_string())?;
+            let ignited = s["ignited"].as_bool().ok_or_else(|| format!("stages.ignited: not true or false: {}", s["ignited"]))?;
+            let last_collapse = if s["last_collapse"].is_null() { None } else { Some(read_exact(&s["last_collapse"], "stages.last_collapse")?) };
+            let shown = if s["shown"].is_null() { None } else { Some(Stage::from_id(&s["shown"])?) };
+            let fired: Vec<bool> = s["fired"].as_array().into_iter().flatten().filter_map(Value::as_bool).collect();
+            let fired: [bool; 4] = fired.try_into().map_err(|_| format!("stages.fired: not 4 flags: {}", s["fired"]))?;
+            let streak = u32::try_from(read_whole(s, "streak")?).map_err(|_| "stages.streak: past u32".to_string())?;
+            states.insert(id, State { history: History { ignited, last_collapse }, raw: Stage::from_id(&s["raw"])?, streak, shown, fired });
+        }
+        Ok(StageTracker { states })
+    }
+}
+
+impl Stage {
+    /// The stage of §1.9.3's id `v` (a JSON string).
+    pub fn from_id(v: &Value) -> Result<Stage, String> {
+        stage_order().into_iter().find(|s| Some(s.id()) == v.as_str()).ok_or_else(|| format!("not a stage id: {v}"))
     }
 }
 

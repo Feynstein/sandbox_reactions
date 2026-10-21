@@ -1,0 +1,35 @@
+== 2026-10-20T18:22:37-04:00 latch · task M0-D74 · box laserax-ai :: bash tests/gpu.sh latch physics
+-- latch · exit=0 · 4.52 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+k = 1: FrameReport { steps_run: 1, advanced: 0.44721362, sim_time: 0.44721361994743347, dt: 0.44721362, dt_next: 0.44721362, steps: 1, latch_fired: Some(1), carried: false, cost: None }, box-sized hook dispatches run 1
+k = 15: FrameReport { steps_run: 15, advanced: 6.7082043, sim_time: 6.708204299211502, dt: 0.44721362, dt_next: 0.44721362, steps: 15, latch_fired: Some(15), carried: false, cost: None }, box-sized hook dispatches run 15
+k = 40: FrameReport { steps_run: 40, advanced: 17.888538, sim_time: 17.88854479789734, dt: 0.44721362, dt_next: 0.44721362, steps: 40, latch_fired: Some(40), carried: false, cost: None }, box-sized hook dispatches run 40
+ok
+test latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+edit flagged, latch at the frame's step 1: FrameReport { steps_run: 1, advanced: 0.44721362, sim_time: 1.7888544797897339, dt: 0.44721362, dt_next: 0.44721362, steps: 4, latch_fired: Some(1), carried: false, cost: None }, box BoxReport { x0: 88, y0: 40, w: 32, h: 32, fft: [64, 64], from_step: 3, fits: 3, tiles: [4, 4, 1], cells: [4, 1, 1] }
+ok
+test latch::poll_never_waits_and_reports_each_frame_once_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+0 report(s) on the first poll after submit; [FrameReport { steps_run: 20, advanced: 8.944271, sim_time: 8.94427239894867, dt: 0.44721362, dt_next: 0.44721362, steps: 20, latch_fired: None, carried: false, cost: None }, FrameReport { steps_run: 11, advanced: 4.9193497, sim_time: 13.863622218370438, dt: 0.44721362, dt_next: 0.44721362, steps: 31, latch_fired: Some(11), carried: false, cost: None }]
+ok
+test latch::the_latch_re_arms_only_after_1_tu_without_a_set ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Δt of the start 0.44721362
+frame 0, hook (4, 5, 1): FrameReport { steps_run: 5, advanced: 2.236068, sim_time: 2.2360680997371674, dt: 0.44721362, dt_next: 0.44721362, steps: 5, latch_fired: Some(5), carried: false, cost: None }
+frame 1, hook (6, 45, 2): FrameReport { steps_run: 40, advanced: 17.888538, sim_time: 20.124612897634506, dt: 0.44721362, dt_next: 0.44721362, steps: 45, latch_fired: None, carried: false, cost: None }
+frame 2, hook (46, 50, 3): FrameReport { steps_run: 5, advanced: 2.236068, sim_time: 22.360680997371674, dt: 0.44721362, dt_next: 0.44721362, steps: 50, latch_fired: Some(5), carried: false, cost: None }
+frame 3, hook (88, 89, 1): FrameReport { steps_run: 40, advanced: 17.888538, sim_time: 40.24922579526901, dt: 0.44721362, dt_next: 0.44721362, steps: 90, latch_fired: None, carried: false, cost: None }
+ok
+test latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+slow-down off, flag at step 15: FrameReport { steps_run: 40, advanced: 17.888538, sim_time: 17.88854479789734, dt: 0.44721362, dt_next: 0.44721362, steps: 40, latch_fired: None, carried: false, cost: None }, box-sized hook dispatches run 40
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 337 filtered out; finished in 4.30s
+
+

@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -651,7 +651,7 @@
+             timing: false,
+             dump_every: None,
+             load_dump: from.as_ref().map(|c| c.dump.clone()),
+-            continue_life: from.is_some(),
++            continue_life: false,
+             cpu_reference: false,
+         };
+         let say = self.say;

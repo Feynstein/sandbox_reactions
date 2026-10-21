@@ -350,6 +350,63 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     ~8–10 whole lives each, so an item runs for hours — the lead, 2026-10-20, at M0-V9, the calibration's first long item
     running on linux-pc: «is there anything possible to do so that the long runs can be resumable? I started the first long run
     and I probably will need to leave», and «Tell me if I have to exit it for you to modify the code to make it resumable for me».
+  - [M0-D74] §0.5 [M0-TJ4] (6)'s "prints `SR-WARN heat unconverged step <n> passes <k> rounds <r>` — never silent" · for a `calibrate`
+    life only, those lines are counted, not printed or kept: the count is `heat_unconverged=<n>` on the life's `SR-CALIBRATE
+    progress` line (before `stage=`), in the life's `progress.json` and on its `run` line when it is non-zero; `headless` and
+    the tests still print every one · a long life reaches P5's ceiling thousands of times and the lines buried `calibrate`'s
+    own — the lead, 2026-10-20, at M0-D74: «try to silence those warnings in the command line»; with it §3.3's progress line
+    gains that field and a running life writes `<life>/progress.json` (`{item, mass, step, sim_time, stage, stages, heat_unconverged,
+    started}`, a temp file renamed into place, removed when the life finishes) for `tools/calibrate_status.py`.
+  - [M0-D75] §2.11 item 4's "preset clouds run to their ending" · m_up_sb's clouds run until the `core_collapse` event fires, a neutron
+    star or a black hole shows, or their ending (`until.condition` `collapse|ending`); m_bh_sb's clouds, and item 6's presets, run to
+    their ending as before. `side_up` is heavy when `core_collapse` fired or the star showed or ended `neutron_star` or `black_hole`,
+    light on a `white_dwarf` ending, else unplaced; the masses `bisect` asks and a record of the earlier rule (run to its ending)
+    side as before. Cost: item 6's `max_gas_speed` («over every run») no longer sees an m_up life's gas after its collapse (m_bh_sb's
+    lives and the massive and giant presets still run their supernovae through) · a life whose side the core collapse already
+    decided ran on for hours (life 02, 14 M₀, showed `supernova` at t 50.38 and ran past 36 min more) — the lead, 2026-10-20, at
+    M0-V9: «Stop at core collapse (Recommended)» and «change the calibration script so it stops at core collapse, neutron star or
+    black hole, and stop the current run if we can already know the outcome». With it §3.3's Calibrate line gains
+    `[--progress-every N]` (steps between a life's progress lines and `progress.json` writes, an integer ≥ 1, default 10,000; 0, a
+    negative or a non-number is exit 4; items 1–2 ignore it; nothing a life computes changes) and `progress.json` gains
+    `progress_every` · a progress mark every 10,000 steps came 16 minutes apart for a 14 M₀ star — the lead: «make the number of
+    steps an arg to the program, id like to try 1000 steps for larger stars and higher values for smaller stars».
+  - [M0-D76] §2.12.3's dump (with [M0-T26]'s `resume` and [M0-D33]'s F) and §3.3's headless line · beside every dump a GPU run
+    writes, the observers' snapshot `dumps/s_<step>.observers.json`: `{"version": 1, "step", "sim_time", "scene", "world": [w, h],
+    "done", "wall_s", "dt_next", "heat_unconverged", "watch", "ledger"}` — the steps run since the run's own start, its wall time,
+    the next Δt its chunks were sized by, the steps that reached P5's ceiling ([M0-D74]), the observers (the tracker's next id, the
+    last frame's block weights and objects; each object's `ignited`, last core collapse, last result, streak, shown stage and
+    events fired; the last frame's sim time, the events, the stage trails, the remnant holds, the objects ended, the at_x_h marks,
+    max_gas_speed) and the ledger (the booked terms' and accumulators' cumulative, its start and last records); every f64 a JSON
+    string of its shortest round-trip form (serde_json reads a number best-effort, §1.2's features unchanged), the file written
+    after its dump and renamed into place; the dump's own bytes unchanged; `--cpu-reference` writes none. §3.3's headless gains
+    `--continue` (with `--load-dump`): the snapshot beside the dump is restored and the run goes on as the cut one would have — the
+    same chunks and frames, `--steps` and `--max-steps` counted from the life's start, summary.json's `steps` and `wall_s` the
+    whole life's; a snapshot missing, unreadable, or of another step (index or sim time, bit for bit), scene label or world is
+    exit 4; without `--continue` `--load-dump` is as before (the observers start over) · `--load-dump` restored the cells bit for
+    bit and started the observers over — new object ids, `ignited` lost (the white_dwarf row needs it), the 10 t.u. remnant hold
+    restarted, the ledger booking from the loaded step — so a life cut part-way ran again from step 0 (m_up_sb's 14 M₀ life
+    started three times, cut 24 min in the third) — measured on linux-pc, 2026-10-20, RTX 5090: the Sun-like preset cut at step
+    768 (ignition at 672) and continued writes the unbroken life's summary.json but `wall_s`, its events.jsonl and its final dump
+    byte for byte (scope `observe_run`) — the lead, 2026-10-20, at M0-V9: «can you add another task so that it can really resume
+    at the current step or something? Or like at the step interval thats being used to display progress? You can write another
+    block for that after D75».
+  - [M0-D77] §3.3's Calibrate line, [M0-D72]'s `--resume` and [M0-D76]'s snapshot · gains `[--checkpoint-every M]` (steps between a
+    life's checkpoints, an integer ≥ 1, default 10,000, a flag of its own beside `--progress-every N`; 0, a negative or a non-number
+    is exit 4; items 1–2 ignore it; neither interval moves anything a life computes). A running life saves its checkpoint — [M0-D76]'s
+    dump and observers' snapshot — into `<life>/checkpoint/` at the first frame boundary at or past each multiple of M, the older
+    pair removed once the new one is whole (a reader finds a whole pair or the previous one), the folder removed when the life
+    finishes and kept when it fails or is cut. `--resume <dir>`: the first life with no finished record continues from its
+    checkpoint when one is there and matches (the run's scene label and mass, the adapter `--adapter` names, the physics_hash, the
+    world, the snapshot's step the dump's and the file name's, the dump whole), its run line saying `continued from step <k>`; a
+    checkpoint that does not match is not used, the life runs from step 0 and `SR-WARN checkpoint not used (<why>)` says why; a
+    life whose restored state already meets its `until` ends at once. A continued life's record is the unbroken life's
+    ([M0-D76]), its `wall_s` the segments' sum. The observers' snapshot gains `adapter`, `driver` and `physics_hash` (unknown keys
+    were never refused: `--continue` reads the keys it names), and `progress.json` gains `continued_from_step` and
+    `checkpoint_step` (the last saved, null before the first) · the first `--resume` of a cut life ran it again from step 0 (m_up_sb's
+    14 M₀ life started three times, each from nothing; a stop lost the whole life so far) — the lead, 2026-10-20, at M0-V9: «can you
+    add another task so that it can really resume at the current step or something? Or like at the step interval thats being used
+    to display progress?», and «make sure that the number of display step and the number of save steps can both be arguments that
+    can be set seeparately … just make sure its logical».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1021,7 +1078,8 @@ fractions; every energy P8 changes — the vacuum reset's E_floor − E as well 
 - **2.12.3 State dump** (`dumps/s_<step>.bin`): the eight bytes `SRDUMP01`, a little-endian u32
   header length, a UTF-8 JSON header `{"version": 1, "width", "height", "step", "sim_time",
   "channels": [§2.2's names], "sinks": [{"x", "y", "vx", "vy", "m"}]}`, then each channel as a
-  little-endian f32 plane in §2.2's order, row-major.
+  little-endian f32 plane in §2.2's order, row-major. [M0-D76] Beside it, a GPU run writes the observers' snapshot
+  `dumps/s_<step>.observers.json`, which `--continue` reads (§0.5 [M0-D76]).
 - **2.12.4 Coordinates:** x to the right, y down, cell (0, 0) at the top-left, in every file, API
   and readout.
 - **2.12.5 Edits file** (`--edits`, for G-TOUCH and G-AGE): a list of `{"at": <trigger>, "edit":
@@ -1072,9 +1130,11 @@ Unit-tested without a GPU against §1.8.
 - **Headless:** `sandbox-reactions headless --scene <file | preset:sun | preset:massive |
   preset:giant> [--world WxH] [--edge leave|bounce] (--steps N | --until <condition>)
   [--max-steps N] [--out DIR] [--frames-every N] [--view glow|heat|element|density]
-  [--dump-every N] [--load-dump FILE] [--edits FILE] [--adapter S] [--cpu-reference] [--timing]`
+  [--dump-every N] [--load-dump FILE [--continue]] [--edits FILE] [--adapter S] [--cpu-reference] [--timing]`
   - `--until`: `sim_time:<t>` · `event:<ignition|core_collapse|supernova|sink_formed>` ·
     `stage:<stage id>` · `ending` (any object holds a remnant stage for 10 t.u.).
+  - [M0-D76] `--continue`: the observers' snapshot beside the `--load-dump` dump restored, the run goes on as the cut one would
+    have, `--steps` and `--max-steps` counted from the life's start (§0.5 [M0-D76]).
   - `--cpu-reference` runs the CPU f64 twin instead of the GPU (worlds up to 128 × 128).
   - Writes DIR/summary.json (§2.12.2), DIR/events.jsonl (one event per line), DIR/frames/f_<step>.png
     (with --frames-every), DIR/dumps/s_<step>.bin (with --dump-every, and always at the end).
@@ -1094,7 +1154,10 @@ Unit-tested without a GPU against §1.8.
   1000 — the wall time the run would take on screen; `off_cap` [M0-TJ2] — the frames whose planned steps
   exceeded that frame's N_max, or at Max differed from it.
 - **Calibrate:** `sandbox-reactions calibrate --adapter S --out assets/calibration.json
-  [--only <item>] [--resume <dir>]` — §2.11; `--only` re-measures one item and keeps the rest. [M0-D72] `--resume <dir>`,
+  [--only <item>] [--resume <dir>] [--progress-every N] [--checkpoint-every M]` — §2.11; `--only` re-measures one item and keeps the rest.
+  [M0-D77] `--checkpoint-every M` is the save interval of a running life's checkpoint (default 10,000 steps), apart from `--progress-every`;
+  `--resume` continues a cut life from it, `continued from step <k>` on its run line.
+  [M0-D75] `--progress-every N` is the tick of every life's progress line and `progress.json` (default 10,000 steps). [M0-D72] `--resume <dir>`,
   an earlier invocation's `build/calibrate_runs/<stamp>/`, reads that invocation's finished lives back instead of running
   them (run NN ← `<dir>/<label>-<NN>/summary.json`, when it parses, its `until.met` is true and its `scene` is this run's
   `calibrate:<label>:<mass to 3 decimals>`; its run line says `replayed`), runs the first life with no such record and every

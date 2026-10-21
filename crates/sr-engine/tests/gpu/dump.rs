@@ -319,7 +319,7 @@ fn headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_fo
 
     let list = |d: &std::path::Path| {
         let mut names: Vec<String> =
-            std::fs::read_dir(d.join("dumps")).unwrap().map(|e| e.unwrap().file_name().into_string().unwrap()).collect();
+            std::fs::read_dir(d.join("dumps")).unwrap().map(|e| e.unwrap().file_name().into_string().unwrap()).filter(|n| n.ends_with(".bin")).collect();
         names.sort();
         names
     };

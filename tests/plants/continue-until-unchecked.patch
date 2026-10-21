@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -736,7 +736,7 @@
+     // A continued life whose restored state already meets its `until` ends at once (M0-D77): the condition is otherwise read
+     // on a frame's fresh events, and an event fired before the cut never fires again.
+     if let (true, Some(until)) = (continued, args.until) {
+-        until_met = watch.holds(until, watch.events());
++        until_met = false;
+     }
+     // What the observers' snapshot carries beside the observers.
+     let carry = |done: u64, dt_next: f64, unconverged: u64, watch: &Watch, ledger: &Ledger| {

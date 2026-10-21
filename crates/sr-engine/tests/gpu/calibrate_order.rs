@@ -96,7 +96,7 @@ fn the_gas_speed_must_stay_under_half_the_speed_of_light() {
 const ANCHORS: [f64; 4] = [3000.0, 3200.0, 26_000.0, 80_000.0];
 
 fn life(mass: f64, ending: &str, sim_time: f64) -> Life {
-    Life { mass, ignited: true, core_collapse: ending != "white_dwarf", ending: Some(ending.to_string()), steps: 5000, sim_time, wall_s: 2.0 }
+    Life { mass, ignited: true, core_collapse: ending != "white_dwarf", collapsed: ending != "white_dwarf", ending: Some(ending.to_string()), steps: 5000, sim_time, wall_s: 2.0 }
 }
 
 /// A stubbed preset life: `stages` as (id, first-frame sim time), the Sun's L and R at X_H,c 0.35.

@@ -1,0 +1,11 @@
+--- a/tools/calibrate_status.py
++++ b/tools/calibrate_status.py
+@@ -143,7 +143,7 @@
+             raw = json.load(f)
+         if raw["item"] != label:
+             return None
+-        found = {"mass": float(raw["mass"]), "step": int(raw["step"]), "sim": float(raw["sim_time"]), "stage": str(raw["stage"]),
++        found = {"mass": float(raw["mass"]), "step": int(raw["step"]), "sim": float(raw["sim_time"]), "stage": "cloud",
+                  "unconverged": int(raw.get("heat_unconverged", 0)), "started": parse_utc(raw.get("started")),
+                  "every": int(raw.get("progress_every", TICK_STEPS)),
+                  # M0-D77: where this process began (a continued life) and the last checkpoint saved; a file written before it

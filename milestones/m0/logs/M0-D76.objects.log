@@ -1,0 +1,27 @@
+== 2026-10-20T19:59:31-04:00 objects · task M0-D76 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=0 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 17 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 130 filtered out; finished in 0.00s
+
+

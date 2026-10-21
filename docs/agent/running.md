@@ -26,11 +26,15 @@ block that builds their feature and are refused with exit 4 until then:
   - `--capture` runs a scripted session, one PNG per step plus `captions.json`, then exits 0 (§3.3; the harness is
     `tests/capture/`). An action not built yet is refused with `SR-ERROR`, exit 4.
 - **Headless**: `headless --scene <scenes/FILE.json | preset:<sun|massive|giant>> --steps N [--world WxH]
-  [--edge leave|bounce] [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE]
+  [--edge leave|bounce] [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE [--continue]]
   [--adapter S | --cpu-reference]` — the
   same step with no surface and no display (§6.3); `DIR/summary.json` per §2.12.2 and, with `--out`, the final state dump
   `DIR/dumps/s_<step>.bin` (§2.12.3; `--dump-every` adds one at every step index N divides, counted from the scene;
-  `--load-dump` starts from a dump, M0-T26). `--world` and `--edge` stand over the scene's `world` (M0-T25); `--timing`
+  `--load-dump` starts from a dump, M0-T26, the observers starting over). Beside each dump of a GPU run sits its observers'
+  snapshot `s_<step>.observers.json` (M0-D76, §0.5 [M0-D76]); `--load-dump FILE --continue` restores it and goes on as the
+  cut run would have — give the cut run's own command plus those two flags: `--steps` and `--max-steps` count from the life's
+  start, summary.json's `steps` and `wall_s` are the whole life's, and a snapshot missing or of another step, scene label or
+  world is exit 4. `--world` and `--edge` stand over the scene's `world` (M0-T25); `--timing`
   adds `timing` to the summary (M0-T23). The scene's `switches` (§2.12.1, each on when left out) build the step's passes:
   `gravity` P2, `hydro` P4, `heat` P5, `reactions` P6, `sinks` P3 and `neutrinos` P7 — P7 only with `reactions` on, S_ν being
   P6's (M0-D47); `--timing` lists the passes built. `--cpu-reference` (M0-T37) runs the CPU f64 twin from the same scene instead of
@@ -38,8 +42,8 @@ block that builds their feature and are refused with exit 4 until then:
   `--adapter`, `--timing` and `--load-dump` are the GPU's and refused with it. stdout: first line `SR-ADAPTER …`, last `SR-HEADLESS DONE …`; errors `SR-ERROR`,
   warnings `SR-WARN`. Exit codes: §3.3. The file formats: `docs/agent/architecture.md` § The files. sr-app's usage line
   (`--help`) lists these flags (M0-T37).
-- **`calibrate`** (M0-T66b–M0-T70): `calibrate --out FILE [--adapter S] [--only a,b] [--max-steps N] [--bracket LO,HI] [--resume DIR]` —
-  § Calibrating below. (sr-app's usage line lists `--only` and `--resume`; `--max-steps` and `--bracket` are refused with exit 4 where they
+- **`calibrate`** (M0-T66b–M0-T70): `calibrate --out FILE [--adapter S] [--only a,b] [--max-steps N] [--bracket LO,HI] [--resume DIR] [--progress-every N] [--checkpoint-every M]` —
+  § Calibrating below. (sr-app's usage line lists `--only`, `--resume`, `--progress-every` and `--checkpoint-every`; `--max-steps` and `--bracket` are refused with exit 4 where they
   do not apply.)
 - Later blocks add `bench`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the headless run's
   `--until`, `--frames-every`, `--edits` (§3.3).
@@ -126,16 +130,54 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   `build/calibrate_runs/<stamp>/` (the newest: `ls -t build/calibrate_runs | head -1`); run again the same command — the same
   `--only`, `--bracket`, `--adapter`, `--out` — with `--resume DIR` added. Run NN reads `DIR/<item>-<NN>/summary.json` instead of
   running a life when it parses, its `until.met` is true and its `scene` names this run's item and mass (to 3 decimals); its run
-  line says `replayed`. The first run with no finished record, and every run after it, runs fresh in DIR (a life cut part-way
-  loses only itself). A record of another item or mass, an adapter `--adapter` does not match, or a DIR without this item's
+  line says `replayed`. The first run with no finished record continues its life from its last checkpoint when there is one and it
+  matches (`--checkpoint-every`, below; M0-D77), else runs fresh in DIR, and every run after it runs fresh (a life cut part-way
+  loses at most one save interval). A record of another item or mass, an adapter `--adapter` does not match, or a DIR without this item's
   first life is exit 4 (`DIR is not this calibration's: start without --resume`) before any life runs, a DIR that is not a folder
   too; items 1–2 run no life and ignore it. Without it nothing changes.
+- **When a life stops** (M0-D75). Every life runs until its condition holds. **m_up_sb**'s lives stop at the first frame where the `core_collapse` event fires or an
+  object shows a `neutron_star` or a `black_hole` — their side is heavy from there, whatever they would have become — else at a white dwarf's
+  ending (held 10 t.u.): `until.condition` `collapse|ending` in summary.json, `until.met` true, often no `ending` event. **m_ign_sb** stops at the
+  ignition or the ending; **m_bh_sb** and the item-6 presets run to their ending (a neutron star shown can still become a black hole). A record
+  made before M0-D75 (run to its ending) replays to the same side. Cost: `max_gas_speed` no longer sees an m_up life's gas after its collapse.
+- **`--progress-every N`** (M0-D75; steps, a whole number ≥ 1, default 10,000; 0, a negative or a non-number is exit 4) is the tick of every
+  life's progress line and `progress.json` for the invocation; items 1–2 ignore it, and nothing a life computes changes. A 14 M₀ star runs ~10
+  steps/s, so the default is a line every ~16 minutes: give it fewer steps for heavy stars (`--progress-every 1000`, the lead's first try) and
+  more for light ones (a 1 M₀ life runs ~280 steps/s: 10,000 is a line every ~35 s, 50,000 every ~3 min). `calibrate_status.py` calls a
+  `progress.json` stale only past max(15 min, 3 × the tick's expected interval).
+- **`--checkpoint-every M`** (M0-D77; steps, a whole number ≥ 1, default 10,000; 0, a negative or a non-number is exit 4; items 1–2 ignore
+  it) is the save interval of a running life, **apart from `--progress-every`**: either may be larger than the other and neither moves anything
+  a life computes. At the first frame boundary at or past each multiple of M the life writes its checkpoint — a dump and the observers' snapshot
+  (M0-D76; ~15 MB) — into `<life>/checkpoint/`, replacing the last pair (a reader finds a whole pair or the previous one); the folder goes when
+  the life finishes and stays when it fails or is cut (Ctrl+C, a logout, `--max-steps`). **A stop loses at most one save interval, not the life:**
+  run the same command again with `--resume DIR` and the life continues from its checkpoint — `SR-CALIBRATE continue item=… from step <k>`, its run
+  line says `continued from step <k>`, its record is the unbroken life's and its `wall_s` the segments' sum. The checkpoint is used only when it
+  is this life's: its scene label and mass, the adapter `--adapter` names, the physics_hash, the world, a snapshot of the dump's own step and a
+  dump that reads; any other is not used — `SR-WARN checkpoint not used (<why>)` and the life runs from step 0. **Sizing the two flags to a life's
+  pace:** a checkpoint costs one dump (~15 MB, a fraction of a second) and a stop loses up to M steps, so choose M as the wall time you would
+  accept losing times the life's steps/s — a 14 M₀ life at ~10 steps/s with M = 3,000 loses at most ~5 min, a 1 M₀ life at ~280 steps/s
+  with M = 50,000 ~3 min; N (`--progress-every`) is only how often you hear from it, and may be smaller (the status script shows both
+  `checkpoint_step` and what a stop would lose). A life whose stop came before its first checkpoint has none: it runs from step 0.
 - **What a run prints.** One `SR-CALIBRATE run …` line per life (mass, side, ending, steps, wall time, `record=<dir>`) so a
-  crash or a kill leaves a trace, and while a life runs a `SR-CALIBRATE progress item= mass= step= sim_time= stage=` line every
-  10,000 steps. Each life's summary.json and events.jsonl are kept in `build/calibrate_runs/<UTC stamp>/<item>-<NN>/`
+  crash or a kill leaves a trace, and while a life runs a `SR-CALIBRATE progress item= mass= step= sim_time= heat_unconverged= stage=` line every
+  `--progress-every` steps, 10,000 by default (the same fields, the stages shown so far and `progress_every` land in the life's `progress.json`, M0-D74, M0-D75; a life's `SR-WARN heat
+  unconverged` lines are counted into `heat_unconverged`, not printed — they buried everything else). Each life's summary.json and events.jsonl are kept in `build/calibrate_runs/<UTC stamp>/<item>-<NN>/`
   (git-ignored; the final dump goes; a failed life's record stays and its error names it) — read them to trace a value to its life. The bisection stops at 2 % (§2.11). `measured.adapter` in the file names the adapter the lives ran on
   (`cpu` while only items 1–2 are in it). Item 5 (K9, `check_order`) runs **before** the preset lives, so a broken order
   costs seconds, not hours. Exit codes: §3.3 — 4 bad arguments, 6 a failed check or a life that proves nothing.
+- **Where a running item stands** (M0-D73, M0-D74). From a second terminal, beside the live run: `python3 tools/calibrate_status.py [DIR]
+  [--item <label>] [--bracket LO,HI] [--log FILE]` (DIR defaults to the newest `build/calibrate_runs/<stamp>/`). **Read-only** — it reads the
+  lives' `summary.json`, the running life's `progress.json` and the folders' times, writes nothing, opens no GPU — and prints ≤ 8 lines
+  (then the verdict): the finished lives (mass, ending, steps, wall time); the life running — its stage, step and sim_time «from
+  progress.json», how old that file is (marked stale past 15 minutes or 3 ticks at the life's pace, whichever is longer: a stopped item) and how long the life has run, from the file's
+  `started` (a life re-run by `--resume` keeps its old folder's time, so the folder is not asked); the stage trail
+  (`cloud › collapsing › [main_sequence] since step 30,000`, the heat-unconverged count beside it); the life's progress bar, its pace in
+  steps/s and the time left, sized by the finished life nearest in mass (a guess: lives differ; no ETA once it runs past that life); lives
+  left and an item ETA as a range and a mean, built on the running life's own ETA. `--log FILE` (the run's output kept with `| tee FILE`)
+  still wins for the stage when it holds a progress line of the running life. A life continued from a checkpoint (M0-D77) is paced on this process's own steps (those past `continued_from_step`), goes stale on its own tick, and its life line says `checkpoint at step K: a stop now loses N steps` (or `no checkpoint yet`). The life count of a bisected item is exact (`2 +` one per
+  halving of the bracket to 2 %: life 01 is LO, life 02 is HI; before life 02 ends it uses `--bracket`, else the item's default, and says
+  so); the ETA is marked a guess until 3 lives have finished. A progress.json that is missing, torn or another item's is not read: the
+  line says the folder's age instead.
 - **Who runs it.** Items 1–2 are the agents' (CPU, seconds). `m_ign_sb` is minutes on the RTX 5090; `m_up_sb`, `m_bh_sb` and the
   preset lives are **whole stellar lives** — hours at the defaults — so the whole calibration is **the lead's**, in one visible
   terminal, in M0-V9's window (§6.4; PLAYBOOK §4 Rule 4). Item by item (`--only`) is how it splits. An agent runs no life

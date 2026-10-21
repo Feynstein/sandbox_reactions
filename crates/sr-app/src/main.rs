@@ -13,8 +13,8 @@ mod web;
 #[cfg(not(target_arch = "wasm32"))]
 const USAGE: &str = "usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] | \
 sandbox-reactions headless --scene <FILE|preset:<sun|massive|giant>> --steps N [--world WxH] [--edge leave|bounce] \
-[--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE] [--adapter S | --cpu-reference] | \
-sandbox-reactions calibrate --out FILE [--adapter S] [--only ITEM] [--resume DIR]";
+[--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE [--continue]] [--adapter S | --cpu-reference] | \
+sandbox-reactions calibrate --out FILE [--adapter S] [--only ITEM] [--resume DIR] [--progress-every N] [--checkpoint-every M]";
 
 /// The web build (§3.5): trunk's wasm-bindgen start runs `main`, which hands the canvas to the app and returns.
 #[cfg(target_arch = "wasm32")]

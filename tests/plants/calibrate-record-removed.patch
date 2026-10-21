@@ -1,11 +1,11 @@
 --- a/crates/sr-engine/src/calibrate.rs
 +++ b/crates/sr-engine/src/calibrate.rs
-@@ -593,7 +593,7 @@
-         *self.record.borrow_mut() = out.display().to_string();
+@@ -700,7 +700,7 @@
          let read = (code == EXIT_DONE).then(|| read_life(&out, mass));
-         // The final dump is 13.4 MB a life; summary.json and events.jsonl stay (M0-D60).
+         // The final dump is 13.4 MB a life; summary.json and events.jsonl stay (M0-D60). A finished life's progress.json goes
+         // too: the file names a life that is running (M0-D74), and a failed life's stays as the trace of where it stopped.
 -        let _ = std::fs::remove_dir_all(out.join("dumps"));
 +        let _ = std::fs::remove_dir_all(&out);
-         match read {
-             Some(run) => {
-                 let (run, adapter) = run?;
+         // The checkpoint goes with a finished life and stays with a failed or a cut one (M0-D77).
+         if code == EXIT_DONE {
+             let _ = std::fs::remove_file(&progress_file);

@@ -1,0 +1,14 @@
+calibrate_bisect · clean · GO · arm 1/12, 11 left
+calibrate_bisect · plant bisect-tolerance · RED (proven: 3 failed) · arm 2/12, 10 left
+calibrate_bisect · plant calibrate-record-removed · RED (proven: 4 failed) · arm 3/12, 9 left
+calibrate_bisect · plant calibrate-resume-any-mass · RED (proven: 1 failed) · arm 4/12, 8 left
+calibrate_bisect · plant calibrate-progress-wrong-stage · RED (proven: 1 failed) · arm 5/12, 7 left
+calibrate_bisect · plant calibrate-heat-warnings-printed · RED (proven: 1 failed) · arm 6/12, 6 left
+calibrate_bisect · plant calibrate-up-until-ending · RED (proven: 1 failed) · arm 7/12, 5 left
+calibrate_bisect · plant calibrate-progress-every-ignored · RED (proven: 2 failed) · arm 8/12, 4 left
+calibrate_bisect · plant calibrate-checkpoint-without-observers · RED (proven: 1 failed) · arm 9/12, 3 left
+calibrate_bisect · plant calibrate-checkpoint-on-the-tick · RED (proven: 1 failed) · arm 10/12, 2 left
+calibrate_bisect · plant calibrate-checkpoint-step-unchecked · RED (proven: 1 failed) · arm 11/12, 1 left
+calibrate_bisect · plant continue-until-unchecked · RED (proven: 1 failed) · arm 12/12, 0 left
+redarm: 11 plants · 11 red · 0 green · 0 errors · scope calibrate_bisect · 1158.44 s · 8 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D77.calibrate_bisect.redarm.log
+=== GO ===

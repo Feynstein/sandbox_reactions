@@ -1,4 +1,4 @@
-//! `sandbox-reactions calibrate --out <file> [--adapter S] [--only <item>[,<item>…]] [--max-steps N] [--bracket LO,HI]`
+//! `sandbox-reactions calibrate --out <file> [--adapter S] [--only <item>[,<item>…]] [--max-steps N] [--bracket LO,HI] [--resume DIR] [--progress-every N] [--checkpoint-every M]`
 //! (m0_contrat.md §2.11 items 1–6, §3.3, §6.4; M0-T66b, M0-T68, M0-T70): the cold ceilings, the ignition and ending
 //! thresholds, the order they must keep, and what the three presets' lives say.
 //!
@@ -16,11 +16,19 @@
 //! (no ending within `--max-steps`, an ending the item cannot place) is a failure, reported and never guessed (exit 6).
 //! m_ign_sb stops each run at the first of the ignition and the ending (`Until::IgnitionOrEnding`): the failed star's ending is
 //! the stage held for [`ENDING_HOLD`](crate::watch::ENDING_HOLD) (§1.9.5, 10 t.u. ≈ 10 τ_dyn at τ_dyn ≈ 1), where §2.11 says 20 τ_dyn.
+//! m_up_sb stops each run once its side is known (`Until::CollapseOrEnding`, M0-D75): the first frame where the `core_collapse`
+//! event fires or an object shows a neutron star or a black hole, else the white dwarf's ending; m_bh_sb's runs and the presets'
+//! go to their ending.
 //! The default bracket of each item is in units of the nominal M₀ ([`UNIT_MASS`]); `--bracket LO,HI` (sandbox mass, with one
 //! `--only` item) replaces it. Every run's mass, side, ending, steps and wall time is a `SR-CALIBRATE run` line, closing on
 //! `record=<dir>`: the life's summary.json and events.jsonl are kept there, under `build/calibrate_runs/<stamp>/<item>-<NN>/`
 //! (git-ignored; the final dump goes, a failed life's record stays and its error names it), and while a life runs a
-//! `SR-CALIBRATE progress item=… mass=… step=… sim_time=… stage=…` line comes every [`PROGRESS_EVERY`] steps (M0-D60).
+//! `SR-CALIBRATE progress item=… mass=… step=… sim_time=… heat_unconverged=… stage=…` line comes every `--progress-every` steps (default [`PROGRESS_EVERY`], M0-D60, M0-D75)
+//! and the same fields land in the life's `progress.json`, atomically (M0-D74); a life's `SR-WARN heat unconverged` lines are
+//! counted into `heat_unconverged`, not printed.
+//! A running life saves its checkpoint (the dump and the observers' snapshot, M0-D76) into `<life>/checkpoint/` every
+//! `--checkpoint-every` steps (default [`CHECKPOINT_EVERY`], M0-D77), apart from the progress tick, and `--resume` continues a
+//! cut life from it — `continued from step <k>` on its run line — instead of from step 0.
 //! `measured.adapter` names the adapter the first of them opened. Runs are whole lives: the lead's, in M0-V9's window (§6.4).
 //!
 //! **Item 5 [M0-T70]: the order (K9)** — [`check_order`] over the merged file: m_ign < m_ch < m_up < m_bh, m_ch < m_tov,
@@ -74,8 +82,9 @@ use sr_physics::reference::sheet::{self, ColdMatter, Fluid};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 use sr_physics::units::G;
 
+use crate::dump::Dump;
 use crate::headless::{
-    git_rev, run_scene_captured, Args, Progress, DEFAULT_MAX_STEPS, EXIT_ARGS, EXIT_CALIBRATION, EXIT_DONE, EXIT_GPU, EXIT_NON_FINITE,
+    git_rev, run_scene_captured, unconverged_steps, Args, Progress, CHECKPOINT_DIR, DEFAULT_MAX_STEPS, EXIT_ARGS, EXIT_CALIBRATION, EXIT_DONE, EXIT_GPU, EXIT_NON_FINITE,
     EXIT_UNMET,
 };
 use crate::scene::{EdgeMode, Gas, Heat, Object, Scene, Switches, TestSettings, UNIT_MASS};
@@ -406,6 +415,9 @@ pub struct Life {
     pub ignited: bool,
     /// The `core_collapse` event fired.
     pub core_collapse: bool,
+    /// Any object showed `neutron_star` or `black_hole` (or the life ended as one): a remnant of a collapse, which can show
+    /// without the `core_collapse` event (M0-D75).
+    pub collapsed: bool,
     /// The stage of the `ending` event (`white_dwarf`, `neutron_star`, `black_hole`, `failed_star`), when one fired.
     pub ending: Option<String>,
     pub steps: u64,
@@ -441,9 +453,10 @@ pub fn side_ign(life: &Life) -> Result<Side, CalError> {
     }
 }
 
-/// m_up_sb: core collapse is over the threshold; a white dwarf is under it.
+/// m_up_sb: core collapse is over the threshold — the event, or a neutron star or a black hole shown or ended — and a white
+/// dwarf ending is under it.
 pub fn side_up(life: &Life) -> Result<Side, CalError> {
-    match (life.core_collapse, life.ending.as_deref()) {
+    match (life.core_collapse || life.collapsed, life.ending.as_deref()) {
         (true, _) => Ok(Side::Heavy),
         (false, Some("white_dwarf")) => Ok(Side::Light),
         _ => Err(unplaced("m_up_sb", life)),
@@ -478,10 +491,12 @@ impl Threshold {
         }
     }
 
-    fn until(self) -> Until {
+    /// The condition a life of this item stops on (§2.11 items 3–4; M0-D75).
+    pub fn until(self) -> Until {
         match self {
             Threshold::Ign => Until::IgnitionOrEnding,
-            Threshold::Up | Threshold::Bh => Until::Ending,
+            Threshold::Up => Until::CollapseOrEnding,
+            Threshold::Bh => Until::Ending,
         }
     }
 
@@ -535,8 +550,28 @@ fn life_error(code: i32, lines: &[String], max_steps: u64, mass: f64, record: &P
     }
 }
 
-/// How often a life says where it is: one `SR-CALIBRATE progress` line every this many steps (M0-D60).
+/// `<life>/progress.json` (M0-D74): where the running life is, written through a temp file and a rename so a reader (the status
+/// script, from a second terminal) never sees half of it. Best effort — a life never fails over its progress note.
+fn write_progress(path: &Path, record: &Value) {
+    let tmp = path.with_extension("json.tmp");
+    if std::fs::write(&tmp, record.to_string()).is_ok() {
+        let _ = std::fs::rename(&tmp, path);
+    }
+}
+
+/// How often a life says where it is by default: one `SR-CALIBRATE progress` line every this many steps (M0-D60);
+/// `--progress-every N` replaces it for the invocation (M0-D75).
 pub const PROGRESS_EVERY: u64 = 10_000;
+
+/// How often a running life saves its checkpoint by default: every this many steps; `--checkpoint-every M` replaces it for the
+/// invocation (M0-D77), apart from `--progress-every`.
+pub const CHECKPOINT_EVERY: u64 = 10_000;
+
+/// A checkpoint `--resume` continues a cut life from (M0-D77): the dump of `step` in `<life>/checkpoint/`, its snapshot beside it.
+struct Checkpoint {
+    dump: PathBuf,
+    step: u64,
+}
 
 /// The preset cloud of `mass` run on the GPU until `until`, its summary.json read back. `dir` holds the invocation's runs, one
 /// folder each (`<item>-<NN>`) that keeps summary.json and events.jsonl — the final dump alone is removed — and `record` is the
@@ -546,6 +581,7 @@ struct Lives<'a> {
     say: &'a dyn Fn(&str),
     record: &'a RefCell<String>,
     progress_every: u64,
+    checkpoint_every: u64,
     adapter: Option<String>,
     adapter_used: Option<String>,
     max_steps: u64,
@@ -557,6 +593,8 @@ struct Lives<'a> {
     replaying: bool,
     /// Whether the run just made was read back instead of run; the run line says so.
     replayed: &'a Cell<bool>,
+    /// What the run line adds for the run just made: `continued from step <k>`, or why a checkpoint was not used (M0-D77).
+    note: &'a RefCell<String>,
 }
 
 impl Lives<'_> {
@@ -573,6 +611,9 @@ impl Lives<'_> {
         self.runs += 1;
         let out = self.dir.join(format!("{label}-{:02}", self.runs));
         self.replayed.set(false);
+        self.note.borrow_mut().clear();
+        // The first run with no finished record continues from its checkpoint when one is there and matches (M0-D77).
+        let mut resuming = false;
         if self.replaying {
             match self.replay(&out, label, mass)? {
                 Some(run) => {
@@ -580,14 +621,29 @@ impl Lives<'_> {
                     *self.record.borrow_mut() = out.display().to_string();
                     return Ok(run);
                 }
-                // The first run with no finished record, and every run after it, runs fresh in `dir`.
-                None => self.replaying = false,
+                // Every run after it runs fresh in `dir`.
+                None => (self.replaying, resuming) = (false, true),
             }
+        }
+        let scene_label = format!("calibrate:{label}:{mass:.3}");
+        let checkpoint_dir = out.join(CHECKPOINT_DIR);
+        let from = if resuming {
+            self.checkpoint(&checkpoint_dir, &scene_label).unwrap_or_else(|why| {
+                (self.say)(&format!("SR-WARN checkpoint not used ({why}): the {label} life at mass {mass:.3} runs from step 0"));
+                *self.note.borrow_mut() = format!(" checkpoint not used: {why}");
+                None
+            })
+        } else {
+            None
+        };
+        if let Some(c) = &from {
+            (self.say)(&format!("SR-CALIBRATE continue item={label} mass={mass:.3} from step {} ({})", c.step, c.dump.display()));
+            *self.note.borrow_mut() = format!(" continued from step {}", c.step);
         }
         let mut scene = Scene::preset_mass(preset, mass, WorldConfig::default()).map_err(CalError::Failed)?;
         scene.overrides = self.overrides.to_vec();
         let args = Args {
-            scene: format!("calibrate:{label}:{mass:.3}"),
+            scene: scene_label,
             steps: None,
             until: Some(until),
             world: None,
@@ -597,19 +653,62 @@ impl Lives<'_> {
             adapter: self.adapter.clone(),
             timing: false,
             dump_every: None,
-            load_dump: None,
+            load_dump: from.as_ref().map(|c| c.dump.clone()),
+            continue_life: from.is_some(),
             cpu_reference: false,
         };
         let say = self.say;
-        let mut tick = |step: u64, sim_time: f64, stage: &str| {
-            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} stage={stage}"));
+        let started = utc_iso(SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs()));
+        let progress_file = out.join("progress.json");
+        // The stages the life has shown and the first tick each was seen at (a tick is every `progress_every` steps); a continued
+        // life starts from the cut run's trail up to the checkpoint, which its own ticks go on from.
+        let carried: Vec<Value> = from
+            .as_ref()
+            .and_then(|c| {
+                let text = std::fs::read_to_string(&progress_file).ok()?;
+                let old: Value = serde_json::from_str(&text).ok()?;
+                let trail = old["stages"].as_array()?.iter().filter(|s| s["since_step"].as_u64().is_some_and(|at| at <= c.step));
+                Some(trail.cloned().collect())
+            })
+            .unwrap_or_default();
+        let stages = RefCell::new(carried);
+        // The last checkpoint saved, and where this process's life began (a checkpoint's step, else none).
+        let checkpoint_step = Cell::new(from.as_ref().map(|c| c.step));
+        let continued_from = from.as_ref().map(|c| c.step);
+        let every = self.progress_every;
+        let note = |step: u64, sim_time: f64, stage: &str| {
+            let record = json!({"item": label, "mass": mass, "step": step, "sim_time": sim_time, "stage": stage, "stages": *stages.borrow(), "heat_unconverged": unconverged_steps(), "started": started, "progress_every": every, "continued_from_step": continued_from, "checkpoint_step": checkpoint_step.get()});
+            write_progress(&progress_file, &record);
         };
-        let progress = Progress { every: self.progress_every, tick: &mut tick };
+        let mut tick = |step: u64, sim_time: f64, stage: &str| {
+            {
+                let mut stages = stages.borrow_mut();
+                if stages.last().and_then(|s| s["stage"].as_str()) != Some(stage) {
+                    stages.push(json!({"stage": stage, "since_step": step}));
+                }
+            }
+            // Heat warnings are counted, not printed (M0-D74): the line says how many steps reached P5's ceiling so far.
+            let unconverged = unconverged_steps();
+            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} heat_unconverged={unconverged} stage={stage}"));
+            note(step, sim_time, stage);
+        };
+        // A saved checkpoint moves progress.json's `checkpoint_step` at once, not at the next tick: what a stop would lose.
+        let mut saved = |step: u64, sim_time: f64, stage: &str| {
+            checkpoint_step.set(Some(step));
+            note(step, sim_time, stage);
+        };
+        let progress = Progress { every, tick: &mut tick, checkpoint_every: Some(self.checkpoint_every), saved: &mut saved };
         let (code, lines) = run_scene_captured(args, scene, Some(progress));
         *self.record.borrow_mut() = out.display().to_string();
         let read = (code == EXIT_DONE).then(|| read_life(&out, mass));
-        // The final dump is 13.4 MB a life; summary.json and events.jsonl stay (M0-D60).
+        // The final dump is 13.4 MB a life; summary.json and events.jsonl stay (M0-D60). A finished life's progress.json goes
+        // too: the file names a life that is running (M0-D74), and a failed life's stays as the trace of where it stopped.
         let _ = std::fs::remove_dir_all(out.join("dumps"));
+        // The checkpoint goes with a finished life and stays with a failed or a cut one (M0-D77).
+        if code == EXIT_DONE {
+            let _ = std::fs::remove_file(&progress_file);
+            let _ = std::fs::remove_dir_all(&checkpoint_dir);
+        }
         match read {
             Some(run) => {
                 let (run, adapter) = run?;
@@ -651,6 +750,63 @@ impl Lives<'_> {
     }
 }
 
+impl Lives<'_> {
+    /// `--resume` (M0-D77): the checkpoint in `folder` this life continues from — the newest whole pair that matches — or none
+    /// when the life has none; `Err(why)` when a pair is there and none is usable. A pair is whole when its snapshot is beside
+    /// its dump (the snapshot is renamed into place after the dump is written) and the dump reads; it matches when the
+    /// snapshot's step is the dump's and the file name's, its scene label is this life's (the item and the mass), its adapter is
+    /// the one `--adapter` names, its physics_hash the assets' and its world the default's.
+    fn checkpoint(&self, folder: &Path, scene: &str) -> Result<Option<Checkpoint>, String> {
+        let Ok(entries) = std::fs::read_dir(folder) else { return Ok(None) };
+        let names: Vec<String> = entries.flatten().map(|e| e.file_name().to_string_lossy().into_owned()).collect();
+        let mut steps: Vec<u64> = names.iter().filter_map(|n| n.strip_prefix("s_")?.strip_suffix(".observers.json")?.parse().ok()).collect();
+        steps.sort_unstable_by(|a, b| b.cmp(a));
+        let mut why = None;
+        for step in steps {
+            match self.pair(folder, step, scene) {
+                Ok(c) => return Ok(Some(c)),
+                Err(e) => {
+                    why.get_or_insert(e);
+                }
+            }
+        }
+        match why {
+            Some(why) => Err(why),
+            None if names.iter().any(|n| n.starts_with("s_")) => Err("a dump with no snapshot beside it, a pair cut while it was written".into()),
+            None => Ok(None),
+        }
+    }
+
+    fn pair(&self, folder: &Path, step: u64, scene: &str) -> Result<Checkpoint, String> {
+        let (dump, file) = (folder.join(format!("s_{step}.bin")), folder.join(format!("s_{step}.observers.json")));
+        let text = std::fs::read_to_string(&file).map_err(|e| format!("{}: {e}", file.display()))?;
+        let v: Value = serde_json::from_str(&text).map_err(|e| format!("{}: not JSON: {e}", file.display()))?;
+        if v["version"] != 1 {
+            return Err(format!("{} is version {}, this build reads 1", file.display(), v["version"]));
+        }
+        if v["step"].as_u64() != Some(step) {
+            return Err(format!("{} holds step {}, beside a dump of step {step}", file.display(), v["step"]));
+        }
+        if v["scene"].as_str() != Some(scene) {
+            return Err(format!("the checkpoint is of {}, this life is {scene:?}", v["scene"]));
+        }
+        let name = v["adapter"].as_str().unwrap_or("");
+        if let Some(query) = self.adapter.as_ref().filter(|q| !name.to_lowercase().contains(&q.to_lowercase())) {
+            return Err(format!("the checkpoint was made on {name:?}, --adapter names {query:?}"));
+        }
+        let hash = calibration::physics_hash().map_err(|e| e.line())?;
+        if v["physics_hash"].as_str() != Some(hash.as_str()) {
+            return Err(format!("the checkpoint's physics_hash is {}, the assets' {hash}", v["physics_hash"]));
+        }
+        let read = Dump::read(&dump).map_err(|e| format!("{}: {e}", dump.display()))?;
+        let world = WorldConfig::default();
+        if read.step != step || read.world != world || v["world"] != json!([world.width, world.height]) {
+            return Err(format!("the dump {} is not step {step} of the {}x{} world", dump.display(), world.width, world.height));
+        }
+        Ok(Checkpoint { dump, step })
+    }
+}
+
 /// summary.json of a finished run (§2.12.2): the events it fired and its cost, and the adapter's name.
 fn read_life(dir: &Path, mass: f64) -> Result<(PresetRun, String), CalError> {
     let path = dir.join("summary.json");
@@ -664,10 +820,19 @@ fn life_of(summary: &Value, mass: f64) -> (PresetRun, String) {
     let events: &[Value] = summary["events"].as_array().map_or(&[], Vec::as_slice);
     let fired = |kind: &str| events.iter().any(|e| e["kind"] == kind);
     let ending = events.iter().find(|e| e["kind"] == "ending").and_then(|e| e["detail"]["stage"].as_str()).map(str::to_string);
+    // Any object's trail, not the star's alone: the until stops on any object showing a collapse remnant (M0-D75).
+    let collapsed_stage = |s: &str| s == "neutron_star" || s == "black_hole";
+    let shown_collapsed = summary["objects"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .flat_map(|o| o["stages"].as_array().into_iter().flatten())
+        .any(|e| e["stage"].as_str().is_some_and(collapsed_stage));
     let life = Life {
         mass,
         ignited: fired("ignition"),
         core_collapse: fired("core_collapse"),
+        collapsed: shown_collapsed || ending.as_deref().is_some_and(collapsed_stage),
         ending,
         steps: summary["steps"].as_u64().unwrap_or(0),
         sim_time: summary["sim_time"].as_f64().unwrap_or(f64::NAN),
@@ -918,19 +1083,25 @@ struct Opts {
     bracket: Option<(f64, f64)>,
     /// `--resume DIR`: an earlier invocation's `build/calibrate_runs/<stamp>/`, whose finished lives are read back (M0-D72).
     resume: Option<PathBuf>,
+    /// `--progress-every N`: steps between a life's progress lines and progress.json writes; none keeps the caller's default
+    /// ([`PROGRESS_EVERY`]; M0-D75).
+    progress_every: Option<u64>,
+    /// `--checkpoint-every M`: steps between a life's checkpoints; none keeps [`CHECKPOINT_EVERY`] (M0-D77).
+    checkpoint_every: Option<u64>,
 }
 
 /// `--adapter` names the GPU for items 3–4 and 6 and is otherwise unused (§3.3); `--only` takes one item or a comma list;
-/// `--resume` is for the items that run lives and is ignored by items 1–2.
+/// `--resume` and `--progress-every` are for the items that run lives and are ignored by items 1–2.
 fn parse_args(args: &[String]) -> Result<Opts, CalError> {
     let (mut out, mut only, mut adapter, mut max_steps, mut bracket, mut resume) = (None, Vec::new(), None, DEFAULT_MAX_STEPS, None, None);
+    let (mut progress_every, mut checkpoint_every) = (None, None);
     let mut it = args.iter();
     while let Some(arg) = it.next() {
         let (flag, inline) = match arg.split_once('=') {
             Some((f, v)) => (f, Some(v.to_string())),
             None => (arg.as_str(), None),
         };
-        if !["--adapter", "--out", "--only", "--max-steps", "--bracket", "--resume"].contains(&flag) {
+        if !["--adapter", "--out", "--only", "--max-steps", "--bracket", "--resume", "--progress-every", "--checkpoint-every"].contains(&flag) {
             return Err(CalError::Args(format!("unknown argument {arg:?}")));
         }
         let value = match inline {
@@ -949,6 +1120,24 @@ fn parse_args(args: &[String]) -> Result<Opts, CalError> {
             }
             "--adapter" => adapter = Some(value),
             "--resume" => resume = Some(PathBuf::from(value)),
+            "--progress-every" => {
+                progress_every = Some(
+                    value
+                        .parse::<u64>()
+                        .ok()
+                        .filter(|n| *n > 0)
+                        .ok_or_else(|| CalError::Args(format!("--progress-every takes a whole number of steps above 0, got {value:?}")))?,
+                )
+            }
+            "--checkpoint-every" => {
+                checkpoint_every = Some(
+                    value
+                        .parse::<u64>()
+                        .ok()
+                        .filter(|n| *n > 0)
+                        .ok_or_else(|| CalError::Args(format!("--checkpoint-every takes a whole number of steps above 0, got {value:?}")))?,
+                )
+            }
             "--max-steps" => {
                 max_steps = value.parse::<u64>().ok().filter(|n| *n > 0).ok_or_else(|| CalError::Args(format!("--max-steps takes a whole number above 0, got {value:?}")))?
             }
@@ -964,7 +1153,7 @@ fn parse_args(args: &[String]) -> Result<Opts, CalError> {
     if bracket.is_some() && !matches!(only.as_slice(), [Job::Bisect(_)]) {
         return Err(CalError::Args("--bracket belongs to one bisected item: give --only m_ign_sb, m_up_sb or m_bh_sb".into()));
     }
-    Ok(Opts { out, only, adapter, max_steps, bracket, resume })
+    Ok(Opts { out, only, adapter, max_steps, bracket, resume, progress_every, checkpoint_every })
 }
 
 /// `calibrate`'s run on the shipped constants with `overrides` on top (tests only: a run with overrides never writes,
@@ -973,7 +1162,8 @@ pub fn run_with(args: &[String], overrides: &[(String, f64)], say: &mut dyn FnMu
     run_with_progress(args, overrides, PROGRESS_EVERY, say)
 }
 
-/// [`run_with`] with a life's progress line every `progress_every` steps instead of [`PROGRESS_EVERY`] (a test's short life).
+/// [`run_with`] with a life's progress line every `progress_every` steps instead of [`PROGRESS_EVERY`] (a test's short life);
+/// `--progress-every` on the command line still wins.
 pub fn run_with_progress(args: &[String], overrides: &[(String, f64)], progress_every: u64, say: &mut dyn FnMut(&str)) -> i32 {
     match run_inner(args, overrides, progress_every, say) {
         Ok(()) => EXIT_DONE,
@@ -1023,6 +1213,7 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, 
     // Items 3–4: whole lives on the GPU, in the order of the ladder (m_bh's default bracket reads m_up_sb).
     let record = RefCell::new(String::new());
     let replayed = Cell::new(false);
+    let note = RefCell::new(String::new());
     let stamp = utc_iso(SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs())).replace(':', "-");
     // `--resume` names the folder an earlier invocation made and continues in it; it is checked before any life runs.
     let runs_lives = !thresholds.is_empty() || asked(Job::Presets);
@@ -1033,7 +1224,8 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, 
         dir: opts.resume.clone().unwrap_or_else(|| Path::new("build").join("calibrate_runs").join(stamp)),
         say: &say,
         record: &record,
-        progress_every,
+        progress_every: opts.progress_every.unwrap_or(progress_every),
+        checkpoint_every: opts.checkpoint_every.unwrap_or(CHECKPOINT_EVERY),
         adapter: opts.adapter.clone(),
         adapter_used: None,
         max_steps: opts.max_steps,
@@ -1042,12 +1234,16 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, 
         gas_peak: 0.0,
         replaying: opts.resume.is_some(),
         replayed: &replayed,
+        note: &note,
     };
     // A run line names the folder its life's record is kept in.
     let run_say = |line: &str| {
         if line.starts_with("SR-CALIBRATE run") {
-            let replay = if replayed.get() { " replayed" } else { "" };
-            say(&format!("{line}{replay} record={}", record.borrow()));
+            let replay = if replayed.get() { " replayed".to_string() } else { note.borrow().clone() };
+            // A life's steps at P5's ceiling, counted not printed (M0-D74); a replayed life ran in an earlier process.
+            let unconverged = unconverged_steps();
+            let heat = if unconverged > 0 && !replayed.get() { format!(" heat_unconverged={unconverged}") } else { String::new() };
+            say(&format!("{line}{replay}{heat} record={}", record.borrow()));
         } else {
             say(line);
         }

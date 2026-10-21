@@ -222,3 +222,69 @@ fn until_is_checked_before_a_device_is_touched() {
         assert!(lines.iter().any(|l| l.starts_with("SR-ERROR bad arguments:") && l.contains(message)), "{extra:?}: {lines:?}");
     }
 }
+
+/// M0-D76 — a life cut at a dump and continued (`--load-dump FILE --continue`, contract §0.5 [M0-D76]): the Sun-like preset
+/// built in code as `calibrate` builds its lives (`run_scene_captured`: a scene that reads no calibration, so it runs on a
+/// partial calibration file too, O13), `--until` [`CONTINUE_UNTIL`] with a dump every [`CONTINUE_EVERY`] steps, run unbroken
+/// and cut at the dump [`CONTINUE_CUT`] — after the ignition and before a stage change, so a lost `ignited` or ledger start
+/// shows past it. The continued run writes the unbroken run's summary.json line for line but `wall_s`, its events.jsonl and
+/// its final dump byte for byte; a snapshot of another step beside the dump, none beside it, and `--continue` without
+/// `--load-dump` are exit 4.
+const CONTINUE_UNTIL: &str = "stage:main_sequence";
+const CONTINUE_EVERY: u64 = 256;
+const CONTINUE_CUT: u64 = 768;
+
+/// `--scene <label> <extra…> --out <out>` on the Sun-like preset built in code: the exit code and the lines it said.
+fn sun_life(out: &Path, extra: &[&str]) -> (i32, Vec<String>) {
+    use sr_engine::headless::{parse_args, run_scene_captured};
+    let mut args: Vec<String> = ["--scene", "life:sun", "--out", &out.display().to_string()].map(String::from).to_vec();
+    args.extend(extra.iter().map(|s| s.to_string()));
+    if let Ok(a) = std::env::var("SR_TEST_ADAPTER") {
+        args.extend(["--adapter".to_string(), a]);
+    }
+    run_scene_captured(parse_args(&args).unwrap(), sr_engine::scene::Scene::preset("sun", Default::default()).unwrap(), None)
+}
+
+#[test]
+fn a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary() {
+    let dir = temp("continue");
+    let every = CONTINUE_EVERY.to_string();
+    // The cap a little past the unbroken life's 1,184 steps: a plant that never meets the condition stops there.
+    let life = ["--until", CONTINUE_UNTIL, "--dump-every", &every, "--max-steps", "1600"];
+    let (whole, cut, on) = (dir.join("whole"), dir.join("cut"), dir.join("on"));
+    let (code, lines) = sun_life(&whole, &life);
+    assert_eq!(code, 0, "{lines:?}");
+    let text = |d: &Path, f: &str| std::fs::read_to_string(d.join(f)).unwrap_or_else(|e| panic!("{}: {e}", d.join(f).display()));
+    let summary: Value = serde_json::from_str(&text(&whole, "summary.json")).unwrap();
+    let steps = summary["steps"].as_u64().unwrap();
+    println!("unbroken: {steps} steps, events {}", summary["events"]);
+    println!("stages {}", summary["objects"][0]["stages"]);
+
+    // The cut: the same life stopped at the dump CONTINUE_CUT, then continued from it.
+    let cap = CONTINUE_CUT.to_string();
+    let mut cut_life = life.to_vec();
+    cut_life[5] = &cap;
+    assert_eq!(sun_life(&cut, &cut_life).0, 2, "cut by --max-steps");
+    let from = cut.join("dumps").join(format!("s_{CONTINUE_CUT}.bin"));
+    let from = from.display().to_string();
+    let (code, lines) = sun_life(&on, &[&life[..], &["--load-dump", &from, "--continue"]].concat());
+    assert_eq!(code, 0, "{lines:?}");
+
+    let but_wall = |d: &Path| text(d, "summary.json").lines().filter(|l| !l.trim_start().starts_with("\"wall_s\"")).map(String::from).collect::<Vec<_>>();
+    assert_eq!(but_wall(&on), but_wall(&whole), "summary.json, wall_s aside");
+    assert_eq!(text(&on, "events.jsonl"), text(&whole, "events.jsonl"));
+    let last = format!("dumps/s_{steps}.bin");
+    assert!(std::fs::read(on.join(&last)).unwrap() == std::fs::read(whole.join(&last)).unwrap(), "the final dump, byte for byte");
+
+    // Refused, exit 4: a snapshot of another step beside the dump, none beside it, --continue without --load-dump.
+    let snapshot = |step: u64| cut.join("dumps").join(format!("s_{step}.observers.json"));
+    std::fs::copy(snapshot(CONTINUE_CUT - CONTINUE_EVERY), snapshot(CONTINUE_CUT)).unwrap();
+    let (code, lines) = sun_life(&dir.join("other"), &[&life[..], &["--load-dump", &from, "--continue"]].concat());
+    assert_eq!(code, 4, "{lines:?}");
+    assert!(lines.iter().any(|l| l.starts_with("SR-ERROR bad dump: --continue:") && l.contains(&format!("the dump's {CONTINUE_CUT}"))), "{lines:?}");
+    std::fs::remove_file(snapshot(CONTINUE_CUT)).unwrap();
+    assert_eq!(sun_life(&dir.join("none"), &[&life[..], &["--load-dump", &from, "--continue"]].concat()).0, 4);
+    let (code, lines) = run_captured(&["--scene", "preset:sun", "--until", "ending", "--continue"].map(String::from));
+    assert_eq!(code, 4, "{lines:?}");
+    assert!(lines.iter().any(|l| l.contains("--continue needs --load-dump")), "{lines:?}");
+}

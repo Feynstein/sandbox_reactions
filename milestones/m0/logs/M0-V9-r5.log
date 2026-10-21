@@ -1,0 +1,248 @@
+== 2026-10-20T18:29:44-04:00 M0-V9 session 3 · box laserax-ai · model=claude-opus-5-5 level=max
+== 2026-10-20T18:29:44-04:00 probe S1 · python3 tools/calibrate_status.py (read-only, M0-D73/D74)
+item m_up_sb · 2026-10-20T19-07-59Z · 1 finished
+  life 01  mass 3351.032  white_dwarf  142801 steps  8m32s
+  life 02 running: its folder was made 3h13m ago (a stopped item, or a life re-run by --resume in an old folder, reads the same)
+lives left 9 of 10 · bracket from the item's default
+ETA 1h08m to 1h08m, mean 1h08m (a guess: 1 of 3 lives needed)
+=== GO ===
+exit=0
+== 2026-10-20T18:35:36-04:00 probe S2 · the run, the file, the lives so far (read-only)
+    PID                  STARTED     ELAPSED COMMAND
+3002019 Tue Oct 20 18:25:31 2026       10:04 build/target/release/sandbox-reactions calibrate --only m_up_sb --adapter RTX 5090 --out assets/calibration.json --resume build/calibrate_runs/2026-10-20T19-07-59Z
+-rwxrwxr-x 2 ybelanger ybelanger 21337040 2026-10-20 18:22:08.352282055 -0400 build/target/release/sandbox-reactions
+-rw-rw-r-- 1 ybelanger ybelanger    58690 2026-10-20 18:06:55.853527865 -0400 crates/sr-engine/src/calibrate.rs
+-rw-rw-r-- 1 ybelanger ybelanger    36180 2026-10-20 18:17:04.681903484 -0400 crates/sr-engine/src/headless.rs
+{
+  "m_ch_sb": 3216.4199210979236,
+  "m_ign_sb": 2515.741187124804,
+  "m_tov_sb": 4853.169981814195,
+  "max_gas_speed": 21.71939923854999,
+  "measured": {
+    "adapter": "NVIDIA GeForce RTX 5090",
+    "box": "laserax-ai",
+    "date": "2026-10-20T19:07:29Z",
+    "git": "22f087d"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "556e3959cee177c48914a95ac94d66ea21849dd7866b50bf2691b3137da1f306",
+  "version": 1
+}
+0, NVIDIA GeForce RTX 5090, 96 %, 3477 MiB, 343.92 W
+1, Quadro RTX 4000, 0 %, 840 MiB, 18.12 W
+4087, 504 MiB
+2932527, 2328 MiB
+3002019, 565 MiB
+    PID                  STARTED COMMAND
+2932527 Tue Oct 20 17:42:58 2026 venv/bin/python backend/forecast/run.py --arm lstm
+m_ign_sb-01 calibrate:m_ign_sb:167.552 no-ign ending=failed_star steps 273 t 11.48 wall 0.7 vmax 5.448 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-02 calibrate:m_ign_sb:3351.032 ign@673 ending=None steps 673 t 8.65 wall 2.0 vmax 21.719 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-03 calibrate:m_ign_sb:749.314 no-ign ending=failed_star steps 513 t 11.10 wall 1.5 vmax 10.997 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-04 calibrate:m_ign_sb:1584.605 no-ign ending=failed_star steps 689 t 10.98 wall 2.1 vmax 16.505 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-05 calibrate:m_ign_sb:2304.357 no-ign ending=failed_star steps 1089 t 15.22 wall 3.3 vmax 18.689 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-06 calibrate:m_ign_sb:2778.844 ign@705 ending=None steps 705 t 9.46 wall 2.2 vmax 19.587 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-07 calibrate:m_ign_sb:2530.504 ign@257 ending=None steps 257 t 4.22 wall 0.5 vmax 10.871 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-08 calibrate:m_ign_sb:2414.785 no-ign ending=failed_star steps 1121 t 15.38 wall 3.1 vmax 19.027 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-09 calibrate:m_ign_sb:2471.967 no-ign ending=failed_star steps 1137 t 15.47 wall 3.2 vmax 19.078 NVIDIA GeForce RTX 5090 22f087d
+m_ign_sb-10 calibrate:m_ign_sb:2501.064 no-ign ending=failed_star steps 1137 t 15.43 wall 3.4 vmax 19.332 NVIDIA GeForce RTX 5090 22f087d
+m_up_sb-01 calibrate:m_up_sb:3351.032 ign@673 ending=white_dwarf steps 142801 t 1609.48 wall 511.9 vmax 33.653 NVIDIA GeForce RTX 5090 22f087d
+m_up_sb-02 no summary.json (running)
+== 2026-10-20T18:42:48-04:00 probe S3 · life 02's first progress.json (waited for it read-only, 5 s polls)
+progress.json at 18:41:43:
+{"heat_unconverged":1082,"item":"m_up_sb","mass":46914.45029360758,"sim_time":50.379047135356814,"stage":"supernova","stages":[{"since_step":10001,"stage":"supernova"}],"started":"2026-10-20T22:25:32Z","step":10001}
+
+[exited with code 0]
+
+== 2026-10-20T18:52:16-04:00 plan.py append M0-D75 --after M0-D72 (the lead's answers: stop at core collapse; --progress-every)
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit=0
+== 2026-10-20T18:52:21-04:00 plan.py flag M0-D75 --from M0-V9
+flag: checks=1 failed=0 warnings=0 · refresh=3/5
+=== GO ===
+exit=0
+== 2026-10-20T18:53:00-04:00 plan.py status M0-V9
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+exit=0
+== 2026-10-20T18:53:17-04:00 plan.py register --set Next task / Open D/BLOCKED register / Awaiting lead
+register: checks=3 failed=0 warnings=0 · set=3 · replaced=3 · appended=0
+=== GO ===
+exit=0
+== 2026-10-20T18:57:56-04:00 plan.py append M0-D76 --after M0-D75; M0-D77 --after M0-D76 (the lead: resume at the step interval; display and save intervals set apart)
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit=0
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit=0
+== 2026-10-20T18:58:10-04:00 plan.py register --set Next task / Open D/BLOCKED register (D76, D77 added)
+register: checks=2 failed=0 warnings=0 · set=2 · replaced=2 · appended=0
+=== GO ===
+exit=0
+== 2026-10-20T18:58:10-04:00 plan.py status M0-V9
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+exit=0
+== 2026-10-20T18:58:52-04:00 plan.py handoff M0-V9
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+exit=0
+== 2026-10-20T21:03:11-04:00 plan.py register (D75–D77 closed; the lead's items)
+register: checks=3 failed=0 warnings=0 · set=3 · replaced=3 · appended=0
+=== GO ===
+exit=0
+== 2026-10-20T21:03:21-04:00 plan.py handoff M0-V9 (session 3, continued)
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+exit=0
+== 2026-10-20T21:34:40-04:00 probe S4 · the lead's m_up_sb run (pasted 21:xx): life 02 Heavy at 3665, life 03 failed_star → exit 6; reading the records
+build/calibrate_runs/2026-10-20T19-07-59Z:
+total 20
+drwxrwxr-x 5 ybelanger ybelanger 4096 21:26:07 .
+drwxrwxr-x 4 ybelanger ybelanger 4096 15:07:59 ..
+drwxrwxr-x 2 ybelanger ybelanger 4096 15:16:31 m_up_sb-01
+drwxrwxr-x 2 ybelanger ybelanger 4096 21:26:07 m_up_sb-02
+drwxrwxr-x 2 ybelanger ybelanger 4096 21:28:27 m_up_sb-03
+
+build/calibrate_runs/2026-10-20T19-07-59Z/m_up_sb-02:
+total 20
+drwxrwxr-x 2 ybelanger ybelanger 4096 21:26:07 .
+drwxrwxr-x 5 ybelanger ybelanger 4096 21:26:07 ..
+-rw-rw-r-- 1 ybelanger ybelanger  229 21:26:06 events.jsonl
+-rw-rw-r-- 1 ybelanger ybelanger 4463 21:26:06 summary.json
+
+build/calibrate_runs/2026-10-20T19-07-59Z/m_up_sb-03:
+total 16
+drwxrwxr-x 2 ybelanger ybelanger 4096 21:28:27 .
+drwxrwxr-x 5 ybelanger ybelanger 4096 21:26:07 ..
+-rw-rw-r-- 1 ybelanger ybelanger  160 21:28:27 events.jsonl
+-rw-rw-r-- 1 ybelanger ybelanger 3844 21:28:27 summary.json
+{'m_ch_sb': 3216.4199210979236, 'm_ign_sb': 2515.741187124804, 'm_tov_sb': 4853.169981814195, 'max_gas_speed': 21.71939923854999, 'ns_sigma_max_sb': 4853.169981814195, 'physics_hash': '556e3959cee177c48914a95ac94d66ea21849dd7866b50bf2691b3137da1f306', 'version': 1} {'adapter': 'NVIDIA GeForce RTX 5090', 'box': 'laserax-ai', 'date': '2026-10-20T19:07:29Z', 'git': '22f087d'}
+== life 02 calibrate:m_up_sb:46914.450 steps 3665 t 22.604 wall 648.6 until {'condition': 'collapse|ending', 'met': True} vmax 64.111
+   event ignition step 417 t 3.616 obj 1 {"mass_sb": 46904.062369400635}
+   event core_collapse step 3665 t 22.604 obj 1 {"mass_sb": 35919.58941444615}
+   object 1 mass 35919.6 core_collapse [('cloud', 33, 0.41), ('collapsing', 113, 1.16), ('cloud', 465, 4.04), ('white_dwarf', 673, 5.7), ('planetary_nebula', 2161, 14.23), ('white_dwarf', 3137, 19.84), ('core_collapse', 3665, 22.6)]
+== life 03 calibrate:m_up_sb:12538.414 steps 1937 t 14.728 wall 139.9 until {'condition': 'collapse|ending', 'met': True} vmax 43.031
+   event ending step 1937 t 14.728 obj 1 {"held_t": 10.005017723888159, "mass_sb": 12502.75880969083, "stage": "failed_star"}
+   object 1 mass 12502.8 failed_star [('cloud', 33, 0.55), ('collapsing', 81, 1.22), ('failed_star', 401, 4.72)]
+== 2026-10-20T21:37:26-04:00 probe P1–P2 setup · scratch copy /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/d73581fb-d3f0-4c87-a257-72ed3b72ab98/scratchpad/v9r5/copy (failed_star hold 20 τ_dyn by env, a trace)
+dest=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/d73581fb-d3f0-4c87-a257-72ed3b72ab98/scratchpad/v9r5/copy · files=5814 · size=84M · linked=none · excluded=13
+=== GO ===
+== 2026-10-20T21:38:46-04:00 probe P1 · SR_PROBE_FS_TDYN=20 calibrate --only m_ign_sb (default bracket) --adapter RTX 5090 --out <scratch>/p1_cal.json (scratch copy; failed_star held max(10 t.u., 20 τ_dyn))
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE ending stage=failed_star step=1905 t=86.6994 held_t=85.5624 tau_dyn=4.2718 hold=85.4355 mass=160.69 R=14.313 d_c=0.9778 v_r=-0.0130 t_c=0.1137 sigma_c=0.5801
+SR-HEADLESS DONE steps=1905 sim_time=86.699425 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=167.552 ignited=false core_collapse=false ending=failed_star steps=1905 sim_time=86.699 wall_s=19.3 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.651935 until=met
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.032 ignited=true core_collapse=false ending=none steps=673 sim_time=8.652 wall_s=5.1 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-02
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE ending stage=failed_star step=1777 t=39.4088 held_t=38.3799 tau_dyn=1.8908 hold=37.8164 mass=747.86 R=13.879 d_c=0.8259 v_r=-0.1636 t_c=4.2168 sigma_c=2.5719
+SR-HEADLESS DONE steps=1777 sim_time=39.408833 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=749.314 ignited=false core_collapse=false ending=failed_star steps=1777 sim_time=39.409 wall_s=11.3 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-03
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE ending stage=failed_star step=1809 t=28.7836 held_t=27.8367 tau_dyn=1.3906 hold=27.8115 mass=1576.83 R=14.501 d_c=0.7454 v_r=-0.0995 t_c=11.9539 sigma_c=4.8198
+SR-HEADLESS DONE steps=1809 sim_time=28.783642 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=1584.605 ignited=false core_collapse=false ending=failed_star steps=1809 sim_time=28.784 wall_s=14.0 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-04
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE ending stage=failed_star step=2049 t=27.9155 held_t=22.7636 tau_dyn=1.1307 hold=22.6131 mass=2291.95 R=14.309 d_c=0.7124 v_r=-0.0457 t_c=20.5107 sigma_c=7.4101
+SR-HEADLESS DONE steps=2049 sim_time=27.915514 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2304.357 ignited=false core_collapse=false ending=failed_star steps=2049 sim_time=27.916 wall_s=16.4 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-05
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=705 sim_time=9.462390 until=met
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=2778.844 ignited=true core_collapse=false ending=none steps=705 sim_time=9.462 wall_s=5.6 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-06
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=257 sim_time=4.222601 until=met
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=2530.504 ignited=true core_collapse=false ending=none steps=257 sim_time=4.223 wall_s=1.1 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-07
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE ending stage=failed_star step=2065 t=27.6050 held_t=22.3342 tau_dyn=1.1088 hold=22.1759 mass=2401.21 R=14.345 d_c=0.7078 v_r=-0.0373 t_c=21.7613 sigma_c=7.7345
+SR-HEADLESS DONE steps=2065 sim_time=27.604966 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2414.785 ignited=false core_collapse=false ending=failed_star steps=2065 sim_time=27.605 wall_s=15.4 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-08
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE ending stage=failed_star step=2065 t=27.3686 held_t=21.9395 tau_dyn=1.0962 hold=21.9236 mass=2457.70 R=14.347 d_c=0.7053 v_r=-0.0442 t_c=22.4247 sigma_c=7.8986
+SR-HEADLESS DONE steps=2065 sim_time=27.368559 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2471.967 ignited=false core_collapse=false ending=failed_star steps=2065 sim_time=27.369 wall_s=16.0 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-09
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE ending stage=failed_star step=2065 t=27.2674 held_t=21.8486 tau_dyn=1.0899 hold=21.7982 mass=2486.48 R=14.348 d_c=0.7041 v_r=-0.0454 t_c=22.7586 sigma_c=7.9843
+SR-HEADLESS DONE steps=2065 sim_time=27.267378 until=met
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2501.064 ignited=false core_collapse=false ending=failed_star steps=2065 sim_time=27.267 wall_s=17.0 record=build/calibrate_runs/2026-10-21T01-38-46Z/m_ign_sb-10
+SR-CALIBRATE item=m_ign_sb value=2515.741 bracket=2501.064..2530.504 runs=10 wall_s=126.3
+SR-CALIBRATE item=max_gas_speed value=21.7194
+SR-CALIBRATE DONE out=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/d73581fb-d3f0-4c87-a257-72ed3b72ab98/scratchpad/v9r5/p1_cal.json wall_s=126.3
+
+real	2m6.350s
+user	0m42.178s
+sys	0m3.225s
+exit=0
+== 2026-10-20T21:41:03-04:00 probe P2 · SR_PROBE_FS_TDYN=20 SR_PROBE_TRACE=1 calibrate --only m_ign_sb --bracket 12538.414,12800 --progress-every 1000 (life 01 = m_up_sb's life 03 mass; until ignition or a 20 τ_dyn failure; timeout 590 s)
+
+real	9m50.528s
+user	9m5.182s
+sys	0m2.388s
+exit=124
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_ign_sb mass=12538.414 step=1009 sim_time=9.905 heat_unconverged=7 stage=failed_star
+SR-CALIBRATE progress item=m_ign_sb mass=12538.414 step=2001 sim_time=16.607 heat_unconverged=29 stage=failed_star
+SR-CALIBRATE progress item=m_ign_sb mass=12538.414 step=3009 sim_time=22.914 heat_unconverged=37 stage=failed_star
+== P2 full trace (life 01 = 12,538.414, every 0.5 t.u.)
+SR-PROBE trace step=1 t=0.026 id=1 shown=None M=12538.4 R=68.57 tau_dyn=5.071 sigma_c=1.0000 t_c=9.1631 d_c=0.4777 v_r=-0.0542 L=7.6296e3 l_nuc=-0.0000e0 xc_h=0.7346 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=33 t=0.545 id=1 shown=Some("cloud") M=12538.4 R=67.91 tau_dyn=4.998 sigma_c=1.0170 t_c=9.3199 d_c=0.4774 v_r=-1.1331 L=1.3451e3 l_nuc=-0.0000e0 xc_h=0.7346 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=65 t=1.002 id=1 shown=Some("cloud") M=12538.4 R=66.99 tau_dyn=4.897 sigma_c=1.0598 t_c=9.7124 d_c=0.4767 v_r=-2.1021 L=4.3738e2 l_nuc=-0.0000e0 xc_h=0.7346 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=113 t=1.639 id=1 shown=Some("collapsing") M=12537.9 R=65.18 tau_dyn=4.700 sigma_c=1.1765 t_c=10.7812 d_c=0.4750 v_r=-3.5225 L=1.3896e2 l_nuc=-0.0000e0 xc_h=0.7346 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=145 t=2.052 id=1 shown=Some("collapsing") M=12537.3 R=63.02 tau_dyn=4.468 sigma_c=1.3042 t_c=11.9521 d_c=0.4731 v_r=-4.5105 L=6.5881e1 l_nuc=-0.0000e0 xc_h=0.7346 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=193 t=2.676 id=1 shown=Some("collapsing") M=12536.3 R=59.61 tau_dyn=4.110 sigma_c=1.6386 t_c=15.0169 d_c=0.4688 v_r=-6.1602 L=2.3304e1 l_nuc=-0.0000e0 xc_h=0.7346 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=225 t=3.092 id=1 shown=Some("collapsing") M=12535.6 R=56.95 tau_dyn=3.839 sigma_c=2.0487 t_c=18.7720 d_c=0.4642 v_r=-7.4130 L=1.3570e1 l_nuc=-0.0000e0 xc_h=0.7346 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=273 t=3.640 id=1 shown=Some("collapsing") M=12534.6 R=52.07 tau_dyn=3.356 sigma_c=3.2020 t_c=29.3025 d_c=0.4539 v_r=-9.3260 L=5.7095e0 l_nuc=9.1876e1 xc_h=0.7346 lg=[91.8762, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=321 t=4.096 id=1 shown=Some("collapsing") M=12533.7 R=47.36 tau_dyn=2.911 sigma_c=6.0300 t_c=55.7185 d_c=0.4330 v_r=-11.0472 L=1.5464e0 l_nuc=1.8681e4 xc_h=0.7344 lg=[18680.6777, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=385 t=4.605 id=1 shown=Some("collapsing") M=12533.0 R=55.18 tau_dyn=3.661 sigma_c=4.4632 t_c=8.5316 d_c=0.8021 v_r=13.0381 L=6.9289e3 l_nuc=-0.0000e0 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=433 t=5.054 id=1 shown=Some("failed_star") M=12531.8 R=68.15 tau_dyn=5.026 sigma_c=5.4346 t_c=3.6137 d_c=0.9196 v_r=10.1231 L=3.3858e3 l_nuc=-0.0000e0 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=497 t=5.607 id=1 shown=Some("failed_star") M=12530.6 R=81.19 tau_dyn=6.535 sigma_c=13.2302 t_c=29.1080 d_c=0.7564 v_r=8.6114 L=2.0046e3 l_nuc=1.6303e-13 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=561 t=6.095 id=1 shown=Some("failed_star") M=12529.7 R=90.14 tau_dyn=7.645 sigma_c=7.6021 t_c=28.2848 d_c=0.6634 v_r=7.2593 L=5.0000e4 l_nuc=4.6030e-13 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=609 t=6.511 id=1 shown=Some("failed_star") M=12529.4 R=99.99 tau_dyn=8.932 sigma_c=7.0791 t_c=36.6883 d_c=0.5879 v_r=6.3119 L=1.3376e5 l_nuc=8.9948e-13 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=673 t=7.084 id=1 shown=Some("failed_star") M=12525.9 R=110.48 tau_dyn=10.375 sigma_c=8.4386 t_c=31.9258 d_c=0.6569 v_r=5.6400 L=9.8601e4 l_nuc=5.7698e-13 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=721 t=7.507 id=1 shown=Some("failed_star") M=12525.4 R=118.87 tau_dyn=11.580 sigma_c=8.8990 t_c=29.9199 d_c=0.6816 v_r=5.0338 L=9.5761e4 l_nuc=1.1717e-13 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=785 t=8.063 id=1 shown=Some("failed_star") M=12527.0 R=126.68 tau_dyn=12.739 sigma_c=10.9075 t_c=28.8709 d_c=0.7260 v_r=4.3505 L=6.0151e4 l_nuc=3.0569e-14 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=849 t=8.611 id=1 shown=Some("failed_star") M=12528.5 R=133.92 tau_dyn=13.846 sigma_c=17.4586 t_c=35.7325 d_c=0.7621 v_r=3.6060 L=4.8575e4 l_nuc=3.3403e-13 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=897 t=9.013 id=1 shown=Some("failed_star") M=12529.5 R=139.05 tau_dyn=14.649 sigma_c=33.6336 t_c=50.2713 d_c=0.7965 v_r=3.2375 L=5.0643e4 l_nuc=4.4170e-12 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=961 t=9.528 id=1 shown=Some("failed_star") M=12530.2 R=144.18 tau_dyn=15.465 sigma_c=46.7270 t_c=47.5766 d_c=0.8431 v_r=2.7530 L=1.3676e5 l_nuc=2.2302e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1025 t=10.030 id=1 shown=Some("failed_star") M=12529.8 R=148.25 tau_dyn=16.125 sigma_c=60.9433 t_c=45.4209 d_c=0.8738 v_r=2.6601 L=1.5375e5 l_nuc=4.6810e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1089 t=10.519 id=1 shown=Some("failed_star") M=12526.2 R=153.65 tau_dyn=17.017 sigma_c=75.4023 t_c=41.4302 d_c=0.8993 v_r=2.1959 L=2.6930e5 l_nuc=6.2673e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1169 t=11.094 id=1 shown=Some("failed_star") M=12522.1 R=157.54 tau_dyn=17.671 sigma_c=101.4908 t_c=0.0500 d_c=0.9999 v_r=2.0557 L=2.6066e5 l_nuc=5.4227e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1233 t=11.542 id=1 shown=Some("failed_star") M=12519.0 R=159.37 tau_dyn=17.981 sigma_c=117.1404 t_c=0.0500 d_c=0.9999 v_r=1.8270 L=2.8050e5 l_nuc=8.8106e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1313 t=12.093 id=1 shown=Some("failed_star") M=12507.4 R=162.73 tau_dyn=18.562 sigma_c=123.0660 t_c=0.0501 d_c=0.9999 v_r=1.7988 L=2.7029e5 l_nuc=1.1170e-9 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1377 t=12.526 id=1 shown=Some("failed_star") M=12506.9 R=164.31 tau_dyn=18.833 sigma_c=141.1496 t_c=0.0500 d_c=0.9999 v_r=1.4998 L=2.4291e5 l_nuc=4.2736e-9 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1457 t=13.058 id=1 shown=Some("failed_star") M=12505.3 R=166.80 tau_dyn=19.265 sigma_c=143.8335 t_c=0.0500 d_c=0.9999 v_r=1.3357 L=5.2977e5 l_nuc=1.9018e-8 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1537 t=13.583 id=1 shown=Some("failed_star") M=12503.5 R=167.51 tau_dyn=19.388 sigma_c=119.0798 t_c=0.0500 d_c=0.9999 v_r=1.1270 L=2.5923e5 l_nuc=1.8747e-8 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1601 t=14.000 id=1 shown=Some("failed_star") M=12501.5 R=168.60 tau_dyn=19.580 sigma_c=130.1584 t_c=0.0500 d_c=0.9999 v_r=0.8794 L=2.0603e5 l_nuc=1.1858e-8 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1681 t=14.514 id=1 shown=Some("failed_star") M=12498.6 R=170.18 tau_dyn=19.859 sigma_c=131.7045 t_c=0.0500 d_c=0.9999 v_r=0.7036 L=1.5605e5 l_nuc=4.4127e-9 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1761 t=15.032 id=1 shown=Some("failed_star") M=12495.9 R=171.12 tau_dyn=20.025 sigma_c=138.4331 t_c=0.0500 d_c=0.9999 v_r=0.2515 L=1.3215e5 l_nuc=1.2233e-9 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1841 t=15.563 id=1 shown=Some("failed_star") M=12493.1 R=173.24 tau_dyn=20.400 sigma_c=136.0919 t_c=0.0500 d_c=0.9999 v_r=-0.1072 L=1.1055e5 l_nuc=2.6498e-10 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1921 t=16.099 id=1 shown=Some("failed_star") M=12490.2 R=172.66 tau_dyn=20.300 sigma_c=135.2631 t_c=0.0500 d_c=0.9999 v_r=-0.0866 L=1.3044e5 l_nuc=7.8510e-7 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=1985 t=16.502 id=1 shown=Some("failed_star") M=12487.8 R=172.35 tau_dyn=20.248 sigma_c=129.4684 t_c=0.0501 d_c=0.9999 v_r=-0.2824 L=2.4972e5 l_nuc=1.4023e-4 xc_h=0.0000 lg=[0.0001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2065 t=17.004 id=1 shown=Some("failed_star") M=12484.6 R=172.95 tau_dyn=20.356 sigma_c=122.0598 t_c=0.0500 d_c=0.9999 v_r=-0.9692 L=7.0587e5 l_nuc=2.0051e-2 xc_h=0.0000 lg=[0.0137, 0.0064, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2161 t=17.576 id=1 shown=Some("failed_star") M=12478.8 R=174.02 tau_dyn=20.550 sigma_c=164.8331 t_c=129.7464 d_c=0.8350 v_r=0.7867 L=1.6879e6 l_nuc=2.1071e-1 xc_h=0.0000 lg=[0.1219, 0.0888, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2241 t=18.082 id=1 shown=Some("failed_star") M=12471.2 R=176.52 tau_dyn=21.000 sigma_c=205.3890 t_c=0.0500 d_c=0.9999 v_r=0.6849 L=7.3213e5 l_nuc=3.4265e-2 xc_h=0.0000 lg=[0.0293, 0.0049, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2321 t=18.567 id=1 shown=Some("failed_star") M=12460.4 R=171.86 tau_dyn=20.184 sigma_c=223.3590 t_c=69.6198 d_c=0.9211 v_r=1.2785 L=8.0758e5 l_nuc=2.7847e-2 xc_h=0.0000 lg=[0.0254, 0.0024, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2401 t=19.046 id=1 shown=Some("failed_star") M=12440.5 R=171.75 tau_dyn=20.180 sigma_c=287.2634 t_c=0.0501 d_c=0.9999 v_r=1.2326 L=7.1006e5 l_nuc=2.8245e-2 xc_h=0.0000 lg=[0.0221, 0.0061, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2481 t=19.508 id=1 shown=Some("failed_star") M=12411.3 R=171.05 tau_dyn=20.081 sigma_c=332.1924 t_c=0.0500 d_c=1.0000 v_r=1.2087 L=4.5477e5 l_nuc=1.7242e-3 xc_h=0.0000 lg=[0.0016, 0.0001, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2577 t=20.069 id=1 shown=Some("failed_star") M=12365.2 R=171.15 tau_dyn=20.136 sigma_c=230.0951 t_c=0.0500 d_c=0.9999 v_r=1.3583 L=1.9591e5 l_nuc=9.0103e-6 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2657 t=20.573 id=1 shown=Some("failed_star") M=12314.8 R=171.12 tau_dyn=20.171 sigma_c=162.3969 t_c=0.0500 d_c=0.9999 v_r=1.3208 L=1.2247e5 l_nuc=1.4419e-8 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2737 t=21.091 id=1 shown=Some("failed_star") M=12258.6 R=172.06 tau_dyn=20.385 sigma_c=142.8981 t_c=0.0500 d_c=0.9999 v_r=1.1447 L=9.0900e4 l_nuc=4.7639e-9 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2801 t=21.506 id=1 shown=Some("failed_star") M=12213.6 R=172.17 tau_dyn=20.441 sigma_c=124.6372 t_c=0.0501 d_c=0.9999 v_r=1.0117 L=8.0818e4 l_nuc=3.4882e-9 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2881 t=22.040 id=1 shown=Some("failed_star") M=12159.2 R=171.64 tau_dyn=20.392 sigma_c=109.4741 t_c=1.1192 d_c=0.9977 v_r=0.8952 L=6.1612e4 l_nuc=1.6296e-9 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=2961 t=22.584 id=1 shown=Some("failed_star") M=12105.4 R=168.71 tau_dyn=19.917 sigma_c=105.6055 t_c=1.4388 d_c=0.9970 v_r=0.8134 L=4.8144e4 l_nuc=6.2093e-10 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3025 t=23.025 id=1 shown=Some("failed_star") M=12058.6 R=168.62 tau_dyn=19.939 sigma_c=99.6705 t_c=0.2184 d_c=0.9995 v_r=0.7248 L=3.6387e4 l_nuc=2.8046e-10 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3105 t=23.586 id=1 shown=Some("failed_star") M=11992.4 R=167.75 tau_dyn=19.839 sigma_c=92.0071 t_c=0.9789 d_c=0.9977 v_r=0.5648 L=4.0482e4 l_nuc=2.2150e-10 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3169 t=24.037 id=1 shown=Some("failed_star") M=11940.8 R=167.01 tau_dyn=19.752 sigma_c=89.6738 t_c=1.0195 d_c=0.9976 v_r=0.5139 L=2.7253e4 l_nuc=2.7154e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3249 t=24.607 id=1 shown=Some("failed_star") M=11871.7 R=166.10 tau_dyn=19.648 sigma_c=85.3324 t_c=1.0936 d_c=0.9973 v_r=0.1284 L=2.0509e4 l_nuc=3.6890e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3313 t=25.062 id=1 shown=Some("failed_star") M=11811.4 R=162.10 tau_dyn=18.991 sigma_c=81.0608 t_c=0.7556 d_c=0.9981 v_r=0.0532 L=1.6993e4 l_nuc=1.1695e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3377 t=25.527 id=1 shown=Some("failed_star") M=11744.8 R=162.08 tau_dyn=19.039 sigma_c=81.3648 t_c=0.6621 d_c=0.9983 v_r=-0.1103 L=1.6698e4 l_nuc=5.6138e-11 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3457 t=26.112 id=1 shown=Some("failed_star") M=11660.2 R=158.29 tau_dyn=18.443 sigma_c=76.9293 t_c=0.7875 d_c=0.9979 v_r=-0.3129 L=1.4627e4 l_nuc=1.2366e-12 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3521 t=26.582 id=1 shown=Some("failed_star") M=11596.8 R=157.47 tau_dyn=18.349 sigma_c=72.1940 t_c=0.7870 d_c=0.9978 v_r=-0.4759 L=1.4277e4 l_nuc=5.5291e-10 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+SR-PROBE trace step=3585 t=27.056 id=1 shown=Some("failed_star") M=11537.9 R=156.14 tau_dyn=18.164 sigma_c=72.9932 t_c=0.8210 d_c=0.9977 v_r=-0.5104 L=1.4415e4 l_nuc=1.2638e-9 xc_h=0.0000 lg=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+== 2026-10-21T07:06:12-04:00 plan.py handoff M0-V9 + register (the lead left mid-question)
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+register: checks=2 failed=0 warnings=0 · set=2 · replaced=2 · appended=0
+=== GO ===

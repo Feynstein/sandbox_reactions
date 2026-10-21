@@ -1,0 +1,3 @@
+# M0-D74 | launch headless-boot | 2026-10-20T18:22:40-0400
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-lrs7tm34
+SR-ERROR calibration invalid: preset_mass_sb: missing
