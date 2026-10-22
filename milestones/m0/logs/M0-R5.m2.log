@@ -1,0 +1,22 @@
+=== M0-R5 M2 a_n_fe=100 calibrate --only m_bh_sb --bracket 4572.393953137947,67020.64327658225 cap 570 s 2026-10-21T13:45:09-04:00 linux-pc ===
+load: load average: 2.14, 2.69, 4.00 · NVIDIA GeForce RTX 5090, 98 %;Quadro RTX 4000, 0 %;
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=113 sim_time=2.290 heat_unconverged=0 stage=failed_star
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=209 sim_time=3.534 heat_unconverged=0 stage=failed_star
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=305 sim_time=4.319 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=401 sim_time=5.043 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=513 sim_time=5.843 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=609 sim_time=6.539 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=705 sim_time=7.204 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=801 sim_time=7.838 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=913 sim_time=8.471 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1009 sim_time=9.000 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1105 sim_time=9.512 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1201 sim_time=10.011 heat_unconverged=3 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1313 sim_time=10.573 heat_unconverged=3 stage=planetary_nebula
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1409 sim_time=11.047 heat_unconverged=3 stage=planetary_nebula
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1505 sim_time=11.512 heat_unconverged=3 stage=supernova
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1601 sim_time=11.968 heat_unconverged=28 stage=supernova
+Command exited with non-zero status 124
+wall=570.11
+exit=124

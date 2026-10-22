@@ -1,0 +1,10 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -352,7 +352,6 @@
+                     "id": id,
+                     "ignited": s.history.ignited,
+                     "last_collapse": s.history.last_collapse.map_or(Value::Null, exact),
+-                    "x_h_max": exact(s.history.x_h_max),
+                     "raw": s.raw.id(),
+                     "streak": s.streak,
+                     "shown": s.shown.map(Stage::id),

@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -219,7 +219,7 @@
+ pub fn ignites(o: &Object, h: &History) -> Option<Ignition> {
+     if hydrogen_leads(o) {
+         Some(Ignition::Light)
+-    } else if h.x_h_max >= SPENT && o.x_c[X_H] <= BURNT_SHARE * h.x_h_max && o.l_group[G_H] > 0.0 {
++    } else if false && h.x_h_max >= SPENT && o.x_c[X_H] <= BURNT_SHARE * h.x_h_max && o.l_group[G_H] > 0.0 {
+         Some(Ignition::Fuel)
+     } else {
+         None

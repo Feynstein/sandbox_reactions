@@ -15,7 +15,7 @@
   "a_mg_burn": 1e-3,
   "a_si_burn": 1e-3,
   "a_s_burn": 1e-3,
-  "a_n_fe": 1e-3,
+  "a_n_fe": 100,
   "nu_c_burn": 30,
   "nu_ne_burn": 30,
   "nu_o_burn": 30,

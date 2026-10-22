@@ -1,0 +1,110 @@
+=== M0-R5 M1 a_n_fe=1e-3 1000 steps 2026-10-21T13:00:06-04:00 linux-pc RTX 5090 (shared: other projects' GPU jobs) ===
+NVIDIA GeForce RTX 5090, 96 %
+Quadro RTX 4000, 0 %
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 60006 passes 2 rounds 4096
+SR-WARN heat unconverged step 60016 passes 4 rounds 4096
+SR-WARN heat unconverged step 60028 passes 6 rounds 4096
+SR-WARN heat unconverged step 60037 passes 2 rounds 4096
+SR-WARN heat unconverged step 60064 passes 2 rounds 4096
+SR-WARN heat unconverged step 60068 passes 2 rounds 4096
+SR-WARN heat unconverged step 60087 passes 6 rounds 4096
+SR-WARN heat unconverged step 60089 passes 4 rounds 4096
+SR-WARN heat unconverged step 60112 passes 2 rounds 4096
+SR-WARN heat unconverged step 60140 passes 2 rounds 4096
+SR-WARN heat unconverged step 60141 passes 2 rounds 4096
+SR-WARN heat unconverged step 60148 passes 6 rounds 4096
+SR-WARN heat unconverged step 60184 passes 8 rounds 4096
+SR-WARN heat unconverged step 60186 passes 5 rounds 4096
+SR-WARN heat unconverged step 60196 passes 2 rounds 4096
+SR-WARN heat unconverged step 60197 passes 2 rounds 4096
+SR-WARN heat unconverged step 60211 passes 3 rounds 4096
+SR-WARN heat unconverged step 60258 passes 8 rounds 4096
+SR-WARN heat unconverged step 60259 passes 5 rounds 4096
+SR-WARN heat unconverged step 60264 passes 2 rounds 4096
+SR-WARN heat unconverged step 60289 passes 4 rounds 4096
+SR-WARN heat unconverged step 60290 passes 3 rounds 4096
+SR-WARN heat unconverged step 60291 passes 2 rounds 4096
+SR-WARN heat unconverged step 60297 passes 3 rounds 4096
+SR-WARN heat unconverged step 60300 passes 2 rounds 4096
+SR-WARN heat unconverged step 60308 passes 3 rounds 4096
+SR-WARN heat unconverged step 60329 passes 6 rounds 4096
+SR-WARN heat unconverged step 60333 passes 6 rounds 4096
+SR-WARN heat unconverged step 60337 passes 2 rounds 4096
+SR-WARN heat unconverged step 60340 passes 5 rounds 4096
+SR-WARN heat unconverged step 60355 passes 10 rounds 4096
+SR-WARN heat unconverged step 60369 passes 2 rounds 4096
+SR-WARN heat unconverged step 60376 passes 4 rounds 4096
+SR-WARN heat unconverged step 60405 passes 3 rounds 4096
+SR-WARN heat unconverged step 60424 passes 2 rounds 4096
+SR-WARN heat unconverged step 60430 passes 2 rounds 4096
+SR-WARN heat unconverged step 60437 passes 2 rounds 4096
+SR-WARN heat unconverged step 60450 passes 3 rounds 4096
+SR-WARN heat unconverged step 60460 passes 3 rounds 4096
+SR-WARN heat unconverged step 60481 passes 3 rounds 4096
+SR-WARN heat unconverged step 60488 passes 2 rounds 4096
+SR-WARN heat unconverged step 60546 passes 8 rounds 4096
+SR-WARN heat unconverged step 60550 passes 6 rounds 4096
+SR-WARN heat unconverged step 60554 passes 8 rounds 4096
+SR-WARN heat unconverged step 60566 passes 2 rounds 4096
+SR-WARN heat unconverged step 60582 passes 3 rounds 4096
+SR-WARN heat unconverged step 60583 passes 2 rounds 4096
+SR-WARN heat unconverged step 60591 passes 2 rounds 4096
+SR-WARN heat unconverged step 60594 passes 6 rounds 4096
+SR-WARN heat unconverged step 60620 passes 2 rounds 4096
+SR-WARN heat unconverged step 60648 passes 6 rounds 4096
+SR-WARN heat unconverged step 60693 passes 5 rounds 4096
+SR-WARN heat unconverged step 60709 passes 5 rounds 4096
+SR-WARN heat unconverged step 60712 passes 2 rounds 4096
+SR-WARN heat unconverged step 60714 passes 2 rounds 4096
+SR-WARN heat unconverged step 60732 passes 3 rounds 4096
+SR-WARN heat unconverged step 60741 passes 5 rounds 4096
+SR-WARN heat unconverged step 60764 passes 5 rounds 4096
+SR-WARN heat unconverged step 60776 passes 2 rounds 4096
+SR-WARN heat unconverged step 60824 passes 2 rounds 4096
+SR-WARN heat unconverged step 60831 passes 4 rounds 4096
+SR-WARN heat unconverged step 60842 passes 2 rounds 4096
+SR-WARN heat unconverged step 60847 passes 2 rounds 4096
+SR-WARN heat unconverged step 60855 passes 6 rounds 4096
+SR-WARN heat unconverged step 60859 passes 2 rounds 4096
+SR-WARN heat unconverged step 60894 passes 2 rounds 4096
+SR-WARN heat unconverged step 60915 passes 2 rounds 4096
+SR-WARN heat unconverged step 60918 passes 10 rounds 4096
+SR-WARN heat unconverged step 60932 passes 4 rounds 4096
+SR-WARN heat unconverged step 60941 passes 3 rounds 4096
+SR-WARN heat unconverged step 60946 passes 2 rounds 4096
+SR-WARN heat unconverged step 60957 passes 2 rounds 4096
+SR-WARN heat unconverged step 60970 passes 2 rounds 4096
+SR-WARN heat unconverged step 60971 passes 6 rounds 4096
+SR-WARN heat unconverged step 60989 passes 2 rounds 4096
+SR-HEADLESS DONE steps=61001 sim_time=282.853907 until=none
+wall=193.39
+exit=0
+ 13:03:48 up 2 days,  5:15,  6 users,  load average: 9.83, 13.85, 21.78
+NVIDIA GeForce RTX 5090, 93 %, 16742 MiB
+Quadro RTX 4000, 0 %, 840 MiB
+=== 2026-10-21T13:06:00-04:00 the five parallel M1 runs killed at ~step 60032 (about 0.3 steps/s each, 5-way contention on the shared 5090); re-run serially ===
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Command exited with non-zero status 124
+wall=570.37
+exit=124
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Command exited with non-zero status 124
+wall=570.46
+exit=124
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Command exited with non-zero status 124
+wall=570.40
+exit=124
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Command exited with non-zero status 124
+wall=571.68
+exit=124
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Command exited with non-zero status 124
+wall=570.14
+exit=124
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Command exited with non-zero status 124
+wall=570.14
+exit=124

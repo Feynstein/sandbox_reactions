@@ -3,7 +3,7 @@
 //! A run's frames — each chunk of steps `headless` summarises, [`crate::step::Step::summarise`] — go through
 //! [`Watch::update`]: the block summary widened to f64 as a [`Report`], the objects of [`Tracker`], their stages and events
 //! of [`StageTracker`], and the one event the engine adds, `ending` (an object holding a remnant stage for
-//! [`ENDING_HOLD`] t.u.). What it keeps becomes summary.json's `events`, `objects` and `until` and DIR/events.jsonl, and
+//! [`ending_hold`] — max(10 t.u., 20 τ_dyn), §0.5 [M0-D78]). What it keeps becomes summary.json's `events`, `objects` and `until` and DIR/events.jsonl, and
 //! [`Until`] is the condition `--until` stops on. Observers watch, never drive (I2): nothing here reaches into a step.
 //!
 //! Readings the contract leaves open, declared here:
@@ -15,26 +15,56 @@
 //!   resumed from a dump counts on from the dump's, while summary.json's `steps` is the steps this run ran.
 //! - An object's `stage` is the displayed stage (after the hold), `null` until one has held; `stages` lists each stage
 //!   displayed, from the frame that showed it. The objects listed are those of the last frame.
-//! - The `ending` event's frame is the one at which the displayed remnant stage has been shown for 10 t.u. of frames' sim
-//!   time (the first frame showing it to the frame in question), the remnant being unchanged throughout.
+//! - The `ending` event's frame is the one at which the displayed remnant stage has been shown for max(10 t.u., 20 τ_dyn) of
+//!   frames' sim time (the first frame showing it to the frame in question), τ_dyn the object's at the frame in question,
+//!   the remnant being unchanged throughout (§0.5 [M0-D78]); its detail's `hold_t` is the hold it met. The ignition event's
+//!   detail names its rule, `by` `light` or `fuel` (§0.5 [M0-D78]).
 
 use std::collections::{BTreeMap, BTreeSet};
 
 use serde_json::{json, Value};
-use sr_physics::observe::stages::stage_order;
+use sr_physics::observe::stages::{ending_hold, stage_order};
 use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole, SUN_MASS_NOMINAL};
-use sr_physics::observe::{BlockData, EventKind, Object, Report, SinkData, Stage, StageTracker, Tracker, TrackerConfig};
+use sr_physics::observe::{BlockData, EventKind, Object, Report, SinkData, Stage, StageTracker, Tracker, TrackerConfig, GROUP_N};
 use sr_physics::registry::Physics;
 
 use crate::ledger::At;
 use crate::summary::BlockSummary;
 
-/// `--until ending` and the `ending` event: a remnant stage held this long (t.u.), §3.3.
-pub const ENDING_HOLD: f64 = 10.0;
 /// §1.10.2's Sun-like anchor: T_eff is read at the first frame whose object has central hydrogen at or under this.
 pub const T_EFF_X_H: f64 = 0.35;
 /// Hydrogen's slot in an object's central composition (§1.5's first species).
 const X_H: usize = 0;
+/// Iron's and the neutrons' slots (§1.5's order: H, He, C, O, Ne, Mg, Si, S, Fe, n).
+const X_FE: usize = 8;
+const X_N: usize = 9;
+
+/// The heaviest object's numbers on a `calibrate` progress line (M0-D80; §1.9.2's quantities, sandbox units): M, R, τ_dyn, Σ_c,
+/// T_c, d_c, Y_e,c, X_Fe,c, X_n,c, v_r and v_r/√(GM/R), M_unb, L, L_nuc, L_N (≤ 0, the neutronization's absorbed power), L_ν,
+/// the sinks and their mass, the raw stage (this frame's result) and the shown one.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Star {
+    pub mass: f64,
+    pub radius: f64,
+    pub tau_dyn: f64,
+    pub sigma_c: f64,
+    pub t_c: f64,
+    pub d_c: f64,
+    pub ye_c: f64,
+    pub x_fe_c: f64,
+    pub x_n_c: f64,
+    pub v_r: f64,
+    pub v_r_dyn: f64,
+    pub unbound: f64,
+    pub luminosity: f64,
+    pub l_nuc: f64,
+    pub l_n: f64,
+    pub l_nu: f64,
+    pub sinks: usize,
+    pub sink_mass: f64,
+    pub raw: Option<&'static str>,
+    pub shown: Option<&'static str>,
+}
 
 /// `--until`'s condition (§3.3).
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -45,7 +75,7 @@ pub enum Until {
     Event(EventKind),
     /// An object displays this stage.
     Stage(Stage),
-    /// Any object holds a remnant stage for [`ENDING_HOLD`].
+    /// Any object holds a remnant stage for [`ending_hold`] of its τ_dyn.
     Ending,
     /// The first of the `ignition` event and the `ending` event: `calibrate`'s m_ign_sb run (§2.11 item 3), which stops at
     /// either side of the threshold. Built in code by `calibrate`; `--until` does not parse it.
@@ -93,6 +123,9 @@ impl Until {
         }
     }
 }
+
+/// The event details' keys that hold a word, not a number: the ending's stage id and the ignition's rule (§0.5 [M0-D78]).
+const DETAIL_WORDS: [&str; 2] = ["stage", "by"];
 
 /// A stage is a remnant when it is an end of a life (§1.9.3's "remnant" rows).
 pub fn is_remnant(stage: Stage) -> bool {
@@ -232,7 +265,11 @@ impl Watch {
             .into_iter()
             .map(|e| {
                 let mass = objects.iter().find(|o| o.id == e.object).map(|o| o.mass);
-                RunEvent { step: at.step, sim_time: e.time, kind: e.kind.id(), object: e.object, detail: json!({"mass_sb": mass}) }
+                let mut detail = json!({"mass_sb": mass});
+                if let Some(by) = e.by {
+                    detail["by"] = json!(by.id());
+                }
+                RunEvent { step: at.step, sim_time: e.time, kind: e.kind.id(), object: e.object, detail }
             })
             .collect();
         self.lives.retain(|id, _| objects.iter().any(|o| o.id == *id));
@@ -251,8 +288,9 @@ impl Watch {
                     if held.stage != stage {
                         *held = Remnant { stage, since: at.sim_time };
                     }
-                    if at.sim_time - held.since >= ENDING_HOLD && self.ended.insert(o.id) {
-                        let detail = json!({"stage": stage.id(), "held_t": at.sim_time - held.since, "mass_sb": o.mass});
+                    let hold = ending_hold(o.tau_dyn);
+                    if at.sim_time - held.since >= hold && self.ended.insert(o.id) {
+                        let detail = json!({"stage": stage.id(), "held_t": at.sim_time - held.since, "hold_t": hold, "mass_sb": o.mass});
                         fresh.push(RunEvent { step: at.step, sim_time: at.sim_time, kind: "ending", object: o.id, detail });
                     }
                 }
@@ -299,6 +337,46 @@ impl Watch {
         self.stages.stage(star.id).and_then(|s| s.shown).map(Stage::id)
     }
 
+    /// The heaviest object's numbers now, for `calibrate`'s progress line (M0-D80); `None` while there is no object.
+    pub fn heaviest_star(&self) -> Option<Star> {
+        let o = self.tracker.objects().iter().max_by(|a, b| a.mass.total_cmp(&b.mass))?;
+        let state = self.stages.stage(o.id);
+        let v_dyn = (sr_physics::units::G * o.mass / o.radius).sqrt();
+        Some(Star {
+            mass: o.mass,
+            radius: o.radius,
+            tau_dyn: o.tau_dyn,
+            sigma_c: o.sigma_c,
+            t_c: o.t_c,
+            d_c: o.d_c,
+            ye_c: sr_physics::registry::electron_fraction(&o.x_c),
+            x_fe_c: o.x_c[X_FE],
+            x_n_c: o.x_c[X_N],
+            v_r: o.v_r,
+            v_r_dyn: if v_dyn > 0.0 { o.v_r / v_dyn } else { 0.0 },
+            unbound: o.unbound,
+            luminosity: o.luminosity,
+            l_nuc: o.l_nuc,
+            l_n: o.l_group[GROUP_N],
+            l_nu: o.l_nu,
+            sinks: o.sinks,
+            sink_mass: o.sink_mass,
+            raw: state.map(|s| s.raw.id()),
+            shown: state.and_then(|s| s.shown).map(Stage::id),
+        })
+    }
+
+    /// The objects the last frame found.
+    pub fn object_count(&self) -> usize {
+        self.tracker.objects().len()
+    }
+
+    /// The heaviest object's raw stage — this frame's result, before the hold (§1.9.3) — `None` while there is no object.
+    pub fn heaviest_raw_stage(&self) -> Option<&'static str> {
+        let star = self.tracker.objects().iter().max_by(|a, b| a.mass.total_cmp(&b.mass))?;
+        self.stages.stage(star.id).map(|s| s.raw.id())
+    }
+
     /// DIR/events.jsonl: one JSON object a line, none for a run without events.
     pub fn events_jsonl(&self) -> String {
         self.events.iter().map(|e| e.json().to_string() + "\n").collect()
@@ -313,7 +391,7 @@ impl Watch {
             .events
             .iter()
             .map(|e| {
-                // The detail's numbers as exact strings; its one string, a stage id, stays one.
+                // The detail's numbers as exact strings; its strings, a stage id and an ignition's rule, stay ones.
                 let detail: serde_json::Map<String, Value> =
                     e.detail.as_object().into_iter().flatten().map(|(k, v)| (k.clone(), v.as_f64().map_or(v.clone(), exact))).collect();
                 json!({"step": e.step, "sim_time": exact(e.sim_time), "kind": e.kind, "object": e.object, "detail": detail})
@@ -359,7 +437,7 @@ impl Watch {
                 let detail = e["detail"].as_object().ok_or_else(|| format!("events.detail: not an object: {}", e["detail"]))?;
                 let detail = detail
                     .iter()
-                    .map(|(k, x)| Ok((k.clone(), if k == "stage" || x.is_null() { x.clone() } else { json!(read_exact(x, "events.detail")?) })))
+                    .map(|(k, x)| Ok((k.clone(), if DETAIL_WORDS.contains(&k.as_str()) || x.is_null() { x.clone() } else { json!(read_exact(x, "events.detail")?) })))
                     .collect::<Result<serde_json::Map<String, Value>, String>>()?;
                 let at = read_exact(&e["sim_time"], "events.sim_time")?;
                 Ok(RunEvent { step: read_whole(e, "step")?, sim_time: at, kind, object: id(&e["object"])?, detail: Value::Object(detail) })

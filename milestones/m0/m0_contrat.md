@@ -407,6 +407,33 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     add another task so that it can really resume at the current step or something? Or like at the step interval thats being used
     to display progress?», and «make sure that the number of display step and the number of save steps can both be arguments that
     can be set seeparately … just make sure its logical».
+  - [M0-D78] §1.9.4's ignition as [M0-D53] reads it ("0.5 L ≤ L_H ≤ 2 L"), §1.9.5's "Once a remnant stage … has held for 10 t.u.",
+    §3.3's `ending` gloss "(any object holds a remnant stage for 10 t.u.)", §2.11 item 3's failure ("d_c ≥ 0.5 and L_H < 0.01 L held for
+    20 τ_dyn"), §2.12.2's event `detail` and [M0-D76]'s observers' snapshot · **burnt fuel also counts**: the `ignited` flag turns on at
+    the first frame where 0.5 L ≤ L_H ≤ 2 L (L > 0), as [M0-D53], **or** where the object's centre has burned a tenth of its hydrogen —
+    X_H,c ≤ 0.9 × the most X_H,c its centre has shown at this or any earlier frame of its id (that most ≥ 10⁻³), with L_H > 0 at that
+    frame (a centre that moved onto painted helium burned nothing); §1.9.3's rows unchanged, failed_star's «never ignited» now fuel that
+    never burned · **every remnant settles for max(10 t.u., 20 τ_dyn)**: the `ending` event — `--until ending`, m_ign_sb's
+    `ignition|ending`, m_up_sb's `collapse|ending` and the game's ending readout (§1.9.5) — fires at the first frame where the displayed
+    remnant stage has been shown for at least max(10 t.u., 20 τ_dyn), τ_dyn the object's at that frame (§1.9.2), the hold restarting on a
+    change of stage; §2.11 item 3's failure is the failed_star ending at that hold · §2.12.2's `detail` gains `by` (`light` or `fuel`) on
+    `ignition` and `hold_t` (the hold met) on `ending` · the observers' snapshot is version 2, each object's history gaining `x_h_max`
+    (an exact string); a snapshot without it (version 1, M0-D77's binary) is refused by `--continue` (exit 4) and not used as
+    `calibrate`'s checkpoint (`SR-WARN checkpoint not used (…)`, step 0) · measured on linux-pc (laserax-ai), 2026-10-20, RTX 5090
+    (tasks/M0-V9.md § Session 3, continued, P1–P2): m_up_sb's life 03 (12,538.414, 3.74 M₀) burned its central hydrogen in a flash —
+    L_H 18,681 against L 1.55 at t 4.10, X_H,c 0.7346 → 0.0000 by t 5.05, never inside the light window — so it never ignited, its
+    cold degenerate core read failed_star («too light to ignite») and the item exited 6; life 02 (14 M₀) showed white_dwarf 8.53 t.u.
+    while still a cloud before its core collapse; failed_star held max(10 t.u., 20 τ_dyn) left m_ign_sb at 2515.741 (the same 10
+    lives, 126 s against ~25 s) — the lead's answers at M0-V9, 2026-10-21: «Burnt fuel also counts (Recommended)» and «max(10 t.u.,
+    20 τ_dyn) (Recommended)» («the game's ending readout follows the same rule»).
+  - [M0-D79] §2.5.1's "A per record … others 1 × 10⁻³" for N_Fe and §1.9.3's neutron_star row ("X_n,c ≥ 0.5, |v_r| ≤ 0.05 √(GM/R), no
+    sink", listed before supernova) · **a_n_fe = 100**: a collapsing iron core reaches its gate's Y_e = Σ_N/Σ within about one τ_dyn
+    (1/(a_n_fe g) = 0.064 t.u. at Σ 403, τ_dyn 0.056), as electron capture finishes within a free fall · **neutron_star: Y_e,c ≤ 0.35
+    (Y_e,c = Σ_k X_k,c Z_k/A_k at c), d_c ≥ 0.5, no sink, listed after supernova** — the gate caps an iron centre at X_n = 1 − Σ_N/(0.464 Σ)
+    (0.41–0.46 measured, the row asked 0.5) and a 2-cell remnant's grid flow holds |v_r| at 0.05–0.49 √(GM/R) (M0-D71); the |v_r| term
+    returns with M0-D71's well-balanced P4 · measured on linux-pc, 2026-10-21, RTX 5090: m_bh_sb's low end (4,572.394) held core_collapse
+    from step 2,001 to 60,001 at 10⁻³ (X_n,c +2.5 × 10⁻⁵ per t.u., ~20,000 t.u. to 0.5); continued from that step at 100 the new row holds
+    at every snapshot from 0.5 t.u. on (reports/neutronization.md M1) — the lead, 2026-10-21, at M0-R5: «Rate + NS row (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

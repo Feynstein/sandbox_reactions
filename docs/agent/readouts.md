@@ -23,7 +23,7 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
 | the f64 hand-over | `sr_engine::watch::report` → `sr_physics::observe::Report` | §1.9, §3.1 |
 | objects | `sr_physics::observe::tracker` (`Tracker`, `Object`) | §1.9.2 |
 | stages and events | `sr_physics::observe::stages` (`classify`, `ROWS`, `StageTracker`) | §1.9.3, §1.9.4 |
-| the run's observers | `sr_engine::watch` (`Watch`, `Until`, `ENDING_HOLD`) and `sr_engine::headless` | §2.12.2, §3.3 |
+| the run's observers | `sr_engine::watch` (`Watch`, `Until`; the hold `sr_physics::observe::stages::ending_hold`) and `sr_engine::headless` | §2.12.2, §3.3 |
 
 ## The block summary (§1.9.1, M0-T56)
 - **What it is.** After a frame's last step, over the active box, one 4 × 4-cell block an invocation: the fields §1.9.1
@@ -85,7 +85,11 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
 ## Stages (§1.9.3, M0-T59)
 - **The table is `ROWS`** (`observe/stages.rs`, 19 rows) and the contract's §1.9.3 table is its source: **thresholds are not
   copied here** — read §1.9.3, and `ROWS` is checked against it by the `classify` scope. The first matching row wins, so the
-  order is part of the rule (black hole before neutron star, supernova before core collapse, Si · O · Ne · C on a tie).
+  order is part of the rule (black hole first, then supernova, neutron star, core collapse; Si · O · Ne · C on a tie).
+- **The neutron star row (§0.5 [M0-D79])** reads the neutronized, degenerate centre: Y_e,c from the centre's X
+  (`registry::electron_fraction`, §1.5's Z/A), d_c, no sink — no |v_r| term until M0-D71's well-balanced P4 (a 2-cell
+  remnant's grid flow holds |v_r| at 0.05–0.49 √(GM/R)). After supernova, so a supernova's window still shows; before core
+  collapse, so N_Fe's gate re-opening for a frame (L_N < 0) does not restart the remnant's ending hold.
 - **`classify(&Object, &History, now) -> Stage`** is pure. `History` carries what a frame cannot: whether the object ever
   ignited and the last time it classified as core collapse.
 - **The display hold.** `StageTracker::update(&[Object], now)` shows a stage only after §1.9.3's count of consecutive
@@ -104,13 +108,13 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
 ## Events (§1.9.4)
 | Kind | Fires when | Notes |
 |---|---|---|
-| `ignition` | the object's `ignited` flag first turns on (L_H within the band of L that §0.5 [M0-D53] names) | once per object; `ignited` never turns off |
+| `ignition` | the object's `ignited` flag first turns on: L_H within the band of L that §0.5 [M0-D53] names, or the centre has burned a tenth of its hydrogen (X_H,c ≤ 0.9 × the most it showed, L_H > 0; §0.5 [M0-D78]) | once per object; `ignited` never turns off; `detail.by` names the rule, `light` or `fuel` |
 | `core_collapse` | the stage row's own condition, L_N < 0 | the engine's latch flag is **not** read (G-WATCH); the latch's own P6 condition is the same |
 | `supernova` | the supernova stage is entered | |
 | `sink_formed` | the first frame an object has a sink | logged only — the latch covers the slow-down |
-| `ending` | an object has *displayed* a remnant stage (black hole, neutron star, white dwarf, failed star) for 10 t.u. | added by the engine (`watch.rs`, `ENDING_HOLD`), not by `StageTracker`; counted between frames' sim times, the remnant unchanged throughout |
+| `ending` | an object has *displayed* a remnant stage (black hole, neutron star, white dwarf, failed star) for max(10 t.u., 20 τ_dyn), τ_dyn the object's at that frame (§0.5 [M0-D78]) | added by the engine (`watch.rs`, reading `stages::ending_hold`), not by `StageTracker`; counted between frames' sim times, the remnant unchanged throughout |
 Each fires once per object, in object order. An event's JSON is `{step, sim_time, kind, object, detail}`: `detail` is
-`{mass_sb}`; for `ending` `{stage, held_t, mass_sb}`. **`step` counts from the scene**, as the dumps' `s_<step>.bin` do —
+`{mass_sb}`; for `ignition` `{mass_sb, by}`; for `ending` `{stage, held_t, hold_t, mass_sb}`. **`step` counts from the scene**, as the dumps' `s_<step>.bin` do —
 a run resumed from a dump counts on from the dump's step — while `summary.json`'s own `steps` is the steps this run ran.
 
 ## The observers in a headless run (§2.12.2, §3.3, M0-T60)

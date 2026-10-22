@@ -2,15 +2,18 @@
 //!
 //! [`classify`] reads one object and its history and walks §1.9.3's rows in the contract's order, the first match
 //! winning. [`StageTracker::update`] does it for every object of a frame: it keeps each object's history (the `ignited`
-//! flag, the last time its row said core collapse), applies the display hold, and returns the events (§1.9.4), each
-//! once per object. The classifier never reads the rung, the frame or the engine — the object and its history only
-//! (I2; G-WATCH keeps this module out of the step).
+//! flag, the last time its row said core collapse, the most hydrogen its centre has shown), applies the display hold, and
+//! returns the events (§1.9.4), each once per object. The classifier never reads the rung, the frame or the engine — the
+//! object and its history only (I2; G-WATCH keeps this module out of the step). [`ending_hold`] is how long a remnant stage
+//! must show before it is the object's ending (§1.9.5 as §0.5 [M0-D78] reads it), for the engine's `ending` event and the
+//! readout's.
 
 use std::collections::BTreeMap;
 
 use serde_json::{json, Value};
 
 use super::tracker::{exact, read_exact, read_whole, Object};
+use crate::registry::electron_fraction;
 
 /// The display hold: a stage other than core collapse and supernova shows after this many identical results (§1.9.3).
 const HOLD: u32 = 3;
@@ -20,10 +23,22 @@ const SUPERNOVA_WINDOW: f64 = 20.0;
 /// §1.9.4 as §0.5 [M0-D53] reads them; the lead at M0-V18, «Burning matches light (Recommended)»).
 const HYDROGEN_SHARE: f64 = 0.5;
 const HYDROGEN_SHARE_MAX: f64 = 2.0;
+/// Or the centre has burned a tenth of its hydrogen: X_H,c at or under this share of the most it has shown, while hydrogen
+/// burns (§1.9.4 as §0.5 [M0-D78] reads it; the lead at M0-V9, «Burnt fuel also counts (Recommended)») — a flash that
+/// overshoots the light window between two frames still burned its fuel.
+const BURNT_SHARE: f64 = 0.9;
+/// A remnant stage is the ending once shown for the longer of this many t.u. and [`ENDING_HOLD_TAU`] τ_dyn (§1.9.5, §2.11
+/// item 3 as §0.5 [M0-D78] reads them; the lead at M0-V9, «max(10 t.u., 20 τ_dyn) (Recommended)»).
+pub const ENDING_HOLD_MIN: f64 = 10.0;
+pub const ENDING_HOLD_TAU: f64 = 20.0;
 /// An abundance at the centre under this is spent; a fuel at or above it still feeds its stage (§1.9.3).
 const SPENT: f64 = 1e-3;
 /// A group is a burning stage's when it is the largest and at least this share of L_nuc.
 const BURN_SHARE: f64 = 0.1;
+/// A neutron star's centre is neutron matter: Y_e,c at or under this. Iron alone is 26/56 = 0.464 and every other species
+/// ≥ 0.5, so no white dwarf reaches it; N_Fe's gate holds a collapsed iron centre at 0.25–0.30 (§1.9.3 as §0.5 [M0-D79]
+/// reads it; the lead at M0-R5, «Rate + NS row (Recommended)»; reports/neutronization.md).
+const NEUTRON_Y_E: f64 = 0.35;
 
 /// Species indices (§1.5) and group indices ([`super::GROUPS`]) the rows read.
 const X_H: usize = 0;
@@ -94,13 +109,16 @@ impl Stage {
     }
 }
 
-/// What an object remembers between frames: the `ignited` flag (§1.9.4) and the last time its row said core collapse.
+/// What an object remembers between frames: the `ignited` flag (§1.9.4), the last time its row said core collapse and the
+/// most hydrogen its centre has shown.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct History {
-    /// First turned on at 0.5 L ≤ L_H ≤ 2 L, never off again.
+    /// First turned on by [`ignites`], never off again.
     pub ignited: bool,
     /// The sim time (t.u.) of the last frame whose result was core collapse.
     pub last_collapse: Option<f64>,
+    /// The most X_H,c the object's centre has shown at any frame of its id, this one included (0 before the first).
+    pub x_h_max: f64,
 }
 
 /// An object's quantities as the rows read them.
@@ -139,13 +157,15 @@ const FUEL_C: usize = 2;
 
 type Row = (Stage, fn(&Ctx) -> bool);
 
-/// §1.9.3's rows, in the table's order: the first that matches wins.
+/// §1.9.3's rows, in the table's order: the first that matches wins. The neutron star reads the neutronized, degenerate
+/// centre and sits after supernova (a supernova's 20 t.u. still shows) and before core collapse (the gate re-opening for a
+/// frame no longer restarts the remnant's hold) — §0.5 [M0-D79]; its |v_r| term returns with M0-D71's well-balanced P4.
 const ROWS: [Row; 19] = [
     (Stage::BlackHole, |c| c.o.sinks > 0),
-    (Stage::NeutronStar, |c| c.o.x_c[X_N] >= 0.5 && c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.sinks == 0),
     (Stage::Supernova, |c| {
         c.h.last_collapse.is_some_and(|t| c.now - t <= SUPERNOVA_WINDOW) && c.o.unbound >= 0.1 * c.o.mass
     }),
+    (Stage::NeutronStar, |c| electron_fraction(&c.o.x_c) <= NEUTRON_Y_E && c.o.d_c >= 0.5 && c.o.sinks == 0),
     (Stage::CoreCollapse, |c| c.o.l_group[G_N] < 0.0),
     (Stage::WhiteDwarf, |c| {
         c.h.ignited && c.o.d_c >= 0.5 && c.o.l_nuc < 0.01 * c.o.luminosity && c.o.unbound < 0.05 * c.o.mass && c.o.x_c[X_N] < 0.5
@@ -182,9 +202,41 @@ pub fn classify(o: &Object, h: &History, now: f64) -> Stage {
     ROWS.iter().find(|(_, test)| test(&c)).map(|(s, _)| *s).unwrap_or(Stage::Cloud)
 }
 
-/// Whether the object's L_H is between half and twice its L: the frame the `ignited` flag turns on (§1.9.4, §0.5 [M0-D53]).
-pub fn ignites(o: &Object) -> bool {
-    hydrogen_leads(o)
+/// What turned an object's `ignited` flag on: the ignition event's `by` (§2.12.2 as §0.5 [M0-D78] reads it).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Ignition {
+    /// 0.5 L ≤ L_H ≤ 2 L (§0.5 [M0-D53]).
+    Light,
+    /// The centre burned a tenth of its hydrogen (§0.5 [M0-D78]).
+    Fuel,
+}
+
+impl Ignition {
+    pub fn id(self) -> &'static str {
+        match self {
+            Ignition::Light => "light",
+            Ignition::Fuel => "fuel",
+        }
+    }
+}
+
+/// Whether this frame turns the object's `ignited` flag on, and by which rule (§1.9.4 as §0.5 [M0-D78] reads it): L_H between
+/// half and twice L, or X_H,c at or under 0.9 × `h.x_h_max` (already this frame's most, and at least 10⁻³) while hydrogen
+/// burns — a centre that moved onto painted helium burned nothing.
+pub fn ignites(o: &Object, h: &History) -> Option<Ignition> {
+    if hydrogen_leads(o) {
+        Some(Ignition::Light)
+    } else if h.x_h_max >= SPENT && o.x_c[X_H] <= BURNT_SHARE * h.x_h_max && o.l_group[G_H] > 0.0 {
+        Some(Ignition::Fuel)
+    } else {
+        None
+    }
+}
+
+/// How long (t.u.) a remnant stage must show before it is the object's ending: max(10 t.u., 20 τ_dyn), τ_dyn the object's at
+/// the frame read (§1.9.5 as §0.5 [M0-D78] reads it). A compact remnant keeps 10 t.u.; an extended one waits out its dynamics.
+pub fn ending_hold(tau_dyn: f64) -> f64 {
+    ENDING_HOLD_MIN.max(ENDING_HOLD_TAU * tau_dyn)
 }
 
 /// What happened to an object (§1.9.4), once each.
@@ -208,12 +260,13 @@ impl EventKind {
     }
 }
 
-/// An event: which object, which kind, the sim time (t.u.) of the frame that saw it.
+/// An event: which object, which kind, the sim time (t.u.) of the frame that saw it, and for an ignition the rule that lit it.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Event {
     pub object: u32,
     pub kind: EventKind,
     pub time: f64,
+    pub by: Option<Ignition>,
 }
 
 /// One object's stage as the readout wants it.
@@ -259,26 +312,27 @@ impl StageTracker {
                 shown: None,
                 fired: [false; 4],
             });
-            let mut fire = |state: &mut State, kind: EventKind| {
+            let mut fire = |state: &mut State, kind: EventKind, by: Option<Ignition>| {
                 if !state.fired[kind as usize] {
                     state.fired[kind as usize] = true;
-                    events.push(Event { object: o.id, kind, time: now });
+                    events.push(Event { object: o.id, kind, time: now, by });
                 }
             };
-            if !state.history.ignited && ignites(o) {
+            state.history.x_h_max = state.history.x_h_max.max(o.x_c[X_H]);
+            if let Some(by) = ignites(o, &state.history).filter(|_| !state.history.ignited) {
                 state.history.ignited = true;
-                fire(state, EventKind::Ignition);
+                fire(state, EventKind::Ignition, Some(by));
             }
             let stage = classify(o, &state.history, now);
             if stage == Stage::CoreCollapse {
                 state.history.last_collapse = Some(now);
-                fire(state, EventKind::CoreCollapse);
+                fire(state, EventKind::CoreCollapse, None);
             }
             if stage == Stage::Supernova {
-                fire(state, EventKind::Supernova);
+                fire(state, EventKind::Supernova, None);
             }
             if o.sinks > 0 {
-                fire(state, EventKind::SinkFormed);
+                fire(state, EventKind::SinkFormed, None);
             }
             state.streak = if stage == state.raw { state.streak + 1 } else { 1 };
             state.raw = stage;
@@ -295,7 +349,7 @@ impl StageTracker {
     }
 
     /// What the next frame reads, for the observers' snapshot (§0.5 [M0-D76]): per object its history (`ignited`, the last
-    /// core collapse), the last result and its streak, the shown stage and the events fired.
+    /// core collapse, [M0-D78]'s `x_h_max`), the last result and its streak, the shown stage and the events fired.
     pub fn snapshot(&self) -> Value {
         let states: Vec<Value> = self
             .states
@@ -305,6 +359,7 @@ impl StageTracker {
                     "id": id,
                     "ignited": s.history.ignited,
                     "last_collapse": s.history.last_collapse.map_or(Value::Null, exact),
+                    "x_h_max": exact(s.history.x_h_max),
                     "raw": s.raw.id(),
                     "streak": s.streak,
                     "shown": s.shown.map(Stage::id),
@@ -315,18 +370,20 @@ impl StageTracker {
         Value::Array(states)
     }
 
-    /// The stages [`StageTracker::snapshot`] wrote.
+    /// The stages [`StageTracker::snapshot`] wrote; one without `x_h_max` (written before §0.5 [M0-D78]) is refused, never
+    /// read as a centre that showed no hydrogen.
     pub fn restore(v: &Value) -> Result<StageTracker, String> {
         let mut states = BTreeMap::new();
         for s in v.as_array().ok_or_else(|| format!("stages: not a list: {v}"))? {
             let id = u32::try_from(read_whole(s, "id")?).map_err(|_| "stages.id: past u32".to_string())?;
             let ignited = s["ignited"].as_bool().ok_or_else(|| format!("stages.ignited: not true or false: {}", s["ignited"]))?;
             let last_collapse = if s["last_collapse"].is_null() { None } else { Some(read_exact(&s["last_collapse"], "stages.last_collapse")?) };
+            let x_h_max = read_exact(&s["x_h_max"], "stages.x_h_max")?;
             let shown = if s["shown"].is_null() { None } else { Some(Stage::from_id(&s["shown"])?) };
             let fired: Vec<bool> = s["fired"].as_array().into_iter().flatten().filter_map(Value::as_bool).collect();
             let fired: [bool; 4] = fired.try_into().map_err(|_| format!("stages.fired: not 4 flags: {}", s["fired"]))?;
             let streak = u32::try_from(read_whole(s, "streak")?).map_err(|_| "stages.streak: past u32".to_string())?;
-            states.insert(id, State { history: History { ignited, last_collapse }, raw: Stage::from_id(&s["raw"])?, streak, shown, fired });
+            states.insert(id, State { history: History { ignited, last_collapse, x_h_max }, raw: Stage::from_id(&s["raw"])?, streak, shown, fired });
         }
         Ok(StageTracker { states })
     }
@@ -381,7 +438,7 @@ mod tests {
     }
 
     fn ignited() -> History {
-        History { ignited: true, last_collapse: None }
+        History { ignited: true, ..History::default() }
     }
 
     fn fresh() -> History {
@@ -413,7 +470,7 @@ mod tests {
         assert_eq!(
             ids,
             [
-                "black_hole", "neutron_star", "supernova", "core_collapse", "white_dwarf", "failed_star", "planetary_nebula", "iron_core",
+                "black_hole", "supernova", "neutron_star", "core_collapse", "white_dwarf", "failed_star", "planetary_nebula", "iron_core",
                 "si_burn", "o_burn", "ne_burn", "c_burn", "he_core", "he_shell", "h_shell", "main_sequence", "collapsing", "protostar", "cloud"
             ]
         );
@@ -426,32 +483,87 @@ mod tests {
         assert_eq!(stage_of(&o, &fresh()), Stage::BlackHole);
     }
 
+    /// A collapsed iron centre as N_Fe's gate leaves it (§0.5 [M0-D79]): X_n 0.46, the rest iron — Y_e,c 0.54 × 26/56 = 0.251,
+    /// degenerate, its grid flow at 0.49 √(GM/R) (M0-R5's M1 at a_n_fe 100).
+    fn neutronized() -> Object {
+        let mut o = cloud();
+        o.x_c = [0.0; 10];
+        (o.x_c[X_FE], o.x_c[X_N]) = (0.54, 0.46);
+        o.d_c = 0.9999;
+        o.v_r = -4.9;
+        o
+    }
+
+    /// The centre's X as helium and neutron matter: Y_e,c = X_He / 2, exact in f64 at the row's 0.35.
+    fn with_y_e(o: &mut Object, x_he: f64) {
+        o.x_c = [0.0; 10];
+        (o.x_c[X_HE], o.x_c[X_N]) = (x_he, 1.0 - x_he);
+    }
+
     #[test]
     fn row_neutron_star() {
-        let mut o = cloud();
-        with_x(&mut o, X_N, 0.5);
-        o.v_r = 0.05;
-        assert_eq!(stage_of(&o, &fresh()), Stage::NeutronStar);
-        o.v_r = 0.06;
-        assert_ne!(stage_of(&o, &fresh()), Stage::NeutronStar, "moving too fast");
-        o.v_r = 0.0;
-        with_x(&mut o, X_N, 0.49);
-        assert_ne!(stage_of(&o, &fresh()), Stage::NeutronStar, "not neutron matter enough");
+        let mut o = neutronized();
+        assert_eq!(stage_of(&o, &ignited()), Stage::NeutronStar, "the gate's centre, moving: no |v_r| term");
+        assert_eq!(stage_of(&o, &fresh()), Stage::NeutronStar, "the row reads no ignition");
+        with_y_e(&mut o, 0.7);
+        assert_eq!(electron_fraction(&o.x_c), NEUTRON_Y_E);
+        assert_eq!(stage_of(&o, &ignited()), Stage::NeutronStar, "Y_e,c exactly 0.35 is within");
+        with_y_e(&mut o, 0.7002);
+        assert_ne!(stage_of(&o, &ignited()), Stage::NeutronStar, "Y_e,c 0.3501: not neutron matter enough");
+        let mut o = neutronized();
+        o.d_c = 0.5;
+        assert_eq!(stage_of(&o, &ignited()), Stage::NeutronStar, "d_c exactly 0.5 is within");
+        o.d_c = 0.49;
+        assert_ne!(stage_of(&o, &ignited()), Stage::NeutronStar, "not degenerate");
+    }
+
+    #[test]
+    fn a_white_dwarf_never_matches_the_neutron_star_row() {
+        // Carbon-oxygen (Y_e 0.5) and pure iron (0.464), cold and wholly degenerate: white dwarfs, whatever the flow.
+        let mut o = degenerate();
+        o.d_c = 1.0;
+        o.v_r = -4.9;
+        for (species, y_e) in [(2, 0.5), (3, 0.5), (X_FE, 26.0 / 56.0)] {
+            with_x(&mut o, species, 1.0);
+            assert_eq!(electron_fraction(&o.x_c), y_e);
+            assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "species {species}");
+        }
+        // The stall M0-R5 measured at a_n_fe 10⁻³: X_n,c 0.011, Y_e,c 0.459 — an iron white dwarf, not a neutron star.
+        (o.x_c[X_FE], o.x_c[X_N]) = (0.989, 0.011);
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf);
     }
 
     #[test]
     fn a_sink_makes_the_black_hole_before_the_neutron_star() {
-        let mut o = cloud();
-        with_x(&mut o, X_N, 1.0);
+        let mut o = neutronized();
         o.sinks = 1;
-        assert_eq!(stage_of(&o, &fresh()), Stage::BlackHole);
+        assert_eq!(stage_of(&o, &ignited()), Stage::BlackHole);
+    }
+
+    #[test]
+    fn a_supernova_shows_before_the_neutron_star() {
+        let mut o = neutronized();
+        o.unbound = 10.0;
+        let h = History { ignited: true, last_collapse: Some(90.0), ..History::default() };
+        assert_eq!(classify(&o, &h, 100.0), Stage::Supernova, "inside the 20 t.u. with 0.1 M unbound");
+        assert_eq!(classify(&o, &h, 110.5), Stage::NeutronStar, "past the window the remnant shows");
+    }
+
+    #[test]
+    fn the_neutron_star_shows_before_core_collapse() {
+        // The gate re-opens for a frame as the core sloshes (L_N < 0): the neutron star holds, its ending's hold not restarted.
+        let mut o = neutronized();
+        o.l_group[G_N] = -620.0;
+        assert_eq!(stage_of(&o, &ignited()), Stage::NeutronStar);
+        o.d_c = 0.49;
+        assert_eq!(stage_of(&o, &ignited()), Stage::CoreCollapse, "not yet degenerate: still collapsing");
     }
 
     #[test]
     fn row_supernova_inside_the_window_with_unbound_mass() {
         let mut o = cloud();
         o.unbound = 10.0;
-        let h = History { ignited: true, last_collapse: Some(90.0) };
+        let h = History { ignited: true, last_collapse: Some(90.0), ..History::default() };
         assert_eq!(classify(&o, &h, 100.0), Stage::Supernova);
         assert_ne!(classify(&o, &h, 110.5), Stage::Supernova, "past 20 t.u.");
         assert_eq!(classify(&o, &h, 110.0), Stage::Supernova, "exactly 20 t.u. is within");
@@ -473,7 +585,7 @@ mod tests {
     fn supernova_before_core_collapse() {
         let mut o = burning([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0]);
         o.unbound = 50.0;
-        let h = History { ignited: true, last_collapse: Some(99.0) };
+        let h = History { ignited: true, last_collapse: Some(99.0), ..History::default() };
         assert_eq!(classify(&o, &h, 100.0), Stage::Supernova);
     }
 
@@ -768,7 +880,7 @@ mod tests {
         lit.l_group = [5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
         lit.l_nuc = 5.0;
         let events = t.update(&[lit.clone()], 1.0);
-        assert_eq!(events, vec![Event { object: 1, kind: EventKind::Ignition, time: 1.0 }]);
+        assert_eq!(events, vec![Event { object: 1, kind: EventKind::Ignition, time: 1.0, by: Some(Ignition::Light) }]);
         assert!(t.stage(1).unwrap().history.ignited);
         assert!(t.update(&[lit], 2.0).is_empty());
         // L_H falls away: ignited stays, no second ignition.
@@ -822,11 +934,11 @@ mod tests {
         a.sinks = 1;
         let b = id(cloud(), 2);
         let events = t.update(&[a.clone(), b.clone()], 1.0);
-        assert_eq!(events, vec![Event { object: 1, kind: EventKind::SinkFormed, time: 1.0 }]);
+        assert_eq!(events, vec![Event { object: 1, kind: EventKind::SinkFormed, time: 1.0, by: None }]);
         assert!(t.update(&[a, b.clone()], 2.0).is_empty());
         let mut b2 = b;
         b2.sinks = 1;
-        assert_eq!(t.update(&[b2], 3.0), vec![Event { object: 2, kind: EventKind::SinkFormed, time: 3.0 }]);
+        assert_eq!(t.update(&[b2], 3.0), vec![Event { object: 2, kind: EventKind::SinkFormed, time: 3.0, by: None }]);
         assert!(t.stage(1).is_none(), "an object gone from the frame is forgotten");
     }
 
@@ -839,5 +951,131 @@ mod tests {
         o.l_nuc = 5.0;
         t.update(&[o], 1.0);
         assert_eq!(t.stage(1).unwrap().raw, Stage::MainSequence);
+    }
+
+    /// M0-V9's 3.74 M₀ cloud (tasks/M0-V9.md, P2): falling in, its centre at X_H,c 0.7346 burning L_H 18,681 against L 1.55 —
+    /// past the light window at every frame.
+    fn flashing(x_h: f64) -> Object {
+        let mut o = cloud();
+        o.luminosity = 1.55;
+        o.l_group = [18_681.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+        o.l_nuc = 18_681.0;
+        o.v_r = -11.0;
+        o.x_c[X_H] = x_h;
+        o
+    }
+
+    /// The flash's burnt core: cold, degenerate, dark, its centre's hydrogen gone.
+    fn burnt_core() -> Object {
+        let mut o = degenerate();
+        o.d_c = 0.9999;
+        o.l_group = [0.0; 7];
+        o.x_c = [0.0; 10];
+        o.x_c[X_HE] = 0.98;
+        o
+    }
+
+    #[test]
+    fn a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star() {
+        // §0.5 [M0-D78]: X_H,c at or under 0.9 × the most it has shown, while hydrogen burns, ignites — `by` fuel.
+        let mut t = StageTracker::new();
+        assert!(t.update(&[flashing(0.7346)], 4.0).is_empty(), "L_H > 2 L: no ignition by the light");
+        assert!(t.update(&[flashing(0.70)], 4.1).is_empty(), "burned under a tenth: not yet");
+        assert_eq!(t.stage(1).unwrap().history.x_h_max, 0.7346, "the most the centre has shown");
+        assert_eq!(t.stage(1).unwrap().raw, Stage::Collapsing, "a never-ignited cloud falling in");
+        let lit = t.update(&[flashing(0.66)], 4.2);
+        assert_eq!(lit, vec![Event { object: 1, kind: EventKind::Ignition, time: 4.2, by: Some(Ignition::Fuel) }], "0.66 ≤ 0.9 × 0.7346");
+        assert!(t.stage(1).unwrap().history.ignited);
+        assert!(t.update(&[flashing(0.0)], 4.3).is_empty(), "ignites once");
+        for frame in 0..3 {
+            t.update(&[burnt_core()], 5.0 + f64::from(frame));
+        }
+        assert_eq!(t.stage(1).unwrap().shown, Some(Stage::WhiteDwarf), "the burnt core of a flash is a white dwarf");
+        // The same core with no flash behind it: never ignited, a failed star.
+        let mut t = StageTracker::new();
+        for frame in 0..3 {
+            t.update(&[burnt_core()], f64::from(frame));
+        }
+        assert_eq!(t.stage(1).unwrap().shown, Some(Stage::FailedStar), "fuel that never burned");
+        // Exactly 0.9 × the most is within; a hair over it is not.
+        let mut t = StageTracker::new();
+        t.update(&[flashing(1.0)], 1.0);
+        assert!(t.update(&[flashing(0.900_000_1)], 2.0).is_empty());
+        assert_eq!(kinds(&t.update(&[flashing(0.9)], 3.0)), vec![EventKind::Ignition]);
+    }
+
+    #[test]
+    fn hydrogen_gone_without_burning_does_not_ignite() {
+        // A centre that moved onto painted helium burned nothing: X_H,c 0.73 → 0 with L_H = 0.
+        let mut t = StageTracker::new();
+        let mut o = flashing(0.73);
+        o.l_group = [0.0; 7];
+        o.l_nuc = 0.0;
+        t.update(&[o.clone()], 1.0);
+        o.x_c[X_H] = 0.0;
+        assert!(t.update(&[o.clone()], 2.0).is_empty(), "X_H,c fell with L_H = 0");
+        assert!(!t.stage(1).unwrap().history.ignited);
+        for frame in 3..6 {
+            t.update(&[burnt_core()], f64::from(frame));
+        }
+        assert_eq!(t.stage(1).unwrap().shown, Some(Stage::FailedStar));
+        // A centre under 10⁻³ throughout never ignites by its fuel, burning or not.
+        let mut t = StageTracker::new();
+        assert!(t.update(&[flashing(0.0009)], 1.0).is_empty());
+        assert!(t.update(&[flashing(0.0)], 2.0).is_empty(), "the most it showed is under 10⁻³");
+        assert!(!t.stage(1).unwrap().history.ignited);
+    }
+
+    #[test]
+    fn a_flash_burning_under_a_tenth_does_not_ignite() {
+        // M0-V8's step 225 ([M0-D53]): L_H 277 against L 2.1 × 10⁻⁷ burned 0.04 % of the centre's hydrogen.
+        let mut t = StageTracker::new();
+        let mut flash = flashing(0.7346);
+        flash.luminosity = 2.1e-7;
+        flash.l_group[0] = 277.0;
+        flash.l_nuc = 277.0;
+        t.update(&[flash.clone()], 1.0);
+        flash.x_c[X_H] = 0.7346 * (1.0 - 4e-4);
+        assert!(t.update(&[flash], 2.0).is_empty(), "0.04 % burned is no star");
+        assert!(!t.stage(1).unwrap().history.ignited);
+    }
+
+    #[test]
+    fn the_light_window_still_ignites_by_light() {
+        let mut t = StageTracker::new();
+        let mut lit = cloud();
+        lit.l_group = [5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+        lit.l_nuc = 5.0;
+        assert_eq!(t.update(&[lit], 1.0)[0].by, Some(Ignition::Light));
+        assert_eq!((Ignition::Light.id(), Ignition::Fuel.id()), ("light", "fuel"));
+    }
+
+    #[test]
+    fn the_ending_hold_is_ten_tu_or_twenty_dynamical_times() {
+        // §0.5 [M0-D78]: max(10 t.u., 20 τ_dyn).
+        assert_eq!(ending_hold(0.25), 10.0, "a compact remnant keeps 10 t.u.");
+        assert_eq!(ending_hold(0.5), 10.0, "20 τ_dyn = 10 t.u.");
+        assert_eq!(ending_hold(1.0), 20.0, "τ_dyn 1: 20 t.u.");
+        assert_eq!(ending_hold(0.0), 10.0);
+    }
+
+    #[test]
+    fn the_snapshot_round_trips_the_history_and_refuses_one_without_it() {
+        let mut t = StageTracker::new();
+        t.update(&[flashing(0.7346)], 4.0);
+        t.update(&[flashing(0.70), id(burnt_core(), 2)], 4.1);
+        let snapshot = t.snapshot();
+        let mut back = StageTracker::restore(&snapshot).expect("its own snapshot");
+        assert_eq!(back.snapshot(), snapshot, "every field round-trips");
+        assert_eq!(back.stage(1).unwrap().history, t.stage(1).unwrap().history);
+        // The restored history goes on as the unbroken one: the centre's most carried, the fuel test fires.
+        assert_eq!(back.update(&[flashing(0.66)], 4.2)[0].by, Some(Ignition::Fuel));
+        // A snapshot from before §0.5 [M0-D78] (no `x_h_max`) is refused, never read as a centre that showed no hydrogen.
+        let mut old = snapshot;
+        for s in old.as_array_mut().unwrap() {
+            s.as_object_mut().unwrap().remove("x_h_max");
+        }
+        let refused = StageTracker::restore(&old).err().expect("a snapshot without x_h_max is refused");
+        assert!(refused.contains("x_h_max"), "{refused}");
     }
 }

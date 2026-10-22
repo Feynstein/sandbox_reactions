@@ -1,0 +1,29 @@
+== 2026-10-21T14:36:12-04:00 ledger · task M0-D79 · box laserax-ai :: bash tests/gpu.sh ledger physics
+-- ledger · exit=0 · 47.66 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 2.57s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.124889 until=none
+remnant: steps 1..1000, sim time 8.108, R₉₀ 2.716, M 1486.7, τ_dyn 0.1161, |W|₀ 2.3296e5; Δinvariant -1.0116e3 → 6.217e-5 |W| per τ_dyn (bound 1e-3); radiated 2.3650e5, floor_added -9.3717e0, escaped 1.5348e3, ΔW -5.1405e5
+ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.691611 until=none
+bounce: steps 1..500, mass drift 3.759e-8, momentum drift 2.236e-7 of Σm|u| = 3.507e3, energy drift -1.993e-2 (reported), escaped 0
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.364465 until=none
+leave: escaped mass 5.269420e0 of 1.017436e3 (5.179e-3), momentum escaped Array [Number(117.76965925130516), Number(0.00002975604292743128)], mass drift 3.883e-8, momentum drift 8.130e-4 of Σm|u| = 4.927e3, energy drift -1.204e-2 (reported), escaped energy 4.351122e2
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.816843 until=none
+leave without gravity: escaped mass 2.987876e2 of 1.017169e3, escaped x momentum 1.310419e3, vacuum_reset 1.763e-2 × u_max 6.876 → bound 7.953e-5; mass drift 9.736e-8, momentum drift 5.290e-5 of Σm|u| = 1.544e3
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 344 filtered out; finished in 43.97s
+
+

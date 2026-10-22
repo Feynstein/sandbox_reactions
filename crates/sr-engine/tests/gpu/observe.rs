@@ -144,8 +144,9 @@ fn an_unmet_condition_is_exit_2_with_until_unmet() {
 /// t.u. apiece — the cold disk's collapse shrinks Δt until 20,000 steps pass only 6) at [`ENDING_T`], with a sink dropped
 /// into its middle (the dump written by the test)
 /// — `sink_formed` at the first frame, the object a black hole, and `--until ending` stopping when that remnant has been
-/// displayed 10 t.u. Every line of the file is one JSON object with the §2.12.2 keys, the same as summary.json's `events`;
-/// the run one frame shorter has no `ending` yet.
+/// displayed for its hold, max(10 t.u., 20 τ_dyn) (§0.5 [M0-D78]: the detail's `hold_t`, `held_t` at or past it). Every line
+/// of the file is one JSON object with the §2.12.2 keys, the same as summary.json's `events`; the run one frame shorter has no
+/// `ending` yet.
 /// The ending case's cloud T, the scene's 0.05 raised (M0-D66, the lead's «Case's own T 0.5 + D», 2026-10-20; the scene file,
 /// the `sink` scope's, unchanged): at T 0.05 the cold sheet is Jeans-unresolved, and once §0.5 [M0-D64]'s face work stopped
 /// the Σu·g source heating it, it fragments into 7 sinks that eat the gas, leaving no object to show `black_hole`; at 0.5 one
@@ -191,12 +192,15 @@ fn events_jsonl_and_the_ending_of_a_black_hole() {
     assert_eq!(o["stage"], "black_hole", "{o}");
     let shown = o["stages"].as_array().unwrap().iter().find(|s| s["stage"] == "black_hole").expect("black_hole was displayed");
     let held = ending["sim_time"].as_f64().unwrap() - shown["sim_time"].as_f64().unwrap();
-    assert!(held >= 10.0, "an ending after {held} t.u. of a remnant on display, not 10");
+    let hold = ending["detail"]["hold_t"].as_f64().expect("the ending names its hold");
+    assert!(hold >= 10.0, "the hold is max(10 t.u., 20 τ_dyn): {ending}");
+    assert_eq!(ending["detail"]["held_t"].as_f64(), Some(held), "{ending}");
+    assert!(held >= hold, "an ending after {held} t.u. of a remnant on display, not its hold {hold}");
     assert_eq!(shown["from_step"].as_u64().map(|s| s > 40), Some(true), "from_step counts from the scene too: {shown}");
-    println!("ending at step {}: black_hole shown from step {}, held {held:.3} t.u.", ending["step"], shown["from_step"]);
+    println!("ending at step {}: black_hole shown from step {}, held {held:.3} t.u. of {hold:.3}", ending["step"], shown["from_step"]);
 
     let shorter = go("ending-short", &scene, &["--load-dump", &from, "--until", "ending", "--max-steps", &(out.steps() - FRAME).to_string()]);
-    assert_eq!(shorter.code, 2, "one frame shorter the remnant has not held 10 t.u.: {:?}", shorter.lines);
+    assert_eq!(shorter.code, 2, "one frame shorter the remnant has not held its hold: {:?}", shorter.lines);
     assert!(shorter.summary["events"].as_array().unwrap().iter().all(|e| e["kind"] != "ending"));
 }
 

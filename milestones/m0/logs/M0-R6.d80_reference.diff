@@ -1,0 +1,118 @@
+--- crates/sr-engine/src/headless.rs	2026-10-21 08:50:36.124341004 -0400
++++ /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-engine/src/headless.rs	2026-10-22 07:57:38.020351524 -0400
+@@ -82,6 +82,8 @@
+ /// must show for 3 frames (§1.9.3) needs frames of a few steps — 16 shows `collapsing` at step 49, 64 never does; shorter
+ /// frames cost more (fill_world, 800 steps on the RTX 5090: 2.5 s at 256, 3.1 s at 16, 4.6 s at 4).
+ const FRAME: u64 = 16;
++/// M0-R6 probe (scratch only): what the last chunk looked like, appended to `calibrate`'s progress line.
++pub static PROBE_DETAIL: std::sync::Mutex<String> = std::sync::Mutex::new(String::new());
+ const _: () = assert!(CHUNK as usize <= crate::step::heat::LOG);
+ 
+ #[derive(Debug, PartialEq)]
+@@ -748,6 +750,11 @@
+         json!({"done": done, "wall_s": exact(wall_s), "dt_next": exact(dt_next), "heat_unconverged": unconverged,
+                "watch": watch.snapshot(), "ledger": ledger.snapshot()})
+     };
++    // M0-R6 probe (scratch only; the lead's «The physics»): a chunk with a step at P5's ceiling, or the heaviest object shown in
++    // core_collapse, puts the run in one-step frames, each step reported; otherwise frames, reported every `every` steps.
++    // SR_PROBE_ADAPTIVE=0 turns it off.
++    let adaptive = std::env::var("SR_PROBE_ADAPTIVE").as_deref() != Ok("0");
++    let mut fine = false;
+     while done < target && !until_met {
+         let mut n = (target - done).min(if args.until.is_some() { FRAME } else { CHUNK });
+         // The ledger's start: the first step alone, then the state after it is the ledger's zero.
+@@ -762,6 +769,10 @@
+         if let Some(every) = args.dump_every {
+             n = n.min(every - (first + done) % every);
+         }
++        if fine {
++            n = n.min(1);
++        }
++        let (chunk_t0, chunk_sim0, chunk_unconv0) = (std::time::Instant::now(), sim, unconverged);
+         step.run(&gpu.device, &gpu.queue, n as u32);
+         if let Err(e) = gpu.device.poll(wgpu::PollType::wait_indefinitely()) {
+             say(&format!("SR-ERROR GPU error after {done} steps: {e}"));
+@@ -792,8 +803,21 @@
+         }
+         let fresh = watch.update(&summary, at_step);
+         (sim, dt_next) = (dt.sim_time, f64::from(dt.dt_next));
++        let per_step = chunk_t0.elapsed().as_secs_f64() / n as f64;
++        let was_fine = fine;
++        fine = adaptive && (unconverged > chunk_unconv0 || watch.heaviest_stage() == Some("core_collapse"));
++        if let Ok(mut d) = PROBE_DETAIL.lock() {
++            *d = format!(
++                "| chunk={n} dt={:.3e} s/step={per_step:.2} p5_ceiling={} mode={}",
++                (dt.sim_time - chunk_sim0) / n as f64,
++                unconverged - chunk_unconv0,
++                if was_fine { "step" } else { "frame" }
++            );
++            d.push_str(&format!(" | escaped={:.1} ", ledger.last().map_or(0.0, |r| r.mass.escaped)));
++            d.push_str(&watch.probe_line());
++        }
+         if let Some(p) = progress.as_mut() {
+-            if at_step.step / p.every.max(1) > ticked {
++            if at_step.step / p.every.max(1) > ticked || was_fine || fine {
+                 ticked = at_step.step / p.every.max(1);
+                 (p.tick)(at_step.step, dt.sim_time, watch.heaviest_stage().unwrap_or("none"));
+             }
+--- crates/sr-engine/src/calibrate.rs	2026-10-21 08:50:44.415475892 -0400
++++ /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-engine/src/calibrate.rs	2026-10-22 07:55:09.597433278 -0400
+@@ -644,6 +644,17 @@
+         }
+         let mut scene = Scene::preset_mass(preset, mass, WorldConfig::default()).map_err(CalError::Failed)?;
+         scene.overrides = self.overrides.to_vec();
++        // M0-R6 probe (scratch only): SR_PROBE_EDGE=bounce walls the world in (no ejecta leaves it).
++        if std::env::var("SR_PROBE_EDGE").as_deref() == Ok("bounce") {
++            scene.edge = crate::scene::EdgeMode::Bounce;
++        }
++        // M0-R6 probe (scratch only): extra overrides from SR_PROBE_OVERRIDES, e.g. "f_dep=0,sigma_bh=6000".
++        if let Ok(spec) = std::env::var("SR_PROBE_OVERRIDES") {
++            for kv in spec.split(',').filter(|s| !s.is_empty()) {
++                let (k, v) = kv.split_once('=').expect("key=value");
++                scene.overrides.push((k.to_string(), v.parse().expect("a number")));
++            }
++        }
+         let args = Args {
+             scene: scene_label,
+             steps: None,
+@@ -654,7 +665,7 @@
+             out: Some(out.clone()),
+             adapter: self.adapter.clone(),
+             timing: false,
+-            dump_every: None,
++            dump_every: std::env::var("SR_PROBE_DUMP_EVERY").ok().and_then(|s| s.parse().ok()),
+             load_dump: from.as_ref().map(|c| c.dump.clone()),
+             continue_life: from.is_some(),
+             cpu_reference: false,
+@@ -691,7 +702,7 @@
+             }
+             // Heat warnings are counted, not printed (M0-D74): the line says how many steps reached P5's ceiling so far.
+             let unconverged = unconverged_steps();
+-            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} heat_unconverged={unconverged} stage={stage}"));
++            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} heat_unconverged={unconverged} stage={stage} {}", crate::headless::PROBE_DETAIL.lock().map(|d| d.clone()).unwrap_or_default()));
+             note(step, sim_time, stage);
+         };
+         // A saved checkpoint moves progress.json's `checkpoint_step` at once, not at the next tick: what a stop would lose.
+--- crates/sr-engine/src/watch.rs	2026-10-21 08:50:18.088910359 -0400
++++ /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-engine/src/watch.rs	2026-10-22 07:57:38.019807109 -0400
+@@ -296,6 +296,20 @@
+         &self.events
+     }
+ 
++    /// M0-R6 probe (scratch only): the heaviest object's numbers for the progress line.
++    pub fn probe_line(&self) -> String {
++        let objs = self.tracker.objects();
++        let Some(o) = objs.iter().max_by(|a, b| a.mass.total_cmp(&b.mass)) else { return "objs=0".into() };
++        let raw = self.stages.stage(o.id).map_or("none", |s| s.raw.id());
++        let v_unit = (sr_physics::units::G * o.mass / o.radius.max(1e-9)).sqrt();
++        format!(
++            "| M={:.1} R={:.2} tau={:.3} sig_c={:.1} T_c={:.3} d_c={:.3} Ye_c={:.3} XFe_c={:.3} Xn_c={:.3} v_r={:.3} ({:+.3} vdyn) \
++             M_unb={:.1} L={:.3e} L_nuc={:.3e} L_N={:.3e} L_nu={:.3e} sinks={} sink_M={:.1} objs={} raw={raw}",
++            o.mass, o.radius, o.tau_dyn, o.sigma_c, o.t_c, o.d_c, sr_physics::registry::electron_fraction(&o.x_c), o.x_c[8], o.x_c[9],
++            o.v_r, o.v_r / v_unit, o.unbound, o.luminosity, o.l_nuc, o.l_group[6], o.l_nu, o.sinks, o.sink_mass, objs.len()
++        )
++    }
++
+     /// summary.json's `max_gas_speed`: the fastest block rms gas speed of the run.
+     pub fn max_gas_speed(&self) -> f64 {
+         self.max_gas_speed

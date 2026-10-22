@@ -1,0 +1,29 @@
+== 2026-10-21T08:55:57-04:00 readouts · task M0-D78 · box laserax-ai :: bash tests/gpu.sh readouts
+-- readouts · exit=101 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test readouts::a_translation_that_would_not_be_monotonic_is_refused ... ok
+test readouts::between_anchors_the_map_is_log_linear_not_linear ... ok
+test readouts::every_anchor_maps_exactly_and_the_inverse_returns_it ... ok
+test readouts::mass_increases_strictly_over_its_whole_range ... ok
+test readouts::temperature_increases_strictly_from_its_floor_up ... ok
+test readouts::the_end_segments_are_extended ... ok
+test readouts::the_presets_read_one_fifteen_and_forty_suns ... ok
+test readouts::the_real_calibration_reads_the_presets_and_the_sun ... 
+thread 'readouts::the_real_calibration_reads_the_presets_and_the_sun' (4052829) panicked at crates/sr-engine/tests/gpu/readouts.rs:237:41:
+assets/calibration.json parses: Invalid { key: "preset_mass_sb", message: "missing" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test readouts::the_sun_like_surface_reads_5772_kelvin ... ok
+
+failures:
+
+failures:
+    readouts::the_real_calibration_reads_the_presets_and_the_sun
+
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 340 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,9 @@
+# M0-D79 quick check: rebuild + continue s_60001 on D79's binary, 2026-10-21T14:40:56-04:00, laserax-ai
+    Finished `release` profile [optimized] target(s) in 0.06s
+build exit=0
+=== headless --continue from s_60001, no overrides (a_n_fe 100 built in), --until ending --max-steps 61201, cap 580 s; load: load average: 37.82, 23.73, 14.91 · NVIDIA GeForce RTX 5090, 98 %;Quadro RTX 4000, 0 %;
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Command exited with non-zero status 124
+wall=580.30
+exit=124
+cut at 580 s (5090 shared 93% by another project's forecast job), dumps to s_60800: neutron_star raw+shown from step 60065 (t 278.34) through 60800 (t 282.01), streak 55, d_c 0.82-0.99997, ending not reached (hold 10 t.u.)

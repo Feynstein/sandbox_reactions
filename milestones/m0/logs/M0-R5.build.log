@@ -1,0 +1,11 @@
+=== M0-R5 build a_n_fe=1e-2 2026-10-21T12:58:45-04:00 on linux-pc ===
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/6d5df45f-6ff7-44f5-a454-ddcb53e17161/scratchpad/r5/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/6d5df45f-6ff7-44f5-a454-ddcb53e17161/scratchpad/r5/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/6d5df45f-6ff7-44f5-a454-ddcb53e17161/scratchpad/r5/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 6.62s
+wall=6.66
+=== M0-R5 build a_n_fe=100 2026-10-21T13:44:51-04:00 ===
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/6d5df45f-6ff7-44f5-a454-ddcb53e17161/scratchpad/r5/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/6d5df45f-6ff7-44f5-a454-ddcb53e17161/scratchpad/r5/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/6d5df45f-6ff7-44f5-a454-ddcb53e17161/scratchpad/r5/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.22s

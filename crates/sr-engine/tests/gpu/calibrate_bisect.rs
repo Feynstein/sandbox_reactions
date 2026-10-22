@@ -10,6 +10,8 @@
 //! M0-D75: m_up_sb's lives stop once their side is known (`Until::CollapseOrEnding`) and `--progress-every N` sets a life's tick.
 //! M0-D77: `--checkpoint-every M` saves a running life's checkpoint apart from the tick, and `--resume` continues a cut life from it.
 //! Plants: `calibrate-checkpoint-without-observers`, `calibrate-checkpoint-on-the-tick`, `calibrate-checkpoint-step-unchecked`.
+//! M0-D80: a life under a progress hook runs one step a frame while the physics is hard (P5's ceiling, a core collapse), each a
+//! progress line with the frame's and the heaviest object's numbers. Plant: `calibrate-one-step-never`.
 
 use sr_engine::headless::{capturing, run_captured, run_scene_captured, say, unconverged_steps, Args};
 use sr_engine::calibrate::{bisect, measure, run_with, run_with_progress, side_bh, side_ign, side_up, CalError, Life, Side, Threshold, BISECT_TOLERANCE};
@@ -240,6 +242,11 @@ fn a_life_keeps_its_record_and_says_where_it_is() {
         for key in ["item=m_ign_sb", "mass=", "step=", "sim_time=", "stage="] {
             assert!(l.contains(key), "{key} in {l}");
         }
+        // M0-D80: the frame, the world and the heaviest object's numbers after the stage.
+        for key in [" | frame=", " dt=", " s_per_step=", " p5_ceiling=", " | escaped=", " objects=", " | M=", " R=", " tau_dyn=", " sigma_c=", " T_c=", " d_c=",
+                    " Ye_c=", " X_Fe_c=", " X_n_c=", " v_r=", " v_r_dyn=", " M_unb=", " L=", " L_nuc=", " L_N=", " L_nu=", " sinks=", " sink_M=", " raw="] {
+            assert!(l.contains(key), "{key} in {l}");
+        }
     }
     let first_run = lines.iter().position(|l| l.starts_with("SR-CALIBRATE run")).unwrap();
     assert!(lines[..first_run].iter().any(|l| l.starts_with("SR-CALIBRATE progress")), "progress comes while the life runs, before its run line: {lines:?}");
@@ -269,6 +276,9 @@ fn a_life_keeps_its_record_and_says_where_it_is() {
     assert_eq!(progress["stages"].as_array().and_then(|s| s.last()).map(|s| s["stage"].clone()), Some(progress["stage"].clone()), "the trail ends on the stage now: {progress}");
     assert!(progress["started"].as_str().is_some_and(|t| t.ends_with('Z') && t.len() == 20), "started is UTC: {progress}");
     assert!(!record.join("progress.json.tmp").exists(), "the temp file is renamed away");
+    for key in ["frame", "dt", "s_per_step", "p5_ceiling", "escaped", "objects", "M", "T_c", "Ye_c", "L_N", "raw"] {
+        assert!(!progress[key].is_null(), "progress.json carries the line's {key} (M0-D80): {progress}");
+    }
     assert!(lines.iter().all(|l| !l.starts_with("SR-WARN heat unconverged")), "a life's heat warnings are counted, not printed: {lines:?}");
     for stamp in stamps {
         let _ = std::fs::remove_dir_all(stamp);
@@ -400,7 +410,7 @@ fn a_lifes_heat_warnings_are_counted_not_printed() {
 
 /// M0-D75: each item's `until`, and what the observers say of it on events — no GPU. m_up_sb's lives stop at the first frame that
 /// fires `core_collapse` (or ends), m_ign_sb's at the ignition, m_bh_sb's and the presets' only at their ending: a neutron star
-/// can still become a black hole, so m_bh_sb waits for the stage to hold its 10 t.u.
+/// can still become a black hole, so m_bh_sb waits for the stage to hold its max(10 t.u., 20 τ_dyn) (§0.5 [M0-D78]).
 #[test]
 fn m_up_stops_at_a_collapse_and_the_others_keep_their_conditions() {
     assert_eq!(Threshold::Up.until(), Until::CollapseOrEnding);
@@ -539,8 +549,9 @@ fn progress_every_sets_the_lives_tick() {
 }
 
 /// M0-D75: a life that shows a black hole without the `core_collapse` event is over for m_up_sb the frame it shows it — the run
-/// stops there, `until.met`, with no `ending` (the stage had not held 10 t.u.) — where `Until::Ending` runs on to the hold. The
-/// observe scope's seeded cloud (a sink of 50 in the sink_cloud scene at T 0.5), under `calibrate`'s own condition.
+/// stops there, `until.met`, with no `ending` (the stage had not held its max(10 t.u., 20 τ_dyn)) — where `Until::Ending` runs on
+/// to the hold. The observe scope's seeded cloud (a sink of 50 in the sink_cloud scene at T 0.5), under `calibrate`'s own
+/// condition.
 #[test]
 fn a_life_showing_a_black_hole_stops_before_its_ending() {
     let dir = std::env::temp_dir().join(format!("sr-calibrate-collapse-{}", std::process::id()));
@@ -687,6 +698,7 @@ fn a_cut_life_resumes_at_its_last_checkpoint() {
     let reasons: Vec<(&str, Vec<String>)> = vec![
         ("another mass", with(&["--bracket", &format!("{},{}", 0.9 * m0, 1.02 * m0)])),
         ("physics_hash", with(&[])),
+        ("version 1", with(&[])),
         ("another step", with(&[])),
         ("torn dump", with(&[])),
         ("no snapshot", with(&[])),
@@ -706,6 +718,11 @@ fn a_cut_life_resumes_at_its_last_checkpoint() {
             "physics_hash" => {
                 edit("physics_hash", "0".repeat(64).into());
                 "physics_hash"
+            }
+            // A snapshot of M0-D77's binary, before each object's history carried `x_h_max` (§0.5 [M0-D78]).
+            "version 1" => {
+                edit("version", 1.into());
+                "is version 1, this build reads 2"
             }
             "another step" => {
                 edit("step", 81.into());
@@ -828,5 +845,119 @@ fn a_continued_life_that_already_met_its_until_ends_at_once() {
     let again: serde_json::Value = serde_json::from_slice(&std::fs::read(second.join("summary.json")).unwrap()).unwrap();
     assert_eq!((again["steps"].as_u64(), &again["until"]["met"]), (Some(steps), &serde_json::json!(true)), "{again}");
     assert_eq!(again["events"], summary["events"]);
+    let _ = std::fs::remove_dir_all(&dir);
+}
+
+/// M0-D80: the trigger of one-step frames reads the state alone — a step at P5's ceiling in the frame just run, or the heaviest
+/// object's raw stage core_collapse — never wall time.
+#[test]
+fn one_step_frames_follow_the_physics() {
+    use sr_engine::headless::one_step_next;
+    assert!(one_step_next(1, Some("cloud")), "a step at P5's ceiling");
+    assert!(one_step_next(0, Some("core_collapse")), "a core collapse");
+    assert!(one_step_next(3, None), "a ceiling with no object yet");
+    for raw in [None, Some("cloud"), Some("supernova"), Some("neutron_star"), Some("black_hole")] {
+        assert!(!one_step_next(0, raw), "{raw:?}: frames as before");
+    }
+}
+
+/// M0-D80: a life under a progress hook runs one step a frame through its core collapse, a progress tick each, and goes back to
+/// frames once the collapse stops. A 16 × 16 iron block at Σ 400 (Y_e Σ 186 over Σ_N 160), gravity on and nothing moving, in a
+/// 64 × 64 world: N_Fe converts it from the first step (raw core_collapse) until the gate closes some 60 steps later. The same
+/// life twice is the same; one cut at a checkpoint inside the stretch and continued is the unbroken one (summary.json but for
+/// `wall_s`, events.jsonl and the ticks after the cut); without a hook the frames are as before.
+#[test]
+fn a_life_steps_one_at_a_time_through_its_core_collapse() {
+    use sr_engine::headless::{Progress, Tick};
+    let dir = std::env::temp_dir().join(format!("sr-calibrate-one-step-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).unwrap();
+    let scene_file = dir.join("iron.json");
+    let scene = serde_json::json!({"version": 1, "world": {"width": 64, "height": 64, "edge": "bounce"}, "slowdown": false,
+        "switches": {"gravity": true, "hydro": false, "heat": false, "reactions": true, "neutrinos": false, "sinks": false},
+        "objects": [{"kind": "rect", "x0": 24, "y0": 24, "w": 16, "h": 16, "sigma": 400.0, "t": 1.0, "composition": {"Fe": 1.0}, "v": [0, 0]}]});
+    std::fs::write(&scene_file, scene.to_string()).unwrap();
+    let adapter = std::env::var("SR_TEST_ADAPTER").ok().filter(|a| !a.trim().is_empty());
+    #[derive(Debug, PartialEq)]
+    struct Seen {
+        step: u64,
+        frame: u64,
+        p5_ceiling: u64,
+        raw: String,
+    }
+    // A life to `max_steps` (its until never met: exit 2), from `load` when given, ticking every 64 steps, a checkpoint every
+    // `checkpoint` steps; `hook` false runs it as plain `headless` does.
+    let life = |name: &str, max_steps: u64, load: Option<std::path::PathBuf>, checkpoint: Option<u64>, hook: bool| {
+        let out = dir.join(name);
+        let args = Args {
+            scene: "calibrate:one_step:iron".to_string(),
+            steps: None,
+            until: Some(Until::parse("stage:black_hole").unwrap()),
+            world: None,
+            edge: None,
+            max_steps,
+            out: Some(out.clone()),
+            adapter: adapter.clone(),
+            timing: false,
+            dump_every: None,
+            continue_life: load.is_some(),
+            load_dump: load,
+            cpu_reference: false,
+        };
+        let mut seen = Vec::new();
+        let mut tick = |t: &Tick| {
+            let star = t.star.as_ref().expect("the block is an object");
+            for x in [t.dt, t.s_per_step, t.escaped, star.mass, star.radius, star.tau_dyn, star.sigma_c, star.t_c, star.d_c, star.ye_c, star.v_r_dyn, star.l_n] {
+                assert!(x.is_finite(), "step {}: {x}", t.step);
+            }
+            assert_eq!(t.objects, 1, "step {}", t.step);
+            seen.push(Seen { step: t.step, frame: t.frame, p5_ceiling: t.p5_ceiling, raw: star.raw.unwrap_or("none").to_string() });
+        };
+        let mut saved = |_: u64, _: f64, _: &str| {};
+        let progress = Progress { every: 64, tick: &mut tick, checkpoint_every: checkpoint, saved: &mut saved };
+        let (code, lines) = run_scene_captured(args, Scene::load(&scene_file).unwrap(), hook.then_some(progress));
+        assert_eq!(code, 2, "{name}: {lines:?}");
+        let mut summary: serde_json::Value = serde_json::from_slice(&std::fs::read(out.join("summary.json")).unwrap()).unwrap();
+        summary.as_object_mut().unwrap().remove("wall_s");
+        (seen, summary, std::fs::read(out.join("events.jsonl")).unwrap(), out)
+    };
+
+    // Engaged from the first step's collapse: ticks at steps 2, 3, … each a frame of one step; the stretch's last frame shows
+    // the collapse over, and frames of 16 follow, ticking only on the 64-step grid.
+    let (seen, summary, events, _) = life("unbroken", 160, None, None, true);
+    let stretch = seen.iter().take_while(|s| s.frame == 1).count();
+    assert!(stretch >= 30, "a stretch of one-step frames through the collapse: {seen:?}");
+    assert!(seen[..stretch].iter().enumerate().all(|(i, s)| s.step == 2 + i as u64), "one tick a step from step 2: {seen:?}");
+    assert!(seen[..stretch - 1].iter().all(|s| s.raw == "core_collapse"), "{seen:?}");
+    assert_ne!(seen[stretch - 1].raw, "core_collapse", "the stretch ends when the collapse does: {seen:?}");
+    let after = &seen[stretch..];
+    assert!(!after.is_empty() && after.iter().all(|s| s.frame == 16), "frames again after the stretch: {seen:?}");
+    assert!(after.windows(2).all(|w| w[1].step / 64 > w[0].step / 64), "only the 64-step grid ticks after it: {after:?}");
+    assert!(seen.iter().all(|s| s.p5_ceiling == 0), "no heat pass in this scene: {seen:?}");
+    assert_eq!(summary["steps"], 160, "{summary}");
+
+    // The same life again: the same ticks, record and events.
+    let (again, summary_2, events_2, _) = life("again", 160, None, None, true);
+    assert_eq!(again.iter().map(|s| (s.step, s.frame, &s.raw)).collect::<Vec<_>>(), seen.iter().map(|s| (s.step, s.frame, &s.raw)).collect::<Vec<_>>());
+    assert_eq!((summary_2["events"].clone(), summary_2["objects"].clone(), events_2), (summary["events"].clone(), summary["objects"].clone(), events.clone()));
+
+    // Cut at 30 with a checkpoint every 20 (a one-step frame ends at 20 exactly), continued from it: the unbroken life.
+    let (_, _, _, cut) = life("cut", 30, None, Some(20), true);
+    let pair = cut.join("checkpoint").join("s_20.observers.json");
+    let snapshot: serde_json::Value = serde_json::from_slice(&std::fs::read(&pair).unwrap_or_else(|e| panic!("{}: {e}", pair.display()))).unwrap();
+    assert_eq!(snapshot["one_step"], true, "the snapshot carries the stretch");
+    let (continued, summary_c, events_c, _) = life("continued", 160, Some(cut.join("checkpoint").join("s_20.bin")), None, true);
+    let unbroken_after: Vec<&Seen> = seen.iter().filter(|s| s.step > 20).collect();
+    assert_eq!(continued.iter().collect::<Vec<_>>(), unbroken_after, "the continued life frames as the unbroken one");
+    let mut unbroken = summary.clone();
+    unbroken.as_object_mut().unwrap().remove("adapter");
+    let mut summary_c = summary_c;
+    summary_c.as_object_mut().unwrap().remove("adapter");
+    assert_eq!((summary_c, events_c), (unbroken, events), "the continued life's record is the unbroken one's");
+
+    // Without a hook (plain headless, the game): frames of 16 throughout, the stage trail on their boundaries (1 + 16k).
+    let (_, plain, _, _) = life("plain", 160, None, None, false);
+    let froms: Vec<u64> = plain["objects"][0]["stages"].as_array().unwrap().iter().map(|s| s["from_step"].as_u64().unwrap()).collect();
+    assert!(froms.len() >= 2 && froms.iter().all(|f| f % 16 == 1), "frames as before: {froms:?}");
     let _ = std::fs::remove_dir_all(&dir);
 }

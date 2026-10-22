@@ -1,0 +1,12 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -229,7 +229,8 @@
+ /// How long (t.u.) a remnant stage must show before it is the object's ending: max(10 t.u., 20 τ_dyn), τ_dyn the object's at
+ /// the frame read (§1.9.5 as §0.5 [M0-D78] reads it). A compact remnant keeps 10 t.u.; an extended one waits out its dynamics.
+ pub fn ending_hold(tau_dyn: f64) -> f64 {
+-    ENDING_HOLD_MIN.max(ENDING_HOLD_TAU * tau_dyn)
++    let _ = ENDING_HOLD_TAU * tau_dyn;
++    ENDING_HOLD_MIN
+ }
+ 
+ /// What happened to an object (§1.9.4), once each.

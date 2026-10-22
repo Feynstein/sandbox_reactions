@@ -1,0 +1,4 @@
+=== M0-R6 base20: calibrate --only m_bh_sb --bracket 67020.64327658225,67100 dump_every=100 overrides='' cap 570 s 2026-10-22T07:38:36-04:00 linux-pc ===
+load: load average: 189.43, 161.86, 102.87 · NVIDIA GeForce RTX 5090, 89 %, 16754 MiB;Quadro RTX 4000, 0 %, 840 MiB;
+=== M0-R6 base20: mass=67020.64327658225 max_steps=6000 overrides='' edge=leave 2026-10-22T07:50:09-04:00 laserax-ai ===
+load: load average: 86.27, 128.82, 121.53 · NVIDIA GeForce RTX 5090, 93 %, 16754 MiB;Quadro RTX 4000, 0 %, 840 MiB;

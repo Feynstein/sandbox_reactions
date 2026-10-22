@@ -1,0 +1,67 @@
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-8mgr8ham/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-8mgr8ham/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.44s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 6 tests
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1600 sim_time=19.759870 until=unmet
+
+thread 'observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary' (4070685) panicked at crates/sr-engine/tests/gpu/observe.rs:260:5:
+assertion `left == right` failed: ["SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA", "SR-HEADLESS DONE steps=1600 sim_time=19.759870 until=unmet"]
+  left: 2
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test observe::an_unmet_condition_is_exit_2_with_until_unmet ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.851416 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.329904 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.329904 until=none
+ok
+test observe::events_jsonl_and_the_ending_of_a_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633373 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20000 sim_time=15.878659 until=unmet
+
+thread 'observe::events_jsonl_and_the_ending_of_a_black_hole' (4071138) panicked at crates/sr-engine/tests/gpu/observe.rs:174:5:
+assertion `left == right` failed: ["SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA", "SR-HEADLESS DONE steps=20000 sim_time=15.878659 until=unmet"]
+  left: 2
+ right: 0
+FAILED
+test observe::until_a_stage_stops_at_the_frame_that_shows_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=9.204702 until=unmet
+
+thread 'observe::until_a_stage_stops_at_the_frame_that_shows_it' (4071350) panicked at crates/sr-engine/tests/gpu/observe.rs:78:5:
+assertion `left == right` failed: ["SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA", "SR-HEADLESS DONE steps=2000 sim_time=9.204702 until=unmet"]
+  left: 2
+ right: 0
+FAILED
+test observe::until_is_checked_before_a_device_is_touched ... SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: --until "later": expected sim_time:<t>, event:<kind>, stage:<id> or ending
+SR-ERROR bad arguments: --until "stage:nova": a stage is one of black_hole|neutron_star|supernova|core_collapse|white_dwarf|failed_star|planetary_nebula|iron_core|si_burn|o_burn|ne_burn|c_burn|he_core|he_shell|h_shell|main_sequence|collapsing|protostar|cloud, got "nova"
+SR-ERROR bad arguments: --until "event:ending": an event is one of ignition|core_collapse|supernova|sink_formed, got "ending"
+SR-ERROR bad arguments: --until "sim_time:-3": sim_time takes a time of 0 or more, got "-3"
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+ok
+test observe::until_sim_time_stops_at_the_first_step_past_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200000 sim_time=1374.577290 until=met
+SR-ERROR bad scene: scene "/tmp/pb-redarm-8mgr8ham/arm1/crates/sr-engine/../../scenes/cold_disk.json": /tmp/pb-redarm-8mgr8ham/arm1/crates/sr-engine/../../scenes/cold_disk.json: No such file or directory (os error 2)
+
+thread 'observe::until_sim_time_stops_at_the_first_step_past_it' (4071366) panicked at crates/sr-engine/tests/gpu/observe.rs:64:83:
+summary.json: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+
+failures:
+
+failures:
+    observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary
+    observe::events_jsonl_and_the_ending_of_a_black_hole
+    observe::until_a_stage_stops_at_the_frame_that_shows_it
+    observe::until_sim_time_stops_at_the_first_step_past_it
+
+test result: FAILED. 2 passed; 4 failed; 0 ignored; 0 measured; 343 filtered out; finished in 137.40s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

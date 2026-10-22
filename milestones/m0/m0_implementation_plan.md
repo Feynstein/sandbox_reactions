@@ -20,7 +20,7 @@ One reaction mechanism, proven by fusion, waits for the chemistry to come; more 
 sound, a world size picked by graphics card, story mode, Steam and the rest of the physics list are
 routed past M0 (reports/sandbox_interview.md §4, reports/bootstrap.md §3). The Windows laptop, routed
 past M0 at bootstrap too, is in play for M0 since M0-TJ3 (Superseded section; R5, R15).
-Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haiku 5.5, high — strongest first; read 2026-10-19 from the claude-api skill's model table (Claude Code 2.1.301, cached 2026-10-06), the probe and the lead's answer (the canonical repository's ladder, 2026-10-10, its last rung added 2026-10-11 on the lead's word)
+Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, high · Sonnet 5.5, medium · Haiku 5.5, high — strongest first; read 2026-10-22 from the claude-api skill's model table (Claude Code 2.1.306, cached 2026-10-06), the probe and the lead's answer (the canonical repository's ladder, 2026-10-10, its last rung added 2026-10-11 on the lead's word)
 Changes by asking: every block — the lead at bootstrap, 2026-10-08, "Any task, by asking you": physics formulas will need tuning as they get built; never a bypass that makes a failing check pass
 Launch prompt: « Read milestones/m0/m0_implementation_plan.md and execute M0-<id> yourself — you
 are the task agent, not an orchestrator. Grep for your own heading first. »
@@ -234,7 +234,13 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D75 | BUILD | `calibrate`'s m_up_sb lives run on for hours past the core collapse that already decides their side, and a life marks its progress only every 10,000 steps — 16 minutes apart for a 14 M₀ star | AFTER M0-D72 | DONE (2026-10-20 19:19) |
 | M0-D76 | BUILD | A run loaded from a dump cannot continue its life: `--load-dump` restores the cells bit for bit but starts the observers over — the object ids, the stages and the ignition flag, the remnant's 10 t.u. hold, the events, the ledger's start and sums — so a life cut part-way can only be run again from step 0 | AFTER M0-D75 | DONE (2026-10-20 20:01) |
 | M0-D77 | BUILD | `calibrate --resume` runs a cut life again from step 0: m_up_sb's 14 M₀ life was started three times, each from nothing, and a stop loses the whole life so far, not one save interval | AFTER M0-D76 | DONE (2026-10-20 20:58) |
-| M0-V9 | CHECK | Validation, lot 9: calibration; the lead's calibrate run | AFTER M0-T71 | IN PROGRESS (awaiting: the lead's answers to two questions — the ignition reading and the remnant's settle time — asked first by the next session, tasks/M0-V9.md § Session 4; m_up_sb exit 6 at life 03) |
+| M0-D78 | BUILD | A cloud that burns its central hydrogen in one flash is never `ignited` — L_H leaps past §0.5 [M0-D53]'s 2 L ceiling between two frames — so its burnt-out core reads `failed_star`, «too light to ignite», and m_up_sb exits 6 at 3.74 M₀; and every remnant stage ends a life after 10 t.u. however slow its object, where §2.11 reads 20 τ_dyn | AFTER M0-D77 | DONE (2026-10-21 08:54) |
+| M0-R5 | BUILD | Neutronization research — the a_n_fe at which a collapsing iron core finishes as a neutron star within a few τ_dyn, measured on m_bh_sb's stalled low-end life, and what else the value moves | AFTER M0-D78 | DONE (2026-10-21 14:15, started 12:55) |
+| M0-D79 | BUILD | m_bh_sb's low end never ends: its supernova leaves a cold iron core (2,534, under m_ch_sb) that neutronizes at 2.4 × 10⁻⁵ per t.u. and reads `core_collapse` for ~20,000 t.u. — a_n_fe 10⁻³ makes the collapse thousands of τ_dyn long | AFTER M0-R5 | DONE (2026-10-21 14:52) |
+| M0-TM10 | PLAN | Rating pass - 5 carried flags | AFTER M0-D79 | DONE (2026-10-22 07:32, started 07:24) |
+| M0-D80 | BUILD | calibrate's progress line goes one step at a time while a life is slow (a step at P5's ceiling, core collapse) and carries the star's numbers — `--progress-every 100` is silent for minutes where the lead wants to watch | AFTER M0-TM10 | TODO |
+| M0-R6 | BUILD | Black-hole research — every collapse keeps ~iron's collapse mass and blows the rest off (2,205 left at 1.25 m_up, 2,633 at 20 M₀), so no remnant passes m_tov_sb 4,853 and m_bh_sb has no threshold: what lets a heavy star keep more | AFTER M0-TM10 | IN PROGRESS (awaiting: the lead's probe runs P1–P7, tasks/M0-R6.md) |
+| M0-V9 | CHECK | Validation, lot 9: calibration; the lead's calibrate run | AFTER M0-T71 | BLOCKED-D78 |
 | M0-D63 | BUILD | A run's `git` names the checkout's HEAD with no mark for uncommitted work: M0-V9's items 1–2, measured on lot 9's uncommitted code, wrote `measured.git` "e788da4", a commit that holds none of it | AFTER M0-V9 | TODO |
 | M0-D65 | BUILD | `cold_core` is red on win-laptop: scenes/cold_co_disk.json, written on linux-pc, is "stale" against the disk rebuilt here — σ 4 × 10⁻¹² apart, over `same_disk`'s 10⁻¹² — so the scope's two scene cases fail on a tree that changed nothing in them | AFTER M0-D63 | TODO |
 | M0-D68 | BUILD | M0-D64's face-work energy source cools a cold collapse below its adiabat: the diffusive mass flux's work comes out of the cells' thermal energy, and G-JEANS's cloud at U_th = 0.05 W loses 8× its entropy on the ripple's spoke (J 0.129 → 1.04) | AFTER M0-D65 | TODO |
@@ -497,6 +503,13 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
   interval, apart from `--progress-every`) and a cut life continued from its last checkpoint instead of from step 0 (the lead,
   2026-10-20, M0-V9: «make sure that the number of display step and the number of save steps can both be arguments that can be set
   seeparately»); [M0-D76]'s snapshot gains `adapter`, `driver` and `physics_hash`.
+- Contract §1.9.4's ignition as §0.5 [M0-D53] reads it, §1.9.5's "has held for 10 t.u.", §3.3's `ending` gloss "(… for 10 t.u.)" and §2.11
+  item 3's failure "held for 20 τ_dyn" — superseded by contract §0.5 [M0-D78]: ignition on the light window or once the centre has burned a
+  tenth of its hydrogen (`by` light|fuel), every remnant's ending at max(10 t.u., 20 τ_dyn) (`hold_t`), the observers' snapshot version 2
+  with `x_h_max` (the lead, 2026-10-21, M0-V9: «Burnt fuel also counts (Recommended)», «max(10 t.u., 20 τ_dyn) (Recommended)»).
+- Contract §2.5.1's "A per record … others 1 × 10⁻³" for N_Fe and §1.9.3's neutron_star row "X_n,c ≥ 0.5, |v_r| ≤ 0.05 √(GM/R), no sink",
+  listed before supernova — superseded by contract §0.5 [M0-D79]: a_n_fe 100; neutron_star on Y_e,c ≤ 0.35, d_c ≥ 0.5, no sink, listed after
+  supernova, the |v_r| term back with M0-D71 (the lead, 2026-10-21, M0-R5: «Rate + NS row (Recommended)»; reports/neutronization.md).
 Inherited debt (§2.4): none.
 
 ## Repo facts (so you don't explore)
@@ -637,13 +650,13 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-V9 session 4 on linux-pc: ask the lead the two questions of tasks/M0-V9.md § Session 4 FIRST (the ignition reading of a flashed core; the remnant's settle time), file one D from the answers before V9, then the lead's m_ign re-check, m_up_sb resumed (life 03's record moved aside), m_bh_sb, preset_mass_sb; then M0-V9's read of the whole file, then M0-D63, M0-D65, M0-D68, M0-D69, M0-D70, M0-D71 (ordering note above M0-V19)
-- Counters: T=125 · D=77 · V=19 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=7 · TR=1 · TM=9 · TD=1 · TE=1 · R=4
-- Open D/BLOCKED register: M0-D63, M0-D65, M0-D68, M0-D69, M0-D70 and M0-D71 open (after M0-V9; M0-D68–D70 filed by M0-D66 2026-10-20: the face work's entropy loss, the world edge's momentum, a gas-free sink no object; M0-D71 filed by M0-D67 2026-10-20: P4 not well-balanced at a remnant's core, its light floor-fed) — six open (E6: ≥ 5); M0-D72, M0-D73, M0-D74, M0-D75, M0-D76, M0-D77 closed 2026-10-20 (calibrate: --resume, the status script, progress.json, m_up_sb's stop at core collapse and --progress-every, a dump continues its life, --checkpoint-every); M0-D62, M0-D61, M0-D60, M0-D59, M0-D58, M0-D57, M0-D52, M0-D54 closed 2026-10-19
-- Outstanding commit gates: Phase 11's, after M0-V9 — the tree to M0-V9's session 2 committed and pushed from win-laptop as 'M0 WIP: lot 9 before the calibration' (2026-10-20, the lead's «linux-pc's RTX 5090 (Recommended)»)
+- Next task: M0-D80 (calibrate's progress line one step at a time while a life is slow, with the star's numbers — the lead's ask at M0-R6, 2026-10-22, «write the D before R6»), then M0-R6 on linux-pc (IN PROGRESS: the lead runs its probes P1–P7, tasks/M0-R6.md; then the report and its question) (black-hole research: both ends of m_bh_sb's bracket left ~iron's collapse mass, 2,205 and 2,633, under m_tov_sb 4,853 — the lead's pick 2026-10-22, «Research block first (Recommended)»), the D it files, the lead's m_bh_sb and preset_mass_sb, then M0-V9 session 5 (the whole file read, Verify 1, Phase 11's close), then M0-D63, M0-D65, M0-D68, M0-D69, M0-D70, M0-D71 (ordering note above M0-V19)
+- Counters: T=125 · D=80 · V=19 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=7 · TR=1 · TM=10 · TD=1 · TE=1 · R=6
+- Open D/BLOCKED register: M0-D80 open (before M0-R6; filed 2026-10-22 by M0-R6 at the lead's word: adaptive progress frames on P5's ceiling or core collapse, the star's numbers on each line) — M0-R6 open (before M0-V9; filed 2026-10-22 at the lead's word after m_bh_sb's bracket was refused: both ends neutron_star, remnants 2,205 and 2,633 under m_tov_sb 4,853) — M0-V9 BLOCKED (waits on M0-R6, the D it files and the lead's m_bh_sb and preset_mass_sb); M0-D63, M0-D65, M0-D68, M0-D69, M0-D70 and M0-D71 open (after M0-V9; M0-D68–D70 filed by M0-D66 2026-10-20: the face work's entropy loss, the world edge's momentum, a gas-free sink no object; M0-D71 filed by M0-D67 2026-10-20: P4 not well-balanced at a remnant's core, its light floor-fed — M0-R5 measured its flow holding a remnant's |v_r| at 0.05–0.49 √(GM/R); it also restores the neutron_star row's |v_r| term, M0-D79's flag) — six D's open (E6: ≥ 5; filed at the lead's word); M0-D79 closed 2026-10-21 (a_n_fe 100, the neutron_star row on Y_e,c ≤ 0.35, d_c ≥ 0.5, after supernova — its low end measured neutron_star, its 20 M₀ end too: M0-R6); M0-R5 closed 2026-10-21 (the value and the row, the lead's pick); M0-D78 closed 2026-10-21 (ignition by burnt fuel, every remnant's hold max(10 t.u., 20 τ_dyn), the snapshot version 2); M0-D72, M0-D73, M0-D74, M0-D75, M0-D76, M0-D77 closed 2026-10-20 (calibrate: --resume, the status script, progress.json, m_up_sb's stop at core collapse and --progress-every, a dump continues its life, --checkpoint-every); M0-D62, M0-D61, M0-D60, M0-D59, M0-D58, M0-D57, M0-D52, M0-D54 closed 2026-10-19
+- Outstanding commit gates: Phase 11's, after M0-V9 — the tree to M0-V9's session 3 committed and pushed by the lead from laserax-ai as 'M0-V9 in progress' (f39c6db, 2026-10-21 07:07); before it 'M0 WIP: lot 9 before the calibration' from win-laptop (2026-10-20, the lead's «linux-pc's RTX 5090 (Recommended)»)
 - Carryover: none
-- Awaiting lead: M0-V9's two questions (tasks/M0-V9.md § Session 4: Q1 «Ignition», Q2 «Settle time») — m_up_sb stopped at exit 6 on life 03 (12,538.4, a failed_star ending after a central hydrogen flash); assets/calibration.json holds items 1–3; no commit on laserax-ai until the file is whole
-- Model ratings: 2026-10-19 by M0-TM9
+- Awaiting lead: M0-R6's session (the lead launches it); keep build/calibrate_runs/2026-10-21T19-39-14Z/ (m_bh_sb's two lives on M0-D79's binary: exit 6, both ends neutron_star, log milestones/m0/logs/calibrate.m_bh_sb.log) and build/calibrate_runs/2026-10-21T15-23-36Z/ (M0-R5's evidence); assets/calibration.json holds m_ch_sb, m_tov_sb, m_ign_sb, m_up_sb on physics_hash 8ca855fb… — m_bh_sb and preset_mass_sb missing (preset_mass_sb refuses without m_bh_sb)
+- Model ratings: 2026-10-22 by M0-TM10
 
 # Tasks
 
@@ -2724,8 +2737,347 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
   M0-D76's equality case and this block's are the guard.
 - Handoff: laserax-ai (linux-pc), RTX 5090, model=claude-sonnet-5-5 level=high (rung_record now; matches). calibrate --checkpoint-every M (apart from --progress-every N) saves a running life's D76 pair into <life>/checkpoint/ at the first frame boundary past each multiple (no chunk shortened, the last pair alone kept, removed when the life finishes); --resume continues a cut life from it when it matches (scene label+mass, --adapter, physics_hash, world, step, whole dump) — run line 'continued from step k', record = the unbroken life's but wall_s; else 'SR-WARN checkpoint not used (why)' and step 0; a restored state already meeting its until ends at once. progress.json: continued_from_step, checkpoint_step; calibrate_status paces on own steps and says what a stop loses. Verify 1 [ALREADY RUN — PASS (calibrate_bisect 16/0/0, calibrate_status 18/0/0) on laserax-ai]; Verify 2 [ALREADY RUN — PASS (calibrate_status 4 plants red; calibrate_bisect 11 of 11 red, 1158 s — over the 10-minute line) on laserax-ai]; claim --changed [ALREADY RUN — FAIL (993/9; the seven scopes of M0-D76's claim, same counts, SR-ERROR calibration invalid preset_mass_sb missing = O13; boot's cause not separately read) on laserax-ai]. Declared: saves on frame boundaries; periodic pair only (a cut life's final dump is not a checkpoint); a 4th engine plant continue-until-unchecked; 4 older plants regenerated (context moved); contract §0.5 [M0-D77] + Superseded mirror. Not acted on: no --adapter accepts any checkpoint adapter; headless --continue itself checks no adapter/hash. Detail tasks/M0-D77.md. Next: M0-V9 (the lead's stop and --resume on this binary, then the two intervals sized per item).
 
+## M0-D78 · A cloud that burns its central hydrogen in one flash is never `ignited` — L_H leaps past §0.5 [M0-D53]'s 2 L ceiling between two frames — so its burnt-out core reads `failed_star`, «too light to ignite», and m_up_sb exits 6 at 3.74 M₀; and every remnant stage ends a life after 10 t.u. however slow its object, where §2.11 reads 20 τ_dyn · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D77)
+- Status: DONE (2026-10-21 08:54)
+- Carried flags: [M0-V9, 2026-10-21] End your handoff with the lead's lines, each tagged [NOT RUN — for you], on laserax-ai (bash), from the repo root, one at a time: `~/.cargo/bin/cargo build --release --locked -p sr-app`; `build/target/release/sandbox-reactions calibrate --only m_ign_sb --adapter "RTX 5090" --out assets/calibration.json --progress-every 1000 --checkpoint-every 3000` (the re-check: P1 says the hold alone leaves 2515.741, the fuel test may move it); `mv build/calibrate_runs/2026-10-20T19-07-59Z/m_up_sb-03 build/calibrate_runs/m_up_sb-03.before-the-fix` (life 03's record set aside, kept — a missing folder runs fresh, M0-D72); `build/target/release/sandbox-reactions calibrate --only m_up_sb --adapter "RTX 5090" --out assets/calibration.json --resume build/calibrate_runs/2026-10-20T19-07-59Z --progress-every 1000 --checkpoint-every 3000` (lives 01–02 replayed, 03 run fresh); then `--only m_bh_sb` and `--only preset_mass_sb`, each with the same `--adapter "RTX 5090" --out assets/calibration.json --progress-every 1000 --checkpoint-every 3000` (a stop → the same line with `--resume` and that item's newest stamp). If your build finds that life 01's or life 02's side could move, say so and hand a fresh m_up_sb line (no `--resume`) instead. The claim run reads the same O13 reds as M0-D75–D77 (assets/calibration.json holds items 1–3): name them, never fix them here.
+- Blocks: the lead's calibration on laserax-ai — m_up_sb stopped at exit 6 on life 03 (12,538.414), then m_bh_sb and preset_mass_sb;
+  M0-V9 resumes once the calibration is whole
+- Caused by: M0-D53 (ignition read on the light window alone — `ignites` is `hydrogen_leads`, stages.rs 115–119 and 185–188: a flash
+  past 2 L is no star, and nothing remembers that the fuel burned) · M0-T60 (`ENDING_HOLD` 10 t.u. for every remnant, watch.rs 33 and
+  254) · M0-T68 (m_ign_sb's failure read at that 10 t.u. ending where §2.11 item 3 says «held for 20 τ_dyn», declared «no effect at the
+  shipped constants» — tasks/M0-V9.md O2; calibrate.rs 17–18)
+- Rating: `(usual)` — rule (3)'s closed list: a persisted format changed (M0-D76's observers' snapshot, read back by `headless
+  --continue` and by calibrate's checkpoint, gains each object's new ignition history)
+- Files: crates/sr-physics/src/observe/stages.rs (`History` 97–104, `hydrogen_leads` 115–119, the rows 143–171, `ignites` 185–188,
+  `StageTracker::update` 251–290 with the ignition test 268–271, `snapshot`/`restore` 297–332, the tests from 342),
+  crates/sr-engine/src/watch.rs (module notes 18–19, `ENDING_HOLD` 32–33, `Until::Ending` 48, the hold 248–262),
+  crates/sr-engine/src/calibrate.rs (module notes 17–18, `stage_times`'s note 988–989), crates/sr-engine/tests/gpu/observe.rs (the
+  ending case 143–201) — opened by M0-V9, not changed; named, not opened — crates/sr-engine/tests/gpu/calibrate_bisect.rs (its notes
+  at 403 and 542 read the 10 t.u. hold), docs/agent/running.md § Calibrating, docs/agent/testing.md, tests/plants/
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.2–§1.9.5 with §0.5 [M0-D53], §2.11 items 3–4 with §0.5
+  [M0-D75], §2.12.2 (events), §3.3 (`--until`), §0.5 [M0-D76] and [M0-D77] + docs/agent/testing.md + tasks/M0-V9.md § Session 3,
+  continued (21:3x: P1, P2) and § Session 4
+- Symptom: measured by M0-V9 on laserax-ai (RTX 5090, shared), 2026-10-20 (tasks/M0-V9.md § Session 3, continued; logs/M0-V9-r5.log
+  § probe S4, P1, P2): the lead's `calibrate --only m_up_sb … --resume build/calibrate_runs/2026-10-20T19-07-59Z` on M0-D77's binary
+  ran life 03 — 12,538.414 = √(M₀ × 14 M₀), 3.74 M₀, 3.9 × m_ch_sb — to an `ending` failed_star (shown from step 401, t 4.723; held
+  10.005 t.u. at step 1,937, t 14.728; no `ignition` event) → `side=none` → `SR-ERROR calibration failed: m_up_sb: the run at mass
+  12538.414 is on neither side of the threshold` (exit 6). P2 (a scratch copy, the heaviest object traced every 0.5 t.u.): at t 4.10
+  T_c 55.7 (T_H 56) and L_H 18,681 against L 1.55 — never inside 0.5 L ≤ L_H ≤ 2 L — and by t 5.05 X_H,c 0.0000 from 0.7346: a central
+  hydrogen flash burned the core's fuel in ~1 t.u. and threw the cloud out (v_r +10, R 68 → 172 by t 17), its cold degenerate core
+  (T_c at the floor, d_c 0.9999) then matching failed_star's «never ignited, d_c ≥ 0.5, L_H < 0.01 L». Life 02 (14 M₀) showed
+  `white_dwarf` from t 5.70 to 14.23 (8.53 t.u.) while still a cloud, then core-collapsed at t 22.604: 1.47 t.u. more and its `ending`
+  would have put a 14 M₀ star on the light side. P1 (the same copy, failed_star's hold max(10 t.u., 20 τ_dyn) at each frame's τ_dyn):
+  m_ign_sb 2515.741, unchanged — the same 10 lives, each on its side, 126 s against ~25 s. The lead, 2026-10-21, at M0-V9: Q1
+  «Burnt fuel also counts (Recommended)» — ignition on the light window as today, OR once the centre has burned a tenth of its
+  hydrogen, «failed star» then meaning fuel that never burned; Q2 «max(10 t.u., 20 τ_dyn) (Recommended)» — every remnant holds it
+  before it counts as the ending, «the game's ending readout follows the same rule» (the options' text)
+- Repro: `build/target/release/sandbox-reactions calibrate --only m_up_sb --adapter "RTX 5090" --out <scratch>/cal.json --bracket
+  12538.414,46914.45` — its first life, 12,538.414, exits 6 the same way (~140 s on the 5090); or read
+  `build/calibrate_runs/2026-10-20T19-07-59Z/m_up_sb-03/summary.json` (no `ignition` event; `ending` failed_star at t 14.728), kept on
+  laserax-ai
+- Deliver: (1) **Burnt fuel ignites** (Q1, §1.9.4): `ignited` turns on at the first frame where 0.5 L ≤ L_H ≤ 2 L (L > 0), as today,
+  or where the object's centre has burned a tenth of its hydrogen — X_H,c ≤ 0.9 × the most X_H,c its centre has shown at this or any
+  earlier frame of its id (that most ≥ 10⁻³), with L_H > 0 at that frame (my reading of «burned»: the drop comes with hydrogen burning
+  — a centre that moved onto painted helium burned nothing; ask the lead before reading it otherwise). `History` keeps that most,
+  updated each frame before the test; the `ignition` event fires once either way, its detail naming the rule (`"by": "light"` or
+  `"fuel"`). §1.9.3's rows are unchanged: failed_star's «never ignited» now means fuel that never burned; main_sequence keeps
+  [M0-D53]'s window. (2) **Every remnant settles for max(10 t.u., 20 τ_dyn)** (Q2, §1.9.5): the `ending` event — and with it `--until
+  ending`, m_ign_sb's `ignition|ending` and m_up_sb's `collapse|ending` — fires at the first frame where the displayed remnant stage has
+  been shown for at least max(10 t.u., 20 τ_dyn), τ_dyn the object's at that frame (§1.9.2; P1's reading), the hold restarting on a
+  change of stage as today; the ending's detail gains `hold_t` (the hold it met). The hold is one function in sr-physics's `observe`,
+  beside the rows, which watch.rs reads and M0-T72's ending readout will (flagged there). (3) **The snapshot** ([M0-D76]) carries
+  each object's new history; one without it (M0-D77's binary) is refused by `--continue` (exit 4) and not used by `--resume` (`SR-WARN
+  checkpoint not used (…)`, step 0) — never read as a default. (4) A §0.5 line citing the lead's words — §1.9.4 as [M0-D53] reads it,
+  §1.9.5's «held for 10 t.u.», §3.3's `ending` gloss «(any object holds a remnant stage for 10 t.u.)», §2.11 item 3's failure («held for
+  20 τ_dyn»: the failed_star ending, at max(10 t.u., 20 τ_dyn)), §2.12.2's two detail keys and [M0-D76]'s snapshot — and its mirror in
+  the plan's Superseded; the notes that read 10 t.u. (watch.rs 18–19, 32, 48; calibrate.rs 17–18, 988; calibrate_bisect.rs 403, 542)
+  brought to the new hold; running.md § Calibrating (an m_ign_sb item runs ~2 min, not ~30 s) and testing.md's rows → Verify 1 · cases
+  (classify): a flashed object — X_H,c from 0.73 to under 0.9 × it while L_H > 2 L at every frame — is ignited at the frame it crosses
+  (`by` fuel) and its cold degenerate burnt core shows white_dwarf, not failed_star; X_H,c falling with L_H = 0 leaves it unignited; a
+  centre under 10⁻³ throughout never ignites by it; a flash burning under a tenth ([M0-D53]'s 0.04 %) does not ignite; the hold is
+  10 t.u. at τ_dyn 0.25 and 20 t.u. at τ_dyn 1; the snapshot round-trips the new history and one without it is refused · observe_run's
+  ending case re-read on the new hold (`held_t ≥ hold_t`, `hold_t` = max(10, 20 τ_dyn); its step cap raised if the black hole's hold
+  passes 10 t.u.) → Verify 1 · plants (classify): the fuel test removed (today's `ignites`); the hold left at 10 t.u.; the snapshot
+  without the new history → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py classify observe_run calibrate_bisect calibrate_order --task M0-D78` · Pass: GO with the new
+  cases · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm classify --task M0-D78` · Pass: GO — each plant NO-GO · Fail: a plant
+  stays GO. A changed observe_run or calibrate_bisect check owes its red-arm — 794 s (M0-D76) and 1,158 s (M0-D77) on laserax-ai,
+  over the 10-minute line: the lead's, handed `[NOT RUN — for you]`
+- Done when: Verify 1–2 GO on laserax-ai; the lead's lines handed (Carried flags); the lead's m_ign_sb re-check and m_up_sb resumed on
+  this block's binary place life 03 (12,538.414) on a side, or stop on a reason other than a burnt core read as a failed star — the
+  lead's run, read at M0-V9
+- Adversarial: a centre that wanders onto painted helium read as burnt — the L_H > 0 guard and its case; a hold that recedes while an
+  expanding remnant's τ_dyn grows faster than 1/20 per t.u. — `--max-steps` bounds it (exit 6, reported, never guessed), and a remnant
+  at fixed τ_dyn ends exactly at max(10, 20 τ_dyn); a record of the old rules replayed by `--resume` on the wrong side — life 01
+  (ignited by the window at step 673, a white_dwarf ending: light) and life 02 (its `core_collapse` event: heavy) are placed the same by
+  both rules, and life 03 is moved aside by the lead's line; a burnt core split off under a new id starts a fresh history (today's
+  behaviour, out of this block — named in the handoff if seen).
+- Handoff: laserax-ai, model=claude-opus-5-5 level=high (rung_record now; matches the heading). DONE: ignition also by burnt fuel (X_H,c ≤ 0.9 × the most the centre showed, ≥ 10⁻³, L_H > 0; the ignition detail's by light|fuel) and every remnant's ending at max(10 t.u., 20 τ_dyn) (stages::ending_hold, read by watch.rs; the ending detail's hold_t); History.x_h_max in the observers' snapshot, now version 2 (OBSERVERS_VERSION): a version-1 snapshot is exit 4 under --continue and 'checkpoint not used' under --resume. Contract §0.5 [M0-D78] + Superseded; running.md, readouts.md, testing.md. Detail: tasks/M0-D78.md.
+  Verify 1 GO (72/0: classify 38, observe_run 6 — the black hole's hold 10.000, held 10.033 —, calibrate_bisect 16 with a 'version 1' reason, calibrate_order 12); Verify 2 GO (classify 5/5 plants red, 3 new; calibrate_order 2/2 red, calibrate-first-white-dwarf's context refreshed). Claim (--changed, 72.8 s): 1027 passed, 9 failed, 42/49 GO — the O13 reds of M0-D75–D77, same scopes and counts (twin 2, timing 1, scene 1, dump 2, boot 1, calibration 1, readouts 1: exit 6 / preset_mass_sb missing, assets/calibration.json holds items 1–3), not fixed here. The lead's red-arms: observe_run GO (3/3 red, 10:13); calibrate_bisect GO 11/11 red on the lead's re-run (1,024 s) — after a NO-GO at 10:27 (calibrate-checkpoint-step-unchecked's context held my version check: regenerated; continue-until-unchecked timed out under load 90.8). Every red-arm owed is GO.
+  Lives 01 (ignited by the window at step 673, a white_dwarf ending) and 02 (core_collapse event) keep their sides under the new rules, so the --resume line stands; life 03's record must move aside (the lead's mv). Not seen: a burnt core split off under a new id (fresh history) — out of scope.
+  Deviations: the snapshot version bump (1 → 2) is mine, so an old checkpoint is refused at the door rather than failing its life; ENDING_HOLD (watch.rs) removed for stages::ending_hold.
+  Next: the lead's lines (rebuild; m_ign_sb re-check; life 03 moved aside; m_up_sb --resume; m_bh_sb; preset_mass_sb), then M0-V9 session 5.
+
+## M0-R5 · Neutronization research — the a_n_fe at which a collapsing iron core finishes as a neutron star within a few τ_dyn, measured on m_bh_sb's stalled low-end life, and what else the value moves · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D78)
+- Status: DONE (2026-10-21 14:15, started 12:55)
+- Ask (verbatim): « file the necessary d tasks after D78 and well tackle this issue, tell the tasks to give me the command lines to re-run
+  the calibration when theyre done » and « if we need to do a R task before the D task, write it too » — the lead, 2026-10-21, at M0-D78;
+  the fork answered in the same session: «Faster neutronization (Recommended)» (raise a_n_fe so a collapsing iron core finishes turning
+  into neutrons within a few τ_dyn; the D measures the value first).
+- Carried flags: none
+- Blocks: M0-D79 (it applies the value this block's lead answer picks), then the lead's whole calibration, then M0-V9
+- Rating: `(usual)` — research whose answer is a tuning value with measured side effects; as M0-R4
+- Read: this file (rules + this task + the M0-D79 block) + milestones/m0/m0_contrat.md §1.6.1 (the rate law, the gate g(Σ)), §1.6.2 (the
+  N_Fe row), §1.9.3 (neutron_star, core_collapse, white_dwarf rows), §1.10.4's stage clock (core_collapse «3 ms», supernova «10 s»), §2.5.1
+  (A per record > 0; Σ_N ≥ 2 (K₂ₑ/K₁ₑ)²), §2.6 (sigma_bh, sinks), §2.11 items 4–6 with §0.5 [M0-D75], [M0-D78] + milestones/m0/tasks/M0-D78.md
+  + docs/agent/testing.md (the scopes whose scenes reach iron)
+- Symptom (measured by M0-D78's session, laserax-ai, RTX 5090, 2026-10-21 12:47–12:51 EDT; the lead's `calibrate --only m_bh_sb …
+  --progress-every 1000 --checkpoint-every 3000` on M0-D78's binary, stopped by the lead): m_bh_sb's first life, the bracket's low end
+  4,572.394 (1.25 × m_up_sb 3,657.915) — ignition `by` fuel at step 257 (t 3.95), `core_collapse` event step 1,457 (t 11.28), `supernova`
+  step 1,473 (t 11.36); shown white_dwarf from step 1,009, core_collapse from step 2,001 and still at step 60,001 (t 278.0, wall 5,214 s).
+  The remnant, steps 57,009 → 60,001 (t 263.70 → 278.03): M 2,547 → 2,534 (under m_ch_sb 3,216.4), R 2.0, τ_dyn 0.056, Σ_c 405.5 → 403.2
+  (not rising), T_c 0.05 (the floor), d_c 0.99996, X_Fe,c 0.989, X_n,c 0.01081 → 0.01116 (2.4 × 10⁻⁵ per t.u.), L_N −654 → −620, v_r −2.94
+  (the neutron_star row asks |v_r| ≤ 0.05 √(GM/R) = 1.78), sinks 0, M_unb 0.045. At that rate X_n,c 0.5 is ~20,000 t.u., ~4.2 M steps,
+  ~86 h — past `--max-steps` 2,000,000 (~40 h), then exit 6 (`side_bh` places only neutron_star or black_hole). By §1.6.1, ω = a_n_fe ·
+  X_Fe · (Y_e Σ/Σ_N − 1) = 10⁻³ × 0.989 × (0.464 × 405/160 − 1) ≈ 1.7 × 10⁻⁴ per t.u. at the centre — 7 × the measured rise (unexplained).
+- Evidence on disk (laserax-ai, kept by the lead's stop — copy it before anything resumes that invocation):
+  `build/calibrate_runs/2026-10-21T15-23-36Z/m_bh_sb-01/checkpoint/s_60001.bin` + `s_60001.observers.json` (M0-D78's snapshot version 2),
+  its `progress.json`; `assets/calibration.json` holds items 1–3 and m_up_sb 3,657.915 (m_ign_sb 2,515.741, unchanged by M0-D78)
+- Deliver: milestones/m0/reports/neutronization.md (new), to §4 Rule 7, ONE artifact kind (research); every probe in a scratch copy
+  (`tools/pb/scratch_copy.sh`; its path in the handoff; a changed a_n_fe through the copy's own assets/physics.json or a scene's `overrides`
+  — nothing lands in the tree) → Verify 1 ·
+  `## Evidence`: dated sources (accessed) on core-collapse neutronization timescales (electron capture during collapse vs the free-fall time)
+  and how simplified or grid codes parameterise it (a deleptonisation recipe, a Y_e(ρ) fit) ·
+  `## Problem`: the stall **separated by measurement** — at least: why the measured X_n,c rise is ~7 × under §1.6.1's centre rate (fresh iron
+  rained in at v_r −2.9, the burn sub-cycle, the block the observer reads); whether Σ_c can rise past Σ_N's regime at all for a remnant under
+  m_ch_sb; what holds v_r at −2.9 (a halo falling onto a 2-cell core, or the core itself) ·
+  `## Options`: candidate a_n_fe values (at least 10⁻², 10⁻¹, 1 and the value where the neutronization time 1/(a_n_fe · g) at the collapse's
+  Σ is ~τ_dyn), each measured on: (M1) the stalled remnant continued from `s_60001` (`headless --load-dump … --continue` refuses a changed
+  constant? — say what it does; else `--load-dump` without `--continue`): X_n,c, Σ_c, v_r, stage over ≥ 50 t.u. — does it show and hold
+  `neutron_star` (or form a sink, `black_hole`)? (M2) the same life from step 0 (scene `calibrate:m_bh_sb:4572.394`, `--until ending`, a
+  `--max-steps` the probe names): its ending and wall time; (M3) the bracket's high end, 20 M₀ (`20 × UNIT_MASS`): black_hole or not, within
+  what wall time (a bracket whose ends agree is refused after two lives); (M4) what else the value moves — the Sun-like life (no iron: none
+  expected, shown), m_up_sb's side (the `core_collapse` event fires on L_N < 0, any a_n_fe > 0: its life 02's step 3,665 unchanged?), the
+  scopes whose scenes neutronize (name them from testing.md and run them on the copy) · if no value makes a neutron star (v_r never settles,
+  Σ never rises), say so: the option then is the neutron_star row's or m_bh_sb's side rule, not a constant — the lead's call ·
+  `## Recommendation`: one value, why, what would falsify it; the **exact** §0.5 line for the contract (§2.5.1's A row or §1.6.2's N_Fe row,
+  the constant's new value, the measurement) and the M0-D79 `Deliver:` / `Verify:` rewritten to it ·
+  `## UNVERIFIED` → Verify 1 ·
+  then ask the lead (PLAYBOOK §12, options (a)/(b), the recommendation first, the measured wall times in the options); the answer recorded
+  verbatim in the report and in M0-D79's block (its `Ask` line), M0-D79's `Deliver:`/`Verify:` re-scoped to it, nothing wider → Verify 2
+- Verify: 1. the report's sections, sources and measurements, from the repo root
+  ```bash
+  python3 -c "import os,re,sys;p='milestones/m0/reports/neutronization.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Evidence','## Problem','## Options','## Recommendation','## UNVERIFIED');miss=[s for s in need if not re.search(r'(?m)^'+re.escape(s)+r'\b',t)];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));m=len(set(re.findall(r'(?m)^\**M(\d+)\b',t)));ok=not miss and n>=4 and m>=4;print(f'sections missing={miss} sources={n} measurements={m}');print('=== GO ===' if ok else '=== NO-GO: report incomplete ===');sys.exit(0 if ok else 1)"
+  ```
+  Pass: GO — the five sections as heading lines, ≥ 4 sources with `(accessed YYYY-MM-DD)` and ≥ 4 measurements, each a line starting
+  `M<n>` (bold allowed). Fail: NO-GO — no report, a missing section, fewer sources or measurements ·
+  2. `python3 tools/pb/verify.py plan_lint --task M0-R5` · Pass: GO — the plan lints clean with M0-D79 re-scoped and the lead's answer in it ·
+  Fail: NO-GO, or the answer not recorded
+- Adversarial: a value chosen because it makes the bracket's ends differ — the recommendation shows the low end's neutron star *holds*
+  (|v_r| ≤ 0.05 √(GM/R), X_n,c ≥ 0.5 for its max(10 t.u., 20 τ_dyn)) and the high end's black hole is a sink formed by the physics, and names
+  what a wrong a_n_fe would break; a rate so fast that every collapsing core skips the neutron star for a sink makes m_bh_sb's low end Heavy
+  (the same refusal from the other side) — measured, not assumed; a probe on the RTX 5090 shared with another job states the load
+- Handoff: DONE: reports/neutronization.md (Verify 1 GO: 5 sections, 6 sources, M1–M4) and M0-D79 re-scoped to the lead's answer. Finding: no a_n_fe makes the shipped neutron_star row hold — N_Fe's gate stops a cell at Y_e = Σ_N/Σ, capping an iron centre at X_n 0.41–0.46 (a ≥ 10), and the 2-cell remnant's grid flow holds |v_r| at 0.05–0.49 √(GM/R) (M0-D71); the stall's «7 ×» is the one gated cell's neutrons mixed through the 2,534 core. M1 from s_60001 (570 s windows, the 5090 shared at ~95 % by two other projects): 10⁻² still stalled, 10⁻¹ re-expands into a white dwarf, 1 reaches Y_e,c 0.35 in 6 t.u., 10 and 100 within 0.5 t.u.; Σ_N 80 lifts X_n,c to 0.72, |v_r| still fails. The lead (verbatim): Q1 «Rate + NS row (Recommended)» (a_n_fe 100; neutron_star on Y_e,c ≤ 0.35, d_c ≥ 0.5, no sink, after supernova), Q2 «In D79 + calibration (Recommended)» — M2 (cut at step 1,601, its trail the lead's to the supernova) and M3 NOT RUN, the lead's lives. M4 on the scratch copy: registry, rates and neutrino (N_Fe's 1 t.u. window, red at any a ≥ 1) move with the value — D79's Deliver names each; calibration's red is O13. Not filed, why in tasks/M0-R5.md: the 10⁻¹ re-expansion's cause (my reading: the electrons' cold energy turned to heat), --continue not checking physics_hash (by [M0-D76]). Scratch: /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/6d5df45f-6ff7-44f5-a454-ddcb53e17161/scratchpad/ (r5/, m1/, m2/, sr-a100); the tree's s_60001 untouched. Claim: plan_lint [ALREADY RUN — PASS (GO) on linux-pc]; --changed [ALREADY RUN — FAIL (O13 only: 87/9 — twin 2, timing, scene, dump 2, boot, calibration, readouts, each exit 6 / preset_mass_sb missing) on linux-pc]. model=claude-opus-5-5 level=high. Next: M0-D79 in a fresh session, then the lead's calibration (its lines in D79's handoff), then M0-V9 session 5.
+
+## M0-D79 · m_bh_sb's low end never ends: its supernova leaves a cold iron core (2,534, under m_ch_sb) that neutronizes at 2.4 × 10⁻⁵ per t.u. and reads `core_collapse` for ~20,000 t.u. — a_n_fe 10⁻³ makes the collapse thousands of τ_dyn long · **BUILD** · Opus 5.5, high · switch · (AFTER M0-R5)
+- Status: DONE (2026-10-21 14:52)
+- Ask (verbatim): the lead, 2026-10-21, at M0-D78: «Faster neutronization (Recommended)» — raise a_n_fe so a collapsing iron core
+  finishes turning into neutrons within a few τ_dyn; « tell the tasks to give me the command lines to re-run the calibration when theyre
+  done ». The value: M0-R5's recommendation as the lead answers it (recorded here by M0-R5). The lead, 2026-10-21, at M0-R5 (one
+  question call, verbatim): Q1 «Rate + NS row (Recommended)» — a_n_fe 100 and the neutron_star row on the neutronized degenerate centre
+  (Y_e,c ≤ 0.35, d_c ≥ 0.5, no sink, after supernova, the |v_r| term dropped until M0-D71); Q2 «In D79 + calibration (Recommended)» — the
+  long probes (m_bh_sb's low end from step 0, its 20 M₀ high end) are this block's and the lead's calibration's lives, not M0-R5's.
+- Carried flags: [M0-D78, 2026-10-21] End your handoff with the lead's lines to re-run the calibration, each tagged [NOT RUN — for you],
+  on laserax-ai (bash), from the repo root, one at a time: rebuild (`~/.cargo/bin/cargo build --release --locked -p sr-app`); then the
+  whole calibration item by item, each `--adapter "RTX 5090" --out assets/calibration.json --progress-every 1000 --checkpoint-every 3000`
+  — `--only m_ch_sb,m_tov_sb` (CPU, seconds), `--only m_ign_sb`, `--only m_up_sb`, `--only m_bh_sb`, `--only preset_mass_sb` — a changed
+  constant moves the physics_hash, so every item is measured again (§2.11, G-CAL) and no earlier invocation is `--resume`d unless your
+  build shows its records are this physics' (say which, and why); a stop → the same line with `--resume` and that item's newest stamp.
+  Name what the claim run reads red (O13: until the calibration is whole, the preset scopes are red) — never fix it here.
+- Blocks: the lead's calibration (m_bh_sb exit 6 after ~40 h at its low end), then M0-V9
+- Caused by: M0-TC (a_n_fe 10⁻³ in §2.5.1's «A per record … others 1 × 10⁻³», «> 0», untuned for N_Fe) — measured by M0-D78's session
+- Rating: `(usual)` — a tuning constant whose value M0-R5 measures; the blast radius (every scope that reaches iron, the whole
+  calibration) is named there
+- Files: assets/physics.json (`a_n_fe`), crates/sr-physics/src/observe/stages.rs (the neutron_star row, its place, its cases),
+  crates/sr-physics/src/registry.rs (the verbatim pin), crates/sr-physics/src/rates.rs (N_Fe's hand value),
+  crates/sr-engine/tests/gpu/neutrino.rs (`gpu_n_fe_absorbs_and_conserves_mass`'s window), tests/plants/ (one new plant),
+  milestones/m0/m0_contrat.md (§0.5 line), docs/agent/readouts.md, docs/agent/testing.md — opened by M0-R5's session, not changed:
+  stages.rs, registry.rs, rates.rs, neutrino.rs (M0-R5's M4 measured them on a scratch copy); read
+  `build/calibrate_runs/2026-10-21T15-23-36Z/m_bh_sb-01/` (progress.json, checkpoint/s_60001.observers.json)
+- Read: this file (rules + this task + the M0-R5 block) + milestones/m0/reports/neutronization.md (whole) + milestones/m0/m0_contrat.md
+  §1.6.1–§1.6.2, §2.5.1, §2.11 + docs/agent/testing.md
+- Symptom: M0-R5's block (measured 2026-10-21 on laserax-ai, RTX 5090: the low-end life 4,572.394 at step 60,001, t 278.0, still
+  `core_collapse`, X_n,c 0.011, Σ_c 403, v_r −2.93)
+- Repro: `build/target/release/sandbox-reactions calibrate --only m_bh_sb --adapter "RTX 5090" --out <scratch>/cal.json --progress-every
+  1000` — its first life shows `core_collapse` from step 2,001 and never leaves it (~13.5 steps/s on the 5090; read progress.json's
+  `stage` and the checkpoint's X_n,c)
+- Deliver: (set by M0-R5 from the lead's answer, 2026-10-21) a_n_fe = 100 in assets/physics.json; §1.9.3's neutron_star row in
+  stages.rs — Y_e,c ≤ 0.35 (Y_e,c = Σ_k X_k,c Z_k/A_k of the centre's X), d_c ≥ 0.5, no sink, no |v_r| term, listed after supernova and
+  before core_collapse (`ROWS` and its contract-order check) — with classify's row cases (either side of Y_e,c 0.35 and of d_c 0.5, a
+  white dwarf's Y_e 0.5 never matching, a sink before it, supernova before it) and one plant (the row back to X_n,c ≥ 0.5 with |v_r|); the
+  tests the value moves: registry's `physics_initial_values_verbatim` (a_n_fe 100), rates' `omega_of_each_record_by_hand` (N_Fe's hand
+  value at A = 100), neutrino's `gpu_n_fe_absorbs_and_conserves_mass` (its window cut so ≤ 10 % of the iron converts — at any a ≥ 1 the
+  1 t.u. window reaches the floor: "E gained −241,059, booked −282,673", M0-R5 M4); the §0.5 line verbatim from
+  reports/neutronization.md § Recommendation, mirrored in the plan's Superseded; readouts.md (the row) and testing.md (classify, rates,
+  registry, neutrino rows); `plan.py flag M0-D71` (restore the |v_r| term once P4 is well-balanced) → Verify 1–2; the lead's calibration
+  lines (Carried flags) in the handoff
+- Verify: 1. `python3 tools/pb/verify.py registry rates neutrino classify burn_cell latch --task M0-D79` · Pass: GO, 6/6 scopes ·
+  Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm classify --task M0-D79` and `python3 tools/pb/verify.py --redarm neutrino --task
+  M0-D79` · Pass: GO — each plant red, the new one included · Fail: a plant green; one over the 10-minute line is the lead's, handed
+  `[NOT RUN — for you]`
+- Done when: Verify 1–2 GO on laserax-ai; the lead's lines handed; the lead's m_bh_sb places its low end (neutron_star) and its high end
+  (black_hole) — the lead's run, read at M0-V9 (M0-R5's M2 and M3, NOT RUN there by the lead's answer)
+- Adversarial: a value that passes the low end by skipping to a sink (black_hole at 1.25 m_up — the bracket refused from the other side;
+  M0-R5's M1 at 100 kept Σ_c ≤ 742 against Σ_BH 6,000); a record of the old constant replayed by `--resume` (its physics_hash differs: run
+  fresh unless shown equal); a scope green only because it never reaches iron; the new row matching a white dwarf (Y_e,c ≤ 0.35 needs
+  neutron matter: iron alone is 0.464) or swallowing the massive preset's `supernova` (the row sits after supernova)
+- Handoff: laserax-ai, model=claude-opus-5-5 level=high (rung_record now; matches the heading). DONE: a_n_fe 100 (physics_hash 556e… → 8ca855fb…); neutron_star row = Y_e,c ≤ 0.35 (registry::electron_fraction, §1.5's Z/A) ∧ d_c ≥ 0.5 ∧ no sink, no |v_r|, in ROWS after supernova and before core_collapse; classify 41 cases + plant neutron-star-old-row; registry pin, rates' N_Fe hand value, neutrino's conversion window 5 × 10⁻⁴ t.u.; contract §0.5 [M0-D79] verbatim + Superseded; readouts.md, testing.md; flag → M0-D71 (it fired the rating refresh: M0-TM10 filed after this block). Deviation: the twin's neutrino mirror case cut too (at 1 t.u. its T went to −2,343 unseen) and both cases grade T > 0. Verify 1 [ALREADY RUN — PASS (GO 6/6, 117 passed) on laserax-ai]; Verify 2 [ALREADY RUN — PASS (classify 6/6 plants red, neutrino 3/3) on laserax-ai]; claim --changed [ALREADY RUN — FAIL (O13 only: 1006/12 — sun_burn 3, twin 2, dump 2, timing, scene, boot, calibration, readouts, each 'preset_mass_sb: missing') on laserax-ai]. Quick check [ALREADY RUN — NOT PROVEN (cut at 580 s, 5090 shared 93 %) on laserax-ai]: s_60001 continued on D79's binary shows neutron_star raw+shown from step 60,065 to 60,800 (3.7 of the 10 t.u. hold). The lead's calibration lines, fresh (no --resume of an earlier stamp: the hash moved): tasks/M0-D79.md § The lead's calibration. Done-when's last clause (m_bh_sb's two ends) is the lead's run, read at M0-V9. Next: M0-TM10, the lead's calibration, then M0-V9 session 5.
+
+## M0-TM10 · Rating pass — five carried flags on open BUILD blocks since 2026-10-19 · **PLAN** · Opus 5.5, max · switch · (AFTER M0-D79)
+- Status: DONE (2026-10-22 07:32, started 07:24)
+- Read: this file (rules + this task) + PLAYBOOK.md §0 (the ladder, the rubric) and §B.3 (the probe) + the agent's model pages the ladder cites + the record (`rung_record.py report`, the last phase-closing V's table)
+- Deliver: the ladder re-read on the day — the probe and the model pages: a model retired, renamed or added, a price or a level changed → the `Models:` line rewritten and dated, the lead's answer first where a rung they run changes (§12) · every open block's rating re-derived by §0's rubric from its heading, `Sizing:`, `Deliver:`, `Verify:` and `Carried flags:` and the record — its rating segment rewritten, nothing else in the block · the register's `Model ratings: <YYYY-MM-DD> by M0-TM10` line · in the handoff, the ratings changed, counted by rung. The flags since M0-TM9's line (five by `plan.py flag`'s count, 2026-10-21, filed by M0-D79 when its flag into M0-D71 reached the refresh): M0-D67's on M0-D68 · M0-D78's on M0-D79 · M0-V9's on M0-T72 · M0-D79's on M0-D71 · the fifth as the tool counts it (M0-D79's session found four by grep — name it from the lint)
+- Pass: `plan.py lint` GO; every open block on a rung of the ladder, each above the cheapest rung that fits named in the task file with its rule; the diff touches rating segments, the `Models:` line and the register's line only. Fail: any other byte changed; a BUILD or MOVE block above the cheapest rung that fits with none of §0's rules (1)–(4) named; a CHECK or PLAN block below `(gate)`.
+- Handoff: Ladder re-read 2026-10-22: the probe (Claude Code 2.1.306; the line cited 2.1.301) and the claude-api skill from 2.1.306's bundle (cached 2026-10-06; models.md sha256 c1af1f09…5675161b, unchanged since M0-TM6): all four models Active, prices and levels unchanged → `Models:` re-dated with the bundle read, rungs and marks byte-identical, no question owed. Record: M0-V8's table (still the last phase-closing V: V19 a triage, V9 BLOCKED) and today's report (linux-pc, 203 DONE) move no class (BUILD on Sonnet 5.5, high $1.97 per DONE block over 72, 45/69 first try, against (usual)'s $8.19, 32/61; BUILD·E on Haiku 5.5, high $0.82 over 10, below; MOVE n < 10); no escalation trail open. Ratings: 0 changed of 71 — Opus 5.5, max 13 (0) · Opus 5.5, high 7 (0: R6, D65, D68, D69, D70, D71 new, each by (3)'s list as filed — (c) an open design, (b) an unmeasured cause, (e) numeric semantics — and T124) · Sonnet 5.5, high 47 (0; D63 new: §2.11/§2.12.2 give `git` no format, nothing FROZEN) · Haiku 5.5, high 4 (0, E); the five flags (D68 [D67], D79 [D78] — DONE since, so the lint reads 4, T72 [V9], D71 [D79], the fifth T106 [D64]) and four 2026-10-19 flags appended after M0-TM9 (T95, T106 ×2, T109) name built mechanisms, measurements or ruled specs, no reason from the list. Register `Model ratings: 2026-10-22 by M0-TM10` (refresh 4/5 → 0/5). Claim `verify.py --changed` FAIL on linux-pc, O13 only: plan_lint GO 639/0 (the one scope this block's paths reach); 727 passed / 12 failed in 8 scopes the anchor owed (`never`, not this block's paths), every one `calibration invalid: preset_mass_sb: missing` — M0-V9's O13, the same 12 as M0-D79's claim: the binary embeds the partial assets/calibration.json and refuses every headless run until m_bh_sb and preset_mass_sb land (M0-R6: any headless probe meets it while the copy's file is partial — O13: complete or moved aside); load 128 → 97, the 5090 shared by another project's jobs. Not acted on (bounded diff): M0-T106's G-CONS (energy now 6.2e-5 |W| per τ_dyn on D64's window; momentum 3e-3–3.9e-3 of Σm|u| against 1e-6 stands); M0-D71 holds two artifact kinds since D79's flag (split if over a task); M0-R6's ruling may rewrite later blocks with no flag to count; header 663/600 inside the margin, no TC; the register's Next task still names M0-TM10 first. Detail: tasks/M0-TM10.md. Ran on model=claude-opus-5-5 level=max (rung_record now = the heading's rung). Next: M0-R6
+
+## M0-D80 · calibrate's progress line goes one step at a time while a life is slow (a step at P5's ceiling, core collapse) and carries the star's numbers — `--progress-every 100` is silent for minutes where the lead wants to watch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TM10)
+- Status: TODO
+- Ask (verbatim): the lead, 2026-10-22, in M0-R6's session, watching the 20 M₀ probe stall at step 1,400:
+  - «wait ok... I want you to do something. Instead of showing me 100 steps I want it to be dynamic. If the simulation goes well it moves
+    to 100 when it gets slow I want to see each step. Can we do that? Like just now the thing froze at step 1400 and I could see the detail
+    of what was happening, id like for it to be one step at a time when the steps get slower.»
+  - «lets make that change in the main calibration script too»
+  - The question call, verbatim: Q1 (what switches to one step) «The physics (Recommended)» — one-step frames while the last frame had
+    a step at P5's ceiling or core collapse is on, never wall time, so a life reads the same whatever the GPU's load; Q2 «File a D, build
+    next (Recommended)».
+  - «and id like to have more info, like temperature density or something each time it writes a line in the terminal. Add more info, I
+    want to see the relevant metrics to see how it goes. Write that in the D too»
+  - «and write the D before R6»
+- Carried flags: none
+- Blocks: nothing. M0-R6's probes run on its scratch build, which already does this (the reference below).
+- Caused by: unknown — not a repair. It is the lead's request on M0-D75's `--progress-every` (a fixed tick every N steps).
+- Rating: `(usual)` — by (3)(e), numeric semantics: frame length moves what a life's observers sample (a stage shows after 3 frames)
+  and what P5 learns per submission, so a calibrated life's trail and ending step can move.
+- Files: crates/sr-engine/src/headless.rs (the frame loop under a `Progress` hook), crates/sr-engine/src/calibrate.rs (the progress line,
+  progress.json), crates/sr-engine/src/watch.rs (the heaviest object's numbers), one test file (the calibrate life case or a new one),
+  tests/plants/ (one plant), tools/pb/verify.json, milestones/m0/m0_contrat.md (§0.5 line), docs/agent/running.md (§ Calibrating),
+  docs/agent/testing.md. Reference implementation from M0-R6's scratch build: `milestones/m0/logs/M0-R6.d80_reference.diff`. It is a
+  probe: drop its env toggles (`SR_PROBE_*`), its static `PROBE_DETAIL` and the dumps/overrides/edge hooks, and keep the mechanism only.
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.3 (the Calibrate line), §0.5 [M0-D75] (`--progress-every`),
+  [M0-D76], [M0-D77] (checkpoints: «no chunk is shortened: nothing the life computes moves»; «a continued life's record is the
+  unbroken life's»), [M0-D74] (heat_unconverged counted), §1.9.2–§1.9.3 + docs/agent/running.md § Calibrating + docs/agent/testing.md
+  (calibrate_bisect, calibrate_status, observe_run, dump) + milestones/m0/logs/M0-R6.d80_reference.diff
+- Symptom: `calibrate … --progress-every 100` prints one line every 100 steps. Through core collapse a step can take seconds (P5 at its
+  ceiling: 5,257 such steps in the 20 M₀ life, `build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-02/summary.json`), so the terminal is
+  silent for minutes. The lead saw the 20 M₀ probe «froze at step 1400». The line carries only step, sim_time, heat_unconverged and
+  the shown stage.
+- Deliver:
+  - **Adaptive frames, `calibrate` lives only** (under a `Progress` hook). Plain `headless` runs keep their frames byte for byte.
+    - The next frame is one step when the frame just run had a step at P5's ceiling, or when the heaviest object's raw stage is
+      core_collapse. Each one-step frame ticks the progress line.
+    - Otherwise frames are as today, ticking every `--progress-every` N steps.
+    - The trigger reads the state, never wall time.
+  - **Resume.** A continued life frames as the unbroken life would have. The trigger reads only what the checkpoint restores, or the
+    observers' snapshot carries it (a key; unknown keys are never refused).
+  - **The line's numbers.** Every progress line, after today's fields, carries:
+    - the frame: `frame=<steps>`, `dt=<Δt>`, `s_per_step=<wall>` (display only), `p5_ceiling=<steps in the frame>`;
+    - the world: `escaped=<ledger mass>`, `objects=<n>`;
+    - the heaviest object: M, R, τ_dyn, Σ_c, T_c, d_c, Y_e,c (`registry::electron_fraction`), X_Fe,c, X_n,c, v_r and v_r/√(GM/R),
+      M_unb, L, L_nuc, L_N, L_ν, sinks and sink mass, and the raw stage beside the shown one.
+    - progress.json's record gains the same fields; `tools/calibrate_status.py` still reads it (calibrate_status green).
+  - **Contract.** The §0.5 line [M0-D80] — §3.3's `--progress-every N` («a line every N steps») and [M0-D77]'s «no chunk is shortened»
+    read for calibrate lives — and its Superseded mirror.
+  - **Docs.** running.md § Calibrating (what a one-step stretch looks like, each field named with its unit); testing.md rows.
+  - **Cases.** On a short scene that reaches P5's ceiling or a core_collapse stage:
+    - one-step frames engage and disengage on the trigger;
+    - the same life twice gives the same events and trail;
+    - a life cut at a checkpoint inside a one-step stretch and continued equals the unbroken one (summary's events and stages);
+    - the line holds every field.
+  - **One plant:** the trigger reading wall time, or one-step frames never engaging. → Verify 1–2.
+  - **In the handoff**, the lead's lines, tagged `[NOT RUN — for you]`:
+    - the rebuild;
+    - re-measuring the stored items whose lives now frame differently (m_ign_sb, m_up_sb; m_bh_sb and preset_mass_sb follow M0-R6's
+      D), unless a run shows their records unchanged — say which, and why.
+- Verify: 1. `python3 tools/pb/verify.py calibrate_bisect calibrate_status observe_run dump --task M0-D80` (plus the scope that holds
+  the new cases if it is another) · Pass: GO, every scope · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm <the scope holding
+  the new cases> --task M0-D80` · Pass: GO, every plant red, the new one included · Fail: a plant green; a run over the 10-minute line
+  is the lead's, handed `[NOT RUN — for you]`
+- Done when: Verify 1–2 GO on laserax-ai; the lead watches a calibrate life step one at a time through its core collapse, with the
+  numbers on each line (the lead's run).
+- Adversarial:
+  - a trigger on wall time (the same life reads differently under another job's load — the lead ruled it out);
+  - a continued life that frames differently from the unbroken one ([M0-D77]);
+  - plain `headless` or the game's frames changed;
+  - one-step frames left on after the stretch ends, making a whole life slow;
+  - a line that floods the log of a fast life (only one-step frames tick off the N-step grid);
+  - progress.json fields that break `calibrate_status.py`.
+- Handoff: <placeholder>
+
+## M0-R6 · Black-hole research — every collapse keeps ~iron's collapse mass and blows the rest off (2,205 left at 1.25 m_up, 2,633 at 20 M₀), so no remnant passes m_tov_sb 4,853 and m_bh_sb has no threshold: what lets a heavy star keep more · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TM10)
+- Status: IN PROGRESS (awaiting: the lead's probe runs P1–P7, tasks/M0-R6.md)
+- Ask (verbatim): the lead, 2026-10-22, after the overnight `calibrate --only m_bh_sb` on M0-D79's binary refused its bracket (one question call):
+  «Research block first (Recommended)» — measure why every collapse leaves ~iron's collapse mass and what in the sandbox would let a heavy
+  star keep more (fallback, a weaker explosion, f_dep), from the kept 20 M₀ record; the lead picks the fix, then a D builds it and the lead
+  re-runs m_bh_sb.
+- Carried flags: none
+- Blocks: the D that builds the lead's pick, then the lead's `calibrate --only m_bh_sb` and `--only preset_mass_sb` (which refuses without
+  m_bh_sb), then M0-V9
+- Rating: `(usual)` — research whose answer is a physics fork with measured side effects; as M0-R4 and M0-R5
+- Read: this file (rules + this task + the M0-R5 and M0-D79 blocks) + milestones/m0/reports/neutronization.md (whole) +
+  milestones/m0/tasks/M0-D79.md + milestones/m0/m0_contrat.md §1.6.4 (S2, the thermal bomb, and its failure rule), §1.9.3 with §0.5
+  [M0-D79], §2.3.2 (the cold ceilings), §2.5.3–§2.5.4 (neutrino cooling and heating, f_dep), §2.6 (sinks, sigma_bh), §2.10 (presets, their
+  radius cap), §2.11 items 4–6 + docs/agent/testing.md (the scopes whose scenes collapse)
+- Symptom (measured on laserax-ai, RTX 5090, the 5090 not shared, 2026-10-21 16:21 → 2026-10-22; the lead's `calibrate --only m_bh_sb
+  --adapter "RTX 5090" --out assets/calibration.json --progress-every 1000 --checkpoint-every 3000 --resume
+  build/calibrate_runs/2026-10-21T19-39-14Z` in tmux; log milestones/m0/logs/calibrate.m_bh_sb.log): the run exited 6 with «the bracket
+  4572.4..67020.6: its ends agree (4572.4 is Light, 67020.6 is Light)». **Life 01** (4,572.394 = 1.25 m_up_sb): supernova at step 1,473,
+  neutron_star from 3,457, ending neutron_star at step 5,681, t 30.8, **remnant 2,205.5**, 642 s. **Life 02** (20 M₀ = 67,020.643):
+  ignition by light at step 225, iron_core 593, core_collapse event 1,489 (t 9.78, M 66,488), supernova 2,097 (t 12.63, M 64,978), then a
+  shown trail of neutron_star 3,057 · supernova 3,649 · neutron_star 4,865 · he_shell 21,377 · neutron_star 21,489, ending neutron_star at step
+  27,249, t 114.67, held 25.7 t.u., **remnant 2,633.2** (two fragments of 241 and 538 apart), 5,980 s, heat_unconverged 5,257,
+  max_gas_speed 88.6. Each remnant sits near iron's continuum ceiling (25,733 Y_e³ = 2,576 at Y_e 26/56, reports/neutronization.md) and
+  under m_tov_sb 4,853.2 = ns_sigma_max_sb (assets/calibration.json, physics_hash 8ca855fb…), so no cell can reach sigma_bh 6,000 and no
+  sink forms at either end. My reading (M0-D79's session), unmeasured: the explosion always succeeds and nothing falls back, so the remnant
+  is the iron core's mass whatever the progenitor; in nature, black holes come from heavy stars whose explosion fails or whose ejecta fall
+  back.
+- Evidence on disk (laserax-ai): `build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-01/` and `m_bh_sb-02/` (summary.json, events.jsonl;
+  finished lives keep no dump and no checkpoint, so a probe re-runs the life); `build/calibrate_runs/2026-10-21T15-23-36Z/` (M0-R5's evidence,
+  the stalled 10⁻³ life's s_60001)
+- Deliver: milestones/m0/reports/black_hole.md (new), to §4 Rule 7, ONE artifact kind (research); every probe in a scratch copy
+  (`tools/pb/scratch_copy.sh`; its path in the handoff; a changed constant through the copy's assets or a scene's `overrides` — nothing
+  lands in the tree); a probe over the 10-minute line is the lead's, handed `[NOT RUN — for you]` with its exact line → Verify 1 ·
+  `## Evidence`: dated sources (accessed) on what decides a black hole against a neutron star — the remnant mass against the maximum
+  neutron-star mass, fallback, failed explosions, the compactness of the progenitor's core — and how simplified or grid codes decide it ·
+  `## Problem`: the remnant's mass **separated by measurement** — at least: where the mass goes between core_collapse and the ending at
+  20 M₀ (unbound mass, escaped through the leave edge, the fragments; the ledger's `escaped` and M_unb over the life); what unbinds it (the
+  bounce, neutrino heating at f_dep 0.05, the electrons' cold energy turned to heat that M0-R5 read but did not measure); whether the core
+  ever holds more than ~M_ch (2,576) before it explodes; whether a heavier or more compact preset (the radius cap at 150 cells from 14 M₀,
+  §2.10) changes that ·
+  `## Options`: at least (a) the same physics with a wider bracket — does any mass the screen holds leave > m_tov_sb (measured, not assumed);
+  (b) less heating: f_dep down to 0 (its bound) or the cold-energy heat routed to neutrinos; (c) fallback: what the sandbox lacks that keeps
+  bound ejecta from returning; (d) a contract change of what m_bh_sb places (e.g. the remnant's mass, not the sink) — each measured on the
+  20 M₀ life and on the light end 4,572.394 (both must still differ: the light end a neutron star, the heavy end a sink), with its wall time,
+  and what it moves elsewhere (the massive preset's supernova, S2's failure rule, m_up_sb) ·
+  `## Recommendation`: one option, why, what would falsify it; the **exact** §0.5 line, and the D block's `Deliver:` / `Verify:` written to it ·
+  `## UNVERIFIED` → Verify 1 ·
+  then ask the lead (PLAYBOOK §12, options (a)/(b), the recommendation first, the measured wall times in the options); the answer recorded
+  verbatim in the report and in the filed D's `Ask` line → Verify 2
+- Verify: 1. the report's sections, sources and measurements, from the repo root
+  ```bash
+  python3 -c "import os,re,sys;p='milestones/m0/reports/black_hole.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Evidence','## Problem','## Options','## Recommendation','## UNVERIFIED');miss=[s for s in need if not re.search(r'(?m)^'+re.escape(s)+r'\b',t)];n=len(re.findall(r'https?://\S+.*?\(accessed 20\d\d-\d\d-\d\d\)',t));m=len(set(re.findall(r'(?m)^\**M(\d+)\b',t)));ok=not miss and n>=4 and m>=4;print(f'sections missing={miss} sources={n} measurements={m}');print('=== GO ===' if ok else '=== NO-GO: report incomplete ===');sys.exit(0 if ok else 1)"
+  ```
+  Pass: GO — the five sections as heading lines, ≥ 4 sources with `(accessed YYYY-MM-DD)` and ≥ 4 measurements, each a line starting
+  `M<n>` (bold allowed). Fail: NO-GO — no report, a missing section, fewer sources or measurements ·
+  2. `python3 tools/pb/verify.py plan_lint --task M0-R6` · Pass: GO — the plan lints clean with the D filed before M0-V9 and the lead's
+  answer in it · Fail: NO-GO, or the answer not recorded
+- Adversarial: a fix that makes the heavy end a black hole by making every collapse one (the light end then ends black_hole: the same
+  refusal from the other side) — both ends measured; a sink formed by lowering sigma_bh under ns_sigma_max_sb (§2.6's order, K9: refused);
+  the S2 stand-in enabled without its failure rule's measurement (§1.6.4); a probe on a shared 5090 states its load; a record of another
+  physics_hash read as this one's
+- Handoff: <placeholder>
+
 ## M0-V9 · Validation — lot 9: calibration · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T71)
-- Status: IN PROGRESS (awaiting: the lead's answers to two questions — the ignition reading and the remnant's settle time — asked first by the next session, tasks/M0-V9.md § Session 4; m_up_sb exit 6 at life 03)
+- Status: BLOCKED-D78
 - Carried flags: [M0-V8, 2026-10-16] [M0-V8, 2026-10-16] owed on win-laptop (R15; M0-V8 ran on linux-pc only): lot 8's scopes on the RTX 4080 Laptop, each red-armed — summary (7; summary-skip-row), ledger (4; ledger-no-escaped), observe_run (5; until-never-met), jeans (5; no-pressure-flux), and on its CPU objects (15; one-object), classify (30; classify-order), preset_cloud (5; preset-uth-half), with timing's M0-D49 check — beside M0-V7's carried list (lot 7's sink, nu_heat, dump's sink round trip; lot 6's and lot 5's lists; M0-D28's desktop and start.bat checks): py -3.12 tools/pb/verify.py --all and --redarm --moved there cover them; else carried V to V, M0-V17 at the latest (reports/v8.md § Owed) · [M0-D50, 2026-10-18] Owed on laserax-ai: `sun_burn` (new, M0-D50) — Verify 1 (`python3 tools/pb/verify.py sun_burn --task <ID>`, GO 4/0/0 in 127.7 s on the RTX 4080 Laptop) and its red-arm (GO there, 726 s with 3 arms — over the 10-minute line on win-laptop, so a lead's run unless the 5090 is faster); M0-D50's Done when names linux-pc · [M0-D55, 2026-10-18] M0-D55 (2026-10-18): registry, rates, burn_cell, burn_order, neutrino, heat_stiff and timing changed and red-armed on win-laptop only — their linux-pc runs and red-arms owed (R15); heat_limiter red on every box until M0-D56 · [M0-T65, 2026-10-19] [M0-T65, 2026-10-19] assets/calibration.json is not embedded yet: after your calibrate write, set `EMBEDDED` in crates/sr-physics/src/calibration.rs to `Some(include_str!("../../../assets/calibration.json"))` — the `calibration` scope's last case then reads the file (it demands EMBEDDED, a parseable §2.11 file and its physics_hash = the assets'); until then it compares the assets' hash to PINNED_HASH in crates/sr-engine/tests/gpu/calibration.rs. Real-binary exit 6 stays NOT PROVEN until then. · [M0-T66b, 2026-10-19] owed on win-laptop (R15): M0-T66b changed sigma_bh 4,000 → 6,000 (physics hash 556e3959…) and re-pinned registry.rs, sink.rs, calibration.rs and stall-constants.patch; run calibrate_cold, registry, sink, calibration there; the sun_burn red-arm (stall-constants context line) is not run anywhere since the edit — git apply --check only · [M0-T70, 2026-10-19] calibrate items 5–6 are built and unrun on real lives: the lead's full run is `sandbox-reactions calibrate --adapter "RTX 5090" --out assets/calibration.json` (hours; defaults m_up 1–14 M₀, m_bh 1.25×m_up_sb–20 M₀, widen with --bracket; each preset life is a whole life, --max-steps raises the ceiling). Read first: max_gas_speed is the largest block rms speed √(2K/m) (a lower bound of the fastest cell, summary.json 'max_gas_speed'); t_eff_sun_sb needs the Sun-like life to reach X_H,c 0.35 (exit 6 if not — M0-D50's helium question); exit 6 on any preset not ending white_dwarf/neutron_star/black_hole at preset_mass_sb. After the write: set EMBEDDED in calibration.rs (T65's flag) and render_reserve_ms stays absent until the drawing lot's --measure-ui, so Calibration::parse refuses the file until then · [M0-D62, 2026-10-19] No EMBEDDED edit after calibrate: sr-physics's build.rs embeds assets/calibration.json at the next build, and a file without render_reserve_ms is a valid calibration until lot 13's --measure-ui (3.0 ms meanwhile) — re-run calibration and readouts on the lead's file · [M0-D64, 2026-10-20] M0-D64 (2026-10-20): blocked now on M0-D66 (four checks its gravity source moved), M0-D67 above it too; the fixed source changes every life the calibration measures — the Sun-like star contracts more on the main sequence (ΔW −11,870 vs −1,871 over steps 5,000–6,000, win-laptop) and its remnant contracts R₉₀ 6.0 → 3.3 in the step-450,000 window: build/v9-sun-life's dumps are the old source's · [M0-D67, 2026-10-20] M0-D67 closed with no code change (the lead, 2026-10-20: «Revert, file well-balanced D», «After M0-V9»): the late remnant's light stays ≈ half floor-fed — s_450000's window floor_added 1.478e5 of radiated 2.777e5, booked, G-CONS holds. Calibrate on today's source; the cure is M0-D71 (a well-balanced P4), after this block; tasks/M0-D67.md · [M0-D77, 2026-10-20] M0-D77 is built: the lead's next stop + --resume of a running item continues the cut life at its last checkpoint (--checkpoint-every M, default 10,000, apart from --progress-every N; running.md § Calibrating sizes M as the wall time you accept losing × the life's steps/s). Hand the lead each item's command line with both intervals sized to the life's pace; a life stopped before its first checkpoint has none and runs from step 0; the checkpoint is kept in <life>/checkpoint/ (~15 MB) until the life finishes.
 - Read: milestones/m0/m0_contrat.md §0.4, §1.6.4, §1.10, §2.6 (Σ_BH's bound), §2.11, §5.1 (G-CORE), §5.4
   (G-CAL, G-READ), §5.5, §6.4 + the handoffs of M0-T65–M0-T71 + docs/agent/running.md + the delivered
@@ -2746,7 +3098,7 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
   lead's run.
 - Adversarial: a calibration measured on the 5090 and used on the Quadro — the V names the adapter it was
   measured on and leans on G-REF's cross-adapter tolerance (§6.7), not on identity.
-- Handoff: IN PROGRESS (awaiting the lead's answers to two questions, asked FIRST by the next session — tasks/M0-V9.md § Session 4, verbatim with their options). Session 3 on linux-pc (laserax-ai), 2026-10-20 18:29 → 2026-10-21 07:06; model=claude-opus-5-5 level=max (rung_record now = the heading's rung, on each of the lead's prompts). The file: items 1–3 (m_ch_sb 3216.42, m_tov_sb = ns_sigma_max_sb 4853.17, m_ign_sb 2515.74; K9 holds so far). D75–D77 (filed here at the lead's word, DONE): m_up_sb stops at core collapse, --progress-every, --checkpoint-every, a cut life continues. The lead's m_up_sb run on that binary: life 01 replayed (Light); life 02 (14 M₀) Heavy at its core collapse, step 3,665 (D75's Done when met) after a white_dwarf transient of 8.5 t.u. (1.5 t.u. from a silent wrong side); life 03 (12,538.4) exit 6 — `failed_star` ending, no side. Probes in a scratch copy (logs/M0-V9-r5.log): P1 a 20 τ_dyn failed-star hold leaves m_ign_sb at 2515.741 (same 10 lives); P2 the 12,538 cloud flashed its whole central hydrogen at t ~3.6–5 (L_H 0 → 16 × L between two frames, X_H,c 0.73 → 0), never inside §0.5 [M0-D53]'s 0.5–2 L ignition window, so its cold burnt core reads «failed star — too light to ignite». The lead had to leave mid-question («wind down … start by asking me this question»; «same here»): Q1 the ignition reading, Q2 the remnant's settle time max(10 t.u., 20 τ_dyn) — then one D, the lead's m_ign re-check, life 03's record moved aside, m_up_sb resumed, m_bh_sb, preset_mass_sb (§ Session 4's steps). Observed, not filed (E1 (i)): O14, O15; O16 the shared red-arm cache's sr-physics embeds a deleted arm's calibration path (check the red-arm logs, § Session 4). Claim: plan_lint [ALREADY RUN — PASS (GO) on linux-pc]; --changed NOT RUN — this box's baseline is session 1's, my edits are the plan and tasks/M0-V9.md only. Next: M0-V9 session 4 on linux-pc — the two questions first.
+- Handoff: BLOCKED-D78: the lead's two answers are in, M0-D78 builds them, then the lead's calibration resumes. Session 4 on linux-pc (laserax-ai), 2026-10-21 08:26 → 08:45 EDT; model=claude-opus-5-5 level=max (rung_record now = the heading's rung). The lead (one question call, verbatim): Q1 «Burnt fuel also counts (Recommended)», Q2 «max(10 t.u., 20 τ_dyn) (Recommended)». Filed M0-D78 after M0-D77 ((usual) Opus 5.5, high — rule (3): a persisted format, M0-D76's observers' snapshot): ignition also once X_H,c ≤ 0.9 × the most X_H,c the centre has shown (≥ 10⁻³) with L_H > 0 that frame (the L_H guard is my reading of «burned», declared in the block), every remnant's hold max(10 t.u., 20 τ_dyn) at the frame's τ_dyn (P1's reading) as one sr-physics function; the lead's lines flagged into it (rebuild; the m_ign_sb re-check; life 03's record moved aside; m_up_sb --resume; m_bh_sb; preset_mass_sb — each --progress-every 1000 --checkpoint-every 3000); M0-T72 flagged (its 10 t.u. ending readout); rating refresh 4/5 flags. Declared deviation: E6 (six D's open → stop spawning) — filed anyway as for M0-D72–D77: the lead's answers, E1 (i) holds (a burnt core read «too light to ignite», exit 6), and it blocks the calibration. O16 checked, not filed: none of the 22 red-arm logs M0-D62–D77 has a compile error (E1 (i) fails). assets/calibration.json unchanged (items 1–3); life 03's record still in place; the lead's f39c6db is pushed. Claim: plan_lint [ALREADY RUN — PASS (GO) on linux-pc]; --changed NOT RUN — the box's baseline is session 1's (2026-10-19) and my edits are the plan, tasks/M0-V9.md and logs/M0-V9-r6.log only. Detail: tasks/M0-V9.md § Session 4. Next: M0-D78 in a fresh session, then the lead's lines from its handoff, then M0-V9 session 5 (the whole file read, Verify 1, Phase 11's close).
 
 ## M0-D63 · A run's `git` names the checkout's HEAD with no mark for uncommitted work: M0-V9's items 1–2, measured on lot 9's uncommitted code, wrote `measured.git` "e788da4", a commit that holds none of it · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V9)
 - Status: TODO
@@ -2882,6 +3234,7 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
 
 ## M0-D71 · P4 is not well-balanced at a hydrostatic core: HLL's diffusion lifts mass out of a degenerate remnant's well every step while spurious inflow momenta carry it back, so the gravity split pumps energy from a heatless centre and P8's floor pays half the late remnant's light (1.48 × 10⁵ of 2.78 × 10⁵ at step 450,000) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D70)
 - Status: TODO
+- Carried flags: [M0-D79, 2026-10-21] Restore the neutron_star row's |v_r| ≤ 0.05 √(GM/R) term once P4 is well-balanced at a remnant's core: M0-D79 dropped it (contract §0.5 [M0-D79]; a 2-cell remnant's grid flow held |v_r| at 0.05–0.49 √(GM/R), reports/neutronization.md M1) — add it back to ROWS' NeutronStar test in crates/sr-physics/src/observe/stages.rs with its classify cases (either side of 0.05), a §0.5 line naming [M0-D79]'s term returned, and the plant neutron-star-old-row re-cut if its context moves
 - Blocks: nothing today — booked, so G-CONS holds (1.0 × 10⁻⁵ |W| per τ_dyn); filed after M0-V9 at the lead's word (2026-10-20, M0-D67:
   «Revert, file well-balanced D (Recommended)», «After M0-V9 (Recommended)»): the calibration's late remnants shine ≈ half on floor energy
 - Caused by: M0-T34 and M0-T36 (P4's MUSCL-Hancock + HLL with gravity as a source term: no hydrostatic balance in the reconstruction),
@@ -2920,6 +3273,7 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
 
 ## M0-T72 · The predicted ending · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V9)
 - Status: TODO
+- Carried flags: [M0-V9, 2026-10-21] The ending's hold is no longer 10 t.u. once M0-D78 lands: a remnant stage shows the ending after max(10 t.u., 20 τ_dyn), τ_dyn the object's at that frame — one function in sr-physics's observe, which watch.rs reads; your Deliver's «a remnant stage held 10 t.u. → the ending» and its case «the switch to the ending at 10 t.u.» read that function (§0.5 [M0-D78]; the lead, 2026-10-21, at M0-V9: «max(10 t.u., 20 τ_dyn) (Recommended)», the option reading «the game's ending readout follows the same rule»).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §1.10.1 + docs/agent/testing.md
 - Deliver: crates/sr-physics/src/observe/ending.rs (new): from M in Suns (M0-T69) — below 0.08 failed
   star, below 8 white dwarf, below 25 supernova then neutron star, else black hole, within ±10 % in

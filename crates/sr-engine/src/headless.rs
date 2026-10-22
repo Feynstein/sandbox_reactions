@@ -24,7 +24,8 @@
 //! [`Watch`], the [`Ledger`], the steps done since the run's start and its wall time, the next Δt and P5's unconverged
 //! steps, under the dump's step, sim time, scene label and world. `--load-dump FILE --continue` reads it back and goes on as
 //! the cut run would have — the same chunks and frames, summary.json the whole life's; `--steps` and `--max-steps` then
-//! count from the life's start. A missing snapshot, or one of another step, scene or world, is exit 4.
+//! count from the life's start. A missing snapshot, or one of another version ([`OBSERVERS_VERSION`]), step, scene or world,
+//! is exit 4.
 //!
 //! stdout: the first line `SR-ADAPTER …`; the last, when the run ends without an error (exit 0 or 2), `SR-HEADLESS DONE
 //! steps=<n> sim_time=<t> until=<met|unmet|none>` (`none` for a run on `--steps`, which `--max-steps` may cut: `unmet`); every error line starts `SR-ERROR`, every warning `SR-WARN`.
@@ -61,7 +62,7 @@ use crate::step::nuheat::NuHeatSetup;
 use crate::step::react::ReactSetup;
 use crate::step::sinks::SinkSetup;
 use crate::step::{CostSource, EosGpu, Pass, Passes, Step, StepCost, Timing};
-use crate::watch::{Until, Watch};
+use crate::watch::{Star, Until, Watch};
 
 pub const EXIT_DONE: i32 = 0;
 pub const EXIT_UNMET: i32 = 2;
@@ -72,6 +73,9 @@ pub const EXIT_CALIBRATION: i32 = sr_physics::calibration::EXIT_CALIBRATION;
 
 /// §3.3: `--max-steps` defaults to 2,000,000.
 pub const DEFAULT_MAX_STEPS: u64 = 2_000_000;
+/// The observers' snapshot's version: 2 since each object's history carries `x_h_max` (§0.5 [M0-D78]); a snapshot of
+/// another version is refused by `--continue` and not used as `calibrate`'s checkpoint.
+pub const OBSERVERS_VERSION: u64 = 2;
 /// Steps recorded per submission: the queue never holds more than this many at once — nor P5's log of unconverged steps.
 const CHUNK: u64 = 256;
 /// A frame while `--until` watches, in steps (untuned): the cold disk's whole collapse is some 250 steps, so a stage that
@@ -195,6 +199,8 @@ struct Carried {
     wall_s: f64,
     dt_next: f64,
     heat_unconverged: u64,
+    /// Whether the cut run's next frame was one step (M0-D80); false in a snapshot without the key.
+    one_step: bool,
     watch: Watch,
     ledger: Ledger,
 }
@@ -206,8 +212,8 @@ fn read_carried(path: &Path, dump: &Dump, scene: &str, physics: &Physics) -> Res
     let text = std::fs::read_to_string(&file).map_err(|e| format!("--continue: {}: {e}", file.display()))?;
     let v: serde_json::Value = serde_json::from_str(&text).map_err(|e| format!("--continue: {}: not JSON: {e}", file.display()))?;
     let refused = |what: String| format!("--continue: {} is {what}", file.display());
-    if v["version"] != 1 {
-        return Err(refused(format!("version {}, this build reads 1", v["version"])));
+    if v["version"] != OBSERVERS_VERSION {
+        return Err(refused(format!("version {}, this build reads {OBSERVERS_VERSION}", v["version"])));
     }
     let sim_time = read_exact(&v["sim_time"], "sim_time").map_err(refused)?;
     if v["step"].as_u64() != Some(dump.step) || sim_time.to_bits() != dump.sim_time.to_bits() {
@@ -229,6 +235,7 @@ fn read_carried(path: &Path, dump: &Dump, scene: &str, physics: &Physics) -> Res
         wall_s: read_exact(&v["wall_s"], "wall_s").map_err(refused)?,
         dt_next: read_exact(&v["dt_next"], "dt_next").map_err(refused)?,
         heat_unconverged: read_whole(&v, "heat_unconverged").map_err(refused)?,
+        one_step: v["one_step"].as_bool().unwrap_or(false),
         watch: Watch::restore(physics, world_width, &v["watch"]).map_err(refused)?,
         ledger: Ledger::restore(dump.world, physics, &v["ledger"]).map_err(refused)?,
     })
@@ -509,11 +516,38 @@ pub fn run(args: &[String]) -> i32 {
     }
 }
 
-/// A run's progress hook (M0-D60): `tick(step, sim_time, stage)` is called each time the run's step count passes a multiple of
-/// `every`, `stage` being the heaviest object's shown stage (`none` before one has held).
+/// What a progress tick says (M0-D60, M0-D80): where the run is, the frame just run and the heaviest object's numbers.
+pub struct Tick<'a> {
+    pub step: u64,
+    pub sim_time: f64,
+    /// The heaviest object's shown stage, `none` before one has held.
+    pub stage: &'a str,
+    /// The frame just run: its steps, its mean Δt, its wall time per step (display only: nothing in the run reads it) and its
+    /// steps that reached P5's ceiling (§0.5 [M0-TJ4] (6)).
+    pub frame: u64,
+    pub dt: f64,
+    pub s_per_step: f64,
+    pub p5_ceiling: u64,
+    /// The ledger's escaped mass so far and the objects the frame found.
+    pub escaped: f64,
+    pub objects: usize,
+    pub star: Option<Star>,
+}
+
+/// M0-D80: whether a run under a [`Progress`] hook (a `calibrate` life) runs its next frame as one step — the frame just run had
+/// a step at P5's ceiling, or the heaviest object's raw stage is core_collapse. It reads the state alone, never wall time, so a
+/// life frames the same whatever else loads the GPU.
+pub fn one_step_next(p5_ceiling: u64, raw_stage: Option<&str>) -> bool {
+    p5_ceiling > 0 || raw_stage == Some("core_collapse")
+}
+
+/// A run's progress hook (M0-D60): `tick` is called each time the run's step count passes a multiple of `every`, and after
+/// each one-step frame (M0-D80). With a hook the run's frames adapt: while [`one_step_next`] holds, each frame is one step —
+/// a stretch the lead watches step by step — and otherwise frames are as without it. A run without a hook (plain `headless`,
+/// the game) never frames so.
 pub struct Progress<'a> {
     pub every: u64,
-    pub tick: &'a mut dyn FnMut(u64, f64, &str),
+    pub tick: &'a mut dyn FnMut(&Tick),
     /// M0-D77: the run saves a checkpoint — a dump and the observers' snapshot, the last pair alone kept in `<out>/checkpoint/` —
     /// at the first frame boundary at or past each multiple of this many steps, apart from `every` and from `--dump-every`
     /// (no chunk is shortened: nothing the life computes moves). `saved(step, sim_time, stage)` follows each save.
@@ -701,7 +735,7 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         observers["adapter"] = json!(gpu.info.name);
         observers["driver"] = json!(gpu.info.driver);
         observers["physics_hash"] = json!(physics_hash);
-        observers["version"] = json!(1);
+        observers["version"] = json!(OBSERVERS_VERSION);
         observers["step"] = json!(d.step);
         observers["sim_time"] = exact(d.sim_time);
         observers["scene"] = json!(args.scene);
@@ -718,10 +752,13 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
     // The run's sim time starts at the dump's, else 0. Under `--continue` the cut run's count, wall time, next Δt, P5's
     // unconverged steps and observers go on: `--steps` and `--max-steps` count the whole life, and step indices from its start.
     let start_sim = dump.as_ref().map_or(0.0, |d| d.sim_time);
-    let fresh = || (0, 0.0, 0.0, 0, Watch::new(&physics, world.width, start_sim), Ledger::new(world, &physics));
+    let fresh = || (0, 0.0, 0.0, 0, false, Watch::new(&physics, world.width, start_sim), Ledger::new(world, &physics));
     let continued = carried.is_some();
-    let (mut done, wall_before, mut dt_next, mut unconverged, mut watch, mut ledger) =
-        carried.map_or_else(fresh, |c| (c.done, c.wall_s, c.dt_next, c.heat_unconverged, c.watch, c.ledger));
+    // `one_step`: the next frame is one step (M0-D80) — only under a progress hook, carried by the snapshot so that a continued
+    // life frames as the unbroken one.
+    let (mut done, wall_before, mut dt_next, mut unconverged, mut one_step, mut watch, mut ledger) =
+        carried.map_or_else(fresh, |c| (c.done, c.wall_s, c.dt_next, c.heat_unconverged, c.one_step, c.watch, c.ledger));
+    let adaptive = progress.is_some();
     if COUNT_HEAT_WARNINGS.load(std::sync::atomic::Ordering::Relaxed) {
         HEAT_UNCONVERGED.fetch_add(unconverged, std::sync::atomic::Ordering::Relaxed);
     }
@@ -739,10 +776,10 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         until_met = watch.holds(until, watch.events());
     }
     // What the observers' snapshot carries beside the observers.
-    let carry = |done: u64, dt_next: f64, unconverged: u64, watch: &Watch, ledger: &Ledger| {
+    let carry = |done: u64, dt_next: f64, unconverged: u64, one_step: bool, watch: &Watch, ledger: &Ledger| {
         let wall_s = wall_before + started.elapsed().as_secs_f64();
         json!({"done": done, "wall_s": exact(wall_s), "dt_next": exact(dt_next), "heat_unconverged": unconverged,
-               "watch": watch.snapshot(), "ledger": ledger.snapshot()})
+               "one_step": one_step, "watch": watch.snapshot(), "ledger": ledger.snapshot()})
     };
     while done < target && !until_met {
         let mut n = (target - done).min(if args.until.is_some() { FRAME } else { CHUNK });
@@ -758,6 +795,12 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         if let Some(every) = args.dump_every {
             n = n.min(every - (first + done) % every);
         }
+        // A one-step stretch (M0-D80): a step at P5's ceiling or a core collapse in the frame before.
+        let one_step_frame = one_step;
+        if one_step_frame {
+            n = 1;
+        }
+        let (frame_started, frame_sim, frame_unconverged) = (Instant::now(), sim, unconverged);
         step.run(&gpu.device, &gpu.queue, n as u32);
         if let Err(e) = gpu.device.poll(wgpu::PollType::wait_indefinitely()) {
             say(&format!("SR-ERROR GPU error after {done} steps: {e}"));
@@ -788,10 +831,24 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         }
         let fresh = watch.update(&summary, at_step);
         (sim, dt_next) = (dt.sim_time, f64::from(dt.dt_next));
+        let p5_ceiling = unconverged - frame_unconverged;
+        one_step = adaptive && one_step_next(p5_ceiling, watch.heaviest_raw_stage());
         if let Some(p) = progress.as_mut() {
-            if at_step.step / p.every.max(1) > ticked {
+            // Each one-step frame ticks; otherwise the tick is every `every` steps.
+            if at_step.step / p.every.max(1) > ticked || one_step_frame {
                 ticked = at_step.step / p.every.max(1);
-                (p.tick)(at_step.step, dt.sim_time, watch.heaviest_stage().unwrap_or("none"));
+                (p.tick)(&Tick {
+                    step: at_step.step,
+                    sim_time: dt.sim_time,
+                    stage: watch.heaviest_stage().unwrap_or("none"),
+                    frame: n,
+                    dt: (dt.sim_time - frame_sim) / n as f64,
+                    s_per_step: frame_started.elapsed().as_secs_f64() / n as f64,
+                    p5_ceiling,
+                    escaped: ledger.last().map_or(0.0, |r| r.mass.escaped),
+                    objects: watch.object_count(),
+                    star: watch.heaviest_star(),
+                });
             }
         }
         if args.until.is_some_and(|u| watch.holds(u, &fresh)) {
@@ -801,7 +858,7 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         let at = first + done;
         if let (Some(every), Some(dir)) = (args.dump_every, &args.out) {
             if at.is_multiple_of(every) && done < target {
-                if let Err(e) = write_dump(&dir.join("dumps"), carry(done, dt_next, unconverged, &watch, &ledger)) {
+                if let Err(e) = write_dump(&dir.join("dumps"), carry(done, dt_next, unconverged, one_step, &watch, &ledger)) {
                     say(&e);
                     return EXIT_ARGS;
                 }
@@ -815,7 +872,7 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
                     let folder = dir.join(CHECKPOINT_DIR);
                     let written = std::fs::create_dir_all(&folder)
                         .map_err(|e| format!("SR-ERROR bad arguments: --out {}: {e}", folder.display()))
-                        .and_then(|()| write_dump(&folder, carry(done, dt_next, unconverged, &watch, &ledger)));
+                        .and_then(|()| write_dump(&folder, carry(done, dt_next, unconverged, one_step, &watch, &ledger)));
                     if let Err(e) = written {
                         say(&e);
                         return EXIT_ARGS;
@@ -839,7 +896,7 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
     }
     // The final dump, always (§3.3).
     if let Some(dir) = &args.out {
-        if let Err(e) = write_dump(&dir.join("dumps"), carry(done, dt_next, unconverged, &watch, &ledger)) {
+        if let Err(e) = write_dump(&dir.join("dumps"), carry(done, dt_next, unconverged, one_step, &watch, &ledger)) {
             say(&e);
             return EXIT_ARGS;
         }

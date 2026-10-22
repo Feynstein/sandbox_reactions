@@ -1,0 +1,13 @@
+=== M0-D80 probe: which short scenes reach P5's ceiling 2026-10-22T08:03:21-04:00 laserax-ai ===
+--- heat_spot
+exit 0 warns 0 first:  SR-HEADLESS DONE steps=600 sim_time=174.381770 until=none
+--- heat_hot
+exit 0 warns 0 first:  SR-HEADLESS DONE steps=600 sim_time=6.561672 until=none
+--- heat_rim
+exit 0 warns 0 first:  SR-HEADLESS DONE steps=600 sim_time=14.120046 until=none
+--- heat_pulse
+exit 0 warns 0 first:  SR-HEADLESS DONE steps=600 sim_time=268.328172 until=none
+--- sun_disk
+exit 6 warns 0 first:  SR-ERROR calibration invalid: preset_mass_sb: missing
+--- ref_burn
+exit 0 warns 0 first:  SR-HEADLESS DONE steps=600 sim_time=6.271428 until=none

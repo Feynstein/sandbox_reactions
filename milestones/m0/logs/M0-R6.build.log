@@ -1,0 +1,26 @@
+=== scratch build 2026-10-22T07:37:47-04:00 ===
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 14.07s
+wall=14.28
+exit=0
+=== scratch build 2 (SR_PROBE_EDGE) 2026-10-22T07:46:49-04:00 ===
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 12.59s
+exit=0
+=== scratch build 3 (adaptive progress) 2026-10-22T07:55:09-04:00 ===
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 7.37s
+exit=0
+=== scratch build 4 (adaptive on the physics) 2026-10-22T07:56:57-04:00 ===
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.17s
+exit=0
+=== scratch build 5 (metrics) 2026-10-22T07:57:38-04:00 ===
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c4c9a2de-677f-4102-b382-3e9caf2f24a3/scratchpad/r6/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 9.96s
+exit=0

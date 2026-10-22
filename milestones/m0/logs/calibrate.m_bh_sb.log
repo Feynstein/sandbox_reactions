@@ -1,0 +1,33 @@
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=5681 sim_time=30.795 wall_s=641.7 replayed record=build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1009 sim_time=7.015 heat_unconverged=8 stage=white_dwarf
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=2001 sim_time=12.198 heat_unconverged=406 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=3009 sim_time=16.466 heat_unconverged=974 stage=supernova
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=4001 sim_time=20.651 heat_unconverged=1219 stage=supernova
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=5009 sim_time=24.150 heat_unconverged=1410 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=6001 sim_time=27.534 heat_unconverged=1616 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=7009 sim_time=31.053 heat_unconverged=1859 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=8001 sim_time=34.718 heat_unconverged=2109 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=9009 sim_time=38.523 heat_unconverged=2406 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=10001 sim_time=42.232 heat_unconverged=2702 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=11009 sim_time=45.992 heat_unconverged=2978 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=12001 sim_time=49.579 heat_unconverged=3302 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=13009 sim_time=53.183 heat_unconverged=3580 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=14001 sim_time=56.812 heat_unconverged=3777 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=15009 sim_time=60.736 heat_unconverged=3961 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16001 sim_time=64.550 heat_unconverged=4135 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=17009 sim_time=68.058 heat_unconverged=4283 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=18001 sim_time=71.713 heat_unconverged=4383 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=19009 sim_time=75.873 heat_unconverged=4537 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=20001 sim_time=80.391 heat_unconverged=4560 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=21009 sim_time=86.160 heat_unconverged=4569 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=22001 sim_time=91.774 heat_unconverged=4587 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=23009 sim_time=96.299 heat_unconverged=4709 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=24001 sim_time=100.580 heat_unconverged=4821 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=25009 sim_time=104.831 heat_unconverged=4974 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=26001 sim_time=109.113 heat_unconverged=5094 stage=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=27009 sim_time=113.620 heat_unconverged=5220 stage=neutron_star
+SR-HEADLESS DONE steps=27249 sim_time=114.668934 until=met
+SR-CALIBRATE run item=m_bh_sb side=Light mass=67020.643 ignited=true core_collapse=true ending=neutron_star steps=27249 sim_time=114.669 wall_s=5980.0 heat_unconverged=5257 record=build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-02
+SR-ERROR calibration failed: the bracket 4572.4..67020.6: its ends agree (4572.4 is Light, 67020.6 is Light), so the threshold is not in it — widen it with --bracket (two runs spent)
+exit=6

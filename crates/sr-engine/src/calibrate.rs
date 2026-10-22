@@ -15,7 +15,9 @@
 //! mapping of a life to a side is the item's own ([`side_ign`], [`side_up`], [`side_bh`]) and a life that is on neither side
 //! (no ending within `--max-steps`, an ending the item cannot place) is a failure, reported and never guessed (exit 6).
 //! m_ign_sb stops each run at the first of the ignition and the ending (`Until::IgnitionOrEnding`): the failed star's ending is
-//! the stage held for [`ENDING_HOLD`](crate::watch::ENDING_HOLD) (§1.9.5, 10 t.u. ≈ 10 τ_dyn at τ_dyn ≈ 1), where §2.11 says 20 τ_dyn.
+//! the stage held for [`ending_hold`](sr_physics::observe::stages::ending_hold), max(10 t.u., 20 τ_dyn) — §2.11's 20 τ_dyn
+//! (§0.5 [M0-D78]); ignition is the light window or a centre that burned a tenth of its hydrogen, so a flash's burnt core is
+//! no failed star.
 //! m_up_sb stops each run once its side is known (`Until::CollapseOrEnding`, M0-D75): the first frame where the `core_collapse`
 //! event fires or an object shows a neutron star or a black hole, else the white dwarf's ending; m_bh_sb's runs and the presets'
 //! go to their ending.
@@ -84,8 +86,8 @@ use sr_physics::units::G;
 
 use crate::dump::Dump;
 use crate::headless::{
-    git_rev, run_scene_captured, unconverged_steps, Args, Progress, CHECKPOINT_DIR, DEFAULT_MAX_STEPS, EXIT_ARGS, EXIT_CALIBRATION, EXIT_DONE, EXIT_GPU, EXIT_NON_FINITE,
-    EXIT_UNMET,
+    git_rev, run_scene_captured, unconverged_steps, Args, Progress, Tick, CHECKPOINT_DIR, DEFAULT_MAX_STEPS, EXIT_ARGS, EXIT_CALIBRATION, EXIT_DONE, EXIT_GPU, EXIT_NON_FINITE,
+    EXIT_UNMET, OBSERVERS_VERSION,
 };
 use crate::scene::{EdgeMode, Gas, Heat, Object, Scene, Switches, TestSettings, UNIT_MASS};
 use crate::state::WorldConfig;
@@ -559,6 +561,81 @@ fn write_progress(path: &Path, record: &Value) {
     }
 }
 
+/// A progress tick's numbers after the shown stage (M0-D80), in the line's order, as progress.json writes them: the frame
+/// (`frame` steps, its mean `dt`, `s_per_step` wall seconds — display only — and `p5_ceiling`, its steps at P5's ceiling), the
+/// world (`escaped` mass, `objects`) and the heaviest object (§1.9.2, sandbox units; `raw` its stage before the hold). `|`
+/// separates the three groups on the line (`GROUPS_AT`).
+fn tick_numbers(t: &Tick) -> Vec<(&'static str, Value)> {
+    let mut v: Vec<(&'static str, Value)> = vec![
+        ("frame", json!(t.frame)),
+        ("dt", json!(t.dt)),
+        ("s_per_step", json!(t.s_per_step)),
+        ("p5_ceiling", json!(t.p5_ceiling)),
+        ("escaped", json!(t.escaped)),
+        ("objects", json!(t.objects)),
+    ];
+    if let Some(s) = &t.star {
+        v.extend([
+            ("M", json!(s.mass)),
+            ("R", json!(s.radius)),
+            ("tau_dyn", json!(s.tau_dyn)),
+            ("sigma_c", json!(s.sigma_c)),
+            ("T_c", json!(s.t_c)),
+            ("d_c", json!(s.d_c)),
+            ("Ye_c", json!(s.ye_c)),
+            ("X_Fe_c", json!(s.x_fe_c)),
+            ("X_n_c", json!(s.x_n_c)),
+            ("v_r", json!(s.v_r)),
+            ("v_r_dyn", json!(s.v_r_dyn)),
+            ("M_unb", json!(s.unbound)),
+            ("L", json!(s.luminosity)),
+            ("L_nuc", json!(s.l_nuc)),
+            ("L_N", json!(s.l_n)),
+            ("L_nu", json!(s.l_nu)),
+            ("sinks", json!(s.sinks)),
+            ("sink_M", json!(s.sink_mass)),
+            ("raw", json!(s.raw.unwrap_or("none"))),
+        ]);
+    }
+    v
+}
+
+/// progress.json's record with the last tick's [`tick_numbers`] beside its own keys.
+fn with_numbers(mut record: Value, numbers: &[(&'static str, Value)]) -> Value {
+    for (key, value) in numbers {
+        record[*key] = value.clone();
+    }
+    record
+}
+
+/// The key that opens each group of [`tick_numbers`] on the line, after a ` |`.
+const GROUPS_AT: [&str; 3] = ["frame", "escaped", "M"];
+
+/// The progress line's tail (M0-D80): ` | frame=… dt=… s_per_step=… p5_ceiling=… | escaped=… objects=… | M=… … raw=…`, each
+/// number to 4 significant digits (an integer as it is). `tools/calibrate_status.py` reads the stage before the first ` | `.
+fn tick_line(numbers: &[(&'static str, Value)]) -> String {
+    let mut line = String::new();
+    for (key, value) in numbers {
+        line.push_str(if GROUPS_AT.contains(key) { " | " } else { " " });
+        let shown = match value {
+            Value::Number(n) if n.is_f64() => {
+                let x = n.as_f64().unwrap_or(f64::NAN);
+                if x == 0.0 {
+                    "0".to_string()
+                } else if (1e-3..1e5).contains(&x.abs()) {
+                    format!("{x:.*}", (3 - x.abs().log10().floor() as i32).max(0) as usize)
+                } else {
+                    format!("{x:.3e}")
+                }
+            }
+            Value::String(s) => s.clone(),
+            other => other.to_string(),
+        };
+        line.push_str(&format!("{key}={shown}"));
+    }
+    line
+}
+
 /// How often a life says where it is by default: one `SR-CALIBRATE progress` line every this many steps (M0-D60);
 /// `--progress-every N` replaces it for the invocation (M0-D75).
 pub const PROGRESS_EVERY: u64 = 10_000;
@@ -676,20 +753,25 @@ impl Lives<'_> {
         let checkpoint_step = Cell::new(from.as_ref().map(|c| c.step));
         let continued_from = from.as_ref().map(|c| c.step);
         let every = self.progress_every;
+        // The last tick's frame and star numbers (M0-D80), which progress.json carries beside its own keys.
+        let numbers = RefCell::new(Vec::new());
         let note = |step: u64, sim_time: f64, stage: &str| {
             let record = json!({"item": label, "mass": mass, "step": step, "sim_time": sim_time, "stage": stage, "stages": *stages.borrow(), "heat_unconverged": unconverged_steps(), "started": started, "progress_every": every, "continued_from_step": continued_from, "checkpoint_step": checkpoint_step.get()});
-            write_progress(&progress_file, &record);
+            write_progress(&progress_file, &with_numbers(record, &numbers.borrow()));
         };
-        let mut tick = |step: u64, sim_time: f64, stage: &str| {
+        let mut tick = |t: &Tick| {
+            let (step, sim_time, stage) = (t.step, t.sim_time, t.stage);
             {
                 let mut stages = stages.borrow_mut();
                 if stages.last().and_then(|s| s["stage"].as_str()) != Some(stage) {
                     stages.push(json!({"stage": stage, "since_step": step}));
                 }
             }
+            *numbers.borrow_mut() = tick_numbers(t);
             // Heat warnings are counted, not printed (M0-D74): the line says how many steps reached P5's ceiling so far.
             let unconverged = unconverged_steps();
-            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} heat_unconverged={unconverged} stage={stage}"));
+            let extra = tick_line(&numbers.borrow());
+            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} heat_unconverged={unconverged} stage={stage}{extra}"));
             note(step, sim_time, stage);
         };
         // A saved checkpoint moves progress.json's `checkpoint_step` at once, not at the next tick: what a stop would lose.
@@ -781,8 +863,8 @@ impl Lives<'_> {
         let (dump, file) = (folder.join(format!("s_{step}.bin")), folder.join(format!("s_{step}.observers.json")));
         let text = std::fs::read_to_string(&file).map_err(|e| format!("{}: {e}", file.display()))?;
         let v: Value = serde_json::from_str(&text).map_err(|e| format!("{}: not JSON: {e}", file.display()))?;
-        if v["version"] != 1 {
-            return Err(format!("{} is version {}, this build reads 1", file.display(), v["version"]));
+        if v["version"] != OBSERVERS_VERSION {
+            return Err(format!("{} is version {}, this build reads {OBSERVERS_VERSION}", file.display(), v["version"]));
         }
         if v["step"].as_u64() != Some(step) {
             return Err(format!("{} holds step {}, beside a dump of step {step}", file.display(), v["step"]));
@@ -985,8 +1067,8 @@ pub fn measure_presets(
             durations.entry(stage).or_default().push((mass, time));
         }
         if k == 0 {
-            // The last entry of the ending's stage: the `ending` event closes a hold of 10 t.u. that a change of stage breaks, so
-            // an earlier, transient showing of the same stage (a bounce's white dwarf) is not the life's end.
+            // The last entry of the ending's stage: the `ending` event closes a hold of max(10 t.u., 20 τ_dyn) that a change of
+            // stage breaks, so an earlier, transient showing of the same stage (a bounce's white dwarf) is not the life's end.
             life_sun = run.stages.iter().rev().find(|(stage, _)| stage == ending).map(|s| s.1).ok_or_else(|| {
                 CalError::Failed(format!("life_sun_sb: the Sun-like life never showed {ending} (stages {:?})", run.stages))
             })?;

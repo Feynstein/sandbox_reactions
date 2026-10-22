@@ -1,0 +1,43 @@
+== 2026-10-21T14:28:29-04:00 rates · task M0-D79 · box laserax-ai :: bash tests/cpu.sh sr-physics rates
+-- rates · exit=0 · 1.82 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 1.73s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 8 tests
+test rates::tests::above_the_span_is_the_direct_form ... ok
+test rates::tests::gate_on_both_sides_of_sigma_g ... ok
+test rates::tests::f_is_zero_below_the_threshold ... ok
+test rates::tests::table_geometry ... ok
+test rates::tests::two_terms_are_not_exact ... ok
+test rates::tests::omega_of_each_record_by_hand ... ok
+test rates::tests::gamow_shape_and_bound ... ok
+test rates::tests::table_against_direct_form_at_nodes_and_midpoints ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 148 filtered out; finished in 0.00s
+
+
+== 2026-10-21T14:29:29-04:00 rates · task M0-D79 · box laserax-ai :: bash tests/cpu.sh sr-physics rates
+-- rates · exit=0 · 0.27 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.20s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 8 tests
+test rates::tests::above_the_span_is_the_direct_form ... ok
+test rates::tests::omega_of_each_record_by_hand ... ok
+test rates::tests::two_terms_are_not_exact ... ok
+test rates::tests::gate_on_both_sides_of_sigma_g ... ok
+test rates::tests::table_geometry ... ok
+test rates::tests::f_is_zero_below_the_threshold ... ok
+test rates::tests::table_against_direct_form_at_nodes_and_midpoints ... ok
+test rates::tests::gamow_shape_and_bound ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 148 filtered out; finished in 0.00s
+
+

@@ -154,6 +154,12 @@ impl Elements {
     }
 }
 
+/// Y_e = Σ X_i Z_i/A_i of mass fractions `x` by §1.5's own table, which the shipped elements.json is checked to equal — for
+/// readers that hold no registry (the stage rows, §1.9.3 as §0.5 [M0-D79] reads the neutron_star row).
+pub fn electron_fraction(x: &[f64; N_SPECIES]) -> f64 {
+    CORE.iter().zip(x).map(|(&(_, a, z, _), &xi)| xi * f64::from(z) / f64::from(a)).sum()
+}
+
 fn parse_species(id: usize, v: &Value) -> Result<Species, RegistryError> {
     let at = |field: &str| format!("species[{id}].{field}");
     let Some(obj) = v.as_object() else {
@@ -830,14 +836,15 @@ mod tests {
         assert_eq!(Elements::parse(&root.to_string()).unwrap_err().key, "species");
     }
 
-    /// §2.7's initial values as amended by §0.5 [M0-D50]: the ladder × 0.56, a_r 4 × 10⁻⁵ and T_ν 93.
+    /// §2.7's initial values as amended by §0.5 [M0-D50]: the ladder × 0.56, a_r 4 × 10⁻⁵ and T_ν 93; a_n_fe 100 by §0.5
+    /// [M0-D79].
     #[test]
     fn physics_initial_values_verbatim() {
         let expected: [(&str, f64); 52] = [
             ("t_h", 56.0), ("t_he", 78.4), ("t_c", 109.8), ("t_ne", 153.4), ("t_o", 168.0), ("t_si", 235.2),
             ("q_h", 8700.0), ("a_h_burn", 5e-4), ("a_he_burn", 1e-3), ("a_c_alpha", 1e-3), ("a_c_burn", 1e-3),
             ("a_ne_burn", 1e-3), ("a_o_burn", 1e-3), ("a_mg_burn", 1e-3), ("a_si_burn", 1e-3), ("a_s_burn", 1e-3),
-            ("a_n_fe", 1e-3), ("nu_c_burn", 30.0), ("nu_ne_burn", 30.0), ("nu_o_burn", 30.0), ("nu_mg_burn", 30.0),
+            ("a_n_fe", 100.0), ("nu_c_burn", 30.0), ("nu_ne_burn", 30.0), ("nu_o_burn", 30.0), ("nu_mg_burn", 30.0),
             ("nu_si_burn", 30.0), ("nu_s_burn", 30.0), ("sigma_n", 160.0), ("burn_dx", 0.1), ("burn_dt", 0.05),
             ("sigma_floor", 1e-8), ("sigma_vac", 1e-6), ("t_floor", 0.05), ("sigma_obj", 1e-3), ("paint_sigma", 0.02),
             ("paint_t", 2.0), ("heat_factor", 1.05), ("cool_factor", 0.95), ("k1e", 21.3), ("k2e", 134.0),
@@ -996,6 +1003,13 @@ mod tests {
         assert_eq!((pure(0).inv_mu, pure(0).y_e, pure(0).z_met), (2.0, 1.0, 0.0));
         assert_eq!((pure(9).inv_mu, pure(9).y_e, pure(9).z_met), (1.0, 0.0, 0.0));
         assert_eq!((pure(8).inv_mu, pure(8).y_e, pure(8).z_met), (27.0 / 56.0, 26.0 / 56.0, 1.0));
+        // The registry-free Y_e the stage rows read (§0.5 [M0-D79]) is the shipped registry's, bit for bit.
+        assert_eq!(electron_fraction(&x), c.y_e);
+        for id in 0..N_SPECIES {
+            let mut one = [0.0; N_SPECIES];
+            one[id] = 1.0;
+            assert_eq!(electron_fraction(&one), pure(id).y_e, "species {id}");
+        }
     }
 
     #[test]

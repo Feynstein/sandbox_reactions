@@ -306,9 +306,11 @@ mod neutrino {
         }
     }
 
-    /// N_Fe converts and absorbs: iron at Σ = 500 (g = 0.45), free, over 1 t.u. — Fe → n mass for mass in the planes
+    /// N_Fe converts and absorbs: iron at Σ = 500 (g = 0.45), free, over 5 × 10⁻⁴ t.u. — Fe → n mass for mass in the planes
     /// (ΔX_Fe = −ΔX_n within 1e-12, Σ X = 1), nothing else moves, the heat booked in group N is q ΔX_n Σ with q = −1.14 Q_H
-    /// (within 1e-5) and negative, no other group is booked, E gains exactly that (1e-9), T falls, the latch is set.
+    /// (within 1e-5) and negative, no other group is booked, E gains exactly that (1e-9), T falls and stays positive, the
+    /// latch is set. The window holds the conversion to ≤ 10 % of the iron (a_n_fe 100: ≈ 2 %, §0.5 [M0-D79]), as the GPU
+    /// case's: at 1 t.u. the twin converted 18.5 % and drove the cell's heat under zero (T −2,343, M0-D79's run).
     #[test]
     fn n_fe_absorbs_and_conserves_mass() {
         let physics = physics(&[]);
@@ -316,11 +318,11 @@ mod neutrino {
         let sigma = 500.0;
         let mut st = world(1, 1, &[(sigma, 1000.0, x_of(&[("Fe", 1.0)]))]);
         let e0 = st.get(3, 0);
-        let pass = r.step(&mut st, 1.0);
+        let pass = r.step(&mut st, 5e-4);
         let (dfe, dn) = (frac(&st, "Fe", 0) - 1.0, frac(&st, "n", 0));
         let sum: f64 = x_at(&st, 0).iter().sum();
         println!("N_Fe: ΔX_Fe {dfe:.6e}, ΔX_n {dn:.6e}, booked {:.6e}, ΔE {:.6e}, T {:.2}", pass.nuclear_total(group("N")), st.get(3, 0) - e0, temp(&st, 0));
-        assert!(dn > 1e-4, "the record converted {dn}");
+        assert!(dn > 1e-4 && dn <= 0.1, "the record converted {dn}: the window holds it to (1e-4, 0.1]");
         assert!((dfe + dn).abs() <= 1e-12, "Fe lost {dfe}, n gained {dn}");
         assert!((sum - 1.0).abs() <= 1e-12 && x_at(&st, 0).iter().all(|&v| v >= 0.0), "ΣX = {sum}");
         let others: f64 = x_at(&st, 0).iter().sum::<f64>() - frac(&st, "Fe", 0) - dn;
@@ -330,7 +332,7 @@ mod neutrino {
         assert!(booked < 0.0 && rel(booked, want) <= 1e-5, "booked {booked}, q ΔX_n Σ {want}");
         assert!((0..N_GROUPS).filter(|&g| g != group("N")).all(|g| pass.nuclear_total(g) == 0.0), "only N is booked");
         assert!(rel(st.get(3, 0) - e0, booked) <= 1e-9, "E gained {}, booked {booked}", st.get(3, 0) - e0);
-        assert!(temp(&st, 0) < 1000.0, "absorbing cooled the cell");
+        assert!(temp(&st, 0) < 1000.0 && temp(&st, 0) > 0.0, "absorbing cooled the cell, its heat left above zero: T {}", temp(&st, 0));
         assert!(pass.latch);
     }
 
@@ -694,9 +696,11 @@ mod gpu {
         }
     }
 
-    /// N_Fe converts and absorbs: iron at Σ = 500 (g = 0.45), free, over 1 t.u. — Fe → n mass for mass in the planes
+    /// N_Fe converts and absorbs: iron at Σ = 500 (g = 0.45), free, over 5 × 10⁻⁴ t.u. — Fe → n mass for mass in the planes
     /// (within 1e-6, f32 at X ≈ 1), ΣX = 1, nothing else moves, the heat booked in group N is q ΔX_n Σ with q = −1.14 Q_H
-    /// (1e-4) and negative, no other group is booked, E gains that (1e-4), T falls, the latch flag is set.
+    /// (1e-4) and negative, no other group is booked, E gains that (1e-4), T falls, the latch flag is set. The window holds
+    /// the conversion to ≤ 10 % of the iron (a_n_fe 100, ω ≈ 45 per t.u.: ≈ 2 %, §0.5 [M0-D79]): at 1 t.u. the cell reaches
+    /// its gate and its heat the floor, which P8 refills, so ΔE stops tracking the booking (M0-R5's M4).
     #[test]
     fn gpu_n_fe_absorbs_and_conserves_mass() {
         let gpu = device();
@@ -705,13 +709,13 @@ mod gpu {
         let block = world(1, 1, &[(sigma, 1000.0, fe())]);
         let rig = Rig::new(&gpu, &physics, &only(&["N_Fe"], &physics), false, false, &block);
         let (e0, t0) = (rig.planes().get(3, 0), temp(&rig.planes(), 0));
-        rig.pass(1.0);
+        rig.pass(5e-4);
         let st = rig.planes();
         let (dfe, dn) = (frac(&st, "Fe", 0) - frac(&block, "Fe", 0), frac(&st, "n", 0));
         let sum: f64 = x_at(&st, 0).iter().sum();
         let booked = rig.nuclear("N");
         println!("N_Fe: ΔX_Fe {dfe:.6e}, ΔX_n {dn:.6e}, booked {booked:.6e}, ΔE {:.6e}, T {:.2}", st.get(3, 0) - e0, temp(&st, 0));
-        assert!(dn > 1e-4, "the record converted {dn}");
+        assert!(dn > 1e-4 && dn <= 0.1, "the record converted {dn}: the window holds it to (1e-4, 0.1]");
         assert!((dfe + dn).abs() <= 1e-6, "Fe lost {dfe}, n gained {dn}");
         assert!((sum - 1.0).abs() <= 1e-6 && x_at(&st, 0).iter().all(|&v| v >= 0.0), "ΣX = {sum}");
         let others: f64 = x_at(&st, 0).iter().sum::<f64>() - frac(&st, "Fe", 0) - dn;
@@ -720,7 +724,7 @@ mod gpu {
         assert!(booked < 0.0 && rel(booked, want) <= 1e-4, "booked {booked}, q ΔX_n Σ {want}");
         assert!(GROUPS.iter().filter(|&&g| g != "N").all(|g| rig.nuclear(g) == 0.0), "only N is booked");
         assert!(rel(st.get(3, 0) - e0, booked) <= 1e-4, "E gained {}, booked {booked}", st.get(3, 0) - e0);
-        assert!(temp(&st, 0) < t0, "absorbing cooled the cell");
+        assert!(temp(&st, 0) < t0 && temp(&st, 0) > 0.0, "absorbing cooled the cell, its heat left above zero: T {}", temp(&st, 0));
         assert!(rig.latch());
     }
 

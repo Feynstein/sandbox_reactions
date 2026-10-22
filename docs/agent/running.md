@@ -137,9 +137,16 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   too; items 1–2 run no life and ignore it. Without it nothing changes.
 - **When a life stops** (M0-D75). Every life runs until its condition holds. **m_up_sb**'s lives stop at the first frame where the `core_collapse` event fires or an
   object shows a `neutron_star` or a `black_hole` — their side is heavy from there, whatever they would have become — else at a white dwarf's
-  ending (held 10 t.u.): `until.condition` `collapse|ending` in summary.json, `until.met` true, often no `ending` event. **m_ign_sb** stops at the
+  ending: `until.condition` `collapse|ending` in summary.json, `until.met` true, often no `ending` event. **m_ign_sb** stops at the
   ignition or the ending; **m_bh_sb** and the item-6 presets run to their ending (a neutron star shown can still become a black hole). A record
   made before M0-D75 (run to its ending) replays to the same side. Cost: `max_gas_speed` no longer sees an m_up life's gas after its collapse.
+- **The ending and ignition** (M0-D78, §0.5 [M0-D78]). A remnant stage is the life's ending once shown for **max(10 t.u., 20 τ_dyn)**, τ_dyn
+  the object's at that frame (the `ending` event's `hold_t`): a compact remnant keeps 10 t.u., an extended one (a white dwarf shown while
+  the star is still a huge cloud) waits out its dynamics. **Ignition** is the light window (0.5 L ≤ L_H ≤ 2 L) **or** a centre that has
+  burned a tenth of its hydrogen (X_H,c ≤ 0.9 × the most it showed, L_H > 0) — the `ignition` event's `by`, `light` or `fuel` — so a cloud
+  whose core flashes its hydrogen in one go is ignited and its burnt core is no failed star. A checkpoint of M0-D77's binary (snapshot
+  version 1) is not used (`SR-WARN checkpoint not used (… is version 1, this build reads 2)`, step 0); a record of the old rules replays
+  as written — move a life's folder aside to run it again (a missing folder runs fresh).
 - **`--progress-every N`** (M0-D75; steps, a whole number ≥ 1, default 10,000; 0, a negative or a non-number is exit 4) is the tick of every
   life's progress line and `progress.json` for the invocation; items 1–2 ignore it, and nothing a life computes changes. A 14 M₀ star runs ~10
   steps/s, so the default is a line every ~16 minutes: give it fewer steps for heavy stars (`--progress-every 1000`, the lead's first try) and
@@ -178,7 +185,8 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   halving of the bracket to 2 %: life 01 is LO, life 02 is HI; before life 02 ends it uses `--bracket`, else the item's default, and says
   so); the ETA is marked a guess until 3 lives have finished. A progress.json that is missing, torn or another item's is not read: the
   line says the folder's age instead.
-- **Who runs it.** Items 1–2 are the agents' (CPU, seconds). `m_ign_sb` is minutes on the RTX 5090; `m_up_sb`, `m_bh_sb` and the
+- **Who runs it.** Items 1–2 are the agents' (CPU, seconds). `m_ign_sb` is ~2 minutes on the RTX 5090 (10 lives; 126 s with M0-D78's
+  hold where it was ~30 s at 10 t.u.); `m_up_sb`, `m_bh_sb` and the
   preset lives are **whole stellar lives** — hours at the defaults — so the whole calibration is **the lead's**, in one visible
   terminal, in M0-V9's window (§6.4; PLAYBOOK §4 Rule 4). Item by item (`--only`) is how it splits. An agent runs no life
   here; the scopes `calibrate_cold`, `calibrate_bisect`, `calibrate_order`, `cold_core` and `calibration` (`testing.md`) grade

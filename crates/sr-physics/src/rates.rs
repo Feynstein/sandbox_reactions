@@ -342,8 +342,9 @@ mod tests {
             ("Mg_burn", 320.0, 1e-3 * sigma * 0.1 * gamow(320.0, 300.0, 30.0)),
             ("Si_burn", 450.0, 1e-3 * sigma * 0.4 * gamow(450.0, 420.0, 30.0)),
             ("S_burn", 450.0, 1e-3 * sigma * 0.05 * gamow(450.0, 420.0, 30.0)),
-            // N_Fe: a = 0, f ≡ 1, g = Y_eΣ/160 − 1 with Y_eΣ = 0.5 × 400 = 200 → 0.25; ω = 1e-3 × 0.7 × 0.25.
-            ("N_Fe", 1.0, 1e-3 * 0.7 * 0.25),
+            // N_Fe: a = 0, f ≡ 1, g = Y_eΣ/160 − 1 with Y_eΣ = 0.5 × 400 = 200 → 0.25; ω = A × 0.7 × 0.25, A = a_n_fe 100
+            // (§0.5 [M0-D79]).
+            ("N_Fe", 1.0, 100.0 * 0.7 * 0.25),
         ];
         assert_eq!(cases.len(), r.reactions.records().len(), "every record has a hand value");
         for (id, t, hand) in cases {
