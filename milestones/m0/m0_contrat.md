@@ -442,7 +442,7 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     N-step tick; otherwise its frames are as before. Plain `headless` (no progress hook) and the game frame as before. The observers'
     snapshot ([M0-D76]) gains `one_step` (a snapshot without it reads false), so a continued life frames as the unbroken one ([M0-D77]'s
     «a continued life's record is the unbroken life's» holds). **The progress line** gains ` | raw=<the heaviest object's stage before
-    the hold>` after `stage=<shown>` and is followed by six indented rows, each a label and four `name value` cells in a fixed grid under
+    the hold>` after `stage=<shown>` and is followed by six indented rows, each a label and four `name value` cells in a fixed grid of
     80 columns — `frame` (steps, dt — its mean Δt —, s/step — wall, display only —, P5_ceil — its steps at P5's ceiling), `star` (M, R,
     tau_dyn, M_unb), `core` (sigma_c, T_c, d_c, Ye_c = Σ X_c Z/A), `centre` (X_Fe, X_n, v_r, vr/vdyn = v_r/√(GM/R)), `light` (L, L_nuc,
     L_N, L_nu), `world` (escaped — the ledger's —, objects, sinks, sink_M); the heaviest object's, §1.9.2, sandbox units; on a terminal

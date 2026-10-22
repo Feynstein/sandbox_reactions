@@ -163,12 +163,12 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   raw=<the heaviest object's stage before the 3-frame hold>`, then six indented rows, the same numbers in the same columns every step:
   ```
   SR-CALIBRATE progress item=m_bh_sb mass=6702.064 step=1010 sim_time=10.469 heat_unconverged=6 stage=white_dwarf | raw=white_dwarf
-    frame  steps          16  dt      8.714e-3  s/step    0.05189  P5_ceil         0
-    star   M            6690  R          108.4  tau_dyn     13.80  M_unb       12.78
-    core   sigma_c     33.76  T_c        33.48  d_c        0.8549  Ye_c       0.4643
-    centre X_Fe        1.000  X_n            0  v_r        0.2974  vr/vdyn   0.03786
-    light  L           42033  L_nuc  1.802e-11  L_N             0  L_nu            0
-    world  escaped   0.09486  objects        1  sinks           0  sink_M          0
+    frame  steps          16 dt       8.714e-3 s/step    0.05189 P5_ceil         0
+    star   M            6690 R           108.4 tau_dyn     13.80 M_unb       12.78
+    core   sigma_c     33.76 T_c         33.48 d_c        0.8549 Ye_c       0.4643
+    centre X_Fe        1.000 X_n             0 v_r        0.2974 vr/vdyn   0.03786
+    light  L           42033 L_nuc   1.802e-11 L_N             0 L_nu            0
+    world  escaped   0.09486 objects         1 sinks           0 sink_M          0
   ```
   - `frame` — steps in the frame (1 in a one-step stretch), `dt` its mean Δt (t.u.), `s/step` wall seconds per step (display only),
     `P5_ceil` its steps at P5's ceiling (the running total is `heat_unconverged`);

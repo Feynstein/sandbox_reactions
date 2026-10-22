@@ -645,13 +645,13 @@ fn cell(name: &str, value: &str) -> String {
 }
 
 /// The lines under a progress line (M0-D80): one row per theme of [`ROWS`], `  <label> <name> <value> …` in a fixed grid so that
-/// the same number sits in the same column from one step to the next, under 80 columns.
+/// the same number sits in the same column from one step to the next, 80 columns.
 fn tick_rows(numbers: &[(&'static str, Value)]) -> Vec<String> {
     let find = |key: &str| numbers.iter().find(|(k, _)| *k == key).map(|(_, v)| v);
     ROWS.iter()
         .filter_map(|(label, columns)| {
             let cells: Option<Vec<String>> = columns.iter().map(|(key, name)| find(key).map(|v| cell(name, &shown(v)))).collect();
-            cells.map(|c| format!("  {label:<6} {}", c.join("  ")))
+            cells.map(|c| format!("  {label:<6} {}", c.join(" ")))
         })
         .collect()
 }
@@ -1323,7 +1323,7 @@ pub fn paint(line: &str) -> String {
                 format!("\x1b[2m{n}{RESET}\x1b[{tone}m{v}{RESET}")
             })
             .collect();
-        return format!("  \x1b[1;34m{label:<6}{RESET} {}", painted.join("  "));
+        return format!("  \x1b[1;34m{label:<6}{RESET} {}", painted.join(" "));
     }
     let tone = if line.starts_with("SR-ERROR") {
         "1;31"

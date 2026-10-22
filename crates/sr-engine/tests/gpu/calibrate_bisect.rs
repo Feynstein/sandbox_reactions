@@ -891,7 +891,7 @@ fn one_step_frames_follow_the_physics() {
     };
     let head = "SR-CALIBRATE progress item=m_bh_sb mass=6702.064 step=1010 sim_time=10.469 heat_unconverged=6 stage=white_dwarf | raw=core_collapse";
     // Rows as `tick_rows` lays them out: a label in 6, then cells of a name in 7 and a value right-aligned in 9.
-    let row = |label: &str, cells: [(&str, &str); 4]| format!("  {label:<6} {}", cells.map(|(n, v)| format!("{n:<7} {v:>9}")).join("  "));
+    let row = |label: &str, cells: [(&str, &str); 4]| format!("  {label:<6} {}", cells.map(|(n, v)| format!("{n:<7} {v:>9}")).join(" "));
     let rows = [
         row("frame", [("steps", "1"), ("dt", "8.714e-3"), ("s/step", "0.05189"), ("P5_ceil", "2")]),
         row("light", [("L", "42033"), ("L_nuc", "1.802e-11"), ("L_N", "-3.100"), ("L_nu", "0")]),
