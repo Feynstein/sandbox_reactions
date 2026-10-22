@@ -250,6 +250,32 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   keep their spelling. The checks, their cases, `expected` counts and plants are unchanged — a rename, never a bypass.
 - A block that greps testing.md for its rows (a docs block's Verify) greps the `_` spelling.
 
+## R18 · GPU runs on laserax-ai-server — a block executed on laserax-ai (the lead, 2026-10-22, at M0-D85)
+- The lead, 2026-10-22, at M0-D85: «write as a standing rule in this plan to run everything thats on the gpu, even the tests on
+  laserax-ai-server, when executing tasks on laserax-ai». Before it, per task: M0-D80 «use the RTX 4090 to run your tests there»,
+  «Push from here», «Iterate there, claim here»; M0-R8 «run everything that requires a gpu on laserax-ai-server, just like D84 did,
+  even the tests at the end»; M0-D85 «If you need the gpu use the 4090 on laserax ai server, even for the tests at the end».
+- **What runs there.** A block executed on laserax-ai (linux-pc) runs every GPU run on laserax-ai-server's RTX 4090
+  (ybelanger@192.168.1.134, repo `~/workspace/sandbox_reactions`; Repo facts): the GPU scopes while iterating, `--redarm`, the claim run
+  (`verify.py --changed`), `calibrate`, `headless`, `bench` and every probe — `SR_TEST_ADAPTER="RTX 4090"` before `verify.py` (tests/gpu.sh
+  otherwise asks for an RTX 5090, which the server lacks) and `--adapter "RTX 4090"` on the binary. Every number names the RTX 4090 and
+  laserax-ai-server (R13). linux-pc keeps the code, the plan, the build and clippy check (no GPU), git, and the lead's own runs.
+- **What stays on linux-pc** (my reading, M0-D85 — the lead corrects it if wrong): a check the server cannot run — the Quadro RTX 4000's
+  timing (G-FPS, G-TOP, per-pass costs, [M0-T122]), a window, Xvfb or a display capture, a scope declaring `box: laserax-ai`. Those run on
+  linux-pc as their block names; nothing else does.
+- **A block naming the RTX 5090** reads the RTX 4090 there (as R15's table reads the RTX 4080 Laptop on win-laptop): the same check,
+  its bound unchanged, its number named by adapter; a measurement whose `Deliver:` is the 5090's own stays the 5090's and is asked.
+- **The route.** The tree goes up by `rsync -a --exclude .git --exclude build --exclude .venv ./
+  ybelanger@192.168.1.134:workspace/sandbox_reactions/` (the task's start, `logs/.baseline/<ID>.json`, rides with it). After a run, bring
+  back before the next rsync up — which overwrites the server's copies: the task's own logs (`rsync -a <server>:…/milestones/m0/logs/
+  --include '<ID>.*' --exclude '*' milestones/m0/logs/`, never the task's main `<ID>.log` over a local one that holds more), the server's
+  new `loop_times.jsonl` lines appended to the local file (never the file copied over), and `tools/pb/verify.anchor.json` after the
+  claim. The server has no GitHub key: commits are made and pushed from linux-pc (`git push origin main`, then `git push
+  ybelanger@192.168.1.134:workspace/sandbox_reactions main`; the server's checkout takes it by `receive.denyCurrentBranch updateInstead`,
+  which needs its tracked files clean).
+- **Claim.** The claim is the server's run, tagged `[ALREADY RUN — PASS|FAIL (<what>) on laserax-ai-server, RTX 4090]`; the Repo facts'
+  «the claim run stays on linux-pc» is superseded (the plan's Superseded section).
+
 ## Considered and REJECTED (false economy)
 Binding (PLAYBOOK §2.1, §11): a later agent proposing an item below re-opens a closed decision — it asks
 the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.

@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/dump.rs
++++ b/crates/sr-engine/src/dump.rs
+@@ -313,7 +313,8 @@
+ pub fn dump_state(device: &wgpu::Device, queue: &wgpu::Queue, state: &State, step: &Step) -> Dump {
+     let (index, sim_time, resume) = step.resume_records(device, queue);
+     let flux = step.side_flux().map(|f| read_buffers(device, queue, "side.flux.readback", std::iter::once(f)));
+-    let rate = step.heat_rate(device, queue);
++    // planted: the dump leaves P5's rate out
++    let rate: Option<Vec<f32>> = step.heat_rate(device, queue).and(None);
+     let sinks = step.read_sinks(device, queue).map(|r| r.sinks).unwrap_or_default();
+     Dump { world: state.world(), step: index, sim_time, sinks, resume, planes: state.readback(device, queue), flux, rate }
+ }

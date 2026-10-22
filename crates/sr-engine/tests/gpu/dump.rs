@@ -12,6 +12,8 @@
 //! (M0-D33): its headless resume is graded byte for byte, so a resume whose first step pushes with F = 0 fails it.
 //! P5's carry (§0.5 [M0-TJ4] (6), M0-T121): scenes/sun_disk.json's 200 steps with every submission recording 8 of P5's
 //! slots — bare, and in frames under the latch — dump the bytes of the run at the engine's own choice.
+//! P5's warm start (§0.5 [M0-D85]): the rate is the dump's 17th plane, after F — a sun_disk life cut by a dump and continued
+//! is the unbroken one byte for byte 10 steps on, and the same dump without its rate visibly is not.
 
 use super::device;
 use sr_engine::dump::{dump_state, load_dump, Dump, Resume, Sink};
@@ -19,7 +21,7 @@ use sr_engine::gpu::Gpu;
 use sr_engine::scene::{EdgeMode, Scene, TestSettings};
 use sr_engine::state::{Booking, SideFields, State, WorldConfig, N_CHANNELS};
 use sr_engine::step::boxfit::{BoxMode, BoxReport};
-use sr_engine::step::heat::{HeatSetup, MIN_ROUNDS};
+use sr_engine::step::heat::{HeatPrecond, HeatSetup, MIN_ROUNDS};
 use sr_engine::step::react::ReactSetup;
 use sr_engine::step::dt::DtReport;
 use sr_engine::step::latch::{FramePlan, FrameReport};
@@ -151,7 +153,7 @@ fn small_dump() -> Dump {
         box_record: [8, 16, 24, 32, 64, 64, 17, 3],
         box_args: [3, 4, 1, 3, 1, 1],
     };
-    Dump { world, step: 17, sim_time: 7.123456789012345, sinks: Vec::new(), resume, planes, flux: None }
+    Dump { world, step: 17, sim_time: 7.123456789012345, sinks: Vec::new(), resume, planes, flux: None, rate: None }
 }
 
 /// The header's bytes and the planes' offset, read by hand.
@@ -555,6 +557,39 @@ fn a_wrong_magic_or_a_header_off_the_contract_is_refused() {
     let err = Dump::from_bytes(&f_bytes[..f_bytes.len() - 4 * cells]).unwrap_err();
     println!("F_y cut: {err}");
     assert!(err.contains("truncated"), "{err}");
+    // P5's rate (M0-D85): the 17th plane, read back; a header without the key (an older dump) reads none; the flag set with no
+    // plane, cleared over one, or set without F, refused.
+    let with_r = Dump { rate: Some((0..cells).map(|i| i as f32 * 0.125).collect()), ..with_f.clone() };
+    let r_bytes = with_r.to_bytes();
+    let (r_header, r_base) = split(&r_bytes);
+    assert_eq!((r_header["resume"]["rate"].as_bool(), r_bytes.len()), (Some(true), r_base + 4 * (N_CHANNELS + 3) * cells));
+    assert_eq!(Dump::from_bytes(&r_bytes).unwrap(), with_r, "a dump with the rate reads back the same");
+    let rewrite = |h: &serde_json::Value, body: &[u8]| {
+        let text = h.to_string();
+        let mut out = b"SRDUMP01".to_vec();
+        out.extend((text.len() as u32).to_le_bytes());
+        out.extend(text.as_bytes());
+        out.extend(body);
+        Dump::from_bytes(&out)
+    };
+    let mut older = f_header.clone();
+    older["resume"].as_object_mut().unwrap().remove("rate");
+    assert_eq!(rewrite(&older, &f_bytes[f_base..]).unwrap(), with_f, "a header without `rate` reads no rate");
+    let mut set = f_header.clone();
+    set["resume"]["rate"] = true.into();
+    let mut cleared = r_header.clone();
+    cleared["resume"]["rate"] = false.into();
+    let mut no_f = header.clone();
+    no_f["resume"]["rate"] = true.into();
+    for (want, got) in [
+        ("header.resume.rate: true, but no rate plane", rewrite(&set, &f_bytes[f_base..])),
+        ("header.resume.rate: false, but a plane follows", rewrite(&cleared, &r_bytes[r_base..])),
+        ("header.resume.rate: true without F", rewrite(&no_f, &bytes[base..])),
+    ] {
+        let err = got.unwrap_err();
+        println!("{want}: {err}");
+        assert!(err.starts_with(want), "expected {want:?}, got {err:?}");
+    }
 
     let root = temp("magic");
     let file = root.join("png.bin");
@@ -602,6 +637,51 @@ fn sun_disk_200_steps_carried_over_submissions_of_8_rounds_dump_the_engines_own_
     assert!(held > 0, "no frame ended with a step held");
     assert!(got == want, "the bare run at 8 rounds a submission: its dump's bytes differ from the engine's own choice");
     assert!(in_frames == want, "the frames at 8 rounds a submission: their dump's bytes differ from the engine's own choice");
+}
+
+/// §0.5 [M0-D85]: on the V-cycle a step's first Newton iterate is T⁰ + the last step's P5 rate × Δt, so a resume needs the
+/// rate. scenes/sun_disk.json, 30 steps, dumped (the rate read by hand as the 17th plane, after F), then 10 more: the dump
+/// loaded into a fresh step and run 10 steps writes the unbroken life's bytes. Adversarial: the same dump without its rate
+/// (the continued life's first step from T⁰) differs by then.
+#[test]
+fn a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on() {
+    let gpu = device();
+    let unbroken = Run::sun_disk(&gpu);
+    assert_eq!(unbroken.step.heat_precond(), Some(HeatPrecond::Multigrid), "the warm start is the V-cycle's");
+    unbroken.step.run(&gpu.device, &gpu.queue, 30);
+    let cut = dump_state(&gpu.device, &gpu.queue, &unbroken.state, &unbroken.step);
+    assert_eq!(cut.step, 30);
+    let bytes = cut.to_bytes();
+    let (header, base) = split(&bytes);
+    let cells = cut.world.cells();
+    assert_eq!(header["resume"]["rate"].as_bool(), Some(true), "a P5 run dumps its rate");
+    assert_eq!(bytes.len(), base + 4 * (N_CHANNELS + 3) * cells, "14 channels, F's 2, the rate's 1");
+    let rate = cut.rate.as_ref().expect("the rate read back");
+    for k in (0..cells).step_by(997) {
+        let o = base + 4 * ((N_CHANNELS + 2) * cells + k);
+        assert_eq!(f32::from_le_bytes(bytes[o..o + 4].try_into().unwrap()).to_bits(), rate[k].to_bits(), "the 17th plane at cell {k}");
+    }
+    let moving = rate.iter().filter(|&&r| r != 0.0).count();
+    println!("sun_disk step 30: {moving} of {cells} cells with a non-zero P5 rate");
+    assert!(moving > 0, "no cell's T moved in P5: the case cannot see a lost rate");
+    unbroken.step.run(&gpu.device, &gpu.queue, 10);
+    let want = dump_state(&gpu.device, &gpu.queue, &unbroken.state, &unbroken.step).to_bytes();
+
+    let read = Dump::from_bytes(&bytes).unwrap();
+    let continued = Run::sun_disk(&gpu);
+    load_dump(&gpu.queue, &continued.state, &continued.step, &read).unwrap();
+    continued.step.run(&gpu.device, &gpu.queue, 10);
+    let got = dump_state(&gpu.device, &gpu.queue, &continued.state, &continued.step).to_bytes();
+    assert!(got == want, "the continued life's dump at step 40 differs from the unbroken one's");
+
+    // The case can see the bug it guards: without the rate the continued life's first step starts from T⁰.
+    let cold = Run::sun_disk(&gpu);
+    load_dump(&gpu.queue, &cold.state, &cold.step, &Dump { rate: None, ..read.clone() }).unwrap();
+    cold.step.run(&gpu.device, &gpu.queue, 10);
+    let lost = dump_state(&gpu.device, &gpu.queue, &cold.state, &cold.step);
+    let off = lost.planes.iter().zip(&Dump::from_bytes(&want).unwrap().planes).filter(|(a, b)| a.to_bits() != b.to_bits()).count();
+    println!("the same dump without its rate: {off} state values differ at step 40");
+    assert!(off > 0, "a resume that drops the rate must not pass for one");
 }
 
 /// A world of [`mixed_start`]'s gas with P3's sinks and nothing else on (M0-T52b): the step P3 runs, its sinks set by the

@@ -12,6 +12,8 @@
 
 use std::fmt;
 use std::ops::Range;
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::Arc;
 
 use crate::step::Pass;
 
@@ -110,6 +112,8 @@ pub struct State {
     world: WorldConfig,
     groups: [wgpu::Buffer; 3],
     dims: wgpu::Buffer,
+    /// How many times [`State::upload`] wrote the state: P5 reads it to forget the last step's rate (§0.5 [M0-D85]).
+    uploads: Arc<AtomicU64>,
 }
 
 impl State {
@@ -137,7 +141,7 @@ impl State {
             dims.get_mapped_range_mut(..).expect("mapped at creation").copy_from_slice(&bytes);
         }
         dims.unmap();
-        Ok(State { world, groups, dims })
+        Ok(State { world, groups, dims, uploads: Arc::default() })
     }
 
     pub fn world(&self) -> WorldConfig {
@@ -164,7 +168,14 @@ impl State {
                 planes[range.start * cells..range.end * cells].iter().flat_map(|v| v.to_le_bytes()).collect();
             queue.write_buffer(&self.groups[g], 0, &bytes);
         }
+        self.uploads.fetch_add(1, Ordering::Relaxed);
         Ok(())
+    }
+
+    /// The count of [`State::upload`]s, shared: a step with P5 zeroes its last step's rate at its first step after one
+    /// (§0.5 [M0-D85]).
+    pub(crate) fn uploads(&self) -> Arc<AtomicU64> {
+        self.uploads.clone()
     }
 
     /// Reads the whole state back in its canonical form, after every submitted step. Blocks on the device: native

@@ -1,0 +1,32 @@
+    Finished `release` profile [optimized] target(s) in 0.10s
+-rwxrwxr-x 2 ybelanger ybelanger 21695608 Oct 22 13:19 build/target/release/sandbox-reactions
+LIFE label=cold run=1 rc=6 wall_s=19.445 sim_time=9.042702 steps=1400 load=0.16 0.10 0.31 procs=0 build/calibrate_runs/2026-10-22T18-48-47Z
+heat_unconverged=3
+LIFE label=cold run=2 rc=6 wall_s=19.106 sim_time=9.042702 steps=1400 load=0.51 0.19 0.33 procs=0 build/calibrate_runs/2026-10-22T18-49-14Z
+heat_unconverged=3
+LIFE label=cold run=3 rc=6 wall_s=19.026 sim_time=9.042702 steps=1400 load=0.65 0.25 0.35 procs=0 build/calibrate_runs/2026-10-22T18-49-34Z
+heat_unconverged=3
+    Finished `release` profile [optimized] target(s) in 3.11s
+0
+LIFE label=warm run=1 rc=6 wall_s=14.697 sim_time=9.250446 steps=1400 load=0.20 0.21 0.32 procs=0 build/calibrate_runs/2026-10-22T18-52-24Z
+heat_unconverged=4
+LIFE label=warm run=2 rc=6 wall_s=14.291 sim_time=9.250446 steps=1400 load=0.41 0.26 0.33 procs=0 build/calibrate_runs/2026-10-22T18-52-47Z
+heat_unconverged=4
+LIFE label=warm run=3 rc=6 wall_s=14.320 sim_time=9.250446 steps=1400 load=0.54 0.29 0.34 procs=0 build/calibrate_runs/2026-10-22T18-53-02Z
+heat_unconverged=4
+== verify.py heat_implicit heat_stiff heat_limiter heat_gauss radiation_force heat_multigrid dump --task M0-D85 (laserax-ai-server, RTX 4090)
+heat_implicit 8/0/0 GO · heat_stiff 8/0/0 GO · heat_limiter 8/0/0 GO · heat_gauss 14/0/0 GO · radiation_force 11/0/0 GO · heat_multigrid 4/0/0 GO · dump 10/2/0 NO-GO
+dump's 2 failed: a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump and headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte — SR-ERROR calibration invalid: preset_mass_sb: missing (M0-V9)
+new case a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on: ok — 6650 of 240000 cells with a non-zero P5 rate at step 30; without the rate 50447 state values differ at step 40
+checkpoint build/calibrate_runs/2026-10-22T18-53-02Z/m_bh_sb-01/checkpoint/s_1400.bin: resume.rate true, 17 planes
+== clean
+test dump::a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+the same dump without its rate: 50447 state values differ at step 40
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 369 filtered out; finished in 1.24s
+== plant warm-rate-not-dumped
+test dump::a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+thread 'dump::a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on' (1350979) panicked at crates/sr-engine/tests/gpu/dump.rs:657:5:
+assertion `left == right` failed: a P5 run dumps its rate
+  left: Some(false)
+ right: Some(true)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 369 filtered out; finished in 0.72s

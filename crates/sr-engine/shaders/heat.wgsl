@@ -232,7 +232,8 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // MAX_ROUNDS + 3 MAX_PASSES + 2 times, each slot reading its workgroup count from a word the slot before it wrote — the
 // args buffer of its parity, so no dispatch writes the buffer it is sized by — and each slot's workgroups first sum the
 // previous slot's partial sums, every workgroup in the same fixed order (§1.3.4), so all of them take the same decision.
-// What a slot does is the record's mode: INIT builds the first pass's system at T⁰; RESID ends the passes or starts the
+// What a slot does is the record's mode: INIT builds the first pass's system at the first iterate (T⁰; on the V-cycle
+// T⁰ + the last step's P5 rate × Δt, §0.5 [M0-D85]); RESID ends the passes or starts the
 // next one's solve (r = b − A x, from the iterate, with A z and zᵀr, zᵀA z); START shifts x and r along z and forms
 // w = A D⁻¹r; SOLVE is a round, or — once the measures hold,
 // the rounds run out or the method breaks down — the Newton update and the next pass's system (the iterate's T, x = u, the
@@ -244,7 +245,8 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // rounds again from slot 0 of parity 0 (the record of parity 1 is the last one written), its commit and P6–P9 after them.
 // The commit: `heat_close` writes F = −D_f (u_b − u_a) at the solved u (the start state's when the step is pinned or
 // not run), side.flux and each cell's `radiated` Δt Σ_vac D_f (u_i − u_vac), with the heat sums; `heat_sum` closes the
-// balance, δ = −(Σ C (T − T⁰) + R)/Σ C T; `heat_apply` adds C (T − T⁰ + δ T) to E.
+// balance, δ = −(Σ C (T − T⁰) + R)/Σ C T; `heat_apply` adds C (T − T⁰ + δ T) to E and keeps the step's rate (T − T⁰)/Δt
+// for the next step's first iterate (§0.5 [M0-D85]).
 //
 // The V-cycle as the preconditioner (§0.5 [M0-D82]; M0-D83; `parity.mg`): M⁻¹r is no longer cell-local, so a slot is a
 // group — its `heat_round`, then the levels (`mg_level0`, `mg_coarsen`), the V-cycle (the last section) and `heat_matvec`,
@@ -636,10 +638,21 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
         let heat = c / rec.dt;
         switch action {
             case CELL_BUILD: {
+                // The first iterate (§0.5 [M0-D85]): on the V-cycle T⁰ + the cell's P5 rate in the last step × Δt_n (the
+                // rate `heat_apply` left in krylov's first s plane), T⁰ where that is off by more than a factor 2 or not
+                // finite, floored at T_floor; on Jacobi T⁰.
                 let t0 = frozen[T0 * n + i];
-                solve[SV_X * n + i] = u_of(t0);
+                var tg = t0;
+                if (mg) {
+                    tg = t0 + krylov[KR_S * n + i] * rec.dt;
+                    if (!(tg >= 0.5 * t0 && tg <= 2.0 * t0)) {
+                        tg = t0;
+                    }
+                    tg = max(tg, params.t_floor);
+                }
+                solve[SV_X * n + i] = u_of(tg);
                 solve[SV_L * n + i] = 0.0;
-                let q = build(x, y, t0, rec.dt);
+                let q = build(x, y, tg, rec.dt);
                 part = vec4<f32>(c * t0, 0.0, q.x, q.y);
             }
             case CELL_RESID: {
@@ -945,17 +958,22 @@ fn heat_park() {
 
 @compute @workgroup_size(8, 8)
 fn heat_apply(@builtin(global_invocation_id) id: vec3<u32>) {
-    if (id.x >= abox.w || id.y >= abox.h || machine.report.stepped == 0u) {
+    if (id.x >= abox.w || id.y >= abox.h) {
         return;
     }
     let n = dims.cells;
     let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
     let c = frozen[CAP * n + cell];
-    if (c <= 0.0) {
+    // The cell's P5 rate in this step, (T − T⁰)/Δt_n, for the next step's first iterate (§0.5 [M0-D85]): krylov's first s
+    // plane, which no round reads before writing it; 0 off the gas and when the step did not run. A dump carries it.
+    if (machine.report.stepped == 0u || c <= 0.0) {
+        krylov[KR_S * n + cell] = 0.0;
         return;
     }
     let t = solve[SV_T * n + cell];
-    hydro[3u * n + cell] += c * (t - frozen[T0 * n + cell] + machine.report.delta * t);
+    let t0 = frozen[T0 * n + cell];
+    hydro[3u * n + cell] += c * (t - t0 + machine.report.delta * t);
+    krylov[KR_S * n + cell] = (t - t0) / machine.rec[1].dt;
 }
 
 // ---- P5's multigrid preconditioner (§0.5 [M0-D82]; reports/heat_multigrid.md) ----

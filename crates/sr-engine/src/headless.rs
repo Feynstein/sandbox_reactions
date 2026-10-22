@@ -383,6 +383,7 @@ pub fn twin_dump(twin: &Twin, world: WorldConfig) -> Dump {
         },
         planes: twin.state.planes.iter().map(|&v| v as f32).collect(),
         flux: None,
+        rate: None,
     }
 }
 

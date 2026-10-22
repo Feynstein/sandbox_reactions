@@ -485,6 +485,21 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     with the closure δ ≈ 4 × 10⁻⁷ (Jacobi's ≈ 10⁻⁹), and (5)'s δ lifts every cell, the floor's at the edges too, ≈ 2 × 10⁻⁸ a pass,
     which they radiate; σ², the heat and T against the twin hold (T 2.7 × 10⁻⁵ of the peak, Jacobi 5.1 × 10⁻⁵) — the lead, 2026-10-22,
     at M0-D83: «V-cycle at 1e-5 (Recommended)».
+  - [M0-D85] §0.5 [M0-TJ4] (3)'s «the first iterate is the pass's start state (nothing kept from the previous step: a dump resumes
+    bit-identical on [M0-T26]'s keys)», and §2.12.3's dump with [M0-T26]'s `resume` and [M0-D33]'s F · on the multigrid V-cycle
+    ([M0-D82]) a step's first Newton iterate is T_i⁰ + r_i Δt_n, r_i = (T_i − T_i⁰)/Δt_{n−1} the cell's P5 rate in the last step (0 off
+    the gas, after a step P5 did not run, and at the first step after a state upload), T_i⁰ where that falls outside [T_i⁰/2, 2 T_i⁰] or
+    is not finite, then floored at T_floor; on Jacobi the first iterate stays T⁰; every tolerance, the factor-2 update and the ceiling
+    unchanged; when the run runs P5 the dump carries r as one more little-endian f32 plane after F's two (the 17th), row-major, flagged
+    `resume.rate` (a header without the key reads false, and loading such a dump zeroes r), restored by `--load-dump` and so by calibrate's
+    checkpoint ([M0-D77]) — a dump resumes bit-identical on [M0-T26]'s keys and r · measured on the RTX 4090 (laserax-ai-server, idle: no
+    other process on the card, load 0.16–0.65, 2026-10-22), the 20 M₀ life to step 1,400 (`calibrate --only m_bh_sb --bracket
+    67020.643,67087.664 --max-steps 1400 --checkpoint-every 1400`), median of 3: 14.320 s against 19.106 s from T⁰ (−25.0 %; M0-R8's probe
+    19.02 → 14.20 s); the hard steps' passes are the factor-2 clamp's and barely move (M0-R8 M5: P5 −1.5 %); one step's T moves within the
+    solve's 10⁻⁵ of the tight answer, neither closer nor farther (M0-R8 M8), so a life measured from one start is not the life from the
+    other (this one's sim time at step 1,400: 9.250446 against 9.042702); on Jacobi the warm start would leave the sharp pulse's heat at
+    3.7 × 10⁻⁵ against heat_implicit's 10⁻⁵ (M0-R8 M9); a dump is one plane (+6 %) larger (reports/heat_warm_start.md, tasks/M0-D85.md) —
+    the lead, 2026-10-22, at M0-R8: «(c) Rate extrapolation (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/step/heat.rs
++++ b/crates/sr-engine/src/step/heat.rs
+@@ -446,7 +446,8 @@
+     /// state gives the same step) — recorded before the step's passes.
+     pub(super) fn forget_rate(&self, encoder: &mut wgpu::CommandEncoder) {
+         let uploads = self.uploads.load(Ordering::Relaxed);
+-        if uploads != self.seen.replace(uploads) {
++        // planted: an upload keeps the last step's rate
++        if uploads != self.seen.replace(uploads) && uploads == 0 {
+             let plane = 4 * self.world.cells() as u64;
+             encoder.clear_buffer(&self.krylov, RATE_PLANE * plane, Some(plane));
+         }

@@ -592,6 +592,9 @@ impl Step {
     /// what it reads) — the pass boundaries cost ~0.06 ms a step on a Sun-sized box (M0-D26).
     fn encode_step(&self, encoder: &mut wgpu::CommandEncoder, latch: Option<&Latch>) {
         let n = self.next.get();
+        if let Some(heat) = &self.heat {
+            heat.forget_rate(encoder);
+        }
         self.timer.begin_step();
         let mut passes: Vec<(&'static str, usize, Lists<'_>)> = Vec::with_capacity(11);
         if n == 0 {

@@ -1,0 +1,22 @@
+== 2026-10-22T15:08:53-04:00 plan_lint · task M0-D85-close · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=669 failed=0 warnings=17 · blocks=286 · flow_rows=286 · verify_fences=7 · history=0 · flow=per-task · header=698/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: 1 carried flag(s) on open BUILD blocks carry no `[<from>, <date>]` stamp - history, read by the pass since `Model ratings: 2026-10-22 by M0-TM10`, never counted (§0): M0-R10
+WARN: M0-TC7: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-V18: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D53: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-D50: DONE outside the current phase and 63 lines long - stub it (§2.6)
+WARN: M0-D55: DONE outside the current phase and 53 lines long - stub it (§2.6)
+WARN: M0-D56: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-TJ2: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T123: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T125: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D51: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D57: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D52: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D54: DONE outside the current phase and 24 lines long - stub it (§2.6)
+WARN: M0-R9: `Read:` names crates/sr-engine/src/step/heat.rs whole (674 lines > 500) - name a section or a line range
+WARN: a line in 3 blocks (M0-R9 · M0-R10 · M0-R6): '`M<n>` (bold allowed). Fail: NO-GO — no report, a missing section, fewer...' - state it once in Rules and cite it
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-R9 7 · M0-R10 7 · M0-D81 3 · M0-R6 12 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6
+=== GO ===
+

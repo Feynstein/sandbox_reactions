@@ -3,7 +3,9 @@
 //! u = a_r T⁴ (u = T under the scene's `test.constant_diffusivity`), each face's D_f frozen at the pass's start with the
 //! Levermore–Pomraning limiter, Newton passes and PCG rounds (the multigrid V-cycle by default, Jacobi for tests), the light
 //! leaving booked `radiated` at the emitting cell, F (the flux the step moved) kept for step n + 1's P4. RKL2 and its
-//! 32-stage face cap are retired (§0.5 [M0-TJ4]).
+//! 32-stage face cap are retired (§0.5 [M0-TJ4]). On the V-cycle a step's first Newton iterate is T⁰ + the last step's P5
+//! rate × Δt (§0.5 [M0-D85]): the rate lives in krylov's first s plane between steps, zeroed at the first step after a
+//! state upload ([`State::upload`]), carried by a dump ([`Step::heat_rate`], [`Step::set_heat_rate`]).
 //!
 //! The dispatches: `heat_cells` (the start state), `heat_law` (each face's D_f), `heat_open` (one invocation), [`SLOTS`]
 //! recorded `heat_round`s — Newton passes and PCG rounds, one dispatch a round on Jacobi, each sized by a word the one before
@@ -31,7 +33,8 @@
 //! and [`Step::apply_heat_precond`] read the V-cycle alone.
 
 use std::cell::Cell;
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
+use std::sync::Arc;
 
 use sr_physics::reference::heat::{MAX_PASSES, MAX_ROUNDS};
 use sr_physics::registry::Physics;
@@ -46,6 +49,8 @@ const FROZEN_PLANES: u64 = 5;
 /// heat.wgsl's `solve` (x, T, p, the diagonal, x's low word) and `krylov` (r, w, s in two parities) planes.
 const SOLVE_PLANES: u64 = 5;
 const KRYLOV_PLANES: u64 = 6;
+/// krylov's first s plane (heat.wgsl `KR_S`): between steps, each cell's P5 rate in the last step (§0.5 [M0-D85]).
+const RATE_PLANE: u64 = 4;
 /// heat.wgsl's `Machines`: two `Machine` records (Δt the ninth word of each), the `Report`, then the log of [`LOG`]
 /// unconverged steps.
 const MACHINE_WORDS: usize = 2 * 16 + REPORT_WORDS + 4 * LOG;
@@ -197,6 +202,11 @@ pub struct Heat {
     /// The round machine on the V-cycle: the slots' `heat_round`s, and the rest of a slot's group per parity.
     mg_rounds: Vec<Dispatch>,
     mg_groups: [Vec<Dispatch>; 2],
+    /// The solve's Krylov planes, whose first s plane holds the last step's rate between steps (§0.5 [M0-D85]), and the
+    /// state's upload count when the rate was last zeroed or written.
+    krylov: wgpu::Buffer,
+    uploads: Arc<AtomicU64>,
+    seen: Cell<u64>,
 }
 
 /// P5's record after the last step run.
@@ -258,7 +268,7 @@ impl Heat {
         // and the rounds' sizes, a buffer per parity (zero: no round runs until `heat_open`).
         let tiles = w.div_ceil(16) * h.div_ceil(16);
         let solve = scratch("heat.solve", SOLVE_PLANES * cells, none);
-        let krylov = scratch("heat.krylov", KRYLOV_PLANES * cells, none);
+        let krylov = scratch("heat.krylov", KRYLOV_PLANES * cells, wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST);
         let machine = init_buffer(device, "heat.machine", storage | wgpu::BufferUsages::COPY_DST, &[0; MACHINE_WORDS]);
         let partials = scratch("heat.partials", 4 * (2 * tiles + w.div_ceil(8) * h.div_ceil(8)), none);
         let sizes = [0, 1].map(|_| init_buffer(device, "heat.rounds", wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::INDIRECT, &[0; ROUND_WORDS + 3 * MGA_COUNT]));
@@ -358,7 +368,7 @@ impl Heat {
         let mg_rounds = (0..SLOTS).map(|j| again(&mg_round[j % 2], j)).collect();
         list.push(dispatch("heat_close", &[0, 4, 5, 8, 10, 11, 12, 14, 16, 17], &[], tiles()));
         list.push(dispatch("heat_sum", &[8, 10, 16, 17, 18, 19], &[], one()));
-        list.push(dispatch("heat_apply", &[0, 1, 4, 8, 14, 16], &[], tiles()));
+        list.push(dispatch("heat_apply", &[0, 1, 4, 8, 14, 15, 16], &[], tiles()));
         let park = dispatch("heat_park", &[16, 18, 19], &[], one());
 
         // The multigrid: each entry's dispatch (heat.wgsl MGA_*) over the world's levels — the box's are no more —, sized
@@ -406,7 +416,40 @@ impl Heat {
         let flux = setup.side.flux().clone();
         let (fixed, learnt) = (Cell::new(None), Cell::new(FIRST_ROUNDS));
         let precond = Cell::new(if DEFAULT_MULTIGRID.load(Ordering::Relaxed) { HeatPrecond::Multigrid } else { HeatPrecond::Jacobi });
-        Heat { dispatches: list, park, machine, faces, flux, sizes, world, fixed, learnt, mg_coef, mg_vec, mg_layout, mg_build, mg_cycle, precond, mg_rounds, mg_groups }
+        let uploads = state.uploads();
+        let seen = Cell::new(uploads.load(Ordering::Relaxed));
+        Heat {
+            dispatches: list,
+            park,
+            machine,
+            faces,
+            flux,
+            sizes,
+            world,
+            fixed,
+            learnt,
+            mg_coef,
+            mg_vec,
+            mg_layout,
+            mg_build,
+            mg_cycle,
+            precond,
+            mg_rounds,
+            mg_groups,
+            krylov,
+            uploads,
+            seen,
+        }
+    }
+
+    /// Zeroes the last step's rate when the state was uploaded since it was last zeroed or written (§0.5 [M0-D85]: the same
+    /// state gives the same step) — recorded before the step's passes.
+    pub(super) fn forget_rate(&self, encoder: &mut wgpu::CommandEncoder) {
+        let uploads = self.uploads.load(Ordering::Relaxed);
+        if uploads != self.seen.replace(uploads) {
+            let plane = 4 * self.world.cells() as u64;
+            encoder.clear_buffer(&self.krylov, RATE_PLANE * plane, Some(plane));
+        }
     }
 
     /// heat.wgsl's `Machines` and the slots' sizes of parity 0, for the latch's gate.
@@ -500,6 +543,40 @@ impl Step {
         Some((all[nx + ny..2 * nx + ny].to_vec(), all[2 * nx + ny..].to_vec()))
     }
 
+    /// Each cell's P5 rate in the last step, (T − T⁰)/Δt, row-major — the next step's first iterate on the V-cycle is
+    /// T⁰ + rate × Δt (§0.5 [M0-D85]), so a dump carries it; none without P5. Blocks on the device.
+    pub fn heat_rate(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> Option<Vec<f32>> {
+        let heat = self.heat.as_ref()?;
+        let plane = 4 * heat.world.cells() as u64;
+        let staging = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("heat.rate"),
+            size: plane,
+            usage: wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+        });
+        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("heat.rate") });
+        encoder.copy_buffer_to_buffer(&heat.krylov, RATE_PLANE * plane, &staging, 0, plane);
+        queue.submit([encoder.finish()]);
+        Some(read_buffers(device, queue, "heat.rate", std::iter::once(&staging)))
+    }
+
+    /// Writes the last step's rate (`load_dump`): `rate`, or zeros when none (a dump without it, §0.5 [M0-D85]); the state's
+    /// uploads so far count as seen. Panics on a length other than the world's cells. No effect without P5.
+    pub fn set_heat_rate(&self, queue: &wgpu::Queue, rate: Option<&[f32]>) {
+        if let Some(heat) = &self.heat {
+            let cells = heat.world.cells();
+            let bytes: Vec<u8> = match rate {
+                Some(r) => {
+                    assert_eq!(r.len(), cells, "the rate is one plane of the world");
+                    r.iter().flat_map(|v| v.to_le_bytes()).collect()
+                }
+                None => vec![0; 4 * cells],
+            };
+            queue.write_buffer(&heat.krylov, RATE_PLANE * 4 * cells as u64, &bytes);
+            heat.seen.set(heat.uploads.load(Ordering::Relaxed));
+        }
+    }
+
     /// `side.flux` (F_x, then F_y, row-major) when the step runs P5: the F its next step's P4 pushes with, which a dump
     /// carries and `load_dump` restores (§0.5 [M0-D33]); none without P5.
     pub fn side_flux(&self) -> Option<&wgpu::Buffer> {
@@ -522,7 +599,8 @@ impl Step {
         self.heat.as_ref().map(|heat| heat.precond.get())
     }
 
-    /// The multigrid's levels built for the first Newton pass of the last step run (its system at T⁰, from the frozen planes
+    /// The multigrid's levels built for the first Newton pass of the last step run (its system at T⁰ — the first pass's on
+    /// Jacobi, and on the V-cycle when the last step's rate is zero, a step after an upload (§0.5 [M0-D85]) — from the frozen planes
     /// and faces a step leaves), and level 0 read back; none without P5. Blocks on the device (tests).
     pub fn heat_first_system(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> Option<HeatSystem> {
         let heat = self.heat.as_ref()?;
