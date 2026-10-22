@@ -26,3 +26,28 @@ ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 350 filtered out; finished in 218.47s
 
+=== M0-D80 new cases on laserax-ai-server RTX 4090 2026-10-22T08:40:47-04:00 ===
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 351 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 351 filtered out; finished in 0.00s
+
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 350 filtered out; finished in 0.00s
+
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953747 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953747 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178701 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953747 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953747 until=unmet
+ok
+--
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 350 filtered out; finished in 246.42s
+
+=== the trimmed life case on laserax-ai-server RTX 4090 2026-10-22T10:01:12-04:00 ===
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 350 filtered out; finished in 123.22s
+

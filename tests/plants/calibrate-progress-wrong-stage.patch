@@ -1,11 +1,11 @@
 --- a/crates/sr-engine/src/calibrate.rs
 +++ b/crates/sr-engine/src/calibrate.rs
-@@ -674,7 +674,7 @@
-         let continued_from = from.as_ref().map(|c| c.step);
-         let every = self.progress_every;
+@@ -756,7 +756,7 @@
+         // The last tick's frame and star numbers (M0-D80), which progress.json carries beside its own keys.
+         let numbers = RefCell::new(Vec::new());
          let note = |step: u64, sim_time: f64, stage: &str| {
 -            let record = json!({"item": label, "mass": mass, "step": step, "sim_time": sim_time, "stage": stage, "stages": *stages.borrow(), "heat_unconverged": unconverged_steps(), "started": started, "progress_every": every, "continued_from_step": continued_from, "checkpoint_step": checkpoint_step.get()});
 +            let record = json!({"item": label, "mass": mass, "step": step, "sim_time": sim_time, "stage": "wrong_stage", "stages": *stages.borrow(), "heat_unconverged": unconverged_steps(), "started": started, "progress_every": every, "continued_from_step": continued_from, "checkpoint_step": checkpoint_step.get()});
-             write_progress(&progress_file, &record);
+             write_progress(&progress_file, &with_numbers(record, &numbers.borrow()));
          };
-         let mut tick = |step: u64, sim_time: f64, stage: &str| {
+         let mut tick = |t: &Tick| {

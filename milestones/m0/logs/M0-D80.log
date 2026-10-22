@@ -1,0 +1,8 @@
+=== M0-D80 quick claims on laserax-ai 2026-10-22T09:14:09-04:00 ===
+plan_lint         661/0/0      0.11 s  GO · step 1/2, 1 left
+calibrate_status  18/0/0       0.06 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-D80.<scope>.log · record: loop_times.jsonl · tree 6409791d83d9+98964a47921c
+anchor: 4 path×scope entries moved by this run
+anchor: 121 paths checked · 253 skipped (3 classes) · 146 never checked · 13 stale · 0 unclassified · 0 owed · 280 covered of 533 visible
+verify: 679 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.66->1.66
+=== GO ===

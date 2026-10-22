@@ -11,3 +11,22 @@ exit 0 warns 0 first:  SR-HEADLESS DONE steps=600 sim_time=268.328172 until=none
 exit 6 warns 0 first:  SR-ERROR calibration invalid: preset_mass_sb: missing
 --- ref_burn
 exit 0 warns 0 first:  SR-HEADLESS DONE steps=600 sim_time=6.271428 until=none
+=== iron block: wall and collapse length by sigma, laserax-ai-server RTX 4090 2026-10-22T08:45:20-04:00 ===
+    Finished `release` profile [optimized] target(s) in 26.94s
+sigma 400 96 steps wall 62.0 s [('core_collapse', 1), ('cloud', 96)]
+sigma 350 96 steps wall 262.9 s [('core_collapse', 1)]
+sigma 800 96 steps wall 210.9 s [('core_collapse', 1), ('neutron_star', 65)]
+sigma 1600 96 steps wall 270.1 s [('core_collapse', 1), ('neutron_star', 65)]
+=== iron block Σ 400 per-pass timing, 40 steps (all in the collapse), laserax-ai-server RTX 3060 (the 4090 busy with the scopes) 2026-10-22T09:02:59-04:00 ===
+SR-ADAPTER name=NVIDIA GeForce RTX 3060 backend=Vulkan driver=NVIDIA
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/d80_t/summary.json'
+1205494
+(the RTX 3060 run above stopped by me after ~10 min at 0 % GPU, no output: NOT measured) === iron block Σ 400 per-pass timing, 20 steps, RTX 4090 idle 2026-10-22T09:11:52-04:00 ===
+SR-HEADLESS DONE steps=20 sim_time=0.119082 until=none
+wall 61.3 s {"per_pass_ms": {"P0 edits": 0.005184, "P1 dt": 0.0030016, "P2 gravity": 0.011603200000000001, "P6 reactions": 3047.2522128000005, "P8 floors": 0.009847999999999999, "P9 reductions": 0.008358399999999998}, "source": "gpu-timestamp", "step_ms_mean": 3047.3536704000007}
+=== iron block Σ 400: a_n_fe override against wall and collapse length, 96 steps, laserax-ai-server RTX 4090 idle 2026-10-22T09:59:06-04:00 ===
+NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %;
+a_n_fe 10 96 steps wall 61.5 s P6 636.5 ms/step [('core_collapse', 1)]
+a_n_fe 1 96 steps wall 30.4 s P6 312.4 ms/step [('core_collapse', 1)]

@@ -42,7 +42,7 @@ UNIT_MASS = 3351.032
 DEFAULT_BRACKET = {"m_ign_sb": (0.05, 1.0), "m_up_sb": (1.0, 14.0), "m_bh_sb": (None, 20.0)}
 PRESET_LIVES = 3  # preset_mass_sb: the Sun-like, the heavy and the neutron-star presets, each one life
 ITEMS = tuple(DEFAULT_BRACKET) + ("preset_mass_sb",)
-PROGRESS = re.compile(r"SR-CALIBRATE progress item=(?P<item>\S+) mass=(?P<mass>\S+) step=(?P<step>\d+) sim_time=(?P<sim>\S+)(?: heat_unconverged=\d+)? stage=(?P<stage>.*?)\s*$")
+PROGRESS = re.compile(r"SR-CALIBRATE progress item=(?P<item>\S+) mass=(?P<mass>\S+) step=(?P<step>\d+) sim_time=(?P<sim>\S+)(?: heat_unconverged=\d+)? stage=(?P<stage>.*?)(?: \| .*)?\s*$")  # M0-D80: the frame's and the star's numbers follow ` | `
 STALE_S = 900.0  # a progress.json older than this, or than STALE_TICKS ticks at the life's pace if longer, is marked as a stopped life's
 STALE_TICKS = 3
 TICK_STEPS = 10_000  # calibrate.rs PROGRESS_EVERY: the tick of a progress.json that does not say (written before M0-D75)

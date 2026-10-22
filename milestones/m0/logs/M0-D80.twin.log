@@ -1,0 +1,54 @@
+== 2026-10-22T09:20:29-04:00 twin · task M0-D80 · box laserax-ai :: bash tests/gpu.sh twin physics
+-- twin · exit=101 · 1.32 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 6 tests
+test twin::a_world_over_128_is_refused_and_128_runs ... SR-ERROR calibration invalid: preset_mass_sb: missing
+
+thread 'twin::a_world_over_128_is_refused_and_128_runs' (635372) panicked at crates/sr-engine/tests/gpu/twin.rs:112:9:
+assertion `left == right` failed: --world 200x200
+  left: 6
+ right: 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time ... SR-ERROR calibration invalid: preset_mass_sb: missing
+
+thread 'twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time' (635374) panicked at crates/sr-engine/tests/gpu/twin.rs:79:5:
+assertion `left == right` failed
+  left: 6
+ right: 0
+FAILED
+test twin::p8_in_the_driver_books_what_it_changes ... SR-TWIN floors: ΔΣ 1.1199999931932325e-6 (vacuum_reset -1.1199999931932325e-6), ΔE 1.1200023787679244e-7 (floor_added 1.1200023787679244e-7)
+ok
+test twin::the_driver_steps_the_gpus_way_not_with_a_fresh_g_each_step ... SR-TWIN order: 12 steps, the driver = the GPU-order loop bit for bit; the fresh-g loop differs by 2.480902962513909e-4 (sim time 1.801672219725603e-5)
+ok
+test twin::the_drivers_pass_list_is_the_gpus ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-TWIN passes (gravity true, hydro true):
+  twin driver: ["P1 dt", "P2 gravity", "P4 hydro", "P8 floors", "P9 reductions"]
+  GPU step:    ["P1 dt", "P2 gravity", "P4 hydro", "P8 floors", "P9 reductions"]
+SR-TWIN passes (gravity true, hydro false):
+  twin driver: ["P1 dt", "P2 gravity", "P8 floors", "P9 reductions"]
+  GPU step:    ["P1 dt", "P2 gravity", "P8 floors", "P9 reductions"]
+SR-TWIN passes (gravity false, hydro true):
+  twin driver: ["P1 dt", "P4 hydro", "P8 floors", "P9 reductions"]
+  GPU step:    ["P1 dt", "P4 hydro", "P8 floors", "P9 reductions"]
+SR-TWIN passes (gravity false, hydro false):
+  twin driver: ["P1 dt", "P8 floors", "P9 reductions"]
+  GPU step:    ["P1 dt", "P8 floors", "P9 reductions"]
+ok
+test twin::the_gpus_own_flags_are_refused_with_the_twin ... SR-ERROR bad arguments: --adapter is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --timing is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --load-dump is the GPU's: it has no meaning with --cpu-reference
+ok
+
+failures:
+
+failures:
+    twin::a_world_over_128_is_refused_and_128_runs
+    twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 345 filtered out; finished in 1.17s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,3 @@
+# M0-D80 | launch headless-boot | 2026-10-22T09:20:46-0400
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-b36wmx2o
+SR-ERROR calibration invalid: preset_mass_sb: missing

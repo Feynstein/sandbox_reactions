@@ -1,0 +1,18 @@
+=== M0-D80 plant calibrate-one-step-never, by hand in a scratch copy on laserax-ai-server (/tmp/d80_redarm), RTX 4090 2026-10-22T09:08:43-04:00 ===
+1
+thread 'calibrate_bisect::one_step_frames_follow_the_physics' (1204464) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:856:5:
+a step at P5's ceiling
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+--
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 350 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+thread 'calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse' (1204691) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:931:5:
+a stretch of one-step frames through the collapse: [Seen { step: 65, frame: 16, p5_ceiling: 0, raw: "cloud" }, Seen { step: 129, frame: 16, p5_ceiling: 0, raw: "cloud" }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+--
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 350 filtered out; finished in 61.57s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

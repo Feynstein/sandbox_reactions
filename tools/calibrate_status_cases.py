@@ -342,7 +342,10 @@ def case_progress_keys_in_source(_tmp):
     assert "SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} heat_unconverged={unconverged} stage={stage}" in text
     # The status script's progress regex reads that very line, with and without the count.
     for line in ("SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=3 stage=main_sequence",
-                 "SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 stage=main_sequence"):
+                 "SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 stage=main_sequence",
+                 # M0-D80: the frame's, the world's and the heaviest object's numbers after the stage.
+                 "SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=3 stage=main_sequence | frame=1 dt=0.0123"
+                 " s_per_step=2.5 p5_ceiling=1 | escaped=0 objects=1 | M=3351 R=12.5 raw=core_collapse"):
         m = cs.PROGRESS.search(line)
         assert m and m["stage"] == "main_sequence" and m["step"] == "10000", line
 

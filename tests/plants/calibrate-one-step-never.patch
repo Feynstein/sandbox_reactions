@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -538,7 +538,8 @@
+ /// a step at P5's ceiling, or the heaviest object's raw stage is core_collapse. It reads the state alone, never wall time, so a
+ /// life frames the same whatever else loads the GPU.
+ pub fn one_step_next(p5_ceiling: u64, raw_stage: Option<&str>) -> bool {
+-    p5_ceiling > 0 || raw_stage == Some("core_collapse")
++    let _ = (p5_ceiling, raw_stage);
++    false
+ }
+ 
+ /// A run's progress hook (M0-D60): `tick` is called each time the run's step count passes a multiple of `every`, and after

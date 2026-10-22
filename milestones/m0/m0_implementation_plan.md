@@ -238,7 +238,11 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-R5 | BUILD | Neutronization research — the a_n_fe at which a collapsing iron core finishes as a neutron star within a few τ_dyn, measured on m_bh_sb's stalled low-end life, and what else the value moves | AFTER M0-D78 | DONE (2026-10-21 14:15, started 12:55) |
 | M0-D79 | BUILD | m_bh_sb's low end never ends: its supernova leaves a cold iron core (2,534, under m_ch_sb) that neutronizes at 2.4 × 10⁻⁵ per t.u. and reads `core_collapse` for ~20,000 t.u. — a_n_fe 10⁻³ makes the collapse thousands of τ_dyn long | AFTER M0-R5 | DONE (2026-10-21 14:52) |
 | M0-TM10 | PLAN | Rating pass - 5 carried flags | AFTER M0-D79 | DONE (2026-10-22 07:32, started 07:24) |
-| M0-D80 | BUILD | calibrate's progress line goes one step at a time while a life is slow (a step at P5's ceiling, core collapse) and carries the star's numbers — `--progress-every 100` is silent for minutes where the lead wants to watch | AFTER M0-TM10 | TODO |
+| M0-D80 | BUILD | calibrate's progress line goes one step at a time while a life is slow (a step at P5's ceiling, core collapse) and carries the star's numbers — `--progress-every 100` is silent for minutes where the lead wants to watch | AFTER M0-TM10 | IN PROGRESS (awaiting: the lead's claim run, red-arm and collapse watch on laserax-ai) |
+| M0-R7 | BUILD | Heat-solve research: a multigrid preconditioner for P5's PCG — fewer rounds on the hard steps that hit 4,096 | AFTER M0-D80 | TODO |
+| M0-R8 | BUILD | Heat-solve research: a warm start — each step's solve begun from the last step's answer, not from the start state | AFTER M0-R7 | TODO |
+| M0-R9 | BUILD | Heat-solve research: a smaller Δt on hard steps — a step that would hit P5's ceiling split into shorter ones | AFTER M0-R8 | TODO |
+| M0-R10 | BUILD | Reactions research: a core-collapse step spends ~3 s in P6 (N_Fe at a_n_fe 100) — a cheaper exact step for the neutronization | AFTER M0-R9 | TODO |
 | M0-R6 | BUILD | Black-hole research — every collapse keeps ~iron's collapse mass and blows the rest off (2,205 left at 1.25 m_up, 2,633 at 20 M₀), so no remnant passes m_tov_sb 4,853 and m_bh_sb has no threshold: what lets a heavy star keep more | AFTER M0-TM10 | IN PROGRESS (awaiting: the lead's probe runs P1–P7, tasks/M0-R6.md) |
 | M0-V9 | CHECK | Validation, lot 9: calibration; the lead's calibrate run | AFTER M0-T71 | BLOCKED-D78 |
 | M0-D63 | BUILD | A run's `git` names the checkout's HEAD with no mark for uncommitted work: M0-V9's items 1–2, measured on lot 9's uncommitted code, wrote `measured.git` "e788da4", a commit that holds none of it | AFTER M0-V9 | TODO |
@@ -510,6 +514,10 @@ timing (a star evolving, flows, a time warp's smoothness), frame rate and input 
 - Contract §2.5.1's "A per record … others 1 × 10⁻³" for N_Fe and §1.9.3's neutron_star row "X_n,c ≥ 0.5, |v_r| ≤ 0.05 √(GM/R), no sink",
   listed before supernova — superseded by contract §0.5 [M0-D79]: a_n_fe 100; neutron_star on Y_e,c ≤ 0.35, d_c ≥ 0.5, no sink, listed after
   supernova, the |v_r| term back with M0-D71 (the lead, 2026-10-21, M0-R5: «Rate + NS row (Recommended)»; reports/neutronization.md).
+- Contract §3.3's `--progress-every N` («a line every N steps», [M0-D75]'s «nothing a life computes changes») and [M0-D77]'s «no chunk is
+  shortened: nothing the life computes moves», read for a `calibrate` life — superseded by contract §0.5 [M0-D80]: one-step frames, each a
+  progress line, while P5's ceiling or a core collapse holds (the state, never wall time), the snapshot's `one_step`, the line's numbers
+  after `stage=` (the lead, 2026-10-22, M0-R6: «The physics (Recommended)», «File a D, build next (Recommended)»).
 Inherited debt (§2.4): none.
 
 ## Repo facts (so you don't explore)
@@ -538,6 +546,12 @@ Inherited debt (§2.4): none.
   Arc Graphics (driver 32.0.101.6790) and NVIDIA GeForce RTX 4080 Laptop (32.0.15.8129); shells PowerShell 5.1 and
   Git Bash 5.3.15 (the Bash tool — every toolkit call goes through it, as `py -3.12 tools/pb/…`, M0-D7) — in play
   for every M0 block, the lot V's included, since M0-TJ3 (R5, R15; reports/win_laptop.md § Box, § Ruling).
+  `laserax-ai-server` — ybelanger@192.168.1.134 over SSH from linux-pc (key auth), repo `~/workspace/sandbox_reactions`, probed by
+  M0-D80 (2026-10-22): Ubuntu 24.04.5, kernel 7.0.0-38, 20 threads, 125 GiB; NVIDIA RTX 4090 24 GB and RTX 3060 12 GB (driver
+  595.99.02); Rust 1.99.0 user-level, off the PATH (tests/cargo.sh finds it); no GitHub key. The lead, 2026-10-22: «use the RTX 4090 to
+  run your tests there», «Push from here», «Iterate there, claim here»: an agent iterates GPU tests there (`SR_TEST_ADAPTER="RTX 4090"`,
+  the tree by `git push ybelanger@192.168.1.134:workspace/sandbox_reactions main` and `rsync -a --exclude .git --exclude build --exclude
+  .venv ./ ybelanger@192.168.1.134:workspace/sandbox_reactions/`); the claim run stays on linux-pc (tasks/M0-D80.md § laserax-ai-server).
 - Toolchains on linux-pc (probed 2026-10-08, re-probed by M0-TP): present — g++/gcc 13.3.0, GNU
   make 4.3, ninja 1.11.1, pkg-config 1.8.1, Python 3.12.3 (uv 0.12.3), Node 20.20.2 + npm 10.8.2,
   git 2.43.0, jq, Xvfb + xvfb-run; Rust 1.99.0 stable (rustup 1.29.1, host target x86_64 only —
@@ -650,12 +664,12 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-D80 (calibrate's progress line one step at a time while a life is slow, with the star's numbers — the lead's ask at M0-R6, 2026-10-22, «write the D before R6»), then M0-R6 on linux-pc (IN PROGRESS: the lead runs its probes P1–P7, tasks/M0-R6.md; then the report and its question) (black-hole research: both ends of m_bh_sb's bracket left ~iron's collapse mass, 2,205 and 2,633, under m_tov_sb 4,853 — the lead's pick 2026-10-22, «Research block first (Recommended)»), the D it files, the lead's m_bh_sb and preset_mass_sb, then M0-V9 session 5 (the whole file read, Verify 1, Phase 11's close), then M0-D63, M0-D65, M0-D68, M0-D69, M0-D70, M0-D71 (ordering note above M0-V19)
-- Counters: T=125 · D=80 · V=19 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=7 · TR=1 · TM=10 · TD=1 · TE=1 · R=6
-- Open D/BLOCKED register: M0-D80 open (before M0-R6; filed 2026-10-22 by M0-R6 at the lead's word: adaptive progress frames on P5's ceiling or core collapse, the star's numbers on each line) — M0-R6 open (before M0-V9; filed 2026-10-22 at the lead's word after m_bh_sb's bracket was refused: both ends neutron_star, remnants 2,205 and 2,633 under m_tov_sb 4,853) — M0-V9 BLOCKED (waits on M0-R6, the D it files and the lead's m_bh_sb and preset_mass_sb); M0-D63, M0-D65, M0-D68, M0-D69, M0-D70 and M0-D71 open (after M0-V9; M0-D68–D70 filed by M0-D66 2026-10-20: the face work's entropy loss, the world edge's momentum, a gas-free sink no object; M0-D71 filed by M0-D67 2026-10-20: P4 not well-balanced at a remnant's core, its light floor-fed — M0-R5 measured its flow holding a remnant's |v_r| at 0.05–0.49 √(GM/R); it also restores the neutron_star row's |v_r| term, M0-D79's flag) — six D's open (E6: ≥ 5; filed at the lead's word); M0-D79 closed 2026-10-21 (a_n_fe 100, the neutron_star row on Y_e,c ≤ 0.35, d_c ≥ 0.5, after supernova — its low end measured neutron_star, its 20 M₀ end too: M0-R6); M0-R5 closed 2026-10-21 (the value and the row, the lead's pick); M0-D78 closed 2026-10-21 (ignition by burnt fuel, every remnant's hold max(10 t.u., 20 τ_dyn), the snapshot version 2); M0-D72, M0-D73, M0-D74, M0-D75, M0-D76, M0-D77 closed 2026-10-20 (calibrate: --resume, the status script, progress.json, m_up_sb's stop at core collapse and --progress-every, a dump continues its life, --checkpoint-every); M0-D62, M0-D61, M0-D60, M0-D59, M0-D58, M0-D57, M0-D52, M0-D54 closed 2026-10-19
-- Outstanding commit gates: Phase 11's, after M0-V9 — the tree to M0-V9's session 3 committed and pushed by the lead from laserax-ai as 'M0-V9 in progress' (f39c6db, 2026-10-21 07:07); before it 'M0 WIP: lot 9 before the calibration' from win-laptop (2026-10-20, the lead's «linux-pc's RTX 5090 (Recommended)»)
+- Next task: the lead's M0-D80 runs on laserax-ai (the claim run and the red-arm, over the 10-minute line; the watch of a collapse), then M0-R7, M0-R8, M0-R9, M0-R10 (filed by M0-D80 at the lead's word, 2026-10-22: «research blocks for each of those possible optimizations, after D80», «lets do the first pass at least so that our testing here doesnt take ages»; M0-R10 on M0-D80's measure: a collapse step's ~3 s in P6), then M0-R6 on linux-pc (IN PROGRESS: the lead runs its probes P1–P7, tasks/M0-R6.md; then the report and its question), the D it files, the lead's m_bh_sb and preset_mass_sb, then M0-V9 session 5, then M0-D63, M0-D65, M0-D68, M0-D69, M0-D70, M0-D71 (ordering note above M0-V19)
+- Counters: T=125 · D=80 · V=19 · Q=0 · TI=0 · TJ=4 · TV=3 · TC=7 · TR=1 · TM=10 · TD=1 · TE=1 · R=10
+- Open D/BLOCKED register: M0-D80 IN PROGRESS (built 2026-10-22; awaiting the lead's claim run and red-arm on laserax-ai, over the 10-minute line) — M0-R7, M0-R8, M0-R9, M0-R10 open (after M0-D80; filed by M0-D80 2026-10-22 at the lead's word: P5's multigrid preconditioner, warm start, a smaller Δt on hard steps; N_Fe's cost in P6) — M0-R6 open (before M0-V9; filed 2026-10-22 at the lead's word after m_bh_sb's bracket was refused: both ends neutron_star, remnants 2,205 and 2,633 under m_tov_sb 4,853) — M0-V9 BLOCKED (waits on M0-R6, the D it files and the lead's m_bh_sb and preset_mass_sb); M0-D63, M0-D65, M0-D68, M0-D69, M0-D70 and M0-D71 open (after M0-V9; M0-D68–D70 filed by M0-D66 2026-10-20: the face work's entropy loss, the world edge's momentum, a gas-free sink no object; M0-D71 filed by M0-D67 2026-10-20: P4 not well-balanced at a remnant's core, its light floor-fed — M0-R5 measured its flow holding a remnant's |v_r| at 0.05–0.49 √(GM/R); it also restores the neutron_star row's |v_r| term, M0-D79's flag) — six D's open (E6: ≥ 5; filed at the lead's word); M0-D79 closed 2026-10-21 (a_n_fe 100, the neutron_star row on Y_e,c ≤ 0.35, d_c ≥ 0.5, after supernova — its low end measured neutron_star, its 20 M₀ end too: M0-R6); M0-R5 closed 2026-10-21 (the value and the row, the lead's pick); M0-D78 closed 2026-10-21 (ignition by burnt fuel, every remnant's hold max(10 t.u., 20 τ_dyn), the snapshot version 2); M0-D72, M0-D73, M0-D74, M0-D75, M0-D76, M0-D77 closed 2026-10-20 (calibrate: --resume, the status script, progress.json, m_up_sb's stop at core collapse and --progress-every, a dump continues its life, --checkpoint-every); M0-D62, M0-D61, M0-D60, M0-D59, M0-D58, M0-D57, M0-D52, M0-D54 closed 2026-10-19
+- Outstanding commit gates: Phase 11's, after M0-V9 — the tree to M0-D80's code committed and pushed from laserax-ai as 'M0-D80 in progress' (6409791, 2026-10-22, at the lead's word «git add -A, commit and push here»); before it 'M0-V9 in progress' (f39c6db, 2026-10-21)
 - Carryover: none
-- Awaiting lead: M0-R6's session (the lead launches it); keep build/calibrate_runs/2026-10-21T19-39-14Z/ (m_bh_sb's two lives on M0-D79's binary: exit 6, both ends neutron_star, log milestones/m0/logs/calibrate.m_bh_sb.log) and build/calibrate_runs/2026-10-21T15-23-36Z/ (M0-R5's evidence); assets/calibration.json holds m_ch_sb, m_tov_sb, m_ign_sb, m_up_sb on physics_hash 8ca855fb… — m_bh_sb and preset_mass_sb missing (preset_mass_sb refuses without m_bh_sb)
+- Awaiting lead: M0-D80's runs on laserax-ai (its handoff); M0-R6's session (the lead launches it); keep build/calibrate_runs/2026-10-21T19-39-14Z/ (m_bh_sb's two lives on M0-D79's binary: exit 6, both ends neutron_star, log milestones/m0/logs/calibrate.m_bh_sb.log) and build/calibrate_runs/2026-10-21T15-23-36Z/ (M0-R5's evidence); assets/calibration.json holds m_ch_sb, m_tov_sb, m_ign_sb, m_up_sb on physics_hash 8ca855fb… — m_bh_sb and preset_mass_sb missing (preset_mass_sb refuses without m_bh_sb; dump's two preset:sun cases read exit 6 until then)
 - Model ratings: 2026-10-22 by M0-TM10
 
 # Tasks
@@ -2941,7 +2955,7 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
 - Handoff: Ladder re-read 2026-10-22: the probe (Claude Code 2.1.306; the line cited 2.1.301) and the claude-api skill from 2.1.306's bundle (cached 2026-10-06; models.md sha256 c1af1f09…5675161b, unchanged since M0-TM6): all four models Active, prices and levels unchanged → `Models:` re-dated with the bundle read, rungs and marks byte-identical, no question owed. Record: M0-V8's table (still the last phase-closing V: V19 a triage, V9 BLOCKED) and today's report (linux-pc, 203 DONE) move no class (BUILD on Sonnet 5.5, high $1.97 per DONE block over 72, 45/69 first try, against (usual)'s $8.19, 32/61; BUILD·E on Haiku 5.5, high $0.82 over 10, below; MOVE n < 10); no escalation trail open. Ratings: 0 changed of 71 — Opus 5.5, max 13 (0) · Opus 5.5, high 7 (0: R6, D65, D68, D69, D70, D71 new, each by (3)'s list as filed — (c) an open design, (b) an unmeasured cause, (e) numeric semantics — and T124) · Sonnet 5.5, high 47 (0; D63 new: §2.11/§2.12.2 give `git` no format, nothing FROZEN) · Haiku 5.5, high 4 (0, E); the five flags (D68 [D67], D79 [D78] — DONE since, so the lint reads 4, T72 [V9], D71 [D79], the fifth T106 [D64]) and four 2026-10-19 flags appended after M0-TM9 (T95, T106 ×2, T109) name built mechanisms, measurements or ruled specs, no reason from the list. Register `Model ratings: 2026-10-22 by M0-TM10` (refresh 4/5 → 0/5). Claim `verify.py --changed` FAIL on linux-pc, O13 only: plan_lint GO 639/0 (the one scope this block's paths reach); 727 passed / 12 failed in 8 scopes the anchor owed (`never`, not this block's paths), every one `calibration invalid: preset_mass_sb: missing` — M0-V9's O13, the same 12 as M0-D79's claim: the binary embeds the partial assets/calibration.json and refuses every headless run until m_bh_sb and preset_mass_sb land (M0-R6: any headless probe meets it while the copy's file is partial — O13: complete or moved aside); load 128 → 97, the 5090 shared by another project's jobs. Not acted on (bounded diff): M0-T106's G-CONS (energy now 6.2e-5 |W| per τ_dyn on D64's window; momentum 3e-3–3.9e-3 of Σm|u| against 1e-6 stands); M0-D71 holds two artifact kinds since D79's flag (split if over a task); M0-R6's ruling may rewrite later blocks with no flag to count; header 663/600 inside the margin, no TC; the register's Next task still names M0-TM10 first. Detail: tasks/M0-TM10.md. Ran on model=claude-opus-5-5 level=max (rung_record now = the heading's rung). Next: M0-R6
 
 ## M0-D80 · calibrate's progress line goes one step at a time while a life is slow (a step at P5's ceiling, core collapse) and carries the star's numbers — `--progress-every 100` is silent for minutes where the lead wants to watch · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TM10)
-- Status: TODO
+- Status: IN PROGRESS (awaiting: the lead's claim run, red-arm and collapse watch on laserax-ai)
 - Ask (verbatim): the lead, 2026-10-22, in M0-R6's session, watching the 20 M₀ probe stall at step 1,400:
   - «wait ok... I want you to do something. Instead of showing me 100 steps I want it to be dynamic. If the simulation goes well it moves
     to 100 when it gets slow I want to see each step. Can we do that? Like just now the thing froze at step 1400 and I could see the detail
@@ -3011,6 +3025,215 @@ the lives run on); M0-D62 before V9's Verify 1 (the reserve-less file, embedded)
   - one-step frames left on after the stretch ends, making a whole life slow;
   - a line that floods the log of a fast life (only one-step frames tick off the N-step grid);
   - progress.json fields that break `calibrate_status.py`.
+- Handoff: Built (tasks/M0-D80.md): under a progress hook a calibrate life's frame is one step while the last frame hit P5's ceiling or the heaviest object's raw stage is core_collapse (headless::one_step_next, the state only), one tick per one-step frame; the snapshot carries one_step; each line gains ' | frame dt s_per_step p5_ceiling | escaped objects | M … raw', progress.json the same keys; calibrate_status's --log regex reads the stage before ' | '; contract §0.5 [M0-D80] + Superseded; docs. Deviation: 8 code/test files, over the ≤6. Verify 1 (the lead's claim run, laserax-ai): NO-GO 354/12, every red the missing preset_mass_sb, the same counts as M0-TM10's (pre-D80, M0-V9's); calibrate_bisect GO. Verify 2 (laserax-ai-server, RTX 4090, the lead's word): GO, 12/12 plants red, 2,562 s; timeout_s 2,700 (was 900: arms queue on one build target) — thin margin, the harness's. Found: a collapse step costs 0.6–3 s, ~all in P6 (N_Fe) → M0-R10 filed with the lead's R7–R9, after D80. Owed: the lead's collapse watch; re-measure m_up_sb and m_ign_sb. model=claude-opus-5-5 level=high. Next: the lead's watch, then M0-R7.
+
+## M0-R7 · Heat-solve research: a multigrid preconditioner for P5's PCG — fewer rounds on the hard steps that hit 4,096 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D80)
+- Status: TODO
+- Ask (verbatim): the lead, 2026-10-22, in M0-D80's session. The lead asked: «quick question: instead of using the heat solver when stuff
+  gets tough, could we write lookup tables and just use the value closest to the value solved by the solver?» My answer, the lead's reading
+  in the next line: a table cannot be indexed by the whole field a hard step's solve depends on, and three ways that do speed such a solve
+  are a multigrid preconditioner, a warm start from the last step's answer, and a smaller Δt on hard steps. The lead: «yes id like research
+  blocks for each of those possible optimizations, after D80. Its still a game were making, if a black hole collapse runs at 1 frame every
+  30 seconds its kind of an issue lol». Then, on TJ2 («nothing in M0 blocks on performance … maybe later in another milestone»): «well yes,
+  but lets do the first pass at least so that our testing here doesnt take ages».
+- Carried flags: none
+- Blocks: nothing. Research only: no tree change, every probe in a scratch copy; a build is a D the lead picks from the report.
+- Rating: `(usual)` — research whose answer is a numeric fork (the heat solve's answers, contract §0.5 [M0-TJ4]) with measured side effects
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TJ4] (the implicit step: u = a_r T⁴, Newton passes, Jacobi-PCG, 64 passes or 4,096 rounds, a
+  hard step carried into the next submission), [M0-D37], [M0-T122] (P5's cost accepted, 0.6189 ms a step on the Quadro), [M0-TJ2] (nothing in
+  M0 blocked on performance, no physics traded for speed), [M0-D80] + crates/sr-engine/src/step/heat.rs and its shader (the solve as built) +
+  docs/agent/testing.md (heat_implicit, heat_stiff, heat_limiter, heat_gauss, radiation_force, timing) + milestones/m0/tasks/M0-R6.md (the probe wrapper)
+- Symptom (measured): a life at a hard stretch runs seconds a step — the 20 M₀ life reached P5's ceiling on 5,257 steps
+  (`build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-02/summary.json`, laserax-ai, RTX 5090) and the lead watched it «froze at step 1400»
+  (M0-R6); a game frame at core collapse would be ~30 s. M0-D80 also measured a collapse step of a 16 × 16 iron block **with heat off**
+  at ~0.6–3 s on the RTX 4090 (laserax-ai-server, 2026-10-22; milestones/m0/logs/M0-D80.probe.log): `--timing` read P6 (reactions)
+  3,047 ms a step and every other pass under 0.02 ms — that collapse's time is N_Fe's in P6 (M0-R10), not P5's; so the report measures
+  P5's share of the 20 M₀ life's hard stretch before it promises anything.
+- Deliver: milestones/m0/reports/heat_multigrid.md (new), to §4 Rule 7, ONE artifact kind (research); every probe in a scratch copy
+  (`tools/pb/scratch_copy.sh`; its path in the handoff), nothing in the tree; a probe over the 10-minute line is the lead's, handed
+  `[NOT RUN — for you]` with its exact line → Verify 1 ·
+  `## Evidence`: dated sources (accessed) on preconditioning a flux-limited diffusion / implicit radiation solve on a GPU — geometric
+  multigrid (V-cycle) as a preconditioner for CG, its cost per round against Jacobi's, its rounds against a stiffness, and what simplified
+  or game codes use ·
+  `## Problem`: **measured** — P5's share of a hard step's time (`headless --timing` per pass) on the 20 M₀ life's stretch (from a dump
+  near step 1,400: `SR_PROBE`-style scratch dumps, M0-R6's wrapper) and on a short stiff scene (heat_stiff's or heat_rim's), the rounds and
+  passes per hard step, and the conditioning that drives them (the largest and smallest face coefficients) ·
+  `## Options`: at least (a) Jacobi kept, the round cap as it is; (b) a geometric multigrid V-cycle preconditioner on the GPU (levels, smoother,
+  its shader count); (c) a cheaper middle (block-Jacobi, or Chebyshev on Jacobi) — each with its measured or estimated rounds and ms on the
+  hard step and on an easy step, its effort in tasks, and what it moves (the answers within PCG's tolerance, heat_implicit's bounds) ·
+  `## Recommendation`: one option, why, what would falsify it; the D block's `Deliver:` / `Verify:` written to it ·
+  `## UNVERIFIED` → Verify 1 ·
+  then ask the lead (PLAYBOOK §12, options (a)/(b), the recommendation first, the measured times in the options); the answer recorded
+  verbatim in the report and, when a build is picked, the D filed after this block → Verify 2
+- Verify: 1. the report's sections and measurements, from the repo root
+  ```bash
+  python3 -c "import os,re,sys;p='milestones/m0/reports/heat_multigrid.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Evidence','## Problem','## Options','## Recommendation','## UNVERIFIED');miss=[s for s in need if not re.search('^'+re.escape(s)+r'\b',t,re.M)];src=len(re.findall(r'\(accessed \d{4}-\d{2}-\d{2}\)',t));m=len(re.findall(r'^\**M\d+',t,re.M));print(f'sections missing={miss} sources={src} measurements={m}');ok=t and not miss and src>=3 and m>=4;print('=== GO ===' if ok else '=== NO-GO: report incomplete ===');sys.exit(0 if ok else 1)"
+  ```
+  Pass: GO — the five sections as heading lines, ≥ 3 sources with `(accessed YYYY-MM-DD)` and ≥ 4 measurements, each a line starting
+  `M<n>` (bold allowed). Fail: NO-GO — no report, a missing section, fewer sources or measurements ·
+  2. `python3 tools/pb/verify.py plan_lint --task M0-R7` · Pass: GO — the plan lints clean with the lead's answer recorded and the D (if
+  any) filed · Fail: NO-GO, or the answer not recorded
+- Adversarial:
+  a speed-up measured on a different scene than the one it is claimed for; a probe on a shared GPU without its load stated; a gain read
+  from one run (median of 3, the box idle, PLAYBOOK §8); an answer that changes the heat solve's results sold as a pure speed-up (the
+  scopes heat_implicit, heat_stiff and radiation_force read it)
+- Handoff: <placeholder>
+
+## M0-R8 · Heat-solve research: a warm start — each step's solve begun from the last step's answer, not from the start state · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D80)
+- Status: TODO
+- Ask (verbatim): the lead, 2026-10-22, in M0-D80's session. The lead asked: «quick question: instead of using the heat solver when stuff
+  gets tough, could we write lookup tables and just use the value closest to the value solved by the solver?» My answer, the lead's reading
+  in the next line: a table cannot be indexed by the whole field a hard step's solve depends on, and three ways that do speed such a solve
+  are a multigrid preconditioner, a warm start from the last step's answer, and a smaller Δt on hard steps. The lead: «yes id like research
+  blocks for each of those possible optimizations, after D80. Its still a game were making, if a black hole collapse runs at 1 frame every
+  30 seconds its kind of an issue lol». Then, on TJ2 («nothing in M0 blocks on performance … maybe later in another milestone»): «well yes,
+  but lets do the first pass at least so that our testing here doesnt take ages».
+- Carried flags: none
+- Blocks: nothing. Research only: no tree change, every probe in a scratch copy; a build is a D the lead picks from the report.
+- Rating: `(usual)` — research whose answer is a numeric fork (the heat solve's answers, contract §0.5 [M0-TJ4]) with measured side effects
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TJ4] (the implicit step: u = a_r T⁴, Newton passes, Jacobi-PCG, 64 passes or 4,096 rounds, a
+  hard step carried into the next submission), [M0-D37], [M0-T122] (P5's cost accepted, 0.6189 ms a step on the Quadro), [M0-TJ2] (nothing in
+  M0 blocked on performance, no physics traded for speed), [M0-D80] + crates/sr-engine/src/step/heat.rs and its shader (the solve as built) +
+  docs/agent/testing.md (heat_implicit, heat_stiff, heat_limiter, heat_gauss, radiation_force, timing) + milestones/m0/tasks/M0-R6.md (the probe wrapper)
+- Symptom (measured): a life at a hard stretch runs seconds a step — the 20 M₀ life reached P5's ceiling on 5,257 steps
+  (`build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-02/summary.json`, laserax-ai, RTX 5090) and the lead watched it «froze at step 1400»
+  (M0-R6); a game frame at core collapse would be ~30 s. M0-D80 also measured a collapse step of a 16 × 16 iron block **with heat off**
+  at ~0.6–3 s on the RTX 4090 (laserax-ai-server, 2026-10-22; milestones/m0/logs/M0-D80.probe.log): `--timing` read P6 (reactions)
+  3,047 ms a step and every other pass under 0.02 ms — that collapse's time is N_Fe's in P6 (M0-R10), not P5's; so the report measures
+  P5's share of the 20 M₀ life's hard stretch before it promises anything.
+- Deliver: milestones/m0/reports/heat_warm_start.md (new), to §4 Rule 7, ONE artifact kind (research); every probe in a scratch copy
+  (`tools/pb/scratch_copy.sh`; its path in the handoff), nothing in the tree; a probe over the 10-minute line is the lead's, handed
+  `[NOT RUN — for you]` with its exact line → Verify 1 ·
+  `## Evidence`: dated sources (accessed) on initial guesses for implicit time steps — the previous step's solution, an extrapolation from
+  the last two, and how much they save in Newton passes and Krylov rounds when the state changes little between steps ·
+  `## Problem`: **measured** — what P5 starts each step's Newton passes and PCG rounds from today (the code, not the contract's words), the
+  passes and rounds per step on an easy stretch and on the 20 M₀ life's hard stretch, and how far one step's answer (u) moves from the last
+  (the norm of the change against the solve's tolerance) ·
+  `## Options`: at least (a) the start as it is; (b) the last step's u as the first guess (kept on the GPU, carried through a dump and a
+  checkpoint — §2.12.3, [M0-D76]); (c) an extrapolation from the last two steps — each with its measured passes, rounds and ms per step
+  on both stretches, what it costs in memory and in the dump, and whether the answers move (a warm start changes where PCG stops within its
+  tolerance: heat_implicit's bounds, a continued life against the unbroken one, [M0-D77]) ·
+  `## Recommendation`: one option, why, what would falsify it; the D block's `Deliver:` / `Verify:` written to it ·
+  `## UNVERIFIED` → Verify 1 ·
+  then ask the lead (PLAYBOOK §12, options (a)/(b), the recommendation first, the measured times in the options); the answer recorded
+  verbatim in the report and, when a build is picked, the D filed after this block → Verify 2
+- Verify: 1. the report's sections and measurements, from the repo root
+  ```bash
+  python3 -c "import os,re,sys;p='milestones/m0/reports/heat_warm_start.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Evidence','## Problem','## Options','## Recommendation','## UNVERIFIED');miss=[s for s in need if not re.search('^'+re.escape(s)+r'\b',t,re.M)];src=len(re.findall(r'\(accessed \d{4}-\d{2}-\d{2}\)',t));m=len(re.findall(r'^\**M\d+',t,re.M));print(f'sections missing={miss} sources={src} measurements={m}');ok=t and not miss and src>=3 and m>=4;print('=== GO ===' if ok else '=== NO-GO: report incomplete ===');sys.exit(0 if ok else 1)"
+  ```
+  Pass: GO — the five sections as heading lines, ≥ 3 sources with `(accessed YYYY-MM-DD)` and ≥ 4 measurements, each a line starting
+  `M<n>` (bold allowed). Fail: NO-GO — no report, a missing section, fewer sources or measurements ·
+  2. `python3 tools/pb/verify.py plan_lint --task M0-R8` · Pass: GO — the plan lints clean with the lead's answer recorded and the D (if
+  any) filed · Fail: NO-GO, or the answer not recorded
+- Adversarial:
+  a speed-up measured on a different scene than the one it is claimed for; a probe on a shared GPU without its load stated; a gain read
+  from one run (median of 3, the box idle, PLAYBOOK §8); an answer that changes the heat solve's results sold as a pure speed-up (the
+  scopes heat_implicit, heat_stiff and radiation_force read it)
+- Handoff: <placeholder>
+
+## M0-R9 · Heat-solve research: a smaller Δt on hard steps — a step that would hit P5's ceiling split into shorter ones · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D80)
+- Status: TODO
+- Ask (verbatim): the lead, 2026-10-22, in M0-D80's session. The lead asked: «quick question: instead of using the heat solver when stuff
+  gets tough, could we write lookup tables and just use the value closest to the value solved by the solver?» My answer, the lead's reading
+  in the next line: a table cannot be indexed by the whole field a hard step's solve depends on, and three ways that do speed such a solve
+  are a multigrid preconditioner, a warm start from the last step's answer, and a smaller Δt on hard steps. The lead: «yes id like research
+  blocks for each of those possible optimizations, after D80. Its still a game were making, if a black hole collapse runs at 1 frame every
+  30 seconds its kind of an issue lol». Then, on TJ2 («nothing in M0 blocks on performance … maybe later in another milestone»): «well yes,
+  but lets do the first pass at least so that our testing here doesnt take ages».
+- Carried flags: none
+- Blocks: nothing. Research only: no tree change, every probe in a scratch copy; a build is a D the lead picks from the report.
+- Rating: `(usual)` — research whose answer is a numeric fork (the heat solve's answers, contract §0.5 [M0-TJ4]) with measured side effects
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TJ4] (the implicit step: u = a_r T⁴, Newton passes, Jacobi-PCG, 64 passes or 4,096 rounds, a
+  hard step carried into the next submission), [M0-D37], [M0-T122] (P5's cost accepted, 0.6189 ms a step on the Quadro), [M0-TJ2] (nothing in
+  M0 blocked on performance, no physics traded for speed), [M0-D80] + crates/sr-engine/src/step/heat.rs and its shader (the solve as built) +
+  docs/agent/testing.md (heat_implicit, heat_stiff, heat_limiter, heat_gauss, radiation_force, timing) + milestones/m0/tasks/M0-R6.md (the probe wrapper)
+- Symptom (measured): a life at a hard stretch runs seconds a step — the 20 M₀ life reached P5's ceiling on 5,257 steps
+  (`build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-02/summary.json`, laserax-ai, RTX 5090) and the lead watched it «froze at step 1400»
+  (M0-R6); a game frame at core collapse would be ~30 s. M0-D80 also measured a collapse step of a 16 × 16 iron block **with heat off**
+  at ~0.6–3 s on the RTX 4090 (laserax-ai-server, 2026-10-22; milestones/m0/logs/M0-D80.probe.log): `--timing` read P6 (reactions)
+  3,047 ms a step and every other pass under 0.02 ms — that collapse's time is N_Fe's in P6 (M0-R10), not P5's; so the report measures
+  P5's share of the 20 M₀ life's hard stretch before it promises anything.
+- Deliver: milestones/m0/reports/heat_hard_dt.md (new), to §4 Rule 7, ONE artifact kind (research); every probe in a scratch copy
+  (`tools/pb/scratch_copy.sh`; its path in the handoff), nothing in the tree; a probe over the 10-minute line is the lead's, handed
+  `[NOT RUN — for you]` with its exact line → Verify 1 ·
+  `## Evidence`: dated sources (accessed) on adaptive time steps for stiff implicit solves — cutting Δt when the nonlinear or linear
+  solve fails to converge, the step's cost against Δt (rounds grow with Δt × the stiffness), and how a game keeps its frame budget ·
+  `## Problem`: **measured** — on the 20 M₀ life's hard stretch and on a short stiff scene: the passes and rounds of a hard step at its Δt
+  and at Δt/2, Δt/4, Δt/8 (sub-steps in a scratch build), the total ms to cover the same sim time each way, and what the ceiling-hit step
+  leaves unconverged today (its residual, [M0-TJ4] (6)) ·
+  `## Options`: at least (a) Δt as it is (the ceiling, a step carried); (b) a heat Δt limit when the last step hit the ceiling (§1.3's Δt
+  rule gains a term; the step's other passes follow); (c) P5 sub-cycled inside a step (n heat sub-steps of Δt/n, the rest of the step once)
+  — each with its measured ms per sim time on both stretches, what it moves (Δt's record, the dumps' `dt_next`, [M0-D80]'s trigger: a
+  life that no longer hits the ceiling no longer frames one step at a time) and its effort in tasks ·
+  `## Recommendation`: one option, why, what would falsify it; the exact §0.5 line and the D block's `Deliver:` / `Verify:` written to it ·
+  `## UNVERIFIED` → Verify 1 ·
+  then ask the lead (PLAYBOOK §12, options (a)/(b), the recommendation first, the measured times in the options); the answer recorded
+  verbatim in the report and, when a build is picked, the D filed after this block → Verify 2
+- Verify: 1. the report's sections and measurements, from the repo root
+  ```bash
+  python3 -c "import os,re,sys;p='milestones/m0/reports/heat_hard_dt.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Evidence','## Problem','## Options','## Recommendation','## UNVERIFIED');miss=[s for s in need if not re.search('^'+re.escape(s)+r'\b',t,re.M)];src=len(re.findall(r'\(accessed \d{4}-\d{2}-\d{2}\)',t));m=len(re.findall(r'^\**M\d+',t,re.M));print(f'sections missing={miss} sources={src} measurements={m}');ok=t and not miss and src>=3 and m>=4;print('=== GO ===' if ok else '=== NO-GO: report incomplete ===');sys.exit(0 if ok else 1)"
+  ```
+  Pass: GO — the five sections as heading lines, ≥ 3 sources with `(accessed YYYY-MM-DD)` and ≥ 4 measurements, each a line starting
+  `M<n>` (bold allowed). Fail: NO-GO — no report, a missing section, fewer sources or measurements ·
+  2. `python3 tools/pb/verify.py plan_lint --task M0-R9` · Pass: GO — the plan lints clean with the lead's answer recorded and the D (if
+  any) filed · Fail: NO-GO, or the answer not recorded
+- Adversarial:
+  a speed-up measured on a different scene than the one it is claimed for; a probe on a shared GPU without its load stated; a gain read
+  from one run (median of 3, the box idle, PLAYBOOK §8); an answer that changes the heat solve's results sold as a pure speed-up (the
+  scopes heat_implicit, heat_stiff and radiation_force read it)
+- Handoff: <placeholder>
+
+## M0-R10 · Reactions research: a core-collapse step spends ~3 s in P6 (N_Fe at a_n_fe 100) — a cheaper exact step for the neutronization · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D80)
+- Status: TODO
+- Ask (verbatim): the lead, 2026-10-22, in M0-D80's session. The lead asked: «quick question: instead of using the heat solver when stuff
+  gets tough, could we write lookup tables and just use the value closest to the value solved by the solver?» My answer, the lead's reading
+  in the next line: a table cannot be indexed by the whole field a hard step's solve depends on, and three ways that do speed such a solve
+  are a multigrid preconditioner, a warm start from the last step's answer, and a smaller Δt on hard steps. The lead: «yes id like research
+  blocks for each of those possible optimizations, after D80. Its still a game were making, if a black hole collapse runs at 1 frame every
+  30 seconds its kind of an issue lol». Then, on TJ2 («nothing in M0 blocks on performance … maybe later in another milestone»): «well yes,
+  but lets do the first pass at least so that our testing here doesnt take ages».
+- Carried flags: none
+- Filed by M0-D80 at the lead's direction («Its still a game were making, if a black hole collapse runs at 1 frame every 30 seconds its
+  kind of an issue lol»): M0-D80 measured the collapse's time in P6, not in P5, so the three heat blocks alone would not answer it.
+- Blocks: nothing. Research only: no tree change, every probe in a scratch copy; a build is a D the lead picks from the report.
+- Rating: `(usual)` — research whose answer is a numeric fork (the heat solve's answers, contract §0.5 [M0-TJ4]) with measured side effects
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6 (the one mechanism: the rate, the gate, burn_dt and burn_dx — how
+  P6 sub-steps a cell), §1.6.1's N_Fe row, §2.5.1 with §0.5 [M0-D79] (a_n_fe 100), [M0-TJ2], [M0-D80] + crates/sr-engine/src/step/react.rs
+  and its shader + reports/neutronization.md + docs/agent/testing.md (burn_cell, burn_order, neutrino, sunburn, timing)
+- Symptom (measured): a life at a hard stretch runs seconds a step — the 20 M₀ life reached P5's ceiling on 5,257 steps
+  (`build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-02/summary.json`, laserax-ai, RTX 5090) and the lead watched it «froze at step 1400»
+  (M0-R6); a game frame at core collapse would be ~30 s. M0-D80 also measured a collapse step of a 16 × 16 iron block **with heat off**
+  at ~0.6–3 s on the RTX 4090 (laserax-ai-server, 2026-10-22; milestones/m0/logs/M0-D80.probe.log): `--timing` read P6 (reactions)
+  3,047 ms a step and every other pass under 0.02 ms — that collapse's time is N_Fe's in P6 (M0-R10), not P5's; so the report measures
+  P5's share of the 20 M₀ life's hard stretch before it promises anything.
+- Deliver: milestones/m0/reports/reactions_collapse.md (new), to §4 Rule 7, ONE artifact kind (research); every probe in a scratch copy
+  (`tools/pb/scratch_copy.sh`; its path in the handoff), nothing in the tree; a probe over the 10-minute line is the lead's, handed
+  `[NOT RUN — for you]` with its exact line → Verify 1 ·
+  `## Evidence`: dated sources (accessed) on integrating stiff reaction terms in grid codes — sub-cycling against an implicit or exact
+  step, and the closed form of a first-order conversion (rate ∝ X, a linear gate) ·
+  `## Problem`: **measured** — why a collapse step costs ~3 s in P6: the sub-steps per cell and per step N_Fe forces (burn_dt, burn_dx
+  against 1/(a_n_fe g)), on the iron block (milestones/m0/tasks/M0-D80.md § The test scene) and on the 20 M₀ life's collapse (a dump near
+  step 1,489), with `--timing` per pass; whether other records sub-cycle with it ·
+  `## Options`: at least (a) as it is; (b) N_Fe stepped exactly (f ≡ 1, p = 1: Y_e Σ relaxes to Σ_N as an exponential over the step — no
+  sub-steps), the other records as before; (c) N_Fe's sub-steps capped with its remainder deferred (what that moves) — each with its
+  measured ms per collapse step, what it moves (burn_cell, burn_order, the neutronization's timing against reports/neutronization.md,
+  m_up_sb's and m_bh_sb's lives), its effort in tasks ·
+  `## Recommendation`: one option, why, what would falsify it; the exact §0.5 line and the D block's `Deliver:` / `Verify:` written to it ·
+  `## UNVERIFIED` → Verify 1 ·
+  then ask the lead (PLAYBOOK §12, options (a)/(b), the recommendation first, the measured times in the options); the answer recorded
+  verbatim in the report and, when a build is picked, the D filed after this block → Verify 2
+- Verify: 1. the report's sections and measurements, from the repo root
+  ```bash
+  python3 -c "import os,re,sys;p='milestones/m0/reports/reactions_collapse.md';t=open(p,encoding='utf-8').read() if os.path.isfile(p) else '';need=('## Evidence','## Problem','## Options','## Recommendation','## UNVERIFIED');miss=[s for s in need if not re.search('^'+re.escape(s)+r'\b',t,re.M)];src=len(re.findall(r'\(accessed \d{4}-\d{2}-\d{2}\)',t));m=len(re.findall(r'^\**M\d+',t,re.M));print(f'sections missing={miss} sources={src} measurements={m}');ok=t and not miss and src>=3 and m>=4;print('=== GO ===' if ok else '=== NO-GO: report incomplete ===');sys.exit(0 if ok else 1)"
+  ```
+  Pass: GO — the five sections as heading lines, ≥ 3 sources with `(accessed YYYY-MM-DD)` and ≥ 4 measurements, each a line starting
+  `M<n>` (bold allowed). Fail: NO-GO — no report, a missing section, fewer sources or measurements ·
+  2. `python3 tools/pb/verify.py plan_lint --task M0-R10` · Pass: GO — the plan lints clean with the lead's answer recorded and the D (if
+  any) filed · Fail: NO-GO, or the answer not recorded
+- Adversarial:
+  a speed-up measured on a different scene than the one it is claimed for; a probe on a shared GPU without its load stated; a gain read
+  from one run (median of 3, the box idle, PLAYBOOK §8); an exact step that changes the neutronization's answers sold as a pure speed-up (the
+  scopes burn_cell, burn_order and neutrino read it)
 - Handoff: <placeholder>
 
 ## M0-R6 · Black-hole research — every collapse keeps ~iron's collapse mass and blows the rest off (2,205 left at 1.25 m_up, 2,633 at 20 M₀), so no remnant passes m_tov_sb 4,853 and m_bh_sb has no threshold: what lets a heavy star keep more · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TM10)

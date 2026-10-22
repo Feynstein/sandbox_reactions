@@ -242,10 +242,26 @@ fn a_life_keeps_its_record_and_says_where_it_is() {
         for key in ["item=m_ign_sb", "mass=", "step=", "sim_time=", "stage="] {
             assert!(l.contains(key), "{key} in {l}");
         }
-        // M0-D80: the frame, the world and the heaviest object's numbers after the stage.
-        for key in [" | frame=", " dt=", " s_per_step=", " p5_ceiling=", " | escaped=", " objects=", " | M=", " R=", " tau_dyn=", " sigma_c=", " T_c=", " d_c=",
-                    " Ye_c=", " X_Fe_c=", " X_n_c=", " v_r=", " v_r_dyn=", " M_unb=", " L=", " L_nuc=", " L_N=", " L_nu=", " sinks=", " sink_M=", " raw="] {
-            assert!(l.contains(key), "{key} in {l}");
+        // M0-D80: the raw stage beside the shown one.
+        assert!(l.contains(" | raw="), "{l}");
+    }
+    // M0-D80: under each progress line, six rows of the frame's, the star's and the world's numbers, under 80 columns.
+    for (i, l) in lines.iter().enumerate().filter(|(_, l)| l.starts_with("SR-CALIBRATE progress")) {
+        let rows: Vec<&str> = lines[i + 1..i + 7].iter().map(String::as_str).collect();
+        let labels: Vec<&str> = rows.iter().map(|r| r.split_whitespace().next().unwrap_or("")).collect();
+        assert_eq!(labels, ["frame", "star", "core", "centre", "light", "world"], "{l}: {rows:?}");
+        for (row, names) in rows.iter().zip([
+            ["steps", "dt", "s/step", "P5_ceil"],
+            ["M", "R", "tau_dyn", "M_unb"],
+            ["sigma_c", "T_c", "d_c", "Ye_c"],
+            ["X_Fe", "X_n", "v_r", "vr/vdyn"],
+            ["L", "L_nuc", "L_N", "L_nu"],
+            ["escaped", "objects", "sinks", "sink_M"],
+        ]) {
+            let words: Vec<&str> = row.split_whitespace().skip(1).collect();
+            assert_eq!(words.iter().step_by(2).copied().collect::<Vec<_>>(), names, "{row}");
+            assert!(words.iter().skip(1).step_by(2).all(|v| v.parse::<f64>().is_ok()), "a number in each column: {row}");
+            assert!(row.starts_with("  ") && row.chars().count() <= 80, "{row}");
         }
     }
     let first_run = lines.iter().position(|l| l.starts_with("SR-CALIBRATE run")).unwrap();
@@ -859,13 +875,44 @@ fn one_step_frames_follow_the_physics() {
     for raw in [None, Some("cloud"), Some("supernova"), Some("neutron_star"), Some("black_hole")] {
         assert!(!one_step_next(0, raw), "{raw:?}: frames as before");
     }
+    // The terminal's colours (M0-D80): the same text once the codes are stripped, hard physics in red, a one-step frame in yellow.
+    use sr_engine::calibrate::paint;
+    let strip = |s: &str| {
+        let mut out = String::new();
+        let mut it = s.chars();
+        while let Some(c) = it.next() {
+            if c == '\x1b' {
+                it.by_ref().find(|&c| c == 'm');
+            } else {
+                out.push(c);
+            }
+        }
+        out
+    };
+    let head = "SR-CALIBRATE progress item=m_bh_sb mass=6702.064 step=1010 sim_time=10.469 heat_unconverged=6 stage=white_dwarf | raw=core_collapse";
+    // Rows as `tick_rows` lays them out: a label in 6, then cells of a name in 7 and a value right-aligned in 9.
+    let row = |label: &str, cells: [(&str, &str); 4]| format!("  {label:<6} {}", cells.map(|(n, v)| format!("{n:<7} {v:>9}")).join("  "));
+    let rows = [
+        row("frame", [("steps", "1"), ("dt", "8.714e-3"), ("s/step", "0.05189"), ("P5_ceil", "2")]),
+        row("light", [("L", "42033"), ("L_nuc", "1.802e-11"), ("L_N", "-3.100"), ("L_nu", "0")]),
+    ];
+    for line in [head, rows[0].as_str(), rows[1].as_str(), "SR-WARN something", "SR-CALIBRATE run item=m_bh_sb side=Light", "plain words"] {
+        assert_eq!(strip(&paint(line)), line, "paint keeps the text");
+    }
+    assert!(paint(head).contains("\x1b[1;31mcore_collapse"), "{:?}", paint(head));
+    let value = |tone: &str, v: &str| format!("\x1b[{tone}m {v:>9}");
+    assert!(paint(&rows[0]).contains(&value("1;33", "1")) && paint(&rows[0]).contains(&value("1;31", "2")), "{:?}", paint(&rows[0]));
+    assert!(paint(&rows[1]).contains(&value("1;31", "-3.100")) && paint(&rows[1]).contains(&value("1", "0")), "{:?}", paint(&rows[1]));
+    assert_eq!(paint("plain words"), "plain words");
 }
 
 /// M0-D80: a life under a progress hook runs one step a frame through its core collapse, a progress tick each, and goes back to
 /// frames once the collapse stops. A 16 × 16 iron block at Σ 400 (Y_e Σ 186 over Σ_N 160), gravity on and nothing moving, in a
 /// 64 × 64 world: N_Fe converts it from the first step (raw core_collapse) until the gate closes some 60 steps later. The same
 /// life twice is the same; one cut at a checkpoint inside the stretch and continued is the unbroken one (summary.json but for
-/// `wall_s`, events.jsonl and the ticks after the cut); without a hook the frames are as before.
+/// `wall_s`, events.jsonl and the ticks after the cut; the cut run is the second life, its ticks the unbroken one's). Without a hook the frames are as before: scopes `observe_run` and `dump`
+/// run every life there through plain `headless` and grade its frame boundaries. Each collapse step costs 0.6–3 s (RTX 4090, ~all in
+/// P6's N_Fe), and the case runs ~90 of them.
 #[test]
 fn a_life_steps_one_at_a_time_through_its_core_collapse() {
     use sr_engine::headless::{Progress, Tick};
@@ -886,8 +933,8 @@ fn a_life_steps_one_at_a_time_through_its_core_collapse() {
         raw: String,
     }
     // A life to `max_steps` (its until never met: exit 2), from `load` when given, ticking every 64 steps, a checkpoint every
-    // `checkpoint` steps; `hook` false runs it as plain `headless` does.
-    let life = |name: &str, max_steps: u64, load: Option<std::path::PathBuf>, checkpoint: Option<u64>, hook: bool| {
+    // `checkpoint` steps.
+    let life = |name: &str, max_steps: u64, load: Option<std::path::PathBuf>, checkpoint: Option<u64>| {
         let out = dir.join(name);
         let args = Args {
             scene: "calibrate:one_step:iron".to_string(),
@@ -915,7 +962,7 @@ fn a_life_steps_one_at_a_time_through_its_core_collapse() {
         };
         let mut saved = |_: u64, _: f64, _: &str| {};
         let progress = Progress { every: 64, tick: &mut tick, checkpoint_every: checkpoint, saved: &mut saved };
-        let (code, lines) = run_scene_captured(args, Scene::load(&scene_file).unwrap(), hook.then_some(progress));
+        let (code, lines) = run_scene_captured(args, Scene::load(&scene_file).unwrap(), Some(progress));
         assert_eq!(code, 2, "{name}: {lines:?}");
         let mut summary: serde_json::Value = serde_json::from_slice(&std::fs::read(out.join("summary.json")).unwrap()).unwrap();
         summary.as_object_mut().unwrap().remove("wall_s");
@@ -924,7 +971,7 @@ fn a_life_steps_one_at_a_time_through_its_core_collapse() {
 
     // Engaged from the first step's collapse: ticks at steps 2, 3, … each a frame of one step; the stretch's last frame shows
     // the collapse over, and frames of 16 follow, ticking only on the 64-step grid.
-    let (seen, summary, events, _) = life("unbroken", 160, None, None, true);
+    let (seen, summary, events, _) = life("unbroken", 160, None, None);
     let stretch = seen.iter().take_while(|s| s.frame == 1).count();
     assert!(stretch >= 30, "a stretch of one-step frames through the collapse: {seen:?}");
     assert!(seen[..stretch].iter().enumerate().all(|(i, s)| s.step == 2 + i as u64), "one tick a step from step 2: {seen:?}");
@@ -936,17 +983,19 @@ fn a_life_steps_one_at_a_time_through_its_core_collapse() {
     assert!(seen.iter().all(|s| s.p5_ceiling == 0), "no heat pass in this scene: {seen:?}");
     assert_eq!(summary["steps"], 160, "{summary}");
 
-    // The same life again: the same ticks, record and events.
-    let (again, summary_2, events_2, _) = life("again", 160, None, None, true);
-    assert_eq!(again.iter().map(|s| (s.step, s.frame, &s.raw)).collect::<Vec<_>>(), seen.iter().map(|s| (s.step, s.frame, &s.raw)).collect::<Vec<_>>());
-    assert_eq!((summary_2["events"].clone(), summary_2["objects"].clone(), events_2), (summary["events"].clone(), summary["objects"].clone(), events.clone()));
+    // The same life again, cut at 30 with a checkpoint every 20 (a one-step frame ends at 20 exactly): its ticks and events
+    // through 30 are the unbroken life's.
+    let (again, summary_2, _, cut) = life("cut", 30, None, Some(20));
+    let first_30: Vec<&Seen> = seen.iter().filter(|s| s.step <= 30).collect();
+    assert_eq!(again.iter().collect::<Vec<_>>(), first_30, "the same life, the same ticks");
+    let early = |v: &serde_json::Value| v["events"].as_array().unwrap().iter().filter(|e| e["step"].as_u64() <= Some(30)).cloned().collect::<Vec<_>>();
+    assert_eq!(early(&summary_2), early(&summary), "the same events");
 
-    // Cut at 30 with a checkpoint every 20 (a one-step frame ends at 20 exactly), continued from it: the unbroken life.
-    let (_, _, _, cut) = life("cut", 30, None, Some(20), true);
+    // Continued from the checkpoint at 20: the unbroken life.
     let pair = cut.join("checkpoint").join("s_20.observers.json");
     let snapshot: serde_json::Value = serde_json::from_slice(&std::fs::read(&pair).unwrap_or_else(|e| panic!("{}: {e}", pair.display()))).unwrap();
     assert_eq!(snapshot["one_step"], true, "the snapshot carries the stretch");
-    let (continued, summary_c, events_c, _) = life("continued", 160, Some(cut.join("checkpoint").join("s_20.bin")), None, true);
+    let (continued, summary_c, events_c, _) = life("continued", 160, Some(cut.join("checkpoint").join("s_20.bin")), None);
     let unbroken_after: Vec<&Seen> = seen.iter().filter(|s| s.step > 20).collect();
     assert_eq!(continued.iter().collect::<Vec<_>>(), unbroken_after, "the continued life frames as the unbroken one");
     let mut unbroken = summary.clone();
@@ -954,10 +1003,5 @@ fn a_life_steps_one_at_a_time_through_its_core_collapse() {
     let mut summary_c = summary_c;
     summary_c.as_object_mut().unwrap().remove("adapter");
     assert_eq!((summary_c, events_c), (unbroken, events), "the continued life's record is the unbroken one's");
-
-    // Without a hook (plain headless, the game): frames of 16 throughout, the stage trail on their boundaries (1 + 16k).
-    let (_, plain, _, _) = life("plain", 160, None, None, false);
-    let froms: Vec<u64> = plain["objects"][0]["stages"].as_array().unwrap().iter().map(|s| s["from_step"].as_u64().unwrap()).collect();
-    assert!(froms.len() >= 2 && froms.iter().all(|f| f % 16 == 1), "frames as before: {froms:?}");
     let _ = std::fs::remove_dir_all(&dir);
 }

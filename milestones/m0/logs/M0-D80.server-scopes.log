@@ -1,0 +1,51 @@
+=== M0-D80 Verify 1 scopes' commands on laserax-ai-server, RTX 4090 (iteration; the claim stays on laserax-ai) 2026-10-22T09:01:03-04:00 ===
+--- calibrate_bisect
+wall 2 s
+--- observe
+wall 1 s
+--- dump
+wall 1 s
+=== end 2026-10-22T09:01:07-04:00
+=== M0-D80 retry after the test's compile fix (first try: compile error, 0 cases) 2026-10-22T09:01:43-04:00 laserax-ai-server RTX 4090 ===
+--- calibrate_bisect
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.653404 until=met
+--
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.653404 until=met
+--
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.653404 until=met
+--
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 333 filtered out; finished in 260.31s
+
+wall 266 s
+--- observe
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 345 filtered out; finished in 16.61s
+
+wall 17 s
+--- dump
+thread 'dump::a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump' (1201638) panicked at crates/sr-engine/tests/gpu/dump.rs:435:5:
+assertion `left == right` failed
+  left: 6
+--
+thread 'dump::headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte' (1201710) panicked at crates/sr-engine/tests/gpu/dump.rs:314:5:
+assertion `left == right` failed
+  left: 6
+--
+test result: FAILED. 9 passed; 2 failed; 0 ignored; 0 measured; 340 filtered out; finished in 15.29s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+wall 15 s
+=== end 2026-10-22T09:06:41-04:00

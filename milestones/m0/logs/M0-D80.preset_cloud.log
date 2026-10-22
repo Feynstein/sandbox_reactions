@@ -1,0 +1,35 @@
+== 2026-10-22T09:19:48-04:00 preset_cloud · task M0-D80 · box laserax-ai :: bash tests/gpu.sh preset
+-- preset_cloud · exit=0 · 40.16 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test preset::a_scene_file_preset_is_the_nominal_mass_and_a_bad_mass_is_refused ... ok
+test preset::the_cells_hold_the_mass_asked_for ... M = 0.3 M0 = 1005.310: cells hold 1005.310, relative error 2.06e-11
+M = 1 M0 = 3351.032: cells hold 3351.032, relative error 3.25e-9
+M = 3 M0 = 10053.096: cells hold 10053.096, relative error 2.64e-10
+M = 9 M0 = 30159.289: cells hold 30159.289, relative error 5.20e-10
+M = 20 M0 = 67020.643: cells hold 67020.643, relative error 2.51e-10
+M = 60 M0 = 201061.930: cells hold 201061.930, relative error 1.62e-11
+ok
+test preset::the_composition_is_the_suns_at_rest_and_the_temperature_uniform ... M = 1 M0: 5024 cells, T from 4.732298 to 4.732301, X = [0.7346, 0.2485, 0.0092, 0.0077, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+M = 20 M0: 70688 cells, T from 25.275240 to 25.275248, X = [0.7346, 0.2485, 0.0092, 0.0077, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+ok
+test preset::the_radius_and_central_sigma_follow_the_formula_and_the_cap ... M = 0.3 M0: a = 21.91 (spans 44 cells), Σc = 1.00000 (centre cell 0.99918)
+M = 1 M0: a = 40.00 (spans 80 cells), Σc = 1.00000 (centre cell 0.99966)
+M = 3 M0: a = 69.28 (spans 138 cells), Σc = 1.00000 (centre cell 1.00000)
+M = 9 M0: a = 120.00 (spans 240 cells), Σc = 1.00000 (centre cell 0.99996)
+M = 20 M0: a = 150.00 (spans 300 cells), Σc = 1.42222 (centre cell 1.42220)
+M = 60 M0: a = 150.00 (spans 300 cells), Σc = 4.26667 (centre cell 4.26660)
+ok
+test preset::the_thermal_energy_is_a_tenth_of_the_grids_own_binding_energy ... M = 0.3 M0: W = -43325.50, U_th = 4332.550, U_th/|W| = 0.100000
+M = 1 M0: W = -264080.44, U_th = 26408.043, U_th/|W| = 0.100000
+M = 3 M0: W = -1373478.20, U_th = 137347.820, U_th/|W| = 0.100000
+M = 9 M0: W = -7139471.78, U_th = 713947.179, U_th/|W| = 0.100000
+M = 20 M0: W = -28209108.80, U_th = 2820910.884, U_th/|W| = 0.100000
+M = 60 M0: W = -253881979.35, U_th = 25388197.943, U_th/|W| = 0.100000
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 346 filtered out; finished in 40.02s
+
+

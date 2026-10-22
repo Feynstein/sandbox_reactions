@@ -1,7 +1,7 @@
 --- a/crates/sr-engine/src/headless.rs
 +++ b/crates/sr-engine/src/headless.rs
-@@ -627,7 +627,7 @@
-                 (p.tick)(at_step.step, dt.sim_time, watch.heaviest_stage().unwrap_or("none"));
+@@ -851,7 +851,7 @@
+                 });
              }
          }
 -        if args.until.is_some_and(|u| watch.holds(u, &fresh)) {

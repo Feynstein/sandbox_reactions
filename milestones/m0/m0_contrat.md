@@ -434,6 +434,29 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     returns with M0-D71's well-balanced P4 · measured on linux-pc, 2026-10-21, RTX 5090: m_bh_sb's low end (4,572.394) held core_collapse
     from step 2,001 to 60,001 at 10⁻³ (X_n,c +2.5 × 10⁻⁵ per t.u., ~20,000 t.u. to 0.5); continued from that step at 100 the new row holds
     at every snapshot from 0.5 t.u. on (reports/neutronization.md M1) — the lead, 2026-10-21, at M0-R5: «Rate + NS row (Recommended)».
+  - [M0-D80] §3.3's Calibrate `--progress-every N` («a line every N steps»; [M0-D75]: «the tick of every life's progress line and
+    `progress.json`», «nothing a life computes changes») and [M0-D77]'s «no chunk is shortened: nothing the life computes moves», read for a
+    `calibrate` life · **a calibrate life's frames adapt to the physics:** its next frame is one step while the frame just run had a step at
+    P5's ceiling ([M0-TJ4] (6)) or the heaviest object's raw stage (§1.9.3, before the hold) is core_collapse — the state alone, never wall
+    time, so a life frames the same under any load — and each one-step frame is a progress line and a `progress.json` write besides the
+    N-step tick; otherwise its frames are as before. Plain `headless` (no progress hook) and the game frame as before. The observers'
+    snapshot ([M0-D76]) gains `one_step` (a snapshot without it reads false), so a continued life frames as the unbroken one ([M0-D77]'s
+    «a continued life's record is the unbroken life's» holds). **The progress line** gains ` | raw=<the heaviest object's stage before
+    the hold>` after `stage=<shown>` and is followed by six indented rows, each a label and four `name value` cells in a fixed grid under
+    80 columns — `frame` (steps, dt — its mean Δt —, s/step — wall, display only —, P5_ceil — its steps at P5's ceiling), `star` (M, R,
+    tau_dyn, M_unb), `core` (sigma_c, T_c, d_c, Ye_c = Σ X_c Z/A), `centre` (X_Fe, X_n, v_r, vr/vdyn = v_r/√(GM/R)), `light` (L, L_nuc,
+    L_N, L_nu), `world` (escaped — the ledger's —, objects, sinks, sink_M); the heaviest object's, §1.9.2, sandbox units; on a terminal
+    (and not under NO_COLOR) coloured, the hard physics (P5_ceil > 0, L_N < 0, raw core_collapse) in red, a one-step frame in yellow, a
+    log or a pipe plain; `progress.json` the same keys (frame, dt, s_per_step, p5_ceiling, escaped, objects, M, R, tau_dyn, sigma_c, T_c,
+    d_c, Ye_c, X_Fe_c, X_n_c, v_r, v_r_dyn, M_unb, L, L_nuc, L_N, L_nu, sinks, sink_M, raw); `tools/calibrate_status.py` reads the stage
+    before ` | ` (the lead, 2026-10-22, watching it: «can you make it so the metrics are clearer? It all appears to be one cluster of text
+    and its not easy to read in a small terminal», «add some color too if you can») · cost: frame length moves what a life's observers sample, so a calibrated life whose stretch differs
+    (a step at P5's ceiling, a core collapse) can move its events and ending step — items 3, 4 and 6 are re-measured on this binary · a
+    life at core collapse ran a step in seconds (5,257 steps at P5's ceiling in the 20 M₀ life) and `--progress-every 100` left the
+    terminal silent for minutes; one collapse step of a 16 × 16 iron block costs 0.6–3 s on the RTX 4090, ~all of it in P6 (laserax-ai-server,
+    2026-10-22) — the lead, 2026-10-22, at M0-R6: «If the simulation goes well it moves to 100 when it gets slow I want to see each
+    step», «lets make that change in the main calibration script too», «The physics (Recommended)», «I want to see the relevant metrics
+    to see how it goes».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1184,7 +1207,9 @@ Unit-tested without a GPU against §1.8.
   [--only <item>] [--resume <dir>] [--progress-every N] [--checkpoint-every M]` — §2.11; `--only` re-measures one item and keeps the rest.
   [M0-D77] `--checkpoint-every M` is the save interval of a running life's checkpoint (default 10,000 steps), apart from `--progress-every`;
   `--resume` continues a cut life from it, `continued from step <k>` on its run line.
-  [M0-D75] `--progress-every N` is the tick of every life's progress line and `progress.json` (default 10,000 steps). [M0-D72] `--resume <dir>`,
+  [M0-D75] `--progress-every N` is the tick of every life's progress line and `progress.json` (default 10,000 steps). [M0-D80] A life's
+  frame is one step, and a progress line, while P5's ceiling or a core collapse holds; each line names the raw stage and is followed by
+  six rows of the frame's, the heaviest object's and the world's numbers. [M0-D72] `--resume <dir>`,
   an earlier invocation's `build/calibrate_runs/<stamp>/`, reads that invocation's finished lives back instead of running
   them (run NN ← `<dir>/<label>-<NN>/summary.json`, when it parses, its `until.met` is true and its `scene` is this run's
   `calibrate:<label>:<mass to 3 decimals>`; its run line says `replayed`), runs the first life with no such record and every

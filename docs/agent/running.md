@@ -152,6 +152,37 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   steps/s, so the default is a line every ~16 minutes: give it fewer steps for heavy stars (`--progress-every 1000`, the lead's first try) and
   more for light ones (a 1 M₀ life runs ~280 steps/s: 10,000 is a line every ~35 s, 50,000 every ~3 min). `calibrate_status.py` calls a
   `progress.json` stale only past max(15 min, 3 × the tick's expected interval).
+- **One step at a time while it is hard** (M0-D80, §0.5 [M0-D80]). A life's next frame is **one step** while the frame just run had a
+  step at P5's ceiling (the heat solve hit its 64 passes or 4,096 rounds) or the heaviest object's raw stage is `core_collapse` — the
+  physics, never the clock, so a life frames the same whatever else loads the GPU — and **each one-step frame prints a progress line**
+  besides the `--progress-every` tick. A stretch reads `step=1400`, `1401`, `1402` … each with `frame=1`; when the trigger clears, the life
+  goes back to frames (16 steps while it watches its `until`) and to one line every N steps. A fast life prints no extra line. A checkpoint
+  carries whether the next frame is one step (the snapshot's `one_step`), so `--resume` frames as the unbroken life would have. Plain
+  `headless` and the game frame as before.
+- **The line's numbers** (M0-D80; sandbox units, §2.1; `progress.json` carries the same keys). The progress line ends `stage=<shown> |
+  raw=<the heaviest object's stage before the 3-frame hold>`, then six indented rows, the same numbers in the same columns every step:
+  ```
+  SR-CALIBRATE progress item=m_bh_sb mass=6702.064 step=1010 sim_time=10.469 heat_unconverged=6 stage=white_dwarf | raw=white_dwarf
+    frame  steps          16  dt      8.714e-3  s/step    0.05189  P5_ceil         0
+    star   M            6690  R          108.4  tau_dyn     13.80  M_unb       12.78
+    core   sigma_c     33.76  T_c        33.48  d_c        0.8549  Ye_c       0.4643
+    centre X_Fe        1.000  X_n            0  v_r        0.2974  vr/vdyn   0.03786
+    light  L           42033  L_nuc  1.802e-11  L_N             0  L_nu            0
+    world  escaped   0.09486  objects        1  sinks           0  sink_M          0
+  ```
+  - `frame` — steps in the frame (1 in a one-step stretch), `dt` its mean Δt (t.u.), `s/step` wall seconds per step (display only),
+    `P5_ceil` its steps at P5's ceiling (the running total is `heat_unconverged`);
+  - `star` (the heaviest object, §1.9.2) — `M` mass, `R` radius holding 90 % of M (cells), `tau_dyn` √(R³/GM) (t.u.), `M_unb` unbound mass;
+  - `core` — `sigma_c` and `T_c` (Σ and T at its centre), `d_c` degeneracy Π_cold/Π (≥ 0.5 a degenerate core), `Ye_c` electrons per nucleon
+    Σ X Z/A (iron 0.464, the neutron_star row ≤ 0.35);
+  - `centre` — `X_Fe`, `X_n` (iron's and neutrons' mass fractions there), `v_r` mass-weighted radial velocity (< 0 falling in), `vr/vdyn`
+    v_r/√(GM/R) (−1 is free fall);
+  - `light` — `L`, `L_nuc`, `L_N` (< 0 while iron neutronizes: the core_collapse row), `L_nu` (powers, energy per t.u.);
+  - `world` — `escaped` (mass gone through the edge so far, the ledger's), `objects` (how many the tracker found), `sinks` and `sink_M`
+    (black holes in the star and their mass).
+  Numbers show 4 significant digits, very large or small ones as `1.802e-11`. **Colour** on a terminal: the stage green, the raw stage
+  magenta (red while `core_collapse`), a one-step frame's `steps` yellow, `P5_ceil` above 0 and `L_N` below 0 red; a log kept with `| tee`
+  or a redirect stays plain, and `NO_COLOR=1` turns it off. `calibrate_status.py --log` reads the stage before ` | `.
 - **`--checkpoint-every M`** (M0-D77; steps, a whole number ≥ 1, default 10,000; 0, a negative or a non-number is exit 4; items 1–2 ignore
   it) is the save interval of a running life, **apart from `--progress-every`**: either may be larger than the other and neither moves anything
   a life computes. At the first frame boundary at or past each multiple of M the life writes its checkpoint — a dump and the observers' snapshot
@@ -166,8 +197,8 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   with M = 50,000 ~3 min; N (`--progress-every`) is only how often you hear from it, and may be smaller (the status script shows both
   `checkpoint_step` and what a stop would lose). A life whose stop came before its first checkpoint has none: it runs from step 0.
 - **What a run prints.** One `SR-CALIBRATE run …` line per life (mass, side, ending, steps, wall time, `record=<dir>`) so a
-  crash or a kill leaves a trace, and while a life runs a `SR-CALIBRATE progress item= mass= step= sim_time= heat_unconverged= stage=` line every
-  `--progress-every` steps, 10,000 by default (the same fields, the stages shown so far and `progress_every` land in the life's `progress.json`, M0-D74, M0-D75; a life's `SR-WARN heat
+  crash or a kill leaves a trace, and while a life runs a `SR-CALIBRATE progress item= mass= step= sim_time= heat_unconverged= stage= | …` line every
+  `--progress-every` steps, 10,000 by default, and after each one-step frame (M0-D80, above) (the same fields, the stages shown so far and `progress_every` land in the life's `progress.json`, M0-D74, M0-D75; a life's `SR-WARN heat
   unconverged` lines are counted into `heat_unconverged`, not printed — they buried everything else). Each life's summary.json and events.jsonl are kept in `build/calibrate_runs/<UTC stamp>/<item>-<NN>/`
   (git-ignored; the final dump goes; a failed life's record stays and its error names it) — read them to trace a value to its life. The bisection stops at 2 % (§2.11). `measured.adapter` in the file names the adapter the lives ran on
   (`cpu` while only items 1–2 are in it). Item 5 (K9, `check_order`) runs **before** the preset lives, so a broken order

@@ -27,7 +27,10 @@
 //! (git-ignored; the final dump goes, a failed life's record stays and its error names it), and while a life runs a
 //! `SR-CALIBRATE progress item=… mass=… step=… sim_time=… heat_unconverged=… stage=…` line comes every `--progress-every` steps (default [`PROGRESS_EVERY`], M0-D60, M0-D75)
 //! and the same fields land in the life's `progress.json`, atomically (M0-D74); a life's `SR-WARN heat unconverged` lines are
-//! counted into `heat_unconverged`, not printed.
+//! counted into `heat_unconverged`, not printed. While a step reaches P5's ceiling or the heaviest object collapses, a life runs
+//! one step a frame and each is a progress line (M0-D80, `headless::one_step_next`); every line names the heaviest object's raw
+//! stage beside the shown one and is followed by six rows of the frame's, the star's and the world's numbers (`tick_rows`, coloured
+//! by [`paint`] on a terminal), and progress.json carries the same keys.
 //! A running life saves its checkpoint (the dump and the observers' snapshot, M0-D76) into `<life>/checkpoint/` every
 //! `--checkpoint-every` steps (default [`CHECKPOINT_EVERY`], M0-D77), apart from the progress tick, and `--resume` continues a
 //! cut life from it — `continued from step <k>` on its run line — instead of from step 0.
@@ -561,10 +564,9 @@ fn write_progress(path: &Path, record: &Value) {
     }
 }
 
-/// A progress tick's numbers after the shown stage (M0-D80), in the line's order, as progress.json writes them: the frame
-/// (`frame` steps, its mean `dt`, `s_per_step` wall seconds — display only — and `p5_ceiling`, its steps at P5's ceiling), the
-/// world (`escaped` mass, `objects`) and the heaviest object (§1.9.2, sandbox units; `raw` its stage before the hold). `|`
-/// separates the three groups on the line (`GROUPS_AT`).
+/// A progress tick's numbers (M0-D80), as progress.json writes them: the frame (`frame` steps, its mean `dt`, `s_per_step` wall
+/// seconds — display only — and `p5_ceiling`, its steps at P5's ceiling), the world (`escaped` mass, `objects`) and the heaviest
+/// object (§1.9.2, sandbox units; `raw` its stage before the hold). The terminal shows them as [`tick_rows`].
 fn tick_numbers(t: &Tick) -> Vec<(&'static str, Value)> {
     let mut v: Vec<(&'static str, Value)> = vec![
         ("frame", json!(t.frame)),
@@ -608,32 +610,50 @@ fn with_numbers(mut record: Value, numbers: &[(&'static str, Value)]) -> Value {
     record
 }
 
-/// The key that opens each group of [`tick_numbers`] on the line, after a ` |`.
-const GROUPS_AT: [&str; 3] = ["frame", "escaped", "M"];
+/// The rows under a progress line (M0-D80), each a label and four columns of a [`tick_numbers`] key and the name it shows; a
+/// row whose keys a tick lacks (no object yet) is left out.
+const ROWS: [(&str, [(&str, &str); 4]); 6] = [
+    ("frame", [("frame", "steps"), ("dt", "dt"), ("s_per_step", "s/step"), ("p5_ceiling", "P5_ceil")]),
+    ("star", [("M", "M"), ("R", "R"), ("tau_dyn", "tau_dyn"), ("M_unb", "M_unb")]),
+    ("core", [("sigma_c", "sigma_c"), ("T_c", "T_c"), ("d_c", "d_c"), ("Ye_c", "Ye_c")]),
+    ("centre", [("X_Fe_c", "X_Fe"), ("X_n_c", "X_n"), ("v_r", "v_r"), ("v_r_dyn", "vr/vdyn")]),
+    ("light", [("L", "L"), ("L_nuc", "L_nuc"), ("L_N", "L_N"), ("L_nu", "L_nu")]),
+    ("world", [("escaped", "escaped"), ("objects", "objects"), ("sinks", "sinks"), ("sink_M", "sink_M")]),
+];
 
-/// The progress line's tail (M0-D80): ` | frame=… dt=… s_per_step=… p5_ceiling=… | escaped=… objects=… | M=… … raw=…`, each
-/// number to 4 significant digits (an integer as it is). `tools/calibrate_status.py` reads the stage before the first ` | `.
-fn tick_line(numbers: &[(&'static str, Value)]) -> String {
-    let mut line = String::new();
-    for (key, value) in numbers {
-        line.push_str(if GROUPS_AT.contains(key) { " | " } else { " " });
-        let shown = match value {
-            Value::Number(n) if n.is_f64() => {
-                let x = n.as_f64().unwrap_or(f64::NAN);
-                if x == 0.0 {
-                    "0".to_string()
-                } else if (1e-3..1e5).contains(&x.abs()) {
-                    format!("{x:.*}", (3 - x.abs().log10().floor() as i32).max(0) as usize)
-                } else {
-                    format!("{x:.3e}")
-                }
+/// A number as the rows show it: an integer as it is, else 4 significant digits, very large or small ones as `1.234e5`.
+fn shown(value: &Value) -> String {
+    match value {
+        Value::Number(n) if n.is_f64() => {
+            let x = n.as_f64().unwrap_or(f64::NAN);
+            if x == 0.0 {
+                "0".to_string()
+            } else if (1e-3..1e5).contains(&x.abs()) {
+                format!("{x:.*}", (3 - x.abs().log10().floor() as i32).max(0) as usize)
+            } else {
+                format!("{x:.3e}")
             }
-            Value::String(s) => s.clone(),
-            other => other.to_string(),
-        };
-        line.push_str(&format!("{key}={shown}"));
+        }
+        Value::String(s) => s.clone(),
+        other => other.to_string(),
     }
-    line
+}
+
+/// One cell of a row: a name in 7 columns, a value right-aligned in 9.
+fn cell(name: &str, value: &str) -> String {
+    format!("{name:<7} {value:>9}")
+}
+
+/// The lines under a progress line (M0-D80): one row per theme of [`ROWS`], `  <label> <name> <value> …` in a fixed grid so that
+/// the same number sits in the same column from one step to the next, under 80 columns.
+fn tick_rows(numbers: &[(&'static str, Value)]) -> Vec<String> {
+    let find = |key: &str| numbers.iter().find(|(k, _)| *k == key).map(|(_, v)| v);
+    ROWS.iter()
+        .filter_map(|(label, columns)| {
+            let cells: Option<Vec<String>> = columns.iter().map(|(key, name)| find(key).map(|v| cell(name, &shown(v)))).collect();
+            cells.map(|c| format!("  {label:<6} {}", c.join("  ")))
+        })
+        .collect()
 }
 
 /// How often a life says where it is by default: one `SR-CALIBRATE progress` line every this many steps (M0-D60);
@@ -770,8 +790,12 @@ impl Lives<'_> {
             *numbers.borrow_mut() = tick_numbers(t);
             // Heat warnings are counted, not printed (M0-D74): the line says how many steps reached P5's ceiling so far.
             let unconverged = unconverged_steps();
-            let extra = tick_line(&numbers.borrow());
-            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} heat_unconverged={unconverged} stage={stage}{extra}"));
+            // The heaviest object's raw stage beside the shown one, then the frame's, the star's and the world's numbers in rows (M0-D80).
+            let raw = t.star.as_ref().map(|s| format!(" | raw={}", s.raw.unwrap_or("none"))).unwrap_or_default();
+            say(&format!("SR-CALIBRATE progress item={label} mass={mass:.3} step={step} sim_time={sim_time:.3} heat_unconverged={unconverged} stage={stage}{raw}"));
+            for row in tick_rows(&numbers.borrow()) {
+                say(&row);
+            }
             note(step, sim_time, stage);
         };
         // A saved checkpoint moves progress.json's `checkpoint_step` at once, not at the next tick: what a stop would lose.
@@ -1258,7 +1282,59 @@ pub fn run_with_progress(args: &[String], overrides: &[(String, f64)], progress_
 
 /// Runs the command; returns the process's exit code.
 pub fn run(args: &[String]) -> i32 {
-    run_with(args, &[], &mut |line| println!("{line}"))
+    // Colour only on a terminal, and never under NO_COLOR (no-color.org): a log kept with `| tee` or a redirect stays plain text.
+    use std::io::IsTerminal;
+    let colour = std::io::stdout().is_terminal() && std::env::var_os("NO_COLOR").is_none();
+    run_with(args, &[], &mut |line| if colour { println!("{}", paint(line)) } else { println!("{line}") })
+}
+
+/// ANSI colours for a terminal (M0-D80; the lead: «add some color too if you can»): a progress line's head in cyan, its shown
+/// stage in green and its raw stage in magenta (red while core_collapse); a row's label in blue, its names dim, its values bold —
+/// red where the physics is hard (P5_ceil above 0, L_N below 0), yellow for a one-step frame; `SR-CALIBRATE run` bold,
+/// `SR-WARN` yellow, `SR-ERROR` red. The text is the same once the codes are stripped.
+pub fn paint(line: &str) -> String {
+    const RESET: &str = "\x1b[0m";
+    if let Some(rest) = line.strip_prefix("SR-CALIBRATE progress") {
+        let (fields, raw) = rest.split_once(" | raw=").map_or((rest, None), |(f, r)| (f, Some(r)));
+        let (before, stage) = fields.split_once(" stage=").unwrap_or((fields, ""));
+        let mut out = format!("\x1b[1;36mSR-CALIBRATE progress{RESET}{before} stage=\x1b[1;32m{stage}{RESET}");
+        if let Some(raw) = raw {
+            let tone = if raw == "core_collapse" { "1;31" } else { "35" };
+            out.push_str(&format!(" | raw=\x1b[{tone}m{raw}{RESET}"));
+        }
+        return out;
+    }
+    let row = line.strip_prefix("  ").and_then(|r| r.split_once(' ')).filter(|(label, _)| ROWS.iter().any(|(l, _)| l == label));
+    if let Some((label, cells)) = row {
+        let words: Vec<&str> = cells.split_whitespace().collect();
+        let painted: Vec<String> = words
+            .chunks(2)
+            .map(|pair| {
+                let (name, value) = (pair[0], pair.get(1).copied().unwrap_or(""));
+                let number = value.parse::<f64>().unwrap_or(0.0);
+                let tone = match name {
+                    "P5_ceil" if number > 0.0 => "1;31",
+                    "L_N" if number < 0.0 => "1;31",
+                    "steps" if number == 1.0 => "1;33",
+                    _ => "1",
+                };
+                let plain = cell(name, value);
+                let (n, v) = plain.split_at(7);
+                format!("\x1b[2m{n}{RESET}\x1b[{tone}m{v}{RESET}")
+            })
+            .collect();
+        return format!("  \x1b[1;34m{label:<6}{RESET} {}", painted.join("  "));
+    }
+    let tone = if line.starts_with("SR-ERROR") {
+        "1;31"
+    } else if line.starts_with("SR-WARN") {
+        "33"
+    } else if line.starts_with("SR-CALIBRATE run") {
+        "1"
+    } else {
+        return line.to_string();
+    };
+    format!("\x1b[{tone}m{line}{RESET}")
 }
 
 fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, say: &mut dyn FnMut(&str)) -> Result<(), CalError> {
