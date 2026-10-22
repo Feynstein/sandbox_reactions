@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/react.rs
++++ b/crates/sr-physics/src/reference/react.rs
+@@ -241,7 +241,7 @@
+             elements: elements.clone(),
+             recs,
+             latch,
+-            nfe,
++            nfe: nfe.filter(|_| false), // planted: N_Fe sub-cycled with the others, the closed form skipped
+             sigma_vac: get("sigma_vac"),
+             burn_dx: get("burn_dx"),
+             burn_dt: get("burn_dt"),

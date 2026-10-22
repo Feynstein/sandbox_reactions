@@ -1,0 +1,9 @@
+== 2026-10-22T16:39:04-04:00 boot · task M0-R10 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 3.27 s
+headless-boot: exited 6 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-R10.launch.headless-boot.log)
+headless-boot: pid 1737290 not signalled - gone
+headless-boot: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-R10.launch.headless-boot.log
+services: 1, ready: 0, failures: 1
+FAIL headless-boot: exited 6 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-R10.launch.headless-boot.log)
+=== NO-GO: launch.py smoke headless-boot did not end GO ===
+

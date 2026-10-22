@@ -1,14 +1,14 @@
 --- a/crates/sr-physics/src/reference/react.rs
 +++ b/crates/sr-physics/src/reference/react.rs
-@@ -248,7 +248,7 @@
-             let mut qdot = 0.0;
-             let eps_nu = self.eps_nu(t);
-             for (r, rec) in self.recs.iter().enumerate() {
--                let w = rec.omega.omega(sigma, &x, t, y_e);
-+                let w = rec.omega.omega(sigma, &x, t, 1.0); // planted: the gate reads Σ, not Y_eΣ
-                 omegas[r] = w;
-                 cell.nfe |= self.latch[r] && w > 0.0;
-                 // ω = 0 may still have a nonzero derivative (an absent input of order 1): the gradient is always built.
+@@ -286,7 +286,7 @@
+         let t0 = Eos::temperature(eps_th0, mu0);
+         // N_Fe first, in closed form over the whole Δt; the latch reads its rate here, at the pass's start.
+         if let Some(nfe) = &self.nfe {
+-            let w_nfe = self.recs[nfe.rec].omega.omega(sigma, &x, t0, y_e0);
++            let w_nfe = self.recs[nfe.rec].omega.omega(sigma, &x, t0, 1.0); // planted: the gate reads Σ, not Y_eΣ
+             cell.nfe = w_nfe > 0.0;
+             if cell.nfe {
+                 let dm = self.nfe_exact(nfe, sigma, &mut x, dt);
 --- a/crates/sr-engine/shaders/react.wgsl
 +++ b/crates/sr-engine/shaders/react.wgsl
 @@ -296,5 +296,5 @@

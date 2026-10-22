@@ -459,6 +459,96 @@ mod cell {
         assert!((0..N_GROUPS).any(|g| pass.nuclear[g * n] != 0.0), "the hydrogen cell burned");
     }
 
+    /// X_Fe after `dt` of §1.6.1's law for N_Fe alone (A Σ^a, a = 0, X_Fe of order 1, f ≡ 1, g = Y_eΣ/Σ_N − 1 above the gate),
+    /// Y_e = a_Y + y_Fe X_Fe with a_Y the other species' electrons (fixed: N_Fe moves iron only): classical RK4 at 4,000 steps
+    /// a Δt — the oracle is the ODE marched, not the closed form the twin evaluates (§0.5 [M0-R10]).
+    fn n_fe_march(a: f64, sigma: f64, sigma_n: f64, a_y: f64, y_fe: f64, x_fe: f64, dt: f64) -> f64 {
+        let rate = |x: f64| -a * x * ((a_y + y_fe * x) * sigma / sigma_n - 1.0).max(0.0);
+        let h = dt / 4000.0;
+        let mut x = x_fe;
+        for _ in 0..4000 {
+            let k1 = rate(x);
+            let k2 = rate(x + 0.5 * h * k1);
+            let k3 = rate(x + 0.5 * h * k2);
+            let k4 = rate(x + h * k3);
+            x += h / 6.0 * (k1 + 2.0 * k2 + 2.0 * k3 + k4);
+        }
+        x
+    }
+
+    /// N_Fe in closed form (§0.5 [M0-R10], M0-D86): the iron block (pure Fe, Σ 400, T 1 — the cell drops to T_floor at once,
+    /// where the sub-cycles' burn_dt spent MAX_ATTEMPTS, M0-R10 M1), every record enabled, over 20 steps of Δt 5.87 × 10⁻³:
+    /// X_n within 10⁻⁹ of the marched law at each step and no sub-step taken; Fe → n mass for mass, ΣX = 1, X ≥ 0; the heat
+    /// booked in N alone is q ΔX_n Σ (q = −1.14 Q_H) with ΔX_n within 10⁻¹² and E gains it; the latch set. The same law on both sides of
+    /// the limit b = Σ_N/Σ against a_Y (He 0.8 + Fe 0.2: a_Y = 0.4 = b at Σ 400, the kΔt branch; Σ 390 where the gate closes
+    /// first, Σ 410 where the iron runs out first). After 10⁶ t.u. a gate-limited cell sits at Y_eΣ ≤ Σ_N (X_n = 1 − Σ_N/(y_Fe Σ)
+    /// within 10⁻¹²) and an iron-limited one holds no iron: a second pass sets no latch and leaves either bit for bit.
+    #[test]
+    fn n_fe_steps_in_closed_form() {
+        let physics = physics(&[]);
+        let r = react(&physics, &Reactions::shipped(&elements(), &physics).unwrap(), false);
+        let (a, sigma_n) = (physics.get("a_n_fe").unwrap(), physics.get("sigma_n").unwrap());
+        let q = -1.14 * Q_H;
+        let y_fe = 26.0 / 56.0;
+        let n_group = GROUPS.iter().position(|g| *g == "N").unwrap();
+        let dt = 5.87e-3;
+        for (label, sigma, parts) in [
+            ("iron block", 400.0, vec![("Fe", 1.0)]),
+            ("a_Y = b", 400.0, vec![("He", 0.8), ("Fe", 0.2)]),
+            ("gate closes", 390.0, vec![("He", 0.8), ("Fe", 0.2)]),
+            ("iron runs out", 410.0, vec![("He", 0.8), ("Fe", 0.2)]),
+        ] {
+            let x0 = x_of(&parts);
+            let mut others = x0;
+            others[elements().index_of("Fe").unwrap()] = 0.0;
+            let a_y = elements().composition(&others).y_e;
+            let mut st = world(1, 1, &[(sigma, 1.0, x0)]);
+            let mut want_fe = frac(&st, "Fe", 0);
+            let mut worst = 0.0f64;
+            for step in 1..=20 {
+                let (e0, fe0, n0) = (st.get(3, 0), frac(&st, "Fe", 0), frac(&st, "n", 0));
+                let pass = r.step(&mut st, dt);
+                assert_eq!(pass.substeps, 0, "{label}, step {step}: N_Fe sub-cycled ({} sub-steps)", pass.substeps);
+                assert!(pass.latch, "{label}, step {step}: the latch");
+                want_fe = n_fe_march(a, sigma, sigma_n, a_y, y_fe, want_fe, dt);
+                let (fe, xn) = (frac(&st, "Fe", 0), frac(&st, "n", 0));
+                let off = (xn - (x0[elements().index_of("Fe").unwrap()] - want_fe)).abs();
+                worst = worst.max(off);
+                assert!(off <= 1e-9, "{label}, step {step}: X_n {xn}, the marched law {} (Δ {off:.2e})", x0[elements().index_of("Fe").unwrap()] - want_fe);
+                let dn = xn - n0;
+                assert!(((fe0 - fe) - dn).abs() <= 1e-15, "{label}, step {step}: Fe lost {}, n gained {dn}", fe0 - fe);
+                assert!((sum_x(&st, 0) - 1.0).abs() <= 1e-12 && (0..NS).all(|s| st.get(4 + s, 0) >= 0.0), "{label}, step {step}: ΣX = {}", sum_x(&st, 0));
+                let (booked, want) = (pass.nuclear_total(n_group), q * dn * sigma);
+                // Graded in ΔX_n's own unit: the planes resolve ΔX_n to ~10⁻¹⁷, ~10⁻¹² of a late step's.
+                assert!((booked - want).abs() <= 1e-12 * (q * sigma).abs(), "{label}, step {step}: booked {booked}, q ΔX_n Σ {want}");
+                assert!((0..N_GROUPS).filter(|&g| g != n_group).all(|g| pass.nuclear_total(g) == 0.0), "{label}: another group booked");
+                assert!(((st.get(3, 0) - e0) - booked).abs() <= 1e-12 * (q * sigma).abs(), "{label}, step {step}: E gained {}, booked {booked}", st.get(3, 0) - e0);
+            }
+            println!("{label}: Σ {sigma}, a_Y {a_y}, b {}, X_n after 20 steps {:.9}, worst |ΔX_n| against the march {worst:.2e}", sigma_n / sigma, frac(&st, "n", 0));
+        }
+        // The limits, one pass of 10⁶ t.u.
+        for (label, sigma, parts) in [("gate", 400.0, vec![("Fe", 1.0)]), ("iron", 410.0, vec![("He", 0.8), ("Fe", 0.2)])] {
+            let mut st = world(1, 1, &[(sigma, 1.0, x_of(&parts))]);
+            let pass = r.step(&mut st, 1e6);
+            assert!(pass.latch && pass.substeps == 0 && pass.unfinished == 0, "{label}: {pass:?}");
+            let x: [f64; NS] = std::array::from_fn(|s| st.get(4 + s, 0));
+            let y_e_sigma = elements().composition(&x).y_e * sigma;
+            println!("{label} limit: Y_eΣ {y_e_sigma:.15} (Σ_N {sigma_n}), X_Fe {:e}, X_n {:.15}", frac(&st, "Fe", 0), frac(&st, "n", 0));
+            if label == "gate" {
+                assert!(y_e_sigma <= sigma_n, "the gate is left open: Y_eΣ {y_e_sigma} > Σ_N");
+                let limit = 1.0 - sigma_n / (y_fe * sigma);
+                assert!((frac(&st, "n", 0) - limit).abs() <= 1e-12, "X_n {} against the gate's {limit}", frac(&st, "n", 0));
+            } else {
+                assert_eq!(frac(&st, "Fe", 0), 0.0, "the iron did not run out");
+            }
+            assert!((sum_x(&st, 0) - 1.0).abs() <= 1e-12, "ΣX = {}", sum_x(&st, 0));
+            let before = st.clone();
+            let again = r.step(&mut st, 1.0);
+            assert!(!again.latch, "{label}: a second pass on the limit set the latch");
+            assert_eq!(st.planes, before.planes, "{label}: a second pass on the limit moved the cell");
+        }
+    }
+
     // P6 on the GPU (M0-T46): the same oracles, the same tolerances, f32.
 
     /// The GPU's `follow`: one pass per checkpoint, X within [`X_TOL`] of the closed form, ΣX = 1 within 1e-6, no cell

@@ -1,0 +1,11 @@
+=== M0-R10 2026-10-22T15:44:30-04:00 laserax-ai: task log ===
+sections missing=[] sources=3 measurements=8
+=== GO ===
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-R10.boot.log
+  calibration: 1 failed · log milestones/m0/logs/M0-R10.calibration.log
+  readouts: 1 failed · log milestones/m0/logs/M0-R10.readouts.log
+  anchor: 146 never checked, 0 stale, 0 unclassified - every one named above
+verify: 736 passed, 12 failed, 0 skipped · 5/13 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 49 not impacted · 21.88 s + loop 0.05 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 0.41->3.09 · base: M0-R10's start 2026-10-22T15:41:43-04:00
+=== NO-GO: sun_burn: 3 failed · log milestones/m0/logs/M0-R10.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-R10.twin.log; timing: 1 failed · log milestones/m0/logs/M0-R10.timing.log; scene: 1 failed · log milestones/m0/logs/M0-R10.scene.log; dump: 2 failed · log milestones/m0/logs/M0-R10.dump.log; boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log m... ===
+verify: 673 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.21->1.21
+=== GO ===

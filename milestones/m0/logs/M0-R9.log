@@ -1,0 +1,566 @@
+# M0-R9 log — probes on laserax-ai-server (RTX 4090) per R18; started 2026-10-22T15:15:25-04:00 on laserax-ai
+dest=/tmp/r9/probe · files=6495 · size=97M · linked=none · excluded=13
+=== GO ===
+patched /tmp/r9/probe 
+seeded
+.
+..
+AGENTS.md
+assets
+.cargo
+Cargo.lock
+Cargo.toml
+.claude
+CLAUDE.md
+crates
+docs
+GEMINI.md
+.gitattributes
+.gitignore
+milestones
+milestones.md
+PLAYBOOK.md
+rust-toolchain.toml
+scenes
+start.bat
+start.ps1
+start.sh
+tests
+tools
+web
+   Compiling sr-physics v0.0.0 (/tmp/r9/probe/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/r9/probe/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/r9/probe/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.04s
+
+real	0m4.101s
+user	0m23.913s
+sys	0m0.722s
+-rwxrwxr-x 2 ybelanger ybelanger 21716952 Oct 22 15:15 /tmp/r9/target/release/sandbox-reactions
+crates/sr-engine/shaders/heat.wgsl:336:const MAX_PASSES: u32 = 1024u;
+crates/sr-engine/shaders/heat.wgsl:337:const MAX_ROUNDS: u32 = 32768u;
+crates/sr-physics/src/reference/heat.rs:50:pub const MAX_PASSES: usize = 1024;
+crates/sr-physics/src/reference/heat.rs:51:pub const MAX_ROUNDS: usize = 32768;
+   Compiling sr-app v0.0.0 (/tmp/r9/ceil/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.00s
+total 43696
+drwxrwxr-x 2 ybelanger ybelanger     4096 Oct 22 15:15 .
+drwxrwxr-x 8 ybelanger ybelanger     4096 Oct 22 15:15 ..
+-rwxrwxr-x 1 ybelanger ybelanger 21906248 Oct 22 15:15 ceil
+-rwxrwxr-x 1 ybelanger ybelanger 21716952 Oct 22 15:15 probe
+-rwxrwxr-x 1 ybelanger ybelanger  1173496 Oct 22 15:15 tcmp
+load=1.81 0.82 0.94 procs=0
+exit=4
+0
+ls: cannot access 'build/calibrate_runs': No such file or directory
+load=1.61 0.81 0.94 procs=0
+exit=6
+90
+SR-WARN heat unconverged step 553 passes 64 rounds 1326
+SR-WARN heat unconverged step 554 passes 64 rounds 506
+SR-WARN heat unconverged step 555 passes 64 rounds 297
+SR-WARN heat unconverged step 557 passes 64 rounds 332
+  world  escaped     2.716 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=1400 sim_time=9.250446 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1400 — reported, not guessed (record kept: build/calibrate_runs/2026-10-22T19-16-07Z/m_bh_sb-01)
+2026-10-22T19-16-07Z
+-rw-rw-r-- 1 ybelanger ybelanger 16320387 Oct 22 15:16 /tmp/r9/p/l_1400.bin
+-rw-rw-r-- 1 ybelanger ybelanger 16320389 Oct 22 15:16 /tmp/r9/p/l_552.bin
+== probe from 552, 10 steps, load=1.00 0.76 0.91
+SR-PROBE heat step=552 passes=5 rounds=95 converged=true delta=7.2890634e-7 dt=4.2029778e-3
+SR-PROBE heat step=553 passes=64 rounds=1326 converged=false delta=1.11978486e-1 dt=4.080903e-3
+SR-PROBE heat step=554 passes=64 rounds=506 converged=false delta=8.9529774e-4 dt=5.5161826e-3
+SR-PROBE heat step=555 passes=64 rounds=297 converged=false delta=1.3023562e-5 dt=6.5950877e-3
+SR-PROBE heat step=556 passes=47 rounds=244 converged=true delta=2.3494829e-7 dt=6.634102e-3
+SR-PROBE heat step=557 passes=64 rounds=332 converged=false delta=2.2914337e-5 dt=6.758995e-3
+SR-PROBE heat step=558 passes=45 rounds=348 converged=true delta=8.263881e-8 dt=6.8192906e-3
+SR-PROBE heat step=559 passes=10 rounds=124 converged=true delta=7.212669e-8 dt=6.4980607e-3
+SR-PROBE heat step=560 passes=4 rounds=26 converged=true delta=-3.1281975e-9 dt=6.066482e-3
+SR-PROBE heat step=561 passes=3 rounds=18 converged=true delta=-8.079411e-8 dt=5.962552e-3
+SR-HEADLESS DONE steps=10 sim_time=4.068565 until=none
+== ceil from 552, 10 steps, load=1.00 0.76 0.91
+SR-PROBE heat step=552 passes=5 rounds=95 converged=true delta=7.2890634e-7 dt=4.2029778e-3
+SR-PROBE heat step=553 passes=78 rounds=1502 converged=true delta=1.6407382e-8 dt=4.080903e-3
+SR-PROBE heat step=554 passes=42 rounds=307 converged=true delta=2.0950398e-7 dt=5.6528463e-3
+SR-PROBE heat step=555 passes=22 rounds=61 converged=true delta=1.17740285e-7 dt=6.7965025e-3
+SR-PROBE heat step=556 passes=20 rounds=50 converged=true delta=1.7584482e-7 dt=7.1720653e-3
+SR-PROBE heat step=557 passes=19 rounds=41 converged=true delta=1.3650688e-7 dt=7.114728e-3
+SR-PROBE heat step=558 passes=19 rounds=42 converged=true delta=1.01665556e-7 dt=7.0805936e-3
+SR-PROBE heat step=559 passes=20 rounds=44 converged=true delta=2.8291009e-8 dt=7.0760245e-3
+SR-PROBE heat step=560 passes=21 rounds=50 converged=true delta=4.2713474e-8 dt=7.0927306e-3
+SR-PROBE heat step=561 passes=22 rounds=52 converged=true delta=7.608397e-8 dt=7.0907683e-3
+SR-HEADLESS DONE steps=10 sim_time=4.072791 until=none
+s_553.bin
+s_553.observers.json
+s_554.bin
+tcmp s_553 probe-vs-ceil: 
+thread 'main' (1364721) panicked at crates/sr-engine/examples/d84_tcmp.rs:12:51:
+called `Result::unwrap()` on an `Err` value: "header.resume.rate: unknown key"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+tcmp s_554 probe-vs-ceil: tcmp s_555 probe-vs-ceil: 
+thread 'main' (1364722) panicked at crates/sr-engine/examples/d84_tcmp.rs:12:51:
+called `Result::unwrap()` on an `Err` value: "header.resume.rate: unknown key"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+tcmp s_556 probe-vs-ceil: 
+thread 'main' (1364723) panicked at crates/sr-engine/examples/d84_tcmp.rs:12:51:
+called `Result::unwrap()` on an `Err` value: "header.resume.rate: unknown key"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'main' (1364724) panicked at crates/sr-engine/examples/d84_tcmp.rs:12:51:
+called `Result::unwrap()` on an `Err` value: "header.resume.rate: unknown key"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+tcmp s_558 probe-vs-ceil: tcmp s_562 probe-vs-ceil: 
+thread 'main' (1364725) panicked at crates/sr-engine/examples/d84_tcmp.rs:12:51:
+called `Result::unwrap()` on an `Err` value: "header.resume.rate: unknown key"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'main' (1364726) panicked at crates/sr-engine/examples/d84_tcmp.rs:12:51:
+called `Result::unwrap()` on an `Err` value: "header.resume.rate: unknown key"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+bash: line 1: crates/sr-engine/examples/r9_tcmp.rs: No such file or directory
+    Finished `release` profile [optimized] target(s) in 2.72s
+step 553 sim_time a 4.013633658 b 4.013633658 gas 180131 gas_mismatch 0 L1_C 0.000e0 worst_cell 0.000e0 heat_b/a 1.000000 off10 0
+step 554 sim_time a 4.017714561 b 4.017714561 gas 180180 gas_mismatch 0 L1_C 1.005e-1 worst_cell 6.934e2 heat_b/a 0.899603 off10 99719
+step 555 sim_time a 4.023230744 b 4.023367407 gas 180549 gas_mismatch 17 L1_C 1.590e-1 worst_cell 2.284e0 heat_b/a 0.841026 off10 119495
+step 556 sim_time a 4.029825831 b 4.030163910 gas 180730 gas_mismatch 16 L1_C 8.301e-2 worst_cell 1.015e1 heat_b/a 0.968440 off10 122003
+step 558 sim_time a 4.043218928 b 4.044450703 gas 181059 gas_mismatch 58 L1_C 7.550e-2 worst_cell 1.824e1 heat_b/a 1.002514 off10 158545
+step 562 sim_time a 4.068565314 b 4.072790820 gas 181736 gas_mismatch 182 L1_C 5.774e-2 worst_cell 9.979e-1 heat_b/a 1.002902 off10 153856
+probe radiated +4.129e+05 thermal 1.073e+07 -> 2.109e+06 kinetic 3.789e+06 -> 1.141e+07 invariant -2.58285e+07 -> -2.58619e+07
+ceil radiated +1.253e+06 thermal 1.073e+07 -> 2.115e+06 kinetic 3.789e+06 -> 1.054e+07 invariant -2.58285e+07 -> -2.58669e+07
+1
+SR-PROBE heat step=1400 passes=13 rounds=275 converged=true delta=1.6041234e-7 dt=5.2335127e-3
+== probe rim n=1 bin=probe steps=20 load=0.16 0.52 0.80 gpu=0%,17MiB procs=0
+exit=0 lines=20 unconverged=0 steps=20 sim_time=0.248617380 radiated=75213.5 wall_s=0.161 
+== probe rim n=2 bin=probe steps=40 load=0.16 0.52 0.80 gpu=0%,17MiB procs=0
+exit=0 lines=40 unconverged=0 steps=40 sim_time=0.251734314 radiated=84345.4 wall_s=0.256 
+== probe rim n=4 bin=probe steps=80 load=0.16 0.52 0.80 gpu=1%,17MiB procs=0
+exit=0 lines=80 unconverged=0 steps=80 sim_time=0.253414284 radiated=91128.2 wall_s=0.397 
+== probe rim n=8 bin=probe steps=160 load=0.16 0.52 0.80 gpu=43%,17MiB procs=0
+exit=0 lines=160 unconverged=0 steps=160 sim_time=0.254296422 radiated=96019.2 wall_s=0.522 
+== probe hot n=1 bin=probe steps=20 load=0.16 0.52 0.80 gpu=42%,17MiB procs=0
+exit=0 lines=20 unconverged=0 steps=20 sim_time=0.096208568 radiated=3.50398e+08 wall_s=0.117 
+== probe hot n=2 bin=probe steps=40 load=0.16 0.52 0.80 gpu=49%,17MiB procs=0
+exit=0 lines=40 unconverged=0 steps=40 sim_time=0.102947370 radiated=4.20759e+08 wall_s=0.180 
+== probe hot n=4 bin=probe steps=80 load=0.16 0.52 0.80 gpu=52%,17MiB procs=0
+exit=0 lines=80 unconverged=0 steps=80 sim_time=0.106876956 radiated=4.99946e+08 wall_s=0.286 
+== probe hot n=8 bin=probe steps=160 load=0.22 0.53 0.80 gpu=41%,17MiB procs=0
+exit=0 lines=160 unconverged=0 steps=160 sim_time=0.109110528 radiated=5.89076e+08 wall_s=0.509 
+== probe e n=1 bin=probe steps=10 load=0.20 0.52 0.80 gpu=0%,17MiB procs=0
+exit=0 lines=10 unconverged=4 steps=10 sim_time=4.068565314 radiated=412927 wall_s=1.732 
+== probe e n=1 bin=ceil steps=10 load=0.19 0.51 0.79 gpu=94%,17MiB procs=0
+exit=0 lines=10 unconverged=0 steps=10 sim_time=4.072790820 radiated=1.25294e+06 wall_s=1.544 
+== probe e n=2 bin=probe steps=20 load=0.19 0.51 0.79 gpu=41%,17MiB procs=0
+exit=0 lines=20 unconverged=0 steps=20 sim_time=4.063333398 radiated=2.23934e+06 wall_s=2.241 
+== probe e n=2 bin=ceil steps=20 load=0.25 0.52 0.79 gpu=39%,17MiB procs=0
+exit=0 lines=20 unconverged=0 steps=20 sim_time=4.063333398 radiated=2.23934e+06 wall_s=2.231 
+== probe e n=4 bin=probe steps=40 load=0.25 0.52 0.79 gpu=39%,17MiB procs=0
+exit=0 lines=40 unconverged=0 steps=40 sim_time=4.051550013 radiated=3.39649e+06 wall_s=4.156 
+== probe e n=4 bin=ceil steps=40 load=0.31 0.53 0.80 gpu=17%,17MiB procs=0
+exit=0 lines=40 unconverged=0 steps=40 sim_time=4.051550013 radiated=3.39649e+06 wall_s=4.212 
+== probe e n=8 bin=probe steps=80 load=0.29 0.52 0.79 gpu=44%,17MiB procs=0
+exit=0 lines=80 unconverged=0 steps=80 sim_time=4.050491787 radiated=4.15897e+06 wall_s=6.036 
+== probe e n=8 bin=ceil steps=80 load=0.32 0.52 0.79 gpu=37%,17MiB procs=0
+exit=0 lines=80 unconverged=0 steps=80 sim_time=4.050491787 radiated=4.15897e+06 wall_s=6.046 
+== probe h n=1 bin=probe steps=20 load=0.30 0.51 0.78 gpu=41%,17MiB procs=0
+exit=0 lines=20 unconverged=0 steps=20 sim_time=9.345276135 radiated=115811 wall_s=1.635 
+== probe h n=2 bin=probe steps=40 load=0.30 0.51 0.78 gpu=53%,17MiB procs=0
+exit=0 lines=40 unconverged=0 steps=40 sim_time=9.344684209 radiated=117926 wall_s=2.425 
+== probe h n=4 bin=probe steps=80 load=0.35 0.52 0.79 gpu=44%,17MiB procs=0
+exit=0 lines=80 unconverged=0 steps=80 sim_time=9.344323793 radiated=118557 wall_s=4.384 
+== probe h n=8 bin=probe steps=160 load=0.41 0.53 0.79 gpu=43%,17MiB procs=0
+exit=0 lines=160 unconverged=0 steps=160 sim_time=9.344253428 radiated=119086 wall_s=8.277 
+q_e_1_ceil       steps= 10 passes mean= 26.80 max= 78 sum=  268 rounds mean=  224.4 max= 1502 sum=  2244 unconv=0 |delta|max=7.29e-07 dt 4.081e-03-7.172e-03 sum_dt=0.063360
+q_e_1_probe      steps= 10 passes mean= 37.00 max= 64 sum=  370 rounds mean=  331.6 max= 1326 sum=  3316 unconv=4 |delta|max=1.12e-01 dt 4.081e-03-6.819e-03 sum_dt=0.059135
+q_e_2_ceil       steps= 20 passes mean= 11.90 max= 64 sum=  238 rounds mean=  182.8 max= 1407 sum=  3656 unconv=0 |delta|max=4.71e-06 dt 1.612e-03-3.035e-03 sum_dt=0.053903
+q_e_2_probe      steps= 20 passes mean= 11.90 max= 64 sum=  238 rounds mean=  182.8 max= 1407 sum=  3656 unconv=0 |delta|max=4.71e-06 dt 1.612e-03-3.035e-03 sum_dt=0.053903
+q_e_4_ceil       steps= 40 passes mean=  7.25 max= 33 sum=  290 rounds mean=  193.2 max= 1271 sum=  7728 unconv=0 |delta|max=3.73e-06 dt 7.263e-04-1.102e-03 sum_dt=0.042119
+q_e_4_probe      steps= 40 passes mean=  7.25 max= 33 sum=  290 rounds mean=  193.2 max= 1271 sum=  7728 unconv=0 |delta|max=3.73e-06 dt 7.263e-04-1.102e-03 sum_dt=0.042119
+q_e_8_ceil       steps= 80 passes mean=  5.08 max= 23 sum=  406 rounds mean=  116.6 max= 1378 sum=  9325 unconv=0 |delta|max=4.51e-06 dt 3.533e-04-5.720e-04 sum_dt=0.041061
+q_e_8_probe      steps= 80 passes mean=  5.08 max= 23 sum=  406 rounds mean=  116.6 max= 1378 sum=  9325 unconv=0 |delta|max=4.51e-06 dt 3.533e-04-5.720e-04 sum_dt=0.041061
+q_h_1_probe      steps= 20 passes mean= 12.45 max= 14 sum=  249 rounds mean=   98.2 max=  169 sum=  1963 unconv=0 |delta|max=3.28e-06 dt 5.218e-03-5.245e-03 sum_dt=0.104655
+q_h_2_probe      steps= 40 passes mean=  9.40 max= 13 sum=  376 rounds mean=   38.6 max=   96 sum=  1545 unconv=0 |delta|max=7.01e-06 dt 2.592e-03-2.620e-03 sum_dt=0.104063
+q_h_4_probe      steps= 80 passes mean=  7.99 max= 13 sum=  639 rounds mean=   25.9 max=   59 sum=  2072 unconv=0 |delta|max=1.57e-06 dt 1.291e-03-1.310e-03 sum_dt=0.103703
+q_h_8_probe      steps=160 passes mean=  6.67 max= 12 sum= 1068 rounds mean=   19.8 max=   40 sum=  3161 unconv=0 |delta|max=1.35e-06 dt 6.455e-04-6.551e-04 sum_dt=0.103632
+q_hot_1_probe    steps= 20 passes mean=  3.35 max=  6 sum=   67 rounds mean=   12.1 max=   35 sum=   241 unconv=0 |delta|max=1.82e-05 dt 1.191e-03-6.296e-03 sum_dt=0.096209
+q_hot_2_probe    steps= 40 passes mean=  2.70 max=  6 sum=  108 rounds mean=    7.5 max=   34 sum=   299 unconv=0 |delta|max=3.55e-05 dt 5.955e-04-3.246e-03 sum_dt=0.102947
+q_hot_4_probe    steps= 80 passes mean=  2.31 max=  5 sum=  185 rounds mean=    4.6 max=   32 sum=   370 unconv=0 |delta|max=1.67e-05 dt 2.977e-04-1.649e-03 sum_dt=0.106877
+q_hot_8_probe    steps=160 passes mean=  2.15 max=  5 sum=  344 rounds mean=    2.8 max=   30 sum=   445 unconv=0 |delta|max=2.24e-05 dt 1.489e-04-8.312e-04 sum_dt=0.109111
+q_rim_1_probe    steps= 20 passes mean=  5.90 max=  9 sum=  118 rounds mean=   16.9 max=   55 sum=   337 unconv=0 |delta|max=1.41e-05 dt 1.000e-02-1.427e-02 sum_dt=0.248617
+q_rim_2_probe    steps= 40 passes mean=  5.40 max=  9 sum=  216 rounds mean=   10.1 max=   42 sum=   403 unconv=0 |delta|max=1.20e-05 dt 5.000e-03-7.228e-03 sum_dt=0.251734
+q_rim_4_probe    steps= 80 passes mean=  3.94 max=  9 sum=  315 rounds mean=    5.8 max=   40 sum=   461 unconv=0 |delta|max=9.40e-06 dt 2.500e-03-3.638e-03 sum_dt=0.253414
+q_rim_8_probe    steps=160 passes mean=  2.73 max=  7 sum=  436 rounds mean=    3.0 max=   39 sum=   486 unconv=0 |delta|max=6.62e-06 dt 1.250e-03-1.825e-03 sum_dt=0.254296
+SR-PROBE heat step=552 passes=5 rounds=77 converged=true delta=-8.4606306e-8 dt=2.1014889e-3
+SR-PROBE heat step=553 passes=49 rounds=1407 converged=true delta=3.6937948e-8 dt=1.9351026e-3
+SR-PROBE heat step=554 passes=61 rounds=1097 converged=true delta=3.535615e-9 dt=1.6115468e-3
+SR-PROBE heat step=555 passes=64 rounds=740 converged=true delta=2.177466e-8 dt=2.8306579e-3
+SR-PROBE heat step=556 passes=12 rounds=135 converged=true delta=1.8976075e-10 dt=3.034594e-3
+SR-PROBE heat step=557 passes=7 rounds=38 converged=true delta=5.171647e-7 dt=2.863479e-3
+SR-PROBE heat step=558 passes=7 rounds=28 converged=true delta=1.7441897e-7 dt=2.7817038e-3
+SR-PROBE heat step=559 passes=4 rounds=17 converged=true delta=-4.295596e-8 dt=2.7929922e-3
+SR-PROBE heat step=560 passes=3 rounds=13 converged=true delta=-1.6083965e-7 dt=2.8027017e-3
+SR-PROBE heat step=561 passes=3 rounds=12 converged=true delta=2.9378175e-6 dt=2.8082521e-3
+SR-PROBE heat step=562 passes=3 rounds=12 converged=true delta=1.1149159e-6 dt=2.8047643e-3
+SR-PROBE heat step=563 passes=3 rounds=11 converged=true delta=-3.1453435e-6 dt=2.8144657e-3
+SR-PROBE heat step=564 passes=3 rounds=10 converged=true delta=-1.5147127e-6 dt=2.8256131e-3
+SR-PROBE heat step=565 passes=2 rounds=9 converged=true delta=4.7074855e-6 dt=2.8359913e-3
+SR-PROBE heat step=566 passes=2 rounds=9 converged=true delta=2.6456055e-6 dt=2.8422938e-3
+SR-PROBE heat step=567 passes=2 rounds=8 converged=true delta=1.4805363e-6 dt=2.8477528e-3
+SR-PROBE heat step=568 passes=2 rounds=8 converged=true delta=8.931965e-7 dt=2.8534518e-3
+SR-PROBE heat step=569 passes=2 rounds=8 converged=true delta=5.9368097e-7 dt=2.8404116e-3
+SR-PROBE heat step=570 passes=2 rounds=8 converged=true delta=3.955965e-7 dt=2.8346751e-3
+SR-PROBE heat step=571 passes=2 rounds=9 converged=true delta=3.7857e-7 dt=2.8407793e-3
+HEAT e l_552 n=1 exit=0 passes=5 rounds=145 unconverged=0 steps=1 sim_time=4.013633658 radiated=0 wall_s=0.075 
+HEAT e l_552 n=2 exit=0 passes=10 rounds=235 unconverged=0 steps=2 sim_time=4.013633658 radiated=983626 wall_s=0.151 
+HEAT e l_552 n=4 exit=0 passes=16 rounds=313 unconverged=0 steps=4 sim_time=4.013633658 radiated=1.72929e+06 wall_s=0.260 
+HEAT e l_552 n=8 exit=0 passes=30 rounds=408 unconverged=0 steps=8 sim_time=4.013633658 radiated=2.27756e+06 wall_s=0.443 
+HEAT e s_553 n=1 exit=0 passes=6 rounds=119 unconverged=0 steps=1 sim_time=4.017714561 radiated=0 wall_s=0.065 
+HEAT e s_553 n=2 exit=0 passes=10 rounds=165 unconverged=0 steps=2 sim_time=4.017714561 radiated=551337 wall_s=0.123 
+HEAT e s_553 n=4 exit=0 passes=16 rounds=221 unconverged=0 steps=4 sim_time=4.017714561 radiated=932025 wall_s=0.214 
+HEAT e s_553 n=8 exit=0 passes=26 rounds=272 unconverged=0 steps=8 sim_time=4.017714561 radiated=1.20409e+06 wall_s=0.369 
+HEAT e s_554 n=1 exit=0 passes=19 rounds=474 unconverged=0 steps=1 sim_time=4.023230744 radiated=0 wall_s=0.203 
+HEAT e s_554 n=2 exit=0 passes=25 rounds=542 unconverged=0 steps=2 sim_time=4.023230744 radiated=372189 wall_s=0.282 
+HEAT e s_554 n=4 exit=0 passes=34 rounds=636 unconverged=0 steps=4 sim_time=4.023230744 radiated=598119 wall_s=0.431 
+HEAT e s_554 n=8 exit=0 passes=47 rounds=729 unconverged=0 steps=8 sim_time=4.023230744 radiated=726317 wall_s=0.634 
+HEAT e s_555 n=1 exit=0 passes=64 rounds=1150 unconverged=1 steps=1 sim_time=4.029825831 radiated=0 wall_s=0.470 
+HEAT e s_555 n=2 exit=0 passes=128 rounds=1255 unconverged=2 steps=2 sim_time=4.029825831 radiated=3.67196 wall_s=0.516 
+HEAT e s_555 n=4 exit=0 passes=210 rounds=879 unconverged=2 steps=4 sim_time=4.029825831 radiated=6.86722 wall_s=0.521 
+HEAT e s_555 n=8 exit=0 passes=263 rounds=625 unconverged=0 steps=8 sim_time=4.029825831 radiated=10.3511 wall_s=0.634 
+HEAT e s_556 n=1 exit=0 passes=56 rounds=308 unconverged=0 steps=1 sim_time=4.036459934 radiated=0 wall_s=0.165 
+HEAT e s_556 n=2 exit=0 passes=60 rounds=201 unconverged=0 steps=2 sim_time=4.036459934 radiated=3.92751 wall_s=0.192 
+HEAT e s_556 n=4 exit=0 passes=80 rounds=201 unconverged=0 steps=4 sim_time=4.036459934 radiated=7.1394 wall_s=0.253 
+HEAT e s_556 n=8 exit=0 passes=105 rounds=189 unconverged=0 steps=8 sim_time=4.036459934 radiated=10.524 wall_s=0.398 
+HEAT e s_557 n=1 exit=0 passes=64 rounds=374 unconverged=1 steps=1 sim_time=4.043218928 radiated=0 wall_s=0.191 
+HEAT e s_557 n=2 exit=0 passes=71 rounds=195 unconverged=0 steps=2 sim_time=4.043218928 radiated=3.63107 wall_s=0.157 
+HEAT e s_557 n=4 exit=0 passes=78 rounds=190 unconverged=0 steps=4 sim_time=4.043218928 radiated=5.70633 wall_s=0.244 
+HEAT e s_557 n=8 exit=0 passes=97 rounds=215 unconverged=0 steps=8 sim_time=4.043218928 radiated=8.74014 wall_s=0.397 
+HEAT e s_558 n=1 exit=0 passes=39 rounds=374 unconverged=0 steps=1 sim_time=4.050038219 radiated=0 wall_s=0.160 
+HEAT e s_558 n=2 exit=0 passes=63 rounds=414 unconverged=0 steps=2 sim_time=4.050038219 radiated=457.676 wall_s=0.242 
+HEAT e s_558 n=4 exit=0 passes=109 rounds=503 unconverged=0 steps=4 sim_time=4.050038219 radiated=576.066 wall_s=0.370 
+HEAT e s_558 n=8 exit=0 passes=153 rounds=492 unconverged=0 steps=8 sim_time=4.050038219 radiated=759.12 wall_s=0.536 
+HEAT e s_559 n=1 exit=0 passes=10 rounds=70 unconverged=0 steps=1 sim_time=4.056536280 radiated=0 wall_s=0.046 
+HEAT e s_559 n=2 exit=0 passes=14 rounds=83 unconverged=0 steps=2 sim_time=4.056536280 radiated=3062.54 wall_s=0.094 
+HEAT e s_559 n=4 exit=0 passes=19 rounds=83 unconverged=0 steps=4 sim_time=4.056536280 radiated=4738.98 wall_s=0.171 
+HEAT e s_559 n=8 exit=0 passes=25 rounds=81 unconverged=0 steps=8 sim_time=4.056536280 radiated=5470.22 wall_s=0.313 
+HEAT e s_560 n=1 exit=0 passes=3 rounds=27 unconverged=0 steps=1 sim_time=4.062602762 radiated=0 wall_s=0.037 
+HEAT e s_560 n=2 exit=0 passes=7 rounds=32 unconverged=0 steps=2 sim_time=4.062602762 radiated=2907.27 wall_s=0.083 
+HEAT e s_560 n=4 exit=0 passes=9 rounds=38 unconverged=0 steps=4 sim_time=4.062602762 radiated=4541.02 wall_s=0.162 
+HEAT e s_560 n=8 exit=0 passes=17 rounds=46 unconverged=0 steps=8 sim_time=4.062602762 radiated=5424.32 wall_s=0.308 
+HEAT e s_561 n=1 exit=0 passes=3 rounds=19 unconverged=0 steps=1 sim_time=4.068565314 radiated=0 wall_s=0.037 
+HEAT e s_561 n=2 exit=0 passes=6 rounds=28 unconverged=0 steps=2 sim_time=4.068565314 radiated=2532.31 wall_s=0.083 
+HEAT e s_561 n=4 exit=0 passes=9 rounds=36 unconverged=0 steps=4 sim_time=4.068565314 radiated=3947.64 wall_s=0.161 
+HEAT e s_561 n=8 exit=0 passes=16 rounds=44 unconverged=0 steps=8 sim_time=4.068565314 radiated=4713.28 wall_s=0.306 
+HEAT h h_1401 n=1 exit=0 passes=5 rounds=59 unconverged=0 steps=1 sim_time=9.245861842 radiated=0 wall_s=0.044 
+HEAT h h_1401 n=2 exit=0 passes=8 rounds=83 unconverged=0 steps=2 sim_time=9.245861842 radiated=3940.69 wall_s=0.101 
+HEAT h h_1401 n=4 exit=0 passes=14 rounds=88 unconverged=0 steps=4 sim_time=9.245861842 radiated=5865.44 wall_s=0.185 
+HEAT h h_1401 n=8 exit=0 passes=23 rounds=95 unconverged=0 steps=8 sim_time=9.245861842 radiated=6809.85 wall_s=0.348 
+HEAT h s_1402 n=1 exit=0 passes=4 rounds=43 unconverged=0 steps=1 sim_time=9.251105821 radiated=0 wall_s=0.041 
+HEAT h s_1402 n=2 exit=0 passes=7 rounds=57 unconverged=0 steps=2 sim_time=9.251105821 radiated=3879.81 wall_s=0.092 
+HEAT h s_1402 n=4 exit=0 passes=12 rounds=65 unconverged=0 steps=4 sim_time=9.251105821 radiated=5744.9 wall_s=0.181 
+HEAT h s_1402 n=8 exit=0 passes=22 rounds=63 unconverged=0 steps=8 sim_time=9.251105821 radiated=6651.49 wall_s=0.342 
+HEAT h s_1403 n=1 exit=0 passes=4 rounds=43 unconverged=0 steps=1 sim_time=9.256350903 radiated=0 wall_s=0.041 
+HEAT h s_1403 n=2 exit=0 passes=6 rounds=53 unconverged=0 steps=2 sim_time=9.256350903 radiated=3828.39 wall_s=0.092 
+HEAT h s_1403 n=4 exit=0 passes=12 rounds=63 unconverged=0 steps=4 sim_time=9.256350903 radiated=5655.34 wall_s=0.180 
+HEAT h s_1403 n=8 exit=0 passes=18 rounds=57 unconverged=0 steps=8 sim_time=9.256350903 radiated=6541.57 wall_s=0.345 
+HEAT h s_1404 n=1 exit=0 passes=4 rounds=43 unconverged=0 steps=1 sim_time=9.261594280 radiated=0 wall_s=0.040 
+HEAT h s_1404 n=2 exit=0 passes=7 rounds=54 unconverged=0 steps=2 sim_time=9.261594280 radiated=3794.81 wall_s=0.091 
+HEAT h s_1404 n=4 exit=0 passes=12 rounds=54 unconverged=0 steps=4 sim_time=9.261594280 radiated=5605.88 wall_s=0.184 
+HEAT h s_1404 n=8 exit=0 passes=19 rounds=57 unconverged=0 steps=8 sim_time=9.261594280 radiated=6477.64 wall_s=0.345 
+HEAT h s_1405 n=1 exit=0 passes=13 rounds=71 unconverged=0 steps=1 sim_time=9.266838624 radiated=0 wall_s=0.050 
+HEAT h s_1405 n=2 exit=0 passes=16 rounds=78 unconverged=0 steps=2 sim_time=9.266838624 radiated=3774.75 wall_s=0.102 
+HEAT h s_1405 n=4 exit=0 passes=20 rounds=85 unconverged=0 steps=4 sim_time=9.266838624 radiated=5563.99 wall_s=0.187 
+HEAT h s_1405 n=8 exit=0 passes=27 rounds=76 unconverged=0 steps=8 sim_time=9.266838624 radiated=6437.72 wall_s=0.345 
+HEAT h s_1406 n=1 exit=0 passes=13 rounds=68 unconverged=0 steps=1 sim_time=9.272079090 radiated=0 wall_s=0.049 
+HEAT h s_1406 n=2 exit=0 passes=16 rounds=68 unconverged=0 steps=2 sim_time=9.272079090 radiated=3759.94 wall_s=0.097 
+HEAT h s_1406 n=4 exit=0 passes=21 rounds=79 unconverged=0 steps=4 sim_time=9.272079090 radiated=5539.91 wall_s=0.188 
+HEAT h s_1406 n=8 exit=0 passes=30 rounds=83 unconverged=0 steps=8 sim_time=9.272079090 radiated=6410.15 wall_s=0.349 
+HEAT h s_1407 n=1 exit=0 passes=14 rounds=96 unconverged=0 steps=1 sim_time=9.277316957 radiated=0 wall_s=0.064 
+HEAT h s_1407 n=2 exit=0 passes=17 rounds=96 unconverged=0 steps=2 sim_time=9.277316957 radiated=3755.55 wall_s=0.124 
+HEAT h s_1407 n=4 exit=0 passes=23 rounds=95 unconverged=0 steps=4 sim_time=9.277316957 radiated=5526.37 wall_s=0.193 
+HEAT h s_1407 n=8 exit=0 passes=33 rounds=95 unconverged=0 steps=8 sim_time=9.277316957 radiated=6383.58 wall_s=0.355 
+HEAT h s_1408 n=1 exit=0 passes=13 rounds=105 unconverged=0 steps=1 sim_time=9.282553752 radiated=0 wall_s=0.070 
+HEAT h s_1408 n=2 exit=0 passes=17 rounds=95 unconverged=0 steps=2 sim_time=9.282553752 radiated=3731.77 wall_s=0.107 
+HEAT h s_1408 n=4 exit=0 passes=23 rounds=87 unconverged=0 steps=4 sim_time=9.282553752 radiated=5513.18 wall_s=0.191 
+HEAT h s_1408 n=8 exit=0 passes=33 rounds=79 unconverged=0 steps=8 sim_time=9.282553752 radiated=6365.37 wall_s=0.345 
+HEAT h s_1409 n=1 exit=0 passes=13 rounds=95 unconverged=0 steps=1 sim_time=9.287790442 radiated=0 wall_s=0.063 
+HEAT h s_1409 n=2 exit=0 passes=17 rounds=102 unconverged=0 steps=2 sim_time=9.287790442 radiated=3712.06 wall_s=0.108 
+HEAT h s_1409 n=4 exit=0 passes=22 rounds=96 unconverged=0 steps=4 sim_time=9.287790442 radiated=5481.9 wall_s=0.192 
+HEAT h s_1409 n=8 exit=0 passes=33 rounds=84 unconverged=0 steps=8 sim_time=9.287790442 radiated=6338.25 wall_s=0.349 
+HEAT h s_1410 n=1 exit=0 passes=13 rounds=91 unconverged=0 steps=1 sim_time=9.293023589 radiated=0 wall_s=0.062 
+HEAT h s_1410 n=2 exit=0 passes=17 rounds=93 unconverged=0 steps=2 sim_time=9.293023589 radiated=3696.83 wall_s=0.107 
+HEAT h s_1410 n=4 exit=0 passes=23 rounds=92 unconverged=0 steps=4 sim_time=9.293023589 radiated=5461.69 wall_s=0.191 
+HEAT h s_1410 n=8 exit=0 passes=32 rounds=88 unconverged=0 steps=8 sim_time=9.293023589 radiated=6302.68 wall_s=0.352 
+HEAT h s_1411 n=1 exit=0 passes=13 rounds=95 unconverged=0 steps=1 sim_time=9.298256723 radiated=0 wall_s=0.063 
+HEAT h s_1411 n=2 exit=0 passes=17 rounds=102 unconverged=0 steps=2 sim_time=9.298256723 radiated=3676 wall_s=0.107 
+HEAT h s_1411 n=4 exit=0 passes=23 rounds=98 unconverged=0 steps=4 sim_time=9.298256723 radiated=5432.1 wall_s=0.193 
+HEAT h s_1411 n=8 exit=0 passes=31 rounds=91 unconverged=0 steps=8 sim_time=9.298256723 radiated=6266.86 wall_s=0.356 
+HEAT h s_1412 n=1 exit=0 passes=5 rounds=54 unconverged=0 steps=1 sim_time=9.303486250 radiated=0 wall_s=0.043 
+HEAT h s_1412 n=2 exit=0 passes=8 rounds=64 unconverged=0 steps=2 sim_time=9.303486250 radiated=3653.4 wall_s=0.094 
+HEAT h s_1412 n=4 exit=0 passes=15 rounds=69 unconverged=0 steps=4 sim_time=9.303486250 radiated=5393.14 wall_s=0.181 
+HEAT h s_1412 n=8 exit=0 passes=21 rounds=62 unconverged=0 steps=8 sim_time=9.303486250 radiated=6224.27 wall_s=0.349 
+HEAT h s_1413 n=1 exit=0 passes=4 rounds=42 unconverged=0 steps=1 sim_time=9.308717281 radiated=0 wall_s=0.039 
+HEAT h s_1413 n=2 exit=0 passes=6 rounds=48 unconverged=0 steps=2 sim_time=9.308717281 radiated=3618.98 wall_s=0.090 
+HEAT h s_1413 n=4 exit=0 passes=12 rounds=59 unconverged=0 steps=4 sim_time=9.308717281 radiated=5345.66 wall_s=0.178 
+HEAT h s_1413 n=8 exit=0 passes=19 rounds=60 unconverged=0 steps=8 sim_time=9.308717281 radiated=6176.84 wall_s=0.344 
+HEAT h s_1414 n=1 exit=0 passes=4 rounds=41 unconverged=0 steps=1 sim_time=9.313944643 radiated=0 wall_s=0.039 
+HEAT h s_1414 n=2 exit=0 passes=6 rounds=50 unconverged=0 steps=2 sim_time=9.313944643 radiated=3587.08 wall_s=0.090 
+HEAT h s_1414 n=4 exit=0 passes=12 rounds=60 unconverged=0 steps=4 sim_time=9.313944643 radiated=5296.63 wall_s=0.180 
+HEAT h s_1414 n=8 exit=0 passes=19 rounds=63 unconverged=0 steps=8 sim_time=9.313944643 radiated=6129.1 wall_s=0.344 
+HEAT h s_1415 n=1 exit=0 passes=4 rounds=41 unconverged=0 steps=1 sim_time=9.319168384 radiated=0 wall_s=0.039 
+HEAT h s_1415 n=2 exit=0 passes=6 rounds=51 unconverged=0 steps=2 sim_time=9.319168384 radiated=3555.74 wall_s=0.090 
+HEAT h s_1415 n=4 exit=0 passes=12 rounds=60 unconverged=0 steps=4 sim_time=9.319168384 radiated=5250.99 wall_s=0.181 
+HEAT h s_1415 n=8 exit=0 passes=19 rounds=62 unconverged=0 steps=8 sim_time=9.319168384 radiated=6072.16 wall_s=0.343 
+HEAT h s_1416 n=1 exit=0 passes=4 rounds=41 unconverged=0 steps=1 sim_time=9.324392655 radiated=0 wall_s=0.039 
+HEAT h s_1416 n=2 exit=0 passes=6 rounds=51 unconverged=0 steps=2 sim_time=9.324392655 radiated=3526.03 wall_s=0.091 
+HEAT h s_1416 n=4 exit=0 passes=12 rounds=60 unconverged=0 steps=4 sim_time=9.324392655 radiated=5206.81 wall_s=0.177 
+HEAT h s_1416 n=8 exit=0 passes=19 rounds=62 unconverged=0 steps=8 sim_time=9.324392655 radiated=6021.16 wall_s=0.342 
+HEAT h s_1417 n=1 exit=0 passes=4 rounds=42 unconverged=0 steps=1 sim_time=9.329617458 radiated=0 wall_s=0.040 
+HEAT h s_1417 n=2 exit=0 passes=6 rounds=49 unconverged=0 steps=2 sim_time=9.329617458 radiated=3496.91 wall_s=0.090 
+HEAT h s_1417 n=4 exit=0 passes=12 rounds=61 unconverged=0 steps=4 sim_time=9.329617458 radiated=5165.31 wall_s=0.178 
+HEAT h s_1417 n=8 exit=0 passes=19 rounds=61 unconverged=0 steps=8 sim_time=9.329617458 radiated=5974.86 wall_s=0.341 
+HEAT h s_1418 n=1 exit=0 passes=12 rounds=71 unconverged=0 steps=1 sim_time=9.334838135 radiated=0 wall_s=0.052 
+HEAT h s_1418 n=2 exit=0 passes=13 rounds=74 unconverged=0 steps=2 sim_time=9.334838135 radiated=3465.02 wall_s=0.104 
+HEAT h s_1418 n=4 exit=0 passes=18 rounds=80 unconverged=0 steps=4 sim_time=9.334838135 radiated=5120.42 wall_s=0.185 
+HEAT h s_1418 n=8 exit=0 passes=25 rounds=77 unconverged=0 steps=8 sim_time=9.334838135 radiated=5920.88 wall_s=0.343 
+HEAT h s_1419 n=1 exit=0 passes=13 rounds=63 unconverged=0 steps=1 sim_time=9.340057676 radiated=0 wall_s=0.047 
+HEAT h s_1419 n=2 exit=0 passes=14 rounds=72 unconverged=0 steps=2 sim_time=9.340057676 radiated=3440.32 wall_s=0.098 
+HEAT h s_1419 n=4 exit=0 passes=19 rounds=85 unconverged=0 steps=4 sim_time=9.340057676 radiated=5081.52 wall_s=0.187 
+HEAT h s_1419 n=8 exit=0 passes=26 rounds=74 unconverged=0 steps=8 sim_time=9.340057676 radiated=5872.97 wall_s=0.344 
+HEAT h s_1420 n=1 exit=0 passes=13 rounds=85 unconverged=0 steps=1 sim_time=9.345276135 radiated=0 wall_s=0.054 
+HEAT h s_1420 n=2 exit=0 passes=17 rounds=76 unconverged=0 steps=2 sim_time=9.345276135 radiated=3428.87 wall_s=0.100 
+HEAT h s_1420 n=4 exit=0 passes=22 rounds=87 unconverged=0 steps=4 sim_time=9.345276135 radiated=5047.45 wall_s=0.189 
+HEAT h s_1420 n=8 exit=0 passes=34 rounds=93 unconverged=0 steps=8 sim_time=9.345276135 radiated=5841.08 wall_s=0.353 
+patched (part 2) /tmp/r9/sub
+    Finished `release` profile [optimized] target(s) in 4.04s
+-rwxrwxr-x 1 ybelanger ybelanger 21721744 Oct 22 15:23 /tmp/r9/bin/sub
+exit=0
+SR-PROBE heat step=552 passes=5 rounds=95 converged=true delta=7.2890634e-7 dt=4.2029778e-3
+SR-PROBE carried submissions=11 chunk_from=553
+SR-PROBE heat step=553 passes=64 rounds=1326 converged=false delta=1.11978486e-1 dt=4.080903e-3
+SR-PROBE heat step=554 passes=64 rounds=506 converged=false delta=8.9529774e-4 dt=5.5161826e-3
+SR-PROBE heat step=555 passes=64 rounds=297 converged=false delta=1.3023562e-5 dt=6.5950877e-3
+SR-PROBE heat step=556 passes=47 rounds=244 converged=true delta=2.3494829e-7 dt=6.634102e-3
+SR-PROBE heat step=557 passes=64 rounds=332 converged=false delta=2.2914337e-5 dt=6.758995e-3
+SR-PROBE heat step=558 passes=45 rounds=348 converged=true delta=8.263881e-8 dt=6.8192906e-3
+SR-PROBE heat step=559 passes=10 rounds=124 converged=true delta=7.212669e-8 dt=6.4980607e-3
+SR-PROBE heat step=560 passes=4 rounds=26 converged=true delta=-3.1281975e-9 dt=6.066482e-3
+SR-PROBE heat step=561 passes=3 rounds=18 converged=true delta=-8.079411e-8 dt=5.962552e-3
+SR-HEADLESS DONE steps=10 sim_time=4.068565 until=none
+exit=0
+
+real	0m2.817s
+user	0m2.187s
+sys	0m0.559s
+SR-PROBE heat step=552 passes=4 rounds=65 converged=true delta=1.2218234e-6 dt=2.1014889e-3
+SR-WARN heat unconverged step 552 passes 5 rounds 93 ok 1
+SR-WARN heat unconverged step 552 passes 4 rounds 65 ok 1
+SR-PROBE heat step=553 passes=6 rounds=189 converged=true delta=1.5563529e-7 dt=1.9034205e-3
+SR-WARN heat unconverged step 553 passes 64 rounds 1473 ok 0
+SR-WARN heat unconverged step 553 passes 6 rounds 189 ok 1
+SR-PROBE heat step=554 passes=6 rounds=128 converged=true delta=-7.7584065e-7 dt=2.3624303e-3
+SR-WARN heat unconverged step 554 passes 15 rounds 1168 ok 1
+SR-WARN heat unconverged step 554 passes 6 rounds 128 ok 1
+SR-HEADLESS DONE steps=3 sim_time=4.022165 until=none
+== sub e n=1 load=0.39 0.46 0.69 procs=0
+exit=0 carried=0 substeps=10 passes=370 rounds=3316 max_slots=1520 unconverged=4 SR-HEADLESS DONE steps=10 sim_time=4.068565 until=none
+radiated=412927
+== sub e n=2 load=0.44 0.47 0.69 procs=0
+exit=0 carried=0 substeps=20 passes=164 rounds=4054 max_slots=1667 unconverged=1 SR-HEADLESS DONE steps=10 sim_time=4.056586 until=none
+radiated=1.50868e+06
+== sub e n=4 load=0.49 0.48 0.70 procs=0
+exit=0 carried=0 substeps=40 passes=181 rounds=2709 max_slots=917 unconverged=0 SR-HEADLESS DONE steps=10 sim_time=4.056428 until=none
+radiated=1.68186e+06
+== sub e n=8 load=0.57 0.50 0.70 procs=0
+exit=0 carried=0 substeps=80 passes=290 rounds=2769 max_slots=1453 unconverged=0 SR-HEADLESS DONE steps=10 sim_time=4.059292 until=none
+radiated=1.55003e+06
+== sub h n=1 load=0.69 0.53 0.71 procs=0
+exit=0 carried=0 substeps=20 passes=249 rounds=1963 max_slots=210 unconverged=0 SR-HEADLESS DONE steps=20 sim_time=9.345276 until=none
+radiated=115811
+== sub h n=2 load=0.72 0.54 0.71 procs=0
+exit=0 carried=0 substeps=40 passes=385 rounds=2415 max_slots=173 unconverged=0 SR-HEADLESS DONE steps=20 sim_time=9.344237 until=none
+radiated=112341
+== sub h n=4 load=0.76 0.55 0.71 procs=0
+exit=0 carried=0 substeps=80 passes=650 rounds=3256 max_slots=141 unconverged=0 SR-HEADLESS DONE steps=20 sim_time=9.344312 until=none
+radiated=110687
+== sub h n=8 load=0.81 0.58 0.72 procs=0
+exit=0 carried=0 substeps=160 passes=1125 rounds=4458 max_slots=122 unconverged=0 SR-HEADLESS DONE steps=20 sim_time=9.344365 until=none
+radiated=109713
+TIMING run=1 mode=b st=h n=1 unconverged=0 steps=20 covered=0.104655 P5=28.4440 step=30.2669 total_ms=605.34 ms_per_tu=5784.1 wall_s=0.846 load=0.53 0.57 0.71 procs=0
+TIMING run=1 mode=b st=h n=2 unconverged=0 steps=40 covered=0.104063 P5=13.1900 step=14.9820 total_ms=599.28 ms_per_tu=5758.8 wall_s=0.907 load=0.56 0.57 0.71 procs=0
+TIMING run=1 mode=b st=h n=4 unconverged=0 steps=80 covered=0.103703 P5=9.3427 step=11.1317 total_ms=890.53 ms_per_tu=8587.3 wall_s=1.275 load=0.56 0.57 0.71 procs=0
+TIMING run=1 mode=b st=h n=8 unconverged=0 steps=160 covered=0.103632 P5=7.3830 step=9.1710 total_ms=1467.35 ms_per_tu=14159.2 wall_s=2.107 load=0.56 0.57 0.71 procs=0
+TIMING run=1 mode=b st=e n=1 unconverged=4 steps=10 covered=0.059135 P5=101.2250 step=107.3897 total_ms=1073.90 ms_per_tu=18160.2 wall_s=1.867 load=0.60 0.58 0.71 procs=0
+TIMING run=1 mode=b st=e n=2 unconverged=0 steps=20 covered=0.053903 P5=63.8258 step=69.1179 total_ms=1382.36 ms_per_tu=25645.4 wall_s=3.144 load=0.60 0.58 0.71 procs=0
+TIMING run=1 mode=b st=e n=4 unconverged=0 steps=40 covered=0.042119 P5=67.0832 step=73.9988 total_ms=2959.95 ms_per_tu=70275.4 wall_s=6.083 load=0.63 0.59 0.71 procs=0
+TIMING run=1 mode=b st=e n=8 unconverged=0 steps=80 covered=0.041061 P5=63.3937 step=66.4477 total_ms=5315.81 ms_per_tu=129461.0 wall_s=20.845 load=0.69 0.60 0.72 procs=0
+TIMING run=1 mode=b st=rim n=1 unconverged=0 steps=20 covered=0.248617 P5=4.4267 step=4.5025 total_ms=90.05 ms_per_tu=362.2 wall_s=0.134 load=0.85 0.64 0.73 procs=0
+TIMING run=1 mode=b st=rim n=2 unconverged=0 steps=40 covered=0.251734 P5=3.2653 step=3.3387 total_ms=133.55 ms_per_tu=530.5 wall_s=0.217 load=0.85 0.64 0.73 procs=0
+TIMING run=1 mode=b st=rim n=4 unconverged=0 steps=80 covered=0.253414 P5=2.3189 step=2.3911 total_ms=191.29 ms_per_tu=754.8 wall_s=0.350 load=0.85 0.64 0.73 procs=0
+TIMING run=1 mode=b st=rim n=8 unconverged=0 steps=160 covered=0.254296 P5=1.6768 step=1.7490 total_ms=279.84 ms_per_tu=1100.4 wall_s=0.595 load=0.85 0.64 0.73 procs=0
+TIMING run=1 mode=b st=hot n=1 unconverged=0 steps=20 covered=0.096209 P5=3.2105 step=3.2822 total_ms=65.64 ms_per_tu=682.3 wall_s=0.111 load=0.85 0.64 0.73 procs=0
+TIMING run=1 mode=b st=hot n=2 unconverged=0 steps=40 covered=0.102947 P5=2.3768 step=2.4501 total_ms=98.01 ms_per_tu=952.0 wall_s=0.179 load=0.86 0.65 0.73 procs=0
+TIMING run=1 mode=b st=hot n=4 unconverged=0 steps=80 covered=0.106877 P5=1.8525 step=1.9249 total_ms=153.99 ms_per_tu=1440.8 wall_s=0.313 load=0.86 0.65 0.73 procs=0
+TIMING run=1 mode=b st=hot n=8 unconverged=0 steps=160 covered=0.109111 P5=1.5326 step=1.6048 total_ms=256.77 ms_per_tu=2353.3 wall_s=0.583 load=0.86 0.65 0.73 procs=0
+TIMING run=1 mode=a_fixed st=h n=1 R=268 carried=0 unconverged=0 steps=20 covered=0.104655 P5=28.0586 step=29.8531 total_ms=597.06 ms_per_tu=5705.0 wall_s=0.844 load=0.86 0.65 0.73 procs=0
+TIMING run=1 mode=c st=h n=2 R=222 carried=0 unconverged=0 steps=20 covered=0.103616 P5=36.9414 step=38.7252 total_ms=774.50 ms_per_tu=7474.7 wall_s=1.125 load=0.86 0.65 0.73 procs=0
+TIMING run=1 mode=c st=h n=4 R=182 carried=0 unconverged=0 steps=20 covered=0.103691 P5=53.1837 step=54.9699 total_ms=1099.40 ms_per_tu=10602.6 wall_s=1.663 load=0.95 0.67 0.74 procs=0
+TIMING run=1 mode=c st=h n=8 R=158 carried=0 unconverged=0 steps=20 covered=0.103744 P5=79.3318 step=81.1231 total_ms=1622.46 ms_per_tu=15639.0 wall_s=2.635 load=0.95 0.67 0.74 procs=0
+TIMING run=1 mode=a_fixed st=e n=1 R=1904 carried=0 unconverged=8 steps=10 covered=0.059135 P5=102.3250 step=108.1784 total_ms=1081.78 ms_per_tu=18293.6 wall_s=1.829 load=0.95 0.68 0.74 procs=0
+TIMING run=1 mode=c st=e n=2 R=2088 carried=0 unconverged=2 steps=10 covered=0.047156 P5=137.2065 step=141.4763 total_ms=1414.76 ms_per_tu=30002.0 wall_s=3.202 load=0.95 0.68 0.74 procs=0
+TIMING run=1 mode=c st=e n=4 R=1150 carried=0 unconverged=0 steps=10 covered=0.046998 P5=114.1661 step=118.3877 total_ms=1183.88 ms_per_tu=25190.1 wall_s=3.219 load=0.96 0.68 0.74 procs=0
+TIMING run=1 mode=c st=e n=8 R=1820 carried=0 unconverged=0 steps=10 covered=0.049861 P5=253.1330 step=258.2371 total_ms=2582.37 ms_per_tu=51791.0 wall_s=12.352 load=0.96 0.69 0.74 procs=0
+TIMING run=2 mode=b st=h n=1 unconverged=0 steps=20 covered=0.104655 P5=28.0396 step=29.8383 total_ms=596.77 ms_per_tu=5702.2 wall_s=0.847 load=0.97 0.70 0.75 procs=0
+TIMING run=2 mode=b st=h n=2 unconverged=0 steps=40 covered=0.104063 P5=13.1684 step=14.9616 total_ms=598.46 ms_per_tu=5751.0 wall_s=0.892 load=0.97 0.71 0.75 procs=0
+TIMING run=2 mode=b st=h n=4 unconverged=0 steps=80 covered=0.103703 P5=9.3464 step=11.1359 total_ms=890.87 ms_per_tu=8590.6 wall_s=1.288 load=0.97 0.71 0.75 procs=0
+TIMING run=2 mode=b st=h n=8 unconverged=0 steps=160 covered=0.103632 P5=7.3874 step=9.1740 total_ms=1467.85 ms_per_tu=14164.0 wall_s=2.126 load=0.97 0.71 0.75 procs=0
+TIMING run=2 mode=b st=e n=1 unconverged=4 steps=10 covered=0.059135 P5=101.2862 step=107.3975 total_ms=1073.98 ms_per_tu=18161.5 wall_s=1.881 load=0.97 0.71 0.75 procs=0
+TIMING run=2 mode=b st=e n=2 unconverged=0 steps=20 covered=0.053903 P5=63.7998 step=69.1386 total_ms=1382.77 ms_per_tu=25653.1 wall_s=3.116 load=0.97 0.71 0.75 procs=0
+TIMING run=2 mode=b st=e n=4 unconverged=0 steps=40 covered=0.042119 P5=61.3434 step=68.0500 total_ms=2722.00 ms_per_tu=64625.9 wall_s=5.804 load=0.98 0.72 0.75 procs=0
+TIMING run=2 mode=b st=e n=8 unconverged=0 steps=80 covered=0.041061 P5=65.0449 step=68.1002 total_ms=5448.01 ms_per_tu=132680.6 wall_s=20.826 load=0.98 0.72 0.75 procs=0
+TIMING run=2 mode=b st=rim n=1 unconverged=0 steps=20 covered=0.248617 P5=4.4227 step=4.4960 total_ms=89.92 ms_per_tu=361.7 wall_s=0.143 load=0.99 0.74 0.76 procs=0
+TIMING run=2 mode=b st=rim n=2 unconverged=0 steps=40 covered=0.251734 P5=3.2655 step=3.3398 total_ms=133.59 ms_per_tu=530.7 wall_s=0.216 load=0.99 0.74 0.76 procs=0
+TIMING run=2 mode=b st=rim n=4 unconverged=0 steps=80 covered=0.253414 P5=2.3239 step=2.3963 total_ms=191.70 ms_per_tu=756.5 wall_s=0.360 load=0.99 0.74 0.76 procs=0
+TIMING run=2 mode=b st=rim n=8 unconverged=0 steps=160 covered=0.254296 P5=1.6748 step=1.7471 total_ms=279.53 ms_per_tu=1099.2 wall_s=0.600 load=0.99 0.74 0.76 procs=0
+TIMING run=2 mode=b st=hot n=1 unconverged=0 steps=20 covered=0.096209 P5=3.2150 step=3.2898 total_ms=65.80 ms_per_tu=683.9 wall_s=0.112 load=0.99 0.74 0.76 procs=0
+TIMING run=2 mode=b st=hot n=2 unconverged=0 steps=40 covered=0.102947 P5=2.3609 step=2.4345 total_ms=97.38 ms_per_tu=945.9 wall_s=0.179 load=0.99 0.74 0.76 procs=0
+TIMING run=2 mode=b st=hot n=4 unconverged=0 steps=80 covered=0.106877 P5=1.8533 step=1.9259 total_ms=154.07 ms_per_tu=1441.6 wall_s=0.312 load=0.99 0.75 0.76 procs=0
+TIMING run=2 mode=b st=hot n=8 unconverged=0 steps=160 covered=0.109111 P5=1.5330 step=1.6052 total_ms=256.83 ms_per_tu=2353.8 wall_s=0.578 load=0.99 0.75 0.76 procs=0
+TIMING run=2 mode=a_fixed st=h n=1 R=268 carried=0 unconverged=0 steps=20 covered=0.104655 P5=28.0654 step=29.8590 total_ms=597.18 ms_per_tu=5706.2 wall_s=0.832 load=0.99 0.75 0.76 procs=0
+TIMING run=2 mode=c st=h n=2 R=222 carried=0 unconverged=0 steps=20 covered=0.103616 P5=36.9514 step=38.7372 total_ms=774.74 ms_per_tu=7477.1 wall_s=1.126 load=0.99 0.75 0.76 procs=0
+TIMING run=2 mode=c st=h n=4 R=182 carried=0 unconverged=0 steps=20 covered=0.103691 P5=53.2192 step=55.0064 total_ms=1100.13 ms_per_tu=10609.6 wall_s=1.667 load=0.99 0.75 0.76 procs=0
+TIMING run=2 mode=c st=h n=8 R=158 carried=0 unconverged=0 steps=20 covered=0.103744 P5=79.3517 step=81.1432 total_ms=1622.86 ms_per_tu=15642.9 wall_s=2.635 load=0.99 0.75 0.76 procs=0
+TIMING run=2 mode=a_fixed st=e n=1 R=1904 carried=0 unconverged=8 steps=10 covered=0.059135 P5=102.3458 step=108.0310 total_ms=1080.31 ms_per_tu=18268.7 wall_s=1.845 load=0.99 0.76 0.76 procs=0
+TIMING run=2 mode=c st=e n=2 R=2088 carried=0 unconverged=2 steps=10 covered=0.047156 P5=137.1978 step=141.4270 total_ms=1414.27 ms_per_tu=29991.6 wall_s=3.196 load=0.99 0.76 0.76 procs=0
+TIMING run=2 mode=c st=e n=4 R=1150 carried=0 unconverged=0 steps=10 covered=0.046998 P5=113.4653 step=117.6381 total_ms=1176.38 ms_per_tu=25030.6 wall_s=3.172 load=0.99 0.76 0.76 procs=0
+TIMING run=2 mode=c st=e n=8 R=1820 carried=0 unconverged=0 steps=10 covered=0.049861 P5=241.3910 step=246.5373 total_ms=2465.37 ms_per_tu=49444.5 wall_s=11.997 load=0.99 0.77 0.77 procs=0
+TIMING run=3 mode=b st=h n=1 unconverged=0 steps=20 covered=0.104655 P5=28.0254 step=29.8223 total_ms=596.45 ms_per_tu=5699.2 wall_s=0.845 load=1.07 0.79 0.77 procs=0
+TIMING run=3 mode=b st=h n=2 unconverged=0 steps=40 covered=0.104063 P5=13.1866 step=14.9794 total_ms=599.18 ms_per_tu=5757.8 wall_s=0.907 load=1.07 0.79 0.77 procs=0
+TIMING run=3 mode=b st=h n=4 unconverged=0 steps=80 covered=0.103703 P5=9.3421 step=11.1303 total_ms=890.42 ms_per_tu=8586.3 wall_s=1.291 load=1.06 0.79 0.78 procs=0
+TIMING run=3 mode=b st=h n=8 unconverged=0 steps=160 covered=0.103632 P5=7.3833 step=9.1721 total_ms=1467.53 ms_per_tu=14160.9 wall_s=2.117 load=1.06 0.79 0.78 procs=0
+TIMING run=3 mode=b st=e n=1 unconverged=4 steps=10 covered=0.059135 P5=101.2180 step=107.0733 total_ms=1070.73 ms_per_tu=18106.7 wall_s=1.921 load=1.06 0.80 0.78 procs=0
+TIMING run=3 mode=b st=e n=2 unconverged=0 steps=20 covered=0.053903 P5=63.8209 step=69.1207 total_ms=1382.41 ms_per_tu=25646.5 wall_s=3.136 load=1.06 0.80 0.78 procs=0
+TIMING run=3 mode=b st=e n=4 unconverged=0 steps=40 covered=0.042119 P5=64.3976 step=71.2615 total_ms=2850.46 ms_per_tu=67675.8 wall_s=6.007 load=1.05 0.80 0.78 procs=0
+TIMING run=3 mode=b st=e n=8 unconverged=0 steps=80 covered=0.041061 P5=65.5163 step=68.5969 total_ms=5487.75 ms_per_tu=133648.5 wall_s=20.799 load=1.05 0.80 0.78 procs=0
+TIMING run=3 mode=b st=rim n=1 unconverged=0 steps=20 covered=0.248617 P5=4.4316 step=4.5065 total_ms=90.13 ms_per_tu=362.5 wall_s=0.134 load=1.10 0.84 0.79 procs=0
+TIMING run=3 mode=b st=rim n=2 unconverged=0 steps=40 covered=0.251734 P5=3.2669 step=3.3403 total_ms=133.61 ms_per_tu=530.8 wall_s=0.213 load=1.10 0.84 0.79 procs=0
+TIMING run=3 mode=b st=rim n=4 unconverged=0 steps=80 covered=0.253414 P5=2.3165 step=2.3884 total_ms=191.07 ms_per_tu=754.0 wall_s=0.348 load=1.10 0.84 0.79 procs=0
+TIMING run=3 mode=b st=rim n=8 unconverged=0 steps=160 covered=0.254296 P5=1.6765 step=1.7485 total_ms=279.76 ms_per_tu=1100.1 wall_s=0.599 load=1.10 0.84 0.79 procs=0
+TIMING run=3 mode=b st=hot n=1 unconverged=0 steps=20 covered=0.096209 P5=3.2170 step=3.2914 total_ms=65.83 ms_per_tu=684.2 wall_s=0.112 load=1.10 0.84 0.79 procs=0
+TIMING run=3 mode=b st=hot n=2 unconverged=0 steps=40 covered=0.102947 P5=2.3734 step=2.4473 total_ms=97.89 ms_per_tu=950.9 wall_s=0.180 load=1.10 0.84 0.79 procs=0
+TIMING run=3 mode=b st=hot n=4 unconverged=0 steps=80 covered=0.106877 P5=1.8526 step=1.9254 total_ms=154.03 ms_per_tu=1441.2 wall_s=0.319 load=1.10 0.84 0.79 procs=0
+TIMING run=3 mode=b st=hot n=8 unconverged=0 steps=160 covered=0.109111 P5=1.5338 step=1.6060 total_ms=256.96 ms_per_tu=2355.0 wall_s=0.581 load=1.02 0.82 0.79 procs=0
+TIMING run=3 mode=a_fixed st=h n=1 R=268 carried=0 unconverged=0 steps=20 covered=0.104655 P5=28.0555 step=29.8465 total_ms=596.93 ms_per_tu=5703.8 wall_s=0.833 load=1.02 0.82 0.79 procs=0
+TIMING run=3 mode=c st=h n=2 R=222 carried=0 unconverged=0 steps=20 covered=0.103616 P5=36.9470 step=38.7322 total_ms=774.64 ms_per_tu=7476.1 wall_s=1.124 load=1.02 0.82 0.79 procs=0
+TIMING run=3 mode=c st=h n=4 R=182 carried=0 unconverged=0 steps=20 covered=0.103691 P5=53.1865 step=54.9733 total_ms=1099.47 ms_per_tu=10603.3 wall_s=1.657 load=1.02 0.82 0.79 procs=0
+TIMING run=3 mode=c st=h n=8 R=158 carried=0 unconverged=0 steps=20 covered=0.103744 P5=79.7000 step=81.4978 total_ms=1629.96 ms_per_tu=15711.3 wall_s=2.638 load=1.01 0.83 0.79 procs=0
+TIMING run=3 mode=a_fixed st=e n=1 R=1904 carried=0 unconverged=8 steps=10 covered=0.059135 P5=102.3367 step=108.1367 total_ms=1081.37 ms_per_tu=18286.5 wall_s=1.826 load=1.01 0.83 0.79 procs=0
+TIMING run=3 mode=c st=e n=2 R=2088 carried=0 unconverged=2 steps=10 covered=0.047156 P5=137.8618 step=142.0951 total_ms=1420.95 ms_per_tu=30133.2 wall_s=3.212 load=1.01 0.83 0.79 procs=0
+TIMING run=3 mode=c st=e n=4 R=1150 carried=0 unconverged=0 steps=10 covered=0.046998 P5=114.2712 step=118.5040 total_ms=1185.04 ms_per_tu=25214.8 wall_s=3.189 load=1.01 0.83 0.79 procs=0
+TIMING run=3 mode=c st=e n=8 R=1820 carried=0 unconverged=0 steps=10 covered=0.049861 P5=255.9882 step=261.1514 total_ms=2611.51 ms_per_tu=52375.4 wall_s=12.095 load=1.01 0.83 0.79 procs=0
+c1 vs ceil s_554: step 554 sim_time a 4.017714561 b 4.017714561 gas 180180 gas_mismatch 0 L1_C 1.118e-1 worst_cell 9.986e-1 heat_b/a 1.111602 off10 138164
+c2 vs ceil s_554: step 554 sim_time a 4.017714561 b 4.017440499 gas 180132 gas_mismatch 48 L1_C 9.839e-2 worst_cell 9.422e0 heat_b/a 0.922525 off10 134996
+c4 vs ceil s_554: step 554 sim_time a 4.017714561 b 4.017020078 gas 180131 gas_mismatch 49 L1_C 1.340e-1 worst_cell 8.415e0 heat_b/a 0.891494 off10 159189
+c8 vs ceil s_554: step 554 sim_time a 4.017714561 b 4.018078823 gas 180180 gas_mismatch 95 L1_C 2.636e-1 worst_cell 6.634e0 heat_b/a 0.741345 off10 159396
+c1 vs ceil s_555: step 555 sim_time a 4.023367407 b 4.023230744 gas 180549 gas_mismatch 17 L1_C 1.890e-1 worst_cell 6.564e2 heat_b/a 1.189024 off10 119692
+c2 vs ceil s_555: step 555 sim_time a 4.023367407 b 4.022165360 gas 180486 gas_mismatch 80 L1_C 2.832e-1 worst_cell 1.799e3 heat_b/a 0.987720 off10 173474
+c4 vs ceil s_555: step 555 sim_time a 4.023367407 b 4.021892649 gas 180485 gas_mismatch 81 L1_C 3.308e-1 worst_cell 1.679e3 heat_b/a 0.918501 off10 173810
+c8 vs ceil s_555: step 555 sim_time a 4.023367407 b 4.023116604 gas 180504 gas_mismatch 62 L1_C 4.016e-1 worst_cell 1.483e3 heat_b/a 0.766876 off10 175362
+c1 vs ceil s_556: step 556 sim_time a 4.030163910 b 4.029825831 gas 180730 gas_mismatch 16 L1_C 8.571e-2 worst_cell 6.887e2 heat_b/a 1.032588 off10 122052
+c2 vs ceil s_556: step 556 sim_time a 4.030163910 b 4.027029808 gas 180630 gas_mismatch 116 L1_C 3.545e-1 worst_cell 1.423e3 heat_b/a 1.090294 off10 177817
+c4 vs ceil s_556: step 556 sim_time a 4.030163910 b 4.026764860 gas 180621 gas_mismatch 125 L1_C 4.012e-1 worst_cell 1.378e3 heat_b/a 1.015547 off10 178269
+c8 vs ceil s_556: step 556 sim_time a 4.030163910 b 4.028220380 gas 180644 gas_mismatch 102 L1_C 4.261e-1 worst_cell 1.251e3 heat_b/a 0.852966 off10 177246
+c1 vs ceil s_558: step 558 sim_time a 4.044450703 b 4.043218928 gas 181059 gas_mismatch 58 L1_C 7.531e-2 worst_cell 6.125e2 heat_b/a 0.997492 off10 158000
+c2 vs ceil s_558: step 558 sim_time a 4.044450703 b 4.036824005 gas 180863 gas_mismatch 254 L1_C 3.696e-1 worst_cell 1.042e3 heat_b/a 1.213985 off10 178657
+c4 vs ceil s_558: step 558 sim_time a 4.044450703 b 4.036621103 gas 180849 gas_mismatch 268 L1_C 3.736e-1 worst_cell 1.055e3 heat_b/a 1.145118 off10 178609
+c8 vs ceil s_558: step 558 sim_time a 4.044450703 b 4.038562393 gas 180876 gas_mismatch 241 L1_C 3.454e-1 worst_cell 9.871e2 heat_b/a 0.966369 off10 179513
+c552_ceil      window 4.013634-4.072791 radiated 1.253e+06 per_tu 2.118e+07 kinetic_end 1.054e+07 thermal_end 2.115e+06
+c552_probe     window 4.013634-4.068565 radiated 4.129e+05 per_tu 7.517e+06 kinetic_end 1.141e+07 thermal_end 2.109e+06
+q_e_1_ceil     window 4.013634-4.072791 radiated 1.253e+06 per_tu 2.118e+07 kinetic_end 1.054e+07 thermal_end 2.115e+06
+q_e_1_probe    window 4.013634-4.068565 radiated 4.129e+05 per_tu 7.517e+06 kinetic_end 1.141e+07 thermal_end 2.109e+06
+q_e_2_ceil     window 4.011532-4.063333 radiated 2.239e+06 per_tu 4.323e+07 kinetic_end 9.447e+06 thermal_end 2.779e+06
+q_e_2_probe    window 4.011532-4.063333 radiated 2.239e+06 per_tu 4.323e+07 kinetic_end 9.447e+06 thermal_end 2.779e+06
+q_e_4_ceil     window 4.010481-4.051550 radiated 3.396e+06 per_tu 8.27e+07 kinetic_end 8.794e+06 thermal_end 3.283e+06
+q_e_4_probe    window 4.010481-4.051550 radiated 3.396e+06 per_tu 8.27e+07 kinetic_end 8.794e+06 thermal_end 3.283e+06
+q_e_8_ceil     window 4.009956-4.050492 radiated 4.159e+06 per_tu 1.026e+08 kinetic_end 8.667e+06 thermal_end 3.392e+06
+q_e_8_probe    window 4.009956-4.050492 radiated 4.159e+06 per_tu 1.026e+08 kinetic_end 8.667e+06 thermal_end 3.392e+06
+q_h_1_probe    window 9.245862-9.345276 radiated 1.158e+05 per_tu 1.165e+06 kinetic_end 5.36e+06 thermal_end 2.752e+06
+q_h_2_probe    window 9.243241-9.344684 radiated 1.179e+05 per_tu 1.162e+06 kinetic_end 5.563e+06 thermal_end 2.767e+06
+q_h_4_probe    window 9.241931-9.344324 radiated 1.186e+05 per_tu 1.158e+06 kinetic_end 5.671e+06 thermal_end 2.769e+06
+q_h_8_probe    window 9.241276-9.344253 radiated 1.191e+05 per_tu 1.156e+06 kinetic_end 5.727e+06 thermal_end 2.769e+06
+q_hot_1_probe  window 0.001191-0.096209 radiated 3.504e+08 per_tu 3.688e+09 kinetic_end 0 thermal_end 4.681e+07
+q_hot_2_probe  window 0.000595-0.102947 radiated 4.208e+08 per_tu 4.111e+09 kinetic_end 0 thermal_end 4.462e+07
+q_hot_4_probe  window 0.000298-0.106877 radiated 4.999e+08 per_tu 4.691e+09 kinetic_end 0 thermal_end 4.35e+07
+q_hot_8_probe  window 0.000149-0.109111 radiated 5.891e+08 per_tu 5.406e+09 kinetic_end 0 thermal_end 4.292e+07
+q_rim_1_probe  window 0.010000-0.248617 radiated 7.521e+04 per_tu 3.152e+05 kinetic_end 0 thermal_end 6.375e+04
+q_rim_2_probe  window 0.005000-0.251734 radiated 8.435e+04 per_tu 3.418e+05 kinetic_end 0 thermal_end 6.275e+04
+q_rim_4_probe  window 0.002500-0.253414 radiated 9.113e+04 per_tu 3.632e+05 kinetic_end 0 thermal_end 6.223e+04
+q_rim_8_probe  window 0.001250-0.254296 radiated 9.602e+04 per_tu 3.795e+05 kinetic_end 0 thermal_end 6.196e+04
+s_e_1          window 4.013634-4.068565 radiated 4.129e+05 per_tu 7.517e+06 kinetic_end 1.141e+07 thermal_end 2.109e+06
+s_e_2          window 4.013634-4.056586 radiated 1.509e+06 per_tu 3.512e+07 kinetic_end 9.396e+06 thermal_end 2.898e+06
+s_e_4          window 4.013634-4.056428 radiated 1.682e+06 per_tu 3.93e+07 kinetic_end 9.152e+06 thermal_end 2.804e+06
+s_e_8          window 4.013634-4.059292 radiated 1.55e+06 per_tu 3.395e+07 kinetic_end 9.539e+06 thermal_end 2.418e+06
+s_h_1          window 9.245862-9.345276 radiated 1.158e+05 per_tu 1.165e+06 kinetic_end 5.36e+06 thermal_end 2.752e+06
+s_h_2          window 9.245862-9.344237 radiated 1.123e+05 per_tu 1.142e+06 kinetic_end 5.385e+06 thermal_end 2.742e+06
+s_h_4          window 9.245862-9.344312 radiated 1.107e+05 per_tu 1.124e+06 kinetic_end 5.397e+06 thermal_end 2.738e+06
+s_h_8          window 9.245862-9.344365 radiated 1.097e+05 per_tu 1.114e+06 kinetic_end 5.404e+06 thermal_end 2.736e+06
+TIMING run=1 mode=d bin=probe st=e unconverged=4 P5=101.5728 step=107.7857 total_ms=1077.9 covered=0.059135 ms_per_tu=18227 load=0.35 0.66 0.73 procs=0
+TIMING run=1 mode=d bin=ceil st=e unconverged=0 P5=78.8559 step=84.8634 total_ms=848.6 covered=0.063360 ms_per_tu=13394 load=0.35 0.66 0.73 procs=0
+TIMING run=1 mode=d bin=probe st=h unconverged=0 P5=28.0620 step=29.8616 total_ms=597.2 covered=0.104655 ms_per_tu=5707 load=0.40 0.67 0.74 procs=0
+TIMING run=1 mode=d bin=ceil st=h unconverged=0 P5=28.3130 step=30.1071 total_ms=602.1 covered=0.104655 ms_per_tu=5754 load=0.40 0.67 0.74 procs=0
+TIMING run=2 mode=d bin=probe st=e unconverged=4 P5=101.4414 step=107.4659 total_ms=1074.7 covered=0.059135 ms_per_tu=18173 load=0.45 0.67 0.74 procs=0
+TIMING run=2 mode=d bin=ceil st=e unconverged=0 P5=78.8721 step=84.7903 total_ms=847.9 covered=0.063360 ms_per_tu=13382 load=0.45 0.67 0.74 procs=0
+TIMING run=2 mode=d bin=probe st=h unconverged=0 P5=28.0522 step=29.8520 total_ms=597.0 covered=0.104655 ms_per_tu=5705 load=0.45 0.67 0.74 procs=0
+TIMING run=2 mode=d bin=ceil st=h unconverged=0 P5=28.3362 step=30.1293 total_ms=602.6 covered=0.104655 ms_per_tu=5758 load=0.57 0.69 0.74 procs=0
+TIMING run=3 mode=d bin=probe st=e unconverged=4 P5=101.4493 step=107.4299 total_ms=1074.3 covered=0.059135 ms_per_tu=18167 load=0.57 0.69 0.74 procs=0
+TIMING run=3 mode=d bin=ceil st=e unconverged=0 P5=78.8037 step=84.8385 total_ms=848.4 covered=0.063360 ms_per_tu=13390 load=0.61 0.70 0.75 procs=0
+TIMING run=3 mode=d bin=probe st=h unconverged=0 P5=28.0693 step=29.8694 total_ms=597.4 covered=0.104655 ms_per_tu=5708 load=0.61 0.70 0.75 procs=0
+TIMING run=3 mode=d bin=ceil st=h unconverged=0 P5=28.3165 step=30.1088 total_ms=602.2 covered=0.104655 ms_per_tu=5754 load=0.61 0.70 0.75 procs=0
+LIFE run=1 bin=probe wall=14.929 SR-HEADLESS DONE steps=1400 sim_time=9.250446 until=unmet heat_unconverged=4 stage=white_dwarf raw=iron_core wall_s=None run_dir=2026-10-22T19-33-11Z load=0.54 0.68 0.74 procs=0
+LIFE run=1 bin=ceil wall=16.648 SR-HEADLESS DONE steps=1400 sim_time=9.273883 until=unmet heat_unconverged=0 stage=white_dwarf raw=None wall_s=None run_dir=2026-10-22T19-33-26Z load=0.64 0.70 0.74 procs=0
+LIFE run=2 bin=probe wall=14.989 SR-HEADLESS DONE steps=1400 sim_time=9.250446 until=unmet heat_unconverged=4 stage=white_dwarf raw=iron_core wall_s=None run_dir=2026-10-22T19-33-43Z load=0.74 0.72 0.75 procs=0
+LIFE run=2 bin=ceil wall=16.574 SR-HEADLESS DONE steps=1400 sim_time=9.273883 until=unmet heat_unconverged=0 stage=white_dwarf raw=None wall_s=None run_dir=2026-10-22T19-33-58Z load=0.80 0.73 0.75 procs=0
+LIFE run=3 bin=probe wall=14.86 SR-HEADLESS DONE steps=1400 sim_time=9.250446 until=unmet heat_unconverged=4 stage=white_dwarf raw=iron_core wall_s=None run_dir=2026-10-22T19-34-14Z load=0.78 0.73 0.75 procs=0
+LIFE run=3 bin=ceil wall=16.634 SR-HEADLESS DONE steps=1400 sim_time=9.273883 until=unmet heat_unconverged=0 stage=white_dwarf raw=None wall_s=None run_dir=2026-10-22T19-34-29Z load=0.76 0.73 0.75 procs=0
+sections missing=[] sources=3 measurements=8
+=== GO ===
+== claim 2026-10-22T15:39:44-04:00: rsync up, plan_lint, --changed on laserax-ai-server
+milestones/m0/logs/.baseline/M0-R9.json
+anchor: 1 path×scope entries moved by this run
+anchor: 116 paths checked · 263 skipped (3 classes) · 168 never checked · 0 stale · 0 unclassified · 0 owed · 284 covered of 547 visible
+verify: 668 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.04->0.04
+=== GO ===
+load=0.04 0.30 0.55 procs=0
+  sun_burn: 3 failed · log milestones/m0/logs/M0-R9.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-R9.twin.log
+  adapter: 1 failed · log milestones/m0/logs/M0-R9.adapter.log
+  timing: 1 failed · log milestones/m0/logs/M0-R9.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-R9.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-R9.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-R9.boot.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready · log milestones/m0/logs/M0-R9.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-R9.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-R9.capture.log
+  calibration: 1 failed · log milestones/m0/logs/M0-R9.calibration.log
+  readouts: 1 failed · log milestones/m0/logs/M0-R9.readouts.log
+  anchor: 168 never checked, 0 stale, 0 unclassified - every one named above
+verify: 55 passed, 20 failed, 0 skipped · 0/12 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 50 not impacted · 24.19 s + loop 0.06 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.04->0.66 · base: M0-R9's start 2026-10-22T15:10:52-04:00
+=== NO-GO: sun_burn: 3 failed · log milestones/m0/logs/M0-R9.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-R9.twin.log; adapter: 1 failed · log milestones/m0/logs/M0-R9.adapter.log; timing: 1 failed · log milestones/m0/logs/M0-R9.timing.log; scene: 1 failed · log milestones/m0/logs/M0-R9.scene.log; dump: 2 failed · log milestones/m0/logs/M0-R9.dump.log; boot: 1 failed; its own verdict NO... ===
+M0-R9 · claim 2026-10-22T15:40:09-04:00 (changed) · base M0-R9's start 2026-10-22T15:10:52-04:00 · 3 file(s)
+  added: milestones/m0/reports/heat_hard_dt.md, milestones/m0/tasks/M0-R9.md
+  modified: milestones/m0/m0_implementation_plan.md
+touched: 1 task(s) · 3 path(s) · 183 claim record(s) naming their files · 71 without (before the field) · 0 foreign
+=== GO ===
+== sun_burn:       6 preset_mass_sb: missing
+== twin:       2 preset_mass_sb: missing
+== adapter: 
+== timing:       1 No such file or directory
+      1 preset_mass_sb: missing
+== scene:       1 preset_mass_sb: missing
+== dump:       2 preset_mass_sb: missing
+== boot: 
+== calibration:       1 preset_mass_sb
+== readouts:       1 preset_mass_sb
+== desktop: 
+== web:       6 trunk not found
+== capture: 
+verify: 668 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.39->1.39
+=== GO ===

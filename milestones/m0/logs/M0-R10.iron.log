@@ -1,0 +1,276 @@
+=== M0-R10 iron block (16x16 Fe, Σ 400, 64x64, gravity on, hydro/heat/neutrinos/sinks off), laserax-ai-server RTX 4090 idle, probe binary /tmp/r10 (react.wgsl counters; SR_PROBE_REACT_MODE 0 shipped, 1 exact N_Fe, 2 capped at SR_PROBE_REACT_CAP, 3 floor-aware predictor), 2026-10-22 ===
+--- m1_base
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1 wall_ms=3850.767 sub=16758528 retried=18688 max=65463 unfinished=256 latch=1 rem=0 dx=0 dt=16747264 h2=11520 floor=16726272 capped=0 exact=0
+SR-PROBE react step=2 wall_ms=3874.983 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=3 wall_ms=3874.328 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=4 wall_ms=3869.410 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=5 wall_ms=3867.277 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=6 wall_ms=3867.313 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777216 capped=0 exact=0
+SR-PROBE react step=7 wall_ms=3867.839 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=8 wall_ms=3867.464 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=9 wall_ms=3867.284 sub=16776960 retried=256 max=65535 unfinished=256 latch=1 rem=0 dx=0 dt=16776960 h2=256 floor=16776960 capped=0 exact=0
+SR-PROBE react step=10 wall_ms=3867.237 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=11 wall_ms=3868.164 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777216 capped=0 exact=0
+SR-PROBE react step=12 wall_ms=3867.948 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=13 wall_ms=3867.573 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777216 capped=0 exact=0
+SR-PROBE react step=14 wall_ms=3868.002 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=15 wall_ms=3867.893 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=16 wall_ms=2111.235 sub=9156096 retried=0 max=35766 unfinished=0 latch=1 rem=256 dx=0 dt=9155840 h2=0 floor=9155840 capped=0 exact=0
+SR-PROBE react step=17 wall_ms=1149.060 sub=4982016 retried=0 max=19461 unfinished=0 latch=1 rem=256 dx=0 dt=4981760 h2=0 floor=4982016 capped=0 exact=0
+SR-PROBE react step=18 wall_ms=631.734 sub=2726144 retried=0 max=10649 unfinished=0 latch=1 rem=256 dx=0 dt=2725888 h2=0 floor=2725888 capped=0 exact=0
+SR-PROBE react step=19 wall_ms=347.593 sub=1496320 retried=0 max=5845 unfinished=0 latch=1 rem=256 dx=0 dt=1496064 h2=0 floor=1496064 capped=0 exact=0
+SR-PROBE react step=20 wall_ms=191.446 sub=822784 retried=0 max=3214 unfinished=0 latch=1 rem=256 dx=0 dt=822528 h2=0 floor=822784 capped=0 exact=0
+SR-HEADLESS DONE steps=20 sim_time=0.119082 until=none
+
+real	1m3.089s
+user	0m0.668s
+sys	0m0.811s
+--- m2_mode0
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1 wall_ms=3839.114 sub=16758528 retried=18688 max=65463 unfinished=256 latch=1 rem=0 dx=0 dt=16747264 h2=11520 floor=16726272 capped=0 exact=0
+SR-PROBE react step=2 wall_ms=3867.317 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=3 wall_ms=3866.787 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=4 wall_ms=3861.982 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=5 wall_ms=3860.283 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=6 wall_ms=3860.357 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777216 capped=0 exact=0
+SR-PROBE react step=7 wall_ms=3860.692 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=8 wall_ms=3860.107 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=9 wall_ms=3859.531 sub=16776960 retried=256 max=65535 unfinished=256 latch=1 rem=0 dx=0 dt=16776960 h2=256 floor=16776960 capped=0 exact=0
+SR-PROBE react step=10 wall_ms=3859.886 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=11 wall_ms=3860.751 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777216 capped=0 exact=0
+SR-PROBE react step=12 wall_ms=3863.185 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=13 wall_ms=3868.050 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777216 capped=0 exact=0
+SR-PROBE react step=14 wall_ms=3868.545 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=15 wall_ms=3868.862 sub=16777216 retried=0 max=65536 unfinished=256 latch=1 rem=0 dx=0 dt=16777472 h2=0 floor=16777472 capped=0 exact=0
+SR-PROBE react step=16 wall_ms=2111.738 sub=9156096 retried=0 max=35766 unfinished=0 latch=1 rem=256 dx=0 dt=9155840 h2=0 floor=9155840 capped=0 exact=0
+SR-PROBE react step=17 wall_ms=1149.481 sub=4982016 retried=0 max=19461 unfinished=0 latch=1 rem=256 dx=0 dt=4981760 h2=0 floor=4982016 capped=0 exact=0
+SR-PROBE react step=18 wall_ms=632.124 sub=2726144 retried=0 max=10649 unfinished=0 latch=1 rem=256 dx=0 dt=2725888 h2=0 floor=2725888 capped=0 exact=0
+SR-PROBE react step=19 wall_ms=347.539 sub=1496320 retried=0 max=5845 unfinished=0 latch=1 rem=256 dx=0 dt=1496064 h2=0 floor=1496064 capped=0 exact=0
+SR-PROBE react step=20 wall_ms=191.426 sub=822784 retried=0 max=3214 unfinished=0 latch=1 rem=256 dx=0 dt=822528 h2=0 floor=822784 capped=0 exact=0
+SR-HEADLESS DONE steps=20 sim_time=0.119082 until=none
+
+real	1m2.801s
+user	0m0.487s
+sys	0m0.791s
+--- m2_mode1
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1 wall_ms=12.926 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=2 wall_ms=0.372 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=3 wall_ms=0.260 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=4 wall_ms=0.246 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=5 wall_ms=0.266 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=6 wall_ms=0.233 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=7 wall_ms=0.246 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=8 wall_ms=0.227 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=9 wall_ms=0.236 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=10 wall_ms=0.242 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=11 wall_ms=0.221 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=12 wall_ms=0.197 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=13 wall_ms=0.196 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=14 wall_ms=0.193 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=15 wall_ms=0.198 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=16 wall_ms=0.195 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=17 wall_ms=0.208 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=18 wall_ms=0.195 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=19 wall_ms=0.196 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-PROBE react step=20 wall_ms=0.193 sub=0 retried=0 max=0 unfinished=0 latch=1 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=256
+SR-HEADLESS DONE steps=20 sim_time=0.119145 until=none
+
+real	0m0.325s
+user	0m0.051s
+sys	0m0.262s
+--- m2_mode3
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1 wall_ms=22.789 sub=37120 retried=18688 max=145 unfinished=0 latch=1 rem=256 dx=0 dt=20736 h2=16128 floor=4608 capped=0 exact=0
+SR-PROBE react step=2 wall_ms=0.341 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=256 capped=0 exact=0
+SR-PROBE react step=3 wall_ms=0.251 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=256 capped=0 exact=0
+SR-PROBE react step=4 wall_ms=0.243 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=5 wall_ms=0.244 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=6 wall_ms=0.239 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=256 capped=0 exact=0
+SR-PROBE react step=7 wall_ms=0.246 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=8 wall_ms=0.238 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=256 capped=0 exact=0
+SR-PROBE react step=9 wall_ms=0.236 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=256 capped=0 exact=0
+SR-PROBE react step=10 wall_ms=0.241 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=11 wall_ms=0.240 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=256 capped=0 exact=0
+SR-PROBE react step=12 wall_ms=0.236 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=13 wall_ms=0.235 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=14 wall_ms=0.234 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=15 wall_ms=0.241 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=16 wall_ms=0.231 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=17 wall_ms=0.243 sub=256 retried=0 max=1 unfinished=0 latch=1 rem=256 dx=0 dt=0 h2=0 floor=256 capped=0 exact=0
+SR-PROBE react step=18 wall_ms=0.195 sub=0 retried=0 max=0 unfinished=0 latch=0 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=19 wall_ms=0.192 sub=0 retried=0 max=0 unfinished=0 latch=0 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=20 wall_ms=0.192 sub=0 retried=0 max=0 unfinished=0 latch=0 rem=0 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-HEADLESS DONE steps=20 sim_time=0.119145 until=none
+
+real	0m0.299s
+user	0m0.053s
+sys	0m0.223s
+--- m2_cap256
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1 wall_ms=30.592 sub=65536 retried=18688 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=54016 h2=11520 floor=33024 capped=256 exact=0
+SR-PROBE react step=2 wall_ms=16.568 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=3 wall_ms=16.514 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=4 wall_ms=16.415 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=5 wall_ms=16.434 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=6 wall_ms=17.630 sub=65536 retried=9984 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=55552 h2=9984 floor=58624 capped=256 exact=0
+SR-PROBE react step=7 wall_ms=16.341 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65280 capped=256 exact=0
+SR-PROBE react step=8 wall_ms=16.361 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=9 wall_ms=16.364 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65280 capped=256 exact=0
+SR-PROBE react step=10 wall_ms=16.333 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65280 capped=256 exact=0
+SR-PROBE react step=11 wall_ms=16.324 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=12 wall_ms=16.388 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=13 wall_ms=16.090 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65280 capped=256 exact=0
+SR-PROBE react step=14 wall_ms=15.719 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=15 wall_ms=15.725 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=16 wall_ms=15.728 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65280 capped=256 exact=0
+SR-PROBE react step=17 wall_ms=15.775 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=18 wall_ms=15.714 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-PROBE react step=19 wall_ms=15.604 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65280 capped=256 exact=0
+SR-PROBE react step=20 wall_ms=15.877 sub=65536 retried=0 max=256 unfinished=0 latch=1 rem=0 dx=0 dt=65536 h2=0 floor=65536 capped=256 exact=0
+SR-HEADLESS DONE steps=20 sim_time=0.117465 until=none
+
+real	0m0.716s
+user	0m0.089s
+sys	0m0.297s
+--- m2_cap4096
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1 wall_ms=257.718 sub=1048576 retried=18688 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1037056 h2=11520 floor=1016064 capped=256 exact=0
+SR-PROBE react step=2 wall_ms=242.646 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048576 capped=256 exact=0
+SR-PROBE react step=3 wall_ms=242.770 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=4 wall_ms=243.105 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=5 wall_ms=243.038 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048576 capped=256 exact=0
+SR-PROBE react step=6 wall_ms=243.369 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048576 capped=256 exact=0
+SR-PROBE react step=7 wall_ms=243.067 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048576 capped=256 exact=0
+SR-PROBE react step=8 wall_ms=244.569 sub=1048576 retried=11264 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1037568 h2=11008 floor=1041408 capped=256 exact=0
+SR-PROBE react step=9 wall_ms=243.507 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048576 capped=256 exact=0
+SR-PROBE react step=10 wall_ms=243.487 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=11 wall_ms=243.098 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=12 wall_ms=243.497 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=13 wall_ms=243.261 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048576 capped=256 exact=0
+SR-PROBE react step=14 wall_ms=243.290 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=15 wall_ms=243.268 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=16 wall_ms=243.016 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=17 wall_ms=242.893 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048576 capped=256 exact=0
+SR-PROBE react step=18 wall_ms=243.411 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048576 capped=256 exact=0
+SR-PROBE react step=19 wall_ms=243.148 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-PROBE react step=20 wall_ms=242.997 sub=1048576 retried=0 max=4096 unfinished=0 latch=1 rem=0 dx=0 dt=1048576 h2=0 floor=1048320 capped=256 exact=0
+SR-HEADLESS DONE steps=20 sim_time=0.117898 until=none
+
+real	0m5.270s
+user	0m0.149s
+sys	0m0.369s
+--- reader (r10read.py: block mean X_n against the closed form)
+step=1 t=0.005869 cells=256 X_n=0.008028 [0.008028,0.008028] closed=0.066601 err=-5.86e-02 Y_e=0.460558
+step=2 t=0.011780 cells=256 X_n=0.016096 [0.016096,0.016096] closed=0.100098 err=-8.40e-02 Y_e=0.456812
+step=3 t=0.017730 cells=256 X_n=0.024234 [0.024234,0.024234] closed=0.117716 err=-9.35e-02 Y_e=0.453034
+step=4 t=0.023692 cells=256 X_n=0.032441 [0.032441,0.032441] closed=0.127155 err=-9.47e-02 Y_e=0.449224
+step=5 t=0.029654 cells=256 X_n=0.040718 [0.040718,0.040718] closed=0.132269 err=-9.16e-02 Y_e=0.445381
+step=6 t=0.035616 cells=256 X_n=0.049067 [0.049067,0.049067] closed=0.135061 err=-8.60e-02 Y_e=0.441505
+step=7 t=0.041578 cells=256 X_n=0.057487 [0.057487,0.057487] closed=0.136592 err=-7.91e-02 Y_e=0.437595
+step=8 t=0.047540 cells=256 X_n=0.065980 [0.065980,0.065980] closed=0.137432 err=-7.15e-02 Y_e=0.433652
+step=9 t=0.053502 cells=256 X_n=0.074546 [0.074546,0.074546] closed=0.137895 err=-6.33e-02 Y_e=0.429675
+step=10 t=0.059464 cells=256 X_n=0.083185 [0.083185,0.083185] closed=0.138149 err=-5.50e-02 Y_e=0.425664
+step=11 t=0.065425 cells=256 X_n=0.091899 [0.091899,0.091899] closed=0.138290 err=-4.64e-02 Y_e=0.421619
+step=12 t=0.071387 cells=256 X_n=0.100687 [0.100687,0.100687] closed=0.138367 err=-3.77e-02 Y_e=0.417538
+step=13 t=0.077349 cells=256 X_n=0.109551 [0.109551,0.109551] closed=0.138409 err=-2.89e-02 Y_e=0.413423
+step=14 t=0.083311 cells=256 X_n=0.118491 [0.118491,0.118491] closed=0.138433 err=-1.99e-02 Y_e=0.409272
+step=15 t=0.089273 cells=256 X_n=0.127508 [0.127508,0.127508] closed=0.138446 err=-1.09e-02 Y_e=0.405086
+step=16 t=0.095235 cells=256 X_n=0.132461 [0.132461,0.132461] closed=0.138453 err=-5.99e-03 Y_e=0.402786
+step=17 t=0.101197 cells=256 X_n=0.135166 [0.135166,0.135166] closed=0.138457 err=-3.29e-03 Y_e=0.401530
+step=18 t=0.107159 cells=256 X_n=0.136649 [0.136649,0.136649] closed=0.138459 err=-1.81e-03 Y_e=0.400841
+step=19 t=0.113121 cells=256 X_n=0.137464 [0.137464,0.137464] closed=0.138460 err=-9.96e-04 Y_e=0.400463
+step=20 t=0.119082 cells=256 X_n=0.137912 [0.137912,0.137912] closed=0.138461 err=-5.48e-04 Y_e=0.400255
+
+step=1 t=0.005869 cells=256 X_n=0.066601 [0.066601,0.066601] closed=0.066601 err=+3.95e-08 Y_e=0.433364
+step=2 t=0.011831 cells=256 X_n=0.100303 [0.100303,0.100303] closed=0.100303 err=+8.68e-09 Y_e=0.417717
+step=3 t=0.017793 cells=256 X_n=0.117850 [0.117850,0.117850] closed=0.117849 err=+3.03e-08 Y_e=0.409570
+step=4 t=0.023755 cells=256 X_n=0.127227 [0.127227,0.127227] closed=0.127227 err=+5.97e-08 Y_e=0.405216
+step=5 t=0.029717 cells=256 X_n=0.132308 [0.132308,0.132308] closed=0.132308 err=+2.34e-08 Y_e=0.402857
+step=6 t=0.035679 cells=256 X_n=0.135083 [0.135083,0.135083] closed=0.135083 err=+3.71e-08 Y_e=0.401569
+step=7 t=0.041641 cells=256 X_n=0.136603 [0.136603,0.136603] closed=0.136603 err=+1.25e-09 Y_e=0.400863
+step=8 t=0.047603 cells=256 X_n=0.137439 [0.137439,0.137439] closed=0.137439 err=+3.94e-08 Y_e=0.400475
+step=9 t=0.053565 cells=256 X_n=0.137898 [0.137898,0.137898] closed=0.137898 err=+3.53e-08 Y_e=0.400261
+step=10 t=0.059526 cells=256 X_n=0.138151 [0.138151,0.138151] closed=0.138151 err=+2.43e-08 Y_e=0.400144
+step=11 t=0.065488 cells=256 X_n=0.138291 [0.138291,0.138291] closed=0.138291 err=+1.08e-08 Y_e=0.400079
+step=12 t=0.071450 cells=256 X_n=0.138367 [0.138367,0.138367] closed=0.138367 err=+5.42e-08 Y_e=0.400044
+step=13 t=0.077412 cells=256 X_n=0.138410 [0.138410,0.138410] closed=0.138410 err=+2.03e-08 Y_e=0.400024
+step=14 t=0.083374 cells=256 X_n=0.138433 [0.138433,0.138433] closed=0.138433 err=-3.05e-08 Y_e=0.400013
+step=15 t=0.089336 cells=256 X_n=0.138446 [0.138446,0.138446] closed=0.138446 err=-1.12e-08 Y_e=0.400007
+step=16 t=0.095298 cells=256 X_n=0.138453 [0.138453,0.138453] closed=0.138453 err=-1.36e-08 Y_e=0.400004
+step=17 t=0.101260 cells=256 X_n=0.138457 [0.138457,0.138457] closed=0.138457 err=+1.31e-08 Y_e=0.400002
+step=18 t=0.107222 cells=256 X_n=0.138459 [0.138459,0.138459] closed=0.138459 err=+4.43e-08 Y_e=0.400001
+step=19 t=0.113183 cells=256 X_n=0.138460 [0.138460,0.138460] closed=0.138460 err=+2.53e-08 Y_e=0.400001
+step=20 t=0.119145 cells=256 X_n=0.138461 [0.138461,0.138461] closed=0.138461 err=+1.52e-08 Y_e=0.400000
+
+step=1 t=0.005869 cells=256 X_n=0.070314 [0.070314,0.070314] closed=0.066601 err=+3.71e-03 Y_e=0.431640
+step=2 t=0.011831 cells=256 X_n=0.112182 [0.112182,0.112182] closed=0.100303 err=+1.19e-02 Y_e=0.412201
+step=3 t=0.017793 cells=256 X_n=0.128039 [0.128039,0.128039] closed=0.117849 err=+1.02e-02 Y_e=0.404839
+step=4 t=0.023755 cells=256 X_n=0.134283 [0.134283,0.134283] closed=0.127227 err=+7.06e-03 Y_e=0.401940
+step=5 t=0.029717 cells=256 X_n=0.136779 [0.136779,0.136779] closed=0.132308 err=+4.47e-03 Y_e=0.400781
+step=6 t=0.035679 cells=256 X_n=0.137783 [0.137783,0.137783] closed=0.135083 err=+2.70e-03 Y_e=0.400315
+step=7 t=0.041641 cells=256 X_n=0.138188 [0.138188,0.138188] closed=0.136603 err=+1.58e-03 Y_e=0.400127
+step=8 t=0.047603 cells=256 X_n=0.138351 [0.138351,0.138351] closed=0.137439 err=+9.12e-04 Y_e=0.400051
+step=9 t=0.053565 cells=256 X_n=0.138417 [0.138417,0.138417] closed=0.137898 err=+5.18e-04 Y_e=0.400021
+step=10 t=0.059526 cells=256 X_n=0.138443 [0.138443,0.138443] closed=0.138151 err=+2.92e-04 Y_e=0.400008
+step=11 t=0.065488 cells=256 X_n=0.138454 [0.138454,0.138454] closed=0.138291 err=+1.64e-04 Y_e=0.400003
+step=12 t=0.071450 cells=256 X_n=0.138459 [0.138459,0.138459] closed=0.138367 err=+9.12e-05 Y_e=0.400001
+step=13 t=0.077412 cells=256 X_n=0.138460 [0.138460,0.138460] closed=0.138410 err=+5.06e-05 Y_e=0.400001
+step=14 t=0.083374 cells=256 X_n=0.138461 [0.138461,0.138461] closed=0.138433 err=+2.80e-05 Y_e=0.400000
+step=15 t=0.089336 cells=256 X_n=0.138461 [0.138461,0.138461] closed=0.138446 err=+1.55e-05 Y_e=0.400000
+step=16 t=0.095298 cells=256 X_n=0.138461 [0.138461,0.138461] closed=0.138453 err=+8.55e-06 Y_e=0.400000
+step=17 t=0.101260 cells=256 X_n=0.138461 [0.138461,0.138461] closed=0.138457 err=+4.72e-06 Y_e=0.400000
+step=18 t=0.107222 cells=256 X_n=0.138461 [0.138461,0.138461] closed=0.138459 err=+2.58e-06 Y_e=0.400000
+step=19 t=0.113183 cells=256 X_n=0.138461 [0.138461,0.138461] closed=0.138460 err=+1.40e-06 Y_e=0.400000
+step=20 t=0.119145 cells=256 X_n=0.138461 [0.138461,0.138461] closed=0.138461 err=+7.45e-07 Y_e=0.400000
+
+step=1 t=0.005869 cells=256 X_n=0.000069 [0.000069,0.000069] closed=0.066601 err=-6.65e-02 Y_e=0.464254
+step=2 t=0.011742 cells=256 X_n=0.000100 [0.000100,0.000100] closed=0.099943 err=-9.98e-02 Y_e=0.464239
+step=3 t=0.017614 cells=256 X_n=0.000132 [0.000132,0.000132] closed=0.117467 err=-1.17e-01 Y_e=0.464225
+step=4 t=0.023486 cells=256 X_n=0.000163 [0.000163,0.000163] closed=0.126917 err=-1.27e-01 Y_e=0.464210
+step=5 t=0.029359 cells=256 X_n=0.000194 [0.000194,0.000194] closed=0.132082 err=-1.32e-01 Y_e=0.464196
+step=6 t=0.035232 cells=256 X_n=0.000220 [0.000220,0.000220] closed=0.134927 err=-1.35e-01 Y_e=0.464183
+step=7 t=0.041104 cells=256 X_n=0.000252 [0.000252,0.000252] closed=0.136501 err=-1.36e-01 Y_e=0.464169
+step=8 t=0.046977 cells=256 X_n=0.000283 [0.000283,0.000283] closed=0.137373 err=-1.37e-01 Y_e=0.464154
+step=9 t=0.052851 cells=256 X_n=0.000314 [0.000314,0.000314] closed=0.137857 err=-1.38e-01 Y_e=0.464140
+step=10 t=0.058724 cells=256 X_n=0.000345 [0.000345,0.000345] closed=0.138125 err=-1.38e-01 Y_e=0.464126
+step=11 t=0.064597 cells=256 X_n=0.000376 [0.000376,0.000376] closed=0.138275 err=-1.38e-01 Y_e=0.464111
+step=12 t=0.070471 cells=256 X_n=0.000407 [0.000407,0.000407] closed=0.138358 err=-1.38e-01 Y_e=0.464097
+step=13 t=0.076345 cells=256 X_n=0.000438 [0.000438,0.000438] closed=0.138404 err=-1.38e-01 Y_e=0.464082
+step=14 t=0.082219 cells=256 X_n=0.000469 [0.000469,0.000469] closed=0.138429 err=-1.38e-01 Y_e=0.464068
+step=15 t=0.088093 cells=256 X_n=0.000501 [0.000501,0.000501] closed=0.138444 err=-1.38e-01 Y_e=0.464053
+step=16 t=0.093967 cells=256 X_n=0.000532 [0.000532,0.000532] closed=0.138452 err=-1.38e-01 Y_e=0.464039
+step=17 t=0.099841 cells=256 X_n=0.000563 [0.000563,0.000563] closed=0.138456 err=-1.38e-01 Y_e=0.464024
+step=18 t=0.105716 cells=256 X_n=0.000594 [0.000594,0.000594] closed=0.138458 err=-1.38e-01 Y_e=0.464010
+step=19 t=0.111590 cells=256 X_n=0.000625 [0.000625,0.000625] closed=0.138460 err=-1.38e-01 Y_e=0.463996
+step=20 t=0.117465 cells=256 X_n=0.000656 [0.000656,0.000656] closed=0.138461 err=-1.38e-01 Y_e=0.463981
+
+step=1 t=0.005869 cells=256 X_n=0.000536 [0.000536,0.000536] closed=0.066601 err=-6.61e-02 Y_e=0.464037
+step=2 t=0.011744 cells=256 X_n=0.001034 [0.001034,0.001034] closed=0.099952 err=-9.89e-02 Y_e=0.463805
+step=3 t=0.017621 cells=256 X_n=0.001533 [0.001533,0.001533] closed=0.117482 err=-1.16e-01 Y_e=0.463574
+step=4 t=0.023500 cells=256 X_n=0.002032 [0.002032,0.002032] closed=0.126933 err=-1.25e-01 Y_e=0.463342
+step=5 t=0.029382 cells=256 X_n=0.002531 [0.002531,0.002531] closed=0.132097 err=-1.30e-01 Y_e=0.463111
+step=6 t=0.035266 cells=256 X_n=0.003030 [0.003030,0.003030] closed=0.134939 err=-1.32e-01 Y_e=0.462879
+step=7 t=0.041152 cells=256 X_n=0.003529 [0.003529,0.003529] closed=0.136510 err=-1.33e-01 Y_e=0.462647
+step=8 t=0.047041 cells=256 X_n=0.004024 [0.004024,0.004024] closed=0.137380 err=-1.33e-01 Y_e=0.462417
+step=9 t=0.052932 cells=256 X_n=0.004524 [0.004524,0.004524] closed=0.137862 err=-1.33e-01 Y_e=0.462185
+step=10 t=0.058826 cells=256 X_n=0.005025 [0.005025,0.005025] closed=0.138129 err=-1.33e-01 Y_e=0.461953
+step=11 t=0.064722 cells=256 X_n=0.005525 [0.005525,0.005525] closed=0.138277 err=-1.33e-01 Y_e=0.461720
+step=12 t=0.070621 cells=256 X_n=0.006026 [0.006026,0.006026] closed=0.138359 err=-1.32e-01 Y_e=0.461488
+step=13 t=0.076522 cells=256 X_n=0.006527 [0.006527,0.006527] closed=0.138405 err=-1.32e-01 Y_e=0.461255
+step=14 t=0.082426 cells=256 X_n=0.007029 [0.007029,0.007029] closed=0.138430 err=-1.31e-01 Y_e=0.461022
+step=15 t=0.088332 cells=256 X_n=0.007530 [0.007530,0.007530] closed=0.138444 err=-1.31e-01 Y_e=0.460789
+step=16 t=0.094240 cells=256 X_n=0.008032 [0.008032,0.008032] closed=0.138452 err=-1.30e-01 Y_e=0.460556
+--- M3 --timing, 20 steps, 3 runs a mode
+NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %; 15:50:18 up 10 days,  3:22,  5 users,  load average: 0.40, 1.06, 0.84
+mode 0 run 1 {"per_pass_ms": {"P0 edits": 0.0051664000000000015, "P1 dt": 0.0029440000000000004, "P2 gravity": 0.0116208, "P6 reactions": 3113.6623007999997, "P8 floors": 0.0098384, "P9 reductions": 0.0083344}, "source": "gpu-timestamp", "step_ms_mean": 3113.7649552} wall_s 62.299790459
+mode 0 run 2 {"per_pass_ms": {"P0 edits": 0.0051296, "P1 dt": 0.0028575999999999996, "P2 gravity": 0.0116016, "P6 reactions": 3115.7627936, "P8 floors": 0.0098112, "P9 reductions": 0.008283200000000001}, "source": "gpu-timestamp", "step_ms_mean": 3115.8655312} wall_s 62.342512432
+mode 0 run 3 {"per_pass_ms": {"P0 edits": 0.005273599999999999, "P1 dt": 0.0030352, "P2 gravity": 0.011579200000000003, "P6 reactions": 3113.3550512000006, "P8 floors": 0.0099376, "P9 reductions": 0.0083552}, "source": "gpu-timestamp", "step_ms_mean": 3113.4555392000007} wall_s 62.29466541
+mode 1 run 1 {"per_pass_ms": {"P0 edits": 0.0051792, "P1 dt": 0.0028576000000000005, "P2 gravity": 0.011500800000000002, "P6 reactions": 0.03481760000000002, "P8 floors": 0.009871999999999999, "P9 reductions": 0.0083136}, "source": "gpu-timestamp", "step_ms_mean": 0.1417744} wall_s 0.020282708
+mode 1 run 2 {"per_pass_ms": {"P0 edits": 0.005131200000000001, "P1 dt": 0.0028544, "P2 gravity": 0.011568, "P6 reactions": 0.0346944, "P8 floors": 0.0098752, "P9 reductions": 0.0082688}, "source": "gpu-timestamp", "step_ms_mean": 0.1402832} wall_s 0.021552707
+mode 1 run 3 {"per_pass_ms": {"P0 edits": 0.0050496, "P1 dt": 0.0028959999999999993, "P2 gravity": 0.011572799999999998, "P6 reactions": 0.0347312, "P8 floors": 0.0098176, "P9 reductions": 0.0084592}, "source": "gpu-timestamp", "step_ms_mean": 0.14112000000000002} wall_s 0.02012557
+mode 3 run 1 {"per_pass_ms": {"P0 edits": 0.005388800000000001, "P1 dt": 0.0030112, "P2 gravity": 0.0115712, "P6 reactions": 0.6096928, "P8 floors": 0.009817600000000001, "P9 reductions": 0.0082352}, "source": "gpu-timestamp", "step_ms_mean": 0.7157456} wall_s 0.030820798
+mode 3 run 2 {"per_pass_ms": {"P0 edits": 0.0051519999999999995, "P1 dt": 0.0028431999999999993, "P2 gravity": 0.011548800000000001, "P6 reactions": 0.609272, "P8 floors": 0.009804799999999999, "P9 reductions": 0.008712000000000001}, "source": "gpu-timestamp", "step_ms_mean": 0.7142191999999999} wall_s 0.030707843
+mode 3 run 3 {"per_pass_ms": {"P0 edits": 0.0053936, "P1 dt": 0.0030192000000000005, "P2 gravity": 0.0121504, "P6 reactions": 0.61216, "P8 floors": 0.0103264, "P9 reductions": 0.008712000000000001}, "source": "gpu-timestamp", "step_ms_mean": 0.7201152000000001} wall_s 0.031070497
+NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 13 %;

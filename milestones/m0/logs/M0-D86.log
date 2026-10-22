@@ -1,0 +1,3 @@
+M0-D86 log — opened 2026-10-22T16:46:36-04:00 on laserax-ai (linux-pc); model=claude-opus-5-5 level=high (rung_record.py now)
+2026-10-22 · laserax-ai-server (RTX 4090): verify.py burn_cell burn_order GO (17, 4); --redarm burn_cell GO (3/3 red); neutrino GO 18; --redarm neutrino GO (3/3 red); --changed NO-GO 43/57 (plan_lint: header budget → M0-TC8 filed; ledger: GPU validation error, alone GO 5/5; the rest M0-D85's known reds).
+Note: a second local→server rsync before the claim overwrote the server's loop_times.jsonl and verify.anchor.json — the records of the four runs above the claim are not in loop_times.jsonl; their logs are (M0-D86.burn_cell.log, .burn_order.log, .neutrino.log, .burn_cell.redarm.log, .neutrino.redarm.log).

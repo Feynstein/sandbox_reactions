@@ -1,0 +1,22 @@
+== 2026-10-22T17:14:13-04:00 plan_lint · task M0-D86-lint · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=676 failed=0 warnings=17 · blocks=289 · flow_rows=289 · verify_fences=7 · history=0 · flow=per-task · header=705/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-TC7: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-V18: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D53: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-D50: DONE outside the current phase and 63 lines long - stub it (§2.6)
+WARN: M0-D55: DONE outside the current phase and 53 lines long - stub it (§2.6)
+WARN: M0-D56: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-TJ2: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T123: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T125: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D51: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D57: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D52: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D54: DONE outside the current phase and 24 lines long - stub it (§2.6)
+WARN: M0-D86: `Read:` names crates/sr-physics/src/reference/react.rs whole (574 lines > 500) - name a section or a line range
+WARN: M0-D87: `Read:` names crates/sr-engine/shaders/react.wgsl whole (664 lines > 500) - name a section or a line range
+WARN: M0-D87: `Read:` names crates/sr-engine/tests/gpu/neutrino.rs whole (880 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-TC8 5 · M0-D81 3 · M0-R6 12 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6
+=== GO ===
+

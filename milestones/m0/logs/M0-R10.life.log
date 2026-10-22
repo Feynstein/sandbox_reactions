@@ -1,0 +1,999 @@
+=== M0-R10 the 20 M0 life (calibrate --only m_bh_sb --bracket 67020.643,67087.664), laserax-ai-server RTX 4090 idle, 2026-10-22 ===
+--- the shipped copy /tmp/r10s to 2,000 steps (timeout 530 s)
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=65 sim_time=0.634 heat_unconverged=0 stage=cloud | raw=cloud
+  frame  steps          16 dt       0.008598 s/step   0.004952 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=113 sim_time=1.010 heat_unconverged=0 stage=collapsing | raw=collapsing
+  frame  steps          16 dt       0.007520 s/step   0.005563 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=161 sim_time=1.353 heat_unconverged=0 stage=collapsing | raw=collapsing
+  frame  steps          16 dt       0.007007 s/step   0.004975 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=209 sim_time=1.681 heat_unconverged=0 stage=collapsing | raw=collapsing
+  frame  steps          16 dt       0.006760 s/step   0.006182 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=257 sim_time=2.002 heat_unconverged=0 stage=collapsing | raw=main_sequence
+  frame  steps          16 dt       0.006682 s/step   0.005690 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=305 sim_time=2.323 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt       0.006703 s/step   0.005471 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=353 sim_time=2.646 heat_unconverged=0 stage=main_sequence | raw=cloud
+  frame  steps          16 dt       0.006734 s/step   0.005094 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=401 sim_time=2.972 heat_unconverged=0 stage=cloud | raw=cloud
+  frame  steps          16 dt       0.006837 s/step   0.004836 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=465 sim_time=3.417 heat_unconverged=0 stage=cloud | raw=cloud
+  frame  steps          16 dt       0.007016 s/step   0.004772 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=513 sim_time=3.756 heat_unconverged=0 stage=cloud | raw=cloud
+  frame  steps          16 dt       0.007090 s/step   0.004836 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=561 sim_time=4.063 heat_unconverged=4 stage=cloud | raw=he_shell
+  frame  steps          16 dt       0.005315 s/step     0.1374 P5_ceil         4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=562 sim_time=4.069 heat_unconverged=4 stage=cloud | raw=iron_core
+  frame  steps           1 dt       0.005963 s/step    0.07814 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=610 sim_time=4.360 heat_unconverged=4 stage=iron_core | raw=iron_core
+  frame  steps          16 dt       0.006121 s/step    0.02939 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=658 sim_time=4.658 heat_unconverged=4 stage=iron_core | raw=iron_core
+  frame  steps          16 dt       0.006267 s/step    0.01491 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=706 sim_time=4.962 heat_unconverged=4 stage=iron_core | raw=iron_core
+  frame  steps          16 dt       0.006371 s/step   0.008964 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=754 sim_time=5.272 heat_unconverged=4 stage=iron_core | raw=iron_core
+  frame  steps          16 dt       0.006491 s/step   0.006866 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=802 sim_time=5.586 heat_unconverged=4 stage=iron_core | raw=iron_core
+  frame  steps          16 dt       0.006581 s/step   0.006101 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=850 sim_time=5.905 heat_unconverged=4 stage=iron_core | raw=white_dwarf
+  frame  steps          16 dt       0.006679 s/step   0.005647 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=914 sim_time=6.335 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.006748 s/step   0.005979 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=962 sim_time=6.663 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.006849 s/step   0.007764 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1010 sim_time=6.984 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.006447 s/step   0.008695 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1058 sim_time=7.274 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005962 s/step   0.008675 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1106 sim_time=7.559 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005942 s/step   0.008705 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1154 sim_time=7.850 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.006261 s/step   0.009264 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1202 sim_time=8.143 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.006013 s/step   0.008892 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1250 sim_time=8.423 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005747 s/step   0.008294 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1314 sim_time=8.783 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005548 s/step   0.009247 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1362 sim_time=9.046 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005442 s/step   0.009481 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1410 sim_time=9.304 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005354 s/step   0.009130 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1458 sim_time=9.558 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005261 s/step   0.009576 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1506 sim_time=9.807 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005163 s/step    0.01113 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1554 sim_time=10.061 heat_unconverged=4 stage=white_dwarf | raw=white_dwarf
+  frame  steps          16 dt       0.005368 s/step    0.01597 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1571 sim_time=10.148 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004874 s/step      3.417 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1572 sim_time=10.152 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004940 s/step      3.431 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1573 sim_time=10.157 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005017 s/step      3.409 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1574 sim_time=10.163 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005119 s/step      3.413 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1575 sim_time=10.168 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005230 s/step      3.433 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1576 sim_time=10.173 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005248 s/step      3.429 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1577 sim_time=10.178 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005272 s/step      3.425 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1578 sim_time=10.184 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005298 s/step      3.418 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1579 sim_time=10.189 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005334 s/step      3.431 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1580 sim_time=10.194 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005346 s/step      3.406 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1581 sim_time=10.200 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005357 s/step      3.434 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1582 sim_time=10.205 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005366 s/step      3.433 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1583 sim_time=10.210 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005349 s/step      3.424 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1584 sim_time=10.216 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005354 s/step      3.442 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1585 sim_time=10.221 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005345 s/step      3.139 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1586 sim_time=10.226 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005325 s/step      2.877 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1587 sim_time=10.232 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005296 s/step      3.047 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1588 sim_time=10.237 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005264 s/step      3.349 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1589 sim_time=10.242 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005230 s/step      3.404 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1590 sim_time=10.247 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005195 s/step      3.473 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1591 sim_time=10.253 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005159 s/step      3.471 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1592 sim_time=10.258 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005122 s/step      3.445 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1593 sim_time=10.263 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005083 s/step      3.450 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1594 sim_time=10.268 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005042 s/step      3.434 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1595 sim_time=10.273 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005000 s/step      3.453 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1596 sim_time=10.278 heat_unconverged=4 stage=core_collapse | raw=neutron_star
+  frame  steps           1 dt       0.004956 s/step      3.471 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1612 sim_time=10.352 heat_unconverged=4 stage=core_collapse | raw=neutron_star
+  frame  steps          16 dt       0.004659 s/step      3.424 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1660 sim_time=10.569 heat_unconverged=4 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.005010 s/step      1.735 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1708 sim_time=10.791 heat_unconverged=4 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.004762 s/step      2.861 P5_ceil         0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1756 sim_time=11.013 heat_unconverged=4 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.004434 s/step      2.590 P5_ceil         0
+--- cut at 1,560
+  world  escaped     101.5 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=1560 sim_time=10.092878 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1560 — reported, not guessed (record kept: build/calibrate_runs/2026-10-22T20-03-40Z/m_bh_sb-01)
+--- continued 1,561-1,700, probe mode 0
+SR-CALIBRATE continue item=m_bh_sb mass=67020.643 from step 1560 (build/calibrate_runs/cut_m0/m_bh_sb-01/checkpoint/s_1560.bin)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1561 wall_ms=52.690 sub=127032 retried=0 max=1 unfinished=0 latch=0 rem=127032 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1562 wall_ms=52.879 sub=127372 retried=0 max=1 unfinished=0 latch=0 rem=127372 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1563 wall_ms=44.755 sub=128023 retried=0 max=1 unfinished=0 latch=0 rem=128023 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1564 wall_ms=49.441 sub=128975 retried=0 max=1 unfinished=0 latch=0 rem=128975 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1565 wall_ms=3361.268 sub=200844 retried=63 max=62699 unfinished=0 latch=1 rem=130083 dx=0 dt=70761 h2=0 floor=70399 capped=0 exact=0
+SR-PROBE react step=1566 wall_ms=3481.474 sub=278677 retried=150 max=65501 unfinished=2 latch=1 rem=131133 dx=0 dt=147499 h2=47 floor=146973 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1566 sim_time=10.123 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004947 s/step      3.507 P5_ceil         0
+  star   M           66456 R           219.4 tau_dyn     12.60 M_unb       19.07
+  core   sigma_c     374.4 T_c       0.05000 d_c        1.0000 Ye_c       0.4545
+  centre X_Fe       0.9789 X_n       0.02113 v_r         6.793 vr/vdyn    0.3903
+  light  L         1.530e6 L_nuc    0.001734 L_N      -2.218e7 L_nu         2060
+  world  escaped     517.8 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1567 wall_ms=3473.813 sub=394143 retried=233 max=65505 unfinished=4 latch=1 rem=132232 dx=0 dt=261834 h2=81 floor=261172 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1567 sim_time=10.128 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004981 s/step      3.500 P5_ceil         0
+  star   M           66454 R           219.4 tau_dyn     12.60 M_unb       19.94
+  core   sigma_c     393.7 T_c       0.05008 d_c        1.0000 Ye_c       0.4504
+  centre X_Fe       0.9702 X_n       0.02984 v_r         6.838 vr/vdyn    0.3929
+  light  L         1.579e6 L_nuc    0.002986 L_N      -2.999e7 L_nu         2770
+  world  escaped     519.9 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1568 wall_ms=3501.968 sub=395136 retried=242 max=65503 unfinished=4 latch=1 rem=133234 dx=0 dt=261820 h2=86 floor=261177 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1568 sim_time=10.133 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004917 s/step      3.518 P5_ceil         0
+  star   M           66453 R           219.4 tau_dyn     12.61 M_unb       20.61
+  core   sigma_c     411.0 T_c       0.05000 d_c        1.0000 Ye_c       0.4466
+  centre X_Fe       0.9619 X_n       0.03813 v_r         6.882 vr/vdyn    0.3954
+  light  L         1.633e6 L_nuc    0.004179 L_N      -3.034e7 L_nu         3431
+  world  escaped     522.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1569 wall_ms=3485.453 sub=396027 retried=176 max=65505 unfinished=4 latch=1 rem=134059 dx=0 dt=261972 h2=0 floor=261305 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1569 sim_time=10.138 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004841 s/step      3.512 P5_ceil         0
+  star   M           66451 R           219.4 tau_dyn     12.61 M_unb       20.97
+  core   sigma_c     430.5 T_c       0.05000 d_c        1.0000 Ye_c       0.4425
+  centre X_Fe       0.9532 X_n       0.04682 v_r         6.924 vr/vdyn    0.3979
+  light  L         1.676e6 L_nuc    0.004099 L_N      -3.350e7 L_nu         3369
+  world  escaped     524.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1570 wall_ms=3474.784 sub=396573 retried=322 max=65475 unfinished=4 latch=1 rem=134751 dx=0 dt=261702 h2=124 floor=261004 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1570 sim_time=10.143 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004833 s/step      3.508 P5_ceil         0
+  star   M           66449 R           219.5 tau_dyn     12.61 M_unb       21.13
+  core   sigma_c     446.2 T_c       0.05006 d_c        1.0000 Ye_c       0.4387
+  centre X_Fe       0.9449 X_n       0.05509 v_r         6.958 vr/vdyn    0.3999
+  light  L         1.708e6 L_nuc    0.003246 L_N      -3.600e7 L_nu         2810
+  world  escaped     526.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1571 wall_ms=3490.763 sub=396994 retried=356 max=65481 unfinished=4 latch=1 rem=135206 dx=0 dt=261665 h2=127 floor=260966 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1571 sim_time=10.148 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004874 s/step      3.513 P5_ceil         0
+  star   M           66447 R           219.5 tau_dyn     12.61 M_unb       21.45
+  core   sigma_c     456.8 T_c       0.05003 d_c        1.0000 Ye_c       0.4350
+  centre X_Fe       0.9370 X_n       0.06298 v_r         6.984 vr/vdyn    0.4014
+  light  L         1.723e6 L_nuc    0.002548 L_N      -3.707e7 L_nu         2297
+  world  escaped     528.1 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1572 wall_ms=3477.823 sub=397235 retried=365 max=65474 unfinished=4 latch=1 rem=135456 dx=0 dt=261657 h2=126 floor=260945 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1572 sim_time=10.152 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004940 s/step      3.504 P5_ceil         0
+  star   M           66445 R           219.5 tau_dyn     12.62 M_unb       21.81
+  core   sigma_c     462.2 T_c       0.05005 d_c        1.0000 Ye_c       0.4315
+  centre X_Fe       0.9294 X_n       0.07065 v_r         7.005 vr/vdyn    0.4026
+  light  L         1.722e6 L_nuc    0.002218 L_N      -3.706e7 L_nu         1996
+  world  escaped     530.2 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1573 wall_ms=3483.935 sub=397268 retried=340 max=65471 unfinished=4 latch=1 rem=135464 dx=0 dt=261719 h2=89 floor=261032 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1573 sim_time=10.157 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005017 s/step      3.510 P5_ceil         0
+  star   M           66443 R           219.5 tau_dyn     12.62 M_unb       22.18
+  core   sigma_c     463.3 T_c       0.05000 d_c        1.0000 Ye_c       0.4279
+  centre X_Fe       0.9217 X_n       0.07828 v_r         7.024 vr/vdyn    0.4037
+  light  L         1.714e6 L_nuc    0.001946 L_N      -3.613e7 L_nu         1771
+  world  escaped     532.3 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1574 wall_ms=3474.957 sub=397236 retried=284 max=65483 unfinished=4 latch=1 rem=135376 dx=0 dt=261827 h2=37 floor=261139 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1574 sim_time=10.163 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005119 s/step      3.501 P5_ceil         0
+  star   M           66441 R           219.5 tau_dyn     12.62 M_unb       22.49
+  core   sigma_c     463.5 T_c       0.05000 d_c        1.0000 Ye_c       0.4242
+  centre X_Fe       0.9138 X_n       0.08624 v_r         7.041 vr/vdyn    0.4047
+  light  L         1.699e6 L_nuc    0.001660 L_N      -3.563e7 L_nu         1559
+  world  escaped     534.5 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1575 wall_ms=3490.359 sub=397064 retried=245 max=65482 unfinished=4 latch=1 rem=135165 dx=0 dt=261903 h2=0 floor=261211 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1575 sim_time=10.168 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005230 s/step      3.517 P5_ceil         0
+  star   M           66439 R           219.6 tau_dyn     12.62 M_unb       22.83
+  core   sigma_c     460.6 T_c       0.05000 d_c        1.0000 Ye_c       0.4204
+  centre X_Fe       0.9056 X_n       0.09444 v_r         7.056 vr/vdyn    0.4056
+  light  L         1.675e6 L_nuc    0.001261 L_N      -3.478e7 L_nu         1310
+  world  escaped     536.7 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1576 wall_ms=3483.000 sub=396651 retried=292 max=65480 unfinished=4 latch=1 rem=134799 dx=0 dt=261816 h2=40 floor=261131 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1576 sim_time=10.173 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005248 s/step      3.510 P5_ceil         0
+  star   M           66437 R           219.6 tau_dyn     12.62 M_unb       22.65
+  core   sigma_c     456.1 T_c       0.05005 d_c        1.0000 Ye_c       0.4165
+  centre X_Fe       0.8971 X_n        0.1029 v_r         7.070 vr/vdyn    0.4064
+  light  L         1.652e6 L_nuc    8.455e-4 L_N      -3.507e7 L_nu         1057
+  world  escaped     539.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1577 wall_ms=3485.979 sub=396251 retried=259 max=65475 unfinished=4 latch=1 rem=134366 dx=0 dt=261889 h2=0 floor=261180 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1577 sim_time=10.178 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005272 s/step      3.512 P5_ceil         0
+  star   M           66435 R           219.6 tau_dyn     12.63 M_unb       22.51
+  core   sigma_c     450.7 T_c       0.05008 d_c        0.9999 Ye_c       0.4124
+  centre X_Fe       0.8882 X_n        0.1118 v_r         7.082 vr/vdyn    0.4071
+  light  L         1.624e6 L_nuc    5.088e-4 L_N      -3.554e7 L_nu        834.7
+  world  escaped     541.3 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1578 wall_ms=3483.625 sub=395804 retried=260 max=65476 unfinished=4 latch=1 rem=133920 dx=0 dt=261888 h2=0 floor=261172 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1578 sim_time=10.184 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005298 s/step      3.510 P5_ceil         0
+  star   M           66433 R           219.6 tau_dyn     12.63 M_unb       22.42
+  core   sigma_c     444.8 T_c       0.05000 d_c        0.9999 Ye_c       0.4081
+  centre X_Fe       0.8790 X_n        0.1210 v_r         7.092 vr/vdyn    0.4078
+  light  L         1.594e6 L_nuc    2.804e-4 L_N      -3.599e7 L_nu        653.0
+  world  escaped     543.6 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1579 wall_ms=3471.801 sub=395223 retried=255 max=65476 unfinished=4 latch=1 rem=133334 dx=0 dt=261893 h2=0 floor=261169 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1579 sim_time=10.189 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005334 s/step      3.498 P5_ceil         0
+  star   M           66430 R           219.6 tau_dyn     12.63 M_unb       22.59
+  core   sigma_c     442.3 T_c       0.05003 d_c        0.9999 Ye_c       0.4037
+  centre X_Fe       0.8695 X_n        0.1305 v_r         7.101 vr/vdyn    0.4083
+  light  L         1.563e6 L_nuc    1.483e-4 L_N      -3.706e7 L_nu        511.9
+  world  escaped     545.9 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1580 wall_ms=3487.736 sub=394549 retried=257 max=65478 unfinished=4 latch=1 rem=132662 dx=0 dt=261891 h2=0 floor=261158 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1580 sim_time=10.194 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005346 s/step      3.514 P5_ceil         0
+  star   M           66428 R           219.6 tau_dyn     12.63 M_unb       22.62
+  core   sigma_c     440.8 T_c       0.05000 d_c        0.9999 Ye_c       0.3992
+  centre X_Fe       0.8598 X_n        0.1402 v_r         7.111 vr/vdyn    0.4089
+  light  L         1.529e6 L_nuc    8.316e-5 L_N      -3.788e7 L_nu        411.0
+  world  escaped     548.2 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1581 wall_ms=3502.194 sub=393871 retried=257 max=65474 unfinished=4 latch=1 rem=131984 dx=0 dt=261891 h2=0 floor=261171 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1581 sim_time=10.200 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005357 s/step      3.524 P5_ceil         0
+  star   M           66426 R           219.7 tau_dyn     12.63 M_unb       23.03
+  core   sigma_c     436.0 T_c       0.05003 d_c        0.9999 Ye_c       0.3950
+  centre X_Fe       0.8508 X_n        0.1492 v_r         7.120 vr/vdyn    0.4094
+  light  L         1.492e6 L_nuc    5.470e-5 L_N      -3.667e7 L_nu        347.4
+  world  escaped     550.6 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1582 wall_ms=3487.846 sub=393187 retried=245 max=65477 unfinished=4 latch=1 rem=131288 dx=0 dt=261903 h2=0 floor=261178 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1582 sim_time=10.205 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005366 s/step      3.514 P5_ceil         0
+  star   M           66424 R           219.7 tau_dyn     12.63 M_unb       23.65
+  core   sigma_c     432.0 T_c       0.05006 d_c        0.9999 Ye_c       0.3911
+  centre X_Fe       0.8424 X_n        0.1576 v_r         7.129 vr/vdyn    0.4099
+  light  L         1.458e6 L_nuc    4.221e-5 L_N      -3.813e7 L_nu        312.0
+  world  escaped     552.9 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1583 wall_ms=3499.979 sub=392488 retried=249 max=65478 unfinished=4 latch=1 rem=130593 dx=0 dt=261899 h2=0 floor=261178 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1583 sim_time=10.210 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005349 s/step      3.526 P5_ceil         0
+  star   M           66422 R           219.7 tau_dyn     12.63 M_unb       24.05
+  core   sigma_c     428.6 T_c       0.05000 d_c        0.9999 Ye_c       0.3874
+  centre X_Fe       0.8344 X_n        0.1656 v_r         7.136 vr/vdyn    0.4104
+  light  L         1.422e6 L_nuc    3.609e-5 L_N      -3.793e7 L_nu        291.5
+  world  escaped     555.3 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1584 wall_ms=3481.564 sub=352694 retried=241 max=65478 unfinished=2 latch=1 rem=129897 dx=0 dt=222799 h2=0 floor=222071 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1584 sim_time=10.216 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005354 s/step      3.514 P5_ceil         0
+  star   M           66420 R           219.9 tau_dyn     12.65 M_unb       24.38
+  core   sigma_c     428.0 T_c       0.05005 d_c        0.9999 Ye_c       0.3838
+  centre X_Fe       0.8265 X_n        0.1735 v_r         7.143 vr/vdyn    0.4110
+  light  L         1.389e6 L_nuc    3.299e-5 L_N      -3.503e7 L_nu        280.8
+  world  escaped     557.6 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1585 wall_ms=3192.348 sub=302928 retried=240 max=60076 unfinished=0 latch=1 rem=129166 dx=0 dt=173762 h2=0 floor=173031 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1585 sim_time=10.221 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005345 s/step      3.225 P5_ceil         0
+  star   M           66418 R           220.0 tau_dyn     12.66 M_unb       24.33
+  core   sigma_c     429.4 T_c       0.05002 d_c        0.9999 Ye_c       0.3806
+  centre X_Fe       0.8197 X_n        0.1803 v_r         7.151 vr/vdyn    0.4115
+  light  L         1.360e6 L_nuc    3.165e-5 L_N      -3.087e7 L_nu        276.5
+  world  escaped     560.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1586 wall_ms=2959.758 sub=303926 retried=244 max=55370 unfinished=0 latch=1 rem=128571 dx=0 dt=175355 h2=0 floor=174619 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1586 sim_time=10.226 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005325 s/step      2.993 P5_ceil         0
+  star   M           66415 R           220.0 tau_dyn     12.66 M_unb       24.37
+  core   sigma_c     432.3 T_c       0.05002 d_c        0.9999 Ye_c       0.3779
+  centre X_Fe       0.8138 X_n        0.1862 v_r         7.158 vr/vdyn    0.4120
+  light  L         1.330e6 L_nuc    3.153e-5 L_N      -3.207e7 L_nu        276.8
+  world  escaped     562.4 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1587 wall_ms=3133.653 sub=333509 retried=223 max=58681 unfinished=0 latch=1 rem=128005 dx=0 dt=205504 h2=0 floor=204776 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1587 sim_time=10.232 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005296 s/step      3.166 P5_ceil         0
+  star   M           66413 R           220.1 tau_dyn     12.67 M_unb       24.18
+  core   sigma_c     436.2 T_c       0.05000 d_c        0.9999 Ye_c       0.3750
+  centre X_Fe       0.8077 X_n        0.1923 v_r         7.167 vr/vdyn    0.4125
+  light  L         1.307e6 L_nuc    3.245e-5 L_N      -3.651e7 L_nu        279.8
+  world  escaped     564.7 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1588 wall_ms=3400.215 sub=369907 retried=232 max=64204 unfinished=0 latch=1 rem=127537 dx=0 dt=242370 h2=0 floor=241635 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1588 sim_time=10.237 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005264 s/step      3.426 P5_ceil         0
+  star   M           66411 R           220.5 tau_dyn     12.71 M_unb       24.16
+  core   sigma_c     440.8 T_c       0.05015 d_c        0.9999 Ye_c       0.3719
+  centre X_Fe       0.8009 X_n        0.1991 v_r         7.175 vr/vdyn    0.4135
+  light  L         1.285e6 L_nuc    3.448e-5 L_N      -4.198e7 L_nu        286.3
+  world  escaped     567.1 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1589 wall_ms=3862.419 sub=389055 retried=216 max=65483 unfinished=4 latch=1 rem=127127 dx=0 dt=261932 h2=0 floor=261200 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1589 sim_time=10.242 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005230 s/step      3.882 P5_ceil         0
+  star   M           66409 R           220.6 tau_dyn     12.71 M_unb       24.23
+  core   sigma_c     445.8 T_c       0.05005 d_c        0.9999 Ye_c       0.3687
+  centre X_Fe       0.7942 X_n        0.2058 v_r         7.185 vr/vdyn    0.4141
+  light  L         1.269e6 L_nuc    3.869e-5 L_N      -4.564e7 L_nu        297.4
+  world  escaped     569.4 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1590 wall_ms=3523.706 sub=388729 retried=214 max=65489 unfinished=4 latch=1 rem=126799 dx=0 dt=261934 h2=0 floor=261201 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1590 sim_time=10.247 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005195 s/step      3.553 P5_ceil         0
+  star   M           66407 R           220.7 tau_dyn     12.72 M_unb       23.96
+  core   sigma_c     451.1 T_c       0.05008 d_c        0.9999 Ye_c       0.3656
+  centre X_Fe       0.7875 X_n        0.2125 v_r         7.196 vr/vdyn    0.4148
+  light  L         1.253e6 L_nuc    4.621e-5 L_N      -4.707e7 L_nu        314.6
+  world  escaped     571.8 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1591 wall_ms=3523.317 sub=388467 retried=216 max=65486 unfinished=4 latch=1 rem=126539 dx=0 dt=261932 h2=0 floor=261200 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1591 sim_time=10.253 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005159 s/step      3.549 P5_ceil         0
+  star   M           66405 R           220.8 tau_dyn     12.74 M_unb       23.50
+  core   sigma_c     456.5 T_c       0.05000 d_c        0.9999 Ye_c       0.3626
+  centre X_Fe       0.7810 X_n        0.2190 v_r         7.208 vr/vdyn    0.4157
+  light  L         1.242e6 L_nuc    5.858e-5 L_N      -4.851e7 L_nu        338.9
+  world  escaped     574.1 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1592 wall_ms=3518.213 sub=388321 retried=214 max=65484 unfinished=4 latch=1 rem=126391 dx=0 dt=261934 h2=0 floor=261201 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1592 sim_time=10.258 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005122 s/step      3.550 P5_ceil         0
+  star   M           66403 R           220.9 tau_dyn     12.74 M_unb       23.50
+  core   sigma_c     462.2 T_c       0.05002 d_c        0.9999 Ye_c       0.3596
+  centre X_Fe       0.7745 X_n        0.2255 v_r         7.220 vr/vdyn    0.4164
+  light  L         1.236e6 L_nuc    7.863e-5 L_N      -5.001e7 L_nu        372.3
+  world  escaped     576.4 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1593 wall_ms=3528.173 sub=404576 retried=213 max=65486 unfinished=4 latch=1 rem=126312 dx=0 dt=278268 h2=0 floor=277533 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1593 sim_time=10.263 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005083 s/step      3.561 P5_ceil         0
+  star   M           66400 R           220.9 tau_dyn     12.74 M_unb       23.52
+  core   sigma_c     468.3 T_c       0.05008 d_c        0.9999 Ye_c       0.3567
+  centre X_Fe       0.7682 X_n        0.2318 v_r         7.233 vr/vdyn    0.4172
+  light  L         1.232e6 L_nuc    1.097e-4 L_N      -5.311e7 L_nu        416.8
+  world  escaped     578.7 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1594 wall_ms=3509.713 sub=564801 retried=209 max=65485 unfinished=4 latch=1 rem=126332 dx=0 dt=438473 h2=0 floor=437744 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1594 sim_time=10.268 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005042 s/step      3.543 P5_ceil         0
+  star   M           66398 R           220.9 tau_dyn     12.74 M_unb       23.64
+  core   sigma_c     474.6 T_c       0.05002 d_c        0.9999 Ye_c       0.3538
+  centre X_Fe       0.7621 X_n        0.2379 v_r         7.246 vr/vdyn    0.4180
+  light  L         1.228e6 L_nuc    1.527e-4 L_N      -6.962e7 L_nu        471.5
+  world  escaped     581.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1595 wall_ms=3517.043 sub=650512 retried=206 max=65536 unfinished=8 latch=1 rem=126430 dx=0 dt=524090 h2=0 floor=523360 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1595 sim_time=10.273 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.005000 s/step      3.550 P5_ceil         0
+  star   M           66396 R           220.9 tau_dyn     12.74 M_unb       23.81
+  core   sigma_c     481.0 T_c       0.05000 d_c        0.9999 Ye_c       0.3511
+  centre X_Fe       0.7562 X_n        0.2438 v_r         7.261 vr/vdyn    0.4188
+  light  L         1.231e6 L_nuc    1.867e-4 L_N      -7.981e7 L_nu        517.1
+  world  escaped     583.3 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1596 wall_ms=3523.079 sub=650685 retried=214 max=65536 unfinished=8 latch=1 rem=126611 dx=0 dt=524082 h2=0 floor=523348 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1596 sim_time=10.278 heat_unconverged=4 stage=core_collapse | raw=neutron_star
+  frame  steps           1 dt       0.004956 s/step      3.549 P5_ceil         0
+  star   M           66394 R           220.9 tau_dyn     12.74 M_unb       24.17
+  core   sigma_c     487.1 T_c       0.05000 d_c        0.9999 Ye_c       0.3484
+  centre X_Fe       0.7504 X_n        0.2496 v_r         7.275 vr/vdyn    0.4197
+  light  L         1.236e6 L_nuc    2.042e-4 L_N      -8.198e7 L_nu        548.6
+  world  escaped     585.6 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1597 wall_ms=3513.143 sub=683885 retried=196 max=65536 unfinished=8 latch=1 rem=126909 dx=0 dt=556984 h2=0 floor=556266 capped=0 exact=0
+SR-PROBE react step=1598 wall_ms=3530.698 sub=729715 retried=194 max=65536 unfinished=8 latch=1 rem=127228 dx=0 dt=602495 h2=0 floor=601784 capped=0 exact=0
+SR-PROBE react step=1599 wall_ms=3522.629 sub=762291 retried=197 max=65536 unfinished=8 latch=1 rem=127612 dx=0 dt=634687 h2=0 floor=633983 capped=0 exact=0
+SR-PROBE react step=1600 wall_ms=3513.054 sub=804357 retried=304 max=65536 unfinished=8 latch=1 rem=127993 dx=0 dt=676372 h2=0 floor=675510 capped=0 exact=0
+SR-PROBE react step=1601 wall_ms=3518.968 sub=812556 retried=429 max=65496 unfinished=8 latch=1 rem=128342 dx=0 dt=684222 h2=0 floor=683065 capped=0 exact=0
+SR-PROBE react step=1602 wall_ms=3536.561 sub=792522 retried=437 max=65492 unfinished=8 latch=1 rem=128602 dx=0 dt=663928 h2=0 floor=662694 capped=0 exact=0
+SR-PROBE react step=1603 wall_ms=3507.652 sub=760091 retried=448 max=65491 unfinished=8 latch=1 rem=128780 dx=0 dt=631319 h2=0 floor=630054 capped=0 exact=0
+SR-PROBE react step=1604 wall_ms=3505.603 sub=718435 retried=426 max=65494 unfinished=7 latch=1 rem=128877 dx=0 dt=589565 h2=0 floor=588302 capped=0 exact=0
+SR-PROBE react step=1605 wall_ms=3498.388 sub=645079 retried=430 max=65477 unfinished=4 latch=1 rem=128876 dx=0 dt=516207 h2=0 floor=514935 capped=0 exact=0
+SR-PROBE react step=1606 wall_ms=3498.254 sub=643111 retried=397 max=65484 unfinished=4 latch=1 rem=128840 dx=0 dt=514275 h2=0 floor=513007 capped=0 exact=0
+SR-PROBE react step=1607 wall_ms=3503.415 sub=731401 retried=386 max=65536 unfinished=5 latch=1 rem=128720 dx=0 dt=602686 h2=0 floor=601421 capped=0 exact=0
+SR-PROBE react step=1608 wall_ms=3517.492 sub=694237 retried=349 max=65536 unfinished=8 latch=1 rem=128535 dx=0 dt=565710 h2=0 floor=564599 capped=0 exact=0
+SR-PROBE react step=1609 wall_ms=3515.307 sub=672912 retried=296 max=65536 unfinished=8 latch=1 rem=128325 dx=0 dt=544595 h2=0 floor=543669 capped=0 exact=0
+SR-PROBE react step=1610 wall_ms=3537.936 sub=653464 retried=224 max=65536 unfinished=7 latch=1 rem=128109 dx=0 dt=525362 h2=0 floor=524625 capped=0 exact=0
+SR-PROBE react step=1611 wall_ms=3526.554 sub=644967 retried=192 max=65536 unfinished=7 latch=1 rem=127825 dx=0 dt=517149 h2=0 floor=516505 capped=0 exact=0
+SR-PROBE react step=1612 wall_ms=3530.025 sub=645420 retried=186 max=65536 unfinished=7 latch=1 rem=127588 dx=0 dt=517839 h2=0 floor=517194 capped=0 exact=0
+SR-PROBE react step=1613 wall_ms=3535.518 sub=651398 retried=187 max=65536 unfinished=8 latch=1 rem=127297 dx=0 dt=524109 h2=0 floor=523465 capped=0 exact=0
+SR-PROBE react step=1614 wall_ms=3535.718 sub=651110 retried=189 max=65536 unfinished=8 latch=1 rem=127011 dx=0 dt=524107 h2=0 floor=523505 capped=0 exact=0
+SR-PROBE react step=1615 wall_ms=3516.319 sub=650866 retried=139 max=65536 unfinished=8 latch=1 rem=126717 dx=0 dt=524157 h2=0 floor=523721 capped=0 exact=0
+SR-PROBE react step=1616 wall_ms=3533.431 sub=650497 retried=243 max=65536 unfinished=8 latch=1 rem=126452 dx=0 dt=524053 h2=0 floor=523320 capped=0 exact=0
+SR-PROBE react step=1617 wall_ms=3517.533 sub=650234 retried=224 max=65536 unfinished=8 latch=1 rem=126170 dx=0 dt=524072 h2=0 floor=523327 capped=0 exact=0
+SR-PROBE react step=1618 wall_ms=3519.261 sub=649936 retried=275 max=65536 unfinished=8 latch=1 rem=125923 dx=0 dt=524021 h2=0 floor=523107 capped=0 exact=0
+SR-PROBE react step=1619 wall_ms=3524.666 sub=649507 retried=403 max=65496 unfinished=8 latch=1 rem=125622 dx=0 dt=523893 h2=0 floor=522779 capped=0 exact=0
+SR-PROBE react step=1620 wall_ms=3503.029 sub=649278 retried=398 max=65503 unfinished=8 latch=1 rem=125388 dx=0 dt=523898 h2=0 floor=522775 capped=0 exact=0
+SR-PROBE react step=1621 wall_ms=3506.932 sub=649048 retried=376 max=65499 unfinished=8 latch=1 rem=125136 dx=0 dt=523920 h2=0 floor=522784 capped=0 exact=0
+SR-PROBE react step=1622 wall_ms=3487.640 sub=648843 retried=378 max=65501 unfinished=8 latch=1 rem=124933 dx=0 dt=523918 h2=0 floor=522720 capped=0 exact=0
+SR-PROBE react step=1623 wall_ms=3526.554 sub=648658 retried=330 max=65536 unfinished=8 latch=1 rem=124700 dx=0 dt=523966 h2=0 floor=523009 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1623 sim_time=10.398 heat_unconverged=4 stage=core_collapse | raw=neutron_star
+  frame  steps           1 dt       0.004014 s/step      3.553 P5_ceil         0
+  star   M           66341 R           222.7 tau_dyn     12.90 M_unb       25.61
+  core   sigma_c     646.2 T_c       0.05005 d_c        0.9999 Ye_c       0.3457
+  centre X_Fe       0.7445 X_n        0.2555 v_r         6.976 vr/vdyn    0.4042
+  light  L         1.129e6 L_nuc    3.420e-5 L_N      -1.336e8 L_nu        254.5
+  world  escaped     642.4 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1624 wall_ms=3508.617 sub=648498 retried=265 max=65536 unfinished=8 latch=1 rem=124475 dx=0 dt=524031 h2=0 floor=523212 capped=0 exact=0
+SR-PROBE react step=1625 wall_ms=3517.887 sub=648362 retried=198 max=65536 unfinished=8 latch=1 rem=124272 dx=0 dt=524098 h2=0 floor=523513 capped=0 exact=0
+SR-PROBE react step=1626 wall_ms=3531.931 sub=648155 retried=193 max=65536 unfinished=8 latch=1 rem=124060 dx=0 dt=524103 h2=0 floor=523500 capped=0 exact=0
+SR-PROBE react step=1627 wall_ms=3532.163 sub=648084 retried=181 max=65536 unfinished=8 latch=1 rem=123977 dx=0 dt=524115 h2=0 floor=523512 capped=0 exact=0
+SR-PROBE react step=1628 wall_ms=3561.698 sub=638474 retried=185 max=65536 unfinished=7 latch=1 rem=124480 dx=0 dt=514001 h2=0 floor=513412 capped=0 exact=0
+SR-PROBE react step=1629 wall_ms=3596.753 sub=587918 retried=233 max=65536 unfinished=6 latch=1 rem=126749 dx=0 dt=461175 h2=0 floor=460499 capped=0 exact=0
+SR-PROBE react step=1630 wall_ms=3563.180 sub=392221 retried=129 max=65536 unfinished=4 latch=1 rem=130206 dx=0 dt=262019 h2=0 floor=261677 capped=0 exact=0
+SR-PROBE react step=1631 wall_ms=3545.146 sub=396648 retried=91 max=65536 unfinished=4 latch=1 rem=134595 dx=0 dt=262057 h2=0 floor=261698 capped=0 exact=0
+SR-PROBE react step=1632 wall_ms=3610.743 sub=403237 retried=115 max=65536 unfinished=4 latch=1 rem=141208 dx=0 dt=262033 h2=0 floor=261655 capped=0 exact=0
+SR-PROBE react step=1633 wall_ms=3579.243 sub=406711 retried=0 max=65536 unfinished=4 latch=1 rem=144567 dx=0 dt=262148 h2=0 floor=262148 capped=0 exact=0
+SR-PROBE react step=1634 wall_ms=3537.927 sub=409355 retried=41 max=65536 unfinished=4 latch=1 rem=147252 dx=0 dt=262107 h2=0 floor=262047 capped=0 exact=0
+SR-PROBE react step=1635 wall_ms=3522.717 sub=410723 retried=0 max=65536 unfinished=4 latch=1 rem=148579 dx=0 dt=262148 h2=0 floor=262148 capped=0 exact=0
+SR-PROBE react step=1636 wall_ms=3519.168 sub=410792 retried=0 max=65536 unfinished=4 latch=1 rem=148648 dx=0 dt=262148 h2=0 floor=262148 capped=0 exact=0
+SR-PROBE react step=1637 wall_ms=3534.475 sub=409285 retried=0 max=65536 unfinished=4 latch=1 rem=147141 dx=0 dt=262148 h2=0 floor=262148 capped=0 exact=0
+SR-PROBE react step=1638 wall_ms=3514.292 sub=406828 retried=0 max=65536 unfinished=4 latch=1 rem=144684 dx=0 dt=262148 h2=0 floor=262148 capped=0 exact=0
+SR-PROBE react step=1639 wall_ms=3502.024 sub=404440 retried=0 max=65536 unfinished=4 latch=1 rem=142296 dx=0 dt=262148 h2=0 floor=262148 capped=0 exact=0
+SR-PROBE react step=1640 wall_ms=3493.751 sub=328694 retried=0 max=65536 unfinished=2 latch=1 rem=140201 dx=0 dt=188495 h2=0 floor=188497 capped=0 exact=0
+SR-PROBE react step=1641 wall_ms=3488.880 sub=269485 retried=0 max=65536 unfinished=2 latch=1 rem=138413 dx=0 dt=131074 h2=0 floor=131074 capped=0 exact=0
+SR-PROBE react step=1642 wall_ms=194.649 sub=141185 retried=67 max=3329 unfinished=0 latch=1 rem=136799 dx=0 dt=4386 h2=0 floor=4181 capped=0 exact=0
+SR-PROBE react step=1643 wall_ms=17.728 sub=135423 retried=0 max=1 unfinished=0 latch=0 rem=135423 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1644 wall_ms=29.538 sub=134192 retried=0 max=1 unfinished=0 latch=0 rem=134192 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1645 wall_ms=22.441 sub=133116 retried=0 max=1 unfinished=0 latch=0 rem=133116 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1646 wall_ms=21.146 sub=132155 retried=0 max=1 unfinished=0 latch=0 rem=132155 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1647 wall_ms=20.363 sub=131253 retried=0 max=1 unfinished=0 latch=0 rem=131253 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1648 wall_ms=20.906 sub=130445 retried=0 max=1 unfinished=0 latch=0 rem=130445 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1649 wall_ms=23.144 sub=129671 retried=0 max=1 unfinished=0 latch=0 rem=129671 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1650 wall_ms=25.090 sub=128926 retried=0 max=2 unfinished=0 latch=1 rem=128925 dx=0 dt=1 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1651 wall_ms=26.747 sub=128234 retried=0 max=19 unfinished=0 latch=1 rem=128200 dx=0 dt=34 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1652 wall_ms=997.480 sub=159745 retried=69 max=17788 unfinished=0 latch=1 rem=127522 dx=0 dt=32223 h2=0 floor=31912 capped=0 exact=0
+SR-PROBE react step=1653 wall_ms=2707.353 sub=223187 retried=67 max=50136 unfinished=0 latch=1 rem=126862 dx=0 dt=96325 h2=0 floor=96039 capped=0 exact=0
+SR-PROBE react step=1654 wall_ms=3510.315 sub=256592 retried=63 max=65506 unfinished=1 latch=1 rem=126191 dx=0 dt=130402 h2=0 floor=130116 capped=0 exact=0
+SR-PROBE react step=1655 wall_ms=3517.595 sub=287747 retried=192 max=65505 unfinished=2 latch=1 rem=125567 dx=0 dt=162182 h2=0 floor=161433 capped=0 exact=0
+SR-PROBE react step=1656 wall_ms=3513.294 sub=494500 retried=265 max=65509 unfinished=5 latch=1 rem=125003 dx=0 dt=369502 h2=0 floor=368557 capped=0 exact=0
+SR-PROBE react step=1657 wall_ms=3520.413 sub=546834 retried=171 max=65536 unfinished=6 latch=1 rem=124457 dx=0 dt=422381 h2=2 floor=421792 capped=0 exact=0
+SR-PROBE react step=1658 wall_ms=3507.048 sub=554788 retried=256 max=65509 unfinished=6 latch=1 rem=123947 dx=0 dt=430847 h2=0 floor=430098 capped=0 exact=0
+SR-PROBE react step=1659 wall_ms=3524.330 sub=552850 retried=219 max=65508 unfinished=6 latch=1 rem=123525 dx=0 dt=429331 h2=0 floor=428686 capped=0 exact=0
+SR-PROBE react step=1660 wall_ms=3527.124 sub=549315 retried=125 max=65536 unfinished=6 latch=1 rem=123152 dx=0 dt=426169 h2=0 floor=425792 capped=0 exact=0
+SR-PROBE react step=1661 wall_ms=3501.866 sub=554961 retried=184 max=65536 unfinished=6 latch=1 rem=122821 dx=0 dt=432146 h2=0 floor=431559 capped=0 exact=0
+SR-PROBE react step=1662 wall_ms=3514.630 sub=596592 retried=217 max=65536 unfinished=6 latch=1 rem=122532 dx=0 dt=474066 h2=0 floor=473354 capped=0 exact=0
+SR-PROBE react step=1663 wall_ms=3514.489 sub=670021 retried=274 max=65536 unfinished=7 latch=1 rem=122361 dx=0 dt=547667 h2=0 floor=546854 capped=0 exact=0
+SR-PROBE react step=1664 wall_ms=3508.535 sub=673896 retried=332 max=65536 unfinished=8 latch=1 rem=122317 dx=0 dt=551587 h2=0 floor=550654 capped=0 exact=0
+SR-PROBE react step=1665 wall_ms=3540.875 sub=661742 retried=136 max=65536 unfinished=8 latch=1 rem=122494 dx=0 dt=539256 h2=0 floor=538898 capped=0 exact=0
+SR-PROBE react step=1666 wall_ms=3532.070 sub=647393 retried=102 max=65536 unfinished=8 latch=1 rem=123207 dx=0 dt=524194 h2=0 floor=523913 capped=0 exact=0
+SR-PROBE react step=1667 wall_ms=3538.263 sub=649101 retried=135 max=65536 unfinished=8 latch=1 rem=124948 dx=0 dt=524161 h2=0 floor=523796 capped=0 exact=0
+SR-PROBE react step=1668 wall_ms=3588.550 sub=577225 retried=132 max=65536 unfinished=6 latch=1 rem=126641 dx=0 dt=450589 h2=1 floor=450248 capped=0 exact=0
+SR-PROBE react step=1669 wall_ms=3551.512 sub=521098 retried=97 max=65536 unfinished=6 latch=1 rem=127979 dx=0 dt=393125 h2=0 floor=392852 capped=0 exact=0
+SR-PROBE react step=1670 wall_ms=3516.599 sub=522728 retried=92 max=65536 unfinished=6 latch=1 rem=129604 dx=0 dt=393130 h2=0 floor=392853 capped=0 exact=0
+SR-PROBE react step=1671 wall_ms=3528.178 sub=525451 retried=91 max=65536 unfinished=6 latch=1 rem=132326 dx=0 dt=393131 h2=0 floor=392842 capped=0 exact=0
+SR-PROBE react step=1672 wall_ms=3545.354 sub=529429 retried=169 max=65536 unfinished=6 latch=1 rem=136382 dx=0 dt=393053 h2=0 floor=392449 capped=0 exact=0
+SR-PROBE react step=1673 wall_ms=3609.162 sub=534148 retried=154 max=65536 unfinished=6 latch=1 rem=141086 dx=0 dt=393067 h2=1 floor=392452 capped=0 exact=0
+SR-PROBE react step=1674 wall_ms=3604.889 sub=539234 retried=215 max=65536 unfinished=6 latch=1 rem=146231 dx=0 dt=393006 h2=3 floor=392325 capped=0 exact=0
+SR-PROBE react step=1675 wall_ms=3629.972 sub=488431 retried=159 max=65498 unfinished=4 latch=1 rem=147465 dx=0 dt=340966 h2=4 floor=340542 capped=0 exact=0
+SR-PROBE react step=1676 wall_ms=3576.426 sub=422507 retried=69 max=65536 unfinished=4 latch=1 rem=146956 dx=0 dt=275553 h2=2 floor=275308 capped=0 exact=0
+SR-PROBE react step=1677 wall_ms=3565.510 sub=276776 retried=35 max=65536 unfinished=2 latch=1 rem=145739 dx=0 dt=131039 h2=0 floor=130904 capped=0 exact=0
+SR-PROBE react step=1678 wall_ms=228.938 sub=146584 retried=0 max=2726 unfinished=0 latch=1 rem=143859 dx=0 dt=2725 h2=0 floor=2726 capped=0 exact=0
+SR-PROBE react step=1679 wall_ms=72.942 sub=141638 retried=0 max=1 unfinished=0 latch=0 rem=141638 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1680 wall_ms=32.286 sub=139288 retried=0 max=1 unfinished=0 latch=0 rem=139288 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1681 wall_ms=28.513 sub=136993 retried=0 max=1 unfinished=0 latch=0 rem=136993 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1682 wall_ms=26.649 sub=134772 retried=0 max=1 unfinished=0 latch=0 rem=134772 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1683 wall_ms=26.505 sub=132650 retried=0 max=1 unfinished=0 latch=0 rem=132650 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1684 wall_ms=26.371 sub=130670 retried=0 max=1 unfinished=0 latch=0 rem=130670 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1685 wall_ms=293.518 sub=133833 retried=35 max=5052 unfinished=0 latch=1 rem=128782 dx=0 dt=5051 h2=0 floor=4910 capped=0 exact=0
+SR-PROBE react step=1686 wall_ms=2048.975 sub=165447 retried=31 max=38368 unfinished=0 latch=1 rem=127032 dx=0 dt=38414 h2=1 floor=38232 capped=0 exact=0
+SR-PROBE react step=1687 wall_ms=2884.417 sub=204576 retried=76 max=53971 unfinished=0 latch=1 rem=125463 dx=0 dt=79112 h2=1 floor=78874 capped=0 exact=0
+SR-PROBE react step=1688 wall_ms=3310.213 sub=226751 retried=83 max=62117 unfinished=0 latch=1 rem=124029 dx=0 dt=102720 h2=2 floor=102496 capped=0 exact=0
+SR-PROBE react step=1689 wall_ms=3469.144 sub=232893 retried=39 max=65497 unfinished=1 latch=1 rem=122768 dx=0 dt=110126 h2=0 floor=110014 capped=0 exact=0
+SR-PROBE react step=1690 wall_ms=3520.206 sub=241299 retried=0 max=65536 unfinished=1 latch=1 rem=121769 dx=0 dt=119531 h2=0 floor=119532 capped=0 exact=0
+SR-PROBE react step=1691 wall_ms=3510.934 sub=251009 retried=0 max=65536 unfinished=1 latch=1 rem=120996 dx=0 dt=130014 h2=0 floor=130015 capped=0 exact=0
+SR-PROBE react step=1692 wall_ms=3511.762 sub=251617 retried=0 max=65536 unfinished=2 latch=1 rem=120545 dx=0 dt=131074 h2=0 floor=131074 capped=0 exact=0
+SR-PROBE react step=1693 wall_ms=3516.337 sub=259921 retried=34 max=65536 unfinished=1 latch=1 rem=120471 dx=0 dt=139451 h2=0 floor=139296 capped=0 exact=0
+SR-PROBE react step=1694 wall_ms=3326.714 sub=327459 retried=67 max=62451 unfinished=0 latch=1 rem=120966 dx=0 dt=206493 h2=0 floor=206243 capped=0 exact=0
+SR-PROBE react step=1695 wall_ms=3508.391 sub=365463 retried=65 max=65508 unfinished=2 latch=1 rem=122019 dx=0 dt=243446 h2=0 floor=243255 capped=0 exact=0
+SR-PROBE react step=1696 wall_ms=3560.002 sub=342490 retried=47 max=65536 unfinished=2 latch=1 rem=123274 dx=0 dt=219218 h2=0 floor=219091 capped=0 exact=0
+SR-PROBE react step=1697 wall_ms=3545.939 sub=318131 retried=31 max=65536 unfinished=2 latch=1 rem=124454 dx=0 dt=193679 h2=0 floor=193571 capped=0 exact=0
+SR-PROBE react step=1698 wall_ms=3520.180 sub=268360 retried=33 max=65536 unfinished=2 latch=1 rem=125688 dx=0 dt=142674 h2=0 floor=142593 capped=0 exact=0
+SR-PROBE react step=1699 wall_ms=3531.496 sub=257962 retried=0 max=65536 unfinished=2 latch=1 rem=126890 dx=0 dt=131074 h2=0 floor=131074 capped=0 exact=0
+SR-PROBE react step=1700 wall_ms=3544.800 sub=259360 retried=0 max=65536 unfinished=2 latch=1 rem=128288 dx=0 dt=131074 h2=0 floor=131074 capped=0 exact=0
+SR-HEADLESS DONE steps=1700 sim_time=10.753535 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1700 — reported, not guessed (record kept: build/calibrate_runs/cut_m0/m_bh_sb-01)
+real	6m54.291s
+user	0m9.216s
+sys	0m2.713s
+--- continued 1,561-1,700, probe mode 1
+SR-CALIBRATE continue item=m_bh_sb mass=67020.643 from step 1560 (build/calibrate_runs/cut_m1/m_bh_sb-01/checkpoint/s_1560.bin)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1561 wall_ms=54.655 sub=127032 retried=0 max=1 unfinished=0 latch=0 rem=127032 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1562 wall_ms=54.443 sub=127372 retried=0 max=1 unfinished=0 latch=0 rem=127372 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1563 wall_ms=44.736 sub=128023 retried=0 max=1 unfinished=0 latch=0 rem=128023 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1564 wall_ms=49.442 sub=128975 retried=0 max=1 unfinished=0 latch=0 rem=128975 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1565 wall_ms=48.637 sub=130081 retried=0 max=1 unfinished=0 latch=1 rem=130081 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1566 wall_ms=23.053 sub=131132 retried=0 max=1 unfinished=0 latch=1 rem=131132 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1566 sim_time=10.123 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004947 s/step    0.04670 P5_ceil         0
+  star   M           66456 R           219.4 tau_dyn     12.60 M_unb       19.07
+  core   sigma_c     374.4 T_c       0.05000 d_c        1.0000 Ye_c       0.4461
+  centre X_Fe       0.9609 X_n       0.03914 v_r         6.793 vr/vdyn    0.3903
+  light  L         1.530e6 L_nuc    0.001734 L_N      -4.530e7 L_nu         2060
+  world  escaped     517.8 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1567 wall_ms=20.404 sub=132239 retried=0 max=1 unfinished=0 latch=1 rem=132239 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1567 sim_time=10.128 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004981 s/step    0.04406 P5_ceil         0
+  star   M           66454 R           219.4 tau_dyn     12.60 M_unb       19.94
+  core   sigma_c     394.1 T_c       0.05009 d_c        0.9999 Ye_c       0.4301
+  centre X_Fe       0.9263 X_n       0.07370 v_r         6.838 vr/vdyn    0.3929
+  light  L         1.579e6 L_nuc    0.003057 L_N      -7.584e7 L_nu         2798
+  world  escaped     519.9 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1568 wall_ms=18.671 sub=133259 retried=0 max=1 unfinished=0 latch=1 rem=133259 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1568 sim_time=10.133 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004927 s/step    0.04217 P5_ceil         0
+  star   M           66453 R           219.4 tau_dyn     12.61 M_unb       20.62
+  core   sigma_c     413.0 T_c       0.05000 d_c        0.9999 Ye_c       0.4135
+  centre X_Fe       0.8907 X_n        0.1093 v_r         6.882 vr/vdyn    0.3954
+  light  L         1.634e6 L_nuc    0.004216 L_N      -9.553e7 L_nu         3425
+  world  escaped     522.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1569 wall_ms=16.991 sub=134136 retried=0 max=1 unfinished=0 latch=1 rem=134136 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1569 sim_time=10.138 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004868 s/step    0.04008 P5_ceil         0
+  star   M           66451 R           219.4 tau_dyn     12.61 M_unb       21.01
+  core   sigma_c     435.6 T_c       0.05001 d_c        0.9999 Ye_c       0.3963
+  centre X_Fe       0.8535 X_n        0.1465 v_r         6.926 vr/vdyn    0.3980
+  light  L         1.678e6 L_nuc    0.003845 L_N      -1.127e8 L_nu         3195
+  world  escaped     524.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1570 wall_ms=16.303 sub=134854 retried=0 max=1 unfinished=0 latch=1 rem=134854 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1570 sim_time=10.143 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004881 s/step    0.03956 P5_ceil         0
+  star   M           66449 R           219.5 tau_dyn     12.61 M_unb       21.16
+  core   sigma_c     455.4 T_c       0.05000 d_c        0.9999 Ye_c       0.3800
+  centre X_Fe       0.8184 X_n        0.1816 v_r         6.960 vr/vdyn    0.4000
+  light  L         1.711e6 L_nuc    0.002500 L_N      -1.250e8 L_nu         2360
+  world  escaped     526.1 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1571 wall_ms=30.003 sub=135264 retried=0 max=1 unfinished=0 latch=1 rem=135264 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1571 sim_time=10.148 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004916 s/step    0.05401 P5_ceil         0
+  star   M           66447 R           219.5 tau_dyn     12.61 M_unb       21.52
+  core   sigma_c     471.6 T_c       0.05002 d_c        0.9999 Ye_c       0.3657
+  centre X_Fe       0.7877 X_n        0.2123 v_r         6.984 vr/vdyn    0.4014
+  light  L         1.724e6 L_nuc    0.001375 L_N      -1.291e8 L_nu         1597
+  world  escaped     528.1 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1572 wall_ms=23.366 sub=135486 retried=0 max=1 unfinished=0 latch=1 rem=135486 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1572 sim_time=10.153 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004974 s/step    0.04988 P5_ceil         0
+  star   M           66445 R           219.5 tau_dyn     12.62 M_unb       21.81
+  core   sigma_c     483.2 T_c       0.05003 d_c        0.9999 Ye_c       0.3540
+  centre X_Fe       0.7626 X_n        0.2374 v_r         7.003 vr/vdyn    0.4025
+  light  L         1.722e6 L_nuc    7.851e-4 L_N      -1.212e8 L_nu         1128
+  world  escaped     530.3 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1573 wall_ms=21.180 sub=135454 retried=0 max=1 unfinished=0 latch=1 rem=135454 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1573 sim_time=10.158 heat_unconverged=4 stage=core_collapse | raw=neutron_star
+  frame  steps           1 dt       0.005080 s/step    0.04705 P5_ceil         0
+  star   M           66443 R           219.5 tau_dyn     12.62 M_unb       22.17
+  core   sigma_c     491.6 T_c       0.05000 d_c        0.9999 Ye_c       0.3448
+  centre X_Fe       0.7427 X_n        0.2573 v_r         7.020 vr/vdyn    0.4035
+  light  L         1.709e6 L_nuc    4.478e-4 L_N      -1.075e8 L_nu        829.1
+  world  escaped     532.4 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1574 wall_ms=22.204 sub=135258 retried=0 max=1 unfinished=0 latch=1 rem=135258 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1575 wall_ms=21.342 sub=134947 retried=0 max=1 unfinished=0 latch=1 rem=134947 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1576 wall_ms=23.796 sub=134445 retried=0 max=1 unfinished=0 latch=1 rem=134445 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1577 wall_ms=23.871 sub=133825 retried=0 max=1 unfinished=0 latch=1 rem=133825 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1578 wall_ms=25.468 sub=133196 retried=0 max=1 unfinished=0 latch=1 rem=133196 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1579 wall_ms=24.085 sub=132484 retried=0 max=1 unfinished=0 latch=1 rem=132484 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1580 wall_ms=24.432 sub=131779 retried=0 max=1 unfinished=0 latch=1 rem=131779 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1581 wall_ms=27.813 sub=131143 retried=0 max=1 unfinished=0 latch=1 rem=131143 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1582 wall_ms=29.708 sub=130502 retried=0 max=1 unfinished=0 latch=1 rem=130502 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1583 wall_ms=34.348 sub=129896 retried=0 max=1 unfinished=0 latch=1 rem=129896 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1584 wall_ms=39.261 sub=129278 retried=0 max=1 unfinished=0 latch=1 rem=129278 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1585 wall_ms=70.699 sub=128807 retried=0 max=1 unfinished=0 latch=1 rem=128807 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1586 wall_ms=54.112 sub=128347 retried=0 max=1 unfinished=0 latch=1 rem=128347 dx=0 dt=0 h2=0 floor=0 capped=0 exact=6
+SR-PROBE react step=1587 wall_ms=54.998 sub=127947 retried=0 max=1 unfinished=0 latch=1 rem=127947 dx=0 dt=0 h2=0 floor=0 capped=0 exact=6
+SR-PROBE react step=1588 wall_ms=54.953 sub=127649 retried=0 max=1 unfinished=0 latch=1 rem=127649 dx=0 dt=0 h2=0 floor=0 capped=0 exact=7
+SR-PROBE react step=1589 wall_ms=46.197 sub=127367 retried=0 max=1 unfinished=0 latch=1 rem=127367 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1590 wall_ms=49.456 sub=127174 retried=0 max=1 unfinished=0 latch=1 rem=127174 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1591 wall_ms=47.626 sub=127076 retried=0 max=1 unfinished=0 latch=1 rem=127076 dx=0 dt=0 h2=0 floor=0 capped=0 exact=9
+SR-PROBE react step=1592 wall_ms=44.473 sub=127034 retried=0 max=1 unfinished=0 latch=1 rem=127034 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1593 wall_ms=44.097 sub=127052 retried=0 max=1 unfinished=0 latch=1 rem=127052 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1594 wall_ms=44.929 sub=127129 retried=0 max=1 unfinished=0 latch=1 rem=127129 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1595 wall_ms=46.679 sub=127213 retried=0 max=1 unfinished=0 latch=1 rem=127213 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1596 wall_ms=51.593 sub=127325 retried=0 max=1 unfinished=0 latch=1 rem=127325 dx=0 dt=0 h2=0 floor=0 capped=0 exact=11
+SR-PROBE react step=1597 wall_ms=49.155 sub=127434 retried=0 max=1 unfinished=0 latch=1 rem=127434 dx=0 dt=0 h2=0 floor=0 capped=0 exact=12
+SR-PROBE react step=1598 wall_ms=44.744 sub=127528 retried=0 max=1 unfinished=0 latch=1 rem=127528 dx=0 dt=0 h2=0 floor=0 capped=0 exact=12
+SR-PROBE react step=1599 wall_ms=43.630 sub=127589 retried=0 max=1 unfinished=0 latch=1 rem=127589 dx=0 dt=0 h2=0 floor=0 capped=0 exact=12
+SR-PROBE react step=1600 wall_ms=45.975 sub=127616 retried=0 max=1 unfinished=0 latch=1 rem=127616 dx=0 dt=0 h2=0 floor=0 capped=0 exact=12
+SR-PROBE react step=1601 wall_ms=45.591 sub=127610 retried=0 max=1 unfinished=0 latch=1 rem=127610 dx=0 dt=0 h2=0 floor=0 capped=0 exact=11
+SR-PROBE react step=1602 wall_ms=50.516 sub=127575 retried=0 max=1 unfinished=0 latch=1 rem=127575 dx=0 dt=0 h2=0 floor=0 capped=0 exact=13
+SR-PROBE react step=1603 wall_ms=47.113 sub=127477 retried=0 max=1 unfinished=0 latch=1 rem=127477 dx=0 dt=0 h2=0 floor=0 capped=0 exact=15
+SR-PROBE react step=1604 wall_ms=47.908 sub=127362 retried=0 max=1 unfinished=0 latch=1 rem=127362 dx=0 dt=0 h2=0 floor=0 capped=0 exact=14
+SR-PROBE react step=1605 wall_ms=44.058 sub=127225 retried=0 max=1 unfinished=0 latch=1 rem=127225 dx=0 dt=0 h2=0 floor=0 capped=0 exact=14
+SR-PROBE react step=1606 wall_ms=43.326 sub=127079 retried=0 max=1 unfinished=0 latch=1 rem=127079 dx=0 dt=0 h2=0 floor=0 capped=0 exact=13
+SR-PROBE react step=1607 wall_ms=48.595 sub=126900 retried=0 max=1 unfinished=0 latch=1 rem=126900 dx=0 dt=0 h2=0 floor=0 capped=0 exact=11
+SR-PROBE react step=1608 wall_ms=50.073 sub=126707 retried=0 max=1 unfinished=0 latch=1 rem=126707 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1609 wall_ms=52.912 sub=126498 retried=0 max=1 unfinished=0 latch=1 rem=126498 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1610 wall_ms=49.751 sub=126234 retried=0 max=1 unfinished=0 latch=1 rem=126234 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1611 wall_ms=57.258 sub=126009 retried=0 max=1 unfinished=0 latch=1 rem=126009 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1612 wall_ms=55.487 sub=125745 retried=0 max=1 unfinished=0 latch=1 rem=125745 dx=0 dt=0 h2=0 floor=0 capped=0 exact=10
+SR-PROBE react step=1613 wall_ms=54.300 sub=125484 retried=0 max=1 unfinished=0 latch=1 rem=125484 dx=0 dt=0 h2=0 floor=0 capped=0 exact=9
+SR-PROBE react step=1614 wall_ms=58.576 sub=125223 retried=0 max=1 unfinished=0 latch=1 rem=125223 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1615 wall_ms=52.840 sub=124964 retried=0 max=1 unfinished=0 latch=1 rem=124964 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1616 wall_ms=56.165 sub=124766 retried=0 max=1 unfinished=0 latch=1 rem=124766 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1617 wall_ms=57.159 sub=124577 retried=0 max=1 unfinished=0 latch=1 rem=124577 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1618 wall_ms=54.419 sub=124427 retried=0 max=1 unfinished=0 latch=1 rem=124427 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1619 wall_ms=58.197 sub=124314 retried=0 max=1 unfinished=0 latch=1 rem=124314 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1620 wall_ms=60.901 sub=124231 retried=0 max=1 unfinished=0 latch=1 rem=124231 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1621 wall_ms=59.551 sub=124191 retried=0 max=1 unfinished=0 latch=1 rem=124191 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1622 wall_ms=54.785 sub=124136 retried=0 max=1 unfinished=0 latch=1 rem=124136 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1623 wall_ms=56.099 sub=124104 retried=0 max=1 unfinished=0 latch=1 rem=124104 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+SR-PROBE react step=1624 wall_ms=60.580 sub=124149 retried=0 max=1 unfinished=0 latch=1 rem=124149 dx=0 dt=0 h2=0 floor=0 capped=0 exact=7
+SR-PROBE react step=1625 wall_ms=69.264 sub=124725 retried=0 max=1 unfinished=0 latch=1 rem=124725 dx=0 dt=0 h2=0 floor=0 capped=0 exact=7
+SR-PROBE react step=1626 wall_ms=81.603 sub=126412 retried=0 max=1 unfinished=0 latch=1 rem=126412 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1627 wall_ms=86.227 sub=129147 retried=1 max=2 unfinished=0 latch=1 rem=129146 dx=0 dt=1 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1628 wall_ms=85.211 sub=132274 retried=0 max=1 unfinished=0 latch=1 rem=132274 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1629 wall_ms=94.289 sub=139185 retried=0 max=1 unfinished=0 latch=1 rem=139185 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1630 wall_ms=116.720 sub=146258 retried=0 max=1 unfinished=0 latch=1 rem=146258 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1631 wall_ms=108.770 sub=154779 retried=0 max=1 unfinished=0 latch=1 rem=154779 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1632 wall_ms=120.626 sub=158873 retried=0 max=1 unfinished=0 latch=1 rem=158873 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+SR-PROBE react step=1633 wall_ms=91.348 sub=158828 retried=0 max=1 unfinished=0 latch=1 rem=158828 dx=0 dt=0 h2=0 floor=0 capped=0 exact=1
+SR-PROBE react step=1634 wall_ms=79.271 sub=154974 retried=0 max=1 unfinished=0 latch=0 rem=154974 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1635 wall_ms=62.272 sub=150158 retried=0 max=1 unfinished=0 latch=0 rem=150158 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1636 wall_ms=37.677 sub=145760 retried=0 max=1 unfinished=0 latch=0 rem=145760 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1637 wall_ms=35.209 sub=142531 retried=0 max=1 unfinished=0 latch=0 rem=142531 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1638 wall_ms=27.231 sub=139927 retried=0 max=1 unfinished=0 latch=0 rem=139927 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1639 wall_ms=23.147 sub=137915 retried=0 max=1 unfinished=0 latch=0 rem=137915 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1640 wall_ms=21.299 sub=136122 retried=0 max=1 unfinished=0 latch=0 rem=136122 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1641 wall_ms=26.949 sub=134565 retried=0 max=1 unfinished=0 latch=0 rem=134565 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1642 wall_ms=25.368 sub=133240 retried=0 max=1 unfinished=0 latch=0 rem=133240 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1643 wall_ms=24.744 sub=132097 retried=0 max=1 unfinished=0 latch=0 rem=132097 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1644 wall_ms=27.343 sub=131123 retried=0 max=1 unfinished=0 latch=0 rem=131123 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1645 wall_ms=30.224 sub=130334 retried=0 max=1 unfinished=0 latch=0 rem=130334 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1646 wall_ms=33.509 sub=129628 retried=0 max=1 unfinished=0 latch=0 rem=129628 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1647 wall_ms=35.753 sub=128996 retried=0 max=1 unfinished=0 latch=0 rem=128996 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1648 wall_ms=39.476 sub=128397 retried=0 max=1 unfinished=0 latch=0 rem=128397 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1649 wall_ms=40.079 sub=127881 retried=0 max=1 unfinished=0 latch=0 rem=127881 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1650 wall_ms=44.523 sub=127421 retried=0 max=1 unfinished=0 latch=0 rem=127421 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1651 wall_ms=50.493 sub=127049 retried=0 max=1 unfinished=0 latch=0 rem=127049 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1652 wall_ms=52.293 sub=126768 retried=0 max=1 unfinished=0 latch=0 rem=126768 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1653 wall_ms=58.068 sub=126728 retried=0 max=1 unfinished=0 latch=0 rem=126728 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1654 wall_ms=63.178 sub=126951 retried=0 max=1 unfinished=0 latch=1 rem=126951 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1655 wall_ms=62.562 sub=127495 retried=0 max=1 unfinished=0 latch=1 rem=127495 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1656 wall_ms=75.533 sub=128337 retried=0 max=1 unfinished=0 latch=1 rem=128337 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1657 wall_ms=77.056 sub=129457 retried=0 max=1 unfinished=0 latch=1 rem=129457 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1658 wall_ms=76.671 sub=130962 retried=0 max=1 unfinished=0 latch=1 rem=130962 dx=0 dt=0 h2=0 floor=0 capped=0 exact=1
+SR-PROBE react step=1659 wall_ms=75.634 sub=132665 retried=0 max=1 unfinished=0 latch=0 rem=132665 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1660 wall_ms=71.566 sub=134124 retried=0 max=1 unfinished=0 latch=0 rem=134124 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1661 wall_ms=72.004 sub=135197 retried=0 max=1 unfinished=0 latch=0 rem=135197 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1662 wall_ms=76.915 sub=136016 retried=0 max=1 unfinished=0 latch=0 rem=136016 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1663 wall_ms=76.856 sub=136481 retried=0 max=1 unfinished=0 latch=0 rem=136481 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1664 wall_ms=86.083 sub=136513 retried=0 max=1 unfinished=0 latch=0 rem=136513 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1665 wall_ms=85.441 sub=135961 retried=0 max=1 unfinished=0 latch=0 rem=135961 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1666 wall_ms=70.513 sub=135065 retried=0 max=1 unfinished=0 latch=0 rem=135065 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1667 wall_ms=48.971 sub=134046 retried=0 max=1 unfinished=0 latch=0 rem=134046 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1668 wall_ms=23.924 sub=132874 retried=0 max=1 unfinished=0 latch=0 rem=132874 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1669 wall_ms=21.034 sub=131809 retried=0 max=1 unfinished=0 latch=0 rem=131809 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1670 wall_ms=21.685 sub=130745 retried=0 max=1 unfinished=0 latch=0 rem=130745 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1671 wall_ms=23.042 sub=129707 retried=0 max=1 unfinished=0 latch=0 rem=129707 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1672 wall_ms=44.908 sub=128729 retried=0 max=1 unfinished=0 latch=0 rem=128729 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1673 wall_ms=39.848 sub=127788 retried=0 max=1 unfinished=0 latch=0 rem=127788 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1674 wall_ms=36.339 sub=126909 retried=0 max=1 unfinished=0 latch=0 rem=126909 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1675 wall_ms=37.634 sub=126019 retried=0 max=1 unfinished=0 latch=1 rem=126019 dx=0 dt=0 h2=0 floor=0 capped=0 exact=1
+SR-PROBE react step=1676 wall_ms=41.026 sub=125149 retried=0 max=1 unfinished=0 latch=1 rem=125149 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1677 wall_ms=44.540 sub=124333 retried=0 max=1 unfinished=0 latch=1 rem=124333 dx=0 dt=0 h2=0 floor=0 capped=0 exact=3
+SR-PROBE react step=1678 wall_ms=49.728 sub=123503 retried=0 max=1 unfinished=0 latch=1 rem=123503 dx=0 dt=0 h2=0 floor=0 capped=0 exact=3
+SR-PROBE react step=1679 wall_ms=55.410 sub=122849 retried=0 max=1 unfinished=0 latch=1 rem=122849 dx=0 dt=0 h2=0 floor=0 capped=0 exact=3
+SR-PROBE react step=1680 wall_ms=58.583 sub=122468 retried=0 max=1 unfinished=0 latch=1 rem=122468 dx=0 dt=0 h2=0 floor=0 capped=0 exact=3
+SR-PROBE react step=1681 wall_ms=65.725 sub=122764 retried=0 max=1 unfinished=0 latch=1 rem=122764 dx=0 dt=0 h2=0 floor=0 capped=0 exact=3
+SR-PROBE react step=1682 wall_ms=75.312 sub=124207 retried=0 max=1 unfinished=0 latch=1 rem=124207 dx=0 dt=0 h2=0 floor=0 capped=0 exact=3
+SR-PROBE react step=1683 wall_ms=80.404 sub=126749 retried=0 max=1 unfinished=0 latch=1 rem=126749 dx=0 dt=0 h2=0 floor=0 capped=0 exact=3
+SR-PROBE react step=1684 wall_ms=87.592 sub=129485 retried=0 max=1 unfinished=0 latch=1 rem=129485 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1685 wall_ms=95.823 sub=131631 retried=0 max=1 unfinished=0 latch=1 rem=131631 dx=0 dt=0 h2=0 floor=0 capped=0 exact=3
+SR-PROBE react step=1686 wall_ms=93.455 sub=133014 retried=0 max=1 unfinished=0 latch=1 rem=133014 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1687 wall_ms=86.143 sub=134071 retried=0 max=1 unfinished=0 latch=1 rem=134071 dx=0 dt=0 h2=0 floor=0 capped=0 exact=2
+SR-PROBE react step=1688 wall_ms=132.215 sub=134866 retried=0 max=1 unfinished=0 latch=1 rem=134866 dx=0 dt=0 h2=0 floor=0 capped=0 exact=1
+SR-PROBE react step=1689 wall_ms=88.241 sub=134670 retried=0 max=1 unfinished=0 latch=0 rem=134670 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1690 wall_ms=72.192 sub=134107 retried=0 max=1 unfinished=0 latch=0 rem=134107 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1691 wall_ms=71.328 sub=133181 retried=0 max=1 unfinished=0 latch=0 rem=133181 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1692 wall_ms=65.561 sub=132109 retried=0 max=1 unfinished=0 latch=0 rem=132109 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1693 wall_ms=24.803 sub=131038 retried=0 max=1 unfinished=0 latch=0 rem=131038 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1694 wall_ms=21.809 sub=129965 retried=0 max=1 unfinished=0 latch=0 rem=129965 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1695 wall_ms=24.564 sub=128975 retried=0 max=1 unfinished=0 latch=0 rem=128975 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1696 wall_ms=24.347 sub=128038 retried=0 max=1 unfinished=0 latch=0 rem=128038 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1697 wall_ms=23.058 sub=127157 retried=0 max=1 unfinished=0 latch=0 rem=127157 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1698 wall_ms=24.561 sub=126360 retried=0 max=1 unfinished=0 latch=0 rem=126360 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1699 wall_ms=26.225 sub=125588 retried=0 max=1 unfinished=0 latch=0 rem=125588 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1700 wall_ms=25.276 sub=124851 retried=0 max=1 unfinished=0 latch=0 rem=124851 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-HEADLESS DONE steps=1700 sim_time=10.759278 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1700 — reported, not guessed (record kept: build/calibrate_runs/cut_m1/m_bh_sb-01)
+real	0m11.423s
+user	0m5.872s
+sys	0m0.435s
+--- continued 1,561-1,700, probe mode 3
+SR-CALIBRATE continue item=m_bh_sb mass=67020.643 from step 1560 (build/calibrate_runs/cut_m3/m_bh_sb-01/checkpoint/s_1560.bin)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-PROBE react step=1561 wall_ms=54.695 sub=127032 retried=0 max=1 unfinished=0 latch=0 rem=127032 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1562 wall_ms=54.685 sub=127372 retried=0 max=1 unfinished=0 latch=0 rem=127372 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1563 wall_ms=46.294 sub=128023 retried=0 max=1 unfinished=0 latch=0 rem=128023 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1564 wall_ms=51.071 sub=128975 retried=0 max=1 unfinished=0 latch=0 rem=128975 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1565 wall_ms=59.691 sub=130471 retried=63 max=196 unfinished=0 latch=1 rem=130083 dx=0 dt=361 h2=27 floor=26 capped=0 exact=0
+SR-PROBE react step=1566 wall_ms=36.821 sub=131751 retried=154 max=218 unfinished=0 latch=1 rem=131135 dx=0 dt=528 h2=88 floor=44 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1566 sim_time=10.123 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004947 s/step    0.06516 P5_ceil         0
+  star   M           66456 R           219.4 tau_dyn     12.60 M_unb       19.07
+  core   sigma_c     374.4 T_c       0.05000 d_c        1.0000 Ye_c       0.4452
+  centre X_Fe       0.9590 X_n       0.04104 v_r         6.793 vr/vdyn    0.3903
+  light  L         1.530e6 L_nuc    0.001735 L_N      -4.736e7 L_nu         2060
+  world  escaped     517.8 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1567 wall_ms=35.104 sub=133022 retried=203 max=228 unfinished=0 latch=1 rem=132244 dx=0 dt=670 h2=108 floor=63 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1567 sim_time=10.128 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004981 s/step    0.06438 P5_ceil         0
+  star   M           66454 R           219.4 tau_dyn     12.60 M_unb       19.94
+  core   sigma_c     394.2 T_c       0.05014 d_c        0.9999 Ye_c       0.4288
+  centre X_Fe       0.9235 X_n       0.07645 v_r         6.838 vr/vdyn    0.3929
+  light  L         1.580e6 L_nuc    0.003066 L_N      -7.846e7 L_nu         2802
+  world  escaped     519.9 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1568 wall_ms=31.309 sub=134012 retried=188 max=203 unfinished=0 latch=1 rem=133265 dx=0 dt=681 h2=66 floor=65 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1568 sim_time=10.133 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004928 s/step    0.06027 P5_ceil         0
+  star   M           66453 R           219.4 tau_dyn     12.61 M_unb       20.62
+  core   sigma_c     413.1 T_c       0.05009 d_c        0.9999 Ye_c       0.4120
+  centre X_Fe       0.8874 X_n        0.1126 v_r         6.883 vr/vdyn    0.3955
+  light  L         1.634e6 L_nuc    0.004224 L_N      -9.808e7 L_nu         3428
+  world  escaped     522.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1569 wall_ms=30.363 sub=134948 retried=253 max=216 unfinished=0 latch=1 rem=134143 dx=0 dt=738 h2=67 floor=67 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1569 sim_time=10.138 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004870 s/step    0.05973 P5_ceil         0
+  star   M           66451 R           219.4 tau_dyn     12.61 M_unb       21.01
+  core   sigma_c     435.9 T_c       0.05000 d_c        0.9999 Ye_c       0.3945
+  centre X_Fe       0.8498 X_n        0.1502 v_r         6.926 vr/vdyn    0.3980
+  light  L         1.678e6 L_nuc    0.003832 L_N      -1.151e8 L_nu         3185
+  world  escaped     524.0 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1570 wall_ms=30.433 sub=135689 retried=244 max=217 unfinished=0 latch=1 rem=134865 dx=0 dt=755 h2=69 floor=69 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1570 sim_time=10.143 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004884 s/step    0.05908 P5_ceil         0
+  star   M           66449 R           219.5 tau_dyn     12.61 M_unb       21.16
+  core   sigma_c     455.9 T_c       0.05018 d_c        0.9999 Ye_c       0.3781
+  centre X_Fe       0.8143 X_n        0.1857 v_r         6.960 vr/vdyn    0.4000
+  light  L         1.711e6 L_nuc    0.002463 L_N      -1.274e8 L_nu         2337
+  world  escaped     526.1 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1571 wall_ms=38.134 sub=136107 retried=244 max=213 unfinished=0 latch=1 rem=135270 dx=0 dt=769 h2=68 floor=68 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1571 sim_time=10.148 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004917 s/step    0.05853 P5_ceil         0
+  star   M           66447 R           219.5 tau_dyn     12.61 M_unb       21.52
+  core   sigma_c     472.3 T_c       0.05009 d_c        0.9999 Ye_c       0.3636
+  centre X_Fe       0.7832 X_n        0.2168 v_r         6.984 vr/vdyn    0.4014
+  light  L         1.724e6 L_nuc    0.001333 L_N      -1.317e8 L_nu         1570
+  world  escaped     528.1 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1572 wall_ms=35.986 sub=136327 retried=239 max=210 unfinished=0 latch=1 rem=135495 dx=0 dt=766 h2=66 floor=66 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1572 sim_time=10.153 heat_unconverged=4 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004976 s/step    0.06529 P5_ceil         0
+  star   M           66445 R           219.5 tau_dyn     12.62 M_unb       21.81
+  core   sigma_c     484.1 T_c       0.05004 d_c        0.9999 Ye_c       0.3521
+  centre X_Fe       0.7583 X_n        0.2417 v_r         7.003 vr/vdyn    0.4025
+  light  L         1.722e6 L_nuc    7.522e-4 L_N      -1.220e8 L_nu         1104
+  world  escaped     530.3 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1573 wall_ms=34.370 sub=136286 retried=234 max=211 unfinished=0 latch=1 rem=135453 dx=0 dt=767 h2=66 floor=66 capped=0 exact=0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1573 sim_time=10.158 heat_unconverged=4 stage=core_collapse | raw=neutron_star
+  frame  steps           1 dt       0.005084 s/step    0.06447 P5_ceil         0
+  star   M           66443 R           219.5 tau_dyn     12.62 M_unb       22.17
+  core   sigma_c     492.6 T_c       0.05000 d_c        0.9999 Ye_c       0.3431
+  centre X_Fe       0.7389 X_n        0.2611 v_r         7.020 vr/vdyn    0.4035
+  light  L         1.709e6 L_nuc    4.235e-4 L_N      -1.073e8 L_nu        807.7
+  world  escaped     532.4 objects         1 sinks           0 sink_M          0
+SR-PROBE react step=1574 wall_ms=35.034 sub=136065 retried=204 max=208 unfinished=0 latch=1 rem=135250 dx=0 dt=750 h2=65 floor=64 capped=0 exact=0
+SR-PROBE react step=1575 wall_ms=34.424 sub=135745 retried=212 max=209 unfinished=0 latch=1 rem=134932 dx=0 dt=750 h2=63 floor=63 capped=0 exact=0
+SR-PROBE react step=1576 wall_ms=36.689 sub=135242 retried=197 max=205 unfinished=0 latch=1 rem=134438 dx=0 dt=743 h2=61 floor=61 capped=0 exact=0
+SR-PROBE react step=1577 wall_ms=36.746 sub=134620 retried=198 max=203 unfinished=0 latch=1 rem=133820 dx=0 dt=741 h2=59 floor=59 capped=0 exact=0
+SR-PROBE react step=1578 wall_ms=37.892 sub=133960 retried=181 max=203 unfinished=0 latch=1 rem=133171 dx=0 dt=733 h2=56 floor=56 capped=0 exact=0
+SR-PROBE react step=1579 wall_ms=36.349 sub=133260 retried=199 max=203 unfinished=0 latch=1 rem=132466 dx=0 dt=739 h2=55 floor=55 capped=0 exact=0
+SR-PROBE react step=1580 wall_ms=36.793 sub=132548 retried=176 max=198 unfinished=0 latch=1 rem=131777 dx=0 dt=719 h2=52 floor=52 capped=0 exact=0
+SR-PROBE react step=1581 wall_ms=39.693 sub=131902 retried=181 max=196 unfinished=0 latch=1 rem=131130 dx=0 dt=718 h2=54 floor=54 capped=0 exact=0
+SR-PROBE react step=1582 wall_ms=41.522 sub=131277 retried=177 max=198 unfinished=0 latch=1 rem=130503 dx=0 dt=715 h2=59 floor=59 capped=0 exact=0
+SR-PROBE react step=1583 wall_ms=48.398 sub=130680 retried=194 max=201 unfinished=0 latch=1 rem=129902 dx=0 dt=721 h2=57 floor=56 capped=0 exact=0
+SR-PROBE react step=1584 wall_ms=51.803 sub=130087 retried=187 max=199 unfinished=0 latch=1 rem=129307 dx=0 dt=720 h2=60 floor=59 capped=0 exact=0
+SR-PROBE react step=1585 wall_ms=61.912 sub=129602 retried=186 max=202 unfinished=0 latch=1 rem=128820 dx=0 dt=719 h2=63 floor=62 capped=0 exact=0
+SR-PROBE react step=1586 wall_ms=65.887 sub=129142 retried=187 max=200 unfinished=0 latch=1 rem=128361 dx=0 dt=718 h2=63 floor=65 capped=0 exact=0
+SR-PROBE react step=1587 wall_ms=68.148 sub=128737 retried=173 max=198 unfinished=0 latch=1 rem=127963 dx=0 dt=713 h2=61 floor=63 capped=0 exact=0
+SR-PROBE react step=1588 wall_ms=67.817 sub=128436 retried=183 max=201 unfinished=0 latch=1 rem=127655 dx=0 dt=718 h2=63 floor=66 capped=0 exact=0
+SR-PROBE react step=1589 wall_ms=57.534 sub=128137 retried=172 max=198 unfinished=0 latch=1 rem=127367 dx=0 dt=709 h2=61 floor=65 capped=0 exact=0
+SR-PROBE react step=1590 wall_ms=57.850 sub=127934 retried=167 max=196 unfinished=0 latch=1 rem=127170 dx=0 dt=703 h2=61 floor=65 capped=0 exact=0
+SR-PROBE react step=1591 wall_ms=58.713 sub=128141 retried=299 max=196 unfinished=0 latch=1 rem=127075 dx=0 dt=974 h2=92 floor=95 capped=0 exact=0
+SR-PROBE react step=1592 wall_ms=56.307 sub=128107 retried=284 max=191 unfinished=0 latch=1 rem=127022 dx=0 dt=992 h2=93 floor=97 capped=0 exact=0
+SR-PROBE react step=1593 wall_ms=56.513 sub=128284 retried=326 max=191 unfinished=0 latch=1 rem=127045 dx=0 dt=1132 h2=107 floor=109 capped=0 exact=0
+SR-PROBE react step=1594 wall_ms=57.822 sub=128502 retried=387 max=191 unfinished=0 latch=1 rem=127106 dx=0 dt=1275 h2=121 floor=122 capped=0 exact=0
+SR-PROBE react step=1595 wall_ms=58.312 sub=128611 retried=379 max=187 unfinished=0 latch=1 rem=127187 dx=0 dt=1303 h2=121 floor=123 capped=0 exact=0
+SR-PROBE react step=1596 wall_ms=64.055 sub=128723 retried=374 max=187 unfinished=0 latch=1 rem=127288 dx=0 dt=1314 h2=121 floor=124 capped=0 exact=0
+SR-PROBE react step=1597 wall_ms=62.548 sub=128934 retried=410 max=183 unfinished=0 latch=1 rem=127390 dx=0 dt=1408 h2=136 floor=138 capped=0 exact=0
+SR-PROBE react step=1598 wall_ms=60.560 sub=129029 retried=418 max=187 unfinished=0 latch=1 rem=127462 dx=0 dt=1432 h2=135 floor=138 capped=0 exact=0
+SR-PROBE react step=1599 wall_ms=56.374 sub=129076 retried=406 max=187 unfinished=0 latch=1 rem=127511 dx=0 dt=1431 h2=134 floor=137 capped=0 exact=0
+SR-PROBE react step=1600 wall_ms=61.602 sub=129231 retried=466 max=189 unfinished=0 latch=1 rem=127542 dx=0 dt=1538 h2=151 floor=153 capped=0 exact=0
+SR-PROBE react step=1601 wall_ms=61.031 sub=129200 retried=430 max=186 unfinished=0 latch=1 rem=127524 dx=0 dt=1528 h2=148 floor=149 capped=0 exact=0
+SR-PROBE react step=1602 wall_ms=54.587 sub=129143 retried=442 max=187 unfinished=0 latch=1 rem=127475 dx=0 dt=1525 h2=143 floor=147 capped=0 exact=0
+SR-PROBE react step=1603 wall_ms=53.606 sub=129016 retried=433 max=185 unfinished=0 latch=1 rem=127389 dx=0 dt=1482 h2=145 floor=150 capped=0 exact=0
+SR-PROBE react step=1604 wall_ms=55.181 sub=128768 retried=393 max=184 unfinished=0 latch=1 rem=127293 dx=0 dt=1347 h2=128 floor=134 capped=0 exact=0
+SR-PROBE react step=1605 wall_ms=56.399 sub=128563 retried=389 max=182 unfinished=0 latch=1 rem=127169 dx=0 dt=1269 h2=125 floor=130 capped=0 exact=0
+SR-PROBE react step=1606 wall_ms=56.127 sub=128217 retried=322 max=183 unfinished=0 latch=1 rem=127011 dx=0 dt=1095 h2=111 floor=115 capped=0 exact=0
+SR-PROBE react step=1607 wall_ms=59.520 sub=127914 retried=290 max=180 unfinished=0 latch=1 rem=126839 dx=0 dt=976 h2=99 floor=103 capped=0 exact=0
+SR-PROBE react step=1608 wall_ms=61.328 sub=127494 retried=212 max=181 unfinished=0 latch=1 rem=126643 dx=0 dt=776 h2=75 floor=80 capped=0 exact=0
+SR-PROBE react step=1609 wall_ms=60.519 sub=127498 retried=328 max=181 unfinished=0 latch=1 rem=126406 dx=0 dt=984 h2=108 floor=111 capped=0 exact=0
+SR-PROBE react step=1610 wall_ms=62.400 sub=127548 retried=421 max=171 unfinished=0 latch=1 rem=126165 dx=0 dt=1242 h2=141 floor=142 capped=0 exact=0
+SR-PROBE react step=1611 wall_ms=69.339 sub=127173 retried=357 max=179 unfinished=0 latch=1 rem=125910 dx=0 dt=1139 h2=124 floor=125 capped=0 exact=0
+SR-PROBE react step=1612 wall_ms=67.808 sub=126968 retried=338 max=182 unfinished=0 latch=1 rem=125635 dx=0 dt=1205 h2=128 floor=128 capped=0 exact=0
+SR-PROBE react step=1613 wall_ms=68.161 sub=126639 retried=321 max=183 unfinished=0 latch=1 rem=125373 dx=0 dt=1140 h2=126 floor=127 capped=0 exact=0
+SR-PROBE react step=1614 wall_ms=65.607 sub=126203 retried=256 max=181 unfinished=0 latch=1 rem=125077 dx=0 dt=1013 h2=113 floor=113 capped=0 exact=0
+SR-PROBE react step=1615 wall_ms=66.184 sub=125848 retried=231 max=183 unfinished=0 latch=1 rem=124854 dx=0 dt=896 h2=98 floor=99 capped=0 exact=0
+SR-PROBE react step=1616 wall_ms=67.658 sub=125573 retried=223 max=182 unfinished=0 latch=1 rem=124636 dx=0 dt=839 h2=98 floor=100 capped=0 exact=0
+SR-PROBE react step=1617 wall_ms=65.791 sub=125130 retried=131 max=177 unfinished=0 latch=1 rem=124450 dx=0 dt=614 h2=66 floor=70 capped=0 exact=0
+SR-PROBE react step=1618 wall_ms=66.678 sub=125001 retried=142 max=178 unfinished=0 latch=1 rem=124322 dx=0 dt=612 h2=67 floor=70 capped=0 exact=0
+SR-PROBE react step=1619 wall_ms=70.234 sub=124897 retried=129 max=172 unfinished=0 latch=1 rem=124230 dx=0 dt=602 h2=65 floor=69 capped=0 exact=0
+SR-PROBE react step=1620 wall_ms=70.220 sub=124976 retried=193 max=177 unfinished=0 latch=1 rem=124174 dx=0 dt=716 h2=86 floor=85 capped=0 exact=0
+SR-PROBE react step=1621 wall_ms=68.433 sub=124920 retried=195 max=170 unfinished=0 latch=1 rem=124134 dx=0 dt=706 h2=80 floor=81 capped=0 exact=0
+SR-PROBE react step=1622 wall_ms=62.001 sub=124767 retried=161 max=170 unfinished=0 latch=1 rem=124101 dx=0 dt=594 h2=72 floor=67 capped=0 exact=0
+SR-PROBE react step=1623 wall_ms=65.090 sub=124737 retried=173 max=168 unfinished=0 latch=1 rem=124091 dx=0 dt=578 h2=68 floor=66 capped=0 exact=0
+SR-PROBE react step=1624 wall_ms=72.496 sub=124998 retried=311 max=187 unfinished=0 latch=1 rem=124209 dx=0 dt=697 h2=92 floor=81 capped=0 exact=0
+SR-PROBE react step=1625 wall_ms=77.521 sub=125479 retried=280 max=177 unfinished=0 latch=1 rem=124972 dx=0 dt=448 h2=59 floor=50 capped=0 exact=0
+SR-PROBE react step=1626 wall_ms=117.442 sub=126951 retried=159 max=130 unfinished=0 latch=1 rem=126673 dx=0 dt=215 h2=63 floor=48 capped=0 exact=0
+SR-PROBE react step=1627 wall_ms=110.763 sub=130227 retried=376 max=251 unfinished=0 latch=1 rem=129729 dx=0 dt=459 h2=39 floor=32 capped=0 exact=0
+SR-PROBE react step=1628 wall_ms=104.948 sub=132727 retried=342 max=237 unfinished=0 latch=1 rem=132270 dx=0 dt=420 h2=37 floor=33 capped=0 exact=0
+SR-PROBE react step=1629 wall_ms=85.582 sub=141408 retried=1 max=2 unfinished=0 latch=1 rem=141407 dx=0 dt=1 h2=0 floor=4 capped=0 exact=0
+SR-PROBE react step=1630 wall_ms=2823.646 sub=215695 retried=65551 max=32766 unfinished=2 latch=1 rem=150174 dx=0 dt=249 h2=65274 floor=2 capped=0 exact=0
+SR-PROBE react step=1631 wall_ms=172.704 sub=157965 retried=163 max=207 unfinished=0 latch=1 rem=157759 dx=0 dt=183 h2=23 floor=18 capped=0 exact=0
+SR-PROBE react step=1632 wall_ms=121.626 sub=161284 retried=0 max=1 unfinished=0 latch=1 rem=161284 dx=0 dt=0 h2=0 floor=4 capped=0 exact=0
+SR-PROBE react step=1633 wall_ms=94.032 sub=160669 retried=0 max=1 unfinished=0 latch=1 rem=160669 dx=0 dt=0 h2=0 floor=1 capped=0 exact=0
+SR-PROBE react step=1634 wall_ms=77.549 sub=156978 retried=0 max=1 unfinished=0 latch=0 rem=156978 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1635 wall_ms=58.742 sub=151830 retried=0 max=1 unfinished=0 latch=0 rem=151830 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1636 wall_ms=38.160 sub=147111 retried=0 max=1 unfinished=0 latch=0 rem=147111 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1637 wall_ms=34.700 sub=143399 retried=0 max=1 unfinished=0 latch=0 rem=143399 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1638 wall_ms=28.259 sub=140382 retried=0 max=1 unfinished=0 latch=0 rem=140382 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1639 wall_ms=25.372 sub=138037 retried=0 max=1 unfinished=0 latch=0 rem=138037 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1640 wall_ms=23.576 sub=136124 retried=0 max=1 unfinished=0 latch=0 rem=136124 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1641 wall_ms=24.791 sub=134477 retried=0 max=1 unfinished=0 latch=0 rem=134477 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1642 wall_ms=25.109 sub=133132 retried=0 max=1 unfinished=0 latch=0 rem=133132 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1643 wall_ms=24.563 sub=131966 retried=0 max=1 unfinished=0 latch=0 rem=131966 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1644 wall_ms=25.811 sub=130992 retried=0 max=1 unfinished=0 latch=0 rem=130992 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1645 wall_ms=30.993 sub=130191 retried=0 max=1 unfinished=0 latch=0 rem=130191 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1646 wall_ms=32.989 sub=129524 retried=0 max=1 unfinished=0 latch=0 rem=129524 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1647 wall_ms=34.549 sub=128874 retried=0 max=1 unfinished=0 latch=0 rem=128874 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1648 wall_ms=35.710 sub=128303 retried=0 max=1 unfinished=0 latch=0 rem=128303 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1649 wall_ms=39.561 sub=127787 retried=0 max=1 unfinished=0 latch=0 rem=127787 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1650 wall_ms=41.026 sub=127311 retried=0 max=1 unfinished=0 latch=0 rem=127311 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1651 wall_ms=49.802 sub=126927 retried=0 max=1 unfinished=0 latch=0 rem=126927 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1652 wall_ms=53.697 sub=126632 retried=0 max=1 unfinished=0 latch=0 rem=126632 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1653 wall_ms=56.569 sub=126536 retried=0 max=1 unfinished=0 latch=0 rem=126536 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1654 wall_ms=66.124 sub=126763 retried=33 max=76 unfinished=0 latch=1 rem=126688 dx=0 dt=59 h2=16 floor=14 capped=0 exact=0
+SR-PROBE react step=1655 wall_ms=62.011 sub=127105 retried=0 max=1 unfinished=0 latch=1 rem=127105 dx=0 dt=0 h2=0 floor=2 capped=0 exact=0
+SR-PROBE react step=1656 wall_ms=67.807 sub=127842 retried=0 max=1 unfinished=0 latch=1 rem=127842 dx=0 dt=0 h2=0 floor=2 capped=0 exact=0
+SR-PROBE react step=1657 wall_ms=75.203 sub=128861 retried=0 max=1 unfinished=0 latch=1 rem=128861 dx=0 dt=0 h2=0 floor=1 capped=0 exact=0
+SR-PROBE react step=1658 wall_ms=75.087 sub=130150 retried=0 max=1 unfinished=0 latch=1 rem=130150 dx=0 dt=0 h2=0 floor=1 capped=0 exact=0
+SR-PROBE react step=1659 wall_ms=73.236 sub=131530 retried=0 max=1 unfinished=0 latch=0 rem=131530 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1660 wall_ms=76.588 sub=132724 retried=0 max=1 unfinished=0 latch=0 rem=132724 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1661 wall_ms=73.749 sub=133692 retried=0 max=1 unfinished=0 latch=0 rem=133692 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1662 wall_ms=72.860 sub=134460 retried=0 max=1 unfinished=0 latch=0 rem=134460 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1663 wall_ms=70.138 sub=134986 retried=0 max=1 unfinished=0 latch=0 rem=134986 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1664 wall_ms=70.662 sub=135453 retried=0 max=1 unfinished=0 latch=0 rem=135453 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1665 wall_ms=115.805 sub=136161 retried=0 max=1 unfinished=0 latch=0 rem=136161 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1666 wall_ms=97.349 sub=136289 retried=0 max=10 unfinished=0 latch=1 rem=136280 dx=0 dt=9 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1667 wall_ms=90.152 sub=136095 retried=26 max=185 unfinished=0 latch=1 rem=135911 dx=0 dt=173 h2=11 floor=11 capped=0 exact=0
+SR-PROBE react step=1668 wall_ms=76.954 sub=135446 retried=40 max=164 unfinished=0 latch=1 rem=135283 dx=0 dt=148 h2=15 floor=15 capped=0 exact=0
+SR-PROBE react step=1669 wall_ms=70.307 sub=134619 retried=39 max=114 unfinished=0 latch=1 rem=134506 dx=0 dt=98 h2=15 floor=15 capped=0 exact=0
+SR-PROBE react step=1670 wall_ms=32.851 sub=133584 retried=0 max=1 unfinished=0 latch=1 rem=133584 dx=0 dt=0 h2=0 floor=1 capped=0 exact=0
+SR-PROBE react step=1671 wall_ms=26.560 sub=132541 retried=0 max=1 unfinished=0 latch=0 rem=132541 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1672 wall_ms=29.899 sub=131503 retried=0 max=1 unfinished=0 latch=0 rem=131503 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1673 wall_ms=35.764 sub=130460 retried=0 max=1 unfinished=0 latch=0 rem=130460 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1674 wall_ms=36.107 sub=129419 retried=0 max=1 unfinished=0 latch=0 rem=129419 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1675 wall_ms=42.005 sub=128438 retried=0 max=1 unfinished=0 latch=0 rem=128438 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1676 wall_ms=48.564 sub=127644 retried=40 max=161 unfinished=0 latch=1 rem=127484 dx=0 dt=144 h2=16 floor=14 capped=0 exact=0
+SR-PROBE react step=1677 wall_ms=44.954 sub=126546 retried=0 max=1 unfinished=0 latch=1 rem=126546 dx=0 dt=0 h2=0 floor=1 capped=0 exact=0
+SR-PROBE react step=1678 wall_ms=54.144 sub=125767 retried=36 max=159 unfinished=0 latch=1 rem=125609 dx=0 dt=146 h2=12 floor=13 capped=0 exact=0
+SR-PROBE react step=1679 wall_ms=51.454 sub=124730 retried=0 max=1 unfinished=0 latch=1 rem=124730 dx=0 dt=0 h2=0 floor=2 capped=0 exact=0
+SR-PROBE react step=1680 wall_ms=57.560 sub=123916 retried=0 max=1 unfinished=0 latch=1 rem=123916 dx=0 dt=0 h2=0 floor=2 capped=0 exact=0
+SR-PROBE react step=1681 wall_ms=67.055 sub=123482 retried=39 max=148 unfinished=0 latch=1 rem=123335 dx=0 dt=134 h2=13 floor=15 capped=0 exact=0
+SR-PROBE react step=1682 wall_ms=96.735 sub=123187 retried=0 max=1 unfinished=0 latch=1 rem=123187 dx=0 dt=0 h2=0 floor=3 capped=0 exact=0
+SR-PROBE react step=1683 wall_ms=75.332 sub=123696 retried=0 max=1 unfinished=0 latch=1 rem=123696 dx=0 dt=0 h2=0 floor=3 capped=0 exact=0
+SR-PROBE react step=1684 wall_ms=93.109 sub=125132 retried=119 max=179 unfinished=0 latch=1 rem=124954 dx=0 dt=156 h2=22 floor=17 capped=0 exact=0
+SR-PROBE react step=1685 wall_ms=105.242 sub=127095 retried=125 max=187 unfinished=0 latch=1 rem=126909 dx=0 dt=168 h2=18 floor=17 capped=0 exact=0
+SR-PROBE react step=1686 wall_ms=88.999 sub=129181 retried=0 max=1 unfinished=0 latch=1 rem=129181 dx=0 dt=0 h2=0 floor=3 capped=0 exact=0
+SR-PROBE react step=1687 wall_ms=98.887 sub=131356 retried=152 max=153 unfinished=0 latch=1 rem=131090 dx=0 dt=236 h2=30 floor=29 capped=0 exact=0
+SR-PROBE react step=1688 wall_ms=2684.309 sub=164801 retried=32823 max=32775 unfinished=1 latch=1 rem=131909 dx=0 dt=255 h2=32638 floor=13 capped=0 exact=0
+SR-PROBE react step=1689 wall_ms=75.612 sub=132000 retried=0 max=1 unfinished=0 latch=0 rem=132000 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1690 wall_ms=68.635 sub=131629 retried=0 max=1 unfinished=0 latch=0 rem=131629 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1691 wall_ms=54.506 sub=131050 retried=0 max=1 unfinished=0 latch=0 rem=131050 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1692 wall_ms=57.147 sub=130472 retried=0 max=1 unfinished=0 latch=0 rem=130472 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1693 wall_ms=66.639 sub=130021 retried=0 max=1 unfinished=0 latch=0 rem=130021 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1694 wall_ms=73.159 sub=129555 retried=0 max=1 unfinished=0 latch=0 rem=129555 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1695 wall_ms=69.225 sub=129110 retried=0 max=1 unfinished=0 latch=0 rem=129110 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1696 wall_ms=66.493 sub=128634 retried=0 max=1 unfinished=0 latch=0 rem=128634 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1697 wall_ms=62.992 sub=128129 retried=0 max=1 unfinished=0 latch=0 rem=128129 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1698 wall_ms=32.614 sub=127569 retried=0 max=1 unfinished=0 latch=0 rem=127569 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1699 wall_ms=28.715 sub=126994 retried=0 max=1 unfinished=0 latch=0 rem=126994 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-PROBE react step=1700 wall_ms=27.013 sub=126358 retried=0 max=1 unfinished=0 latch=0 rem=126358 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+SR-HEADLESS DONE steps=1700 sim_time=10.751162 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1700 — reported, not guessed (record kept: build/calibrate_runs/cut_m3/m_bh_sb-01)
+real	0m18.169s
+user	0m6.404s
+sys	0m0.503s
+--- derived (m4sum.py, m5rows.py)
+mode 0: steps 140 wall 409.8 s; N_Fe live on 123 steps (1565..1700) median 3514.6 ms/step, the others 26.6 ms; wall on N_Fe steps 409.2 s
+   most unfinished cells 8, most sub-steps in a cell 65536, sub-steps 5.963e+07 of which burn_dt-set 4.140e+07, at T_floor 4.133e+07
+    step=1561 wall_ms=52.7 sub=127032 retried=0 max=1 unfinished=0 latch=0 rem=127032 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+    step=1571 wall_ms=3490.8 sub=396994 retried=356 max=65481 unfinished=4 latch=1 rem=135206 dx=0 dt=261665 h2=127 floor=260966 capped=0 exact=0
+    step=1572 wall_ms=3477.8 sub=397235 retried=365 max=65474 unfinished=4 latch=1 rem=135456 dx=0 dt=261657 h2=126 floor=260945 capped=0 exact=0
+    step=1580 wall_ms=3487.7 sub=394549 retried=257 max=65478 unfinished=4 latch=1 rem=132662 dx=0 dt=261891 h2=0 floor=261158 capped=0 exact=0
+    step=1590 wall_ms=3523.7 sub=388729 retried=214 max=65489 unfinished=4 latch=1 rem=126799 dx=0 dt=261934 h2=0 floor=261201 capped=0 exact=0
+    step=1596 wall_ms=3523.1 sub=650685 retried=214 max=65536 unfinished=8 latch=1 rem=126611 dx=0 dt=524082 h2=0 floor=523348 capped=0 exact=0
+    step=1600 wall_ms=3513.1 sub=804357 retried=304 max=65536 unfinished=8 latch=1 rem=127993 dx=0 dt=676372 h2=0 floor=675510 capped=0 exact=0
+    step=1620 wall_ms=3503.0 sub=649278 retried=398 max=65503 unfinished=8 latch=1 rem=125388 dx=0 dt=523898 h2=0 floor=522775 capped=0 exact=0
+    step=1650 wall_ms=25.1 sub=128926 retried=0 max=2 unfinished=0 latch=1 rem=128925 dx=0 dt=1 h2=0 floor=0 capped=0 exact=0
+    step=1700 wall_ms=3544.8 sub=259360 retried=0 max=65536 unfinished=2 latch=1 rem=128288 dx=0 dt=131074 h2=0 floor=131074 capped=0 exact=0
+1566 core_collapse Σc  374.4 Ye 0.4545 Xn 0.02113 dc 1.0000 Tc 0.05000 L_N -2.218e7
+1567 core_collapse Σc  393.7 Ye 0.4504 Xn 0.02984 dc 1.0000 Tc 0.05008 L_N -2.999e7
+1570 core_collapse Σc  446.2 Ye 0.4387 Xn 0.05509 dc 1.0000 Tc 0.05006 L_N -3.600e7
+1575 core_collapse Σc  460.6 Ye 0.4204 Xn 0.09444 dc 1.0000 Tc 0.05000 L_N -3.478e7
+1580 core_collapse Σc  440.8 Ye 0.3992 Xn  0.1402 dc 0.9999 Tc 0.05000 L_N -3.788e7
+1585 core_collapse Σc  429.4 Ye 0.3806 Xn  0.1803 dc 0.9999 Tc 0.05002 L_N -3.087e7
+1590 core_collapse Σc  451.1 Ye 0.3656 Xn  0.2125 dc 0.9999 Tc 0.05008 L_N -4.707e7
+1595 core_collapse Σc  481.0 Ye 0.3511 Xn  0.2438 dc 0.9999 Tc 0.05000 L_N -7.981e7
+1596 neutron_star  Σc  487.1 Ye 0.3484 Xn  0.2496 dc 0.9999 Tc 0.05000 L_N -8.198e7
+mode 1: steps 140 wall 7.1 s; N_Fe live on 88 steps (1565..1688) median 51.1 ms/step, the others 39.7 ms; wall on N_Fe steps 4.8 s
+   most unfinished cells 0, most sub-steps in a cell 2, sub-steps 1.829e+07 of which burn_dt-set 1.000e+00, at T_floor 0.000e+00
+    step=1561 wall_ms=54.7 sub=127032 retried=0 max=1 unfinished=0 latch=0 rem=127032 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+    step=1571 wall_ms=30.0 sub=135264 retried=0 max=1 unfinished=0 latch=1 rem=135264 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+    step=1572 wall_ms=23.4 sub=135486 retried=0 max=1 unfinished=0 latch=1 rem=135486 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+    step=1580 wall_ms=24.4 sub=131779 retried=0 max=1 unfinished=0 latch=1 rem=131779 dx=0 dt=0 h2=0 floor=0 capped=0 exact=4
+    step=1590 wall_ms=49.5 sub=127174 retried=0 max=1 unfinished=0 latch=1 rem=127174 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+    step=1596 wall_ms=51.6 sub=127325 retried=0 max=1 unfinished=0 latch=1 rem=127325 dx=0 dt=0 h2=0 floor=0 capped=0 exact=11
+    step=1600 wall_ms=46.0 sub=127616 retried=0 max=1 unfinished=0 latch=1 rem=127616 dx=0 dt=0 h2=0 floor=0 capped=0 exact=12
+    step=1620 wall_ms=60.9 sub=124231 retried=0 max=1 unfinished=0 latch=1 rem=124231 dx=0 dt=0 h2=0 floor=0 capped=0 exact=8
+    step=1650 wall_ms=44.5 sub=127421 retried=0 max=1 unfinished=0 latch=0 rem=127421 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+    step=1700 wall_ms=25.3 sub=124851 retried=0 max=1 unfinished=0 latch=0 rem=124851 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+1566 core_collapse Σc  374.4 Ye 0.4461 Xn 0.03914 dc 1.0000 Tc 0.05000 L_N -4.530e7
+1567 core_collapse Σc  394.1 Ye 0.4301 Xn 0.07370 dc 0.9999 Tc 0.05009 L_N -7.584e7
+1570 core_collapse Σc  455.4 Ye 0.3800 Xn  0.1816 dc 0.9999 Tc 0.05000 L_N -1.250e8
+mode 3: steps 140 wall 13.6 s; N_Fe live on 92 steps (1565..1688) median 62.0 ms/step, the others 48.0 ms; wall on N_Fe steps 11.3 s
+   most unfinished cells 2, most sub-steps in a cell 32775, sub-steps 1.847e+07 of which burn_dt-set 5.844e+04, at T_floor 5.722e+03
+    step=1561 wall_ms=54.7 sub=127032 retried=0 max=1 unfinished=0 latch=0 rem=127032 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+    step=1571 wall_ms=38.1 sub=136107 retried=244 max=213 unfinished=0 latch=1 rem=135270 dx=0 dt=769 h2=68 floor=68 capped=0 exact=0
+    step=1572 wall_ms=36.0 sub=136327 retried=239 max=210 unfinished=0 latch=1 rem=135495 dx=0 dt=766 h2=66 floor=66 capped=0 exact=0
+    step=1580 wall_ms=36.8 sub=132548 retried=176 max=198 unfinished=0 latch=1 rem=131777 dx=0 dt=719 h2=52 floor=52 capped=0 exact=0
+    step=1590 wall_ms=57.9 sub=127934 retried=167 max=196 unfinished=0 latch=1 rem=127170 dx=0 dt=703 h2=61 floor=65 capped=0 exact=0
+    step=1596 wall_ms=64.1 sub=128723 retried=374 max=187 unfinished=0 latch=1 rem=127288 dx=0 dt=1314 h2=121 floor=124 capped=0 exact=0
+    step=1600 wall_ms=61.6 sub=129231 retried=466 max=189 unfinished=0 latch=1 rem=127542 dx=0 dt=1538 h2=151 floor=153 capped=0 exact=0
+    step=1620 wall_ms=70.2 sub=124976 retried=193 max=177 unfinished=0 latch=1 rem=124174 dx=0 dt=716 h2=86 floor=85 capped=0 exact=0
+    step=1650 wall_ms=41.0 sub=127311 retried=0 max=1 unfinished=0 latch=0 rem=127311 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+    step=1700 wall_ms=27.0 sub=126358 retried=0 max=1 unfinished=0 latch=0 rem=126358 dx=0 dt=0 h2=0 floor=0 capped=0 exact=0
+1566 core_collapse Σc  374.4 Ye 0.4452 Xn 0.04104 dc 1.0000 Tc 0.05000 L_N -4.736e7
+1567 core_collapse Σc  394.2 Ye 0.4288 Xn 0.07645 dc 0.9999 Tc 0.05014 L_N -7.846e7
+1570 core_collapse Σc  455.9 Ye 0.3781 Xn  0.1857 dc 0.9999 Tc 0.05018 L_N -1.274e8
+--- M6 --timing on 1,561-1,590 from s_1560 (headless --load-dump --continue), 3 runs a mode
+== run_0_1.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.247415 until=none
+{"per_pass_ms": {"P0 edits": 0.01919466666666667, "P1 dt": 0.004596266666666666, "P2 gravity": 0.14640960000000003, "P3 sinks": 0.18459840000000005, "P4 hydro": 0.8675477333333332, "P5 heat": 22.50259413333333, "P6 reactions": 2951.907662933334, "P7 neutrino heating": 0.02657706666666666, "P8 floors": 0.04187946666666666, "P9 reductions": 0.0220928}, "source": "gpu-timestamp", "step_ms_mean": 2975.9127989333333} wall_s 106.06877367599999
+== run_0_2.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.247415 until=none
+{"per_pass_ms": {"P0 edits": 0.018711466666666666, "P1 dt": 0.004714666666666668, "P2 gravity": 0.1463488, "P3 sinks": 0.1846602666666667, "P4 hydro": 0.8674698666666666, "P5 heat": 22.517921066666663, "P6 reactions": 2951.8921877333332, "P7 neutrino heating": 0.026657066666666673, "P8 floors": 0.041613866666666666, "P9 reductions": 0.0222112}, "source": "gpu-timestamp", "step_ms_mean": 2975.9114079999995} wall_s 106.059161966
+== run_0_3.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.247415 until=none
+{"per_pass_ms": {"P0 edits": 0.018815999999999996, "P1 dt": 0.004646399999999998, "P2 gravity": 0.14679466666666666, "P3 sinks": 0.18446293333333336, "P4 hydro": 0.8672576, "P5 heat": 22.516455466666667, "P6 reactions": 2954.9490240000005, "P7 neutrino heating": 0.026573866666666668, "P8 floors": 0.041596799999999996, "P9 reductions": 0.022117333333333333}, "source": "gpu-timestamp", "step_ms_mean": 2978.967124266667} wall_s 106.146906726
+== run_1_1.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.248001 until=none
+{"per_pass_ms": {"P0 edits": 0.019020800000000004, "P1 dt": 0.0047968, "P2 gravity": 0.1472458666666667, "P3 sinks": 0.18556266666666665, "P4 hydro": 0.8714784000000002, "P5 heat": 28.420883200000002, "P6 reactions": 0.4662890666666667, "P7 neutrino heating": 0.02708479999999999, "P8 floors": 0.0418752, "P9 reductions": 0.022307199999999996}, "source": "gpu-timestamp", "step_ms_mean": 30.398492799999993} wall_s 17.687922152
+== run_1_2.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.248001 until=none
+{"per_pass_ms": {"P0 edits": 0.018853333333333337, "P1 dt": 0.004605866666666666, "P2 gravity": 0.14642133333333335, "P3 sinks": 0.1846026666666667, "P4 hydro": 0.8677376, "P5 heat": 28.265258666666675, "P6 reactions": 0.4650986666666667, "P7 neutrino heating": 0.02649173333333333, "P8 floors": 0.04164373333333335, "P9 reductions": 0.022291199999999997}, "source": "gpu-timestamp", "step_ms_mean": 30.234898133333335} wall_s 17.678918418
+== run_1_3.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.248001 until=none
+{"per_pass_ms": {"P0 edits": 0.018676266666666663, "P1 dt": 0.004614400000000001, "P2 gravity": 0.14624853333333332, "P3 sinks": 0.18451626666666668, "P4 hydro": 0.8676501333333333, "P5 heat": 28.2518912, "P6 reactions": 0.4653610666666667, "P7 neutrino heating": 0.026244266666666672, "P8 floors": 0.04186666666666667, "P9 reductions": 0.022190933333333336}, "source": "gpu-timestamp", "step_ms_mean": 30.22203733333333} wall_s 17.678462086
+== run_3_1.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.248011 until=none
+{"per_pass_ms": {"P0 edits": 0.01853653333333333, "P1 dt": 0.0047136, "P2 gravity": 0.14642879999999997, "P3 sinks": 0.18459093333333337, "P4 hydro": 0.8668586666666668, "P5 heat": 28.259032533333333, "P6 reactions": 11.114530133333336, "P7 neutrino heating": 0.0263488, "P8 floors": 0.04164906666666666, "P9 reductions": 0.022830933333333338}, "source": "gpu-timestamp", "step_ms_mean": 40.87728533333333} wall_s 18.002116649999998
+== run_3_2.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.248011 until=none
+{"per_pass_ms": {"P0 edits": 0.01865066666666667, "P1 dt": 0.004613333333333333, "P2 gravity": 0.146896, "P3 sinks": 0.18456960000000006, "P4 hydro": 0.8679872000000003, "P5 heat": 28.2669472, "P6 reactions": 11.168568533333334, "P7 neutrino heating": 0.026528000000000013, "P8 floors": 0.04180693333333333, "P9 reductions": 0.022105599999999996}, "source": "gpu-timestamp", "step_ms_mean": 40.94056960000001} wall_s 18.003116539999997
+== run_3_3.log
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1590 sim_time=10.248011 until=none
+{"per_pass_ms": {"P0 edits": 0.018630400000000002, "P1 dt": 0.004716800000000002, "P2 gravity": 0.1464330666666667, "P3 sinks": 0.1844448, "P4 hydro": 0.8678783999999999, "P5 heat": 28.255319466666666, "P6 reactions": 11.189089066666668, "P7 neutrino heating": 0.026053333333333338, "P8 floors": 0.04184426666666666, "P9 reductions": 0.022098133333333332}, "source": "gpu-timestamp", "step_ms_mean": 40.94674986666666} wall_s 18.004979328999998

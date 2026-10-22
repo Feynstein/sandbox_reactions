@@ -1,0 +1,61 @@
+NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %; 17:07:02 up 10 days,  4:39,  5 users,  load average: 1.62, 1.27, 0.72
+NEVER CHECKED  tests/capture/smoke.json  (no entry for capture)
+NEVER CHECKED  tests/cargo.sh  (no entry for ledger, twin, adapter, timing, scene, dump, boot, desktop, web, capture, calibration, readouts)
+NEVER CHECKED  tests/gpu.sh  (no entry for ledger, sun_burn, twin, adapter, timing, scene, dump, calibration, readouts)
+NEVER CHECKED  tests/plants/adapter-case.patch  (no entry for adapter)
+NEVER CHECKED  tests/plants/anchor-reverse.patch  (no entry for readouts)
+NEVER CHECKED  tests/plants/burn-runaway.patch  (no entry for sun_burn)
+NEVER CHECKED  tests/plants/capture-no-captions.patch  (no entry for capture)
+NEVER CHECKED  tests/plants/const-drift.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/dump-channel-order.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-flux-zero.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-sim-time-skip.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-sinks-drop.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/headless-no-sinks.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/launcher-no-stop.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/launcher-stop-all.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/ledger-cell-grav-work.patch  (no entry for ledger)
+NEVER CHECKED  tests/plants/ledger-no-escaped.patch  (no entry for ledger)
+NEVER CHECKED  tests/plants/never-ready.patch  (no entry for web)
+NEVER CHECKED  tests/plants/port-handover-early.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/render-reserve-required.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/scene-refuse.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/scene-unknown-key.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/smoke-no-sandbox.patch  (no entry for web)
+NEVER CHECKED  tests/plants/stall-constants.patch  (no entry for sun_burn)
+NEVER CHECKED  tests/plants/status-never-ready.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/timing-skip-pass.patch  (no entry for timing)
+NEVER CHECKED  tests/plants/twin-skip-floors.patch  (no entry for twin)
+NEVER CHECKED  tests/plants/warm-rate-not-dumped.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/web-autoload.patch  (no entry for web)
+NEVER CHECKED  tests/plants/web-no-gpu-check.patch  (no entry for web)
+NEVER CHECKED  tests/smoke.sh  (no entry for boot, desktop)
+NEVER CHECKED  tests/web/check.sh  (no entry for web)
+NEVER CHECKED  tools/pb/launch.json  (no entry for boot, desktop, web)
+NEVER CHECKED  web/Trunk.toml  (no entry for web)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   257  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  plan_lint: 673 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-D86.plan_lint.log
+  ledger: `regex` matched nothing; 0 case(s) < expected 5 · log milestones/m0/logs/M0-D86.ledger.log
+  sun_burn: 3 failed · log milestones/m0/logs/M0-D86.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-D86.twin.log
+  adapter: 1 failed · log milestones/m0/logs/M0-D86.adapter.log
+  timing: 1 failed · log milestones/m0/logs/M0-D86.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-D86.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-D86.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-D86.boot.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready · log milestones/m0/logs/M0-D86.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-D86.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-D86.capture.log
+  calibration: 1 failed · log milestones/m0/logs/M0-D86.calibration.log
+  readouts: 1 failed · log milestones/m0/logs/M0-D86.readouts.log
+  anchor: 172 never checked, 0 stale, 0 unclassified - every one named above
+verify: 494 passed, 693 failed, 0 skipped · 43/57 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 5 not impacted · 305.54 s + loop 46.18 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 1.62->0.54 · base: M0-D86's start 2026-10-22T16:42:33-04:00
+=== NO-GO: plan_lint: 673 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-D86.plan_lint.log; ledger: `regex` matched nothing; 0 case(s) < expected 5 · log milestones/m0/logs/M0-D86.ledger.log; sun_burn: 3 failed · log milestones/m0/logs/M0-D86.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-D86.twin.log; adapter: 1 failed · log milestones/m0/logs/M0-D86.adapter.lo... ===

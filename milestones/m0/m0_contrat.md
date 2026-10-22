@@ -500,6 +500,14 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     other (this one's sim time at step 1,400: 9.250446 against 9.042702); on Jacobi the warm start would leave the sharp pulse's heat at
     3.7 × 10⁻⁵ against heat_implicit's 10⁻⁵ (M0-R8 M9); a dump is one plane (+6 %) larger (reports/heat_warm_start.md, tasks/M0-D85.md) —
     the lead, 2026-10-22, at M0-R8: «(c) Rate extrapolation (Recommended)».
+  - [M0-R10] §2.5.2's sub-cycling and §1.7's reactions row read for N_Fe · N_Fe (f ≡ 1, a = 0, one input of order 1 into n, the gate
+    p = 1) is stepped in closed form over the pass's Δt before the other records sub-cycle: Y_e − b = d E/(1 + d (1 − E)/(b − a_Y)), b =
+    Σ_N/Σ, a_Y the Y_e of the species other than iron, d = Y_e − b, E = e^{−k(b − a_Y)Δt}, k = A Σ^a Σ/Σ_N ((1 − E)/(b − a_Y) → kΔt as b →
+    a_Y); X_Fe falls by ΔY_e/y_Fe, X_n gains it, the heat q·ΔX_Fe enters ε and nuclear.N at once; a gap under f32's resolution lands the
+    cell at Y_eΣ ≤ Σ_N (on the twin, f64's — and where the iron runs out first, at X_Fe = 0 [M0-D86]); the collapse latch reads N_Fe's
+    rate at the pass's start; twin and GPU; burn_dt and burn_dx unchanged for the other records — measured on the RTX 4090 (M0-R10):
+    the shipped sub-cycles spent MAX_ATTEMPTS at T_floor, 8.4 % of Δt burned, P6 2,951.9 ms a collapse step. The twin since M0-D86
+    (2026-10-22), the GPU with M0-D87 — the lead, 2026-10-22, at M0-R10: «(b) Exact N_Fe (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

@@ -1,0 +1,62 @@
+=== M0-R10 the GPU tests under each probe mode, /tmp/r10, SR_TEST_ADAPTER=RTX 4090, laserax-ai-server, 2026-10-22 ===
+--- m7_m0_burn: test result: FAILED. 21 passed; 3 failed; 0 ignored; 0 measured; 346 filtered out; finished in 2.99s
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (1402091) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1402021-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (1402092) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1402021-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+thread 'sunburn::the_star_stays_bound' (1402094) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1402021-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+--- m7_m0_collapse: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 364 filtered out; finished in 1.02s
+--- m7_m0_cpu_gpu: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 367 filtered out; finished in 5.53s
+--- m7_m0_latch: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 365 filtered out; finished in 0.97s
+--- m7_m0_neutrino: test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 352 filtered out; finished in 59.92s
+gate closing: Fe fell by 9.090912e-2 (closes at 9.900990e-3), 1 sub-steps
+--- m7_m0_twin: test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 364 filtered out; finished in 0.80s
+thread 'twin::a_world_over_128_is_refused_and_128_runs' (1402911) panicked at crates/sr-engine/tests/gpu/twin.rs:112:9:
+assertion `left == right` failed: --world 200x200
+  left: 6
+thread 'twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time' (1402912) panicked at crates/sr-engine/tests/gpu/twin.rs:79:5:
+assertion `left == right` failed
+  left: 6
+--- m7_m1_burn: test result: FAILED. 21 passed; 3 failed; 0 ignored; 0 measured; 346 filtered out; finished in 3.30s
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (1400312) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1400242-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (1400313) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1400242-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+thread 'sunburn::the_star_stays_bound' (1400315) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1400242-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+--- m7_m1_collapse: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 364 filtered out; finished in 1.04s
+--- m7_m1_cpu_gpu: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 367 filtered out; finished in 5.54s
+--- m7_m1_latch: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 365 filtered out; finished in 0.96s
+--- m7_m1_neutrino: test result: FAILED. 17 passed; 1 failed; 0 ignored; 0 measured; 352 filtered out; finished in 1.58s
+thread 'neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step' (1400583) panicked at crates/sr-engine/tests/gpu/neutrino.rs:782:9:
+the gate stayed open: Fe fell by 0.009900867938995361, 0.00990099009900991 closes it
+gate closing: Fe fell by 9.900868e-3 (closes at 9.900990e-3), 0 sub-steps
+--- m7_m1_twin: test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 364 filtered out; finished in 0.79s
+thread 'twin::a_world_over_128_is_refused_and_128_runs' (1401690) panicked at crates/sr-engine/tests/gpu/twin.rs:112:9:
+assertion `left == right` failed: --world 200x200
+  left: 6
+thread 'twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time' (1401691) panicked at crates/sr-engine/tests/gpu/twin.rs:79:5:
+assertion `left == right` failed
+  left: 6
+--- m7_m3_burn: test result: FAILED. 21 passed; 3 failed; 0 ignored; 0 measured; 346 filtered out; finished in 3.03s
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (1403344) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1403255-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (1403345) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1403255-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+thread 'sunburn::the_star_stays_bound' (1403347) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1403255-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+--- m7_m3_collapse: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 364 filtered out; finished in 1.02s
+--- m7_m3_cpu_gpu: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 367 filtered out; finished in 5.50s
+--- m7_m3_latch: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 365 filtered out; finished in 0.92s
+--- m7_m3_neutrino: test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 352 filtered out; finished in 1.63s
+gate closing: Fe fell by 9.090912e-2 (closes at 9.900990e-3), 1 sub-steps

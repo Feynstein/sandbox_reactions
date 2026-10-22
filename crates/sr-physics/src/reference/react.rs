@@ -34,7 +34,19 @@
 //! newborn neutron star), kept as the source S_ν = ε_νΣ ([`Pass::s_nu`], the pass's mean power per area) for P7. With T pinned
 //! the loss is booked and the cell's T held. Cooling moves no mass, so no fraction changes by it.
 //!
-//! The collapse latch's P6 condition (§1.8.5): any cell whose N_Fe rate is > 0 at the start of any sub-step ([`Pass::latch`]).
+//! N_Fe in closed form (§0.5 [M0-R10]): N_Fe (f ≡ 1, one input of order 1 into a species of Z = 0, the gate p = 1) is stepped
+//! exactly over the pass's Δt *before* the other records sub-cycle, which then skip it — split order N_Fe first, so iron another
+//! record makes within the pass waits for the next pass. Read for Y_e with Σ fixed, its law is a constant-coefficient Riccati
+//! equation, dY_e/dt = −k (Y_e − a_Y)(Y_e − b), k = A Σ^a Σ/Σ_N, b = Σ_N/Σ, a_Y the Y_e of every species but iron; with
+//! d = Y_e − b and E = e^{−k(b − a_Y)Δt}, Y_e − b = d E/(1 + d (1 − E)/(b − a_Y)) ((1 − E)/(b − a_Y) → kΔt as b → a_Y). It is
+//! evaluated as the drop ΔY_e = u v φ/(1 + w φ) — u = Y_e − b, v = Y_e − a_Y, w the one of them that decays (u where b ≥ a_Y,
+//! the gate closes; v where b < a_Y, the iron runs out), φ = (1 − e^{−k|b − a_Y|Δt})/|b − a_Y| — so no exponential grows and
+//! no difference cancels. X_Fe falls by ΔY_e/y_Fe and X_n gains it; its heat q ΔX_Fe enters the energy and `nuclear.N` at once.
+//! A gap left under f64's resolution of Y_e lands the cell on its limit: at Y_eΣ ≤ Σ_N, the gate shut, or with no iron. No
+//! sub-step is spent on it, so burn_dt's T limit (which at T_floor predicted h ≈ 7.6 × 10⁻⁹ against a T-free rate, M0-R10 M1)
+//! never reads it.
+//!
+//! The collapse latch's P6 condition (§1.8.5): any cell whose N_Fe rate is > 0 at the start of the pass ([`Pass::latch`]).
 //! N_Fe's gate (Y_eΣ against Σ_N, p = 1) is in [`Omega`], read here with the cell's own Y_e; q < 0 absorbs.
 //!
 //! Conventions as [`hydro`](super::hydro): channel-major planes in §2.2's order, `index = y * w + x`. A cell below Σ_vac is not
@@ -57,6 +69,8 @@ pub const N_GROUPS: usize = GROUPS.len();
 pub const MAX_ATTEMPTS: u64 = 1_000_000;
 /// A retry below this fraction of the pass's Δt takes its step as it is, clamped (the half-size loop's floor).
 const MIN_H: f64 = 1e-14;
+/// N_Fe's closed form leaves a gap under this many ulps of b = Σ_N/Σ: the cell is landed on its limit (module doc).
+const LAND_ULPS: f64 = 4.0;
 
 /// §2.12.1's `test`, as the reactions pass reads it.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -78,6 +92,22 @@ struct Rec {
     inputs: Vec<(usize, f64)>,
 }
 
+/// N_Fe's law, the shape the closed form needs (module doc).
+#[derive(Debug, Clone, Copy)]
+struct Nfe {
+    /// Index into `recs`.
+    rec: usize,
+    /// The input (iron) and the output (neutrons, Z = 0).
+    fe: usize,
+    n: usize,
+    /// The input's Z/A.
+    y_fe: f64,
+    /// A, a and the gate's Σ_g.
+    a_coef: f64,
+    a_sigma: f64,
+    sigma_g: f64,
+}
+
 /// What one pass of P6 did.
 #[derive(Debug, Clone, PartialEq, Default)]
 pub struct Pass {
@@ -89,7 +119,7 @@ pub struct Pass {
     /// The neutrino source S_ν (§2.5.3, `side.s_nu`): in a cell that leaves the pass with X_n ≥ [`X_N_STAR`], its
     /// `neutrino_lost` over the pass's Δt (ε_νΣ, the mean power per area), else 0; `width × height`.
     pub s_nu: Vec<f64>,
-    /// §1.8.5's P6 condition: some cell's N_Fe rate was > 0 at the start of some sub-step.
+    /// §1.8.5's P6 condition: some cell's N_Fe rate was > 0 at the start of the pass.
     pub latch: bool,
     /// Accepted sub-steps over every cell.
     pub substeps: u64,
@@ -125,6 +155,8 @@ pub struct React {
     recs: Vec<Rec>,
     /// Per record of `recs`: it is N_Fe, whose rate > 0 sets the latch.
     latch: Vec<bool>,
+    /// N_Fe, stepped in closed form; `None` when it is disabled or its shape is not the closed form's (it then sub-cycles).
+    nfe: Option<Nfe>,
     sigma_vac: f64,
     burn_dx: f64,
     burn_dt: f64,
@@ -142,7 +174,7 @@ struct Cell {
     de: f64,
     /// Σ ε_ν h over the pass, per unit mass (booked `neutrino_lost`).
     lost: f64,
-    /// An N_Fe rate was > 0 at the start of a sub-step.
+    /// N_Fe's rate was > 0 at the start of the pass.
     nfe: bool,
     /// Heat per unit mass released, by group.
     booked: [f64; N_GROUPS],
@@ -182,11 +214,34 @@ impl React {
             })
             .collect();
         let latch = reactions.records().iter().filter(|r| r.enabled).map(|r| r.id == NFE).collect();
+        let species = elements.species();
+        let nfe = reactions.records().iter().filter(|r| r.enabled).enumerate().find(|(_, r)| r.id == NFE).and_then(|(rec, r)| {
+            let rate = &r.rate;
+            let gate = rate.gate.as_ref()?;
+            let shaped = rate.t_thr.is_none()
+                && rate.terms.is_empty()
+                && rate.orders == [1.0]
+                && r.inputs.len() == 1
+                && r.outputs.len() == 1
+                && species[r.outputs[0].species].z == 0
+                && gate.p == 1.0;
+            let fe = &species[r.inputs[0].species];
+            shaped.then(|| Nfe {
+                rec,
+                fe: r.inputs[0].species,
+                n: r.outputs[0].species,
+                y_fe: f64::from(fe.z) / f64::from(fe.a),
+                a_coef: rate.a_coef,
+                a_sigma: rate.a,
+                sigma_g: gate.sigma_g,
+            })
+        });
         Ok(React {
             eos: Eos::from_physics(physics)?,
             elements: elements.clone(),
             recs,
             latch,
+            nfe,
             sigma_vac: get("sigma_vac"),
             burn_dx: get("burn_dx"),
             burn_dt: get("burn_dt"),
@@ -229,6 +284,21 @@ impl React {
         let floor = |mu: f64| self.eos.t_floor() / mu;
         let eps_th0 = (e_tot0 - self.eos.eps_cold(sigma, y_e0, x0[ID_N])).max(floor(mu0));
         let t0 = Eos::temperature(eps_th0, mu0);
+        // N_Fe first, in closed form over the whole Δt; the latch reads its rate here, at the pass's start.
+        if let Some(nfe) = &self.nfe {
+            let w_nfe = self.recs[nfe.rec].omega.omega(sigma, &x, t0, y_e0);
+            cell.nfe = w_nfe > 0.0;
+            if cell.nfe {
+                let dm = self.nfe_exact(nfe, sigma, &mut x, dt);
+                let heat = self.recs[nfe.rec].q * dm;
+                if !self.test.pin_temperature {
+                    e_tot += heat;
+                }
+                cell.de += heat;
+                cell.booked[self.recs[nfe.rec].group] += heat;
+                cell.changed |= dm > 0.0;
+            }
+        }
         let nrec = self.recs.len();
         let mut t_done = 0.0;
         let mut h_try = f64::INFINITY;
@@ -248,6 +318,9 @@ impl React {
             let mut qdot = 0.0;
             let eps_nu = self.eps_nu(t);
             for (r, rec) in self.recs.iter().enumerate() {
+                if self.nfe.is_some_and(|nfe| nfe.rec == r) {
+                    continue;
+                }
                 let w = rec.omega.omega(sigma, &x, t, y_e);
                 omegas[r] = w;
                 cell.nfe |= self.latch[r] && w > 0.0;
@@ -363,6 +436,53 @@ impl React {
     fn species_inv_mu(&self, i: usize) -> f64 {
         let s = &self.elements.species()[i];
         (f64::from(s.z) + 1.0) / f64::from(s.a)
+    }
+
+    /// N_Fe over `dt` in closed form (module doc, §0.5 [M0-R10]), Σ fixed: moves the mass converted from iron to neutrons in
+    /// `x` and returns it (≥ 0, at most the iron there was). A cell under its gate or without iron is left as it is.
+    fn nfe_exact(&self, nfe: &Nfe, sigma: f64, x: &mut [f64; NS], dt: f64) -> f64 {
+        let b = nfe.sigma_g / sigma;
+        let mut others = *x;
+        others[nfe.fe] = 0.0;
+        let a_y = self.comp(&others).1;
+        let c = b - a_y;
+        // v = Y_e − a_Y (the iron's electrons), u = Y_e − b (the gate's gap).
+        let v = nfe.y_fe * x[nfe.fe];
+        let u = v - c;
+        if !(u > 0.0 && v > 0.0) || dt <= 0.0 {
+            return 0.0;
+        }
+        let k = nfe.a_coef * sigma.powf(nfe.a_sigma) / b;
+        let (w, s) = if c >= 0.0 { (u, c) } else { (v, -c) };
+        let ks = k * s * dt;
+        let phi = if ks > 0.0 { -(-ks).exp_m1() / s } else { k * dt };
+        let dy = u * v * phi / (1.0 + w * phi);
+        let mut dm = (dy / nfe.y_fe).min(x[nfe.fe]);
+        // What the closed form leaves of the decaying gap: under f64's resolution the cell is on its limit.
+        let left = w * (-ks).exp() / (1.0 + w * phi);
+        if left <= LAND_ULPS * f64::EPSILON * b {
+            if c >= 0.0 {
+                x[nfe.fe] -= dm;
+                x[nfe.n] += dm;
+                let mut nudge = f64::EPSILON * x[nfe.fe];
+                for _ in 0..16 {
+                    let y_e = self.comp(x).1;
+                    if y_e * sigma <= nfe.sigma_g || x[nfe.fe] == 0.0 {
+                        break;
+                    }
+                    let more = ((y_e * sigma - nfe.sigma_g) / (sigma * nfe.y_fe)).max(nudge).min(x[nfe.fe]);
+                    x[nfe.fe] -= more;
+                    x[nfe.n] += more;
+                    dm += more;
+                    nudge *= 2.0;
+                }
+                return dm;
+            }
+            dm = x[nfe.fe];
+        }
+        x[nfe.fe] -= dm;
+        x[nfe.n] += dm;
+        dm
     }
 
     /// The linearised backward-Euler step: ΔX with (I − hJ) ΔX = h S, J = Σ_r ν_r ∇ω_r.

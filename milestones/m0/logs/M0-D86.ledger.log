@@ -1,0 +1,21 @@
+== 2026-10-22T17:07:08-04:00 ledger · task M0-D86 · box laserax-ai-server :: bash tests/gpu.sh ledger physics
+-- ledger · exit=3 · 23.89 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ERROR GPU error: Validation Error
+
+Caused by:
+  In Buffer::map_async
+    Buffer with 'latch.run' label is invalid
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+Caused by:
+  process didn't exit successfully: `/home/ybelanger/workspace/sandbox_reactions/build/target/release/deps/gpu-c1ed76875989c7d5 'ledger::' --nocapture --test-threads=1` (exit status: 3)
+
