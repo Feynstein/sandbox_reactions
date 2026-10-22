@@ -621,7 +621,9 @@ impl Step {
                 let (head, rest) = dispatches.split_at(heat::HEAD);
                 let (rounds, tail) = rest.split_at(heat::SLOTS);
                 let park = std::slice::from_ref(&h.park);
-                lists = vec![(head, 1, false), (&rounds[..h.rounds()], 1, false), (park, 1, true), (std::slice::from_ref(carry), 1, true), (tail, 1, false)];
+                lists = vec![(head, 1, false)];
+                lists.extend(h.slots(rounds).into_iter().map(|slot| (slot, 1, false)));
+                lists.extend([(park, 1, true), (std::slice::from_ref(carry), 1, true), (tail, 1, false)]);
             }
             if let (true, Some(l)) = (hooked, latch) {
                 lists.push((l.hook_dispatches(), 1, false));

@@ -1,0 +1,71 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 2 tests
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PROBE pass 1: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: 7.128727e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 6.298e-10, bg 5e-2
+PROBE pass 2: HeatReport { dt: 1.0, passes: 3, rounds: 4, converged: true, delta: -2.1450987e-8 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 5.530e-10, bg 5e-2
+PROBE pass 3: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -2.5922642e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 4.983e-10, bg 5e-2
+PROBE pass 4: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -2.138618e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 4.573e-10, bg 5e-2
+PROBE pass 5: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -1.6849717e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 4.252e-10, bg 5e-2
+PROBE pass 6: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -2.041408e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.992e-10, bg 5e-2
+PROBE pass 7: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -2.3816427e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.775e-10, bg 5e-2
+PROBE pass 8: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -2.9811038e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.592e-10, bg 5e-2
+SR-HEAT1 GPU t = 8: sigma2 x 23.995177, y 23.995177, expected 24, error 2.01e-4; heat 3.15e-7; |T - twin| 1.12e-5
+PROBE pass 9: HeatReport { dt: 1.0, passes: 2, rounds: 5, converged: true, delta: -5.5085614e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.434e-10, bg 5e-2
+PROBE pass 10: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -1.1989222e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.295e-10, bg 5e-2
+PROBE pass 11: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -1.1665189e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.172e-10, bg 5e-2
+PROBE pass 12: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -1.7821816e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.063e-10, bg 5e-2
+PROBE pass 13: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -7.1287265e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.964e-10, bg 5e-2
+PROBE pass 14: HeatReport { dt: 1.0, passes: 2, rounds: 4, converged: true, delta: -9.720991e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.874e-10, bg 5e-2
+PROBE pass 15: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -3.0783137e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.792e-10, bg 5e-2
+PROBE pass 16: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: 4.8604953e-11 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.717e-10, bg 5e-2
+SR-HEAT1 GPU t = 16: sigma2 x 31.986960, y 31.986959, expected 32, error 4.08e-4; heat 3.77e-7; |T - twin| 3.43e-5
+PROBE pass 17: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -4.0504128e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.648e-10, bg 5e-2
+PROBE pass 18: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -4.8604953e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.584e-10, bg 5e-2
+PROBE pass 19: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -2.4302477e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.524e-10, bg 5e-2
+PROBE pass 20: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: 4.2124293e-10 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.469e-10, bg 5e-2
+PROBE pass 21: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -0.0 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.417e-10, bg 5e-2
+PROBE pass 22: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: -5.281738e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.369e-10, bg 5e-2
+PROBE pass 23: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -1.6201651e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.322e-10, bg 5e-2
+PROBE pass 24: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -1.5229553e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.279e-10, bg 5e-2
+SR-HEAT1 GPU t = 24: sigma2 x 39.972385, y 39.972382, expected 40, error 6.90e-4; heat 4.61e-7; |T - twin| 5.07e-5
+SR-HEAT1 GPU radiated 0.00e0, 0.00e0 of the pulse
+SR-HEAT1 GPU worst sigma2 error 6.90e-4; up to 3 Newton passes, 5 rounds, |delta| 2.1e-8
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PROBE pass 1: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -9.429362e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 6.298e-10, bg 5e-2
+PROBE pass 2: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -7.987414e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 5.530e-10, bg 5e-2
+PROBE pass 3: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -6.351048e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 4.983e-10, bg 5e-2
+PROBE pass 4: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -6.594072e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 4.573e-10, bg 5e-2
+PROBE pass 5: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -5.1845284e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 4.252e-10, bg 5e-2
+PROBE pass 6: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -5.168327e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.992e-10, bg 5e-2
+PROBE pass 7: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -4.180026e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.775e-10, bg 5e-2
+PROBE pass 8: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -4.487857e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.592e-10, bg 5e-2
+SR-HEAT1 GPU t = 8: sigma2 x 24.000167, y 24.000166, expected 24, error 6.94e-6; heat 4.52e-7; |T - twin| 9.02e-7
+PROBE pass 9: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -2.7704823e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.434e-10, bg 5e-2
+PROBE pass 10: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -2.462651e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.295e-10, bg 5e-2
+PROBE pass 11: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -1.6201651e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.172e-10, bg 5e-2
+PROBE pass 12: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -2.7542808e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 3.063e-10, bg 5e-2
+PROBE pass 13: HeatReport { dt: 1.0, passes: 2, rounds: 3, converged: true, delta: -2.3492395e-9 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.964e-10, bg 5e-2
+PROBE pass 14: HeatReport { dt: 1.0, passes: 3, rounds: 3, converged: true, delta: -1.8567093e-8 } leak so far 0.000e0, edge max T-bg 7.451e-10, twin 2.874e-10, bg 5e-2
+PROBE pass 15: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 4.0823318e-7 } leak so far 0.000e0, edge max T-bg 1.937e-8, twin 2.792e-10, bg 5e-2
+PROBE pass 16: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 3.7500357e-7 } leak so far 3.815e-6, edge max T-bg 3.427e-8, twin 2.717e-10, bg 5e-2
+SR-HEAT1 GPU t = 16: sigma2 x 32.007922, y 32.007922, expected 32, error 2.48e-4; heat 4.31e-7; |T - twin| 2.78e-5
+PROBE pass 17: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 3.449819e-7 } leak so far 1.141e-5, edge max T-bg 4.917e-8, twin 2.648e-10, bg 5e-2
+PROBE pass 18: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 3.177388e-7 } leak so far 2.186e-5, edge max T-bg 5.662e-8, twin 2.584e-10, bg 5e-2
+PROBE pass 19: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 2.9274773e-7 } leak so far 3.420e-5, edge max T-bg 6.407e-8, twin 2.524e-10, bg 5e-2
+PROBE pass 20: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 2.6762706e-7 } leak so far 4.843e-5, edge max T-bg 7.153e-8, twin 2.469e-10, bg 5e-2
+PROBE pass 21: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 2.4550368e-7 } leak so far 6.452e-5, edge max T-bg 7.525e-8, twin 2.417e-10, bg 5e-2
+PROBE pass 22: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 2.250086e-7 } leak so far 8.154e-5, edge max T-bg 7.898e-8, twin 2.369e-10, bg 5e-2
+PROBE pass 23: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 2.0766473e-7 } leak so far 9.950e-5, edge max T-bg 8.270e-8, twin 2.322e-10, bg 5e-2
+PROBE pass 24: HeatReport { dt: 1.0, passes: 2, rounds: 2, converged: true, delta: 1.9228123e-7 } leak so far 1.184e-4, edge max T-bg 8.643e-8, twin 2.279e-10, bg 5e-2
+SR-HEAT1 GPU t = 24: sigma2 x 40.028779, y 40.028780, expected 40, error 7.19e-4; heat 3.45e-7; |T - twin| 2.74e-5
+SR-HEAT1 GPU radiated 1.18e-4, 5.89e-7 of the pulse
+SR-HEAT1 GPU worst sigma2 error 7.19e-4; up to 3 Newton passes, 3 rounds, |delta| 4.1e-7
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 367 filtered out; finished in 0.71s
+

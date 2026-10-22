@@ -1,0 +1,277 @@
+==== 2026-10-22T13:12:42-04:00 heat_stiff · clean · a fresh scratch copy of the tree
+== 2026-10-22T13:12:43-04:00 heat_stiff · task M0-D83 · box laserax-ai :: bash tests/gpu.sh heat::stiff physics
+-- heat_stiff · exit=0 · 38.54 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-8qmifvdq/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-8qmifvdq/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.31s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 -0.00e0, [1e-4, 0.1) -0.00e0, ≥ 0.1 7.86e-7; signed heat over the twin's -7.78e-7
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 3.46e-6 5.46e-8
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 7, rounds: 395, converged: true, delta: -0.0 }, the twin 8 passes, 899 rounds; T in [652.3828, 2805.3349]; lost 1.528789526e9 of radiated 1.528789451e9 (twin 1.528789367e9); C-weighted L1 against the twin 7.86e-7, worst cell with Σ ≥ 1e-4 6.01e-6
+SR-STIFF GPU heat_hot.json carried: 53 submissions of 8 rounds for the step's 418 slots, HeatReport { dt: 0.02, passes: 7, rounds: 395, converged: true, delta: -0.0 }
+ok
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 -0.00e0, [1e-4, 0.1) -0.00e0, ≥ 0.1 3.34e-6; signed heat over the twin's -3.34e-6
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 2.90e-6 4.32e-7
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 7, rounds: 44, converged: true, delta: -2.512037e-6 }, the twin 8 passes, 899 rounds; T in [652.3887, 2805.3281]; lost 1.528790048e9 of radiated 1.528790027e9 (twin 1.528789367e9); C-weighted L1 against the twin 3.34e-6, worst cell with Σ ≥ 1e-4 1.00e-5
+SR-STIFF GPU heat_hot.json carried: 9 submissions of 8 rounds for the step's 67 slots, HeatReport { dt: 0.02, passes: 7, rounds: 44, converged: true, delta: -2.512037e-6 }
+ok
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 9.33e-12, [1e-4, 0.1) 7.96e-9, ≥ 0.1 1.01e-5; signed heat over the twin's 1.01e-5
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 4.90e-5 -4.90e-5, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 9, rounds: 470, converged: true, delta: 1.50810365e-5 }, the twin 6 passes, 859 rounds; T in [40.9208, 95.7226]; lost 2.871357243e4 of radiated 2.871357278e4 (twin 2.871497902e4); C-weighted L1 against the twin 1.01e-5, worst cell with Σ ≥ 1e-4 1.18e-5
+SR-STIFF GPU heat_rim.json carried: 63 submissions of 8 rounds for the step's 499 slots, HeatReport { dt: 0.01, passes: 9, rounds: 470, converged: true, delta: 1.50810365e-5 }
+ok
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 4.03e-13, [1e-4, 0.1) 1.47e-10, ≥ 0.1 1.46e-7; signed heat over the twin's -1.06e-7
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 4.49e-7 4.23e-7, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 5, rounds: 55, converged: true, delta: -1.6865941e-7 }, the twin 6 passes, 859 rounds; T in [40.9207, 95.7215]; lost 2.871499375e4 of radiated 2.871499118e4 (twin 2.871497902e4); C-weighted L1 against the twin 1.46e-7, worst cell with Σ ≥ 1e-4 4.09e-7
+SR-STIFF GPU heat_rim.json carried: 9 submissions of 8 rounds for the step's 72 slots, HeatReport { dt: 0.01, passes: 5, rounds: 55, converged: true, delta: -1.6865941e-7 }
+ok
+test heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more ... SR-STIFF heat_hot heat left: one pass 0.3422, 64 passes of Δt/64 0.2030 (up to 6 Newton passes, 530 rounds a pass), ratio 1.686
+ok
+test heat::stiff::the_scenes_are_stiff_for_rkl2_and_carry_what_the_oracles_assume ... SR-STIFF RKL2 would need 5797 stages on heat_hot (Δt 0.02) and 115470 on heat_rim (Δt 0.01)
+ok
+test heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_hot.json: 8 Newton passes, 899 rounds, converged true, delta 4.5e-12; T in [652.3847, 2805.3371]; lost 1.528789369e9 of radiated 1.528789369e9; worst balance 1.17e-12
+ok
+test heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_rim.json: 6 Newton passes, 888 rounds, converged true, delta -2.1e-11; T in [40.9207, 95.7215]; lost 2.871497932e4 of radiated 2.871497932e4; worst balance 8.50e-10
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 361 filtered out; finished in 2.47s
+
+
+==== 2026-10-22T13:12:42-04:00 heat_stiff · plant newton-one-pass · a fresh scratch copy of the tree
+planted newton-one-pass: tests/plants/newton-one-pass.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-22T13:12:43-04:00 heat_stiff · task M0-D83 · box laserax-ai :: bash tests/gpu.sh heat::stiff physics
+-- heat_stiff · exit=101 · 28.70 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-8qmifvdq/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-8qmifvdq/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.32s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 0.00e0, [1e-4, 0.1) 0.00e0, ≥ 0.1 -1.00e0; signed heat over the twin's -1.00e0
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 4.01e-7 4.01e-7
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 1, rounds: 55, converged: true, delta: -8179.578 }, the twin 1 passes, 157 rounds; T in [0.0500, 0.0500]; lost 1.732603392e9 of radiated 7.086867481e12 (twin 7.086864637e12); C-weighted L1 against the twin -1.00e0, worst cell with Σ ≥ 1e-4 0.00e0
+
+thread 'heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi' (1317019) panicked at crates/sr-engine/tests/gpu/heat.rs:1228:13:
+(a) T 0.049999999999999996 below the floor 0.05
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 0.00e0, [1e-4, 0.1) 0.00e0, ≥ 0.1 -1.00e0; signed heat over the twin's -1.00e0
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 4.01e-7 4.01e-7
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 1, rounds: 6, converged: true, delta: -8179.578 }, the twin 1 passes, 157 rounds; T in [0.0500, 0.0500]; lost 1.732603392e9 of radiated 7.086867481e12 (twin 7.086864637e12); C-weighted L1 against the twin -1.00e0, worst cell with Σ ≥ 1e-4 0.00e0
+
+thread 'heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid' (1317046) panicked at crates/sr-engine/tests/gpu/heat.rs:1228:13:
+(a) T 0.049999999999999996 below the floor 0.05
+FAILED
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 8.80e-11, [1e-4, 0.1) 1.54e-7, ≥ 0.1 9.39e-5; signed heat over the twin's -6.37e-10
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 2.20e-7 2.20e-7, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 1, rounds: 131, converged: true, delta: 0.24237877 }, the twin 1 passes, 176 rounds; T in [12.4238, 117.6238]; lost 1.023999942e2 of radiated 1.023999100e2 (twin 1.023998875e2); C-weighted L1 against the twin 9.40e-5, worst cell with Σ ≥ 1e-4 8.19e-4
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi' (1317062) panicked at crates/sr-engine/tests/gpu/heat.rs:1229:13:
+(a) T 117.62379818022097 above (1 + 1e-5) max T0 = 100.00081443399864
+FAILED
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 2.07e-12, [1e-4, 0.1) 3.49e-9, ≥ 0.1 2.70e-6; signed heat over the twin's 8.19e-9
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 2.20e-7 2.20e-7, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 1, rounds: 15, converged: true, delta: 0.24251197 }, the twin 1 passes, 176 rounds; T in [12.4251, 117.6350]; lost 1.023985142e2 of radiated 1.023999100e2 (twin 1.023998875e2); C-weighted L1 against the twin 2.71e-6, worst cell with Σ ≥ 1e-4 2.44e-5
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid' (1317074) panicked at crates/sr-engine/tests/gpu/heat.rs:1229:13:
+(a) T 117.63496694442057 above (1 + 1e-5) max T0 = 100.00081443399864
+FAILED
+test heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more ... SR-STIFF heat_hot heat left: one pass -39.9029, 64 passes of Δt/64 0.1918 (up to 1 Newton passes, 144 rounds a pass), ratio -208.055
+
+thread 'heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more' (1317097) panicked at crates/sr-engine/tests/gpu/heat.rs:1337:9:
+(e) one pass keeps -208.0553581914139 × the refinement's heat
+FAILED
+test heat::stiff::the_scenes_are_stiff_for_rkl2_and_carry_what_the_oracles_assume ... SR-STIFF RKL2 would need 5797 stages on heat_hot (Δt 0.02) and 115470 on heat_rim (Δt 0.01)
+ok
+test heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_hot.json: 1 Newton passes, 157 rounds, converged true, delta -8.2e3; T in [-76878604.4682, -76878604.4682]; lost 7.086864796e12 of radiated 7.086864796e12; worst balance 4.09e3
+
+thread 'heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance' (1317099) panicked at crates/sr-engine/tests/gpu/heat.rs:1290:9:
+(c) the balance of a cell: 4090.2874717125424
+FAILED
+test heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_rim.json: 1 Newton passes, 176 rounds, converged true, delta 2.4e-1; T in [12.4251, 117.6347]; lost 1.023998898e2 of radiated 1.023998898e2; worst balance 1.49e0
+
+thread 'heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance' (1317100) panicked at crates/sr-engine/tests/gpu/heat.rs:1290:9:
+(c) the balance of a cell: 1.485017964485659
+FAILED
+
+failures:
+
+failures:
+    heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi
+    heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid
+    heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more
+    heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance
+    heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance
+
+test result: FAILED. 1 passed; 7 failed; 0 ignored; 0 measured; 361 filtered out; finished in 1.64s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-22T13:12:42-04:00 heat_stiff · plant carry-commit-early · a fresh scratch copy of the tree
+planted carry-commit-early: tests/plants/carry-commit-early.patch -> crates/sr-engine/shaders/latch.wgsl
+== 2026-10-22T13:12:43-04:00 heat_stiff · task M0-D83 · box laserax-ai :: bash tests/gpu.sh heat::stiff physics
+-- heat_stiff · exit=101 · 9.80 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-8qmifvdq/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-8qmifvdq/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.57s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 -0.00e0, [1e-4, 0.1) -0.00e0, ≥ 0.1 7.86e-7; signed heat over the twin's -7.78e-7
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 3.46e-6 5.46e-8
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 7, rounds: 395, converged: true, delta: -0.0 }, the twin 8 passes, 899 rounds; T in [652.3828, 2805.3349]; lost 1.528789526e9 of radiated 1.528789451e9 (twin 1.528789367e9); C-weighted L1 against the twin 7.86e-7, worst cell with Σ ≥ 1e-4 6.01e-6
+SR-STIFF GPU heat_hot.json carried: 1 submissions of 8 rounds for the step's 418 slots, HeatReport { dt: 0.02, passes: 0, rounds: 0, converged: false, delta: -65444.625 }
+
+thread 'heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi' (1315958) panicked at crates/sr-engine/tests/gpu/heat.rs:1393:9:
+assertion `left == right` failed: (d) carried: the record
+  left: HeatReport { dt: 0.02, passes: 0, rounds: 0, converged: false, delta: -65444.625 }
+ right: HeatReport { dt: 0.02, passes: 7, rounds: 395, converged: true, delta: -0.0 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 -0.00e0, [1e-4, 0.1) -0.00e0, ≥ 0.1 3.34e-6; signed heat over the twin's -3.34e-6
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 2.90e-6 4.32e-7
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 7, rounds: 44, converged: true, delta: -2.512037e-6 }, the twin 8 passes, 899 rounds; T in [652.3887, 2805.3281]; lost 1.528790048e9 of radiated 1.528790027e9 (twin 1.528789367e9); C-weighted L1 against the twin 3.34e-6, worst cell with Σ ≥ 1e-4 1.00e-5
+SR-STIFF GPU heat_hot.json carried: 1 submissions of 8 rounds for the step's 67 slots, HeatReport { dt: 0.02, passes: 0, rounds: 0, converged: false, delta: -65444.625 }
+
+thread 'heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid' (1315970) panicked at crates/sr-engine/tests/gpu/heat.rs:1393:9:
+assertion `left == right` failed: (d) carried: the record
+  left: HeatReport { dt: 0.02, passes: 0, rounds: 0, converged: false, delta: -65444.625 }
+ right: HeatReport { dt: 0.02, passes: 7, rounds: 44, converged: true, delta: -2.512037e-6 }
+FAILED
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 9.33e-12, [1e-4, 0.1) 7.96e-9, ≥ 0.1 1.01e-5; signed heat over the twin's 1.01e-5
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 4.90e-5 -4.90e-5, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 9, rounds: 470, converged: true, delta: 1.50810365e-5 }, the twin 6 passes, 859 rounds; T in [40.9208, 95.7226]; lost 2.871357243e4 of radiated 2.871357278e4 (twin 2.871497902e4); C-weighted L1 against the twin 1.01e-5, worst cell with Σ ≥ 1e-4 1.18e-5
+SR-STIFF GPU heat_rim.json carried: 1 submissions of 8 rounds for the step's 499 slots, HeatReport { dt: 0.01, passes: 0, rounds: 0, converged: false, delta: -3.8168255e-5 }
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi' (1315997) panicked at crates/sr-engine/tests/gpu/heat.rs:1393:9:
+assertion `left == right` failed: (d) carried: the record
+  left: HeatReport { dt: 0.01, passes: 0, rounds: 0, converged: false, delta: -3.8168255e-5 }
+ right: HeatReport { dt: 0.01, passes: 9, rounds: 470, converged: true, delta: 1.50810365e-5 }
+FAILED
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 4.03e-13, [1e-4, 0.1) 1.47e-10, ≥ 0.1 1.46e-7; signed heat over the twin's -1.06e-7
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 4.49e-7 4.23e-7, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 5, rounds: 55, converged: true, delta: -1.6865941e-7 }, the twin 6 passes, 859 rounds; T in [40.9207, 95.7215]; lost 2.871499375e4 of radiated 2.871499118e4 (twin 2.871497902e4); C-weighted L1 against the twin 1.46e-7, worst cell with Σ ≥ 1e-4 4.09e-7
+SR-STIFF GPU heat_rim.json carried: 1 submissions of 8 rounds for the step's 72 slots, HeatReport { dt: 0.01, passes: 0, rounds: 0, converged: false, delta: -3.8168255e-5 }
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid' (1316013) panicked at crates/sr-engine/tests/gpu/heat.rs:1393:9:
+assertion `left == right` failed: (d) carried: the record
+  left: HeatReport { dt: 0.01, passes: 0, rounds: 0, converged: false, delta: -3.8168255e-5 }
+ right: HeatReport { dt: 0.01, passes: 5, rounds: 55, converged: true, delta: -1.6865941e-7 }
+FAILED
+test heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more ... SR-STIFF heat_hot heat left: one pass 0.3422, 64 passes of Δt/64 0.2030 (up to 6 Newton passes, 530 rounds a pass), ratio 1.686
+ok
+test heat::stiff::the_scenes_are_stiff_for_rkl2_and_carry_what_the_oracles_assume ... SR-STIFF RKL2 would need 5797 stages on heat_hot (Δt 0.02) and 115470 on heat_rim (Δt 0.01)
+ok
+test heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_hot.json: 8 Newton passes, 899 rounds, converged true, delta 4.5e-12; T in [652.3847, 2805.3371]; lost 1.528789369e9 of radiated 1.528789369e9; worst balance 1.17e-12
+ok
+test heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_rim.json: 6 Newton passes, 888 rounds, converged true, delta -2.1e-11; T in [40.9207, 95.7215]; lost 2.871497932e4 of radiated 2.871497932e4; worst balance 8.50e-10
+ok
+
+failures:
+
+failures:
+    heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi
+    heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid
+
+test result: FAILED. 4 passed; 4 failed; 0 ignored; 0 measured; 361 filtered out; finished in 2.08s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-22T13:12:42-04:00 heat_stiff · plant vcycle-carry-restart · a fresh scratch copy of the tree
+planted vcycle-carry-restart: tests/plants/vcycle-carry-restart.patch -> crates/sr-engine/shaders/heat.wgsl
+== 2026-10-22T13:12:43-04:00 heat_stiff · task M0-D83 · box laserax-ai :: bash tests/gpu.sh heat::stiff physics
+-- heat_stiff · exit=101 · 19.68 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-8qmifvdq/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-8qmifvdq/arm3/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.15s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 -0.00e0, [1e-4, 0.1) -0.00e0, ≥ 0.1 7.86e-7; signed heat over the twin's -7.78e-7
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 3.46e-6 5.46e-8
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 7, rounds: 395, converged: true, delta: -0.0 }, the twin 8 passes, 899 rounds; T in [652.3828, 2805.3349]; lost 1.528789526e9 of radiated 1.528789451e9 (twin 1.528789367e9); C-weighted L1 against the twin 7.86e-7, worst cell with Σ ≥ 1e-4 6.01e-6
+SR-STIFF GPU heat_hot.json carried: 53 submissions of 8 rounds for the step's 418 slots, HeatReport { dt: 0.02, passes: 7, rounds: 395, converged: true, delta: -0.0 }
+ok
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_hot.json gap by Σ: < 1e-4 -0.00e0, [1e-4, 0.1) -0.00e0, ≥ 0.1 3.34e-6; signed heat over the twin's -3.34e-6
+SR-STIFF GPU heat_hot.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 -0.00e0 -0.00e0, [1e-4, 0.1) -0.00e0 -0.00e0, ≥ 0.1 2.90e-6 4.32e-7
+SR-STIFF GPU heat_hot.json: HeatReport { dt: 0.02, passes: 7, rounds: 44, converged: true, delta: -2.512037e-6 }, the twin 8 passes, 899 rounds; T in [652.3887, 2805.3281]; lost 1.528790048e9 of radiated 1.528790027e9 (twin 1.528789367e9); C-weighted L1 against the twin 3.34e-6, worst cell with Σ ≥ 1e-4 1.00e-5
+SR-STIFF GPU heat_hot.json carried: 9 submissions of 8 rounds for the step's 67 slots, HeatReport { dt: 0.02, passes: 7, rounds: 45, converged: true, delta: 6.2800927e-6 }
+
+thread 'heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid' (1316481) panicked at crates/sr-engine/tests/gpu/heat.rs:1393:9:
+assertion `left == right` failed: (d) carried: the record
+  left: HeatReport { dt: 0.02, passes: 7, rounds: 45, converged: true, delta: 6.2800927e-6 }
+ right: HeatReport { dt: 0.02, passes: 7, rounds: 44, converged: true, delta: -2.512037e-6 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 9.33e-12, [1e-4, 0.1) 7.96e-9, ≥ 0.1 1.01e-5; signed heat over the twin's 1.01e-5
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 4.90e-5 -4.90e-5, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 9, rounds: 470, converged: true, delta: 1.50810365e-5 }, the twin 6 passes, 859 rounds; T in [40.9208, 95.7226]; lost 2.871357243e4 of radiated 2.871357278e4 (twin 2.871497902e4); C-weighted L1 against the twin 1.01e-5, worst cell with Σ ≥ 1e-4 1.18e-5
+SR-STIFF GPU heat_rim.json carried: 63 submissions of 8 rounds for the step's 499 slots, HeatReport { dt: 0.01, passes: 9, rounds: 470, converged: true, delta: 1.50810365e-5 }
+ok
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-STIFF GPU heat_rim.json gap by Σ: < 1e-4 4.03e-13, [1e-4, 0.1) 1.47e-10, ≥ 0.1 1.46e-7; signed heat over the twin's -1.06e-7
+SR-STIFF GPU heat_rim.json radiated gap by Σ (|·| and signed, of the twin's radiated): < 1e-4 4.49e-7 4.23e-7, [1e-4, 0.1) 0.00e0 0.00e0, ≥ 0.1 0.00e0 0.00e0
+SR-STIFF GPU heat_rim.json: HeatReport { dt: 0.01, passes: 5, rounds: 55, converged: true, delta: -1.6865941e-7 }, the twin 6 passes, 859 rounds; T in [40.9207, 95.7215]; lost 2.871499375e4 of radiated 2.871499118e4 (twin 2.871497902e4); C-weighted L1 against the twin 1.46e-7, worst cell with Σ ≥ 1e-4 4.09e-7
+SR-STIFF GPU heat_rim.json carried: 19 submissions of 8 rounds for the step's 72 slots, HeatReport { dt: 0.01, passes: 11, rounds: 113, converged: true, delta: 2.791318e-5 }
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid' (1316524) panicked at crates/sr-engine/tests/gpu/heat.rs:1393:9:
+assertion `left == right` failed: (d) carried: the record
+  left: HeatReport { dt: 0.01, passes: 11, rounds: 113, converged: true, delta: 2.791318e-5 }
+ right: HeatReport { dt: 0.01, passes: 5, rounds: 55, converged: true, delta: -1.6865941e-7 }
+FAILED
+test heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more ... SR-STIFF heat_hot heat left: one pass 0.3422, 64 passes of Δt/64 0.2030 (up to 6 Newton passes, 530 rounds a pass), ratio 1.686
+ok
+test heat::stiff::the_scenes_are_stiff_for_rkl2_and_carry_what_the_oracles_assume ... SR-STIFF RKL2 would need 5797 stages on heat_hot (Δt 0.02) and 115470 on heat_rim (Δt 0.01)
+ok
+test heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_hot.json: 8 Newton passes, 899 rounds, converged true, delta 4.5e-12; T in [652.3847, 2805.3371]; lost 1.528789369e9 of radiated 1.528789369e9; worst balance 1.17e-12
+ok
+test heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_rim.json: 6 Newton passes, 888 rounds, converged true, delta -2.1e-11; T in [40.9207, 95.7215]; lost 2.871497932e4 of radiated 2.871497932e4; worst balance 8.50e-10
+ok
+
+failures:
+
+failures:
+    heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid
+
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 361 filtered out; finished in 2.66s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

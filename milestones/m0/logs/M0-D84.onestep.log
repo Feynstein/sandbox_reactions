@@ -1,0 +1,209 @@
+# M0-D84 one-step T comparisons (laserax-ai-server, RTX 4090), 2026-10-22T13:23:33-04:00
+load: 1.20 1.33 0.86 1/878 1300412
+jacobi32k SR-PROBE heat step=1400 passes=14 rounds=8951 converged=true delta=-8.447449e-6
+one r7 s_1400 k=1400 vcycle-vs-jacobi32k: step 1401 sim_time a 9.240620929 b 9.240620929 gas 239999 gas_mismatch 0 L1_C 5.638e-5 worst_cell 9.920e-3
+one r7 s_1400 k=1400 vcycle-vs-jacobi4096: step 1401 sim_time a 9.240620929 b 9.240620929 gas 239999 gas_mismatch 0 L1_C 1.210e-2 worst_cell 1.407e3
+one r7 s_1400 k=1400 jacobi4096-vs-jacobi32k: step 1401 sim_time a 9.240620929 b 9.240620929 gas 239999 gas_mismatch 0 L1_C 1.207e-2 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1401 passes=13 rounds=8717 converged=true delta=-3.396479e-6
+one r7 s_1400 k=1401 vcycle-vs-jacobi32k: step 1402 sim_time a 9.245857043 b 9.245857043 gas 240000 gas_mismatch 0 L1_C 4.955e-5 worst_cell 8.347e-3
+one r7 s_1400 k=1401 vcycle-vs-jacobi4096: step 1402 sim_time a 9.245857043 b 9.245857043 gas 240000 gas_mismatch 0 L1_C 1.126e-2 worst_cell 1.455e3
+one r7 s_1400 k=1401 jacobi4096-vs-jacobi32k: step 1402 sim_time a 9.245857043 b 9.245857043 gas 240000 gas_mismatch 0 L1_C 1.122e-2 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1402 passes=13 rounds=8322 converged=true delta=-1.1721415e-6
+one r7 s_1400 k=1402 vcycle-vs-jacobi32k: step 1403 sim_time a 9.251092804 b 9.251092804 gas 240000 gas_mismatch 0 L1_C 4.441e-5 worst_cell 8.306e-3
+one r7 s_1400 k=1402 vcycle-vs-jacobi4096: step 1403 sim_time a 9.251092804 b 9.251092804 gas 240000 gas_mismatch 0 L1_C 1.047e-2 worst_cell 1.360e3
+one r7 s_1400 k=1402 jacobi4096-vs-jacobi32k: step 1403 sim_time a 9.251092804 b 9.251092804 gas 240000 gas_mismatch 0 L1_C 1.044e-2 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1403 passes=14 rounds=8323 converged=true delta=-5.6353188e-6
+one r7 s_1400 k=1403 vcycle-vs-jacobi32k: step 1404 sim_time a 9.256329220 b 9.256329220 gas 240000 gas_mismatch 0 L1_C 5.157e-5 worst_cell 8.326e-3
+one r7 s_1400 k=1403 vcycle-vs-jacobi4096: step 1404 sim_time a 9.256329220 b 9.256329220 gas 240000 gas_mismatch 0 L1_C 9.400e-3 worst_cell 1.393e3
+one r7 s_1400 k=1403 jacobi4096-vs-jacobi32k: step 1404 sim_time a 9.256329220 b 9.256329220 gas 240000 gas_mismatch 0 L1_C 9.364e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1404 passes=17 rounds=8317 converged=true delta=2.3439654e-5
+one r7 s_1400 k=1404 vcycle-vs-jacobi32k: step 1405 sim_time a 9.261563317 b 9.261563317 gas 240000 gas_mismatch 0 L1_C 3.534e-5 worst_cell 2.286e-2
+one r7 s_1400 k=1404 vcycle-vs-jacobi4096: step 1405 sim_time a 9.261563317 b 9.261563317 gas 240000 gas_mismatch 0 L1_C 8.755e-3 worst_cell 1.399e3
+one r7 s_1400 k=1404 jacobi4096-vs-jacobi32k: step 1405 sim_time a 9.261563317 b 9.261563317 gas 240000 gas_mismatch 0 L1_C 8.731e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1405 passes=17 rounds=9124 converged=true delta=1.590587e-5
+one r7 s_1400 k=1405 vcycle-vs-jacobi32k: step 1406 sim_time a 9.266798341 b 9.266798341 gas 240000 gas_mismatch 0 L1_C 2.514e-5 worst_cell 4.789e-2
+one r7 s_1400 k=1405 vcycle-vs-jacobi4096: step 1406 sim_time a 9.266798341 b 9.266798341 gas 240000 gas_mismatch 0 L1_C 8.654e-3 worst_cell 1.515e3
+one r7 s_1400 k=1405 jacobi4096-vs-jacobi32k: step 1406 sim_time a 9.266798341 b 9.266798341 gas 240000 gas_mismatch 0 L1_C 8.637e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1406 passes=17 rounds=9300 converged=true delta=1.5100918e-5
+one r7 s_1400 k=1406 vcycle-vs-jacobi32k: step 1407 sim_time a 9.272032027 b 9.272032027 gas 240000 gas_mismatch 0 L1_C 2.754e-5 worst_cell 2.997e-3
+one r7 s_1400 k=1406 vcycle-vs-jacobi4096: step 1407 sim_time a 9.272032027 b 9.272032027 gas 240000 gas_mismatch 0 L1_C 8.123e-3 worst_cell 1.466e3
+one r7 s_1400 k=1406 jacobi4096-vs-jacobi32k: step 1407 sim_time a 9.272032027 b 9.272032027 gas 240000 gas_mismatch 0 L1_C 8.106e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1407 passes=14 rounds=9030 converged=true delta=1.0588406e-6
+one r7 s_1400 k=1407 vcycle-vs-jacobi32k: step 1408 sim_time a 9.277264371 b 9.277264371 gas 240000 gas_mismatch 0 L1_C 4.254e-5 worst_cell 7.602e-3
+one r7 s_1400 k=1407 vcycle-vs-jacobi4096: step 1408 sim_time a 9.277264371 b 9.277264371 gas 240000 gas_mismatch 0 L1_C 9.164e-3 worst_cell 1.436e3
+one r7 s_1400 k=1407 jacobi4096-vs-jacobi32k: step 1408 sim_time a 9.277264371 b 9.277264371 gas 240000 gas_mismatch 0 L1_C 9.129e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1408 passes=14 rounds=8989 converged=true delta=1.0195144e-5
+one r7 s_1400 k=1408 vcycle-vs-jacobi32k: step 1409 sim_time a 9.282492957 b 9.282492957 gas 240000 gas_mismatch 0 L1_C 4.717e-5 worst_cell 1.523e-2
+one r7 s_1400 k=1408 vcycle-vs-jacobi4096: step 1409 sim_time a 9.282492957 b 9.282492957 gas 240000 gas_mismatch 0 L1_C 9.938e-3 worst_cell 1.395e3
+one r7 s_1400 k=1408 jacobi4096-vs-jacobi32k: step 1409 sim_time a 9.282492957 b 9.282492957 gas 240000 gas_mismatch 0 L1_C 9.896e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1409 passes=13 rounds=9514 converged=true delta=3.7573368e-6
+one r7 s_1400 k=1409 vcycle-vs-jacobi32k: step 1410 sim_time a 9.287718746 b 9.287718746 gas 240000 gas_mismatch 0 L1_C 4.491e-5 worst_cell 7.288e-1
+one r7 s_1400 k=1409 vcycle-vs-jacobi4096: step 1410 sim_time a 9.287718746 b 9.287718746 gas 240000 gas_mismatch 0 L1_C 1.095e-2 worst_cell 1.293e3
+one r7 s_1400 k=1409 jacobi4096-vs-jacobi32k: step 1410 sim_time a 9.287718746 b 9.287718746 gas 240000 gas_mismatch 0 L1_C 1.092e-2 worst_cell 9.992e-1
+jacobi32k SR-PROBE heat step=1410 passes=14 rounds=9568 converged=true delta=8.379485e-6
+one r7 s_1400 k=1410 vcycle-vs-jacobi32k: step 1411 sim_time a 9.292941115 b 9.292941115 gas 240000 gas_mismatch 0 L1_C 4.416e-5 worst_cell 8.167e-3
+one r7 s_1400 k=1410 vcycle-vs-jacobi4096: step 1411 sim_time a 9.292941115 b 9.292941115 gas 240000 gas_mismatch 0 L1_C 1.106e-2 worst_cell 1.314e3
+one r7 s_1400 k=1410 jacobi4096-vs-jacobi32k: step 1411 sim_time a 9.292941115 b 9.292941115 gas 240000 gas_mismatch 0 L1_C 1.102e-2 worst_cell 9.992e-1
+jacobi32k SR-PROBE heat step=1411 passes=14 rounds=9439 converged=true delta=8.274441e-6
+one r7 s_1400 k=1411 vcycle-vs-jacobi32k: step 1412 sim_time a 9.298157789 b 9.298157789 gas 240000 gas_mismatch 0 L1_C 4.376e-5 worst_cell 7.390e-3
+one r7 s_1400 k=1411 vcycle-vs-jacobi4096: step 1412 sim_time a 9.298157789 b 9.298157789 gas 240000 gas_mismatch 0 L1_C 1.041e-2 worst_cell 1.396e3
+one r7 s_1400 k=1411 jacobi4096-vs-jacobi32k: step 1412 sim_time a 9.298157789 b 9.298157789 gas 240000 gas_mismatch 0 L1_C 1.037e-2 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1412 passes=13 rounds=9089 converged=true delta=6.5510862e-6
+one r7 s_1400 k=1412 vcycle-vs-jacobi32k: step 1413 sim_time a 9.303373549 b 9.303373549 gas 240000 gas_mismatch 0 L1_C 3.885e-5 worst_cell 7.119e-3
+one r7 s_1400 k=1412 vcycle-vs-jacobi4096: step 1413 sim_time a 9.303373549 b 9.303373549 gas 240000 gas_mismatch 0 L1_C 8.854e-3 worst_cell 1.409e3
+one r7 s_1400 k=1412 jacobi4096-vs-jacobi32k: step 1413 sim_time a 9.303373549 b 9.303373549 gas 240000 gas_mismatch 0 L1_C 8.819e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1413 passes=14 rounds=8486 converged=true delta=-1.634103e-5
+one r7 s_1400 k=1413 vcycle-vs-jacobi32k: step 1414 sim_time a 9.308588970 b 9.308588970 gas 240000 gas_mismatch 0 L1_C 5.495e-5 worst_cell 5.677e-2
+one r7 s_1400 k=1413 vcycle-vs-jacobi4096: step 1414 sim_time a 9.308588970 b 9.308588970 gas 240000 gas_mismatch 0 L1_C 8.585e-3 worst_cell 1.477e3
+one r7 s_1400 k=1413 jacobi4096-vs-jacobi32k: step 1414 sim_time a 9.308588970 b 9.308588970 gas 240000 gas_mismatch 0 L1_C 8.564e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1414 passes=13 rounds=8299 converged=true delta=5.928739e-6
+one r7 s_1400 k=1414 vcycle-vs-jacobi32k: step 1415 sim_time a 9.313804842 b 9.313804842 gas 240000 gas_mismatch 0 L1_C 3.068e-5 worst_cell 1.589e-2
+one r7 s_1400 k=1414 vcycle-vs-jacobi4096: step 1415 sim_time a 9.313804842 b 9.313804842 gas 240000 gas_mismatch 0 L1_C 9.007e-3 worst_cell 1.308e3
+one r7 s_1400 k=1414 jacobi4096-vs-jacobi32k: step 1415 sim_time a 9.313804842 b 9.313804842 gas 240000 gas_mismatch 0 L1_C 8.980e-3 worst_cell 9.992e-1
+jacobi32k SR-PROBE heat step=1415 passes=14 rounds=8314 converged=true delta=-1.6523063e-5
+one r7 s_1400 k=1415 vcycle-vs-jacobi32k: step 1416 sim_time a 9.319021647 b 9.319021647 gas 240000 gas_mismatch 0 L1_C 3.699e-5 worst_cell 7.566e-3
+one r7 s_1400 k=1415 vcycle-vs-jacobi4096: step 1416 sim_time a 9.319021647 b 9.319021647 gas 240000 gas_mismatch 0 L1_C 8.775e-3 worst_cell 1.369e3
+one r7 s_1400 k=1415 jacobi4096-vs-jacobi32k: step 1416 sim_time a 9.319021647 b 9.319021647 gas 240000 gas_mismatch 0 L1_C 8.770e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1416 passes=13 rounds=9172 converged=true delta=2.6315713e-6
+one r7 s_1400 k=1416 vcycle-vs-jacobi32k: step 1417 sim_time a 9.324239663 b 9.324239663 gas 240000 gas_mismatch 0 L1_C 1.478e-5 worst_cell 4.277e-3
+one r7 s_1400 k=1416 vcycle-vs-jacobi4096: step 1417 sim_time a 9.324239663 b 9.324239663 gas 240000 gas_mismatch 0 L1_C 8.570e-3 worst_cell 1.383e3
+one r7 s_1400 k=1416 jacobi4096-vs-jacobi32k: step 1417 sim_time a 9.324239663 b 9.324239663 gas 240000 gas_mismatch 0 L1_C 8.559e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1417 passes=13 rounds=9221 converged=true delta=-6.469083e-7
+one r7 s_1400 k=1417 vcycle-vs-jacobi32k: step 1418 sim_time a 9.329451517 b 9.329451517 gas 240000 gas_mismatch 0 L1_C 1.705e-5 worst_cell 6.553e-3
+one r7 s_1400 k=1417 vcycle-vs-jacobi4096: step 1418 sim_time a 9.329451517 b 9.329451517 gas 240000 gas_mismatch 0 L1_C 9.199e-3 worst_cell 1.402e3
+one r7 s_1400 k=1417 jacobi4096-vs-jacobi32k: step 1418 sim_time a 9.329451517 b 9.329451517 gas 240000 gas_mismatch 0 L1_C 9.190e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1418 passes=15 rounds=8957 converged=true delta=-1.7215207e-5
+one r7 s_1400 k=1418 vcycle-vs-jacobi32k: step 1419 sim_time a 9.334658660 b 9.334658660 gas 240000 gas_mismatch 0 L1_C 4.143e-5 worst_cell 1.029e-2
+one r7 s_1400 k=1418 vcycle-vs-jacobi4096: step 1419 sim_time a 9.334658660 b 9.334658660 gas 240000 gas_mismatch 0 L1_C 9.673e-3 worst_cell 1.508e3
+one r7 s_1400 k=1418 jacobi4096-vs-jacobi32k: step 1419 sim_time a 9.334658660 b 9.334658660 gas 240000 gas_mismatch 0 L1_C 9.665e-3 worst_cell 9.993e-1
+jacobi32k SR-PROBE heat step=1419 passes=15 rounds=9235 converged=true delta=-1.5992293e-5
+one r7 s_1400 k=1419 vcycle-vs-jacobi32k: step 1420 sim_time a 9.339866872 b 9.339866872 gas 240000 gas_mismatch 0 L1_C 4.087e-5 worst_cell 1.285e-2
+one r7 s_1400 k=1419 vcycle-vs-jacobi4096: step 1420 sim_time a 9.339866872 b 9.339866872 gas 240000 gas_mismatch 0 L1_C 1.030e-2 worst_cell 1.343e3
+one r7 s_1400 k=1419 jacobi4096-vs-jacobi32k: step 1420 sim_time a 9.339866872 b 9.339866872 gas 240000 gas_mismatch 0 L1_C 1.029e-2 worst_cell 9.993e-1
+
+real	0m57.859s
+user	0m30.019s
+sys	0m17.231s
+load: 0.62 1.13 0.82 1/873 1301343
+jacobi32k SR-PROBE heat step=600 passes=7 rounds=357 converged=true delta=3.1236207e-6
+one r7 s_600 k=600 vcycle-vs-jacobi32k: step 601 sim_time a 4.350752184 b 4.350752184 gas 187925 gas_mismatch 0 L1_C 4.724e-6 worst_cell 1.114e-1
+jacobi32k SR-PROBE heat step=601 passes=6 rounds=89 converged=true delta=3.7222283e-6
+one r7 s_600 k=601 vcycle-vs-jacobi32k: step 602 sim_time a 4.356875726 b 4.356875726 gas 188069 gas_mismatch 0 L1_C 5.348e-6 worst_cell 9.852e-2
+jacobi32k SR-PROBE heat step=602 passes=6 rounds=328 converged=true delta=4.168975e-6
+one r7 s_600 k=602 vcycle-vs-jacobi32k: step 603 sim_time a 4.363008736 b 4.363008736 gas 188234 gas_mismatch 0 L1_C 6.073e-6 worst_cell 9.956e-3
+jacobi32k SR-PROBE heat step=603 passes=5 rounds=90 converged=true delta=6.900384e-6
+one r7 s_600 k=603 vcycle-vs-jacobi32k: step 604 sim_time a 4.369175117 b 4.369175117 gas 188391 gas_mismatch 0 L1_C 9.682e-6 worst_cell 2.508e-2
+jacobi32k SR-PROBE heat step=604 passes=5 rounds=83 converged=true delta=7.882285e-6
+one r7 s_600 k=604 vcycle-vs-jacobi32k: step 605 sim_time a 4.375369719 b 4.375369719 gas 188525 gas_mismatch 0 L1_C 1.059e-5 worst_cell 3.769e-2
+jacobi32k SR-PROBE heat step=605 passes=5 rounds=102 converged=true delta=9.143669e-6
+one r7 s_600 k=605 vcycle-vs-jacobi32k: step 606 sim_time a 4.381521974 b 4.381521974 gas 188676 gas_mismatch 0 L1_C 1.414e-5 worst_cell 2.032e-1
+jacobi32k SR-PROBE heat step=606 passes=6 rounds=100 converged=true delta=1.13825545e-5
+one r7 s_600 k=606 vcycle-vs-jacobi32k: step 607 sim_time a 4.387682921 b 4.387682921 gas 188829 gas_mismatch 0 L1_C 1.723e-5 worst_cell 1.681e-1
+jacobi32k SR-PROBE heat step=607 passes=7 rounds=98 converged=true delta=1.2945442e-5
+one r7 s_600 k=607 vcycle-vs-jacobi32k: step 608 sim_time a 4.393872844 b 4.393872844 gas 188981 gas_mismatch 0 L1_C 1.810e-5 worst_cell 1.023e-2
+jacobi32k SR-PROBE heat step=608 passes=5 rounds=99 converged=true delta=1.7232818e-5
+one r7 s_600 k=608 vcycle-vs-jacobi32k: step 609 sim_time a 4.400095990 b 4.400095990 gas 189145 gas_mismatch 0 L1_C 2.436e-5 worst_cell 8.741e-3
+jacobi32k SR-PROBE heat step=609 passes=5 rounds=104 converged=true delta=1.279496e-5
+one r7 s_600 k=609 vcycle-vs-jacobi32k: step 610 sim_time a 4.406269246 b 4.406269246 gas 189273 gas_mismatch 0 L1_C 1.793e-5 worst_cell 6.760e-3
+jacobi32k SR-PROBE heat step=610 passes=4 rounds=106 converged=true delta=2.0102283e-5
+one r7 s_600 k=610 vcycle-vs-jacobi32k: step 611 sim_time a 4.412451698 b 4.412451698 gas 189435 gas_mismatch 0 L1_C 2.805e-5 worst_cell 9.139e-3
+jacobi32k SR-PROBE heat step=611 passes=5 rounds=108 converged=true delta=2.0609496e-5
+one r7 s_600 k=611 vcycle-vs-jacobi32k: step 612 sim_time a 4.418658491 b 4.418658491 gas 189595 gas_mismatch 0 L1_C 2.793e-5 worst_cell 8.968e-3
+jacobi32k SR-PROBE heat step=612 passes=4 rounds=98 converged=true delta=1.9751713e-5
+one r7 s_600 k=612 vcycle-vs-jacobi32k: step 613 sim_time a 4.424839514 b 4.424839514 gas 189743 gas_mismatch 0 L1_C 2.839e-5 worst_cell 9.395e-3
+jacobi32k SR-PROBE heat step=613 passes=4 rounds=104 converged=true delta=2.0299636e-5
+one r7 s_600 k=613 vcycle-vs-jacobi32k: step 614 sim_time a 4.431027038 b 4.431027038 gas 189882 gas_mismatch 0 L1_C 2.777e-5 worst_cell 9.121e-3
+jacobi32k SR-PROBE heat step=614 passes=6 rounds=111 converged=true delta=2.1926227e-5
+one r7 s_600 k=614 vcycle-vs-jacobi32k: step 615 sim_time a 4.437233884 b 4.437233884 gas 190048 gas_mismatch 0 L1_C 3.081e-5 worst_cell 1.115e-2
+jacobi32k SR-PROBE heat step=615 passes=6 rounds=102 converged=true delta=1.9719144e-5
+one r7 s_600 k=615 vcycle-vs-jacobi32k: step 616 sim_time a 4.443464433 b 4.443464433 gas 190194 gas_mismatch 0 L1_C 2.777e-5 worst_cell 9.991e-3
+jacobi32k SR-PROBE heat step=616 passes=6 rounds=92 converged=true delta=2.0845071e-5
+one r7 s_600 k=616 vcycle-vs-jacobi32k: step 617 sim_time a 4.449657834 b 4.449657834 gas 190333 gas_mismatch 0 L1_C 2.796e-5 worst_cell 1.061e-2
+jacobi32k SR-PROBE heat step=617 passes=6 rounds=110 converged=true delta=2.0698782e-5
+one r7 s_600 k=617 vcycle-vs-jacobi32k: step 618 sim_time a 4.455857544 b 4.455857544 gas 190489 gas_mismatch 0 L1_C 2.993e-5 worst_cell 1.024e-2
+jacobi32k SR-PROBE heat step=618 passes=5 rounds=143 converged=true delta=2.4595472e-5
+one r7 s_600 k=618 vcycle-vs-jacobi32k: step 619 sim_time a 4.462085015 b 4.462085015 gas 190658 gas_mismatch 0 L1_C 3.571e-5 worst_cell 9.664e-3
+jacobi32k SR-PROBE heat step=619 passes=7 rounds=90 converged=true delta=2.2442096e-5
+one r7 s_600 k=619 vcycle-vs-jacobi32k: step 620 sim_time a 4.468284188 b 4.468284188 gas 190801 gas_mismatch 0 L1_C 3.066e-5 worst_cell 3.206e-2
+load: 0.79 1.13 0.83 1/870 1301838
+jacobi32k SR-PROBE heat step=600 passes=4 rounds=75 converged=true delta=2.1081041e-5
+one cur s_600 k=600 vcycle-vs-jacobi32k: step 601 sim_time a 4.374674527 b 4.374674527 gas 189047 gas_mismatch 0 L1_C 3.132e-5 worst_cell 1.553e-2
+jacobi32k SR-PROBE heat step=601 passes=4 rounds=103 converged=true delta=2.6988948e-5
+one cur s_600 k=601 vcycle-vs-jacobi32k: step 602 sim_time a 4.380948364 b 4.380948364 gas 189230 gas_mismatch 0 L1_C 3.875e-5 worst_cell 1.621e-2
+jacobi32k SR-PROBE heat step=602 passes=4 rounds=68 converged=true delta=2.741616e-5
+one cur s_600 k=602 vcycle-vs-jacobi32k: step 603 sim_time a 4.387225613 b 4.387225613 gas 189396 gas_mismatch 0 L1_C 3.781e-5 worst_cell 1.487e-2
+jacobi32k SR-PROBE heat step=603 passes=4 rounds=72 converged=true delta=2.75962e-5
+one cur s_600 k=603 vcycle-vs-jacobi32k: step 604 sim_time a 4.393534179 b 4.393534179 gas 189559 gas_mismatch 0 L1_C 3.978e-5 worst_cell 1.596e-2
+jacobi32k SR-PROBE heat step=604 passes=6 rounds=71 converged=true delta=2.7620119e-5
+one cur s_600 k=604 vcycle-vs-jacobi32k: step 605 sim_time a 4.399856799 b 4.399856799 gas 189716 gas_mismatch 0 L1_C 3.929e-5 worst_cell 1.682e-2
+jacobi32k SR-PROBE heat step=605 passes=6 rounds=79 converged=true delta=2.5895888e-5
+one cur s_600 k=605 vcycle-vs-jacobi32k: step 606 sim_time a 4.406150940 b 4.406150940 gas 189877 gas_mismatch 0 L1_C 3.797e-5 worst_cell 1.972e-2
+jacobi32k SR-PROBE heat step=606 passes=5 rounds=97 converged=true delta=2.7675538e-5
+one cur s_600 k=606 vcycle-vs-jacobi32k: step 607 sim_time a 4.412456646 b 4.412456646 gas 190039 gas_mismatch 0 L1_C 4.032e-5 worst_cell 1.804e-2
+jacobi32k SR-PROBE heat step=607 passes=5 rounds=57 converged=true delta=3.0740233e-5
+one cur s_600 k=607 vcycle-vs-jacobi32k: step 608 sim_time a 4.418792321 b 4.418792321 gas 190191 gas_mismatch 0 L1_C 4.524e-5 worst_cell 1.768e-2
+jacobi32k SR-PROBE heat step=608 passes=6 rounds=71 converged=true delta=2.8545965e-5
+one cur s_600 k=608 vcycle-vs-jacobi32k: step 609 sim_time a 4.425113538 b 4.425113538 gas 190351 gas_mismatch 0 L1_C 4.023e-5 worst_cell 1.671e-2
+jacobi32k SR-PROBE heat step=609 passes=5 rounds=79 converged=true delta=3.16566e-5
+one cur s_600 k=609 vcycle-vs-jacobi32k: step 610 sim_time a 4.431434481 b 4.431434481 gas 190553 gas_mismatch 0 L1_C 4.662e-5 worst_cell 2.074e-2
+jacobi32k SR-PROBE heat step=610 passes=5 rounds=67 converged=true delta=3.0268473e-5
+one cur s_600 k=610 vcycle-vs-jacobi32k: step 611 sim_time a 4.437762029 b 4.437762029 gas 190696 gas_mismatch 0 L1_C 4.357e-5 worst_cell 1.994e-2
+jacobi32k SR-PROBE heat step=611 passes=5 rounds=66 converged=true delta=3.0915715e-5
+one cur s_600 k=611 vcycle-vs-jacobi32k: step 612 sim_time a 4.444115221 b 4.444115221 gas 190842 gas_mismatch 0 L1_C 4.487e-5 worst_cell 1.995e-2
+jacobi32k SR-PROBE heat step=612 passes=5 rounds=68 converged=true delta=3.146362e-5
+one cur s_600 k=612 vcycle-vs-jacobi32k: step 613 sim_time a 4.450444623 b 4.450444623 gas 190990 gas_mismatch 0 L1_C 4.578e-5 worst_cell 2.099e-2
+jacobi32k SR-PROBE heat step=613 passes=12 rounds=95 converged=true delta=2.8114344e-5
+one cur s_600 k=613 vcycle-vs-jacobi32k: step 614 sim_time a 4.456778455 b 4.456778455 gas 191189 gas_mismatch 0 L1_C 4.272e-5 worst_cell 2.291e-2
+jacobi32k SR-PROBE heat step=614 passes=6 rounds=72 converged=true delta=3.204061e-5
+one cur s_600 k=614 vcycle-vs-jacobi32k: step 615 sim_time a 4.463135811 b 4.463135811 gas 191349 gas_mismatch 0 L1_C 4.593e-5 worst_cell 2.068e-2
+jacobi32k SR-PROBE heat step=615 passes=5 rounds=75 converged=true delta=3.1566124e-5
+one cur s_600 k=615 vcycle-vs-jacobi32k: step 616 sim_time a 4.469519152 b 4.469519152 gas 191511 gas_mismatch 0 L1_C 4.590e-5 worst_cell 2.241e-2
+jacobi32k SR-PROBE heat step=616 passes=6 rounds=72 converged=true delta=3.310747e-5
+one cur s_600 k=616 vcycle-vs-jacobi32k: step 617 sim_time a 4.475891226 b 4.475891226 gas 191669 gas_mismatch 0 L1_C 4.865e-5 worst_cell 2.234e-2
+jacobi32k SR-PROBE heat step=617 passes=9 rounds=72 converged=true delta=2.9524164e-5
+one cur s_600 k=617 vcycle-vs-jacobi32k: step 618 sim_time a 4.482263706 b 4.482263706 gas 191825 gas_mismatch 0 L1_C 4.479e-5 worst_cell 2.320e-2
+jacobi32k SR-PROBE heat step=618 passes=9 rounds=72 converged=true delta=3.1746353e-5
+one cur s_600 k=618 vcycle-vs-jacobi32k: step 619 sim_time a 4.488643068 b 4.488643068 gas 191994 gas_mismatch 0 L1_C 4.784e-5 worst_cell 2.185e-2
+jacobi32k SR-PROBE heat step=619 passes=6 rounds=73 converged=true delta=3.1103133e-5
+one cur s_600 k=619 vcycle-vs-jacobi32k: step 620 sim_time a 4.495029020 b 4.495029020 gas 192143 gas_mismatch 0 L1_C 4.648e-5 worst_cell 2.192e-2
+load: 0.87 1.12 0.83 1/870 1302307
+jacobi32k SR-PROBE heat step=1400 passes=6 rounds=1288 converged=true delta=-1.126538e-5
+one cur s_1400 k=1400 vcycle-vs-jacobi32k: step 1401 sim_time a 9.481384123 b 9.481384123 gas 240000 gas_mismatch 0 L1_C 2.591e-5 worst_cell 7.285e-3
+jacobi32k SR-PROBE heat step=1401 passes=6 rounds=1283 converged=true delta=-1.4738148e-5
+one cur s_1400 k=1401 vcycle-vs-jacobi32k: step 1402 sim_time a 9.487029860 b 9.487029860 gas 240000 gas_mismatch 0 L1_C 2.915e-5 worst_cell 7.246e-3
+jacobi32k SR-PROBE heat step=1402 passes=6 rounds=1274 converged=true delta=-1.3822557e-5
+one cur s_1400 k=1402 vcycle-vs-jacobi32k: step 1403 sim_time a 9.492691729 b 9.492691729 gas 240000 gas_mismatch 0 L1_C 2.708e-5 worst_cell 6.384e-3
+jacobi32k SR-PROBE heat step=1403 passes=7 rounds=942 converged=true delta=-1.9836487e-5
+one cur s_1400 k=1403 vcycle-vs-jacobi32k: step 1404 sim_time a 9.498366991 b 9.498366991 gas 240000 gas_mismatch 0 L1_C 4.162e-5 worst_cell 1.709e-2
+jacobi32k SR-PROBE heat step=1404 passes=6 rounds=893 converged=true delta=-9.66834e-6
+one cur s_1400 k=1404 vcycle-vs-jacobi32k: step 1405 sim_time a 9.504051288 b 9.504051288 gas 240000 gas_mismatch 0 L1_C 4.125e-5 worst_cell 9.688e-3
+jacobi32k SR-PROBE heat step=1405 passes=5 rounds=905 converged=true delta=-4.69032e-6
+one cur s_1400 k=1405 vcycle-vs-jacobi32k: step 1406 sim_time a 9.509742655 b 9.509742655 gas 240000 gas_mismatch 0 L1_C 3.010e-5 worst_cell 9.250e-3
+jacobi32k SR-PROBE heat step=1406 passes=6 rounds=941 converged=true delta=1.4219604e-6
+one cur s_1400 k=1406 vcycle-vs-jacobi32k: step 1407 sim_time a 9.515441201 b 9.515441201 gas 240000 gas_mismatch 0 L1_C 2.261e-5 worst_cell 6.489e-3
+jacobi32k SR-PROBE heat step=1407 passes=8 rounds=1213 converged=true delta=6.018953e-6
+one cur s_1400 k=1407 vcycle-vs-jacobi32k: step 1408 sim_time a 9.521145030 b 9.521145030 gas 240000 gas_mismatch 0 L1_C 3.588e-5 worst_cell 5.409e-3
+jacobi32k SR-PROBE heat step=1408 passes=6 rounds=1450 converged=true delta=6.797691e-6
+one cur s_1400 k=1408 vcycle-vs-jacobi32k: step 1409 sim_time a 9.526847683 b 9.526847683 gas 240000 gas_mismatch 0 L1_C 3.082e-5 worst_cell 9.759e-3
+jacobi32k SR-PROBE heat step=1409 passes=6 rounds=1435 converged=true delta=7.5870207e-6
+one cur s_1400 k=1409 vcycle-vs-jacobi32k: step 1410 sim_time a 9.532550822 b 9.532550822 gas 240000 gas_mismatch 0 L1_C 1.553e-5 worst_cell 1.188e-2
+jacobi32k SR-PROBE heat step=1410 passes=6 rounds=1414 converged=true delta=8.913994e-6
+one cur s_1400 k=1410 vcycle-vs-jacobi32k: step 1411 sim_time a 9.538254392 b 9.538254392 gas 240000 gas_mismatch 0 L1_C 1.659e-5 worst_cell 1.258e-2
+jacobi32k SR-PROBE heat step=1411 passes=5 rounds=1398 converged=true delta=7.717215e-6
+one cur s_1400 k=1411 vcycle-vs-jacobi32k: step 1412 sim_time a 9.543936975 b 9.543936975 gas 240000 gas_mismatch 0 L1_C 1.688e-5 worst_cell 1.064e-2
+jacobi32k SR-PROBE heat step=1412 passes=5 rounds=1386 converged=true delta=7.821347e-6
+one cur s_1400 k=1412 vcycle-vs-jacobi32k: step 1413 sim_time a 9.549586070 b 9.549586070 gas 240000 gas_mismatch 0 L1_C 2.010e-5 worst_cell 1.024e-2
+jacobi32k SR-PROBE heat step=1413 passes=6 rounds=1334 converged=true delta=-9.878469e-6
+one cur s_1400 k=1413 vcycle-vs-jacobi32k: step 1414 sim_time a 9.555193875 b 9.555193875 gas 240000 gas_mismatch 0 L1_C 3.214e-5 worst_cell 1.117e-2
+jacobi32k SR-PROBE heat step=1414 passes=7 rounds=1222 converged=true delta=1.8198563e-5
+one cur s_1400 k=1414 vcycle-vs-jacobi32k: step 1415 sim_time a 9.560745659 b 9.560745659 gas 240000 gas_mismatch 0 L1_C 3.652e-5 worst_cell 1.612e-2
+jacobi32k SR-PROBE heat step=1415 passes=7 rounds=1278 converged=true delta=1.6658221e-5
+one cur s_1400 k=1415 vcycle-vs-jacobi32k: step 1416 sim_time a 9.566247115 b 9.566247115 gas 240000 gas_mismatch 0 L1_C 3.000e-5 worst_cell 1.376e-2
+jacobi32k SR-PROBE heat step=1416 passes=7 rounds=1174 converged=true delta=2.0057923e-5
+one cur s_1400 k=1416 vcycle-vs-jacobi32k: step 1417 sim_time a 9.571700001 b 9.571700001 gas 240000 gas_mismatch 0 L1_C 4.491e-5 worst_cell 2.390e-2
+jacobi32k SR-PROBE heat step=1417 passes=6 rounds=1206 converged=true delta=1.4576692e-5
+one cur s_1400 k=1417 vcycle-vs-jacobi32k: step 1418 sim_time a 9.577111565 b 9.577111565 gas 240000 gas_mismatch 0 L1_C 3.887e-5 worst_cell 2.781e-2
+jacobi32k SR-PROBE heat step=1418 passes=7 rounds=1227 converged=true delta=-1.3630177e-5
+one cur s_1400 k=1418 vcycle-vs-jacobi32k: step 1419 sim_time a 9.582494577 b 9.582494577 gas 240000 gas_mismatch 0 L1_C 4.136e-5 worst_cell 2.829e-2
+jacobi32k SR-PROBE heat step=1419 passes=7 rounds=1279 converged=true delta=-1.7964254e-5
+one cur s_1400 k=1419 vcycle-vs-jacobi32k: step 1420 sim_time a 9.587826305 b 9.587826305 gas 240000 gas_mismatch 0 L1_C 4.289e-5 worst_cell 1.314e-2

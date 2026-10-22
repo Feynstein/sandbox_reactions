@@ -1,0 +1,29 @@
+== vcycle load 0.02 0.24 0.52 1/868 1308342
+   Compiling thiserror v2.0.21
+D84SUN code 2 unconverged 0
+D84SUN steps 1600 sim_time 19.7333592036739 stages [{"from_step":33,"sim_time":0.7751617841422558,"stage":"failed_star"},{"from_step":209,"sim_time":3.613848167471588,"stage":"collapsing"},{"from_step":337,"sim_time":4.8523346316069365,"stage":"cloud"},{"from_step":433,"sim_time":5.789043385535479,"stage":"failed_star"},{"from_step":721,"sim_time":9.239755145274104,"stage":"cloud"}]
+D84SUN object {"id":1,"mass_sb":3323.3007409749553,"stage":"cloud","stages":[{"from_step":33,"sim_time":0.7751617841422558,"stage":"failed_star"},{"from_step":209,"sim_time":3.613848167471588,"stage":"collapsing"},{"from_step":337,"sim_time":4.8523346316069365,"stage":"cloud"},{"from_step":433,"sim_time":5.789043385535479,"stage":"failed_star"},{"from_step":721,"sim_time":9.239755145274104,"stage":"cloud"}]}
+== jacobi load 1.67 0.63 0.64 1/864 1309156
+D84SUN code 0 unconverged 0
+D84SUN steps 1185 sim_time 14.848443157039585 stages [{"from_step":33,"sim_time":0.7752084285020828,"stage":"failed_star"},{"from_step":209,"sim_time":3.613962974399328,"stage":"collapsing"},{"from_step":337,"sim_time":4.852804192341864,"stage":"cloud"},{"from_step":433,"sim_time":5.790064554661512,"stage":"failed_star"},{"from_step":721,"sim_time":9.250394387170672,"stage":"cloud"},{"from_step":1185,"sim_time":14.848443157039585,"stage":"main_sequence"}]
+D84SUN object {"id":1,"mass_sb":3345.882796155289,"stage":"main_sequence","stages":[{"from_step":33,"sim_time":0.7752084285020828,"stage":"failed_star"},{"from_step":209,"sim_time":3.613962974399328,"stage":"collapsing"},{"from_step":337,"sim_time":4.852804192341864,"stage":"cloud"},{"from_step":433,"sim_time":5.790064554661512,"stage":"failed_star"},{"from_step":721,"sim_time":9.250394387170672,"stage":"cloud"},{"from_step":1185,"sim_time":14.848443157039585,"stage":"main_sequence"}]}
+== vcycle 6000 load 1.30 0.60 0.63 1/865 1309299
+D84SUN code 0 unconverged 0
+D84SUN steps 1617 sim_time 19.9334900630638 stages [{"from_step":33,"sim_time":0.7751617841422558,"stage":"failed_star"},{"from_step":209,"sim_time":3.613848167471588,"stage":"collapsing"},{"from_step":337,"sim_time":4.8523346316069365,"stage":"cloud"},{"from_step":433,"sim_time":5.789043385535479,"stage":"failed_star"},{"from_step":721,"sim_time":9.239755145274104,"stage":"cloud"},{"from_step":1617,"sim_time":19.9334900630638,"stage":"main_sequence"}]
+331:const SOLVE_TOL: f32 = 1.0e-6;
+332:const NEWTON_HEAT: f32 = 1.0e-7;
+335:const MAX_ROUNDS: u32 = 32768u;
+== tight (SOLVE_TOL 1e-6, NEWTON_HEAT 1e-7, MAX_ROUNDS 32768) vcycle 2000 load 0.76 0.55 0.62 1/865 1309626
+D84SUN code 0 unconverged 0
+D84SUN steps 1617 sim_time 19.91966569237411 stages [{"from_step":33,"sim_time":0.7751922179013491,"stage":"failed_star"},{"from_step":209,"sim_time":3.6138184582814574,"stage":"collapsing"},{"from_step":337,"sim_time":4.851853315718472,"stage":"cloud"},{"from_step":433,"sim_time":5.788253337144852,"stage":"failed_star"},{"from_step":721,"sim_time":9.234305087476969,"stage":"cloud"},{"from_step":1617,"sim_time":19.91966569237411,"stage":"main_sequence"}]
+== tight (SOLVE_TOL 1e-6, NEWTON_HEAT 1e-7, MAX_ROUNDS 32768) jacobi 2000 load 3.47 1.36 0.89 1/864 1310463
+D84SUN code 0 unconverged 0
+D84SUN steps 1617 sim_time 19.93154201004654 stages [{"from_step":33,"sim_time":0.7752011716365814,"stage":"failed_star"},{"from_step":209,"sim_time":3.613855918869376,"stage":"collapsing"},{"from_step":337,"sim_time":4.8522869637236,"stage":"cloud"},{"from_step":433,"sim_time":5.7917430102825165,"stage":"failed_star"},{"from_step":721,"sim_time":9.242499898187816,"stage":"cloud"},{"from_step":1617,"sim_time":19.93154201004654,"stage":"main_sequence"}]
+257:    let life = ["--until", CONTINUE_UNTIL, "--dump-every", &every, "--max-steps", "1600"];
+77:    let out = go("stage", &cold_disk(), &["--until", "stage:collapsing", "--max-steps", "2000"]);
+257:    let life = ["--until", CONTINUE_UNTIL, "--dump-every", &every, "--max-steps", "2000"];
+== observe a_life_cut cap 2000 (scratch) vcycle load 2.04 1.24 0.87 2/865 1310701
+unbroken: 1616 steps, events [{"detail":{"by":"light","mass_sb":3344.9272946687415},"kind":"ignition","object":1,"sim_time":8.631122916005552,"step":672}]
+stages [{"from_step":33,"sim_time":0.7751617841422558,"stage":"failed_star"},{"from_step":209,"sim_time":3.613848167471588,"stage":"collapsing"},{"from_step":336,"sim_time":4.842809090390801,"stage":"cloud"},{"from_step":432,"sim_time":5.7788251070305705,"stage":"failed_star"},{"from_step":720,"sim_time":9.227755278348925,"stage":"cloud"},{"from_step":1616,"sim_time":19.92174660973251,"stage":"main_sequence"}]
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 369 filtered out; finished in 21.19s

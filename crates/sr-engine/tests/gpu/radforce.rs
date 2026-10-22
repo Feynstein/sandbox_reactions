@@ -28,6 +28,9 @@
 //! and the momentum gained is s·Δt·f, E the free step's. Then D58's block itself — a 2 × 2 C/O block of Σ 1,250 at T_floor,
 //! heat on, 64 × 64 bounce, gravity and hydro, the shipped constants — 50 steps on the twin and through `headless` on the
 //! GPU: every value finite and the mass invariant within 10⁻⁶ (uncapped, E runs to NaN by step 12 and the world empties).
+//!
+//! M0-D83 — each GPU case on both of P5's preconditioners, Jacobi and the V-cycle (§0.5 [M0-D82]): `crate::heat`'s
+//! `on_both_preconditioners`, the D58 block's in-process `headless` run included.
 
 use std::path::PathBuf;
 
@@ -43,6 +46,15 @@ use sr_physics::reference::heat::{Heat, TestFlags};
 use sr_physics::reference::hydro::{Edge, Hydro, State};
 use sr_physics::reference::{react, Burning, Switches, Twin};
 use sr_physics::registry::{Elements, Physics, Reactions};
+
+use crate::heat::on_both_preconditioners;
+
+on_both_preconditioners!(
+    gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged,
+    gpu_p4_reads_the_previous_steps_flux,
+    gpu_the_push_spends_no_more_than_the_heat_above_the_floor,
+    gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass,
+);
 
 const W: usize = 64;
 const H: usize = 64;
@@ -282,7 +294,6 @@ fn read(gpu: &Gpu, buffer: &wgpu::Buffer) -> Vec<f32> {
 }
 
 /// The GPU's P4: each step's momentum gained against the free step is Σ Δt·f of the F side.flux held at the step's start.
-#[test]
 fn gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged() {
     let physics = physics();
     let first = slab();
@@ -302,7 +313,6 @@ fn gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged() {
 /// The adversarial case: P4 reads the F the last step left, not the one this step's P5 writes. One step runs on an F
 /// written by hand — the previous step's negated —: the momentum gained is that F's force within 1e-6, and differs from
 /// the force of the F P5 leaves at the step's end by more than the force itself.
-#[test]
 fn gpu_p4_reads_the_previous_steps_flux() {
     let physics = physics();
     let pair = Pair::new(&physics, &slab());
@@ -410,7 +420,6 @@ fn twin_the_push_spends_no_more_than_the_heat_above_the_floor() {
 }
 
 /// The GPU's P4: the same, F as side.flux holds it at the step's start.
-#[test]
 fn gpu_the_push_spends_no_more_than_the_heat_above_the_floor() {
     let physics = physics();
     let pair = Pair::new(&physics, &slab_of(CAP_MEDIUM, CAP_HOT));
@@ -467,7 +476,6 @@ fn twin_a_dense_hot_block_stays_finite_and_keeps_its_mass() {
 
 /// The GPU on the block, through `headless` in-process on the physics adapter: 50 steps, exit 0, every value of the final
 /// dump finite (F's planes included), summary.json's mass invariant within 10⁻⁶ from the ledger's start to its end.
-#[test]
 fn gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass() {
     let dir: PathBuf = std::env::temp_dir().join(format!("sr-radforce-{}-block", std::process::id()));
     let _ = std::fs::remove_dir_all(&dir);

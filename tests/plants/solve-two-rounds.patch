@@ -11,10 +11,10 @@
              self.net.matvec(&self.diag, &p, &mut q);
 --- a/crates/sr-engine/shaders/heat.wgsl
 +++ b/crates/sr-engine/shaders/heat.wgsl
-@@ -529,7 +529,7 @@
-                 eta = total.y - beta * beta * rec.eta;
-             }
-             var stop = (gamma <= rec.u_bound && total.z <= rec.t_bound) || !(eta > 0.0);
+@@ -604,7 +604,7 @@
+             // (4)'s u-measure is (r, D⁻¹r) whatever the preconditioner: Jacobi's γ, the V-cycle's fourth sum.
+             let measure = select(gamma, total.w, mg);
+             var stop = (measure <= rec.u_bound && total.z <= rec.t_bound) || !(eta > 0.0);
 -            stop = stop || rec.rounds >= MAX_ROUNDS;
 +            stop = stop || rec.rounds >= MAX_ROUNDS || rec.k == 2u;
              if (stop) {

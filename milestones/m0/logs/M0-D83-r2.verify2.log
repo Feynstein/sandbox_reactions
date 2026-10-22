@@ -1,0 +1,9 @@
+heat_stiff · clean · GO · arm 1/4, 3 left
+heat_stiff · plant newton-one-pass · RED (proven: 7 failed) · arm 2/4, 2 left
+heat_stiff · plant carry-commit-early · RED (proven: 4 failed) · arm 3/4, 1 left
+heat_stiff · plant vcycle-carry-restart · RED (proven: 2 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope heat_stiff · 42.51 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D83-r2.heat_stiff.redarm.log
+=== GO ===
+---
+milestones/m0/logs/M0-D83-r2.heat_stiff.redarm.log
+milestones/m0/logs/M0-D83-r2.heat_stiff.redarm.log

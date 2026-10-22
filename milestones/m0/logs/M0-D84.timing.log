@@ -1,0 +1,93 @@
+# M0-D84 timing (laserax-ai-server, RTX 4090 idle, 2026-10-22T13:27:48-04:00); a first pass at 13:26 lost its lines to a print bug (no load recorded) and is not counted
+pid, process_name
+TIMING run=1 dump=r7_s_1400 bin=jacobi P5=118.5655 step=120.5433 unconverged=20 load=0.66 0.95 0.81 gpu=0%,16MiB procs=0
+TIMING run=1 dump=r7_s_1400 bin=vcycle P5=31.5206 step=33.3240 unconverged=0 load=0.69 0.95 0.81 gpu=71%,16MiB procs=0
+TIMING run=1 dump=r7_s_600 bin=jacobi P5=4.8681 step=6.3364 unconverged=0 load=0.69 0.95 0.81 gpu=93%,16MiB procs=0
+TIMING run=1 dump=r7_s_600 bin=vcycle P5=5.0805 step=6.5419 unconverged=0 load=0.69 0.95 0.81 gpu=15%,16MiB procs=0
+TIMING run=1 dump=s_1400 bin=jacobi P5=37.1552 step=39.0463 unconverged=0 load=0.69 0.95 0.81 gpu=85%,16MiB procs=0
+TIMING run=1 dump=s_1400 bin=vcycle P5=10.9859 step=12.8172 unconverged=0 load=0.79 0.97 0.82 gpu=72%,16MiB procs=0
+TIMING run=1 dump=s_600 bin=jacobi P5=3.0555 step=4.6293 unconverged=0 load=0.79 0.97 0.82 gpu=95%,16MiB procs=0
+TIMING run=1 dump=s_600 bin=vcycle P5=3.6807 step=5.1521 unconverged=0 load=0.79 0.97 0.82 gpu=2%,16MiB procs=0
+TIMING run=1 dump=v_s_1400 bin=jacobi P5=35.4332 step=37.3237 unconverged=0 load=0.79 0.97 0.82 gpu=12%,16MiB procs=0
+TIMING run=1 dump=v_s_1400 bin=vcycle P5=10.4041 step=12.2445 unconverged=0 load=0.81 0.97 0.82 gpu=71%,16MiB procs=0
+TIMING run=1 dump=v_s_600 bin=jacobi P5=5.1189 step=6.6856 unconverged=0 load=0.81 0.97 0.82 gpu=77%,16MiB procs=0
+TIMING run=1 dump=v_s_600 bin=vcycle P5=3.9623 step=5.4394 unconverged=0 load=0.81 0.97 0.82 gpu=62%,16MiB procs=0
+TIMING run=2 dump=r7_s_1400 bin=jacobi P5=118.2580 step=120.2286 unconverged=20 load=0.81 0.97 0.82 gpu=0%,16MiB procs=0
+TIMING run=2 dump=r7_s_1400 bin=vcycle P5=31.4906 step=33.2918 unconverged=0 load=0.82 0.97 0.82 gpu=71%,16MiB procs=0
+TIMING run=2 dump=r7_s_600 bin=jacobi P5=4.8619 step=6.3332 unconverged=0 load=0.82 0.97 0.82 gpu=94%,16MiB procs=0
+TIMING run=2 dump=r7_s_600 bin=vcycle P5=5.0764 step=6.5347 unconverged=0 load=0.82 0.97 0.82 gpu=15%,16MiB procs=0
+TIMING run=2 dump=s_1400 bin=jacobi P5=37.0679 step=38.9596 unconverged=0 load=0.82 0.97 0.82 gpu=90%,16MiB procs=0
+TIMING run=2 dump=s_1400 bin=vcycle P5=11.0034 step=12.8359 unconverged=0 load=0.84 0.97 0.82 gpu=71%,16MiB procs=0
+TIMING run=2 dump=s_600 bin=jacobi P5=3.0546 step=4.6332 unconverged=0 load=0.84 0.97 0.82 gpu=95%,16MiB procs=0
+TIMING run=2 dump=s_600 bin=vcycle P5=3.6822 step=5.1526 unconverged=0 load=0.84 0.97 0.82 gpu=1%,16MiB procs=0
+TIMING run=2 dump=v_s_1400 bin=jacobi P5=35.3614 step=37.2544 unconverged=0 load=0.84 0.97 0.82 gpu=13%,16MiB procs=0
+TIMING run=2 dump=v_s_1400 bin=vcycle P5=10.4060 step=12.2457 unconverged=0 load=0.85 0.97 0.82 gpu=71%,16MiB procs=0
+TIMING run=2 dump=v_s_600 bin=jacobi P5=5.0487 step=6.6125 unconverged=0 load=0.85 0.97 0.82 gpu=94%,16MiB procs=0
+TIMING run=2 dump=v_s_600 bin=vcycle P5=3.9585 step=5.4342 unconverged=0 load=0.85 0.97 0.82 gpu=29%,16MiB procs=0
+TIMING run=3 dump=r7_s_1400 bin=jacobi P5=118.4798 step=120.4558 unconverged=20 load=0.85 0.97 0.82 gpu=1%,16MiB procs=0
+TIMING run=3 dump=r7_s_1400 bin=vcycle P5=31.5056 step=33.3095 unconverged=0 load=0.94 0.99 0.83 gpu=71%,16MiB procs=0
+TIMING run=3 dump=r7_s_600 bin=jacobi P5=4.8678 step=6.3374 unconverged=0 load=0.94 0.99 0.83 gpu=94%,16MiB procs=0
+TIMING run=3 dump=r7_s_600 bin=vcycle P5=5.0795 step=6.5389 unconverged=0 load=0.94 0.99 0.83 gpu=15%,16MiB procs=0
+TIMING run=3 dump=s_1400 bin=jacobi P5=37.1558 step=39.0494 unconverged=0 load=0.94 0.99 0.83 gpu=85%,16MiB procs=0
+TIMING run=3 dump=s_1400 bin=vcycle P5=11.0015 step=12.8319 unconverged=0 load=0.95 0.99 0.83 gpu=71%,16MiB procs=0
+TIMING run=3 dump=s_600 bin=jacobi P5=3.0683 step=4.6433 unconverged=0 load=0.95 0.99 0.83 gpu=95%,16MiB procs=0
+TIMING run=3 dump=s_600 bin=vcycle P5=3.6797 step=5.1498 unconverged=0 load=0.95 0.99 0.83 gpu=2%,16MiB procs=0
+TIMING run=3 dump=v_s_1400 bin=jacobi P5=35.4446 step=37.3349 unconverged=0 load=0.95 0.99 0.83 gpu=5%,16MiB procs=0
+TIMING run=3 dump=v_s_1400 bin=vcycle P5=10.3992 step=12.2401 unconverged=0 load=0.95 0.99 0.83 gpu=71%,16MiB procs=0
+TIMING run=3 dump=v_s_600 bin=jacobi P5=5.1345 step=6.7012 unconverged=0 load=0.95 0.99 0.83 gpu=56%,16MiB procs=0
+TIMING run=3 dump=v_s_600 bin=vcycle P5=3.9596 step=5.4367 unconverged=0 load=0.95 0.99 0.83 gpu=63%,16MiB procs=0
+== 2026-10-22T13:31:24-04:00 timing · task M0-D84 · box laserax-ai :: bash tests/gpu.sh timing physics
+-- timing · exit=101 · 18.21 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+a 240-step frame: StepCost { source: GpuTimestamp, steps: 204, ended: 240, step_ms: 14.513010509803927, pass_ms: [Some(0.05510290196078424), Some(0.019822901960784317), Some(0.07906666666666666), Some(0.22275419607843128), Some(0.13455043137254902), Some(13.59266949019607), Some(0.0707822745098039), Some(0.029992470588235298), Some(0.06408376470588234), Some(0.08177207843137252)], frame_ms: Some(0.006688) }
+a 240-step frame: 204 steps recorded for 240 ended
+a 240-step frame: passes sum 14.350597 ms, step 14.513011 ms, off by 1.1 %
+the next frame starts a fresh query set: StepCost { source: GpuTimestamp, steps: 10, ended: 10, step_ms: 20.1638944, pass_ms: [Some(0.35350400000000004), Some(0.0026463999999999993), Some(0.021168), Some(0.09312959999999999), Some(0.09494719999999998), Some(19.2157984), Some(0.07306559999999998), Some(0.0137152), Some(0.010729600000000002), Some(0.0128608)], frame_ms: Some(0.0066879999999999995) }
+the next frame starts a fresh query set: 10 steps recorded for 10 ended
+the next frame starts a fresh query set: passes sum 19.891565 ms, step 20.163894 ms, off by 1.4 %
+ok
+test timing::bare_steps_time_every_pass_at_its_boundaries ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+recorded passes: ["P0 edits", "P1 dt", "P2 gravity", "P3 sinks", "P4 hydro", "P5 heat", "P6 reactions", "P7 neutrino heating", "P8 floors", "P9 reductions"]
+steps 0–63: StepCost { source: GpuTimestamp, steps: 64, ended: 64, step_ms: 14.852449, pass_ms: [Some(0.008752000000000001), Some(0.0023829999999999993), Some(0.058539999999999995), Some(0.22637000000000002), Some(0.1267005), Some(13.859976499999993), Some(0.1616985), Some(0.05008), Some(0.09234249999999994), Some(0.05095500000000001)], frame_ms: None }
+steps 0–63: 64 steps recorded for 64 ended
+steps 0–63: passes sum 14.637798 ms, step 14.852449 ms, off by 1.4 %
+steps 64–78: StepCost { source: GpuTimestamp, steps: 15, ended: 15, step_ms: 13.934875733333334, pass_ms: [Some(0.008872533333333333), Some(0.002423466666666667), Some(0.2588138666666666), Some(0.09334400000000001), Some(0.05222826666666667), Some(12.687025066666667), Some(0.036096), Some(0.013619200000000001), Some(0.7317376000000002), Some(0.0130432)], frame_ms: None }
+steps 64–78: 15 steps recorded for 15 ended
+steps 64–78: passes sum 13.897203 ms, step 13.934876 ms, off by 0.3 %
+ok
+test timing::frames_report_their_cost_per_step_and_per_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+frame 0: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 20.1522976, pass_ms: [Some(0.008831199999999999), Some(0.0025720000000000005), Some(0.42718480000000003), Some(0.43005680000000013), Some(0.1923551999999998), Some(18.746309599999996), Some(0.035516), Some(0.0129512), Some(0.0125056), Some(0.0125712)], frame_ms: Some(0.008416) }
+frame 0: 40 steps recorded for 40 ended
+frame 0: passes sum 19.880854 ms, step 20.152298 ms, off by 1.3 %
+frame 1: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 13.3011632, pass_ms: [Some(0.0086312), Some(0.0023608), Some(0.021827999999999993), Some(0.1802592), Some(0.6232743999999998), Some(11.300922400000001), Some(0.38524879999999995), Some(0.18936480000000006), Some(0.12810559999999996), Some(0.13234079999999987)], frame_ms: Some(0.006336) }
+frame 1: 40 steps recorded for 40 ended
+frame 1: passes sum 12.972336 ms, step 13.301163 ms, off by 2.5 %
+frame 2: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 11.936413599999998, pass_ms: [Some(0.008662400000000002), Some(0.0024319999999999997), Some(0.1413472000000001), Some(0.09477679999999998), Some(1.7904655999999999), Some(9.6705872), Some(0.15268880000000015), Some(0.013140800000000003), Some(0.0121456), Some(0.012220799999999999)], frame_ms: Some(0.0066879999999999995) }
+frame 2: 40 steps recorded for 40 ended
+frame 2: passes sum 11.898467 ms, step 11.936414 ms, off by 0.3 %
+ok
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ERROR calibration invalid: preset_mass_sb: missing
+
+thread 'timing::headless_timing_writes_every_pass_of_the_nominal_disk' (1360073) panicked at crates/sr-engine/tests/gpu/timing.rs:206:66:
+summary.json written: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+bare, wall: StepCost { source: Wall, steps: 20, ended: 20, step_ms: 21.488816949999908, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+frame, wall: StepCost { source: Wall, steps: 20, ended: 20, step_ms: 15.880358149999847, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+ok
+
+failures:
+
+failures:
+    timing::headless_timing_writes_every_pass_of_the_nominal_disk
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 364 filtered out; finished in 17.97s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,284 @@
+# M0-D84 claim: verify.py --changed (linux-pc), 2026-10-22T13:30:13-04:00, load 1.16 1.31 1.69 3/2732 1352617
+0, NVIDIA GeForce RTX 5090, 97 %, 5274 MiB
+1, Quadro RTX 4000, 0 %, 840 MiB
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/src/step/heat.rs (+1)
+why burn_cell: stale: crates/sr-engine/src/step/heat.rs (+1)
+why burn_order: stale: crates/sr-engine/src/step/heat.rs (+1)
+why neutrino: stale: crates/sr-engine/src/step/heat.rs (+1)
+why sink: stale: crates/sr-engine/src/step/heat.rs (+1)
+why nu_heat: stale: crates/sr-engine/src/step/heat.rs (+1)
+why summary: stale: crates/sr-engine/src/step/heat.rs (+1)
+why ledger: stale: crates/sr-engine/src/step/heat.rs (+1)
+why preset_cloud: stale: crates/sr-engine/src/step/heat.rs (+1)
+why observe_run: stale: crates/sr-engine/src/step/heat.rs (+1)
+why sod: stale: crates/sr-engine/src/step/heat.rs (+1)
+why edges: stale: crates/sr-engine/src/step/heat.rs (+1)
+why collapse: stale: crates/sr-engine/src/step/heat.rs (+1)
+why jeans: stale: crates/sr-engine/src/step/heat.rs (+1)
+why sun_burn: never: assets/elements.json (+6)
+why twin: never: .cargo/config.toml (+103)
+why cpu_gpu: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_gauss: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_implicit: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_limiter: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_stiff: stale: crates/sr-engine/src/step/heat.rs (+1)
+why heat_multigrid: stale: crates/sr-engine/src/step/heat.rs (+1)
+why radiation_force: stale: crates/sr-engine/src/step/heat.rs (+1)
+why grav_force: stale: crates/sr-engine/src/step/heat.rs (+1)
+why grav_selfforce: stale: crates/sr-engine/src/step/heat.rs (+1)
+why fft: stale: crates/sr-engine/src/step/heat.rs (+1)
+why strings: stale: milestones/m0/m0_contrat.md
+why adapter: stale: crates/sr-engine/src/step/heat.rs (+1)
+why state: stale: crates/sr-engine/src/step/heat.rs (+1)
+why booking: stale: crates/sr-engine/src/step/heat.rs (+1)
+why floors: stale: crates/sr-engine/src/step/heat.rs (+1)
+why dt: stale: crates/sr-engine/src/step/heat.rs (+1)
+why box: stale: crates/sr-engine/src/step/heat.rs (+1)
+why latch: stale: crates/sr-engine/src/step/heat.rs (+1)
+why timing: never: .cargo/config.toml (+102)
+why scene: never: .cargo/config.toml (+120)
+why dump: never: .cargo/config.toml (+123)
+why boot: never: .cargo/config.toml (+112)
+why desktop: stale: crates/sr-engine/src/step/heat.rs (+1)
+why web: stale: crates/sr-engine/src/step/heat.rs (+1)
+why capture: stale: crates/sr-engine/src/step/heat.rs (+1)
+why watch_only: stale: crates/sr-engine/src/step/heat.rs (+1)
+why calibration: never: .cargo/config.toml (+122)
+why calibrate_cold: stale: crates/sr-engine/src/step/heat.rs (+1)
+why cold_core: stale: crates/sr-engine/src/step/heat.rs (+1)
+why calibrate_bisect: stale: crates/sr-engine/src/step/heat.rs (+1)
+why calibrate_order: stale: crates/sr-engine/src/step/heat.rs (+1)
+why readouts: never: .cargo/config.toml (+121)
+plan_lint         669/0/0      0.12 s  GO · step 1/49, 48 left
+build             2/0/0       11.21 s  GO · step 2/49, 47 left
+burn_cell         16/0/0      47.65 s  GO · step 3/49, 46 left
+burn_order        4/0/0       41.33 s  GO · step 4/49, 45 left
+neutrino          18/0/0      50.10 s  GO · step 5/49, 44 left
+sink              30/0/0      62.68 s  GO · step 6/49, 43 left
+nu_heat           15/0/0      52.56 s  GO · step 7/49, 42 left
+summary           7/0/0       45.68 s  GO · step 8/49, 41 left
+ledger            5/0/0       77.98 s  GO · step 9/49, 40 left
+preset_cloud      5/0/0       40.07 s  GO · step 10/49, 39 left
+observe_run       5/1/0       50.42 s  NO-GO · step 11/49, 38 left
+sod               15/0/0       8.88 s  GO · step 12/49, 37 left
+edges             7/0/0       14.09 s  GO · step 13/49, 36 left
+collapse          6/0/0        2.02 s  GO · step 14/49, 35 left
+jeans             5/0/0        1.92 s  GO · step 15/49, 34 left
+sun_burn          1/3/0        0.16 s  NO-GO · step 16/49, 33 left
+twin              4/2/0        1.37 s  NO-GO · step 17/49, 32 left
+cpu_gpu           3/0/0       10.43 s  GO · step 18/49, 31 left
+heat_gauss        14/0/0       7.58 s  GO · step 19/49, 30 left
+heat_implicit     8/0/0        3.92 s  GO · step 20/49, 29 left
+heat_limiter      8/0/0        8.58 s  GO · step 21/49, 28 left
+heat_stiff        8/0/0        5.68 s  GO · step 22/49, 27 left
+heat_multigrid    4/0/0        6.93 s  GO · step 23/49, 26 left
+radiation_force   11/0/0      14.15 s  GO · step 24/49, 25 left
+grav_force        13/0/0       6.28 s  GO · step 25/49, 24 left
+grav_selfforce    5/0/0        2.32 s  GO · step 26/49, 23 left
+fft               8/0/0        6.67 s  GO · step 27/49, 22 left
+strings           3/0/0        0.41 s  GO · step 28/49, 21 left
+adapter           10/0/0       4.77 s  GO · step 29/49, 20 left
+state             6/0/0        4.22 s  GO · step 30/49, 19 left
+booking           4/0/0        4.02 s  GO · step 31/49, 18 left
+floors            7/0/0        6.78 s  GO · step 32/49, 17 left
+dt                7/0/0        8.38 s  GO · step 33/49, 16 left
+box               8/0/0       10.88 s  GO · step 34/49, 15 left
+latch             5/0/0        4.82 s  GO · step 35/49, 14 left
+timing            4/1/0       18.21 s  NO-GO · step 36/49, 13 left
+scene             7/1/0        1.42 s  NO-GO · step 37/49, 12 left
+dump              9/2/0       45.69 s  NO-GO · step 38/49, 11 left
+boot              0/1/0        0.16 s  NO-GO · step 39/49, 10 left
+desktop           3/0/0       13.68 s  GO · step 40/49, 9 left
+web               3/0/0       21.49 s  GO · step 41/49, 8 left
+capture           2/0/0        0.98 s  GO · step 42/49, 7 left
+watch_only        1/0/0        0.12 s  GO · step 43/49, 6 left
+calibration       11/1/0       0.17 s  NO-GO · step 44/49, 5 left
+calibrate_cold    8/0/0        1.22 s  GO · step 45/49, 4 left
+cold_core         8/0/0        8.14 s  GO · step 46/49, 3 left
+calibrate_bisect  18/0/0     295.86 s  GO · step 47/49, 2 left
+calibrate_order   12/0/0       0.16 s  GO · step 48/49, 1 left
+readouts          8/1/0        0.11 s  NO-GO · step 49/49, 0 left
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 36 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 33 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 34 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+FLAG oracle: crates/sr-engine/tests/gpu/heat.rs changed since M0-D84's start - a test, case or check M0-D84's Deliver: does not name
+logs: milestones/m0/logs/M0-D84.<scope>.log · record: loop_times.jsonl · tree 40bdeac720a9+4f7d18bf9705
+anchor: 201 path×scope entries moved by this run
+anchor: 133 paths checked · 257 skipped (3 classes) · 149 never checked · 0 stale · 0 unclassified · 0 owed · 282 covered of 539 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  Cargo.lock  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  Cargo.toml  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  assets/calibration.json  (no entry for calibration, readouts)
+NEVER CHECKED  assets/elements.json  (no entry for observe_run, sun_burn, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  assets/physics.json  (no entry for observe_run, sun_burn, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  assets/reactions.json  (no entry for sun_burn, calibration, readouts)
+NEVER CHECKED  crates/sr-app/Cargo.toml  (no entry for boot)
+NEVER CHECKED  crates/sr-app/src/capture.rs  (no entry for boot)
+NEVER CHECKED  crates/sr-app/src/desktop.rs  (no entry for boot)
+NEVER CHECKED  crates/sr-app/src/main.rs  (no entry for boot)
+NEVER CHECKED  crates/sr-app/src/status.rs  (no entry for boot)
+NEVER CHECKED  crates/sr-app/src/strings.rs  (no entry for boot)
+NEVER CHECKED  crates/sr-app/src/web.rs  (no entry for boot)
+NEVER CHECKED  crates/sr-app/tests/strings.rs  (no entry for boot)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_order.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/readouts.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for observe_run, sun_burn, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/build.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/calibration.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/calibration_embed.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/observe/mod.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/observe/stages.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/observe/tracker.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/observe/translate.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/sheet.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  rust-toolchain.toml  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  scenes/asym_blob.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/box_blob.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/cold_co_disk.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/cold_disk.json  (no entry for observe_run, twin, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/edge_pulse.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/fill_world.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/heat_hot.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/heat_pulse.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/heat_rim.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/heat_spot.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/jeans_ripple.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/ref_burn.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/ref_disk.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/ref_sod.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/sink_cloud.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/sod.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  scenes/sun_disk.json  (no entry for observe_run, scene, dump, calibration, readouts)
+NEVER CHECKED  tests/cargo.sh  (no entry for observe_run, twin, timing, scene, dump, boot, calibration, readouts)
+NEVER CHECKED  tests/gpu.sh  (no entry for observe_run, sun_burn, twin, timing, scene, dump, calibration, readouts)
+NEVER CHECKED  tests/plants/anchor-reverse.patch  (no entry for readouts)
+NEVER CHECKED  tests/plants/burn-runaway.patch  (no entry for sun_burn)
+NEVER CHECKED  tests/plants/const-drift.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/continue-ignited-left-out.patch  (no entry for observe_run)
+NEVER CHECKED  tests/plants/continue-ledger-start-lost.patch  (no entry for observe_run)
+NEVER CHECKED  tests/plants/continue-until-unchecked.patch  (no entry for observe_run)
+NEVER CHECKED  tests/plants/dump-channel-order.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-flux-zero.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-sim-time-skip.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-sinks-drop.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/headless-no-sinks.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/render-reserve-required.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/scene-refuse.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/scene-unknown-key.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/stall-constants.patch  (no entry for sun_burn)
+NEVER CHECKED  tests/plants/timing-skip-pass.patch  (no entry for timing)
+NEVER CHECKED  tests/plants/twin-skip-floors.patch  (no entry for twin)
+NEVER CHECKED  tests/plants/until-never-met.patch  (no entry for observe_run)
+NEVER CHECKED  tests/smoke.sh  (no entry for boot)
+NEVER CHECKED  tools/pb/launch.json  (no entry for boot)
+skipped   249  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  observe_run: 1 failed · log milestones/m0/logs/M0-D84.observe_run.log
+  sun_burn: 3 failed · log milestones/m0/logs/M0-D84.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-D84.twin.log
+  timing: 1 failed · log milestones/m0/logs/M0-D84.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-D84.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-D84.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-D84.boot.log
+  calibration: 1 failed · log milestones/m0/logs/M0-D84.calibration.log
+  readouts: 1 failed · log milestones/m0/logs/M0-D84.readouts.log
+  anchor: 149 never checked, 0 stale, 0 unclassified - every one named above
+verify: 1040 passed, 13 failed, 0 skipped · 40/49 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 13 not impacted · 379.07 s + loop 0.05 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 1.16->1.81 · base: M0-D84's start 2026-10-22T13:15:45-04:00
+=== NO-GO: observe_run: 1 failed · log milestones/m0/logs/M0-D84.observe_run.log; sun_burn: 3 failed · log milestones/m0/logs/M0-D84.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-D84.twin.log; timing: 1 failed · log milestones/m0/logs/M0-D84.timing.log; scene: 1 failed · log milestones/m0/logs/M0-D84.scene.log; dump: 2 failed · log milestones/m0/logs/M0-D84.dump.log; boot: 1 failed; its ... ===
+exit 1

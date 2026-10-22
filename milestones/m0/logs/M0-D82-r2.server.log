@@ -1,0 +1,11 @@
+ 12:27:47 up 10 days, 0 min,  5 users,  load average: 0.16, 0.33, 0.29
+NVIDIA GeForce RTX 3060, 0 %
+NVIDIA GeForce RTX 4090, 0 %
+anchor: 111 path×scope entries moved by this run
+anchor: 134 paths checked · 255 skipped (3 classes) · 145 never checked · 2 stale · 0 unclassified · 0 owed · 281 covered of 536 visible
+verify: 16 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 9.24 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.16->2.19
+=== GO ===
+heat_multigrid · clean · GO · arm 1/2, 1 left
+heat_multigrid · plant vcycle-no-coarse · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope heat_multigrid · 19.16 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D82-r2.heat_multigrid.redarm.log
+=== GO ===

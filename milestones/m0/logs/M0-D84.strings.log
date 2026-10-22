@@ -1,0 +1,18 @@
+== 2026-10-22T13:31:17-04:00 strings · task M0-D84 · box laserax-ai :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 0.41 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 0.36s
+     Running tests/strings.rs (build/target/release/deps/strings-4b1d5408d3b86ba1)
+
+running 3 tests
+test same_keys_both_ways ... ok
+test web_texts_verbatim_in_index_html ... ok
+test texts_byte_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+

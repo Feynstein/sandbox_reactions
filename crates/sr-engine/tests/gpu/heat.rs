@@ -3,7 +3,9 @@
 //! of contract §0.5 [M0-TJ4] (backward Euler in u = a_r T⁴, Newton passes, Jacobi-PCG). M0-T42 — the GPU's P5
 //! (`step/heat.rs`, shaders/heat.wgsl), cases `gpu_…`, the same oracles on the physics adapter (R12), P5 alone between P1,
 //! P8 and P9 ([`OnGpu`]). M0-T118 — the GPU's implicit step on the linear law; M0-T119 — on every scene (the radiative law,
-//! RKL2 retired), every GPU case compared with the twin's `Heat::step` or `Heat::law`.
+//! RKL2 retired), every GPU case compared with the twin's `Heat::step` or `Heat::law`. M0-D83 — every GPU case of the four
+//! scopes below on both of P5's preconditioners, Jacobi and the V-cycle (§0.5 [M0-D82]), a case parameter
+//! ([`on_both_preconditioners`]).
 //!
 //! Three scopes, one module each. `gauss` — G-HEAT1: a Gaussian heat pulse in a uniform medium whose diffusivity is the
 //! scene's `test.constant_diffusivity` (scenes/heat_pulse.json), the variance per axis σ²(t) = σ₀² + 2χt within 1 % (SM-O7,
@@ -35,7 +37,7 @@ use sr_engine::gpu::Gpu;
 use sr_engine::scene::{Scene, TestSettings};
 use sr_engine::state::{Booking, SideFields, State as GpuState, WorldConfig, BOOK_GROUPS, TERMS};
 use sr_engine::step::boxfit::BoxMode;
-use sr_engine::step::heat::{HeatReport, HeatSetup, MIN_ROUNDS, SLOTS};
+use sr_engine::step::heat::{set_default_precond, HeatPrecond, HeatReport, HeatSetup, MIN_ROUNDS, SLOTS};
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::reference::heat::{lambda, Flux, Heat, Pass, TestFlags};
 use sr_physics::reference::hydro::State;
@@ -302,9 +304,49 @@ impl OnGpu {
     }
 }
 
+/// M0-D83 — `case` with every P5 it builds starting on `precond` (`set_default_precond`), the default before it put back
+/// after (M0-D84: the V-cycle), a panic included.
+pub(crate) fn on_precond(precond: HeatPrecond, case: fn()) {
+    struct Back(HeatPrecond);
+    impl Drop for Back {
+        fn drop(&mut self) {
+            set_default_precond(self.0);
+        }
+    }
+    let _back = Back(set_default_precond(precond));
+    println!("SR-PRECOND {precond:?}");
+    case();
+}
+
+/// Each named GPU case on both of P5's preconditioners (§0.5 [M0-D82], M0-D83), a case parameter: `<case>::jacobi` and
+/// `<case>::multigrid`, every bound the case's own.
+macro_rules! on_both_preconditioners {
+    ($($case:ident),* $(,)?) => {$(
+        mod $case {
+            #[test]
+            fn jacobi() {
+                $crate::heat::on_precond(sr_engine::step::heat::HeatPrecond::Jacobi, super::$case);
+            }
+
+            #[test]
+            fn multigrid() {
+                $crate::heat::on_precond(sr_engine::step::heat::HeatPrecond::Multigrid, super::$case);
+            }
+        }
+    )*};
+}
+pub(crate) use on_both_preconditioners;
+
 /// G-HEAT1: σ²(t) = σ₀² + 2χt per axis within 1 %, total heat constant to 1e-5, F at a face.
 mod gauss {
     use super::*;
+
+    on_both_preconditioners!(
+        gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept,
+        gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean,
+        gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost,
+        gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux,
+    );
 
     #[test]
     fn the_scene_files_carry_what_the_oracles_assume() {
@@ -488,7 +530,6 @@ mod gauss {
     /// G-HEAT1 on the GPU's implicit step (M0-T118): 24 passes of Δt = 1, each converged in two Newton passes or more (the
     /// second the linear law's check), σ² at t = 8, 16, 24 within 1 %, the heat to 1e-5, and the field the twin's
     /// (`Heat::step`) within 1e-4 of the peak.
-    #[test]
     fn gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept() {
         let scene = scene("heat_pulse.json");
         let (st, heat, bg) = gaussian(&scene, SIGMA0, PEAK);
@@ -518,13 +559,17 @@ mod gauss {
         }
         // Nothing reaches the edges but f32's round-off: the solve's noise at the floor, kept where it lands above u_vac,
         // books ~2e-9 an ulp at an edge face a pass (M0-D38: 3e-9 of the pulse on the RTX 4080 Laptop) — so the edges' sum is
-        // held to 1e-7 of the pulse's heat, and a cell off the edge books nothing (the lead, 2026-10-14, M0-D38).
+        // held to 1e-7 of the pulse's heat, and a cell off the edge books nothing (the lead, 2026-10-14, M0-D38). On the V-cycle,
+        // to 1e-5 of it, (4)'s own tolerance: from pass 15 its solves meet (4)'s measures in 2 rounds with the closure δ ~4e-7
+        // (Jacobi's ~1e-9), and δ lifts every cell, the floor's at the edges too, ~2e-8 a pass (5.9e-7 of the pulse on the RTX
+        // 4090; the lead, 2026-10-22, M0-D83: «V-cycle at 1e-5 (Recommended)»).
+        let band = if gpu.step.heat_precond() == Some(HeatPrecond::Multigrid) { 1e-5 } else { 1e-7 };
         let rad = gpu.radiated();
         let w = gpu.first.width;
         let h = gpu.first.height;
         let leak: f64 = rad.iter().map(|r| r.abs()).sum();
-        println!("SR-HEAT1 GPU radiated {leak:.2e}, {:.2e} of the pulse", leak / h0);
-        assert!(leak <= 1e-7 * h0, "the edges radiated {leak} of a pulse of {h0}");
+        println!("SR-HEAT1 GPU radiated {leak:.2e}, {:.2e} of the pulse (band {band:e})", leak / h0);
+        assert!(leak <= band * h0, "the edges radiated {leak} of a pulse of {h0}");
         for (i, &r) in rad.iter().enumerate() {
             let (x, y) = (i % w, i / w);
             assert!(r == 0.0 || x == 0 || y == 0 || x == w - 1 || y == h - 1, "cell ({x}, {y}) off the edge booked {r}");
@@ -534,7 +579,6 @@ mod gauss {
 
     /// F kept on the GPU — the flux the implicit step moved: every face the twin's within 1e-4 of the largest, −χ·C·ΔT signs;
     /// side.flux the mean of a cell's two faces (the field step n + 1's P4 reads).
-    #[test]
     fn gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean() {
         let scene = scene("heat_pulse.json");
         let (st, heat, _) = gaussian(&scene, SIGMA0, PEAK);
@@ -564,7 +608,6 @@ mod gauss {
     /// The hot slab on the GPU's implicit step, the radiative law (u = a_r T⁴, Newton passes): each pass converged,
     /// `radiated` equals the heat the grid lost within 1e-5 and the twin's (`Heat::step`) within 1e-4, booked exactly on the
     /// slab's ring, and T the twin's within 1e-4 of the slab's 30.
-    #[test]
     fn gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost() {
         let scene = rect_world(64, 64, [0, 16, 32, 32], 1.0, 30.0);
         let (st, physics, heat) = world(&scene);
@@ -597,7 +640,6 @@ mod gauss {
     /// `test.pin_temperature` on the GPU's implicit step: no pass runs, nothing is booked, the planes are the start's bit for
     /// bit, F is the law on the start state (the twin's `Heat::law` within 1e-4 of the largest face) — not the flux a free
     /// pass solves.
-    #[test]
     fn gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux() {
         let scene = scene("heat_pulse.json");
         let (st, heat, _) = gaussian(&scene, SIGMA0, PEAK);
@@ -623,6 +665,11 @@ mod gauss {
 /// radiative step solved cell by cell; the GPU's implicit step on the linear law against the twin (M0-T118).
 mod implicit {
     use super::*;
+
+    on_both_preconditioners!(
+        gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice,
+        gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t,
+    );
 
     /// One backward-Euler step of `dt` on a constant-diffusivity medium, solved here by Gauss–Seidel until no cell moves by
     /// 1e-14: C_i (T_i − T_i⁰)/Δt = Σ_f χ C_f (T_nb − T_i), C = Σ/μ, C_f the mean of the face's two C; beyond the world's edge
@@ -764,7 +811,6 @@ mod implicit {
     /// twin — the committed T within 1e-4 of the peak of the twin's `Heat::step` (the solved field, never the solve's own
     /// residual), σ² within 1 % of σ₀² + 2χt — and the same pass run again bit for bit: the planes, the record, the faces
     /// (every reduction a fixed-order tree, §1.3.4).
-    #[test]
     fn gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice() {
         let scene = scene("heat_pulse.json");
         let (st, heat, bg) = gaussian(&scene, SIGMA0, PEAK);
@@ -793,7 +839,6 @@ mod implicit {
     /// tolerance is relative to (§0.5 [M0-TJ4] (4)) — 15 passes of Δt = 3.2, each converged: the field within 1e-4 of the
     /// peak of the twin's from the same f32 start, σ² within 1 % of an explicit run's and of 2χt, the pulse's heat to 1e-5,
     /// never below −1e-5 of the peak (backward Euler's maximum principle, to the solve's own tolerance in f32).
-    #[test]
     fn gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t() {
         const SHARP: f64 = 100.0;
         let scene = scene("heat_pulse.json");
@@ -831,6 +876,11 @@ mod implicit {
 /// G-FLD: |F| ≤ c_sb a_r T⁴ in thin gas; the radiative conductivity in thick gas; λ.
 mod limiter {
     use super::*;
+
+    on_both_preconditioners!(
+        gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4,
+        gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off,
+    );
 
     fn constants(physics: &Physics) -> (f64, f64) {
         (physics.get("a_r").unwrap(), physics.get("c_sb").unwrap())
@@ -964,7 +1014,6 @@ mod limiter {
     /// largest face of `Heat::law`, T within 1e-4 of the spot's 2 of `Heat::step`, and the solved F (the flux the step moved)
     /// its by the energy it moves — Δt |F − F_twin| ≤ 1e-5 of the heat Σ C T⁰ at every face (the lead, M0-T119) — the
     /// adversarial case: u = a_r T⁴ spans 2.5 × 10⁻¹² (T_floor) to 6.4 × 10⁻⁶ (T = 2) here.
-    #[test]
     fn gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4() {
         let (st, physics, heat) = world(&scene("heat_spot.json"));
         let (a_r, c_sb) = constants(&physics);
@@ -1015,7 +1064,6 @@ mod limiter {
     /// Thick gas on the GPU carries (4/3) a_r c_sb T³/(κΣ) times −∇T of the solved temperatures within 1 % in the solved F;
     /// with `flux_limiter` off the law on a face of the spot (a pinned run) is c_sb ΔE/(3 κΣ_face) within 1e-5, a thousand
     /// times the bound.
-    #[test]
     fn gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off() {
         let thick = rect_world(64, 64, [0, 0, 64, 64], 100.0, 10.0);
         let (mut st, physics, _) = world(&thick);
@@ -1066,28 +1114,33 @@ mod limiter {
 mod stiff {
     use super::*;
 
+    on_both_preconditioners!(
+        gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost,
+        gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost,
+    );
+
     /// A scene, its gas and the Δt of its one pass.
-    struct Case {
-        file: &'static str,
+    pub(super) struct Case {
+        pub(super) file: &'static str,
         /// The gas's 1/μ and κ = κ₀ (1 + X_H) (§1.5, §2.4.2): helium 3/4 and 1, hydrogen 2 and 2.
         inv_mu: f64,
         kappa: f64,
-        dt: f64,
+        pub(super) dt: f64,
     }
 
-    const HOT: Case = Case { file: "heat_hot.json", inv_mu: 0.75, kappa: 1.0, dt: 0.02 };
-    const RIM: Case = Case { file: "heat_rim.json", inv_mu: INV_MU, kappa: KAPPA_H, dt: 0.01 };
+    pub(super) const HOT: Case = Case { file: "heat_hot.json", inv_mu: 0.75, kappa: 1.0, dt: 0.02 };
+    pub(super) const RIM: Case = Case { file: "heat_rim.json", inv_mu: INV_MU, kappa: KAPPA_H, dt: 0.01 };
 
     /// The constants a case's oracles read.
-    struct Ctx {
+    pub(super) struct Ctx {
         w: usize,
         h: usize,
         inv_mu: f64,
         kappa: f64,
         sigma_vac: f64,
         sigma_floor: f64,
-        t_floor: f64,
-        a_r: f64,
+        pub(super) t_floor: f64,
+        pub(super) a_r: f64,
         c_sb: f64,
     }
 
@@ -1116,13 +1169,13 @@ mod stiff {
         }
 
         /// T of every cell from E (the floor below Σ_vac), as [`temps`] with the gas's own 1/μ.
-        fn temps(&self, st: &State) -> Vec<f64> {
+        pub(super) fn temps(&self, st: &State) -> Vec<f64> {
             let n = st.cells();
             (0..n).map(|i| if self.gas(st, i) { st.planes[3 * n + i] / st.planes[i] / self.inv_mu } else { self.t_floor }).collect()
         }
 
         /// C = Σ/μ of every gas cell, 0 elsewhere.
-        fn c(&self, st: &State) -> Vec<f64> {
+        pub(super) fn c(&self, st: &State) -> Vec<f64> {
             (0..st.cells()).map(|i| if self.gas(st, i) { st.planes[i] * self.inv_mu } else { 0.0 }).collect()
         }
 
@@ -1177,7 +1230,7 @@ mod stiff {
     }
 
     /// The scene of `case`, its start as the twin holds it, its constants and its twin.
-    fn load(case: &Case) -> (Scene, Ctx, State, Heat) {
+    pub(super) fn load(case: &Case) -> (Scene, Ctx, State, Heat) {
         let scene = scene(case.file);
         let ctx = Ctx::new(case, &scene);
         let (st, _, heat) = world(&scene);
@@ -1344,13 +1397,156 @@ mod stiff {
         assert!(flux_bits(read(&gpu.gpu, gpu.side.flux())) == flux_bits(want.3), "(d) carried: side.flux differs");
     }
 
-    #[test]
     fn gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost() {
         gpu_one_pass(&HOT);
     }
 
-    #[test]
     fn gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost() {
         gpu_one_pass(&RIM);
+    }
+}
+
+/// M0-D82 — P5's multigrid preconditioner (§0.5 [M0-D82]; reports/heat_multigrid.md): the V-cycle's levels built from G-STIFF's
+/// two scenes' first Newton pass on the physics adapter (`Step::heat_first_system`), M⁻¹ applied there in f32
+/// (`Step::apply_heat_precond`). It is symmetric, |⟨Mx, y⟩ − ⟨x, My⟩| ≤ 1e-7 ‖Mx‖ ‖y‖ over the pairs of 8 random vectors
+/// (normwise: a nearly orthogonal pair's ⟨Mx, y⟩ is no scale — the lead, M0-D82, 2026-10-22: «Normwise ≤ 1e-7
+/// (Recommended)»; measured ≤ 4.8e-9, and ≥ 4.4e-6 with the sweeps going up red first, not the adjoint), and positive,
+/// ⟨Mx, x⟩ > 0; as the preconditioner of that pass's CG — run here in f64 from the pass's start to §0.5
+/// [M0-TJ4] (4)'s two measures — it converges in ≤ 2 × the f64 model's rounds (M6: heat_hot 14, heat_rim 17 in pass 1).
+/// Jacobi's rounds on the same pass are printed beside them.
+mod multigrid {
+    use super::stiff::{load, Case, Ctx, HOT, RIM};
+    use super::*;
+    use sr_engine::step::heat::{HeatPrecond, HeatSystem};
+
+    /// The model's first-pass rounds, the tile-smoother V(1,1) (reports/heat_multigrid.md M6).
+    const MODEL_HOT: usize = 14;
+    const MODEL_RIM: usize = 17;
+
+    /// The case's first step on the GPU and its first pass's system, with the case's constants.
+    fn first_pass(case: &Case) -> (OnGpu, HeatSystem, Ctx) {
+        let (scene, ctx, st, _) = load(case);
+        let gpu = OnGpu::new(&scene.physics().unwrap(), flags(&scene), &st);
+        gpu.pass(case.dt);
+        let s = gpu.step.heat_first_system(&gpu.gpu.device, &gpu.gpu.queue).unwrap();
+        println!("SR-MG {}: box {} × {} at ({}, {}), {} levels, mg_coarse from level {}", case.file, s.w, s.h, s.x0, s.y0, s.levels, s.coarse);
+        (gpu, s, ctx)
+    }
+
+    /// The four faces (D_f, the neighbour) of box cell k; a face of D_f 0 has no gas cell beyond it.
+    fn faces(s: &HeatSystem, k: usize) -> [(f64, usize); 4] {
+        let (i, j, w) = (k % s.w, k / s.w, s.w);
+        let d = [s.fx[j * (w + 1) + i], s.fx[j * (w + 1) + i + 1], s.fy[j * w + i], s.fy[(j + 1) * w + i]].map(f64::from);
+        [(d[0], k.wrapping_sub(1)), (d[1], k + 1), (d[2], k.wrapping_sub(w)), (d[3], k + w)]
+    }
+
+    /// A v over the box, face by face, in f64.
+    fn apply(s: &HeatSystem, v: &[f64]) -> Vec<f64> {
+        let at = |k: usize| faces(s, k).iter().filter(|f| f.0 != 0.0).fold(f64::from(s.own[k]) * v[k], |a, &(d, o)| a + d * (v[k] - v[o]));
+        (0..v.len()).map(|k| if s.own[k] < 0.0 { 0.0 } else { at(k) }).collect()
+    }
+
+    fn dot(a: &[f64], b: &[f64]) -> f64 {
+        a.iter().zip(b).map(|(x, y)| x * y).sum()
+    }
+
+    /// M⁻¹ r on the GPU, by the preconditioner chosen.
+    fn precond(gpu: &OnGpu, r: &[f64]) -> Vec<f64> {
+        let r: Vec<f32> = r.iter().map(|&v| v as f32).collect();
+        gpu.step.apply_heat_precond(&gpu.gpu.device, &gpu.gpu.queue, &r).iter().map(|&v| f64::from(v)).collect()
+    }
+
+    fn symmetric_and_positive(case: &Case) {
+        let (gpu, s, _) = first_pass(case);
+        gpu.step.set_heat_precond(HeatPrecond::Multigrid);
+        let mut seed = 0x9e37_79b9_7f4a_7c15u64;
+        let mut random = || {
+            seed ^= seed << 13;
+            seed ^= seed >> 7;
+            seed ^= seed << 17;
+            (seed >> 11) as f64 / (1u64 << 53) as f64 * 2.0 - 1.0
+        };
+        let xs: Vec<Vec<f64>> = (0..8).map(|_| s.own.iter().map(|&o| if o >= 0.0 { random() } else { 0.0 }).collect()).collect();
+        let ms: Vec<Vec<f64>> = xs.iter().map(|x| precond(&gpu, x)).collect();
+        let mut worst: f64 = 0.0;
+        for i in 0..8 {
+            for j in i + 1..8 {
+                let (a, b) = (dot(&ms[i], &xs[j]), dot(&xs[i], &ms[j]));
+                worst = worst.max((a - b).abs() / (dot(&ms[i], &ms[i]) * dot(&xs[j], &xs[j])).sqrt());
+            }
+        }
+        let least = (0..8).map(|i| dot(&ms[i], &xs[i])).fold(f64::MAX, f64::min);
+        println!("SR-MG {}: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs {worst:.2e}; the least <Mx, x> {least:.3e}", case.file);
+        assert!(worst <= 1e-7, "M⁻¹ is not symmetric: {worst:.2e}");
+        assert!(least > 0.0, "M⁻¹ is not positive: {least:e}");
+    }
+
+    /// The first pass's CG from its start under the preconditioner chosen, until both of (4)'s measures hold (§0.5 [M0-TJ4]):
+    /// x = u⁰, b − A x = −Σ_vac D_f (u_i − u_vac) − Σ_f D_f (u_i − u_f); its rounds (none past the ceiling's 4,096).
+    fn rounds(case: &Case, gpu: &OnGpu, s: &HeatSystem, ctx: &Ctx, precond_by: HeatPrecond) -> usize {
+        gpu.step.set_heat_precond(precond_by);
+        let (t_all, c_all) = (ctx.temps(&gpu.first), ctx.c(&gpu.first));
+        let world = |k: usize| (s.y0 + k / s.w) * gpu.first.width + s.x0 + k % s.w;
+        let gas: Vec<bool> = s.own.iter().map(|&o| o >= 0.0).collect();
+        let n = s.own.len();
+        let t: Vec<f64> = (0..n).map(|k| t_all[world(k)]).collect();
+        let heat: Vec<f64> = (0..n).map(|k| if gas[k] { c_all[world(k)] / f64::from(case.dt as f32) } else { 0.0 }).collect();
+        let slope: Vec<f64> = t.iter().map(|&t| 1.0 / (4.0 * ctx.a_r * t.powi(3))).collect();
+        let u: Vec<f64> = (0..n).map(|k| if gas[k] { ctx.a_r * t[k].powi(4) } else { 0.0 }).collect();
+        let diag: Vec<f64> = (0..n).map(|k| f64::from(s.own[k]) + faces(s, k).iter().map(|f| f.0).sum::<f64>()).collect();
+        let u_vac = ctx.a_r * ctx.t_floor.powi(4);
+        let au = apply(s, &u);
+        let mut r: Vec<f64> =
+            (0..n).map(|k| if gas[k] { -f64::from(s.vac[k]) * (u[k] - u_vac) - (au[k] - f64::from(s.own[k]) * u[k]) } else { 0.0 }).collect();
+        let tol2 = 1e-10;
+        let u_bound = tol2 * (0..n).filter(|&k| gas[k]).map(|k| heat[k] * slope[k] * u[k] * u[k]).sum::<f64>();
+        let t_bound = tol2 * (0..n).filter(|&k| gas[k]).map(|k| heat[k] * t[k] * t[k]).sum::<f64>();
+        let held = |r: &[f64]| {
+            let gamma: f64 = (0..n).filter(|&k| gas[k]).map(|k| r[k] * r[k] / diag[k]).sum();
+            let e: f64 = (0..n).filter(|&k| gas[k]).map(|k| heat[k] * (r[k] * slope[k] / diag[k]).powi(2)).sum();
+            gamma <= u_bound && e <= t_bound
+        };
+        let mut z = precond(gpu, &r);
+        let (mut p, mut rz) = (z.clone(), dot(&r, &z));
+        let mut k = 0;
+        while !held(&r) && k < 4096 {
+            let q = apply(s, &p);
+            let alpha = rz / dot(&p, &q);
+            r.iter_mut().zip(&q).for_each(|(r, q)| *r -= alpha * q);
+            z = precond(gpu, &r);
+            let rz1 = dot(&r, &z);
+            p = z.iter().zip(&p).map(|(z, p)| z + rz1 / rz * p).collect();
+            rz = rz1;
+            k += 1;
+        }
+        k
+    }
+
+    fn converges_within_twice_the_model(case: &Case, model: usize) {
+        let (gpu, s, ctx) = first_pass(case);
+        let jacobi = rounds(case, &gpu, &s, &ctx, HeatPrecond::Jacobi);
+        let multigrid = rounds(case, &gpu, &s, &ctx, HeatPrecond::Multigrid);
+        println!("SR-MG {}: the first pass converges in {multigrid} V-cycle rounds (the model {model}, the bound {}), {jacobi} Jacobi rounds", case.file, 2 * model);
+        assert!(multigrid <= 2 * model, "{multigrid} V-cycle rounds, over 2 × the model's {model}");
+    }
+
+    #[test]
+    fn gpu_the_v_cycle_is_symmetric_and_positive_on_the_burnt_field() {
+        symmetric_and_positive(&HOT);
+    }
+
+    #[test]
+    fn gpu_the_v_cycle_is_symmetric_and_positive_on_the_hot_disk_in_a_thin_ring() {
+        symmetric_and_positive(&RIM);
+    }
+
+    #[test]
+    fn gpu_the_burnt_fields_first_pass_converges_within_twice_the_models_rounds() {
+        converges_within_twice_the_model(&HOT, MODEL_HOT);
+    }
+
+    #[test]
+    fn gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds() {
+        converges_within_twice_the_model(&RIM, MODEL_RIM);
     }
 }

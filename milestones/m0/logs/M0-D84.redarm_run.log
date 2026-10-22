@@ -1,0 +1,8 @@
+# M0-D84 redarm observe_run on laserax-ai-server (RTX 4090), 2026-10-22T13:51:58-04:00, load 0.33 0.26 0.50 1/865 1314470
+observe_run · clean · GO · arm 1/4, 3 left
+observe_run · plant until-never-met · RED (proven: 4 failed) · arm 2/4, 2 left
+observe_run · plant continue-ignited-left-out · RED (proven: 1 failed) · arm 3/4, 1 left
+observe_run · plant continue-ledger-start-lost · RED (proven: 1 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope observe_run · 480.85 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D84.observe_run.redarm.log
+=== GO ===
+exit 0 at 2026-10-22T13:59:59-04:00

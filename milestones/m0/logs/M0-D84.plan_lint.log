@@ -1,0 +1,46 @@
+== 2026-10-22T13:30:13-04:00 plan_lint · task M0-D84 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=669 failed=0 warnings=41 · blocks=285 · flow_rows=285 · verify_fences=7 · history=0 · flow=per-task · header=690/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: 1 carried flag(s) on open BUILD blocks carry no `[<from>, <date>]` stamp - history, read by the pass since `Model ratings: 2026-10-22 by M0-TM10`, never counted (§0): M0-R10
+WARN: M0-TC7: DONE outside the current phase and 12 lines long - stub it (§2.6)
+WARN: M0-V18: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-D53: DONE outside the current phase and 44 lines long - stub it (§2.6)
+WARN: M0-D50: DONE outside the current phase and 63 lines long - stub it (§2.6)
+WARN: M0-D55: DONE outside the current phase and 53 lines long - stub it (§2.6)
+WARN: M0-D56: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-TJ2: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T123: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-T125: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D51: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D57: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D52: DONE outside the current phase and 38 lines long - stub it (§2.6)
+WARN: M0-D54: DONE outside the current phase and 24 lines long - stub it (§2.6)
+WARN: M0-R8: `Read:` names crates/sr-engine/src/step/heat.rs whole (596 lines > 500) - name a section or a line range
+WARN: M0-R9: `Read:` names crates/sr-engine/src/step/heat.rs whole (596 lines > 500) - name a section or a line range
+WARN: a line in 4 blocks (M0-R8 · M0-R9 · M0-R10 · M0-R6): '`M<n>` (bold allowed). Fail: NO-GO — no report, a missing section, fewer...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'gets tough, could we write lookup tables and just use the value closest ...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '(`build/calibrate_runs/2026-10-21T19-39-14Z/m_bh_sb-02/summary.json`, la...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'Pass: GO — the five sections as heading lines, ≥ 3 sources with `(access...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '30 seconds its kind of an issue lol». Then, on TJ2 («nothing in M0 block...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '- Symptom (measured): a life at a hard stretch runs seconds a step — the...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'are a multigrid preconditioner, a warm start from the last step's answer...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '- Blocks: nothing. Research only: no tree change, every probe in a scrat...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '- Rating: `(usual)` — research whose answer is a numeric fork (the heat ...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'any) filed · Fail: NO-GO, or the answer not recorded' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'verbatim in the report and, when a build is picked, the D filed after th...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '3,047 ms a step and every other pass under 0.02 ms — that collapse's tim...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'blocks for each of those possible optimizations, after D80. Its still a ...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '`[NOT RUN — for you]` with its exact line → Verify 1 ·' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'in the next line: a table cannot be indexed by the whole field a hard st...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'at ~0.6–3 s on the RTX 4090 (laserax-ai-server, 2026-10-22; milestones/m...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '(M0-R6); a game frame at core collapse would be ~30 s. M0-D80 also measu...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'a speed-up measured on a different scene than the one it is claimed for;...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '- Verify: 1. the report's sections and measurements, from the repo root' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'but lets do the first pass at least so that our testing here doesnt take...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'then ask the lead (PLAYBOOK §12, options (a)/(b), the recommendation fir...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '- Ask (verbatim): the lead, 2026-10-22, in M0-D80's session. The lead as...' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): 'P5's share of the 20 M₀ life's hard stretch before it promises anything.' - state it once in Rules and cite it
+WARN: a line in 3 blocks (M0-R8 · M0-R9 · M0-R10): '(`tools/pb/scratch_copy.sh`; its path in the handoff), nothing in the tr...' - state it once in Rules and cite it
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D84 4 · M0-R8 6 · M0-R9 7 · M0-R10 7 · M0-D81 3 · M0-R6 12 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6
+=== GO ===
+

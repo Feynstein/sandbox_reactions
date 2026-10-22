@@ -457,6 +457,34 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     2026-10-22) — the lead, 2026-10-22, at M0-R6: «If the simulation goes well it moves to 100 when it gets slow I want to see each
     step», «lets make that change in the main calibration script too», «The physics (Recommended)», «I want to see the relevant metrics
     to see how it goes».
+  - [M0-D82] §0.5 [M0-TJ4] (4)'s «Jacobi-preconditioned conjugate gradients» · the PCG's preconditioner is Jacobi's D⁻¹ or a geometric
+    multigrid V-cycle: Galerkin 2 × 2 piecewise-constant aggregation of each Newton pass's system (a coarse cell's own term the sum of its
+    cells' c_i and vacuum faces, a coarse face the sum of the fine faces between two aggregates, an aggregate with no gas cell inactive),
+    the levels halving until both sides are ≤ 4; one symmetric V(1,1) from z = 0 — a 16 × 16 tile smoother in workgroup memory (4
+    red-black sweep pairs, the halo frozen at the dispatch's start, red first going down, black first going up), the levels of ≤ 256 cells
+    in one workgroup, the coarsest by 50 symmetric sweep pairs; the stopping test, every tolerance and the ceiling (64 passes or 4,096
+    rounds, [M0-D37]) unchanged; the twin unchanged (it solves to 10⁻¹², where the preconditioner moves no answer). The V-cycle is P5's
+    default since M0-D84 (Jacobi until then), Jacobi kept for tests (`set_default_precond`, `Step::set_heat_precond`); M0-D83 runs the
+    round machine on either · M0-D84's cost, RTX 4090 (laserax-ai-server, idle: no other process on the card, load 0.66–0.95,
+    2026-10-22), the median of 3 `headless --load-dump <the 20 M₀ life's dump> --steps 20 --timing` runs (600 × 400, leave, every
+    switch on): on M0-R7's capped stretch (steps 1,400–1,420) P5 31.51 ms a step, every step converged in 59–275 rounds over 6–14
+    passes (Jacobi 118.48 ms, every step at 4,096 rounds, δ up to 8.3 × 10⁻³); on its easy stretch (600–620) 5.08 ms (Jacobi 4.87);
+    on the tree's own life 11.00 ms at 1,400 (Jacobi 37.16) and 3.68 ms at 600 (Jacobi 3.06); P5 ≈ 1.26 ms + 281 µs a V-cycle round
+    (Jacobi's round 28.6 µs); one step's T from the same state against Jacobi's run to convergence (a scratch cap of 32,768 rounds:
+    5,000–9,600 rounds on the capped stretch) within 5.6 × 10⁻⁵ C-weighted relative L1 over 80 steps, where the capped Jacobi step
+    sits 0.8–1.2 × 10⁻² from its own converged answer (milestones/m0/tasks/M0-D84.md); sun_disk on the Quadro not measured
+    (`preset_mass_sb` missing, M0-V9) · on heat_hot's and heat_rim's first pass (RTX
+    4090, laserax-ai-server, 2026-10-22) the V-cycle is symmetric to 4.8 × 10⁻⁹ ‖Mx‖ ‖y‖ (graded ≤ 10⁻⁷, normwise: the lead at M0-D82,
+    «Normwise ≤ 1e-7 (Recommended)») and positive, and the pass's CG converges in 15 rounds on each (Jacobi 112 and 131) — the lead,
+    2026-10-22, at M0-R7: «(b) Multigrid V-cycle (Recommended)» (reports/heat_multigrid.md: from step ~1,314 of the 20 M₀ life every
+    step stops at 4,096 Jacobi rounds, δ 6–8 × 10⁻³).
+  - [M0-D83] M0-D38's ruled bound on heat_gauss's GPU pulse («the edges' sum is held to 1e-7 of the pulse's heat», the lead,
+    2026-10-14, M0-D38), read on the V-cycle · on the multigrid preconditioner ([M0-D82]) the edges' sum is held to 10⁻⁵ of the
+    pulse, (4)'s own tolerance; on Jacobi 10⁻⁷ as ruled; every other bound of the five heat scopes unchanged on both · measured on the
+    RTX 4090 (laserax-ai-server, 2026-10-22): 5.9 × 10⁻⁷ — from the 15th pass the V-cycle's solves meet (4)'s two measures in 2 rounds
+    with the closure δ ≈ 4 × 10⁻⁷ (Jacobi's ≈ 10⁻⁹), and (5)'s δ lifts every cell, the floor's at the edges too, ≈ 2 × 10⁻⁸ a pass,
+    which they radiate; σ², the heat and T against the twin hold (T 2.7 × 10⁻⁵ of the peak, Jacobi 5.1 × 10⁻⁵) — the lead, 2026-10-22,
+    at M0-D83: «V-cycle at 1e-5 (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

@@ -253,8 +253,9 @@ fn sun_life(out: &Path, extra: &[&str]) -> (i32, Vec<String>) {
 fn a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary() {
     let dir = temp("continue");
     let every = CONTINUE_EVERY.to_string();
-    // The cap a little past the unbroken life's 1,184 steps: a plant that never meets the condition stops there.
-    let life = ["--until", CONTINUE_UNTIL, "--dump-every", &every, "--max-steps", "1600"];
+    // The cap a little past the unbroken life's 1,616 steps on the V-cycle (M0-D84; 1,184 on Jacobi's looser solve, the lead
+    // at M0-D84: «Raise cap to 2,000 (Recommended)»): a plant that never meets the condition stops there.
+    let life = ["--until", CONTINUE_UNTIL, "--dump-every", &every, "--max-steps", "2000"];
     let (whole, cut, on) = (dir.join("whole"), dir.join("cut"), dir.join("on"));
     let (code, lines) = sun_life(&whole, &life);
     assert_eq!(code, 0, "{lines:?}");

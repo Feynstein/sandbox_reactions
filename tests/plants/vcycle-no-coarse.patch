@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -1104,7 +1104,7 @@
+         let y = wid.y * MG_TILE + k / MG_HALO - 1u;
+         var v = 0.0;
+         if (live && up != 0u && x < d.x && y < d.y && mg_coef[coef + y * d.x + x] >= 0.0) {
+-            v = mg_vec[mg_z(l, 0u) + y * d.x + x] + mg_vec[mg_z(l + 1u, 1u) + (y / 2u) * cd.x + x / 2u];
++            v = mg_vec[mg_z(l, 0u) + y * d.x + x];
+         }
+         mg_tile[k] = v;
+     }

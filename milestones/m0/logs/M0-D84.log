@@ -1,0 +1,112 @@
+# M0-D84 — laserax-ai-server runs, 2026-10-22T13:17:08-04:00
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.08s
+
+real	0m3.123s
+user	0m15.389s
+sys	0m0.513s
+-rwxrwxr-x 2 ybelanger ybelanger 21703576 Oct 22 13:17 build/target/release/sandbox-reactions
+== calibrate 1400 (jacobi binary) load: 0.81 0.35 0.47 2/869 1291883
+0, 0 %, 15 MiB
+1, 0 %, 16 MiB
+  light  L         2.727e5 L_nuc   2.039e-11 L_N             0 L_nu            0
+  world  escaped     3.023 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=567 sim_time=4.163 heat_unconverged=24 stage=iron_core | raw=iron_core
+  frame  steps           1 dt       0.006165 s/step     0.1288 P5_ceil         0
+  star   M           67005 R           107.8 tau_dyn     4.325 M_unb           0
+  core   sigma_c     4.948 T_c         52.40 d_c        0.4202 Ye_c       0.4643
+  centre X_Fe        1.000 X_n             0 v_r         17.34 vr/vdyn    0.6954
+  light  L         2.611e5 L_nuc   1.909e-11 L_N             0 L_nu            0
+  world  escaped     3.054 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=1400 sim_time=9.475754 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1400 — reported, not guessed (record kept: build/calibrate_runs/2026-10-22T17-17-19Z/m_bh_sb-01)
+
+real	0m35.802s
+user	0m26.107s
+sys	0m0.560s
+exit 6
+== jacobi headless s_1400 20 steps load: 0.58 0.38 0.47 1/865 1292249
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=9.587826 until=none
+dumps
+events.jsonl
+summary.json
+s_1000.bin
+s_1000.observers.json
+s_100.bin
+/tmp/m0r7/p/life20/build/calibrate_runs/2026-10-22T15-33-15Z/m_bh_sb-01/dumps
+s_1000.bin s_1000.observers.json s_100.bin s_100.observers.json s_1100.bin s_1100.observers.json s_1200.bin s_1200.observers.json s_1300.bin s_1300.observers.json s_1400.bin s_1400.observers.json s_1500.bin s_1500.observers.json s_1600.bin s_1600.observers.json s_200.bin s_200.observers.json s_300.bin s_300.observers.json s_400.bin s_400.observers.json s_500.bin s_500.observers.json s_600.bin s_600.observers.json s_700.bin s_700.observers.json s_800.bin s_800.observers.json s_900.bin s_900.observers.json 
+SRDUMP01o
+{"channels":["sigma","mom_x","mom_y","energy","x_H","x_He","x_C","x_O","x_Ne","x_Mg","x_Si","x_S","x_Fe","x_n"],"height":400,"resume":{"box":[0,0,600,400,2048,1024,1393,89],"box_args":[75,50,1,938,1,1],"dt":0.005239287856966257,"dt_next":0.0052335127256810665,"flux":true,"latch_since":1.0},"sim_time":9.235387416323647,"sinks":[],"step":1400,"version":1,"width":600}]
+
+SRDUMP01n
+{"channels":["sigma","mom_x","mom_y","energy","x_H","x_He","x_C","x_O","x_Ne","x_Mg","x_Si","x_S","x_Fe","x_n"],"height":400,"resume":{"box":[0,0,600,400,2048,1024,1393,89],"box_args":[75,50,1,938,1,1],"dt":0.005615214351564646,"dt_next":0.005630162078887224,"flux":true,"latch_since":1.0},"sim_time":9.475753960665315,"sinks":[],"step":1400,"version":1,"width":600}:
+q8:A
+
+{"per_pass_ms": {"P0 edits": 0.015371199999999996, "P1 dt": 0.004030399999999999, "P2 gravity": 0.14707040000000002, "P3 sinks": 0.18556319999999998, "P4 hydro": 0.8773600000000001, "P5 heat": 37.389520000000005, "P6 reactions": 0.4385504, "P7 neutrino heating": 0.023230400000000002, "P8 floors": 0.04111839999999999, "P9 reductions": 0.020238400000000007}, "source": "gpu-timestamp", "step_ms_mean": 39.29638560000001}
+== jacobi headless on M0-R7 s_1400 load: 0.49 0.36 0.47 1/865 1292368
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 1400 passes 4 rounds 4096
+SR-WARN heat unconverged step 1401 passes 4 rounds 4096
+SR-WARN heat unconverged step 1402 passes 4 rounds 4096
+SR-WARN heat unconverged step 1403 passes 4 rounds 4096
+SR-WARN heat unconverged step 1404 passes 4 rounds 4096
+SR-WARN heat unconverged step 1405 passes 5 rounds 4096
+SR-WARN heat unconverged step 1406 passes 4 rounds 4096
+SR-WARN heat unconverged step 1407 passes 4 rounds 4096
+SR-WARN heat unconverged step 1408 passes 4 rounds 4096
+SR-WARN heat unconverged step 1409 passes 4 rounds 4096
+SR-WARN heat unconverged step 1410 passes 4 rounds 4096
+SR-WARN heat unconverged step 1411 passes 4 rounds 4096
+SR-WARN heat unconverged step 1412 passes 4 rounds 4096
+SR-WARN heat unconverged step 1413 passes 4 rounds 4096
+SR-WARN heat unconverged step 1414 passes 4 rounds 4096
+SR-WARN heat unconverged step 1415 passes 4 rounds 4096
+SR-WARN heat unconverged step 1416 passes 4 rounds 4096
+SR-WARN heat unconverged step 1417 passes 4 rounds 4096
+SR-WARN heat unconverged step 1418 passes 4 rounds 4096
+SR-WARN heat unconverged step 1419 passes 4 rounds 4096
+SR-HEADLESS DONE steps=20 sim_time=9.339867 until=none
+{"per_pass_ms": {"P0 edits": 0.0276096, "P1 dt": 0.005636799999999999, "P2 gravity": 0.14786880000000002, "P3 sinks": 0.1876112, "P4 hydro": 0.8749439999999999, "P5 heat": 118.56215360000003, "P6 reactions": 0.39923840000000005, "P7 neutrino heating": 0.027812800000000006, "P8 floors": 0.0431952, "P9 reductions": 0.0250832}, "source": "gpu-timestamp", "step_ms_mean": 120.53666560000002}
+== calibrate 600 (jacobi binary) load: 0.51 0.38 0.47 2/879 1292991
+
+real	0m8.280s
+user	0m3.384s
+sys	0m0.472s
+build/calibrate_runs/2026-10-22T17-18-51Z/m_bh_sb-01/checkpoint/s_600.bin
+== build vcycle binary
+   Compiling sr-app v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.10s
+binaries differ
+== vcycle headless on M0-R7 s_1400 (first look) load: 0.35 0.36 0.45 1/874 1293657
+0, 0 %, 15 MiB
+1, 0 %, 16 MiB
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=9.340056 until=none
+P5 42.236279999999994 step 44.7328816
+== probe build
+    Finished `release` profile [optimized] target(s) in 16.96s
+/tmp/d84/probe_target/release/examples/d84_tcmp
+ls: cannot access '/tmp/d84/probe_target/release/sandbox-reactions': No such file or directory
+    Finished `release` profile [optimized] target(s) in 20.35s
+jacobi
+probe
+tcmp
+vcycle
+crates/sr-physics/src/reference/heat.rs:51:pub const MAX_ROUNDS: usize = 32768;
+crates/sr-engine/shaders/heat.wgsl:335:const MAX_ROUNDS: u32 = 32768u;
+== probe32k build (scratch: MAX_ROUNDS 32768, a converged Jacobi reference)
+    Finished `release` profile [optimized] target(s) in 3.92s
+== calibrate 1400 (vcycle binary, the shipped CLI after the flip) load: 0.77 1.08 0.83 1/868 1302917
+SR-HEADLESS DONE steps=1400 sim_time=9.042702 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1400 — reported, not guessed (record kept: build/calibrate_runs/2026-10-22T17-26-00Z/m_bh_sb-01)
+real	0m20.044s
+kept build/calibrate_runs/2026-10-22T17-26-00Z/ -> /tmp/d84/v_s_1400.bin
+{'step': 1400, 'sim_time': 9.042701724916697, 'heat_unconverged': 3, 'stage': 'white_dwarf', 'raw': 'iron_core'}
+== calibrate 600 (vcycle binary, the shipped CLI after the flip) load: 0.75 1.05 0.82 1/866 1303009
+SR-HEADLESS DONE steps=600 sim_time=4.282633 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 600 — reported, not guessed (record kept: build/calibrate_runs/2026-10-22T17-26-20Z/m_bh_sb-01)
+real	0m9.731s
+kept build/calibrate_runs/2026-10-22T17-26-20Z/ -> /tmp/d84/v_s_600.bin
+{'step': 600, 'sim_time': 4.282632710412145, 'heat_unconverged': 3, 'stage': 'iron_core', 'raw': 'iron_core'}

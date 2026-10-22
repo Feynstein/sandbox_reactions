@@ -1,0 +1,67 @@
+1
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the first pass converges in 15 V-cycle rounds (the model 14, the bound 28), 112 Jacobi rounds
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the first pass converges in 15 V-cycle rounds (the model 17, the bound 34), 131 Jacobi rounds
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MGDBG pair 0 1: a 6.266619e0 b 6.266619e0 rel 1.17e-7 of-norms 9.56e-10 a/norms 8.17e-3
+SR-MGDBG pair 0 2: a -3.999893e0 b -3.999893e0 rel 1.52e-9 of-norms 7.93e-12 a/norms 5.22e-3
+SR-MGDBG pair 0 3: a -1.585125e1 b -1.585125e1 rel 2.22e-7 of-norms 4.64e-9 a/norms 2.09e-2
+SR-MGDBG pair 0 4: a 1.807886e1 b 1.807886e1 rel 5.15e-8 of-norms 1.23e-9 a/norms 2.39e-2
+SR-MGDBG pair 0 5: a 1.142626e-2 b 1.142284e-2 rel 3.00e-4 of-norms 4.51e-9 a/norms 1.50e-5
+SR-MGDBG pair 0 6: a -1.142070e1 b -1.142071e1 rel 2.04e-7 of-norms 3.09e-9 a/norms 1.51e-2
+SR-MGDBG pair 0 7: a -1.529973e1 b -1.529973e1 rel 2.52e-8 of-norms 5.04e-10 a/norms 2.00e-2
+SR-MGDBG pair 1 2: a -1.812477e1 b -1.812477e1 rel 6.63e-8 of-norms 1.58e-9 a/norms 2.39e-2
+SR-MGDBG pair 1 3: a 9.066601e0 b 9.066603e0 rel 2.52e-7 of-norms 3.04e-9 a/norms 1.21e-2
+SR-MGDBG pair 1 4: a 1.300575e1 b 1.300575e1 rel 2.75e-8 of-norms 4.77e-10 a/norms 1.73e-2
+SR-MGDBG pair 1 5: a -2.339752e1 b -2.339752e1 rel 3.57e-8 of-norms 1.11e-9 a/norms 3.11e-2
+SR-MGDBG pair 1 6: a -1.222219e1 b -1.222219e1 rel 2.11e-8 of-norms 3.44e-10 a/norms 1.63e-2
+SR-MGDBG pair 1 7: a -8.561322e0 b -8.561320e0 rel 2.54e-7 of-norms 2.87e-9 a/norms 1.13e-2
+SR-MGDBG pair 2 3: a -9.104609e0 b -9.104612e0 rel 3.89e-7 of-norms 4.13e-9 a/norms 1.06e-2
+SR-MGDBG pair 2 4: a -1.975972e1 b -1.975972e1 rel 4.72e-8 of-norms 1.09e-9 a/norms 2.31e-2
+SR-MGDBG pair 2 5: a 1.821780e1 b 1.821781e1 rel 2.05e-7 of-norms 4.35e-9 a/norms 2.13e-2
+SR-MGDBG pair 2 6: a 4.880988e0 b 4.880989e0 rel 2.54e-7 of-norms 1.46e-9 a/norms 5.72e-3
+SR-MGDBG pair 2 7: a -8.989794e0 b -8.989790e0 rel 4.58e-7 of-norms 4.77e-9 a/norms 1.04e-2
+SR-MGDBG pair 3 4: a 1.355747e0 b 1.355748e0 rel 9.39e-7 of-norms 1.72e-9 a/norms 1.83e-3
+SR-MGDBG pair 3 5: a 3.101611e-1 b 3.101630e-1 rel 6.11e-6 of-norms 2.55e-9 a/norms 4.17e-4
+SR-MGDBG pair 3 6: a 3.628852e0 b 3.628851e0 rel 2.13e-7 of-norms 1.04e-9 a/norms 4.90e-3
+SR-MGDBG pair 3 7: a 6.330951e0 b 6.330953e0 rel 2.11e-7 of-norms 1.79e-9 a/norms 8.45e-3
+SR-MGDBG pair 4 5: a -1.208899e1 b -1.208899e1 rel 1.21e-7 of-norms 2.21e-9 a/norms 1.82e-2
+SR-MGDBG pair 4 6: a 1.319876e1 b 1.319876e1 rel 1.21e-7 of-norms 2.41e-9 a/norms 2.00e-2
+SR-MGDBG pair 4 7: a -1.658592e1 b -1.658592e1 rel 3.38e-8 of-norms 8.37e-10 a/norms 2.48e-2
+SR-MGDBG pair 5 6: a 2.999990e0 b 2.999990e0 rel 2.51e-7 of-norms 8.18e-10 a/norms 3.25e-3
+SR-MGDBG pair 5 7: a -3.229808e1 b -3.229807e1 rel 6.13e-8 of-norms 2.12e-9 a/norms 3.46e-2
+SR-MGDBG pair 6 7: a 3.464939e0 b 3.464942e0 rel 6.86e-7 of-norms 3.51e-9 a/norms 5.11e-3
+SR-MG heat_hot.json: the worst |<Mx, y> - <x, My>| / |<Mx, y>| over 28 pairs 3.00e-4; the least <Mx, x> 2.796e2
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MGDBG pair 0 1: a -4.664668e-1 b -4.664668e-1 rel 3.07e-8 of-norms 1.07e-9 a/norms 3.50e-2
+SR-MGDBG pair 0 2: a -2.159590e-3 b -2.159586e-3 rel 1.73e-6 of-norms 2.80e-10 a/norms 1.62e-4
+SR-MGDBG pair 0 3: a -1.965632e-1 b -1.965632e-1 rel 8.00e-8 of-norms 1.19e-9 a/norms 1.49e-2
+SR-MGDBG pair 0 4: a 8.165921e-2 b 8.165924e-2 rel 3.08e-7 of-norms 1.91e-9 a/norms 6.20e-3
+SR-MGDBG pair 0 5: a 4.500406e-1 b 4.500406e-1 rel 3.65e-8 of-norms 1.24e-9 a/norms 3.41e-2
+SR-MGDBG pair 0 6: a -4.779362e-2 b -4.779364e-2 rel 3.47e-7 of-norms 1.26e-9 a/norms 3.63e-3
+SR-MGDBG pair 0 7: a -1.213428e-2 b -1.213429e-2 rel 1.00e-6 of-norms 9.13e-10 a/norms 9.11e-4
+SR-MGDBG pair 1 2: a -1.671180e-1 b -1.671179e-1 rel 3.43e-7 of-norms 4.17e-9 a/norms 1.21e-2
+SR-MGDBG pair 1 3: a 5.005755e-1 b 5.005755e-1 rel 1.20e-8 of-norms 4.41e-10 a/norms 3.67e-2
+SR-MGDBG pair 1 4: a -1.033331e-2 b -1.033331e-2 rel 1.62e-7 of-norms 1.23e-10 a/norms 7.60e-4
+SR-MGDBG pair 1 5: a -4.341513e-1 b -4.341513e-1 rel 1.92e-8 of-norms 6.12e-10 a/norms 3.18e-2
+SR-MGDBG pair 1 6: a -5.050754e-1 b -5.050754e-1 rel 1.67e-8 of-norms 6.21e-10 a/norms 3.72e-2
+SR-MGDBG pair 1 7: a -1.476879e-2 b -1.476880e-2 rel 3.99e-7 of-norms 4.28e-10 a/norms 1.07e-3
+SR-MGDBG pair 2 3: a -2.433533e-1 b -2.433533e-1 rel 1.19e-7 of-norms 1.74e-9 a/norms 1.46e-2
+SR-MGDBG pair 2 4: a -2.522003e-1 b -2.522004e-1 rel 2.75e-7 of-norms 4.17e-9 a/norms 1.52e-2
+SR-MGDBG pair 2 5: a 1.902734e-1 b 1.902734e-1 rel 4.59e-8 of-norms 5.23e-10 a/norms 1.14e-2
+SR-MGDBG pair 2 6: a 2.220556e-1 b 2.220557e-1 rel 1.95e-7 of-norms 2.60e-9 a/norms 1.34e-2
+SR-MGDBG pair 2 7: a -2.898224e-1 b -2.898224e-1 rel 2.31e-7 of-norms 3.98e-9 a/norms 1.72e-2
+SR-MGDBG pair 3 4: a -4.070110e-2 b -4.070107e-2 rel 7.52e-7 of-norms 2.00e-9 a/norms 2.66e-3
+SR-MGDBG pair 3 5: a -1.641660e-1 b -1.641660e-1 rel 9.55e-8 of-norms 1.02e-9 a/norms 1.07e-2
+SR-MGDBG pair 3 6: a -7.867169e-2 b -7.867164e-2 rel 6.81e-7 of-norms 3.50e-9 a/norms 5.14e-3
+SR-MGDBG pair 3 7: a 6.202287e-2 b 6.202287e-2 rel 7.84e-8 of-norms 3.14e-10 a/norms 4.01e-3
+SR-MGDBG pair 4 5: a -9.227584e-3 b -9.227564e-3 rel 2.15e-6 of-norms 1.31e-9 a/norms 6.09e-4
+SR-MGDBG pair 4 6: a -2.155650e-1 b -2.155650e-1 rel 2.81e-8 of-norms 4.01e-10 a/norms 1.43e-2
+SR-MGDBG pair 4 7: a 1.195068e-1 b 1.195068e-1 rel 3.62e-7 of-norms 2.83e-9 a/norms 7.82e-3
+SR-MGDBG pair 5 6: a 1.330443e-1 b 1.330443e-1 rel 2.18e-7 of-norms 1.89e-9 a/norms 8.68e-3
+SR-MGDBG pair 5 7: a -4.980238e-1 b -4.980237e-1 rel 6.54e-8 of-norms 2.10e-9 a/norms 3.21e-2
+SR-MGDBG pair 6 7: a 6.216944e-2 b 6.216940e-2 rel 5.61e-7 of-norms 2.32e-9 a/norms 4.15e-3
+SR-MG heat_rim.json: the worst |<Mx, y> - <x, My>| / |<Mx, y>| over 28 pairs 2.15e-6; the least <Mx, x> 3.574e0
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 351 filtered out; finished in 0.82s
+error: test failed, to rerun pass `-p sr-engine --test gpu`

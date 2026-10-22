@@ -1,0 +1,168 @@
+=== M0-R7 2026-10-22T11:29:22-04:00 linux-pc → laserax-ai-server (RTX 4090), model=claude-opus-5-5 level=high ===
+--- laserax-ai-server, RTX 4090, scratch /tmp/m0r7 (scratch_copy.sh of ~/workspace/sandbox_reactions at 40bdeac) + probe hooks (scratchpad r7_patch.py, r7_bench.rs), model /tmp/r7model
+system sys_601.bin: 600x400 box [32, 0, 536, 400] gas=187925 dt=6.1816443e-3 T0 [5.000e-2, 4.250e1]
+cond: D_f (gas-gas) [1.344e1, 5.154e6] ratio 3.84e5; c_i (pass 1) [5.504e-4, 1.296e10] ratio 2.35e13; max Σ_f D_f / c_i = 5.023e8 (115167 cells above 1e3)
+jacobi levels=1: converged=true passes=6 rounds=90 per pass [79(κ≈1.5e3) 8(κ≈1.9e1) 1(κ≈1.0e0) 1(κ≈1.0e0) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999352283
+system sys_1301.bin: 600x400 box [0, 0, 600, 400] gas=239695 dt=5.5226325e-3 T0 [1.545e1, 1.470e2]
+cond: D_f (gas-gas) [4.325e-1, 2.440e6] ratio 5.64e6; c_i (pass 1) [2.193e-4, 1.822e2] ratio 8.31e5; max Σ_f D_f / c_i = 4.866e8 (205342 cells above 1e3)
+jacobi levels=1: converged=true passes=4 rounds=1155 per pass [783(κ≈2.4e5) 370(κ≈2.5e5) 2(κ≈2.6e0) 0(κ≈NaN)] heat after/before 0.997442559
+system sys_1401.bin: 600x400 box [0, 0, 600, 400] gas=239999 dt=5.2335127e-3 T0 [5.000e-2, 1.720e2]
+cond: D_f (gas-gas) [3.205e-1, 5.961e5] ratio 1.86e6; c_i (pass 1) [2.602e-3, 2.403e10] ratio 9.24e12; max Σ_f D_f / c_i = 8.538e7 (203564 cells above 1e3)
+jacobi levels=1: converged=true passes=13 rounds=6914 per pass [946(κ≈8.5e4) 830(κ≈8.7e4) 632(κ≈9.0e4) 616(κ≈9.1e4) 489(κ≈9.1e4) 545(κ≈9.4e4) 551(κ≈1.1e5) 577(κ≈1.3e5) 572(κ≈1.5e5) 533(κ≈1.6e5) 525(κ≈1.6e5) 97(κ≈6.4e3) 1(κ≈1.0e0)] heat after/before 0.997673247
+system sys_heat_rim.bin: 64x64 box [0, 0, 64, 64] gas=4096 dt=1.000001e-2 T0 [5.000e0, 1.000e2]
+cond: D_f (gas-gas) [3.335e1, 1.667e7] ratio 5.00e5; c_i (pass 1) [2.000e-2, 1.249e0] ratio 6.25e1; max Σ_f D_f / c_i = 3.333e9 (2980 cells above 1e3)
+jacobi levels=1: converged=true passes=5 rounds=486 per pass [131(κ≈1.4e7) 119(κ≈1.4e7) 119(κ≈1.4e7) 117(κ≈1.4e7) 0(κ≈NaN)] heat after/before 0.828749634
+system sys_heat_hot.bin: 64x64 box [0, 0, 64, 64] gas=4096 dt=1.1909826e-3 T0 [1.880e4, 1.880e4]
+cond: D_f (gas-gas) [2.222e0, 2.222e0] ratio 1.00e0; c_i (pass 1) [1.777e-5, 1.777e-5] ratio 1.00e0; max Σ_f D_f / c_i = 7.489e5 (4096 cells above 1e3)
+jacobi levels=1: converged=true passes=6 rounds=402 per pass [107(κ≈1.7e3) 104(κ≈1.6e3) 100(κ≈1.5e3) 82(κ≈1.5e3) 9(κ≈2.9e1) 0(κ≈NaN)] heat after/before 0.229253093
+== model runs
+601 bj16 levels=1: converged=true passes=6 rounds=43 per pass [36(κ≈3.2e2) 4(κ≈4.3e0) 1(κ≈1.0e0) 1(κ≈1.0e0) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999353134
+601 bj8 levels=1: converged=true passes=6 rounds=124 per pass [44(κ≈4.6e2) 4(κ≈4.4e0) 1(κ≈1.0e0) 74(κ≈6.6e3) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999352429
+601 cheb4 levels=1: converged=true passes=7 rounds=57 per pass [22(κ≈1.2e2) 4(κ≈2.5e0) 9(κ≈1.7e2) 20(κ≈7.6e2) 1(κ≈1.0e0) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999351008
+601 cheb8 levels=1: converged=true passes=6 rounds=60 per pass [15(κ≈5.2e1) 4(κ≈2.3e0) 4(κ≈4.6e1) 36(κ≈1.4e3) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999355618
+601 mg_jac2 levels=9: converged=true passes=7 rounds=33 per pass [11(κ≈2.1e1) 2(κ≈1.3e0) 2(κ≈1.3e1) 13(κ≈6.0e1) 4(κ≈1.4e1) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999357003
+601 mg_rb1o levels=9: converged=true passes=7 rounds=37 per pass [20(κ≈6.8e1) 4(κ≈6.6e0) 2(κ≈4.7e0) 9(κ≈1.7e2) 1(κ≈1.0e0) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999356548
+601 mg_rb1 levels=9: converged=true passes=7 rounds=38 per pass [14(κ≈3.1e1) 2(κ≈1.2e0) 1(κ≈1.0e0) 11(κ≈6.9e1) 6(κ≈3.4e1) 4(κ≈1.8e1) 0(κ≈NaN)] heat after/before 0.999356636
+601 mg_rb2 levels=9: converged=true passes=7 rounds=28 per pass [9(κ≈1.4e1) 1(κ≈1.0e0) 4(κ≈1.8e1) 9(κ≈3.6e1) 4(κ≈1.9e1) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999356974
+601 sgs1 levels=1: converged=true passes=7 rounds=269 per pass [40(κ≈3.9e2) 4(κ≈5.1e0) 2(κ≈6.2e0) 81(κ≈6.6e3) 132(κ≈2.2e4) 10(κ≈1.4e2) 0(κ≈NaN)] heat after/before 0.999356476
+601 sgs2 levels=1: converged=true passes=7 rounds=222 per pass [28(κ≈1.9e2) 3(κ≈2.9e0) 2(κ≈8.7e0) 63(κ≈4.1e3) 102(κ≈1.1e4) 24(κ≈9.1e2) 0(κ≈NaN)] heat after/before 0.999356406
+1301 bj16 levels=1: converged=true passes=4 rounds=382 per pass [258(κ≈2.5e4) 123(κ≈2.6e4) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997446926
+1301 bj8 levels=1: converged=true passes=4 rounds=517 per pass [349(κ≈4.8e4) 167(κ≈4.9e4) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997446545
+1301 cheb4 levels=1: converged=true passes=4 rounds=321 per pass [215(κ≈1.8e4) 105(κ≈1.9e4) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997444969
+1301 cheb8 levels=1: converged=true passes=4 rounds=168 per pass [112(κ≈4.7e3) 55(κ≈4.8e3) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997448573
+1301 mg_jac2 levels=9: converged=true passes=4 rounds=55 per pass [33(κ≈1.8e2) 21(κ≈1.8e2) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997447105
+1301 mg_rb1o levels=9: converged=true passes=4 rounds=40 per pass [22(κ≈4.2e2) 16(κ≈5.0e2) 2(κ≈7.4e1) 0(κ≈NaN)] heat after/before 0.997448312
+1301 mg_rb1 levels=9: converged=true passes=4 rounds=60 per pass [36(κ≈2.1e2) 23(κ≈2.2e2) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997446804
+1301 mg_rb2 levels=9: converged=true passes=4 rounds=44 per pass [27(κ≈1.1e2) 16(κ≈1.1e2) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997448607
+1301 sgs1 levels=1: converged=true passes=4 rounds=577 per pass [391(κ≈6.0e4) 185(κ≈6.2e4) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997442391
+1301 sgs2 levels=1: converged=true passes=4 rounds=399 per pass [276(κ≈3.0e4) 122(κ≈3.1e4) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997438599
+1401 bj16 levels=1: converged=true passes=13 rounds=2276 per pass [287(κ≈8.9e3) 193(κ≈9.1e3) 198(κ≈9.4e3) 195(κ≈9.5e3) 165(κ≈9.6e3) 189(κ≈9.9e3) 195(κ≈1.1e4) 199(κ≈1.4e4) 199(κ≈1.5e4) 181(κ≈1.7e4) 180(κ≈1.7e4) 94(κ≈1.6e4) 1(κ≈1.0e0)] heat after/before 0.997705186
+1401 bj8 levels=1: converged=true passes=13 rounds=3113 per pass [418(κ≈1.7e4) 298(κ≈1.7e4) 266(κ≈1.8e4) 271(κ≈1.8e4) 230(κ≈1.8e4) 262(κ≈1.9e4) 277(κ≈2.1e4) 274(κ≈2.6e4) 268(κ≈2.9e4) 251(κ≈3.2e4) 243(κ≈3.3e4) 54(κ≈1.7e3) 1(κ≈1.0e0)] heat after/before 0.997675459
+1401 cheb4 levels=1: converged=true passes=13 rounds=1901 per pass [251(κ≈6.4e3) 191(κ≈6.5e3) 178(κ≈6.7e3) 171(κ≈6.8e3) 138(κ≈6.8e3) 159(κ≈7.1e3) 167(κ≈8.0e3) 161(κ≈9.8e3) 161(κ≈1.1e4) 151(κ≈1.2e4) 145(κ≈1.2e4) 27(κ≈4.8e2) 1(κ≈1.0e0)] heat after/before 0.997673486
+1401 cheb8 levels=1: converged=true passes=13 rounds=1021 per pass [126(κ≈1.6e3) 102(κ≈1.7e3) 94(κ≈1.7e3) 89(κ≈1.8e3) 74(κ≈1.8e3) 87(κ≈1.8e3) 87(κ≈2.1e3) 83(κ≈2.5e3) 84(κ≈2.9e3) 78(κ≈3.1e3) 75(κ≈3.2e3) 41(κ≈3.0e3) 1(κ≈1.0e0)] heat after/before 0.997705720
+1401 mg_jac2 levels=9: converged=true passes=13 rounds=400 per pass [47(κ≈2.1e2) 43(κ≈2.2e2) 42(κ≈2.1e2) 40(κ≈1.8e2) 35(κ≈1.4e2) 32(κ≈1.1e2) 31(κ≈9.7e1) 29(κ≈1.1e2) 29(κ≈1.2e2) 29(κ≈1.3e2) 28(κ≈1.3e2) 15(κ≈1.2e2) 0(κ≈NaN)] heat after/before 0.997707659
+1401 mg_rb1o levels=9: converged=true passes=14 rounds=350 per pass [36(κ≈1.0e2) 33(κ≈1.1e2) 32(κ≈1.0e2) 28(κ≈7.7e1) 27(κ≈5.1e1) 25(κ≈1.1e2) 29(κ≈5.1e2) 30(κ≈1.1e3) 32(κ≈1.3e3) 34(κ≈1.3e3) 33(κ≈1.3e3) 9(κ≈3.1e2) 2(κ≈1.1e2) 0(κ≈NaN)] heat after/before 0.997709545
+1401 mg_rb1 levels=9: converged=true passes=13 rounds=463 per pass [55(κ≈2.6e2) 51(κ≈2.7e2) 51(κ≈2.6e2) 47(κ≈2.2e2) 40(κ≈1.7e2) 36(κ≈1.3e2) 36(κ≈1.2e2) 32(κ≈1.3e2) 33(κ≈1.4e2) 32(κ≈1.5e2) 32(κ≈1.6e2) 17(κ≈1.5e2) 1(κ≈1.0e0)] heat after/before 0.997708030
+1401 mg_rb2 levels=9: converged=true passes=13 rounds=314 per pass [36(κ≈1.3e2) 31(κ≈1.3e2) 32(κ≈1.3e2) 29(κ≈1.2e2) 29(κ≈9.9e1) 26(κ≈7.7e1) 26(κ≈6.4e1) 24(κ≈6.7e1) 23(κ≈7.3e1) 23(κ≈7.8e1) 22(κ≈8.0e1) 12(κ≈7.6e1) 1(κ≈1.0e0)] heat after/before 0.997708003
+1401 sgs1 levels=1: converged=true passes=13 rounds=3391 per pass [469(κ≈2.1e4) 345(κ≈2.2e4) 315(κ≈2.2e4) 308(κ≈2.3e4) 248(κ≈2.3e4) 275(κ≈2.4e4) 278(κ≈2.7e4) 288(κ≈3.3e4) 286(κ≈3.7e4) 267(κ≈3.9e4) 263(κ≈4.1e4) 48(κ≈1.6e3) 1(κ≈1.0e0)] heat after/before 0.997673275
+1401 sgs2 levels=1: converged=true passes=13 rounds=2196 per pass [230(κ≈1.1e4) 197(κ≈1.1e4) 191(κ≈1.1e4) 205(κ≈1.1e4) 174(κ≈1.1e4) 194(κ≈1.2e4) 199(κ≈1.3e4) 203(κ≈1.6e4) 196(κ≈1.8e4) 187(κ≈2.0e4) 185(κ≈2.0e4) 34(κ≈8.0e2) 1(κ≈1.0e0)] heat after/before 0.997673245
+heat_rim cheb8 levels=1: converged=true passes=5 rounds=79 per pass [21(κ≈2.6e5) 20(κ≈2.6e5) 20(κ≈2.6e5) 18(κ≈2.6e5) 0(κ≈NaN)] heat after/before 0.828749555
+heat_rim mg_rb1 levels=5: converged=true passes=5 rounds=82 per pass [23(κ≈2.5e3) 20(κ≈2.4e3) 20(κ≈2.4e3) 19(κ≈2.4e3) 0(κ≈NaN)] heat after/before 0.828749251
+heat_rim mg_rb2 levels=5: converged=true passes=5 rounds=64 per pass [17(κ≈2.4e3) 16(κ≈2.4e3) 16(κ≈2.4e3) 15(κ≈2.4e3) 0(κ≈NaN)] heat after/before 0.828749530
+heat_hot cheb8 levels=1: converged=true passes=6 rounds=65 per pass [17(κ≈3.1e1) 16(κ≈3.1e1) 16(κ≈2.9e1) 13(κ≈2.9e1) 3(κ≈2.0e0) 0(κ≈NaN)] heat after/before 0.229253201
+heat_hot mg_rb1 levels=5: converged=true passes=6 rounds=74 per pass [21(κ≈1.2e1) 20(κ≈1.2e1) 18(κ≈1.1e1) 12(κ≈1.1e1) 3(κ≈2.5e0) 0(κ≈NaN)] heat after/before 0.229253233
+heat_hot mg_rb2 levels=5: converged=true passes=6 rounds=56 per pass [16(κ≈8.2e0) 15(κ≈8.1e0) 14(κ≈7.6e0) 9(κ≈7.6e0) 2(κ≈1.6e0) 0(κ≈NaN)] heat after/before 0.229253203
+== GPU probe lines
+-- heat_rim
+SR-PROBE heat step=1 passes=9 rounds=472 converged=true delta=1.769528e-5 dt=1.000001e-2 wall_ms=16.116
+SR-PROBE heat step=2 passes=6 rounds=734 converged=true delta=1.3116575e-5 dt=1.022097e-2 wall_ms=11.272
+SR-PROBE heat step=3 passes=11 rounds=377 converged=true delta=4.4232234e-5 dt=1.0539199e-2 wall_ms=7.295
+SR-PROBE heat step=4 passes=12 rounds=342 converged=true delta=2.5483476e-5 dt=1.0875977e-2 wall_ms=6.017
+SR-PROBE heat step=5 passes=9 rounds=298 converged=true delta=3.885456e-5 dt=1.1201787e-2 wall_ms=4.780
+SR-PROBE heat step=6 passes=10 rounds=309 converged=true delta=3.9659164e-5 dt=1.1507488e-2 wall_ms=4.197
+SR-PROBE heat step=7 passes=10 rounds=294 converged=true delta=3.0559833e-5 dt=1.179189e-2 wall_ms=4.388
+SR-PROBE heat step=8 passes=6 rounds=232 converged=true delta=2.512726e-5 dt=1.2056368e-2 wall_ms=4.100
+SR-PROBE heat step=9 passes=8 rounds=218 converged=true delta=1.8558627e-5 dt=1.2302934e-2 wall_ms=3.563
+SR-PROBE heat step=10 passes=8 rounds=291 converged=true delta=1.2363205e-5 dt=1.253361e-2 wall_ms=6.430
+-- heat_hot
+SR-PROBE heat step=1 passes=6 rounds=331 converged=true delta=8.378527e-6 dt=1.1909826e-3 wall_ms=14.546
+SR-PROBE heat step=2 passes=4 rounds=226 converged=true delta=6.7458774e-7 dt=2.2115873e-3 wall_ms=3.997
+SR-PROBE heat step=3 passes=4 rounds=223 converged=true delta=2.5767185e-5 dt=2.9896845e-3 wall_ms=2.954
+SR-PROBE heat step=4 passes=4 rounds=206 converged=true delta=4.6549258e-6 dt=3.5463776e-3 wall_ms=2.733
+SR-PROBE heat step=5 passes=4 rounds=181 converged=true delta=9.678233e-7 dt=3.962895e-3 wall_ms=2.522
+SR-PROBE heat step=6 passes=4 rounds=166 converged=true delta=3.0612625e-7 dt=4.291131e-3 wall_ms=2.261
+SR-PROBE heat step=7 passes=4 rounds=149 converged=true delta=-1.2056509e-7 dt=4.560771e-3 wall_ms=2.104
+SR-PROBE heat step=8 passes=4 rounds=139 converged=true delta=1.11147806e-7 dt=4.7893426e-3 wall_ms=1.915
+SR-PROBE heat step=9 passes=4 rounds=128 converged=true delta=-0e0 dt=4.9877535e-3 wall_ms=1.864
+SR-PROBE heat step=10 passes=4 rounds=118 converged=true delta=-6.249332e-7 dt=5.163178e-3 wall_ms=1.740
+-- 600
+SR-PROBE heat step=601 passes=7 rounds=357 converged=true delta=3.1236207e-6 dt=6.1816443e-3 wall_ms=18.143
+SR-PROBE heat step=602 passes=6 rounds=89 converged=true delta=3.7222283e-6 dt=6.1235414e-3 wall_ms=6.784
+SR-PROBE heat step=603 passes=6 rounds=328 converged=true delta=4.168975e-6 dt=6.1330106e-3 wall_ms=11.187
+SR-PROBE heat step=604 passes=5 rounds=90 converged=true delta=6.900384e-6 dt=6.1663804e-3 wall_ms=6.689
+SR-PROBE heat step=605 passes=5 rounds=83 converged=true delta=7.882285e-6 dt=6.194602e-3 wall_ms=6.051
+SR-PROBE heat step=606 passes=5 rounds=102 converged=true delta=9.143669e-6 dt=6.152255e-3 wall_ms=5.880
+SR-PROBE heat step=607 passes=6 rounds=100 converged=true delta=1.13825545e-5 dt=6.1609475e-3 wall_ms=5.643
+SR-PROBE heat step=608 passes=7 rounds=98 converged=true delta=1.2945442e-5 dt=6.1899223e-3 wall_ms=5.546
+SR-PROBE heat step=609 passes=5 rounds=99 converged=true delta=1.7232818e-5 dt=6.2231463e-3 wall_ms=5.407
+SR-PROBE heat step=610 passes=5 rounds=104 converged=true delta=1.279496e-5 dt=6.173256e-3 wall_ms=5.355
+SR-PROBE heat step=611 passes=4 rounds=106 converged=true delta=2.0102283e-5 dt=6.182452e-3 wall_ms=5.593
+SR-PROBE heat step=612 passes=5 rounds=108 converged=true delta=2.0609496e-5 dt=6.2067932e-3 wall_ms=5.601
+SR-PROBE heat step=613 passes=4 rounds=98 converged=true delta=1.9751713e-5 dt=6.1810226e-3 wall_ms=5.122
+SR-PROBE heat step=614 passes=4 rounds=104 converged=true delta=2.0299636e-5 dt=6.187524e-3 wall_ms=4.753
+SR-PROBE heat step=615 passes=6 rounds=111 converged=true delta=2.1926227e-5 dt=6.2068454e-3 wall_ms=5.416
+SR-PROBE heat step=616 passes=6 rounds=102 converged=true delta=1.9719144e-5 dt=6.2305494e-3 wall_ms=5.866
+SR-PROBE heat step=617 passes=6 rounds=92 converged=true delta=2.0845071e-5 dt=6.193401e-3 wall_ms=5.588
+SR-PROBE heat step=618 passes=6 rounds=110 converged=true delta=2.0698782e-5 dt=6.1997096e-3 wall_ms=5.490
+SR-PROBE heat step=619 passes=5 rounds=143 converged=true delta=2.4595472e-5 dt=6.2274714e-3 wall_ms=6.331
+SR-PROBE heat step=620 passes=7 rounds=90 converged=true delta=2.2442096e-5 dt=6.199173e-3 wall_ms=5.492
+-- 1400
+SR-PROBE heat step=1401 passes=4 rounds=4096 converged=false delta=8.294232e-3 dt=5.2335127e-3 wall_ms=175.331
+SR-PROBE heat step=1402 passes=4 rounds=4096 converged=false delta=7.723698e-3 dt=5.236114e-3 wall_ms=114.350
+SR-PROBE heat step=1403 passes=4 rounds=4096 converged=false delta=7.1901106e-3 dt=5.2357614e-3 wall_ms=116.470
+SR-PROBE heat step=1404 passes=4 rounds=4096 converged=false delta=6.4537884e-3 dt=5.236416e-3 wall_ms=113.959
+SR-PROBE heat step=1405 passes=4 rounds=4096 converged=false delta=6.0805287e-3 dt=5.2340967e-3 wall_ms=114.726
+SR-PROBE heat step=1406 passes=5 rounds=4096 converged=false delta=6.0442863e-3 dt=5.2350243e-3 wall_ms=114.664
+SR-PROBE heat step=1407 passes=4 rounds=4096 converged=false delta=5.642984e-3 dt=5.2336855e-3 wall_ms=113.821
+SR-PROBE heat step=1408 passes=4 rounds=4096 converged=false delta=6.3502155e-3 dt=5.2323444e-3 wall_ms=114.566
+SR-PROBE heat step=1409 passes=4 rounds=4096 converged=false delta=6.8640844e-3 dt=5.228586e-3 wall_ms=114.006
+SR-PROBE heat step=1410 passes=4 rounds=4096 converged=false delta=7.5462945e-3 dt=5.225789e-3 wall_ms=111.836
+SR-PROBE heat step=1411 passes=4 rounds=4096 converged=false delta=7.547557e-3 dt=5.2223685e-3 wall_ms=114.576
+SR-PROBE heat step=1412 passes=4 rounds=4096 converged=false delta=7.099907e-3 dt=5.216674e-3 wall_ms=113.969
+SR-PROBE heat step=1413 passes=4 rounds=4096 converged=false delta=6.0228026e-3 dt=5.2157603e-3 wall_ms=114.112
+SR-PROBE heat step=1414 passes=4 rounds=4096 converged=false delta=5.873267e-3 dt=5.215421e-3 wall_ms=114.308
+SR-PROBE heat step=1415 passes=4 rounds=4096 converged=false delta=6.1424472e-3 dt=5.2158725e-3 wall_ms=114.126
+SR-PROBE heat step=1416 passes=4 rounds=4096 converged=false delta=5.9672105e-3 dt=5.216805e-3 wall_ms=114.327
+SR-PROBE heat step=1417 passes=4 rounds=4096 converged=false delta=5.7736556e-3 dt=5.2180155e-3 wall_ms=111.775
+SR-PROBE heat step=1418 passes=4 rounds=4096 converged=false delta=6.2191784e-3 dt=5.211854e-3 wall_ms=114.653
+SR-PROBE heat step=1419 passes=4 rounds=4096 converged=false delta=6.5263263e-3 dt=5.2071433e-3 wall_ms=113.936
+SR-PROBE heat step=1420 passes=4 rounds=4096 converged=false delta=6.9996268e-3 dt=5.2082124e-3 wall_ms=113.981
+-- life20 run.log head/tail
+=== M0-R7 life20 max_steps=1600 2026-10-22T11:33:15-04:00 laserax-ai-server ===
+load: load average: 1.30, 1.40, 0.82 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 15 MiB;
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1600 — reported, not guessed (record kept: build/calibrate_runs/2026-10-22T15-33-15Z/m_bh_sb-01)
+exit=6 wall=75 s
+    Finished `release` profile [optimized] target(s) in 0.55s
+601 mg_tile1 levels=9: converged=true passes=6 rounds=27 per pass [10(κ≈1.7e1) 1(κ≈1.0e0) 4(κ≈1.8e1) 9(κ≈3.8e1) 3(κ≈1.2e1) 0(κ≈NaN)] heat after/before 0.999356896
+601 mg_tile2 levels=9: converged=true passes=7 rounds=24 per pass [8(κ≈1.1e1) 1(κ≈1.0e0) 3(κ≈1.0e1) 7(κ≈2.5e1) 4(κ≈1.6e1) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.999356992
+1301 mg_tile1 levels=9: converged=true passes=4 rounds=47 per pass [28(κ≈1.1e2) 18(κ≈1.1e2) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997446792
+1301 mg_tile2 levels=9: converged=true passes=4 rounds=38 per pass [23(κ≈6.4e1) 14(κ≈6.6e1) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.997447957
+1401 mg_tile1 levels=9: converged=true passes=13 rounds=333 per pass [39(κ≈1.4e2) 33(κ≈1.4e2) 34(κ≈1.4e2) 32(κ≈1.3e2) 30(κ≈1.0e2) 28(κ≈8.0e1) 28(κ≈6.6e1) 25(κ≈6.9e1) 24(κ≈7.5e1) 
+1401 mg_tile2 levels=9: converged=true passes=13 rounds=275 per pass [34(κ≈9.0e1) 24(κ≈9.2e1) 26(κ≈9.2e1) 26(κ≈8.4e1) 25(κ≈7.0e1) 24(κ≈5.6e1) 23(κ≈4.5e1) 22(κ≈4.4e1) 20(κ≈4.7e1) 
+heat_rim mg_tile1 levels=5: converged=true passes=5 rounds=64 per pass [17(κ≈2.4e3) 16(κ≈2.4e3) 16(κ≈2.4e3) 15(κ≈2.4e3) 0(κ≈NaN)] heat after/before 0.828749438
+heat_rim mg_tile2 levels=5: converged=true passes=5 rounds=56 per pass [15(κ≈2.3e3) 14(κ≈2.3e3) 14(κ≈2.3e3) 13(κ≈2.3e3) 0(κ≈NaN)] heat after/before 0.828749733
+heat_hot mg_tile1 levels=5: converged=true passes=6 rounds=57 per pass [16(κ≈8.3e0) 16(κ≈8.2e0) 14(κ≈7.7e0) 9(κ≈7.7e0) 2(κ≈1.6e0) 0(κ≈NaN)] heat after/before 0.229253203
+heat_hot mg_tile2 levels=5: converged=true passes=6 rounds=47 per pass [14(κ≈5.9e0) 13(κ≈5.9e0) 11(κ≈5.5e0) 8(κ≈5.5e0) 1(κ≈1.0e0) 0(κ≈NaN)] heat after/before 0.229253112
+    Finished `release` profile [optimized] target(s) in 0.58s
+1401 REF mg_tile2 levels=9: converged=true passes=15 rounds=617 per pass [58(κ≈9.0e1) 54(κ≈9.2e1) 54(κ≈9.2e1) 53(κ≈8.4e1) 52(κ�
+1301 REF mg_tile2 levels=9: converged=true passes=5 rounds=120 per pass [49(κ≈6.5e1) 41(κ≈6.6e1) 29(κ≈6.6e1) 1(κ≈1.0e0) 0(κ≈N
+heat_rim REF mg_tile2 levels=5: converged=true passes=5 rounds=85 per pass [23(κ≈2.3e3) 21(κ≈2.3e3) 21(κ≈2.3e3) 20(κ≈2.3e3) 0(κ
+heat_hot REF mg_tile2 levels=5: converged=true passes=7 rounds=89 per pass [21(κ≈5.9e0) 20(κ≈5.9e0) 19(κ≈5.5e0) 16(κ≈5.5e0) 12(�
+1401 jacobi: vs reference: C-weighted relative L1 3.533e-5, worst cell (C ≥ 1e-4) 1.058e-3
+1401 cheb8: vs reference: C-weighted relative L1 3.194e-6, worst cell (C ≥ 1e-4) 1.343e-4
+1401 mg_tile2: vs reference: C-weighted relative L1 1.769e-6, worst cell (C ≥ 1e-4) 7.050e-4
+1301 jacobi: vs reference: C-weighted relative L1 1.480e-5, worst cell (C ≥ 1e-4) 8.637e-3
+1301 cheb8: vs reference: C-weighted relative L1 1.268e-5, worst cell (C ≥ 1e-4) 5.890e-3
+1301 mg_tile2: vs reference: C-weighted relative L1 5.364e-6, worst cell (C ≥ 1e-4) 3.826e-3
+heat_rim jacobi: vs reference: C-weighted relative L1 3.110e-7, worst cell (C ≥ 1e-4) 3.583e-6
+heat_rim cheb8: vs reference: C-weighted relative L1 3.000e-7, worst cell (C ≥ 1e-4) 2.274e-6
+heat_rim mg_tile2: vs reference: C-weighted relative L1 2.900e-7, worst cell (C ≥ 1e-4) 2.091e-6
+heat_hot jacobi: vs reference: C-weighted relative L1 9.880e-7, worst cell (C ≥ 1e-4) 7.428e-6
+heat_hot cheb8: vs reference: C-weighted relative L1 5.191e-7, worst cell (C ≥ 1e-4) 1.611e-6
+heat_hot mg_tile2: vs reference: C-weighted relative L1 9.381e-7, worst cell (C ≥ 1e-4) 3.818e-5
+--- timing summaries (headless --timing, RTX 4090, 20 steps from dumps / 10 steps of scenes)
+h/t1400-1 step_ms=106.774 P0 edits=0.027 P1 dt=0.006 P2 gravity=0.148 P3 sinks=0.188 P4 hydro=0.875 P5 heat=104.800 P6 reactions=0.398 P7 neutrino heating=0.029 P8 floors=0.043 P9 reductions=0.025
+h/t1400-2 step_ms=106.536 P0 edits=0.026 P1 dt=0.006 P2 gravity=0.147 P3 sinks=0.187 P4 hydro=0.871 P5 heat=104.571 P6 reactions=0.398 P7 neutrino heating=0.029 P8 floors=0.042 P9 reductions=0.024
+h/t1400-3 step_ms=106.496 P0 edits=0.026 P1 dt=0.006 P2 gravity=0.147 P3 sinks=0.187 P4 hydro=0.871 P5 heat=104.532 P6 reactions=0.397 P7 neutrino heating=0.029 P8 floors=0.043 P9 reductions=0.024
+h/t600-1 step_ms=6.166 P0 edits=0.012 P1 dt=0.003 P2 gravity=0.143 P3 sinks=0.173 P4 hydro=0.695 P5 heat=4.703 P6 reactions=0.241 P7 neutrino heating=0.018 P8 floors=0.038 P9 reductions=0.018
+h/t600-2 step_ms=6.165 P0 edits=0.012 P1 dt=0.003 P2 gravity=0.143 P3 sinks=0.173 P4 hydro=0.694 P5 heat=4.703 P6 reactions=0.242 P7 neutrino heating=0.018 P8 floors=0.038 P9 reductions=0.018
+h/t600-3 step_ms=6.160 P0 edits=0.012 P1 dt=0.003 P2 gravity=0.143 P3 sinks=0.172 P4 hydro=0.694 P5 heat=4.696 P6 reactions=0.241 P7 neutrino heating=0.019 P8 floors=0.038 P9 reductions=0.018
+h/theat_hot-1 step_ms=2.536 P0 edits=0.012 P1 dt=0.003 P5 heat=2.446 P8 floors=0.010 P9 reductions=0.013
+h/theat_hot-2 step_ms=2.521 P0 edits=0.012 P1 dt=0.003 P5 heat=2.433 P8 floors=0.010 P9 reductions=0.013
+h/theat_hot-3 step_ms=2.517 P0 edits=0.012 P1 dt=0.003 P5 heat=2.428 P8 floors=0.010 P9 reductions=0.013
+h/theat_rim-1 step_ms=6.926 P0 edits=0.022 P1 dt=0.005 P5 heat=6.783 P8 floors=0.012 P9 reductions=0.017
+h/theat_rim-2 step_ms=6.900 P0 edits=0.023 P1 dt=0.005 P5 heat=6.759 P8 floors=0.012 P9 reductions=0.017
+h/theat_rim-3 step_ms=6.899 P0 edits=0.022 P1 dt=0.005 P5 heat=6.759 P8 floors=0.012 P9 reductions=0.017
+sections missing=[] sources=5 measurements=8
+=== GO ===

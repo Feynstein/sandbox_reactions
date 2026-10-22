@@ -1,0 +1,2 @@
+# M0-R7-decoy | launch web | 2026-10-22T12:02:33-0400
+$ python3 -m http.server 47812 --bind 127.0.0.1 --directory web/dist

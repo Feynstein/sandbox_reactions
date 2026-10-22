@@ -1,0 +1,14 @@
+heat_gauss · plant chi-scale · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope heat_gauss · 21.93 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D83-r2.heat_gauss.redarm.log
+=== GO ===
+heat_implicit · plant solve-two-rounds · ERROR (the patch tests/plants/solve-two-rounds.patch does not apply: crates/sr-engine/shaders/heat.wgsl @@ -529,7 +529,7 @@: its old lines appear 0 times in the file, not once) · arm 2/2, 0 left
+  plant solve-two-rounds: the patch tests/plants/solve-two-rounds.patch does not apply: crates/sr-engine/shaders/heat.wgsl @@ -529,7 +529,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+redarm: 1 plants · 0 red · 0 green · 1 errors · scope heat_implicit · 10.71 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D83-r2.heat_implicit.redarm.log
+=== NO-GO: plant solve-two-rounds: the patch tests/plants/solve-two-rounds.patch does not apply: crates/sr-engine/shaders/heat.wgsl @@ -529,7 +529,7 @@: its old lines appear 0 times in the file, not once - an error, not a red ===
+heat_limiter · plant limiter-off · RED (proven: 4 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope heat_limiter · 20.97 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D83-r2.heat_limiter.redarm.log
+=== GO ===
+radiation_force · plant radforce-zero · RED (proven: 8 failed) · arm 2/3, 1 left
+radiation_force · plant push-uncapped · RED (proven: 6 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope radiation_force · 45.78 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D83-r2.radiation_force.redarm.log
+=== GO ===

@@ -245,6 +245,17 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // The commit: `heat_close` writes F = −D_f (u_b − u_a) at the solved u (the start state's when the step is pinned or
 // not run), side.flux and each cell's `radiated` Δt Σ_vac D_f (u_i − u_vac), with the heat sums; `heat_sum` closes the
 // balance, δ = −(Σ C (T − T⁰) + R)/Σ C T; `heat_apply` adds C (T − T⁰ + δ T) to E.
+//
+// The V-cycle as the preconditioner (§0.5 [M0-D82]; M0-D83; `parity.mg`): M⁻¹r is no longer cell-local, so a slot is a
+// group — its `heat_round`, then the levels (`mg_level0`, `mg_coarsen`), the V-cycle (the last section) and `heat_matvec`,
+// each sized by the slot's `heat_round` in the multigrid's words after the slots' words of its own args buffer (`mg_size`),
+// none when the slot has no use for them. RESID builds the pass's levels at its iterate; START and a round put their r
+// (the shifted start's, r_{k+1}) as level 0's right side, the V-cycle makes z = M⁻¹r, and `heat_matvec` forms w = A z
+// and the next slot's sums (zᵀr, zᵀw, the heat measure, and rᵀD⁻¹r: (4)'s u-measure is Jacobi's whatever M is); a round
+// takes the last V-cycle's z where Jacobi takes D⁻¹r. Every slot in the mode writes all its words, and the slots on both
+// sides of a step's end (an UPDATE or INIT, then the ending RESID) write none on, so a slot that does not run finds its
+// group's words zero; `heat_park` zeroes both parities' at a carry, `heat_sum` at the step's end. The levels, z and the
+// Krylov planes live in their buffers between slots, so a carried pass goes on from what its last slot left.
 
 // The machine's record, one per parity: the slot that reads it, its mode, the passes and rounds so far, this pass's
 // rounds, how many partial sums the slot reads, the rounds' tiles, Δt, Σ C T⁰, this pass's two bounds and the last
@@ -296,9 +307,10 @@ struct Machines {
     log: array<vec4<u32>, LOG>,
 }
 
+// The slot's parity, and whether its round runs on the V-cycle (step/heat.rs `HeatPrecond`).
 struct Parity {
     p: u32,
-    _a: u32,
+    mg: u32,
     _b: u32,
     _c: u32,
 }
@@ -310,7 +322,8 @@ struct Parity {
 @group(0) @binding(16) var<storage, read_write> machine: Machines;
 // The rounds' partial sums, one 16 × 16 tile each, per parity (params.tiles a parity), then `heat_close`'s, one 8 × 8 tile each.
 @group(0) @binding(17) var<storage, read_write> partials: array<vec4<f32>>;
-// The next slot's workgroup counts (three words a slot, the slots of one parity); `heat_sum` zeroes this one and the other.
+// The next slot's workgroup counts (three words a slot, the slots of one parity), then the multigrid's MGA_COUNT for the
+// slot's own group; `heat_sum` zeroes this one and the other.
 @group(0) @binding(18) var<storage, read_write> args_next: array<u32>;
 @group(0) @binding(19) var<storage, read_write> args_other: array<u32>;
 @group(0) @binding(20) var<uniform> parity: Parity;
@@ -530,6 +543,7 @@ fn heat_open() {
 fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_invocation_index) li: u32) {
     let me = parity.p;
     let old = 1u - me;
+    let mg = parity.mg != 0u;
     let rec = machine.rec[old];
     var acc = vec4<f32>(0.0);
     for (var i = li; i < rec.parts; i += 256u) {
@@ -587,7 +601,9 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 beta = gamma / rec.gamma;
                 eta = total.y - beta * beta * rec.eta;
             }
-            var stop = (gamma <= rec.u_bound && total.z <= rec.t_bound) || !(eta > 0.0);
+            // (4)'s u-measure is (r, D⁻¹r) whatever the preconditioner: Jacobi's γ, the V-cycle's fourth sum.
+            let measure = select(gamma, total.w, mg);
+            var stop = (measure <= rec.u_bound && total.z <= rec.t_bound) || !(eta > 0.0);
             stop = stop || rec.rounds >= MAX_ROUNDS;
             if (stop) {
                 action = CELL_UPDATE;
@@ -674,16 +690,25 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 if (free_at(x, y, rec.dt)) {
                     raise(i, shift);
                 }
-                let u = r / d;
-                let w = applied(x, y, heat_term(i, rec.dt), u, 1u, old, shift, 0.0, true);
                 krylov[(KR_R + me) * n + i] = r;
-                krylov[(KR_W + me) * n + i] = w;
-                let e = r * slope(solve[SV_T * n + i]) / d;
-                part = vec4<f32>(r * u, w * u, heat * e * e, 0.0);
+                if (mg) {
+                    // z = M⁻¹r and w = A z follow, by the V-cycle and `heat_matvec`.
+                    mg_vec[mg_layout.level[0].vec + mg_at(x, y)] = r;
+                } else {
+                    let u = r / d;
+                    let w = applied(x, y, heat_term(i, rec.dt), u, 1u, old, shift, 0.0, true);
+                    krylov[(KR_W + me) * n + i] = w;
+                    let e = r * slope(solve[SV_T * n + i]) / d;
+                    part = vec4<f32>(r * u, w * u, heat * e * e, 0.0);
+                }
             }
             case CELL_ROUND: {
                 let d = solve[SV_D * n + i];
+                // p_k = z_k + β p_{k−1}: z_k is D⁻¹r_k, or the V-cycle's of the slot before.
                 var p = krylov[(KR_R + old) * n + i] / d;
+                if (mg) {
+                    p = mg_vec[mg_z(0u, 1u) + mg_at(x, y)];
+                }
                 if (!first) {
                     p += beta * solve[SV_P * n + i];
                 }
@@ -691,13 +716,17 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 solve[SV_P * n + i] = p;
                 raise(i, alpha * p);
                 let r = sr.y;
-                let u = r / d;
-                let w = applied(x, y, heat_term(i, rec.dt), u, 2u, old, alpha, beta, first);
                 krylov[(KR_S + me) * n + i] = sr.x;
                 krylov[(KR_R + me) * n + i] = r;
-                krylov[(KR_W + me) * n + i] = w;
-                let e = r * slope(solve[SV_T * n + i]) / d;
-                part = vec4<f32>(r * u, w * u, heat * e * e, 0.0);
+                if (mg) {
+                    mg_vec[mg_layout.level[0].vec + mg_at(x, y)] = r;
+                } else {
+                    let u = r / d;
+                    let w = applied(x, y, heat_term(i, rec.dt), u, 2u, old, alpha, beta, first);
+                    krylov[(KR_W + me) * n + i] = w;
+                    let e = r * slope(solve[SV_T * n + i]) / d;
+                    part = vec4<f32>(r * u, w * u, heat * e * e, 0.0);
+                }
             }
             case CELL_UPDATE: {
                 let t = solve[SV_T * n + i];
@@ -720,6 +749,16 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
     wsum[li] = part;
     workgroupBarrier();
     tree(li, 128u);
+    if (mg && wid.x == 0u && wid.y == 0u) {
+        // The slot's group: the levels after a RESID that goes on, the V-cycle and the matvec after a START or a round.
+        let base = arrayLength(&args_next) - 3u * MGA_COUNT;
+        for (var k = li; k < MGA_COUNT; k += 256u) {
+            let s = mg_size(k, action == CELL_RESID, action == CELL_START || action == CELL_ROUND);
+            args_next[base + 3u * k] = s.x;
+            args_next[base + 3u * k + 1u] = s.y;
+            args_next[base + 3u * k + 2u] = s.z;
+        }
+    }
     if (li == 0u) {
         partials[me * params.tiles + wid.y * rec.tx + wid.x] = wsum[0];
         if (wid.x == 0u && wid.y == 0u) {
@@ -745,6 +784,45 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 }
             }
         }
+    }
+}
+
+// The end of a V-cycle slot (sized by its `heat_round`, MGA_MATVEC): w = A z at every gas cell, z the V-cycle's level-0 z up
+// (0 beyond a vacuum or edge face), face by face as `applied`, and the slot's sums for the next — zᵀr, zᵀw, the heat
+// measure and rᵀD⁻¹r — in the tiles `heat_round` wrote.
+@compute @workgroup_size(16, 16)
+fn heat_matvec(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_invocation_index) li: u32) {
+    let me = parity.p;
+    let rec = machine.rec[me];
+    let x = abox.x0 + wid.x * TILE + lid.x;
+    let y = abox.y0 + wid.y * TILE + lid.y;
+    var part = vec4<f32>(0.0);
+    if (gas_at(x, y)) {
+        let n = dims.cells;
+        let i = y * dims.width + x;
+        let z = mg_z(0u, 1u);
+        let own = mg_vec[z + mg_at(x, y)];
+        var d = face_d(x, y);
+        var nb = neighbours(x, y);
+        var w = heat_term(i, rec.dt) * own;
+        for (var f = 0u; f < 4u; f++) {
+            var far = 0.0;
+            if (gas_at(nb[f].x, nb[f].y)) {
+                far = mg_vec[z + mg_at(nb[f].x, nb[f].y)];
+            }
+            w += d[f] * (own - far);
+        }
+        krylov[(KR_W + me) * n + i] = w;
+        let r = krylov[(KR_R + me) * n + i];
+        let diag = solve[SV_D * n + i];
+        let e = r * slope(solve[SV_T * n + i]) / diag;
+        part = vec4<f32>(r * own, w * own, frozen[CAP * n + i] / rec.dt * e * e, r * r / diag);
+    }
+    wsum[li] = part;
+    workgroupBarrier();
+    tree(li, 128u);
+    if (li == 0u) {
+        partials[me * params.tiles + wid.y * rec.tx + wid.x] = wsum[0];
     }
 }
 
@@ -845,7 +923,8 @@ fn heat_sum(@builtin(local_invocation_index) li: u32) {
 
 // After the rounds a submission records (recorded bare, so a held step's continuation runs it): a step still `live` is
 // carried (§0.5 [M0-TJ4] (6)) — the words its slots wrote zeroed (slot j's at j / 2 in parity j % 2's buffer, the last
-// run having written slot `rec[1].slot`'s) and its next slot made 0, so the next submission's `latch_hold` starts it
+// run having written slot `rec[1].slot`'s), the multigrid's words of both parities too (a later step of the submission
+// records slot groups that would read them), and its next slot made 0, so the next submission's `latch_hold` starts it
 // there. Running again where nothing is live, or after the zeroing, changes nothing.
 @compute @workgroup_size(1)
 fn heat_park() {
@@ -854,6 +933,10 @@ fn heat_park() {
     }
     let words = min((machine.rec[1].slot / 2u + 1u) * 3u, arrayLength(&args_next));
     for (var i = 0u; i < words; i++) {
+        args_next[i] = 0u;
+        args_other[i] = 0u;
+    }
+    for (var i = arrayLength(&args_next) - 3u * MGA_COUNT; i < arrayLength(&args_next); i++) {
         args_next[i] = 0u;
         args_other[i] = 0u;
     }
@@ -873,4 +956,375 @@ fn heat_apply(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     let t = solve[SV_T * n + cell];
     hydro[3u * n + cell] += c * (t - frozen[T0 * n + cell] + machine.report.delta * t);
+}
+
+// ---- P5's multigrid preconditioner (§0.5 [M0-D82]; reports/heat_multigrid.md) ----
+//
+// The V-cycle M⁻¹ the PCG may take in Jacobi's place (step/heat.rs `HeatPrecond`; in the round machine since M0-D83, sized by
+// `mg_size`, the levels built at the iterate there — `mg_step.start` 0; the tests' window builds at T⁰). Level 0
+// is a pass's system over the box, cell (i, j) the box's (x0 + i, y0 + j): a gas cell's own term c_i + Σ_vac D_f, D_f between
+// two gas cells, A v = own v + Σ_f D_f (v_i − v_f) face by face (M0-D56). Level l + 1 is Pᵀ A_l P over 2 × 2 aggregates
+// (P piecewise constant): own terms and the faces between two aggregates summed, an aggregate with no active cell inactive
+// (own −1); the levels halve until both sides are ≤ MG_LAST (9 at 600 × 400). Down each level of > MG_COARSE cells,
+// `mg_smooth` (a 16 × 16 tile and its halo in 1.3 KB of workgroup memory, the halo frozen at the dispatch's start, red first)
+// and `mg_restrict`; `mg_coarse`, one workgroup, the rest (from 19 × 13 at 600 × 400; the coarsest by MG_SOLVE symmetric
+// pairs); up, `mg_smooth` on z + P z_coarse, black first — each the adjoint of its way down, so M⁻¹ is symmetric. z down and
+// z up are two planes, so no tile reads a halo another workgroup of its dispatch writes.
+
+const MG_LEVELS: u32 = 12u;
+const MG_TILE: u32 = 16u;
+const MG_HALO: u32 = 18u;
+const MG_SWEEPS: u32 = 4u;
+const MG_COARSE: u32 = 256u;
+const MG_LAST: u32 = 4u;
+const MG_SOLVE: u32 = 50u;
+
+// Each level's planes, sized for the world's level (w × h) and indexed by the box's: the coefficients from `coef` (own,
+// then the x faces, (w + 1) × h, face (x, y) between x − 1 and x, then the y faces, w × (h + 1)), the vectors from `vec`
+// (the right side b, z down, z up).
+struct MgLevel {
+    coef: u32,
+    vec: u32,
+    w: u32,
+    h: u32,
+}
+
+struct MgLayout {
+    level: array<MgLevel, MG_LEVELS>,
+}
+
+// The level a dispatch works on, whether it goes up, and whether `mg_level0` linearises at T⁰ (the first pass's system).
+struct MgStep {
+    level: u32,
+    up: u32,
+    start: u32,
+    _a: u32,
+}
+
+@group(0) @binding(21) var<storage, read_write> mg_coef: array<f32>;
+@group(0) @binding(22) var<storage, read_write> mg_vec: array<f32>;
+@group(0) @binding(23) var<uniform> mg_layout: MgLayout;
+@group(0) @binding(24) var<uniform> mg_step: MgStep;
+
+var<workgroup> mg_tile: array<f32, 324>;
+
+// Level l's sides over the box.
+fn mg_dims(l: u32) -> vec2<u32> {
+    let s = (1u << l) - 1u;
+    return vec2<u32>((abox.w + s) >> l, (abox.h + s) >> l);
+}
+
+// (the first level of at most MG_COARSE cells — it and the coarser ones run in `mg_coarse` —, the coarsest: both sides
+// ≤ MG_LAST).
+fn mg_span() -> vec2<u32> {
+    var s = vec2<u32>(0u);
+    while (mg_dims(s.x).x * mg_dims(s.x).y > MG_COARSE) {
+        s.x++;
+    }
+    while (s.y + 1u < MG_LEVELS && max(mg_dims(s.y).x, mg_dims(s.y).y) > MG_LAST) {
+        s.y++;
+    }
+    return s;
+}
+
+// Level 0's index of box cell (x, y).
+fn mg_at(x: u32, y: u32) -> u32 {
+    return (y - abox.y0) * abox.w + x - abox.x0;
+}
+
+// The multigrid's entries in a round machine's args buffer (after the slots' words): `mg_level0`, `mg_coarsen` a level,
+// `mg_smooth` a level (down and up), `mg_restrict` a level, `mg_coarse`, `heat_matvec` (step/heat.rs records them so).
+const MGA_LEVEL0: u32 = 0u;
+const MGA_COARSEN: u32 = 1u;
+const MGA_SMOOTH: u32 = 1u + MG_LEVELS;
+const MGA_RESTRICT: u32 = 1u + 2u * MG_LEVELS;
+const MGA_COARSE: u32 = 1u + 3u * MG_LEVELS;
+const MGA_MATVEC: u32 = 2u + 3u * MG_LEVELS;
+const MGA_COUNT: u32 = 3u + 3u * MG_LEVELS;
+
+// Entry k's workgroups for a slot that builds the levels (`build`) or applies the V-cycle and the matvec (`cycle`): over
+// the box's level, none for a level the box has not.
+fn mg_size(k: u32, build: bool, cycle: bool) -> vec3<u32> {
+    let span = mg_span();
+    var on = cycle;
+    var n = vec2<u32>(1u);
+    if (k == MGA_LEVEL0) {
+        on = build;
+        n = (mg_dims(0u) + 7u) / 8u;
+    } else if (k < MGA_SMOOTH) {
+        on = build && k - MGA_COARSEN < span.y;
+        n = (mg_dims(k - MGA_COARSEN + 1u) + 7u) / 8u;
+    } else if (k < MGA_RESTRICT) {
+        on = cycle && k - MGA_SMOOTH < span.x;
+        n = (mg_dims(k - MGA_SMOOTH) + 15u) / 16u;
+    } else if (k < MGA_COARSE) {
+        on = cycle && k - MGA_RESTRICT < span.x;
+        n = (mg_dims(k - MGA_RESTRICT + 1u) + 7u) / 8u;
+    } else if (k == MGA_MATVEC) {
+        n = (mg_dims(0u) + 15u) / 16u;
+    }
+    return select(vec3<u32>(0u), vec3<u32>(n, 1u), on);
+}
+
+fn mg_fx(l: u32) -> u32 {
+    let v = mg_layout.level[l];
+    return v.coef + v.w * v.h;
+}
+
+fn mg_fy(l: u32) -> u32 {
+    let v = mg_layout.level[l];
+    return mg_fx(l) + (v.w + 1u) * v.h;
+}
+
+// Level l's plane of z: down (0) or up (1).
+fn mg_z(l: u32, up: u32) -> u32 {
+    let v = mg_layout.level[l];
+    return v.vec + (1u + up) * v.w * v.h;
+}
+
+// (the four faces' D_f, −x, +x, −y, +y) of cell (x, y) of level l, sides d.
+fn mg_faces(l: u32, d: vec2<u32>, x: u32, y: u32) -> vec4<f32> {
+    let fx = mg_fx(l) + y * (d.x + 1u) + x;
+    let fy = mg_fy(l) + y * d.x + x;
+    return vec4<f32>(mg_coef[fx], mg_coef[fx + 1u], mg_coef[fy], mg_coef[fy + d.x]);
+}
+
+// z at the four neighbours of cell i of level l (plane z); a face of D_f 0 reads nothing.
+fn mg_near(z: u32, d: vec2<u32>, i: u32, f: vec4<f32>) -> vec4<f32> {
+    var v = vec4<f32>(0.0);
+    if (f.x != 0.0) {
+        v.x = mg_vec[z + i - 1u];
+    }
+    if (f.y != 0.0) {
+        v.y = mg_vec[z + i + 1u];
+    }
+    if (f.z != 0.0) {
+        v.z = mg_vec[z + i - d.x];
+    }
+    if (f.w != 0.0) {
+        v.w = mg_vec[z + i + d.x];
+    }
+    return v;
+}
+
+// b − A z at active cell (x, y) of level l, plane z, face by face.
+fn mg_residual(l: u32, d: vec2<u32>, x: u32, y: u32, z: u32) -> f32 {
+    let i = y * d.x + x;
+    let f = mg_faces(l, d, x, y);
+    let zi = mg_vec[z + i];
+    let near = mg_near(z, d, i, f);
+    return mg_vec[mg_layout.level[l].vec + i] - mg_coef[mg_layout.level[l].coef + i] * zi - dot(f, vec4<f32>(zi) - near);
+}
+
+@compute @workgroup_size(8, 8)
+fn mg_level0(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h) {
+        return;
+    }
+    let x = abox.x0 + id.x;
+    let y = abox.y0 + id.y;
+    let n = dims.cells;
+    let cell = y * dims.width + x;
+    let i = id.y * abox.w + id.x;
+    let gas = gas_at(x, y);
+    var d = face_d(x, y);
+    var nb = neighbours(x, y);
+    var own = -1.0;
+    var near = vec4<f32>(0.0);
+    if (gas) {
+        let t = select(solve[SV_T * n + cell], frozen[T0 * n + cell], mg_step.start != 0u);
+        own = frozen[CAP * n + cell] / machine.rec[1].dt * slope(t);
+        for (var f = 0u; f < 4u; f++) {
+            if (gas_at(nb[f].x, nb[f].y)) {
+                near[f] = d[f];
+            } else {
+                own += d[f];
+            }
+        }
+    }
+    let fx = mg_fx(0u) + id.y * (abox.w + 1u) + id.x;
+    let fy = mg_fy(0u) + id.y * abox.w + id.x;
+    mg_coef[mg_layout.level[0].coef + i] = own;
+    // A face beyond the box has no gas on its far side: 0, as at a vacuum face.
+    mg_coef[fx] = select(0.0, near.x, gas);
+    mg_coef[fy] = select(0.0, near.z, gas);
+    if (id.x + 1u == abox.w) {
+        mg_coef[fx + 1u] = 0.0;
+    }
+    if (id.y + 1u == abox.h) {
+        mg_coef[fy + abox.w] = 0.0;
+    }
+}
+
+@compute @workgroup_size(8, 8)
+fn mg_coarsen(@builtin(global_invocation_id) id: vec3<u32>) {
+    let l = mg_step.level;
+    let fine = mg_dims(l);
+    let d = mg_dims(l + 1u);
+    if (l >= mg_span().y || id.x >= d.x || id.y >= d.y) {
+        return;
+    }
+    var own = 0.0;
+    var live = false;
+    var fx = 0.0;
+    var fy = 0.0;
+    for (var k = 0u; k < 4u; k++) {
+        let x = 2u * id.x + (k & 1u);
+        let y = 2u * id.y + (k >> 1u);
+        if (x < fine.x && y < fine.y) {
+            let o = mg_coef[mg_layout.level[l].coef + y * fine.x + x];
+            if (o >= 0.0) {
+                own += o;
+                live = true;
+            }
+        }
+    }
+    // The −x face sums the fine faces at x = 2 id.x of both rows (0 at the level's edge), the −y face likewise.
+    for (var k = 0u; k < 2u; k++) {
+        if (2u * id.y + k < fine.y) {
+            fx += mg_coef[mg_fx(l) + (2u * id.y + k) * (fine.x + 1u) + 2u * id.x];
+        }
+        if (2u * id.x + k < fine.x) {
+            fy += mg_coef[mg_fy(l) + 2u * id.y * fine.x + 2u * id.x + k];
+        }
+    }
+    let cx = mg_fx(l + 1u) + id.y * (d.x + 1u) + id.x;
+    let cy = mg_fy(l + 1u) + id.y * d.x + id.x;
+    mg_coef[mg_layout.level[l + 1u].coef + id.y * d.x + id.x] = select(-1.0, own, live);
+    mg_coef[cx] = fx;
+    mg_coef[cy] = fy;
+    if (id.x + 1u == d.x) {
+        mg_coef[cx + 1u] = 0.0;
+    }
+    if (id.y + 1u == d.y) {
+        mg_coef[cy + d.x] = 0.0;
+    }
+}
+
+@compute @workgroup_size(16, 16)
+fn mg_smooth(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_invocation_index) li: u32) {
+    let l = mg_step.level;
+    let up = mg_step.up;
+    let d = mg_dims(l);
+    let cd = mg_dims(l + 1u);
+    // Every invocation reaches every barrier: a tile past the level only does nothing.
+    let live = l < mg_span().x && wid.x * MG_TILE < d.x && wid.y * MG_TILE < d.y;
+    let coef = mg_layout.level[l].coef;
+    // The tile and its halo at the dispatch's start: 0 going down, z + P z_coarse going up.
+    for (var k = li; k < MG_HALO * MG_HALO; k += 256u) {
+        let x = wid.x * MG_TILE + k % MG_HALO - 1u;
+        let y = wid.y * MG_TILE + k / MG_HALO - 1u;
+        var v = 0.0;
+        if (live && up != 0u && x < d.x && y < d.y && mg_coef[coef + y * d.x + x] >= 0.0) {
+            v = mg_vec[mg_z(l, 0u) + y * d.x + x] + mg_vec[mg_z(l + 1u, 1u) + (y / 2u) * cd.x + x / 2u];
+        }
+        mg_tile[k] = v;
+    }
+    workgroupBarrier();
+    let x = wid.x * MG_TILE + lid.x;
+    let y = wid.y * MG_TILE + lid.y;
+    let i = y * d.x + x;
+    let mine = live && x < d.x && y < d.y && mg_coef[coef + i] >= 0.0;
+    var f = vec4<f32>(0.0);
+    var b = 0.0;
+    var diag = 1.0;
+    if (mine) {
+        f = mg_faces(l, d, x, y);
+        b = mg_vec[mg_layout.level[l].vec + i];
+        diag = mg_coef[coef + i] + f.x + f.y + f.z + f.w;
+    }
+    let t = (lid.y + 1u) * MG_HALO + lid.x + 1u;
+    for (var s = 0u; s < 2u * MG_SWEEPS; s++) {
+        if (mine && (x + y) % 2u == (s + up) % 2u) {
+            let near = vec4<f32>(mg_tile[t - 1u], mg_tile[t + 1u], mg_tile[t - MG_HALO], mg_tile[t + MG_HALO]);
+            mg_tile[t] = (b + dot(f, near)) / diag;
+        }
+        workgroupBarrier();
+    }
+    if (mine) {
+        mg_vec[mg_z(l, up) + i] = mg_tile[t];
+    }
+}
+
+@compute @workgroup_size(8, 8)
+fn mg_restrict(@builtin(global_invocation_id) id: vec3<u32>) {
+    let l = mg_step.level;
+    let fine = mg_dims(l);
+    let d = mg_dims(l + 1u);
+    if (l >= mg_span().x || id.x >= d.x || id.y >= d.y) {
+        return;
+    }
+    mg_vec[mg_layout.level[l + 1u].vec + id.y * d.x + id.x] = mg_gather(l, fine, id.x, id.y, mg_z(l, 0u));
+}
+
+// The coarse right side at aggregate (cx, cy): the residual b − A z of its active cells of level l, summed.
+fn mg_gather(l: u32, fine: vec2<u32>, cx: u32, cy: u32, z: u32) -> f32 {
+    var sum = 0.0;
+    for (var k = 0u; k < 4u; k++) {
+        let x = 2u * cx + (k & 1u);
+        let y = 2u * cy + (k >> 1u);
+        if (x < fine.x && y < fine.y && mg_coef[mg_layout.level[l].coef + y * fine.x + x] >= 0.0) {
+            sum += mg_residual(l, fine, x, y, z);
+        }
+    }
+    return sum;
+}
+
+// One red-black half-sweep of colour `colour` over level l in z's up plane, by `mg_coarse`'s one workgroup.
+fn mg_half(l: u32, li: u32, colour: u32) {
+    let d = mg_dims(l);
+    let z = mg_z(l, 1u);
+    for (var i = li; i < d.x * d.y; i += 256u) {
+        let x = i % d.x;
+        let y = i / d.x;
+        let own = mg_coef[mg_layout.level[l].coef + i];
+        if ((x + y) % 2u == colour && own >= 0.0) {
+            let f = mg_faces(l, d, x, y);
+            mg_vec[z + i] = (mg_vec[mg_layout.level[l].vec + i] + dot(f, mg_near(z, d, i, f))) / (own + f.x + f.y + f.z + f.w);
+        }
+    }
+    storageBarrier();
+}
+
+@compute @workgroup_size(256)
+fn mg_coarse(@builtin(local_invocation_index) li: u32) {
+    let first = mg_span().x;
+    let last = mg_span().y;
+    for (var l = first; l <= last; l++) {
+        let d = mg_dims(l);
+        for (var i = li; i < d.x * d.y; i += 256u) {
+            mg_vec[mg_z(l, 1u) + i] = 0.0;
+        }
+        storageBarrier();
+        if (l == last) {
+            // The coarsest, a few cells: MG_SOLVE symmetric pairs, red, black, black, red.
+            for (var s = 0u; s < 4u * MG_SOLVE; s++) {
+                mg_half(l, li, ((s + 1u) / 2u) % 2u);
+            }
+            break;
+        }
+        for (var s = 0u; s < 2u * MG_SWEEPS; s++) {
+            mg_half(l, li, s % 2u);
+        }
+        let cd = mg_dims(l + 1u);
+        for (var i = li; i < cd.x * cd.y; i += 256u) {
+            mg_vec[mg_layout.level[l + 1u].vec + i] = mg_gather(l, d, i % cd.x, i / cd.x, mg_z(l, 1u));
+        }
+        storageBarrier();
+    }
+    for (var l = last; l > first; l--) {
+        let d = mg_dims(l - 1u);
+        let cd = mg_dims(l);
+        for (var i = li; i < d.x * d.y; i += 256u) {
+            let x = i % d.x;
+            let y = i / d.x;
+            if (mg_coef[mg_layout.level[l - 1u].coef + i] >= 0.0) {
+                mg_vec[mg_z(l - 1u, 1u) + i] += mg_vec[mg_z(l, 1u) + (y / 2u) * cd.x + x / 2u];
+            }
+        }
+        storageBarrier();
+        for (var s = 0u; s < 2u * MG_SWEEPS; s++) {
+            mg_half(l - 1u, li, (s + 1u) % 2u);
+        }
+    }
 }

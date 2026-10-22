@@ -1,0 +1,313 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+warning: deref which would be done by auto-deref
+   --> crates/sr-engine/src/step/heat.rs:329:20
+    |
+329 |             label: *label,
+    |                    ^^^^^^ help: try: `label`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#explicit_auto_deref
+    = note: `#[warn(clippy::explicit_auto_deref)]` on by default
+
+warning: deref which would be done by auto-deref
+   --> crates/sr-engine/src/step/heat.rs:331:46
+    |
+331 |             bind_groups: vec![bind(pipeline, *label, bindings, extra)],
+    |                                              ^^^^^^ help: try: `label`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#explicit_auto_deref
+
+warning: `sr-engine` (lib test) generated 2 warnings (run `cargo clippy --fix --lib -p sr-engine --tests -- ` to apply 2 suggestions)
+warning: `sr-engine` (lib) generated 2 warnings (2 duplicates)
+warning: the loop variable `ch` is used to index `CHANNELS`
+   --> crates/sr-engine/tests/gpu/floors.rs:440:19
+    |
+440 |         for ch in 0..3 {
+    |                   ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator and enumerate()
+    |
+440 -         for ch in 0..3 {
+440 +         for (ch, <item>) in CHANNELS.iter().enumerate().take(3) {
+    |
+
+warning: the loop variable `k` is used to index `CHANNELS`
+   --> crates/sr-engine/tests/gpu/floors.rs:508:18
+    |
+508 |         for k in 0..N_CHANNELS {
+    |                  ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+508 -         for k in 0..N_CHANNELS {
+508 +         for (k, <item>) in CHANNELS.iter().enumerate().take(N_CHANNELS) {
+    |
+
+warning: the loop variable `k` is used to index `CHANNELS`
+   --> crates/sr-engine/tests/gpu/floors.rs:516:18
+    |
+516 |         for k in 0..N_CHANNELS {
+    |                  ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+516 -         for k in 0..N_CHANNELS {
+516 +         for (k, <item>) in CHANNELS.iter().enumerate().take(N_CHANNELS) {
+    |
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/box.rs:134:17
+    |
+134 |     let places: Vec<(&str, Vec<(u32, u32)>, [u32; 4])> = vec![
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+    = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/box.rs:167:16
+    |
+167 |     let cases: [((u32, u32), Vec<(u32, u32)>, [u32; 2]); 5] = [
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+warning: the loop variable `c` is used to index `CHANNELS`
+   --> crates/sr-engine/tests/gpu/box.rs:339:14
+    |
+339 |     for c in 4..N_CHANNELS {
+    |              ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+339 -     for c in 4..N_CHANNELS {
+339 +     for (c, <item>) in CHANNELS.iter().enumerate().take(N_CHANNELS).skip(4) {
+    |
+
+warning: the loop variable `k` is only used to index `s`
+   --> crates/sr-engine/tests/gpu/box.rs:362:14
+    |
+362 |     for k in 4..s.len() {
+    |              ^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator
+    |
+362 -     for k in 4..s.len() {
+362 +     for <item> in s.iter_mut().skip(4) {
+    |
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/latch.rs:163:17
+    |
+163 |     let script: [((u32, u32, u32), u32, Option<u32>); 4] = [
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/dump.rs:515:16
+    |
+515 |     let cases: [(&str, &dyn Fn(&mut serde_json::Value)); 10] = [
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+warning: using `chunks_exact` with a constant chunk size
+  --> crates/sr-engine/tests/gpu/fft.rs:59:7
+   |
+59 |     v.chunks_exact(2).map(|c| Complex::new(f64::from(c[0]), f64::from(c[1]))).collect()
+   |       ^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<2>().0.iter()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+   = note: `#[warn(clippy::chunks_exact_to_as_chunks)]` on by default
+
+warning: the loop variable `s` is used to index `end`
+   --> crates/sr-engine/tests/gpu/sod.rs:183:14
+    |
+183 |     for s in 5..COMPONENTS {
+    |              ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+183 -     for s in 5..COMPONENTS {
+183 +     for (s, <item>) in end.iter().enumerate().take(COMPONENTS).skip(5) {
+    |
+
+warning: useless conversion to the same type: `f64`
+   --> crates/sr-engine/tests/gpu/cpu_gpu.rs:126:17
+    |
+126 |     let t_gpu = f64::from(report.sim_time);
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider removing `f64::from()`: `report.sim_time`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#useless_conversion
+    = note: `#[warn(clippy::useless_conversion)]` on by default
+
+warning: the loop variable `i` is used to index `t`
+   --> crates/sr-engine/tests/gpu/heat.rs:101:14
+    |
+101 |     for i in 0..n {
+    |              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+101 -     for i in 0..n {
+101 +     for (i, <item>) in t.iter().enumerate().take(n) {
+    |
+
+warning: the loop variable `i` is used to index `t`
+   --> crates/sr-engine/tests/gpu/heat.rs:132:14
+    |
+132 |     for i in 0..n {
+    |              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+132 -     for i in 0..n {
+132 +     for (i, <item>) in t.iter().enumerate().take(n) {
+    |
+
+warning: the loop variable `i` is used to index `f`
+   --> crates/sr-engine/tests/gpu/radforce.rs:140:18
+    |
+140 |         for i in 0..n {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+140 -         for i in 0..n {
+140 +         for (i, <item>) in f.iter().enumerate().take(n) {
+    |
+
+warning: the loop variable `c` is used to index `names`
+   --> crates/sr-engine/tests/gpu/radforce.rs:158:18
+    |
+158 |         for c in 0..2 {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+158 -         for c in 0..2 {
+158 +         for (c, <item>) in names.iter().enumerate() {
+    |
+
+warning: the loop variable `h` is used to index `names`
+   --> crates/sr-engine/tests/gpu/radforce.rs:159:22
+    |
+159 |             for h in 0..2 {
+    |                      ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+159 -             for h in 0..2 {
+159 +             for (h, <item>) in names.iter().enumerate() {
+    |
+
+warning: the loop variable `i` is used to index `f`
+   --> crates/sr-engine/tests/gpu/radforce.rs:376:14
+    |
+376 |     for i in 0..n {
+    |              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+376 -     for i in 0..n {
+376 +     for (i, <item>) in f.iter().enumerate().take(n) {
+    |
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/burn.rs:491:20
+    |
+491 |         let cases: [(&str, &str, (f64, f64, [f64; NS]), Vec<f64>, Oracle); 3] = [
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+warning: module has the same name as its containing module
+   --> crates/sr-engine/tests/gpu/neutrino.rs:134:1
+    |
+134 | / mod neutrino {
+135 | |     use super::*;
+136 | |
+137 | |     /// A cell held at T (pin) loses exactly ε_ν Σ Δt — booked `neutrino_lost` within 1e-6 of A_ν (T/T_ν)^8 Σ Δt — at four
+...   |
+368 | | }
+    | |_^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#module_inception
+    = note: `#[warn(clippy::module_inception)]` on by default
+
+warning: using `chunks_exact` with a constant chunk size
+   --> crates/sr-engine/tests/gpu/neutrino.rs:398:73
+    |
+398 | ...e().expect("mapped").chunks_exact(4).map(|c| u32::from_le_bytes(c.try_into().unwrap())).collect();
+    |                         ^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<4>().0.iter()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+
+warning: the loop variable `i` is used to index `lost`
+   --> crates/sr-engine/tests/gpu/neutrino.rs:605:18
+    |
+605 |         for i in 0..5 {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+605 -         for i in 0..5 {
+605 +         for (i, <item>) in lost.iter().enumerate().take(5) {
+    |
+
+warning: the loop variable `i` is used to index `q`
+   --> crates/sr-engine/tests/gpu/nuheat.rs:395:18
+    |
+395 |         for i in 0..GW * GH {
+    |                  ^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+395 -         for i in 0..GW * GH {
+395 +         for (i, <item>) in q.iter().enumerate().take(GW * GH) {
+    |
+
+warning: redundant slicing of the whole range
+   --> crates/sr-engine/tests/gpu/nuheat.rs:429:60
+    |
+429 |         let (e1, booked, sigma) = (r.energy(), r.booked(), &st.plane(0)[..]);
+    |                                                            ^^^^^^^^^^^^^^^^ help: use the original value instead: `st.plane(0)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#redundant_slicing
+    = note: `#[warn(clippy::redundant_slicing)]` on by default
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/summary.rs:207:94
+    |
+207 | ...], s: &BlockSummary, col: u32, row: u32) -> (Vec<(String, f64, f64, f64)>, Vec<u32>) {
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+warning: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-engine/tests/gpu/calibrate_bisect.rs:278:11
+    |
+278 |     clean(&[record.clone()]);
+    |           ^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&record)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+    = note: `#[warn(clippy::cloned_ref_to_slice_refs)]` on by default
+
+warning: `sr-engine` (test "gpu") generated 26 warnings (run `cargo clippy --fix --test "gpu" -p sr-engine -- ` to apply 5 suggestions)
+    Finished `release` profile [optimized] target(s) in 2.53s

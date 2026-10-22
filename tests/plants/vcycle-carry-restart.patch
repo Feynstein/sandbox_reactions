@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -707,7 +707,7 @@
+                 // p_k = z_k + β p_{k−1}: z_k is D⁻¹r_k, or the V-cycle's of the slot before.
+                 var p = krylov[(KR_R + old) * n + i] / d;
+                 if (mg) {
+-                    p = mg_vec[mg_z(0u, 1u) + mg_at(x, y)];
++                    p = select(mg_vec[mg_z(0u, 1u) + mg_at(x, y)], 0.0, rec.slot == 0u);
+                 }
+                 if (!first) {
+                     p += beta * solve[SV_P * n + i];

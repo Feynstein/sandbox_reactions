@@ -30,3 +30,7 @@ wall 61.3 s {"per_pass_ms": {"P0 edits": 0.005184, "P1 dt": 0.0030016, "P2 gravi
 NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %;
 a_n_fe 10 96 steps wall 61.5 s P6 636.5 ms/step [('core_collapse', 1)]
 a_n_fe 1 96 steps wall 30.4 s P6 312.4 ms/step [('core_collapse', 1)]
+=== the 4,572.394 life with one-step frames off (the plant calibrate-one-step-never, /tmp/d80_redarm), laserax-ai-server RTX 4090 2026-10-22T11:09:53-04:00 ===
+NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %;
+    Finished `release` profile [optimized] target(s) in 27.04s
+ger 21624280 11:10 /home/ybelanger/.cache/sandbox-reactions/redarm-target/release/sandbox-reactions

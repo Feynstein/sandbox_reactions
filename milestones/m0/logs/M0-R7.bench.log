@@ -1,0 +1,60 @@
+load: 1.50 2.12 1.55 gpu: 0 %, 15 MiB
+-- run 1
+adapter: NVIDIA GeForce RTX 4090
+empty dispatch (1 workgroup): 0.51 µs per repetition (1 dispatches; median of 5, min 0.36 max 0.54)
+zero-size indirect dispatch: 0.41 µs per repetition (1 dispatches; median of 5, min 0.40 max 0.42)
+half-sweep 600x400: 12.26 µs per repetition (2 dispatches; median of 5, min 9.93 max 15.00)
+half-sweep 300x200: 10.01 µs per repetition (2 dispatches; median of 5, min 9.76 max 10.62)
+half-sweep 150x100: 8.05 µs per repetition (2 dispatches; median of 5, min 7.94 max 8.49)
+half-sweep 75x50: 7.29 µs per repetition (2 dispatches; median of 5, min 7.19 max 7.75)
+half-sweep 38x25: 6.97 µs per repetition (2 dispatches; median of 5, min 6.92 max 7.16)
+half-sweep 19x13: 6.49 µs per repetition (2 dispatches; median of 5, min 4.74 max 6.81)
+bottom (levels 5+ in one workgroup, 200 sweeps): 100.04 µs per repetition (1 dispatches; median of 5, min 98.23 max 101.43)
+V(1,1) round, 600x400, 9 levels: 264.36 µs per repetition (33 dispatches; median of 5, min 212.71 max 267.01)
+V(2,2) round, 600x400, 9 levels: 327.17 µs per repetition (53 dispatches; median of 5, min 326.65 max 327.46)
+Chebyshev-8 round proxy, 600x400: 66.32 µs per repetition (9 dispatches; median of 5, min 65.94 max 68.54)
+-- run 2
+adapter: NVIDIA GeForce RTX 4090
+empty dispatch (1 workgroup): 0.45 µs per repetition (1 dispatches; median of 5, min 0.43 max 0.51)
+zero-size indirect dispatch: 0.38 µs per repetition (1 dispatches; median of 5, min 0.38 max 0.39)
+half-sweep 600x400: 15.11 µs per repetition (2 dispatches; median of 5, min 10.51 max 15.52)
+half-sweep 300x200: 9.57 µs per repetition (2 dispatches; median of 5, min 9.26 max 10.57)
+half-sweep 150x100: 7.81 µs per repetition (2 dispatches; median of 5, min 7.61 max 8.01)
+half-sweep 75x50: 6.89 µs per repetition (2 dispatches; median of 5, min 6.81 max 7.09)
+half-sweep 38x25: 6.57 µs per repetition (2 dispatches; median of 5, min 6.55 max 6.64)
+half-sweep 19x13: 6.47 µs per repetition (2 dispatches; median of 5, min 6.34 max 6.53)
+bottom (levels 5+ in one workgroup, 200 sweeps): 101.40 µs per repetition (1 dispatches; median of 5, min 100.72 max 101.56)
+V(1,1) round, 600x400, 9 levels: 264.72 µs per repetition (33 dispatches; median of 5, min 264.33 max 264.95)
+V(2,2) round, 600x400, 9 levels: 326.37 µs per repetition (53 dispatches; median of 5, min 323.07 max 328.29)
+Chebyshev-8 round proxy, 600x400: 66.29 µs per repetition (9 dispatches; median of 5, min 65.87 max 68.74)
+-- run 3
+adapter: NVIDIA GeForce RTX 4090
+empty dispatch (1 workgroup): 0.38 µs per repetition (1 dispatches; median of 5, min 0.36 max 0.45)
+zero-size indirect dispatch: 0.47 µs per repetition (1 dispatches; median of 5, min 0.42 max 0.51)
+half-sweep 600x400: 11.38 µs per repetition (2 dispatches; median of 5, min 9.59 max 13.55)
+half-sweep 300x200: 9.54 µs per repetition (2 dispatches; median of 5, min 9.28 max 10.17)
+half-sweep 150x100: 7.87 µs per repetition (2 dispatches; median of 5, min 7.71 max 8.12)
+half-sweep 75x50: 6.94 µs per repetition (2 dispatches; median of 5, min 6.89 max 7.05)
+half-sweep 38x25: 6.57 µs per repetition (2 dispatches; median of 5, min 6.44 max 6.64)
+half-sweep 19x13: 6.50 µs per repetition (2 dispatches; median of 5, min 6.49 max 6.51)
+bottom (levels 5+ in one workgroup, 200 sweeps): 99.30 µs per repetition (1 dispatches; median of 5, min 97.31 max 99.93)
+V(1,1) round, 600x400, 9 levels: 263.55 µs per repetition (33 dispatches; median of 5, min 217.52 max 264.03)
+V(2,2) round, 600x400, 9 levels: 326.53 µs per repetition (53 dispatches; median of 5, min 325.07 max 327.38)
+Chebyshev-8 round proxy, 600x400: 66.10 µs per repetition (9 dispatches; median of 5, min 65.86 max 68.55)
+    Finished `release` profile [optimized] target(s) in 0.39s
+load: 0.41 1.50 1.39 gpu: 0 %
+adapter: NVIDIA GeForce RTX 4090
+fused Jacobi-round replica 600x400 (950 tiles): 24.90 µs per repetition (2 dispatches; median of 5, min 18.85 max 25.75)
+fused Jacobi-round replica 300x200 (247 tiles): 14.98 µs per repetition (2 dispatches; median of 5, min 14.13 max 16.16)
+fused Jacobi-round replica 150x100 (70 tiles): 9.07 µs per repetition (2 dispatches; median of 5, min 8.29 max 12.95)
+fused Jacobi-round replica 75x50 (20 tiles): 11.29 µs per repetition (2 dispatches; median of 5, min 7.89 max 11.50)
+adapter: NVIDIA GeForce RTX 4090
+fused Jacobi-round replica 600x400 (950 tiles): 23.96 µs per repetition (2 dispatches; median of 5, min 18.23 max 24.74)
+fused Jacobi-round replica 300x200 (247 tiles): 14.44 µs per repetition (2 dispatches; median of 5, min 13.88 max 15.23)
+fused Jacobi-round replica 150x100 (70 tiles): 12.64 µs per repetition (2 dispatches; median of 5, min 12.60 max 12.76)
+fused Jacobi-round replica 75x50 (20 tiles): 11.98 µs per repetition (2 dispatches; median of 5, min 11.89 max 12.01)
+adapter: NVIDIA GeForce RTX 4090
+fused Jacobi-round replica 600x400 (950 tiles): 23.94 µs per repetition (2 dispatches; median of 5, min 17.98 max 24.77)
+fused Jacobi-round replica 300x200 (247 tiles): 14.27 µs per repetition (2 dispatches; median of 5, min 13.96 max 15.25)
+fused Jacobi-round replica 150x100 (70 tiles): 12.70 µs per repetition (2 dispatches; median of 5, min 12.56 max 12.91)
+fused Jacobi-round replica 75x50 (20 tiles): 11.97 µs per repetition (2 dispatches; median of 5, min 11.90 max 12.06)

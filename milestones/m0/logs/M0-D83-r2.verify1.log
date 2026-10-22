@@ -1,0 +1,11 @@
+heat_multigrid   4/0/0       10.79 s  GO · step 1/6, 5 left
+heat_implicit    8/0/0       11.64 s  GO · step 2/6, 4 left
+heat_stiff       8/0/0       11.79 s  GO · step 3/6, 3 left
+heat_limiter     8/0/0       11.79 s  GO · step 4/6, 2 left
+heat_gauss       14/0/0      12.74 s  GO · step 5/6, 1 left
+radiation_force  11/0/0      20.01 s  GO · step 6/6, 0 left
+logs: milestones/m0/logs/M0-D83-r2.<scope>.log · record: loop_times.jsonl · tree 40bdeac720a9+c679de7870b8
+anchor: 529 path×scope entries moved by this run
+anchor: 137 paths checked · 256 skipped (3 classes) · 145 never checked · 0 stale · 0 unclassified · 0 owed · 282 covered of 538 visible
+verify: 53 passed, 0 failed, 0 skipped · 6/6 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 20.01 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.1->0.7
+=== GO ===

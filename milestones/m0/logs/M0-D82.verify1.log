@@ -1,0 +1,9 @@
+ 12:25:03 up 9 days, 23:57,  5 users,  load average: 0.56, 0.39, 0.29
+heat_multigrid  4/0/0        1.82 s  GO · step 1/3, 2 left
+heat_implicit   6/0/0        1.97 s  GO · step 2/3, 1 left
+heat_stiff      6/0/0        1.57 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-D82.<scope>.log · record: loop_times.jsonl · tree 40bdeac720a9+8e1e66348c88
+anchor: 111 path×scope entries moved by this run
+anchor: 135 paths checked · 255 skipped (3 classes) · 145 never checked · 1 stale · 0 unclassified · 0 owed · 281 covered of 536 visible
+verify: 16 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.97 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.56->0.76
+=== GO ===
