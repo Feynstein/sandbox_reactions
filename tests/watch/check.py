@@ -9,7 +9,9 @@ comments and strings included: the step reads state, never a label and never a m
 
 The calibration keys are read from the contract's §2.11 "Schema:" line, never listed here: the top-level keys of its
 JSON, less the provenance keys (`version`, `measured`, which carry no value) and `physics_hash`, the one key the
-engine may know (G-CAL). A scan that finds fewer than MIN_FILES files, or fewer than MIN_KEYS keys, is NO-GO — an empty
+engine may know (G-CAL). EXEMPT keys are the step's own physics by a §0.5 line (`m_tov_sb`: P3's mass test computes
+the neutron sheet's ceiling for the run's physics, §0.5 [M0-R6], [M0-D90]); the exemption holds because the step may
+not name `calibration` either (any case), so it cannot read the measured file. A scan that finds fewer than MIN_FILES files, or fewer than MIN_KEYS keys, is NO-GO — an empty
 folder or an unreadable schema would be green for nothing. Ends in `=== GO ===` or `=== NO-GO: … ===`.
 """
 import os
@@ -22,6 +24,8 @@ FOLDERS = ("crates/sr-engine/src/step", "crates/sr-engine/shaders")
 LABELS = ("observe", "Stage", "Tracker")
 PROVENANCE = {"version", "measured"}  # §2.11's bookkeeping keys: no calibration value behind them
 ALLOWED_KEY = "physics_hash"
+EXEMPT = {"m_tov_sb": "§0.5 [M0-D90]"}  # computed by the step from its own sheet, never read (the lead, 2026-10-23)
+READ_WORD = "calibration"  # the measured file's module, type and path: the step never names it
 MIN_FILES = 2  # step/mod.rs and shaders/floors.wgsl today
 MIN_KEYS = 10  # §2.11's schema names 13 value keys today; far fewer means the line was not read
 
@@ -61,8 +65,10 @@ def calibration_keys():
 
 
 def forbidden(keys):
-    words = list(LABELS) + list(keys)
-    return {w: re.compile(r"(?<![A-Za-z0-9_])" + re.escape(w) + r"(?![A-Za-z0-9_])") for w in words}
+    words = list(LABELS) + [k for k in keys if k not in EXEMPT]
+    pats = {w: re.compile(r"(?<![A-Za-z0-9_])" + re.escape(w) + r"(?![A-Za-z0-9_])") for w in words}
+    pats[READ_WORD] = re.compile(r"(?<![A-Za-z0-9])" + READ_WORD + r"(?![A-Za-z0-9])", re.I)
+    return pats
 
 
 def files_under(folders):
@@ -91,8 +97,10 @@ def main():
                 for word, pat in pats.items():
                     if pat.search(line):
                         hits.append(f"{rel}:{n}: names `{word}`")
+    exempt = [k for k in keys if k in EXEMPT]
     print(f"files scanned: {len(files)} in {', '.join(FOLDERS)}; words forbidden: {len(pats)} "
-          f"({len(LABELS)} labels + {len(keys)} calibration keys)")
+          f"({len(LABELS)} labels + {len(keys) - len(exempt)} calibration keys + `{READ_WORD}`); exempt: "
+          + (", ".join(f"`{k}` ({EXEMPT[k]})" for k in exempt) or "none"))
     if len(files) < MIN_FILES:
         print(f"=== NO-GO: {len(files)} files scanned (expected ≥ {MIN_FILES}): the scan saw an empty folder ===")
         return 1

@@ -1,0 +1,3 @@
+# M0-D90 | launch headless-boot | 2026-10-23T16:11:19-0400
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-cjcqa_jc
+SR-ERROR calibration invalid: preset_mass_sb: missing

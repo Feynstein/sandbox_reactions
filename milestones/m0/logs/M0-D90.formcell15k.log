@@ -1,0 +1,56 @@
+first sink in dump s_3044 (previous dump s_3043): [{"m": 5106.40625, "vx": -0.7956759929656982, "vy": -1.5988285541534424, "x": 299.49676513671875, "y": 201.49365234375}]
+AT FORMATION (before): step 3043 t 18.109 cell (299,201) Σ 991 peak True M3 4501 M4 5106 (1.052 m_tov) M5 5813 M6 6267 Ye3 0.350 Xn3 0.246 XFe3 0.754 div_u -46.001 <v_r>4 -15.054
+after:                step 3044 t 18.113 cell (299,201) Σ 0 peak True M3 0 M4 34 (0.007 m_tov) M5 710 M6 1165 Ye3 0.430 Xn3 0.073 XFe3 0.927 div_u +0.000 <v_r>4 -10.620
+candidates before (local max Σ ≥ 100, M4 ≥ m_tov, Ye3 ≤ 0.35):
+  step 3043 t 18.109 cell (299,201) Σ 991 peak True M3 4501 M4 5106 (1.052 m_tov) M5 5813 M6 6267 Ye3 0.350 Xn3 0.246 XFe3 0.754 div_u -46.001 <v_r>4 -15.054
+peaks within 15 cells before (Σ ≥ 50):
+  step 3043 t 18.109 cell (299,201) Σ 991 peak True M3 4501 M4 5106 (1.052 m_tov) M5 5813 M6 6267 Ye3 0.350 Xn3 0.246 XFe3 0.754 div_u -46.001 <v_r>4 -15.054
+history of the forming clump (nearest peak within 3 cells of the last):
+  step 3043 t 18.109 cell (299,201) Σ 991 peak True M3 4501 M4 5106 (1.052 m_tov) M5 5813 M6 6267 Ye3 0.350 Xn3 0.246 XFe3 0.754 div_u -46.001 <v_r>4 -15.054
+  step 3042 t 18.105 cell (299,201) Σ 951 peak True M3 4469 M4 5094 (1.050 m_tov) M5 5809 M6 6263 Ye3 0.358 Xn3 0.229 XFe3 0.771 div_u -44.172 <v_r>4 -14.468
+  step 3041 t 18.101 cell (299,201) Σ 909 peak True M3 4438 M4 5082 (1.047 m_tov) M5 5805 M6 6259 Ye3 0.366 Xn3 0.212 XFe3 0.788 div_u -42.306 <v_r>4 -13.858
+  step 3040 t 18.096 cell (299,201) Σ 867 peak True M3 4407 M4 5071 (1.045 m_tov) M5 5802 M6 6254 Ye3 0.374 Xn3 0.195 XFe3 0.805 div_u -40.437 <v_r>4 -13.204
+  step 3039 t 18.092 cell (299,201) Σ 825 peak True M3 4377 M4 5061 (1.043 m_tov) M5 5798 M6 6250 Ye3 0.381 Xn3 0.179 XFe3 0.821 div_u -38.514 <v_r>4 -12.516
+  step 3038 t 18.088 cell (299,201) Σ 784 peak True M3 4349 M4 5052 (1.041 m_tov) M5 5795 M6 6246 Ye3 0.389 Xn3 0.163 XFe3 0.837 div_u -36.531 <v_r>4 -11.806
+  step 3037 t 18.084 cell (299,201) Σ 744 peak True M3 4323 M4 5044 (1.039 m_tov) M5 5793 M6 6242 Ye3 0.396 Xn3 0.148 XFe3 0.852 div_u -34.379 <v_r>4 -11.087
+  step 3036 t 18.079 cell (299,201) Σ 707 peak True M3 4298 M4 5036 (1.038 m_tov) M5 5790 M6 6238 Ye3 0.403 Xn3 0.133 XFe3 0.867 div_u -32.180 <v_r>4 -10.375
+  step 3035 t 18.075 cell (299,201) Σ 674 peak True M3 4274 M4 5030 (1.036 m_tov) M5 5787 M6 6234 Ye3 0.409 Xn3 0.119 XFe3 0.881 div_u -30.008 <v_r>4 -9.682
+  step 3034 t 18.071 cell (299,201) Σ 646 peak True M3 4251 M4 5023 (1.035 m_tov) M5 5785 M6 6230 Ye3 0.415 Xn3 0.107 XFe3 0.893 div_u -27.968 <v_r>4 -9.026
+  step 3033 t 18.066 cell (299,201) Σ 620 peak True M3 4228 M4 5017 (1.034 m_tov) M5 5783 M6 6226 Ye3 0.420 Xn3 0.095 XFe3 0.905 div_u -26.345 <v_r>4 -8.433
+  step 3032 t 18.062 cell (299,201) Σ 591 peak True M3 4205 M4 5010 (1.032 m_tov) M5 5780 M6 6221 Ye3 0.425 Xn3 0.085 XFe3 0.915 div_u -24.794 <v_r>4 -7.876
+  step 3031 t 18.058 cell (299,201) Σ 563 peak True M3 4183 M4 5005 (1.031 m_tov) M5 5778 M6 6216 Ye3 0.429 Xn3 0.076 XFe3 0.924 div_u -23.412 <v_r>4 -7.317
+  step 3030 t 18.053 cell (299,201) Σ 537 peak True M3 4161 M4 5001 (1.030 m_tov) M5 5777 M6 6212 Ye3 0.433 Xn3 0.068 XFe3 0.932 div_u -22.263 <v_r>4 -6.764
+  step 3029 t 18.048 cell (299,201) Σ 511 peak True M3 4141 M4 4997 (1.030 m_tov) M5 5775 M6 6207 Ye3 0.436 Xn3 0.061 XFe3 0.939 div_u -21.285 <v_r>4 -6.207
+  step 3028 t 18.044 cell (299,201) Σ 487 peak True M3 4124 M4 4995 (1.029 m_tov) M5 5774 M6 6202 Ye3 0.439 Xn3 0.055 XFe3 0.945 div_u -20.013 <v_r>4 -5.598
+  step 3027 t 18.039 cell (299,201) Σ 466 peak True M3 4108 M4 4994 (1.029 m_tov) M5 5772 M6 6197 Ye3 0.440 Xn3 0.051 XFe3 0.949 div_u -18.707 <v_r>4 -4.960
+  step 3026 t 18.034 cell (299,201) Σ 447 peak True M3 4097 M4 4995 (1.029 m_tov) M5 5771 M6 6192 Ye3 0.442 Xn3 0.047 XFe3 0.953 div_u -17.428 <v_r>4 -4.307
+  step 3025 t 18.029 cell (299,201) Σ 431 peak True M3 4088 M4 4996 (1.030 m_tov) M5 5770 M6 6187 Ye3 0.444 Xn3 0.044 XFe3 0.956 div_u -16.227 <v_r>4 -3.660
+  step 3024 t 18.024 cell (299,201) Σ 415 peak True M3 4084 M4 4999 (1.030 m_tov) M5 5769 M6 6181 Ye3 0.445 Xn3 0.041 XFe3 0.959 div_u -15.015 <v_r>4 -3.038
+  step 3023 t 18.019 cell (299,201) Σ 400 peak True M3 4082 M4 5002 (1.031 m_tov) M5 5767 M6 6176 Ye3 0.447 Xn3 0.038 XFe3 0.962 div_u -13.792 <v_r>4 -2.465
+  step 3022 t 18.014 cell (299,201) Σ 388 peak True M3 4082 M4 5005 (1.031 m_tov) M5 5766 M6 6170 Ye3 0.448 Xn3 0.035 XFe3 0.965 div_u -12.452 <v_r>4 -1.966
+  step 3021 t 18.009 cell (299,201) Σ 377 peak True M3 4084 M4 5008 (1.032 m_tov) M5 5763 M6 6164 Ye3 0.449 Xn3 0.034 XFe3 0.966 div_u -10.878 <v_r>4 -1.575
+  step 3020 t 18.004 cell (299,201) Σ 369 peak True M3 4085 M4 5010 (1.032 m_tov) M5 5760 M6 6158 Ye3 0.449 Xn3 0.032 XFe3 0.968 div_u -9.108 <v_r>4 -1.342
+  step 3019 t 17.999 cell (299,201) Σ 365 peak True M3 4086 M4 5012 (1.033 m_tov) M5 5755 M6 6151 Ye3 0.450 Xn3 0.032 XFe3 0.968 div_u -7.900 <v_r>4 -1.321
+  step 3018 t 17.994 cell (299,201) Σ 361 peak True M3 4086 M4 5013 (1.033 m_tov) M5 5751 M6 6145 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -7.618 <v_r>4 -1.478
+  step 3017 t 17.989 cell (299,201) Σ 358 peak True M3 4085 M4 5014 (1.033 m_tov) M5 5745 M6 6137 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -7.959 <v_r>4 -1.694
+  step 3016 t 17.984 cell (299,201) Σ 354 peak True M3 4083 M4 5016 (1.033 m_tov) M5 5739 M6 6130 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -8.309 <v_r>4 -1.871
+  step 3015 t 17.979 cell (299,201) Σ 348 peak True M3 4081 M4 5017 (1.034 m_tov) M5 5733 M6 6122 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -8.505 <v_r>4 -1.980
+  step 3014 t 17.974 cell (299,201) Σ 343 peak True M3 4080 M4 5018 (1.034 m_tov) M5 5726 M6 6114 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -8.518 <v_r>4 -2.013
+  step 3013 t 17.969 cell (299,201) Σ 337 peak True M3 4079 M4 5019 (1.034 m_tov) M5 5719 M6 6106 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -8.336 <v_r>4 -1.970
+  step 3012 t 17.964 cell (299,201) Σ 332 peak True M3 4079 M4 5021 (1.035 m_tov) M5 5712 M6 6098 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -7.973 <v_r>4 -1.857
+  step 3011 t 17.959 cell (299,201) Σ 327 peak True M3 4081 M4 5023 (1.035 m_tov) M5 5705 M6 6089 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -7.459 <v_r>4 -1.683
+  step 3010 t 17.954 cell (299,201) Σ 322 peak True M3 4083 M4 5026 (1.036 m_tov) M5 5698 M6 6081 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -6.836 <v_r>4 -1.460
+  step 3009 t 17.950 cell (299,201) Σ 319 peak True M3 4086 M4 5027 (1.036 m_tov) M5 5691 M6 6073 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -6.181 <v_r>4 -1.202
+  step 3008 t 17.945 cell (299,201) Σ 316 peak True M3 4090 M4 5029 (1.036 m_tov) M5 5683 M6 6065 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -5.515 <v_r>4 -0.921
+  step 3007 t 17.940 cell (299,201) Σ 315 peak True M3 4096 M4 5030 (1.036 m_tov) M5 5676 M6 6057 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -4.830 <v_r>4 -0.632
+  step 3006 t 17.935 cell (299,201) Σ 315 peak True M3 4103 M4 5029 (1.036 m_tov) M5 5668 M6 6049 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -4.136 <v_r>4 -0.344
+  step 3005 t 17.930 cell (299,201) Σ 316 peak True M3 4111 M4 5027 (1.036 m_tov) M5 5660 M6 6041 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -3.456 <v_r>4 -0.072
+  step 3004 t 17.925 cell (299,201) Σ 318 peak True M3 4120 M4 5024 (1.035 m_tov) M5 5652 M6 6034 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -2.818 <v_r>4 +0.164
+  step 3003 t 17.920 cell (299,201) Σ 322 peak True M3 4129 M4 5019 (1.034 m_tov) M5 5643 M6 6027 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -2.245 <v_r>4 +0.346
+  step 3002 t 17.915 cell (299,201) Σ 326 peak True M3 4139 M4 5013 (1.033 m_tov) M5 5635 M6 6020 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -1.772 <v_r>4 +0.450
+  step 3001 t 17.910 cell (299,201) Σ 332 peak True M3 4147 M4 5005 (1.031 m_tov) M5 5627 M6 6013 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -1.528 <v_r>4 +0.444
+  step 3000 t 17.905 cell (299,201) Σ 339 peak True M3 4155 M4 4996 (1.029 m_tov) M5 5618 M6 6007 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -1.625 <v_r>4 +0.303
+  step 2999 t 17.900 cell (299,201) Σ 345 peak True M3 4160 M4 4986 (1.027 m_tov) M5 5610 M6 6001 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -2.135 <v_r>4 +0.005
+  step 2998 t 17.895 cell (299,201) Σ 350 peak True M3 4162 M4 4976 (1.025 m_tov) M5 5602 M6 5995 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -3.129 <v_r>4 -0.447
+  step 2950 t 17.664 cell (298,203) Σ 256 peak True M3 2891 M4 3589 (0.739 m_tov) M5 4530 M6 5275 Ye3 0.450 Xn3 0.031 XFe3 0.969 div_u -3.007 <v_r>4 -0.292
+  step 2900: no peak within 3 cells of (298,203) — lost

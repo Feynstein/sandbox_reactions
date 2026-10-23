@@ -197,3 +197,11 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   [M0-R6]: a sink also forms at a local Σ maximum whose disk r ≤ 4 holds m_tov_sb or more, neutronized (Y_e ≤ 0.35 over r ≤ 3), with
   §2.6's other three tests, and takes the disk; Σ ≥ Σ_BH alone still forms one (the lead, 2026-10-23, M0-R6: «Mass sink, r=4
   (Recommended)»; built by M0-D90).
+- Contract §5's G-WATCH («names … a calibration value other than the physics hash», a ban on every §2.11 key in the step code) —
+  superseded by contract §0.5 [M0-D90]: the step may name `m_tov_sb`, computed in-process from the run's neutron sheet for [M0-R6]'s mass
+  test, and names no `calibration` at all (the lead, 2026-10-23, M0-D90: «Named exemption (Recommended)»).
+- M0-D90's Done-when «`--bracket 15000,15015`'s life 01 forms none (the massive preset's range)» — N/A, superseded by the lead's
+  «Keep the rule (Recommended)» (2026-10-23, at M0-D90): measured on the RTX 4090, the 15,000 life's central fallback core holds 1.03 ×
+  m_tov_sb within 4 cells from step 2,998 and forms its sink at step 3,044 as its collapse brings Y_e over r ≤ 3 to 0.35 (a fallback
+  black hole); m_bh_sb's bisection lands between 4,572.394 and 15,000 and preset_mass_sb places the massive preset under it
+  (tasks/M0-D90.md § The probe).

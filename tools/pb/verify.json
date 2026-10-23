@@ -1693,6 +1693,10 @@
         {
           "id": "stage-in-step",
           "patch": "{python} -S -c \"import pathlib;p=pathlib.Path('crates/sr-engine/src/step/mod.rs');p.write_text(p.read_text(encoding='utf-8')+chr(10)+'use sr_physics::observe::Stage;'+chr(10),encoding='utf-8')\""
+        },
+        {
+          "id": "calibration-in-step",
+          "patch": "{python} -S -c \"import pathlib;p=pathlib.Path('crates/sr-engine/src/step/sinks.rs');p.write_text(p.read_text(encoding='utf-8')+chr(10)+'use crate::calibration::Calibration;'+chr(10),encoding='utf-8')\""
         }
       ]
     },

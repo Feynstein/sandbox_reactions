@@ -557,6 +557,11 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     (Fryer et al. 2012; O'Connor & Ott 2011) · measured on laserax-ai-server, 2026-10-23, RTX 4090: within 4 cells the 4,572.394 life's
     neutronized core peaks at 3,167 (0.65 m_tov_sb), 15,000's at 4,318, the 20 M₀ life passes at step 3,900 and 40 M₀ at 2,000
     (reports/black_hole.md M8) — the lead, 2026-10-23, at M0-R6: «Mass sink, r=4 (Recommended)».
+  - [M0-D90] §5's G-WATCH («names … a calibration value other than the physics hash») · **the step may also name `m_tov_sb`, which P3's
+    mass test ([M0-R6]) computes in-process from the neutron sheet for the run's physics (§2.11 item 2's procedure), never read; the
+    step names no `calibration` (any case), so it cannot read the measured file** — [M0-R6] makes m_tov_sb physics in the step, and
+    `watch_only` read NO-GO on its 7 mentions in sinks.wgsl and step/sinks.rs (laserax-ai-server, 2026-10-23, M0-D90's claim); scan
+    tests/watch/check.py's EXEMPT, plant `calibration-in-step` — the lead, 2026-10-23, at M0-D90: «Named exemption (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
