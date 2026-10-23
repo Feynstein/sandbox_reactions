@@ -1,0 +1,60 @@
+D89 pre-P5 (heat pinned, no P6/P7):   cell (5,0) rad 0e0 | sigma 2.8354684e-3->2.8382025e-3 E 1.4476156e0->1.4487046e0 | T0 3.5078042e0 C 1.3804104e-3 C*T0 4.842209e-3 iterT 0e0 u_iter 0e0
+D89 pre-P5 (heat pinned, no P6/P7):   cell (6,0) rad 0e0 | sigma 2.9476364e-3->2.9505955e-3 E 1.4967076e0->1.4979042e0 | T0 3.9432895e0 C 1.434387e-3 C*T0 5.6562033e-3 iterT 0e0 u_iter 0e0
+D89 pre-P5 (heat pinned, no P6/P7):   cell (7,0) rad 0e0 | sigma 3.0688087e-3->3.0721198e-3 E 1.5497451e0->1.55111e0 | T0 4.1685047e0 C 1.4925424e-3 C*T0 6.22167e-3 iterT 0e0 u_iter 0e0
+D89 Full Multigrid: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 2513, fits: 159, tiles: [75, 50, 1], cells: [938, 1, 1] }
+D89 full V-cycle: dt 7.8751025e-4 passes 1 rounds 4096 converged 0 stepped 1 delta -7.4324756e9 gained -3.3470094e4 radiated 4.1930134e16 held 5.641476e6
+D89 full V-cycle: thermal 5.673374e6 -> 4.174250e3; booked floor_added 4.193013e16 vacuum_reset -1.428084e-10 escaped.energy 2.756354e3; booking radiated 0.000000e0; accumulator radiated 4.193013e16
+D89 full V-cycle:   cell (0,0) rad 0e0 | sigma 2.294617e-3->2.2969833e-3 E 1.2071474e0->1.2045128e0 | T0 3.298371e0 C 1.1200601e-3 C*T0 3.6943739e-3 iterT 3.4690604e0 u_iter 5.7930537e-3
+D89 full V-cycle:   cell (1,0) rad 0e0 | sigma 2.4426493e-3->2.4450854e-3 E 1.274804e0->1.2719339e0 | T0 3.286917e0 C 1.1912409e-3 C*T0 3.9155097e-3 iterT 3.4762895e0 u_iter 5.841492e-3
+D89 full V-cycle:   cell (2,0) rad 0e0 | sigma 2.5270004e-3->2.5294472e-3 E 1.3126314e0->1.3095703e0 | T0 3.3231978e0 C 1.2316001e-3 C*T0 4.0928507e-3 iterT 3.499256e0 u_iter 5.9973975e-3
+D89 full V-cycle:   cell (3,0) rad 0e0 | sigma 2.6283164e-3->2.6308133e-3 E 1.3575408e0->1.3543005e0 | T0 3.3401434e0 C 1.2804166e-3 C*T0 4.2767753e-3 iterT 3.5181255e0 u_iter 6.12781e-3
+D89 full V-cycle:   cell (4,0) rad 0e0 | sigma 2.7293924e-3->2.7319766e-3 E 1.4014966e0->1.3980793e0 | T0 3.3760183e0 C 1.3291595e-3 C*T0 4.4872668e-3 iterT 3.557653e0 u_iter 6.407879e-3
+D89 full V-cycle:   cell (5,0) rad 0e0 | sigma 2.8354684e-3->2.8382025e-3 E 1.4476156e0->1.4439313e0 | T0 3.5078042e0 C 1.3804104e-3 C*T0 4.842209e-3 iterT 3.7089264e0 u_iter 7.5692497e-3
+D89 full V-cycle:   cell (6,0) rad 0e0 | sigma 2.9476364e-3->2.9505955e-3 E 1.4967076e0->1.4923198e0 | T0 3.9432895e0 C 1.434387e-3 C*T0 5.6562033e-3 iterT 4.1169577e0 u_iter 1.1491206e-2
+D89 full V-cycle:   cell (7,0) rad 0e0 | sigma 3.0688087e-3->3.0721198e-3 E 1.5497451e0->1.544963e0 | T0 4.1685047e0 C 1.4925424e-3 C*T0 6.22167e-3 iterT 4.268643e0 u_iter 1.3280648e-2
+D89 Full Jacobi: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 2513, fits: 159, tiles: [75, 50, 1], cells: [938, 1, 1] }
+D89 full Jacobi: dt 7.8751025e-4 passes 1 rounds 4096 converged 0 stepped 1 delta -7.428605e9 gained -3.0536152e4 radiated 4.193009e16 held 5.64441e6
+D89 full Jacobi: thermal 5.673374e6 -> 4.174250e3; booked floor_added 4.193009e16 vacuum_reset -1.428084e-10 escaped.energy 2.756354e3; booking radiated 0.000000e0; accumulator radiated 4.193009e16
+D89 full Jacobi:   cell (0,0) rad 0e0 | sigma 2.294617e-3->2.2969833e-3 E 1.2071474e0->1.2045128e0 | T0 3.298371e0 C 1.1200601e-3 C*T0 3.6943739e-3 iterT 3.298371e0 u_iter 4.7343248e-3
+D89 full Jacobi:   cell (1,0) rad 0e0 | sigma 2.4426493e-3->2.4450854e-3 E 1.274804e0->1.2719339e0 | T0 3.286917e0 C 1.1912409e-3 C*T0 3.9155097e-3 iterT 3.286917e0 u_iter 4.668904e-3
+D89 full Jacobi:   cell (2,0) rad 0e0 | sigma 2.5270004e-3->2.5294472e-3 E 1.3126314e0->1.3095703e0 | T0 3.3231978e0 C 1.2316001e-3 C*T0 4.0928507e-3 iterT 3.3231978e0 u_iter 4.878483e-3
+D89 full Jacobi:   cell (3,0) rad 0e0 | sigma 2.6283164e-3->2.6308133e-3 E 1.3575408e0->1.3543005e0 | T0 3.3401434e0 C 1.2804166e-3 C*T0 4.2767753e-3 iterT 3.3401432e0 u_iter 4.9787513e-3
+D89 full Jacobi:   cell (4,0) rad 0e0 | sigma 2.7293924e-3->2.7319766e-3 E 1.4014966e0->1.3980793e0 | T0 3.3760183e0 C 1.3291595e-3 C*T0 4.4872668e-3 iterT 3.376018e0 u_iter 5.196119e-3
+D89 full Jacobi:   cell (5,0) rad 0e0 | sigma 2.8354684e-3->2.8382025e-3 E 1.4476156e0->1.4439313e0 | T0 3.5078042e0 C 1.3804104e-3 C*T0 4.842209e-3 iterT 3.5078042e0 u_iter 6.056216e-3
+D89 full Jacobi:   cell (6,0) rad 0e0 | sigma 2.9476364e-3->2.9505955e-3 E 1.4967076e0->1.4923198e0 | T0 3.9432895e0 C 1.434387e-3 C*T0 5.6562033e-3 iterT 3.9432895e0 u_iter 9.671518e-3
+D89 full Jacobi:   cell (7,0) rad 0e0 | sigma 3.0688087e-3->3.0721198e-3 E 1.5497451e0->1.544963e0 | T0 4.1685047e0 C 1.4925424e-3 C*T0 6.22167e-3 iterT 4.1685047e0 u_iter 1.2077616e-2
+D89 Alone Multigrid: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 1, fits: 2, tiles: [75, 50, 1], cells: [938, 1, 1] }
+D89 P5 alone V-cycle (pre-P5 start): dt 7.8751025e-4 passes 1 rounds 4096 converged 0 stepped 1 delta -7.432475e9 gained -3.3470086e4 radiated 4.1930134e16 held 5.6414765e6
+D89 P5 alone V-cycle (pre-P5 start): thermal 5.674947e6 -> 4.174250e3; booked floor_added 4.193014e16 vacuum_reset 0.000000e0 escaped.energy 0.000000e0; booking radiated 0.000000e0; accumulator radiated 4.193013e16
+D89 P5 alone V-cycle (pre-P5 start):   cell (0,0) rad 0e0 | sigma 2.2969833e-3->2.2969833e-3 E 1.2081513e0->1.2045128e0 | T0 3.298371e0 C 1.1200601e-3 C*T0 3.6943739e-3 iterT 3.4690604e0 u_iter 5.7930537e-3
+D89 P5 alone V-cycle (pre-P5 start):   cell (1,0) rad 0e0 | sigma 2.4450854e-3->2.4450854e-3 E 1.2757899e0->1.2719339e0 | T0 3.286917e0 C 1.1912409e-3 C*T0 3.9155097e-3 iterT 3.4762895e0 u_iter 5.841492e-3
+D89 P5 alone V-cycle (pre-P5 start):   cell (2,0) rad 0e0 | sigma 2.5294472e-3->2.5294472e-3 E 1.3136016e0->1.3095703e0 | T0 3.3231978e0 C 1.2316001e-3 C*T0 4.0928507e-3 iterT 3.499256e0 u_iter 5.9973975e-3
+D89 P5 alone V-cycle (pre-P5 start):   cell (3,0) rad 0e0 | sigma 2.6308133e-3->2.6308133e-3 E 1.3585131e0->1.3543005e0 | T0 3.340144e0 C 1.2804165e-3 C*T0 4.2767753e-3 iterT 3.5181258e0 u_iter 6.1278134e-3
+D89 P5 alone V-cycle (pre-P5 start):   cell (4,0) rad 0e0 | sigma 2.7319766e-3->2.7319766e-3 E 1.4024999e0->1.3980793e0 | T0 3.3760192e0 C 1.3291594e-3 C*T0 4.4872677e-3 iterT 3.557654e0 u_iter 6.4078863e-3
+D89 P5 alone V-cycle (pre-P5 start):   cell (5,0) rad 0e0 | sigma 2.8382025e-3->2.8382025e-3 E 1.4487046e0->1.4439313e0 | T0 3.5078037e0 C 1.3804105e-3 C*T0 4.842209e-3 iterT 3.7089257e0 u_iter 7.5692465e-3
+D89 P5 alone V-cycle (pre-P5 start):   cell (6,0) rad 0e0 | sigma 2.9505955e-3->2.9505955e-3 E 1.4979042e0->1.4923198e0 | T0 3.9432895e0 C 1.434387e-3 C*T0 5.6562033e-3 iterT 4.1169577e0 u_iter 1.1491206e-2
+D89 P5 alone V-cycle (pre-P5 start):   cell (7,0) rad 0e0 | sigma 3.0721198e-3->3.0721198e-3 E 1.55111e0->1.544963e0 | T0 4.1685047e0 C 1.4925424e-3 C*T0 6.22167e-3 iterT 4.268643e0 u_iter 1.3280648e-2
+D89 Alone Jacobi: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 1, fits: 2, tiles: [75, 50, 1], cells: [938, 1, 1] }
+D89 P5 alone Jacobi (pre-P5 start): dt 7.8751025e-4 passes 1 rounds 4096 converged 0 stepped 1 delta -7.4286034e9 gained -3.0536154e4 radiated 4.193009e16 held 5.644411e6
+D89 P5 alone Jacobi (pre-P5 start): thermal 5.674947e6 -> 4.174250e3; booked floor_added 4.193009e16 vacuum_reset 0.000000e0 escaped.energy 0.000000e0; booking radiated 0.000000e0; accumulator radiated 4.193009e16
+D89 P5 alone Jacobi (pre-P5 start):   cell (0,0) rad 0e0 | sigma 2.2969833e-3->2.2969833e-3 E 1.2081513e0->1.2045128e0 | T0 3.298371e0 C 1.1200601e-3 C*T0 3.6943739e-3 iterT 3.298371e0 u_iter 4.7343248e-3
+D89 P5 alone Jacobi (pre-P5 start):   cell (1,0) rad 0e0 | sigma 2.4450854e-3->2.4450854e-3 E 1.2757899e0->1.2719339e0 | T0 3.286917e0 C 1.1912409e-3 C*T0 3.9155097e-3 iterT 3.286917e0 u_iter 4.668904e-3
+D89 P5 alone Jacobi (pre-P5 start):   cell (2,0) rad 0e0 | sigma 2.5294472e-3->2.5294472e-3 E 1.3136016e0->1.3095703e0 | T0 3.3231978e0 C 1.2316001e-3 C*T0 4.0928507e-3 iterT 3.3231978e0 u_iter 4.878483e-3
+D89 P5 alone Jacobi (pre-P5 start):   cell (3,0) rad 0e0 | sigma 2.6308133e-3->2.6308133e-3 E 1.3585131e0->1.3543005e0 | T0 3.340144e0 C 1.2804165e-3 C*T0 4.2767753e-3 iterT 3.3401437e0 u_iter 4.9787546e-3
+D89 P5 alone Jacobi (pre-P5 start):   cell (4,0) rad 0e0 | sigma 2.7319766e-3->2.7319766e-3 E 1.4024999e0->1.3980793e0 | T0 3.3760192e0 C 1.3291594e-3 C*T0 4.4872677e-3 iterT 3.3760192e0 u_iter 5.1961252e-3
+D89 P5 alone Jacobi (pre-P5 start):   cell (5,0) rad 0e0 | sigma 2.8382025e-3->2.8382025e-3 E 1.4487046e0->1.4439313e0 | T0 3.5078037e0 C 1.3804105e-3 C*T0 4.842209e-3 iterT 3.5078037e0 u_iter 6.056212e-3
+D89 P5 alone Jacobi (pre-P5 start):   cell (6,0) rad 0e0 | sigma 2.9505955e-3->2.9505955e-3 E 1.4979042e0->1.4923198e0 | T0 3.9432895e0 C 1.434387e-3 C*T0 5.6562033e-3 iterT 3.9432895e0 u_iter 9.671518e-3
+D89 P5 alone Jacobi (pre-P5 start):   cell (7,0) rad 0e0 | sigma 3.0721198e-3->3.0721198e-3 E 1.55111e0->1.544963e0 | T0 4.1685047e0 C 1.4925424e-3 C*T0 6.22167e-3 iterT 4.1685047e0 u_iter 1.2077616e-2
+D89 twin: 6.7 s, passes 3 rounds 4096 converged false delta -1.8032511022450116e6 radiated 1.0237105970247584e13
+D89 twin:   cell (216,75) emitted 1.023710596869441e13 sigma 2.0759178369189613e-5 E 8.192692756652832e0->-1.213934230941314e6 | gpu T0 3.3966894e5 C 1.5855298e-5
+D89 twin:   cell (221,399) emitted 1.8298518032956938e1 sigma 1.857730560004711e-2 E 5.301137161254883e1->-1.0499588828763263e6 | gpu T0 3.2635696e1 C 1.1846794e-2
+D89 twin:   cell (222,399) emitted 1.827192219850899e1 sigma 1.6880111768841743e-2 E 5.008612823486328e1->-9.6279090833831e5 | gpu T0 3.2424053e1 C 1.0868425e-2
+D89 twin:   cell (220,399) emitted 1.816912829704439e1 sigma 2.005634270608425e-2 E 5.561089324951172e1->-1.1216449406159043e6 | gpu T0 3.202456e1 C 1.2676884e-2
+D89 twin:   cell (219,399) emitted 1.8024312041383116e1 sigma 2.1413592621684074e-2 E 5.840556335449219e1->-1.1861880565348438e6 | gpu T0 3.1998077e1 C 1.34320175e-2
+D89 twin:   cell (218,399) emitted 1.7821831161203907e1 sigma 2.2368939593434334e-2 E 6.0222808837890625e1->-1.226786689187539e6 | gpu T0 3.1864744e1 C 1.393017e-2
+D89 twin:   cell (223,399) emitted 1.7695426533358656e1 sigma 1.5010037459433079e-2 E 4.587218475341797e1->-8.57563209695924e5 | gpu T0 3.1719524e1 C 9.7596515e-3
+D89 twin:   cell (217,399) emitted 1.7574088506146467e1 sigma 2.2772010415792465e-2 E 6.051970672607422e1->-1.2352455793453427e6 | gpu T0 3.1879654e1 C 1.4075022e-2
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 372 filtered out; finished in 12.60s
+

@@ -1,0 +1,26 @@
+dest=/tmp/d88_probe · files=6785 · size=100M · linked=none · excluded=13
+=== GO ===
+patched /tmp/d88_probe/crates/sr-engine/src/watch.rs
+candidate a applied
+bash: line 9: tests/cargo.sh: Permission denied
+
+real	0m0.001s
+user	0m0.001s
+sys	0m0.000s
+#!/usr/bin/env bash
+# Every cargo scope sources this file (m0_contrat.md §6.5; docs/agent/testing.md § Cargo scopes). Run as
+#   bash tests/cargo.sh build native|wasm
+# it is the `build` scope's case runner and ends in `=== GO ===` or `=== NO-GO: <reason> ===`.
+#   native  cargo build --workspace --release --locked, then cargo clippy ... -- -D warnings
+=== NO-GO: unknown case '--release' (native or wasm) ===
+
+real	0m0.011s
+user	0m0.004s
+sys	0m0.010s
+   Compiling eframe v0.36.2
+   Compiling sr-app v0.0.0 (/tmp/d88_probe/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 30.70s
+
+real	0m30.753s
+user	8m20.029s
+sys	0m20.005s

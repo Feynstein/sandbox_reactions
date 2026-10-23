@@ -508,6 +508,55 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     rate at the pass's start; twin and GPU; burn_dt and burn_dx unchanged for the other records — measured on the RTX 4090 (M0-R10):
     the shipped sub-cycles spent MAX_ATTEMPTS at T_floor, 8.4 % of Δt burned, P6 2,951.9 ms a collapse step. The twin since M0-D86
     (2026-10-22), the GPU with M0-D87 — the lead, 2026-10-22, at M0-R10: «(b) Exact N_Fe (Recommended)».
+  - [M0-D81] §1.9.3's white_dwarf row («ignited, d_c ≥ 0.5, L_nuc < 0.01 L, M_unb < 0.05 M, X_n,c < 0.5») and planetary_nebula row
+    («ignited, d_c ≥ 0.5, L_nuc < 0.1 L, M_unb ≥ 0.05 M») · **each also needs M ≤ m_ch_sb**, m_ch_sb as §2.11 item 1 computes it for
+    the run's own physics (the sheet's C/O ceiling, 0.04 s, no adapter — never read from assets/calibration.json; a scene with the
+    electrons' cold pressure off has no ceiling, and its rows refuse no mass): a heavier star's quiet, degenerate centre falls to the
+    rows below — iron_core for an iron centre — until it collapses, so no white_dwarf hold races the collapse; the other rows, the
+    order and §1.9.5's hold unchanged · measured on the RTX 4090 (laserax-ai-server, idle, 2026-10-23, this tree; M0-D81's probe: each
+    frame's heaviest object traced, the rows replayed): the 4,572.394 life showed white_dwarf from t 4.33 holding the whole 4,570 star,
+    its centre burnt to iron in one flash (X_Fe 1.0, Y_e 0.464, d_c 0.59–0.75, L_nuc ≤ 10⁻⁵ L, v_r ±0.5 √(GM/R)), planetary_nebula from
+    t 10.10, core collapse at t 11.40, ending neutron_star at t 29.11; the 6,702.064 life the same (ending neutron_star at t 21.55);
+    on 40bdeac the same 4,572 life on the same card had not collapsed by t 15.54 and ended white_dwarf (`side=none`, exit 6) where the
+    RTX 5090 (D79's tree) collapsed at t 11.28 — the race moved by the physics, never by the rows; with the bound both lives read
+    iron_core from t 4.3 and keep their endings; m_up_sb's light-side lives ended white_dwarf at 2,235.8 and 1,978.8 (RTX 5090,
+    f39c6db), far under 3,216.42, and the Sun-like preset (≈ 3,118 by §1.10.1) is under it by construction (1 Sun < 1.44) — the lead,
+    2026-10-23, at M0-D81: «Refuse above m_ch_sb (Recommended)».
+  - [M0-D88] §1.9.3's neutron_star row as [M0-D79] reads it («Y_e,c ≤ 0.35, d_c ≥ 0.5, no sink, listed after supernova») · **it also
+    needs the object to have passed core collapse** (a frame of its id whose result was core_collapse — the history's last core
+    collapse, already in the observers' snapshot): a centre that neutronizes inside one frame reads core_collapse first (L_N < 0), its
+    event fires, supernova can follow, calibrate's one-step frames ([M0-D80]) start; once collapsed the order is [M0-D79]'s, so the
+    gate re-opening under a neutron star still reads neutron_star · measured on the RTX 4090 (laserax-ai-server, idle, 2026-10-23,
+    this tree; M0-D81's trace probe on a scratch build): the 6,702.064 life's Y_e,c went 0.464 → 0.342 between steps 1,537 and 1,553
+    (one 16-step frame; L_N −5.2 × 10⁷), neutron_star won that frame and no core_collapse or supernova ever fired (ending neutron_star
+    t 21.55); with the term: core_collapse step 1,553 (t 11.379), supernova 1,554, neutron_star from t 21.03, ending neutron_star step
+    6,658 (t 31.06); the 4,572.394 life unchanged (core_collapse 1,521, ending step 5,970, t 29.110) — the lead, 2026-10-23, at
+    M0-D88: «NS needs a collapse (Recommended)».
+  - [M0-D89] §0.5 [M0-TJ4] (6)'s «the only ceiling … commits the last iterate with (5)'s closure» · **past the ceiling the step commits
+    by limited fluxes**, on the GPU and the twin: F_f = −D_f (u_b − u_a) at the last iterate; each gas cell's outflow Δt Σ_f max(F_f, 0)
+    over its four faces (outflow positive) is scaled by s_i = min(1, C_i (T_i⁰ − T_floor)/outflow), every face's F taken at the scale of
+    the cell it leaves (1 from vacuum); E_i −= Δt Σ_f F_f; R is that F through the gas cells' vacuum and edge faces, booked `radiated` and
+    per emitting cell; δ = 0 (the two sides of a face book the same F); F and side.flux the limited F's; the rate (§0.5 [M0-D85]) the
+    cell's change over C_i Δt; the warning printed as before; a converged step's commit unchanged · measured on the RTX 4090
+    (laserax-ai-server, idle, 2026-10-23, the tree at 8332496 + its working changes): in the 40 M₀ life (`calibrate --only m_bh_sb` at
+    134,041.287) step 2,517 stops at 1 pass, 4,096 rounds on either preconditioner (still at 32,768 in a scratch build: in f32 a thin
+    cell's residual never meets (4)'s u-measure) with a cell at Σ 2.1 × 10⁻⁵, T 3.4 × 10⁵ beside vacuum holding 5.4 of heat above its
+    floor; the last iterate leaves it within a factor 2 of T⁰, so it emits 4.19 × 10¹⁶, δ −7.4 × 10⁹ took that from every cell and P8
+    floored them all (thermal 5.67 × 10⁶ → 4,174, the invariant +1.71 × 10⁹); the twin from the same P5 start converges in 16 passes,
+    14,334 rounds (R 1,250; the cell left at E 2.808) and stops at its own ceiling at 3 passes (R 1.02 × 10¹³, δ −1.8 × 10⁶); limited,
+    the twin's ceiling step books R 713 and leaves the cell at 2.807, no cell below its floor, the balance exact to 9 × 10⁻¹¹; on the GPU
+    the step books R 777.7 and moves the invariant by 4,994 (G-CONS's 10⁻³ |W| is 1.6 × 10⁵), and the life from s_2510 to step 3,100
+    (ceiling steps 2,517, 2,520 and 2,523) books no 10-step floor over 1.03 × 10⁶ (logs/M0-D89.*, tasks/M0-D89.md) — the lead,
+    2026-10-23, at M0-D89: «Limited fluxes (Recommended)».
+  - [M0-R6] §2.6's Formation ("all four at one cell … Σ ≥ Σ_BH") · **a sink also forms at a cell that is a local Σ maximum whose disk r ≤
+    r_core = 4 cells holds M_core ≥ m_tov_sb (§2.11 item 2's value) with the disk's mass-weighted Y_e over r ≤ 3 at most 0.35 (§0.5
+    [M0-D79]'s bound), the cell passing §2.6's other three tests (∇·u < 0, φ no greater than its 8 neighbours, bound); that sink takes the
+    disk's mass above the floor and its momentum, its thermal and cold energy booked `swallowed`; Σ ≥ Σ_BH alone still forms one** — a
+    one-cell grid holds a neutron star's mass in a block of a few cells and never drives Σ past Σ_BH (densest cell 1,554 over every probe,
+    reports/black_hole.md M7; M0-R4 M10), while the black hole is decided by the remnant's mass against the maximum neutron-star mass
+    (Fryer et al. 2012; O'Connor & Ott 2011) · measured on laserax-ai-server, 2026-10-23, RTX 4090: within 4 cells the 4,572.394 life's
+    neutronized core peaks at 3,167 (0.65 m_tov_sb), 15,000's at 4,318, the 20 M₀ life passes at step 3,900 and 40 M₀ at 2,000
+    (reports/black_hole.md M8) — the lead, 2026-10-23, at M0-R6: «Mass sink, r=4 (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

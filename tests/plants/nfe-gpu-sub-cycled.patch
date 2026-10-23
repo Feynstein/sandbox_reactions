@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/step/react.rs
++++ b/crates/sr-engine/src/step/react.rs
+@@ -105,7 +105,7 @@
+         assert!(rec.inputs.len() <= MAX_INPUTS && rate.terms.len() <= MAX_TERMS, "{}: react.wgsl's record is too small", rec.id);
+         let group = GROUPS.iter().position(|g| *g == rec.group).expect("a record's group is one of GROUPS (registry load)");
+         let flags = u32::from(rate.t_thr.is_some()) * HAS_TERMS + u32::from(rate.gate.is_some()) * GATED + u32::from(rec.id == NFE) * LATCHES
+-            + u32::from(exact(rec, elements.species())) * EXACT;
++            + u32::from(exact(rec, elements.species()) && false) * EXACT; // planted: N_Fe sub-cycled on the GPU, the closed form skipped
+         let mut w = vec![group as u32, rec.inputs.len() as u32, rate.terms.len() as u32, flags];
+         let (mut species, mut orders) = ([0u32; MAX_INPUTS], [0u32; MAX_INPUTS]);
+         for (k, (s, &n)) in rec.inputs.iter().zip(&rate.orders).enumerate() {

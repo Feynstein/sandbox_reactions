@@ -1,0 +1,10 @@
+== 2026-10-23T12:35:26-04:00 capture[smoke] · task M0-D89 · box laserax-ai-server :: bash tests/capture/check.sh {case}
+== 2026-10-23T12:35:26-04:00 capture[refuse] · task M0-D89 · box laserax-ai-server :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=1 · 0.11 s
+tests/capture/check.sh: line 28: xvfb-run: command not found
+=== NO-GO: the capture run exited 127, expected 0 ===
+
+-- capture[refuse] · exit=0 · 0.16 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+

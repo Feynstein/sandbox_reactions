@@ -89,7 +89,9 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
 - **The neutron star row (§0.5 [M0-D79])** reads the neutronized, degenerate centre: Y_e,c from the centre's X
   (`registry::electron_fraction`, §1.5's Z/A), d_c, no sink — no |v_r| term until M0-D71's well-balanced P4 (a 2-cell
   remnant's grid flow holds |v_r| at 0.05–0.49 √(GM/R)). After supernova, so a supernova's window still shows; before core
-  collapse, so N_Fe's gate re-opening for a frame (L_N < 0) does not restart the remnant's ending hold.
+  collapse, so N_Fe's gate re-opening for a frame (L_N < 0) does not restart the remnant's ending hold. It also needs the object
+  to have passed core collapse (`History::last_collapse`, §0.5 [M0-D88]): a centre that neutronizes inside one frame shows
+  core_collapse first, so the event fires, the supernova can follow and calibrate's one-step frames start.
 - **`classify(&Object, &History, now) -> Stage`** is pure. `History` carries what a frame cannot: whether the object ever
   ignited and the last time it classified as core collapse.
 - **The display hold.** `StageTracker::update(&[Object], now)` shows a stage only after §1.9.3's count of consecutive

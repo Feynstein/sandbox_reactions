@@ -33,15 +33,17 @@
 
 use std::path::{Path, PathBuf};
 
+use sr_engine::dump::Dump;
 use sr_engine::gpu::Gpu;
 use sr_engine::scene::{Scene, TestSettings};
-use sr_engine::state::{Booking, SideFields, State as GpuState, WorldConfig, BOOK_GROUPS, TERMS};
+use sr_engine::state::{book_totals, Booking, SideFields, State as GpuState, WorldConfig, BOOK_GROUPS, TERMS};
 use sr_engine::step::boxfit::BoxMode;
 use sr_engine::step::heat::{set_default_precond, HeatPrecond, HeatReport, HeatSetup, MIN_ROUNDS, SLOTS};
 use sr_engine::step::{EosGpu, Passes, Step};
+use sr_physics::eos::Eos;
 use sr_physics::reference::heat::{lambda, Flux, Heat, Pass, TestFlags};
 use sr_physics::reference::hydro::State;
-use sr_physics::registry::{Elements, Physics};
+use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 /// Hydrogen's 1/μ (§1.5): ε_th = T/μ = 2T.
 const INV_MU: f64 = 2.0;
@@ -1117,6 +1119,7 @@ mod stiff {
     on_both_preconditioners!(
         gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost,
         gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost,
+        gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold,
     );
 
     /// A scene, its gas and the Δt of its one pass.
@@ -1403,6 +1406,99 @@ mod stiff {
 
     fn gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost() {
         gpu_one_pass(&RIM);
+    }
+
+    /// M0-D89's cut (scenes/heat_ceiling.bin, a §2.12.3 dump): P5's start in step 2,517 of the 40 M₀ life (`calibrate --only
+    /// m_bh_sb` at 134,041.287, RTX 4090, 2026-10-23: s_2517 through P1–P4 and P8 with P5 pinned), cells x 184–247, y 43–106
+    /// of its 600 × 400 world — the thin hot cell (Σ 2.1e-5, T 3.4e5) at (32, 32) beside a vacuum cell — and the step's Δt
+    /// (the header's `resume.dt_next`). The shipped constants; every test flag off.
+    fn ceiling_cut() -> (State, Physics, f64) {
+        let dump = Dump::read(&scenes_dir().join("heat_ceiling.bin")).unwrap();
+        let (w, h) = (dump.world.width as usize, dump.world.height as usize);
+        let st = State::new(w, h, dump.planes.iter().map(|&v| f64::from(v)).collect());
+        (st, Physics::shipped().unwrap(), f64::from(dump.resume.dt_next))
+    }
+
+    /// Each cell's heat above its floor as P5 reads its start (§0.5 [M0-TJ4] (1)): C (T⁰ − T_floor), C = Σ/μ, T⁰ from the
+    /// EOS's ε_th (floored at T_floor/μ); 0 off the gas (Σ < Σ_vac).
+    fn held_above_floor(physics: &Physics, st: &State) -> Vec<f64> {
+        let eos = Eos::from_physics(physics).unwrap();
+        let elements = elements();
+        let sigma_vac = physics.get("sigma_vac").unwrap();
+        let n = st.cells();
+        let at = |c: usize, i: usize| st.planes[c * n + i];
+        (0..n)
+            .map(|i| {
+                if at(0, i) < sigma_vac {
+                    return 0.0;
+                }
+                let x: [f64; N_SPECIES] = std::array::from_fn(|s| at(4 + s, i));
+                let comp = elements.composition(&x);
+                let mu = 1.0 / comp.inv_mu;
+                let th = eos.thermal(at(3, i), at(0, i), [at(1, i), at(2, i)], comp.y_e, x[N_SPECIES - 1], mu);
+                at(0, i) * comp.inv_mu * (Eos::temperature(th.eps_th, mu) - eos.t_floor())
+            })
+            .collect()
+    }
+
+    /// M0-D89's bounds on a step that reached the ceiling, `before` to `after` with `radiated` booked: (a) no gas cell loses
+    /// more than its heat above the floor, E⁰ − E ≤ held (1 + `rel`) + `abs` |E⁰|; (b) the grid loses the heat it books,
+    /// |ΔE + R| ≤ `rel` Σ held; (c) R ≤ Σ held (1 + `rel`). Returns the worst cell's (index, lost, held).
+    fn assert_bounded(physics: &Physics, before: &State, after: &State, radiated: f64, rel: f64, abs: f64) -> (usize, f64, f64) {
+        let held = held_above_floor(physics, before);
+        let n = before.cells();
+        let lost: Vec<f64> = (0..n).map(|i| before.planes[3 * n + i] - after.planes[3 * n + i]).collect();
+        let worst = (0..n).max_by(|&a, &b| (lost[a] - held[a]).total_cmp(&(lost[b] - held[b]))).unwrap();
+        let all: f64 = held.iter().sum();
+        let grid: f64 = lost.iter().sum();
+        println!(
+            "SR-STIFF ceiling: heat above the floor {all:.6e}, the grid lost {grid:.6e}, radiated {radiated:.6e}; the worst cell ({}, {}) lost {:.6e} of {:.6e} held",
+            worst % before.width, worst / before.width, lost[worst], held[worst]
+        );
+        for i in (0..n).filter(|&i| before.planes[i] >= physics.get("sigma_vac").unwrap()) {
+            let e0 = before.planes[3 * n + i];
+            assert!(lost[i] <= held[i] * (1.0 + rel) + abs * e0.abs(), "(a) cell ({}, {}) lost {} of {} held", i % before.width, i / before.width, lost[i], held[i]);
+        }
+        assert!((grid - radiated).abs() <= rel * all, "(b) the grid lost {grid}, radiated {radiated}");
+        assert!(radiated <= all * (1.0 + rel), "(c) radiated {radiated} over the heat above the floor {all}");
+        (worst, lost[worst], held[worst])
+    }
+
+    /// M0-D89 on the twin: the cut's step reaches the ceiling (11 passes, 4,096 rounds; the case is moot otherwise), and its
+    /// commit by limited fluxes (§0.5 [M0-D89]) holds the bounds to 1e-9 with δ = 0 — before it, the last iterate's T and (5)'s
+    /// closure gave δ −1.7e-2.
+    #[test]
+    fn the_twin_at_the_ceiling_moves_no_more_heat_than_its_cells_hold() {
+        let (before, physics, dt) = ceiling_cut();
+        let heat = Heat::new(&physics, &elements(), TestFlags::default()).unwrap();
+        let mut after = before.clone();
+        let p = heat.step(&mut after, dt);
+        println!("SR-STIFF twin heat_ceiling.bin: {} passes, {} rounds, converged {}, delta {:e}, radiated {:e}", p.passes, p.rounds, p.converged, p.delta, p.radiated);
+        assert!(!p.converged, "the cut's step must reach the ceiling: {} passes, {} rounds", p.passes, p.rounds);
+        assert_eq!(p.delta, 0.0, "past the ceiling the fluxes are booked on both sides: no closure");
+        assert_bounded(&physics, &before, &after, p.radiated, 1e-9, 1e-12);
+    }
+
+    /// M0-D89 on the GPU: the cut's step reaches the ceiling (1 pass, 4,096 rounds on the RTX 4090 on either preconditioner: in
+    /// f32 the thin hot cell's residual never meets (4)'s u-measure), and the commit holds the bounds to f32's 1e-5 with δ 0 —
+    /// where the last iterate with (5)'s closure booked 4.2e16 radiated against ~1e5 of heat above the floor, δ −2.9e11. P8
+    /// runs after P5 here and would floor a cell that gave more than it held, so its `floor_added` is held to the same 1e-5 of
+    /// the heat above the floor: (a) on the state P5 left.
+    fn gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold() {
+        let (st, physics, dt) = ceiling_cut();
+        let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
+        let before = gpu.first.clone();
+        let r = gpu.pass(dt);
+        let after = gpu.planes();
+        let radiated: f64 = gpu.radiated().iter().sum();
+        let floored = book_totals(gpu.state.world(), &gpu.booking.readback(&gpu.gpu.device, &gpu.gpu.queue))
+            [TERMS.iter().position(|t| t.name == "energy.floor_added").unwrap()];
+        println!("SR-STIFF GPU heat_ceiling.bin: {r:?}, radiated booked {radiated:e}, P8's floor_added {floored:e}");
+        assert!(!r.converged, "the cut's step must reach the ceiling: {r:?}");
+        assert_eq!(r.delta, 0.0, "past the ceiling the fluxes are booked on both sides: no closure");
+        let all: f64 = held_above_floor(&physics, &before).iter().sum();
+        assert!(floored.abs() <= 1e-5 * all, "(a) P8 floored {floored} after P5: a cell gave more than it held");
+        assert_bounded(&physics, &before, &after, radiated, 1e-5, 2.0 * f64::from(f32::EPSILON));
     }
 }
 

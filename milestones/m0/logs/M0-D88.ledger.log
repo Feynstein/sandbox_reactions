@@ -1,0 +1,28 @@
+== 2026-10-23T10:21:44-04:00 ledger · task M0-D88 · box laserax-ai-server :: bash tests/gpu.sh ledger physics
+-- ledger · exit=0 · 18.19 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 1.02s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.123725 until=none
+remnant: steps 1..1000, sim time 8.107, R₉₀ 2.705, M 1486.7, τ_dyn 0.1154, |W|₀ 2.3296e5; Δinvariant -1.1596e3 → 7.086e-5 |W| per τ_dyn (bound 1e-3); radiated 2.3656e5, floor_added -9.3837e0, escaped 1.5375e3, ΔW -5.1417e5
+ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.691798 until=none
+bounce: steps 1..500, mass drift 9.184e-8, momentum drift 3.557e-7 of Σm|u| = 3.507e3, energy drift -1.993e-2 (reported), escaped 0
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.349479 until=none
+leave: escaped mass 4.718404e0 of 1.017436e3 (4.638e-3), momentum escaped Array [Number(111.77665776549502), Number(-0.0006578140297293089)], mass drift 5.961e-8, momentum drift 8.358e-4 of Σm|u| = 4.981e3, energy drift -1.216e-2 (reported), escaped energy 3.954273e2
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.818474 until=none
+leave without gravity: escaped mass 2.988126e2 of 1.017169e3, escaped x momentum 1.310427e3, vacuum_reset 1.765e-2 × u_max 6.875 → bound 7.960e-5; mass drift 1.265e-7, momentum drift 5.295e-5 of Σm|u| = 1.544e3
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 367 filtered out; finished in 16.68s
+
+

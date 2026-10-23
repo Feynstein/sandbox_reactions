@@ -14,6 +14,10 @@
 //! the sum over the gas of its softened pull's reaction, graded by the no-net-force bound on the twin (M0-D45) and on the
 //! GPU (M0-D46: P3 sums the box's tiles, so a sink outside the box feels the gas too); the `gpu_*` cases grade P3 against
 //! the twin's `step` and `advance`.
+//!
+//! A sink from mass (§0.5 [M0-R6], M0-D90): under the shipped physics (the cold pressure on, so m_tov_sb is the sheet's), a
+//! neutronized core holding m_tov_sb within 4 cells forms a sink that takes the disk; 0.95 of it, the same mass as iron
+//! (Y_e 0.464) or diverging does not, and Σ ≥ Σ_BH alone still forms one that takes its cell — on the twin and on the GPU.
 
 use std::path::{Path, PathBuf};
 
@@ -28,7 +32,7 @@ use sr_engine::step::sinks::{SinkReport, SinkSetup};
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::reference::grav::{add_sinks, Field, Gravity, SinkSource};
 use sr_physics::reference::hydro::{Edge, Hydro, State, COMPONENTS};
-use sr_physics::reference::sinks::{r_acc, Sink, Sinks, MAX_SINKS};
+use sr_physics::reference::sinks::{disk, r_acc, Sink, Sinks, MAX_SINKS, R_CORE};
 use sr_physics::registry::{Elements, Physics};
 
 fn elements() -> Elements {
@@ -357,6 +361,106 @@ fn no_seventeenth_sink_forms() {
     assert_eq!(s.form(&mut st, &phi), Some((8, 8)), "15 stand: the sixteenth forms");
 }
 
+// ---- a sink from mass (§0.5 [M0-R6]) ----
+
+/// The shipped physics: the cold pressure on, so the mass test reads the sheet's m_tov_sb.
+fn shipped() -> Physics {
+    Physics::shipped().unwrap()
+}
+
+fn mass_sinks() -> Sinks {
+    Sinks::new(&shipped(), &elements(), 1.0).unwrap()
+}
+
+/// A `w` × `h` world of hydrogen at Σ = 1 at rest with, about cell (cx, cy), a core of `mass` in the disk r ≤ 4 (49 cells,
+/// Σ = mass/50, its centre twice that: the one local maximum) of pure `species`, converging on its centre at 0.1 per cell
+/// (diverging, `sign` = +1); ε_th = 0.1 everywhere and φ = −100 + ½d² about the centre.
+fn core_world(w: usize, h: usize, (cx, cy): (usize, usize), mass: f64, species: &str, sign: f64) -> (State, Vec<f64>) {
+    let (n, k) = (w * h, elements().index_of(species).unwrap());
+    let mut planes = vec![0.0; COMPONENTS * n];
+    let mut phi = vec![0.0; n];
+    let core: Vec<usize> = disk(cx, cy, R_CORE, w, h).collect();
+    for y in 0..h {
+        for x in 0..w {
+            let i = y * w + x;
+            let d = [x as f64 - cx as f64, y as f64 - cy as f64];
+            let (sigma, u, sp) = match (core.contains(&i), (x, y) == (cx, cy)) {
+                (true, centre) => (mass / 50.0 * if centre { 2.0 } else { 1.0 }, [sign * 0.1 * d[0], sign * 0.1 * d[1]], k),
+                (false, _) => (1.0, [0.0; 2], 0),
+            };
+            planes[i] = sigma;
+            planes[n + i] = sigma * u[0];
+            planes[2 * n + i] = sigma * u[1];
+            planes[3 * n + i] = sigma * (0.1 + 0.5 * (u[0] * u[0] + u[1] * u[1]));
+            planes[(4 + sp) * n + i] = 1.0;
+            phi[i] = -100.0 + 0.5 * (d[0] * d[0] + d[1] * d[1]);
+        }
+    }
+    (State::new(w, h, planes), phi)
+}
+
+#[test]
+fn a_neutronized_core_holding_m_tov_sb_within_4_cells_forms_a_sink_that_takes_the_disk() {
+    let mut s = mass_sinks();
+    let m_tov = s.m_tov();
+    assert!((4800.0..4900.0).contains(&m_tov), "the sheet's m_tov_sb, 4,853 (reports/cold_ceiling.md): {m_tov}");
+    let (mut st, phi) = core_world(24, 24, (12, 12), 1.05 * m_tov, "n", -1.0);
+    let before = st.clone();
+    let (mass0, mom0) = grid_totals(&st);
+    let e0: f64 = st.plane(3).iter().sum();
+    assert_eq!(s.form(&mut st, &phi), Some((12, 12)));
+    let k = s.sinks[0];
+    let floor = shipped().get("sigma_floor").unwrap();
+    // The disk's 49 cells give their mass above the floor; every other cell is untouched.
+    let core: Vec<usize> = disk(12, 12, R_CORE, 24, 24).collect();
+    assert_eq!(core.len(), 49);
+    let taken: f64 = core.iter().map(|&i| before.get(0, i) - floor).sum();
+    assert!(rel(k.m, taken) < 1e-12 && rel(k.m, 1.05 * m_tov) < 1e-6, "sink {} against the disk's {taken}", k.m);
+    assert_eq!((k.x, k.y), (12.5, 12.5), "at the core's centre");
+    for i in 0..576 {
+        if core.contains(&i) {
+            assert!(rel(st.get(0, i), floor) < 1e-9 && st.get(13, i) == 1.0, "cell {i} left at the floor, neutron matter");
+        } else {
+            assert!((0..COMPONENTS).all(|c| st.get(c, i) == before.get(c, i)), "cell {i} beyond the disk touched");
+        }
+    }
+    // Mass and momentum move from the grid to the sink; the energy leaving the grid is the kinetic part with the momentum and
+    // the rest booked `swallowed`.
+    let (mass1, mom1) = grid_totals(&st);
+    assert!(rel(mass1 + s.mass(), mass0) < 1e-12, "mass");
+    let p = s.momentum();
+    assert!((mom1[0] + p[0] - mom0[0]).abs() < 1e-9 && (mom1[1] + p[1] - mom0[1]).abs() < 1e-9, "momentum");
+    let kinetic: f64 = core.iter().map(|&i| (1.0 - floor / before.get(0, i)) * 0.5 * (before.get(1, i).powi(2) + before.get(2, i).powi(2)) / before.get(0, i)).sum();
+    let e1: f64 = st.plane(3).iter().sum();
+    assert!(rel(e0 - e1, s.swallowed + kinetic) < 1e-9, "the grid's energy fell by {} for {} booked + {kinetic} kinetic", e0 - e1, s.swallowed);
+}
+
+#[test]
+fn a_core_under_m_tov_sb_as_iron_or_diverging_forms_none() {
+    let m_tov = mass_sinks().m_tov();
+    for (name, mass, species, sign) in [("0.95 m_tov_sb", 0.95, "n", -1.0), ("iron, Y_e 0.464", 1.05, "Fe", -1.0), ("∇·u > 0", 1.05, "n", 1.0)] {
+        let (mut st, phi) = core_world(24, 24, (12, 12), mass * m_tov, species, sign);
+        let before = st.clone();
+        let mut s = mass_sinks();
+        assert_eq!(s.form(&mut st, &phi), None, "{name}: a sink formed");
+        assert!(s.sinks.is_empty() && s.swallowed == 0.0 && st == before, "{name}: the world was touched");
+    }
+}
+
+#[test]
+fn sigma_bh_alone_still_forms_a_sink_that_takes_its_cell() {
+    // Hydrogen (Y_e 1): the disk holds 7,000 + 48 × 100 > m_tov_sb but is not neutronized, so Σ ≥ Σ_BH forms, as §2.6.
+    let (mut st, phi) = world(16, 16, &[(8, 8, 7000.0)], -1.0, 0.0);
+    let before = st.clone();
+    let mut s = mass_sinks();
+    let core_mass: f64 = disk(8, 8, R_CORE, 16, 16).map(|i| st.get(0, i)).sum();
+    assert!(core_mass > s.m_tov(), "{core_mass}");
+    assert_eq!(s.form(&mut st, &phi), Some((8, 8)));
+    let floor = shipped().get("sigma_floor").unwrap();
+    assert!(rel(s.sinks[0].m, 7000.0 - floor) < 1e-12, "the cell alone: {}", s.sinks[0].m);
+    assert!((0..256).filter(|&i| i != 8 * 16 + 8).all(|i| (0..COMPONENTS).all(|c| st.get(c, i) == before.get(c, i))), "only the cell");
+}
+
 // ---- motion and merging ----
 
 /// The direct sum, written here and not in the twin: the pull of the gas cells at Σ ≥ Σ_vac on a sink at `at`, softened by
@@ -576,7 +680,10 @@ fn rounded(st: &State) -> State {
 }
 
 fn rig(st: &State, phi: Option<&[f64]>, gravity: bool, hydro: Option<EdgeMode>, sinks: &[Sink]) -> Rig {
-    let physics = physics();
+    rig_with(&physics(), st, phi, gravity, hydro, sinks)
+}
+
+fn rig_with(physics: &Physics, st: &State, phi: Option<&[f64]>, gravity: bool, hydro: Option<EdgeMode>, sinks: &[Sink]) -> Rig {
     let gpu = super::device();
     let world = WorldConfig::new(st.width as u32, st.height as u32).unwrap();
     let state = GpuState::new(&gpu.device, world).unwrap();
@@ -587,9 +694,9 @@ fn rig(st: &State, phi: Option<&[f64]>, gravity: bool, hydro: Option<EdgeMode>, 
         let bytes: Vec<u8> = f32s(phi).iter().flat_map(|v| v.to_le_bytes()).collect();
         gpu.queue.write_buffer(side.phi(), 0, &bytes);
     }
-    let eos = EosGpu::new(&gpu.device, &physics, &elements());
+    let eos = EosGpu::new(&gpu.device, physics, &elements());
     let passes = Passes { mode: BoxMode::Fit, gravity: gravity.then_some(&side), hydro };
-    let step = Step::with_sinks(&gpu.device, &state, &booking, &eos, &physics, &passes, None, None, Some(&SinkSetup { side: &side })).unwrap();
+    let step = Step::with_sinks(&gpu.device, &state, &booking, &eos, physics, &passes, None, None, Some(&SinkSetup { side: &side })).unwrap();
     let set: Vec<GpuSink> = sinks.iter().map(|s| GpuSink { x: s.x, y: s.y, vx: s.vx, vy: s.vy, m: s.m }).collect();
     step.set_sinks(&gpu.queue, &set).unwrap();
     Rig { gpu, state, booking, side, step, w: st.width, h: st.height }
@@ -1130,4 +1237,48 @@ fn gpu_a_formation_inside_a_frame_stops_it_with_the_slow_down_on_and_only_a_form
     let report = r.frame(10, true);
     assert_eq!((report.steps_run, report.latch_fired), (10, None), "accretion is not a formation: {report:?}");
     assert!(r.step.read_sinks(&r.gpu.device, &r.gpu.queue).unwrap().accreted > 0.0 || r.step.read_sinks(&r.gpu.device, &r.gpu.queue).unwrap().sinks[0].m > 2000.0);
+}
+
+#[test]
+fn gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin() {
+    let phys = shipped();
+    let m_tov = mass_sinks().m_tov();
+    let world = |mass: f64, species: &str, sign: f64| {
+        let (st, phi) = core_world(64, 64, (32, 32), mass * m_tov, species, sign);
+        (rounded(&st), phi.iter().map(|&v| f64::from(v as f32)).collect::<Vec<f64>>())
+    };
+    let (st, phi) = world(1.05, "n", -1.0);
+    let (mass0, _) = grid_totals(&st);
+    let r = rig_with(&phys, &st, Some(&phi), false, None, &[]);
+    let report = r.run(1);
+    let mut twin = mass_sinks();
+    let tr = twin.step(&mut st.clone(), &Field { phi: phi.clone(), gx: vec![0.0; 4096], gy: vec![0.0; 4096] }, r.dt());
+    println!("SR-SINK gpu mass formation: {report:?}; twin {tr:?}, {:?}; swallowed {:.4} (twin {:.4})", twin.sinks, r.swallowed(), twin.swallowed);
+    assert_eq!((report.formed, tr.formed), (Some((32, 32)), Some((32, 32))));
+    assert!(rel(report.sinks[0].m, twin.sinks[0].m) < 1e-6 && rel(report.sinks[0].m, 1.05 * m_tov) < 1e-5, "{report:?}");
+    same_sinks("mass formation", &report, &twin, 1e-5);
+    assert!(rel(r.swallowed(), twin.swallowed) < 1e-5, "swallowed {} against {}", r.swallowed(), twin.swallowed);
+    let cells = r.cells();
+    assert!(rel(grid_totals(&cells).0 + gpu_mass(&report), mass0) < 1e-6, "mass");
+    let floor = phys.get("sigma_floor").unwrap();
+    let core: Vec<usize> = disk(32, 32, R_CORE, 64, 64).collect();
+    assert!(core.iter().all(|&i| rel(cells.get(0, i), floor) < 1e-6), "the disk left at the floor");
+    assert!((0..4096).filter(|i| !core.contains(i)).all(|i| cells.get(0, i) == st.get(0, i)), "nothing beyond the disk taken");
+    // Refused: under m_tov_sb, iron, diverging — the world untouched.
+    for (name, mass, species, sign) in [("0.95 m_tov_sb", 0.95, "n", -1.0), ("iron, Y_e 0.464", 1.05, "Fe", -1.0), ("∇·u > 0", 1.05, "n", 1.0)] {
+        let (st, phi) = world(mass, species, sign);
+        let r = rig_with(&phys, &st, Some(&phi), false, None, &[]);
+        let report = r.run(1);
+        assert!(report.formed.is_none() && report.sinks.is_empty(), "{name}: {report:?}");
+        // The step's other passes (P8) may move E; no cell of the disk gave its mass.
+        let cells = r.cells();
+        assert!(core.iter().all(|&i| cells.get(0, i) == st.get(0, i)), "{name}: a cell of the disk was taken");
+    }
+    // Σ ≥ Σ_BH alone, hydrogen: the cell alone, as §2.6.
+    let (st, phi) = world64(&[(32, 32, 7000.0)], -1.0, 0.0);
+    let report = rig_with(&phys, &st, Some(&phi), false, None, &[]).run(1);
+    assert_eq!(report.formed, Some((32, 32)));
+    // Formation took the cell alone; the same step's accretion then took the bound cells within r_acc = 2 (12 × 100), not
+    // the disk r ≤ 4 (48 × 100).
+    assert!(rel(report.sinks[0].m - report.accreted, 7000.0 - floor) < 1e-6 && report.accreted < 1300.0, "the cell alone: {report:?}");
 }

@@ -1,0 +1,20 @@
+D89 pre-P5 (heat pinned, no P6/P7): dt 7.8751025e-4 passes 0 rounds 0 converged 1 stepped 0 delta 0e0 gained 0e0 radiated 0e0 held 0e0
+D89 pre-P5 (heat pinned, no P6/P7): thermal 5.673374e6 -> 5.674947e6; booked floor_added 9.700065e3 vacuum_reset -1.428084e-10 escaped.energy 2.756354e3; booking radiated 0.000000e0; accumulator radiated 0.000000e0
+D89 full V-cycle: dt 7.8751025e-4 passes 1 rounds 32768 converged 0 stepped 1 delta -7.4324756e9 gained -3.3470094e4 radiated 4.1930134e16 held 5.641476e6
+D89 full V-cycle: thermal 5.673374e6 -> 4.174250e3; booked floor_added 4.193013e16 vacuum_reset -1.428084e-10 escaped.energy 2.756354e3; booking radiated 0.000000e0; accumulator radiated 4.193013e16
+D89 full Jacobi: dt 7.8751025e-4 passes 1 rounds 32768 converged 0 stepped 1 delta -7.428605e9 gained -3.0536152e4 radiated 4.193009e16 held 5.64441e6
+D89 full Jacobi: thermal 5.673374e6 -> 4.174250e3; booked floor_added 4.193009e16 vacuum_reset -1.428084e-10 escaped.energy 2.756354e3; booking radiated 0.000000e0; accumulator radiated 4.193009e16
+D89 P5 alone V-cycle (pre-P5 start): dt 7.8751025e-4 passes 1 rounds 32768 converged 0 stepped 1 delta -7.432475e9 gained -3.3470086e4 radiated 4.1930134e16 held 5.6414765e6
+D89 P5 alone V-cycle (pre-P5 start): thermal 5.674947e6 -> 4.174250e3; booked floor_added 4.193014e16 vacuum_reset 0.000000e0 escaped.energy 0.000000e0; booking radiated 0.000000e0; accumulator radiated 4.193013e16
+D89 P5 alone Jacobi (pre-P5 start): dt 7.8751025e-4 passes 1 rounds 32768 converged 0 stepped 1 delta -7.4286034e9 gained -3.0536154e4 radiated 4.193009e16 held 5.644411e6
+D89 P5 alone Jacobi (pre-P5 start): thermal 5.674947e6 -> 4.174250e3; booked floor_added 4.193009e16 vacuum_reset 0.000000e0 escaped.energy 0.000000e0; booking radiated 0.000000e0; accumulator radiated 4.193009e16
+D89 twin: 23.5 s, passes 16 rounds 14336 converged true delta -9.118158256726843e-13 radiated 1.250062192796164e3
+D89 twin:   cell (218,75) emitted 1.047007156976383e1 sigma 2.5459980592131615e-2 E 2.2033674716949463e0->1.9656709647257171e0 | gpu T0 5.5047188e1 C 1.9356975e-2
+D89 twin:   cell (217,76) emitted 9.927002452164716e0 sigma 2.730883890762925e-3 E 4.957920551300049e0->4.885586442829635e0 | gpu T0 7.672852e1 C 2.0913105e-3
+D89 twin:   cell (216,75) emitted 8.70499412159606e0 sigma 2.0759178369189613e-5 E 8.192692756652832e0->2.8077877047793116e0 | gpu T0 3.3966894e5 C 1.5855298e-5
+D89 twin:   cell (267,399) emitted 8.528837309350875e0 sigma 1.802854299545288e0 E 4.3292236328125e2->4.3309274967333806e2 | gpu T0 4.7290554e1 C 8.694625e-1
+D89 twin:   cell (266,399) emitted 7.832056498981705e0 sigma 5.249923229217529e0 E 9.588646850585938e2->9.526367777727835e2 | gpu T0 5.9349106e1 C 2.5338054e0
+D89 twin:   cell (267,0) emitted 7.207309891601375e0 sigma 1.109787940979004e0 E 2.4352235412597656e2->2.4369141603417947e2 | gpu T0 4.2548496e1 C 5.351614e-1
+D89 twin:   cell (333,0) emitted 6.182628024469638e0 sigma 9.468991160392761e-1 E 2.4370034790039063e2->2.4332314714777843e2 | gpu T0 4.145897e1 C 4.566818e-1
+D89 twin:   cell (268,399) emitted 5.508762092875921e0 sigma 1.9586347341537476e0 E 4.4915673828125e2->4.4915373818267364e2 | gpu T0 4.310856e1 C 9.446106e-1
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 373 filtered out; finished in 61.84s

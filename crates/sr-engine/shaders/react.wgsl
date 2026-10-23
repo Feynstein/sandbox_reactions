@@ -40,6 +40,14 @@
 // cells, ORs it into word 0 of the latch record (Step::latch_flag) — a ninth binding cannot be added to `react_cells`
 // (7 storage buffers here + the EOS table = WebGPU's 8).
 //
+// N_Fe in closed form (§0.5 [M0-R10], M0-D87; the twin's since M0-D86): where the host flags it EXACT (f ≡ 1, one input of
+// order 1 into n, the gate p = 1), its rate is read once at the pass's start — > 0 sets the latch — and the record is
+// stepped over the whole Δt_n before the sub-cycles, which then skip it: ΔY_e = u v φ/(1 + w φ), u = Y_e − b, v = Y_e −
+// a_Y, b = Σ_N/Σ, a_Y the electrons of every species but iron, w the decaying one, φ = (1 − e^{−k|c|Δt})/|c| (kΔt at c =
+// 0), c = b − a_Y, k = A Σ^a/b; the heat q ΔX_Fe into the energy and group N at once. A cell the closed form leaves within
+// LAND_ULPS f32 ulps of its limit lands on it: gate-limited, nudged until Y_eΣ ≤ Σ_N as `rate_g` reads it (so the next
+// pass's rate is 0); iron-limited, all its iron. The step is no sub-step: the counters count the sub-cycles alone.
+//
 // `react_begin` clears the step's counters; `react_cells` burns and adds to the counters with u32 atomics (order-free, never
 // a float, §1.3.4) — the state and the booking each have one writer invocation per slot.
 
@@ -137,7 +145,12 @@ const PIN_TEMPERATURE: u32 = 1u;
 const HAS_TERMS: u32 = 1u;
 const GATED: u32 = 2u;
 const LATCHES: u32 = 4u;
+const EXACT: u32 = 8u;
 const NEUTRINOS: u32 = 2u;
+// The closed form's landing: a gap left under LAND_ULPS of f32's epsilon times b (header), and the nudges' cap (the twin's).
+const LAND_ULPS: f32 = 4.0;
+const F32_EPS: f32 = 1.1920929e-7;
+const LAND_NUDGES: u32 = 16u;
 // §2.5.3: where a cell keeps S_ν — the newborn neutron star.
 const X_N_STAR: f32 = 0.5;
 const MAX_ATTEMPTS: u32 = 65536u;
@@ -305,7 +318,9 @@ fn rates(sigma: f32, t: f32, y_e: f32) -> vec2<f32> {
             }
         }
         rec_whole[r] = absent == 0u;
-        rec_live[r] = rec_kind[r] != F_ZERO && rec_a_sigma[r] * rec_g[r] != 0.0 && (absent == 0u || (absent == 1u && !stuck));
+        // N_Fe in closed form was stepped before the sub-cycles (header).
+        rec_live[r] = (rec.head.w & EXACT) == 0u && rec_kind[r] != F_ZERO && rec_a_sigma[r] * rec_g[r] != 0.0
+            && (absent == 0u || (absent == 1u && !stuck));
         if (rec_live[r] && rec_whole[r]) {
             top = max(top, read.x);
         }
@@ -439,6 +454,72 @@ fn temp_of(sigma: f32, e_tot: f32, comp: Composition, x_n: f32) -> f32 {
     return temperature(max(e_tot - eps_cold(sigma, comp.y_e, x_n), eps_th_floor(comp.inv_mu)), comp.inv_mu);
 }
 
+// 1 − e^{−x} for x > 0 (the twin's −expm1(−x), which WGSL lacks): under 0.7 its series by Horner, ten terms (the next is
+// under 10⁻⁹ of it), where 1 − exp(−x) would cancel.
+fn one_minus_exp(x: f32) -> f32 {
+    if (x >= 0.7) {
+        return 1.0 - exp(-x);
+    }
+    var s = 1.0;
+    for (var n = 10u; n >= 2u; n--) {
+        s = 1.0 - s * x / f32(n);
+    }
+    return x * s;
+}
+
+// Record r (EXACT: iron into n, header) over `dt` in closed form on `cx`, Σ fixed: moves the mass converted from iron to
+// neutrons and returns it (≥ 0, at most the iron there was). A cell under its gate or without iron is left as it is.
+fn nfe_exact(r: u32, sigma: f32, dt: f32) -> f32 {
+    let rec = params.recs[r];
+    let fe = rec.species[0];
+    let y_fe = eos.y_e_coef[fe / 4u][fe % 4u];
+    let b = rec.gate.x / sigma;
+    var a_y = 0.0;
+    for (var i = 0u; i < N_SPECIES; i++) {
+        if (i != fe) {
+            a_y += cx[i] * eos.y_e_coef[i / 4u][i % 4u];
+        }
+    }
+    let c = b - a_y;
+    // v = Y_e − a_Y (the iron's electrons), u = Y_e − b (the gate's gap).
+    let v = y_fe * cx[fe];
+    let u = v - c;
+    if (!(u > 0.0 && v > 0.0) || !(dt > 0.0)) {
+        return 0.0;
+    }
+    let k = rec.coef.x * powr(sigma, rec.coef.y) / b;
+    let s = abs(c);
+    let w = select(v, u, c >= 0.0);
+    let ks = k * s * dt;
+    let phi = select(k * dt, one_minus_exp(ks) / s, ks > 0.0);
+    var dm = min(u * v * phi / (1.0 + w * phi) / y_fe, cx[fe]);
+    // What the closed form leaves of the decaying gap: under f32's resolution the cell is on its limit.
+    let left = w * exp(-ks) / (1.0 + w * phi);
+    if (left <= LAND_ULPS * F32_EPS * b) {
+        if (c >= 0.0) {
+            cx[fe] -= dm;
+            cx[ID_N] += dm;
+            var nudge = F32_EPS * cx[fe];
+            for (var i = 0u; i < LAND_NUDGES; i++) {
+                let y_e_sigma = composition(cx).y_e * sigma;
+                if (rate_g(r, y_e_sigma) == 0.0 || cx[fe] == 0.0) {
+                    break;
+                }
+                let more = min(max((y_e_sigma - rec.gate.x) / (sigma * y_fe), nudge), cx[fe]);
+                cx[fe] -= more;
+                cx[ID_N] += more;
+                dm += more;
+                nudge *= 2.0;
+            }
+            return dm;
+        }
+        dm = cx[fe];
+    }
+    cx[fe] -= dm;
+    cx[ID_N] += dm;
+    return dm;
+}
+
 @compute @workgroup_size(1)
 fn react_begin() {
     atomicStore(&report.substeps, 0u);
@@ -488,6 +569,30 @@ fn react_cells(@builtin(global_invocation_id) id: vec3<u32>) {
     var booked = array<vec2<f32>, 7>();
     var de_sum = vec2<f32>(0.0, 0.0);
     var lost_sum = vec2<f32>(0.0, 0.0);
+    // N_Fe first, in closed form over the whole Δt_n; the latch reads its rate here, at the pass's start (header).
+    var moved = false;
+    for (var r = 0u; r < params.n_recs; r++) {
+        let rec = params.recs[r];
+        if ((rec.head.w & EXACT) == 0u) {
+            continue;
+        }
+        let fe = rec.species[0];
+        let g = rate_g(r, composition(cx).y_e * sigma);
+        if (!(rec.coef.x * powr(sigma, rec.coef.y) * cx[fe] * g > 0.0)) {
+            continue;
+        }
+        latched = true;
+        let dm = nfe_exact(r, sigma, dt);
+        if (dm > 0.0) {
+            let heat = rec.coef.z * dm;
+            if (!pin) {
+                e_tot += heat;
+            }
+            de_sum = add2(de_sum, heat);
+            booked[rec.head.x] = add2(booked[rec.head.x], heat);
+            moved = true;
+        }
+    }
     var t_done = vec2<f32>(0.0, 0.0);
     // The last sub-step's 2h, in the scaled time of its own shift.
     var h_try = dt;
@@ -634,7 +739,7 @@ fn react_cells(@builtin(global_invocation_id) id: vec3<u32>) {
     if (latched) {
         atomicOr(&report.latch, 1u);
     }
-    if (substeps == 0u) {
+    if (substeps == 0u && !moved) {
         if (nu_on) {
             s_nu[cell] = 0.0;
         }

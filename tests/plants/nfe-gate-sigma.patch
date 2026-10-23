@@ -11,10 +11,12 @@
                  let dm = self.nfe_exact(nfe, sigma, &mut x, dt);
 --- a/crates/sr-engine/shaders/react.wgsl
 +++ b/crates/sr-engine/shaders/react.wgsl
-@@ -296,5 +296,5 @@
-         rec_kind[r] = u32(read.y);
-         rec_a_sigma[r] = rec.coef.x * powr(sigma, rec.coef.y);
--        rec_g[r] = rate_g(r, y_e * sigma);
-+        rec_g[r] = rate_g(r, sigma); // planted: the gate reads Σ, not Y_eΣ
-         var absent = 0u;
-         var stuck = false;
+@@ -577,7 +577,7 @@
+             continue;
+         }
+         let fe = rec.species[0];
+-        let g = rate_g(r, composition(cx).y_e * sigma);
++        let g = rate_g(r, sigma); // planted: the gate reads Σ, not Y_eΣ
+         if (!(rec.coef.x * powr(sigma, rec.coef.y) * cx[fe] * g > 0.0)) {
+             continue;
+         }

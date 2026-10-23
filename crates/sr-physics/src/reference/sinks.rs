@@ -10,6 +10,12 @@
 //! (central differences of the velocity, the cell's four neighbours; a vacuum neighbour at rest); φ no greater than at any
 //! of its 8 neighbours; bound, ½|u|² + ε_th + φ < 0. A cell on the world's outer ring has no 8 neighbours and does not
 //! form. The densest candidate forms (ties: the lowest y, then the lowest x), at most one per step and never past 16.
+//! *A sink from mass* (§0.5 [M0-R6]): a cell under Σ_BH is a candidate too when it is a local Σ maximum (no less than its 8
+//! neighbours) whose disk of cells with centres r ≤ [`R_CORE`] = 4 from its own holds M_core ≥ m_tov_sb (§2.11 item 2, the
+//! sheet's neutron-matter ceiling for the run's physics, [`m_tov_sb`]), the mass-weighted Y_e over r ≤ [`R_Y_E`] = 3 at most
+//! [`CORE_Y_E`] = 0.35, and the other three criteria at the cell; such a sink takes the disk's mass above the floor (cell by
+//! cell, row-major) and its momentum. A cell at Σ ≥ Σ_BH forms as before, taking its cell alone, unless its disk passes the
+//! mass test too.
 //!
 //! *Accretion* — every step, per sink in index order: r_acc = max(2, 2GM_s/c_sb²) of the sink's mass at the pass's start; a
 //! non-vacuum cell whose centre lies within r_acc and whose gas is bound to the sink, ½|u − v_s|² + ε_th − GM_s/max(r, ½)
@@ -32,6 +38,7 @@
 use super::floors::renormalised;
 use super::grav::{Field, SinkSource};
 use super::hydro::State;
+use super::sheet::{self, ColdMatter};
 use crate::eos::Eos;
 use crate::registry::{Elements, Physics, RegistryError, N_SPECIES};
 
@@ -42,6 +49,11 @@ const R_MIN: f64 = 0.5;
 /// The species planes of the state (§2.2: channels 4–13) and neutron matter's slot (§1.5).
 const FIRST_SPECIES: usize = 4;
 const ID_N: usize = 9;
+/// §0.5 [M0-R6]: the mass test's disk, its Y_e disk (cells, centre to centre) and the neutronized core's Y_e bound (§0.5
+/// [M0-D79]'s).
+pub const R_CORE: f64 = 4.0;
+pub const R_Y_E: f64 = 3.0;
+pub const CORE_Y_E: f64 = 0.35;
 
 /// A sink: position (cells), velocity (cells per t.u.) and mass.
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -82,6 +94,33 @@ pub struct Sinks {
     sigma_vac: f64,
     sigma_floor: f64,
     c_sb: f64,
+    m_tov: f64,
+}
+
+/// m_tov_sb for `physics` (§2.11 item 2): the sheet's neutron-matter ceiling, a few hundredths of a second, never read from
+/// assets/calibration.json (as §0.5 [M0-D81]'s m_ch_sb); infinite when the neutrons' cold pressure is off, so no sink forms
+/// from mass.
+pub fn m_tov_sb(physics: &Physics, elements: &Elements) -> f64 {
+    let eos = Eos::from_physics(physics).expect("the run's physics");
+    let (Some(n), true) = (elements.index_of("n"), eos.neutron_table().is_some()) else {
+        return f64::INFINITY;
+    };
+    let mut x = [0.0; N_SPECIES];
+    x[n] = 1.0;
+    let comp = elements.composition(&x);
+    let matter = ColdMatter { y_e: comp.y_e, x_n: 1.0, inv_mu: comp.inv_mu };
+    let vac = physics.get("sigma_vac").expect("physics.json key");
+    sheet::ceiling(&eos, matter, vac).map(|c| c.limit).unwrap_or_else(|e| panic!("the run's physics has the neutrons' cold pressure and no ceiling: {e}"))
+}
+
+/// The cells of the disk of radius `r` about cell (x, y), centre to centre, clipped to the world, row-major.
+pub fn disk(x: usize, y: usize, r: f64, w: usize, h: usize) -> impl Iterator<Item = usize> {
+    let k = r as i64;
+    (-k..=k).flat_map(move |dy| (-k..=k).map(move |dx| (dx, dy))).filter_map(move |(dx, dy)| {
+        let (cx, cy) = (x as i64 + dx, y as i64 + dy);
+        let inside = cx >= 0 && cy >= 0 && cx < w as i64 && cy < h as i64 && ((dx * dx + dy * dy) as f64) <= r * r;
+        inside.then_some(cy as usize * w + cx as usize)
+    })
 }
 
 /// r_acc = max(2 cells, 2GM_s/c_sb²) (§2.6, SM-E29's form).
@@ -103,7 +142,13 @@ impl Sinks {
             sigma_vac: get("sigma_vac"),
             sigma_floor: get("sigma_floor"),
             c_sb: get("c_sb"),
+            m_tov: m_tov_sb(physics, elements),
         })
+    }
+
+    /// The m_tov_sb the mass test reads.
+    pub fn m_tov(&self) -> f64 {
+        self.m_tov
     }
 
     /// Sink `i`'s r_acc at its current mass.
@@ -159,8 +204,26 @@ impl Sinks {
         (taken * sigma, [taken * mom[0], taken * mom[1]])
     }
 
-    /// Formation (§2.6): at most one sink, at the densest cell passing all four criteria against the potential `phi` (the
-    /// gas's and the sinks', §1.4.3); `None` when there is none or 16 sinks already.
+    /// The mass test (§0.5 [M0-R6]) at cell (x, y): its disk r ≤ 4 holds m_tov_sb or more and the disk r ≤ 3 is neutronized
+    /// (mass-weighted Y_e ≤ 0.35).
+    fn core(&self, st: &State, x: usize, y: usize) -> bool {
+        let (w, h) = (st.width, st.height);
+        let mass: f64 = disk(x, y, R_CORE, w, h).map(|i| st.get(0, i)).sum();
+        if mass < self.m_tov {
+            return false;
+        }
+        let (mut m, mut ye) = (0.0, 0.0);
+        for i in disk(x, y, R_Y_E, w, h) {
+            let xs: [f64; N_SPECIES] = std::array::from_fn(|k| st.get(FIRST_SPECIES + k, i));
+            m += st.get(0, i);
+            ye += st.get(0, i) * self.elements.composition(&renormalised(&xs)).y_e;
+        }
+        ye <= CORE_Y_E * m
+    }
+
+    /// Formation (§2.6, §0.5 [M0-R6]): at most one sink, at the densest cell passing Σ ≥ Σ_BH or the mass test, and the other
+    /// three criteria, against the potential `phi` (the gas's and the sinks', §1.4.3); `None` when there is none or 16 sinks
+    /// already.
     pub fn form(&mut self, st: &mut State, phi: &[f64]) -> Option<(usize, usize)> {
         let (w, h) = (st.width, st.height);
         if self.sinks.len() >= MAX_SINKS || w < 3 || h < 3 {
@@ -171,7 +234,10 @@ impl Sinks {
             for x in 1..w - 1 {
                 let i = y * w + x;
                 let sigma = st.get(0, i);
-                if sigma < self.sigma_bh || best.is_some_and(|(s, _, _)| sigma <= s) {
+                if best.is_some_and(|(s, _, _)| sigma <= s) {
+                    continue;
+                }
+                if sigma < self.sigma_bh && !self.peak(st, x, y) {
                     continue;
                 }
                 let div = (self.velocity(st, i + 1)[0] - self.velocity(st, i - 1)[0]) / 2.0 + (self.velocity(st, i + w)[1] - self.velocity(st, i - w)[1]) / 2.0;
@@ -186,14 +252,35 @@ impl Sinks {
                 if 0.5 * (gas.u[0] * gas.u[0] + gas.u[1] * gas.u[1]) + gas.eps_th + phi[i] >= 0.0 {
                     continue;
                 }
+                if sigma < self.sigma_bh && !self.core(st, x, y) {
+                    continue;
+                }
                 // Strictly denser wins; rows then columns in order, so a tie keeps the lowest y then the lowest x.
                 best = Some((sigma, x, y));
             }
         }
         let (_, x, y) = best?;
-        let (m, p) = self.take(st, y * w + x);
+        // A sink from mass takes its disk, cell by cell in row-major order (the cells accretion would take: Σ ≥ Σ_vac and
+        // above the floor); one from Σ_BH alone its cell.
+        let cells: Vec<usize> = if self.peak(st, x, y) && self.core(st, x, y) {
+            disk(x, y, R_CORE, w, h).filter(|&i| st.get(0, i) >= self.sigma_vac && st.get(0, i) > self.sigma_floor).collect()
+        } else {
+            vec![y * w + x]
+        };
+        let (mut m, mut p) = (0.0, [0.0; 2]);
+        for i in cells {
+            let (dm, dp) = self.take(st, i);
+            m += dm;
+            p = [p[0] + dp[0], p[1] + dp[1]];
+        }
         self.sinks.push(Sink { x: x as f64 + 0.5, y: y as f64 + 0.5, vx: p[0] / m, vy: p[1] / m, m });
         Some((x, y))
+    }
+
+    /// Whether cell (x, y) is a local Σ maximum, no less than at any of its 8 neighbours.
+    fn peak(&self, st: &State, x: usize, y: usize) -> bool {
+        let (w, sigma) = (st.width, st.get(0, y * st.width + x));
+        (y - 1..=y + 1).all(|ny| (x - 1..=x + 1).all(|nx| sigma >= st.get(0, ny * w + nx)))
     }
 
     /// Accretion (§2.6): every sink in index order takes the bound gas within its r_acc; returns the mass taken.

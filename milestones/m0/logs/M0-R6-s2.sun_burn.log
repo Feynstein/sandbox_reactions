@@ -1,0 +1,42 @@
+== 2026-10-23T11:59:22-04:00 sun_burn · task M0-R6-s2 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=101 · 0.16 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ERROR calibration invalid: preset_mass_sb: missing
+
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (1577845) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1577841-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-ERROR calibration invalid: preset_mass_sb: missing
+
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (1577850) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1577841-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+ right: 0
+FAILED
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-ERROR calibration invalid: preset_mass_sb: missing
+
+thread 'sunburn::the_star_stays_bound' (1577852) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-1577841-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration invalid: preset_mass_sb: missing")
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    sunburn::hydrogen_burns_steadily_at_the_centre
+    sunburn::it_shines_what_it_burns_and_only_hydrogen_burns
+    sunburn::the_star_stays_bound
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 368 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

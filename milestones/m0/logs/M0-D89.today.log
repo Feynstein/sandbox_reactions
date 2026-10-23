@@ -1,0 +1,17 @@
+crates/sr-physics/src/reference/heat.rs:0
+crates/sr-engine/shaders/heat.wgsl:0
+test heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::jacobi ... SR-PRECOND Jacobi
+SR-STIFF GPU heat_ceiling.bin: HeatReport { dt: 0.00078751025, passes: 1, rounds: 4096, converged: false, delta: -294440140000.0 }, radiated booked 4.184967600092189e16
+thread 'heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::jacobi' (1595987) panicked at crates/sr-engine/tests/gpu/heat.rs:1495:9:
+assertion `left == right` failed: past the ceiling the fluxes are booked on both sides: no closure
+test heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::multigrid ... SR-PRECOND Multigrid
+SR-STIFF GPU heat_ceiling.bin: HeatReport { dt: 0.00078751025, passes: 1, rounds: 4096, converged: false, delta: -294440140000.0 }, radiated booked 4.184967600092189e16
+thread 'heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::multigrid' (1595993) panicked at crates/sr-engine/tests/gpu/heat.rs:1495:9:
+assertion `left == right` failed: past the ceiling the fluxes are booked on both sides: no closure
+test heat::stiff::the_twin_at_the_ceiling_moves_no_more_heat_than_its_cells_hold ... SR-STIFF twin heat_ceiling.bin: 11 passes, 4096 rounds, converged false, delta -1.680810573950771e-2, radiated 3.7826621256645367e3
+thread 'heat::stiff::the_twin_at_the_ceiling_moves_no_more_heat_than_its_cells_hold' (1596032) panicked at crates/sr-engine/tests/gpu/heat.rs:1478:9:
+assertion `left == right` failed: past the ceiling the fluxes are booked on both sides: no closure
+    heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::jacobi
+    heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::multigrid
+    heat::stiff::the_twin_at_the_ceiling_moves_no_more_heat_than_its_cells_hold
+test result: FAILED. 8 passed; 3 failed; 0 ignored; 0 measured; 369 filtered out; finished in 3.93s

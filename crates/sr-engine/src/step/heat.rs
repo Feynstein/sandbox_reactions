@@ -10,7 +10,8 @@
 //! The dispatches: `heat_cells` (the start state), `heat_law` (each face's D_f), `heat_open` (one invocation), [`SLOTS`]
 //! recorded `heat_round`s — Newton passes and PCG rounds, one dispatch a round on Jacobi, each sized by a word the one before
 //! it wrote ([`Size::Chained`]), so a converged step's later rounds have no workgroups — then `heat_close` (F, side.flux,
-//! the booking), `heat_sum` (one workgroup: the closure δ, every round's size zeroed) and `heat_apply` (E). The box-sized
+//! the booking), `heat_limit` (past the ceiling only, §0.5 [M0-D89]: F at the scale of the cell it leaves, the booking and
+//! each cell's change in its place), `heat_sum` (one workgroup: the closure δ, every round's size zeroed) and `heat_apply` (E). The box-sized
 //! ones run over its 8 × 8 tiles ([`Size::Indirect`] at [`ARGS_TILES`]), and the latch reaches the chain through
 //! `heat_open`, its fixed-size opener.
 //!
@@ -217,9 +218,9 @@ pub struct HeatReport {
     /// The step's Newton passes and PCG rounds over all of them (0 when it did not run).
     pub passes: u32,
     pub rounds: u32,
-    /// False when the step reached its ceiling (§0.5 [M0-TJ4] (6)) and committed its last iterate.
+    /// False when the step reached its ceiling (§0.5 [M0-TJ4] (6)) and committed by limited fluxes (§0.5 [M0-D89]).
     pub converged: bool,
-    /// The heat balance's closure δ (§0.5 [M0-TJ4] (5)).
+    /// The heat balance's closure δ (§0.5 [M0-TJ4] (5)); 0 past the ceiling.
     pub delta: f32,
 }
 
@@ -367,8 +368,9 @@ impl Heat {
         list.extend((0..SLOTS).map(|j| again(&rounds[j % 2], j)));
         let mg_rounds = (0..SLOTS).map(|j| again(&mg_round[j % 2], j)).collect();
         list.push(dispatch("heat_close", &[0, 4, 5, 8, 10, 11, 12, 14, 16, 17], &[], tiles()));
+        list.push(dispatch("heat_limit", &[0, 4, 5, 8, 10, 11, 12, 14, 16, 17], &[], tiles()));
         list.push(dispatch("heat_sum", &[8, 10, 16, 17, 18, 19], &[], one()));
-        list.push(dispatch("heat_apply", &[0, 1, 4, 8, 14, 15, 16], &[], tiles()));
+        list.push(dispatch("heat_apply", &[0, 1, 4, 5, 8, 14, 15, 16], &[], tiles()));
         let park = dispatch("heat_park", &[16, 18, 19], &[], one());
 
         // The multigrid: each entry's dispatch (heat.wgsl MGA_*) over the world's levels — the box's are no more —, sized

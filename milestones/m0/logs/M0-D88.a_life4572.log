@@ -1,0 +1,46 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1009 sim_time=9.148 heat_unconverged=0 stage=iron_core | raw=iron_core
+  frame  steps          16 dt       0.005100 s/step    0.01254 P5_ceil         0
+  star   M            4560 R           13.84 tau_dyn    0.7627 M_unb       141.5
+  core   sigma_c     51.23 T_c         148.7 d_c        0.6488 Ye_c       0.4643
+  centre X_Fe       0.9998 X_n             0 v_r        -2.586 vr/vdyn   -0.1425
+  light  L         6.561e5 L_nuc       1.028 L_N             0 L_nu        63.07
+  world  escaped   0.03424 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1522 sim_time=11.407 heat_unconverged=0 stage=supernova | raw=supernova
+  frame  steps           1 dt       0.004298 s/step    0.05446 P5_ceil         0
+  star   M            4456 R           44.52 tau_dyn     4.449 M_unb       901.5
+  core   sigma_c     431.1 T_c       0.05009 d_c        0.9999 Ye_c       0.3997
+  centre X_Fe       0.8607 X_n        0.1392 v_r        -2.331 vr/vdyn   -0.2330
+  light  L         8.720e5 L_nuc       522.3 L_N      -5.555e7 L_nu         2909
+  world  escaped     17.68 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=2002 sim_time=13.472 heat_unconverged=0 stage=supernova | raw=supernova
+  frame  steps          16 dt       0.004358 s/step    0.05472 P5_ceil         0
+  star   M            4435 R           108.0 tau_dyn     16.85 M_unb        1366
+  core   sigma_c     607.5 T_c       0.05000 d_c        0.9999 Ye_c       0.1971
+  centre X_Fe       0.4246 X_n        0.5754 v_r         12.55 vr/vdyn     1.959
+  light  L         7.124e5 L_nuc       4.599 L_N             0 L_nu        14319
+  world  escaped     60.30 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=3010 sim_time=17.627 heat_unconverged=0 stage=supernova | raw=supernova
+  frame  steps          16 dt       0.003967 s/step    0.06408 P5_ceil         0
+  star   M            3828 R           285.8 tau_dyn     78.08 M_unb        1093
+  core   sigma_c     733.5 T_c         2.353 d_c        0.9966 Ye_c       0.1986
+  centre X_Fe       0.4277 X_n        0.5723 v_r         12.79 vr/vdyn     3.496
+  light  L         4.215e5 L_nuc     0.03078 L_N             0 L_nu         3131
+  world  escaped     729.2 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=4002 sim_time=21.403 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.003821 s/step    0.04478 P5_ceil         0
+  star   M            2677 R           2.000 tau_dyn   0.05466 M_unb       119.6
+  core   sigma_c     686.5 T_c       0.05000 d_c        0.9999 Ye_c       0.1986
+  centre X_Fe       0.4277 X_n        0.5723 v_r       -0.5845 vr/vdyn  -0.01598
+  light  L         4.220e5 L_nuc    0.002914 L_N             0 L_nu         1442
+  world  escaped      1775 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=5010 sim_time=25.265 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.003892 s/step    0.05692 P5_ceil         0
+  star   M            2495 R           2.000 tau_dyn   0.05663 M_unb       61.43
+  core   sigma_c     495.5 T_c         1.472 d_c        0.9972 Ye_c       0.1986
+  centre X_Fe       0.4277 X_n        0.5723 v_r       -0.4857 vr/vdyn  -0.01375
+  light  L         7.274e5 L_nuc    0.004577 L_N             0 L_nu         1767
+  world  escaped      1972 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=5970 sim_time=29.110166 until=met
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=5970 sim_time=29.110 wall_s=289.6 record=build/calibrate_runs/2026-10-23T13-58-56Z/m_bh_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA

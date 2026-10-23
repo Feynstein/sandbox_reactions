@@ -837,6 +837,86 @@ mod cell {
             assert!((de_gpu - de_twin).abs() <= de_floor, "{name}: ΔE {de_gpu:e} on the GPU, {de_twin:e} in the twin");
         }
     }
+
+    /// N_Fe in closed form on the GPU (§0.5 [M0-R10], M0-D87): `n_fe_steps_in_closed_form`'s four cells, every record
+    /// enabled, 20 passes of Δt 5.87 × 10⁻³ in f32 — X_n within 10⁻⁶ of the marched law and of the twin stepped beside it
+    /// (G-REF) at each pass, no sub-step and no cell unfinished, Fe → n mass for mass and ΣX = 1 within 10⁻⁶, the heat booked
+    /// in N alone q ΔX_n Σ with ΔX_n within 10⁻⁶. The heat takes T to the floor in the first pass and P8 raises E there (M0-R5's
+    /// M4), so E is graded as T = T_floor, not as E plus the booking. After 10⁶ t.u. a gate-limited cell sits at the gate (X_n
+    /// within 10⁻⁶ of 1 − Σ_N/(y_Fe Σ), Y_eΣ ≤ Σ_N as f32 resolves it) and an iron-limited one holds no iron; a second pass
+    /// there takes no sub-step and moves nothing.
+    #[test]
+    fn gpu_n_fe_steps_in_closed_form() {
+        let gpu = super::super::device();
+        let physics = physics(&[]);
+        let all = Reactions::shipped(&elements(), &physics).unwrap();
+        let twin = react(&physics, &all, false);
+        let (a, sigma_n, t_floor) = (physics.get("a_n_fe").unwrap(), physics.get("sigma_n").unwrap(), physics.get("t_floor").unwrap());
+        let q = -1.14 * Q_H;
+        let y_fe = 26.0 / 56.0;
+        let n_group = GROUPS.iter().position(|g| *g == "N").unwrap();
+        let fe_id = elements().index_of("Fe").unwrap();
+        let dt = 5.87e-3;
+        for (label, sigma, parts) in [
+            ("iron block", 400.0, vec![("Fe", 1.0)]),
+            ("a_Y = b", 400.0, vec![("He", 0.8), ("Fe", 0.2)]),
+            ("gate closes", 390.0, vec![("He", 0.8), ("Fe", 0.2)]),
+            ("iron runs out", 410.0, vec![("He", 0.8), ("Fe", 0.2)]),
+        ] {
+            let x0 = x_of(&parts);
+            let mut others = x0;
+            others[fe_id] = 0.0;
+            let a_y = elements().composition(&others).y_e;
+            let mut st = world(1, 1, &[(sigma, 1.0, x0)]);
+            let r = rig::OnGpu::new(&gpu, &physics, &all, false, &st);
+            let (mut prev, mut booked_before) = (r.planes(), 0.0);
+            let mut want_fe = x0[fe_id];
+            let (mut worst_law, mut worst_twin) = (0.0f64, 0.0f64);
+            for step in 1..=20 {
+                let report = r.pass(dt);
+                twin.step(&mut st, dt);
+                want_fe = n_fe_march(a, sigma, sigma_n, a_y, y_fe, want_fe, dt);
+                let now = r.planes();
+                assert_eq!((report.substeps, report.unfinished), (0, 0), "{label}, step {step}: N_Fe sub-cycled on the GPU");
+                let xn = frac(&now, "n", 0);
+                let (law, beside) = ((xn - (x0[fe_id] - want_fe)).abs(), (xn - frac(&st, "n", 0)).abs());
+                (worst_law, worst_twin) = (worst_law.max(law), worst_twin.max(beside));
+                assert!(law <= 1e-6, "{label}, step {step}: GPU X_n {xn}, the marched law {} (Δ {law:.2e})", x0[fe_id] - want_fe);
+                assert!(beside <= 1e-6, "{label}, step {step}: GPU X_n {xn}, the twin's {} (Δ {beside:.2e})", frac(&st, "n", 0));
+                let dn = xn - frac(&prev, "n", 0);
+                assert!(((frac(&prev, "Fe", 0) - frac(&now, "Fe", 0)) - dn).abs() <= 1e-6, "{label}, step {step}: Fe → n not mass for mass");
+                assert!((sum_x(&now, 0) - 1.0).abs() <= 1e-6 && (0..NS).all(|s| now.get(4 + s, 0) >= 0.0), "{label}, step {step}: ΣX = {}", sum_x(&now, 0));
+                let pass = rig::booked(r.nuclear());
+                let booked = pass.nuclear_total(n_group) - booked_before;
+                booked_before = pass.nuclear_total(n_group);
+                assert!((booked - q * dn * sigma).abs() <= 1e-6 * (q * sigma).abs(), "{label}, step {step}: booked {booked}, q ΔX_n Σ {}", q * dn * sigma);
+                assert!((0..N_GROUPS).filter(|&g| g != n_group).all(|g| pass.nuclear_total(g) == 0.0), "{label}: another group booked");
+                assert!((temp(&now, 0) - t_floor).abs() <= 1e-5 * t_floor, "{label}, step {step}: T {} (the heat not taken)", temp(&now, 0));
+                prev = now;
+            }
+            println!("GPU {label}: X_n after 20 steps {:.7}, worst |ΔX_n| against the march {worst_law:.2e}, against the twin {worst_twin:.2e}", frac(&prev, "n", 0));
+        }
+        // The limits, one pass of 10⁶ t.u.
+        for (label, sigma, parts) in [("gate", 400.0, vec![("Fe", 1.0)]), ("iron", 410.0, vec![("He", 0.8), ("Fe", 0.2)])] {
+            let r = rig::OnGpu::new(&gpu, &physics, &all, false, &world(1, 1, &[(sigma, 1.0, x_of(&parts))]));
+            let report = r.pass(1e6);
+            assert_eq!((report.substeps, report.unfinished), (0, 0), "{label}: {report:?}");
+            let st = r.planes();
+            let x: [f64; NS] = std::array::from_fn(|s| st.get(4 + s, 0));
+            let y_e_sigma = elements().composition(&x).y_e * sigma;
+            println!("GPU {label} limit: Y_eΣ {y_e_sigma:.9} (Σ_N {sigma_n}), X_Fe {:e}, X_n {:.9}", frac(&st, "Fe", 0), frac(&st, "n", 0));
+            if label == "gate" {
+                assert!(y_e_sigma <= sigma_n * (1.0 + f64::from(f32::EPSILON)), "the gate is left open: Y_eΣ {y_e_sigma} > Σ_N");
+                let limit = 1.0 - sigma_n / (y_fe * sigma);
+                assert!((frac(&st, "n", 0) - limit).abs() <= 1e-6, "X_n {} against the gate's {limit}", frac(&st, "n", 0));
+            } else {
+                assert_eq!(frac(&st, "Fe", 0), 0.0, "the iron did not run out");
+            }
+            let again = r.pass(1.0);
+            assert_eq!(again.substeps, 0, "{label}: a second pass sub-cycled");
+            assert_eq!(r.planes().planes, st.planes, "{label}: a second pass on the limit moved the cell");
+        }
+    }
 }
 
 /// G-ORDER.

@@ -17,11 +17,14 @@
 //! conjugate gradients to [`SOLVE_TOL`] in both of (4)'s measures; a pass moves no cell's T by more than a factor 2 and keeps
 //! u ≥ u_vac, and the passes end after the first one that moves Σ C |ΔT| by at most [`NEWTON_HEAT`] of Σ C T⁰ and every
 //! cell by at most [`NEWTON_CELL`] of its T. The first iterate is the start state; nothing is kept between steps. Past
-//! [`MAX_PASSES`] passes or [`MAX_ROUNDS`] rounds the step commits its last iterate and says so ([`Pass::warning`]).
+//! [`MAX_PASSES`] passes or [`MAX_ROUNDS`] rounds the step commits by limited fluxes and says so ([`Pass::warning`]).
 //!
 //! The commit: F is the solved flux, the energy the step moved (step n + 1's P4 reads it, M0-T43); what the gas cells lose
 //! through their vacuum and edge faces is `radiated` R; E_i += C_i ((1 + δ) T(u_i) − T_i⁰) with δ = −(Σ C (T(u) − T⁰) + R)/
-//! Σ C T(u), so the grid loses exactly the heat it books. RKL2 (§2.4.3 before [M0-TJ4]) is retired (M0-T119).
+//! Σ C T(u), so the grid loses exactly the heat it books. RKL2 (§2.4.3 before [M0-TJ4]) is retired (M0-T119). Past the
+//! ceiling (§0.5 [M0-D89]) the last iterate's T(u) is no answer — a hot cell beside vacuum still at a factor 2 of its T⁰
+//! emits ~10¹² times the heat it holds, and δ took that from every cell — so the heat moves by the faces' F at the last
+//! iterate instead, each gas cell's outflow scaled to the heat it holds above its floor ([`Heat::commit_limited`]).
 //!
 //! Light leaving (§2.4.4): a face between a gas cell and a vacuum cell (Σ < Σ_vac), or the world edge in either edge mode
 //! (D1), has the vacuum state — Σ_floor, T_floor, the gas side's κ and μ, u_vac = a_r T_floor⁴ — on its far side. The
@@ -102,9 +105,10 @@ pub struct Pass {
     pub passes: usize,
     /// CG rounds over all its passes.
     pub rounds: usize,
-    /// The heat balance's closure δ (§0.5 [M0-TJ4] (5)): of the order of the solve's tolerance when the step converged.
+    /// The heat balance's closure δ (§0.5 [M0-TJ4] (5)): of the order of the solve's tolerance when the step converged, 0
+    /// past the ceiling.
     pub delta: f64,
-    /// False when the step reached [`MAX_PASSES`] or [`MAX_ROUNDS`] and committed its last iterate.
+    /// False when the step reached [`MAX_PASSES`] or [`MAX_ROUNDS`] and committed by limited fluxes (§0.5 [M0-D89]).
     pub converged: bool,
     /// Booked `radiated` (§2.9): the heat the gas lost into vacuum cells and through the world's edge, energy per area summed.
     pub radiated: f64,
@@ -497,6 +501,9 @@ impl Heat {
             }
         }
 
+        if !converged {
+            return self.commit_limited(st, &net, &u, &t0, dt, passes, rounds);
+        }
         // The commit: the solved flux, the light leaving, E closed by δ.
         let flux = net.flux(&u);
         let mut emitted = vec![0.0; n];
@@ -512,5 +519,61 @@ impl Heat {
             st.planes[energy + i] += net.c[i] * ((1.0 + delta) * t[i] - t0[i]);
         }
         Pass { passes, rounds, delta, converged, radiated, emitted, flux }
+    }
+
+    /// The commit past the ceiling (§0.5 [M0-D89]): F = −D_f (u_b − u_a) at the last iterate `u`, each gas cell's outflow
+    /// Δt Σ_f max(F, 0) over its four faces scaled by s_i = min(1, C_i (T_i⁰ − T_floor)/outflow) — every face's F taken at
+    /// the scale of the cell it leaves (1 from vacuum) — then E_i −= Δt Σ_f F_f (outflow positive), and what leaves through
+    /// the vacuum and edge faces is `radiated`. No cell gives more heat than it holds above its floor, the two sides of a face
+    /// book the same F, and δ = 0: the grid loses exactly the heat it books, face by face.
+    #[allow(clippy::too_many_arguments)]
+    fn commit_limited(&self, st: &mut State, net: &Net, u: &[f64], t0: &[f64], dt: f64, passes: usize, rounds: usize) -> Pass {
+        let (w, h) = (net.w, net.h);
+        let n = w * h;
+        let t_floor = self.eos.t_floor();
+        let mut flux = net.flux(u);
+        // F leaving cell i through its −x, +x, −y and +y faces (`Net::faces`' order).
+        let leaving = |f: &Flux, i: usize| {
+            let (x, y) = (i % w, i / w);
+            [-f.x[y * (w + 1) + x], f.x[y * (w + 1) + x + 1], -f.y[y * w + x], f.y[(y + 1) * w + x]]
+        };
+        let scale: Vec<f64> = (0..n)
+            .map(|i| {
+                if !net.gas[i] {
+                    return 1.0;
+                }
+                let out = dt * leaving(&flux, i).iter().map(|f| f.max(0.0)).sum::<f64>();
+                let held = net.c[i] * (t0[i] - t_floor).max(0.0);
+                if out > held { held / out } else { 1.0 }
+            })
+            .collect();
+        let of = |cell: Option<usize>| cell.map_or(1.0, |j| scale[j]);
+        for y in 0..h {
+            for x in 0..=w {
+                let k = y * (w + 1) + x;
+                let from = if flux.x[k] > 0.0 { (x > 0).then(|| y * w + x - 1) } else { (x < w).then(|| y * w + x) };
+                flux.x[k] *= of(from);
+            }
+        }
+        for y in 0..=h {
+            for x in 0..w {
+                let k = y * w + x;
+                let from = if flux.y[k] > 0.0 { (y > 0).then(|| (y - 1) * w + x) } else { (y < h).then(|| y * w + x) };
+                flux.y[k] *= of(from);
+            }
+        }
+        let mut emitted = vec![0.0; n];
+        let energy = 3 * n;
+        for i in (0..n).filter(|&i| net.gas[i]) {
+            let out = leaving(&flux, i);
+            for (f, (_, beyond)) in net.faces(i % w, i / w).iter().enumerate() {
+                if !matches!(beyond, Some(j) if net.gas[*j]) {
+                    emitted[i] += dt * out[f];
+                }
+            }
+            st.planes[energy + i] -= dt * out.iter().sum::<f64>();
+        }
+        let radiated = emitted.iter().sum();
+        Pass { passes, rounds, delta: 0.0, converged: false, radiated, emitted, flux }
     }
 }

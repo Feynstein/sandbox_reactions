@@ -1,0 +1,7 @@
+2026-10-23 10:17:34.353741640 -0400 build/target/release/sandbox-reactions
+2026-10-23 10:07:47.126375500 -0400 crates/sr-physics/src/observe/stages.rs
+SR-CALIBRATE run item=m_bh_sb side=Light mass=6702.064 ignited=true core_collapse=true ending=neutron_star steps=6659 sim_time=31.057 wall_s=215.6 heat_unconverged=3 record=build/calibrate_runs/2026-10-23T14-17-41Z/m_bh_sb-01
+build/calibrate_runs/2026-10-23T14-17-41Z/m_bh_sb-01
+{"detail":{"mass_sb":6631.5006800070405},"kind":"core_collapse","object":1,"sim_time":11.37894469150342,"step":1553}
+{"detail":{"mass_sb":6631.346926396713},"kind":"supernova","object":1,"sim_time":11.3832870752085,"step":1554}
+{"detail":{"held_t":10.027963907225057,"hold_t":10.0,"mass_sb":2662.712880895473,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":31.056507589761168,"step":6659}

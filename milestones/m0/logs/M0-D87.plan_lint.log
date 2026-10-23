@@ -1,0 +1,8 @@
+== 2026-10-23T08:30:24-04:00 plan_lint · task M0-D87 · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=674 failed=0 warnings=3 · blocks=289 · flow_rows=289 · verify_fences=7 · history=0 · flow=per-task · header=528/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-D87: `Read:` names crates/sr-engine/shaders/react.wgsl whole (769 lines > 500) - name a section or a line range
+WARN: M0-D87: `Read:` names crates/sr-engine/tests/gpu/neutrino.rs whole (880 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D81 3 · M0-R6 12 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6
+=== GO ===
+

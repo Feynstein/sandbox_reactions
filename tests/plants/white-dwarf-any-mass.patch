@@ -1,0 +1,16 @@
+--- a/crates/sr-physics/src/observe/stages.rs	2026-10-23 09:22:21.237227925 -0400
++++ b/crates/sr-physics/src/observe/stages.rs	2026-10-23 09:22:21.243832336 -0400
+@@ -178,11 +178,11 @@
+             && c.o.l_nuc < 0.01 * c.o.luminosity
+             && c.o.unbound < 0.05 * c.o.mass
+             && c.o.x_c[X_N] < 0.5
+-            && c.o.mass <= c.m_ch
++            && c.m_ch > 0.0
+     }),
+     (Stage::FailedStar, |c| !c.h.ignited && c.o.d_c >= 0.5 && c.o.l_group[G_H] < 0.01 * c.o.luminosity),
+     (Stage::PlanetaryNebula, |c| {
+-        c.h.ignited && c.o.d_c >= 0.5 && c.o.l_nuc < 0.1 * c.o.luminosity && c.o.unbound >= 0.05 * c.o.mass && c.o.mass <= c.m_ch
++        c.h.ignited && c.o.d_c >= 0.5 && c.o.l_nuc < 0.1 * c.o.luminosity && c.o.unbound >= 0.05 * c.o.mass && c.m_ch > 0.0
+     }),
+     (Stage::IronCore, |c| c.o.x_c[X_FE] >= 0.5 && c.o.l_nuc < 0.1 * c.o.luminosity),
+     (Stage::SiBurn, |c| burns(c, G_SI, FUEL_SI)),

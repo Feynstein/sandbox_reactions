@@ -1,0 +1,12 @@
+    Finished `release` profile [optimized] target(s) in 0.09s
+-rwxrwxr-x 2 ybelanger ybelanger 21722432 Oct 23 10:17 build/target/release/sandbox-reactions
+== 2026-10-23T12:34:51-04:00 build[wasm] · task M0-D89 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+== 2026-10-23T12:34:51-04:00 build[native] · task M0-D89 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.87 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.6G)
+=== GO ===
+
+-- build[native] · exit=0 · 3.97 s
+build native: 1.99.0 in 4 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.6G)
+=== GO ===
+

@@ -1,0 +1,22 @@
+=== session 2 build on laserax-ai-server /tmp/r6 (tree 8332496 + working changes + 3 probe hooks) 2026-10-23T10:52:36-04:00 ===
+   Compiling egui-wgpu v0.36.2
+   Compiling sr-engine v0.0.0 (/tmp/r6/crates/sr-engine)
+   Compiling eframe v0.36.2
+   Compiling sr-app v0.0.0 (/tmp/r6/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 27.23s
+-rwxrwxr-x 2 ybelanger ybelanger 21723936 Oct 23 10:53 build/target/release/sandbox-reactions
+    Finished `release` profile [optimized] target(s) in 3.36s
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'numpy'
+    Finished `release` profile [optimized] target(s) in 3.32s
+== 2026-10-23T11:59:10-04:00 build[native] · task M0-R6-s2 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+== 2026-10-23T11:59:10-04:00 build[wasm] · task M0-R6-s2 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.47 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.6G)
+=== GO ===
+
+-- build[native] · exit=0 · 0.72 s
+build native: 1.99.0 in 1 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.6G)
+=== GO ===
+

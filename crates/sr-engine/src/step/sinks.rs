@@ -1,5 +1,6 @@
 //! P3 sinks (m0_contrat.md §1.3.2, §1.3.4, §2.6, §2.9; M0-T51), on shaders/sinks.wgsl: M0-T50's twin
-//! (sr_physics::reference::sinks, `Sinks::step`) in f32, every reading it declared kept — a sink's position in cells with
+//! (sr_physics::reference::sinks, `Sinks::step`) in f32, every reading it declared kept — §0.5 [M0-R6]'s sink from mass
+//! beside Σ_BH's, m_tov_sb the twin's own [`m_tov_sb`] for the run's physics; a sink's position in cells with
 //! cell (i, j) centred at (i + ½, j + ½); the share 1 − Σ_floor/Σ of a cell's Σ, momentum and E taken; accretion sink by
 //! sink in index order, each sink's M and v frozen for its own pass; the world's outer ring never forming; formation's φ
 //! with the sinks' own term; merging the lowest pair first, strictly inside the larger r_acc, into the lower slot.
@@ -22,7 +23,8 @@
 //! latch (§1.8.5): `sink_latch`, built apart ([`Sinks::latch_dispatch`]) because the latch is made from the finished pass
 //! lists. A dump carries the sinks in its header (dump.rs, [`Step::read_sinks`] and [`Step::set_sinks`], M0-T52b).
 
-use sr_physics::registry::Physics;
+use sr_physics::reference::sinks::m_tov_sb;
+use sr_physics::registry::{Elements, Physics};
 
 use super::boxfit::{BoxFit, ARGS_TILES};
 use super::{compute_pipeline, init_buffer, with_eos, Dispatch, EosGpu, Pass, Size, Step};
@@ -80,7 +82,7 @@ pub(super) fn state_buffer(device: &wgpu::Device, state: &State) -> wgpu::Buffer
 
 impl Sinks {
     /// P3 for `state`'s world over `boxfit`'s box, the sinks living in `sinks` ([`state_buffer`]), reading Δt_n from
-    /// `dt_record`, φ from `setup.side`, booking into `booking`, with Σ_BH, c_sb and Σ_vac from `physics` and G = 1.
+    /// `dt_record`, φ from `setup.side`, booking into `booking`, with Σ_BH, c_sb, Σ_vac and m_tov_sb from `physics` and G = 1.
     #[allow(clippy::too_many_arguments)]
     pub fn new(
         device: &wgpu::Device,
@@ -101,7 +103,9 @@ impl Sinks {
         let world = state.world();
         let tiles = world.width.div_ceil(8) * world.height.div_ceil(8);
         let c_sb = get("c_sb");
-        let params = [(super::grav::G as f32).to_bits(), get("sigma_bh").to_bits(), (c_sb * c_sb).to_bits(), tiles, get("sigma_vac").to_bits(), 0, 0, 0];
+        let m_tov = m_tov_sb(physics, &Elements::shipped().expect("the shipped elements")).min(f64::from(f32::MAX)) as f32;
+        let params =
+            [(super::grav::G as f32).to_bits(), get("sigma_bh").to_bits(), (c_sb * c_sb).to_bits(), tiles, get("sigma_vac").to_bits(), m_tov.to_bits(), 0, 0];
         let params = init_buffer(device, "sinks.params", wgpu::BufferUsages::UNIFORM, &params);
         let storage = wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_DST | wgpu::BufferUsages::COPY_SRC;
         let pull = init_buffer(device, "sinks.pull", storage, &vec![0; PULL_HEAD_WORDS + 2 * MAX_SINKS * tiles as usize]);

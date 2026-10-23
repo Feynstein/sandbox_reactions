@@ -1,11 +1,12 @@
 --- a/crates/sr-engine/shaders/react.wgsl
 +++ b/crates/sr-engine/shaders/react.wgsl
-@@ -326,6 +326,6 @@
+@@ -581,8 +581,8 @@
+         if (!(rec.coef.x * powr(sigma, rec.coef.y) * cx[fe] * g > 0.0)) {
+             continue;
          }
-         // A latching ω the scale took under f32's range is still > 0.
--        if ((prod > 0.0 || (prod == 0.0 && shift > 0.0 && rec_live[r] && rec_whole[r])) && (rec.head.w & LATCHES) != 0u) {
--            latched = true;
-+        if ((rec.head.w & LATCHES) != 0u) {
-+            latched = (prod > 0.0 || (prod == 0.0 && shift > 0.0 && rec_live[r] && rec_whole[r])); // planted: the latch reads the last sub-cycle's rate only
-         }
-         for (var k = 0u; k < MAX_INPUTS; k++) {
+-        latched = true;
+         let dm = nfe_exact(r, sigma, dt);
++        latched = rate_g(r, composition(cx).y_e * sigma) > 0.0; // planted: the latch reads N_Fe's rate at the pass's end
+         if (dm > 0.0) {
+             let heat = rec.coef.z * dm;
+             if (!pin) {

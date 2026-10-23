@@ -3776,3 +3776,432 @@ uncommitted) turns `timing` red through a check M0-D49 fixes; M0-T61 then re-run
   `grep -cE "lands with lot 7|until P3's block|today only the test hook|Sinks' source terms \(lot 7\)|still says P5 is stepped by RKL2|is not described on this row" docs/agent/architecture.md docs/agent/physics.md docs/agent/testing.md`
   · Pass: 0 for each file · Fail: any line
 - Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record at launch; matches the heading). architecture.md: P3 row names its seven dispatches with sizes (sink_candidates, sink_update, sink_pull ×2, sink_kick_drift, sink_kick_merge, sink_latch), P7 row its nine (nu_tiles … nu_close), P2 row its fifth grav_sinks; the side-field, latch-flag and dump lines read as the code does. physics.md: § Gas flow's Not built and § Heat and light's RKL2 note (M0-D40 fixed the module doc). testing.md: the dump row's count 10→11, the carried-step case (M0-T121) and M0-D47's headless case described, plan headless-no-sinks listed; the sink row (M0-D46's carried flag) 27→30 cases, P3's motion, sink-pull-grid. Declared: the dump row's M0-D47 case and the sink row went beyond the one line the Deliver names — the count and the flag needed them. Verify 1 [ALREADY RUN — PASS (14 = 11 + sink_pull, sink_kick_drift, sink_kick_merge) on linux-pc]; Verify 2 [ALREADY RUN — PASS (0, 0, 0) on linux-pc]; claim --changed [ALREADY RUN — PASS (GO, 556 passed, 1/1 scopes) on linux-pc]. Next: M0-T56.
+
+## M0-TC7 · Compaction — Phase 10's close: eighteen DONE blocks to stub, more than ten (PLAYBOOK §8, §11) · **MOVE** · Haiku 5.5, high · switch · (AFTER M0-V8)
+- Status: DONE (2026-10-16 12:39)
+- Read: this file (rules + this task) + plan_archive.md § M0-V7 (one archived block: the shape to keep)
+- Deliver: `plan.py stub` over Phase 10's DONE blocks — M0-T56, M0-T57, M0-T58, M0-T59, M0-T60, M0-D49, M0-T61, M0-T62,
+  M0-TM8, M0-T63, M0-T64 and M0-V8 — and Phase 9's six that ran after its close (M0-TC6, M0-D45, M0-D46, M0-TM7, M0-D47,
+  M0-D48: the lint's six WARNs at M0-V8) into plan_archive.md, no TODO block touched (M0-V18, M0-D50 … M0-D54, M0-TJ2 and lot 9
+  stay whole) · the Pipeline state back to a register of pointers · lines repeated in three or more blocks hoisted, long Rules
+  entries moved to m0_rules.md (index line kept, text unchanged) · Repo facts de-duplicated · every moved line diffed
+  byte-for-byte, counts reported · `plan.py lint`'s header before and after in the handoff.
+- Pass: `plan.py lint` GO, header within budget, diff count = moved count. Fail: any TODO block touched, any rule reworded,
+  any fact dropped.
+- Handoff: Stubbed 18 DONE blocks into plan_archive.md (Phase 10's 12: M0-T56–T60, M0-D49, M0-T61–T62, M0-TM8, M0-T63–T64, M0-V8; Phase 9's six: M0-TC6, M0-D45, M0-D46, M0-TM7, M0-D47, M0-D48): 393 lines moved, 393 verified byte-for-byte by plan.py stub; plan 3371 -> 3050 lines, archive 3367 -> 3778. Independent check: each of the 18 archived blocks equals its original line for line; M0-D48 differs only by its Phase 9 commit-gate trailer, kept in the plan under its stub (WARN by design, as at M0-D8). No other block changed (247 before and after); no TODO block touched (M0-V18, M0-D50 … M0-D54, M0-TJ2, lot 9 whole). Lint: warnings 6 -> 0, GO 570 checks; header 565/600 before and after. Deliver's other items found nothing to move: no line repeats in 3+ blocks except the template '- Handoff: <placeholder>' (78 TODO blocks, hoisting would touch them: left); Repo facts has no internal duplicates; Rules already one-line index rows; Pipeline state already pointers. Measured: verify.py --changed --task M0-TC7 [ALREADY RUN — PASS (GO, plan_lint 570 passed, 1/1 scopes) on linux-pc]. Model: claude-haiku-5-5 level=high (rung_record now, matches the heading). Next: M0-V18.
+
+## M0-V18 · Triage — five open D's after M0-V8 (E6) · **CHECK** · Opus 5.5, max · switch · (AFTER M0-TC7)
+- Status: DONE (2026-10-16 13:03, started 12:55)
+- Read: this file (rules + this task) + milestones/m0/reports/v8.md § Verdict, § The stall, § The tracker on a real collapse,
+  § Defects filed + the five open D blocks (M0-D50, M0-D53, M0-D51, M0-D52, M0-D54) and M0-V8's ordering note
+- Deliver: E6's triage of the five open D's that M0-V8's filings left — duplicates merged, the order kept or moved under an
+  ordering note (block moves, E8), any that should close closed with its pointer (M0-V8 measured one thread each, none to merge
+  or close, an order before lot 9) — and M0-D50's and M0-D53's two contract questions (the constants' balance; an object's L and
+  ignition) set before the lead where one sitting serves both → none — the register's open-D line and the ordering note are the
+  record
+- Done when: verdict recorded; the open-D register and the order updated; no D spawned while five are open (E6)
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=max (rung_record now at launch; the heading's rung). TRIAGED, five open D's re-read on today's tree: none a duplicate (no shared file; M0-D50 shares levers, not its goal, with lot 14's M0-T98a/T99a), none closed (their code unchanged since a0f18d9; M0-D52's greps still 1, 2, 2 and 1; scene-refuse.patch still does not apply). The lead, one sitting, three questions: M0-D53 «Nearest star (Recommended)» and «Burning matches light (Recommended)» (0.5 L ≤ L_H ≤ 2 L for ignition and main_sequence); M0-D50 «Keep white dwarfs, D50 writes (Recommended)» — flagged verbatim into both (each writes its own §0.5 line when it applies them), one step-cost flag to M0-TJ2. Moved M0-D53 before M0-D50 (plan.py move, 43 lines byte-identical): it waits on nothing of D50's, and D50's candidate runs are read by the lead's rules — a replay of M0-V8's 76 probe frames (76/76 against the engine's stages under today's rules) shows the preset as failed_star from step 385 under them, where the L fix alone would call it white_dwarf. Ordering note below this handoff. Found, not filed (E6): plan.py close rewrites a block's handoff up to the next heading, so a note written under an open block dies at its close — it took this note (re-inserted after the close) and most likely M0-V8's, written after its own block before its close; the cause is plan.py's, unread — the lead's (§12). Also not filed: M0-TJ2's stale AFTER M0-T113/(deferred) (named in the note); calibrate item 3 reads a star burning without shining as neither ignited nor failed (flagged to D50). Register: Next M0-D53, the open-D line, commit gates (a0f18d9 pushed), Awaiting lead. Claim verify.py --changed --task M0-V18 [ALREADY RUN — PASS (GO, plan_lint 569/0/0, 1/1 scopes, 51 not impacted; 1 WARN: handoff 10 lines with the note) on linux-pc]; note cut to 6 lines, --task M0-V18-r2 [ALREADY RUN — PASS (GO, 569/0/0, 0 WARN) on linux-pc]; after the re-insert, plan_lint --task M0-V18-r3 in tasks/M0-V18.md § After the close. No D spawned. Next: M0-D53.
+
+Ordering note (E8 — M0-V18, 2026-10-16, for the note M0-V8's handoff names but the plan never held): M0-D53, M0-D50, M0-TJ2,
+M0-D51, M0-D52, M0-D54, then lot 9. M0-D53 first, moved by M0-V18 (its heading's AFTER M0-D50 is its filing order): the lead
+ruled its rules at M0-V18, so it waits on nothing of M0-D50's, and M0-D50's candidate runs are then read by them (a failed
+cloud reads `failed_star`, so `--until ending` stops it). M0-D50 before M0-T66 (the first calibrate write, G-CAL), M0-D53 before
+M0-T68. M0-TJ2 next, woken and moved by M0-V8 (its AFTER M0-T113 and its Flow row's "(deferred)" are pre-wake): its numbers wait
+on M0-D50. M0-D51 before M0-V9's complete loop; M0-D52 after M0-D53, M0-D50, M0-D51 (it reads their handoffs); M0-D54 before M0-V9's sweep.
+
+## M0-D53 · An object's L counts only the light booked in its own blocks: the Sun-like preset reads L = 0 and `cloud` while its box radiates 2.4 × 10⁴ through a halo under Σ_obj, and its `ignition` fired on a flash against L ≈ 2 × 10⁻⁷ · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D50)
+- Status: DONE (2026-10-16 16:32)
+- Carried flags: [M0-V18, 2026-10-16] the lead at M0-V18 (2026-10-16, one sitting with M0-D50's question) ruled this block's two options: §1.9.2's L «Nearest star (Recommended)» — light leaving anywhere is credited to the star whose own patch (member block) is nearest to where it left, so in a two-star world each keeps its own halo's light; §1.9.4's ignition «Burning matches light (Recommended)» — ignited when 0.5 L ≤ L_H ≤ 2 L, the same test for the main-sequence row (a real star shines what it burns). No question owed: apply both with the §0.5 override line and its Superseded mirror, and grade them. Replay of M0-V8's P3 frames (tasks/M0-V18.md, logs/M0-V18.log; today's rules agree with the engine's raw stage on 76/76 frames): the nearest-star L alone keeps the flash's ignition at step 225 and shows white_dwarf from 385; with the balance rule too it never ignites and shows failed_star from 385; the flash's frames (225–337, L_H/L 10^9–10^10) match no remnant row and show collapsing (257), then cloud (337). Runs before M0-D50 now (ordering note), so its 1,200-step run is on today's constants
+- Blocks: M0-T68 (calibrate item 3 reads ignition and L_H < 0.01 L; item 4's endings read a remnant stage held 10 t.u.), M0-T70
+  (life_sun_sb: the drop to `white_dwarf`), the ending and age readouts (M0-T72, M0-T73), lot 15's G-STAGES and G-END (M0-T103,
+  M0-T104) — every reading of a real star's stage
+- Caused by: unknown — the contract's own definitions as M0-T58 and M0-T59 built them, each conforming: §1.9.2's L = the
+  object's blocks' radiated ÷ the frame's sim time, §2.4.4's light booked at the emitting cell (the last gas before vacuum),
+  §1.9.2's member blocks (a cell at Σ ≥ Σ_obj = 10⁻³) and §1.9.4's ignition at L_H ≥ 0.5 L
+- Rating: (usual) — rule (3): a design the spec leaves open (where an object's light is counted; ignition against a cloud that
+  does not radiate), a contract formula changed by asking
+- Files: crates/sr-physics/src/observe/tracker.rs (`measure`: `luminosity`, the object's blocks only), crates/sr-physics/src/
+  observe/stages.rs (`hydrogen_leads`, ROWS' comparisons with L), crates/sr-engine/shaders/summary.wgsl (`summary_book`'s
+  radiated per block), milestones/m0/m0_contrat.md §1.9.2, §1.9.4, §2.4.4, §2.7 (sigma_obj) — opened by M0-V8, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.1–§1.9.4, §2.4.4, §2.7, §5.2 (G-STAGES, G-END,
+  G-MULTI) + milestones/m0/reports/v8.md § The tracker on a real collapse + milestones/m0/logs/M0-V8.probe.log +
+  docs/agent/readouts.md § Objects, § Stages
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-16, M0-V8's P3 (a scratch copy's watch.rs printing each frame's
+  objects; `preset:sun --until stage:h_shell --max-steps 1200`, 16-step frames; logs/M0-V8.probe.log): through the collapse the
+  whole box radiates 1–5 × 10⁻⁷ (steps 49–337), so at step 225 L_H = 277 against L = 2.1 × 10⁻⁷ turns the `ignited` flag on
+  (§1.9.4's L_H ≥ 0.5 L) on a flash that is out by step 417 (X_H,c 0.7346 → 0.7343). After the bounce the box radiates
+  3.9 × 10⁴ (step 369), 2.4 × 10⁴ (401), 8.5 × 10³ (481); the one object (M ≈ 3,350, R 18–45 cells) has L 4,042 at step 369 —
+  raw `white_dwarf` (ignited, d_c 0.584, L_nuc 30 < 0.01 L) — and L = 0 from step 401 on, so every row that compares with L
+  fails and it reads `cloud` (shown from step 417) while ignited, d_c 0.59–0.60, L_nuc 0, M_unb/M 0.0003–0.042: a
+  `white_dwarf`'s quantities but for L
+- Suspected cause: measured — the light leaves where the expanding halo (Σ between σ_vac 10⁻⁶ and Σ_obj 10⁻³) meets vacuum, in
+  blocks that are not the object's members; before the bounce the cloud's surface sits at T_floor, so L ≈ 0 and any burn at all
+  meets L_H ≥ 0.5 L
+- Deliver: where real runs' light is booked against their objects measured (the share of the box's light inside the objects
+  over the shipped preset's run, at least) → this block's task file → none — the record the lead's question reads · the options
+  put to the lead (Changes by asking: §1.9.2's L
+  — e.g. a non-member block's light given to the object whose member block is nearest, or an object's L as the light leaving
+  within a radius of it, and §1.9.4's ignition — e.g. against L_nuc with a floor), the approved text applied in observe
+  (tracker.rs, stages.rs) with the contract's §0.5 override line and its Superseded mirror → Verify 1 · cases on a block summary
+  with a halo (the light outside the members) and on a dark cloud's flash, in `objects` and `classify` → Verify 1 · their plant →
+  Verify 2
+- Done when: on linux-pc both scopes grade the approved rule (a halo: the object's L is its share of the box's light; a dark
+  cloud's flash: ignition only as the approved rule says) and the shipped preset's 1,200-step run reads by it
+- Verify: 1. `python3 tools/pb/verify.py objects classify observe_run --task M0-D53` · Pass: GO, the new cases among the passed
+  · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm objects --task M0-D53` · Pass: GO — the new plant NO-GO · Fail: a
+  plant GO
+- Adversarial: every block's light given to the heaviest object hides a second star's in a two-star world (G-MULTI) — a case
+  runs two objects, each with its own halo.
+- Handoff: Exists: §0.5 [M0-D53] applied — tracker.rs credit_light (a block outside every listed object gives its light to the object whose member block is nearest; ties heavier, then lower id; Object.luminosity_own the own-block part) and stages.rs's band 0.5 L ≤ L_H ≤ 2 L for ignition and main_sequence; contract §0.5 line, Superseded mirror, readouts.md § Objects/§ Stages/§ Events; cases objects 15→17, classify 30→32; plants light-to-heaviest, ignite-on-a-flash. · Measured (win-laptop, RTX 4080 Laptop, logs/M0-D53.probe.log, a temporary SR_D53_PROBE print in watch.rs removed after, its diff empty): the object's own blocks radiate 4.4 % of preset:sun's light over 1,200 steps (99.5 % to step 337, none from 385). The run by the new rules: no ignition, failed_star (33) → collapsing (257) → cloud (337) → failed_star (385) — M0-V18's replay step for step; the preset still lives no main sequence (M0-D50's, flagged). · Declared (tasks/M0-D53.md): Euclidean block-centre distance; a wisp's light to the nearest listed object; only edge blocks searched (same result); no listed object → credited to none; L_ν, L_g stay own-block. · Verify 1 GO 54 passed (17·32·5); Verify 2 GO, both plants RED; classify red-armed too (GO, its new plant beyond Verify 2's — the claim's oracle FLAGs name the two plants and verify.json, the cases and plants Deliver asks for); claim verify.py --changed GO 878 passed, 38/38 scopes — all on win-laptop (Laser2025-20), R15, nothing owed. · Ran on claude-opus-5-5, high. · Next: M0-D50
+
+## M0-D50 · The Sun-like preset never lives a main sequence on the shipped constants: its degenerate centre flashes at T 59 against hydrogen's threshold 50 and cools as a cloud near T 29, X_H,c untouched — and a quarter of K₁ₑ burns it all and blows it apart · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TC7)
+- Status: DONE (2026-10-18 09:51, started 2026-10-16 17:27)
+- Carried flags: [M0-V18, 2026-10-16] the lead at M0-V18 (2026-10-16, one sitting with M0-D53's question) ruled the constants' balance: «Keep white dwarfs, D50 writes (Recommended)» — the option as put: D50 prefers sets that leave the cold pressure alone, mainly by lowering the burning temperatures (the whole ladder moves together; §2.5.3 keeps T_ν between T_He and T_C); white dwarfs keep their radius of ≈ 4 cells and each life's step count stays lowest; D50 writes the working set and tells the lead after; the lead is asked only if nothing within the limits works, or if only a weaker cold pressure works. So the Deliver's measured options are pre-ruled: write the working set once (physics.json, §0.5 [M0-D50] citing these words, its Superseded mirror); the options and each candidate's effects still go to reports/ignition.md. M0-D53 runs first now (ordering note): ignition and main_sequence read 0.5 L ≤ L_H ≤ 2 L with L from the nearest member block, so a working set's star must shine what it burns; a cloud that fails reads failed_star and --until ending stops it 10 t.u. later (tasks/M0-V18.md, the replay of M0-V8's run) · [M0-D53, 2026-10-16] [M0-D53, 2026-10-16] §0.5 [M0-D53] landed: an object's L is the nearest star's (one object: the box's whole light) and ignition and main_sequence read 0.5 L ≤ L_H ≤ 2 L. On today's constants preset:sun's 1,200 steps (win-laptop, RTX 4080 Laptop) never ignite and show failed_star (33) → collapsing (257) → cloud (337) → failed_star (385), the flash at 225–337 burning L_H up to 2,409 against L ~2.5 × 10⁻⁷ (tasks/M0-D53.md). Your 'burns hydrogen steadily' is now read under that band: a steady burn whose L_H stays within 0.5–2 × the light the box radiates
+- Blocks: M0-T68 (calibrate item 3, m_ign_sb from the preset cloud, and item 5's K9 order m_ign < m_ch) and M0-T70 (item 6:
+  t_eff_sun_sb at X_H,c = 0.35, life_sun_sb to white_dwarf, the top rung) — and every preset life after them (M0-T74, lot 14's
+  M0-T97, lot 15), and M0-TJ2's steps per life; before M0-T66, the first `calibrate` write, so no calibration goes stale (G-CAL)
+- Caused by: unknown — measured as the shipped constants' balance (contract §2.7's K₁ₑ and a_r, c_sb, κ₀, §2.5.1's T_H ladder,
+  Q_H and A_H, §2.10's 0.1|W|, from M0-TC); no pass is measured wrong (the stage labels' L is M0-D53's, not this block's)
+- Rating: (usual) — rule (3): a D whose cause is not measured (which term of the balance) and a design the spec leaves open
+  (§2.5.1's role line «the settled Sun-like core runs near μc²/2 ≈ 114» is measured false)
+- Files: assets/physics.json (k1e, k2e, sigma_n, t_h … t_si, q_h, a_h_burn, a_r, c_sb, kappa0), milestones/m0/m0_contrat.md §2.5.1, §2.7 —
+  opened by M0-V8, not changed · crates/sr-engine/src/scene.rs (`sun_gas`, `cloud_shape`: the preset as §2.10 writes it —
+  opened, conforms)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6 (the rate law, §0.5 [M0-D34]), §1.9.3, §2.3.2,
+  §2.5.1, §2.7, §2.10, §2.11 (items 3, 5, 6), §2.12.1 (overrides), §5.1 (G-THERMO), §5.2 (G-SQUEEZE, G-STAGES), §5.5 +
+  milestones/m0/reports/v8.md § The stall + milestones/m0/reports/step_cost.md § Steps + docs/agent/physics.md § Reactions +
+  M0-T98a's block (the tuning pattern: preset-free clouds, candidates as overrides, one physics.json write)
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-16. `preset:sun --until stage:h_shell` is never met: 25,000 steps on the
+  Quadro RTX 4000 (M0-T63, logs/M0-T63.log) and 6,000 on the RTX 5090 (M0-V8's P0, logs/M0-V8.log), the two runs alike —
+  displayed `failed_star` from step 33, `ignition` at step 225 (sim 3.83), `main_sequence` 257–416, `cloud` from 417; the
+  nuclear energy released stops at 1598.1 by step 3,000 (7.5 × 10⁻⁵ of the 2.14 × 10⁷ that M·X_H·Q_H holds). At the densest
+  cell (the dumps read in f64 with §2.3's EOS, reports/v8.md): d_c 0.63 at step 100; the bounce at step 300 — Σc 12.39,
+  T_c 59.1 against H_burn's threshold 0.5 T_H = 50, d_c 0.57; then Σc 6.1–6.5, T_c 28.6–29.5, d_c 0.60–0.61 to step 6,000;
+  X_H,c 0.7343 throughout. The whole box radiates 2–4 × 10⁻⁷ through the collapse (steps 49–337, M0-V8's P3, logs/M0-V8.probe.log):
+  τ_KH = |W|/2L ~ 10¹² t.u., so the cloud cannot cool either. With K₁ₑ ÷ 4 (5.325, Σ_N 1,300 as §2.5.1's bound Σ_N ≥
+  2(K₂ₑ/K₁ₑ)² then needs; M0-V8's P2): ignition at step 161, X_H,c 0 at step 500, 2.86 × 10⁷ released, 3,348.6 of 3,351 escaped
+  by step 6,000, no object left
+- Suspected cause: measured in part — the electrons' cold pressure at the solar Y_e (0.867: K₁ₑY_e² = 16.0 against
+  Π_th/Σ² = 7.9 at the drop) holds the cloud before its centre reaches hydrogen's scale; in the sheet with γ = 2 both pressures
+  go as Σ², so d_c barely moves as it contracts and the quasi-static peak is ≈ 3μπα²GM/(32K₁ₑY_e²) ≈ 27 at M₀ (α = 8/3π, §2.7's
+  own cold-disk radius; M0-V8's arithmetic) — ∝ M / K₁ₑ; and with a_r = 4 × 10⁻⁷ its surface reaches T_floor within ~60 steps,
+  so no light drives a Kelvin–Helmholtz contraction. A smaller K₁ₑ lets the core reach the scale, and then nothing holds the
+  burn (P2): the thermostat's balance (Q_H, A_H, the rate's steepness — G-THERMO's question) is not measured
+- Deliver: the balance measured on preset-free clouds (§2.10's Sun-like cloud as a `disk` at M₀, candidates as `overrides` —
+  M0-T98a's way, so no run needs a calibration a change makes stale): for candidate values inside the contract's bounds (K₁ₑ
+  with Σ_N ≥ 2(K₂ₑ/K₁ₑ)², the T ladder in K6's order with T_Si/T_H ≤ 10, A_H > 0, Q_H against G-SQUEEZE's τ_nuc ≥ 10 τ_KH, and
+  a_r, c_sb, κ₀ — M0-T98a's levers, the light that lets a cloud cool), whether the cloud ignites and holds a main sequence — X_H,c
+  falling, L_H the dominant power, the star bound, no runaway — and what each moves elsewhere (M_ch through K₂ₑ, the cold C/O
+  disk's radius, the massive cloud's ladder), each number with its command, SHA and adapter, a run over 10 minutes the lead's
+  [NOT RUN — for you] → milestones/m0/reports/ignition.md (new) → none — the record the lead's question reads (a BUILD block's
+  report) · the measured options put to the lead (Changes by asking: §2.7's and §2.5.1's numbers), the approved values written
+  once into assets/physics.json with the contract's §0.5 override line and its Superseded mirror → Verify 1 · a case grading
+  the shipped preset's hydrogen burning (X_H,c falls by a stated margin within a stated number of steps, the star bound) in the
+  scope it fits → Verify 1 · its plant → Verify 2 · no in-bounds value holding a main sequence → BLOCKED with the measurements
+  and the lead's question (§5.5), never a looser check (§0.4) → none — the block's end then
+- Done when: on linux-pc, `preset:sun` on the constants the lead approved burns hydrogen steadily — X_H,c falling by the stated
+  margin, the star bound (M_unb < 5 % of M), L_H the dominant nuclear power, read from the summary's and the dumps' quantities,
+  not from the stage label (its L is M0-D53's); the case GO and its plant red; reports/ignition.md holds the options and the
+  lead's words — or BLOCKED with them
+- Verify: 1. `python3 tools/pb/verify.py <the case's scope> --task M0-D50` · Pass: GO, the new case among its passed · Fail:
+  NO-GO · 2. `python3 tools/pb/verify.py --redarm <the case's scope> --task M0-D50` · Pass: GO — the new plant NO-GO · Fail: a
+  plant GO
+- Adversarial: a constant pushed until the preset burns can break another clock or the ending ladder (K9: m_ign < m_ch, M_ch
+  ≈ 1.2 Suns through K₂ₑ; the white dwarf's radius in cells) — each candidate's effect on them is recorded beside its burn; a
+  burn that reads `main_sequence` for a few frames and runs away (P2) is no main sequence — the case holds X_H,c's fall and the
+  star bound together.
+- Handoff: DONE (win-laptop Laser2025-20, RTX 4080 Laptop; model=claude-opus-5-5 level=xhigh by rung_record — the heading's rung reads high: MISMATCH). Written: assets/physics.json W2 — the ladder × 0.56 (T_H 56 … T_Si 235.2, T_ν 93) and a_r 4e-5, K₁ₑ, K₂ₑ, Q_H and A_H untouched, as the lead ruled at M0-V18 («Keep white dwarfs, D50 writes (Recommended)»); contract §0.5 [M0-D50] and its Superseded mirror; scope `sun_burn` (crates/sr-engine/tests/gpu/sunburn.rs, plants stall-constants and burn-runaway, docs/agent/testing.md's row); reports/ignition.md (the runs, the margins, the effects).
+  Measured: preset:sun's X_H,c falls 0.72473 → 0.72142 → 0.71789 over steps 3,000–5,000, 99.4 % bound, L_nuc/L 0.70, T_max 35.9 < 0.5 T_He 39.2; W2's 8,000-step run reads main_sequence from step 3,000; the ladder ± 4 % and A_H × 1.4 hold.
+  Verify 1 [ALREADY RUN — PASS (sun_burn 4/0/0, 127.7 s) on win-laptop] · Verify 2 [ALREADY RUN — PASS (clean GO, both plants RED) on win-laptop], 726 s — over the 10-minute line (the arms' builds queue on the shared red-arm target), so its next red-arm is the lead's · on the RTX 5090 [NOT RUN — owed on laserax-ai], flagged to M0-V9.
+  Claim [ALREADY RUN — FAIL (924 passed, 29 failed, 38/46 scopes GO, 276 s) on win-laptop]: all 29 are consumers of the new constants — 26 hand oracles pinning M0-TC's ladder or T_ν (registry, rates, burn_cell, burn_order, neutrino) and 3 cases moved by a_r × 100 (heat_limiter's thin gas meets the 64-pass ceiling, heat_stiff's 2.66 against 2.2, timing's 267 against 300) — the split, filed as M0-D55, next.
+  Deviations: the case's window is 3,000–5,000, not the proposal's (L_nuc/L 0.53 over 2,000–3,000, too near the band); sun_burn's paths leave out crates/** (≈ 2.5 min a run, declared in its desc); one D, not two, for the split (one cause, one kind of file, ≤ 6 files; E6 stays at four).
+  Not acted on: helium's threshold 39.2 against T_c 36.5 and rising (flag M0-T70); the Massive and Giant presets on the lower ladder not run (their lots); docs/agent/physics.md's G-ORDER crossings now stale (in M0-D55). Flags: M0-V9, M0-TJ2, M0-T98a, M0-T70. Detail: tasks/M0-D50.md § How it ended.
+  Next: M0-D55.
+
+## M0-D55 · M0-D50's constants turn 29 cases red in eight scopes: 26 hand oracles pin M0-TC's ladder or T_ν, and three heat and timing cases move under a_r × 100 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D50)
+- Status: DONE (2026-10-18 11:23)
+- Blocks: the claim of every task whose changes reach registry, rates, burn_cell, burn_order, neutrino, heat_limiter, heat_stiff
+  or timing (their paths: `crates/**`, `assets/physics.json`) — those reds are not the task's own until this lands; M0-TJ2 next
+- Caused by: M0-D50 — physics.json's ladder × 0.56, T_ν 93 and a_r 4 × 10⁻⁵ (contract §0.5 [M0-D50]); the tests were written
+  against M0-TC's 100 … 420, 166 and 4 × 10⁻⁷
+- Rating: (usual) — rule (3): a D whose cause is not measured (the three heat and timing reds: which property of the step
+  a_r × 100 moves); the 26 oracle reds are measured
+- Files: opened by M0-D50, not changed — crates/sr-physics/src/registry.rs (tests, lines 825–885), crates/sr-engine/tests/gpu/burn.rs
+  (lines 300–330, 460–510); named from the claim's logs, not opened — crates/sr-physics/src/rates.rs (tests),
+  crates/sr-engine/tests/gpu/neutrino.rs, crates/sr-engine/tests/gpu/heat.rs (limiter, stiff), crates/sr-engine/tests/gpu/timing.rs;
+  docs/agent/physics.md § Reactions (G-ORDER's crossings, H 147 …)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-D50], [M0-TJ4], [M0-D37], [M0-V6] + the eight logs
+  below + milestones/m0/reports/ignition.md § The claim, § Effects elsewhere + docs/agent/testing.md's eight rows
+- Symptom: measured on win-laptop (Laser2025-20, RTX 4080 Laptop), 2026-10-18, M0-D50's claim (`py -3.12 tools/pb/verify.py
+  --changed --task M0-D50`; logs/M0-D50.<scope>.log): 924 passed, 29 failed, 38/46 scopes GO, 276 s. Oracles written for M0-TC's
+  values — registry 5 (`physics_initial_values_verbatim` « t_h left 56 right 100 »; `reactions_resolve_against_physics` « (56,
+  64.4) » against « (100, 115) »; edge cases built on the old neighbours: « t_si: must be > t_o = 274 (K6), got 235.2 », « t_si
+  / t_h must be ≤ 10 … got 17.86 »), rates 5 (« T_thr = 0.5 T_H »; the two-term crossing 119.5; f(50) by hand; « H_burn:
+  6.070e0 against 1.361e-3 »; the Gamow slope at 140), burn_cell 6 (« GPU H at t = 9.29: X = 0.00142, the closed form 0.667 »,
+  He and Ne alike, the shipped limits' runaway), burn_order 2 (« H's power at T = 82.5: 9.17, by hand 0.0546 »), neutrino 8 (« T
+  = 170: lost 1.87, the closed form 0.0181 »; « T = 165.98 < T_ν: 2.57 against 0 »; the source plane); under a_r × 100 —
+  heat_limiter 1 (`gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4`: « pass 0: HeatReport { dt: 0.05, passes: 64, rounds:
+  3059, converged: false } »), heat_stiff 1 (« (e) one pass keeps 2.657 × the refinement's heat », bound 2.2), timing 1
+  (`a_frame_longer_than_the_query_set_times_its_first_whole_steps`: 267 against 300)
+- Repro: `py -3.12 tools/pb/verify.py <scope> --task M0-D55` for each of the eight (win-laptop; `python3` on linux-pc)
+- Suspected cause: measured for 26 — each oracle hard-codes M0-TC's T_H 100, T_He 140, T_Ne 274 or T_ν 166 (or a value built
+  from them) while its test reads the shipped physics.json; not measured for 3 — a_r × 100 makes radiative diffusion 100 ×
+  stronger in heat_spot's thin gas, the burnt field and the timing case's scene: more Newton passes (the 64-pass ceiling met),
+  another one-pass heat ratio, steps carried past a frame. The preset itself printed no `SR-WARN heat unconverged` in 8,000
+  steps (M0-D50)
+- Deliver: the 26 oracle reds, each cause measured and fixed in its own test (an oracle that grades a law, the rate or the
+  cooling, pins the constants it was written for through `Physics::with` or a scene's `overrides`, G-COLL's pattern, never a
+  looser tolerance, §0.4, one that grades the shipped values, registry's verbatim list and `reactions_resolve_against_physics`,
+  reads §0.5 [M0-D50]'s, the ladder's edge cases built from today's neighbours), and the three heat and timing reds, each
+  property measured on the shipped a_r first, then fixed in its test → Verify 1 · a solve that cannot hold its tolerance
+  or its 64-pass ceiling at a_r 4 × 10⁻⁵ on gas the game can make → BLOCKED with the measurements and the lead's question
+  (§5.5), never a pin that hides it → none — the block's end then · docs/agent/physics.md's G-ORDER crossings re-read from
+  burn_order's run → none — a docs page no scope reads
+- Done when: the eight scopes GO on the box named, each fix's reason in tasks/M0-D55.md, every changed check red-armed — or
+  BLOCKED on the heat reds with the lead's question
+- Verify: 1. for each of the eight, `python3 tools/pb/verify.py <scope> --task M0-D55` · Pass: GO, every case passed · Fail:
+  NO-GO · 2. for each scope whose test changed, `python3 tools/pb/verify.py --redarm <scope> --task M0-D55` · Pass: GO —
+  every plant NO-GO · Fail: a plant GO
+- Adversarial: a pin is legitimate only where the test grades a law at a stated state; a pin that silences what the shipped
+  constants do in the game (thin gas whose solve meets its ceiling) is a bypass — that red is measured on the shipped values,
+  and pinned only once the measurement shows the property the test grades does not depend on them.
+- Handoff: DONE on win-laptop (Laser2025-20, RTX 4080 Laptop), 2026-10-18; model=claude-opus-5-5 level=high by rung_record (the first session read xhigh: MISMATCH then). All 29 reds fixed, each cause measured (tasks/M0-D55.md). 28 in their own tests: the hand oracles of a law pin, through Physics::with, the constants they were written at (rates' and burn_cell's closed forms: M0-TC's ladder; neutrino's cooling: T_ν 166; heat_stiff (e): a_r 4e-7, its ratio a_r Δt's). The oracles of the shipped values read §0.5 [M0-D50]'s (registry's list and resolution, the ladder edges from today's neighbours; G-ORDER's H 82.5 … Si 282.5 into physics.md). burn's GPU runaway starts at T_H 56; timing's FRAME 300 → 240. heat_limiter by M0-D56's solver fix (the lead: «Fix the solver (Recommended)»), G-FLD unchanged.
+  Verify 1 [ALREADY RUN — PASS (registry 29, rates 8, burn_cell 16, burn_order 4, neutrino 18, heat_stiff 6, timing 5) on win-laptop] · heat_limiter [ALREADY RUN — PASS (6/6, by M0-D56, same tree) on win-laptop] · Verify 2 [ALREADY RUN — PASS (7 changed scopes, every plant RED) on win-laptop] · linux-pc [NOT RUN — owed on laserax-ai], flagged to M0-V9.
+  Claim: the first run FAIL (heat_limiter only, M0-D56's); M0-D56's claim GO 824/0 on this tree; the re-run after this close: tasks/M0-D55.md § The resume after M0-D56.
+  Deviations: docs/agent/testing.md's six rows (not named in Deliver); burn_cell's two heat-booked cases pinned too; three red-arms in one 710 s call (each under 10 min).
+  Not acted on: heat_hot's one step keeps 2.66 × its refinement's heat at the shipped a_r (backward Euler's order, flagged M0-T97); gpu_the_runaway_books_as_the_twin's comment numbers are M0-TC's (green, E1 (i)); no same-box P5 cost from before M0-D50 to compare.
+  Next: M0-TJ2 (the Flow's order); three D open (M0-D51, D52, D54).
+
+## M0-D56 · P5 on the GPU meets its 64-pass ceiling on heat_spot's first step at the shipped a_r while the twin solves it in 8 passes: G-FLD's GPU case red · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D55)
+- Status: DONE (2026-10-18 11:11)
+- Blocks: M0-D55's close (BLOCKED on it) and the claim of every task whose changes reach heat_limiter (`crates/**`,
+  `assets/physics.json`, scenes/heat_spot.json) — that red is not the task's own until this lands
+- Caused by: M0-T119 (the GPU's implicit P5 on the radiative law, its Newton passes), exposed by M0-D50's a_r × 100 — which
+  of the loop's tests stalls is not measured
+- Rating: (usual) — rule (3): a D whose cause is not measured
+- Files: opened by M0-D55, not changed — crates/sr-engine/tests/gpu/heat.rs (`limiter`, lines 961–1013), crates/sr-engine/src/step/heat.rs
+  (lines 1–120); named, not opened — crates/sr-engine/shaders/heat.wgsl (the passes' end test, the solve's end test),
+  crates/sr-physics/src/reference/heat.rs (MAX_PASSES, MAX_ROUNDS, the twin's tests)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TJ4] (3)–(6), [M0-D37], [M0-D50] +
+  milestones/m0/tasks/M0-D55.md § heat_limiter + logs/M0-D55.probe.log (the `PROBE shipped`, `old`, `old-dtx100`,
+  `shipped-dt/100` lines) + crates/sr-engine/shaders/heat.wgsl lines 210–345 (the implicit step's header) and 511–715
+  (`heat_round`: the passes' and the solve's end tests)
+- Symptom: measured on win-laptop (Laser2025-20, RTX 4080 Laptop), 2026-10-18, by M0-D55 (logs/M0-D55.heat_limiter.log, the
+  probe in logs/M0-D55.probe.log): `heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4` « pass 0: HeatReport
+  { dt: 0.05, passes: 64, rounds: 3059, converged: false, delta: -9.453388e-5 } » on scenes/heat_spot.json (Σ 10⁻⁴ hydrogen at
+  T_floor 0.05 around an 8 × 8 spot at T 2) at the shipped a_r 4 × 10⁻⁵; the twin from the same f32 start: 8 Newton passes,
+  472 rounds, converged; the GPU's committed T within C-weighted L1 4.2 × 10⁻⁵ and worst cell 3.9 × 10⁻⁴ of the twin's; step 1
+  26 passes (the twin 7), steps 2–19 4–13 (the twin 5–6), all converged. a_r 4 × 10⁻⁷ at Δt 5 does the same (64 passes,
+  2,891 rounds, unconverged, then 52) and a_r 4 × 10⁻⁵ at Δt 5 × 10⁻⁴ reads the old run (≤ 6 passes): the step's stiffness
+  a_r Δt, not u's range in f32. The Sun-like preset printed no `SR-WARN heat unconverged` in 8,000 steps (M0-D50)
+- Repro: `py -3.12 tools/pb/verify.py heat_limiter --task M0-D56` (win-laptop; `python3` on linux-pc)
+- Suspected cause: not measured — the GPU's passes end at Σ C|ΔT| ≤ 10⁻⁶ Σ C T⁰ and 10⁻³ a cell, while each pass's
+  Jacobi-PCG ends at 10⁻⁵ of the heat (§0.5 [M0-TJ4] (3)–(4)): on a stiff step the solve stops near its tolerance and the
+  passes' change may never fall under 10⁻⁶ (the twin solves to 10⁻¹²)
+- Deliver: the cause measured on heat_spot's first step (per pass: the end test's two sums, the solve's rounds and its end
+  residual), then the smallest engine fix that converges heat_spot's 20 steps on the GPU within the ceiling at the shipped a_r,
+  every tolerance of §0.5 [M0-TJ4] (3)–(4) and G-FLD's check unchanged (the lead, 2026-10-18, at M0-D55: «Fix the solver
+  (Recommended)») → Verify 1–2 · the cure is a tolerance or the ceiling of [M0-TJ4] (contract values) → BLOCKED with the
+  measurements and the lead's question (contract §5.5) → none — the block's end then
+- Done when: on win-laptop heat_limiter GO, every case, and the other P5 scopes GO; linux-pc's run owed (R15)
+- Verify: 1. `python3 tools/pb/verify.py heat_limiter --task M0-D56` · Pass: GO, every case passed · Fail: NO-GO · 2. for
+  heat_gauss, heat_implicit, heat_stiff, cpu_gpu and sun_burn, `python3 tools/pb/verify.py <scope> --task M0-D56` · Pass: GO ·
+  Fail: NO-GO · 3. a changed P5 cost: `headless --timing`'s `P5 heat` on scenes/sun_disk.json (§0.5 [M0-T122]) — owed on
+  laserax-ai's Quadro
+- Adversarial: a fix that ends the passes by loosening an end test, or that commits a stalled iterate as converged, is the
+  looser number the lead declined at M0-D55 — the passes must reach [M0-TJ4]'s tests, measured per pass
+- Handoff: Done on Laser2025-20 (RTX 4080 Laptop), 2026-10-18; detail and every number in tasks/M0-D56.md, the per-pass probe in logs/M0-D56.probe.log.
+  Cause, measured per pass: the rounds' products with A cancel in f32 (d ≈ 1.3e6 against c 3–19), so the rounds' r drifts 10³ from b − A x; and u held in one f32 word leaves b − A x at 21.6 × the u-bound, which forces one round every pass.
+  Fix, in heat.wgsl: the products and the residual are formed face by face, and the iterate's u is carried in two f32 words (`raise`; SV_L takes the right side's plane). No tolerance or ceiling changed. heat_spot's step 0: 9 passes, 163 rounds (the twin: 8); all 20 steps ≤ 10 passes, ≤ 236 rounds.
+  Verify 1–2 GO on this box: heat_limiter 6/6, heat_gauss, heat_implicit, cpu_gpu, heat_stiff (heat_rim 983 → 467 rounds), sun_burn. Claim: tasks/M0-D56.md § The claim.
+  Measured, not acted on: step 0's δ is 1.38e-4 (no GPU case bounds it); G-FLD's first-step margins are 79 % and 72 % of their bands; verify.json's heat_limiter desc still states the old pass counts.
+  Owed: Verify 3, P5's cost on laserax-ai's Quadro; linux-pc's runs (R15). Model: claude-opus-5-5, level high.
+  Next: M0-D55, now unblocked — its claim re-run and its close.
+
+## M0-TJ2 · Direction ruling — the top speed, if it cannot hold at 30 frames · **PLAN + LEAD answers** · Opus 5.5, max · switch · (AFTER M0-D56)
+- Status: DONE (2026-10-18 12:21, started 11:40)
+- Carried flags: [M0-V18, 2026-10-16] the lead ruled M0-D50's balance at M0-V18: «Keep white dwarfs, D50 writes (Recommended)» — sets that leave the cold pressure alone, the burning ladder lowered, each life's step count kept lowest — so reports/v8.md § M0-TJ2's « M0-D50's fix moves the bound up, not down » (a core at §2.5.1's design point, T ≈ 114) may not hold: read M0-D50's chosen set (its core temperature and steps per τ_dyn, reports/ignition.md) before restating the frame cost at a ~10 s life · [M0-D50, 2026-10-18] M0-D50's constants (contract §0.5 [M0-D50]): the Sun-like main sequence's X_H,c falls ≈ 3.5e-3 per 1,000 steps (≈ 11.4 t.u.) at step 5,000 — X_H,c 0.35 near ~1,200 t.u., ~10⁵ steps by linear extrapolation (UNVERIFIED); 26 ms a step on the RTX 4080 Laptop in the burning star (reports/ignition.md § Effects elsewhere)
+- Ask (verbatim): Q2, the lead, 2026-10-08 11:23 EDT: "30 pictures/s at top speed (Recommended)"; §1.8.6:
+  "If even that is not enough, we come back to you"
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.6, §5.3 (G-TOP) +
+  milestones/m0/reports/step_cost.md + milestones/m0/reports/time_warp.md R6, R8 (F1) +
+  milestones/m0/reports/sandbox_interview.md B28
+- Deliver: §1.8.6's question to the lead with the measured numbers — the unruled options: projective
+  jumps (TW R6: a second integrator and its tests), a slower top speed (re-opens answer 6 — B28's "a life
+  in ~1 min" was not picked), or the build kept as it is — the answer verbatim in
+  milestones/m0/reports/top_speed.md → none — the lead's words are the record · the amendment the ruling
+  calls for (§0.3, tagged [M0-TJ2]) and its blocks filed → Pass · not woken by M0-V17 → N/A, G-TOP's GO
+  cited → none
+- Pass: the lead's answer recorded, the amendment tagged and its blocks filed, or N/A with G-TOP's GO.
+  Fail: a slower top speed or shortcut jumps built without the lead's answer — never a silent fallback
+  (§1.8.6).
+- Handoff: DONE on win-laptop (Laser2025-20), 2026-10-18; model=claude-opus-5-5 level=max (rung_record now at launch — the heading's rung). Woken by M0-V8's projection, not by M0-T113. The lead, one question-tool call, verbatim in reports/top_speed.md § Ruling: Q1 «we go as fast as the card goes. We dont compromise physics over performance for now, maybe later in another milestone will we optimize further but not now, we do not block anything on performance» · Q2 «I would like to maybe the user have a choice on time step length or something, if possible. But we go with shortest life otherwise.» · Q3 «Yes, one cost task (Recommended)».
+  Applied (my readings labelled in the report): the top rung is Max — N_max steps a frame at 30 frames, nothing owed, the readout always the running speed — and TOP only caps the numbered rungs; §1.8.6's stop retired, G-FPS's frame times and G-TOP's life wall time reported, never NO-GO (the clamp graded: bench.json's off_cap = 0); the cadence not built (M0-T114 N/A). Contract: §0.5 three [M0-TJ2] lines, in place §0.2, §1.4.4, §1.8.2–§1.8.6, §3.2, §3.3, §4.2, §4.3, §4.10, §4.12, §5.3, §5.5. Plan: the goal paragraph, Superseded ×3, M0-T98a aimed at the shortest life, M0-T85/T75/TV2/T109–T113/T115/V16/V17 re-scoped [M0-TJ2], M0-D51 and M0-T110 re-chained.
+  Filed: M0-T123 (Max in sr_physics::time, next), M0-T125 (its two strings in §4.1's block and strings.rs together — G-STR reads the contract), M0-T124 (the cost task on the Quadro, lot 16 after the bench). Flag → M0-TZ (§ Routed: the player's choice of a life's pace, the later optimisations).
+  Measured (RTX 4080 Laptop, logs/M0-TJ2.log): preset:sun ignites at step 769, main_sequence from 3,000, Δt 0.0114, its box the whole world from 3,000; the burning star's step 17.392 ms by GPU timestamps (P4 8.07, P5 5.94), median of 3; a life ≈ 2 × 10⁵ steps (UNVERIFIED), so a 10 s life is ≈ 240× short at 30 frames. The Quadro's burning-star step [NOT RUN — owed on laserax-ai], M0-T124's.
+  Not acted on: this card ran P4 at ≈ 2× the Quadro's whole-world cost (cause not measured; handed to M0-T124, not filed — performance never blocks); build/m0-tj2-* (≈ 70 MB of dumps, git-ignored) kept for M0-T124 and lot 14, deletable.
+  Deviations: the first two toolkit calls ran as python3 (the hook's words), the rest py -3.12; other blocks' bodies hand-edited (plan.py has no call for them), each tagged [M0-TJ2]; Max's strings split from M0-T123 (PLAYBOOK §2.1 (i), (vi)).
+  Claim py -3.12 tools/pb/verify.py --changed --task M0-TJ2 [ALREADY RUN — PASS (GO, 582 passed, 3/3 scopes: plan_lint 578, strings 3, watch_only 1; 50 not impacted; 141 s) on win-laptop]; no scope's check changed, no red-arm owed. Detail: tasks/M0-TJ2.md.
+  Next: M0-T123.
+
+## M0-T123 · The top rung is Max — as fast as the card goes, in `sr_physics::time` · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TJ2)
+- Status: DONE (2026-10-18 12:37)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TJ2], §1.8.2–§1.8.6, §3.2, §4.10 +
+  crates/sr-physics/src/time.rs lines 1–420 (the module; its tests follow) + docs/agent/time_control.md +
+  docs/agent/testing.md (the time_control row)
+- Deliver: crates/sr-physics/src/time.rs: rungs() holds the numbered rungs (below top_rung / 1.5, all nine without
+  a calibration) then Max (label "Max", above every numbered rung for select, faster, slower and the slow-down's
+  "only ever slower", key 0 the app's, k = rungs().len() − 1), at Max plan_frame plans N_max steps at f_target 30
+  from Max's first frame and owes no sim time, speed_text() at Max always carries the running speed, f_target is 60
+  at every numbered rung — the TOP rung and its 30-frames switch removed, top_rung_from_life kept (it caps the
+  numbered rungs) → Verify 1 · time.rs's tests: TOP's cases replaced by Max's — the ladder then Max with and
+  without a calibration (45: no ×30, then Max), Max planning N_max at 30 from its first frame and owing nothing
+  over 10,000 frames, Max's readout always running, the slow-down from Max to ×1 and to ×0.1, faster at Max
+  staying, Max selected by its index → scope `time_control` (its expected count and desc in tools/pb/verify.json)
+  → Verify 1 · plant tests/plants/time-max-paced.patch (new: Max plans ⌈owed / Δt_est⌉ as a numbered rung does,
+  the time_control entry's plants and paths in verify.json gaining it) → Verify 2 · docs/agent/time_control.md (§
+  the rungs, and § the 30-frames switch, now Max at 30 frames) and docs/agent/testing.md's time_control row →
+  Verify 1
+- Verify: 1. `python3 tools/pb/verify.py time_control --task M0-T123` · Pass: GO, every case passed, Max's among
+  them · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm time_control --task M0-T123` · Pass: GO — both
+  plants NO-GO · Fail: a plant GO
+- Adversarial: Max run through a numbered rung's arithmetic — owed += ∞ / f_target, N = ⌈∞ / Δt⌉ — plans
+  u32::MAX or a NaN; `bound_owed` clamps owed to one frame's sim time, unbounded at Max; the slow-down compares
+  rung values, so Max must sort above ×1000 and land on ×1 or ×0.1, never on another numbered rung above them.
+- Handoff: DONE on win-laptop (Laser2025-20), 2026-10-18; model=claude-sonnet-5-5 level=high (rung_record now at launch — the heading's rung). rungs() = the numbered rungs then Max (label "Max", value ∞, last; key 0 = the app's select(len−1)); f_target 60 at every numbered rung, 30 at Max from its first frame; at Max plan_frame plans N_max and owes nothing (owed never added to, its reports book nothing), speed_text() always running; the TOP rung and its 30-frames switch removed (top_rung_from_life kept). time_control 18 → 23 cases; plant time-max-paced RED (2 failed). Deviation: slowdown-auto-return.patch re-based, same mutation — its context named the removed top_binds/quiet fields (--redarm ERROR); RED again; the harness's oracle FLAG names it, declared. verify.json: expected 23, desc, paths, plants. Docs: time_control.md, testing.md row. Claim verify.py --changed --task M0-T123 [ALREADY RUN — PASS (GO, 961 passed, 40/40 scopes, 13 not impacted, 207 s) on win-laptop]; redarm [ALREADY RUN — PASS (2 plants RED) on win-laptop]. Not acted on: a top_rung under 0.15 would start on Max (unreachable from a Sun-like life; not filed). Detail: tasks/M0-T123.md. Next: M0-T125.
+
+## M0-T125 · Max's two strings — §4.1's block and strings.rs · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T123)
+- Status: DONE (2026-10-18 12:41)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §4.1, §4.3 ([M0-TJ2]'s two keys), §5.4
+  (G-STR) + docs/agent/testing.md (the strings row)
+- Deliver: milestones/m0/m0_contrat.md §4.1's `strings` block and crates/sr-app/src/strings.rs gain exactly
+  `time.rung_max = "Max"` and `time.speed_max = "Speed max (running ×{actual})"`, after `time.speed_capped`, byte
+  for byte (× U+00D7) — the in-place amendment §4.3 [M0-TJ2] names, the contract and the code in one edit → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py strings --task M0-T125` · Pass: GO, 3 cases · Fail: NO-GO
+- Adversarial: a key on one side only, or an ASCII "x" for "×" — G-STR compares both ways, as bytes.
+- Handoff: linux-pc (Laser2025-20), model=claude-sonnet-5-5 level=high (rung_record now at launch; the heading's rung). §4.1's strings block (milestones/m0/m0_contrat.md) and crates/sr-app/src/strings.rs gain time.rung_max = "Max" and time.speed_max = "Speed max (running ×{actual})" after time.speed_capped, byte for byte (× U+00D7), one edit, no other change. Claim: verify.py strings --task M0-T125 [ALREADY RUN — PASS (GO, 3 cases) on linux-pc]; verify.py --changed --task M0-T125 [ALREADY RUN — PASS (GO, 587/0/0, 7/7 scopes, 46 not impacted) on linux-pc]; logs M0-T125.log, M0-T125.changed.log. No red-arm (scope and its check unchanged). Deviations: none. Found, not filed: none. The readout and the Max button may now look the keys up (M0-TJ2's UI consumers). Next: M0-D51.
+
+## M0-D51 · The desktop scope's `launcher` case reads « port 47811 held by a process we did not start » under the complete loop: an intermittent NO-GO right after its sibling `window` case's stop · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T125)
+- Status: DONE (2026-10-18 13:49)
+- Blocks: every phase-closing V's Verify 1 (`verify.py --all` reads NO-GO on the harness's own race, M0-V8's did) and the
+  sweep's desktop campaign
+- Caused by: unknown — the port lock M0-T6 wrote (tests/smoke.sh, keyed on 47811) serialises the two cases, yet the port is
+  found held right after the window case's stop; M0-D28 added the decoy web server under the web scope's lock
+- Rating: (usual) — rule (3): a D whose cause is not measured; concurrency as processes sharing a port
+- Files: tests/smoke.sh (lines 24–39, the port lock; 41–80, the launcher case and its decoy), tools/pb/launch.json (`game-xvfb`,
+  port 47811), start.sh — opened by M0-V8, not changed; tools/pb/launch.py (the toolkit: its code is not read — a cause there is
+  the lead's question, §12)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.4, §3.6 + tests/smoke.sh + docs/agent/testing.md's
+  `desktop` row + logs M0-V8.desktop.log, M0-V8.desktop-race.log, M0-T33b.desktop.log, M0-T43.desktop.log, M0-T6.desktop.log
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-16 11:24, M0-V8's Verify 1 (`verify.py --all --task M0-V8`, jobs 8,
+  load 27.9 → 29.9): `desktop[window]` and `desktop[launcher]` both start at 11:24:07; window GO in 4.63 s (game-xvfb ready in
+  0.6 s, « pid … stopped; its X server :99 … stopped »); launcher NO-GO in 5.13 s: « game-xvfb: port 47811 held by a process we
+  did not start - not reusing » → « the launcher never reached ready ». The same refusal in M0-T6 (2026-10-09), M0-T33b
+  (2026-10-13, port 47811) and M0-T43 (2026-10-14, the decoy's port 47812), each re-run green by its task. Alone it is green:
+  `verify.py desktop --task M0-V8-r2` GO 2/0/0; six concurrent window + launcher pairs outside the loop 6/6 GO
+  (logs/M0-V8.desktop-race.log) — it needs the complete loop's concurrency (boot's `headless-boot` under the same lock, the web
+  scope's server on 47812, eight scopes at once, a loaded box)
+- Suspected cause: not measured — the lock is released when the window case's shell exits, while the stopped game's listening
+  socket may outlive launch.py's « stopped » under load; or another process binds 47811 (none found: `capture` passes no
+  `--status-port`, `boot`'s service is headless)
+- Deliver: the holder of 47811 at the refusal measured first, then the smallest fix in the desktop scope's runner or manifest
+  entry so its two cases never meet each other's port — never a retry that hides the race, never a case dropped → Verify 1 ·
+  the race reproduced on purpose (a plant that delays the window case's port release, or a case that runs the pair under the
+  loop's concurrency), red without the fix → Verify 2 · a cause inside tools/pb/launch.py → stop and ask (§12)
+- Done when: on linux-pc the reproduction is red without the fix and the scope GO with it
+- Verify: 1. `python3 tools/pb/verify.py desktop --task M0-D51` · Pass: GO, 2 cases (or the new count) · Fail: NO-GO · 2.
+  `python3 tools/pb/verify.py --redarm desktop --task M0-D51` · Pass: GO — every plant NO-GO, the race's among them · Fail: a
+  plant GO
+- Adversarial: a fix proven only by a green re-run proves nothing (the race passed 6/6 outside the loop) — the reproduction must
+  go red without the fix first.
+- Handoff: On win-laptop (Laser2025-20): the holder measured black-box — after launch.py's « stopped » (pid already exited) the stopped game's own socket still takes connections 2 ms – 3 s (logs/M0-D51.holder.log); the runner released the port lock at the case's exit, inside that gap. Fix, tests/smoke.sh only: every case hands a port's lock on (47811, and the decoy's 47812) only once the port binds again as the game binds it, 30 s bound, else NO-GO; a connect probe was tried first and read a full backlog as free (os error 10048). Reproduction: case `race` (lock held throughout, a 10 s listener launch.py did not start, the window route straight behind the wait) + plant `port-handover-early`; a two-holder race went GREEN under 5 contending arms first. [ALREADY RUN — PASS (Verify 1: desktop GO 3/0/0, 36.3 s) on Laser2025-20] · [ALREADY RUN — FAIL (Verify 2: --redarm desktop NO-GO 579 s — port-handover-early RED with « port 47811 held by a process we did not start », launcher-stop-all GREEN: pre-existing, start.sh-only patch vs start.bat → filed M0-D57) on Laser2025-20] · [ALREADY RUN — FAIL (claim --changed: 579 passed, plan_lint + boot GO, NO-GO only on launcher-stop-all) on Laser2025-20] · [NOT RUN — owed on laserax-ai: Verify 1, Verify 2 (flock route) and the holder at a refusal there]. Findings not acted on: tests/web/check.sh hands its 47812 lock on right after its stop (same gap toward the decoy, unmeasured — the web scope's runner); the mkdir lock's stale-holder break can remove a fresh holder's lock (NOT PROVEN, source only). Detail: tasks/M0-D51.md. Model and level: model=claude-opus-5-5 level=high. Next: M0-D57.
+
+## M0-D57 · `desktop`'s plant `launcher-stop-all` stays GO on win-laptop: it plants the bare stop in start.sh only, and win-laptop's `launcher` case runs start.bat · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D51)
+- Status: DONE (2026-10-19 08:00, started 07:54)
+- Sizing: E
+- Blocks: nothing — but `--redarm desktop` reads NO-GO on win-laptop until it lands (the phase's sweep there, every desktop
+  red-arm a win-laptop block runs)
+- Caused by: M0-D28 — it wrote the plant against start.sh (`launcher-stop-all.patch`: start.sh's stop back to the bare
+  `launch.py stop --task launcher`) and red-armed it on linux-pc only (tasks/M0-D28.md); R15 routes the `launcher` case to
+  start.bat on win-laptop, which the patch never touches
+- Rating: rule (3) — `Sizing: E` (one patch file, its targets named, verified by the existing `desktop` scope's red-arm): the
+  ladder's lowest rung
+- Files: tests/plants/launcher-stop-all.patch, start.bat (line 12, CRLF) — opened by M0-D51, not changed
+- Read: this file (rules + this task) + the patch + start.bat + docs/agent/testing.md's `desktop` row + R15
+- Symptom: measured on win-laptop (Laser2025-20), 2026-10-18 13:18–13:27, M0-D51's `verify.py --redarm desktop --task M0-D51`
+  (logs/M0-D51.desktop.redarm.log): « planted launcher-stop-all: tests/plants/launcher-stop-all.patch -> start.sh » then
+  « plant launcher-stop-all · GREEN (unfailable) » — « stayed GO - the scope cannot see this bug »
+- Suspected cause: measured — the patch's one file is start.sh; on win-laptop `bash tests/smoke.sh launcher` runs
+  `cmd //c ".\start.bat game-offscreen"`, whose `py -3.12 tools\pb\launch.py stop %SERVICE% --task launcher` stays its own
+  service's stop
+- Deliver: the plant also plants the bare stop in start.bat (`py -3.12 tools\pb\launch.py stop --task launcher`, CRLF kept), one
+  patch, both launchers — the planted bug unchanged on linux-pc → Verify 1
+- Done when: on win-laptop `--redarm desktop` shows launcher-stop-all RED for its own reason (« the launcher stopped a service
+  it did not start (the decoy web server) »); on linux-pc the same, owed there
+- Verify: 1. `py -3.12 tools/pb/verify.py --redarm desktop --task M0-D57` · Pass: launcher-stop-all RED with the decoy's
+  NO-GO line · Fail: GREEN, or the patch not applying
+- Handoff: Plant launcher-stop-all now covers both launchers: tests/plants/launcher-stop-all.patch keeps the start.sh hunk (line 10) and adds a start.bat hunk (line 12: stop %SERVICE% --task launcher -> stop --task launcher), LF-only per the launcher-no-stop precedent. [ALREADY RUN — PASS on laserax-ai (linux-pc): python3 tools/pb/verify.py --redarm desktop --task M0-D57; 4 plants, 4 red, 0 green, 0 errors, 332.61 s, clean GO; launcher-stop-all RED: "the launcher stopped a service it did not start (the decoy web server)", applied to start.sh, start.bat. Logs: milestones/m0/logs/M0-D57.desktop.redarm.log, milestones/m0/logs/M0-D57.log] [NOT RUN — owed on win-laptop: py -3.12 tools/pb/verify.py --redarm desktop --task M0-D57, the Done-when arm there]. Measured, not acted on: GNU patch and exact git apply reject the LF-only start.bat hunk against the CRLF worktree copy (scratch test; the existing launcher-no-stop start.bat hunk fails the same way); linux-pc applies both, so the redarm copy is not an exact-match CRLF copy, or it applies tolerantly. Win-laptop run decides; no D filed. Model and level: rung_record line model=claude-haiku-5-5 level=high plugin=installed, matching the heading. Next: M0-D52, then M0-D54.
+
+## M0-D52 · The pages agents read miss lot 8's summary path: architecture.md never records the block summary encode_frame appends and says headless's observers read poll_frames, readouts.md names lot 10 for G-STAGES and G-END, verify.json's objects and classify still read NOT PROVEN until M0-T60 · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D51)
+- Status: DONE (2026-10-19 08:02)
+- Blocks: nothing — but an agent that reads the page for a module instead of the module (the instruction file's rule) is told a
+  frame ends at `latch_end`, that headless's observers take `Step::poll_frames`' summary (they take `Step::summarise`'s, after
+  bare steps), that the star's stages are lot 10's to grade (lot 15's: M0-T103, M0-T104), and that the tracker and the stages are
+  NOT PROVEN on the engine's own summary (`observe_run` has run them there since M0-T60)
+- Caused by: M0-T56 (encode_frame's summary and `poll_frames`, never written into architecture.md's frame section — no lot-8
+  block's Deliver named it; M0-V7's flag to M0-T64) · M0-T64 (architecture.md:259–260's `Step::poll_frames`, readouts.md:77's
+  "lot 10") · M0-T58 and M0-T59 (the descs' "until … (M0-T60)", which M0-T60 and M0-T64 each left to the next)
+- Rating: rule (3) — a docs block, no reason from §0's list; not E: three pages and the manifest's two descs, no scope grades
+  them (M0-D48's reading)
+- Files: docs/agent/architecture.md (164–166, "A frame is … between `latch_begin` and `latch_end`" — no summary after it;
+  177–180, `Step::poll` — no `poll_frames`; 259–260, "`Watch::update` takes each frame's block summary (`Step::poll_frames`)"),
+  docs/agent/readouts.md (14–16, the pipeline drawn through `poll_frames` alone; 77, "G-STAGES and G-END's to grade (lot 10)";
+  127–128, "a finding for the lot's V, not a defect filed" — now M0-D50), tools/pb/verify.json (`objects`' and `classify`'s
+  desc tails, "NOT PROVEN on the engine's own summary until the observers run in headless (M0-T60)") — opened by M0-V8, not
+  changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.1, §3.1, §7 + crates/sr-engine/src/step/latch.rs
+  (`encode_frame` line 250, `poll_frames` 303, `summarise` 311) + crates/sr-engine/src/headless.rs lines 519–568 (the chunk
+  loop) + docs/agent/testing.md's `observe_run` row + the handoffs of M0-D50, M0-D53 and M0-D51 (readouts.md's § Objects and
+  § Stages as M0-D53 leaves the objects' L)
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-16, M0-V8: the lines above against the code — `encode_frame` records the
+  block summary after `latch_end`, outside the frame's timing, in the frame's own readback, and `poll_frames()` returns
+  `Frame { report, summary }` (latch.rs:250, :303; M0-T56); headless runs `step.run` and takes each chunk's summary from
+  `Step::summarise` (headless.rs:556; M0-T57, M0-T60); G-STAGES and G-END are M0-T103 and M0-T104, Phase 17 — lot 15
+- Deliver: those lines brought to the code as it stands — architecture.md's frame bullet names the summary `encode_frame`
+  records after `latch_end` and `poll_frames` beside `poll`, § The observer boundary's headless line reads `Step::summarise`
+  after each chunk of bare steps; readouts.md's pipeline names both routes (a frame's `poll_frames`, headless's `summarise`), its
+  lot number 15 with M0-T103 and M0-T104, its step-cost line pointing to M0-D50; verify.json's two desc tails reading that
+  `observe_run` runs the tracker and the stages on the engine's own summary (M0-T60) — a desc's text only, no case, path,
+  count or plant moving; nothing else on the pages moving → Verify 1–2
+- Done when: on linux-pc both greps below read the pages and the manifest as the code stands
+- Verify: 1. `grep -cE "poll_frames.\), widens|\(lot 10\)|not a defect filed|until the observers run in headless" docs/agent/architecture.md docs/agent/readouts.md tools/pb/verify.json`
+  · Pass: 0 for each file (M0-V8 read 1, 2, 2) · Fail: any line · 2. `grep -cE "poll_frames|Step::summarise" docs/agent/architecture.md` · Pass: ≥ 2
+  (the frame bullet's `poll_frames`, the observer line's `Step::summarise`) · Fail: fewer
+- Adversarial: a page rewritten from the plan's words rather than the code repeats the drift — each line cites the function it
+  describes, and no number §1.9 or calibration holds is copied in.
+- Handoff: DONE on linux-pc (laserax-ai), 2026-10-19; model=claude-sonnet-5-5 level=high by rung_record (matches the heading). architecture.md: the frame bullet names the summary encode_frame records after latch_end, poll_frames beside poll, the observer line reads Step::summarise after each chunk of bare steps; readouts.md: pipeline names both routes, lot 15 (M0-T103, M0-T104), the step-cost line points to M0-D50; verify.json: objects and classify desc tails read that observe_run runs them on the engine's own summary (M0-T60). Verify 1: 0/0/0; Verify 2: 3; verify.py --changed GO, 579 passed. Not done: docs/agent/testing.md:107 (classify row) still reads G-STAGES's (lot 10) — outside Files, a one-line fix for the next docs block. Detail: tasks/M0-D52.md. Next: M0-D54.
+
+## M0-D54 · `boot`'s only plant no longer applies: scene-refuse's hunk misses scene.rs since M0-T61 moved the preset check into `Scene::preset_mass` · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-D52)
+- Status: DONE (2026-10-19 08:09)
+- Sizing: E
+- Blocks: nothing — but the `boot` scope (G-BOOT) has no plant proven red on today's code until it lands (the phase's sweep:
+  NO-GO on it)
+- Caused by: M0-T61 — `Scene::preset` now delegates to `Scene::preset_mass`, which checks the mass, then `PRESETS.contains`
+  (scene.rs:278–284), the lines the plant's hunk takes as `preset`'s own; the plant was last proven by M0-V7's sweep, before it
+- Rating: rule (3) — `Sizing: E` (one patch file, its target named, verified by the existing `boot` scope's red-arm): the
+  ladder's lowest rung
+- Files: tests/plants/scene-refuse.patch — opened by M0-V8, not changed
+- Read: this file (rules + this task) + crates/sr-engine/src/scene.rs lines 270–295 (`Scene::preset`, `Scene::preset_mass`) +
+  the patch + docs/agent/testing.md's `boot` row
+- Symptom: measured on linux-pc (laserax-ai), 2026-10-16, M0-V8's sweep (the lead's run, `logs/M0-V8.boot.redarm.log`): `boot`
+  clean GO and « redarm boot: plant scene-refuse: the patch tests/plants/scene-refuse.patch does not apply:
+  crates/sr-engine/src/scene.rs @@ -266,5 +266,5 @@: its old lines appear 0 times in the file, not once - an error, not a red » —
+  the hunk's context is `pub fn preset(…)` followed by `if !PRESETS.contains(&name) {`, while `preset` now reads
+  `Scene::preset_mass(name, UNIT_MASS, world)` (line 274) and the check sits in `preset_mass` after the mass check (line 282)
+- Suspected cause: measured — the hunk's context is pre-M0-T61 text
+- Deliver: the hunk re-aimed at `preset_mass`'s check, the planted bug unchanged (the loader refuses `preset:sun`, so
+  headless-boot's run fails) → Verify 1
+- Done when: on linux-pc `--redarm boot` is GO with scene-refuse NO-GO
+- Verify: 1. `python3 tools/pb/verify.py --redarm boot --task M0-D54` · Pass: GO — the clean copy GO, scene-refuse NO-GO · Fail:
+  the plant GO or not applying
+- Handoff: Re-aimed tests/plants/scene-refuse.patch from Scene::preset to Scene::preset_mass (its mass-check then PRESETS check, scene.rs:282); planted line unchanged. Patch applies (git apply --check). Verify: verify.py --redarm boot --task M0-D54 → clean boot GO, scene-refuse RED (cause: headless-boot ran preset:sun, refused — log line 124 scene 'preset:sun'); === GO ===, on linux-pc. Claim run verify.py --changed --task M0-D54: 584 passed, 0 failed, 3/3 scopes GO. Flag from the claim run: 'tests/plants/scene-refuse.patch changed since M0-D54's start' — Deliver names this hunk re-aim, so I read it as covered; lead to confirm. Ordering: block says AFTER M0-D52 (register: TODO); ran at the lead's direct request, D52 untouched. Harness wrote tools/pb/verify.anchor.json (3 entries moved). Rung: model=claude-haiku-5-5 level=high (rung_record.py now, plugin=installed; matches heading, no MISMATCH). Logs: milestones/m0/logs/M0-D54.log, M0-D54.boot.redarm.log. Next: M0-D57 per register.

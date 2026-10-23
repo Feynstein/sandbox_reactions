@@ -1,0 +1,20 @@
+/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/a30cbad2-945d-4b70-9b27-09cd84301685/scratchpad/tr/d81_t4572.jsonl: 502 frames to step 8000, t 37.76
+  today    ending=('neutron_star', 5970, 29.11, 2380.4)
+           events=[('core_collapse', 1521, 11.402), ('supernova', 1522, 11.407)] one-step from frame 1521
+           trail=[('failed_star', 0.71), ('collapsing', 3.69), ('iron_core', 4.33), ('core_collapse', 11.4), ('supernova', 11.41), ('neutron_star', 19.11)]
+  a_passed ending=('neutron_star', 5970, 29.11, 2380.4)
+           events=[('core_collapse', 1521, 11.402), ('supernova', 1522, 11.407)] one-step from frame 1521
+           trail=[('failed_star', 0.71), ('collapsing', 3.69), ('iron_core', 4.33), ('core_collapse', 11.4), ('supernova', 11.41), ('neutron_star', 19.11)]
+  b_cross  ending=('neutron_star', 5970, 29.11, 2380.4)
+           events=[('core_collapse', 1521, 11.402), ('supernova', 1522, 11.407)] one-step from frame 1521
+           trail=[('failed_star', 0.71), ('collapsing', 3.69), ('iron_core', 4.33), ('core_collapse', 11.4), ('supernova', 11.41), ('neutron_star', 19.11)]
+/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/a30cbad2-945d-4b70-9b27-09cd84301685/scratchpad/tr/d81_t6702.jsonl: 502 frames to step 8000, t 36.65
+  today    ending=('neutron_star', 4210, 21.55, 2992.9)
+           events=[] one-step from frame None
+           trail=[('failed_star', 0.64), ('collapsing', 3.71), ('iron_core', 4.29), ('neutron_star', 11.51)]
+  a_passed ending=('neutron_star', 6658, 31.05, 2662.8)
+           events=[('core_collapse', 1553, 11.379), ('supernova', 1569, 11.451)] one-step from frame 1553
+           trail=[('failed_star', 0.64), ('collapsing', 3.71), ('iron_core', 4.29), ('core_collapse', 11.38), ('supernova', 11.45), ('neutron_star', 21.02)]
+  b_cross  ending=('neutron_star', 6658, 31.05, 2662.8)
+           events=[('core_collapse', 1553, 11.379), ('supernova', 1569, 11.451)] one-step from frame 1553
+           trail=[('failed_star', 0.64), ('collapsing', 3.71), ('iron_core', 4.29), ('core_collapse', 11.38), ('supernova', 11.45), ('neutron_star', 21.02)]

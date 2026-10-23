@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/sinks.rs
++++ b/crates/sr-physics/src/reference/sinks.rs
+@@ -218,7 +218,7 @@
+             m += st.get(0, i);
+             ye += st.get(0, i) * self.elements.composition(&renormalised(&xs)).y_e;
+         }
+-        ye <= CORE_Y_E * m
++        ye <= f64::INFINITY * m
+     }
+ 
+     /// Formation (§2.6, §0.5 [M0-R6]): at most one sink, at the densest cell passing Σ ≥ Σ_BH or the mass test, and the other
+--- a/crates/sr-engine/shaders/sinks.wgsl
++++ b/crates/sr-engine/shaders/sinks.wgsl
+@@ -219,7 +219,7 @@
+             }
+         }
+     }
+-    return ye <= CORE_Y_E * m;
++    return ye >= 0.0 || CORE_Y_E > 0.0;
+ }
+ 
+ // §2.6's four criteria at cell (x, y), inside the world's outer ring — Σ ≥ Σ_BH, or §0.5 [M0-R6]'s mass test in its place.

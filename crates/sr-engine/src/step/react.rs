@@ -13,10 +13,12 @@
 //! With the scene's `neutrinos` switch on ([`ReactSetup::neutrinos`]) each sub-step also takes ε_ν from the cell, books
 //! `neutrino_lost` and leaves S_ν in `side.s_nu`; a cell whose N_Fe rate is > 0 sets the collapse latch (§1.8.5): the cells
 //! pass ORs a bit into the report and `react_latch`, built once the step's latch exists ([`React::latch_dispatch`]), ORs it
-//! into the latch record's flag word — `react_cells` has no binding left for the flag itself.
+//! into the latch record's flag word — `react_cells` has no binding left for the flag itself. N_Fe in its closed form's shape
+//! is flagged EXACT and stepped over the whole Δt_n before the sub-cycles (§0.5 [M0-R10], M0-D87), its latch read at the
+//! pass's start.
 
 use sr_physics::rates::{Omega, TABLE_POINTS};
-use sr_physics::registry::{Physics, Reactions, GROUPS, N_SPECIES};
+use sr_physics::registry::{Elements, Physics, Reactions, Record, Species, GROUPS, N_SPECIES};
 
 use super::boxfit::{BoxFit, ARGS_TILES};
 use super::{compute_pipeline, init_buffer, with_eos, Dispatch, EosGpu, Pass, Size, Step};
@@ -36,8 +38,23 @@ const NEUTRINOS: u32 = 2;
 const HAS_TERMS: u32 = 1;
 const GATED: u32 = 2;
 const LATCHES: u32 = 4;
+const EXACT: u32 = 8;
 /// §1.6.2's record whose rate > 0 sets the latch (the twin's own constant).
 const NFE: &str = "N_Fe";
+
+/// N_Fe has the shape its closed form needs (§0.5 [M0-R10], the twin's `Nfe`): f ≡ 1, one input of order 1, one output of
+/// Z = 0, a gate with p = 1 — react.wgsl then steps it before the sub-cycles; otherwise it sub-cycles with the others.
+fn exact(rec: &Record, species: &[Species]) -> bool {
+    let rate = &rec.rate;
+    rec.id == NFE
+        && rate.t_thr.is_none()
+        && rate.terms.is_empty()
+        && rate.orders == [1.0]
+        && rec.inputs.len() == 1
+        && rec.outputs.len() == 1
+        && species[rec.outputs[0].species].z == 0
+        && rate.gate.as_ref().is_some_and(|g| g.p == 1.0)
+}
 
 /// What P6 needs beyond the state: the registry parsed against the run's constants, the scene's test flags, its
 /// `neutrinos` switch and the side fields S_ν goes to (written only with the switch on).
@@ -74,6 +91,7 @@ pub struct ReactReport {
 fn params_words(physics: &Physics, reactions: &Reactions, test: TestSettings, neutrinos: bool) -> Vec<u32> {
     let get = |k: &str| physics.get(k).unwrap_or_else(|| panic!("physics.json key {k}")) as f32;
     let recs: Vec<_> = reactions.records().iter().filter(|r| r.enabled).collect();
+    let elements = Elements::shipped().expect("assets/elements.json (§1.5's species are fixed)");
     assert!(recs.len() <= MAX_RECORDS, "react.wgsl holds {MAX_RECORDS} enabled records, the registry {}", recs.len());
     let f = |v: f64| (v as f32).to_bits();
     let flags = u32::from(test.pin_temperature) * PIN_TEMPERATURE + u32::from(neutrinos) * NEUTRINOS;
@@ -86,7 +104,8 @@ fn params_words(physics: &Physics, reactions: &Reactions, test: TestSettings, ne
         let rate = &rec.rate;
         assert!(rec.inputs.len() <= MAX_INPUTS && rate.terms.len() <= MAX_TERMS, "{}: react.wgsl's record is too small", rec.id);
         let group = GROUPS.iter().position(|g| *g == rec.group).expect("a record's group is one of GROUPS (registry load)");
-        let flags = u32::from(rate.t_thr.is_some()) * HAS_TERMS + u32::from(rate.gate.is_some()) * GATED + u32::from(rec.id == NFE) * LATCHES;
+        let flags = u32::from(rate.t_thr.is_some()) * HAS_TERMS + u32::from(rate.gate.is_some()) * GATED + u32::from(rec.id == NFE) * LATCHES
+            + u32::from(exact(rec, elements.species())) * EXACT;
         let mut w = vec![group as u32, rec.inputs.len() as u32, rate.terms.len() as u32, flags];
         let (mut species, mut orders) = ([0u32; MAX_INPUTS], [0u32; MAX_INPUTS]);
         for (k, (s, &n)) in rec.inputs.iter().zip(&rate.orders).enumerate() {

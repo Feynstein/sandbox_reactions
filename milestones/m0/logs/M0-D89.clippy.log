@@ -1,0 +1,28 @@
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-physics/src/observe/stages.rs:908:22
+    |
+908 |             t.update(&[o.clone()], frame as f64);
+    |                      ^^^^^^^^^^^^ help: try: `std::slice::from_ref(&o)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: could not compile `sr-physics` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+    Finished `release` profile [optimized] target(s) in 0.15s
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-engine/tests/gpu/calibrate_bisect.rs:278:11
+    |
+278 |     clean(&[record.clone()]);
+    |           ^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&record)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: could not compile `sr-engine` (test "gpu") due to 26 previous errors

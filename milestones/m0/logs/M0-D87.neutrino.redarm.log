@@ -1,0 +1,433 @@
+==== 2026-10-23T08:26:21-04:00 neutrino · clean · a fresh scratch copy of the tree
+== 2026-10-23T08:26:22-04:00 neutrino · task M0-D87 · box laserax-ai-server :: bash tests/gpu.sh neutrino physics
+-- neutrino · exit=0 · 10.34 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-pblgpp56/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-pblgpp56/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.69s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 18 tests
+test neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+bare step 1: max Σ 186.26 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 2: max Σ 211.51 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 3: max Σ 233.18 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 4: max Σ 247.90 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 5: max Σ 260.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 6: max Σ 271.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 7: max Σ 281.88 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 8: max Σ 291.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 9: max Σ 300.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 10: max Σ 309.25 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 11: max Σ 317.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 12: max Σ 325.67 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 13: max Σ 332.92 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 14: max Σ 340.10 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 15: max Σ 347.08 (Σ_N/Y_e = 344.6), max X_n 6.549e-3
+frame: 15 steps run, fired at Some(15) (the bare run opened the gate at step 15)
+ok
+test neutrino::gpu::gpu_cooling_closed_form_at_pinned_t ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+pinned T = 170, Σ = 50: lost 1.814754e-2, the closed form 1.814755e-2 (Δ 1.04e-7), T 170.0000
+pinned T = 200, Σ = 50: lost 6.659885e-2, the closed form 6.659882e-2 (Δ 4.46e-7), T 200.0000
+pinned T = 300, Σ = 50: lost 1.706854e0, the closed form 1.706855e0 (Δ 4.41e-7), T 300.0000
+pinned T = 500, Σ = 120: lost 2.438924e2, the closed form 2.438922e2 (Δ 8.59e-7), T 500.0000
+ok
+test neutrino::gpu::gpu_cooling_unpinned_follows_the_ode ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+unpinned: T 500.000 → 397.8836 (closed form 398.0491), drop Δ 1.62e-3, 267 sub-steps, E lost 2.461733e3, booked 2.461733e3
+ok
+test neutrino::gpu::gpu_energy_closes_with_burning_and_cooling ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+Ne cell: heat 7.631579e3, lost 2.786579e3 (3.65e-1 of it), ΔE 4.845000e3
+ok
+test neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+gate closing: Fe fell by 9.900987148e-3 (closes at 9.900990099e-3), Y_eΣ 160.000000477 (Σ_N 160), 0 sub-steps
+ok
+test neutrino::gpu::gpu_n_fe_absorbs_and_conserves_mass ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+N_Fe: ΔX_Fe -2.151716e-2, ΔX_n 2.151713e-2, booked -1.067034e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed, latch false
+case 1: Σ = 344.650, Y_eΣ = 160.016 → converts, latch true
+case 2: Σ = 159.980, Y_eΣ = 74.276 → closed, latch false
+case 3: Σ = 160.020, Y_eΣ = 74.295 → closed, latch false
+case 4: Σ = 200.000, Y_eΣ = 92.857 → closed, latch false
+case 5: Σ = 218.515, Y_eΣ = 159.984 → closed, latch false
+case 6: Σ = 218.558, Y_eΣ = 160.016 → converts, latch true
+case 7: Σ = 344.650, Y_eΣ = 252.333 → converts, latch true
+ok
+test neutrino::gpu::gpu_none_below_t_nu_and_none_with_the_switch_off ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+just above T_ν: lost 2.502001e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::gpu::gpu_source_only_where_x_n_is_half_or_more ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+S_ν = [9.103230476379395, 9.103230476379395, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+test neutrino::neutrino::cooling_closed_form_at_pinned_t ... pinned T = 170, Σ = 50: lost 1.814755e-2, the closed form 1.814755e-2 (Δ 0.00e0)
+pinned T = 200, Σ = 50: lost 6.659882e-2, the closed form 6.659882e-2 (Δ 4.17e-16)
+pinned T = 300, Σ = 50: lost 1.706855e0, the closed form 1.706855e0 (Δ 1.30e-16)
+pinned T = 500, Σ = 120: lost 2.438922e2, the closed form 2.438922e2 (Δ 1.17e-15)
+ok
+test neutrino::neutrino::cooling_unpinned_follows_the_ode ... unpinned: T 500 → 397.8679 (closed form 398.0491), drop Δ 1.78e-3, 229 sub-steps, max ΔT/T 1.00e-3
+ok
+test neutrino::neutrino::energy_closes_with_burning_and_cooling ... Ne cell: heat 7.631579e3, lost 2.786578e3 (3.65e-1 of it), ΔE 4.845001e3
+ok
+test neutrino::neutrino::latch_is_any_cells_n_fe_rate ... ok
+test neutrino::neutrino::n_fe_absorbs_and_conserves_mass ... N_Fe: ΔX_Fe -2.151714e-2, ΔX_n 2.151714e-2, booked -1.067035e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::neutrino::n_fe_gate_reads_y_e_sigma ... Y_e(Fe) = 0.46429, Σ_N/Y_e = 344.615; Y_e(mixed) = 0.73214, Σ_N/Y_e = 218.537
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed
+case 1: Σ = 344.650, Y_eΣ = 160.016 → converts
+case 2: Σ = 159.980, Y_eΣ = 74.276 → closed
+case 3: Σ = 160.020, Y_eΣ = 74.295 → closed
+case 4: Σ = 200.000, Y_eΣ = 92.857 → closed
+case 5: Σ = 218.515, Y_eΣ = 159.984 → closed
+case 6: Σ = 218.558, Y_eΣ = 160.016 → converts
+case 7: Σ = 344.650, Y_eΣ = 252.333 → converts
+ok
+test neutrino::neutrino::none_below_t_nu_and_none_with_the_switch_off ... just above T_ν: lost 2.500020e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::neutrino::source_only_where_x_n_is_half_or_more ... S_ν = [9.103225908002102, 9.103225908002102, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 354 filtered out; finished in 1.58s
+
+
+==== 2026-10-23T08:26:21-04:00 neutrino · plant nfe-gate-off · a fresh scratch copy of the tree
+planted nfe-gate-off: tests/plants/nfe-gate-off.patch -> crates/sr-physics/src/rates.rs, crates/sr-engine/shaders/react.wgsl
+== 2026-10-23T08:26:22-04:00 neutrino · task M0-D87 · box laserax-ai-server :: bash tests/gpu.sh neutrino physics
+-- neutrino · exit=101 · 41.75 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-pblgpp56/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-pblgpp56/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.66s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 18 tests
+test neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+bare step 1: max Σ 186.26 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 2: max Σ 211.51 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 3: max Σ 233.18 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 4: max Σ 247.90 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 5: max Σ 260.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 6: max Σ 271.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 7: max Σ 281.88 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 8: max Σ 291.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 9: max Σ 300.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 10: max Σ 309.25 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 11: max Σ 317.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 12: max Σ 325.67 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 13: max Σ 332.92 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 14: max Σ 340.10 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 15: max Σ 347.08 (Σ_N/Y_e = 344.6), max X_n 6.549e-3
+frame: 1 steps run, fired at Some(1) (the bare run opened the gate at step 15)
+
+thread 'neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k' (1469913) panicked at crates/sr-engine/tests/gpu/neutrino.rs:867:9:
+assertion `left == right` failed: the frame stops after the step that turned N_Fe on
+  left: (1, Some(1))
+ right: (15, Some(15))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test neutrino::gpu::gpu_cooling_closed_form_at_pinned_t ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+pinned T = 170, Σ = 50: lost 1.814754e-2, the closed form 1.814755e-2 (Δ 1.04e-7), T 170.0000
+pinned T = 200, Σ = 50: lost 6.659885e-2, the closed form 6.659882e-2 (Δ 4.46e-7), T 200.0000
+pinned T = 300, Σ = 50: lost 1.706854e0, the closed form 1.706855e0 (Δ 4.41e-7), T 300.0000
+pinned T = 500, Σ = 120: lost 2.438924e2, the closed form 2.438922e2 (Δ 8.59e-7), T 500.0000
+ok
+test neutrino::gpu::gpu_cooling_unpinned_follows_the_ode ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+unpinned: T 500.000 → 397.8836 (closed form 398.0491), drop Δ 1.62e-3, 267 sub-steps, E lost 2.461733e3, booked 2.461733e3
+ok
+test neutrino::gpu::gpu_energy_closes_with_burning_and_cooling ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+Ne cell: heat 7.631579e3, lost 2.786579e3 (3.65e-1 of it), ΔE 4.845000e3
+ok
+test neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate' (1469934) panicked at crates/sr-engine/tests/gpu/neutrino.rs:749:9:
+no cell's N_Fe rate is > 0, the flag stays unset
+FAILED
+test neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+gate closing: Fe fell by 1.763582230e-2 (closes at 9.900990099e-3), Y_eΣ 158.750051117 (Σ_N 160), 0 sub-steps
+
+thread 'neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step' (1469939) panicked at crates/sr-engine/tests/gpu/neutrino.rs:782:9:
+not at the gate: Fe fell by 0.017635822296142578, 0.00990099009900991 closes it
+FAILED
+test neutrino::gpu::gpu_n_fe_absorbs_and_conserves_mass ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+N_Fe: ΔX_Fe -2.151716e-2, ΔX_n 2.151713e-2, booked -1.067034e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed, latch true
+
+thread 'neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma' (1469949) panicked at crates/sr-engine/tests/gpu/neutrino.rs:691:13:
+assertion `left == right` failed: case 0 (Σ = 344.58092307692306, Y_eΣ = 159.984): gate false
+  left: (false, true)
+ right: (false, false)
+FAILED
+test neutrino::gpu::gpu_none_below_t_nu_and_none_with_the_switch_off ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+just above T_ν: lost 2.502001e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::gpu::gpu_source_only_where_x_n_is_half_or_more ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+S_ν = [9.103230476379395, 9.103230476379395, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+test neutrino::neutrino::cooling_closed_form_at_pinned_t ... pinned T = 170, Σ = 50: lost 1.814755e-2, the closed form 1.814755e-2 (Δ 0.00e0)
+pinned T = 200, Σ = 50: lost 6.659882e-2, the closed form 6.659882e-2 (Δ 4.17e-16)
+pinned T = 300, Σ = 50: lost 1.706855e0, the closed form 1.706855e0 (Δ 1.30e-16)
+pinned T = 500, Σ = 120: lost 2.438922e2, the closed form 2.438922e2 (Δ 1.17e-15)
+ok
+test neutrino::neutrino::cooling_unpinned_follows_the_ode ... unpinned: T 500 → 397.8679 (closed form 398.0491), drop Δ 1.78e-3, 229 sub-steps, max ΔT/T 1.00e-3
+ok
+test neutrino::neutrino::energy_closes_with_burning_and_cooling ... Ne cell: heat 7.631579e3, lost 2.786578e3 (3.65e-1 of it), ΔE 4.845001e3
+ok
+test neutrino::neutrino::latch_is_any_cells_n_fe_rate ... 
+thread 'neutrino::neutrino::latch_is_any_cells_n_fe_rate' (1469967) panicked at crates/sr-engine/tests/gpu/neutrino.rs:355:9:
+no cell's N_Fe rate is > 0, the latch stays unset
+FAILED
+test neutrino::neutrino::n_fe_absorbs_and_conserves_mass ... N_Fe: ΔX_Fe -2.151714e-2, ΔX_n 2.151714e-2, booked -1.067035e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::neutrino::n_fe_gate_reads_y_e_sigma ... Y_e(Fe) = 0.46429, Σ_N/Y_e = 344.615; Y_e(mixed) = 0.73214, Σ_N/Y_e = 218.537
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed
+
+thread 'neutrino::neutrino::n_fe_gate_reads_y_e_sigma' (1469969) panicked at crates/sr-engine/tests/gpu/neutrino.rs:301:13:
+assertion `left == right` failed: case 0 (Σ = 344.58092307692306, Y_eΣ = 159.984): gate false
+  left: (false, true)
+ right: (false, false)
+FAILED
+test neutrino::neutrino::none_below_t_nu_and_none_with_the_switch_off ... just above T_ν: lost 2.500020e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::neutrino::source_only_where_x_n_is_half_or_more ... S_ν = [9.103225908002102, 9.103225908002102, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+
+failures:
+
+failures:
+    neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k
+    neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate
+    neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step
+    neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma
+    neutrino::neutrino::latch_is_any_cells_n_fe_rate
+    neutrino::neutrino::n_fe_gate_reads_y_e_sigma
+
+test result: FAILED. 12 passed; 6 failed; 0 ignored; 0 measured; 354 filtered out; finished in 1.74s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-23T08:26:21-04:00 neutrino · plant nfe-gate-sigma · a fresh scratch copy of the tree
+planted nfe-gate-sigma: tests/plants/nfe-gate-sigma.patch -> crates/sr-physics/src/reference/react.rs, crates/sr-engine/shaders/react.wgsl
+== 2026-10-23T08:26:22-04:00 neutrino · task M0-D87 · box laserax-ai-server :: bash tests/gpu.sh neutrino physics
+-- neutrino · exit=101 · 20.81 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-pblgpp56/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-pblgpp56/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.58s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 18 tests
+test neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+bare step 1: max Σ 186.26 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 2: max Σ 211.51 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 3: max Σ 233.18 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 4: max Σ 247.90 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 5: max Σ 260.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 6: max Σ 271.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 7: max Σ 281.88 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 8: max Σ 291.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 9: max Σ 300.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 10: max Σ 309.25 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 11: max Σ 317.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 12: max Σ 325.67 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 13: max Σ 332.92 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 14: max Σ 340.10 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 15: max Σ 347.08 (Σ_N/Y_e = 344.6), max X_n 6.549e-3
+frame: 1 steps run, fired at Some(1) (the bare run opened the gate at step 15)
+
+thread 'neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k' (1469418) panicked at crates/sr-engine/tests/gpu/neutrino.rs:867:9:
+assertion `left == right` failed: the frame stops after the step that turned N_Fe on
+  left: (1, Some(1))
+ right: (15, Some(15))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test neutrino::gpu::gpu_cooling_closed_form_at_pinned_t ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+pinned T = 170, Σ = 50: lost 1.814754e-2, the closed form 1.814755e-2 (Δ 1.04e-7), T 170.0000
+pinned T = 200, Σ = 50: lost 6.659885e-2, the closed form 6.659882e-2 (Δ 4.46e-7), T 200.0000
+pinned T = 300, Σ = 50: lost 1.706854e0, the closed form 1.706855e0 (Δ 4.41e-7), T 300.0000
+pinned T = 500, Σ = 120: lost 2.438924e2, the closed form 2.438922e2 (Δ 8.59e-7), T 500.0000
+ok
+test neutrino::gpu::gpu_cooling_unpinned_follows_the_ode ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+unpinned: T 500.000 → 397.8836 (closed form 398.0491), drop Δ 1.62e-3, 267 sub-steps, E lost 2.461733e3, booked 2.461733e3
+ok
+test neutrino::gpu::gpu_energy_closes_with_burning_and_cooling ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+Ne cell: heat 7.631579e3, lost 2.786579e3 (3.65e-1 of it), ΔE 4.845000e3
+ok
+test neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate' (1469439) panicked at crates/sr-engine/tests/gpu/neutrino.rs:749:9:
+no cell's N_Fe rate is > 0, the flag stays unset
+FAILED
+test neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+gate closing: Fe fell by 9.900987148e-3 (closes at 9.900990099e-3), Y_eΣ 160.000000477 (Σ_N 160), 0 sub-steps
+
+thread 'neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step' (1469444) panicked at crates/sr-engine/tests/gpu/neutrino.rs:786:9:
+a cell at its gate sets nothing: the first pass's flag came from the rate at its start
+FAILED
+test neutrino::gpu::gpu_n_fe_absorbs_and_conserves_mass ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+N_Fe: ΔX_Fe -2.151716e-2, ΔX_n 2.151713e-2, booked -1.067034e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed, latch true
+
+thread 'neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma' (1469454) panicked at crates/sr-engine/tests/gpu/neutrino.rs:691:13:
+assertion `left == right` failed: case 0 (Σ = 344.58092307692306, Y_eΣ = 159.984): gate false
+  left: (false, true)
+ right: (false, false)
+FAILED
+test neutrino::gpu::gpu_none_below_t_nu_and_none_with_the_switch_off ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+just above T_ν: lost 2.502001e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::gpu::gpu_source_only_where_x_n_is_half_or_more ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+S_ν = [9.103230476379395, 9.103230476379395, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+test neutrino::neutrino::cooling_closed_form_at_pinned_t ... pinned T = 170, Σ = 50: lost 1.814755e-2, the closed form 1.814755e-2 (Δ 0.00e0)
+pinned T = 200, Σ = 50: lost 6.659882e-2, the closed form 6.659882e-2 (Δ 4.17e-16)
+pinned T = 300, Σ = 50: lost 1.706855e0, the closed form 1.706855e0 (Δ 1.30e-16)
+pinned T = 500, Σ = 120: lost 2.438922e2, the closed form 2.438922e2 (Δ 1.17e-15)
+ok
+test neutrino::neutrino::cooling_unpinned_follows_the_ode ... unpinned: T 500 → 397.8679 (closed form 398.0491), drop Δ 1.78e-3, 229 sub-steps, max ΔT/T 1.00e-3
+ok
+test neutrino::neutrino::energy_closes_with_burning_and_cooling ... Ne cell: heat 7.631579e3, lost 2.786578e3 (3.65e-1 of it), ΔE 4.845001e3
+ok
+test neutrino::neutrino::latch_is_any_cells_n_fe_rate ... 
+thread 'neutrino::neutrino::latch_is_any_cells_n_fe_rate' (1469472) panicked at crates/sr-engine/tests/gpu/neutrino.rs:355:9:
+no cell's N_Fe rate is > 0, the latch stays unset
+FAILED
+test neutrino::neutrino::n_fe_absorbs_and_conserves_mass ... N_Fe: ΔX_Fe -2.151714e-2, ΔX_n 2.151714e-2, booked -1.067035e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::neutrino::n_fe_gate_reads_y_e_sigma ... Y_e(Fe) = 0.46429, Σ_N/Y_e = 344.615; Y_e(mixed) = 0.73214, Σ_N/Y_e = 218.537
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed
+
+thread 'neutrino::neutrino::n_fe_gate_reads_y_e_sigma' (1469474) panicked at crates/sr-engine/tests/gpu/neutrino.rs:301:13:
+assertion `left == right` failed: case 0 (Σ = 344.58092307692306, Y_eΣ = 159.984): gate false
+  left: (false, true)
+ right: (false, false)
+FAILED
+test neutrino::neutrino::none_below_t_nu_and_none_with_the_switch_off ... just above T_ν: lost 2.500020e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::neutrino::source_only_where_x_n_is_half_or_more ... S_ν = [9.103225908002102, 9.103225908002102, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+
+failures:
+
+failures:
+    neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k
+    neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate
+    neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step
+    neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma
+    neutrino::neutrino::latch_is_any_cells_n_fe_rate
+    neutrino::neutrino::n_fe_gate_reads_y_e_sigma
+
+test result: FAILED. 12 passed; 6 failed; 0 ignored; 0 measured; 354 filtered out; finished in 1.77s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-23T08:26:21-04:00 neutrino · plant nfe-latch-last · a fresh scratch copy of the tree
+planted nfe-latch-last: tests/plants/nfe-latch-last.patch -> crates/sr-engine/shaders/react.wgsl
+== 2026-10-23T08:26:22-04:00 neutrino · task M0-D87 · box laserax-ai-server :: bash tests/gpu.sh neutrino physics
+-- neutrino · exit=101 · 31.28 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-pblgpp56/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-pblgpp56/arm3/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.63s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 18 tests
+test neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+bare step 1: max Σ 186.26 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 2: max Σ 211.51 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 3: max Σ 233.18 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 4: max Σ 247.90 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 5: max Σ 260.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 6: max Σ 271.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 7: max Σ 281.88 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 8: max Σ 291.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 9: max Σ 300.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 10: max Σ 309.25 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 11: max Σ 317.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 12: max Σ 325.67 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 13: max Σ 332.92 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 14: max Σ 340.10 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 15: max Σ 347.08 (Σ_N/Y_e = 344.6), max X_n 6.549e-3
+frame: 15 steps run, fired at Some(15) (the bare run opened the gate at step 15)
+ok
+test neutrino::gpu::gpu_cooling_closed_form_at_pinned_t ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+pinned T = 170, Σ = 50: lost 1.814754e-2, the closed form 1.814755e-2 (Δ 1.04e-7), T 170.0000
+pinned T = 200, Σ = 50: lost 6.659885e-2, the closed form 6.659882e-2 (Δ 4.46e-7), T 200.0000
+pinned T = 300, Σ = 50: lost 1.706854e0, the closed form 1.706855e0 (Δ 4.41e-7), T 300.0000
+pinned T = 500, Σ = 120: lost 2.438924e2, the closed form 2.438922e2 (Δ 8.59e-7), T 500.0000
+ok
+test neutrino::gpu::gpu_cooling_unpinned_follows_the_ode ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+unpinned: T 500.000 → 397.8836 (closed form 398.0491), drop Δ 1.62e-3, 267 sub-steps, E lost 2.461733e3, booked 2.461733e3
+ok
+test neutrino::gpu::gpu_energy_closes_with_burning_and_cooling ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+Ne cell: heat 7.631579e3, lost 2.786579e3 (3.65e-1 of it), ΔE 4.845000e3
+ok
+test neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate' (1469686) panicked at crates/sr-engine/tests/gpu/neutrino.rs:755:13:
+the open cell at position 0 did not set the flag
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+gate closing: Fe fell by 9.900987148e-3 (closes at 9.900990099e-3), Y_eΣ 160.000000477 (Σ_N 160), 0 sub-steps
+
+thread 'neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step' (1469691) panicked at crates/sr-engine/tests/gpu/neutrino.rs:781:9:
+the rate at the step's start was > 0, the flag is set
+FAILED
+test neutrino::gpu::gpu_n_fe_absorbs_and_conserves_mass ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+N_Fe: ΔX_Fe -2.151716e-2, ΔX_n 2.151713e-2, booked -1.067034e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed, latch false
+case 1: Σ = 344.650, Y_eΣ = 160.016 → converts, latch false
+
+thread 'neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma' (1469701) panicked at crates/sr-engine/tests/gpu/neutrino.rs:691:13:
+assertion `left == right` failed: case 1 (Σ = 344.6498461538461, Y_eΣ = 160.016): gate true
+  left: (true, false)
+ right: (true, true)
+FAILED
+test neutrino::gpu::gpu_none_below_t_nu_and_none_with_the_switch_off ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+just above T_ν: lost 2.502001e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::gpu::gpu_source_only_where_x_n_is_half_or_more ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+S_ν = [9.103230476379395, 9.103230476379395, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+test neutrino::neutrino::cooling_closed_form_at_pinned_t ... pinned T = 170, Σ = 50: lost 1.814755e-2, the closed form 1.814755e-2 (Δ 0.00e0)
+pinned T = 200, Σ = 50: lost 6.659882e-2, the closed form 6.659882e-2 (Δ 4.17e-16)
+pinned T = 300, Σ = 50: lost 1.706855e0, the closed form 1.706855e0 (Δ 1.30e-16)
+pinned T = 500, Σ = 120: lost 2.438922e2, the closed form 2.438922e2 (Δ 1.17e-15)
+ok
+test neutrino::neutrino::cooling_unpinned_follows_the_ode ... unpinned: T 500 → 397.8679 (closed form 398.0491), drop Δ 1.78e-3, 229 sub-steps, max ΔT/T 1.00e-3
+ok
+test neutrino::neutrino::energy_closes_with_burning_and_cooling ... Ne cell: heat 7.631579e3, lost 2.786578e3 (3.65e-1 of it), ΔE 4.845001e3
+ok
+test neutrino::neutrino::latch_is_any_cells_n_fe_rate ... ok
+test neutrino::neutrino::n_fe_absorbs_and_conserves_mass ... N_Fe: ΔX_Fe -2.151714e-2, ΔX_n 2.151714e-2, booked -1.067035e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::neutrino::n_fe_gate_reads_y_e_sigma ... Y_e(Fe) = 0.46429, Σ_N/Y_e = 344.615; Y_e(mixed) = 0.73214, Σ_N/Y_e = 218.537
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed
+case 1: Σ = 344.650, Y_eΣ = 160.016 → converts
+case 2: Σ = 159.980, Y_eΣ = 74.276 → closed
+case 3: Σ = 160.020, Y_eΣ = 74.295 → closed
+case 4: Σ = 200.000, Y_eΣ = 92.857 → closed
+case 5: Σ = 218.515, Y_eΣ = 159.984 → closed
+case 6: Σ = 218.558, Y_eΣ = 160.016 → converts
+case 7: Σ = 344.650, Y_eΣ = 252.333 → converts
+ok
+test neutrino::neutrino::none_below_t_nu_and_none_with_the_switch_off ... just above T_ν: lost 2.500020e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::neutrino::source_only_where_x_n_is_half_or_more ... S_ν = [9.103225908002102, 9.103225908002102, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+
+failures:
+
+failures:
+    neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate
+    neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step
+    neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma
+
+test result: FAILED. 15 passed; 3 failed; 0 ignored; 0 measured; 354 filtered out; finished in 1.79s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

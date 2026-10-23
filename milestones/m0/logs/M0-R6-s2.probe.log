@@ -1,0 +1,48 @@
+--- session 2: P1 base20 launched 2026-10-23T10:53:29-04:00 on laserax-ai-server, RTX 4090 ---
+=== M0-R6 base20: mass=67020.64327658225 max_steps=6000 overrides='' edge=leave dump_every=250 cap=570s 2026-10-23T10:53:29-04:00 laserax-ai-server ===
+load: load average: 3.96, 1.37, 0.75 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 6000 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T14-53-29Z/m_bh_sb-01)
+exit=6 wall=262 s
+=== M0-R6 base20d: mass=67020.64327658225 max_steps=6000 overrides='' edge=leave dump_every=100 cap=570s 2026-10-23T10:58:46-04:00 laserax-ai-server ===
+load: load average: 0.91, 1.08, 0.82 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 6000 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T14-58-46Z/m_bh_sb-01)
+exit=6 wall=262 s
+=== M0-R6 base_lo: mass=4572.394 max_steps=7000 overrides='' edge=leave dump_every=250 cap=570s 2026-10-23T11:03:15-04:00 laserax-ai-server ===
+load: load average: 0.85, 0.98, 0.84 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=5974 sim_time=29.126 wall_s=192.3 record=build/calibrate_runs/2026-10-23T15-03-15Z/m_bh_sb-01
+(stopped before the bracket's second life)
+exit=143 wall=194 s
+=== M0-R6 fdep0_20: mass=67020.64327658225 max_steps=6000 overrides='f_dep=0' edge=leave dump_every=100 cap=570s 2026-10-23T11:07:54-04:00 laserax-ai-server ===
+load: load average: 0.24, 0.75, 0.80 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 6000 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T15-07-54Z/m_bh_sb-01)
+exit=6 wall=214 s
+=== M0-R6 fdep0_lo: mass=4572.394 max_steps=7000 overrides='f_dep=0' edge=leave dump_every=250 cap=570s 2026-10-23T11:11:40-04:00 laserax-ai-server ===
+load: load average: 0.78, 0.84, 0.83 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=5878 sim_time=28.744 wall_s=189.8 record=build/calibrate_runs/2026-10-23T15-11-40Z/m_bh_sb-01
+(stopped before the bracket's second life)
+exit=143 wall=192 s
+=== M0-R6 bounce20: mass=67020.64327658225 max_steps=6000 overrides='' edge=bounce dump_every=250 cap=570s 2026-10-23T11:15:27-04:00 laserax-ai-server ===
+load: load average: 0.56, 0.82, 0.84 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 6000 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T15-15-27Z/m_bh_sb-01)
+exit=6 wall=240 s
+=== M0-R6 bounce_lo: mass=4572.394 max_steps=7000 overrides='' edge=bounce dump_every=250 cap=570s 2026-10-23T11:19:52-04:00 laserax-ai-server ===
+load: load average: 0.67, 0.85, 0.85 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=6282 sim_time=30.326 wall_s=271.2 record=build/calibrate_runs/2026-10-23T15-19-52Z/m_bh_sb-01
+(stopped before the bracket's second life)
+exit=143 wall=272 s
+=== M0-R6 m40: mass=134041.287 max_steps=6000 overrides='' edge=leave dump_every=250 cap=570s 2026-10-23T11:25:00-04:00 laserax-ai-server ===
+load: load average: 0.67, 0.89, 0.89 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-ERROR calibration failed: the run at mass 134041.287 reached no ending within --max-steps 6000 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T15-25-00Z/m_bh_sb-01)
+exit=6 wall=354 s
+=== M0-R6 compact20: mass=67020.64327658225 max_steps=6000 overrides='' edge=leave dump_every=250 radius_cap=60 cap=570s 2026-10-23T11:32:47-04:00 laserax-ai-server ===
+load: load average: 0.29, 0.73, 0.85 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 6000 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T15-32-47Z/m_bh_sb-01)
+exit=6 wall=214 s
+=== M0-R6 mid15k: mass=15000 max_steps=7000 overrides='' edge=leave dump_every=250 radius_cap=150 cap=570s 2026-10-23T11:39:16-04:00 laserax-ai-server ===
+load: load average: 0.24, 0.60, 0.79 · NVIDIA GeForce RTX 3060, 0 %, 15 MiB;NVIDIA GeForce RTX 4090, 0 %, 17 MiB;
+SR-ERROR calibration failed: the run at mass 15000.000 reached no ending within --max-steps 7000 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T15-39-16Z/m_bh_sb-01)
+exit=6 wall=240 s
+SR-WARN heat unconverged step 2517 passes 1 rounds 4096
+SR-HEADLESS DONE steps=2518 sim_time=10.145347 until=none
+step  t      M_grid  M_esc  |  E_kin  E_th  E_cold  W        E_gas    |  nuc     nu_lost  nu_dep  floor           rad             E_esc  |  inv
+2518  10.15  125838  8203   |  40.50  0.00  16.86   -160.91  -103.55  |  704.05  1138.72  0.12    41930132424.53  41930133639.94  3.89   |  1550.29

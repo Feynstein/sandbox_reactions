@@ -1,0 +1,12 @@
+== 2026-10-23T11:59:10-04:00 plan_lint · task M0-R6-s2 · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=680 failed=0 warnings=1 · blocks=292 · flow_rows=292 · verify_fences=7 · history=0 · flow=per-task · header=531/600 · pipeline=9/60 · ladder=7 rungs · refresh=2/5
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-R6 12 · M0-D89 3 · M0-D90 6 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6
+=== GO ===
+
+== 2026-10-23T12:02:33-04:00 plan_lint · task M0-R6-s2 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=679 failed=0 warnings=1 · blocks=292 · flow_rows=292 · verify_fences=7 · history=0 · flow=per-task · header=531/600 · pipeline=9/60 · ladder=7 rungs · refresh=1/5
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D89 3 · M0-D90 6 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6
+=== GO ===
+

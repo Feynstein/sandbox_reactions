@@ -908,11 +908,12 @@ fn one_step_frames_follow_the_physics() {
 
 /// M0-D80: a life under a progress hook runs one step a frame through its core collapse, a progress tick each, and goes back to
 /// frames once the collapse stops. A 16 × 16 iron block at Σ 400 (Y_e Σ 186 over Σ_N 160), gravity on and nothing moving, in a
-/// 64 × 64 world: N_Fe converts it from the first step (raw core_collapse) until the gate closes some 60 steps later. The same
+/// 64 × 64 world: N_Fe converts it from the first step (raw core_collapse) until the gate closes some 22 steps later (§0.5 [M0-R10]'s rate, M0-D87;
+/// ~60 on the capped sub-cycles before it). The same
 /// life twice is the same; one cut at a checkpoint inside the stretch and continued is the unbroken one (summary.json but for
 /// `wall_s`, events.jsonl and the ticks after the cut; the cut run is the second life, its ticks the unbroken one's). Without a hook the frames are as before: scopes `observe_run` and `dump`
-/// run every life there through plain `headless` and grade its frame boundaries. Each collapse step costs 0.6–3 s (RTX 4090, ~all in
-/// P6's N_Fe), and the case runs ~90 of them.
+/// run every life there through plain `headless` and grade its frame boundaries. Each collapse step cost 0.6–3 s before M0-D87 (RTX 4090, ~all in
+/// P6's N_Fe); in closed form it costs what any step does.
 #[test]
 fn a_life_steps_one_at_a_time_through_its_core_collapse() {
     use sr_engine::headless::{Progress, Tick};
@@ -973,7 +974,8 @@ fn a_life_steps_one_at_a_time_through_its_core_collapse() {
     // the collapse over, and frames of 16 follow, ticking only on the 64-step grid.
     let (seen, summary, events, _) = life("unbroken", 160, None, None);
     let stretch = seen.iter().take_while(|s| s.frame == 1).count();
-    assert!(stretch >= 30, "a stretch of one-step frames through the collapse: {seen:?}");
+    // 22 measured (M0-D87, RTX 4090); the cut below at 20 must fall inside it.
+    assert!(stretch >= 20, "a stretch of one-step frames through the collapse: {seen:?}");
     assert!(seen[..stretch].iter().enumerate().all(|(i, s)| s.step == 2 + i as u64), "one tick a step from step 2: {seen:?}");
     assert!(seen[..stretch - 1].iter().all(|s| s.raw == "core_collapse"), "{seen:?}");
     assert_ne!(seen[stretch - 1].raw, "core_collapse", "the stretch ends when the collapse does: {seen:?}");

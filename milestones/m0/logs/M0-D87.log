@@ -1,0 +1,30 @@
+
+error: redundant slicing of the whole range
+   --> crates/sr-engine/tests/gpu/nuheat.rs:429:60
+    |
+429 |         let (e1, booked, sigma) = (r.energy(), r.booked(), &st.plane(0)[..]);
+    |                                                            ^^^^^^^^^^^^^^^^ help: use the original value instead: `st.plane(0)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#redundant_slicing
+    = note: `-D clippy::redundant-slicing` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::redundant_slicing)]`
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/summary.rs:207:94
+    |
+207 | ...], s: &BlockSummary, col: u32, row: u32) -> (Vec<(String, f64, f64, f64)>, Vec<u32>) {
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-engine/tests/gpu/calibrate_bisect.rs:278:11
+    |
+278 |     clean(&[record.clone()]);
+    |           ^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&record)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: could not compile `sr-engine` (test "gpu") due to 26 previous errors

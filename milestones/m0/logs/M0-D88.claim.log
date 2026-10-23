@@ -1,0 +1,30 @@
+NEVER CHECKED  tests/plants/web-autoload.patch  (no entry for web)
+NEVER CHECKED  tests/plants/web-no-gpu-check.patch  (no entry for web)
+NEVER CHECKED  tests/smoke.sh  (no entry for boot, desktop)
+NEVER CHECKED  tests/web/check.sh  (no entry for web)
+NEVER CHECKED  tools/pb/launch.json  (no entry for boot, desktop, web)
+NEVER CHECKED  web/Trunk.toml  (no entry for web)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   262  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  sun_burn: 3 failed · log milestones/m0/logs/M0-D88.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-D88.twin.log
+  adapter: 1 failed · log milestones/m0/logs/M0-D88.adapter.log
+  timing: 1 failed · log milestones/m0/logs/M0-D88.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-D88.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-D88.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-D88.boot.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready · log milestones/m0/logs/M0-D88.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-D88.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-D88.capture.log
+  calibration: 1 failed · log milestones/m0/logs/M0-D88.calibration.log
+  readouts: 1 failed · log milestones/m0/logs/M0-D88.readouts.log
+  anchor: 168 never checked, 0 stale, 0 unclassified - every one named above
+verify: 1151 passed, 20 failed, 0 skipped · 41/53 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 9 not impacted · 119.55 s + loop 23.46 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.76->1.64 · base: M0-D88's start 2026-10-23T09:53:29-04:00
+=== NO-GO: sun_burn: 3 failed · log milestones/m0/logs/M0-D88.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-D88.twin.log; adapter: 1 failed · log milestones/m0/logs/M0-D88.adapter.log; timing: 1 failed · log milestones/m0/logs/M0-D88.timing.log; scene: 1 failed · log milestones/m0/logs/M0-D88.scene.log; dump: 2 failed · log milestones/m0/logs/M0-D88.dump.log; boot: 1 failed; its own verd... ===

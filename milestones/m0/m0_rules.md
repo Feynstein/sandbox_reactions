@@ -276,6 +276,16 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
 - **Claim.** The claim is the server's run, tagged `[ALREADY RUN — PASS|FAIL (<what>) on laserax-ai-server, RTX 4090]`; the Repo facts'
   «the claim run stays on linux-pc» is superseded (the plan's Superseded section).
 
+## R19 · The Superseded section's full text lives in m0_superseded.md (the lead, 2026-10-23, at M0-TC8)
+- The lead, 2026-10-23, at M0-TC8, picked «Superseded to an annex (Recommended)», shown as: "Move Superseded's 51 entries byte
+  for byte to a new milestones/m0/m0_superseded.md (binding like m0_rules.md), with a one-line pointer under the plan's Superseded
+  heading, and add one Rules line saying future mirrors are written there."
+- **Why.** The header read 705 lines against its 600 budget (`plan.py lint`, 2026-10-23); the Flow's 293 rows and Superseded's 182
+  lines were neither stubs nor Rules, so PLAYBOOK §11's four moves could not bring it under 600.
+- **The reading.** "The plan's Superseded section" (PLAYBOOK §2.6 P3, the TJ bookkeeping, every §9 mirror line, and this annex's
+  R5, R9, R10, R15, R16 and R18) reads m0_superseded.md: a new mirror is appended at its end in the same shape, binding as if it
+  sat in the plan; the plan's `## Superseded / retired (§2.6)` keeps its one pointer line and the `Inherited debt` line.
+
 ## Considered and REJECTED (false economy)
 Binding (PLAYBOOK §2.1, §11): a later agent proposing an item below re-opens a closed decision — it asks
 the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.

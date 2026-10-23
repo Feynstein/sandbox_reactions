@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/heat.rs
++++ b/crates/sr-physics/src/reference/heat.rs
+@@ -544,7 +544,7 @@
+                 }
+                 let out = dt * leaving(&flux, i).iter().map(|f| f.max(0.0)).sum::<f64>();
+                 let held = net.c[i] * (t0[i] - t_floor).max(0.0);
+-                if out > held { held / out } else { 1.0 }
++                if out > held { 1.0 } else { 1.0 }
+             })
+             .collect();
+         let of = |cell: Option<usize>| cell.map_or(1.0, |j| scale[j]);
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -933,7 +933,7 @@
+             let c = frozen[CAP * n + cell];
+             let out = machine.rec[1].dt * (max(-fl, 0.0) + max(fr, 0.0) + max(-ft, 0.0) + max(fb, 0.0));
+             let held = c * max(frozen[T0 * n + cell] - params.t_floor, 0.0);
+-            solve[SV_P * n + cell] = select(1.0, held / out, out > held);
++            solve[SV_P * n + cell] = select(1.0, 1.0, out > held);
+         } else if (machine.report.stepped != 0u && gas_at(x, y)) {
+             let t = final_t(cell);
+             let c = frozen[CAP * n + cell];

@@ -190,6 +190,15 @@ fn constant(physics: &Physics, name: &str) -> Result<f64, CalError> {
     physics.get(name).ok_or_else(|| CalError::Failed(format!("physics.json has no {name}")))
 }
 
+/// m_ch_sb (§2.11 item 1) for `physics`: the sheet's C/O ceiling, the value `--only m_ch_sb` writes (a few hundredths of a
+/// second, no adapter). The observers' white dwarf and planetary nebula rows read it (§0.5 [M0-D81]).
+pub fn m_ch_sb(physics: &Physics) -> Result<f64, CalError> {
+    let elements = Elements::shipped().map_err(|e| CalError::Failed(e.to_string()))?;
+    let eos = Eos::from_physics(physics).map_err(|e| CalError::Failed(e.to_string()))?;
+    let ceiling = sheet::ceiling(&eos, Matter::CarbonOxygen.cold(&elements)?, constant(physics, "sigma_vac")?);
+    ceiling.map(|c| c.limit).map_err(|e| CalError::Failed(format!("m_ch_sb: {e}")))
+}
+
 // ---------------------------------------------------------------------------------------------------------------
 // The grid's own cold disk (G-CORE (d))
 

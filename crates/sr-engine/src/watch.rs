@@ -26,8 +26,10 @@ use serde_json::{json, Value};
 use sr_physics::observe::stages::{ending_hold, stage_order};
 use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole, SUN_MASS_NOMINAL};
 use sr_physics::observe::{BlockData, EventKind, Object, Report, SinkData, Stage, StageTracker, Tracker, TrackerConfig, GROUP_N};
+use sr_physics::eos::Eos;
 use sr_physics::registry::Physics;
 
+use crate::calibrate;
 use crate::ledger::At;
 use crate::summary::BlockSummary;
 
@@ -197,6 +199,16 @@ pub fn report(summary: &BlockSummary, world_width: u32, sim_dt: f64) -> Report {
 }
 
 /// A remnant stage on display and the sim time of the first frame that showed it.
+/// m_ch_sb for the run's physics, which the white dwarf and planetary nebula rows read (§0.5 [M0-D81]): §2.11 item 1's sheet,
+/// a few hundredths of a second. A scene that turns the electrons' cold pressure off has no Chandrasekhar mass, and its rows
+/// refuse none.
+fn m_ch(physics: &Physics) -> f64 {
+    if !Eos::from_physics(physics).is_ok_and(|eos| eos.electron_table().is_some()) {
+        return f64::INFINITY;
+    }
+    calibrate::m_ch_sb(physics).unwrap_or_else(|e| panic!("the run's physics has the electrons' cold pressure and no C/O ceiling: {e}"))
+}
+
 #[derive(Clone, Copy)]
 struct Remnant {
     stage: Stage,
@@ -237,7 +249,7 @@ impl Watch {
         Watch {
             world_width,
             tracker: Tracker::new(TrackerConfig::from_physics(physics, SUN_MASS_NOMINAL)),
-            stages: StageTracker::new(),
+            stages: StageTracker::new(m_ch(physics)),
             last_sim: start_sim_time,
             events: Vec::new(),
             lives: BTreeMap::new(),
@@ -461,7 +473,7 @@ impl Watch {
         Ok(Watch {
             world_width,
             tracker: Tracker::restore(config, &v["tracker"])?,
-            stages: StageTracker::restore(&v["stages"])?,
+            stages: StageTracker::restore(&v["stages"], m_ch(physics))?,
             last_sim: read_exact(&v["last_sim"], "last_sim")?,
             events,
             lives,

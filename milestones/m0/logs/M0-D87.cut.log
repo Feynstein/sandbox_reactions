@@ -1,0 +1,10 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=562 sim_time=4.069 heat_unconverged=4 stage=cloud | raw=iron_core
+  frame  steps           1 dt       0.005963 s/step    0.08440 P5_ceil         0
+  star   M           67006 R           109.3 tau_dyn     4.414 M_unb     0.06888
+  core   sigma_c     4.648 T_c         98.17 d_c        0.2677 Ye_c       0.4643
+  centre X_Fe        1.000 X_n             0 v_r         16.47 vr/vdyn    0.6653
+  light  L         6.506e5 L_nuc    3.593e-7 L_N             0 L_nu        24.50
+  world  escaped     2.716 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=1560 sim_time=10.092878 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1560 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T12-27-52Z/m_bh_sb-01)

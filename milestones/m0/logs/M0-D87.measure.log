@@ -1,0 +1,44 @@
+=== M0-D87 Verify 1, laserax-ai-server RTX 4090, 2026-10-23T08:27:47-04:00 ===
+--- box before the cut
+ 08:27:47 up 10 days, 20:00,  2 users,  load average: 3.06, 1.63, 0.64
+NVIDIA GeForce RTX 3060, 0 %, 15 MiB
+NVIDIA GeForce RTX 4090, 0 %, 17 MiB
+--- the cut: calibrate --only m_bh_sb --bracket 67020.643,67087.664 --max-steps 1560 --checkpoint-every 1560 --adapter "RTX 4090"
+exit 4 wall_s .013289704
+SR-ERROR bad arguments: --out is required (the calibration file to write)
+(first try: exit 4, --out is required; rerun with --out build/d87_cut.json)
+exit 6 wall_s 17.618117500
+  world  escaped     2.716 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=1560 sim_time=10.092878 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 1560 — reported, not guessed (record kept: build/calibrate_runs/2026-10-23T12-27-52Z/m_bh_sb-01)
+--- timing: headless --scene calibrate:m_bh_sb:67020.643 --load-dump build/calibrate_runs/2026-10-23T12-27-52Z/m_bh_sb-01/checkpoint/s_1560.bin --continue --steps 1590 --timing --adapter "RTX 4090" --out build/d87_t<i>, 3 runs
+== run 1, box: load average: 2.12, 1.54, 0.64; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %;
+exit 4 wall_s .028897150
+== run 2, box: load average: 2.03, 1.53, 0.64; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %;
+exit 4 wall_s .023842807
+== run 3, box: load average: 2.03, 1.53, 0.64; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %;
+exit 4 wall_s .018636511
+(runs 1-3 above: exit 4, "calibrate:m_bh_sb:67020.643" is no scene path; M0-R10 ran it as a 77-byte stub file of that name, /tmp/r10/m6/ — copied to build/d87_scene.json: {"version":1,"world":{"width":600,"height":400,"edge":"leave"},"objects":[]})
+--- timing: headless --scene build/d87_scene.json --load-dump build/calibrate_runs/2026-10-23T12-27-52Z/m_bh_sb-01/checkpoint/s_1560.bin --continue --steps 1590 --timing --adapter "RTX 4090" --out build/d87_t<i>, 3 runs
+== run 1, box: load average: 1.11, 1.35, 0.62; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %; apps: 0
+exit 4 wall_s .022100583
+== run 2, box: load average: 1.11, 1.35, 0.62; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %; apps: 0
+exit 4 wall_s .038014461
+== run 3, box: load average: 1.10, 1.34, 0.62; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %; apps: 0
+exit 4 wall_s .031124707
+(those 3: exit 4, --continue checks the dump observers scene name "calibrate:m_bh_sb:67020.643" — M0-R10 ran from a folder holding the stub under that name; so here, build/d87_m6/)
+--- timing, from build/d87_m6: headless --scene calibrate:m_bh_sb:67020.643 --load-dump /home/ybelanger/workspace/sandbox_reactions/build/calibrate_runs/2026-10-23T12-27-52Z/m_bh_sb-01/checkpoint/s_1560.bin --continue --steps 1590 --timing --adapter "RTX 4090" --out out_<i>, 3 runs
+== run 1, box: load average: 0.93, 1.30, 0.62; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 0 %; compute apps: 0
+exit 0 wall_s 1.930242344
+SR-HEADLESS DONE steps=1590 sim_time=10.248003 until=none
+{"per_pass_ms": {"P0 edits": 0.019984, "P1 dt": 0.0048650666666666675, "P2 gravity": 0.14720000000000003, "P3 sinks": 0.18526613333333333, "P4 hydro": 0.8710933333333334, "P5 heat": 28.480829866666664, "P6 reactions": 0.6974613333333333, "P7 neutrino heating": 0.027089066666666665, "P8 floors": 0.044902399999999995, "P9 reductions": 0.02223893333333333}, "source": "gpu-timestamp", "step_ms_mean": 30.691954133333333}
+== run 2, box: load average: 0.93, 1.29, 0.62; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 95 %; compute apps: 0
+exit 0 wall_s 1.868211894
+SR-HEADLESS DONE steps=1590 sim_time=10.248003 until=none
+{"per_pass_ms": {"P0 edits": 0.01865066666666667, "P1 dt": 0.0048, "P2 gravity": 0.1460832, "P3 sinks": 0.1843434666666667, "P4 hydro": 0.8660256, "P5 heat": 28.200717866666672, "P6 reactions": 0.6985845333333333, "P7 neutrino heating": 0.02656426666666667, "P8 floors": 0.044620799999999995, "P9 reductions": 0.022020266666666663}, "source": "gpu-timestamp", "step_ms_mean": 30.402801066666672}
+== run 3, box: load average: 0.93, 1.29, 0.62; NVIDIA GeForce RTX 3060, 0 %;NVIDIA GeForce RTX 4090, 95 %; compute apps: 0
+exit 0 wall_s 1.888298354
+SR-HEADLESS DONE steps=1590 sim_time=10.248003 until=none
+{"per_pass_ms": {"P0 edits": 0.01872853333333334, "P1 dt": 0.004680533333333332, "P2 gravity": 0.14600000000000002, "P3 sinks": 0.18388799999999997, "P4 hydro": 0.8656522666666666, "P5 heat": 28.1990304, "P6 reactions": 0.6978399999999999, "P7 neutrino heating": 0.0266432, "P8 floors": 0.04481386666666665, "P9 reductions": 0.022220799999999992}, "source": "gpu-timestamp", "step_ms_mean": 30.400348800000007}
+--- the answers: calibrate --resume a copy of the cut (build/calibrate_runs/d87_cont) to --max-steps 1700 --progress-every 1
+exit 6 wall_s 9.120303813

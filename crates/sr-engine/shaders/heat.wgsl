@@ -226,7 +226,8 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // f32's ε of u alone leaves b − A x ~20× the u-measure's bound, so every pass ran a round and the passes never ended (64 on
 // heat_spot's first step, the twin 8). On the linear law the second pass
 // is the check: its residual is recomputed from the solved u, so a recursive residual that drifted from the true one is
-// solved again, not committed. The ceiling (64 passes, 4,096 rounds; §0.5 [M0-D37]) commits the last iterate unconverged.
+// solved again, not committed. The ceiling (64 passes, 4,096 rounds; §0.5 [M0-D37]) commits the last iterate's F by limited
+// fluxes (§0.5 [M0-D89], below).
 //
 // One dispatch a round (Chronopoulos–Gear's form of the method: one reduction point a round): `heat_round` is recorded
 // MAX_ROUNDS + 3 MAX_PASSES + 2 times, each slot reading its workgroup count from a word the slot before it wrote — the
@@ -246,7 +247,12 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // The commit: `heat_close` writes F = −D_f (u_b − u_a) at the solved u (the start state's when the step is pinned or
 // not run), side.flux and each cell's `radiated` Δt Σ_vac D_f (u_i − u_vac), with the heat sums; `heat_sum` closes the
 // balance, δ = −(Σ C (T − T⁰) + R)/Σ C T; `heat_apply` adds C (T − T⁰ + δ T) to E and keeps the step's rate (T − T⁰)/Δt
-// for the next step's first iterate (§0.5 [M0-D85]).
+// for the next step's first iterate (§0.5 [M0-D85]). Past the ceiling (§0.5 [M0-D89]) the last iterate's T is no answer —
+// a hot cell beside vacuum, still within a factor 2 of its T⁰, emits ~10¹² times the heat it holds and δ took that from
+// every cell — so the heat moves by limited fluxes instead: `heat_close` keeps each gas cell's scale s = min(1, held/outflow)
+// (the heat above its floor over what its faces would carry out), `heat_limit` takes every face's F at the scale of the cell
+// it leaves and books the cell's change −Δt Σ F and its light, δ = 0, and `heat_apply` adds the change and rewrites its
+// faces' F.
 //
 // The V-cycle as the preconditioner (§0.5 [M0-D82]; M0-D83; `parity.mg`): M⁻¹r is no longer cell-local, so a slot is a
 // group — its `heat_round`, then the levels (`mg_level0`, `mg_coarsen`), the V-cycle (the last section) and `heat_matvec`,
@@ -863,6 +869,38 @@ fn solved(xa: u32, ya: u32, xb: u32, yb: u32, d: f32) -> f32 {
     return -d * (u_side(xb, yb) - u_side(xa, ya));
 }
 
+// Whether the step commits by limited fluxes: it ran and reached the ceiling (§0.5 [M0-D89]).
+fn limited() -> bool {
+    return machine.report.stepped != 0u && machine.report.converged == 0u;
+}
+
+// A cell's outflow scale past the ceiling, `heat_close`'s in p's plane for a gas cell; 1 for vacuum.
+fn scale_at(x: u32, y: u32) -> f32 {
+    if (gas_at(x, y)) {
+        return solve[SV_P * dims.cells + y * dims.width + x];
+    }
+    return 1.0;
+}
+
+// F of a face at the scale of the cell it leaves: `minus` is the −x (−y) side's scale, `plus` the other's.
+fn limit(f: f32, minus: f32, plus: f32) -> f32 {
+    return f * select(plus, minus, f > 0.0);
+}
+
+// The limited F of cell (x, y)'s −x, +x, −y and +y faces, from the F `heat_close` wrote.
+fn limited_faces(x: u32, y: u32) -> array<f32, 4> {
+    let w = dims.width;
+    let fx = nx() + ny();
+    let fy = 2u * nx() + ny();
+    let me = scale_at(x, y);
+    return array<f32, 4>(
+        limit(faces[fx + y * (w + 1u) + x], scale_at(x - 1u, y), me),
+        limit(faces[fx + y * (w + 1u) + x + 1u], me, scale_at(x + 1u, y)),
+        limit(faces[fy + y * w + x], scale_at(x, y - 1u), me),
+        limit(faces[fy + (y + 1u) * w + x], me, scale_at(x, y + 1u)),
+    );
+}
+
 @compute @workgroup_size(8, 8)
 fn heat_close(@builtin(global_invocation_id) id: vec3<u32>, @builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_index) li: u32) {
     var part = vec4<f32>(0.0);
@@ -889,7 +927,14 @@ fn heat_close(@builtin(global_invocation_id) id: vec3<u32>, @builtin(workgroup_i
         }
         flux[cell] = 0.5 * (fl + fr);
         flux[n + cell] = 0.5 * (ft + fb);
-        if (machine.report.stepped != 0u && gas_at(x, y)) {
+        if (limited() && gas_at(x, y)) {
+            // Past the ceiling the light and the sums are `heat_limit`'s; here the cell's scale, s = min(1, held/outflow),
+            // the heat above its floor over what its faces would carry out.
+            let c = frozen[CAP * n + cell];
+            let out = machine.rec[1].dt * (max(-fl, 0.0) + max(fr, 0.0) + max(-ft, 0.0) + max(fb, 0.0));
+            let held = c * max(frozen[T0 * n + cell] - params.t_floor, 0.0);
+            solve[SV_P * n + cell] = select(1.0, held / out, out > held);
+        } else if (machine.report.stepped != 0u && gas_at(x, y)) {
             let t = final_t(cell);
             let c = frozen[CAP * n + cell];
             let emitted = machine.rec[1].dt * d_sums(x, y).y * (u_of(t) - u_of(params.t_floor));
@@ -901,6 +946,48 @@ fn heat_close(@builtin(global_invocation_id) id: vec3<u32>, @builtin(workgroup_i
     workgroupBarrier();
     tree(li, 32u);
     if (li == 0u) {
+        partials[2u * params.tiles + wid.y * ((abox.w + 7u) / 8u) + wid.x] = wsum[0];
+    }
+}
+
+// The commit past the ceiling (§0.5 [M0-D89]; the twin's `commit_limited`): each face's F from `heat_close` at the scale of
+// the cell it leaves, side.flux from those, the cell's change of heat −Δt Σ_f F_f (outflow positive) in the iterate's low-word
+// plane for `heat_apply` (the next step's first slot zeroes it), what leaves through vacuum and edge faces booked
+// `radiated`, and the sums `heat_sum` reads in `heat_close`'s place. A converged step's commit is `heat_close`'s alone.
+@compute @workgroup_size(8, 8)
+fn heat_limit(@builtin(global_invocation_id) id: vec3<u32>, @builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_index) li: u32) {
+    let on = limited();
+    var part = vec4<f32>(0.0);
+    if (on && id.x < abox.w && id.y < abox.h) {
+        let n = dims.cells;
+        let x = abox.x0 + id.x;
+        let y = abox.y0 + id.y;
+        let cell = y * dims.width + x;
+        let f = limited_faces(x, y);
+        flux[cell] = 0.5 * (f[0] + f[1]);
+        flux[n + cell] = 0.5 * (f[2] + f[3]);
+        if (gas_at(x, y)) {
+            let out = array<f32, 4>(-f[0], f[1], -f[2], f[3]);
+            var nb = neighbours(x, y);
+            var leaving = 0.0;
+            var light = 0.0;
+            for (var k = 0u; k < 4u; k++) {
+                leaving += out[k];
+                if (!gas_at(nb[k].x, nb[k].y)) {
+                    light += out[k];
+                }
+            }
+            let dt = machine.rec[1].dt;
+            let change = -dt * leaving;
+            solve[SV_L * n + cell] = change;
+            book[cell] += dt * light;
+            part = vec4<f32>(change, dt * light, frozen[CAP * n + cell] * frozen[T0 * n + cell] + change, 0.0);
+        }
+    }
+    wsum[li] = part;
+    workgroupBarrier();
+    tree(li, 32u);
+    if (on && li == 0u) {
         partials[2u * params.tiles + wid.y * ((abox.w + 7u) / 8u) + wid.x] = wsum[0];
     }
 }
@@ -917,8 +1004,9 @@ fn heat_sum(@builtin(local_invocation_index) li: u32) {
     tree(li, 128u);
     if (li == 0u) {
         let s = wsum[0];
+        // Past the ceiling the limited fluxes book each face on both sides: no closure (§0.5 [M0-D89]).
         var delta = 0.0;
-        if (machine.report.stepped != 0u && s.z > 0.0) {
+        if (machine.report.stepped != 0u && machine.report.converged != 0u && s.z > 0.0) {
             delta = -(s.x + s.y) / s.z;
         }
         machine.report.delta = delta;
@@ -962,12 +1050,37 @@ fn heat_apply(@builtin(global_invocation_id) id: vec3<u32>) {
         return;
     }
     let n = dims.cells;
-    let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
+    let x = abox.x0 + id.x;
+    let y = abox.y0 + id.y;
+    let cell = y * dims.width + x;
     let c = frozen[CAP * n + cell];
+    let past = limited();
+    if (past) {
+        // Past the ceiling (§0.5 [M0-D89]) the faces this cell writes in `heat_close` — its −x and −y, and its +x and +y at
+        // the box's edge — take their limited F, read and written by this cell alone.
+        let w = dims.width;
+        let me = scale_at(x, y);
+        let left = nx() + ny() + y * (w + 1u) + x;
+        let top = 2u * nx() + ny() + y * w + x;
+        faces[left] = limit(faces[left], scale_at(x - 1u, y), me);
+        faces[top] = limit(faces[top], scale_at(x, y - 1u), me);
+        if (id.x + 1u == abox.w) {
+            faces[left + 1u] = limit(faces[left + 1u], me, scale_at(x + 1u, y));
+        }
+        if (id.y + 1u == abox.h) {
+            faces[top + w] = limit(faces[top + w], me, scale_at(x, y + 1u));
+        }
+    }
     // The cell's P5 rate in this step, (T − T⁰)/Δt_n, for the next step's first iterate (§0.5 [M0-D85]): krylov's first s
     // plane, which no round reads before writing it; 0 off the gas and when the step did not run. A dump carries it.
     if (machine.report.stepped == 0u || c <= 0.0) {
         krylov[KR_S * n + cell] = 0.0;
+        return;
+    }
+    if (past) {
+        let change = solve[SV_L * n + cell];
+        hydro[3u * n + cell] += change;
+        krylov[KR_S * n + cell] = change / (c * machine.rec[1].dt);
         return;
     }
     let t = solve[SV_T * n + cell];

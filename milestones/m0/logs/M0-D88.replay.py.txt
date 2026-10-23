@@ -1,0 +1,79 @@
+# Replays §1.9.3's whole table (stages.rs ROWS as shipped, M0-D81's bound in) over an M0-D81 trace (heaviest object per
+# frame) under each M0-D88 candidate, with the 3-frame display hold, core_collapse/supernova at once, the events once and
+# §1.9.5's max(10 t.u., 20 τ_dyn) hold. The rows observe, never drive (I2) — except calibrate's one-step frames, which a
+# candidate starts at its first core_collapse frame: the replay is exact up to that frame only.
+import json, sys
+M_CH = 3216.4199210979236
+Z = [1, 2, 6, 10, 8, 12, 14, 16, 26, 0]; A = [1, 4, 12, 20, 16, 24, 28, 32, 56, 1]
+X_H, X_HE, X_FE, X_N = 0, 1, 8, 9
+G_H, G_HE, G_C, G_NE, G_O, G_SI, G_N = range(7)
+REMNANT = {"white_dwarf", "neutron_star", "black_hole", "failed_star"}
+def ye(x): return sum(xi * z / a for xi, z, a in zip(x, Z, A))
+def frames(path):
+    best = {}
+    for l in open(path):
+        r = json.loads(l)
+        if r["step"] not in best or r["M"] > best[r["step"]]["M"]:
+            best[r["step"]] = r
+    return [best[k] for k in sorted(best)]
+def burns(o, g, fuel):
+    l = o["lg"][g]
+    return l > 0 and all(o["lg"][k] <= l for k in range(G_N)) and l >= 0.1 * o["lnuc"] and o["xc"][fuel] >= 1e-3
+def classify(o, h, now, opt):
+    vd = o["R"] / o["tau"] if o["tau"] > 0 else 0
+    L, M, x, dc, unb = o["L"], o["M"], o["xc"], o["dc"], o["unb"]
+    ign = h["ign"]; lc = h["lc"]
+    y = ye(x)
+    ns = y <= 0.35 and dc >= 0.5 and o["sinks"] == 0
+    if opt == "a_passed": ns = ns and lc is not None
+    cc = o["lg"][G_N] < 0
+    if opt == "b_cross": cc_first = h["ye_prev"] is not None and h["ye_prev"] > 0.35 >= y and lc is None
+    else: cc_first = False
+    rows = [
+        ("black_hole", o["sinks"] > 0),
+        ("core_collapse", cc_first),
+        ("supernova", lc is not None and now - lc <= 20.0 and unb >= 0.1 * M),
+        ("neutron_star", ns),
+        ("core_collapse", cc),
+        ("white_dwarf", ign and dc >= 0.5 and o["lnuc"] < 0.01 * L and unb < 0.05 * M and x[X_N] < 0.5 and M <= M_CH),
+        ("failed_star", (not ign) and dc >= 0.5 and o["lg"][G_H] < 0.01 * L),
+        ("planetary_nebula", ign and dc >= 0.5 and o["lnuc"] < 0.1 * L and unb >= 0.05 * M and M <= M_CH),
+        ("iron_core", x[X_FE] >= 0.5 and o["lnuc"] < 0.1 * L),
+        ("si_burn", burns(o, G_SI, 6)), ("o_burn", burns(o, G_O, 3)), ("ne_burn", burns(o, G_NE, 4)), ("c_burn", burns(o, G_C, 2)),
+        ("he_core", o["lg"][G_HE] > 0 and o["lg"][G_HE] >= 0.1 * L and x[X_HE] >= 1e-3),
+        ("he_shell", ign and x[X_HE] < 1e-3 and x[X_H] < 1e-3 and not (o["lg"][G_C] > 0 and o["lg"][G_C] >= 0.1 * o["lnuc"])),
+        ("h_shell", ign and x[X_H] < 1e-3 and o["lg"][G_HE] < 0.1 * L),
+        ("main_sequence", L > 0 and 0.5 * L <= o["lg"][G_H] <= 2 * L and x[X_H] >= 1e-3),
+        ("collapsing", (not ign) and o["vr"] <= -0.1 * vd),
+        ("protostar", (not ign) and abs(o["vr"]) <= 0.05 * vd and o["W"] != 0 and 2 * o["P"] / abs(o["W"]) >= 0.8),
+    ]
+    return next((s for s, ok in rows if ok), "cloud")
+def replay(fr, opt):
+    h = {"ign": False, "lc": None, "ye_prev": None}
+    shown, streak, rawp, trail, since, ending, events, first_cc = None, 0, None, [], None, None, [], None
+    for r in fr:
+        h["ign"] = r["ign"]
+        s = classify(r, h, r["t"], opt)
+        h["ye_prev"] = ye(r["xc"])
+        if s == "core_collapse":
+            h["lc"] = r["t"]
+            if "core_collapse" not in [e[0] for e in events]:
+                events.append(("core_collapse", r["step"], round(r["t"], 3))); first_cc = r["step"]
+        if s == "supernova" and "supernova" not in [e[0] for e in events]:
+            events.append(("supernova", r["step"], round(r["t"], 3)))
+        streak = streak + 1 if s == rawp else 1
+        rawp = s
+        if s in ("core_collapse", "supernova") or streak >= 3:
+            if s != shown:
+                trail.append((s, round(r["t"], 2)))
+                since = r["t"]
+            shown = s
+        if shown in REMNANT and ending is None and r["t"] - since >= max(10.0, 20.0 * r["tau"]):
+            ending = (shown, r["step"], round(r["t"], 2), round(r["M"], 1))
+    return trail, events, ending, first_cc
+for path in sys.argv[1:]:
+    fr = frames(path)
+    print(f"{path}: {len(fr)} frames to step {fr[-1]['step']}, t {fr[-1]['t']:.2f}")
+    for opt in ("today", "a_passed", "b_cross"):
+        trail, events, ending, first_cc = replay(fr, opt)
+        print(f"  {opt:8} ending={ending}\n           events={events} one-step from frame {first_cc}\n           trail={trail}")

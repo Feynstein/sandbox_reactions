@@ -1,0 +1,56 @@
+== 2026-10-23T11:59:13-04:00 observe_run · task M0-R6-s2 · box laserax-ai-server :: bash tests/gpu.sh observe physics
+-- observe_run · exit=0 · 41.62 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 6 tests
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1616 sim_time=19.916875 until=met
+unbroken: 1616 steps, events [{"detail":{"by":"light","mass_sb":3344.923518313095},"kind":"ignition","object":1,"sim_time":8.631996505893767,"step":672}]
+stages [{"from_step":33,"sim_time":0.7751989793032408,"stage":"failed_star"},{"from_step":209,"sim_time":3.613835141994059,"stage":"collapsing"},{"from_step":336,"sim_time":4.843455782160163,"stage":"cloud"},{"from_step":432,"sim_time":5.781479169614613,"stage":"failed_star"},{"from_step":720,"sim_time":9.228574090637268,"stage":"cloud"},{"from_step":1616,"sim_time":19.916874542832375,"stage":"main_sequence"}]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=768 sim_time=9.789735 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1616 sim_time=19.916875 until=met
+SR-ERROR bad dump: --continue: /tmp/sr-observe-1577318-continue/cut/dumps/s_768.observers.json is step 512 at 6.644699060358107, the dump's 768 at 9.789735224097967
+SR-ERROR bad dump: --continue: /tmp/sr-observe-1577318-continue/cut/dumps/s_768.observers.json: No such file or directory (os error 2)
+SR-ERROR bad arguments: --continue needs --load-dump (the dump it goes on from)
+ok
+test observe::an_unmet_condition_is_exit_2_with_until_unmet ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.851416 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.329904 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.329904 until=none
+ok
+test observe::events_jsonl_and_the_ending_of_a_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ending at step 2121: black_hole shown from step 73, held 10.011 t.u. of 10.000
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2065 sim_time=11.107661 until=unmet
+ok
+test observe::until_a_stage_stops_at_the_frame_that_shows_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=49 sim_time=2.094263 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.724375 until=unmet
+ok
+test observe::until_is_checked_before_a_device_is_touched ... SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: --until "later": expected sim_time:<t>, event:<kind>, stage:<id> or ending
+SR-ERROR bad arguments: --until "stage:nova": a stage is one of black_hole|supernova|neutron_star|core_collapse|white_dwarf|failed_star|planetary_nebula|iron_core|si_burn|o_burn|ne_burn|c_burn|he_core|he_shell|h_shell|main_sequence|collapsing|protostar|cloud, got "nova"
+SR-ERROR bad arguments: --until "event:ending": an event is one of ignition|core_collapse|supernova|sink_formed, got "ending"
+SR-ERROR bad arguments: --until "sim_time:-3": sim_time takes a time of 0 or more, got "-3"
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+ok
+test observe::until_sim_time_stops_at_the_first_step_past_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1310 sim_time=5.000763 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1309 sim_time=4.995696 until=none
+sim_time:5 met at step 1310, sim time 5.000763407; the step before: 4.995695530
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 366 filtered out; finished in 41.48s
+
+

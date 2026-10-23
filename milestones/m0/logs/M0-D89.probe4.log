@@ -1,0 +1,4 @@
+test d89probe::fallback_twin ... D89 fallback shipped: passes 3 rounds 4096 converged false delta -1.8033827818806672e6 radiated 1.0237106027768535e13; grid dE -1.0237106027768764e13, dE + R -2.28515625e-1; gas cells with E < 0: 239999; hot cell E 8.192693e0 -> -1.2140228768738357e6 emitted 1.0237106026245363e13
+D89 fallback: 130971 cells limited
+D89 fallback limited fluxes: passes 3 rounds 4096 converged false delta 0e0 radiated 7.1340913833202e2; grid dE -7.134091383321089e2, dE + R -8.890310709830374e-11; gas cells with E < 0: 0; hot cell E 8.192693e0 -> 2.8071420429628207e0 emitted 1.4958595457898887e0
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 374 filtered out; finished in 13.43s

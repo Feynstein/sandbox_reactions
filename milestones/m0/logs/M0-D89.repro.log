@@ -1,0 +1,16 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 2517 passes 1 rounds 4096
+SR-HEADLESS DONE steps=2518 sim_time=10.145347 until=none
+
+real	0m2.122s
+user	0m0.829s
+sys	0m0.345s
+/tmp/d89:
+dumps
+events.jsonl
+summary.json
+
+/tmp/d89/dumps:
+s_2518.bin
+s_2518.observers.json
+['adapter', 'done', 'driver', 'dt_next', 'heat_unconverged', 'ledger', 'one_step', 'physics_hash', 'scene', 'sim_time', 'step', 'version', 'wall_s', 'watch', 'world']

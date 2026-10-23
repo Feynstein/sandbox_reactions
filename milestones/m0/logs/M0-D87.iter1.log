@@ -1,0 +1,18 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 2 tests
+test burn::cell::gpu_n_fe_steps_in_closed_form ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU iron block: X_n after 20 steps 0.1384607, worst |ΔX_n| against the march 9.30e-8, against the twin 9.30e-8
+GPU a_Y = b: X_n after 20 steps 0.1463139, worst |ΔX_n| against the march 2.27e-8, against the twin 2.27e-8
+GPU gate closes: X_n after 20 steps 0.1343925, worst |ΔX_n| against the march 3.12e-8, against the twin 3.12e-8
+GPU iron runs out: X_n after 20 steps 0.1564060, worst |ΔX_n| against the march 3.04e-8, against the twin 3.04e-8
+GPU gate limit: Y_eΣ 159.999990463 (Σ_N 160), X_Fe 8.615384101867676e-1, X_n 0.138461575
+GPU iron limit: Y_eΣ 164.000002444 (Σ_N 160), X_Fe 0e0, X_n 0.200000003
+ok
+test neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+gate closing: Fe fell by 9.900987148e-3 (closes at 9.900990099e-3), Y_eΣ 160.000000477 (Σ_N 160), 0 sub-steps
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 370 filtered out; finished in 0.79s
+

@@ -761,10 +761,10 @@ mod gpu {
         }
     }
 
-    /// The flag is set from any sub-cycle's rate, not the step's last: iron 1 % over the gate (g = 0.01) over a step of 10⁶ t.u.
-    /// converts until its own Y_e has closed the gate (the first sub-cycle moves 9 % of the iron, the gate shuts at 1 %), so
-    /// the rate is 0 from then to the step's end — the flag is set; the same cell over another step, its gate shut, leaves
-    /// it unset.
+    /// The flag is set from the rate at the step's start, not its end: iron 1 % over the gate (g = 0.01) over a step of 10⁶
+    /// t.u. converts until its own Y_e has closed the gate — N_Fe's closed form lands it at the gate (§0.5 [M0-R10], M0-D87:
+    /// Fe falls by what closes it within 10⁻⁶, Y_eΣ ≤ Σ_N as f32 resolves it), so the rate is 0 at the step's end — the flag
+    /// is set; the same cell over another step, its gate shut, leaves it unset.
     #[test]
     fn gpu_latch_is_set_by_a_rate_that_closes_within_the_step() {
         let gpu = device();
@@ -777,13 +777,13 @@ mod gpu {
         let st = rig.planes();
         let closes = 1.0 - 1.0 / (1.0 + g0);
         let fallen = 1.0 - frac(&st, "Fe", 0);
-        println!("gate closing: Fe fell by {fallen:.6e} (closes at {closes:.6e}), {} sub-steps", report.substeps);
-        assert!(rig.latch(), "the first sub-cycle's rate was > 0, the flag is set");
-        assert!(fallen > closes, "the gate stayed open: Fe fell by {fallen}, {closes} closes it");
-        assert!(y_e(&x_at(&st, 0)) * sigma < SIGMA_N, "the gate is shut at the step's end");
+        println!("gate closing: Fe fell by {fallen:.9e} (closes at {closes:.9e}), Y_eΣ {:.9} (Σ_N {SIGMA_N}), {} sub-steps", y_e(&x_at(&st, 0)) * sigma, report.substeps);
+        assert!(rig.latch(), "the rate at the step's start was > 0, the flag is set");
+        assert!((fallen - closes).abs() <= 1e-6, "not at the gate: Fe fell by {fallen}, {closes} closes it");
+        assert!(y_e(&x_at(&st, 0)) * sigma <= SIGMA_N * (1.0 + f64::from(f32::EPSILON)), "the gate is open at the step's end");
         rig.gpu.queue.write_buffer(rig.step.latch_flag(), 0, &0u32.to_le_bytes());
         rig.pass(1.0);
-        assert!(!rig.latch(), "a cell whose gate is shut sets nothing: the first pass's flag came from a sub-cycle before the last");
+        assert!(!rig.latch(), "a cell at its gate sets nothing: the first pass's flag came from the rate at its start");
     }
 
     /// The latch's first trigger by the physics (§1.8.5): two walls of iron (Σ = 90, Y_eΣ = 42 < 160, cold, moving at ±2

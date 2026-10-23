@@ -1,0 +1,31 @@
+    Finished `release` profile [optimized] target(s) in 3.13s
+ 12:31:54 up 11 days, 4 min,  4 users,  load average: 1.22, 0.97, 0.65
+NVIDIA GeForce RTX 3060, 0 %
+NVIDIA GeForce RTX 4090, 0 %
+== repro s_2517 -> 2518
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 2517 passes 1 rounds 4096
+SR-HEADLESS DONE steps=2518 sim_time=10.145347 until=none
+== life s_2510 -> 3100
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 2517 passes 1 rounds 4096
+SR-WARN heat unconverged step 2520 passes 2 rounds 4096
+SR-WARN heat unconverged step 2523 passes 3 rounds 4096
+SR-HEADLESS DONE steps=3100 sim_time=12.202589 until=none
+wall 46.90 s
+repro step 2517->2518
+  thermal      5.673374e+06 -> 5.673621e+06  (moved 2.4691e+02)
+  radiated     1.666301e+07 -> 1.666379e+07  (moved 7.7769e+02)
+  floor_added  5.195045e+08 -> 5.195140e+08  (moved 9.5206e+03)
+  potential    -1.608887e+08 -> -1.609077e+08  (moved -1.9027e+04)
+  invariant    -1.623002e+08 -> -1.622952e+08  (moved 4.9935e+03)
+  1e-3 |W| = 1.6091e+05
+life: 59 dumps, steps 2520..3100
+  step 2520 thermal 5.6799e+06 radiated 1.6666e+07 floor_added 5.1953e+08 invariant -1.622821e+08 |W| 1.6096e+08
+  step 2530 thermal 6.2363e+06 radiated 1.6697e+07 floor_added 5.1974e+08 invariant -1.620285e+08 |W| 1.6254e+08
+  step 2600 thermal 7.3638e+06 radiated 1.7223e+07 floor_added 5.2377e+08 invariant -1.623821e+08 |W| 1.6091e+08
+  step 2800 thermal 7.4442e+06 radiated 1.9154e+07 floor_added 5.3465e+08 invariant -1.629509e+08 |W| 1.5327e+08
+  step 3000 thermal 6.4458e+06 radiated 2.0953e+07 floor_added 5.4238e+08 invariant -1.636992e+08 |W| 1.4661e+08
+  step 3100 thermal 6.2896e+06 radiated 2.1678e+07 floor_added 5.4615e+08 invariant -1.638179e+08 |W| 1.4322e+08
+largest 10-step invariant move: to step 2570, -4.5584e+05 (floor_added 4.2582e+05, radiated 7.1983e+04)
+max 10-step floor_added 1.0299e+06, radiated 1.1860e+05

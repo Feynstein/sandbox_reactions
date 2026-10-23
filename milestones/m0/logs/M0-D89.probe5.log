@@ -1,0 +1,16 @@
+D89 cut 184,43 Multigrid: passes 1 rounds 4096 converged 0 delta -2.9444014e11 gained -6.469425e2 radiated 4.1849676e16 held 1.4213305e5; heat above the floor 0e0
+D89 cut 184,43 Jacobi: passes 1 rounds 4096 converged 0 delta -2.9444014e11 gained -6.469425e2 radiated 4.1849676e16 held 1.4213305e5; heat above the floor 0e0
+D89 cut 184,43 twin: passes 11 rounds 4096 converged false delta -1.680810573950771e-2 radiated 3.7826621256645367e3
+D89 cut 200,59 Multigrid: passes 1 rounds 4096 converged 0 delta -3.1871225e11 gained -1.01035156e3 radiated 4.1871172e16 held 1.313761e5; heat above the floor 0e0
+D89 cut 200,59 Jacobi: passes 1 rounds 4096 converged 0 delta -3.1871225e11 gained -1.01035156e3 radiated 4.1871172e16 held 1.313761e5; heat above the floor 0e0
+D89 cut 200,59 twin: passes 10 rounds 4096 converged false delta -2.9100238304611264e-1 radiated 3.9491292581744565e4
+D89 synthetic sigma 0.00002 T 340000 Multigrid: passes 14 rounds 96 converged 1 delta 1.01031084e-7 gained -2.035587e4 radiated 2.035586e4 held 9.665961e4; heat above the floor 0e0
+D89 synthetic sigma 0.00002 T 340000 Jacobi: passes 14 rounds 838 converged 1 delta 2.6874332e-6 gained -2.0356094e4 radiated 2.0355834e4 held 9.6659375e4; heat above the floor 0e0
+D89 synthetic sigma 0.00002 T 340000 twin: passes 15 rounds 1858 converged true delta 2.93531068658319e-13 radiated 2.0355865688099682e4
+D89 synthetic sigma 0.00002 T 100000 Multigrid: passes 12 rounds 65 converged 1 delta -6.0618746e-8 gained -2.0352363e4 radiated 2.035237e4 held 9.665945e4; heat above the floor 0e0
+D89 synthetic sigma 0.00002 T 100000 Jacobi: passes 12 rounds 605 converged 1 delta 3.0309438e-6 gained -2.035256e4 radiated 2.0352268e4 held 9.665925e4; heat above the floor 0e0
+D89 synthetic sigma 0.00002 T 100000 twin: passes 13 rounds 1522 converged true delta 2.919131721031354e-13 radiated 2.0352373032282107e4
+D89 synthetic sigma 0.0001 T 340000 Multigrid: passes 14 rounds 103 converged 1 delta 6.0618095e-7 gained -2.0375703e4 radiated 2.0375645e4 held 9.666049e4; heat above the floor 0e0
+D89 synthetic sigma 0.0001 T 340000 Jacobi: passes 14 rounds 914 converged 1 delta 7.8803555e-7 gained -2.037574e4 radiated 2.0375664e4 held 9.666045e4; heat above the floor 0e0
+D89 synthetic sigma 0.0001 T 340000 twin: passes 15 rounds 1863 converged true delta 1.7282749754984317e-13 radiated 2.0375653005150612e4
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 375 filtered out; finished in 4.78s
