@@ -1,0 +1,389 @@
+# M0-V9 session 5 — linux-pc (laserax-ai) + laserax-ai-server (RTX 4090, R18), 2026-10-23
+# rung_record now: model=claude-opus-5-5 level=max plugin=installed (the heading's rung)
+# the lead: «do task V9 on the server 4090»
+laserax-ai-server
+ 16:20:57 up 11 days,  3:53,  3 users,  load average: 0.03, 0.27, 0.42
+NVIDIA GeForce RTX 3060, 0 %, 15 MiB, 12288 MiB
+NVIDIA GeForce RTX 4090, 0 %, 17 MiB, 24564 MiB
+255ec37 M0-D90 done: a black hole from mass; G-WATCH's m_tov_sb exemption
+1243c32 M0-D90 in progress
+8332496 M0-D86 done
+?? milestones/m0/logs/M0-D85-decoy.launch.web.log
+?? milestones/m0/logs/M0-D85-race.launch.game-xvfb.log
+?? milestones/m0/logs/M0-R6-s2-decoy.launch.web.log
+?? milestones/m0/logs/M0-R6-s2-race.launch.game-xvfb.log
+?? milestones/m0/logs/M0-R9-decoy.launch.web.log
+?? milestones/m0/logs/M0-R9-race.launch.game-xvfb.log
+--- calibration.json
+{
+  "m_ch_sb": 3216.4199210979236,
+  "m_ign_sb": 2515.741187124804,
+  "m_tov_sb": 4853.169981814195,
+  "m_up_sb": 3657.915162510358,
+  "max_gas_speed": 64.11116923863287,
+  "measured": {
+    "adapter": "NVIDIA GeForce RTX 5090",
+    "box": "laserax-ai",
+    "date": "2026-10-21T19:37:52Z",
+    "git": "f39c6db"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "8ca855fbccfaa0715314aed86c7689562589bde39663728be5eec245dd9f73e2",
+  "version": 1
+}
+--- calibrate_runs
+total 92
+drwxrwxr-x 23 ybelanger ybelanger 4096 Oct 23 13:03 .
+drwxrwxr-x  6 ybelanger ybelanger 4096 Oct 23 16:11 ..
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 10:52 2026-10-22T14-52-35Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 11:04 2026-10-22T15-04-23Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 11:08 2026-10-22T15-08-15Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 13:17 2026-10-22T17-17-19Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 13:18 2026-10-22T17-18-51Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 13:26 2026-10-22T17-26-00Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 13:26 2026-10-22T17-26-20Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 14:48 2026-10-22T18-48-47Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 14:49 2026-10-22T18-49-14Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 14:49 2026-10-22T18-49-34Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 14:52 2026-10-22T18-52-24Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 14:52 2026-10-22T18-52-47Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 22 14:53 2026-10-22T18-53-02Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 23 08:27 2026-10-23T12-27-52Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 Oct 23 09:26 2026-10-23T13-23-29Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 Oct 23 09:32 2026-10-23T13-30-39Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 Oct 23 10:21 2026-10-23T14-17-41Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 Oct 23 10:31 2026-10-23T14-27-54Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 Oct 23 12:55 2026-10-23T16-52-12Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 23 13:03 2026-10-23T17-03-51Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 Oct 23 08:29 d87_cont
+--- procs
+-rwxrwxr-x 2 ybelanger ybelanger 21743656 2026-10-23 12:52:05.629635541 -0400 build/target/release/sandbox-reactions
+newest sources:
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme2n1p2  937G  395G  495G  45% /
+/dev/nvme2n1p2  937G  395G  495G  45% /
+17G	/tmp/d90p
+186M	build/calibrate_runs
+
+real	0m0.123s
+user	0m0.066s
+sys	0m0.038s
+-rwxrwxr-x 2 ybelanger ybelanger 21743656 2026-10-23 12:52:05.629635541 -0400 build/target/release/sandbox-reactions
+    Finished `release` profile [optimized] target(s) in 0.07s
+exit=0
+2026-10-22T14-52-35Z m_bh_sb-01             RUNNING/CUT progress step=1010 t=10.469129562843591 stage=white_dwarf
+2026-10-22T15-04-23Z m_bh_sb-01             RUNNING/CUT progress step=3632 t=29.282436239533126 stage=white_dwarf
+2026-10-22T15-08-15Z m_bh_sb-01             scene=calibrate:m_bh_sb:4572.394 adapter=NVIDIA GeForce RTX 4090 git=40bdeac steps=1943 t=15.54 wall=62s until={'condition': 'ending', 'met': True} ending={'held_t': 11.18704269407317, 'hold_t': 10.0, 'mass_sb': 4536.692187045701, 'stage': 'white_dwarf'}
+2026-10-22T17-17-19Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=40bdeac steps=1400 t=9.48 wall=28s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T17-18-51Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=40bdeac steps=600 t=4.37 wall=8s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T17-26-00Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=40bdeac steps=1400 t=9.04 wall=19s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T17-26-20Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=40bdeac steps=600 t=4.28 wall=9s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T18-48-47Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=a3aaefd steps=1400 t=9.04 wall=19s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T18-49-14Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=a3aaefd steps=1400 t=9.04 wall=19s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T18-49-34Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=a3aaefd steps=1400 t=9.04 wall=19s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T18-52-24Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=a3aaefd steps=1400 t=9.25 wall=15s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T18-52-47Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=a3aaefd steps=1400 t=9.25 wall=14s until={'condition': 'ending', 'met': False} ending=None
+2026-10-22T18-53-02Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=a3aaefd steps=1400 t=9.25 wall=14s until={'condition': 'ending', 'met': False} ending=None
+2026-10-23T12-27-52Z m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=03e763b steps=1560 t=10.09 wall=17s until={'condition': 'ending', 'met': False} ending=None
+2026-10-23T13-23-29Z m_bh_sb-01             scene=calibrate:m_bh_sb:4572.394 adapter=NVIDIA GeForce RTX 4090 git=03e763b steps=5970 t=29.11 wall=190s until={'condition': 'ending', 'met': True} ending={'held_t': 10.002780898008496, 'hold_t': 10.0, 'mass_sb': 2380.4312451118603, 'stage': 'neutron_star'}
+2026-10-23T13-23-29Z m_bh_sb-02             RUNNING/CUT progress step=6009 t=28.697345880558714 stage=neutron_star
+2026-10-23T13-30-39Z m_bh_sb-01             scene=calibrate:m_bh_sb:6702.064 adapter=NVIDIA GeForce RTX 4090 git=03e763b steps=4210 t=21.55 wall=120s until={'condition': 'ending', 'met': True} ending={'held_t': 10.03469578572549, 'hold_t': 10.0, 'mass_sb': 2992.934429898858, 'stage': 'neutron_star'}
+2026-10-23T13-30-39Z m_bh_sb-02             RUNNING/CUT progress step=5193 t=25.62203141162172 stage=core_collapse
+2026-10-23T14-17-41Z m_bh_sb-01             scene=calibrate:m_bh_sb:6702.064 adapter=NVIDIA GeForce RTX 4090 git=03e763b steps=6659 t=31.06 wall=216s until={'condition': 'ending', 'met': True} ending={'held_t': 10.027963907225057, 'hold_t': 10.0, 'mass_sb': 2662.712880895473, 'stage': 'neutron_star'}
+2026-10-23T14-17-41Z m_bh_sb-02             (no record) ['dumps']
+2026-10-23T14-27-54Z m_bh_sb-01             scene=calibrate:m_bh_sb:6702.064 adapter=NVIDIA GeForce RTX 4090 git=03e763b steps=6659 t=31.06 wall=216s until={'condition': 'ending', 'met': True} ending={'held_t': 10.027963907225057, 'hold_t': 10.0, 'mass_sb': 2662.712880895473, 'stage': 'neutron_star'}
+2026-10-23T14-27-54Z m_bh_sb-02             RUNNING/CUT progress step=3013 t=16.08422744856216 stage=neutron_star
+2026-10-23T16-52-12Z m_bh_sb-01             scene=calibrate:m_bh_sb:4572.394 adapter=NVIDIA GeForce RTX 4090 git=03e763b steps=5970 t=29.11 wall=191s until={'condition': 'ending', 'met': True} ending={'held_t': 10.002780898008496, 'hold_t': 10.0, 'mass_sb': 2380.4312451118603, 'stage': 'neutron_star'}
+2026-10-23T16-52-12Z m_bh_sb-02             RUNNING/CUT progress step=9005 t=36.3763351237867 stage=black_hole
+2026-10-23T17-03-51Z m_bh_sb-01             RUNNING/CUT progress step=3506 t=19.937410302925855 stage=black_hole
+d87_cont m_bh_sb-01             scene=calibrate:m_bh_sb:67020.643 adapter=NVIDIA GeForce RTX 4090 git=03e763b steps=1700 t=10.76 wall=25s until={'condition': 'ending', 'met': False} ending=None
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/v9s5/p1.json wall_s=0.1
+
+real	0m0.063s
+user	0m0.058s
+sys	0m0.005s
+exit=0
+probe hash 8ca855fbccfaa0715314aed86c7689562589bde39663728be5eec245dd9f73e2
+file  hash 8ca855fbccfaa0715314aed86c7689562589bde39663728be5eec245dd9f73e2
+match True
+{'m_ch_sb': 3216.4199210979236, 'm_tov_sb': 4853.169981814195, 'measured': {'adapter': 'cpu', 'box': 'laserax-ai-server', 'date': '2026-10-23T20:26:45Z', 'git': '255ec37'}}
+
+## 16:3x EDT — handed to the lead [NOT RUN — for you], laserax-ai-server, RTX 4090 (the whole calibration, [M0-D80]: items 3, 4, 6 re-measured on this binary)
+ssh -t ybelanger@192.168.1.134 'cd ~/workspace/sandbox_reactions && cal() { build/target/release/sandbox-reactions calibrate --adapter "RTX 4090" --out assets/calibration.json --checkpoint-every 3000 "$@"; } && cal --only m_ch_sb,m_tov_sb && cal --only m_ign_sb --progress-every 1000 && cal --only m_up_sb --progress-every 5000 --max-steps 600000 && cal --only m_bh_sb --progress-every 1000 --max-steps 200000 && cal --only preset_mass_sb --progress-every 2000 --max-steps 600000'
+# pre-flight (mine, 16:2x): server idle (RTX 4090 0 %, 17 MiB; load 0.03), HEAD 255ec37, tracked tree clean; cargo build --release --locked -p sr-app → Finished, nothing rebuilt;
+# items 1–2 into /tmp/v9s5/p1.json: m_ch_sb 3216.419921, m_tov_sb = ns_sigma_max_sb 4853.169982 (worst virial 1.56e-5/1.51e-5), physics_hash 8ca855fb… = the file's; disk 495 GB free.
+# pace on the RTX 4090 at this tree (server records): 4,572.394 → neutron_star 5,970 steps 191 s; 6,702.064 → neutron_star 6,659 steps 216 s; 20 M₀ black_hole shown at step 9,005 after 8.2 min (ending NOT RUN, D90).
+# pace on the RTX 5090 at f39c6db (linux-pc records 2026-10-21): m_up_sb 10 lives 1,806 s (light: 3,351 142,801 steps 719 s; 3,639 117,457 steps 454 s; heavy ≤ 3,665 steps, 26–286 s).
+
+## 16:4x EDT — R1 measured (D90's probe snapshots, RTX 4090): the 20 M₀ life's max_gas_speed 87.7 from step 8,081 through 8,559 (sink 8,494); 15,000: 55.4 through 3,141
+## the plan: status IN PROGRESS (awaiting: the lead's whole calibration on the RTX 4090), handoff, register (Next task, Open D/BLOCKED, Awaiting lead)
+## plan_lint [ALREADY RUN — PASS] linux-pc: 680/0/0 GO (logs/M0-V9-r7.plan_lint.log); no claim run — no code, scope or doc changed
+## 16:4x — the lead runs the chain in tmux session v9cal on the server (overnight); tmux 3.4 present (re-probed)
+v9cal: 1 windows (created Fri Oct 23 16:41:55 2026) (attached)
+--- pane
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=95006 sim_time=1087.046 heat_unconverged=34 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01130 s/step   0.003433 P5_ceil         0
+  star   M            3299 R           16.50 tau_dyn     1.167 M_unb           0
+  core   sigma_c     17.01 T_c         59.14 d_c        0.5980 Ye_c       0.6252
+  centre X_Fe            0 X_n             0 v_r     -0.007283 vr/vdyn -5.150e-4
+  light  L            5894 L_nuc        5814 L_N             0 L_nu            0
+  world  escaped     15.41 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=100014 sim_time=1143.488 heat_unconverged=34 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01125 s/step   0.003864 P5_ceil         0
+  star   M            3292 R           16.50 tau_dyn     1.168 M_unb           0
+  core   sigma_c     18.51 T_c         61.51 d_c        0.6030 Ye_c       0.6078
+  centre X_Fe            0 X_n             0 v_r     -0.007207 vr/vdyn -5.103e-4
+  light  L            6408 L_nuc        6327 L_N             0 L_nu            0
+  world  escaped     15.41 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=105006 sim_time=1199.454 heat_unconverged=34 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01120 s/step   0.003868 P5_ceil         0
+  star   M            3282 R           16.74 tau_dyn     1.196 M_unb           0
+  core   sigma_c     19.41 T_c         64.75 d_c        0.5984 Ye_c       0.5934
+  centre X_Fe            0 X_n             0 v_r     -0.006865 vr/vdyn -4.903e-4
+  light  L            6933 L_nuc        6847 L_N             0 L_nu            0
+  world  escaped     16.39 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=110014 sim_time=1255.334 heat_unconverged=34 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01113 s/step   0.005135 P5_ceil         0
+  star   M            3267 R           17.19 tau_dyn     1.247 M_unb           0
+  core   sigma_c     20.88 T_c         67.28 d_c        0.6023 Ye_c       0.5801
+  centre X_Fe            0 X_n             0 v_r     -0.002219 vr/vdyn -1.610e-4
+  light  L            7585 L_nuc        7584 L_N             0 L_nu            0
+  world  escaped     22.45 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=115006 sim_time=1310.690 heat_unconverged=34 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01105 s/step   0.005118 P5_ceil         0
+  star   M            3242 R           17.45 tau_dyn     1.280 M_unb           0
+  core   sigma_c     23.20 T_c         69.36 d_c        0.6159 Ye_c       0.5655
+  centre X_Fe            0 X_n             0 v_r      0.001309 vr/vdyn  9.606e-5
+  light  L            8312 L_nuc        8340 L_N             0 L_nu            0
+  world  escaped     38.95 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=120014 sim_time=1366.094 heat_unconverged=34 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01104 s/step   0.005191 P5_ceil         0
+  star   M            3201 R           18.58 tau_dyn     1.416 M_unb           0
+  core   sigma_c     24.78 T_c         69.92 d_c        0.6296 Ye_c       0.5548
+  centre X_Fe            0 X_n             0 v_r       0.01982 vr/vdyn  0.001510
+  light  L            9055 L_nuc        9124 L_N             0 L_nu            0
+  world  escaped     67.41 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=125006 sim_time=1421.027 heat_unconverged=34 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01097 s/step   0.004652 P5_ceil         0
+  star   M            3128 R           18.78 tau_dyn     1.455 M_unb           0
+  core   sigma_c     27.27 T_c         74.71 d_c        0.6456 Ye_c       0.5393
+  centre X_Fe            0 X_n             0 v_r       0.02906 vr/vdyn  0.002251
+  light  L            9586 L_nuc        9667 L_N             0 L_nu            0
+  world  escaped     127.3 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=130014 sim_time=1475.451 heat_unconverged=34 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01066 s/step   0.005191 P5_ceil         0
+  star   M            3027 R           19.77 tau_dyn     1.598 M_unb           0
+  core   sigma_c     29.47 T_c         74.25 d_c        0.6701 Ye_c       0.5419
+  centre X_Fe            0 X_n             0 v_r       0.06363 vr/vdyn  0.005142
+  light  L           10586 L_nuc       11194 L_N             0 L_nu            0
+  world  escaped     213.4 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=133534 sim_time=1512.078835 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3351.032 ignited=true core_collapse=true ending=none steps=133534 sim_time=1512.079 wall_s=528.
+0 heat_unconverged=34 record=build/calibrate_runs/2026-10-23T20-43-27Z/m_up_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_up_sb mass=46914.450 step=626 sim_time=5.259 heat_unconverged=1 stage=cloud | raw=he_shell
+  frame  steps           1 dt       0.004067 s/step     0.1649 P5_ceil         0
+  star   M           46896 R           93.90 tau_dyn     4.202 M_unb       191.9
+  core   sigma_c     4.335 T_c         309.8 d_c       0.09807 Ye_c       0.4643
+  centre X_Fe       1.0000 X_n             0 v_r         6.517 vr/vdyn    0.2916
+  light  L         6.630e8 L_nuc     3.344e9 L_N             0 L_nu      3.320e9
+  world  escaped     2.830 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=46914.450 step=643 sim_time=5.340 heat_unconverged=6 stage=he_shell | raw=iron_core
+  frame  steps           1 dt       0.005590 s/step     0.2080 P5_ceil         0
+  star   M           46896 R           100.5 tau_dyn     4.656 M_unb       90.03
+  core   sigma_c     4.531 T_c         106.8 d_c        0.2472 Ye_c       0.4643
+  centre X_Fe        1.000 X_n             0 v_r         13.09 vr/vdyn    0.6062
+  light  L         1.169e6 L_nuc    1.001e-5 L_N             0 L_nu        43.03
+  world  escaped     3.225 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=1731 sim_time=12.051053 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=46914.450 ignited=true core_collapse=true ending=none steps=1731 sim_time=12.051 wall_s=33.1 he
+at_unconverged=6 record=build/calibrate_runs/2026-10-23T20-43-27Z/m_up_sb-02
+SR-ERROR calibration failed: the bracket 3351.0..46914.5: its ends agree (3351.0 is Heavy, 46914.5 is Heavy), so the threshold is not in it —
+ widen it with --bracket (two runs spent)
+ybelanger@laserax-ai-server:~/workspace/sandbox_reactions$ cd workspace/sandbox_reactions/
+--- procs
+--- stamps
+total 92
+drwxrwxr-x  4 ybelanger ybelanger 4096 16:52 2026-10-23T20-43-27Z
+drwxrwxr-x 12 ybelanger ybelanger 4096 16:43 2026-10-23T20-42-01Z
+drwxrwxr-x  3 ybelanger ybelanger 4096 13:03 2026-10-23T17-03-51Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 12:55 2026-10-23T16-52-12Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 10:31 2026-10-23T14-27-54Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 10:21 2026-10-23T14-17-41Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 09:32 2026-10-23T13-30-39Z
+{
+  "m_ch_sb": 3216.4199210979236,
+  "m_ign_sb": 2515.741187124804,
+  "m_tov_sb": 4853.169981814195,
+  "m_up_sb": 3657.915162510358,
+  "max_gas_speed": 64.11116923863287,
+  "measured": {
+    "adapter": "NVIDIA GeForce RTX 4090",
+    "box": "laserax-ai-server",
+    "date": "2026-10-23T20:43:26Z",
+    "git": "255ec37"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "8ca855fbccfaa0715314aed86c7689562589bde39663728be5eec245dd9f73e2",
+  "version": 1
+}
+build/calibrate_runs/2026-10-23T20-42-01Z/:
+total 48
+drwxrwxr-x 12 ybelanger ybelanger 4096 Oct 23 16:43 .
+drwxrwxr-x 25 ybelanger ybelanger 4096 Oct 23 16:43 ..
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:42 m_ign_sb-01
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:42 m_ign_sb-02
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:42 m_ign_sb-03
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:42 m_ign_sb-04
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:42 m_ign_sb-05
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:42 m_ign_sb-06
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:42 m_ign_sb-07
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:43 m_ign_sb-08
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:43 m_ign_sb-09
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:43 m_ign_sb-10
+
+build/calibrate_runs/2026-10-23T20-43-27Z/:
+total 16
+drwxrwxr-x  4 ybelanger ybelanger 4096 Oct 23 16:52 .
+drwxrwxr-x 25 ybelanger ybelanger 4096 Oct 23 16:43 ..
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:52 m_up_sb-01
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 16:52 m_up_sb-02
+
+build/calibrate_runs/2026-10-23T20-43-27Z/m_up_sb-01/:
+total 20
+drwxrwxr-x 2 ybelanger ybelanger 4096 Oct 23 16:52 .
+drwxrwxr-x 4 ybelanger ybelanger 4096 Oct 23 16:52 ..
+-rw-rw-r-- 1 ybelanger ybelanger  241 Oct 23 16:52 events.jsonl
+-rw-rw-r-- 1 ybelanger ybelanger 5227 Oct 23 16:52 summary.json
+== m_up_sb-01 calibrate:m_up_sb:3351.032 steps 133534 t 1512.078834832646 wall 528.04809445 git 255ec37 max_gas_speed 30.636459396315082
+  until {'condition': 'collapse|ending', 'met': True}
+  event {'detail': {'by': 'light', 'mass_sb': 3344.90674475953}, 'kind': 'ignition', 'object': 1, 'sim_time': 8.644881427288055, 'step': 673}
+  event {'detail': {'mass_sb': 2921.9969133213162}, 'kind': 'core_collapse', 'object': 1, 'sim_time': 1512.078834832646, 'step': 133534}
+  object {'at_x_h': {'luminosity': 4607.55599286019, 'radius': 16.8030199176764, 'sim_time': 902.8714805906639, 'x_h_c': 0.35}, 'id': 1, 'mass_sb': 2921.9969133213162, 'stage': 'core_collapse'}
+   stages [('failed_star', 33, 0.78), ('collapsing', 209, 3.61), ('cloud', 337, 4.85), ('failed_star', 433, 5.79), ('cloud', 721, 9.24), ('main_sequence', 1601, 19.74), ('cloud', 1697, 20.86), ('main_sequence', 2017, 24.59), ('he_core', 118078, 1344.68), ('main_sequence', 132590, 1502.87), ('white_dwarf', 132766, 1504.73), ('planetary_nebula', 133022, 1508.23), ('core_collapse', 133534, 1512.08)]
+  ledger end {'energy': {'cold': 925067.5340358368, 'escaped': 13746.666919548497, 'floor_added': 87528.40868736009, 'invariant': -270630.20005867584, 'kinetic': 137511.59286248684, 'neutrino_deposited': 0.0, 'neutrino_lost': 15224420.91995095, 'nuclear_released': 22633308.833212983, 'potential': -2294698.364112679, 'radiated': 8318410.109623079, 'swallowed': 0.0, 'thermal': 125748.58256244287, 'tools': 0.0}, 'mass': {'cleared': 0.0, 'erased': 0.0, 'escaped': 313.42533059337177, 'grid': 2996.0458100053947, 'invariant': 3351.032576538261, 'painted': 0.0, 'preset_dropped': 0.0, 'sinks': 0.0, 'vacuum_reset': 41.56143593949442}, 'momentum': {'escaped': [6.840246708493019, 101.05790286587705], 'grid': [-300.77102570604984, -230.09907006874255], 'invariant': [-293.93077899755684, -129.0411672028655], 'sinks': [0.0, 0.0]}, 'sim_time': 1512.078834832646, 'step': 133534}
+== m_up_sb-02 calibrate:m_up_sb:46914.450 steps 1731 t 12.051053197821602 wall 33.118435692 git 255ec37 max_gas_speed 38.98710817831997
+  until {'condition': 'collapse|ending', 'met': True}
+  event {'detail': {'by': 'light', 'mass_sb': 46903.242587693036}, 'kind': 'ignition', 'object': 1, 'sim_time': 3.711769231595099, 'step': 433}
+  event {'detail': {'mass_sb': 46411.17500267178}, 'kind': 'core_collapse', 'object': 1, 'sim_time': 12.051053197821602, 'step': 1731}
+  object {'at_x_h': {'luminosity': 3025643.2578202575, 'radius': 93.9252686682837, 'sim_time': 5.255433095851913, 'x_h_c': 0.35}, 'id': 1, 'mass_sb': 46411.17500267178, 'stage': 'core_collapse'}
+   stages [('cloud', 33, 0.41), ('collapsing', 113, 1.16), ('cloud', 481, 4.12), ('he_shell', 642, 5.33), ('iron_core', 675, 5.53), ('core_collapse', 1731, 12.05)]
+  ledger end {'energy': {'cold': 7349502.380950639, 'escaped': 112089.04494772076, 'floor_added': 1517748.9906838865, 'invariant': -12701738.950941954, 'kinetic': 2622863.011006186, 'neutrino_deposited': 0.0, 'neutrino_lost': 398436164.1019148, 'nuclear_released': 397573704.24722636, 'potential': -31225083.440807447, 'radiated': 7350642.159039694, 'swallowed': 0.0, 'thermal': 1743537.0299166366, 'tools': 0.0}, 'mass': {'cleared': 0.0, 'erased': 0.0, 'escaped': 489.2173075839137, 'grid': 46424.97658544639, 'invariant': 46914.45098057905, 'painted': 0.0, 'preset_dropped': 0.0, 'sinks': 0.0, 'vacuum_reset': 0.25708754874171813}, 'momentum': {'escaped': [-10.822574459651534, -84.83666546914077], 'grid': [-567.0388053904753, -214.97023646964226], 'invariant': [-577.8613798501268, -299.806901938783], 'sinks': [0.0, 0.0]}, 'sim_time': 12.051053197821602, 'step': 1731}
+--- P3a start 17:01:19
+## 17:0x — m_up_sb exit 6 (M₀ life core_collapse at 1512.08, step 133,534); P3 refused by the lead; m_bh_sb alone handed for the night (tmux v9bh)
+## 17:1x — filed M0-D92 (before V9), flagged R1 into it, register + handoff updated; plan_lint run (see the scope log)
+v9cal: 1 windows (created Fri Oct 23 16:41:55 2026) (attached)
+--- pane (last lines)
+SR-CALIBRATE run item=m_bh_sb side=none mass=67020.643 ignited=true core_collapse=true ending=failed_star steps=23987 sim_time=79.747 wall_s=1621.0 heat_unconverged=
+SR-ERROR calibration failed: m_bh_sb: the run at mass 67020.643 is on neither side of the threshold (mass=67020.643 ignited=true core_collapse=true ending=failed_sta
+--- procs
+--- file
+{
+  "m_ch_sb": 3216.4199210979236,
+  "m_ign_sb": 2515.741187124804,
+  "m_tov_sb": 4853.169981814195,
+  "m_up_sb": 3657.915162510358,
+  "max_gas_speed": 64.11116923863287,
+  "measured": {
+    "adapter": "NVIDIA GeForce RTX 4090",
+    "box": "laserax-ai-server",
+    "date": "2026-10-23T20:43:26Z",
+    "git": "255ec37"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "8ca855fbccfaa0715314aed86c7689562589bde39663728be5eec245dd9f73e2",
+  "version": 1
+}
+--- stamps
+total 96
+drwxrwxr-x  4 ybelanger ybelanger 4096 10-23 17:16 2026-10-23T21-08-46Z
+drwxrwxr-x  4 ybelanger ybelanger 4096 10-23 16:52 2026-10-23T20-43-27Z
+drwxrwxr-x 12 ybelanger ybelanger 4096 10-23 16:43 2026-10-23T20-42-01Z
+build/calibrate_runs/2026-10-23T21-08-46Z/m_bh_sb-01/:
+total 20
+drwxrwxr-x 2 ybelanger ybelanger 4096 Oct 23 17:16 .
+drwxrwxr-x 4 ybelanger ybelanger 4096 Oct 23 17:16 ..
+-rw-rw-r-- 1 ybelanger ybelanger  542 Oct 23 17:16 events.jsonl
+-rw-rw-r-- 1 ybelanger ybelanger 4823 Oct 23 17:16 summary.json
+
+build/calibrate_runs/2026-10-23T21-08-46Z/m_bh_sb-02/:
+total 32
+drwxrwxr-x 2 ybelanger ybelanger  4096 Oct 23 17:43 .
+drwxrwxr-x 4 ybelanger ybelanger  4096 Oct 23 17:16 ..
+-rw-rw-r-- 1 ybelanger ybelanger  6463 Oct 23 17:43 events.jsonl
+-rw-rw-r-- 1 ybelanger ybelanger 14025 Oct 23 17:43 summary.json
+== m_bh_sb-01 calibrate:m_bh_sb:4572.394 steps 42674 t 463.676 wall 465.5 git 255ec37 max_gas_speed 52.18279813304805
+  until {'condition': 'ending', 'met': True}
+  event ignition obj 1 step 257 t 3.945 {'by': 'fuel', 'mass_sb': 4570.916450064629}
+  event core_collapse obj 1 step 1329 t 10.952 {'mass_sb': 4537.159851774573}
+  event supernova obj 1 step 1330 t 10.957 {'mass_sb': 4537.022694264539}
+  event ending obj 1 step 42674 t 463.676 {'held_t': 438.5413152920082, 'hold_t': 438.42378071252057, 'mass_sb': 2472.7861963538453, 'stage': 'neutron_star'}
+  object id 1 mass 2472.8 stage neutron_star ending None pred None
+    stages [('failed_star', 33, 0.71), ('collapsing', 225, 3.69), ('iron_core', 305, 4.33), ('core_collapse', 1329, 10.95), ('supernova', 1330, 10.96), ('neutron_star', 3458, 25.13)]
+  ledger mass {'cleared': 0.0, 'erased': 0.0, 'escaped': 2046.477, 'grid': 2525.511, 'invariant': 4572.393, 'painted': 0.0, 'preset_dropped': 0.0, 'sinks': 0.0, 'vacuum_reset': 0.404}
+== m_bh_sb-02 calibrate:m_bh_sb:67020.643 steps 23987 t 79.747 wall 1621.0 git 255ec37 max_gas_speed 108.13005012701855
+  until {'condition': 'ending', 'met': True}
+  event ignition obj 1 step 241 t 1.896 {'by': 'light', 'mass_sb': 67016.40737832803}
+  event core_collapse obj 1 step 1528 t 9.727 {'mass_sb': 66550.64555450995}
+  event supernova obj 1 step 2106 t 12.207 {'mass_sb': 65293.715221175924}
+  event sink_formed obj 1 step 5434 t 22.377 {'mass_sb': 44828.34848511126}
+  event sink_formed obj 8 step 10314 t 37.997 {'mass_sb': 32324.54270993918}
+  event sink_formed obj 16 step 13835 t 48.686 {'mass_sb': 7906.814028673107}
+  event sink_formed obj 18 step 13979 t 49.153 {'mass_sb': 7902.527879018569}
+  event sink_formed obj 19 step 14027 t 49.321 {'mass_sb': 7901.731386402156}
+  event sink_formed obj 20 step 14059 t 49.439 {'mass_sb': 24259.475489016855}
+  event sink_formed obj 21 step 14187 t 49.922 {'mass_sb': 7900.300602357136}
+  event sink_formed obj 22 step 14267 t 50.228 {'mass_sb': 7899.726985541172}
+  event sink_formed obj 23 step 14411 t 50.681 {'mass_sb': 24119.17991018435}
+  event sink_formed obj 24 step 14427 t 50.727 {'mass_sb': 7898.8974740008125}
+  event sink_formed obj 25 step 14587 t 51.231 {'mass_sb': 7898.314439280744}
+  event sink_formed obj 26 step 14699 t 51.603 {'mass_sb': 7897.910560149408}
+  event sink_formed obj 27 step 14779 t 51.84 {'mass_sb': 24034.068661413854}
+  event sink_formed obj 28 step 14939 t 52.301 {'mass_sb': 7897.50565553434}
+  event sink_formed obj 30 step 15035 t 52.576 {'mass_sb': 7897.183914866066}
+  event sink_formed obj 31 step 15147 t 52.907 {'mass_sb': 23967.64854552294}
+  event sink_formed obj 32 step 15355 t 53.519 {'mass_sb': 7891.926695866045}
+  event sink_formed obj 33 step 15387 t 53.613 {'mass_sb': 7891.961112279445}
+  event sink_formed obj 34 step 15515 t 53.994 {'mass_sb': 23906.439403362805}
+  event sink_formed obj 35 step 15723 t 54.628 {'mass_sb': 23869.86736725783}
+  event sink_formed obj 36 step 15755 t 54.724 {'mass_sb': 7891.776270833914}
+  event sink_formed obj 37 step 15819 t 54.93 {'mass_sb': 7891.840562616941}
+  event sink_formed obj 38 step 15867 t 55.088 {'mass_sb': 23840.054059300805}
+  event ignition obj 17 step 16171 t 55.957 {'by': 'light', 'mass_sb': 1817.8693652907386}
+  event sink_formed obj 39 step 16208 t 56.009 {'mass_sb': 7891.569496052689}
+  event sink_formed obj 40 step 16247 t 56.083 {'mass_sb': 23763.186568563106}
+  event sink_formed obj 41 step 16531 t 56.668 {'mass_sb': 7892.042265109543}
+  event sink_formed obj 42 step 16707 t 57.193 {'mass_sb': 23693.992994773667}
+  event sink_formed obj 43 step 16819 t 57.526 {'mass_sb': 7891.796894598752}
+  event sink_formed obj 44 step 16931 t 57.861 {'mass_sb': 25468.635629726807}
+  event sink_formed obj 47 step 17107 t 58.385 {'mass_sb': 21823.330989896087}
+  event sink_formed obj 49 step 17411 t 59.292 {'mass_sb': 7891.8262462602}
+  event sink_formed obj 50 step 17443 t 59.388 {'mass_sb': 7891.834989772411}
+  event sink_formed obj 51 step 17571 t 59.763 {'mass_sb': 23593.243995815283}
+  event sink_formed obj 54 step 18035 t 61.12 {'mass_sb': 23566.5808244762}
+  event sink_formed obj 56 step 18339 t 62.031 {'mass_sb': 23535.786558795022}
+  event sink_formed obj 57 step 18371 t 62.127 {'mass_sb': 7891.845804513199}
+  event sink_formed obj 58 step 18579 t 62.746 {'mass_sb': 23521.09247421869}
+  event sink_formed obj 59 step 18851 t 63.551 {'mass_sb': 23504.32105208398}
+  event sink_formed obj 60 step 19091 t 64.266 {'mass_sb': 23491.114308097633}
+  event sink_formed obj 61 step 19331 t 64.973 {'mass_sb': 25242.31699858699}
+  event sink_formed obj 62 step 19539 t 65.59 {'mass_sb': 25230.87078196206}
+  event sink_formed obj 63 step 19539 t 65.59 {'mass_sb': 7891.861513916869}
+  event sink_formed obj 64 step 19747 t 66.223 {'mass_sb': 25217.738524437882}
+  event sink_formed obj 65 step 19939 t 66.836 {'mass_sb': 25202.313714406453}
+  event sink_formed obj 66 step 20291 t 68.003 {'mass_sb': 7893.772063196171}
+  event sink_formed obj 67 step 20403 t 68.309 {'mass_sb': 25150.372016445268}
+  event sink_formed obj 69 step 22275 t 74.19 {'mass_sb': 30949.37187796575}
+  event sink_formed obj 70 step 22483 t 74.817 {'mass_sb': 30916.92141499836}
+  event sink_formed obj 71 step 22675 t 75.424 {'mass_sb': 30884.24279335374}
+  event sink_formed obj 72 step 22851 t 75.992 {'mass_sb': 30802.878675712273}
+  event ending obj 68 step 23987 t 79.747 {'held_t': 10.015491037396714, 'hold_t': 10.0, 'mass_sb': 1700.585241262801, 'stage': 'failed_star'}
+  object id 68 mass 1700.6 stage failed_star ending None pred None
+    stages [('failed_star', 20915, 69.73)]
+  object id 72 mass 30618.4 stage black_hole ending None pred None
+    stages [('black_hole', 22883, 76.09)]
+  ledger mass {'cleared': 0.0, 'erased': 0.0, 'escaped': 34674.142, 'grid': 3330.533, 'invariant': 67020.621, 'painted': 0.0, 'preset_dropped': 0.0, 'sinks': 29015.68, 'vacuum_reset': 0.265}
+## 23:5x — overnight m_bh_sb read (F1, F2, O20); F1/F2 logged not filed (E1/E6); M0-V20 triage-V filed before M0-D92; M0-V9 closed BLOCKED via plan.py close; flag to M0-D92; plan_lint above

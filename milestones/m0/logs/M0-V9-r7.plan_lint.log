@@ -1,0 +1,21 @@
+== 2026-10-23T16:36:19-04:00 plan_lint · task M0-V9-r7 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=680 failed=0 warnings=2 · blocks=293 · flow_rows=293 · verify_fences=7 · history=0 · flow=per-task · header=532/600 · pipeline=9/60 · ladder=7 rungs · refresh=1/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1461 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6 · M0-D91 3
+=== GO ===
+
+== 2026-10-23T17:07:10-04:00 plan_lint · task M0-V9-r7 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=683 failed=0 warnings=2 · blocks=294 · flow_rows=294 · verify_fences=7 · history=0 · flow=per-task · header=533/600 · pipeline=9/60 · ladder=7 rungs · refresh=2/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1461 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D92 4 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6 · M0-D91 3
+=== GO ===
+
+== 2026-10-23T23:52:24-04:00 plan_lint · task M0-V9-r7 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=686 failed=0 warnings=2 · blocks=295 · flow_rows=295 · verify_fences=7 · history=0 · flow=per-task · header=534/600 · pipeline=9/60 · ladder=7 rungs · refresh=3/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1461 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D92 4 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D70 2 · M0-D71 6 · M0-D91 3
+=== GO ===
+
