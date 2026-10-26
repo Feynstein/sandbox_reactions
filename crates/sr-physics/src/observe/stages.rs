@@ -4,9 +4,8 @@
 //! winning. [`StageTracker::update`] does it for every object of a frame: it keeps each object's history (the `ignited`
 //! flag, the last time its row said core collapse, the most hydrogen its centre has shown), applies the display hold, and
 //! returns the events (§1.9.4), each once per object. The classifier never reads the rung, the frame or the engine — the
-//! object, its history and m_ch_sb, the heaviest object a white dwarf may hold, only (I2; G-WATCH keeps this module out of
-//! the step). [`ending_hold`] is how long a remnant stage
-//! must show before it is the object's ending (§1.9.5 as §0.5 [M0-D78] reads it), for the engine's `ending` event and the
+//! object, its history and m_ch_sb, the heaviest object a white dwarf may hold and a collapsing core's must pass, only
+//! (I2; G-WATCH keeps this module out of the step). [`ending_hold`] is how long a remnant stage must show before it is the object's ending (§1.9.5 as §0.5 [M0-D78] reads it), for the engine's `ending` event and the
 //! readout's.
 
 use std::collections::BTreeMap;
@@ -129,7 +128,8 @@ struct Ctx<'a> {
     now: f64,
     /// √(GM/R) = R / τ_dyn.
     v_dyn: f64,
-    /// m_ch_sb (§2.3.2): an object holding more is no white dwarf and sheds no planetary nebula (§0.5 [M0-D81]).
+    /// m_ch_sb (§2.3.2): an object holding more is no white dwarf and sheds no planetary nebula (§0.5 [M0-D81]); one holding
+    /// at most this is no collapsing core (§0.5 [M0-D92]).
     m_ch: f64,
 }
 
@@ -166,7 +166,9 @@ type Row = (Stage, fn(&Ctx) -> bool);
 /// also needs the object to have passed core collapse: a centre neutronized inside one frame shows core_collapse first, its
 /// event fires and its supernova can follow — §0.5 [M0-D88].
 /// White dwarf and planetary nebula read an object of at most m_ch_sb: a heavier star's quiet, degenerate centre is its iron
-/// core on the way to collapse, never a remnant whose hold races the collapse — §0.5 [M0-D81].
+/// core on the way to collapse, never a remnant whose hold races the collapse — §0.5 [M0-D81]. Core collapse reads one of more
+/// (none refused where the run has no ceiling): a lighter remnant whose cold iron centre overshoots into N_Fe's gate bounces
+/// back to a white dwarf — §0.5 [M0-D92].
 const ROWS: [Row; 19] = [
     (Stage::BlackHole, |c| c.o.sinks > 0),
     (Stage::Supernova, |c| {
@@ -175,7 +177,7 @@ const ROWS: [Row; 19] = [
     (Stage::NeutronStar, |c| {
         electron_fraction(&c.o.x_c) <= NEUTRON_Y_E && c.o.d_c >= 0.5 && c.o.sinks == 0 && c.h.last_collapse.is_some()
     }),
-    (Stage::CoreCollapse, |c| c.o.l_group[G_N] < 0.0),
+    (Stage::CoreCollapse, |c| c.o.l_group[G_N] < 0.0 && (c.o.mass > c.m_ch || c.m_ch.is_infinite())),
     (Stage::WhiteDwarf, |c| {
         c.h.ignited
             && c.o.d_c >= 0.5
@@ -482,11 +484,19 @@ mod tests {
         o
     }
 
-    /// m_ch_sb for the shipped physics (assets/calibration.json, physics_hash 8ca855fb…); the test objects weigh 100.
+    /// m_ch_sb for the shipped physics (assets/calibration.json, physics_hash 56df8ade…, the same value as 8ca855fb…'s); the test objects weigh 100.
     const M_CH: f64 = 3216.4199210979236;
 
     fn stage_of(o: &Object, h: &History) -> Stage {
         classify(o, h, 100.0, M_CH)
+    }
+
+    /// N_Fe converting in an object past m_ch_sb, the only one whose core collapses (§0.5 [M0-D92]); the unbound masses the
+    /// tests give it are shares of its mass.
+    fn collapsing() -> Object {
+        let mut o = burning([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0]);
+        o.mass = 2.0 * M_CH;
+        o
     }
 
     #[test]
@@ -547,6 +557,7 @@ mod tests {
     fn a_neutron_star_needs_a_passed_core_collapse() {
         // The 6,702.064 life's frame at step 1,553 (RTX 4090, M0-D81's trace): Y_e,c 0.342 a frame after 0.464, N_Fe converting.
         let mut o = neutronized();
+        o.mass = 6_631.5;
         (o.x_c[X_FE], o.x_c[X_N]) = (0.7366, 0.2634);
         o.l_group[G_N] = -5.22e7;
         assert!(electron_fraction(&o.x_c) <= NEUTRON_Y_E);
@@ -592,6 +603,7 @@ mod tests {
     fn the_neutron_star_shows_before_core_collapse() {
         // The gate re-opens for a frame as the core sloshes (L_N < 0): the neutron star holds, its ending's hold not restarted.
         let mut o = neutronized();
+        o.mass = 2.0 * M_CH;
         o.l_group[G_N] = -620.0;
         assert_eq!(stage_of(&o, &collapsed()), Stage::NeutronStar);
         o.d_c = 0.49;
@@ -614,10 +626,29 @@ mod tests {
 
     #[test]
     fn row_core_collapse_n_fe_converting() {
-        let mut o = burning([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0]);
+        let mut o = collapsing();
         assert_eq!(stage_of(&o, &ignited()), Stage::CoreCollapse);
         o.l_group[6] = 0.0;
         assert_ne!(stage_of(&o, &ignited()), Stage::CoreCollapse);
+    }
+
+    #[test]
+    fn a_core_collapses_only_past_m_ch_sb() {
+        let mut o = collapsing();
+        o.mass = M_CH.next_up();
+        assert_eq!(stage_of(&o, &ignited()), Stage::CoreCollapse, "just past m_ch_sb");
+        o.mass = M_CH;
+        assert_ne!(stage_of(&o, &ignited()), Stage::CoreCollapse, "exactly m_ch_sb is a white dwarf's, no collapsing core");
+        assert_eq!(classify(&o, &ignited(), 100.0, f64::INFINITY), Stage::CoreCollapse, "no ceiling in the run: none refused");
+        // M0-D92, RTX 4090: the M₀ life (3,351.032) at step 133,534, t 1512.08 — its flashed iron centre, cold, overshooting
+        // into N_Fe's gate (Σ_c 347.2) while the envelope leaves; the same physics then bounced to a 2,364 white dwarf.
+        let mut o = degenerate();
+        with_x(&mut o, X_FE, 0.9888);
+        o.x_c[X_N] = 0.0062;
+        (o.mass, o.unbound, o.d_c) = (2_922.0, 474.7, 1.0);
+        (o.luminosity, o.l_nuc) = (3.363e5, 6_908.0);
+        o.l_group[G_N] = -2.337e5;
+        assert_eq!(stage_of(&o, &ignited()), Stage::PlanetaryNebula, "a sub-Chandrasekhar remnant shedding its shell");
     }
 
     #[test]
@@ -935,12 +966,12 @@ mod tests {
     #[test]
     fn core_collapse_and_supernova_show_at_once() {
         let mut t = StageTracker::new(M_CH);
-        let mut o = burning([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0]);
+        let mut o = collapsing();
         o.x_c[X_H] = 0.5;
         t.update(&[cloud()], 0.0);
         t.update(&[o.clone()], 1.0);
         assert_eq!(t.stage(1).unwrap().shown, Some(Stage::CoreCollapse));
-        o.unbound = 50.0;
+        o.unbound = 0.5 * o.mass;
         t.update(&[o], 2.0);
         assert_eq!(t.stage(1).unwrap().shown, Some(Stage::Supernova));
     }
@@ -974,11 +1005,11 @@ mod tests {
     #[test]
     fn core_collapse_and_supernova_fire_once_each_in_order() {
         let mut t = StageTracker::new(M_CH);
-        let mut o = burning([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0]);
+        let mut o = collapsing();
         let first = t.update(&[o.clone()], 1.0);
         assert_eq!(kinds(&first), vec![EventKind::CoreCollapse]);
         assert!(t.update(&[o.clone()], 2.0).is_empty(), "core collapse again: nothing");
-        o.unbound = 50.0;
+        o.unbound = 0.5 * o.mass;
         let boom = t.update(&[o.clone()], 3.0);
         assert_eq!(kinds(&boom), vec![EventKind::Supernova], "the collapse row is shadowed by supernova while it holds");
         assert!(t.update(&[o.clone()], 4.0).is_empty());
@@ -1022,12 +1053,11 @@ mod tests {
         o.unbound = 50.0;
         // Unbound mass with no collapse behind it: no supernova.
         assert!(!kinds(&t.update(&[o.clone()], 1.0)).contains(&EventKind::Supernova));
-        let collapse = burning([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0]);
-        t.update(&[collapse], 2.0);
+        t.update(&[collapsing()], 2.0);
         assert!(kinds(&t.update(&[o.clone()], 30.0)).is_empty(), "28 t.u. later");
         assert_ne!(t.stage(1).unwrap().raw, Stage::Supernova);
         let mut t = StageTracker::new(M_CH);
-        t.update(&[burning([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0])], 2.0);
+        t.update(&[collapsing()], 2.0);
         assert!(kinds(&t.update(&[o], 12.0)).contains(&EventKind::Supernova));
     }
 

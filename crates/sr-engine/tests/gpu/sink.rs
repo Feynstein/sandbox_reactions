@@ -92,11 +92,11 @@ fn the_scene_is_a_uniform_cloud_with_the_sinks_on() {
 #[test]
 fn r_acc_follows_two_gm_over_c_squared_with_a_floor_of_two_cells() {
     let c_sb = physics().get("c_sb").unwrap();
-    assert_eq!(c_sb, 200.0, "§2.7's light speed");
-    assert_eq!(r_acc(1.0, 2000.0, c_sb), 2.0, "2GM/c² = 0.1 < 2");
-    assert!(rel(r_acc(1.0, 200_000.0, c_sb), 10.0) < 1e-12, "2GM/c² = 10");
+    assert_eq!(c_sb, 400.0, "§2.7's light speed ([M0-D94])");
+    assert_eq!(r_acc(1.0, 2000.0, c_sb), 2.0, "2GM/c² = 0.025 < 2");
+    assert!(rel(r_acc(1.0, 800_000.0, c_sb), 10.0) < 1e-12, "2GM/c² = 10");
     let mut s = sinks();
-    s.sinks.push(sink(10.0, 10.0, 0.0, 0.0, 200_000.0));
+    s.sinks.push(sink(10.0, 10.0, 0.0, 0.0, 800_000.0));
     assert!(rel(s.r_acc(0), 10.0) < 1e-12);
 }
 
@@ -557,15 +557,15 @@ fn two_sinks_pull_each_other_softened_by_the_larger_r_acc_and_keep_their_total_m
     let p1 = s.momentum();
     assert!((p1[0] - p0[0]).abs() < 1e-9 && (p1[1] - p0[1]).abs() < 1e-9, "momentum {p1:?} against {p0:?}");
     assert!(s.sinks[0].x > 20.5 && s.sinks[1].x < 40.5, "they fall toward each other");
-    // Two sinks of r_acc 2 and 5 (400 and 100,000 at c_sb = 200): each is pulled softened by 5, the larger — M a is equal and opposite.
+    // Two sinks of r_acc 2 and 5 (400 and 400,000 at c_sb = 400): each is pulled softened by 5, the larger — M a is equal and opposite.
     let mut s = sinks();
     s.sinks.push(sink(20.5, 30.5, 0.0, 0.0, 400.0));
-    s.sinks.push(sink(28.5, 30.5, 0.0, 0.0, 100_000.0));
+    s.sinks.push(sink(28.5, 30.5, 0.0, 0.0, 400_000.0));
     assert_eq!((s.r_acc(0), s.r_acc(1)), (2.0, 5.0));
     let a = s.pull(&st);
     let soft: f64 = 64.0 + 25.0;
-    assert!(rel(a[0][0], 100_000.0 * 8.0 / soft.powf(1.5)) < 1e-12 && rel(a[1][0], -400.0 * 8.0 / soft.powf(1.5)) < 1e-12, "{a:?}");
-    assert!((400.0 * a[0][0] + 100_000.0 * a[1][0]).abs() < 1e-12 * 400.0 * a[0][0].abs(), "M a, equal and opposite");
+    assert!(rel(a[0][0], 400_000.0 * 8.0 / soft.powf(1.5)) < 1e-12 && rel(a[1][0], -400.0 * 8.0 / soft.powf(1.5)) < 1e-12, "{a:?}");
+    assert!((400.0 * a[0][0] + 400_000.0 * a[1][0]).abs() < 1e-12 * 400.0 * a[0][0].abs(), "M a, equal and opposite");
 }
 
 /// [M0-V7]'s bound, graded as G-GRAV2 is: |Σ_s M_s a_s + Σ_cells m g_s| ≤ 1e-5 (Σ_s M_s |a_s| + Σ_cells m |g_s|), a_s the
@@ -611,7 +611,7 @@ fn the_sinks_pull_on_the_gas_is_equal_and_opposite_on_asymmetric_worlds() {
     // Two sinks of r_acc 2 and 5 beside it: each pulled softened by its own r_acc by the gas, the pair by the larger.
     let mut s = sinks();
     s.sinks.push(sink(24.5, 41.5, 0.0, 0.0, 400.0));
-    s.sinks.push(sink(30.5, 30.5, 0.0, 0.0, 100_000.0));
+    s.sinks.push(sink(30.5, 30.5, 0.0, 0.0, 400_000.0));
     assert_eq!((s.r_acc(0), s.r_acc(1)), (2.0, 5.0));
     check("two sinks of r_acc 2 and 5 beside the blob", &s, &blob());
     // The cloud's corner, the sink off its cell's centre so the cells it takes are no symmetric disc: it accretes in the step it is graded, so the sum counts the cells accretion left — those it
@@ -1081,7 +1081,7 @@ fn gpu_the_sinks_pull_on_the_gas_is_equal_and_opposite_on_asymmetric_worlds() {
     for d in [2.0, 4.0, 8.0, 16.0] {
         worst = worst.max(gpu_net_force(&format!("one sink {d} beside the blob"), &blob(), &[sink(12.5 + d + 3.0, 41.5, 0.0, 0.0, 100.0)]));
     }
-    let pair = [sink(24.5, 41.5, 0.0, 0.0, 400.0), sink(30.5, 30.5, 0.0, 0.0, 100_000.0)];
+    let pair = [sink(24.5, 41.5, 0.0, 0.0, 400.0), sink(30.5, 30.5, 0.0, 0.0, 400_000.0)];
     worst = worst.max(gpu_net_force("two sinks of r_acc 2 and 5 beside the blob", &blob(), &pair));
     // The sink at the cloud's corner accretes in the step it is graded: a sum over the gas before accretion would count the
     // cells it took (the twin: 3.6e-2 of the pull), and the step's velocity against the twin's `step` catches a first
@@ -1197,9 +1197,9 @@ fn check_pull(name: &str, st: &State, start: &[Sink]) -> f64 {
 
 #[test]
 fn gpu_a_test_mass_near_a_sink_feels_the_softened_pull_and_phi_carries_the_same_term() {
-    // M_s = 2000 sits at r_acc = 2 (the floor); 60 000 at r_acc = 2GM/c_sb² = 3 — the formula's own branch.
+    // M_s = 2000 sits at r_acc = 2 (the floor); 240 000 at r_acc = 2GM/c_sb² = 3 — the formula's own branch.
     check_pull("test mass, one sink", &test_mass(), &[sink(30.5, 20.5, 0.0, 0.0, 2000.0)]);
-    check_pull("test mass, two sinks", &test_mass(), &[sink(30.5, 20.5, 0.0, 0.0, 2000.0), sink(8.5, 33.5, 0.0, 0.0, 60_000.0)]);
+    check_pull("test mass, two sinks", &test_mass(), &[sink(30.5, 20.5, 0.0, 0.0, 2000.0), sink(8.5, 33.5, 0.0, 0.0, 240_000.0)]);
 }
 
 #[test]

@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs	2026-10-25 10:09:22.609849756 -0400
++++ b/crates/sr-physics/src/observe/stages.rs	2026-10-25 10:09:22.610846888 -0400
+@@ -177,7 +177,7 @@
+     (Stage::NeutronStar, |c| {
+         electron_fraction(&c.o.x_c) <= NEUTRON_Y_E && c.o.d_c >= 0.5 && c.o.sinks == 0 && c.h.last_collapse.is_some()
+     }),
+-    (Stage::CoreCollapse, |c| c.o.l_group[G_N] < 0.0 && (c.o.mass > c.m_ch || c.m_ch.is_infinite())),
++    (Stage::CoreCollapse, |c| c.o.l_group[G_N] < 0.0),
+     (Stage::WhiteDwarf, |c| {
+         c.h.ignited
+             && c.o.d_c >= 0.5

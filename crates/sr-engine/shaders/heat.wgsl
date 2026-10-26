@@ -227,7 +227,10 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // heat_spot's first step, the twin 8). On the linear law the second pass
 // is the check: its residual is recomputed from the solved u, so a recursive residual that drifted from the true one is
 // solved again, not committed. The ceiling (64 passes, 4,096 rounds; §0.5 [M0-D37]) commits the last iterate's F by limited
-// fluxes (§0.5 [M0-D89], below).
+// fluxes (§0.5 [M0-D89], below), and so does a step whose sums leave f32's range (§0.5 [M0-D93]): a thin cell beside
+// vacuum at T ~ 10⁷ holds u ~ 10²⁶, so Σ c u² and the rounds' γ and η overflow, the method would stop as solved at round 0
+// pass after pass and the Newton test read the unmoved iterate as converged — a pass bound, γ, η or a measure that is not
+// finite ends the step there, unconverged.
 //
 // One dispatch a round (Chronopoulos–Gear's form of the method: one reduction point a round): `heat_round` is recorded
 // MAX_ROUNDS + 3 MAX_PASSES + 2 times, each slot reading its workgroup count from a word the slot before it wrote — the
@@ -585,8 +588,10 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 next.heat0 = total.x;
             }
             let empty = rec.passes == 0u && !(total.x > 0.0);
-            converged = empty || (rec.passes > 0u && total.x <= NEWTON_HEAT * rec.heat0 && total.y == 0.0);
-            finish = converged || rec.passes == MAX_PASSES || rec.rounds >= MAX_ROUNDS;
+            // The next pass's bounds out of f32's range: no round can meet them (§0.5 [M0-D93]).
+            let unmeasured = !(finite(total.z) && finite(total.w));
+            converged = !unmeasured && (empty || (rec.passes > 0u && total.x <= NEWTON_HEAT * rec.heat0 && total.y == 0.0));
+            finish = converged || unmeasured || rec.passes == MAX_PASSES || rec.rounds >= MAX_ROUNDS;
             if (!finish) {
                 action = CELL_RESID;
                 next.mode = DO_START;
@@ -623,6 +628,12 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 next.eta = eta;
                 next.k = rec.k + 1u;
                 next.rounds = rec.rounds + 1u;
+            }
+            // A round's sums out of f32's range: γ or η NaN would stop the method as solved, so the step ends unconverged
+            // instead, its cells left at the iterate (§0.5 [M0-D93]).
+            if (!(finite(gamma) && finite(eta) && finite(measure) && finite(total.z))) {
+                action = CELL_NONE;
+                finish = true;
             }
         }
         default: {

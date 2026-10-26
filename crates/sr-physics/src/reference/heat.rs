@@ -17,7 +17,8 @@
 //! conjugate gradients to [`SOLVE_TOL`] in both of (4)'s measures; a pass moves no cell's T by more than a factor 2 and keeps
 //! u ≥ u_vac, and the passes end after the first one that moves Σ C |ΔT| by at most [`NEWTON_HEAT`] of Σ C T⁰ and every
 //! cell by at most [`NEWTON_CELL`] of its T. The first iterate is the start state; nothing is kept between steps. Past
-//! [`MAX_PASSES`] passes or [`MAX_ROUNDS`] rounds the step commits by limited fluxes and says so ([`Pass::warning`]).
+//! [`MAX_PASSES`] passes or [`MAX_ROUNDS`] rounds, or when a pass's bounds or a round's sums are not finite (§0.5 [M0-D93]),
+//! the step commits by limited fluxes and says so ([`Pass::warning`]).
 //!
 //! The commit: F is the solved flux, the energy the step moved (step n + 1's P4 reads it, M0-T43); what the gas cells lose
 //! through their vacuum and edge faces is `radiated` R; E_i += C_i ((1 + δ) T(u_i) − T_i⁰) with δ = −(Σ C (T(u) − T⁰) + R)/
@@ -108,7 +109,8 @@ pub struct Pass {
     /// The heat balance's closure δ (§0.5 [M0-TJ4] (5)): of the order of the solve's tolerance when the step converged, 0
     /// past the ceiling.
     pub delta: f64,
-    /// False when the step reached [`MAX_PASSES`] or [`MAX_ROUNDS`] and committed by limited fluxes (§0.5 [M0-D89]).
+    /// False when the step reached [`MAX_PASSES`] or [`MAX_ROUNDS`], or its sums left the float's range (§0.5 [M0-D93]),
+    /// and committed by limited fluxes (§0.5 [M0-D89]).
     pub converged: bool,
     /// Booked `radiated` (§2.9): the heat the gas lost into vacuum cells and through the world's edge, energy per area summed.
     pub radiated: f64,
@@ -405,8 +407,9 @@ struct System<'a> {
 
 impl System<'_> {
     /// Jacobi-preconditioned CG from `x`, at most `max_rounds` rounds, ending at the first round where both measures hold
-    /// (checked before every round, the start included); returns the rounds it ran and whether the measures hold.
-    fn solve(&self, x: &mut [f64], max_rounds: usize) -> (usize, bool) {
+    /// (checked before every round, the start included); returns the rounds it ran, `Err` when a measure or pᵀAp is not
+    /// finite — the method cannot go on and the step ends unconverged (§0.5 [M0-D93]).
+    fn solve(&self, x: &mut [f64], max_rounds: usize) -> Result<usize, usize> {
         let n = x.len();
         let gas = &self.net.gas;
         let mut q = vec![0.0; n];
@@ -418,14 +421,14 @@ impl System<'_> {
         let mut rounds = 0;
         loop {
             let e_heat: f64 = (0..n).filter(|&i| gas[i]).map(|i| self.heat[i] * (r[i] * self.slope[i] / self.diag[i]).powi(2)).sum();
-            if rz <= self.u_bound && e_heat <= self.t_bound {
-                return (rounds, true);
-            }
-            if rounds == max_rounds {
-                return (rounds, false);
-            }
             self.net.matvec(&self.diag, &p, &mut q);
             let pq: f64 = (0..n).map(|i| p[i] * q[i]).sum();
+            if !(rz.is_finite() && e_heat.is_finite() && pq.is_finite()) {
+                return Err(rounds);
+            }
+            if (rz <= self.u_bound && e_heat <= self.t_bound) || rounds == max_rounds {
+                return Ok(rounds);
+            }
             let alpha = rz / pq;
             for i in 0..n {
                 x[i] += alpha * p[i];
@@ -482,9 +485,19 @@ impl Heat {
                 heat,
                 slope,
             };
+            // Bounds or sums out of the float's range end the step unconverged (§0.5 [M0-D93]).
+            if !(sys.u_bound.is_finite() && sys.t_bound.is_finite()) {
+                passes -= 1;
+                break;
+            }
             let mut x: Vec<f64> = (0..n).map(|i| if net.gas[i] { u[i] } else { 0.0 }).collect();
-            let (r, _) = sys.solve(&mut x, MAX_ROUNDS - rounds);
-            rounds += r;
+            match sys.solve(&mut x, MAX_ROUNDS - rounds) {
+                Ok(r) => rounds += r,
+                Err(r) => {
+                    rounds += r;
+                    break;
+                }
+            }
             // The pass's update: u ≥ u_vac, T moved by no more than a factor 2.
             let (mut moved, mut every) = (0.0, true);
             for &i in &gas {

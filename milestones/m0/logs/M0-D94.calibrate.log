@@ -1,0 +1,263 @@
+SR-WARN /tmp/d94/cal.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=/tmp/d94/cal.json wall_s=0.1
+exit 0
+
+real	0m0.064s
+user	0m0.059s
+sys	0m0.004s
+{
+  "m_ch_sb": 3216.4199210979236,
+  "m_tov_sb": 4853.169981814195,
+  "measured": {
+    "adapter": "cpu",
+    "box": "laserax-ai-server",
+    "date": "2026-10-25T19:48:23Z",
+    "git": "255ec37"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea",
+  "version": 1
+}
+SR-WARN assets/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=assets/calibration.json wall_s=0.0
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=42674 sim_time=463.676 wall_s=465.5 replayed record=/tmp/d94/run/m_bh_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1009 sim_time=6.691 heat_unconverged=0 stage=iron_core | raw=iron_core
+  frame  steps          16 dt       0.005951 s/step   0.006534 P5_ceil         0
+  star   M           66922 R           151.9 tau_dyn     7.239 M_unb       9.115
+  core   sigma_c     7.805 T_c         67.50 d_c        0.4581 Ye_c       0.4643
+  centre X_Fe        1.000 X_n             0 v_r        -1.649 vr/vdyn  -0.07855
+  light  L         1.291e5 L_nuc   5.118e-11 L_N             0 L_nu            0
+  world  escaped     84.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1506 sim_time=9.332 heat_unconverged=0 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004833 s/step    0.03133 P5_ceil         0
+  star   M           66702 R           170.5 tau_dyn     8.622 M_unb       87.27
+  core   sigma_c     420.2 T_c       0.05009 d_c        0.9999 Ye_c       0.4018
+  centre X_Fe       0.8655 X_n        0.1345 v_r         6.980 vr/vdyn    0.3529
+  light  L         1.434e6 L_nuc     0.03546 L_N      -7.875e7 L_nu        19139
+  world  escaped     314.4 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1507 sim_time=9.337 heat_unconverged=0 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004826 s/step    0.03019 P5_ceil         0
+  star   M           66701 R           170.5 tau_dyn     8.624 M_unb       87.27
+  core   sigma_c     436.9 T_c       0.05004 d_c        0.9999 Ye_c       0.3890
+  centre X_Fe       0.8378 X_n        0.1622 v_r         6.982 vr/vdyn    0.3531
+  light  L         1.430e6 L_nuc     0.02873 L_N      -9.436e7 L_nu        16381
+  world  escaped     315.1 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1508 sim_time=9.342 heat_unconverged=0 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004821 s/step    0.03050 P5_ceil         0
+  star   M           66700 R           170.6 tau_dyn     8.624 M_unb       87.25
+  core   sigma_c     455.5 T_c       0.05005 d_c        0.9999 Ye_c       0.3755
+  centre X_Fe       0.8088 X_n        0.1912 v_r         6.983 vr/vdyn    0.3531
+  light  L         1.422e6 L_nuc     0.02455 L_N      -1.089e8 L_nu        14523
+  world  escaped     315.9 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1509 sim_time=9.347 heat_unconverged=0 stage=core_collapse | raw=core_collapse
+  frame  steps           1 dt       0.004821 s/step    0.02942 P5_ceil         0
+  star   M           66700 R           170.6 tau_dyn     8.625 M_unb       87.22
+  core   sigma_c     476.0 T_c       0.05009 d_c        0.9999 Ye_c       0.3617
+  centre X_Fe       0.7791 X_n        0.2209 v_r         6.984 vr/vdyn    0.3532
+  light  L         1.412e6 L_nuc     0.02206 L_N      -1.241e8 L_nu        13320
+  world  escaped     316.6 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=1510 sim_time=9.352 heat_unconverged=0 stage=core_collapse | raw=neutron_star
+  frame  steps           1 dt       0.004827 s/step    0.02907 P5_ceil         0
+  star   M           66699 R           171.0 tau_dyn     8.658 M_unb       87.15
+  core   sigma_c     498.4 T_c       0.05003 d_c        0.9999 Ye_c       0.3477
+  centre X_Fe       0.7489 X_n        0.2511 v_r         6.985 vr/vdyn    0.3537
+  light  L         1.398e6 L_nuc     0.02044 L_N      -1.398e8 L_nu        12510
+  world  escaped     317.4 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=2006 sim_time=11.278 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.004598 s/step    0.03382 P5_ceil         0
+  star   M           66216 R           195.1 tau_dyn     10.59 M_unb       90.80
+  core   sigma_c     386.6 T_c       0.05002 d_c        0.9999 Ye_c       0.1480
+  centre X_Fe       0.3189 X_n        0.6811 v_r         9.816 vr/vdyn    0.5328
+  light  L         6.439e5 L_nuc    1.000e-5 L_N             0 L_nu        88.53
+  world  escaped     804.2 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=3014 sim_time=16.609 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.005892 s/step    0.03804 P5_ceil         0
+  star   M           60677 R           242.2 tau_dyn     15.30 M_unb      0.1766
+  core   sigma_c     199.0 T_c         35.83 d_c        0.8755 Ye_c       0.1541
+  centre X_Fe       0.3319 X_n        0.6681 v_r         2.889 vr/vdyn    0.1825
+  light  L         2.867e5 L_nuc   2.596e-10 L_N             0 L_nu            0
+  world  escaped      6344 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=4006 sim_time=21.966 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.005439 s/step    0.02557 P5_ceil         0
+  star   M           57006 R           268.3 tau_dyn     18.40 M_unb       1.520
+  core   sigma_c     177.1 T_c         93.70 d_c        0.7184 Ye_c       0.2134
+  centre X_Fe       0.4596 X_n        0.5404 v_r        -2.971 vr/vdyn   -0.2038
+  light  L         1.773e5 L_nuc    2.420e-9 L_N             0 L_nu       0.7307
+  world  escaped     10014 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=5014 sim_time=25.798 heat_unconverged=0 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.002833 s/step    0.04622 P5_ceil         0
+  star   M           55197 R           283.7 tau_dyn     20.34 M_unb       93.29
+  core   sigma_c     5.830 T_c         109.3 d_c        0.1935 Ye_c       0.3813
+  centre X_Fe       0.8213 X_n        0.1787 v_r        -7.019 vr/vdyn   -0.5032
+  light  L         3.561e6 L_nuc    4.321e-7 L_N             0 L_nu        40.72
+  world  escaped     11823 objects         1 sinks           1 sink_M      10781
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=6000 sim_time=28.396 heat_unconverged=0 stage=black_hole | raw=black_hole
+  frame  steps          10 dt       0.003003 s/step    0.05197 P5_ceil         0
+  star   M           52218 R           270.8 tau_dyn     19.50 M_unb        1359
+  core   sigma_c     8.765 T_c         132.4 d_c        0.2474 Ye_c       0.4045
+  centre X_Fe       0.8713 X_n        0.1287 v_r        -2.025 vr/vdyn   -0.1458
+  light  L         3.026e6 L_nuc    4.083e-7 L_N             0 L_nu        20.68
+  world  escaped     14802 objects         1 sinks           1 sink_M      22447
+SR-HEADLESS DONE steps=6000 sim_time=28.395620 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 6000 — reported, not guessed (record kept: /tmp/d94/run/m_bh_sb-02)
+exit 6
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=42674 sim_time=463.676 wall_s=465.5 replayed record=/tmp/d94/run/m_bh_sb-01
+SR-CALIBRATE continue item=m_bh_sb mass=67020.643 from step 6000 (/tmp/d94/run/m_bh_sb-02/checkpoint/s_6000.bin)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=7008 sim_time=30.629 heat_unconverged=0 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.002586 s/step    0.04116 P5_ceil         0
+  star   M           49867 R           193.1 tau_dyn     12.02 M_unb        3793
+  core   sigma_c     9.290 T_c         124.4 d_c        0.3124 Ye_c       0.4385
+  centre X_Fe       0.9445 X_n       0.05545 v_r         1.339 vr/vdyn   0.08333
+  light  L         2.489e6 L_nuc    1.522e-8 L_N             0 L_nu        1.955
+  world  escaped     17152 objects         1 sinks           1 sink_M      28430
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=7345 sim_time=31.424 heat_unconverged=2 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       0.002365 s/step    0.08248 P5_ceil         0
+  star   M           49035 R           200.5 tau_dyn     12.82 M_unb        3917
+  core   sigma_c     9.056 T_c         96.50 d_c        0.3631 Ye_c       0.4378
+  centre X_Fe       0.9429 X_n       0.05712 v_r       -0.6656 vr/vdyn  -0.04257
+  light  L         3.025e6 L_nuc    3.803e-8 L_N             0 L_nu        4.711
+  world  escaped     17984 objects         1 sinks           1 sink_M      28980
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=8001 sim_time=32.722 heat_unconverged=2 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.002026 s/step    0.05566 P5_ceil         0
+  star   M           47527 R           200.7 tau_dyn     13.05 M_unb        4819
+  core   sigma_c     1.306 T_c         142.1 d_c       0.06078 Ye_c       0.4356
+  centre X_Fe       0.9382 X_n       0.06178 v_r         4.238 vr/vdyn    0.2754
+  light  L         8.593e6 L_nuc    2.130e-6 L_N             0 L_nu        46.07
+  world  escaped     19489 objects         1 sinks           1 sink_M      33242
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=8322 sim_time=33.338 heat_unconverged=3 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       0.001860 s/step    0.08780 P5_ceil         0
+  star   M           46883 R           205.0 tau_dyn     13.56 M_unb        4672
+  core   sigma_c     1.016 T_c         87.39 d_c       0.07565 Ye_c       0.4336
+  centre X_Fe       0.9339 X_n       0.06607 v_r         3.732 vr/vdyn    0.2468
+  light  L         2.790e6 L_nuc   2.575e-10 L_N             0 L_nu       0.2711
+  world  escaped     20133 objects         1 sinks           1 sink_M      33976
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=9010 sim_time=35.141 heat_unconverged=3 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.002806 s/step    0.08131 P5_ceil         0
+  star   M           44912 R           239.1 tau_dyn     17.45 M_unb        3382
+  core   sigma_c     3.345 T_c         67.92 d_c        0.2409 Ye_c       0.4315
+  centre X_Fe       0.9294 X_n       0.07063 v_r         1.992 vr/vdyn    0.1454
+  light  L         8.082e5 L_nuc   8.311e-12 L_N             0 L_nu            0
+  world  escaped     22104 objects         1 sinks           1 sink_M      34275
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=10002 sim_time=37.521 heat_unconverged=3 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.002067 s/step    0.07601 P5_ceil         0
+  star   M           42637 R           171.7 tau_dyn     10.90 M_unb        2020
+  core   sigma_c    0.8839 T_c         60.28 d_c       0.09694 Ye_c       0.4387
+  centre X_Fe       0.9449 X_n       0.05509 v_r         2.574 vr/vdyn    0.1633
+  light  L         5.547e5 L_nuc   1.210e-13 L_N             0 L_nu            0
+  world  escaped     24361 objects         1 sinks           1 sink_M      35733
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=10883 sim_time=39.693 heat_unconverged=5 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       0.002537 s/step    0.09483 P5_ceil         0
+  star   M           41359 R           90.36 tau_dyn     4.224 M_unb        1056
+  core   sigma_c    0.4325 T_c         39.41 d_c       0.07547 Ye_c       0.4370
+  centre X_Fe       0.9411 X_n       0.05886 v_r         1.114 vr/vdyn   0.05207
+  light  L         2.593e5 L_nuc   8.132e-15 L_N             0 L_nu            0
+  world  escaped     25639 objects         1 sinks           1 sink_M      35833
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=11011 sim_time=40.022 heat_unconverged=5 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.002707 s/step     0.1152 P5_ceil         0
+  star   M           41253 R           79.87 tau_dyn     3.514 M_unb       991.5
+  core   sigma_c    0.7507 T_c         37.54 d_c        0.1275 Ye_c       0.4373
+  centre X_Fe       0.9418 X_n       0.05820 v_r         1.081 vr/vdyn   0.04757
+  light  L         1.807e5 L_nuc   4.475e-15 L_N             0 L_nu            0
+  world  escaped     25745 objects         1 sinks           1 sink_M      35838
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=11668 sim_time=41.861 heat_unconverged=6 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       0.002776 s/step     0.1057 P5_ceil         0
+  star   M           40878 R           76.07 tau_dyn     3.282 M_unb       757.4
+  core   sigma_c    0.3976 T_c         36.70 d_c       0.07419 Ye_c       0.4357
+  centre X_Fe       0.9384 X_n       0.06159 v_r        0.5693 vr/vdyn   0.02456
+  light  L           90103 L_nuc   1.299e-15 L_N             0 L_nu            0
+  world  escaped     26119 objects         1 sinks           1 sink_M      35861
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=12000 sim_time=42.850 heat_unconverged=6 stage=black_hole | raw=black_hole
+  frame  steps          12 dt       0.003059 s/step    0.08373 P5_ceil         0
+  star   M           40460 R           36.90 tau_dyn     1.114 M_unb       412.8
+  core   sigma_c    0.2271 T_c         31.80 d_c       0.05076 Ye_c       0.4352
+  centre X_Fe       0.9374 X_n       0.06256 v_r        0.1852 vr/vdyn  0.005592
+  light  L           66351 L_nuc   1.009e-15 L_N             0 L_nu            0
+  world  escaped     26532 objects         1 sinks           1 sink_M      35869
+SR-HEADLESS DONE steps=12000 sim_time=42.850125 until=unmet
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 12000 — reported, not guessed (record kept: /tmp/d94/run/m_bh_sb-02)
+exit 6
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=42674 sim_time=463.676 wall_s=465.5 replayed record=/tmp/d94/run/m_bh_sb-01
+SR-CALIBRATE continue item=m_bh_sb mass=67020.643 from step 12000 (/tmp/d94/run/m_bh_sb-02/checkpoint/s_12000.bin)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=13008 sim_time=45.583 heat_unconverged=6 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.002427 s/step    0.07742 P5_ceil         0
+  star   M           39999 R           2.000 tau_dyn   0.01414 M_unb       97.83
+  core   sigma_c   0.09687 T_c         32.75 d_c       0.02208 Ye_c       0.4357
+  centre X_Fe       0.9384 X_n       0.06160 v_r        0.3071 vr/vdyn  0.002171
+  light  L         1.706e5 L_nuc   1.682e-14 L_N             0 L_nu            0
+  world  escaped     26971 objects         1 sinks           1 sink_M      36341
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=13793 sim_time=47.673 heat_unconverged=12 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       9.954e-4 s/step     0.1802 P5_ceil         1
+  star   M           39740 R           2.000 tau_dyn   0.01419 M_unb       25.83
+  core   sigma_c   0.04208 T_c         180.4 d_c      0.001806 Ye_c       0.4364
+  centre X_Fe       0.9400 X_n       0.06004 v_r      -0.06267 vr/vdyn -4.446e-4
+  light  L           23208 L_nuc    2.155e-5 L_N             0 L_nu        26551
+  world  escaped     27122 objects         2 sinks           1 sink_M      36363
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=13794 sim_time=47.675 heat_unconverged=12 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       0.002517 s/step     0.1563 P5_ceil         0
+  star   M           39740 R           2.000 tau_dyn   0.01419 M_unb       25.75
+  core   sigma_c   0.04287 T_c         37.11 d_c      0.008877 Ye_c       0.4364
+  centre X_Fe       0.9400 X_n       0.06004 v_r      -0.06303 vr/vdyn -4.471e-4
+  light  L           69357 L_nuc   2.041e-15 L_N             0 L_nu            0
+  world  escaped     27122 objects         2 sinks           1 sink_M      36363
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=14002 sim_time=48.298 heat_unconverged=12 stage=none | raw=black_hole
+  frame  steps          16 dt       0.003024 s/step    0.09038 P5_ceil         0
+  star   M           38983 R           2.000 tau_dyn   0.01433 M_unb       13.87
+  core   sigma_c    0.1879 T_c         31.55 d_c       0.04310 Ye_c       0.4360
+  centre X_Fe       0.9392 X_n       0.06082 v_r       -0.1293 vr/vdyn -9.263e-4
+  light  L           59275 L_nuc   1.057e-15 L_N             0 L_nu            0
+  world  escaped     27157 objects         3 sinks           1 sink_M      36366
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=14483 sim_time=49.747 heat_unconverged=16 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       0.002839 s/step     0.1339 P5_ceil         0
+  star   M           37964 R           2.000 tau_dyn   0.01452 M_unb       3.409
+  core   sigma_c    0.1872 T_c         30.79 d_c       0.04394 Ye_c       0.4360
+  centre X_Fe       0.9390 X_n       0.06099 v_r      -0.01109 vr/vdyn -8.048e-5
+  light  L           50278 L_nuc   1.311e-15 L_N             0 L_nu            0
+  world  escaped     27218 objects         4 sinks           1 sink_M      36370
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=14596 sim_time=50.081 heat_unconverged=18 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       0.003021 s/step     0.1142 P5_ceil         0
+  star   M           37957 R           2.000 tau_dyn   0.01452 M_unb       1.850
+  core   sigma_c    0.1327 T_c         24.51 d_c       0.03956 Ye_c       0.4360
+  centre X_Fe       0.9390 X_n       0.06102 v_r      -0.03482 vr/vdyn -2.528e-4
+  light  L           39911 L_nuc   6.589e-16 L_N             0 L_nu            0
+  world  escaped     27229 objects         4 sinks           1 sink_M      36370
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=15012 sim_time=51.331 heat_unconverged=18 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.003016 s/step     0.1047 P5_ceil         0
+  star   M           39014 R           2.000 tau_dyn   0.01432 M_unb           0
+  core   sigma_c   0.07576 T_c         23.36 d_c       0.02428 Ye_c       0.4359
+  centre X_Fe       0.9388 X_n       0.06117 v_r       -0.2591 vr/vdyn -0.001855
+  light  L           46776 L_nuc   9.137e-16 L_N             0 L_nu            0
+  world  escaped     27264 objects         2 sinks           1 sink_M      36373
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=15653 sim_time=53.252 heat_unconverged=23 stage=black_hole | raw=black_hole
+  frame  steps           1 dt       0.003040 s/step     0.1411 P5_ceil         0
+  star   M           38422 R           2.000 tau_dyn   0.01443 M_unb           0
+  core   sigma_c    0.1055 T_c         32.95 d_c       0.02387 Ye_c       0.4360
+  centre X_Fe       0.9390 X_n       0.06100 v_r       -0.2113 vr/vdyn -0.001525
+  light  L           69826 L_nuc   3.564e-15 L_N             0 L_nu            0
+  world  escaped     27303 objects         3 sinks           1 sink_M      36378
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16005 sim_time=54.312 heat_unconverged=23 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.003025 s/step     0.1141 P5_ceil         0
+  star   M           38332 R           2.000 tau_dyn   0.01445 M_unb    5.295e-4
+  core   sigma_c    0.3054 T_c         28.74 d_c       0.07357 Ye_c       0.4361
+  centre X_Fe       0.9392 X_n       0.06079 v_r       -0.2279 vr/vdyn -0.001646
+  light  L           30031 L_nuc   2.542e-16 L_N             0 L_nu            0
+  world  escaped     27318 objects         4 sinks           1 sink_M      36381
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=17013 sim_time=57.357 heat_unconverged=23 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.003048 s/step    0.09772 P5_ceil         0
+  star   M           38342 R           2.000 tau_dyn   0.01444 M_unb      0.4380
+  core   sigma_c    0.1310 T_c         26.69 d_c       0.03599 Ye_c       0.4358
+  centre X_Fe       0.9386 X_n       0.06137 v_r       -0.3387 vr/vdyn -0.002446
+  light  L           24363 L_nuc   1.065e-16 L_N             0 L_nu            0
+  world  escaped     27345 objects         4 sinks           1 sink_M      36393
+SR-HEADLESS DONE steps=17397 sim_time=58.516316 until=met
+SR-CALIBRATE run item=m_bh_sb side=none mass=67020.643 ignited=true core_collapse=true ending=failed_star steps=17397 sim_time=58.516 wall_s=1151.0 continued from step 12000 heat_unconverged=23 record=/tmp/d94/run/m_bh_sb-02
+SR-ERROR calibration failed: m_bh_sb: the run at mass 67020.643 is on neither side of the threshold (mass=67020.643 ignited=true core_collapse=true ending=failed_star steps=17397 sim_time=58.516 wall_s=1151.0) — reported, not guessed
+exit 6

@@ -1,0 +1,36 @@
+== 2026-10-25T16:16:29-04:00 calibration · task M0-D94 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 0.16 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 12 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (1897022) panicked at crates/sr-engine/tests/gpu/calibration.rs:292:49:
+assets/calibration.json is §2.11's: Invalid { key: "preset_mass_sb", message: "missing" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::the_calibration_the_binary_embeds_matches_the_assets
+
+test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 370 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

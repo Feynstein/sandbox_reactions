@@ -562,6 +562,44 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     step names no `calibration` (any case), so it cannot read the measured file** — [M0-R6] makes m_tov_sb physics in the step, and
     `watch_only` read NO-GO on its 7 mentions in sinks.wgsl and step/sinks.rs (laserax-ai-server, 2026-10-23, M0-D90's claim); scan
     tests/watch/check.py's EXEMPT, plant `calibration-in-step` — the lead, 2026-10-23, at M0-D90: «Named exemption (Recommended)».
+  - [M0-D92] §1.9.3's core_collapse row («N_Fe is converting matter (L_N < 0)») · **it also needs M > m_ch_sb**, m_ch_sb as [M0-D81]
+    reads it (a scene without the electrons' cold pressure has no ceiling, and the row refuses none): a remnant at or under it whose
+    cold centre overshoots into N_Fe's gate reads the rows below — white_dwarf or planetary_nebula — and bounces back, the mirror of
+    [M0-D81]; the other rows, the order, the events' rule and §1.8.5's latch unchanged (the game's slow-down still fires on any N_Fe rate)
+    · measured on the RTX 4090 (laserax-ai-server, idle, 2026-10-25, 255ec37; tasks/M0-D92.md): the M₀ life (3,351.032, m_up_sb's light
+    end) flashes its helium core to iron inside one 16-step frame at t 1504.18 (L_nuc 1.3 × 10⁸ against L ≈ 10⁴), the iron centre goes
+    cold and falls in while the envelope leaves, and at t 1512.08 (step 133,534) it touches the gate by 0.2 % (Y_e Σ = 0.4617 × 347.2 =
+    160.3; the object 2,922, 474.7 unbound) — core_collapse, side Heavy, m_up_sb's bracket refused; the same physics run on bounces
+    (Σ_c 347 → 129 → ~44, X_n,c 0.14) and ends white_dwarf at t 1577.42 (step 140,942, 2,364 left); on 6409791's binary (the tree the
+    RTX 5090 ran) the same card's flash came at t 1600.26 holding 2,724 and its centre peaked 7 % under the gate (Σ_c 321.4), ending
+    white_dwarf at t 1621.56; with the bound m_up_sb's bisection read 3,351.032 Light and 3,951.951 … 46,914.450 Heavy (core collapse at
+    t 10.9–13.0); the Sun-like preset (≈ 3,118) is under m_ch_sb by construction — the lead, 2026-10-25, at M0-D92: «No collapse ≤
+    m_ch_sb (Recommended)».
+  - [M0-D93] §0.5 [M0-TJ4] (3)–(4)'s ends («the passes end after the first one with …», «ending at the first round with both … ≤ …»)
+    and (6)'s «the only ceiling» · **a step whose sums leave the float's range ends there, unconverged, as at the ceiling** — a
+    pass's two bounds ((4)'s Σ c_i (u_i^{k−1})² and Σ (C_i/Δt) (T_i^{k−1})²), or a round's sums (γ = (r, z), η = (z, A z) or
+    pᵀAp, either measure), not finite end the step at once, the cells left at the last iterate; it commits by limited fluxes
+    (§0.5 [M0-D89]) and prints `SR-WARN heat unconverged step <n> passes <k> rounds <r>`; on the GPU (f32) and the twin (f64) alike;
+    every tolerance, the ceiling and a finite step unchanged · measured on the RTX 4090 (laserax-ai-server, idle, 2026-10-25, 255ec37
+    + its working changes; tasks/M0-D93.md): in the 20 M₀ life (`calibrate --only m_bh_sb` at 67,020.643) P4 leaves cell (294, 205) at
+    Σ 1.73 × 10⁻⁶ holding 49.8 (T⁰ 3.7 × 10⁷, u ≈ 7.9 × 10²⁵) beside vacuum; in step 16,127 Σ c u² reads inf, every pass's first
+    round γ and η NaN, so the method stopped as solved at round 0 seventeen times and the Newton test read the unmoved iterate as
+    converged; (5) then booked R 3.3843 × 10²⁵, δ −1.31 × 10²⁰ and P8 floored every cell — the life's floor_added and radiated
+    3.38 × 10²⁵ to its end (the lead's record, M0-V20); ended there, the step books R 236.5 and floor_added 2,049, the cell emits
+    24.4156 of its 48.4 (the f64 twin from the same start reaches its own ceiling, 2 passes and 4,096 rounds, and emits 24.4156) — the
+    lead, 2026-10-25, at M0-D93: «End it unconverged (Recommended)».
+  - [M0-D94] §2.7's "a_r, c_sb, κ₀, k_cond 4 × 10⁻⁷, 200, 1, 0" as [M0-D50] left it (a_r 4 × 10⁻⁵, c_sb 200) · **c_sb 400 and
+    a_r 2 × 10⁻⁵** — a_r c_sb held at 8 × 10⁻³, so F_rad (§2.4.1: D = c_sb λ(R)/(κΣ) on a_r T⁴, R scale-free), the thin-gas
+    ceiling c_sb a_r T⁴, σ = a_r c_sb/4 (§1.10.3) and K1's gaps are unchanged; c_sb alone moves the push f = κΣF/c_sb (§2.4.4,
+    halved), r_acc's 2GM_s/c_sb² (§2.6: the 2-cell floor up to M_s 160,000, from 40,000) and §2.11 item 6's bound (max_gas_speed
+    under 200); the bound itself, every tolerance and every other constant unchanged; the physics hash moves, so every calibration
+    item is measured again (§2.11, G-CAL) · measured on the RTX 4090 (laserax-ai-server, M0-D93's frame record of the largest 4 × 4
+    block rms speed, its centre and the nearest sink, every 16 steps, on the tree after M0-D93's fix; tasks/M0-D94.md): the 20 M₀
+    life (67,020.643) passes c_sb/2 = 100 twice by under 1 % — 100.10 at step 2,650 in the supernova's ejecta (block mass 0.030, x
+    570, no sink; 95–100 from step 2,362 to 3,178 as they stream to the edge) and 100.97 at step 20,816 of the lead's trajectory, 1.63
+    cells from a 20,682 sink, inside its 2-cell r_acc (free fall √(2M_s/r) 159; 3 frames over 100, all under 2 cells) — no speed cap,
+    no kick; max_gas_speed read outside the hole's reach, or a wider r_acc, leaves the ejecta's 100.10 — the lead, 2026-10-25, at
+    M0-D94: «c_sb 400, a_r 2e-5 (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

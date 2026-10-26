@@ -1,0 +1,58 @@
+# M0-D92 — 2026-10-25T09:19:50-04:00 — probe 1: m_up_sb life 01 (M0 3351.032) to step 129000, RTX 4090, laserax-ai-server @255ec37, /tmp/d92
+2026-10-25T09:19:50-04:00
+# 2026-10-25T09:21:07-04:00 — A/B build: 6409791 (D78–D80 tree) via git archive into /tmp/d92ab on laserax-ai-server, CARGO_TARGET_DIR=/tmp/d92ab/target, nice 10
+   Compiling eframe v0.36.2
+   Compiling sr-app v0.0.0 (/tmp/d92ab/src/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 32.45s
+-rwxrwxr-x 2 ybelanger ybelanger 21608896 Oct 25 09:21 /tmp/d92ab/target/release/sandbox-reactions
+# 2026-10-25T09:22:10-04:00 — A/B piece 1: 6409791's binary, m_up_sb life 01, RTX 4090, /tmp/d92ab/run, cut at 570 s
+exit 130
+  centre X_Fe            0 X_n             0 v_r     -0.002219 vr/vdyn -1.610e-4
+  light  L            7585 L_nuc        7584 L_N             0 L_nu            0
+  world  escaped     22.45 objects         1 sinks           0 sink_M          0
+Command terminated by signal 2
+wall 571.11 s
+2026-10-25T13-19-50Z
+# 2026-10-25T09:29:37-04:00 — probe 2: resume /tmp/d92 stamp 2026-10-25T13-19-50Z from s_111006, --progress-every 16 to the collapse, cut 570 s
+exit 124
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=115003 sim_time=1313.995 heat_unconverged=29 stage=main_sequence | frame=16 dt=0.01120 s_per_step=0.006299
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=105003 sim_time=1202.211 heat_unconverged=29 stage=main_sequence | frame=16 dt=0.01121 s_per_step=0.006921 p5_ceiling=0 | escaped=16.27 objects=1 
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=110011 sim_time=1258.306 heat_unconverged=29 stage=main_sequence | frame=16 dt=0.01117 s_per_step=0.006429 p5_ceiling=0 | escaped=21.36 objects=1 
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=115003 sim_time=1313.995 heat_unconverged=29 stage=main_sequence | frame=16 dt=0.01120 s_per_step=0.006299 p5_ceiling=0 | escaped=33.63 objects=1 
+s_118011.bin
+s_118011.observers.json
+exit 6
+SR-CALIBRATE continue item=m_up_sb mass=3351.032 from step 111006 (build/calibrate_runs/2026-10-25T13-19-50Z/m_up_sb-01/checkpoint/s_111006.bin)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=133534 sim_time=1512.078835 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3351.032 ignited=true core_collapse=true ending=none steps=133534 sim_time=1512.079 wall_s=731.5 continued from step 111006 heat_unconverged=34 record=build/calibrate_runs/2026-10-25T13-19-50Z/m_up_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1731 sim_time=12.051053 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=46914.450 ignited=true core_collapse=true ending=none steps=1731 sim_time=12.051 wall_s=33.2 heat_unconverged=6 record=build/calibrate_runs/2026-10-25T13-19-50Z/m_up_sb-02
+SR-ERROR calibration failed: the bracket 3351.0..46914.5: its ends agree (3351.0 is Heavy, 46914.5 is Heavy), so the threshold is not in it — widen it with --bracket (two runs spent)
+# 2026-10-25T09:33:42-04:00 — A/B piece 2: resume /tmp/d92ab/run from s_118011 (6409791's binary), --progress-every 16, cut 570 s
+exit 124
+SR-CALIBRATE continue item=m_up_sb mass=3351.032 from step 118011 (build/calibrate_runs/2026-10-25T13-22-10Z/m_up_sb-01/checkpoint/s_118011.bin)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=144250 sim_time=1621.558657 until=met
+SR-CALIBRATE run item=m_up_sb side=Light mass=3351.032 ignited=true core_collapse=false ending=white_dwarf steps=144250 sim_time=1621.559 wall_s=910.9 continued from step 118011 heat_unconverged=1072 record=build/calibrate_runs/2026-10-25T13-22-10Z/m_up_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1755 sim_time=12.450245 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=46914.450 ignited=true core_collapse=true ending=none steps=1755 sim_time=12.450 wall_s=74.5 heat_unconverged=175 record=build/calibrate_runs/2026-10-25T13-22-10Z/m_up_sb-02
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+# 2026-10-25T09:46:16-04:00 — option (a) probe: /tmp/d92a/sr-a (255ec37 + core_collapse row needs M > m_ch), m_up_sb life 01, piece 1, cut 570 s, /tmp/d92a/run
+exit 124
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=130014 sim_time=1475.451 heat_unconverged=34 stage=he_core | raw=he_core
+s_134014.bin
+s_134014.observers.json
+# 2026-10-25T09:55:54-04:00 — option (a) probe piece 2: resume from s_134014, --progress-every 16, cut 570 s
+exit 124
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=6482.024 ignited=true core_collapse=true ending=none steps=1553 sim_time=11.558 wall_s=14.9 record=build/calibrate_runs/2026-10-25T13-46-17Z/m_up_sb-04
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1473 sim_time=11.328307 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=4660.630 ignited=true core_collapse=true ending=none steps=1473 sim_time=11.328 wall_s=11.9 record=build/calibrate_runs/2026-10-25T13-46-17Z/m_up_sb-05
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1281 sim_time=10.943035 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3951.951 ignited=true core_collapse=true ending=none steps=1281 sim_time=10.943 wall_s=10.8 record=build/calibrate_runs/2026-10-25T13-46-17Z/m_up_sb-06
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_up_sb mass=3639.109 step=86301 sim_time=980.795 heat_unconverged=15 stage=main_sequence | raw=main_sequence

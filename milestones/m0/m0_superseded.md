@@ -205,3 +205,14 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   m_tov_sb within 4 cells from step 2,998 and forms its sink at step 3,044 as its collapse brings Y_e over r ≤ 3 to 0.35 (a fallback
   black hole); m_bh_sb's bisection lands between 4,572.394 and 15,000 and preset_mass_sb places the massive preset under it
   (tasks/M0-D90.md § The probe).
+- Contract §1.9.3's core_collapse row, read for any object mass — superseded by contract §0.5 [M0-D92]: it also needs M > m_ch_sb (none
+  refused without a ceiling), a lighter remnant's cold centre overshooting into N_Fe's gate reading white_dwarf or planetary_nebula as it
+  bounces back (the lead, 2026-10-25, M0-D92: «No collapse ≤ m_ch_sb (Recommended)»).
+- Contract §0.5 [M0-TJ4] (3)–(4)'s ends and (6)'s «the only ceiling», read with sums that may leave the float's range — superseded by
+  contract §0.5 [M0-D93]: a pass's bounds or a round's sums not finite end the step there, unconverged, committed by limited fluxes
+  with the warning, after the 20 M₀ life's step 16,127 read 17 NaN-stopped passes as converged and booked 3.4 × 10²⁵ radiated (the
+  lead, 2026-10-25, M0-D93: «End it unconverged (Recommended)»).
+- Contract §2.7's a_r and c_sb (4 × 10⁻⁵ after [M0-D50], 200) — superseded by contract §0.5 [M0-D94]: c_sb 400 and a_r 2 × 10⁻⁵, a_r
+  c_sb held (the light, σ and K1 unchanged; the push halved, the bound 200), after the 20 M₀ life's gas passed c_sb/2 at 100.10 in the
+  supernova's ejecta and 100.97 beside its black hole on the RTX 4090; the calibration measured again from item 1 (the lead,
+  2026-10-25, M0-D94: «c_sb 400, a_r 2e-5 (Recommended)»).

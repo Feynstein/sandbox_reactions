@@ -218,7 +218,8 @@ pub struct HeatReport {
     /// The step's Newton passes and PCG rounds over all of them (0 when it did not run).
     pub passes: u32,
     pub rounds: u32,
-    /// False when the step reached its ceiling (§0.5 [M0-TJ4] (6)) and committed by limited fluxes (§0.5 [M0-D89]).
+    /// False when the step reached its ceiling (§0.5 [M0-TJ4] (6)) or its sums left f32's range (§0.5 [M0-D93]), and
+    /// committed by limited fluxes (§0.5 [M0-D89]).
     pub converged: bool,
     /// The heat balance's closure δ (§0.5 [M0-TJ4] (5)); 0 past the ceiling.
     pub delta: f32,

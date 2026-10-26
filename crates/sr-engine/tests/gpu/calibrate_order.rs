@@ -6,7 +6,7 @@
 //! The order is graded on a stubbed table, one refusal per inequality; the presets on a stubbed life (the masses asked for, the
 //! endings checked, T_eff off the scale refused, TOP's rounding, the durations); the command's own order — the K9 check before
 //! any preset life — through `run_with` on a file under the shipped physics hash.
-//! Plant: `calibrate-order-skip` (m_tov/m_ch left unchecked).
+//! Plants: `calibrate-order-skip` (m_tov/m_ch left unchecked); `light-speed-200` (§2.7's c_sb and a_r before [M0-D94]).
 
 use std::path::PathBuf;
 
@@ -88,6 +88,21 @@ fn the_gas_speed_must_stay_under_half_the_speed_of_light() {
             other => panic!("{speed}: {other:?}"),
         }
     }
+}
+
+/// [M0-D94] The shipped light speed against the 20 M₀ life's fastest gas on the RTX 4090 (M0-D93's frame record): 100.97 at
+/// 1.6 cells from a 20,682 sink and 100.10 in the supernova's ejecta, no sink near — over c_sb 200's bound, under the shipped
+/// one's. a_r c_sb stays [M0-D50]'s 8 × 10⁻³, so the heat, the light and T_eff (σ = a_r c_sb/4) stay; c_sb alone moves the push.
+#[test]
+fn the_shipped_light_speed_clears_the_fastest_gas_measured_and_keeps_the_light() {
+    let p = physics();
+    let (a_r, c_sb) = (p.get("a_r").unwrap(), p.get("c_sb").unwrap());
+    assert!((a_r * c_sb - 8e-3).abs() < 1e-15, "a_r c_sb {}: [M0-D50]'s light", a_r * c_sb);
+    for measured in [100.973754, 100.101489] {
+        check_speed(measured, c_sb).unwrap_or_else(|e| panic!("{measured} under c_sb {c_sb}: {e:?}"));
+        assert!(check_speed(measured, 200.0).is_err(), "{measured} breaks c_sb 200's bound");
+    }
+    assert!(check_speed(c_sb / 2.0, c_sb).is_err(), "half the shipped c_sb is refused");
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -322,12 +337,12 @@ fn render_reserve_ms_is_kept_across_a_rerun_and_the_gas_speed_bound_is_enforced_
     assert_eq!(file["life_sun_sb"], json!(1200.0));
     assert_eq!(file["max_gas_speed"], json!(20.0), "no life ran: the file's gas speed stands");
     assert!(file["m_ch_sb"].as_f64().is_some_and(|m| m > 3000.0));
-    // c_sb = 200 must beat twice the file's gas speed: 100 does not, and nothing is written.
-    base(&path, json!({"render_reserve_ms": 4.25, "max_gas_speed": 100.0}));
+    // c_sb = 400 must beat twice the file's gas speed: 200 does not, and nothing is written.
+    base(&path, json!({"render_reserve_ms": 4.25, "max_gas_speed": 200.0}));
     let before = std::fs::read_to_string(&path).unwrap();
     let (code, lines) = calibrate(&["--out", out, "--only", "m_ch_sb"]);
     assert_eq!(code, 6, "{lines:?}");
-    assert!(lines.iter().any(|l| l.contains("max_gas_speed 100.000") && l.contains("c_sb 200 must exceed twice it")), "{lines:?}");
+    assert!(lines.iter().any(|l| l.contains("max_gas_speed 200.000") && l.contains("c_sb 400 must exceed twice it")), "{lines:?}");
     assert_eq!(std::fs::read_to_string(&path).unwrap(), before);
     let _ = std::fs::remove_dir_all(&dir);
 }

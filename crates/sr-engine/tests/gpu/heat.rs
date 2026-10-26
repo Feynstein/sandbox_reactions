@@ -1120,6 +1120,7 @@ mod stiff {
         gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost,
         gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost,
         gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold,
+        gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold,
     );
 
     /// A scene, its gas and the Δt of its one pass.
@@ -1411,12 +1412,28 @@ mod stiff {
     /// M0-D89's cut (scenes/heat_ceiling.bin, a §2.12.3 dump): P5's start in step 2,517 of the 40 M₀ life (`calibrate --only
     /// m_bh_sb` at 134,041.287, RTX 4090, 2026-10-23: s_2517 through P1–P4 and P8 with P5 pinned), cells x 184–247, y 43–106
     /// of its 600 × 400 world — the thin hot cell (Σ 2.1e-5, T 3.4e5) at (32, 32) beside a vacuum cell — and the step's Δt
-    /// (the header's `resume.dt_next`). The shipped constants; every test flag off.
+    /// (the header's `resume.dt_next`). The constants its life ran on ([`cut`]); every test flag off.
     fn ceiling_cut() -> (State, Physics, f64) {
-        let dump = Dump::read(&scenes_dir().join("heat_ceiling.bin")).unwrap();
+        cut("heat_ceiling.bin")
+    }
+
+    /// M0-D93's cut (scenes/heat_overflow.bin, a §2.12.3 dump): P5's start in step 16,127 of the 20 M₀ life (`calibrate --only
+    /// m_bh_sb` at 67,020.643, RTX 4090, 2026-10-25: s_16127 through P1–P4 and P8 with P5 pinned), cells x 262–325, y 173–236 of
+    /// its 600 × 400 world — the thin hot cell P4 left at Σ 1.7e-6, T⁰ 3.7e7 (u ~ 10²⁶) at (32, 32) beside two vacuum cells —
+    /// and the step's Δt (the header's `resume.dt_next`). The constants its life ran on ([`cut`]); every test flag off.
+    fn overflow_cut() -> (State, Physics, f64) {
+        cut("heat_overflow.bin")
+    }
+
+    /// A cut is P5's start in a life run on a_r 4e-5 and c_sb 200, before §0.5 [M0-D94], and runs on that pair: the shipped
+    /// one holds a_r c_sb, so the twin (f64) reads the same, but u = a_r T⁴ is halved and the GPU's f32 Jacobi solve of
+    /// heat_ceiling.bin then converges (17 passes, 3,518 rounds on the RTX 4090, M0-D94) — no ceiling left to grade.
+    fn cut(file: &str) -> (State, Physics, f64) {
+        let dump = Dump::read(&scenes_dir().join(file)).unwrap();
         let (w, h) = (dump.world.width as usize, dump.world.height as usize);
         let st = State::new(w, h, dump.planes.iter().map(|&v| f64::from(v)).collect());
-        (st, Physics::shipped().unwrap(), f64::from(dump.resume.dt_next))
+        let physics = Physics::shipped().unwrap().with(&[("a_r", 4e-5), ("c_sb", 200.0)]).unwrap();
+        (st, physics, f64::from(dump.resume.dt_next))
     }
 
     /// Each cell's heat above its floor as P5 reads its start (§0.5 [M0-TJ4] (1)): C (T⁰ − T_floor), C = Σ/μ, T⁰ from the
@@ -1499,6 +1516,37 @@ mod stiff {
         let all: f64 = held_above_floor(&physics, &before).iter().sum();
         assert!(floored.abs() <= 1e-5 * all, "(a) P8 floored {floored} after P5: a cell gave more than it held");
         assert_bounded(&physics, &before, &after, radiated, 1e-5, 2.0 * f64::from(f32::EPSILON));
+    }
+
+    /// M0-D93 on the GPU: the cut's thin hot cell holds u = a_r T⁴ past √f32::MAX, so P5's sums (Σ c u², γ, η) are not finite;
+    /// the step ends unconverged (§0.5 [M0-D93]) and commits by limited fluxes, held to M0-D89's bounds — where the method
+    /// stopped as solved at round 0 in every pass, the Newton test read 17 passes as converged and (5)'s closure booked
+    /// 3.4e25 radiated, δ −1.3e20, against ~2.6e5 of heat above the floor in the world (RTX 4090, the 20 M₀ life's step 16,127).
+    fn gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold() {
+        let (st, physics, dt) = overflow_cut();
+        let n = st.cells();
+        let elements = elements();
+        let t_floor = Eos::from_physics(&physics).unwrap().t_floor();
+        let held = held_above_floor(&physics, &st);
+        // The hottest gas cell's T⁰ = T_floor + held/C, C = Σ/μ.
+        let inv_mu = |i: usize| elements.composition(&std::array::from_fn(|s| st.planes[(4 + s) * n + i])).inv_mu;
+        let t_hot = (0..n).filter(|&i| held[i] > 0.0).map(|i| t_floor + held[i] / (st.planes[i] * inv_mu(i))).fold(0.0, f64::max);
+        let u_hot = physics.get("a_r").unwrap() * t_hot.powi(4);
+        println!("SR-STIFF heat_overflow.bin: hottest T⁰ {t_hot:e}, u {u_hot:e} (√f32::MAX {:e})", f64::from(f32::MAX).sqrt());
+        assert!(u_hot > f64::from(f32::MAX).sqrt(), "the cut must hold a cell whose u² leaves f32's range: u {u_hot:e}");
+        let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
+        let before = gpu.first.clone();
+        let r = gpu.pass(dt);
+        let after = gpu.planes();
+        let radiated: f64 = gpu.radiated().iter().sum();
+        let floored = book_totals(gpu.state.world(), &gpu.booking.readback(&gpu.gpu.device, &gpu.gpu.queue))
+            [TERMS.iter().position(|t| t.name == "energy.floor_added").unwrap()];
+        println!("SR-STIFF GPU heat_overflow.bin: {r:?}, radiated booked {radiated:e}, P8's floor_added {floored:e}");
+        let all: f64 = held_above_floor(&physics, &before).iter().sum();
+        assert!(floored.abs() <= 1e-5 * all, "(a) P8 floored {floored} after P5: a cell gave more than it held");
+        assert_bounded(&physics, &before, &after, radiated, 1e-5, 2.0 * f64::from(f32::EPSILON));
+        assert!(!r.converged, "a step whose sums leave f32's range ends unconverged: {r:?}");
+        assert_eq!(r.delta, 0.0, "past the ceiling the fluxes are booked on both sides: no closure");
     }
 }
 

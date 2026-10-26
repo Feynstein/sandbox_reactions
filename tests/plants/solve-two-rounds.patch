@@ -1,14 +1,14 @@
 --- a/crates/sr-physics/src/reference/heat.rs
 +++ b/crates/sr-physics/src/reference/heat.rs
-@@ -415,7 +415,7 @@
-             if rz <= self.u_bound && e_heat <= self.t_bound {
-                 return (rounds, true);
+@@ -426,7 +426,7 @@
+             if !(rz.is_finite() && e_heat.is_finite() && pq.is_finite()) {
+                 return Err(rounds);
              }
--            if rounds == max_rounds {
-+            if rounds == max_rounds || rounds == 2 {
-                 return (rounds, false);
+-            if (rz <= self.u_bound && e_heat <= self.t_bound) || rounds == max_rounds {
++            if (rz <= self.u_bound && e_heat <= self.t_bound) || rounds == max_rounds || rounds == 2 {
+                 return Ok(rounds);
              }
-             self.net.matvec(&self.diag, &p, &mut q);
+             let alpha = rz / pq;
 --- a/crates/sr-engine/shaders/heat.wgsl
 +++ b/crates/sr-engine/shaders/heat.wgsl
 @@ -604,7 +604,7 @@

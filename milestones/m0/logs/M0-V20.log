@@ -1,0 +1,176 @@
+# M0-V20 — triage log (linux-pc laserax-ai; read-only probes of laserax-ai-server)
+## 2026-10-25T08:45:57-04:00 probe 1: list the lead's m_bh_sb record
+total 16
+drwxrwxr-x  4 ybelanger ybelanger 4096 Oct 23 17:16 .
+drwxrwxr-x 26 ybelanger ybelanger 4096 Oct 23 17:08 ..
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 17:16 m_bh_sb-01
+drwxrwxr-x  2 ybelanger ybelanger 4096 Oct 23 17:43 m_bh_sb-02
+total 32
+drwxrwxr-x 2 ybelanger ybelanger  4096 Oct 23 17:43 .
+drwxrwxr-x 4 ybelanger ybelanger  4096 Oct 23 17:16 ..
+-rw-rw-r-- 1 ybelanger ybelanger  6463 Oct 23 17:43 events.jsonl
+-rw-rw-r-- 1 ybelanger ybelanger 14025 Oct 23 17:43 summary.json
+55 m_bh_sb-02/events.jsonl
+28K	m_bh_sb-02
+## 2026-10-25T08:46:06-04:00 probe 2: copied m_bh_sb-01/02 summary+events to /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/b95b2fe7-d27c-46af-b499-b9f9f88d77e6/scratchpad/v20/rec (read-only scp)
+## 2026-10-25T08:48:23-04:00 probe 3: ledgers of every life of the lead's 2026-10-23 calibration records (server, read-only)
+2026-10-23T20-42-01Z/m_ign_sb-01//summar calibrate:m_ign_sb:167.552 steps 1905 t 86.58 floor -9.467e-01 rad 2.646e+01 inv -7.9765e+02 -> -8.1170e+02 vmax 5.45 [(1, 160.7, 'failed_star')]
+2026-10-23T20-42-01Z/m_ign_sb-02//summar calibrate:m_ign_sb:3351.032 steps 673 t 8.64 floor -1.793e+01 rad 7.741e+04 inv -2.0064e+05 -> -2.0321e+05 vmax 22.10 [(1, 3344.9, 'failed_star')]
+2026-10-23T20-42-01Z/m_ign_sb-03//summar calibrate:m_ign_sb:749.314 steps 1777 t 39.38 floor -9.937e+00 rad 9.646e+02 inv -1.6797e+04 -> -1.6875e+04 vmax 11.32 [(1, 747.8, 'failed_star')]
+2026-10-23T20-42-01Z/m_ign_sb-04//summar calibrate:m_ign_sb:1584.605 steps 1809 t 28.74 floor -3.656e+01 rad 1.523e+04 inv -5.9742e+04 -> -6.0374e+04 vmax 16.75 [(1, 1576.8, 'failed_star')]
+2026-10-23T20-42-01Z/m_ign_sb-05//summar calibrate:m_ign_sb:2304.357 steps 2049 t 27.87 floor -6.303e+01 rad 4.867e+04 inv -1.1002e+05 -> -1.1149e+05 vmax 19.37 [(1, 2292.0, 'failed_star')]
+2026-10-23T20-42-01Z/m_ign_sb-06//summar calibrate:m_ign_sb:2778.844 steps 705 t 9.44 floor -1.599e+01 rad 4.674e+04 inv -1.4877e+05 -> -1.5053e+05 vmax 20.63 [(1, 2772.3, 'failed_star')]
+2026-10-23T20-42-01Z/m_ign_sb-07//summar calibrate:m_ign_sb:2530.504 steps 257 t 4.22 floor -4.484e-01 rad 1.359e+03 inv -1.2797e+05 -> -1.2923e+05 vmax 10.87 [(1, 2529.7, 'collapsing')]
+2026-10-23T20-42-01Z/m_ign_sb-08//summar calibrate:m_ign_sb:2414.785 steps 2065 t 27.55 floor -6.594e+01 rad 5.599e+04 inv -1.1866e+05 -> -1.2028e+05 vmax 19.89 [(1, 2401.3, 'failed_star')]
+2026-10-23T20-42-01Z/m_ign_sb-09//summar calibrate:m_ign_sb:2471.967 steps 2081 t 27.53 floor -6.943e+01 rad 6.016e+04 inv -1.2322e+05 -> -1.2494e+05 vmax 19.65 [(1, 2457.9, 'failed_star')]
+2026-10-23T20-42-01Z/m_ign_sb-10//summar calibrate:m_ign_sb:2501.064 steps 2065 t 27.22 floor -6.934e+01 rad 6.201e+04 inv -1.2560e+05 -> -1.2736e+05 vmax 19.71 [(1, 2486.5, 'failed_star')]
+2026-10-23T20-43-27Z/m_up_sb-01//summary calibrate:m_up_sb:3351.032 steps 133534 t 1512.08 floor 8.753e+04 rad 8.318e+06 inv -2.0064e+05 -> -2.7063e+05 vmax 30.64 [(1, 2922.0, 'core_collapse')]
+2026-10-23T20-43-27Z/m_up_sb-02//summary calibrate:m_up_sb:46914.450 steps 1731 t 12.05 floor 1.518e+06 rad 7.351e+06 inv -1.1952e+07 -> -1.2702e+07 vmax 38.99 [(1, 46411.2, 'core_collapse')]
+2026-10-23T21-08-46Z/m_bh_sb-01//summary calibrate:m_bh_sb:4572.394 steps 42674 t 463.68 floor 1.902e+07 rad 2.856e+06 inv -3.2845e+05 -> -1.3557e+06 vmax 52.18 [(1, 2472.8, 'neutron_star')]
+2026-10-23T21-08-46Z/m_bh_sb-02//summary calibrate:m_bh_sb:67020.643 steps 23987 t 79.75 floor 3.384e+25 rad 3.384e+25 inv -2.4358e+07 -> -4.2965e+18 vmax 108.13 [(68, 1700.6, 'failed_star'), (72, 30618.4, 'black_hole')]
+## 2026-10-25T08:48:47-04:00 probe 4: git (read-only) — where M0-D89's limited fluxes landed; tmux sessions on the server
+946c846 M0-D90 done
+255ec37 M0-D90 done: a black hole from mass; G-WATCH's m_tov_sb exemption
+1243c32 M0-D90 in progress
+8332496 M0-D86 done
+03e763b M0-D85 done: P5's warm start from the last step's rate; R18
+a3aaefd M0-D84 done: the multigrid V-cycle is P5's default
+40bdeac M0-D80 in progress: handoff after the rows and colours
+6211e86 M0-D80 in progress: progress rows at 80 columns
+7d69ca3 M0-D80 in progress: progress rows and colours
+6409791 M0-D80 in progress
+f39c6db M0-V9 in progress
+a226fc5 M0-D72 in progress: handoff for the resume
+ crates/sr-engine/shaders/heat.wgsl                 |  123 +-
+ crates/sr-engine/shaders/sinks.wgsl                |   96 +-
+ crates/sr-engine/src/step/heat.rs                  |   10 +-
+ crates/sr-engine/src/step/sinks.rs                 |   12 +-
+ crates/sr-engine/src/watch.rs                      |   16 +-
+ crates/sr-engine/tests/gpu/heat.rs                 |  100 +-
+ crates/sr-engine/tests/gpu/sink.rs                 |  159 ++-
+ crates/sr-physics/src/reference/heat.rs            |   71 +-
+ crates/sr-physics/src/reference/sinks.rs           |   95 +-
+ milestones/m0/logs/M0-D81.heat_gauss.log           |   62 +
+ milestones/m0/logs/M0-D81.heat_implicit.log        |   35 +
+ milestones/m0/logs/M0-D81.heat_limiter.log         |   44 +
+ milestones/m0/logs/M0-D81.heat_multigrid.log       |   26 +
+ milestones/m0/logs/M0-D81.heat_stiff.log           |   46 +
+ milestones/m0/logs/M0-D81.nu_heat.log              |   56 +
+ milestones/m0/logs/M0-D81.sink.log                 |  118 ++
+ milestones/m0/logs/M0-D81.watch_only.log           |    6 +
+ milestones/m0/logs/M0-D87.heat_gauss.log           |   62 +
+ milestones/m0/logs/M0-D87.heat_implicit.log        |   35 +
+ milestones/m0/logs/M0-D87.heat_limiter.log         |   44 +
+v9cal: 1 windows (created Fri Oct 23 16:41:55 2026)
+255ec37 M0-D90 done: a black hole from mass; G-WATCH's m_tov_sb exemption
+1243c32 M0-D90 in progress
+8332496 M0-D86 done
+ M assets/calibration.json
+?? milestones/m0/logs/M0-D85-decoy.launch.web.log
+?? milestones/m0/logs/M0-D85-race.launch.game-xvfb.log
+?? milestones/m0/logs/M0-R6-s2-decoy.launch.web.log
+?? milestones/m0/logs/M0-R6-s2-race.launch.game-xvfb.log
+## 2026-10-25T08:48:56-04:00 probe 5: tmux capture-pane -p -t v9cal (read-only, the peek M0-V9's task file names) -> /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/b95b2fe7-d27c-46af-b499-b9f9f88d77e6/scratchpad/v20/v9cal.pane.txt
+1951 /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/b95b2fe7-d27c-46af-b499-b9f9f88d77e6/scratchpad/v20/v9cal.pane.txt
+## 2026-10-25T08:52:18-04:00 probe 6: ledgers of M0-D90's kept 20 M0 probe records (server, read-only)
+2026-10-22T15-08-15Z
+AGENTS.md
+assets
+build
+Cargo.lock
+Cargo.toml
+CLAUDE.md
+crates
+docs
+GEMINI.md
+milestones
+calibrate_runs
+target
+2026-10-23T19-52-54Z
+2026-10-23T19-56-12Z
+2026-10-23T19-58-57Z
+== /tmp/d90p/build/calibrate_runs/2026-10-23T19-52-54Z/
+m_bh_sb-01
+  -- /tmp/d90p/build/calibrate_runs/2026-10-23T19-52-54Z/m_bh_sb-01/
+progress.json
+1
+== /tmp/d90p/build/calibrate_runs/2026-10-23T19-56-12Z/
+m_bh_sb-01
+  -- /tmp/d90p/build/calibrate_runs/2026-10-23T19-56-12Z/m_bh_sb-01/
+dumps
+progress.json
+2
+== /tmp/d90p/build/calibrate_runs/2026-10-23T19-58-57Z/
+m_bh_sb-01
+  -- /tmp/d90p/build/calibrate_runs/2026-10-23T19-58-57Z/m_bh_sb-01/
+dumps
+progress.json
+2
+== 2026-10-23T19-56-12Z
+{"L":1487700.979591447,"L_N":0.0,"L_nu":6.410241145674672,"L_nuc":1.1366065123668021e-7,"M":13266.041735440493,"M_unb":4420.782864665613,"R":251.34919523504968,"T_c":142.96591186523438,"X_Fe_c":0.970151424407959,"X_n_c":0.029848558828234673,"Ye_c":0.45042745464614165,"checkpoint_step":null,"continued_from_step":null,"d_c":0.4930156469345093,"dt":0.004193005617707968,"escaped":1726.989347269019,"frame":1,"heat_unconverged":0,"item":"m_bh_sb","mass":15000.0,"objects":1,"p5_ceiling":0,"progress_every":50,"raw":"black_hole","s_per_step":0.043923359,"sigma_c":24.429759979248047,"sim_time":18.35994146205485,"sink_M":6044.77685546875,"sinks":1,"stage":"black_hole","stages":[{"since_step":50,"stage":"cloud"},{"since_step":100,"stage":"collapsing"},{"since_step":450,"stage":"iron_core"},{"since_step":1750,"stage":"core_collapse"},{"since_step":1751,"stage":"supernova"},{"since_step":3050,"stage":"black_hole"}],"started":"2026-10-23T19:56:12Z","step":3100,"tau_dyn":34.59756778915607,"v_r":8.664967316225345,"v_r_dyn":1.1927103798107725}
+s_1000.bin
+s_1000.observers.json
+s_100.bin
+s_900.observers.json
+s_950.bin
+s_950.observers.json
+406
+== 2026-10-23T19-58-57Z
+{"L":1403652.515913217,"L_N":0.0,"L_nu":9070.931639394765,"L_nuc":0.010158608953947379,"M":33293.62987369485,"M_unb":2500.8562846775167,"R":139.61035731413148,"T_c":118.56980895996094,"X_Fe_c":0.699237585067749,"X_n_c":0.300762414932251,"Ye_c":0.3246460271527172,"checkpoint_step":null,"continued_from_step":null,"d_c":0.39921334385871887,"dt":0.003526495536789298,"escaped":33691.92282219294,"frame":1,"heat_unconverged":18,"item":"m_bh_sb","mass":67020.643,"objects":1,"p5_ceiling":0,"progress_every":50,"raw":"black_hole","s_per_step":0.077312333,"sigma_c":29.226133346557617,"sim_time":34.744813612662256,"sink_M":5288.52685546875,"sinks":1,"stage":"black_hole","stages":[{"since_step":50,"stage":"cloud"},{"since_step":100,"stage":"collapsing"},{"since_step":250,"stage":"main_sequence"},{"since_step":400,"stage":"cloud"},{"since_step":567,"stage":"he_shell"},{"since_step":600,"stage":"iron_core"},{"since_step":1649,"stage":"core_collapse"},{"since_step":1700,"stage":"neutron_star"},{"since_step":2400,"stage":"supernova"},{"since_step":4000,"stage":"neutron_star"},{"since_step":8500,"stage":"black_hole"}],"started":"2026-10-23T19:58:57Z","step":8550,"tau_dyn":9.040571480392963,"v_r":-1.9821666783390182,"v_r_dyn":-0.12835666268840004}
+s_1000.bin
+s_1000.observers.json
+s_100.bin
+s_900.observers.json
+s_950.bin
+s_950.observers.json
+1438
+keys ['adapter', 'done', 'driver', 'dt_next', 'heat_unconverged', 'ledger', 'one_step', 'physics_hash', 'scene', 'sim_time', 'step', 'version', 'wall_s', 'watch', 'world']
+s_50.observers.json no ledger keys ['adapter', 'done', 'driver', 'dt_next', 'heat_unconverged', 'ledger', 'one_step', 'physics_hash', 'scene', 'sim_time']
+/rec/02.summary.json start step 1 {'escaped': [0.0, 0.0], 'grid': [0.0, 0.0], 'invariant': [0.0, 0.0], 'sinks': [0.0, 0.0]}
+/rec/02.summary.json end step 23987 {'escaped': [-84330.9, 30886.8], 'grid': [13285.2, 7925.8], 'invariant': [39520.3, 6689.1], 'sinks': [110565.9, -32123.5]}
+  mass {'cleared': 0.0, 'erased': 0.0, 'escaped': 34674.142, 'grid': 3330.533, 'invariant': 67020.621, 'painted': 0.0, 'preset_dropped': 0.0, 'sinks': 29015.68, 'vacuum_reset': 0.265}
+v20/rec/summary.json start step 1 {'escaped': [0.0, 0.0], 'grid': [-0.0, 0.0], 'invariant': [-0.0, 0.0], 'sinks': [0.0, 0.0]}
+v20/rec/summary.json end step 42674 {'escaped': [967.3, -498.3], 'grid': [167.5, -265.3], 'invariant': [1134.8, -763.6], 'sinks': [0.0, 0.0]}
+  mass {'cleared': 0.0, 'erased': 0.0, 'escaped': 2046.477, 'grid': 2525.511, 'invariant': 4572.393, 'painted': 0.0, 'preset_dropped': 0.0, 'sinks': 0.0, 'vacuum_reset': 0.404}
+calibrate:m_bh_sb:4572.394 W start -4.2112e+05 end -2.0381e+05 dInv -1.0273e+06 t 463.68 dInv/|W0| -2.439e+00
+   floor-rad 1.6161e+07 thermal 1.710e+04 kinetic 6.783e+04 nuclear 2.265e+07 nu_lost 3.719e+07 swallowed 0.000e+00 escaped 3.721e+05
+calibrate:m_bh_sb:67020.643 W start -2.8209e+07 end -2.9218e+06 dInv -4.2965e+18 t 79.75 dInv/|W0| -1.523e+11
+   floor-rad 4.2965e+18 thermal 1.103e+05 kinetic 3.065e+06 nuclear 4.133e+08 nu_lost 5.706e+08 swallowed 6.115e+06 escaped 3.099e+07
+## 2026-10-25T09:02:01-04:00 probe 7: read-only git — have the open D's code sites changed since filing?
+D63 since 2026-10-19: 03e763b 2026-10-22 M0-D85 done: P5's warm start from the last step's rate; R18;6409791 2026-10-22 M0-D80 in progress;f39c6db 2026-10-21 M0-V9 in progress;b502cda 2026-10-19 M0-D64 in progress;d818dbc 2026-10-19 M0-V19 done;
+D65 since 2026-10-19: f39c6db 2026-10-21 M0-V9 in progress;d818dbc 2026-10-19 M0-V19 done;
+D68 since 2026-10-20: a740549 2026-10-20 M0-D67 N/A;
+D69 since 2026-10-20: a740549 2026-10-20 M0-D67 N/A;
+D70 since 2026-10-20: 1243c32 2026-10-23 M0-D90 in progress;6409791 2026-10-22 M0-D80 in progress;f39c6db 2026-10-21 M0-V9 in progress;
+D71 since 2026-10-20: a740549 2026-10-20 M0-D67 N/A;
+D91 since 2026-10-23T16:00: 
+D92 since 2026-10-23T23:00: 
+343:pub fn git_rev() -> String {
+344-    std::process::Command::new("git")
+345-        .args(["rev-parse", "--short", "HEAD"])
+346-        .output()
+347-        .ok()
+348-        .filter(|o| o.status.success())
+349-        .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
+350-        .unwrap_or_else(|| "unknown".to_string())
+351-}
+## 2026-10-25T09:05:12-04:00 probe 8: each life's energy drift against |W0| (server records, read-only)
+m_ign_sb-01 t 86.58 |W0| 2.9211e+03 dInv -1.4047e+01 dInv/|W0| -0.0048
+m_ign_sb-02 t 8.64 |W0| 2.6408e+05 dInv -2.5704e+03 dInv/|W0| -0.0097
+m_ign_sb-03 t 39.38 |W0| 2.7854e+04 dInv -7.8110e+01 dInv/|W0| -0.0028
+m_ign_sb-04 t 28.74 |W0| 8.5884e+04 dInv -6.3276e+02 dInv/|W0| -0.0074
+m_ign_sb-05 t 27.87 |W0| 1.5055e+05 dInv -1.4724e+03 dInv/|W0| -0.0098
+m_ign_sb-06 t 9.44 |W0| 1.9944e+05 dInv -1.7664e+03 dInv/|W0| -0.0089
+m_ign_sb-07 t 4.22 |W0| 1.7328e+05 dInv -1.2619e+03 dInv/|W0| -0.0073
+m_ign_sb-08 t 27.55 |W0| 1.6150e+05 dInv -1.6253e+03 dInv/|W0| -0.0101
+m_ign_sb-09 t 27.53 |W0| 1.6727e+05 dInv -1.7181e+03 dInv/|W0| -0.0103
+m_ign_sb-10 t 27.22 |W0| 1.7030e+05 dInv -1.7547e+03 dInv/|W0| -0.0103
+m_up_sb-01 t 1512.08 |W0| 2.6408e+05 dInv -6.9990e+04 dInv/|W0| -0.2650
+m_up_sb-02 t 12.05 |W0| 1.3853e+07 dInv -7.4959e+05 dInv/|W0| -0.0541
+m_bh_sb-01 t 463.68 |W0| 4.2112e+05 dInv -1.0273e+06 dInv/|W0| -2.4394
+m_bh_sb-02 t 79.75 |W0| 2.8209e+07 dInv -4.2965e+18 dInv/|W0| -152307111866.0825
+## 2026-10-25T09:10:07-04:00 the pane's copy kept as milestones/m0/logs/M0-V20.v9cal-pane.log (1,951 lines, captured 2026-10-25 from tmux v9cal on laserax-ai-server)
+## 2026-10-25T09:13:01-04:00 claim: rsync up (R18's route) then SR_TEST_ADAPTER="RTX 4090" verify.py --changed --task M0-V20 on laserax-ai-server
+<f.st...... assets/calibration.json
+## 2026-10-25T09:14:37-04:00 brought home: loop_times.jsonl's new server lines (appended), tools/pb/verify.anchor.json (after the claim), logs M0-V20.<scope>.* (the main log kept local: the server's holds nothing more)
+## 2026-10-25T09:15:42-04:00 closed M0-V20 (plan.py close GO); plan.py lint after the close: GO

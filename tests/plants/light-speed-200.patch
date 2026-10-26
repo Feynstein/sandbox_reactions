@@ -1,0 +1,13 @@
+--- a/assets/physics.json
++++ b/assets/physics.json
+@@ -37,8 +37,8 @@
+   "k2e": 134,
+   "k1n": 2.67,
+   "k2n": 58.2,
+-  "a_r": 2e-5,
+-  "c_sb": 400,
++  "a_r": 4e-5,
++  "c_sb": 200,
+   "kappa0": 1,
+   "k_cond": 0,
+   "a_nu": 1e-3,

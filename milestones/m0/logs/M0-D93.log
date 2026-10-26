@@ -1,0 +1,372 @@
+# M0-D93 log — laserax-ai-server, RTX 4090 (opened 2026-10-25T13:56:40-04:00)
+## piece 1: calibrate --resume /tmp/d93/run (life 01 replayed from the lead's record) --max-steps 7000  2026-10-25T13:56:53-04:00
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=2010 sim_time=11.869 heat_unconverged=14 stage=neutron_star | raw=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=3002 sim_time=14.822 heat_unconverged=14 stage=supernova | raw=supernova
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=4010 sim_time=18.142 heat_unconverged=14 stage=neutron_star | raw=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=5002 sim_time=21.114 heat_unconverged=14 stage=neutron_star | raw=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=6010 sim_time=24.053 heat_unconverged=14 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=7000 sim_time=27.190 heat_unconverged=14 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 7000 — reported, not guessed (record kept: /tmp/d93/run/m_bh_sb-02)
+exit 6
+
+real	6m43.142s
+user	6m27.668s
+sys	0m1.720s
+## piece 2: --max-steps 13000  2026-10-25T14:03:58-04:00
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=9000 sim_time=34.185 heat_unconverged=14 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=10008 sim_time=37.109 heat_unconverged=14 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=10585 sim_time=38.808 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=11001 sim_time=40.029 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=12009 sim_time=42.897 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=13000 sim_time=46.070 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 13000 — reported, not guessed (record kept: /tmp/d93/run/m_bh_sb-02)
+exit 6
+
+real	6m42.620s
+user	6m30.328s
+sys	0m2.318s
+   8008    30.603   2.4541e+08   5.4539e+07   8.2100e+05  -7.9818e+06   5.8092e+06    14
+   9000    34.185   2.5493e+08   6.0223e+07   4.3528e+05  -4.5734e+06   5.8199e+06    14
+  10008    37.109   2.5943e+08   6.4667e+07   4.5438e+05  -5.7347e+06   5.8673e+06    14
+  11001    40.029   2.6355e+08   6.8715e+07   4.2471e+05  -4.6793e+06   5.8941e+06    15
+  12009    42.897   2.6721e+08   7.2947e+07   3.4072e+05  -4.5763e+06   5.9654e+06    15
+  13000    46.070   2.7080e+08   7.6355e+07   3.6082e+05  -4.5648e+06   5.9667e+06    15
+## piece 3: --max-steps 16000  2026-10-25T14:10:50-04:00
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=42674 sim_time=463.676 wall_s=465.5 replayed record=/tmp/d93/run/m_bh_sb-01
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=14008 sim_time=49.255 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=15000 sim_time=52.476 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16000 sim_time=55.502 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 16000 — reported, not guessed (record kept: /tmp/d93/run/m_bh_sb-02)
+exit 6
+
+real	3m6.116s
+user	2m58.028s
+sys	0m1.004s
+  13000    46.070   2.7080e+08   7.6355e+07   3.6082e+05  -4.5648e+06   5.9667e+06    15
+  14008    49.255   2.7434e+08   7.9727e+07   3.2208e+05  -4.5323e+06   5.9675e+06    15
+  15000    52.476   2.7780e+08   8.3071e+07   4.8554e+05  -4.5723e+06   5.9686e+06    15
+  16000    55.502   2.8103e+08   8.6148e+07   3.9478e+05  -4.5616e+06   5.9692e+06    15
+## piece 4: --max-steps 16600 --checkpoint-every 50  2026-10-25T14:14:09-04:00
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16462 sim_time=56.484 heat_unconverged=335 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16463 sim_time=56.486 heat_unconverged=336 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16464 sim_time=56.488 heat_unconverged=337 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16465 sim_time=56.490 heat_unconverged=338 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16466 sim_time=56.492 heat_unconverged=338 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=16483 sim_time=56.527 heat_unconverged=347 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 16600 — reported, not guessed (record kept: /tmp/d93/run/m_bh_sb-02)
+exit 6
+
+real	4m21.255s
+user	4m9.300s
+sys	0m1.293s
+  15000    52.476   2.7780e+08   8.3071e+07   4.8554e+05  -4.5723e+06   5.9686e+06    15
+  16000    55.502   2.8103e+08   8.6148e+07   3.9478e+05  -4.5616e+06   5.9692e+06    15
+  16064    55.692   2.8124e+08   8.6342e+07   2.8565e+05  -4.5557e+06   5.9692e+06    15
+  16112    55.835   2.8139e+08   8.6490e+07   3.4223e+05  -4.5623e+06   5.9692e+06    15
+  16150    55.932   3.3843e+25   3.3843e+25   2.6135e+05  -4.2965e+18   5.9693e+06    23
+  16200    55.992   3.3843e+25   3.3843e+25   2.4706e+05  -4.2965e+18   5.9694e+06    73
+  16250    56.090   3.3843e+25   3.3843e+25   3.0231e+05  -4.2965e+18   5.9698e+06   123
+  16300    56.198   3.3843e+25   3.3843e+25   2.5451e+05  -4.2965e+18   5.9701e+06   173
+  16350    56.287   3.3843e+25   3.3843e+25   4.2026e+05  -4.2965e+18   5.9703e+06   223
+  16400    56.384   3.3843e+25   3.3843e+25   3.0926e+05  -4.2965e+18   5.9707e+06   273
+  16450    56.459   3.3843e+25   3.3843e+25   4.0360e+05  -4.2965e+18   5.9710e+06   323
+  16515    56.621   3.3843e+25   3.3843e+25   3.5201e+05  -4.2965e+18   5.9712e+06   347
+  16563    56.763   3.3843e+25   3.3843e+25   3.5785e+05  -4.2965e+18   5.9712e+06   347
+  16600    56.874   3.3843e+25   3.3843e+25   3.2694e+05  -4.2965e+18   5.9712e+06   347
+## headless from s_16112 to 16150, dumps every step  2026-10-25T14:18:44-04:00
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 16126 passes 64 rounds 251
+SR-WARN heat unconverged step 16143 passes 64 rounds 874
+SR-WARN heat unconverged step 16144 passes 64 rounds 1402
+SR-WARN heat unconverged step 16145 passes 64 rounds 1297
+SR-WARN heat unconverged step 16146 passes 64 rounds 1863
+SR-WARN heat unconverged step 16147 passes 64 rounds 1516
+SR-WARN heat unconverged step 16148 passes 1 rounds 4096
+SR-WARN heat unconverged step 16149 passes 64 rounds 1308
+SR-HEADLESS DONE steps=16150 sim_time=55.931931 until=none
+
+real	0m8.626s
+user	0m6.388s
+sys	0m0.572s
+   step         t    floor_add     radiated      thermal    invariant    swallowed   unc
+  16113    55.837   2.8139e+08   8.6493e+07   3.3112e+05  -4.5615e+06   5.9692e+06    15
+  16114    55.840   2.8140e+08   8.6495e+07   3.2032e+05  -4.5604e+06   5.9692e+06    15
+  16115    55.843   2.8140e+08   8.6497e+07   3.1015e+05  -4.5592e+06   5.9692e+06    15
+  16116    55.846   2.8140e+08   8.6499e+07   3.0080e+05  -4.5580e+06   5.9692e+06    15
+  16117    55.849   2.8141e+08   8.6501e+07   2.9234e+05  -4.5568e+06   5.9692e+06    15
+  16118    55.852   2.8141e+08   8.6502e+07   2.8490e+05  -4.5557e+06   5.9692e+06    15
+  16119    55.855   2.8141e+08   8.6504e+07   2.7843e+05  -4.5545e+06   5.9692e+06    15
+  16120    55.858   2.8142e+08   8.6505e+07   2.7296e+05  -4.5533e+06   5.9692e+06    15
+  16121    55.861   2.8142e+08   8.6506e+07   2.6854e+05  -4.5520e+06   5.9692e+06    15
+  16122    55.863   2.8142e+08   8.6507e+07   2.6499e+05  -4.5507e+06   5.9692e+06    15
+  16123    55.866   2.8143e+08   8.6508e+07   2.6217e+05  -4.5495e+06   5.9692e+06    15
+  16124    55.869   2.8143e+08   8.6509e+07   2.6010e+05  -4.5483e+06   5.9692e+06    15
+  16125    55.872   2.8143e+08   8.6510e+07   2.5880e+05  -4.5472e+06   5.9692e+06    15
+  16126    55.875   2.8143e+08   8.6511e+07   2.5825e+05  -4.5461e+06   5.9692e+06    15
+  16127    55.878   2.8143e+08   8.6511e+07   2.5915e+05  -4.5450e+06   5.9692e+06    16
+  16128    55.880   3.3843e+25   3.3843e+25   2.4108e+02  -4.2965e+18   5.9692e+06    16
+  16129    55.880   3.3843e+25   3.3843e+25   7.4503e+02  -4.2965e+18   5.9692e+06    16
+  16130    55.881   3.3843e+25   3.3843e+25   1.6396e+03  -4.2965e+18   5.9692e+06    16
+  16131    55.882   3.3843e+25   3.3843e+25   2.5645e+03  -4.2965e+18   5.9692e+06    16
+  16132    55.883   3.3843e+25   3.3843e+25   6.3880e+03  -4.2965e+18   5.9692e+06    16
+  16133    55.886   3.3843e+25   3.3843e+25   1.1239e+04  -4.2965e+18   5.9692e+06    16
+  16134    55.889   3.3843e+25   3.3843e+25   1.9435e+04  -4.2965e+18   5.9692e+06    16
+  16135    55.892   3.3843e+25   3.3843e+25   2.8293e+04  -4.2965e+18   5.9692e+06    16
+  16136    55.895   3.3843e+25   3.3843e+25   3.7995e+04  -4.2965e+18   5.9692e+06    16
+  16137    55.898   3.3843e+25   3.3843e+25   4.8624e+04  -4.2965e+18   5.9692e+06    16
+  16138    55.901   3.3843e+25   3.3843e+25   6.0190e+04  -4.2965e+18   5.9692e+06    16
+  16139    55.904   3.3843e+25   3.3843e+25   7.2828e+04  -4.2965e+18   5.9692e+06    16
+  16140    55.907   3.3843e+25   3.3843e+25   8.6614e+04  -4.2965e+18   5.9692e+06    16
+  16141    55.910   3.3843e+25   3.3843e+25   1.0158e+05  -4.2965e+18   5.9692e+06    16
+  16142    55.913   3.3843e+25   3.3843e+25   1.1788e+05  -4.2965e+18   5.9692e+06    16
+  16143    55.916   3.3843e+25   3.3843e+25   1.3583e+05  -4.2965e+18   5.9692e+06    16
+  16144    55.919   3.3843e+25   3.3843e+25   1.5546e+05  -4.2965e+18   5.9692e+06    17
+  16145    55.921   3.3843e+25   3.3843e+25   1.6973e+05  -4.2965e+18   5.9692e+06    18
+  16146    55.923   3.3843e+25   3.3843e+25   1.8518e+05  -4.2965e+18   5.9692e+06    19
+  16147    55.925   3.3843e+25   3.3843e+25   2.0172e+05  -4.2965e+18   5.9692e+06    20
+  16148    55.927   3.3843e+25   3.3843e+25   2.1957e+05  -4.2965e+18   5.9692e+06    21
+  16149    55.930   3.3843e+25   3.3843e+25   2.3966e+05  -4.2965e+18   5.9693e+06    22
+  16150    55.932   3.3843e+25   3.3843e+25   2.6135e+05  -4.2965e+18   5.9693e+06    23
+## probe d93probe::steps (s_16126, s_16127)  2026-10-25T14:21:12-04:00
+test d93probe::steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+D93 s_16126 Full: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 16113, fits: 1009, tiles: [75, 50, 1], cells: [938, 1, 1] } warnings ["SR-WARN heat unconverged step 16126 passes 64 rounds 251"]
+D93 step 16126 full: dt 2.9258337e-3 passes 64 rounds 251 converged 0 stepped 1 delta 0e0 gained -3.4672657e1 radiated 3.467262e1 held 2.5929622e5
+thread 'd93probe::steps' (1862286) panicked at crates/sr-engine/tests/gpu/d93probe.rs:51:47:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 380 filtered out; finished in 0.76s
+D93 s_16126 Full: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 16113, fits: 1009, tiles: [75, 50, 1], cells: [938, 1, 1] } warnings ["SR-WARN heat unconverged step 16126 passes 64 rounds 251"]
+D93 step 16126 full: dt 2.9258337e-3 passes 64 rounds 251 converged 0 stepped 1 delta 0e0 gained -3.4672657e1 radiated 3.467262e1 held 2.5929622e5
+D93 step 16126 full: grid E 2.418547e6 -> 2.430693e6; booked floor_added 2.022215e3 radiated 3.467262e1 swallowed 3.205675e-1
+D93 step 16126 full:   cell (297,207) rad 5.7699704e0 | sigma 8.667916e-2->8.551396e-2 E 1.8328333e2->1.8332475e2 | T0 9.044754e1 C 6.382885e-2 C*T0 5.7731624e0 iterT 3.0029083e1 u_iter 3.2525826e1 | rate in -2.0655727e4 out -2.8729678e3
+D93 step 16126 full:   cell (295,204) rad 1.7050084e0 | sigma 5.0449207e-2->4.9963426e-2 E 9.336989e1->9.758178e1 | T0 4.713832e1 C 3.7293434e-2 C*T0 1.7579498e0 iterT 2.7816357e1 u_iter 2.3947544e1 | rate in -6.4955513e3 out 4.2571535e4
+D93 step 16126 full:   cell (296,208) rad 6.125492e-1 | sigma 5.3767454e-2->5.1937416e-2 E 7.7943016e1->8.317633e1 | T0 1.7948614e1 C 3.8766827e-2 C*T0 6.9581085e-1 iterT 2.878162e1 u_iter 2.744865e1 | rate in 3.9326016e3 out 7.40512e4
+D93 step 16126 full:   cell (293,206) rad 2.2910698e-1 | sigma 1.7800456e-3->2.0457779e-3 E 1.8861527e0->3.3550746e0 | T0 1.5008813e2 C 1.5269917e-3 C*T0 2.2918335e-1 iterT 2.7248976e1 u_iter 2.2052649e1 | rate in -4.4389566e4 out 9.17188e5
+D93 step 16126 full:   cell (294,208) rad 2.1307671e-1 | sigma 2.9207475e-3->3.0770886e-3 E 3.7378623e0->5.667935e0 | T0 1.0524178e2 C 2.2967719e-3 C*T0 2.4171637e-1 iterT 2.882979e1 u_iter 2.7632868e1 | rate in -2.616396e4 out 1.085646e6
+D93 step 16126 full:   cell (56,399) rad 1.8409896e-1 | sigma 3.1060215e-2->3.1028222e-2 E 1.0591147e1->1.0568046e1 | T0 1.1394893e1 C 2.317705e-2 C*T0 2.641e-1 iterT 1.1227454e1 u_iter 6.3560194e-1 | rate in -5.9860504e1 out -1.2874628e2
+D93 step 16126: planes bit-equal to s_16127 in 3360000 of 3360000
+D93 s_16126 PreP5: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 16113, fits: 1009, tiles: [75, 50, 1], cells: [938, 1, 1] } warnings []
+D93 step 16126 dump (297,207): 8.6679e-2 1.8635e0 -5.2878e0 1.8328e2 2.4245e-9 1.5314e-10 7.0229e-18 2.5353e-9 6.4253e-31 2.9113e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16126 dump (296,207): 1.0000e-8 0.0000e0 0.0000e0 3.7321e-10 2.4245e-9 1.5313e-10 7.0220e-18 2.5353e-9 0.0000e0 2.9114e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16126 dump (298,207): 3.3896e-1 5.5979e0 -2.0910e1 6.9948e2 2.4246e-9 1.5317e-10 7.0250e-18 2.5353e-9 6.4306e-31 2.9111e-28 2.7633e-14 1.1843e-14 4.8969e-1 5.1031e-1
+D93 step 16126 dump (297,206): 9.3345e-2 -2.8161e-1 -5.5980e0 1.7042e2 2.4245e-9 1.5313e-10 7.0218e-18 2.5353e-9 6.4222e-31 2.9114e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16126 dump (297,208): 2.2168e-1 7.9413e0 -1.1524e1 4.4712e2 2.4245e-9 1.5315e-10 7.0237e-18 2.5353e-9 6.4276e-31 2.9112e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16126 preP5 (297,207): 8.5514e-2 1.8401e0 -5.2029e0 1.8386e2 2.4245e-9 1.5315e-10 7.0231e-18 2.5353e-9 6.4259e-31 2.9113e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16126 preP5 (296,207): 1.0000e-8 0.0000e0 0.0000e0 3.7321e-10 2.4245e-9 1.5313e-10 7.0220e-18 2.5353e-9 0.0000e0 2.9114e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16126 preP5 (298,207): 3.3659e-1 5.5710e0 -2.0773e1 6.9537e2 2.4246e-9 1.5317e-10 7.0252e-18 2.5353e-9 6.4311e-31 2.9111e-28 2.7633e-14 1.1843e-14 4.8969e-1 5.1031e-1
+D93 step 16126 preP5 (297,206): 9.2326e-2 -2.8848e-1 -5.5232e0 1.6824e2 2.4245e-9 1.5313e-10 7.0220e-18 2.5353e-9 6.4227e-31 2.9114e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16126 preP5 (297,208): 2.1924e-1 7.8756e0 -1.1360e1 4.4316e2 2.4245e-9 1.5315e-10 7.0240e-18 2.5353e-9 6.4282e-31 2.9112e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16126: P5 dt 2.9258337e-3
+D93 s_16127 Full: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 16113, fits: 1009, tiles: [75, 50, 1], cells: [938, 1, 1] } warnings []
+D93 step 16127 full: dt 2.1468466e-3 passes 17 rounds 0 converged 1 stepped 1 delta -1.3144604e20 gained -3.3076462e3 radiated 3.3843238e25 held 2.5746869e5
+D93 step 16127 full: grid E 2.430693e6 -> 2.181199e6; booked floor_added 3.384324e25 radiated 3.384324e25 swallowed 9.127387e0
+D93 step 16127 full:   cell (294,205) rad 3.3813654e25 | sigma 1.1310503e-4->1.7315388e-6 E 2.629242e-1->1.4551318e0 | T0 3.744049e7 C 1.292444e-6 C*T0 4.8389736e1 iterT 3.7458496e7 u_iter 7.875195e25 | rate in 8.474147e6 out 8.388117e6
+D93 step 16127 full:   cell (296,207) rad 2.958363e22 | sigma 1e-8->6.8646965e-5 E 3.7320796e-10->1.4135756e0 | T0 7.6828455e6 C 5.123908e-5 C*T0 3.9366193e2 iterT 7.6612475e6 u_iter 1.3780278e23 | rate in 0e0 out -1.0060337e7
+D93 step 16127 full:   cell (49,399) rad 3.5519989e0 | sigma 1.0410318e-2->1.0733265e-2 E 2.8321419e0->2.7870195e0 | T0 1.9341621e1 C 8.018374e-3 C*T0 1.5508837e-1 iterT 2.5377392e1 u_iter 1.659006e1 | rate in 2.811459e3 out 2.8114587e3
+D93 step 16127 full:   cell (296,205) rad 2.5324302e0 | sigma 4.531394e-3->3.3015304e-3 E 9.902784e0->5.4133687e0 | T0 9.323286e1 C 2.464313e-3 C*T0 2.2975494e-1 iterT 2.3308214e1 u_iter 1.1805815e1 | rate in 6.6040775e5 out -3.2570861e4
+D93 step 16127 full:   cell (153,399) rad 8.8968116e-1 | sigma 1.4543726e-2->1.4634809e-2 E 2.8229783e0->2.6694398e0 | T0 1.5790521e1 C 1.0956743e-2 C*T0 1.7301267e-1 iterT 1.7957489e1 u_iter 4.159512e0 | rate in 1.00937305e3 out 1.0093727e3
+D93 step 16127 full:   cell (293,206) rad 8.490638e-1 | sigma 2.0457779e-3->1.6407634e-3 E 3.3550746e0->2.0218055e0 | T0 2.8374908e2 C 1.2246837e-3 C*T0 3.475029e-1 iterT 1.7734316e1 u_iter 3.956561e0 | rate in 9.17188e5 out -1.2390954e5
+D93 step 16127: planes bit-equal to s_16128 in 3360000 of 3360000
+D93 s_16127 PreP5: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 16113, fits: 1009, tiles: [75, 50, 1], cells: [938, 1, 1] } warnings []
+D93 step 16127 dump (294,205): 1.1311e-4 -6.4139e-3 1.8819e-3 2.6292e-1 2.4244e-9 2.2018e-11 7.3112e-26 2.2179e-12 0.0000e0 0.0000e0 1.8911e-21 8.1049e-22 4.8968e-1 5.1032e-1
+D93 step 16127 dump (293,205): 6.2999e-2 -1.5934e0 2.6008e0 7.7498e1 2.4246e-9 1.5318e-10 7.0263e-18 2.5352e-9 6.4344e-31 2.9110e-28 2.7633e-14 1.1844e-14 4.8969e-1 5.1031e-1
+D93 step 16127 dump (295,205): 1.0000e-8 0.0000e0 0.0000e0 3.7321e-10 2.4243e-9 1.5307e-10 7.0164e-18 2.5353e-9 0.0000e0 2.9120e-28 2.7633e-14 1.1843e-14 4.8967e-1 5.1033e-1
+D93 step 16127 dump (294,204): 7.4673e-2 -4.2284e0 1.2755e0 1.3421e2 2.4245e-9 1.5316e-10 7.0241e-18 2.5353e-9 6.4281e-31 2.9112e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16127 dump (294,206): 1.0000e-8 0.0000e0 0.0000e0 3.7323e-10 2.4233e-9 1.5275e-10 6.9866e-18 2.5356e-9 0.0000e0 2.9152e-28 2.7632e-14 1.1843e-14 4.8961e-1 5.1039e-1
+D93 step 16127 preP5 (294,205): 1.7315e-6 2.2447e-3 -2.7140e-5 4.9845e1 2.4245e-9 1.5242e-10 6.9847e-18 2.5211e-9 6.3922e-31 2.8949e-28 2.7478e-14 1.1777e-14 4.8968e-1 5.1032e-1
+D93 step 16127 preP5 (293,205): 6.3679e-2 -1.5916e0 2.6521e0 7.5127e1 2.4246e-9 1.5318e-10 7.0266e-18 2.5352e-9 6.4351e-31 2.9109e-28 2.7633e-14 1.1844e-14 4.8969e-1 5.1031e-1
+D93 step 16127 preP5 (295,205): 1.0000e-8 0.0000e0 0.0000e0 3.7321e-10 2.4245e-9 1.5304e-10 7.0166e-18 2.5335e-9 5.2063e-31 2.9094e-28 2.7613e-14 1.1835e-14 4.8968e-1 5.1032e-1
+D93 step 16127 preP5 (294,204): 7.4363e-2 -4.2101e0 1.2948e0 1.3312e2 2.4245e-9 1.5316e-10 7.0243e-18 2.5353e-9 6.4288e-31 2.9112e-28 2.7633e-14 1.1843e-14 4.8968e-1 5.1032e-1
+D93 step 16127 preP5 (294,206): 1.0000e-8 0.0000e0 0.0000e0 3.7323e-10 2.4233e-9 1.5275e-10 6.9866e-18 2.5356e-9 0.0000e0 2.9152e-28 2.7632e-14 1.1843e-14 4.8961e-1 5.1039e-1
+D93 step 16127: P5 dt 2.1468466e-3
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 380 filtered out; finished in 1.54s
+## probe d93probe::twin (P5 start of 16127, f64 twin)  2026-10-25T14:23:04-04:00
+test d93probe::twin ... D93 twin 16127: 6.8 s, passes 2 rounds 4096 converged false delta 0e0 radiated 2.486022605797873e2
+D93 twin 16127:   cell (295,208) emitted 9.98607629361111e1 sigma 6.411250797100365e-4 E 3.947501220703125e2->8.071108063546149e-1
+D93 twin 16127:   cell (296,207) emitted 9.929394032024615e1 sigma 6.864696479169652e-5 E 3.950755310058594e2->1.4135756355201465e0
+D93 twin 16127:   cell (294,205) emitted 2.4415559880258044e1 sigma 1.7315387594862841e-6 E 4.9844871520996094e1->1.4551317298395503e0
+D93 twin 16127:   cell (153,399) emitted 1.5899515853398896e-1 sigma 1.4634809456765652e-2 E 2.841905355453491e0->2.7886074976889517e0
+D93 twin 16127:   cell (152,399) emitted 1.579451881495694e-1 sigma 1.5227398835122585e-2 E 2.983988046646118e0->2.950469805831467e0
+D93 twin 16127:   cell (132,399) emitted 1.5754732018800352e-1 sigma 1.5593559481203556e-2 E 4.077004909515381e0->4.066410014530824e0
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 380 filtered out; finished in 6.83s
+## probe with the scratch shader's solve log, step 16127  2026-10-25T14:24:14-04:00
+patched
+D93 step 16127 full: dt 2.1468466e-3 passes 17 rounds 0 converged 1 stepped 1 delta -1.3144604e20 gained -3.3076462e3 radiated 3.3843238e25 held 2.5746869e5
+D93 step 16127 full: pass 0: resid [2.6077638e5 0e0 inf 2.417761e12] | solve stop: measure 0e0 u_bound 0e0 heat 0e0 t_bound 0e0 gamma 0e0 eta 0e0 k 0 rounds 0
+D93 step 16127 full: pass 1: resid [2.5134531e3 2.07524e5 inf 2.3017656e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.4177608e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 2: resid [5.1631824e2 1.30447e5 inf 2.272487e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.3017654e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 3: resid [1.0065728e2 3.3355e4 inf 2.264842e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2724869e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 4: resid [4.0290634e1 3.352e3 inf 2.2625782e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2648419e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 5: resid [1.6847378e1 5.3e2 inf 2.2616552e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2625781e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 6: resid [7.67493e0 1.94e2 inf 2.261067e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2616551e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 7: resid [3.3906333e0 1.05e2 inf 2.2605634e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2610669e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 8: resid [1.6964312e0 5.1e1 inf 2.260081e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2605632e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 9: resid [8.551359e-1 1.5e1 inf 2.2596032e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2600809e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 10: resid [4.571474e-1 8e0 inf 2.2591266e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.259603e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 11: resid [2.6171672e-1 5e0 inf 2.2586497e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2591264e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 12: resid [1.6372311e-1 4e0 inf 2.2581734e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2586496e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 13: resid [1.1526564e-1 1e0 inf 2.257696e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2581734e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 14: resid [9.099721e-2 1e0 inf 2.2572192e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2576959e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 15: resid [7.8883454e-2 1e0 inf 2.2567424e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2572191e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 16: resid [7.287276e-2 1e0 inf 2.256265e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.2567422e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: pass 17: resid [6.685689e-2 0e0 inf 2.2557874e12] | solve stop: measure inf u_bound inf heat inf t_bound 2.256265e2 gamma NaN eta NaN k 0 rounds 0
+D93 step 16127 full: grid E 2.430693e6 -> 2.181199e6; booked floor_added 3.384324e25 radiated 3.384324e25 swallowed 9.127387e0
+D93 step 16127 full:   cell (294,205) rad 3.3813654e25 | sigma 1.1310503e-4->1.7315388e-6 E 2.629242e-1->1.4551318e0 | T0 3.744049e7 C 1.292444e-6 C*T0 4.8389736e1 iterT 3.7458496e7 u_iter 7.875195e25 | rate in 8.474147e6 out 8.388117e6
+D93 step 16127 full:   cell (296,207) rad 2.958363e22 | sigma 1e-8->6.8646965e-5 E 3.7320796e-10->1.4135756e0 | T0 7.6828455e6 C 5.123908e-5 C*T0 3.9366193e2 iterT 7.6612475e6 u_iter 1.3780278e23 | rate in 0e0 out -1.0060337e7
+D93 step 16127 full:   cell (49,399) rad 3.5519989e0 | sigma 1.0410318e-2->1.0733265e-2 E 2.8321419e0->2.7870195e0 | T0 1.9341621e1 C 8.018374e-3 C*T0 1.5508837e-1 iterT 2.5377392e1 u_iter 1.659006e1 | rate in 2.811459e3 out 2.8114587e3
+D93 step 16127 full:   cell (296,205) rad 2.5324302e0 | sigma 4.531394e-3->3.3015304e-3 E 9.902784e0->5.4133687e0 | T0 9.323286e1 C 2.464313e-3 C*T0 2.2975494e-1 iterT 2.3308214e1 u_iter 1.1805815e1 | rate in 6.6040775e5 out -3.2570861e4
+D93 step 16127 full:   cell (153,399) rad 8.8968116e-1 | sigma 1.4543726e-2->1.4634809e-2 E 2.8229783e0->2.6694398e0 | T0 1.5790521e1 C 1.0956743e-2 C*T0 1.7301267e-1 iterT 1.7957489e1 u_iter 4.159512e0 | rate in 1.00937305e3 out 1.0093727e3
+D93 step 16127 full:   cell (293,206) rad 8.490638e-1 | sigma 2.0457779e-3->1.6407634e-3 E 3.3550746e0->2.0218055e0 | T0 2.8374908e2 C 1.2246837e-3 C*T0 3.475029e-1 iterT 1.7734316e1 u_iter 3.956561e0 | rate in 9.17188e5 out -1.2390954e5
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 380 filtered out; finished in 1.01s
+## prototype: non-finite sums end the step unconverged (scratch), step 16127  2026-10-25T14:25:52-04:00
+fix patched
+D93 s_16127 Full: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 16113, fits: 1009, tiles: [75, 50, 1], cells: [938, 1, 1] } warnings ["SR-WARN heat unconverged step 16127 passes 0 rounds 0"]
+D93 step 16127 full: dt 2.1468466e-3 passes 0 rounds 0 converged 0 stepped 1 delta 0e0 gained -2.3648283e2 radiated 2.3648285e2 held 2.6053988e5
+D93 step 16127 full: pass 0: resid [2.2599e-41 0e0 0e0 0e0] | solve stop: measure 0e0 u_bound 0e0 heat 0e0 t_bound 0e0 gamma 0e0 eta 0e0 k 0 rounds 0
+D93 step 16127 full: grid E 2.430693e6 -> 2.440929e6; booked floor_added 2.049168e3 radiated 2.364829e2 swallowed 9.127387e0
+D93 step 16127 full:   cell (295,208) rad 9.986077e1 | sigma 3.6107752e-4->6.411251e-4 E 9.696562e-1->8.0711085e-1 | T0 8.2321225e5 C 4.7854372e-4 C*T0 3.9394305e2 iterT 8.3088294e5 u_iter 1.9064232e19 | rate in 3.572988e6 out -3.8345178e8
+D93 step 16127 full:   cell (296,207) rad 9.929393e1 | sigma 1e-8->6.8646965e-5 E 3.7320796e-10->1.4136047e0 | T0 7.6828455e6 C 5.123908e-5 C*T0 3.9366193e2 iterT 7.6828455e6 u_iter 1.3936328e23 | rate in 0e0 out -3.5786652e9
+D93 step 16127 full:   cell (294,205) rad 2.4415556e1 | sigma 1.1310503e-4->1.7315388e-6 E 2.629242e-1->1.4551318e0 | T0 3.744049e7 C 1.292444e-6 C*T0 4.8389736e1 iterT 3.745868e7 u_iter 7.8753495e25 | rate in 8.474147e6 out -1.743976e10
+D93 step 16127 full:   cell (116,399) rad 1.5204057e-1 | sigma 1.6238427e-2->1.6233832e-2 E 4.147612e0->4.032357e0 | T0 1.2560509e1 C 1.21530285e-2 C*T0 1.5264823e-1 iterT 1.253843e1 u_iter 9.886275e-1 | rate in -1.0284159e1 out -4.257433e3
+D93 step 16127 full:   cell (117,399) rad 1.4563383e-1 | sigma 1.635549e-2->1.6351445e-2 E 4.189484e0->4.129759e0 | T0 1.2566208e1 C 1.22415e-2 C*T0 1.5382923e-1 iterT 1.2542414e1 u_iter 9.8988444e-1 | rate in -1.10831375e1 out -2.121799e3
+D93 step 16127 full:   cell (294,208) rad 1.4261232e-1 | sigma 3.0770886e-3->2.3880617e-3 E 5.667935e0->4.755618e0 | T0 2.3577101e2 C 1.7824739e-3 C*T0 4.2025566e-1 iterT 2.3577101e2 u_iter 1.2360088e5 | rate in 1.085646e6 out 2.597038e7
+D93 s_16127 PreP5: box BoxReport { x0: 0, y0: 0, w: 600, h: 400, fft: [2048, 1024], from_step: 16113, fits: 1009, tiles: [75, 50, 1], cells: [938, 1, 1] } warnings []
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 380 filtered out; finished in 1.01s
+test d93probe::write_cut ... D93 s_16127 header: step 16127 sim_time 55.878022217424586 resume Resume { dt: 0.0029258337, dt_next: 0.0021468466, latch_since: 1.0, box_record: [0, 0, 600, 400, 2048, 1024, 16113, 1009], box_args: [75, 50, 1, 938, 1, 1] }
+D93 cut written: step 16127 sim_time 55.878022217424586 resume Resume { dt: 0.0029258337, dt_next: 0.0021468466, latch_since: 1.0, box_record: [0, 0, 600, 400, 2048, 1024, 16113, 1009], box_args: [75, 50, 1, 938, 1, 1] }; (32,32) sigma 1.7315388e-6 E 4.984487e1
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 381 filtered out; finished in 0.03s
+-rw-rw-r-- 1 ybelanger ybelanger 229771 Oct 25 14:32 /tmp/d93/heat_overflow.bin
+76d72d19fe0f6fa0f28daa19da2e489fcf71138e44abf418b4a5f46132cb8ef7  /tmp/d93/heat_overflow.bin
+## fixed-binary life (scratch /tmp/d93_life = tree + speed hook), piece 1 to 7000  2026-10-25T14:40:07-04:00
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=6010 sim_time=24.053 heat_unconverged=14 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=7000 sim_time=27.190 heat_unconverged=14 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 7000 — reported, not guessed (record kept: /tmp/d93/run2/m_bh_sb-02)
+exit 6
+477
+
+real	6m40.813s
+user	6m25.300s
+sys	0m1.844s
+SR-D93 step=1 t=0.018040 v=6.768815 mass=9.983149e-4 at=191.50,304.50 d_sink=NaN sink_m=0.000 sinks=0
+SR-D93 step=17 t=0.194492 v=18.000362 mass=5.606408e-6 at=199.46,83.46 d_sink=NaN sink_m=0.000 sinks=0
+{"detail":{"by":"light","mass_sb":67016.40737832803},"kind":"ignition","object":1,"sim_time":1.8956026467494667,"step":241}
+{"detail":{"mass_sb":66550.64555450995},"kind":"core_collapse","object":1,"sim_time":9.727365019964054,"step":1528}
+{"detail":{"mass_sb":65293.715221175924},"kind":"supernova","object":1,"sim_time":12.20744916331023,"step":2106}
+{"detail":{"mass_sb":44828.34848511126},"kind":"sink_formed","object":1,"sim_time":22.37735058227554,"step":5434}
+## fixed-binary life piece 2 to 13000  2026-10-25T14:46:56-04:00
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=12009 sim_time=42.910 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=13000 sim_time=46.094 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 13000 — reported, not guessed (record kept: /tmp/d93/run2/m_bh_sb-02)
+exit 6
+376
+
+real	6m32.480s
+user	6m20.872s
+sys	0m1.794s
+   7000    27.190   2.3732e+08   4.7444e+07   9.7882e+05  -1.1487e+07   5.6922e+06    14
+   8008    30.603   2.4541e+08   5.4539e+07   8.2100e+05  -7.9818e+06   5.8092e+06    14
+   9000    34.185   2.5493e+08   6.0223e+07   4.3528e+05  -4.5734e+06   5.8199e+06    14
+  10008    37.109   2.5943e+08   6.4667e+07   4.5438e+05  -5.7347e+06   5.8673e+06    14
+  11001    40.029   2.6355e+08   6.8718e+07   4.2320e+05  -4.6748e+06   5.8941e+06    15
+  12009    42.910   2.6722e+08   7.2956e+07   3.0028e+05  -4.5610e+06   5.9654e+06    15
+  13000    46.094   2.7082e+08   7.6392e+07   4.5264e+05  -4.5774e+06   5.9668e+06    15
+## divergence 10008-11001: old (10:14, pre-fix) vs fixed scratch binary, headless from s_10008  2026-10-25T14:53:56-04:00
+## walk probe (fixed shader + scratch log) from old run's s_10008, 993 steps  2026-10-25T15:04:53-04:00
+D93 walk step 10569: passes 1 rounds 0 radiated 9.6369125e1 held 4.687372e5 | last pass resid [1.711538e3 2.17503e5 3.9456352e11 1.363743e10] stop: measure 2.3085237e0 u_bound 4.0952263e1 heat 7.705363e-1 t_bound 1.3692956e0 gamma 7.340258e0 eta 2.3154635e0
+D93 walk done: 993 steps from 10008, grid E 4.985501933315974e6
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 382 filtered out; finished in 76.13s
+## walk probe on the PRE-fix shader (debug log only) from s_10008, 600 steps  2026-10-25T15:06:43-04:00
+D93 walk step 10569: passes 2 rounds 4096 radiated 3.749203e1 held 4.68796e5 | last pass resid [2.6277537e3 1.96346e5 4.0345976e20 4.2664128e9] stop: measure inf u_bound 4.0346784e10 heat inf t_bound 4.2835674e-1 gamma 2.3382158e38 eta 2.3371108e38
+D93 walk done: 600 steps from 10008, grid E 4.058206565545114e6
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 382 filtered out; finished in 50.41s
+## fixed-binary life piece 3 to 18000  2026-10-25T15:07:54-04:00
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=17000 sim_time=58.489 heat_unconverged=15 stage=none | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=18000 sim_time=61.439 heat_unconverged=15 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 18000 — reported, not guessed (record kept: /tmp/d93/run2/m_bh_sb-02)
+exit 6
+313
+
+real	4m46.658s
+user	4m35.353s
+sys	0m1.175s
+  13000    46.094   2.7082e+08   7.6392e+07   4.5264e+05  -4.5774e+06   5.9668e+06    15
+  14008    49.269   2.7435e+08   7.9732e+07   3.7355e+05  -4.5435e+06   5.9675e+06    15
+  15000    52.559   2.7793e+08   8.3156e+07   2.5158e+05  -4.5691e+06   5.9686e+06    15
+  16008    55.563   2.8113e+08   8.6203e+07   2.6999e+05  -4.5550e+06   5.9692e+06    15
+  17000    58.489   2.8416e+08   8.9117e+07   3.2331e+05  -4.5065e+06   5.9696e+06    15
+  18000    61.439   2.8723e+08   9.2053e+07   3.4990e+05  -4.3303e+06   5.9702e+06    15
+## fixed-binary life piece 4 to 24000  2026-10-25T15:12:49-04:00
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=42674 sim_time=463.676 wall_s=465.5 replayed record=/tmp/d93/run2/m_bh_sb-01
+SR-CALIBRATE run item=m_bh_sb side=none mass=67020.643 ignited=true core_collapse=true ending=failed_star steps=18384 sim_time=62.585 wall_s=1083.1 continued from step 18000 heat_unconverged=15 record=/tmp/d93/run2/m_bh_sb-02
+SR-ERROR calibration failed: m_bh_sb: the run at mass 67020.643 is on neither side of the threshold (mass=67020.643 ignited=true core_collapse=true ending=failed_star steps=18384 sim_time=62.585 wall_s=1083.1) — reported, not guessed
+exit 6
+24
+
+real	0m18.512s
+user	0m14.261s
+sys	0m0.534s
+  12009    42.910   2.6722e+08   7.2956e+07   3.0028e+05  -4.5610e+06   5.9654e+06    15
+  13000    46.094   2.7082e+08   7.6392e+07   4.5264e+05  -4.5774e+06   5.9668e+06    15
+  14008    49.269   2.7435e+08   7.9732e+07   3.7355e+05  -4.5435e+06   5.9675e+06    15
+  15000    52.559   2.7793e+08   8.3156e+07   2.5158e+05  -4.5691e+06   5.9686e+06    15
+  16008    55.563   2.8113e+08   8.6203e+07   2.6999e+05  -4.5550e+06   5.9692e+06    15
+  17000    58.489   2.8416e+08   8.9117e+07   3.2331e+05  -4.5065e+06   5.9696e+06    15
+  18000    61.439   2.8723e+08   9.2053e+07   3.4990e+05  -4.3303e+06   5.9702e+06    15
+{"detail":{"mass_sb":21754.215258056764},"kind":"sink_formed","object":54,"sim_time":61.174721937975846,"step":17912}
+{"detail":{"mass_sb":23523.406701163854},"kind":"sink_formed","object":55,"sim_time":62.054891231120564,"step":18208}
+{"detail":{"mass_sb":7891.729489424673},"kind":"sink_formed","object":56,"sim_time":62.102435172884725,"step":18224}
+{"detail":{"held_t":10.025559252360836,"hold_t":10.0,"mass_sb":1794.2634153617546,"stage":"failed_star"},"kind":"ending","object":31,"sim_time":62.58451991213951,"step":18384}
+## old trajectory from s_16112 on the fixed binary (run3), piece to 20000  2026-10-25T15:13:28-04:00
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=19009 sim_time=64.382 heat_unconverged=17 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=20000 sim_time=67.330 heat_unconverged=17 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 20000 — reported, not guessed (record kept: /tmp/d93/run3/m_bh_sb-02)
+exit 6
+244
+
+real	2m56.350s
+user	2m45.448s
+sys	0m1.067s
+   step         t    floor_add     radiated      thermal    invariant    swallowed   unc
+  16112    55.835   2.8139e+08   8.6490e+07   3.4223e+05  -4.5623e+06   5.9692e+06    15
+  17009    58.463   2.8412e+08   8.9087e+07   3.5137e+05  -4.4668e+06   5.9696e+06    17
+  18001    61.385   2.8717e+08   9.2017e+07   2.8251e+05  -4.3288e+06   5.9701e+06    17
+  19009    64.382   2.9019e+08   9.5152e+07   3.4823e+05  -4.1045e+06   5.9714e+06    17
+  20000    67.330   2.9321e+08   9.7978e+07   3.4766e+05  -3.8464e+06   5.9729e+06    17
+## run3 piece to 24000  2026-10-25T15:16:32-04:00
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=23008 sim_time=76.226 heat_unconverged=17 stage=black_hole | raw=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=24000 sim_time=79.651 heat_unconverged=17 stage=black_hole | raw=black_hole
+SR-ERROR calibration failed: the run at mass 67020.643 reached no ending within --max-steps 24000 — reported, not guessed (record kept: /tmp/d93/run3/m_bh_sb-02)
+exit 6
+250
+
+real	3m34.176s
+user	3m23.281s
+sys	0m1.116s
+  20000    67.330   2.9321e+08   9.7978e+07   3.4766e+05  -3.8464e+06   5.9729e+06    17
+  21008    70.165   2.9525e+08   1.0192e+08   2.3295e+05  -3.6626e+05   6.1186e+06    17
+  22000    72.867   2.9660e+08   1.0385e+08   1.2926e+05   5.7828e+05   6.1362e+06    17
+  23008    76.226   2.9819e+08   1.0599e+08   1.6537e+05   1.5265e+06   6.1388e+06    17
+  24000    79.651   2.9976e+08   1.0773e+08   1.7312e+05   2.6395e+06   6.1405e+06    17
+{"detail":{"mass_sb":30598.6421009365},"kind":"sink_formed","object":82,"sim_time":78.11769322364125,"step":23552}
+{"detail":{"mass_sb":30555.74399550294},"kind":"sink_formed","object":83,"sim_time":79.27800946182106,"step":23888}
+## m_ign_sb on the fixed scratch binary, vs the lead's T20-42-01Z records  2026-10-25T15:20:44-04:00
+exit 0
+SR-CALIBRATE run item=m_ign_sb side=Light mass=167.552 ignited=false core_collapse=false ending=failed_star steps=1905 sim_time=86.582 wall_s=11.9 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_ig
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.032 ignited=true core_collapse=false ending=none steps=673 sim_time=8.645 wall_s=3.8 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_ign_sb-02
+SR-CALIBRATE run item=m_ign_sb side=Light mass=749.314 ignited=false core_collapse=false ending=failed_star steps=1777 sim_time=39.379 wall_s=8.2 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_ign
+SR-CALIBRATE run item=m_ign_sb side=Light mass=1584.605 ignited=false core_collapse=false ending=failed_star steps=1809 sim_time=28.736 wall_s=9.5 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_ig
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2304.357 ignited=false core_collapse=false ending=failed_star steps=2049 sim_time=27.874 wall_s=11.0 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_i
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=2778.844 ignited=true core_collapse=false ending=none steps=705 sim_time=9.443 wall_s=3.8 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_ign_sb-06
+SR-CALIBRATE run item=m_ign_sb side=Heavy mass=2530.504 ignited=true core_collapse=false ending=none steps=257 sim_time=4.223 wall_s=1.2 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_ign_sb-07
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2414.785 ignited=false core_collapse=false ending=failed_star steps=2065 sim_time=27.551 wall_s=11.1 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_i
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2471.967 ignited=false core_collapse=false ending=failed_star steps=2081 sim_time=27.527 wall_s=10.9 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_i
+SR-CALIBRATE run item=m_ign_sb side=Light mass=2501.064 ignited=false core_collapse=false ending=failed_star steps=2065 sim_time=27.220 wall_s=11.0 record=build/calibrate_runs/2026-10-25T19-20-45Z/m_i
+
+real	1m26.564s
+user	1m0.581s
+sys	0m1.916s
+## m_up_sb life 01 (M0, 3351.032) on the fixed scratch binary, cut at 133534 (the lead's last step)  2026-10-25T15:22:36-04:00
+exit 6
+
+real	8m49.838s
+user	4m45.766s
+sys	0m2.175s
+SR-ERROR calibration failed: the run at mass 3351.032 reached no ending within --max-steps 133534 — reported, not guessed (record kept: build/calibrate_runs/2026-10-25T19-22-37Z/m_up_sb-01)

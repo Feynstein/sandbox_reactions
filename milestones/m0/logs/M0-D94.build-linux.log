@@ -1,0 +1,6 @@
+build native: 1.99.0 in 5 s, target /home/ybelanger/private/sandbox_reactions/build/target (3.6G)
+=== GO ===
+
+real	0m5.326s
+user	0m22.001s
+sys	0m1.015s

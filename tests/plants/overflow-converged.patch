@@ -1,0 +1,20 @@
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -589,7 +589,7 @@
+             }
+             let empty = rec.passes == 0u && !(total.x > 0.0);
+             // The next pass's bounds out of f32's range: no round can meet them (§0.5 [M0-D93]).
+-            let unmeasured = !(finite(total.z) && finite(total.w));
++            let unmeasured = false;
+             converged = !unmeasured && (empty || (rec.passes > 0u && total.x <= NEWTON_HEAT * rec.heat0 && total.y == 0.0));
+             finish = converged || unmeasured || rec.passes == MAX_PASSES || rec.rounds >= MAX_ROUNDS;
+             if (!finish) {
+@@ -631,7 +631,7 @@
+             }
+             // A round's sums out of f32's range: γ or η NaN would stop the method as solved, so the step ends unconverged
+             // instead, its cells left at the iterate (§0.5 [M0-D93]).
+-            if (!(finite(gamma) && finite(eta) && finite(measure) && finite(total.z))) {
++            if (false) {
+                 action = CELL_NONE;
+                 finish = true;
+             }

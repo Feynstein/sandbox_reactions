@@ -1,0 +1,31 @@
+M0-D94 — log (linux-pc, laserax-ai; reads only so far)
+2026-10-25 start: rung_record now → model=claude-opus-5-5 level=high plugin=installed (heading's rung)
+Measurement, read from M0-D93's frame-by-frame records (RTX 4090, laserax-ai-server, the D93-fixed physics; one line per 16-step frame):
+  logs/M0-D93.speed-life.log (the 20 M0 life from step 0 to its 18,384 ending, 1,190 frames)
+  logs/M0-D93.speed-lead.log (the lead's trajectory, s_16112 -> 24,000 on the fixed binary, 494 frames)
+Frames over 100 (c_sb/2):
+  life: step 2,650 t 13.840 v 100.101 block mass 3.03e-2 at (570.18,225.81) sinks 0 — supernova ejecta, no sink; the only frame > 100;
+        plateau 95.6–100.1 over steps 2,362–3,178 (t 13.0–15.3), blocks of mass 0.01–0.06 streaming to x 598 (the edge)
+  lead: step 20,816 t 69.693 v 100.974 mass 2.29 at (365.76,202.69) d_sink 1.632 sink_M 20,681.5 → √(2M/r) 159.2, √M 143.8 (0.63 of free fall)
+        step 20,832 v 100.810 mass 1.60 d 1.638 M 20,692.9; step 21,456 v 100.788 mass 3.14 d 1.975 M 20,997.4 — all inside r_acc (2 cells)
+No speed cap in any shader (grep c_sb / max_speed): the plateau is the gas's own.
+Heat: u = a_r T^4, D = c_sb λ(R)/κΣ (heat.wgsl 159, 390–404), R scale-free → heat and light depend on a_r·c_sb only; c_sb alone enters
+  f = κΣF/c_sb (hydro.wgsl 233, reference/hydro.rs 321) and r_acc = max(2, 2GM/c_sb²) (sinks.rs, grav.rs, reference/sinks.rs 127).
+2026-10-25T15:47:58-04:00 rsync up (tree with D94's edits) → laserax-ai-server
+2026-10-25T15:48:10-04:00 server: bash tests/cargo.sh build native
+2026-10-25T15:48:23-04:00 server: calibrate --only m_ch_sb,m_tov_sb --out /tmp/d94/cal.json (base: a copy of the stale assets file)
+2026-10-25T15:48:31-04:00 linux-pc: bash tests/cargo.sh build native
+2026-10-25T15:48:44-04:00 linux-pc: calibrate --only m_ch_sb,m_tov_sb --out assets/calibration.json (the stale file as base: its items dropped)
+2026-10-25T15:48:50-04:00 rsync up (calibration.json items 1–2 on 56df8ade…, stages.rs comment)
+2026-10-25T15:48:56-04:00 server: verify.py calibrate_order --task M0-D94-i1
+2026-10-25T15:49:12-04:00 server: verify.py --redarm calibrate_order --task M0-D94-r1
+2026-10-25T15:49:59-04:00 server: verify.py calibration calibrate_bisect calibrate_order sink sun_burn registry radiation_force readouts --task M0-D94-v1
+2026-10-25T15:51:35-04:00 sink.rs 614, 1084: the r_acc-5 sink 100,000 → 400,000 (c_sb 400); rsync up; server: verify.py sink --task M0-D94-i2
+2026-10-25T15:53:02-04:00 server: /tmp/d94_life = the tree (rsync) + M0-D93's frame probe (env SR_D94_SPEED, physics untouched); cargo build --release
+2026-10-25T15:54:13-04:00 server piece 1: cd /tmp/d94 && SR_D94_SPEED=1 /tmp/d94_life/build/target/release/sandbox-reactions calibrate --only m_bh_sb --bracket 4572.394,67020.643 --adapter 'RTX 4090' --out /tmp/d94/cal.json --resume /tmp/d94/run --progress-every 1000 --checkpoint-every 1000 --max-steps 6000 (life 01 = the lead's record, replayed)
+2026-10-25T15:57:42-04:00 server piece 2: the same line, --max-steps 12000
+2026-10-25T16:05:08-04:00 server piece 3: the same line, --max-steps 18000
+2026-10-25T16:15:54-04:00 rsync up; server: verify.py --changed --task M0-D94 (the claim)
+2026-10-25T16:19:25-04:00 heat.rs stiff::cut: the cuts run on a_r 4e-5, c_sb 200 (their lives' constants); rsync up; server: verify.py heat_stiff --task M0-D94-i3
+2026-10-25T16:19:38-04:00 server: verify.py --redarm heat_stiff --task M0-D94-r2
+2026-10-25T16:23:52-04:00 rsync down: the server's M0-D94* logs, loop_times.jsonl (+ the c2 claim's record; i1/r1/v1/i2/i3/r2's records lost to the rsyncs up, as M0-D93's) and verify.anchor.json

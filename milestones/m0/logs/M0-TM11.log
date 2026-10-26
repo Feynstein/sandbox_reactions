@@ -1,0 +1,103 @@
+# M0-TM11 — rating pass, linux-pc (laserax-ai), started 2026-10-25T10:29:13-04:00
+## rung_record.py now (launch prompt): model=claude-opus-5-5 level=max plugin=installed
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+## lint at start
+lint: checks=696 failed=0 warnings=2 · blocks=299 · flow_rows=299 · verify_fences=7 · history=0 · flow=per-task · header=538/600 · pipeline=9/60 · ladder=7 rungs · refresh=3/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1461 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D70 2 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D71 6 · M0-D91 3
+=== GO ===
+CLAUDECODE=1
+CLAUDE_EFFORT=xhigh
+AI_AGENT=claude-code_2-1-310_agent
+## rung_record.py report 2026-10-25T10:30:58-04:00
+report: 223 DONE blocks · 14 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 79 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 6 D block(s) naming no cause in the record · $711.88 read from the sessions' own cost
+BUILD on Opus 5.5, high: 82 block(s) · first-try 34/77 · $11.43 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Opus 5.5, xhigh: 1 block(s) · first-try 0/1 · n/a per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 72 block(s) · first-try 45/69 · $2.36 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 16 block(s) · first-try 13/16 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 10 block(s) · first-try 8/10 · $0.82 per DONE block · cheaper on Haiku 5.5, high · vs (usual) BUILD blocks, all classes
+BUILD·E on Opus 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 2 block(s) · first-try 2/2 · $0.34 per DONE block · n<10
+CHECK on Opus 5.5, max: 11 block(s) · first-try 9/11 · $15.49 per DONE block · above (usual)
+MOVE on Haiku 5.5, high: 4 block(s) · first-try 4/4 · $0.13 per DONE block · n<10
+MOVE on Opus 5.5, high: 1 block(s) · first-try 0/1 · $1.59 per DONE block · usual
+MOVE on Sonnet 5.5, medium: 1 block(s) · first-try n/a · $0.27 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 19 block(s) · first-try 12/16 · $12.56 per DONE block · above (usual)
+=== GO ===
+## lint after the Models: line
+lint: checks=696 failed=0 warnings=2 · blocks=299 · flow_rows=299 · verify_fences=7 · history=0 · flow=per-task · header=538/600 · pipeline=9/60 · ladder=7 rungs · refresh=3/5
+## register
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+## lint after the register
+lint: checks=696 failed=0 warnings=2 · blocks=299 · flow_rows=299 · verify_fences=7 · history=0 · flow=per-task · header=538/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1461 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D70 2 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D71 6 · M0-D91 3
+=== GO ===
+checkdiff: rating=0 · models=1 · register=1 · own=0 · other=0
+=== GO ===
+## verify.py touched 2026-10-25T10:34:30-04:00
+touched: 0 task(s) · 0 path(s) · 195 claim record(s) naming their files · 71 without (before the field) · 0 foreign
+=== NO-GO: no claim record of M0-TM11 names its files ===
+## rsync up 2026-10-25T10:37:05-04:00
+<f.st...... milestones/m0/m0_implementation_plan.md
+<f+++++++++ milestones/m0/logs/M0-D92.ab.log
+<f+++++++++ milestones/m0/logs/M0-D92.option_a.log
+<f+++++++++ milestones/m0/logs/M0-D92.probe.log
+<f+++++++++ milestones/m0/logs/M0-TM11.log
+<f.st...... milestones/m0/logs/launcher.launch.game-xvfb.log
+<f..t...... milestones/m0/logs/.baseline/.gitignore
+<f+++++++++ milestones/m0/logs/.baseline/M0-TM11.json
+<f.st...... milestones/m0/tasks/M0-D92.md
+<f..t...... tools/pb/.launch.pid.json
+## claim on laserax-ai-server 2026-10-25T10:37:10-04:00: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-TM11
+## claim output (server stdout, tail)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   268  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  sun_burn: 3 failed · log milestones/m0/logs/M0-TM11.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-TM11.twin.log
+  adapter: 1 failed · log milestones/m0/logs/M0-TM11.adapter.log
+  timing: 1 failed · log milestones/m0/logs/M0-TM11.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-TM11.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-TM11.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-TM11.boot.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready · log milestones/m0/logs/M0-TM11.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-TM11.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-TM11.capture.log
+  calibration: 1 failed · log milestones/m0/logs/M0-TM11.calibration.log
+  readouts: 1 failed · log milestones/m0/logs/M0-TM11.readouts.log
+  anchor: 169 never checked, 0 stale, 0 unclassified - every one named above
+verify: 751 passed, 20 failed, 0 skipped · 1/13 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 49 not impacted · 24.08 s + loop 0.07 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.0->0.13 · base: M0-TM11's start 2026-10-25T10:28:28-04:00
+=== NO-GO: sun_burn: 3 failed · log milestones/m0/logs/M0-TM11.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-TM11.twin.log; adapter: 1 failed · log milestones/m0/logs/M0-TM11.adapter.log; timing: 1 failed · log milestones/m0/logs/M0-TM11.timing.log; scene: 1 failed · log milestones/m0/logs/M0-TM11.scene.log; dump: 2 failed · log milestones/m0/logs/M0-TM11.dump.log; boot: 1 failed; its ow... ===
+exit 1
+## close 2026-10-25T10:40:48-04:00
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+## checkdiff after the close vs post-status
+checkdiff: rating=0 · models=1 · register=1 · own=3 · other=0
+=== GO ===
+## checkdiff after the close vs start
+checkdiff: rating=0 · models=1 · register=1 · own=3 · other=0
+=== GO ===
+## lint after the close
+lint: checks=695 failed=0 warnings=2 · blocks=299 · flow_rows=299 · verify_fences=7 · history=0 · flow=per-task · header=538/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1461 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D70 2 · M0-D65 3 · M0-D68 4 · M0-D69 2 · M0-D71 6 · M0-D91 3
+=== GO ===
+## plan_lint scoped re-verify after the close
+plan_lint  695/0/0      0.12 s  GO
+logs: milestones/m0/logs/M0-TM11.<scope>.log · record: loop_times.jsonl · tree 946c8467a227+b66350adc01d
+anchor: 1 path×scope entries moved by this run
+anchor: 123 paths checked · 277 skipped (3 classes) · 169 never checked · 0 stale · 0 unclassified · 0 owed · 292 covered of 569 visible
+verify: 695 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 58.16->58.16
+=== GO ===

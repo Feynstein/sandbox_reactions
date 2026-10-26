@@ -92,6 +92,10 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
   collapse, so N_Fe's gate re-opening for a frame (L_N < 0) does not restart the remnant's ending hold. It also needs the object
   to have passed core collapse (`History::last_collapse`, §0.5 [M0-D88]): a centre that neutronizes inside one frame shows
   core_collapse first, so the event fires, the supernova can follow and calibrate's one-step frames start.
+- **m_ch_sb splits the remnant rows (§0.5 [M0-D81], [M0-D92])**: white_dwarf and planetary_nebula read an object of at most
+  m_ch_sb, core_collapse one past it (`Watch` computes it from the run's physics; no electrons' cold pressure, no ceiling, none
+  refused). A light remnant whose cold centre overshoots into N_Fe's gate shows white_dwarf or planetary_nebula and bounces back
+  — the game's slow-down latch (§1.8.5, any N_Fe rate) still fires there.
 - **`classify(&Object, &History, now) -> Stage`** is pure. `History` carries what a frame cannot: whether the object ever
   ignited and the last time it classified as core collapse.
 - **The display hold.** `StageTracker::update(&[Object], now)` shows a stage only after §1.9.3's count of consecutive
@@ -111,7 +115,7 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
 | Kind | Fires when | Notes |
 |---|---|---|
 | `ignition` | the object's `ignited` flag first turns on: L_H within the band of L that §0.5 [M0-D53] names, or the centre has burned a tenth of its hydrogen (X_H,c ≤ 0.9 × the most it showed, L_H > 0; §0.5 [M0-D78]) | once per object; `ignited` never turns off; `detail.by` names the rule, `light` or `fuel` |
-| `core_collapse` | the stage row's own condition, L_N < 0 | the engine's latch flag is **not** read (G-WATCH); the latch's own P6 condition is the same |
+| `core_collapse` | the stage row's own condition, L_N < 0 in an object past m_ch_sb (§0.5 [M0-D92]) | the engine's latch flag is **not** read (G-WATCH); the latch's own P6 condition is L_N < 0 alone |
 | `supernova` | the supernova stage is entered | |
 | `sink_formed` | the first frame an object has a sink | logged only — the latch covers the slow-down |
 | `ending` | an object has *displayed* a remnant stage (black hole, neutron star, white dwarf, failed star) for max(10 t.u., 20 τ_dyn), τ_dyn the object's at that frame (§0.5 [M0-D78]) | added by the engine (`watch.rs`, reading `stages::ending_hold`), not by `StageTracker`; counted between frames' sim times, the remnant unchanged throughout |
