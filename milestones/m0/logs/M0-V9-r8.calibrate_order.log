@@ -1,0 +1,32 @@
+== 2026-10-26T14:10:21-04:00 calibrate_order · task M0-V9-r8 · box laserax-ai-server :: bash tests/gpu.sh calibrate_order
+-- calibrate_order · exit=0 · 0.16 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 13 tests
+test calibrate_order::a_preset_that_does_not_end_as_promised_is_exit_6_and_stops_the_lives ... ok
+test calibrate_order::a_t_eff_off_the_temperature_scale_or_a_sun_that_never_burned_down_is_refused ... ok
+test calibrate_order::a_table_in_order_passes_and_each_inequality_has_its_own_refusal ... ok
+test calibrate_order::a_transient_white_dwarf_before_the_main_sequence_is_not_the_suns_life_and_books_no_duration ... ok
+test calibrate_order::render_reserve_ms_is_kept_across_a_rerun_and_the_gas_speed_bound_is_enforced_on_the_file ... SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=max_gas_speed value=20.0000
+SR-CALIBRATE DONE out=/tmp/sr-calibrate-order-2032075-keep/calibration.json wall_s=0.0
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=max_gas_speed value=200.0000
+SR-ERROR calibration failed: max_gas_speed 200.000: c_sb 400 must exceed twice it, 400.000 (§2.11 item 6) — reported, never re-tuned
+ok
+test calibrate_order::sigma_bh_must_not_sit_under_the_densest_holding_neutron_star ... ok
+test calibrate_order::the_command_checks_the_order_before_it_runs_any_preset_life ... SR-ERROR calibration failed: K9: m_ign_sb 3300.0 must be under m_ch_sb 3200.0 (reported, never re-tuned)
+SR-ERROR calibration failed: preset_mass_sb needs m_ign_sb, m_ch_sb, m_up_sb and m_bh_sb in the file: measure them first
+SR-ERROR bad arguments: --only render_reserve_ms: the drawing lot's `--measure-ui` run writes it (§2.11 item 7, §3.3); calibrate keeps it
+ok
+test calibrate_order::the_gas_speed_must_stay_under_half_the_speed_of_light ... ok
+test calibrate_order::the_presets_are_asked_at_the_inverse_translation_of_1_15_and_40_suns ... ok
+test calibrate_order::the_shipped_light_speed_clears_the_fastest_gas_measured_and_keeps_the_light ... ok
+test calibrate_order::the_stage_durations_are_one_pair_a_life_with_the_remnant_left_out ... ok
+test calibrate_order::the_suns_life_the_top_rung_and_t_eff_come_from_the_sun_like_life ... ok
+test calibrate_order::the_tov_over_chandrasekhar_ratio_is_held_to_1_4_through_2 ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 374 filtered out; finished in 0.07s
+
+

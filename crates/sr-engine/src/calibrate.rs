@@ -20,7 +20,8 @@
 //! no failed star.
 //! m_up_sb stops each run once its side is known (`Until::CollapseOrEnding`, M0-D75): the first frame where the `core_collapse`
 //! event fires or an object shows a neutron star or a black hole, else the white dwarf's ending; m_bh_sb's runs and the presets'
-//! go to their ending.
+//! go to their ending. A life's ending is its heaviest object's (§0.5 [M0-D95]; the lead at M0-D95, «Heaviest object's
+//! (Recommended)»): a fragment's remnant is logged, never stops the run and never places it.
 //! The default bracket of each item is in units of the nominal M₀ ([`UNIT_MASS`]); `--bracket LO,HI` (sandbox mass, with one
 //! `--only` item) replaces it. Every run's mass, side, ending, steps and wall time is a `SR-CALIBRATE run` line, closing on
 //! `record=<dir>`: the life's summary.json and events.jsonl are kept there, under `build/calibrate_runs/<stamp>/<item>-<NN>/`
@@ -432,7 +433,8 @@ pub struct Life {
     /// Any object showed `neutron_star` or `black_hole` (or the life ended as one): a remnant of a collapse, which can show
     /// without the `core_collapse` event (M0-D75).
     pub collapsed: bool,
-    /// The stage of the `ending` event (`white_dwarf`, `neutron_star`, `black_hole`, `failed_star`), when one fired.
+    /// The stage of the life's ending — the `ending` event of the run's heaviest object (`white_dwarf`, `neutron_star`,
+    /// `black_hole`, `failed_star`), when it fired; a lighter object's ending is none of the life's (§0.5 [M0-D95]).
     pub ending: Option<String>,
     pub steps: u64,
     pub sim_time: f64,
@@ -934,7 +936,14 @@ fn read_life(dir: &Path, mass: f64) -> Result<(PresetRun, String), CalError> {
 fn life_of(summary: &Value, mass: f64) -> (PresetRun, String) {
     let events: &[Value] = summary["events"].as_array().map_or(&[], Vec::as_slice);
     let fired = |kind: &str| events.iter().any(|e| e["kind"] == kind);
-    let ending = events.iter().find(|e| e["kind"] == "ending").and_then(|e| e["detail"]["stage"].as_str()).map(str::to_string);
+    // The star is the run's heaviest object (a wisp or a remnant's debris is lighter).
+    let objects: &[Value] = summary["objects"].as_array().map_or(&[], Vec::as_slice);
+    let star = objects.iter().max_by(|a, b| a["mass_sb"].as_f64().unwrap_or(0.0).total_cmp(&b["mass_sb"].as_f64().unwrap_or(0.0)));
+    // The life's ending is the star's, a fragment's never (§0.5 [M0-D95]): the run stops on it, at a frame whose objects these are.
+    let ending = star
+        .and_then(|o| events.iter().find(|e| e["kind"] == "ending" && e["object"] == o["id"]))
+        .and_then(|e| e["detail"]["stage"].as_str())
+        .map(str::to_string);
     // Any object's trail, not the star's alone: the until stops on any object showing a collapse remnant (M0-D75).
     let collapsed_stage = |s: &str| s == "neutron_star" || s == "black_hole";
     let shown_collapsed = summary["objects"]
@@ -953,9 +962,6 @@ fn life_of(summary: &Value, mass: f64) -> (PresetRun, String) {
         sim_time: summary["sim_time"].as_f64().unwrap_or(f64::NAN),
         wall_s: summary["wall_s"].as_f64().unwrap_or(f64::NAN),
     };
-    // The star is the run's heaviest object (a wisp or a remnant's debris is lighter).
-    let objects: &[Value] = summary["objects"].as_array().map_or(&[], Vec::as_slice);
-    let star = objects.iter().max_by(|a, b| a["mass_sb"].as_f64().unwrap_or(0.0).total_cmp(&b["mass_sb"].as_f64().unwrap_or(0.0)));
     let stages = star
         .and_then(|o| o["stages"].as_array())
         .into_iter()

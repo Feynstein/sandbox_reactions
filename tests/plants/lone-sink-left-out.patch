@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/tracker.rs
++++ b/crates/sr-physics/src/observe/tracker.rs
+@@ -513,7 +513,7 @@
+ /// The sinks that no block of the report holds (outside the box), by index.
+ fn lone_sinks(report: &Report) -> Vec<usize> {
+     let held = report.blocks.iter().fold(0u32, |bits, b| bits | b.sinks);
+-    (0..report.sinks.len()).filter(|&k| k >= 32 || held >> k & 1 == 0).collect()
++    (0..report.sinks.len()).filter(|&k| k >= 32 && held >> k & 1 == 0).collect()
+ }
+ 
+ /// A sink no block holds, as an object of its own (§0.5 [M0-D70]): M its mass, c the sink, R half a block, no gas.

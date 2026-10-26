@@ -1,0 +1,131 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.36s
+  Executable tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+NVIDIA GeForce RTX 3060, 0 %
+NVIDIA GeForce RTX 4090, 0 %
+test dt::a_run_ending_between_two_scans_exits_5_on_a_non_finite_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ERROR GPU error: Validation Error
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+SR-ERROR GPU error: Validation Error
+Caused by:
+  In a CommandEncoder, label = 'step'
+    In a dispatch command, indirect:false
+      The BindGroupLayout with '' label of current set BindGroup with 'eos' label at index 1 is not compatible with the corresponding BindGroupLayout with '' label of ComputePipeline with 'dt_partials' label
+        Exclusive pipelines don't match: expected ComputePipeline with 'dt_partials' label, got ComputePipeline with 'dt_cells' label
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+Caused by:
+  process didn't exit successfully: `/home/ybelanger/workspace/sandbox_reactions/build/target/release/deps/gpu-c1ed76875989c7d5 'dt::' --nocapture --test-threads=1` (exit status: 3)
+test dt::a_run_ending_between_two_scans_exits_5_on_a_non_finite_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ERROR GPU error: Validation Error
+test dt::a_run_ending_between_two_scans_exits_5_on_a_non_finite_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test dt::an_empty_box_steps_on_the_floor_gas_of_hydrogen ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+no gas: box (0, 0, 0, 0), Δt 4.4721365e-1 (floor gas 4.4721359216795703e-1), sim time 4.472136497497559e0
+emptied: box (0, 0, 0, 0), Δt 4.4721365e-1, Δt_next 4.4721365e-1, sim time 2.0866431649774313e1
+test dt::dt_and_the_state_are_bit_identical_over_two_runs_on_a_600_by_400_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test dt::dt_equals_the_cfl_formula_on_fields_of_known_u_and_c ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test dt::p1_advances_dt_and_p9_reduces_it_and_guards_every_64th_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test dt::step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1 ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test dt::the_guard_names_a_nan_fraction_that_p8_would_renormalise_away ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test dt::the_guard_names_the_step_cell_and_channel_of_a_planted_non_finite_value ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 377 filtered out; finished in 2.02s
+test observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.164810 until=none
+SR-HEADLESS DONE steps=1489 sim_time=14.130834 until=met
+T 3: ending at step 1529 (t 14.131), object 1 of 1649.9705810546875 sb, the sink at (36.02, 29.70), 2 events
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 384 filtered out; finished in 1.23s
+## dt
+anchor: 105 path×scope entries moved by this run
+anchor: 121 paths checked · 280 skipped (3 classes) · 171 never checked · 7 stale · 0 unclassified · 0 owed · 299 covered of 579 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 2.12 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.07->0.07
+=== GO ===
+## sink
+anchor: 7 path×scope entries moved by this run
+anchor: 121 paths checked · 280 skipped (3 classes) · 171 never checked · 7 stale · 0 unclassified · 0 owed · 299 covered of 579 visible
+verify: 34 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.48 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.15->0.22
+=== GO ===
+## observe_run
+anchor: 127 path×scope entries moved by this run
+anchor: 126 paths checked · 280 skipped (3 classes) · 171 never checked · 2 stale · 0 unclassified · 0 owed · 299 covered of 579 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 20.47 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.22->0.37
+=== GO ===
+## dump
+FAILED:
+  dump: 2 failed · log milestones/m0/logs/M0-D96.dump.log
+verify: 10 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 22.22 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.37->0.55
+=== NO-GO: dump: 2 failed · log milestones/m0/logs/M0-D96.dump.log ===
+dt · clean · GO · arm 1/4, 3 left
+dt · plant dt-cfl-one · RED (proven: 3 failed) · arm 2/4, 2 left
+dt · plant dt-last-scan-off · RED (proven: 1 failed) · arm 3/4, 1 left
+dt · plant dt-empty-box-unbounded · RED (proven: 1 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope dt · 46.05 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D96.dt.redarm.log
+=== GO ===
+
+real	0m46.210s
+user	3m34.958s
+sys	0m13.140s
+observe_run · clean · GO · arm 1/6, 5 left
+observe_run · plant until-never-met · RED (proven: 6 failed) · arm 2/6, 4 left
+observe_run · plant continue-ignited-left-out · RED (proven: 1 failed) · arm 3/6, 3 left
+observe_run · plant continue-ledger-start-lost · RED (proven: 1 failed) · arm 4/6, 2 left
+observe_run · plant lone-sink-left-out · RED (proven: 2 failed) · arm 5/6, 1 left
+observe_run · plant dt-empty-box-unbounded · RED (proven: 1 failed) · arm 6/6, 0 left
+redarm: 5 plants · 5 red · 0 green · 0 errors · scope observe_run · 550.90 s · 6 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D96.observe_run.redarm.log
+=== GO ===
+
+real	9m11.057s
+user	9m14.445s
+sys	0m28.162s
+dump · clean · NO-GO · arm 1/8, 7 left
+FAILED:
+  clean: 2 failed - red with no plant, so a red plant would prove nothing; the plants are not counted
+redarm: 7 plants · 0 red · 0 green · 0 errors · scope dump · 189.24 s · 8 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D96.dump.redarm.log
+=== NO-GO: clean: 2 failed - red with no plant, so a red plant would prove nothing; the plants are not counted ===
+
+real	3m9.394s
+user	6m55.834s
+sys	0m27.123s
+NEVER CHECKED  tests/plants/render-reserve-required.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/scene-refuse.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/scene-unknown-key.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/smoke-no-sandbox.patch  (no entry for web)
+NEVER CHECKED  tests/plants/stall-constants.patch  (no entry for sun_burn)
+NEVER CHECKED  tests/plants/status-never-ready.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/timing-skip-pass.patch  (no entry for timing)
+NEVER CHECKED  tests/plants/twin-skip-floors.patch  (no entry for twin)
+NEVER CHECKED  tests/plants/warm-rate-not-dumped.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/web-autoload.patch  (no entry for web)
+NEVER CHECKED  tests/plants/web-no-gpu-check.patch  (no entry for web)
+NEVER CHECKED  tests/smoke.sh  (no entry for boot, desktop)
+NEVER CHECKED  tests/web/check.sh  (no entry for web)
+NEVER CHECKED  tools/pb/launch.json  (no entry for boot, desktop, web)
+NEVER CHECKED  web/Trunk.toml  (no entry for web)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   273  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  sun_burn: 3 failed · log milestones/m0/logs/M0-D96.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-D96.twin.log
+  adapter: 1 failed · log milestones/m0/logs/M0-D96.adapter.log
+  timing: 1 failed · log milestones/m0/logs/M0-D96.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-D96.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-D96.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-D96.boot.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready · log milestones/m0/logs/M0-D96.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-D96.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-D96.capture.log
+  calibration: 1 failed · log milestones/m0/logs/M0-D96.calibration.log
+  readouts: 1 failed · log milestones/m0/logs/M0-D96.readouts.log
+  redarm dump: clean: 2 failed - red with no plant, so a red plant would prove nothing; the plants are not counted
+  anchor: 171 never checked, 0 stale, 0 unclassified - every one named above
+verify: 1217 passed, 20 failed, 0 skipped · 43/55 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 7 not impacted · 108.39 s + loop 786.83 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 2.26->2.22 · base: M0-D96's start 2026-10-26T10:08:20-04:00
+=== NO-GO: sun_burn: 3 failed · log milestones/m0/logs/M0-D96.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-D96.twin.log; adapter: 1 failed · log milestones/m0/logs/M0-D96.adapter.log; timing: 1 failed · log milestones/m0/logs/M0-D96.timing.log; scene: 1 failed · log milestones/m0/logs/M0-D96.scene.log; dump: 2 failed · log milestones/m0/logs/M0-D96.dump.log; boot: 1 failed; its own verd... ===
+
+real	14m55.513s
+user	23m23.120s
+sys	2m16.362s

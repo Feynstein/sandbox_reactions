@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/watch.rs
++++ b/crates/sr-engine/src/watch.rs
+@@ -340,8 +340,7 @@
+     /// The life's ending (§0.5 [M0-D95]): the `ending` event of the last frame's heaviest object, once it has fired — `None`
+     /// while that object holds no ending, whatever a lighter object's.
+     pub fn life_ending(&self) -> Option<&RunEvent> {
+-        let star = self.tracker.objects().iter().max_by(|a, b| a.mass.total_cmp(&b.mass))?;
+-        self.events.iter().find(|e| e.kind == "ending" && e.object == star.id)
++        self.events.iter().find(|e| e.kind == "ending")
+     }
+ 
+     /// Whether any object displays `stage` now.

@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/tracker.rs
++++ b/crates/sr-physics/src/observe/tracker.rs
+@@ -270,7 +270,7 @@
+                         .zip(next)
+                         .filter_map(|(s, k)| k.filter(|k| new.sinks.contains(k)).map(|k| s.m.min(report.sinks[k].m)))
+                         .sum();
+-                    (gas + sinks, o)
++                    (gas + 0.0 * sinks, o)
+                 })
+                 .filter(|(shared, _)| *shared > 0.0)
+                 .collect();

@@ -19,6 +19,10 @@
 //!   frames' sim time (the first frame showing it to the frame in question), τ_dyn the object's at the frame in question,
 //!   the remnant being unchanged throughout (§0.5 [M0-D78]); its detail's `hold_t` is the hold it met. The ignition event's
 //!   detail names its rule, `by` `light` or `fuel` (§0.5 [M0-D78]).
+//! - Every object fires its own `ending` event; the life's ending is the heaviest object's (§0.5 [M0-D95]; the lead at M0-D95,
+//!   «Heaviest object's (Recommended)»): `ending` holds at the first frame whose heaviest object (gas + sinks, §1.9.6's default
+//!   selected star) has fired its `ending`, now or at an earlier frame — a lighter object's ending is logged and never stops
+//!   the run. [`Watch::life_ending`] is that event, summary.json's `until.object` its object.
 
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -77,13 +81,14 @@ pub enum Until {
     Event(EventKind),
     /// An object displays this stage.
     Stage(Stage),
-    /// Any object holds a remnant stage for [`ending_hold`] of its τ_dyn.
+    /// The life's ending: the frame's heaviest object holds a remnant stage for [`ending_hold`] of its τ_dyn (§0.5 [M0-D95];
+    /// [`Watch::life_ending`]).
     Ending,
-    /// The first of the `ignition` event and the `ending` event: `calibrate`'s m_ign_sb run (§2.11 item 3), which stops at
-    /// either side of the threshold. Built in code by `calibrate`; `--until` does not parse it.
+    /// The first of any object's `ignition` event and the life's ending: `calibrate`'s m_ign_sb run (§2.11 item 3), which
+    /// stops at either side of the threshold. Built in code by `calibrate`; `--until` does not parse it.
     IgnitionOrEnding,
     /// The first frame where the `core_collapse` event fires or any object shows `neutron_star` or `black_hole`, else the
-    /// `ending` event: `calibrate`'s m_up_sb runs (§2.11 item 4, M0-D75), whose side is known from the collapse on. Built in
+    /// life's ending: `calibrate`'s m_up_sb runs (§2.11 item 4, M0-D75), whose side is known from the collapse on. Built in
     /// code by `calibrate`; `--until` does not parse it.
     CollapseOrEnding,
 }
@@ -321,12 +326,22 @@ impl Watch {
             Until::SimTime(t) => self.last_sim >= t,
             Until::Event(kind) => fresh.iter().any(|e| e.kind == kind.id()),
             Until::Stage(stage) => self.shows(stage),
-            Until::Ending => fresh.iter().any(|e| e.kind == "ending"),
-            Until::IgnitionOrEnding => fresh.iter().any(|e| e.kind == "ending" || e.kind == "ignition"),
+            Until::Ending => self.life_ending().is_some(),
+            Until::IgnitionOrEnding => fresh.iter().any(|e| e.kind == "ignition") || self.life_ending().is_some(),
             Until::CollapseOrEnding => {
-                fresh.iter().any(|e| e.kind == "ending" || e.kind == "core_collapse") || self.shows(Stage::NeutronStar) || self.shows(Stage::BlackHole)
+                fresh.iter().any(|e| e.kind == "core_collapse")
+                    || self.shows(Stage::NeutronStar)
+                    || self.shows(Stage::BlackHole)
+                    || self.life_ending().is_some()
             }
         }
+    }
+
+    /// The life's ending (§0.5 [M0-D95]): the `ending` event of the last frame's heaviest object, once it has fired — `None`
+    /// while that object holds no ending, whatever a lighter object's.
+    pub fn life_ending(&self) -> Option<&RunEvent> {
+        let star = self.tracker.objects().iter().max_by(|a, b| a.mass.total_cmp(&b.mass))?;
+        self.events.iter().find(|e| e.kind == "ending" && e.object == star.id)
     }
 
     /// Whether any object displays `stage` now.

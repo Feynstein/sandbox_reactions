@@ -14,7 +14,9 @@
 //! P1 also adds each step's Δt to the record's sim time, an f64 summed on the GPU in step order (M0-D21, [`sim_time`]).
 //! Later passes read Δt_n from [`Dt::record`]'s first word (an f32). The reduction runs over the active box
 //! ([`super::boxfit`]): `dt_cells` takes its workgroup count from the box's indirect sizes and `dt_partials` the box's
-//! partials; the guard scans the whole world.
+//! partials; the guard scans the whole world. An empty box takes the floor gas's rate instead — every cell of the world
+//! is then in the floor state, hydrogen's the fastest (§0.5 [M0-D96]) — so a sink that has eaten the last gas keeps a
+//! running clock and a finite drift.
 
 use sr_physics::registry::Physics;
 
@@ -133,11 +135,14 @@ impl Dt {
         };
         let one = || Size::Fixed([1, 1, 1]);
         let tiles = Size::Fixed([world.width.div_ceil(8), world.height.div_ceil(8), 1]);
+        // An empty box's floor rate reads the EOS parameters, not its cold table (§0.5 [M0-D96]).
+        let mut partials = dispatch("dt_partials", &[4, 5, 6, 7], one(), false);
+        partials.bind_groups.push(eos.params_bind_group(device, &partials.pipeline));
         Dt {
             advance: vec![dispatch("dt_advance", &[5], one(), false)],
             reduce: vec![
                 dispatch("dt_cells", &[0, 1, 2, 3, 4, 6, 7, 14], Size::Indirect(boxfit.args().clone(), ARGS_CELLS), true),
-                dispatch("dt_partials", &[4, 5, 6, 7], one(), false),
+                partials,
             ],
             guard: vec![dispatch("guard_scan", &[0, 1, 2, 3, 5], tiles, false), dispatch("guard_stamp", &[5], one(), false)],
             world_width: world.width,

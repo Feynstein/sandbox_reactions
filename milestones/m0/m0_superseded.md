@@ -216,3 +216,22 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   c_sb held (the light, σ and K1 unchanged; the push halved, the bound 200), after the 20 M₀ life's gas passed c_sb/2 at 100.10 in the
   supernova's ejecta and 100.97 beside its black hole on the RTX 4090; the calibration measured again from item 1 (the lead,
   2026-10-25, M0-D94: «c_sb 400, a_r 2e-5 (Recommended)»).
+- Contract §1.9.2's objects of blocks alone and identity by block mass (M0-T58's tracker: a sink's mass counted in its block) —
+  superseded by contract §0.5 [M0-D70]: a sink no block of the summary holds is an object of its own, and a pair shares the common
+  blocks' lesser gas plus each sink's lesser mass, the sink matched where its velocity carries it, after the 20 M₀ life's black-hole
+  object took 59 ids as its sink crossed blocks (RTX 4090) (the lead, 2026-10-26, M0-D70: «Its own object (Recommended)», «Share by
+  sink (Recommended)»).
+- Contract §2.3.5's Δt reduced over the active box alone, an empty box giving the largest finite f32 (M0-T21) — superseded by
+  contract §0.5 [M0-D96]: an empty box steps on the floor gas of hydrogen, C / [2 c_floor], after M0-D66's T 3 cloud froze its clock
+  at t 11.0 and threw its sink to infinity once the sink had eaten the gas (RTX 4090) (the lead, 2026-10-26, M0-D96: «Floor gas's step
+  (Recommended)»).
+- Contract §3.3's `ending` "(any object holds a remnant stage for 10 t.u.)" as [M0-D78] read it, the life stopped and §2.11 items
+  3–4 and 6 placed by the first object to hold its remnant — superseded by contract §0.5 [M0-D95]: a life's ending is its heaviest
+  object's (a lighter object's `ending` logged, never stopping the run or placing it; `until.object` names the ending's object),
+  after m_bh_sb's 20 M₀ life stopped on a 1,700 fragment's failed_star while its 30,618 black hole held (RTX 4090) (the lead,
+  2026-10-26, M0-D95: «Heaviest object's (Recommended)»).
+- Contract §1.9.2's identity on a split as [M0-D70] kept it, «the larger part on a split» keeping the id — superseded by contract §0.5
+  [M0-D97]: the part holding the previous object's centre (its max-Σ cell's block, or its heaviest sink) keeps the id and its history
+  whatever its share, the others new, after m_bh_sb's 11,200.210 life's ejecta kept the star's id and its neutron-matter core, a fresh
+  id with no passed collapse, ended the life failed_star (RTX 4090) (the lead, 2026-10-26, M0-D97: «Id follows the centre
+  (Recommended)»).

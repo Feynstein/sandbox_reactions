@@ -208,6 +208,48 @@ fn step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1() {
 }
 
 #[test]
+fn an_empty_box_steps_on_the_floor_gas_of_hydrogen() {
+    // M0-D96 (§0.5 [M0-D96]): no cell at or above Σ_vac leaves every cell in the floor state, so §2.3.5's min over the
+    // world is the fastest floor gas's — hydrogen's (1/μ = 2), c² = 2 T_floor/μ with the pairs off: Δt = C / (2c),
+    // whatever fractions the vacuum keeps. The clock runs on it, step by step (M0-D21's f64 sum).
+    let gpu = device();
+    let c = constants();
+    let key = |k: &str| c.physics.get(k).unwrap() as f32 as f64;
+    let mut h = [0.0; N_SPECIES];
+    h[0] = 1.0;
+    let cs = (2.0 * key("t_floor") * c.elements.composition(&h).inv_mu).sqrt();
+    let want = C / (2.0 * cs);
+    let world = WorldConfig::new(64, 64).unwrap();
+    let cells = world.cells();
+    let fe = SPECIES.start + 8;
+    let clock = |dt: f32, steps: u32| (0..steps).fold(0f64, |t, _| t + f64::from(dt));
+
+    // A world with no gas from step 0, its vacuum iron: the floor's Δt is still hydrogen's.
+    let mut vacuum = vec![0f32; N_CHANNELS * cells];
+    vacuum[fe * cells..(fe + 1) * cells].fill(1.0);
+    let run = Run::new(&gpu, &c, world, &vacuum);
+    let r = run.run(&gpu, 10);
+    let b = run.step.read_box(&gpu.device, &gpu.queue);
+    println!("no gas: box {:?}, Δt {:e} (floor gas {want:e}), sim time {:e}", (b.x0, b.y0, b.w, b.h), r.dt, r.sim_time);
+    assert_eq!((b.w, b.h), (0, 0), "the box of a world with no gas is empty");
+    assert!(close(r.dt, want), "an empty box's Δt {} against the floor gas's {want}", r.dt);
+    assert_eq!(r.dt_next.to_bits(), r.dt.to_bits());
+    assert_eq!(r.sim_time.to_bits(), clock(r.dt, 10).to_bits(), "10 steps of the floor's Δt on the clock");
+
+    // A field emptied between steps (the gas erased): the re-fit at step 16 empties the box, and Δt is the floor's.
+    let run = Run::new(&gpu, &c, world, &field(world, 3, Some(100)));
+    let gas = run.run(&gpu, 1);
+    assert!(close(gas.dt, C / 25.0), "the gas bounds step 0's Δt: {}", gas.dt);
+    run.state.upload(&gpu.queue, &vacuum).unwrap();
+    let r = run.run(&gpu, 31);
+    let b = run.step.read_box(&gpu.device, &gpu.queue);
+    println!("emptied: box {:?}, Δt {:e}, Δt_next {:e}, sim time {:e}", (b.x0, b.y0, b.w, b.h), r.dt, r.dt_next, r.sim_time);
+    assert_eq!((b.w, b.h, r.steps), (0, 0, 32), "the box emptied at the re-fit");
+    assert!(close(r.dt, want) && close(r.dt_next, want), "the emptied box's Δt {} against the floor gas's {want}", r.dt);
+    assert!(r.sim_time.is_finite() && r.sim_time > gas.sim_time + 15.0 * want, "the clock ran on: {}", r.sim_time);
+}
+
+#[test]
 fn dt_and_the_state_are_bit_identical_over_two_runs_on_a_600_by_400_field() {
     let gpu = device();
     let c = constants();

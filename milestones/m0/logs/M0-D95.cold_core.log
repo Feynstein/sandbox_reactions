@@ -1,0 +1,61 @@
+== 2026-10-26T11:35:28-04:00 cold_core · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh cold_core physics
+-- cold_core · exit=0 · 7.68 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test cold_core::an_equilibrium_exists_at_095_m_ch_sb_and_none_at_11 ... SR-CORE (b) scan of 17 half decades: M from 22.78 to 3207.36; m_ch_sb 3216.42
+SR-CORE (b) 0.95 m_ch_sb = 3055.60: Σ_c 3.0781e5, R₉₀ 0.0994 cells, virial 5.0e-5
+SR-CORE (b) 1.1 m_ch_sb = 3538.06: none; the heaviest disk to Σ_c 10⁸ is 3207.36
+ok
+test cold_core::c_sheet_from_the_pure_law_is_1_4331_at_two_resolutions ... SR-CORE (a) c_sheet at 100 annuli: 1.43322
+SR-CORE (a) c_sheet at 200 annuli: 1.43307
+ok
+test cold_core::carbon_oxygen_m_ch_sb_is_c_sheet_k2_squared ... SR-CORE (a) C/O: m_ch_sb 3216.420, c_sheet K₂′²/G² 3216.861 (K₂′ 47.3762)
+SR-CORE (a) C/O: M(10⁰) 22.78 … M(10⁸) 3207.04, limit 3216.42, written 3216.42
+ok
+test cold_core::neutron_m_tov_sb_is_c_sheet_k2_squared_and_k9_holds ... SR-CORE (a) neutron: m_tov_sb 4853.170, c_sheet K₂ₙ²/G² 4854.658, m_tov/m_ch 1.5089
+SR-CORE (a) neutron: M(10⁰) 6.64 … M(10⁸) 4819.27, limit 4853.17, written 4853.17
+ok
+test cold_core::the_grid_holds_a_resolved_cold_disk_on_the_gpu_and_the_twin ... SR-CORE (d) start: R₉₀ 18.8091 cells, M 100.0000, τ_dyn 8.1574, 10 τ_dyn = 81.574
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1128 sim_time=81.620164 until=met
+SR-CORE (d) GPU "NVIDIA GeForce RTX 4090": 1128 steps to sim time 81.620
+SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1128 sim_time=81.620134 until=none
+SR-CORE (d) step     50: R₉₀ GPU 18.8290 (t 3.606), twin 18.8290 (t 3.606); mass 100.0000 / 100.0000
+SR-CORE (d) step    100: R₉₀ GPU 18.8754 (t 7.215), twin 18.8754 (t 7.215); mass 100.0000 / 100.0000
+SR-CORE (d) step    150: R₉₀ GPU 18.9085 (t 10.830), twin 18.9085 (t 10.830); mass 100.0000 / 100.0000
+SR-CORE (d) step    200: R₉₀ GPU 18.9448 (t 14.452), twin 18.9448 (t 14.452); mass 99.9998 / 99.9998
+SR-CORE (d) step    250: R₉₀ GPU 18.9646 (t 18.083), twin 18.9646 (t 18.083); mass 99.9996 / 99.9996
+SR-CORE (d) step    300: R₉₀ GPU 18.9679 (t 21.713), twin 18.9679 (t 21.713); mass 99.9992 / 99.9992
+SR-CORE (d) step    350: R₉₀ GPU 18.9547 (t 25.339), twin 18.9547 (t 25.339); mass 99.9990 / 99.9990
+SR-CORE (d) step    400: R₉₀ GPU 18.9085 (t 28.962), twin 18.9085 (t 28.962); mass 99.9989 / 99.9989
+SR-CORE (d) step    450: R₉₀ GPU 18.8787 (t 32.581), twin 18.8787 (t 32.581); mass 99.9989 / 99.9989
+SR-CORE (d) step    500: R₉₀ GPU 18.8390 (t 36.193), twin 18.8390 (t 36.193); mass 99.9989 / 99.9989
+SR-CORE (d) step    550: R₉₀ GPU 18.8157 (t 39.800), twin 18.8157 (t 39.800); mass 99.9989 / 99.9989
+SR-CORE (d) step    600: R₉₀ GPU 18.8290 (t 43.406), twin 18.8290 (t 43.406); mass 99.9988 / 99.9988
+SR-CORE (d) step    650: R₉₀ GPU 18.8456 (t 47.012), twin 18.8456 (t 47.012); mass 99.9986 / 99.9986
+SR-CORE (d) step    700: R₉₀ GPU 18.8853 (t 50.625), twin 18.8853 (t 50.624); mass 99.9986 / 99.9986
+SR-CORE (d) step    750: R₉₀ GPU 18.9184 (t 54.245), twin 18.9184 (t 54.245); mass 99.9984 / 99.9984
+SR-CORE (d) step    800: R₉₀ GPU 18.9547 (t 57.871), twin 18.9547 (t 57.871); mass 99.9981 / 99.9981
+SR-CORE (d) step    850: R₉₀ GPU 18.9679 (t 61.499), twin 18.9679 (t 61.499); mass 99.9977 / 99.9977
+SR-CORE (d) step    900: R₉₀ GPU 18.9646 (t 65.126), twin 18.9646 (t 65.126); mass 99.9976 / 99.9976
+SR-CORE (d) step    950: R₉₀ GPU 18.9283 (t 68.753), twin 18.9283 (t 68.753); mass 99.9976 / 99.9976
+SR-CORE (d) step   1000: R₉₀ GPU 18.8953 (t 72.374), twin 18.8953 (t 72.374); mass 99.9976 / 99.9976
+SR-CORE (d) step   1050: R₉₀ GPU 18.8688 (t 75.990), twin 18.8688 (t 75.990); mass 99.9976 / 99.9976
+SR-CORE (d) step   1100: R₉₀ GPU 18.8323 (t 79.600), twin 18.8323 (t 79.600); mass 99.9976 / 99.9976
+SR-CORE (d) step   1128: R₉₀ GPU 18.8323 (t 81.620), twin 18.8323 (t 81.620); mass 99.9976 / 99.9976
+SR-CORE (d) largest |R₉₀/R₀ − 1|: GPU 0.0084, twin 0.0084 (M0-R4: 0.0162, 0.0165; bound 0.03); final GPU/twin 1.00000
+ok
+test cold_core::the_ring_kernel_gives_the_maclaurin_disks_potential ... SR-CORE (a) Maclaurin potential: worst error 6.37e-5 of |φ_c| (bound 1e-4)
+ok
+test cold_core::the_scene_file_is_the_current_grid_disk ... SR-CORE (d) scene file: 2000 rects, planes differ in 0 of 57344 values (worst relative 0.0e0)
+ok
+test cold_core::without_the_relativistic_branch_r90_is_flat_in_mass ... SR-CORE (c) pure Σ²: R₉₀ at ¼, ½, 1 × m_ch_sb = [3.6863502976734464, 3.6863502842734857, 3.686350280796656] cells
+SR-CORE (c) full law: R₉₀ 1.884 cells at ¼ m_ch_sb, 0.099 at 0.95
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 379 filtered out; finished in 7.54s
+
+

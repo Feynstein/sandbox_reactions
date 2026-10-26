@@ -29,8 +29,8 @@ const COST_FRAMES: usize = 16;
 /// The cap's window and how many of its frames must bind (§1.8.4).
 const CAP_WINDOW: usize = 60;
 const CAP_BINDS: usize = 30;
-/// A Δt at or above this is not a CFL step: an all-vacuum world's box is empty and its Δt reduces to the largest finite
-/// f32 (M0-T21). Such a frame carries no estimate and owes nothing.
+/// A Δt at or above this is not a CFL step: the largest finite f32, P9's Δt when no term bounds it (M0-T21; an empty box
+/// takes the floor gas's step since §0.5 [M0-D96]). Such a frame carries no estimate and owes nothing.
 const DT_EMPTY: f64 = f32::MAX as f64;
 
 /// A speed setting: sandbox time units per wall second (infinite at Max), and the label `time.rung` shows (§4.3, §4.12).
@@ -264,7 +264,7 @@ impl TimeControl {
     }
 
     /// One frame (§1.8.3): owed += rung / f_target, N = min(N_max, ⌈owed / Δt_est⌉), what N planned taken off owed
-    /// until its report books what it advanced. No estimate yet (the first frames, an empty world): one step. At Max
+    /// until its report books what it advanced. No estimate yet (the first frames, an unbounded Δt): one step. At Max
     /// nothing is owed (its rung value is infinite) and N = N_max in every frame, whatever sim time those steps advance.
     pub fn plan_frame(&mut self, est: Estimates) -> Plan {
         let (f_target, slow_down) = (self.f_target, self.slow_down);

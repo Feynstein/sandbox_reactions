@@ -830,6 +830,15 @@ impl EosGpu {
             ],
         })
     }
+
+    /// The same for an entry point that reads the parameters alone (no cold table: its auto layout has binding 0 only).
+    pub fn params_bind_group(&self, device: &wgpu::Device, pipeline: &wgpu::ComputePipeline) -> wgpu::BindGroup {
+        device.create_bind_group(&wgpu::BindGroupDescriptor {
+            label: Some("eos.params"),
+            layout: &pipeline.get_bind_group_layout(1),
+            entries: &[wgpu::BindGroupEntry { binding: 0, resource: self.params.as_entire_binding() }],
+        })
+    }
 }
 
 /// A buffer created holding `words`, little-endian.

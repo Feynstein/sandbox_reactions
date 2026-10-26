@@ -5,10 +5,25 @@
 //! - a block holding a sink joins an object even when no cell of it reaches Σ_obj (a sink at the centre of swallowed
 //!   gas is still an object);
 //! - R and R_core never read below half a block (the summary's resolution), so τ_dyn is finite for a point-like core;
-//! - identity: a pair (new object, previous object) shares, per common block, the lesser of the two frames' block
-//!   weights (gas plus sinks in it); the pair counts when that is ≥ 25 % of the previous object's weight; pairs are taken
-//!   by the shared weight, largest first, ties by the lower id, each id once — so on a merge the heavier id survives and
-//!   on a split the larger part keeps it;
+//! - identity: a pair (new object, previous object) shares the weight both frames hold (below); the pair counts when that
+//!   is ≥ 25 % of the previous object's weight; pairs are taken by the shared weight, largest first, ties by the lower id,
+//!   each id once — so on a merge the heavier id survives and on a split the larger part keeps it;
+//!
+//! A sink alone, and identity by sink (contract §0.5 [M0-D70]; the lead at M0-D70, «Its own object (Recommended)», «Share by
+//! sink (Recommended)»): a sink that no block of the summary holds — outside the box, which follows the gas alone — is an
+//! object of its own: M its mass, c the sink, R half a block. A pair shares, per common block, the lesser of the two frames'
+//! gas masses, and per sink both hold the lesser of its two masses: each previous sink, carried on by its velocity over the
+//! frame's sim time, is the sink of this frame nearest that point within the larger of the two accretion radii,
+//! max(2 cells, 2GM_s/c_sb²) (§2.6; two live sinks are never closer — they would have merged); a merge gathers several.
+//! Declared in M0-D70's handoff: the match runs from each previous sink to this frame's (a merged sink holds both), ties
+//! by the lower slot.
+//! The id follows the centre (contract §0.5 [M0-D97]; the lead at M0-D97, «Id follows the centre (Recommended)»): a new
+//! object holding a previous object's centre — the block of its max-Σ cell, or its heaviest sink's successor — keeps that
+//! object's id, whatever its share, when that previous object is the one it shares the most with; such pairs are taken
+//! first, then the shares as above. On a split the piece that holds the centre keeps the id and the history (a blast's core,
+//! a planetary nebula's white dwarf), the rest are new; a merge still keeps the heavier id (it shares the most).
+//! Declared in M0-D97's handoff: the centre is read from the last frame's object (no snapshot change); a centre held by a
+//! new object that shares more with another previous object counts for nothing.
 //! - K is the gas's kinetic energy (the sinks' ½Mv² is not in it), and v_r weights the sinks in with their mass.
 //!
 //! L, the nearest star (contract §0.5 [M0-D53]; the lead at M0-V18, «Nearest star (Recommended)»): the light a block outside
@@ -21,7 +36,7 @@ use std::collections::BTreeMap;
 
 use serde_json::{json, Map, Value};
 
-use super::{BlockData, Report, GROUPS, GROUP_N};
+use super::{BlockData, Report, SinkData, GROUPS, GROUP_N};
 use crate::registry::Physics;
 
 /// An f64 as the observers' snapshot writes it (contract §0.5 [M0-D76]): Rust's shortest round-trip form, as a JSON string.
@@ -56,25 +71,35 @@ const INHERIT: f64 = 0.25;
 const ENCLOSED: f64 = 0.9;
 /// How far (in blocks) a block reaches to join its neighbours: 1 is 8-connectivity.
 const LINK: i64 = 1;
+/// The accretion radius's floor in cells (§2.6).
+const R_ACC_MIN: f64 = 2.0;
 
-/// What the tracker needs of the constants: Σ_obj and the block edge (§2.7), G (§2.1), the wisp mass (§1.9.2).
+/// What the tracker needs of the constants: Σ_obj and the block edge (§2.7), G (§2.1), the light speed c_sb of the
+/// accretion radius (§2.6), the wisp mass (§1.9.2).
 #[derive(Clone, Debug, PartialEq)]
 pub struct TrackerConfig {
     pub sigma_obj: f64,
     pub block: u32,
     pub g: f64,
+    pub c_sb: f64,
     pub wisp_mass: f64,
 }
 
 impl TrackerConfig {
-    /// `physics`' Σ_obj and block edge, G = 1, wisps under 1 % of `sun_mass` (calibration's `preset_mass_sb.sun`).
+    /// `physics`' Σ_obj, block edge and c_sb, G = 1, wisps under 1 % of `sun_mass` (calibration's `preset_mass_sb.sun`).
     pub fn from_physics(physics: &Physics, sun_mass: f64) -> TrackerConfig {
         TrackerConfig {
             sigma_obj: physics.get("sigma_obj").expect("sigma_obj is a physics.json key"),
             block: physics.get("block").expect("block is a physics.json key") as u32,
             g: 1.0,
+            c_sb: physics.get("c_sb").expect("c_sb is a physics.json key"),
             wisp_mass: WISP_FRACTION * sun_mass,
         }
+    }
+
+    /// A sink's accretion radius, max(2 cells, 2GM_s/c_sb²) (§2.6).
+    fn r_acc(&self, m: f64) -> f64 {
+        R_ACC_MIN.max(2.0 * self.g * m / (self.c_sb * self.c_sb))
     }
 }
 
@@ -125,14 +150,25 @@ pub struct Object {
     pub envelope_mass: Option<f64>,
 }
 
-/// A component's blocks as the next frame's identity reads them: absolute block coordinates and weights.
+/// A component's blocks as the next frame's identity reads them: absolute block coordinates and gas masses.
 type Weights = BTreeMap<(i64, i64), f64>;
 
-/// An object's blocks (absolute block coordinates, weights) as the next frame's identity reads them.
+/// An object as the next frame's identity reads it: its blocks' gas (absolute block coordinates), its sinks, and the
+/// weight of both.
 struct Previous {
     id: u32,
     weight: f64,
     blocks: Weights,
+    sinks: Vec<SinkData>,
+}
+
+/// An object found in a frame: its measures, its blocks' gas for the next frame, its member blocks (none for a sink alone)
+/// and its sinks (indices into the report's).
+struct Found {
+    object: Object,
+    weights: Weights,
+    list: Vec<usize>,
+    sinks: Vec<usize>,
 }
 
 /// The objects of a run: ids that last across frames, merges and splits (§1.9.2).
@@ -155,43 +191,110 @@ impl Tracker {
 
     /// A frame's report in: its objects out, by id. Every id is new or inherited by §1.9.2's rule, never reused.
     pub fn update(&mut self, report: &Report) -> &[Object] {
-        let mut found: Vec<(Object, Weights, Vec<usize>)> = components(&self.config, report)
+        let mut found: Vec<Found> = components(&self.config, report)
             .into_iter()
-            .map(|c| {
-                let (object, weights) = measure(&self.config, report, &c);
-                (object, weights, c)
-            })
-            .filter(|(o, _, _)| o.mass >= self.config.wisp_mass)
+            .map(|list| measure(&self.config, report, list))
+            .chain(lone_sinks(report).into_iter().map(|k| measure_sink(&self.config, report, k)))
+            .filter(|f| f.object.mass >= self.config.wisp_mass)
             .collect();
-        let ids = self.inherit(&found.iter().map(|(_, b, _)| b).collect::<Vec<_>>());
+        let ids = self.inherit(report, &found);
         let mut previous = Vec::with_capacity(found.len());
-        for ((object, blocks, _), id) in found.iter_mut().zip(ids) {
-            object.id = id;
-            previous.push(Previous { id, weight: blocks.values().sum(), blocks: std::mem::take(blocks) });
+        for (f, id) in found.iter_mut().zip(ids) {
+            f.object.id = id;
+            let sinks: Vec<SinkData> = f.sinks.iter().map(|&k| report.sinks[k].clone()).collect();
+            let weight = f.weights.values().sum::<f64>() + sinks.iter().map(|s| s.m).sum::<f64>();
+            previous.push(Previous { id, weight, blocks: std::mem::take(&mut f.weights), sinks });
         }
         credit_light(report, &mut found);
-        self.objects = found.into_iter().map(|(o, _, _)| o).collect();
+        self.objects = found.into_iter().map(|f| f.object).collect();
         self.objects.sort_by_key(|o| o.id);
         self.previous = previous;
         &self.objects
     }
 
-    /// The id of each new object (given by its blocks): the previous object it shares the most weight with when that is
-    /// ≥ 25 % of the previous object's, each previous id to one successor, else a fresh id.
-    fn inherit(&mut self, blocks: &[&Weights]) -> Vec<u32> {
-        let mut pairs: Vec<(f64, u32, usize)> = Vec::new();
-        for (i, new) in blocks.iter().enumerate() {
-            for old in &self.previous {
-                let shared: f64 = new.iter().filter_map(|(k, w)| old.blocks.get(k).map(|o| w.min(*o))).sum();
-                if shared > 0.0 && shared >= INHERIT * old.weight {
-                    pairs.push((shared, old.id, i));
+    /// For each previous object, each of its sinks' successor in `report` (an index into its sinks): the sink nearest the
+    /// previous one carried on by its velocity over the frame, within the larger of the two accretion radii.
+    fn sink_successors(&self, report: &Report) -> Vec<Vec<Option<usize>>> {
+        self.previous
+            .iter()
+            .map(|old| {
+                old.sinks
+                    .iter()
+                    .map(|s| {
+                        let at = [s.x + s.vx * report.sim_dt, s.y + s.vy * report.sim_dt];
+                        let mut best: Option<(f64, usize)> = None;
+                        for (k, n) in report.sinks.iter().enumerate() {
+                            let d = (n.x - at[0]).hypot(n.y - at[1]);
+                            if d <= self.config.r_acc(s.m).max(self.config.r_acc(n.m)) && best.is_none_or(|(bd, _)| d < bd) {
+                                best = Some((d, k));
+                            }
+                        }
+                        best.map(|(_, k)| k)
+                    })
+                    .collect()
+            })
+            .collect()
+    }
+
+    /// Whether `new` holds `old`'s centre (§0.5 [M0-D97]): its heaviest sink's successor when the centre was a sink, else the
+    /// block of its max-Σ cell — read from the last frame's object of that id.
+    fn holds_centre(&self, old: &Previous, next: &[Option<usize>], new: &Found) -> bool {
+        let Some(o) = self.objects.iter().find(|o| o.id == old.id) else { return false };
+        match old.sinks.iter().position(|s| s.x == o.centre[0] && s.y == o.centre[1]) {
+            Some(j) => next[j].is_some_and(|k| new.sinks.contains(&k)),
+            None => {
+                let block = self.config.block as f64;
+                new.weights.contains_key(&((o.centre[0] / block).floor() as i64, (o.centre[1] / block).floor() as i64))
+            }
+        }
+    }
+
+    /// The id of each new object: the previous object whose centre it holds, when that is also the previous object it
+    /// shares the most weight with (§0.5 [M0-D97]); else the previous object it shares the most weight with — its common
+    /// blocks' lesser gas and its sinks' lesser masses — when that is ≥ 25 % of the previous object's; each previous id to
+    /// one successor, else a fresh id.
+    fn inherit(&mut self, report: &Report, found: &[Found]) -> Vec<u32> {
+        let successors = self.sink_successors(report);
+        let mut pairs: Vec<(bool, f64, u32, usize)> = Vec::new();
+        for (i, new) in found.iter().enumerate() {
+            let shares: Vec<(f64, usize)> = self
+                .previous
+                .iter()
+                .zip(&successors)
+                .enumerate()
+                .map(|(o, (old, next))| {
+                    let gas: f64 = new.weights.iter().filter_map(|(k, w)| old.blocks.get(k).map(|o| w.min(*o))).sum();
+                    let sinks: f64 = old
+                        .sinks
+                        .iter()
+                        .zip(next)
+                        .filter_map(|(s, k)| k.filter(|k| new.sinks.contains(k)).map(|k| s.m.min(report.sinks[k].m)))
+                        .sum();
+                    (gas + sinks, o)
+                })
+                .filter(|(shared, _)| *shared > 0.0)
+                .collect();
+            // The previous object this one came from most: the largest share, ties by the lower id.
+            let main = shares
+                .iter()
+                .copied()
+                .reduce(|a, b| match b.0.total_cmp(&a.0).then(self.previous[a.1].id.cmp(&self.previous[b.1].id)) {
+                    std::cmp::Ordering::Greater => b,
+                    _ => a,
+                })
+                .map(|(_, o)| o);
+            for (shared, o) in shares {
+                let old = &self.previous[o];
+                let centre = main == Some(o) && self.holds_centre(old, &successors[o], new);
+                if centre || shared >= INHERIT * old.weight {
+                    pairs.push((centre, shared, old.id, i));
                 }
             }
         }
-        pairs.sort_by(|a, b| b.0.total_cmp(&a.0).then(a.1.cmp(&b.1)).then(a.2.cmp(&b.2)));
-        let mut ids: Vec<Option<u32>> = vec![None; blocks.len()];
+        pairs.sort_by(|a, b| b.0.cmp(&a.0).then(b.1.total_cmp(&a.1)).then(a.2.cmp(&b.2)).then(a.3.cmp(&b.3)));
+        let mut ids: Vec<Option<u32>> = vec![None; found.len()];
         let mut taken: Vec<u32> = Vec::new();
-        for (_, id, i) in pairs {
+        for (_, _, id, i) in pairs {
             if ids[i].is_none() && !taken.contains(&id) {
                 ids[i] = Some(id);
                 taken.push(id);
@@ -207,15 +310,16 @@ impl Tracker {
             .collect()
     }
 
-    /// What the next frame reads, for the observers' snapshot (§0.5 [M0-D76]): the next id, the last frame's blocks by
-    /// object and its objects.
+    /// What the next frame reads, for the observers' snapshot (§0.5 [M0-D76]): the next id, the last frame's blocks and
+    /// sinks by object and its objects.
     pub fn snapshot(&self) -> Value {
         let previous: Vec<Value> = self
             .previous
             .iter()
             .map(|p| {
                 let blocks: Vec<Value> = p.blocks.iter().map(|(&(x, y), &w)| json!([x, y, exact(w)])).collect();
-                json!({"id": p.id, "weight": exact(p.weight), "blocks": blocks})
+                let sinks: Vec<Value> = p.sinks.iter().map(|s| json!([s.x, s.y, s.vx, s.vy, s.m].map(exact))).collect();
+                json!({"id": p.id, "weight": exact(p.weight), "blocks": blocks, "sinks": sinks})
             })
             .collect();
         json!({"next_id": self.next_id, "previous": previous, "objects": self.objects.iter().map(Object::snapshot).collect::<Vec<_>>()})
@@ -234,7 +338,17 @@ impl Tracker {
                         _ => Err(format!("previous.blocks: not [x, y, weight]: {b}")),
                     })
                     .collect::<Result<Weights, String>>()?;
-                Ok(Previous { id: id(p, "id")?, weight: read_exact(&p["weight"], "previous.weight")?, blocks })
+                let sinks = read_list(p, "sinks")?
+                    .iter()
+                    .map(|s| {
+                        let r = |i: usize| read_exact(&s[i], "previous.sinks");
+                        match s.as_array().map(Vec::len) {
+                            Some(5) => Ok(SinkData { x: r(0)?, y: r(1)?, vx: r(2)?, vy: r(3)?, m: r(4)? }),
+                            _ => Err(format!("previous.sinks: not [x, y, vx, vy, m]: {s}")),
+                        }
+                    })
+                    .collect::<Result<Vec<_>, String>>()?;
+                Ok(Previous { id: id(p, "id")?, weight: read_exact(&p["weight"], "previous.weight")?, blocks, sinks })
             })
             .collect::<Result<Vec<_>, String>>()?;
         let objects = read_list(v, "objects")?.iter().map(Object::restore).collect::<Result<Vec<_>, String>>()?;
@@ -361,15 +475,15 @@ fn components(config: &TrackerConfig, report: &Report) -> Vec<Vec<usize>> {
 
 /// The nearest star's light (§0.5 [M0-D53]): each block outside every listed object adds its radiated energy to the L of
 /// the listed object whose member block is nearest; ties to the heavier object, then the lower id.
-fn credit_light(report: &Report, objects: &mut [(Object, Weights, Vec<usize>)]) {
+fn credit_light(report: &Report, objects: &mut [Found]) {
     let columns = report.columns as i64;
     if columns == 0 || objects.is_empty() || report.sim_dt <= 0.0 {
         return;
     }
     let rows = report.blocks.len() as i64 / columns;
     let mut owner: Vec<Option<usize>> = vec![None; report.blocks.len()];
-    for (k, (_, _, list)) in objects.iter().enumerate() {
-        for &i in list {
+    for (k, f) in objects.iter().enumerate() {
+        for &i in &f.list {
             owner[i] = Some(k);
         }
     }
@@ -377,7 +491,7 @@ fn credit_light(report: &Report, objects: &mut [(Object, Weights, Vec<usize>)]) 
     let edge: Vec<(i64, i64, usize)> = objects
         .iter()
         .enumerate()
-        .flat_map(|(k, (_, _, list))| list.iter().map(move |&i| (k, i)))
+        .flat_map(|(k, f)| f.list.iter().map(move |&i| (k, i)))
         .filter(|&(k, i)| {
             let (x, y) = (i as i64 % columns, i as i64 / columns);
             (-1..=1).any(|dy| {
@@ -401,7 +515,7 @@ fn credit_light(report: &Report, objects: &mut [(Object, Weights, Vec<usize>)]) 
             let better = match best {
                 None => true,
                 Some((bd, bk)) => {
-                    let (o, ob) = (&objects[k].0, &objects[bk].0);
+                    let (o, ob) = (&objects[k].object, &objects[bk].object);
                     d < bd || (d == bd && (o.mass > ob.mass || (o.mass == ob.mass && o.id < ob.id)))
                 }
             };
@@ -413,8 +527,8 @@ fn credit_light(report: &Report, objects: &mut [(Object, Weights, Vec<usize>)]) 
             credited[k] += b.radiated;
         }
     }
-    for ((object, _, _), extra) in objects.iter_mut().zip(credited) {
-        object.luminosity = object.luminosity_own + extra / report.sim_dt;
+    for (f, extra) in objects.iter_mut().zip(credited) {
+        f.object.luminosity = f.object.luminosity_own + extra / report.sim_dt;
     }
 }
 
@@ -437,8 +551,31 @@ fn radius_holding(entries: &mut [(f64, f64)], fraction: f64) -> f64 {
     d_prev
 }
 
-/// One component's object (id 0 until the tracker names it) and its blocks' weights for the next frame's identity.
-fn measure(config: &TrackerConfig, report: &Report, list: &[usize]) -> (Object, Weights) {
+/// The sinks that no block of the report holds (outside the box), by index.
+fn lone_sinks(report: &Report) -> Vec<usize> {
+    let held = report.blocks.iter().fold(0u32, |bits, b| bits | b.sinks);
+    (0..report.sinks.len()).filter(|&k| k >= 32 || held >> k & 1 == 0).collect()
+}
+
+/// A sink no block holds, as an object of its own (§0.5 [M0-D70]): M its mass, c the sink, R half a block, no gas.
+fn measure_sink(config: &TrackerConfig, report: &Report, k: usize) -> Found {
+    let s = &report.sinks[k];
+    let radius = config.block as f64 / 2.0;
+    let object = Object {
+        mass: s.m,
+        sink_mass: s.m,
+        sinks: 1,
+        centre: [s.x, s.y],
+        radius,
+        tau_dyn: (radius.powi(3) / (config.g * s.m)).sqrt(),
+        ..Object::default()
+    };
+    Found { object, weights: Weights::new(), list: Vec::new(), sinks: vec![k] }
+}
+
+/// One component's object (id 0 until the tracker names it), with its blocks' gas for the next frame's identity.
+fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Found {
+    let list: &[usize] = &members;
     let block = config.block as f64;
     let r_min = block / 2.0;
     let columns = report.columns as usize;
@@ -533,13 +670,7 @@ fn measure(config: &TrackerConfig, report: &Report, list: &[usize]) -> (Object, 
         None => (None, None),
     };
 
-    let weights: Weights = list
-        .iter()
-        .map(|&i| {
-            let in_block: f64 = sinks.iter().filter(|&&(_, b)| b == i).map(|&(k, _)| report.sinks[k].m).sum();
-            (key(i), at(i).mass + in_block)
-        })
-        .collect();
+    let weights: Weights = list.iter().map(|&i| (key(i), at(i).mass)).collect();
     let object = Object {
         id: 0,
         mass,
@@ -569,16 +700,15 @@ fn measure(config: &TrackerConfig, report: &Report, list: &[usize]) -> (Object, 
         r_core,
         envelope_mass,
     };
-    (object, weights)
+    Found { object, weights, list: members, sinks: sinks.into_iter().map(|(k, _)| k).collect() }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::observe::SinkData;
 
     fn cfg() -> TrackerConfig {
-        TrackerConfig { sigma_obj: 1e-3, block: 4, g: 1.0, wisp_mass: WISP_FRACTION * SUN_MASS_NOMINAL }
+        TrackerConfig { sigma_obj: 1e-3, block: 4, g: 1.0, c_sb: 400.0, wisp_mass: WISP_FRACTION * SUN_MASS_NOMINAL }
     }
 
     /// An empty report of `cols` × `rows` blocks over a world as wide as the box, one sim time unit.
@@ -732,6 +862,74 @@ mod tests {
         assert_eq!(ids_after(&mut t, &r), vec![1, 2]);
         let left = t.objects().iter().find(|o| o.id == 1).unwrap();
         assert_eq!(left.mass, 1200.0);
+    }
+
+    #[test]
+    fn a_split_keeps_the_id_with_the_centre() {
+        // The max-Σ cell in column 9: the 20 % part on the right holds it and keeps the id, under 25 % of the old weight
+        // (§0.5 [M0-D97]); the 70 % part is new.
+        let mut t = Tracker::new(cfg());
+        let mut r = report(16, 4);
+        rect(&mut r, 1..11, 1..3, 100.0);
+        r.blocks[16 + 9].max_sigma = 5.0;
+        assert_eq!(ids_after(&mut t, &r), vec![1]);
+        for row in 1..3 {
+            r.blocks[(row * 16 + 8) as usize] = BlockData::default();
+        }
+        assert_eq!(ids_after(&mut t, &r), vec![1, 2]);
+        let masses: Vec<(u32, f64)> = t.objects().iter().map(|o| (o.id, o.mass)).collect();
+        assert_eq!(masses, vec![(1, 400.0), (2, 1400.0)]);
+        // A sink is the centre: the part holding it keeps the id.
+        let mut t = Tracker::new(cfg());
+        let mut r = report(16, 4);
+        rect(&mut r, 1..11, 1..3, 100.0);
+        let r = with_sinks(r, vec![sink(9.0, 9.0, 0.0, 0.0, 10.0)]);
+        assert_eq!(ids_after(&mut t, &r), vec![1]);
+        let mut r = r;
+        for row in 1..3 {
+            r.blocks[(row * 16 + 3) as usize] = BlockData::default();
+        }
+        t.update(&r);
+        let masses: Vec<(u32, f64)> = t.objects().iter().map(|o| (o.id, o.mass)).collect();
+        assert_eq!(masses, vec![(1, 410.0), (2, 1400.0)], "the sink's two columns keep the id");
+    }
+
+    #[test]
+    fn a_blast_s_core_keeps_the_star_s_history() {
+        // m_bh_sb's life 07 (11,200.210, RTX 4090, M0-D97): the blast splits the star, the ejecta outweigh the core. The core
+        // holds the star's centre, keeps its id and its passed core collapse, and reads neutron_star; the ejecta are new.
+        use super::super::{Stage, StageTracker};
+        let (fe, n) = (8, 9); // §1.5's X order: Fe, then free neutrons.
+        let mut t = Tracker::new(cfg());
+        let mut stages = StageTracker::new(f64::INFINITY);
+        let mut r = report(17, 17);
+        rect(&mut r, 5..12, 5..12, 50.0);
+        let centre = 8 * 17 + 8;
+        r.blocks[centre].max_sigma = 5.0;
+        r.blocks[centre].nuclear[GROUP_N] = -1.0;
+        t.update(&r);
+        assert_eq!(stages.update(t.objects(), 10.0)[0].kind, super::super::EventKind::CoreCollapse);
+        // The next frame: the core alone in its block, a ring three blocks out (24 × 100) past two empty rings.
+        let mut r = report(17, 17);
+        for row in 5..12u32 {
+            for col in 5..12u32 {
+                if row.abs_diff(8).max(col.abs_diff(8)) == 3 {
+                    put(&mut r, col, row, 100.0);
+                }
+            }
+        }
+        put(&mut r, 8, 8, 300.0);
+        let core = &mut r.blocks[centre];
+        core.max_sigma = 5.0;
+        (core.max_x[fe], core.max_x[n]) = (0.54, 0.46);
+        core.cold_ratio = 0.9;
+        t.update(&r);
+        stages.update(t.objects(), 11.0);
+        let masses: Vec<(u32, f64)> = t.objects().iter().map(|o| (o.id, o.mass)).collect();
+        assert_eq!(masses, vec![(1, 300.0), (2, 2400.0)], "the core keeps the id at 2 % of the star's weight");
+        let s = stages.stage(1).unwrap();
+        assert_eq!((s.raw, s.history.last_collapse), (Stage::NeutronStar, Some(10.0)));
+        assert_eq!(stages.stage(2).unwrap().history.last_collapse, None, "the ejecta inherit no stage they never had");
     }
 
     #[test]
@@ -959,5 +1157,127 @@ mod tests {
         }
         let o = Tracker::new(cfg()).update(&r).to_vec();
         assert_eq!((o[0].core_group, o[0].r_core, o[0].envelope_mass), (None, None, None));
+    }
+
+    /// A sink at (`x`, `y`) moving at (`vx`, `vy`).
+    fn sink(x: f64, y: f64, vx: f64, vy: f64, m: f64) -> SinkData {
+        SinkData { x, y, vx, vy, m }
+    }
+
+    /// `r` with its sinks, each block's bits set for the sinks whose position lies in its cells inside the box.
+    fn with_sinks(mut r: Report, sinks: Vec<SinkData>) -> Report {
+        let rows = r.blocks.len() as u32 / r.columns.max(1);
+        for (k, s) in sinks.iter().enumerate() {
+            let (col, row) = ((s.x as u32 - r.origin[0]) / 4, (s.y as u32 - r.origin[1]) / 4);
+            if r.columns > 0 && s.x >= r.origin[0] as f64 && s.y >= r.origin[1] as f64 && col < r.columns && row < rows {
+                r.blocks[(row * r.columns + col) as usize].sinks |= 1 << k;
+            }
+        }
+        r.sinks = sinks;
+        r
+    }
+
+    #[test]
+    fn a_sink_no_block_holds_is_an_object_of_its_own() {
+        // M0-D66's T 3 cloud on the RTX 4090: the sink has eaten the gas, the box is empty — no block at all.
+        let empty = Report { sim_dt: 1.0, world_width: 64, ..Report::default() };
+        let r = with_sinks(empty, vec![sink(34.429, 30.581, 0.29, -0.16, 1649.97)]);
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        assert_eq!(o.len(), 1, "the sink alone is an object");
+        let o = &o[0];
+        assert_eq!((o.id, o.mass, o.gas_mass, o.sink_mass, o.sinks), (1, 1649.97, 0.0, 1649.97, 1));
+        assert_eq!((o.centre, o.radius), ([34.429, 30.581], 2.0), "c the sink, R half a block");
+        assert_eq!(o.tau_dyn, (8.0f64 / 1649.97).sqrt());
+        assert_eq!((o.luminosity, o.v_r, o.sigma_c), (0.0, 0.0, 0.0));
+        // Beside a cloud, outside the box: the cloud and the sink, two objects; the sink's bit in no block.
+        let mut r = report(8, 8);
+        rect(&mut r, 2..5, 2..5, 100.0);
+        r.origin = [64, 64];
+        r.world_width = 256;
+        let r = with_sinks(r, vec![sink(10.5, 10.5, 0.0, 0.0, 50.0)]);
+        assert!(r.blocks.iter().all(|b| b.sinks == 0), "outside the box");
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        assert_eq!(o.iter().map(|o| (o.mass, o.sinks)).collect::<Vec<_>>(), vec![(900.0, 0), (50.0, 1)]);
+        // A sink under the wisp mass is a wisp, as gas is.
+        let empty = Report { sim_dt: 1.0, world_width: 64, ..Report::default() };
+        let r = with_sinks(empty, vec![sink(10.5, 10.5, 0.0, 0.0, 0.5 * WISP_FRACTION * SUN_MASS_NOMINAL)]);
+        assert!(Tracker::new(cfg()).update(&r).is_empty());
+    }
+
+    #[test]
+    fn a_sink_crossing_a_block_keeps_its_object_s_id() {
+        // M0-V9's F1 on the RTX 4090: 28,907 of 30,787 in the sink; by block alone, a sink one block over shares only the
+        // gas, 1,880 — under 25 % — and the object took a fresh id each time. Its sink moves one cell a frame (vx 1).
+        let mut t = Tracker::new(cfg());
+        for frame in 0..6 {
+            let mut r = report(8, 8);
+            rect(&mut r, 2..6, 2..5, 1880.0 / 12.0);
+            let r = with_sinks(r, vec![sink(12.6 + frame as f64, 13.5, 1.0, 0.0, 28_907.0 + frame as f64)]);
+            t.update(&r);
+            assert_eq!(ids(&t), vec![1], "frame {frame}: the sink in block {}", (12.6 + frame as f64) as u32 / 4);
+            assert_eq!(t.objects()[0].sinks, 1);
+        }
+    }
+
+    #[test]
+    fn a_lone_sink_is_followed_where_its_velocity_carries_it() {
+        let lone = |x: f64, vx: f64| with_sinks(Report { sim_dt: 1.0, world_width: 256, ..Report::default() }, vec![sink(x, 20.5, vx, 0.0, 500.0)]);
+        // Three cells a frame, its velocity saying so: one id.
+        let mut t = Tracker::new(cfg());
+        for frame in 0..4 {
+            t.update(&lone(20.5 + 3.0 * frame as f64, 3.0));
+            assert_eq!(ids(&t), vec![1], "frame {frame}");
+        }
+        // The same three cells with a velocity of 0: the carried point is 3 cells off, past r_acc's 2 — a new object.
+        let mut t = Tracker::new(cfg());
+        t.update(&lone(20.5, 0.0));
+        assert_eq!(ids_after(&mut t, &lone(23.5, 0.0)), vec![2]);
+        // At r_acc exactly it is the same sink; a hair past, not.
+        let mut t = Tracker::new(cfg());
+        t.update(&lone(20.5, 0.0));
+        assert_eq!(ids_after(&mut t, &lone(22.5, 0.0)), vec![1]);
+        assert_eq!(ids_after(&mut t, &lone(24.5 + 1e-9, 0.0)), vec![2]);
+        // r_acc grows with the mass, 2GM/c_sb²: 320,000 reads 4 cells at c_sb 400.
+        let heavy = |x: f64| with_sinks(Report { sim_dt: 1.0, world_width: 256, ..Report::default() }, vec![sink(x, 20.5, 0.0, 0.0, 320_000.0)]);
+        let mut t = Tracker::new(cfg());
+        t.update(&heavy(20.5));
+        assert_eq!(ids_after(&mut t, &heavy(24.5)), vec![1]);
+    }
+
+    #[test]
+    fn sinks_are_matched_by_place_not_by_slot() {
+        let frame = |sinks: Vec<SinkData>| with_sinks(Report { sim_dt: 1.0, world_width: 256, ..Report::default() }, sinks);
+        // A (1,000), B (400) and C (300), far apart: three objects.
+        let mut t = Tracker::new(cfg());
+        t.update(&frame(vec![sink(10.0, 10.0, 0.0, 0.0, 1000.0), sink(12.5, 10.0, 0.0, 0.0, 400.0), sink(80.0, 80.0, 0.0, 0.0, 300.0)]));
+        assert_eq!(ids(&t), vec![1, 2, 3]);
+        // B merges into A (P3 folds the later slot into the earlier, at the mass-weighted centre): C moves to slot 1. The
+        // merged sink holds both A and B — the heavier's id survives — and C keeps its own.
+        let merged = sink((10.0 * 1000.0 + 12.5 * 400.0) / 1400.0, 10.0, 0.0, 0.0, 1400.0);
+        t.update(&frame(vec![merged, sink(80.0, 80.0, 0.0, 0.0, 300.0)]));
+        let found: Vec<(u32, f64)> = t.objects().iter().map(|o| (o.id, o.mass)).collect();
+        assert_eq!(found, vec![(1, 1400.0), (3, 300.0)]);
+        // A new sink takes the next slot and a fresh id.
+        t.update(&frame(vec![sink(10.7, 10.0, 0.0, 0.0, 1400.0), sink(80.0, 80.0, 0.0, 0.0, 300.0), sink(40.0, 40.0, 0.0, 0.0, 100.0)]));
+        assert_eq!(ids(&t), vec![1, 3, 4]);
+    }
+
+    #[test]
+    fn the_snapshot_carries_the_sinks_and_refuses_one_without_them() {
+        let mut r = report(8, 8);
+        rect(&mut r, 2..6, 2..5, 1880.0 / 12.0);
+        let mut t = Tracker::new(cfg());
+        t.update(&with_sinks(r.clone(), vec![sink(13.6, 13.5, 1.0, 0.0, 28_907.0)]));
+        let snap = t.snapshot();
+        let mut back = Tracker::restore(cfg(), &snap).expect("the snapshot restores");
+        assert_eq!(back.snapshot(), snap, "round trip");
+        // The restored tracker follows the sink across the block as the live one does.
+        let next = with_sinks(r, vec![sink(14.6, 13.5, 1.0, 0.0, 28_908.0)]);
+        assert_eq!(ids_after(&mut back, &next), ids_after(&mut t, &next));
+        assert_eq!(ids(&back), vec![1]);
+        let mut old = snap.clone();
+        old["previous"][0].as_object_mut().unwrap().remove("sinks");
+        let err = Tracker::restore(cfg(), &old).err().expect("a snapshot without the sinks is refused");
+        assert!(err.contains("sinks"), "{err}");
     }
 }

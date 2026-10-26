@@ -1,0 +1,808 @@
+==== 2026-10-26T14:21:07-04:00 objects · clean · a fresh scratch copy of the tree
+== 2026-10-26T14:21:10-04:00 objects · task M0-D97 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=0 · 10.13 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-x7a89w2y/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.65s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.01s
+
+
+==== 2026-10-26T14:21:07-04:00 objects · plant one-object · a fresh scratch copy of the tree
+planted one-object: tests/plants/one-object.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:21:10-04:00 objects · task M0-D97 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 12.80 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-x7a89w2y/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.65s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... FAILED
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... FAILED
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... FAILED
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... FAILED
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+failures:
+
+---- observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass stdout ----
+
+thread 'observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass' (4074795) panicked at crates/sr-physics/src/observe/tracker.rs:1128:9:
+assertion `left == right` failed: a sink's block joins even with no dense cell: the lone sink is an object
+  left: 1
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_centre stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_centre' (4074797) panicked at crates/sr-physics/src/observe/tracker.rs:879:9:
+assertion `left == right` failed
+  left: [1]
+ right: [1, 2]
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part' (4074798) panicked at crates/sr-physics/src/observe/tracker.rs:851:9:
+assertion `left == right` failed
+  left: [1]
+ right: [1, 2]
+
+---- observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block stdout ----
+
+thread 'observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block' (4074800) panicked at crates/sr-physics/src/observe/tracker.rs:786:9:
+assertion `left == right` failed: one empty block between separates
+  left: 1
+ right: 2
+
+
+failures:
+    observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass
+    observe::tracker::tests::a_split_keeps_the_id_with_the_centre
+    observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part
+    observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block
+
+test result: FAILED. 20 passed; 4 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:21:07-04:00 objects · plant light-to-heaviest · a fresh scratch copy of the tree
+planted light-to-heaviest: tests/plants/light-to-heaviest.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:21:10-04:00 objects · task M0-D97 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 18.06 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-x7a89w2y/arm2/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.16s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... FAILED
+
+failures:
+
+---- observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light stdout ----
+
+thread 'observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light' (4075194) panicked at crates/sr-physics/src/observe/tracker.rs:1066:9:
+assertion `left == right` failed: each its own halo's, none lost
+  left: (96.0, 0.0)
+ right: (16.0, 80.0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light
+
+test result: FAILED. 23 passed; 1 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:21:07-04:00 objects · plant lone-sink-left-out · a fresh scratch copy of the tree
+planted lone-sink-left-out: tests/plants/lone-sink-left-out.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:21:10-04:00 objects · task M0-D97 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.33 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-x7a89w2y/arm3/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.27s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... FAILED
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... FAILED
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (4073165) panicked at crates/sr-physics/src/observe/tracker.rs:1229:13:
+assertion `left == right` failed: frame 0
+  left: []
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own stdout ----
+
+thread 'observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own' (4073169) panicked at crates/sr-physics/src/observe/tracker.rs:1186:9:
+assertion `left == right` failed: the sink alone is an object
+  left: 0
+ right: 1
+
+---- observe::tracker::tests::sinks_are_matched_by_place_not_by_slot stdout ----
+
+thread 'observe::tracker::tests::sinks_are_matched_by_place_not_by_slot' (4073178) panicked at crates/sr-physics/src/observe/tracker.rs:1253:9:
+assertion `left == right` failed
+  left: []
+ right: [1, 2, 3]
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+    observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own
+    observe::tracker::tests::sinks_are_matched_by_place_not_by_slot
+
+test result: FAILED. 21 passed; 3 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:21:07-04:00 objects · plant identity-by-block · a fresh scratch copy of the tree
+planted identity-by-block: tests/plants/identity-by-block.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:21:10-04:00 objects · task M0-D97 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 4.60 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-x7a89w2y/arm4/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.36s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... FAILED
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (4073647) panicked at crates/sr-physics/src/observe/tracker.rs:1229:13:
+assertion `left == right` failed: frame 1
+  left: [2]
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::sinks_are_matched_by_place_not_by_slot stdout ----
+
+thread 'observe::tracker::tests::sinks_are_matched_by_place_not_by_slot' (4073660) panicked at crates/sr-physics/src/observe/tracker.rs:1259:9:
+assertion `left == right` failed
+  left: [(4, 1400.0), (5, 300.0)]
+ right: [(1, 1400.0), (3, 300.0)]
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+    observe::tracker::tests::sinks_are_matched_by_place_not_by_slot
+
+test result: FAILED. 22 passed; 2 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:21:07-04:00 objects · plant sink-not-carried · a fresh scratch copy of the tree
+planted sink-not-carried: tests/plants/sink-not-carried.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:21:10-04:00 objects · task M0-D97 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 15.86 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-x7a89w2y/arm5/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 3.01s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (4075007) panicked at crates/sr-physics/src/observe/tracker.rs:1229:13:
+assertion `left == right` failed: frame 1
+  left: [2]
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+
+test result: FAILED. 23 passed; 1 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:21:07-04:00 objects · plant split-by-share · a fresh scratch copy of the tree
+planted split-by-share: tests/plants/split-by-share.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:21:10-04:00 objects · task M0-D97 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 7.43 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-x7a89w2y/arm6/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.82s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... FAILED
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... FAILED
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+failures:
+
+---- observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history stdout ----
+
+thread 'observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history' (4074251) panicked at crates/sr-physics/src/observe/tracker.rs:929:9:
+assertion `left == right` failed: the core keeps the id at 2 % of the star's weight
+  left: [(1, 2400.0), (2, 300.0)]
+ right: [(1, 300.0), (2, 2400.0)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_centre stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_centre' (4074261) panicked at crates/sr-physics/src/observe/tracker.rs:881:9:
+assertion `left == right` failed
+  left: [(1, 1400.0), (2, 400.0)]
+ right: [(1, 400.0), (2, 1400.0)]
+
+
+failures:
+    observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history
+    observe::tracker::tests::a_split_keeps_the_id_with_the_centre
+
+test result: FAILED. 22 passed; 2 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:32:17-04:00 objects · clean · a fresh scratch copy of the tree
+== 2026-10-26T14:32:19-04:00 objects · task M0-D97 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=0 · 14.64 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tmqm19y0/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.37s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+
+==== 2026-10-26T14:32:17-04:00 objects · plant one-object · a fresh scratch copy of the tree
+planted one-object: tests/plants/one-object.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:32:19-04:00 objects · task M0-D97 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 7.38 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tmqm19y0/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.41s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... FAILED
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... FAILED
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... FAILED
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+failures:
+
+---- observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass stdout ----
+
+thread 'observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass' (2039627) panicked at crates/sr-physics/src/observe/tracker.rs:1128:9:
+assertion `left == right` failed: a sink's block joins even with no dense cell: the lone sink is an object
+  left: 1
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_centre stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_centre' (2039629) panicked at crates/sr-physics/src/observe/tracker.rs:879:9:
+assertion `left == right` failed
+  left: [1]
+ right: [1, 2]
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part' (2039630) panicked at crates/sr-physics/src/observe/tracker.rs:851:9:
+assertion `left == right` failed
+  left: [1]
+ right: [1, 2]
+
+---- observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block stdout ----
+
+thread 'observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block' (2039632) panicked at crates/sr-physics/src/observe/tracker.rs:786:9:
+assertion `left == right` failed: one empty block between separates
+  left: 1
+ right: 2
+
+
+failures:
+    observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass
+    observe::tracker::tests::a_split_keeps_the_id_with_the_centre
+    observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part
+    observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block
+
+test result: FAILED. 20 passed; 4 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:32:17-04:00 objects · plant light-to-heaviest · a fresh scratch copy of the tree
+planted light-to-heaviest: tests/plants/light-to-heaviest.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:32:19-04:00 objects · task M0-D97 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 17.04 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tmqm19y0/arm2/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.35s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... FAILED
+
+failures:
+
+---- observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light stdout ----
+
+thread 'observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light' (2040184) panicked at crates/sr-physics/src/observe/tracker.rs:1066:9:
+assertion `left == right` failed: each its own halo's, none lost
+  left: (96.0, 0.0)
+ right: (16.0, 80.0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light
+
+test result: FAILED. 23 passed; 1 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:32:17-04:00 objects · plant lone-sink-left-out · a fresh scratch copy of the tree
+planted lone-sink-left-out: tests/plants/lone-sink-left-out.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:32:19-04:00 objects · task M0-D97 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 9.78 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tmqm19y0/arm3/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.33s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... FAILED
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... FAILED
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (2039760) panicked at crates/sr-physics/src/observe/tracker.rs:1229:13:
+assertion `left == right` failed: frame 0
+  left: []
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own stdout ----
+
+thread 'observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own' (2039764) panicked at crates/sr-physics/src/observe/tracker.rs:1186:9:
+assertion `left == right` failed: the sink alone is an object
+  left: 0
+ right: 1
+
+---- observe::tracker::tests::sinks_are_matched_by_place_not_by_slot stdout ----
+
+thread 'observe::tracker::tests::sinks_are_matched_by_place_not_by_slot' (2039773) panicked at crates/sr-physics/src/observe/tracker.rs:1253:9:
+assertion `left == right` failed
+  left: []
+ right: [1, 2, 3]
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+    observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own
+    observe::tracker::tests::sinks_are_matched_by_place_not_by_slot
+
+test result: FAILED. 21 passed; 3 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:32:17-04:00 objects · plant identity-by-block · a fresh scratch copy of the tree
+planted identity-by-block: tests/plants/identity-by-block.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:32:19-04:00 objects · task M0-D97 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 4.87 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tmqm19y0/arm4/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.37s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... FAILED
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (2039471) panicked at crates/sr-physics/src/observe/tracker.rs:1229:13:
+assertion `left == right` failed: frame 1
+  left: [2]
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::sinks_are_matched_by_place_not_by_slot stdout ----
+
+thread 'observe::tracker::tests::sinks_are_matched_by_place_not_by_slot' (2039484) panicked at crates/sr-physics/src/observe/tracker.rs:1259:9:
+assertion `left == right` failed
+  left: [(4, 1400.0), (5, 300.0)]
+ right: [(1, 1400.0), (3, 300.0)]
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+    observe::tracker::tests::sinks_are_matched_by_place_not_by_slot
+
+test result: FAILED. 22 passed; 2 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:32:17-04:00 objects · plant sink-not-carried · a fresh scratch copy of the tree
+planted sink-not-carried: tests/plants/sink-not-carried.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:32:19-04:00 objects · task M0-D97 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 12.19 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tmqm19y0/arm5/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.34s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (2039894) panicked at crates/sr-physics/src/observe/tracker.rs:1229:13:
+assertion `left == right` failed: frame 1
+  left: [2]
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+
+test result: FAILED. 23 passed; 1 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-10-26T14:32:17-04:00 objects · plant split-by-share · a fresh scratch copy of the tree
+planted split-by-share: tests/plants/split-by-share.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-10-26T14:32:19-04:00 objects · task M0-D97 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.47 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tmqm19y0/arm6/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.38s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 24 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... FAILED
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+
+failures:
+
+---- observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history stdout ----
+
+thread 'observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history' (2039330) panicked at crates/sr-physics/src/observe/tracker.rs:929:9:
+assertion `left == right` failed: the core keeps the id at 2 % of the star's weight
+  left: [(1, 2400.0), (2, 300.0)]
+ right: [(1, 300.0), (2, 2400.0)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_centre stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_centre' (2039340) panicked at crates/sr-physics/src/observe/tracker.rs:881:9:
+assertion `left == right` failed
+  left: [(1, 1400.0), (2, 400.0)]
+ right: [(1, 400.0), (2, 1400.0)]
+
+
+failures:
+    observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history
+    observe::tracker::tests::a_split_keeps_the_id_with_the_centre
+
+test result: FAILED. 22 passed; 2 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

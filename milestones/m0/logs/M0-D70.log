@@ -1,0 +1,32 @@
+M0-D70 log — opened 2026-10-26T09:38:23-04:00 on laserax-ai (linux-pc); GPU runs on laserax-ai-server RTX 4090 (R18)
+    Finished `release` profile [optimized] target(s) in 5.22s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 1 test
+test observe::d70_probe ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.164810 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=6000 sim_time=11.000339 until=unmet
+D70 T 3 dir /tmp/sr-observe-1975202-d70-run/out code 2 done SR-HEADLESS DONE steps=6000 sim_time=11.000339 until=unmet
+D70 objects []
+D70 events [{"detail":{"mass_sb":1649.991535670124},"kind":"sink_formed","object":1,"sim_time":1.1852047760039568,"step":41}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 382 filtered out; finished in 1.94s
+
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    observe::a_sink_outside_the_box_is_an_object_and_ends
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 382 filtered out; finished in 5.25s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-HEADLESS DONE steps=33 sim_time=1.179786 until=met
+lone sink: object 2 black_hole at step 73 beside the cloud
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 382 filtered out; finished in 0.58s

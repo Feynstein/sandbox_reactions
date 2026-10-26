@@ -1,0 +1,1479 @@
+==== 2026-10-26T11:36:37-04:00 calibrate_bisect · clean · a fresh scratch copy of the tree
+== 2026-10-26T11:36:40-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=0 · 142.06 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.01s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.595050 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 368 filtered out; finished in 61.96s
+
+
+==== 2026-10-26T11:36:37-04:00 calibrate_bisect · plant bisect-tolerance · a fresh scratch copy of the tree
+planted bisect-tolerance: tests/plants/bisect-tolerance.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:36:40-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 265.23 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.08s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.595050 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... 
+thread 'calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs' (2013103) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:56:5:
+assertion `left == right` failed: runs for a 200-fold bracket at 2 %
+  left: 7
+ right: 11
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... 
+thread 'calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run' (2013105) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:150:9:
+m_ign_sb: 283.65220128778736 against 280
+FAILED
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... 
+thread 'calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold' (2013141) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:36:5:
+assertion `left == right` failed: §2.11: bisection to 2 %
+  left: 0.2
+ right: 0.02
+FAILED
+
+failures:
+
+failures:
+    calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs
+    calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run
+    calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold
+
+test result: FAILED. 16 passed; 3 failed; 0 ignored; 0 measured; 368 filtered out; finished in 62.02s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:36:37-04:00 calibrate_bisect · plant calibrate-record-removed · a fresh scratch copy of the tree
+planted calibrate-record-removed: tests/plants/calibrate-record-removed.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:36:40-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 312.90 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.23s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+
+thread 'calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint' (2013376) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:726:141:
+build/calibrate_runs/2026-10-26T15-41-20Z/m_ign_sb-01/summary.json: No such file or directory (os error 2)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+
+thread 'calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is' (2013391) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:232:9:
+"build/calibrate_runs/2026-10-26T15-41-26Z/m_ign_sb-01" keeps summary.json and events.jsonl
+FAILED
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+
+thread 'calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life' (2013445) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:343:72:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+
+thread 'calibrate_bisect::progress_every_sets_the_lives_tick' (2013463) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:604:115:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint
+    calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is
+    calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life
+    calibrate_bisect::progress_every_sets_the_lives_tick
+
+test result: FAILED. 15 passed; 4 failed; 0 ignored; 0 measured; 368 filtered out; finished in 38.36s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:36:37-04:00 calibrate_bisect · plant calibrate-resume-any-mass · a fresh scratch copy of the tree
+planted calibrate-resume-any-mass: tests/plants/calibrate-resume-any-mass.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:36:40-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 458.11 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm3/crates/sr-engine)
+warning: unused variable: `label`
+   --> crates/sr-engine/src/calibrate.rs:847:38
+    |
+847 |     fn replay(&mut self, out: &Path, label: &str, mass: f64) -> Result<Option<PresetRun>, CalError> {
+    |                                      ^^^^^ help: if this is intentional, prefix it with an underscore: `_label`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning (run `cargo fix --lib -p sr-engine` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 9.06s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.595050 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+
+thread 'calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life' (2014363) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:388:9:
+assertion `left == right` failed: another mass at run 1: ["SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3015.929 ignited=true core_collapse=false ending=none steps=673 sim_time=8.686 wall_s=3.9 replayed record=build/calibrate_runs/2026-10-26T15-43-55Z/m_ign_sb-01", "SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3418.053 ignited=true core_collapse=false ending=none steps=289 sim_time=4.369 wall_s=1.4 replayed record=build/calibrate_runs/2026-10-26T15-43-55Z/m_ign_sb-02", "SR-ERROR calibration failed: the bracket 3015.9..3418.1: its ends agree (3015.9 is Heavy, 3418.1 is Heavy), so the threshold is not in it — widen it with --bracket (two runs spent)"]
+  left: 6
+ right: 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life
+
+test result: FAILED. 18 passed; 1 failed; 0 ignored; 0 measured; 368 filtered out; finished in 62.17s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:36:37-04:00 calibrate_bisect · plant calibrate-progress-wrong-stage · a fresh scratch copy of the tree
+planted calibrate-progress-wrong-stage: tests/plants/calibrate-progress-wrong-stage.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:36:40-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 386.84 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm4/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm4/crates/sr-engine)
+warning: unused variable: `stage`
+   --> crates/sr-engine/src/calibrate.rs:789:47
+    |
+789 |         let note = |step: u64, sim_time: f64, stage: &str| {
+    |                                               ^^^^^ help: if this is intentional, prefix it with an underscore: `_stage`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning (run `cargo fix --lib -p sr-engine` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 9.10s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.595050 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+
+thread 'calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is' (2013832) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:288:5:
+assertion `left == right` failed: progress.json's stage is the terminal line's: SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=64 sim_time=1.491 heat_unconverged=0 stage=failed_star | raw=failed_star
+  left: "wrong_stage"
+ right: "failed_star"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is
+
+test result: FAILED. 18 passed; 1 failed; 0 ignored; 0 measured; 368 filtered out; finished in 64.72s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:36:37-04:00 calibrate_bisect · plant calibrate-heat-warnings-printed · a fresh scratch copy of the tree
+planted calibrate-heat-warnings-printed: tests/plants/calibrate-heat-warnings-printed.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-26T11:36:40-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 71.02 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm5/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm5/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.02s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.595050 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+
+thread 'calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed' (2011734) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:420:5:
+assertion `left == right` failed: only the progress line and the other warning are said: ["SR-WARN heat unconverged step 10275 passes 13 rounds 4096", "SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud", "SR-WARN heat unconverged step 10275 passes 13 rounds 4096", "SR-WARN overrides given: measured and checked, nothing written (§2.12.1)"]
+  left: 4
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed
+
+test result: FAILED. 18 passed; 1 failed; 0 ignored; 0 measured; 368 filtered out; finished in 61.87s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:36:37-04:00 calibrate_bisect · plant calibrate-up-until-ending · a fresh scratch copy of the tree
+planted calibrate-up-until-ending: tests/plants/calibrate-up-until-ending.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:36:40-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 529.38 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm6/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm6/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.19s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.595050 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... 
+thread 'calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions' (2014920) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:434:5:
+assertion `left == right` failed
+  left: Ending
+ right: CollapseOrEnding
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions
+
+test result: FAILED. 18 passed; 1 failed; 0 ignored; 0 measured; 368 filtered out; finished in 61.97s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:36:37-04:00 calibrate_bisect · plant calibrate-progress-every-ignored · a fresh scratch copy of the tree
+planted calibrate-progress-every-ignored: tests/plants/calibrate-progress-every-ignored.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:36:40-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 194.05 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm7/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm7/crates/sr-engine)
+warning: field `progress_every` is never read
+    --> crates/sr-engine/src/calibrate.rs:1209:5
+     |
+1198 | struct Opts {
+     |        ---- field in this struct
+...
+1209 |     progress_every: Option<u64>,
+     |     ^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 8.97s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+
+thread 'calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint' (2012522) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:759:5:
+progress lines at their own 16: []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+
+thread 'calibrate_bisect::progress_every_sets_the_lives_tick' (2012632) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:593:5:
+a life of a few hundred steps shows a line every 16: ["SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.032 ignited=true core_collapse=false ending=none steps=673 sim_time=8.686 wall_s=3.9 record=build/calibrate_runs/2026-10-26T15-39-48Z/m_ign_sb-01", "SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3418.053 ignited=true core_collapse=false ending=none steps=289 sim_time=4.369 wall_s=1.4 record=build/calibrate_runs/2026-10-26T15-39-48Z/m_ign_sb-02", "SR-ERROR calibration failed: the bracket 3351.0..3418.1: its ends agree (3351.0 is Heavy, 3418.1 is Heavy), so the threshold is not in it — widen it with --bracket (two runs spent)"]
+FAILED
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint
+    calibrate_bisect::progress_every_sets_the_lives_tick
+
+test result: FAILED. 17 passed; 2 failed; 0 ignored; 0 measured; 368 filtered out; finished in 42.94s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:37:51-04:00 calibrate_bisect · plant calibrate-checkpoint-without-observers · a fresh scratch copy of the tree
+planted calibrate-checkpoint-without-observers: tests/plants/calibrate-checkpoint-without-observers.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:37:51-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 523.89 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm8/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm8/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.92s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=577 sim_time=8.699164 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=3.742926 until=unmet
+
+thread 'calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint' (2015185) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:845:5:
+assertion `left == right` failed: no line at the step it continued from: ["SR-CALIBRATE continue item=m_ign_sb mass=3351.032 from step 97 (/tmp/sr-calibrate-checkpoint-2015150/copy-cut-again/m_ign_sb-01/checkpoint/s_97.bin)", "SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=114 sim_time=2.424 heat_unconverged=0 stage=none | raw=failed_star", "  frame  steps          16 dt        0.01682 s/step   0.005556 P5_ceil         0", "  star   M            3351 R           30.71 tau_dyn     2.941 M_unb           0", "  core   sigma_c     2.230 T_c         10.57 d_c        0.6245 Ye_c       0.8673", "  centre X_Fe            0 X_n             0 v_r        -4.643 vr/vdyn   -0.4445", "  light  L          0.3249 L_nuc           0 L_N             0 L_nu            0", "  world  escaped         0 objects         1 sinks           0 sink_M          0", "SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=130 sim_time=2.669 heat_unconverged=0 stage=failed_star | raw=failed_star", "  frame  steps          16 dt        0.01533 s/step   0.004688 P5_ceil         0", "  star   M            3351 R           29.54 tau_dyn     2.773 M_unb           0", "  core   sigma_c     2.882 T_c         13.65 d_c        0.6188 Ye_c       0.8673", "  centre X_Fe            0 X_n             0 v_r        -5.199 vr/vdyn   -0.4882", "  light  L          0.1987 L_nuc           0 L_N             0 L_nu            0", "  world  escaped         0 objects         1 sinks           0 sink_M          0", "SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=146 sim_time=2.893 heat_unconverged=0 stage=failed_star | raw=failed_star", "  frame  steps          16 dt        0.01397 s/step   0.004054 P5_ceil         0", "  star   M            3351 R           28.33 tau_dyn     2.604 M_unb           0", "  core   sigma_c     3.900 T_c         18.44 d_c        0.6116 Ye_c       0.8673", "  centre X_Fe            0 X_n             0 v_r        -5.678 vr/vdyn   -0.5220", "  light  L          0.1299 L_nuc           0 L_N             0 L_nu            0", "  world  escaped         0 objects         1 sinks           0 sink_M          0", "SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=162 sim_time=3.096 heat_unconverged=0 stage=failed_star | raw=failed_star", "  frame  steps          16 dt        0.01272 s/step   0.003525 P5_ceil         0", "  star   M            3351 R           26.98 tau_dyn     2.422 M_unb           0", "  core   sigma_c     5.445 T_c         25.57 d_c        0.6036 Ye_c       0.8673", "  centre X_Fe            0 X_n             0 v_r        -6.010 vr/vdyn   -0.5393", "  light  L         0.08920 L_nuc           0 L_N             0 L_nu            0", "  world  escaped         0 objects         1 sinks           0 sink_M          0", "SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=178 sim_time=3.283 heat_unconverged=0 stage=failed_star | raw=collapsing", "  frame  steps          16 dt        0.01166 s/step   0.003178 P5_ceil         0", "  star   M            3350 R           26.04 tau_dyn     2.295 M_unb           0", "  core   sigma_c     7.449 T_c         34.54 d_c        0.5964 Ye_c       0.8673", "  centre X_Fe            0 X_n             0 v_r        -6.101 vr/vdyn   -0.5378", "  light  L         0.06481 L_nuc       208.0 L_N             0 L_nu            0", "  world  escaped         0 objects         1 sinks           0 sink_M          0", "SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=194 sim_time=3.457 heat_unconverged=0 stage=failed_star | raw=collapsing", "  frame  steps          16 dt        0.01088 s/step   0.002886 P5_ceil         0", "  star   M            3350 R           24.80 tau_dyn     2.134 M_unb           0", "  core   sigma_c     9.185 T_c         42.19 d_c        0.5912 Ye_c       0.8672", "  centre X_Fe            0 X_n             0 v_r        -5.882 vr/vdyn   -0.5061", "  light  L         0.04899 L_nuc        1709 L_N             0 L_nu            0", "  world  escaped         0 objects         1 sinks           0 sink_M          0", "SR-CALIBRATE progress item=m_ign_sb mass=3351.032 step=210 sim_time=3.623 heat_unconverged=0 stage=collapsing | raw=collapsing", "  frame  steps          16 dt        0.01036 s/step   0.002771 P5_ceil         0", "  star   M            3350 R           23.25 tau_dyn     1.937 M_unb           0", "  core   sigma_c     10.30 T_c         47.51 d_c        0.5857 Ye_c       0.8672", "  centre X_Fe            0 X_n             0 v_r        -5.373 vr/vdyn   -0.4476", "  light  L         0.03763 L_nuc        5459 L_N             0 L_nu            0", "  world  escaped         0 objects         1 sinks           0 sink_M          0", "SR-ERROR calibration failed: the run at mass 3351.032 reached no ending within --max-steps 125 — reported, not guessed (record kept: /tmp/sr-calibrate-checkpoint-2015150/copy-cut-again/m_ign_sb-01)"]
+  left: [114, 130, 146, 162, 178, 194, 210]
+ right: [113]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint
+
+test result: FAILED. 18 passed; 1 failed; 0 ignored; 0 measured; 368 filtered out; finished in 56.70s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:39:02-04:00 calibrate_bisect · plant calibrate-checkpoint-on-the-tick · a fresh scratch copy of the tree
+planted calibrate-checkpoint-on-the-tick: tests/plants/calibrate-checkpoint-on-the-tick.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:39:02-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 507.51 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm9/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm9/crates/sr-engine)
+warning: field `checkpoint_every` is never read
+   --> crates/sr-engine/src/calibrate.rs:692:5
+    |
+687 | struct Lives<'a> {
+    |        ----- field in this struct
+...
+692 |     checkpoint_every: u64,
+    |     ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 9.01s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+
+thread 'calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint' (2015625) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:757:5:
+assertion `left == right` failed: one whole pair, the last save's
+  left: ["s_129.bin", "s_129.observers.json"]
+ right: ["s_97.bin", "s_97.observers.json"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint
+
+test result: FAILED. 18 passed; 1 failed; 0 ignored; 0 measured; 368 filtered out; finished in 45.56s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:39:54-04:00 calibrate_bisect · plant calibrate-checkpoint-step-unchecked · a fresh scratch copy of the tree
+planted calibrate-checkpoint-step-unchecked: tests/plants/calibrate-checkpoint-step-unchecked.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-26T11:39:54-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 511.34 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm10/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm10/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.00s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR bad dump: --continue: /tmp/sr-calibrate-checkpoint-2015980/copy-another-step/m_ign_sb-01/checkpoint/s_97.observers.json is step 81 at 2.137105790898204, the dump's 97 at 2.137105790898204
+
+thread 'calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint' (2016015) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:815:106:
+another step: a checkpoint not used says so: ["SR-CALIBRATE continue item=m_ign_sb mass=3351.032 from step 97 (/tmp/sr-calibrate-checkpoint-2015980/copy-another-step/m_ign_sb-01/checkpoint/s_97.bin)", "SR-ERROR calibration failed: the run at mass 3351.032: headless bad dump: --continue: /tmp/sr-calibrate-checkpoint-2015980/copy-another-step/m_ign_sb-01/checkpoint/s_97.observers.json is step 81 at 2.137105790898204, the dump's 97 at 2.137105790898204 (record kept: /tmp/sr-calibrate-checkpoint-2015980/copy-another-step/m_ign_sb-01)"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint
+
+test result: FAILED. 18 passed; 1 failed; 0 ignored; 0 measured; 368 filtered out; finished in 46.73s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:41:05-04:00 calibrate_bisect · plant continue-until-unchecked · a fresh scratch copy of the tree
+planted continue-until-unchecked: tests/plants/continue-until-unchecked.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-26T11:41:06-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 636.43 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm11/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm11/crates/sr-engine)
+warning: unused variable: `until`
+   --> crates/sr-engine/src/headless.rs:776:24
+    |
+776 |     if let (true, Some(until)) = (continued, args.until) {
+    |                        ^^^^^ help: if this is intentional, prefix it with an underscore: `_until`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning (run `cargo fix --lib -p sr-engine` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 9.06s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20000 sim_time=227.394270 until=unmet
+
+thread 'calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once' (2016389) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:912:5:
+assertion `left == right` failed: the restored life met its until already: ["SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA", "SR-HEADLESS DONE steps=20000 sim_time=227.394270 until=unmet"]
+  left: 2
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.595050 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once
+
+test result: FAILED. 18 passed; 1 failed; 0 ignored; 0 measured; 368 filtered out; finished in 187.15s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T11:41:53-04:00 calibrate_bisect · plant calibrate-one-step-never · a fresh scratch copy of the tree
+planted calibrate-one-step-never: tests/plants/calibrate-one-step-never.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-26T11:41:53-04:00 calibrate_bisect · task M0-D95 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 659.47 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-lpylamjt/arm12/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-lpylamjt/arm12/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.10s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.699653 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.669294 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 3060 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 4090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.595050 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.633372 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.178932 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2081 sim_time=11.189645 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+
+thread 'calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse' (2017141) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:1030:5:
+a stretch of one-step frames through the collapse: [Seen { step: 65, frame: 16, p5_ceiling: 0, raw: "cloud" }, Seen { step: 129, frame: 16, p5_ceiling: 0, raw: "cloud" }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... ok
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... ok
+test calibrate_bisect::one_step_frames_follow_the_physics ... 
+thread 'calibrate_bisect::one_step_frames_follow_the_physics' (2017184) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:924:5:
+a step at P5's ceiling
+FAILED
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.686273 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=289 sim_time=4.368713 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.491360 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... ok
+
+failures:
+
+failures:
+    calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse
+    calibrate_bisect::one_step_frames_follow_the_physics
+
+test result: FAILED. 17 passed; 2 failed; 0 ignored; 0 measured; 368 filtered out; finished in 61.51s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

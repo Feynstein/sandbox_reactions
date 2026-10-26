@@ -1,0 +1,13 @@
+observe_run · clean · GO · arm 1/7, 6 left
+observe_run · plant until-never-met · RED (proven: 7 failed) · arm 2/7, 5 left
+observe_run · plant continue-ignited-left-out · RED (proven: 1 failed) · arm 3/7, 4 left
+observe_run · plant continue-ledger-start-lost · RED (proven: 1 failed) · arm 4/7, 3 left
+observe_run · plant lone-sink-left-out · RED (proven: 3 failed) · arm 5/7, 2 left
+observe_run · plant dt-empty-box-unbounded · RED (proven: 1 failed) · arm 6/7, 1 left
+observe_run · plant ending-any-object · RED (proven: 1 failed) · arm 7/7, 0 left
+redarm: 6 plants · 6 red · 0 green · 0 errors · scope observe_run · 618.33 s · 7 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D95.observe_run.redarm.log
+=== GO ===
+
+real	10m18.493s
+user	10m41.569s
+sys	0m35.098s

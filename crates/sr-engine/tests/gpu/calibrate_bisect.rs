@@ -427,6 +427,8 @@ fn a_lifes_heat_warnings_are_counted_not_printed() {
 /// M0-D75: each item's `until`, and what the observers say of it on events — no GPU. m_up_sb's lives stop at the first frame that
 /// fires `core_collapse` (or ends), m_ign_sb's at the ignition, m_bh_sb's and the presets' only at their ending: a neutron star
 /// can still become a black hole, so m_bh_sb waits for the stage to hold its max(10 t.u., 20 τ_dyn) (§0.5 [M0-D78]).
+/// M0-D95: an `ending` event alone stops nothing — the life's ending is the heaviest object's (§0.5 [M0-D95]), and a watch that
+/// has seen no frame has no object.
 #[test]
 fn m_up_stops_at_a_collapse_and_the_others_keep_their_conditions() {
     assert_eq!(Threshold::Up.until(), Until::CollapseOrEnding);
@@ -438,7 +440,7 @@ fn m_up_stops_at_a_collapse_and_the_others_keep_their_conditions() {
     let event = |kind: &'static str| RunEvent { step: 100, sim_time: 5.0, kind, object: 1, detail: serde_json::json!({"mass_sb": 1.0}) };
     for (kind, collapse_or_ending, ending) in [
         ("core_collapse", true, false),
-        ("ending", true, true),
+        ("ending", false, false),
         ("ignition", false, false),
         ("supernova", false, false),
         ("sink_formed", false, false),
@@ -502,6 +504,56 @@ fn a_record_sides_the_same_whichever_condition_stopped_it() {
     let mut lines = Vec::new();
     assert_eq!(run_with(&args, &[], &mut |l| lines.push(l.to_string())), 6, "{lines:?}");
     assert!(lines.iter().any(|l| l.contains("neither side of the threshold")), "{lines:?}");
+    let _ = std::fs::remove_dir_all(&dir);
+}
+
+/// M0-D95: a life's ending is its heaviest object's (§0.5 [M0-D95]) — read back by `--resume`, no GPU. m_bh_sb's heavy life
+/// whose fragment (1,700) ended neutron_star before the star (30,000) ended black_hole sides heavy on the star's ending; the same
+/// life stopped on the fragment's ending alone (the binary before M0-D95: any object's) is on no side, refused — never light.
+#[test]
+fn a_fragments_ending_is_none_of_the_lifes() {
+    let dir = std::env::temp_dir().join(format!("sr-calibrate-fragment-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    // `objects`: (id, mass, stage); `endings`: (object, stage), in the order they fired.
+    let record = |nn: u32, mass: f64, objects: &[(u32, f64, &str)], endings: &[(u32, &str)]| {
+        let events: Vec<serde_json::Value> = endings
+            .iter()
+            .map(|(id, stage)| serde_json::json!({"step": 99, "sim_time": 11.0, "kind": "ending", "object": id, "detail": {"stage": stage}}))
+            .collect();
+        let objects: Vec<serde_json::Value> = objects
+            .iter()
+            .map(|(id, m, stage)| serde_json::json!({"id": id, "stage": stage, "mass_sb": m, "stages": [{"stage": stage, "from_step": 5, "sim_time": 0.5}]}))
+            .collect();
+        let summary = serde_json::json!({
+            "scene": format!("calibrate:m_bh_sb:{mass:.3}"), "until": {"condition": "ending", "met": true}, "steps": 1000, "sim_time": 50.0,
+            "wall_s": 1.0, "adapter": {"name": "test adapter"}, "max_gas_speed": 1.0, "events": events, "objects": objects,
+        });
+        let folder = dir.join(format!("m_bh_sb-{nn:02}"));
+        std::fs::create_dir_all(&folder).unwrap();
+        std::fs::write(folder.join("summary.json"), summary.to_string()).unwrap();
+    };
+    let (lo, hi) = (4500.0, 4560.0);
+    let resume = || {
+        let args: Vec<String> = ["--out", dir.join("calibration.json").to_str().unwrap(), "--only", "m_bh_sb", "--bracket", "4500,4560", "--resume", dir.to_str().unwrap()]
+            .map(String::from)
+            .to_vec();
+        let mut lines = Vec::new();
+        let code = run_with(&args, &[], &mut |l| lines.push(l.to_string()));
+        (code, lines)
+    };
+    record(1, lo, &[(1, 2380.0, "neutron_star")], &[(1, "neutron_star")]);
+    record(2, hi, &[(1, 30_000.0, "black_hole"), (2, 1700.0, "neutron_star")], &[(2, "neutron_star"), (1, "black_hole")]);
+    let (code, lines) = resume();
+    assert_eq!(code, 0, "{lines:?}");
+    let runs: Vec<&String> = lines.iter().filter(|l| l.starts_with("SR-CALIBRATE run")).collect();
+    assert_eq!(runs.len(), 2, "{lines:?}");
+    assert!(runs[0].contains("side=Light") && runs[0].contains("ending=neutron_star"), "{}", runs[0]);
+    assert!(runs[1].contains("side=Heavy") && runs[1].contains("ending=black_hole"), "the star's ending, not the fragment's: {}", runs[1]);
+
+    record(2, hi, &[(1, 30_000.0, "black_hole"), (2, 1700.0, "neutron_star")], &[(2, "neutron_star")]);
+    let (code, lines) = resume();
+    assert_eq!(code, 6, "a fragment's ending places no life: {lines:?}");
+    assert!(lines.iter().any(|l| l.contains("neither side of the threshold") && l.contains("ending=none")), "{lines:?}");
     let _ = std::fs::remove_dir_all(&dir);
 }
 

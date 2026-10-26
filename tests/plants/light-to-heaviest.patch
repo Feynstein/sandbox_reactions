@@ -1,9 +1,9 @@
 --- a/crates/sr-physics/src/observe/tracker.rs
 +++ b/crates/sr-physics/src/observe/tracker.rs
-@@ -268,7 +268,7 @@
+@@ -475,7 +475,7 @@
                  None => true,
                  Some((bd, bk)) => {
-                     let (o, ob) = (&objects[k].0, &objects[bk].0);
+                     let (o, ob) = (&objects[k].object, &objects[bk].object);
 -                    d < bd || (d == bd && (o.mass > ob.mass || (o.mass == ob.mass && o.id < ob.id)))
 +                    (d < 0 && d < bd) || o.mass > ob.mass || (o.mass == ob.mass && o.id < ob.id)
                  }

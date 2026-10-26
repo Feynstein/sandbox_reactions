@@ -600,6 +600,56 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     cells from a 20,682 sink, inside its 2-cell r_acc (free fall √(2M_s/r) 159; 3 frames over 100, all under 2 cells) — no speed cap,
     no kick; max_gas_speed read outside the hole's reach, or a wider r_acc, leaves the ejecta's 100.10 — the lead, 2026-10-25, at
     M0-D94: «c_sb 400, a_r 2e-5 (Recommended)».
+  - [M0-D70] §1.9.2's "8-connected blocks that hold a cell with Σ ≥ Σ_obj … Identity: an object inherits the id of the previous
+    frame's object with which it shares the most block mass (≥ 25 %)" (with M0-T58's declared choice, a sink's block a member, and
+    §0.7's "*object* — a connected body of gas") · **a sink that no block of the summary holds** (outside the box, which follows the
+    gas alone, §1.3.3) **is an object of its own**: M its mass, c the sink, R half a block, stage by §1.9.3 (black_hole), a wisp under
+    1 % of the Sun-like mass as gas is; **identity shares, per common block, the lesser of the two frames' gas masses, and per sink both
+    hold the lesser of its two masses** — a previous sink, carried on by its velocity over the frame's sim time, is the sink nearest that
+    point within the larger of the two accretion radii, max(2 cells, 2GM_s/c_sb²) (§2.6; two live sinks are never closer), a merge
+    gathering several; 25 %, the heavier id on a merge and the larger part on a split unchanged; the observers' snapshot (§0.5
+    [M0-D76]) carries each object's sinks, one without them refused · measured on the RTX 4090 (laserax-ai-server; tasks/M0-D70.md):
+    M0-V9's F1 — the 20 M₀ life's black-hole object, 28,907 of 30,787 in its sink, took a fresh id each time its sink crossed a 4-cell
+    block (59 ids in 54 t.u.: by block, a sink one block over shares only the gas, 1,880, under 25 %); M0-D66's T 3 cloud — the sink
+    alone was an object while the box held it (steps 41–1,280), then the box emptied (the Δt that followed is M0-D96's) — the lead,
+    2026-10-26, at M0-D70: «Its own object (Recommended)», «Share by sink (Recommended)».
+  - [M0-D96] §2.3.5's "Δt = min(C · min_cells …, η_g · min_cells …)" over the active box (§1.3.3), which has no cell once no
+    cell is at or above Σ_vac (M0-T21's reduction then gave the largest finite f32) · **an empty box steps on the floor gas**: every
+    cell of the world is then in P8's floor state (Σ_floor, u = 0, T = T_floor), so the min over the world is the fastest floor
+    gas's — hydrogen's fractions (1/μ = 2, Y_e = 1, the largest of the ten species) — Δt = C / [2 c_floor], no gravity term (P2
+    runs over the box alone); a box with a cell holds its margin's floor cells already, so the floor's rate is taken only when the box
+    is empty and every run with gas keeps its bits (the physics hash unchanged); a world with no gas from step 0 runs its clock too ·
+    measured on the RTX 4090 (laserax-ai-server; tasks/M0-D96.md): M0-D66's T 3 cloud — its sink eats the cloud, the box empties at
+    step 1,521, Δt was 3.4028 × 10³⁸: the clock froze at t 11.0 and P3 drifted the sink to infinity, so `--until ending` never met;
+    with the floor's 0.447 the ending meets at step 1,529 (t 14.13), the sink finite — the lead, 2026-10-26, at M0-D96: «Floor gas's
+    step (Recommended)».
+  - [M0-D95] §3.3's `ending` gloss "(any object holds a remnant stage for 10 t.u.)" as [M0-D78] reads it ("the `ending` event —
+    `--until ending`, m_ign_sb's `ignition|ending`, m_up_sb's `collapse|ending` … — fires at the first frame where the displayed
+    remnant stage has been shown …"), §2.11 items 3–4 and 6 ("until it ignites or fails", "run to their ending") and §2.12.2's
+    `"until": {"condition", "met"}` · **a life's ending is its heaviest object's**: every object still fires its own `ending` event
+    (logged in `events`, never stopping the run); `--until ending` — and the ending half of `ignition|ending` and `collapse|ending` —
+    is met at the first frame whose heaviest object (M = gas + sinks, §1.9.2; §1.9.6's default selected star, as §2.12.5's
+    `object_until` already reads it) has fired its `ending`, at that frame or an earlier one; §2.11 items 3–4 and 6 read that
+    object's ending, a lighter object's never (a record stopped on one is on no side, exit 6); the `ignition`, `core_collapse` and
+    shown neutron_star / black_hole early stops stay any object's; §2.12.2's `until` gains `object`, the id of the object whose
+    ending is the life's, present only when there is one; §1.9.5's readout unchanged (it reads the selected star's own ending) ·
+    measured on the RTX 4090 (laserax-ai-server, 255ec37; M0-V9's F1, M0-V20's verdict): m_bh_sb's 20 M₀ life (67,020.643) stopped
+    on object 68's failed_star (1,700.585, held 10.015 of hold_t 10.0, step 23,987) while object 72 (30,618.4) had shown black_hole
+    from t 76.09, its hold max(10, 20 τ_dyn) ≈ 169 t.u. — side_bh «on neither side» (exit 6); a fragment's neutron_star there
+    would have read Light with no error (M0-R6 M1: the 20 M₀ cloud breaks into 8–16 clumps near M_ch) — the lead, 2026-10-26, at
+    M0-D95: «Heaviest object's (Recommended)».
+  - [M0-D97] §1.9.2's "Identity: an object inherits the id of the previous frame's object with which it shares the most block mass (≥
+    25 %) … on a merge the heavier id survives" as [M0-D70] reads it ("25 %, the heavier id on a merge and the larger part on a split
+    unchanged") · **the id follows the centre**: a new object that holds a previous object's centre c (§1.9.2: the block of its max-Σ
+    cell, or its heaviest sink's successor as [M0-D70] matches sinks) keeps that object's id, and with it the per-id history ([M0-D78]'s
+    `ignited` and `x_h_max`, [M0-D88]'s passed core collapse), whatever its share, when that previous object is the one it shares the
+    most with; those pairs are taken first, then the ≥ 25 % shares as before — on a split the part holding the centre keeps the id (a
+    blast's core, a planetary nebula's white dwarf), the other parts are new with no history; a merge keeps the heavier id; §1.9.3's
+    rows unchanged · measured on the RTX 4090 (laserax-ai-server, 2026-10-26, the lead's chain; build/calibrate_runs/
+    2026-10-26T16-49-42Z/m_bh_sb-07): the 11,200.210 life's star (object 1) collapsed at step 1,025 and went supernova at 1,192; at
+    1,928 its neutron-matter core (X_n,c 0.735, Y_e,c 0.123) split off as a fresh object 2 while the ejecta kept id 1, so the core
+    read failed_star (never ignited, no passed collapse) and the life ended on it «on neither side of the threshold» (exit 6) — the
+    lead, 2026-10-26, at M0-D97: «Id follows the centre (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1266,7 +1316,7 @@ fractions; every energy P8 changes — the vacuum reset's E_floor − E as well 
   "ledger": {"start": {…}, "end": {…}}, "events": [{"step", "sim_time", "kind":
   "ignition|core_collapse|supernova|sink_formed|ending", "object", "detail"}], "objects": [{"id",
   "stage", "mass_sb", "mass_suns", "predicted_ending", "ending", "age_years", "stages": [{"stage",
-  "from_step", "sim_time"}]}], "until": {"condition", "met"}, "timing": {"per_pass_ms": {…},
+  "from_step", "sim_time"}]}], "until": {"condition", "met"[, "object" — M0-D95: the life's ending's object, §0.5 [M0-D95]]}, "timing": {"per_pass_ms": {…},
   "step_ms_mean"}}` (timing only with `--timing`).
 - **2.12.3 State dump** (`dumps/s_<step>.bin`): the eight bytes `SRDUMP01`, a little-endian u32
   header length, a UTF-8 JSON header `{"version": 1, "width", "height", "step", "sim_time",
@@ -1325,7 +1375,8 @@ Unit-tested without a GPU against §1.8.
   [--max-steps N] [--out DIR] [--frames-every N] [--view glow|heat|element|density]
   [--dump-every N] [--load-dump FILE [--continue]] [--edits FILE] [--adapter S] [--cpu-reference] [--timing]`
   - `--until`: `sim_time:<t>` · `event:<ignition|core_collapse|supernova|sink_formed>` ·
-    `stage:<stage id>` · `ending` (any object holds a remnant stage for 10 t.u.).
+    `stage:<stage id>` · `ending` (any object holds a remnant stage for 10 t.u.) [M0-D95: the heaviest object's ending —
+    §0.5 [M0-D95]].
   - [M0-D76] `--continue`: the observers' snapshot beside the `--load-dump` dump restored, the run goes on as the cut one would
     have, `--steps` and `--max-steps` counted from the life's start (§0.5 [M0-D76]).
   - `--cpu-reference` runs the CPU f64 twin instead of the GPU (worlds up to 128 × 128).

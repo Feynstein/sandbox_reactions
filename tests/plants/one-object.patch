@@ -1,11 +1,11 @@
 --- a/crates/sr-physics/src/observe/tracker.rs
 +++ b/crates/sr-physics/src/observe/tracker.rs
-@@ -25,7 +25,7 @@
+@@ -63,7 +63,7 @@
  /// The mass fraction R encloses, and the power fraction R_core encloses (§1.9.2).
  const ENCLOSED: f64 = 0.9;
  /// How far (in blocks) a block reaches to join its neighbours: 1 is 8-connectivity.
 -const LINK: i64 = 1;
 +const LINK: i64 = 2;
+ /// The accretion radius's floor in cells (§2.6).
+ const R_ACC_MIN: f64 = 2.0;
  
- /// What the tracker needs of the constants: Σ_obj and the block edge (§2.7), G (§2.1), the wisp mass (§1.9.2).
- #[derive(Clone, Debug, PartialEq)]

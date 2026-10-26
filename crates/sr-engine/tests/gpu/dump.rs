@@ -415,17 +415,20 @@ fn forty_steps_as_one_two_or_forty_frames_or_bare_give_one_dump_and_one_sim_time
 }
 
 #[test]
-fn an_empty_worlds_steps_add_no_sim_time() {
+fn an_empty_worlds_steps_run_the_clock_on_the_floor_gas() {
     let gpu = device();
     let c = constants();
-    // No cell at or above Σ_vac: the box is empty and Δt the largest f32 (M0-T21).
+    // No cell at or above Σ_vac: the box is empty and Δt the floor gas's step (§0.5 [M0-D96]; M0-T21's largest f32
+    // froze the clock), the same in bare steps and in a frame, each step's Δt on the clock.
     let run = Run::new(&gpu, &c, start(128, 64, [0.0; 4], [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]));
     run.step.run(&gpu.device, &gpu.queue, 10);
     let bare = run.step.read_dt(&gpu.device, &gpu.queue);
     let r = run.frame(&gpu, 10);
     println!("bare: {bare:?}; frame: {r:?}");
-    assert_eq!((bare.dt, bare.steps, bare.sim_time.to_bits()), (f32::MAX, 10, 0), "10 bare steps");
-    assert_eq!((r.dt, r.steps, r.steps_run, r.sim_time.to_bits()), (f32::MAX, 20, 10, 0), "then a 10-step frame");
+    let clock = |steps: u32| (0..steps).fold(0f64, |t, _| t + f64::from(bare.dt));
+    assert!(bare.dt > 0.0 && bare.dt < f32::MAX, "an empty box's Δt is a step: {}", bare.dt);
+    assert_eq!((bare.steps, bare.sim_time.to_bits()), (10, clock(10).to_bits()), "10 bare steps");
+    assert_eq!((r.dt.to_bits(), r.steps, r.steps_run, r.sim_time.to_bits()), (bare.dt.to_bits(), 20, 10, clock(20).to_bits()), "then a 10-step frame");
 }
 
 #[test]

@@ -1,0 +1,47 @@
+== 2026-10-26T10:04:23-04:00 fft · task M0-D70 · box laserax-ai-server :: bash tests/gpu.sh fft physics
+-- fft · exit=0 · 8.13 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test fft::convolution_matches_the_twin_with_an_asymmetric_kernel_on_boxes_inside_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 48x40 at (24, 16) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.39e-7 (limit 1e-5)
+SR-FFT convolution box 40x33 at (0, 0) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.22e-7 (limit 1e-5)
+SR-FFT convolution box 64x48 at (96, 72) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.08e-7 (limit 1e-5)
+SR-FFT convolution box 150x1 at (8, 100) padded 512x32: 3 dispatches (+2 once per size for the kernel); rel L2 1.46e-7 (limit 1e-5)
+ok
+test fft::convolution_of_gravity_over_the_whole_600_by_400_world_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 600x400 at (0, 0) padded 2048x1024: 3 dispatches (+2 once per size for the kernel); rel L2 9.35e-8 (limit 1e-5)
+ok
+test fft::cost_per_convolution_in_the_log ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FFT-COST box 64x64 padded 128x128: 0.029 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M4: whole step 0.11 ms at 128x128
+SR-FFT-COST box 160x160 padded 512x512: 0.036 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M3: gravity 0.17 ms at 512x512
+SR-FFT-COST box 600x400 padded 2048x1024: 0.156 ms per convolution (3 dispatches, twiddles tabulated; median of 5 batches of 20, wall); TW M2: gravity 1.24 ms at 2048x1024
+ok
+test fft::the_kernel_transform_is_cached_per_padded_size ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FFT convolution box 48x40 at (8, 8) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.65e-7 (limit 1e-5)
+SR-FFT convolution box 50x41 at (0, 16) padded 128x128: 3 dispatches (+2 once per size for the kernel); rel L2 1.61e-7 (limit 1e-5)
+SR-FFT convolution box 20x10 at (40, 50) padded 64x32: 3 dispatches (+2 once per size for the kernel); rel L2 1.20e-7 (limit 1e-5)
+ok
+test fft::transform_2048_by_1024_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FFT 2048x1024 transform: 2 dispatches each way; forward rel L2 1.72e-7, inverse 1.72e-7 (limit 1e-5)
+ok
+test fft::transform_256_by_128_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FFT 256x128 transform: 2 dispatches each way; forward rel L2 1.45e-7, inverse 1.43e-7 (limit 1e-5)
+ok
+test fft::transform_64_by_64_matches_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FFT 64x64 transform: 2 dispatches each way; forward rel L2 1.26e-7, inverse 1.26e-7 (limit 1e-5)
+ok
+test fft::transform_every_length_32_to_2048_on_both_axes_and_the_refusals ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FFT 32x2048 transform: 2 dispatches each way; forward rel L2 1.48e-7, inverse 1.47e-7 (limit 1e-5)
+SR-FFT 2048x32 transform: 2 dispatches each way; forward rel L2 1.48e-7, inverse 1.47e-7 (limit 1e-5)
+SR-FFT 64x512 transform: 2 dispatches each way; forward rel L2 1.44e-7, inverse 1.43e-7 (limit 1e-5)
+SR-FFT 512x64 transform: 2 dispatches each way; forward rel L2 1.44e-7, inverse 1.43e-7 (limit 1e-5)
+SR-FFT 128x1024 transform: 2 dispatches each way; forward rel L2 1.54e-7, inverse 1.53e-7 (limit 1e-5)
+SR-FFT 1024x128 transform: 2 dispatches each way; forward rel L2 1.54e-7, inverse 1.53e-7 (limit 1e-5)
+SR-FFT 256x256 transform: 2 dispatches each way; forward rel L2 1.49e-7, inverse 1.48e-7 (limit 1e-5)
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 375 filtered out; finished in 7.97s
+
+

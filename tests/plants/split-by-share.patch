@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/tracker.rs
++++ b/crates/sr-physics/src/observe/tracker.rs
+@@ -285,7 +285,7 @@
+                 .map(|(_, o)| o);
+             for (shared, o) in shares {
+                 let old = &self.previous[o];
+-                let centre = main == Some(o) && self.holds_centre(old, &successors[o], new);
++                let centre = false && main == Some(o) && self.holds_centre(old, &successors[o], new);
+                 if centre || shared >= INHERIT * old.weight {
+                     pairs.push((centre, shared, old.id, i));
+                 }

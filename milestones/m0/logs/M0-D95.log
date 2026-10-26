@@ -1,0 +1,88 @@
+M0-D95 2026-10-26T11:17:30-04:00 probe log
+   Compiling sr-app v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.15s
+SR-HEADLESS DONE steps=40 sim_time=0.783660 until=none
+step 40 sinks [{'x': 148.5, 'y': 48.5, 'vx': 0.0, 'vy': 0.0, 'm': 50.0}]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=6000 sim_time=24.289064 until=unmet
+
+real	0m4.361s
+user	0m1.883s
+sys	0m0.323s
+steps 6000 sim_time 24.289 until {'condition': 'ending', 'met': False}
+  ev 41 0.808 sink_formed obj 2 {'mass_sb': 306.0}
+  ev 1772 7.945 sink_formed obj 1 {'mass_sb': 1767.349}
+  obj 1 1704.52 black_hole [('collapsing', 73), ('cloud', 281), ('black_hole', 1804)]
+SR-HEADLESS DONE steps=200 sim_time=2.718724 until=unmet
+s_240.bin
+s_240.observers.json
+step 240 sinks [{'m': 305.8639221191406, 'vx': -0.3139791190624237, 'vy': 0.01017698086798191, 'x': 147.84629821777344, 'y': 48.30996322631836}, {'x': 36.5, 'y': 48.5, 'vx': 0.0, 'vy': 0.0, 'm': 50.0}]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4008 sim_time=18.675774 until=met
+
+real	0m2.842s
+user	0m1.204s
+sys	0m0.269s
+steps 4008 sim_time 18.676 until {'condition': 'ending', 'met': True, 'object': 1}
+  ev 41 0.808 sink_formed obj 2 {'mass_sb': 306.0}
+  ev 256 2.786 sink_formed obj 1 {'mass_sb': 1649.771}
+  ev 4048 18.676 sink_formed obj 3 {'mass_sb': 309.942}
+  ev 4048 18.676 ending obj 1 {'held_t': 15.794, 'hold_t': 10.0, 'mass_sb': 1487.06, 'stage': 'black_hole'}
+  obj 1 1487.06 black_hole [('collapsing', 73), ('black_hole', 288)]
+  obj 3 309.94 None []
+500 3.25 remnants [[1, ['black_hole', '2.8822703702608123']], [2, ['black_hole', '1.526117970701307']]] ended [] [{'id': 1.0, 'mass': 1649.12, 'tau_dyn': 0.91, 'radius': 11.1, 'sinks': 1.0, 'sink_mass': 276.81}, {'id': 2.0, 'mass': 305.96, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 305.95}]
+1000 4.33 remnants [[1, ['black_hole', '2.8822703702608123']], [2, ['black_hole', '1.526117970701307']]] ended [] [{'id': 1.0, 'mass': 1644.87, 'tau_dyn': 2.68, 'radius': 22.79, 'sinks': 1.0, 'sink_mass': 674.05}, {'id': 2.0, 'mass': 305.99, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 305.99}]
+1500 5.96 remnants [[1, ['black_hole', '2.8822703702608123']], [2, ['black_hole', '1.526117970701307']]] ended [] [{'id': 1.0, 'mass': 1586.68, 'tau_dyn': 3.5, 'radius': 26.9, 'sinks': 1.0, 'sink_mass': 1209.19}, {'id': 2.0, 'mass': 305.99, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 305.99}]
+2000 8.89 remnants [[1, ['black_hole', '2.8822703702608123']]] ended [] [{'id': 1.0, 'mass': 1827.8, 'tau_dyn': 25.59, 'radius': 106.17, 'sinks': 2.0, 'sink_mass': 1687.24}]
+2500 10.78 remnants [[1, ['black_hole', '2.8822703702608123']]] ended [] [{'id': 1.0, 'mass': 1813.94, 'tau_dyn': 24.7, 'radius': 103.43, 'sinks': 2.0, 'sink_mass': 1721.9}]
+3000 13.06 remnants [[1, ['black_hole', '2.8822703702608123']]] ended [] [{'id': 1.0, 'mass': 1806.37, 'tau_dyn': 23.16, 'radius': 98.97, 'sinks': 2.0, 'sink_mass': 1745.71}]
+3500 15.78 remnants [[1, ['black_hole', '2.8822703702608123']]] ended [] [{'id': 1.0, 'mass': 1801.35, 'tau_dyn': 20.95, 'radius': 92.46, 'sinks': 2.0, 'sink_mass': 1763.17}]
+4000 18.41 remnants [[1, ['black_hole', '2.8822703702608123']]] ended [] [{'id': 1.0, 'mass': 1797.44, 'tau_dyn': 18.32, 'radius': 84.5, 'sinks': 2.0, 'sink_mass': 1773.79}]
+4048 18.68 remnants [[1, ['black_hole', '2.8822703702608123']]] ended [1] [{'id': 1.0, 'mass': 1487.06, 'tau_dyn': 0.07, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 1466.96}, {'id': 3.0, 'mass': 309.94, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 307.65}]
+SR-HEADLESS DONE steps=40 sim_time=0.995748 until=none
+SR-HEADLESS DONE steps=2216 sim_time=11.715128 until=met
+steps 2216 sim_time 11.715 until {'condition': 'ending', 'met': True, 'object': 1}
+  ev 41 1.023 sink_formed obj 1 {'mass_sb': 1649.997}
+  ev 41 1.023 sink_formed obj 2 {'mass_sb': 305.995}
+  ev 2256 11.715 ending obj 1 {'held_t': 10.065, 'hold_t': 10.0, 'mass_sb': 1649.093, 'stage': 'black_hole'}
+  ev 2256 11.715 ending obj 2 {'held_t': 10.065, 'hold_t': 10.0, 'mass_sb': 305.996, 'stage': 'black_hole'}
+  obj 1 1649.09 black_hole [('black_hole', 73)]
+  obj 2 306.0 black_hole [('black_hole', 73)]
+1000 5.31 remnants [[1, ['black_hole', '1.6504910783842206']], [2, ['black_hole', '1.6504910783842206']]] ended [] [{'id': 1.0, 'mass': 1648.73, 'tau_dyn': 0.07, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 1648.73}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+2000 10.48 remnants [[1, ['black_hole', '1.6504910783842206']], [2, ['black_hole', '1.6504910783842206']]] ended [] [{'id': 1.0, 'mass': 1649.06, 'tau_dyn': 0.07, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 1649.06}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+2256 11.72 remnants [[1, ['black_hole', '1.6504910783842206']], [2, ['black_hole', '1.6504910783842206']]] ended [1, 2] [{'id': 1.0, 'mass': 1649.09, 'tau_dyn': 0.07, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 1649.09}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+SR-HEADLESS DONE steps=2440 sim_time=11.563391 until=met
+steps 2440 sim_time 11.563 until {'condition': 'ending', 'met': True, 'object': 1}
+  ev 41 1.023 sink_formed obj 1 {'mass_sb': 2099.997}
+  ev 41 1.023 sink_formed obj 2 {'mass_sb': 305.995}
+  ev 2480 11.563 ending obj 1 {'held_t': 10.022, 'hold_t': 10.0, 'mass_sb': 2098.707, 'stage': 'black_hole'}
+  ev 2480 11.563 ending obj 2 {'held_t': 10.022, 'hold_t': 10.0, 'mass_sb': 305.995, 'stage': 'black_hole'}
+  obj 1 2098.71 black_hole [('black_hole', 73)]
+  obj 2 306.0 black_hole [('black_hole', 73)]
+1000 4.84 remnants [[1, ['black_hole', '1.541751322336495']], [2, ['black_hole', '1.541751322336495']]] ended [] [{'id': 1.0, 'mass': 2098.23, 'tau_dyn': 0.06, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 2098.2}, {'id': 2.0, 'mass': 305.99, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 305.99}]
+2000 9.44 remnants [[1, ['black_hole', '1.541751322336495']], [2, ['black_hole', '1.541751322336495']]] ended [] [{'id': 1.0, 'mass': 2098.66, 'tau_dyn': 0.06, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 2098.66}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+2480 11.56 remnants [[1, ['black_hole', '1.541751322336495']], [2, ['black_hole', '1.541751322336495']]] ended [1, 2] [{'id': 1.0, 'mass': 2098.71, 'tau_dyn': 0.06, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 2098.71}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+SR-HEADLESS DONE steps=200 sim_time=2.774690 until=unmet
+SR-HEADLESS DONE steps=2680 sim_time=12.937572 until=met
+steps 2680 sim_time 12.938 until {'condition': 'ending', 'met': True, 'object': 1}
+  ev 41 1.023 sink_formed obj 2 {'mass_sb': 305.995}
+  ev 256 2.816 sink_formed obj 1 {'mass_sb': 1649.764}
+  ev 2496 11.701 ending obj 2 {'held_t': 10.05, 'hold_t': 10.0, 'mass_sb': 305.996, 'stage': 'black_hole'}
+  ev 2720 12.938 ending obj 1 {'held_t': 10.05, 'hold_t': 10.0, 'mass_sb': 1491.202, 'stage': 'black_hole'}
+  obj 1 1491.2 black_hole [('collapsing', 73), ('black_hole', 288)]
+  obj 2 306.0 black_hole [('black_hole', 73)]
+1000 4.71 remnants [[1, ['black_hole', '2.8876711793709546']], [2, ['black_hole', '1.6514141289517283']]] ended [] [{'id': 1.0, 'mass': 1634.59, 'tau_dyn': 3.27, 'radius': 25.95, 'sinks': 1.0, 'sink_mass': 870.47}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 305.99}]
+2000 8.99 remnants [[1, ['black_hole', '2.8876711793709546']], [2, ['black_hole', '1.6514141289517283']]] ended [] [{'id': 1.0, 'mass': 1512.35, 'tau_dyn': 0.07, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 1375.69}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+2720 12.94 remnants [[1, ['black_hole', '2.8876711793709546']], [2, ['black_hole', '1.6514141289517283']]] ended [1, 2] [{'id': 1.0, 'mass': 1491.2, 'tau_dyn': 0.07, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 1430.93}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+SR-HEADLESS DONE steps=2976 sim_time=12.923544 until=met
+steps 2976 sim_time 12.924 until {'condition': 'ending', 'met': True, 'object': 1}
+  ev 41 1.023 sink_formed obj 2 {'mass_sb': 305.995}
+  ev 256 2.816 sink_formed obj 1 {'mass_sb': 2099.764}
+  ev 2752 11.693 ending obj 2 {'held_t': 10.042, 'hold_t': 10.0, 'mass_sb': 305.995, 'stage': 'black_hole'}
+  ev 3016 12.924 ending obj 1 {'held_t': 10.035, 'hold_t': 10.0, 'mass_sb': 2023.567, 'stage': 'black_hole'}
+  obj 1 2023.57 black_hole [('collapsing', 73), ('black_hole', 288)]
+  obj 2 306.0 black_hole [('black_hole', 73)]
+1000 4.44 remnants [[1, ['black_hole', '2.888462912524119']], [2, ['black_hole', '1.6514141289517283']]] ended [] [{'id': 1.0, 'mass': 2091.06, 'tau_dyn': 0.06, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 1887.12}, {'id': 2.0, 'mass': 305.99, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 305.99}]
+2000 8.14 remnants [[1, ['black_hole', '2.888462912524119']], [2, ['black_hole', '1.6514141289517283']]] ended [] [{'id': 1.0, 'mass': 2036.14, 'tau_dyn': 0.06, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 1993.41}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+3000 12.85 remnants [[1, ['black_hole', '2.888462912524119']], [2, ['black_hole', '1.6514141289517283']]] ended [2] [{'id': 1.0, 'mass': 2023.67, 'tau_dyn': 0.06, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 2014.3}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]
+3016 12.92 remnants [[1, ['black_hole', '2.888462912524119']], [2, ['black_hole', '1.6514141289517283']]] ended [1, 2] [{'id': 1.0, 'mass': 2023.57, 'tau_dyn': 0.06, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 2014.48}, {'id': 2.0, 'mass': 306.0, 'tau_dyn': 0.16, 'radius': 2.0, 'sinks': 1.0, 'sink_mass': 306.0}]

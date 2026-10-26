@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/tracker.rs
++++ b/crates/sr-physics/src/observe/tracker.rs
+@@ -214,7 +214,7 @@
+                 old.sinks
+                     .iter()
+                     .map(|s| {
+-                        let at = [s.x + s.vx * report.sim_dt, s.y + s.vy * report.sim_dt];
++                        let at = [s.x, s.y];
+                         let mut best: Option<(f64, usize)> = None;
+                         for (k, n) in report.sinks.iter().enumerate() {
+                             let d = (n.x - at[0]).hypot(n.y - at[1]);

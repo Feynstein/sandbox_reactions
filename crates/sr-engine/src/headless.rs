@@ -929,6 +929,10 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
             "max_gas_speed": watch.max_gas_speed(),
             "until": {"condition": condition, "met": met},
         });
+        // The life's ending names its object (§0.5 [M0-D95]): the heaviest of the last frame, a lighter one's never.
+        if let Some(ending) = watch.life_ending() {
+            summary["until"]["object"] = json!(ending.object);
+        }
         if let Some(timing) = cost.summary() {
             summary["timing"] = timing;
         }

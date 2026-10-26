@@ -13,12 +13,16 @@
 // the box's indirect size says — and halves them in shared memory, pairing slot i with slot i + s for s = 128, 64, …,
 // 1; `dt_partials`, one workgroup, walks the box's partials in strides of 256 in index order, then halves the same way
 // and writes Δt_{n+1}. No atomic, no scheduling-dependent order. P1's `dt_advance` makes it step n + 1's Δt. An empty
-// box bounds nothing: Δt_{n+1} is the largest finite f32.
+// box (§0.5 [M0-D96]: a sink has eaten the last gas, or none was painted) leaves every cell of the world in the floor
+// state, so the min over the world is the floor gas's: Δt_{n+1} = C / r_h of the floor state with hydrogen's fractions —
+// 1/μ = 2 and Y_e = 1, the fastest floor gas of the ten species — and no gravity term (P2 runs over the box alone). A
+// box with a cell holds its margin's floor cells already: the floor's rate is taken only when the box is empty, so a
+// run with gas keeps its bits. The largest finite f32 (`DT_UNBOUNDED`) is left for a world whose floor bounds nothing.
 //
 // The sim time (M0-D21): P1 adds each step's Δt to the record's clock, an f64 kept as its bits — WGSL has no f64 — by an
 // exact add on u32 words rounded to nearest, ties to even: the CPU's `t += f64::from(dt)`, bit for bit, in step order.
 // So the clock is a function of the steps run, whatever their grouping into frames, bare steps included; a step the
-// latch stopped runs no P1 and adds nothing, and neither does an empty box's Δt (the largest f32) or a Δt of 0.
+// latch stopped runs no P1 and adds nothing, and neither does an unbounded Δt (the largest f32) or a Δt of 0.
 //
 // The non-finite guard (every 64 steps, §1.3.2 P9): `guard_scan` reads all 14 channels of every cell; a NaN or Inf is
 // told by its bits (exponent all ones), never by a float comparison WGSL may fold away. Each finding is atomicMax'd as
@@ -125,6 +129,20 @@ const BOX_EMPTY = vec4<u32>(0xffffffffu, 0xffffffffu, 0u, 0u);
 var<workgroup> tree: array<vec2<f32>, 256>;
 var<workgroup> btree: array<vec4<u32>, 256>;
 
+// r_h = (|u| + c)/Δx + (|v| + c)/Δy of a gas state.
+fn hydro_rate(sigma: f32, vel: vec2<f32>, eps_th: f32, y_e: f32, x_n: f32) -> f32 {
+    let c = sqrt(max(wave_speed_sq(sigma, pressure(sigma, eps_th, y_e, x_n)), 0.0));
+    return (abs(vel.x) + c) / DX + (abs(vel.y) + c) / DY;
+}
+
+// r_h of the floor state P8 leaves a vacuum cell in (Σ_floor, u = 0, T = T_floor) with hydrogen's fractions.
+fn floor_rate() -> f32 {
+    var x: array<f32, 10>;
+    x[ID_H] = 1.0;
+    let comp = composition(x);
+    return hydro_rate(eos.sigma_floor, vec2<f32>(0.0, 0.0), eps_th_floor(comp.inv_mu), comp.y_e, 0.0);
+}
+
 // The cell's two rates, (r_h, r_g).
 fn cell_rates(cell: u32) -> vec2<f32> {
     let n = dims.cells;
@@ -149,8 +167,7 @@ fn cell_rates(cell: u32) -> vec2<f32> {
         vel = mom / sigma;
         eps_th = max(eps_th_raw(sigma, mom, hydro[3u * n + cell], comp.y_e, x_n), eps_floor);
     }
-    let c = sqrt(max(wave_speed_sq(sigma, pressure(sigma, eps_th, comp.y_e, x_n)), 0.0));
-    let r_h = (abs(vel.x) + c) / DX + (abs(vel.y) + c) / DY;
+    let r_h = hydro_rate(sigma, vel, eps_th, comp.y_e, x_n);
     var r_g = 0.0;
     if (params.gravity != 0u) {
         r_g = length(vec2<f32>(grav_g[cell], grav_g[n + cell])) / DX;
@@ -192,7 +209,10 @@ fn dt_partials(@builtin(local_invocation_index) lid: u32) {
     tree[lid] = r;
     halve(lid);
     if (lid == 0u) {
-        let top = tree[0];
+        var top = tree[0];
+        if (abox.w * abox.h == 0u) {
+            top = vec2<f32>(floor_rate(), 0.0);
+        }
         var dt = DT_UNBOUNDED;
         if (top.x > 0.0) {
             dt = min(dt, params.cfl / top.x);

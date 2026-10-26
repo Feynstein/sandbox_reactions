@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 use sr_engine::dump::{Dump, Sink};
-use sr_engine::headless::run_captured;
+use sr_engine::headless::{observers_path, run_captured};
 
 /// A frame while `--until` watches (headless's FRAME), in steps: the first step stands alone.
 const FRAME: u64 = 16;
@@ -202,6 +202,142 @@ fn events_jsonl_and_the_ending_of_a_black_hole() {
     let shorter = go("ending-short", &scene, &["--load-dump", &from, "--until", "ending", "--max-steps", &(out.steps() - FRAME).to_string()]);
     assert_eq!(shorter.code, 2, "one frame shorter the remnant has not held its hold: {:?}", shorter.lines);
     assert!(shorter.summary["events"].as_array().unwrap().iter().all(|e| e["kind"] != "ending"));
+}
+
+/// A black hole that eats all the gas in the world still ends (M0-D96; M0-D66's T 3 fix, M0-D70's case): sink_cloud at T 3,
+/// a 50 sink dropped at its centre after 40 steps, eats the whole cloud — on the RTX 4090 the box emptied at step 1,521 (t
+/// 11.0), where Δt was the largest f32: the clock froze and P3 drifted the sink to infinity, so `--until ending` never met.
+/// With an empty box stepping on the floor gas (§0.5 [M0-D96]) the clock runs on, the sink stays a finite object of its own
+/// (§0.5 [M0-D70]) and its black_hole holds to the ending; the final dump's sink is finite and in the world.
+#[test]
+fn a_black_hole_that_eats_its_whole_cloud_meets_its_ending() {
+    let dir = temp("eaten");
+    let mut cloud: Value = serde_json::from_slice(&std::fs::read(scenes_dir().join("sink_cloud.json")).unwrap()).unwrap();
+    cloud["objects"][0]["t"] = 3.0.into();
+    let scene = dir.join("sink_cloud.json");
+    std::fs::write(&scene, cloud.to_string()).unwrap();
+
+    let seed = go("eaten-seed", &scene, &["--steps", "40"]);
+    assert_eq!(seed.code, 0, "{:?}", seed.lines);
+    let mut dump = Dump::read(&seed.dir.join("dumps").join("s_40.bin")).expect("the seed run's dump");
+    let (w, h) = (dump.world.width, dump.world.height);
+    dump.sinks = vec![Sink { x: f64::from(w / 2) + 0.5, y: f64::from(h / 2) + 0.5, vx: 0.0, vy: 0.0, m: 50.0 }];
+    let seeded = dir.join("seeded.bin");
+    dump.write(&seeded).unwrap();
+
+    let out = go("eaten-run", &scene, &["--load-dump", &seeded.display().to_string(), "--until", "ending", "--max-steps", "20000"]);
+    assert_eq!(out.code, 0, "{:?}", out.lines);
+    assert!(out.done().ends_with("until=met"), "{}", out.done());
+    let lines: Vec<Value> = out.events.lines().map(|l| serde_json::from_str(l).unwrap()).collect();
+    let ending = lines.last().expect("events");
+    assert_eq!((ending["kind"].as_str(), ending["detail"]["stage"].as_str()), (Some("ending"), Some("black_hole")), "{lines:?}");
+    let o = out.summary["objects"].as_array().unwrap().iter().find(|o| o["id"] == ending["object"]).expect("the ending's object");
+    assert_eq!(o["stage"], "black_hole", "{o}");
+    let last = Dump::read(&out.dir.join("dumps").join(format!("s_{}.bin", 40 + out.steps()))).expect("the final dump");
+    assert_eq!(last.sinks.len(), 1, "{:?}", last.sinks);
+    let s = &last.sinks[0];
+    assert!(s.x.is_finite() && s.y.is_finite(), "the sink is somewhere: {s:?}");
+    assert!((0.0..f64::from(w)).contains(&s.x) && (0.0..f64::from(h)).contains(&s.y), "the sink is in the world: {s:?}");
+    println!(
+        "T 3: ending at step {} (t {:.3}), object {} of {} sb, the sink at ({:.2}, {:.2}), {} events",
+        ending["step"], out.sim_time(), o["id"], o["mass_sb"], s.x, s.y, lines.len()
+    );
+}
+
+/// A sink with no gas around it is an object of its own (§0.5 [M0-D70]): the [`ENDING_T`] cloud in a 256 × 256 world, a 50
+/// sink dropped into the vacuum at (16.5, 16.5), outside the box (the box follows the gas, §1.3.3, about the cloud at the
+/// centre), so no block of the summary holds it — `sink_formed` at the first frame on an object of 50 exactly (a block would
+/// add its gas, the floor's 1.6 × 10⁻⁷ at least) and `--until stage:black_hole` met on that object, still 50, the same id.
+/// Later the cloud's thin gas reaches the sink and §1.9.2's merge and split rules take over (M0-D70's probe, RTX 4090).
+#[test]
+fn a_sink_outside_the_box_is_an_object_of_its_own() {
+    let dir = temp("lone");
+    let mut cloud: Value = serde_json::from_slice(&std::fs::read(scenes_dir().join("sink_cloud.json")).unwrap()).unwrap();
+    cloud["objects"][0]["t"] = ENDING_T.into();
+    let scene = dir.join("sink_cloud.json");
+    std::fs::write(&scene, cloud.to_string()).unwrap();
+    let world = ["--world", "256x256"];
+
+    let seed = go("lone-seed", &scene, &[&world[..], &["--steps", "40"]].concat());
+    assert_eq!(seed.code, 0, "{:?}", seed.lines);
+    let mut dump = Dump::read(&seed.dir.join("dumps").join("s_40.bin")).expect("the seed run's dump");
+    dump.sinks = vec![Sink { x: 16.5, y: 16.5, vx: 0.0, vy: 0.0, m: 50.0 }];
+    let seeded = dir.join("seeded.bin");
+    dump.write(&seeded).unwrap();
+    let from = seeded.display().to_string();
+
+    let out = go("lone-run", &scene, &[&world[..], &["--load-dump", &from, "--until", "stage:black_hole", "--max-steps", "2000"]].concat());
+    assert_eq!(out.code, 0, "{:?}", out.lines);
+    assert!(out.done().ends_with("until=met"), "{}", out.done());
+    let lines: Vec<Value> = out.events.lines().map(|l| serde_json::from_str(l).unwrap()).collect();
+    assert_eq!(lines.len(), 1, "{lines:?}");
+    let formed = &lines[0];
+    assert_eq!((formed["kind"].as_str(), formed["step"].as_u64()), (Some("sink_formed"), Some(41)), "the first frame: {formed}");
+    assert_eq!(formed["detail"]["mass_sb"].as_f64(), Some(50.0), "the sink alone, no block's gas: {formed}");
+    let objects = out.summary["objects"].as_array().unwrap();
+    let o = objects.iter().find(|o| o["id"] == formed["object"]).expect("the sink's object, the same id");
+    assert_eq!((o["stage"].as_str(), o["mass_sb"].as_f64()), (Some("black_hole"), Some(50.0)), "{o}");
+    assert!(objects.iter().any(|c| c["id"] != o["id"] && c["mass_sb"].as_f64() > Some(1000.0)), "the cloud beside it: {objects:?}");
+    println!("lone sink: object {} black_hole at step {} beside the cloud", o["id"], 40 + out.steps());
+}
+
+/// A life's ending is its heaviest object's (§0.5 [M0-D95]; the lead at M0-D95, «Heaviest object's (Recommended)»): two
+/// [`ENDING_T`] clouds 324 cells apart in a 448 × 96 world — sink_cloud's 40 × 40 (1,600) and a 16 × 16 (256) — a 50 sink
+/// dropped into the lighter after 40 steps and, the life cut at step 240 and continued, one into the heavier, so the lighter's
+/// black hole holds its 10 t.u. first. Its `ending` is logged and the run goes on; the life ends on the heavier's, which
+/// `until.object` names (a run with no life's ending names none). Closer, the heavier's spreading gas (R ≈ 100 by t 9) takes
+/// the lighter's sink in before its hold (M0-D95's probe, 192 × 96). RTX 4090: the lighter's ending at step 2,496 (t 11.70),
+/// the heavier's at 2,720 (t 12.94); the binary before M0-D95 stopped on the lighter's.
+#[test]
+fn a_lighter_objects_ending_never_ends_the_life() {
+    let dir = temp("two");
+    let mut scene: Value = serde_json::from_slice(&std::fs::read(scenes_dir().join("sink_cloud.json")).unwrap()).unwrap();
+    scene["world"] = serde_json::json!({"width": 448, "height": 96, "edge": "leave"});
+    let rect = |x0: u32, y0: u32, side: u32| {
+        serde_json::json!({"kind": "rect", "x0": x0, "y0": y0, "w": side, "h": side, "sigma": 1.0, "t": ENDING_T, "composition": {"H": 1.0}, "v": [0, 0]})
+    };
+    scene["objects"] = serde_json::json!([rect(16, 28, 40), rect(380, 40, 16)]);
+    let scene_file = dir.join("two_clouds.json");
+    std::fs::write(&scene_file, scene.to_string()).unwrap();
+    let add_sink = |from: &Path, to: &Path, x: f64, y: f64| {
+        let mut dump = Dump::read(from).expect("a dump");
+        dump.sinks.push(Sink { x, y, vx: 0.0, vy: 0.0, m: 50.0 });
+        dump.write(to).unwrap();
+    };
+
+    let seed = go("two-seed", &scene_file, &["--steps", "40"]);
+    assert_eq!(seed.code, 0, "{:?}", seed.lines);
+    let lighter = dir.join("lighter.bin");
+    add_sink(&seed.dir.join("dumps").join("s_40.bin"), &lighter, 388.5, 48.5);
+    let cut = go("two-cut", &scene_file, &["--load-dump", &lighter.display().to_string(), "--until", "ending", "--max-steps", "200"]);
+    assert_eq!(cut.code, 2, "{:?}", cut.lines);
+    assert_eq!(cut.summary["until"], serde_json::json!({"condition": "ending", "met": false}), "no life's ending, no object named");
+    let both = dir.join("both").join("s_240.bin");
+    std::fs::create_dir_all(both.parent().unwrap()).unwrap();
+    let cut_dump = cut.dir.join("dumps").join("s_240.bin");
+    add_sink(&cut_dump, &both, 36.5, 48.5);
+    std::fs::copy(observers_path(&cut_dump), observers_path(&both)).unwrap();
+
+    let out = go("two-run", &scene_file, &["--load-dump", &both.display().to_string(), "--continue", "--until", "ending", "--max-steps", "20000"]);
+    assert_eq!(out.code, 0, "{:?}", out.lines);
+    assert!(out.done().ends_with("until=met"), "{}", out.done());
+    let lines: Vec<Value> = out.events.lines().map(|l| serde_json::from_str(l).unwrap()).collect();
+    let endings: Vec<&Value> = lines.iter().filter(|e| e["kind"] == "ending").collect();
+    assert_eq!(endings.len(), 2, "the lighter's ending, then the heavier's: {lines:?}");
+    let (first, last) = (endings[0], endings[1]);
+    let mass = |e: &Value| e["detail"]["mass_sb"].as_f64().expect("the ending's mass");
+    assert!(mass(first) < mass(last) && first["step"].as_u64() < last["step"].as_u64(), "the lighter ends first: {endings:?}");
+    assert_eq!((first["detail"]["stage"].as_str(), last["detail"]["stage"].as_str()), (Some("black_hole"), Some("black_hole")), "{endings:?}");
+    assert_eq!(last["step"].as_u64(), Some(40 + out.steps()), "the run stops at the heavier's ending");
+    assert_eq!(out.summary["until"], serde_json::json!({"condition": "ending", "met": true, "object": last["object"]}), "the life's ending names its object");
+    let objects = out.summary["objects"].as_array().unwrap();
+    let heaviest = objects.iter().max_by(|a, b| a["mass_sb"].as_f64().unwrap().total_cmp(&b["mass_sb"].as_f64().unwrap())).unwrap();
+    assert_eq!(heaviest["id"], last["object"], "the life's ending is the heaviest object's: {objects:?}");
+    println!(
+        "two clouds: object {} ({:.1}) ended at step {} (t {:.2}), the life on object {} ({:.1}) at step {} (t {:.2})",
+        first["object"], mass(first), first["step"], first["sim_time"].as_f64().unwrap(), last["object"], mass(last), last["step"],
+        last["sim_time"].as_f64().unwrap()
+    );
 }
 
 /// The arguments: one of `--steps` and `--until`, a condition of the four forms, the twin never asked to observe — each

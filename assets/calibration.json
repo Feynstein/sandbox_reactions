@@ -1,11 +1,14 @@
 {
   "m_ch_sb": 3216.4199210979236,
+  "m_ign_sb": 2636.2983247717016,
   "m_tov_sb": 4853.169981814195,
+  "m_up_sb": 3510.1475955541146,
+  "max_gas_speed": 51.56973629913728,
   "measured": {
-    "adapter": "cpu",
-    "box": "laserax-ai",
-    "date": "2026-10-25T19:48:44Z",
-    "git": "946c846"
+    "adapter": "NVIDIA GeForce RTX 4090",
+    "box": "laserax-ai-server",
+    "date": "2026-10-26T16:49:42Z",
+    "git": "255ec37"
   },
   "ns_sigma_max_sb": 4853.169981814195,
   "physics_hash": "56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea",
