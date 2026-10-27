@@ -1,0 +1,8 @@
+desktop · clean · GO · arm 1/5, 4 left
+desktop · plant port-handover-early · RED (proven: desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not) · arm 2/5, 3 left
+desktop · plant status-never-ready · RED (proven: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[lau) · arm 3/5, 2 left
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb) · arm 4/5, 1 left
+desktop · plant launcher-stop-all · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start () · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope desktop · 348.78 s · 5 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.desktop.redarm.log
+=== GO ===
+exit=0

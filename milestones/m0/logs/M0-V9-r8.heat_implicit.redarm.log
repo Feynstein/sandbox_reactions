@@ -1,0 +1,150 @@
+==== 2026-10-26T16:56:22-04:00 heat_implicit · clean · a fresh scratch copy of the tree
+== 2026-10-26T16:56:23-04:00 heat_implicit · task M0-V9-r8 · box laserax-ai-server :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=0 · 10.84 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-td7wxj2j/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-td7wxj2j/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.12s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -4.741e-12, highest 3.5743e-3, heat 1.000000000
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 6.35e-7 of the peak; sigma2 x 47.96835 y 47.96837, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5744e-1; heat 100.0009133 of 100.0000031; up to 8 Newton passes, 141 rounds
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 1.46e-7 of the peak; sigma2 x 48.00462 y 48.00462, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5743e-1; heat 99.9999842 of 100.0000031; up to 8 Newton passes, 28 rounds
+ok
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 2, rounds: 37, converged: true, delta: -3.1107175e-9 }; the twin 2 passes, 116 rounds; |T - twin| 2.80e-6 of the peak; sigma2 x 39.962471 y 39.962470, expected 40
+ok
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 2, rounds: 5, converged: true, delta: 9.217615e-7 }; the twin 2 passes, 116 rounds; |T - twin| 4.92e-6 of the peak; sigma2 x 40.000593 y 40.000593, expected 40
+ok
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 2 Newton passes, 108 rounds, delta -4.7e-13; |T - tight solve| 4.77e-13; sigma2 x 39.999878 y 39.999878, expected 40
+ok
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 6 Newton passes, 276 rounds, delta -1.2e-14; worst balance 5.35e-12; lost 19166.821271 of radiated 19166.821271
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 379 filtered out; finished in 1.61s
+
+
+==== 2026-10-26T16:56:22-04:00 heat_implicit · plant solve-two-rounds · a fresh scratch copy of the tree
+planted solve-two-rounds: tests/plants/solve-two-rounds.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-26T16:56:23-04:00 heat_implicit · task M0-V9-r8 · box laserax-ai-server :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=101 · 33.24 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-td7wxj2j/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-td7wxj2j/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.04s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -1.234e-11, highest 3.5743e-3, heat 0.999999999
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 1.47e-6 of the peak; sigma2 x 48.02384 y 48.02322, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5748e-1; heat 99.9991478 of 100.0000031; up to 24 Newton passes, 45 rounds
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 4.15e-7 of the peak; sigma2 x 48.01975 y 48.01975, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5742e-1; heat 100.0000732 of 100.0000031; up to 9 Newton passes, 16 rounds
+ok
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 62, rounds: 123, converged: true, delta: -8.2952454e-8 }; the twin 64 passes, 128 rounds; |T - twin| 2.11e-1 of the peak; sigma2 x 39.949510 y 39.949520, expected 40
+
+thread 'heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::jacobi' (2084364) panicked at crates/sr-engine/tests/gpu/heat.rs:829:9:
+T against the twin: 0.2113351037012553
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 4, rounds: 6, converged: true, delta: -3.930521e-8 }; the twin 64 passes, 128 rounds; |T - twin| 2.11e-1 of the peak; sigma2 x 39.999676 y 39.999676, expected 40
+
+thread 'heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::multigrid' (2084369) panicked at crates/sr-engine/tests/gpu/heat.rs:829:9:
+T against the twin: 0.21135370035042234
+FAILED
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 64 Newton passes, 128 rounds, delta 0.0e0; |T - tight solve| 2.11e-1; sigma2 x 20.243132 y 20.243132, expected 40
+
+thread 'heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared' (2084374) panicked at crates/sr-engine/tests/gpu/heat.rs:722:9:
+64 passes
+FAILED
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 64 Newton passes, 128 rounds, delta 0.0e0; worst balance 6.53e-17; lost 7049.738474 of radiated 7049.738474
+
+thread 'heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell' (2084375) panicked at crates/sr-engine/tests/gpu/heat.rs:807:9:
+64 passes
+FAILED
+
+failures:
+
+failures:
+    heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::jacobi
+    heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::multigrid
+    heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared
+    heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell
+
+test result: FAILED. 4 passed; 4 failed; 0 ignored; 0 measured; 379 filtered out; finished in 2.59s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T16:56:22-04:00 heat_implicit · plant warm-no-reset · a fresh scratch copy of the tree
+planted warm-no-reset: tests/plants/warm-no-reset.patch -> crates/sr-engine/src/step/heat.rs
+== 2026-10-26T16:56:23-04:00 heat_implicit · task M0-V9-r8 · box laserax-ai-server :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=101 · 21.56 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-td7wxj2j/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-td7wxj2j/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.03s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -4.741e-12, highest 3.5743e-3, heat 1.000000000
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 6.35e-7 of the peak; sigma2 x 47.96835 y 47.96837, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5744e-1; heat 100.0009133 of 100.0000031; up to 8 Newton passes, 141 rounds
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 1.44e-7 of the peak; sigma2 x 48.00462 y 48.00462, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5743e-1; heat 99.9999891 of 100.0000031; up to 8 Newton passes, 28 rounds
+ok
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 2, rounds: 37, converged: true, delta: -3.1107175e-9 }; the twin 2 passes, 116 rounds; |T - twin| 2.80e-6 of the peak; sigma2 x 39.962471 y 39.962470, expected 40
+ok
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 2, rounds: 6, converged: true, delta: -4.8070305e-8 }; the twin 2 passes, 116 rounds; |T - twin| 7.82e-7 of the peak; sigma2 x 40.000076 y 40.000075, expected 40
+
+thread 'heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::multigrid' (2084150) panicked at crates/sr-engine/tests/gpu/heat.rs:834:9:
+assertion `left == right` failed: the record
+  left: HeatReport { dt: 24.0, passes: 1, rounds: 0, converged: true, delta: -4.8070305e-8 }
+ right: HeatReport { dt: 24.0, passes: 2, rounds: 6, converged: true, delta: -4.8070305e-8 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 2 Newton passes, 108 rounds, delta -4.7e-13; |T - tight solve| 4.77e-13; sigma2 x 39.999878 y 39.999878, expected 40
+ok
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 6 Newton passes, 276 rounds, delta -1.2e-14; worst balance 5.35e-12; lost 19166.821271 of radiated 19166.821271
+ok
+
+failures:
+
+failures:
+    heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::multigrid
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 379 filtered out; finished in 1.62s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

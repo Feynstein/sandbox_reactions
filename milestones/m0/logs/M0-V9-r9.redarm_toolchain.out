@@ -1,0 +1,7 @@
+toolchain · clean: proven by M0-V5 2026-10-13T14:14:02-04:00 (fingerprint 18302f604696)
+toolchain · plant toolchain-compiler · RED (proven: toolchain[desktop]: 1 failed; toolchain[desktop]: its own verdict NO-GO: carg0 not found on PATH (~/.cargo/bin is put fi) · arm 1/3, 2 left
+toolchain · plant toolchain-web-target · RED (proven: toolchain[wasm]: 1 failed; toolchain[wasm]: its own verdict NO-GO: cargo build --target wasm32-unknown-unknwn failed) · arm 2/3, 1 left
+toolchain · plant toolchain-trunk · RED (proven: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunc not found on PATH) · arm 3/3, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope toolchain · 5.09 s · 3 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.toolchain.redarm.log
+=== GO ===
+exit=0

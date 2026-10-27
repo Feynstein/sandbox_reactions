@@ -1,0 +1,52 @@
+==== 2026-10-27T14:09:05-04:00 toolchain · clean: proven by M0-V5 2026-10-13T14:14:02-04:00 (fingerprint 18302f604696)
+==== 2026-10-27T14:09:00-04:00 toolchain · plant toolchain-compiler · a fresh scratch copy of the tree
+planted toolchain-compiler: tests/plants/toolchain-compiler.patch -> tests/toolchain/check.sh
+== 2026-10-27T14:09:01-04:00 toolchain[desktop] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+== 2026-10-27T14:09:01-04:00 toolchain[wasm] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+-- toolchain[desktop] · exit=1 · 0.00 s
+toolchain desktop: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+-- toolchain[wasm] · exit=1 · 0.00 s
+toolchain wasm: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+== 2026-10-27T14:09:01-04:00 toolchain[trunk] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+-- toolchain[trunk] · exit=1 · 0.00 s
+toolchain trunk: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+==== 2026-10-27T14:09:00-04:00 toolchain · plant toolchain-web-target · a fresh scratch copy of the tree
+planted toolchain-web-target: tests/plants/toolchain-web-target.patch -> tests/toolchain/check.sh
+== 2026-10-27T14:09:01-04:00 toolchain[desktop] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+== 2026-10-27T14:09:01-04:00 toolchain[wasm] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=1 · 0.06 s
+toolchain wasm: cargo build --target wasm32-unknown-unknwn failed
+=== NO-GO: cargo build --target wasm32-unknown-unknwn failed ===
+
+== 2026-10-27T14:09:01-04:00 toolchain[trunk] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+-- toolchain[desktop] · exit=0 · 0.17 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+-- toolchain[trunk] · exit=0 · 3.97 s
+toolchain trunk: trunk 0.21.14 built the page
+=== GO ===
+
+==== 2026-10-27T14:09:00-04:00 toolchain · plant toolchain-trunk · a fresh scratch copy of the tree
+planted toolchain-trunk: tests/plants/toolchain-trunk.patch -> tests/toolchain/check.sh
+== 2026-10-27T14:09:01-04:00 toolchain[desktop] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+== 2026-10-27T14:09:01-04:00 toolchain[wasm] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=0 · 3.92 s
+toolchain wasm: wasm32-unknown-unknown module built (2651641 bytes)
+=== GO ===
+
+== 2026-10-27T14:09:05-04:00 toolchain[trunk] · task M0-V9-r9 · box laserax-ai :: bash tests/toolchain/check.sh {case}
+-- toolchain[trunk] · exit=1 · 0.00 s
+toolchain trunk: trunc not found on PATH
+=== NO-GO: trunc not found on PATH ===
+
+-- toolchain[desktop] · exit=0 · 3.98 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+

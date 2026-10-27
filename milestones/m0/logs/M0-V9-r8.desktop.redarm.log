@@ -1,0 +1,145 @@
+==== 2026-10-26T17:09:18-04:00 desktop · clean · a fresh scratch copy of the tree
+== 2026-10-26T17:09:20-04:00 desktop[window] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 8.68 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+game-xvfb: log /tmp/pb-redarm-7d8905fy/arm0/milestones/m0/logs/M0-V9-r8.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+== 2026-10-26T17:09:29-04:00 desktop[launcher] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 13.24 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: nothing recorded
+services: 1, stopped: 1
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+== 2026-10-26T17:09:42-04:00 desktop[race] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=1 · 21.09 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+==== 2026-10-26T17:09:18-04:00 desktop · plant port-handover-early · a fresh scratch copy of the tree
+planted port-handover-early: tests/plants/port-handover-early.patch -> tests/smoke.sh
+== 2026-10-26T17:09:20-04:00 desktop[window] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 4.42 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+game-xvfb: log /tmp/pb-redarm-7d8905fy/arm1/milestones/m0/logs/M0-V9-r8.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+== 2026-10-26T17:09:24-04:00 desktop[launcher] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 17.15 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: nothing recorded
+services: 1, stopped: 1
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+== 2026-10-26T17:09:42-04:00 desktop[race] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=1 · 11.28 s
+game-xvfb: port 47811 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL game-xvfb: port 47811 held by a process we did not start - not reusing
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+==== 2026-10-26T17:09:18-04:00 desktop · plant status-never-ready · a fresh scratch copy of the tree
+planted status-never-ready: tests/plants/status-never-ready.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-26T17:09:20-04:00 desktop[window] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 17.10 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+game-xvfb: log /tmp/pb-redarm-7d8905fy/arm2/milestones/m0/logs/M0-V9-r8.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+== 2026-10-26T17:09:37-04:00 desktop[launcher] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 5.48 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: nothing recorded
+services: 1, stopped: 1
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+== 2026-10-26T17:09:43-04:00 desktop[race] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=1 · 40.80 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+==== 2026-10-26T17:09:18-04:00 desktop · plant launcher-no-stop · a fresh scratch copy of the tree
+planted launcher-no-stop: tests/plants/launcher-no-stop.patch -> start.sh, start.bat
+== 2026-10-26T17:09:20-04:00 desktop[window] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 21.30 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+game-xvfb: log /tmp/pb-redarm-7d8905fy/arm3/milestones/m0/logs/M0-V9-r8.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+== 2026-10-26T17:09:41-04:00 desktop[launcher] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 1.52 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+=== NO-GO: the launcher never reached ready ===
+
+== 2026-10-26T17:09:43-04:00 desktop[race] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=1 · 50.71 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+==== 2026-10-26T17:09:18-04:00 desktop · plant launcher-stop-all · a fresh scratch copy of the tree
+planted launcher-stop-all: tests/plants/launcher-stop-all.patch -> start.sh, start.bat
+== 2026-10-26T17:09:20-04:00 desktop[window] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 12.84 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+game-xvfb: log /tmp/pb-redarm-7d8905fy/arm4/milestones/m0/logs/M0-V9-r8.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+== 2026-10-26T17:09:33-04:00 desktop[launcher] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 9.43 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: nothing recorded
+web: pid 2100267 stopped
+services: 5, stopped: 5
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+== 2026-10-26T17:09:42-04:00 desktop[race] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=1 · 30.94 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+

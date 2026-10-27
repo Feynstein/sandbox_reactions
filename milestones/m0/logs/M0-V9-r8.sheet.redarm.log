@@ -1,0 +1,74 @@
+==== 2026-10-26T16:52:06-04:00 sheet · clean · a fresh scratch copy of the tree
+== 2026-10-26T16:52:07-04:00 sheet · task M0-V9-r8 · box laserax-ai-server :: bash tests/cpu.sh sr-physics reference::sheet
+-- sheet · exit=0 · 4.98 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-p1raagkq/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.35s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 7 tests
+test reference::sheet::tests::enthalpy_table_matches_the_closed_form_and_inverts ... ok
+test reference::sheet::tests::ring_kernel_gives_the_maclaurin_potential ... ok
+test reference::sheet::tests::gamma_three_equilibrium_is_the_maclaurin_profile ... ok
+test reference::sheet::tests::gamma_two_radius_is_independent_of_mass ... ok
+test reference::sheet::tests::critical_sheet_mass_constant ... ok
+test reference::sheet::tests::exponent_one_point_six_has_no_ceiling ... ok
+test reference::sheet::tests::shipped_limits_are_the_critical_sheets_mass ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 162 filtered out; finished in 0.10s
+
+
+==== 2026-10-26T16:52:06-04:00 sheet · plant sheet-ring-kernel · a fresh scratch copy of the tree
+planted sheet-ring-kernel: tests/plants/sheet-ring-kernel.patch -> crates/sr-physics/src/reference/sheet.rs
+== 2026-10-26T16:52:07-04:00 sheet · task M0-V9-r8 · box laserax-ai-server :: bash tests/cpu.sh sr-physics reference::sheet
+-- sheet · exit=101 · 2.47 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-p1raagkq/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.37s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 7 tests
+test reference::sheet::tests::enthalpy_table_matches_the_closed_form_and_inverts ... ok
+test reference::sheet::tests::critical_sheet_mass_constant ... FAILED
+test reference::sheet::tests::ring_kernel_gives_the_maclaurin_potential ... FAILED
+test reference::sheet::tests::gamma_three_equilibrium_is_the_maclaurin_profile ... FAILED
+test reference::sheet::tests::gamma_two_radius_is_independent_of_mass ... ok
+test reference::sheet::tests::exponent_one_point_six_has_no_ceiling ... ok
+test reference::sheet::tests::shipped_limits_are_the_critical_sheets_mass ... FAILED
+
+failures:
+
+---- reference::sheet::tests::critical_sheet_mass_constant stdout ----
+SR-SHEET-CSHEET n=100 c_sheet 5.73288 virial 6.31e-5
+
+thread 'reference::sheet::tests::critical_sheet_mass_constant' (2079589) panicked at crates/sr-physics/src/reference/sheet.rs:443:13:
+100 annuli: c_sheet 5.732877648940884
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- reference::sheet::tests::ring_kernel_gives_the_maclaurin_potential stdout ----
+SR-SHEET-MACLAURIN worst potential error 5.00e-1 of |φ_c|
+
+thread 'reference::sheet::tests::ring_kernel_gives_the_maclaurin_potential' (2079594) panicked at crates/sr-physics/src/reference/sheet.rs:420:9:
+the Maclaurin disk's potential is off by 4.9997904816617184e-1
+
+---- reference::sheet::tests::gamma_three_equilibrium_is_the_maclaurin_profile stdout ----
+SR-SHEET-GAMMA3 profile error 3.68e-4, K 0.822338 (π²/6 = 1.644934)
+
+thread 'reference::sheet::tests::gamma_three_equilibrium_is_the_maclaurin_profile' (2079592) panicked at crates/sr-physics/src/reference/sheet.rs:432:9:
+K 0.8223384059119735 against π²/6
+
+---- reference::sheet::tests::shipped_limits_are_the_critical_sheets_mass stdout ----
+SR-SHEET-LIMIT C/O limit 12865.68 (c_sheet K₂′² 12866.14), M_8 12828.18
+
+thread 'reference::sheet::tests::shipped_limits_are_the_critical_sheets_mass' (2079595) panicked at crates/sr-physics/src/reference/sheet.rs:460:13:
+C/O: limit 12865.679684391695 against 3216.4
+
+
+failures:
+    reference::sheet::tests::critical_sheet_mass_constant
+    reference::sheet::tests::gamma_three_equilibrium_is_the_maclaurin_profile
+    reference::sheet::tests::ring_kernel_gives_the_maclaurin_potential
+    reference::sheet::tests::shipped_limits_are_the_critical_sheets_mass
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 162 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

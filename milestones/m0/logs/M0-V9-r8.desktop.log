@@ -25,3 +25,30 @@ services: 1, ready: 0
 FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
 === NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
 
+== 2026-10-26T16:30:13-04:00 desktop[window] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+== 2026-10-26T16:30:14-04:00 desktop[launcher] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+== 2026-10-26T16:30:19-04:00 desktop[race] · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 12.84 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+game-xvfb: log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-V9-r8.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+-- desktop[launcher] · exit=1 · 12.04 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: nothing recorded
+services: 1, stopped: 1
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+-- desktop[race] · exit=1 · 16.95 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+

@@ -1,0 +1,83 @@
+== 2026-10-27T14:07:39-04:00 desktop[window] · task M0-V9-r9 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-27T14:07:39-04:00 desktop[launcher] · task M0-V9-r9 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-27T14:07:39-04:00 desktop[race] · task M0-V9-r9 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 13.55 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-V9-r9.launch.game-xvfb.log)
+game-xvfb: pid 182926 stopped; its X server :100, pid 182921 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-V9-r9.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 13 s, booted and checked in 0 s
+=== GO ===
+
+-- desktop[race] · exit=0 · 24.13 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-V9-r9-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 13 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 25.04 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.4s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 186163 stopped; its X server :99, pid 186161 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 13 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+== 2026-10-27T14:30:03-04:00 desktop[window] · task M0-V9-r9 · box laserax-ai-server :: bash tests/smoke.sh {case}
+== 2026-10-27T14:30:03-04:00 desktop[launcher] · task M0-V9-r9 · box laserax-ai-server :: bash tests/smoke.sh {case}
+== 2026-10-27T14:30:03-04:00 desktop[race] · task M0-V9-r9 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 0.72 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: nothing recorded
+services: 1, stopped: 1
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+-- desktop[window] · exit=1 · 0.77 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+game-xvfb: log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-V9-r9.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+-- desktop[race] · exit=1 · 10.89 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+== 2026-10-27T14:31:43-04:00 desktop[window] · task M0-V9-r9 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-27T14:31:43-04:00 desktop[launcher] · task M0-V9-r9 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-27T14:31:43-04:00 desktop[race] · task M0-V9-r9 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 2.72 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 339568 stopped; its X server :99, pid 339556 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 1 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[window] · exit=0 · 3.12 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-V9-r9.launch.game-xvfb.log)
+game-xvfb: pid 339756 stopped; its X server :99, pid 339754 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-V9-r9.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 1 s, booted and checked in 3 s
+=== GO ===
+
+-- desktop[race] · exit=0 · 13.90 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.5s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-V9-r9-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 1 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+

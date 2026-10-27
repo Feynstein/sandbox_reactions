@@ -13,3 +13,18 @@ web ready: trunk not found on PATH
 web no-webgpu: trunk not found on PATH
 === NO-GO: trunk not found on PATH ===
 
+== 2026-10-26T16:30:25-04:00 web[build] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 0.03 s
+web build: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+== 2026-10-26T16:30:25-04:00 web[ready] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+== 2026-10-26T16:30:25-04:00 web[no-webgpu] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=1 · 0.03 s
+web no-webgpu: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+-- web[ready] · exit=1 · 0.06 s
+web ready: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+

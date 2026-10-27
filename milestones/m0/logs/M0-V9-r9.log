@@ -1,0 +1,192 @@
+# M0-V9 session 8 (task id M0-V9-r9: the r8 logs are committed in e30699b) — linux-pc (laserax-ai) + laserax-ai-server (RTX 4090, R18)
+# start 2026-10-27 13:54:29 EDT; rung_record now: model=claude-opus-5-5 level=max plugin=installed; plan.py show M0-V9 GO (baseline 2026-10-26T12:08:26, 582 files)
+13:54:35 · scopes red-armed: 62 · last done: readouts, 73491 s ago
+sweep finished - tell Claude
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope cold_core · 50.73 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V9-r8.cold_core.redarm.log · campaign 58/62, 4 left
+calibrate_status · clean · GO · arm 1/5, 4 left
+calibrate_status · plant calibrate-status-one-short · RED (proven: 12 failed; its own verdict NO-GO: 6 case(s) failed; 12 case(s) < expected 18) · arm 2/5, 3 left
+calibrate_status · plant calibrate-status-wrong-stage · RED (proven: 17 failed; its own verdict NO-GO: 1 case(s) failed; 17 case(s) < expected 18) · arm 3/5, 2 left
+calibrate_status · plant calibrate-status-continued-total-steps · RED (proven: 17 failed; its own verdict NO-GO: 1 case(s) failed; 17 case(s) < expected 18) · arm 4/5, 1 left
+calibrate_status · plant calibrate-status-flat-stale · RED (proven: 16 failed; its own verdict NO-GO: 2 case(s) failed; 16 case(s) < expected 18) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope calibrate_status · 2.14 s · 5 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V9-r8.calibrate_status.redarm.log · campaign 59/62, 3 left
+calibrate_bisect · clean · GO · arm 1/13, 12 left
+calibrate_bisect · plant bisect-tolerance · RED (proven: 3 failed) · arm 2/13, 11 left
+calibrate_bisect · plant calibrate-record-removed · RED (proven: 4 failed) · arm 3/13, 10 left
+calibrate_bisect · plant calibrate-resume-any-mass · RED (proven: 1 failed) · arm 4/13, 9 left
+calibrate_bisect · plant calibrate-progress-wrong-stage · RED (proven: 1 failed) · arm 5/13, 8 left
+calibrate_bisect · plant calibrate-heat-warnings-printed · RED (proven: 1 failed) · arm 6/13, 7 left
+calibrate_bisect · plant calibrate-up-until-ending · RED (proven: 1 failed) · arm 7/13, 6 left
+calibrate_bisect · plant calibrate-progress-every-ignored · RED (proven: 2 failed) · arm 8/13, 5 left
+calibrate_bisect · plant calibrate-checkpoint-without-observers · RED (proven: 1 failed) · arm 9/13, 4 left
+calibrate_bisect · plant calibrate-checkpoint-on-the-tick · RED (proven: 1 failed) · arm 10/13, 3 left
+calibrate_bisect · plant calibrate-checkpoint-step-unchecked · RED (proven: 1 failed) · arm 11/13, 2 left
+calibrate_bisect · plant continue-until-unchecked · RED (proven: 1 failed) · arm 12/13, 1 left
+calibrate_bisect · plant calibrate-one-step-never · RED (proven: 2 failed) · arm 13/13, 0 left
+redarm: 12 plants · 12 red · 0 green · 0 errors · scope calibrate_bisect · 976.27 s · 8 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V9-r8.calibrate_bisect.redarm.log · campaign 60/62, 2 left
+calibrate_order · clean · GO · arm 1/4, 3 left
+calibrate_order · plant calibrate-order-skip · RED (proven: 1 failed) · arm 2/4, 2 left
+calibrate_order · plant calibrate-first-white-dwarf · RED (proven: 1 failed) · arm 3/4, 1 left
+calibrate_order · plant light-speed-200 · RED (proven: 2 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope calibrate_order · 38.29 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V9-r8.calibrate_order.redarm.log · campaign 61/62, 1 left
+readouts · clean · GO · arm 1/2, 1 left
+readouts · plant anchor-reverse · RED (proven: 8 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope readouts · 18.91 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V9-r8.readouts.redarm.log · campaign 62/62, 0 left
+FAILED:
+  redarm toolchain: clean: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunk not found on PATH - red with no plant, so a red plant would prove nothing; the plants are not counted
+  redarm build: plant build-wasm-only: the patch tests/plants/build-wasm-only.patch does not apply: crates/sr-physics/src/lib.rs @@ -1 +1,4 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  redarm collapse: plant grav-half: the patch tests/plants/grav-half.patch does not apply: crates/sr-physics/src/reference/hydro.rs @@ -540,7 +540,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  redarm adapter: clean: 1 failed - red with no plant, so a red plant would prove nothing; the plants are not counted
+  redarm dump: clean: 1 failed - red with no plant, so a red plant would prove nothing; the plants are not counted
+  redarm desktop: clean: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready - red with no plant, so a red plant would prove nothing; the plants are not counted
+  redarm web: clean: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH (this arm's build, reused); web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH (this arm's build, reused) - red with no plant, so a red plant would prove nothing; the plants are not counted
+  redarm capture: clean: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 - red with no plant, so a red plant would prove nothing; the plants are not counted
+moved: 62 of 62 armed scopes, plants RED 118, GREEN 0, ERROR 2 · 3466.41 s · box laserax-ai-server
+=== NO-GO: redarm toolchain: clean: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunk not found on PATH - red with no plant, so a red plant would prove nothing; the plants are not counted; redarm build: plant build-wasm-only: the patch tests/plants/build-wasm-only.patch does not apply: crates/sr-physics/src/lib.rs @@ -1 +1,4 @@: its old lines appear 0 times in the file, not... ===
+---
+8032 milestones/m0/logs/M0-V9-r8.chain.log
+6fa8bdad28569bb7bd2b22a1b8993ae0  assets/calibration.json
+255ec37 M0-D90 done: a black hole from mass; G-WATCH's m_tov_sb exemption
+1243c32 M0-D90 in progress
+8332496 M0-D86 done
+ M assets/calibration.json
+ M assets/physics.json
+ M crates/sr-engine/shaders/heat.wgsl
+ M crates/sr-engine/shaders/reduce.wgsl
+ M crates/sr-engine/src/calibrate.rs
+ M crates/sr-engine/src/headless.rs
+ M crates/sr-engine/src/step/dt.rs
+ M crates/sr-engine/src/step/heat.rs
+ M crates/sr-engine/src/step/mod.rs
+ M crates/sr-engine/src/watch.rs
+ M crates/sr-engine/tests/gpu/calibrate_bisect.rs
+ M crates/sr-engine/tests/gpu/calibrate_order.rs
+ M crates/sr-engine/tests/gpu/dt.rs
+ M crates/sr-engine/tests/gpu/dump.rs
+ M crates/sr-engine/tests/gpu/heat.rs
+ M crates/sr-engine/tests/gpu/observe.rs
+ M crates/sr-engine/tests/gpu/sink.rs
+ M crates/sr-physics/src/observe/stages.rs
+ M crates/sr-physics/src/observe/tracker.rs
+ M crates/sr-physics/src/reference/heat.rs
+ M crates/sr-physics/src/registry.rs
+ M crates/sr-physics/src/time.rs
+ M docs/agent/readouts.md
+ M docs/agent/testing.md
+ M milestones/m0/logs/launcher.launch.game-xvfb.log
+ M milestones/m0/logs/loop_times.jsonl
+ M milestones/m0/m0_contrat.md
+ M milestones/m0/m0_implementation_plan.md
+ M milestones/m0/m0_superseded.md
+ M milestones/m0/tasks/M0-V9.md
+
+NVIDIA GeForce RTX 3060, 0 %, 15 MiB
+NVIDIA GeForce RTX 4090, 0 %, 17 MiB
+ 13:54:41 up 15 days,  1:27,  4 users,  load average: 0.89, 1.14, 0.52
+1621826 bash -c while pgrep -f "verify.py --changed --task M0-D90" >/dev/null; do sleep 5; done; echo done
+2195451 bash -c cd ~/workspace/sandbox_reactions && tail -n 40 milestones/m0/logs/M0-V9-r8.chain.log; echo ---; wc -l milestones/m0/logs/M0-V9-r8.chain.log; md5sum assets/calibration.json; git log --oneline -3; git status --short | head -30; echo; nvidia-smi --query-gpu=name,utilization.gpu,memory.used --format=csv,noheader; uptime; pgrep -af "sandbox-reactions|verify[.]py|cargo" | head; tmux ls 2>&1
+v9cal: 1 windows (created Fri Oct 23 16:41:55 2026)
+## 13:57:02 bring home (server → linux-pc), R18's route
+logs: rsync --include 'M0-V9-r8.*' (M0-V9-r8.log excluded: linux-pc's holds more) — 107 new, 18 append-only supersets of e30699b's copies, 2 launcher logs (per-run)
+loop_times.jsonl: 63 server lines appended (1211 → 1274)
+assets/calibration.json: scp -p from the server, md5 6fa8bdad28569bb7bd2b22a1b8993ae0
+## 14:07:39 Verify 1, linux-pc's half: python3 tools/pb/verify.py adapter desktop web capture toolchain --task M0-V9-r9 (load 3.38)
+adapter    10/0/0      10.44 s  GO · step 1/5, 4 left
+desktop    3/0/0       62.72 s  GO · step 2/5, 3 left
+web        3/0/0       71.79 s  GO · step 3/5, 2 left
+capture    2/0/0       20.48 s  GO · step 4/5, 1 left
+toolchain  3/0/0        0.39 s  GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-V9-r9.<scope>.log · record: loop_times.jsonl · tree e30699bfc411+4c184f946d64
+anchor: 346 path×scope entries moved by this run
+anchor: 125 paths checked · 283 skipped (3 classes) · 151 never checked · 25 stale · 0 unclassified · 0 owed · 301 covered of 584 visible
+verify: 21 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 26.94 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.38->5.07
+=== GO ===
+exit=0
+## 14:08:30 python3 tools/pb/verify.py --redarm adapter --task M0-V9-r9 (load 8.07)
+adapter · plant adapter-case · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 20.36 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.adapter.redarm.log
+=== GO ===
+exit=0
+## 14:08:51 python3 tools/pb/verify.py --redarm capture --task M0-V9-r9 (load 7.68)
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope capture · 9.23 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.capture.redarm.log
+=== GO ===
+exit=0
+## 14:09:00 python3 tools/pb/verify.py --redarm toolchain --task M0-V9-r9 (load 6.73)
+toolchain · plant toolchain-compiler · RED (proven: toolchain[desktop]: 1 failed; toolchain[desktop]: its own verdict NO-GO: carg0 not found on PATH (~/.cargo/bin is put fi) · arm 1/3, 2 left
+toolchain · plant toolchain-web-target · RED (proven: toolchain[wasm]: 1 failed; toolchain[wasm]: its own verdict NO-GO: cargo build --target wasm32-unknown-unknwn failed) · arm 2/3, 1 left
+toolchain · plant toolchain-trunk · RED (proven: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunc not found on PATH) · arm 3/3, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope toolchain · 5.09 s · 3 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.toolchain.redarm.log
+=== GO ===
+exit=0
+## 14:09:15 python3 tools/pb/verify.py --redarm web --task M0-V9-r9 (load 6.39)
+web · plant web-no-gpu-check · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: index.html has no navigator.gpu check; web[ready]: 1 failed; we) · arm 2/5, 3 left
+web · plant web-autoload · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still in index.h) · arm 3/5, 2 left
+web · plant never-ready · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: srState is "loading" after 30 s; never ready - console.e) · arm 4/5, 1 left
+web · plant smoke-no-sandbox · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: Chrome runs with --no-sandbox, which contract §6.2.3 lea) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope web · 55.45 s · 5 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.web.redarm.log
+=== GO ===
+exit=0
+## 14:10:14 python3 tools/pb/verify.py --redarm desktop --task M0-V9-r9 (load 4.62)
+desktop · plant port-handover-early · RED (proven: desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not) · arm 2/5, 3 left
+desktop · plant status-never-ready · RED (proven: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[lau) · arm 3/5, 2 left
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb) · arm 4/5, 1 left
+desktop · plant launcher-stop-all · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start () · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope desktop · 348.78 s · 5 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.desktop.redarm.log
+=== GO ===
+exit=0
+decoy/race launcher logs brought home (the --all's, 16:30)
+## 14:29:48 rsync up (R18's route; the server's anchor kept: --exclude tools/pb/verify.anchor.json)
+## 14:30:02 the claim, laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-V9-r9
+NVIDIA GeForce RTX 3060, 0 % NVIDIA GeForce RTX 4090, 0 % 
+NEVER CHECKED  tests/web/check.sh  (no entry for web)
+NEVER CHECKED  tools/pb/launch.json  (no entry for desktop, web)
+NEVER CHECKED  web/Trunk.toml  (no entry for web)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   276  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  toolchain: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-V9-r9.toolchain.log
+  adapter: 1 failed · log milestones/m0/logs/M0-V9-r9.adapter.log
+  dump: 1 failed · log milestones/m0/logs/M0-V9-r9.dump.log
+  desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready · log milestones/m0/logs/M0-V9-r9.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-V9-r9.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-V9-r9.capture.log
+  anchor: 168 never checked, 0 stale, 0 unclassified - every one named above
+verify: 727 passed, 10 failed, 0 skipped · 1/7 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 55 not impacted · 26.64 s + loop 0.11 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.22->0.33 · base: M0-D97's start 2026-10-26T14:15:36-04:00 — no start for M0-V9-r9
+=== NO-GO: toolchain: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-V9-r9.toolchain.log; adapter: 1 failed · log milestones/m0/logs/M0-V9-r9.adapter.log; dump: 1 failed · log milestones/m0/logs/M0-V9-r9.dump.log; desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready;... ===
+exit=1
+## 14:31:35 bring home after the claim (R18): logs M0-V9-r9.* (the main log excluded), loop_times' new lines appended, the anchor
+>f..t...... M0-V9-r9-decoy.launch.web.log
+>f.st...... M0-V9-r9-race.launch.game-xvfb.log
+>f.st...... M0-V9-r9.adapter.log
+>f.st...... M0-V9-r9.capture.log
+>f.st...... M0-V9-r9.desktop.log
+>f+++++++++ M0-V9-r9.dump.log
+>f.st...... M0-V9-r9.launch.game-xvfb.log
+>f+++++++++ M0-V9-r9.plan_lint.log
+>f.st...... M0-V9-r9.toolchain.log
+>f.st...... M0-V9-r9.web.log
+loop_times.jsonl: 1 server line(s) appended (1280 -> 1281); local lines the server lacks: 0
+anchor: the server's after the claim (md5 c2ab2dd9b8ce); linux-pc's before kept in the scratchpad
+## 14:31:43 linux-pc's half again, for the anchor (R18 brought the server's home; its red box runs had dropped these five scopes' entries): python3 tools/pb/verify.py adapter desktop web capture toolchain --task M0-V9-r9 (load 10.81)
+desktop    3/0/0       19.75 s  GO · step 2/5, 3 left
+web        3/0/0       13.02 s  GO · step 3/5, 2 left
+capture    2/0/0        1.38 s  GO · step 4/5, 1 left
+toolchain  3/0/0        0.34 s  GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-V9-r9.<scope>.log · record: loop_times.jsonl · tree e30699bfc411+31df6a22d1c8
+anchor: 354 path×scope entries moved by this run
+anchor: 173 paths checked · 284 skipped (3 classes) · 128 never checked · 0 stale · 0 unclassified · 0 owed · 301 covered of 585 visible
+verify: 21 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 13.91 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 10.81->9.7
+=== GO ===
+exit=0
+## 14:34:46 after the close: python3 tools/pb/verify.py plan_lint --task M0-V9-r9 (the plan changed by plan.py close/handoff after the claim)
+anchor: 173 paths checked · 284 skipped (3 classes) · 128 never checked · 0 stale · 0 unclassified · 0 owed · 301 covered of 585 visible
+verify: 703 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.38->8.38
+=== GO ===
+## 14:34:58 final rsync up (R18; the anchor now the union: the server's + linux-pc's box five)
+differing after: 0

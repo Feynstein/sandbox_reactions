@@ -1,0 +1,15 @@
+== 2026-10-26T16:29:24-04:00 toolchain[desktop] · task M0-V9-r8 · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[desktop] · exit=0 · 0.16 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+== 2026-10-26T16:29:24-04:00 toolchain[wasm] · task M0-V9-r8 · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+== 2026-10-26T16:29:24-04:00 toolchain[trunk] · task M0-V9-r8 · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[trunk] · exit=1 · 0.00 s
+toolchain trunk: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+-- toolchain[wasm] · exit=0 · 4.57 s
+toolchain wasm: wasm32-unknown-unknown module built (2651776 bytes)
+=== GO ===
+

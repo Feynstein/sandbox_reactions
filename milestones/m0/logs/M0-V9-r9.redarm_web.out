@@ -1,0 +1,8 @@
+web · clean · GO · arm 1/5, 4 left
+web · plant web-no-gpu-check · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: index.html has no navigator.gpu check; web[ready]: 1 failed; we) · arm 2/5, 3 left
+web · plant web-autoload · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still in index.h) · arm 3/5, 2 left
+web · plant never-ready · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: srState is "loading" after 30 s; never ready - console.e) · arm 4/5, 1 left
+web · plant smoke-no-sandbox · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: Chrome runs with --no-sandbox, which contract §6.2.3 lea) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope web · 55.45 s · 5 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.web.redarm.log
+=== GO ===
+exit=0

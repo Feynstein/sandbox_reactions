@@ -7,3 +7,147 @@ services: 1, ready: 0, failures: 1
 FAIL headless-boot: exited 6 (log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-V9-r8.launch.headless-boot.log)
 === NO-GO: launch.py smoke headless-boot did not end GO ===
 
+== 2026-10-26T16:30:13-04:00 boot · task M0-V9-r8 · box laserax-ai-server :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 12.89 s
+headless-boot: ready - exit 0, 10.7s (log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-V9-r8.launch.headless-boot.log)
+headless-boot: pid 2054449 not signalled - gone
+headless-boot: log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-V9-r8.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 3060"
+  },
+  "events": [],
+  "git": "255ec37",
+  "ledger": {
+    "end": {
+      "energy": {
+        "cold": 166153.72377679026,
+        "escaped": 0.0,
+        "floor_added": -0.5269171413018682,
+        "invariant": -200551.192750424,
+        "kinetic": 71236.91652559262,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 583.0922868252185,
+        "potential": -555500.7922668646,
+        "radiated": 58.232984291487355,
+        "swallowed": 0.0,
+        "thermal": 118083.29159945011,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3351.018938138042,
+        "invariant": 3351.034408075365,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.015469937322893479
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          0.00020086510994588025,
+          0.0004145954007981345
+        ],
+        "invariant": [
+          0.00020086510994588025,
+          0.0004145954007981345
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 3.5200986079871655,
+      "step": 200
+    },
+    "start": {
+      "energy": {
+        "cold": 37036.161265771814,
+        "escaped": 0.0,
+        "floor_added": 0.0,
+        "invariant": -200640.42982237256,
+        "kinetic": 11.160653036204167,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 0.0,
+        "potential": -264081.94702940615,
+        "radiated": 0.0,
+        "swallowed": 0.0,
+        "thermal": 26394.195288225557,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3351.0345331258436,
+        "invariant": 3351.0345331258436,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.0
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          3.457535058259964e-7,
+          1.1826632544398308e-6
+        ],
+        "invariant": [
+          3.457535058259964e-7,
+          1.1826632544398308e-6
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 0.030266789719462395,
+      "step": 1
+    }
+  },
+  "max_gas_speed": 9.523403514966096,
+  "objects": [
+    {
+      "id": 1,
+      "mass_sb": 3350.1021091211587,
+      "stage": null,
+      "stages": []
+    }
+  ],
+  "scene": "preset:sun",
+  "sim_time": 3.5200986079871655,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 1.403749155,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 0 s, booted and checked in 12 s
+=== GO ===
+

@@ -1,3 +1,4 @@
-# M0-V9-r8 | launch headless-boot | 2026-10-26T14:10:21-0400
-$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-n4g3y5qs
-SR-ERROR calibration invalid: preset_mass_sb: missing
+# M0-V9-r8 | launch headless-boot | 2026-10-26T16:30:13-0400
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-olyte7sp
+SR-ADAPTER name=NVIDIA GeForce RTX 3060 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.520099 until=none

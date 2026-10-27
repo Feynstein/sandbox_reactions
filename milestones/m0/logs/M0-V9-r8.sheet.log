@@ -1,0 +1,17 @@
+== 2026-10-26T16:29:45-04:00 sheet · task M0-V9-r8 · box laserax-ai-server :: bash tests/cpu.sh sr-physics reference::sheet
+-- sheet · exit=0 · 0.21 s
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 7 tests
+test reference::sheet::tests::enthalpy_table_matches_the_closed_form_and_inverts ... ok
+test reference::sheet::tests::ring_kernel_gives_the_maclaurin_potential ... ok
+test reference::sheet::tests::gamma_two_radius_is_independent_of_mass ... ok
+test reference::sheet::tests::gamma_three_equilibrium_is_the_maclaurin_profile ... ok
+test reference::sheet::tests::critical_sheet_mass_constant ... ok
+test reference::sheet::tests::exponent_one_point_six_has_no_ceiling ... ok
+test reference::sheet::tests::shipped_limits_are_the_critical_sheets_mass ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 162 filtered out; finished in 0.11s
+
+

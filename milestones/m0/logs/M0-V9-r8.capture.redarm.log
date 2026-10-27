@@ -1,0 +1,23 @@
+==== 2026-10-26T17:10:36-04:00 capture · clean · a fresh scratch copy of the tree
+== 2026-10-26T17:10:37-04:00 capture[smoke] · task M0-V9-r8 · box laserax-ai-server :: bash tests/capture/check.sh {case}
+== 2026-10-26T17:10:37-04:00 capture[refuse] · task M0-V9-r8 · box laserax-ai-server :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=1 · 4.32 s
+tests/capture/check.sh: line 28: xvfb-run: command not found
+=== NO-GO: the capture run exited 127, expected 0 ===
+
+-- capture[refuse] · exit=0 · 4.37 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+==== 2026-10-26T17:10:36-04:00 capture · plant capture-no-captions · a fresh scratch copy of the tree
+planted capture-no-captions: tests/plants/capture-no-captions.patch -> crates/sr-app/src/capture.rs
+== 2026-10-26T17:10:37-04:00 capture[smoke] · task M0-V9-r8 · box laserax-ai-server :: bash tests/capture/check.sh {case}
+== 2026-10-26T17:10:37-04:00 capture[refuse] · task M0-V9-r8 · box laserax-ai-server :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=1 · 8.53 s
+tests/capture/check.sh: line 28: xvfb-run: command not found
+=== NO-GO: the capture run exited 127, expected 0 ===
+
+-- capture[refuse] · exit=0 · 8.63 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+

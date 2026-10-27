@@ -1,0 +1,5 @@
+adapter · clean · GO · arm 1/2, 1 left
+adapter · plant adapter-case · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 20.36 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V9-r9.adapter.redarm.log
+=== GO ===
+exit=0

@@ -1,0 +1,123 @@
+==== 2026-10-26T16:54:03-04:00 sun_burn · clean · a fresh scratch copy of the tree
+== 2026-10-26T16:54:03-04:00 sun_burn · task M0-V9-r8 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=0 · 45.82 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-up91qy01/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-up91qy01/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.35s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=35.819141 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=58.357182 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 35.819: centre (299, 199) Σ 8.525 T 36.045 X_H 0.72248; T_max 36.048; bound 3339.72 of 3345.25 (0.9966 of the preset's 3351.03); sinks 0
+SR-SUNBURN step 4000 t 47.121: centre (299, 199) Σ 8.837 T 36.847 X_H 0.71858; T_max 36.851; bound 3338.91 of 3341.23 (0.9964 of the preset's 3351.03); sinks 0
+SR-SUNBURN step 5000 t 58.357: centre (299, 199) Σ 8.951 T 37.212 X_H 0.71441; T_max 37.220; bound 3338.34 of 3339.29 (0.9962 of the preset's 3351.03); sinks 0
+SR-SUNBURN X_H,c: [0.72248, 0.71858, 0.71441]; falls [0.00390, 0.00417] (each ≥ 0.001), 0.00807 over the window (≥ 0.002); least ≥ 0.5
+ok
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 22.527, L 2391.9, L_nuc 2049.5, L_nuc/L 0.8568 (band (0.5, 2.0)); T_max [36.048, 36.851, 37.220] against 0.5 T_He = 39.2
+ok
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 3339.72 of the preset's 3351.03 (0.9966), grid 3345.25, sinks 0
+SR-SUNBURN bound at step 4000: 3338.91 of the preset's 3351.03 (0.9964), grid 3341.23, sinks 0
+SR-SUNBURN bound at step 5000: 3338.34 of the preset's 3351.03 (0.9962), grid 3339.29, sinks 0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 383 filtered out; finished in 36.23s
+
+
+==== 2026-10-26T16:54:03-04:00 sun_burn · plant stall-constants · a fresh scratch copy of the tree
+planted stall-constants: tests/plants/stall-constants.patch -> assets/physics.json
+== 2026-10-26T16:54:03-04:00 sun_burn · task M0-V9-r8 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=101 · 55.25 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-up91qy01/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-up91qy01/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.34s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 1ba4df764014941054cc8bc375ad8300334509264b7a11bc651836e7f5949493 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (2081847) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-2081846-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 1ba4df764014941054cc8bc375ad8300334509264b7a11bc651836e7f5949493 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 1ba4df764014941054cc8bc375ad8300334509264b7a11bc651836e7f5949493 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (2081848) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-2081846-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 1ba4df764014941054cc8bc375ad8300334509264b7a11bc651836e7f5949493 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+FAILED
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 1ba4df764014941054cc8bc375ad8300334509264b7a11bc651836e7f5949493 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::the_star_stays_bound' (2081850) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-2081846-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 1ba4df764014941054cc8bc375ad8300334509264b7a11bc651836e7f5949493 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    sunburn::hydrogen_burns_steadily_at_the_centre
+    sunburn::it_shines_what_it_burns_and_only_hydrogen_burns
+    sunburn::the_star_stays_bound
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 383 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-26T16:54:03-04:00 sun_burn · plant burn-runaway · a fresh scratch copy of the tree
+planted burn-runaway: tests/plants/burn-runaway.patch -> assets/physics.json
+== 2026-10-26T16:54:03-04:00 sun_burn · task M0-V9-r8 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=101 · 64.41 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-up91qy01/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-up91qy01/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.99s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 8cb6de08483bac242acf3c338ac4a0cc3d3927c8c5eb378913d801c13c500f82 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (2082066) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-2082065-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 8cb6de08483bac242acf3c338ac4a0cc3d3927c8c5eb378913d801c13c500f82 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 8cb6de08483bac242acf3c338ac4a0cc3d3927c8c5eb378913d801c13c500f82 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (2082067) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-2082065-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 8cb6de08483bac242acf3c338ac4a0cc3d3927c8c5eb378913d801c13c500f82 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+FAILED
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 8cb6de08483bac242acf3c338ac4a0cc3d3927c8c5eb378913d801c13c500f82 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::the_star_stays_bound' (2082069) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-2082065-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 8cb6de08483bac242acf3c338ac4a0cc3d3927c8c5eb378913d801c13c500f82 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    sunburn::hydrogen_burns_steadily_at_the_centre
+    sunburn::it_shines_what_it_burns_and_only_hydrogen_burns
+    sunburn::the_star_stays_bound
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 383 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

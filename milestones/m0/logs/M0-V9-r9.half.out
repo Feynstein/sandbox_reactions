@@ -1,0 +1,11 @@
+adapter    10/0/0      10.44 s  GO · step 1/5, 4 left
+desktop    3/0/0       62.72 s  GO · step 2/5, 3 left
+web        3/0/0       71.79 s  GO · step 3/5, 2 left
+capture    2/0/0       20.48 s  GO · step 4/5, 1 left
+toolchain  3/0/0        0.39 s  GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-V9-r9.<scope>.log · record: loop_times.jsonl · tree e30699bfc411+4c184f946d64
+anchor: 346 path×scope entries moved by this run
+anchor: 125 paths checked · 283 skipped (3 classes) · 151 never checked · 25 stale · 0 unclassified · 0 owed · 301 covered of 584 visible
+verify: 21 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 26.94 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.38->5.07
+=== GO ===
+exit=0

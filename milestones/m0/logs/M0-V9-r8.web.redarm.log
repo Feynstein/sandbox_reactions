@@ -1,0 +1,84 @@
+==== 2026-10-26T17:10:34-04:00 web · clean · a fresh scratch copy of the tree
+== 2026-10-26T17:10:36-04:00 web[build] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 0.03 s
+web build: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+== 2026-10-26T17:10:36-04:00 web[ready] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 0.03 s
+web ready: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+== 2026-10-26T17:10:36-04:00 web[no-webgpu] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=1 · 0.03 s
+web no-webgpu: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+==== 2026-10-26T17:10:34-04:00 web · plant web-no-gpu-check · a fresh scratch copy of the tree
+planted web-no-gpu-check: tests/plants/web-no-gpu-check.patch -> web/index.html
+== 2026-10-26T17:10:36-04:00 web[build] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 0.03 s
+web build: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+== 2026-10-26T17:10:36-04:00 web[ready] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 0.03 s
+web ready: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+== 2026-10-26T17:10:36-04:00 web[no-webgpu] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=1 · 0.03 s
+web no-webgpu: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+==== 2026-10-26T17:10:34-04:00 web · plant web-autoload · a fresh scratch copy of the tree
+planted web-autoload: tests/plants/web-autoload.patch -> web/Trunk.toml
+== 2026-10-26T17:10:36-04:00 web[build] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 0.03 s
+web build: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+== 2026-10-26T17:10:36-04:00 web[ready] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 0.03 s
+web ready: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+== 2026-10-26T17:10:36-04:00 web[no-webgpu] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=1 · 0.03 s
+web no-webgpu: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+==== 2026-10-26T17:10:34-04:00 web · plant never-ready · a fresh scratch copy of the tree
+planted never-ready: tests/plants/never-ready.patch -> crates/sr-app/src/web.rs
+== 2026-10-26T17:10:36-04:00 web[build] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 0.03 s
+web build: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+== 2026-10-26T17:10:36-04:00 web[ready] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 0.03 s
+web ready: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+== 2026-10-26T17:10:36-04:00 web[no-webgpu] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=1 · 0.03 s
+web no-webgpu: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+==== 2026-10-26T17:10:34-04:00 web · plant smoke-no-sandbox · a fresh scratch copy of the tree
+planted smoke-no-sandbox: tests/plants/smoke-no-sandbox.patch -> web/smoke.mjs
+== 2026-10-26T17:10:36-04:00 web[build] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[build] · exit=1 · 0.03 s
+web build: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+== 2026-10-26T17:10:36-04:00 web[ready] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 0.03 s
+web ready: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
+== 2026-10-26T17:10:36-04:00 web[no-webgpu] · task M0-V9-r8 · box laserax-ai-server :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=1 · 0.03 s
+web no-webgpu: trunk not found on PATH (this arm's build, reused)
+=== NO-GO: trunk not found on PATH (this arm's build, reused) ===
+
