@@ -286,6 +286,33 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   R5, R9, R10, R15, R16 and R18) reads m0_superseded.md: a new mirror is appended at its end in the same shape, binding as if it
   sat in the plan; the plan's `## Superseded / retired (§2.6)` keeps its one pointer line and the `Inherited debt` line.
 
+## R20 · The site and every live deploy are `../tykun_games`'s (the lead, 2026-10-27, at M0-TJ5)
+- **The rule** (M0-TJ5's Deliver 2, verbatim): **The site and every live deploy are `../tykun_games`'s** (the lead,
+  2026-10-27; `M0-TJ5`). `https://tykungames.com` — its pages, the game picker, the site's look and the ads — the box
+  `games-box` and every upload to it belong to `../tykun_games`, whose own plan runs them. Agents here never deploy, never
+  write on `games-box` and never edit `../tykun_games`. This project's web work ends at its own static web build, which runs
+  entirely on the player's machine: the box serves files and computes nothing (no backend, database, API or socket of ours at
+  run time), and the page needs no cross-origin isolation (COOP/COEP `require-corp` would break the site's ads —
+  `milestones/m0/reports/web_hosting.md`; a build that needs it is a fork for the lead). When the lead calls a build ready to
+  go live, the block that closes on that word writes one dated line in this project's tracker —
+  `Web build ready: <folder> · <commit, or tree id> · <date> · <what changed>` — and `../tykun_games`, which reads this
+  project read-only, deploys it. What the site needs from a build — a hook, a size limit, a change to the page around the
+  game — arrives as a flag from `../tykun_games` through the lead, and is built here.
+- **The lead's words** (2026-10-27, launching the bootstrap of `../tykun_games`, a new project that takes over the website
+  `https://tykungames.com`; « In here » is that project — M0-TJ5's Ask): « I want space_tykun, traffic_simulator,
+  sandbox_reactions, tykun_circuits live on the website as soon as theyre ready. It might be gradual, maybe we should write a
+  task after their last done (or in progress) task so that we tell them were taking over their live deploy. » · « In here I
+  will want to rework the website so its more pleasing and ultimately to make it possible to have google adsense in it. » ·
+  « What I want for all those games is that the server stays very minimal, right now its the smallest amazon lightsail. If we
+  need I can upgrade to the next one or the other one after that but not much. I want it to be client side computation. » ·
+  « I want them to know we're taking over the live push of their games and the website itself. » At M0-TJ5 (2026-10-27) the
+  lead picked «Confirm, as listed (Recommended)» for the list put to them: what goes to `../tykun_games`, this rule, what stays.
+- **What it retired and what it kept:** m0_superseded.md's [M0-TJ5] lines, the negative scope among them, and contract §0.5
+  [M0-TJ5] (§6.2.5); M0-TZ carries the routing as its flag [M0-TJ5].
+- **The reading** (mine, M0-TJ5 — the lead corrects it if wrong): a deploy is any copy of the web build to an address players
+  reach — `games-box`, a CDN, a game portal; serving a build on this machine for a test (the web smoke, `review_page.py
+  serve`) is not one, and Steam's desktop release is outside R20 (the negative scope keeps Steam).
+
 ## Considered and REJECTED (false economy)
 Binding (PLAYBOOK §2.1, §11): a later agent proposing an item below re-opens a closed decision — it asks
 the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.

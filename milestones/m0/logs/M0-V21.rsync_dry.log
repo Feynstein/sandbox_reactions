@@ -1,0 +1,16 @@
+.d..t...... milestones/m0/
+<f.st...... milestones/m0/m0_implementation_plan.md
+.d..t...... milestones/m0/logs/
+<f.st...... milestones/m0/logs/M0-TM12.log
+<f.st...... milestones/m0/logs/M0-TM12.plan_lint.log
+<f+++++++++ milestones/m0/logs/M0-V21.log
+<f+++++++++ milestones/m0/logs/M0-V21.rsync_dry.log
+<f.st...... milestones/m0/logs/loop_times.jsonl
+.d..t...... milestones/m0/logs/.baseline/
+<f..t...... milestones/m0/logs/.baseline/.gitignore
+<f+++++++++ milestones/m0/logs/.baseline/M0-V21.json
+.d..t...... milestones/m0/tasks/
+<f+++++++++ milestones/m0/tasks/M0-TM12.md
+<f+++++++++ milestones/m0/tasks/M0-V21.md
+.d..t...... tools/pb/
+<f.st...... tools/pb/verify.anchor.json

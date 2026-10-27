@@ -1,0 +1,262 @@
+== M0-V21 · Triage — six open D's and M0-V9's two findings (E6) · linux-pc (laserax-ai) · 2026-10-27, from 15:48 EDT
+rung_record now: model=claude-opus-5-5 level=max plugin=installed (the heading's rung: Opus 5.5, max)
+plan.py show M0-V21: baseline: M0-V21, 588 files, 2026-10-27T15:48:13-04:00 · show GO
+
+-- read-only probes (linux-pc, no write)
+git apply --check tests/plants/build-wasm-only.patch   -> patch failed: crates/sr-physics/src/lib.rs:1
+git apply --check tests/plants/grav-half.patch         -> both hunks fail: reference/hydro.rs:540 (closure now `gravity.map(|f| … [f.gx…, f.gy…]` at 616–619);
+                                                          shaders/hydro.wgsl:193 (`accel_at`'s return at 270, `phi_at` follows from 273)
+git apply --check, dump's 7 plants                     -> dump-flux-zero FAILS (src/dump.rs:288), dump-sinks-drop FAILS (src/dump.rs:283);
+                                                          dump-channel-order, dump-sim-time-skip, headless-no-sinks, warm-rate-not-dumped, dt-empty-box-unbounded apply
+git log -- tests/plants/dump-{flux-zero,sinks-drop}.patch -> last cut a2bed96 (2026-10-15); src/dump.rs since: 03e763b (M0-D85, 2026-10-22)
+git show d818dbc -- crates/sr-physics/src/lib.rs        -> line 1 gains «the calibration file» with `pub mod calibration;` (M0-T65's module)
+tests/gpu/dump.rs:345                                    -> still `base + 4 * (N_CHANNELS + 2) * cells`; :346 slices every byte after the 14 channels as F
+                                                          (with the 17th plane, `f.split_at(cells)` puts F_y and the rate in `fy`) — source read, not run
+headless.rs git_rev 343–351                             -> `git rev-parse --short HEAD`, no mark (M0-D63 stands)
+assets/calibration.json measured                        -> {'git': '255ec37', 'box': 'laserax-ai-server', 'adapter': 'NVIDIA GeForce RTX 4090', 'date': '2026-10-26T20:29:19Z'}
+                                                          (the lives ran on 255ec37 + the rsync'd tree — reports/v9.md header) — M0-D63's symptom on the shipped file
+git log since filing, each D's files                   -> D65: f39c6db (+2 lines, a .bin filter, not same_disk/scene_file) · D68/D71 (hydro.wgsl, reference/hydro.rs): none ·
+                                                          D69 (grav.wgsl, reference/grav.rs): none · D91 (heat.wgsl, step/heat.rs, reference/heat.rs): 8c2ad32 (M0-D93/D94)
+M0-D94's handoff (plan_archive.md)                       -> «on the new pair the f32 Jacobi solve of heat_ceiling.bin converges — its premise gone»; heat_stiff's cuts kept on a_r 4e-5 / c_sb 200
+logs/M0-V9-r8.chain.log, heat_unconverged per life     -> preset_giant (18,211.5) 0 in 12,005 steps · preset_massive 0 · preset_sun 266 in 177,762 (first at step 13,730,
+                                                          main_sequence, sim_time 154.867; record build/calibrate_runs/2026-10-26T20-04-01Z/preset_sun-01) ·
+                                                          m_up_sb-01 (3,351.0) 53 from step 16,210 · m_up_sb 3,492.1 10 · m_up_sb 46,914 2 · m_bh_sb 67,020.6 14 · the rest 0
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+moved M0-D65 after M0-T78 (30 lines, byte-identical). Write the ordering note (E8).
+move: checks=1 failed=0 warnings=0
+=== GO ===
+register: checks=3 failed=0 warnings=0 · set=3 · replaced=3 · appended=0
+=== GO ===
+lint: checks=697 failed=0 warnings=2 · blocks=307 · flow_rows=307 · verify_fences=1 · history=0 · flow=per-task · header=547/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D98 1 · M0-D99 1 · M0-D68 4 · M0-D69 2 · M0-D71 6 · M0-D91 3 · M0-D65 3
+=== GO ===
+lint: checks=697 failed=0 warnings=2 · blocks=307 · flow_rows=307 · verify_fences=1 · history=0 · flow=per-task · header=547/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D68 4 · M0-D69 2 · M0-D71 6 · M0-D91 3 · M0-D65 3
+=== GO ===
+ 16:14:14 up 15 days,  3:46,  4 users,  load average: 0.00, 0.00, 0.00
+NVIDIA GeForce RTX 3060, 0 %
+NVIDIA GeForce RTX 4090, 0 %
+loop_times: server 1718810 bytes, prefix match: yes
+== claim on laserax-ai-server, RTX 4090
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why dump: never: .cargo/config.toml (+127)
+plan_lint         697/0/0      0.11 s  GO · step 1/2, 1 left
+dump              11/1/0      25.74 s  NO-GO · step 2/2, 0 left
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 108 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 36 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 33 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 107 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 108 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 109 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 128 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 41 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 106 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 104 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 109 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 101 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 76 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 76 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 105 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 103 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 94 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 85 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 26 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 125 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 107 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 135 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 126 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-V21.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+4be54f373e18
+anchor: 1 path×scope entries moved by this run
+anchor: 173 paths checked · 288 skipped (3 classes) · 128 never checked · 0 stale · 0 unclassified · 0 owed · 301 covered of 589 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for dump)
+NEVER CHECKED  Cargo.lock  (no entry for dump)
+NEVER CHECKED  Cargo.toml  (no entry for dump)
+NEVER CHECKED  assets/elements.json  (no entry for dump)
+NEVER CHECKED  assets/physics.json  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_order.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/readouts.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/build.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/calibration.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/calibration_embed.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/observe/mod.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/observe/stages.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/observe/tracker.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/observe/translate.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/sheet.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for dump)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for dump)
+NEVER CHECKED  rust-toolchain.toml  (no entry for dump)
+NEVER CHECKED  scenes/asym_blob.json  (no entry for dump)
+NEVER CHECKED  scenes/box_blob.json  (no entry for dump)
+NEVER CHECKED  scenes/cold_co_disk.json  (no entry for dump)
+NEVER CHECKED  scenes/cold_disk.json  (no entry for dump)
+NEVER CHECKED  scenes/edge_pulse.json  (no entry for dump)
+NEVER CHECKED  scenes/fill_world.json  (no entry for dump)
+NEVER CHECKED  scenes/heat_ceiling.bin  (no entry for dump)
+NEVER CHECKED  scenes/heat_hot.json  (no entry for dump)
+NEVER CHECKED  scenes/heat_overflow.bin  (no entry for dump)
+NEVER CHECKED  scenes/heat_pulse.json  (no entry for dump)
+NEVER CHECKED  scenes/heat_rim.json  (no entry for dump)
+NEVER CHECKED  scenes/heat_spot.json  (no entry for dump)
+NEVER CHECKED  scenes/jeans_ripple.json  (no entry for dump)
+NEVER CHECKED  scenes/ref_burn.json  (no entry for dump)
+NEVER CHECKED  scenes/ref_disk.json  (no entry for dump)
+NEVER CHECKED  scenes/ref_sod.json  (no entry for dump)
+NEVER CHECKED  scenes/sink_cloud.json  (no entry for dump)
+NEVER CHECKED  scenes/sod.json  (no entry for dump)
+NEVER CHECKED  scenes/sun_disk.json  (no entry for dump)
+NEVER CHECKED  tests/cargo.sh  (no entry for dump)
+NEVER CHECKED  tests/gpu.sh  (no entry for dump)
+NEVER CHECKED  tests/plants/dt-empty-box-unbounded.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-channel-order.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-flux-zero.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-sim-time-skip.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-sinks-drop.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/headless-no-sinks.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/warm-rate-not-dumped.patch  (no entry for dump)
+skipped   280  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  dump: 1 failed · log milestones/m0/logs/M0-V21.dump.log
+  anchor: 128 never checked, 0 stale, 0 unclassified - every one named above
+verify: 708 passed, 1 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 60 not impacted · 25.74 s + loop 0.07 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.0->0.2 · base: M0-V21's start 2026-10-27T15:48:13-04:00
+=== NO-GO: dump: 1 failed · log milestones/m0/logs/M0-V21.dump.log; anchor: 128 never checked, 0 stale, 0 unclassified - every one named above ===
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+lint: checks=696 failed=0 warnings=2 · blocks=307 · flow_rows=307 · verify_fences=1 · history=0 · flow=per-task · header=547/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D68 4 · M0-D69 2 · M0-D71 6 · M0-D91 3 · M0-D65 3
+=== GO ===
+verify: 696 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.54->8.54
+=== GO ===

@@ -15,9 +15,12 @@ lives in the current plan — `milestones/m0/m0_implementation_plan.md` today.
    (M0-TB's session). **On win-laptop**, the switch is installed once there too, when it first joins.
 3. **Before a Steam release** — Steamworks partner enrolment and the per-app fee (M0-R1's report
    states the current terms).
-4. **Before the web release** — an AWS account for a small Lightsail box with a Lightsail CDN in
-   front, and the AdSense H5 Games Ads application; the consent rules for ads to rule
-   (milestones/m0/reports/web_hosting.md; the milestone placed by M0-TZ).
+4. Closed 2026-10-27 — N/A — superseded by the lead's direction of 2026-10-27 (M0-TJ5's Ask): the box
+   exists (`games-box`, the $5 Lightsail bundle in Canada (Central), up since 2026-10-16), and the CDN,
+   the AdSense application and the consent rules are the site's — `../tykun_games`'s, with every live
+   deploy (R20 in the M0 plan). Was: **Before the web release** — an AWS account for a small Lightsail
+   box with a Lightsail CDN in front, and the AdSense H5 Games Ads application; the consent rules for
+   ads to rule (milestones/m0/reports/web_hosting.md; the milestone placed by M0-TZ).
 5. **The first session on win-laptop** — push the Phase 2 commit gate from linux-pc first. On the
    laptop: Git for Windows and Claude Code installed, the repo cloned from `origin`, then launch
    M0-TE-win (it probes the laptop, installs what is missing, asks you for anything that needs an
@@ -64,3 +67,8 @@ lives in the current plan — `milestones/m0/m0_implementation_plan.md` today.
   proven there) and M0-TJ3 (the lead rules which checks run on the laptop and which stay on linux-pc).
   Next: the Phase 2 commit gate on linux-pc, then M0-TE-win on win-laptop.
 - **2026-10-11 · PLAYBOOK v12.3 propagated** — PLAYBOOK.md v12.3 written (byte-identical to canonical); AGENTS.md written from §C, CLAUDE.md and GEMINI.md set to `@AGENTS.md`; in milestones/m0/m0_implementation_plan.md: M0-TE-V12.3, M0-TH-adopt-a inserted after M0-T22. Committed and pushed by tools/propagate.py after the lead's go (11:06).
+- 2026-10-27 · M0-TJ5: the lead's direction — the site `https://tykungames.com` (its pages, picker, look and ads), the
+  box `games-box` and every live deploy are `../tykun_games`'s (rule R20 in the M0 plan; the lead: «Confirm, as listed
+  (Recommended)»). This project's web work ends at its static web build: when the lead calls one ready, the block that
+  closes on that word writes `Web build ready: <folder> · <commit, or tree id> · <date> · <what changed>` here, and
+  `../tykun_games` deploys it. Worklist item 4 closed; the web build, Steam and reports/web_hosting.md kept. Next: M0-TC9.

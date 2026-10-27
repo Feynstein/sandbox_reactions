@@ -650,6 +650,12 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     1,928 its neutron-matter core (X_n,c 0.735, Y_e,c 0.123) split off as a fresh object 2 while the ejecta kept id 1, so the core
     read failed_star (never ignited, no passed collapse) and the life ended on it «on neither side of the threshold» (exit 6) — the
     lead, 2026-10-26, at M0-D97: «Id follows the centre (Recommended)».
+  - [M0-TJ5] §6.2.5's "Hosting: none in M0 (reports/web_hosting.md feeds a later milestone)" · hosting is none in this project,
+    in M0 or after it: the site `https://tykungames.com` (its pages, game picker, look and ads), the box `games-box`, the CDN, the
+    consent rules and every live deploy are `../tykun_games`'s, which deploys a web build this project marks ready in its tracker
+    (R20); reports/web_hosting.md stays as the record `../tykun_games` reads; the smoke still serves web/dist locally · the lead's
+    direction of 2026-10-27 (M0-TJ5's Ask: «I want them to know we're taking over the live push of their games and the website
+    itself.»), confirmed at M0-TJ5: «Confirm, as listed (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1972,7 +1978,8 @@ Wayland or X11 (eframe `wayland` and `x11`); the lead's session is Wayland with 
   WebGPU' page (Recommended)"**. They get §4.9's page. The game ships no CPU physics (the CPU f64
   twin is a test oracle, never shipped) and no browser threads (no SharedArrayBuffer, no COOP/COEP
   — ES).
-- **6.2.5 Hosting:** none in M0 (reports/web_hosting.md feeds a later milestone); the smoke serves
+- **6.2.5 Hosting:** none in this project [M0-TJ5]: the site, its box and every live deploy are `../tykun_games`'s, which
+  deploys a build this project marks ready (R20; §0.5; reports/web_hosting.md is the record it reads); the smoke serves
   web/dist locally.
 
 ### 6.3 Headless (R4)

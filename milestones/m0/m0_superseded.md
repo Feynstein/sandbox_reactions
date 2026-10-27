@@ -235,3 +235,30 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   whatever its share, the others new, after m_bh_sb's 11,200.210 life's ejecta kept the star's id and its neutron-matter core, a fresh
   id with no passed collapse, ended the life failed_star (RTX 4090) (the lead, 2026-10-26, M0-D97: «Id follows the centre
   (Recommended)»).
+- M0-TZ's carried asks [M0-R1] ("Place the web release — hosting, CDN, ads, consent — in a milestone with the lead. Consent rules
+  and revenue are the lead's to rule.") and [M0-R2b] ("place the site's game picker with the web release"), and [M3-TB1] whole —
+  `../space_tykun`'s note for this project (its `milestones/m3/m3_contrat.md` §2.5, never pasted here): this project uploading its
+  own build over SSH to `ubuntu@games-box` into `/srv/site/sandbox-reactions/`, the box's serving facts for that path, the shared
+  origin's storage keys, the « Ready to go up » tracker line and "Place this game's web release — with M0-R1's hosting, CDN, ads
+  and consent — in a milestone with the lead" — N/A — superseded by the lead's direction of 2026-10-27 (M0-TJ5's Ask: «I want
+  them to know we're taking over the live push of their games and the website itself.»): the site, its picker, look and ads, the
+  CDN, the consent rules, `games-box` and every live deploy are `../tykun_games`'s, and what the site needs from a build arrives
+  from it as a flag through the lead (R20; M0-TZ's flag [M0-TJ5]) (the lead, 2026-10-27, M0-TJ5: «Confirm, as listed
+  (Recommended)»).
+- milestones.md's worklist item 4 ("Before the web release — an AWS account for a small Lightsail box with a Lightsail CDN in
+  front, and the AdSense H5 Games Ads application; the consent rules for ads to rule") and reports/web_hosting.md § Routed to
+  (M0-TZ places the web release; the worklist's AWS account and AdSense application) — N/A — superseded by the lead's direction
+  of 2026-10-27 (M0-TJ5's Ask): the box exists (`games-box`, the $5 Lightsail bundle in Canada (Central), up since 2026-10-16),
+  and the CDN, the AdSense application and the consent rules are the site's; the report stays, unedited, as the record
+  `../tykun_games` reads (the same answer).
+- Contract §6.2.5's "Hosting: none in M0 (reports/web_hosting.md feeds a later milestone)" — superseded by contract §0.5
+  [M0-TJ5]: no hosting in this project, in M0 or after it; and reports/bootstrap.md §3's row « "run on a website" — a full web
+  release | later, beyond M0's web smoke | after M0 » narrowed by the same: what M0-TZ places from it is this game's static web
+  build, marked ready in the tracker (R20), its going live `../tykun_games`'s (the lead's direction of 2026-10-27, M0-TJ5's Ask;
+  the same answer).
+- Not retired, explicitly (M0-TJ5's negative scope): the web build — `web/` (Trunk, the wasm bundle, `web/smoke.mjs`), G-WEB and
+  « a tiny web build kept alive from the first build lot »; contract §6.2.4's no browser threads and no COOP/COEP, which R20 now
+  also holds for the site's ads; Steam; reports/web_hosting.md, kept as the record (`../tykun_games` reads it); the folder
+  `/srv/site/sandbox-reactions/` on the box, `../tykun_games`'s to fill; an in-game ad break (H5 Games Ads at game breaks, as
+  web_hosting.md records) — if `../tykun_games` rules one, its hook arrives as a flag and is built here; M0-TZ placing this
+  game's own web build in a milestone with the lead.
