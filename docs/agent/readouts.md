@@ -3,8 +3,7 @@
 Written by M0-T64 (2026-10-16) from `milestones/m0/m0_contrat.md` §1.9, §2.9, §2.12.2, §3.3 and the handoffs of
 M0-T56–M0-T63. The contract owns every number, threshold, formula and string; this page names the parts and points to
 the section that fixes them, never a value §1.9, §2.7 or `assets/calibration.json` holds. What waits for later lots is
-said where it comes up: the mass and temperature translations (§1.10.1–§1.10.3) are § Translations (M0-T69, M0-T71); the age clock, the predicted
-ending (§1.9.5), the selected star (§1.9.6) and the readout strings (§4) are not built yet — M0-T72, M0-T73 and the drawing lots own them.
+said where it comes up: the mass and temperature translations (§1.10.1–§1.10.3) are § Translations (M0-T69, M0-T71); the predicted ending (§1.9.5) is § The predicted ending (M0-T72); the age clock (§1.10.4) is § The age clock (M0-T73); the number formats (§4.12) are § Number formats (M0-T75); the selected star (§1.9.6) and the readout panel are not built yet — the drawing lots own them.
 
 The one rule (I2, G-WATCH): **observers watch, never drive.** Everything here reads what a step produced and changes
 nothing in it. The boundary is in `docs/agent/architecture.md` § The observer boundary.
@@ -131,8 +130,8 @@ a run resumed from a dump counts on from the dump's step — while `summary.json
 - **Files.** `DIR/events.jsonl` (one event a line, equal to `summary.json`'s `events`), and in `summary.json`:
   `events`, `objects` and `until`. Each object: `id`, `stage` (the displayed one — `null` until a stage has held),
   `mass_sb` and `stages` — `[{stage, from_step, sim_time}]` for each stage displayed, from the frame that showed it. The objects
-  listed are the last frame's. **Left out until their blocks:** `mass_suns` (M0-T69), `predicted_ending` (M0-T72),
-  `ending` and `age_years` (M0-T73) — the summary has no placeholder for them.
+  listed are the last frame's. **Left out until their blocks:** `mass_suns` (M0-T69), `predicted_ending` (the drawing lots' readout wires `observe::ending`),
+  `ending` and `age_years` (M0-T73 built the clock, `observe::age`; the summary does not carry it yet) — the summary has no placeholder for them.
 - **`--until`** (exactly one of `--steps` / `--until`; refused with `--cpu-reference`): `sim_time:<t>` · `event:<kind>` ·
   `stage:<id>` · `ending`. `--max-steps` bounds either; reaching it with the condition unmet exits 2 and the DONE line reads
   `until=unmet`. `sim_time:<t>` stops at the first step past `t` (the last chunks are single steps); the others are read on a
@@ -176,8 +175,36 @@ them; nothing a step computes depends on one. They live in `sr_physics::observe:
   copies none. The scope `readouts` (`testing.md`) runs on `Calibration::test_calibration`, and its real-calibration case stays **NOT PROVEN**
   until M0-V9's run writes `assets/calibration.json`.
 - **Not wired yet.** summary.json's `mass_suns` and the readout strings come with M0-T72, M0-T73 and the drawing lots; nothing in the engine
-  consumes `Translations` today but `calibrate` (the preset masses, the Sun-like T_eff check). The age clock (§1.10.4) is not built.
+  consumes `Translations` today but `calibrate` (the preset masses, the Sun-like T_eff check). The age clock (§1.10.4) is § The age clock (M0-T73).
+
+## The predicted ending (§1.9.5; M0-T72)
+`sr_physics::observe::ending::Predictor` (built from calibration's M_ign, M_Ch, M_up, M_BH): `predict(mass_sb)` reads the mass in Suns — below 0.08 failed
+star, below 8 white dwarf, below 25 supernova then neutron star, else black hole — and a mass within **±10 % in sandbox mass** of M_ign, M_up or M_BH
+(the band closed, the nearer threshold if two meet) is `CloseCall(lighter, heavier)`, for `fate.close_call`. `readout(mass_sb, remnant)` shows
+`Ended(ending)` instead once the displayed remnant stage (white_dwarf, neutron_star, black_hole, failed_star) has held `stages::ending_hold(τ_dyn)`
+= max(10 t.u., 20 τ_dyn) (§0.5 [M0-D78]) — the same function the engine's `ending` event reads. `Fate::key` / `Ending::key` give the strings table's keys
+(`fate.*`, `ending.*`); the text lives in `sr-app`'s strings. Display only, nothing wired to a panel or summary.json yet.
+
+## The age clock (§1.10.4; M0-T73)
+`sr_physics::observe::age::AgeClock` (built from calibration: `from_calibration`, or `new((M_ign, M_Ch, M_up, M_BH), stage_durations_sb)`): `update(now, wall, &objects, |id| shown_stage)`
+once per summary, `age(id)` in years, `rate(id, wall)` the "1 s ≈ …" figure. Per object the age is a **running sum** of `max(Δφ, 0) · τ_s(M_suns)` for the stage it *shows* (`StageTracker::stage(id).shown`;
+none shown yet → the age waits), so it never decreases and never jumps (G-AGE); a mass change moves τ_s for the Δφ still to come only. φ: a stage with a fuel (main_sequence H, he_core He, c_burn C,
+ne_burn Ne, o_burn O, si_burn Si) = (X_f,c,start − X_f,c) / (X_f,c,start − 10⁻³), clamped to [0, 1], fuel painted back in raising the start; any other stage sums Δt / its `stage_durations_sb` duration
+(log-log in mass, held beyond its pairs, 10 t.u. unmeasured; capped at 1); the four remnant stages add 10⁸ years per t.u. τ_s is §1.10.4's table, log-log in Suns, held under 1 and over 25 (`collapsing` on
+the cloud's row). A stage that ends is banked up to the frame that ends it; a stage entered again goes on from where it stood. The rate is the age gained over the last wall second up to the `wall` asked (0 when
+paused). Not wired to a panel or summary.json (`age_years` is left out of it until the drawing lots). Display only (G-WATCH).
+
+## Number formats (§4.12; M0-T75; `crates/sr-app/src/format.rs`)
+Every number the app shows becomes text here, through the string table's templates (§4.1) — no caller formats a number itself. English: "," groups thousands, "." is the decimal point.
+The rules (significant digits, the unit ladders, the cut-offs) are §4.12's; the scope `formats` (`testing.md`) holds each of its examples byte for byte. This page names the parts:
+- **Builders.** `mass` (Suns), `temperature` (kelvins: grouped, then million, then billion), `age` and `rate` (the largest unit whose value is ≥ 1, a year 365.25 days, §1.10.4's "1 s ≈ …"), the speeds
+  (`rung`, `speed`, `speed_capped`, `speed_max`, `rung_max` — Max is `time.rung_max`, TOP is no longer a rung), `number` (the inspector's), `percent` (mix), `integer` (fps, steps), and the line builders
+  `inspect_temperature`, `inspect_density`, `inspect_speed`, `inspect_mix` and `status_line`.
+- **The boundary reads the rounded value (declared at M0-T75, cheap to reverse).** A unit or notation switch is decided after rounding to the digits shown, so 999,999 K reads "1.00 million K", never
+  "1,000 thousand"; the same for ages and the inspector's scientific cut-offs.
+- **Grouping applies to every fixed number**; ladder rungs print as written (×1000, not ×1,000). Zero reads "0.00"; a NaN or an infinity prints as Rust writes it — a bug upstream, not a state.
+- **Not wired yet.** The module sits under `allow(dead_code)` until the readout panel, the inspector, the top bar and the status line call it (the drawing lots). Display only (G-WATCH).
 
 ## What is not here yet
-The age → years clock (§1.10.4; M0-T73), the predicted ending and its "close call" (§1.9.5), the selected star (§1.9.6), the labels (§4.6) and the
+The selected star (§1.9.6), the labels (§4.6) and the
 readout panel (the drawing lots). When they land their sections go on this page; a number that calibration holds is pointed to, never copied.

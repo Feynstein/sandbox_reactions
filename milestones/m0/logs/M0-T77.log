@@ -1,0 +1,70 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.47s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 6 tests
+test edits_file::a_bad_edits_file_is_refused ... refused: not a list: the edits file must be a list
+refused: unknown entry key: [0].when: unknown key
+refused: unknown edit key: [0].edit.colour: unknown key
+refused: two triggers: [0].at: give one of step, object_until, mass_until
+refused: a fractional step: [0].at.step: must be a whole number
+refused: a negative step: [0].at.step: must be a whole number
+refused: an unknown condition: [0].at.object_until.x_he_c_below: unknown key
+refused: both mass bounds: [0].at.mass_until: give at_least or at_most
+refused: a negative mass: [0].at.mass_until.at_least: a mass is not negative
+refused: a cell outside the world: [0].edit: cell (64, 10) is outside the 64x64 world
+refused: a radius of 0: [0].edit.radius: 0 is outside 1–40
+refused: a radius of 41: [0].edit.radius: 41 is outside 1–40
+refused: an unknown species: [0].edit.species: "Xx" is not in the registry
+refused: a paint with no species: [0].edit.species: a paint names its species
+refused: an erase with a species: [0].edit.species: only a paint has one
+refused: an unknown kind: [0].edit.kind: "smear" is not paint, erase, heat or cool
+refused: frames of 0: [0].edit.frames: 0 is outside 1–8
+refused: frames of 9: [0].edit.frames: 9 is outside 1–8
+SR-ERROR bad edits: the edits file must be a list
+SR-ERROR bad edits: /tmp/sr-edits-file-3488509/missing.json: No such file or directory (os error 2)
+SR-ERROR bad arguments: --edits is the GPU's: it has no meaning with --cpu-reference
+ok
+test edits_file::a_chunked_run_stops_at_the_step_trigger ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3 sim_time=0.089745 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4 sim_time=0.119659 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.199359 until=none
+chunked: painted 0 after 3 steps, 1.1600 after 4 and after 40
+ok
+test edits_file::a_mass_repeat_stops_once_the_mass_passes ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=14 sim_time=0.418808 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=14 sim_time=0.406560 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=6 sim_time=0.179489 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10 sim_time=0.303166 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3 sim_time=0.090247 until=none
+mass: 6 applications of 0.58 to pass 304.58; at_most: 0 erases above, 47.6 erased once under
+ok
+test edits_file::a_step_trigger_and_a_state_trigger_land_in_the_step_they_name ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=8 sim_time=0.239319 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=8 sim_time=0.239626 until=none
+cascade: E1 in step 3 (2×29 cells), E2 in step 4 (13 cells), painted 1.4200
+ok
+test edits_file::the_queue_takes_eight_edits_a_step_in_the_files_order ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=6 sim_time=0.179489 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=6 sim_time=0.179489 until=none
+queue: eight in step 2, the next eight in step 3
+ok
+test edits_file::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=8 sim_time=0.239626 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=8 sim_time=0.239626 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=8 sim_time=0.239626 until=none
+two runs: 8 dumps and the summary bit-identical, the chunked run's last dump too
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 405 filtered out; finished in 3.95s
+

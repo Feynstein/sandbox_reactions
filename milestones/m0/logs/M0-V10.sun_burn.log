@@ -1,0 +1,28 @@
+== 2026-10-28T15:42:48-04:00 sun_burn · task M0-V10 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=0 · 76.50 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=36.203398 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=58.699711 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 36.203: centre (299, 200) Σ 8.967 T 33.115 X_H 0.72676; T_max 33.115; bound 3129.08 of 3132.91 (0.9976 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 4000 t 47.511: centre (299, 200) Σ 9.403 T 33.431 X_H 0.72408; T_max 33.431; bound 3128.60 of 3130.23 (0.9974 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 5000 t 58.700: centre (300, 199) Σ 9.678 T 33.701 X_H 0.72123; T_max 33.706; bound 3128.23 of 3128.89 (0.9973 of the preset's 3136.72); sinks 0
+SR-SUNBURN X_H,c: [0.72676, 0.72408, 0.72123]; falls [0.00268, 0.00285] (each ≥ 0.001), 0.00554 over the window (≥ 0.002); least ≥ 0.5
+ok
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 22.485, L 1695.8, L_nuc 1160.4, L_nuc/L 0.6843 (band (0.5, 2.0)); T_max [33.115, 33.431, 33.706] against 0.5 T_He = 39.2
+ok
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 3129.08 of the preset's 3136.72 (0.9976), grid 3132.91, sinks 0
+SR-SUNBURN bound at step 4000: 3128.60 of the preset's 3136.72 (0.9974), grid 3130.23, sinks 0
+SR-SUNBURN bound at step 5000: 3128.23 of the preset's 3136.72 (0.9973), grid 3128.89, sinks 0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 407 filtered out; finished in 76.26s
+
+

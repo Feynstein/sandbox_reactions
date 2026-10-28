@@ -629,6 +629,141 @@
         }
       ]
     },
+    "ending": {
+      "desc": "ending (contract §1.9.5; M0-T72): sr_physics::observe::ending on synthetic anchors (no GPU) — the four bands read from the mass in Suns (below 0.08 failed star, below 8 white dwarf, below 25 supernova then neutron star, else black hole; zero and the end segments extended; NaN refused), each of the three thresholds a close call between its two fates, both edges of every band at exactly ±10 % in sandbox mass a close call and a hair outside not (the band closed), the band taken in sandbox mass and not in Suns on a squeezed ladder (1.08 × M_up is 13 % over 8 Suns yet close), the nearer threshold naming the pair where two bands meet, a remnant stage (white_dwarf, neutron_star, black_hole, failed_star) displayed for max(10 t.u., 20 τ_dyn) — stages::ending_hold, §0.5 [M0-D78] — showing the ending instead of the prediction (9.999 t.u. not, 10 t.u. yes; τ_dyn 1 needs 20), no other stage ending it, and the strings keys. Synthetic anchors only — NOT PROVEN against assets/calibration.json's real thresholds; the readout panel wiring is the drawing lots'. Plant ending-band-swap (M_up where M_BH belongs, in the unit).",
+      "cmd": "bash tests/cpu.sh sr-physics observe::ending",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 11,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/ending-band-swap.patch"
+      ],
+      "plants": [
+        {
+          "id": "ending-band-swap",
+          "patch": "tests/plants/ending-band-swap.patch"
+        }
+      ]
+    },
+    "age_clock": {
+      "desc": "age_clock (contract §1.10.4, G-AGE; M0-T73; the plan spells it `age-clock`, the scope is `age_clock`, R17): sr_physics::observe::age on synthetic anchors and objects (no GPU) — τ_s at 1, 5, 15 and 25 Suns for all fourteen table rows against the table typed again, collapsing on the cloud's row, the four remnant stages having none; log-log between the listed masses (√5 Suns the geometric mean, 3 and 9 Suns on the straight line, under the linear blend) and held under 1 and over 25 Suns; a fuel stage (main_sequence H, he_core He, c_burn C, o_burn O, ne_burn Ne, si_burn Si) gaining its τ as X_f,c goes from its start to 10⁻³ (half at the midpoint, the whole at 0.0005, nothing after); a mass jump keeping the age and the next burn earning the new mass's τ, and moving no timed stage; Δφ < 0 clamped (fuel painted back in adds nothing, its burning counts again); a timed stage on the calibrated duration (log-log in mass, held, 10 t.u. unmeasured) and stopping at φ = 1; a remnant at 10⁸ years per t.u. whatever the mass; a stage change banking the old stage whole and not resetting, a stage entered again going on from where it stood; the age non-decreasing over 2,000 scrambled frames (stage, mass, fuel, sim time jumping, sometimes back); the \"1 s ≈ …\" rate over the last wall second following a speed change, falling to 0 paused, over a short history the span there is; objects independent, a new one at 0, a gone one forgotten, a sim time running back gaining nothing; built from a Calibration. Synthetic anchors only — NOT PROVEN against assets/calibration.json's stage_durations_sb and a real life; the readout wiring is the drawing lots'. Plant age-unclamped-unit (Δφ not clamped at 0 in the unit).",
+      "cmd": "bash tests/cpu.sh sr-physics observe::age",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 17,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/age-unclamped-unit.patch"
+      ],
+      "plants": [
+        {
+          "id": "age-unclamped-unit",
+          "patch": "tests/plants/age-unclamped-unit.patch"
+        }
+      ]
+    },
+    "multi": {
+      "desc": "several clouds and the three presets (contract \u00a72.10, \u00a73.3, \u00a75.2's G-MULTI; M0-T74): crates/sr-engine/src/scene.rs's `Scene::with_preset_masses` and headless's read of calibration, scenes/two_suns.json; `bash tests/gpu.sh multi physics`. The three presets' planes at calibration's `preset_mass_sb` (the cells hold it within 1e-5, nothing left to warn as nominal) and `headless --scene preset:<name> --steps 1`'s ledger start mass the same; the scene's two Sun-like presets 240 cells apart asserted against each cloud's radius before any run (the gap between the edges \u2265 100 cells, no gas between, each cloud one Sun-like mass); G-MULTI on the physics adapter: two_suns.json to sim_time 40 [M0-T74: the contract's 20 \u03c4_dyn \u2248 72 t.u. is past the clouds' infall, one object at t = 72 (the lead, 2026-10-28, \u00abShorten to 40 t.u. (Recommended)\u00bb)] \u2014 two objects, the ids an early run began with, finite masses, exit 0 (no non-finite value, exit 5), each object's mass in Suns, predicted ending (white dwarf) and age filled; and two 24 \u00d7 24 clouds 7 cells apart (exactly one empty 4-cell block between, whatever the alignment) two objects after one step. one-object (M0-T58's patch, \u00a75.2) lets the tracker link across an empty block",
+      "cmd": "bash tests/gpu.sh multi physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 5,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "assets/calibration.json",
+        "scenes/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/one-object.patch"
+      ],
+      "plants": [
+        {
+          "id": "one-object",
+          "patch": "tests/plants/one-object.patch"
+        }
+      ]
+    },
+    "edits": {
+      "desc": "player edits on the GPU, P0 (contract \u00a71.3.2 P0, \u00a71.12, \u00a72.7, \u00a72.9, \u00a73.1; M0-T76): crates/sr-engine/src/step/edit.rs and shaders/edit.wgsl, Step::with_edits and Step::queue_edit; `bash tests/gpu.sh edit physics` \u2014 64 \u00d7 64 to 256 \u00d7 256 worlds run through P0, P1, P8 and P9 alone, one step after the edits are queued, against the f64 twin of a deposit (\u03a3 \u03b5_th added to, the cold energy following the new \u03a3 and composition, the momentum density unchanged) and of the heat and cool factors: paint (113 cells of a radius-6 brush: \u03a3 + paint_sigma, mixed by mass, momentum bit-identical, E within 2e-5, painted = 113 \u00d7 paint_sigma), erase (the floor state, hydrogen, at rest; what is outside the brush bit-identical), heat and cool (\u03b5_th \u00d7 1.05 / 0.95 within 5e-5, floored at T_floor, vacuum and \u03a3, momentum untouched), a hot dense C/O cloud (\u03a3 = 300, T = 3e4, cold pressure on) taking the same paint and heat as warm gas (B7), a Sun-like preset dropped on a cell against the scene's own planes (\u03a3 within 1e-6, E within 2e-5, preset_dropped = the cloud's mass within 1e-5, the box grown to it), drops within 40 cells of an edge refused (`presets.no_room`) and drops with room accepted, the box re-fit once by a paint outside it and not by an edit inside it (equal to the oracle), Clear (every cell the floor state, the sinks removed, cleared booked), the queue (edits in order, once, eight at most, bad radius, cell, species and an unbuilt step refused); in every case the state's change in mass and energy equals the booked terms (with P8's) to 1e-6 of the field's total. edit-ignored is \u00a75.2's G-TOUCH plant: P0 drops edits on non-vacuum cells",
+      "cmd": "bash tests/gpu.sh edit physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 10,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/edit-ignored.patch"
+      ],
+      "plants": [
+        {
+          "id": "edit-ignored",
+          "patch": "tests/plants/edit-ignored.patch"
+        }
+      ]
+    },
+    "edits_file": {
+      "desc": "the edits file and `headless --edits` (contract \u00a72.12.5, \u00a73.3, \u00a71.12; M0-T77): crates/sr-engine/src/headless.rs's EditPlan; `bash tests/gpu.sh edits_file physics` \u2014 scenes/edits_triggers.json, a 64 \u00d7 64 world with an H disk and every physics switch off so only an edit moves a cell, run with a dump after every step on the physics adapter: a {\\\"step\\\": 3} paint (frames 2) lands in step 3 (the cells of its brush at base + 2 \u00d7 paint_sigma from the fourth dump, every other cell bit-identical to the unedited run's, painted = 2 \u00d7 29 \u00d7 paint_sigma), an object_until x_h_c_below trigger read at the step boundary lands in the step after the one that held it, a chunked run (no dump each step) ending at the step trigger, a mass_until at_least repeat applied every step from the first object's until the heaviest object's mass passes m \u2014 six applications, the sixth the first to pass, none after \u2014 and an at_most erase that stops once under m (and never starts above it), the queue's eight a step with the rest in the file's order, two runs bit-identical and the chunked run's last dump the same, and the refusals (eighteen bad files, a missing file, --cpu-reference, exit 4 before any GPU). edits-trigger-late is the adversarial plant: a step trigger applied one step late",
+      "cmd": "bash tests/gpu.sh edits_file physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 6,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "scenes/edits_triggers.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/edits-trigger-late.patch"
+      ],
+      "plants": [
+        {
+          "id": "edits-trigger-late",
+          "patch": "tests/plants/edits-trigger-late.patch"
+        }
+      ]
+    },
     "fft_twin": {
       "desc": "the CPU twin's FFT and convolution, no GPU (contract §1.3.3, §1.4.2, §2.5.4): the radix-2 f64 FFT against a direct DFT on sizes 1…128 (1e-12 relative) and a delta and a plane wave exactly, inverse(forward) = identity at 32…2048 and in 2D, the 2D transform against the direct 2D DFT, Parseval at 16 × 8 and at 2048, the zero-padded convolution against direct summation on a 48 × 40 box with a kernel asymmetric in both axes (1e-10 relative, the box's edge cells checked rim by rim), mass in the four corners not wrapping, a single source reproducing the shifted kernel, the kernel's transform cached per padded size (sampled once for 48 × 40 and 50 × 41), padded sizes 32…2048 by the smallest power of two ≥ 2 × the axis and the refusals (M0-T28)",
       "cmd": "bash tests/cpu.sh sr-physics reference::fft",
@@ -1274,6 +1409,32 @@
         {
           "id": "string-typo",
           "patch": "tests/plants/string-typo.patch"
+        }
+      ]
+    },
+    "formats": {
+      "desc": "number formats (contract §4.12, M0-T75): crates/sr-app/src/format.rs — mass (3 significant digits, units.suns), temperature (grouping below 10^6 K, then million, then billion), age and rate (the largest unit whose value is >= 1, 365.25 days a year), speeds (rungs as written, the actual at 2 significant digits, Max as time.rung_max), inspector numbers (3 significant digits, scientific below 0.001 and from 100,000), mix percentages, integers for fps and steps, each through the string table's templates; every example §4.12 gives byte-identical and each boundary judged after rounding (999,999 K is 1.00 million K). The bin's own unit tests, `format::` (sr-app is bin-only, so cpu.sh's --bin mode). Plant format-grouping (no thousands separator).",
+      "cmd": "bash tests/cpu.sh sr-app --bin format",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 15,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/main.rs",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/format-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "format-grouping",
+          "patch": "tests/plants/format-grouping.patch"
         }
       ]
     },

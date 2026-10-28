@@ -40,6 +40,7 @@
 
 pub mod boxfit;
 pub mod dt;
+pub mod edit;
 pub mod fft;
 pub mod grav;
 pub mod heat;
@@ -154,6 +155,7 @@ pub struct Step {
     react: Option<react::React>,
     sinks: Option<sinks::Sinks>,
     nuheat: Option<nuheat::NuHeat>,
+    edits: Option<edit::Edits>,
     boxfit: BoxFit,
     latch: Latch,
     summary: Summary,
@@ -506,7 +508,7 @@ impl Step {
         if let Some(s) = &sink {
             passes[Pass::Sinks as usize].push(s.latch_dispatch(device, latch.flag()));
         }
-        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, sinks: sink, nuheat: heating, boxfit, latch, summary, next: Cell::new(0), timer: Timer::default() })
+        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, sinks: sink, nuheat: heating, edits: None, boxfit, latch, summary, next: Cell::new(0), timer: Timer::default() })
     }
 
     /// P2's g = −∇φ (the x plane, then the y plane, f32, row-major over the world) when the step runs gravity; φ is the

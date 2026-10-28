@@ -1,0 +1,5 @@
+# M0-V10 — F1's measurement: summary.json objects' keys (§2.12.2 wants id, stage, mass_sb, mass_suns, predicted_ending, ending, age_years, stages)
+file /tmp/sr-multi-3513779-run/out/summary.json, written 2026-10-28 15:15:34 by the multi scope's G-MULTI run
+git b3e8b22-dirty | adapter NVIDIA GeForce RTX 5090 | scene /home/ybelanger/private/sandbox_reactions/crates/sr-engine/../../scenes/two_suns.json | sim_time 40.00475243944675
+object 1 keys ['id', 'mass_sb', 'stage', 'stages']
+object 2 keys ['id', 'mass_sb', 'stage', 'stages']

@@ -281,3 +281,12 @@ mod readouts;
 
 /// M0-T70 — `calibrate`, items 5–6: the order (K9), the presets' masses, the Sun's life, the top rung, the stage durations and the gas speed, on stubbed lives (contract §2.11, §1.8.2, §1.10.1); no GPU.
 mod calibrate_order;
+
+/// M0-T74 — the three presets at calibration's masses and several clouds (contract §2.10, §5.2's G-MULTI).
+mod multi;
+
+/// M0-T76 — player edits on the GPU, P0 (contract §1.3.2 P0, §1.12, §2.9, §3.1).
+mod edit;
+
+/// M0-T77 — the edits file and `headless --edits` (contract §2.12.5, §3.3).
+mod edits_file;

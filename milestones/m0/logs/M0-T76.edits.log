@@ -1,0 +1,365 @@
+== 2026-10-28T14:55:45-04:00 edits · task M0-T76 · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 8.14 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::a_drop_that_would_leave_the_world_is_refused_with_no_room' (3315937) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it' (3315961) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+FAILED
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas' (3315969) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+FAILED
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared' (3316006) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+FAILED
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::erase_writes_the_floor_state_and_books_what_left' (3316024) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+FAILED
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone' (3316032) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+FAILED
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it' (3316040) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+FAILED
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded' (3316059) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+FAILED
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::the_box_grows_to_an_edit_outside_it_and_only_then' (3316072) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `patch` is a reserved keyword
+    ┌─ wgsl:201:42
+    │
+201 │ @group(0) @binding(7) var<storage, read> patch: array<f32>;
+    │                                          ^^^^^ definition of `patch`
+
+
+
+
+FAILED
+
+failures:
+
+failures:
+    edit::a_drop_that_would_leave_the_world_is_refused_with_no_room
+    edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it
+    edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas
+    edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared
+    edit::erase_writes_the_floor_state_and_books_what_left
+    edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone
+    edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it
+    edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded
+    edit::the_box_grows_to_an_edit_outside_it_and_only_then
+
+test result: FAILED. 0 passed; 9 failed; 0 ignored; 0 measured; 395 filtered out; finished in 1.02s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-10-28T14:56:25-04:00 edits · task M0-T76 · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 8.49 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.99s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it' (3319053) panicked at crates/sr-engine/tests/gpu/edit.rs:208:5:
+preset drop: Δmass 3351.0321190894697 against the booked 3351.0321651101112
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::erase_writes_the_floor_state_and_books_what_left' (3319117) panicked at crates/sr-engine/tests/gpu/edit.rs:281:21:
+assertion `left == right` failed: (0, 0) channel 3 outside the brush
+  left: 814313586
+ right: 814313587
+FAILED
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone' (3319145) panicked at crates/sr-engine/tests/gpu/edit.rs:323:13:
+(60, 4) ε_th 0.09999324058095738 against 0.1
+FAILED
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded' (3319189) panicked at crates/sr-engine/tests/gpu/edit.rs:522:5:
+the eighth edit applied
+FAILED
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it
+    edit::erase_writes_the_floor_state_and_books_what_left
+    edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone
+    edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded
+
+test result: FAILED. 5 passed; 4 failed; 0 ignored; 0 measured; 395 filtered out; finished in 1.38s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-10-28T14:57:13-04:00 edits · task M0-T76 · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=0 · 5.98 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.73s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 395 filtered out; finished in 1.20s
+
+
+== 2026-10-28T14:57:44-04:00 edits · task M0-T76 · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=0 · 6.13 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 4.71s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 10 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 395 filtered out; finished in 1.32s
+
+
+== 2026-10-28T14:58:36-04:00 edits · task M0-T76 · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=0 · 4.42 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 10 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 395 filtered out; finished in 4.29s
+
+
+== 2026-10-28T15:01:14-04:00 edits · task M0-T76 · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=0 · 5.58 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 10 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 395 filtered out; finished in 5.46s
+
+

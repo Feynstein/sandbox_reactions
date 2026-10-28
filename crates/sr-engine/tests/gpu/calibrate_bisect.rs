@@ -659,6 +659,7 @@ fn a_life_showing_a_black_hole_stops_before_its_ending() {
             load_dump: Some(seeded.clone()),
             continue_life: false,
             cpu_reference: false,
+            edits: None,
         };
         let (code, lines) = run_scene_captured(args, Scene::load(&scene).unwrap(), None);
         assert_eq!(code, 0, "{name}: {lines:?}");
@@ -899,6 +900,7 @@ fn a_continued_life_that_already_met_its_until_ends_at_once() {
             continue_life: load.is_some(),
             load_dump: load,
             cpu_reference: false,
+            edits: None,
         };
         let (code, lines) = run_scene_captured(args, scene(), None);
         (code, lines, out)
@@ -1003,6 +1005,7 @@ fn a_life_steps_one_at_a_time_through_its_core_collapse() {
             continue_life: load.is_some(),
             load_dump: load,
             cpu_reference: false,
+            edits: None,
         };
         let mut seen = Vec::new();
         let mut tick = |t: &Tick| {

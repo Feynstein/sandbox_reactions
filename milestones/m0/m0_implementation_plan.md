@@ -275,15 +275,21 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D68 | BUILD | M0-D64's face-work energy source cools a cold collapse below its adiabat: the diffusive mass flux's work comes out of the cells' thermal energy, and G-JEANS's cloud at U_th = 0.05 W loses 8× its entropy on the ripple's spoke (J 0.129 → 1.04) | AFTER M0-D65 | DONE (2026-10-28 09:57, started 08:58) |
 | M0-D69 | BUILD | Gravity's momentum leaks where gas sits on the world's edge: the box's outer ring takes a one-sided g with no matching pull back, so the ledger's cold disk collapsing 12 cells from a leave edge drifts 266 in momentum against 21 in a wider world | AFTER M0-D68 | DONE (2026-10-28 10:27) | | |
 | M0-R11 | BUILD | Unresolved-remnant research — a degenerate remnant one or two cells across cannot be held at rest by P4 (M0-D71: no well-balanced reconstruction or solver did), and P8's floor pays its cold core's every residual motion: what treatment lets a sub-cell white dwarf or neutron star sit still and shine on its own heat | AFTER M0-D69 | DONE (2026-10-28 13:25) | | |
-| M0-T72 | BUILD | The predicted ending and the close call (§1.9.5) | AFTER M0-V9 | TODO |
-| M0-T73 | BUILD | The age clock: a stage clock that never runs backwards (§1.10.4) | AFTER M0-T72 | TODO |
-| M0-T74 | BUILD | The three presets and several clouds (G-MULTI) | AFTER M0-T73 | TODO |
-| M0-T75 | BUILD | Number formats (§4.12) | AFTER M0-T74 | TODO |
-| M0-T76 | BUILD | Player edits on the GPU (P0): brush, eraser, heat, cool, preset drop, clear | AFTER M0-T75 | TODO |
-| M0-T77 | BUILD | The edits file and --edits (§2.12.5) | AFTER M0-T76 | TODO |
-| M0-T78 | BUILD | Docs: readouts.md (ending, age), physics.md (edits); lot 10 rows | AFTER M0-T77 | TODO |
-| M0-D65 | BUILD | `cold_core` is red on win-laptop: scenes/cold_co_disk.json, written on linux-pc, is "stale" against the disk rebuilt here — σ 4 × 10⁻¹² apart, over `same_disk`'s 10⁻¹² — so the scope's two scene cases fail on a tree that changed nothing in them | AFTER M0-D63 | TODO |
-| M0-V10 | CHECK | Validation, lot 10: readouts, presets, edits | AFTER M0-T78 | TODO |
+| M0-T72 | BUILD | The predicted ending and the close call (§1.9.5) | AFTER M0-V9 | DONE (2026-10-28 13:34) |
+| M0-T73 | BUILD | The age clock: a stage clock that never runs backwards (§1.10.4) | AFTER M0-T72 | DONE (2026-10-28 13:45) |
+| M0-T74 | BUILD | The three presets and several clouds (G-MULTI) | AFTER M0-T73 | DONE (2026-10-28 14:10, started 13:46) |
+| M0-D100 | BUILD | `observe_run`'s ending case is red by one ulp on the RTX 5090 — `held_t` 10.009586475323886 against the test's own 10.009586475323887 (observe.rs:197) | AFTER M0-T74 | DONE (2026-10-28 14:30) |
+| M0-T75 | BUILD | Number formats (§4.12) | AFTER M0-T74 | DONE (2026-10-28 14:40) |
+| M0-T76 | BUILD | Player edits on the GPU (P0): brush, eraser, heat, cool, preset drop, clear | AFTER M0-T75 | DONE (2026-10-28 15:04) |
+| M0-T77 | BUILD | The edits file and --edits (§2.12.5) | AFTER M0-T76 | DONE (2026-10-28 15:17) |
+| M0-T78 | BUILD | Docs: readouts.md (ending, age), physics.md (edits); lot 10 rows | AFTER M0-T77 | DONE (2026-10-28 15:21) |
+| M0-D65 | BUILD | `cold_core` is red on win-laptop: scenes/cold_co_disk.json, written on linux-pc, is "stale" against the disk rebuilt here — σ 4 × 10⁻¹² apart, over `same_disk`'s 10⁻¹² — so the scope's two scene cases fail on a tree that changed nothing in them | AFTER M0-D63 | DEFERRED (wake: an agent's box probe reads win-laptop — hostname Laser2025-20 — owed there, R15; or cold_core reads red on linux-pc too; otherwise not run here) |
+| M0-V10 | CHECK | Validation, lot 10: readouts, presets, edits | AFTER M0-T78 | DONE (2026-10-28 16:11) |
+| M0-D104 | BUILD | calibrate_bisect's plant `calibrate-checkpoint-without-observers` no longer applies: M0-T77's `edits: None` sits inside its hunk's context (calibrate.rs:767), so the Phase 12 sweep reads it ERROR and the scope's red-arm NO-GO | AFTER M0-V10 | TODO |
+| M0-TC10 | MOVE | Compaction — Phase 12's close: nineteen closed blocks to stub, more than ten (PLAYBOOK §8, §11) | AFTER M0-V10 | TODO |
+| M0-V22 | CHECK | Triage — five open D's after Phase 12's close, and M0-V10's logged finding (E6) | AFTER M0-TC10 | TODO |
+| M0-D101 | BUILD | A paint that lands outside the active box makes the state non-finite in the step that applies it: the first stroke into an empty world, or beside a star's box, reads energy non-finite at the painted disk's top row (exit 5), where the same paint inside the box runs clean | AFTER M0-V22 | TODO |
+| M0-D102 | BUILD | `observe_run` can no longer fail on an empty box: its plant `dt-empty-box-unbounded` reads GREEN («unfailable») on the RTX 4090 and the RTX 5090 alike — M0-D96's eaten-cloud case passes with the empty box's Δt unbounded, so every sweep reads `observe_run` NO-GO | AFTER M0-D101 | TODO |
 | M0-T79 | BUILD | The blackbody table (§1.11) | AFTER M0-V10 | TODO |
 | M0-T80 | BUILD | The cell image and the four views (§1.11) | AFTER M0-T79 | TODO |
 | M0-T81 | BUILD | The glow: bright pass, Gaussian, upsample (§1.11) | AFTER M0-T80 | TODO |
@@ -310,6 +316,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-V13 | CHECK | Validation, lot 13: tools, stars and cells; the lead's measure-ui run | AFTER M0-TV3 | TODO |
 | M0-D71 | BUILD | P4 is not well-balanced at a hydrostatic core: HLL's diffusion lifts mass out of a degenerate remnant's well every step while spurious inflow momenta carry it back, so the gravity split pumps energy from a heatless centre and P8's floor pays half the late remnant's light (1.48 × 10⁵ of 2.78 × 10⁵ at step 450,000) | AFTER M0-D70 | TODO | | |
 | M0-D91 | BUILD | P5's f32 solve stagnates where a thin cell beside vacuum holds u ~ 10¹⁶ — the 40 M₀ life's step 2,517 spends all 4,096 rounds in its first Newton pass on either preconditioner (still unconverged at 32,768), so the step commits by limited fluxes instead of its backward-Euler answer | AFTER M0-D71 | TODO | | |
+| M0-D103 | BUILD | summary.json's objects carry none of §2.12.2's four readouts — `mass_suns`, `predicted_ending`, `ending`, `age_years`: M0-T60 left them «once M0-T69, M0-T72 and M0-T73 exist», and those three built the library alone | AFTER M0-D91 | TODO | | |
 | M0-T97 | BUILD | The life probe: three presets' lives measured (reports/lives.md) | AFTER M0-V13 | TODO |
 | M0-TJ1 | PLAN + LEAD answers | Stand-ins S1/S2: enabled only on a measured failure (deferred) | AFTER M0-T97 | DEFERRED (wake: reports/lives.md measures §1.6.4's failure — S1's unbound envelope under 30 %, or S2's under 50 % at f_dep = 0.1) |
 | M0-T98a | BUILD | K1's gap tuned on preset-free clouds (split from M0-T98 by M0-TB) | AFTER M0-TJ1 | TODO |
@@ -534,12 +541,12 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: lot 10 (M0-T72 … M0-T78), M0-D65 (win-laptop's) and M0-V10, then Phases 13–15 — the game on screen first (the lead at M0-R11, 2026-10-28: «Game first (Recommended)»); M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13
-- Counters: T=125 · D=99 · V=21 · Q=0 · TI=0 · TJ=5 · TV=3 · TC=9 · TR=1 · TM=12 · TD=1 · TE=1 · R=11
-- Open D/BLOCKED register: two D's open, at the head of Phase 16 after M0-V13 (the lead at M0-R11, 2026-10-28: «Game first (Recommended)», «move the deffered tasks where they will run»): M0-D71 (re-opened by M0-R11's ruling — the held core, η 0.1, the measured bounds, reports/unresolved_remnant.md; its flags, M0-D68's among them, in its block), then M0-D91 (M0-D93 measured its cause apart; M0-V21's flag in it); M0-D65 below M0-T78 (win-laptop's; first there if a lot-10 block runs on win-laptop) — the reasons in the ordering notes under Phase 12's and Phase 16's headings; M0-D69 closed 2026-10-28 (its residue, source-term gravity, flagged to M0-T106) · E6's declarations before M0-V21 (M0-V20 three at eight open, M0-D70 one at eight, M0-V9 one at six) and the blocks closed since M0-V20: each its own handoff
-- Outstanding commit gates: Phase 11's is in: bcbd2e5 ('M0 Phase 11: calibration'), HEAD is origin/main (read-only git, M0-V21, 2026-10-27); R18's push of it to laserax-ai-server not read from here (that checkout held 255ec37 plus the rsync'd tree, refused until its tracked files are clean) · for the next gate, uncommitted since bcbd2e5: the work of M0-TJ5 (filed by ../tykun_games' bootstrap), M0-TC9, M0-TM12 and M0-V21 — the plan, plan_archive.md, the contract, m0_rules.md, m0_superseded.md, milestones.md, their task files and logs, loop_times and the anchor
+- Next task: M0-TC10 (Phase 12's compaction: nineteen closed blocks to stub) on linux-pc, then M0-V22 (E6's triage: six open D's and M0-V10's logged F2), then M0-D104, M0-D101 and M0-D102 before Phase 13; M0-D65 (win-laptop's) is DEFERRED and owed — it wakes, and runs first, as soon as an agent detects it is on win-laptop (hostname Laser2025-20) — then Phases 13–15, the game on screen first (the lead at M0-R11, 2026-10-28: «Game first (Recommended)»); M0-D71, M0-D91 and M0-D103 at the head of Phase 16, after M0-V13
+- Counters: T=125 · D=105 · V=22 · Q=0 · TI=0 · TJ=5 · TV=3 · TC=10 · TR=1 · TM=12 · TD=1 · TE=1 · R=11
+- Open D/BLOCKED register: six D's open — E6 → M0-V22 after M0-TC10: M0-D104 (calibrate_bisect's plant calibrate-checkpoint-without-observers stranded by M0-T77's `edits: None`; filed right after M0-V10 at the lead's word, it runs after M0-V22; every sweep reads calibrate_bisect NO-GO until it lands), M0-D101 (a paint outside the active box makes the state non-finite, exit 5; before Phase 13 — the window's brush and drop, M0-T89, M0-T90) and M0-D102 (observe_run's dt-empty-box-unbounded GREEN on the RTX 4090 and 5090; before Phase 13 — every sweep reads observe_run NO-GO until it lands), then at the head of Phase 16 after M0-V13 (the lead at M0-R11, 2026-10-28: «Game first (Recommended)», «move the deffered tasks where they will run»): M0-D71 (re-opened by M0-R11's ruling — the held core, η 0.1, the measured bounds, reports/unresolved_remnant.md; its flags, M0-D68's among them, in its block), M0-D91 (M0-D93 measured its cause apart; M0-V21's flag in it), M0-D103 (summary.json's four readouts, before M0-T104 and M0-T107); M0-D65 below M0-T78 (win-laptop's, DEFERRED) — the reasons in the ordering notes under Phase 12's and Phase 16's headings; M0-V10's F2 (the wisp cut) logged for M0-V22 · M0-D100 and M0-D69 closed 2026-10-28 (their handoffs) · E6's declarations before M0-V21 (M0-V20 three at eight open, M0-D70 one at eight, M0-V9 one at six) and the blocks closed since M0-V20: each its own handoff
+- Outstanding commit gates: Phase 11's is in (bcbd2e5), then c6c8b4b and b3e8b22 (M0-V21, M0-R11 done) · Phase 12's: committed and pushed to origin by M0-V10 at the lead's word (2026-10-28: «when you're done I want you to git add -A, commit and push», «I want everything pushed live, even stuff you didnt do yourself») — 'M0 Phase 12: readouts, presets and edits', the whole working tree since b3e8b22 (lot 10, M0-D100, M0-V10's report, D's and every log); R18's push of it to laserax-ai-server waits on that checkout's tracked files being clean (255ec37 + the rsync'd tree)
 - Carryover: none
-- Awaiting lead: R18's push of bcbd2e5 to laserax-ai-server (its tracked files clean first; not read from here, M0-TJ5); the RTX 5090 reading of the 4,572 life and the collapse watch (M0-D81's owed lines, tasks/M0-D81.md § Owed); the RTX 5090 reading of the 6,702 life (tasks/M0-D88.md § Owed); on laserax-ai-server keep build/calibrate_runs/2026-10-26T16-25-05Z, T16-26-37Z, T18-37-19Z, T20-04-01Z (the calibration's lives, reports/v9.md) and T16-49-42Z (the exit-6 run, M0-D97's evidence), never `--resume` a pre-D94 stamp (tasks/M0-D94.md § Measured, not filed); keep build/calibrate_runs/2026-10-21T19-39-14Z/ (m_bh_sb's two lives on M0-D79's binary; M0-D81's 5090 record) and build/calibrate_runs/2026-10-21T15-23-36Z/ (M0-R5's evidence); on laserax-ai-server keep build/calibrate_runs/2026-10-22T15-08-15Z/ and /tmp/d80_frames_off/build/calibrate_runs/2026-10-22T15-10-37Z/ (M0-D81's 4090 records) and build/r6_evidence/ (M0-R6's probe tables; M0-D89's repro dumps under m40/), and the server's build/calibrate_runs/2026-10-23T20-42-01Z, T20-43-27Z, T21-08-46Z as M0-D92–D95's and M0-D70's evidence, never as a --resume base; on laserax-ai-server, removable (the lead's): /tmp/d90p and build/calibrate_runs/2026-10-23T19-56-12Z/, 2026-10-23T19-58-57Z/ (M0-D90's probe dumps, 15 GB), /tmp/d97, /tmp/v9s6, /tmp/v9r9_claim.out, and pid 1621826 (a pgrep loop left by M0-D90's session that matches itself and never ends)
+- Awaiting lead: R18's push of HEAD to laserax-ai-server (its tracked files clean first; that checkout is 255ec37 + the rsync'd tree); on laserax-ai-server keep /tmp/v10 (M0-V10's probe scenes and outputs — M0-D101's and M0-V22's repro) until M0-D101 closes, removable after; the RTX 5090 reading of the 4,572 life and the collapse watch (M0-D81's owed lines, tasks/M0-D81.md § Owed); the RTX 5090 reading of the 6,702 life (tasks/M0-D88.md § Owed); on laserax-ai-server keep build/calibrate_runs/2026-10-26T16-25-05Z, T16-26-37Z, T18-37-19Z, T20-04-01Z (the calibration's lives, reports/v9.md) and T16-49-42Z (the exit-6 run, M0-D97's evidence), never `--resume` a pre-D94 stamp (tasks/M0-D94.md § Measured, not filed); keep build/calibrate_runs/2026-10-21T19-39-14Z/ (m_bh_sb's two lives on M0-D79's binary; M0-D81's 5090 record) and build/calibrate_runs/2026-10-21T15-23-36Z/ (M0-R5's evidence); on laserax-ai-server keep build/calibrate_runs/2026-10-22T15-08-15Z/ and /tmp/d80_frames_off/build/calibrate_runs/2026-10-22T15-10-37Z/ (M0-D81's 4090 records) and build/r6_evidence/ (M0-R6's probe tables; M0-D89's repro dumps under m40/), and the server's build/calibrate_runs/2026-10-23T20-42-01Z, T20-43-27Z, T21-08-46Z as M0-D92–D95's and M0-D70's evidence, never as a --resume base; on laserax-ai-server, removable (the lead's): /tmp/d90p and build/calibrate_runs/2026-10-23T19-56-12Z/, 2026-10-23T19-58-57Z/ (M0-D90's probe dumps, 15 GB), /tmp/d97, /tmp/v9s6, /tmp/v9r9_claim.out, and pid 1621826 (a pgrep loop left by M0-D90's session that matches itself and never ends)
 - Model ratings: 2026-10-27 by M0-TM12
 
 # Tasks
@@ -2124,12 +2131,19 @@ Ordering note (E8 — M0-V21, 2026-10-27, E6's triage): before M0-T72 run M0-D98
 M0-D69, M0-D71 and M0-D91 as filed (the lead's «After M0-V9»; M0-D91 after the physics D's): lot 10 grades
 nothing they change, but they bring the open D's under E6's five before new work. M0-D65 moved below M0-T78 by
 `plan.py move`: its symptom is win-laptop's, where M0-V10's carried runs go next; on win-laptop it runs first (a
-claim there touching the engine's crates reads `cold_core` NO-GO until it lands).
+claim there touching the engine's crates reads `cold_core` NO-GO until it lands). Amended 2026-10-28 (the lead, after M0-T78): M0-D65 is
+DEFERRED and owed — an agent that detects it is on win-laptop (the box probe reads hostname Laser2025-20) sets it IN PROGRESS and runs it
+first, before its own task; on linux-pc it runs only if `cold_core` reads red there too (the lead, 2026-10-28: «unless its happening on this pc too, we defer it»); otherwise it stays deferred.
 Amended at M0-R11, 2026-10-28 (the lead: «Game first (Recommended)», then «move the deffered tasks where they will run»):
 M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on screen first; the open D's sit at two, under E6's five.
+Amended at M0-V10, 2026-10-28 (E8): after M0-V10 run M0-TC10 (the close's compaction, §11), M0-V22 (E6's triage: the open D's at
+six), then M0-D104, M0-D101 and M0-D102 (the sweep's F5 and lot 10's F1 and F4 — a stranded calibrate_bisect plant, the brush outside
+the box, `observe_run`'s stranded plant) before Phase 13, so M0-T79's «AFTER M0-V10» reads after M0-D102. M0-D104 sits right after
+M0-V10 at the lead's word («If there is any issue you file a D block right after your task», 2026-10-28) and runs after M0-V22, which
+orders the six; M0-D103 (F3) went to Phase 16's head (its note).
 
 ## M0-T72 · The predicted ending · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V9)
-- Status: TODO
+- Status: DONE (2026-10-28 13:34)
 - Carried flags: [M0-V9, 2026-10-21] The ending's hold is no longer 10 t.u. once M0-D78 lands: a remnant stage shows the ending after max(10 t.u., 20 τ_dyn), τ_dyn the object's at that frame — one function in sr-physics's observe, which watch.rs reads; your Deliver's «a remnant stage held 10 t.u. → the ending» and its case «the switch to the ending at 10 t.u.» read that function (§0.5 [M0-D78]; the lead, 2026-10-21, at M0-V9: «max(10 t.u., 20 τ_dyn) (Recommended)», the option reading «the game's ending readout follows the same rule»).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §1.10.1 + docs/agent/testing.md
 - Deliver: crates/sr-physics/src/observe/ending.rs (new): from M in Suns (M0-T69) — below 0.08 failed
@@ -2143,10 +2157,10 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
   plant stays GO
 - Adversarial: a close-call band computed in Suns instead of sandbox mass widens at the squeezed ends —
   §1.9.5 says sandbox mass, and the edge cases are taken there.
-- Handoff: <placeholder>
+- Handoff: linux-pc (laserax-ai) + laserax-ai-server (RTX 4090), model=claude-sonnet-5-5 level=high (rung_record, matches). New crates/sr-physics/src/observe/ending.rs: Predictor::predict (bands from the mass in Suns via MassScale; close call = ±10 % of M_ign, M_up or M_BH in sandbox mass, band closed, nearer threshold if two meet) and Predictor::readout (Ended(ending) once a displayed remnant stage held stages::ending_hold(τ_dyn) = max(10 t.u., 20 τ_dyn), else the prediction); Fate::key / Ending::key name the strings table. Scope ending (verify.json) 11 cases; plant tests/plants/ending-band-swap.patch. Verify 1 [ALREADY RUN — PASS (GO 11/0/0) on linux-pc and on laserax-ai-server, RTX 4090]. Verify 2 [ALREADY RUN — PASS (--redarm ending: plant RED, 3 failed) on linux-pc and laserax-ai-server]. Claim [ALREADY RUN — FAIL (45/46 scopes, 1188 passed/1 failed: observe_run's events_jsonl_and_the_ending_of_a_black_hole, held_t …886 vs …887, 1 ulp) on linux-pc, RTX 5090] then [ALREADY RUN — PASS (--changed GO, ending 11/11; observe_run alone GO 9/0) on laserax-ai-server, RTX 4090]. Not acted on: that 5090 1-ulp equality in crates/sr-engine/tests/gpu/observe.rs:197 (exact f64 == on held_t) — engine code does not read ending.rs; the 4090 passes; not filed as D (not reproduced beyond one 5090 run). Deviation: NOT PROVEN against assets/calibration.json's real thresholds (synthetic anchors); no panel/summary.json wiring (drawing lots). Docs: docs/agent/testing.md, readouts.md. Next: M0-T73.
 
 ## M0-T73 · The age clock · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T72)
-- Status: TODO
+- Status: DONE (2026-10-28 13:45)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.3 (the fuels), §1.10.4 +
   docs/agent/testing.md
 - Deliver: crates/sr-physics/src/observe/age.rs (new): age += max(Δφ, 0)·τ_s(M_suns) each summary — φ
@@ -2161,10 +2175,10 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
   plant stays GO
 - Adversarial: a stage change resetting φ to the new stage's start without banking the old one makes the
   age jump back — the clock integrates Δφ, and a case changes stage mid-run.
-- Handoff: <placeholder>
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record, matches heading). observe/age.rs: AgeClock (integrated Δφ·τ_s, table log-log held, fuel/timed/remnant φ, rate over last wall second), scope age_clock (R17's spelling of age-clock) 17/17 GO, red-arm GO (plant age-unclamped-unit RED, 2 failed). Declared readings: timed φ summed per frame so a mass jump moves the rate only; φ capped at 1; durations held beyond their pairs. Claim: --changed on linux-pc 46/47 GO, observe_run red by one ulp in an f64 assert_eq (observe.rs:197, not this task's code); re-run per R18 on laserax-ai-server RTX 4090: observe_run 9/9 GO. NOT PROVEN against assets/calibration.json durations (synthetic). Not wired to summary.json/panel nor in StageTracker snapshot (a resumed dump restarts ages at 0). Detail tasks/M0-T73.md. Next: M0-T74.
 
 ## M0-T74 · The three presets and several clouds (G-MULTI) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T73)
-- Status: TODO
+- Status: DONE (2026-10-28 14:10, started 13:46)
 - Carried flags: [M0-T61, 2026-10-16] [M0-T61] Object::Preset now carries mass (scene files load UNIT_MASS); give a preset its calibrated mass with Scene::preset_mass(name, mass_sb, world); cloud_shape(mass) → {a, sigma_c}; MAX_RADIUS 150 caps the radius, a clipped cloud keeps the full-disk scale (tasks/M0-T61.md)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.10, §3.3 (`preset:`), §5.2
   (G-MULTI) + docs/agent/testing.md
@@ -2178,10 +2192,25 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
   stays GO
 - Adversarial: two presets so close that their clouds overlap at the drop make one object by design — the
   scene's 240 cells against each cloud's radius is asserted before the run.
-- Handoff: <placeholder>
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record, matches). Presets sun/massive/giant now at calibration's preset_mass_sb in scene files and headless preset:<name> (Scene::with_preset_masses; no calibration embedded → nominal disk + SR-WARN as before); scenes/two_suns.json, scope multi 5/5 GO, red-arm GO (one-object RED; needs its second case: two rects 10 cells apart — the 240-cell pair is out of LINK's reach). Declared (the lead's ruling «Shorten to 40 t.u. (Recommended)»): G-MULTI runs to sim_time 40 — gravity merges the pair into one object by 20 τ_dyn (t 72) — contract §0.5 [M0-T74] + Superseded mirror. Claim --changed: 1113 passed, twin and dump red from my change (their twins built the nominal sun; fixed, re-run GO with sun_burn), observe_run red by one ulp on the 5090 (known since T72, filed M0-D100). NOT RUN (owed on laserax-ai-server): observe_run on the RTX 4090 — rsync refused by auto mode. Not done: Watch's wisp cut still uses the nominal Sun mass (3,351 vs 3,137). Detail tasks/M0-T74.md. Next: M0-D100 (filed right after this block), then M0-T75.
+
+## M0-D100 · `observe_run`'s ending case is red by one ulp on the RTX 5090 — `held_t` 10.009586475323886 against the test's own 10.009586475323887 (observe.rs:197) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T74)
+- Status: DONE (2026-10-28 14:30)
+- Filed by: M0-T74, 2026-10-28 — seen by M0-T72 and M0-T73 on the same tree and each re-run green on the RTX 4090 (their handoffs, tasks/M0-T72.md, tasks/M0-T73.md), never filed.
+- Blocks: nothing — `observe_run` reads GO on the RTX 4090; every claim run on linux-pc's 5090 carries one red until it lands
+- Caused by: unknown
+- Rating: (usual) — the cause is not measured: Opus 5.5, high
+- Files: crates/sr-engine/tests/gpu/observe.rs:183–197 (opened by M0-T74); crates/sr-engine/src/watch.rs:310 (`held_t` is `at.sim_time − held.since`)
+- Read: this file (rules + this task) + crates/sr-engine/tests/gpu/observe.rs 183–200 + crates/sr-engine/src/watch.rs 280–320 + docs/agent/readouts.md § Events
+- Symptom: measured on linux-pc, RTX 5090, 2026-10-28 (M0-T74's `--changed` and `observe_run` alone, the same each time): `events_jsonl_and_the_ending_of_a_black_hole` fails at observe.rs:197, `assert_eq!(ending["detail"]["held_t"].as_f64(), Some(held))` — left Some(10.009586475323886), right Some(10.009586475323887); the ending event is {"hold_t":10.0,"mass_sb":1647.87…,"stage":"black_hole","sim_time":11.638221981935205,"step":2201}. The same case is green on the RTX 4090 (M0-T72, M0-T73, laserax-ai-server).
+- Repro: `bash tests/gpu.sh observe physics` on linux-pc (SR_TEST_ADAPTER "RTX 5090"), case `observe::events_jsonl_and_the_ending_of_a_black_hole`.
+- Suspected cause: the test computes `held` from two JSON numbers (the event's `sim_time` minus the displayed stage's `sim_time`) and the event holds `at.sim_time − held.since`; if `held.since` is not bit-equal to the stage entry's `sim_time` (two readings of one instant, one through a different path) a 1-ulp difference shows on one adapter and not on another. Not measured: print both operands on each adapter first.
+- Deliver: the cause measured, then either the two readings made one (watch.rs) or the compare made a ≤ 1e-12 relative one (observe.rs), whichever the measure says — never a loosened bound without it → Verify 1
+- Verify: 1. `bash tests/gpu.sh observe physics` on linux-pc (RTX 5090) · Pass: 9 passed · Fail: the case red
+- Handoff: Cause measured: the test's JSON parse, not watch.rs — the 5090's events.jsonl holds sim_time 11.638221981935203 and held_t is that minus the stage's 1.6286355066113174 to the bit; serde_json (no float_roundtrip) reads …203 as …205, one ulp. observe.rs:197's compare is now ≤ 1e-12 relative, its comment naming why; watch.rs unchanged. Verify 1 on linux-pc RTX 5090: observe_run 9 passed GO. Claim (verify.py --changed, linux-pc RTX 5090): 1104 passed, 47/47 scopes GO, 321.5 s. Red-arm NO-GO on the 5090 (904 s): 3 red, 2 plants timed out at 900 s (7 arms on one GPU), dt-empty-box-unbounded stayed GO (armed on the 4090's empty-box path) — none targets the changed line; not chased, the lead: «do not spend too much time fixing it»; R18 places red-arms on the server's 4090. Deviation: Verify, red-arm and claim ran on linux-pc's 5090 (the only adapter showing the bug), not laserax-ai-server. Option left to the lead: serde_json's float_roundtrip feature. Model: claude-opus-5-5, high. Detail: tasks/M0-D100.md. Next: the Pipeline's next task.
 
 ## M0-T75 · Number formats · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T74)
-- Status: TODO
+- Status: DONE (2026-10-28 14:40)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §4.1 (units.*, time.*), §4.12 +
   docs/agent/testing.md
 - Deliver: crates/sr-app/src/format.rs (new): mass (3 significant digits, `units.suns`), temperature
@@ -2198,10 +2227,10 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
   plant stays GO
 - Adversarial: rounding to 3 significant digits that crosses a unit boundary (999,999 K → "1,000,000 K")
   — the boundary cases pick the unit after rounding.
-- Handoff: <placeholder>
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record, matches). crates/sr-app/src/format.rs: mass, temperature, age/rate, speeds (rung, speed, speed_capped, speed_max, rung_max), inspector number, mix percent, integer, plus the inspect_* and status_line builders, all through strings::get templates. Scope formats 18/18 GO, red-arm GO (plant format-grouping RED, 8 failed). Declared: every unit/notation boundary is decided on the rounded value (999,999 K → 1.00 million K); grouping on every fixed number, rungs as written; tests/cpu.sh gained a --bin mode (sr-app is bin-only) — with verify.json's new scope, the two oracle FLAGs of the claim; mod format sits under allow(dead_code) until the drawing lots call it. Claim --changed: 903 passed, 18/18 scopes GO, 48 not impacted (box laserax-ai, 28.9 s). Detail tasks/M0-T75.md. Next: M0-T76.
 
 ## M0-T76 · Player edits on the GPU (P0) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T75)
-- Status: TODO
+- Status: DONE (2026-10-28 15:04)
 - Carried flags: [M0-T21, 2026-10-10] P0's edit pass ORs 1 into Step::box_edit_flag() (one u32) when an edit lands outside the box, read from the ActiveBox uniform; box_gate, box_cells and box_fit already follow the edits in P0 and clear the flag (M0-T21).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P0), §1.12, §2.7 (paint_sigma,
   paint_t, heat_factor, cool_factor), §2.9 (painted, erased, preset_dropped, cleared, tools), §3.1
@@ -2222,10 +2251,11 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
   stays GO
 - Adversarial: paint that adds mass at rest but keeps the cell's old momentum density speeds the cell up
   — the case checks momentum, not velocity.
-- Handoff: <placeholder>
+- Handoff: P0's edit pass exists: Step::with_edits + Step::queue_edit (step/edit.rs, shaders/edit.wgsl; scene.rs preset_cloud for DropPreset); opt-in, not yet called by headless or the app (flag to M0-T77). Verify 1 [ALREADY RUN — PASS (edits: 10 cases GO; claim --changed 48/48 scopes GO, 414 passed) on linux-pc, RTX 5090 — NOT the R18 route: rsync to laserax-ai-server was denied by the auto-mode classifier and not retried, so the RTX 4090 reading is NOT RUN (owed)]. Verify 2 [ALREADY RUN — PASS (--redarm edits: plant edit-ignored RED, 6 failed) on linux-pc, RTX 5090]. Declared: heat/cool skip vacuum; erase/clear write pure-hydrogen floor; box flag only for paint/drop outside the box; Clear's ledger restart is the caller's. Measured, not acted on: Δt of the step that applies a paint is the previous step's (possible one-step CFL overshoot into cold vacuum, not reproduced); the 3 per-step dispatches are unmeasured. Sizing miss: 8 files, ≈700 non-test lines (scene.rs preset-as-patch was a separable thread). Extra logs M0-T76b.* come from one rerun under a fresh id. Ran on rung_record model=claude-sonnet-5-5 level=high. Detail: milestones/m0/tasks/M0-T76.md. Next: M0-T77.
 
 ## M0-T77 · The edits file and `--edits` · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T76)
-- Status: TODO
+- Status: DONE (2026-10-28 15:17)
+- Carried flags: [M0-T76, 2026-10-28] [M0-T76, 2026-10-28] Step::with_edits(device, state, booking, eos, physics) adds P0's edit pass to a built step (the other builders keep P0 empty; headless and the app do not call it yet); Step::queue_edit(queue, &Edit) queues Paint/Erase/Heat/Cool/DropPreset/Clear for the next P0, Edit::drop_preset(preset, mass, cell, world, physics, elements) builds a drop (NoRoom → presets.no_room), at most 8 edits per step; a Clear is applied on the GPU but the caller restarts its Ledger (Edit::restarts_ledger). An --edits trigger fires queue_edit between steps; frames: edits land in a frame's first step (tasks/M0-T76.md)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.12.5, §3.3 (`--edits`) +
   docs/agent/testing.md
 - Deliver: crates/sr-engine/src/headless.rs: §2.12.5's list parsed — triggers `{"step": n}`,
@@ -2240,10 +2270,11 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
   the plant stays GO
 - Adversarial: a trigger read from a summary that lags two frames fires late and differs between runs —
   triggers read the state at the step boundary, and the two-run case proves it.
-- Handoff: <placeholder>
+- Handoff: claude-sonnet-5-5, high (rung_record.py now, 2026-10-28), linux-pc (laserax-ai), RTX 5090. headless --edits FILE: headless.rs EditPlan parses §2.12.5 (step · object_until x_h_c_below · mass_until at_least/at_most; unknown keys, cell/radius/species/frames out of range refused, exit 4 'SR-ERROR bad edits', --cpu-reference refused); the run queues Step::queue_edit at step boundaries (chunk ends at the next step trigger, one-step chunks while a state trigger is unspent). Scope edits_file (R17 spelling), 6 cases GO 22.5 s, red-arm proven (edits-trigger-late: 3 failed), --changed 50/50 GO. Declared readings: state triggers wait for the first object (first read after step 1); a repeat adds copies only when the backlog is empty; frames = that many applications in the one step (1-8, queue takes 8 a step, rest in file order). Deviations: Watch::heaviest_mass_and_x_h_c (watch.rs) and the Args.edits field (calibrate.rs, calibrate_bisect.rs's 3 Args literals) are outside Deliver — mechanical; docs/agent/testing.md edits_file row added (T78 lists it). Not measured: step-trigger/mass-trigger cost per one-step chunk on a long life; 4090 reading owed (R18, rsync denied at T76). Static synthetic disk only: NOT PROVEN on a star. Next: M0-T78.
 
 ## M0-T78 · Docs — readouts.md (the ending, the age), physics.md (edits) and lot 10's testing rows · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T77)
-- Status: TODO
+- Status: DONE (2026-10-28 15:21)
+- Carried flags: [M0-T77, 2026-10-28] [M0-T77, 2026-10-28] docs/agent/testing.md already holds an edits_file row (M0-T77, after observe_run) — T78 adds only the edits row (M0-T76 wrote none) and ending/age_clock/multi/formats if missing, never a second edits_file row; the edits file's readings (state triggers wait for the first object, one-step chunks while one is unspent, frames = applications in one step, 8 a step) are in that row for physics.md § Player edits
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §1.10.4, §1.12, §2.12.5, §4.12,
   §7 + the handoffs of M0-T72–M0-T77
 - Deliver: docs/agent/readouts.md § The predicted ending, § The age clock, § Number formats,
@@ -2254,10 +2285,10 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
   2. `grep -cE "^[|] .(ending|age-clock|multi|formats|edits|edits-file). [|]" docs/agent/testing.md` ·
   Pass: 6 · Fail: fewer
 - Adversarial: the τ_s table copied into the page — the page points to §1.10.4.
-- Handoff: <placeholder>
+- Handoff: linux-pc (laserax-ai), claude-sonnet-5-5 high (rung_record.py now, 2026-10-28; matches heading). docs/agent/readouts.md: § Number formats added (§The predicted ending and § The age clock were already there from M0-T72/T73); docs/agent/physics.md: § Player edits (P0, the edits file, declared readings of M0-T76/T77); docs/agent/testing.md: rows multi and edits added (ending, formats, age_clock, edits_file already present; no second edits_file row). Verify 1 [ALREADY RUN — PASS (3 in readouts.md, 1 in physics.md) on linux-pc]. Verify 2 [ALREADY RUN — FAIL (4 of 6) on linux-pc]: the pattern spells age-clock and edits-file with hyphens, the rows (and verify.json's scopes) use age_clock and edits_file per R17, so those two cannot match without breaking R17; all six rows exist. Claim --changed [ALREADY RUN — PASS (1/1 scope GO, plan_lint 689 passed) on linux-pc]. No code touched; no GPU run. Not acted on: the Verify 2 regex should read [_-] in the plan's check (lead's/plan's edit, not mine). Next: M0-V10.
 
 ## M0-D65 · `cold_core` is red on win-laptop: scenes/cold_co_disk.json, written on linux-pc, is "stale" against the disk rebuilt here — σ 4 × 10⁻¹² apart, over `same_disk`'s 10⁻¹² — so the scope's two scene cases fail on a tree that changed nothing in them · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D63)
-- Status: TODO
+- Status: DEFERRED (wake: an agent's box probe reads win-laptop — hostname Laser2025-20 — owed there, R15; or cold_core reads red on linux-pc too; otherwise not run here)
 - Blocks: nothing on linux-pc; `cold_core` (and so every `--changed` touching crates/sr-physics/** or crates/sr-engine/**) reads NO-GO on
   win-laptop until it lands — a claim there names this D
 - Caused by: M0-T67 (`scene_file()` / `same_disk` in crates/sr-engine/tests/gpu/cold_core.rs compare the rebuilt disk to the committed
@@ -2288,7 +2319,7 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
 - Handoff: <placeholder>
 
 ## M0-V10 · Validation — lot 10: the readouts, the presets and the edits · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T78)
-- Status: TODO
+- Status: DONE (2026-10-28 16:11)
 - Carried flags: [M0-V9, 2026-10-27] owed on win-laptop (R15), carried from M0-V9 (no win-laptop in its window): M0-V8's list (lot 8's scopes each red-armed — summary, ledger, observe_run, jeans, objects, classify, preset_cloud, with timing's M0-D49 check — and M0-V7's lots 5–7, M0-D28's desktop and start.bat checks), M0-D55's and M0-T66b's runs (calibrate_cold, registry, sink, calibration), and lot 9's seven scopes (calibration, calibrate_cold, cold_core, calibrate_status, calibrate_bisect, calibrate_order, readouts) on the RTX 4080 Laptop: `py -3.12 tools/pb/verify.py --all` and `--redarm --moved` there cover them; the calibration is the RTX 4090's (measured.adapter) — G-REF's tolerance carries it, not identity (§6.7); reports/v9.md § Owed
 - Read: milestones/m0/m0_contrat.md §1.9.5, §1.10.4, §1.12, §2.10, §2.12.5, §4.12, §5.2 (G-MULTI) + the
   handoffs of M0-T72–M0-T78 + docs/agent/readouts.md, physics.md + the delivered files, each by the
@@ -2302,6 +2333,165 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
 - Verify: 1. `python3 tools/pb/verify.py --all --task M0-V10` · Pass: GO, every scope present · Fail:
   NO-GO — each red a D (E4)
 - Adversarial: presets checked on the test calibration only — the V reads them on assets/calibration.json.
+- Handoff: DONE — DEFECTS (4 filed, 1 logged). linux-pc (laserax-ai) for the reads, the plan, the box scopes and the claim; every GPU run on laserax-ai-server, RTX 4090 (R18); model=claude-opus-5-5 level=max (rung_record now at every prompt; the heading's rung). Lot 10 conforms clause by clause — the ending's bands and close call in sandbox mass, §1.10.4's table value for value, every §4.12 example byte-exact, the edits' bookings, §2.12.5's triggers read at step boundaries; the presets read back «1.00 / 15.0 / 40.0 Suns» on assets/calibration.json (the tree's MassScale and format::mass, a scratchpad probe). Probes: F1 → M0-D101 (a paint outside the active box makes the state non-finite at step 2, exit 5 — the first stroke into an empty world; inside the box clean, P1's Δt ruled out); F4 → M0-D102 (observe_run's dt-empty-box-unbounded GREEN on the RTX 4090 as on the 5090); F3 → M0-D103 (summary.json lacks mass_suns, predicted_ending, ending, age_years); F2 (the wisp cut on the nominal Sun) logged at E6's five → M0-V22, the triage, filed. Verify 1 [ALREADY RUN — FAIL (NO-GO 1,354/10, 63/68 scopes, 176.54 s — the box five only) on laserax-ai-server, RTX 4090] + the box five [ALREADY RUN — PASS (22/0, 5/5) on linux-pc]; the lot's six red-arms [ALREADY RUN — PASS (each plant RED) on laserax-ai-server]; the sweep, at the lead's word after a re-sync [ALREADY RUN — FAIL (NO-GO: 59/68 armed, 126 RED, 1 GREEN = F4, 1 ERROR, 4,291 s) on laserax-ai-server, RTX 4090] + the box five's red-arms [ALREADY RUN — PASS (14/14 RED) on linux-pc] — the ERROR is F5 → M0-D104 (calibrate_bisect's calibrate-checkpoint-without-observers stranded by M0-T77's edits: None; E), filed right after this block at the lead's word, the sixth open D. Over the ten-minute line: observe_run's red-arm (652 s, not planned) and the sweep (the lead's instruction). Close: M0-TC10 (19 stubs), header 555/600, loop 176.54 s raw (the server's median 162.91 s idle) — no TR; no class moves — no TM, refresh 3/5. Flags: M0-V11 (win-laptop's owed list with lot 10's six), M0-T104 (O1), M0-V22 (six open). Claim [ALREADY RUN — PASS (GO 705/0, plan_lint) on linux-pc]. Committed and pushed to origin at the lead's word, the Phase 12 gate's message. Detail tasks/M0-V10.md, reports/v10.md. Next: M0-TC10.
+
+## M0-D104 · calibrate_bisect's plant `calibrate-checkpoint-without-observers` no longer applies: M0-T77's `edits: None` sits inside its hunk's context (calibrate.rs:767), so the Phase 12 sweep reads it ERROR and the scope's red-arm NO-GO · **BUILD** · Haiku 5.5, high · switch · (AFTER M0-V22)
+- Status: TODO
+- Sizing: E
+- Filed by: M0-V10, 2026-10-28 — the Phase 12 sweep's one ERROR (logs/M0-V10.sweep_stdout.log); filed right after M0-V10 at the lead's
+  word (2026-10-28: «If there is any issue you file a D block right after your task and then do the commit and push»), the sixth open
+  D over E6's five; it runs after M0-TC10 and M0-V22, which orders it with the other five (Phase 12's ordering note).
+- Blocks: every sweep and `--redarm calibrate_bisect` (NO-GO on the ERROR); the scope's other eleven plants read red
+- Caused by: M0-T77 (its mechanical `edits: None` in `Lives`' `Args` literal — crates/sr-engine/src/calibrate.rs:767, the one line
+  `git diff HEAD` shows there — between the plant's context lines `cpu_reference: false,` and `};`; M0-T77 armed edits_file only)
+- Rating: rule (3) — `Sizing: E` (one plant file re-cut, verified by its existing scope), its cause measured: the ladder's lowest rung
+- Files: tests/plants/calibrate-checkpoint-without-observers.patch (its hunk `@@ -651,7 +651,7 @@`: `continue_life: from.is_some(),`
+  → `continue_life: false,`), crates/sr-engine/src/calibrate.rs 755–772 (the literal today) — opened by M0-V10, not changed
+- Read: this file (rules + this task) + tests/plants/calibrate-checkpoint-without-observers.patch + crates/sr-engine/src/calibrate.rs:755–772
+  + docs/agent/testing.md (the `calibrate_bisect` row) + milestones/m0/logs/M0-V10-sweep.calibrate_bisect.redarm.log:921 (its arm: one header line, the patch refused)
+- Symptom: measured on laserax-ai-server (RTX 4090), 2026-10-28, the Phase 12 sweep (`SR_TEST_ADAPTER="RTX 4090" python3
+  tools/pb/verify.py --redarm --moved --task M0-V10-sweep`, logs/M0-V10.sweep_stdout.log): «calibrate_bisect · plant
+  calibrate-checkpoint-without-observers · ERROR (the patch tests/plants/calibrate-checkpoint-without-observers.patch does not apply:
+  crates/sr-engine/src/calibrate.rs @@ -651,7 +651,7 @@: its old lines appear 0 times in the file, not once)», the scope 12 plants, 11
+  red, 1 error, 1,157.29 s; on linux-pc, `git apply --check` of the plant → «patch failed: crates/sr-engine/src/calibrate.rs:651».
+- Repro: from the repo root, `git apply --check tests/plants/calibrate-checkpoint-without-observers.patch` (writes nothing)
+- Suspected cause: measured — the hunk's context (`cpu_reference: false,` then `};`) has `edits: None,` between its lines since M0-T77
+- Deliver: the plant re-cut against today's calibrate.rs — the same mutation (`continue_life` forced false in `Lives`' `Args`), its
+  context today's → Verify 1 · the re-cut plant red in `calibrate_bisect` → Verify 2
+- Verify: 1. `git apply --check tests/plants/calibrate-checkpoint-without-observers.patch` from the repo root · Pass: exit 0 · Fail: «does
+  not apply» · 2. on laserax-ai-server (R18), the plant applied alone in a scratch copy (`tools/pb/scratch_copy.sh`), then the scope's
+  command there, `SR_TEST_ADAPTER="RTX 4090" bash tests/gpu.sh calibrate_bisect physics` · Pass: the planted run fails a case · Fail: 19
+  passed — the whole `--redarm calibrate_bisect` (twelve plants, 1,157 s at M0-V10) is over ten minutes, the lead's
+- Done when: the plant applies and reads red on laserax-ai-server's RTX 4090; win-laptop `owed` (R15)
+- Handoff: <placeholder>
+
+## M0-TC10 · Compaction — Phase 12's close: nineteen closed blocks to stub, more than ten (PLAYBOOK §8, §11) · **MOVE** · Haiku 5.5, high · switch · (AFTER M0-V10)
+- Status: TODO
+- Filed by: M0-V10, 2026-10-28 — Phase 12's close (PLAYBOOK §14.3's V template, §11's trigger: a phase-closing V with more than ten
+  blocks to stub); runs next, ahead of the triage M0-V22 and the D's.
+- Carried flags: none
+- Read: this file (rules + this task) + milestones/m0/plan_archive.md § M0-TC9 (an archived compaction: the shape to keep)
+- Deliver: `plan.py stub` over the nineteen closed blocks between M0-V9's stub and Phase 13's heading — Phase 11's ten closed after
+  M0-TC9's pass (M0-TJ5, M0-TC9, M0-TM12, M0-V21, M0-D98, M0-D99, M0-D63, M0-D68, M0-D69, M0-R11) and Phase 12's nine (M0-T72, M0-T73,
+  M0-T74, M0-D100, M0-T75, M0-T76, M0-T77, M0-T78, M0-V10) — into plan_archive.md, no TODO or DEFERRED block touched (M0-D65 stays whole
+  below M0-T78: it wakes on win-laptop, and this block, M0-V22, M0-D101 and M0-D102 stay whole; the Phase 11 and Phase 12 commit-gate trailers stay
+  where they stand), and with it the Pipeline state back to a register of pointers, lines repeated in three or more blocks hoisted, long
+  Rules entries moved to m0_rules.md (index line kept, text unchanged), Repo facts de-duplicated, every moved line diffed byte-for-byte
+  with its count, `plan.py lint`'s header before and after in the handoff → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py plan_lint --task M0-TC10` · Pass: GO, the header within budget, the ten «stub it» WARNs gone,
+  diff count = moved count · Fail: any TODO or DEFERRED block touched, any rule reworded, any fact dropped
+- Done when: Verify 1 GO on linux-pc
+- Handoff: <placeholder>
+
+## M0-V22 · Triage — five open D's after Phase 12's close, and M0-V10's logged finding (E6) · **CHECK** · Opus 5.5, max · switch · (AFTER M0-TC10)
+- Status: TODO
+- Filed by: M0-V10, 2026-10-28 — its three D's (M0-D101, M0-D102, M0-D103) bring the open D's to five with M0-D71 and M0-D91 (E6 ≥ 5;
+  M0-D65 is DEFERRED and the register does not count it), so its fourth finding, F2, is logged, not filed (E1); runs after M0-TC10,
+  before M0-D101 and Phase 13.
+- Carried flags: none · [M0-V10, 2026-10-28] Six open D's, not five: M0-D104 — the Phase 12 sweep's one ERROR, calibrate_bisect's plant calibrate-checkpoint-without-observers no longer applies (M0-T77's `edits: None` at crates/sr-engine/src/calibrate.rs:767 inside its context; Sizing: E) — was filed right after M0-V10 at the lead's word («If there is any issue you file a D block right after your task», 2026-10-28) and runs after this block (Phase 12's ordering note). The sweep (laserax-ai-server, RTX 4090, 4,291 s, + the box five on linux-pc): 140 plants red, 1 GREEN (F4, M0-D102), 1 ERROR (F5, M0-D104); reports/v10.md § The sweep
+- Read: this file (rules + this task) + the five open D blocks (M0-D101, M0-D102 after this block; M0-D71, M0-D91, M0-D103 at Phase 16's
+  head) + milestones/m0/reports/v10.md § Verdict, § Findings, § Logged, not filed + milestones/m0/logs/M0-V10.wisp_probe.log +
+  crates/sr-engine/src/watch.rs:245–262 and :450–456
+- Deliver: E6's triage after lot 10. Convert M0-V10's logged finding, its own D or merged where it is one thread: **F2** — the
+  observers' wisp cut is 1 % of the nominal Sun-like mass: `Watch::new` (watch.rs:256) and `Watch::restore` (:454) build the tracker on
+  SUN_MASS_NOMINAL (3,351.0) where §1.9.2 cuts at 1 % of the Sun-like preset, calibration's `preset_mass_sb.sun` 3,136.7 since M0-T74
+  (Watch::new's own doc: «until calibration gives preset_mass_sb.sun»); measured on the RTX 4090 (logs/M0-V10.wisp_probe.log): cold
+  rects of 30.0 / 32.5 / 35.0 → objects none / none / one, §1.9.2 listing the 32.5 one (Caused by: M0-T74; M0-D103 changes the same
+  two constructors). Then the five open D's: merged where one thread, the order kept or moved under an ordering note (E8, moves only:
+  M0-D101 and M0-D102 before Phase 13 — the window lots wire the brush onto P0, and every sweep reads `observe_run` NO-GO until
+  M0-D102; M0-D103 at Phase 16's head — the lead's «Game first»), any that should close closed with its pointer → none — the
+  register's open-D line and the ordering notes are the record
+- Done when: verdict recorded; F2 filed or merged; the open-D register and the order updated
+- Handoff: <placeholder>
+
+## M0-D101 · A paint that lands outside the active box makes the state non-finite in the step that applies it: the first stroke into an empty world, or beside a star's box, reads energy non-finite at the painted disk's top row (exit 5), where the same paint inside the box runs clean · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V22)
+- Status: TODO
+- Filed by: M0-V10, 2026-10-28 — lot 10's validation (E4), an adversarial probe of M0-T76's «measured, not acted on» (a paint's step runs
+  on the Δt reduced before it); placed after the triage M0-V22 and before Phase 13: the window lots wire the brush (M0-T89) and the
+  preset drop (M0-T90) onto this pass.
+- Blocks: the brush and the preset drop anywhere outside the active box — in the game, the first stroke into an empty world (M0-T89,
+  M0-T90, M0-TV3's capture of the tools); G-TOUCH paints onto a star, inside its box, and is not blocked
+- Caused by: M0-T76 (P0's edit pass — edit.wgsl `edit_gate` sets the box's edit flag and P0's box_gate / box_cells / box_fit re-fit
+  after it, §1.3.2 P0 «the box re-fit if an edit lands outside it»; its cases run P0 alone, tasks/M0-T76.md: «Not reproduced (the tests
+  run no P4)»)
+- Rating: (usual) — the cause is not measured (the probe locates the path, the box re-fit after an edit outside it, not its mechanism):
+  Opus 5.5, high
+- Files: crates/sr-engine/shaders/edit.wgsl (`edit_gate` 104–139, the flag; `deposit` 168–188), crates/sr-engine/src/step/edit.rs (the
+  three dispatches, before the box's own re-fit in P0), crates/sr-engine/src/step/boxfit.rs 1–30 (when the box re-fits: before step 0,
+  after P9 every 16 steps, and in P0 on the edit flag) — opened by M0-V10, not changed; named, not opened — shaders/reduce.wgsl
+  (`box_gate` 435–, `box_fit` 396–), the box's consumers after P0 (P2's FFT extent `fft_w`/`fft_h` and kernel, P4's ghost cells, P9's
+  reduction), crates/sr-engine/tests/gpu/edit.rs (`the_box_grows_to_an_edit_outside_it_and_only_then`: P0 only)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3.2 (P0, P1), §1.3.3, §1.12, §2.9 +
+  milestones/m0/logs/M0-V10.paint_probe.log + milestones/m0/tasks/M0-T76.md + docs/agent/physics.md § Player edits +
+  docs/agent/testing.md (the `edits` row)
+- Symptom: measured on laserax-ai-server (RTX 4090), 2026-10-28, M0-V10's probe (logs/M0-V10.paint_probe.log: 128 × 128, bounce; an
+  edits file painting H at radius 8, frames 1): painted at (96, 96) at step 2, outside the box of one 8 × 8 rect at (8, 8), `--steps 3`
+  → «SR-ERROR non-finite value in the state at step 2, cell (96, 88), channel energy», exit 5 — the rect cold (Σ 0.1, T 0.05) or hot
+  (Σ 0.02, T 2.0: the painted step's Δt 0.0589 under the painted gas's own 0.0673, so no CFL overshoot); into an empty world, painted
+  at step 2 or step 0, the same cell, exit 5; painted at (64, 64) inside a box spanning the world (rects at two opposite corners), cold
+  or hot, 200 steps, exit 0; no paint, exit 0. (96, 88) is the disk's top row, the first cell in the scan's order.
+- Repro: on laserax-ai-server, the log's run B — its scene and edits file written there as the log's header gives them, then
+  `build/target/release/sandbox-reactions headless --scene <box_hot.json> --steps 3 --edits <paint_edits.json> --adapter "RTX 4090"
+  --out <dir>` (R18; about 1 s)
+- Suspected cause: the periodic re-fit runs after P9, the edit's in P0, mid-step (boxfit.rs:10–12: `box_gate` → `box_cells` →
+  `box_fit` rewrite the box record, the passes' dispatch sizes and the FFT size per axis); whatever the step's later passes still hold
+  from the old box — P2's kernel transform at the old FFT size, φ on §1.4.4's cadence, the margin's ghost cells — meets the grown box
+  unprepared, so the painted rim reads garbage; not measured. P1's Δt (§1.3.2: reduced at the end of the step before, ahead of P0's
+  edits) is ruled out by the hot-box run.
+- Deliver: the cause measured, then a paint or a preset drop landing outside the active box — the empty world's included — steps as one
+  inside it does: finite, the re-fit box holding the edit and its margin before P1, booked in §2.9's terms → Verify 1 · cases in
+  tests/gpu/edit.rs running whole steps (P0–P9, every switch on, ≥ 10 steps) after a paint outside the box, a paint into an empty
+  world and a preset drop outside the box — every cell finite, the ledger's mass and energy invariants within G-CONS's tolerance →
+  scope `edits` → Verify 1 · a plant listed for `edits` that undoes the cause measured → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py edits --task M0-D101` on laserax-ai-server (R18) · Pass: GO, ≥ 13
+  cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm edits --task M0-D101` there · Pass: GO —
+  edit-ignored and the new plant NO-GO · Fail: a plant GREEN or ERROR
+- Done when: a paint outside the box, a paint into an empty world and a drop outside the box run finite through whole steps on
+  laserax-ai-server's RTX 4090; win-laptop `owed` (R15)
+- Adversarial: a paint inside the box passes today (the probe's run A) — the cases paint outside it, and the empty world, where every
+  paint is outside, is read too.
+- Handoff: <placeholder>
+
+## M0-D102 · `observe_run` can no longer fail on an empty box: its plant `dt-empty-box-unbounded` reads GREEN («unfailable») on the RTX 4090 and the RTX 5090 alike — M0-D96's eaten-cloud case passes with the empty box's Δt unbounded, so every sweep reads `observe_run` NO-GO · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D101)
+- Status: TODO
+- Filed by: M0-V10, 2026-10-28 — lot 10's validation (E4): M0-D100's red-arm saw it on the RTX 5090 («not chased»), M0-V10's on the
+  RTX 4090 (R18's arm, M0-D100's owed one); placed after M0-D101 and before Phase 13, ahead of the next sweep (the lead's for Phase 12,
+  then M0-V11's on win-laptop).
+- Blocks: every `--redarm --moved` sweep and `--redarm observe_run` (NO-GO on the GREEN plant); the guarantee itself is still read by
+  `dt` and `dump`, which list the same plant (tools/pb/verify.json; `dump`'s seven red on the RTX 4090 at M0-D98, 2026-10-28)
+- Caused by: unknown — the case (M0-D96's) bit at M0-V9's sweep (RTX 4090, 2026-10-26, 0 GREEN); the physics D's since (M0-D68,
+  M0-D69) are the likely shift, not measured
+- Rating: (usual) — the cause is not measured: Opus 5.5, high
+- Files: crates/sr-engine/tests/gpu/observe.rs (`a_black_hole_that_eats_its_whole_cloud_meets_its_ending` 216–250: scenes/
+  sink_cloud.json at T 3, a 50-mass sink seeded at step 40, `--until ending` — its asserts read the ending, the sink in the world and
+  finite, never that the box emptied), tests/plants/dt-empty-box-unbounded.patch (reduce.wgsl:214, the empty box's floor rate × 0),
+  crates/sr-engine/shaders/reduce.wgsl 205–225 (the reduction's top: an empty box reads the floor rate) — opened by M0-V10, not
+  changed; named, not opened — scenes/sink_cloud.json, tasks/M0-D96.md
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-D96], §1.3.2 (P1, P9), §1.3.3 +
+  milestones/m0/logs/M0-V10.observe_run.redarm.log:460–539 (arm 6) and milestones/m0/logs/M0-D100.observe_run.redarm.log:440–519 +
+  milestones/m0/tasks/M0-D96.md +
+  docs/agent/testing.md (the `observe_run` and `dt` rows)
+- Symptom: measured on laserax-ai-server (RTX 4090), 2026-10-28 15:50–16:01, `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py
+  --redarm observe_run --task M0-V10` (logs/M0-V10.observe_run.redarm.log): clean GO; until-never-met, continue-ignited-left-out,
+  continue-ledger-start-lost, lone-sink-left-out, ending-any-object RED; **dt-empty-box-unbounded GREEN (unfailable): 9 passed, exit 0,
+  609.7 s**; the scope NO-GO, 651.98 s. On linux-pc's RTX 5090 the same plant, 9 passed (M0-D100, 14:14, logs/M0-D100.observe_run.
+  redarm.log). M0-V9's sweep (RTX 4090, 2026-10-26) read every observe_run plant red.
+- Repro: on laserax-ai-server, `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm observe_run --task <ID>` (≈ 11 min with
+  its seven arms at once — the lead's over ten minutes; one arm alone: the plant applied in a scratch copy, then `bash tests/gpu.sh
+  observe physics`, ≈ 1 min warm)
+- Suspected cause: the case's cloud no longer leaves an empty box before its ending — the sink no longer eats the whole T 3 cloud on
+  today's physics — so the floor rate the plant zeroes is never read; or the ending now meets before the box empties. Not measured:
+  first log the box's area over the case's run, clean and planted.
+- Deliver: the cause measured, then `observe_run` failing again with the empty box's Δt unbounded — the case reaching an empty box
+  before its ending, as M0-D96 built it (re-seeded, or its own scene, the box's emptying asserted), never the plant dropped from the
+  scope or a case loosened → Verify 1 · the plant red in `observe_run` again → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py observe_run --task M0-D102` on laserax-ai-server (R18) · Pass: GO,
+  9 cases or more · Fail: NO-GO · 2. the plant alone in a scratch copy, then `bash tests/gpu.sh observe physics` there (R18; or
+  `--redarm observe_run`, the lead's when over ten minutes) · Pass: the planted run red — dt-empty-box-unbounded RED, and the scope's
+  other five as before · Fail: GREEN
+- Done when: dt-empty-box-unbounded red in `observe_run` on laserax-ai-server's RTX 4090; the RTX 5090 and win-laptop `owed`
+- Adversarial: a case that asserts only that the ending met passes whether or not the box ever emptied — the box's emptiness is
+  asserted where the plant bites.
 - Handoff: <placeholder>
 
 > **Commit gate (lead):** Phase 12 closes after M0-V10 — from the repo root, one at a time:
@@ -2395,6 +2585,7 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
 
 ## M0-V11 · Validation — lot 11: drawing · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T83)
 - Status: TODO
+- Carried flags: [M0-V10, 2026-10-28] owed on win-laptop (R15), carried from M0-V9 and M0-V10 (both on linux-pc, no win-laptop in their windows): M0-V8's list (lot 8's scopes each red-armed — summary, ledger, observe_run, jeans, objects, classify, preset_cloud, with timing's M0-D49 check — and M0-V7's lots 5–7, M0-D28's desktop and start.bat checks), M0-D55's and M0-T66b's runs (calibrate_cold, registry, sink, calibration), lot 9's seven scopes (calibration, calibrate_cold, cold_core, calibrate_status, calibrate_bisect, calibrate_order, readouts) and lot 10's six (ending, age_clock, multi, edits, edits_file, formats) on the RTX 4080 Laptop: `py -3.12 tools/pb/verify.py --all` and `--redarm --moved` there cover them; M0-D65 (DEFERRED) wakes there and runs first; `observe_run`'s dt-empty-box-unbounded reads GREEN on the RTX 4090 and 5090 until M0-D102 lands; the calibration is the RTX 4090's (measured.adapter) — G-REF's tolerance carries it, not identity (§6.7); reports/v10.md § Owed
 - Read: milestones/m0/m0_contrat.md §1.8.3, §1.10.2, §1.11, §4.11 + the handoffs of M0-T79–M0-T83 +
   docs/agent/architecture.md + the delivered files, each by the section it covers
 - Deliver: contract-vs-code on lot 11 — the blackbody table, each view's formula and map, the glow, the
@@ -2772,6 +2963,8 @@ M0-D71 and M0-D91 moved to the head of Phase 16, after M0-V13 — the game on sc
 Ordering note (E8 — M0-R11, 2026-10-28, the lead: «Game first (Recommended)», «move the deffered tasks where they will run»):
 M0-D71 (the held core, ruled at M0-R11) and M0-D91 moved here from Phase 11 by `plan.py move` and the Phase 15 gate kept last
 of its phase; they run first in this lot, before M0-T97's life probe, which then measures lives with the hold built.
+Amended at M0-V10, 2026-10-28: M0-D103 (lot 10's F3, summary.json's four readouts) filed after M0-D91, before M0-T97 — the game does
+not read summary.json (the lead's «Game first»); the lives' summaries, G-END (M0-T104) and G-AGE (M0-T107) do.
 
 ## M0-D71 · P4 is not well-balanced at a hydrostatic core: HLL's diffusion lifts mass out of a degenerate remnant's well every step while spurious inflow momenta carry it back, so the gravity split pumps energy from a heatless centre and P8's floor pays half the late remnant's light (1.48 × 10⁵ of 2.78 × 10⁵ at step 450,000) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D70)
 - Status: TODO
@@ -2834,6 +3027,50 @@ of its phase; they run first in this lot, before M0-T97's life probe, which then
 - Verify: 1. `python3 tools/pb/verify.py heat_multigrid heat_stiff heat_implicit heat_gauss heat_limiter --task M0-D91` (laserax-ai-server, `SR_TEST_ADAPTER="RTX 4090"`) · Pass: GO, every scope · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm <the scope given the new case> --task M0-D91` · Pass: every plant red · Fail: a plant green
 - Done when: Verify 1–2 GO; the 40 M₀ life from build/r6_evidence/m40/s_2510.bin to step 3,100 prints no `SR-WARN heat unconverged` on the RTX 4090
 - Adversarial: a looser tolerance or a raised ceiling (32,768 did not converge it); a fix read on the one state only
+- Handoff: <placeholder>
+
+## M0-D103 · summary.json's objects carry none of §2.12.2's four readouts — `mass_suns`, `predicted_ending`, `ending`, `age_years`: M0-T60 left them «once M0-T69, M0-T72 and M0-T73 exist», and those three built the library alone · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D91)
+- Status: TODO
+- Filed by: M0-V10, 2026-10-28 — lot 10's validation (E4); placed at Phase 16's head after M0-D91 under Phase 16's ordering note — the
+  game does not read summary.json (the lead's «Game first»); before M0-T97, M0-T104 (G-END) and M0-T107 (G-AGE), which read lives'
+  summaries. M0-V10's logged F2 (the wisp cut on the nominal Sun, in the same two Watch constructors) waits for M0-V22, which may
+  merge it here.
+- Blocks: M0-T107 (G-AGE: «the Sun-like preset reaching white_dwarf reading within a factor 1.5 of 1.21 × 10¹⁰ years» needs a run's
+  ages) and M0-T104's at-drop predictions (G-END) — nothing before them
+- Caused by: M0-T60 (its Deliver, plan_archive.md § M0-T60: summary.json's `objects` «(id, stage, mass_sb, stages with from_step and
+  sim_time — mass_suns, predicted_ending, ending and age_years once M0-T69, M0-T72 and M0-T73 exist)»; watch.rs:509–510 says the same;
+  M0-T69's, M0-T72's and M0-T73's Delivers name translate.rs, ending.rs and age.rs only, their handoffs «no summary.json wiring»)
+- Rating: (usual) by rule (3)'s list — a persisted format changed: the observers' snapshot (§0.5 [M0-D76]) carries the age clock, so a
+  `--continue`d life writes the unbroken life's ages: Opus 5.5, high
+- Files: crates/sr-engine/src/watch.rs (`objects_json` 509–532; `Watch::new` 250–262; `snapshot`/`restore` 430–470), crates/sr-physics/
+  src/observe/age.rs (`AgeClock`: no snapshot of its tracks — tasks/M0-T73.md «a resumed dump restarts every age at 0»), ending.rs
+  (`Predictor::predict`, `readout`), translate.rs (`MassScale`) — opened by M0-V10, not changed; named, not opened —
+  crates/sr-engine/src/headless.rs:985 (`Watch::new`), crates/sr-engine/tests/gpu/observe.rs
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §1.10.1, §1.10.4, §2.12.2, §0.5 [M0-D76], [M0-D78] +
+  milestones/m0/logs/M0-V10.summary_fields.log + docs/agent/readouts.md § The predicted ending, § The age clock + docs/agent/testing.md
+  (the `observe_run` row)
+- Symptom: measured on linux-pc (RTX 5090), 2026-10-28 (logs/M0-V10.summary_fields.log): the `multi` scope's G-MULTI run
+  (scenes/two_suns.json to sim_time 40, b3e8b22-dirty, 15:15:34) wrote summary.json objects keyed id, mass_sb, stage, stages only;
+  no code under crates/ writes any of the four keys (grep, M0-V10).
+- Repro: any headless run with an object, then summary.json's `objects[*]` keys — on laserax-ai-server `build/target/release/
+  sandbox-reactions headless --scene preset:sun --steps 10 --adapter "RTX 4090" --out <dir>` (R18)
+- Suspected cause: measured — `objects_json` writes id, stage, mass_sb and stages; the Watch holds no MassScale, Predictor or AgeClock
+- Deliver: each summary.json object gains, from the embedded calibration (read as `Scene::with_embedded_masses` reads it), `mass_suns`
+  = MassScale::to_suns(mass_sb), `predicted_ending` = Predictor::predict(mass_sb) as a list of fate ids (`failed_star`, `white_dwarf`,
+  `supernova`, `black_hole` — the `fate.*` keys' ids, one for a sure call, the close call's two lighter first), `ending` = the ending
+  id (`ending.*`'s) once Predictor::readout reads Ended — the displayed remnant stage held stages::ending_hold — else null, and
+  `age_years` = an AgeClock the Watch updates every frame on each object's displayed stage (§1.10.4), the clock carried in the
+  observers' snapshot so a `--continue`d life writes the unbroken life's ages (one §0.5 line, the snapshot's version, PLAYBOOK §9), a
+  tree with no calibration embedded writing the four as null → Verify 1 · cases in tests/gpu/observe.rs — the four on a short
+  preset:sun run against the library's values for its last frame, an age that never decreases over the frames, a cut-and-continued
+  run's `age_years` equal to the unbroken one's → scope `observe_run` → Verify 1 · plant tests/plants/age-not-carried.patch (new: the
+  snapshot drops the clock) listed for `observe_run` → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py observe_run --task M0-D103` on laserax-ai-server (R18) · Pass: GO,
+  ≥ 13 cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm observe_run --task M0-D103` there ·
+  Pass: GO — age-not-carried NO-GO with the scope's other plants · Fail: age-not-carried GREEN
+- Done when: the four readouts in summary.json on laserax-ai-server's RTX 4090, equal across a `--continue`; win-laptop `owed` (R15)
+- Adversarial: an age computed once from the last frame reads 0 or one jump — the clock is updated every frame, and the
+  never-decreasing case reads the frames.
 - Handoff: <placeholder>
 
 ## M0-T97 · The life probe — three presets' lives, measured · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V13)
@@ -3001,6 +3238,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
 
 ## M0-T104 · Each ending as predicted (G-END) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T103)
 - Status: TODO
+- Carried flags: [M0-V10, 2026-10-28] On assets/calibration.json the Sun-like preset reads a sure white dwarf by 0.64 points: 3,136.7 sits 10.64 % under M_up 3,510.1 (the close call starts at 3,159.1), so a recalibration lifting M_up by more than 0.7 % (M0-T99a's ladder) turns the drop's readout into «white dwarf or supernova, then a neutron star (close call)» — G-END's «as predicted at the drop» then needs its reading for a close call, or the margin asserted where the case reads the prediction (reports/v10.md O1; logs/M0-V10.presets_probe.log)
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §2.12.2, §5.2 (G-END), §5.5,
   §6.4 + docs/agent/testing.md
 - Deliver: tests/gpu/endings.rs (new): the three presets ending as predicted at the drop, preset-shaped

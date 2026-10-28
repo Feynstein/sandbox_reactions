@@ -1,0 +1,8 @@
+{"version": 1,
+ "world": {"width": 64, "height": 64, "edge": "leave"},
+ "slowdown": false,
+ "switches": {"gravity": false, "hydro": false, "heat": false, "reactions": false, "neutrinos": false, "sinks": false},
+ "objects": [
+   {"kind": "disk", "x": 32, "y": 32, "a": 12, "sigma_c": 1.0, "t": 2.0,
+    "composition": {"H": 1.0}, "v": [0, 0]}
+ ]}

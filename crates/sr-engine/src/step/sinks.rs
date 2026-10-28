@@ -81,6 +81,11 @@ pub(super) fn state_buffer(device: &wgpu::Device, state: &State) -> wgpu::Buffer
 }
 
 impl Sinks {
+    /// The sinks' state buffer: the header's first word is the count — a Clear (P0, M0-T76) sets it to 0.
+    pub(super) fn state_buffer(&self) -> &wgpu::Buffer {
+        &self.state
+    }
+
     /// P3 for `state`'s world over `boxfit`'s box, the sinks living in `sinks` ([`state_buffer`]), reading Δt_n from
     /// `dt_record`, φ from `setup.side`, booking into `booking`, with Σ_BH, c_sb, Σ_vac and m_tov_sb from `physics` and G = 1.
     #[allow(clippy::too_many_arguments)]

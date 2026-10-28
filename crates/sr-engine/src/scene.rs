@@ -15,14 +15,16 @@
 use std::path::Path;
 
 use serde_json::{Map, Value};
+use sr_physics::calibration::{self, Calibration, PresetMasses};
 use sr_physics::eos::Eos;
 use sr_physics::reference::grav::Gravity;
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::state::{WorldConfig, N_CHANNELS, SPECIES};
 
-/// The presets §2.10 names. Their masses come from calibration (`preset_mass_sb`, §2.11) — until the presets (M0-T74)
-/// all three load the nominal Sun-like disk, and the scene says so.
+/// The presets §2.10 names. Their masses come from calibration (`preset_mass_sb`, §2.11): a run reads them through
+/// [`Scene::with_preset_masses`]; a scene with none to read (no calibration embedded) loads the nominal Sun-like disk, and
+/// says so.
 pub const PRESETS: [&str; 3] = ["sun", "massive", "giant"];
 
 /// §2.10's composition by mass: H 0.7346, He 0.2485, O 0.0077 and the remaining 0.0092 as C, in §1.5's order.
@@ -294,6 +296,31 @@ impl Scene {
         })
     }
 
+    /// The scene with every preset at its calibrated mass (§2.10, `preset_mass_sb`): what a scene file's or `preset:<name>`'s
+    /// preset loads as, which the parser leaves the nominal [`UNIT_MASS`] because it reads no calibration. A preset built
+    /// in code with a mass of its own ([`Scene::preset_mass`]) is not passed through here.
+    pub fn with_preset_masses(mut self, masses: &PresetMasses) -> Scene {
+        for object in &mut self.objects {
+            if let Object::Preset { preset, mass, .. } = object {
+                *mass = match preset.as_str() {
+                    "sun" => masses.sun,
+                    "massive" => masses.massive,
+                    _ => masses.giant,
+                };
+            }
+        }
+        self
+    }
+
+    /// [`Scene::with_preset_masses`] at the masses of the calibration this binary embeds (§2.11), and the scene as it is where
+    /// none is embedded or the file does not parse — what `headless` does after its gate (exit 6) has passed.
+    pub fn with_embedded_masses(self) -> Scene {
+        match calibration::EMBEDDED.and_then(|text| Calibration::parse(text).ok()) {
+            Some(cal) => self.with_preset_masses(&cal.preset_mass_sb),
+            None => self,
+        }
+    }
+
     pub fn load(path: &Path) -> Result<Scene, String> {
         let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
         let elements = Elements::shipped().map_err(|e| e.to_string())?;
@@ -383,7 +410,7 @@ impl Scene {
         self.objects
             .iter()
             .filter_map(|o| match o {
-                Object::Preset { preset, .. } if preset != "sun" => Some(format!(
+                Object::Preset { preset, mass, .. } if preset != "sun" && *mass == UNIT_MASS => Some(format!(
                     "preset {preset}: the nominal Sun-like disk until calibration gives preset_mass_sb (§2.11)"
                 )),
                 _ => None,
@@ -568,6 +595,72 @@ fn sun_gas(cells: &[(usize, usize, f64)], physics: &Physics, elements: &Elements
     let eps_th = THERMAL_OVER_W * w_sum.abs() / mass;
     let mu = 1.0 / elements.composition(&SUN_MIX).inv_mu;
     Ok(Gas { heat: Heat::T(mu * eps_th), composition: SUN_MIX, v: [0.0, 0.0] })
+}
+
+/// A preset cloud ready to drop into a running world (§1.12; M0-T76): the Σ of its cells in the bounding rectangle
+/// (x0, y0, w, h), row-major, and the uniform temperature and composition of its gas — what [`Scene::planes`] would
+/// lay down for the same `Object::Preset`, the energy left to the edit pass, which adds it to the gas it lands on.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Cloud {
+    pub x0: u32,
+    pub y0: u32,
+    pub w: u32,
+    pub h: u32,
+    pub sigma: Vec<f32>,
+    pub t: f32,
+    pub composition: [f32; N_SPECIES],
+}
+
+/// Why a preset cloud could not be made.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum CloudError {
+    /// A cell of the cloud falls outside the world (§1.12: refused with `presets.no_room`).
+    NoRoom,
+    /// An unknown preset or a mass that is not a finite number > 0, or the physics refusing the cloud.
+    Invalid(String),
+}
+
+/// The preset `name` at `mass` (sandbox units) centred at the point `centre` (cell units, §2.12.4) in `world`: the same
+/// cloud `Scene::preset_mass` loads, or [`CloudError::NoRoom`] when the world clips any cell of it.
+pub fn preset_cloud(
+    name: &str,
+    mass: f64,
+    centre: [f64; 2],
+    world: WorldConfig,
+    physics: &Physics,
+    elements: &Elements,
+) -> Result<Cloud, CloudError> {
+    if !(mass.is_finite() && mass > 0.0) {
+        return Err(CloudError::Invalid(format!("preset {name}: the mass must be a finite number > 0, got {mass}")));
+    }
+    if !PRESETS.contains(&name) {
+        return Err(CloudError::Invalid(format!("unknown preset {name:?} (known: {})", PRESETS.join(", "))));
+    }
+    let CloudShape { a, sigma_c } = cloud_shape(mass);
+    let (w, h) = (world.width as usize, world.height as usize);
+    let object = Object::Preset { preset: name.to_string(), x: centre[0], y: centre[1], mass };
+    let cells = cells_of(&object, [0, 0], w, h);
+    if cells.is_empty() || cells.len() < disk_samples(centre[0], centre[1], a, sigma_c).count() {
+        return Err(CloudError::NoRoom);
+    }
+    let gas = sun_gas(&cells, physics, elements).map_err(CloudError::Invalid)?;
+    let Heat::T(t) = gas.heat else { unreachable!("a preset's gas is set by its temperature") };
+    let (x0, x1) = cells.iter().fold((usize::MAX, 0), |(lo, hi), c| (lo.min(c.0), hi.max(c.0)));
+    let (y0, y1) = cells.iter().fold((usize::MAX, 0), |(lo, hi), c| (lo.min(c.1), hi.max(c.1)));
+    let (cw, ch) = (x1 - x0 + 1, y1 - y0 + 1);
+    let mut sigma = vec![0f32; cw * ch];
+    for &(x, y, m) in &cells {
+        sigma[(y - y0) * cw + (x - x0)] = m as f32;
+    }
+    Ok(Cloud {
+        x0: x0 as u32,
+        y0: y0 as u32,
+        w: cw as u32,
+        h: ch as u32,
+        sigma,
+        t: t as f32,
+        composition: gas.composition.map(|x| x as f32),
+    })
 }
 
 /// The nominal Sun-like disk alone, centred in `world`, with the shipped constants — the `preset:sun` scene's planes.

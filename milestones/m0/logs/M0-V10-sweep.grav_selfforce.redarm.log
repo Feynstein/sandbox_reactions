@@ -1,0 +1,262 @@
+==== 2026-10-28T16:44:41-04:00 grav_selfforce · clean · a fresh scratch copy of the tree
+== 2026-10-28T16:44:43-04:00 grav_selfforce · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=0 · 10.49 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-frvx576l/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-frvx576l/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.58s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 7 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.509e-12, Σ m|g| = 2.767e3, ratio 5.452e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 1.449e-5, Σ m|g| = 2.767e3, ratio 5.238e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 1.25e-7, gx 1.52e-6, gy 1.52e-6
+ok
+test grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU world-edge matter 128x128, box BoxReport { x0: 0, y0: 0, w: 128, h: 128, fft: [256, 256], from_step: 1, fits: 2, tiles: [16, 16, 1], cells: [64, 1, 1] }: |Σ m·g| = 2.237e-5, Σ m|g| = 2.105e3, ratio 1.063e-8
+SR-GRAV-REF world-edge matter, box 128x128 at (0, 0), FFT [256, 256]: relative L1 against the twin φ 1.14e-7, gx 2.54e-6, gy 3.21e-6
+ok
+test grav::selfforce::gpu_tall_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU tall box 128x512, box BoxReport { x0: 40, y0: 88, w: 40, h: 344, fft: [128, 1024], from_step: 1, fits: 2, tiles: [5, 43, 1], cells: [54, 1, 1] }: |Σ m·g| = 2.398e-4, Σ m|g| = 5.937e3, ratio 4.040e-8
+SR-GRAV-REF tall box, box 40x344 at (40, 88), FFT [128, 1024]: relative L1 against the twin φ 8.13e-8, gx 1.16e-6, gy 8.64e-6
+ok
+test grav::selfforce::gpu_wide_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU wide box 600x400, box BoxReport { x0: 120, y0: 168, w: 392, h: 64, fft: [1024, 128], from_step: 1, fits: 2, tiles: [49, 8, 1], cells: [98, 1, 1] }: |Σ m·g| = 6.003e-5, Σ m|g| = 4.766e3, ratio 1.259e-8
+SR-GRAV-REF wide box, box 392x64 at (120, 168), FFT [1024, 128]: relative L1 against the twin φ 1.15e-7, gx 3.16e-6, gy 3.01e-6
+ok
+test grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either ... SR-GRAV2 random on the ring 50x37: 72 ring cells hold mass, ratio 1.501e-16
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 2.355e-16
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 404 filtered out; finished in 0.79s
+
+
+==== 2026-10-28T16:44:41-04:00 grav_selfforce · plant grav-kernel-shift · a fresh scratch copy of the tree
+planted grav-kernel-shift: tests/plants/grav-kernel-shift.patch -> crates/sr-physics/src/reference/grav.rs
+== 2026-10-28T16:44:43-04:00 grav_selfforce · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=101 · 51.82 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-frvx576l/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-frvx576l/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.57s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 7 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 2.412e2, Σ m|g| = 2.764e3, ratio 8.726e-2
+
+thread 'grav::selfforce::asym_blob_has_no_net_self_force' (151997) panicked at crates/sr-engine/tests/gpu/grav.rs:337:9:
+G-GRAV2: |Σ m·g| / Σ m|g| = 8.726e-2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 1.449e-5, Σ m|g| = 2.767e3, ratio 5.238e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 2.23e-2, gx 1.17e-1, gy 4.85e-2
+
+thread 'grav::selfforce::gpu_asym_blob_has_no_net_self_force' (151998) panicked at crates/sr-engine/tests/gpu/grav.rs:501:13:
+asym_blob: the GPU against the twin over G-REF's 0.001
+FAILED
+test grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU world-edge matter 128x128, box BoxReport { x0: 0, y0: 0, w: 128, h: 128, fft: [256, 256], from_step: 1, fits: 2, tiles: [16, 16, 1], cells: [64, 1, 1] }: |Σ m·g| = 2.237e-5, Σ m|g| = 2.105e3, ratio 1.063e-8
+SR-GRAV-REF world-edge matter, box 128x128 at (0, 0), FFT [256, 256]: relative L1 against the twin φ 1.75e-2, gx 1.28e-1, gy 4.59e-2
+
+thread 'grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force' (152004) panicked at crates/sr-engine/tests/gpu/grav.rs:501:13:
+world-edge matter: the GPU against the twin over G-REF's 0.001
+FAILED
+test grav::selfforce::gpu_tall_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU tall box 128x512, box BoxReport { x0: 40, y0: 88, w: 40, h: 344, fft: [128, 1024], from_step: 1, fits: 2, tiles: [5, 43, 1], cells: [54, 1, 1] }: |Σ m·g| = 2.398e-4, Σ m|g| = 5.937e3, ratio 4.040e-8
+SR-GRAV-REF tall box, box 40x344 at (40, 88), FFT [128, 1024]: relative L1 against the twin φ 2.26e-2, gx 2.03e-1, gy 3.76e-2
+
+thread 'grav::selfforce::gpu_tall_box_has_no_net_self_force' (152009) panicked at crates/sr-engine/tests/gpu/grav.rs:501:13:
+tall box: the GPU against the twin over G-REF's 0.001
+FAILED
+test grav::selfforce::gpu_wide_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU wide box 600x400, box BoxReport { x0: 120, y0: 168, w: 392, h: 64, fft: [1024, 128], from_step: 1, fits: 2, tiles: [49, 8, 1], cells: [98, 1, 1] }: |Σ m·g| = 6.003e-5, Σ m|g| = 4.766e3, ratio 1.259e-8
+SR-GRAV-REF wide box, box 392x64 at (120, 168), FFT [1024, 128]: relative L1 against the twin φ 1.29e-2, gx 9.48e-2, gy 2.88e-2
+
+thread 'grav::selfforce::gpu_wide_box_has_no_net_self_force' (152014) panicked at crates/sr-engine/tests/gpu/grav.rs:501:13:
+wide box: the GPU against the twin over G-REF's 0.001
+FAILED
+test grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either ... SR-GRAV2 random on the ring 50x37: 72 ring cells hold mass, ratio 6.869e-1
+
+thread 'grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either' (152019) panicked at crates/sr-engine/tests/gpu/grav.rs:386:9:
+|Σ m·g| / Σ m|g| = 6.869e-1
+FAILED
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 6.469e-1
+
+thread 'grav::selfforce::random_asymmetric_masses_have_none_either' (152020) panicked at crates/sr-engine/tests/gpu/grav.rs:364:9:
+|Σ m·g| / Σ m|g| = 6.469e-1
+FAILED
+
+failures:
+
+failures:
+    grav::selfforce::asym_blob_has_no_net_self_force
+    grav::selfforce::gpu_asym_blob_has_no_net_self_force
+    grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force
+    grav::selfforce::gpu_tall_box_has_no_net_self_force
+    grav::selfforce::gpu_wide_box_has_no_net_self_force
+    grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either
+    grav::selfforce::random_asymmetric_masses_have_none_either
+
+test result: FAILED. 0 passed; 7 failed; 0 ignored; 0 measured; 404 filtered out; finished in 0.81s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-28T16:44:41-04:00 grav_selfforce · plant grav-gradient-backward · a fresh scratch copy of the tree
+planted grav-gradient-backward: tests/plants/grav-gradient-backward.patch -> crates/sr-engine/shaders/grav.wgsl
+== 2026-10-28T16:44:43-04:00 grav_selfforce · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=101 · 20.76 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-frvx576l/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-frvx576l/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.45s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 7 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.509e-12, Σ m|g| = 2.767e3, ratio 5.452e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 6.478e1, Σ m|g| = 2.164e3, ratio 2.994e-2
+
+thread 'grav::selfforce::gpu_asym_blob_has_no_net_self_force' (151291) panicked at crates/sr-engine/tests/gpu/grav.rs:404:9:
+G-GRAV2 (GPU): |Σ m·g| / Σ m|g| = 2.994e-2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU world-edge matter 128x128, box BoxReport { x0: 0, y0: 0, w: 128, h: 128, fft: [256, 256], from_step: 1, fits: 2, tiles: [16, 16, 1], cells: [64, 1, 1] }: |Σ m·g| = 7.239e1, Σ m|g| = 1.627e3, ratio 4.450e-2
+
+thread 'grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force' (151297) panicked at crates/sr-engine/tests/gpu/grav.rs:420:9:
+G-GRAV2 (GPU, world-edge matter): |Σ m·g| / Σ m|g| = 4.450e-2
+FAILED
+test grav::selfforce::gpu_tall_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU tall box 128x512, box BoxReport { x0: 40, y0: 88, w: 40, h: 344, fft: [128, 1024], from_step: 1, fits: 2, tiles: [5, 43, 1], cells: [54, 1, 1] }: |Σ m·g| = 4.713e2, Σ m|g| = 3.296e3, ratio 1.430e-1
+
+thread 'grav::selfforce::gpu_tall_box_has_no_net_self_force' (151302) panicked at crates/sr-engine/tests/gpu/grav.rs:420:9:
+G-GRAV2 (GPU, tall box): |Σ m·g| / Σ m|g| = 1.430e-1
+FAILED
+test grav::selfforce::gpu_wide_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU wide box 600x400, box BoxReport { x0: 120, y0: 168, w: 392, h: 64, fft: [1024, 128], from_step: 1, fits: 2, tiles: [49, 8, 1], cells: [98, 1, 1] }: |Σ m·g| = 8.490e1, Σ m|g| = 3.913e3, ratio 2.169e-2
+
+thread 'grav::selfforce::gpu_wide_box_has_no_net_self_force' (151307) panicked at crates/sr-engine/tests/gpu/grav.rs:420:9:
+G-GRAV2 (GPU, wide box): |Σ m·g| / Σ m|g| = 2.169e-2
+FAILED
+test grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either ... SR-GRAV2 random on the ring 50x37: 72 ring cells hold mass, ratio 1.501e-16
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 2.355e-16
+ok
+
+failures:
+
+failures:
+    grav::selfforce::gpu_asym_blob_has_no_net_self_force
+    grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force
+    grav::selfforce::gpu_tall_box_has_no_net_self_force
+    grav::selfforce::gpu_wide_box_has_no_net_self_force
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 404 filtered out; finished in 0.78s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-28T16:44:41-04:00 grav_selfforce · plant grav-ring-one-sided · a fresh scratch copy of the tree
+planted grav-ring-one-sided: tests/plants/grav-ring-one-sided.patch -> crates/sr-engine/shaders/grav.wgsl
+== 2026-10-28T16:44:43-04:00 grav_selfforce · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=101 · 31.13 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-frvx576l/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-frvx576l/arm3/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.53s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 7 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.509e-12, Σ m|g| = 2.767e3, ratio 5.452e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 1.449e-5, Σ m|g| = 2.767e3, ratio 5.238e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 1.25e-7, gx 3.32e-4, gy 3.36e-4
+ok
+test grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU world-edge matter 128x128, box BoxReport { x0: 0, y0: 0, w: 128, h: 128, fft: [256, 256], from_step: 1, fits: 2, tiles: [16, 16, 1], cells: [64, 1, 1] }: |Σ m·g| = 2.967e1, Σ m|g| = 2.058e3, ratio 1.442e-2
+
+thread 'grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force' (151509) panicked at crates/sr-engine/tests/gpu/grav.rs:420:9:
+G-GRAV2 (GPU, world-edge matter): |Σ m·g| / Σ m|g| = 1.442e-2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::selfforce::gpu_tall_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU tall box 128x512, box BoxReport { x0: 40, y0: 88, w: 40, h: 344, fft: [128, 1024], from_step: 1, fits: 2, tiles: [5, 43, 1], cells: [54, 1, 1] }: |Σ m·g| = 2.398e-4, Σ m|g| = 5.937e3, ratio 4.040e-8
+SR-GRAV-REF tall box, box 40x344 at (40, 88), FFT [128, 1024]: relative L1 against the twin φ 8.13e-8, gx 1.12e-3, gy 3.92e-4
+
+thread 'grav::selfforce::gpu_tall_box_has_no_net_self_force' (151514) panicked at crates/sr-engine/tests/gpu/grav.rs:501:13:
+tall box: the GPU against the twin over G-REF's 0.001
+FAILED
+test grav::selfforce::gpu_wide_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU wide box 600x400, box BoxReport { x0: 120, y0: 168, w: 392, h: 64, fft: [1024, 128], from_step: 1, fits: 2, tiles: [49, 8, 1], cells: [98, 1, 1] }: |Σ m·g| = 6.003e-5, Σ m|g| = 4.766e3, ratio 1.259e-8
+SR-GRAV-REF wide box, box 392x64 at (120, 168), FFT [1024, 128]: relative L1 against the twin φ 1.15e-7, gx 2.22e-4, gy 4.30e-4
+ok
+test grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either ... SR-GRAV2 random on the ring 50x37: 72 ring cells hold mass, ratio 1.501e-16
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 2.355e-16
+ok
+
+failures:
+
+failures:
+    grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force
+    grav::selfforce::gpu_tall_box_has_no_net_self_force
+
+test result: FAILED. 5 passed; 2 failed; 0 ignored; 0 measured; 404 filtered out; finished in 0.80s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-28T16:44:41-04:00 grav_selfforce · plant grav-twin-ring-one-sided · a fresh scratch copy of the tree
+planted grav-twin-ring-one-sided: tests/plants/grav-twin-ring-one-sided.patch -> crates/sr-physics/src/reference/grav.rs
+== 2026-10-28T16:44:43-04:00 grav_selfforce · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=101 · 41.40 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-frvx576l/arm4/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-frvx576l/arm4/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.40s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 7 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.509e-12, Σ m|g| = 2.767e3, ratio 5.452e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU asym_blob 128x128, box BoxReport { x0: 8, y0: 16, w: 104, h: 72, fft: [256, 256], from_step: 1, fits: 2, tiles: [13, 9, 1], cells: [30, 1, 1] }: |Σ m·g| = 1.449e-5, Σ m|g| = 2.767e3, ratio 5.238e-9
+SR-GRAV-REF asym_blob, box 104x72 at (8, 16), FFT [256, 256]: relative L1 against the twin φ 1.25e-7, gx 3.32e-4, gy 3.35e-4
+ok
+test grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU world-edge matter 128x128, box BoxReport { x0: 0, y0: 0, w: 128, h: 128, fft: [256, 256], from_step: 1, fits: 2, tiles: [16, 16, 1], cells: [64, 1, 1] }: |Σ m·g| = 2.237e-5, Σ m|g| = 2.105e3, ratio 1.063e-8
+SR-GRAV-REF world-edge matter, box 128x128 at (0, 0), FFT [256, 256]: relative L1 against the twin φ 1.14e-7, gx 1.11e-2, gy 7.17e-3
+
+thread 'grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force' (151773) panicked at crates/sr-engine/tests/gpu/grav.rs:501:13:
+world-edge matter: the GPU against the twin over G-REF's 0.001
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::selfforce::gpu_tall_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU tall box 128x512, box BoxReport { x0: 40, y0: 88, w: 40, h: 344, fft: [128, 1024], from_step: 1, fits: 2, tiles: [5, 43, 1], cells: [54, 1, 1] }: |Σ m·g| = 2.398e-4, Σ m|g| = 5.937e3, ratio 4.040e-8
+SR-GRAV-REF tall box, box 40x344 at (40, 88), FFT [128, 1024]: relative L1 against the twin φ 8.13e-8, gx 1.12e-3, gy 3.92e-4
+
+thread 'grav::selfforce::gpu_tall_box_has_no_net_self_force' (151778) panicked at crates/sr-engine/tests/gpu/grav.rs:501:13:
+tall box: the GPU against the twin over G-REF's 0.001
+FAILED
+test grav::selfforce::gpu_wide_box_has_no_net_self_force ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV2 GPU wide box 600x400, box BoxReport { x0: 120, y0: 168, w: 392, h: 64, fft: [1024, 128], from_step: 1, fits: 2, tiles: [49, 8, 1], cells: [98, 1, 1] }: |Σ m·g| = 6.003e-5, Σ m|g| = 4.766e3, ratio 1.259e-8
+SR-GRAV-REF wide box, box 392x64 at (120, 168), FFT [1024, 128]: relative L1 against the twin φ 1.15e-7, gx 2.22e-4, gy 4.30e-4
+ok
+test grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either ... SR-GRAV2 random on the ring 50x37: 72 ring cells hold mass, ratio 3.404e-2
+
+thread 'grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either' (151788) panicked at crates/sr-engine/tests/gpu/grav.rs:386:9:
+|Σ m·g| / Σ m|g| = 3.404e-2
+FAILED
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 2.355e-16
+ok
+
+failures:
+
+failures:
+    grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force
+    grav::selfforce::gpu_tall_box_has_no_net_self_force
+    grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either
+
+test result: FAILED. 4 passed; 3 failed; 0 ignored; 0 measured; 404 filtered out; finished in 0.81s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

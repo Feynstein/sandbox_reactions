@@ -1,0 +1,24 @@
+==== 2026-10-28T17:06:19-04:00 watch_only · clean · a fresh scratch copy of the tree
+== 2026-10-28T17:06:20-04:00 watch_only · task M0-V10-sweep · box laserax-ai-server :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.11 s
+files scanned: 25 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 12 calibration keys + `calibration`); exempt: `m_tov_sb` (§0.5 [M0-D90])
+1 passed, 0 failed (25 files)
+=== GO ===
+
+==== 2026-10-28T17:06:19-04:00 watch_only · plant stage-in-step · a fresh scratch copy of the tree
+planted stage-in-step: {python} -S -c "import pathlib;p=pathlib.Path('crates/sr-engine/src/step/mod.rs');p.write_text(p.read_text(encoding='utf-8')+chr(10)+'use sr_physics::observe::Stage;'+chr(10),encoding='utf-8')" -> exit 0
+== 2026-10-28T17:06:20-04:00 watch_only · task M0-V10-sweep · box laserax-ai-server :: {python} tests/watch/check.py
+-- watch_only · exit=1 · 0.11 s
+files scanned: 25 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 12 calibration keys + `calibration`); exempt: `m_tov_sb` (§0.5 [M0-D90])
+crates/sr-engine/src/step/mod.rs:936: names `observe`
+crates/sr-engine/src/step/mod.rs:936: names `Stage`
+=== NO-GO: 2 name(s) a label or a calibration value in the step code ===
+
+==== 2026-10-28T17:06:19-04:00 watch_only · plant calibration-in-step · a fresh scratch copy of the tree
+planted calibration-in-step: {python} -S -c "import pathlib;p=pathlib.Path('crates/sr-engine/src/step/sinks.rs');p.write_text(p.read_text(encoding='utf-8')+chr(10)+'use crate::calibration::Calibration;'+chr(10),encoding='utf-8')" -> exit 0
+== 2026-10-28T17:06:20-04:00 watch_only · task M0-V10-sweep · box laserax-ai-server :: {python} tests/watch/check.py
+-- watch_only · exit=1 · 0.11 s
+files scanned: 25 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 12 calibration keys + `calibration`); exempt: `m_tov_sb` (§0.5 [M0-D90])
+crates/sr-engine/src/step/sinks.rs:223: names `calibration`
+=== NO-GO: 1 name(s) a label or a calibration value in the step code ===
+

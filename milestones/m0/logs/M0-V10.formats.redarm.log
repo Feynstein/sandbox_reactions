@@ -1,0 +1,136 @@
+==== 2026-10-28T15:45:22-04:00 formats · clean · a fresh scratch copy of the tree
+== 2026-10-28T15:45:22-04:00 formats · task M0-V10 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin format
+-- formats · exit=0 · 4.32 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-xw2fq_2y/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-xw2fq_2y/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-xw2fq_2y/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.22s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-9994784d2fcb77d6)
+
+running 18 tests
+test format::tests::age_boundaries_pick_the_unit_after_rounding ... ok
+test format::tests::age_examples ... ok
+test format::tests::age_takes_the_largest_unit_at_or_above_one ... ok
+test format::tests::fps_and_steps_are_integers ... ok
+test format::tests::grouping_is_by_thousands_in_the_integer_part_only ... ok
+test format::tests::inspector_boundaries_are_judged_after_rounding ... ok
+test format::tests::inspector_lines_go_through_the_templates ... ok
+test format::tests::inspector_numbers_three_digits ... ok
+test format::tests::inspector_scientific_below_a_thousandth_and_from_a_hundred_thousand ... ok
+test format::tests::mass_boundaries ... ok
+test format::tests::mass_examples ... ok
+test format::tests::max_is_the_table_text_and_top_is_never_shown ... ok
+test format::tests::mix_percentages ... ok
+test format::tests::non_finite_values_are_shown_as_they_are ... ok
+test format::tests::rate_reads_as_an_age ... ok
+test format::tests::speeds_rungs_as_written_actual_at_two_digits ... ok
+test format::tests::temperature_boundaries_pick_the_unit_after_rounding ... ok
+test format::tests::temperature_examples ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+
+==== 2026-10-28T15:45:22-04:00 formats · plant format-grouping · a fresh scratch copy of the tree
+planted format-grouping: tests/plants/format-grouping.patch -> crates/sr-app/src/format.rs
+== 2026-10-28T15:45:22-04:00 formats · task M0-V10 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin format
+-- formats · exit=101 · 8.58 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-xw2fq_2y/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-xw2fq_2y/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-xw2fq_2y/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.20s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-9994784d2fcb77d6)
+
+running 18 tests
+test format::tests::age_boundaries_pick_the_unit_after_rounding ... ok
+test format::tests::age_examples ... ok
+test format::tests::age_takes_the_largest_unit_at_or_above_one ... ok
+test format::tests::fps_and_steps_are_integers ... FAILED
+test format::tests::grouping_is_by_thousands_in_the_integer_part_only ... FAILED
+test format::tests::inspector_lines_go_through_the_templates ... ok
+test format::tests::inspector_boundaries_are_judged_after_rounding ... FAILED
+test format::tests::inspector_numbers_three_digits ... FAILED
+test format::tests::inspector_scientific_below_a_thousandth_and_from_a_hundred_thousand ... ok
+test format::tests::mass_boundaries ... FAILED
+test format::tests::mass_examples ... ok
+test format::tests::max_is_the_table_text_and_top_is_never_shown ... ok
+test format::tests::mix_percentages ... ok
+test format::tests::non_finite_values_are_shown_as_they_are ... ok
+test format::tests::rate_reads_as_an_age ... ok
+test format::tests::speeds_rungs_as_written_actual_at_two_digits ... FAILED
+test format::tests::temperature_boundaries_pick_the_unit_after_rounding ... FAILED
+test format::tests::temperature_examples ... FAILED
+
+failures:
+
+---- format::tests::fps_and_steps_are_integers stdout ----
+
+thread 'format::tests::fps_and_steps_are_integers' (111094) panicked at crates/sr-app/src/format.rs:384:9:
+assertion `left == right` failed
+  left: "12345"
+ right: "12,345"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- format::tests::grouping_is_by_thousands_in_the_integer_part_only stdout ----
+
+thread 'format::tests::grouping_is_by_thousands_in_the_integer_part_only' (111095) panicked at crates/sr-app/src/format.rs:395:9:
+assertion `left == right` failed
+  left: "1000"
+ right: "1,000"
+
+---- format::tests::inspector_boundaries_are_judged_after_rounding stdout ----
+
+thread 'format::tests::inspector_boundaries_are_judged_after_rounding' (111096) panicked at crates/sr-app/src/format.rs:358:9:
+assertion `left == right` failed
+  left: "99900"
+ right: "99,900"
+
+---- format::tests::inspector_numbers_three_digits stdout ----
+
+thread 'format::tests::inspector_numbers_three_digits' (111098) panicked at crates/sr-app/src/format.rs:339:9:
+assertion `left == right` failed
+  left: "12300"
+ right: "12,300"
+
+---- format::tests::mass_boundaries stdout ----
+
+thread 'format::tests::mass_boundaries' (111100) panicked at crates/sr-app/src/format.rs:252:9:
+assertion `left == right` failed
+  left: "1000 Suns"
+ right: "1,000 Suns"
+
+---- format::tests::speeds_rungs_as_written_actual_at_two_digits stdout ----
+
+thread 'format::tests::speeds_rungs_as_written_actual_at_two_digits' (111106) panicked at crates/sr-app/src/format.rs:324:9:
+assertion `left == right` failed
+  left: "Speed max (running ×1200)"
+ right: "Speed max (running ×1,200)"
+
+---- format::tests::temperature_boundaries_pick_the_unit_after_rounding stdout ----
+
+thread 'format::tests::temperature_boundaries_pick_the_unit_after_rounding' (111107) panicked at crates/sr-app/src/format.rs:268:9:
+assertion `left == right` failed
+  left: "999000 K"
+ right: "999,000 K"
+
+---- format::tests::temperature_examples stdout ----
+
+thread 'format::tests::temperature_examples' (111108) panicked at crates/sr-app/src/format.rs:258:9:
+assertion `left == right` failed
+  left: "5770 K"
+ right: "5,770 K"
+
+
+failures:
+    format::tests::fps_and_steps_are_integers
+    format::tests::grouping_is_by_thousands_in_the_integer_part_only
+    format::tests::inspector_boundaries_are_judged_after_rounding
+    format::tests::inspector_numbers_three_digits
+    format::tests::mass_boundaries
+    format::tests::speeds_rungs_as_written_actual_at_two_digits
+    format::tests::temperature_boundaries_pick_the_unit_after_rounding
+    format::tests::temperature_examples
+
+test result: FAILED. 10 passed; 8 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

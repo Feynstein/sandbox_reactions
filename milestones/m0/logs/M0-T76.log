@@ -1,0 +1,5 @@
+M0-T76 log opened 2026-10-28T14:55:02-04:00 on linux-pc
+route to laserax-ai-server denied by the auto-mode classifier (rsync); running on linux-pc RTX 5090 instead 2026-10-28T14:55:45-04:00
+redarm start 2026-10-28T14:57:58-04:00
+claim start 2026-10-28T14:58:28-04:00
+claim rerun after watch_only fix 2026-10-28T15:00:57-04:00

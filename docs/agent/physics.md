@@ -305,6 +305,19 @@ The step never reads it (G-WATCH): the time control, the observers, the translat
 - **Across adapters.** A calibration is measured on one adapter (`measured.adapter`) and used on every other by leaning on G-REF's tolerance
   (§6.7), never on bit identity.
 
+## Player edits (contract §1.12, §2.12.5, §3.1, P0; `crates/sr-engine/src/step/edit.rs`, `shaders/edit.wgsl`; the edits file in `crates/sr-engine/src/headless.rs`)
+The player's tools act in **P0**, the pass before the step's Δt, on the same state the physics reads: a painted, heated or erased star reacts through the same laws as gas (B7). The tool sizes and factors are `paint_sigma`, `paint_t`, `heat_factor`, `cool_factor` in `assets/physics.json` (§2.7); this page copies none.
+- **The edits** (`step::edit::Edit`): Paint · Erase · Heat · Cool · DropPreset · Clear; `Step::with_edits` adds P0's three dispatches (`edit_gate`, `edit_cells`, `edit_finish`) to a built step and `Step::queue_edit` queues one for the next step. Opt-in: `Step::new` and its siblings keep their pass lists. The queue takes 8 edits and 300 × 300 patch cells a step (a ninth is `QueueFull`); edits apply once, in order.
+- **Deposit** (paint, drop): Σε_th is added to; the cold energy follows the new Σ and the mass-mixed composition; the momentum density is unchanged, so the kinetic energy follows it onto the larger Σ. Booked = the stored change in E and Σ per cell, so the ledger balances (to f32 rounding).
+  **Erase** and **Clear** write the floor state — pure hydrogen (M0-T3's default composition); Clear also zeroes the sinks, and the caller restarts its `Ledger` (`Edit::restarts_ledger`). **Heat** and **Cool** multiply ε_th on non-vacuum cells only (Σ ≥ Σ_vac), floored at T_floor; a cool never raises it.
+- **Drop preset.** `scene::preset_cloud` builds the same cloud `Scene::preset_mass` loads, as a Σ patch plus T and composition; a drop whose cloud the world would clip is refused (`presets.no_room`, §4.5) before anything is written.
+- **The box.** The flag that re-fits the active box (§1.3.3) is set only by a paint or drop whose rectangle is not inside it; erase, heat, cool and Clear leave the periodic re-fit to shrink it.
+- **The edits file** (`headless --edits FILE`, §2.12.5; `headless::EditPlan`): a list of `{at, edit}` with the triggers `step`, `object_until` (`x_h_c_below`) and `mass_until` (`at_least` / `at_most`). Triggers read the state at **step boundaries**, never the wall clock, so a run is deterministic: two runs are bit-identical. Readings declared at M0-T77 (cheap to reverse):
+  a state trigger waits for the first object (first read after step 1); while one is unspent the run goes in one-step chunks, and a step trigger ends a chunk at its step; a repeating `mass_until` adds copies only when the backlog is empty; `frames` = that many applications in the one step (1–8), the queue taking eight a step with the rest in file order.
+  A bad file (unknown key, cell, radius, species or frames out of range, a missing file) and `--cpu-reference` are refused before any GPU: exit 4, `SR-ERROR bad edits`.
+- **Measured, not acted on.** P1's Δt for the step that applies a paint was made by P9 from the previous step, so a paint into an all-cold-vacuum box can raise the wave speed above what that Δt assumed (a CFL up to ~2.5 for one step; not reproduced — the tests run no P4). Edits queued before the first step apply after the initial Δt reduction.
+- **Not wired yet.** The app does not call `queue_edit` (the input lots do). The scopes are `edits` (P0) and `edits_file` (`testing.md`); the step and mass triggers are `NOT PROVEN` on a star (a static synthetic disk). The RTX 4090 reading is owed (R18).
+
 ## Where a number lives (so this page never holds one)
 | A value | Lives in | Checked by |
 |---|---|---|

@@ -1,0 +1,55 @@
+== 2026-10-28T14:58:49-04:00 heat_multigrid · task M0-T76 · box laserax-ai :: bash tests/gpu.sh heat::multigrid physics
+-- heat_multigrid · exit=0 · 3.87 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 4 tests
+test heat::multigrid::gpu_the_burnt_fields_first_pass_converges_within_twice_the_models_rounds ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the first pass converges in 15 V-cycle rounds (the model 14, the bound 28), 112 Jacobi rounds
+ok
+test heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the first pass converges in 15 V-cycle rounds (the model 17, the bound 34), 131 Jacobi rounds
+ok
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_burnt_field ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs 4.58e-9; the least <Mx, x> 1.398e2
+ok
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_hot_disk_in_a_thin_ring ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs 4.34e-9; the least <Mx, x> 1.787e0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.72s
+
+
+== 2026-10-28T15:01:30-04:00 heat_multigrid · task M0-T76 · box laserax-ai :: bash tests/gpu.sh heat::multigrid physics
+-- heat_multigrid · exit=0 · 3.12 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 4 tests
+test heat::multigrid::gpu_the_burnt_fields_first_pass_converges_within_twice_the_models_rounds ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the first pass converges in 15 V-cycle rounds (the model 14, the bound 28), 112 Jacobi rounds
+ok
+test heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the first pass converges in 15 V-cycle rounds (the model 17, the bound 34), 131 Jacobi rounds
+ok
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_burnt_field ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs 4.58e-9; the least <Mx, x> 1.398e2
+ok
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_hot_disk_in_a_thin_ring ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs 4.34e-9; the least <Mx, x> 1.787e0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 401 filtered out; finished in 2.96s
+
+

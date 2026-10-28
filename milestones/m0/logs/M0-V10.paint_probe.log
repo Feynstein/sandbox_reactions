@@ -1,0 +1,64 @@
+# M0-V10 — the paint-outside-the-box probe (laserax-ai-server, RTX 4090, 2026-10-28 15:47–15:53; tree 255ec37 + the rsync'd working tree; build/target/release/sandbox-reactions built by --all's build scope)
+# every run: headless --scene <scene> --steps <n> [--edits <file>] --adapter "RTX 4090" --out <dir>; world 128 × 128, edge bounce; rects 8 × 8, H 1.0, at rest
+# edits: paint_edits.json = [{"at": {"step": 2}, "edit": {"kind": "paint", "x": 96, "y": 96, "radius": 8, "species": "H", "frames": 1}}]; paint_mid.json the same at (64, 64); paint_step0.json the same as paint_edits at step 0
+# scenes: paint_cold = one rect at (8,8) Σ 0.1 T 0.05 · box_hot = one rect at (8,8) Σ 0.02 T 2.0 · wide_cold = rects at (4,4) and (116,116) Σ 0.1 T 0.05 (the box spans the world) · wide_hot = the same at Σ 0.02 T 2.0 · paint_hot = paint_cold plus a Maclaurin disk at (96,96) a 8 Σc 0.02 T 2.0 from step 0 · empty = no object
+
+=== 2026-10-28T15:47:30-04:00 paint_cold steps 1
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+exit 0
+=== 2026-10-28T15:47:30-04:00 paint_cold steps 2
+SR-HEADLESS DONE steps=2 sim_time=0.183639 until=none
+exit 0
+=== 2026-10-28T15:47:31-04:00 paint_cold steps 3
+SR-ERROR non-finite value in the state at step 2, cell (96, 88), channel energy
+exit 5
+=== 2026-10-28T15:47:31-04:00 paint_hot steps 1
+SR-HEADLESS DONE steps=1 sim_time=0.067305 until=none
+exit 0
+=== 2026-10-28T15:47:31-04:00 paint_cold steps 200
+SR-ERROR non-finite value in the state at step 64, cell (96, 88), channel energy
+exit 5
+=== 2026-10-28T15:47:32-04:00 paint_hot steps 200
+SR-HEADLESS DONE steps=200 sim_time=5.876108 until=none
+exit 0
+=== 2026-10-28T15:47:34-04:00 done
+=== 2026-10-28T15:50:11-04:00 A wide_cold, paint inside the box at (64,64), steps 1
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+exit 0
+=== 2026-10-28T15:50:11-04:00 A wide_cold, paint inside the box at (64,64), steps 2
+SR-HEADLESS DONE steps=2 sim_time=0.183639 until=none
+exit 0
+=== 2026-10-28T15:50:12-04:00 A wide_cold, paint inside the box at (64,64), steps 3
+SR-HEADLESS DONE steps=3 sim_time=0.261858 until=none
+exit 0
+=== 2026-10-28T15:50:12-04:00 A wide_cold, paint inside the box at (64,64), steps 200
+SR-HEADLESS DONE steps=200 sim_time=6.412346 until=none
+exit 0
+=== 2026-10-28T15:50:13-04:00 B box_hot, paint outside the box at (96,96), steps 1
+SR-HEADLESS DONE steps=1 sim_time=0.067293 until=none
+exit 0
+=== 2026-10-28T15:50:14-04:00 B box_hot, paint outside the box at (96,96), steps 2
+SR-HEADLESS DONE steps=2 sim_time=0.126205 until=none
+exit 0
+=== 2026-10-28T15:50:14-04:00 B box_hot, paint outside the box at (96,96), steps 3
+SR-ERROR non-finite value in the state at step 2, cell (96, 88), channel energy
+exit 5
+=== 2026-10-28T15:50:14-04:00 B box_hot, paint outside the box at (96,96), steps 200
+SR-ERROR non-finite value in the state at step 64, cell (96, 88), channel energy
+exit 5
+=== 2026-10-28T15:50:16-04:00 C wide_hot, paint inside the box at (64,64), steps 3
+SR-HEADLESS DONE steps=3 sim_time=0.171842 until=none
+exit 0
+=== 2026-10-28T15:50:16-04:00 C wide_hot, paint inside the box at (64,64), steps 200
+SR-HEADLESS DONE steps=200 sim_time=6.203403 until=none
+exit 0
+=== 2026-10-28T15:50:18-04:00 D wide_cold, no paint, steps 3
+SR-HEADLESS DONE steps=3 sim_time=0.261858 until=none
+exit 0
+=== 2026-10-28T15:50:18-04:00 D wide_cold, no paint, steps 200
+SR-HEADLESS DONE steps=200 sim_time=12.452515 until=none
+exit 0
+=== (15:53) E empty, paint_edits.json, steps 2 → SR-HEADLESS DONE steps=2 sim_time=0.894426 (the floor's Δt 0.447), exit 0
+=== E empty, paint_edits.json, steps 3 → SR-ERROR non-finite value in the state at step 2, cell (96, 88), channel energy, exit 5
+=== E empty, paint_edits.json, steps 200 → SR-ERROR non-finite value in the state at step 64, cell (96, 88), channel energy, exit 5
+=== F empty, paint_step0.json, steps 3 → SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy, exit 5

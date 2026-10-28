@@ -4,6 +4,9 @@
 #[cfg(not(target_arch = "wasm32"))]
 mod capture;
 mod desktop;
+// Number formats (§4.12, M0-T75): the readout and inspector lots call them; until then only the `formats` scope does.
+#[allow(dead_code)]
+mod format;
 #[cfg(not(target_arch = "wasm32"))]
 mod status;
 mod strings;
@@ -13,7 +16,7 @@ mod web;
 #[cfg(not(target_arch = "wasm32"))]
 const USAGE: &str = "usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] | \
 sandbox-reactions headless --scene <FILE|preset:<sun|massive|giant>> --steps N [--world WxH] [--edge leave|bounce] \
-[--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE [--continue]] [--adapter S | --cpu-reference] | \
+[--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE [--continue]] [--edits FILE] [--adapter S | --cpu-reference] | \
 sandbox-reactions calibrate --out FILE [--adapter S] [--only ITEM] [--resume DIR] [--progress-every N] [--checkpoint-every M]";
 
 /// The web build (§3.5): trunk's wasm-bindgen start runs `main`, which hands the canvas to the app and returns.

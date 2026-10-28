@@ -663,6 +663,13 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     fallback serves runs started without it; the `desktop` scope's `port-taken` case and `port-no-fallback` plant hold it · the
     lead's ask, 2026-10-28, as the plan records it («the app finds an open port when its own is taken»), and the lead's ruling at
     M0-D99: «(b) App side only».
+  - [M0-T74] §5.2's G-MULTI "Two Sun-like presets 240 cells apart, 20 τ_dyn: two objects with stable ids" · **the run is to
+    `sim_time:40` (about 11 of the cloud's τ_dyn, ≈ 3.6); the 240 cells, the two objects, the stable ids, no non-finite value and both
+    readouts filled stand** — measured on the RTX 5090 at the calibrated Sun-like mass (3,137, a = 38.7): two objects at t = 10, 20, 30
+    and 40 (both on the main sequence at 40), one object (5,749, iron_core) at t = 72 = 20 τ_dyn, the clouds having fallen together
+    under their own gravity (a gap of 162.6 cells between the edges at the drop); §2.10's presets, in scene files and `preset:<name>`,
+    are at calibration's `preset_mass_sb` when a calibration is embedded (a tree with none keeps the nominal disk and its `SR-WARN`) ·
+    the lead at M0-T74, 2026-10-28: «Shorten to 40 t.u. (Recommended)».
   - [M0-D68] §0.5 [M0-D64]'s "cell i taking (½p_i + w_i(q − ½(p_i + p_j)))(φ_i − φ_j)Δt … and j the rest", §0.5 [M0-D66]'s
     "G-JEANS's cloud at U_th = 0.07|W| (T 3.3132)" and the ledger case's leave momentum band 5e-3 · **each cell of a face keeps
     ½Δt·p·(φ_i − φ_j) of its own; the rest, D = Δt(q − ½(p_i + p_j))(φ_i − φ_j), when a cost (D < 0) is paid first from the

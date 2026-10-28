@@ -194,7 +194,10 @@ fn events_jsonl_and_the_ending_of_a_black_hole() {
     let held = ending["sim_time"].as_f64().unwrap() - shown["sim_time"].as_f64().unwrap();
     let hold = ending["detail"]["hold_t"].as_f64().expect("the ending names its hold");
     assert!(hold >= 10.0, "the hold is max(10 t.u., 20 τ_dyn): {ending}");
-    assert_eq!(ending["detail"]["held_t"].as_f64(), Some(held), "{ending}");
+    // ≤ 1e-12 relative, not bit-equal (M0-D100): serde_json's default float parse is not correctly rounded — on the RTX 5090 it
+    // read events.jsonl's sim_time 11.638221981935203 as …205, one ulp off, while held_t is exactly the file's two times' difference.
+    let held_t = ending["detail"]["held_t"].as_f64().expect("the ending names how long it held");
+    assert!((held_t - held).abs() <= 1e-12 * held, "held_t {held_t} against {held}: {ending}");
     assert!(held >= hold, "an ending after {held} t.u. of a remnant on display, not its hold {hold}");
     assert_eq!(shown["from_step"].as_u64().map(|s| s > 40), Some(true), "from_step counts from the scene too: {shown}");
     println!("ending at step {}: black_hole shown from step {}, held {held:.3} t.u. of {hold:.3}", ending["step"], shown["from_step"]);

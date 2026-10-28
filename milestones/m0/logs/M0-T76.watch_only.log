@@ -1,0 +1,12 @@
+== 2026-10-28T14:59:18-04:00 watch_only · task M0-T76 · box laserax-ai :: {python} tests/watch/check.py
+-- watch_only · exit=1 · 0.11 s
+files scanned: 25 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 12 calibration keys + `calibration`); exempt: `m_tov_sb` (§0.5 [M0-D90])
+crates/sr-engine/src/step/edit.rs:84: names `preset_mass_sb`
+=== NO-GO: 1 name(s) a label or a calibration value in the step code ===
+
+== 2026-10-28T15:02:02-04:00 watch_only · task M0-T76 · box laserax-ai :: {python} tests/watch/check.py
+-- watch_only · exit=0 · 0.11 s
+files scanned: 25 in crates/sr-engine/src/step, crates/sr-engine/shaders; words forbidden: 16 (3 labels + 12 calibration keys + `calibration`); exempt: `m_tov_sb` (§0.5 [M0-D90])
+1 passed, 0 failed (25 files)
+=== GO ===
+

@@ -4,6 +4,8 @@
 //! [`Tracker::update`] turns it into objects with every §1.9.2 quantity. Nothing here reaches back into a step: G-WATCH
 //! keeps this module out of `crates/sr-engine/src/step/` and the shaders.
 
+pub mod age;
+pub mod ending;
 pub mod stages;
 pub mod tracker;
 pub mod translate;

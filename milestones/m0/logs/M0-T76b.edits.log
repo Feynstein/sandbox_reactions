@@ -1,0 +1,188 @@
+== 2026-10-28T14:56:10-04:00 edits · task M0-T76b · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 8.04 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.92s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::a_drop_that_would_leave_the_world_is_refused_with_no_room' (3317739) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it' (3317769) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+FAILED
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas' (3317777) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+FAILED
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared' (3317788) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+FAILED
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::erase_writes_the_floor_state_and_books_what_left' (3317799) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+FAILED
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone' (3317807) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+FAILED
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it' (3317815) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+FAILED
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded' (3317823) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+FAILED
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::the_box_grows_to_an_edit_outside_it_and_only_then' (3317834) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1084:30:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_shader_module, label = 'edit.wgsl'
+    
+Shader 'edit.wgsl' parsing error: name `target` is a reserved keyword
+    ┌─ wgsl:350:9
+    │
+350 │     var target = max(eps * factor, eps_th_floor(comp.inv_mu));
+    │         ^^^^^^ definition of `target`
+
+
+
+
+FAILED
+
+failures:
+
+failures:
+    edit::a_drop_that_would_leave_the_world_is_refused_with_no_room
+    edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it
+    edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas
+    edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared
+    edit::erase_writes_the_floor_state_and_books_what_left
+    edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone
+    edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it
+    edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded
+    edit::the_box_grows_to_an_edit_outside_it_and_only_then
+
+test result: FAILED. 0 passed; 9 failed; 0 ignored; 0 measured; 395 filtered out; finished in 1.04s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

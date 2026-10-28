@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/ending.rs	2026-10-28 13:29:22.558089977 -0400
++++ b/crates/sr-physics/src/observe/ending.rs	2026-10-28 13:29:22.558878249 -0400
+@@ -103,7 +103,7 @@
+ impl Predictor {
+     /// From calibration's four sandbox anchors, `M_ign < M_Ch < M_up < M_BH` (the scale refuses any other order).
+     pub fn new(m_ign: f64, m_ch: f64, m_up: f64, m_bh: f64) -> Result<Predictor, TranslateError> {
+-        Ok(Predictor { scale: MassScale::new(m_ign, m_ch, m_up, m_bh)?, cuts: [m_ign, m_up, m_bh] })
++        Ok(Predictor { scale: MassScale::new(m_ign, m_ch, m_up, m_bh)?, cuts: [m_ign, m_up, m_up] })
+     }
+ 
+     /// The prediction for an object of `mass_sb`; `None` when the mass is not a number.

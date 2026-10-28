@@ -364,6 +364,13 @@ impl Watch {
         self.stages.stage(star.id).and_then(|s| s.shown).map(Stage::id)
     }
 
+    /// The heaviest object's mass in sandbox units (M = gas + sinks, §1.9.2) and its central hydrogen — what §2.12.5's edit
+    /// triggers read at a step boundary; `None` while there is no object.
+    pub fn heaviest_mass_and_x_h_c(&self) -> Option<(f64, f64)> {
+        let o = self.tracker.objects().iter().max_by(|a, b| a.mass.total_cmp(&b.mass))?;
+        Some((o.mass, o.x_c[X_H]))
+    }
+
     /// The heaviest object's numbers now, for `calibrate`'s progress line (M0-D80); `None` while there is no object.
     pub fn heaviest_star(&self) -> Option<Star> {
         let o = self.tracker.objects().iter().max_by(|a, b| a.mass.total_cmp(&b.mass))?;

@@ -1,0 +1,240 @@
+# M0-V10 — the server's two chains (laserax-ai-server, /tmp/v10/chain.sh then chain2.sh), verbatim
+#!/usr/bin/env bash
+cd ~/workspace/sandbox_reactions
+export SR_TEST_ADAPTER="RTX 4090"
+stamp() { echo "=== $(date -Iseconds) $*"; }
+stamp "--all"; t0=$(date +%s.%N)
+python3 tools/pb/verify.py --all --task M0-V10; echo "exit $? wall $(echo "$(date +%s.%N) - $t0" | bc) s"
+for s in ending age_clock formats multi edits edits_file; do
+  stamp "--redarm $s"; t0=$(date +%s.%N)
+  python3 tools/pb/verify.py --redarm $s --task M0-V10; echo "exit $? wall $(echo "$(date +%s.%N) - $t0" | bc) s"
+done
+B=build/target/release/sandbox-reactions
+for m in 300 325 350; do
+  stamp "wisp probe $m"; $B headless --scene /tmp/v10/wisp_$m.json --steps 1 --adapter "RTX 4090" --out /tmp/v10/wisp_$m.out 2>&1 | tail -3; echo "exit ${PIPESTATUS[0]}"
+done
+for n in 1 2 3; do stamp "paint_cold steps $n"; $B headless --scene /tmp/v10/paint_cold.json --steps $n --edits /tmp/v10/paint_edits.json --adapter "RTX 4090" --out /tmp/v10/pc_$n.out 2>&1 | tail -2; echo "exit ${PIPESTATUS[0]}"; done
+stamp "paint_hot steps 1"; $B headless --scene /tmp/v10/paint_hot.json --steps 1 --adapter "RTX 4090" --out /tmp/v10/ph_1.out 2>&1 | tail -2; echo "exit ${PIPESTATUS[0]}"
+stamp "paint_cold steps 200"; $B headless --scene /tmp/v10/paint_cold.json --steps 200 --edits /tmp/v10/paint_edits.json --adapter "RTX 4090" --out /tmp/v10/pc_200.out 2>&1 | tail -3; echo "exit ${PIPESTATUS[0]}"
+stamp "paint_hot steps 200"; $B headless --scene /tmp/v10/paint_hot.json --steps 200 --adapter "RTX 4090" --out /tmp/v10/ph_200.out 2>&1 | tail -3; echo "exit ${PIPESTATUS[0]}"
+stamp "done"
+----- chain.log
+=== 2026-10-28T15:42:13-04:00 --all
+plan_lint         688/0/0      0.12 s  GO · step 1/68, 67 left
+tools_selftest    10/0/0      19.83 s  GO · step 2/68, 66 left
+toolchain         2/1/0        0.18 s  NO-GO · step 3/68, 65 left
+build             2/0/0       19.97 s  GO · step 4/68, 64 left
+registry          29/0/0       7.08 s  GO · step 5/68, 63 left
+eos               13/0/0       6.98 s  GO · step 6/68, 62 left
+rates             8/0/0        6.93 s  GO · step 7/68, 61 left
+burn_cell         18/0/0      21.60 s  GO · step 8/68, 60 left
+burn_order        4/0/0       16.19 s  GO · step 9/68, 59 left
+neutrino          18/0/0      19.54 s  GO · step 10/68, 58 left
+sink              34/0/0      30.97 s  GO · step 11/68, 57 left
+nu_heat           15/0/0      21.70 s  GO · step 12/68, 56 left
+summary           7/0/0       17.25 s  GO · step 13/68, 55 left
+ledger            5/0/0       21.69 s  GO · step 14/68, 54 left
+preset_cloud      5/0/0       50.33 s  GO · step 15/68, 53 left
+observe_run       9/0/0       56.50 s  GO · step 16/68, 52 left
+objects           24/0/0       0.11 s  GO · step 17/68, 51 left
+classify          47/0/0       0.11 s  GO · step 18/68, 50 left
+ending            11/0/0       0.11 s  GO · step 19/68, 49 left
+age_clock         17/0/0       0.11 s  GO · step 20/68, 48 left
+multi             5/0/0       67.01 s  GO · step 21/68, 47 left
+edits             10/0/0       6.93 s  GO · step 22/68, 46 left
+edits_file        6/0/0        9.53 s  GO · step 23/68, 45 left
+fft_twin          10/0/0       0.16 s  GO · step 24/68, 44 left
+riemann           8/0/0        0.06 s  GO · step 25/68, 43 left
+sheet             7/0/0        0.21 s  GO · step 26/68, 42 left
+sod               15/0/0       8.63 s  GO · step 27/68, 41 left
+edges             7/0/0        9.48 s  GO · step 28/68, 40 left
+collapse          6/0/0        1.87 s  GO · step 29/68, 39 left
+jeans             6/0/0        0.87 s  GO · step 30/68, 38 left
+sun_burn          4/0/0       76.50 s  GO · step 31/68, 37 left
+twin              6/0/0        1.92 s  GO · step 32/68, 36 left
+cpu_gpu           3/0/0        8.73 s  GO · step 33/68, 35 left
+heat_gauss        14/0/0       5.02 s  GO · step 34/68, 34 left
+heat_implicit     8/0/0        3.27 s  GO · step 35/68, 33 left
+heat_limiter      8/0/0        5.07 s  GO · step 36/68, 32 left
+heat_stiff        13/0/0       5.92 s  GO · step 37/68, 31 left
+heat_multigrid    4/0/0        3.82 s  GO · step 38/68, 30 left
+radiation_force   11/0/0      11.03 s  GO · step 39/68, 29 left
+grav_force        13/0/0       3.07 s  GO · step 40/68, 28 left
+grav_selfforce    7/0/0        1.62 s  GO · step 41/68, 27 left
+fft               8/0/0        3.72 s  GO · step 42/68, 26 left
+time_control      23/0/0       0.11 s  GO · step 43/68, 25 left
+strings           3/0/0        0.46 s  GO · step 44/68, 24 left
+formats           18/0/0       0.61 s  GO · step 45/68, 23 left
+adapter           9/1/0        2.92 s  NO-GO · step 46/68, 22 left
+state             6/0/0        2.42 s  GO · step 47/68, 21 left
+booking           4/0/0        3.07 s  GO · step 48/68, 20 left
+floors            7/0/0        5.22 s  GO · step 49/68, 19 left
+dt                8/0/0        6.72 s  GO · step 50/68, 18 left
+box               8/0/0       12.63 s  GO · step 51/68, 17 left
+latch             5/0/0        2.92 s  GO · step 52/68, 16 left
+timing            5/0/0       27.91 s  GO · step 53/68, 15 left
+scene             8/0/0        2.12 s  GO · step 54/68, 14 left
+dump              12/0/0      47.55 s  GO · step 55/68, 13 left
+boot              1/0/0        8.63 s  GO · step 56/68, 12 left
+desktop           0/4/0      114.29 s  NO-GO · step 57/68, 11 left
+web               0/3/0        0.10 s  NO-GO · step 58/68, 10 left
+capture           1/1/0        0.23 s  NO-GO · step 59/68, 9 left
+licences          3/0/0        0.54 s  GO · step 60/68, 8 left
+watch_only        1/0/0        0.11 s  GO · step 61/68, 7 left
+calibration       12/0/0       0.11 s  GO · step 62/68, 6 left
+calibrate_cold    8/0/0        1.37 s  GO · step 63/68, 5 left
+cold_core         8/0/0        8.98 s  GO · step 64/68, 4 left
+calibrate_status  18/0/0       0.11 s  GO · step 65/68, 3 left
+calibrate_bisect  19/0/0     101.28 s  GO · step 66/68, 2 left
+calibrate_order   13/0/0       0.16 s  GO · step 67/68, 1 left
+readouts          9/0/0        0.11 s  GO · step 68/68, 0 left
+logs: milestones/m0/logs/M0-V10.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+17d989da3ea0
+anchor: 379 path×scope entries moved by this run
+anchor: 199 paths checked · 304 skipped (3 classes) · 122 never checked · 0 stale · 0 unclassified · 0 owed · 321 covered of 625 visible
+FAILED:
+  toolchain: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-V10.toolchain.log
+  adapter: 1 failed · log milestones/m0/logs/M0-V10.adapter.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready; desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: no ready within 90 s (SR-STATUS-PORT never printed, last status none) · log milestones/m0/logs/M0-V10.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-V10.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-V10.capture.log
+verify: 1354 passed, 10 failed, 0 skipped · 63/68 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 176.54 s + loop 0.09 s · mode all · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.63->2.06 · base: M0-V10's start 2026-10-28T15:25:41-04:00
+=== NO-GO: toolchain: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-V10.toolchain.log; adapter: 1 failed · log milestones/m0/logs/M0-V10.adapter.log; desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own ve... ===
+exit 1 wall 176.907047206 s
+=== 2026-10-28T15:45:10-04:00 --redarm ending
+ending · clean · GO · arm 1/2, 1 left
+ending · plant ending-band-swap · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope ending · 5.72 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V10.ending.redarm.log
+=== GO ===
+exit 0 wall 5.887231289 s
+=== 2026-10-28T15:45:16-04:00 --redarm age_clock
+age_clock · clean · GO · arm 1/2, 1 left
+age_clock · plant age-unclamped-unit · RED (proven: 2 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope age_clock · 5.66 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V10.age_clock.redarm.log
+=== GO ===
+exit 0 wall 5.840890218 s
+=== 2026-10-28T15:45:22-04:00 --redarm formats
+formats · clean · GO · arm 1/2, 1 left
+formats · plant format-grouping · RED (proven: 8 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope formats · 9.23 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V10.formats.redarm.log
+=== GO ===
+exit 0 wall 9.398692691 s
+=== 2026-10-28T15:45:31-04:00 --redarm multi
+multi · clean · GO · arm 1/2, 1 left
+multi · plant one-object · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope multi · 68.78 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V10.multi.redarm.log
+=== GO ===
+exit 0 wall 68.934675154 s
+=== 2026-10-28T15:46:40-04:00 --redarm edits
+edits · clean · GO · arm 1/2, 1 left
+edits · plant edit-ignored · RED (proven: 6 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edits · 23.56 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V10.edits.redarm.log
+=== GO ===
+exit 0 wall 23.709852234 s
+=== 2026-10-28T15:47:04-04:00 --redarm edits_file
+edits_file · clean · GO · arm 1/2, 1 left
+edits_file · plant edits-trigger-late · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edits_file · 24.91 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V10.edits_file.redarm.log
+=== GO ===
+exit 0 wall 25.063980198 s
+=== 2026-10-28T15:47:29-04:00 wisp probe 300
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+exit 0
+=== 2026-10-28T15:47:29-04:00 wisp probe 325
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+exit 0
+=== 2026-10-28T15:47:29-04:00 wisp probe 350
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+exit 0
+=== 2026-10-28T15:47:30-04:00 paint_cold steps 1
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+exit 0
+=== 2026-10-28T15:47:30-04:00 paint_cold steps 2
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2 sim_time=0.183639 until=none
+exit 0
+=== 2026-10-28T15:47:31-04:00 paint_cold steps 3
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ERROR non-finite value in the state at step 2, cell (96, 88), channel energy
+exit 5
+=== 2026-10-28T15:47:31-04:00 paint_hot steps 1
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.067305 until=none
+exit 0
+=== 2026-10-28T15:47:31-04:00 paint_cold steps 200
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ERROR non-finite value in the state at step 64, cell (96, 88), channel energy
+exit 5
+=== 2026-10-28T15:47:32-04:00 paint_hot steps 200
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=5.876108 until=none
+exit 0
+=== 2026-10-28T15:47:34-04:00 done
+----- chain2.sh
+#!/usr/bin/env bash
+cd ~/workspace/sandbox_reactions
+export SR_TEST_ADAPTER="RTX 4090"
+B=build/target/release/sandbox-reactions
+stamp() { echo "=== $(date -Iseconds) $*"; }
+run() { stamp "$1"; shift; $B headless "$@" --adapter "RTX 4090" 2>&1 | grep -v "^SR-ADAPTER" | tail -2; echo "exit ${PIPESTATUS[0]}"; }
+for n in 1 2 3 200; do run "A wide_cold, paint inside the box at (64,64), steps $n" --scene /tmp/v10/wide_cold.json --steps $n --edits /tmp/v10/paint_mid.json --out /tmp/v10/A_$n.out; done
+for n in 1 2 3 200; do run "B box_hot, paint outside the box at (96,96), steps $n" --scene /tmp/v10/box_hot.json --steps $n --edits /tmp/v10/paint_edits.json --out /tmp/v10/B_$n.out; done
+for n in 3 200; do run "C wide_hot, paint inside the box at (64,64), steps $n" --scene /tmp/v10/wide_hot.json --steps $n --edits /tmp/v10/paint_mid.json --out /tmp/v10/C_$n.out; done
+for n in 3 200; do run "D wide_cold, no paint, steps $n" --scene /tmp/v10/wide_cold.json --steps $n --out /tmp/v10/D_$n.out; done
+stamp "--redarm observe_run"; t0=$(date +%s.%N)
+python3 tools/pb/verify.py --redarm observe_run --task M0-V10; echo "exit $? wall $(echo "$(date +%s.%N) - $t0" | bc) s"
+stamp done
+----- chain2.log
+=== 2026-10-28T15:50:11-04:00 A wide_cold, paint inside the box at (64,64), steps 1
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+exit 0
+=== 2026-10-28T15:50:11-04:00 A wide_cold, paint inside the box at (64,64), steps 2
+SR-HEADLESS DONE steps=2 sim_time=0.183639 until=none
+exit 0
+=== 2026-10-28T15:50:12-04:00 A wide_cold, paint inside the box at (64,64), steps 3
+SR-HEADLESS DONE steps=3 sim_time=0.261858 until=none
+exit 0
+=== 2026-10-28T15:50:12-04:00 A wide_cold, paint inside the box at (64,64), steps 200
+SR-HEADLESS DONE steps=200 sim_time=6.412346 until=none
+exit 0
+=== 2026-10-28T15:50:13-04:00 B box_hot, paint outside the box at (96,96), steps 1
+SR-HEADLESS DONE steps=1 sim_time=0.067293 until=none
+exit 0
+=== 2026-10-28T15:50:14-04:00 B box_hot, paint outside the box at (96,96), steps 2
+SR-HEADLESS DONE steps=2 sim_time=0.126205 until=none
+exit 0
+=== 2026-10-28T15:50:14-04:00 B box_hot, paint outside the box at (96,96), steps 3
+SR-ERROR non-finite value in the state at step 2, cell (96, 88), channel energy
+exit 5
+=== 2026-10-28T15:50:14-04:00 B box_hot, paint outside the box at (96,96), steps 200
+SR-ERROR non-finite value in the state at step 64, cell (96, 88), channel energy
+exit 5
+=== 2026-10-28T15:50:16-04:00 C wide_hot, paint inside the box at (64,64), steps 3
+SR-HEADLESS DONE steps=3 sim_time=0.171842 until=none
+exit 0
+=== 2026-10-28T15:50:16-04:00 C wide_hot, paint inside the box at (64,64), steps 200
+SR-HEADLESS DONE steps=200 sim_time=6.203403 until=none
+exit 0
+=== 2026-10-28T15:50:18-04:00 D wide_cold, no paint, steps 3
+SR-HEADLESS DONE steps=3 sim_time=0.261858 until=none
+exit 0
+=== 2026-10-28T15:50:18-04:00 D wide_cold, no paint, steps 200
+SR-HEADLESS DONE steps=200 sim_time=12.452515 until=none
+exit 0
+=== 2026-10-28T15:50:20-04:00 --redarm observe_run
+observe_run · clean · GO · arm 1/7, 6 left
+observe_run · plant until-never-met · RED (proven: 7 failed) · arm 2/7, 5 left
+observe_run · plant continue-ignited-left-out · RED (proven: 1 failed) · arm 3/7, 4 left
+observe_run · plant continue-ledger-start-lost · RED (proven: 1 failed) · arm 4/7, 3 left
+observe_run · plant lone-sink-left-out · RED (proven: 2 failed) · arm 5/7, 2 left
+observe_run · plant dt-empty-box-unbounded · GREEN (unfailable) · arm 6/7, 1 left
+observe_run · plant ending-any-object · RED (proven: 1 failed) · arm 7/7, 0 left
+FAILED:
+  plant dt-empty-box-unbounded: stayed GO - the scope cannot see this bug
+redarm: 6 plants · 5 red · 1 green · 0 errors · scope observe_run · 651.98 s · 7 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V10.observe_run.redarm.log
+=== NO-GO: plant dt-empty-box-unbounded: stayed GO - the scope cannot see this bug ===
+exit 1 wall 652.136912522 s
+=== 2026-10-28T16:01:12-04:00 done

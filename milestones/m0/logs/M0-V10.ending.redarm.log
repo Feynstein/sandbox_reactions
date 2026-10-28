@@ -1,0 +1,74 @@
+==== 2026-10-28T15:45:10-04:00 ending · clean · a fresh scratch copy of the tree
+== 2026-10-28T15:45:10-04:00 ending · task M0-V10 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::ending
+-- ending · exit=0 · 2.57 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jccgk3cg/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.48s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 11 tests
+test observe::ending::tests::a_remnant_held_ten_tu_shows_the_ending_instead_of_the_prediction ... ok
+test observe::ending::tests::anchors_out_of_order_are_refused ... ok
+test observe::ending::tests::each_band_reads_its_fate ... ok
+test observe::ending::tests::a_threshold_itself_is_a_close_call_between_its_two_fates ... ok
+test observe::ending::tests::only_a_remnant_stage_ends_the_prediction ... ok
+test observe::ending::tests::outside_the_band_the_fate_is_the_side_the_mass_is_on ... ok
+test observe::ending::tests::the_band_is_taken_in_sandbox_mass_not_in_suns ... ok
+test observe::ending::tests::the_close_call_edges_are_exactly_ten_percent_in_sandbox_mass ... ok
+test observe::ending::tests::the_hold_is_the_stage_modules_function_of_tau_dyn ... ok
+test observe::ending::tests::the_keys_name_the_strings_table ... ok
+test observe::ending::tests::the_nearer_threshold_names_the_pair_when_two_bands_meet ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 186 filtered out; finished in 0.00s
+
+
+==== 2026-10-28T15:45:10-04:00 ending · plant ending-band-swap · a fresh scratch copy of the tree
+planted ending-band-swap: tests/plants/ending-band-swap.patch -> crates/sr-physics/src/observe/ending.rs
+== 2026-10-28T15:45:10-04:00 ending · task M0-V10 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::ending
+-- ending · exit=101 · 5.08 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jccgk3cg/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.41s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 11 tests
+test observe::ending::tests::a_remnant_held_ten_tu_shows_the_ending_instead_of_the_prediction ... ok
+test observe::ending::tests::anchors_out_of_order_are_refused ... ok
+test observe::ending::tests::a_threshold_itself_is_a_close_call_between_its_two_fates ... FAILED
+test observe::ending::tests::each_band_reads_its_fate ... ok
+test observe::ending::tests::only_a_remnant_stage_ends_the_prediction ... ok
+test observe::ending::tests::outside_the_band_the_fate_is_the_side_the_mass_is_on ... ok
+test observe::ending::tests::the_band_is_taken_in_sandbox_mass_not_in_suns ... ok
+test observe::ending::tests::the_close_call_edges_are_exactly_ten_percent_in_sandbox_mass ... FAILED
+test observe::ending::tests::the_hold_is_the_stage_modules_function_of_tau_dyn ... ok
+test observe::ending::tests::the_keys_name_the_strings_table ... ok
+test observe::ending::tests::the_nearer_threshold_names_the_pair_when_two_bands_meet ... FAILED
+
+failures:
+
+---- observe::ending::tests::a_threshold_itself_is_a_close_call_between_its_two_fates stdout ----
+
+thread 'observe::ending::tests::a_threshold_itself_is_a_close_call_between_its_two_fates' (110308) panicked at crates/sr-physics/src/observe/ending.rs:184:22:
+mass 10000: expected a close call, got Some(Sure(BlackHole))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::ending::tests::the_close_call_edges_are_exactly_ten_percent_in_sandbox_mass stdout ----
+
+thread 'observe::ending::tests::the_close_call_edges_are_exactly_ten_percent_in_sandbox_mass' (110314) panicked at crates/sr-physics/src/observe/ending.rs:184:22:
+mass 9000: expected a close call, got Some(Sure(Supernova))
+
+---- observe::ending::tests::the_nearer_threshold_names_the_pair_when_two_bands_meet stdout ----
+
+thread 'observe::ending::tests::the_nearer_threshold_names_the_pair_when_two_bands_meet' (110317) panicked at crates/sr-physics/src/observe/ending.rs:247:9:
+assertion `left == right` failed: nearer M_BH
+  left: Some(CloseCall(WhiteDwarf, Supernova))
+ right: Some(CloseCall(Supernova, BlackHole))
+
+
+failures:
+    observe::ending::tests::a_threshold_itself_is_a_close_call_between_its_two_fates
+    observe::ending::tests::the_close_call_edges_are_exactly_ten_percent_in_sandbox_mass
+    observe::ending::tests::the_nearer_threshold_names_the_pair_when_two_bands_meet
+
+test result: FAILED. 8 passed; 3 failed; 0 ignored; 0 measured; 186 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

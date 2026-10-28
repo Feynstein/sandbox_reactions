@@ -1,6 +1,6 @@
 //! `sandbox-reactions headless` (m0_contrat.md §3.3, §6.3): load a scene, run N steps on a surfaceless device, write the
-//! run summary (§2.12.2). Today: `--scene` reads a scene file or `preset:<name>` through [`crate::scene`] (M0-T25; every
-//! preset is the nominal Sun-like disk until M0-T74), `--world` and `--edge` stand over the scene's `world`, `--steps N`
+//! run summary (§2.12.2). Today: `--scene` reads a scene file or `preset:<name>` through [`crate::scene`] (M0-T25; a preset is
+//! at calibration's `preset_mass_sb` since M0-T74, the nominal Sun-like disk where none is embedded), `--world` and `--edge` stand over the scene's `world`, `--steps N`
 //! runs [`Step`] N times and `--timing` adds the steps' cost (M0-T23); the ledger (§2.9, [`crate::ledger`], M0-T57) is
 //! sampled after every chunk of steps and written as summary.json's `ledger`. The observers ([`crate::watch`], M0-T60) read
 //! the same summary after every chunk — a frame: objects, stages, events and `ending` — and write summary.json's `events`
@@ -40,12 +40,13 @@
 //! `--load-dump` (the GPU's own) and `--until` (the twin has no block summary to observe) are refused. The twin has no active box: its dumps carry the box record of the whole
 //! world, the GPU's `BoxMode::WholeWorld` form.
 
+use std::collections::VecDeque;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Instant;
 
 use serde_json::json;
-use sr_physics::calibration;
+use sr_physics::calibration::{self, Calibration};
 use sr_physics::observe::tracker::{exact, read_exact, read_whole};
 use sr_physics::reference::hydro::Edge;
 use sr_physics::reference::{Switches as TwinSwitches, Twin, GUARD_EVERY};
@@ -57,6 +58,7 @@ use crate::ledger::{take_booked, At, Ledger};
 use crate::scene::{EdgeMode, Object, Scene, Switches};
 use crate::state::{Booking, SideFields, State, WorldConfig, CHANNELS};
 use crate::step::boxfit::BoxMode;
+use crate::step::edit::{Edit, EditError, MAX_EDITS, RADIUS};
 use crate::step::heat::HeatSetup;
 use crate::step::nuheat::NuHeatSetup;
 use crate::step::react::ReactSetup;
@@ -107,6 +109,8 @@ pub struct Args {
     pub continue_life: bool,
     /// `--cpu-reference`: the CPU f64 twin in place of the GPU.
     pub cpu_reference: bool,
+    /// `--edits FILE`: §2.12.5's edits, applied in P0 at the step their trigger holds.
+    pub edits: Option<PathBuf>,
 }
 
 /// Parses what follows `headless`. `--flag value` or `--flag=value`, `--timing`, `--continue` and `--cpu-reference` alone;
@@ -114,7 +118,7 @@ pub struct Args {
 pub fn parse_args(args: &[String]) -> Result<Args, String> {
     let (mut scene, mut steps, mut world, mut edge, mut max_steps, mut out, mut adapter) =
         (None, None, None, None, DEFAULT_MAX_STEPS, None, None);
-    let (mut dump_every, mut load_dump, mut until) = (None, None, None);
+    let (mut dump_every, mut load_dump, mut until, mut edits) = (None, None, None, None);
     let (mut timing, mut cpu_reference, mut continue_life) = (false, false, false);
     let mut it = args.iter();
     while let Some(arg) = it.next() {
@@ -134,7 +138,7 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
             Some((f, v)) => (f, Some(v.to_string())),
             None => (arg.as_str(), None),
         };
-        let known = ["--scene", "--steps", "--world", "--edge", "--max-steps", "--out", "--adapter", "--dump-every", "--load-dump", "--until"];
+        let known = ["--scene", "--steps", "--world", "--edge", "--max-steps", "--out", "--adapter", "--dump-every", "--load-dump", "--until", "--edits"];
         if !known.contains(&flag) {
             return Err(format!("unknown argument {arg:?}"));
         }
@@ -152,6 +156,7 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
             "--adapter" => adapter = Some(value),
             "--dump-every" => dump_every = Some(count(&value)?),
             "--load-dump" => load_dump = Some(PathBuf::from(value)),
+            "--edits" => edits = Some(PathBuf::from(value)),
             "--edge" => edge = Some(EdgeMode::parse(&value).map_err(|e| format!("--{e}"))?),
             _ => {
                 let size = value.split_once('x').and_then(|(w, h)| Some((w.parse().ok()?, h.parse().ok()?)));
@@ -178,12 +183,190 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
     }
     if cpu_reference {
         let refused =
-            [("--adapter", adapter.is_some()), ("--timing", timing), ("--load-dump", load_dump.is_some()), ("--until", until.is_some())];
+            [("--adapter", adapter.is_some()), ("--timing", timing), ("--load-dump", load_dump.is_some()), ("--until", until.is_some()), ("--edits", edits.is_some())];
         if let Some((flag, _)) = refused.iter().find(|(_, given)| *given) {
             return Err(format!("{flag} is the GPU's: it has no meaning with --cpu-reference"));
         }
     }
-    Ok(Args { scene, steps, until, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, continue_life, cpu_reference })
+    Ok(Args { scene, steps, until, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, continue_life, cpu_reference, edits })
+}
+
+/// When an entry of the edits file fires (§2.12.5).
+#[derive(Clone, Copy, Debug, PartialEq)]
+enum Trigger {
+    /// `{"step": n}`: the first step boundary at or past step n.
+    Step(u64),
+    /// `{"object_until": {"x_h_c_below": v}}`: the first boundary whose heaviest object has central hydrogen under v.
+    XhBelow(f64),
+    /// `{"mass_until": {"at_least" | "at_most": m}}`: every boundary until the heaviest object's mass has passed m.
+    Mass { at_least: bool, m: f64 },
+}
+
+#[derive(Debug)]
+struct Entry {
+    trigger: Trigger,
+    edit: Edit,
+    /// `frames`: how many frames of holding the tool one firing stands for — that many applications in the one step.
+    copies: usize,
+    spent: bool,
+}
+
+/// §2.12.5's edits file, parsed against the world and the registry before any GPU is touched, and its firing state. The
+/// run reads the heaviest object's mass and central hydrogen at each step boundary — one-step chunks for as long as a state
+/// trigger is unspent, so that no summary lags the step it is read at — and never the wall clock.
+///
+/// Readings declared (M0-T77): a state trigger waits for the first object the observers have found (the first read is
+/// after step 1); a repeat adds its copies only when the previous boundary's have all been queued; at most [`MAX_EDITS`]
+/// edits are queued a step, the rest wait their turn in order; `frames` is 1 to [`MAX_EDITS`].
+#[derive(Debug)]
+pub struct EditPlan {
+    entries: Vec<Entry>,
+    backlog: VecDeque<Edit>,
+}
+
+fn edit_fields<'a>(v: &'a serde_json::Value, at: &str, known: &[&str]) -> Result<&'a serde_json::Map<String, serde_json::Value>, String> {
+    let map = v.as_object().ok_or_else(|| format!("{at}: must be an object"))?;
+    match map.keys().find(|k| !known.contains(&k.as_str())) {
+        Some(k) => Err(format!("{at}.{k}: unknown key")),
+        None => Ok(map),
+    }
+}
+
+impl EditPlan {
+    /// Reads `path`: a list of `{"at": <trigger>, "edit": {"kind", "x", "y", "radius", "species", "frames"}}`. Every unknown
+    /// key, a cell outside the world, a radius outside 1–40, an unknown species and a `frames` outside 1–8 are refused.
+    pub fn read(path: &Path, world: WorldConfig, elements: &Elements) -> Result<EditPlan, String> {
+        let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        EditPlan::parse(&text, world, elements)
+    }
+
+    pub fn parse(text: &str, world: WorldConfig, elements: &Elements) -> Result<EditPlan, String> {
+        let value: serde_json::Value = serde_json::from_str(text).map_err(|e| format!("not JSON: {e}"))?;
+        let list = value.as_array().ok_or("the edits file must be a list")?;
+        let mut entries = Vec::new();
+        for (i, item) in list.iter().enumerate() {
+            let at = format!("[{i}]");
+            let map = edit_fields(item, &at, &["at", "edit"])?;
+            let trigger = parse_trigger(map.get("at").ok_or_else(|| format!("{at}.at: missing"))?, &format!("{at}.at"))?;
+            let spec = map.get("edit").ok_or_else(|| format!("{at}.edit: missing"))?;
+            let (edit, copies) = parse_edit(spec, &format!("{at}.edit"), world, elements)?;
+            entries.push(Entry { trigger, edit, copies, spent: false });
+        }
+        Ok(EditPlan { entries, backlog: VecDeque::new() })
+    }
+
+    /// The entries whose trigger holds at the boundary before step `at`, given the heaviest object's (mass, X_H,c): their
+    /// copies join the backlog, in the file's order.
+    fn fire(&mut self, at: u64, heaviest: Option<(f64, f64)>) {
+        for e in self.entries.iter_mut().filter(|e| !e.spent) {
+            let (fires, repeats) = match e.trigger {
+                Trigger::Step(n) => (at >= n, false),
+                Trigger::XhBelow(v) => (heaviest.is_some_and(|(_, x)| x < v), false),
+                Trigger::Mass { at_least, m } => match heaviest {
+                    None => (false, true),
+                    Some((mass, _)) => {
+                        let passed = if at_least { mass >= m } else { mass <= m };
+                        e.spent = passed;
+                        (!passed, true)
+                    }
+                },
+            };
+            if !repeats {
+                e.spent = fires;
+            }
+            if fires && (!repeats || self.backlog.is_empty()) {
+                self.backlog.extend(std::iter::repeat_n(e.edit.clone(), e.copies));
+            }
+        }
+    }
+
+    /// Queues the next [`MAX_EDITS`] of the backlog for the coming step's P0.
+    fn queue(&mut self, step: &Step, queue: &wgpu::Queue) -> Result<(), EditError> {
+        for _ in 0..MAX_EDITS {
+            match self.backlog.pop_front() {
+                Some(edit) => step.queue_edit(queue, &edit)?,
+                None => break,
+            }
+        }
+        Ok(())
+    }
+
+    /// The most steps the next chunk may run: one while edits wait or a state trigger is unspent, else up to the nearest
+    /// step trigger.
+    fn horizon(&self, at: u64) -> u64 {
+        if !self.backlog.is_empty() {
+            return 1;
+        }
+        let next = |e: &Entry| match e.trigger {
+            Trigger::Step(n) => n.saturating_sub(at).max(1),
+            _ => 1,
+        };
+        self.entries.iter().filter(|e| !e.spent).map(next).min().unwrap_or(u64::MAX)
+    }
+}
+
+fn parse_trigger(v: &serde_json::Value, at: &str) -> Result<Trigger, String> {
+    let map = edit_fields(v, at, &["step", "object_until", "mass_until"])?;
+    if map.len() != 1 {
+        return Err(format!("{at}: give one of step, object_until, mass_until"));
+    }
+    let (key, value) = map.iter().next().expect("one key");
+    let number = |v: &serde_json::Value, at: &str| v.as_f64().filter(|x| x.is_finite()).ok_or_else(|| format!("{at}: must be a number"));
+    match key.as_str() {
+        "step" => Ok(Trigger::Step(value.as_u64().ok_or_else(|| format!("{at}.step: must be a whole number"))?)),
+        "object_until" => {
+            let m = edit_fields(value, &format!("{at}.object_until"), &["x_h_c_below"])?;
+            let v = m.get("x_h_c_below").ok_or_else(|| format!("{at}.object_until.x_h_c_below: missing"))?;
+            Ok(Trigger::XhBelow(number(v, &format!("{at}.object_until.x_h_c_below"))?))
+        }
+        _ => {
+            let at = format!("{at}.mass_until");
+            let m = edit_fields(value, &at, &["at_least", "at_most"])?;
+            if m.len() != 1 {
+                return Err(format!("{at}: give at_least or at_most"));
+            }
+            let (which, v) = m.iter().next().expect("one key");
+            let mass = number(v, &format!("{at}.{which}"))?;
+            if mass < 0.0 {
+                return Err(format!("{at}.{which}: a mass is not negative"));
+            }
+            Ok(Trigger::Mass { at_least: which == "at_least", m: mass })
+        }
+    }
+}
+
+fn parse_edit(v: &serde_json::Value, at: &str, world: WorldConfig, elements: &Elements) -> Result<(Edit, usize), String> {
+    let map = edit_fields(v, at, &["kind", "x", "y", "radius", "species", "frames"])?;
+    let whole = |key: &str| -> Result<u32, String> {
+        let v = map.get(key).ok_or_else(|| format!("{at}.{key}: missing"))?;
+        v.as_u64().and_then(|n| u32::try_from(n).ok()).ok_or_else(|| format!("{at}.{key}: must be a whole number"))
+    };
+    let (x, y, radius) = (whole("x")?, whole("y")?, whole("radius")?);
+    if x >= world.width || y >= world.height {
+        return Err(format!("{at}: cell ({x}, {y}) is outside the {}x{} world", world.width, world.height));
+    }
+    if !RADIUS.contains(&radius) {
+        return Err(format!("{at}.radius: {radius} is outside {}–{}", RADIUS.start(), RADIUS.end()));
+    }
+    let copies = if map.contains_key("frames") { whole("frames")? as usize } else { 1 };
+    if !(1..=MAX_EDITS).contains(&copies) {
+        return Err(format!("{at}.frames: {copies} is outside 1–{MAX_EDITS}"));
+    }
+    let kind = map.get("kind").and_then(|k| k.as_str()).ok_or_else(|| format!("{at}.kind: missing"))?;
+    let (cell, species) = ([x, y], map.get("species"));
+    let edit = match kind {
+        "paint" => {
+            let key = species.and_then(|s| s.as_str()).ok_or_else(|| format!("{at}.species: a paint names its species"))?;
+            let id = elements.index_of(key).ok_or_else(|| format!("{at}.species: {key:?} is not in the registry"))?;
+            Edit::Paint { cell, radius, species: id }
+        }
+        "erase" | "heat" | "cool" if species.is_some() => return Err(format!("{at}.species: only a paint has one")),
+        "erase" => Edit::Erase { cell, radius },
+        "heat" => Edit::Heat { cell, radius },
+        "cool" => Edit::Cool { cell, radius },
+        other => return Err(format!("{at}.kind: {other:?} is not paint, erase, heat or cool")),
+    };
+    Ok((edit, copies))
 }
 
 /// The observers' snapshot beside the dump at `dump` (§0.5 [M0-D76]): `dumps/s_<step>.observers.json`.
@@ -522,10 +705,16 @@ fn run_twin(
 /// whether the scene names a preset. `Ok` for a run that needs none, and — until M0-V9 embeds a file — for a run with none
 /// to check; otherwise [`calibration::resolve`]'s verdict as `(exit 6, the SR-ERROR line)`.
 pub fn calibration_gate(embedded: Option<&str>, names_preset: bool) -> Result<(), (i32, String)> {
+    calibration_for(embedded, names_preset).map(|_| ())
+}
+
+/// [`calibration_gate`]'s verdict with the calibration it passed: `None` for a run that needs none and for one with none
+/// embedded — its presets keep the nominal Sun-like mass (§2.10, M0-T74) — otherwise the file, read once.
+pub fn calibration_for(embedded: Option<&str>, names_preset: bool) -> Result<Option<Calibration>, (i32, String)> {
     if embedded.is_none() {
-        return Ok(());
+        return Ok(None);
     }
-    calibration::resolve(embedded, names_preset).map(|_| ()).map_err(|e| (e.exit_code(), e.line()))
+    calibration::resolve(embedded, names_preset).map_err(|e| (e.exit_code(), e.line()))
 }
 
 /// Runs the command; returns the process's exit code.
@@ -622,9 +811,17 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
     // The scene, its world and constants and the state it starts from, all before any GPU is touched (exit 4); a dump
     // gives the world and the cells instead.
     let mut names_preset = false;
+    let mut calibrated = Ok(None);
     let built = given.is_some();
     let prepared = given.map_or_else(|| load_scene(&args.scene, args.world), Ok).and_then(|scene| {
         names_preset = !built && scene.objects.iter().any(|o| matches!(o, Object::Preset { .. }));
+        // §2.10: the presets a file or `preset:<name>` names are at calibration's masses. A stale or missing file is exit 6
+        // below, where the gate always stood; the scene is built on the nominal masses meanwhile.
+        calibrated = calibration::EMBEDDED.map_or(Ok(None), |text| calibration_for(Some(text), names_preset));
+        let scene = match &calibrated {
+            Ok(Some(cal)) => scene.with_preset_masses(&cal.preset_mass_sb),
+            _ => scene,
+        };
         let physics = scene.physics()?;
         let elements = Elements::shipped().map_err(|e| e.to_string())?;
         let edge = args.edge.unwrap_or(scene.edge);
@@ -656,7 +853,7 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
     };
     // §2.11 (G-CAL): a scene that names a preset reads calibration, so a stale one stops the run here (exit 6) — before
     // the registry, the GPU or any output; a scene that names none never reads it, and runs without one.
-    if let Err((code, line)) = calibration_gate(calibration::EMBEDDED, names_preset) {
+    if let Err((code, line)) = calibrated {
         say(&line);
         return code;
     }
@@ -664,6 +861,14 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         Ok(r) => r,
         Err(e) => {
             say(&format!("SR-ERROR bad scene: {e}"));
+            return EXIT_ARGS;
+        }
+    };
+    // §2.12.5's edits file, against the world and the registry (exit 4).
+    let mut edits = match args.edits.as_deref().map(|path| EditPlan::read(path, world, &elements)).transpose() {
+        Ok(plan) => plan,
+        Err(e) => {
+            say(&format!("SR-ERROR bad edits: {e}"));
             return EXIT_ARGS;
         }
     };
@@ -731,6 +936,8 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
             return EXIT_ARGS;
         }
     };
+    // P0's edit pass only for a run that has an edits file: every other run keeps its pass list.
+    let step = if edits.is_some() { step.with_edits(&gpu.device, &state, &booking, &eos, &physics) } else { step };
     let first = match &dump {
         Some(d) => {
             if let Err(e) = load_dump(&gpu.queue, &state, &step, d) {
@@ -822,6 +1029,17 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         let one_step_frame = one_step;
         if one_step_frame {
             n = 1;
+        }
+        // §2.12.5: the edits whose trigger holds at this boundary, read from the state the last step left, are queued for
+        // this chunk's first step; a chunk ends at the next step trigger, and is one step while a state trigger waits.
+        if let Some(plan) = edits.as_mut() {
+            let at = first + done;
+            plan.fire(at, watch.heaviest_mass_and_x_h_c());
+            if let Err(e) = plan.queue(&step, &gpu.queue) {
+                say(&format!("SR-ERROR bad edits: step {at}: {e}"));
+                return EXIT_ARGS;
+            }
+            n = n.min(plan.horizon(at));
         }
         let (frame_started, frame_sim, frame_unconverged) = (Instant::now(), sim, unconverged);
         step.run(&gpu.device, &gpu.queue, n as u32);

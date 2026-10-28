@@ -50,9 +50,9 @@ fn read(scene: &Scene) -> (WorldConfig, Physics, Vec<f32>) {
     (world, physics, planes)
 }
 
-/// The sun-like preset on a `size` × `size` world.
+/// The sun-like preset on a `size` × `size` world, at calibration's mass as `headless --scene preset:sun` loads it (M0-T74).
 fn sun(size: u32) -> (WorldConfig, Physics, Vec<f32>) {
-    read(&Scene::preset("sun", WorldConfig::new(size, size).unwrap()).unwrap())
+    read(&Scene::preset("sun", WorldConfig::new(size, size).unwrap()).unwrap().with_embedded_masses())
 }
 
 /// scenes/cold_disk.json (M0-T36): the cold collapse, where gravity's term limits Δt.

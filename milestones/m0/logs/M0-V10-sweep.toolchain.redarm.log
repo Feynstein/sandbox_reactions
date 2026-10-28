@@ -1,0 +1,67 @@
+==== 2026-10-28T16:16:52-04:00 toolchain · clean · a fresh scratch copy of the tree
+== 2026-10-28T16:16:54-04:00 toolchain[desktop] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+== 2026-10-28T16:16:54-04:00 toolchain[wasm] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=0 · 4.18 s
+toolchain wasm: wasm32-unknown-unknown module built (2651641 bytes)
+=== GO ===
+
+== 2026-10-28T16:16:58-04:00 toolchain[trunk] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[trunk] · exit=1 · 0.00 s
+toolchain trunk: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+-- toolchain[desktop] · exit=0 · 4.23 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+==== 2026-10-28T16:16:52-04:00 toolchain · plant toolchain-compiler · a fresh scratch copy of the tree
+planted toolchain-compiler: tests/plants/toolchain-compiler.patch -> tests/toolchain/check.sh
+== 2026-10-28T16:16:54-04:00 toolchain[desktop] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+== 2026-10-28T16:16:54-04:00 toolchain[wasm] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[desktop] · exit=1 · 0.00 s
+toolchain desktop: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+== 2026-10-28T16:16:54-04:00 toolchain[trunk] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=1 · 0.00 s
+toolchain wasm: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+-- toolchain[trunk] · exit=1 · 0.00 s
+toolchain trunk: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?)
+=== NO-GO: carg0 not found on PATH (~/.cargo/bin is put first here; is Rust installed?) ===
+
+==== 2026-10-28T16:16:52-04:00 toolchain · plant toolchain-web-target · a fresh scratch copy of the tree
+planted toolchain-web-target: tests/plants/toolchain-web-target.patch -> tests/toolchain/check.sh
+== 2026-10-28T16:16:54-04:00 toolchain[desktop] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+== 2026-10-28T16:16:54-04:00 toolchain[wasm] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=1 · 0.06 s
+toolchain wasm: cargo build --target wasm32-unknown-unknwn failed
+=== NO-GO: cargo build --target wasm32-unknown-unknwn failed ===
+
+== 2026-10-28T16:16:54-04:00 toolchain[trunk] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[trunk] · exit=1 · 0.01 s
+toolchain trunk: trunk not found on PATH
+=== NO-GO: trunk not found on PATH ===
+
+-- toolchain[desktop] · exit=0 · 0.21 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+
+==== 2026-10-28T16:16:52-04:00 toolchain · plant toolchain-trunk · a fresh scratch copy of the tree
+planted toolchain-trunk: tests/plants/toolchain-trunk.patch -> tests/toolchain/check.sh
+== 2026-10-28T16:16:54-04:00 toolchain[desktop] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+== 2026-10-28T16:16:54-04:00 toolchain[wasm] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[wasm] · exit=0 · 4.17 s
+toolchain wasm: wasm32-unknown-unknown module built (2651641 bytes)
+=== GO ===
+
+== 2026-10-28T16:16:58-04:00 toolchain[trunk] · task M0-V10-sweep · box laserax-ai-server :: bash tests/toolchain/check.sh {case}
+-- toolchain[trunk] · exit=1 · 0.00 s
+toolchain trunk: trunc not found on PATH
+=== NO-GO: trunc not found on PATH ===
+
+-- toolchain[desktop] · exit=0 · 4.22 s
+toolchain desktop: rustc 1.99.0 (b940084d7 2026-09-28) built and ran the one-file program
+=== GO ===
+

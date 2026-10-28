@@ -1,0 +1,22 @@
+file assets/calibration.json: measured Measured { date: "2026-10-26T20:29:19Z", git: "255ec37", adapter: "NVIDIA GeForce RTX 4090", machine: "laserax-ai-server" }
+preset sun: 3136.7178531263357 sb -> 0.999999999999996 Suns -> "1.00 Suns" -> Some(Sure(WhiteDwarf)); relative to the cuts: m_ign +0.1898, m_up -0.1064, m_bh -0.7214
+    round trip to_sb(to_suns) rel err 0.000e0
+preset massive: 6677.218232256418 sb -> 15.000000000000000 Suns -> "15.0 Suns" -> Some(Sure(Supernova)); relative to the cuts: m_ign +1.5328, m_up +0.9023, m_bh -0.4070
+    round trip to_sb(to_suns) rel err 0.000e0
+preset giant: 18211.50387296124 sb -> 40.000000000000014 Suns -> "40.0 Suns" -> Some(Sure(BlackHole)); relative to the cuts: m_ign +5.9080, m_up +4.1882, m_bh +0.6174
+    round trip to_sb(to_suns) rel err 0.000e0
+anchor m_ign: 2636.2983247717016 sb -> "0.0800 Suns"; 0.9x Some(CloseCall(FailedStar, WhiteDwarf)); 1.1x Some(CloseCall(FailedStar, WhiteDwarf)); under 0.9x Some(Sure(FailedStar)); over 1.1x Some(Sure(WhiteDwarf))
+anchor m_ch: 3216.4199210979236 sb -> "1.44 Suns"; 0.9x Some(CloseCall(FailedStar, WhiteDwarf)); 1.1x Some(CloseCall(WhiteDwarf, Supernova)); under 0.9x Some(CloseCall(FailedStar, WhiteDwarf)); over 1.1x Some(CloseCall(WhiteDwarf, Supernova))
+anchor m_up: 3510.1475955541146 sb -> "8.00 Suns"; 0.9x Some(CloseCall(WhiteDwarf, Supernova)); 1.1x Some(CloseCall(WhiteDwarf, Supernova)); under 0.9x Some(Sure(WhiteDwarf)); over 1.1x Some(Sure(Supernova))
+anchor m_bh: 11260.006121125767 sb -> "25.0 Suns"; 0.9x Some(CloseCall(Supernova, BlackHole)); 1.1x Some(CloseCall(Supernova, BlackHole)); under 0.9x Some(Sure(Supernova)); over 1.1x Some(Sure(BlackHole))
+stage_durations_sb cloud: [(3136.7178531263357, 26.790872050449252), (18211.50387296124, 1.344814328243956)]
+stage_durations_sb collapsing: [(3136.7178531263357, 1.2561654159799218), (6677.218232256418, 0.5943904253654182), (18211.50387296124, 3.0739612160250545)]
+stage_durations_sb core_collapse: [(6677.218232256418, 0.10067249601706862), (18211.50387296124, 0.3211161680519581)]
+stage_durations_sb he_core: [(3136.7178531263357, 414.20113145187497)]
+stage_durations_sb iron_core: [(3136.7178531263357, 0.6178434076718986), (6677.218232256418, 3.238305514678359), (18211.50387296124, 4.354395337402821)]
+stage_durations_sb main_sequence: [(3136.7178531263357, 1523.8852188671008)]
+stage_durations_sb planetary_nebula: [(3136.7178531263357, 3.2037676153704524)]
+stage_durations_sb supernova: [(6677.218232256418, 3.165124510647729)]
+tau_s main_sequence at the three presets: ["10.0 billion years", "11.0 million years", "10.0 million years"]
+tau_s he_core at the three presets: ["120 million years", "2.00 million years", "1.00 million years"]
+tau_s protostar at the three presets: ["10.0 million years", "11.0 thousand years", "3.20 thousand years"]

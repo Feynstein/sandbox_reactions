@@ -1,0 +1,83 @@
+==== 2026-10-28T17:28:01-04:00 readouts · clean · a fresh scratch copy of the tree
+== 2026-10-28T17:28:01-04:00 readouts · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh readouts
+-- readouts · exit=0 · 10.04 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-nrmzegrb/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-nrmzegrb/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.94s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test readouts::a_translation_that_would_not_be_monotonic_is_refused ... ok
+test readouts::between_anchors_the_map_is_log_linear_not_linear ... ok
+test readouts::every_anchor_maps_exactly_and_the_inverse_returns_it ... ok
+test readouts::mass_increases_strictly_over_its_whole_range ... ok
+test readouts::temperature_increases_strictly_from_its_floor_up ... ok
+test readouts::the_end_segments_are_extended ... ok
+test readouts::the_presets_read_one_fifteen_and_forty_suns ... ok
+test readouts::the_real_calibration_reads_the_presets_and_the_sun ... ok
+test readouts::the_sun_like_surface_reads_5772_kelvin ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 402 filtered out; finished in 0.01s
+
+
+==== 2026-10-28T17:28:01-04:00 readouts · plant anchor-reverse · a fresh scratch copy of the tree
+planted anchor-reverse: tests/plants/anchor-reverse.patch -> crates/sr-physics/src/observe/translate.rs
+== 2026-10-28T17:28:01-04:00 readouts · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh readouts
+-- readouts · exit=101 · 20.06 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-nrmzegrb/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-nrmzegrb/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.95s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test readouts::a_translation_that_would_not_be_monotonic_is_refused ... ok
+test readouts::between_anchors_the_map_is_log_linear_not_linear ... 
+thread 'readouts::between_anchors_the_map_is_log_linear_not_linear' (178272) panicked at crates/sr-engine/tests/gpu/readouts.rs:23:51:
+the test calibration translates: NotIncreasing { side: "real", index: 3, prev: 25.0, value: 8.0 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test readouts::every_anchor_maps_exactly_and_the_inverse_returns_it ... 
+thread 'readouts::every_anchor_maps_exactly_and_the_inverse_returns_it' (178273) panicked at crates/sr-engine/tests/gpu/readouts.rs:23:51:
+the test calibration translates: NotIncreasing { side: "real", index: 3, prev: 25.0, value: 8.0 }
+FAILED
+test readouts::mass_increases_strictly_over_its_whole_range ... 
+thread 'readouts::mass_increases_strictly_over_its_whole_range' (178274) panicked at crates/sr-engine/tests/gpu/readouts.rs:23:51:
+the test calibration translates: NotIncreasing { side: "real", index: 3, prev: 25.0, value: 8.0 }
+FAILED
+test readouts::temperature_increases_strictly_from_its_floor_up ... 
+thread 'readouts::temperature_increases_strictly_from_its_floor_up' (178275) panicked at crates/sr-engine/tests/gpu/readouts.rs:23:51:
+the test calibration translates: NotIncreasing { side: "real", index: 3, prev: 25.0, value: 8.0 }
+FAILED
+test readouts::the_end_segments_are_extended ... 
+thread 'readouts::the_end_segments_are_extended' (178276) panicked at crates/sr-engine/tests/gpu/readouts.rs:23:51:
+the test calibration translates: NotIncreasing { side: "real", index: 3, prev: 25.0, value: 8.0 }
+FAILED
+test readouts::the_presets_read_one_fifteen_and_forty_suns ... 
+thread 'readouts::the_presets_read_one_fifteen_and_forty_suns' (178277) panicked at crates/sr-engine/tests/gpu/readouts.rs:23:51:
+the test calibration translates: NotIncreasing { side: "real", index: 3, prev: 25.0, value: 8.0 }
+FAILED
+test readouts::the_real_calibration_reads_the_presets_and_the_sun ... 
+thread 'readouts::the_real_calibration_reads_the_presets_and_the_sun' (178278) panicked at crates/sr-engine/tests/gpu/readouts.rs:238:49:
+the real calibration translates: NotIncreasing { side: "real", index: 3, prev: 25.0, value: 8.0 }
+FAILED
+test readouts::the_sun_like_surface_reads_5772_kelvin ... 
+thread 'readouts::the_sun_like_surface_reads_5772_kelvin' (178279) panicked at crates/sr-engine/tests/gpu/readouts.rs:23:51:
+the test calibration translates: NotIncreasing { side: "real", index: 3, prev: 25.0, value: 8.0 }
+FAILED
+
+failures:
+
+failures:
+    readouts::between_anchors_the_map_is_log_linear_not_linear
+    readouts::every_anchor_maps_exactly_and_the_inverse_returns_it
+    readouts::mass_increases_strictly_over_its_whole_range
+    readouts::temperature_increases_strictly_from_its_floor_up
+    readouts::the_end_segments_are_extended
+    readouts::the_presets_read_one_fifteen_and_forty_suns
+    readouts::the_real_calibration_reads_the_presets_and_the_sun
+    readouts::the_sun_like_surface_reads_5772_kelvin
+
+test result: FAILED. 1 passed; 8 failed; 0 ignored; 0 measured; 402 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

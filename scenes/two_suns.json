@@ -1,0 +1,6 @@
+{"version": 1,
+ "world": {"width": 600, "height": 400, "edge": "leave"},
+ "objects": [
+   {"kind": "preset", "preset": "sun", "x": 180, "y": 200},
+   {"kind": "preset", "preset": "sun", "x": 420, "y": 200}
+ ]}

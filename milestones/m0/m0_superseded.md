@@ -276,3 +276,5 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   outermost ring (M0-T29's twin, M0-T31's shader) — superseded by contract §0.5 [M0-D69]: central differences in every cell of the
   box, the ring reading the zero-padded convolution's exact φ one cell past the box; the leave band 7e-3 (the lead, 2026-10-28,
   M0-D69: «7e-3 (Recommended)»).
+- Contract §5.2's G-MULTI "20 τ_dyn" — superseded by contract §0.5 [M0-T74]: the run is to `sim_time:40` (about 11 τ_dyn), the two
+  Sun-like clouds 240 cells apart falling into one object by 20 τ_dyn (the lead, 2026-10-28, M0-T74: «Shorten to 40 t.u. (Recommended)»).

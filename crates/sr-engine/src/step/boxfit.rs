@@ -143,6 +143,11 @@ impl BoxFit {
         &self.args
     }
 
+    /// P0's sizes for `box_cells` and `box_fit` — and for the edit pass's `edit_cells`, which `edit_gate` sizes first.
+    pub(super) fn gate(&self) -> &wgpu::Buffer {
+        &self.gate
+    }
+
     /// One u32: P0's edit pass ORs 1 into it when an edit lands outside the box; the re-fit clears it.
     pub fn edit_flag(&self) -> &wgpu::Buffer {
         &self.flags

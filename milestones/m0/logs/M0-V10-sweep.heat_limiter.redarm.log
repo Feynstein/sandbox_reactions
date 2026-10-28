@@ -1,0 +1,113 @@
+==== 2026-10-28T16:40:53-04:00 heat_limiter · clean · a fresh scratch copy of the tree
+== 2026-10-28T16:40:53-04:00 heat_limiter · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh heat::limiter physics
+-- heat_limiter · exit=0 · 11.39 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-qqq0lvys/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-qqq0lvys/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.46s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU first pass: law |F - twin| 5.18e-9 of 6.3994e-2; solved |F - twin| 9.20e-6 of 6.8473e-3; |T - twin| 1.69e-4; HeatReport { dt: 0.05, passes: 8, rounds: 163, converged: true, delta: 0.00014738935 }, the twin 8 passes, 472 rounds
+SR-FLD GPU solved F: Δt |F - twin| 6.98e-6 of the heat 6.5920e-2 (1.34e-3 of the largest face)
+SR-FLD GPU worst |F| / (c_sb a_r T^4) 0.979945 over 20 passes, up to 9 Newton passes and 252 rounds
+ok
+test heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU first pass: law |F - twin| 5.18e-9 of 6.3994e-2; solved |F - twin| 9.20e-6 of 6.8473e-3; |T - twin| 1.20e-5; HeatReport { dt: 0.05, passes: 7, rounds: 27, converged: true, delta: 2.1230949e-6 }, the twin 8 passes, 472 rounds
+SR-FLD GPU solved F: Δt |F - twin| 6.98e-6 of the heat 6.5920e-2 (1.34e-3 of the largest face)
+SR-FLD GPU worst |F| / (c_sb a_r T^4) 0.979944 over 20 passes, up to 7 Newton passes and 86 rounds
+ok
+test heat::limiter::gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU thick gas: worst relative error 5.57e-5; HeatReport { dt: 0.001, passes: 1, rounds: 0, converged: true, delta: 1.0876244e-8 }
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU limiter off: -2.1333e2 against -2.1333e2, bound 1.2800e-1
+ok
+test heat::limiter::gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU thick gas: worst relative error 5.57e-5; HeatReport { dt: 0.001, passes: 1, rounds: 0, converged: true, delta: 1.0876244e-8 }
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU limiter off: -2.1333e2 against -2.1333e2, bound 1.2800e-1
+ok
+test heat::limiter::in_thick_gas_the_flux_is_the_radiative_conductivity ... SR-FLD thick gas: worst |F - (4/3) a c T^3/(kappa Sigma) (-dT)| / |F| = 9.98e-7
+ok
+test heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... SR-FLD worst |F| / (c_sb a_r T^4) 0.979929 over 20 passes of 64x64 thin gas, up to 8 Newton passes and 472 rounds
+SR-FLD limiter off: |F| = 1666.7 c_sb a_r T^4
+ok
+test heat::limiter::lambda_is_levermore_pomraning ... ok
+test heat::limiter::the_scene_flag_turns_the_limiter_into_one_third ... SR-FLD face of the spot: unlimited -2.1333e2 (thick form -2.1333e2), limited -6.3994e-2, bound 1.2800e-1
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 403 filtered out; finished in 1.83s
+
+
+==== 2026-10-28T16:40:53-04:00 heat_limiter · plant limiter-off · a fresh scratch copy of the tree
+planted limiter-off: tests/plants/limiter-off.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-28T16:40:53-04:00 heat_limiter · task M0-V10-sweep · box laserax-ai-server :: bash tests/gpu.sh heat::limiter physics
+-- heat_limiter · exit=101 · 22.41 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-qqq0lvys/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-qqq0lvys/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.63s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU first pass: law |F - twin| 3.44e-6 of 2.1333e2; solved |F - twin| 1.15e-7 of 1.5241e-2; |T - twin| 3.24e-6; HeatReport { dt: 0.05, passes: 8, rounds: 209, converged: true, delta: 8.070731e-6 }, the twin 10 passes, 535 rounds
+SR-FLD GPU solved F: Δt |F - twin| 8.72e-8 of the heat 6.5920e-2 (7.55e-6 of the largest face)
+
+thread 'heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4::jacobi' (146433) panicked at crates/sr-engine/tests/gpu/heat.rs:1059:13:
+pass 0: |F| = 1666.666030883789 c_sb a_r T^4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU first pass: law |F - twin| 3.44e-6 of 2.1333e2; solved |F - twin| 5.46e-8 of 1.5241e-2; |T - twin| 2.06e-6; HeatReport { dt: 0.05, passes: 8, rounds: 34, converged: true, delta: 4.3236214e-6 }, the twin 10 passes, 535 rounds
+SR-FLD GPU solved F: Δt |F - twin| 4.14e-8 of the heat 6.5920e-2 (3.58e-6 of the largest face)
+
+thread 'heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4::multigrid' (146443) panicked at crates/sr-engine/tests/gpu/heat.rs:1059:13:
+pass 0: |F| = 1666.666030883789 c_sb a_r T^4
+FAILED
+test heat::limiter::gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU thick gas: worst relative error 5.57e-5; HeatReport { dt: 0.001, passes: 1, rounds: 0, converged: true, delta: 1.08755716e-8 }
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU limiter off: -2.1333e2 against -2.1333e2, bound 1.2800e-1
+ok
+test heat::limiter::gpu_thick_gas_carries_the_radiative_conductivity_and_the_flag_turns_the_limiter_off::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU thick gas: worst relative error 5.57e-5; HeatReport { dt: 0.001, passes: 1, rounds: 0, converged: true, delta: 1.08755716e-8 }
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-FLD GPU limiter off: -2.1333e2 against -2.1333e2, bound 1.2800e-1
+ok
+test heat::limiter::in_thick_gas_the_flux_is_the_radiative_conductivity ... SR-FLD thick gas: worst |F - (4/3) a c T^3/(kappa Sigma) (-dT)| / |F| = 9.98e-7
+ok
+test heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4 ... 
+thread 'heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4' (146471) panicked at crates/sr-engine/tests/gpu/heat.rs:929:13:
+pass 0: |F| = 1666.6660577285259 c_sb a_r T^4
+FAILED
+test heat::limiter::lambda_is_levermore_pomraning ... ok
+test heat::limiter::the_scene_flag_turns_the_limiter_into_one_third ... SR-FLD face of the spot: unlimited -2.1333e2 (thick form -2.1333e2), limited -2.1333e2, bound 1.2800e-1
+
+thread 'heat::limiter::the_scene_flag_turns_the_limiter_into_one_third' (146473) panicked at crates/sr-engine/tests/gpu/heat.rs:1009:9:
+-213.33325538925132
+FAILED
+
+failures:
+
+failures:
+    heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4::jacobi
+    heat::limiter::gpu_in_thin_gas_the_flux_never_passes_c_sb_a_r_t4::multigrid
+    heat::limiter::in_thin_gas_the_flux_never_passes_c_sb_a_r_t4
+    heat::limiter::the_scene_flag_turns_the_limiter_into_one_third
+
+test result: FAILED. 4 passed; 4 failed; 0 ignored; 0 measured; 403 filtered out; finished in 1.31s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,70 @@
+==== 2026-10-28T16:36:39-04:00 fft_twin · clean · a fresh scratch copy of the tree
+== 2026-10-28T16:36:40-04:00 fft_twin · task M0-V10-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-physics reference::fft
+-- fft_twin · exit=0 · 5.12 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-3gmwlk8b/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.47s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 10 tests
+test reference::fft::tests::fft_of_a_delta_and_a_wave_are_exact ... ok
+test reference::fft::tests::padded_sizes_follow_the_box_rule_and_refuse_out_of_range_boxes ... ok
+test reference::fft::tests::inverse_undoes_forward_in_1d_and_2d ... ok
+test reference::fft::tests::parseval_holds_at_the_largest_size ... ok
+test reference::fft::tests::fft2_matches_the_direct_2d_dft_and_obeys_parseval ... ok
+test reference::fft::tests::a_single_source_reproduces_the_kernel_shifted ... ok
+test reference::fft::tests::fft_matches_the_direct_dft ... ok
+test reference::fft::tests::the_kernel_transform_is_cached_per_padded_size ... ok
+test reference::fft::tests::mass_in_the_corners_does_not_wrap_around ... ok
+test reference::fft::tests::convolution_matches_direct_summation_on_48_by_40_with_an_asymmetric_kernel ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 187 filtered out; finished in 0.06s
+
+
+==== 2026-10-28T16:36:39-04:00 fft_twin · plant fft-twiddle-sign · a fresh scratch copy of the tree
+planted fft-twiddle-sign: tests/plants/fft-twiddle-sign.patch -> crates/sr-physics/src/reference/fft.rs
+== 2026-10-28T16:36:40-04:00 fft_twin · task M0-V10-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-physics reference::fft
+-- fft_twin · exit=101 · 2.57 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-3gmwlk8b/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.42s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 10 tests
+test reference::fft::tests::fft_matches_the_direct_dft ... FAILED
+test reference::fft::tests::fft_of_a_delta_and_a_wave_are_exact ... FAILED
+test reference::fft::tests::padded_sizes_follow_the_box_rule_and_refuse_out_of_range_boxes ... ok
+test reference::fft::tests::parseval_holds_at_the_largest_size ... ok
+test reference::fft::tests::inverse_undoes_forward_in_1d_and_2d ... ok
+test reference::fft::tests::fft2_matches_the_direct_2d_dft_and_obeys_parseval ... FAILED
+test reference::fft::tests::a_single_source_reproduces_the_kernel_shifted ... ok
+test reference::fft::tests::the_kernel_transform_is_cached_per_padded_size ... ok
+test reference::fft::tests::mass_in_the_corners_does_not_wrap_around ... ok
+test reference::fft::tests::convolution_matches_direct_summation_on_48_by_40_with_an_asymmetric_kernel ... ok
+
+failures:
+
+---- reference::fft::tests::fft_matches_the_direct_dft stdout ----
+
+thread 'reference::fft::tests::fft_matches_the_direct_dft' (140717) panicked at crates/sr-physics/src/reference/fft.rs:349:17:
+n = 4, inverse = false: relative error 2.521093652912291e-1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- reference::fft::tests::fft_of_a_delta_and_a_wave_are_exact stdout ----
+
+thread 'reference::fft::tests::fft_of_a_delta_and_a_wave_are_exact' (140718) panicked at crates/sr-physics/src/reference/fft.rs:371:13:
+bin 3: Complex { re: -1.7954607747942734e-15, im: -3.8514915649120557e-16 }
+
+---- reference::fft::tests::fft2_matches_the_direct_2d_dft_and_obeys_parseval stdout ----
+
+thread 'reference::fft::tests::fft2_matches_the_direct_2d_dft_and_obeys_parseval' (140716) panicked at crates/sr-physics/src/reference/fft.rs:415:9:
+2D relative error 1.2141042499216121e0
+
+
+failures:
+    reference::fft::tests::fft2_matches_the_direct_2d_dft_and_obeys_parseval
+    reference::fft::tests::fft_matches_the_direct_dft
+    reference::fft::tests::fft_of_a_delta_and_a_wave_are_exact
+
+test result: FAILED. 7 passed; 3 failed; 0 ignored; 0 measured; 187 filtered out; finished in 0.08s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

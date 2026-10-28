@@ -1,0 +1,129 @@
+why build: stale: crates/sr-engine/src/step/edit.rs
+why burn_cell: stale: crates/sr-engine/src/step/edit.rs
+why burn_order: stale: crates/sr-engine/src/step/edit.rs
+why neutrino: stale: crates/sr-engine/src/step/edit.rs
+why sink: stale: crates/sr-engine/src/step/edit.rs
+why nu_heat: stale: crates/sr-engine/src/step/edit.rs
+why summary: stale: crates/sr-engine/src/step/edit.rs
+why ledger: stale: crates/sr-engine/src/step/edit.rs
+why preset_cloud: stale: crates/sr-engine/src/step/edit.rs
+why observe_run: stale: crates/sr-engine/src/step/edit.rs
+why multi: stale: crates/sr-engine/src/step/edit.rs
+why edits: stale: crates/sr-engine/src/step/edit.rs
+why sod: stale: crates/sr-engine/src/step/edit.rs
+why edges: stale: crates/sr-engine/src/step/edit.rs
+why collapse: stale: crates/sr-engine/src/step/edit.rs
+why jeans: stale: crates/sr-engine/src/step/edit.rs
+why twin: stale: crates/sr-engine/src/step/edit.rs
+why cpu_gpu: stale: crates/sr-engine/src/step/edit.rs
+why heat_gauss: stale: crates/sr-engine/src/step/edit.rs
+why heat_implicit: stale: crates/sr-engine/src/step/edit.rs
+why heat_limiter: stale: crates/sr-engine/src/step/edit.rs
+why heat_stiff: stale: crates/sr-engine/src/step/edit.rs
+why heat_multigrid: stale: crates/sr-engine/src/step/edit.rs
+why radiation_force: stale: crates/sr-engine/src/step/edit.rs
+why grav_force: stale: crates/sr-engine/src/step/edit.rs
+why grav_selfforce: stale: crates/sr-engine/src/step/edit.rs
+why fft: stale: crates/sr-engine/src/step/edit.rs
+why adapter: stale: crates/sr-engine/src/step/edit.rs
+why state: stale: crates/sr-engine/src/step/edit.rs
+why booking: stale: crates/sr-engine/src/step/edit.rs
+why floors: stale: crates/sr-engine/src/step/edit.rs
+why dt: stale: crates/sr-engine/src/step/edit.rs
+why box: stale: crates/sr-engine/src/step/edit.rs
+why latch: stale: crates/sr-engine/src/step/edit.rs
+why timing: stale: crates/sr-engine/src/step/edit.rs
+why scene: stale: crates/sr-engine/src/step/edit.rs
+why dump: stale: crates/sr-engine/src/step/edit.rs
+why boot: stale: crates/sr-engine/src/step/edit.rs
+why desktop: stale: crates/sr-engine/src/step/edit.rs
+why web: stale: crates/sr-engine/src/step/edit.rs
+why capture: stale: crates/sr-engine/src/step/edit.rs
+why watch_only: never: crates/sr-engine/shaders/edit.wgsl (+27)
+why calibration: stale: crates/sr-engine/src/step/edit.rs
+why calibrate_cold: stale: crates/sr-engine/src/step/edit.rs
+why cold_core: stale: crates/sr-engine/src/step/edit.rs
+why calibrate_bisect: stale: crates/sr-engine/src/step/edit.rs
+why calibrate_order: stale: crates/sr-engine/src/step/edit.rs
+why readouts: stale: crates/sr-engine/src/step/edit.rs
+build             2/0/0       14.61 s  GO · step 1/48, 47 left
+burn_cell         18/0/0      16.30 s  GO · step 2/48, 46 left
+burn_order        4/0/0       11.34 s  GO · step 3/48, 45 left
+neutrino          18/0/0      16.65 s  GO · step 4/48, 44 left
+sink              34/0/0      28.87 s  GO · step 5/48, 43 left
+nu_heat           15/0/0      20.95 s  GO · step 6/48, 42 left
+summary           7/0/0       16.44 s  GO · step 7/48, 41 left
+ledger            5/0/0       26.42 s  GO · step 8/48, 40 left
+preset_cloud      5/0/0       50.42 s  GO · step 9/48, 39 left
+observe_run       9/0/0       47.61 s  GO · step 10/48, 38 left
+multi             5/0/0       40.75 s  GO · step 11/48, 37 left
+edits             10/0/0       5.58 s  GO · step 12/48, 36 left
+sod               15/0/0      12.69 s  GO · step 13/48, 35 left
+edges             7/0/0       12.69 s  GO · step 14/48, 34 left
+collapse          6/0/0        2.12 s  GO · step 15/48, 33 left
+jeans             6/0/0        0.82 s  GO · step 16/48, 32 left
+twin              6/0/0        2.22 s  GO · step 17/48, 31 left
+cpu_gpu           3/0/0        8.68 s  GO · step 18/48, 30 left
+heat_gauss        14/0/0       4.77 s  GO · step 19/48, 29 left
+heat_implicit     8/0/0        3.12 s  GO · step 20/48, 28 left
+heat_limiter      8/0/0        5.07 s  GO · step 21/48, 27 left
+heat_stiff        13/0/0       7.23 s  GO · step 22/48, 26 left
+heat_multigrid    4/0/0        3.12 s  GO · step 23/48, 25 left
+radiation_force   11/0/0      10.58 s  GO · step 24/48, 24 left
+grav_force        13/0/0       4.62 s  GO · step 25/48, 23 left
+grav_selfforce    7/0/0        2.77 s  GO · step 26/48, 22 left
+fft               8/0/0        5.32 s  GO · step 27/48, 21 left
+adapter           10/0/0       3.42 s  GO · step 28/48, 20 left
+state             6/0/0        3.62 s  GO · step 29/48, 19 left
+booking           4/0/0        3.27 s  GO · step 30/48, 18 left
+floors            7/0/0        5.68 s  GO · step 31/48, 17 left
+dt                8/0/0        7.53 s  GO · step 32/48, 16 left
+box               8/0/0        7.18 s  GO · step 33/48, 15 left
+latch             5/0/0        3.62 s  GO · step 34/48, 14 left
+timing            5/0/0       22.56 s  GO · step 35/48, 13 left
+scene             8/0/0        2.67 s  GO · step 36/48, 12 left
+dump              12/0/0      37.89 s  GO · step 37/48, 11 left
+boot              1/0/0       10.23 s  GO · step 38/48, 10 left
+desktop           4/0/0       47.32 s  GO · step 39/48, 9 left
+web               3/0/0       25.73 s  GO · step 40/48, 8 left
+capture           2/0/0        2.49 s  GO · step 41/48, 7 left
+watch_only        1/0/0        0.11 s  GO · step 42/48, 6 left
+calibration       12/0/0       0.22 s  GO · step 43/48, 5 left
+calibrate_cold    8/0/0        1.48 s  GO · step 44/48, 4 left
+cold_core         8/0/0        7.48 s  GO · step 45/48, 3 left
+calibrate_bisect  19/0/0      90.45 s  GO · step 46/48, 2 left
+calibrate_order   13/0/0       0.21 s  GO · step 47/48, 1 left
+readouts          9/0/0        0.16 s  GO · step 48/48, 0 left
+plan_lint         NOT RUN (not impacted: its 2 path(s) checked at the anchor)
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+edits · clean · GO · arm 1/2, 1 left
+edits · plant edit-ignored · RED (proven: 6 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edits · 26.26 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T76.edits.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/edit.rs changed since M0-T76's start - a test, case or check M0-T76's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T76's start - a test, case or check M0-T76's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T76's start - a test, case or check M0-T76's Deliver: does not name
+logs: milestones/m0/logs/M0-T76.<scope>.log · record: loop_times.jsonl · tree b3e8b2216197+9ae223c1717c
+anchor: 75 path×scope entries moved by this run
+anchor: 318 paths checked · 301 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 318 covered of 619 visible
+skipped   293  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 414 passed, 0 failed, 0 skipped · 48/48 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 19 not impacted · 157.25 s + loop 26.37 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 2.75->6.63 · base: M0-T76's start 2026-10-28T14:42:26-04:00
+=== GO ===

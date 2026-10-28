@@ -1,0 +1,59 @@
+== 2026-10-28T14:40:51-04:00 classify · task M0-T75 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=0 · 3.42 s
+    Blocking waiting for file lock on package cache
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 3.39s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 47 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_shines_what_it_burns ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+
+test result: ok. 47 passed; 0 failed; 0 ignored; 0 measured; 150 filtered out; finished in 0.00s
+
+

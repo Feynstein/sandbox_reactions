@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/shaders/edit.wgsl
++++ b/crates/sr-engine/shaders/edit.wgsl
+@@ -248,6 +248,9 @@
+         let dy = i32(py) - i32(word(k, W_Y));
+         let r = i32(word(k, W_RADIUS));
+         let inside = dx * dx + dy * dy <= r * r;
++        if (c.sigma >= eos.sigma_vac) {
++            continue;
++        }
+         if (kind == PAINT && inside) {
+             var xp = floor_hydrogen();
+             let sp = word(k, W_SPECIES);

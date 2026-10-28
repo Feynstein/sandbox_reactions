@@ -1,0 +1,7 @@
+# M0-V10 — F2's measurement (laserax-ai-server, RTX 4090, 2026-10-28 15:47, tree 255ec37 + the rsync'd working tree)
+# scene /tmp/v10/wisp_<m>.json: 128 × 128, bounce; one rect x0 50 y0 50, w 25, h 12|13|14, sigma 0.1, t 0.05, H 1.0 (mass 30.0 | 32.5 | 35.0)
+# run: build/target/release/sandbox-reactions headless --scene /tmp/v10/wisp_<m>.json --steps 1 --adapter "RTX 4090" --out /tmp/v10/wisp_<m>.out
+# §1.9.2: a wisp is lighter than 1 % of the Sun-like preset = 0.01 × preset_mass_sb.sun 3,136.718 = 31.367; the tree's cut 0.01 × SUN_MASS_NOMINAL 3,351.032 = 33.510 (watch.rs:256, :454)
+rect mass 30.0 | grid mass 30.0002 | objects [] | adapter NVIDIA GeForce RTX 4090 | git 255ec37-dirty
+rect mass 32.5 | grid mass 32.5002 | objects [] | adapter NVIDIA GeForce RTX 4090 | git 255ec37-dirty
+rect mass 35.0 | grid mass 35.0002 | objects [(1, 35.0, None)] | adapter NVIDIA GeForce RTX 4090 | git 255ec37-dirty

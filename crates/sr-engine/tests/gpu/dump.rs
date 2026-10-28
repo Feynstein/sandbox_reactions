@@ -451,7 +451,7 @@ fn a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump() {
     let _ = std::fs::remove_dir_all(&root);
 
     // The same run in-process, one bare step at a time: each step's Δt, and the state headless ended on.
-    let scene = sr_engine::scene::Scene::preset("sun", world).unwrap();
+    let scene = sr_engine::scene::Scene::preset("sun", world).unwrap().with_embedded_masses(); // as headless loads it (M0-T74)
     let c = Constants { physics: scene.physics().unwrap(), elements: Elements::shipped().unwrap() };
     let (planes, _) = scene.planes(world, &c.physics, &c.elements).unwrap();
     let twin = Run::as_headless(&gpu, &c, (world, planes), scene.edge);

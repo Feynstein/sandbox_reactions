@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -260,7 +260,7 @@ impl EditPlan {
+     fn fire(&mut self, at: u64, heaviest: Option<(f64, f64)>) {
+         for e in self.entries.iter_mut().filter(|e| !e.spent) {
+             let (fires, repeats) = match e.trigger {
+-                Trigger::Step(n) => (at >= n, false),
++                Trigger::Step(n) => (at > n, false),
+                 Trigger::XhBelow(v) => (heaviest.is_some_and(|(_, x)| x < v), false),
+                 Trigger::Mass { at_least, m } => match heaviest {
+                     None => (false, true),

@@ -1,0 +1,17 @@
+report: 249 DONE blocks · 15 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 79 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 8 D block(s) naming no cause in the record · $904.95 read from the sessions' own cost
+BUILD on Haiku 5.5, high: 1 block(s) · first-try 0/1 · $3.20 per DONE block · n<10
+BUILD on Opus 5.5, high: 92 block(s) · first-try 36/85 · $11.36 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Opus 5.5, xhigh: 1 block(s) · first-try 0/1 · n/a per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 81 block(s) · first-try 49/78 · $2.39 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 16 block(s) · first-try 13/16 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 10 block(s) · first-try 8/10 · $0.82 per DONE block · cheaper on Haiku 5.5, high · vs (usual) BUILD blocks, all classes
+BUILD·E on Opus 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 2 block(s) · first-try 2/2 · $0.34 per DONE block · n<10
+CHECK on Opus 5.5, max: 13 block(s) · first-try 10/13 · $22.05 per DONE block · above (usual)
+MOVE on Haiku 5.5, high: 5 block(s) · first-try 4/5 · $0.11 per DONE block · n<10
+MOVE on Opus 5.5, high: 1 block(s) · first-try 0/1 · $1.59 per DONE block · usual
+MOVE on Sonnet 5.5, medium: 1 block(s) · first-try n/a · $0.27 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 22 block(s) · first-try 12/19 · $11.26 per DONE block · above (usual)
+=== GO ===

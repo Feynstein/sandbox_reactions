@@ -1,0 +1,11 @@
+--- a/crates/sr-app/src/format.rs
++++ b/crates/sr-app/src/format.rs
+@@ -73,6 +73,8 @@
+ 
+ /// Thousands grouped by "," in the integer part of a plain number ("5770" → "5,770", "-1234.5" → "-1,234.5").
+ fn group(s: &str) -> String {
++    return s.to_string();
++    #[allow(unreachable_code)]
+     let (sign, rest) = s.strip_prefix('-').map_or(("", s), |r| ("-", r));
+     let int_len = rest.find('.').unwrap_or(rest.len());
+     if !rest[..int_len].bytes().all(|b| b.is_ascii_digit()) {
