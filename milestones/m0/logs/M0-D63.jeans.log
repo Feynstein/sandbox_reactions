@@ -1,0 +1,28 @@
+== 2026-10-28T08:33:15-04:00 jeans · task M0-D63 · box laserax-ai :: bash tests/gpu.sh jeans physics
+-- jeans · exit=0 · 0.72 s
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-JEANS end: step 193, t = 3.2568, Σ_max 102.187: 1 object(s) of mass 3351.3 (at most 1 in any summary); largest secondary peak 0.0000 of Σ_max at the end, 1.0000 in any summary
+ok
+test jeans::the_collapse_reaches_a_hundred_times_the_central_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.0919 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   1.8669: Σmax    1.733, J 0.0906 at (68, 64), 1 object(s) of mass 3351.6, secondary peak 0.9824 of Σmax
+SR-JEANS step   153 t   2.9684: Σmax   11.429, J 0.1269 at (97, 61), 1 object(s) of mass 3351.4, secondary peak 1.0000 of Σmax
+SR-JEANS step   185 t   3.2123: Σmax   84.290, J 0.1570 at (94, 62), 1 object(s) of mass 3351.3, secondary peak 0.0000 of Σmax
+SR-JEANS step   193 t   3.2568: Σmax  102.187, J 0.1562 at (94, 61), 1 object(s) of mass 3351.3, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 102.187 at the end (largest 102.187) after 193 steps, t = 3.2568 (start 0.9998, target 100.0); 35 summaries
+ok
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 0.1591 (bound 0.25) at step 191, t = 3.2460, cell (94, 66), Σ_max then 99.007; over 35 summaries
+ok
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+ok
+test jeans::the_scene_is_the_disk_cloud_at_seven_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 18492.32, U_th/|W| 0.070000
+SR-JEANS ripple: worst |Σ'/Σ − (1 + 0.01(cos 3θ + cos 5θ))| = 5.77e-8, mass 3351.648 → 3351.648
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 382 filtered out; finished in 0.53s
+
+

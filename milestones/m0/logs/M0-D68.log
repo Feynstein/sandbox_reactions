@@ -1,0 +1,17 @@
+M0-D68 session start 2026-10-28T09:00:20-04:00 linux-pc; scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4ba3aa17-7e02-4a34-a648-52b0b8fd32da/scratchpad/w
+build start 09:02:15
+2026-10-28 lead's answers (AskUserQuestion): energy source «Relative motion first (Recommended)» · J bound «(1 + 10⁻²) × start (Recommended)» · scene «Back to 0.05|W| (Recommended)»
+twin screening: milestones/m0/logs/M0-D68.twin.log
+== 09:42:54 ledger leave case: payment off (face-work-heat-pays applied on the server copy)
+remnant: steps 1..1000, sim time 8.001, R₉₀ 2.676, M 1492.2, τ_dyn 0.1133, |W|₀ 2.3296e5; Δinvariant -1.3349e3 → 8.118e-5 |W| per τ_dyn (bound 1e-3); radiated 2.4943e5, floor_added 7.5817e1, escaped 8.9646e2, ΔW -5.3427e5
+bounce: steps 1..500, mass drift 6.519e-8, momentum drift 3.914e-7 of Σm|u| = 3.507e3, energy drift -1.993e-2 (reported), escaped 0
+leave: escaped mass 4.580309e0 of 1.017436e3 (4.502e-3), momentum escaped Array [Number(110.25129851405848), Number(0.0010286462840980448)], mass drift 6.551e-8, momentum drift 8.337e-4 of Σm|u| = 4.995e3, energy drift -1.216e-2 (reported), escaped energy 3.852024e2
+leave without gravity: escaped mass 2.988126e2 of 1.017169e3, escaped x momentum 1.310427e3, vacuum_reset 1.765e-2 × u_max 6.875 → bound 7.960e-5; mass drift 1.265e-7, momentum drift 5.295e-5 of Σm|u| = 1.544e3
+reverted
+remnant: steps 1..1000, sim time 8.317, R₉₀ 2.644, M 1496.3, τ_dyn 0.1111, |W|₀ 2.3296e5; Δinvariant -1.1821e3 → 6.781e-5 |W| per τ_dyn (bound 1e-3); radiated 2.5668e5, floor_added -9.1215e0, escaped 4.0751e2, ΔW -5.5412e5
+bounce: steps 1..500, mass drift 9.945e-9, momentum drift 4.940e-7 of Σm|u| = 2.844e3, energy drift -1.802e-2 (reported), escaped 0
+leave: escaped mass 1.124880e1 of 1.017436e3 (1.106e-2), momentum escaped Array [Number(171.84346636998032), Number(-0.0002218772451669793)], mass drift 4.738e-8, momentum drift 8.054e-3 of Σm|u| = 3.238e3, energy drift -1.126e-2 (reported), escaped energy 8.909768e2
+thread 'ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it' (11139) panicked at crates/sr-engine/tests/gpu/ledger.rs:199:5:
+leave without gravity: escaped mass 2.988126e2 of 1.017169e3, escaped x momentum 1.310427e3, vacuum_reset 1.765e-2 × u_max 6.875 → bound 7.960e-5; mass drift 1.265e-7, momentum drift 5.295e-5 of Σm|u| = 1.544e3
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 383 filtered out; finished in 8.82s
+2026-10-28 lead's answer: ledger band «1e-2 until D69 (Recommended)»; rung_record: model=claude-opus-5-5 level=high

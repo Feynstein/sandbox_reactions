@@ -1,0 +1,46 @@
+# M0-D71 log — opened 2026-10-28T10:32:13-04:00 on linux-pc (laserax-ai); GPU runs on laserax-ai-server RTX 4090 (R18)
+## rsync tree + dump to laserax-ai-server, release build there
+synced
+    Finished `release` profile [optimized] target(s) in 0.08s
+-rwxrwxr-x 2 ybelanger ybelanger 21785008 Oct 28 10:23 build/target/release/sandbox-reactions
+   Compiling sr-app v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.10s
+-rwxrwxr-x 2 ybelanger ybelanger 21785008 Oct 28 10:32 build/target/release/sandbox-reactions
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5000 sim_time=5316.471247 until=none
+
+real	0m15.941s
+user	0m14.821s
+sys	0m0.774s
+['end', 'start']
+dict_keys(['energy', 'mass', 'momentum', 'sim_time', 'step'])
+/tmp/d71/base/summary.json  share=0.000
+/tmp/d71/base/summary.json floor_added=1.089e+05 radiated=2.294e+05 nuclear_released=2.044e+04 neutrino_lost=0 thermal=-2.952e+04 kinetic=135.2 cold=1.568e+05 potential=-2.29e+05 invariant=-1465 share=0.475
+## GPU baseline (laserax-ai-server, RTX 4090, Vulkan; today's tree incl. M0-D68/D69), s_450000 + 5,000 steps, 15.9 s
+floor_added 1.089e5 radiated 2.294e5 share 0.475 (M0-D67 on the 5090: 1.478e5 / 2.777e5) · nuclear +2.04e4 thermal −2.95e4 cold +1.57e5 potential −2.29e5 invariant −1465
+## Twin screening (linux-pc, CPU f64; scratch copy .../scratchpad/w, drivers examples/d71r.rs d71d.rs d71s.rs; hydro.rs variants by SR_D71 / SR_D71F)
+Variants: R = Σ and Π reconstructed as deviations from the cell's hydrostatic profile Π0(s) = Π_c + Σ_c g s, Σ0 = EoS⁻¹(Π0; ε_th,c) (MC on the deviations);
+C = HLLC (Toro; Davis speeds) for HLL; K = predictor kick by the cell's Σ_c, work at the mean momentum; J = kick by Σ_c, thermal-neutral work.
+Crop window (M0-D67's crop of s_450000, 128², leave, all passes, 5,000 steps): floor / radiated
+  baseline 1.136e5 / 2.346e5 = 0.484 (GPU 0.475: the twin crop reproduces today's GPU)
+  C alone 6.16e4 / 1.34e5 = 0.459, KE 5.8e4 by the end (the core disperses)
+  RK / RKC: P5 unconverged from step ~150 (343 in 500 steps), thin gas (Σ 1e-5…1e-2) heated to T ~7e2–1e3 — the cell-mass kick; stopped
+  RC 5.86e4 / 1.93e5 = 0.304 · RJC 6.09e4 / 1.98e5 = 0.307 · R (HLL) P5 unconverged and radiated 4e5 in steps 1,000–1,500
+  RC late: floor ≈ 9e3 of radiated 1.25e4 per 500 steps (≈ 70 %); KE 3.4e2 → 1.8e3 over the last 1,000 steps
+Strip at rest (64 × 1, cold C/O Gaussian peak 100 a 2, bounce, gravity+hydro, 20,000 steps): KE baseline 5.7e-2 (umax 0.20, parked) · R 1.6e-3 · RC 4.3e-4 · RJC 9.8e-4 · RKC 2.9e-4 (all still falling)
+Cold C/O SCF disk (calibrate's cold_disk_scene, M 1,800, 64², bounce, heat off, 30,000 steps): relaxes from Σ_max 408 to ~85–145 in 50 steps (floor 3.2e5) for every variant;
+  steps 21k→30k: baseline KE 1.1e3 floor +3.9e3 · RC KE 56–123 floor +1.15e4 · RJC KE 118–167 floor +2.6e3 · R KE 5e4 (disperses) · HLLC alone KE 4.3e4 (disperses)
+Twin unit tests: sr-physics 169/169 and sod's 9 twin cases pass under HLLC (SR_D71=2), linux-pc.
+H = Σ, Π as deviations from the cell's isentropic profile h + φ = const (h = (E_int + Π)/Σ, φ at a face the mean), predictor kick and update source the profile's face-pressure difference (exact 2D equilibria for barotropic cores; Σg replaced by ΔΠ0)
+  strip (as above) KE 8.9 at 20,000 (T-floor gas is isothermal, not isentropic) · SCF disk H: Σ_max stays 448 (the SCF's own h + φ = C), KE 2.4e3 steady, floor +1.1e4 over 21k→30k · HC disk KE 5.7e3–1.5e4
+Crop window, 5,000 steps: H floor 1.22e7 / radiated 4.46e5 (share 27; the centre cell 6.8e5 per 500 steps, P5 unconverged 4,558) · HC the remnant disperses (Σ_max 0.00 by step 4,000; P5 unconverged 2,625)
+Floor by cell (crop, D71_CELLS): baseline — all of it the centre cell (2.1e4 per 500 steps at d=(0,0), Σ 78) as M0-D67; RC — a 2-cell core (d=(0,0), (0,−1), Σ 75 each, v ±0.17 toward each other), both drawing (≈5e3 each per 500)
+RC to 10,000 steps: the core's oscillation grows — KE 3e2 (step 3,000) → 5.5e4 (10,000), Σ_max 82 → 25, floor 1.98e5 / radiated 2.20e5 = 0.90; the 5,000-step 0.304 was transient
+Verdict (twin): no screened candidate holds the remnant at rest; the HLLC ones destabilise an unresolved (1–2 cell) cold core, the HLL ones disperse it.
+## claim: verify.py --changed 2026-10-28T12:21:37-04:00
+anchor: 306 paths checked · 294 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 306 covered of 600 visible
+skipped   286  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 713 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 57 not impacted · 12.65 s + loop 0.06 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 0.96->3.85 · base: M0-D71's start 2026-10-28T10:29:03-04:00
+=== GO ===

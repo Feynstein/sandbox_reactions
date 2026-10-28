@@ -63,10 +63,22 @@ impl Status {
     }
 }
 
+/// Where a taken status port moves to (the lead, 2026-10-28, M0-D99; contract §0.5 [M0-D99]): launch.json's 47811 and
+/// the nineteen above it.
+pub const FALLBACK: std::ops::RangeInclusive<u16> = 47811..=47830;
+
 /// Binds 127.0.0.1:`port` now — so a poller sees "booting" while the window and the device come up — and answers on
-/// a background thread for the life of the process.
-pub fn serve(port: u16) -> std::io::Result<Arc<Status>> {
-    let listener = TcpListener::bind((Ipv4Addr::LOCALHOST, port))?;
+/// a background thread for the life of the process. When `port` is taken, the first free one of [`FALLBACK`]; none
+/// free, `port`'s own error. Returns the port it listens on.
+pub fn serve(port: u16) -> std::io::Result<(Arc<Status>, u16)> {
+    let listener = match TcpListener::bind((Ipv4Addr::LOCALHOST, port)) {
+        Ok(l) => l,
+        Err(e) => FALLBACK
+            .filter(|p| *p != port)
+            .find_map(|p| TcpListener::bind((Ipv4Addr::LOCALHOST, p)).ok())
+            .ok_or(e)?,
+    };
+    let port = listener.local_addr()?.port();
     let status = Arc::new(Status(Mutex::new(Snapshot {
         state: State::Booting,
         frame: 0,
@@ -82,7 +94,7 @@ pub fn serve(port: u16) -> std::io::Result<Arc<Status>> {
             let _ = answer(stream, &shared);
         }
     })?;
-    Ok(status)
+    Ok((status, port))
 }
 
 fn answer(mut stream: TcpStream, status: &Status) -> std::io::Result<()> {
@@ -129,7 +141,8 @@ mod tests {
     #[test]
     fn status_booting_then_ready() {
         let port = TcpListener::bind((Ipv4Addr::LOCALHOST, 0)).unwrap().local_addr().unwrap().port();
-        let status = serve(port).unwrap();
+        let (status, bound) = serve(port).unwrap();
+        assert_eq!(bound, port);
         let first = get(port, "/status");
         assert!(first.starts_with("HTTP/1.0 200 OK\r\n"), "{first}");
         let body: serde_json::Value = serde_json::from_str(first.split("\r\n\r\n").nth(1).unwrap()).unwrap();

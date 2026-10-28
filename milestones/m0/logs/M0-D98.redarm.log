@@ -1,0 +1,10 @@
+dump · clean · GO · arm 1/8, 7 left
+dump · plant dump-channel-order · RED (proven: 7 failed) · arm 2/8, 6 left
+dump · plant dump-sim-time-skip · RED (proven: 4 failed) · arm 3/8, 5 left
+dump · plant dump-flux-zero · RED (proven: 2 failed) · arm 4/8, 4 left
+dump · plant dump-sinks-drop · RED (proven: 2 failed) · arm 5/8, 3 left
+dump · plant headless-no-sinks · RED (proven: 1 failed) · arm 6/8, 2 left
+dump · plant warm-rate-not-dumped · RED (proven: 2 failed) · arm 7/8, 1 left
+dump · plant dt-empty-box-unbounded · RED (proven: 1 failed) · arm 8/8, 0 left
+redarm: 7 plants · 7 red · 0 green · 0 errors · scope dump · 281.67 s · 8 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D98.dump.redarm.log
+=== GO ===

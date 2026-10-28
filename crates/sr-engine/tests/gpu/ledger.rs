@@ -32,11 +32,16 @@ const N: u32 = 128;
 const BAND: f64 = 1e-6;
 /// The drifting run's momentum band, relative to Σm|u|: a cloud that moves is held by source-term gravity's momentum error
 /// (M0-V7 observation 1: 3.9 × 10⁻³ on sink_cloud), so the number is reported and bounded by the measured error, not 10⁻⁶.
-const LEAVE_MOMENTUM: f64 = 5e-3;
+/// 7e-3 since M0-D69 (§0.5 [M0-D69], the lead's «7e-3», 2026-10-28): gravity's ring reads the free-space φ past the world, and
+/// this case's drift fell from 8.05 × 10⁻³ (the one-sided ring) to 5.54 × 10⁻³ (RTX 4090). What holds it is source-term
+/// gravity on §0.5 [M0-D68]'s source, not the edge: the same disk with no edge near drifts 1.15 × 10⁻², and one whose rim
+/// just touches the edge drifts as it does in a wider world (M0-T106 carries it). The one-sided ring's 8.05e-3 stays red.
+const LEAVE_MOMENTUM: f64 = 7e-3;
 /// The disk's T: U_th ≈ 0.1|W|₀ (M0-D66, the lead's «Disk T 2.3 + edge D», 2026-10-20). At M0-T57's T 0.05 the pressureless
 /// disk falls to a point; once §0.5 [M0-D64]'s face work stopped the Σu·g source heating it there, it stays collapsed:
-/// bounce's Σm|u| fell 9 × under an alike drift (2.8e-6), and leave's collapse beside the world's edge, where the box's outer
-/// ring takes a one-sided g, drifts 5.7e-2 (21 in a 256-wide world, M0-D66's D).
+/// bounce's Σm|u| fell 9 × under an alike drift (2.8e-6), and leave's collapse beside the world's edge drifted 5.7e-2 (21 in a
+/// 256-wide world, M0-D66's D). On §0.5 [M0-D68]'s source with M0-D69's ring, T 0.05 reads 2.06e-2 at x 116 — the disk cut
+/// by the edge — and 1.04e-2 with no edge near (RTX 4090): source-term gravity, not the edge.
 const DISK_T: f64 = 2.3;
 
 fn scene(edge: &str, x: f64, v: f64, gravity: bool) -> String {

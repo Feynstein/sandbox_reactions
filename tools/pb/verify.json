@@ -400,7 +400,7 @@
       ]
     },
     "ledger": {
-      "desc": "the ledger (contract §2.9, §2.12.2, §5.3's G-CONS; M0-T57): crates/sr-engine/src/ledger.rs, Step::summarise and headless's summary.json `ledger` {start, end} — the mass, energy and momentum terms in f64 from the block summary's fixed-order partials, the sinks it carries, and the booked terms read and cleared after every chunk of steps (take_booked), cumulative since the ledger started (the run's first step: the box and φ exist only after it), the three invariants in each record; `bash tests/gpu.sh ledger physics` on the physics adapter, 128 × 128, 500 steps of a disk (a = 24, Σc = 1, T 2.3 ≈ U_th 0.1|W|₀ since M0-D66, the cold pressure off through `overrides`): at rest in a bounce world — mass invariant 1e-6 of the mass, momentum (grid + sinks + escaped) 1e-6 of Σm|u| (read from the final dump), nothing escaped, the energy drift reported; drifting out of a leave world's edge with gravity on — 0.52 % of the mass escapes (asserted over 0.1 % and printed), mass 1e-6, momentum held to 5e-3 of Σm|u| (source-term gravity does not conserve momentum, M0-V7 observation 1: measured 8.1e-4; at a world edge more, M0-D69) a band that leaving the escaped momentum out (off by 0.23) would break; the same disk with gravity off — mass 1e-6, momentum to 1e-6 plus what a vacuum reset removes (booked nowhere, §2.7 [M0-T19]: `vacuum_reset` × the fastest gas, read from the run); in every run the ledger's grid mass and momentum against an f64 sum of the final dump's planes (independent of the summary and of the box, whose outside the ledger fills with the floor state); the arithmetic of every term and invariant on a hand-made summary (NOT PROVEN (synthetic) past the arithmetic). The energy invariant is reported in those runs, and graded on one (M0-D64, §0.5 [M0-D64]): a hot compact remnant (disk a = 9, Σc = 8.8, T 50, He 0.9 C 0.05 O 0.05, heat on, burning off, leave), 1,000 steps — |Δ invariant| ≤ G-CONS's 1e-3 |W|₀ per τ_dyn, τ_dyn = √(R₉₀³/GM) of the end state, and it radiated over 1 % of |W|₀ (measured 6.2e-5 on linux-pc's RTX 5090, 2026-10-20; Σu·g alone 5.0e-2). ledger-no-escaped drops `escaped` from the mass sum; ledger-cell-grav-work puts P4's energy source back to Σu·g (hydro.wgsl)",
+      "desc": "the ledger (contract §2.9, §2.12.2, §5.3's G-CONS; M0-T57): crates/sr-engine/src/ledger.rs, Step::summarise and headless's summary.json `ledger` {start, end} — the mass, energy and momentum terms in f64 from the block summary's fixed-order partials, the sinks it carries, and the booked terms read and cleared after every chunk of steps (take_booked), cumulative since the ledger started (the run's first step: the box and φ exist only after it), the three invariants in each record; `bash tests/gpu.sh ledger physics` on the physics adapter, 128 × 128, 500 steps of a disk (a = 24, Σc = 1, T 2.3 ≈ U_th 0.1|W|₀ since M0-D66, the cold pressure off through `overrides`): at rest in a bounce world — mass invariant 1e-6 of the mass, momentum (grid + sinks + escaped) 1e-6 of Σm|u| (read from the final dump), nothing escaped, the energy drift reported; drifting out of a leave world's edge with gravity on — 1.05 % of the mass escapes (0.52 % before §0.5 [M0-D68]) (asserted over 0.1 % and printed), mass 1e-6, momentum held to 7e-3 of Σm|u| since M0-D69 (source-term gravity does not conserve momentum, M0-V7 observation 1, carried to M0-T106: measured 8.1e-4 on M0-D64's first split; on §0.5 [M0-D68]'s source 8.05e-3 through the box's one-sided ring at the world edge, 1e-2 until M0-D69; with M0-D69's free-space ring 5.54e-3 on the RTX 4090, the same disk with no edge near 1.15e-2 — the lead's «7e-3», 2026-10-28) a band that leaving the escaped momentum out (off by 0.23) would break; the same disk with gravity off — mass 1e-6, momentum to 1e-6 plus what a vacuum reset removes (booked nowhere, §2.7 [M0-T19]: `vacuum_reset` × the fastest gas, read from the run); in every run the ledger's grid mass and momentum against an f64 sum of the final dump's planes (independent of the summary and of the box, whose outside the ledger fills with the floor state); the arithmetic of every term and invariant on a hand-made summary (NOT PROVEN (synthetic) past the arithmetic). The energy invariant is reported in those runs, and graded on one (M0-D64, §0.5 [M0-D64]): a hot compact remnant (disk a = 9, Σc = 8.8, T 50, He 0.9 C 0.05 O 0.05, heat on, burning off, leave), 1,000 steps — |Δ invariant| ≤ G-CONS's 1e-3 |W|₀ per τ_dyn, τ_dyn = √(R₉₀³/GM) of the end state, and it radiated over 1 % of |W|₀ (measured 6.2e-5 on linux-pc's RTX 5090, 2026-10-20; Σu·g alone 5.0e-2). ledger-no-escaped drops `escaped` from the mass sum; ledger-cell-grav-work puts P4's energy source back to Σu·g (hydro.wgsl); grav-ring-one-sided puts gravity's ring at the world edge back to one-sided (grav.wgsl, M0-D69)",
       "cmd": "bash tests/gpu.sh ledger physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
@@ -417,7 +417,8 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/gpu.sh",
-        "tests/plants/ledger-*.patch"
+        "tests/plants/ledger-*.patch",
+        "tests/plants/grav-ring-one-sided.patch"
       ],
       "plants": [
         {
@@ -427,6 +428,10 @@
         {
           "id": "ledger-cell-grav-work",
           "patch": "tests/plants/ledger-cell-grav-work.patch"
+        },
+        {
+          "id": "grav-ring-one-sided",
+          "patch": "tests/plants/grav-ring-one-sided.patch"
         }
       ]
     },
@@ -791,11 +796,11 @@
       ]
     },
     "jeans": {
-      "desc": "G-JEANS, no artificial fragmentation (contract §2.3.5, §1.9.2, §5.1, SM-O6, SM-E16, R8; M0-T62): scenes/jeans_ripple.json — a disk cloud (a = 40, Σc = 1, the Sun's mix, T 3.3132 so U_th = 0.07|W| with W the grid's own — the lead's rulings at M0-T62 and M0-D66, contract §0.5 [M0-T62], [M0-D66] (0.05|W| loses entropy on M0-D64's face work, J 1.04, M0-D68): §5.1's 0.1|W| turns round at Σ_max 62.7 and never meets 100 ×, 0.02|W| fragments) in a 128 × 128 leave world, gravity and hydro on, the rest off, the cold pressure off through `overrides` naming the four K's and nothing else (G-COLL's isolation; the shipped K's halt the cloud at Σ_max 12.7) — with the test's deterministic ripple Σ·(1 + 0.01(cos 3θ + cos 5θ)) (E rebuilt at each cell's ε_th, at rest), collapsing on the GPU's P2 + P4 on the physics adapter until its central Σ is 100 × the start's; a block summary every 8 steps (2 past Σ_max 30): J = GΣ²/(2Π) ≤ 1/4 in every gas cell of every summary (Π from the EOS twin on the state read back); at the end exactly one object (observe::Tracker on the engine's own summary) and no secondary Σ peak (a 5 × 5 local maximum other than the global one) above 10 % of the central Σ; and the adversarial case — a collapse that stops short of 100 × reports the largest Σ reached and fails, never passing on the 20,000-step cap. Also the scene's U_th/|W| = 0.07 within 1e-4, the ripple's arithmetic and the checks' own (J's bound, the peak finder and the tracker's object count on hand-made data, NOT PROVEN on a star). no-pressure-flux drops the pressure term from the momentum flux in hydro.wgsl",
+      "desc": "G-JEANS, no artificial fragmentation (contract §2.3.5, §1.9.2, §5.1, SM-O6, SM-E16, R8; M0-T62): scenes/jeans_ripple.json — a disk cloud (a = 40, Σc = 1, the Sun's mix, T 2.3666 so U_th = 0.05|W| with W the grid's own — the lead's rulings at M0-T62 and M0-D68, contract §0.5 [M0-T62], [M0-D68] (on M0-D64's first face work it lost entropy, J 1.04, and M0-D66 ran it at 0.07|W|): §5.1's 0.1|W| turns round at Σ_max 62.7 and never meets 100 ×, 0.02|W| fragments) in a 128 × 128 leave world, gravity and hydro on, the rest off, the cold pressure off through `overrides` naming the four K's and nothing else (G-COLL's isolation; the shipped K's halt the cloud at Σ_max 12.7) — with the test's deterministic ripple Σ·(1 + 0.01(cos 3θ + cos 5θ)) (E rebuilt at each cell's ε_th, at rest), collapsing on the GPU's P2 + P4 on the physics adapter until its central Σ is 100 × the start's; a block summary every 8 steps (2 past Σ_max 30): J = GΣ²/(2Π) ≤ 1/4 in every gas cell of every summary (Π from the EOS twin on the state read back); the largest J of every summary at most (1 + 10⁻²) × the start's (§0.5 [M0-D68]: heat off and γ = 2, J is constant along an adiabat); at the end exactly one object (observe::Tracker on the engine's own summary) and no secondary Σ peak (a 5 × 5 local maximum other than the global one) above 10 % of the central Σ; and the adversarial case — a collapse that stops short of 100 × reports the largest Σ reached and fails, never passing on the 20,000-step cap. Also the scene's U_th/|W| = 0.05 within 1e-4, the ripple's arithmetic and the checks' own (J's bound, the peak finder and the tracker's object count on hand-made data, NOT PROVEN on a star). no-pressure-flux drops the pressure term from the momentum flux in hydro.wgsl; face-work-heat-pays turns §0.5 [M0-D68]'s relative-motion payment off in hydro.wgsl (the diffusive work back on heat: J ×8)",
       "cmd": "bash tests/gpu.sh jeans physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 5,
+      "expected": 6,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -809,12 +814,17 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/gpu.sh",
-        "tests/plants/no-pressure-flux.patch"
+        "tests/plants/no-pressure-flux.patch",
+        "tests/plants/face-work-heat-pays.patch"
       ],
       "plants": [
         {
           "id": "no-pressure-flux",
           "patch": "tests/plants/no-pressure-flux.patch"
+        },
+        {
+          "id": "face-work-heat-pays",
+          "patch": "tests/plants/face-work-heat-pays.patch"
         }
       ]
     },
@@ -1145,11 +1155,11 @@
       ]
     },
     "grav_selfforce": {
-      "desc": "gravity's net self-force on the CPU twin and on the GPU's P2, on the physics adapter (contract §1.4.2, §5.1's G-GRAV2): scenes/asym_blob.json (a Maclaurin disk and an off-centre rectangle, 128 × 128) and a seeded scatter of masses in a 50 × 37 box, φ = K ∗ Σ_src and g = −∇φ by central differences: |Σ m·g| ≤ 1e-5 Σ m|g| (printed; measured 4e-16), the blob a real one (over 1500 cells, mass over 500, Σ m|g| over 100) (M0-T29); the blob through one GPU step with gravity on, over the fitted box: the same ratio (measured 2e-9 in f32) and φ and g within G-REF's 1e-3 relative L1 of the twin (M0-T31); a wide box (392 × 64, FFT 1024 × 128) and a tall one (40 × 344, 128 × 1024), each with an empty outermost ring: the same ratio and the same twin bound (M0-D25)",
+      "desc": "gravity's net self-force on the CPU twin and on the GPU's P2, on the physics adapter (contract §1.4.2, §5.1's G-GRAV2): scenes/asym_blob.json (a Maclaurin disk and an off-centre rectangle, 128 × 128) and a seeded scatter of masses in a 50 × 37 box, φ = K ∗ Σ_src and g = −∇φ by central differences: |Σ m·g| ≤ 1e-5 Σ m|g| (printed; measured 4e-16), the blob a real one (over 1500 cells, mass over 500, Σ m|g| over 100) (M0-T29); the blob through one GPU step with gravity on, over the fitted box: the same ratio (measured 2e-9 in f32) and φ and g within G-REF's 1e-3 relative L1 of the twin (M0-T31); a wide box (392 × 64, FFT 1024 × 128) and a tall one (40 × 344, 128 × 1024), each with an empty outermost ring: the same ratio and the same twin bound (M0-D25); matter on the box's outermost ring — the scatter with no empty rim on the twin, and on the GPU a 128 × 128 world with matter on all four edges (box the world, FFT 256²) — the same ratio and the twin bound: the ring's central difference reads the free-space φ one cell past the box, which the zero-padded convolution holds (M0-D69). grav-ring-one-sided puts the shader's ring back to one-sided, grav-twin-ring-one-sided the twin's",
       "cmd": "bash tests/gpu.sh grav::selfforce physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 5,
+      "expected": 7,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -1173,6 +1183,14 @@
         {
           "id": "grav-gradient-backward",
           "patch": "tests/plants/grav-gradient-backward.patch"
+        },
+        {
+          "id": "grav-ring-one-sided",
+          "patch": "tests/plants/grav-ring-one-sided.patch"
+        },
+        {
+          "id": "grav-twin-ring-one-sided",
+          "patch": "tests/plants/grav-twin-ring-one-sided.patch"
         }
       ]
     },
@@ -1563,7 +1581,7 @@
       ]
     },
     "boot": {
-      "desc": "the headless boot (contract §3.3, §3.4, §5.4 G-BOOT): launch.py smoke of headless-boot is ready within 60 s and its summary.json carries every §2.12.2 key with steps = 200; stdout opens with SR-ADAPTER and ends with SR-HEADLESS DONE steps=200 (M0-T4); the build is the tree's own",
+      "desc": "the headless boot (contract §3.3, §3.4, §5.4 G-BOOT): launch.py smoke of headless-boot is ready within 60 s and its summary.json carries every §2.12.2 key with steps = 200; stdout opens with SR-ADAPTER and ends with SR-HEADLESS DONE steps=200 (M0-T4); the revision a run records marks uncommitted sources (M0-D63): in a throwaway repository summary.json's git is the bare sha when clean — assets/calibration.json rewritten and a log written not counted —, `<sha>-dirty` with a source changed or a new one untracked, `unknown` outside a repository; the build is the tree's own",
       "cmd": "bash tests/smoke.sh headless-boot",
       "expected": 1,
       "timeout_s": 900,
@@ -1580,24 +1598,30 @@
         "rust-toolchain.toml",
         ".cargo/**",
         "tests/cargo.sh",
-        "tests/plants/scene-*.patch"
+        "tests/plants/scene-*.patch",
+        "tests/plants/git-*.patch"
       ],
       "plants": [
         {
           "id": "scene-refuse",
           "patch": "tests/plants/scene-refuse.patch"
+        },
+        {
+          "id": "git-dirty-mark-dropped",
+          "patch": "tests/plants/git-dirty-mark-dropped.patch"
         }
       ]
     },
     "desktop": {
-      "desc": "the desktop boot (contract §3.3, §3.4, §3.6, §5.4 G-DESK): launch.py smoke of the box's window route — game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) — reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); a case hands the port lock on only once 47811 binds again, and `race`, under the lock throughout, starts the window route straight behind a hand-over whose port a listener launch.py did not start holds for 10 s (M0-D51); the build is the tree's own",
+      "desc": "the desktop boot (contract §3.3, §3.4, §3.6, §5.4 G-DESK): launch.py smoke of the box's window route — game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) — reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); a case hands the port lock on only once 47811 binds again, and `race`, under the lock throughout, starts the window route straight behind a hand-over whose port a listener launch.py did not start holds for 10 s (M0-D51); `port-taken`, under the lock, holds 47811 throughout and starts the game straight on the box's route (launch.py refuses a held port): it prints SR-STATUS-PORT <n>, n in 47812–47830, and /status reads \"ready\" there within 90 s (M0-D99, contract §0.5 [M0-D99]); the build is the tree's own",
       "cases": [
         "window",
         "launcher",
-        "race"
+        "race",
+        "port-taken"
       ],
       "case_cmd": "bash tests/smoke.sh {case}",
-      "expected": 3,
+      "expected": 4,
       "timeout_s": 900,
       "paths": [
         "crates/sr-app/**",
@@ -1632,6 +1656,10 @@
         {
           "id": "launcher-stop-all",
           "patch": "tests/plants/launcher-stop-all.patch"
+        },
+        {
+          "id": "port-no-fallback",
+          "patch": "tests/plants/port-no-fallback.patch"
         }
       ]
     },

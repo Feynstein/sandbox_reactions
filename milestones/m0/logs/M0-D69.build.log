@@ -1,0 +1,15 @@
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+warning: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-engine/tests/gpu/calibrate_bisect.rs:278:11
+    |
+278 |     clean(&[record.clone()]);
+    |           ^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&record)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+    = note: `#[warn(clippy::cloned_ref_to_slice_refs)]` on by default
+
+warning: `sr-engine` (test "gpu") generated 26 warnings (run `cargo clippy --fix --test "gpu" -p sr-engine -- ` to apply 5 suggestions)
+    Finished `release` profile [optimized] target(s) in 5.58s

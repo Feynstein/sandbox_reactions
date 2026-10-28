@@ -3,6 +3,12 @@
 // record is `abox`, so the FFT size per axis is the box's (§1.3.3) — then g = −∇φ by central differences, the scheme
 // of the CPU twin (sr_physics::reference::grav).
 //
+// The ring (M0-D69): the box's outermost cells difference against φ one cell past the box, which the zero-padded
+// convolution holds exactly (the padded size is ≥ 2 × the box and K is even). `spec` keeps it for `grav_gradient`: row
+// h is φ at y = h and row h + 1 φ at y = −1 (x < w), and in each box row y < h, column w is φ at x = w and column
+// fft_w − 1 φ at x = −1 — real parts. So Σ m·g cancels by K's symmetry even with matter on the ring, as a box clamped
+// to a world edge has.
+//
 // K is real and even in both axes, so K̂ is too: `kquarter` holds, for every padded size the world's boxes can take,
 // K̂(kx, ky) for kx ≤ nx/2 and ky ≤ ny/2 — row-major in ky, (nx/2 + 1) per row — taken in f64 on the CPU; a size's
 // quarter starts at koffsets[(log2 nx − 5) · ny_sizes + log2 ny − 5], and K̂(kx, ky) is read at
@@ -85,8 +91,8 @@ fn grav_rows(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_ind
 }
 
 // 2 of 4: each column forward over fft_h (rows ≥ h are zero), times K̂ and 1 / (fft_w · fft_h), back by decimation in
-// frequency: conv_columns with the kernel's real quarter for the box's size. Then fft.wgsl's conv_rows_inverse (3 of 4)
-// writes φ.
+// frequency: conv_columns with the kernel's real quarter for the box's size, rows y < h back into spec and the ring's
+// two, y = h and y = fft_h − 1, into its rows h and h + 1. Then `grav_rows_inverse` (3 of 4) writes φ.
 @compute @workgroup_size(256)
 fn grav_columns(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_index) lid: u32) {
     let col = wg.x;
@@ -114,10 +120,44 @@ fn grav_columns(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_
     for (var y = lid; y < abox.h; y = y + WG) {
         spec[y * nx + col] = buf[bitrev(y, log_n)];
     }
+    if (lid == 0u) {
+        spec[abox.h * nx + col] = buf[bitrev(abox.h, log_n)];
+        spec[(abox.h + 1u) * nx + col] = buf[bitrev(n - 1u, log_n)];
+    }
 }
 
-// 4 of 4: g = −∇φ over the box's 8 × 8 tiles by central differences, one-sided on the box's outermost ring (the twin's
-// rule; the box's margin keeps matter off it, §1.3.3).
+// 3 of 4: fft.wgsl's conv_rows_inverse over h + 2 rows: a box row's φ into the box's cells of `dst` and its ring cells,
+// x = w and x = −1, into its own row of spec; the ring's rows h and h + 1 into spec for x < w (the ring, above).
+@compute @workgroup_size(256)
+fn grav_rows_inverse(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_index) lid: u32) {
+    let row = wg.x;
+    if (row >= abox.h + 2u) {
+        return;
+    }
+    let n = abox.fft_w;
+    let log_n = countTrailingZeros(n);
+    for (var x = lid; x < n; x = x + WG) {
+        buf[x] = spec[row * n + x];
+    }
+    dif(n, lid, true);
+    if (row >= abox.h) {
+        for (var x = lid; x < abox.w; x = x + WG) {
+            spec[row * n + x] = vec2<f32>(buf[bitrev(x, log_n)].x, 0.0);
+        }
+        return;
+    }
+    let base = fp.dst_offset + (abox.y0 + row) * fp.stride + abox.x0;
+    for (var x = lid; x < abox.w; x = x + WG) {
+        dst[base + x] = buf[bitrev(x, log_n)].x;
+    }
+    if (lid == 0u) {
+        spec[row * n + abox.w] = vec2<f32>(buf[bitrev(abox.w, log_n)].x, 0.0);
+        spec[row * n + n - 1u] = vec2<f32>(buf[bitrev(n - 1u, log_n)].x, 0.0);
+    }
+}
+
+// 4 of 4: g = −∇φ over the box's 8 × 8 tiles by central differences, the box's outermost ring reading φ past the box
+// from spec (the ring, above; the twin's rule).
 @compute @workgroup_size(8, 8)
 fn grav_gradient(@builtin(global_invocation_id) id: vec3<u32>) {
     if (id.x >= abox.w || id.y >= abox.h) {
@@ -126,17 +166,32 @@ fn grav_gradient(@builtin(global_invocation_id) id: vec3<u32>) {
     let x = abox.x0 + id.x;
     let y = abox.y0 + id.y;
     let s = fp.stride;
-    let xl = select(x - 1u, x, id.x == 0u);
-    let xh = select(x + 1u, x, id.x + 1u == abox.w);
-    let yl = select(y - 1u, y, id.y == 0u);
-    let yh = select(y + 1u, y, id.y + 1u == abox.h);
-    var a = vec2<f32>(0.0, 0.0);
-    if (xh > xl) {
-        a.x = -(phi[y * s + xh] - phi[y * s + xl]) / f32(xh - xl);
+    let n = abox.fft_w;
+    var xl = 0.0;
+    var xh = 0.0;
+    var yl = 0.0;
+    var yh = 0.0;
+    if (id.x == 0u) {
+        xl = spec[id.y * n + n - 1u].x;
+    } else {
+        xl = phi[y * s + x - 1u];
     }
-    if (yh > yl) {
-        a.y = -(phi[yh * s + x] - phi[yl * s + x]) / f32(yh - yl);
+    if (id.x + 1u == abox.w) {
+        xh = spec[id.y * n + abox.w].x;
+    } else {
+        xh = phi[y * s + x + 1u];
     }
+    if (id.y == 0u) {
+        yl = spec[(abox.h + 1u) * n + id.x].x;
+    } else {
+        yl = phi[(y - 1u) * s + x];
+    }
+    if (id.y + 1u == abox.h) {
+        yh = spec[abox.h * n + id.x].x;
+    } else {
+        yh = phi[(y + 1u) * s + x];
+    }
+    let a = vec2<f32>(-(xh - xl) * 0.5, -(yh - yl) * 0.5);
     let cell = y * s + x;
     g[cell] = a.x;
     g[gp.cells + cell] = a.y;

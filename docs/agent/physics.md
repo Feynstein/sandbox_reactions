@@ -130,11 +130,13 @@ Pass order and module map: `architecture.md`. Scopes that grade these pages: `te
 - **The kernel's transform lives for every size.** The box's padded size is written by `box_fit` on the GPU and never read back, so the CPU cannot pick a transform per frame. K is real and even
   on both axes, so is K̂, and each size keeps one quarter of it; the table holds every size the world's boxes can take, made once per `Step` in f64 from the twin's own `grav::kernel` (so a bug in
   the twin's K reaches the shader too). Its size and cost at the default world: `milestones/m0/tasks/M0-T31.md`.
-- **The force: central differences (M0-T29's choice).** g = −∇φ by central differences, one-sided on the box's outermost ring (y down). G-GRAV1 was measured on the twin **before** the GPU
+- **The force: central differences (M0-T29's choice).** g = −∇φ by central differences in every cell of the box, its outermost ring included (y down). G-GRAV1 was measured on the twin **before** the GPU
   was built: the force on a Maclaurin disk is far inside its bound over every cell with 0 < r ≤ 0.75a (worst error and its cell are printed; `testing.md`, `grav_force`), so the direct force
-  kernels (two more inverse FFTs) stayed unbuilt — φ is one forward FFT, one multiply, one inverse, then the differences. The rim rule matters to G-GRAV2: the net self-force
-  Σ m·g cancels exactly (to rounding) only while no mass sits on that outermost ring, which the box's 8-cell margin guarantees; the shader keeps the twin's rule. φ and g outside the box keep
-  their last values.
+  kernels (two more inverse FFTs) stayed unbuilt — φ is one forward FFT, one multiply, one inverse, then the differences. The rim matters to G-GRAV2: the net self-force
+  Σ m·g cancels exactly (to rounding) by K's symmetry only if every difference reads the true φ. Until M0-D69 the ring fell back to a one-sided difference — harmless while the box's 8-cell
+  margin keeps it empty, but a box clamped to a world edge holds gas there (3.4e-2 of Σ m|g| on the twin with matter on the ring). Now the ring reads φ one cell past the box, which the
+  zero-padded convolution already holds exactly (padded size ≥ 2 × the box, K even, so the offset n/2 aliasing −n/2 is K's own value): the twin's `Convolver::convolve_ringed`, the GPU's
+  `grav_columns` and `grav_rows_inverse` keeping rows y = h and y = −1 and columns x = w and x = −1 in the work buffer for `grav_gradient`. φ and g outside the box keep their last values.
 - **Δt (§2.3.5).** The gravity term η_g/√max|g| reads P2's |g|; step 0's initial reduction runs after P2 on the initial state, so P2 runs twice on step 0 (one extra solve per run).
 - **Not built.** The solve cadence k ∈ {1, 4} (§1.4.4) is a lever for M0-TG's budget; every step solves (k = 1). Sinks' potentials (§1.4.3) are P2's fifth dispatch, `grav_sinks`, in a step that runs P3 (§ Sinks).
 - **Cost.** The measurements — the RTX 4080 Laptop's smoke and the Quadro RTX 4000 figures owed on `laserax-ai` — live in `milestones/m0/tasks/M0-T31.md` and `M0-T30.md`; this page holds none.

@@ -1,0 +1,11 @@
+# M0-D69 twin cases, linux-pc, 2026-10-28T10:07:24-04:00
+SR-GRAV2 random on the ring 50x37: 72 ring cells hold mass, ratio 1.501e-16
+SR-GRAV2 random 50x37: ratio 2.355e-16
+SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.509e-12, Σ m|g| = 2.767e3, ratio 5.452e-16
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 387 filtered out; finished in 0.01s
+# plant grav-twin-ring-one-sided (scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/5c938df8-a992-4458-9266-595970c268b3/scratchpad/d69_old)
+SR-GRAV2 random on the ring 50x37: 72 ring cells hold mass, ratio 3.404e-2
+SR-GRAV2 random 50x37: ratio 2.355e-16
+thread 'grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either' (3529335) panicked at crates/sr-engine/tests/gpu/grav.rs:386:9:
+SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.509e-12, Σ m|g| = 2.767e3, ratio 5.452e-16
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 387 filtered out; finished in 0.01s

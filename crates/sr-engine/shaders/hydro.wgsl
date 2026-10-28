@@ -24,11 +24,13 @@
 // face state by half a step of the cell's g — velocity by ½Δt·g, energy by the work Σ(u + ¼Δt·g)·g·½Δt, leaving its
 // thermal energy as it was — beside the flux differences; `hydro_update` adds Δt·Σg to the momentum, Σ the cell centre's
 // half-step value from that same predictor. The energy source is the work the step's mass fluxes do across φ (§0.5
-// [M0-D64]): a face whose mass flux q joins the cell i to its neighbour j does Δt·q·(φ_i − φ_j), i taking
-// (½ p_i + w_i (q − ½(p_i + p_j)))·(φ_i − φ_j)·Δt of it (`grav_share`) — p the two cells' half-step momenta on that axis,
-// w_i = Σ_i/(Σ_i + Σ_j) their half-step masses' share — so each cell keeps the Δt·(Σu)·g its own momentum pays for and the
-// mass HLL's diffusion moves is paid by the two cells' masses; the neighbours' half-step centres cross through `mids`.
-// Summed, the energy gained is what the moved mass does to W at the step's φ. A ghost's g and φ are its edge cell's, so
+// [M0-D64], [M0-D68]): a face whose mass flux q joins the cell i to its neighbour j does Δt·q·(φ_i − φ_j), i keeping
+// ½Δt·p_i·(φ_i − φ_j) of it — p the two cells' half-step momenta on that axis — so each cell keeps the Δt·(Σu)·g its own
+// momentum pays for; the rest, the work of the mass HLL's diffusion moves, D = Δt·(q − ½(p_i + p_j))·(φ_i − φ_j), when it
+// is a cost (D < 0) is paid first from the pair's relative motion on the axis — at most half its kinetic energy, by an
+// equal and opposite impulse — and what is left of it, or a gain, is shared by w_i = Σ_i/(Σ_i + Σ_j), their half-step
+// masses' share (`face_work`); the neighbours' half-step centres cross through `mids`. Summed, the energy gained is what
+// the moved mass does to W at the step's φ, and the impulses cancel in the momentum. A ghost's g and φ are its edge cell's, so
 // no work is done across the world's edge. `hydro_edges` recomputes the same predictor, so it binds g too. The twin's
 // `Hydro::step_with` is the reference.
 //
@@ -276,18 +278,40 @@ fn phi_at(x: i32, y: i32) -> f32 {
     return grav[2u * dims.cells + cell];
 }
 
-// Gravity's energy source at one face of a cell (the header comment): `q` the face's mass flux toward the neighbour
-// (along +x or +y), `pi`, `pj` the cell's and the neighbour's half-step momentum on that axis, `si`, `sj` their half-step
-// Σ, `d` = φ_cell − φ_neighbour for the + face (φ_neighbour − φ_cell for the − face). The cell's share of the face's
-// work q·d: its own ½ pi·d, plus its mass's share of what the face moved beyond the two cells' own momenta.
-fn grav_share(q: f32, pi: f32, pj: f32, si: f32, sj: f32, d: f32) -> f32 {
-    let a = max(si, 0.0);
-    let b = max(sj, 0.0);
+// Gravity's source at one face over the step (the header comment), for the face's low cell (−x or −y) and its high cell
+// alike, so the two read the same numbers: `q` the face's mass flux along +x or +y, `sl`, `sh` the two cells' half-step Σ,
+// `pl`, `ph` their half-step momenta on that axis, `d` = φ_low − φ_high. Returns (the impulse to the low cell — the high
+// cell takes its negative —, the low cell's energy, the high cell's). Each keeps ½Δt·p·d of its own; the work of the
+// diffusive flux beyond the two momenta, when it is a cost, is paid first from the pair's relative motion on the axis, at
+// most half its kinetic energy ½Δu²/(1/Σ_l + 1/Σ_h), by the equal and opposite impulse that takes it (the smaller root,
+// in the form without cancellation); the rest is shared by mass.
+fn face_work(q: f32, sl: f32, sh: f32, pl: f32, ph: f32, d: f32, dt: f32) -> vec3<f32> {
+    let a = max(sl, 0.0);
+    let b = max(sh, 0.0);
     var w = 0.5;
     if (a + b > 0.0) {
         w = a / (a + b);
     }
-    return (0.5 * pi + w * (q - 0.5 * (pi + pj))) * d;
+    let extra = dt * (q - 0.5 * (pl + ph)) * d;
+    var c = 0.0;
+    var kick = 0.0;
+    var el = 0.0;
+    var eh = 0.0;
+    if (extra < 0.0 && a > 0.0 && b > 0.0) {
+        let ul = pl / a;
+        let uh = ph / b;
+        let du = ul - uh;
+        let inv = 1.0 / a + 1.0 / b;
+        c = min(-extra, 0.25 * du * du / inv);
+        if (c > 0.0) {
+            let disc = sqrt(max(du * du - 2.0 * inv * c, 0.0));
+            kick = -2.0 * c / (du + sign(du) * disc);
+            el = ul * kick + 0.5 * kick * kick / a;
+            eh = -uh * kick + 0.5 * kick * kick / b;
+        }
+    }
+    let rest = extra + c;
+    return vec3<f32>(kick, 0.5 * dt * pl * d + w * rest + el, 0.5 * dt * ph * d + (1.0 - w) * rest + eh);
 }
 
 // The monotonised-central slope: ½(r − l) limited to twice either one-sided difference, 0 at an extremum.
@@ -862,10 +886,13 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         let mr = mids[select(72u + lid.y, lid.y * TILE + lid.x + 1u, lid.x + 1u < TILE)];
         let mu = mids[select(80u + lid.x, (lid.y - 1u) * TILE + lid.x, lid.y > 0u)];
         let md = mids[select(88u + lid.x, (lid.y + 1u) * TILE + lid.x, lid.y + 1u < TILE)];
-        u[3] += dt * (grav_share(fxr[0], m.y, mr.y, m.x, mr.x, p - phi_at(x + 1, y))
-            + grav_share(fxl[0], m.y, ml.y, m.x, ml.x, phi_at(x - 1, y) - p)
-            + grav_share(fyr[0], m.z, md.z, m.x, md.x, p - phi_at(x, y + 1))
-            + grav_share(fyl[0], m.z, mu.z, m.x, mu.x, phi_at(x, y - 1) - p));
+        let r = face_work(fxr[0], m.x, mr.x, m.y, mr.y, p - phi_at(x + 1, y), dt);
+        let l = face_work(fxl[0], ml.x, m.x, ml.y, m.y, phi_at(x - 1, y) - p, dt);
+        let dn = face_work(fyr[0], m.x, md.x, m.z, md.z, p - phi_at(x, y + 1), dt);
+        let up = face_work(fyl[0], mu.x, m.x, mu.z, m.z, phi_at(x, y - 1) - p, dt);
+        u[1] += r.x - l.x;
+        u[2] += dn.x - up.x;
+        u[3] += r.y + l.z + dn.y + up.z;
     }
     // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
     if (edges.radiation != 0u && !empty_here) {

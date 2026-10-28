@@ -9,10 +9,14 @@
 //!
 //! Conventions as [`fft`](super::fft): row-major, `index = y * w + x`, y down (§2.12.4), so `gy > 0` pulls toward larger
 //! rows. The box is the field's own extent: the caller crops to the active box (§1.3.3). At the box's outermost ring the
-//! central difference has no neighbour outside, so it falls back to the one-sided difference there; the box carries a
-//! margin of vacuum (§1.3.3), so no matter sits on that ring.
+//! central difference reads φ one cell past the box, which the zero-padded convolution holds exactly (free space, no
+//! source there: [`Convolver::convolve_ringed`]). So Σ m·g cancels by the kernel's symmetry even with matter on that
+//! ring — a box clamped to a world edge (M0-D69: the one-sided difference there leaked a collapse's momentum).
 
 use super::fft::{Convolver, FftError};
+
+/// The convolution's ring past the box that g's central difference reads (M0-D69).
+pub const RING: usize = 1;
 
 /// −K(0, 0) / G = 4 ln(1 + √2) = 3.525494 (§1.4.2, my arithmetic there): ∫∫ over [−½, ½]² of dA / r.
 pub const SELF_CELL: f64 = 3.525_494_348_078_172;
@@ -39,24 +43,21 @@ pub struct Field {
     pub gy: Vec<f64>,
 }
 
-/// g = −∇φ by central differences (one-sided on the box's outermost ring, an axis of one cell has none).
-pub fn acceleration(phi: &[f64], w: usize, h: usize) -> Result<(Vec<f64>, Vec<f64>), FftError> {
-    if phi.len() != w * h {
-        return Err(FftError::LengthMismatch { expected: w * h, found: phi.len() });
+/// g = −∇φ by central differences over the `w` × `h` box, from φ on the box grown by [`RING`] cell per side
+/// ([`Convolver::convolve_ringed`]'s layout), so the outermost ring's difference reads free space's φ past the box.
+pub fn acceleration(phi_ringed: &[f64], w: usize, h: usize) -> Result<(Vec<f64>, Vec<f64>), FftError> {
+    let rw = w + 2 * RING;
+    if phi_ringed.len() != rw * (h + 2 * RING) {
+        return Err(FftError::LengthMismatch { expected: rw * (h + 2 * RING), found: phi_ringed.len() });
     }
     let mut gx = vec![0.0; w * h];
     let mut gy = vec![0.0; w * h];
+    let at = |x: usize, y: usize| phi_ringed[y * rw + x];
     for y in 0..h {
         for x in 0..w {
-            let at = |x: usize, y: usize| phi[y * w + x];
-            if w > 1 {
-                let (lo, hi) = (x.saturating_sub(1), (x + 1).min(w - 1));
-                gx[y * w + x] = -(at(hi, y) - at(lo, y)) / (hi - lo) as f64;
-            }
-            if h > 1 {
-                let (lo, hi) = (y.saturating_sub(1), (y + 1).min(h - 1));
-                gy[y * w + x] = -(at(x, hi) - at(x, lo)) / (hi - lo) as f64;
-            }
+            // the box's (x, y) sits at (x + 1, y + 1) of the ringed field
+            gx[y * w + x] = -(at(x + 2, y + 1) - at(x, y + 1)) / 2.0;
+            gy[y * w + x] = -(at(x + 1, y + 2) - at(x + 1, y)) / 2.0;
         }
     }
     Ok((gx, gy))
@@ -109,8 +110,10 @@ impl Gravity {
 
     /// φ and g = −∇φ from Σ over the `w` × `h` box, vacuum (Σ < `sigma_vac`) not a source.
     pub fn field(&mut self, sigma: &[f64], sigma_vac: f64, w: usize, h: usize) -> Result<Field, FftError> {
-        let phi = self.potential(&source(sigma, sigma_vac), w, h)?;
-        let (gx, gy) = acceleration(&phi, w, h)?;
+        let ringed = self.conv.convolve_ringed(&source(sigma, sigma_vac), w, h, RING)?;
+        let (gx, gy) = acceleration(&ringed, w, h)?;
+        let rw = w + 2 * RING;
+        let phi = (0..h).flat_map(|y| ringed[(y + RING) * rw + RING..][..w].to_vec()).collect();
         Ok(Field { phi, gx, gy })
     }
 

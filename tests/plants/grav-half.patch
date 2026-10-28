@@ -1,22 +1,22 @@
 --- a/crates/sr-physics/src/reference/hydro.rs
 +++ b/crates/sr-physics/src/reference/hydro.rs
-@@ -540,7 +540,7 @@
-             gravity.map(|(gx, gy)| {
+@@ -616,7 +616,7 @@
+             gravity.map(|f| {
                  let x = (gi % pw).clamp(GHOSTS, GHOSTS + w - 1) - GHOSTS;
                  let y = (gi / pw).clamp(GHOSTS, GHOSTS + h - 1) - GHOSTS;
--                [gx[y * w + x], gy[y * w + x]]
-+                [0.5 * gx[y * w + x], 0.5 * gy[y * w + x]]
+-                [f.gx[y * w + x], f.gy[y * w + x]]
++                [0.5 * f.gx[y * w + x], 0.5 * f.gy[y * w + x]]
              })
          };
- 
+
 --- a/crates/sr-engine/shaders/hydro.wgsl
 +++ b/crates/sr-engine/shaders/hydro.wgsl
-@@ -193,7 +193,7 @@
+@@ -267,7 +267,7 @@
          return vec2<f32>(0.0, 0.0);
      }
      let cell = u32(clamp(y, 0, i32(dims.height) - 1)) * dims.width + u32(clamp(x, 0, i32(dims.width) - 1));
 -    return vec2<f32>(grav[cell], grav[dims.cells + cell]);
 +    return 0.5 * vec2<f32>(grav[cell], grav[dims.cells + cell]);
  }
- 
- // The monotonised-central slope: ½(r − l) limited to twice either one-sided difference, 0 at an extremum.
+
+ // φ at (x, y), a ghost's its edge cell's (so no work is done across the world's edge); read only when the step runs P2.

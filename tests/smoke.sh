@@ -6,8 +6,9 @@
 # checked, verbatim, into its own output (the folder goes at exit, launch.py removes its own --out), so the scope's log
 # keeps the text a V reads. `window` is the desktop scope's case (G-DESK, M0-T5): the box's route —
 # `game-xvfb` (the private Xvfb, lavapipe) on linux-pc, `game-offscreen` on win-laptop (R15; contract §6.6) — whose
-# /status must read "ready". `race` is its third (M0-D51): the port lock's hand-over, raced on purpose. Ends in
-# `=== GO ===` or `=== NO-GO: <reason> ===`.
+# /status must read "ready". `race` is its third (M0-D51): the port lock's hand-over, raced on purpose. `port-taken` its fourth
+# (M0-D99): 47811 held, the game serves /status on the next free port and prints it. Ends in `=== GO ===` or
+# `=== NO-GO: <reason> ===`.
 source "$(dirname "${BASH_SOURCE[0]}")/cargo.sh"
 service="${1:-}"
 [ -n "$service" ] || { echo "=== NO-GO: usage: bash tests/smoke.sh <service> ==="; exit 1; }
@@ -18,6 +19,7 @@ esac
 [ "$service" = "window" ] && service="$window"
 launcher=0; [ "$service" = "launcher" ] && { launcher=1; service="$window"; }
 race=0; [ "$service" = "race" ] && { race=1; service="$window"; }
+taken=0; [ "$service" = "port-taken" ] && { taken=1; service="$window"; }
 cd "$_sr_root" || exit 1
 start=$SECONDS
 sr_build_app "$exe" || { echo "=== NO-GO: cargo build --release -p sr-app failed ==="; exit 1; }
@@ -99,6 +101,66 @@ PY
   exit 0
 fi
 
+if [ $taken -eq 1 ]; then
+  # `port-taken` (M0-D99, contract §0.5 [M0-D99]): a listener launch.py did not start holds 47811 throughout, under the lock;
+  # the game, started straight (launch.py refuses a held port before the game runs), must print `SR-STATUS-PORT <n>`, n in
+  # 47812–47830, and reach "ready" there within 90 s. The box's window route by hand: a private Xvfb and lavapipe as
+  # game-xvfb on linux-pc (Wayland's variables dropped, so no window reaches the lead's desktop, R4), off-screen on win-laptop.
+  up="build/.sr-taken-$$.up" log="build/.sr-taken-$$.out"; rm -f "$up" "$log"
+  $PY -I - "$up" 8>&- <<'PY' &
+import os, socket, sys, time
+s = socket.socket()
+if os.name != "nt":
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # as the game binds; a listener still refuses it the port
+s.bind(("127.0.0.1", 47811)); s.listen()
+open(sys.argv[1], "w").close()
+time.sleep(300)
+PY
+  holder=$!
+  while [ ! -e "$up" ] && kill -0 $holder 2>/dev/null; do sleep 0.1; done
+  [ -e "$up" ] || { echo "=== NO-GO: the listener on 47811 never came up (the port taken?) ==="; exit 1; }
+  rm -f "$up"
+  case "$(uname -s)" in
+    MINGW* | MSYS* | CYGWIN*)
+      build/target/release/sandbox-reactions.exe --status-port 47811 --offscreen-window >"$log" 2>&1 8>&- &
+      game=$!; _sr_game_down() { kill $game 2>/dev/null; wait $game 2>/dev/null; } ;;
+    *)
+      env -u WAYLAND_DISPLAY -u WAYLAND_SOCKET -u XDG_SESSION_TYPE setsid xvfb-run -a -s "-screen 0 1280x1024x24" \
+        build/target/release/sandbox-reactions --status-port 47811 --adapter llvmpipe >"$log" 2>&1 8>&- &
+      game=$!; _sr_game_down() { kill -TERM -- -$game 2>/dev/null; wait $game 2>/dev/null; } ;;
+  esac
+  trap '_sr_game_down; kill $holder 2>/dev/null; rm -f "$log"; _sr_release' EXIT
+  port="$($PY -I - "$log" 2>&1 <<'PY'
+import json, re, sys, time, urllib.request
+end, port, last = time.monotonic() + 90, None, ""
+while time.monotonic() < end:
+    out = open(sys.argv[1], encoding="utf-8", errors="replace").read()
+    if "SR-ERROR" in out or "panicked at" in out:
+        sys.exit(f"the game failed: {out.strip().splitlines()[-1]}")
+    m = re.search(r"^SR-STATUS-PORT (\d+)\s*$", out, re.M)
+    port = port or (m and int(m.group(1)))
+    if port:
+        try:
+            last = json.load(urllib.request.urlopen(f"http://127.0.0.1:{port}/status", timeout=2)).get("status", "")
+            if last == "ready":
+                print(port)
+                sys.exit(0)
+        except OSError:
+            pass
+    time.sleep(0.25)
+sys.exit(f"no ready within 90 s (SR-STATUS-PORT {port or 'never printed'}, last status {last or 'none'})")
+PY
+)"; rc=$?
+  _sr_game_down; kill $holder 2>/dev/null; wait $holder 2>/dev/null
+  grep -v '^=== ' "$log"
+  [ $rc -eq 0 ] || { echo "=== NO-GO: port-taken: $port ==="; exit 1; }
+  [ "$port" -ge 47812 ] && [ "$port" -le 47830 ] || { echo "=== NO-GO: the game served on $port, outside 47812–47830 ==="; exit 1; }
+  _sr_port_closed "$port" || { echo "=== NO-GO: port $port still bound 30 s after the game stopped ==="; exit 1; }
+  echo "port-taken $service: built in $built s, 47811 held, ready on $port as printed, stopped"
+  echo "=== GO ==="
+  exit 0
+fi
+
 if [ $launcher -eq 1 ]; then
   # `launcher` is the desktop scope's second case (G-DESK, M0-T6): the double-click launcher, fed its Enter, on the box's
   # window route — starts, reaches ready, stops, and leaves nothing running (R15: start.bat on win-laptop).
@@ -172,6 +234,34 @@ if s["steps"] != 200:
     sys.exit(f"summary.json steps = {s['steps']}, expected 200")
 print(f"summary.json: {len(need)} keys of §2.12.2, steps = {s['steps']}")
 PY
+  # The revision a run records marks uncommitted sources (M0-D63): in a throwaway repository, summary.json's `git` is the
+  # bare sha when clean — a rewritten assets/calibration.json and a log beside the sources not counted — and `<sha>-dirty`
+  # once a source changed or a new one appeared, and `unknown` outside any repository. The binary embeds its assets, so
+  # it runs from the repository's own folder.
+  exe_abs="$PWD/build/target/release/sandbox-reactions$exe"
+  repo="$dir/repo"; mkdir -p "$repo/crates/x" "$repo/assets"
+  echo "fn a() {}" > "$repo/crates/x/lib.rs"; echo '{}' > "$repo/assets/calibration.json"
+  g() { git -C "$repo" -c user.name=t -c user.email=t@t "$@" >/dev/null; }
+  g init -q; g add -A; g commit -q -m base
+  sha="$(git -C "$repo" rev-parse --short HEAD)"
+  run_git() {
+    (cd "$repo" && "$exe_abs" headless --scene preset:sun --steps 1 --out "$dir/g" >/dev/null 2>&1) || return 1
+    $PY -I -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["git"])' "$dir/g/summary.json"
+  }
+  expect_git() {
+    got="$(run_git)"
+    [ "$got" = "$2" ] || { echo "=== NO-GO: summary.json git is \"$got\" with $1, expected \"$2\" ==="; exit 1; }
+    echo "git revision: $1 -> $got"
+  }
+  expect_git "a clean tree" "$sha"
+  echo '{"measured": 1}' > "$repo/assets/calibration.json"; echo log > "$repo/run.log"
+  expect_git "only assets/calibration.json rewritten and a log written" "$sha"
+  echo "fn b() {}" > "$repo/crates/x/lib.rs"
+  expect_git "a source changed" "$sha-dirty"
+  g checkout -q -- crates/x/lib.rs; echo "fn c() {}" > "$repo/crates/x/new.rs"
+  expect_git "a new source untracked" "$sha-dirty"
+  rm -rf "$repo/.git"
+  expect_git "no repository" "unknown"
   echo "--- summary.json (verbatim, as checked) ---"
   cat "$dir/summary.json"; echo
   echo "--- end summary.json ---"

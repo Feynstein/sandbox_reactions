@@ -1,0 +1,689 @@
+# M0-R11 scratch — the candidates N, D, H on the CPU twin and the two drivers; never in the tree. H's final form: SR_R11=H (reflecting held walls, no work across them; SR_R11_WALL=p and SR_R11_WALLW=own and SR_R11_MIRROR=1 are the rejected forms). Diff against the tree of 2026-10-28 (HEAD c6c8b4b + working tree).
+--- a/crates/sr-physics/src/reference/mod.rs
++++ b/crates/sr-physics/src/reference/mod.rs
+@@ -18,6 +18,7 @@
+ pub mod hydro;
+ pub mod nuheat;
+ pub mod react;
++pub mod r11;
+ pub mod riemann;
+ pub mod sheet;
+ pub mod sinks;
+@@ -102,13 +103,22 @@
+     flux: Option<(Vec<f64>, Vec<f64>)>,
+     sigma_vac: f64,
+     /// P2's g for the state the last step started from (the initial state's before step 0).
+-    g: Option<Field>,
++    pub g: Option<Field>,
+     step: u64,
+     sim_time: f64,
+     dt: f64,
+     dt_next: f64,
+     /// The passes the last step ran, by the GPU's labels (`Pass::label`).
+     ran: Vec<&'static str>,
++    /// R11 scratch.
++    pub radiated: f64,
++    pub nuclear: f64,
++    pub unconverged: u64,
++    pub floor_cells: Vec<f64>,
++    pub cand: r11::Cand,
++    /// R11 diagnosis: thermal deficit below the floor after P4, P5, P6 — [held, free] each.
++    pub deficit: [[f64; 2]; 3],
++    last_deficit: [f64; 2],
+ }
+ 
+ impl Twin {
+@@ -155,7 +165,18 @@
+             dt: 0.0,
+             dt_next: 0.0,
+             ran: Vec::new(),
++            radiated: 0.0,
++            nuclear: 0.0,
++            unconverged: 0,
++            floor_cells: vec![0.0; width * height],
++            deficit: [[0.0; 2]; 3],
++            last_deficit: [0.0; 2],
++            cand: r11::Cand::new(crate::eos::Eos::from_physics(physics)?, elements.clone(), physics.get("sigma_vac").expect("sigma_vac"), &State::new(width, height, vec![0.0; COMPONENTS * width * height])),
+         };
++        twin.cand = r11::Cand::new(crate::eos::Eos::from_physics(physics)?, elements.clone(), twin.sigma_vac, &twin.state);
++        if twin.cand.variant == 'H' {
++            twin.cand.update_held(&mut twin.state);
++        }
+         twin.solve_gravity();
+         twin.dt_next = twin.reduce_dt();
+         Ok(twin)
+@@ -235,24 +256,85 @@
+         if self.switches.hydro {
+             self.ran.push("P4 hydro");
+             let radiation = self.flux.as_ref().map(|(x, y)| (&x[..], &y[..]));
++            if self.cand.variant == 'H' {
++                *self.hydro.held.borrow_mut() = self.cand.held.clone();
++            }
++            let before = (self.cand.variant == 'D').then(|| self.state.clone());
+             self.hydro.step_forced(&mut self.state, dt, self.g.as_ref(), radiation);
++            if let Some(before) = before {
++                let (fx, fy) = self.hydro.mass_flux.borrow().clone();
++                self.cand.advect(&before, &self.state, &fx, &fy, dt);
++            }
++            if self.cand.variant == 'H' {
++                let f = *self.hydro.held_force.borrow();
++                self.cand.held_mom[0] += f[0];
++                self.cand.held_mom[1] += f[1];
++            }
+         }
++        let n = self.state.cells();
++        self.tally(0);
+         if let Some(heat) = &self.heat {
+             self.ran.push("P5 heat");
++            let e0: Vec<f64> = self.state.planes[3 * n..4 * n].to_vec();
+             let pass = heat.step(&mut self.state, dt);
++            self.radiated += pass.radiated;
++            self.unconverged += u64::from(!pass.converged);
++            for i in 0..n {
++                self.cand.aux[i] += self.state.planes[3 * n + i] - e0[i];
++            }
+             self.flux = Some(pass.flux.cells());
++            self.tally(1);
+         }
+         if let Some(react) = &self.react {
+             self.ran.push("P6 reactions");
+-            react.step(&mut self.state, dt);
++            let e0: Vec<f64> = self.state.planes[3 * n..4 * n].to_vec();
++            let pass = react.step(&mut self.state, dt);
++            self.nuclear += pass.nuclear.iter().sum::<f64>();
++            for i in 0..n {
++                self.cand.aux[i] += self.state.planes[3 * n + i] - e0[i];
++            }
++            self.tally(2);
+         }
+         self.ran.push("P8 floors");
++        match self.cand.variant {
++            'D' => self.cand.resync(&mut self.state),
++            'N' => self.cand.borrow(&mut self.state),
++            _ => {}
++        }
++        let before: Vec<f64> = self.state.planes[3 * n..4 * n].to_vec();
+         self.booked += self.floors.apply(&mut self.state);
++        for i in 0..n {
++            self.floor_cells[i] += self.state.planes[3 * n + i] - before[i];
++        }
++        if self.cand.variant == 'H' {
++            self.cand.update_held(&mut self.state);
++        }
+         self.ran.push("P9 reductions");
+         self.dt_next = self.reduce_dt();
+         self.step += 1;
+     }
+ 
++    /// R11: the deficit below the floor now, minus what was already counted at the earlier stage (new deficit only).
++    fn tally(&mut self, stage: usize) {
++        let n = self.state.cells();
++        let mut d = [0.0f64; 2];
++        for i in 0..n {
++            let (s, eth, _, floor, _) = self.cand.th(&self.state, i);
++            if s < self.sigma_vac || !eth.is_finite() {
++                continue;
++            }
++            let k = usize::from(!self.cand.held.get(i).copied().unwrap_or(false));
++            d[k] += (floor - eth).max(0.0);
++        }
++        if stage == 0 {
++            self.last_deficit = d;
++        }
++        for k in 0..2 {
++            self.deficit[stage][k] += if stage == 0 { d[k] } else { (d[k] - self.last_deficit[k]).max(0.0) };
++        }
++        self.last_deficit = d;
++    }
++
+     /// The first non-finite value in the state, by cell and then channel as P9's guard finds it: (cell, channel).
+     pub fn first_non_finite(&self) -> Option<(usize, usize)> {
+         let n = self.state.cells();
+--- a/crates/sr-physics/src/reference/hydro.rs
++++ b/crates/sr-physics/src/reference/hydro.rs
+@@ -284,6 +284,10 @@
+     c_sb: f64,
+     kappa_dust: f64,
+     t_dust: f64,
++    /// R11 scratch: H's held mask (empty: none), the step's mass fluxes (x faces, y faces), the force on held cells.
++    pub held: std::cell::RefCell<Vec<bool>>,
++    pub mass_flux: std::cell::RefCell<(Vec<f64>, Vec<f64>)>,
++    pub held_force: std::cell::RefCell<[f64; 2]>,
+ }
+ 
+ impl Hydro {
+@@ -302,6 +306,9 @@
+             c_sb: get("c_sb"),
+             kappa_dust: get("kappa_dust"),
+             t_dust: get("t_dust"),
++            held: Default::default(),
++            mass_flux: Default::default(),
++            held_force: Default::default(),
+         })
+     }
+ 
+@@ -480,6 +487,24 @@
+ 
+     /// The flux through a wall (§2.8, bounce): mass, energy and species exactly 0, the normal momentum the pressure
+     /// alone.
++    /// R11 H: a held neighbour as a reflecting wall — HLL between the free face and its mirror (mass and energy 0 by
++    /// symmetry, momentum Π + Σu² + SΣu); `low` when the free cell is on the face's low side. SR_R11_WALL=p: Π alone.
++    fn held_wall(face: &Face, dir: usize, low: bool) -> [f64; COMPONENTS] {
++        if std::env::var("SR_R11_WALL").is_ok_and(|v| v == "p") {
++            return Self::wall(face, dir);
++        }
++        let mut g = *face;
++        g.p = g.p.mirrored(dir);
++        g.u[1 + dir] = -g.u[1 + dir];
++        let mut f = if low { Self::hll(face, &g, dir) } else { Self::hll(&g, face, dir) };
++        f[0] = 0.0;
++        f[3] = 0.0;
++        for k in 4..COMPONENTS {
++            f[k] = 0.0;
++        }
++        f
++    }
++
+     fn wall(face: &Face, dir: usize) -> [f64; COMPONENTS] {
+         let mut f = [0.0; COMPONENTS];
+         f[1 + dir] = face.p.pi;
+@@ -629,8 +654,26 @@
+         let half = 0.5 * dt;
+         let mut faces: Vec<[Face; 4]> = Vec::with_capacity(n);
+         let mut mids: Vec<[f64; 3]> = Vec::with_capacity(n);
++        let held0 = self.held.borrow().clone();
++        let mirror = std::env::var("SR_R11_MIRROR").is_ok_and(|v| v == "1");
++        let own_wall_work = std::env::var("SR_R11_WALLW").is_ok_and(|v| v == "own");
++        let hd = |x: usize, y: usize| !held0.is_empty() && held0[y * w + x];
+         for y in 0..h {
+             for x in 0..w {
++                let nb = [x > 0 && hd(x - 1, y), x + 1 < w && hd(x + 1, y), y > 0 && hd(x, y - 1), y + 1 < h && hd(x, y + 1)];
++                if mirror && !hd(x, y) && nb.iter().any(|&b| b) {
++                    // R11 H: a free cell beside a held one reads its own mirror there, as at a bounce wall.
++                    let c = grid[at(x, y)];
++                    let mut patch = [c; 9];
++                    patch[3] = if nb[0] { c.mirrored(0) } else { grid[at(x, y) - 1] };
++                    patch[5] = if nb[1] { c.mirrored(0) } else { grid[at(x, y) + 1] };
++                    patch[1] = if nb[2] { c.mirrored(1) } else { grid[at(x, y) - pw] };
++                    patch[7] = if nb[3] { c.mirrored(1) } else { grid[at(x, y) + pw] };
++                    let (f, mid) = self.predicted(&patch, 3, 4, half, accel(at(x, y)));
++                    faces.push(f);
++                    mids.push(mid);
++                    continue;
++                }
+                 let (f, mid) = self.predicted(&grid, pw, at(x, y), half, accel(at(x, y)));
+                 faces.push(f);
+                 mids.push(mid);
+@@ -673,6 +716,48 @@
+             }
+         }
+ 
++        // R11 H: a face with a held side is a wall (the free side's pressure), between two held cells nothing.
++        let held = self.held.borrow().clone();
++        let is_held = |i: usize| !held.is_empty() && held[i];
++        if !held.is_empty() {
++            for y in 0..h {
++                for i in 0..=w {
++                    let a = (i > 0).then(|| y * w + i - 1);
++                    let b = (i < w).then(|| y * w + i);
++                    let (ha, hb) = (a.is_some_and(is_held), b.is_some_and(is_held));
++                    let f = &mut fx[y * (w + 1) + i];
++                    if (ha || a.is_none()) && (hb || b.is_none()) {
++                        if ha || hb {
++                            *f = [0.0; COMPONENTS];
++                        }
++                    } else if ha {
++                        *f = Self::held_wall(&faces[b.unwrap()][0], 0, false);
++                    } else if hb {
++                        *f = Self::held_wall(&faces[a.unwrap()][1], 0, true);
++                    }
++                }
++            }
++            for j in 0..=h {
++                for x in 0..w {
++                    let a = (j > 0).then(|| (j - 1) * w + x);
++                    let b = (j < h).then(|| j * w + x);
++                    let (ha, hb) = (a.is_some_and(is_held), b.is_some_and(is_held));
++                    let f = &mut fy[j * w + x];
++                    if (ha || a.is_none()) && (hb || b.is_none()) {
++                        if ha || hb {
++                            *f = [0.0; COMPONENTS];
++                        }
++                    } else if ha {
++                        *f = Self::held_wall(&faces[b.unwrap()][2], 1, false);
++                    } else if hb {
++                        *f = Self::held_wall(&faces[a.unwrap()][3], 1, true);
++                    }
++                }
++            }
++        }
++        *self.mass_flux.borrow_mut() = (fx.iter().map(|f| f[0]).collect(), fy.iter().map(|f| f[0]).collect());
++        let mut held_force = [0.0f64; 2];
++
+         // The update, in place; a cell with no gas around it stays empty.
+         let vacuum = |x: usize, y: usize| st.get(0, y * w + x) < self.sigma_vac;
+         let mut next = st.clone();
+@@ -687,6 +772,16 @@
+                     continue;
+                 }
+                 let i = y * w + x;
++                if is_held(i) {
++                    let dp = |k: usize| -dt * ((fx[y * (w + 1) + x + 1][k] - fx[y * (w + 1) + x][k]) + (fy[(y + 1) * w + x][k] - fy[y * w + x][k]));
++                    held_force[0] += dp(1);
++                    held_force[1] += dp(2);
++                    if let Some([gx, gy]) = accel(at(x, y)) {
++                        held_force[0] += dt * st.get(0, i) * gx;
++                        held_force[1] += dt * st.get(0, i) * gy;
++                    }
++                    continue;
++                }
+                 // The stored vector where there is gas (bit for bit what the planes hold), the floor state's below Σ_vac.
+                 let mut u = if vacuum(x, y) {
+                     self.cons(&grid[at(x, y)])
+@@ -715,10 +810,20 @@
+                     let (pl, ml) = if x > 0 { next(x - 1, y) } else { (p, m) };
+                     let (pd, md) = if y + 1 < h { next(x, y + 1) } else { (p, m) };
+                     let (pu, mu) = if y > 0 { next(x, y - 1) } else { (p, m) };
+-                    let r = face_work(fx[y * (w + 1) + x + 1][0], m[0], mr[0], m[1], mr[1], p - pr, dt);
+-                    let l = face_work(fx[y * (w + 1) + x][0], ml[0], m[0], ml[1], m[1], pl - p, dt);
+-                    let dn = face_work(fy[(y + 1) * w + x][0], m[0], md[0], m[2], md[2], p - pd, dt);
+-                    let up = face_work(fy[y * w + x][0], mu[0], m[0], mu[2], m[2], pu - p, dt);
++                    let fw = |wall: bool, q: f64, sl: f64, sh: f64, ql: f64, qh: f64, d: f64| {
++                        if wall && own_wall_work {
++                            [0.0, 0.5 * dt * ql * d, 0.5 * dt * qh * d]
++                        } else if wall {
++                            // R11 H: no mass crosses a wall, so no work is done across it.
++                            [0.0, 0.0, 0.0]
++                        } else {
++                            face_work(q, sl, sh, ql, qh, d, dt)
++                        }
++                    };
++                    let r = fw(x + 1 < w && is_held(i + 1), fx[y * (w + 1) + x + 1][0], m[0], mr[0], m[1], mr[1], p - pr);
++                    let l = fw(x > 0 && is_held(i - 1), fx[y * (w + 1) + x][0], ml[0], m[0], ml[1], m[1], pl - p);
++                    let dn = fw(y + 1 < h && is_held(i + w), fy[(y + 1) * w + x][0], m[0], md[0], m[2], md[2], p - pd);
++                    let up = fw(y > 0 && is_held(i - w), fy[y * w + x][0], mu[0], m[0], mu[2], m[2], pu - p);
+                     u[1] += r[0] - l[0];
+                     u[2] += dn[0] - up[0];
+                     u[3] += r[1] + l[2] + dn[1] + up[2];
+@@ -759,6 +864,7 @@
+             }
+         }
+         *st = next;
++        *self.held_force.borrow_mut() = held_force;
+     }
+ 
+     /// Steps `st` to sim time `t_end` from `t`, each Δt per §2.3.5 and the last cut to land on `t_end`; returns the
+--- /dev/null
++++ b/crates/sr-physics/src/reference/r11.rs
+@@ -0,0 +1,191 @@
++//! M0-R11 scratch: the unresolved-remnant candidates on the twin, picked by `SR_R11` (0 | N | D | H), never in the tree.
++//! N — P8 borrows a cell's thermal deficit from its four neighbours' heat above their floor (each gives ≤ ¼ of it) before
++//!     the floor refills the rest.
++//! D — dual energy (Bryan et al. 1995): Σε_th carried beside E, advected upwind with the mass flux plus −Π_th ∇·u, P5's
++//!     and P6's changes added; where the conservative ε_th < η ε_cold, E is re-synced to it, the change booked `sync`.
++//! H — held core: a cell with Σ ≥ Σ_hold and ε_th ≤ η ε_cold is held — P4 leaves it as it is, its faces to free cells
++//!     are walls (the free side's pressure), no work across them; P5, P6, P8 run on it; released past 2η or ½Σ_hold.
++
++use super::hydro::State;
++use crate::eos::Eos;
++use crate::registry::{Elements, N_SPECIES};
++
++pub struct Cand {
++    pub variant: char,
++    pub eta: f64,
++    pub sigma_hold: f64,
++    eos: Eos,
++    elements: Elements,
++    sigma_vac: f64,
++    /// D: Σε_th per cell.
++    pub aux: Vec<f64>,
++    /// H: the held mask.
++    pub held: Vec<bool>,
++    pub sync: f64,
++    pub borrowed: f64,
++    pub held_mom: [f64; 2],
++}
++
++/// (Σ, raw Σε_th, Σε_cold, Σε_floor, |p|²/2Σ) of cell i.
++pub fn thermo(eos: &Eos, el: &Elements, st: &State, i: usize) -> (f64, f64, f64, f64, f64) {
++    let s = st.get(0, i);
++    let x: [f64; N_SPECIES] = std::array::from_fn(|k| st.get(4 + k, i));
++    let comp = el.composition(&x);
++    let ke = 0.5 * (st.get(1, i).powi(2) + st.get(2, i).powi(2)) / s;
++    let cold = s * eos.eps_cold(s, comp.y_e, x[N_SPECIES - 1]);
++    let floor = s * eos.t_floor() * comp.inv_mu;
++    (s, st.get(3, i) - ke - cold, cold, floor, ke)
++}
++
++impl Cand {
++    pub fn new(eos: Eos, elements: Elements, sigma_vac: f64, st: &State) -> Cand {
++        let variant = std::env::var("SR_R11").ok().and_then(|v| v.chars().next()).unwrap_or('0');
++        let eta = std::env::var("SR_R11_ETA").ok().map_or(0.1, |v| v.parse().unwrap());
++        let sigma_hold = std::env::var("SR_R11_SHOLD").ok().map_or(10.0, |v| v.parse().unwrap());
++        let n = st.cells();
++        let mut c = Cand {
++            variant,
++            eta,
++            sigma_hold,
++            eos,
++            elements,
++            sigma_vac,
++            aux: vec![0.0; n],
++            held: vec![false; n],
++            sync: 0.0,
++            borrowed: 0.0,
++            held_mom: [0.0; 2],
++        };
++        for i in 0..n {
++            let (_, eth, _, floor, _) = c.th(st, i);
++            c.aux[i] = eth.max(floor);
++        }
++        c
++    }
++
++    pub fn th(&self, st: &State, i: usize) -> (f64, f64, f64, f64, f64) {
++        thermo(&self.eos, &self.elements, st, i)
++    }
++
++    /// D after P4: Σε_th advected with the step's mass fluxes (upwind specific ε_th) and −Π_th ∇·u (γ = 2: Π_th = Σε_th),
++    /// ∇·u by central differences of the velocities the step started from. `before` is the state P4 started from.
++    pub fn advect(&mut self, before: &State, after: &State, fx: &[f64], fy: &[f64], dt: f64) {
++        let (w, h) = (before.width, before.height);
++        let spec = |i: usize| {
++            let s = before.get(0, i);
++            if s < self.sigma_vac {
++                self.eos.t_floor() * 0.6
++            } else {
++                self.aux[i] / s
++            }
++        };
++        let vel = |i: usize, c: usize| {
++            let s = before.get(0, i);
++            if s < self.sigma_vac {
++                0.0
++            } else {
++                before.get(c, i) / s
++            }
++        };
++        let mut next = self.aux.clone();
++        for y in 0..h {
++            for x in 0..w {
++                let i = y * w + x;
++                if after.get(0, i) < self.sigma_vac {
++                    continue;
++                }
++                let up = |q: f64, lo: usize, hi: usize| q * if q > 0.0 { spec(lo) } else { spec(hi) };
++                let fl = if x > 0 { up(fx[y * (w + 1) + x], i - 1, i) } else { fx[y * (w + 1)] * spec(i) };
++                let fr = if x + 1 < w { up(fx[y * (w + 1) + x + 1], i, i + 1) } else { fx[y * (w + 1) + w] * spec(i) };
++                let fu = if y > 0 { up(fy[y * w + x], i - w, i) } else { fy[x] * spec(i) };
++                let fd = if y + 1 < h { up(fy[(y + 1) * w + x], i, i + w) } else { fy[h * w + x] * spec(i) };
++                let ux = if x > 0 && x + 1 < w { 0.5 * (vel(i + 1, 1) - vel(i - 1, 1)) } else { 0.0 };
++                let vy = if y > 0 && y + 1 < h { 0.5 * (vel(i + w, 2) - vel(i - w, 2)) } else { 0.0 };
++                next[i] = self.aux[i] - dt * (fr - fl + fd - fu) - dt * self.aux[i] * (ux + vy);
++            }
++        }
++        self.aux = next;
++    }
++
++    /// D in P8, before the floors: re-sync E where the gas is cold-dominated, else take the conservative value.
++    pub fn resync(&mut self, st: &mut State) {
++        let n = st.cells();
++        for i in 0..n {
++            let (s, eth, cold, floor, _) = self.th(st, i);
++            if s < self.sigma_vac {
++                self.aux[i] = floor;
++                continue;
++            }
++            if eth < self.eta * cold {
++                let a = self.aux[i].max(floor);
++                self.sync += a - eth;
++                st.planes[3 * n + i] += a - eth;
++                self.aux[i] = a;
++            } else {
++                self.aux[i] = eth.max(floor);
++            }
++        }
++    }
++
++    /// N in P8, before the floors: each short cell borrows from its four neighbours' heat above their floor, ≤ ¼ each.
++    pub fn borrow(&mut self, st: &mut State) {
++        let (w, h, n) = (st.width, st.height, st.cells());
++        let mut deficit = vec![0.0; n];
++        let mut heat = vec![0.0; n];
++        for i in 0..n {
++            let (s, eth, _, floor, _) = self.th(st, i);
++            if s < self.sigma_vac || !eth.is_finite() {
++                continue;
++            }
++            deficit[i] = (floor - eth).max(0.0);
++            heat[i] = (eth - floor).max(0.0);
++        }
++        let mut delta = vec![0.0; n];
++        for y in 0..h {
++            for x in 0..w {
++                let i = y * w + x;
++                if deficit[i] <= 0.0 {
++                    continue;
++                }
++                let nb: Vec<usize> = [(x > 0, i.wrapping_sub(1)), (x + 1 < w, i + 1), (y > 0, i.wrapping_sub(w)), (y + 1 < h, i + w)]
++                    .iter()
++                    .filter(|(ok, _)| *ok)
++                    .map(|&(_, j)| j)
++                    .collect();
++                let offer: f64 = nb.iter().map(|&j| 0.25 * heat[j]).sum();
++                if offer <= 0.0 {
++                    continue;
++                }
++                let take = deficit[i].min(offer);
++                delta[i] += take;
++                for &j in &nb {
++                    delta[j] -= take * 0.25 * heat[j] / offer;
++                }
++                self.borrowed += take;
++            }
++        }
++        for i in 0..n {
++            st.planes[3 * n + i] += delta[i];
++        }
++    }
++
++    /// H at the end of the step: the mask for the next; a newly held cell's momentum zeroed (its KE left in E as heat),
++    /// the momentum booked in `held_mom`.
++    pub fn update_held(&mut self, st: &mut State) {
++        let n = st.cells();
++        for i in 0..n {
++            let (s, eth, cold, _, _) = self.th(st, i);
++            if self.held[i] {
++                if eth > 2.0 * self.eta * cold || s < 0.5 * self.sigma_hold {
++                    self.held[i] = false;
++                }
++            } else if s >= self.sigma_hold && eth <= self.eta * cold {
++                self.held[i] = true;
++                self.held_mom[0] += st.planes[n + i];
++                self.held_mom[1] += st.planes[2 * n + i];
++                st.planes[n + i] = 0.0;
++                st.planes[2 * n + i] = 0.0;
++            }
++        }
++    }
++}
+--- /dev/null
++++ b/crates/sr-engine/examples/r11c.rs
+@@ -0,0 +1,118 @@
++//! R11 scratch: M0-D67's crop of a GPU dump (box [248,144,104,104] into 128 × 128, vacuum outside), all passes, the
++//! candidate by SR_R11. Args: <dump> <steps> [every].
++use sr_engine::dump::Dump;
++use sr_engine::scene::Scene;
++use sr_engine::state::WorldConfig;
++use sr_physics::reference::hydro::Edge;
++use sr_physics::reference::{heat, react, Burning, Switches, Twin};
++use sr_physics::registry::{Elements, Reactions};
++
++fn main() {
++    let args: Vec<String> = std::env::args().collect();
++    let dump = Dump::read(std::path::Path::new(&args[1])).unwrap();
++    let steps: u64 = args[2].parse().unwrap();
++    let every: u64 = args.get(3).map_or(500, |a| a.parse().unwrap());
++    let (w0, h0) = (dump.world.width as usize, dump.world.height as usize);
++    let scene = Scene::preset("sun", WorldConfig::new(w0 as u32, h0 as u32).unwrap()).unwrap();
++    let physics = scene.physics().unwrap();
++    let elements = Elements::shipped().unwrap();
++    let (bx, by, bw, bh, n, off) = (248usize, 144usize, 104usize, 104usize, 128usize, 12usize);
++    let ch = dump.planes.len() / (w0 * h0);
++    let mut p = vec![0.0f64; ch * n * n];
++    for c in 0..ch {
++        for y in 0..n {
++            for x in 0..n {
++                let (sx, sy) = (x as i64 - off as i64 + bx as i64, y as i64 - off as i64 + by as i64);
++                let inside = x >= off && x < off + bw && y >= off && y < off + bh;
++                let src = if inside { sy as usize * w0 + sx as usize } else { 0 };
++                p[c * n * n + y * n + x] = f64::from(dump.planes[c * w0 * h0 + src]);
++            }
++        }
++    }
++    let sw = Switches { gravity: true, hydro: true, heat: scene.switches.heat, reactions: scene.switches.reactions };
++    let records = Reactions::shipped(&elements, &physics).unwrap();
++    let burning = Burning { heat: heat::TestFlags::default(), react: react::TestFlags { pin_temperature: false }, reactions: &records, neutrinos: scene.switches.neutrinos };
++    let mut twin = Twin::new(&physics, &elements, Edge::Leave, sw, Some(burning), n, n, p).unwrap();
++    let c = &twin.cand;
++    println!("variant {} eta {} sigma_hold {} dump {} step {} switches {:?}", c.variant, c.eta, c.sigma_hold, args[1], dump.step, sw);
++    let probe = |t: &Twin| {
++        let st = &t.state;
++        let (mut ke, mut umax, mut smax, mut heat, mut held) = (0.0f64, 0.0f64, 0.0f64, 0.0f64, 0usize);
++        let mut imax = 0;
++        for i in 0..st.cells() {
++            let s = st.get(0, i);
++            let (px, py) = (st.get(1, i), st.get(2, i));
++            ke += 0.5 * (px * px + py * py) / s;
++            if s > 1.0 {
++                umax = umax.max((px * px + py * py).sqrt() / s);
++                let (_, eth, _, floor, _) = t.cand.th(st, i);
++                heat += (eth - floor).max(0.0);
++            }
++            if s > smax {
++                (smax, imax) = (s, i);
++            }
++            held += usize::from(t.cand.held.get(i).copied().unwrap_or(false));
++        }
++        let (_, eth, cold, _, _) = t.cand.th(st, imax);
++        let (mut eth_all, mut cold_all, mut wpot) = (0.0f64, 0.0f64, 0.0f64);
++        for i in 0..st.cells() {
++            let (s, e, c, _, _) = t.cand.th(st, i);
++            eth_all += e;
++            cold_all += c;
++            if let Some(g) = &t.g {
++                wpot += 0.5 * s * g.phi[i];
++            }
++        }
++        let esc = st.escaped_total()[3];
++        let mass: f64 = (0..st.cells()).map(|i| st.get(0, i)).sum::<f64>() + st.escaped_total()[0];
++        format!("ke {ke:.3e} umax(S>1) {umax:.3e} Smax {smax:.2} at ({},{}) eth/cold_c {:.2e} heat(S>1) {heat:.3e} held {held} | Eth {eth_all:.5e} Ecold {cold_all:.5e} W {wpot:.5e} esc {esc:.4e} mass {mass:.6e}", imax % st.width, imax / st.width, eth / cold)
++    };
++    println!("step +    0 {}", probe(&twin));
++    let rec = |t: &Twin| [t.booked.floor_added, t.cand.sync, t.cand.borrowed, t.radiated, t.nuclear];
++    let mut last = rec(&twin);
++    let mut marks = vec![(0u64, last)];
++    for k in 1..=steps {
++        twin.step();
++        if k % every == 0 || k == steps {
++            let r = rec(&twin);
++            println!(
++                "step +{k:>5} floor +{:.3e} sync {:+.3e} borrowed +{:.3e} radiated +{:.3e} nuclear +{:.3e} {} unconv {} t {:.2}",
++                r[0] - last[0], r[1] - last[1], r[2] - last[2], r[3] - last[3], r[4] - last[4], probe(&twin), twin.unconverged, twin.sim_time()
++            );
++            if std::env::var("R11_CELLS").is_ok() {
++                let st = &twin.state;
++                let imax = (0..st.cells()).max_by(|&a, &b| st.get(0, a).total_cmp(&st.get(0, b))).unwrap();
++                let mut idx: Vec<usize> = (0..st.cells()).collect();
++                idx.sort_by(|&a, &b| twin.floor_cells[b].abs().total_cmp(&twin.floor_cells[a].abs()));
++                for &i in idx.iter().take(4) {
++                    let (dx, dy) = ((i % st.width) as i64 - (imax % st.width) as i64, (i / st.width) as i64 - (imax / st.width) as i64);
++                    println!("        floor cell d=({dx},{dy}) +{:.3e} S {:.3e} u ({:.2e},{:.2e})", twin.floor_cells[i], st.get(0, i), st.get(1, i) / st.get(0, i), st.get(2, i) / st.get(0, i));
++                }
++                twin.floor_cells.iter_mut().for_each(|v| *v = 0.0);
++            }
++            let d = twin.deficit;
++            println!("      deficit new after P4 held {:.3e} free {:.3e} · P5 held {:.3e} free {:.3e} · P6 held {:.3e} free {:.3e}", d[0][0], d[0][1], d[1][0], d[1][1], d[2][0], d[2][1]);
++            twin.deficit = [[0.0; 2]; 3];
++            last = r;
++            marks.push((k, r));
++        }
++        if twin.first_non_finite().is_some() {
++            println!("NON-FINITE at step +{k}");
++            break;
++        }
++    }
++    let win = |a: u64, b: u64| {
++        let f = |k: u64| marks.iter().find(|m| m.0 == k).map(|m| m.1);
++        if let (Some(x), Some(y)) = (f(a), f(b)) {
++            let d: Vec<f64> = (0..5).map(|j| y[j] - x[j]).collect();
++            println!(
++                "RESULT {} window {a}-{b} floor {:.4e} sync {:+.4e} borrowed {:.4e} radiated {:.4e} nuclear {:.4e} floor/rad {:.3} (floor+sync)/rad {:.3}",
++                twin.cand.variant, d[0], d[1], d[2], d[3], d[4], d[0] / d[3], (d[0] + d[1]) / d[3]
++            );
++        }
++    };
++    win(0, 5000);
++    win(5000, 10000);
++    win(0, 10000);
++    println!("held_mom ({:.3e},{:.3e}) unconverged {}", twin.cand.held_mom[0], twin.cand.held_mom[1], twin.unconverged);
++}
+--- /dev/null
++++ b/crates/sr-engine/examples/r11d.rs
+@@ -0,0 +1,56 @@
++//! R11 scratch: calibrate's grid SCF cold C/O disk of `mass` (shipped K's, T_floor, 64 × 64, bounce), gravity and hydro
++//! only, the candidate by SR_R11. Args: <mass> <steps> [every].
++use sr_engine::calibrate::{cold_disk_scene, Matter};
++use sr_physics::reference::hydro::Edge;
++use sr_physics::reference::{Switches, Twin};
++use sr_physics::registry::{Elements, Physics};
++
++fn main() {
++    let args: Vec<String> = std::env::args().collect();
++    let mass: f64 = args[1].parse().unwrap();
++    let steps: u64 = args[2].parse().unwrap();
++    let every: u64 = args.get(3).map_or(100, |a| a.parse().unwrap());
++    let physics = Physics::shipped().unwrap();
++    let elements = Elements::shipped().unwrap();
++    let (scene, planes) = cold_disk_scene(mass, Matter::CarbonOxygen, &physics, &elements, &[]).unwrap().expect("a disk settles");
++    let (w, h) = (scene.world.width as usize, scene.world.height as usize);
++    let p: Vec<f64> = planes.iter().map(|&v| f64::from(v)).collect();
++    let sw = Switches { gravity: true, hydro: true, heat: false, reactions: false };
++    let mut twin = Twin::new(&physics, &elements, Edge::Bounce, sw, None, w, h, p).unwrap();
++    let probe = |t: &Twin| {
++        let st = &t.state;
++        let (mut ke, mut umax, mut smax, mut m, mut held, mut over10) = (0.0f64, 0.0f64, 0.0f64, 0.0f64, 0usize, 0usize);
++        for i in 0..st.cells() {
++            let s = st.get(0, i);
++            let (px, py) = (st.get(1, i), st.get(2, i));
++            if s > 0.0 {
++                ke += 0.5 * (px * px + py * py) / s;
++            }
++            if s > 1e-3 {
++                umax = umax.max((px * px + py * py).sqrt() / s);
++            }
++            smax = smax.max(s);
++            m += s;
++            held += usize::from(t.cand.held.get(i).copied().unwrap_or(false));
++            over10 += usize::from(s >= 10.0);
++        }
++        (ke, umax, smax, m, held, over10)
++    };
++    let (ke, umax, smax, m, held, over10) = probe(&twin);
++    println!("variant {} eta {} sigma_hold {} mass {mass} world {w}x{h} M {m:.3} Smax {smax:.3} ke {ke:.3e} umax {umax:.3e} held {held} cells>=10 {over10}", twin.cand.variant, twin.cand.eta, twin.cand.sigma_hold);
++    for k in 1..=steps {
++        twin.step();
++        if k % every == 0 || k == steps || k == 50 {
++            let (ke, umax, smax, _, held, over10) = probe(&twin);
++            println!(
++                "step {k:>6} t {:.2} floor {:.4e} sync {:+.4e} borrowed {:.3e} ke {ke:.3e} umax {umax:.3e} Smax {smax:.3} held {held} cells>=10 {over10}",
++                twin.sim_time(), twin.booked.floor_added, twin.cand.sync, twin.cand.borrowed
++            );
++        }
++        if twin.first_non_finite().is_some() {
++            println!("NON-FINITE at step {k}");
++            break;
++        }
++    }
++    println!("held_mom ({:.3e},{:.3e})", twin.cand.held_mom[0], twin.cand.held_mom[1]);
++}

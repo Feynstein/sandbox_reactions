@@ -1,0 +1,23 @@
+# M0-R11 log — opened 2026-10-28T12:28:36-04:00 on linux-pc (laserax-ai); CPU f64 twin only (no GPU run)
+## long runs launched 2026-10-28T12:32:48-04:00: crop s_450000 10,000 steps every 500 (R11_CELLS), disk M 1800 30,000 steps every 1000; variants 0 N D H (eta 0.1, sigma_hold 10); outputs /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/500019b7-ff89-4ff7-af9e-27460e4c5d5b/scratchpad/runs
+- the lead, 2026-10-28T12:39:38-04:00, on the four ~30 min crop runs over R2's 10-minute line: «Let them finish (Recommended)»
+## batch 2 2026-10-28T12:42:17-04:00: H with the mirrored stencil beside held cells (SR_R11_MIRROR default on); crop H eta 0.1 / 1e-3, baseline with W probe; disk H M 900 / 1800 / eta 1e-3. Batch 1 took 7 min wall (12:33-12:40), under the 10-minute line.
+- 12:53 stopped c_Hm (mirror, eta 0.1) at step ~3,000: past 10 min wall, KE 7.3e3 against unmirrored H's 236 — the mirrored stencil discarded
+## batch 3 2026-10-28T12:54:31-04:00: H with no work across a wall (the own share at a wall face created energy: c_Hm3 invariant +3.4e5 over 10k); disk M 900 / 1800 / 900 old own-share
+## batch 4 2026-10-28T12:57:52-04:00: H with reflecting held walls (HLL against the mirror, mass/energy 0) and no work across them; disk M900 KE 155 floor flat, M1800 held exact, Sigma_hold 50 KE 8e3; crop eta 0.1 / 1e-3
+- 2026-10-28T13:17:11-04:00 per-pass deficit diagnosis (c_*_diag, 1000-step tallies) stopped at ~step 3,000-4,000, past the 10-minute line: baseline's deficit all after P4 in free cells (4.28e4 per 1000 = its floor); H eta 0.1 and 1e-3 to step 3,000: all after P4 in free cells (1.7e2, 4.8e1); the held-cell residual at eta 1e-3 (from ~step 5,000) not reached — NOT MEASURED
+## Results (linux-pc, CPU f64 twin; runs in scratchpad/runs/, budget by scratchpad/budget.py)
+crop s_450000, 10,000 steps — floor (D: sync) / radiated, windows 0-5k · 5k-10k · 0-10k:
+  baseline (c_0, c_0w) 0.484 · 0.963 · 0.712; invariant -1.71427e5 -> -1.71476e5
+  N (c_N) 0.316 · 1.009 · 0.622 (borrowed 1.9e5, 8.1e5)
+  D eta 0.1 (c_D) 0.465 · 0.858 · 0.640 (floor ~0; sync replaces it)
+  H pressure-only wall + own-share wall work (c_H): floor 0 but leak (c_Hm3 invariant +3.4e5) — discarded
+  H reflecting wall, no wall work, eta 0.1 (c_Hr) 0.012 · 0.462 · 0.038; floor 5k-10k 3.56e3 (baseline 2.06e5); invariant -> -1.71495e5
+  H same, eta 1e-3 (c_Hr3) 0.021 · 1.012 · 0.109; floor 5k-10k 1.57e4; invariant -> -1.71533e5
+disk SCF C/O M 1800 (64^2 bounce, gravity+hydro): baseline floor 2k->10k +2.9e3, KE 1.2e3; N unstable (KE 8.2e4); D sync +2.2e3, KE 8e2;
+  H (Sigma_hold 10) held 12 from step 0, KE 0, floor 0 over 30k; H Sigma_hold 50 KE 8e3. M 900: baseline floor +7.2e4 (2k->10k), disperses;
+  H reflecting: KE 155 steady, floor +2.1 (1k->10k); H pressure-only wall: KE 5e6 runaway
+report: milestones/m0/reports/unresolved_remnant.md
+- the lead, 2026-10-28T13:20:55-04:00, at M0-R11: «H, held core (Recommended)», «η 0.1 (Recommended)», «Measured bounds (Recommended)»
+- the lead, 2026-10-28T13:23:37-04:00, on the run order after M0-R11 (asked after the lead's question «how far from a running game in the browser … are we turning round and round?»): «Game first (Recommended)» — M0-D71 and M0-D91 deferred until Phase 15's window lot, Phases 12-15 next
+- the lead, 2026-10-28T13:24:22-04:00: «move the deffered tasks where they will run instead of closing them deferred» — M0-D71, M0-D91 moved after M0-V13, TODO

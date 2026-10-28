@@ -228,6 +228,14 @@ impl Convolver {
 
     /// The convolution of the `w` × `h` row-major `field` with the kernel, on the same box.
     pub fn convolve(&mut self, field: &[f64], w: usize, h: usize) -> Result<Vec<f64>, FftError> {
+        self.convolve_ringed(field, w, h, 0)
+    }
+
+    /// The convolution on the box grown by `ring` cells per side, (w + 2·ring) × (h + 2·ring) row-major, the box's cell
+    /// (x, y) at (y + ring) · (w + 2·ring) + x + ring. Exact for ring ≤ 1: the padded size is ≥ 2w, so a target one cell
+    /// past the box sees every source at an offset |d| ≤ w ≤ n/2, and K is even, so the offset n/2 aliasing −n/2 is K's
+    /// own value (M0-D69: the free-space φ one cell past the world, which the box's outer ring differences against).
+    pub fn convolve_ringed(&mut self, field: &[f64], w: usize, h: usize, ring: usize) -> Result<Vec<f64>, FftError> {
         if field.len() != w * h {
             return Err(FftError::LengthMismatch { expected: w * h, found: field.len() });
         }
@@ -262,10 +270,12 @@ impl Convolver {
         }
         fft2(&mut padded, plan_x, plan_y, true)?;
 
-        let mut out = vec![0.0; w * h];
-        for y in 0..h {
-            for x in 0..w {
-                out[y * w + x] = padded[y * px + x].re;
+        let (rw, rh) = (w + 2 * ring, h + 2 * ring);
+        let mut out = vec![0.0; rw * rh];
+        for y in 0..rh {
+            for x in 0..rw {
+                let (sx, sy) = ((x + px - ring) % px, (y + py - ring) % py);
+                out[y * rw + x] = padded[sy * px + sx].re;
             }
         }
         Ok(out)

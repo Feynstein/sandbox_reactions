@@ -1,0 +1,13 @@
+adapter    GO (already GO on this tree at 2026-10-28T07:47:39-04:00 — not re-run)
+desktop    2/1/0       85.90 s  NO-GO · step 1/2, 1 left
+web        1/2/0       82.77 s  NO-GO · step 2/2, 0 left
+capture    GO (already GO on this tree at 2026-10-28T07:47:39-04:00 — not re-run)
+toolchain  GO (already GO on this tree at 2026-10-28T07:47:39-04:00 — not re-run)
+logs: milestones/m0/logs/M0-D98.<scope>.log · record: loop_times.jsonl · tree c6c8b4bfa7dd+a668cf79e2bf
+anchor: 0 path×scope entries moved by this run
+anchor: 194 paths checked · 289 skipped (3 classes) · 107 never checked · 0 stale · 0 unclassified · 0 owed · 301 covered of 590 visible
+FAILED:
+  desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the decoy web server did not start · log milestones/m0/logs/M0-D98.desktop.log
+  web: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: launch.py start web did not end GO; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: launch.py start web did not end GO · log milestones/m0/logs/M0-D98.web.log
+verify: 18 passed, 3 failed, 0 skipped · 3/5 scopes GO · 0 skipped · 0 owed · 3 not re-run · 0 NOT RUN · 0 not impacted · 48.05 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 58.22->71.91
+=== NO-GO: desktop: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the decoy web server did not start · log milestones/m0/logs/M0-D98.desktop.log; web: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: launch.py start web did not end GO; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: launch.py start web did not end GO · log milestones/m0/logs/M0-D98.... ===

@@ -1,0 +1,57 @@
+== 2026-10-28T10:23:37-04:00 nu_heat · task M0-D69 · box laserax-ai-server :: bash tests/gpu.sh nuheat physics
+-- nu_heat · exit=0 · 12.58 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 3.24s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 15 tests
+test nuheat::a_lone_gas_cell_takes_exactly_f_dep ... ok
+test nuheat::deposited_is_f_dep_of_emitted ... ok
+test nuheat::f_dep_above_the_bound_is_refused ... ok
+test nuheat::gpu_a_lone_gas_cell_takes_exactly_f_dep ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT the lone cell took 1.100000 of 1.100000
+ok
+test nuheat::gpu_a_stopped_frame_runs_no_p7_after_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_an_all_star_world_deposits_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_deposited_is_f_dep_of_emitted_and_e_rises_by_what_was_booked ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.05: booked 5.586143e-1 against 5.586143e-1, off by 9.75e-8
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.1: booked 1.117229e0 against 1.117229e0, off by 9.75e-8
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT f_dep 0.01: booked 1.117229e-1 against 1.117229e-1, off by 1.30e-7
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_nearer_and_denser_receive_more ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT nearer/farther 6.5000 (6.5), denser/thinner 2.0000 (2)
+ok
+test nuheat::gpu_no_dispatch_when_nothing_is_emitted ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT P7 costs 0.0255 ms with nothing emitted, 0.5279 ms with a star (512 × 512)
+ok
+test nuheat::gpu_none_inside_the_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test nuheat::gpu_q_matches_the_twin_cell_by_cell_over_the_box_and_the_world_and_a_second_run_is_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT q against the twin (Fit): worst cell off by 1.705e-7 of the top 7.068e-2
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-NUHEAT q against the twin (WholeWorld): worst cell off by 1.705e-7 of the top 7.068e-2
+ok
+test nuheat::matches_the_direct_sum ... ok
+test nuheat::nearer_and_denser_receive_more ... ok
+test nuheat::none_inside_the_neutron_star ... ok
+test nuheat::nothing_when_nothing_is_emitted_or_taken ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 375 filtered out; finished in 9.27s
+
+

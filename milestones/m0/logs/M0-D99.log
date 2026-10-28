@@ -1,0 +1,10 @@
+M0-D99 log — linux-pc — started 2026-10-28T07:51:42-04:00
+build · clean · GO · arm 1/2, 1 left
+build · plant build-wasm-only · RED (proven: build[wasm]: 1 failed; build[wasm]: its own verdict NO-GO: cargo check --target wasm32-unknown-unknown failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope build · 42.89 s · 2 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D99.build.redarm.log
+=== GO ===
+lrwxrwxrwx 1 ybelanger ybelanger 49 Oct 28 07:53 /home/ybelanger/scratch/M0-D99/tree/build -> /home/ybelanger/workspace/sandbox_reactions/build
+PLANTS-APPLY
+== M0-D99 try 2 (Opus 5.5 high), 2026-10-28T08:04:22-04:00: lead ruled (b) app-side only; one-time grant to stop pid 339755 on 47812
+2026-10-28T08:07:36-04:00 stopped pid 339755 (python3 -m http.server 47812, web/dist) on the lead's one-time grant
+== Verify 5 (claim) 2026-10-28T08:17:09-04:00

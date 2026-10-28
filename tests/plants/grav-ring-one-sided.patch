@@ -1,0 +1,40 @@
+--- a/crates/sr-engine/shaders/grav.wgsl
++++ b/crates/sr-engine/shaders/grav.wgsl
+@@ -171,27 +171,16 @@
+     var xh = 0.0;
+     var yl = 0.0;
+     var yh = 0.0;
+-    if (id.x == 0u) {
+-        xl = spec[id.y * n + n - 1u].x;
+-    } else {
+-        xl = phi[y * s + x - 1u];
+-    }
+-    if (id.x + 1u == abox.w) {
+-        xh = spec[id.y * n + abox.w].x;
+-    } else {
+-        xh = phi[y * s + x + 1u];
+-    }
+-    if (id.y == 0u) {
+-        yl = spec[(abox.h + 1u) * n + id.x].x;
+-    } else {
+-        yl = phi[(y - 1u) * s + x];
+-    }
+-    if (id.y + 1u == abox.h) {
+-        yh = spec[abox.h * n + id.x].x;
+-    } else {
+-        yh = phi[(y + 1u) * s + x];
+-    }
+-    let a = vec2<f32>(-(xh - xl) * 0.5, -(yh - yl) * 0.5);
++    let ix0 = select(x - 1u, x, id.x == 0u);
++    let ix1 = select(x + 1u, x, id.x + 1u == abox.w);
++    let iy0 = select(y - 1u, y, id.y == 0u);
++    let iy1 = select(y + 1u, y, id.y + 1u == abox.h);
++    // spec stays bound (the layout is the entry point's): read, weighted 0
++    xl = phi[y * s + ix0] + 0.0 * spec[n - 1u].x;
++    xh = phi[y * s + ix1];
++    yl = phi[iy0 * s + x];
++    yh = phi[iy1 * s + x];
++    let a = vec2<f32>(-(xh - xl) / f32(max(ix1 - ix0, 1u)), -(yh - yl) / f32(max(iy1 - iy0, 1u)));
+     let cell = y * s + x;
+     g[cell] = a.x;
+     g[gp.cells + cell] = a.y;

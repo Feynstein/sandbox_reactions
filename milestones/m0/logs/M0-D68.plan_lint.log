@@ -1,0 +1,7 @@
+== 2026-10-28T09:52:59-04:00 plan_lint · task M0-D68 · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=693 failed=0 warnings=2 · blocks=307 · flow_rows=307 · verify_fences=1 · history=0 · flow=per-task · header=547/600 · pipeline=9/60 · ladder=7 rungs · refresh=0/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D68 4 · M0-D69 2 · M0-D71 6 · M0-D91 3 · M0-D65 3
+=== GO ===
+

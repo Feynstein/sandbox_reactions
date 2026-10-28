@@ -1,0 +1,15 @@
+--- a/crates/sr-physics/src/reference/grav.rs
++++ b/crates/sr-physics/src/reference/grav.rs
+@@ -56,8 +56,10 @@
+     for y in 0..h {
+         for x in 0..w {
+             // the box's (x, y) sits at (x + 1, y + 1) of the ringed field
+-            gx[y * w + x] = -(at(x + 2, y + 1) - at(x, y + 1)) / 2.0;
+-            gy[y * w + x] = -(at(x + 1, y + 2) - at(x + 1, y)) / 2.0;
++            let (lo, hi) = (x.saturating_sub(1), (x + 1).min(w - 1));
++            gx[y * w + x] = -(at(hi + 1, y + 1) - at(lo + 1, y + 1)) / (hi - lo).max(1) as f64;
++            let (lo, hi) = (y.saturating_sub(1), (y + 1).min(h - 1));
++            gy[y * w + x] = -(at(x + 1, hi + 1) - at(x + 1, lo + 1)) / (hi - lo).max(1) as f64;
+         }
+     }
+     Ok((gx, gy))

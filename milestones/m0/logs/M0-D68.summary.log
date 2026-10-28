@@ -1,0 +1,33 @@
+== 2026-10-28T09:53:02-04:00 summary · task M0-D68 · box laserax-ai-server :: bash tests/gpu.sh summary physics
+-- summary · exit=0 · 8.23 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 3.43s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 7 tests
+test summary::gpu_every_field_is_an_f64_sum_of_the_dump ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+box [0, 8] + [56, 48], 168 blocks; worst |Δ| / (2⁻²⁴ S): [("mass", 2.9802322568818065), ("Σx·m", 4.421296929176255), ("Σy·m", 4.504811689057487), ("p_x", 3.2444040311538624), ("p_y", 1.9078046886103726), ("kinetic", 3.5790557477341944), ("thermal", 28.591134744172834), ("cold", 56.71593496121807), ("∫Π dA", 21.31702501378753), ("Σm·φ", 2.5813673601933074), ("unbound", 2.009007147673598), ("T max", 34.60714770159573), ("Π_cold/Π max", 19.638060990418495), ("species 0", 3.4447232320235917), ("species 1", 3.09754214559822), ("species 2", 3.3532859361801144), ("species 3", 0.0), ("species 4", 0.0), ("species 5", 0.0), ("species 6", 0.0), ("species 7", 0.0), ("species 8", 0.0), ("species 9", 2.7246730767412632), ("radiated", 2.4849104995077695), ("nuclear.H", 1.8203473910138186), ("nuclear.He", 2.098458476820236), ("nuclear.C", 2.4124013551935897), ("nuclear.Ne", 2.5707479323647497), ("nuclear.O", 2.0035188314169514), ("nuclear.Si", 2.506272437743632), ("nuclear.N", 3.0978033866046317), ("neutrino_lost", 2.365192839177245), ("neutrino_deposited", 2.8470765248360923)]
+ok
+test summary::gpu_the_accumulators_reset_after_each_summary ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test summary::gpu_the_blocks_tile_the_box ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test summary::gpu_the_max_cell_is_the_densest_the_lowest_y_then_x ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test summary::gpu_the_sinks_inside_are_marked ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sinks [Sink { x: 33.49881362915039, y: 38.49880599975586, vx: -0.29724040627479553, vy: -0.2904658615589142, m: 246.2960205078125 }, Sink { x: 37.500770568847656, y: 38.50086975097656, vx: 0.07022013515233994, vy: 0.14128562808036804, m: 136.00146484375 }, Sink { x: 6.500186443328857, y: 12.500168800354004, vx: 0.07616818696260452, vy: 0.06881160289049149, m: 10.0 }]; marked [(1, 1, 4), (8, 7, 1), (9, 7, 2)]
+ok
+test summary::gpu_the_summary_arrives_with_its_frame_at_most_two_frames_late ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test summary::gpu_two_runs_give_the_same_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 381 filtered out; finished in 4.66s
+
+

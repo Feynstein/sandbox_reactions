@@ -340,14 +340,36 @@ pub fn run_captured(args: &[String]) -> (i32, Vec<String>) {
     capturing(false, || run(args))
 }
 
+/// What builds the binary, as git pathspecs from the repository's top: the sources, the assets the engine embeds bar
+/// the calibration a run itself writes, the scenes, the manifests. Logs and `build/` are not here (M0-D63).
+const BUILT_FROM: [&str; 8] = [
+    ":(top)crates",
+    ":(top)assets",
+    ":(top,exclude)assets/calibration.json",
+    ":(top)scenes",
+    ":(top)Cargo.toml",
+    ":(top)Cargo.lock",
+    ":(top).cargo",
+    ":(top)rust-toolchain.toml",
+];
+
+fn git_out(args: &[&str]) -> Option<String> {
+    let out = std::process::Command::new("git").arg("--no-optional-locks").args(args).output().ok().filter(|o| o.status.success())?;
+    Some(String::from_utf8_lossy(&out.stdout).trim().to_string())
+}
+
+/// The revision a run records: HEAD's short sha, `-dirty` after it when a file that builds the binary (`BUILT_FROM`,
+/// untracked ones too) differs from HEAD — git's own convention (M0-D63); `unknown` outside a repository.
 pub fn git_rev() -> String {
-    std::process::Command::new("git")
-        .args(["rev-parse", "--short", "HEAD"])
-        .output()
-        .ok()
-        .filter(|o| o.status.success())
-        .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
-        .unwrap_or_else(|| "unknown".to_string())
+    let Some(rev) = git_out(&["rev-parse", "--short", "HEAD"]) else {
+        return "unknown".to_string();
+    };
+    let mut status = vec!["status", "--porcelain", "--"];
+    status.extend(BUILT_FROM);
+    match git_out(&status) {
+        Some(changed) if changed.is_empty() => rev,
+        _ => format!("{rev}-dirty"),
+    }
 }
 
 /// The exit-5 line (§3.3): the step the value was found at, its cell and its channel's §2.2 name.

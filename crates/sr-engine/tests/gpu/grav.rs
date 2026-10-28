@@ -11,6 +11,9 @@
 //! P2's vacuum mask on a box with sub-Σ_vac cells in it; P2 on a wide and a tall box (FFT 1024 × 128, 128 × 1024) and
 //! on the whole 600 × 400 world (2048 × 1024), against the twin and against a direct sum of the kernel over the sources
 //! (no FFT, no table), and G-GRAV2's ratio on the two boxes whose outermost ring is empty.
+//!
+//! M0-D69 — G-GRAV2 with matter on the box's outermost ring (a box clamped to the world's edges), twin and GPU: the
+//! ring's central difference reads the free-space φ one cell past the box.
 
 use sr_physics::reference::grav::{self, Gravity, SELF_CELL};
 
@@ -362,6 +365,28 @@ mod selfforce {
     }
 
     #[test]
+    fn masses_on_the_boxs_outermost_ring_have_none_either() {
+        // M0-D69: the same scatter with no empty rim — matter on the outermost ring, as a box clamped to a world edge holds.
+        // The ring's central difference reads the free-space φ past the box; a one-sided one there broke the pairing.
+        let (w, h) = (50usize, 37usize);
+        let mut state = 0x2545_F491_4F6C_DD1Du64;
+        let mut next = || {
+            state ^= state << 13;
+            state ^= state >> 7;
+            state ^= state << 17;
+            (state >> 11) as f64 / (1u64 << 53) as f64
+        };
+        let sigma: Vec<f64> = (0..w * h).map(|_| if next() < 0.4 { 0.01 + 2.0 * next() * next() } else { 0.0 }).collect();
+        let on_ring = (0..w * h).filter(|&k| sigma[k] > 0.0 && (k % w == 0 || k % w == w - 1 || k / w == 0 || k / w == h - 1)).count();
+        let field = Gravity::new(G).field(&sigma, 1e-6, w, h).unwrap();
+        let (net, scale) = net_and_scale(&sigma, &field.gx, &field.gy);
+        let ratio = net[0].hypot(net[1]) / scale;
+        println!("SR-GRAV2 random on the ring {w}x{h}: {on_ring} ring cells hold mass, ratio {ratio:.3e}");
+        assert!(on_ring > 30, "{on_ring} ring cells hold mass");
+        assert!(scale > 1.0 && ratio <= 1e-5, "|Σ m·g| / Σ m|g| = {ratio:.3e}");
+    }
+
+    #[test]
     fn gpu_asym_blob_has_no_net_self_force() {
         let gpu = crate::device();
         let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../scenes/asym_blob.json");
@@ -404,6 +429,13 @@ mod selfforce {
     #[test]
     fn gpu_tall_box_has_no_net_self_force() {
         gpu_no_net_force_on("tall box", super::gpu::tall_scene(), (40, 344), [128, 1024]);
+    }
+
+    /// M0-D69: matter on the world's edges, so the box is the world and its outermost ring holds gas — the ring's g from
+    /// the free-space φ past the box (`grav_rows_inverse`, `grav_gradient`).
+    #[test]
+    fn gpu_matter_on_the_worlds_edges_has_no_net_self_force() {
+        gpu_no_net_force_on("world-edge matter", super::gpu::edge_scene(), (128, 128), [256, 256]);
     }
 }
 
@@ -510,6 +542,25 @@ mod gpu {
                 }
                 if (400..500).contains(&i) && (185..215).contains(&j) {
                     sigma[j * w + i] += 0.5;
+                }
+            }
+        }
+        (w as u32, h as u32, sigma)
+    }
+
+    /// M0-D69's: a Maclaurin disk (a = 20, Σc = 1) at (8, 110), cut by the edges x = 0 and y = 127, and a block of Σ 0.4
+    /// at x 96–127, y 0–11, in 128 × 128: matter on all four edges, the box the world, FFT 256².
+    pub fn edge_scene() -> (u32, u32, Vec<f64>) {
+        let (w, h) = (128usize, 128usize);
+        let mut sigma = vec![0.0; w * h];
+        for j in 0..h {
+            for i in 0..w {
+                let r2 = ((i as f64 - 8.0).powi(2) + (j as f64 - 110.0).powi(2)) / 400.0;
+                if r2 < 1.0 {
+                    sigma[j * w + i] = (1.0 - r2).sqrt();
+                }
+                if i >= 96 && j < 12 {
+                    sigma[j * w + i] += 0.4;
                 }
             }
         }

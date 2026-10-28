@@ -336,14 +336,20 @@ fn headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_fo
     let end = Dump::from_bytes(&read(&c, "s_200.bin")).unwrap();
     assert_eq!((end.step, end.world), (200, WorldConfig::new(256, 256).unwrap()));
 
-    // P5 runs (preset:sun, heat on): F's 2 planes follow the 14 channels, flagged, and the light leaving the star is
-    // not 0 — else the byte-for-byte resume above could not tell a lost F (M0-D33).
+    // P5 runs (preset:sun, heat on): F's 2 planes follow the 14 channels, flagged, then P5's rate, flagged (M0-D85), and the
+    // light leaving the star is not 0 — else the byte-for-byte resume above could not tell a lost F (M0-D33).
     let bytes = read(&b, "s_100.bin");
     let (header, base) = split(&bytes);
     let cells = 256 * 256;
     assert_eq!(header["resume"]["flux"].as_bool(), Some(true), "P5 runs: the flag");
-    assert_eq!(bytes.len(), base + 4 * (N_CHANNELS + 2) * cells, "F's 2 planes after the 14 channels");
-    let f: Vec<f32> = bytes[base + 4 * N_CHANNELS * cells..].as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect();
+    assert_eq!(header["resume"]["rate"].as_bool(), Some(true), "P5 runs: the rate's flag");
+    assert_eq!(bytes.len(), base + 4 * (N_CHANNELS + 3) * cells, "F's 2 planes after the 14 channels, the rate's 1 after F");
+    let f: Vec<f32> = bytes[base + 4 * N_CHANNELS * cells..base + 4 * (N_CHANNELS + 2) * cells]
+        .as_chunks::<4>()
+        .0
+        .iter()
+        .map(|b| f32::from_le_bytes(*b))
+        .collect();
     let (fx, fy) = f.split_at(cells);
     let lit = |p: &[f32]| p.iter().filter(|v| **v != 0.0).count();
     println!("s_100.bin: F_x non-zero in {} cells, F_y in {}", lit(fx), lit(fy));

@@ -1,0 +1,35 @@
+== 2026-10-28T08:33:19-04:00 heat_implicit · task M0-D63 · box laserax-ai :: bash tests/gpu.sh heat::implicit physics
+-- heat_implicit · exit=0 · 3.72 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 8 tests
+test heat::implicit::a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t ... SR-HEAT2 sharp pulse, 15 passes: sigma2 x 48.00000 y 48.00000, explicit x 48.00000 y 48.00000, lowest -4.741e-12, highest 3.5743e-3, heat 1.000000000
+ok
+test heat::implicit::backward_euler_is_first_order_in_the_step ... SR-HEAT2 order: e(6) 2.3560e-2, e(12) 1.1996e-2, e(24) 6.0827e-3; ratios 1.964, 1.972
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 6.35e-7 of the peak; sigma2 x 47.96835 y 47.96837, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5744e-1; heat 100.0009133 of 100.0000031; up to 8 Newton passes, 141 rounds
+ok
+test heat::implicit::gpu_a_sharp_pulse_stays_non_negative_and_spreads_as_two_chi_t::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU sharp pulse of 100, 15 passes: |T - twin| 1.46e-7 of the peak; sigma2 x 48.00462 y 48.00462, explicit x 48.00000 y 48.00000; lowest 0.000e0 of the peak, highest 3.5743e-1; heat 99.9999842 of 100.0000031; up to 8 Newton passes, 28 rounds
+ok
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 2, rounds: 37, converged: true, delta: -3.1107175e-9 }; the twin 2 passes, 116 rounds; |T - twin| 2.80e-6 of the peak; sigma2 x 39.962471 y 39.962470, expected 40
+ok
+test heat::implicit::gpu_one_pass_is_the_twins_and_runs_bit_for_bit_twice::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEAT2 GPU one pass of 24: HeatReport { dt: 24.0, passes: 2, rounds: 5, converged: true, delta: 9.217615e-7 }; the twin 2 passes, 116 rounds; |T - twin| 4.92e-6 of the peak; sigma2 x 40.000593 y 40.000593, expected 40
+ok
+test heat::implicit::one_pass_solves_its_own_system_and_keeps_sigma_squared ... SR-HEAT2 Gauss-Seidel: 549 sweeps
+SR-HEAT2 one pass of 24: 2 Newton passes, 108 rounds, delta -4.7e-13; |T - tight solve| 4.77e-13; sigma2 x 39.999878 y 39.999878, expected 40
+ok
+test heat::implicit::the_radiative_step_solves_its_nonlinear_balance_cell_by_cell ... SR-HEAT2 radiative slab: 6 Newton passes, 276 rounds, delta -1.2e-14; worst balance 5.35e-12; lost 19166.821271 of radiated 19166.821271
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 379 filtered out; finished in 3.54s
+
+

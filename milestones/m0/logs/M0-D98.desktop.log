@@ -1,0 +1,51 @@
+== 2026-10-28T07:45:27-04:00 desktop[window] · task M0-D98 · box laserax-ai-server :: bash tests/smoke.sh {case}
+== 2026-10-28T07:45:28-04:00 desktop[launcher] · task M0-D98 · box laserax-ai-server :: bash tests/smoke.sh {case}
+== 2026-10-28T07:45:29-04:00 desktop[race] · task M0-D98 · box laserax-ai-server :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 5.62 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+game-xvfb: log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-D98.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+-- desktop[launcher] · exit=1 · 4.32 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: nothing recorded
+services: 1, stopped: 1
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+-- desktop[race] · exit=1 · 13.69 s
+game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+services: 1, ready: 0
+FAIL game-xvfb: no Xvfb on PATH - the private display needs one (not started)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+== 2026-10-28T07:48:49-04:00 desktop[window] · task M0-D98 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-28T07:48:49-04:00 desktop[launcher] · task M0-D98 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-28T07:48:49-04:00 desktop[race] · task M0-D98 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 3.79 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 1.4s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D98.launch.game-xvfb.log)
+game-xvfb: pid 2054098 stopped; its X server :99, pid 2054097 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D98.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 0 s, booted and checked in 3 s
+=== GO ===
+
+-- desktop[launcher] · exit=1 · 34.06 s
+web: port 47812 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL web: port 47812 held by a process we did not start - not reusing
+=== NO-GO: 1 failure(s) ===
+=== NO-GO: the decoy web server did not start ===
+
+-- desktop[race] · exit=0 · 48.04 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 1.2s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D98-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 1 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+

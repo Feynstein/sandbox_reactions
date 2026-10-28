@@ -262,3 +262,17 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   `/srv/site/sandbox-reactions/` on the box, `../tykun_games`'s to fill; an in-game ad break (H5 Games Ads at game breaks, as
   web_hosting.md records) — if `../tykun_games` rules one, its hook arrives as a flag and is built here; M0-TZ placing this
   game's own web build in a milestone with the lead.
+- Contract §3.4's Desktop "`--status-port <port>` serves `GET /status` on 127.0.0.1", the bind failing with `SR-ERROR` when the port
+  is taken — superseded by contract §0.5 [M0-D99]: a taken port moves to the first free one of 47811–47830, printed as
+  `SR-STATUS-PORT <n>`; `SR-ERROR` only when none is free; §3.6 and launch.py unchanged (the lead, 2026-10-28, M0-D99: «(b) App
+  side only»).
+- Contract §0.5 [M0-D64]'s split of the face work ("cell i taking (½p_i + w_i(q − ½(p_i + p_j)))(φ_i − φ_j)Δt … and j the rest"),
+  §0.5 [M0-D66]'s "G-JEANS's cloud at U_th = 0.07|W| (T 3.3132)" and the ledger's leave momentum band 5e-3 — superseded by contract
+  §0.5 [M0-D68]: the diffusive flux's work, when a cost, paid first from the pair's relative motion (at most half its kinetic
+  energy, by equal and opposite impulses), the rest shared by mass; G-JEANS back at 0.05|W| with J ≤ (1 + 10⁻²) × its start; the
+  leave band 1e-2 until M0-D69 (the lead, 2026-10-28, M0-D68: «Relative motion first (Recommended)», «(1 + 10⁻²) × start
+  (Recommended)», «Back to 0.05|W| (Recommended)», «1e-2 until D69 (Recommended)»).
+- Contract §0.5 [M0-D68]'s "the ledger's leave momentum band 1e-2 until M0-D69" and the one-sided difference on the box's
+  outermost ring (M0-T29's twin, M0-T31's shader) — superseded by contract §0.5 [M0-D69]: central differences in every cell of the
+  box, the ring reading the zero-padded convolution's exact φ one cell past the box; the leave band 7e-3 (the lead, 2026-10-28,
+  M0-D69: «7e-3 (Recommended)»).

@@ -273,10 +273,22 @@ mod native {
         let mut capture = capture.map(|(steps, script, out, outcome)| crate::capture::Driver::new(steps, &script, out, outcome));
 
         // Bound before the window, so a poller reads "booting" while the window and the device come up (§3.4).
+        // Its port taken, the server moves to the first free one of status::FALLBACK and says where (§0.5 [M0-D99]).
         let status = match args.status_port.map(crate::status::serve).transpose() {
-            Ok(s) => s,
+            Ok(Some((s, port))) => {
+                if Some(port) != args.status_port {
+                    println!("SR-STATUS-PORT {port}");
+                }
+                Some(s)
+            }
+            Ok(None) => None,
             Err(e) => {
-                println!("SR-ERROR --status-port {}: cannot listen on 127.0.0.1 ({e})", args.status_port.unwrap_or(0));
+                println!(
+                    "SR-ERROR --status-port {}: cannot listen on 127.0.0.1, nor on {}–{} ({e})",
+                    args.status_port.unwrap_or(0),
+                    crate::status::FALLBACK.start(),
+                    crate::status::FALLBACK.end()
+                );
                 return EXIT_ARGS;
             }
         };

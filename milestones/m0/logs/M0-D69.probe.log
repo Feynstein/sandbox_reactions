@@ -1,0 +1,26 @@
+# M0-D69 probe: leave disk a 24, v 0.5, 500 steps; laserax-ai-server RTX 4090; 2026-10-28T10:11:04-04:00
+## ring new
+D69-PROBE w 128 x 116 T 2.3 steps 500 gravity true: |Δp| 1.796e1 (x 1.796e1, y -1.045e-4), Σm|u| 3.245e3, drift 5.535e-3, escaped mass 1.065e1 of 1.017e3
+D69-PROBE w 256 x 116 T 2.3 steps 500 gravity true: |Δp| 3.932e1 (x -3.932e1, y -1.194e-3), Σm|u| 3.416e3, drift 1.151e-2, escaped mass 0.000e0 of 1.206e3
+D69-PROBE w 128 x 64 T 2.3 steps 500 gravity true: |Δp| 3.931e1 (x -3.931e1, y -1.067e-3), Σm|u| 3.415e3, drift 1.151e-2, escaped mass 0.000e0 of 1.206e3
+D69-PROBE w 128 x 116 T 0.05 steps 500 gravity true: |Δp| 1.106e2 (x -1.106e2, y -9.465e-5), Σm|u| 5.366e3, drift 2.062e-2, escaped mass 7.782e-1 of 1.018e3
+D69-PROBE w 256 x 116 T 0.05 steps 500 gravity true: |Δp| 5.071e1 (x -5.071e1, y 2.627e-3), Σm|u| 4.889e3, drift 1.037e-2, escaped mass 3.791e-5 of 1.206e3
+D69-PROBE w 128 x 64 T 0.05 steps 500 gravity true: |Δp| 5.073e1 (x -5.073e1, y 1.371e-3), Σm|u| 4.889e3, drift 1.038e-2, escaped mass 2.559e-4 of 1.206e3
+## ring old
+## ring old (plant grav-ring-one-sided, spec read kept)
+D69-PROBE w 128 x 116 T 2.3 steps 500 gravity true: |Δp| 2.605e1 (x 2.605e1, y -2.362e-4), Σm|u| 3.237e3, drift 8.049e-3, escaped mass 1.124e1 of 1.017e3
+D69-PROBE w 256 x 116 T 2.3 steps 500 gravity true: |Δp| 3.932e1 (x -3.932e1, y -1.194e-3), Σm|u| 3.416e3, drift 1.151e-2, escaped mass 0.000e0 of 1.206e3
+D69-PROBE w 128 x 64 T 2.3 steps 500 gravity true: |Δp| 3.931e1 (x -3.931e1, y -1.067e-3), Σm|u| 3.415e3, drift 1.151e-2, escaped mass 0.000e0 of 1.206e3
+D69-PROBE w 128 x 116 T 0.05 steps 500 gravity true: |Δp| 1.002e2 (x -1.002e2, y 3.773e-3), Σm|u| 5.262e3, drift 1.905e-2, escaped mass 1.497e0 of 1.017e3
+D69-PROBE w 256 x 116 T 0.05 steps 500 gravity true: |Δp| 5.071e1 (x -5.071e1, y 2.627e-3), Σm|u| 4.889e3, drift 1.037e-2, escaped mass 3.791e-5 of 1.206e3
+D69-PROBE w 128 x 64 T 0.05 steps 500 gravity true: |Δp| 5.073e1 (x -5.073e1, y 1.372e-3), Σm|u| 4.889e3, drift 1.038e-2, escaped mass 2.559e-4 of 1.206e3
+## ring new — disk at x 104 (unclipped, its rim at the edge)
+D69-PROBE w 128 x 104 T 2.3 steps 500 gravity true: |Δp| 3.979e1 (x -3.979e1, y -1.196e-3), Σm|u| 3.239e3, drift 1.228e-2, escaped mass 4.515e0 of 1.206e3
+D69-PROBE w 256 x 104 T 2.3 steps 500 gravity true: |Δp| 3.931e1 (x -3.931e1, y -1.067e-3), Σm|u| 3.415e3, drift 1.151e-2, escaped mass 0.000e0 of 1.206e3
+D69-PROBE w 128 x 104 T 0.05 steps 500 gravity true: |Δp| 4.957e1 (x -4.957e1, y 3.893e-3), Σm|u| 4.872e3, drift 1.017e-2, escaped mass 2.107e-1 of 1.206e3
+D69-PROBE w 256 x 104 T 0.05 steps 500 gravity true: |Δp| 5.071e1 (x -5.071e1, y 1.498e-3), Σm|u| 4.889e3, drift 1.037e-2, escaped mass 3.791e-5 of 1.206e3
+## ring old — disk at x 104 (unclipped, its rim at the edge)
+D69-PROBE w 128 x 104 T 2.3 steps 500 gravity true: |Δp| 4.009e1 (x -4.009e1, y -1.080e-3), Σm|u| 3.254e3, drift 1.232e-2, escaped mass 4.384e0 of 1.206e3
+D69-PROBE w 256 x 104 T 2.3 steps 500 gravity true: |Δp| 3.931e1 (x -3.931e1, y -1.067e-3), Σm|u| 3.415e3, drift 1.151e-2, escaped mass 0.000e0 of 1.206e3
+D69-PROBE w 128 x 104 T 0.05 steps 500 gravity true: |Δp| 4.922e1 (x -4.922e1, y 1.934e-3), Σm|u| 4.871e3, drift 1.010e-2, escaped mass 2.067e-1 of 1.206e3
+D69-PROBE w 256 x 104 T 0.05 steps 500 gravity true: |Δp| 5.071e1 (x -5.071e1, y 1.509e-3), Σm|u| 4.889e3, drift 1.037e-2, escaped mass 3.791e-5 of 1.206e3

@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -368,7 +368,8 @@
+     status.extend(BUILT_FROM);
+     match git_out(&status) {
+         Some(changed) if changed.is_empty() => rev,
+-        _ => format!("{rev}-dirty"),
++        // planted: the mark is dropped, a run on uncommitted sources names HEAD alone
++        _ => rev,
+     }
+ }
+ 

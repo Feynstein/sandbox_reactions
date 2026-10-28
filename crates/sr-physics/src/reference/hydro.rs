@@ -24,14 +24,18 @@
 //! each face state by half a step of g — its velocity by ½Δt·g, its energy by the work Σ(u + ¼Δt·g)·g·½Δt, so the kick
 //! leaves its thermal energy as it was — beside the flux differences; the update adds Δt·Σg to the momentum, Σ the cell
 //! centre's half-step value from that same predictor (its flux differences and its half kick). The energy source is the
-//! work the step's mass fluxes do across φ (§0.5 [M0-D64]): a face whose mass flux q (along +x or +y) joins cell i to
-//! its neighbour j does Δt·q·(φ_i − φ_j), cell i taking (½ p_i + w_i (q − ½(p_i + p_j)))·(φ_i − φ_j)·Δt of it — p the
-//! two cells' half-step momenta on that axis, w_i = Σ_i/(Σ_i + Σ_j) their half-step masses' share — and j the rest: each
-//! cell keeps the Δt·(Σu)·g its own momentum kick pays for (g by central differences of φ), and the mass the face moved
-//! beyond the two cells' own momenta (HLL's diffusion) is paid by their masses, so a thin cell beside a dense one is not
-//! heated by the dense one's flux. Summed, the energy gained is exactly −Σ_faces Δt·q·Δφ, what the mass moved does to W at
-//! the step's φ; what remains is first order in Δt, φ lagging the half step (measured, M0-D64). A ghost cell's g and φ are
-//! its edge cell's, so no work is done across the world's edge.
+//! work the step's mass fluxes do across φ (§0.5 [M0-D64], [M0-D68]): a face whose mass flux q (along +x or +y) joins
+//! cell i to its neighbour j does Δt·q·(φ_i − φ_j), cell i keeping ½Δt·p_i·(φ_i − φ_j) of it — p the two cells'
+//! half-step momenta on that axis — so each cell keeps the Δt·(Σu)·g its own momentum kick pays for (g by central
+//! differences of φ). The rest, D = Δt·(q − ½(p_i + p_j))·(φ_i − φ_j), the work of the mass the face moved beyond the two
+//! cells' own momenta (HLL's diffusion), when it is a cost (D < 0) is paid first from the pair's relative motion on the
+//! axis — c = min(−D, ½·½Δu²/(1/Σ_i + 1/Σ_j)), Δu = u_i − u_j, taken by the equal and opposite impulse ±δ that lowers
+//! their kinetic energy by c, each cell's energy changing by its own kinetic part — and what is left of it (D + c), or a
+//! gain, is shared by w_i = Σ_i/(Σ_i + Σ_j), their half-step masses' share: a thin cell beside a dense one is not heated by
+//! the dense one's flux, and a cold collapse's lifted mass is paid by its infall, not by its heat (charged to heat it
+//! lost 8× its entropy, M0-D68). Summed, the energy gained is exactly −Σ_faces Δt·q·Δφ, what the mass moved does to W at
+//! the step's φ, and the impulses cancel; what remains is first order in Δt, φ lagging the half step (measured, M0-D64).
+//! A ghost cell's g and φ are its edge cell's, so no work is done across the world's edge.
 //!
 //! The radiation force (§2.4.4; M0-T43), when a step is given the previous step's flux F ([`Hydro::step_forced`]: P5's
 //! cell-centred planes, `heat::Flux::cells`): every gas cell (Σ ≥ Σ_vac) gains Δt·f of momentum, f = κΣF/c_sb from the
@@ -699,8 +703,8 @@ impl Hydro {
                 for k in 0..COMPONENTS {
                     u[k] -= dt * ((fx[y * (w + 1) + x + 1][k] - fx[y * (w + 1) + x][k]) + (fy[(y + 1) * w + x][k] - fy[y * w + x][k]));
                 }
-                // Gravity's source, time-centred on the predictor's half step (§1.4.2), its energy the faces' work (module
-                // doc): the + faces, then the − faces, x before y. A face on the world's edge does none (its φ difference is 0).
+                // Gravity's source, time-centred on the predictor's half step (§1.4.2), its energy the faces' work and the
+                // pairs' impulses (module doc): each face as its low cell and its high cell both read it. A face on the world's edge does none (its φ difference is 0).
                 if let (Some([gx, gy]), Some(f)) = (accel(at(x, y)), gravity) {
                     let m = mids[i];
                     u[1] += dt * m[0] * gx;
@@ -711,11 +715,13 @@ impl Hydro {
                     let (pl, ml) = if x > 0 { next(x - 1, y) } else { (p, m) };
                     let (pd, md) = if y + 1 < h { next(x, y + 1) } else { (p, m) };
                     let (pu, mu) = if y > 0 { next(x, y - 1) } else { (p, m) };
-                    u[3] += dt
-                        * (grav_share(fx[y * (w + 1) + x + 1][0], m[1], mr[1], m[0], mr[0], p - pr)
-                            + grav_share(fx[y * (w + 1) + x][0], m[1], ml[1], m[0], ml[0], pl - p)
-                            + grav_share(fy[(y + 1) * w + x][0], m[2], md[2], m[0], md[0], p - pd)
-                            + grav_share(fy[y * w + x][0], m[2], mu[2], m[0], mu[0], pu - p));
+                    let r = face_work(fx[y * (w + 1) + x + 1][0], m[0], mr[0], m[1], mr[1], p - pr, dt);
+                    let l = face_work(fx[y * (w + 1) + x][0], ml[0], m[0], ml[1], m[1], pl - p, dt);
+                    let dn = face_work(fy[(y + 1) * w + x][0], m[0], md[0], m[2], md[2], p - pd, dt);
+                    let up = face_work(fy[y * w + x][0], mu[0], m[0], mu[2], m[2], pu - p, dt);
+                    u[1] += r[0] - l[0];
+                    u[2] += dn[0] - up[0];
+                    u[3] += r[1] + l[2] + dn[1] + up[2];
                 }
                 // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
                 if let Some((fx, fy)) = radiation {
@@ -771,12 +777,28 @@ impl Hydro {
     }
 }
 
-/// Gravity's energy source at one face of a cell, per unit Δt (module doc): `q` the face's mass flux along +x or +y, `pi`
-/// and `pj` the cell's and the neighbour's half-step momentum on that axis, `si` and `sj` their half-step Σ, `d` =
-/// φ_cell − φ_neighbour for the cell's + face and φ_neighbour − φ_cell for its − face. The cell's own ½ pi·d, plus its mass's
-/// share of what the face moved beyond the two cells' own momenta.
-fn grav_share(q: f64, pi: f64, pj: f64, si: f64, sj: f64, d: f64) -> f64 {
-    let (a, b) = (si.max(0.0), sj.max(0.0));
+/// Gravity's source at one face over the step (module doc), for the face's low cell (−x or −y) and its high cell alike:
+/// `q` the face's mass flux along +x or +y, `sl`, `sh` the two cells' half-step Σ, `pl`, `ph` their half-step momenta on
+/// that axis, `d` = φ_low − φ_high. Returns [the impulse δ to the low cell (the high cell takes −δ), the low cell's energy,
+/// the high cell's]. The impulse is the smaller root of ½(1/Σ_l + 1/Σ_h)δ² + Δu·δ + c = 0, in the form without
+/// cancellation.
+fn face_work(q: f64, sl: f64, sh: f64, pl: f64, ph: f64, d: f64, dt: f64) -> [f64; 3] {
+    let (a, b) = (sl.max(0.0), sh.max(0.0));
     let w = if a + b > 0.0 { a / (a + b) } else { 0.5 };
-    (0.5 * pi + w * (q - 0.5 * (pi + pj))) * d
+    let extra = dt * (q - 0.5 * (pl + ph)) * d;
+    let (mut c, mut kick, mut el, mut eh) = (0.0, 0.0, 0.0, 0.0);
+    if extra < 0.0 && a > 0.0 && b > 0.0 {
+        let (ul, uh) = (pl / a, ph / b);
+        let du = ul - uh;
+        let inv = 1.0 / a + 1.0 / b;
+        c = (-extra).min(0.25 * du * du / inv);
+        if c > 0.0 {
+            let disc = (du * du - 2.0 * inv * c).max(0.0).sqrt();
+            kick = -2.0 * c / (du + du.signum() * disc);
+            el = ul * kick + 0.5 * kick * kick / a;
+            eh = -uh * kick + 0.5 * kick * kick / b;
+        }
+    }
+    let rest = extra + c;
+    [kick, 0.5 * dt * pl * d + w * rest + el, 0.5 * dt * ph * d + (1.0 - w) * rest + eh]
 }

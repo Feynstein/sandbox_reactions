@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -302,7 +302,7 @@
+         let uh = ph / b;
+         let du = ul - uh;
+         let inv = 1.0 / a + 1.0 / b;
+-        c = min(-extra, 0.25 * du * du / inv);
++        c = 0.0;
+         if (c > 0.0) {
+             let disc = sqrt(max(du * du - 2.0 * inv * c, 0.0));
+             kick = -2.0 * c / (du + sign(du) * disc);

@@ -1,0 +1,123 @@
+== 2026-10-28T09:41:37-04:00 ledger · task M0-D68 · box laserax-ai-server :: bash tests/gpu.sh ledger physics
+-- ledger · exit=101 · 6.18 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.333618 until=none
+remnant: steps 1..1000, sim time 8.317, R₉₀ 2.646, M 1496.3, τ_dyn 0.1112, |W|₀ 2.3296e5; Δinvariant -1.1830e3 → 6.792e-5 |W| per τ_dyn (bound 1e-3); radiated 2.5665e5, floor_added -9.1146e0, escaped 4.0738e2, ΔW -5.5411e5
+ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.726638 until=none
+bounce: steps 1..500, mass drift 1.365e-7, momentum drift 5.510e-7 of Σm|u| = 2.841e3, energy drift -1.803e-2 (reported), escaped 0
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.709639 until=none
+leave: escaped mass 1.123897e1 of 1.017436e3 (1.105e-2), momentum escaped Array [Number(171.68557712320143), Number(-0.00006237620459614845)], mass drift 5.559e-8, momentum drift 8.049e-3 of Σm|u| = 3.237e3, energy drift -1.126e-2 (reported), escaped energy 8.896857e2
+
+thread 'ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it' (10206) panicked at crates/sr-engine/tests/gpu/ledger.rs:199:5:
+momentum drift 8.049e-3 of Σm|u|
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.818474 until=none
+leave without gravity: escaped mass 2.988126e2 of 1.017169e3, escaped x momentum 1.310427e3, vacuum_reset 1.765e-2 × u_max 6.875 → bound 7.960e-5; mass drift 1.265e-7, momentum drift 5.295e-5 of Σm|u| = 1.544e3
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+failures:
+
+failures:
+    ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 383 filtered out; finished in 6.01s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-10-28T09:47:14-04:00 ledger · task M0-D68 · box laserax-ai-server :: bash tests/gpu.sh ledger physics
+-- ledger · exit=0 · 11.29 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 5.39s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.333926 until=none
+remnant: steps 1..1000, sim time 8.317, R₉₀ 2.644, M 1496.3, τ_dyn 0.1111, |W|₀ 2.3296e5; Δinvariant -1.1821e3 → 6.781e-5 |W| per τ_dyn (bound 1e-3); radiated 2.5668e5, floor_added -9.1215e0, escaped 4.0751e2, ΔW -5.5412e5
+ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.725015 until=none
+bounce: steps 1..500, mass drift 9.945e-9, momentum drift 4.940e-7 of Σm|u| = 2.844e3, energy drift -1.802e-2 (reported), escaped 0
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.709458 until=none
+leave: escaped mass 1.124880e1 of 1.017436e3 (1.106e-2), momentum escaped Array [Number(171.84346636998032), Number(-0.0002218772451669793)], mass drift 4.738e-8, momentum drift 8.054e-3 of Σm|u| = 3.238e3, energy drift -1.126e-2 (reported), escaped energy 8.909768e2
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.818474 until=none
+leave without gravity: escaped mass 2.988126e2 of 1.017169e3, escaped x momentum 1.310427e3, vacuum_reset 1.765e-2 × u_max 6.875 → bound 7.960e-5; mass drift 1.265e-7, momentum drift 5.295e-5 of Σm|u| = 1.544e3
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 383 filtered out; finished in 5.78s
+
+
+== 2026-10-28T09:48:43-04:00 ledger · task M0-D68 · box laserax-ai-server :: bash tests/gpu.sh ledger physics
+-- ledger · exit=0 · 6.13 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.333618 until=none
+remnant: steps 1..1000, sim time 8.317, R₉₀ 2.646, M 1496.3, τ_dyn 0.1112, |W|₀ 2.3296e5; Δinvariant -1.1830e3 → 6.792e-5 |W| per τ_dyn (bound 1e-3); radiated 2.5665e5, floor_added -9.1146e0, escaped 4.0738e2, ΔW -5.5411e5
+ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.726638 until=none
+bounce: steps 1..500, mass drift 1.365e-7, momentum drift 5.510e-7 of Σm|u| = 2.841e3, energy drift -1.803e-2 (reported), escaped 0
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.709639 until=none
+leave: escaped mass 1.123897e1 of 1.017436e3 (1.105e-2), momentum escaped Array [Number(171.68557712320143), Number(-0.00006237620459614845)], mass drift 5.559e-8, momentum drift 8.049e-3 of Σm|u| = 3.237e3, energy drift -1.126e-2 (reported), escaped energy 8.896857e2
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.818474 until=none
+leave without gravity: escaped mass 2.988126e2 of 1.017169e3, escaped x momentum 1.310427e3, vacuum_reset 1.765e-2 × u_max 6.875 → bound 7.960e-5; mass drift 1.265e-7, momentum drift 5.295e-5 of Σm|u| = 1.544e3
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 383 filtered out; finished in 5.94s
+
+
+== 2026-10-28T09:53:02-04:00 ledger · task M0-D68 · box laserax-ai-server :: bash tests/gpu.sh ledger physics
+-- ledger · exit=0 · 16.54 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 3.44s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.333618 until=none
+remnant: steps 1..1000, sim time 8.317, R₉₀ 2.646, M 1496.3, τ_dyn 0.1112, |W|₀ 2.3296e5; Δinvariant -1.1830e3 → 6.792e-5 |W| per τ_dyn (bound 1e-3); radiated 2.5665e5, floor_added -9.1146e0, escaped 4.0738e2, ΔW -5.5411e5
+ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.726638 until=none
+bounce: steps 1..500, mass drift 1.365e-7, momentum drift 5.510e-7 of Σm|u| = 2.841e3, energy drift -1.803e-2 (reported), escaped 0
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.709639 until=none
+leave: escaped mass 1.123897e1 of 1.017436e3 (1.105e-2), momentum escaped Array [Number(171.68557712320143), Number(-0.00006237620459614845)], mass drift 5.559e-8, momentum drift 8.049e-3 of Σm|u| = 3.237e3, energy drift -1.126e-2 (reported), escaped energy 8.896857e2
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.818474 until=none
+leave without gravity: escaped mass 2.988126e2 of 1.017169e3, escaped x momentum 1.310427e3, vacuum_reset 1.765e-2 × u_max 6.875 → bound 7.960e-5; mass drift 1.265e-7, momentum drift 5.295e-5 of Σm|u| = 1.544e3
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 383 filtered out; finished in 12.86s
+
+

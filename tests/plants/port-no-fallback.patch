@@ -1,0 +1,17 @@
+--- a/crates/sr-app/src/status.rs
++++ b/crates/sr-app/src/status.rs
+@@ -71,13 +71,7 @@
+ /// a background thread for the life of the process. When `port` is taken, the first free one of [`FALLBACK`]; none
+ /// free, `port`'s own error. Returns the port it listens on.
+ pub fn serve(port: u16) -> std::io::Result<(Arc<Status>, u16)> {
+-    let listener = match TcpListener::bind((Ipv4Addr::LOCALHOST, port)) {
+-        Ok(l) => l,
+-        Err(e) => FALLBACK
+-            .filter(|p| *p != port)
+-            .find_map(|p| TcpListener::bind((Ipv4Addr::LOCALHOST, p)).ok())
+-            .ok_or(e)?,
+-    };
++    let listener = TcpListener::bind((Ipv4Addr::LOCALHOST, port))?; // planted (M0-D99): no fallback, the bind error kept
+     let port = listener.local_addr()?.port();
+     let status = Arc::new(Status(Mutex::new(Snapshot {
+         state: State::Booting,

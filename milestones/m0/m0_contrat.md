@@ -656,6 +656,46 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     (R20); reports/web_hosting.md stays as the record `../tykun_games` reads; the smoke still serves web/dist locally · the lead's
     direction of 2026-10-27 (M0-TJ5's Ask: «I want them to know we're taking over the live push of their games and the website
     itself.»), confirmed at M0-TJ5: «Confirm, as listed (Recommended)».
+  - [M0-D99] §3.4's Desktop "`--status-port <port>` serves `GET /status` on 127.0.0.1" · **its port taken, the server binds the
+    first free port of 47811–47830 (the asked one tried first), prints one stdout line `SR-STATUS-PORT <n>` and serves /status
+    there; none free, `SR-ERROR --status-port <p>: cannot listen on 127.0.0.1, nor on 47811–47830 (<os error>)` and the args exit
+    as before**; §3.6, launch.json and launch.py unchanged — launch.py still refuses a held 47811 before the game starts, so the
+    fallback serves runs started without it; the `desktop` scope's `port-taken` case and `port-no-fallback` plant hold it · the
+    lead's ask, 2026-10-28, as the plan records it («the app finds an open port when its own is taken»), and the lead's ruling at
+    M0-D99: «(b) App side only».
+  - [M0-D68] §0.5 [M0-D64]'s "cell i taking (½p_i + w_i(q − ½(p_i + p_j)))(φ_i − φ_j)Δt … and j the rest", §0.5 [M0-D66]'s
+    "G-JEANS's cloud at U_th = 0.07|W| (T 3.3132)" and the ledger case's leave momentum band 5e-3 · **each cell of a face keeps
+    ½Δt·p·(φ_i − φ_j) of its own; the rest, D = Δt(q − ½(p_i + p_j))(φ_i − φ_j), when a cost (D < 0) is paid first from the
+    pair's relative motion on the face's axis — c = min(−D, ½ · ½Δu²/(1/Σ_i + 1/Σ_j)), Δu = u_i − u_j of the half-step state —
+    by the impulse δ to i and −δ to j that lowers their kinetic energy by c (the smaller root of ½(1/Σ_i + 1/Σ_j)δ² + Δu·δ + c
+    = 0, in the form without cancellation), each cell's energy changing by its own kinetic part (u·δ + δ²/2Σ); D + c, or a
+    gain, is shared by w_i = Σ_i/(Σ_i + Σ_j)**; GPU (`face_work`, both cells of a face reading it in one orientation) and
+    twin alike; G-JEANS back at U_th = 0.05|W| (T 2.3666), with J ≤ (1 + 10⁻²) × its start in every summary beside J ≤ ¼ (heat
+    off and γ = 2: J = G/(2K) is constant along an adiabat), plant `face-work-heat-pays` (the payment off); the ledger's leave
+    momentum band 1e-2 until M0-D69 · on [M0-D64]'s split the diffusive flux's work came out of heat, and the cold cloud lost
+    8× its entropy (J 0.129 → 1.04 at (81, 64), step 165; the CPU twin alike); every other share of that cost between the two
+    cells' heat (½/½, donor, receiver, by heat, the hotter pays, inverse mass) left J at 4.5–83× its start; capping the cost at
+    each cell's adiabat held J but left 9.0 × 10⁴ unpaid on [M0-D64]'s hot compact disk (unbooked, D64's defect back); paid
+    from relative motion J stays at its start, 100 × in 161 steps, one object, and on the hot compact disk no heat step
+    unconverged (309 on the old split, twin) with the energy invariant at 6.8 × 10⁻⁵ |W| per τ_dyn (bound 1e-3); the share ½
+    is tuned (0.4–0.6 hold, ¼ gives 1.08×, ¾ 1.03×, all of it 1.56×); the impulses net −1.2 × 10⁻⁸ (twin), but the collapse
+    runs as on Σu·g (Σ|p| 6.82 × 10³ against Σu·g's 6.88 × 10³ at step 100, the old split's 8.10 × 10³), so the ledger's disk
+    beside a leave edge drifts 8.05 × 10⁻³ of Σm|u| through the box's one-sided outer ring (M0-D69; 7 × 10⁻³ on Σu·g, 8.4 ×
+    10⁻⁴ on the old split) — measured on linux-pc, CPU f64 twin, and laserax-ai-server, RTX 4090, 2026-10-28 (tasks/M0-D68.md)
+    — the lead's answers at M0-D68, 2026-10-28: «Relative motion first (Recommended)», «(1 + 10⁻²) × start (Recommended)»,
+    «Back to 0.05|W| (Recommended)», «1e-2 until D69 (Recommended)».
+  - [M0-D69] §0.5 [M0-D68]'s "the ledger's leave momentum band 1e-2 until M0-D69" and the twin's and the shader's one-sided
+    difference on the box's outermost ring (§1.4.2's "g = −∇φ by central differences", as M0-T29 and M0-T31 built it) · **central
+    differences in every cell of the box, the outermost ring reading φ one cell past the box from the zero-padded convolution,
+    which holds it exactly (padded size ≥ 2 × the box, K even: the offset n/2 aliasing −n/2 is K's own value); the ledger's leave
+    momentum band 7e-3 of Σm|u|** · §1.4.2 unchanged — its central differences now hold on the ring too; GPU (`grav_columns` and
+    `grav_rows_inverse` keep φ at y = h, y = −1, x = w and x = −1 in the work buffer, `grav_gradient` reads them) and twin
+    (`Convolver::convolve_ringed`) alike · with matter on the ring the net self-force read 3.4 × 10⁻² of Σ m|g| one-sided and
+    1.5 × 10⁻¹⁶ now (twin; the GPU 1.06 × 10⁻⁸ on a 128 × 128 world with matter on all four edges); the ledger's leave case 8.05
+    × 10⁻³ → 5.54 × 10⁻³; the rest is source-term gravity on [M0-D68]'s source, not the edge — the same disk with no edge near
+    drifts 1.15 × 10⁻² (1.04 × 10⁻² at T 0.05), and a disk whose rim touches the edge drifts as in a wider world (39.8 against
+    39.3) under either ring rule (M0-V7 observation 1, carried to M0-T106) — measured on linux-pc, CPU f64 twin, and
+    laserax-ai-server, RTX 4090, 2026-10-28 (tasks/M0-D69.md) — the lead's answer at M0-D69, 2026-10-28: «7e-3 (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

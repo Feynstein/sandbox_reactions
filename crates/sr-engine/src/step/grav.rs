@@ -13,8 +13,11 @@
 //! (latch.rs):
 //! - `grav_rows`: the box's rows of Σ, vacuum (Σ < Σ_vac) as 0, zero-padded and forward — one workgroup per world row;
 //! - `grav_columns`: each column forward, times K̂ ÷ (nx · ny), back — one per column of the world's largest padded size;
-//! - `conv_rows_inverse` (fft.wgsl's): the rows back, φ into the box's cells of `side.phi`;
-//! - `grav_gradient`: g = −∇φ over the box's 8 × 8 tiles, one-sided on the box's outermost ring as the twin;
+//!   the box's rows and the two just past it (y = h, y = −1) kept;
+//! - `grav_rows_inverse` (fft.wgsl's conv_rows_inverse over h + 2 rows): the rows back, φ into the box's cells of
+//!   `side.phi`, and φ one cell past the box — exact in the zero-padded convolution — into the work buffer (M0-D69);
+//! - `grav_gradient`: g = −∇φ over the box's 8 × 8 tiles by central differences everywhere, the outermost ring reading φ
+//!   past the box, as the twin — so Σ m·g cancels with matter on a world edge's ring;
 //! - `grav_sinks` (a step with P3 only, M0-T52a): the sinks' softened potentials (§1.4.3) added to φ in place and their
 //!   exact pull added to g — into a second field, so [`Gravity::gas_field`] stays the gas's alone for P3's kick-drift-kick
 //!   (a g carrying a sink's own pull would pull the sink on itself through the bilinear read) while [`Gravity::field`],
@@ -141,7 +144,8 @@ impl Gravity {
         let koffsets = init_buffer(device, "grav.kernel_offsets", storage, &offsets);
         let work = device.create_buffer(&wgpu::BufferDescriptor {
             label: Some("grav.work"),
-            size: 8 * u64::from(max_nx) * u64::from(world.height),
+            // the box's rows and the ring's two (y = h, y = −1)
+            size: 8 * u64::from(max_nx) * (u64::from(world.height) + 2),
             usage: storage,
             mapped_at_creation: false,
         });
@@ -189,8 +193,8 @@ impl Gravity {
         let mut dispatches = vec![
             dispatch("grav_rows", &[0, 1, 2, 3, 4, 7], rows()),
             dispatch("grav_columns", &[0, 2, 3, 7, 8, 9], Size::Fixed([max_nx, 1, 1])),
-            dispatch("conv_rows_inverse", &[0, 1, 2, 3, 5], rows()),
-            dispatch("grav_gradient", &[0, 1, 7, 10, 11], Size::Indirect(boxfit.args().clone(), ARGS_TILES)),
+            dispatch("grav_rows_inverse", &[0, 1, 2, 3, 5], Size::Fixed([world.height + 2, 1, 1])),
+            dispatch("grav_gradient", &[0, 1, 3, 7, 10, 11], Size::Indirect(boxfit.args().clone(), ARGS_TILES)),
         ];
         if sinks.is_some() {
             dispatches.push(dispatch("grav_sinks", &[0, 1, 5, 7, 11, 12, 13], Size::Indirect(boxfit.args().clone(), ARGS_TILES)));
