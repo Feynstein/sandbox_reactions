@@ -1,0 +1,10 @@
+== 2026-10-29T18:13:19-04:00 build[wasm] · task M0-D117 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+== 2026-10-29T18:13:19-04:00 build[native] · task M0-D117 · box Laser2025-20 :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 7.12 s
+build wasm: 1.99.0 in 4 s, target C:/workspace/sandbox_reactions/build/target (2.5G)
+=== GO ===
+
+-- build[native] · exit=0 · 77.53 s
+build native: 1.99.0 in 77 s, target C:/workspace/sandbox_reactions/build/target (2.5G)
+=== GO ===
+

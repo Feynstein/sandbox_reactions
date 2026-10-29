@@ -118,8 +118,9 @@ const DX: f32 = 1.0;
 const DY: f32 = 1.0;
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
-// The largest finite f32: Δt when no term bounds it.
-const DT_UNBOUNDED: f32 = 3.40282347e38;
+// The largest finite f32: Δt when no term bounds it. Written exactly (bits 0x7f7fffff): the rounded decimal 3.40282347e38
+// lies above it, and Chrome 156's WGSL compiler refuses it as not representable (M0-D117).
+const DT_UNBOUNDED: f32 = 0x1.fffffep+127f;
 const NONE: u32 = 0u;
 
 // §1.3.3: the margin in cells, the multiple the box is rounded out to, the smallest FFT size.

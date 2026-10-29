@@ -1,0 +1,54 @@
+== 2026-10-29T18:01:39-04:00 probe: web/smoke.mjs ready --timeout-s 300 on Laser2025-20, the dist web[build] made (reduce.wgsl fixed)
+web: ready on port 47812, 0.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D117-probe.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (156.0.8078.48) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+ready: srState "ready" after 17.1 s
+=== GO ===
+rc=0 wall=19 s
+web: pid 12440 stopped (needed SIGKILL)
+services: 1, stopped: 1
+=== GO ===
+== 2026-10-29T18:02:16-04:00 probe run 2, same dist
+web: ready on port 47812, 0.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D117-probe.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (156.0.8078.48) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+ready: srState "ready" after 19.1 s
+=== GO ===
+rc=0
+web: pid 15988 stopped (needed SIGKILL)
+services: 1, stopped: 1
+=== GO ===
+== 2026-10-29T18:02:44-04:00 probe run 3, same dist
+web: ready on port 47812, 0.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D117-probe.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (156.0.8078.48) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47812
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+ready: srState "ready" after 27.2 s
+=== GO ===
+rc=0
+web: pid 16032 stopped (needed SIGKILL)
+services: 1, stopped: 1
+=== GO ===
+== 2026-10-29T18:03:48-04:00 probe: Dawn's HLSL compiler toggles (scratch ready_time.mjs, same dist)
+web: ready on port 47812, 0.5s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D117-probe.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+flags [] -> ready after 31.8 s | Failed to load resource: the server responded with a status of 404 (File not found) | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+flags [--disable-dawn-features=use_dxc] -> timeout after 180.0 s | Failed to load resource: the server responded with a status of 404 (File not found) | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+flags [--enable-dawn-features=use_dxc] -> ready after 19.1 s | Failed to load resource: the server responded with a status of 404 (File not found) | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+flags [] -> ready after 19.2 s | Failed to load resource: the server responded with a status of 404 (File not found) | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+flags [--disable-dawn-features=use_dxc] -> timeout after 180.0 s | Failed to load resource: the server responded with a status of 404 (File not found) | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 | The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+web: pid 564 stopped (needed SIGKILL)
+services: 1, stopped: 1
+=== GO ===
