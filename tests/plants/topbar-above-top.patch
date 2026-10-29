@@ -1,0 +1,23 @@
+--- a/crates/sr-app/src/ui/topbar.rs
++++ b/crates/sr-app/src/ui/topbar.rs
+@@ -174,7 +174,7 @@
+ 
+ /// The bar as the clock and the world's actions stand.
+ pub fn view(time: &TimeControl, world: &WorldBar) -> TopBar {
+-    let rungs = time
++    let mut rungs: Vec<RungButton> = time
+         .rungs()
+         .iter()
+         .enumerate()
+@@ -186,6 +186,11 @@
+             selected: i == time.rung(),
+         })
+         .collect();
++    // Planted: the ladder's top rung shown whatever TOP cuts (M0-T85's plant).
++    if rungs.len() < 10 {
++        let at = rungs.len() - 1;
++        rungs.insert(at, RungButton { button: Button { label: "×1000".to_string(), command: Command::Select(at) }, selected: false });
++    }
+     let play_key = if time.paused() { "time.play" } else { "time.pause" };
+     TopBar {
+         play: Button { label: strings::get(play_key).to_string(), command: Command::TogglePause },

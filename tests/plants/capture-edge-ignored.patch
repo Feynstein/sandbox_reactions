@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -95,7 +95,8 @@
+             }
+             Action::Rung(k) => self.sim.command(if *k == 0 { Command::Max } else { Command::Numbered(*k) }),
+             Action::SlowDown(on) => self.sim.command(Command::SetSlowDown(*on)),
+-            Action::Edge(mode) => self.sim.command(Command::SetEdge(*mode)),
++            // Planted: the scripted edge choice never reaches the bar (M0-T87's capture plant).
++            Action::Edge(_) => {}
+             Action::Steps(n) => self.sim.queue_steps(*n),
+             Action::Preset(name) => self.sim.drop_preset(name)?,
+         }

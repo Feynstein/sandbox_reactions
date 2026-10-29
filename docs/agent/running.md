@@ -25,6 +25,12 @@ block that builds their feature and are refused with exit 4 until then:
   - `--offscreen-window` places the window outside every monitor, never activated, out of the taskbar (§3.3 [M0-TJ3]).
   - `--capture` runs a scripted session, one PNG per step plus `captions.json`, then exits 0 (§3.3; the harness is
     `tests/capture/`). An action not built yet is refused with `SR-ERROR`, exit 4.
+    Built: `pause`, `steps N` (N steps through the real frame loop, paused or not), `preset sun|massive|giant` (the engine's
+    DropPreset at the world's centre; the panel's own is M0-T90), `rung k` (the key: 1–9 numbered, 0 Max — not an index), `slowdown
+    on|off` and `edge leave|bounce` (the bar's own commands, M0-T85, M0-T87). Each step also prints `SR-CAPTURE-STATUS <id> <status.line as the
+    step's last frame drew it>` (M0-T84). A new world is empty, at ×1, running: at ×1 a Sun-like star is owed less than one step a
+    frame, and an empty world steps once per ~0.45 s (Δt is the floor gas's, M0-D96), so a capture that needs a state asks for
+    `steps`.
 - **Headless**: `headless --scene <scenes/FILE.json | preset:<sun|massive|giant>> --steps N [--world WxH]
   [--edge leave|bounce] [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE [--continue]]
   [--adapter S | --cpu-reference]` — the
@@ -47,6 +53,47 @@ block that builds their feature and are refused with exit 4 until then:
   do not apply.)
 - Later blocks add `bench`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the headless run's
   `--until`, `--frames-every`, `--edits` (§3.3).
+
+## The window (§4.1–§4.3, §4.10, §1.11; `crates/sr-app/src/desktop.rs`, `ui/`)
+What the window holds so far (M0-T84–M0-T87); the left and right panels, the tools, the views and the inspector are later
+blocks and are not in it. Sizes and colours are §4.11's tokens, named in the code, never restated here.
+- **Layout**, top to bottom: the **top bar** (44 px, `bg.panel` with `border.panel`), the **world** (the centre, `bg.space`),
+  the **status bar** (24 px) carrying `status.line` live. The world is a 600 × 400 cell image drawn at the integer scale
+  s = max(1, ⌊min(w/W, h/H)⌋) physical px, centred with its corner on a pixel and nearest filtering (§1.11), so every cell shows
+  whole; a new world is empty (`bg.space` exactly, pinned by the `desktop` scope's `world` case). The banner sits over the world's
+  top centre (`banner.bg` / `banner.text`, 20 px) — `docs/agent/time_control.md` § The frame loop in the app.
+- **The top bar**, left to right: Pause/Play, Step · the rung buttons (the ladder below TOP / 1.5, Max last; the selected one in
+  `accent`) · the speed readout (`time.speed`, `time.speed_capped`, `time.speed_max`, `time.paused`) · the slow-down checkbox ·
+  `edge.label` with two radios (Leave for good, Bounce back — not `accent`: §4.2 lists tool, rung and view only) · `world.clear`.
+  Every text is a `strings.rs` key (byte-exact, §4.3). The bar is **drawn from a view model**: `ui/topbar.rs`'s `view(&TimeControl,
+  &WorldBar)` computes it, `desktop.rs` only draws it and hands back `Command`s; `Command::apply` does the clock's part and
+  `WorldBar::apply` the world's, returning an `Effect` (`Edge` → `Step::set_edge_mode` at once, in any state; `Clear` → an engine
+  `Edit::Clear` queued for the next step's P0). That is what the `ui_topbar` and `ui_world` scopes grade without a window.
+- **Clear world** opens an `egui::Modal` (`world.clear_confirm`, `world.clear_yes`, `world.clear_no`); a Clear is queued by yes
+  alone, once. It lands at the next step's P0, so **paused, the old star stays on screen until a step runs**. The rung, the
+  slow-down and the edge mode are kept; the observers (`Watch`) and the banner's feed start over.
+- **Keys** (§4.10) — what is bound **today** (`ui::topbar::key_command`); a key with Ctrl, Alt or Command held is not the
+  bar's, and none is while a text field has the keyboard (`key_commands` takes the presses it maps out of the pass's input, so a
+  focused button is not pressed a second time by the Space that paused the clock):
+
+| Key | Action | Command |
+|---|---|---|
+| Space | Pause / Play | `TogglePause` |
+| . (period) | Step (one step while paused; pauses while running) | `Step` |
+| 1 … 9 | numbered rung n; past the last numbered rung (the ladder is cut at TOP / 1.5) it does nothing — never Max | `Numbered(n)` |
+| 0 | Max | `Max` |
+| + or = / − | faster / slower | `Faster` / `Slower` |
+| Delete | opens the Clear dialog | `OpenClear` |
+
+  Esc and the dialog's buttons are not key-bound (the buttons are clicked). B · E · H · C, `[` `]`, F1–F4 and the mouse actions of
+  §4.10 are bound by the blocks that build the tools, the brush and the views (later lot) — a key not in the table above does nothing.
+- **Scripting it** (`--capture`, §3.3, `tests/capture/actions.json`, nine steps — `check.sh actions`): `rung` (the key), `slowdown`,
+  `edge`, `pause`, `steps`, `preset`. The check compares each step's top bar (44 px) with the step before and the accent's column
+  (×1 → ×10 → Max); `edge-leave` is compared with `edge` (both paused, so only the radios differ). **No capture action opens the
+  Clear dialog** and no key is scriptable — the dialog is seen in a visible window with the lead's yes (R4) or is NOT PROVEN
+  (M0-T87's flag, M0-TV2's).
+- **Not proven by the scopes**: the bar, the banner and the dialog *on screen* — the view models are graded, the drawing by a
+  capture's pixels (lavapipe) and the lead's launcher run (the real GPU).
 
 ## launch.py — how a service is started, polled, stopped (`tools/pb/launch.py`, §3.4, §3.6)
 `python3 tools/pb/launch.py start|stop|status|smoke|list <service> --task <ID>` (`py -3.12 …` on win-laptop). A service's

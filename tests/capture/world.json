@@ -1,0 +1,5 @@
+[
+  {"id": "empty", "caption": "A new world: empty, at ×1, running", "frames": 5},
+  {"id": "dropped", "caption": "The Sun-like star dropped at the centre, the engine's DropPreset, one step taken", "actions": [{"preset": "sun"}, {"steps": 1}], "frames": 2},
+  {"id": "running", "caption": "200 steps through the real loop, then 60 frames at ×1", "actions": [{"steps": 200}], "frames": 60}
+]

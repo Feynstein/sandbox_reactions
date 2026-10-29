@@ -1816,20 +1816,29 @@
       ]
     },
     "desktop": {
-      "desc": "the desktop boot (contract §3.3, §3.4, §3.6, §5.4 G-DESK): launch.py smoke of the box's window route — game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) — reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); a case hands the port lock on only once 47811 binds again, and `race`, under the lock throughout, starts the window route straight behind a hand-over whose port a listener launch.py did not start holds for 10 s (M0-D51); `port-taken`, under the lock, holds 47811 throughout and starts the game straight on the box's route (launch.py refuses a held port): it prints SR-STATUS-PORT <n>, n in 47812–47830, and /status reads \"ready\" there within 90 s (M0-D99, contract §0.5 [M0-D99]); the build is the tree's own",
+      "desc": "the desktop boot (contract §3.3, §3.4, §3.6, §5.4 G-DESK): launch.py smoke of the box's window route — game-xvfb (private Xvfb, lavapipe) on linux-pc, game-offscreen on win-laptop (R15) — reads /status \"ready\" within 90 s, raised by the first presented frame (M0-T5), and the double-click launcher fed its Enter on the same route - starts, reaches ready, stops, leaves nothing running (M0-T6); a case hands the port lock on only once 47811 binds again, and `race`, under the lock throughout, starts the window route straight behind a hand-over whose port a listener launch.py did not start holds for 10 s (M0-D51); `port-taken`, under the lock, holds 47811 throughout and starts the game straight on the box's route (launch.py refuses a held port): it prints SR-STATUS-PORT <n>, n in 47812–47830, and /status reads \"ready\" there within 90 s (M0-D99, contract §0.5 [M0-D99]); `world`, on the same route, runs tests/capture/world.json — the frame loop in the window (M0-T84): a new world is empty on bg.space, the Sun-like preset dropped and 200 steps put a star in the window's centre, and status.line reads steps per frame > 0 (fps at ×1 printed); the build is the tree's own",
       "cases": [
         "window",
         "launcher",
         "race",
-        "port-taken"
+        "port-taken",
+        "world"
       ],
       "case_cmd": "bash tests/smoke.sh {case}",
-      "box": ["laserax-ai", "Laser2025-20"],
-      "expected": 4,
+      "box": [
+        "laserax-ai",
+        "Laser2025-20"
+      ],
+      "expected": 5,
       "timeout_s": 900,
       "paths": [
         "crates/sr-app/**",
         "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "assets/calibration.json",
         "tools/pb/launch.json",
         "tests/smoke.sh",
         "start.sh",
@@ -1842,7 +1851,9 @@
         "tests/cargo.sh",
         "tests/plants/status-*.patch",
         "tests/plants/launcher-*.patch",
-        "tests/plants/port-*.patch"
+        "tests/plants/port-*.patch",
+        "tests/capture/world.json",
+        "tests/plants/world-*.patch"
       ],
       "plants": [
         {
@@ -1864,6 +1875,10 @@
         {
           "id": "port-no-fallback",
           "patch": "tests/plants/port-no-fallback.patch"
+        },
+        {
+          "id": "world-not-drawn",
+          "patch": "tests/plants/world-not-drawn.patch"
         }
       ]
     },
@@ -1875,13 +1890,21 @@
         "no-webgpu"
       ],
       "case_cmd": "bash tests/web/check.sh {case}",
-      "box": ["laserax-ai", "Laser2025-20"],
+      "box": [
+        "laserax-ai",
+        "Laser2025-20"
+      ],
       "expected": 3,
       "timeout_s": 900,
       "paths": [
         "web/**",
         "crates/sr-app/**",
         "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "assets/calibration.json",
         "tests/web/**",
         "Cargo.toml",
         "Cargo.lock",
@@ -1913,18 +1936,27 @@
       ]
     },
     "capture": {
-      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; the build is the tree's own",
+      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own",
       "cases": [
         "smoke",
-        "refuse"
+        "refuse",
+        "actions"
       ],
       "case_cmd": "bash tests/capture/check.sh {case}",
-      "box": ["laserax-ai", "Laser2025-20"],
-      "expected": 2,
+      "box": [
+        "laserax-ai",
+        "Laser2025-20"
+      ],
+      "expected": 3,
       "timeout_s": 900,
       "paths": [
         "crates/sr-app/**",
         "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "assets/calibration.json",
         "tests/capture/**",
         "Cargo.toml",
         "Cargo.lock",
@@ -1937,6 +1969,10 @@
         {
           "id": "capture-no-captions",
           "patch": "tests/plants/capture-no-captions.patch"
+        },
+        {
+          "id": "capture-edge-ignored",
+          "patch": "tests/plants/capture-edge-ignored.patch"
         }
       ]
     },
@@ -2350,6 +2386,90 @@
         {
           "id": "frames-off-by-one",
           "patch": "tests/plants/frames-off-by-one.patch"
+        }
+      ]
+    },
+    "ui_topbar": {
+      "desc": "the top bar's view model (contract §4.2, §4.3, §4.10, §4.12; M0-T85): crates/sr-app/src/ui/topbar.rs computed from TimeControl - Pause/Play and Step, the rung buttons (each label byte-exact, none above TOP / 1.5, Max's last), the speed readout (time.speed, time.speed_capped under the cap, time.speed_max at Max, time.paused over both), the slow-down checkbox both ways, the selected rung, each key mapped (Space, period, 1-9, 0, + or =, -) and a numbered key past the ladder never landing on Max. The bin's own unit tests, `ui::topbar::` (cpu.sh's --bin mode). The plan spells the scope `ui-topbar`; R17 makes it `ui_topbar`. Plant topbar-above-top (a rung above TOP shown).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::topbar::tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 14,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-physics/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/topbar-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "topbar-above-top",
+          "patch": "tests/plants/topbar-above-top.patch"
+        }
+      ]
+    },
+    "ui_banner": {
+      "desc": "the banner's view model (contract §1.8.5, §1.9.4, §4.2, §4.3, §4.11; M0-T86): crates/sr-app/src/ui/banner.rs - the text and rung each automatic slow-down shows (ignition ×1 `banner.ignition`, the latch's core collapse and the supernova ×0.1), the banner kept until the player changes the rung, the setting off meaning no slow-down and no banner, only ever slower, each event once per object, and a Tracker core collapse that arrives after the latch already slowed the clock never a second banner. The bin's own unit tests, `ui::banner::` (cpu.sh's --bin mode). The plan spells the scope `ui-banner`; R17 makes it `ui_banner`. Plant banner-wrong-event (supernova shown for core collapse).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::banner",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 12,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-physics/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/banner-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "banner-wrong-event",
+          "patch": "tests/plants/banner-wrong-event.patch"
+        }
+      ]
+    },
+    "ui_world": {
+      "desc": "the world's actions in the top bar (contract §1.12, §2.8, §4.1, §4.2, §4.7, §4.10; M0-T87): crates/sr-app/src/ui/topbar.rs's WorldBar and view - edge.label with edge.leave and edge.bounce (a new world in leave, the choice both ways, at any time - D1: paused, at Max, with the dialog open), world.clear opening the dialog (world.clear_confirm, world.clear_yes, world.clear_no) as the Delete key does, Cancel closing it with no Clear, a Clear queued by yes alone and once, and the rung, the slow-down and the edge mode kept across it (the view is the left panel's, M0-T9x). The bin's own unit tests, `ui::topbar::world_tests::` (cpu.sh's --bin mode). The plan spells the scope `ui-world`; R17 makes it `ui_world`. Plant clear-without-confirm (the Clear button queues the Clear itself).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::topbar::world_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 7,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-physics/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/clear-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "clear-without-confirm",
+          "patch": "tests/plants/clear-without-confirm.patch"
         }
       ]
     }

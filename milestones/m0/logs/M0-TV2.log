@@ -1,0 +1,24 @@
+# M0-TV2 log — linux-pc (laserax-ai), 2026-10-29T15:31:38-04:00
+    Finished `release` profile [optimized] target(s) in 0.10s
+## probe: lavapipe step rate
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE a a.png 1760x940
+SR-CAPTURE-STATUS a llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE b b.png 1760x940
+SR-CAPTURE-STATUS b llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 256 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/4b968b89-6b59-4557-a0fd-8261946bff4b/scratchpad/probe
+wall 18.89 s
+## probe2: massive preset at x10, 20 + 29x100 steps
+SR-CAPTURE-STATUS m19 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m20 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m21 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m22 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m23 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m24 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m25 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m26 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m27 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE-STATUS m28 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 1 steps per frame · 600 × 400 cells
+Command terminated by signal 15
+wall 732.40 s
+## probe2 stopped by the agent at the lead's handoff (2026-10-29T15:45:17-04:00), 28 of 30 PNGs

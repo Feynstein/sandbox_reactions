@@ -93,7 +93,7 @@ async fn run() -> Result<(), String> {
                         fail(ERROR_DEVICE_LOST, &detail);
                     }
                 });
-                Ok(Box::new(SandboxApp::new()))
+                Ok(Box::new(SandboxApp::new(render)?))
             }),
         )
         .await

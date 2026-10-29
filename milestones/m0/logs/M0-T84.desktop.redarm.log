@@ -1,0 +1,667 @@
+==== 2026-10-29T14:29:04-04:00 desktop · clean · a fresh scratch copy of the tree
+== 2026-10-29T14:29:04-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:04-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:04-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:04-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:04-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 7.84 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-77ud9nm8/arm0/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3547911 stopped; its X server :99, pid 3547897 stopped
+game-xvfb: log /tmp/pb-redarm-77ud9nm8/arm0/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 4 s
+=== GO ===
+
+-- desktop[world] · exit=0 · 15.61 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 25 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.ajidmhlD6C
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 25 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 21.22 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.1s (log /tmp/pb-redarm-77ud9nm8/arm0/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 24.68 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.1s (log /tmp/pb-redarm-77ud9nm8/arm0/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3548725 stopped; its X server :99, pid 3548724 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 4 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[port-taken] · exit=0 · 27.89 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T14:29:32-04:00 desktop · plant port-handover-early · a fresh scratch copy of the tree
+planted port-handover-early: tests/plants/port-handover-early.patch -> tests/smoke.sh
+== 2026-10-29T14:29:32-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:32-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:32-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:32-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:32-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 7.79 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-77ud9nm8/arm1/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3549505 stopped; its X server :99, pid 3549487 stopped
+game-xvfb: log /tmp/pb-redarm-77ud9nm8/arm1/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 4 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 11.80 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-77ud9nm8/arm1/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3549922 stopped; its X server :99, pid 3549921 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 4 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[world] · exit=0 · 15.60 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 25 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.EIHbYv6aNX
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 25 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=1 · 21.78 s
+game-xvfb: port 47811 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL game-xvfb: port 47811 held by a process we did not start - not reusing
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+-- desktop[port-taken] · exit=0 · 25.24 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T14:29:57-04:00 desktop · plant status-never-ready · a fresh scratch copy of the tree
+==== 2026-10-29T14:29:57-04:00 desktop · plant launcher-no-stop · a fresh scratch copy of the tree
+planted launcher-no-stop: tests/plants/launcher-no-stop.patch -> start.sh, start.bat
+== 2026-10-29T14:29:58-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:58-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:58-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:58-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:29:58-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 7.84 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-77ud9nm8/arm3/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3551100 stopped; its X server :99, pid 3551087 stopped
+game-xvfb: log /tmp/pb-redarm-77ud9nm8/arm3/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 3 s
+=== GO ===
+
+-- desktop[world] · exit=0 · 15.50 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 26 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.agp7kNV3Jd
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 26 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 21.22 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.1s (log /tmp/pb-redarm-77ud9nm8/arm3/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[launcher] · exit=1 · 24.63 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.1s (log /tmp/pb-redarm-77ud9nm8/arm3/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+=== NO-GO: the launcher did not stop game-xvfb ===
+
+-- desktop[port-taken] · exit=0 · 27.89 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T14:30:26-04:00 desktop · plant launcher-stop-all · a fresh scratch copy of the tree
+planted launcher-stop-all: tests/plants/launcher-stop-all.patch -> start.sh, start.bat
+== 2026-10-29T14:30:26-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:30:26-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:30:26-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:30:26-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:30:26-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 8.09 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-77ud9nm8/arm4/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: pid 3552819 stopped; its X server :100, pid 3552814 stopped
+game-offscreen: nothing recorded
+web: pid 3552729 stopped
+services: 5, stopped: 5
+=== GO ===
+headless-boot stopped
+game stopped
+game-xvfb stopped
+game-offscreen stopped
+web stopped
+services: 5, running: 0
+=== GO ===
+=== NO-GO: the launcher stopped a service it did not start (the decoy web server) ===
+
+-- desktop[window] · exit=0 · 11.99 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-77ud9nm8/arm4/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3553141 stopped; its X server :100, pid 3553140 stopped
+game-xvfb: log /tmp/pb-redarm-77ud9nm8/arm4/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 8 s
+=== GO ===
+
+-- desktop[world] · exit=0 · 16.41 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 23 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.xbL0u9RyiC
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 23 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 25.98 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-77ud9nm8/arm4/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[port-taken] · exit=0 · 29.19 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T14:30:55-04:00 desktop · plant port-no-fallback · a fresh scratch copy of the tree
+planted port-no-fallback: tests/plants/port-no-fallback.patch -> crates/sr-app/src/status.rs
+== 2026-10-29T14:30:55-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:30:55-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:30:55-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:30:55-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:30:55-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 8.24 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.9s (log /tmp/pb-redarm-77ud9nm8/arm5/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3555923 stopped; its X server :99, pid 3555909 stopped
+game-xvfb: log /tmp/pb-redarm-77ud9nm8/arm5/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 4 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 12.30 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-77ud9nm8/arm5/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3556302 stopped; its X server :99, pid 3556301 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 4 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[world] · exit=0 · 16.15 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 25 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.IjEaZvNusa
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 25 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 25.88 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.3s (log /tmp/pb-redarm-77ud9nm8/arm5/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[port-taken] · exit=1 · 26.28 s
+SR-ERROR --status-port 47811: cannot listen on 127.0.0.1, nor on 47811–47830 (Address already in use (os error 98))
+=== NO-GO: port-taken: the game failed: SR-ERROR --status-port 47811: cannot listen on 127.0.0.1, nor on 47811–47830 (Address already in use (os error 98)) ===
+
+==== 2026-10-29T14:31:22-04:00 desktop · plant world-not-drawn · a fresh scratch copy of the tree
+planted world-not-drawn: tests/plants/world-not-drawn.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-29T14:31:22-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:31:22-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:31:22-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:31:22-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:31:22-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 8.14 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 4.0s (log /tmp/pb-redarm-77ud9nm8/arm6/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3557526 stopped; its X server :99, pid 3557509 stopped
+game-xvfb: log /tmp/pb-redarm-77ud9nm8/arm6/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 4 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 12.65 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 4.1s (log /tmp/pb-redarm-77ud9nm8/arm6/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3557869 stopped; its X server :99, pid 3557868 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 4 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[world] · exit=1 · 16.61 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 25 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.Ic0rGWYFeZ
+running world: the centre (880, 458) is bg.space: the star is not drawn
+=== NO-GO: the world is not in the window ===
+
+-- desktop[race] · exit=0 · 25.98 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.1s (log /tmp/pb-redarm-77ud9nm8/arm6/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[port-taken] · exit=0 · 29.44 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T14:32:01-04:00 desktop · clean · a fresh scratch copy of the tree
+== 2026-10-29T14:32:01-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:01-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:01-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:01-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:01-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 7.79 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-djzpvhx6/arm0/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3559523 stopped; its X server :99, pid 3559506 stopped
+game-xvfb: log /tmp/pb-redarm-djzpvhx6/arm0/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 4 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 11.85 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.7s (log /tmp/pb-redarm-djzpvhx6/arm0/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3559856 stopped; its X server :99, pid 3559855 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 4 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[world] · exit=0 · 15.90 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 25 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.HWBHZhwCP6
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 25 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 25.23 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.1s (log /tmp/pb-redarm-djzpvhx6/arm0/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[port-taken] · exit=0 · 28.45 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T14:32:30-04:00 desktop · plant port-handover-early · a fresh scratch copy of the tree
+planted port-handover-early: tests/plants/port-handover-early.patch -> tests/smoke.sh
+== 2026-10-29T14:32:30-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:30-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:30-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:30-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:30-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=1 · 13.95 s
+game-xvfb: port 47811 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL game-xvfb: port 47811 held by a process we did not start - not reusing
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+-- desktop[world] · exit=0 · 14.90 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 26 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.R55092ZVlT
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 26 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 17.36 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.1s (log /tmp/pb-redarm-djzpvhx6/arm1/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3561598 stopped; its X server :100, pid 3561597 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 4 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[window] · exit=0 · 20.57 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.1s (log /tmp/pb-redarm-djzpvhx6/arm1/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3561842 stopped; its X server :99, pid 3561841 stopped
+game-xvfb: log /tmp/pb-redarm-djzpvhx6/arm1/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 16 s
+=== GO ===
+
+-- desktop[port-taken] · exit=1 · 20.67 s
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+OSError: [Errno 98] Address already in use
+=== NO-GO: the listener on 47811 never came up (the port taken?) ===
+
+==== 2026-10-29T14:32:51-04:00 desktop · plant status-never-ready · a fresh scratch copy of the tree
+planted status-never-ready: tests/plants/status-never-ready.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-29T14:32:51-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:51-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:51-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:51-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:32:51-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[world] · exit=0 · 18.06 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 18 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.CKwXgGyf2F
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 18 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[window] · exit=1 · 94.14 s
+game-xvfb: not ready within 90s (log /tmp/pb-redarm-djzpvhx6/arm2/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3562474 stopped; its X server :99, pid 3562461 stopped
+game-xvfb: log /tmp/pb-redarm-djzpvhx6/arm2/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: not ready within 90s (log /tmp/pb-redarm-djzpvhx6/arm2/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+-- desktop[launcher] · exit=1 · 184.49 s
+game-xvfb: not ready within 90s (log /tmp/pb-redarm-djzpvhx6/arm2/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 0
+FAIL game-xvfb: not ready within 90s (log /tmp/pb-redarm-djzpvhx6/arm2/milestones/m0/logs/launcher.launch.game-xvfb.log)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3567886 stopped; its X server :99, pid 3567884 stopped
+services: 1, stopped: 1
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+-- desktop[port-taken] · exit=1 · 274.67 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+=== NO-GO: port-taken: no ready within 90 s (SR-STATUS-PORT 47812, last status booting) ===
+
+-- desktop[race] · exit=1 · 374.89 s
+game-xvfb: not ready within 90s (log /tmp/pb-redarm-djzpvhx6/arm2/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 0
+FAIL game-xvfb: not ready within 90s (log /tmp/pb-redarm-djzpvhx6/arm2/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+==== 2026-10-29T14:39:06-04:00 desktop · plant launcher-no-stop · a fresh scratch copy of the tree
+planted launcher-no-stop: tests/plants/launcher-no-stop.patch -> start.sh, start.bat
+== 2026-10-29T14:39:06-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:39:06-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:39:06-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:39:06-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:39:06-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 8.74 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 4.3s (log /tmp/pb-redarm-djzpvhx6/arm3/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3590818 stopped; its X server :99, pid 3590806 stopped
+game-xvfb: log /tmp/pb-redarm-djzpvhx6/arm3/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 5 s
+=== GO ===
+
+-- desktop[world] · exit=0 · 18.11 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 20 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.qSjWojQjoC
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 20 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 23.32 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 4.3s (log /tmp/pb-redarm-djzpvhx6/arm3/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[port-taken] · exit=0 · 27.53 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+-- desktop[launcher] · exit=1 · 31.39 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.5s (log /tmp/pb-redarm-djzpvhx6/arm3/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+=== NO-GO: the launcher did not stop game-xvfb ===
+
+==== 2026-10-29T14:39:37-04:00 desktop · plant launcher-stop-all · a fresh scratch copy of the tree
+planted launcher-stop-all: tests/plants/launcher-stop-all.patch -> start.sh, start.bat
+== 2026-10-29T14:39:38-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:39:38-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:39:38-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:39:38-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:39:38-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 10.39 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 5.2s (log /tmp/pb-redarm-djzpvhx6/arm4/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: pid 3595501 stopped; its X server :100, pid 3595489 stopped
+game-offscreen: nothing recorded
+web: pid 3595381 stopped
+services: 5, stopped: 5
+=== GO ===
+headless-boot stopped
+game stopped
+game-xvfb stopped
+game-offscreen stopped
+web stopped
+services: 5, running: 0
+=== GO ===
+=== NO-GO: the launcher stopped a service it did not start (the decoy web server) ===
+
+-- desktop[window] · exit=0 · 17.45 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 7.0s (log /tmp/pb-redarm-djzpvhx6/arm4/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3596122 stopped; its X server :100, pid 3596121 stopped
+game-xvfb: log /tmp/pb-redarm-djzpvhx6/arm4/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 13 s
+=== GO ===
+
+-- desktop[world] · exit=0 · 19.96 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 19 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.yJwOsWR0TD
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 19 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 32.43 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 4.7s (log /tmp/pb-redarm-djzpvhx6/arm4/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[port-taken] · exit=0 · 36.94 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T14:40:14-04:00 desktop · plant port-no-fallback · a fresh scratch copy of the tree
+planted port-no-fallback: tests/plants/port-no-fallback.patch -> crates/sr-app/src/status.rs
+== 2026-10-29T14:40:15-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:40:15-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:40:15-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:40:15-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:40:15-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[world] · exit=0 · 16.70 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 21 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.KgcPbAtjJB
+world drawn at s = 2 (1760x940); centre (253, 255, 255); 1 steps per frame; 21 fps at x1 (the box's window route)
+world game-xvfb: built in 4 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 18.85 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 4.1s (log /tmp/pb-redarm-djzpvhx6/arm5/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 4 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 23.17 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.9s (log /tmp/pb-redarm-djzpvhx6/arm5/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3603592 stopped; its X server :99, pid 3603591 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 4 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[port-taken] · exit=1 · 23.56 s
+SR-ERROR --status-port 47811: cannot listen on 127.0.0.1, nor on 47811–47830 (Address already in use (os error 98))
+=== NO-GO: port-taken: the game failed: SR-ERROR --status-port 47811: cannot listen on 127.0.0.1, nor on 47811–47830 (Address already in use (os error 98)) ===
+
+-- desktop[window] · exit=0 · 27.07 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 3.3s (log /tmp/pb-redarm-djzpvhx6/arm5/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3604186 stopped; its X server :99, pid 3604185 stopped
+game-xvfb: log /tmp/pb-redarm-djzpvhx6/arm5/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 4 s, booted and checked in 23 s
+=== GO ===
+
+==== 2026-10-29T14:40:42-04:00 desktop · plant world-not-drawn · a fresh scratch copy of the tree
+planted world-not-drawn: tests/plants/world-not-drawn.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-29T14:40:42-04:00 desktop[window] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:40:42-04:00 desktop[launcher] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:40:42-04:00 desktop[port-taken] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:40:42-04:00 desktop[world] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T14:40:42-04:00 desktop[race] · task M0-T84 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 9.99 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 5.0s (log /tmp/pb-redarm-djzpvhx6/arm6/milestones/m0/logs/M0-T84.launch.game-xvfb.log)
+game-xvfb: pid 3605256 stopped; its X server :99, pid 3605245 stopped
+game-xvfb: log /tmp/pb-redarm-djzpvhx6/arm6/milestones/m0/logs/M0-T84.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 5 s, booted and checked in 5 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 14.54 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 4.1s (log /tmp/pb-redarm-djzpvhx6/arm6/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 3606076 stopped; its X server :99, pid 3606075 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 5 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[world] · exit=1 · 19.20 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 20 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 /tmp/tmp.KPTDyRlNlS
+running world: the centre (880, 458) is bg.space: the star is not drawn
+=== NO-GO: the world is not in the window ===
+
+-- desktop[port-taken] · exit=0 · 20.30 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 5 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+-- desktop[race] · exit=0 · 35.09 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 4.5s (log /tmp/pb-redarm-djzpvhx6/arm6/milestones/m0/logs/M0-T84-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 5 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+

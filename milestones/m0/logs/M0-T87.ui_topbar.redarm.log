@@ -1,0 +1,109 @@
+==== 2026-10-29T15:23:55-04:00 ui_topbar · clean · a fresh scratch copy of the tree
+== 2026-10-29T15:23:56-04:00 ui_topbar · task M0-T87 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::topbar::tests
+-- ui_topbar · exit=0 · 3.98 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-hu5ajcak/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-hu5ajcak/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-hu5ajcak/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.89s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 14 tests
+test ui::topbar::tests::every_key_is_mapped ... ok
+test ui::topbar::tests::a_numbered_key_past_the_ladder_does_nothing_and_never_lands_on_max ... ok
+test ui::topbar::tests::labels_are_byte_exact ... ok
+test ui::topbar::tests::numbered_keys_pick_the_numbered_rungs_in_order_and_zero_picks_max ... ok
+test ui::topbar::tests::paused_reads_paused_and_the_button_reads_play ... ok
+test ui::topbar::tests::max_is_the_last_button_and_the_only_one_not_a_number ... ok
+test ui::topbar::tests::plus_and_minus_walk_the_ladder_and_stop_at_its_ends ... ok
+test ui::topbar::tests::rungs_above_top_are_never_shown ... ok
+test ui::topbar::tests::step_pauses_a_running_clock_and_steps_a_paused_one ... ok
+test ui::topbar::tests::the_readout_at_a_rung_that_runs_as_asked ... ok
+test ui::topbar::tests::the_readout_at_max_always_shows_the_running_speed ... ok
+test ui::topbar::tests::the_readout_names_the_cap ... ok
+test ui::topbar::tests::the_selected_rung_is_one_and_follows_the_clock ... ok
+test ui::topbar::tests::the_slow_down_checkbox_both_ways ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.00s
+
+
+==== 2026-10-29T15:23:55-04:00 ui_topbar · plant topbar-above-top · a fresh scratch copy of the tree
+==== 2026-10-29T15:24:16-04:00 ui_topbar · clean · a fresh scratch copy of the tree
+== 2026-10-29T15:24:17-04:00 ui_topbar · task M0-T87 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::topbar::tests
+-- ui_topbar · exit=0 · 4.02 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-85ff_e1d/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-85ff_e1d/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-85ff_e1d/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.94s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 14 tests
+test ui::topbar::tests::a_numbered_key_past_the_ladder_does_nothing_and_never_lands_on_max ... ok
+test ui::topbar::tests::every_key_is_mapped ... ok
+test ui::topbar::tests::numbered_keys_pick_the_numbered_rungs_in_order_and_zero_picks_max ... ok
+test ui::topbar::tests::rungs_above_top_are_never_shown ... ok
+test ui::topbar::tests::max_is_the_last_button_and_the_only_one_not_a_number ... ok
+test ui::topbar::tests::labels_are_byte_exact ... ok
+test ui::topbar::tests::paused_reads_paused_and_the_button_reads_play ... ok
+test ui::topbar::tests::plus_and_minus_walk_the_ladder_and_stop_at_its_ends ... ok
+test ui::topbar::tests::step_pauses_a_running_clock_and_steps_a_paused_one ... ok
+test ui::topbar::tests::the_readout_at_a_rung_that_runs_as_asked ... ok
+test ui::topbar::tests::the_readout_at_max_always_shows_the_running_speed ... ok
+test ui::topbar::tests::the_readout_names_the_cap ... ok
+test ui::topbar::tests::the_slow_down_checkbox_both_ways ... ok
+test ui::topbar::tests::the_selected_rung_is_one_and_follows_the_clock ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.00s
+
+
+==== 2026-10-29T15:24:16-04:00 ui_topbar · plant topbar-above-top · a fresh scratch copy of the tree
+planted topbar-above-top: tests/plants/topbar-above-top.patch -> crates/sr-app/src/ui/topbar.rs
+== 2026-10-29T15:24:17-04:00 ui_topbar · task M0-T87 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::topbar::tests
+-- ui_topbar · exit=101 · 7.84 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-85ff_e1d/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-85ff_e1d/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-85ff_e1d/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 3.81s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 14 tests
+test ui::topbar::tests::a_numbered_key_past_the_ladder_does_nothing_and_never_lands_on_max ... ok
+test ui::topbar::tests::every_key_is_mapped ... ok
+test ui::topbar::tests::labels_are_byte_exact ... ok
+test ui::topbar::tests::max_is_the_last_button_and_the_only_one_not_a_number ... FAILED
+test ui::topbar::tests::numbered_keys_pick_the_numbered_rungs_in_order_and_zero_picks_max ... ok
+test ui::topbar::tests::paused_reads_paused_and_the_button_reads_play ... ok
+test ui::topbar::tests::plus_and_minus_walk_the_ladder_and_stop_at_its_ends ... ok
+test ui::topbar::tests::step_pauses_a_running_clock_and_steps_a_paused_one ... ok
+test ui::topbar::tests::rungs_above_top_are_never_shown ... FAILED
+test ui::topbar::tests::the_readout_at_a_rung_that_runs_as_asked ... ok
+test ui::topbar::tests::the_readout_at_max_always_shows_the_running_speed ... ok
+test ui::topbar::tests::the_readout_names_the_cap ... ok
+test ui::topbar::tests::the_selected_rung_is_one_and_follows_the_clock ... ok
+test ui::topbar::tests::the_slow_down_checkbox_both_ways ... ok
+
+failures:
+
+---- ui::topbar::tests::max_is_the_last_button_and_the_only_one_not_a_number stdout ----
+
+thread 'ui::topbar::tests::max_is_the_last_button_and_the_only_one_not_a_number' (4030599) panicked at crates/sr-app/src/ui/topbar.rs:316:13:
+assertion `left == right` failed
+  left: Select(7)
+ right: Select(8)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::topbar::tests::rungs_above_top_are_never_shown stdout ----
+
+thread 'ui::topbar::tests::rungs_above_top_are_never_shown' (4030603) panicked at crates/sr-app/src/ui/topbar.rs:305:9:
+assertion `left == right` failed
+  left: ["×0.1", "×0.3", "×1", "×3", "×10", "×30", "×100", "×1000", "Max"]
+ right: ["×0.1", "×0.3", "×1", "×3", "×10", "×30", "×100", "Max"]
+
+
+failures:
+    ui::topbar::tests::max_is_the_last_button_and_the_only_one_not_a_number
+    ui::topbar::tests::rungs_above_top_are_never_shown
+
+test result: FAILED. 12 passed; 2 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

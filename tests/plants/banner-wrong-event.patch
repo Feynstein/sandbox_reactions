@@ -1,0 +1,15 @@
+--- a/crates/sr-app/src/ui/banner.rs
++++ b/crates/sr-app/src/ui/banner.rs
+@@ -18,7 +18,11 @@
+ /// The banner as the clock stands: the text of the event that slowed it, none after the player changes the rung (or when
+ /// nothing slowed it).
+ pub fn view(time: &TimeControl) -> Option<Banner> {
+-    time.banner().map(|event| Banner { text: strings::get(event.banner_key()).to_string() })
++    // Planted: a core collapse worded as a supernova (M0-T86's plant).
++    time.banner().map(|event| {
++        let event = if event == Event::CoreCollapse { Event::Supernova } else { event };
++        Banner { text: strings::get(event.banner_key()).to_string() }
++    })
+ }
+ 
+ /// The events the slow-down answers, by the id the observers write (`sr_engine::watch::RunEvent::kind`). `sink_formed` is

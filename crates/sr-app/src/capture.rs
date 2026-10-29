@@ -3,7 +3,7 @@
 //! run, takes one screenshot through eframe's viewport command, writes `<dir>/<id>.png` with `png`, and at the end
 //! `<dir>/captions.json` in review_page.py's shape (PLAYBOOK §A.4), then closes the window — exit 0.
 //!
-//! Only the actions that exist today are built (`pause`, `steps`). Every later block that builds a feature with a §3.3
+//! Only the actions that exist today are built (`pause`, `steps`, `preset`, `rung`, `slowdown`, `edge`). Every later block that builds a feature with a §3.3
 //! action adds the action to `Action`, `parse_action` and the app's `apply`, and takes it off `NOT_BUILT`. A script that
 //! names an action not built yet is refused before the window opens — `SR-ERROR` naming it, exit 4.
 //!
@@ -17,19 +17,28 @@ use std::sync::{Arc, Mutex, PoisonError};
 
 use eframe::egui;
 use serde_json::{json, Value};
+use sr_engine::scene::EdgeMode;
 
 /// A §3.3 action built so far.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Action {
     /// `{"pause": true|false}`
     Pause(bool),
-    /// `{"steps": n}` — n simulation steps, paused or not.
+    /// `{"steps": n}` — n simulation steps through the real frame loop, paused or not.
     Steps(u64),
+    /// `{"preset": "sun" | "massive" | "giant"}` — the engine's DropPreset at the world's centre (until the panel's, M0-T90).
+    Preset(String),
+    /// `{"rung": k}` — the key k of the bar (§4.10): 1…9 the numbered rungs in order, 0 Max. A key past the ladder (it is cut
+    /// at TOP / 1.5, §1.8.2) does nothing, as pressing it does.
+    Rung(usize),
+    /// `{"slowdown": true|false}` — the bar's checkbox.
+    SlowDown(bool),
+    /// `{"edge": "leave|bounce"}` — the bar's edge choice.
+    Edge(EdgeMode),
 }
 
 /// §3.3's actions whose blocks have not built them: refused by name, not as unknown.
-const NOT_BUILT: &[&str] =
-    &["preset", "tool", "element", "paint", "view", "rung", "hover", "select", "edge", "slowdown"];
+const NOT_BUILT: &[&str] = &["tool", "element", "paint", "view", "hover", "select"];
 
 /// Most frames one step may wait: a typo of a few zeros would hang a run for hours.
 const MAX_FRAMES: u64 = 100_000;
@@ -64,6 +73,27 @@ fn parse_action(step: &str, value: &Value) -> Result<Action, String> {
             .as_u64()
             .map(Action::Steps)
             .ok_or_else(|| format!("step {step:?}: action \"steps\" takes a whole number, got {arg}")),
+        "preset" => arg
+            .as_str()
+            .filter(|n| sr_engine::scene::PRESETS.contains(n))
+            .map(|n| Action::Preset(n.to_string()))
+            .ok_or_else(|| {
+                format!("step {step:?}: action \"preset\" takes one of {:?}, got {arg}", sr_engine::scene::PRESETS)
+            }),
+        "rung" => arg
+            .as_u64()
+            .filter(|k| *k <= 9)
+            .map(|k| Action::Rung(k as usize))
+            .ok_or_else(|| format!("step {step:?}: action \"rung\" takes a key from 0 to 9, got {arg}")),
+        "slowdown" => arg
+            .as_bool()
+            .map(Action::SlowDown)
+            .ok_or_else(|| format!("step {step:?}: action \"slowdown\" takes true or false, got {arg}")),
+        "edge" => arg
+            .as_str()
+            .and_then(|m| EdgeMode::parse(m).ok())
+            .map(Action::Edge)
+            .ok_or_else(|| format!("step {step:?}: action \"edge\" takes \"leave\" or \"bounce\", got {arg}")),
         other if NOT_BUILT.contains(&other) => Err(format!(
             "step {step:?}: action {other:?} is not built yet (the block that builds its feature adds it to capture.rs)"
         )),
@@ -144,6 +174,8 @@ pub struct Driver {
     phase: Phase,
     captions: Vec<Value>,
     outcome: Arc<Mutex<Outcome>>,
+    /// The status bar's text as the step's last frame drew it, printed with the step's PNG.
+    status_line: String,
 }
 
 /// What the app does at the top of a pass.
@@ -156,7 +188,13 @@ pub struct Begin {
 impl Driver {
     pub fn new(steps: Vec<Step>, script: &Path, out: PathBuf, outcome: Arc<Mutex<Outcome>>) -> Self {
         let script_name = script.file_name().map_or_else(|| "script.json".into(), |n| n.to_string_lossy().into_owned());
-        Self { steps, out, script_name, index: 0, phase: Phase::Pending, captions: Vec::new(), outcome, }
+        Self { steps, out, script_name, index: 0, phase: Phase::Pending, captions: Vec::new(), outcome, status_line: String::new() }
+    }
+
+    /// The app could not do a step's action: the run fails with `message`, exit 3.
+    pub fn abort(&mut self, ctx: &egui::Context, message: String) {
+        let id = self.steps[self.index].id.clone();
+        self.fail(ctx, format!("capture {id:?}: {message}"));
     }
 
     fn fail(&mut self, ctx: &egui::Context, message: String) {
@@ -219,10 +257,12 @@ impl Driver {
         begin
     }
 
-    /// The bottom of a pass: count it, and ask for the screenshot after the step's last frame.
-    pub fn end(&mut self, ctx: &egui::Context) {
+    /// The bottom of a pass: count it, and ask for the screenshot after the step's last frame. `status_line` is the status
+    /// bar's text as this pass drew it.
+    pub fn end(&mut self, ctx: &egui::Context, status_line: &str) {
         if let Phase::Counting(left) = self.phase {
             if left <= 1 {
+                self.status_line = status_line.to_string();
                 self.phase = Phase::Waiting(0);
                 self.request(ctx);
             } else {
@@ -239,6 +279,7 @@ impl Driver {
         write_png(&self.out.join(&file), w as u32, h as u32, &rgb)
             .map_err(|e| format!("capture {:?}: cannot write {file} ({e})", step.id))?;
         println!("SR-CAPTURE {} {file} {w}x{h}", step.id);
+        println!("SR-CAPTURE-STATUS {} {}", step.id, self.status_line);
         self.captions.push(json!({
             "id": step.id,
             "file": file,

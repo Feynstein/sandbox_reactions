@@ -1,0 +1,11 @@
+[
+  {"id": "start", "caption": "A new world: the top bar at ×1, running, the slow-down on", "frames": 3},
+  {"id": "paused", "caption": "Paused through the bar: Play, Paused, one step taken", "actions": [{"pause": true}, {"steps": 1}], "frames": 3},
+  {"id": "dropped", "caption": "Running again, the Sun-like star dropped at the centre", "actions": [{"pause": false}, {"preset": "sun"}, {"steps": 1}], "frames": 2},
+  {"id": "stepped", "caption": "200 steps through the real loop", "actions": [{"steps": 200}], "frames": 3},
+  {"id": "rung", "caption": "Rung key 5: the fifth numbered rung, ×10, in accent", "actions": [{"rung": 5}], "frames": 3},
+  {"id": "slowdown", "caption": "The slow-down checkbox cleared", "actions": [{"slowdown": false}], "frames": 3},
+  {"id": "rung-max", "caption": "Rung key 0: Max, the readout showing the running speed", "actions": [{"rung": 0}], "frames": 6},
+  {"id": "edge", "caption": "World edge: Bounce back chosen in the bar, paused", "actions": [{"pause": true}, {"edge": "bounce"}], "frames": 3},
+  {"id": "edge-leave", "caption": "World edge: Leave for good chosen again, paused", "actions": [{"edge": "leave"}], "frames": 3}
+]

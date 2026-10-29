@@ -1,0 +1,13 @@
+--- a/crates/sr-app/src/ui/topbar.rs
++++ b/crates/sr-app/src/ui/topbar.rs
+@@ -80,8 +80,9 @@
+                 Some(Effect::Edge(mode))
+             }
+             Command::OpenClear => {
++                // Planted: the button asks for the Clear itself, the dialog opened for show (M0-T87's plant).
+                 self.dialog = true;
+-                None
++                Some(Effect::Clear)
+             }
+             Command::CancelClear => {
+                 self.dialog = false;

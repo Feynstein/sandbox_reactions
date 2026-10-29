@@ -8,7 +8,8 @@
 # `game-xvfb` (the private Xvfb, lavapipe) on linux-pc, `game-offscreen` on win-laptop (R15; contract §6.6) — whose
 # /status must read "ready". `race` is its third (M0-D51): the port lock's hand-over, raced on purpose. `port-taken` its fourth
 # (M0-D99): 47811 held, the game serves /status on the next free port and prints it. Ends in `=== GO ===` or
-# `=== NO-GO: <reason> ===`.
+# `=== NO-GO: <reason> ===`. `world` is its fifth (M0-T84): the frame loop in the window — tests/capture/world.json on the same
+# route, the world drawn in the window's centre (§1.11).
 source "$(dirname "${BASH_SOURCE[0]}")/cargo.sh"
 service="${1:-}"
 [ -n "$service" ] || { echo "=== NO-GO: usage: bash tests/smoke.sh <service> ==="; exit 1; }
@@ -20,10 +21,78 @@ esac
 launcher=0; [ "$service" = "launcher" ] && { launcher=1; service="$window"; }
 race=0; [ "$service" = "race" ] && { race=1; service="$window"; }
 taken=0; [ "$service" = "port-taken" ] && { taken=1; service="$window"; }
+world=0; [ "$service" = "world" ] && { world=1; service="$window"; }
 cd "$_sr_root" || exit 1
 start=$SECONDS
 sr_build_app "$exe" || { echo "=== NO-GO: cargo build --release -p sr-app failed ==="; exit 1; }
 built=$((SECONDS - start))
+
+if [ $world -eq 1 ]; then
+  # `world` (M0-T84, G-DESK): the frame loop in the window. tests/capture/world.json on the box's window route — a new world
+  # (empty: every pixel of the world's area is bg.space #05070D, which also proves the cell image is not drawn twice
+  # sRGB-encoded), then the Sun-like preset dropped and 200 steps through the real loop. Pass: exit 0; `empty`'s window centre
+  # and its world's corners are bg.space exactly; `running`'s centre is not; its status line's steps per frame > 0. The fps
+  # at ×1 is printed. No port, no lock: the capture serves no /status.
+  case "$(uname -s)" in
+    MINGW* | MSYS* | CYGWIN*) route=(--offscreen-window); runner=() ;;
+    *) route=(--adapter llvmpipe)
+       runner=(xvfb-run -a -s "-screen 0 1920x1080x24" env -u WAYLAND_DISPLAY -u XDG_SESSION_TYPE) ;;
+  esac
+  dir="$(mktemp -d)"; trap 'rm -rf "$dir"' EXIT
+  out="$("${runner[@]}" "build/target/release/sandbox-reactions$exe" "${route[@]}" --capture tests/capture/world.json --out "$dir" 2>&1)"; rc=$?
+  echo "$out" | grep -v '^$' | tail -n 8
+  [ $rc -eq 0 ] || { echo "=== NO-GO: the capture run exited $rc, expected 0 ==="; exit 1; }
+  echo "$out" | grep -q '^SR-CAPTURE DONE 3 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 3' line ==="; exit 1; }
+  printf '%s\n' "$out" > "$dir/stdout.txt"
+  $PY -I - "$dir" <<'PY' || { echo "=== NO-GO: the world is not in the window ==="; exit 1; }
+import re, struct, sys, zlib
+d = sys.argv[1]
+BG = (0x05, 0x07, 0x0D)
+W, H, TOP, BAR = 600, 400, 44, 24  # the world's cells (§1.11), the top bar's and the status bar's heights (§4.2)
+def read(name):
+    raw = open(f"{d}/{name}.png", "rb").read(); pos, idat, ihdr = 8, b"", None
+    while pos < len(raw):
+        n, kind = struct.unpack(">I4s", raw[pos:pos + 8]); body = raw[pos + 8:pos + 8 + n]
+        if kind == b"IHDR": ihdr = struct.unpack(">IIBBBBB", body)
+        if kind == b"IDAT": idat += body
+        pos += 12 + n
+    w, h, depth, ctype = ihdr[:4]
+    if (depth, ctype) != (8, 2): sys.exit(f"{name}.png: expected 8-bit RGB, got depth {depth} type {ctype}")
+    data, stride, rows, prev, i = zlib.decompress(idat), w * 3, [], bytearray(w * 3), 0
+    for _ in range(h):
+        f = data[i]; line = bytearray(data[i + 1:i + 1 + stride]); i += 1 + stride
+        for x in range(stride):
+            a = line[x - 3] if x >= 3 else 0; b = prev[x]; c = prev[x - 3] if x >= 3 else 0
+            if f == 1: line[x] = (line[x] + a) & 255
+            elif f == 2: line[x] = (line[x] + b) & 255
+            elif f == 3: line[x] = (line[x] + (a + b) // 2) & 255
+            elif f == 4:
+                p = a + b - c; pa, pb, pc = abs(p - a), abs(p - b), abs(p - c)
+                line[x] = (line[x] + (a if pa <= pb and pa <= pc else b if pb <= pc else c)) & 255
+        rows.append(line); prev = line
+    return w, h, lambda x, y: tuple(rows[y][3 * x:3 * x + 3])
+w, h, empty = read("empty")
+_, _, running = read("running")
+s = max(1, min(w // W, (h - TOP - BAR) // H))                # the integer scale (§1.11), 2 in the default window
+x0, y0 = (w - W * s) // 2, TOP + (h - TOP - BAR - H * s) // 2
+cx, cy = w // 2, TOP + (h - TOP - BAR) // 2
+for name, (x, y) in {"centre": (cx, cy), "top-left cell": (x0, y0), "bottom-right cell": (x0 + W * s - 1, y0 + H * s - 1)}.items():
+    if empty(x, y) != BG:
+        sys.exit(f"empty world, {name} ({x}, {y}): {empty(x, y)}, expected bg.space {BG}")
+if running(cx, cy) == BG:
+    sys.exit(f"running world: the centre ({cx}, {cy}) is bg.space: the star is not drawn")
+text = open(f"{d}/stdout.txt", encoding="utf-8").read()
+m = re.search(r"^SR-CAPTURE-STATUS running .* · (\d+) fps · (\d+) steps per frame · (\d+) × (\d+) cells$", text, re.M)
+if not m: sys.exit("no `SR-CAPTURE-STATUS running` line in status.line's shape")
+fps, steps, cw, ch = map(int, m.groups())
+if steps < 1: sys.exit(f"status.line reads {steps} steps per frame, expected > 0")
+if (cw, ch) != (W, H): sys.exit(f"status.line reads {cw} × {ch} cells, expected {W} × {H}")
+print(f"world drawn at s = {s} ({w}x{h}); centre {running(cx, cy)}; {steps} steps per frame; {fps} fps at x1 (the box's window route)")
+PY
+  echo "world $service: built in $built s, the empty world on bg.space, the star drawn, steps per frame > 0"
+  echo "=== GO ==="
+  exit 0
+fi
 
 # The desktop scope's cases run in parallel yet share launch.json's port 47811 and one pid file (M0-T6): take a lock keyed
 # on the port, outside any tree, so two cases (or a clean arm and a plant's) boot one at a time. flock, else a mkdir lock

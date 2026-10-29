@@ -1,0 +1,30 @@
+== 2026-10-29T14:59:39-04:00 ui_topbar · task M0-T85 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::topbar
+-- ui_topbar · exit=0 · 0.73 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on shared package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.64s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 14 tests
+test ui::topbar::tests::every_key_is_mapped ... ok
+test ui::topbar::tests::labels_are_byte_exact ... ok
+test ui::topbar::tests::max_is_the_last_button_and_the_only_one_not_a_number ... ok
+test ui::topbar::tests::a_numbered_key_past_the_ladder_does_nothing_and_never_lands_on_max ... ok
+test ui::topbar::tests::plus_and_minus_walk_the_ladder_and_stop_at_its_ends ... ok
+test ui::topbar::tests::numbered_keys_pick_the_numbered_rungs_in_order_and_zero_picks_max ... ok
+test ui::topbar::tests::rungs_above_top_are_never_shown ... ok
+test ui::topbar::tests::paused_reads_paused_and_the_button_reads_play ... ok
+test ui::topbar::tests::step_pauses_a_running_clock_and_steps_a_paused_one ... ok
+test ui::topbar::tests::the_readout_at_a_rung_that_runs_as_asked ... ok
+test ui::topbar::tests::the_readout_at_max_always_shows_the_running_speed ... ok
+test ui::topbar::tests::the_readout_names_the_cap ... ok
+test ui::topbar::tests::the_selected_rung_is_one_and_follows_the_clock ... ok
+test ui::topbar::tests::the_slow_down_checkbox_both_ways ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 19 filtered out; finished in 0.00s
+
+

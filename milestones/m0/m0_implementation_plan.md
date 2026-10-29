@@ -308,12 +308,12 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D115 | BUILD | Three plants no longer apply since M0-D110 rewrote the Δt reduction: dt-empty-box-unbounded and dt-cfl-one (reduce.wgsl) and cfl-gpu (step/dt.rs) read ERROR in the Phase 13 sweep, so `dt`, `dump`, `cpu_gpu` and `observe_run` cannot prove their red-arm and `cpu_gpu` has no working plant | AFTER M0-D114 | DONE (2026-10-29 14:11) |
 | M0-D116 | BUILD | Two plants no longer apply since M0-T82 added the headless frames: until-never-met (headless.rs, the frame block above its hunk) and calibrate-checkpoint-without-observers (calibrate.rs, `frames: None` inside its context — M0-D104's break again) read ERROR in the Phase 13 sweep | AFTER M0-D115 | DONE (2026-10-29 14:13, started 14:13) |
 | M0-TC11 | MOVE | Compaction — Phase 13's close: fifteen closed blocks to stub, more than ten (PLAYBOOK §8, §11) | AFTER M0-D114 | DONE (2026-10-29 14:16) |
-| M0-T84 | BUILD | The world in the window: the frame loop, interpolation, the integer scale | AFTER M0-V11 | TODO |
-| M0-T85 | BUILD | The top bar: time controls, the speed readout, the slow-down setting, time keys | AFTER M0-T84 | TODO |
-| M0-T86 | BUILD | The banner and the automatic slow-down in the app | AFTER M0-T85 | TODO |
-| M0-T87 | BUILD | World actions: the edge choice and Clear world with its dialog | AFTER M0-T86 | TODO |
-| M0-T88 | BUILD | Docs: running.md (the window), time_control.md (the app's loop); lot 12 rows | AFTER M0-T87 | TODO |
-| M0-TV2 | BUILD | UI/UX pass: the world and its time | AFTER M0-T88 | TODO |
+| M0-T84 | BUILD | The world in the window: the frame loop, interpolation, the integer scale | AFTER M0-V11 | DONE (2026-10-29 14:41) |
+| M0-T85 | BUILD | The top bar: time controls, the speed readout, the slow-down setting, time keys | AFTER M0-T84 | DONE (2026-10-29 15:06) |
+| M0-T86 | BUILD | The banner and the automatic slow-down in the app | AFTER M0-T85 | DONE (2026-10-29 15:14) |
+| M0-T87 | BUILD | World actions: the edge choice and Clear world with its dialog | AFTER M0-T86 | DONE (2026-10-29 15:24) |
+| M0-T88 | BUILD | Docs: running.md (the window), time_control.md (the app's loop); lot 12 rows | AFTER M0-T87 | DONE (2026-10-29 15:29) |
+| M0-TV2 | BUILD | UI/UX pass: the world and its time | AFTER M0-T88 | IN PROGRESS (2026-10-29 15:45) |
 | M0-V12 | CHECK | Validation, lot 12: the world and its time; the lead's launcher run | AFTER M0-TV2 | TODO |
 | M0-T89 | BUILD | Tools and elements in the left panel (§4.4) | AFTER M0-V12 | TODO |
 | M0-T90 | BUILD | Presets in the window: arm, place, refuse, Esc (§4.5) | AFTER M0-T89 | TODO |
@@ -2352,7 +2352,7 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
 # Phase 14 — Lot 12 · the window: the world and its time
 
 ## M0-T84 · The world in the window — the frame loop · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V11)
-- Status: TODO
+- Status: DONE (2026-10-29 14:41)
 - Carried flags: [M0-T24, 2026-10-11] TimeControl (sr_physics::time) takes Report{steps_run, advanced as f64, dt_next as f64, step_ms = cost.map(|c| c.step_ms), latch_fired.is_some()} once per polled frame with steps > 0, in order, then on_event(CoreCollapse) on latch_fired; Plan{steps, slow_down} → encode_frame, paced at Plan.f_target. N_max is 1 until a step_ms arrives: turn Step::set_timing on, and on wasm32 without timestamp-query feed a wall-clock step_ms. An empty world (Δt f32::MAX) still grows FrameReport.sim_time by f32::MAX per step — TimeControl ignores it, the age readout must too (M0-T24). · [M0-V3, 2026-10-11] once the app's frame loop runs Step, the desktop, capture and web scopes read crates/sr-physics/** and assets/physics.json, assets/elements.json at run time: their paths gain them as M0-D22 gives boot's (M0-D10's class; today they compile sr-physics and embed the assets but read neither — M0-V3) · [M0-D26, 2026-10-12] A timed step is recorded pass by pass (each pass a compute pass with two timestamps, for per_pass_ms) and pays the pass boundaries M0-D26 cut from untimed steps: sun_disk 0.141 ms timed against 0.113 untimed (RTX 4080 Laptop, warm). The frame loop times every frame for c_step (§1.8.3), and a frame of up to ~170 steps is timed whole — time the step as one compute pass (its first and last timestamps) when no per-pass cost is asked for (tasks/M0-D26.md § Findings) · [M0-V11, 2026-10-29] Lot 11's two duties for the quad — NOT PROVEN (source only): `Renderer::new(device, state, previous, …)` binds the previous State's buffers and never advances them (render.rs:242–310), so the window keeps a second State and copies the state into it before each frame's steps — without it α (§1.8.3) blends a state with itself; `IMAGE_FORMAT` is Rgba8Unorm holding sRGB-encoded bytes («the display draws it as is», render.rs:141–142), so a quad drawn into an sRGB surface encodes them twice (washed out) — sample it through an Rgba8UnormSrgb view or draw into a non-sRGB target, and capture-confirm one known colour in the window (bg.space #05070D once M0-D113 lands, or a Density stop). The glow (M0-D112) and vacuum (M0-D113) rulings land before this block.
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.3, §1.11 (the integer scale),
   §3.1 (encode_frame, render, poll), §4.1 (status.line), §4.2 (centre, status bar) + docs/agent/running.md
@@ -2371,10 +2371,10 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
   Pass: GO — the plant NO-GO on `world` · Fail: the plant stays GO
 - Adversarial: a loop that waits on `poll()` stalls every frame by the readback's latency — `poll()` never
   blocks (§3.1), and the case's fps at ×1 is printed.
-- Handoff: <placeholder>
+- Handoff: Frame loop in the window: sr-app's sim module (TimeControl plan → encode_frame → render into an egui texture at integer s, poll → on_report, α, previous-state copy), status.line live in a 24 px bar, a new world empty at ×1; capture actions preset/steps run the real loop; desktop gains case world (5 cases, not the plan's 3 — race and port-taken since M0-D51/D99), plant world-not-drawn red; status-never-ready patch re-cut. Measured (llvmpipe, linux-pc): world GO, 25 fps at ×1, empty-world pixels = bg.space exactly (no double sRGB). Deviations: steps/frame = mean of frames that ran any (×1 owes <1 step/frame); verify.json paths gain sr-physics + assets for desktop, capture and web; 9 files touched (> 6: the scope case, its plant and its docs). Not acted on: M0-D26's timer-as-one-pass (engine), events→on_event (M0-T86); an empty world steps once per ~0.45 s so a drop lands ≤ 0.45 s late (T90). Detail: milestones/m0/tasks/M0-T84.md. Ran on model=claude-sonnet-5-5 level=high. Next: M0-T85.
 
 ## M0-T85 · The top bar — time controls, the speed readout, the slow-down setting · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T84)
-- Status: TODO
+- Status: DONE (2026-10-29 15:06)
 - Carried flags: [M0-T24, 2026-10-11] speed_text() → SpeedText{rung (time.rung / time.speed's {rung}), running: Some({actual}) → time.speed_capped, paused → time.paused}; rungs() never holds a rung above TOP; banner() → Event::banner_key, cleared only when the rung changes; speeds are not thousands-grouped (×1000, ×4200) (M0-T24).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.2–§1.8.4, §4.1 (time.*), §4.2 (the
   top bar), §4.3, §4.10 (Space, ., 1–9 and 0, + or =, −), §4.11, §4.12 (speeds) + docs/agent/testing.md
@@ -2397,10 +2397,11 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
   plant stays GO
 - Adversarial: a view model tested while egui draws something else — the egui layer reads only the view
   model, and TV2's captures compare the two.
-- Handoff: <placeholder>
+- Handoff: Built the top bar: ui/topbar.rs is a pure view model of TimeControl (Pause/Play, Step, rung buttons with none above TOP and Max last, the readout time.speed / speed_capped / speed_max / paused, the slow-down checkbox, selected rung in accent), a Command enum with apply() and key_command() (Space . 1-9 0 + = -), and desktop.rs draws it in a 44 px panel and reads only the view; the step-counter stand-in text is gone. Capture actions rung and slowdown are built (rung k is the key: 1-9 numbered, 0 Max) and pause now goes through the bar. tests/capture/actions.json has 7 steps run as capture's case actions: the bar changes after each action and the accent moves right x1 → x10 → Max. Verify 1: ui_topbar 14/0 GO, capture 3/0 GO (actions new); Verify 2: ui_topbar red-armed (topbar-above-top: 2 failed); --changed on linux-pc (laserax-ai, lavapipe): build, formats, boot, desktop 5, web 3, capture 3 all GO, capture red-armed too (its actions case failed under capture-no-captions). Deviations: (1) the scope is ui_topbar, not ui-topbar (R17, as observe_run), the plan's own command line still reads ui-topbar; (2) tests/smoke.sh's world case geometry moved down 44 px for the bar (the oracle flag on smoke.sh, check.sh and verify.json is that; check.sh's actions case and the scope are named by Deliver); (3) readout's {actual} is written as time.rs's sig2 writes it, ungrouped (×4200, the carried flag), while format::actual_number groups it (4,200): an unsettled contract point, not filed (needs the lead's ruling, §4.12 vs M0-T24's flag). Not done: actions case has no plant of its own beyond capture-no-captions; docs rows are M0-T88's; the web build only cargo-checks on wasm32 here. Ran on Sonnet 5.5 (model=claude-sonnet-5-5 level=high per rung_record). Next: M0-T86 (the banner, on_event wiring; the world area now starts 44 px down).
 
 ## M0-T86 · The banner and the automatic slow-down in the app · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T85)
-- Status: TODO
+- Status: DONE (2026-10-29 15:14)
+- Carried flags: [M0-T84, 2026-10-29] the frame loop (desktop.rs sim::Sim::poll) books every polled report with TimeControl::on_report but never calls on_event: the latch's report (latch_fired) and the Tracker's events are yours. A frame the latch cut still owes nothing; a capture's forced frames reach on_report with steps_run 0 and are not planned.
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5, §1.9.4, §4.1 (banner.*), §4.2
   (the banner), §4.3, §4.11 (banner tokens) + docs/agent/testing.md
 - Deliver: crates/sr-app/src/ui/banner.rs (new) and its wiring in desktop.rs: the Tracker's events
@@ -2415,10 +2416,11 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
   plant stays GO
 - Adversarial: an event that arrives two frames late (the summary's lag) after the latch already slowed the
   frame shows a second banner — each event fires once per object (§1.9.4), and a case sends both.
-- Handoff: <placeholder>
+- Handoff: Built the banner: ui/banner.rs is a pure view model (view = the text of the clock's banner event, Feed = the door of the latch's cut and the Tracker's events, each event once per object, a Tracker core collapse after a latch cut swallowed once so no second banner), and desktop.rs now polls Step::poll_frames, feeds on_report, the latch and Watch::update's events into on_event, and draws the banner at the world's top centre in the banner tokens. Verify 1: ui_banner 12/0 GO (scope is ui_banner, R17); Verify 2: banner-wrong-event red-armed (2 failed); --changed on linux-pc (lavapipe): build, boot, desktop, web, capture, ui_banner, plan_lint 7/7 GO, 747 passed. Deviations: (1) verify.json's ui_banner entry is not named by Deliver (the claim FLAGs it as an oracle change; Deliver's 'scope ui-banner' implies it); (2) Sim now owns a sr_engine Watch (M0-T92 reads its objects). Not proven: the banner on screen and Watch's per-frame cost on the real GPU. Detail: tasks/M0-T86.md. Ran on Sonnet 5.5 (model=claude-sonnet-5-5 level=high per rung_record). Next: M0-T87 (edge choice, Clear world).
 
 ## M0-T87 · World actions — the edge choice and Clear world · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T86)
-- Status: TODO
+- Status: DONE (2026-10-29 15:24)
+- Carried flags: [M0-T85, 2026-10-29] [M0-T85, 2026-10-29] ui/topbar.rs holds TopBar, Command (apply, key_command) and tests; edge.* and world.clear join the bar there as more fields and Commands, and Sim::command (desktop.rs) is the one door a click, a key or a capture action uses. Its scope is ui_topbar (R17) and tests/capture/actions.json has seven steps (start … rung-max): append yours and raise check.sh's expected count (SR-CAPTURE DONE 7) and its ordered ids list; the world case's geometry reads the 44 px bar (tests/smoke.sh TOP).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.12 (Clear world), §2.8 (D1), §4.1
   (edge.*, world.*), §4.2, §4.7, §4.10 (Delete) + docs/agent/testing.md
 - Deliver: crates/sr-app/src/ui/topbar.rs: `edge.label` with `edge.leave` and `edge.bounce`
@@ -2433,10 +2435,11 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
   plant stays GO
 - Adversarial: Clear resetting the rung, the view or the edge mode breaks §1.12 ("settings kept") — the
   case reads all four after a Clear.
-- Handoff: <placeholder>
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record, matches the heading). Built ui/topbar.rs WorldBar + Commands SetEdge/OpenClear/ConfirmClear/CancelClear + Effect::{Edge,Clear} (Delete opens the dialog; Clear only from yes, once), the bar's edge radios (not accent) and world.clear, the Modal dialog, Sim::command → Step::set_edge_mode / Edit::Clear (Watch and Feed start over), capture action edge + steps edge and edge-leave (check.sh 9 steps, compares edge-leave with edge, both paused — Max's live readout would have passed a dead action). Scope ui_world 7/0/0 (the plan's ui-world is refused: R17 spelling), ui_topbar narrowed to ui::topbar::tests (14). Plants clear-without-confirm (RED, 3 failed), capture-edge-ignored (RED), topbar-above-top re-cut for view's new signature (RED). Verify 1 [ALREADY RUN — PASS (ui_world 7, capture 3 GO) on linux-pc]; 2 [ALREADY RUN — PASS (ui_world RED; capture 2/2 RED) on linux-pc]; claim --changed [ALREADY RUN — PASS (724 passed, 4/4 scopes; first run NO-GO on the stale topbar plant, fixed, re-run GO 14) on linux-pc]. Adversarial: the case reads rung, slow-down, edge mode and pause after a Clear; the view is the left panel's — NOT PROVEN by a case. Not acted on: a Clear lands at the next P0, so paused it shows nothing until a step (M0-T84's flag); in-flight frames after Clear may feed the new Watch (unmeasured). Detail tasks/M0-T87.md. Next: M0-T88.
 
 ## M0-T88 · Docs — running.md (the window) and time_control.md (the app's frame loop) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T87)
-- Status: TODO
+- Status: DONE (2026-10-29 15:29)
+- Carried flags: [M0-T85, 2026-10-29] [M0-T85, 2026-10-29] docs: the scope is ui_topbar (R17), the plan's ui-topbar spelling is its alias; capture's rung action is the key (1-9 numbered, 0 Max), not an index; the keys bound so far are Space . 1-9 0 + = - (B E H C etc. are later blocks); the readout's {actual} is ungrouped (time.rs sig2) while format::actual_number groups it — say which stands once the lead rules. · [M0-T86, 2026-10-29] [M0-T86, 2026-10-29] docs: the scope is ui_banner (R17), the plan's ui-banner spelling is its alias; time_control.md's banner section: Sim::poll feeds Step::poll_frames' report to on_report, a planned frame's latch cut to Feed::latch and Watch::update's events to Feed::event (ui/banner.rs); a Tracker core_collapse after a latch cut is swallowed once; the banner stays until the player's rung change (no auto-return). · [M0-T87, 2026-10-29] docs: the scope is ui_world (R17), the plan's ui-world spelling is its alias (verify.py refuses the hyphen); ui_topbar's cases are ui::topbar::tests, ui_world's ui::topbar::world_tests. Keys: Delete now opens the Clear dialog (§4.10); Esc and the dialog are not key-bound. The bar: edge.label with two radios (not accent) and world.clear; the dialog is an egui Modal; capture's actions: edge, edge-leave (9 steps).
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8, §4.2, §4.3, §4.10, §7 + the
   handoffs of M0-T84–M0-T87
 - Deliver: docs/agent/running.md § The window (the layout so far, the keys), docs/agent/time_control.md §
@@ -2447,10 +2450,11 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
   "^[|] .(ui-topbar|ui-banner|ui-world). [|]" docs/agent/testing.md` · Pass: 3 · Fail: fewer
 - Adversarial: keys documented that the code does not bind — the V checks the page's table against
   §4.10 and the view models' cases.
-- Handoff: <placeholder>
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record, matches the heading). Wrote running.md § The window (layout, top bar, Clear dialog, the keys table bound today — Space . 1-9 0 + = - Delete; B E H C, [ ], F1-F4 are later; capture's actions rung = the key, slowdown, edge) and time_control.md § The frame loop in the app (the order of one frame, α, the empty world, the banner's Feed and its once-swallowed Tracker collapse, Clear restarts Watch/Feed; the three "not wired yet" lines now point at it); testing.md: rows ui_topbar (14), ui_banner (12), ui_world (7) and capture's `actions` case (3 cases, plant capture-edge-ignored). Verify 1 [ALREADY RUN — PASS (1 + 1) on linux-pc]; Verify 2 literal `ui-…` greps 0 — R17 spells the scopes with `_` (as M0-T27 did): the underscore rows count 3 [ALREADY RUN — PASS (3, R17 spelling) on linux-pc]. Desktop's `world` row was already in (M0-T84). Not acted on: the readout's {actual} ungrouped (sig2) vs format::actual_number grouped — said in time_control.md, awaits the lead's ruling; no capture action opens the Clear dialog (M0-T87's flag, M0-TV2's) — said in running.md and the ui_world row. Claim verify.py --changed --task M0-T88 [ALREADY RUN — PASS (GO, 716 passed, 1/1 scopes: plan_lint; 74 not impacted — docs are a skipped class) on linux-pc]. Detail tasks/M0-T88.md. Next: M0-TV2.
 
-## M0-TV2 · UI/UX pass — Phase 14: the world and its time · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T88)
-- Status: TODO
+## M0-TV2 · UI/UX pass — Phase 14: the world and its time · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T88)
+- Status: IN PROGRESS (2026-10-29 15:45)
+- Carried flags: [M0-T87, 2026-10-29] the clear dialog: §3.3 has no capture action that opens it and no key is scriptable — needs a clear action (a contract §3.3 line, declared) or the lead's window run; edge both ways is captured as actions.json's edge (bounce) and edge-leave steps. A Clear lands at the next step's P0: paused, the old star stays on screen until a step.
 - Read: this file (rules + this task) + docs/agent/running.md + milestones/m0/m0_contrat.md §3.3 (capture),
   §4.2, §4.3, §4.7, §4.11 + PLAYBOOK.md §8 (TV) and §A.4 (review_page.py's section text)
 - Deliver: capture every screen and state Phase 14 touched into images/tv2/ with the capture harness on a
@@ -2468,7 +2472,7 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
 - Adversarial: lavapipe draws what the Quadro draws only up to its own precision and speed — a state that
   differs on the real GPU (the glow, the capped readout's numbers) is flagged for M0-V12's launcher run,
   never passed on lavapipe's word.
-- Handoff: <placeholder>
+- Handoff: IN PROGRESS (session 1 stopped at the lead's word, «if theres still a lot of stuff to do write a handoff in your task, put it as in progress»). linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record). The lead at launch: «I dont want to be involved in this task. Complete it yourself» — no capture is flagged for remarks; the page is still served and stopped; review2.md quotes those words. Done: lavapipe probes on a private Xvfb (images/tv2/probes/, logs/M0-TV2.log). Sun runs about 65 steps/s. A massive life at ×10 shows the ignition banner (verbatim, top centre, ×10 → ×1) at about 220–320 steps, and a second slow-down at about 1,520–1,620 steps. probe2 ran over 10 minutes: don't repeat it. Two D's are measured and not filed yet: the selected rung's accent text sits on egui's #005C80 fill, which is not a §4.11 token (M0-T85); a preset disk draws as a rounded square (cause not measured). Left: the final capture set, the Clear dialog via xdotool Delete on a private Xvfb, captions.json, the D's, the review page, the claim — tasks/M0-TV2.md § What is left. Claim NOT RUN. Next: M0-TV2 (re-run).
 
 ## M0-V12 · Validation — lot 12: the world and its time · **CHECK** · Opus 5.5, max · switch · (AFTER M0-TV2)
 - Status: TODO
@@ -2519,6 +2523,7 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
 
 ## M0-T90 · Presets in the window · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T89)
 - Status: TODO
+- Carried flags: [M0-T84, 2026-10-29] an edit lands at the next step's P0, and an empty world steps once per ~0.45 s at ×1 (Δt = the floor gas's step, M0-D96; TimeControl owes −0.447 after its first step), so a drop shows up to 0.45 s late — and never while paused. The capture's preset action is Sim::drop_preset + a script's own steps; the panel's drop decides whether an edit asks the loop for a step.
 - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.12 (DropPreset), §4.1 (presets.*),
   §4.2, §4.5, §4.10 (Esc) + docs/agent/testing.md
 - Deliver: crates/sr-app/src/ui/left.rs: `presets.heading` with the three buttons and their notes (small
