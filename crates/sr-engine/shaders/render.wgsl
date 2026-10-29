@@ -85,6 +85,7 @@ var<private> DENSITY: array<vec3<f32>, 5> = array<vec3<f32>, 5>(
 const HAZE: vec3<f32> = vec3<f32>(0.164706, 0.207843, 0.313725); // #2A3550
 const HAZE_GAIN: f32 = 0.6;
 const GLOW_T_SCALE: f32 = 3000.0;
+const BG_SPACE: vec3<f32> = vec3<f32>(0.019608, 0.027451, 0.050980); // #05070D
 
 fn srgb_to_linear(c: vec3<f32>) -> vec3<f32> {
     return select(pow((c + vec3<f32>(0.055)) / 1.055, vec3<f32>(2.4)), c / 12.92, c <= vec3<f32>(0.04045));
@@ -208,9 +209,6 @@ fn glow_colour(c: Cell, t_k: f32) -> vec3<f32> {
 }
 
 fn element_colour(c: Cell) -> vec3<f32> {
-    if (c.sigma < eos.sigma_vac) {
-        return vec3<f32>(0.0);
-    }
     var lin = vec3<f32>(0.0);
     for (var k = 0u; k < N_SPECIES; k++) {
         lin += c.x[k] * pal.species[k].xyz;
@@ -239,6 +237,9 @@ fn render_cells(@builtin(global_invocation_id) id: vec3<u32>) {
         default: {
             rgb = glow_colour(c, to_kelvin(cell_temperature(c)));
         }
+    }
+    if (c.sigma < eos.sigma_vac) {
+        rgb = BG_SPACE;
     }
     textureStore(image, vec2<i32>(i32(id.x), i32(id.y)), vec4<f32>(clamp(rgb, vec3<f32>(0.0), vec3<f32>(1.0)), 1.0));
 }

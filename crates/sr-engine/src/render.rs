@@ -11,7 +11,7 @@
 //! `TempScale`.
 //!
 //! The glow: for the Glow view, [`Renderer::render`] draws the cell image into an image of its own, then runs shaders/glow.wgsl's
-//! passes over it — a bright pass on luminance > 0.8 at half resolution, a separable 9-tap Gaussian (σ = 3 texels), the result
+//! passes over it — a bright pass on the brightest channel > 0.8 at half resolution, a separable 9-tap Gaussian (σ = 3 texels), the result
 //! upsampled and added at 0.6 — into the caller's target. The other views never go through them.
 
 use sr_physics::observe::translate::TEMP_KELVIN;

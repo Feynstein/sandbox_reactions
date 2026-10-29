@@ -282,3 +282,11 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   first stroke into an empty world stepped on the floor gas's 0.4472 against its own 0.0673) — superseded by contract §0.5 [M0-D110]:
   P0 re-makes the CFL term over the box it left after a paint or drop, Δt_n the lesser of it and P9's (whose gravity term stands);
   every other step keeps its bits (RTX 4090) (the lead, 2026-10-29, M0-D110: «Gas-speed term only (Recommended)»).
+- Contract §1.11's Glow bullet "bright pass on luminance > 0.8 at half resolution" (M0-T81 built it as written; M0-V11 measured that it
+  blooms only 3,907–13,478 K matter, so star cores and a massive star's whole disk never glow) — superseded by contract §0.5
+  [M0-D112]: the bright pass keeps a cell whose brightest channel (max R, G, B of the Glow view's cell image) is above 0.8; the rest of
+  §1.11 and §4.11's glow unchanged (the lead, 2026-10-29, M0-V11: «Brightest channel > 0.8 (Recommended)»).
+- Contract §1.11's Heat, Element ("vacuum black") and Density views and Glow's haze, which give vacuum no colour of its own (M0-T80 built
+  §1.11 as written; M0-V11 measured the empty corners #000000 / #000004 / #440154 against §4.11's bg.space) — superseded by contract §0.5
+  [M0-D113]: a cell whose blended Σ is below Σ_vac draws bg.space #05070D in every view, ahead of the view's formula (the lead, 2026-10-29,
+  M0-V11: «bg.space in every view (Recommended)»).

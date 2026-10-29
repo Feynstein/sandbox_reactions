@@ -1,11 +1,9 @@
 --- a/crates/sr-engine/src/calibrate.rs
 +++ b/crates/sr-engine/src/calibrate.rs
-@@ -762,7 +762,7 @@
+@@ -762,5 +762,5 @@
              timing: false,
              dump_every: None,
              load_dump: from.as_ref().map(|c| c.dump.clone()),
 -            continue_life: from.is_some(),
 +            continue_life: false,
              cpu_reference: false,
-             edits: None,
-         };

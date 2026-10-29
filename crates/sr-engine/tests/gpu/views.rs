@@ -25,6 +25,7 @@ const LEVEL: f64 = 1.0;
 const HEAT_STOPS: [&str; 6] = ["#000004", "#3B0F70", "#8C2981", "#DE4968", "#FE9F6D", "#FCFDBF"];
 const DENSITY_STOPS: [&str; 5] = ["#440154", "#3B528B", "#21918C", "#5EC962", "#FDE725"];
 const HAZE: &str = "#2A3550";
+const BG_SPACE: &str = "#05070D";
 
 struct Lcg(u64);
 
@@ -238,8 +239,11 @@ impl Rig {
         self.scale.to_kelvin(t)
     }
 
-    /// §1.11's colour of a cell in `view`, 0…1.
+    /// §1.11's colour of a cell in `view`, 0…1; below Σ_vac every view draws bg.space (§4.11, M0-D113).
     fn colour(&self, view: View, c: &Cell) -> [f64; 3] {
+        if c.sigma < self.physics.get("sigma_vac").unwrap() {
+            return hex(BG_SPACE);
+        }
         let l10_sigma = c.sigma.log10();
         match view {
             View::Glow => {
@@ -253,9 +257,6 @@ impl Rig {
             }
             View::Heat => map(&HEAT_STOPS, (self.kelvin(c).log10() - 1.0) / 9.0),
             View::Element => {
-                if c.sigma < self.physics.get("sigma_vac").unwrap() {
-                    return [0.0; 3];
-                }
                 let visible = ((l10_sigma + 6.0) / 8.0).clamp(0.15, 1.0);
                 let mut sum = [0.0; 3];
                 for (i, s) in self.elements.species().iter().enumerate() {
@@ -422,22 +423,27 @@ fn the_maps_midpoints_are_linear_rgb_means() {
     }
 }
 
-/// Vacuum (the floor state, Σ = 10⁻⁸ at T_floor): Glow black, Element black, Heat the map's first stop (10 K), Density the
-/// map's first stop (log₁₀ Σ = −8 clamps to −6) — the maps have no vacuum exception (§4.11 clamps outside).
+/// Below Σ_vac (10⁻⁶) every view draws bg.space #05070D (§4.11, M0-D113): the floor state (Σ = 10⁻⁸), a cell between Σ_floor and
+/// Σ_vac (10⁻⁷), and the cell just above Σ_vac reading its view's formula, not bg.space.
 #[test]
-fn vacuum_is_black_where_the_contract_says() {
-    let rig = setup(&[], &[]);
-    let c = idx(7, 7);
-    let near = |got: [u8; 4], want: [f64; 3], what: &str| {
-        for k in 0..3 {
-            assert!((f64::from(got[k]) - 255.0 * want[k]).abs() <= LEVEL, "{what}: got {got:?}, want {want:.4?}");
+fn vacuum_is_bg_space_in_every_view() {
+    let bg = hex(BG_SPACE);
+    let (floor, between, above) = (idx(7, 7), idx(8, 7), idx(9, 7));
+    let rig = setup(&[(between, gas(1e-7, 1.0)), (above, gas(1.2e-6, 10.0))], &[]);
+    let sigma_vac = rig.physics.get("sigma_vac").unwrap();
+    assert!(1e-7 < sigma_vac && sigma_vac < 1.2e-6, "the cells straddle Σ_vac = {sigma_vac}");
+    for view in [View::Glow, View::Heat, View::Element, View::Density] {
+        let image = rig.image(view, 1.0);
+        for (c, what) in [(floor, "floor"), (between, "Σ 10⁻⁷")] {
+            for k in 0..3 {
+                assert!((f64::from(image[c][k]) - 255.0 * bg[k]).abs() <= LEVEL, "{view:?} {what}: got {:?}, want bg.space {bg:.4?}", image[c]);
+            }
+            assert_eq!(image[c][3], 255);
         }
-        assert_eq!(got[3], 255);
-    };
-    near(rig.image(View::Glow, 1.0)[c], [0.0; 3], "Glow vacuum");
-    assert_eq!(rig.image(View::Element, 1.0)[c], [0, 0, 0, 255], "Element vacuum is exactly black");
-    near(rig.image(View::Heat, 1.0)[c], hex(HEAT_STOPS[0]), "Heat vacuum");
-    near(rig.image(View::Density, 1.0)[c], hex(DENSITY_STOPS[0]), "Density vacuum");
+        rig.assert_matches(view, 1.0, &image, std::iter::once(above));
+        let off = (0..3).map(|k| (f64::from(image[above][k]) - 255.0 * bg[k]).abs()).fold(0.0, f64::max);
+        assert!(off > 3.0, "{view:?}: the cell just above Σ_vac reads {:?}, bg.space within {off:.1} levels", image[above]);
+    }
 }
 
 /// Beyond the last anchor (T_Si ↔ 3.3 × 10⁹ K) the O–Si segment is extended: 10¹⁰ K reads the Heat map's last stop; between

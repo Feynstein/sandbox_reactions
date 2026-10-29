@@ -1,7 +1,7 @@
 //! M0-T81 — the glow (contract §1.11, §4.11; crates/sr-engine/src/render.rs, shaders/glow.wgsl) on the physics adapter (R12): the
 //! Glow view's cell image (`Renderer::render_cells`, proven against the formulas by `views`) is read back, and the glow
 //! (`Renderer::render`) is graded against a CPU model of §1.11 written out here from its text, in f64, from that image: the
-//! bright pass on luminance > 0.8 at half resolution (the mean of a 2 × 2 block of cells, each kept or zeroed), a separable
+//! bright pass on the brightest channel > 0.8 (M0-D112) at half resolution (the mean of a 2 × 2 block of cells, each kept or zeroed), a separable
 //! 9-tap Gaussian of σ = 3 half-resolution texels (weights exp(−k²/2σ²) normalised over k = −4…4, zero outside), the halo
 //! upsampled bilinearly (clamped at the edges) and added at 0.6, clamped to 1. A channel must land within one level of the 8-bit
 //! image of the model. The worlds are hand-made, 64 × 64 (`NOT PROVEN (synthetic)` for a star's glow): the passes are proven.
@@ -133,6 +133,12 @@ fn rgb(image: &Image, c: usize) -> [f64; 3] {
     std::array::from_fn(|k| f64::from(image[c][k]) / 255.0)
 }
 
+/// The largest of the three channels: what the bright pass tests (M0-D112).
+fn brightest(c: [f64; 3]) -> f64 {
+    c[0].max(c[1]).max(c[2])
+}
+
+/// The luminance the bright pass used to test (0.2126 R + 0.7152 G + 0.0722 B): the premise of the hot cases, whose luminance is below the threshold.
 fn luminance(c: [f64; 3]) -> f64 {
     0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
 }
@@ -140,13 +146,13 @@ fn luminance(c: [f64; 3]) -> f64 {
 /// §1.11's halo of `cells` (the Glow view's cell image): the bright pass, the two Gaussian passes, the upsample — per cell, before
 /// the intensity. Written from the contract's text, in f64.
 fn halo(cells: &Image) -> Vec<[f64; 3]> {
-    // The bright pass at half resolution: the mean of a 2 × 2 block, each cell kept when its luminance is above the threshold.
+    // The bright pass at half resolution: the mean of a 2 × 2 block, each cell kept when its brightest channel is above the threshold.
     let mut half = vec![[0.0; 3]; HALF * HALF];
     for hy in 0..HALF {
         for hx in 0..HALF {
             for (dx, dy) in [(0, 0), (1, 0), (0, 1), (1, 1)] {
                 let c = rgb(cells, idx(2 * hx + dx, 2 * hy + dy));
-                if luminance(c) > THRESHOLD {
+                if brightest(c) > THRESHOLD {
                     for k in 0..3 {
                         half[hy * HALF + hx][k] += c[k] / 4.0;
                     }
@@ -222,8 +228,8 @@ fn assert_glow_matches(rig: &Rig) -> (Image, Image) {
     (cells, got)
 }
 
-/// 6,500 K at b ≈ 1: near-white, whose luminance (0.9 in the image) is past 0.8 — checked on the image by each test. Blue-white
-/// matter hotter than ~13,000 K is *below* it: ȳ weighs blue lightly (the glow's finding, M0-T81's handoff).
+/// 6,500 K at b ≈ 1: near-white, whose largest channel (1.0 in the image) is past 0.8 — checked on the image by each test. Hotter
+/// matter is too (M0-D112): `hotter_than_the_luminance_band_still_blooms` draws the table's end and past it.
 const HOT_K: f64 = 6_500.0;
 const HOT_SIGMA: f64 = 0.2;
 
@@ -236,7 +242,7 @@ fn block(x0: usize, y0: usize, w: usize, h: usize) -> Vec<usize> {
 }
 
 fn bright_cells(image: &Image) -> Vec<usize> {
-    (0..CELLS).filter(|&c| luminance(rgb(image, c)) > THRESHOLD).collect()
+    (0..CELLS).filter(|&c| brightest(rgb(image, c)) > THRESHOLD).collect()
 }
 
 #[test]
@@ -271,7 +277,7 @@ fn a_bright_block_halo_follows_the_gaussian_and_is_visible() {
 
 #[test]
 fn nothing_is_added_below_the_threshold() {
-    // A gradient of warm cells, cool and moderately hot, with the dimmer half of the blackbody table: none past luminance 0.8.
+    // A gradient of warm cells, cool and moderately hot, with the dimmer half of the blackbody table: no channel past 0.8.
     let mut cells = Vec::new();
     for x in 0..N {
         for y in 0..N {
@@ -282,8 +288,8 @@ fn nothing_is_added_below_the_threshold() {
     let rig = setup(&cells);
     let base = rig.image(View::Glow, false);
     let got = rig.image(View::Glow, true);
-    let top = (0..CELLS).map(|c| luminance(rgb(&base, c))).fold(0.0, f64::max);
-    assert!(top > 0.2 && top <= THRESHOLD, "the premise: the world is lit but nowhere past the threshold (peak luminance {top:.3})");
+    let top = (0..CELLS).map(|c| brightest(rgb(&base, c))).fold(0.0, f64::max);
+    assert!(top > 0.2 && top <= THRESHOLD, "the premise: the world is lit but nowhere past the threshold (peak channel {top:.3})");
     assert_eq!(got, base, "no cell is past the threshold: the glow image is the cell image, byte for byte");
 }
 
@@ -306,4 +312,41 @@ fn the_other_views_are_untouched() {
     }
     // And the premise: the same world's Glow view does change.
     assert_ne!(rig.image(View::Glow, true), rig.image(View::Glow, false), "the Glow view carries the glow");
+}
+
+#[test]
+fn hotter_than_the_luminance_band_still_blooms() {
+    // 40,000 K is the table's end colour (158, 184, 255) at luminance 0.72, and 10⁷ K is past the table (the end colour again):
+    // a luminance test missed both (M0-D112). Each fills a 16 × 16 block, so its halo is well above one level; the model is the
+    // Gaussian's weights in f64 over the cell image, as the lone-cell case is.
+    let mut cells = Vec::new();
+    for (x0, kelvin) in [(8, 40_000.0), (40, 1.0e7)] {
+        cells.extend(block(x0, 24, 16, 16).into_iter().map(|c| (c, HOT_SIGMA, kelvin)));
+    }
+    let rig = setup(&cells);
+    let (image, got) = assert_glow_matches(&rig);
+    assert_eq!(bright_cells(&image).len(), 2 * 16 * 16, "the premise: both blocks are past the threshold");
+    for (x, label) in [(12, "40,000 K"), (44, "10⁷ K")] {
+        let c = rgb(&image, idx(x, 32));
+        assert!(luminance(c) <= THRESHOLD, "the premise: the {label} cell's luminance {:.3} is under the threshold", luminance(c));
+        assert!(brightest(c) > THRESHOLD, "the premise: its brightest channel {:.3} is over it", brightest(c));
+    }
+    // Beside each block the empty world is dark and the halo is the glow: 2 cells off the 40,000 K block's left edge, and off the
+    // 10⁷ K block's right edge.
+    let blue = |image: &Image, x: usize, y: usize| f64::from(image[idx(x, y)][2]);
+    for x in [6, 57] {
+        let added = blue(&got, x, 32) - blue(&image, x, 32);
+        assert!(added > 10.0, "the halo at ({x}, 32) is {added} levels of blue");
+    }
+}
+
+#[test]
+fn dense_cold_gas_does_not_bloom() {
+    // The haze is at most 0.6 × #2A3550, whose largest channel is 0.314: the densest, coldest gas stays the cell image.
+    let cells: Vec<_> = (0..CELLS).map(|c| (c, 1.0e3, 100.0)).collect();
+    let rig = setup(&cells);
+    let base = rig.image(View::Glow, false);
+    let top = (0..CELLS).map(|c| brightest(rgb(&base, c))).fold(0.0, f64::max);
+    assert!(top > 0.1 && top < 0.4, "the premise: the world is the haze, lit but dim (peak channel {top:.3})");
+    assert_eq!(rig.image(View::Glow, true), base, "the haze does not bloom: the glow image is the cell image, byte for byte");
 }

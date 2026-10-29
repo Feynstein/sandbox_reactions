@@ -715,6 +715,22 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     one axis, the block's figure) and its vacuum resets put back 4.7 % of the
     paint (M0-D101's run); now 0.0673 and none put back; a paint into a cold H disk (T_floor, Σ_c 0.005) 0.2920 → 0.0726 —
     the lead's answer at M0-D110, 2026-10-29: «Gas-speed term only (Recommended)».
+  - [M0-D112] §1.11 (Glow)'s "bright pass on luminance > 0.8 at half resolution" · **the bright pass keeps a cell when its brightest
+    channel — max(R, G, B) of the Glow view's cell image, the sRGB-encoded values it reads — is above 0.8, and zeroes it otherwise;
+    the half resolution, the 9-tap Gaussian (σ 3), the upsample and the intensity 0.6 (§4.11) unchanged** · §1.11 normalises the
+    blackbody table to its largest channel, so a hot cell's luminance falls as its blue rises (0.721 at the table's 40,000 K end
+    colour (158, 184, 255)): measured on laserax-ai-server, RTX 4090, 2026-10-29 (M0-V11) the luminance test passed 0.8 only from
+    3,907 K to 13,478 K, and the Massive preset's disk (steps 512–896) and the Sun-like main sequence's core never bloomed; now every
+    cell hotter than ~3,400 K blooms, matter past the table too; the haze (at most 0.6 × #2A3550, largest channel 0.314) stays under
+    the threshold — the lead's answer at M0-V11, 2026-10-29: «Brightest channel > 0.8 (Recommended)».
+  - [M0-D113] §1.11's Heat view ("the sequential map of §4.11 over log₁₀ T_K from 1 to 10"), Element view ("vacuum black") and Density
+    view ("over log₁₀ Σ from −6 to 4"), and Glow's haze that fades to 0 at Σ_floor, read with §4.11's bg.space ("the world's background and
+    vacuum") · **a cell whose blended Σ is below Σ_vac (`assets/physics.json`, 10⁻⁶) draws bg.space #05070D in every view, ahead of the view's
+    formula; Σ_vac and above is the view's formula as written; in the Glow view the glow still adds over it (bg.space's largest channel,
+    0.051, stays under the bright pass's 0.8)** · measured on laserax-ai-server, RTX 4090, 2026-10-29 (M0-V11, images/M0-V11.sun_ms_s2721_*.png):
+    the Sun-like preset's empty corners read #000000 in Glow and Element, #000004 in Heat and #440154 in Density — the Density view's empty
+    world a dark-purple rectangle on the window's bg.space; M0-T80 built §1.11 as written and declared the gap — the lead's answer at M0-V11,
+    2026-10-29: «bg.space in every view (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

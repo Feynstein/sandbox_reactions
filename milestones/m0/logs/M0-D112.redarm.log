@@ -1,0 +1,5 @@
+glow · clean · GO · arm 1/3, 2 left
+glow · plant glow-threshold · RED (proven: 2 failed) · arm 2/3, 1 left
+glow · plant glow-luminance · RED (proven: 1 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope glow · 34.35 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D112.glow.redarm.log
+=== GO ===

@@ -1,0 +1,9 @@
+views     0/11/0      21.57 s  NO-GO
+logs: milestones/m0/logs/M0-D113.<scope>.log · record: loop_times.jsonl · tree 682406647763+c003dd915dca
+anchor: 116 path×scope entries moved by this run
+anchor: 216 paths checked · 320 skipped (3 classes) · 117 never checked · 3 stale · 0 unclassified · 0 owed · 336 covered of 656 visible
+FAILED:
+  views: 11 failed · log milestones/m0/logs/M0-D113.views.log
+verify: 0 passed, 11 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 21.57 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 45.12->46.25
+=== NO-GO: views: 11 failed · log milestones/m0/logs/M0-D113.views.log ===
+Verify 1 (views glow frames): GO 11/7/6 — Verify 2 (--redarm views): GO, heat-linear + vacuum-black RED — claim (--changed): GO 1155/0, 49 scopes — all on laserax-ai-server, RTX 4090

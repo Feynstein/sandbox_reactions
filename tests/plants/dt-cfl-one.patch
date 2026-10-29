@@ -1,7 +1,7 @@
 --- a/crates/sr-engine/shaders/reduce.wgsl
 +++ b/crates/sr-engine/shaders/reduce.wgsl
-@@ -215,7 +215,7 @@
-         }
+@@ -223,7 +223,7 @@
+     if (lid == 0u) {
          var dt = DT_UNBOUNDED;
          if (top.x > 0.0) {
 -            dt = min(dt, params.cfl / top.x);

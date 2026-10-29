@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/glow.wgsl
++++ b/crates/sr-engine/shaders/glow.wgsl
+@@ -22,7 +22,7 @@
+ @group(0) @binding(3) var full_out: texture_storage_2d<rgba8unorm, write>;
+ 
+ fn brightest(rgb: vec3<f32>) -> f32 {
+-    return max(rgb.r, max(rgb.g, rgb.b));
++    return dot(rgb, vec3<f32>(0.2126, 0.7152, 0.0722));
+ }
+ 
+ fn bright_cell(p: vec2<i32>) -> vec3<f32> {

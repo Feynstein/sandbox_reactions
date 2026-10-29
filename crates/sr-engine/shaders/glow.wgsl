@@ -1,8 +1,9 @@
 // The glow (m0_contrat.md §1.11, §4.11; M0-T81): hot matter glows and a supernova flashes. Four compute passes over the Glow
 // view's cell image (the RGBA8 image render.wgsl wrote, sRGB-encoded):
 //   glow_bright     the bright pass at half resolution — a half-resolution texel is the mean of its 2 × 2 cells, each kept (as its
-//                   colour) when its luminance, 0.2126 R + 0.7152 G + 0.0722 B of the encoded values, is above THRESHOLD and
-//                   zero otherwise (cells past the world's edge count as zero);
+//                   colour) when its brightest channel, max(R, G, B) of the encoded values, is above THRESHOLD and zero
+//                   otherwise (cells past the world's edge count as zero; M0-D112: a luminance test never selected the
+//                   hottest matter, whose blue-white colour is normalised to its largest channel);
 //   glow_blur_h/v   a separable 9-tap Gaussian (σ = SIGMA half-resolution texels, taps −4…4, the weights normalised to sum 1,
 //                   zero outside the image);
 //   glow_composite  the blurred bright pass upsampled bilinearly (the sampler's clamp at the edges) and added at INTENSITY to
@@ -20,8 +21,8 @@ const RADIUS: i32 = 4;
 @group(0) @binding(2) var half_out: texture_storage_2d<rgba16float, write>;
 @group(0) @binding(3) var full_out: texture_storage_2d<rgba8unorm, write>;
 
-fn luminance(rgb: vec3<f32>) -> f32 {
-    return dot(rgb, vec3<f32>(0.2126, 0.7152, 0.0722));
+fn brightest(rgb: vec3<f32>) -> f32 {
+    return max(rgb.r, max(rgb.g, rgb.b));
 }
 
 fn bright_cell(p: vec2<i32>) -> vec3<f32> {
@@ -30,7 +31,7 @@ fn bright_cell(p: vec2<i32>) -> vec3<f32> {
         return vec3<f32>(0.0);
     }
     let rgb = textureLoad(full_in, p, 0).rgb;
-    return select(vec3<f32>(0.0), rgb, luminance(rgb) > THRESHOLD);
+    return select(vec3<f32>(0.0), rgb, brightest(rgb) > THRESHOLD);
 }
 
 @compute @workgroup_size(8, 8)

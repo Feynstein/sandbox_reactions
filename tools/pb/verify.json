@@ -62,6 +62,7 @@
         "trunk"
       ],
       "case_cmd": "bash tests/toolchain/check.sh {case}",
+      "box": ["laserax-ai", "Laser2025-20"],
       "expected": 3,
       "timeout_s": 900,
       "paths": [
@@ -2264,7 +2265,7 @@
       ]
     },
     "views": {
-      "desc": "the cell image and the four views (contract §1.11, §1.10.2, §1.8.3, §4.11; M0-T80): crates/sr-engine/src/render.rs `Renderer::render_cells` (`render` for the other views) and shaders/render.wgsl — a compute pass writing the W × H RGBA8 image of Glow, Heat, Element or Density from the state, blended with the previous state by α — on the physics adapter, 64 × 64 hand-made worlds, each channel of each cell within 1/255 of a CPU formula written in the test from the contract's text (§4.11's hex stops, §1.5's colours, the cell's f32 values through the EOS and TempScale in f64): a gentle world (Σ ≤ 0.25, T from 0.08 to 30) for Glow and Heat, a wide one (Σ to 10⁴, every species) for Element and Density, 4,096 cells each; the heat map at T_K = 10^1 … 10^10 and the density map at Σ = 10^−6 … 10^4 reading §4.11's stop colours; the midpoint of each map (heat, density, element) the linear-RGB mean of its two stops, and apart from the sRGB mean by more than 2 levels; the vacuum (floor state) black in Glow and Element, the first stop in Heat and Density; temperatures past T_Si extended (10^10 K the last heat stop) and inside the first segment translated; α = 1 and α = 0 bit for bit the images of rigs holding the current and the previous state alone, α = ¼ and ½ against the formula on the mixed state. views-heat-linear reads the heat map over T_K, not log₁₀ T_K. Synthetic worlds: the formulas are proven, a star's image is NOT PROVEN (synthetic)",
+      "desc": "the cell image and the four views (contract §1.11, §1.10.2, §1.8.3, §4.11; M0-T80): crates/sr-engine/src/render.rs `Renderer::render_cells` (`render` for the other views) and shaders/render.wgsl — a compute pass writing the W × H RGBA8 image of Glow, Heat, Element or Density from the state, blended with the previous state by α — on the physics adapter, 64 × 64 hand-made worlds, each channel of each cell within 1/255 of a CPU formula written in the test from the contract's text (§4.11's hex stops, §1.5's colours, the cell's f32 values through the EOS and TempScale in f64): a gentle world (Σ ≤ 0.25, T from 0.08 to 30) for Glow and Heat, a wide one (Σ to 10⁴, every species) for Element and Density, 4,096 cells each; the heat map at T_K = 10^1 … 10^10 and the density map at Σ = 10^−6 … 10^4 reading §4.11's stop colours; the midpoint of each map (heat, density, element) the linear-RGB mean of its two stops, and apart from the sRGB mean by more than 2 levels; every view drawing bg.space #05070D below Σ_vac (M0-D113: the floor state, a cell at Σ 10⁻⁷, and a cell just above Σ_vac reading its view's formula, not bg.space); temperatures past T_Si extended (10^10 K the last heat stop) and inside the first segment translated; α = 1 and α = 0 bit for bit the images of rigs holding the current and the previous state alone, α = ¼ and ½ against the formula on the mixed state. views-heat-linear reads the heat map over T_K, not log₁₀ T_K; views-vacuum-black gives vacuum back to each view's formula. Synthetic worlds: the formulas are proven, a star's image is NOT PROVEN (synthetic)",
       "cmd": "bash tests/gpu.sh views physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
@@ -2287,15 +2288,19 @@
         {
           "id": "views-heat-linear",
           "patch": "tests/plants/views-heat-linear.patch"
+        },
+        {
+          "id": "views-vacuum-black",
+          "patch": "tests/plants/views-vacuum-black.patch"
         }
       ]
     },
     "glow": {
-      "desc": "the glow of the Glow view (contract §1.11, §4.11; M0-T81): crates/sr-engine/src/render.rs `Renderer::render` and shaders/glow.wgsl — for the Glow view, the cell image (`Renderer::render_cells`, proven by `views`) goes through a bright pass on luminance > 0.8 at half resolution (the mean of a 2 × 2 block, each cell kept or zeroed), a separable 9-tap Gaussian (σ = 3 half-resolution texels, weights normalised, zero outside) and a bilinear upsample added at 0.6 — on the physics adapter, 64 × 64 hand-made worlds, every channel of every cell within 1 level of a CPU model of those passes written in the test from the contract's text, in f64, from the read-back cell image: a lone bright cell (nothing changes past 11 cells of it), a 16 × 16 bright block (a halo above 20 levels at its edge, falling away outward), a corner cell and two edge cells; a warm world with no cell past the threshold (luminance up to 0.8) gives the cell image byte for byte; Heat, Element and Density drawn by `render` are the cell image byte for byte, while the Glow view of the same world differs. A lone cell's halo is under one level of an 8-bit image (the 2 × 2 mean and the Gaussian's spread): the block case is the discriminating one. Synthetic worlds: a star's glow is NOT PROVEN (synthetic). glow-threshold reads the threshold as 0 (every lit cell blooms)",
+      "desc": "the glow of the Glow view (contract §1.11, §4.11; M0-T81): crates/sr-engine/src/render.rs `Renderer::render` and shaders/glow.wgsl — for the Glow view, the cell image (`Renderer::render_cells`, proven by `views`) goes through a bright pass on the brightest channel > 0.8 (M0-D112) at half resolution (the mean of a 2 × 2 block, each cell kept or zeroed), a separable 9-tap Gaussian (σ = 3 half-resolution texels, weights normalised, zero outside) and a bilinear upsample added at 0.6 — on the physics adapter, 64 × 64 hand-made worlds, every channel of every cell within 1 level of a CPU model of those passes written in the test from the contract's text, in f64, from the read-back cell image: a lone bright cell (nothing changes past 11 cells of it), a 16 × 16 bright block (a halo above 20 levels at its edge, falling away outward), a corner cell and two edge cells; a block each of 40,000 K and 10⁷ K matter (past the table), whose luminance is under 0.8 and brightest channel over it, blooms against the same model; a warm world with no channel past the threshold, and a world of dense cold gas (the haze), give the cell image byte for byte; Heat, Element and Density drawn by `render` are the cell image byte for byte, while the Glow view of the same world differs. A lone cell's halo is under one level of an 8-bit image (the 2 × 2 mean and the Gaussian's spread): the block case is the discriminating one. Synthetic worlds: a star's glow is NOT PROVEN (synthetic). glow-threshold reads the threshold as 0 (every lit cell blooms); glow-luminance tests luminance again (the hottest matter never blooms)",
       "cmd": "bash tests/gpu.sh glow physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 5,
+      "expected": 7,
       "timeout_s": 900,
       "paths": [
         "crates/sr-engine/**",
@@ -2314,6 +2319,10 @@
         {
           "id": "glow-threshold",
           "patch": "tests/plants/glow-threshold.patch"
+        },
+        {
+          "id": "glow-luminance",
+          "patch": "tests/plants/glow-luminance.patch"
         }
       ]
     },

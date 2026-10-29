@@ -254,7 +254,8 @@ encoder)` records the passes into the caller's encoder and `target` (a storage t
 The quad that draws the texture to the window at an integer scale is the app's (M0-T84), not this page's yet.
 - **The four views** (`View`: Glow, Heat, Element, Density) are one entry point and a `view` word. Glow is the default and the
   only one with the glow passes; Heat and Density are the §4.11 sequential maps over log₁₀ T_K and log₁₀ Σ; Element blends
-  the species colours (§1.5) by mass fraction. Maps interpolate in linear RGB. Every colour, stop and threshold is §1.11's and
+  the species colours (§1.5) by mass fraction. Maps interpolate in linear RGB. A cell below Σ_vac is bg.space in every view
+  (M0-D113), ahead of the view's formula. Every colour, stop and threshold is §1.11's and
   §4.11's — this page never restates a design token; `render_cells` draws the cell image alone, glow-less even for Glow.
 - **Temperature** is the translated one: the sandbox T goes through §1.10.2's piecewise log-log translation in f32 on the GPU
   (the same eight anchors that build the readouts' `TempScale`), so the view and the status line read one temperature.
@@ -267,8 +268,8 @@ The quad that draws the texture to the window at an integer scale is the app's (
   §1.11's; `blackbody_table`, `blackbody_lookup`). The Glow view reads it at T_K and mixes in the haze for cold gas.
 - **The glow** (Glow view only): the cell image is drawn into an image of the renderer's own, then four dispatches — a bright
   pass to a half-resolution texture, a horizontal and a vertical Gaussian blur, a composite that upsamples and adds into
-  `target`. The other views write straight into `target`. Numbers: §1.11, §4.11. Known limit, the lead's call on §1.11
-  (M0-T81): the luminance test blooms only a middle range of temperatures, so blue-white matter does not glow by this pass.
+  `target`. The other views write straight into `target`. Numbers: §1.11, §4.11. The bright pass keeps a cell whose brightest
+  channel is above 0.8 (§0.5 [M0-D112]), so every cell hotter than ~3,400 K blooms, the table's end colour and matter past the table included.
 - **Headless frames** (`headless --frames-every N [--view …]`, §3.3, `headless::FrameOut`): a `Renderer` at α = 1 draws into
   an offscreen RGBA8 texture, the read-back is padded to the row alignment and waited for before the PNG is written
   (`png`), to `DIR/frames/f_<step>.png` at every step index N divides — the chunks are cut there, so a frame is the state of

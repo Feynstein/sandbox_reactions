@@ -1,0 +1,114 @@
+== 2026-10-29T13:43:51-04:00 views · task M0-D113 · box laserax-ai :: bash tests/gpu.sh views physics
+-- views · exit=101 · 21.57 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 21.14s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test views::alpha_between_blends_the_states ... 
+thread 'views::alpha_between_blends_the_states' (3134623) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test views::alpha_zero_and_one_give_the_two_states_exactly ... 
+thread 'views::alpha_zero_and_one_give_the_two_states_exactly' (3134901) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::density_matches_the_formula_across_a_wide_world ... 
+thread 'views::density_matches_the_formula_across_a_wide_world' (3134905) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::density_reads_the_stops_colours ... 
+thread 'views::density_reads_the_stops_colours' (3134911) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::element_matches_the_formula_across_a_wide_world ... 
+thread 'views::element_matches_the_formula_across_a_wide_world' (3134912) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::glow_matches_the_formula_across_a_world ... 
+thread 'views::glow_matches_the_formula_across_a_world' (3134916) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::heat_matches_the_formula_across_a_world ... 
+thread 'views::heat_matches_the_formula_across_a_world' (3134917) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::heat_reads_the_stops_colours ... 
+thread 'views::heat_reads_the_stops_colours' (3134921) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::temperatures_translate_past_the_anchors ... 
+thread 'views::temperatures_translate_past_the_anchors' (3134927) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::the_maps_midpoints_are_linear_rgb_means ... 
+thread 'views::the_maps_midpoints_are_linear_rgb_means' (3134942) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test views::vacuum_is_bg_space_in_every_view ... 
+thread 'views::vacuum_is_bg_space_in_every_view' (3134949) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] Intel(R) Graphics (RPL-S) (Vulkan, IntegratedGpu, driver Intel open-source Mesa driver); [3] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    views::alpha_between_blends_the_states
+    views::alpha_zero_and_one_give_the_two_states_exactly
+    views::density_matches_the_formula_across_a_wide_world
+    views::density_reads_the_stops_colours
+    views::element_matches_the_formula_across_a_wide_world
+    views::glow_matches_the_formula_across_a_world
+    views::heat_matches_the_formula_across_a_world
+    views::heat_reads_the_stops_colours
+    views::temperatures_translate_past_the_anchors
+    views::the_maps_midpoints_are_linear_rgb_means
+    views::vacuum_is_bg_space_in_every_view
+
+test result: FAILED. 0 passed; 11 failed; 0 ignored; 0 measured; 431 filtered out; finished in 0.31s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-10-29T13:47:20-04:00 views · task M0-D113 · box laserax-ai-server :: bash tests/gpu.sh views physics
+-- views · exit=0 · 17.20 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 9.12s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::vacuum_is_bg_space_in_every_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 431 filtered out; finished in 8.00s
+
+

@@ -1,0 +1,56 @@
+== 2026-10-29T13:47:20-04:00 frames · task M0-D113 · box laserax-ai-server :: bash tests/gpu.sh frames physics
+-- frames · exit=0 · 14.89 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on shared package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 9.13s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test frames::bad_frame_arguments_are_exit_4 ... SR-ERROR bad arguments: --frames-every must be at least 1
+SR-ERROR bad arguments: --frames-every takes a whole number, got "x"
+SR-ERROR bad arguments: --view takes glow, heat, element or density, got "mass"
+SR-ERROR bad arguments: --view needs --frames-every (the view the frames are drawn in)
+SR-ERROR bad arguments: --adapter is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --frames-every needs --out (frames go to DIR/frames)
+ok
+test frames::each_frame_is_the_state_of_the_step_in_its_name_glow ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.527263 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test frames::frames_land_at_every_n_steps_at_the_worlds_size ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=25 sim_time=0.344771 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=0.282290 until=none
+ok
+test frames::frames_leave_the_run_unchanged ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+ok
+test frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10 sim_time=0.153661 until=none
+centre [255, 255, 255, 255] rim [255, 255, 230, 255] corner [5, 7, 13, 255]
+ok
+test frames::the_view_flag_draws_the_chosen_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.527263 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10 sim_time=0.153661 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10 sim_time=0.153661 until=none
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 436 filtered out; finished in 5.70s
+
+

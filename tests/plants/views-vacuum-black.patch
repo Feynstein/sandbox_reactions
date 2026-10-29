@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/render.wgsl
++++ b/crates/sr-engine/shaders/render.wgsl
+@@ -238,7 +238,7 @@
+             rgb = glow_colour(c, to_kelvin(cell_temperature(c)));
+         }
+     }
+-    if (c.sigma < eos.sigma_vac) {
++    if (c.sigma < 0.0) {
+         rgb = BG_SPACE;
+     }
+     textureStore(image, vec2<i32>(i32(id.x), i32(id.y)), vec4<f32>(clamp(rgb, vec3<f32>(0.0), vec3<f32>(1.0)), 1.0));
