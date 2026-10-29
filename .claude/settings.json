@@ -1,4 +1,8 @@
 {
+  "availableModels": ["fable", "opus", "sonnet"],
+  "env": {
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-5-5"
+  },
   "hooks": {
     "UserPromptSubmit": [
       {

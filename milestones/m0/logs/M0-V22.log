@@ -1,0 +1,249 @@
+# M0-V22 — E6's triage after Phase 12's close — session trail
+# box: linux-pc (hostname laserax-ai); GPU runs on laserax-ai-server, RTX 4090 (R18)
+# start: 2026-10-28T21:17:46-04:00 (plan.py show: baseline 629 files)
+# rung_record.py now (launch prompt): model=claude-opus-5-5 level=max plugin=installed — the heading's rung (Opus 5.5, max)
+2026-10-28T21:20 plan.py status M0-V22 "IN PROGRESS" → GO
+laserax-ai-server
+ 21:28:24 up 13:30,  2 users,  load average: 0.00, 0.00, 0.00
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB, 12288 MiB
+NVIDIA GeForce RTX 4090, 0 %, 19 MiB, 24564 MiB
+255ec37 M0-D90 done: a black hole from mass; G-WATCH's m_tov_sb exemption
+1936767 milestones/m0/logs/loop_times.jsonl
+64ab57766e9414b7b370744dc7f1ca0926f404dc2326e871fe25ebd25c4d3450  milestones/m0/logs/loop_times.jsonl
+-rw-rw-r-- 1 ybelanger ybelanger   24439 Oct 20 19:31 crates/sr-engine/tests/gpu/cold_core.rs
+-rw-rw-r-- 1 ybelanger ybelanger 1097227 Oct 28 16:10 tools/pb/verify.anchor.json
+0
+2026-10-28T21:29 rsync up (R18): server idle (load 0.00, GPUs 0 %); server loop_times.jsonl = exact prefix of local (sha256 over 1,936,767 B); dry run 13 tree files + 146 logs (logs/M0-V22.rsync_dry.log); server anchor's 319 extra records = desktop/web/timing/tools_selftest dropped locally by win-laptop's reds (none newer)
+rsync exit 0
+2026-10-28T21:29 on laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py cold_core --task M0-V22 (M0-D65's owed linux-pc run, R18)
+cold_core  8/0/0       12.39 s  GO
+logs: milestones/m0/logs/M0-V22.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+2e5bef5214e1
+anchor: 0 path×scope entries moved by this run
+anchor: 169 paths checked · 307 skipped (3 classes) · 151 never checked · 2 stale · 0 unclassified · 0 owed · 322 covered of 629 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.39 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.0->0.96
+=== GO ===
+2026-10-28T21:30 brought back: logs/M0-V22.cold_core.log; loop_times.jsonl's 512-byte server tail appended (prefix checked by sha256). cold_core 8/0/0 GO, 12.39 s, laserax-ai-server RTX 4090
+2026-10-28T21:34 the lead (question tool): M0-D106 → «Defer to win-laptop (Recommended)»; M0-D107 → «Defer to win-laptop (Recommended)»
+2026-10-28T21:37 plan.py status M0-D106/M0-D107 DEFERRED (the lead's word) → GO; flag M0-D103 (F2 merged) → GO 4/5; flag M0-D106 (two sightings, M0-D39) → GO 5/5 + WARN; append M0-TM13 after M0-V22 → see above
+2026-10-28T21:39 ordering notes amended (Phase 12's, Phase 16's: two Edits); plan.py register --set Next task, Open D/BLOCKED register, Outstanding commit gates, Awaiting lead (/tmp/v10 no longer M0-V22's)
+2026-10-28T21:40 tasks/M0-V22.md written; verify.py touched --task M0-V22:
+touched: 0 task(s) · 0 path(s) · 231 claim record(s) naming their files · 71 without (before the field) · 0 foreign
+=== NO-GO: no claim record of M0-V22 names its files ===
+2026-10-28T21:42 claim: server idle (load 0.08), loop_times identical (1,964,781 B, sha256 4cdb7f0e…); rsync up, then on laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-V22
+<f.st...... milestones/m0/m0_implementation_plan.md
+<f.st...... milestones/m0/logs/M0-V22.log
+<f..t...... milestones/m0/logs/loop_times.jsonl
+<f+++++++++ milestones/m0/tasks/M0-V22.md
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why tools_selftest: never: tests/plants/tools-selftest-scratch.patch (+10)
+why timing: never: .cargo/config.toml (+109)
+why desktop: never: .cargo/config.toml (+97)
+why web: never: .cargo/config.toml (+99)
+why calibrate_bisect: stale: tests/plants/calibrate-checkpoint-without-observers.patch
+plan_lint         709/0/0      0.12 s  GO · step 1/6, 5 left
+tools_selftest    10/0/0      18.79 s  GO · step 2/6, 4 left
+timing            5/0/0       21.36 s  GO · step 3/6, 3 left
+desktop           0/4/0      191.59 s  NO-GO · step 4/6, 2 left
+web               0/3/0        1.13 s  NO-GO · step 5/6, 1 left
+calibrate_bisect  19/0/0      86.44 s  GO · step 6/6, 0 left
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 114 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 115 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 137 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+multi             NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+edits             NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+edits_file        NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 108 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 81 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 81 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 137 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 134 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 115 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 135 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-V22.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+a1056806b672
+anchor: 123 path×scope entries moved by this run
+anchor: 213 paths checked · 308 skipped (3 classes) · 109 never checked · 0 stale · 0 unclassified · 0 owed · 322 covered of 630 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for desktop, web)
+NEVER CHECKED  Cargo.lock  (no entry for desktop, web)
+NEVER CHECKED  Cargo.toml  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/Cargo.toml  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/src/capture.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/src/desktop.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/src/format.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/src/main.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/src/status.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/src/strings.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/src/web.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-app/tests/strings.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/edit.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/edit.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_order.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edit.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edits_file.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/multi.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/readouts.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for desktop, web)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for desktop, web)
+NEVER CHECKED  rust-toolchain.toml  (no entry for desktop, web)
+NEVER CHECKED  start.bat  (no entry for desktop)
+NEVER CHECKED  start.ps1  (no entry for desktop)
+NEVER CHECKED  start.sh  (no entry for desktop)
+NEVER CHECKED  tests/cargo.sh  (no entry for desktop, web)
+NEVER CHECKED  tests/plants/launcher-no-stop.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/launcher-stop-all.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/never-ready.patch  (no entry for web)
+NEVER CHECKED  tests/plants/port-handover-early.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/port-no-fallback.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/smoke-no-sandbox.patch  (no entry for web)
+NEVER CHECKED  tests/plants/status-never-ready.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/web-autoload.patch  (no entry for web)
+NEVER CHECKED  tests/plants/web-no-gpu-check.patch  (no entry for web)
+NEVER CHECKED  tests/smoke.sh  (no entry for desktop)
+NEVER CHECKED  tests/web/check.sh  (no entry for web)
+NEVER CHECKED  tools/pb/launch.json  (no entry for desktop, web)
+NEVER CHECKED  web/Trunk.toml  (no entry for web)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   300  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: no ready within 90 s (SR-STATUS-PORT never printed, last status none); desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready · log milestones/m0/logs/M0-V22.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-V22.web.log
+  anchor: 109 never checked, 0 stale, 0 unclassified - every one named above
+verify: 743 passed, 7 failed, 0 skipped · 4/6 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 62 not impacted · 101.57 s + loop 0.09 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.06->0.66 · base: M0-V22's start 2026-10-28T21:17:46-04:00
+=== NO-GO: desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: no ready within 90 s (SR-STATUS-PORT never printed, last status none); desktop[r... ===
+2026-10-28T21:44 brought back (R18): logs/M0-V22.<scope>.log for the claim's six scopes; loop_times.jsonl's server tail appended (prefix sha256-checked); tools/pb/verify.anchor.json (local unchanged since 21:10, before the first rsync)
+2026-10-28T21:45 on linux-pc (box scopes R18 keeps here; ports 47810–47830 free): python3 tools/pb/verify.py desktop web --task M0-V22-lpc
+desktop   4/0/0       26.03 s  GO · step 1/2, 1 left
+web       3/0/0       19.85 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-V22-lpc.<scope>.log · record: loop_times.jsonl · tree aecb0a7d9605+a1056806b672
+anchor: 198 path×scope entries moved by this run
+anchor: 322 paths checked · 308 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 322 covered of 630 visible
+verify: 7 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.35 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 2.85->2.56
+=== GO ===
+2026-10-28T21:45 linux-pc box scopes: desktop 4/0 GO 26.03 s, web 3/0 GO 19.85 s (task M0-V22-lpc; anchor 0 never checked, 0 stale). plan.py flag M0-V11 (R15's owed list; a CHECK, uncounted)
+2026-10-28T21:46 plan.py close M0-V22 --status DONE → GO (handoff 1 line); re-verify plan_lint scoped after the close (step 7): python3 tools/pb/verify.py plan_lint --task M0-V22-lpc
+lint: checks=708 failed=0 warnings=2 · blocks=318 · flow_rows=318 · verify_fences=0 · history=0 · flow=per-task · header=558/600 · pipeline=9/60 · ladder=6 rungs · refresh=5/5
+plan_lint  708/0/0      0.06 s  GO
+logs: milestones/m0/logs/M0-V22-lpc.<scope>.log · record: loop_times.jsonl · tree aecb0a7d9605+91d3cdad0a51
+anchor: 1 path×scope entries moved by this run
+anchor: 322 paths checked · 308 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 322 covered of 630 visible
+verify: 708 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.95->3.95
+=== GO ===
