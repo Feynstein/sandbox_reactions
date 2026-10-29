@@ -1,0 +1,67 @@
+==== 2026-10-29T01:21:41-04:00 calibrate_status · clean · a fresh scratch copy of the tree
+== 2026-10-29T01:22:03-04:00 calibrate_status · task M0-V11-win · box Laser2025-20 :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=0 · 1.62 s
+18 passed, 0 failed
+=== GO ===
+
+==== 2026-10-29T01:21:41-04:00 calibrate_status · plant calibrate-status-one-short · a fresh scratch copy of the tree
+planted calibrate-status-one-short: {python} -S -c "import pathlib;p=pathlib.Path('tools/calibrate_status.py');t=p.read_text(encoding='utf-8');assert '    runs = 2' in t;p.write_text(t.replace('    runs = 2','    runs = 1',1),encoding='utf-8')" -> exit 0
+== 2026-10-29T01:22:03-04:00 calibrate_status · task M0-V11-win · box Laser2025-20 :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=1 · 1.45 s
+FAIL case_finished_lives: AssertionError: item m_up_sb · tmphdgahbe7 · 3 finished
+  life 01  mass 3351.032  white_dwarf  142801 steps  8m30s
+  life 02  mass 46914.448  black_hole  1000 steps  7m00s
+  life 03  mass 12000.000  white_dwarf  1000 steps  36m40s
+  no life running in m_up_sb
+lives left 6 of 9 · bracket from lives 1 and 2
+ETA 42m00s to 3h40m, mean 1h44m
+FAIL case_running_life: AssertionError: item m_ign_sb · tmp_jgpiyiz · 2 finished
+  life 01  mass 167.552  white_dwarf  1000 steps  1s
+  life 02  mass 3351.032  white_dwarf  1000 steps  3s
+  life 03 running: its folder was made 1m30s ago (a stopped item, or a life re-run by --resume in an old folder, reads the same)
+lives left 7 of 9 · bracket from lives 1 and 2
+ETA 6s to 18s, mean 12s (a guess: 2 of 3 lives needed)
+FAIL case_bracket_unknown: AssertionError: (None, ['item m_up_sb · tmpd85kwk0b · 1 finished', '  life 01  mass 3351.032  white_dwarf  1000 steps  10m00s', '  no life running in m_up_sb', "lives left 8 of 9 · bracket from the item's default", 'ETA 1h20m to 1h20m, mean 1h20m (a guess: 1 of 3 lives needed)'])
+FAIL case_bh_no_default_lo: AssertionError: (None, ['item m_bh_sb · tmpar3v1v50 · 0 finished', '  life 01 running: its folder was made 1m30s ago (a stopped item, or a life re-run by --resume in an old folder, reads the same)', 'lives left 9 of 9 · bracket from --bracket', "ETA: none yet, no life has finished (a Sun-like life is ~37 min, a heavy one ~8: the lead's measure)"])
+FAIL case_progress_json: AssertionError: item m_up_sb · tmpp1pvmiz1 · 1 finished
+  life 01  mass 3351.032  white_dwarf  142801 steps  8m30s
+  life 02 running 10m00s · stage main_sequence, step 60,000, sim_time 480.25 (from progress.json, updated 5s ago)
+  path: cloud › collapsing › [main_sequence] since step 30,000 · heat unconverged in 1,234 steps (counted, not printed)
+  this life: [########------------] 42% of life 01's 142,801 steps (nearest mass) at 100 steps/s · ~13m48s left (a guess)
+lives left 8 of 9 · bracket from the item's default
+ETA 1h13m to 1h13m, mean 1h13m (a guess: 1 of 3 lives needed)
+FAIL case_bisect_count: AssertionError: (0.05, 1.0, 9, 10)
+12 passed, 6 failed
+=== NO-GO: 6 case(s) failed ===
+
+==== 2026-10-29T01:21:41-04:00 calibrate_status · plant calibrate-status-wrong-stage · a fresh scratch copy of the tree
+planted calibrate-status-wrong-stage: tests/plants/calibrate-status-wrong-stage.patch -> tools/calibrate_status.py
+== 2026-10-29T01:22:03-04:00 calibrate_status · task M0-V11-win · box Laser2025-20 :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=1 · 1.56 s
+FAIL case_progress_json: AssertionError: item m_up_sb · tmpncf8yjh3 · 1 finished
+  life 01  mass 3351.032  white_dwarf  142801 steps  8m30s
+  life 02 running 10m00s · stage cloud, step 60,000, sim_time 480.25 (from progress.json, updated 5s ago)
+  path: cloud › collapsing › [main_sequence] since step 30,000 · heat unconverged in 1,234 steps (counted, not printed)
+  this life: [########------------] 42% of life 01's 142,801 steps (nearest mass) at 100 steps/s · ~13m48s left (a guess)
+lives left 9 of 10 · bracket from the item's default
+ETA 1h21m to 1h21m, mean 1h21m (a guess: 1 of 3 lives needed)
+17 passed, 1 failed
+=== NO-GO: 1 case(s) failed ===
+
+==== 2026-10-29T01:21:41-04:00 calibrate_status · plant calibrate-status-continued-total-steps · a fresh scratch copy of the tree
+planted calibrate-status-continued-total-steps: tests/plants/calibrate-status-continued-total-steps.patch -> tools/calibrate_status.py
+== 2026-10-29T01:22:03-04:00 calibrate_status · task M0-V11-win · box Laser2025-20 :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=1 · 1.55 s
+FAIL case_continued_life: AssertionError: (None, ['item m_up_sb · tmpsmke3kch · 1 finished', '  life 01  mass 3351.032  white_dwarf  200000 steps  10m00s', '  life 02 running 1m40s · stage main_sequence, step 60,000, sim_time 480.25 (from progress.json, updated 5s ago)', '  path: cloud › collapsing › [main_sequence] since step 30,000', "  this life: [######--------------] 30% of life 01's 200,000 steps (nearest mass) at 600 steps/s · checkpoint at step 55,000: a stop now loses 5,000 steps · ~3m53s left (a guess)", "lives left 9 of 10 · bracket from the item's default", 'ETA 1h23m to 1h23m, mean 1h23m (a guess: 1 of 3 lives needed)'])
+17 passed, 1 failed
+=== NO-GO: 1 case(s) failed ===
+
+==== 2026-10-29T01:21:41-04:00 calibrate_status · plant calibrate-status-flat-stale · a fresh scratch copy of the tree
+planted calibrate-status-flat-stale: {python} -S -c "import pathlib;p=pathlib.Path('tools/calibrate_status.py');t=p.read_text(encoding='utf-8');a='STALE_TICKS * progress[\"every\"] * ran / own';assert a in t;p.write_text(t.replace(a,'0',1),encoding='utf-8')" -> exit 0
+== 2026-10-29T01:22:03-04:00 calibrate_status · task M0-V11-win · box Laser2025-20 :: {python} tools/calibrate_status_cases.py
+-- calibrate_status · exit=1 · 1.42 s
+FAIL case_stale_follows_the_tick: AssertionError: (1200.0, "item m_up_sb · tmpyqrfs5bs · 1 finished\n  life 01  mass 3351.032  white_dwarf  1000 steps  10m00s\n  life 02 running 36m00s · stage main_sequence, step 10,000, sim_time 480.25 (from progress.json, updated 20m00s ago — stale, is it stopped?)\n  path: cloud › collapsing › [main_sequence] since step 30,000\n  this life: step 10,000, past life 01's 1,000 steps (nearest mass) at 5 steps/s · no ETA for it\nlives left 9 of 10 · bracket from the item's default\nETA 1h20m to 1h20m, mean 1h20m (a guess: 1 of 3 lives needed)")
+FAIL case_continued_life: AssertionError: (None, ['item m_up_sb · tmpipl8swq2 · 1 finished', '  life 01  mass 3351.032  white_dwarf  200000 steps  10m00s', '  life 02 running 3h00m · stage main_sequence, step 60,000, sim_time 480.25 (from progress.json, updated 2h00m ago — stale, is it stopped?)', '  path: cloud › collapsing › [main_sequence] since step 30,000', "  this life: [######--------------] 30% of life 01's 200,000 steps (nearest mass) at 1 steps/s · checkpoint at step 50,000: a stop now loses 10,000 steps · ~42h00m left (a guess)", "lives left 9 of 10 · bracket from the item's default", 'ETA 43h20m to 43h20m, mean 43h20m (a guess: 1 of 3 lives needed)'])
+16 passed, 2 failed
+=== NO-GO: 2 case(s) failed ===
+

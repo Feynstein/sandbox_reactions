@@ -1,0 +1,29 @@
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-qf6ohijq\arm4\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-qf6ohijq\arm4\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 1m 06s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 9 tests
+test observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.216924 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2065 sim_time=11.849519 until=met
+T 3: ending at step 2105 (t 11.850), object 1 of 1649.861844758343 sb, the sink at (35.32, 30.06), 2 events
+ok
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1648 sim_time=20.296289 until=met
+unbroken: 1648 steps, events [{"detail":{"by":"light","mass_sb":3345.1493724249303},"kind":"ignition","object":1,"sim_time":8.656357404775918,"step":672}]
+stages [{"from_step":33,"sim_time":0.7751594074070454,"stage":"failed_star"},{"from_step":209,"sim_time":3.611508486792445,"stage":"collapsing"},{"from_step":336,"sim_time":4.830148474313319,"stage":"cloud"},{"from_step":464,"sim_time":6.104329141788185,"stage":"failed_star"},{"from_step":720,"sim_time":9.2584623452276,"stage":"cloud"},{"from_step":1648,"sim_time":20.29628875013441,"stage":"main_sequence"}]
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=768 sim_time=9.825839 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1648 sim_time=20.296289 until=met
+SR-ERROR bad dump: --continue: C:\Users\YOHANB~1\AppData\Local\Temp\sr-observe-33128-continue\cut\dumps\s_768.observers.json is step 512 at 6.6372890044003725, the dump's 768 at 9.825838988646865
+SR-ERROR bad dump: --continue: C:\Users\YOHANB~1\AppData\Local\Temp\sr-observe-33128-continue\cut\dumps\s_768.observers.json: Le fichier spécifié est introuvable. (os error 2)
+SR-ERROR bad arguments: --continue needs --load-dump (the dump it goes on from)
+ok
+test observe::a_lighter_objects_ending_never_ends_the_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.006030 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=2.876690 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA

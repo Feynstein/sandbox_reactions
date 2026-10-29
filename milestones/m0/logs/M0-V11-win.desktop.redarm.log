@@ -1,0 +1,224 @@
+==== 2026-10-29T00:57:06-04:00 desktop · clean · a fresh scratch copy of the tree
+== 2026-10-29T00:57:32-04:00 desktop[window] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 241.98 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.0s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm0\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log)
+game-offscreen: pid 26872 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm0\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 190 s, booted and checked in 51 s
+=== GO ===
+
+== 2026-10-29T01:01:34-04:00 desktop[launcher] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 21.36 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.8s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm0\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-offscreen: pid 40916 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-offscreen: built in 1 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+== 2026-10-29T01:01:56-04:00 desktop[race] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=0 · 338.56 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.9s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm0\milestones\m0\logs\M0-V11-win-race.launch.game-offscreen.log)
+services: 1, ready: 1
+race game-offscreen: built in 1 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+== 2026-10-29T01:07:34-04:00 desktop[port-taken] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[port-taken] · exit=0 · 13.34 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+port-taken game-offscreen: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T00:57:06-04:00 desktop · plant port-handover-early · a fresh scratch copy of the tree
+planted port-handover-early: tests/plants/port-handover-early.patch -> tests/smoke.sh
+== 2026-10-29T00:57:32-04:00 desktop[window] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 73.25 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.4s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm1\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log)
+game-offscreen: pid 36264 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm1\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 68 s, booted and checked in 5 s
+=== GO ===
+
+== 2026-10-29T00:58:46-04:00 desktop[launcher] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 48.94 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.4s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm1\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-offscreen: pid 29464 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-offscreen: built in 30 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+== 2026-10-29T00:59:35-04:00 desktop[race] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=1 · 130.20 s
+game-offscreen: port 47811 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL game-offscreen: port 47811 held by a process we did not start - not reusing
+=== NO-GO: game-offscreen, started straight behind the hand-over, did not reach ready ===
+
+== 2026-10-29T01:01:45-04:00 desktop[port-taken] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[port-taken] · exit=0 · 13.81 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+port-taken game-offscreen: built in 1 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T00:57:06-04:00 desktop · plant status-never-ready · a fresh scratch copy of the tree
+planted status-never-ready: tests/plants/status-never-ready.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-29T00:57:32-04:00 desktop[window] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 227.69 s
+game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm2\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log)
+game-offscreen: pid 41788 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm2\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log
+services: 1, ready: 0, failures: 1
+FAIL game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm2\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log)
+=== NO-GO: launch.py smoke game-offscreen did not end GO ===
+
+== 2026-10-29T01:01:20-04:00 desktop[launcher] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 139.56 s
+game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm2\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 0
+FAIL game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm2\milestones\m0\logs\launcher.launch.game-offscreen.log)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions is running. Press Enter to close it.
+game-offscreen: pid 42228 stopped
+services: 1, stopped: 1
+=== GO ===
+=== NO-GO: the launcher never reached ready ===
+
+== 2026-10-29T01:03:40-04:00 desktop[race] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=1 · 124.59 s
+game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm2\milestones\m0\logs\M0-V11-win-race.launch.game-offscreen.log)
+services: 1, ready: 0
+FAIL game-offscreen: not ready within 90s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm2\milestones\m0\logs\M0-V11-win-race.launch.game-offscreen.log)
+=== NO-GO: game-offscreen, started straight behind the hand-over, did not reach ready ===
+
+== 2026-10-29T01:05:44-04:00 desktop[port-taken] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[port-taken] · exit=1 · 95.91 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+=== NO-GO: port-taken: no ready within 90 s (SR-STATUS-PORT 47812, last status booting) ===
+
+==== 2026-10-29T00:57:06-04:00 desktop · plant launcher-no-stop · a fresh scratch copy of the tree
+planted launcher-no-stop: tests/plants/launcher-no-stop.patch -> start.sh, start.bat
+== 2026-10-29T00:57:32-04:00 desktop[window] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 106.97 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.4s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm3\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log)
+game-offscreen: pid 16772 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm3\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 102 s, booted and checked in 4 s
+=== GO ===
+
+== 2026-10-29T00:59:19-04:00 desktop[launcher] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 130.98 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.9s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm3\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+=== NO-GO: the launcher exited 1 ===
+
+== 2026-10-29T01:01:30-04:00 desktop[race] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=0 · 144.59 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.4s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm3\milestones\m0\logs\M0-V11-win-race.launch.game-offscreen.log)
+services: 1, ready: 1
+race game-offscreen: built in 1 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+== 2026-10-29T01:03:55-04:00 desktop[port-taken] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[port-taken] · exit=0 · 112.83 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+port-taken game-offscreen: built in 4 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T00:57:06-04:00 desktop · plant launcher-stop-all · a fresh scratch copy of the tree
+planted launcher-stop-all: tests/plants/launcher-stop-all.patch -> start.sh, start.bat
+== 2026-10-29T00:57:32-04:00 desktop[window] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 387.97 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.1s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm4\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log)
+game-offscreen: pid 23212 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm4\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 164 s, booted and checked in 223 s
+=== GO ===
+
+== 2026-10-29T01:04:00-04:00 desktop[launcher] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 224.91 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.9s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm4\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+headless-boot: nothing recorded
+game: nothing recorded
+game-xvfb: nothing recorded
+game-offscreen: pid 34548 stopped
+web: pid 16548 stopped (needed SIGKILL)
+services: 5, stopped: 5
+=== GO ===
+headless-boot stopped
+game stopped
+game-xvfb stopped
+game-offscreen stopped
+web stopped
+services: 5, running: 0
+=== GO ===
+=== NO-GO: the launcher stopped a service it did not start (the decoy web server) ===
+
+== 2026-10-29T01:07:45-04:00 desktop[race] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=0 · 15.70 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.9s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm4\milestones\m0\logs\M0-V11-win-race.launch.game-offscreen.log)
+services: 1, ready: 1
+race game-offscreen: built in 2 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+== 2026-10-29T01:08:01-04:00 desktop[port-taken] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[port-taken] · exit=0 · 14.97 s
+SR-STATUS-PORT 47812
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+port-taken game-offscreen: built in 1 s, 47811 held, ready on 47812 as printed, stopped
+=== GO ===
+
+==== 2026-10-29T00:57:06-04:00 desktop · plant port-no-fallback · a fresh scratch copy of the tree
+planted port-no-fallback: tests/plants/port-no-fallback.patch -> crates/sr-app/src/status.rs
+== 2026-10-29T00:57:32-04:00 desktop[window] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 39.44 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.4s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm5\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log)
+game-offscreen: pid 33512 stopped
+game-offscreen: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm5\milestones\m0\logs\M0-V11-win.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 34 s, booted and checked in 4 s
+=== GO ===
+
+== 2026-10-29T00:58:12-04:00 desktop[launcher] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 601.62 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 0.9s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm5\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-offscreen: pid 21732 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-offscreen: built in 152 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+== 2026-10-29T01:08:13-04:00 desktop[race] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[race] · exit=0 · 17.61 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 1.2s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-6le3mjvy\arm5\milestones\m0\logs\M0-V11-win-race.launch.game-offscreen.log)
+services: 1, ready: 1
+race game-offscreen: built in 3 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+== 2026-10-29T01:08:31-04:00 desktop[port-taken] · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[port-taken] · exit=1 · 3.03 s
+SR-ERROR --status-port 47811: cannot listen on 127.0.0.1, nor on 47811–47830 (Une seule utilisation de chaque adresse de socket (protocole/adresse réseau/port) est habituellement autorisée. (os error 10048))
+=== NO-GO: port-taken: the game failed: SR-ERROR --status-port 47811: cannot listen on 127.0.0.1, nor on 47811�47830 (Une seule utilisation de chaque adresse de socket (protocole/adresse r�seau/port) est habituellement autoris�e. (os error 10048)) ===
+

@@ -1,0 +1,98 @@
+==== 2026-10-28T23:18:15-04:00 edits · clean · a fresh scratch copy of the tree
+== 2026-10-28T23:18:26-04:00 edits · task M0-V11-win · box Laser2025-20 :: bash tests/gpu.sh edit physics
+-- edits · exit=0 · 59.56 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-apirzb41\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-apirzb41\arm0\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 51.98s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 10 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 401 filtered out; finished in 5.63s
+
+
+==== 2026-10-28T23:18:15-04:00 edits · plant edit-ignored · a fresh scratch copy of the tree
+planted edit-ignored: tests/plants/edit-ignored.patch -> crates/sr-engine/shaders/edit.wgsl
+== 2026-10-28T23:18:26-04:00 edits · task M0-V11-win · box Laser2025-20 :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 100.02 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-apirzb41\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-apirzb41\arm1\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 34.44s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 10 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas' (43804) panicked at crates\sr-engine\tests\gpu\edit.rs:361:9:
+hot dense, painted and heated: ΔΣ 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared' (29500) panicked at crates\sr-engine\tests\gpu\edit.rs:488:13:
+(32, 12) Cell { sigma: 0.5, mom: [0.15000000596046448, -0.10000000149011612], energy: 5.258072853088379, x: [0.699999988079071, 0.30000001192092896, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] }
+FAILED
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'edit::erase_writes_the_floor_state_and_books_what_left' (41836) panicked at crates\sr-engine\tests\gpu\edit.rs:282:17:
+(32, 26) Cell { sigma: 0.5, mom: [0.15000000596046448, -0.10000000149011612], energy: 5.258072853088379, x: [0.699999988079071, 0.30000001192092896, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] } against the floor state Cell { sigma: 9.99999993922529e-9, mom: [0.0, 0.0], energy: 1.0000020811418153e-9, x: [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] }
+FAILED
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone' (17244) panicked at crates\sr-engine\tests\gpu\edit.rs:331:13:
+(60, 4) ε_th 0.10199977134267613 against 0.1
+FAILED
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it' (42292) panicked at crates\sr-engine\tests\gpu\edit.rs:253:13:
+(32, 26) Σ 0.5 after 0.5
+FAILED
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded' (43832) panicked at crates\sr-engine\tests\gpu\edit.rs:513:5:
+paint, then erase: 0.02000000886619091
+FAILED
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas
+    edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared
+    edit::erase_writes_the_floor_state_and_books_what_left
+    edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone
+    edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it
+    edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded
+
+test result: FAILED. 4 passed; 6 failed; 0 ignored; 0 measured; 401 filtered out; finished in 4.47s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,178 @@
+==== 2026-10-29T00:54:57-04:00 boot · clean · a fresh scratch copy of the tree
+== 2026-10-29T00:55:11-04:00 boot · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 92.05 s
+headless-boot: ready - exit 0, 5.0s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1svn7r3u\arm0\milestones\m0\logs\M0-V11-win.launch.headless-boot.log)
+headless-boot: pid 36988 not signalled - gone
+headless-boot: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1svn7r3u\arm0\milestones\m0\logs\M0-V11-win.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+warning: in the working copy of 'assets/calibration.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'crates/x/lib.rs', LF will be replaced by CRLF the next time Git touches it
+git revision: a clean tree -> f527c06
+git revision: only assets/calibration.json rewritten and a log written -> f527c06
+git revision: a source changed -> f527c06-dirty
+git revision: a new source untracked -> f527c06-dirty
+git revision: no repository -> unknown
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4080 Laptop GPU"
+  },
+  "events": [],
+  "git": "unknown",
+  "ledger": {
+    "end": {
+      "energy": {
+        "cold": 161086.97878091616,
+        "escaped": 0.0,
+        "floor_added": -0.46898548094094716,
+        "invariant": -180588.52127677615,
+        "kinetic": 59953.15294965166,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 585.8846801519464,
+        "potential": -512947.4838496438,
+        "radiated": 61.564902038312994,
+        "swallowed": 0.0,
+        "thermal": 111842.68163493244,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7052298064773,
+        "invariant": 3136.7200976207378,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.014867814260250967
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          0.0008696487620909465,
+          0.0004254093882991583
+        ],
+        "invariant": [
+          0.0008696487620909465,
+          0.0004254093882991583
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 3.5382860666140914,
+      "step": 200
+    },
+    "start": {
+      "energy": {
+        "cold": 34684.23576809466,
+        "escaped": 0.0,
+        "floor_added": 0.0,
+        "invariant": -180591.6275314663,
+        "kinetic": 10.41209120809799,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 0.0,
+        "potential": -239193.30319004058,
+        "radiated": 0.0,
+        "swallowed": 0.0,
+        "thermal": 23907.027799271502,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7202017002014,
+        "invariant": 3136.7202017002014,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.0
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          5.977228283882141e-6,
+          5.392357707023621e-6
+        ],
+        "invariant": [
+          5.977228283882141e-6,
+          5.392357707023621e-6
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 0.030442580580711365,
+      "step": 1
+    }
+  },
+  "max_gas_speed": 9.410389698528187,
+  "objects": [
+    {
+      "id": 1,
+      "mass_sb": 3136.1812059618533,
+      "stage": null,
+      "stages": []
+    }
+  ],
+  "scene": "preset:sun",
+  "sim_time": 3.5382860666140914,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 2.9721745,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 64 s, booted and checked in 27 s
+=== GO ===
+
+==== 2026-10-29T00:54:57-04:00 boot · plant scene-refuse · a fresh scratch copy of the tree
+planted scene-refuse: tests/plants/scene-refuse.patch -> crates/sr-engine/src/scene.rs
+== 2026-10-29T00:55:11-04:00 boot · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 43.47 s
+headless-boot: exited 4 (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1svn7r3u\arm1\milestones\m0\logs\M0-V11-win.launch.headless-boot.log)
+headless-boot: pid 26152 not signalled - gone
+headless-boot: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1svn7r3u\arm1\milestones\m0\logs\M0-V11-win.launch.headless-boot.log
+services: 1, ready: 0, failures: 1
+FAIL headless-boot: exited 4 (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1svn7r3u\arm1\milestones\m0\logs\M0-V11-win.launch.headless-boot.log)
+=== NO-GO: launch.py smoke headless-boot did not end GO ===
+
+==== 2026-10-29T00:54:57-04:00 boot · plant git-dirty-mark-dropped · a fresh scratch copy of the tree
+planted git-dirty-mark-dropped: tests/plants/git-dirty-mark-dropped.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-29T00:55:11-04:00 boot · task M0-V11-win · box Laser2025-20 :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 107.83 s
+headless-boot: ready - exit 0, 4.1s (log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1svn7r3u\arm2\milestones\m0\logs\M0-V11-win.launch.headless-boot.log)
+headless-boot: pid 43368 not signalled - gone
+headless-boot: log C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-1svn7r3u\arm2\milestones\m0\logs\M0-V11-win.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of �2.12.2, steps = 200
+warning: in the working copy of 'assets/calibration.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'crates/x/lib.rs', LF will be replaced by CRLF the next time Git touches it
+git revision: a clean tree -> 4021f0f
+git revision: only assets/calibration.json rewritten and a log written -> 4021f0f
+=== NO-GO: summary.json git is "4021f0f" with a source changed, expected "4021f0f-dirty" ===
+

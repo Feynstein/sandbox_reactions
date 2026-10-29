@@ -1,0 +1,69 @@
+==== 2026-10-28T23:57:54-04:00 heat_multigrid · clean · a fresh scratch copy of the tree
+== 2026-10-28T23:58:05-04:00 heat_multigrid · task M0-V11-win · box Laser2025-20 :: bash tests/gpu.sh heat::multigrid physics
+-- heat_multigrid · exit=0 · 46.33 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-ltafc29h\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-ltafc29h\arm0\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 42.14s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 4 tests
+test heat::multigrid::gpu_the_burnt_fields_first_pass_converges_within_twice_the_models_rounds ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the first pass converges in 15 V-cycle rounds (the model 14, the bound 28), 112 Jacobi rounds
+ok
+test heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the first pass converges in 15 V-cycle rounds (the model 17, the bound 34), 131 Jacobi rounds
+ok
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_burnt_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs 4.17e-9; the least <Mx, x> 1.398e2
+ok
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_hot_disk_in_a_thin_ring ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs 4.75e-9; the least <Mx, x> 1.787e0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 407 filtered out; finished in 2.58s
+
+
+==== 2026-10-28T23:57:54-04:00 heat_multigrid · plant vcycle-no-coarse · a fresh scratch copy of the tree
+planted vcycle-no-coarse: tests/plants/vcycle-no-coarse.patch -> crates/sr-engine/shaders/heat.wgsl
+== 2026-10-28T23:58:05-04:00 heat_multigrid · task M0-V11-win · box Laser2025-20 :: bash tests/gpu.sh heat::multigrid physics
+-- heat_multigrid · exit=101 · 95.03 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-ltafc29h\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-ltafc29h\arm1\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 43.47s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 4 tests
+test heat::multigrid::gpu_the_burnt_fields_first_pass_converges_within_twice_the_models_rounds ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the first pass converges in 25 V-cycle rounds (the model 14, the bound 28), 112 Jacobi rounds
+ok
+test heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the first pass converges in 36 V-cycle rounds (the model 17, the bound 34), 131 Jacobi rounds
+
+thread 'heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds' (36020) panicked at crates\sr-engine\tests\gpu\heat.rs:1674:9:
+36 V-cycle rounds, over 2 × the model's 17
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_burnt_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-MG heat_hot.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_hot.json: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs 2.42e-9; the least <Mx, x> 1.136e2
+ok
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_hot_disk_in_a_thin_ring ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-MG heat_rim.json: box 64 × 64 at (0, 0), 5 levels, mg_coarse from level 2
+SR-MG heat_rim.json: the worst |<Mx, y> - <x, My>| / (|Mx| |y|) over 28 pairs 2.57e-9; the least <Mx, x> 1.493e0
+ok
+
+failures:
+
+failures:
+    heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 407 filtered out; finished in 3.65s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

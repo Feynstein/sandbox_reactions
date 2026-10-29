@@ -1,0 +1,95 @@
+==== 2026-10-29T00:34:52-04:00 timing · clean · a fresh scratch copy of the tree
+== 2026-10-29T00:35:02-04:00 timing · task M0-V11-win · box Laser2025-20 :: bash tests/gpu.sh timing physics
+-- timing · exit=101 · 112.05 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-rn5oc5s_\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-rn5oc5s_\arm0\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 45.66s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps' (39408) panicked at crates\sr-engine\tests\gpu\timing.rs:168:5:
+assertion `left == right` failed: a step carried past ROUNDS inside the frame: the disk's front moved before step 240
+  left: 0
+ right: 240
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test timing::bare_steps_time_every_pass_at_its_boundaries ... 
+thread 'timing::bare_steps_time_every_pass_at_its_boundaries' (27240) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::frames_report_their_cost_per_step_and_per_pass ... 
+thread 'timing::frames_report_their_cost_per_step_and_per_pass' (32712) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... 
+thread 'timing::headless_timing_writes_every_pass_of_the_nominal_disk' (42596) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... 
+thread 'timing::the_wall_clock_fallback_is_named_and_times_no_pass' (30232) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+
+failures:
+
+failures:
+    timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps
+    timing::bare_steps_time_every_pass_at_its_boundaries
+    timing::frames_report_their_cost_per_step_and_per_pass
+    timing::headless_timing_writes_every_pass_of_the_nominal_disk
+    timing::the_wall_clock_fallback_is_named_and_times_no_pass
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 406 filtered out; finished in 11.33s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-29T00:34:52-04:00 timing · plant timing-skip-pass · a fresh scratch copy of the tree
+planted timing-skip-pass: tests/plants/timing-skip-pass.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-29T00:35:02-04:00 timing · task M0-V11-win · box Laser2025-20 :: bash tests/gpu.sh timing physics
+-- timing · exit=101 · 53.02 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-rn5oc5s_\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-rn5oc5s_\arm1\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 40.89s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps' (37596) panicked at crates\sr-engine\tests\gpu\timing.rs:168:5:
+assertion `left == right` failed: a step carried past ROUNDS inside the frame: the disk's front moved before step 240
+  left: 0
+ right: 240
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test timing::bare_steps_time_every_pass_at_its_boundaries ... 
+thread 'timing::bare_steps_time_every_pass_at_its_boundaries' (40132) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::frames_report_their_cost_per_step_and_per_pass ... 
+thread 'timing::frames_report_their_cost_per_step_and_per_pass' (41712) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... 
+thread 'timing::headless_timing_writes_every_pass_of_the_nominal_disk' (42696) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... 
+thread 'timing::the_wall_clock_fallback_is_named_and_times_no_pass' (31812) panicked at crates\sr-engine\tests\gpu\main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4080")): adapter NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA) refused the device: Parent device is lost
+FAILED
+
+failures:
+
+failures:
+    timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps
+    timing::bare_steps_time_every_pass_at_its_boundaries
+    timing::frames_report_their_cost_per_step_and_per_pass
+    timing::headless_timing_writes_every_pass_of_the_nominal_disk
+    timing::the_wall_clock_fallback_is_named_and_times_no_pass
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 406 filtered out; finished in 10.41s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

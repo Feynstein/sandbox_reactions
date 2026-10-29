@@ -1,0 +1,49 @@
+==== 2026-10-29T00:16:23-04:00 strings · clean · a fresh scratch copy of the tree
+== 2026-10-29T00:16:35-04:00 strings · task M0-V11-win · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=0 · 37.25 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-l4o2a_tv\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-l4o2a_tv\arm0\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-l4o2a_tv\arm0\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 35.93s
+     Running tests\strings.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\strings-0b09fe16b8ffc41a.exe)
+
+running 3 tests
+test same_keys_both_ways ... ok
+test texts_byte_identical ... ok
+test web_texts_verbatim_in_index_html ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+
+==== 2026-10-29T00:16:23-04:00 strings · plant string-typo · a fresh scratch copy of the tree
+planted string-typo: tests/plants/string-typo.patch -> crates/sr-app/src/strings.rs
+== 2026-10-29T00:16:35-04:00 strings · task M0-V11-win · box Laser2025-20 :: bash tests/cpu.sh sr-app --test strings
+-- strings · exit=101 · 69.39 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-l4o2a_tv\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-l4o2a_tv\arm1\crates\sr-engine)
+   Compiling sr-app v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-l4o2a_tv\arm1\crates\sr-app)
+    Finished `release` profile [optimized] target(s) in 30.67s
+     Running tests\strings.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\strings-0b09fe16b8ffc41a.exe)
+
+running 3 tests
+test texts_byte_identical ... FAILED
+test same_keys_both_ways ... ok
+test web_texts_verbatim_in_index_html ... ok
+
+failures:
+
+---- texts_byte_identical stdout ----
+
+thread 'texts_byte_identical' (22280) panicked at crates\sr-app\tests\strings.rs:83:5:
+texts that differ from §4.1:
+stage.supernova: STRINGS "Supernoba" ([53, 75, 70, 65, 72, 6e, 6f, 62, 61]), §4.1 "Supernova" ([53, 75, 70, 65, 72, 6e, 6f, 76, 61])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    texts_byte_identical
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p sr-app --test strings`
+
