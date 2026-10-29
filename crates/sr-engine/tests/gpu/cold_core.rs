@@ -305,8 +305,14 @@ fn scene_text(scene: &Scene) -> String {
     )
 }
 
-/// Whether two scenes are the same disk: everything equal but the floats (σ, T, the overrides), which JSON may return a last digit off.
-fn same_disk(a: &Scene, b: &Scene) -> Result<(), String> {
+/// How far the file's σ may sit from the rebuilt disk's, relative: f32's unit roundoff 2⁻²⁴, the resolution of the planes the
+/// hold starts from. The f64 SCF rebuild differs across boxes' libm (4.1e-12 win-laptop against linux-pc's file, planes
+/// bit-identical; M0-D65, the lead: «f32 resolution»); a disk that moved moves σ far past it.
+const SIGMA_REBUILD: f64 = f32::EPSILON as f64 / 2.0;
+
+/// Whether two scenes are the same disk: everything equal but the floats — T and the overrides, which JSON may return a last
+/// digit off, and σ within `SIGMA_REBUILD`. Ok carries the worst σ relative difference.
+fn same_disk(a: &Scene, b: &Scene) -> Result<f64, String> {
     if (a.world, a.edge, a.slowdown, a.switches, a.test) != (b.world, b.edge, b.slowdown, b.switches, b.test) {
         return Err("the world, edge or switches differ".to_string());
     }
@@ -317,6 +323,7 @@ fn same_disk(a: &Scene, b: &Scene) -> Result<(), String> {
     if a.objects.len() != b.objects.len() {
         return Err(format!("{} objects against {}", a.objects.len(), b.objects.len()));
     }
+    let mut worst = 0.0f64;
     for (i, (p, q)) in a.objects.iter().zip(&b.objects).enumerate() {
         match (p, q) {
             (Object::Rect { x0, y0, w, h, sigma, gas }, Object::Rect { x0: x1, y0: y1, w: w1, h: h1, sigma: s1, gas: g1 }) => {
@@ -324,14 +331,16 @@ fn same_disk(a: &Scene, b: &Scene) -> Result<(), String> {
                     (Heat::T(t), Heat::T(u)) => (t / u - 1.0).abs() < 1e-12 && a.composition == b.composition && a.v == b.v,
                     _ => false,
                 };
-                if (x0, y0, w, h) != (x1, y1, w1, h1) || (sigma / s1 - 1.0).abs() > 1e-12 || !same_gas(gas, g1) {
-                    return Err(format!("object {i}: {p:?} against {q:?}"));
+                let apart = (sigma / s1 - 1.0).abs();
+                worst = worst.max(apart);
+                if (x0, y0, w, h) != (x1, y1, w1, h1) || !(apart <= SIGMA_REBUILD) || !same_gas(gas, g1) {
+                    return Err(format!("object {i}: {p:?} against {q:?}, σ {apart:.1e} apart (bound {SIGMA_REBUILD:.1e})"));
                 }
             }
             _ => return Err(format!("object {i} is not a rect on both sides")),
         }
     }
-    Ok(())
+    Ok(worst)
 }
 
 /// scenes/cold_co_disk.json, checked against the rebuilt disk: stale is a failure, never a silent regeneration
@@ -345,8 +354,9 @@ fn scene_file() -> &'static PathBuf {
             std::fs::write(&path, scene_text(scene)).expect("write scenes/cold_co_disk.json");
         }
         let loaded = Scene::load(&path).unwrap_or_else(|e| panic!("{e} — SR_WRITE_SCENES=1 bash tests/gpu.sh cold_core physics writes it"));
-        if let Err(why) = same_disk(&loaded, scene) {
-            panic!("scenes/cold_co_disk.json is stale ({why}) — SR_WRITE_SCENES=1 bash tests/gpu.sh cold_core physics rewrites it");
+        match same_disk(&loaded, scene) {
+            Ok(worst) => println!("SR-CORE (d) scene file against the rebuild: σ at most {worst:.1e} apart, relative (bound {SIGMA_REBUILD:.1e})"),
+            Err(why) => panic!("scenes/cold_co_disk.json is stale ({why}) — SR_WRITE_SCENES=1 bash tests/gpu.sh cold_core physics rewrites it"),
         }
         path
     })

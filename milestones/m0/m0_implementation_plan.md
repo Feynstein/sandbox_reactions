@@ -283,13 +283,15 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T76 | BUILD | Player edits on the GPU (P0): brush, eraser, heat, cool, preset drop, clear | AFTER M0-T75 | DONE (2026-10-28 15:04) |
 | M0-T77 | BUILD | The edits file and --edits (§2.12.5) | AFTER M0-T76 | DONE (2026-10-28 15:17) |
 | M0-T78 | BUILD | Docs: readouts.md (ending, age), physics.md (edits); lot 10 rows | AFTER M0-T77 | DONE (2026-10-28 15:21) |
-| M0-D65 | BUILD | `cold_core` is red on win-laptop: scenes/cold_co_disk.json, written on linux-pc, is "stale" against the disk rebuilt here — σ 4 × 10⁻¹² apart, over `same_disk`'s 10⁻¹² — so the scope's two scene cases fail on a tree that changed nothing in them | AFTER M0-D63 | DEFERRED (wake: an agent's box probe reads win-laptop — hostname Laser2025-20 — owed there, R15; or cold_core reads red on linux-pc too; otherwise not run here) |
+| M0-D65 | BUILD | `cold_core` is red on win-laptop: scenes/cold_co_disk.json, written on linux-pc, is "stale" against the disk rebuilt here — σ 4 × 10⁻¹² apart, over `same_disk`'s 10⁻¹² — so the scope's two scene cases fail on a tree that changed nothing in them | AFTER M0-D63 | DONE (2026-10-28 18:24, started 17:49) |
 | M0-V10 | CHECK | Validation, lot 10: readouts, presets, edits | AFTER M0-T78 | DONE (2026-10-28 16:11) |
 | M0-D104 | BUILD | calibrate_bisect's plant `calibrate-checkpoint-without-observers` no longer applies: M0-T77's `edits: None` sits inside its hunk's context (calibrate.rs:767), so the Phase 12 sweep reads it ERROR and the scope's red-arm NO-GO | AFTER M0-V10 | TODO |
 | M0-TC10 | MOVE | Compaction — Phase 12's close: nineteen closed blocks to stub, more than ten (PLAYBOOK §8, §11) | AFTER M0-V10 | TODO |
 | M0-V22 | CHECK | Triage — five open D's after Phase 12's close, and M0-V10's logged finding (E6) | AFTER M0-TC10 | TODO |
 | M0-D101 | BUILD | A paint that lands outside the active box makes the state non-finite in the step that applies it: the first stroke into an empty world, or beside a star's box, reads energy non-finite at the painted disk's top row (exit 5), where the same paint inside the box runs clean | AFTER M0-V22 | TODO |
 | M0-D102 | BUILD | `observe_run` can no longer fail on an empty box: its plant `dt-empty-box-unbounded` reads GREEN («unfailable») on the RTX 4090 and the RTX 5090 alike — M0-D96's eaten-cloud case passes with the empty box's Δt unbounded, so every sweep reads `observe_run` NO-GO | AFTER M0-D101 | TODO |
+| M0-D106 | BUILD | `timing` hung on win-laptop: its first case sat 900 s and timed out (0 of 5) in the loop, where it took 44–82 s the same day on the same binary | AFTER M0-D102 | TODO |
+| M0-D107 | BUILD | `web` and `desktop[launcher]` read NO-GO on win-laptop whenever another program holds 47812: VS Code (the agents' own editor) held it all evening, and the web service, unlike the game since M0-D99, has no other port | AFTER M0-D106 | TODO |
 | M0-T79 | BUILD | The blackbody table (§1.11) | AFTER M0-V10 | TODO |
 | M0-T80 | BUILD | The cell image and the four views (§1.11) | AFTER M0-T79 | TODO |
 | M0-T81 | BUILD | The glow: bright pass, Gaussian, upsample (§1.11) | AFTER M0-T80 | TODO |
@@ -541,9 +543,9 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-TC10 (Phase 12's compaction: nineteen closed blocks to stub) on linux-pc, then M0-V22 (E6's triage: six open D's and M0-V10's logged F2), then M0-D104, M0-D101 and M0-D102 before Phase 13; M0-D65 (win-laptop's) is DEFERRED and owed — it wakes, and runs first, as soon as an agent detects it is on win-laptop (hostname Laser2025-20) — then Phases 13–15, the game on screen first (the lead at M0-R11, 2026-10-28: «Game first (Recommended)»); M0-D71, M0-D91 and M0-D103 at the head of Phase 16, after M0-V13
-- Counters: T=125 · D=105 · V=22 · Q=0 · TI=0 · TJ=5 · TV=3 · TC=10 · TR=1 · TM=12 · TD=1 · TE=1 · R=11
-- Open D/BLOCKED register: six D's open — E6 → M0-V22 after M0-TC10: M0-D104 (calibrate_bisect's plant calibrate-checkpoint-without-observers stranded by M0-T77's `edits: None`; filed right after M0-V10 at the lead's word, it runs after M0-V22; every sweep reads calibrate_bisect NO-GO until it lands), M0-D101 (a paint outside the active box makes the state non-finite, exit 5; before Phase 13 — the window's brush and drop, M0-T89, M0-T90) and M0-D102 (observe_run's dt-empty-box-unbounded GREEN on the RTX 4090 and 5090; before Phase 13 — every sweep reads observe_run NO-GO until it lands), then at the head of Phase 16 after M0-V13 (the lead at M0-R11, 2026-10-28: «Game first (Recommended)», «move the deffered tasks where they will run»): M0-D71 (re-opened by M0-R11's ruling — the held core, η 0.1, the measured bounds, reports/unresolved_remnant.md; its flags, M0-D68's among them, in its block), M0-D91 (M0-D93 measured its cause apart; M0-V21's flag in it), M0-D103 (summary.json's four readouts, before M0-T104 and M0-T107); M0-D65 below M0-T78 (win-laptop's, DEFERRED) — the reasons in the ordering notes under Phase 12's and Phase 16's headings; M0-V10's F2 (the wisp cut) logged for M0-V22 · M0-D100 and M0-D69 closed 2026-10-28 (their handoffs) · E6's declarations before M0-V21 (M0-V20 three at eight open, M0-D70 one at eight, M0-V9 one at six) and the blocks closed since M0-V20: each its own handoff
+- Next task: M0-TC10 (Phase 12's compaction: nineteen closed blocks to stub) on linux-pc, then M0-V22 (E6's triage: eight open D's and M0-V10's logged F2; M0-D65's linux-pc cold_core run owed there, its Carried flags), then M0-D104, M0-D101 and M0-D102 before Phase 13, M0-D106 and M0-D107 (win-laptop's) where M0-V22 orders them, then Phases 13–15, the game on screen first (the lead at M0-R11, 2026-10-28: «Game first (Recommended)»); M0-D71, M0-D91 and M0-D103 at the head of Phase 16, after M0-V13; win-laptop's red-arm sweep (task M0-V11-win, M0-V11's carried list) the lead's, overnight
+- Counters: T=125 · D=107 · V=22 · Q=0 · TI=0 · TJ=5 · TV=3 · TC=10 · TR=1 · TM=12 · TD=1 · TE=1 · R=11
+- Open D/BLOCKED register: eight D's open — E6 → M0-V22 after M0-TC10: M0-D104 (calibrate_bisect's plant calibrate-checkpoint-without-observers stranded by M0-T77's `edits: None`; filed right after M0-V10 at the lead's word, it runs after M0-V22; every sweep reads calibrate_bisect NO-GO until it lands), M0-D101 (a paint outside the active box makes the state non-finite, exit 5; before Phase 13 — the window's brush and drop, M0-T89, M0-T90) and M0-D102 (observe_run's dt-empty-box-unbounded GREEN on the RTX 4090 and 5090; before Phase 13 — every sweep reads observe_run NO-GO until it lands), M0-D106 (timing hung 900 s on win-laptop's loaded --all, M0-V11-win; cause not measured) and M0-D107 (web and desktop[launcher] NO-GO on win-laptop while VS Code holds 47812; a lead's fork inside) — both filed after M0-D102 by M0-D65's session at the lead's word, 2026-10-28, ordered by M0-V22; then at the head of Phase 16 after M0-V13 (the lead at M0-R11, 2026-10-28: «Game first (Recommended)», «move the deffered tasks where they will run»): M0-D71 (re-opened by M0-R11's ruling — the held core, η 0.1, the measured bounds, reports/unresolved_remnant.md; its flags, M0-D68's among them, in its block), M0-D91 (M0-D93 measured its cause apart; M0-V21's flag in it), M0-D103 (summary.json's four readouts, before M0-T104 and M0-T107) — the reasons in the ordering notes under Phase 12's and Phase 16's headings; M0-V10's F2 (the wisp cut) logged for M0-V22 · M0-D100, M0-D69 and M0-D65 closed 2026-10-28 (their handoffs; M0-D65's linux-pc run owed to M0-V22) · win-laptop's --all (M0-V11-win, 2026-10-28, the lead's): 1371/4, 64/68 GO — tools_selftest's overlap check raced under load 20 (not filed: the lead, «the box was not idle, that can explain it»), timing → M0-D106, web + desktop → M0-D107; tools/pb/verify.py's live ETA lines added at the lead's word after M0-D65 closed (tasks/M0-D65.md § After the close) · E6's declarations before M0-V21 (M0-V20 three at eight open, M0-D70 one at eight, M0-V9 one at six) and the blocks closed since M0-V20: each its own handoff
 - Outstanding commit gates: Phase 11's is in (bcbd2e5), then c6c8b4b and b3e8b22 (M0-V21, M0-R11 done) · Phase 12's: committed and pushed to origin by M0-V10 at the lead's word (2026-10-28: «when you're done I want you to git add -A, commit and push», «I want everything pushed live, even stuff you didnt do yourself») — 'M0 Phase 12: readouts, presets and edits', the whole working tree since b3e8b22 (lot 10, M0-D100, M0-V10's report, D's and every log); R18's push of it to laserax-ai-server waits on that checkout's tracked files being clean (255ec37 + the rsync'd tree)
 - Carryover: none
 - Awaiting lead: R18's push of HEAD to laserax-ai-server (its tracked files clean first; that checkout is 255ec37 + the rsync'd tree); on laserax-ai-server keep /tmp/v10 (M0-V10's probe scenes and outputs — M0-D101's and M0-V22's repro) until M0-D101 closes, removable after; the RTX 5090 reading of the 4,572 life and the collapse watch (M0-D81's owed lines, tasks/M0-D81.md § Owed); the RTX 5090 reading of the 6,702 life (tasks/M0-D88.md § Owed); on laserax-ai-server keep build/calibrate_runs/2026-10-26T16-25-05Z, T16-26-37Z, T18-37-19Z, T20-04-01Z (the calibration's lives, reports/v9.md) and T16-49-42Z (the exit-6 run, M0-D97's evidence), never `--resume` a pre-D94 stamp (tasks/M0-D94.md § Measured, not filed); keep build/calibrate_runs/2026-10-21T19-39-14Z/ (m_bh_sb's two lives on M0-D79's binary; M0-D81's 5090 record) and build/calibrate_runs/2026-10-21T15-23-36Z/ (M0-R5's evidence); on laserax-ai-server keep build/calibrate_runs/2026-10-22T15-08-15Z/ and /tmp/d80_frames_off/build/calibrate_runs/2026-10-22T15-10-37Z/ (M0-D81's 4090 records) and build/r6_evidence/ (M0-R6's probe tables; M0-D89's repro dumps under m40/), and the server's build/calibrate_runs/2026-10-23T20-42-01Z, T20-43-27Z, T21-08-46Z as M0-D92–D95's and M0-D70's evidence, never as a --resume base; on laserax-ai-server, removable (the lead's): /tmp/d90p and build/calibrate_runs/2026-10-23T19-56-12Z/, 2026-10-23T19-58-57Z/ (M0-D90's probe dumps, 15 GB), /tmp/d97, /tmp/v9s6, /tmp/v9r9_claim.out, and pid 1621826 (a pgrep loop left by M0-D90's session that matches itself and never ends)
@@ -2288,7 +2290,7 @@ orders the six; M0-D103 (F3) went to Phase 16's head (its note).
 - Handoff: linux-pc (laserax-ai), claude-sonnet-5-5 high (rung_record.py now, 2026-10-28; matches heading). docs/agent/readouts.md: § Number formats added (§The predicted ending and § The age clock were already there from M0-T72/T73); docs/agent/physics.md: § Player edits (P0, the edits file, declared readings of M0-T76/T77); docs/agent/testing.md: rows multi and edits added (ending, formats, age_clock, edits_file already present; no second edits_file row). Verify 1 [ALREADY RUN — PASS (3 in readouts.md, 1 in physics.md) on linux-pc]. Verify 2 [ALREADY RUN — FAIL (4 of 6) on linux-pc]: the pattern spells age-clock and edits-file with hyphens, the rows (and verify.json's scopes) use age_clock and edits_file per R17, so those two cannot match without breaking R17; all six rows exist. Claim --changed [ALREADY RUN — PASS (1/1 scope GO, plan_lint 689 passed) on linux-pc]. No code touched; no GPU run. Not acted on: the Verify 2 regex should read [_-] in the plan's check (lead's/plan's edit, not mine). Next: M0-V10.
 
 ## M0-D65 · `cold_core` is red on win-laptop: scenes/cold_co_disk.json, written on linux-pc, is "stale" against the disk rebuilt here — σ 4 × 10⁻¹² apart, over `same_disk`'s 10⁻¹² — so the scope's two scene cases fail on a tree that changed nothing in them · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D63)
-- Status: DEFERRED (wake: an agent's box probe reads win-laptop — hostname Laser2025-20 — owed there, R15; or cold_core reads red on linux-pc too; otherwise not run here)
+- Status: DONE (2026-10-28 18:24, started 17:49)
 - Blocks: nothing on linux-pc; `cold_core` (and so every `--changed` touching crates/sr-physics/** or crates/sr-engine/**) reads NO-GO on
   win-laptop until it lands — a claim there names this D
 - Caused by: M0-T67 (`scene_file()` / `same_disk` in crates/sr-engine/tests/gpu/cold_core.rs compare the rebuilt disk to the committed
@@ -2316,7 +2318,7 @@ orders the six; M0-D103 (F3) went to Phase 16's head (its note).
   on linux-pc · Pass: GO on both (one box's run `NOT RUN — owed on <box>` if the lead is on the other) · Fail: NO-GO · 2.
   `--redarm cold_core` · Pass: GO — `cold-exponent` and `cold-gpu-pressure` still NO-GO · Fail: a plant GO
 - Done when: `cold_core` GO on win-laptop with the scene check still refusing a disk that moved, on linux-pc unchanged
-- Handoff: <placeholder>
+- Handoff: cold_core GO on win-laptop (8/8): the scene check's σ bound is f32's 2⁻²⁴ (`SIGMA_REBUILD`, the planes' resolution — the lead: «f32 resolution (Recommended)», asked after the measure, §0.4); measured: rebuilt σ ≤ 4.1e-12 from linux-pc's file over 2000 cells, f32 planes bit-identical; T, overrides keep 1e-12. New plant cold-scene-moved (σ × (1 + 1e-7)): `--redarm cold_core` GO, 3/3 RED (610.6 s). Files: cold_core.rs, verify.json, testing.md, tests/plants/cold-scene-moved.patch. · Claim `--changed` NO-GO on win-laptop: 1121/3, 47/49 GO, 801 s — desktop[launcher], web[ready], web[no-webgpu]: port 47812 held by VS Code's node process (pid 25920, from 17:44, before this task), launch.py refusing a foreign listener as designed; not filed — environmental, not this tree's; re-run those two scopes once the port is free. · Deviations: the claim before close (only plan_lint reads the close, `plan.py lint` after); both runs over 10 min, waived by the lead («I waive it»). · linux-pc's cold_core run NOT RUN — owed on laserax-ai → M0-V22. Libm as the cause not isolated (it never reaches f32). · claude-opus-5-5, high. Next: M0-TC10 on linux-pc. Detail: tasks/M0-D65.md
 
 ## M0-V10 · Validation — lot 10: the readouts, the presets and the edits · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T78)
 - Status: DONE (2026-10-28 16:11)
@@ -2388,7 +2390,7 @@ orders the six; M0-D103 (F3) went to Phase 16's head (its note).
 - Filed by: M0-V10, 2026-10-28 — its three D's (M0-D101, M0-D102, M0-D103) bring the open D's to five with M0-D71 and M0-D91 (E6 ≥ 5;
   M0-D65 is DEFERRED and the register does not count it), so its fourth finding, F2, is logged, not filed (E1); runs after M0-TC10,
   before M0-D101 and Phase 13.
-- Carried flags: none · [M0-V10, 2026-10-28] Six open D's, not five: M0-D104 — the Phase 12 sweep's one ERROR, calibrate_bisect's plant calibrate-checkpoint-without-observers no longer applies (M0-T77's `edits: None` at crates/sr-engine/src/calibrate.rs:767 inside its context; Sizing: E) — was filed right after M0-V10 at the lead's word («If there is any issue you file a D block right after your task», 2026-10-28) and runs after this block (Phase 12's ordering note). The sweep (laserax-ai-server, RTX 4090, 4,291 s, + the box five on linux-pc): 140 plants red, 1 GREEN (F4, M0-D102), 1 ERROR (F5, M0-D104); reports/v10.md § The sweep
+- Carried flags: none · [M0-V10, 2026-10-28] Six open D's, not five: M0-D104 — the Phase 12 sweep's one ERROR, calibrate_bisect's plant calibrate-checkpoint-without-observers no longer applies (M0-T77's `edits: None` at crates/sr-engine/src/calibrate.rs:767 inside its context; Sizing: E) — was filed right after M0-V10 at the lead's word («If there is any issue you file a D block right after your task», 2026-10-28) and runs after this block (Phase 12's ordering note). The sweep (laserax-ai-server, RTX 4090, 4,291 s, + the box five on linux-pc): 140 plants red, 1 GREEN (F4, M0-D102), 1 ERROR (F5, M0-D104); reports/v10.md § The sweep · [M0-D65, 2026-10-28] M0-D65's linux-pc run owed: `python3 tools/pb/verify.py cold_core --task <ID>` on laserax-ai (the σ bound now 2⁻²⁴, f32's; expected GO, not measured — tasks/M0-D65.md § Owed); and win-laptop's web/desktop[launcher] read NO-GO at M0-D65's claim on a foreign listener (VS Code, port 47812) — re-run there once free
 - Read: this file (rules + this task) + the five open D blocks (M0-D101, M0-D102 after this block; M0-D71, M0-D91, M0-D103 at Phase 16's
   head) + milestones/m0/reports/v10.md § Verdict, § Findings, § Logged, not filed + milestones/m0/logs/M0-V10.wisp_probe.log +
   crates/sr-engine/src/watch.rs:245–262 and :450–456
@@ -2492,6 +2494,65 @@ orders the six; M0-D103 (F3) went to Phase 16's head (its note).
 - Done when: dt-empty-box-unbounded red in `observe_run` on laserax-ai-server's RTX 4090; the RTX 5090 and win-laptop `owed`
 - Adversarial: a case that asserts only that the ending met passes whether or not the box ever emptied — the box's emptiness is
   asserted where the plant bites.
+- Handoff: <placeholder>
+
+## M0-D106 · `timing` hung on win-laptop: its first case sat 900 s and timed out (0 of 5) in the loop, where it took 44–82 s the same day on the same binary · **BUILD** · Opus 5.5, high · switch · (AFTER M0-V22)
+- Status: TODO
+- Filed by: M0-D65's session, 2026-10-28, at the lead's word («Do not re-run the test, just file a d if needed») on win-laptop's
+  `--all` (task M0-V11-win, run by the lead); the lead's reading: «the box was not idle, that can explain it» — load 19.96 → 17.67 on 22
+  threads, which slows a case, never 11× and never to no output (the filer's reading); E6's triage (M0-V22) orders it.
+- Blocks: `--all` and every win-laptop claim touching the engine's crates while it recurs (`timing` NO-GO on the timeout)
+- Caused by: unknown
+- Rating: (usual) — rule (3)'s list: a D whose cause is not measured
+- Files: milestones/m0/logs/M0-V11-win.timing.log (8 lines), M0-D65.timing.log, M0-D62.timing.log — opened; named, not opened —
+  crates/sr-engine/tests/gpu/timing.rs (`a_frame_longer_than_the_query_set_times_its_first_whole_steps`), the GPU timestamp readback
+- Read: this file (rules + this task) + docs/agent/testing.md (the `timing` row) + the three logs above
+- Symptom: measured on win-laptop (Laser2025-20, RTX 4080 Laptop, Vulkan), 2026-10-28T20:25:48, `py -3.12 tools/pb/verify.py --all
+  --task M0-V11-win` (jobs 8, other GPU scopes beside it): `timing · exit=timeout · 900.89 s` — «running 5 tests», then
+  `test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU`
+  and nothing more; «0 case(s) < expected 5». The same binary (gpu-5c6db7a953a31bdd) read GO 5/5 in 82.09 s at 18:16 (M0-D65's claim,
+  load ≈ 10) and 43.69 s on 2026-10-19 (M0-D62). One occurrence; not re-run (the lead).
+- Repro: on win-laptop, `py -3.12 tools/pb/verify.py timing --task <ID>` idle, then under load (beside `--all`'s other GPU scopes) — not
+  yet shown to reproduce; three idle runs GO and one loaded GO make it a load-bound race, not noise
+- Suspected cause: a wait that never returns once the GPU is shared — the first case's timestamp-query readback (a map or `poll` with
+  no deadline) starved or lost under other processes' queues on the laptop's driver; not measured
+- Deliver: the hang reproduced and its cause measured (where the case waits), then either the fix — no wait without a deadline in the
+  readback, the case still grading what it grades — or, if it does not reproduce in N loaded runs (N stated before the runs, §0.4), the
+  evidence and BLOCKED/N/A asked of the lead → Verify 1–2
+- Verify: 1. `py -3.12 tools/pb/verify.py timing --task <ID>` on win-laptop, idle and beside a loaded `--all` · Pass: GO 5/5 each, under
+  300 s · Fail: a timeout · 2. `--redarm timing` if the scope's check changed · Pass: GO · Fail: a plant GREEN
+- Done when: `timing` holds under the loop's load on win-laptop, or the lead rules on the non-reproduction
+- Handoff: <placeholder>
+
+## M0-D107 · `web` and `desktop[launcher]` read NO-GO on win-laptop whenever another program holds 47812: VS Code (the agents' own editor) held it all evening, and the web service, unlike the game since M0-D99, has no other port · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V22)
+- Status: TODO
+- Filed by: M0-D65's session, 2026-10-28, at the lead's word («Do not re-run the test, just file a d if needed»); E6's triage (M0-V22)
+  orders it. A product fork inside (the Deliver's two arms): asked of the lead by the builder, never chosen alone.
+- Blocks: on win-laptop with VS Code open, `web` (2 cases), `desktop[launcher]` and so `--all` and every claim touching them NO-GO
+- Caused by: unknown (the web service's fixed port, tools/pb/launch.json `web` — 47812 in its command; contract §3.6, §0.5 [M0-D99])
+- Rating: rule (3) — its cause measured, no reason from its list: the highest rung below `(usual)`
+- Files: milestones/m0/logs/M0-D65.web.log, M0-V11-win.web.log, M0-V11-win.desktop.log, tools/pb/launch.json 125–131 — opened, not
+  changed; named, not opened — tools/pb/launch.py (its foreign-listener refusal), tests/smoke.sh, contract §3.6 and §0.5 [M0-D99]
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.6, §0.5 [M0-D99] + docs/agent/testing.md (the `web`, `desktop` rows)
+  + the logs above
+- Symptom: measured on win-laptop (Laser2025-20), 2026-10-28, twice — M0-D65's claim (18:1x) and the lead's `--all` (task M0-V11-win,
+  20:16–20:5x): «web: port 47812 held by a process we did not start - not reusing» → `web[ready]`, `web[no-webgpu]` NO-GO («launch.py
+  start web did not end GO»), `desktop[launcher]` NO-GO («the decoy web server did not start»). The holder (Get-NetTCPConnection, read
+  only): pid 25920, Code.exe `--type=utility --utility-sub-type=node.mojom.NodeService`, started 17:44:22, listening on 47812 throughout.
+  launch.py refusing a listener it did not start is its contract (never reuse a stack you didn't start) — the refusal is right; a
+  scope that cannot get its port reads NO-GO, not why.
+- Repro: on win-laptop, any listener on 47812 (`py -3.12 -c "import socket,time;s=socket.socket();s.bind(('127.0.0.1',47812));s.listen();time.sleep(600)"`),
+  then `py -3.12 tools/pb/verify.py web --task <ID>` → NO-GO as above
+- Suspected cause: measured — the web service binds the one port 47812 (launch.json); M0-D99 gave the game a fallback (47812–47830),
+  the web service none, and the game's fallback range starts on the web's port
+- Deliver: the lead's pick, asked first (§12): (a) the web service takes M0-D99's way — the next free port of a declared range, printed and
+  read by the scopes and the smoke, the range kept clear of the game's, or (b) the scopes read a held port as `NOT RUN (port 47812 held by
+  <process>)`, naming the holder, never a false NO-GO on the product → Verify 1 · the contract's line amended either way (§0.5), the
+  changed checks red-armed → Verify 2
+- Verify: 1. with a foreign listener on 47812 (the Repro's), `py -3.12 tools/pb/verify.py web --task <ID>` and `… desktop --task <ID>` on
+  win-laptop · Pass: (a) GO on another port, named; (b) NOT RUN naming the holder · Fail: NO-GO on the held port · 2. `--redarm web` and
+  `--redarm desktop` (their checks change) · Pass: GO · Fail: a plant GREEN — over 10 minutes, the lead's
+- Done when: a foreign listener on 47812 no longer reads as a red product on win-laptop, with the lead's arm; linux-pc unchanged (owed, R15)
 - Handoff: <placeholder>
 
 > **Commit gate (lead):** Phase 12 closes after M0-V10 — from the repo root, one at a time:

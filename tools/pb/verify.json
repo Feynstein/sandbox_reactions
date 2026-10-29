@@ -2004,7 +2004,7 @@
       ]
     },
     "cold_core": {
-      "desc": "G-CORE, the cold ceiling holds (contract §5.1 [M0-R4], §1.4.1's K9, §2.3.2, §2.11 items 1–2; M0-T67; reports/cold_ceiling.md M3, M4, M6): (a) the sheet's ring kernel gives the Maclaurin disk's potential within 1e-4; c_sheet (the pure Π = KΣ^{3/2} sheet, Hachisu with Σ_max and the edge fixed, the test's own solver) within 1e-3 of 1.4331 at 100 and 200 annuli; the sequence M(Σ_c) at Σ_c = 10⁰ … 10⁸ rises at every decade with each |2∫Π dA/W + 1| ≤ 1e-3 and calibrate's m_ch_sb / m_tov_sb, read from the file `calibrate::run_with` writes, are within 0.5 % of c_sheet (K₂ₑ Y_e^{3/2})²/G² and c_sheet K₂ₙ²/G², K9's order and band, ns_sigma_max_sb = m_tov_sb, sigma_bh above it; (b) a fresh half-decade scan on 100 annuli: an equilibrium at 0.95 m_ch_sb, none at 1.1 m_ch_sb (above every mass reached, none over 1.005 m_ch_sb); (c) the pure Σ² law, R₉₀ flat within 3 % over ¼, ½, 1 × m_ch_sb and falling by over 3× on the full law between ¼ and 0.95; (d) scenes/cold_co_disk.json (M = 100 C/O, k1e × 6, 64 × 64 bounce, gravity and hydro only; the test rebuilds it with calibrate::cold_disk_scene and refuses a stale file, SR_WRITE_SCENES=1 rewrites it) holds R₉₀ within 3 % of its start at every dump (each 50 steps) over 10 τ_dyn on the GPU (the physics adapter) and on the CPU twin run the same steps, the mass kept to 1e-4 and the GPU's final R₉₀ within 1 % of the twin's — the grid's statics and hydro, never the ceiling. Plants cold-exponent (eos.rs's relativistic exponent 3/2 → 1.6: no ceiling) and cold-gpu-pressure (eos.wgsl's cold pressure × 0.9: (d))",
+      "desc": "G-CORE, the cold ceiling holds (contract §5.1 [M0-R4], §1.4.1's K9, §2.3.2, §2.11 items 1–2; M0-T67; reports/cold_ceiling.md M3, M4, M6): (a) the sheet's ring kernel gives the Maclaurin disk's potential within 1e-4; c_sheet (the pure Π = KΣ^{3/2} sheet, Hachisu with Σ_max and the edge fixed, the test's own solver) within 1e-3 of 1.4331 at 100 and 200 annuli; the sequence M(Σ_c) at Σ_c = 10⁰ … 10⁸ rises at every decade with each |2∫Π dA/W + 1| ≤ 1e-3 and calibrate's m_ch_sb / m_tov_sb, read from the file `calibrate::run_with` writes, are within 0.5 % of c_sheet (K₂ₑ Y_e^{3/2})²/G² and c_sheet K₂ₙ²/G², K9's order and band, ns_sigma_max_sb = m_tov_sb, sigma_bh above it; (b) a fresh half-decade scan on 100 annuli: an equilibrium at 0.95 m_ch_sb, none at 1.1 m_ch_sb (above every mass reached, none over 1.005 m_ch_sb); (c) the pure Σ² law, R₉₀ flat within 3 % over ¼, ½, 1 × m_ch_sb and falling by over 3× on the full law between ¼ and 0.95; (d) scenes/cold_co_disk.json (M = 100 C/O, k1e × 6, 64 × 64 bounce, gravity and hydro only; the test rebuilds it with calibrate::cold_disk_scene and refuses a stale file — σ over f32's 2⁻²⁴ relative from the rebuild, M0-D65 — SR_WRITE_SCENES=1 rewrites it) holds R₉₀ within 3 % of its start at every dump (each 50 steps) over 10 τ_dyn on the GPU (the physics adapter) and on the CPU twin run the same steps, the mass kept to 1e-4 and the GPU's final R₉₀ within 1 % of the twin's — the grid's statics and hydro, never the ceiling. Plants cold-exponent (eos.rs's relativistic exponent 3/2 → 1.6: no ceiling) and cold-gpu-pressure (eos.wgsl's cold pressure × 0.9: (d)) and cold-scene-moved (one cell's σ in the file × (1 + 1e-7): past 2⁻²⁴, under the planes' 1e-6 — the stale refusal alone)",
       "cmd": "bash tests/gpu.sh cold_core physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
@@ -2022,7 +2022,8 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/plants/cold-exponent.patch",
-        "tests/plants/cold-gpu-pressure.patch"
+        "tests/plants/cold-gpu-pressure.patch",
+        "tests/plants/cold-scene-moved.patch"
       ],
       "plants": [
         {
@@ -2032,6 +2033,10 @@
         {
           "id": "cold-gpu-pressure",
           "patch": "tests/plants/cold-gpu-pressure.patch"
+        },
+        {
+          "id": "cold-scene-moved",
+          "patch": "tests/plants/cold-scene-moved.patch"
         }
       ]
     },

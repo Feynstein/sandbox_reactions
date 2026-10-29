@@ -162,6 +162,49 @@ def say(text):
             sys.stderr.flush()
 
 
+def live():
+    """Whether `say` writes at all - the live ETA's history is read only then."""
+    return PROGRESS and sys.stderr.isatty()
+
+
+def past_seconds(logs, box, redarm=False):
+    """This box's newest seconds per scope from loop_times.jsonl - a loop's scope rows, or (`redarm`) one scope's
+    red-arm campaign. Display only: the live ETA's guess, never a verdict (M0-D65's lead, 2026-10-28)."""
+    out = {}
+    for r in records_in(Path(logs) / "loop_times.jsonl")[1]:
+        sc = r.get("scopes") if r.get("box") == box else None
+        if not isinstance(sc, dict):
+            continue
+        if redarm:
+            if r.get("mode") == "redarm" and len(sc) == 1 and is_num(r.get("seconds")):
+                out[next(iter(sc))] = float(r["seconds"])
+        elif r.get("mode") != "redarm":
+            out.update({n: float(e["seconds"]) for n, e in sc.items() if isinstance(e, dict) and is_num(e.get("seconds"))})
+    return out
+
+
+def dur(s):
+    """Seconds as `1h05m`, `7m10s` or `45s`."""
+    s = int(round(max(0.0, s)))
+    return f"{s // 3600}h{s % 3600 // 60:02d}m" if s >= 3600 else f"{s // 60}m{s % 60:02d}s" if s >= 60 else f"{s}s"
+
+
+def eta_line(what, done, running, todo, of, elapsed, work_done, work_left, at_once=1):
+    """`.. <what>: 12 done · 8 running · 29 to do (of 49) · 3m10s elapsed · ≈ 7m02s left`: the history's seconds
+    still to run (`work_left`), scaled by this run's own pace - its elapsed wall time over the history's seconds it
+    has got through (`work_done`, a running one's capped at its own); with none yet, shared `at_once`."""
+    pace = elapsed / work_done if work_done > 0 and elapsed > 0 else 1.0 / max(1, at_once)
+    return (f".. {what}: {done} done · {f'{running} running · ' if running else ''}{todo} to do (of {of}) · "
+            f"{dur(elapsed)} elapsed · ≈ {dur(work_left * pace)} left")
+
+
+def guesses(names, hist):
+    """Each name's history seconds; one without any takes the known ones' median (60 s with none) -> (dict, count)."""
+    known = sorted(hist[n] for n in names if n in hist)
+    mid = known[len(known) // 2] if known else 60.0
+    return {n: hist.get(n, mid) for n in names}, sum(1 for n in names if n not in hist)
+
+
 # ----------------------------------------------------------- the load sample: a number, or WHY there is none
 def busy_cpus(idle0, all0, idle1, all1, cpus):
     """Two GetSystemTimes samples as CPUs' worth of busy - a load average's own unit."""
@@ -1839,11 +1882,20 @@ def moved_sweep(man, root, task, jobs, box=None, logs=None, tool=None):
         steps.append((name, f"{name} · proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]}) - not moved"
                       if proof else None, None))
     total = sum(1 for _n, line, _f in steps if line is None)    # every campaign counted before one starts (M0-D27)
+    todo = [name for name, line, _f in steps if line is None]
+    exp, unknown = guesses(todo, past_seconds(logs, box, redarm=True)) if live() and total > 1 else ({}, 0)
+    if exp:
+        say(f".. sweep: {total} campaigns, one at a time · ≈ {dur(sum(exp.values()))} by this box's past red-arms"
+            + (f" ({unknown} without one: the median)" if unknown else ""))
     for name, line, fail in steps:
         if line is not None:
             lines.append(line)
             fails += [fail] if fail else []
             continue
+        if exp and n["moved"]:                                   # the campaigns before this one are done
+            ran = todo[:n["moved"]]
+            say(eta_line("sweep", n["moved"], 0, total - n["moved"], total, time.monotonic() - t0,
+                         sum(exp[x] for x in ran), sum(exp[x] for x in todo[n["moved"]:])))
         n["moved"] += 1
         at = step_tag("campaign", n["moved"], total) if total > 1 else ""
         if at:
@@ -2215,6 +2267,26 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     steps += list(dict.fromkeys(u[0] for u in todo if u[0].spec.get("exclusive")))      # in the order it starts (M0-D27)
     for k, sr in enumerate(steps if len(steps) > 1 else [], 1):
         sr.step = (k, len(steps))
+    units_left = {}                                    # each step's units not ended yet: 0 is a step done
+    for u in todo:
+        units_left[u[0].name] = units_left.get(u[0].name, 0) + 1
+    exp, unknown = guesses([sr.name for sr in steps], past_seconds(logs, box)) if live() and len(steps) > 1 else ({}, 0)
+    if exp:                                            # the plain ones share the jobs, the exclusive ones run alone
+        first_guess = (sum(exp[sr.name] for sr in steps if not sr.spec.get("exclusive")) / max(1, jobs)
+                       + sum(exp[sr.name] for sr in steps if sr.spec.get("exclusive")))
+        say(f".. {mode}: {len(steps)} scopes to run, {max(1, jobs)} at a time · ≈ {dur(first_guess)} by this box's "
+            f"past runs" + (f" ({unknown} without one: the median)" if unknown else ""))
+
+    def progress():
+        """The live ETA line - under LOCK, so the counts are one moment's."""
+        now = time.time()
+        done = [sr for sr in steps if not units_left[sr.name]]
+        running = [sr for sr in steps if units_left[sr.name] and sr.started is not None]
+        got = {sr.name: min(exp[sr.name], now - sr.started) for sr in running}
+        work_done = sum(exp[sr.name] for sr in done) + sum(got.values())
+        work_left = sum(exp[sr.name] for sr in steps if sr.started is None) + sum(exp[n] - g for n, g in got.items())
+        return eta_line(mode, len(done), len(running), len(steps) - len(done) - len(running), len(steps),
+                        time.monotonic() - t0, work_done, work_left, jobs)
 
     def one(u):
         sr, label, cmd, value = u
@@ -2225,6 +2297,10 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
         run_unit(sr, label, cmd, value, root, man, env, task, box)
         with LOCK:
             sr.ended = time.time()
+            units_left[sr.name] -= 1
+            line = progress() if exp and not units_left[sr.name] else None
+        if line:
+            say(line)
 
     with ThreadPoolExecutor(max_workers=max(1, jobs)) as pool:
         list(pool.map(one, [u for u in todo if not u[0].spec.get("exclusive")]))
@@ -4638,10 +4714,17 @@ def selftest():
             finally:
                 PROGRESS = False
             live = tty.getvalue().splitlines()
-            check("on a terminal each step is named as it starts, its number once, every line whole",
+            eta = [ln for ln in live if ln.startswith(".. scope: ")]
+            check("on a terminal each step is named as it starts, its number once, every line whole; the ETA "
+                  "announced, then one line per step done, the last 3 done and none to do (M0-D65's lead)",
                   sorted(ln for ln in live if ln.startswith(">> "))
                   == [f">> s{k} · step {k}/3, {3 - k} left · started" for k in (1, 2, 3)]
-                  and all(re.fullmatch(r">> s\d · step \d/3, \d left · started|\.\. s\d \d+\.\d\ds", ln) for ln in live), live)
+                  and all(re.fullmatch(r">> s\d · step \d/3, \d left · started|\.\. s\d \d+\.\d\ds"
+                                       r"|\.\. scope: 3 scopes to run, 2 at a time · ≈ \S+ by this box's past runs"
+                                       r"( \(\d without one: the median\))?"
+                                       r"|\.\. scope: \d done · (\d running · )?\d to do \(of 3\) · \S+ elapsed · ≈ \S+ left",
+                                       ln) for ln in live)
+                  and len(eta) == 4 and eta[-1].startswith(".. scope: 3 done · 0 to do (of 3) · "), live)
     except Exception as exc:                   # a crash is a failed check, never a traceback in place of the verdict
         failed.append(f"crashed after {len(checks)} checks: {type(exc).__name__}: {exc} "
                       f"({traceback.format_exc().strip().splitlines()[-3].strip()})")

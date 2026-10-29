@@ -1,0 +1,11 @@
+--- a/scenes/cold_co_disk.json
++++ b/scenes/cold_co_disk.json
+@@ -3,7 +3,7 @@
+  "slowdown": false,
+  "switches": {"gravity": true, "hydro": true, "heat": false, "reactions": false, "neutrinos": false, "sinks": false},
+  "objects": [
+-   {"kind": "rect", "x0": 26, "y0": 7, "w": 1, "h": 1, "sigma": 4.470082681687129e-6, "t": 0.05, "composition": {"C": 0.5, "O": 0.5}, "v": [0, 0]},
++   {"kind": "rect", "x0": 26, "y0": 7, "w": 1, "h": 1, "sigma": 4.4700831286953975e-6, "t": 0.05, "composition": {"C": 0.5, "O": 0.5}, "v": [0, 0]},
+    {"kind": "rect", "x0": 27, "y0": 7, "w": 1, "h": 1, "sigma": 2.0455402006201965e-5, "t": 0.05, "composition": {"C": 0.5, "O": 0.5}, "v": [0, 0]},
+    {"kind": "rect", "x0": 28, "y0": 7, "w": 1, "h": 1, "sigma": 6.682157445474814e-5, "t": 0.05, "composition": {"C": 0.5, "O": 0.5}, "v": [0, 0]},
+    {"kind": "rect", "x0": 29, "y0": 7, "w": 1, "h": 1, "sigma": 0.00015003351888249176, "t": 0.05, "composition": {"C": 0.5, "O": 0.5}, "v": [0, 0]},

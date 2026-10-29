@@ -1,0 +1,23 @@
+== 2026-10-28T20:26:20-04:00 web[build] · task M0-V11-win · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-28T20:26:59-04:00 web[ready] · task M0-V11-win · box Laser2025-20 :: bash tests/web/check.sh {case}
+== 2026-10-28T20:27:18-04:00 web[no-webgpu] · task M0-V11-win · box Laser2025-20 :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 70.31 s
+web build: trunk 0.21.14, 4.1M wasm; check on line 38, wasm on line 48
+=== GO ===
+
+-- web[no-webgpu] · exit=1 · 14.34 s
+web: port 47812 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL web: port 47812 held by a process we did not start - not reusing
+=== NO-GO: 1 failure(s) ===
+web no-webgpu: launch.py start web did not end GO
+=== NO-GO: launch.py start web did not end GO ===
+
+-- web[ready] · exit=1 · 35.67 s
+web: port 47812 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL web: port 47812 held by a process we did not start - not reusing
+=== NO-GO: 1 failure(s) ===
+web ready: launch.py start web did not end GO
+=== NO-GO: launch.py start web did not end GO ===
+

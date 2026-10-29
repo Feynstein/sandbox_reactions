@@ -1,0 +1,8 @@
+== 2026-10-28T20:25:48-04:00 timing · task M0-V11-win · box Laser2025-20 :: bash tests/gpu.sh timing physics
+-- timing · exit=timeout · 900.89 s
+    Finished `release` profile [optimized] target(s) in 0.90s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-5c6db7a953a31bdd.exe)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
