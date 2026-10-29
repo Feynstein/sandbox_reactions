@@ -1,0 +1,95 @@
+== 2026-10-29T17:35:58-04:00 neutrino · task M0-D106 · box Laser2025-20 :: bash tests/gpu.sh neutrino physics
+-- neutrino · exit=0 · 26.24 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 5.70s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-b9f5dd9b6977d55a.exe)
+
+running 18 tests
+test neutrino::gpu::gpu_a_frame_whose_step_k_turns_n_fe_on_stops_after_step_k ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+bare step 1: max Σ 186.26 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 2: max Σ 211.51 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 3: max Σ 233.18 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 4: max Σ 247.90 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 5: max Σ 260.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 6: max Σ 271.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 7: max Σ 281.88 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 8: max Σ 291.69 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 9: max Σ 300.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 10: max Σ 309.25 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 11: max Σ 317.59 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 12: max Σ 325.67 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 13: max Σ 332.92 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 14: max Σ 340.10 (Σ_N/Y_e = 344.6), max X_n 0.000e0
+bare step 15: max Σ 347.08 (Σ_N/Y_e = 344.6), max X_n 6.549e-3
+frame: 15 steps run, fired at Some(15) (the bare run opened the gate at step 15)
+ok
+test neutrino::gpu::gpu_cooling_closed_form_at_pinned_t ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+pinned T = 170, Σ = 50: lost 1.814754e-2, the closed form 1.814755e-2 (Δ 1.04e-7), T 170.0000
+pinned T = 200, Σ = 50: lost 6.659885e-2, the closed form 6.659882e-2 (Δ 4.46e-7), T 200.0000
+pinned T = 300, Σ = 50: lost 1.706854e0, the closed form 1.706855e0 (Δ 4.41e-7), T 300.0000
+pinned T = 500, Σ = 120: lost 2.438924e2, the closed form 2.438922e2 (Δ 8.59e-7), T 500.0000
+ok
+test neutrino::gpu::gpu_cooling_unpinned_follows_the_ode ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+unpinned: T 500.000 → 397.8836 (closed form 398.0491), drop Δ 1.62e-3, 267 sub-steps, E lost 2.461733e3, booked 2.461733e3
+ok
+test neutrino::gpu::gpu_energy_closes_with_burning_and_cooling ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+Ne cell: heat 7.631579e3, lost 2.786579e3 (3.65e-1 of it), ΔE 4.845000e3
+ok
+test neutrino::gpu::gpu_latch_is_any_cells_n_fe_rate ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+ok
+test neutrino::gpu::gpu_latch_is_set_by_a_rate_that_closes_within_the_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+gate closing: Fe fell by 9.900987148e-3 (closes at 9.900990099e-3), Y_eΣ 160.000000477 (Σ_N 160), 0 sub-steps
+ok
+test neutrino::gpu::gpu_n_fe_absorbs_and_conserves_mass ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+N_Fe: ΔX_Fe -2.151716e-2, ΔX_n 2.151713e-2, booked -1.067034e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::gpu::gpu_n_fe_gate_reads_y_e_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed, latch false
+case 1: Σ = 344.650, Y_eΣ = 160.016 → converts, latch true
+case 2: Σ = 159.980, Y_eΣ = 74.276 → closed, latch false
+case 3: Σ = 160.020, Y_eΣ = 74.295 → closed, latch false
+case 4: Σ = 200.000, Y_eΣ = 92.857 → closed, latch false
+case 5: Σ = 218.515, Y_eΣ = 159.984 → closed, latch false
+case 6: Σ = 218.558, Y_eΣ = 160.016 → converts, latch true
+case 7: Σ = 344.650, Y_eΣ = 252.333 → converts, latch true
+ok
+test neutrino::gpu::gpu_none_below_t_nu_and_none_with_the_switch_off ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+just above T_ν: lost 2.502001e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::gpu::gpu_source_only_where_x_n_is_half_or_more ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+S_ν = [9.103230476379395, 9.103230476379395, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+test neutrino::neutrino::cooling_closed_form_at_pinned_t ... pinned T = 170, Σ = 50: lost 1.814755e-2, the closed form 1.814755e-2 (Δ 0.00e0)
+pinned T = 200, Σ = 50: lost 6.659882e-2, the closed form 6.659882e-2 (Δ 4.17e-16)
+pinned T = 300, Σ = 50: lost 1.706855e0, the closed form 1.706855e0 (Δ 1.30e-16)
+pinned T = 500, Σ = 120: lost 2.438922e2, the closed form 2.438922e2 (Δ 1.17e-15)
+ok
+test neutrino::neutrino::cooling_unpinned_follows_the_ode ... unpinned: T 500 → 397.8679 (closed form 398.0491), drop Δ 1.78e-3, 229 sub-steps, max ΔT/T 1.00e-3
+ok
+test neutrino::neutrino::energy_closes_with_burning_and_cooling ... Ne cell: heat 7.631579e3, lost 2.786578e3 (3.65e-1 of it), ΔE 4.845001e3
+ok
+test neutrino::neutrino::latch_is_any_cells_n_fe_rate ... ok
+test neutrino::neutrino::n_fe_absorbs_and_conserves_mass ... N_Fe: ΔX_Fe -2.151714e-2, ΔX_n 2.151714e-2, booked -1.067035e5, ΔE -1.067035e5, T 544.79
+ok
+test neutrino::neutrino::n_fe_gate_reads_y_e_sigma ... Y_e(Fe) = 0.46429, Σ_N/Y_e = 344.615; Y_e(mixed) = 0.73214, Σ_N/Y_e = 218.537
+case 0: Σ = 344.581, Y_eΣ = 159.984 → closed
+case 1: Σ = 344.650, Y_eΣ = 160.016 → converts
+case 2: Σ = 159.980, Y_eΣ = 74.276 → closed
+case 3: Σ = 160.020, Y_eΣ = 74.295 → closed
+case 4: Σ = 200.000, Y_eΣ = 92.857 → closed
+case 5: Σ = 218.515, Y_eΣ = 159.984 → closed
+case 6: Σ = 218.558, Y_eΣ = 160.016 → converts
+case 7: Σ = 344.650, Y_eΣ = 252.333 → converts
+ok
+test neutrino::neutrino::none_below_t_nu_and_none_with_the_switch_off ... just above T_ν: lost 2.500020e-2, A_ν Σ Δt 2.500000e-2
+ok
+test neutrino::neutrino::source_only_where_x_n_is_half_or_more ... S_ν = [9.103225908002102, 9.103225908002102, 0.0, 0.0, 0.0, 0.0, 0.0], ε_νΣ = 9.103226e0
+ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 424 filtered out; finished in 19.38s
+
+

@@ -1,0 +1,10 @@
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 43.80s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-b9f5dd9b6977d55a.exe)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps' (29836) panicked at crates\sr-engine\tests\gpu\timing.rs:108:9:
+a 240-step frame: its wait ended in «The requested Wait timed out before the submission was completed.» at 125.7s (encoded at 229.1ms, submitted at 5.7s)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

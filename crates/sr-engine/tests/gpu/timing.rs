@@ -90,12 +90,24 @@ fn check_timed(cost: &StepCost, passes: &[Pass], steps: u32, what: &str) {
     assert!(off <= SUM_WITHIN, "{what}: the passes' sum {sum} ms is {:.1} % off the step's {} ms", 100.0 * off, cost.step_ms);
 }
 
-/// One frame, submitted, waited for, and its report.
+/// How long a frame's submission may take before the case names the wait (M0-D106): far past any frame here (the
+/// 240-step one ≈ 1 s of GPU on the RTX 4080 Laptop), far short of the harness's 900 s.
+const WAIT: std::time::Duration = std::time::Duration::from_secs(120);
+
+/// One frame, submitted, waited for (at most [`WAIT`]), and its report; the wall times of its encoding, submission and
+/// wait printed for the log.
 fn frame(gpu: &Gpu, step: &Step, steps: u32) -> FrameReport {
+    let start = std::time::Instant::now();
     let mut encoder = gpu.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frame") });
     step.encode_frame(&FramePlan { steps, slow_down: true }, &mut encoder);
-    gpu.queue.submit([encoder.finish()]);
-    gpu.device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
+    let encoded = start.elapsed();
+    let index = gpu.queue.submit([encoder.finish()]);
+    let submitted = start.elapsed();
+    let wait = wgpu::PollType::Wait { submission_index: Some(index), timeout: Some(WAIT) };
+    if let Err(e) = gpu.device.poll(wait) {
+        panic!("a {steps}-step frame: its wait ended in «{e}» at {:.1?} (encoded at {encoded:.1?}, submitted at {submitted:.1?})", start.elapsed());
+    }
+    println!("a {steps}-step frame: encoded {encoded:.2?}, submitted {submitted:.2?}, done {:.2?} (wall)", start.elapsed());
     let reports = step.poll(&gpu.device);
     assert_eq!(reports.len(), 1, "one report per frame: {reports:?}");
     reports[0]
@@ -139,8 +151,8 @@ fn frames_report_their_cost_per_step_and_per_pass() {
     let mut encoder = gpu.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frames") });
     step.encode_frame(&FramePlan { steps: 5, slow_down: true }, &mut encoder);
     step.encode_frame(&FramePlan { steps: 12, slow_down: true }, &mut encoder);
-    gpu.queue.submit([encoder.finish()]);
-    gpu.device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
+    let index = gpu.queue.submit([encoder.finish()]);
+    gpu.device.poll(wgpu::PollType::Wait { submission_index: Some(index), timeout: Some(WAIT) }).expect("two frames' wait");
     let reports = step.poll(&gpu.device);
     let timed: Vec<u32> = reports.iter().map(|r| r.cost.expect("a cost").steps).collect();
     assert_eq!(timed, [5, 12], "each frame's own steps: {reports:?}");
@@ -149,14 +161,15 @@ fn frames_report_their_cost_per_step_and_per_pass() {
 #[test]
 fn a_frame_longer_than_the_query_set_times_its_first_whole_steps() {
     let gpu = device();
-    let step = disk(&gpu, 128, 128);
-    // Rounds fixed so no step carries over (§0.5 [M0-TJ4] (6), M0-T121), and few enough that the frame's one submission
-    // stays far inside Windows' 2 s GPU timeout (M0-D39): at SLOTS a step's P5 is 9.8 ms on the RTX 5090, ~2.3 µs a
-    // recorded round, so 1000 steps were ~10 s and the RTX 4080 Laptop lost its device. Under the shipped constants the
-    // fresh disk's steps 0–266 use at most 256 slots (its front from step 267 up to 2,912 slots; RTX 4080 Laptop, M0-D55 —
-    // step 336 under M0-TC's, M0-D39), so FRAME steps at ROUNDS never carry, and FRAME still outruns the query set (≈ 204).
+    let step = disk(&gpu, 64, 64);
+    // Rounds fixed so no step carries over (§0.5 [M0-TJ4] (6), M0-T121), and the frame's one submission kept small for
+    // Windows' 2 s GPU timeout (M0-D39: 1000 steps at SLOTS were ~10 s and the RTX 4080 Laptop lost its device). On the
+    // RTX 4080 Laptop the 128 × 128 disk at 256 rounds was ≈ 2.8 s of GPU in this frame — lost devices and submissions
+    // that never ran (M0-D106); the 64 × 64 disk at 48 rounds is ≈ 0.96 s, most of it the passes' fixed dispatches. Under
+    // the shipped constants that disk's steps 0–254 use at most 18 slots (its front from step 255 up to 357 slots; RTX 4080
+    // Laptop, M0-D106), so FRAME steps at ROUNDS never carry, and FRAME still outruns the query set (≈ 204).
     const FRAME: u32 = 240;
-    const ROUNDS: usize = 256;
+    const ROUNDS: usize = 48;
     step.set_heat_rounds(Some(ROUNDS));
     assert_eq!(step.set_timing(&gpu.device, &gpu.queue, Timing::Auto), Some(CostSource::GpuTimestamp));
     let passes = recorded(&step);
@@ -239,3 +252,4 @@ fn headless_timing_writes_every_pass_of_the_nominal_disk() {
     assert!(off <= SUM_WITHIN, "the passes' sum {sum} ms is {:.1} % off the step's {step_ms} ms", 100.0 * off);
     let _ = std::fs::remove_dir_all(&root);
 }
+

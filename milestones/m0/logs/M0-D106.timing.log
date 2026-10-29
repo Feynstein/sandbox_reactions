@@ -1,0 +1,71 @@
+== 2026-10-29T17:09:26-04:00 timing · task M0-D106 · box Laser2025-20 :: bash tests/gpu.sh timing physics
+-- timing · exit=timeout · 900.20 s
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 43.80s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-b9f5dd9b6977d55a.exe)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+
+thread 'timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps' (29836) panicked at crates\sr-engine\tests\gpu\timing.rs:108:9:
+a 240-step frame: its wait ended in «The requested Wait timed out before the submission was completed.» at 125.7s (encoded at 229.1ms, submitted at 5.7s)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+== 2026-10-29T17:28:33-04:00 timing · task M0-D106 · box Laser2025-20 :: bash tests/gpu.sh timing physics
+-- timing · exit=0 · 43.47 s
+   Compiling sr-engine v0.0.0 (C:\workspace\sandbox_reactions\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 21.64s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-b9f5dd9b6977d55a.exe)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+a 240-step frame: encoded 22.89ms, submitted 377.39ms, done 1.36s (wall)
+a 240-step frame: StepCost { source: GpuTimestamp, steps: 204, ended: 240, step_ms: 4.066482509803921, pass_ms: [Some(0.022649568627450982), Some(0.011918274509803923), Some(0.05597584313725491), Some(0.25236517647058837), Some(0.38681599999999994), Some(2.9896199215686274), Some(0.13235419607843135), Some(0.033740549019607866), Some(0.03687560784313725), Some(0.04268047058823531)], frame_ms: Some(0.02128) }
+a 240-step frame: 204 steps recorded for 240 ended
+a 240-step frame: passes sum 3.964996 ms, step 4.066483 ms, off by 2.5 %
+a 10-step frame: encoded 668.90µs, submitted 11.73ms, done 83.72ms (wall)
+the next frame starts a fresh query set: StepCost { source: GpuTimestamp, steps: 10, ended: 10, step_ms: 7.1579776, pass_ms: [Some(0.0201856), Some(0.009484799999999998), Some(0.053065600000000004), Some(0.23781120000000003), Some(0.37552), Some(6.028848), Some(0.220464), Some(0.03556159999999999), Some(0.036995200000000006), Some(0.04175040000000001)], frame_ms: Some(0.020544) }
+the next frame starts a fresh query set: 10 steps recorded for 10 ended
+the next frame starts a fresh query set: passes sum 7.059686 ms, step 7.157978 ms, off by 1.4 %
+ok
+test timing::bare_steps_time_every_pass_at_its_boundaries ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+recorded passes: ["P0 edits", "P1 dt", "P2 gravity", "P3 sinks", "P4 hydro", "P5 heat", "P6 reactions", "P7 neutrino heating", "P8 floors", "P9 reductions"]
+steps 0–63: StepCost { source: GpuTimestamp, steps: 64, ended: 64, step_ms: 12.255797, pass_ms: [Some(0.0204965), Some(0.009412500000000002), Some(0.07650750000000003), Some(0.24867450000000005), Some(0.49983750000000005), Some(11.057868), Some(0.12387350000000001), Some(0.03370600000000001), Some(0.040803000000000006), Some(0.04623150000000002)], frame_ms: None }
+steps 0–63: 64 steps recorded for 64 ended
+steps 0–63: passes sum 12.157410 ms, step 12.255797 ms, off by 0.8 %
+steps 64–78: StepCost { source: GpuTimestamp, steps: 15, ended: 15, step_ms: 7.0930048, pass_ms: [Some(0.02016853333333334), Some(0.00923306666666667), Some(0.07557546666666665), Some(0.2485525333333334), Some(0.5694570666666667), Some(5.762754133333333), Some(0.1346346666666667), Some(0.034350933333333326), Some(0.04212906666666667), Some(0.09749760000000002)], frame_ms: None }
+steps 64–78: 15 steps recorded for 15 ended
+steps 64–78: passes sum 6.994353 ms, step 7.093005 ms, off by 1.4 %
+ok
+test timing::frames_report_their_cost_per_step_and_per_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+a 8-step frame: encoded 3.76ms, submitted 46.56ms, done 208.55ms (wall)
+a 40-step frame: encoded 9.88ms, submitted 155.35ms, done 595.20ms (wall)
+frame 0: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 11.108717599999999, pass_ms: [Some(0.039840799999999996), Some(0.009335199999999998), Some(0.0753336), Some(0.2598712), Some(0.5089832000000001), Some(9.8768184), Some(0.1230424), Some(0.0339568), Some(0.04017280000000001), Some(0.04285599999999999)], frame_ms: Some(0.022784) }
+frame 0: 40 steps recorded for 40 ended
+frame 0: passes sum 11.010210 ms, step 11.108718 ms, off by 0.9 %
+a 40-step frame: encoded 9.84ms, submitted 116.57ms, done 372.53ms (wall)
+frame 1: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 6.399919199999999, pass_ms: [Some(0.0328408), Some(0.00982), Some(0.07600960000000002), Some(0.2635984), Some(0.6024904), Some(5.0543879999999985), Some(0.1305816), Some(0.033815200000000004), Some(0.05347040000000001), Some(0.0449752)], frame_ms: Some(0.021920000000000002) }
+frame 1: 40 steps recorded for 40 ended
+frame 1: passes sum 6.301990 ms, step 6.399919 ms, off by 1.5 %
+a 40-step frame: encoded 6.39ms, submitted 85.00ms, done 315.42ms (wall)
+frame 2: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 5.7643128, pass_ms: [Some(0.020210399999999996), Some(0.0092952), Some(0.099328), Some(0.27609040000000007), Some(0.625456), Some(4.3735008), Some(0.13989759999999996), Some(0.0344344), Some(0.043299199999999996), Some(0.0443408)], frame_ms: Some(0.022432) }
+frame 2: 40 steps recorded for 40 ended
+frame 2: passes sum 5.665853 ms, step 5.764313 ms, off by 1.7 %
+ok
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=300 sim_time=4.530228 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=300 sim_time=4.530228 until=none
+summary.json timing: {"per_pass_ms":{"P0 edits":0.02693144052287581,"P1 dt":0.011005835294117644,"P2 gravity":0.1186264700653595,"P3 sinks":0.28881533071895416,"P4 hydro":0.7384396800000002,"P5 heat":10.170198732549022,"P6 reactions":0.23311509124183005,"P7 neutrino heating":0.0418826122875817,"P8 floors":0.05093870849673206,"P9 reductions":0.05977976470588236},"source":"gpu-timestamp","step_ms_mean":11.8802423006536}
+headless: passes sum 11.739734 ms, step 11.880242 ms, off by 1.2 %
+ok
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+bare, wall: StepCost { source: Wall, steps: 20, ended: 20, step_ms: 20.15086999999985, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+a 20-step frame: encoded 4.29ms, submitted 78.48ms, done 232.85ms (wall)
+frame, wall: StepCost { source: Wall, steps: 20, ended: 20, step_ms: 11.646240000000216, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 437 filtered out; finished in 21.23s
+
+

@@ -1,0 +1,49 @@
+== 2026-10-29T17:38:38-04:00 desktop[window] · task M0-D106 · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-29T17:38:39-04:00 desktop[launcher] · task M0-D106 · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-29T17:39:14-04:00 desktop[race] · task M0-D106 · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-29T17:39:15-04:00 desktop[port-taken] · task M0-D106 · box Laser2025-20 :: bash tests/smoke.sh {case}
+== 2026-10-29T17:39:25-04:00 desktop[world] · task M0-D106 · box Laser2025-20 :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=0 · 52.28 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 3.4s (log C:\workspace\sandbox_reactions\milestones\m0\logs\launcher.launch.game-offscreen.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-offscreen: pid 30080 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-offscreen: built in 0 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[world] · exit=0 · 38.56 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-CAPTURE empty empty.png 2560x1410
+SR-CAPTURE-STATUS empty NVIDIA GeForce RTX 4080 Laptop GPU · 7 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE dropped dropped.png 2560x1410
+SR-CAPTURE-STATUS dropped NVIDIA GeForce RTX 4080 Laptop GPU · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 2560x1410
+SR-CAPTURE-STATUS running NVIDIA GeForce RTX 4080 Laptop GPU · 38 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 3 C:/Users/YOHANB~1/AppData/Local/Temp/tmp.z7SHOXWJ9Q
+world drawn at s = 3 (2560x1410); centre (253, 255, 255); 1 steps per frame; 38 fps at x1 (the box's window route)
+world game-offscreen: built in 0 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===
+
+-- desktop[race] · exit=0 · 90.09 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 58.9s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D106-race.launch.game-offscreen.log)
+services: 1, ready: 1
+race game-offscreen: built in 1 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[window] · exit=0 · 132.42 s
+game-offscreen: ready on http://127.0.0.1:47811/status, 2.4s (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D106.launch.game-offscreen.log)
+game-offscreen: pid 17064 stopped
+game-offscreen: log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D106.launch.game-offscreen.log
+services: 1, ready: 1, failures: 0
+boot game-offscreen: built in 1 s, booted and checked in 131 s
+=== GO ===
+
+-- desktop[port-taken] · exit=0 · 103.14 s
+SR-STATUS-PORT 47813
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+port-taken game-offscreen: built in 2 s, 47811 held, ready on 47813 as printed, stopped
+=== GO ===
+

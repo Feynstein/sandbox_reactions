@@ -1,0 +1,134 @@
+== M0-D106 · box Laser2025-20 · opened 2026-10-29T17:06:04-04:00
+-- N stated before the runs (§0.4): N = 3 loaded rounds, each two `timing` runs at once (the condition of logs/M0-V11-win.timing.redarm.log, 00:35:02, whose first cases met one TDR at 00:35:53); then beside a loaded --all is the lead's (over 10 min)
+-- edit 1: timing.rs frame() waits at most 120 s on its submission and prints encode/submit/done wall times
+-- idle run 1 (CPU load 3 %), 2026-10-29T17:09:24-04:00
+-- idle run 1 result: timing NO-GO, timeout 900.20 s, load 1.48->2.6 (logs/M0-D106.timing.log): case 1 «a 240-step frame: its wait ended in «...timed out...» at 125.7s (encoded at 229.1ms, submitted at 5.7s)»; GPU through the wait: P8, 210 MHz, 5 W, 0-4 %; no nvlddmkm event; the process stayed after the panic until the harness killed it
+== probe slots 2026-10-29T17:24:44-04:00 :: SR_TEST_ADAPTER='RTX 4080' cargo test --release --locked -p sr-engine --test gpu timing::probe_d106_disk_slots -- --nocapture --exact
+    Finished `release` profile [optimized] target(s) in 29.60s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-b9f5dd9b6977d55a.exe)
+
+running 1 test
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+PROBE step 0: passes 6 rounds 10 slots 30 converged true
+PROBE step 20: passes 2 rounds 8 slots 16 converged true
+PROBE step 40: passes 3 rounds 6 slots 17 converged true
+PROBE step 60: passes 2 rounds 1 slots 9 converged true
+PROBE step 80: passes 2 rounds 1 slots 9 converged true
+PROBE step 100: passes 2 rounds 1 slots 9 converged true
+PROBE step 120: passes 3 rounds 1 slots 12 converged true
+PROBE step 140: passes 3 rounds 1 slots 12 converged true
+PROBE step 160: passes 2 rounds 1 slots 9 converged true
+PROBE step 180: passes 3 rounds 1 slots 12 converged true
+PROBE step 200: passes 3 rounds 1 slots 12 converged true
+PROBE step 220: passes 5 rounds 1 slots 18 converged true
+PROBE most slots 42 at step 2
+test timing::probe_d106_disk_slots ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 2.67s
+
+exit=0
+-- probe slots: steps 0-239 of the 128x128 disk use at most 42 slots (step 2); every 20th: 30 16 17 9 9 9 12 12 9 12 12 18
+== probe frame ROUNDS=96 2026-10-29T17:25:28-04:00
+a 240-step frame: encoded 84.86ms, submitted 1.45s, done 3.11s (wall)
+PROBE rounds 96: steps_run 240 carried false timed 204 step_ms 7.171 P5 Some(5.797074823529412) → ≈ 1721 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 4.34s
+exit=0
+== probe frame ROUNDS=64 2026-10-29T17:25:33-04:00
+a 240-step frame: encoded 65.81ms, submitted 1.07s, done 2.53s (wall)
+PROBE rounds 64: steps_run 240 carried false timed 204 step_ms 6.262 P5 Some(4.890989333333335) → ≈ 1503 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 3.78s
+exit=0
+== probe frame ROUNDS=96 2026-10-29T17:25:38-04:00
+a 240-step frame: encoded 90.94ms, submitted 1.58s, done 3.28s (wall)
+PROBE rounds 96: steps_run 240 carried false timed 204 step_ms 7.321 P5 Some(5.8959882352941175) → ≈ 1757 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 4.52s
+exit=0
+== probe frame ROUNDS=64 2026-10-29T17:25:43-04:00
+a 240-step frame: encoded 60.51ms, submitted 1.03s, done 2.54s (wall)
+PROBE rounds 64: steps_run 240 carried false timed 204 step_ms 6.452 P5 Some(4.996048470588233) → ≈ 1548 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 3.75s
+exit=0
+== probe frame ROUNDS=96 2026-10-29T17:25:48-04:00
+a 240-step frame: encoded 87.86ms, submitted 1.51s, done 3.20s (wall)
+PROBE rounds 96: steps_run 240 carried false timed 204 step_ms 7.237 P5 Some(5.834043764705881) → ≈ 1737 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 4.41s
+exit=0
+== probe frame ROUNDS=64 2026-10-29T17:25:53-04:00
+a 240-step frame: encoded 66.95ms, submitted 1.07s, done 2.49s (wall)
+PROBE rounds 64: steps_run 240 carried false timed 204 step_ms 6.084 P5 Some(4.73246337254902) → ≈ 1460 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 3.69s
+exit=0
+-- probe frame, 128x128: ROUNDS 96 → 7.17/7.32/7.24 ms a step (≈1.72-1.76 s GPU), wall 3.1-3.3 s; ROUNDS 64 → 6.26/6.45/6.08 ms (≈1.46-1.55 s), wall 2.5 s; no carry, no stall in 6
+== probe frame SIDE=64 ROUNDS=48 2026-10-29T17:26:18-04:00
+a 240-step frame: encoded 40.03ms, submitted 682.38ms, done 1.64s (wall)
+PROBE rounds 48: steps_run 240 carried false timed 204 step_ms 3.983 P5 Some(2.924522666666667) → ≈ 956 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 2.82s
+exit=0
+== probe frame SIDE=64 ROUNDS=64 2026-10-29T17:26:52-04:00
+a 240-step frame: encoded 53.37ms, submitted 851.78ms, done 1.89s (wall)
+PROBE rounds 64: steps_run 240 carried false timed 204 step_ms 4.359 P5 Some(3.310897254901961) → ≈ 1046 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 3.18s
+exit=0
+== probe frame SIDE=96 ROUNDS=48 2026-10-29T17:26:56-04:00
+a 240-step frame: encoded 48.37ms, submitted 828.44ms, done 1.23s (wall)
+PROBE rounds 48: steps_run 2 carried true timed 204 step_ms 217.713 P5 Some(191.03934117647063) → ≈ 52251 ms GPU for 240
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 2.44s
+exit=0
+== probe frame SIDE=48 ROUNDS=48 2026-10-29T17:26:59-04:00
+thread 'timing::probe_d106_frame' (27792) panicked at crates\sr-engine\tests\gpu\timing.rs:32:40:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 443 filtered out; finished in 0.87s
+exit=101
+-- probe frame: 64x64 ROUNDS 48 → 3.98 ms a step (≈0.96 s GPU), wall 1.64 s; 64x64 ROUNDS 64 → 4.36 ms (≈1.05 s), wall 1.89 s; 96x96 ROUNDS 48 carries at step 2; 48x48 refused (timing.rs:32, WorldConfig)
+== probe slots SIDE=64, 400 steps 2026-10-29T17:27:26-04:00
+PROBE step 0: passes 3 rounds 2 slots 13 converged true
+PROBE step 20: passes 3 rounds 2 slots 13 converged true
+PROBE step 40: passes 2 rounds 1 slots 9 converged true
+PROBE step 60: passes 2 rounds 1 slots 9 converged true
+PROBE step 80: passes 2 rounds 1 slots 9 converged true
+PROBE step 100: passes 2 rounds 1 slots 9 converged true
+PROBE step 120: passes 2 rounds 1 slots 9 converged true
+PROBE step 140: passes 2 rounds 1 slots 9 converged true
+PROBE step 160: passes 2 rounds 1 slots 9 converged true
+PROBE step 180: passes 2 rounds 1 slots 9 converged true
+PROBE step 200: passes 2 rounds 1 slots 9 converged true
+PROBE step 220: passes 3 rounds 2 slots 13 converged true
+PROBE step 240: passes 4 rounds 4 slots 18 converged true
+PROBE step 255: passes 14 rounds 21 slots 65 converged true
+PROBE step 256: passes 21 rounds 99 slots 164 converged true
+PROBE step 257: passes 18 rounds 234 slots 290 converged true
+PROBE step 258: passes 11 rounds 322 slots 357 converged true
+PROBE step 259: passes 9 rounds 190 slots 219 converged true
+PROBE step 260: passes 9 rounds 124 slots 153 converged true
+PROBE step 261: passes 8 rounds 41 slots 67 converged true
+PROBE step 262: passes 8 rounds 33 slots 59 converged true
+PROBE step 263: passes 9 rounds 37 slots 66 converged true
+PROBE step 264: passes 7 rounds 33 slots 56 converged true
+PROBE step 267: passes 3 rounds 32 slots 43 converged true
+PROBE step 273: passes 3 rounds 30 slots 41 converged true
+PROBE step 279: passes 3 rounds 35 slots 46 converged true
+PROBE step 280: passes 3 rounds 32 slots 43 converged true
+PROBE step 300: passes 3 rounds 18 slots 29 converged true
+PROBE step 308: passes 3 rounds 45 slots 56 converged true
+PROBE step 309: passes 3 rounds 45 slots 56 converged true
+PROBE step 310: passes 3 rounds 33 slots 44 converged true
+PROBE step 320: passes 3 rounds 16 slots 27 converged true
+PROBE step 340: passes 3 rounds 6 slots 17 converged true
+PROBE step 360: passes 3 rounds 4 slots 15 converged true
+PROBE step 380: passes 3 rounds 4 slots 15 converged true
+PROBE most slots 357 at step 258
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 4.48s
+-- probe slots 64x64: steps 0-254 at most 18 slots; front at 255 (65), peak 357 at 258 → chosen: 64x64, ROUNDS 48, FRAME 240; probes removed
+-- idle run 2 (the fix): timing GO 5/5, 43.47 s, load 2.38->2.64; frame 4.07 ms a step, encoded 23 ms, submitted 0.38 s, done 1.36 s wall
+== loaded round 1: two `bash tests/gpu.sh timing physics` at once, 2026-10-29T17:29:30-04:00
+  1a: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 437 filtered out; finished in 30.67s exit=0  | a 240-step frame: encoded 30.54ms, submitted 534.81ms, done 1.52s (wall)
+  1b: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 437 filtered out; finished in 47.73s exit=0  | a 240-step frame: encoded 43.61ms, submitted 724.06ms, done 1.74s (wall)
+  nvlddmkm events in the last 3 min: 0
+== loaded round 2: two `bash tests/gpu.sh timing physics` at once, 2026-10-29T17:30:20-04:00
+  2a: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 437 filtered out; finished in 46.41s exit=0  | a 240-step frame: encoded 41.89ms, submitted 716.35ms, done 3.48s (wall)
+  2b: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 437 filtered out; finished in 46.29s exit=0  | a 240-step frame: encoded 39.22ms, submitted 703.10ms, done 3.46s (wall)
+  nvlddmkm events in the last 3 min: 0
+== loaded round 3: two `bash tests/gpu.sh timing physics` at once, 2026-10-29T17:31:09-04:00
+  3a: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 437 filtered out; finished in 45.19s exit=0  | a 240-step frame: encoded 40.54ms, submitted 701.34ms, done 3.42s (wall)
+  3b: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 437 filtered out; finished in 45.23s exit=0  | a 240-step frame: encoded 40.91ms, submitted 701.84ms, done 3.46s (wall)
+  nvlddmkm events in the last 3 min: 0
+-- loaded rounds: 3 of 3 GO (6 runs 5/5, 30.7-47.7 s, frame done 1.52-3.48 s wall), 0 nvlddmkm events
