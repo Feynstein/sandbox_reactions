@@ -1,0 +1,121 @@
+CLAUDECODE=1
+CLAUDE_EFFORT=xhigh
+AI_AGENT=claude-code_2-1-312_agent
+report: 254 DONE blocks · 15 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 79 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 8 D block(s) naming no cause in the record · $940.49 read from the sessions' own cost
+BUILD on Haiku 5.5, high: 1 block(s) · first-try 0/1 · $3.20 per DONE block · off the ladder
+BUILD on Opus 5.5, high: 92 block(s) · first-try 36/85 · $11.36 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Opus 5.5, xhigh: 2 block(s) · first-try 0/2 · $0.08 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 81 block(s) · first-try 49/78 · $2.39 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 16 block(s) · first-try 13/16 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 11 block(s) · first-try 8/10 · $0.77 per DONE block · off the ladder
+BUILD·E on Opus 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 2 block(s) · first-try 2/2 · $0.34 per DONE block · n<10
+CHECK on Opus 5.5, max: 15 block(s) · first-try 10/15 · $21.28 per DONE block · above (usual)
+MOVE on Haiku 5.5, high: 5 block(s) · first-try 4/5 · $0.11 per DONE block · off the ladder
+MOVE on Opus 5.5, high: 1 block(s) · first-try 0/1 · $1.59 per DONE block · usual
+MOVE on Sonnet 5.5, medium: 2 block(s) · first-try 1/1 · $0.25 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 22 block(s) · first-try 12/19 · $11.26 per DONE block · above (usual)
+=== GO ===
+lint: checks=711 failed=0 warnings=2 · blocks=319 · flow_rows=319 · verify_fences=0 · history=0 · flow=per-task · header=559/600 · pipeline=9/60 · ladder=6 rungs · refresh=8/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D71 15 · M0-D91 3
+=== GO ===
+lint: checks=711 failed=0 warnings=2 · blocks=319 · flow_rows=319 · verify_fences=0 · history=0 · flow=per-task · header=559/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D71 15 · M0-D91 3
+=== GO ===
+rsync up: exit 0
+== claim on laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-TM13 (2026-10-29T08:00:15-04:00)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint         711/0/0      0.11 s  GO
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 114 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 115 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 137 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+multi             NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+edits             NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+edits_file        NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 111 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 108 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 81 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 81 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 112 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 110 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 137 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 98 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 100 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 91 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 134 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 115 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 144 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 135 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TM13.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+e90e7dabde85
+anchor: 1 path×scope entries moved by this run
+anchor: 322 paths checked · 308 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 322 covered of 630 visible
+skipped   300  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 711 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 67 not impacted · 0.12 s + loop 0.09 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.05->0.05 · base: M0-TM13's start 2026-10-29T07:50:31-04:00
+=== GO ===
+exit=0
+brought back: logs/M0-TM13.plan_lint.log, loop_times.jsonl +7470 B, verify.anchor.json (1 record moved: the plan's plan_lint)
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+lint: checks=710 failed=0 warnings=2 · blocks=319 · flow_rows=319 · verify_fences=0 · history=0 · flow=per-task · header=559/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D71 15 · M0-D91 3
+=== GO ===
+plan_lint  710/0/0      0.11 s  GO
+logs: milestones/m0/logs/M0-TM13-lpc.<scope>.log · record: loop_times.jsonl · tree feb41a3510c9+4e3cde267903
+anchor: 1 path×scope entries moved by this run
+anchor: 322 paths checked · 309 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 322 covered of 631 visible
+verify: 710 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 45.59->45.59
+=== GO ===

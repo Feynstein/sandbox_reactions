@@ -1,0 +1,32 @@
+--- a/crates/sr-engine/shaders/edit.wgsl
++++ b/crates/sr-engine/shaders/edit.wgsl
+@@ -172,7 +172,7 @@
+     let mom = (*c).mom;
+     let gas = s0 > 0.0;
+     let comp0 = composition((*c).x);
+-    let u0 = select(0.0, s0 * eps_cold(s0, comp0.y_e, (*c).x[ID_N]), gas);
++    let u0 = s0 * eps_cold(s0, comp0.y_e, (*c).x[ID_N]);
+     let s1 = s0 + ds;
+     var x1: array<f32, 10>;
+     for (var i = 0u; i < N_SPECIES; i++) {
+@@ -181,7 +181,7 @@
+     let comp1 = composition(x1);
+     let u1 = s1 * eps_cold(s1, comp1.y_e, x1[ID_N]);
+     // ½|m|² (1/Σ₁ − 1/Σ₀): the same momentum on the larger Σ.
+-    let kinetic = select(0.0, -0.5 * dot(mom, mom) * ds / (s0 * s1), gas);
++    let kinetic = -0.5 * dot(mom, mom) * ds / (s0 * s1);
+     let e1 = e0 + ds * eps_p + (u1 - u0) + kinetic;
+     (*c).sigma = s1;
+     (*c).energy = e1;
+--- a/crates/sr-engine/src/scene.rs
++++ b/crates/sr-engine/src/scene.rs
+@@ -504,8 +504,7 @@
+         for i in 0..cells {
+             let sigma = self.sigma[i];
+             if sigma <= 0.0 {
+-                planes[i] = floor_sigma as f32;
+-                planes[3 * cells + i] = floor_energy as f32;
++                let _ = (floor_sigma, floor_energy);
+                 planes[SPECIES.start * cells + i] = 1.0;
+                 continue;
+             }

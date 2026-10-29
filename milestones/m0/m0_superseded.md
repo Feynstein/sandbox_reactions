@@ -278,3 +278,7 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   M0-D69: «7e-3 (Recommended)»).
 - Contract §5.2's G-MULTI "20 τ_dyn" — superseded by contract §0.5 [M0-T74]: the run is to `sim_time:40` (about 11 τ_dyn), the two
   Sun-like clouds 240 cells apart falling into one object by 20 τ_dyn (the lead, 2026-10-28, M0-T74: «Shorten to 40 t.u. (Recommended)»).
+- Contract §1.3.2's P1 row "Δt_n is the reduction P9 made at the end of step n−1" for a step whose P0 paints or drops (M0-T76: the
+  first stroke into an empty world stepped on the floor gas's 0.4472 against its own 0.0673) — superseded by contract §0.5 [M0-D110]:
+  P0 re-makes the CFL term over the box it left after a paint or drop, Δt_n the lesser of it and P9's (whose gravity term stands);
+  every other step keeps its bits (RTX 4090) (the lead, 2026-10-29, M0-D110: «Gas-speed term only (Recommended)»).

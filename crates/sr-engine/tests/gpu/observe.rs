@@ -14,6 +14,7 @@ use std::path::{Path, PathBuf};
 use serde_json::Value;
 use sr_engine::dump::{Dump, Sink};
 use sr_engine::headless::{observers_path, run_captured};
+use sr_physics::registry::Physics;
 
 /// A frame while `--until` watches (headless's FRAME), in steps: the first step stands alone.
 const FRAME: u64 = 16;
@@ -208,10 +209,12 @@ fn events_jsonl_and_the_ending_of_a_black_hole() {
 }
 
 /// A black hole that eats all the gas in the world still ends (M0-D96; M0-D66's T 3 fix, M0-D70's case): sink_cloud at T 3,
-/// a 50 sink dropped at its centre after 40 steps, eats the whole cloud — on the RTX 4090 the box emptied at step 1,521 (t
-/// 11.0), where Δt was the largest f32: the clock froze and P3 drifted the sink to infinity, so `--until ending` never met.
-/// With an empty box stepping on the floor gas (§0.5 [M0-D96]) the clock runs on, the sink stays a finite object of its own
-/// (§0.5 [M0-D70]) and its black_hole holds to the ending; the final dump's sink is finite and in the world.
+/// a [`EATEN_SINK`] sink dropped at its centre after 40 steps, eats the whole cloud — on the RTX 4090 (M0-D96, a 50 sink) the
+/// box emptied at step 1,521 (t 11.0), where Δt was the largest f32: the clock froze and P3 drifted the sink to infinity, so
+/// `--until ending` never met. With an empty box stepping on the floor gas (§0.5 [M0-D96]) the clock runs on, the sink stays a
+/// finite object of its own (§0.5 [M0-D70]) and its black_hole holds to the ending; the final dump's sink is finite and in the
+/// world. The box must empty before the ending, or the floor's Δt is never read (M0-D102: a 50 sink left thin wisps in 611
+/// cells at its ending, t 11.77, the box the whole world) — so the final dump's box is empty and its Δt the floor gas's.
 #[test]
 fn a_black_hole_that_eats_its_whole_cloud_meets_its_ending() {
     let dir = temp("eaten");
@@ -224,11 +227,11 @@ fn a_black_hole_that_eats_its_whole_cloud_meets_its_ending() {
     assert_eq!(seed.code, 0, "{:?}", seed.lines);
     let mut dump = Dump::read(&seed.dir.join("dumps").join("s_40.bin")).expect("the seed run's dump");
     let (w, h) = (dump.world.width, dump.world.height);
-    dump.sinks = vec![Sink { x: f64::from(w / 2) + 0.5, y: f64::from(h / 2) + 0.5, vx: 0.0, vy: 0.0, m: 50.0 }];
+    dump.sinks = vec![Sink { x: f64::from(w / 2) + 0.5, y: f64::from(h / 2) + 0.5, vx: 0.0, vy: 0.0, m: EATEN_SINK }];
     let seeded = dir.join("seeded.bin");
     dump.write(&seeded).unwrap();
 
-    let out = go("eaten-run", &scene, &["--load-dump", &seeded.display().to_string(), "--until", "ending", "--max-steps", "20000"]);
+    let out = go("eaten-run", &scene, &["--load-dump", &seeded.display().to_string(), "--until", "ending", "--max-steps", "4000"]);
     assert_eq!(out.code, 0, "{:?}", out.lines);
     assert!(out.done().ends_with("until=met"), "{}", out.done());
     let lines: Vec<Value> = out.events.lines().map(|l| serde_json::from_str(l).unwrap()).collect();
@@ -241,11 +244,23 @@ fn a_black_hole_that_eats_its_whole_cloud_meets_its_ending() {
     let s = &last.sinks[0];
     assert!(s.x.is_finite() && s.y.is_finite(), "the sink is somewhere: {s:?}");
     assert!((0.0..f64::from(w)).contains(&s.x) && (0.0..f64::from(h)).contains(&s.y), "the sink is in the world: {s:?}");
+    // The box emptied before the ending and the clock ran on the floor gas of hydrogen (1/μ = 2): Δt = C / (2c), c² = 2 T_floor/μ.
+    let [_, _, bw, bh, ..] = last.resume.box_record;
+    assert_eq!(bw * bh, 0, "the cloud never left an empty box before its ending: box {:?}", last.resume.box_record);
+    let physics = Physics::shipped().expect("shipped physics.json");
+    let key = |k: &str| physics.get(k).unwrap() as f32 as f64;
+    let floor = key("cfl") / (2.0 * (4.0 * key("t_floor")).sqrt());
+    let dt = f64::from(last.resume.dt);
+    assert!((dt - floor).abs() <= 1e-6 * floor, "the empty box's Δt {dt} against the floor gas's {floor}");
     println!(
-        "T 3: ending at step {} (t {:.3}), object {} of {} sb, the sink at ({:.2}, {:.2}), {} events",
+        "T 3: ending at step {} (t {:.3}), object {} of {} sb, the sink at ({:.2}, {:.2}), {} events; the box empty, Δt {dt:.6}",
         ending["step"], out.sim_time(), o["id"], o["mass_sb"], s.x, s.y, lines.len()
     );
 }
+
+/// The eaten cloud's sink (M0-D102): 200 eats the T 3 cloud's last wisps by t ≈ 5.8 (the box empty at step 800's re-fit on
+/// the RTX 4090), the ending at step 816 (t 12.09) — 6 t.u. on the floor's Δt; a 50 sink's wisps outlived its ending.
+const EATEN_SINK: f64 = 200.0;
 
 /// A sink with no gas around it is an object of its own (§0.5 [M0-D70]): the [`ENDING_T`] cloud in a 256 × 256 world, a 50
 /// sink dropped into the vacuum at (16.5, 16.5), outside the box (the box follows the gas, §1.3.3, about the cloud at the

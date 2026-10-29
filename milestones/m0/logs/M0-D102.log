@@ -1,0 +1,570 @@
+== 2026-10-29T08:45:15-04:00 M0-D102 · linux-pc → laserax-ai-server (RTX 4090, R18): rsync the tree, build sr-app, the probe
+    Finished `release` profile [optimized] target(s) in 0.08s
+== 2026-10-29T08:45:25-04:00 clean: bash /tmp/d102/d102_run.sh ~/workspace/sandbox_reactions clean 3 50
+SR-HEADLESS DONE steps=40 sim_time=1.216924 until=none
+SR-HEADLESS DONE steps=2040 sim_time=11.769981 until=met
+step  sim_time   dt          box(x0,y0,w,h)   area  gas_sum      cells>=vac  sink_m
+   48    1.3912    0.020778 0,0,64,64          4096      1579.02   2401    70.982529
+   64    1.6931    0.017265 0,0,64,64          4096      1568.21   2380    81.790855
+   80    1.9455    0.014523 0,0,64,64          4096      1552.58   2303    97.417992
+   96    2.1586     0.01233 0,0,64,64          4096      1531.96   2198   118.040222
+  112    2.3386   0.0097852 0,0,64,64          4096      1483.53   2111   166.462906
+  128    2.4653   0.0070168 0,0,64,64          4096       1369.6   1966   280.391479
+  144    2.5420   0.0040407 0,0,64,64          4096      1092.31   1873   557.688721
+  160    2.6499   0.0065996 0,0,64,64          4096      809.057   1757   840.938843
+  176    2.7494   0.0059634 0,0,64,64          4096      538.687   1663  1111.308228
+  192    2.8413   0.0055812 0,0,64,64          4096      324.675   1581  1325.320435
+  208    2.9288   0.0053913 0,0,64,64          4096      181.814   1472  1468.180786
+  224    3.0128   0.0053632 0,0,64,64          4096      100.714   1384  1549.281372
+  240    3.0978   0.0052838 0,0,64,64          4096      58.9354   1305  1591.059204
+  256    3.1806   0.0050785 0,0,64,64          4096      37.5815   1230  1612.412964
+  272    3.2598   0.0047948 0,0,64,64          4096      25.6157   1188  1624.378540
+  288    3.3383   0.0048908 0,0,64,64          4096      19.0379   1160  1630.956177
+  304    3.4115   0.0031717 0,0,64,64          4096      14.7085   1138  1635.285400
+  320    3.4494   0.0018868 0,0,64,64          4096      12.9664   1130  1637.027466
+  336    3.4744   0.0016226 0,0,64,64          4096       11.983   1128  1638.010742
+  352    3.4987    0.001642 0,0,64,64          4096      11.1235   1124  1638.870239
+  368    3.5229   0.0010793 0,0,64,64          4096      10.1853   1117  1639.808350
+  384    3.5488    0.001934 0,0,64,64          4096      9.45142   1125  1640.542358
+  400    3.5851   0.0018752 0,0,64,64          4096      8.49821   1135  1641.495361
+  416    3.6133   0.0020583 0,0,64,64          4096      7.84419   1139  1642.149414
+  432    3.6467   0.0022613 0,0,64,64          4096      7.15029   1142  1642.843018
+  448    3.6752   0.0015619 0,0,64,64          4096      6.60426   1143  1643.389038
+  464    3.7152    0.002763 0,0,64,64          4096      5.96096   1173  1644.032349
+  480    3.7628   0.0033427 0,0,64,64          4096      5.29258   1202  1644.700562
+  496    3.8146   0.0036911 0,0,64,64          4096      4.67106   1235  1645.321655
+  512    3.8767   0.0036502 0,0,64,64          4096      4.03397   1273  1645.958252
+  528    3.9487   0.0053515 0,0,64,64          4096      3.41584   1323  1646.576050
+  544    4.0262    0.004987 8,0,56,64          3584      2.79787   1356  1647.193604
+  560    4.1131   0.0051851 8,0,56,64          3584      2.17783   1414  1647.812988
+  576    4.1996   0.0056071 8,0,56,64          3584      1.67889   1480  1648.311157
+  592    4.2887   0.0055726 8,0,56,64          3584      1.27851   1549  1648.711060
+  608    4.3776   0.0054594 8,0,56,64          3584      1.01782   1614  1648.970581
+  624    4.4640   0.0053888 0,0,64,64          4096     0.853695   1684  1649.133301
+  640    4.5499   0.0053365 0,0,64,64          4096     0.742817   1758  1649.242676
+  656    4.6353   0.0053549 0,0,64,64          4096      0.66321   1824  1649.320190
+  672    4.7220   0.0054923 0,0,64,64          4096     0.601237   1889  1649.379639
+  688    4.8101   0.0055157 0,0,64,64          4096     0.550289   1957  1649.427612
+  704    4.8985   0.0055335 0,0,64,64          4096     0.507922   2008  1649.466675
+  720    4.9876    0.005603 0,0,64,64          4096      0.47097   2066  1649.499756
+  736    5.0773   0.0055924 0,0,64,64          4096     0.437819   2102  1649.528809
+  752    5.1634   0.0053744 0,0,64,64          4096     0.408403   2134  1649.554199
+  768    5.2507   0.0055051 0,0,64,64          4096     0.383206   2157  1649.575073
+  784    5.3374   0.0053206 0,0,64,64          4096     0.360529   2177  1649.593506
+  800    5.4172    0.005112 0,0,64,64          4096      0.34159   2184  1649.609131
+  816    5.5012   0.0052777 0,0,64,64          4096     0.323161   2199  1649.623657
+  832    5.5851   0.0052283 0,0,64,64          4096     0.306968   2207  1649.636108
+  848    5.6683   0.0051708 0,0,64,64          4096     0.292452   2212  1649.646851
+  864    5.7513   0.0052051 0,0,64,64          4096     0.279615   2217  1649.656616
+  880    5.8349   0.0052464 0,0,64,64          4096     0.267617   2221  1649.664795
+  896    5.9195   0.0053586 0,0,64,64          4096     0.256291   2227  1649.672607
+  912    6.0060   0.0054022 0,0,64,64          4096      0.24516   2226  1649.680420
+  928    6.0921    0.005317 0,0,64,64          4096     0.234308   2223  1649.688232
+  944    6.1767   0.0053088 0,0,64,64          4096     0.223714   2219  1649.696045
+  960    6.2615   0.0052963 0,0,64,64          4096     0.213174   2211  1649.703857
+  976    6.3451   0.0051508 0,0,64,64          4096     0.202833   2204  1649.711670
+  992    6.4271   0.0051082 0,0,64,64          4096     0.193222   2198  1649.719116
+ 1008    6.5093   0.0051895 0,0,64,64          4096     0.183279   2195  1649.726929
+ 1024    6.5923   0.0051614 0,0,64,64          4096     0.173157   2194  1649.734741
+ 1040    6.6754   0.0052103 0,0,64,64          4096     0.163181   2191  1649.742554
+ 1056    6.7585   0.0051772 0,0,64,64          4096     0.153279   2185  1649.750366
+ 1072    6.8411   0.0051407 0,0,64,64          4096     0.143614   2184  1649.758179
+ 1088    6.9226   0.0050091 0,0,64,64          4096     0.134313   2181  1649.765991
+ 1104    7.0034   0.0050967 0,0,64,64          4096     0.125429   2175  1649.773804
+ 1120    7.0853   0.0051078 0,0,64,64          4096     0.116761   2171  1649.781616
+ 1136    7.1664   0.0050119 0,0,64,64          4096     0.108657   2168  1649.789429
+ 1152    7.2459   0.0049366 0,0,64,64          4096     0.101094   2162  1649.795532
+ 1168    7.3217   0.0042495 0,0,64,64          4096    0.0944774   2150  1649.801392
+ 1184    7.3908    0.004399 0,0,64,64          4096    0.0889837   2145  1649.805786
+ 1200    7.4629    0.004578 0,0,64,64          4096     0.083776   2140  1649.809692
+ 1216    7.5369   0.0046739 0,0,64,64          4096     0.078957   2131  1649.813599
+ 1232    7.6124   0.0047697 0,0,64,64          4096    0.0745842   2121  1649.817505
+ 1248    7.6883   0.0046723 0,0,64,64          4096    0.0707031   2106  1649.821411
+ 1264    7.7619   0.0045302 0,0,64,64          4096    0.0672683   2095  1649.823975
+ 1280    7.8328   0.0043438 0,0,64,64          4096    0.0641839   2087  1649.825928
+ 1296    7.9012   0.0042379 0,0,64,64          4096    0.0613239   2083  1649.827881
+ 1312    7.9696   0.0043501 0,0,64,64          4096    0.0585555   2071  1649.829834
+ 1328    8.0402   0.0044834 0,0,64,64          4096    0.0557896   2056  1649.831787
+ 1344    8.1131   0.0046023 0,0,64,64          4096    0.0530719   2034  1649.833740
+ 1360    8.1872   0.0046272 0,0,64,64          4096    0.0505099   2021  1649.835693
+ 1376    8.2605    0.004556 0,0,64,64          4096    0.0482401   2005  1649.837646
+ 1392    8.3333   0.0045559 0,0,64,64          4096    0.0462167   1988  1649.839600
+ 1408    8.4071   0.0046638 0,0,64,64          4096    0.0441841   1969  1649.841553
+ 1424    8.4826   0.0047852 0,0,64,64          4096    0.0422227   1947  1649.843506
+ 1440    8.5601   0.0048954 0,0,64,64          4096    0.0403063   1935  1649.845459
+ 1456    8.6402   0.0050176 0,0,64,64          4096    0.0383622   1908  1649.847412
+ 1472    8.7207    0.005048 0,0,64,64          4096    0.0364771   1891  1649.849365
+ 1488    8.8013   0.0050068 0,0,64,64          4096    0.0346245   1859  1649.851318
+ 1504    8.8803   0.0048806 0,0,64,64          4096    0.0328771   1836  1649.853271
+ 1520    8.9575   0.0047929 0,0,64,64          4096     0.031238   1817  1649.855225
+ 1536    9.0341   0.0049011 0,0,64,64          4096    0.0297525   1792  1649.857178
+ 1552    9.1111   0.0045129 0,0,64,64          4096    0.0282663   1755  1649.859131
+ 1568    9.1828   0.0048335 0,0,64,64          4096    0.0269716   1720  1649.860718
+ 1584    9.2562   0.0045203 0,0,64,64          4096     0.025712   1692  1649.862671
+ 1600    9.3278   0.0044661 0,0,64,64          4096    0.0245207   1657  1649.862671
+ 1616    9.4001   0.0045727 0,0,64,64          4096     0.023379   1623  1649.862671
+ 1632    9.4734   0.0045942 0,0,64,64          4096    0.0222671   1583  1649.862671
+ 1648    9.5481   0.0047371 0,0,64,64          4096    0.0211959   1545  1649.862671
+ 1664    9.6251   0.0048986 0,0,64,64          4096    0.0201452   1506  1649.862671
+ 1680    9.7050   0.0050777 0,0,64,64          4096    0.0191081   1461  1649.862671
+ 1696    9.7878   0.0051779 0,0,64,64          4096    0.0181034   1429  1649.862671
+ 1712    9.8697   0.0050832 0,0,64,64          4096    0.0171578   1398  1649.862671
+ 1728    9.9497   0.0049309 0,0,64,64          4096    0.0162774   1363  1649.862671
+ 1744   10.0278   0.0048964 0,0,64,64          4096    0.0154713   1332  1649.862671
+ 1760   10.1067   0.0049861 0,0,64,64          4096    0.0147114   1307  1649.862671
+ 1776   10.1875   0.0050951 0,0,64,64          4096    0.0139806   1285  1649.862671
+ 1792   10.2696   0.0051401 0,0,64,64          4096     0.013279   1257  1649.862671
+ 1808   10.3520   0.0051487 0,0,64,64          4096    0.0126173   1230  1649.862671
+ 1824   10.4354    0.005272 0,0,64,64          4096    0.0119655   1201  1649.862671
+ 1840   10.5203   0.0053184 0,0,64,64          4096    0.0113631   1173  1649.862671
+ 1856   10.6054   0.0053284 0,0,64,64          4096     0.010778   1135  1649.862671
+ 1872   10.6907   0.0053305 0,0,64,64          4096    0.0102249   1105  1649.862671
+ 1888   10.7760   0.0053317 0,0,64,64          4096   0.00969348   1074  1649.862671
+ 1904   10.8615   0.0053564 0,0,64,64          4096   0.00917473   1040  1649.862671
+ 1920   10.9401   0.0050009 0,0,64,64          4096   0.00873691   1009  1649.862671
+ 1936   11.0204   0.0050263 0,0,64,64          4096   0.00827645    975  1649.862671
+ 1952   11.1012   0.0050681 0,0,64,64          4096    0.0078301    941  1649.862671
+ 1968   11.1826   0.0051007 0,0,64,64          4096   0.00738364    901  1649.862671
+ 1984   11.2645   0.0051386 0,0,64,64          4096   0.00695768    868  1649.862671
+ 2000   11.3469   0.0051642 0,0,64,64          4096   0.00653473    824  1649.862671
+ 2016   11.4299   0.0052031 0,0,64,64          4096   0.00612828    787  1649.862671
+ 2032   11.5131   0.0052125 0,0,64,64          4096   0.00572982    747  1649.862671
+ 2048   11.5965   0.0052156 0,0,64,64          4096   0.00533472    703  1649.862671
+ 2064   11.6815   0.0053958 0,0,64,64          4096     0.004948    657  1649.862671
+ 2080   11.7700   0.0057407 0,0,64,64          4096   0.00457252    611  1649.862671
+until {'condition': 'ending', 'met': True, 'object': 1}
+event {'detail': {'mass_sb': 1649.974175879266}, 'kind': 'sink_formed', 'object': 1, 'sim_time': 1.239625919610262, 'step': 41}
+event {'detail': {'held_t': 10.07689054653747, 'hold_t': 10.0, 'mass_sb': 1649.8626983433805, 'stage': 'black_hole'}, 'kind': 'ending', 'object': 1, 'sim_time': 11.769981208897661, 'step': 2080}
+== 2026-10-29T08:46:12-04:00 variant T 3 sink 200: BRIEF=1 bash /tmp/d102/d102_run.sh ~/workspace/sandbox_reactions v_3_200 3 200
+SR-HEADLESS DONE steps=40 sim_time=1.216924 until=none
+SR-HEADLESS DONE steps=776 sim_time=12.088859 until=met
+first empty box: step 816, t 12.0889, dt 0.447214
+until {'condition': 'ending', 'met': True, 'object': 1}
+event {'detail': {'mass_sb': 1799.9741938100196}, 'kind': 'sink_formed', 'object': 1, 'sim_time': 1.239625919610262, 'step': 41}
+event {'detail': {'held_t': 10.399773800279945, 'hold_t': 10.0, 'mass_sb': 1799.9879150390625, 'stage': 'black_hole'}, 'kind': 'ending', 'object': 1, 'sim_time': 12.0888593303971, 'step': 816}
+
+real	0m1.305s
+user	0m0.050s
+sys	0m0.003s
+== 2026-10-29T08:46:14-04:00 variant T 3 sink 500: BRIEF=1 bash /tmp/d102/d102_run.sh ~/workspace/sandbox_reactions v_3_500 3 500
+SR-HEADLESS DONE steps=40 sim_time=1.216924 until=none
+SR-HEADLESS DONE steps=808 sim_time=11.886848 until=met
+first empty box: step 848, t 11.8868, dt 0.447214
+until {'condition': 'ending', 'met': True, 'object': 1}
+event {'detail': {'mass_sb': 2099.9741775138536}, 'kind': 'sink_formed', 'object': 1, 'sim_time': 1.239625919610262, 'step': 41}
+event {'detail': {'held_t': 10.287986997514963, 'hold_t': 10.0, 'mass_sb': 2099.988037109375, 'stage': 'black_hole'}, 'kind': 'ending', 'object': 1, 'sim_time': 11.886847998946905, 'step': 848}
+
+real	0m1.228s
+user	0m0.047s
+sys	0m0.003s
+== 2026-10-29T08:46:15-04:00 variant T 1 sink 50: BRIEF=1 bash /tmp/d102/d102_run.sh ~/workspace/sandbox_reactions v_1_50 1 50
+SR-HEADLESS DONE steps=40 sim_time=1.022802 until=none
+SR-HEADLESS DONE steps=2200 sim_time=11.601293 until=met
+until {'condition': 'ending', 'met': True, 'object': 1}
+event {'detail': {'mass_sb': 1649.9778777803294}, 'kind': 'sink_formed', 'object': 1, 'sim_time': 1.0502814557403326, 'step': 41}
+event {'detail': {'held_t': 10.067654157290235, 'hold_t': 10.0, 'mass_sb': 1647.5302259622258, 'stage': 'black_hole'}, 'kind': 'ending', 'object': 1, 'sim_time': 11.601292595500126, 'step': 2240}
+
+real	0m2.046s
+user	0m0.047s
+sys	0m0.003s
+== 2026-10-29T08:46:17-04:00 variant T 0.5 sink 50: BRIEF=1 bash /tmp/d102/d102_run.sh ~/workspace/sandbox_reactions v_0.5_50 0.5 50
+SR-HEADLESS DONE steps=40 sim_time=0.982988 until=none
+SR-HEADLESS DONE steps=2136 sim_time=11.518479 until=met
+until {'condition': 'ending', 'met': True, 'object': 1}
+event {'detail': {'mass_sb': 1649.9867794809397}, 'kind': 'sink_formed', 'object': 1, 'sim_time': 1.0118185011669993, 'step': 41}
+event {'detail': {'held_t': 10.02821995317936, 'hold_t': 10.0, 'mass_sb': 1647.8721275820863, 'stage': 'black_hole'}, 'kind': 'ending', 'object': 1, 'sim_time': 11.518479057587683, 'step': 2176}
+
+real	0m2.018s
+user	0m0.059s
+sys	0m0.002s
+== 2026-10-29T08:46:34-04:00 v_3_200: the table's last frames (python3 /tmp/d102/d102_probe.py table /tmp/d102/v_3_200/run/dumps | tail -8)
+step  sim_time   dt          box(x0,y0,w,h)   area  gas_sum      cells>=vac  sink_m
+  576    4.6041   0.0050295 8,0,56,56          3136    0.0391506    418  1799.951538
+  592    4.6827   0.0047403 8,0,56,56          3136    0.0281576    381  1799.962402
+  608    4.7611   0.0050852 8,0,56,56          3136    0.0198617    339  1799.970703
+  624    4.8422    0.005067 8,0,56,56          3136    0.0138827    304  1799.976562
+  640    4.9228   0.0050155 8,0,56,56          3136   0.00933943    258  1799.980713
+  656    5.0021   0.0049163 8,0,56,56          3136   0.00600274    222  1799.984131
+  672    5.0815   0.0050113 8,0,56,56          3136   0.00374875    179  1799.986084
+  688    5.1625   0.0051072 8,0,56,56          3136   0.00236729    146  1799.987915
+  704    5.2445   0.0050644 8,0,56,56          3136   0.00157132    128  1799.987915
+  720    5.3236   0.0046109 16,0,48,48         2304   0.00108525    106  1799.987915
+  736    5.3993   0.0046841 16,0,48,48         2304  0.000747152     85  1799.987915
+  752    5.4730   0.0045687 16,16,48,32        1536   0.00049504     72  1799.987915
+  768    5.5544   0.0054315 16,16,48,32        1536  0.000275368     50  1799.987915
+  784    5.6448   0.0063393 16,16,32,32        1024   9.8574e-05     21  1799.987915
+  800    5.7821    0.022868 16,16,32,32        1024    4.096e-05      0  1799.987915
+  816   12.0889     0.44721 0,0,0,0               0    4.096e-05      0  1799.987915
+== 2026-10-29T08:46:34-04:00 v_3_500: the table's last frames (python3 /tmp/d102/d102_probe.py table /tmp/d102/v_3_500/run/dumps | tail -8)
+step  sim_time   dt          box(x0,y0,w,h)   area  gas_sum      cells>=vac  sink_m
+  576    4.3028   0.0045835 8,0,56,56          3136    0.0491604    429  2099.942139
+  592    4.3764    0.004628 8,0,56,56          3136    0.0331854    380  2099.958008
+  608    4.4510   0.0046744 8,0,56,56          3136    0.0224679    350  2099.968506
+  624    4.5251   0.0046157 8,0,56,56          3136    0.0153653    306  2099.975830
+  640    4.5960   0.0044019 8,0,56,56          3136    0.0108151    276  2099.979736
+  656    4.6668   0.0044431 8,0,56,56          3136    0.0074771    243  2099.983643
+  672    4.7386   0.0045263 8,0,56,56          3136   0.00498922    208  2099.987549
+  688    4.8113   0.0044981 8,0,56,56          3136   0.00319572    175  2099.988037
+  704    4.8834   0.0045375 8,0,56,56          3136    0.0020446    148  2099.988037
+  720    4.9501   0.0040824 8,0,56,56          3136     0.001388    130  2099.988037
+  736    5.0157   0.0040114 16,0,48,56         2688  0.000956811    108  2099.988037
+  752    5.0871   0.0044629 16,0,48,48         2304  0.000642935     85  2099.988037
+  768    5.1591   0.0045488 16,0,48,48         2304  0.000417037     57  2099.988037
+  784    5.2329   0.0046324 16,16,32,32        1024  0.000266665     41  2099.988037
+  800    5.3153    0.006283 16,16,32,32        1024  0.000160899     30  2099.988037
+  816    5.4182   0.0062515 16,16,32,32        1024  7.06327e-05     12  2099.988037
+  832    5.5836    0.021133 16,16,32,32        1024    4.096e-05      0  2099.988037
+  848   11.8868     0.44721 0,0,0,0               0    4.096e-05      0  2099.988037
+== 2026-10-29T08:47:51-04:00 Verify 1: rsync, then SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py observe_run --task M0-D102 on laserax-ai-server
+observe_run  9/0/0       34.02 s  GO
+logs: milestones/m0/logs/M0-D102.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+7ad5fa6530b1
+anchor: 1 path×scope entries moved by this run
+anchor: 321 paths checked · 310 skipped (3 classes) · 0 never checked · 2 stale · 0 unclassified · 0 owed · 323 covered of 633 visible
+verify: 9 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 34.02 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.07->0.48
+=== GO ===
+== 2026-10-29T08:48:50-04:00 Verify 2: bash tools/pb/scratch_copy.sh . /tmp/d102/planted; patch -p1 < tests/plants/dt-empty-box-unbounded.patch; SR_TEST_ADAPTER="RTX 4090" bash tests/gpu.sh observe physics (laserax-ai-server)
+patching file crates/sr-engine/shaders/reduce.wgsl
+   Compiling sr-physics v0.0.0 (/tmp/d102/planted/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/d102/planted/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.53s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.216924 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4000 sim_time=5.827868 until=unmet
+
+thread 'observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending' (246254) panicked at crates/sr-engine/tests/gpu/observe.rs:235:5:
+assertion `left == right` failed: ["SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA", "SR-HEADLESS DONE steps=4000 sim_time=5.827868 until=unmet"]
+  left: 2
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1648 sim_time=20.295455 until=met
+unbroken: 1648 steps, events [{"detail":{"by":"light","mass_sb":3345.149935366586},"kind":"ignition","object":1,"sim_time":8.655280584469438,"step":672}]
+stages [{"from_step":33,"sim_time":0.7751296740025282,"stage":"failed_star"},{"from_step":209,"sim_time":3.6114962361752982,"stage":"collapsing"},{"from_step":336,"sim_time":4.830166658386588,"stage":"cloud"},{"from_step":464,"sim_time":6.103681104257703,"stage":"failed_star"},{"from_step":720,"sim_time":9.257473040372131,"stage":"cloud"},{"from_step":1648,"sim_time":20.295455456711352,"stage":"main_sequence"}]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=768 sim_time=9.825033 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1648 sim_time=20.295455 until=met
+SR-ERROR bad dump: --continue: /tmp/sr-observe-246253-continue/cut/dumps/s_768.observers.json is step 512 at 6.636671453714371, the dump's 768 at 9.82503336854279
+SR-ERROR bad dump: --continue: /tmp/sr-observe-246253-continue/cut/dumps/s_768.observers.json: No such file or directory (os error 2)
+SR-ERROR bad arguments: --continue needs --load-dump (the dump it goes on from)
+ok
+test observe::a_lighter_objects_ending_never_ends_the_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.006029 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=2.876688 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2712 sim_time=13.041111 until=met
+two clouds: object 2 (306.0) ended at step 2512 (t 11.74), the life on object 1 (1521.7) at step 2752 (t 13.04)
+ok
+test observe::a_sink_outside_the_box_is_an_object_of_its_own ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.982988 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.629832 until=met
+lone sink: object 2 black_hole at step 73 beside the cloud
+ok
+test observe::an_unmet_condition_is_exit_2_with_until_unmet ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.837737 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.328021 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.328021 until=none
+ok
+test observe::events_jsonl_and_the_ending_of_a_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.982988 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2161 sim_time=11.643506 until=met
+ending at step 2201: black_hole shown from step 73, held 10.015 t.u. of 10.000
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2145 sim_time=11.563425 until=unmet
+ok
+test observe::until_a_stage_stops_at_the_frame_that_shows_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=49 sim_time=2.087824 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.721125 until=unmet
+ok
+test observe::until_is_checked_before_a_device_is_touched ... SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: --until "later": expected sim_time:<t>, event:<kind>, stage:<id> or ending
+SR-ERROR bad arguments: --until "stage:nova": a stage is one of black_hole|supernova|neutron_star|core_collapse|white_dwarf|failed_star|planetary_nebula|iron_core|si_burn|o_burn|ne_burn|c_burn|he_core|he_shell|h_shell|main_sequence|collapsing|protostar|cloud, got "nova"
+SR-ERROR bad arguments: --until "event:ending": an event is one of ignition|core_collapse|supernova|sink_formed, got "ending"
+SR-ERROR bad arguments: --until "sim_time:-3": sim_time takes a time of 0 or more, got "-3"
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+ok
+test observe::until_sim_time_stops_at_the_first_step_past_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1280 sim_time=5.000107 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1279 sim_time=4.994803 until=none
+sim_time:5 met at step 1280, sim time 5.000106535; the step before: 4.994802888
+ok
+
+failures:
+
+failures:
+    observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending
+
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 406 filtered out; finished in 28.29s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+exit=101 38 s
+== 2026-10-29T08:50:47-04:00 the claim: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-D102 on laserax-ai-server (R18)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/tests/gpu/observe.rs
+why burn_cell: stale: crates/sr-engine/tests/gpu/observe.rs
+why burn_order: stale: crates/sr-engine/tests/gpu/observe.rs
+why neutrino: stale: crates/sr-engine/tests/gpu/observe.rs
+why sink: stale: crates/sr-engine/tests/gpu/observe.rs
+why nu_heat: stale: crates/sr-engine/tests/gpu/observe.rs
+why summary: stale: crates/sr-engine/tests/gpu/observe.rs
+why ledger: stale: crates/sr-engine/tests/gpu/observe.rs
+why preset_cloud: stale: crates/sr-engine/tests/gpu/observe.rs
+why observe_run: stale: crates/sr-engine/tests/gpu/observe.rs
+why multi: stale: crates/sr-engine/tests/gpu/observe.rs
+why edits: stale: crates/sr-engine/tests/gpu/observe.rs
+why edits_file: stale: crates/sr-engine/tests/gpu/observe.rs
+why sod: stale: crates/sr-engine/tests/gpu/observe.rs
+why edges: stale: crates/sr-engine/tests/gpu/observe.rs
+why collapse: stale: crates/sr-engine/tests/gpu/observe.rs
+why jeans: stale: crates/sr-engine/tests/gpu/observe.rs
+why twin: stale: crates/sr-engine/tests/gpu/observe.rs
+why cpu_gpu: stale: crates/sr-engine/tests/gpu/observe.rs
+why heat_gauss: stale: crates/sr-engine/tests/gpu/observe.rs
+why heat_implicit: stale: crates/sr-engine/tests/gpu/observe.rs
+why heat_limiter: stale: crates/sr-engine/tests/gpu/observe.rs
+why heat_stiff: stale: crates/sr-engine/tests/gpu/observe.rs
+why heat_multigrid: stale: crates/sr-engine/tests/gpu/observe.rs
+why radiation_force: stale: crates/sr-engine/tests/gpu/observe.rs
+why grav_force: stale: crates/sr-engine/tests/gpu/observe.rs
+why grav_selfforce: stale: crates/sr-engine/tests/gpu/observe.rs
+why fft: stale: crates/sr-engine/tests/gpu/observe.rs
+why adapter: stale: crates/sr-engine/tests/gpu/observe.rs
+why state: stale: crates/sr-engine/tests/gpu/observe.rs
+why booking: stale: crates/sr-engine/tests/gpu/observe.rs
+why floors: stale: crates/sr-engine/tests/gpu/observe.rs
+why dt: stale: crates/sr-engine/tests/gpu/observe.rs
+why box: stale: crates/sr-engine/tests/gpu/observe.rs
+why latch: stale: crates/sr-engine/tests/gpu/observe.rs
+why timing: stale: crates/sr-engine/tests/gpu/observe.rs
+why scene: stale: crates/sr-engine/tests/gpu/observe.rs
+why dump: stale: crates/sr-engine/tests/gpu/observe.rs
+why boot: stale: crates/sr-engine/tests/gpu/observe.rs
+why desktop: stale: crates/sr-engine/tests/gpu/observe.rs
+why web: stale: crates/sr-engine/tests/gpu/observe.rs
+why capture: stale: crates/sr-engine/tests/gpu/observe.rs
+why calibration: stale: crates/sr-engine/tests/gpu/observe.rs
+why calibrate_cold: stale: crates/sr-engine/tests/gpu/observe.rs
+why cold_core: stale: crates/sr-engine/tests/gpu/observe.rs
+why calibrate_bisect: stale: crates/sr-engine/tests/gpu/observe.rs
+why calibrate_order: stale: crates/sr-engine/tests/gpu/observe.rs
+why readouts: stale: crates/sr-engine/tests/gpu/observe.rs
+plan_lint         715/0/0      0.11 s  GO · step 1/49, 48 left
+build             2/0/0        1.13 s  GO · step 2/49, 47 left
+burn_cell         18/0/0       8.23 s  GO · step 3/49, 46 left
+burn_order        4/0/0        2.87 s  GO · step 4/49, 45 left
+neutrino          18/0/0       8.38 s  GO · step 5/49, 44 left
+sink              34/0/0      24.15 s  GO · step 6/49, 43 left
+nu_heat           15/0/0      12.93 s  GO · step 7/49, 42 left
+summary           7/0/0        8.03 s  GO · step 8/49, 41 left
+ledger            5/0/0       15.03 s  GO · step 9/49, 40 left
+preset_cloud      5/0/0       50.34 s  GO · step 10/49, 39 left
+observe_run       9/0/0       55.39 s  GO · step 11/49, 38 left
+multi             5/0/0       43.38 s  GO · step 12/49, 37 left
+edits             14/0/0      10.83 s  GO · step 13/49, 36 left
+edits_file        6/0/0       10.48 s  GO · step 14/49, 35 left
+sod               15/0/0       9.48 s  GO · step 15/49, 34 left
+edges             7/0/0       10.88 s  GO · step 16/49, 33 left
+collapse          6/0/0        2.02 s  GO · step 17/49, 32 left
+jeans             6/0/0        1.17 s  GO · step 18/49, 31 left
+twin              6/0/0        1.72 s  GO · step 19/49, 30 left
+cpu_gpu           3/0/0        8.78 s  GO · step 20/49, 29 left
+heat_gauss        14/0/0       5.17 s  GO · step 21/49, 28 left
+heat_implicit     8/0/0        3.32 s  GO · step 22/49, 27 left
+heat_limiter      8/0/0        5.52 s  GO · step 23/49, 26 left
+heat_stiff        13/0/0       6.37 s  GO · step 24/49, 25 left
+heat_multigrid    4/0/0        2.97 s  GO · step 25/49, 24 left
+radiation_force   11/0/0      10.03 s  GO · step 26/49, 23 left
+grav_force        13/0/0       4.92 s  GO · step 27/49, 22 left
+grav_selfforce    7/0/0        2.47 s  GO · step 28/49, 21 left
+fft               8/0/0        5.27 s  GO · step 29/49, 20 left
+adapter           9/1/0        4.02 s  NO-GO · step 30/49, 19 left
+state             6/0/0        3.87 s  GO · step 31/49, 18 left
+booking           4/0/0        3.32 s  GO · step 32/49, 17 left
+floors            7/0/0        5.57 s  GO · step 33/49, 16 left
+dt                8/0/0        6.37 s  GO · step 34/49, 15 left
+box               8/0/0       11.68 s  GO · step 35/49, 14 left
+latch             5/0/0        3.57 s  GO · step 36/49, 13 left
+timing            5/0/0       24.10 s  GO · step 37/49, 12 left
+scene             8/0/0        6.87 s  GO · step 38/49, 11 left
+dump              12/0/0      37.29 s  GO · step 39/49, 10 left
+boot              1/0/0        9.28 s  GO · step 40/49, 9 left
+desktop           0/4/0      120.59 s  NO-GO · step 41/49, 8 left
+web               0/3/0        0.10 s  NO-GO · step 42/49, 7 left
+capture           1/1/0        0.43 s  NO-GO · step 43/49, 6 left
+calibration       12/0/0       0.16 s  GO · step 44/49, 5 left
+calibrate_cold    8/0/0        1.42 s  GO · step 45/49, 4 left
+cold_core         8/0/0        8.88 s  GO · step 46/49, 3 left
+calibrate_bisect  19/0/0      92.31 s  GO · step 47/49, 2 left
+calibrate_order   13/0/0       0.16 s  GO · step 48/49, 1 left
+readouts          9/0/0        0.11 s  GO · step 49/49, 0 left
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+FLAG oracle: crates/sr-engine/tests/gpu/observe.rs changed since M0-D102's start - a test, case or check M0-D102's Deliver: does not name
+logs: milestones/m0/logs/M0-D102.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+304843914e05
+anchor: 415 path×scope entries moved by this run
+anchor: 209 paths checked · 310 skipped (3 classes) · 114 never checked · 0 stale · 0 unclassified · 0 owed · 323 covered of 633 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  Cargo.lock  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  Cargo.toml  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-app/Cargo.toml  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/capture.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/desktop.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/format.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/main.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/status.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/strings.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/web.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/tests/strings.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/edit.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/edit.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_order.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edit.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edits_file.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/multi.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/readouts.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  rust-toolchain.toml  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  start.bat  (no entry for desktop)
+NEVER CHECKED  start.ps1  (no entry for desktop)
+NEVER CHECKED  start.sh  (no entry for desktop)
+NEVER CHECKED  tests/capture/check.sh  (no entry for capture)
+NEVER CHECKED  tests/capture/smoke.json  (no entry for capture)
+NEVER CHECKED  tests/cargo.sh  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  tests/gpu.sh  (no entry for adapter)
+NEVER CHECKED  tests/plants/adapter-case.patch  (no entry for adapter)
+NEVER CHECKED  tests/plants/capture-no-captions.patch  (no entry for capture)
+NEVER CHECKED  tests/plants/launcher-no-stop.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/launcher-stop-all.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/never-ready.patch  (no entry for web)
+NEVER CHECKED  tests/plants/port-handover-early.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/port-no-fallback.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/smoke-no-sandbox.patch  (no entry for web)
+NEVER CHECKED  tests/plants/status-never-ready.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/web-autoload.patch  (no entry for web)
+NEVER CHECKED  tests/plants/web-no-gpu-check.patch  (no entry for web)
+NEVER CHECKED  tests/smoke.sh  (no entry for desktop)
+NEVER CHECKED  tests/web/check.sh  (no entry for web)
+NEVER CHECKED  tools/pb/launch.json  (no entry for desktop, web)
+NEVER CHECKED  web/Trunk.toml  (no entry for web)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   302  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  adapter: 1 failed · log milestones/m0/logs/M0-D102.adapter.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready; desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: no ready within 90 s (SR-STATUS-PORT never printed, last status none) · log milestones/m0/logs/M0-D102.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-D102.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-D102.capture.log
+  anchor: 114 never checked, 0 stale, 0 unclassified - every one named above
+verify: 1129 passed, 9 failed, 0 skipped · 45/49 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 19 not impacted · 152.44 s + loop 0.09 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.2->1.35 · base: M0-D102's start 2026-10-29T08:43:32-04:00
+=== NO-GO: adapter: 1 failed · log milestones/m0/logs/M0-D102.adapter.log; desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the h... ===
+== 2026-10-29T08:53:49-04:00 the four the server cannot run, on linux-pc (same tree): python3 tools/pb/verify.py adapter desktop web capture --task M0-D102-lpc
+adapter   10/0/0      95.81 s  GO · step 1/4, 3 left
+desktop   4/0/0      304.35 s  GO · step 2/4, 2 left
+web       3/0/0      317.94 s  GO · step 3/4, 1 left
+capture   2/0/0       82.02 s  GO · step 4/4, 0 left
+logs: milestones/m0/logs/M0-D102-lpc.<scope>.log · record: loop_times.jsonl · tree feb41a3510c9+304843914e05
+anchor: 4 path×scope entries moved by this run
+anchor: 321 paths checked · 310 skipped (3 classes) · 0 never checked · 2 stale · 0 unclassified · 0 owed · 323 covered of 633 visible
+verify: 19 passed, 0 failed, 0 skipped · 4/4 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 112.10 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 160.64->207.99
+=== GO ===

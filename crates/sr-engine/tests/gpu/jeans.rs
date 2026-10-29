@@ -295,9 +295,11 @@ fn the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_
     // the grid's own solve — the scene file's T has four decimals, so the ratio is graded to 1e-4 relative.
     let p = cloud_planes();
     let sigma: Vec<f64> = p[..cells].iter().map(|&s| f64::from(s)).collect();
+    // The cloud's cells: the scene leaves the floor state elsewhere (M0-D101).
+    let floor = f64::from(physics.get("sigma_floor").unwrap() as f32);
     let (mut lo, mut hi) = (usize::MAX, 0);
     for (i, &s) in sigma.iter().enumerate() {
-        if s > 0.0 {
+        if s > floor {
             lo = lo.min(i % N);
             hi = hi.max(i % N);
         }

@@ -1,0 +1,59 @@
+# M0-D110 — the first stroke's Δt (logs/M0-D110.log, narrated)
+2026-10-29T09:08:37-04:00 start on linux-pc (laserax-ai); rung_record: model=claude-opus-5-5 level=xhigh (heading: Sonnet 5.5, high — MISMATCH)
+2026-10-29T09:08:37-04:00 the lead, at M0-D110: «Gas-speed term only (Recommended)» — P0 re-makes the CFL term over the re-fit box after a paint or drop, min'd with step n−1's Δt (its gravity term kept)
+2026-10-29T09:09:49-04:00 linux-pc: cargo clippy -p sr-engine --release --tests (compile check, no GPU)
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+error: lifetime may not live long enough
+   --> crates/sr-engine/src/step/dt.rs:125:22
+    |
+117 |         let entry = |binding: u32, params: &'_ wgpu::Buffer| -> wgpu::BindingResource<'_> {
+    |                                            -                    ------------------------- return type of closure is wgpu::BindingResource<'2>
+    |                                            |
+    |                                            let's call the lifetime of this reference `'1`
+...
+125 |                 6 => params.as_entire_binding(),
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^ returning this value requires that `'1` must outlive `'2`
+
+error: could not compile `sr-engine` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `sr-engine` (lib) due to 1 previous error
+336 |                 if (x0, y0, w, h) != (x1, y1, w1, h1) || !(apart <= SIGMA_REBUILD) || !same_gas(gas, g1) {
+    |                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#neg_cmp_op_on_partial_ord
+    = note: `#[warn(clippy::neg_cmp_op_on_partial_ord)]` on by default
+
+warning: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-engine/tests/gpu/calibrate_bisect.rs:278:11
+    |
+278 |     clean(&[record.clone()]);
+    |           ^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&record)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+    = note: `#[warn(clippy::cloned_ref_to_slice_refs)]` on by default
+
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> crates/sr-engine/tests/gpu/edits_file.rs:96:56
+   |
+96 | fn grade(name: &str, run: &Run, base: &[f32], brushes: &[(Vec<usize>, Box<dyn Fn(usize) -> usize>)]) {
+   |                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+warning: `sr-engine` (test "gpu") generated 28 warnings (run `cargo clippy --fix --test "gpu" -p sr-engine -- ` to apply 5 suggestions)
+    Finished `release` profile [optimized] target(s) in 2.94s
+2026-10-29T09:12:36-04:00 rsync the tree to laserax-ai-server (R18); then Verify 1 there: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py edits --task M0-D110
+2026-10-29T09:14 Verify 1, iteration 1 — laserax-ai-server, RTX 4090: NO-GO 15/1/0, 12.1 s (scope log overwritten by iteration 2; its lines here):
+  empty world: the edit's Δt 0.0673 (P9's before it 0.4472), bound 0.0673, its vacuum_reset 0.000e0, mass drift 4.386e-9 — graded GO
+  cold box (Σ_c 0.05): the edit's Δt 0.0869, bound 0.0869, its vacuum_reset 3.667e-5 — but P9's Δt before it 0.1331, not > 2 × bound:
+  the case's precondition (the box slow against the paint) failed. Cause: the electrons' cold pressure at Σ 0.05, Π_e 0.051 vs Π_th 0.005,
+  c ≈ 1.50 (0.4 / 3.0 = 0.133, my arithmetic from k1e 21.3, k2e 134). Fixture thinned to Σ_c 0.005 (c ≈ 0.64, Δt ≈ 0.31 expected); the
+  criteria (CFL_TOL 1e-3, > 2 × bound, vacuum_reset ≥ 0) unchanged.
+  bits: whole_steps_without_an_edit_keep_their_bits GO (14 steps, Σ_c 0.05 disk).
+2026-10-29T09:14:02-04:00 server's loop_times line appended locally; rsync up; Verify 1, iteration 2
+2026-10-29T09:17:59-04:00 Verify 2 (first) — laserax-ai-server, RTX 4090: GO, 3 plants red (edit-ignored 7, edit-zero-vacuum 4, edit-no-refresh 2: 0.4472 over 0.0673, 0.2920 over 0.0726), 54.2 s. Then a step-0 case added (the contract line claims it): expected 16 → 17; Verify 1 and 2 re-run
+2026-10-29T09:19:36-04:00 Verify 1 (final) — laserax-ai-server, RTX 4090: GO 17/0/0, 9.6 s (step 0: Δt_0 0.0673, bound 0.0673). Verify 2 (final): GO 55.0 s — edit-ignored RED 7, edit-zero-vacuum RED 5 (step 0's paint NaN at (64, 56) among them), edit-no-refresh RED 3 (0.4472 over 0.0673 ×2, 0.2920 over 0.0726)
+2026-10-29T09:20:40-04:00 the claim: rsync up; SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-D110 on laserax-ai-server
+2026-10-29T09:23:30-04:00 the claim — laserax-ai-server, RTX 4090: NO-GO 1,135 passed / 9 failed, 47/51 scopes GO, 152.7 s; red only adapter, desktop, web, capture (no linux-pc adapters, display, trunk or xvfb-run there — M0-D101's precedent); logs, loop_times and the anchor brought back; those four on linux-pc next (--task M0-D110-lpc)
+2026-10-29T09:25:05-04:00 the four box-bound scopes on linux-pc (M0-D110-lpc): GO 19/0/0, same tree 5798d7faba18; plan.py flag M0-T89 (the carried-step gap), plan.py close M0-D110 DONE

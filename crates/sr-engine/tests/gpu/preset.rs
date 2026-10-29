@@ -24,8 +24,10 @@ fn planes(mass: f64) -> Vec<f32> {
     planes
 }
 
+/// Σ of the cloud's cells, 0 where the scene leaves the floor state (no object there, M0-D101).
 fn sigma(planes: &[f32]) -> Vec<f64> {
-    planes[..world().cells()].iter().map(|&s| f64::from(s)).collect()
+    let floor = Physics::shipped().unwrap().get("sigma_floor").unwrap() as f32;
+    planes[..world().cells()].iter().map(|&s| if s == floor { 0.0 } else { f64::from(s) }).collect()
 }
 
 #[test]
@@ -117,7 +119,7 @@ fn the_composition_is_the_suns_at_rest_and_the_temperature_uniform() {
         for i in 0..cells {
             let species: Vec<f64> = SPECIES.map(|c| f64::from(p[c * cells + i])).collect();
             if s[i] == 0.0 {
-                assert_eq!(species[0], 1.0, "a vacuum cell is x_H = 1 (P8)");
+                assert_eq!(species[0], 1.0, "a vacuum cell is x_H = 1 (the floor state, P8's)");
                 continue;
             }
             covered += 1;

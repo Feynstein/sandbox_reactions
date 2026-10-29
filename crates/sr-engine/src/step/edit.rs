@@ -7,7 +7,9 @@
 //! per cell; `edit_finish` empties it and, for a Clear, removes the sinks. The two single-invocation dispatches take the
 //! latch's fixed size, `edit_cells` the gate the latch already zeroes, so a frame's latch reaches P0 as it reaches every
 //! pass (§1.8.5). Each edit is booked in §2.9's terms into the booking's P0 buffers (state.rs): mass painted, erased,
-//! preset_dropped, cleared; energy `tools.*` — the E plane's stored change, so the ledger balances to the bit.
+//! preset_dropped, cleared; energy `tools.*` — the E plane's stored change, so the ledger balances to the bit. A step whose
+//! queue holds a paint or a drop records Δt's re-reduction after the box's re-fit ([`super::dt`], §0.5 [M0-D110]), so it
+//! steps on the bound of the gas it added.
 //!
 //! The queue lives on the GPU; the CPU keeps the records queued since the last step so that a second edit before a step
 //! joins the first ([`Step::queue_edit`]). At most [`MAX_EDITS`] records, and preset clouds of at most [`PATCH_CELLS`] cells
@@ -209,6 +211,15 @@ impl Edits {
             dispatch("edit_finish", &[6, 12], one(), false),
         ];
         Edits { world, queue, patch, pending: Default::default(), dispatches }
+    }
+}
+
+impl Edits {
+    /// Whether step `step`'s P0 applies a paint or a preset drop (kinds 1 and 5): that step re-makes its Δt after them
+    /// (§0.5 [M0-D110]).
+    pub(super) fn deposits_at(&self, step: u64) -> bool {
+        let pending = self.pending.borrow();
+        pending.at_step == step && pending.records.iter().any(|r| matches!(r[0], 1 | 5))
     }
 }
 

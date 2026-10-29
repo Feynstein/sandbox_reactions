@@ -564,3 +564,310 @@ fn a_frame_applies_the_queued_edit_once_in_its_first_step() {
     let b = rig.the_box();
     assert!(b.x0 + b.w >= 103 && b.y0 + b.h >= 103, "the box reaches the painted gas: {b:?}");
 }
+
+/// M0-D101 — whole steps (P0–P9, every switch on, as headless builds them) after an edit outside the active box, on a world
+/// loaded from a scene, whose cells no object covers hold the floor state (scene.rs) — before M0-D101 they were Σ = 0, which
+/// P8 floors only once a box holds them, so a paint there read 0/0 (exit 5) and a box grown over them moved the mass
+/// invariant by Σ_floor a cell against the ledger's floor outside the box. Graded over [`AFTER`] steps: every cell of every
+/// plane finite, the box holding the edit and its margin from the step that applied it, and §2.9's mass invariant from the
+/// ledger to G-CONS's 10⁻⁶ of the grid's mass. The energy invariant is reported, not graded (the lead at M0-D101, as
+/// tests/gpu/ledger.rs's runs: G-CONS grades it over whole lives): the edit's step moves it by the potential energy the
+/// added mass brings, which no §2.9 term books (M0-D109), and the steps after it drift as the same scene's without the edit.
+struct Whole {
+    gpu: Gpu,
+    world: WorldConfig,
+    state: State,
+    booking: Booking,
+    step: Step,
+    ledger: sr_engine::ledger::Ledger,
+    physics: Physics,
+    elements: Elements,
+    steps: u64,
+}
+
+/// The steps run after the edit's.
+const AFTER: u32 = 12;
+/// G-CONS (§5.3): the mass invariant (§2.9) relative to the grid's mass.
+const CONS_MASS: f64 = 1e-6;
+/// M0-D110: the edit's Δt against §2.3.3's bound for the painted gas, relative — fixed before the first run: the GPU reads c
+/// from the f32 state through the u(x) table (TABLE_TOL) and ε_th's subtraction (THERMAL_TOL), and c is their square root;
+/// the measured miss it guards against was ×6 (0.447 against ≈ 0.07).
+const CFL_TOL: f64 = 1e-3;
+
+/// What an edit's run measured: the mass it booked (painted + preset_dropped) and the mass invariant's drift; the state
+/// before the edit's step, the Δt that step would have taken from the step before (P9's) and the one it took, and the
+/// mass its vacuum resets booked (§2.9: < 0 is mass the floor put back).
+struct Graded {
+    added: f64,
+    mass_drift: f64,
+    before: Vec<f32>,
+    pre_dt: f32,
+    edit_dt: f32,
+    edit_vacuum_reset: f64,
+}
+
+impl Whole {
+    /// `scene`'s world on the GPU with P0's edits. `zero_vacuum`: the cells no object covers at Σ = 0, at rest, as a dump
+    /// made before M0-D101 holds them.
+    fn new(scene: &str, zero_vacuum: bool) -> Whole {
+        Whole::build(scene, zero_vacuum, true)
+    }
+
+    /// [`Whole::new`], P0's edits built only when `edits`.
+    fn build(scene: &str, zero_vacuum: bool, edits: bool) -> Whole {
+        use sr_engine::step::{heat::HeatSetup, nuheat::NuHeatSetup, react::ReactSetup};
+        let gpu = device();
+        let elements = Elements::shipped().unwrap();
+        let scene = Scene::parse(scene, &elements).unwrap();
+        let (physics, world) = (scene.physics().unwrap(), scene.world);
+        let (mut planes, _) = scene.planes(world, &physics, &elements).unwrap();
+        let n = world.cells();
+        let floor = physics.get("sigma_floor").unwrap() as f32;
+        if zero_vacuum {
+            for i in 0..n {
+                if planes[i] > floor {
+                    continue;
+                }
+                planes[i] = 0.0;
+                planes[3 * n + i] = 0.0;
+            }
+        }
+        let state = State::new(&gpu.device, world).unwrap();
+        state.upload(&gpu.queue, &planes).unwrap();
+        let booking = Booking::new(&gpu.device, world).unwrap();
+        let (eos, side) = (EosGpu::new(&gpu.device, &physics, &elements), SideFields::new(&gpu.device, world).unwrap());
+        let reactions = sr_physics::registry::Reactions::shipped(&elements, &physics).unwrap();
+        let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(scene.edge) };
+        let heat = HeatSetup { side: &side, test: scene.test };
+        let react = ReactSetup { reactions: &reactions, test: scene.test, neutrinos: true, side: &side };
+        let (sinks, nuheat) = (SinkSetup { side: &side }, NuHeatSetup { side: &side });
+        let step = Step::with_neutrino_heating(&gpu.device, &state, &booking, &eos, &physics, &passes, Some(&heat), Some(&react), Some(&sinks), Some(&nuheat))
+            .unwrap();
+        let step = if edits { step.with_edits(&gpu.device, &state, &booking, &eos, &physics) } else { step };
+        let ledger = sr_engine::ledger::Ledger::new(world, &physics);
+        Whole { gpu, world, state, booking, step, ledger, physics, elements, steps: 0 }
+    }
+
+    /// One step, then the ledger as headless keeps it: started after the first step, updated after each one.
+    fn step(&mut self) {
+        let (device, queue) = (&self.gpu.device, &self.gpu.queue);
+        self.step.run(device, queue, 1);
+        device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
+        self.steps += 1;
+        let dt = self.step.read_dt(device, queue);
+        assert!(dt.non_finite.is_none(), "step {}: the guard found {:?}", self.steps - 1, dt.non_finite);
+        let booked = sr_engine::ledger::take_booked(device, queue, &self.booking);
+        let summary = self.step.summarise(device, queue);
+        let at = sr_engine::ledger::At { step: self.steps, sim_time: dt.sim_time };
+        if self.ledger.start().is_none() {
+            self.ledger.restart(&summary, at);
+        } else {
+            self.ledger.update(&summary, &booked, at);
+        }
+    }
+
+    /// Runs one step, queues `edit` and runs its step, asserts the box holds the edit's cells `[lo, hi)` grown by the
+    /// margin, runs [`AFTER`] more and asserts every cell finite; prints the ledger's mass and energy.
+    fn edit_and_run(&mut self, edit: Edit, lo: [u32; 2], hi: [u32; 2], what: &str) -> Graded {
+        self.step();
+        let before = self.state.readback(&self.gpu.device, &self.gpu.queue);
+        let pre_dt = self.step.read_dt(&self.gpu.device, &self.gpu.queue).dt_next;
+        self.step.queue_edit(&self.gpu.queue, &edit).unwrap();
+        self.step();
+        let edit_dt = self.step.read_dt(&self.gpu.device, &self.gpu.queue).dt;
+        let edited = self.ledger.last().unwrap().clone();
+        let b = self.step.read_box(&self.gpu.device, &self.gpu.queue);
+        let (w, h) = (self.world.width, self.world.height);
+        assert!(
+            b.x0 <= lo[0].saturating_sub(8) && b.y0 <= lo[1].saturating_sub(8) && b.x0 + b.w >= (hi[0] + 8).min(w) && b.y0 + b.h >= (hi[1] + 8).min(h),
+            "{what}: the box {b:?} holds the edit's cells {lo:?}..{hi:?} and their margin"
+        );
+        for _ in 0..AFTER {
+            self.step();
+        }
+        let planes = self.state.readback(&self.gpu.device, &self.gpu.queue);
+        let n = self.world.cells();
+        if let Some(i) = planes.iter().position(|v| !v.is_finite()) {
+            panic!("{what}: cell ({}, {}) channel {} is {} after {} steps", (i % n) as u32 % w, (i % n) as u32 / w, i / n, planes[i], self.steps);
+        }
+        let (s, e) = (self.ledger.start().unwrap(), self.ledger.last().unwrap());
+        let mass_drift = (e.mass.invariant() - s.mass.invariant()).abs() / e.mass.grid;
+        let edit_vacuum_reset = edited.mass.vacuum_reset - s.mass.vacuum_reset;
+        println!(
+            "{what}: steps {}..{}, sim time {:.4}, the edit's Δt {edit_dt:.4} (P9's before it {pre_dt:.4}), its vacuum_reset \
+             {edit_vacuum_reset:.3e}, box {b:?}; mass {:.6e}, invariant drift {mass_drift:.3e} of it \
+             (painted {:.6e}, preset_dropped {:.6e}, vacuum_reset {:.3e}); energy invariant (reported): the edit's step {:.4e} with \
+             ΔW {:.4e}, the {AFTER} steps after it {:.4e} of |W| {:.4e} (tools {:.4e}, floor_added {:.4e}, radiated {:.4e})",
+            s.at.step,
+            e.at.step,
+            e.at.sim_time - s.at.sim_time,
+            e.mass.grid,
+            e.mass.painted,
+            e.mass.preset_dropped,
+            e.mass.vacuum_reset,
+            edited.energy.invariant() - s.energy.invariant(),
+            edited.energy.potential - s.energy.potential,
+            e.energy.invariant() - edited.energy.invariant(),
+            e.energy.potential.abs(),
+            e.energy.tools,
+            e.energy.floor_added,
+            e.energy.radiated,
+        );
+        Graded { added: e.mass.painted + e.mass.preset_dropped, mass_drift, before, pre_dt, edit_dt, edit_vacuum_reset }
+    }
+
+    /// The planes and the Δt record (Δt_n, Δt_{n+1}, the sim time, the steps begun), as bits.
+    fn bits(&self) -> (Vec<u32>, [u64; 4]) {
+        let dt = self.step.read_dt(&self.gpu.device, &self.gpu.queue);
+        let planes = self.state.readback(&self.gpu.device, &self.gpu.queue).iter().map(|v| v.to_bits()).collect();
+        (planes, [u64::from(dt.dt.to_bits()), u64::from(dt.dt_next.to_bits()), dt.sim_time.to_bits(), dt.steps])
+    }
+}
+
+/// §2.3.3's bound for the gas a paint of `species` about `cell` leaves: C over the largest r_h = (|u| + c)/Δx + (|v| + c)/Δy
+/// of the brush's cells, each the f64 deposit ([`deposit_ref`]) on the cell as `before` holds it, ε_th floored at T_floor/μ.
+fn paint_bound(run: &Whole, before: &[f32], cell: (u32, u32), radius: u32, species: usize) -> f64 {
+    let c = constants();
+    let xp = one_hot(species);
+    let eps_p = c.get("paint_t") * c.inv_mu(&xp);
+    let rate = |p: &Cell| {
+        let k = c.elements.composition(&p.x);
+        let eps = eps_th(&c, p).max(c.get("t_floor") * k.inv_mu);
+        let speed = Eos::wave_speed_sq(p.sigma, c.eos.pi(p.sigma, eps, k.y_e, p.x[N_SPECIES - 1])).max(0.0).sqrt();
+        (p.mom[0] / p.sigma).abs() + (p.mom[1] / p.sigma).abs() + 2.0 * speed
+    };
+    let (w, h) = (run.world.width, run.world.height);
+    let top = (0..h)
+        .flat_map(|y| (0..w).map(move |x| (x, y)))
+        .filter(|&(x, y)| in_disk(x, y, cell, radius))
+        .map(|(x, y)| rate(&deposit_ref(&c, &read(before, run.world, x, y), c.get("paint_sigma"), &xp, eps_p)))
+        .fold(0.0, f64::max);
+    c.get("cfl") / top
+}
+
+/// M0-D110's grades of a paint's step into a slow box: the box stepped slower than the paint's bound (else the case proves
+/// nothing — a hot box hides the fault), the edit's Δt at or under that bound, and no mass put back by its vacuum resets.
+fn assert_paint_step_holds(run: &Whole, g: &Graded, cell: (u32, u32), radius: u32, what: &str) {
+    let bound = paint_bound(run, &g.before, cell, radius, SP_H);
+    println!("{what}: §2.3.3's bound for the painted gas {bound:.4}");
+    assert!(f64::from(g.pre_dt) > 2.0 * bound, "{what}: P9's Δt before the paint {} is not slow against its bound {bound}", g.pre_dt);
+    assert!(f64::from(g.edit_dt) <= bound * (1.0 + CFL_TOL), "{what}: the paint's step took Δt {} over its bound {bound}", g.edit_dt);
+    assert!(g.edit_vacuum_reset >= 0.0, "{what}: the paint's step put back {:.3e} through its vacuum resets", -g.edit_vacuum_reset);
+}
+
+/// A 128 × 128 bounce world of `objects` (every switch on: a key left out is on).
+fn scene_128(objects: &str) -> String {
+    format!(r#"{{"version": 1, "world": {{"width": 128, "height": 128, "edge": "bounce"}}, "objects": [{objects}]}}"#)
+}
+
+/// The mass a brush of `radius` about `cell` paints in `world`.
+fn brush_mass(run: &Whole, cell: (u32, u32), radius: u32) -> f64 {
+    let (w, h) = (run.world.width, run.world.height);
+    let cells = (0..h).flat_map(|y| (0..w).map(move |x| (x, y))).filter(|&(x, y)| in_disk(x, y, cell, radius)).count();
+    cells as f64 * run.physics.get("paint_sigma").unwrap()
+}
+
+#[test]
+fn whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced() {
+    // A warm H disk at (32, 32) — its box ends near x, y 48 — and a paint at (96, 96), all of it outside the box.
+    let mut run = Whole::new(&scene_128(r#"{"kind": "disk", "x": 32, "y": 32, "a": 10, "sigma_c": 0.5, "t": 1.0, "composition": {"H": 1.0}}"#), false);
+    let g = run.edit_and_run(Edit::Paint { cell: [96, 96], radius: 8, species: SP_H }, [88, 88], [105, 105], "paint beside a star");
+    assert!(close(g.added, brush_mass(&run, (96, 96), 8), 1e-4), "painted {}: the paint landed", g.added);
+    assert!(g.mass_drift <= CONS_MASS, "mass invariant drift {:.3e} of the grid's mass", g.mass_drift);
+}
+
+/// M0-D110: the first stroke's step steps on the painted gas's bound — before it, on the floor gas's 0.447 (CFL ≈ 1.3), its
+/// vacuum resets put back 4.7 % of the paint.
+#[test]
+fn whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced() {
+    // No object: the box is empty until the paint (Δt is the floor gas's, §0.5 [M0-D96]); the first stroke is all outside it.
+    let mut run = Whole::new(&scene_128(""), false);
+    let what = "paint into an empty world";
+    let g = run.edit_and_run(Edit::Paint { cell: [64, 64], radius: 8, species: SP_H }, [56, 56], [73, 73], what);
+    assert!(close(g.added, brush_mass(&run, (64, 64), 8), 1e-4), "painted {}: the paint landed", g.added);
+    assert!(g.mass_drift <= CONS_MASS, "mass invariant drift {:.3e} of the grid's mass", g.mass_drift);
+    assert_paint_step_holds(&run, &g, (64, 64), 8, what);
+}
+
+/// M0-D110: a paint queued before the first step re-makes step 0's Δt too — the initial state's reduction ran before it
+/// (M0-T76's «edits queued before the first step apply after the initial Δt reduction»).
+#[test]
+fn a_paint_queued_before_the_first_step_steps_on_its_bound() {
+    let mut run = Whole::new(&scene_128(""), false);
+    let before = run.state.readback(&run.gpu.device, &run.gpu.queue);
+    run.step.queue_edit(&run.gpu.queue, &Edit::Paint { cell: [64, 64], radius: 8, species: SP_H }).unwrap();
+    run.step();
+    let dt = run.step.read_dt(&run.gpu.device, &run.gpu.queue).dt;
+    let bound = paint_bound(&run, &before, (64, 64), 8, SP_H);
+    println!("paint before step 0: Δt_0 {dt:.4}, §2.3.3's bound for the painted gas {bound:.4}");
+    assert!(f64::from(dt) <= bound * (1.0 + CFL_TOL), "step 0 took Δt {dt} over the paint's bound {bound}");
+}
+
+/// A cold H disk (T_floor, Σ_c 0.005) wider than the brush. Thin, because cold is not enough: at Σ_c 0.05 the electrons'
+/// cold pressure alone gives c ≈ 1.5, and the box stepped at 0.133 against the paint's 0.087 (M0-D110's first run).
+const COLD_DISK: &str = r#"{"kind": "disk", "x": 64, "y": 64, "a": 20, "sigma_c": 0.005, "t": 0.05, "composition": {"H": 1.0}}"#;
+
+/// M0-D110's adversarial case: a paint into a box of cold gas, whose Δt is as slow as the floor's — inside the box, so P0
+/// re-fits nothing and the re-reduction runs over the box as it stood.
+#[test]
+fn whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound() {
+    let mut run = Whole::new(&scene_128(COLD_DISK), false);
+    let what = "paint into a cold box";
+    let g = run.edit_and_run(Edit::Paint { cell: [64, 64], radius: 8, species: SP_H }, [56, 56], [73, 73], what);
+    assert!(close(g.added, brush_mass(&run, (64, 64), 8), 1e-4), "painted {}: the paint landed", g.added);
+    assert!(g.mass_drift <= CONS_MASS, "mass invariant drift {:.3e} of the grid's mass", g.mass_drift);
+    assert_paint_step_holds(&run, &g, (64, 64), 8, what);
+}
+
+/// M0-D110: only a step that paints or drops re-makes its Δt — a run of whole steps with nothing queued is, bit for bit,
+/// the run of a step built without P0's edits: every plane, Δt_n, Δt_{n+1}, the sim time and the steps begun.
+#[test]
+fn whole_steps_without_an_edit_keep_their_bits() {
+    let scene = scene_128(COLD_DISK);
+    let (mut with, mut without) = (Whole::build(&scene, false, true), Whole::build(&scene, false, false));
+    for _ in 0..AFTER + 2 {
+        with.step();
+        without.step();
+    }
+    let ((p1, d1), (p0, d0)) = (with.bits(), without.bits());
+    assert_eq!(d1, d0, "the Δt records (Δt_n, Δt_{{n+1}}, sim time, steps as bits) after {} steps", AFTER + 2);
+    if let Some(i) = p1.iter().zip(&p0).position(|(a, b)| a != b) {
+        let n = with.world.cells();
+        panic!("cell {} channel {}: {:#x} with P0's edits, {:#x} without", i % n, i / n, p1[i], p0[i]);
+    }
+}
+
+#[test]
+fn whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced() {
+    // A small disk at (48, 48) of a 256 × 256 world and a Sun-like cloud dropped on (176, 176): its 40-cell radius is outside
+    // the disk's box.
+    let mut run = Whole::new(
+        r#"{"version": 1, "world": {"width": 256, "height": 256, "edge": "bounce"},
+            "objects": [{"kind": "disk", "x": 48, "y": 48, "a": 10, "sigma_c": 0.5, "t": 1.0, "composition": {"H": 1.0}}]}"#,
+        false,
+    );
+    let drop = Edit::drop_preset("sun", UNIT_MASS, [176, 176], run.world, &run.physics, &run.elements).unwrap();
+    let Edit::DropPreset(cloud) = &drop else { unreachable!() };
+    // The cloud's cells at or above Σ_vac, the ones the box fits.
+    let vac = run.physics.get("sigma_vac").unwrap();
+    let gas: Vec<(u32, u32)> = (0..cloud.h)
+        .flat_map(|y| (0..cloud.w).map(move |x| (x, y)))
+        .filter(|&(x, y)| f64::from(cloud.sigma[(y * cloud.w + x) as usize]) >= vac)
+        .map(|(x, y)| (cloud.x0 + x, cloud.y0 + y))
+        .collect();
+    let lo = [gas.iter().map(|c| c.0).min().unwrap(), gas.iter().map(|c| c.1).min().unwrap()];
+    let hi = [gas.iter().map(|c| c.0).max().unwrap() + 1, gas.iter().map(|c| c.1).max().unwrap() + 1];
+    assert!(lo[0] >= 56 + 8 && lo[1] >= 56 + 8, "the cloud {lo:?} lies outside the disk's box");
+    let g = run.edit_and_run(drop, lo, hi, "preset drop beside a star");
+    assert!(close(g.added, UNIT_MASS, 1e-5), "preset_dropped {} against the cloud's mass {UNIT_MASS}", g.added);
+    assert!(g.mass_drift <= CONS_MASS, "mass invariant drift {:.3e} of the grid's mass", g.mass_drift);
+}
+
+/// A dump made before M0-D101 holds Σ = 0 outside every box: the paint there is finite too (edit.wgsl `deposit`). Its mass
+/// invariant moves by Σ_floor a cell the box grows over (the ledger's floor outside the box) and is not graded.
+#[test]
+fn whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite() {
+    let mut run = Whole::new(&scene_128(""), true);
+    let g = run.edit_and_run(Edit::Paint { cell: [64, 64], radius: 8, species: SP_H }, [56, 56], [73, 73], "paint on Σ = 0 vacuum");
+    assert!(close(g.added, brush_mass(&run, (64, 64), 8), 1e-4), "painted {}: the paint landed", g.added);
+}

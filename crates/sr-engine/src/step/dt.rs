@@ -17,6 +17,11 @@
 //! partials; the guard scans the whole world. An empty box takes the floor gas's rate instead — every cell of the world
 //! is then in the floor state, hydrogen's the fastest (§0.5 [M0-D96]) — so a sink that has eaten the last gas keeps a
 //! running clock and a finite drift.
+//!
+//! A step whose P0 paints or drops re-makes the CFL term over the state its edits left (§0.5 [M0-D110]): [`Dt::refresh`]
+//! — `dt_cells` over the box P0 re-fit, with no gravity term, then `dt_refresh`, which lowers Δt_{n+1} to it before P1
+//! takes it — so the first stroke into an empty world steps on the painted gas's bound, not the floor gas's. The gravity
+//! term stays P9's from step n − 1 (P2 has not run on the edited state); a step without such an edit records none of it.
 
 use sr_physics::registry::Physics;
 
@@ -65,6 +70,8 @@ pub struct Dt {
     pub(super) reduce: Vec<Dispatch>,
     /// P9, every [`GUARD_EVERY`] steps: `guard_scan`, `guard_stamp`.
     pub(super) guard: Vec<Dispatch>,
+    /// P0, after the edits of a step that paints or drops: `dt_cells` without its gravity term, `dt_refresh`.
+    pub(super) refresh: Vec<Dispatch>,
 }
 
 impl Dt {
@@ -83,12 +90,12 @@ impl Dt {
         let get = |k: &str| physics.get(k).unwrap_or_else(|| panic!("physics.json key {k}")) as f32;
         let world = state.world();
         let partials = (world.cells() as u32).div_ceil(WG);
-        let params = init_buffer(
-            device,
-            "dt.params",
-            wgpu::BufferUsages::UNIFORM,
-            &[get("cfl").to_bits(), get("eta_g").to_bits(), partials, u32::from(g.is_some())],
-        );
+        let params_with = |label: &str, gravity: bool| {
+            init_buffer(device, label, wgpu::BufferUsages::UNIFORM, &[get("cfl").to_bits(), get("eta_g").to_bits(), partials, u32::from(gravity)])
+        };
+        let params = params_with("dt.params", g.is_some());
+        // P0's re-reduction reads no field: where the box just grew, g holds what P2 left there from an older box.
+        let params_hydro = params_with("dt.params.hydro", false);
         let no_gravity = g.is_none().then(|| init_buffer(device, "dt.no_gravity", wgpu::BufferUsages::STORAGE, &[0; 2]));
         let g = g.or(no_gravity.as_ref()).expect("P2's field or its stand-in");
         let partials_buf = device.create_buffer(&wgpu::BufferDescriptor {
@@ -105,7 +112,8 @@ impl Dt {
             &[0; RECORD_WORDS],
         );
 
-        // Every entry point binds the subset of group 0 it uses (auto layouts); `entry` maps a binding to its buffer.
+        // Every entry point binds the subset of group 0 it uses (auto layouts); `entry` maps a binding to its buffer, the
+        // params (6) excepted: each dispatch names its own.
         let entry = |binding: u32| -> wgpu::BindingResource<'_> {
             match binding {
                 0 => state.dims().as_entire_binding(),
@@ -114,15 +122,16 @@ impl Dt {
                 3 => state.group(2).as_entire_binding(),
                 4 => partials_buf.as_entire_binding(),
                 5 => record.as_entire_binding(),
-                6 => params.as_entire_binding(),
                 14 => g.as_entire_binding(),
                 _ => boxfit.active().as_entire_binding(),
             }
         };
-        let dispatch = |label: &'static str, bindings: &[u32], size: Size, uses_eos: bool| {
+        let dispatch_on = |label: &'static str, bindings: &[u32], size: Size, uses_eos: bool, params: &wgpu::Buffer| {
             let pipeline = compute_pipeline(device, module, label);
-            let entries: Vec<wgpu::BindGroupEntry> =
-                bindings.iter().map(|&b| wgpu::BindGroupEntry { binding: b, resource: entry(b) }).collect();
+            let entries: Vec<wgpu::BindGroupEntry> = bindings
+                .iter()
+                .map(|&b| wgpu::BindGroupEntry { binding: b, resource: if b == 6 { params.as_entire_binding() } else { entry(b) } })
+                .collect();
             let mut bind_groups = vec![device.create_bind_group(&wgpu::BindGroupDescriptor {
                 label: Some(label),
                 layout: &pipeline.get_bind_group_layout(0),
@@ -133,17 +142,22 @@ impl Dt {
             }
             Dispatch { label, pipeline, bind_groups, size }
         };
+        let dispatch = |label: &'static str, bindings: &[u32], size: Size, uses_eos: bool| dispatch_on(label, bindings, size, uses_eos, &params);
         let one = || Size::Fixed([1, 1, 1]);
         let tiles = Size::Fixed([world.width.div_ceil(8), world.height.div_ceil(8), 1]);
+        let cells = |params: &wgpu::Buffer| {
+            dispatch_on("dt_cells", &[0, 1, 2, 3, 4, 6, 7, 14], Size::Indirect(boxfit.args().clone(), ARGS_CELLS), true, params)
+        };
         // An empty box's floor rate reads the EOS parameters, not its cold table (§0.5 [M0-D96]).
-        let mut partials = dispatch("dt_partials", &[4, 5, 6, 7], one(), false);
-        partials.bind_groups.push(eos.params_bind_group(device, &partials.pipeline));
+        let top = |label: &'static str, params: &wgpu::Buffer| {
+            let mut d = dispatch_on(label, &[4, 5, 6, 7], one(), false, params);
+            d.bind_groups.push(eos.params_bind_group(device, &d.pipeline));
+            d
+        };
         Dt {
             advance: vec![dispatch("dt_advance", &[5], one(), false)],
-            reduce: vec![
-                dispatch("dt_cells", &[0, 1, 2, 3, 4, 6, 7, 14], Size::Indirect(boxfit.args().clone(), ARGS_CELLS), true),
-                partials,
-            ],
+            reduce: vec![cells(&params), top("dt_partials", &params)],
+            refresh: vec![cells(&params_hydro), top("dt_refresh", &params_hydro)],
             guard: vec![dispatch("guard_scan", &[0, 1, 2, 3, 5], tiles, false), dispatch("guard_stamp", &[5], one(), false)],
             world_width: world.width,
             record,

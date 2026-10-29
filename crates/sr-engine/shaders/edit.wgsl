@@ -164,13 +164,15 @@ struct Cell {
 }
 
 // Adds `ds` of gas of fractions `xp` at specific thermal energy `eps_p`, at rest, to the cell. Returns (ΔΣ, ΔE) as
-// stored.
+// stored. A cell at Σ = 0 — outside every box of a dump made before M0-D101, whose scenes left their vacuum at 0 (P8
+// floors only the box's cells) — has no cold or kinetic energy, where ε_cold(0) and ½|m|²/Σ₀ are 0/0.
 fn deposit(c: ptr<function, Cell>, ds: f32, xp: array<f32, 10>, eps_p: f32) -> vec2<f32> {
     let s0 = (*c).sigma;
     let e0 = (*c).energy;
     let mom = (*c).mom;
+    let gas = s0 > 0.0;
     let comp0 = composition((*c).x);
-    let u0 = s0 * eps_cold(s0, comp0.y_e, (*c).x[ID_N]);
+    let u0 = select(0.0, s0 * eps_cold(s0, comp0.y_e, (*c).x[ID_N]), gas);
     let s1 = s0 + ds;
     var x1: array<f32, 10>;
     for (var i = 0u; i < N_SPECIES; i++) {
@@ -179,7 +181,7 @@ fn deposit(c: ptr<function, Cell>, ds: f32, xp: array<f32, 10>, eps_p: f32) -> v
     let comp1 = composition(x1);
     let u1 = s1 * eps_cold(s1, comp1.y_e, x1[ID_N]);
     // ½|m|² (1/Σ₁ − 1/Σ₀): the same momentum on the larger Σ.
-    let kinetic = -0.5 * dot(mom, mom) * ds / (s0 * s1);
+    let kinetic = select(0.0, -0.5 * dot(mom, mom) * ds / (s0 * s1), gas);
     let e1 = e0 + ds * eps_p + (u1 - u0) + kinetic;
     (*c).sigma = s1;
     (*c).energy = e1;

@@ -149,22 +149,24 @@ fn planes_of(scene: &Scene, world: WorldConfig) -> Vec<f32> {
 fn objects_land_where_section_2_12_4_puts_them() {
     let w64 = WorldConfig::new(64, 64).unwrap();
     let cells = 64 * 64;
+    // A cell no object covers holds the floor state (M0-D101): Σ_floor of hydrogen at rest.
+    let floor = Physics::shipped().unwrap().get("sigma_floor").unwrap() as f32;
     let sigma_at = |p: &[f32], x: usize, y: usize, w: usize| p[y * w + x];
     // x to the right, y down, (0, 0) top-left: a 3 × 2 rect from (8, 16) is rows 16–17, columns 8–10.
     let rect = one(r#"{"kind": "rect", "x0": 8, "y0": 16, "w": 3, "h": 2, "sigma": 0.25, "t": 1.0, "composition": {"H": 1}}"#);
     let p = planes_of(&rect, w64);
-    let lit: Vec<(usize, usize)> = (0..cells).filter(|&i| p[i] > 0.0).map(|i| (i % 64, i / 64)).collect();
+    let lit: Vec<(usize, usize)> = (0..cells).filter(|&i| p[i] != floor).map(|i| (i % 64, i / 64)).collect();
     assert_eq!(lit, vec![(8, 16), (9, 16), (10, 16), (8, 17), (9, 17), (10, 17)]);
     // A disk at the point (20, 40), a = 1: the four cells whose centres lie within 1 of it.
     let disk = one(r#"{"kind": "disk", "x": 20, "y": 40, "a": 1, "sigma_c": 1, "t": 1, "composition": {"H": 1}}"#);
     let p = planes_of(&disk, w64);
-    let lit: Vec<(usize, usize)> = (0..cells).filter(|&i| p[i] > 0.0).map(|i| (i % 64, i / 64)).collect();
+    let lit: Vec<(usize, usize)> = (0..cells).filter(|&i| p[i] != floor).map(|i| (i % 64, i / 64)).collect();
     assert_eq!(lit, vec![(19, 39), (20, 39), (19, 40), (20, 40)]);
     assert!((sigma_at(&p, 19, 39, 64) - 0.5f32.sqrt()).abs() < 1e-6, "Σc√(1 − r²/a²) at r² = ½");
     // A wider world keeps the objects where they stood relative to the centre: (+32, +8) for 128 × 80.
     let p = planes_of(&rect, WorldConfig::new(128, 80).unwrap());
-    assert!(sigma_at(&p, 40, 24, 128) > 0.0 && sigma_at(&p, 42, 25, 128) > 0.0 && sigma_at(&p, 43, 25, 128) == 0.0);
-    // Overlapping objects add mass, momentum and each species' mass; vacuum elsewhere is x_H = 1.
+    assert!(sigma_at(&p, 40, 24, 128) > 0.0 && sigma_at(&p, 42, 25, 128) > floor && sigma_at(&p, 43, 25, 128) == floor);
+    // Overlapping objects add mass, momentum and each species' mass; vacuum elsewhere is the floor state, x_H = 1.
     let two = parse(
         r#"{"version": 1, "world": {"width": 64, "height": 64}, "objects": [
         {"kind": "rect", "x0": 0, "y0": 0, "w": 2, "h": 1, "sigma": 0.3, "t": 1, "composition": {"H": 1}, "v": [1, 0]},
@@ -175,7 +177,7 @@ fn objects_land_where_section_2_12_4_puts_them() {
     let ch = |c: usize, x: usize| p[c * cells + x];
     assert!((ch(0, 1) - 0.4).abs() < 1e-7 && (ch(1, 1) - 0.3).abs() < 1e-7 && (ch(2, 1) + 0.2).abs() < 1e-7);
     assert!((ch(4, 1) - 0.75).abs() < 1e-7 && (ch(5, 1) - 0.25).abs() < 1e-7, "X by mass");
-    assert_eq!((ch(0, 5), ch(4, 5), ch(5, 5)), (0.0, 1.0, 0.0), "vacuum");
+    assert_eq!((ch(0, 5), ch(1, 5), ch(2, 5), ch(4, 5), ch(5, 5)), (floor, 0.0, 0.0, 1.0, 0.0), "vacuum");
     // An object outside the world is a warning, never a silent nothing.
     let gone = one(r#"{"kind": "disk", "x": 500, "y": 500, "a": 5, "sigma_c": 1, "t": 1, "composition": {"H": 1}}"#);
     let (_, warnings) = gone.planes(w64, &Physics::shipped().unwrap(), &elements()).unwrap();
@@ -261,7 +263,8 @@ fn every_scene_file_parses() {
     for (w, h) in [(64, 64), (600, 400), (2048, 64), (64, 2048)] {
         let world = WorldConfig::new(w, h).unwrap();
         let (p, _) = fill.planes(world, &physics, &elements()).unwrap();
-        assert!(p[..world.cells()].iter().all(|&s| s > 0.0), "fill_world leaves vacuum in {w}x{h}");
+        let floor = physics.get("sigma_floor").unwrap() as f32;
+        assert!(p[..world.cells()].iter().all(|&s| s > floor), "fill_world leaves vacuum in {w}x{h}");
     }
 }
 

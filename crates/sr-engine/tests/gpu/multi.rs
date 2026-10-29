@@ -144,10 +144,12 @@ fn the_two_suns_are_far_enough_apart_not_to_be_one_cloud() {
     assert!(warnings.is_empty(), "{warnings:?}");
     let w = world().width as usize;
     let sigma = &planes[..world().cells()];
+    // Vacuum is the floor state the scene leaves where no object is (M0-D101).
+    let floor = physics.get("sigma_floor").unwrap() as f32;
     let (lo, hi) = ((at[0].0 + a1).ceil() as usize, (at[1].0 - a2).floor() as usize);
     for (i, &s) in sigma.iter().enumerate() {
         let x = i % w;
-        assert!(x < lo || x >= hi || s == 0.0, "gas at x = {x} between the clouds");
+        assert!(x < lo || x >= hi || s == floor, "gas at x = {x} between the clouds");
     }
     for (k, m) in [(0usize, at[0].2), (1, at[1].2)] {
         let held: f64 = sigma.iter().enumerate().filter(|(i, _)| ((i % w) as f64 > at[0].0 + 0.5 * apart) == (k == 1)).map(|(_, &s)| f64::from(s)).sum();

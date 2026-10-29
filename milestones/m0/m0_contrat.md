@@ -703,6 +703,18 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     drifts 1.15 × 10⁻² (1.04 × 10⁻² at T 0.05), and a disk whose rim touches the edge drifts as in a wider world (39.8 against
     39.3) under either ring rule (M0-V7 observation 1, carried to M0-T106) — measured on linux-pc, CPU f64 twin, and
     laserax-ai-server, RTX 4090, 2026-10-28 (tasks/M0-D69.md) — the lead's answer at M0-D69, 2026-10-28: «7e-3 (Recommended)».
+  - [M0-D110] §1.3.2's P1 row "Δt_n is the reduction P9 made at the end of step n−1 (step 0 reduces the initial state first)" ·
+    **on a step whose P0 paints or drops a preset, P0 re-makes the CFL term after its edits: C / the largest (|u|+c)/Δx +
+    (|v|+c)/Δy over the box P0 left (§1.3.3, re-fit when the edit landed outside it; an empty box's the floor gas's, §0.5
+    [M0-D96]), by the same fixed-order tree, and Δt_n is the lesser of it and P9's Δt_{n+1} of step n−1, whose gravity term
+    stands (P2 has not run on the edited state, and g outside the old box is what P2 left there)**; step 0 likewise, after the
+    initial reduction; a step whose queue holds no paint or drop records none of it and keeps its bits (G-WARP), under the
+    latch's frame too (§1.8.5: its dispatches take the latch's sizes); erase, heat, cool and Clear keep P9's Δt · measured on
+    the RTX 4090 (laserax-ai-server, 2026-10-29; tasks/M0-D110.md): the first stroke into an empty world (H, radius 8, T 2)
+    stepped on the floor gas's 0.4472 against its own bound 0.0673 (Δt · max r_h ≈ 2.7 against C = 0.4; c Δt ≈ 1.3 cells on
+    one axis, the block's figure) and its vacuum resets put back 4.7 % of the
+    paint (M0-D101's run); now 0.0673 and none put back; a paint into a cold H disk (T_floor, Σ_c 0.005) 0.2920 → 0.0726 —
+    the lead's answer at M0-D110, 2026-10-29: «Gas-speed term only (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

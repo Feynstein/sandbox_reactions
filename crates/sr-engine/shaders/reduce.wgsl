@@ -18,6 +18,8 @@
 // 1/μ = 2 and Y_e = 1, the fastest floor gas of the ten species — and no gravity term (P2 runs over the box alone). A
 // box with a cell holds its margin's floor cells already: the floor's rate is taken only when the box is empty, so a
 // run with gas keeps its bits. The largest finite f32 (`DT_UNBOUNDED`) is left for a world whose floor bounds nothing.
+// A step that paints or drops re-makes the CFL term in P0, after its edits (`dt_refresh`, §0.5 [M0-D110]): the gas they
+// add steps on its own bound, not on the one P9 made before it was there.
 //
 // The sim time (M0-D21): P1 adds each step's Δt to the record's clock, an f64 kept as its bits — WGSL has no f64 — by an
 // exact add on u32 words rounded to nearest, ties to even: the CPU's `t += f64::from(dt)`, bit for bit, in step order.
@@ -200,19 +202,25 @@ fn dt_cells(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_inde
     }
 }
 
-@compute @workgroup_size(256)
-fn dt_partials(@builtin(local_invocation_index) lid: u32) {
+// The box's largest (r_h, r_g) from `dt_cells`' partials, walked in index order and halved; an empty box's is the floor
+// gas's r_h and no gravity term (§0.5 [M0-D96]). Called by the whole workgroup, in uniform control flow.
+fn box_top(lid: u32) -> vec2<f32> {
     var r = vec2<f32>(0.0, 0.0);
     for (var k = lid; k < (abox.w * abox.h + WG - 1u) / WG; k += WG) {
         r = max(r, partials[k]);
     }
     tree[lid] = r;
     halve(lid);
+    if (abox.w * abox.h == 0u) {
+        return vec2<f32>(floor_rate(), 0.0);
+    }
+    return tree[0];
+}
+
+@compute @workgroup_size(256)
+fn dt_partials(@builtin(local_invocation_index) lid: u32) {
+    let top = box_top(lid);
     if (lid == 0u) {
-        var top = tree[0];
-        if (abox.w * abox.h == 0u) {
-            top = vec2<f32>(floor_rate(), 0.0);
-        }
         var dt = DT_UNBOUNDED;
         if (top.x > 0.0) {
             dt = min(dt, params.cfl / top.x);
@@ -224,7 +232,19 @@ fn dt_partials(@builtin(local_invocation_index) lid: u32) {
     }
 }
 
-// P1: step n's Δt is the one P9 made at the end of step n − 1 (or the initial state's reduction, before step 0).
+// P0, after the edits of a step that paints or drops (§0.5 [M0-D110]): the CFL term re-made over the state they left —
+// `dt_cells` over the box P0 re-fit, its gravity term off — and Δt_{n+1} lowered to it, so P1 steps on a Δt that holds
+// the new gas. The gravity term stays the one P9 made at the end of step n − 1: P2 has not run on the edited state.
+@compute @workgroup_size(256)
+fn dt_refresh(@builtin(local_invocation_index) lid: u32) {
+    let top = box_top(lid);
+    if (lid == 0u && top.x > 0.0) {
+        rec.dt_next = min(rec.dt_next, params.cfl / top.x);
+    }
+}
+
+// P1: step n's Δt is the one P9 made at the end of step n − 1 (or the initial state's reduction, before step 0) — lowered
+// by P0 on a step that paints or drops.
 @compute @workgroup_size(1)
 fn dt_advance() {
     rec.dt = rec.dt_next;

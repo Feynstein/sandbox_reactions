@@ -152,12 +152,19 @@ fn the_drivers_pass_list_is_the_gpus() {
 
 #[test]
 fn p8_in_the_driver_books_what_it_changes() {
-    // Hydro and gravity off: the one step changes the state through P8 alone.
+    // Hydro and gravity off: the one step changes the state through P8 alone — on a state whose vacuum is Σ = 0, as a dump
+    // made before M0-D101 holds it (a scene now writes the floor state there, which leaves P8 nothing to reset).
     let (world, physics, planes) = sun(64);
-    let before = widened(&planes);
+    let mut before = widened(&planes);
+    let (n, floor) = (world.cells(), f64::from(physics.get("sigma_floor").unwrap() as f32));
+    for i in 0..n {
+        if before[i] == floor {
+            before[i] = 0.0;
+            before[3 * n + i] = 0.0;
+        }
+    }
     let mut twin = Twin::new(&physics, &elements(), Edge::Leave, Switches { gravity: false, hydro: false, heat: false, reactions: false }, None, 64, 64, before.clone()).unwrap();
     twin.step();
-    let n = world.cells();
     // Each cell's change, then summed: the planes' own sums (~3 × 10³) would drown a change of 10⁻⁶ in rounding.
     let change = |c: usize| (c * n..(c + 1) * n).map(|k| twin.state.planes[k] - before[k]).sum::<f64>();
     let (dm, de) = (change(0), change(3));

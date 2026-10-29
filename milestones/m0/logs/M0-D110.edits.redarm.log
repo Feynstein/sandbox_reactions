@@ -1,0 +1,607 @@
+==== 2026-10-29T09:14:22-04:00 edits · clean · a fresh scratch copy of the tree
+== 2026-10-29T09:14:23-04:00 edits · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh edit physics
+-- edits · exit=0 · 13.24 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-9akybni_/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-9akybni_/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.64s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 16 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 0.8229, the edit's Δt 0.0726 (P9's before it 0.2920), its vacuum_reset 9.846e-6, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 8.131923e0, invariant drift 1.386e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.870e-4); energy invariant (reported): the edit's step -3.5197e0 with ΔW -3.5025e0, the 12 steps after it -2.7210e-3 of |W| 4.1812e0 (tools 1.8202e1, floor_added 2.2738e-3, radiated 6.6472e-7)
+paint into a cold box: §2.3.3's bound for the painted gas 0.0726
+ok
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into an empty world: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset 0.000e0, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940012e0, invariant drift 4.386e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.519e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8140e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9774e-3, radiated 8.1899e-1)
+paint into an empty world: §2.3.3's bound for the painted gas 0.0673
+ok
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint on Σ = 0 vacuum: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset -1.355e-5, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940010e0, invariant drift 3.941e-6 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.384e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8141e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9761e-3, radiated 8.1899e-1)
+ok
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint beside a star: steps 1..14, sim time 0.4645, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 7.349e-11, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2, invariant drift 3.404e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant (reported): the edit's step -6.3252e0 with ΔW -5.4314e0, the 12 steps after it -1.1023e0 of |W| 1.0112e3 (tools 1.7414e1, floor_added -5.3096e-3, radiated 8.2194e-1)
+ok
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+preset drop beside a star: steps 1..14, sim time 0.3204, the edit's Δt 0.0303 (P9's before it 0.0416), its vacuum_reset 1.430e-10, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3, invariant drift 1.487e-8 of it (painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.964e-4); energy invariant (reported): the edit's step -2.6610e5 with ΔW -2.6611e5, the 12 steps after it 5.9951e1 of |W| 2.6795e5 (tools 6.3485e4, floor_added -2.7933e-2, radiated 5.8026e1)
+ok
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.50s
+
+
+==== 2026-10-29T09:14:22-04:00 edits · plant edit-ignored · a fresh scratch copy of the tree
+planted edit-ignored: tests/plants/edit-ignored.patch -> crates/sr-engine/shaders/edit.wgsl
+== 2026-10-29T09:14:23-04:00 edits · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 26.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-9akybni_/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-9akybni_/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.55s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 16 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas' (255279) panicked at crates/sr-engine/tests/gpu/edit.rs:361:9:
+hot dense, painted and heated: ΔΣ 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared' (255284) panicked at crates/sr-engine/tests/gpu/edit.rs:488:13:
+(32, 12) Cell { sigma: 0.5, mom: [0.15000000596046448, -0.10000000149011612], energy: 5.258072853088379, x: [0.699999988079071, 0.30000001192092896, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] }
+FAILED
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::erase_writes_the_floor_state_and_books_what_left' (255289) panicked at crates/sr-engine/tests/gpu/edit.rs:282:17:
+(32, 26) Cell { sigma: 0.5, mom: [0.15000000596046448, -0.10000000149011612], energy: 5.258072853088379, x: [0.699999988079071, 0.30000001192092896, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] } against the floor state Cell { sigma: 9.99999993922529e-9, mom: [0.0, 0.0], energy: 1.0000020811418153e-9, x: [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] }
+FAILED
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone' (255294) panicked at crates/sr-engine/tests/gpu/edit.rs:331:13:
+(60, 4) ε_th 0.10199977134267613 against 0.1
+FAILED
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it' (255299) panicked at crates/sr-engine/tests/gpu/edit.rs:253:13:
+(32, 26) Σ 0.5 after 0.5
+FAILED
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded' (255304) panicked at crates/sr-engine/tests/gpu/edit.rs:513:5:
+paint, then erase: 0.02000000886619091
+FAILED
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 2.6099, the edit's Δt 0.2920 (P9's before it 0.2920), its vacuum_reset 4.660e-5, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 4.191674e0, invariant drift 2.266e-8 of it (painted 0.000000e0, preset_dropped 0.000000e0, vacuum_reset 4.363e-4); energy invariant (reported): the edit's step -1.2196e-5 with ΔW 1.4880e-4, the 12 steps after it -1.2070e-5 of |W| 8.2154e-1 (tools 0.0000e0, floor_added 1.4355e-2, radiated 2.2481e-7)
+
+thread 'edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound' (255314) panicked at crates/sr-engine/tests/gpu/edit.rs:803:5:
+painted 0: the paint landed
+FAILED
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into an empty world: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset 0.000e0, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940012e0, invariant drift 4.386e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.519e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8140e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9774e-3, radiated 8.1899e-1)
+paint into an empty world: §2.3.3's bound for the painted gas 0.0673
+ok
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint on Σ = 0 vacuum: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset -1.355e-5, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940010e0, invariant drift 3.941e-6 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.384e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8141e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9761e-3, radiated 8.1899e-1)
+ok
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint beside a star: steps 1..14, sim time 0.4645, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 7.349e-11, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2, invariant drift 3.404e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant (reported): the edit's step -6.3252e0 with ΔW -5.4314e0, the 12 steps after it -1.1023e0 of |W| 1.0112e3 (tools 1.7414e1, floor_added -5.3096e-3, radiated 8.2194e-1)
+ok
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+preset drop beside a star: steps 1..14, sim time 0.3204, the edit's Δt 0.0303 (P9's before it 0.0416), its vacuum_reset 1.430e-10, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3, invariant drift 1.487e-8 of it (painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.964e-4); energy invariant (reported): the edit's step -2.6610e5 with ΔW -2.6611e5, the 12 steps after it 5.9951e1 of |W| 2.6795e5 (tools 6.3485e4, floor_added -2.7933e-2, radiated 5.8026e1)
+ok
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas
+    edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared
+    edit::erase_writes_the_floor_state_and_books_what_left
+    edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone
+    edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it
+    edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded
+    edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound
+
+test result: FAILED. 9 passed; 7 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.39s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-29T09:14:22-04:00 edits · plant edit-zero-vacuum · a fresh scratch copy of the tree
+planted edit-zero-vacuum: tests/plants/edit-zero-vacuum.patch -> crates/sr-engine/shaders/edit.wgsl, crates/sr-engine/src/scene.rs
+== 2026-10-29T09:14:23-04:00 edits · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 52.33 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-9akybni_/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-9akybni_/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.53s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 16 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 0.8229, the edit's Δt 0.0726 (P9's before it 0.2920), its vacuum_reset 9.846e-6, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 8.131923e0, invariant drift 1.386e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.870e-4); energy invariant (reported): the edit's step -3.5197e0 with ΔW -3.5025e0, the 12 steps after it -2.7210e-3 of |W| 4.1812e0 (tools 1.8202e1, floor_added 2.2738e-3, radiated 6.6472e-7)
+paint into a cold box: §2.3.3's bound for the painted gas 0.0726
+ok
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced' (255895) panicked at crates/sr-engine/tests/gpu/edit.rs:691:13:
+paint into an empty world: cell (64, 56) channel 3 is NaN after 14 steps
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite' (255900) panicked at crates/sr-engine/tests/gpu/edit.rs:691:13:
+paint on Σ = 0 vacuum: cell (64, 56) channel 3 is NaN after 14 steps
+FAILED
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced' (255905) panicked at crates/sr-engine/tests/gpu/edit.rs:691:13:
+paint beside a star: cell (96, 88) channel 3 is NaN after 14 steps
+FAILED
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced' (255910) panicked at crates/sr-engine/tests/gpu/edit.rs:691:13:
+preset drop beside a star: cell (168, 137) channel 3 is NaN after 14 steps
+FAILED
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced
+    edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite
+    edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced
+    edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced
+
+test result: FAILED. 12 passed; 4 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.37s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-29T09:14:22-04:00 edits · plant edit-no-refresh · a fresh scratch copy of the tree
+planted edit-no-refresh: tests/plants/edit-no-refresh.patch -> crates/sr-engine/src/step/mod.rs
+== 2026-10-29T09:14:23-04:00 edits · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 39.35 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-9akybni_/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-9akybni_/arm3/crates/sr-engine)
+warning: field `refresh` is never read
+  --> crates/sr-engine/src/step/dt.rs:74:16
+   |
+64 | pub struct Dt {
+   |            -- field in this struct
+...
+74 |     pub(super) refresh: Vec<Dispatch>,
+   |                ^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 9.52s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 16 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 0.9013, the edit's Δt 0.2920 (P9's before it 0.2920), its vacuum_reset 4.661e-5, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 8.131950e0, invariant drift 1.532e-8 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.601e-4); energy invariant (reported): the edit's step -3.5451e0 with ΔW -3.4771e0, the 12 steps after it 3.8727e-3 of |W| 4.1417e0 (tools 1.8202e1, floor_added 8.2110e-1, radiated 9.8947e-8)
+paint into a cold box: §2.3.3's bound for the painted gas 0.0726
+
+thread 'edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound' (255613) panicked at crates/sr-engine/tests/gpu/edit.rs:754:5:
+paint into a cold box: the paint's step took Δt 0.29199153 over its bound 0.07263826290555216
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into an empty world: steps 1..14, sim time 0.9321, the edit's Δt 0.4472 (P9's before it 0.4472), its vacuum_reset -1.869e-1, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126907e0, invariant drift 2.741e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.867e-1); energy invariant (reported): the edit's step -1.7662e0 with ΔW -1.6593e0, the 12 steps after it -6.0102e-2 of |W| 1.6027e0 (tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6908e0)
+paint into an empty world: §2.3.3's bound for the painted gas 0.0673
+
+thread 'edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced' (255618) panicked at crates/sr-engine/tests/gpu/edit.rs:754:5:
+paint into an empty world: the paint's step took Δt 0.44721314 over its bound 0.06729291908477966
+FAILED
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint on Σ = 0 vacuum: steps 1..14, sim time 0.9321, the edit's Δt 0.4472 (P9's before it 0.4472), its vacuum_reset -1.869e-1, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126905e0, invariant drift 3.802e-6 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.868e-1); energy invariant (reported): the edit's step -1.7662e0 with ΔW -1.6593e0, the 12 steps after it -6.0102e-2 of |W| 1.6027e0 (tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6909e0)
+ok
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint beside a star: steps 1..14, sim time 0.4645, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 7.349e-11, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2, invariant drift 3.404e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant (reported): the edit's step -6.3252e0 with ΔW -5.4314e0, the 12 steps after it -1.1023e0 of |W| 1.0112e3 (tools 1.7414e1, floor_added -5.3096e-3, radiated 8.2194e-1)
+ok
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+preset drop beside a star: steps 1..14, sim time 0.3305, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 2.306e-10, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3, invariant drift 5.812e-9 of it (painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.998e-4); energy invariant (reported): the edit's step -2.6610e5 with ΔW -2.6611e5, the 12 steps after it 5.8667e1 of |W| 2.6801e5 (tools 6.3485e4, floor_added -2.9024e-2, radiated 5.7831e1)
+ok
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound
+    edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced
+
+test result: FAILED. 14 passed; 2 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.53s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-29T09:18:10-04:00 edits · clean · a fresh scratch copy of the tree
+== 2026-10-29T09:18:11-04:00 edits · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh edit physics
+-- edits · exit=0 · 13.29 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-24zseaqk/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-24zseaqk/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.47s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 17 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_paint_queued_before_the_first_step_steps_on_its_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint before step 0: Δt_0 0.0673, §2.3.3's bound for the painted gas 0.0673
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 0.8229, the edit's Δt 0.0726 (P9's before it 0.2920), its vacuum_reset 9.846e-6, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 8.131923e0, invariant drift 1.386e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.870e-4); energy invariant (reported): the edit's step -3.5197e0 with ΔW -3.5025e0, the 12 steps after it -2.7210e-3 of |W| 4.1812e0 (tools 1.8202e1, floor_added 2.2738e-3, radiated 6.6472e-7)
+paint into a cold box: §2.3.3's bound for the painted gas 0.0726
+ok
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into an empty world: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset 0.000e0, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940012e0, invariant drift 4.386e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.519e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8140e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9774e-3, radiated 8.1899e-1)
+paint into an empty world: §2.3.3's bound for the painted gas 0.0673
+ok
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint on Σ = 0 vacuum: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset -1.355e-5, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940010e0, invariant drift 3.941e-6 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.384e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8141e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9761e-3, radiated 8.1899e-1)
+ok
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint beside a star: steps 1..14, sim time 0.4645, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 7.349e-11, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2, invariant drift 3.404e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant (reported): the edit's step -6.3252e0 with ΔW -5.4314e0, the 12 steps after it -1.1023e0 of |W| 1.0112e3 (tools 1.7414e1, floor_added -5.3096e-3, radiated 8.2194e-1)
+ok
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+preset drop beside a star: steps 1..14, sim time 0.3204, the edit's Δt 0.0303 (P9's before it 0.0416), its vacuum_reset 1.430e-10, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3, invariant drift 1.487e-8 of it (painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.964e-4); energy invariant (reported): the edit's step -2.6610e5 with ΔW -2.6611e5, the 12 steps after it 5.9951e1 of |W| 2.6795e5 (tools 6.3485e4, floor_added -2.7933e-2, radiated 5.8026e1)
+ok
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.74s
+
+
+==== 2026-10-29T09:18:10-04:00 edits · plant edit-ignored · a fresh scratch copy of the tree
+planted edit-ignored: tests/plants/edit-ignored.patch -> crates/sr-engine/shaders/edit.wgsl
+== 2026-10-29T09:18:11-04:00 edits · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 26.43 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-24zseaqk/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-24zseaqk/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.51s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 17 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_paint_queued_before_the_first_step_steps_on_its_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint before step 0: Δt_0 0.0673, §2.3.3's bound for the painted gas 0.0673
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas' (257429) panicked at crates/sr-engine/tests/gpu/edit.rs:361:9:
+hot dense, painted and heated: ΔΣ 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared' (257434) panicked at crates/sr-engine/tests/gpu/edit.rs:488:13:
+(32, 12) Cell { sigma: 0.5, mom: [0.15000000596046448, -0.10000000149011612], energy: 5.258072853088379, x: [0.699999988079071, 0.30000001192092896, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] }
+FAILED
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::erase_writes_the_floor_state_and_books_what_left' (257439) panicked at crates/sr-engine/tests/gpu/edit.rs:282:17:
+(32, 26) Cell { sigma: 0.5, mom: [0.15000000596046448, -0.10000000149011612], energy: 5.258072853088379, x: [0.699999988079071, 0.30000001192092896, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] } against the floor state Cell { sigma: 9.99999993922529e-9, mom: [0.0, 0.0], energy: 1.0000020811418153e-9, x: [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] }
+FAILED
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone' (257444) panicked at crates/sr-engine/tests/gpu/edit.rs:331:13:
+(60, 4) ε_th 0.10199977134267613 against 0.1
+FAILED
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it' (257449) panicked at crates/sr-engine/tests/gpu/edit.rs:253:13:
+(32, 26) Σ 0.5 after 0.5
+FAILED
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded' (257454) panicked at crates/sr-engine/tests/gpu/edit.rs:513:5:
+paint, then erase: 0.02000000886619091
+FAILED
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 2.6099, the edit's Δt 0.2920 (P9's before it 0.2920), its vacuum_reset 4.660e-5, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 4.191674e0, invariant drift 2.266e-8 of it (painted 0.000000e0, preset_dropped 0.000000e0, vacuum_reset 4.363e-4); energy invariant (reported): the edit's step -1.2196e-5 with ΔW 1.4880e-4, the 12 steps after it -1.2070e-5 of |W| 8.2154e-1 (tools 0.0000e0, floor_added 1.4355e-2, radiated 2.2481e-7)
+
+thread 'edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound' (257464) panicked at crates/sr-engine/tests/gpu/edit.rs:817:5:
+painted 0: the paint landed
+FAILED
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into an empty world: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset 0.000e0, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940012e0, invariant drift 4.386e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.519e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8140e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9774e-3, radiated 8.1899e-1)
+paint into an empty world: §2.3.3's bound for the painted gas 0.0673
+ok
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint on Σ = 0 vacuum: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset -1.355e-5, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940010e0, invariant drift 3.941e-6 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.384e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8141e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9761e-3, radiated 8.1899e-1)
+ok
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint beside a star: steps 1..14, sim time 0.4645, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 7.349e-11, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2, invariant drift 3.404e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant (reported): the edit's step -6.3252e0 with ΔW -5.4314e0, the 12 steps after it -1.1023e0 of |W| 1.0112e3 (tools 1.7414e1, floor_added -5.3096e-3, radiated 8.2194e-1)
+ok
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+preset drop beside a star: steps 1..14, sim time 0.3204, the edit's Δt 0.0303 (P9's before it 0.0416), its vacuum_reset 1.430e-10, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3, invariant drift 1.487e-8 of it (painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.964e-4); energy invariant (reported): the edit's step -2.6610e5 with ΔW -2.6611e5, the 12 steps after it 5.9951e1 of |W| 2.6795e5 (tools 6.3485e4, floor_added -2.7933e-2, radiated 5.8026e1)
+ok
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas
+    edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared
+    edit::erase_writes_the_floor_state_and_books_what_left
+    edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone
+    edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it
+    edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded
+    edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound
+
+test result: FAILED. 10 passed; 7 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.58s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-29T09:18:10-04:00 edits · plant edit-zero-vacuum · a fresh scratch copy of the tree
+planted edit-zero-vacuum: tests/plants/edit-zero-vacuum.patch -> crates/sr-engine/shaders/edit.wgsl, crates/sr-engine/src/scene.rs
+== 2026-10-29T09:18:11-04:00 edits · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 39.80 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-24zseaqk/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-24zseaqk/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.71s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 17 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_paint_queued_before_the_first_step_steps_on_its_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::a_paint_queued_before_the_first_step_steps_on_its_bound' (257700) panicked at crates/sr-engine/tests/gpu/edit.rs:658:9:
+step 0: the guard found Some(NonFinite { step: 0, x: 64, y: 56, channel: "energy" })
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 0.8229, the edit's Δt 0.0726 (P9's before it 0.2920), its vacuum_reset 9.846e-6, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 8.131923e0, invariant drift 1.386e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.870e-4); energy invariant (reported): the edit's step -3.5197e0 with ΔW -3.5025e0, the 12 steps after it -2.7210e-3 of |W| 4.1812e0 (tools 1.8202e1, floor_added 2.2738e-3, radiated 6.6472e-7)
+paint into a cold box: §2.3.3's bound for the painted gas 0.0726
+ok
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced' (257754) panicked at crates/sr-engine/tests/gpu/edit.rs:691:13:
+paint into an empty world: cell (64, 56) channel 3 is NaN after 14 steps
+FAILED
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite' (257759) panicked at crates/sr-engine/tests/gpu/edit.rs:691:13:
+paint on Σ = 0 vacuum: cell (64, 56) channel 3 is NaN after 14 steps
+FAILED
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced' (257764) panicked at crates/sr-engine/tests/gpu/edit.rs:691:13:
+paint beside a star: cell (96, 88) channel 3 is NaN after 14 steps
+FAILED
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced' (257769) panicked at crates/sr-engine/tests/gpu/edit.rs:691:13:
+preset drop beside a star: cell (168, 137) channel 3 is NaN after 14 steps
+FAILED
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    edit::a_paint_queued_before_the_first_step_steps_on_its_bound
+    edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced
+    edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite
+    edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced
+    edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced
+
+test result: FAILED. 12 passed; 5 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.58s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-29T09:18:10-04:00 edits · plant edit-no-refresh · a fresh scratch copy of the tree
+planted edit-no-refresh: tests/plants/edit-no-refresh.patch -> crates/sr-engine/src/step/mod.rs
+== 2026-10-29T09:18:11-04:00 edits · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 53.28 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-24zseaqk/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-24zseaqk/arm3/crates/sr-engine)
+warning: field `refresh` is never read
+  --> crates/sr-engine/src/step/dt.rs:74:16
+   |
+64 | pub struct Dt {
+   |            -- field in this struct
+...
+74 |     pub(super) refresh: Vec<Dispatch>,
+   |                ^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-engine` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 9.64s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 17 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_paint_queued_before_the_first_step_steps_on_its_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint before step 0: Δt_0 0.4472, §2.3.3's bound for the painted gas 0.0673
+
+thread 'edit::a_paint_queued_before_the_first_step_steps_on_its_bound' (258001) panicked at crates/sr-engine/tests/gpu/edit.rs:803:5:
+step 0 took Δt 0.44721314 over the paint's bound 0.06729291908477966
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 0.9013, the edit's Δt 0.2920 (P9's before it 0.2920), its vacuum_reset 4.661e-5, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 8.131950e0, invariant drift 1.532e-8 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.601e-4); energy invariant (reported): the edit's step -3.5451e0 with ΔW -3.4771e0, the 12 steps after it 3.8727e-3 of |W| 4.1417e0 (tools 1.8202e1, floor_added 8.2110e-1, radiated 9.8947e-8)
+paint into a cold box: §2.3.3's bound for the painted gas 0.0726
+
+thread 'edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound' (258050) panicked at crates/sr-engine/tests/gpu/edit.rs:754:5:
+paint into a cold box: the paint's step took Δt 0.29199153 over its bound 0.07263826290555216
+FAILED
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into an empty world: steps 1..14, sim time 0.9321, the edit's Δt 0.4472 (P9's before it 0.4472), its vacuum_reset -1.869e-1, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126907e0, invariant drift 2.741e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.867e-1); energy invariant (reported): the edit's step -1.7662e0 with ΔW -1.6593e0, the 12 steps after it -6.0102e-2 of |W| 1.6027e0 (tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6908e0)
+paint into an empty world: §2.3.3's bound for the painted gas 0.0673
+
+thread 'edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced' (258055) panicked at crates/sr-engine/tests/gpu/edit.rs:754:5:
+paint into an empty world: the paint's step took Δt 0.44721314 over its bound 0.06729291908477966
+FAILED
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint on Σ = 0 vacuum: steps 1..14, sim time 0.9321, the edit's Δt 0.4472 (P9's before it 0.4472), its vacuum_reset -1.869e-1, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126905e0, invariant drift 3.802e-6 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.868e-1); energy invariant (reported): the edit's step -1.7662e0 with ΔW -1.6593e0, the 12 steps after it -6.0102e-2 of |W| 1.6027e0 (tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6909e0)
+ok
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint beside a star: steps 1..14, sim time 0.4645, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 7.349e-11, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2, invariant drift 3.404e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant (reported): the edit's step -6.3252e0 with ΔW -5.4314e0, the 12 steps after it -1.1023e0 of |W| 1.0112e3 (tools 1.7414e1, floor_added -5.3096e-3, radiated 8.2194e-1)
+ok
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+preset drop beside a star: steps 1..14, sim time 0.3305, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 2.306e-10, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3, invariant drift 5.812e-9 of it (painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.998e-4); energy invariant (reported): the edit's step -2.6610e5 with ΔW -2.6611e5, the 12 steps after it 5.8667e1 of |W| 2.6801e5 (tools 6.3485e4, floor_added -2.9024e-2, radiated 5.7831e1)
+ok
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    edit::a_paint_queued_before_the_first_step_steps_on_its_bound
+    edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound
+    edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced
+
+test result: FAILED. 14 passed; 3 failed; 0 ignored; 0 measured; 401 filtered out; finished in 3.76s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

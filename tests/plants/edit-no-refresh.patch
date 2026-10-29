@@ -1,0 +1,13 @@
+--- a/crates/sr-engine/src/step/mod.rs
++++ b/crates/sr-engine/src/step/mod.rs
+@@ -623,9 +623,7 @@
+                 }
+                 lists.push((&self.boxfit.on_edit, 1, false));
+                 // A paint or a drop: Δt_n re-made over the state the edits left, in the box just re-fit (§0.5 [M0-D110]).
+-                if self.edits.as_ref().is_some_and(|e| e.deposits_at(n)) {
+-                    lists.push((&self.dt.refresh, 1, false));
+-                }
++                let _ = self.edits.as_ref().is_some_and(|e| e.deposits_at(n));
+             }
+             if let (Pass::Heat, Some((_, carry)), Some(h)) = (*pass, gate, &self.heat) {
+                 let (head, rest) = dispatches.split_at(heat::HEAD);

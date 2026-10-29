@@ -1,0 +1,19 @@
+== 2026-10-29T08:34:22-04:00 readouts · task M0-D101 · box laserax-ai-server :: bash tests/gpu.sh readouts
+-- readouts · exit=0 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 9 tests
+test readouts::a_translation_that_would_not_be_monotonic_is_refused ... ok
+test readouts::between_anchors_the_map_is_log_linear_not_linear ... ok
+test readouts::every_anchor_maps_exactly_and_the_inverse_returns_it ... ok
+test readouts::mass_increases_strictly_over_its_whole_range ... ok
+test readouts::temperature_increases_strictly_from_its_floor_up ... ok
+test readouts::the_end_segments_are_extended ... ok
+test readouts::the_presets_read_one_fifteen_and_forty_suns ... ok
+test readouts::the_real_calibration_reads_the_presets_and_the_sun ... ok
+test readouts::the_sun_like_surface_reads_5772_kelvin ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 406 filtered out; finished in 0.00s
+
+

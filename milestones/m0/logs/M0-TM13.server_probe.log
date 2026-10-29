@@ -1,0 +1,11 @@
+ 07:59:06 up 1 day, 1 min,  2 users,  load average: 0.05, 0.04, 0.00
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB
+NVIDIA GeForce RTX 4090, 0 %, 19 MiB
+255ec37 M0-D90 done: a black hole from mass; G-WATCH's m_tov_sb exemption
+dirty tracked: 75
+1972241
+8568e8d5e5564345aaa14940a9bde911c5d24cfe45c835739c13bbeb0f77d8e2  milestones/m0/logs/loop_times.jsonl
+0ac475d3a6540cd99ff14a84a6949f7f7cfb469e095c3815be9717831bfc3590  tools/pb/verify.anchor.json
+M0-V21.json
+M0-V22.json
+M0-V9.json

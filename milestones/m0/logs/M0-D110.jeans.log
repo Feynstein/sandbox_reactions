@@ -1,0 +1,29 @@
+== 2026-10-29T09:21:02-04:00 jeans · task M0-D110 · box laserax-ai-server :: bash tests/gpu.sh jeans physics
+-- jeans · exit=0 · 1.07 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 6 tests
+test jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-JEANS end: step 161, t = 3.1784, Σ_max 100.001: 1 object(s) of mass 3351.6 (at most 1 in any summary); largest secondary peak 0.0000 of Σ_max at the end, 1.0000 in any summary
+ok
+test jeans::the_collapse_reaches_a_hundred_times_the_central_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.1286 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   2.1949: Σmax    2.489, J 0.1265 at (62, 62), 1 object(s) of mass 3351.6, secondary peak 0.9602 of Σmax
+SR-JEANS step   153 t   3.1308: Σmax   48.940, J 0.1135 at (63, 63), 1 object(s) of mass 3351.6, secondary peak 0.0000 of Σmax
+SR-JEANS step   161 t   3.1784: Σmax  100.001, J 0.1224 at (70, 63), 1 object(s) of mass 3351.6, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 100.001 at the end (largest 100.001) after 161 steps, t = 3.1784 (start 0.9998, target 100.0); 25 summaries
+ok
+test jeans::the_jeans_number_never_rises_a_hundredth_above_its_start ... SR-JEANS adiabat: J at the start 0.1286, worst 0.1286 (×1.0000, bound ×1.01) at step 0, cell (63, 63), Σ_max then 1.014
+ok
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 0.1286 (bound 0.25) at step 0, t = 0.0000, cell (63, 63), Σ_max then 1.014; over 25 summaries
+ok
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+ok
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 13208.96, U_th/|W| 0.050000
+SR-JEANS ripple: worst |Σ'/Σ − (1 + 0.01(cos 3θ + cos 5θ))| = 5.77e-8, mass 3351.648 → 3351.648
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 412 filtered out; finished in 0.95s
+
+

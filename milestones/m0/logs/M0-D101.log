@@ -1,0 +1,201 @@
+# M0-D101 — 2026-10-29T08:07:20-04:00 — linux-pc driving laserax-ai-server (RTX 4090), tree = local working tree rsync'd
+rsync done 08:07:26
+    Finished `release` profile [optimized] target(s) in 0.08s
+F_off_none: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy (exit 0)
+F_off_gravity: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy (exit 0)
+F_off_hydro: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy (exit 0)
+F_off_heat: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy (exit 0)
+F_off_reactions: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy (exit 0)
+F_off_neutrinos: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy (exit 0)
+F_off_sinks: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy (exit 0)
+{"version": 1, "world": {"width": 128, "height": 128, "edge": "bounce"}, "objects": []}
+F_only_none: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy
+F_only_gravity: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy
+F_only_hydro: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy
+F_only_heat: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy
+F_only_reactions: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy
+== differential: the painted area holds Σ_floor (1e-8 < Σ_vac, so still outside the box) instead of the scene loader Σ = 0
+B_floorpatch_3: SR-HEADLESS DONE steps=3 sim_time=0.171842 until=none
+B_floorpatch_200: SR-HEADLESS DONE steps=200 sim_time=6.151040 until=none
+F_floorpatch_3: SR-HEADLESS DONE steps=3 sim_time=0.564615 until=none
+E_floorpatch_200: SR-HEADLESS DONE steps=200 sim_time=7.501468 until=none
+== controls, unchanged scenes
+B_3: SR-ERROR non-finite value in the state at step 2, cell (96, 88), channel energy
+F_3: SR-ERROR non-finite value in the state at step 0, cell (96, 88), channel energy
+== 08:12:43 iteration 1: deposit fix + 3 whole-step cases, tests/gpu.sh edit on RTX 4090
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint into an empty world: steps 1..14, sim time 0.9321, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126905e0 (invariant drift 3.802e-6 of the grid's, painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.868e-1); energy invariant drift -1.8263e0 → 1.659e1 |W| per τ_dyn (|W| 1.6027e0, τ_dyn 13.5708; tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6909e0)
+thread 'edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced' (227322) panicked at crates/sr-engine/tests/gpu/edit.rs:678:9:
+paint into an empty world: mass invariant drift 3.802e-6 of the grid's mass
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint beside a star: steps 1..14, sim time 0.4645, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2 (invariant drift 9.211e-7 of the grid's, painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 2.873e-4); energy invariant drift -7.4276e0 → 5.779e-2 |W| per τ_dyn (|W| 1.0289e3, τ_dyn 3.7178; tools 1.7414e1, floor_added -5.2996e-3, radiated 8.2193e-1)
+thread 'edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced' (227327) panicked at crates/sr-engine/tests/gpu/edit.rs:679:9:
+paint beside a star: energy invariant drift 5.779e-2 |W| per τ_dyn
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+preset drop beside a star: steps 1..14, sim time 0.3305, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3 (invariant drift 1.008e-7 of the grid's, painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 5.732e-4); energy invariant drift -2.6604e5 → 1.192e1 |W| per τ_dyn (|W| 2.6801e5, τ_dyn 3.9701; tools 6.3485e4, floor_added -2.8967e-2, radiated 5.7829e1)
+thread 'edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced' (227332) panicked at crates/sr-engine/tests/gpu/edit.rs:679:9:
+preset drop beside a star: energy invariant drift 1.192e1 |W| per τ_dyn
+    edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced
+    edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced
+    edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced
+test result: FAILED. 10 passed; 3 failed; 0 ignored; 0 measured; 401 filtered out; finished in 2.71s
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== 08:14:13 diagnostics, SR_D101_FLOORFILL=unset (scene vacuum filled with the floor state in-test)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 415 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 415 filtered out; finished in 0.00s
+== 08:14:20 diagnostics, SR_D101_FLOORFILL=1 (scene vacuum filled with the floor state in-test)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 415 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 415 filtered out; finished in 0.00s
+== 08:14:27 diagnostics (cargo test edit::whole_steps, edit::diag), SR_D101_FLOORFILL=unset
+DIAG DIAG paint inside the box: edit step: Δinvariant -2.2501e0, ΔW -1.9947e0, Δtools 1.7414e1, Δfloor_added 0.0000e0, Δvacuum_reset 0.0000e0, Δmass_inv 2.9597e-7, dt 0.0867; after it: Δinvariant 7.6499e-2 → 1.965e0 |W| per τ_dyn, Δmass_inv -1.3584e-7
+DIAG paint inside the box: energy invariant drift 4.649e1 |W| per τ_dyn
+DIAG paint into an empty world: edit step: Δinvariant -1.7662e0, ΔW -1.6593e0, Δtools 1.7414e1, Δfloor_added 8.9856e-1, Δvacuum_reset -1.8694e-1, Δmass_inv -1.5472e-5, dt 0.4472; after it: Δinvariant -6.0102e-2 → 1.050e0 |W| per τ_dyn, Δmass_inv -2.2052e-7
+paint into an empty world: steps 1..14, sim time 0.9321, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126905e0 (invariant drift 3.802e-6 of the grid's, painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.868e-1); energy invariant drift -1.8263e0 → 1.659e1 |W| per τ_dyn (|W| 1.6027e0, τ_dyn 13.5708; tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6909e0)
+paint into an empty world: mass invariant drift 3.802e-6 of the grid's mass
+DIAG paint beside a star: edit step: Δinvariant -6.3253e0, ΔW -5.4314e0, Δtools 1.7414e1, Δfloor_added 9.9945e-6, Δvacuum_reset -9.9950e-5, Δmass_inv -1.0053e-4, dt 0.0416; after it: Δinvariant -1.1023e0 → 9.419e-3 |W| per τ_dyn, Δmass_inv 2.2591e-7
+paint beside a star: steps 1..14, sim time 0.4645, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2 (invariant drift 9.211e-7 of the grid's, painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 2.873e-4); energy invariant drift -7.4276e0 → 5.779e-2 |W| per τ_dyn (|W| 1.0289e3, τ_dyn 3.7178; tools 1.7414e1, floor_added -5.2996e-3, radiated 8.2193e-1)
+paint beside a star: energy invariant drift 5.779e-2 |W| per τ_dyn
+DIAG preset drop beside a star: edit step: Δinvariant -2.6610e5, ΔW -2.6611e5, Δtools 6.3485e4, Δfloor_added 3.2452e-5, Δvacuum_reset -3.2455e-4, Δmass_inv -3.3222e-4, dt 0.0416; after it: Δinvariant 5.8667e1 → 3.008e-3 |W| per τ_dyn, Δmass_inv -1.6154e-5
+preset drop beside a star: steps 1..14, sim time 0.3305, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3 (invariant drift 1.008e-7 of the grid's, painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 5.732e-4); energy invariant drift -2.6604e5 → 1.192e1 |W| per τ_dyn (|W| 2.6801e5, τ_dyn 3.9701; tools 6.3485e4, floor_added -2.8967e-2, radiated 5.7829e1)
+preset drop beside a star: energy invariant drift 1.192e1 |W| per τ_dyn
+test result: FAILED. 10 passed; 4 failed; 0 ignored; 0 measured; 401 filtered out; finished in 2.85s
+== 08:14:31 diagnostics (cargo test edit::whole_steps, edit::diag), SR_D101_FLOORFILL=1
+DIAG DIAG paint inside the box: edit step: Δinvariant -2.2501e0, ΔW -1.9947e0, Δtools 1.7414e1, Δfloor_added 0.0000e0, Δvacuum_reset 0.0000e0, Δmass_inv 2.9597e-7, dt 0.0867; after it: Δinvariant 7.6499e-2 → 1.965e0 |W| per τ_dyn, Δmass_inv -1.3584e-7
+DIAG paint inside the box: energy invariant drift 4.649e1 |W| per τ_dyn
+DIAG paint into an empty world: edit step: Δinvariant -1.7662e0, ΔW -1.6593e0, Δtools 1.7414e1, Δfloor_added 8.9856e-1, Δvacuum_reset -1.8692e-1, Δmass_inv -3.0880e-7, dt 0.4472; after it: Δinvariant -6.0102e-2 → 1.050e0 |W| per τ_dyn, Δmass_inv 2.9749e-7
+paint into an empty world: steps 1..14, sim time 0.9321, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126907e0 (invariant drift 2.741e-9 of the grid's, painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.867e-1); energy invariant drift -1.8263e0 → 1.659e1 |W| per τ_dyn (|W| 1.6027e0, τ_dyn 13.5708; tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6908e0)
+paint into an empty world: energy invariant drift 1.659e1 |W| per τ_dyn
+DIAG paint beside a star: edit step: Δinvariant -6.3252e0, ΔW -5.4314e0, Δtools 1.7414e1, Δfloor_added -5.0188e-10, Δvacuum_reset 7.3488e-11, Δmass_inv 1.2041e-6, dt 0.0416; after it: Δinvariant -1.1023e0 → 9.419e-3 |W| per τ_dyn, Δmass_inv -1.5747e-6
+paint beside a star: steps 1..14, sim time 0.4645, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2 (invariant drift 3.404e-9 of the grid's, painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant drift -7.4276e0 → 5.779e-2 |W| per τ_dyn (|W| 1.0289e3, τ_dyn 3.7178; tools 1.7414e1, floor_added -5.3096e-3, radiated 8.2194e-1)
+paint beside a star: energy invariant drift 5.779e-2 |W| per τ_dyn
+DIAG preset drop beside a star: edit step: Δinvariant -2.6610e5, ΔW -2.6611e5, Δtools 6.3485e4, Δfloor_added -3.3648e-9, Δvacuum_reset 2.3065e-10, Δmass_inv -1.1529e-6, dt 0.0416; after it: Δinvariant 5.8667e1 → 3.008e-3 |W| per τ_dyn, Δmass_inv -1.8934e-5
+preset drop beside a star: steps 1..14, sim time 0.3305, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3 (invariant drift 5.812e-9 of the grid's, painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.998e-4); energy invariant drift -2.6604e5 → 1.192e1 |W| per τ_dyn (|W| 2.6801e5, τ_dyn 3.9701; tools 6.3485e4, floor_added -2.9024e-2, radiated 5.7831e1)
+preset drop beside a star: energy invariant drift 1.192e1 |W| per τ_dyn
+test result: FAILED. 10 passed; 4 failed; 0 ignored; 0 measured; 401 filtered out; finished in 2.78s
+== 08:15:25 no-edit controls (SR_D101_FLOORFILL=1)
+DIAG DIAG no edit, star 128: edit step: Δinvariant -1.2598e-1, ΔW 7.5775e-1, Δtools 0.0000e0, Δfloor_added -5.0301e-10, Δvacuum_reset 7.3491e-11, Δmass_inv 3.7260e-7, dt 0.0416; after it: Δinvariant -1.6947e0 → 9.457e-3 |W| per τ_dyn, Δmass_inv -3.7608e-7
+DIAG no edit, star 128: steps 1..14, sim time 0.5339, box BoxReport { x0: 8, y0: 8, w: 48, h: 48, fft: [128, 128], from_step: 1, fits: 2, tiles: [6, 6, 1], cells: [9, 1, 1] }; mass 1.049558e2 (invariant drift 3.316e-11 of the grid's, painted 0.000000e0, preset_dropped 0.000000e0, vacuum_reset 2.141e-4); energy invariant drift -1.8207e0 → 9.368e-3 |W| per τ_dyn (|W| 1.0289e3, τ_dyn 2.8262; tools 0.0000e0, floor_added -2.2865e-3, radiated 5.9150e-2)
+DIAG no edit, star 128: energy invariant drift 9.368e-3 |W| per τ_dyn
+DIAG DIAG no edit, star + sun 256: edit step: Δinvariant 8.6202e0, ΔW -1.1007e1, Δtools 0.0000e0, Δfloor_added -1.0214e-7, Δvacuum_reset 2.2063e-8, Δmass_inv 2.5173e-5, dt 0.0303; after it: Δinvariant 5.6422e1 → 2.953e-3 |W| per τ_dyn, Δmass_inv -1.2260e-5
+DIAG no edit, star + sun 256: steps 1..14, sim time 0.3131, box BoxReport { x0: 24, y0: 24, w: 208, h: 208, fft: [512, 512], from_step: 1, fits: 2, tiles: [26, 26, 1], cells: [169, 1, 1] }; mass 3.455988e3 (invariant drift 3.736e-9 of the grid's, painted 0.000000e0, preset_dropped 0.000000e0, vacuum_reset 9.346e-4); energy invariant drift 6.5042e1 → 3.075e-3 |W| per τ_dyn (|W| 2.6808e5, τ_dyn 3.9689; tools 0.0000e0, floor_added -2.9573e-2, radiated 4.8324e1)
+DIAG no edit, star + sun 256: energy invariant drift 3.075e-3 |W| per τ_dyn
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 415 filtered out; finished in 0.90s
+== 08:19:43 iteration 2: the lead's rulings — scene writes floor; energy reported; edit + scene modules, RTX 4090
+error[E0502]: cannot borrow `planes` as mutable because it is also borrowed as immutable
+   --> crates/sr-engine/tests/gpu/edit.rs:614:17
+error[E0502]: cannot borrow `planes` as mutable because it is also borrowed as immutable
+   --> crates/sr-engine/tests/gpu/edit.rs:615:17
+error: could not compile `sr-engine` (test "gpu") due to 2 previous errors
+error[E0502]: cannot borrow `planes` as mutable because it is also borrowed as immutable
+   --> crates/sr-engine/tests/gpu/edit.rs:614:17
+error[E0502]: cannot borrow `planes` as mutable because it is also borrowed as immutable
+   --> crates/sr-engine/tests/gpu/edit.rs:615:17
+error: could not compile `sr-engine` (test "gpu") due to 2 previous errors
+== 08:19:58 iteration 2b (borrow fix)
+paint into an empty world: steps 1..14, sim time 0.9321, the edit's Δt 0.4472, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126907e0, invariant drift 2.741e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.867e-1); energy invariant (reported): the edit's step -1.7662e0 with ΔW -1.6593e0, the 12 steps after it -6.0102e-2 of |W| 1.6027e0 (tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6908e0)
+ok
+paint on Σ = 0 vacuum: steps 1..14, sim time 0.9321, the edit's Δt 0.4472, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 4.126905e0, invariant drift 3.802e-6 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset -1.868e-1); energy invariant (reported): the edit's step -1.7662e0 with ΔW -1.6593e0, the 12 steps after it -6.0102e-2 of |W| 1.6027e0 (tools 1.7414e1, floor_added 8.9553e-1, radiated 1.6909e0)
+ok
+paint beside a star: steps 1..14, sim time 0.4645, the edit's Δt 0.0416, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2, invariant drift 3.404e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant (reported): the edit's step -6.3252e0 with ΔW -5.4314e0, the 12 steps after it -1.1023e0 of |W| 1.0112e3 (tools 1.7414e1, floor_added -5.3096e-3, radiated 8.2194e-1)
+ok
+preset drop beside a star: steps 1..14, sim time 0.3305, the edit's Δt 0.0416, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3, invariant drift 5.812e-9 of it (painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.998e-4); energy invariant (reported): the edit's step -2.6610e5 with ΔW -2.6611e5, the 12 steps after it 5.8667e1 of |W| 2.6801e5 (tools 6.3485e4, floor_added -2.9024e-2, radiated 5.7831e1)
+ok
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 401 filtered out; finished in 2.82s
+
+thread 'scene::objects_land_where_section_2_12_4_puts_them' (229445) panicked at crates/sr-engine/tests/gpu/scene.rs:157:5:
+assertion `left == right` failed
+    scene::objects_land_where_section_2_12_4_puts_them
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 407 filtered out; finished in 1.15s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== 08:21:01 iteration 3: whole gpu test binary (every module), RTX 4090 — the scene-vacuum change's reach
+test adapter::live_this_boxs_adapters_are_listed ... FAILED
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... FAILED
+test multi::the_two_suns_are_far_enough_apart_not_to_be_one_cloud ... FAILED
+test preset::the_cells_hold_the_mass_asked_for ... FAILED
+test preset::the_composition_is_the_suns_at_rest_and_the_temperature_uniform ... FAILED
+test preset::the_radius_and_central_sigma_follow_the_formula_and_the_cap ... FAILED
+test twin::p8_in_the_driver_books_what_it_changes ... FAILED
+thread 'adapter::live_this_boxs_adapters_are_listed' (229907) panicked at crates/sr-engine/tests/gpu/main.rs:178:9:
+thread 'jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple' (232237) panicked at crates/sr-engine/tests/gpu/jeans.rs:305:5:
+thread 'multi::the_two_suns_are_far_enough_apart_not_to_be_one_cloud' (232450) panicked at crates/sr-engine/tests/gpu/multi.rs:150:9:
+thread 'preset::the_cells_hold_the_mass_asked_for' (233073) panicked at crates/sr-engine/tests/gpu/preset.rs:38:9:
+thread 'preset::the_composition_is_the_suns_at_rest_and_the_temperature_uniform' (233074) panicked at crates/sr-engine/tests/gpu/preset.rs:127:17:
+thread 'preset::the_radius_and_central_sigma_follow_the_formula_and_the_cap' (233075) panicked at crates/sr-engine/tests/gpu/preset.rs:66:9:
+thread 'twin::p8_in_the_driver_books_what_it_changes' (233775) panicked at crates/sr-engine/tests/gpu/twin.rs:166:5:
+test result: FAILED. 408 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 288.37s
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== 08:26:50 iteration 4: the six vacuum-reading tests updated; jeans, multi, preset, twin, scene modules, RTX 4090
+jeans: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 409 filtered out; finished in 0.35s
+multi: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 410 filtered out; finished in 24.14s
+preset: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 410 filtered out; finished in 46.15s
+twin: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 409 filtered out; finished in 1.09s
+scene: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 407 filtered out; finished in 1.19s
+== 08:29:07 Verify 1 on laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py edits --task M0-D101
+edits     14/0/0       8.64 s  GO
+logs: milestones/m0/logs/M0-D101.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+1c760083f53e
+anchor: 111 path×scope entries moved by this run
+anchor: 315 paths checked · 309 skipped (3 classes) · 0 never checked · 8 stale · 0 unclassified · 0 owed · 323 covered of 632 visible
+verify: 14 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 8.64 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.52->1.76
+=== GO ===
+== 08:29:24 Verify 2 on laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm edits --task M0-D101
+edits · clean · GO · arm 1/3, 2 left
+edits · plant edit-ignored · RED (proven: 6 failed) · arm 2/3, 1 left
+edits · plant edit-zero-vacuum · RED (proven: 4 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope edits · 38.56 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D101.edits.redarm.log
+=== GO ===
+== 08:30:18 M0-V10's probe re-run on the fixed binary (laserax-ai-server, RTX 4090; scenes and edits in /tmp/v10)
+    Finished `release` profile [optimized] target(s) in 3.30s
+B_box_hot_paint_outside_3: SR-HEADLESS DONE steps=3 sim_time=0.171842 until=none
+B_box_hot_paint_outside_200: SR-HEADLESS DONE steps=200 sim_time=6.151040 until=none
+paint_cold_outside_200: SR-HEADLESS DONE steps=200 sim_time=6.245717 until=none
+E_empty_paint_step2_200: SR-HEADLESS DONE steps=200 sim_time=7.501468 until=none
+F_empty_paint_step0_3: SR-HEADLESS DONE steps=3 sim_time=0.564615 until=none
+A_wide_cold_inside_200: SR-HEADLESS DONE steps=200 sim_time=6.412346 until=none
+== 08:33:29 the claim on laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-D101
+NEVER CHECKED  tests/plants/port-no-fallback.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/smoke-no-sandbox.patch  (no entry for web)
+NEVER CHECKED  tests/plants/status-never-ready.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/web-autoload.patch  (no entry for web)
+NEVER CHECKED  tests/plants/web-no-gpu-check.patch  (no entry for web)
+NEVER CHECKED  tests/smoke.sh  (no entry for desktop)
+NEVER CHECKED  tests/web/check.sh  (no entry for web)
+NEVER CHECKED  tools/pb/launch.json  (no entry for desktop, web)
+NEVER CHECKED  web/Trunk.toml  (no entry for web)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   302  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  adapter: 1 failed · log milestones/m0/logs/M0-D101.adapter.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready; desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: no ready within 90 s (SR-STATUS-PORT never printed, last status none) · log milestones/m0/logs/M0-D101.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-D101.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-D101.capture.log
+  anchor: 114 never checked, 0 stale, 0 unclassified - every one named above
+verify: 1149 passed, 9 failed, 0 skipped · 47/51 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 17 not impacted · 149.56 s + loop 38.04 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.1->1.41 · base: M0-D101's start 2026-10-29T08:05:50-04:00
+=== NO-GO: adapter: 1 failed · log milestones/m0/logs/M0-D101.adapter.log; desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the h... ===
+== 08:37:49 the claim's four server-blind scopes on linux-pc (no display, no trunk, no xvfb-run on the server — R18's precedent, M0-D69): verify.py adapter desktop web capture --task M0-D101-lpc
+adapter   10/0/0      75.06 s  GO · step 1/4, 3 left
+desktop   4/0/0      231.41 s  GO · step 2/4, 2 left
+web       3/0/0      279.31 s  GO · step 3/4, 1 left
+capture   2/0/0       70.76 s  GO · step 4/4, 0 left
+logs: milestones/m0/logs/M0-D101-lpc.<scope>.log · record: loop_times.jsonl · tree feb41a3510c9+0b44240288a8
+anchor: 370 path×scope entries moved by this run
+anchor: 323 paths checked · 310 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 323 covered of 633 visible
+verify: 19 passed, 0 failed, 0 skipped · 4/4 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 95.94 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 43.79->114.99
+=== GO ===

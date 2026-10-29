@@ -16,7 +16,8 @@
 //!
 //! Every pass runs inside the active box ([`boxfit`], §1.3.3, M0-T21): a box-sized dispatch takes its workgroup count
 //! from the box's indirect sizes on the GPU ([`Size::Indirect`]), never from a readback. The box is fit before step 0
-//! (ahead of the initial Δt reduction), after P9 at step indices ≡ 0 (mod 16), and in P0 after an edit outside it.
+//! (ahead of the initial Δt reduction), after P9 at step indices ≡ 0 (mod 16), and in P0 after an edit outside it. A step
+//! whose P0 paints or drops then re-makes Δt's CFL term over that box ([`dt`], §0.5 [M0-D110]); no other step records it.
 //!
 //! A frame ([`latch`], §1.8.3, §1.8.5, M0-T22) records N steps under the latch: every dispatch of a step then takes its
 //! workgroup count from a buffer the latch's controller can zero, and the guard's and the re-fit's schedule is the GPU's
@@ -621,6 +622,10 @@ impl Step {
                     lists.insert(0, (std::slice::from_ref(hold), 1, true));
                 }
                 lists.push((&self.boxfit.on_edit, 1, false));
+                // A paint or a drop: Δt_n re-made over the state the edits left, in the box just re-fit (§0.5 [M0-D110]).
+                if self.edits.as_ref().is_some_and(|e| e.deposits_at(n)) {
+                    lists.push((&self.dt.refresh, 1, false));
+                }
             }
             if let (Pass::Heat, Some((_, carry)), Some(h)) = (*pass, gate, &self.heat) {
                 let (head, rest) = dispatches.split_at(heat::HEAD);

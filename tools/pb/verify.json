@@ -710,11 +710,11 @@
       ]
     },
     "edits": {
-      "desc": "player edits on the GPU, P0 (contract \u00a71.3.2 P0, \u00a71.12, \u00a72.7, \u00a72.9, \u00a73.1; M0-T76): crates/sr-engine/src/step/edit.rs and shaders/edit.wgsl, Step::with_edits and Step::queue_edit; `bash tests/gpu.sh edit physics` \u2014 64 \u00d7 64 to 256 \u00d7 256 worlds run through P0, P1, P8 and P9 alone, one step after the edits are queued, against the f64 twin of a deposit (\u03a3 \u03b5_th added to, the cold energy following the new \u03a3 and composition, the momentum density unchanged) and of the heat and cool factors: paint (113 cells of a radius-6 brush: \u03a3 + paint_sigma, mixed by mass, momentum bit-identical, E within 2e-5, painted = 113 \u00d7 paint_sigma), erase (the floor state, hydrogen, at rest; what is outside the brush bit-identical), heat and cool (\u03b5_th \u00d7 1.05 / 0.95 within 5e-5, floored at T_floor, vacuum and \u03a3, momentum untouched), a hot dense C/O cloud (\u03a3 = 300, T = 3e4, cold pressure on) taking the same paint and heat as warm gas (B7), a Sun-like preset dropped on a cell against the scene's own planes (\u03a3 within 1e-6, E within 2e-5, preset_dropped = the cloud's mass within 1e-5, the box grown to it), drops within 40 cells of an edge refused (`presets.no_room`) and drops with room accepted, the box re-fit once by a paint outside it and not by an edit inside it (equal to the oracle), Clear (every cell the floor state, the sinks removed, cleared booked), the queue (edits in order, once, eight at most, bad radius, cell, species and an unbuilt step refused); in every case the state's change in mass and energy equals the booked terms (with P8's) to 1e-6 of the field's total. edit-ignored is \u00a75.2's G-TOUCH plant: P0 drops edits on non-vacuum cells",
+      "desc": "player edits on the GPU, P0 (contract \u00a71.3.2 P0, \u00a71.12, \u00a72.7, \u00a72.9, \u00a73.1; M0-T76): crates/sr-engine/src/step/edit.rs and shaders/edit.wgsl, Step::with_edits and Step::queue_edit; `bash tests/gpu.sh edit physics` \u2014 64 \u00d7 64 to 256 \u00d7 256 worlds run through P0, P1, P8 and P9 alone, one step after the edits are queued, against the f64 twin of a deposit (\u03a3 \u03b5_th added to, the cold energy following the new \u03a3 and composition, the momentum density unchanged) and of the heat and cool factors: paint (113 cells of a radius-6 brush: \u03a3 + paint_sigma, mixed by mass, momentum bit-identical, E within 2e-5, painted = 113 \u00d7 paint_sigma), erase (the floor state, hydrogen, at rest; what is outside the brush bit-identical), heat and cool (\u03b5_th \u00d7 1.05 / 0.95 within 5e-5, floored at T_floor, vacuum and \u03a3, momentum untouched), a hot dense C/O cloud (\u03a3 = 300, T = 3e4, cold pressure on) taking the same paint and heat as warm gas (B7), a Sun-like preset dropped on a cell against the scene's own planes (\u03a3 within 1e-6, E within 2e-5, preset_dropped = the cloud's mass within 1e-5, the box grown to it), drops within 40 cells of an edge refused (`presets.no_room`) and drops with room accepted, the box re-fit once by a paint outside it and not by an edit inside it (equal to the oracle), Clear (every cell the floor state, the sinks removed, cleared booked), the queue (edits in order, once, eight at most, bad radius, cell, species and an unbuilt step refused); in every case the state's change in mass and energy equals the booked terms (with P8's) to 1e-6 of the field's total. M0-D101: four cases run whole steps (P0\u2013P9, every switch on, as headless builds them) on worlds loaded from a scene, whose vacuum is the floor state: a paint beside a star's box, a paint into an empty world and a Sun-like preset drop outside the box \u2014 every cell finite after 12 more steps, the box holding the edit and its margin from the edit's step, the ledger's mass invariant within G-CONS's 1e-6 of the grid's mass, the energy invariant reported (an edit's \u0394W is booked by no \u00a72.9 term, M0-D109) \u2014 and a paint on a dump's \u03a3 = 0 vacuum (made before M0-D101) finite. M0-D110 (\u00a70.5 [M0-D110]): the empty world's paint and a paint into a box of cold gas (an H disk at T_floor, \u03a3_c 0.005) step on the painted gas's bound \u2014 the edit's \u0394t at or under C / the largest r_h of the brush's f64 deposits within 1e-3, the box's \u0394t before it over twice that bound, the edit's vacuum_reset \u2265 0 \u2014 a paint queued before step 0 likewise (step 0's \u0394t at or under its bound), and 14 whole steps with nothing queued are bit-identical (planes, \u0394t_n, \u0394t_{n+1}, sim time) to a step built without P0's edits. edit-ignored is \u00a75.2's G-TOUCH plant: P0 drops edits on non-vacuum cells; edit-zero-vacuum puts back M0-D101's cause: the scene's vacuum at \u03a3 = 0 and deposit's 0/0 there; edit-no-refresh drops M0-D110's re-reduction (the paint's step back on P9's \u0394t)",
       "cmd": "bash tests/gpu.sh edit physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 10,
+      "expected": 17,
       "timeout_s": 900,
       "paths": [
         "crates/sr-physics/**",
@@ -727,12 +727,22 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/gpu.sh",
-        "tests/plants/edit-ignored.patch"
+        "tests/plants/edit-ignored.patch",
+        "tests/plants/edit-zero-vacuum.patch",
+        "tests/plants/edit-no-refresh.patch"
       ],
       "plants": [
         {
           "id": "edit-ignored",
           "patch": "tests/plants/edit-ignored.patch"
+        },
+        {
+          "id": "edit-zero-vacuum",
+          "patch": "tests/plants/edit-zero-vacuum.patch"
+        },
+        {
+          "id": "edit-no-refresh",
+          "patch": "tests/plants/edit-no-refresh.patch"
         }
       ]
     },

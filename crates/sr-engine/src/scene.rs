@@ -9,8 +9,10 @@
 //! units — cell (i, j) covers [i, i + 1) × [j, j + 1) and is sampled at its centre (i + ½, j + ½) — so a disk at (300,
 //! 200) sits on the 600 × 400 world's exact centre. A `rect` covers the cells [x0, x0 + w) × [y0, y0 + h), clipped to
 //! the world. Objects add where they overlap (mass, momentum, energy and each species' mass); cells no object covers
-//! are vacuum (Σ = 0, x_H = 1, as P8 leaves them). A world resized from the command line (`--world`) keeps the objects
-//! where they stood relative to the world's centre.
+//! hold the floor state — Σ_floor of hydrogen at T_floor, at rest — as P8 leaves a vacuum cell and as the ledger counts
+//! every cell outside the active box (§1.3.3, §2.7, §2.9; M0-D101: they were Σ = 0, which P8 floors only once a box
+//! holds them, so a paint there read 0/0). A world resized from the command line (`--world`) keeps the objects where they
+//! stood relative to the world's centre.
 
 use std::path::Path;
 
@@ -458,7 +460,11 @@ impl Scene {
                 sum.add(y * w + x, sigma, &gas, eps_th + eos.eps_cold(sigma, comp.y_e, x_n) + kinetic);
             }
         }
-        Ok((sum.planes(), warnings))
+        // The floor state of the cells no object covers: P8's own, Σ_floor (T_floor/μ + ε_cold(Σ_floor)) of hydrogen.
+        let sigma_floor = physics.get("sigma_floor").ok_or("physics.json has no sigma_floor")?;
+        let hydrogen = elements.composition(&std::array::from_fn(|s| f64::from(u8::from(s == 0))));
+        let floor_eps = Eos::eps_th_of_t(eos.t_floor(), 1.0 / hydrogen.inv_mu) + eos.eps_cold(sigma_floor, hydrogen.y_e, 0.0);
+        Ok((sum.planes(sigma_floor, sigma_floor * floor_eps), warnings))
     }
 }
 
@@ -491,12 +497,15 @@ impl Sums {
         }
     }
 
-    fn planes(&self) -> Vec<f32> {
+    /// The planes; a cell nothing was added to holds `floor_sigma` of hydrogen at rest, energy `floor_energy`.
+    fn planes(&self, floor_sigma: f64, floor_energy: f64) -> Vec<f32> {
         let cells = self.sigma.len();
         let mut planes = vec![0f32; N_CHANNELS * cells];
         for i in 0..cells {
             let sigma = self.sigma[i];
             if sigma <= 0.0 {
+                planes[i] = floor_sigma as f32;
+                planes[3 * cells + i] = floor_energy as f32;
                 planes[SPECIES.start * cells + i] = 1.0;
                 continue;
             }
