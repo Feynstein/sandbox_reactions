@@ -1,0 +1,108 @@
+==== 2026-10-29T10:13:06-04:00 views · clean · a fresh scratch copy of the tree
+== 2026-10-29T10:13:07-04:00 views · task M0-T80 · box laserax-ai :: bash tests/gpu.sh views physics
+-- views · exit=0 · 45.69 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-r8p53ixs/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-r8p53ixs/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.01s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 11 tests
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::vacuum_is_black_where_the_contract_says ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 418 filtered out; finished in 8.89s
+
+
+==== 2026-10-29T10:13:06-04:00 views · plant views-heat-linear · a fresh scratch copy of the tree
+planted views-heat-linear: tests/plants/views-heat-linear.patch -> crates/sr-engine/shaders/render.wgsl
+== 2026-10-29T10:13:07-04:00 views · task M0-T80 · box laserax-ai :: bash tests/gpu.sh views physics
+-- views · exit=101 · 24.74 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-r8p53ixs/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-r8p53ixs/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 16.61s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-c1ed76875989c7d5)
+
+running 11 tests
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'views::alpha_between_blends_the_states' (1816162) panicked at crates/sr-engine/tests/gpu/views.rs:290:9:
+Heat α=0.25: cell 3625 is off by 231.293 levels: got [0, 0, 6, 255], formula [231.29, 105.56, 105.39]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'views::heat_matches_the_formula_across_a_world' (1820286) panicked at crates/sr-engine/tests/gpu/views.rs:290:9:
+Heat α=1: cell 1821 is off by 229.366 levels: got [0, 0, 6, 255], formula [229.37, 99.73, 105.10]
+FAILED
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'views::heat_reads_the_stops_colours' (1820321) panicked at crates/sr-engine/tests/gpu/views.rs:373:13:
+stop 1 (#3B0F70): got [0, 0, 4, 255], stop #3B0F70
+FAILED
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'views::temperatures_translate_past_the_anchors' (1820360) panicked at crates/sr-engine/tests/gpu/views.rs:290:9:
+Heat α=1: cell 1302 is off by 109.343 levels: got [0, 0, 4, 255], formula [69.05, 17.98, 113.34]
+FAILED
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'views::the_maps_midpoints_are_linear_rgb_means' (1820750) panicked at crates/sr-engine/tests/gpu/views.rs:408:13:
+Heat midpoint: got [0, 0, 4, 255], linear mean [0.4275, 0.1203, 0.4740]
+FAILED
+test views::vacuum_is_black_where_the_contract_says ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    views::alpha_between_blends_the_states
+    views::heat_matches_the_formula_across_a_world
+    views::heat_reads_the_stops_colours
+    views::temperatures_translate_past_the_anchors
+    views::the_maps_midpoints_are_linear_rgb_means
+
+test result: FAILED. 6 passed; 5 failed; 0 ignored; 0 measured; 418 filtered out; finished in 8.02s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

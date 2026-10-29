@@ -1,0 +1,74 @@
+== 2026-10-29T10:24:18-04:00 radiation_force · task M0-T81 · box laserax-ai :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 11.35 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 11 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.194924 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.1949235012289137, mass invariant 5000.000040320 → 5000.000803874 (1.53e-7), floor_added 1944039.811308139, 0 non-finite values in the final dump
+ok
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.194924 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.19492353056557477, mass invariant 5000.000040320 → 4999.999829914 (4.21e-8), floor_added 1944059.2754489344, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -2.909540858e-1, Σ Δt·f -2.909541000e-1, relative 4.90e-8
+SR-RADFORCE gpu x, right: gained 2.909540857e-1, Σ Δt·f 2.909541000e-1, relative 4.94e-8
+SR-RADFORCE gpu y, top: gained -2.144473412e-2, Σ Δt·f -2.144473443e-2, relative 1.46e-8
+SR-RADFORCE gpu y, bottom: gained 2.144473427e-2, Σ Δt·f 2.144473442e-2, relative 7.17e-9
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 1.29e-10 of the largest Δt·f 4.16e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -2.909540858e-1, Σ Δt·f -2.909541000e-1, relative 4.90e-8
+SR-RADFORCE gpu x, right: gained 2.909540857e-1, Σ Δt·f 2.909541000e-1, relative 4.94e-8
+SR-RADFORCE gpu y, top: gained -2.144473412e-2, Σ Δt·f -2.144473443e-2, relative 1.46e-8
+SR-RADFORCE gpu y, bottom: gained 2.144473427e-2, Σ Δt·f 2.144473442e-2, relative 7.17e-9
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 1.29e-10 of the largest Δt·f 4.16e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 3.716312509e-2, the hand F's 3.716312491e-2 (4.92e-9), P5's F after -3.426341113e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -3.716312509e-2, the hand F's -3.716312491e-2 (4.92e-9), P5's F after 3.426341113e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 2.702857518e-3, the hand F's 2.702857514e-3 (1.40e-9), P5's F after -2.680430074e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -2.702857518e-3, the hand F's -2.702857514e-3 (1.40e-9), P5's F after 2.680430073e-3 (2.01e0)
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 3.716312509e-2, the hand F's 3.716312491e-2 (4.92e-9), P5's F after -3.426341113e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -3.716312509e-2, the hand F's -3.716312491e-2 (4.92e-9), P5's F after 3.426341113e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 2.702857518e-3, the hand F's 2.702857514e-3 (1.40e-9), P5's F after -2.680430074e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -2.702857518e-3, the hand F's -2.702857514e-3 (1.40e-9), P5's F after 2.680430073e-3 (2.01e0)
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178541183e3, Σ s·Δt·f -1.178541119e3 (5.45e-8), uncapped Σ Δt·f -2.503e5
+SR-RADFORCE gpu cap, x right: gained 1.178541183e3, Σ s·Δt·f 1.178541119e3 (5.45e-8), uncapped Σ Δt·f 2.503e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 1.49e-7
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178541183e3, Σ s·Δt·f -1.178541119e3 (5.45e-8), uncapped Σ Δt·f -2.503e5
+SR-RADFORCE gpu cap, x right: gained 1.178541183e3, Σ s·Δt·f 1.178541119e3 (5.45e-8), uncapped Σ Δt·f 2.503e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 1.49e-7
+ok
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.19492, E 5.1894e6, floor_added 4.9768e6, mass invariant 5000.000040920 → 5000.000040935 (3.07e-12)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -3.301163298e-1, Σ Δt·f -3.301163298e-1, relative 1.68e-16
+SR-RADFORCE twin x, right: gained 3.301163298e-1, Σ Δt·f 3.301163298e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -2.179488876e-2, Σ Δt·f -2.179488876e-2, relative 3.18e-16
+SR-RADFORCE twin y, bottom: gained 2.179488876e-2, Σ Δt·f 2.179488876e-2, relative 4.78e-16
+SR-RADFORCE twin cells: worst |gained − Δt·f| 1.63e-19 of the largest Δt·f 9.41e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -7.698094182e2, Σ s·Δt·f -7.698094182e2 (0.00e0), uncapped Σ Δt·f -6.622e5
+SR-RADFORCE twin cap, x right: gained 7.698094182e2, Σ s·Δt·f 7.698094182e2 (0.00e0), uncapped Σ Δt·f 6.622e5
+SR-RADFORCE twin cap: 284 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 423 filtered out; finished in 11.11s
+
+

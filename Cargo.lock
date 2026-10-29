@@ -2232,6 +2232,7 @@ dependencies = [
 name = "sr-engine"
 version = "0.0.0"
 dependencies = [
+ "png",
  "pollster",
  "serde_json",
  "sr-physics",

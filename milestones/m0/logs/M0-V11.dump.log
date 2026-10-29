@@ -1,0 +1,112 @@
+== 2026-10-29T10:50:53-04:00 dump · task M0-V11 · box laserax-ai-server :: bash tests/gpu.sh dump physics
+-- dump · exit=0 · 50.20 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 12 tests
+test dump::a_dump_carries_two_sinks_bit_for_bit_through_the_file_and_the_load ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test dump::a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.213874 until=none
+summary 2.21387352049350739, final dump 2.21387352049350739, twin 2.21387352049350739; 0.000e0 off the f64 sum
+ok
+test dump::a_truncated_dump_is_refused_wherever_it_is_cut ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+cut at 0: truncated: 0 bytes, the magic alone is 8
+cut at 5: truncated: 5 bytes, the magic alone is 8
+cut at 8: truncated in the header length
+cut at 11: truncated in the header length
+cut at 12: truncated in the header: 362 bytes announced, 0 present
+cut at 187: truncated in the header: 362 bytes announced, 175 present
+cut at 373: truncated in the header: 362 bytes announced, 361 present
+cut at 374: truncated in the planes: 0 of 229376 bytes
+cut at 377: truncated in the planes: 3 of 229376 bytes
+cut at 16758: truncated in the planes: 16384 of 229376 bytes
+cut at 229746: truncated in the planes: 229372 of 229376 bytes
+cut at 229749: truncated in the planes: 229375 of 229376 bytes
+SR-ERROR bad dump: truncated in the planes: 229375 of 229376 bytes
+ok
+test dump::a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun_disk step 30: 6573 of 240000 cells with a non-zero P5 rate
+the same dump without its rate: 49623 state values differ at step 40
+ok
+test dump::a_wrong_magic_or_a_header_off_the_contract_is_refused ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+magic [83, 82, 68, 85, 77, 80, 48, 50]: not a state dump: magic "SRDUMP02", expected "SRDUMP01"
+magic [115, 114, 100, 117, 109, 112, 48, 49]: not a state dump: magic "srdump01", expected "SRDUMP01"
+magic [137, 80, 78, 71, 13, 10, 26, 10]: not a state dump: magic "�PNG\r\n\u{1a}\n", expected "SRDUMP01"
+magic [0, 0, 0, 0, 0, 0, 0, 0]: not a state dump: magic "\0\0\0\0\0\0\0\0", expected "SRDUMP01"
+header.extra: unknown key: header.extra: unknown key
+header.resume.box_args: missing: header.resume.box_args: missing
+header.resume: missing: header.resume: missing
+header.version: 2: header.version: 2, this build reads 1
+header.channels: header.channels: ["sigma","mom_y","mom_y","energy","x_H","x_He","x_C","x_O","x_Ne","x_Mg","x_Si","x_S","x_Fe","x_n"], expected §2.2's ["sigma", "mom_x", "mom_y", "energy", "x_H", "x_He", "x_C", "x_O", "x_Ne", "x_Mg", "x_Si", "x_S", "x_Fe", "x_n"] in that order
+header: world 60: header: world 60 × 64: width and height must be multiples of 8 within [64, 2048]
+header.resume.box: header.resume.box: not 8 whole numbers below 2^32: [1,2,3]
+header.resume.flux: missing: header.resume.flux: missing
+header.resume.flux: not true or false: header.resume.flux: not true or false: 1
+header.resume.flux: true, but no F planes: header.resume.flux: true, but no F planes follow §2.2's 14
+flag cleared: header.resume.flux: false, but F's 2 planes follow §2.2's 14
+F_y cut: truncated in the planes: 245760 of 262144 bytes
+header.resume.rate: true, but no rate plane: header.resume.rate: true, but no rate plane follows F's 2
+header.resume.rate: false, but a plane follows: header.resume.rate: false, but a plane follows F's 2
+header.resume.rate: true without F: header.resume.rate: true without F (flux false): the rate is P5's
+SR-ERROR bad dump: not a state dump: magic "SRDUMP02", expected "SRDUMP01"
+ok
+test dump::an_empty_worlds_steps_run_the_clock_on_the_floor_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+bare: DtReport { dt: 0.44721365, dt_next: 0.44721365, steps: 10, sim_time: 4.472136497497559, non_finite: None }; frame: FrameReport { steps_run: 10, advanced: 4.4721365, sim_time: 8.944272994995117, dt: 0.44721365, dt_next: 0.44721365, steps: 20, latch_fired: None, carried: false, cost: None }
+ok
+test dump::forty_steps_as_one_two_or_forty_frames_or_bare_give_one_dump_and_one_sim_time ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+40 × 1: sim_time 17.88854479789733887 (reported 17.88854479789733887), 0.000e0 off the f64 sum
+1 × 40: sim_time 17.88854479789733887 (reported 17.88854479789733887), 0.000e0 off the f64 sum
+2 × 20: sim_time 17.88854479789733887 (reported 17.88854479789733887), 0.000e0 off the f64 sum
+bare: sim_time 17.88854479789733887 (reported 17.88854479789733887), 0.000e0 off the f64 sum
+the f32 running sum: 3.599e-7 off
+ok
+test dump::headless_builds_p3_and_p7_from_the_scenes_switches_and_resumes_a_dump_holding_sinks ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.121337 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.121337 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.121337 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.121337 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=5 sim_time=0.121337 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2 sim_time=0.384850 until=none
+sinks after 2 more steps: [Sink { x: 45.569698333740234, y: 25.327852249145508, vx: 0.1516830325126648, vy: -0.5152835845947266, m: 16.06891632080078 }, Sink { x: 100.24779510498047, y: 40.94179916381836, vx: -0.011456056497991085, vy: 0.4967171847820282, m: 1.75 }]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ERROR bad dump: dump holds 2 sink(s), and this step runs no P3 to keep them
+ok
+test dump::headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.538306 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.213874 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=3.538306 until=none
+s_100.bin: F_x non-zero in 9368 cells, F_y in 9368
+F into a step without P5: dump holds F, and this step runs no P5 to keep it (heat off)
+no F into a step with P5: dump holds no F, and this step runs P5: its first step would push with F = 0
+SR-ERROR bad arguments: --world 128x128 against the dump's 256x256
+SR-ERROR bad arguments: --dump-every needs --out (dumps go to DIR/dumps)
+SR-ERROR bad arguments: --dump-every must be at least 1
+ok
+test dump::sun_disk_200_steps_carried_over_submissions_of_8_rounds_dump_the_engines_own_choice_byte_for_byte ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun_disk 200 steps: 1 submission(s) at the engine's choice; 450 bare submissions of 8 rounds; 251 frames of 8 rounds, 250 ending with a step held
+ok
+test dump::two_hundred_steps_through_a_dump_equal_two_hundred_straight_steps_state_and_reports ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+straight: [FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 22.360680997371674, dt: 0.44721362, dt_next: 0.44721362, steps: 50, latch_fired: None, carried: false, cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 44.72136199474335, dt: 0.44721362, dt_next: 0.44721362, steps: 100, latch_fired: Some(50), carried: false, cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 67.08204299211502, dt: 0.44721362, dt_next: 0.44721362, steps: 150, latch_fired: None, carried: false, cost: None }, FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 89.4427239894867, dt: 0.44721362, dt_next: 0.44721362, steps: 200, latch_fired: None, carried: false, cost: None }]
+resumed frame 2: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 67.08204299211502, dt: 0.44721362, dt_next: 0.44721362, steps: 150, latch_fired: None, carried: false, cost: None }
+resumed frame 3: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 89.4427239894867, dt: 0.44721362, dt_next: 0.44721362, steps: 200, latch_fired: None, carried: false, cost: None }
+cells only: FrameReport { steps_run: 50, advanced: 22.36068, sim_time: 22.360680997371674, dt: 0.44721362, dt_next: 0.44721362, steps: 50, latch_fired: None, carried: false, cost: None }
+arming time lost: FrameReport { steps_run: 2, advanced: 0.89442724, sim_time: 45.615789234638214, dt: 0.44721362, dt_next: 0.44721362, steps: 102, latch_fired: Some(2), carried: false, cost: None }
+ok
+test dump::write_then_read_gives_a_bit_identical_state_and_the_bytes_follow_2_12_3 ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+header: {"channels":["sigma","mom_x","mom_y","energy","x_H","x_He","x_C","x_O","x_Ne","x_Mg","x_Si","x_S","x_Fe","x_n"],"height":64,"resume":{"box":[32,8,32,32,64,64,17,3],"box_args":[4,4,1,4,1,1],"dt":0.08713509887456894,"dt_next":0.08713509887456894,"flux":false,"latch_since":0.0,"rate":false},"sim_time":1.568431779742241,"sinks":[],"step":18,"version":1,"width":128}
+ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 428 filtered out; finished in 50.02s
+
+

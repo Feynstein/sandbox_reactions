@@ -1,0 +1,132 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why tools_selftest: never: tests/plants/tools-selftest-box-list.patch · stale: tools/pb/verify.py
+why build: stale: crates/sr-engine/tests/gpu/main.rs
+why burn_cell: stale: crates/sr-engine/tests/gpu/main.rs
+why burn_order: stale: crates/sr-engine/tests/gpu/main.rs
+why neutrino: stale: crates/sr-engine/tests/gpu/main.rs
+why sink: stale: crates/sr-engine/tests/gpu/main.rs
+why nu_heat: stale: crates/sr-engine/tests/gpu/main.rs
+why summary: stale: crates/sr-engine/tests/gpu/main.rs
+why ledger: stale: crates/sr-engine/tests/gpu/main.rs
+why preset_cloud: stale: crates/sr-engine/tests/gpu/main.rs
+why observe_run: stale: crates/sr-engine/tests/gpu/main.rs
+why multi: stale: crates/sr-engine/tests/gpu/main.rs
+why edits: stale: crates/sr-engine/tests/gpu/main.rs
+why edits_file: stale: crates/sr-engine/tests/gpu/main.rs
+why sod: stale: crates/sr-engine/tests/gpu/main.rs
+why edges: stale: crates/sr-engine/tests/gpu/main.rs
+why collapse: stale: crates/sr-engine/tests/gpu/main.rs
+why jeans: stale: crates/sr-engine/tests/gpu/main.rs
+why twin: stale: crates/sr-engine/tests/gpu/main.rs
+why cpu_gpu: stale: crates/sr-engine/tests/gpu/main.rs
+why heat_gauss: stale: crates/sr-engine/tests/gpu/main.rs
+why heat_implicit: stale: crates/sr-engine/tests/gpu/main.rs
+why heat_limiter: stale: crates/sr-engine/tests/gpu/main.rs
+why heat_stiff: stale: crates/sr-engine/tests/gpu/main.rs
+why heat_multigrid: stale: crates/sr-engine/tests/gpu/main.rs
+why radiation_force: stale: crates/sr-engine/tests/gpu/main.rs
+why grav_force: stale: crates/sr-engine/tests/gpu/main.rs
+why grav_selfforce: stale: crates/sr-engine/tests/gpu/main.rs
+why fft: stale: crates/sr-engine/tests/gpu/main.rs
+why state: stale: crates/sr-engine/tests/gpu/main.rs
+why booking: stale: crates/sr-engine/tests/gpu/main.rs
+why floors: stale: crates/sr-engine/tests/gpu/main.rs
+why dt: stale: crates/sr-engine/tests/gpu/main.rs
+why box: stale: crates/sr-engine/tests/gpu/main.rs
+why latch: stale: crates/sr-engine/tests/gpu/main.rs
+why timing: stale: crates/sr-engine/tests/gpu/main.rs
+why scene: stale: crates/sr-engine/tests/gpu/main.rs
+why dump: stale: crates/sr-engine/tests/gpu/main.rs
+why boot: stale: crates/sr-engine/tests/gpu/main.rs
+why calibration: stale: crates/sr-engine/tests/gpu/main.rs
+why calibrate_cold: stale: crates/sr-engine/tests/gpu/main.rs
+why cold_core: stale: crates/sr-engine/tests/gpu/main.rs
+why calibrate_bisect: stale: crates/sr-engine/tests/gpu/main.rs
+why calibrate_order: stale: crates/sr-engine/tests/gpu/main.rs
+why readouts: stale: crates/sr-engine/tests/gpu/main.rs
+plan_lint         715/0/0      0.11 s  GO · step 1/46, 45 left
+tools_selftest    10/0/0      19.22 s  GO · step 2/46, 44 left
+build             2/0/0        1.83 s  GO · step 3/46, 43 left
+burn_cell         18/0/0       8.02 s  GO · step 4/46, 42 left
+burn_order        4/0/0        2.92 s  GO · step 5/46, 41 left
+neutrino          18/0/0       7.63 s  GO · step 6/46, 40 left
+sink              34/0/0      23.60 s  GO · step 7/46, 39 left
+nu_heat           15/0/0      11.73 s  GO · step 8/46, 38 left
+summary           7/0/0        7.43 s  GO · step 9/46, 37 left
+ledger            5/0/0       12.19 s  GO · step 10/46, 36 left
+preset_cloud      5/0/0       50.44 s  GO · step 11/46, 35 left
+observe_run       9/0/0       53.04 s  GO · step 12/46, 34 left
+multi             5/0/0       49.24 s  GO · step 13/46, 33 left
+edits             17/0/0      12.93 s  GO · step 14/46, 32 left
+edits_file        6/0/0       10.33 s  GO · step 15/46, 31 left
+sod               15/0/0       9.68 s  GO · step 16/46, 30 left
+edges             7/0/0       11.58 s  GO · step 17/46, 29 left
+collapse          6/0/0        1.92 s  GO · step 18/46, 28 left
+jeans             6/0/0        0.92 s  GO · step 19/46, 27 left
+twin              6/0/0        1.87 s  GO · step 20/46, 26 left
+cpu_gpu           3/0/0        8.48 s  GO · step 21/46, 25 left
+heat_gauss        14/0/0       5.32 s  GO · step 22/46, 24 left
+heat_implicit     8/0/0        3.17 s  GO · step 23/46, 23 left
+heat_limiter      8/0/0        4.92 s  GO · step 24/46, 22 left
+heat_stiff        13/0/0       6.22 s  GO · step 25/46, 21 left
+heat_multigrid    4/0/0        3.32 s  GO · step 26/46, 20 left
+radiation_force   11/0/0      10.43 s  GO · step 27/46, 19 left
+grav_force        13/0/0      10.03 s  GO · step 28/46, 18 left
+grav_selfforce    7/0/0        2.22 s  GO · step 29/46, 17 left
+fft               8/0/0        4.97 s  GO · step 30/46, 16 left
+state             6/0/0        3.17 s  GO · step 31/46, 15 left
+booking           4/0/0        2.97 s  GO · step 32/46, 14 left
+floors            7/0/0        4.37 s  GO · step 33/46, 13 left
+dt                8/0/0        7.83 s  GO · step 34/46, 12 left
+box               8/0/0       11.03 s  GO · step 35/46, 11 left
+latch             5/0/0        3.22 s  GO · step 36/46, 10 left
+timing            5/0/0       22.30 s  GO · step 37/46, 9 left
+scene             8/0/0        2.27 s  GO · step 38/46, 8 left
+dump              12/0/0      45.81 s  GO · step 39/46, 7 left
+boot              1/0/0        8.32 s  GO · step 40/46, 6 left
+desktop           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+web               owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+capture           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+calibration       12/0/0       0.16 s  GO · step 41/46, 5 left
+calibrate_cold    8/0/0        1.42 s  GO · step 42/46, 4 left
+cold_core         8/0/0        8.08 s  GO · step 43/46, 3 left
+calibrate_bisect  19/0/0      96.17 s  GO · step 44/46, 2 left
+calibrate_order   13/0/0       0.21 s  GO · step 45/46, 1 left
+readouts          9/0/0        0.11 s  GO · step 46/46, 0 left
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 82 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+tools_selftest · clean · GO · arm 1/3, 2 left
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed) · arm 2/3, 1 left
+tools_selftest · plant tools-selftest-box-list (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope tools_selftest · 11.64 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D111.tools_selftest.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-D111's start - a test, case or check M0-D111's Deliver: does not name
+FLAG oracle: tests/plants/tools-selftest-box-list.patch changed since M0-D111's start - a test, case or check M0-D111's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D111's start - a test, case or check M0-D111's Deliver: does not name
+FLAG oracle: tools/pb/verify.py changed since M0-D111's start - a test, case or check M0-D111's Deliver: does not name
+FLAG oracle: scope `tools_selftest` changed in tools/pb/verify.json - M0-D111's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-D111.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+b6c919c58b7e
+anchor: 47 path×scope entries moved by this run
+anchor: 327 paths checked · 313 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 327 covered of 640 visible
+skipped   305  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 1132 passed, 0 failed, 0 skipped · 46/46 scopes GO · 0 skipped · 3 owed · 0 NOT RUN · 20 not impacted · 143.69 s + loop 11.78 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 1.31->1.83 · base: M0-D111's start 2026-10-29T09:52:32-04:00
+=== GO ===

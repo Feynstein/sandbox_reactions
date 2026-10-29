@@ -1,0 +1,38 @@
+== 2026-10-29T10:14:18-04:00 multi · task M0-T80 · box laserax-ai :: bash tests/gpu.sh multi physics
+-- multi · exit=0 · 39.54 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test multi::clouds_one_empty_block_apart_are_two_objects ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.032126 until=none
+[{"id":1,"mass_sb":576.0000035315752,"stage":null,"stages":[]},{"id":2,"mass_sb":576.0000009536743,"stage":null,"stages":[]}]
+ok
+test multi::headless_presets_start_at_calibrations_masses ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.030443 until=none
+preset:sun: ledger start mass 3136.720 against calibration's 3136.718
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.028234 until=none
+preset:massive: ledger start mass 6677.221 against calibration's 6677.218
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.024865 until=none
+preset:giant: ledger start mass 18211.506 against calibration's 18211.504
+ok
+test multi::the_three_presets_hold_calibrations_masses ... preset:sun: calibrated mass 3136.718, the cells hold 3136.720, a = 38.70
+preset:massive: calibrated mass 6677.218, the cells hold 6677.221, a = 56.46
+preset:giant: calibrated mass 18211.504, the cells hold 18211.506, a = 93.25
+ok
+test multi::the_two_suns_are_far_enough_apart_not_to_be_one_cloud ... two_suns: 240 cells apart, a = 38.70 and 38.70: 162.60 cells of vacuum between the edges
+ok
+test multi::two_suns_stay_two_objects_with_stable_ids ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=32 sim_time=0.770710 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3446 sim_time=40.004752 until=met
+two_suns to t = 40.005 in 3446 steps
+object 1: 3123.2 sb = 0.939 Suns, Some(Sure(WhiteDwarf)), age Some(4000475243.9446745) years, stage "main_sequence"
+object 2: 3123.2 sb = 0.939 Suns, Some(Sure(WhiteDwarf)), age Some(4000475243.9446745) years, stage "main_sequence"
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 424 filtered out; finished in 39.39s
+
+

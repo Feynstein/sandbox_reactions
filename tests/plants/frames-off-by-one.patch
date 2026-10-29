@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/headless.rs
++++ b/crates/sr-engine/src/headless.rs
+@@ -1244,7 +1244,8 @@
+         // there); the chunk was waited for above, so no later step is in the image.
+         if let (Some((f, out)), Some(dir)) = (&frames, &args.out) {
+             if (first + done).is_multiple_of(f.every) {
+-                let path = dir.join("frames").join(format!("f_{}.png", first + done));
++                // planted: the frame is named for the step after the state it holds
++                let path = dir.join("frames").join(format!("f_{}.png", first + done + 1));
+                 if let Err(e) = out.write(&gpu, &path) {
+                     say(&format!("SR-ERROR bad arguments: --out {}: {e}", path.display()));
+                     return EXIT_ARGS;

@@ -1,0 +1,54 @@
+== 2026-10-29T10:14:22-04:00 edits · task M0-T80 · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=0 · 10.98 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 17 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::a_paint_queued_before_the_first_step_steps_on_its_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+paint before step 0: Δt_0 0.0673, §2.3.3's bound for the painted gas 0.0673
+ok
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::erase_writes_the_floor_state_and_books_what_left ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+paint into a cold box: steps 1..14, sim time 0.8229, the edit's Δt 0.0726 (P9's before it 0.2920), its vacuum_reset 9.846e-6, box BoxReport { x0: 32, y0: 32, w: 64, h: 64, fft: [128, 128], from_step: 1, fits: 2, tiles: [8, 8, 1], cells: [16, 1, 1] }; mass 8.131924e0, invariant drift 1.131e-8 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.870e-4); energy invariant (reported): the edit's step -3.5197e0 with ΔW -3.5025e0, the 12 steps after it -2.7212e-3 of |W| 4.1812e0 (tools 1.8202e1, floor_added 2.2738e-3, radiated 6.6476e-7)
+paint into a cold box: §2.3.3's bound for the painted gas 0.0726
+ok
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+paint into an empty world: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset 0.000e0, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940012e0, invariant drift 3.109e-9 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.519e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8144e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9774e-3, radiated 8.1899e-1)
+paint into an empty world: §2.3.3's bound for the painted gas 0.0673
+ok
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+paint on Σ = 0 vacuum: steps 1..14, sim time 0.5001, the edit's Δt 0.0673 (P9's before it 0.4472), its vacuum_reset -1.355e-5, box BoxReport { x0: 48, y0: 48, w: 40, h: 40, fft: [128, 128], from_step: 1, fits: 3, tiles: [5, 5, 1], cells: [7, 1, 1] }; mass 3.940010e0, invariant drift 3.920e-6 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 1.384e-4); energy invariant (reported): the edit's step -1.6590e0 with ΔW -1.6427e0, the 12 steps after it 3.8146e-3 of |W| 1.5826e0 (tools 1.7414e1, floor_added -2.9761e-3, radiated 8.1899e-1)
+ok
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+paint beside a star: steps 1..14, sim time 0.4645, the edit's Δt 0.0416 (P9's before it 0.0416), its vacuum_reset 7.349e-11, box BoxReport { x0: 8, y0: 8, w: 112, h: 112, fft: [256, 256], from_step: 1, fits: 3, tiles: [14, 14, 1], cells: [49, 1, 1] }; mass 1.088957e2, invariant drift 1.880e-8 of it (painted 3.940000e0, preset_dropped 0.000000e0, vacuum_reset 3.873e-4); energy invariant (reported): the edit's step -6.3252e0 with ΔW -5.4314e0, the 12 steps after it -1.1023e0 of |W| 1.0112e3 (tools 1.7414e1, floor_added -5.3097e-3, radiated 8.2192e-1)
+ok
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+preset drop beside a star: steps 1..14, sim time 0.3204, the edit's Δt 0.0303 (P9's before it 0.0416), its vacuum_reset 1.430e-10, box BoxReport { x0: 24, y0: 24, w: 200, h: 200, fft: [512, 512], from_step: 1, fits: 3, tiles: [25, 25, 1], cells: [157, 1, 1] }; mass 3.455988e3, invariant drift 1.397e-8 of it (painted 0.000000e0, preset_dropped 3.351032e3, vacuum_reset 8.960e-4); energy invariant (reported): the edit's step -2.6610e5 with ΔW -2.6611e5, the 12 steps after it 5.9950e1 of |W| 2.6795e5 (tools 6.3485e4, floor_added -2.7924e-2, radiated 5.8025e1)
+ok
+test edit::whole_steps_without_an_edit_keep_their_bits ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 412 filtered out; finished in 10.82s
+
+

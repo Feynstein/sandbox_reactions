@@ -1,0 +1,157 @@
+M0-T82 claim 2026-10-29T10:34:20-04:00
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why registry: stale: Cargo.lock
+why eos: stale: Cargo.lock
+why rates: stale: Cargo.lock
+why burn_cell: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why burn_order: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why neutrino: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why sink: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why nu_heat: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why summary: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why ledger: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why preset_cloud: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why observe_run: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why objects: stale: Cargo.lock
+why classify: stale: Cargo.lock
+why ending: stale: Cargo.lock
+why age_clock: stale: Cargo.lock
+why multi: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why edits: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why edits_file: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why fft_twin: stale: Cargo.lock
+why riemann: stale: Cargo.lock
+why sheet: stale: Cargo.lock
+why sod: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why edges: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why collapse: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why jeans: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why twin: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why cpu_gpu: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why heat_gauss: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why heat_implicit: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why heat_limiter: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why heat_stiff: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why heat_multigrid: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why radiation_force: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why grav_force: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why grav_selfforce: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why fft: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why time_control: stale: Cargo.lock
+why strings: stale: Cargo.lock
+why formats: stale: Cargo.lock
+why blackbody: stale: Cargo.lock (+1)
+why adapter: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why state: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why booking: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why floors: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why dt: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why box: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why latch: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why timing: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why scene: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why dump: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why boot: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why desktop: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why web: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why capture: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why licences: stale: Cargo.lock (+1)
+why calibration: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why calibrate_cold: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why cold_core: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why calibrate_status: stale: crates/sr-engine/src/calibrate.rs
+why calibrate_bisect: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why calibrate_order: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why readouts: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why views: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+why glow: never: crates/sr-engine/tests/gpu/frames.rs · stale: Cargo.lock (+5)
+plan_lint         712/0/0      0.12 s  GO · step 1/67, 66 left
+build             2/0/0        6.00 s  GO · step 2/67, 65 left
+registry          29/0/0       0.37 s  GO · step 3/67, 64 left
+eos               13/0/0       0.37 s  GO · step 4/67, 63 left
+rates             8/0/0        3.52 s  GO · step 5/67, 62 left
+burn_cell         18/0/0       3.37 s  GO · step 6/67, 61 left
+burn_order        4/0/0        4.62 s  GO · step 7/67, 60 left
+neutrino          18/0/0      25.72 s  GO · step 8/67, 59 left
+sink              34/0/0      40.62 s  GO · step 9/67, 58 left
+nu_heat           15/0/0       9.75 s  GO · step 10/67, 57 left
+summary           7/0/0       27.55 s  GO · step 11/67, 56 left
+ledger            5/0/0       25.16 s  GO · step 12/67, 55 left
+preset_cloud      5/0/0       65.01 s  GO · step 13/67, 54 left
+observe_run       9/0/0       56.83 s  GO · step 14/67, 53 left
+objects           24/0/0       0.11 s  GO · step 15/67, 52 left
+classify          47/0/0       0.11 s  GO · step 16/67, 51 left
+ending            11/0/0       0.06 s  GO · step 17/67, 50 left
+age_clock         17/0/0       0.11 s  GO · step 18/67, 49 left
+multi             5/0/0       58.80 s  GO · step 19/67, 48 left
+edits             17/0/0      33.50 s  GO · step 20/67, 47 left
+edits_file        6/0/0       11.53 s  GO · step 21/67, 46 left
+fft_twin          10/0/0       0.27 s  GO · step 22/67, 45 left
+riemann           8/0/0        0.22 s  GO · step 23/67, 44 left
+sheet             7/0/0        0.38 s  GO · step 24/67, 43 left
+sod               15/0/0      14.96 s  GO · step 25/67, 42 left
+edges             7/0/0       15.30 s  GO · step 26/67, 41 left
+collapse          6/0/0        3.58 s  GO · step 27/67, 40 left
+jeans             6/0/0        1.23 s  GO · step 28/67, 39 left
+twin              6/0/0        2.59 s  GO · step 29/67, 38 left
+cpu_gpu           3/0/0       17.58 s  GO · step 30/67, 37 left
+heat_gauss        14/0/0      12.01 s  GO · step 31/67, 36 left
+heat_implicit     8/0/0        5.62 s  GO · step 32/67, 35 left
+heat_limiter      8/0/0        7.72 s  GO · step 33/67, 34 left
+heat_stiff        13/0/0      12.00 s  GO · step 34/67, 33 left
+heat_multigrid    4/0/0        5.23 s  GO · step 35/67, 32 left
+radiation_force   11/0/0      10.35 s  GO · step 36/67, 31 left
+grav_force        13/0/0       5.69 s  GO · step 37/67, 30 left
+grav_selfforce    7/0/0        3.47 s  GO · step 38/67, 29 left
+fft               8/0/0        5.20 s  GO · step 39/67, 28 left
+time_control      23/0/0       0.16 s  GO · step 40/67, 27 left
+strings           3/0/0        0.72 s  GO · step 41/67, 26 left
+formats           18/0/0       0.97 s  GO · step 42/67, 25 left
+blackbody         8/0/0        2.02 s  GO · step 43/67, 24 left
+adapter           10/0/0       6.43 s  GO · step 44/67, 23 left
+state             6/0/0        4.83 s  GO · step 45/67, 22 left
+booking           4/0/0        3.92 s  GO · step 46/67, 21 left
+floors            7/0/0        6.83 s  GO · step 47/67, 20 left
+dt                8/0/0        7.34 s  GO · step 48/67, 19 left
+box               8/0/0        7.14 s  GO · step 49/67, 18 left
+latch             5/0/0        3.78 s  GO · step 50/67, 17 left
+timing            5/0/0       17.81 s  GO · step 51/67, 16 left
+scene             8/0/0        3.12 s  GO · step 52/67, 15 left
+dump              12/0/0      32.91 s  GO · step 53/67, 14 left
+boot              1/0/0        9.74 s  GO · step 54/67, 13 left
+desktop           4/0/0       61.67 s  GO · step 55/67, 12 left
+web               3/0/0        9.07 s  GO · step 56/67, 11 left
+capture           2/0/0        0.78 s  GO · step 57/67, 10 left
+licences          3/0/0        0.54 s  GO · step 58/67, 9 left
+calibration       12/0/0       0.21 s  GO · step 59/67, 8 left
+calibrate_cold    8/0/0        1.42 s  GO · step 60/67, 7 left
+cold_core         8/0/0        6.98 s  GO · step 61/67, 6 left
+calibrate_status  18/0/0       0.11 s  GO · step 62/67, 5 left
+calibrate_bisect  19/0/0      91.89 s  GO · step 63/67, 4 left
+calibrate_order   13/0/0       0.16 s  GO · step 64/67, 3 left
+readouts          9/0/0        0.11 s  GO · step 65/67, 2 left
+views             11/0/0       8.48 s  GO · step 66/67, 1 left
+glow              5/0/0        1.52 s  GO · step 67/67, 0 left
+tools_selftest    NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+frames            NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+frames · red-arm proven by M0-T82 2026-10-29T10:33:54-04:00 (fingerprint ce3d67c9468e) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/calibrate_bisect.rs changed since M0-T82's start - a test, case or check M0-T82's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/frames.rs changed since M0-T82's start - a test, case or check M0-T82's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T82's start - a test, case or check M0-T82's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T82's start - a test, case or check M0-T82's Deliver: does not name
+logs: milestones/m0/logs/M0-T82.<scope>.log · record: loop_times.jsonl · tree 8410af20c4b5+b0f49a8200ee
+anchor: 369 path×scope entries moved by this run
+anchor: 335 paths checked · 316 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 335 covered of 651 visible
+skipped   308  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 1401 passed, 0 failed, 0 skipped · 67/67 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 5 not impacted · 170.54 s + loop 0.11 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 4.44->13.66 · base: M0-T82's start 2026-10-29T10:27:30-04:00
+=== GO ===
+
+real	2m50.965s
+user	7m2.510s
+sys	1m12.514s

@@ -1,0 +1,27 @@
+== 2026-10-29T10:34:26-04:00 age_clock · task M0-T82 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::age
+-- age_clock · exit=0 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 17 tests
+test observe::age::tests::a_mass_jump_keeps_the_age_and_changes_the_rate ... ok
+test observe::age::tests::a_fuel_stage_gains_its_tau_as_the_fuel_goes ... ok
+test observe::age::tests::a_falling_phi_is_clamped_and_the_age_never_goes_down ... ok
+test observe::age::tests::a_remnant_adds_a_hundred_million_years_per_time_unit ... ok
+test observe::age::tests::a_mass_jump_moves_no_timed_stage ... ok
+test observe::age::tests::a_short_history_gives_the_rate_over_what_there_is ... ok
+test observe::age::tests::a_stage_change_banks_the_old_stage_and_starts_the_next ... ok
+test observe::age::tests::a_timed_stage_runs_on_the_calibrated_duration_or_ten ... ok
+test observe::age::tests::between_the_listed_masses_tau_is_log_log ... ok
+test observe::age::tests::beyond_the_table_tau_is_held ... ok
+test observe::age::tests::every_fuel_stage_reads_its_own_species ... ok
+test observe::age::tests::objects_are_independent_new_ones_start_at_zero_and_the_gone_are_forgotten ... ok
+test observe::age::tests::the_clock_builds_from_a_calibration ... ok
+test observe::age::tests::the_rate_is_the_age_gained_over_the_last_wall_second ... ok
+test observe::age::tests::the_table_at_one_five_fifteen_and_twenty_five_suns ... ok
+test observe::age::tests::time_running_back_gains_nothing ... ok
+test observe::age::tests::the_age_never_decreases_over_a_wild_run ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 180 filtered out; finished in 0.00s
+
+

@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/render.rs
++++ b/crates/sr-engine/src/render.rs
+@@ -77,7 +77,7 @@ pub fn blackbody_srgb(t: f64) -> [f64; 3] {
+         y += b * yb;
+         z += b * zb;
+     }
+-    let lin = XYZ_TO_RGB.map(|r| (r[0] * x + r[1] * y + r[2] * z).max(0.0));
++    let lin = [0, 1, 2].map(|j| (XYZ_TO_RGB[0][j] * x + XYZ_TO_RGB[1][j] * y + XYZ_TO_RGB[2][j] * z).max(0.0));
+     let m = lin[0].max(lin[1]).max(lin[2]);
+     lin.map(|c| srgb_encode(c / m))
+ }

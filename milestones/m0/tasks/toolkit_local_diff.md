@@ -134,3 +134,13 @@ the swapped switch's `RUNGS` holds all seven rungs of the 2026-10-11 ladder.
    followed, its one line read ». The annex's §A.9 text and its plant count lag by this one, as item 6's do. Measured on
    linux-pc: selftest checks=73 · plants 31/31 red, GO; `report --json` GO, M0-D5 and M0-T19 on Opus 5.5, high, and 53 of 53
    quoting handoff rows on their quote's rung (was 51 of 53).
+8. **verify.py — `box` takes a list (local, M0-D111, 2026-10-29; the lead at M0-D111: «Let `box` take a list
+   (Recommended)»).** A check both PCs run by their own routes (R15) and laserax-ai-server cannot (no Xvfb, Chrome or trunk,
+   R18) had no manifest form: one host name owed it on win-laptop too. Now `box` is one host name or a list of them;
+   `box_names(sc)` reads either, `owed_on` owes on every box not in the list (case and spaces ignored, as before),
+   `owed_label(sc)` prints «A or B» in the owed lines, the refusal, the sweep line and `list`; `scope_errors` refuses an
+   empty list, an empty name or a non-string. Hunks: `scope_errors`'s `box` test; `box_names` and `owed_label` before
+   `owed_on`; `redarm`'s refusal; `moved_sweep`'s owed line; `run_scopes`' `sr.owed`; `list`'s `box` field; the selftest's
+   check « a `box` list runs on each box it names and owes on every other (M0-D111) » after the anchor's owed check, its
+   plant `tools-selftest-box-list` (verify.json, case `verify`: the list read by its first name only). The annex's §A.2
+   manifest shape still reads `"box": "<the one box …>"`. Measured on linux-pc: `--redarm tools_selftest` 2/2 plants RED, GO.

@@ -1,0 +1,133 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why burn_cell: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why burn_order: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why neutrino: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why sink: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why nu_heat: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why summary: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why ledger: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why preset_cloud: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why observe_run: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why multi: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why edits: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why edits_file: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why sod: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why edges: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why collapse: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why jeans: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why twin: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why cpu_gpu: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why heat_gauss: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why heat_implicit: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why heat_limiter: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why heat_stiff: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why heat_multigrid: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why radiation_force: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why grav_force: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why grav_selfforce: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why fft: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why blackbody: stale: crates/sr-engine/src/render.rs
+why adapter: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why state: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why booking: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why floors: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why dt: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why box: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why latch: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why timing: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why scene: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why dump: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why boot: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why desktop: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why web: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why capture: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why watch_only: never: crates/sr-engine/shaders/render.wgsl
+why calibration: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why calibrate_cold: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why cold_core: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why calibrate_bisect: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why calibrate_order: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+why readouts: never: crates/sr-engine/shaders/render.wgsl (+1) · stale: crates/sr-engine/src/render.rs (+1)
+plan_lint         714/0/0      0.12 s  GO · step 1/51, 50 left
+build             2/0/0        5.79 s  GO · step 2/51, 49 left
+burn_cell         18/0/0      10.28 s  GO · step 3/51, 48 left
+burn_order        4/0/0        1.42 s  GO · step 4/51, 47 left
+neutrino          18/0/0       2.87 s  GO · step 5/51, 46 left
+sink              34/0/0      18.60 s  GO · step 6/51, 45 left
+nu_heat           15/0/0      13.24 s  GO · step 7/51, 44 left
+summary           7/0/0        9.33 s  GO · step 8/51, 43 left
+ledger            5/0/0       17.79 s  GO · step 9/51, 42 left
+preset_cloud      5/0/0       52.21 s  GO · step 10/51, 41 left
+observe_run       9/0/0       48.00 s  GO · step 11/51, 40 left
+multi             5/0/0       39.54 s  GO · step 12/51, 39 left
+edits             17/0/0      10.98 s  GO · step 13/51, 38 left
+edits_file        6/0/0        9.43 s  GO · step 14/51, 37 left
+sod               15/0/0       8.28 s  GO · step 15/51, 36 left
+edges             7/0/0       12.74 s  GO · step 16/51, 35 left
+collapse          6/0/0        1.47 s  GO · step 17/51, 34 left
+jeans             6/0/0        0.67 s  GO · step 18/51, 33 left
+twin              6/0/0        1.57 s  GO · step 19/51, 32 left
+cpu_gpu           3/0/0        8.18 s  GO · step 20/51, 31 left
+heat_gauss        14/0/0       4.57 s  GO · step 21/51, 30 left
+heat_implicit     8/0/0        3.27 s  GO · step 22/51, 29 left
+heat_limiter      8/0/0        4.22 s  GO · step 23/51, 28 left
+heat_stiff        13/0/0       6.73 s  GO · step 24/51, 27 left
+heat_multigrid    4/0/0        2.67 s  GO · step 25/51, 26 left
+radiation_force   11/0/0       7.98 s  GO · step 26/51, 25 left
+grav_force        13/0/0       3.83 s  GO · step 27/51, 24 left
+grav_selfforce    7/0/0        1.87 s  GO · step 28/51, 23 left
+fft               8/0/0        3.32 s  GO · step 29/51, 22 left
+blackbody         8/0/0        2.07 s  GO · step 30/51, 21 left
+adapter           10/0/0       6.03 s  GO · step 31/51, 20 left
+state             6/0/0        5.38 s  GO · step 32/51, 19 left
+booking           4/0/0        3.22 s  GO · step 33/51, 18 left
+floors            7/0/0        5.97 s  GO · step 34/51, 17 left
+dt                8/0/0        7.68 s  GO · step 35/51, 16 left
+box               8/0/0        6.73 s  GO · step 36/51, 15 left
+latch             5/0/0        3.02 s  GO · step 37/51, 14 left
+timing            5/0/0       21.49 s  GO · step 38/51, 13 left
+scene             8/0/0        2.72 s  GO · step 39/51, 12 left
+dump              12/0/0      39.02 s  GO · step 40/51, 11 left
+boot              1/0/0       10.44 s  GO · step 41/51, 10 left
+desktop           4/0/0       53.77 s  GO · step 42/51, 9 left
+web               3/0/0       29.53 s  GO · step 43/51, 8 left
+capture           2/0/0        3.84 s  GO · step 44/51, 7 left
+watch_only        1/0/0        0.11 s  GO · step 45/51, 6 left
+calibration       12/0/0       0.22 s  GO · step 46/51, 5 left
+calibrate_cold    8/0/0        2.13 s  GO · step 47/51, 4 left
+cold_core         8/0/0        8.04 s  GO · step 48/51, 3 left
+calibrate_bisect  19/0/0      89.87 s  GO · step 49/51, 2 left
+calibrate_order   13/0/0       0.22 s  GO · step 50/51, 1 left
+readouts          9/0/0        0.16 s  GO · step 51/51, 0 left
+tools_selftest    NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+views             NOT RUN (not impacted: its 113 path(s) checked at the anchor)
+views · red-arm proven by M0-T80 2026-10-29T10:13:53-04:00 (fingerprint 9127b8e2cfbb) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/main.rs changed since M0-T80's start - a test, case or check M0-T80's Deliver: does not name
+FLAG oracle: crates/sr-engine/tests/gpu/views.rs changed since M0-T80's start - a test, case or check M0-T80's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T80's start - a test, case or check M0-T80's Deliver: does not name
+logs: milestones/m0/logs/M0-T80.<scope>.log · record: loop_times.jsonl · tree 8410af20c4b5+50aed589ca3f
+anchor: 195 path×scope entries moved by this run
+anchor: 330 paths checked · 314 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 330 covered of 644 visible
+skipped   306  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 1149 passed, 0 failed, 0 skipped · 51/51 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 19 not impacted · 149.81 s + loop 0.12 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 12.06->8.52 · base: M0-T80's start 2026-10-29T10:05:34-04:00
+=== GO ===

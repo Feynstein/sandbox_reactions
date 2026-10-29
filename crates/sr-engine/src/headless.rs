@@ -55,6 +55,7 @@ use sr_physics::registry::{Elements, Physics, Reactions};
 use crate::dump::{dump_state, load_dump, Dump, Resume};
 use crate::gpu::Gpu;
 use crate::ledger::{take_booked, At, Ledger};
+use crate::render::{Renderer, View, IMAGE_FORMAT};
 use crate::scene::{EdgeMode, Object, Scene, Switches};
 use crate::state::{Booking, SideFields, State, WorldConfig, CHANNELS};
 use crate::step::boxfit::BoxMode;
@@ -111,6 +112,15 @@ pub struct Args {
     pub cpu_reference: bool,
     /// `--edits FILE`: §2.12.5's edits, applied in P0 at the step their trigger holds.
     pub edits: Option<PathBuf>,
+    /// `--frames-every N` (needs `--out`) with `--view`: a PNG of the state at every step index N divides (M0-T82).
+    pub frames: Option<Frames>,
+}
+
+/// `--frames-every` and `--view` (§3.3).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Frames {
+    pub every: u64,
+    pub view: View,
 }
 
 /// Parses what follows `headless`. `--flag value` or `--flag=value`, `--timing`, `--continue` and `--cpu-reference` alone;
@@ -119,6 +129,7 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
     let (mut scene, mut steps, mut world, mut edge, mut max_steps, mut out, mut adapter) =
         (None, None, None, None, DEFAULT_MAX_STEPS, None, None);
     let (mut dump_every, mut load_dump, mut until, mut edits) = (None, None, None, None);
+    let (mut frames_every, mut view) = (None, None);
     let (mut timing, mut cpu_reference, mut continue_life) = (false, false, false);
     let mut it = args.iter();
     while let Some(arg) = it.next() {
@@ -138,7 +149,7 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
             Some((f, v)) => (f, Some(v.to_string())),
             None => (arg.as_str(), None),
         };
-        let known = ["--scene", "--steps", "--world", "--edge", "--max-steps", "--out", "--adapter", "--dump-every", "--load-dump", "--until", "--edits"];
+        let known = ["--scene", "--steps", "--world", "--edge", "--max-steps", "--out", "--adapter", "--dump-every", "--load-dump", "--until", "--edits", "--frames-every", "--view"];
         if !known.contains(&flag) {
             return Err(format!("unknown argument {arg:?}"));
         }
@@ -157,6 +168,16 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
             "--dump-every" => dump_every = Some(count(&value)?),
             "--load-dump" => load_dump = Some(PathBuf::from(value)),
             "--edits" => edits = Some(PathBuf::from(value)),
+            "--frames-every" => frames_every = Some(count(&value)?),
+            "--view" => {
+                view = Some(match value.as_str() {
+                    "glow" => View::Glow,
+                    "heat" => View::Heat,
+                    "element" => View::Element,
+                    "density" => View::Density,
+                    _ => return Err(format!("--view takes glow, heat, element or density, got {value:?}")),
+                })
+            }
             "--edge" => edge = Some(EdgeMode::parse(&value).map_err(|e| format!("--{e}"))?),
             _ => {
                 let size = value.split_once('x').and_then(|(w, h)| Some((w.parse().ok()?, h.parse().ok()?)));
@@ -178,17 +199,27 @@ pub fn parse_args(args: &[String]) -> Result<Args, String> {
     if dump_every.is_some() && out.is_none() {
         return Err("--dump-every needs --out (dumps go to DIR/dumps)".to_string());
     }
+    if frames_every == Some(0) {
+        return Err("--frames-every must be at least 1".to_string());
+    }
+    if frames_every.is_some() && out.is_none() {
+        return Err("--frames-every needs --out (frames go to DIR/frames)".to_string());
+    }
+    if view.is_some() && frames_every.is_none() {
+        return Err("--view needs --frames-every (the view the frames are drawn in)".to_string());
+    }
     if continue_life && load_dump.is_none() {
         return Err("--continue needs --load-dump (the dump it goes on from)".to_string());
     }
     if cpu_reference {
         let refused =
-            [("--adapter", adapter.is_some()), ("--timing", timing), ("--load-dump", load_dump.is_some()), ("--until", until.is_some()), ("--edits", edits.is_some())];
+            [("--adapter", adapter.is_some()), ("--timing", timing), ("--load-dump", load_dump.is_some()), ("--until", until.is_some()), ("--edits", edits.is_some()), ("--frames-every", frames_every.is_some())];
         if let Some((flag, _)) = refused.iter().find(|(_, given)| *given) {
             return Err(format!("{flag} is the GPU's: it has no meaning with --cpu-reference"));
         }
     }
-    Ok(Args { scene, steps, until, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, continue_life, cpu_reference, edits })
+    let frames = frames_every.map(|every| Frames { every, view: view.unwrap_or(View::Glow) });
+    Ok(Args { scene, steps, until, world, edge, max_steps, out, adapter, timing, dump_every, load_dump, continue_life, cpu_reference, edits, frames })
 }
 
 /// When an entry of the edits file fires (§2.12.5).
@@ -701,6 +732,86 @@ fn run_twin(
     }
 }
 
+/// `--frames-every`'s image (§3.3, §6.3): the cell image of `view` drawn offscreen into an RGBA8 texture of the world's size,
+/// copied to a mappable buffer (rows padded to the copy's 256-byte alignment) and written as a PNG.
+struct FrameOut {
+    renderer: Renderer,
+    view: View,
+    texture: wgpu::Texture,
+    staging: wgpu::Buffer,
+    width: u32,
+    height: u32,
+    /// A row of the staging buffer in bytes.
+    row: u32,
+}
+
+impl FrameOut {
+    fn new(device: &wgpu::Device, renderer: Renderer, view: View, world: WorldConfig) -> FrameOut {
+        let (width, height) = (world.width, world.height);
+        let texture = device.create_texture(&wgpu::TextureDescriptor {
+            label: Some("frame.image"),
+            size: wgpu::Extent3d { width, height, depth_or_array_layers: 1 },
+            mip_level_count: 1,
+            sample_count: 1,
+            dimension: wgpu::TextureDimension::D2,
+            format: IMAGE_FORMAT,
+            usage: wgpu::TextureUsages::STORAGE_BINDING | wgpu::TextureUsages::COPY_SRC,
+            view_formats: &[],
+        });
+        let row = (width * 4).next_multiple_of(wgpu::COPY_BYTES_PER_ROW_ALIGNMENT);
+        let staging = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("frame.staging"),
+            size: u64::from(row) * u64::from(height),
+            usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+        });
+        FrameOut { renderer, view, texture, staging, width, height, row }
+    }
+
+    /// Draws the state as it stands, waits for the GPU, and writes `path` (a temporary beside it, renamed into place).
+    fn write(&self, gpu: &Gpu, path: &Path) -> Result<(), String> {
+        let (device, queue) = (&gpu.device, &gpu.queue);
+        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frame") });
+        let target = self.texture.create_view(&wgpu::TextureViewDescriptor::default());
+        self.renderer.render(self.view, 1.0, &target, &mut encoder);
+        encoder.copy_texture_to_buffer(
+            wgpu::TexelCopyTextureInfo { texture: &self.texture, mip_level: 0, origin: wgpu::Origin3d::ZERO, aspect: wgpu::TextureAspect::All },
+            wgpu::TexelCopyBufferInfo {
+                buffer: &self.staging,
+                layout: wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(self.row), rows_per_image: Some(self.height) },
+            },
+            wgpu::Extent3d { width: self.width, height: self.height, depth_or_array_layers: 1 },
+        );
+        queue.submit([encoder.finish()]);
+        let (tx, rx) = std::sync::mpsc::channel();
+        self.staging.map_async(wgpu::MapMode::Read, .., move |r| {
+            let _ = tx.send(r);
+        });
+        device.poll(wgpu::PollType::wait_indefinitely()).map_err(|e| format!("GPU error reading a frame: {e}"))?;
+        rx.recv().map_err(|e| e.to_string())?.map_err(|e| format!("GPU error reading a frame: {e}"))?;
+        let pixels = {
+            let mapped = self.staging.get_mapped_range(..).map_err(|e| e.to_string())?;
+            let (w, row) = (self.width as usize * 4, self.row as usize);
+            let mut pixels = Vec::with_capacity(w * self.height as usize);
+            for y in 0..self.height as usize {
+                pixels.extend_from_slice(&mapped[y * row..y * row + w]);
+            }
+            pixels
+        };
+        self.staging.unmap();
+        let temp = path.with_extension("png.tmp");
+        let written = std::fs::File::create(&temp).map_err(|e| e.to_string()).and_then(|file| {
+            let mut encoder = png::Encoder::new(std::io::BufWriter::new(file), self.width, self.height);
+            encoder.set_color(png::ColorType::Rgba);
+            encoder.set_depth(png::BitDepth::Eight);
+            let mut writer = encoder.write_header().map_err(|e| e.to_string())?;
+            writer.write_image_data(&pixels).map_err(|e| e.to_string())?;
+            writer.finish().map_err(|e| e.to_string())
+        });
+        written.and_then(|()| std::fs::rename(&temp, path).map_err(|e| e.to_string()))
+    }
+}
+
 /// §2.11's refusal as the run sees it: `embedded` is the calibration compiled in ([`calibration::EMBEDDED`]), `names_preset`
 /// whether the scene names a preset. `Ok` for a run that needs none, and — until M0-V9 embeds a file — for a run with none
 /// to check; otherwise [`calibration::resolve`]'s verdict as `(exit 6, the SR-ERROR line)`.
@@ -853,10 +964,27 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
     };
     // §2.11 (G-CAL): a scene that names a preset reads calibration, so a stale one stops the run here (exit 6) — before
     // the registry, the GPU or any output; a scene that names none never reads it, and runs without one.
-    if let Err((code, line)) = calibrated {
-        say(&line);
-        return code;
-    }
+    let calibrated = match calibrated {
+        Ok(c) => c,
+        Err((code, line)) => {
+            say(&line);
+            return code;
+        }
+    };
+    // `--frames-every`: the Glow view's colours are translated temperatures (§1.10.2), whose Sun-like anchor is calibration's,
+    // so a run with frames needs a calibration as a preset does (exit 6 otherwise).
+    let t_eff_sun_sb = match (&args.frames, &calibrated) {
+        (None, _) => 0.0,
+        (Some(_), Some(cal)) => cal.t_eff_sun_sb,
+        (Some(_), None) => match calibration::resolve(calibration::EMBEDDED, true) {
+            Ok(Some(cal)) => cal.t_eff_sun_sb,
+            Ok(None) => unreachable!("a run that needs a calibration gets one or an error"),
+            Err(e) => {
+                say(&e.line());
+                return e.exit_code();
+            }
+        },
+    };
     let reactions = match Reactions::shipped(&elements, &physics) {
         Ok(r) => r,
         Err(e) => {
@@ -873,7 +1001,9 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         }
     };
     if let Some(dir) = &args.out {
-        if let Err(e) = std::fs::create_dir_all(dir.join("dumps")) {
+        let made = std::fs::create_dir_all(dir.join("dumps"))
+            .and_then(|()| if args.frames.is_some() { std::fs::create_dir_all(dir.join("frames")) } else { Ok(()) });
+        if let Err(e) = made {
             say(&format!("SR-ERROR bad arguments: --out {}: {e}", dir.display()));
             return EXIT_ARGS;
         }
@@ -951,6 +1081,21 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
             0
         }
     };
+    // The frames' renderer (M0-T82): the state drawn as it stands (α = 1), so the previous state it blends with is the state.
+    let frames = args.frames.map(|f| {
+        let anchors = |k: &str| physics.get(k).expect("physics.json holds the temperature anchors");
+        let anchors = [
+            anchors("t_floor"),
+            t_eff_sun_sb,
+            anchors("t_h"),
+            anchors("t_he"),
+            anchors("t_c"),
+            anchors("t_ne"),
+            anchors("t_o"),
+            anchors("t_si"),
+        ];
+        (f, FrameOut::new(&gpu.device, Renderer::new(&gpu.device, &state, &state, &eos, anchors, &elements), f.view, world))
+    });
     let timing = if args.timing { Timing::Auto } else { Timing::Off };
     let mut cost = Costs { source: step.set_timing(&gpu.device, &gpu.queue, timing), ..Costs::default() };
     // A dump of the state as it stands, named by its step index, and beside it the observers' snapshot (§0.5 [M0-D76]):
@@ -1025,6 +1170,9 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
         if let Some(every) = args.dump_every {
             n = n.min(every - (first + done) % every);
         }
+        if let Some((f, _)) = &frames {
+            n = n.min(f.every - (first + done) % f.every);
+        }
         // A one-step stretch (M0-D80): a step at P5's ceiling or a core collapse in the frame before.
         let one_step_frame = one_step;
         if one_step_frame {
@@ -1090,6 +1238,17 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
                     objects: watch.object_count(),
                     star: watch.heaviest_star(),
                 });
+            }
+        }
+        // A frame of the state this chunk left, whose step index the chunk's end is on a multiple of `every` (the chunk was cut
+        // there); the chunk was waited for above, so no later step is in the image.
+        if let (Some((f, out)), Some(dir)) = (&frames, &args.out) {
+            if (first + done).is_multiple_of(f.every) {
+                let path = dir.join("frames").join(format!("f_{}.png", first + done));
+                if let Err(e) = out.write(&gpu, &path) {
+                    say(&format!("SR-ERROR bad arguments: --out {}: {e}", path.display()));
+                    return EXIT_ARGS;
+                }
             }
         }
         if args.until.is_some_and(|u| watch.holds(u, &fresh)) {

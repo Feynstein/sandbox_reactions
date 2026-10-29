@@ -1,0 +1,14 @@
+# M0-V11 session trail — linux-pc (laserax-ai) + laserax-ai-server (RTX 4090, R18)
+2026-10-29 10:48:40 EDT start; rung_record now: model=claude-opus-5-5 level=max plugin=installed (twice: launch, lead prompt "make sure you run all the gpu stuff on the 4090 server")
+10:49:39 rsync up (R18 route); server idle, load 0.00, RTX 4090 19 MiB used
+11:04:35 linux-pc: verify.py --redarm <s> --task M0-V11-lpc for desktop web capture toolchain (the sweep's box-bound four) -> logs/M0-V11-lpc.redarm_stdout.log
+11:12:16 D112 (glow, brightest channel), D113 (vacuum bg.space), D114 (toolchain box, E), TC11 (15 stubs) appended after M0-V11; verify.py report + rung_record.py report saved (logs/M0-V11.{verify,rung}_report.out)
+11:38:40 the lead: «when youre done I want you to do git add -A, commit and push» — Phase 13's commit gate, run by this block at the end (origin; R18's push to the server still waits on its clean checkout)
+12:01:02 server: nohup SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm --moved --task M0-V11-sweep (the lead: «Run it now (Recommended)»), pid 300376, stdout /tmp/v11/sweep_stdout.log
+12:02:00 sweep ended: NO-GO, 65/69 armed, RED 136, GREEN 0, ERROR 7, 3527.44 s; brought home logs M0-V11-sweep.*, stdout, loop lines; server anchor unmoved (4615743b)
+13:16:17 takeover: session 9b3da6e7 stopped at the lead's word (pid 899562, idle on its stale-plants question); continued by session 343cc9b3, rung_record now: model=claude-opus-5-5 level=max plugin=installed; the lead on the question: «File two D's now (Recommended)»
+13:26:19 filed M0-D115 (M0-D110's three stale plants, Sonnet 5.5, high) after M0-D114 and M0-D116 (M0-T82's two, E, Sonnet 5.5, medium) after M0-D115 (plan.py append, GO each); M0-TC11's body follows; flags to M0-T84 and M0-V12 (GO, refresh 0/5); register: Next task, Open D, Outstanding commit gates, Awaiting lead (GO)
+13:26:19 claim on linux-pc: python3 tools/pb/verify.py --changed --task M0-V11 -> logs/M0-V11.claim_stdout.log
+13:27:04 two Deliver lint WARNs fixed (M0-D115's and M0-TC11's ';' split an item); claim re-run on linux-pc: python3 tools/pb/verify.py --changed --task M0-V11 -> logs/M0-V11.claim2_stdout.log
+13:28:01 close: plan.py close M0-V11 --status DONE
+13:28:26 Phase 13's commit gate at the lead's word («when youre done I want you to do git add -A, commit and push»): git add -A; git commit -m "M0 Phase 13: drawing"; git push (origin) — R18's push to laserax-ai-server stays the lead's (its checkout not clean)

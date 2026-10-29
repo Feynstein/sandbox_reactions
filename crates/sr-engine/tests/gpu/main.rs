@@ -78,6 +78,15 @@ mod neutrino;
 /// M0-T50 — sinks on the CPU twin (contract §1.4.3, §2.6, §5.1's G-SINK); M0-T51 — P3 on the GPU, the same cases.
 mod sink;
 
+/// M0-T80 — the cell image and the four views (contract §1.11, §1.10.2, §1.8.3, §4.11).
+mod views;
+
+/// M0-T81 — the glow of the Glow view (contract §1.11, §4.11).
+mod glow;
+
+/// M0-T82 — frames from headless runs (contract §3.3, §6.3, §1.11).
+mod frames;
+
 /// M0-T2 — the adapter choice (contract §6.1–§6.3, §6.2.2).
 mod adapter {
     use super::device;
@@ -166,10 +175,29 @@ mod adapter {
         list
     }
 
+    /// The box's name as the harness reads it (verify.py's `this_box`): $PB_BOX, else the host name, lower case.
+    fn this_box() -> String {
+        std::env::var("PB_BOX")
+            .ok()
+            .filter(|b| !b.trim().is_empty())
+            .or_else(|| std::fs::read_to_string("/proc/sys/kernel/hostname").ok())
+            .unwrap_or_default()
+            .trim()
+            .to_lowercase()
+    }
+
     #[test]
     fn live_this_boxs_adapters_are_listed() {
-        let expected: &[&str] =
-            if cfg!(windows) { &["RTX 4080 Laptop", "Intel(R) Arc"] } else { &["Quadro RTX 4000", "RTX 5090", "llvmpipe"] };
+        // One check, one route per box (R15): linux-pc and laserax-ai-server are both Linux, so the host name picks.
+        let expected: &[&str] = if cfg!(windows) {
+            &["RTX 4080 Laptop", "Intel(R) Arc"]
+        } else {
+            match this_box().as_str() {
+                "laserax-ai" => &["Quadro RTX 4000", "RTX 5090", "llvmpipe"],
+                "laserax-ai-server" => &["RTX 4090", "RTX 3060", "llvmpipe"], // R18's GPU box (M0-D80's probe)
+                other => panic!("no adapter list for box {other:?}: name its adapters here (R15)"),
+            }
+        };
         let list = live_adapters();
         let missing: Vec<&&str> = expected
             .iter()

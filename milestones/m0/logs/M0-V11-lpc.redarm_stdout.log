@@ -1,0 +1,13 @@
+toolchain · plant toolchain-trunk · RED (proven: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunc not found on PATH) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope toolchain · 6.62 s · 4 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V11-lpc.toolchain.redarm.log
+=== GO ===
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope capture · 11.01 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V11-lpc.capture.redarm.log
+=== GO ===
+web · plant smoke-no-sandbox · RED (proven: web[ready]: 1 failed; web[ready]: its own verdict NO-GO: ready: Chrome runs with --no-sandbox, which contract §6.2.3 lea) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope web · 77.57 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V11-lpc.web.redarm.log
+=== GO ===
+desktop · plant port-no-fallback · RED (proven: desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: the game failed: SR-ERROR --statu) · arm 6/6, 0 left
+redarm: 5 plants · 5 red · 0 green · 0 errors · scope desktop · 460.00 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V11-lpc.desktop.redarm.log
+=== GO ===
+exit 0

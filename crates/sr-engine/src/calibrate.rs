@@ -765,6 +765,7 @@ impl Lives<'_> {
             continue_life: from.is_some(),
             cpu_reference: false,
             edits: None,
+            frames: None,
         };
         let say = self.say;
         let started = utc_iso(SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs()));

@@ -371,8 +371,8 @@ def scope_errors(name, s):
         out.append("`rerun` is true or false")
     if "paths" in s and not str_list(s["paths"]):
         out.append("`paths` is a list of globs")
-    if "box" in s and not (isinstance(s["box"], str) and s["box"].strip()):
-        out.append("`box` names the one box that can run it")
+    if "box" in s and not (box_names(s) and all(isinstance(b, str) and b.strip() for b in box_names(s))):
+        out.append("`box` names the one box that can run it, or a list of the boxes that can")
     if not all(isinstance(p, int) and not isinstance(p, bool) for p in s.get("free_ports", [])):
         out.append("`free_ports` is a list of port numbers")
     plants, seen = s.get("plants", []), set()
@@ -486,8 +486,20 @@ def spec_hash(sc):
     return hashlib.sha1(json.dumps({k: sc.get(k) for k in SPEC_KEYS}, sort_keys=True).encode()).hexdigest()[:12]
 
 
+def box_names(sc):
+    """A scope's `box` as a list: one host name, or the list of the boxes that can run it (M0-D111, a local divergence
+    from annex §A at the lead's word: a check two boxes run by their own routes and a third cannot)."""
+    b = sc.get("box")
+    return [b] if isinstance(b, str) else list(b) if isinstance(b, list) else []
+
+
+def owed_label(sc):
+    return " or ".join(str(b).strip() for b in box_names(sc))
+
+
 def owed_on(sc, box):
-    return bool(sc.get("box")) and sc["box"].strip().lower() != box.strip().lower()
+    names = [str(b).strip().lower() for b in box_names(sc)]
+    return bool(names) and box.strip().lower() not in names
 
 
 # ------------------------------------------------------------------------------------ one command, one scope
@@ -1726,7 +1738,7 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     if "placeholder" in s:
         raise Refused(f"`{name}` is a placeholder until {s['placeholder']}: nothing to red-arm")
     if owed_on(s, box):
-        raise Refused(f"`{name}` runs on {s['box']} only (this box: {box}) - red-arm it there; owed on {s['box']}")
+        raise Refused(f"`{name}` runs on {owed_label(s)} only (this box: {box}) - red-arm it there; owed on {owed_label(s)}")
     plants = s.get("plants") or []
     if not plants:
         return result(f"redarm: 0 plants · scope {name} · box {box}",
@@ -1874,7 +1886,7 @@ def moved_sweep(man, root, task, jobs, box=None, logs=None, tool=None):
             steps.append((name, f"{name} · SKIP (placeholder until {s['placeholder']})", None))
             continue
         if owed_on(s, box):
-            steps.append((name, f"{name} · owed on {s['box']} (this box: {box}) - swept there, never NO-GO here", None))
+            steps.append((name, f"{name} · owed on {owed_label(s)} (this box: {box}) - swept there, never NO-GO here", None))
             continue
         n["here"] += 1
         fp = fingerprint(man, name, root, visible, tool)
@@ -2247,7 +2259,7 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
         elif "placeholder" in s:
             sr.skip = f"placeholder until {s['placeholder']}"
         elif owed_on(s, box):
-            sr.owed = s["box"]
+            sr.owed = owed_label(s)
         else:
             us = units(sr, case, root, man, env, task, box)
             if use_anchor and visible is not None and s.get("paths") and sr.listed and us:
@@ -2489,7 +2501,7 @@ def cmd_list(man):
         more = [f for f, on in ((f"paths {len(s.get('paths', []))}", s.get("paths")),
                                 (f"plants {len(s.get('plants', []))}" + (f" ({'; '.join(cased)})" if cased else ""),
                                  s.get("plants")),
-                                (f"box {s.get('box')}", s.get("box")), ("exclusive", s.get("exclusive")), ("rerun", s.get("rerun")),
+                                (f"box {owed_label(s)}", s.get("box")), ("exclusive", s.get("exclusive")), ("rerun", s.get("rerun")),
                                 (f"free_ports {s.get('free_ports')}", s.get("free_ports"))) if on]
         note = next((s[k] for k in ("note", "desc") if isinstance(s.get(k), str) and s[k]), None)
         lines.append(f"{name:<18}{s.get('parse', 'gonogo'):<8}{form:<32}expected {s.get('expected', 0)}"
@@ -3660,6 +3672,14 @@ def selftest():
                 plant_(name, want in nogo and not others and (drives is None or bool(st[drives])), (nogo, others))
             check("a path only another box's scope owes reads owed, never NO-GO",
                   g_owed["owed"] == ["src/b.py"] and anchor_nogo(g_owed) is None, (g_owed["owed"], anchor_nogo(g_owed)))
+            oman["scopes"]["s1"]["box"] = ["OTHERBOX", "selfbox "]
+            g_listed = gate(man=oman)
+            check("a `box` list runs on each box it names and owes on every other (M0-D111)",
+                  not g_listed["owed"] and not owed_on(oman["scopes"]["s1"], "SELFBOX")
+                  and owed_on({"box": ["A", "B"]}, "SELFBOX") and owed_label({"box": ["A", "B"]}) == "A or B"
+                  and not scope_errors("s", {"cmd": py, "box": ["A", "B"]})
+                  and all(scope_errors("s", {"cmd": py, "box": b}) for b in ([], ["A", ""], ["A", 3], "", 7)),
+                  (g_listed["owed"], owed_on(oman["scopes"]["s1"], "SELFBOX")))
             apath.write_text("{ not json", encoding="utf-8")
             try:
                 gate()

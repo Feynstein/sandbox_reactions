@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/render.wgsl
++++ b/crates/sr-engine/shaders/render.wgsl
+@@ -228,7 +228,7 @@
+     var rgb: vec3<f32>;
+     switch (params.view) {
+         case VIEW_HEAT: {
+-            rgb = heat_map(log2(to_kelvin(cell_temperature(c))) * 0.30102999566);
++            rgb = heat_map(1.0 + 9.0 * to_kelvin(cell_temperature(c)) / 1.0e10);
+         }
+         case VIEW_ELEMENT: {
+             rgb = element_colour(c);

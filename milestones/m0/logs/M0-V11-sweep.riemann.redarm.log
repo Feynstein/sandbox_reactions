@@ -1,0 +1,80 @@
+==== 2026-10-29T11:18:34-04:00 riemann · clean · a fresh scratch copy of the tree
+== 2026-10-29T11:18:35-04:00 riemann · task M0-V11-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-physics reference::riemann
+-- riemann · exit=0 · 5.02 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-avzki9u6/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.44s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 8 tests
+test reference::riemann::tests::a_state_with_no_solution_is_refused ... ok
+test reference::riemann::tests::every_shock_and_fan_in_the_problems_satisfies_its_jump_or_its_isentrope ... ok
+test reference::riemann::tests::far_from_the_waves_the_solution_is_the_initial_states ... ok
+test reference::riemann::tests::mirrored_states_give_the_mirrored_solution ... ok
+test reference::riemann::tests::sod_satisfies_the_jumps_and_the_isentrope ... ok
+test reference::riemann::tests::sods_pattern_is_a_left_rarefaction_and_a_right_shock ... ok
+test reference::riemann::tests::star_pressure_matches_an_independent_bisection ... ok
+test reference::riemann::tests::the_solution_conserves_mass_momentum_and_energy ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 189 filtered out; finished in 0.00s
+
+
+==== 2026-10-29T11:18:34-04:00 riemann · plant riemann-gamma · a fresh scratch copy of the tree
+planted riemann-gamma: tests/plants/riemann-gamma.patch -> crates/sr-physics/src/reference/riemann.rs
+== 2026-10-29T11:18:35-04:00 riemann · task M0-V11-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-physics reference::riemann
+-- riemann · exit=101 · 2.52 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-avzki9u6/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.42s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 8 tests
+test reference::riemann::tests::a_state_with_no_solution_is_refused ... FAILED
+test reference::riemann::tests::far_from_the_waves_the_solution_is_the_initial_states ... ok
+test reference::riemann::tests::every_shock_and_fan_in_the_problems_satisfies_its_jump_or_its_isentrope ... FAILED
+test reference::riemann::tests::sod_satisfies_the_jumps_and_the_isentrope ... FAILED
+test reference::riemann::tests::mirrored_states_give_the_mirrored_solution ... ok
+test reference::riemann::tests::sods_pattern_is_a_left_rarefaction_and_a_right_shock ... ok
+test reference::riemann::tests::star_pressure_matches_an_independent_bisection ... FAILED
+test reference::riemann::tests::the_solution_conserves_mass_momentum_and_energy ... FAILED
+
+failures:
+
+---- reference::riemann::tests::a_state_with_no_solution_is_refused stdout ----
+
+thread 'reference::riemann::tests::a_state_with_no_solution_is_refused' (324279) panicked at crates/sr-physics/src/reference/riemann.rs:452:9:
+assertion `left == right` failed
+  left: Ok(Solution { left: State { rho: 1.0, u: -3.0, p: 1.0 }, right: State { rho: 1.0, u: 3.0, p: 1.0 }, p_star: 0.0070689947420870605, u_star: 0.0, rho_star_left: 0.0840773140751241, rho_star_right: 0.0840773140751241, left_wave: Rarefaction { head: -4.414213562373095, tail: -0.41006661428388463 }, right_wave: Rarefaction { head: 4.414213562373095, tail: 0.41006661428388463 } })
+ right: Err(Vacuum)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- reference::riemann::tests::every_shock_and_fan_in_the_problems_satisfies_its_jump_or_its_isentrope stdout ----
+
+thread 'reference::riemann::tests::every_shock_and_fan_in_the_problems_satisfies_its_jump_or_its_isentrope' (324280) panicked at crates/sr-physics/src/reference/riemann.rs:359:21:
+sod: left invariant
+
+---- reference::riemann::tests::sod_satisfies_the_jumps_and_the_isentrope stdout ----
+
+thread 'reference::riemann::tests::sod_satisfies_the_jumps_and_the_isentrope' (324283) panicked at crates/sr-physics/src/reference/riemann.rs:319:13:
+Sod's shock: flux 0 -0.25117107394064364 vs -0.25943592892081296
+
+---- reference::riemann::tests::star_pressure_matches_an_independent_bisection stdout ----
+
+thread 'reference::riemann::tests::star_pressure_matches_an_independent_bisection' (324285) panicked at crates/sr-physics/src/reference/riemann.rs:289:13:
+sod: p* 0.3031301780506468 vs bisection 0.2859752782098274
+
+---- reference::riemann::tests::the_solution_conserves_mass_momentum_and_energy stdout ----
+
+thread 'reference::riemann::tests::the_solution_conserves_mass_momentum_and_energy' (324286) panicked at crates/sr-physics/src/reference/riemann.rs:423:17:
+sod: conserved 0: 4.550823973200539 vs 4.5210793309315855
+
+
+failures:
+    reference::riemann::tests::a_state_with_no_solution_is_refused
+    reference::riemann::tests::every_shock_and_fan_in_the_problems_satisfies_its_jump_or_its_isentrope
+    reference::riemann::tests::sod_satisfies_the_jumps_and_the_isentrope
+    reference::riemann::tests::star_pressure_matches_an_independent_bisection
+    reference::riemann::tests::the_solution_conserves_mass_momentum_and_energy
+
+test result: FAILED. 3 passed; 5 failed; 0 ignored; 0 measured; 189 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

@@ -1,0 +1,20 @@
+== 2026-10-29T10:23:17-04:00 glow · task M0-T81 · box laserax-ai :: bash tests/gpu.sh glow physics
+-- glow · exit=0 · 1.12 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test glow::a_bright_block_halo_follows_the_gaussian_and_is_visible ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test glow::a_bright_cell_at_the_corner_and_one_on_the_edge ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test glow::a_lone_bright_cell_halo_follows_the_gaussian ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test glow::nothing_is_added_below_the_threshold ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test glow::the_other_views_are_untouched ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 429 filtered out; finished in 0.95s
+
+

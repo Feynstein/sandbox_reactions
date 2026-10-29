@@ -1,0 +1,131 @@
+-rwxrwxr-x 2 ybelanger ybelanger 21938088 10:49 build/target/release/sandbox-reactions
+ 10:55:35 up 1 day,  2:58,  2 users,  load average: 0.13, 0.96, 0.62
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2720 sim_time=33.003020 until=met
+
+real	0m15.631s
+user	0m10.326s
+sys	0m0.393s
+/tmp/v11/sun/dumps:
+s_2720.bin
+s_2720.observers.json
+
+/tmp/v11/sun/frames:
+f_1024.png
+f_1152.png
+f_1280.png
+f_128.png
+f_1408.png
+f_1536.png
+f_1664.png
+f_1792.png
+f_1920.png
+f_2048.png
+f_2176.png
+f_2304.png
+f_2432.png
+f_2560.png
+f_256.png
+f_2688.png
+f_384.png
+f_512.png
+f_640.png
+f_768.png
+f_896.png
+SR-HEADLESS DONE steps=1 sim_time=33.014467 until=none
+SR-HEADLESS DONE steps=1 sim_time=33.014467 until=none
+SR-HEADLESS DONE steps=1 sim_time=33.014467 until=none
+SR-HEADLESS DONE steps=1 sim_time=33.014467 until=none
+/tmp/v11/sun_density/frames:
+f_2721.png
+
+/tmp/v11/sun_element/frames:
+f_2721.png
+
+/tmp/v11/sun_glow/frames:
+f_2721.png
+
+/tmp/v11/sun_heat/frames:
+f_2721.png
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=928 sim_time=7.774671 until=met
+
+real	0m8.234s
+user	0m6.037s
+sys	0m0.469s
+f_704.png
+f_768.png
+f_832.png
+f_896.png
+s_896.observers.json
+s_928.bin
+s_928.observers.json
+{"detail":{"by":"fuel","mass_sb":6674.780519258231},"kind":"ignition","object":1,"sim_time":3.9590200989041477,"step":272}
+{"detail":{"mass_sb":6670.410657503642},"kind":"core_collapse","object":1,"sim_time":7.705261811381206,"step":912}
+{"detail":{"mass_sb":6670.342578647658},"kind":"supernova","object":1,"sim_time":7.774670975049958,"step":928}
+SR-HEADLESS DONE steps=1 sim_time=7.778442 until=none
+SR-HEADLESS DONE steps=1 sim_time=7.778442 until=none
+SR-HEADLESS DONE steps=1 sim_time=7.778442 until=none
+SR-HEADLESS DONE steps=1 sim_time=7.778442 until=none
+SR-HEADLESS DONE steps=96 sim_time=8.152895 until=none
+f_936.png f_944.png f_952.png f_960.png f_968.png f_976.png f_984.png f_992.png f_1000.png f_1008.png f_1016.png f_1024.png 393M	/tmp/v11
+## Measurements (linux-pc, from the server's frames; scratchpad scripts frame_stats.py, compare.py)
+massive/f_64.png: lit   6.0 %  white(>=250)   0.0 %  end-colour   0.0 %
+massive/f_256.png: lit  11.9 %  white(>=250)   0.2 %  end-colour   0.2 %
+massive/f_512.png: lit  24.0 %  white(>=250)   0.0 %  end-colour  24.0 %
+massive/f_768.png: lit  41.8 %  white(>=250)   0.0 %  end-colour  41.8 %
+massive/f_832.png: lit  47.3 %  white(>=250)   0.0 %  end-colour  47.3 %
+massive/f_896.png: lit  53.2 %  white(>=250)   0.0 %  end-colour  53.2 %
+sn_glow/f_929.png: lit  58.9 %  white(>=250)  42.0 %  end-colour   6.6 %
+sn_after/f_936.png: lit  59.3 %  white(>=250)  49.3 %  end-colour   5.0 %
+sn_after/f_944.png: lit  59.6 %  white(>=250)  50.6 %  end-colour   3.9 %
+sn_after/f_952.png: lit  59.9 %  white(>=250)  49.7 %  end-colour   3.1 %
+sn_after/f_960.png: lit  57.3 %  white(>=250)   0.0 %  end-colour  57.3 %
+sn_after/f_968.png: lit  57.8 %  white(>=250)   0.0 %  end-colour  57.8 %
+sn_after/f_976.png: lit  58.4 %  white(>=250)   0.0 %  end-colour  58.4 %
+sn_after/f_984.png: lit  58.9 %  white(>=250)   0.0 %  end-colour  58.9 %
+sn_after/f_992.png: lit  59.6 %  white(>=250)   0.0 %  end-colour  59.6 %
+sn_after/f_1000.png: lit  62.5 %  white(>=250)   3.0 %  end-colour  24.0 %
+sn_after/f_1008.png: lit  60.9 %  white(>=250)   0.0 %  end-colour  60.8 %
+sn_after/f_1016.png: lit  61.5 %  white(>=250)   0.0 %  end-colour  61.5 %
+sn_after/f_1024.png: lit  62.1 %  white(>=250)   0.0 %  end-colour  62.1 %
+sun_glow/f_2721.png: lit  91.5 %  white(>=250)   0.1 %  end-colour   0.1 %
+
+## The shipped table (render.rs lines 23-118 verbatim, md5 of render.rs 4ac742156a6c61676e22b84ad13dc554) against Mitchell Charity's bbr_color list, 2deg rows
+## URL http://www.vendian.org/mncharity/dir3/blackbody/UnstableURLs/bbr_color.html accessed 2026-10-29T14:49:58Z sha256 d82002c699c1d6ab42e71eb73848386640f500e3b6e34188ac62b754298e28b2 (Version 2001-Jun-22)
+# entry T_K R G B (sRGB-encoded, 0-1) | x255
+entry 0 1000.000 1.00000 0.18715 0.00000 | 255.00 47.72 0.00
+entry 76 1730.897 1.00000 0.48708 0.00000 | 255.00 124.21 0.00
+entry 152 2996.003 1.00000 0.72498 0.42860 | 255.00 184.87 109.29
+entry 200 4236.716 1.00000 0.85223 0.69273 | 255.00 217.32 176.65
+entry 259 6486.389 1.00000 0.97569 0.99586 | 255.00 248.80 253.95
+entry 319 10002.575 0.80349 0.85217 1.00000 | 204.89 217.30 255.00
+entry 400 17949.762 0.68315 0.76840 1.00000 | 174.20 195.94 255.00
+entry 450 25752.301 0.64711 0.74185 1.00000 | 165.01 189.17 255.00
+entry 511 40000.000 0.62143 0.72247 1.00000 | 158.46 184.23 255.00
+# T_K luma(table) b luma(table*b)
+T 1000 0.3465 0.0123 0.0043
+T 2000 0.6146 0.1792 0.1102
+T 3000 0.7625 0.6321 0.4820
+T 3400 0.8040 0.8079 0.6495
+T 3500 0.8133 0.8432 0.6858
+T 3600 0.8223 0.8743 0.7189
+T 4000 0.8550 0.9576 0.8187
+T 5000 0.9187 0.9996 0.9183
+T 6500 0.9826 1.0000 0.9826
+T 8000 0.9104 1.0000 0.9104
+T 10000 0.8526 1.0000 0.8526
+T 12000 0.8178 1.0000 0.8178
+T 13000 0.8052 1.0000 0.8052
+T 13500 0.7998 1.0000 0.7998
+T 14000 0.7948 1.0000 0.7948
+T 20000 0.7576 1.0000 0.7576
+T 40000 0.7210 1.0000 0.7210
+band luma(glow colour) > 0.8: 3907 K .. 13478 K (haze 0)
+entry  T_K        ours (x255)              list 2deg r g b (interp.)   d levels            d rel %
+0      1000.0     255.00  47.72   0.00    255.0   51.0    0.0    +0.0  -3.3  +0.0   +0.0 -6.4 n/a(<20)
+152    2996.0     255.00 184.87 109.29    255.0  184.9  104.7    +0.0  -0.0  +4.6   +0.0 -0.0 +4.4
+259    6486.4     255.00 248.80 253.95    255.0  248.9  250.6    +0.0  -0.1  +3.4   +0.0 -0.0 +1.3
+319    10002.6    204.89 217.30 255.00    207.0  218.0  255.0    -2.1  -0.7  +0.0   -1.0 -0.3 +0.0
+511    40000.0    158.46 184.23 255.00    161.0  183.0  255.0    -2.5  +1.2  +0.0   -1.6 +0.7 +0.0
+list 2deg: luma(r g b) > 0.8 from 3400 K to 13800 K; at 40,000 K 0.720; at 20,000 K 0.758

@@ -4,7 +4,7 @@ Written by M0-T9 (2026-10-09) from `milestones/m0/m0_contrat.md` §1.1–§1.3 a
 the booking layout, the box, the frame and the latch, the files) added by M0-T27 (2026-10-11) from §1.3, §1.8, §2.9,
 §2.12 and the handoffs of M0-T18–M0-T26. The contract owns every number, formula and string; this page names the parts
 and points to the section that fixes them. Where a part is not built yet it says so (« lands with »), so the page can be
-read against the tree. Each lot's V checks the code against this page (§7). Time control's own page:
+read against the tree. Each lot's V checks the code against this page (§7). Rendering (§1.11; M0-T79–M0-T82) added by M0-T83. Time control's own page:
 `docs/agent/time_control.md`.
 
 ## The crates — dependencies point one way (§1.1)
@@ -45,7 +45,8 @@ Built through M0-T26 (2026-10-11):
 | `step::latch` — a frame of steps, the latch (the contract's `latch`) | `crates/sr-engine/src/step/latch.rs`, `shaders/latch.wgsl` | M0-T22, M0-T23, M0-T26 |
 | `scene` — scene files | `crates/sr-engine/src/scene.rs` | M0-T25 |
 | `dump` — state dumps | `crates/sr-engine/src/dump.rs` | M0-T26 |
-| `headless` | `crates/sr-engine/src/headless.rs` | M0-T4, M0-T20, M0-T23, M0-T25, M0-T26 |
+| `headless` | `crates/sr-engine/src/headless.rs` | M0-T4, M0-T20, M0-T23, M0-T25, M0-T26, M0-T82 (frames) |
+| `render` — the blackbody table, the cell image, the glow (§ Rendering) | `crates/sr-engine/src/render.rs`, `shaders/render.wgsl`, `shaders/glow.wgsl` | M0-T79, M0-T80, M0-T81 |
 | sr-physics `units`, `registry`, `eos`, `time` | `crates/sr-physics/src/*.rs` | M0-T10–M0-T12, M0-T24 |
 
 `boxfit` and `latch` sit under `step::` because both rewrite how a step's dispatches are sized; the contract names them as
@@ -244,6 +245,37 @@ non-vacuum. Built on the GPU and never read back to size a dispatch:
   differs between them.
 - **The web entry** is the same `SandboxApp` as the desktop (§3.5); only the runner, the canvas and the readiness signal
   differ (`web.rs`, `srState`).
+
+## Rendering (§1.11, `sr_engine::render`, shaders/render.wgsl and glow.wgsl)
+The picture of the world is a W × H RGBA8 **cell image** — one texel per cell, so cells are visible squares (B12) — written
+by a compute pass from the state, never from a copy of it on the CPU. `Renderer::new` is built once for a world (the state,
+the previous state, the EOS tables, §1.10.2's eight temperature anchors, the species colours); `render(view, alpha, target,
+encoder)` records the passes into the caller's encoder and `target` (a storage texture of the world's size, `IMAGE_FORMAT`).
+The quad that draws the texture to the window at an integer scale is the app's (M0-T84), not this page's yet.
+- **The four views** (`View`: Glow, Heat, Element, Density) are one entry point and a `view` word. Glow is the default and the
+  only one with the glow passes; Heat and Density are the §4.11 sequential maps over log₁₀ T_K and log₁₀ Σ; Element blends
+  the species colours (§1.5) by mass fraction. Maps interpolate in linear RGB. Every colour, stop and threshold is §1.11's and
+  §4.11's — this page never restates a design token; `render_cells` draws the cell image alone, glow-less even for Glow.
+- **Temperature** is the translated one: the sandbox T goes through §1.10.2's piecewise log-log translation in f32 on the GPU
+  (the same eight anchors that build the readouts' `TempScale`), so the view and the status line read one temperature.
+- **The interpolation.** The image blends the current state with the previous one by α, channel by channel, before it reads
+  any of them: α = 1 is the current state exactly, α = 0 the previous exactly, between them the slow-motion mix of §1.8.3
+  (α = owed / Δt_est; clamped to [0, 1]). The caller owes the previous state — a copy of the State taken each step; the
+  renderer holds both and never advances either.
+- **The blackbody table** (CPU, built once in `Renderer::new`, uploaded in the palette uniform): Planck's law integrated
+  against the CIE 1931 fit, converted to sRGB, tabulated over log T, end colours outside (the formulas and constants are
+  §1.11's; `blackbody_table`, `blackbody_lookup`). The Glow view reads it at T_K and mixes in the haze for cold gas.
+- **The glow** (Glow view only): the cell image is drawn into an image of the renderer's own, then four dispatches — a bright
+  pass to a half-resolution texture, a horizontal and a vertical Gaussian blur, a composite that upsamples and adds into
+  `target`. The other views write straight into `target`. Numbers: §1.11, §4.11. Known limit, the lead's call on §1.11
+  (M0-T81): the luminance test blooms only a middle range of temperatures, so blue-white matter does not glow by this pass.
+- **Headless frames** (`headless --frames-every N [--view …]`, §3.3, `headless::FrameOut`): a `Renderer` at α = 1 draws into
+  an offscreen RGBA8 texture, the read-back is padded to the row alignment and waited for before the PNG is written
+  (`png`), to `DIR/frames/f_<step>.png` at every step index N divides — the chunks are cut there, so a frame is the state of
+  the step in its name, byte for byte the image of the dump of that step. A run with frames needs a calibration (exit 6).
+- **What is proven** (testing.md: `blackbody`, `views`, `glow`, `frames`): the table against external anchors, the views
+  against a CPU formula written from the contract, the glow against a CPU model of its passes, the frames against the dumps.
+  All on synthetic worlds — a real star's image and the bloom's cost at the world's size are NOT PROVEN.
 
 ## The observer boundary (§1.9, I2) — labels watch, never drive
 Everything that names or explains the star — blocks, objects, stages, events, the predicted ending, the readouts, the

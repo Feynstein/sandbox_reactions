@@ -1,0 +1,17 @@
+blackbody · clean · GO · arm 1/2, 1 left
+blackbody · plant blackbody-matrix-transpose · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope blackbody · 6.28 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11.blackbody.redarm.log
+=== GO ===
+views · clean · GO · arm 1/2, 1 left
+views · plant views-heat-linear · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope views · 37.33 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11.views.redarm.log
+=== GO ===
+glow · clean · GO · arm 1/2, 1 left
+glow · plant glow-threshold · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope glow · 22.56 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11.glow.redarm.log
+=== GO ===
+frames · clean · GO · arm 1/2, 1 left
+frames · plant frames-off-by-one · RED (proven: 4 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope frames · 27.92 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11.frames.redarm.log
+=== GO ===
+exit 0

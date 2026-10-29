@@ -1,0 +1,291 @@
+plan_lint · clean · GO · arm 1/2, 1 left
+plan_lint · plant plan-bad-status · RED (proven: 711 failed; its own verdict NO-GO: 2 violation(s)) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope plan_lint · 0.85 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.plan_lint.redarm.log · campaign 1/65, 64 left
+tools_selftest · clean · GO · arm 1/3, 2 left
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed) · arm 2/3, 1 left
+tools_selftest · plant tools-selftest-box-list (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope tools_selftest · 11.41 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.tools_selftest.redarm.log · campaign 2/65, 63 left
+toolchain · clean · NO-GO · arm 1/4, 3 left
+redarm: 3 plants · 0 red · 0 green · 0 errors · scope toolchain · 6.06 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.toolchain.redarm.log · campaign 3/65, 62 left
+build · clean · GO · arm 1/2, 1 left
+build · plant build-wasm-only · RED (proven: build[wasm]: 1 failed; build[wasm]: its own verdict NO-GO: cargo check --target wasm32-unknown-unknown failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope build · 15.43 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.build.redarm.log · campaign 4/65, 61 left
+registry · clean · GO · arm 1/3, 2 left
+registry · plant registry-order-unchecked · RED (proven: 1 failed) · arm 2/3, 1 left
+registry · plant registry-shares-unchecked · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope registry · 8.83 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.registry.redarm.log · campaign 5/65, 60 left
+eos · clean · GO · arm 1/2, 1 left
+eos · plant eos-exponent · RED (proven: 7 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope eos · 5.78 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.eos.redarm.log · campaign 6/65, 59 left
+rates · clean · GO · arm 1/2, 1 left
+rates · plant rates-table-shift · RED (proven: 4 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope rates · 5.78 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.rates.redarm.log · campaign 7/65, 58 left
+burn_cell · clean · GO · arm 1/5, 4 left
+burn_cell · plant q-double · RED (proven: 4 failed) · arm 2/5, 3 left
+burn_cell · plant burn-clip-ln-f · RED (proven: 1 failed) · arm 3/5, 2 left
+burn_cell · plant nfe-sub-cycled · RED (proven: 1 failed) · arm 4/5, 1 left
+burn_cell · plant nfe-gpu-sub-cycled · RED (proven: 1 failed) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope burn_cell · 75.99 s · 5 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.burn_cell.redarm.log · campaign 8/65, 57 left
+burn_order · clean · GO · arm 1/2, 1 left
+burn_order · plant swap-he-c · RED (proven: 2 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope burn_order · 22.27 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.burn_order.redarm.log · campaign 9/65, 56 left
+neutrino · clean · GO · arm 1/4, 3 left
+neutrino · plant nfe-gate-off · RED (proven: 6 failed) · arm 2/4, 2 left
+neutrino · plant nfe-gate-sigma · RED (proven: 6 failed) · arm 3/4, 1 left
+neutrino · plant nfe-latch-last · RED (proven: 3 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope neutrino · 49.64 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.neutrino.redarm.log · campaign 10/65, 55 left
+sink · clean · GO · arm 1/6, 5 left
+sink · plant sink-momentum · RED (proven: 3 failed) · arm 2/6, 4 left
+sink · plant sink-phi-skip · RED (proven: 2 failed) · arm 3/6, 3 left
+sink · plant sink-latch-off · RED (proven: 1 failed) · arm 4/6, 2 left
+sink · plant sink-pull-grid · RED (proven: 10 failed) · arm 5/6, 1 left
+sink · plant sink-ye-filter-off · RED (proven: 3 failed) · arm 6/6, 0 left
+redarm: 5 plants · 5 red · 0 green · 0 errors · scope sink · 99.87 s · 6 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.sink.redarm.log · campaign 11/65, 54 left
+nu_heat · clean · GO · arm 1/4, 3 left
+nu_heat · plant nuheat-no-cap · RED (proven: 5 failed) · arm 2/4, 2 left
+nu_heat · plant nuheat-gpu-no-cap · RED (proven: 4 failed) · arm 3/4, 1 left
+nu_heat · plant nuheat-gpu-always-dispatch · RED (proven: 1 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope nu_heat · 51.42 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.nu_heat.redarm.log · campaign 12/65, 53 left
+summary · clean · GO · arm 1/2, 1 left
+summary · plant summary-skip-row · RED (proven: 2 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope summary · 24.91 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.summary.redarm.log · campaign 13/65, 52 left
+ledger · clean · GO · arm 1/4, 3 left
+ledger · plant ledger-no-escaped · RED (proven: 3 failed) · arm 2/4, 2 left
+ledger · plant ledger-cell-grav-work · RED (proven: 1 failed) · arm 3/4, 1 left
+ledger · plant grav-ring-one-sided · RED (proven: 1 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope ledger · 69.27 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.ledger.redarm.log · campaign 14/65, 51 left
+preset_cloud · clean · GO · arm 1/2, 1 left
+preset_cloud · plant preset-uth-half · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope preset_cloud · 111.93 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.preset_cloud.redarm.log · campaign 15/65, 50 left
+observe_run · clean · GO · arm 1/7, 6 left
+observe_run · plant until-never-met · ERROR (the patch tests/plants/until-never-met.patch does not apply: crates/sr-engine/src/headless.rs @@ -851,7 +851,7 @@: its old lines appear 0 times in the file, not once) · arm 2/7, 5 left
+observe_run · plant continue-ignited-left-out · RED (proven: 1 failed) · arm 3/7, 4 left
+observe_run · plant continue-ledger-start-lost · RED (proven: 1 failed) · arm 4/7, 3 left
+observe_run · plant lone-sink-left-out · RED (proven: 3 failed) · arm 5/7, 2 left
+observe_run · plant dt-empty-box-unbounded · ERROR (the patch tests/plants/dt-empty-box-unbounded.patch does not apply: crates/sr-engine/shaders/reduce.wgsl @@ -211,7 +211,7 @@: its old lines appear 0 times in the file, not once) · arm 6/7, 1 left
+observe_run · plant ending-any-object · RED (proven: 1 failed) · arm 7/7, 0 left
+redarm: 6 plants · 4 red · 0 green · 2 errors · scope observe_run · 194.45 s · 7 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.observe_run.redarm.log · campaign 16/65, 49 left
+objects · clean · GO · arm 1/7, 6 left
+objects · plant one-object · RED (proven: 4 failed) · arm 2/7, 5 left
+objects · plant light-to-heaviest · RED (proven: 1 failed) · arm 3/7, 4 left
+objects · plant lone-sink-left-out · RED (proven: 3 failed) · arm 4/7, 3 left
+objects · plant identity-by-block · RED (proven: 2 failed) · arm 5/7, 2 left
+objects · plant sink-not-carried · RED (proven: 1 failed) · arm 6/7, 1 left
+objects · plant split-by-share · RED (proven: 2 failed) · arm 7/7, 0 left
+redarm: 6 plants · 6 red · 0 green · 0 errors · scope objects · 21.76 s · 7 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.objects.redarm.log · campaign 17/65, 48 left
+classify · clean · GO · arm 1/10, 9 left
+classify · plant classify-order · RED (proven: 2 failed) · arm 2/10, 8 left
+classify · plant ignite-on-a-flash · RED (proven: 6 failed) · arm 3/10, 7 left
+classify · plant ignite-light-only · RED (proven: 2 failed) · arm 4/10, 6 left
+classify · plant ending-hold-ten-tu · RED (proven: 1 failed) · arm 5/10, 5 left
+classify · plant snapshot-x-h-max-left-out · RED (proven: 1 failed) · arm 6/10, 4 left
+classify · plant neutron-star-old-row · RED (proven: 5 failed) · arm 7/10, 3 left
+classify · plant white-dwarf-any-mass · RED (proven: 3 failed) · arm 8/10, 2 left
+classify · plant neutron-star-without-collapse · RED (proven: 2 failed) · arm 9/10, 1 left
+classify · plant core-collapse-any-mass · RED (proven: 1 failed) · arm 10/10, 0 left
+redarm: 9 plants · 9 red · 0 green · 0 errors · scope classify · 29.45 s · 8 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.classify.redarm.log · campaign 18/65, 47 left
+ending · clean · GO · arm 1/2, 1 left
+ending · plant ending-band-swap · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope ending · 5.81 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.ending.redarm.log · campaign 19/65, 46 left
+age_clock · clean · GO · arm 1/2, 1 left
+age_clock · plant age-unclamped-unit · RED (proven: 2 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope age_clock · 5.78 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.age_clock.redarm.log · campaign 20/65, 45 left
+multi · clean · GO · arm 1/2, 1 left
+multi · plant one-object · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope multi · 70.45 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.multi.redarm.log · campaign 21/65, 44 left
+edits · clean · GO · arm 1/4, 3 left
+edits · plant edit-ignored · RED (proven: 7 failed) · arm 2/4, 2 left
+edits · plant edit-zero-vacuum · RED (proven: 5 failed) · arm 3/4, 1 left
+edits · plant edit-no-refresh · RED (proven: 3 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope edits · 57.33 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.edits.redarm.log · campaign 22/65, 43 left
+edits_file · clean · GO · arm 1/2, 1 left
+edits_file · plant edits-trigger-late · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edits_file · 26.03 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.edits_file.redarm.log · campaign 23/65, 42 left
+fft_twin · clean · GO · arm 1/2, 1 left
+fft_twin · plant fft-twiddle-sign · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope fft_twin · 5.94 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.fft_twin.redarm.log · campaign 24/65, 41 left
+riemann · clean · GO · arm 1/2, 1 left
+riemann · plant riemann-gamma · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope riemann · 5.73 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.riemann.redarm.log · campaign 25/65, 40 left
+sheet · clean · GO · arm 1/2, 1 left
+sheet · plant sheet-ring-kernel · RED (proven: 4 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope sheet · 5.84 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.sheet.redarm.log · campaign 26/65, 39 left
+sod · clean · GO · arm 1/2, 1 left
+sod · plant hll-swap · RED (proven: 14 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope sod · 37.03 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.sod.redarm.log · campaign 27/65, 38 left
+edges · clean · GO · arm 1/2, 1 left
+edges · plant wall-copy · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edges · 39.55 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.edges.redarm.log · campaign 28/65, 37 left
+collapse · clean · GO · arm 1/2, 1 left
+collapse · plant grav-half · RED (proven: 4 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope collapse · 29.38 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.collapse.redarm.log · campaign 29/65, 36 left
+jeans · clean · GO · arm 1/3, 2 left
+jeans · plant no-pressure-flux · RED (proven: 3 failed) · arm 2/3, 1 left
+jeans · plant face-work-heat-pays · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope jeans · 42.00 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.jeans.redarm.log · campaign 30/65, 35 left
+sun_burn · clean · GO · arm 1/3, 2 left
+sun_burn · plant stall-constants · RED (proven: 3 failed) · arm 2/3, 1 left
+sun_burn · plant burn-runaway · RED (proven: 3 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope sun_burn · 67.10 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.sun_burn.redarm.log · campaign 31/65, 34 left
+twin · clean · GO · arm 1/2, 1 left
+twin · plant twin-skip-floors · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope twin · 23.23 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.twin.redarm.log · campaign 32/65, 33 left
+cpu_gpu · clean · GO · arm 1/2, 1 left
+cpu_gpu · plant cfl-gpu · ERROR (the patch tests/plants/cfl-gpu.patch does not apply: crates/sr-engine/src/step/dt.rs @@ -85,7 +85,7 @@ impl Dt {: its old lines appear 0 times in the file, not once) · arm 2/2, 0 left
+redarm: 1 plants · 0 red · 0 green · 1 errors · scope cpu_gpu · 16.52 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.cpu_gpu.redarm.log · campaign 33/65, 32 left
+heat_gauss · clean · GO · arm 1/2, 1 left
+heat_gauss · plant chi-scale · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope heat_gauss · 25.18 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.heat_gauss.redarm.log · campaign 34/65, 31 left
+heat_implicit · clean · GO · arm 1/3, 2 left
+heat_implicit · plant solve-two-rounds · RED (proven: 4 failed) · arm 2/3, 1 left
+heat_implicit · plant warm-no-reset · RED (proven: 1 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope heat_implicit · 37.70 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.heat_implicit.redarm.log · campaign 35/65, 30 left
+heat_limiter · clean · GO · arm 1/2, 1 left
+heat_limiter · plant limiter-off · RED (proven: 4 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope heat_limiter · 24.18 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.heat_limiter.redarm.log · campaign 36/65, 29 left
+heat_stiff · clean · GO · arm 1/6, 5 left
+heat_stiff · plant newton-one-pass · RED (proven: 9 failed) · arm 2/6, 4 left
+heat_stiff · plant carry-commit-early · RED (proven: 4 failed) · arm 3/6, 3 left
+heat_stiff · plant vcycle-carry-restart · RED (proven: 2 failed) · arm 4/6, 2 left
+heat_stiff · plant ceiling-unlimited · RED (proven: 5 failed) · arm 5/6, 1 left
+heat_stiff · plant overflow-converged · RED (proven: 2 failed) · arm 6/6, 0 left
+redarm: 5 plants · 5 red · 0 green · 0 errors · scope heat_stiff · 80.52 s · 6 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.heat_stiff.redarm.log · campaign 37/65, 28 left
+heat_multigrid · clean · GO · arm 1/2, 1 left
+heat_multigrid · plant vcycle-no-coarse · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope heat_multigrid · 22.81 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.heat_multigrid.redarm.log · campaign 38/65, 27 left
+radiation_force · clean · GO · arm 1/3, 2 left
+radiation_force · plant radforce-zero · RED (proven: 8 failed) · arm 2/3, 1 left
+radiation_force · plant push-uncapped · RED (proven: 3 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope radiation_force · 48.88 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.radiation_force.redarm.log · campaign 39/65, 26 left
+grav_force · clean · GO · arm 1/5, 4 left
+grav_force · plant grav-kernel-exponent · RED (proven: 7 failed) · arm 2/5, 3 left
+grav_force · plant grav-vacuum-mask-off · RED (proven: 1 failed) · arm 3/5, 2 left
+grav_force · plant grav-kernel-transposed · RED (proven: 3 failed) · arm 4/5, 1 left
+grav_force · plant grav-kernel-diagonal · RED (proven: 1 failed) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope grav_force · 62.30 s · 5 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.grav_force.redarm.log · campaign 40/65, 25 left
+grav_selfforce · clean · GO · arm 1/5, 4 left
+grav_selfforce · plant grav-kernel-shift · RED (proven: 7 failed) · arm 2/5, 3 left
+grav_selfforce · plant grav-gradient-backward · RED (proven: 4 failed) · arm 3/5, 2 left
+grav_selfforce · plant grav-ring-one-sided · RED (proven: 2 failed) · arm 4/5, 1 left
+grav_selfforce · plant grav-twin-ring-one-sided · RED (proven: 3 failed) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope grav_selfforce · 57.22 s · 5 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.grav_selfforce.redarm.log · campaign 41/65, 24 left
+fft · clean · GO · arm 1/2, 1 left
+fft · plant fft-gpu-bitreverse · RED (proven: 7 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope fft · 24.38 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.fft.redarm.log · campaign 42/65, 23 left
+time_control · clean · GO · arm 1/3, 2 left
+time_control · plant slowdown-auto-return · RED (proven: 1 failed) · arm 2/3, 1 left
+time_control · plant time-max-paced · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope time_control · 8.81 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.time_control.redarm.log · campaign 43/65, 22 left
+strings · clean · GO · arm 1/2, 1 left
+strings · plant string-typo · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope strings · 9.80 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.strings.redarm.log · campaign 44/65, 21 left
+formats · clean · GO · arm 1/2, 1 left
+formats · plant format-grouping · RED (proven: 8 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope formats · 9.49 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.formats.redarm.log · campaign 45/65, 20 left
+blackbody · proven by M0-V11 2026-10-29T10:59:35-04:00 (fingerprint a647a51603f9) - not moved
+adapter · clean · GO · arm 1/2, 1 left
+adapter · plant adapter-case · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope adapter · 22.51 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.adapter.redarm.log · campaign 46/65, 19 left
+state · clean · GO · arm 1/2, 1 left
+state · plant state-renorm-skip · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope state · 22.67 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.state.redarm.log · campaign 47/65, 18 left
+booking · clean · GO · arm 1/2, 1 left
+booking · plant booking-row-skip · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope booking · 22.47 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.booking.redarm.log · campaign 48/65, 17 left
+floors · clean · GO · arm 1/2, 1 left
+floors · plant floors-no-cold-energy · RED (proven: 6 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope floors · 23.23 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.floors.redarm.log · campaign 49/65, 16 left
+dt · clean · GO · arm 1/4, 3 left
+dt · plant dt-cfl-one · ERROR (the patch tests/plants/dt-cfl-one.patch does not apply: crates/sr-engine/shaders/reduce.wgsl @@ -215,7 +215,7 @@: its old lines appear 0 times in the file, not once) · arm 2/4, 2 left
+dt · plant dt-last-scan-off · RED (proven: 1 failed) · arm 3/4, 1 left
+dt · plant dt-empty-box-unbounded · ERROR (the patch tests/plants/dt-empty-box-unbounded.patch does not apply: crates/sr-engine/shaders/reduce.wgsl @@ -211,7 +211,7 @@: its old lines appear 0 times in the file, not once) · arm 4/4, 0 left
+redarm: 3 plants · 1 red · 0 green · 2 errors · scope dt · 26.24 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.dt.redarm.log · campaign 50/65, 15 left
+box · clean · GO · arm 1/2, 1 left
+box · plant margin-zero · RED (proven: 7 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope box · 26.52 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.box.redarm.log · campaign 51/65, 14 left
+latch · clean · GO · arm 1/2, 1 left
+latch · plant latch-off · RED (proven: 5 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope latch · 22.65 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.latch.redarm.log · campaign 52/65, 13 left
+timing · clean · GO · arm 1/2, 1 left
+timing · plant timing-skip-pass · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope timing · 43.88 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.timing.redarm.log · campaign 53/65, 12 left
+scene · clean · GO · arm 1/2, 1 left
+scene · plant scene-unknown-key · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope scene · 23.39 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.scene.redarm.log · campaign 54/65, 11 left
+dump · clean · GO · arm 1/8, 7 left
+dump · plant dump-channel-order · RED (proven: 7 failed) · arm 2/8, 6 left
+dump · plant dump-sim-time-skip · RED (proven: 4 failed) · arm 3/8, 5 left
+dump · plant dump-flux-zero · RED (proven: 2 failed) · arm 4/8, 4 left
+dump · plant dump-sinks-drop · RED (proven: 2 failed) · arm 5/8, 3 left
+dump · plant headless-no-sinks · RED (proven: 1 failed) · arm 6/8, 2 left
+dump · plant warm-rate-not-dumped · RED (proven: 2 failed) · arm 7/8, 1 left
+dump · plant dt-empty-box-unbounded · ERROR (the patch tests/plants/dt-empty-box-unbounded.patch does not apply: crates/sr-engine/shaders/reduce.wgsl @@ -211,7 +211,7 @@: its old lines appear 0 times in the file, not once) · arm 8/8, 0 left
+redarm: 7 plants · 6 red · 0 green · 1 errors · scope dump · 258.10 s · 8 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.dump.redarm.log · campaign 55/65, 10 left
+boot · clean · GO · arm 1/3, 2 left
+boot · plant scene-refuse · RED (proven: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO) · arm 2/3, 1 left
+boot · plant git-dirty-mark-dropped · RED (proven: 1 failed; its own verdict NO-GO: summary.json git is "82e240c" with a source changed, expected "82e240c-dirty") · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope boot · 21.76 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.boot.redarm.log · campaign 56/65, 9 left
+desktop · owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - swept there, never NO-GO here
+web · owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - swept there, never NO-GO here
+capture · owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - swept there, never NO-GO here
+licences · clean · GO · arm 1/2, 1 left
+licences · plant gpl-dep · RED (proven: licences[cargo-wasm32]: 1 failed; licences[cargo-wasm32]: its own verdict NO-GO: 1 package(s) outside the G-LIC list: _g) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope licences · 1.14 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.licences.redarm.log · campaign 57/65, 8 left
+watch_only · clean · GO · arm 1/3, 2 left
+watch_only · plant stage-in-step · RED (proven: `count` matched nothing; 0 case(s) < expected 1) · arm 2/3, 1 left
+watch_only · plant calibration-in-step · RED (proven: `count` matched nothing; 0 case(s) < expected 1) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope watch_only · 1.43 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.watch_only.redarm.log · campaign 58/65, 7 left
+calibration · clean · GO · arm 1/3, 2 left
+calibration · plant const-drift · RED (proven: 1 failed) · arm 2/3, 1 left
+calibration · plant render-reserve-required · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope calibration · 31.84 s · 3 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.calibration.redarm.log · campaign 59/65, 6 left
+calibrate_cold · clean · GO · arm 1/2, 1 left
+calibrate_cold · plant calibrate-cold-matter · RED (proven: 6 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope calibrate_cold · 23.17 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.calibrate_cold.redarm.log · campaign 60/65, 5 left
+cold_core · clean · GO · arm 1/4, 3 left
+cold_core · plant cold-exponent · RED (proven: 6 failed) · arm 2/4, 2 left
+cold_core · plant cold-gpu-pressure · RED (proven: 1 failed) · arm 3/4, 1 left
+cold_core · plant cold-scene-moved · RED (proven: 2 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope cold_core · 64.91 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.cold_core.redarm.log · campaign 61/65, 4 left
+calibrate_status · clean · GO · arm 1/5, 4 left
+calibrate_status · plant calibrate-status-one-short · RED (proven: 12 failed; its own verdict NO-GO: 6 case(s) failed; 12 case(s) < expected 18) · arm 2/5, 3 left
+calibrate_status · plant calibrate-status-wrong-stage · RED (proven: 17 failed; its own verdict NO-GO: 1 case(s) failed; 17 case(s) < expected 18) · arm 3/5, 2 left
+calibrate_status · plant calibrate-status-continued-total-steps · RED (proven: 17 failed; its own verdict NO-GO: 1 case(s) failed; 17 case(s) < expected 18) · arm 4/5, 1 left
+calibrate_status · plant calibrate-status-flat-stale · RED (proven: 16 failed; its own verdict NO-GO: 2 case(s) failed; 16 case(s) < expected 18) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope calibrate_status · 2.62 s · 5 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.calibrate_status.redarm.log · campaign 62/65, 3 left
+calibrate_bisect · clean · GO · arm 1/13, 12 left
+calibrate_bisect · plant bisect-tolerance · RED (proven: 3 failed) · arm 2/13, 11 left
+calibrate_bisect · plant calibrate-record-removed · RED (proven: 4 failed) · arm 3/13, 10 left
+calibrate_bisect · plant calibrate-resume-any-mass · RED (proven: 1 failed) · arm 4/13, 9 left
+calibrate_bisect · plant calibrate-progress-wrong-stage · RED (proven: 1 failed) · arm 5/13, 8 left
+calibrate_bisect · plant calibrate-heat-warnings-printed · RED (proven: 1 failed) · arm 6/13, 7 left
+calibrate_bisect · plant calibrate-up-until-ending · RED (proven: 1 failed) · arm 7/13, 6 left
+calibrate_bisect · plant calibrate-progress-every-ignored · RED (proven: 2 failed) · arm 8/13, 5 left
+calibrate_bisect · plant calibrate-checkpoint-without-observers · ERROR (the patch tests/plants/calibrate-checkpoint-without-observers.patch does not apply: crates/sr-engine/src/calibrate.rs @@ -762,7 +762,7 @@: its old lines appear 0 times in the file, not once) · arm 9/13, 4 left
+calibrate_bisect · plant calibrate-checkpoint-on-the-tick · RED (proven: 1 failed) · arm 10/13, 3 left
+calibrate_bisect · plant calibrate-checkpoint-step-unchecked · RED (proven: 1 failed) · arm 11/13, 2 left
+calibrate_bisect · plant continue-until-unchecked · RED (proven: 1 failed) · arm 12/13, 1 left
+calibrate_bisect · plant calibrate-one-step-never · RED (proven: 2 failed) · arm 13/13, 0 left
+redarm: 12 plants · 11 red · 0 green · 1 errors · scope calibrate_bisect · 1164.32 s · 8 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.calibrate_bisect.redarm.log · campaign 63/65, 2 left
+calibrate_order · clean · GO · arm 1/4, 3 left
+calibrate_order · plant calibrate-order-skip · RED (proven: 1 failed) · arm 2/4, 2 left
+calibrate_order · plant calibrate-first-white-dwarf · RED (proven: 1 failed) · arm 3/4, 1 left
+calibrate_order · plant light-speed-200 · RED (proven: 2 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope calibrate_order · 43.19 s · 4 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.calibrate_order.redarm.log · campaign 64/65, 1 left
+readouts · clean · GO · arm 1/2, 1 left
+readouts · plant anchor-reverse · RED (proven: 8 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope readouts · 21.17 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-V11-sweep.readouts.redarm.log · campaign 65/65, 0 left
+views · proven by M0-V11 2026-10-29T11:00:12-04:00 (fingerprint 724be36ff11d) - not moved
+glow · proven by M0-V11 2026-10-29T11:00:35-04:00 (fingerprint a5652d1e02a7) - not moved
+frames · proven by M0-V11 2026-10-29T11:01:03-04:00 (fingerprint ce3d67c9468e) - not moved
+FAILED:
+  redarm toolchain: clean: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunk not found on PATH - red with no plant, so a red plant would prove nothing; the plants are not counted
+  redarm observe_run: plant until-never-met: the patch tests/plants/until-never-met.patch does not apply: crates/sr-engine/src/headless.rs @@ -851,7 +851,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  redarm observe_run: plant dt-empty-box-unbounded: the patch tests/plants/dt-empty-box-unbounded.patch does not apply: crates/sr-engine/shaders/reduce.wgsl @@ -211,7 +211,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  redarm cpu_gpu: plant cfl-gpu: the patch tests/plants/cfl-gpu.patch does not apply: crates/sr-engine/src/step/dt.rs @@ -85,7 +85,7 @@ impl Dt {: its old lines appear 0 times in the file, not once - an error, not a red
+  redarm dt: plant dt-cfl-one: the patch tests/plants/dt-cfl-one.patch does not apply: crates/sr-engine/shaders/reduce.wgsl @@ -215,7 +215,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  redarm dt: plant dt-empty-box-unbounded: the patch tests/plants/dt-empty-box-unbounded.patch does not apply: crates/sr-engine/shaders/reduce.wgsl @@ -211,7 +211,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  redarm dump: plant dt-empty-box-unbounded: the patch tests/plants/dt-empty-box-unbounded.patch does not apply: crates/sr-engine/shaders/reduce.wgsl @@ -211,7 +211,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  redarm calibrate_bisect: plant calibrate-checkpoint-without-observers: the patch tests/plants/calibrate-checkpoint-without-observers.patch does not apply: crates/sr-engine/src/calibrate.rs @@ -762,7 +762,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+moved: 65 of 69 armed scopes, plants RED 136, GREEN 0, ERROR 7 · 3527.44 s · box laserax-ai-server
+=== NO-GO: redarm toolchain: clean: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunk not found on PATH - red with no plant, so a red plant would prove nothing; the plants are not counted; redarm observe_run: plant until-never-met: the patch tests/plants/until-never-met.patch does not apply: crates/sr-engine/src/headless.rs @@ -851,7 +851,7 @@: its old lines appear 0 times ... ===

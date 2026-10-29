@@ -1,0 +1,131 @@
+== 2026-10-29T10:23:53-04:00 sink · task M0-T81 · box laserax-ai :: bash tests/gpu.sh sink physics
+-- sink · exit=0 · 20.91 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.38s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 34 tests
+test sink::a_core_under_m_tov_sb_as_iron_or_diverging_forms_none ... ok
+test sink::a_dense_converging_bound_potential_minimum_forms_a_sink_and_books_the_cell ... ok
+test sink::a_neutronized_core_holding_m_tov_sb_within_4_cells_forms_a_sink_that_takes_the_disk ... ok
+test sink::accretion_keeps_grid_and_sink_mass_and_momentum_and_books_the_energy ... SR-SINK accretion: r_acc 2, took 13.000000 of 1600.000; sink mass 2013.000000, momentum [3.9000001159720736, -2.6000000127430187]; swallowed 1.300000
+ok
+test sink::accretion_takes_bound_gas_only_in_the_sinks_own_frame ... ok
+test sink::formation_refused_below_the_density_threshold ... ok
+test sink::formation_refused_in_a_bouncing_core_with_only_the_density_threshold_met ... ok
+test sink::formation_refused_when_the_cell_is_not_the_potential_minimum ... ok
+test sink::formation_refused_when_the_gas_is_not_bound ... ok
+test sink::gpu_a_formation_inside_a_frame_stops_it_with_the_slow_down_on_and_only_a_formation ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test sink::gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu mass formation: SinkReport { sinks: [Sink { x: 32.5, y: 32.5, vx: -0.0003429311909712851, vy: -0.0003429330827202648, m: 5095.82763671875 }], formed: Some((32, 32)), accreted: 0.0, merged: 0, pulls: [[[-0.04397660493850708, -0.04397651180624962], [-0.04397660493850708, -0.04397651180624962]]] }; twin Report { formed: Some((32, 32)), accreted: 0.0, merged: 0 }, [Sink { x: 32.49999866290794, y: 32.49999866290794, vx: -0.0003429332750434662, vy: -0.00034293327504346453, m: 5095.828628050042 }]; swallowed 509.5828 (twin 509.5829)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test sink::gpu_a_sink_outside_the_box_moves_as_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu outside the box: velocity (-3.781315e-4, -3.781315e-4), the twin's (-3.781315e-4, -3.781315e-4)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu inside the box: velocity (-4.162233e-2, -4.162234e-2), the twin's (-4.162234e-2, -4.162234e-2)
+ok
+test sink::gpu_a_test_mass_near_a_sink_feels_the_softened_pull_and_phi_carries_the_same_term ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK pull test mass, one sink: 4 cells, the largest sink pull 22.969
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK pull test mass, two sinks: 4 cells, the largest sink pull 781.374
+ok
+test sink::gpu_accretion_matches_the_twin_keeps_mass_and_momentum_and_touches_nothing_beyond_r_acc ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu accretion: took 13.000000 (twin 13.000000); sink Sink { x: 32.497684478759766, y: 32.49675750732422, vx: -0.018230456858873367, vy: -0.021514758467674255, m: 2013.0 }; swallowed 1.300000 (twin 1.300000)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test sink::gpu_accretion_takes_bound_gas_only_in_the_sinks_own_frame ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu frame: riding sink took 13.000000 (twin 13.000000)
+ok
+test sink::gpu_formation_matches_the_twin_where_all_four_criteria_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu formation: SinkReport { sinks: [Sink { x: 32.49338912963867, y: 32.49338912963867, vx: -0.24962559342384338, vy: -0.2496252804994583, m: 8200.0 }], formed: Some((32, 32)), accreted: 1200.0, merged: 0, pulls: [[[-4.3976593017578125, -4.397647857666016], [-4.70672607421875, -4.70672607421875]]] }; twin Report { formed: Some((32, 32)), accreted: 1199.99999988, merged: 0 }, [Sink { x: 32.4933880649116, y: 32.4933880649116, vx: -0.24962632912628005, vy: -0.24962632912628724, m: 8199.99999987 }]; swallowed 820.0000 (twin 820.0000)
+ok
+test sink::gpu_formation_refuses_each_criterion_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test sink::gpu_kick_drift_kick_and_merging_match_the_twin_in_the_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu motion: step 0, Δt 0.04744, 4 sinks, first Sink { x: 21.62297821044922, y: 24.50164222717285, vx: -0.010165054351091385, vy: 0.044274166226387024, m: 0.03999999910593033 }
+SR-SINK gpu motion: step 1, Δt 0.04744, 4 sinks, first Sink { x: 21.6240291595459, y: 24.504201889038086, vx: 0.05445866286754608, vy: 0.06358427554368973, m: 0.03999999910593033 }
+SR-SINK gpu motion: step 2, Δt 0.04744, 4 sinks, first Sink { x: 21.628145217895508, y: 24.50767707824707, vx: 0.11905930191278458, vy: 0.08286450803279877, m: 0.03999999910593033 }
+SR-SINK gpu motion: step 3, Δt 0.04744, 4 sinks, first Sink { x: 21.635326385498047, y: 24.512065887451172, vx: 0.1836082488298416, vy: 0.10210888087749481, m: 0.03999999910593033 }
+SR-SINK gpu motion: step 4, Δt 0.04745, 4 sinks, first Sink { x: 21.64556884765625, y: 24.517366409301758, vx: 0.24807818233966827, vy: 0.12131176143884659, m: 0.03999999910593033 }
+SR-SINK gpu motion: step 5, Δt 0.04745, 4 sinks, first Sink { x: 21.65886878967285, y: 24.523576736450195, vx: 0.31244388222694397, vy: 0.14046810567378998, m: 0.03999999910593033 }
+ok
+test sink::gpu_the_cloud_falls_into_a_sink_with_mass_conserved_each_step ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu fall: after 40 steps the sink holds 2089.5613 (2000 + 89.5613); grid + sink momentum (478.8020, -320.8817) from (480.0000, -320.0000), 0.26 % of Σ m|u| = 576.89
+ok
+test sink::gpu_the_densest_forms_first_ties_the_lowest_y_then_x_one_a_step_none_past_16 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test sink::gpu_the_sinks_pull_on_the_gas_is_equal_and_opposite_on_asymmetric_worlds ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu no net force: one sink 2 beside the blob: |Σ M a + Σ m g| / scale = 7.572e-8; the pull against the twin's, 1.532e-7 relative
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu no net force: one sink 4 beside the blob: |Σ M a + Σ m g| / scale = 3.358e-9; the pull against the twin's, 6.747e-9 relative
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu no net force: one sink 8 beside the blob: |Σ M a + Σ m g| / scale = 2.485e-8; the pull against the twin's, 4.978e-8 relative
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu no net force: one sink 16 beside the blob: |Σ M a + Σ m g| / scale = 4.546e-8; the pull against the twin's, 9.096e-8 relative
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu no net force: two sinks of r_acc 2 and 5 beside the blob: |Σ M a + Σ m g| / scale = 1.192e-8; the pull against the twin's, 2.804e-8 relative
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu no net force: the sink at the cloud's corner, after accretion: |Σ M a + Σ m g| / scale = 1.756e-8; the pull against the twin's, 3.851e-8 relative
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu no net force: worst ratio 7.572e-8; the corner's sink Sink { x: 13.329148292541504, y: 13.816449165344238, vx: 0.9079339504241943, vy: 0.8206807374954224, m: 2011.0 } (twin Sink { x: 13.329148322382084, y: 13.816449076738486, vx: 0.9079339313026622, vy: 0.8206807057753639, m: 2010.99999989 })
+ok
+test sink::gpu_the_sinks_pull_reaches_the_cloud_in_g_and_phi_and_the_gas_g_stays_the_gas_own ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK pull cloud: 1600 cells, the largest sink pull 576.083
+ok
+test sink::gpu_two_sinks_over_one_cell_take_it_once ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-SINK gpu shared cells: sinks [Sink { x: 31.59084129333496, y: 32.44385528564453, vx: 0.3598232865333557, vy: -0.21027852594852448, m: 14.0 }, Sink { x: 34.551082611083984, y: 32.44455337524414, vx: 0.08119194954633713, vy: -0.20771105587482452, m: 12.0 }] (twin [Sink { x: 31.590842092140875, y: 32.44385387775836, vx: 0.359823369434582, vy: -0.21027859638484886, m: 13.999999869999996 }, Sink { x: 34.55108236742393, y: 32.44455305425936, vx: 0.08119183055421648, vy: -0.20771109199243667, m: 11.999999889999998 }])
+ok
+test sink::kick_drift_kick_pulls_by_the_softened_sum_over_the_gas_at_both_ends_of_the_step ... ok
+test sink::no_seventeenth_sink_forms ... ok
+test sink::r_acc_follows_two_gm_over_c_squared_with_a_floor_of_two_cells ... ok
+test sink::sigma_bh_alone_still_forms_a_sink_that_takes_its_cell ... ok
+test sink::sinks_closer_than_the_larger_r_acc_merge_with_mass_and_momentum_summed ... ok
+test sink::the_cloud_falls_into_a_sink_with_mass_conserved_each_step ... SR-SINK fall: after 40 steps the sink holds 2089.6413 (2000 + 89.6413); grid + sink momentum (478.7963, -320.8826) from (480.0000, -320.0000)
+ok
+test sink::the_densest_candidate_forms_ties_go_to_the_lowest_y_then_x_and_one_forms_a_step ... ok
+test sink::the_scene_is_a_uniform_cloud_with_the_sinks_on ... SR-SINK scene: mass 1600.0000, momentum [480.0000190734863, -320.0000047683716]
+ok
+test sink::the_sinks_potential_and_pull_are_the_softened_point_mass ... ok
+test sink::the_sinks_pull_on_the_gas_is_equal_and_opposite_on_asymmetric_worlds ... SR-SINK no net force: one sink 2 beside the blob: |Σ M a + Σ m g| / scale = 7.648e-17
+SR-SINK no net force: one sink 4 beside the blob: |Σ M a + Σ m g| / scale = 4.543e-17
+SR-SINK no net force: one sink 8 beside the blob: |Σ M a + Σ m g| / scale = 6.365e-17
+SR-SINK no net force: one sink 16 beside the blob: |Σ M a + Σ m g| / scale = 9.379e-17
+SR-SINK no net force: two sinks of r_acc 2 and 5 beside the blob: |Σ M a + Σ m g| / scale = 4.801e-17
+SR-SINK no net force: the sink at the cloud's corner, after accretion: |Σ M a + Σ m g| / scale = 7.328e-16
+SR-SINK no net force: accretion moves the sink's pull by 3.619e-2 of its value
+SR-SINK no net force: worst ratio 7.328e-16
+ok
+test sink::two_sinks_pull_each_other_softened_by_the_larger_r_acc_and_keep_their_total_momentum ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 400 filtered out; finished in 20.45s
+
+

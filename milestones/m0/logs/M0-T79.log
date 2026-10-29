@@ -1,0 +1,45 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 1.09s
+     Running unittests src/lib.rs (build/target/release/deps/sr_engine-cf60927f12b0ab06)
+
+running 8 tests
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... ok
+test render::tests::fit_matches_the_cie_1931_values ... FAILED
+test render::tests::one_thousand_kelvin_is_red_dominant ... ok
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+
+failures:
+
+---- render::tests::fit_matches_the_cie_1931_values stdout ----
+
+thread 'render::tests::fit_matches_the_cie_1931_values' (1477605) panicked at crates/sr-engine/src/render.rs:175:17:
+λ = 440 nm, channel 1: fit 0.01905432881301316 vs CIE 0.023
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    render::tests::fit_matches_the_cie_1931_values
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --lib`
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 0.95s
+     Running unittests src/lib.rs (build/target/release/deps/sr_engine-cf60927f12b0ab06)
+
+running 8 tests
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... ok
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... ok
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::one_thousand_kelvin_is_red_dominant ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+

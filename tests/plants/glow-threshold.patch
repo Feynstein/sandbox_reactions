@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/glow.wgsl
++++ b/crates/sr-engine/shaders/glow.wgsl
+@@ -10,7 +10,7 @@
+ // The half-resolution textures are RGBA16F: a lone cell's halo is under one level of the 8-bit image and must not be rounded
+ // away before the sum. render.rs `Renderer::render` runs the passes for the Glow view only.
+ 
+-const THRESHOLD: f32 = 0.8;
++const THRESHOLD: f32 = 0.0;
+ const SIGMA: f32 = 3.0;
+ const INTENSITY: f32 = 0.6;
+ const RADIUS: i32 = 4;

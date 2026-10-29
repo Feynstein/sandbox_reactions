@@ -1,0 +1,35 @@
+== 2026-10-29T10:24:33-04:00 desktop[window] · task M0-T81 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T10:24:34-04:00 desktop[launcher] · task M0-T81 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T10:24:38-04:00 desktop[race] · task M0-T81 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-10-29T10:24:42-04:00 desktop[port-taken] · task M0-T81 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=0 · 9.38 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T81.launch.game-xvfb.log)
+game-xvfb: pid 1985923 stopped; its X server :99, pid 1985921 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T81.launch.game-xvfb.log
+services: 1, ready: 1, failures: 0
+boot game-xvfb: built in 0 s, booted and checked in 9 s
+=== GO ===
+
+-- desktop[launcher] · exit=0 · 9.13 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 1
+=== GO ===
+Sandbox Reactions is running. Press Enter to close it.
+game-xvfb: pid 1986281 stopped; its X server :99, pid 1986280 stopped
+services: 1, stopped: 1
+=== GO ===
+launcher game-xvfb: built in 0 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+
+-- desktop[race] · exit=0 · 15.43 s
+game-xvfb: ready on http://127.0.0.1:47811/status, 0.3s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T81-race.launch.game-xvfb.log)
+services: 1, ready: 1
+race game-xvfb: built in 0 s, started straight behind a hand-over whose port outlived its holder, stopped
+=== GO ===
+
+-- desktop[port-taken] · exit=0 · 12.22 s
+SR-STATUS-PORT 47813
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+port-taken game-xvfb: built in 0 s, 47811 held, ready on 47813 as printed, stopped
+=== GO ===
+

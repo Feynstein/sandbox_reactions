@@ -1,0 +1,11 @@
+--- a/tools/pb/verify.py
++++ b/tools/pb/verify.py
+@@ -499,7 +499,7 @@
+ 
+ def owed_on(sc, box):
+     names = [str(b).strip().lower() for b in box_names(sc)]
+-    return bool(names) and box.strip().lower() not in names
++    return bool(names) and box.strip().lower() != names[0]
+ 
+ 
+ # ------------------------------------------------------------------------------------ one command, one scope

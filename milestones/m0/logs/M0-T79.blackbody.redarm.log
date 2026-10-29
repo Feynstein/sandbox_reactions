@@ -1,0 +1,204 @@
+==== 2026-10-29T09:39:08-04:00 blackbody · clean · a fresh scratch copy of the tree
+== 2026-10-29T09:39:09-04:00 blackbody · task M0-T79 · box laserax-ai :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=0 · 2.82 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-h8wz7cd5/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-h8wz7cd5/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.73s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_engine-cf60927f12b0ab06)
+
+running 8 tests
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... ok
+test render::tests::one_thousand_kelvin_is_red_dominant ... ok
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+
+==== 2026-10-29T09:39:08-04:00 blackbody · plant blackbody-matrix-transpose · a fresh scratch copy of the tree
+planted blackbody-matrix-transpose: tests/plants/blackbody-matrix-transpose.patch -> crates/sr-engine/src/render.rs
+== 2026-10-29T09:39:09-04:00 blackbody · task M0-T79 · box laserax-ai :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=101 · 5.43 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-h8wz7cd5/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-h8wz7cd5/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.58s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_engine-cf60927f12b0ab06)
+
+running 8 tests
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... FAILED
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... FAILED
+test render::tests::one_thousand_kelvin_is_red_dominant ... FAILED
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+
+failures:
+
+---- render::tests::forty_thousand_kelvin_is_blue_dominant stdout ----
+
+thread 'render::tests::forty_thousand_kelvin_is_blue_dominant' (1487013) panicked at crates/sr-engine/src/render.rs:156:9:
+40,000 K = [0.9999999999999999, 0.0, 0.8620373007200283]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- render::tests::six_thousand_five_hundred_kelvin_is_near_white stdout ----
+
+thread 'render::tests::six_thousand_five_hundred_kelvin_is_near_white' (1487016) panicked at crates/sr-engine/src/render.rs:143:9:
+6,500 K = [0.9999999999999999, 0.2969084202833761, 0.6123847389646755]
+
+---- render::tests::one_thousand_kelvin_is_red_dominant stdout ----
+
+thread 'render::tests::one_thousand_kelvin_is_red_dominant' (1487015) panicked at crates/sr-engine/src/render.rs:149:9:
+1,000 K = [0.9999999999999999, 0.0, 0.0]
+
+
+failures:
+    render::tests::forty_thousand_kelvin_is_blue_dominant
+    render::tests::one_thousand_kelvin_is_red_dominant
+    render::tests::six_thousand_five_hundred_kelvin_is_near_white
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --lib`
+
+==== 2026-10-29T09:43:36-04:00 blackbody · clean · a fresh scratch copy of the tree
+== 2026-10-29T09:43:37-04:00 blackbody · task M0-T79 · box laserax-ai :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=0 · 5.23 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-e2tbdzyn/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-e2tbdzyn/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.52s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_engine-cf60927f12b0ab06)
+
+running 8 tests
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... ok
+test render::tests::one_thousand_kelvin_is_red_dominant ... ok
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+
+==== 2026-10-29T09:43:36-04:00 blackbody · plant blackbody-matrix-transpose · a fresh scratch copy of the tree
+planted blackbody-matrix-transpose: tests/plants/blackbody-matrix-transpose.patch -> crates/sr-engine/src/render.rs
+== 2026-10-29T09:43:37-04:00 blackbody · task M0-T79 · box laserax-ai :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=101 · 2.62 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-e2tbdzyn/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-e2tbdzyn/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.57s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_engine-cf60927f12b0ab06)
+
+running 8 tests
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::one_thousand_kelvin_is_red_dominant ... FAILED
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... FAILED
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... FAILED
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+
+failures:
+
+---- render::tests::one_thousand_kelvin_is_red_dominant stdout ----
+
+thread 'render::tests::one_thousand_kelvin_is_red_dominant' (1523344) panicked at crates/sr-engine/src/render.rs:149:9:
+1,000 K = [0.9999999999999999, 0.0, 0.0]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- render::tests::six_thousand_five_hundred_kelvin_is_near_white stdout ----
+
+thread 'render::tests::six_thousand_five_hundred_kelvin_is_near_white' (1523345) panicked at crates/sr-engine/src/render.rs:143:9:
+6,500 K = [0.9999999999999999, 0.2969084202833761, 0.6123847389646755]
+
+---- render::tests::forty_thousand_kelvin_is_blue_dominant stdout ----
+
+thread 'render::tests::forty_thousand_kelvin_is_blue_dominant' (1523342) panicked at crates/sr-engine/src/render.rs:156:9:
+40,000 K = [0.9999999999999999, 0.0, 0.8620373007200283]
+
+
+failures:
+    render::tests::forty_thousand_kelvin_is_blue_dominant
+    render::tests::one_thousand_kelvin_is_red_dominant
+    render::tests::six_thousand_five_hundred_kelvin_is_near_white
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --lib`
+
+==== 2026-10-29T09:49:13-04:00 blackbody · clean · a fresh scratch copy of the tree
+== 2026-10-29T09:49:14-04:00 blackbody · task M0-T79 · box laserax-ai-server :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=0 · 2.72 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-3gi7fel9/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-3gi7fel9/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.66s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_engine-cf60927f12b0ab06)
+
+running 8 tests
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... ok
+test render::tests::one_thousand_kelvin_is_red_dominant ... ok
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+
+==== 2026-10-29T09:49:13-04:00 blackbody · plant blackbody-matrix-transpose · a fresh scratch copy of the tree
+planted blackbody-matrix-transpose: tests/plants/blackbody-matrix-transpose.patch -> crates/sr-engine/src/render.rs
+== 2026-10-29T09:49:14-04:00 blackbody · task M0-T79 · box laserax-ai-server :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=101 · 5.48 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-3gi7fel9/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-3gi7fel9/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 2.65s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_engine-cf60927f12b0ab06)
+
+running 8 tests
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... FAILED
+test render::tests::one_thousand_kelvin_is_red_dominant ... FAILED
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... FAILED
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+
+failures:
+
+---- render::tests::forty_thousand_kelvin_is_blue_dominant stdout ----
+
+thread 'render::tests::forty_thousand_kelvin_is_blue_dominant' (271371) panicked at crates/sr-engine/src/render.rs:156:9:
+40,000 K = [0.9999999999999999, 0.0, 0.8620373007200283]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- render::tests::one_thousand_kelvin_is_red_dominant stdout ----
+
+thread 'render::tests::one_thousand_kelvin_is_red_dominant' (271373) panicked at crates/sr-engine/src/render.rs:149:9:
+1,000 K = [0.9999999999999999, 0.0, 0.0]
+
+---- render::tests::six_thousand_five_hundred_kelvin_is_near_white stdout ----
+
+thread 'render::tests::six_thousand_five_hundred_kelvin_is_near_white' (271374) panicked at crates/sr-engine/src/render.rs:143:9:
+6,500 K = [0.9999999999999999, 0.2969084202833761, 0.6123847389646755]
+
+
+failures:
+    render::tests::forty_thousand_kelvin_is_blue_dominant
+    render::tests::one_thousand_kelvin_is_red_dominant
+    render::tests::six_thousand_five_hundred_kelvin_is_near_white
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-engine --lib`
+

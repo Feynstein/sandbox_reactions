@@ -1,0 +1,251 @@
+# M0-T79 claim on laserax-ai-server, RTX 4090, 2026-10-29T09:46:29-04:00
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why burn_cell: stale: crates/sr-engine/src/render.rs
+why burn_order: stale: crates/sr-engine/src/render.rs
+why neutrino: stale: crates/sr-engine/src/render.rs
+why sink: stale: crates/sr-engine/src/render.rs
+why nu_heat: stale: crates/sr-engine/src/render.rs
+why summary: stale: crates/sr-engine/src/render.rs
+why ledger: stale: crates/sr-engine/src/render.rs
+why preset_cloud: stale: crates/sr-engine/src/render.rs
+why observe_run: stale: crates/sr-engine/src/render.rs
+why multi: stale: crates/sr-engine/src/render.rs
+why edits: stale: crates/sr-engine/src/render.rs
+why edits_file: stale: crates/sr-engine/src/render.rs
+why sod: stale: crates/sr-engine/src/render.rs
+why edges: stale: crates/sr-engine/src/render.rs
+why collapse: stale: crates/sr-engine/src/render.rs
+why jeans: stale: crates/sr-engine/src/render.rs
+why twin: stale: crates/sr-engine/src/render.rs
+why cpu_gpu: stale: crates/sr-engine/src/render.rs
+why heat_gauss: stale: crates/sr-engine/src/render.rs
+why heat_implicit: stale: crates/sr-engine/src/render.rs
+why heat_limiter: stale: crates/sr-engine/src/render.rs
+why heat_stiff: stale: crates/sr-engine/src/render.rs
+why heat_multigrid: stale: crates/sr-engine/src/render.rs
+why radiation_force: stale: crates/sr-engine/src/render.rs
+why grav_force: stale: crates/sr-engine/src/render.rs
+why grav_selfforce: stale: crates/sr-engine/src/render.rs
+why fft: stale: crates/sr-engine/src/render.rs
+why adapter: stale: crates/sr-engine/src/render.rs
+why state: stale: crates/sr-engine/src/render.rs
+why booking: stale: crates/sr-engine/src/render.rs
+why floors: stale: crates/sr-engine/src/render.rs
+why dt: stale: crates/sr-engine/src/render.rs
+why box: stale: crates/sr-engine/src/render.rs
+why latch: stale: crates/sr-engine/src/render.rs
+why timing: stale: crates/sr-engine/src/render.rs
+why scene: stale: crates/sr-engine/src/render.rs
+why dump: stale: crates/sr-engine/src/render.rs
+why boot: stale: crates/sr-engine/src/render.rs
+why desktop: stale: crates/sr-engine/src/render.rs
+why web: stale: crates/sr-engine/src/render.rs
+why capture: stale: crates/sr-engine/src/render.rs
+why calibration: stale: crates/sr-engine/src/render.rs
+why calibrate_cold: stale: crates/sr-engine/src/render.rs
+why cold_core: stale: crates/sr-engine/src/render.rs
+why calibrate_bisect: stale: crates/sr-engine/src/render.rs
+why calibrate_order: stale: crates/sr-engine/src/render.rs
+why readouts: stale: crates/sr-engine/src/render.rs
+plan_lint         713/0/0      0.12 s  GO · step 1/48, 47 left
+burn_cell         18/0/0      16.25 s  GO · step 2/48, 46 left
+burn_order        4/0/0       11.29 s  GO · step 3/48, 45 left
+neutrino          18/0/0      16.70 s  GO · step 4/48, 44 left
+sink              34/0/0      31.57 s  GO · step 5/48, 43 left
+nu_heat           15/0/0      21.15 s  GO · step 6/48, 42 left
+summary           7/0/0       16.39 s  GO · step 7/48, 41 left
+ledger            5/0/0       21.60 s  GO · step 8/48, 40 left
+preset_cloud      5/0/0       59.00 s  GO · step 9/48, 39 left
+observe_run       9/0/0       56.74 s  GO · step 10/48, 38 left
+multi             5/0/0       44.97 s  GO · step 11/48, 37 left
+edits             17/0/0      13.13 s  GO · step 12/48, 36 left
+edits_file        6/0/0        9.93 s  GO · step 13/48, 35 left
+sod               15/0/0       9.33 s  GO · step 14/48, 34 left
+edges             7/0/0       11.88 s  GO · step 15/48, 33 left
+collapse          6/0/0        1.82 s  GO · step 16/48, 32 left
+jeans             6/0/0        1.17 s  GO · step 17/48, 31 left
+twin              6/0/0        1.82 s  GO · step 18/48, 30 left
+cpu_gpu           3/0/0        8.28 s  GO · step 19/48, 29 left
+heat_gauss        14/0/0       5.42 s  GO · step 20/48, 28 left
+heat_implicit     8/0/0        3.57 s  GO · step 21/48, 27 left
+heat_limiter      8/0/0        4.77 s  GO · step 22/48, 26 left
+heat_stiff        13/0/0       6.82 s  GO · step 23/48, 25 left
+heat_multigrid    4/0/0        2.82 s  GO · step 24/48, 24 left
+radiation_force   11/0/0      11.33 s  GO · step 25/48, 23 left
+grav_force        13/0/0       4.17 s  GO · step 26/48, 22 left
+grav_selfforce    7/0/0        2.47 s  GO · step 27/48, 21 left
+fft               8/0/0        5.02 s  GO · step 28/48, 20 left
+adapter           9/1/0        3.52 s  NO-GO · step 29/48, 19 left
+state             6/0/0        3.42 s  GO · step 30/48, 18 left
+booking           4/0/0        3.12 s  GO · step 31/48, 17 left
+floors            7/0/0        5.52 s  GO · step 32/48, 16 left
+dt                8/0/0        6.67 s  GO · step 33/48, 15 left
+box               8/0/0       17.29 s  GO · step 34/48, 14 left
+latch             5/0/0        4.22 s  GO · step 35/48, 13 left
+timing            5/0/0       22.70 s  GO · step 36/48, 12 left
+scene             8/0/0        2.42 s  GO · step 37/48, 11 left
+dump              12/0/0      37.14 s  GO · step 38/48, 10 left
+boot              1/0/0       12.99 s  GO · step 39/48, 9 left
+desktop           0/4/0      133.15 s  NO-GO · step 40/48, 8 left
+web               0/3/0        0.10 s  NO-GO · step 41/48, 7 left
+capture           1/1/0        0.33 s  NO-GO · step 42/48, 6 left
+calibration       12/0/0       0.16 s  GO · step 43/48, 5 left
+calibrate_cold    8/0/0        1.42 s  GO · step 44/48, 4 left
+cold_core         8/0/0        8.58 s  GO · step 45/48, 3 left
+calibrate_bisect  19/0/0      89.85 s  GO · step 46/48, 2 left
+calibrate_order   13/0/0       0.16 s  GO · step 47/48, 1 left
+readouts          9/0/0        0.11 s  GO · step 48/48, 0 left
+tools_selftest    NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 28 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+blackbody · clean · GO · arm 1/2, 1 left
+blackbody · plant blackbody-matrix-transpose · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope blackbody · 6.16 s · 2 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-T79.blackbody.redarm.log
+FLAG oracle: tools/pb/verify.json changed since M0-T79's start - a test, case or check M0-T79's Deliver: does not name
+logs: milestones/m0/logs/M0-T79.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+160b0f1851c1
+anchor: 418 path×scope entries moved by this run
+anchor: 211 paths checked · 313 skipped (3 classes) · 115 never checked · 0 stale · 0 unclassified · 0 owed · 326 covered of 639 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  Cargo.lock  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  Cargo.toml  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-app/Cargo.toml  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/capture.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/desktop.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/format.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/main.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/status.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/strings.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/src/web.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-app/tests/strings.rs  (no entry for desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/edit.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/render.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/edit.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_order.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edit.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edits_file.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/multi.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/readouts.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  rust-toolchain.toml  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  start.bat  (no entry for desktop)
+NEVER CHECKED  start.ps1  (no entry for desktop)
+NEVER CHECKED  start.sh  (no entry for desktop)
+NEVER CHECKED  tests/capture/check.sh  (no entry for capture)
+NEVER CHECKED  tests/capture/smoke.json  (no entry for capture)
+NEVER CHECKED  tests/cargo.sh  (no entry for adapter, desktop, web, capture)
+NEVER CHECKED  tests/gpu.sh  (no entry for adapter)
+NEVER CHECKED  tests/plants/adapter-case.patch  (no entry for adapter)
+NEVER CHECKED  tests/plants/capture-no-captions.patch  (no entry for capture)
+NEVER CHECKED  tests/plants/launcher-no-stop.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/launcher-stop-all.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/never-ready.patch  (no entry for web)
+NEVER CHECKED  tests/plants/port-handover-early.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/port-no-fallback.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/smoke-no-sandbox.patch  (no entry for web)
+NEVER CHECKED  tests/plants/status-never-ready.patch  (no entry for desktop)
+NEVER CHECKED  tests/plants/web-autoload.patch  (no entry for web)
+NEVER CHECKED  tests/plants/web-no-gpu-check.patch  (no entry for web)
+NEVER CHECKED  tests/smoke.sh  (no entry for desktop)
+NEVER CHECKED  tests/web/check.sh  (no entry for web)
+NEVER CHECKED  tools/pb/launch.json  (no entry for desktop, web)
+NEVER CHECKED  web/Trunk.toml  (no entry for web)
+NEVER CHECKED  web/index.html  (no entry for web)
+NEVER CHECKED  web/package-lock.json  (no entry for web)
+NEVER CHECKED  web/package.json  (no entry for web)
+NEVER CHECKED  web/smoke.mjs  (no entry for web)
+NEVER CHECKED  web/strip-autoload.mjs  (no entry for web)
+skipped   305  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  adapter: 1 failed · log milestones/m0/logs/M0-T79.adapter.log
+  desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready; desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: no ready within 90 s (SR-STATUS-PORT never printed, last status none) · log milestones/m0/logs/M0-T79.desktop.log
+  web: web[build]: 1 failed; web[build]: its own verdict NO-GO: trunk not found on PATH; web[ready]: 1 failed; web[ready]: its own verdict NO-GO: trunk not found on PATH; web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: trunk not found on PATH · log milestones/m0/logs/M0-T79.web.log
+  capture: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the capture run exited 127, expected 0 · log milestones/m0/logs/M0-T79.capture.log
+  anchor: 115 never checked, 0 stale, 0 unclassified - every one named above
+verify: 1128 passed, 9 failed, 0 skipped · 44/48 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 21 not impacted · 164.04 s + loop 6.30 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.52->1.38 · base: M0-T79's start 2026-10-29T09:35:08-04:00
+=== NO-GO: adapter: 1 failed · log milestones/m0/logs/M0-T79.adapter.log; desktop: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never reached ready; desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the ha... ===

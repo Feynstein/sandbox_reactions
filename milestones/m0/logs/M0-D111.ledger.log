@@ -1,0 +1,27 @@
+== 2026-10-29T10:00:28-04:00 ledger · task M0-D111 · box laserax-ai-server :: bash tests/gpu.sh ledger physics
+-- ledger · exit=0 · 12.19 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-c1ed76875989c7d5)
+
+running 5 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.333618 until=none
+remnant: steps 1..1000, sim time 8.317, R₉₀ 2.646, M 1496.3, τ_dyn 0.1113, |W|₀ 2.3296e5; Δinvariant -1.1838e3 → 6.798e-5 |W| per τ_dyn (bound 1e-3); radiated 2.5665e5, floor_added -9.1146e0, escaped 4.0739e2, ΔW -5.5411e5
+ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.726638 until=none
+bounce: steps 1..500, mass drift 5.373e-8, momentum drift 5.510e-7 of Σm|u| = 2.841e3, energy drift -1.803e-2 (reported), escaped 0
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.706426 until=none
+leave: escaped mass 1.065236e1 of 1.017499e3 (1.047e-2), momentum escaped Array [Number(162.5744569890987), Number(-0.000017671897126092517)], mass drift 2.632e-8, momentum drift 5.535e-3 of Σm|u| = 3.245e3, energy drift -1.164e-2 (reported), escaped energy 8.743991e2
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.818474 until=none
+leave without gravity: escaped mass 2.988126e2 of 1.017169e3, escaped x momentum 1.310427e3, vacuum_reset 1.778e-2 × u_max 6.875 → bound 8.019e-5; mass drift 3.211e-9, momentum drift 5.295e-5 of Σm|u| = 1.544e3
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 413 filtered out; finished in 11.75s
+
+

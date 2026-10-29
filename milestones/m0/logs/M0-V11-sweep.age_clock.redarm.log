@@ -1,0 +1,80 @@
+==== 2026-10-29T11:15:48-04:00 age_clock · clean · a fresh scratch copy of the tree
+== 2026-10-29T11:15:49-04:00 age_clock · task M0-V11-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::age
+-- age_clock · exit=0 · 2.52 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-xpz3ec01/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.46s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 17 tests
+test observe::age::tests::a_falling_phi_is_clamped_and_the_age_never_goes_down ... ok
+test observe::age::tests::a_fuel_stage_gains_its_tau_as_the_fuel_goes ... ok
+test observe::age::tests::a_mass_jump_keeps_the_age_and_changes_the_rate ... ok
+test observe::age::tests::a_mass_jump_moves_no_timed_stage ... ok
+test observe::age::tests::a_remnant_adds_a_hundred_million_years_per_time_unit ... ok
+test observe::age::tests::a_short_history_gives_the_rate_over_what_there_is ... ok
+test observe::age::tests::a_stage_change_banks_the_old_stage_and_starts_the_next ... ok
+test observe::age::tests::a_timed_stage_runs_on_the_calibrated_duration_or_ten ... ok
+test observe::age::tests::between_the_listed_masses_tau_is_log_log ... ok
+test observe::age::tests::beyond_the_table_tau_is_held ... ok
+test observe::age::tests::every_fuel_stage_reads_its_own_species ... ok
+test observe::age::tests::objects_are_independent_new_ones_start_at_zero_and_the_gone_are_forgotten ... ok
+test observe::age::tests::the_clock_builds_from_a_calibration ... ok
+test observe::age::tests::the_rate_is_the_age_gained_over_the_last_wall_second ... ok
+test observe::age::tests::the_age_never_decreases_over_a_wild_run ... ok
+test observe::age::tests::the_table_at_one_five_fifteen_and_twenty_five_suns ... ok
+test observe::age::tests::time_running_back_gains_nothing ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 180 filtered out; finished in 0.01s
+
+
+==== 2026-10-29T11:15:48-04:00 age_clock · plant age-unclamped-unit · a fresh scratch copy of the tree
+planted age-unclamped-unit: tests/plants/age-unclamped-unit.patch -> crates/sr-physics/src/observe/age.rs
+== 2026-10-29T11:15:49-04:00 age_clock · task M0-V11-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::age
+-- age_clock · exit=101 · 5.07 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-xpz3ec01/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.48s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 17 tests
+test observe::age::tests::a_fuel_stage_gains_its_tau_as_the_fuel_goes ... ok
+test observe::age::tests::a_mass_jump_keeps_the_age_and_changes_the_rate ... ok
+test observe::age::tests::a_mass_jump_moves_no_timed_stage ... ok
+test observe::age::tests::a_falling_phi_is_clamped_and_the_age_never_goes_down ... FAILED
+test observe::age::tests::a_remnant_adds_a_hundred_million_years_per_time_unit ... ok
+test observe::age::tests::a_short_history_gives_the_rate_over_what_there_is ... ok
+test observe::age::tests::a_stage_change_banks_the_old_stage_and_starts_the_next ... ok
+test observe::age::tests::a_timed_stage_runs_on_the_calibrated_duration_or_ten ... ok
+test observe::age::tests::between_the_listed_masses_tau_is_log_log ... ok
+test observe::age::tests::beyond_the_table_tau_is_held ... ok
+test observe::age::tests::every_fuel_stage_reads_its_own_species ... ok
+test observe::age::tests::objects_are_independent_new_ones_start_at_zero_and_the_gone_are_forgotten ... ok
+test observe::age::tests::the_age_never_decreases_over_a_wild_run ... FAILED
+test observe::age::tests::the_clock_builds_from_a_calibration ... ok
+test observe::age::tests::the_rate_is_the_age_gained_over_the_last_wall_second ... ok
+test observe::age::tests::the_table_at_one_five_fifteen_and_twenty_five_suns ... ok
+test observe::age::tests::time_running_back_gains_nothing ... ok
+
+failures:
+
+---- observe::age::tests::a_falling_phi_is_clamped_and_the_age_never_goes_down stdout ----
+
+thread 'observe::age::tests::a_falling_phi_is_clamped_and_the_age_never_goes_down' (321394) panicked at crates/sr-physics/src/observe/age.rs:375:9:
+assertion `left == right` failed: Δφ < 0 adds nothing
+  left: 0.0
+ right: 2861230329.0414877
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::age::tests::the_age_never_decreases_over_a_wild_run stdout ----
+
+thread 'observe::age::tests::the_age_never_decreases_over_a_wild_run' (321406) panicked at crates/sr-physics/src/observe/age.rs:460:13:
+frame 15: 42878254945.44737 < 42878254960.72085
+
+
+failures:
+    observe::age::tests::a_falling_phi_is_clamped_and_the_age_never_goes_down
+    observe::age::tests::the_age_never_decreases_over_a_wild_run
+
+test result: FAILED. 15 passed; 2 failed; 0 ignored; 0 measured; 180 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
