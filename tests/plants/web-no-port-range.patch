@@ -1,0 +1,13 @@
+--- a/tools/pb/launch.json
++++ b/tools/pb/launch.json
+@@ -148,10 +148,6 @@
+       },
+       "cwd": ".",
+       "port": 47840,
+-      "port_range": [
+-        47840,
+-        47859
+-      ],
+       "ready": "port",
+       "deadline_s": 30
+     }

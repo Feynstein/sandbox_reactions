@@ -1,0 +1,141 @@
+==== 2026-10-30T09:21:08-04:00 calibrate_bisect · clean · a fresh scratch copy of the tree
+== 2026-10-30T09:21:17-04:00 calibrate_bisect · task M0-D108 · box Laser2025-20 :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 57.45 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-x8ofu376\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-x8ofu376\arm0\crates\sr-engine)
+error: linking with `link.exe` failed: exit code: 1104
+  |
+  = note: "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\HostX64\\x64\\link.exe" "/NOLOGO" "C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\\release\\deps\\rustcYWG1Vx\\symbols.o" "<17 object files omitted>" "<sysroot>\\lib\\rustlib\\x86_64-pc-windows-msvc\\lib/{libtest-*,libgetopts-*,librustc_std_workspace_std-*}.rlib" "C:\\Users\\YohanBelanger\\.cache\\sandbox-reactions\\redarm-target\\release\\deps/{libsr_engine-e4f2ed10f83104b7,libpollster-c352c5b7aa984cea,libpng-b7d1d0cfa9490764,libflate2-ffc9c8d45eaa4cd9,libminiz_oxide-8f451edb2da12a2b,libfdeflate-020127e9055a8f39,libsimd_adler32-a68840f6264e05ce,libcrc32fast-aea6c1181ea4fdc2,libwgpu-b1b56452147ea6cf,libwgpu_core-9c8306c64161ecdc,libwgpu_hal-a51b9af49af46f79,librenderdoc_sys-f408c3a77b8527c1,libprofiling-13001514500ebfc0,libwgpu_naga_bridge-6faf482b510ade58,libgpu_allocator-58d6437b6b6c7e34,libpresser-07c86f10c9bfc883,libash-26b97bc51ffaebc2,liblibloading-7bafd558d5d7d270,libhashbrown-f84469b971e67cc0,liballocator_api2-77939fe3815d03b6,libordered_float-085bab5578f592be,libnaga-c7e493e6f633f772,libunicode_ident-beda122c6ec2c813,libhalf-66b56a537d736c80,libzerocopy-fd3ba30d031312c7,libcodespan_reporting-199e86aaf864f676,libunicode_width-89f015b485d0f1fd,libnum_traits-f0d59134f20f5583,liblibm-8fe2dde1ea05dc84,libspirv-8310fa074e574167,libthiserror-945379acaafb828c,libarrayvec-f15bc6b98c31f770,librange_alloc-4905fd0eea2ffb43,libbit_set-c9b7f475575a4429,libbit_vec-b849e1cf24e205f9,libonce_cell-64e79683e811cb3f,libwindows-7d87c0194843186c,libwindows_numerics-458f3ee3f9638c5d,libwindows_core-6afad516437a0db4,libwindows_strings-3bf43066b7deff3a,libwindows_result-eb08757872eef1f8,libparking_lot-4cc89d8d107573db,libparking_lot_core-146aacc7897cc1b2,libwindows_link-f9647ace1bf29659,libcfg_if-0b6d4d1361889fd9,libsmallvec-f26c13b49c469287,liblock_api-d291e48a1137fb8c,libscopeguard-c44a76a2ba434ff5,libwgpu_types-86b8890dae6a8731,libraw_window_handle-c6d1131348f27256,libstatic_assertions-f41893146cbde75d,liblog-396e33c3342ccee6,libbytemuck-5959395734d6282e,libbitflags-666929aef03ade09,libnaga_types-785d575505042a0a,libindexmap-771eece920ed3ab3,libequivalent-960f44d031ebc72e,librustc_hash-8c2443938fd60e0f,libhashbrown-71345ff1cd4cd9d1,libfoldhash-bfe29bcb2e28f8c5,libsr_physics-2b749c12a41c7e62,libserde_json-b2e0e0f97e83d9db,libmemchr-323d2d17eabb9827,libitoa-f2bca62081c42f5c,libzmij-26b40c17a257ab6f,libserde_core-1607c5ff1b0e2ed6}.rlib" "<sysroot>\\lib\\rustlib\\x86_64-pc-windows-msvc\\lib/{libstd-*,libpanic_unwind-*,libcfg_if-*,libwindows_link-*,librustc_demangle-*,libstd_detect-*,libhashbrown-*,librustc_std_workspace_alloc-*,libunwind-*,librustc_std_workspace_core-*,liballoc-*,libcore-*,libcompiler_builtins-*}.rlib" "kernel32.lib" "kernel32.lib" "kernel32.lib" "kernel32.lib" "ntdll.lib" "userenv.lib" "ws2_32.lib" "dbghelp.lib" "/defaultlib:msvcrt" "/NXCOMPAT" "/OUT:C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\\release\\deps\\gpu-b9f5dd9b6977d55a.exe" "/OPT:REF,ICF" "/DEBUG" "/PDBALTPATH:%_PDB%" "/NATVIS:<sysroot>\\lib\\rustlib\\etc\\intrinsic.natvis" "/NATVIS:<sysroot>\\lib\\rustlib\\etc\\liballoc.natvis" "/NATVIS:<sysroot>\\lib\\rustlib\\etc\\libcore.natvis" "/NATVIS:<sysroot>\\lib\\rustlib\\etc\\libstd.natvis" "/NATVIS:C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\\release\\deps\\rustcYWG1Vx\\gpu-0.natvis" "/NATVIS:C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\\release\\deps\\rustcYWG1Vx\\gpu-1.natvis" "/NATVIS:C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\\release\\deps\\rustcYWG1Vx\\gpu-2.natvis"
+  = note: some arguments are omitted. use `--verbose` to show all linker arguments
+  = note: LINK : fatal error LNK1104: impossible d'ouvrir le fichier 'C:\Users\YohanBelanger\.cache\sandbox-reactions\redarm-target\release\deps\gpu-b9f5dd9b6977d55a.exe'
+          
+
+error: could not compile `sr-engine` (test "gpu") due to 1 previous error
+
+==== 2026-10-30T09:22:15-04:00 calibrate_bisect · plant bisect-tolerance · a fresh scratch copy of the tree
+planted bisect-tolerance: tests/plants/bisect-tolerance.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-30T09:22:30-04:00 calibrate_bisect · task M0-D108 · box Laser2025-20 :: bash tests/gpu.sh calibrate_bisect physics
+-- calibrate_bisect · exit=101 · 349.84 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-x8ofu376\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-x8ofu376\arm1\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 1m 16s
+     Running tests\gpu\main.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\gpu-b9f5dd9b6977d55a.exe)
+
+running 19 tests
+test calibrate_bisect::a_bracket_whose_ends_agree_is_refused_after_two_runs ... ok
+test calibrate_bisect::a_continued_life_that_already_met_its_until_ends_at_once ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+ok
+test calibrate_bisect::a_cut_life_resumes_at_its_last_checkpoint ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.667801 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.700775 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.667801 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.667801 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.667801 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.667801 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=130 sim_time=2.667801 until=unmet
+SR-ERROR no adapter name contains "no such adapter"; adapters seen: [0] NVIDIA GeForce RTX 4080 Laptop GPU (Vulkan, DiscreteGpu, driver NVIDIA); [1] Intel(R) Arc(TM) Graphics (Vulkan, IntegratedGpu, driver Intel Corporation); [2] NVIDIA GeForce RTX 4080 Laptop GPU (Dx12, DiscreteGpu, driver 32.0.15.8129); [3] Intel(R) Arc(TM) Graphics (Dx12, IntegratedGpu, driver 32.0.101.6790); [4] Microsoft Basic Render Driver (Dx12, Cpu, driver 10.0.26100.9711)
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=125 sim_time=2.593546 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+ok
+test calibrate_bisect::a_fragments_ending_is_none_of_the_lifes ... ok
+test calibrate_bisect::a_life_keeps_its_record_and_says_where_it_is ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.489435 until=unmet
+ok
+test calibrate_bisect::a_life_showing_a_black_hole_stops_before_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.982988 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.628635 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2161 sim_time=11.687623 until=met
+ok
+test calibrate_bisect::a_life_steps_one_at_a_time_through_its_core_collapse ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30 sim_time=0.178764 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=160 sim_time=0.953810 until=unmet
+ok
+test calibrate_bisect::a_lifes_heat_warnings_are_counted_not_printed ... SR-CALIBRATE progress item=m_up_sb mass=1.000 step=10000 sim_time=80.500 heat_unconverged=1 stage=cloud
+SR-WARN overrides given: measured and checked, nothing written (§2.12.1)
+SR-WARN heat unconverged step 10275 passes 13 rounds 4096
+ok
+test calibrate_bisect::a_record_sides_the_same_whichever_condition_stopped_it ... ok
+test calibrate_bisect::a_run_that_fails_stops_the_bisection_and_is_reported ... ok
+test calibrate_bisect::a_stopped_item_resumes_without_rerunning_a_finished_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+ok
+test calibrate_bisect::each_item_places_a_life_on_a_side_or_refuses_it ... ok
+test calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs ... 
+thread 'calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs' (35592) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:56:5:
+assertion `left == right` failed: runs for a 200-fold bracket at 2 %
+  left: 7
+ right: 11
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibrate_bisect::m_up_stops_at_a_collapse_and_the_others_keep_their_conditions ... ok
+test calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run ... 
+thread 'calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run' (36084) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:150:9:
+m_ign_sb: 283.65220128778736 against 280
+FAILED
+test calibrate_bisect::one_step_frames_follow_the_physics ... ok
+test calibrate_bisect::progress_every_sets_the_lives_tick ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=673 sim_time=8.669372 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=10.355282 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=64 sim_time=1.489435 until=unmet
+ok
+test calibrate_bisect::the_command_checks_the_new_arguments_before_any_run ... ok
+test calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold ... 
+thread 'calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold' (34876) panicked at crates\sr-engine\tests\gpu\calibrate_bisect.rs:36:5:
+assertion `left == right` failed: §2.11: bisection to 2 %
+  left: 0.2
+ right: 0.02
+FAILED
+
+failures:
+
+failures:
+    calibrate_bisect::it_asks_both_ends_first_and_spends_the_expected_number_of_runs
+    calibrate_bisect::measure_runs_the_items_mapping_and_logs_every_run
+    calibrate_bisect::the_tolerance_is_2_percent_and_the_bracket_closes_on_the_threshold
+
+test result: FAILED. 16 passed; 3 failed; 0 ignored; 0 measured; 423 filtered out; finished in 270.68s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -731,6 +731,17 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     the Sun-like preset's empty corners read #000000 in Glow and Element, #000004 in Heat and #440154 in Density — the Density view's empty
     world a dark-purple rectangle on the window's bg.space; M0-T80 built §1.11 as written and declared the gap — the lead's answer at M0-V11,
     2026-10-29: «bg.space in every view (Recommended)».
+  - [M0-D107] §3.4's Web "`python3 -m http.server 47812 --bind 127.0.0.1 --directory web/dist`" and §3.6's `web` row "the static server on
+    47812" · **the static server is the same `http.server` command on port 47840, the service declaring `port_range` [47840, 47859]: a
+    port held by a process launch.py did not start, `start` takes the first free port of the range and prints `ready on port <n>` (the
+    word «on port <n>» in `status` and in the record too); every refusal of a held port stays for a service with no `port_range`, and a
+    range with no free port is refused naming it; the range is clear of the game's 47811–47830 (M0-D99); `tests/web/check.sh` and
+    `tests/smoke.sh` read the printed port, the `web` scope's `ready-held` case and its plants `web-no-port-range` and `web-port-ignored`
+    hold it** · measured on win-laptop (Laser2025-20), 2026-10-28: VS Code's helper (pid 25920) held 47812 all evening, so `web` and
+    `desktop[launcher]` read NO-GO on the held port (logs/M0-D65.web.log, M0-V11-win.web.log) · the lead's answer at M0-D107, 2026-10-30:
+    «I want the launchers to automatically find the next free port, lets not be stopped by that» (the web service takes the next free
+    port of a declared range, the lead's pick over «read a held port as NOT RUN»); the game's own launch.json entries, whose 47811 launch.py
+    still refuses when held, are unchanged (M0-D99).
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1514,8 +1525,8 @@ Unit-tested without a GPU against §1.8.
   "frame", "step", "sim_time", "adapter", "fps"}`; "ready" once the first frame is presented;
   ready_key `status`, ready_values `["ready"]`. Off unless the flag is given; never in the web
   build.
-- **Web:** the static server (`python3 -m http.server 47812 --bind 127.0.0.1 --directory
-  web/dist` — standard library) is kind `port`; the page signals through
+- **Web:** the static server (`python3 -m http.server 47840 --bind 127.0.0.1 --directory
+  web/dist` — standard library; on the next free port of 47840–47859 when 47840 is held, launch.json's `port_range`, [M0-D107]) is kind `port`; the page signals through
   `document.body.dataset.srState` (§3.5).
 
 ### 3.5 The web entry
@@ -1538,7 +1549,7 @@ Unit-tested without a GPU against §1.8.
 | `game-xvfb` | the same plus `--adapter llvmpipe`, under launch.py's private Xvfb (`xvfb: true`) — Mesa's software Vulkan (lavapipe; `lvp_icd.json` present on linux-pc, probed 2026-10-08) | url, as above | no — a private display, never the lead's desktop (R4) |
 | `game-offscreen` [M0-TJ3] | the same as `game` plus `--offscreen-window` — win-laptop's route for the window checks (§6.6) | url, as above | no — off-screen, never on the lead's screen (R4 as amended) |
 | `headless-boot` | `build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out <tmp>` [M0-TG] | exit; ready_forbid SR-ERROR, panicked at | no |
-| `web` | the static server on 47812 | port | no |
+| `web` | the static server on 47840, else the next free port of 47840–47859 [M0-D107] | port | no |
 The double-click launchers PLAYBOOK §8 requires (start.sh: `launch.py start game --task <id>`, wait
 for Enter, `launch.py stop`) come with the first build block that runs a window. [M0-TJ3] start.bat sits
 beside start.sh for win-laptop: `py -3.12 tools\pb\launch.py start game --task <id>`, wait for Enter,

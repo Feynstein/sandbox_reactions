@@ -242,9 +242,9 @@ if [ $launcher -eq 1 ]; then
   # launch.py's records are the box's, not the task's: a bare `launch.py stop` stops every service, a parallel scope's
   # included (M0-D28: it took the web scope's server mid-smoke). A decoy web server, started here under the web scope's
   # port lock (its lock file, flock or mkdir as tests/web/check.sh takes it), must outlive the launcher.
-  decoy_task="${PB_TASK:-launcher}-decoy" web_lock="${TMPDIR:-/tmp}/sr-web-47812.lock" decoy=0
+  decoy_task="${PB_TASK:-launcher}-decoy" web_lock="${TMPDIR:-/tmp}/sr-web.lock" decoy=0 decoy_port=""
   _sr_decoy_down() {
-    [ "$decoy" = 1 ] && { $PY tools/pb/launch.py stop web --task "$decoy_task" >/dev/null 2>&1; _sr_port_closed 47812; }
+    [ "$decoy" = 1 ] && { $PY tools/pb/launch.py stop web --task "$decoy_task" >/dev/null 2>&1; [ -z "$decoy_port" ] || _sr_port_closed "$decoy_port"; }
     [ -f "$web_lock.d/pid" ] && [ "$(cat "$web_lock.d/pid" 2>/dev/null)" = "$$" ] && rm -rf "$web_lock.d"
   }
   trap '_sr_decoy_down; _sr_release' EXIT
@@ -260,6 +260,8 @@ if [ $launcher -eq 1 ]; then
   fi
   decoy=1
   dout="$($PY tools/pb/launch.py start web --task "$decoy_task" 2>&1)" || { echo "$dout"; echo "=== NO-GO: the decoy web server did not start ==="; exit 1; }
+  # the decoy takes launch.json's next free port when a foreign program holds the first (M0-D107): read the one it printed
+  decoy_port="$(echo "$dout" | sed -n 's/^web: ready on port \([0-9][0-9]*\).*/\1/p' | head -1)"
   out="$(run_launcher)"; rc=$?
   echo "$out"
   left="$($PY tools/pb/launch.py status --task "${PB_TASK:-launcher}" 2>&1)"

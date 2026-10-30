@@ -144,3 +144,14 @@ the swapped switch's `RUNGS` holds all seven rungs of the 2026-10-11 ladder.
    check « a `box` list runs on each box it names and owes on every other (M0-D111) » after the anchor's owed check, its
    plant `tools-selftest-box-list` (verify.json, case `verify`: the list read by its first name only). The annex's §A.2
    manifest shape still reads `"box": "<the one box …>"`. Measured on linux-pc: `--redarm tools_selftest` 2/2 plants RED, GO.
+9. **verify.py — a scope's `arms_at_once` (local, M0-D108, 2026-10-30; the lead at M0-D108: «arms_at_once key (Rec.)»).**
+   A red-arm copy runs `cargo test` whole inside tests/cargo.sh's shared-target lock, so a cargo scope's arms ran one after
+   another while each arm's timeout ran from the campaign's start: win-laptop's sweep timed out six arms queued (observe_run,
+   dump, calibrate_bisect — the arms' ends a staircase, three never holding the lock). Now `arms_at_once` (an integer ≥ 1) caps
+   the arms a campaign runs at once; `scope_errors` refuses anything else (`arms_at_once` 0, a bool, a string: NOT RUN).
+   verify.json sets it to 1 on the 65 scopes whose command is `bash tests/gpu.sh|cpu.sh|cargo.sh`. Hunks: `SCOPE_KEYS`;
+   `scope_errors`' test after `rerun`'s; `arm_workers`' docstring and its `min`; the selftest's planted-manifest row `v_arms`,
+   the redarm fixture's scope `aa`, the check « arm_workers: never more than the scope's `arms_at_once` », the check
+   « --redarm: an `arms_at_once: 1` scope's arms one at a time » and its plant « `arms_at_once` ignored »; verify.json's
+   plant `tools-selftest-arms-at-once` (case `verify`: `arm_workers` without the cap). The annex's §A.2 manifest keys and
+   its red-arm paragraph lag by this one. Measured on win-laptop: selftest checks=357 · plants 160/160 red, GO.

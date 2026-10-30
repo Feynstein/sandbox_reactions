@@ -18,8 +18,9 @@ THE GUARD, AND THE WHOLE REASON THIS TOOL EXISTS. A pid is not an identity: the 
 the moment its process dies. Every entry records the process's START TIME, and `stop` re-reads it
 live and signals only on a match. When the start time cannot be read at all, the tool REFUSES to
 signal — it fails CLOSED, because the failure it guards against is killing someone else's process.
-`start` refuses a port that is already listening rather than adopting the stack behind it. And
-nothing runs UNRECORDED: a child whose record the pid file refuses (held open, on Windows) is
+`start` refuses a port that is already listening rather than adopting the stack behind it — unless
+the service declares a `port_range`: then it takes the next free port of the range, says which, and
+carries on (M0-D107). And nothing runs UNRECORDED: a child whose record the pid file refuses (held open, on Windows) is
 stopped at once through the Popen that spawned it, before the NO-GO naming the pid file.
 `smoke` stops only what it started itself: a service already running from an earlier `start` is a
 refusal, and that instance is left running and recorded — a smoke never stops the lead's own stack.
@@ -45,6 +46,10 @@ Manifest `launch.json` (§A.3, widened):
   services.<name>.cmd          argv list, or {"posix": [...], "nt": [...]}
   services.<name>.cwd/env      cwd relative to the root; env entries ADD to the parent environment
   services.<name>.port/host/ready_url/ready_key/ready_values/ready/ready_forbid/deadline_s
+  services.<name>.port_range   [first, last] — `port` held by a process we did not start, the service
+                               starts on the first free port of the range instead (`port` as a whole
+                               argv word and in `ready_url` swapped); `start` prints «on port <n>»,
+                               `status` carries it, and the record keeps it (M0-D107)
   services.<name>.ask          true -> a windowed or irreversible start is asked EVERY time, so the
                                tool refuses without --asked (PLAYBOOK §13 OPT-C)
   services.<name>.xvfb         true, or {"displays": [99, 109], "screen": "1920x1080x24", "args": [],
@@ -277,6 +282,23 @@ def port_busy(port, host='127.0.0.1'):
         return sock.connect_ex((host, int(port))) == 0
 
 
+def free_port_in(svc, taken):
+    """The first port of the service's `port_range` that nothing listens on (and is not `taken`), or None."""
+    first, last = svc['port_range']
+    host = svc.get('host', '127.0.0.1')
+    return next((p for p in range(int(first), int(last) + 1) if p != taken and not port_busy(p, host)), None)
+
+
+def moved_to(svc, old, new):
+    """`svc` as it runs on port `new`: `old` as a whole argv word, in `ready_url`, and `port` itself."""
+    swap = lambda argv: [str(new) if str(a) == str(old) else a for a in argv]
+    cmd = svc.get('cmd')
+    moved = dict(svc, port=new, cmd=swap(cmd) if isinstance(cmd, list) else {k: swap(v) for k, v in cmd.items()})
+    if svc.get('ready_url'):
+        moved['ready_url'] = re.sub(r':%s(?=[/?#]|$)' % old, ':%s' % new, svc['ready_url'])
+    return moved
+
+
 def url_ready(svc):
     import urllib.request
     try:
@@ -444,9 +466,15 @@ def start_one(ctx, name, asked, deadline=None):
                        '(PLAYBOOK 13, OPT-C) - re-run with --asked once the go is given' % name)
     if not argv_for(svc, None):
         return False, '%s: no cmd for os %s' % (name, os.name)
-    port = svc.get('port')
+    port, moved = svc.get('port'), ''
     if port and port_busy(port, svc.get('host', '127.0.0.1')):
-        return False, '%s: port %s held by a process we did not start - not reusing' % (name, port)
+        held = '%s: port %s held by a process we did not start - not reusing' % (name, port)
+        if not svc.get('port_range'):
+            return False, held
+        free = free_port_in(svc, port)
+        if free is None:
+            return False, '%s, and none of %s-%s is free' % ((held,) + tuple(svc['port_range']))
+        svc, moved, port = moved_to(svc, port, free), ' (port %s held by a process we did not start)' % port, free
 
     recipe = xvfb_recipe(svc)
     tmpdir = tempfile.mkdtemp(prefix='pb-launch-%s-' % name) if '{tmpdir}' in json.dumps(svc) else None
@@ -482,6 +510,8 @@ def start_one(ctx, name, asked, deadline=None):
             return False, '%s: could not spawn (%s)' % (name, exc)
     entry = {'pid': proc.pid, 'start_time': start_time(proc.pid), 'cmd': argv, 'service': name,
              'log': str(log_path), 'tmpdir': tmpdir, 'started': time.strftime('%Y-%m-%dT%H:%M:%S%z')}
+    if port:
+        entry['port'] = port
     if xproc:
         entry['xvfb'] = {'pid': xproc.pid, 'start_time': start_time(xproc.pid), 'display': display}
     ctx.pids[name] = entry
@@ -521,8 +551,8 @@ def start_one(ctx, name, asked, deadline=None):
         elif proc.poll() is not None:
             return False, '%s: died before ready, exit %s (log %s)' % (name, proc.returncode, log_path)
         elif url_ready(svc) if kind == 'url' else port_busy(port, svc.get('host', '127.0.0.1')):
-            return True, '%s: ready on %s, %.1fs (log %s)' % (
-                name, svc.get('ready_url') or 'port %s' % port, time.monotonic() - began, log_path)
+            return True, '%s: ready on %s, %.1fs%s (log %s)' % (
+                name, svc.get('ready_url') or 'port %s' % port, time.monotonic() - began, moved, log_path)
         pause(n)
         n += 1
     return False, '%s: not ready within %ss (log %s)' % (name, deadline, log_path)
@@ -629,8 +659,9 @@ def cmd_status(args):
         if is_ours(entry):
             running += 1
             xv = entry.get('xvfb')
-            lines.append('%s running pid %s since %s%s' % (
+            lines.append('%s running pid %s since %s%s%s' % (
                 name, entry['pid'], entry.get('started'),
+                ' on port %s' % entry['port'] if entry.get('port') else '',
                 ' on private X display :%s' % xv.get('display') if is_ours(xv) else ''))
         elif entry:
             lines.append('%s STALE entry pid %s - that pid is not ours any more' % (name, entry.get('pid')))
@@ -880,6 +911,25 @@ def selftest(args):
         check('PLANT foreign port: the foreign process is STILL ALIVE',
               foreign.poll() is None and alive(foreign.pid))
         check('PLANT foreign port: nothing was recorded for it', read_pids(tmp / pid_file) == {})
+
+        # --- port_range (M0-D107): the same held port, a range declared — the service starts on the next
+        # free port of the range, says so, records it, and the foreign process is untouched
+        wide = dict(served(fport or 1), port_range=[fport or 1, (fport or 1) + 30])
+        code, out = run({'web': wide}, 'start')
+        entry = read_pids(tmp / pid_file).get('web', {})
+        moved = entry.get('port')
+        check('port_range: the held port, start GO on another port of the range, recorded',
+              fport is not None and code == 0 and moved not in (None, fport) and fport < moved <= fport + 30
+              and server_pid(fport) == entry.get('pid'))
+        code, plain = cli(tmp / 'launch.json', 'status')
+        check('port_range: status names the port the service runs on',
+              code == 0 and 'web running' in plain and 'on port %s' % moved in plain)
+        check('port_range: the foreign process is STILL ALIVE', foreign.poll() is None and alive(foreign.pid))
+        code, out = run({'web': wide}, 'stop')
+        check('port_range: stop -> GO and the process is gone', code == 0 and ended(entry.get('pid')))
+        code, out = run({'web': dict(served(fport or 1), port_range=[fport or 1, fport or 1])}, 'start')
+        check('port_range: none free -> start REFUSES, naming the range, nothing recorded',
+              fport is not None and code == 1 and 'none of' in failed(out) and read_pids(tmp / pid_file) == {})
         foreign.kill()
         foreign.wait()
 

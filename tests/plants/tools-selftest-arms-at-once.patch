@@ -1,0 +1,11 @@
+--- a/tools/pb/verify.py
++++ b/tools/pb/verify.py
+@@ -1700,7 +1700,7 @@
+     for the others (M0-D108)."""
+     if s.get("exclusive") or s.get("box") or s.get("free_ports"):
+         return 1
+-    return max(1, min(int(jobs), n, s.get("arms_at_once", n)))
++    return max(1, min(int(jobs), n))
+
+
+ def plant_case(arm):

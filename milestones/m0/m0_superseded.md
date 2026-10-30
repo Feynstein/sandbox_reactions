@@ -290,3 +290,8 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   §1.11 as written; M0-V11 measured the empty corners #000000 / #000004 / #440154 against §4.11's bg.space) — superseded by contract §0.5
   [M0-D113]: a cell whose blended Σ is below Σ_vac draws bg.space #05070D in every view, ahead of the view's formula (the lead, 2026-10-29,
   M0-V11: «bg.space in every view (Recommended)»).
+- Contract §3.4's Web "`python3 -m http.server 47812 --bind 127.0.0.1 --directory web/dist`" and §3.6's `web` row "the static server on
+  47812" (one fixed port, refused when held: VS Code's helper held it all evening on win-laptop and `web` and `desktop[launcher]` read
+  NO-GO, M0-D65, M0-V11-win) — superseded by contract §0.5 [M0-D107]: the same command on 47840 with launch.json's `port_range`
+  [47840, 47859], the next free port taken and printed when 47840 is held (the lead, 2026-10-30, M0-D107: «I want the launchers to
+  automatically find the next free port, lets not be stopped by that»).

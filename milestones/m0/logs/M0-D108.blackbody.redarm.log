@@ -1,0 +1,68 @@
+==== 2026-10-30T09:03:10-04:00 blackbody · clean · a fresh scratch copy of the tree
+== 2026-10-30T09:03:21-04:00 blackbody · task M0-D108 · box Laser2025-20 :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=0 · 13.16 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nkjn9a5z\arm0\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nkjn9a5z\arm0\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.15s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_engine-fd155fc80ffffadd.exe)
+
+running 8 tests
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... ok
+test render::tests::one_thousand_kelvin_is_red_dominant ... ok
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+
+==== 2026-10-30T09:03:34-04:00 blackbody · plant blackbody-matrix-transpose · a fresh scratch copy of the tree
+planted blackbody-matrix-transpose: tests/plants/blackbody-matrix-transpose.patch -> crates/sr-engine/src/render.rs
+== 2026-10-30T09:03:44-04:00 blackbody · task M0-D108 · box Laser2025-20 :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=101 · 13.72 s
+   Compiling sr-physics v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nkjn9a5z\arm1\crates\sr-physics)
+   Compiling sr-engine v0.0.0 (C:\Users\YohanBelanger\AppData\Local\Temp\pb-redarm-nkjn9a5z\arm1\crates\sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.58s
+     Running unittests src\lib.rs (C:/Users/YohanBelanger/.cache/sandbox-reactions/redarm-target\release\deps\sr_engine-fd155fc80ffffadd.exe)
+
+running 8 tests
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::one_thousand_kelvin_is_red_dominant ... FAILED
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... FAILED
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... FAILED
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+
+failures:
+
+---- render::tests::one_thousand_kelvin_is_red_dominant stdout ----
+
+thread 'render::tests::one_thousand_kelvin_is_red_dominant' (6412) panicked at crates\sr-engine\src\render.rs:407:9:
+1,000 K = [0.9999999999999999, 0.0, 0.0]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- render::tests::six_thousand_five_hundred_kelvin_is_near_white stdout ----
+
+thread 'render::tests::six_thousand_five_hundred_kelvin_is_near_white' (35100) panicked at crates\sr-engine\src\render.rs:401:9:
+6,500 K = [0.9999999999999999, 0.29690842028337605, 0.6123847389646756]
+
+---- render::tests::forty_thousand_kelvin_is_blue_dominant stdout ----
+
+thread 'render::tests::forty_thousand_kelvin_is_blue_dominant' (35060) panicked at crates\sr-engine\src\render.rs:414:9:
+40,000 K = [0.9999999999999999, 0.0, 0.8620373007200283]
+
+
+failures:
+    render::tests::forty_thousand_kelvin_is_blue_dominant
+    render::tests::one_thousand_kelvin_is_red_dominant
+    render::tests::six_thousand_five_hundred_kelvin_is_near_white
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --lib`
+

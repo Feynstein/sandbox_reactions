@@ -1,0 +1,9 @@
+web: ready on port 47841, 0.5s (port 47840 held by a process we did not start) (log C:\workspace\sandbox_reactions\milestones\m0\logs\M0-D107.launch.web.log)
+services: 1, ready: 1
+web ready-held: 47840 held, the server on 47841
+web smoke ready: C:\Program Files\Google\Chrome\Application\chrome.exe (156.0.8078.48) on win32, flags --headless=new --enable-unsafe-webgpu, http://127.0.0.1:47841
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=lovelace device= description= fallback=false
+ready: srState "ready" after 13.5 s
+=== GO ===

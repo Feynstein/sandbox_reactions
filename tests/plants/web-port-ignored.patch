@@ -1,0 +1,10 @@
+--- a/tests/web/check.sh
++++ b/tests/web/check.sh
+@@ -193,5 +193,6 @@
+ else
+   smoke="$case_"
+ fi
+-node web/smoke.mjs "$smoke" --base "http://127.0.0.1:$port" --timeout-s 30; rc=$?
++# plant web-port-ignored (M0-D107): the smoke reads the declared port, not the one launch.py printed
++node web/smoke.mjs "$smoke" --base "http://127.0.0.1:$first" --timeout-s 30; rc=$?
+ exit $rc

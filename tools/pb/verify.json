@@ -51,6 +51,11 @@
           "id": "tools-selftest-box-list",
           "patch": "tests/plants/tools-selftest-box-list.patch",
           "case": "verify"
+        },
+        {
+          "id": "tools-selftest-arms-at-once",
+          "patch": "tests/plants/tools-selftest-arms-at-once.patch",
+          "case": "verify"
         }
       ]
     },
@@ -93,6 +98,7 @@
       "case_cmd": "bash tests/cargo.sh build {case}",
       "expected": 2,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "Cargo.toml",
         "Cargo.lock",
@@ -116,6 +122,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 29,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "assets/elements.json",
@@ -147,6 +154,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 13,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "assets/physics.json",
@@ -172,6 +180,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "assets/physics.json",
@@ -199,6 +208,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 18,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -242,6 +252,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 4,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -270,6 +281,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 18,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -306,6 +318,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 34,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -350,6 +363,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 15,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -385,6 +399,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 7,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -412,6 +427,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 5,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -448,6 +464,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 5,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -475,6 +492,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 9,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -527,6 +545,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 24,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "assets/physics.json",
@@ -577,6 +596,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 47,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "assets/physics.json",
@@ -642,6 +662,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 11,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "assets/physics.json",
@@ -667,6 +688,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 17,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "assets/physics.json",
@@ -692,6 +714,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 5,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -722,6 +745,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 17,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -759,6 +783,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 6,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -787,6 +812,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 10,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/src/reference/**",
         "crates/sr-physics/src/lib.rs",
@@ -813,6 +839,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/src/reference/**",
         "crates/sr-physics/src/lib.rs",
@@ -839,6 +866,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 7,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/src/reference/**",
         "crates/sr-physics/src/eos.rs",
@@ -869,6 +897,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 15,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -897,6 +926,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 7,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -925,6 +955,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 6,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -953,6 +984,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 6,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -986,6 +1018,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 4,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/tests/gpu/sunburn.rs",
         "assets/physics.json",
@@ -1013,6 +1046,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 6,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1041,6 +1075,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 3,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1071,6 +1106,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 14,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1100,6 +1136,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1133,6 +1170,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1161,6 +1199,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 13,
       "timeout_s": 1800,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1212,6 +1251,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 4,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1241,6 +1281,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 11,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1273,6 +1314,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 13,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1312,6 +1354,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 7,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/**",
         "crates/sr-engine/**",
@@ -1352,6 +1395,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1377,6 +1421,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 23,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-physics/src/time.rs",
         "crates/sr-physics/src/lib.rs",
@@ -1408,6 +1453,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 3,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-app/src/strings.rs",
         "crates/sr-app/tests/strings.rs",
@@ -1435,6 +1481,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 15,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-app/src/format.rs",
         "crates/sr-app/src/strings.rs",
@@ -1461,6 +1508,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/src/render.rs",
         "crates/sr-engine/src/lib.rs",
@@ -1487,6 +1535,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 10,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "tests/gpu.sh",
@@ -1511,6 +1560,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 6,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1538,6 +1588,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 4,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "tests/gpu.sh",
@@ -1562,6 +1613,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 7,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1589,6 +1641,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1624,6 +1677,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1653,6 +1707,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 5,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1680,6 +1735,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 5,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1707,6 +1763,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1735,6 +1792,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 12,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -1887,14 +1945,15 @@
       "cases": [
         "build",
         "ready",
-        "no-webgpu"
+        "no-webgpu",
+        "ready-held"
       ],
       "case_cmd": "bash tests/web/check.sh {case}",
       "box": [
         "laserax-ai",
         "Laser2025-20"
       ],
-      "expected": 3,
+      "expected": 4,
       "timeout_s": 900,
       "paths": [
         "web/**",
@@ -1914,6 +1973,7 @@
         "tests/plants/web-*.patch",
         "tools/pb/launch.json",
         "tests/plants/never-ready.patch",
+        "tools/pb/launch.py",
         "tests/plants/smoke-no-sandbox.patch"
       ],
       "plants": [
@@ -1932,6 +1992,14 @@
         {
           "id": "smoke-no-sandbox",
           "patch": "tests/plants/smoke-no-sandbox.patch"
+        },
+        {
+          "id": "web-no-port-range",
+          "patch": "tests/plants/web-no-port-range.patch"
+        },
+        {
+          "id": "web-port-ignored",
+          "patch": "tests/plants/web-port-ignored.patch"
         }
       ]
     },
@@ -2032,6 +2100,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 12,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2064,6 +2133,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2091,6 +2161,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 8,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2161,6 +2232,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 19,
       "timeout_s": 2700,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2243,6 +2315,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 13,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2280,6 +2353,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 9,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2307,6 +2381,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 11,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2338,6 +2413,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 7,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2369,6 +2445,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 6,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-engine/**",
         "crates/sr-physics/**",
@@ -2396,6 +2473,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 14,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-app/src/ui/**",
         "crates/sr-app/src/strings.rs",
@@ -2424,6 +2502,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 12,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-app/src/ui/**",
         "crates/sr-app/src/strings.rs",
@@ -2452,6 +2531,7 @@
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
       "expected": 7,
       "timeout_s": 900,
+      "arms_at_once": 1,
       "paths": [
         "crates/sr-app/src/ui/**",
         "crates/sr-app/src/strings.rs",

@@ -1,0 +1,12 @@
+M0-D117-r2 · 2026-10-30T07:54:45-04:00 · Laser2025-20 · Verify 1: py -3.12 tools/pb/verify.py web --task M0-D117-r2 (tree 44808aa)
+web       3/0/0      236.69 s  GO
+logs: milestones/m0/logs/M0-D117-r2.<scope>.log · record: loop_times.jsonl · tree 44808aa56d33+e9973bb3f816
+anchor: 0 path×scope entries moved by this run
+anchor: 346 paths checked · 331 skipped (3 classes) · 0 never checked · 1 stale · 0 unclassified · 0 owed · 347 covered of 678 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 96.73 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 1.96->3.93
+=== GO ===
+2026-10-30T07:57:55-04:00 · Verify 3: py -3.12 tools/pb/verify.py --changed --base 44808aa --task M0-D117-r2
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 719 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 74 not impacted · 0.25 s + loop 0.42 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 3.86->4.3 · base: commit 44808aa56d33
+=== GO ===
+exit 0

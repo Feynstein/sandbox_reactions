@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* web/smoke.mjs - the web smoke (G-WEB; m0_contrat.md §5.4, §6.2.3). Project code, M0-T15.
  *
- *   node web/smoke.mjs <ready|no-webgpu> [--base http://127.0.0.1:47812] [--timeout-s 30]
+ *   node web/smoke.mjs <ready|no-webgpu> [--base http://127.0.0.1:47840] [--timeout-s 30]
  *
  * Launches the box's installed Chrome through playwright-core, headless, with §6.2.3's flags (never `--no-sandbox`):
  *   linux-pc   /usr/bin/google-chrome   --headless=new --use-angle=vulkan --enable-features=Vulkan
@@ -30,7 +30,7 @@ const CASES = ['ready', 'no-webgpu'];
 const args = process.argv.slice(2);
 const flag = (name, dflt) => { const i = args.indexOf(name); return i >= 0 && args[i + 1] ? args[i + 1] : dflt; };
 const kase = args.find((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1].startsWith('--')));
-const base = flag('--base', 'http://127.0.0.1:47812').replace(/\/$/, '');
+const base = flag('--base', 'http://127.0.0.1:47840').replace(/\/$/, '');
 const timeoutMs = Number(flag('--timeout-s', '30')) * 1000;
 
 // The verdict stays one line (verify.py reads it): a multi-line reason (playwright's call log) prints its tail first, as log lines.

@@ -76,7 +76,8 @@ CODE_SUFFIXES = (".py", ".sh", ".mjs", ".js", ".cjs", ".ts", ".tsx", ".jsx", ".p
                  ".java", ".c", ".cc", ".cpp", ".h", ".hpp", ".cs", ".rb", ".php", ".swift", ".kt")
 TOP_KEYS = {"scopes", "smoke", "jobs_cap", "logs_dir", "tree_extra", "anchor", "skip_classes", "vars", "budget"}
 SCOPE_KEYS = {"cmd", "cases", "cases_cmd", "case_cmd", "placeholder", "parse", "regex", "count",
-              "expected", "exclusive", "timeout_s", "cwd", "paths", "box", "plants", "free_ports", "good", "rerun"}
+              "expected", "exclusive", "timeout_s", "cwd", "paths", "box", "plants", "free_ports", "good", "rerun",
+              "arms_at_once"}
 NOTE_KEYS = ("note", "desc", "why", "hint", "reason")    # and any `_` key: a note - read, never acted on
 SPEC_KEYS = ("cmd", "cases", "cases_cmd", "case_cmd", "parse", "regex", "count", "expected", "cwd", "good")
 PLANT_KEYS = {"id", "patch", "case"}
@@ -369,6 +370,9 @@ def scope_errors(name, s):
         out.append("`exclusive` is true or false")
     if not isinstance(s.get("rerun", False), bool):
         out.append("`rerun` is true or false")
+    if "arms_at_once" in s and (not isinstance(s["arms_at_once"], int) or isinstance(s["arms_at_once"], bool)
+                                or s["arms_at_once"] < 1):
+        out.append("`arms_at_once` is an integer >= 1")
     if "paths" in s and not str_list(s["paths"]):
         out.append("`paths` is a list of globs")
     if "box" in s and not (box_names(s) and all(isinstance(b, str) and b.strip() for b in box_names(s))):
@@ -1691,10 +1695,12 @@ def clean_proof(name, logs, box, fp):
 
 def arm_workers(s, jobs, n):
     """How many arms run at once: up to the run's jobs, one at a time for a scope that must run alone - `exclusive`,
-    bound to one `box` (a GPU, a device), or holding `free_ports` (two arms would race for one port)."""
+    bound to one `box` (a GPU, a device), or holding `free_ports` (two arms would race for one port) - and never more
+    than its `arms_at_once`: arms that queue on one lock inside their command would spend their own timeout waiting
+    for the others (M0-D108)."""
     if s.get("exclusive") or s.get("box") or s.get("free_ports"):
         return 1
-    return max(1, min(int(jobs), n))
+    return max(1, min(int(jobs), n, s.get("arms_at_once", n)))
 
 
 def plant_case(arm):
@@ -3083,6 +3089,7 @@ def selftest():
                 "v_parse": ({"cmd": tr("v_parse"), "parse": "unittest"}, "`parse` is one of"),
                 "v_exclusive": ({"cmd": tr("v_exclusive"), "exclusive": "gpu"}, "`exclusive` is true or false"),
                 "v_rerun": ({"cmd": tr("v_rerun"), "rerun": "yes"}, "`rerun` is true or false"),
+                "v_arms": ({"cmd": tr("v_arms"), "arms_at_once": 0}, "`arms_at_once` is an integer >= 1"),
                 "v_placeholder": ({"placeholder": "M9", "cmd": tr("v_placeholder")}, "a placeholder runs nothing"),
                 "v_nocmd": ({"parse": "gonogo"}, "needs exactly one of"),
                 "v_regex": ({"cmd": tr("v_regex"), "parse": "regex", "regex": r"(\d+) ok"}, "has no (?P<passed>"),
@@ -4304,6 +4311,7 @@ def selftest():
             qman = {"logs_dir": "logs", "vars": {"emit": ["emit.py"]}, "scopes": {
                 "par": {"cmd": f"{py} check data.txt 0.15", "paths": ["a.txt"], "plants": three},
                 "ex": {"cmd": f"{py} check data.txt 0.15", "exclusive": True, "plants": three[:2]},
+                "aa": {"cmd": f"{py} check data.txt 0.15", "arms_at_once": 1, "plants": three[:2]},
                 "cs": {"cases": ["x", "y"], "case_cmd": f"{py} check {{case}}.txt", "expected": 2,
                        "plants": [{"id": "yb", "patch": "plants/y.patch", "case": "y"}]},
                 "cf": {"cases_cmd": f"{py} rows x y", "case_cmd": f"{py} check {{case}}.txt", "expected": 2,
@@ -4344,12 +4352,22 @@ def selftest():
             check("arm_workers: a `box` or `free_ports` scope one arm at a time, the rest up to the jobs",
                   (arm_workers({"box": "B"}, 8, 3), arm_workers({"free_ports": [9]}, 8, 3), arm_workers({}, 8, 3),
                    arm_workers({}, 2, 5)) == (1, 1, 3, 2))
+            check("arm_workers: never more than the scope's `arms_at_once` (M0-D108)",
+                  (arm_workers({"arms_at_once": 1}, 8, 3), arm_workers({"arms_at_once": 2}, 8, 5),
+                   arm_workers({"arms_at_once": 9}, 4, 3)) == (1, 2, 3))
             r, sp = qarm("ex", "Q2")
             check("--redarm: an `exclusive` scope's arms one at a time", not r["failures"] and r["data"]["workers"] == 1
                   and len(sp) == 3 and not overlap(sp), sp)
             _r, msp = swap("arm_workers", lambda s, j, n: max(1, min(int(j), n)), lambda: qarm("ex", "Q2m", record=False))
             plant_("arms of an `exclusive` scope side by side: red - the serial case sees them overlap",
                    overlap(msp) and not overlap(qarm("ex", "Q2b", record=False)[1]), msp)
+            r, sp = qarm("aa", "Q2a")
+            check("--redarm: an `arms_at_once: 1` scope's arms one at a time, its record says so (M0-D108)",
+                  not r["failures"] and r["data"]["workers"] == 1 and len(sp) == 3 and not overlap(sp), sp)
+            _r, msp = swap("arm_workers", lambda s, j, n: 1 if s.get("exclusive") or s.get("box") or s.get("free_ports")
+                           else max(1, min(int(j), n)), lambda: qarm("aa", "Q2am", record=False))
+            plant_("`arms_at_once` ignored: red - the arms side by side, the serial case sees them overlap",
+                   overlap(msp) and not overlap(qarm("aa", "Q2ab", record=False)[1]), msp)
             r, sp = qarm("par", "Q3")
             check("--redarm: the clean arm a record on today's fingerprint proved is not re-run - and says by whom",
                   not r["failures"] and r["lines"][0].startswith("par · clean: proven by Q1 ") and len(sp) == 3

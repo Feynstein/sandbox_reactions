@@ -1,0 +1,14 @@
+# M0-D107 web scope 2026-10-30T08:13:00-04:00
+web       4/0/0      305.06 s  GO
+logs: milestones/m0/logs/M0-D107.<scope>.log · record: loop_times.jsonl · tree 44808aa56d33+acd675175684
+anchor: 143 path×scope entries moved by this run
+anchor: 345 paths checked · 331 skipped (3 classes) · 0 never checked · 4 stale · 0 unclassified · 0 owed · 349 covered of 680 visible
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 123.06 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 2.8->2.87
+=== GO ===
+desktop   5/0/0      113.44 s  GO
+logs: milestones/m0/logs/M0-D107.<scope>.log · record: loop_times.jsonl · tree 44808aa56d33+acd675175684
+anchor: 2 path×scope entries moved by this run
+anchor: 345 paths checked · 331 skipped (3 classes) · 0 never checked · 4 stale · 0 unclassified · 0 owed · 349 covered of 680 visible
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 38.25 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 8.42->4.46
+=== GO ===
+# M0-D107 --changed claim 2026-10-30T08:18:02-04:00

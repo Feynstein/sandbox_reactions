@@ -1,0 +1,7 @@
+web build: trunk 0.21.14, 5.1M wasm; check on line 38, wasm on line 48
+web: port 47840 held by a process we did not start - not reusing
+services: 1, ready: 0
+FAIL web: port 47840 held by a process we did not start - not reusing
+=== NO-GO: 1 failure(s) ===
+web ready-held: launch.py start web did not end GO
+=== NO-GO: launch.py start web did not end GO ===

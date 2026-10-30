@@ -1,0 +1,32 @@
+== 2026-10-30T07:57:57-04:00 plan_lint · task M0-D117-r2 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.25 s
+lint: checks=719 failed=0 warnings=11 · blocks=330 · flow_rows=330 · verify_fences=0 · history=0 · flow=per-task · header=570/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-D106: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-D118: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D117: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-D112: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-D113: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-D114: DONE outside the current phase and 26 lines long - stub it (§2.6)
+WARN: M0-D115: DONE outside the current phase and 46 lines long - stub it (§2.6)
+WARN: M0-D116: DONE outside the current phase and 40 lines long - stub it (§2.6)
+WARN: M0-TC11: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D71 15 · M0-D91 3
+=== GO ===
+
+== 2026-10-30T07:58:12-04:00 plan_lint · task M0-D117-r2 · box Laser2025-20 :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.25 s
+lint: checks=719 failed=0 warnings=11 · blocks=330 · flow_rows=330 · verify_fences=0 · history=0 · flow=per-task · header=570/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-D106: DONE outside the current phase and 28 lines long - stub it (§2.6)
+WARN: M0-D118: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D117: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-D112: DONE outside the current phase and 45 lines long - stub it (§2.6)
+WARN: M0-D113: DONE outside the current phase and 36 lines long - stub it (§2.6)
+WARN: M0-D114: DONE outside the current phase and 26 lines long - stub it (§2.6)
+WARN: M0-D115: DONE outside the current phase and 46 lines long - stub it (§2.6)
+WARN: M0-D116: DONE outside the current phase and 40 lines long - stub it (§2.6)
+WARN: M0-TC11: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D71 15 · M0-D91 3
+=== GO ===
+

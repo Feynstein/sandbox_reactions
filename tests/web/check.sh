@@ -7,11 +7,13 @@
 #   ready      the page in the box's installed Chrome (web/smoke.mjs, §6.2.3): `launch.py start web`, then `/` reaches srState
 #              "ready" within 30 s; srAdapter and Chrome's own adapter go in the log (M0-T15)
 #   no-webgpu  `/?no-webgpu=1` shows srState "no-webgpu" and the three web.no_webgpu_* texts exactly (M0-T15)
-# The scope's cases run in parallel, yet they share one dist, one port (launch.json's 47812) and one pid file. Two locks, each
+#   ready-held `ready` with a foreign listener on launch.json's `web` port: launch.py starts the server on the next free port of
+#              the service's `port_range`, prints it, and the page reaches "ready" there (M0-D107)
+# The scope's cases run in parallel, yet they share one dist, one port (launch.json's `web`, 47840 or the next free one of its range) and one pid file. Two locks, each
 # held only for what needs it (M0-TR1b), always taken in this order and released on every exit path:
 #   the tree's build lock (build/web-build.lock.d) - the dist from its build to the end of the smoke that serves it: `trunk
 #     build` (its `rm -rf dist` included), `npm ci`, the launch and the smoke; no case rebuilds dist under another's smoke
-#   the port lock (keyed on 47812, outside any tree) - taken after the build and `npm ci`, held for `launch.py start web`, the
+#   the port lock (outside any tree) - taken after the build and `npm ci`, held for `launch.py start web`, the
 #     smoke and the stop, so one red-arm copy's trunk run overlaps another copy's Chrome run
 # The shared target's lock (tests/cargo.sh) still covers a whole trunk run, wasm-opt included. `ready` and `no-webgpu` serve the
 # dist of a build that is fresh against every input (build/web-built.stamp), else they build it first - a smoke never runs
@@ -25,7 +27,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/../cargo.sh"
 root="$_sr_root"
 die() { echo "web $case_: $1"; echo "=== NO-GO: $1 ==="; exit 1; }
 
-case "$case_" in build | ready | no-webgpu) ;; *) die "unknown case '$case_' (build|ready|no-webgpu)" ;; esac
+case "$case_" in build | ready | no-webgpu | ready-held) ;; *) die "unknown case '$case_' (build|ready|no-webgpu|ready-held)" ;; esac
 case "$(uname -s)" in
   MINGW* | MSYS* | CYGWIN*) PY="py -3.12" ;;
   *) PY="python3" ;;
@@ -51,10 +53,10 @@ pick_node() {
 pick_node
 
 task="${PB_TASK:-web}"
-lock="${TMPDIR:-/tmp}/sr-web-47812.lock"
+lock="${TMPDIR:-/tmp}/sr-web.lock"
 build_lock="$root/build/web-build.lock.d"
 result="$root/build/web-build.result"
-own_build=0 own_port=0 started=0
+own_build=0 own_port=0 started=0 holding=""
 # sr_lock <dir>: a mkdir lock (Git Bash has no flock), broken when its holder's pid is gone, or when it has no pid a minute on
 sr_lock() {
   until mkdir "$1" 2>/dev/null; do
@@ -71,6 +73,7 @@ sr_lock() {
 _sr_exit() {
   # web alone: launch.py's records are the box's, not the task's - a bare stop takes another scope's game too (M0-D28)
   [ "$started" = 1 ] && $PY tools/pb/launch.py stop web --task "$task" >/dev/null 2>&1
+  [ -n "$holding" ] && rm -f "$holding"   # the foreign listener of `ready-held` ends when its file is gone
   [ "$own_port" = 1 ] && rm -rf "$lock.d" 2>/dev/null
   [ "$own_build" = 1 ] && rm -rf "$build_lock" 2>/dev/null
 }
@@ -162,8 +165,33 @@ if [ ! -d node_modules/playwright-core ]; then   # a red-arm scratch copy leaves
 fi
 cd "$root" || exit 1
 take_port_lock
+first="$($PY -I -c "import json;print(json.load(open('tools/pb/launch.json'))['services']['web']['port'])" | tr -d '\r')"
+if [ "$case_" = ready-held ]; then
+  # a foreign listener (a program launch.py did not start - VS Code's helper held 47812 all evening, M0-D107) on the first port
+  holding="$root/build/web-foreign-$$.hold"; : >"$holding"
+  $PY -I -c "
+import os, socket, sys, time
+s = socket.socket(); s.bind(('127.0.0.1', $first)); s.listen(5)
+end = time.monotonic() + 300
+while os.path.exists(sys.argv[1]) and time.monotonic() < end: time.sleep(0.2)" "$holding" &
+  for _ in $(seq 1 50); do
+    $PY -I -c "import socket,sys;s=socket.socket();s.settimeout(0.5);sys.exit(0 if s.connect_ex(('127.0.0.1',$first))==0 else 1)" && break
+    sleep 0.2
+  done
+fi
 started=1
 start="$($PY tools/pb/launch.py start web --task "$task" 2>&1)" || { echo "$start"; die "launch.py start web did not end GO"; }
 echo "$start" | grep -v '^=== '
-node web/smoke.mjs "$case_" --base http://127.0.0.1:47812 --timeout-s 30; rc=$?
+port="$(echo "$start" | sed -n 's/^web: ready on port \([0-9][0-9]*\).*/\1/p' | head -1)"
+[ -n "$port" ] || die "launch.py start web printed no 'ready on port <n>'"
+if [ "$case_" = ready-held ]; then
+  [ "$port" != "$first" ] || die "the web server took $first, which a foreign listener holds"
+  $PY -I -c "import socket,sys;s=socket.socket();s.settimeout(0.5);sys.exit(0 if s.connect_ex(('127.0.0.1',$first))==0 else 1)" \
+    || die "the foreign listener on $first is gone (launch.py stopped or replaced it?)"
+  echo "web ready-held: $first held, the server on $port"
+  smoke=ready
+else
+  smoke="$case_"
+fi
+node web/smoke.mjs "$smoke" --base "http://127.0.0.1:$port" --timeout-s 30; rc=$?
 exit $rc
