@@ -82,6 +82,12 @@ impl SandboxApp {
         })
     }
 
+    /// The device work of `new`, built and dropped (web.rs's warm-up, M0-D118).
+    #[cfg(target_arch = "wasm32")]
+    pub fn dry_run(device: &wgpu::Device, queue: &wgpu::Queue) -> Result<(), String> {
+        sim::Sim::dry_run(device, queue)
+    }
+
     /// A scripted action (§3.3) — the ones built so far. An error is the line the capture fails with.
     #[cfg(not(target_arch = "wasm32"))]
     fn apply(&mut self, action: &crate::capture::Action) -> Result<(), String> {
@@ -417,70 +423,26 @@ mod sim {
         _image: wgpu::Texture,
     }
 
+    /// What `Sim::new` builds on the device before egui sees it: the step, the renderer and their world.
+    struct Parts {
+        cal: calibration::Calibration,
+        physics: Physics,
+        elements: Elements,
+        world: WorldConfig,
+        world_bar: WorldBar,
+        state: State,
+        previous: State,
+        step: Step,
+        renderer: Renderer,
+        image: wgpu::Texture,
+        target: wgpu::TextureView,
+    }
+
     impl Sim {
         pub fn new(render: &egui_wgpu::RenderState) -> Result<Sim, String> {
             let (device, queue) = (render.device.clone(), render.queue.clone());
-            let cal = calibration::resolve(calibration::EMBEDDED, true)
-                .map_err(|e| e.line())?
-                .ok_or("calibration missing: the game needs assets/calibration.json (sandbox-reactions calibrate writes it)")?;
-            let physics = Physics::shipped().map_err(|e| e.to_string())?;
-            let elements = Elements::shipped().map_err(|e| e.to_string())?;
-            let reactions = Reactions::shipped(&elements, &physics).map_err(|e| e.to_string())?;
-            let world = WorldConfig::default();
-            let world_bar = WorldBar::default();
-            let (edge, switches, test) = (world_bar.edge(), Switches::default(), TestSettings::default());
-
-            // A new world is empty: every cell at the floor state (§2.8).
-            let scene = Scene { world, edge, slowdown: true, switches, test, objects: Vec::new(), overrides: Vec::new() };
-            let (planes, _) = scene.planes(world, &physics, &elements)?;
-            let state = State::new(&device, world).map_err(|e| e.to_string())?;
-            let previous = State::new(&device, world).map_err(|e| e.to_string())?;
-            let booking = Booking::new(&device, world).map_err(|e| e.to_string())?;
-            let eos = EosGpu::new(&device, &physics, &elements);
-            let side = SideFields::new(&device, world).map_err(|e| e.to_string())?;
-            let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(edge) };
-            let step = Step::with_neutrino_heating(
-                &device,
-                &state,
-                &booking,
-                &eos,
-                &physics,
-                &passes,
-                Some(&HeatSetup { side: &side, test }),
-                Some(&ReactSetup { reactions: &reactions, test, neutrinos: true, side: &side }),
-                Some(&SinkSetup { side: &side }),
-                Some(&NuHeatSetup { side: &side }),
-            )
-            .map_err(|e| format!("gravity over a {}x{} world: {e}", world.width, world.height))?
-            .with_edits(&device, &state, &booking, &eos, &physics);
-            state.upload(&queue, &planes).map_err(|e| e.to_string())?;
-            previous.upload(&queue, &planes).map_err(|e| e.to_string())?;
-            // §1.8.3: c_step is the cost per step the frames read back; GPU timestamps where the device has them.
-            step.set_timing(&device, &queue, Timing::Auto);
-
-            let anchor = |k: &str| physics.get(k).ok_or_else(|| format!("physics.json holds no {k}"));
-            let anchors = [
-                anchor("t_floor")?,
-                cal.t_eff_sun_sb,
-                anchor("t_h")?,
-                anchor("t_he")?,
-                anchor("t_c")?,
-                anchor("t_ne")?,
-                anchor("t_o")?,
-                anchor("t_si")?,
-            ];
-            let renderer = Renderer::new(&device, &state, &previous, &eos, anchors, &elements);
-            let image = device.create_texture(&wgpu::TextureDescriptor {
-                label: Some("world.image"),
-                size: wgpu::Extent3d { width: world.width, height: world.height, depth_or_array_layers: 1 },
-                mip_level_count: 1,
-                sample_count: 1,
-                dimension: wgpu::TextureDimension::D2,
-                format: IMAGE_FORMAT,
-                usage: wgpu::TextureUsages::STORAGE_BINDING | wgpu::TextureUsages::TEXTURE_BINDING,
-                view_formats: &[],
-            });
-            let target = image.create_view(&wgpu::TextureViewDescriptor::default());
+            let Parts { cal, physics, elements, world, world_bar, state, previous, step, renderer, image, target } =
+                Self::parts(&device, &queue)?;
             // IMAGE_FORMAT holds sRGB-encoded bytes in a UNORM texture, "the display draws it as is" (render.rs): egui-wgpu
             // reads its textures as gamma-encoded bytes in Rgba8Unorm too, so the quad needs no view of its own.
             let texture = render.renderer.write().register_native_texture(&device, &target, wgpu::FilterMode::Nearest);
@@ -515,6 +477,78 @@ mod sim {
                 sim_time: 0.0,
                 _image: image,
             })
+        }
+
+        /// `new`'s device work alone, built and dropped: web.rs's dry run, whose pipeline creations it turns into
+        /// parallel compiles the real build then finds done (M0-D118).
+        #[cfg(target_arch = "wasm32")]
+        pub fn dry_run(device: &wgpu::Device, queue: &wgpu::Queue) -> Result<(), String> {
+            Self::parts(device, queue).map(drop)
+        }
+
+        fn parts(device: &wgpu::Device, queue: &wgpu::Queue) -> Result<Parts, String> {
+            let cal = calibration::resolve(calibration::EMBEDDED, true)
+                .map_err(|e| e.line())?
+                .ok_or("calibration missing: the game needs assets/calibration.json (sandbox-reactions calibrate writes it)")?;
+            let physics = Physics::shipped().map_err(|e| e.to_string())?;
+            let elements = Elements::shipped().map_err(|e| e.to_string())?;
+            let reactions = Reactions::shipped(&elements, &physics).map_err(|e| e.to_string())?;
+            let world = WorldConfig::default();
+            let world_bar = WorldBar::default();
+            let (edge, switches, test) = (world_bar.edge(), Switches::default(), TestSettings::default());
+
+            // A new world is empty: every cell at the floor state (§2.8).
+            let scene = Scene { world, edge, slowdown: true, switches, test, objects: Vec::new(), overrides: Vec::new() };
+            let (planes, _) = scene.planes(world, &physics, &elements)?;
+            let state = State::new(device, world).map_err(|e| e.to_string())?;
+            let previous = State::new(device, world).map_err(|e| e.to_string())?;
+            let booking = Booking::new(device, world).map_err(|e| e.to_string())?;
+            let eos = EosGpu::new(device, &physics, &elements);
+            let side = SideFields::new(device, world).map_err(|e| e.to_string())?;
+            let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(edge) };
+            let step = Step::with_neutrino_heating(
+                device,
+                &state,
+                &booking,
+                &eos,
+                &physics,
+                &passes,
+                Some(&HeatSetup { side: &side, test }),
+                Some(&ReactSetup { reactions: &reactions, test, neutrinos: true, side: &side }),
+                Some(&SinkSetup { side: &side }),
+                Some(&NuHeatSetup { side: &side }),
+            )
+            .map_err(|e| format!("gravity over a {}x{} world: {e}", world.width, world.height))?
+            .with_edits(device, &state, &booking, &eos, &physics);
+            state.upload(queue, &planes).map_err(|e| e.to_string())?;
+            previous.upload(queue, &planes).map_err(|e| e.to_string())?;
+            // §1.8.3: c_step is the cost per step the frames read back; GPU timestamps where the device has them.
+            step.set_timing(device, queue, Timing::Auto);
+
+            let anchor = |k: &str| physics.get(k).ok_or_else(|| format!("physics.json holds no {k}"));
+            let anchors = [
+                anchor("t_floor")?,
+                cal.t_eff_sun_sb,
+                anchor("t_h")?,
+                anchor("t_he")?,
+                anchor("t_c")?,
+                anchor("t_ne")?,
+                anchor("t_o")?,
+                anchor("t_si")?,
+            ];
+            let renderer = Renderer::new(device, &state, &previous, &eos, anchors, &elements);
+            let image = device.create_texture(&wgpu::TextureDescriptor {
+                label: Some("world.image"),
+                size: wgpu::Extent3d { width: world.width, height: world.height, depth_or_array_layers: 1 },
+                mip_level_count: 1,
+                sample_count: 1,
+                dimension: wgpu::TextureDimension::D2,
+                format: IMAGE_FORMAT,
+                usage: wgpu::TextureUsages::STORAGE_BINDING | wgpu::TextureUsages::TEXTURE_BINDING,
+                view_formats: &[],
+            });
+            let target = image.create_view(&wgpu::TextureViewDescriptor::default());
+            Ok(Parts { cal, physics, elements, world, world_bar, state, previous, step, renderer, image, target })
         }
 
         pub fn world(&self) -> WorldConfig {

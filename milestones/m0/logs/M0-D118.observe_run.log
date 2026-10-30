@@ -1,0 +1,77 @@
+== 2026-10-29T19:10:15-04:00 observe_run · task M0-D118 · box Laser2025-20 :: bash tests/gpu.sh observe physics
+-- observe_run · exit=0 · 177.27 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 8.79s
+     Running tests\gpu\main.rs (build/target\release\deps\gpu-b9f5dd9b6977d55a.exe)
+
+running 9 tests
+test observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.216924 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=785 sim_time=16.115635 until=met
+T 3: ending at step 825 (t 16.116), object 1 of 1799.9884033203125 sb, the sink at (36.24, 29.60), 2 events; the box empty, Δt 0.447214
+ok
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1648 sim_time=20.296289 until=met
+unbroken: 1648 steps, events [{"detail":{"by":"light","mass_sb":3345.1493724249303},"kind":"ignition","object":1,"sim_time":8.656357404775918,"step":672}]
+stages [{"from_step":33,"sim_time":0.7751594074070454,"stage":"failed_star"},{"from_step":209,"sim_time":3.611508486792445,"stage":"collapsing"},{"from_step":336,"sim_time":4.830148474313319,"stage":"cloud"},{"from_step":464,"sim_time":6.104329141788185,"stage":"failed_star"},{"from_step":720,"sim_time":9.2584623452276,"stage":"cloud"},{"from_step":1648,"sim_time":20.29628875013441,"stage":"main_sequence"}]
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=768 sim_time=9.825839 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1648 sim_time=20.296289 until=met
+SR-ERROR bad dump: --continue: C:\Users\YOHANB~1\AppData\Local\Temp\sr-observe-5508-continue\cut\dumps\s_768.observers.json is step 512 at 6.6372890044003725, the dump's 768 at 9.825838988646865
+SR-ERROR bad dump: --continue: C:\Users\YOHANB~1\AppData\Local\Temp\sr-observe-5508-continue\cut\dumps\s_768.observers.json: Le fichier spécifié est introuvable. (os error 2)
+SR-ERROR bad arguments: --continue needs --load-dump (the dump it goes on from)
+ok
+test observe::a_lighter_objects_ending_never_ends_the_life ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.006030 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=2.876690 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2696 sim_time=12.967013 until=met
+two clouds: object 2 (306.0) ended at step 2496 (t 11.66), the life on object 1 (1521.9) at step 2736 (t 12.97)
+ok
+test observe::a_sink_outside_the_box_is_an_object_of_its_own ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.982988 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.629832 until=met
+lone sink: object 2 black_hole at step 73 beside the cloud
+ok
+test observe::an_unmet_condition_is_exit_2_with_until_unmet ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.837738 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.328021 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.328021 until=none
+ok
+test observe::events_jsonl_and_the_ending_of_a_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.982988 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2161 sim_time=11.687623 until=met
+ending at step 2201: black_hole shown from step 73, held 10.059 t.u. of 10.000
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2145 sim_time=11.607747 until=unmet
+ok
+test observe::until_a_stage_stops_at_the_frame_that_shows_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=49 sim_time=2.087824 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.721124 until=unmet
+ok
+test observe::until_is_checked_before_a_device_is_touched ... SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: --until "later": expected sim_time:<t>, event:<kind>, stage:<id> or ending
+SR-ERROR bad arguments: --until "stage:nova": a stage is one of black_hole|supernova|neutron_star|core_collapse|white_dwarf|failed_star|planetary_nebula|iron_core|si_burn|o_burn|ne_burn|c_burn|he_core|he_shell|h_shell|main_sequence|collapsing|protostar|cloud, got "nova"
+SR-ERROR bad arguments: --until "event:ending": an event is one of ignition|core_collapse|supernova|sink_formed, got "ending"
+SR-ERROR bad arguments: --until "sim_time:-3": sim_time takes a time of 0 or more, got "-3"
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+ok
+test observe::until_sim_time_stops_at_the_first_step_past_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1280 sim_time=5.001714 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1279 sim_time=4.996405 until=none
+sim_time:5 met at step 1280, sim time 5.001714003; the step before: 4.996404639
+ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 433 filtered out; finished in 167.28s
+
+

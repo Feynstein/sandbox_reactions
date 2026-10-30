@@ -1,0 +1,298 @@
+== 2026-10-29T18:23:22-04:00 M0-D118 start on Laser2025-20
+== 2026-10-29T18:24:30-04:00 baseline: verify.py web
+web       3/0/0      184.42 s  GO
+logs: milestones/m0/logs/M0-D118.<scope>.log · record: loop_times.jsonl · tree da3731969937+a79233407d76
+anchor: 140 path×scope entries moved by this run
+anchor: 347 paths checked · 330 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 347 covered of 677 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 81.02 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 0.64->8.32
+=== GO ===
+== 2026-10-29T18:26:04-04:00 probe: record pipelines (scratch pipes.mjs)
+=== GO ===
+ready after 30.6 s
+modules 15, pipelines 75 (compute 73); device {"features":[],"limits":{"maxTextureDimension1D":8192,"maxTextureDimension2D":8192,"maxTextureDimension3D":2048,"maxTextureArrayLayers":256,"maxBindGroups":4,"maxBindGroupsPlusVertexBuffers":24,"maxBindingsPerBindGroup":1000,"maxDynamicUniformBuffersPerPipelineLayout":8,"maxDynamicStorageBuffersPerPipelineLayout":4,"maxSampledTexturesPerShaderStage":16,"maxSamplersPerShaderStage":16,"maxStorageBuffersPerShaderStage":8,"maxStorageTexturesPerShaderStage":4,"maxUniformBuffersPerShaderStage":12,"maxUniformBufferBindingSize":65536,"maxStorageBufferBindingSize":134217728,"minUniformBufferOffsetAlignment":256,"minStorageBufferOffsetAlignment":256,"maxVertexBuffers":8,"maxBufferSize":268435456,"maxVertexAttributes":16,"maxVertexBufferArrayStride":2048,"maxInterStageShaderVariables":16,"maxColorAttachments":8,"maxColorAttachmentBytesPerSample":32,"maxComputeWorkgroupStorageSize":16384,"maxComputeInvocationsPerWorkgroup":256,"maxComputeWorkgroupSizeX":256,"maxComputeWorkgroupSizeY":256,"maxComputeWorkgroupSizeZ":64,"maxComputeWorkgroupsPerDimension":65535}}
+     515 ms  RenderPipeline egui:vs_main (6064 chars)
+     860 ms  ComputePipeline grav.wgsl:grav_rows (16520 chars)
+     860 ms  ComputePipeline grav.wgsl:grav_columns (16520 chars)
+     860 ms  ComputePipeline grav.wgsl:grav_rows_inverse (16520 chars)
+     860 ms  ComputePipeline grav.wgsl:grav_gradient (16520 chars)
+     860 ms  ComputePipeline grav.wgsl:grav_sinks (16520 chars)
+     861 ms  ComputePipeline reduce.wgsl:dt_advance (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:dt_cells (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:dt_partials (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:dt_cells (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:dt_refresh (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:guard_scan (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:guard_stamp (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:box_cells (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:box_fit (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:box_gate (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:box_cells (22966 chars)
+     861 ms  ComputePipeline reduce.wgsl:box_fit (22966 chars)
+     862 ms  ComputePipeline summary.wgsl:summary_cells (13680 chars)
+     862 ms  ComputePipeline summary.wgsl:summary_book (13680 chars)
+     946 ms  ComputePipeline sinks.wgsl:sink_candidates (27942 chars)
+     946 ms  ComputePipeline sinks.wgsl:sink_update (27942 chars)
+     947 ms  ComputePipeline sinks.wgsl:sink_pull (27942 chars)
+     947 ms  ComputePipeline sinks.wgsl:sink_kick_drift (27942 chars)
+     947 ms  ComputePipeline sinks.wgsl:sink_pull (27942 chars)
+     947 ms  ComputePipeline sinks.wgsl:sink_kick_merge (27942 chars)
+     948 ms  ComputePipeline hydro.wgsl:hydro_update (44022 chars)
+     948 ms  ComputePipeline hydro.wgsl:hydro_edges (44022 chars)
+     948 ms  ComputePipeline hydro.wgsl:hydro_commit (44022 chars)
+     949 ms  ComputePipeline heat.wgsl:heat_round (65225 chars)
+     949 ms  ComputePipeline heat.wgsl:heat_cells (65225 chars)
+     949 ms  ComputePipeline heat.wgsl:heat_law (65225 chars)
+     949 ms  ComputePipeline heat.wgsl:heat_open (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:heat_close (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:heat_limit (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:heat_sum (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:heat_apply (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:heat_park (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:mg_level0 (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:mg_coarsen (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:mg_smooth (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:mg_restrict (65225 chars)
+     951 ms  ComputePipeline heat.wgsl:mg_coarse (65225 chars)
+     952 ms  ComputePipeline heat.wgsl:heat_matvec (65225 chars)
+     954 ms  ComputePipeline react.wgsl:react_begin (35991 chars)
+     954 ms  ComputePipeline react.wgsl:react_cells (35991 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:nu_tiles (16905 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:nu_gate (16905 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:conv_rows (16905 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:nu_columns (16905 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:conv_rows_inverse (16905 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:nu_deposit (16905 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:nu_share (16905 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:nu_apply (16905 chars)
+    1246 ms  ComputePipeline nuheat.wgsl:nu_close (16905 chars)
+    1246 ms  ComputePipeline floors.wgsl:floor_cells (10648 chars)
+    1246 ms  ComputePipeline floors.wgsl:renormalise_species (10648 chars)
+    1247 ms  ComputePipeline latch.wgsl:latch_begin (7263 chars)
+    1247 ms  ComputePipeline latch.wgsl:latch_check (7263 chars)
+    1247 ms  ComputePipeline latch.wgsl:latch_end (7263 chars)
+    1247 ms  ComputePipeline latch.wgsl:latch_hook (7263 chars)
+    1247 ms  ComputePipeline latch.wgsl:latch_probe (7263 chars)
+    1247 ms  ComputePipeline latch.wgsl:latch_hold (7263 chars)
+    1247 ms  ComputePipeline latch.wgsl:latch_carry (7263 chars)
+    1247 ms  ComputePipeline react.wgsl:react_latch (35991 chars)
+    1247 ms  ComputePipeline sinks.wgsl:sink_latch (27942 chars)
+    1248 ms  ComputePipeline edit.wgsl:edit_gate (17029 chars)
+    1248 ms  ComputePipeline edit.wgsl:edit_cells (17029 chars)
+    1248 ms  ComputePipeline edit.wgsl:edit_finish (17029 chars)
+    1274 ms  ComputePipeline render.wgsl:render_cells (14426 chars)
+    1293 ms  ComputePipeline glow.wgsl:glow_bright (4447 chars)
+    1293 ms  ComputePipeline glow.wgsl:glow_blur_h (4447 chars)
+    1293 ms  ComputePipeline glow.wgsl:glow_blur_v (4447 chars)
+    1293 ms  ComputePipeline glow.wgsl:glow_composite (4447 chars)
+    1520 ms  RenderPipeline texture_copy.wgsl:vs_main (1071 chars)
+=== GO ===
+== 2026-10-29T18:26:51-04:00 probe: replay each compute pipeline alone, sequential, createComputePipelineAsync
+=== GO ===
+    9551 ms  hydro.wgsl:hydro_edges
+    2870 ms  hydro.wgsl:hydro_update
+     687 ms  react.wgsl:react_cells
+     388 ms  sinks.wgsl:sink_update
+     368 ms  heat.wgsl:heat_round
+     336 ms  edit.wgsl:edit_cells
+     268 ms  sinks.wgsl:sink_candidates
+     234 ms  grav.wgsl:grav_rows
+     175 ms  heat.wgsl:heat_close
+     174 ms  heat.wgsl:mg_coarse
+     174 ms  render.wgsl:render_cells
+     148 ms  summary.wgsl:summary_cells
+     134 ms  heat.wgsl:heat_law
+     120 ms  reduce.wgsl:dt_cells
+     109 ms  summary.wgsl:summary_book
+     109 ms  heat.wgsl:heat_limit
+     109 ms  grav.wgsl:grav_columns
+     104 ms  sinks.wgsl:sink_kick_merge
+      93 ms  heat.wgsl:heat_matvec
+      92 ms  heat.wgsl:mg_smooth
+      91 ms  floors.wgsl:floor_cells
+      85 ms  nuheat.wgsl:nu_columns
+      83 ms  grav.wgsl:grav_rows_inverse
+      80 ms  heat.wgsl:mg_coarsen
+      78 ms  heat.wgsl:heat_cells
+      78 ms  heat.wgsl:mg_restrict
+      77 ms  heat.wgsl:mg_level0
+      76 ms  heat.wgsl:heat_apply
+      67 ms  reduce.wgsl:dt_partials
+      66 ms  sinks.wgsl:sink_kick_drift
+      65 ms  reduce.wgsl:dt_refresh
+      60 ms  heat.wgsl:heat_sum
+      58 ms  nuheat.wgsl:conv_rows
+      56 ms  nuheat.wgsl:conv_rows_inverse
+      55 ms  sinks.wgsl:sink_pull
+      54 ms  reduce.wgsl:box_fit
+      54 ms  latch.wgsl:latch_carry
+      51 ms  hydro.wgsl:hydro_commit
+      47 ms  heat.wgsl:heat_open
+      46 ms  reduce.wgsl:guard_scan
+      46 ms  reduce.wgsl:dt_advance
+      43 ms  grav.wgsl:grav_sinks
+      41 ms  heat.wgsl:heat_park
+      41 ms  grav.wgsl:grav_gradient
+      40 ms  floors.wgsl:renormalise_species
+      40 ms  glow.wgsl:glow_blur_v
+      39 ms  reduce.wgsl:box_cells
+      37 ms  latch.wgsl:latch_check
+      36 ms  edit.wgsl:edit_gate
+      34 ms  nuheat.wgsl:nu_deposit
+      32 ms  nuheat.wgsl:nu_gate
+      31 ms  nuheat.wgsl:nu_tiles
+      31 ms  react.wgsl:react_latch
+      30 ms  nuheat.wgsl:nu_share
+      30 ms  latch.wgsl:latch_hold
+      29 ms  glow.wgsl:glow_blur_h
+      28 ms  glow.wgsl:glow_bright
+      27 ms  glow.wgsl:glow_composite
+      26 ms  nuheat.wgsl:nu_apply
+      25 ms  latch.wgsl:latch_begin
+      24 ms  reduce.wgsl:box_gate
+      24 ms  react.wgsl:react_begin
+      23 ms  latch.wgsl:latch_end
+      22 ms  reduce.wgsl:guard_stamp
+      22 ms  sinks.wgsl:sink_latch
+      22 ms  edit.wgsl:edit_finish
+      21 ms  latch.wgsl:latch_hook
+      18 ms  nuheat.wgsl:nu_close
+      17 ms  latch.wgsl:latch_probe
+       1 ms  reduce.wgsl:dt_cells
+       1 ms  reduce.wgsl:box_cells
+       1 ms  sinks.wgsl:sink_pull
+       1 ms  reduce.wgsl:box_fit
+total 18.5 s over 73 compute pipelines
+-- parallel
+     290 ms  reduce.wgsl:dt_advance
+     289 ms  reduce.wgsl:guard_stamp
+total 11.4 s over 73 compute pipelines
+=== GO ===
+== 2026-10-29T18:28:35-04:00 after the hydro.wgsl change: verify.py web
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 123.98 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 0.81->2.56
+=== GO ===
+== 2026-10-29T18:30:48-04:00 probe after change 1: record + sequential replay
+=== GO ===
+ready after 19.7 s
+modules 15, pipelines 75 (compute 73); device {"features":[],"limits":{"maxTextureDimension1D":8192,"maxTextureDimension2D":8192,"maxTextureDimension3D":2048,"maxTextureArrayLayers":256,"maxBindGroups":4,"maxBindGroupsPlusVertexBuffers":24,"maxBindingsPerBindGroup":1000,"maxDynamicUniformBuffersPerPipelineLayout":8,"maxDynamicStorageBuffersPerPipelineLayout":4,"maxSampledTexturesPerShaderStage":16,"maxSamplersPerShaderStage":16,"maxStorageBuffersPerShaderStage":8,"maxStorageTexturesPerShaderStage":4,"maxUniformBuffersPerShaderStage":12,"maxUniformBufferBindingSize":65536,"maxStorageBufferBindingSize":134217728,"minUniformBufferOffsetAlignment":256,"minStorageBufferOffsetAlignment":256,"maxVertexBuffers":8,"maxBufferSize":268435456,"maxVertexAttributes":16,"maxVertexBufferArrayStride":2048,"maxInterStageShaderVariables":16,"maxColorAttachments":8,"maxColorAttachmentBytesPerSample":32,"maxComputeWorkgroupStorageSize":16384,"maxComputeInvocationsPerWorkgroup":256,"maxComputeWorkgroupSizeX":256,"maxComputeWorkgroupSizeY":256,"maxComputeWorkgroupSizeZ":64,"maxComputeWorkgroupsPerDimension":65535}}
+    4722 ms  hydro.wgsl:hydro_edges
+    3451 ms  hydro.wgsl:hydro_update
+     989 ms  react.wgsl:react_cells
+     541 ms  heat.wgsl:heat_round
+     412 ms  edit.wgsl:edit_cells
+     405 ms  sinks.wgsl:sink_update
+     336 ms  sinks.wgsl:sink_candidates
+     283 ms  grav.wgsl:grav_rows
+total 12.2 s over 73 compute pipelines
+=== GO ===
+== 2026-10-29T18:32:59-04:00 after change 2 (one evolved, one read_cell, one face): verify.py web
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 136.25 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 4.9->3.69
+=== GO ===
+ready: srState "ready" after 20.4 s
+ready: srState "ready" after 16.5 s
+-- probe: record + sequential replay
+=== GO ===
+ready after 16.7 s
+    2786 ms  hydro.wgsl:hydro_update
+    2366 ms  hydro.wgsl:hydro_edges
+    1022 ms  react.wgsl:react_cells
+     563 ms  heat.wgsl:heat_round
+     451 ms  edit.wgsl:edit_cells
+     399 ms  sinks.wgsl:sink_update
+total 11.2 s over 73 compute pipelines
+=== GO ===
+== 2026-10-29T18:44:18-04:00 after change 3 (boundary's predictor loop): verify.py web + 2 probe readies
+verify: 2 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 78.22 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 1.22->3.08
+=== NO-GO: web: web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: launch.py start web did not end GO · log milestones/m0/logs/M0-D118.web.log ===
+ready: srState "ready" after 15.6 s
+=== GO ===
+ready after 15.9 s
+  submit at 1557 ms (1 buffers), done at 15327 ms
+ready after 15.8 s
+  submit at 1685 ms (1 buffers), done at 15461 ms
+=== GO ===
+== 2026-10-29T18:49:52-04:00 three ready readings, the dist of change 3
+=== GO ===
+ready after 11.2 s
+ready after 11.6 s
+ready after 12.2 s
+=== GO ===
+== 2026-10-29T18:51:12-04:00 iteration: sod edges collapse cpu_gpu
+edges     7/0/0       83.16 s  GO · step 2/4, 2 left
+collapse  6/0/0       63.31 s  GO · step 3/4, 1 left
+cpu_gpu   3/0/0       73.31 s  GO · step 4/4, 0 left
+logs: milestones/m0/logs/M0-D118.<scope>.log · record: loop_times.jsonl · tree da3731969937+d7e8bf00525c
+anchor: 4 path×scope entries moved by this run
+anchor: 207 paths checked · 330 skipped (3 classes) · 140 never checked · 0 stale · 0 unclassified · 0 owed · 347 covered of 677 visible
+verify: 31 passed, 0 failed, 0 skipped · 4/4 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 83.78 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 1.65->0.63
+=== GO ===
+== 2026-10-29T18:52:47-04:00 Verify 1 run 1: verify.py web
+=== GO ===
+ready: srState "ready" after 16.0 s
+== 2026-10-29T18:54:09-04:00 Verify 1 run 2: verify.py web
+=== GO ===
+ready: srState "ready" after 16.0 s
+== 2026-10-29T18:54:10-04:00 Verify 1 run 3: verify.py web
+=== GO ===
+ready: srState "ready" after 16.0 s
+== 2026-10-29T18:55:05-04:00 probe: current shaders, parallel async vs sequential async
+=== GO ===
+total 4.0 s over 73 compute pipelines
+total 10.9 s over 73 compute pipelines
+total 4.5 s over 73 compute pipelines
+total 12.0 s over 73 compute pipelines
+=== GO ===
+== 2026-10-29T18:56:41-04:00 probe: warm async in parallel, then the same sync (held | dropped)
+=== GO ===
+-- hold
+warm 5.4 s, then sync 0.1 s total 5.4 s over 0 compute pipelines
+-- drop
+warm 4.9 s, then sync 0.1 s total 5.0 s over 0 compute pipelines
+-- hold
+warm 4.5 s, then sync 0.1 s total 4.6 s over 0 compute pipelines
+=== GO ===
+== 2026-10-29T19:04:10-04:00 cargo check sr-app, wasm32 and native
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.21s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 43.47s
+== 2026-10-29T19:05:04-04:00 after the warm-up: verify.py web
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 67.94 s · mode scope · jobs 8 · box Laser2025-20 · python 3.12.10 · load 2.61->0.43
+=== GO ===
+ready: srState "ready" after 16.0 s
+ready: srState "ready" after 7.3 s
+== 2026-10-29T19:06:24-04:00 probe: the warm-up's dist, console + three readies
+=== GO ===
+[0.2] Failed to load resource: the server responded with a status of 404 (File not found)
+[0.2] The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+[0.5] The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+ready after 5.6 s
+  submit at 1164 ms (1 buffers), done at 1598 ms
+  submit at 1170 ms (1 buffers), done at 1604 ms
+  submit at 1178 ms (1 buffers), done at 1635 ms
+  submit at 4833 ms (1 buffers), done at 5170 ms
+  submit at 4838 ms (1 buffers), done at 5171 ms
+  submit at 4840 ms (1 buffers), done at 5303 ms
+  submit at 4840 ms (1 buffers), done at 5304 ms
+  submit at 4846 ms (1 buffers), done at 5470 ms
+ready after 5.5 s
+ready after 5.7 s
+=== GO ===
+== 2026-10-29T19:07:19-04:00 Verify 1 run: verify.py web --task M0-D118-v1b
+web       3/0/0      133.35 s  GO
+=== GO ===
+ready: srState "ready" after 7.1 s
+== 2026-10-29T19:08:31-04:00 Verify 1 run: verify.py web --task M0-D118-v1c
+web       3/0/0      134.92 s  GO
+=== GO ===
+ready: srState "ready" after 7.3 s
+== 2026-10-29T19:09:49-04:00 Verify 3: verify.py --changed --task M0-D118 (the claim)
+ui_topbar         NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+ui_banner         NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-D118.<scope>.log · record: loop_times.jsonl · tree da3731969937+f7f03e869c75
+anchor: 55 path×scope entries moved by this run
+anchor: 347 paths checked · 330 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 347 covered of 677 visible
+skipped   322  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 419 passed, 0 failed, 0 skipped · 47/47 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 28 not impacted · 372.38 s + loop 0.45 s · mode changed · jobs 8 · box Laser2025-20 · python 3.12.10 · load 0.85->4.18 · base: M0-D118's start 2026-10-29T18:23:10-04:00
+=== GO ===
+exit 0

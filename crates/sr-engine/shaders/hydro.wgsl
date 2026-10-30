@@ -20,7 +20,7 @@
 // what crosses each boundary face into `escaped` — the same `boundary` flux on the same state, so the grid's loss is
 // the booking; bounce books nothing.
 //
-// Gravity's source (§1.4.2; M0-T36), when the step runs P2 (`edges.gravity`): `cell_faces`' Hancock predictor kicks each
+// Gravity's source (§1.4.2; M0-T36), when the step runs P2 (`edges.gravity`): `face_state`'s Hancock predictor kicks each
 // face state by half a step of the cell's g — velocity by ½Δt·g, energy by the work Σ(u + ¼Δt·g)·g·½Δt, leaving its
 // thermal energy as it was — beside the flux differences; `hydro_update` adds Δt·Σg to the momentum, Σ the cell centre's
 // half-step value from that same predictor. The energy source is the work the step's mass fluxes do across φ (§0.5
@@ -166,11 +166,30 @@ fn read_cell(cell: u32) -> Prim {
 
 // The cell at (x, y), or a ghost beyond the edge (§2.8): bounce, its mirror inside with the normal velocity negated;
 // leave, the edge cell with the normal velocity clamped outward.
+// One `read_cell` for both edges: DXC inlines every call (M0-D118).
 fn read_at(x: i32, y: i32) -> Prim {
     let w = i32(dims.width);
     let h = i32(dims.height);
-    if (edges.leave != 0u) {
-        var p = read_cell(u32(clamp(y, 0, h - 1)) * dims.width + u32(clamp(x, 0, w - 1)));
+    let leave = edges.leave != 0u;
+    var mx = x;
+    var my = y;
+    if (leave) {
+        mx = clamp(x, 0, w - 1);
+        my = clamp(y, 0, h - 1);
+    } else {
+        if (x < 0) {
+            mx = -1 - x;
+        } else if (x >= w) {
+            mx = 2 * w - 1 - x;
+        }
+        if (y < 0) {
+            my = -1 - y;
+        } else if (y >= h) {
+            my = 2 * h - 1 - y;
+        }
+    }
+    var p = read_cell(u32(my) * dims.width + u32(mx));
+    if (leave) {
         if (x < 0) {
             p.u = min(p.u, 0.0);
         } else if (x >= w) {
@@ -183,19 +202,6 @@ fn read_at(x: i32, y: i32) -> Prim {
         }
         return p;
     }
-    var mx = x;
-    var my = y;
-    if (x < 0) {
-        mx = -1 - x;
-    } else if (x >= w) {
-        mx = 2 * w - 1 - x;
-    }
-    if (y < 0) {
-        my = -1 - y;
-    } else if (y >= h) {
-        my = 2 * h - 1 - y;
-    }
-    var p = read_cell(u32(my) * dims.width + u32(mx));
     if (mx != x) {
         p.u = -p.u;
     }
@@ -475,10 +481,29 @@ fn hancock(c: Prim, xl: Prim, xr: Prim, yl: Prim, yr: Prim, x: i32, y: i32, half
 // The predicted face state from face `w` (conserved `u0`) of a Hancock step: advanced by its `delta`, kicked by its g
 // when the step runs P2.
 fn face_state(w: Prim, u0: array<f32, 14>, delta: array<f32, 14>, g: vec2<f32>, half: f32) -> Face {
-    if (edges.gravity == 0u) {
-        return evolved(w, u0, delta);
+    var d = delta;
+    if (edges.gravity != 0u) {
+        d = kicked(delta, w, g, half);
     }
-    return evolved(w, u0, kicked(delta, w, g, half));
+    return evolved(w, u0, d);
+}
+
+// Face `k` ([x−, x+, y−, y+]) of a Hancock step, predicted alone: the face is chosen before it is evolved, so a caller
+// that needs one face runs one `evolved` (DXC inlines every call, M0-D118).
+fn hancock_face(h: Hancock, k: u32, half: f32) -> Face {
+    var w = h.w[0];
+    var u0 = h.u[0];
+    if (k == 1u) {
+        w = h.w[1];
+        u0 = h.u[1];
+    } else if (k == 2u) {
+        w = h.w[2];
+        u0 = h.u[2];
+    } else if (k == 3u) {
+        w = h.w[3];
+        u0 = h.u[3];
+    }
+    return face_state(w, u0, h.delta, h.g, half);
 }
 
 // A Hancock step's four predicted face states and its centre half a step on.
@@ -489,11 +514,12 @@ fn predict(h: Hancock, half: f32) -> Predicted {
     return Predicted(faces, h.mid);
 }
 
-// The predictor of the cell at (x, y), read from the state: its four face states, [x−, x+, y−, y+], and its centre half
-// a step on (`hydro_edges`; `hydro_update` reads its tile's primitives instead).
-fn cell_faces(x: i32, y: i32, half: f32) -> Predicted {
+// Predicted face `k` ([x−, x+, y−, y+]) of the cell at (x, y), read from the state (`hydro_edges`; `hydro_update` reads
+// its tile's primitives instead).
+fn cell_face(x: i32, y: i32, k: u32, half: f32) -> Face {
     let c = read_at(x, y);
-    return predict(hancock(c, read_at(x - 1, y), read_at(x + 1, y), read_at(x, y - 1), read_at(x, y + 1), x, y, half), half);
+    return hancock_face(hancock(c, read_at(x - 1, y), read_at(x + 1, y), read_at(x, y - 1), read_at(x, y + 1), x, y, half), k,
+        half);
 }
 
 // The HLL flux across a face normal to `dir` between `l` and `r` (Davis speeds), species by the mass flux's upwind side.
@@ -538,51 +564,41 @@ fn wall(face: Face, dir: u32) -> array<f32, 14> {
 }
 
 // The flux through the boundary face on `side` (0: x = 0, 1: x = width − 1, 2: y = 0, 3: y = height − 1) of the edge
-// cell (x, y), whose own predicted face there is `own` (§2.8). Bounce: the wall. Leave: HLL between `own` and the facing
+// cell (x, y), from its own predicted face there (§2.8). Bounce: the wall. Leave: HLL between that face and the facing
 // predicted face of the ghost beyond it, clamped to outflow — a face whose mass flux points into the world is a wall,
 // so inflow is exactly 0 and nothing else enters with it.
-fn boundary(x: i32, y: i32, side: u32, own: Face, half: f32) -> array<f32, 14> {
+fn boundary(x: i32, y: i32, side: u32, half: f32) -> array<f32, 14> {
+    // The cell's face (j = 0) and the ghost's facing it (x− ↔ x+, y− ↔ y+: side ^ 1) from one predictor in a loop: DXC
+    // inlines every call and unrolls a constant count, so the count is read from `edges` — five inlined predictors here
+    // took Chrome's D3D12 backend ~10 s to compile, two ~1.7 s, this one ~0.9 s (M0-D118).
+    let high = (side & 1u) == 1u;
+    let step = select(-1, 1, high);
+    let gx = select(x, x + step, side < 2u);
+    let gy = select(y + step, y, side < 2u);
+    var faces: array<Face, 2>;
+    let count = select(1u, 2u, edges.leave != 0u);
+    for (var j = 0u; j < count; j++) {
+        faces[j] = cell_face(select(gx, x, j == 0u), select(gy, y, j == 0u), side ^ j, half);
+    }
+    let own = faces[0];
     if (edges.leave == 0u) {
         return wall(own, side / 2u);
     }
-    var ghost: Face;
-    switch side {
-        case 0u: {
-            ghost = cell_faces(x - 1, y, half).faces[1];
-        }
-        case 1u: {
-            ghost = cell_faces(x + 1, y, half).faces[0];
-        }
-        case 2u: {
-            ghost = cell_faces(x, y - 1, half).faces[3];
-        }
-        default: {
-            ghost = cell_faces(x, y + 1, half).faces[2];
-        }
+    var l = faces[1];
+    var r = own;
+    if (high) {
+        l = own;
+        r = faces[1];
     }
-    return edge_flux(side, own, ghost);
+    return edge_flux(side, own, hll(l, r, side / 2u));
 }
 
-// `boundary`'s flux from the ghost's facing predicted face `ghost`, already in hand (`hydro_update`'s tile).
-fn edge_flux(side: u32, own: Face, ghost: Face) -> array<f32, 14> {
+// `boundary`'s flux from `f`, the HLL flux between the face's lower cell and its upper one, the ghost on the outside —
+// the same HLL an inner face takes, so `hydro_update` runs one per face and clamps it here at the world's edge.
+fn edge_flux(side: u32, own: Face, f: array<f32, 14>) -> array<f32, 14> {
     let dir = side / 2u;
     if (edges.leave == 0u) {
         return wall(own, dir);
-    }
-    var f: array<f32, 14>;
-    switch side {
-        case 0u: {
-            f = hll(ghost, own, 0u);
-        }
-        case 1u: {
-            f = hll(own, ghost, 0u);
-        }
-        case 2u: {
-            f = hll(ghost, own, 1u);
-        }
-        default: {
-            f = hll(own, ghost, 1u);
-        }
     }
     let high = (side & 1u) == 1u;
     if ((high && f[0] < 0.0) || (!high && f[0] > 0.0)) {
@@ -770,19 +786,7 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
             rb = i32(TILE);
         }
         let h = tile_hancock(ra, rb, x0, y0, half);
-        var w = h.w[1];
-        var u0 = h.u[1];
-        if (side == 1u) {
-            w = h.w[0];
-            u0 = h.u[0];
-        } else if (side == 2u) {
-            w = h.w[3];
-            u0 = h.u[3];
-        } else if (side == 3u) {
-            w = h.w[2];
-            u0 = h.u[2];
-        }
-        ring = face_state(w, u0, h.delta, h.g, half);
+        ring = hancock_face(h, side ^ 1u, half);
         mids[64u + li] = h.mid;
     }
     let pred = predict(tile_hancock(a, b, x0, y0, half), half);
@@ -813,15 +817,13 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     if (moves) {
         let before = get_face(lid.x * TILE + lid.y);
         let after = get_face(64u + lid.x * TILE + lid.y);
+        fxl = hll(before, own[0], 0u);
         if (x == 0) {
-            fxl = edge_flux(0u, own[0], before);
-        } else {
-            fxl = hll(before, own[0], 0u);
+            fxl = edge_flux(0u, own[0], fxl);
         }
+        fxr = hll(own[1], after, 0u);
         if (x == last_x) {
-            fxr = edge_flux(1u, own[1], after);
-        } else {
-            fxr = hll(own[1], after, 0u);
+            fxr = edge_flux(1u, own[1], fxr);
         }
     }
     workgroupBarrier();
@@ -845,15 +847,13 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     }
     let below = get_face(lid.y * TILE + lid.x);
     let above = get_face(64u + lid.y * TILE + lid.x);
+    fyl = hll(below, own[2], 1u);
     if (y == 0) {
-        fyl = edge_flux(2u, own[2], below);
-    } else {
-        fyl = hll(below, own[2], 1u);
+        fyl = edge_flux(2u, own[2], fyl);
     }
+    fyr = hll(own[3], above, 1u);
     if (y == last_y) {
-        fyr = edge_flux(3u, own[3], above);
-    } else {
-        fyr = hll(own[3], above, 1u);
+        fyr = edge_flux(3u, own[3], fyr);
     }
     let empty_here = vacuum_at(x, y);
 
@@ -945,8 +945,7 @@ fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     let dt = dt_rec.x;
     let half = 0.5 * dt;
-    var own = cell_faces(x, y, half).faces;
-    let f = boundary(x, y, side, own[side], half);
+    let f = boundary(x, y, side, half);
     let s = select(-dt, dt, (side & 1u) == 1u);
     for (var k = 0u; k < COMPONENTS; k++) {
         escaped[k * slots + slot] += s * f[k];

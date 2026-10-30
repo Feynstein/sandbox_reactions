@@ -1,0 +1,31 @@
+== 2026-10-29T19:12:39-04:00 capture[smoke] · task M0-D118 · box Laser2025-20 :: bash tests/capture/check.sh {case}
+== 2026-10-29T19:12:44-04:00 capture[refuse] · task M0-D118 · box Laser2025-20 :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 1.48 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+== 2026-10-29T19:12:46-04:00 capture[actions] · task M0-D118 · box Laser2025-20 :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=0 · 9.45 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4080 Laptop GPU backend=Vulkan driver=NVIDIA
+SR-CAPTURE paused paused.png 2560x1410
+SR-CAPTURE-STATUS paused NVIDIA GeForce RTX 4080 Laptop GPU · 5 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 2560x1410
+SR-CAPTURE-STATUS running NVIDIA GeForce RTX 4080 Laptop GPU · 14 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 C:/Users/YOHANB~1/AppData/Local/Temp/tmp.EaZ0s1HWK3
+2 PNGs of (2560, 1410) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=0 · 53.34 s
+SR-CAPTURE-STATUS slowdown NVIDIA GeForce RTX 4080 Laptop GPU · 14 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE rung-max rung-max.png 2560x1410
+SR-CAPTURE-STATUS rung-max NVIDIA GeForce RTX 4080 Laptop GPU · 19 fps · 2 steps per frame · 600 × 400 cells
+SR-CAPTURE edge edge.png 2560x1410
+SR-CAPTURE-STATUS edge NVIDIA GeForce RTX 4080 Laptop GPU · 19 fps · 2 steps per frame · 600 × 400 cells
+SR-CAPTURE edge-leave edge-leave.png 2560x1410
+SR-CAPTURE-STATUS edge-leave NVIDIA GeForce RTX 4080 Laptop GPU · 13 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 9 C:/Users/YOHANB~1/AppData/Local/Temp/tmp.2zAi41JlnC
+9 PNGs of (2560, 1410); the bar changed after each action; accent at x = 328 (x1), 432 (x10), 621 (Max)
+capture actions: ok
+=== GO ===
+
