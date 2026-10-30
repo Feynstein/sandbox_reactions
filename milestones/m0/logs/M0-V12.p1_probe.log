@@ -1,0 +1,15 @@
+SR-HEADLESS DONE steps=600 sim_time=6.122193 until=none
+== p1a events (one life, 600 steps):
+{"detail":{"by":"fuel","mass_sb":6672.657247312367},"kind":"ignition","object":1,"sim_time":5.624818985117599,"step":513}
+s_600.bin
+s_600.observers.json
+SR-HEADLESS DONE steps=64 sim_time=6.469605 until=none
+== p1b events (the step-600 dump, fresh observers):
+SR-HEADLESS DONE steps=664 sim_time=6.469605 until=none
+== p1c events (the same dump, --continue: the observers' snapshot restored):
+{"detail":{"by":"fuel","mass_sb":6672.657247312367},"kind":"ignition","object":1,"sim_time":5.624818985117599,"step":513}
+SR-HEADLESS DONE steps=929 sim_time=7.778442 until=met
+== p4 events (to the supernova):
+{"detail":{"by":"fuel","mass_sb":6674.741746609099},"kind":"ignition","object":1,"sim_time":3.9662672595586628,"step":273}
+{"detail":{"mass_sb":6670.383750317618},"kind":"core_collapse","object":1,"sim_time":7.7100048151332885,"step":913}
+{"detail":{"mass_sb":6670.299857901409},"kind":"supernova","object":1,"sim_time":7.778442203765735,"step":929}

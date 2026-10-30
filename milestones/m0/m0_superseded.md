@@ -295,3 +295,14 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   NO-GO, M0-D65, M0-V11-win) — superseded by contract §0.5 [M0-D107]: the same command on 47840 with launch.json's `port_range`
   [47840, 47859], the next free port taken and printed when 47840 is held (the lead, 2026-10-30, M0-D107: «I want the launchers to
   automatically find the next free port, lets not be stopped by that»).
+- Contract §4.2's "Selected tool, rung and view use `accent`" and its top bar with no widths (in an empty world only the Pause/Play
+  label told a pause from a run, and pausing, a rung or the cap resized the button or the readout and moved the rest of the bar,
+  M0-V12) — superseded by contract §0.5 [M0-V12]: the paused readout in `accent`, the Pause/Play button and the readout of one width
+  each (the lead, 2026-10-30, M0-V12: «I dont like when an interaction in a bar moves the whole bar»).
+- Contract §4.12's heading ("," groups thousands) as read for the speed readout's `{actual}` (unsettled since M0-T85: `sig2` wrote it
+  ungrouped, format.rs's `actual_number` grouped) — superseded by contract §0.5 [M0-V12]: `{actual}` is never grouped, as the rungs
+  ×1000 are written (the lead, 2026-10-30, M0-V12: «Ungrouped, ×4200 (Recommended)»).
+- Contract §1.8.5's banner that "shows until then" and §4.2's "after an automatic slow-down", for a supernova at ×0.1 (it slowed
+  nothing, so the core-collapse banner stayed and `banner.supernova` never showed in a life the player left alone, M0-V12) —
+  superseded by contract §0.5 [M0-V12]: the supernova takes over a showing core-collapse banner, the rung unchanged (the lead,
+  2026-10-30, M0-V12: «Supernova takes over (Recommended)»).

@@ -1,0 +1,144 @@
+==== 2026-10-30T13:03:50-04:00 ui_theme · clean · a fresh scratch copy of the tree
+== 2026-10-30T13:03:51-04:00 ui_theme · task M0-V12 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=0 · 4.73 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.62s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... ok
+test ui::theme::tests::the_desktop_and_the_web_install_the_tokens ... ok
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::a_light_system_still_draws_the_tokens ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 54 filtered out; finished in 0.00s
+
+
+==== 2026-10-30T13:03:55-04:00 ui_theme · plant theme-default-selection · a fresh scratch copy of the tree
+planted theme-default-selection: tests/plants/theme-default-selection.patch -> crates/sr-app/src/ui/theme.rs
+== 2026-10-30T13:03:56-04:00 ui_theme · task M0-V12 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=101 · 4.68 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.61s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... FAILED
+test ui::theme::tests::the_desktop_and_the_web_install_the_tokens ... ok
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... FAILED
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::a_light_system_still_draws_the_tokens ... FAILED
+
+failures:
+
+---- ui::theme::tests::every_colour_of_the_visuals_is_a_token stdout ----
+
+thread 'ui::theme::tests::every_colour_of_the_visuals_is_a_token' (578155) panicked at crates/sr-app/src/ui/theme.rs:125:13:
+selection.bg_fill is #00_5C_80_FF, not a §4.11 token
+
+---- ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill stdout ----
+
+thread 'ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill' (578154) panicked at crates/sr-app/src/ui/theme.rs:133:9:
+assertion `left == right` failed
+  left: #00_5C_80_FF
+ right: #23_2A_3A_FF
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::theme::tests::a_light_system_still_draws_the_tokens stdout ----
+
+thread 'ui::theme::tests::a_light_system_still_draws_the_tokens' (578153) panicked at crates/sr-app/src/ui/theme.rs:155:9:
+assertion `left == right` failed
+  left: (#10_14_1E_FF, #00_5C_80_FF, #10_14_1E_FF)
+ right: (#10_14_1E_FF, #23_2A_3A_FF, #10_14_1E_FF)
+
+
+failures:
+    ui::theme::tests::a_light_system_still_draws_the_tokens
+    ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill
+    ui::theme::tests::every_colour_of_the_visuals_is_a_token
+
+test result: FAILED. 4 passed; 3 failed; 0 ignored; 0 measured; 54 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+==== 2026-10-30T13:04:00-04:00 ui_theme · plant theme-follows-system · a fresh scratch copy of the tree
+planted theme-follows-system: tests/plants/theme-follows-system.patch -> crates/sr-app/src/ui/theme.rs
+== 2026-10-30T13:04:01-04:00 ui_theme · task M0-V12 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=101 · 4.62 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm2/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm2/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.53s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... ok
+test ui::theme::tests::the_desktop_and_the_web_install_the_tokens ... ok
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::a_light_system_still_draws_the_tokens ... FAILED
+
+failures:
+
+---- ui::theme::tests::a_light_system_still_draws_the_tokens stdout ----
+
+thread 'ui::theme::tests::a_light_system_still_draws_the_tokens' (578356) panicked at crates/sr-app/src/ui/theme.rs:153:9:
+assertion `left == right` failed
+  left: Light
+ right: Dark
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::theme::tests::a_light_system_still_draws_the_tokens
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 54 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+==== 2026-10-30T13:04:05-04:00 ui_theme · plant theme-web-not-installed · a fresh scratch copy of the tree
+planted theme-web-not-installed: tests/plants/theme-web-not-installed.patch -> crates/sr-app/src/web.rs
+== 2026-10-30T13:04:06-04:00 ui_theme · task M0-V12 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=101 · 4.73 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm3/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-fslq7xbs/arm3/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.66s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... ok
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::the_desktop_and_the_web_install_the_tokens ... FAILED
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::a_light_system_still_draws_the_tokens ... ok
+
+failures:
+
+---- ui::theme::tests::the_desktop_and_the_web_install_the_tokens stdout ----
+
+thread 'ui::theme::tests::the_desktop_and_the_web_install_the_tokens' (578613) panicked at crates/sr-app/src/ui/theme.rs:163:13:
+web.rs does not install the tokens
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::theme::tests::the_desktop_and_the_web_install_the_tokens
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 54 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

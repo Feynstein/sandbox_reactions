@@ -1,0 +1,20 @@
+== 2026-10-30T11:06:18-04:00 blackbody · task M0-V12 · box laserax-ai-server :: bash tests/cpu.sh sr-engine render
+-- blackbody · exit=0 · 1.47 s
+    Blocking waiting for file lock on build directory
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 1.42s
+     Running unittests src/lib.rs (build/target/release/deps/sr_engine-d8a073acb65f6f6b)
+
+running 8 tests
+test render::tests::c2_from_the_exact_si_constants ... ok
+test render::tests::fit_matches_the_cie_1931_values ... ok
+test render::tests::forty_thousand_kelvin_is_blue_dominant ... ok
+test render::tests::one_thousand_kelvin_is_red_dominant ... ok
+test render::tests::six_thousand_five_hundred_kelvin_is_near_white ... ok
+test render::tests::table_has_512_entries_in_range_with_the_largest_channel_one ... ok
+test render::tests::lookup_clamps_to_the_end_colours_and_follows_the_table ... ok
+test render::tests::blue_to_red_ratio_rises_with_temperature ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+

@@ -1,0 +1,160 @@
+==== 2026-10-30T12:12:06-04:00 sod · clean · a fresh scratch copy of the tree
+== 2026-10-30T12:12:07-04:00 sod · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh sod physics
+-- sod · exit=0 · 16.30 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-m1_cuig0/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-m1_cuig0/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.11s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 15 tests
+test sod::a_strip_laid_along_y_is_the_same_run ... SR-SOD-RUN twin 400x4 strip: 824 steps to t = 80
+SR-SOD-Y twin: the y-oriented strip within 0.00e0 of the x-oriented one
+ok
+test sod::gpu_every_row_is_the_same_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-RUN gpu 400x64 world: 824 steps to t = 80.006677 (SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-ROWS gpu: every row within 1.13e-6 of row 0 (channel 0, row 10), |v| ≤ 3.05e-7
+ok
+test sod::gpu_mass_energy_and_the_walls_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-CONS gpu: mass 3.881e-10, energy 1.378e-8 relative; momentum 4608.3842 for 4608.3846 (7.885e-8), y momentum 3.824e-6
+ok
+test sod::gpu_the_l1_density_error_is_within_two_percent ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-L1 gpu at t = 80.0067: worst row's Σ|ρ − ρ_exact| / Σρ_exact = 0.3193 % ≤ 2 %
+ok
+test sod::gpu_the_shock_is_within_one_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-SHOCK gpu at t = 80.0067: worst row 2, numerical 356.946, exact 356.611, off 0.335 cells ≤ 1
+ok
+test sod::gpu_the_tube_laid_along_y_is_the_same_run ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-Y gpu: 824 steps, t = 80.006678 along y and 80.006677 along x, states within 1.40e-6
+ok
+test sod::gpu_with_cold_pressure_on_a_flow_conserves_and_stays_physical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-COLD gpu: 972 steps to t = 20.0070, mass 3.619e-9, energy 1.348e-8 relative, momentum 90624.1939 for 90624.4808 (3.166e-6)
+ok
+test sod::mass_energy_and_the_walls_momentum_are_exact ... SR-SOD-CONS twin: mass 9.000000000000000e2 → 9.000000000000005e2, energy 8.800000011920929e2 → 8.800000011920927e2
+SR-SOD-CONS twin: momentum 287.9999995232 against the walls' (P_L − P_R) · t · 4 = 287.9999995232
+ok
+test sod::species_ride_the_mass_flux_and_change_nothing_else ... SR-SOD-SPECIES twin: ΣX_i − 1 within 1.6e-15, X_H in [0.00e0, 1.000000000000000], contact 262.252 for exact 260.805
+ok
+test sod::the_l1_density_error_is_within_two_percent ... SR-SOD-L1 twin: Σ|ρ − ρ_exact| / Σρ_exact = 0.3187 % ≤ 2 %
+ok
+test sod::the_mirrored_tube_gives_the_mirrored_run ... SR-SOD-MIRROR twin: the mirrored run within 0.00e0 of the straight one
+ok
+test sod::the_scene_is_sods_tube ... ok
+test sod::the_shock_is_within_one_cell ... SR-SOD-SHOCK twin: numerical 356.935, exact 356.598, off 0.337 cells ≤ 1
+ok
+test sod::the_tall_scene_world_runs_as_its_strip ... SR-SOD-ROWS twin: 64 rows over 101 steps, every row within 9.44e-15 of the strip's
+ok
+test sod::with_cold_pressure_on_a_flow_conserves_and_stays_physical ... SR-SOD-COLD twin: Π 77.563 | 6.787 (cold 69.563 | 4.787), 972 steps, mass 2.00000000000000e3 → 2.00000000000000e3, momentum 5662.049117191 for 5662.049117191
+ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 427 filtered out; finished in 6.07s
+
+
+==== 2026-10-30T12:12:23-04:00 sod · plant hll-swap · a fresh scratch copy of the tree
+planted hll-swap: tests/plants/hll-swap.patch -> crates/sr-physics/src/reference/hydro.rs, crates/sr-engine/shaders/hydro.wgsl
+== 2026-10-30T12:12:23-04:00 sod · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh sod physics
+-- sod · exit=101 · 15.55 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-m1_cuig0/arm1/crates/sr-physics)
+warning: unused variable: `r`
+   --> crates/sr-physics/src/reference/hydro.rs:455:22
+    |
+455 |     fn hll(l: &Face, r: &Face, dir: usize) -> [f64; COMPONENTS] {
+    |                      ^ help: if this is intentional, prefix it with an underscore: `_r`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-m1_cuig0/arm1/crates/sr-engine)
+warning: `sr-physics` (lib) generated 1 warning (run `cargo fix --lib -p sr-physics` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 10.08s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 15 tests
+test sod::a_strip_laid_along_y_is_the_same_run ... 
+thread 'sod::a_strip_laid_along_y_is_the_same_run' (523159) panicked at crates/sr-physics/src/reference/hydro.rs:772:13:
+Δt collapsed to 0.00000000089303658177183 at t = 1.0022965121394452 after 132 steps
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test sod::gpu_every_row_is_the_same_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'sod::gpu_every_row_is_the_same_gas' (523160) panicked at crates/sr-engine/tests/gpu/sod.rs:383:9:
+non-finite state: Some(NonFinite { step: 192, x: 227, y: 7, channel: "x_H" })
+FAILED
+test sod::gpu_mass_energy_and_the_walls_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'sod::gpu_mass_energy_and_the_walls_momentum_hold' (523166) panicked at crates/sr-engine/tests/gpu/sod.rs:383:9:
+non-finite state: Some(NonFinite { step: 192, x: 227, y: 7, channel: "x_H" })
+FAILED
+test sod::gpu_the_l1_density_error_is_within_two_percent ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'sod::gpu_the_l1_density_error_is_within_two_percent' (523171) panicked at crates/sr-engine/tests/gpu/sod.rs:383:9:
+non-finite state: Some(NonFinite { step: 192, x: 227, y: 7, channel: "x_H" })
+FAILED
+test sod::gpu_the_shock_is_within_one_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'sod::gpu_the_shock_is_within_one_cell' (523176) panicked at crates/sr-engine/tests/gpu/sod.rs:383:9:
+non-finite state: Some(NonFinite { step: 192, x: 227, y: 7, channel: "x_H" })
+FAILED
+test sod::gpu_the_tube_laid_along_y_is_the_same_run ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'sod::gpu_the_tube_laid_along_y_is_the_same_run' (523181) panicked at crates/sr-engine/tests/gpu/sod.rs:383:9:
+non-finite state: Some(NonFinite { step: 192, x: 227, y: 7, channel: "x_H" })
+FAILED
+test sod::gpu_with_cold_pressure_on_a_flow_conserves_and_stays_physical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'sod::gpu_with_cold_pressure_on_a_flow_conserves_and_stays_physical' (523186) panicked at crates/sr-engine/tests/gpu/sod.rs:383:9:
+non-finite state: Some(NonFinite { step: 384, x: 169, y: 0, channel: "energy" })
+FAILED
+test sod::mass_energy_and_the_walls_momentum_are_exact ... 
+thread 'sod::mass_energy_and_the_walls_momentum_are_exact' (523191) panicked at crates/sr-physics/src/reference/hydro.rs:772:13:
+Δt collapsed to 0.00000000089303658177183 at t = 1.0022965121394452 after 132 steps
+FAILED
+test sod::species_ride_the_mass_flux_and_change_nothing_else ... 
+thread 'sod::species_ride_the_mass_flux_and_change_nothing_else' (523192) panicked at crates/sr-physics/src/reference/hydro.rs:772:13:
+Δt collapsed to 0.000000000057234511978956886 at t = 1.0031694500327921 after 121 steps
+FAILED
+test sod::the_l1_density_error_is_within_two_percent ... 
+thread 'sod::the_l1_density_error_is_within_two_percent' (523193) panicked at crates/sr-physics/src/reference/hydro.rs:772:13:
+Δt collapsed to 0.00000000089303658177183 at t = 1.0022965121394452 after 132 steps
+FAILED
+test sod::the_mirrored_tube_gives_the_mirrored_run ... 
+thread 'sod::the_mirrored_tube_gives_the_mirrored_run' (523194) panicked at crates/sr-physics/src/reference/hydro.rs:772:13:
+Δt collapsed to 0.00000000027134190934848375 at t = 2.2823761687883133 after 152 steps
+FAILED
+test sod::the_scene_is_sods_tube ... ok
+test sod::the_shock_is_within_one_cell ... 
+thread 'sod::the_shock_is_within_one_cell' (523196) panicked at crates/sr-physics/src/reference/hydro.rs:772:13:
+Δt collapsed to 0.00000000089303658177183 at t = 1.0022965121394452 after 132 steps
+FAILED
+test sod::the_tall_scene_world_runs_as_its_strip ... 
+thread 'sod::the_tall_scene_world_runs_as_its_strip' (523197) panicked at crates/sr-physics/src/reference/hydro.rs:772:13:
+Δt collapsed to 0.00000000089303658177183 at t = 1.0022965121394452 after 132 steps
+FAILED
+test sod::with_cold_pressure_on_a_flow_conserves_and_stays_physical ... 
+thread 'sod::with_cold_pressure_on_a_flow_conserves_and_stays_physical' (523198) panicked at crates/sr-physics/src/reference/hydro.rs:772:13:
+Δt collapsed to 0.00000000014990851025404413 at t = 0.22796495454901639 after 149 steps
+FAILED
+
+failures:
+
+failures:
+    sod::a_strip_laid_along_y_is_the_same_run
+    sod::gpu_every_row_is_the_same_gas
+    sod::gpu_mass_energy_and_the_walls_momentum_hold
+    sod::gpu_the_l1_density_error_is_within_two_percent
+    sod::gpu_the_shock_is_within_one_cell
+    sod::gpu_the_tube_laid_along_y_is_the_same_run
+    sod::gpu_with_cold_pressure_on_a_flow_conserves_and_stays_physical
+    sod::mass_energy_and_the_walls_momentum_are_exact
+    sod::species_ride_the_mass_flux_and_change_nothing_else
+    sod::the_l1_density_error_is_within_two_percent
+    sod::the_mirrored_tube_gives_the_mirrored_run
+    sod::the_shock_is_within_one_cell
+    sod::the_tall_scene_world_runs_as_its_strip
+    sod::with_cold_pressure_on_a_flow_conserves_and_stays_physical
+
+test result: FAILED. 1 passed; 14 failed; 0 ignored; 0 measured; 427 filtered out; finished in 5.36s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

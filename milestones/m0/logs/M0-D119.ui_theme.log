@@ -1,0 +1,15 @@
+== 2026-10-30T10:34:32-04:00 ui_theme · task M0-D119 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=0 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 5 tests
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... ok
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 52 filtered out; finished in 0.00s
+
+

@@ -1,0 +1,3 @@
+==== 2026-10-30T10:18:25-04:00 calibrate_bisect · plant calibrate-progress-wrong-stage · a fresh scratch copy of the tree
+planted calibrate-progress-wrong-stage: tests/plants/calibrate-progress-wrong-stage.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-10-30T10:18:26-04:00 calibrate_bisect · task M0-TV2 · box laserax-ai-server :: bash tests/gpu.sh calibrate_bisect physics

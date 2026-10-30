@@ -1,0 +1,60 @@
+==== 2026-10-30T12:58:29-04:00 ui_theme · clean · a fresh scratch copy of the tree
+== 2026-10-30T12:58:29-04:00 ui_theme · task M0-V12-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=0 · 4.67 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-7wgfi1s0/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-7wgfi1s0/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-7wgfi1s0/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.62s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 5 tests
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... ok
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 53 filtered out; finished in 0.00s
+
+
+==== 2026-10-30T12:58:34-04:00 ui_theme · plant theme-default-selection · a fresh scratch copy of the tree
+planted theme-default-selection: tests/plants/theme-default-selection.patch -> crates/sr-app/src/ui/theme.rs
+== 2026-10-30T12:58:34-04:00 ui_theme · task M0-V12-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=101 · 4.57 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-7wgfi1s0/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-7wgfi1s0/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-7wgfi1s0/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.48s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 5 tests
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... FAILED
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... FAILED
+
+failures:
+
+---- ui::theme::tests::every_colour_of_the_visuals_is_a_token stdout ----
+
+thread 'ui::theme::tests::every_colour_of_the_visuals_is_a_token' (575001) panicked at crates/sr-app/src/ui/theme.rs:114:13:
+selection.bg_fill is #00_5C_80_FF, not a §4.11 token
+
+---- ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill stdout ----
+
+thread 'ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill' (575000) panicked at crates/sr-app/src/ui/theme.rs:122:9:
+assertion `left == right` failed
+  left: #00_5C_80_FF
+ right: #23_2A_3A_FF
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill
+    ui::theme::tests::every_colour_of_the_visuals_is_a_token
+
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 53 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

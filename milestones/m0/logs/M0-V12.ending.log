@@ -1,0 +1,22 @@
+== 2026-10-30T11:05:53-04:00 ending · task M0-V12 · box laserax-ai-server :: bash tests/cpu.sh sr-physics observe::ending
+-- ending · exit=0 · 0.11 s
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 11 tests
+test observe::ending::tests::a_threshold_itself_is_a_close_call_between_its_two_fates ... ok
+test observe::ending::tests::a_remnant_held_ten_tu_shows_the_ending_instead_of_the_prediction ... ok
+test observe::ending::tests::anchors_out_of_order_are_refused ... ok
+test observe::ending::tests::each_band_reads_its_fate ... ok
+test observe::ending::tests::outside_the_band_the_fate_is_the_side_the_mass_is_on ... ok
+test observe::ending::tests::the_band_is_taken_in_sandbox_mass_not_in_suns ... ok
+test observe::ending::tests::only_a_remnant_stage_ends_the_prediction ... ok
+test observe::ending::tests::the_close_call_edges_are_exactly_ten_percent_in_sandbox_mass ... ok
+test observe::ending::tests::the_hold_is_the_stage_modules_function_of_tau_dyn ... ok
+test observe::ending::tests::the_keys_name_the_strings_table ... ok
+test observe::ending::tests::the_nearer_threshold_names_the_pair_when_two_bands_meet ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 186 filtered out; finished in 0.00s
+
+

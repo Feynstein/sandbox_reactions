@@ -1,0 +1,48 @@
+== 2026-10-30T11:06:15-04:00 grav_force · task M0-V12 · box laserax-ai-server :: bash tests/gpu.sh grav::force physics
+-- grav_force · exit=0 · 3.42 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test grav::force::force_error_halves_when_the_disk_doubles ... SR-GRAV1 largest error a=20: 5.786e-3 (0.58 %) at (39, 38); a=40: 3.005e-3 (0.30 %) at (24, 66); ratio 1.926
+ok
+test grav::force::gpu_a_frames_gravity_is_the_bare_steps_bit_for_bit ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test grav::force::gpu_force_error_halves_when_the_disk_doubles ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 7.82e-8, gx 2.06e-6, gy 2.39e-6
+SR-GRAV-REF disk a=20, box 64x64 at (0, 0), FFT [128, 128]: relative L1 against the twin φ 8.04e-8, gx 1.14e-6, gy 1.44e-6
+SR-GRAV1 GPU largest error a=20: 5.787e-3; a=40: 3.006e-3; ratio 1.925
+ok
+test grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV-DT max |g| 4.857731e0: η_g term 1.361145e-1; gravity off Δt_0 4.4721362e-1, Δt_1 4.4721356e-1; on Δt_0 1.3611455e-1, Δt_1 1.3611455e-1
+ok
+test grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV-REF disk a=40, box 96x96 at (16, 16), FFT [256, 256]: relative L1 against the twin φ 7.82e-8, gx 2.06e-6, gy 2.39e-6
+SR-GRAV1 GPU a=40 centred on a cell: largest |Δg|/|g| = 3.006e-3 (0.30 %) at box cell (24, 66), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::gpu_sub_vacuum_cells_are_no_source ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV-REF sub-vacuum disk, box 64x64 at (32, 32), FFT [128, 128]: relative L1 against the twin φ 7.65e-8, gx 1.12e-6, gy 1.32e-6
+SR-GRAV-DIRECT sub-vacuum disk, 1245 sources: φ against the direct sum at 9 cells, worst relative 1.10e-7 at box cell (63, 63)
+ok
+test grav::force::gpu_tall_box_has_the_twins_and_the_kernels_potential ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV-REF tall box, box 40x344 at (40, 88), FFT [128, 1024]: relative L1 against the twin φ 8.13e-8, gx 1.16e-6, gy 8.64e-6
+SR-GRAV-DIRECT tall box, 6400 sources: φ against the direct sum at 9 cells, worst relative 1.55e-7 at box cell (20, 172)
+ok
+test grav::force::gpu_whole_default_world_has_the_twins_and_the_kernels_potential ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV-REF whole 600x400 world, box 600x400 at (0, 0), FFT [2048, 1024]: relative L1 against the twin φ 8.69e-8, gx 2.49e-5, gy 2.38e-5
+SR-GRAV-DIRECT whole 600x400 world, 240000 sources: φ against the direct sum at 9 cells, worst relative 1.81e-7 at box cell (500, 133)
+ok
+test grav::force::gpu_wide_box_has_the_twins_and_the_kernels_potential ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-GRAV-REF wide box, box 392x64 at (120, 168), FFT [1024, 128]: relative L1 against the twin φ 1.15e-7, gx 3.16e-6, gy 3.01e-6
+SR-GRAV-DIRECT wide box, 4245 sources: φ against the direct sum at 9 cells, worst relative 1.43e-7 at box cell (326, 21)
+ok
+test grav::force::kernel_is_minus_g_over_r_at_every_offset_of_a_64_box ... ok
+test grav::force::kernel_is_the_section_1_4_2_kernel ... ok
+test grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere ... SR-GRAV1 a=40 centred on a cell: largest |Δg|/|g| = 3.005e-3 (0.30 %) at cell (24, 66), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too ... SR-GRAV1 a=40 centred on a corner: largest |Δg|/|g| = 3.104e-3 (0.31 %) at cell (19, 49), 2828 cells
+ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 429 filtered out; finished in 3.27s
+
+

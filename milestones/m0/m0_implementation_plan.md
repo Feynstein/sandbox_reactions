@@ -315,8 +315,20 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-T86 | BUILD | The banner and the automatic slow-down in the app | AFTER M0-T85 | DONE (2026-10-29 15:14) |
 | M0-T87 | BUILD | World actions: the edge choice and Clear world with its dialog | AFTER M0-T86 | DONE (2026-10-29 15:24) |
 | M0-T88 | BUILD | Docs: running.md (the window), time_control.md (the app's loop); lot 12 rows | AFTER M0-T87 | DONE (2026-10-29 15:29) |
-| M0-TV2 | BUILD | UI/UX pass: the world and its time | AFTER M0-T88 | IN PROGRESS (2026-10-29 15:45) |
-| M0-V12 | CHECK | Validation, lot 12: the world and its time; the lead's launcher run | AFTER M0-TV2 | TODO |
+| M0-TV2 | BUILD | UI/UX pass: the world and its time | AFTER M0-T88 | DONE (2026-10-30 10:19, started 2026-10-29 15:45) |
+| M0-D119 | BUILD | The bar's and the Clear dialog's widgets draw egui's default dark theme, not §4.11's tokens — the selected rung's `accent` text on egui's selection teal #005C80, chips and the panel's lower line #3C3C3C, the dialog #1B1B1B | AFTER M0-TV2 | DONE (2026-10-30 10:40) |
+| M0-D120 | BUILD | The banner and the bar disagree for one pass: the pass that reads back a slow-down event draws the new banner over a bar still showing the old rung — «Slowed down: core collapse» beside «Speed ×1», ×1 selected | AFTER M0-D119 | DONE (2026-10-30 10:48) |
+| M0-V12 | CHECK | Validation, lot 12: the world and its time; the lead's launcher run | AFTER M0-TV2 | DONE (2026-10-30 13:10) |
+| M0-TC12 | MOVE | Compaction — Phase 14's close: twenty closed blocks to stub, more than ten (PLAYBOOK §8, §11) | AFTER M0-V12 | TODO |
+| M0-D128 | BUILD | M0-D107's port-holding cases race on linux-pc: `web[ready-held]`'s own listener cannot bind 47840 while its sibling `ready` serves there and the case blames launch.py, `desktop[launcher]`'s decoy dies when the red-arm's arms start theirs at once, and two decoys of earlier runs still hold 47841–47842 | AFTER M0-TC12 | TODO |
+| M0-D130 | BUILD | `edges`' only plant, `wall-copy`, no longer applies — M0-D118 rewrote the hydro.wgsl lines its hunk reads — so `edges` has no working red-arm | AFTER M0-D128 | TODO |
+| M0-D125 | BUILD | `tools_selftest` reads NO-GO in every complete loop on laserax-ai-server since M0-D108's verify.py — its plant «a command that hangs» is not counted red there — and GO alone | AFTER M0-D128 | TODO |
+| M0-D122 | BUILD | A Clear confirmed while frames are in flight hands the cleared world's frames to the new observers — and a fresh tracker fires `ignition` on a main-sequence star's first frame, which would slow the clock to ×1 under an ignition banner over the emptied world | AFTER M0-D125 | TODO |
+| M0-D127 | BUILD | A supernova at ×0.1 leaves the core-collapse banner up, so `banner.supernova` never shows in a life the player leaves alone — §0.5 [M0-V12] has the supernova take the banner over | AFTER M0-D122 | TODO |
+| M0-D126 | BUILD | format.rs keeps speed helpers no caller reads — `speed`, `speed_capped`, `speed_max`, `actual_number` (which groups «×4,200»), `rung`, `rung_number` — beside the bar's own formatting, which §0.5 [M0-V12] makes the one reading | AFTER M0-D127 | TODO |
+| M0-D123 | BUILD | The status line draws at egui 0.36.2's body size, 13 px, not §4.11's small 12 px | AFTER M0-D126 | TODO |
+| M0-D129 | BUILD | The launchers say «Sandbox Reactions is running» after the game failed to start — start.sh, start.bat and start.ps1 print it whatever `launch.py start` returned | AFTER M0-D123 | TODO |
+| M0-D124 | BUILD | The docs lag lot 12's last blocks: time_control.md describes the pass order M0-D120 replaced, testing.md has no `ui_theme` row, running.md's top bar predates M0-V12's fixed widths, `accent` «Paused» and theme install | AFTER M0-D129 | TODO |
 | M0-T89 | BUILD | Tools and elements in the left panel (§4.4) | AFTER M0-V12 | TODO |
 | M0-T90 | BUILD | Presets in the window: arm, place, refuse, Esc (§4.5) | AFTER M0-T89 | TODO |
 | M0-T91 | BUILD | Views in the window: Glow, Heat, Element, Density, F1-F4 (edit job) | AFTER M0-T90 | TODO |
@@ -332,6 +344,7 @@ physics forks and the dependency table at M0-TC (m0_contrat.md §0.2, reports/co
 | M0-D91 | BUILD | P5's f32 solve stagnates where a thin cell beside vacuum holds u ~ 10¹⁶ — the 40 M₀ life's step 2,517 spends all 4,096 rounds in its first Newton pass on either preconditioner (still unconverged at 32,768), so the step commits by limited fluxes instead of its backward-Euler answer | AFTER M0-D71 | TODO | | |
 | M0-D103 | BUILD | summary.json's objects carry none of §2.12.2's four readouts — `mass_suns`, `predicted_ending`, `ending`, `age_years`: M0-T60 left them «once M0-T69, M0-T72 and M0-T73 exist», and those three built the library alone | AFTER M0-D91 | TODO | | |
 | M0-D109 | BUILD | An edit's step moves §2.9's energy invariant by the potential energy the added mass brings — no term books ΔW: a paint inside the box −2.25 against ΔW −1.99, a Sun drop −2.661 × 10⁵ against ΔW −2.661 × 10⁵ | AFTER M0-D103 | TODO | | |
+| M0-D121 | BUILD | A round star grows square: the Sun-like preset, a round disk at its drop, is a rounded square by 300 steps (Glow), and the massive's cold haze around a round core — the grid's four-fold imprint on the state, seen by every player | AFTER M0-D109 | TODO | | |
 | M0-T97 | BUILD | The life probe: three presets' lives measured (reports/lives.md) | AFTER M0-V13 | TODO |
 | M0-TJ1 | PLAN + LEAD answers | Stand-ins S1/S2: enabled only on a measured failure (deferred) | AFTER M0-T97 | DEFERRED (wake: reports/lives.md measures §1.6.4's failure — S1's unbound envelope under 30 %, or S2's under 50 % at f_dep = 0.1) |
 | M0-T98a | BUILD | K1's gap tuned on preset-free clouds (split from M0-T98 by M0-TB) | AFTER M0-TJ1 | TODO |
@@ -556,12 +569,12 @@ Inherited debt (§2.4): none.
   so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
 
 ## Pipeline state (a register of one-line pointers — never a handoff or a history)
-- Next task: M0-D114, M0-D115, M0-D116, then M0-TC11 — filed by M0-V11 at the lead's word («File each now, no triage (Recommended)»; «File two D's now (Recommended)»), ahead of Phases 14–15, the game on screen first (the lead at M0-R11, 2026-10-28: «Game first (Recommended)»); M0-D71, M0-D91, M0-D103 (M0-V10's F2 merged in) and M0-D109 (an edit's ΔW) at the head of Phase 16, after M0-V13; on win-laptop, first: DEFERRED M0-D107 (the lead at M0-V22), then M0-D108 (its filer's default)
-- Counters: T=125 · D=118 · V=22 · Q=0 · TI=0 · TJ=5 · TV=3 · TC=11 · TR=1 · TM=13 · TD=1 · TE=1 · R=11
-- Open D/BLOCKED register: seven D's open — M0-D114 (toolchain's `box`, E), M0-D115 (M0-D110's three stale plants: dt-empty-box-unbounded, dt-cfl-one, cfl-gpu) and M0-D116 (M0-T82's two: until-never-met, calibrate-checkpoint-without-observers; E), filed right after M0-V11 ahead of Phase 14 at the lead's word, «File each now, no triage (Recommended)» and «File two D's now (Recommended)» — E6's triage-V set aside (reports/v11.md); and M0-D71 (the held core, η 0.1, the measured bounds, reports/unresolved_remnant.md; its flags, M0-D68's among them, in its block), M0-D91 (M0-D93 measured its cause apart; M0-V21's flag in it), M0-D103 (summary.json's four readouts, before M0-T104 and M0-T107; M0-V10's F2, the wisp cut on the nominal Sun, merged by M0-V22's flag) and M0-D109 (an edit's ΔW booked by no §2.9 term — the lead at M0-D101: «Report, file ΔW as a D») at the head of Phase 16 after M0-V13 (the lead at M0-R11: «Game first (Recommended)») — the reasons in the ordering notes under Phase 12's and Phase 16's headings · DEFERRED to win-laptop, uncounted (the lead at M0-V22: «Defer to win-laptop (Recommended)»): M0-D107 (web and desktop[launcher] NO-GO while a foreign program holds 47812; a lead's fork inside) and M0-D108 (win-laptop's sweep: six plants ERROR by timeout in observe_run, dump, calibrate_bisect; filed DEFERRED by M0-D65's session, 2026-10-29) · closed 2026-10-30: M0-D117 (reduce.wgsl's DT_UNBOUNDED written exactly, 0x1.fffffep+127f; web[ready] GO on win-laptop, ready 9.6 s; linux-pc's web and dt owed) · closed 2026-10-29: M0-D118 (web[ready] 7.1–7.3 s on win-laptop: hydro.wgsl's inlined predictors cut, the web build's pipelines compiled in parallel by a dry-run warm-up, the lead: «Dry-run warm (Recommended)»; linux-pc owed), M0-D106 (timing's 240-step frame cut to the 64 × 64 disk at 48 rounds, ≈ 0.96 s of GPU on the RTX 4080 Laptop, its waits bounded; the loaded --all owed, M0-V13's flag), M0-D113 (every view draws bg.space #05070D below Σ_vac, §0.5 [M0-D113], the lead: «bg.space in every view (Recommended)»: views 11 GO and views-vacuum-black red on the RTX 4090; the RTX 5090 and win-laptop owed), M0-D111 (desktop, web, capture `box` ["laserax-ai", "Laser2025-20"] — verify.py's `box` takes a list, a local divergence at the lead's word, «Let `box` take a list (Recommended)», tasks/toolkit_local_diff.md item 8; adapter's live case routes by host name: the server claim GO 1132/0, 3 owed), M0-D110 (P0 re-makes the CFL term after a paint or drop, §0.5 [M0-D110], the lead: «Gas-speed term only (Recommended)»: the first stroke 0.4472 → 0.0673 on the RTX 4090; a frame that starts on a step P5 carried is not covered — M0-T89's flag; win-laptop owed), M0-D102 (observe_run's eaten cloud re-seeded with a 200 sink, the box empty before its ending: dt-empty-box-unbounded red again on the RTX 4090; M0-V11's sweep armed the scope's four other plants red, its two stale ones → M0-D115, M0-D116; the RTX 5090 and win-laptop owed), M0-D101 (a paint outside the box: the scene's Σ = 0 vacuum under deposit's 0/0; the scene writes the floor state, the lead's ruling) · closed 2026-10-28: M0-D104 (the re-cut plant red on the RTX 4090), M0-D65 (its linux-pc run discharged by M0-V22 on laserax-ai-server, RTX 4090: cold_core 8/0 GO), M0-D100, M0-D69 · win-laptop's --all (M0-V11-win, 2026-10-28, the lead's): 1371/4, 64/68 GO — tools_selftest's overlap check raced under load 20 (not filed: the lead, «the box was not idle, that can explain it»), timing → M0-D106, web + desktop → M0-D107; win-laptop's sweep (M0-V11-win, 2026-10-29, the lead's): 67 campaigns, 63 GO — observe_run's GREEN → M0-D102's flag, timing's lost device → M0-D106's flag, six timeouts → M0-D108; tools/pb/verify.py's live ETA lines added at the lead's word after M0-D65 closed, a local divergence from PLAYBOOK annex §A (tasks/M0-D65.md § After the close) · Phase 13's sweep (M0-V11, 2026-10-29, RTX 4090): 146 plants, 136 red, 0 green, 7 ERROR → M0-D115, M0-D116; toolchain's clean red there (no trunk) → M0-D114 (reports/v11.md § The sweep) · E6's declarations before M0-V22 and the blocks closed since: each its own handoff
-- Outstanding commit gates: every gate through Phase 13 is in: Phase 13's (M0-T79's table and blackbody scope, M0-D111's `box` list, M0-T80–M0-T83's render.wgsl, glow.wgsl, headless frames, their scopes, plants and docs, M0-V11's report with M0-D112–D116 and M0-TC11 filed, every block's logs, loop_times.jsonl and the anchor; images/ git-ignored) committed on 8410af2 as `M0 Phase 13: drawing` and pushed to origin by M0-V11 at the lead's word («when youre done I want you to do git add -A, commit and push») · R18's push of HEAD to laserax-ai-server waits on that checkout's tracked files being clean (255ec37 + the rsync'd tree, re-synced by M0-V11 at 10:49, 2026-10-29)
+- Next task: M0-TC12, then M0-D128, M0-D130, M0-D125, M0-D122, M0-D127, M0-D126, M0-D123, M0-D129 and M0-D124 — filed by M0-V12 at the lead's word («File each now, no triage (Recommended)»), ahead of Phase 15 (M0-T89); M0-V13 carries M0-V12's win-laptop list, M0-TW the real GPU's window (the lead: «Leave them to M0-TW (Recommended)»); M0-D71, M0-D91, M0-D103, M0-D109 and M0-D121 at the head of Phase 16, after M0-V13
+- Counters: T=125 · D=130 · V=22 · Q=0 · TI=0 · TJ=5 · TV=3 · TC=12 · TR=1 · TM=13 · TD=1 · TE=1 · R=11
+- Open D/BLOCKED register: fourteen D's open — M0-D122–M0-D130, filed by M0-V12 right after it, ahead of Phase 15, at the lead's word («File each now, no triage (Recommended)», E6 set aside as at M0-V11): M0-D128 (M0-D107's port races on linux-pc), M0-D130 (`edges`' wall-copy plant stale since M0-D118), M0-D125 (tools_selftest red inside the server's complete loop and the sweep's arms), M0-D122 (a Clear's frames in flight reach the new observers), M0-D127 (the supernova takes over the core-collapse banner, §0.5 [M0-V12]), M0-D126 (format.rs's uncalled speed helpers, §0.5 [M0-V12]), M0-D123 (the status line 13 px), M0-D129 (the launchers' «running» after a failed start), M0-D124 (the docs, after the rest); M0-D121 (a round star grows square) at Phase 16's head after M0-D109; and M0-D71 (the held core, η 0.1, reports/unresolved_remnant.md; its flags in its block), M0-D91 (M0-D93 measured its cause apart; M0-V21's flag in it), M0-D103 (summary.json's four readouts, before M0-T104 and M0-T107; M0-V10's F2 merged) and M0-D109 (an edit's ΔW, the lead at M0-D101) at the head of Phase 16 after M0-V13 (the lead at M0-R11: «Game first (Recommended)») · closed 2026-10-30: M0-D120 (the bar and the banner from one clock state; its Verify 2 PASS on lavapipe at M0-V12), M0-D119 (§4.11's Visuals; on a light system → M0-V12's install), M0-D108 (arms_at_once, win-laptop; M0-D125's suspect), M0-D107 (the web's port range; linux-pc's races → M0-D128), M0-D117 (reduce.wgsl's DT_UNBOUNDED) · closed 2026-10-29: M0-D118, M0-D106, M0-D113, M0-D112, M0-D111, M0-D110, M0-D102, M0-D101 and Phase 13's (each its own handoff) · M0-V12's sweep (2026-10-30, RTX 4090): 72 campaigns, 151 plants red, 0 green, 1 ERROR → M0-D130; tools_selftest's clean arm red → M0-D125; calibrate_bisect 12/12 and observe_run 6/6 red, the lead's owed red-arms discharged (reports/v12.md § The sweep)
+- Outstanding commit gates: Phase 14's gate is the lead's, after M0-V12: Phase 14's blocks (M0-T84–M0-T88, M0-TV2, M0-D119, M0-D120) and M0-V12 (its report, the theme install and the bar's change with their cases and plants, the three §0.5 [M0-V12] lines and their mirrors, M0-TC12 and M0-D122–M0-D130 filed, every block's logs, loop_times.jsonl and the anchor; images/ git-ignored) — `git add -A`, `git commit -m "M0 Phase 14: the world and its time in the window"`, `git push`; every gate through Phase 13 is in · R18's push of HEAD to laserax-ai-server waits on that checkout's tracked files being clean (255ec37 + the rsync'd tree, re-synced by M0-V12)
 - Carryover: none
-- Awaiting lead: R18's push of HEAD to laserax-ai-server (its tracked files clean first; that checkout is 255ec37 + the rsync'd tree); the whole `--redarm calibrate_bisect` on laserax-ai-server after M0-D116 (twelve plants, 1,164 s at M0-V11's sweep — over ten minutes; M0-D116's Verify 3 arms its plant alone; observe_run's red-arm, M0-D102's, is M0-D116's Verify 2 — 194 s in the sweep); on laserax-ai-server, removable: /tmp/v11 (M0-V11's probe frames and dumps, 393 MB; the frames it cites are in images/ on linux-pc), /tmp/d102 (M0-D102's probe and planted copy, 265 MB); on laserax-ai-server, removable since M0-D101 closed: /tmp/v10 (M0-V10's probe scenes and outputs; F2's wisp scenes, merged into M0-D103, are spelled in logs/M0-V10.wisp_probe.log's header) and /tmp/d101 (M0-D101's probe outputs); the RTX 5090 reading of the 4,572 life and the collapse watch (M0-D81's owed lines, tasks/M0-D81.md § Owed); the RTX 5090 reading of the 6,702 life (tasks/M0-D88.md § Owed); on laserax-ai-server keep build/calibrate_runs/2026-10-26T16-25-05Z, T16-26-37Z, T18-37-19Z, T20-04-01Z (the calibration's lives, reports/v9.md) and T16-49-42Z (the exit-6 run, M0-D97's evidence), never `--resume` a pre-D94 stamp (tasks/M0-D94.md § Measured, not filed); keep build/calibrate_runs/2026-10-21T19-39-14Z/ (m_bh_sb's two lives on M0-D79's binary; M0-D81's 5090 record) and build/calibrate_runs/2026-10-21T15-23-36Z/ (M0-R5's evidence); on laserax-ai-server keep build/calibrate_runs/2026-10-22T15-08-15Z/ and /tmp/d80_frames_off/build/calibrate_runs/2026-10-22T15-10-37Z/ (M0-D81's 4090 records) and build/r6_evidence/ (M0-R6's probe tables; M0-D89's repro dumps under m40/), and the server's build/calibrate_runs/2026-10-23T20-42-01Z, T20-43-27Z, T21-08-46Z as M0-D92–D95's and M0-D70's evidence, never as a --resume base; on laserax-ai-server, removable (the lead's): /tmp/d90p and build/calibrate_runs/2026-10-23T19-56-12Z/, 2026-10-23T19-58-57Z/ (M0-D90's probe dumps, 15 GB), /tmp/d97, /tmp/v9s6, /tmp/v9r9_claim.out, and pid 1621826 (a pgrep loop left by M0-D90's session that matches itself and never ends)
+- Awaiting lead: R18's push of HEAD to laserax-ai-server (its tracked files clean first; that checkout is 255ec37 + the rsync'd tree); on linux-pc, stop the two decoy web servers M0-D128 names (pids 2959678 and 3012130, on 47841 and 47842 — no task started them); a word on M0-D125's toolkit change when it runs (tasks/toolkit_local_diff.md); on laserax-ai-server, removable: /tmp/v12 (M0-V12's probes; every number it cites is in logs/ and images/v12/ on linux-pc), /tmp/v11 (M0-V11's probe frames and dumps, 393 MB; the frames it cites are in images/ on linux-pc), /tmp/d102 (M0-D102's probe and planted copy, 265 MB); on laserax-ai-server, removable since M0-D101 closed: /tmp/v10 (M0-V10's probe scenes and outputs; F2's wisp scenes, merged into M0-D103, are spelled in logs/M0-V10.wisp_probe.log's header) and /tmp/d101 (M0-D101's probe outputs); the RTX 5090 reading of the 4,572 life and the collapse watch (M0-D81's owed lines, tasks/M0-D81.md § Owed); the RTX 5090 reading of the 6,702 life (tasks/M0-D88.md § Owed); on laserax-ai-server keep build/calibrate_runs/2026-10-26T16-25-05Z, T16-26-37Z, T18-37-19Z, T20-04-01Z (the calibration's lives, reports/v9.md) and T16-49-42Z (the exit-6 run, M0-D97's evidence), never `--resume` a pre-D94 stamp (tasks/M0-D94.md § Measured, not filed); keep build/calibrate_runs/2026-10-21T19-39-14Z/ (m_bh_sb's two lives on M0-D79's binary; M0-D81's 5090 record) and build/calibrate_runs/2026-10-21T15-23-36Z/ (M0-R5's evidence); on laserax-ai-server keep build/calibrate_runs/2026-10-22T15-08-15Z/ and /tmp/d80_frames_off/build/calibrate_runs/2026-10-22T15-10-37Z/ (M0-D81's 4090 records) and build/r6_evidence/ (M0-R6's probe tables; M0-D89's repro dumps under m40/), and the server's build/calibrate_runs/2026-10-23T20-42-01Z, T20-43-27Z, T21-08-46Z as M0-D92–D95's and M0-D70's evidence, never as a --resume base; on laserax-ai-server, removable (the lead's): /tmp/d90p and build/calibrate_runs/2026-10-23T19-56-12Z/, 2026-10-23T19-58-57Z/ (M0-D90's probe dumps, 15 GB), /tmp/d97, /tmp/v9s6, /tmp/v9r9_claim.out, and pid 1621826 (a pgrep loop left by M0-D90's session that matches itself and never ends)
 - Model ratings: 2026-10-29 by M0-TM13
 
 # Tasks
@@ -2493,7 +2506,7 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
 - Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record, matches the heading). Wrote running.md § The window (layout, top bar, Clear dialog, the keys table bound today — Space . 1-9 0 + = - Delete; B E H C, [ ], F1-F4 are later; capture's actions rung = the key, slowdown, edge) and time_control.md § The frame loop in the app (the order of one frame, α, the empty world, the banner's Feed and its once-swallowed Tracker collapse, Clear restarts Watch/Feed; the three "not wired yet" lines now point at it); testing.md: rows ui_topbar (14), ui_banner (12), ui_world (7) and capture's `actions` case (3 cases, plant capture-edge-ignored). Verify 1 [ALREADY RUN — PASS (1 + 1) on linux-pc]; Verify 2 literal `ui-…` greps 0 — R17 spells the scopes with `_` (as M0-T27 did): the underscore rows count 3 [ALREADY RUN — PASS (3, R17 spelling) on linux-pc]. Desktop's `world` row was already in (M0-T84). Not acted on: the readout's {actual} ungrouped (sig2) vs format::actual_number grouped — said in time_control.md, awaits the lead's ruling; no capture action opens the Clear dialog (M0-T87's flag, M0-TV2's) — said in running.md and the ui_world row. Claim verify.py --changed --task M0-T88 [ALREADY RUN — PASS (GO, 716 passed, 1/1 scopes: plan_lint; 74 not impacted — docs are a skipped class) on linux-pc]. Detail tasks/M0-T88.md. Next: M0-TV2.
 
 ## M0-TV2 · UI/UX pass — Phase 14: the world and its time · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T88)
-- Status: IN PROGRESS (2026-10-29 15:45)
+- Status: DONE (2026-10-30 10:19, started 2026-10-29 15:45)
 - Carried flags: [M0-T87, 2026-10-29] the clear dialog: §3.3 has no capture action that opens it and no key is scriptable — needs a clear action (a contract §3.3 line, declared) or the lead's window run; edge both ways is captured as actions.json's edge (bounce) and edge-leave steps. A Clear lands at the next step's P0: paused, the old star stays on screen until a step.
 - Read: this file (rules + this task) + docs/agent/running.md + milestones/m0/m0_contrat.md §3.3 (capture),
   §4.2, §4.3, §4.7, §4.11 + PLAYBOOK.md §8 (TV) and §A.4 (review_page.py's section text)
@@ -2512,11 +2525,70 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
 - Adversarial: lavapipe draws what the Quadro draws only up to its own precision and speed — a state that
   differs on the real GPU (the glow, the capped readout's numbers) is flagged for M0-V12's launcher run,
   never passed on lavapipe's word.
-- Handoff: IN PROGRESS (session 1 stopped at the lead's word, «if theres still a lot of stuff to do write a handoff in your task, put it as in progress»). linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record). The lead at launch: «I dont want to be involved in this task. Complete it yourself» — no capture is flagged for remarks; the page is still served and stopped; review2.md quotes those words. Done: lavapipe probes on a private Xvfb (images/tv2/probes/, logs/M0-TV2.log). Sun runs about 65 steps/s. A massive life at ×10 shows the ignition banner (verbatim, top centre, ×10 → ×1) at about 220–320 steps, and a second slow-down at about 1,520–1,620 steps. probe2 ran over 10 minutes: don't repeat it. Two D's are measured and not filed yet: the selected rung's accent text sits on egui's #005C80 fill, which is not a §4.11 token (M0-T85); a preset disk draws as a rounded square (cause not measured). Left: the final capture set, the Clear dialog via xdotool Delete on a private Xvfb, captions.json, the D's, the review page, the claim — tasks/M0-TV2.md § What is left. Claim NOT RUN. Next: M0-TV2 (re-run).
+- Handoff: linux-pc (laserax-ai) + laserax-ai-server, model=claude-opus-5-5 level=high (rung_record). Every capture on laserax-ai-server at the lead's word («rule everything GPU on the 4090 server and never here»): lavapipe on a private Xvfb (the RTX 4090 refuses Xvfb, exit 3; xvfb/xdotool/imagemagick installed by the lead). 45 captures in images/tv2/final/ with captions.json, each passed, filed or flagged: ×1, paused, stepped, rungs 1–7, capped ×30/×100, Max, slow-down off, edge both ways, ignition and core-collapse banners, the Clear dialog (xdotool Delete — M0-T87's flag closed). Supernova banner NOT PROVEN (590 s bound) → flagged to M0-V12 with the glow and lavapipe's readout numbers. Filed M0-D119 (egui default colours, not §4.11), M0-D120 (banner beside a one-pass-stale bar), M0-D121 (a round star grows square, Phase 16's head). Deviation: review_page.py refuses a page with nothing flagged, so the three D captures are flagged «for the record»; served, /health ready, stopped; reports/review2.md quotes the lead, no remark. Claim: the lead's run on laserax-ai-server (RTX 4090), 2026-10-30 — verify.py --changed: 0 scopes chosen, 71 not impacted, «NO-GO: nothing changed since every scope's last GO … the anchor already vouches for this tree»; my agent run before it red-armed moved scopes and was cut at 580 s (children stopped, sources re-synced by checksum, cause not measured); the plan's last edits are plan_lint's, GO 726/0 on linux-pc. Detail: tasks/M0-TV2.md § Session 2. Next: M0-D119.
+
+## M0-D119 · The bar's and the Clear dialog's widgets draw egui's default dark theme, not §4.11's tokens — the selected rung's `accent` text on egui's selection teal #005C80, chips and the panel's lower line #3C3C3C, the dialog #1B1B1B · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TV2)
+- Status: DONE (2026-10-30 10:40)
+- Filed by: M0-TV2, 2026-10-30 — its own look at the Phase 14 captures (E1; the lead at M0-TV2's launch: «Look at the screenshots
+  yourself, file the necessary tasks yourself»); filed right after M0-TV2 so it runs before M0-V12 grades the lot
+- Blocks: nothing graded — no scope reads the bar's pixel colours; M0-V12's launcher run and M0-TW see the clash
+- Caused by: M0-T85 (the bar's rung buttons, ui/topbar.rs drawn by desktop.rs) and M0-T87 (the Clear dialog) — one cause: egui's default
+  `Visuals` left in place
+- Rating: rule (3) — a BUILD block, its cause measured (every off-token colour is egui's default dark theme's own), no reason from the list
+- Files: crates/sr-app/src/desktop.rs (the top bar's panel :146–157, `draw_dialog`, the status line `from_gray(0xc8)` :197) — opened by
+  M0-TV2, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §4.2, §4.11 + crates/sr-app/src/desktop.rs:100–215 (the pass) and :230–340 (the bar, the dialog, the banner's
+  drawing) + milestones/m0/tasks/M0-TV2.md
+  § Findings
+- Symptom: measured on laserax-ai-server's lavapipe (private Xvfb, R18 — the RTX 4090 cannot present to Xvfb), 2026-10-30, pixels of
+  images/tv2/final/s03-star-x1.png and c02-hold.png: the selected rung's fill #005C80 under its `accent` text (#F0B33E measured) — amber on
+  teal; the unselected rung chips' fill and the bar's line under border.panel (y = 43) #3C3C3C; the Clear dialog's fill #1B1B1B, its
+  border and buttons #3C3C3C; the status line's text #C8C8C8. §4.11 names none of them. On token: bg.panel #10141E, border.panel #232A3A
+  (y = 42), text.primary #E6EAF2 (labels, readout, dialog text), bg.space #05070D, banner.bg / banner.text #3A2A0B / #FFD27A
+- Repro: the capture route of docs/agent/running.md with `tests/capture/actions.json`'s `rung` step, then read pixel (218, 22) of the PNG;
+  for the dialog, the xdotool route of tasks/M0-TV2.md § The Clear dialog
+- Suspected cause: measured — desktop.rs never sets `ctx.set_visuals`/`style_mut`: `selection.bg_fill` (#005C80), `widgets.inactive.weak_bg_fill`
+  and `noninteractive.bg_stroke` (#3C3C3C), `window_fill` (#1B1B1B) are egui 0.36's dark defaults
+- Deliver: egui's `Visuals` set once from §4.11's tokens at start-up — the selection a token (§4.2: «Selected tool, rung and view use
+  `accent`»: the selected rung's text `accent` on a token fill, bg.panel or border.panel, the choice named in the handoff), widget fills and
+  strokes, window fill and stroke from bg.panel / border.panel, the status line `text.secondary` — one table in code, no colour literal
+  outside it → Verify 1, 2
+- Verify: 1. a unit test over the start-up `Visuals`: every fill and stroke the bar, the dialog and the status bar use is one of §4.11's
+  values · Pass: GO · Fail: a colour outside §4.11 · 2. the capture route on laserax-ai-server's lavapipe (R18), `tests/capture/actions.json`
+  plus the Clear route · Pass: pixels (218, 22), the dialog's fill and the chips read §4.11 tokens · Fail: #005C80, #3C3C3C or #1B1B1B
+- Done when: no egui default colour in the bar, the dialog or the status bar; Verify 1 red-armed (`verify.py --redarm`) if a scope is added
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record at launch; matches the heading's rung). New crates/sr-app/src/ui/theme.rs: §4.11's tokens as the one colour table and `visuals()` built from them, set once in the desktop's and the web's creator closures; desktop.rs/web.rs read the tokens by name (status line text.secondary, modal backdrop bg.space at 60 %). Choice: a selected rung is accent text on border.panel (selection.bg_fill), chips bg.panel outlined by border.panel, hover border.panel + text.secondary outline, shadows off. Scope `ui_theme` (5 tests, incl. no colour literal in desktop.rs/topbar.rs) + plant theme-default-selection (tests/plants, tools/pb/verify.json — the Verify 1 scope the block says to add; verify.py flags them as oracle changes). Verify 1 [ALREADY RUN — PASS (ui_theme 5/0/0 GO; --redarm ui_theme: clean GO, plant RED, 2 failed) on linux-pc]; claim [ALREADY RUN — PASS (verify.py --changed, 773 passed, 9/9 scopes GO, 183 s) on linux-pc]. Verify 2 [ALREADY RUN — PASS (tests/capture/actions.json + the Clear route, lavapipe LLVM 20.1.2 on a private Xvfb) on laserax-ai-server]: selected ×10 chip fill #232A3A under accent text, unselected chips #10141E with #232A3A outline, bar line y=42/43 #232A3A, dialog fill #10141E and border #232A3A, status text #9AA4B8; no #005C80/#3C3C3C/#1B1B1B (pixel (218,22) of the old capture is between chips in the new rung.png; the selected chip sits at x≈283). Captures: images/d119/ (git-ignored). Not measured: the wasm32 web.rs line (no wasm build run here), win-laptop. Next: M0-D120.
+
+## M0-D120 · The banner and the bar disagree for one pass: the pass that reads back a slow-down event draws the new banner over a bar still showing the old rung — «Slowed down: core collapse» beside «Speed ×1», ×1 selected · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D119)
+- Status: DONE (2026-10-30 10:48)
+- Filed by: M0-TV2, 2026-10-30 — its own look at the Phase 14 captures (E1); filed after M0-D119, before M0-V12
+- Blocks: nothing graded — the view models are tested apart (ui::banner, ui::topbar); one pass at 60 frames a second, about half a
+  second on lavapipe's 2 frames a second
+- Caused by: M0-T86 (the banner drawn after `self.sim.frame()`; the bar, M0-T85's, read before it)
+- Rating: rule (3) — a BUILD block, its cause measured (the capture and the pass's order in desktop.rs), no reason from the list
+- Files: crates/sr-app/src/desktop.rs:146 (`topbar::view(self.sim.time(), …)` before the frame), :167 (`self.sim.frame(now, frozen)`, which
+  polls the read-back events and slows the clock), :170 (`banner::view(self.sim.time())` after it) — opened by M0-TV2, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5, §4.2, §4.3 + crates/sr-app/src/desktop.rs:100–215 +
+  crates/sr-app/src/ui/banner.rs
+- Symptom: measured on laserax-ai-server's lavapipe (private Xvfb, R18), 2026-10-30, images/tv2/final/m15.png (the massive life, about
+  1,520 steps at ×10 → ×1 after ignition): the core-collapse banner on screen, the bar «Speed ×1» with ×1 selected; the next capture
+  (m16.png) shows ×0.1 selected and «Speed ×0.1». The ignition (m03.png) happened to land in an earlier pass and reads consistent
+- Repro: images/tv2/scripts/tv2-massive.json on the capture route (docs/agent/running.md), rung 5, `preset massive`, `steps` in 100s; the
+  capture whose last pass reads the latch shows it. Deterministic: a unit test that feeds an event between the two reads
+- Suspected cause: measured — the bar's view model is built from the clock before `frame()` polls the read-back frames
+  (`Sim::poll` → `Feed::latch`/`event` → `TimeControl::on_event`), the banner's after, so the pass that books an event draws them from two
+  clock states
+- Deliver: the bar and the banner drawn from one clock state per pass — the commands applied, the frame polled, then both views built
+  (the bar's commands still reach the clock before the frame is planned) → Verify 1, 2
+- Verify: 1. a test that books an event between the pass's reads and asserts the bar's selected rung and readout match the banner's
+  slow-down · Pass: GO · Fail: the bar's rung ≠ the slowed rung while the banner shows · 2. the massive capture on laserax-ai-server's
+  lavapipe · Pass: every capture with a banner shows the rung §1.8.5 sets · Fail: a banner beside the old rung
+- Done when: no pass draws a banner beside the rung it replaced; Verify 1's scope red-armed (`verify.py --redarm`)
+- Handoff: DONE. The bar and the banner are now built from one clock state per pass: new `banner::Pass` + `banner::views` (ui/banner.rs) poll the read-back first, then build both views; desktop.rs calls it before the keys and the bar's draw, `Sim::frame` no longer polls (poll_frames behind `impl Pass for Sim`), the bar's commands still reach the clock before the frame is planned. A click or key shows in both views one pass later (before: the banner cleared in the same pass, the bar a pass after). Verify 1: ui_banner 13/13 (new test over ignition, core_collapse, supernova), red-armed: banner-bar-before-poll RED, banner-wrong-event RED; claim --changed on laserax-ai: GO, 778 passed, 10/10 scopes. Verify 2 NOT RUN (the massive capture, about 590 s on lavapipe: the lead's, over 10 min): the pass order is source- and unit-proven only. The claim flagged 3 oracle lines (the plant, verify.json, ui_banner's expected 12→13): the plan's Deliver named none of them. Ran on: model=claude-sonnet-5-5 level=high (rung_record.py now). Next: M0-V12.
 
 ## M0-V12 · Validation — lot 12: the world and its time · **CHECK** · Opus 5.5, max · switch · (AFTER M0-TV2)
-- Status: TODO
-- Carried flags: [M0-D101, 2026-10-29] M0-D101's ruling changes bits: Scene::planes now writes the floor state (Σ_floor of hydrogen at T_floor, at rest) in the cells no object covers, where it wrote Σ = 0 — a run whose box grows over cells it never held steps differently there from P4 on (calibration's lives included; the assets' physics hash unchanged; a run whose box held its world from step 0 keeps its bits — M0-V10's run A to the digit). A baseline compared bit for bit across this change reads it. · [M0-V11, 2026-10-29] Owed on win-laptop (R15) — M0-V11 ran on linux-pc and laserax-ai-server: lot 11's four scopes (blackbody, views, glow, frames) and their plants on the RTX 4080 Laptop, and M0-D101's, M0-D102's, M0-D110's and M0-D111's win-laptop runs (each handoff's owed line), with M0-D112–D116's once they close — `py -3.12 tools/pb/verify.py --all` and `--redarm --moved` there cover them, after M0-D106, M0-D107 and M0-D108 (DEFERRED; they wake there and run first). M0-V10's older owed list ran as the lead's M0-V11-win (2026-10-28/29: --all 64/68, the sweep 63/67 — its reds M0-D106–D108, observe_run's GREEN closed by M0-D102). reports/v11.md § Owed.
+- Status: DONE (2026-10-30 13:10)
+- Carried flags: [M0-D101, 2026-10-29] M0-D101's ruling changes bits: Scene::planes now writes the floor state (Σ_floor of hydrogen at T_floor, at rest) in the cells no object covers, where it wrote Σ = 0 — a run whose box grows over cells it never held steps differently there from P4 on (calibration's lives included; the assets' physics hash unchanged; a run whose box held its world from step 0 keeps its bits — M0-V10's run A to the digit). A baseline compared bit for bit across this change reads it. · [M0-V11, 2026-10-29] Owed on win-laptop (R15) — M0-V11 ran on linux-pc and laserax-ai-server: lot 11's four scopes (blackbody, views, glow, frames) and their plants on the RTX 4080 Laptop, and M0-D101's, M0-D102's, M0-D110's and M0-D111's win-laptop runs (each handoff's owed line), with M0-D112–D116's once they close — `py -3.12 tools/pb/verify.py --all` and `--redarm --moved` there cover them, after M0-D106, M0-D107 and M0-D108 (DEFERRED; they wake there and run first). M0-V10's older owed list ran as the lead's M0-V11-win (2026-10-28/29: --all 64/68, the sweep 63/67 — its reds M0-D106–D108, observe_run's GREEN closed by M0-D102). reports/v11.md § Owed. · [M0-TV2, 2026-10-30] the launcher run on the real GPU sees what lavapipe cannot prove: the glow; the capped readouts' numbers (lavapipe's ×0.075/×0.072/×0.067); the supernova banner — not reached in M0-TV2's 590 s massive capture, and whether §1.8.5 shows one when the rung already sits at ×0.1 is unmeasured (reports/review2.md) · [M0-D120, 2026-10-30] the massive capture re-run after M0-D120 (images/tv2/scripts/tv2-massive.json, rung 5, lavapipe or the lead's real GPU): every capture with a banner shows the rung §1.8.5 sets — Verify 2 of M0-D120, NOT RUN there (about 590 s)
 - Read: milestones/m0/m0_contrat.md §1.8, §1.11, §4.1–§4.3, §4.7, §4.10 + the handoffs of M0-T84–M0-T88 and
   M0-TV2 + docs/agent/running.md, time_control.md + the delivered files, each by the section it covers
 - Deliver: contract-vs-code on lot 12 — the frame loop against §1.8.3, the top bar against §4.2–§4.3, the
@@ -2530,6 +2602,262 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
   NO-GO — each red a D (E4)
 - Adversarial: a frame loop proven on lavapipe only — the lead's launcher run is on the real GPU, and its
   fps lands in the report.
+- Handoff: linux-pc (laserax-ai) + laserax-ai-server (RTX 4090: every GPU run, R18; lavapipe there for the window probes); model=claude-opus-5-5 level=max (rung_record now, at launch and every lead prompt). Contract-vs-code on lot 12 → reports/v12.md: the loop, the bar, the banner and the world actions as written; Verify 1 [ALREADY RUN — FAIL (NO-GO 1,464/1, 71/72, 4 owed, twice: tools_selftest) on laserax-ai-server] + linux-pc's four [FAIL then PASS: web's ready-held race]; the sweep [ALREADY RUN — FAIL (72/72 moved, 151 red, 0 green, 1 ERROR, 4,240 s) on laserax-ai-server]; M0-D120's Verify 2 PASS (lavapipe, m18). Filed at the lead's word («File each now, no triage»): M0-TC12 (twenty stubs), then M0-D128, D130, D125, D122, D127, D126, D123, D129, D124. Rulings «Ungrouped, ×4200» and «Supernova takes over»; at the lead's word a CHECK wrote code — L1 the theme install (a light browser blanked the bar's buttons), L2 the bar (amber «Paused», fixed widths) — §0.5 [M0-V12] ×3; ui_theme 7 and ui_topbar 15 GO and red-armed. Human-run tier: the lead's web build on their own PC, «alright I clicked on everything, looks good now»; no fps → M0-TW with the real GPU's window (the lead's word). Header 583/600; every loop under 600 s (server 167.76 s idle); no TM. Claim [ALREADY RUN — PASS (GO 780/0, 7/7, 4 owed; FLAG type/oracle on L1/L2) on laserax-ai-server] + the owed four on linux-pc [desktop, capture, toolchain GO; web FAIL then PASS, M0-D128]. Owed: win-laptop → M0-V13. Detail tasks/M0-V12.md. Next: M0-TC12.
+
+## M0-TC12 · Compaction — Phase 14's close: twenty closed blocks to stub, more than ten (PLAYBOOK §8, §11) · **MOVE** · Sonnet 5.5, medium · switch · (AFTER M0-V12)
+- Status: TODO
+- Filed by: M0-V12, 2026-10-30 — Phase 14's close (PLAYBOOK §14.3's V template, §11's trigger: a phase-closing V with more than ten
+  blocks to stub); runs first, ahead of the D's M0-V12 filed and of Phase 15.
+- Carried flags: none
+- Read: this file (rules + this task) + milestones/m0/plan_archive.md § M0-TC11 (the last compaction: the shape to keep)
+- Deliver: `plan.py stub` over the twenty closed blocks the lint names — the eleven outside the phase (M0-D106, M0-D107, M0-D108,
+  M0-D112, M0-D113, M0-D114, M0-D115, M0-D116, M0-D117, M0-D118, M0-TC11: the lint's eleven «stub it» WARNs on 2026-10-30) and Phase
+  14's nine (M0-T84, M0-T85, M0-T86, M0-T87, M0-T88, M0-TV2, M0-D119, M0-D120, M0-V12) — into plan_archive.md, no TODO or DEFERRED
+  block touched (M0-D71, M0-D91, M0-D103, M0-D109, M0-D121, M0-D122–M0-D130 and this block stay whole, the Phase 13 and Phase 14
+  commit-gate trailers where they stand), every moved line diffed byte for byte with its count, `plan.py lint`'s header before and
+  after in the handoff → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py plan_lint --task M0-TC12` · Pass: GO, the header within budget, the «stub it» WARNs gone, diff
+  count = moved count · Fail: any TODO or DEFERRED block touched, any line reworded
+- Done when: Verify 1 GO on linux-pc
+- Handoff: <placeholder>
+
+## M0-D128 · M0-D107's port-holding cases race on linux-pc: `web[ready-held]`'s own listener cannot bind 47840 while its sibling `ready` serves there and the case blames launch.py, `desktop[launcher]`'s decoy dies when the red-arm's arms start theirs at once, and two decoys of earlier runs still hold 47841–47842 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TC12)
+- Status: TODO
+- Filed by: M0-V12, 2026-10-30 — Verify 1's linux-pc half and the box-bound red-arms; the `ready-held` race sighted twice, so an owned D
+  (PLAYBOOK §4); at the lead's word «File each now, no triage (Recommended)» (E6 set aside, as at M0-V11); placed first among
+  M0-V12's D's: any claim that runs `web` on linux-pc can trip on it
+- Blocks: `--redarm desktop` and `--redarm web` on linux-pc (their clean arms red, so their plants unproven there); intermittently any
+  claim that runs `web` on linux-pc
+- Caused by: M0-D107 (the `ready-held` case, the launcher case's decoy web server, launch.json's `port_range`)
+- Rating: rule (5) — concurrency: processes racing for one port outside any lock
+- Files: tests/web/check.sh (`ready-held`: its foreign listener's bind unchecked), tests/smoke.sh (`launcher`: the decoy) — unverified,
+  the executing task confirms first
+- Read: this file (rules + this task) + M0-D107's block, or once stubbed plan_archive.md § M0-D107 + tests/web/check.sh (`ready-held`) and
+  tests/smoke.sh (`launcher`) + logs/M0-V12-lpc.web.log, M0-V12-lpc2.web.log, M0-V12-lpc.web.redarm.log, M0-V12-lpc.desktop.redarm.log
+- Symptom: measured on linux-pc, 2026-10-30. (a) `verify.py desktop web capture toolchain --task M0-V12-lpc`: web 3/1 — `ready-held`
+  «OSError: [Errno 98] Address already in use» from its own listener while `ready`, run beside it (jobs 8), served on 47840; launch.py
+  then took 47840, free again, and the case read «the web server took 47840, which a foreign listener holds»; the re-run GO
+  (M0-V12-lpc2: «47840 held, the server on 47843»); the same Errno 98 on `--redarm web`'s clean arm (11:50) → «red with no plant …
+  the plants are not counted». (b) `--redarm desktop`: the clean arm's and arm 1's `launcher` «web: died before ready, exit 1
+  (…-decoy.launch.web.log)» → «the decoy web server did not start» — `desktop` has no `arms_at_once`, so its arms start their decoys
+  at once. (c) `ss -ltnp`: `python3 -m http.server 47841` pid 2959678 (since 10:37:37, inside M0-D119's runs) and `… 47842` pid 3012130
+  (since 10:45:26, M0-D120's), parent 1, cwd the tree — never stopped.
+- Suspected cause: (a) the listener bound outside the port lock `ready` holds, its failure unchecked; (b) one decoy port shared by
+  parallel arms; (c) a path of the launcher case that leaves its decoy running — (c) not measured
+- Deliver: `ready-held` takes its port under the lock the cases it races hold, and a listener that cannot bind is the case's own error,
+  never launch.py's, the launcher case's decoy never collides with another arm's (a port of its own, or the scope's arms one at a time),
+  and every decoy is stopped on every path → Verify 1–3 · the two leaked servers → none — the lead's to stop (no task started them)
+- Verify: 1. `python3 tools/pb/verify.py web --task <ID>` three times · Pass: GO each · Fail: a red `ready-held` · 2. `verify.py --redarm
+  web` and `--redarm desktop` · Pass: each clean GO, every plant red · Fail: a clean arm red (the full `--redarm web` may pass ten
+  minutes: then the lead's) · 3. `ss -ltnp | grep -E ":478[45][0-9]"` after them · Pass: nothing of the runs left · Fail: a decoy left
+- Done when: Verify 1–3 GO on linux-pc; win-laptop owed (R15)
+- Handoff: <placeholder>
+
+## M0-D130 · `edges`' only plant, `wall-copy`, no longer applies — M0-D118 rewrote the hydro.wgsl lines its hunk reads — so `edges` has no working red-arm · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-D128)
+- Status: TODO
+- Sizing: E
+- Filed by: M0-V12, 2026-10-30 — Phase 14's sweep (the lead: «Run it now on the server (Recommended)»), its one ERROR; at the lead's word
+  «File each now, no triage (Recommended)»; placed early, since every claim that touches hydro.wgsl reads `edges` with no plant able to
+  turn it red
+- Blocks: `--redarm edges`, and with it any sweep's verdict
+- Caused by: M0-D118 (hydro.wgsl's inlined predictors cut; it re-cut no plant of `edges`)
+- Rating: rule (3) — an edit job (Sizing: E): one patch re-cut against today's hydro.wgsl, verified by an existing scope's red-arm
+- Files: tests/plants/wall-copy.patch (its hunk `@@ -151,14 +151,8 @@` against crates/sr-engine/shaders/hydro.wgsl: the bounce ghost's
+  mirror, `var p = read_cell(…)` with `p.u = -p.u` / `p.v = -p.v`) — opened by M0-V12, not changed
+- Read: this file (rules + this task) + tests/plants/wall-copy.patch + crates/sr-engine/shaders/hydro.wgsl:165–205 (`read_at`, the
+  bounce ghost's mirror) + docs/agent/testing.md's `edges` row
+- Symptom: measured on laserax-ai-server, 2026-10-30, the sweep (logs/M0-V12.sweep_stdout.log, M0-V12-sweep.edges.redarm.log): «edges ·
+  plant wall-copy · ERROR (the patch tests/plants/wall-copy.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -151,14 +151,8
+  @@: its old lines appear 0 times in the file, not once)» — `redarm: 1 plants · 0 red · 0 green · 1 errors · scope edges`
+- Suspected cause: measured — the hunk's old lines left hydro.wgsl with M0-D118 (44808aa)
+- Deliver: wall-copy re-cut against today's hydro.wgsl, planting the same fault — the bounce ghost copies the edge cell instead of
+  mirroring it → Verify 1
+- Verify: 1. on laserax-ai-server `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm edges --task <ID>` · Pass: GO, the
+  clean arm GO and wall-copy RED · Fail: ERROR, or wall-copy GREEN
+- Done when: Verify 1 GO on the RTX 4090
+- Handoff: <placeholder>
+
+## M0-D125 · `tools_selftest` reads NO-GO in every complete loop on laserax-ai-server since M0-D108's verify.py — its plant «a command that hangs» is not counted red there — and GO alone · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D128)
+- Status: TODO
+- Filed by: M0-V12, 2026-10-30 — Verify 1's one red (E4), sighted in both of its complete loops, so an owned D (PLAYBOOK §4); at the
+  lead's word «File each now, no triage (Recommended)»
+- Blocks: every phase-closing V's Verify 1 on laserax-ai-server (its `--all` reads NO-GO)
+- Caused by: unknown — the only change to tools/pb/verify.py since M0-V11's passing loop on the server (2026-10-29) is M0-D108's
+  (2d51122: `arms_at_once`, `arm_workers`, their selftest checks); suspected, not measured (M0-V12 read no tool code)
+- Rating: rule (5) — a D whose cause is not measured
+- Files: tools/pb/verify.py (unverified — the executing task confirms first); a change there is a toolkit local divergence
+  (tasks/toolkit_local_diff.md), at the lead's word
+- Read: this file (rules + this task) + milestones/m0/tasks/M0-D108.md + milestones/m0/tasks/toolkit_local_diff.md +
+  logs/M0-V12.tools_selftest.log and M0-V12-r2.tools_selftest.log (the two failures), M0-V12-ts{,2,3,4}.tools_selftest.log (the passes)
+- Symptom: measured on laserax-ai-server, 2026-10-30: `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --all` NO-GO twice
+  (M0-V12, 169.81 s; M0-V12-r2, 161.42 s), 1,464 passed and 1 failed, the red `tools_selftest[verify]`: «selftest: checks=358 · failed=1
+  · plants=159/160 red», «FAILED: PLANT a command that hangs: killed at its timeout, its log kept: /T9.<scope>.log» (r2: «T9.<scope>.log»),
+  while the plant's inner run itself reads «a: timed out after 0.2 s · log logs/T9.a.log», 15.20 s both times. `verify.py tools_selftest`
+  GO 10/0 alone (M0-V12-ts, 16.32 s), under 16 busy loops (ts2), with SR_TEST_ADAPTER set (ts3) and beside four scopes in one run (ts4:
+  registry, plan_lint, time_control, dump). A third sighting in M0-V12's sweep: `--redarm tools_selftest` (4 arms at a time) — its clean
+  arm red with the same plant, «/T9.<scope>.log» (logs/M0-V12-sweep.tools_selftest.redarm.log), so its three plants were not counted. It
+  fails inside the complete loop and inside the red-arm's parallel arms, and passes in every single run of the scope (ts to ts4).
+- Repro: the server's `--all` (≈ 165 s; 2 of 2), or `--redarm tools_selftest` (1 of 1)
+- Suspected cause: the `logs:` path the plant reads loses its directory under the complete loop (`/T9.<scope>.log`, `T9.<scope>.log`):
+  something the loop hands its scopes (environment or working state) reaches the selftest's nested verify — not measured
+- Deliver: the cause measured, then the smallest fix — in the selftest's plant or in verify.py, a local divergence at the lead's word
+  (a new item of tasks/toolkit_local_diff.md) — so `tools_selftest` reads the same inside the complete loop as alone → Verify 1, 2
+- Verify: 1. on laserax-ai-server `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --all --task <ID>` · Pass: `tools_selftest` GO
+  inside the loop · Fail: «PLANT a command that hangs» again · 2. `python3 tools/pb/verify.py --redarm tools_selftest --task <ID>` ·
+  Pass: GO, every plant red · Fail: a plant green
+- Done when: Verify 1 and 2 GO on laserax-ai-server; linux-pc's and win-laptop's loops read it too (R15)
+- Handoff: <placeholder>
+
+## M0-D122 · A Clear confirmed while frames are in flight hands the cleared world's frames to the new observers — and a fresh tracker fires `ignition` on a main-sequence star's first frame, which would slow the clock to ×1 under an ignition banner over the emptied world · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D125)
+- Status: TODO
+- Filed by: M0-V12, 2026-10-30 — contract-vs-code on the world actions (§1.12: Clear keeps the settings; §1.8.5); M0-T87's handoff left
+  it «unmeasured»; at the lead's word «File each now, no triage (Recommended)»
+- Blocks: nothing graded — no scope reads the clock after a Clear
+- Caused by: M0-T87 (`Sim::clear` starts a fresh `Watch` and `Feed` at once)
+- Rating: rule (5) — concurrency as async (frames read back ≤ 2 frames late across a state change), and its window repro not reached:
+  the cause is not measured end to end
+- Files: crates/sr-app/src/desktop.rs (`mod sim`: `clear`, `poll_frames`), crates/sr-physics/src/observe/stages.rs:341 (a fresh tracker's
+  first sight fires `ignition`) — opened by M0-V12, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.8.5, §1.9.4, §1.12 + crates/sr-app/src/desktop.rs:600–720
+  (`Sim::clear`, `poll_frames`, `frame`) + crates/sr-app/src/ui/banner.rs (`Feed`, `Pass`) + milestones/m0/reports/v12.md § F1
+- Symptom: measured in parts, 2026-10-30. (a) RTX 4090, laserax-ai-server, headless (M0-V12's P5, logs/M0-V12.p5_probe.log): `headless
+  --scene preset:sun --until stage:main_sequence` (2,705 steps), then `--load-dump` of its last dump without `--continue` — fresh
+  observers, as `Sim::clear` makes them — fire `ignition` (by light) at their first frame, step 2,706; over the massive preset at step 600
+  and the Sun at step 600 they fire nothing (the light rule, 0.5 L ≤ L_H ≤ 2 L, unmet: P1, P6). (b) Source: `poll_frames` feeds every
+  frame read back to `self.watch` with no mark of whether it was submitted before the Clear, and `Sim::clear` replaces the Watch and the
+  Feed at the click while up to two frames already submitted are still to be read back (§1.9.1). (c) Not reproduced in the window:
+  lavapipe on a private Xvfb (P2 v2, images/v12/p2b/): Clear clicked at ×10 over the main-sequence Sun → empty world, ×10 kept, no
+  banner — M0-V12's reading, not measured: lavapipe's present drains the queue every pass, so no old frame was in flight.
+- Repro: the Deliver's test; in the window, a real GPU at Max over a main-sequence star (M0-T90's preset panel or the capture route),
+  Clear, then the rung and the banner
+- Suspected cause: (b)
+- Deliver: a frame submitted before a Clear never reaches the new `Watch` or `Feed` — its report still goes to `on_report` (the clock's
+  Δt and sim time are the engine's) — e.g. a world generation counted with each frame in flight and an older generation's summary
+  dropped, the routing factored out of `Sim` so a test drives it with no GPU → Verify 1 · a plant (the generation ignored) → Verify 2
+- Verify: 1. a test that reads back an old world's frame (a main-sequence star's summary) after a Clear · Pass: GO in its scope (ui_banner
+  or ui_world), no event reaches the clock — no rung change, no banner · Fail: an ignition after the Clear · 2. `python3 tools/pb/verify.py
+  --redarm <scope> --task <ID>` · Pass: the plant RED · Fail: the plant GREEN
+- Done when: no frame submitted before a Clear books an event after it; Verify 2 red
+- Handoff: <placeholder>
+
+## M0-D127 · A supernova at ×0.1 leaves the core-collapse banner up, so `banner.supernova` never shows in a life the player leaves alone — §0.5 [M0-V12] has the supernova take the banner over · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D122)
+- Status: TODO
+- Filed by: M0-V12, 2026-10-30 — M0-TV2's flag («whether §1.8.5 shows one when the rung already sits at ×0.1 is unmeasured») measured,
+  then the lead's ruling «Supernova takes over (Recommended)», shown as: "While the core-collapse banner is up, the supernova switches it
+  to banner.supernova; the rung stays ×0.1. A §0.5 line on §1.8.5/§4.2 and a small D." (the §0.5 line written by M0-V12)
+- Blocks: nothing graded
+- Caused by: M0-TC (§1.8.5's only-slower leaves `banner.supernova` unreachable after a core collapse); M0-T24 (`TimeControl::on_event`)
+  and M0-T86 built it as written
+- Rating: rule (3) — a BUILD block whose spec the ruling fixes, no reason from the list
+- Files: crates/sr-physics/src/time.rs (`on_event`: `if target < self.rung { self.set_rung(target, Some(event)) }`) and its tests,
+  tools/pb/verify.json (`time_control`'s count and plants), tests/plants/ (a new plant) — opened by M0-V12, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-V12] (the supernova line), §1.8.5, §4.2, §4.3 +
+  crates/sr-physics/src/time.rs:325–390 (`on_event`, `set_rung`) and :560–600 (the slow-down cases) + crates/sr-app/src/ui/banner.rs
+  (`Feed`)
+- Symptom: measured on linux-pc, 2026-10-30 (M0-V12's probe P3, a program over `sr_physics::time`, TOP 200): ×10 → ignition: ×1 and
+  `banner.ignition` → core collapse: ×0.1 and `banner.core_collapse` → supernova: still ×0.1 and `banner.core_collapse`; `banner.supernova`
+  only after the player's + (×0.3) and a supernova then. On the RTX 4090 the massive preset's supernova comes 16 steps, 0.068 t.u., after
+  its collapse (M0-V12's P4: core_collapse step 913, t 7.7100; supernova step 929, t 7.7784) — about 0.7 s of wall time at ×0.1.
+- Deliver: a supernova that comes while `banner.core_collapse` shows takes the banner over (`banner.supernova`), the rung unchanged, and
+  every other only-slower rule stands (an ignition never replaces a banner, a supernova with no banner up slows by the rule or not at
+  all) → Verify 1 · a plant (the takeover dropped) → Verify 2
+- Verify: 1. `python3 tools/pb/verify.py time_control ui_banner --task <ID>` with a case: ×10 → core collapse → supernova reads ×0.1 and
+  `banner.supernova`, and a supernova at a ×0.1 the player chose shows none · Pass: GO · Fail: the core-collapse banner after the supernova
+  · 2. `python3 tools/pb/verify.py --redarm time_control --task <ID>` · Pass: the plant RED · Fail: the plant GREEN
+- Done when: Verify 1 and 2 GO on linux-pc (neither scope needs a GPU)
+- Handoff: <placeholder>
+
+## M0-D126 · format.rs keeps speed helpers no caller reads — `speed`, `speed_capped`, `speed_max`, `actual_number` (which groups «×4,200»), `rung`, `rung_number` — beside the bar's own formatting, which §0.5 [M0-V12] makes the one reading · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-D127)
+- Status: TODO
+- Sizing: E
+- Filed by: M0-V12, 2026-10-30 — the lead's ruling «Ungrouped, ×4200 (Recommended)», shown as: "Matches the rung labels (×1000) and
+  today's code; a §0.5 line records the reading and a small D removes the unused grouped helper." (the §0.5 line written by M0-V12)
+- Blocks: nothing
+- Caused by: M0-TC (§4.12's "," heading against its Speeds line); the bar reads `sig2` (M0-T24) and its own labels (M0-T85), so the
+  format.rs helpers were never called — a second implementation of a primitive the project owns (PLAYBOOK §4's engineering taste)
+- Rating: rule (3) — an edit job (Sizing: E): deletions in one file and the `formats` count
+- Files: crates/sr-app/src/format.rs (`speed`, `speed_capped`, `speed_max`, `actual_number`, `rung`, `rung_number` and their tests — no
+  caller outside format.rs on 2026-10-30, M0-V12's grep; `rung_max` is the bar's and stays), tools/pb/verify.json (`formats`, expected 15)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-V12] (the grouping line), §4.12 + crates/sr-app/src/format.rs
+- Deliver: the six helpers and the tests that only exercise them removed, `formats`' expected count lowered to match → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py formats ui_topbar --task <ID>` · Pass: GO, and `grep -nE "fn (speed|speed_capped|speed_max|
+  actual_number|rung|rung_number)\(" crates/sr-app/src/format.rs` empty · Fail: NO-GO, or a helper left
+- Done when: Verify 1 GO on linux-pc
+- Handoff: <placeholder>
+
+## M0-D123 · The status line draws at egui 0.36.2's body size, 13 px, not §4.11's small 12 px · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D126)
+- Status: TODO
+- Filed by: M0-V12, 2026-10-30 — contract-vs-code on the status bar (§4.11's font sizes); at the lead's word «File each now, no triage
+  (Recommended)»
+- Blocks: nothing graded
+- Caused by: M0-T84 (the status bar's text, drawn as egui's body text)
+- Rating: rule (3) — a BUILD block, its cause measured, no reason from the list (a case and its plant take it past an edit job's two files)
+- Files: crates/sr-app/src/desktop.rs (the status bar: `ui.label(egui::RichText::new(&status_line).color(TEXT_SECONDARY))`, no size),
+  crates/sr-app/src/ui/theme.rs (`BANNER_FONT`: the sizes' home), tools/pb/verify.json (`ui_theme`), tests/plants/ — opened by M0-V12,
+  not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §4.11 (font sizes) + crates/sr-app/src/desktop.rs:190–200 (the status
+  bar) + crates/sr-app/src/ui/theme.rs
+- Symptom: measured by source, 2026-10-30: §4.11 sets «small 12 px (status line, preset notes)»; the status label sets no size, so it
+  takes `TextStyle::Body`, 13.0 in egui 0.36.2 (`default_text_styles`, style.rs:1419), and nothing in sr-app sets the text styles —
+  every other text of the window sets its own (the bar and the dialog 14 px, the banner 20 px)
+- Suspected cause: measured — the size was never set
+- Deliver: the status line at 12 px from one named size beside `BANNER_FONT` in theme.rs → Verify 1 · a plant (the size dropped) →
+  Verify 2
+- Verify: 1. `python3 tools/pb/verify.py ui_theme --task <ID>` with a source case (as `the_window_files_write_no_colour_literal` reads
+  the files): desktop.rs's status label carries the named size and the size is 12.0 · Pass: GO · Fail: the label without it or another
+  value · 2. `python3 tools/pb/verify.py --redarm ui_theme --task <ID>` · Pass: every plant RED · Fail: one GREEN
+- Done when: the status line at 12 px; Verify 1 and 2 GO on linux-pc
+- Handoff: <placeholder>
+
+## M0-D129 · The launchers say «Sandbox Reactions is running» after the game failed to start — start.sh, start.bat and start.ps1 print it whatever `launch.py start` returned · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D123)
+- Status: TODO
+- Filed by: M0-V12, 2026-10-30 — the human-run tier: the lead's own run of start.sh on laserax-ai-server, pasted at M0-V12; at the
+  lead's word «File each now, no triage (Recommended)»
+- Blocks: nothing graded
+- Caused by: M0-T6 (the launchers, §3.6; M0-D28 amended their stop)
+- Rating: rule (3) — a BUILD block over three launcher files, no reason from the list
+- Files: start.sh (`python3 tools/pb/launch.py start …`, then `echo "Sandbox Reactions is running. Press Enter to close it."` whatever it
+  returned), start.bat (`echo Sandbox Reactions is running…` after `py -3.12 tools\pb\launch.py start …`), start.ps1 (`Read-Host
+  "Sandbox Reactions is running…"`) — opened by M0-V12, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.6 (the launchers) + start.sh, start.bat, start.ps1 +
+  docs/agent/running.md § The two ways a person starts the game
+- Symptom: measured, 2026-10-30 — the lead's paste (start.sh over SSH on laserax-ai-server, no display): «game: died before ready, exit 3
+  (log …/launcher.launch.game.log) … FAIL game: died before ready, exit 3 … === NO-GO: 1 failure(s) === / Sandbox Reactions is running.
+  Press Enter to close it.»; the launch log (logs/M0-V12.lead-server.launch.game.log): «SR-ERROR winit EventLoopError: … neither
+  WAYLAND_DISPLAY nor WAYLAND_SOCKET nor DISPLAY is set.»
+- Suspected cause: measured — none of the three reads `launch.py start`'s exit status before its message
+- Deliver: on a failed start each launcher says the game did not start and names its log, and asks for Enter only to close the window,
+  never to close a game that is not running → Verify 1
+- Verify: 1. the `desktop` scope's `launcher` case plus a check that runs `bash start.sh game-xvfb` with the start forced to fail (an
+  adapter no box has) · Pass: GO — the failure line, no «is running» · Fail: «is running» after a NO-GO
+- Done when: Verify 1 GO on linux-pc; start.bat and start.ps1 owed on win-laptop (R15)
+- Handoff: <placeholder>
+
+## M0-D124 · The docs lag lot 12's last blocks: time_control.md describes the pass order M0-D120 replaced, testing.md has no `ui_theme` row, running.md's top bar predates M0-V12's fixed widths, `accent` «Paused» and theme install · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D129)
+- Status: TODO
+- Filed by: M0-V12, 2026-10-30 — the docs against the code (M0-T88's Adversarial line); at the lead's word «File each now, no triage
+  (Recommended)»; placed after the D's whose behaviour it documents (M0-D122, M0-D127, M0-D123, M0-D126)
+- Blocks: nothing graded
+- Caused by: M0-D120 (the pass order; docs were not in its Deliver) and M0-D119 (the `ui_theme` scope came after M0-T88's docs block);
+  M0-V12's bar change and theme install, at the lead's word
+- Rating: rule (3) — a BUILD block of three doc files, no reason from the list
+- Files: docs/agent/time_control.md (§ The frame loop in the app — «One frame, in order», step 1 `poll()` inside `Sim::frame` «after the
+  top bar's commands ran»; «`desktop.rs` reads `banner::view` *after* the frame»; «Clear starts the watch over … unmeasured»; § What grades
+  it — `ui_topbar` (14), `ui_banner` (12)), docs/agent/testing.md (no `ui_theme` row; `ui_topbar`'s row 14 cases and one plant),
+  docs/agent/running.md (§ The window: the top bar) — opened by M0-V12, not changed
+- Read: this file (rules + this task) + crates/sr-app/src/ui/banner.rs (`views`), crates/sr-app/src/desktop.rs:112–320 (`ui`,
+  `draw_top_bar`), crates/sr-app/src/ui/theme.rs (`install`), tools/pb/verify.json:2469–2575 (`ui_topbar`, `ui_banner`, `ui_theme`) +
+  milestones/m0/m0_contrat.md
+  §0.5 [M0-V12] + the handoffs of M0-D119, M0-D120, M0-D122, M0-D123, M0-D126, M0-D127 and M0-V12
+- Symptom: measured, 2026-10-30: time_control.md:100–104 and :129–131 describe the pass before M0-D120 (the read-back as step 1 of
+  `Sim::frame` after the commands; the banner read after the frame) — since M0-D120 `banner::views` polls first and builds the bar and the
+  banner from one clock state, before the keys and the frame; :143 counts `ui_banner` 12 (13 since M0-D120) and `ui_topbar` 14 (15 since
+  M0-V12); testing.md has no `ui_theme` row (7 cases and 3 plants since M0-V12); running.md's top bar has no fixed widths, no `accent`
+  «Paused», no `theme::install`
+- Deliver: the three pages describe the code as it stands after the D's above → Verify 1
+- Verify: 1. `grep -c "ui_theme" docs/agent/testing.md` and `grep -c "banner::views" docs/agent/time_control.md` · Pass: each ≥ 1, and
+  the pass order in time_control.md names the read-back before the bar · Fail: either missing
+- Done when: Verify 1 on linux-pc
 - Handoff: <placeholder>
 
 > **Commit gate (lead):** Phase 14 closes after M0-V12 — from the repo root, one at a time:
@@ -2727,7 +3055,7 @@ M0-V10's F2 merged into M0-D103 (its Carried flags: the same two Watch construct
 
 ## M0-V13 · Validation — lot 13: tools, stars and cells · **CHECK** · Opus 5.5, max · switch · (AFTER M0-TV3)
 - Status: TODO
-- Carried flags: [M0-D106, 2026-10-29] [M0-D106, 2026-10-29] Owed on win-laptop (the lead's, over 10 min): D106's Verify 1 «beside a loaded --all» — read timing's line in win-laptop's --all: GO 5/5 under 300 s, case 1's «a 240-step frame: … done» under 5 s wall; a timeout or «its wait ended in» reopens it (tasks/M0-D106.md). · [M0-D106, 2026-10-29] [M0-D106, 2026-10-29] Discharged: the lead's --all on win-laptop (M0-D106-all) read timing GO 5/5 in 76.52 s; case 1's frame done 5.09 s wall under load, just over this flag's 5 s watch line, no timeout — read it again in V13's own --all, and a timeout or «its wait ended in» reopens M0-D106. · [M0-D108, 2026-10-30] win-laptop: M0-D108's Verify 1, owed - py -3.12 tools/pb/verify.py --redarm dump, then observe_run, then calibrate_bisect (arms now one at a time, arms_at_once 1; ~16, 17, 50 min): Pass no plant ERROR by timeout. Also the 65 scopes' red-arm the stopped claim left (verify.json changed every cargo scope's entry); one LNK1104 clean red seen on calibrate_bisect (tasks/M0-D108.md § Measured) - file a D if it recurs.
+- Carried flags: [M0-D106, 2026-10-29] [M0-D106, 2026-10-29] Owed on win-laptop (the lead's, over 10 min): D106's Verify 1 «beside a loaded --all» — read timing's line in win-laptop's --all: GO 5/5 under 300 s, case 1's «a 240-step frame: … done» under 5 s wall; a timeout or «its wait ended in» reopens it (tasks/M0-D106.md). · [M0-D106, 2026-10-29] [M0-D106, 2026-10-29] Discharged: the lead's --all on win-laptop (M0-D106-all) read timing GO 5/5 in 76.52 s; case 1's frame done 5.09 s wall under load, just over this flag's 5 s watch line, no timeout — read it again in V13's own --all, and a timeout or «its wait ended in» reopens M0-D106. · [M0-D108, 2026-10-30] win-laptop: M0-D108's Verify 1, owed - py -3.12 tools/pb/verify.py --redarm dump, then observe_run, then calibrate_bisect (arms now one at a time, arms_at_once 1; ~16, 17, 50 min): Pass no plant ERROR by timeout. Also the 65 scopes' red-arm the stopped claim left (verify.json changed every cargo scope's entry); one LNK1104 clean red seen on calibrate_bisect (tasks/M0-D108.md § Measured) - file a D if it recurs. · [M0-V12, 2026-10-30] Owed on win-laptop (R15) — M0-V12 ran on linux-pc and laserax-ai-server, so these still run there: lot 12's scopes on win-laptop's routes and their red-arms (ui_topbar 15, ui_banner 13, ui_world 7, ui_theme 7; desktop's world case on the off-screen window; capture's actions), M0-D119's and M0-D120's win-laptop runs, M0-V12's theme install and fixed-width bar under a light Windows theme (start.bat's window), and the list M0-V12 carried from M0-V11 (lot 11's four scopes and their plants on the RTX 4080 Laptop; M0-D101, M0-D102, M0-D110, M0-D111, M0-D112–M0-D116) — py -3.12 tools/pb/verify.py --all and --redarm --moved there cover them (reports/v12.md § Owed).
 - Read: milestones/m0/m0_contrat.md §1.9.6, §1.12, §3.3, §3.5, §4.1, §4.2, §4.4–§4.6, §4.12, §5.4 (G-WEB)
   + the handoffs of M0-T89–M0-T96 and M0-TV3 + docs/agent/running.md + the delivered files, each by the
   section it covers
@@ -2902,6 +3230,32 @@ objects of 31.4–33.5 sandbox mass meanwhile — no game lot grades it (M0-T86'
 - Done when: an edit's step keeps the energy invariant at the ruled tolerance on laserax-ai-server's RTX 4090; win-laptop `owed` (R15)
 - Adversarial: a paint far from any mass has a small ΔW and hides the term: the cases include the Sun drop beside a star (ΔW ≈ |W|).
 - Handoff: <placeholder>
+
+## M0-D121 · A round star grows square: the Sun-like preset, a round disk at its drop, is a rounded square by 300 steps (Glow), and the massive's cold haze around a round core — the grid's four-fold imprint on the state, seen by every player · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D109)
+- Status: TODO
+- Filed by: M0-TV2, 2026-10-30 — its own look at the Phase 14 captures (E1); seen before by M0-V11 (reports/v11.md O3: «the star's density
+  contour is a rounded square … the physics' grid imprint, not the drawing», not filed then, «for the lead's eye»); filed at the lead's
+  word at M0-TV2's launch, «file the necessary tasks yourself». Placed at Phase 16's head after M0-D109, with the physics D's, by the
+  lead's «Game first (Recommended)» (M0-R11): before M0-T97's life probe measures the lives
+- Blocks: nothing graded — no oracle says the field must stay round (M0-V11 O3); the window shows it from the first minute of a life
+- Caused by: unknown
+- Rating: rule (5) — a D whose cause is not measured: `(usual)`
+- Files: none opened by M0-TV2 beyond the captures; the candidates are P4 (hydro), P1–P2 (gravity) and the preset's deposit (§2.10)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.10 (the preset's disk) and the P1–P5 rows of §1.7's solver table +
+  milestones/m0/reports/v11.md § Observations O3 + milestones/m0/tasks/M0-TV2.md § Findings
+- Symptom: measured on laserax-ai-server's lavapipe (private Xvfb, R18), 2026-10-30: images/tv2/final/s02-dropped.png (step 1) a round disk,
+  157 px across; s03-star-x1.png (301 steps) the bright body a rounded square 137 × 137 px, its haze a rounded square; s12-rung7.png
+  the body's sides flat, its corners rounded; M0-V11's frames (images/M0-V11.sun_ms_s2721_density.png) the same on the RTX 4090 —
+  so not lavapipe's
+- Repro: `headless --scene preset:sun --steps 300 --out <dir> --adapter "RTX 4090"` on laserax-ai-server with a frame or a dump at steps 1
+  and 300 (§3.3's `--frames-every`, `--dump-every`); measure the density contour's radius along the axes and the diagonals
+- Suspected cause: not measured — a four-fold anisotropy of the grid: dimensionally split hydro (P4), the gravity stencil (P1–P2), or both;
+  the deposit is round at step 1, so not §2.10's drop
+- Deliver: the cause measured (each solver alone on a round equilibrium: which one squares it), then either a fix within the contract
+  (a FROZEN passage's change declared, PLAYBOOK §9) or a measured report naming the scheme's limit for the lead's ruling → Verify 1
+- Verify: 1. the contour's axis-to-diagonal radius ratio of the Sun-like star at 300 and 3,000 steps on the RTX 4090 · Pass: within a bound
+  this block measures and names (a round 2D equilibrium ≈ 1.00) · Fail: the ratio of today's state, measured first, unchanged
+- Done when: the cause named by measurement and either fixed under a case that reads the ratio, or reported with the lead's ruling
 
 ## M0-T97 · The life probe — three presets' lives, measured · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V13)
 - Status: TODO
@@ -3470,6 +3824,7 @@ M0-T98b and M0-T99b were filed here, M0-T100 and M0-T101 moved here from lot 14 
 
 ## M0-TW · Live walk — the user gate: a star's life · **LEAD walk + CHECK scribe** · Opus 5.5, max · switch · (AFTER the push that follows M0-V17 and M0-TD)
 - Status: TODO
+- Carried flags: [M0-V12, 2026-10-30] The real GPU's window, the lead's at M0-V12 («Leave them to M0-TW (Recommended)»): the glow drawn in the window, the speed readout's numbers and the status line's fps at ×1, a capped rung and Max — M0-V12's visible window on linux-pc never presented (the session was locked), and the lead's own web run on their PC (localhost:47870) read «alright I clicked on everything, looks good now» with no fps given; also M0-D122's window repro if it is still open (Clear at Max over a main-sequence star) (reports/v12.md § The human-run tier).
 - Read: this file (rules + this task) + the launchers named in Repo facts
 - Deliver: the lead drives the increment from the double-click launcher, one step at a time — a
   star from gas cloud to each of its three ends (a white dwarf, a supernova leaving a neutron star,

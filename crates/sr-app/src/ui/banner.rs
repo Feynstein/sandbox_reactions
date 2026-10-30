@@ -8,6 +8,7 @@
 use sr_physics::time::{Event, TimeControl};
 
 use crate::strings;
+use crate::ui::topbar::{self, TopBar, WorldBar};
 
 /// What the banner says.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -30,6 +31,22 @@ fn slow_down_event(kind: &str) -> Option<Event> {
         "supernova" => Some(Event::Supernova),
         _ => None,
     }
+}
+
+/// What a pass reads of the app to draw the top bar and the banner: the frames read back since the last pass (which book the
+/// slow-down's events into the clock), and the clock and the world's actions as they stand after.
+pub trait Pass {
+    /// Reads the frames back and books their events (`Sim::poll`).
+    fn poll(&mut self);
+    fn time(&self) -> &TimeControl;
+    fn world_bar(&self) -> &WorldBar;
+}
+
+/// The bar and the banner of one pass, both built from the clock as the pass's read-back leaves it: an event booked by this
+/// pass's frames shows its banner beside the rung it slowed to, never beside the one it replaced (M0-D120).
+pub fn views(app: &mut impl Pass) -> (TopBar, Option<Banner>) {
+    app.poll();
+    (topbar::view(app.time(), app.world_bar()), view(app.time()))
 }
 
 /// Feeds the clock's `on_event` from both sources and books each event once.
@@ -89,6 +106,28 @@ mod tests {
 
     fn text(time: &TimeControl) -> Option<String> {
         view(time).map(|b| b.text)
+    }
+
+    /// An app whose read-back books `events` (object, kind) into the clock when the pass polls.
+    struct App {
+        time: TimeControl,
+        feed: Feed,
+        world_bar: WorldBar,
+        events: Vec<(u32, &'static str)>,
+    }
+
+    impl Pass for App {
+        fn poll(&mut self) {
+            for (object, kind) in self.events.drain(..) {
+                self.feed.event(&mut self.time, object, kind);
+            }
+        }
+        fn time(&self) -> &TimeControl {
+            &self.time
+        }
+        fn world_bar(&self) -> &WorldBar {
+            &self.world_bar
+        }
     }
 
     #[test]
@@ -211,5 +250,22 @@ mod tests {
         topbar::apply(&mut time, Command::Select(5));
         feed.latch(&mut time);
         assert_eq!((value(&time), text(&time).is_some()), (0.1, true));
+    }
+
+    #[test]
+    fn the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock() {
+        for (kind, rung_value, speed, banner) in [
+            ("ignition", 1.0, "Speed ×1", "Slowed down: hydrogen ignition — press + to speed up again"),
+            ("core_collapse", 0.1, "Speed ×0.1", "Slowed down: core collapse — press + to speed up again"),
+            ("supernova", 0.1, "Speed ×0.1", "Slowed down: supernova — press + to speed up again"),
+        ] {
+            let mut app = App { time: clock(5), feed: Feed::new(), world_bar: WorldBar::default(), events: vec![(1, kind)] };
+            let (bar, shown) = views(&mut app);
+            let selected: Vec<usize> = bar.rungs.iter().enumerate().filter(|(_, r)| r.selected).map(|(i, _)| i).collect();
+            assert_eq!(selected.len(), 1, "{kind}: one rung selected");
+            assert_eq!(app.time.rungs()[selected[0]].value, rung_value, "{kind}: the bar's selected rung is the slowed one");
+            assert_eq!(bar.speed, speed, "{kind}: the readout");
+            assert_eq!(shown.map(|b| b.text).as_deref(), Some(banner), "{kind}: the banner");
+        }
     }
 }

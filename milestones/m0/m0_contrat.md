@@ -742,6 +742,25 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     «I want the launchers to automatically find the next free port, lets not be stopped by that» (the web service takes the next free
     port of a declared range, the lead's pick over «read a held port as NOT RUN»); the game's own launch.json entries, whose 47811 launch.py
     still refuses when held, are unchanged (M0-D99).
+  - [M0-V12] §4.2's "Selected tool, rung and view use `accent`" and its top bar, which sizes no item · **while the clock is paused the
+    speed readout (`time.paused`) is `accent` too; the Pause/Play button is as wide as the wider of `time.pause` and `time.play`, and the
+    readout sits in a slot as wide as its longest usual text (a capped ×1000, Max's speed at six digits), so nothing in the bar moves when
+    the clock changes** · measured at M0-V12, 2026-10-30, on the lead's own web run (Chrome on the lead's PC): in an empty world the
+    bar's only sign of a pause was the button's label, and pausing, a rung or the cap resized the button or the readout and moved
+    everything after them — the lead's words at M0-V12: «Its not clear when the game is played or paused... the button changes but since
+    theres nothing to see I dont know which is which, maybe change that so its clearer and also so that the width of the button doesnt
+    change. I dont like when an interaction in a bar moves the whole bar».
+  - [M0-V12] §4.12's heading ("English: "," groups thousands") read against its Speeds line ("ladder rungs as written (×0.1 … ×1000);
+    `{actual}` at 2 significant digits") · **`{actual}` is never grouped in thousands, as the rungs are written: «Speed max (running
+    ×4200)», «Speed ×1000 (running ×1200)»** · M0-T24 wrote it ungrouped (`sig2`) and format.rs's `actual_number`, which no caller
+    reads, grouped it; M0-T85 and M0-T88 left the point to the lead — the lead's answer at M0-V12, 2026-10-30: «Ungrouped, ×4200
+    (Recommended)».
+  - [M0-V12] §1.8.5's "supernova (§1.9.4) → ×0.1 — only ever slower … and the banner (§4.3) shows until then" and §4.2's banner "after
+    an automatic slow-down" · **a supernova that comes while the core-collapse banner still shows — the clock where the collapse put it
+    — takes the banner over: `banner.supernova`, the rung unchanged** · measured at M0-V12, 2026-10-30: at ×0.1 the supernova slows
+    nothing, so the core-collapse banner stayed through it and `banner.supernova` showed only if the player had sped up in between
+    (`TimeControl::on_event`, a probe of `sr_physics::time` on linux-pc), while on the RTX 4090 the massive preset's supernova comes 16
+    steps (0.068 t.u., about 0.7 s at ×0.1) after its collapse — the lead's answer at M0-V12: «Supernova takes over (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

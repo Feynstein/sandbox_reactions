@@ -14,10 +14,9 @@ use eframe::{egui, egui_wgpu};
 
 use crate::format;
 use crate::ui::banner::{self, Banner};
+use crate::ui::theme::{self, ACCENT, BANNER_BG, BANNER_FONT, BANNER_TEXT, BG_PANEL, BG_SPACE, BORDER_PANEL, TEXT_PRIMARY, TEXT_SECONDARY};
 use crate::ui::topbar::{self, Command, Dialog, TopBar};
 
-/// `bg.space` (§4.11): the world's background and vacuum, #05070D.
-pub const BG_SPACE: egui::Color32 = egui::Color32::from_rgb(0x05, 0x07, 0x0D);
 /// The default window (§4.2), in logical px.
 #[cfg(not(target_arch = "wasm32"))]
 pub const WINDOW_SIZE: [f32; 2] = [1760.0, 940.0];
@@ -142,9 +141,11 @@ impl eframe::App for SandboxApp {
         #[cfg(target_arch = "wasm32")]
         let frozen = false;
 
-        // The keys of the bar (§4.10) and its buttons; the commands reach the clock before this pass plans its frame.
+        // The frames read back since the last pass book their events into the clock first, then the bar and the banner are
+        // built from that one clock state (M0-D120). The keys of the bar (§4.10) and its buttons reach the clock before this
+        // pass plans its frame.
+        let (bar, banner) = banner::views(&mut self.sim);
         let mut commands = key_commands(ui.ctx());
-        let bar = topbar::view(self.sim.time(), self.sim.world_bar());
         egui::Panel::top("topbar")
             .exact_size(TOP_BAR_HEIGHT)
             .frame(
@@ -165,9 +166,6 @@ impl eframe::App for SandboxApp {
         // The frame (§1.8.3): the plan, the steps, the cell image — all submitted here, so they run before the pass egui
         // draws the image in.
         self.sim.frame(now, frozen);
-
-        // The banner as the clock stands after this pass's frame: an event read back in it has slowed the clock already.
-        let banner = banner::view(self.sim.time());
 
         self.frames += 1;
         self.recent.push_back(now);
@@ -196,7 +194,7 @@ impl eframe::App for SandboxApp {
             .exact_size(STATUS_BAR_HEIGHT)
             .frame(egui::Frame::NONE.fill(BG_SPACE).inner_margin(egui::Margin::symmetric(8, 4)))
             .show(ui, |ui| {
-                ui.label(egui::RichText::new(&status_line).color(egui::Color32::from_gray(0xc8)));
+                ui.label(egui::RichText::new(&status_line).color(TEXT_SECONDARY));
             });
         egui::CentralPanel::no_frame().frame(egui::Frame::NONE.fill(BG_SPACE)).show(ui, |ui| {
             let painter = ui.painter();
@@ -228,16 +226,6 @@ impl eframe::App for SandboxApp {
 const STATUS_BAR_HEIGHT: f32 = 24.0;
 /// The top bar's height in logical px (§4.2).
 pub const TOP_BAR_HEIGHT: f32 = 44.0;
-/// `bg.panel` and `border.panel` (§4.11): #10141E and #232A3A.
-const BG_PANEL: egui::Color32 = egui::Color32::from_rgb(0x10, 0x14, 0x1E);
-const BORDER_PANEL: egui::Color32 = egui::Color32::from_rgb(0x23, 0x2A, 0x3A);
-/// `text.primary` and `accent` (§4.11): #E6EAF2 and #F2B33D.
-const TEXT_PRIMARY: egui::Color32 = egui::Color32::from_rgb(0xE6, 0xEA, 0xF2);
-const ACCENT: egui::Color32 = egui::Color32::from_rgb(0xF2, 0xB3, 0x3D);
-/// `banner.bg` and `banner.text` (§4.11): #3A2A0B and #FFD27A; the banner's font is 20 px.
-const BANNER_BG: egui::Color32 = egui::Color32::from_rgb(0x3A, 0x2A, 0x0B);
-const BANNER_TEXT: egui::Color32 = egui::Color32::from_rgb(0xFF, 0xD2, 0x7A);
-const BANNER_FONT: f32 = 20.0;
 
 /// The commands of this pass's key presses (§4.10). The presses it takes leave the pass's input, so a button that holds the
 /// keyboard focus (egui focuses what the mouse clicked) is not pressed a second time by the Space that paused the clock.
@@ -264,18 +252,40 @@ fn key_commands(ctx: &egui::Context) -> Vec<Command> {
     commands
 }
 
-/// The top bar as the view model gives it (§4.2): drawn as given, and the commands of what was clicked handed back.
-fn draw_top_bar(ui: &mut egui::Ui, bar: &TopBar) -> Vec<Command> {
+/// The bar's text size (§4.11: body 14 px).
+const BAR_FONT: f32 = 14.0;
+
+/// The width `label` takes at the bar's text size.
+fn text_width(ui: &egui::Ui, label: &str) -> f32 {
+    ui.ctx().fonts_mut(|f| f.layout_no_wrap(label.to_string(), egui::FontId::proportional(BAR_FONT), TEXT_PRIMARY).size().x)
+}
+
+/// The top bar as the view model gives it (§4.2): drawn as given, and the commands of what was clicked handed back. Nothing in
+/// it moves when the clock changes (the lead at M0-V12: «I dont like when an interaction in a bar moves the whole bar»): the
+/// Pause/Play button is as wide as its wider label, and the speed readout sits in a slot as wide as its longest usual text — a
+/// capped ×1000 or Max's six-digit speed. While paused the readout is `accent`, so a still world says so (§0.5 [M0-V12]).
+pub(crate) fn draw_top_bar(ui: &mut egui::Ui, bar: &TopBar) -> Vec<Command> {
     let mut commands = Vec::new();
     let text = |label: &str, selected: bool| {
-        egui::RichText::new(label).size(14.0).color(if selected { ACCENT } else { TEXT_PRIMARY })
+        egui::RichText::new(label).size(BAR_FONT).color(if selected { ACCENT } else { TEXT_PRIMARY })
     };
+    let get = crate::strings::get;
+    let play_width =
+        text_width(ui, get("time.pause")).max(text_width(ui, get("time.play"))) + 2.0 * ui.spacing().button_padding.x;
+    let readout_width = [
+        get("time.speed_capped").replace("{rung}", "1000").replace("{actual}", "0.0083"),
+        get("time.speed_max").replace("{actual}", "120000"),
+    ]
+    .iter()
+    .map(|t| text_width(ui, t))
+    .fold(0.0, f32::max);
     ui.horizontal_centered(|ui| {
         ui.spacing_mut().item_spacing.x = 8.0;
-        for button in [&bar.play, &bar.step] {
-            if ui.button(text(&button.label, false)).clicked() {
-                commands.push(button.command);
-            }
+        if ui.add(egui::Button::new(text(&bar.play.label, false)).min_size(egui::vec2(play_width, 0.0))).clicked() {
+            commands.push(bar.play.command);
+        }
+        if ui.button(text(&bar.step.label, false)).clicked() {
+            commands.push(bar.step.command);
         }
         ui.separator();
         for rung in &bar.rungs {
@@ -284,7 +294,11 @@ fn draw_top_bar(ui: &mut egui::Ui, bar: &TopBar) -> Vec<Command> {
             }
         }
         ui.separator();
-        ui.label(text(&bar.speed, false));
+        let slot = egui::vec2(readout_width, ui.spacing().interact_size.y);
+        ui.allocate_ui_with_layout(slot, egui::Layout::left_to_right(egui::Align::Center), |ui| {
+            ui.set_min_width(readout_width);
+            ui.label(text(&bar.speed, bar.paused));
+        });
         ui.separator();
         let mut checked = bar.slow_down.checked;
         if ui.checkbox(&mut checked, text(&bar.slow_down.label, false)).changed() {
@@ -308,7 +322,7 @@ fn draw_top_bar(ui: &mut egui::Ui, bar: &TopBar) -> Vec<Command> {
 /// The Clear dialog (§4.7), modal over the window: the question, then `world.clear_yes` and `world.clear_no`.
 fn draw_dialog(ctx: &egui::Context, dialog: &Dialog) -> Vec<Command> {
     let mut commands = Vec::new();
-    egui::Modal::new(egui::Id::new("clear-world")).show(ctx, |ui| {
+    egui::Modal::new(egui::Id::new("clear-world")).backdrop_color(theme::backdrop()).show(ctx, |ui| {
         ui.label(egui::RichText::new(&dialog.text).size(14.0).color(TEXT_PRIMARY));
         ui.add_space(8.0);
         ui.horizontal(|ui| {
@@ -366,7 +380,7 @@ mod sim {
     use sr_physics::registry::{Elements, Physics, Reactions};
     use sr_physics::time::{Estimates, Report, TimeControl};
 
-    use crate::ui::banner::Feed;
+    use crate::ui::banner::{Feed, Pass};
     use crate::ui::topbar::{self, Command, Effect, WorldBar};
 
     /// Most steps one scripted `steps` action puts into a single frame: a capture asking for 10⁶ would otherwise build one
@@ -436,6 +450,18 @@ mod sim {
         renderer: Renderer,
         image: wgpu::Texture,
         target: wgpu::TextureView,
+    }
+
+    impl Pass for Sim {
+        fn poll(&mut self) {
+            self.poll_frames();
+        }
+        fn time(&self) -> &TimeControl {
+            &self.time
+        }
+        fn world_bar(&self) -> &WorldBar {
+            &self.world_bar
+        }
     }
 
     impl Sim {
@@ -564,16 +590,6 @@ mod sim {
             self.time.paused()
         }
 
-        /// The clock, for the top bar's view (§4.2).
-        pub fn time(&self) -> &TimeControl {
-            &self.time
-        }
-
-        /// The edge choice and the dialog, for the top bar's view (§4.2, §4.7).
-        pub fn world_bar(&self) -> &WorldBar {
-            &self.world_bar
-        }
-
         /// A command of the top bar, a key or a script (ui::topbar): the clock's, then the world's.
         pub fn command(&mut self, command: Command) {
             topbar::apply(&mut self.time, command);
@@ -639,7 +655,7 @@ mod sim {
 
         /// The frames read back since the last call, in order: each one's report to `on_report`, its latch cut and the
         /// events its block summary names to the slow-down (§1.8.5). Never blocks.
-        fn poll(&mut self) {
+        fn poll_frames(&mut self) {
             for frame in self.step.poll_frames(&self.device) {
                 let r = frame.report;
                 let forced = self.in_flight.pop_front().unwrap_or(false);
@@ -663,10 +679,9 @@ mod sim {
             }
         }
 
-        /// One frame at egui time `now` (s). `frozen`: a capture is waiting for its screenshot, so nothing advances and the
+        /// One frame at egui time `now` (s), the pass's read-back (`Pass::poll`) done. `frozen`: a capture is waiting for its screenshot, so nothing advances and the
         /// image on screen stays the one drawn last.
         pub fn frame(&mut self, now: f64, frozen: bool) {
-            self.poll();
             if frozen {
                 return;
             }
@@ -884,6 +899,7 @@ mod native {
             options,
             Box::new(move |cc| {
                 let render = cc.wgpu_render_state.as_ref().ok_or("eframe gave no wgpu render state")?;
+                crate::ui::theme::install(&cc.egui_ctx);
                 let mut app = SandboxApp::new(render)?;
                 let info: AdapterDesc = (&render.adapter.get_info()).into();
                 println!("{}", info.sr_adapter_line());

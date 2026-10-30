@@ -1,0 +1,83 @@
+plan_lint         723/0/0      0.11 s  GO · step 1/72, 71 left
+tools_selftest    9/1/0       35.78 s  NO-GO · step 2/72, 70 left
+toolchain         owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+build             2/0/0       11.70 s  GO · step 3/72, 69 left
+registry          29/0/0       0.52 s  GO · step 4/72, 68 left
+eos               13/0/0       0.37 s  GO · step 5/72, 67 left
+rates             8/0/0        0.31 s  GO · step 6/72, 66 left
+burn_cell         18/0/0      13.89 s  GO · step 7/72, 65 left
+burn_order        4/0/0       11.94 s  GO · step 8/72, 64 left
+neutrino          18/0/0      17.39 s  GO · step 9/72, 63 left
+sink              34/0/0      30.36 s  GO · step 10/72, 62 left
+nu_heat           15/0/0      18.60 s  GO · step 11/72, 61 left
+summary           7/0/0       15.14 s  GO · step 12/72, 60 left
+ledger            5/0/0       12.13 s  GO · step 13/72, 59 left
+preset_cloud      5/0/0       50.24 s  GO · step 14/72, 58 left
+observe_run       9/0/0       69.37 s  GO · step 15/72, 57 left
+objects           24/0/0       0.11 s  GO · step 16/72, 56 left
+classify          47/0/0       0.06 s  GO · step 17/72, 55 left
+ending            11/0/0       0.11 s  GO · step 18/72, 54 left
+age_clock         17/0/0       0.11 s  GO · step 19/72, 53 left
+multi             5/0/0       55.74 s  GO · step 20/72, 52 left
+edits             17/0/0      11.98 s  GO · step 21/72, 51 left
+edits_file        6/0/0        7.63 s  GO · step 22/72, 50 left
+fft_twin          10/0/0       0.16 s  GO · step 23/72, 49 left
+riemann           8/0/0        0.06 s  GO · step 24/72, 48 left
+sheet             7/0/0        0.16 s  GO · step 25/72, 47 left
+sod               15/0/0       8.68 s  GO · step 26/72, 46 left
+edges             7/0/0       10.63 s  GO · step 27/72, 45 left
+collapse          6/0/0        3.82 s  GO · step 28/72, 44 left
+jeans             6/0/0        0.82 s  GO · step 29/72, 43 left
+sun_burn          4/0/0       75.79 s  GO · step 30/72, 42 left
+twin              6/0/0        1.52 s  GO · step 31/72, 41 left
+cpu_gpu           3/0/0        8.23 s  GO · step 32/72, 40 left
+heat_gauss        14/0/0       4.27 s  GO · step 33/72, 39 left
+heat_implicit     8/0/0        3.07 s  GO · step 34/72, 38 left
+heat_limiter      8/0/0        4.72 s  GO · step 35/72, 37 left
+heat_stiff        13/0/0       5.72 s  GO · step 36/72, 36 left
+heat_multigrid    4/0/0        3.52 s  GO · step 37/72, 35 left
+radiation_force   11/0/0       9.93 s  GO · step 38/72, 34 left
+grav_force        13/0/0       3.42 s  GO · step 39/72, 33 left
+grav_selfforce    7/0/0        1.87 s  GO · step 40/72, 32 left
+fft               8/0/0        2.67 s  GO · step 41/72, 31 left
+time_control      23/0/0       0.06 s  GO · step 42/72, 30 left
+strings           3/0/0        0.46 s  GO · step 43/72, 29 left
+formats           18/0/0       0.87 s  GO · step 44/72, 28 left
+blackbody         8/0/0        1.47 s  GO · step 45/72, 27 left
+adapter           10/0/0       4.12 s  GO · step 46/72, 26 left
+state             6/0/0        2.97 s  GO · step 47/72, 25 left
+booking           4/0/0        2.67 s  GO · step 48/72, 24 left
+floors            7/0/0        4.32 s  GO · step 49/72, 23 left
+dt                8/0/0        5.67 s  GO · step 50/72, 22 left
+box               8/0/0       13.83 s  GO · step 51/72, 21 left
+latch             5/0/0        3.07 s  GO · step 52/72, 20 left
+timing            5/0/0       24.90 s  GO · step 53/72, 19 left
+scene             8/0/0        2.27 s  GO · step 54/72, 18 left
+dump              12/0/0      48.19 s  GO · step 55/72, 17 left
+boot              1/0/0       11.08 s  GO · step 56/72, 16 left
+desktop           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+web               owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+capture           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+licences          3/0/0        0.54 s  GO · step 57/72, 15 left
+watch_only        1/0/0        0.11 s  GO · step 58/72, 14 left
+calibration       12/0/0       0.16 s  GO · step 59/72, 13 left
+calibrate_cold    8/0/0        1.42 s  GO · step 60/72, 12 left
+cold_core         8/0/0        9.98 s  GO · step 61/72, 11 left
+calibrate_status  18/0/0       0.11 s  GO · step 62/72, 10 left
+calibrate_bisect  19/0/0     105.12 s  GO · step 63/72, 9 left
+calibrate_order   13/0/0       0.16 s  GO · step 64/72, 8 left
+readouts          9/0/0        0.11 s  GO · step 65/72, 7 left
+views             11/0/0       9.63 s  GO · step 66/72, 6 left
+glow              7/0/0        2.87 s  GO · step 67/72, 5 left
+frames            6/0/0       10.23 s  GO · step 68/72, 4 left
+ui_topbar         14/0/0       0.11 s  GO · step 69/72, 3 left
+ui_banner         13/0/0       0.16 s  GO · step 70/72, 2 left
+ui_theme          5/0/0        0.11 s  GO · step 71/72, 1 left
+ui_world          7/0/0        0.11 s  GO · step 72/72, 0 left
+logs: milestones/m0/logs/M0-V12.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+ed5a9d88e5cd
+anchor: 14 path×scope entries moved by this run
+anchor: 340 paths checked · 336 skipped (3 classes) · 13 never checked · 0 stale · 0 unclassified · 0 owed · 353 covered of 689 visible
+FAILED:
+  tools_selftest: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed · log milestones/m0/logs/M0-V12.tools_selftest.log
+verify: 1464 passed, 1 failed, 0 skipped · 71/72 scopes GO · 0 skipped · 4 owed · 0 NOT RUN · 0 not impacted · 169.81 s + loop 0.11 s · mode all · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.1->1.71 · base: M0-V12's start 2026-10-30T10:51:26-04:00
+=== NO-GO: tools_selftest: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed · log milestones/m0/logs/M0-V12.tools_selftest.log ===

@@ -1,0 +1,13 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -281,7 +281,9 @@
+     .fold(0.0, f32::max);
+     ui.horizontal_centered(|ui| {
+         ui.spacing_mut().item_spacing.x = 8.0;
+-        if ui.add(egui::Button::new(text(&bar.play.label, false)).min_size(egui::vec2(play_width, 0.0))).clicked() {
++        // Planted: the Pause/Play button back to its label's width, so pausing moves the bar (M0-V12's fault).
++        let _ = play_width;
++        if ui.button(text(&bar.play.label, false)).clicked() {
+             commands.push(bar.play.command);
+         }
+         if ui.button(text(&bar.step.label, false)).clicked() {

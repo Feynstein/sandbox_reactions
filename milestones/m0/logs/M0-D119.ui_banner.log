@@ -1,0 +1,22 @@
+== 2026-10-30T10:37:45-04:00 ui_banner · task M0-D119 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::banner
+-- ui_banner · exit=0 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 12 tests
+test ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock ... ok
+test ui::banner::tests::a_core_collapse_named_two_frames_after_the_latch_is_not_a_second_banner ... ok
+test ui::banner::tests::a_second_latch_slows_the_clock_again ... ok
+test ui::banner::tests::each_event_fires_once_per_object ... ok
+test ui::banner::tests::events_that_are_not_the_slow_downs_do_nothing ... ok
+test ui::banner::tests::ignition_slows_to_one_and_says_so ... ok
+test ui::banner::tests::nothing_slowed_nothing_shown ... ok
+test ui::banner::tests::only_ever_slower ... ok
+test ui::banner::tests::supernova_slows_to_a_tenth_with_its_text ... ok
+test ui::banner::tests::the_banner_stays_until_the_player_changes_the_rung ... ok
+test ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text ... ok
+test ui::banner::tests::the_setting_off_means_no_slow_down_and_no_banner ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 45 filtered out; finished in 0.00s
+
+

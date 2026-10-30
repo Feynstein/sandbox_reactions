@@ -14,7 +14,8 @@ use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::js_sys::{Array, Function, Object, Promise, Reflect};
 use wasm_bindgen_futures::JsFuture;
 
-use crate::desktop::{wgpu_setup, SandboxApp, BG_SPACE};
+use crate::desktop::{wgpu_setup, SandboxApp};
+use crate::ui::theme::{self, BG_SPACE};
 
 /// `error.no_adapter` and `error.device_lost` (§4.1, §4.8), verbatim; the string table (strings.rs) comes with M0-T13.
 const ERROR_NO_ADAPTER: &str =
@@ -93,6 +94,7 @@ async fn run() -> Result<(), String> {
                 let render = cc.wgpu_render_state.as_ref().ok_or("eframe gave no wgpu render state")?;
                 let info: AdapterDesc = (&render.adapter.get_info()).into();
                 set_data("srAdapter", &info.to_string());
+                theme::install(&cc.egui_ctx);
                 // The callback runs on a lost device and on a destroyed one (the page closing): only the first is fatal.
                 render.device.set_device_lost_callback(|reason, detail| {
                     if reason != wgpu::DeviceLostReason::Destroyed {

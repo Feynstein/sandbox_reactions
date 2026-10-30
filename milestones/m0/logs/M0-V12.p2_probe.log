@@ -1,0 +1,12 @@
+p02 written after 391 s
+window 2097154
+Delete at 395 s
+import dialog 0
+clicked Clear at 401 s
+imports done
+app exit 0 after 410 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE p01-main-seq p01-main-seq.png 1760x940
+SR-CAPTURE-STATUS p01-main-seq llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE p02-x10 p02-x10.png 1760x940
+SR-CAPTURE-STATUS p02-x10 llvmpipe (LLVM 20.1.2, 256 bits) · 5 fps · 1 steps per frame · 600 × 400 cells

@@ -1,0 +1,18 @@
+== 2026-10-30T11:05:58-04:00 riemann · task M0-V12 · box laserax-ai-server :: bash tests/cpu.sh sr-physics reference::riemann
+-- riemann · exit=0 · 0.06 s
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 8 tests
+test reference::riemann::tests::a_state_with_no_solution_is_refused ... ok
+test reference::riemann::tests::every_shock_and_fan_in_the_problems_satisfies_its_jump_or_its_isentrope ... ok
+test reference::riemann::tests::far_from_the_waves_the_solution_is_the_initial_states ... ok
+test reference::riemann::tests::sod_satisfies_the_jumps_and_the_isentrope ... ok
+test reference::riemann::tests::sods_pattern_is_a_left_rarefaction_and_a_right_shock ... ok
+test reference::riemann::tests::mirrored_states_give_the_mirrored_solution ... ok
+test reference::riemann::tests::star_pressure_matches_an_independent_bisection ... ok
+test reference::riemann::tests::the_solution_conserves_mass_momentum_and_energy ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 189 filtered out; finished in 0.00s
+
+

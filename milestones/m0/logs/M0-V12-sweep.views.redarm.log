@@ -1,0 +1,184 @@
+==== 2026-10-30T12:56:10-04:00 views · clean · a fresh scratch copy of the tree
+== 2026-10-30T12:56:10-04:00 views · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh views physics
+-- views · exit=0 · 16.80 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5v4cl_oj/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-5v4cl_oj/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.12s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::vacuum_is_bg_space_in_every_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 431 filtered out; finished in 6.59s
+
+
+==== 2026-10-30T12:56:27-04:00 views · plant views-heat-linear · a fresh scratch copy of the tree
+planted views-heat-linear: tests/plants/views-heat-linear.patch -> crates/sr-engine/shaders/render.wgsl
+== 2026-10-30T12:56:27-04:00 views · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh views physics
+-- views · exit=101 · 16.50 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5v4cl_oj/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-5v4cl_oj/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.94s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::alpha_between_blends_the_states' (571035) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Heat α=0.25: cell 2181 is off by 231.163 levels: got [0, 0, 6, 255], formula [231.16, 105.17, 105.37]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::heat_matches_the_formula_across_a_world' (571126) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Heat α=1: cell 1821 is off by 229.366 levels: got [0, 0, 6, 255], formula [229.37, 99.73, 105.10]
+FAILED
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::heat_reads_the_stops_colours' (571131) panicked at crates/sr-engine/tests/gpu/views.rs:374:13:
+stop 1 (#3B0F70): got [0, 0, 4, 255], stop #3B0F70
+FAILED
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::temperatures_translate_past_the_anchors' (571140) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Heat α=1: cell 1302 is off by 109.343 levels: got [0, 0, 4, 255], formula [69.05, 17.98, 113.34]
+FAILED
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::the_maps_midpoints_are_linear_rgb_means' (571149) panicked at crates/sr-engine/tests/gpu/views.rs:409:13:
+Heat midpoint: got [0, 0, 4, 255], linear mean [0.4275, 0.1203, 0.4740]
+FAILED
+test views::vacuum_is_bg_space_in_every_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::vacuum_is_bg_space_in_every_view' (571158) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Heat α=1: cell 457 is off by 209.817 levels: got [0, 0, 4, 255], formula [209.82, 68.32, 109.21]
+FAILED
+
+failures:
+
+failures:
+    views::alpha_between_blends_the_states
+    views::heat_matches_the_formula_across_a_world
+    views::heat_reads_the_stops_colours
+    views::temperatures_translate_past_the_anchors
+    views::the_maps_midpoints_are_linear_rgb_means
+    views::vacuum_is_bg_space_in_every_view
+
+test result: FAILED. 5 passed; 6 failed; 0 ignored; 0 measured; 431 filtered out; finished in 6.44s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-10-30T12:56:44-04:00 views · plant views-vacuum-black · a fresh scratch copy of the tree
+planted views-vacuum-black: tests/plants/views-vacuum-black.patch -> crates/sr-engine/shaders/render.wgsl
+== 2026-10-30T12:56:44-04:00 views · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh views physics
+-- views · exit=101 · 16.60 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5v4cl_oj/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-5v4cl_oj/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.98s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::alpha_between_blends_the_states' (571413) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Density α=0.25: cell 3 is off by 71.000 levels: got [68, 1, 84, 255], formula [5.00, 7.00, 13.00]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::density_matches_the_formula_across_a_wide_world' (571432) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Density α=1: cell 0 is off by 71.000 levels: got [68, 1, 84, 255], formula [5.00, 7.00, 13.00]
+FAILED
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::element_matches_the_formula_across_a_wide_world' (571442) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Element α=1: cell 68 is off by 95.000 levels: got [100, 81, 64, 255], formula [5.00, 7.00, 13.00]
+FAILED
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::glow_matches_the_formula_across_a_world' (571447) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Glow α=1: cell 222 is off by 250.000 levels: got [255, 239, 229, 255], formula [5.00, 7.00, 13.00]
+FAILED
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::heat_matches_the_formula_across_a_world' (571471) panicked at crates/sr-engine/tests/gpu/views.rs:291:9:
+Heat α=1: cell 401 is off by 224.000 levels: got [229, 97, 105, 255], formula [5.00, 7.00, 13.00]
+FAILED
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::vacuum_is_bg_space_in_every_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::vacuum_is_bg_space_in_every_view' (571559) panicked at crates/sr-engine/tests/gpu/views.rs:439:17:
+Glow floor: got [0, 0, 0, 255], want bg.space [0.0196, 0.0275, 0.0510]
+FAILED
+
+failures:
+
+failures:
+    views::alpha_between_blends_the_states
+    views::density_matches_the_formula_across_a_wide_world
+    views::element_matches_the_formula_across_a_wide_world
+    views::glow_matches_the_formula_across_a_world
+    views::heat_matches_the_formula_across_a_world
+    views::vacuum_is_bg_space_in_every_view
+
+test result: FAILED. 5 passed; 6 failed; 0 ignored; 0 measured; 431 filtered out; finished in 6.53s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

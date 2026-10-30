@@ -1,0 +1,31 @@
+== 2026-10-30T13:05:16-04:00 capture[smoke] · task M0-V12-lpc3 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=0 · 2.32 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.RFifsmABbf
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+== 2026-10-30T13:05:18-04:00 capture[refuse] · task M0-V12-lpc3 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 0.16 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+== 2026-10-30T13:05:18-04:00 capture[actions] · task M0-V12-lpc3 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[actions] · exit=0 · 13.66 s
+SR-CAPTURE-STATUS slowdown llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE rung-max rung-max.png 1760x940
+SR-CAPTURE-STATUS rung-max llvmpipe (LLVM 20.1.2, 256 bits) · 18 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE edge edge.png 1760x940
+SR-CAPTURE-STATUS edge llvmpipe (LLVM 20.1.2, 256 bits) · 20 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE edge-leave edge-leave.png 1760x940
+SR-CAPTURE-STATUS edge-leave llvmpipe (LLVM 20.1.2, 256 bits) · 24 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 9 /tmp/tmp.qBhnXy8emG
+9 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max)
+capture actions: ok
+=== GO ===
+

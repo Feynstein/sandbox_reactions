@@ -1,0 +1,17 @@
+== 2026-10-30T10:37:45-04:00 ui_world · task M0-D119 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::topbar::world_tests
+-- ui_world · exit=0 · 0.16 s
+    Finished `release` profile [optimized] target(s) in 0.10s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::topbar::world_tests::a_clear_keeps_the_rung_the_slow_down_and_the_edge_mode ... ok
+test ui::topbar::world_tests::cancel_closes_the_dialog_and_queues_no_clear ... ok
+test ui::topbar::world_tests::clear_is_queued_by_yes_alone_and_once ... ok
+test ui::topbar::world_tests::delete_opens_the_dialog_as_the_button_does ... ok
+test ui::topbar::world_tests::the_clear_button_opens_the_dialog_and_asks_nothing_yet ... ok
+test ui::topbar::world_tests::the_edge_can_change_at_any_time_while_paused_running_or_the_dialog_open ... ok
+test ui::topbar::world_tests::the_edge_choice_reads_leave_to_start_and_both_ways ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 50 filtered out; finished in 0.00s
+
+

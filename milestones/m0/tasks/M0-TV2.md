@@ -1,4 +1,4 @@
-# M0-TV2 — detail (session 1, 2026-10-29, linux-pc laserax-ai, model=claude-opus-5-5 level=high) — IN PROGRESS
+# M0-TV2 — detail (sessions 1 and 2, 2026-10-29/30, linux-pc laserax-ai, model=claude-opus-5-5 level=high)
 
 The lead's words at launch: «Look at the screenshots yourself, file the necessary tasks yourself. I dont want to be
 involved in this task. Complete it yourself.» So: no capture is flagged for the lead's remarks. The page step still has
@@ -70,3 +70,27 @@ stuff to do write a handoff in your task, put it as in progress».
    lead's words above.
 6. Claim: `verify.py --changed --task M0-TV2` (the baseline was recorded by `plan.py show` at 15:30:41). Then
    `plan.py close`.
+
+## Session 2 (2026-10-30, model=claude-opus-5-5 level=high, rung_record) — what was done
+- The lead: «make sure you follow the rule and rule everything GPU on the 4090 server and never here» — every capture ran on
+  laserax-ai-server (R18); none on linux-pc. The server lacked Xvfb/xdotool/ImageMagick: the lead installed them
+  (`sudo apt-get install -y xvfb xdotool imagemagick`, the lead's answer «You install them (Recommended)»).
+- The RTX 4090 cannot present to Xvfb: `SR-ERROR … adapter NVIDIA GeForce RTX 4090 … cannot present to this window`, exit 3. Every capture
+  is lavapipe (LLVM 20.1.2) on the server's private Xvfb. Route, from the server's repo:
+  `xvfb-run -a -s "-screen 0 1920x1080x24" env -u WAYLAND_DISPLAY -u XDG_SESSION_TYPE build/target/release/sandbox-reactions --adapter llvmpipe --capture <script> --out <dir>`.
+- Scripts in images/tv2/scripts/ (git-ignored): tv2-sun.json (16 states, 35 s), tv2-massive.json (26 chunks; stopped by its own
+  `timeout 590` after m25, ≈ 2,520 steps — about 4 steps/s once the star is big), clear.sh + tv2-clear.json (the Clear dialog).
+- **The Clear dialog**: `Xvfb :77`, the capture script holding 200 frames, `xdotool windowfocus` + click + `key Delete`, then
+  `import -window root` — the dialog shows in the harness's own c02-hold.png and the root grab. This closes M0-T87's carried flag.
+- The capped readout needs N_max binding in ≥ 30 of the last 60 frames (§1.8.4): 8 frames a rung is too few; 40 show it.
+- Measured: ignition banner at ≈ 320 steps (m03, ×10 → ×1), core collapse at ≈ 1,520 (m15, ×1 → ×0.1 one pass late → M0-D120),
+  no supernova banner by ≈ 2,520 (NOT PROVEN, flagged to M0-V12). Server lavapipe: Sun ≈ 40 steps/s; massive ≈ 15 steps/s early.
+- Colours measured (s03, c02): on token — bg.panel, border.panel (y 42), text.primary, bg.space, banner.bg/text; off token —
+  #005C80, #3C3C3C, #1B1B1B, #C8C8C8 → M0-D119.
+- Final set: images/tv2/final/ (45 PNGs + captions.json, each with its pass / filed / flagged reason).
+- **Deviation**: review_page.py refuses a page with nothing flagged («nothing flagged for the lead — no page to show», NO-GO); session 1's
+  plan (no flag) cannot serve. Default taken: the three D-evidence captures (s03-star-x1, m15, c02-hold) flagged "for the record", no
+  remark asked. Served at 127.0.0.1:8765, /health ready (3 captures), stopped by SIGTERM (GO). Log: logs/M0-TV2.review_serve.log.
+- Filed: M0-D119 (after M0-TV2), M0-D120 (after M0-D119), M0-D121 (after M0-D109, Phase 16's head). Flag → M0-V12 (glow, readout
+  numbers, supernova banner).
+- Session 1's finding 2's check «is the disk round at step 0?» answered: round at step 1 (s02-dropped) — the square grows.

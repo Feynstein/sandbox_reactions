@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/ui/topbar.rs
++++ b/crates/sr-app/src/ui/topbar.rs
+@@ -194,7 +194,8 @@
+         step: Button { label: strings::get("time.step").to_string(), command: Command::Step },
+         rungs,
+         speed: readout(time),
+-        paused: time.paused(),
++        // Planted: the paused readout never marked (M0-V12's fault).
++        paused: false,
+         slow_down: SlowDown { label: strings::get("time.slowdown").to_string(), checked: time.slow_down() },
+         edge: EdgeChoice {
+             label: strings::get("edge.label").to_string(),

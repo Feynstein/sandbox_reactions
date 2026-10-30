@@ -1,0 +1,12 @@
+  clean: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the decoy web server did not start - red with no plant, so a red plant would prove nothing; the plants are not counted
+redarm: 6 plants · 0 red · 0 green · 0 errors · scope desktop · 43.95 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V12-lpc.desktop.redarm.log
+=== NO-GO: clean: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the decoy web server did not start - red with no plant, so a red plant would prove nothing; the plants are not counted ===
+capture · plant capture-edge-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope capture · 48.65 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V12-lpc.capture.redarm.log
+=== GO ===
+toolchain · plant toolchain-trunk · RED (proven: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunc not found on PATH) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope toolchain · 12.57 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V12-lpc.toolchain.redarm.log
+=== GO ===
+  clean: web[ready-held]: 1 failed; web[ready-held]: its own verdict NO-GO: the web server took 47840, which a foreign listener holds - red with no plant, so a red plant would prove nothing; the plants are not counted
+redarm: 6 plants · 0 red · 0 green · 0 errors · scope web · 109.00 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V12-lpc.web.redarm.log
+=== NO-GO: clean: web[ready-held]: 1 failed; web[ready-held]: its own verdict NO-GO: the web server took 47840, which a foreign listener holds - red with no plant, so a red plant would prove nothing; the plants are not counted ===

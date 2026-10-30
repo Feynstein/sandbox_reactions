@@ -1,0 +1,8 @@
+SR-HEADLESS DONE steps=2705 sim_time=32.831322 until=met
+== p5a events:
+{"detail":{"by":"light","mass_sb":3135.655456474982},"kind":"ignition","object":1,"sim_time":4.265455741435289,"step":273}
+dump /tmp/v12/p5a/dumps/s_2705.bin
+SR-HEADLESS DONE steps=64 sim_time=33.563990 until=none
+== p5b events (fresh observers):
+{"detail":{"by":"light","mass_sb":3120.328895671293},"kind":"ignition","object":1,"sim_time":32.84276807773858,"step":2706}
+{'id': 1, 'stage': None}

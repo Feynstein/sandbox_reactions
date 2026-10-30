@@ -1,0 +1,120 @@
+==== 2026-10-30T12:57:35-04:00 frames · clean · a fresh scratch copy of the tree
+== 2026-10-30T12:57:35-04:00 frames · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh frames physics
+-- frames · exit=0 · 14.90 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-31k4atri/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-31k4atri/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.32s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test frames::bad_frame_arguments_are_exit_4 ... SR-ERROR bad arguments: --frames-every must be at least 1
+SR-ERROR bad arguments: --frames-every takes a whole number, got "x"
+SR-ERROR bad arguments: --view takes glow, heat, element or density, got "mass"
+SR-ERROR bad arguments: --view needs --frames-every (the view the frames are drawn in)
+SR-ERROR bad arguments: --adapter is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --frames-every needs --out (frames go to DIR/frames)
+ok
+test frames::each_frame_is_the_state_of_the_step_in_its_name_glow ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.527263 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test frames::frames_land_at_every_n_steps_at_the_worlds_size ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=25 sim_time=0.344771 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=0.282290 until=none
+ok
+test frames::frames_leave_the_run_unchanged ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+ok
+test frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10 sim_time=0.153661 until=none
+centre [255, 255, 255, 255] rim [255, 255, 230, 255] corner [5, 7, 13, 255]
+ok
+test frames::the_view_flag_draws_the_chosen_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.527263 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10 sim_time=0.153661 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10 sim_time=0.153661 until=none
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 436 filtered out; finished in 4.49s
+
+
+==== 2026-10-30T12:57:50-04:00 frames · plant frames-off-by-one · a fresh scratch copy of the tree
+planted frames-off-by-one: tests/plants/frames-off-by-one.patch -> crates/sr-engine/src/headless.rs
+== 2026-10-30T12:57:51-04:00 frames · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh frames physics
+-- frames · exit=101 · 12.94 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-31k4atri/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-31k4atri/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.35s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test frames::bad_frame_arguments_are_exit_4 ... SR-ERROR bad arguments: --frames-every must be at least 1
+SR-ERROR bad arguments: --frames-every takes a whole number, got "x"
+SR-ERROR bad arguments: --view takes glow, heat, element or density, got "mass"
+SR-ERROR bad arguments: --view needs --frames-every (the view the frames are drawn in)
+SR-ERROR bad arguments: --adapter is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --frames-every needs --out (frames go to DIR/frames)
+ok
+test frames::each_frame_is_the_state_of_the_step_in_its_name_glow ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.527263 until=none
+
+thread 'frames::each_frame_is_the_state_of_the_step_in_its_name_glow' (573171) panicked at crates/sr-engine/tests/gpu/frames.rs:197:5:
+assertion `left == right` failed
+  left: [11, 21, 31, 41]
+ right: [10, 20, 30, 40]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test frames::frames_land_at_every_n_steps_at_the_worlds_size ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+
+thread 'frames::frames_land_at_every_n_steps_at_the_worlds_size' (573230) panicked at crates/sr-engine/tests/gpu/frames.rs:159:5:
+assertion `left == right` failed: a frame at each multiple of 10 up to the run's end, none else
+  left: [11, 21, 31, 41, 51]
+ right: [10, 20, 30, 40, 50]
+FAILED
+test frames::frames_leave_the_run_unchanged ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.645763 until=none
+ok
+test frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10 sim_time=0.153661 until=none
+
+thread 'frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre' (573299) panicked at crates/sr-engine/tests/gpu/frames.rs:68:56:
+/tmp/sr-frames-573169-glow/frames/f_10.png: No such file or directory (os error 2)
+FAILED
+test frames::the_view_flag_draws_the_chosen_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=0.527263 until=none
+
+thread 'frames::the_view_flag_draws_the_chosen_view' (573305) panicked at crates/sr-engine/tests/gpu/frames.rs:197:5:
+assertion `left == right` failed
+  left: [11, 21, 31, 41]
+ right: [10, 20, 30, 40]
+FAILED
+
+failures:
+
+failures:
+    frames::each_frame_is_the_state_of_the_step_in_its_name_glow
+    frames::frames_land_at_every_n_steps_at_the_worlds_size
+    frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre
+    frames::the_view_flag_draws_the_chosen_view
+
+test result: FAILED. 2 passed; 4 failed; 0 ignored; 0 measured; 436 filtered out; finished in 2.47s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

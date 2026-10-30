@@ -1,0 +1,146 @@
+==== 2026-10-30T12:15:59-04:00 heat_gauss · clean · a fresh scratch copy of the tree
+== 2026-10-30T12:15:59-04:00 heat_gauss · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh heat::gauss physics
+-- heat_gauss · exit=0 · 12.39 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-n7u8s1u4/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-n7u8s1u4/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.20s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 42384.087275104, radiated 42384.087275110, Newton passes up to 6, |delta| up to 7.05e-13
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 42384.059747, radiated 42384.057938, twin 42384.087275; |T - twin| 2.07e-4; up to 4 Newton passes, 124 rounds, |delta| 1.4e-5
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 42384.050566, radiated 42384.051270, twin 42384.087275; |T - twin| 2.50e-4; up to 4 Newton passes, 19 rounds, |delta| 1.5e-5
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 5.11e-6 of a largest |F| 0.1375
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 4.00e-7 of a largest |F| 0.1375
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 23.995177, y 23.995177, expected 24, error 2.01e-4; heat 3.15e-7; |T - twin| 1.12e-5
+SR-HEAT1 GPU t = 16: sigma2 x 31.986960, y 31.986959, expected 32, error 4.08e-4; heat 3.77e-7; |T - twin| 3.43e-5
+SR-HEAT1 GPU t = 24: sigma2 x 39.972385, y 39.972382, expected 40, error 6.90e-4; heat 4.61e-7; |T - twin| 5.07e-5
+SR-HEAT1 GPU radiated 0.00e0, 0.00e0 of the pulse (band 1e-7)
+SR-HEAT1 GPU worst sigma2 error 6.90e-4; up to 3 Newton passes, 5 rounds, |delta| 2.1e-8
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 23.999976, y 23.999976, expected 24, error 1.01e-6; heat 3.08e-6; |T - twin| 5.26e-6
+SR-HEAT1 GPU t = 16: sigma2 x 31.999851, y 31.999850, expected 32, error 4.67e-6; heat 5.20e-6; |T - twin| 3.82e-6
+SR-HEAT1 GPU t = 24: sigma2 x 40.012006, y 40.012005, expected 40, error 3.00e-4; heat 6.50e-6; |T - twin| 4.74e-5
+SR-HEAT1 GPU radiated 6.65e-6, 3.31e-8 of the pulse (band 1e-5)
+SR-HEAT1 GPU worst sigma2 error 3.00e-4; up to 2 Newton passes, 3 rounds, |delta| 5.7e-7
+ok
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... ok
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... ok
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 1.88e-14 of the pulse, E 1.41e-13 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 24.000000, y 24.000000, expected 24, error 9.56e-11
+SR-HEAT1 t = 16: sigma2 x 32.000000, y 32.000000, expected 32, error 1.41e-10
+SR-HEAT1 t = 24: sigma2 x 40.000000, y 40.000000, expected 40, error 2.07e-10
+SR-HEAT1 worst sigma2 error 2.07e-10
+ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 428 filtered out; finished in 2.10s
+
+
+==== 2026-10-30T12:16:12-04:00 heat_gauss · plant chi-scale · a fresh scratch copy of the tree
+planted chi-scale: tests/plants/chi-scale.patch -> crates/sr-physics/src/reference/heat.rs, crates/sr-engine/shaders/heat.wgsl
+== 2026-10-30T12:16:12-04:00 heat_gauss · task M0-V12-sweep · box laserax-ai-server :: bash tests/gpu.sh heat::gauss physics
+-- heat_gauss · exit=101 · 12.39 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-n7u8s1u4/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-n7u8s1u4/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.35s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test heat::gauss::a_hot_slab_beside_vacuum_books_radiated_equal_to_the_heat_the_grid_lost ... SR-HEAT-RAD slab 61440.0000: lost 42384.087275104, radiated 42384.087275110, Newton passes up to 6, |delta| up to 7.05e-13
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 42384.059747, radiated 42384.057938, twin 42384.087275; |T - twin| 2.07e-4; up to 4 Newton passes, 124 rounds, |delta| 1.4e-5
+ok
+test heat::gauss::gpu_a_hot_slab_books_radiated_equal_to_the_heat_the_grid_lost::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT-RAD GPU: lost 42384.050566, radiated 42384.051270, twin 42384.087275; |T - twin| 2.50e-4; up to 4 Newton passes, 19 rounds, |delta| 1.5e-5
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_pinned_temperature_leaves_the_state_and_keeps_the_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 3.23e-6 of a largest |F| 0.1246
+ok
+test heat::gauss::gpu_the_flux_kept_is_the_twins_and_side_flux_is_its_cell_mean::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU flux: largest |F - twin| 2.48e-7 of a largest |F| 0.1246
+ok
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 23.196740, y 23.196740, expected 24, error 3.35e-2; heat 3.28e-7; |T - twin| 8.18e-6
+
+thread 'heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::jacobi' (528215) panicked at crates/sr-engine/tests/gpu/heat.rs:556:17:
+t = 8: σ² x 23.196739997669283, y 23.19674012681844, expected 24
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEAT1 GPU t = 8: sigma2 x 23.199998, y 23.199998, expected 24, error 3.33e-2; heat 2.08e-6; |T - twin| 4.05e-6
+
+thread 'heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::multigrid' (528220) panicked at crates/sr-engine/tests/gpu/heat.rs:556:17:
+t = 8: σ² x 23.199998441836215, y 23.199998320412305, expected 24
+FAILED
+test heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux ... 
+thread 'heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux' (528246) panicked at crates/sr-engine/tests/gpu/heat.rs:525:9:
+0.11986280497193813 vs 0.13318089441326458
+FAILED
+test heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference ... 
+thread 'heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference' (528247) panicked at crates/sr-engine/tests/gpu/heat.rs:440:13:
+x face (70, 64): 0.11324602480842191 vs 0.125828916453802
+FAILED
+test heat::gauss::the_scene_files_carry_what_the_oracles_assume ... ok
+test heat::gauss::the_total_heat_is_constant ... SR-HEAT1 heat 201.061930, worst change 3.72e-14 of the pulse, E 1.31e-13 of the world
+ok
+test heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis ... SR-HEAT1 t = 8: sigma2 x 23.200000, y 23.200000, expected 24, error 3.33e-2
+
+thread 'heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis' (528294) panicked at crates/sr-engine/tests/gpu/heat.rs:404:17:
+t = 8: σ² x 23.199999997828854, y 23.199999997774285, expected 24
+FAILED
+
+failures:
+
+failures:
+    heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::jacobi
+    heat::gauss::gpu_the_variance_grows_as_sigma0_squared_plus_two_chi_t_and_the_heat_is_kept::multigrid
+    heat::gauss::pinned_temperature_leaves_the_state_and_keeps_the_flux
+    heat::gauss::the_flux_kept_is_chi_c_times_the_temperature_difference
+    heat::gauss::the_variance_grows_as_sigma0_squared_plus_two_chi_t_per_axis
+
+test result: FAILED. 9 passed; 5 failed; 0 ignored; 0 measured; 428 filtered out; finished in 1.93s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

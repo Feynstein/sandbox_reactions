@@ -2467,15 +2467,16 @@
       ]
     },
     "ui_topbar": {
-      "desc": "the top bar's view model (contract §4.2, §4.3, §4.10, §4.12; M0-T85): crates/sr-app/src/ui/topbar.rs computed from TimeControl - Pause/Play and Step, the rung buttons (each label byte-exact, none above TOP / 1.5, Max's last), the speed readout (time.speed, time.speed_capped under the cap, time.speed_max at Max, time.paused over both), the slow-down checkbox both ways, the selected rung, each key mapped (Space, period, 1-9, 0, + or =, -) and a numbered key past the ladder never landing on Max. The bin's own unit tests, `ui::topbar::` (cpu.sh's --bin mode). The plan spells the scope `ui-topbar`; R17 makes it `ui_topbar`. Plant topbar-above-top (a rung above TOP shown).",
+      "desc": "the top bar's view model (contract §4.2, §4.3, §4.10, §4.12; M0-T85): crates/sr-app/src/ui/topbar.rs computed from TimeControl - Pause/Play and Step, the rung buttons (each label byte-exact, none above TOP / 1.5, Max's last), the speed readout (time.speed, time.speed_capped under the cap, time.speed_max at Max, time.paused over both), the slow-down checkbox both ways, the selected rung, each key mapped (Space, period, 1-9, 0, + or =, -) and a numbered key past the ladder never landing on Max; since M0-V12 the paused state marked for `accent` and desktop.rs's drawing of the bar keeping one width through pause, play, a rung change and the cap (the lead: «I dont like when an interaction in a bar moves the whole bar»). The bin's own unit tests, `ui::topbar::` (cpu.sh's --bin mode). The plan spells the scope `ui-topbar`; R17 makes it `ui_topbar`. Plants topbar-above-top (a rung above TOP shown), topbar-pause-width (the Pause/Play button back to its label's width), topbar-paused-unmarked (the paused readout never marked).",
       "cmd": "bash tests/cpu.sh sr-app --bin ui::topbar::tests",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 14,
+      "expected": 15,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
         "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/desktop.rs",
         "crates/sr-app/src/strings.rs",
         "crates/sr-app/src/format.rs",
         "crates/sr-app/src/main.rs",
@@ -2492,15 +2493,23 @@
         {
           "id": "topbar-above-top",
           "patch": "tests/plants/topbar-above-top.patch"
+        },
+        {
+          "id": "topbar-pause-width",
+          "patch": "tests/plants/topbar-pause-width.patch"
+        },
+        {
+          "id": "topbar-paused-unmarked",
+          "patch": "tests/plants/topbar-paused-unmarked.patch"
         }
       ]
     },
     "ui_banner": {
-      "desc": "the banner's view model (contract §1.8.5, §1.9.4, §4.2, §4.3, §4.11; M0-T86): crates/sr-app/src/ui/banner.rs - the text and rung each automatic slow-down shows (ignition ×1 `banner.ignition`, the latch's core collapse and the supernova ×0.1), the banner kept until the player changes the rung, the setting off meaning no slow-down and no banner, only ever slower, each event once per object, and a Tracker core collapse that arrives after the latch already slowed the clock never a second banner. The bin's own unit tests, `ui::banner::` (cpu.sh's --bin mode). The plan spells the scope `ui-banner`; R17 makes it `ui_banner`. Plant banner-wrong-event (supernova shown for core collapse).",
+      "desc": "the banner's view model (contract §1.8.5, §1.9.4, §4.2, §4.3, §4.11; M0-T86): crates/sr-app/src/ui/banner.rs - the text and rung each automatic slow-down shows (ignition ×1 `banner.ignition`, the latch's core collapse and the supernova ×0.1), the banner kept until the player changes the rung, the setting off meaning no slow-down and no banner, only ever slower, each event once per object, and a Tracker core collapse that arrives after the latch already slowed the clock never a second banner. The bin's own unit tests, `ui::banner::` (cpu.sh's --bin mode). The plan spells the scope `ui-banner`; R17 makes it `ui_banner`. Since M0-D120 `banner::views` builds the bar and the banner of a pass from one clock state after the read-back (the case `the_pass_that_reads_an_event_...`). Plants banner-wrong-event (supernova shown for core collapse), banner-bar-before-poll (the bar read before the pass books an event).",
       "cmd": "bash tests/cpu.sh sr-app --bin ui::banner",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 12,
+      "expected": 13,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -2521,6 +2530,46 @@
         {
           "id": "banner-wrong-event",
           "patch": "tests/plants/banner-wrong-event.patch"
+        },
+        {
+          "id": "banner-bar-before-poll",
+          "patch": "tests/plants/banner-bar-before-poll.patch"
+        }
+      ]
+    },
+    "ui_theme": {
+      "desc": "the window's colours (contract §4.2, §4.11; M0-D119): crates/sr-app/src/ui/theme.rs - the design tokens as egui colours and the Visuals built from them at start-up: every fill and stroke egui reads for the bar, the Clear dialog and the status bar one of §4.11's values (no selection teal #005C80, no #3C3C3C chips, no #1B1B1B window), a selected rung accent text on a token fill, the shadows off, the modal backdrop bg.space dimmed, and desktop.rs and ui/topbar.rs writing no colour literal; since M0-V12 the tokens kept whatever the system's light or dark preference (`install` pins egui's dark preference and dresses both themes; a light browser had drawn egui's light fills under the light text) and both entries, desktop.rs and web.rs, installing them. The bin's own unit tests, `ui::theme::tests` (cpu.sh's --bin mode). Plants theme-default-selection (the selection fill back to egui's teal), theme-follows-system (`install` back to one `set_visuals`), theme-web-not-installed (web.rs setting the visuals itself).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::theme::tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 7,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/desktop.rs",
+        "crates/sr-app/src/web.rs",
+        "crates/sr-app/src/main.rs",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/theme-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "theme-default-selection",
+          "patch": "tests/plants/theme-default-selection.patch"
+        },
+        {
+          "id": "theme-follows-system",
+          "patch": "tests/plants/theme-follows-system.patch"
+        },
+        {
+          "id": "theme-web-not-installed",
+          "patch": "tests/plants/theme-web-not-installed.patch"
         }
       ]
     },

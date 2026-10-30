@@ -1,0 +1,14 @@
+--- a/crates/sr-app/src/ui/banner.rs
++++ b/crates/sr-app/src/ui/banner.rs
+@@ -45,8 +45,10 @@
+ /// The bar and the banner of one pass, both built from the clock as the pass's read-back leaves it: an event booked by this
+ /// pass's frames shows its banner beside the rung it slowed to, never beside the one it replaced (M0-D120).
+ pub fn views(app: &mut impl Pass) -> (TopBar, Option<Banner>) {
++    // Planted: the bar read before the read-back, the banner after it (M0-D120's fault).
++    let bar = topbar::view(app.time(), app.world_bar());
+     app.poll();
+-    (topbar::view(app.time(), app.world_bar()), view(app.time()))
++    (bar, view(app.time()))
+ }
+ 
+ /// Feeds the clock's `on_event` from both sources and books each event once.

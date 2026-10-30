@@ -1,0 +1,11 @@
+--- a/crates/sr-app/src/ui/theme.rs
++++ b/crates/sr-app/src/ui/theme.rs
+@@ -53,7 +53,7 @@
+         hot.fg_stroke = ink;
+     }
+ 
+-    v.selection.bg_fill = BORDER_PANEL;
++    v.selection.bg_fill = Color32::from_rgb(0x00, 0x5C, 0x80); // Planted: egui's own selection teal (M0-D119's plant).
+     v.selection.stroke = Stroke::new(1.0, ACCENT);
+ 
+     v.window_fill = BG_PANEL;

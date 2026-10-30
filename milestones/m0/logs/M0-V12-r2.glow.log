@@ -1,0 +1,24 @@
+== 2026-10-30T11:12:12-04:00 glow · task M0-V12-r2 · box laserax-ai-server :: bash tests/gpu.sh glow physics
+-- glow · exit=0 · 2.87 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test glow::a_bright_block_halo_follows_the_gaussian_and_is_visible ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test glow::a_bright_cell_at_the_corner_and_one_on_the_edge ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test glow::a_lone_bright_cell_halo_follows_the_gaussian ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test glow::dense_cold_gas_does_not_bloom ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test glow::hotter_than_the_luminance_band_still_blooms ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test glow::nothing_is_added_below_the_threshold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test glow::the_other_views_are_untouched ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 435 filtered out; finished in 2.73s
+
+

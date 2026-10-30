@@ -3,4 +3,5 @@
 //! it and hands the commands back. That keeps the panels testable without a window (scopes `ui-*`).
 
 pub mod banner;
+pub mod theme;
 pub mod topbar;

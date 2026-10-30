@@ -1,0 +1,14 @@
+--- a/crates/sr-app/src/ui/theme.rs
++++ b/crates/sr-app/src/ui/theme.rs
+@@ -78,9 +78,8 @@
+ /// drew egui's light fills under the tokens' light text — the bar's buttons blank. The window is dark whatever the system
+ /// prefers: the preference pinned to dark, and both of egui's themes given the tokens.
+ pub fn install(ctx: &egui::Context) {
+-    ctx.set_theme(egui::ThemePreference::Dark);
+-    ctx.set_visuals_of(egui::Theme::Dark, visuals());
+-    ctx.set_visuals_of(egui::Theme::Light, visuals());
++    // Planted: the tokens on the theme active at start-up only, the system's light or dark setting followed (M0-V12's fault).
++    ctx.set_visuals(visuals());
+ }
+ 
+ #[cfg(test)]

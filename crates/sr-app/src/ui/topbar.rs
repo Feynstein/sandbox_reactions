@@ -145,6 +145,8 @@ pub struct TopBar {
     /// The ladder rungs the clock holds (none above TOP / 1.5, §1.8.2), then Max's.
     pub rungs: Vec<RungButton>,
     pub speed: String,
+    /// The clock is paused: the readout (`time.paused`) is drawn in `accent`, so a still world says so (§0.5 [M0-V12]).
+    pub paused: bool,
     pub slow_down: SlowDown,
     pub edge: EdgeChoice,
     /// `world.clear`: opens the dialog.
@@ -192,6 +194,7 @@ pub fn view(time: &TimeControl, world: &WorldBar) -> TopBar {
         step: Button { label: strings::get("time.step").to_string(), command: Command::Step },
         rungs,
         speed: readout(time),
+        paused: time.paused(),
         slow_down: SlowDown { label: strings::get("time.slowdown").to_string(), checked: time.slow_down() },
         edge: EdgeChoice {
             label: strings::get("edge.label").to_string(),
@@ -358,14 +361,37 @@ mod tests {
     #[test]
     fn paused_reads_paused_and_the_button_reads_play() {
         let mut time = clock(None);
+        assert!(!bar_of(&time).paused, "running: the readout is not marked");
         apply(&mut time, Command::TogglePause);
         let bar = bar_of(&time);
-        assert_eq!((bar.speed.as_str(), bar.play.label.as_str()), ("Paused", "Play"));
+        assert_eq!((bar.speed.as_str(), bar.play.label.as_str(), bar.paused), ("Paused", "Play", true));
         // At Max, too: the pause wins over the running speed.
         apply(&mut time, Command::Max);
         assert_eq!(bar_of(&time).speed, "Paused");
         apply(&mut time, Command::TogglePause);
-        assert_eq!(bar_of(&time).play.label, "Pause");
+        assert_eq!((bar_of(&time).play.label.as_str(), bar_of(&time).paused), ("Pause", false));
+    }
+
+    /// Nothing in the bar moves when the player pauses, plays, changes the rung or the cap shows (the lead at M0-V12: «I dont
+    /// like when an interaction in a bar moves the whole bar»): the window's own drawing of the bar keeps one width.
+    #[test]
+    fn the_bar_keeps_its_width_through_pause_rungs_and_the_cap() {
+        let width = |bar: &TopBar| {
+            let mut w = 0.0;
+            let _ = egui::Context::default().run_ui(egui::RawInput::default(), |ui| {
+                crate::desktop::draw_top_bar(ui, bar);
+                w = ui.min_rect().width();
+            });
+            w
+        };
+        let mut time = clock(None);
+        let running = width(&bar_of(&time));
+        apply(&mut time, Command::TogglePause);
+        let paused = width(&bar_of(&time));
+        apply(&mut time, Command::TogglePause);
+        run_capped(&mut time, 8, 0.5);
+        let capped = width(&bar_of(&time));
+        assert_eq!((paused, capped), (running, running), "running {running}, paused {paused}, capped {capped}");
     }
 
     #[test]

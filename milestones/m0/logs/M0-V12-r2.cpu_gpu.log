@@ -1,0 +1,20 @@
+== 2026-10-30T11:11:32-04:00 cpu_gpu · task M0-V12-r2 · box laserax-ai-server :: bash tests/gpu.sh cpu_gpu physics
+-- cpu_gpu · exit=0 · 7.83 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test cpu_gpu::the_burning_field_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA: sim time GPU 1.84135 / twin 1.84133 (+0.001 %); relative L1 Σ 0.000e0 (band 1e-3), E 7.836e-6 (band 1e-3); largest |ΔX| 2.260e-13 in x_He (band 1e-4)
+SR-REF ref_burn.json: H mass in the twin fell 100.000 % (at least 1 % required)
+ok
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA: sim time GPU 2.73740 / twin 2.73745 (-0.002 %); relative L1 Σ 1.580e-4 (band 1e-3), E 2.513e-4 (band 1e-3); largest |ΔX| 5.276e-6 in x_He (band 1e-4)
+ok
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA: sim time GPU 19.52918 / twin 19.52918 (-0.000 %); relative L1 Σ 1.637e-7 (band 1e-3), E 2.061e-7 (band 1e-3); largest |ΔX| 7.718e-7 in x_He (band 1e-4)
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 439 filtered out; finished in 7.61s
+
+

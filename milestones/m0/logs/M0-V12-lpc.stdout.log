@@ -1,0 +1,11 @@
+desktop    5/0/0       57.72 s  GO · step 1/4, 3 left
+web        3/1/0      115.46 s  NO-GO · step 2/4, 2 left
+capture    3/0/0       14.67 s  GO · step 3/4, 1 left
+toolchain  3/0/0        0.39 s  GO · step 4/4, 0 left
+logs: milestones/m0/logs/M0-V12-lpc.<scope>.log · record: loop_times.jsonl · tree 2d511228bd23+ed5a9d88e5cd
+anchor: 144 path×scope entries moved by this run
+anchor: 209 paths checked · 336 skipped (3 classes) · 144 never checked · 0 stale · 0 unclassified · 0 owed · 353 covered of 689 visible
+FAILED:
+  web: web[ready-held]: 1 failed; web[ready-held]: its own verdict NO-GO: the web server took 47840, which a foreign listener holds · log milestones/m0/logs/M0-V12-lpc.web.log
+verify: 14 passed, 1 failed, 0 skipped · 3/4 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 93.21 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.43->2.88
+=== NO-GO: web: web[ready-held]: 1 failed; web[ready-held]: its own verdict NO-GO: the web server took 47840, which a foreign listener holds · log milestones/m0/logs/M0-V12-lpc.web.log ===

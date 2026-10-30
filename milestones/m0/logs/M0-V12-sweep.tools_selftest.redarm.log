@@ -1,0 +1,168 @@
+==== 2026-10-30T11:48:12-04:00 tools_selftest · clean · a fresh scratch copy of the tree
+== 2026-10-30T11:48:14-04:00 tools_selftest[plan] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/plan.py selftest
+== 2026-10-30T11:48:14-04:00 tools_selftest[verify] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/verify.py selftest
+-- tools_selftest[plan] · exit=0 · 1.52 s
+selftest: checks=260 failed=0 warnings=0 · plants=80
+=== GO ===
+
+== 2026-10-30T11:48:15-04:00 tools_selftest[launch] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/launch.py selftest
+-- tools_selftest[launch] · exit=0 · 3.52 s
+checks: 60, failures: 0
+=== GO ===
+
+== 2026-10-30T11:48:19-04:00 tools_selftest[review_page] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/review_page.py selftest
+-- tools_selftest[review_page] · exit=0 · 1.27 s
+  read back verbatim from the report on disk after a served POST: 2/2 (JSON + text/plain beacon shape)
+  unknown capture id POST: HTTP 422, remarks.json + report unchanged; the unflagged capture's POST: HTTP 422
+  red arms: accept_unknown → red · memory_only → red · drop_outside → red · show_unflagged → red · raw_paths → red
+checks 45 · passed 45 · failed 0 · skipped 0
+=== GO ===
+
+== 2026-10-30T11:48:20-04:00 tools_selftest[status_page] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/status_page.py selftest
+-- tools_selftest[status_page] · exit=0 · 1.27 s
+  block lists: the page's == the fixture's 6 · plan.py lint GO, blocks 6, Flow rows 6
+  round trip: 1 answered question(s) read back by poll after a served POST
+  red arms: own_parser → red · critical_ignored → red · rewrite_state → red · accept_unknown → red · no_lock → red
+checks 43 · passed 43 · failed 0
+=== GO ===
+
+== 2026-10-30T11:48:21-04:00 tools_selftest[content_gate] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/content_gate.py selftest
+-- tools_selftest[content_gate] · exit=0 · 0.32 s
+checks: 87 · passed: 87 · failed: 0
+=== GO ===
+
+== 2026-10-30T11:48:22-04:00 tools_selftest[rung_record] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/rung_record.py selftest
+-- tools_selftest[rung_record] · exit=0 · 0.11 s
+selftest: checks=73 passed=73 failed=0 · plants red 31/31
+=== GO ===
+
+== 2026-10-30T11:48:22-04:00 tools_selftest[capture_web] · task M0-V12-sweep · box laserax-ai-server :: node tools/pb/capture_web.mjs selftest
+-- tools_selftest[capture_web] · exit=0 · 0.97 s
+NOTE no tools/pb/routes.json beside the tool: nothing of the project's to validate
+NOTE live tier NOT RUN (--live: a real browser, through the project's Playwright)
+selftest: checks=85 · failed=0 · plants=38 · live=0 · seconds=0.94
+=== GO ===
+
+== 2026-10-30T11:48:23-04:00 tools_selftest[switch] · task M0-V12-sweep · box laserax-ai-server :: node tools/pb/switch.mjs selftest
+-- tools_selftest[switch] · exit=0 · 0.03 s
+selftest: checks=45 passed=45 failed=0 · plants red 13/13
+=== GO ===
+
+== 2026-10-30T11:48:23-04:00 tools_selftest[scratch_copy] · task M0-V12-sweep · box laserax-ai-server :: bash tools/pb/scratch_copy.sh --selftest
+-- tools_selftest[scratch_copy] · exit=0 · 0.36 s
+checks=12 · passed=12 · failed=0
+=== GO ===
+
+-- tools_selftest[verify] · exit=1 · 27.00 s
+FAILED:
+  PLANT a command that hangs: killed at its timeout, its log kept: /T9.<scope>.log · record: loop_times.jsonl · tree 632517b7086b
+FAILED:
+  a: timed out after 0.2 s · log logs/T9.a.log
+verify: 1 passed, 0 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.21 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.3 · load 0.4->0.31 · base: none — every plant
+=== NO-GO: a: timed out after 0.2 s · log logs/T9.a.log ===
+
+selftest: checks=358 · failed=1 · plants=159/160 red
+=== NO-GO: 1 check(s) failed ===
+
+==== 2026-10-30T11:48:12-04:00 tools_selftest · plant tools-selftest-scratch · a fresh scratch copy of the tree
+planted tools-selftest-scratch: tests/plants/tools-selftest-scratch.patch -> tools/pb/scratch_copy.sh
+== 2026-10-30T11:48:14-04:00 tools_selftest[plan] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/plan.py selftest
+== 2026-10-30T11:48:14-04:00 tools_selftest[verify] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/verify.py selftest
+-- tools_selftest[plan] · exit=0 · 1.42 s
+selftest: checks=260 failed=0 warnings=0 · plants=80
+=== GO ===
+
+== 2026-10-30T11:48:15-04:00 tools_selftest[launch] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/launch.py selftest
+-- tools_selftest[launch] · exit=0 · 3.62 s
+checks: 60, failures: 0
+=== GO ===
+
+== 2026-10-30T11:48:19-04:00 tools_selftest[review_page] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/review_page.py selftest
+-- tools_selftest[review_page] · exit=0 · 1.27 s
+  read back verbatim from the report on disk after a served POST: 2/2 (JSON + text/plain beacon shape)
+  unknown capture id POST: HTTP 422, remarks.json + report unchanged; the unflagged capture's POST: HTTP 422
+  red arms: accept_unknown → red · memory_only → red · drop_outside → red · show_unflagged → red · raw_paths → red
+checks 45 · passed 45 · failed 0 · skipped 0
+=== GO ===
+
+== 2026-10-30T11:48:20-04:00 tools_selftest[status_page] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/status_page.py selftest
+-- tools_selftest[status_page] · exit=0 · 1.27 s
+  block lists: the page's == the fixture's 6 · plan.py lint GO, blocks 6, Flow rows 6
+  round trip: 1 answered question(s) read back by poll after a served POST
+  red arms: own_parser → red · critical_ignored → red · rewrite_state → red · accept_unknown → red · no_lock → red
+checks 43 · passed 43 · failed 0
+=== GO ===
+
+== 2026-10-30T11:48:21-04:00 tools_selftest[content_gate] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/content_gate.py selftest
+-- tools_selftest[content_gate] · exit=0 · 0.32 s
+checks: 87 · passed: 87 · failed: 0
+=== GO ===
+
+== 2026-10-30T11:48:22-04:00 tools_selftest[rung_record] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/rung_record.py selftest
+-- tools_selftest[rung_record] · exit=0 · 0.11 s
+selftest: checks=73 passed=73 failed=0 · plants red 31/31
+=== GO ===
+
+== 2026-10-30T11:48:22-04:00 tools_selftest[capture_web] · task M0-V12-sweep · box laserax-ai-server :: node tools/pb/capture_web.mjs selftest
+-- tools_selftest[capture_web] · exit=0 · 0.97 s
+NOTE no tools/pb/routes.json beside the tool: nothing of the project's to validate
+NOTE live tier NOT RUN (--live: a real browser, through the project's Playwright)
+selftest: checks=85 · failed=0 · plants=38 · live=0 · seconds=0.93
+=== GO ===
+
+== 2026-10-30T11:48:23-04:00 tools_selftest[switch] · task M0-V12-sweep · box laserax-ai-server :: node tools/pb/switch.mjs selftest
+-- tools_selftest[switch] · exit=0 · 0.03 s
+selftest: checks=45 passed=45 failed=0 · plants red 13/13
+=== GO ===
+
+== 2026-10-30T11:48:23-04:00 tools_selftest[scratch_copy] · task M0-V12-sweep · box laserax-ai-server :: bash tools/pb/scratch_copy.sh --selftest
+-- tools_selftest[scratch_copy] · exit=1 · 0.37 s
+checks=12 · passed=9 · failed=3
+FAIL no file of §A.7's 13 excluded folders is copied, top level or nested
+FAIL .venv and node_modules are symlinks to the source's
+FAIL PLANT `models` removed from the list → its two files appear → the leak check turns red
+=== NO-GO: 3 check(s) failed ===
+
+-- tools_selftest[verify] · exit=1 · 27.01 s
+FAILED:
+  PLANT a command that hangs: killed at its timeout, its log kept: /T9.<scope>.log · record: loop_times.jsonl · tree 85c46901ad31
+FAILED:
+  a: timed out after 0.2 s · log logs/T9.a.log
+verify: 1 passed, 0 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.20 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.3 · load 0.4->0.31 · base: none — every plant
+=== NO-GO: a: timed out after 0.2 s · log logs/T9.a.log ===
+
+selftest: checks=358 · failed=1 · plants=159/160 red
+=== NO-GO: 1 check(s) failed ===
+
+==== 2026-10-30T11:48:12-04:00 tools_selftest · plant tools-selftest-box-list · a fresh scratch copy of the tree
+planted tools-selftest-box-list: tests/plants/tools-selftest-box-list.patch -> tools/pb/verify.py
+== 2026-10-30T11:48:14-04:00 tools_selftest[verify] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 26.95 s
+FAILED:
+  PLANT a command that hangs: killed at its timeout, its log kept: /T9.<scope>.log · record: loop_times.jsonl · tree 5ba4b5adcdcd
+FAILED:
+  a: timed out after 0.2 s · log logs/T9.a.log
+verify: 1 passed, 0 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.21 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.3 · load 0.4->0.31 · base: none — every plant
+=== NO-GO: a: timed out after 0.2 s · log logs/T9.a.log ===
+
+  a `box` list runs on each box it names and owes on every other (M0-D111): (['src/b.py'], True)
+selftest: checks=358 · failed=2 · plants=159/160 red
+=== NO-GO: 2 check(s) failed ===
+
+==== 2026-10-30T11:48:12-04:00 tools_selftest · plant tools-selftest-arms-at-once · a fresh scratch copy of the tree
+planted tools-selftest-arms-at-once: tests/plants/tools-selftest-arms-at-once.patch -> tools/pb/verify.py
+== 2026-10-30T11:48:14-04:00 tools_selftest[verify] · task M0-V12-sweep · box laserax-ai-server :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 26.65 s
+FAILED:
+  PLANT a command that hangs: killed at its timeout, its log kept: /T9.<scope>.log · record: loop_times.jsonl · tree 37f1464cafcc
+FAILED:
+  a: timed out after 0.2 s · log logs/T9.a.log
+verify: 1 passed, 0 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.20 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.3 · load 0.4->0.31 · base: none — every plant
+=== NO-GO: a: timed out after 0.2 s · log logs/T9.a.log ===
+
+  arm_workers: never more than the scope's `arms_at_once` (M0-D108)
+  --redarm: an `arms_at_once: 1` scope's arms one at a time, its record says so (M0-D108): [('nogo', 1793375318.06167, 1793375318.211798), ('nogo', 1793375318.062051, 1793375318.212255), ('go', 1793375318.062773, 1793375318.21299)]
+  PLANT `arms_at_once` ignored: red - the arms side by side, the serial case sees them overlap: [('nogo', 1793375318.310055, 1793375318.460238), ('nogo', 1793375318.310309, 1793375318.460439)]
+selftest: checks=358 · failed=4 · plants=158/160 red
+=== NO-GO: 4 check(s) failed ===
+

@@ -1,0 +1,99 @@
+==== 2026-10-30T11:49:42-04:00 capture · clean · a fresh scratch copy of the tree
+== 2026-10-30T11:49:42-04:00 capture[smoke] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-30T11:49:42-04:00 capture[refuse] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-30T11:49:42-04:00 capture[actions] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 5.12 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 7.08 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.o7f0S27iCm
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=0 · 16.45 s
+SR-CAPTURE-STATUS slowdown llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE rung-max rung-max.png 1760x940
+SR-CAPTURE-STATUS rung-max llvmpipe (LLVM 20.1.2, 256 bits) · 20 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE edge edge.png 1760x940
+SR-CAPTURE-STATUS edge llvmpipe (LLVM 20.1.2, 256 bits) · 25 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE edge-leave edge-leave.png 1760x940
+SR-CAPTURE-STATUS edge-leave llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 9 /tmp/tmp.JHg1UJc5HU
+9 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max)
+capture actions: ok
+=== GO ===
+
+==== 2026-10-30T11:49:59-04:00 capture · plant capture-no-captions · a fresh scratch copy of the tree
+planted capture-no-captions: tests/plants/capture-no-captions.patch -> crates/sr-app/src/capture.rs
+== 2026-10-30T11:49:59-04:00 capture[smoke] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-30T11:49:59-04:00 capture[refuse] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-30T11:49:59-04:00 capture[actions] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 5.70 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=1 · 7.79 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.JoaDyoG2bK
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.JoaDyoG2bK/captions.json'
+=== NO-GO: the captures do not match §3.3 ===
+
+-- capture[actions] · exit=1 · 15.90 s
+SR-CAPTURE-STATUS slowdown llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE rung-max rung-max.png 1760x940
+SR-CAPTURE-STATUS rung-max llvmpipe (LLVM 20.1.2, 256 bits) · 20 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE edge edge.png 1760x940
+SR-CAPTURE-STATUS edge llvmpipe (LLVM 20.1.2, 256 bits) · 25 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE edge-leave edge-leave.png 1760x940
+SR-CAPTURE-STATUS edge-leave llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 9 /tmp/tmp.kXcPfniBbG
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.kXcPfniBbG/captions.json'
+=== NO-GO: the actions did not reach the top bar ===
+
+==== 2026-10-30T11:50:15-04:00 capture · plant capture-edge-ignored · a fresh scratch copy of the tree
+planted capture-edge-ignored: tests/plants/capture-edge-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-30T11:50:15-04:00 capture[smoke] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-30T11:50:15-04:00 capture[refuse] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-30T11:50:15-04:00 capture[actions] · task M0-V12-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 4.33 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 6.18 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.CJfIGoUBxc
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 15.25 s
+SR-CAPTURE-STATUS slowdown llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE rung-max rung-max.png 1760x940
+SR-CAPTURE-STATUS rung-max llvmpipe (LLVM 20.1.2, 256 bits) · 20 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE edge edge.png 1760x940
+SR-CAPTURE-STATUS edge llvmpipe (LLVM 20.1.2, 256 bits) · 25 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE edge-leave edge-leave.png 1760x940
+SR-CAPTURE-STATUS edge-leave llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 9 /tmp/tmp.kj8B7ryA1E
+the top bar of edge-leave is the same as edge's: the action did not reach the bar
+=== NO-GO: the actions did not reach the top bar ===
+
