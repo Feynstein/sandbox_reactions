@@ -623,6 +623,17 @@ def stop_tree(proc):
     proc.wait()
 
 
+def live_sigint():
+    """SIGINT back to Python's own handler when this run was handed it ignored (POSIX; M0-D125). A shell
+    starts an async job (`nohup ... &`, no job control) with SIGINT ignored, every child inherits that,
+    and stop_tree's SIGINT then stops nothing: a timed-out case waited its 15 s for SIGKILL, its
+    runner's teardown never ran. A handler, unlike an ignore, is reset at exec, so every case starts
+    with SIGINT live however the run was launched."""
+    if os.name != "nt" and signal.getsignal(signal.SIGINT) is signal.SIG_IGN:
+        with contextlib.suppress(ValueError):                  # not the main thread: nothing to restore from here
+            signal.signal(signal.SIGINT, signal.default_int_handler)
+
+
 class ScopeRun:
     """One scope's tally in a run; its verdict is derived from the counts, never stated."""
 
@@ -3073,6 +3084,14 @@ def selftest():
             plant_("a command that hangs: killed at its timeout, its log kept",
                    ok and time.monotonic() - t0 < 10 and "exit=timeout" in (logs / "T9.a.log").read_text(encoding="utf-8")
                    and gone(int((tmp / "sleep.pid").read_text())), detail)
+            was = signal.signal(signal.SIGINT, signal.SIG_IGN)      # the run handed SIGINT ignored: `nohup ... &`
+            try:
+                t0 = time.monotonic()
+                ok, detail = red({"a": {"cmd": f"{py} sleep 20", "timeout_s": 0.2}}, "a", "timed out after 0.2 s")
+                check("a run handed SIGINT ignored still stops a hung command at its SIGINT, not 15 s on (M0-D125)",
+                      ok and time.monotonic() - t0 < 10 and gone(int((tmp / "sleep.pid").read_text())), detail)
+            finally:
+                signal.signal(signal.SIGINT, was)
             rc, out = run_({"later": clean["later"]}, "--all")
             plant_("nothing but placeholders: zero passed in total", rc == 1 and "zero passed in total" in out, out[-300:])
 
@@ -4872,6 +4891,7 @@ def check_call(a):
 
 def main(argv=None):
     global PROGRESS
+    live_sigint()
     for stream in (sys.stdout, sys.stderr):      # a cp1252 pipe must not eat the verdict
         with contextlib.suppress(AttributeError, ValueError, OSError, io.UnsupportedOperation):
             stream.reconfigure(encoding="utf-8", errors="backslashreplace")

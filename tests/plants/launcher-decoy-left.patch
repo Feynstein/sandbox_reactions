@@ -1,0 +1,8 @@
+--- a/tests/smoke.sh
++++ b/tests/smoke.sh
+@@ -252,3 +252,4 @@
+       decoy=0
+-      $PY tools/pb/launch.py stop web --task "$decoy_task" >/dev/null 2>&1
++      # plant launcher-decoy-left (M0-D128): the decoy's record lost to a parallel writer - the stop finds nothing, the decoy runs on
++      $PY tools/pb/launch.py stop headless-boot --task "$decoy_task" >/dev/null 2>&1
+       if [ -n "$decoy_port" ] && ! _sr_port_closed "$decoy_port"; then

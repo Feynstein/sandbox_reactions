@@ -1,0 +1,10 @@
+--- a/tools/pb/verify.py
++++ b/tools/pb/verify.py
+@@ -4891,7 +4891,6 @@
+ 
+ def main(argv=None):
+     global PROGRESS
+-    live_sigint()
+     for stream in (sys.stdout, sys.stderr):      # a cp1252 pipe must not eat the verdict
+         with contextlib.suppress(AttributeError, ValueError, OSError, io.UnsupportedOperation):
+             stream.reconfigure(encoding="utf-8", errors="backslashreplace")

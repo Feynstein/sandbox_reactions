@@ -56,6 +56,16 @@
           "id": "tools-selftest-arms-at-once",
           "patch": "tests/plants/tools-selftest-arms-at-once.patch",
           "case": "verify"
+        },
+        {
+          "id": "tools-selftest-launch-records",
+          "patch": "tests/plants/tools-selftest-launch-records.patch",
+          "case": "launch"
+        },
+        {
+          "id": "tools-selftest-sigint",
+          "patch": "tests/plants/tools-selftest-sigint.patch",
+          "case": "verify"
         }
       ]
     },
@@ -1419,7 +1429,7 @@
       "cmd": "bash tests/cpu.sh sr-physics time",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 23,
+      "expected": 24,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -1439,6 +1449,10 @@
         {
           "id": "slowdown-auto-return",
           "patch": "tests/plants/slowdown-auto-return.patch"
+        },
+        {
+          "id": "slowdown-supernova-no-takeover",
+          "patch": "tests/plants/slowdown-supernova-no-takeover.patch"
         },
         {
           "id": "time-max-paced",
@@ -1479,7 +1493,7 @@
       "cmd": "bash tests/cpu.sh sr-app --bin format",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 15,
+      "expected": 17,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -1931,6 +1945,14 @@
           "patch": "tests/plants/launcher-stop-all.patch"
         },
         {
+          "id": "launcher-decoy-left",
+          "patch": "tests/plants/launcher-decoy-left.patch"
+        },
+        {
+          "id": "launcher-start-ignored",
+          "patch": "tests/plants/launcher-start-ignored.patch"
+        },
+        {
           "id": "port-no-fallback",
           "patch": "tests/plants/port-no-fallback.patch"
         },
@@ -2000,6 +2022,10 @@
         {
           "id": "web-port-ignored",
           "patch": "tests/plants/web-port-ignored.patch"
+        },
+        {
+          "id": "web-stop-lost",
+          "patch": "tests/plants/web-stop-lost.patch"
         }
       ]
     },
@@ -2505,11 +2531,11 @@
       ]
     },
     "ui_banner": {
-      "desc": "the banner's view model (contract §1.8.5, §1.9.4, §4.2, §4.3, §4.11; M0-T86): crates/sr-app/src/ui/banner.rs - the text and rung each automatic slow-down shows (ignition ×1 `banner.ignition`, the latch's core collapse and the supernova ×0.1), the banner kept until the player changes the rung, the setting off meaning no slow-down and no banner, only ever slower, each event once per object, and a Tracker core collapse that arrives after the latch already slowed the clock never a second banner. The bin's own unit tests, `ui::banner::` (cpu.sh's --bin mode). The plan spells the scope `ui-banner`; R17 makes it `ui_banner`. Since M0-D120 `banner::views` builds the bar and the banner of a pass from one clock state after the read-back (the case `the_pass_that_reads_an_event_...`). Plants banner-wrong-event (supernova shown for core collapse), banner-bar-before-poll (the bar read before the pass books an event).",
+      "desc": "the banner's view model (contract §1.8.5, §1.9.4, §4.2, §4.3, §4.11; M0-T86): crates/sr-app/src/ui/banner.rs - the text and rung each automatic slow-down shows (ignition ×1 `banner.ignition`, the latch's core collapse and the supernova ×0.1), the banner kept until the player changes the rung, the setting off meaning no slow-down and no banner, only ever slower, each event once per object, and a Tracker core collapse that arrives after the latch already slowed the clock never a second banner. The bin's own unit tests, `ui::banner::` (cpu.sh's --bin mode). The plan spells the scope `ui-banner`; R17 makes it `ui_banner`. Since M0-D120 `banner::views` builds the bar and the banner of a pass from one clock state after the read-back (the case `the_pass_that_reads_an_event_...`). Since M0-D122 `banner::Frames` routes the frames read back: a frame submitted before a Clear still reports to the clock but never reaches the new world's observers or Feed (the cases `a_main_sequence_frame_of_the_current_world_ignites`, its control, and `a_frame_submitted_before_a_clear_books_nothing_after_it`). Plants banner-wrong-event (supernova shown for core collapse), banner-bar-before-poll (the bar read before the pass books an event), banner-clear-in-flight (every frame read back taken for the current world's).",
       "cmd": "bash tests/cpu.sh sr-app --bin ui::banner",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 13,
+      "expected": 15,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -2518,6 +2544,8 @@
         "crates/sr-app/src/format.rs",
         "crates/sr-app/src/main.rs",
         "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "crates/sr-app/src/desktop.rs",
         "Cargo.toml",
         "Cargo.lock",
         "rust-toolchain.toml",
@@ -2534,15 +2562,19 @@
         {
           "id": "banner-bar-before-poll",
           "patch": "tests/plants/banner-bar-before-poll.patch"
+        },
+        {
+          "id": "banner-clear-in-flight",
+          "patch": "tests/plants/banner-clear-in-flight.patch"
         }
       ]
     },
     "ui_theme": {
-      "desc": "the window's colours (contract §4.2, §4.11; M0-D119): crates/sr-app/src/ui/theme.rs - the design tokens as egui colours and the Visuals built from them at start-up: every fill and stroke egui reads for the bar, the Clear dialog and the status bar one of §4.11's values (no selection teal #005C80, no #3C3C3C chips, no #1B1B1B window), a selected rung accent text on a token fill, the shadows off, the modal backdrop bg.space dimmed, and desktop.rs and ui/topbar.rs writing no colour literal; since M0-V12 the tokens kept whatever the system's light or dark preference (`install` pins egui's dark preference and dresses both themes; a light browser had drawn egui's light fills under the light text) and both entries, desktop.rs and web.rs, installing them. The bin's own unit tests, `ui::theme::tests` (cpu.sh's --bin mode). Plants theme-default-selection (the selection fill back to egui's teal), theme-follows-system (`install` back to one `set_visuals`), theme-web-not-installed (web.rs setting the visuals itself).",
+      "desc": "the window's colours (contract §4.2, §4.11; M0-D119): crates/sr-app/src/ui/theme.rs - the design tokens as egui colours and the Visuals built from them at start-up: every fill and stroke egui reads for the bar, the Clear dialog and the status bar one of §4.11's values (no selection teal #005C80, no #3C3C3C chips, no #1B1B1B window), a selected rung accent text on a token fill, the shadows off, the modal backdrop bg.space dimmed, and desktop.rs and ui/topbar.rs writing no colour literal; since M0-V12 the tokens kept whatever the system's light or dark preference (`install` pins egui's dark preference and dresses both themes; a light browser had drawn egui's light fills under the light text) and both entries, desktop.rs and web.rs, installing them. The bin's own unit tests, `ui::theme::tests` (cpu.sh's --bin mode). the status line at §4.11's small 12 px (`STATUS_FONT`), not egui's 13 px body text (M0-D123). Plants theme-default-selection (the selection fill back to egui's teal), theme-follows-system (`install` back to one `set_visuals`), theme-web-not-installed (web.rs setting the visuals itself), theme-status-body-size (the status label back to no size).",
       "cmd": "bash tests/cpu.sh sr-app --bin ui::theme::tests",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 7,
+      "expected": 8,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -2570,6 +2602,10 @@
         {
           "id": "theme-web-not-installed",
           "patch": "tests/plants/theme-web-not-installed.patch"
+        },
+        {
+          "id": "theme-status-body-size",
+          "patch": "tests/plants/theme-status-body-size.patch"
         }
       ]
     },

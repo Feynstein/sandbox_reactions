@@ -1,0 +1,12 @@
+desktop · clean · GO · arm 1/8, 7 left
+desktop · plant port-handover-early · RED (proven: desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not) · arm 2/8, 6 left
+desktop · plant status-never-ready · RED (proven: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[lau) · arm 3/8, 5 left
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb) · arm 4/8, 4 left
+desktop · plant launcher-stop-all · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start () · arm 5/8, 3 left
+desktop · plant launcher-decoy-left · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the decoy web server on 47840 (pid 2601621) still) · arm 6/8, 2 left
+desktop · plant port-no-fallback · RED (proven: desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: the game failed: SR-ERROR --statu) · arm 7/8, 1 left
+desktop · plant world-not-drawn · ERROR (the patch tests/plants/world-not-drawn.patch does not apply: crates/sr-app/src/desktop.rs @@ -166,12 +166,7 @@: its old lines appear 0 times in the file, not once) · arm 8/8, 0 left
+FAILED:
+  plant world-not-drawn: the patch tests/plants/world-not-drawn.patch does not apply: crates/sr-app/src/desktop.rs @@ -166,12 +166,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+redarm: 7 plants · 6 red · 0 green · 1 errors · scope desktop · 539.28 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D128.desktop.redarm.log
+=== NO-GO: plant world-not-drawn: the patch tests/plants/world-not-drawn.patch does not apply: crates/sr-app/src/desktop.rs @@ -166,12 +166,7 @@: its old lines appear 0 times in the file, not once - an error, not a red ===

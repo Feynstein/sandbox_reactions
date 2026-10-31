@@ -1,0 +1,12 @@
+logs: milestones/m0/logs/M0-D124.<scope>.log · record: loop_times.jsonl · tree c3dd062bab85+c90c6f0e45e2
+anchor: 0 path×scope entries moved by this run
+anchor: 364 paths checked · 343 skipped (3 classes) · 0 never checked · 1 stale · 0 unclassified · 0 owed · 365 covered of 708 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.17 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.25->4.07
+=== GO ===
+1
+2
+7:latch, `poll` — is in `docs/agent/architecture.md` § A frame and the latch.
+41:and the frame's report, when it comes back (≤ 2 frames late, `Step::poll`), books what was actually advanced. **At 
+105:  0. `banner::views(&mut sim)` — **before anything else reads the clock** (M0-D120): `Sim::poll` never blocks and 
+138:  latch). `banner::views` reads it with the bar, right after the pass's read-back (step 0), so an event read back in
+156:`ui_topbar` (15 cases, the bar, its fixed widths and the keys), `ui_banner` (15, `views`' pass order and `Frames`' r

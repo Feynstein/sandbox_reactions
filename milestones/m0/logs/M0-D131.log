@@ -1,0 +1,65 @@
+# M0-D131 | linux-pc | 2026-10-31T11:22:31-04:00 | lead's go: «Go: lock + merge (Recommended)»
+# baseline before the fix: probe (c), 6 rounds
+round 1: records after starts ['headless-boot'] | after stops [] | left bound: pid=2898998  | BAD
+round 2: records after starts ['headless-boot', 'web'] | after stops ['headless-boot'] | left bound: none | BAD
+round 3: records after starts ['headless-boot', 'web'] | after stops ['headless-boot'] | left bound: none | BAD
+round 4: records after starts ['headless-boot'] | after stops [] | left bound: none | BAD
+round 5: records after starts ['headless-boot'] | after stops [] | left bound: pid=2899425  | BAD
+round 6: records after starts ['headless-boot', 'web'] | after stops ['headless-boot'] | left bound: none | BAD
+probe (c): 6 rounds, 6 bad
+=== NO-GO: 6 of 6 rounds lost a record, tore the file or left a server ===
+# Verify 1 (after the fix): probe (c), 20 rounds, parallel starts then parallel stops
+round 1: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 2: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 3: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 4: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 5: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 6: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 7: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 8: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 9: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 10: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 11: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 12: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 13: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 14: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 15: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 16: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 17: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 18: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 19: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+round 20: records after starts ['headless-boot', 'web'] | after stops [] | left bound: none | ok
+probe (c): 20 rounds, 0 bad
+=== GO ===
+# Verify 2b: verify.py desktop web --task M0-D131
+web       4/0/0      284.75 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-D131.<scope>.log · record: loop_times.jsonl · tree c3dd062bab85+3adbe0cb04dc
+anchor: 2 path×scope entries moved by this run
+anchor: 357 paths checked · 339 skipped (3 classes) · 1 never checked · 2 stale · 0 unclassified · 0 owed · 360 covered of 699 visible
+verify: 9 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 140.88 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.46->3.31
+=== GO ===
+after: nothing bound on 478xx
+# claim: verify.py --changed --task M0-D131-claim
+tools_selftest · red-arm proven by M0-D131 2026-10-31T11:26:43-04:00 (fingerprint 78482547477c) - not re-run
+flags: M0-D131-claim is no block of a plan under milestones/ - no Deliver and no type to read them against
+logs: milestones/m0/logs/M0-D131-claim.<scope>.log · record: loop_times.jsonl · tree c3dd062bab85+93da9898795d
+anchor: 3 path×scope entries moved by this run
+anchor: 360 paths checked · 340 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 360 covered of 700 visible
+skipped   332  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 765 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 74 not impacted · 10.75 s + loop 0.12 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 2.18->2.07 · base: M0-D131's start 2026-10-31T11:20:50-04:00 — no start for M0-D131-claim
+=== GO ===
+# claim (re-run under the block's own id, for the Deliver read): verify.py --changed --task M0-D131
+calibrate_bisect  NOT RUN (not impacted: its 150 path(s) checked at the anchor)
+calibrate_order  NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+readouts  NOT RUN (not impacted: its 139 path(s) checked at the anchor)
+views  NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+glow  NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+frames  NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+ui_topbar  NOT RUN (not impacted: its 44 path(s) checked at the anchor)
+ui_banner  NOT RUN (not impacted: its 42 path(s) checked at the anchor)
+ui_theme  NOT RUN (not impacted: its 16 path(s) checked at the anchor)
+ui_world  NOT RUN (not impacted: its 41 path(s) checked at the anchor)
+verify: 0 passed, 0 failed, 0 skipped · 0 scopes chosen · 76 not impacted · mode changed · box laserax-ai · base: M0-D131's start 2026-10-31T11:20:50-04:00
+=== NO-GO: nothing changed since every scope's last GO: no scope to run, zero cases - the anchor already vouches for this tree (a loop on it is waste) ===

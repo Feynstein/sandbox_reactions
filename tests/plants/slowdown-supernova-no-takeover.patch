@@ -1,0 +1,13 @@
+--- a/crates/sr-physics/src/time.rs
++++ b/crates/sr-physics/src/time.rs
+@@ -329,10 +329,6 @@
+     /// The slow-down (§1.8.5): only ever slower, the banner until the player changes the rung; off, nothing. A supernova
+     /// that comes while the core-collapse banner shows takes the banner over, the rung where the collapse put it (§0.5).
+     pub fn on_event(&mut self, event: Event) {
+-        if self.slow_down && event == Event::Supernova && self.banner == Some(Event::CoreCollapse) {
+-            self.banner = Some(event);
+-            return;
+-        }
+         if !self.slow_down {
+             return;
+         }

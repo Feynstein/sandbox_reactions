@@ -14,7 +14,7 @@ use eframe::{egui, egui_wgpu};
 
 use crate::format;
 use crate::ui::banner::{self, Banner};
-use crate::ui::theme::{self, ACCENT, BANNER_BG, BANNER_FONT, BANNER_TEXT, BG_PANEL, BG_SPACE, BORDER_PANEL, TEXT_PRIMARY, TEXT_SECONDARY};
+use crate::ui::theme::{self, ACCENT, BANNER_BG, BANNER_FONT, BANNER_TEXT, BG_PANEL, BG_SPACE, BORDER_PANEL, STATUS_FONT, TEXT_PRIMARY, TEXT_SECONDARY};
 use crate::ui::topbar::{self, Command, Dialog, TopBar};
 
 /// The default window (§4.2), in logical px.
@@ -194,7 +194,7 @@ impl eframe::App for SandboxApp {
             .exact_size(STATUS_BAR_HEIGHT)
             .frame(egui::Frame::NONE.fill(BG_SPACE).inner_margin(egui::Margin::symmetric(8, 4)))
             .show(ui, |ui| {
-                ui.label(egui::RichText::new(&status_line).color(TEXT_SECONDARY));
+                ui.label(egui::RichText::new(&status_line).size(STATUS_FONT).color(TEXT_SECONDARY));
             });
         egui::CentralPanel::no_frame().frame(egui::Frame::NONE.fill(BG_SPACE)).show(ui, |ui| {
             let painter = ui.painter();
@@ -373,14 +373,12 @@ mod sim {
     use sr_engine::step::nuheat::NuHeatSetup;
     use sr_engine::step::react::ReactSetup;
     use sr_engine::step::sinks::SinkSetup;
-    use sr_engine::ledger::At;
     use sr_engine::step::{EosGpu, Passes, Step, Timing};
-    use sr_engine::watch::Watch;
     use sr_physics::calibration::{self, PresetMasses};
     use sr_physics::registry::{Elements, Physics, Reactions};
-    use sr_physics::time::{Estimates, Report, TimeControl};
+    use sr_physics::time::{Estimates, TimeControl};
 
-    use crate::ui::banner::{Feed, Pass};
+    use crate::ui::banner::{Frames, Pass};
     use crate::ui::topbar::{self, Command, Effect, WorldBar};
 
     /// Most steps one scripted `steps` action puts into a single frame: a capture asking for 10⁶ would otherwise build one
@@ -414,15 +412,11 @@ mod sim {
         time: TimeControl,
         /// The edge choice and the Clear dialog (ui::topbar).
         world_bar: WorldBar,
-        /// The observers of the world, fed each frame's block summary (§1.9): their events slow the clock.
-        watch: Watch,
-        /// The slow-down's two sources, booked once per event (ui::banner).
-        events: Feed,
+        /// The frames in flight and the observers they feed (ui::banner): their events slow the clock.
+        frames: Frames,
         view: View,
         /// Steps a capture asked of the real loop and the loop has not yet submitted.
         forced: u64,
-        /// Per submitted frame not yet read back, whether a capture forced it (its report is not the plan's to book).
-        in_flight: VecDeque<bool>,
         /// The last Δt read back; none before the first report and while the world is empty.
         dt_est: Option<f64>,
         /// Sim time owed, as `TimeControl` counts it (§1.8.3), for α.
@@ -473,7 +467,7 @@ mod sim {
             // reads its textures as gamma-encoded bytes in Rgba8Unorm too, so the quad needs no view of its own.
             let texture = render.renderer.write().register_native_texture(&device, &target, wgpu::FilterMode::Nearest);
             let time = TimeControl::new(Some(cal.top_rung), cal.render_reserve_ms)?;
-            let watch = Watch::new(&physics, world.width, 0.0);
+            let frames = Frames::new(&physics, world.width);
             Ok(Sim {
                 device,
                 queue,
@@ -489,11 +483,9 @@ mod sim {
                 texture,
                 time,
                 world_bar,
-                watch,
-                events: Feed::new(),
+                frames,
                 view: View::Glow,
                 forced: 0,
-                in_flight: VecDeque::new(),
                 dt_est: None,
                 owed: 0.0,
                 alpha: 1.0,
@@ -601,13 +593,12 @@ mod sim {
         }
 
         /// Clear world (§1.12): the engine's `Clear` edit for the next step's P0 — every cell to the floor state, the sinks
-        /// removed — and the observers of the old objects start over. The rung, the view, the edge mode and the slow-down
-        /// are not touched.
+        /// removed — and the observers of the old objects start over with the new world's first frame, the frames still in
+        /// flight booking nothing (M0-D122). The rung, the view, the edge mode and the slow-down are not touched.
         fn clear(&mut self) {
             // A full queue (MAX_EDITS in one step) refuses the edit and the player asks again.
             if self.step.queue_edit(&self.queue, &Edit::Clear).is_ok() {
-                self.watch = Watch::new(&self.physics, self.world.width, self.sim_time);
-                self.events = Feed::new();
+                self.frames.clear();
             }
         }
 
@@ -654,28 +645,12 @@ mod sim {
         }
 
         /// The frames read back since the last call, in order: each one's report to `on_report`, its latch cut and the
-        /// events its block summary names to the slow-down (§1.8.5). Never blocks.
+        /// events its block summary names to the slow-down (§1.8.5), through `Frames`. Never blocks.
         fn poll_frames(&mut self) {
             for frame in self.step.poll_frames(&self.device) {
-                let r = frame.report;
-                let forced = self.in_flight.pop_front().unwrap_or(false);
-                self.sim_time = r.sim_time;
-                self.dt_est = real_dt(f64::from(r.dt_next));
-                // A forced frame was never planned, so it owes nothing: its report carries the next Δt and no steps.
-                self.time.on_report(&Report {
-                    steps_run: if forced { 0 } else { r.steps_run },
-                    advanced: f64::from(r.advanced),
-                    dt_next: f64::from(r.dt_next),
-                    step_ms: r.cost.map(|c| c.step_ms),
-                    latch_fired: r.latch_fired.is_some(),
-                });
-                // A forced frame runs with the slow-down off (`frame`), so the latch never cut it.
-                if !forced && r.latch_fired.is_some() {
-                    self.events.latch(&mut self.time);
-                }
-                for event in self.watch.update(&frame.summary, At { step: r.steps, sim_time: r.sim_time }) {
-                    self.events.event(&mut self.time, event.object, event.kind);
-                }
+                self.sim_time = frame.report.sim_time;
+                self.dt_est = real_dt(f64::from(frame.report.dt_next));
+                self.frames.read_back(&mut self.time, &frame);
             }
         }
 
@@ -713,7 +688,7 @@ mod sim {
                     encoder.copy_buffer_to_buffer(buffer, 0, self.previous.group(g), 0, buffer.size());
                 }
                 self.step.encode_frame(&FramePlan { steps, slow_down }, &mut encoder);
-                self.in_flight.push_back(forced);
+                self.frames.submitted(forced);
                 self.submitted += u64::from(steps);
             }
             self.renderer.render(self.view, self.alpha, &self.target, &mut encoder);

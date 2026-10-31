@@ -22,6 +22,8 @@ pub const BANNER_TEXT: Color32 = Color32::from_rgb(0xFF, 0xD2, 0x7A);
 pub const ERROR_TEXT: Color32 = Color32::from_rgb(0xFF, 0x6B, 0x6B);
 /// The banner's font size in px (§4.11).
 pub const BANNER_FONT: f32 = 20.0;
+/// The status line's font size in px (§4.11's «small 12 px»; egui's body text is 13).
+pub const STATUS_FONT: f32 = 12.0;
 
 /// The modal's backdrop: `bg.space` at 60 %, in place of egui's black at 100/255.
 pub fn backdrop() -> Color32 {
@@ -163,6 +165,14 @@ mod tests {
             assert!(source.contains("theme::install(&cc.egui_ctx)"), "{file} does not install the tokens");
             assert!(!source.contains("set_visuals("), "{file} sets egui's visuals itself");
         }
+    }
+
+    /// The status line is §4.11's small text: 12 px, set by name — a label with no size takes egui's body text, 13 px.
+    #[test]
+    fn the_status_line_is_the_small_size() {
+        assert_eq!(STATUS_FONT, 12.0);
+        let source = include_str!("../desktop.rs");
+        assert!(source.contains("RichText::new(&status_line).size(STATUS_FONT)"), "the status label does not carry STATUS_FONT");
     }
 
     #[test]

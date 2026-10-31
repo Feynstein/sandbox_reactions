@@ -1,0 +1,10 @@
+web: ready on port 47840, 0.0s (log /tmp/pb-redarm-s9rr9xeh/arm7/milestones/m0/logs/M0-D128.launch.web.log)
+services: 1, ready: 1
+web smoke ready: /usr/bin/google-chrome (156.0.8078.73) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+ready: srState "ready" after 5.2 s
+=== GO ===
+web ready: the web server on 47840 (pid 2688271) still bound 30 s after launch.py stop web - its record lost; stopped by the case
+=== NO-GO: the web server on 47840 (pid 2688271) still bound 30 s after launch.py stop web - its record lost; stopped by the case ===

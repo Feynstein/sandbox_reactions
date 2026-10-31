@@ -17,3 +17,5 @@ node_modules/
 __pycache__/
 # launch.py's record of what it started (PLAYBOOK §A.3; M0-T4)
 tools/pb/.launch.pid.json
+# and its lock, held for each read-modify-write of that record (M0-D131)
+tools/pb/.launch.pid.json.lock

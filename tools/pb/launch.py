@@ -24,6 +24,8 @@ carries on (M0-D107). And nothing runs UNRECORDED: a child whose record the pid 
 stopped at once through the Popen that spawned it, before the NO-GO naming the pid file.
 `smoke` stops only what it started itself: a service already running from an earlier `start` is a
 refusal, and that instance is left running and recorded — a smoke never stops the lead's own stack.
+Two launch.py runs at once never drop each other's records: every write re-reads the pid file under
+its lock (`<pid_file>.lock`, flock / msvcrt) and changes only the entries this run changed (M0-D131).
 
 Three readiness kinds, declared per service by `ready` (inferred from `ready_url` / `port`):
   `url`   `ready_url` answers JSON whose `ready_key` carries one of `ready_values`   (§A.3)
@@ -71,6 +73,7 @@ ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = Path(__file__).resolve().with_name('launch.json')
 ENVVAR = re.compile(r'\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^}]*))?\}')
 REPLACE_TRIES, REPLACE_WAIT_S = 6, 0.05  # a held pid file: the wait doubles 0.05 -> 0.8 s, 1.55 s in all (plan.py's)
+LOCK_WAIT_S = 30  # the records' lock, held by another launch.py for a read and a write: a bounded wait, then a verdict
 PROC = Path('/proc/self/stat').is_file()  # Linux; a box without it (macOS, BSD) reads ps
 XVFB = {'displays': [99, 109], 'screen': '1920x1080x24', 'args': [], 'env_drop': [], 'platforms': ['linux'],
         'exe': 'Xvfb', 'x_dir': '/tmp'}
@@ -239,6 +242,40 @@ def dropped(tmp):
     except OSError:
         return False
     return True
+
+
+@contextlib.contextmanager
+def records_lock(path):
+    """The pid file's lock for one read-modify-write: `<pid_file>.lock`, flock on POSIX, msvcrt on
+    Windows — the OS drops it with a process that dies holding it, so no stale lock is ever left. Two
+    runs each writing back the whole file they read at start dropped each other's entries and, on one
+    shared temp, tore it [M0-D128's probe (c)]. Held over LOCK_WAIT_S: WriteRefused naming the lock."""
+    path = Path(path)
+    lock, began, n = path.with_name(path.name + '.lock'), time.monotonic(), 0
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(lock, 'a+b') as f:
+        if os.name == 'posix':
+            import fcntl
+            take = lambda: fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            drop = lambda: fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+        else:
+            import msvcrt
+            take = lambda: (f.seek(0), msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1))
+            drop = lambda: (f.seek(0), msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1))
+        while True:
+            try:
+                take()
+                break
+            except OSError:
+                if time.monotonic() - began >= LOCK_WAIT_S:
+                    raise WriteRefused('pid file %s not written - its lock %s held over %d s by another '
+                                       'process; it is unchanged, no temp left' % (path, lock, LOCK_WAIT_S)) from None
+                pause(n)
+                n += 1
+        try:
+            yield
+        finally:
+            drop()
 
 
 def read_pids(path):
@@ -421,16 +458,28 @@ class Context:
         self.task = args.task or os.environ.get('PB_TASK')
         self.deadline = args.deadline or self.manifest.get('deadline_s', 90)
         self.pids = read_pids(self.pid_file)
+        self.seen = json.loads(json.dumps(self.pids))  # the records as last read: `save` writes only what differs
         self.refused = []  # every pid-file write that did not land
 
     def log_path(self, name):
         return self.logs / ('%s.launch.%s.log' % (self.task, name))
 
     def save(self):
-        """True when the pid file took `self.pids`. A refusal is kept, never raised: each caller
-        decides what it means for its own process, and the verdict names the file."""
+        """True when the pid file took this run's changes to `self.pids` — the entries it set, changed
+        or dropped since its last read — merged, under the records' lock, into the file as it is NOW:
+        another run's entries are kept as that run left them. A refusal is kept, never raised: each
+        caller decides what it means for its own process, and the verdict names the file."""
         try:
-            write_pids(self.pid_file, self.pids)
+            with records_lock(self.pid_file):
+                fresh = read_pids(self.pid_file)
+                for name in set(self.pids) | set(self.seen):
+                    if self.pids.get(name) != self.seen.get(name):
+                        if name in self.pids:
+                            fresh[name] = self.pids[name]
+                        else:
+                            fresh.pop(name, None)
+                write_pids(self.pid_file, fresh)
+            self.pids, self.seen = fresh, json.loads(json.dumps(fresh))
             return True
         except WriteRefused as e:
             self.refused.append(str(e))
@@ -1183,6 +1232,26 @@ def selftest(args):
                   code == 0 and lives(other) and read_pids(tmp / pid_file) == {})
         else:
             skips.append('private X display: an X server is POSIX only - NOT RUN on os %s' % os.name)
+
+        # --- runs at once on one pid file (M0-D131): each writes back only its own entry, under the
+        # records' lock — runs writing back the whole file they had read dropped each other's entries
+        crowd = ['p%d' % i for i in range(8)]
+        (tmp / 'launch.json').write_text(json.dumps({'services': {n: echoed for n in crowd}, 'pid_file': pid_file,
+                                                     'logs_dir': 'logs', 'root': str(tmp)}))
+
+        def at_once(verb):
+            procs = [subprocess.Popen([sys.executable, __file__, '--manifest', str(tmp / 'launch.json'), '--task',
+                                       'ST', verb, n], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                     for n in crowd]
+            strays.extend(procs)
+            return [p.wait(timeout=60) for p in procs]
+
+        codes = at_once('start')
+        check('%d starts at once on one pid file: each GO, every record kept' % len(crowd),
+              codes == [0] * len(crowd) and sorted(read_pids(tmp / pid_file)) == crowd)
+        codes = at_once('stop')
+        check('%d stops at once on one pid file: each GO, no record left' % len(crowd),
+              codes == [0] * len(crowd) and read_pids(tmp / pid_file) == {})
 
         # --- the ask gate, the default smoke set, and the empty arms
         code, out = run({'game': windowed}, 'start')

@@ -1,0 +1,31 @@
+== 2026-10-31T11:38:01-04:00 linux-pc probe (a) SigIgn of a bash async child vs a foreground one
+SigIgn:	0000000000000000
+SigIgn:	0000000000000006
+== (b) verify.py selftest, foreground
+selftest: checks=358 · failed=0 · plants=160/160 red
+=== GO ===
+secs 10.749570433
+== (c) verify.py selftest, as a bash async job (& wait)
+  a: timed out after 0.2 s · log logs/T9.a.log
+verify: 1 passed, 0 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.20 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.3 · load 2.23->2.18 · base: none — every plant
+=== NO-GO: a: timed out after 0.2 s · log logs/T9.a.log ===
+
+selftest: checks=358 · failed=1 · plants=159/160 red
+=== NO-GO: 1 check(s) failed ===
+secs 25.721485489
+== 2026-10-31T11:41:52-04:00 after the fix: (d) verify.py selftest, foreground
+selftest: checks=359 · failed=0 · plants=160/160 red
+=== GO ===
+secs 10.929243607
+== (e) verify.py selftest, as a bash async job (& wait)
+selftest: checks=359 · failed=0 · plants=160/160 red
+=== GO ===
+secs 10.924739138
+== (f) the plant applied (live_sigint() dropped), foreground
+verify: 1 passed, 0 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.20 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.3 · load 3.35->2.91 · base: none — every plant
+=== NO-GO: a: timed out after 0.2 s · log logs/T9.a.log ===
+
+  find_block reads the type from the tag, and by id under an old word (JUDGE on a T: BUILD): (None, None, None)
+selftest: checks=359 · failed=2 · plants=160/160 red
+=== NO-GO: 2 check(s) failed ===
+secs 25.827421758

@@ -1,0 +1,8 @@
+--- a/tests/web/check.sh
++++ b/tests/web/check.sh
+@@ -246,3 +246,4 @@
+ started=0
+-$PY tools/pb/launch.py stop web --task "$task" >/dev/null 2>&1
++# plant web-stop-lost (M0-D128): the server's record lost to a parallel writer - the stop finds nothing, the server runs on
++$PY tools/pb/launch.py stop headless-boot --task "$task" >/dev/null 2>&1
+ if ! port_free "$port"; then

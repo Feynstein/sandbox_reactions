@@ -236,16 +236,31 @@ if [ $launcher -eq 1 ]; then
   # `.\start.bat`, never bare: with NoDefaultCurrentDirectoryInExePath set (Claude Code's shell sets it), cmd skips the
   # current directory when it looks a bare name up and reads « not recognised » (M0-D15, logs/M0-D15.log).
   case "$(uname -s)" in
-    MINGW* | MSYS* | CYGWIN*) run_launcher() { printf '\n' | cmd //c ".\\start.bat $service" 2>&1; } ;;
-    *) run_launcher() { printf '\n' | bash start.sh "$service" 2>&1; } ;;
+    MINGW* | MSYS* | CYGWIN*) run_launcher() { printf '\n' | cmd //c ".\\start.bat ${1:-$service}" 2>&1; } ;;
+    *) run_launcher() { printf '\n' | bash start.sh "${1:-$service}" 2>&1; } ;;
   esac
   # launch.py's records are the box's, not the task's: a bare `launch.py stop` stops every service, a parallel scope's
   # included (M0-D28: it took the web scope's server mid-smoke). A decoy web server, started here under the web scope's
   # port lock (its lock file, flock or mkdir as tests/web/check.sh takes it), must outlive the launcher.
-  decoy_task="${PB_TASK:-launcher}-decoy" web_lock="${TMPDIR:-/tmp}/sr-web.lock" decoy=0 decoy_port=""
+  # The decoy is stopped before the verdict, not in the trap alone, and its port must bind again: launch.py's records are one
+  # file each start and stop rewrites, and a record a parallel writer drops leaves its server running unseen (M0-D128) — a
+  # decoy that outlives its stop is a NO-GO naming its pid, and the case stops it.
+  decoy_task="${PB_TASK:-launcher}-decoy" web_lock="${TMPDIR:-/tmp}/sr-web.lock" decoy=0 decoy_port="" decoy_pid=""
   _sr_decoy_down() {
-    [ "$decoy" = 1 ] && { $PY tools/pb/launch.py stop web --task "$decoy_task" >/dev/null 2>&1; [ -z "$decoy_port" ] || _sr_port_closed "$decoy_port"; }
+    local rc=0
+    if [ "$decoy" = 1 ]; then
+      decoy=0
+      $PY tools/pb/launch.py stop web --task "$decoy_task" >/dev/null 2>&1
+      if [ -n "$decoy_port" ] && ! _sr_port_closed "$decoy_port"; then
+        if [ -n "$decoy_pid" ]; then
+          case "$(uname -s)" in MINGW* | MSYS* | CYGWIN*) taskkill //F //PID "$decoy_pid" >/dev/null 2>&1 ;; *) kill "$decoy_pid" 2>/dev/null ;; esac
+        fi
+        echo "=== NO-GO: the decoy web server on $decoy_port (pid ${decoy_pid:-unknown}) still bound 30 s after launch.py stop web - its record lost${decoy_pid:+; stopped by the case} ==="
+        rc=1
+      fi
+    fi
     [ -f "$web_lock.d/pid" ] && [ "$(cat "$web_lock.d/pid" 2>/dev/null)" = "$$" ] && rm -rf "$web_lock.d"
+    return $rc
   }
   trap '_sr_decoy_down; _sr_release' EXIT
   if command -v flock >/dev/null 2>&1; then
@@ -259,9 +274,15 @@ if [ $launcher -eq 1 ]; then
     echo $$ > "$web_lock.d/pid"
   fi
   decoy=1
-  dout="$($PY tools/pb/launch.py start web --task "$decoy_task" 2>&1)" || { echo "$dout"; echo "=== NO-GO: the decoy web server did not start ==="; exit 1; }
+  dout="$($PY tools/pb/launch.py start web --task "$decoy_task" 2>&1)" || {
+    echo "$dout"
+    dlog="$(echo "$dout" | sed -n 's/.*(log \(.*\))$/\1/p' | head -1)"   # in a red-arm copy the decoy's log goes with the arm
+    [ -f "$dlog" ] && tail -n 20 "$dlog"
+    echo "=== NO-GO: the decoy web server did not start ==="; exit 1
+  }
   # the decoy takes launch.json's next free port when a foreign program holds the first (M0-D107): read the one it printed
   decoy_port="$(echo "$dout" | sed -n 's/^web: ready on port \([0-9][0-9]*\).*/\1/p' | head -1)"
+  decoy_pid="$($PY tools/pb/launch.py status --task "$decoy_task" 2>&1 | sed -n 's/^web running pid \([0-9][0-9]*\) .*/\1/p' | head -1)"
   out="$(run_launcher)"; rc=$?
   echo "$out"
   left="$($PY tools/pb/launch.py status --task "${PB_TASK:-launcher}" 2>&1)"
@@ -273,7 +294,16 @@ if [ $launcher -eq 1 ]; then
   echo "$left" | grep -q "^$service stopped$" || { echo "$left"; echo "=== NO-GO: a process is left running after the launcher ==="; exit 1; }
   _sr_port_closed 47811 || { echo "=== NO-GO: port 47811 still bound 30 s after the launcher stopped $service ==="; exit 1; }
   echo "$left" | grep -q "^web running " || { echo "$left"; echo "=== NO-GO: the launcher stopped a service it did not start (the decoy web server) ==="; exit 1; }
-  echo "launcher $service: built in $built s, started, stopped, nothing left running, the decoy web server untouched"
+  # A start that fails is not a game running (M0-D129): the same launcher fed a service launch.json does not declare, so
+  # launch.py start exits non-zero without spawning anything (a box without a display fails the same way, the launcher
+  # reading only the exit status), must say the game did not start, exit non-zero, and never say it is running.
+  bad="$(run_launcher no-such-service)"; brc=$?
+  echo "$bad"
+  [ $brc -ne 0 ] || { echo "=== NO-GO: the launcher exited 0 after a failed start ==="; exit 1; }
+  echo "$bad" | grep -q "did NOT start" || { echo "=== NO-GO: the launcher never said the game did not start ==="; exit 1; }
+  ! echo "$bad" | grep -q "is running" || { echo "=== NO-GO: the launcher said the game is running after a failed start ==="; exit 1; }
+  _sr_decoy_down || exit 1
+  echo "launcher $service: built in $built s, started, stopped, nothing left running, the decoy web server untouched, then stopped; a failed start said so"
   echo "=== GO ==="
   exit 0
 fi

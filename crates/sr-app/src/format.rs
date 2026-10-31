@@ -128,39 +128,9 @@ pub fn rate(years_per_second: f64) -> String {
     age(years_per_second)
 }
 
-/// A ladder rung as written (×0.1 … ×1000): the number alone, "0.1", "1", "1000".
-pub fn rung_number(rung: f64) -> String {
-    rung.to_string()
-}
-
-/// The actual speed at 2 significant digits, the number alone ("42", "0.83"); the template carries the ×.
-pub fn actual_number(actual: f64) -> String {
-    grouped(actual, 2)
-}
-
-/// A rung button: `time.rung`.
-pub fn rung(rung: f64) -> String {
-    fill("time.rung", &[("rung", &rung_number(rung))])
-}
-
 /// Max's button: `time.rung_max` (TOP is never shown, M0-TJ2).
 pub fn rung_max() -> String {
     strings::get("time.rung_max").to_string()
-}
-
-/// The speed readout at a ladder rung that runs as asked: `time.speed`.
-pub fn speed(rung: f64) -> String {
-    fill("time.speed", &[("rung", &rung_number(rung))])
-}
-
-/// The speed readout at a rung the box cannot keep up with: `time.speed_capped`.
-pub fn speed_capped(rung: f64, actual: f64) -> String {
-    fill("time.speed_capped", &[("rung", &rung_number(rung)), ("actual", &actual_number(actual))])
-}
-
-/// The speed readout at Max, always: `time.speed_max`.
-pub fn speed_max(actual: f64) -> String {
-    fill("time.speed_max", &[("actual", &actual_number(actual))])
 }
 
 /// An inspector number: 3 significant digits; scientific ("1.23e-5") below 0.001 or at 100,000 and above, judged on
@@ -310,23 +280,9 @@ mod tests {
     }
 
     #[test]
-    fn speeds_rungs_as_written_actual_at_two_digits() {
-        assert_eq!(rung(0.1), "×0.1");
-        assert_eq!(rung(1.0), "×1");
-        assert_eq!(rung(1000.0), "×1000");
-        assert_eq!(speed(10.0), "Speed ×10");
-        assert_eq!(speed_capped(100.0, 42.0), "Speed ×100 (running ×42)");
-        assert_eq!(speed_capped(10.0, 0.834), "Speed ×10 (running ×0.83)");
-        assert_eq!(actual_number(41.6), "42");
-        assert_eq!(actual_number(99.6), "100");
-        assert_eq!(speed_max(1234.0), "Speed max (running ×1,200)");
-    }
-
-    #[test]
     fn max_is_the_table_text_and_top_is_never_shown() {
         assert_eq!(rung_max(), "Max");
-        assert_eq!(speed_max(42.0), "Speed max (running ×42)");
-        assert!(!rung_max().contains("TOP") && !speed_max(1.0).contains("TOP"));
+        assert!(!rung_max().contains("TOP"));
     }
 
     #[test]

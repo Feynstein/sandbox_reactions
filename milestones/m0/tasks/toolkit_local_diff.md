@@ -155,3 +155,29 @@ the swapped switch's `RUNGS` holds all seven rungs of the 2026-10-11 ladder.
    « --redarm: an `arms_at_once: 1` scope's arms one at a time » and its plant « `arms_at_once` ignored »; verify.json's
    plant `tools-selftest-arms-at-once` (case `verify`: `arm_workers` without the cap). The annex's §A.2 manifest keys and
    its red-arm paragraph lag by this one. Measured on win-laptop: selftest checks=357 · plants 160/160 red, GO.
+10. **launch.py — the records' lock and merge (local, M0-D131, 2026-10-31; the lead at M0-D131: «Go: lock + merge
+   (Recommended)»).** Every run read the pid file once (`Context.__init__`) and wrote the whole dict back at each `save`, on
+   one shared `<pid_file>.tmp`: two runs at once dropped each other's entries or tore the file (M0-D128's probe (c), 6 of 6
+   rounds bad on linux-pc), and a dropped service ran on unseen by `stop`. Now `records_lock(path)` holds `<pid_file>.lock`
+   (flock on POSIX, msvcrt on Windows; the OS drops it with a dead holder; held over `LOCK_WAIT_S` = 30 s → WriteRefused
+   naming the lock), and `save` re-reads the file under it and changes only the entries this run set, changed or dropped
+   since its last read (`Context.seen`). Hunks: the module docstring's paragraph; `LOCK_WAIT_S`; `records_lock` before
+   `read_pids`; `Context.__init__`'s `seen`; `Context.save`; the selftest's « 8 starts at once on one pid file … » and
+   « 8 stops at once … » before the ask gate; .gitignore's `tools/pb/.launch.pid.json.lock`; verify.json's plant
+   `tools-selftest-launch-records` (case `launch`: the merge over the records as last read, not as they are now). The
+   annex's §A.3 says nothing of runs at once. Measured on linux-pc: probe (c) 20/20 rounds clean, `--redarm tools_selftest`
+   4/4 plants RED, GO; win-laptop (msvcrt) owed (R15).
+11. **verify.py — SIGINT live in every case however the run was launched (local, M0-D125, 2026-10-31; the lead at M0-D125:
+   «Fix verify.py (Recommended)»).** A shell starts an async job (`nohup … &`, no job control) with SIGINT and SIGQUIT ignored
+   (`SigIgn: 0000000000000006`, probed on linux-pc), every descendant inherits the ignore, and Python keeps it: `stop_tree`'s
+   SIGINT then stopped nothing, a timed-out case waited its 15 s grace for SIGKILL and its runner's teardown never ran. Seen as
+   `tools_selftest[verify]`'s red « PLANT a command that hangs » (0.2 s + 15 s = 15.20 s, over the plant's 10 s) in M0-V12's two
+   `nohup` loops and its `nohup` sweep on laserax-ai-server, never in a foreground run; reproduced on linux-pc as a `bash -c '… &
+   wait'` job, 1 of 1. Now `live_sigint()` (POSIX), first thing in `main()`, puts SIGINT back to Python's own handler when it
+   arrives ignored — a handler, unlike an ignore, is reset at exec, so every case starts with SIGINT live. Side effect, named: a
+   backgrounded verify.py itself now stops on SIGINT, as a foreground one always did. Hunks: `live_sigint` after `stop_tree`;
+   its call in `main()`; the selftest's check « a run handed SIGINT ignored still stops a hung command at its SIGINT, not 15 s on »
+   after the plant « a command that hangs » (the selftest sets SIGINT ignored around one inner run); verify.json's plant
+   `tools-selftest-sigint` (case `verify`: the call dropped from `main()`). The annex's §A.2 says nothing of the launch's signal
+   dispositions. Measured on linux-pc: selftest checks=359 · plants 160/160 red, GO, in the foreground and as an async job;
+   `--redarm tools_selftest` 5/5 plants RED, GO; laserax-ai-server and win-laptop owed (R15; a no-op on Windows).

@@ -1,0 +1,75 @@
+# M0-D128 · repro: verify.py --redarm desktop, arm decoy logs captured to /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/6f1bf7ab-6ab3-40d5-91a0-bd762b8c1266/scratchpad/armlogs
+# baseline: verify.py web --task M0-D128-base (before any change), then ss
+# probe (a): http.server on 47995, two GETs, stopped, then bind 47995 without / with SO_REUSEADDR
+TIME-WAIT  0      0                                   127.0.0.1:47995       127.0.0.1:43300       
+TIME-WAIT  0      0                                   127.0.0.1:47995       127.0.0.1:43314       
+TIME-WAIT  0      0                                   127.0.0.1:43284       127.0.0.1:47995       
+reuse 0 bind [Errno 98] Address already in use
+reuse 1 bind OK
+# probe (c): launch.py start web + start headless-boot at once, 6 rounds, pid file read after each
+round 1 records: ['headless-boot']
+  left after both stops: pid=2315835 
+round 2 records: ['headless-boot']
+  left after both stops: pid=2315835 
+round 3 records: ['headless-boot', 'web']
+  left after both stops: pid=2315835 
+round 4 records: ['headless-boot', 'web']
+  left after both stops: pid=2315835 
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.12/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 340, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 22 column 4 (char 435)
+round 5 records: 
+  left after both stops: pid=2315835 pid=2316354 
+round 6 records: ['headless-boot']
+  left after both stops: pid=2315835 pid=2316354 pid=2316387 
+# probe (c) cleanup: stopped my probe's 3 leaked http.server pids 2315835 2316354 2316387; 47840-47842 free
+# probe (b): foreign http.server on 47841 and 47842 (as V12's leaks), then verify.py desktop --case launcher
+logs: milestones/m0/logs/M0-D128-leak.<scope>.log · record: loop_times.jsonl · tree c3dd062bab85+56687f41e2ef
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.97 s · mode case · PARTIAL, not the loop (--case launcher) · jobs 8 · box laserax-ai · python 3.12.3 · load 4.63->4.63
+=== GO ===
+game-xvfb: ready on http://127.0.0.1:47811/status, 1.5s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+=== GO ===
+=== GO ===
+launcher game-xvfb: built in 0 s, started, stopped, nothing left running, the decoy web server untouched
+=== GO ===
+# M0-D128-leak-decoy | launch web | 2026-10-31T10:01:11-0400
+$ python3 -m http.server 47840 --bind 127.0.0.1 --directory web/dist
+# fix check: verify.py web --case no-webgpu, then --case ready-held at once (TIME-WAIT on 47840 between)
+=== GO ===
+3
+=== GO ===
+== 2026-10-31T10:05:50-04:00 web[ready-held] · task M0-D128-tw2 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[ready-held] · exit=0 · 74.29 s
+web ready-held: 47840 held, the server on 47841
+# Verify 1 run 1: verify.py web --task M0-D128
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 164.17 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.48->10.81
+=== GO ===
+# Verify 1 run 2: verify.py web --task M0-D128-v1b
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 181.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 10.83->18.68
+=== GO ===
+# Verify 1 run 3: verify.py web --task M0-D128-v1c
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 158.20 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 19.43->7.14
+=== GO ===
+# Verify 2a: verify.py --redarm desktop --task M0-D128
+desktop · clean · GO · arm 1/8, 7 left
+desktop · plant port-handover-early · RED (proven: desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not) · arm 2/8, 6 left
+desktop · plant status-never-ready · RED (proven: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[lau) · arm 3/8, 5 left
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb) · arm 4/8, 4 left
+desktop · plant launcher-stop-all · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start () · arm 5/8, 3 left
+desktop · plant launcher-decoy-left · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the decoy web server on 47840 (pid 2601621) still) · arm 6/8, 2 left
+desktop · plant port-no-fallback · RED (proven: desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: the game failed: SR-ERROR --statu) · arm 7/8, 1 left
+desktop · plant world-not-drawn · ERROR (the patch tests/plants/world-not-drawn.patch does not apply: crates/sr-app/src/desktop.rs @@ -166,12 +166,7 @@: its old lines appear 0 times in the file, not once) · arm 8/8, 0 left
+FAILED:
+  plant world-not-drawn: the patch tests/plants/world-not-drawn.patch does not apply: crates/sr-app/src/desktop.rs @@ -166,12 +166,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+redarm: 7 plants · 6 red · 0 green · 1 errors · scope desktop · 539.28 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D128.desktop.redarm.log
+=== NO-GO: plant world-not-drawn: the patch tests/plants/world-not-drawn.patch does not apply: crates/sr-app/src/desktop.rs @@ -166,12 +166,7 @@: its old lines appear 0 times in the file, not once - an error, not a red ===
+# Verify 2b: verify.py --redarm web --task M0-D128
+# claim: verify.py --changed --task M0-D128-claim

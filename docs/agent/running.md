@@ -17,6 +17,11 @@ PowerShell: `powershell -ExecutionPolicy Bypass -File start.ps1`. All three take
 opens no window on the lead's screen. `game` is the only service that asks (`--asked`): the double-click is the ask
 (R4, §3.6). Not for agents: a visible window is the lead's to run and to watch.
 
+A launcher reads `launch.py start`'s exit status (M0-D129). On a failed start it says the game **did NOT start**, names the log
+(`milestones/m0/logs/launcher.launch.<service>.log`), asks Enter only to close the window, exits non-zero and does **not** call `stop`
+(nothing started); it never says «Sandbox Reactions is running» then. The success path is unchanged. `start.bat` and `start.ps1`
+are NOT RUN on win-laptop yet (R15).
+
 ## The binary `sandbox-reactions` (§3.3)
 `sandbox-reactions --help` prints the usage line. What exists today (M0-T4–M0-T8); the rest of §3.3's flags arrive with the
 block that builds their feature and are refused with exit 4 until then:
@@ -55,20 +60,31 @@ block that builds their feature and are refused with exit 4 until then:
   `--until`, `--frames-every`, `--edits` (§3.3).
 
 ## The window (§4.1–§4.3, §4.10, §1.11; `crates/sr-app/src/desktop.rs`, `ui/`)
-What the window holds so far (M0-T84–M0-T87); the left and right panels, the tools, the views and the inspector are later
+What the window holds so far (M0-T84–M0-T87, M0-D119–M0-D123); the left and right panels, the tools, the views and the inspector are later
 blocks and are not in it. Sizes and colours are §4.11's tokens, named in the code, never restated here.
+  **The theme** (`ui/theme.rs`, M0-D119, M0-V12): `theme::install(&ctx)` runs once at start-up, from both entries (`desktop.rs`'s
+  creator and `web.rs`), and puts the tokens' `Visuals` on the context for good — egui's dark preference pinned, both of its themes
+  dressed — so the window is dark and drawn from the tokens whatever the system's light or dark setting says (a light browser had
+  drawn egui's light fills under the light text, the bar's buttons blank). No other file writes a colour literal; graded by
+  `ui_theme`, the pixels on screen NOT PROVEN.
 - **Layout**, top to bottom: the **top bar** (44 px, `bg.panel` with `border.panel`), the **world** (the centre, `bg.space`),
-  the **status bar** (24 px) carrying `status.line` live. The world is a 600 × 400 cell image drawn at the integer scale
+  the **status bar** (24 px) carrying `status.line` live at §4.11's small 12 px (`STATUS_FONT`; egui's body text is 13, M0-D123). The world is a 600 × 400 cell image drawn at the integer scale
   s = max(1, ⌊min(w/W, h/H)⌋) physical px, centred with its corner on a pixel and nearest filtering (§1.11), so every cell shows
   whole; a new world is empty (`bg.space` exactly, pinned by the `desktop` scope's `world` case). The banner sits over the world's
   top centre (`banner.bg` / `banner.text`, 20 px) — `docs/agent/time_control.md` § The frame loop in the app.
 - **The top bar**, left to right: Pause/Play, Step · the rung buttons (the ladder below TOP / 1.5, Max last; the selected one in
-  `accent`) · the speed readout (`time.speed`, `time.speed_capped`, `time.speed_max`, `time.paused`) · the slow-down checkbox ·
+  `accent`) · the speed readout (`time.speed`, `time.speed_capped`, `time.speed_max`, `time.paused`; **`accent` while the clock is
+  paused**, so a still world says so, §0.5 [M0-V12]) · the slow-down checkbox ·
   `edge.label` with two radios (Leave for good, Bounce back — not `accent`: §4.2 lists tool, rung and view only) · `world.clear`.
   Every text is a `strings.rs` key (byte-exact, §4.3). The bar is **drawn from a view model**: `ui/topbar.rs`'s `view(&TimeControl,
   &WorldBar)` computes it, `desktop.rs` only draws it and hands back `Command`s; `Command::apply` does the clock's part and
   `WorldBar::apply` the world's, returning an `Effect` (`Edge` → `Step::set_edge_mode` at once, in any state; `Clear` → an engine
   `Edit::Clear` queued for the next step's P0). That is what the `ui_topbar` and `ui_world` scopes grade without a window.
+  **Nothing in the bar moves when the clock changes** (the lead at M0-V12: «I dont like when an interaction in a bar moves the whole
+  bar»): the Pause/Play button is as wide as the wider of `time.pause` and `time.play` (plus the button padding), and the speed readout
+  sits in a slot as wide as its longest usual text — a capped ×1000 or Max's six-digit speed — so a pause, a rung or the cap resizes
+  nothing after them. The widths are measured at the bar's 14 px text in `draw_top_bar`; the view model carries the paused state, and
+  `ui_topbar` pins that and the single width.
 - **Clear world** opens an `egui::Modal` (`world.clear_confirm`, `world.clear_yes`, `world.clear_no`); a Clear is queued by yes
   alone, once. It lands at the next step's P0, so **paused, the old star stays on screen until a step runs**. The rung, the
   slow-down and the edge mode are kept; the observers (`Watch`) and the banner's feed start over.

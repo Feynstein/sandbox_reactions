@@ -326,8 +326,13 @@ impl TimeControl {
         self.bound_owed();
     }
 
-    /// The slow-down (§1.8.5): only ever slower, the banner until the player changes the rung; off, nothing.
+    /// The slow-down (§1.8.5): only ever slower, the banner until the player changes the rung; off, nothing. A supernova
+    /// that comes while the core-collapse banner shows takes the banner over, the rung where the collapse put it (§0.5).
     pub fn on_event(&mut self, event: Event) {
+        if self.slow_down && event == Event::Supernova && self.banner == Some(Event::CoreCollapse) {
+            self.banner = Some(event);
+            return;
+        }
         if !self.slow_down {
             return;
         }
@@ -577,6 +582,21 @@ mod tests {
         d.tc.select(2);
         d.tc.on_event(Event::Supernova);
         assert_eq!((d.value(), d.tc.banner().map(Event::banner_key)), (0.1, Some("banner.supernova")));
+    }
+
+    #[test]
+    fn a_supernova_takes_the_core_collapse_banner_over() {
+        let mut d = Driver::primed(None, 8);
+        d.tc.on_event(Event::Ignition);
+        d.tc.on_event(Event::CoreCollapse);
+        d.tc.on_event(Event::Supernova);
+        assert_eq!((d.value(), d.tc.banner().map(Event::banner_key)), (0.1, Some("banner.supernova")));
+        d.tc.on_event(Event::CoreCollapse);
+        assert_eq!((d.value(), d.tc.banner()), (0.1, Some(Event::Supernova)), "a banner is never replaced by an earlier event");
+        d.tc.select(1);
+        d.tc.select(0);
+        d.tc.on_event(Event::Supernova);
+        assert_eq!((d.value(), d.tc.banner()), (0.1, None), "a ×0.1 the player chose shows none");
     }
 
     #[test]

@@ -1,6 +1,6 @@
 --- a/crates/sr-app/src/desktop.rs
 +++ b/crates/sr-app/src/desktop.rs
-@@ -166,12 +166,7 @@
+@@ -200,12 +200,7 @@
              let painter = ui.painter();
              let area = ui.available_rect_before_wrap();
              let rect = world_rect(area, world, ui.ctx().pixels_per_point());
@@ -11,6 +11,6 @@
 -                egui::Color32::WHITE,
 -            );
 +            let _ = (&rect, self.sim.texture());
-             painter.text(
-                 egui::pos2(16.0, 12.0),
-                 egui::Align2::LEFT_TOP,
+             if let Some(banner) = &banner {
+                 draw_banner(painter, rect, banner);
+             }

@@ -8,7 +8,10 @@
 #              "ready" within 30 s; srAdapter and Chrome's own adapter go in the log (M0-T15)
 #   no-webgpu  `/?no-webgpu=1` shows srState "no-webgpu" and the three web.no_webgpu_* texts exactly (M0-T15)
 #   ready-held `ready` with a foreign listener on launch.json's `web` port: launch.py starts the server on the next free port of
-#              the service's `port_range`, prints it, and the page reaches "ready" there (M0-D107)
+#              the service's `port_range`, prints it, and the page reaches "ready" there (M0-D107); the listener binds as
+#              launch.py's server does and a bind it cannot make is the case's own NO-GO, never launch.py's (M0-D128)
+# Every case that serves stops its server itself once the smoke ends, and the port it printed must bind again within 30 s: a
+# server that outlives launch.py's stop is a NO-GO naming its pid, and the case stops it (M0-D128).
 # The scope's cases run in parallel, yet they share one dist, one port (launch.json's `web`, 47840 or the next free one of its range) and one pid file. Two locks, each
 # held only for what needs it (M0-TR1b), always taken in this order and released on every exit path:
 #   the tree's build lock (build/web-build.lock.d) - the dist from its build to the end of the smoke that serves it: `trunk
@@ -73,7 +76,7 @@ sr_lock() {
 _sr_exit() {
   # web alone: launch.py's records are the box's, not the task's - a bare stop takes another scope's game too (M0-D28)
   [ "$started" = 1 ] && $PY tools/pb/launch.py stop web --task "$task" >/dev/null 2>&1
-  [ -n "$holding" ] && rm -f "$holding"   # the foreign listener of `ready-held` ends when its file is gone
+  [ -n "$holding" ] && rm -f "$holding" "$holding.up" "$holding.err"   # the foreign listener of `ready-held` ends when its file is gone
   [ "$own_port" = 1 ] && rm -rf "$lock.d" 2>/dev/null
   [ "$own_build" = 1 ] && rm -rf "$build_lock" 2>/dev/null
 }
@@ -85,6 +88,32 @@ take_port_lock() {
   else
     sr_lock "$lock.d"; own_port=1
   fi
+}
+# port_free <port>: the port binds again within 30 s, as http.server binds it (SO_REUSEADDR on POSIX, none on Windows) - a
+# bind, never a connect (tests/smoke.sh's _sr_port_closed, M0-D51)
+port_free() {
+  $PY -I - "$1" <<'PY'
+import os, socket, sys, time
+port, end = int(sys.argv[1]), time.monotonic() + 30
+while time.monotonic() < end:
+    with socket.socket() as s:
+        if os.name != "nt":
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            s.bind(("127.0.0.1", port))
+            sys.exit(0)
+        except OSError:
+            pass
+    time.sleep(0.05)
+sys.exit(1)
+PY
+}
+# sr_kill <pid>: a server launch.py no longer stops - Git Bash's kill takes no Windows pid
+sr_kill() {
+  case "$(uname -s)" in
+    MINGW* | MSYS* | CYGWIN*) taskkill //F //PID "$1" >/dev/null 2>&1 ;;
+    *) kill "$1" 2>/dev/null ;;
+  esac
 }
 
 # a build's failure, recorded for the arm's sibling cases (build/web-build.result) before the NO-GO
@@ -168,22 +197,40 @@ take_port_lock
 first="$($PY -I -c "import json;print(json.load(open('tools/pb/launch.json'))['services']['web']['port'])" | tr -d '\r')"
 if [ "$case_" = ready-held ]; then
   # a foreign listener (a program launch.py did not start - VS Code's helper held 47812 all evening, M0-D107) on the first port
+  # It binds as launch.py's http.server does - SO_REUSEADDR on POSIX, none on Windows: a sibling case's smoke that served
+  # on this port leaves the server side's TIME-WAIT sockets there for a minute, and on linux-pc a bind without it read
+  # Errno 98 while no one listened, then launch.py took the port (M0-D128). It says it is up, or why it is not.
   holding="$root/build/web-foreign-$$.hold"; : >"$holding"
   $PY -I -c "
 import os, socket, sys, time
-s = socket.socket(); s.bind(('127.0.0.1', $first)); s.listen(5)
+s = socket.socket()
+if os.name != 'nt':
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+try:
+    s.bind(('127.0.0.1', $first)); s.listen(5)
+except OSError as e:
+    open(sys.argv[1] + '.err', 'w').write(str(e)); sys.exit(1)
+open(sys.argv[1] + '.up', 'w').close()
 end = time.monotonic() + 300
 while os.path.exists(sys.argv[1]) and time.monotonic() < end: time.sleep(0.2)" "$holding" &
   for _ in $(seq 1 50); do
-    $PY -I -c "import socket,sys;s=socket.socket();s.settimeout(0.5);sys.exit(0 if s.connect_ex(('127.0.0.1',$first))==0 else 1)" && break
+    { [ -e "$holding.up" ] || [ -e "$holding.err" ]; } && break
     sleep 0.2
   done
+  [ -e "$holding.err" ] && die "the case's own foreign listener could not bind $first ($(cat "$holding.err")) - the case's setup, not launch.py"
+  [ -e "$holding.up" ] || die "the case's own foreign listener on $first never came up in 10 s"
 fi
 started=1
-start="$($PY tools/pb/launch.py start web --task "$task" 2>&1)" || { echo "$start"; die "launch.py start web did not end GO"; }
+start="$($PY tools/pb/launch.py start web --task "$task" 2>&1)" || {
+  echo "$start"
+  slog="$(echo "$start" | sed -n 's/.*(log \(.*\))$/\1/p' | head -1)"   # in a red-arm copy the server's log goes with the arm
+  [ -f "$slog" ] && tail -n 20 "$slog"
+  die "launch.py start web did not end GO"
+}
 echo "$start" | grep -v '^=== '
 port="$(echo "$start" | sed -n 's/^web: ready on port \([0-9][0-9]*\).*/\1/p' | head -1)"
 [ -n "$port" ] || die "launch.py start web printed no 'ready on port <n>'"
+pid="$($PY tools/pb/launch.py status --task "$task" 2>&1 | sed -n 's/^web running pid \([0-9][0-9]*\) .*/\1/p' | head -1)"
 if [ "$case_" = ready-held ]; then
   [ "$port" != "$first" ] || die "the web server took $first, which a foreign listener holds"
   $PY -I -c "import socket,sys;s=socket.socket();s.settimeout(0.5);sys.exit(0 if s.connect_ex(('127.0.0.1',$first))==0 else 1)" \
@@ -194,4 +241,12 @@ else
   smoke="$case_"
 fi
 node web/smoke.mjs "$smoke" --base "http://127.0.0.1:$port" --timeout-s 30; rc=$?
+# Stopped here, not in the trap alone: launch.py's records are one file each start and stop rewrites, and a record a parallel
+# writer drops leaves its server running unseen - ready-held's held 47841 and 47842 for hours on linux-pc (M0-D128)
+started=0
+$PY tools/pb/launch.py stop web --task "$task" >/dev/null 2>&1
+if ! port_free "$port"; then
+  [ -n "$pid" ] && sr_kill "$pid"
+  die "the web server on $port (pid ${pid:-unknown}) still bound 30 s after launch.py stop web - its record lost${pid:+; stopped by the case}"
+fi
 exit $rc

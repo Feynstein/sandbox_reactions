@@ -1,0 +1,13 @@
+--- a/start.sh
++++ b/start.sh
+@@ -8,3 +8,3 @@
+ rc=$?
+-if [ $rc -ne 0 ]; then   # a start that failed is not a game running: say so, name its log, and ask for Enter only to close this window (M0-D129)
++if false; then   # plant launcher-start-ignored (M0-D129): the exit status never read
+   echo "Sandbox Reactions did NOT start (launch.py start exit $rc). The lines above say why; its log: milestones/m0/logs/launcher.launch.$service.log"
+--- a/start.bat
++++ b/start.bat
+@@ -9,3 +9,2 @@
+ py -3.12 tools\pb\launch.py start %SERVICE% --task launcher %ASKED%
+-if errorlevel 1 goto failed
+ echo Sandbox Reactions is running. Press Enter to close it.

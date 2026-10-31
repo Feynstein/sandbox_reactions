@@ -1,0 +1,22 @@
+==== 2026-10-31T10:30:26-04:00 web · plant web-autoload · a fresh scratch copy of the tree
+planted web-autoload: tests/plants/web-autoload.patch -> web/Trunk.toml
+== 2026-10-31T10:30:26-04:00 web[build] · task M0-D128 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:30:26-04:00 web[ready] · task M0-D128 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:30:26-04:00 web[no-webgpu] · task M0-D128 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:30:26-04:00 web[ready-held] · task M0-D128 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 11.82 s
+web ready: trunk's auto-loader or preload for the wasm is still in index.html
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html ===
+
+-- web[build] · exit=1 · 12.12 s
+web build: trunk's auto-loader or preload for the wasm is still in index.html (this arm's build, reused)
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html (this arm's build, reused) ===
+
+-- web[ready-held] · exit=1 · 12.13 s
+web ready-held: trunk's auto-loader or preload for the wasm is still in index.html (this arm's build, reused)
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html (this arm's build, reused) ===
+
+-- web[no-webgpu] · exit=1 · 13.13 s
+web no-webgpu: trunk's auto-loader or preload for the wasm is still in index.html (this arm's build, reused)
+=== NO-GO: trunk's auto-loader or preload for the wasm is still in index.html (this arm's build, reused) ===
+

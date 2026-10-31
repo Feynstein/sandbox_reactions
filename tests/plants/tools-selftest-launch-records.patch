@@ -1,0 +1,11 @@
+--- a/tools/pb/launch.py
++++ b/tools/pb/launch.py
+@@ -471,7 +471,7 @@
+         caller decides what it means for its own process, and the verdict names the file."""
+         try:
+             with records_lock(self.pid_file):
+-                fresh = read_pids(self.pid_file)
++                fresh = json.loads(json.dumps(self.seen))  # the records as this run last read them, not as they are now
+                 for name in set(self.pids) | set(self.seen):
+                     if self.pids.get(name) != self.seen.get(name):
+                         if name in self.pids:

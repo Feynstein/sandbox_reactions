@@ -1,0 +1,22 @@
+==== 2026-10-31T10:30:13-04:00 web · plant web-no-gpu-check · a fresh scratch copy of the tree
+planted web-no-gpu-check: tests/plants/web-no-gpu-check.patch -> web/index.html
+== 2026-10-31T10:30:14-04:00 web[build] · task M0-D128 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:30:14-04:00 web[ready] · task M0-D128 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:30:14-04:00 web[no-webgpu] · task M0-D128 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:30:14-04:00 web[ready-held] · task M0-D128 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 10.82 s
+web ready: index.html has no navigator.gpu check
+=== NO-GO: index.html has no navigator.gpu check ===
+
+-- web[build] · exit=1 · 11.12 s
+web build: index.html has no navigator.gpu check (this arm's build, reused)
+=== NO-GO: index.html has no navigator.gpu check (this arm's build, reused) ===
+
+-- web[ready-held] · exit=1 · 11.14 s
+web ready-held: index.html has no navigator.gpu check (this arm's build, reused)
+=== NO-GO: index.html has no navigator.gpu check (this arm's build, reused) ===
+
+-- web[no-webgpu] · exit=1 · 12.14 s
+web no-webgpu: index.html has no navigator.gpu check (this arm's build, reused)
+=== NO-GO: index.html has no navigator.gpu check (this arm's build, reused) ===
+

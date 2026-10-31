@@ -76,7 +76,10 @@ per step is the physics', not the rung's).
 ## The slow-down and the latch (§1.8.5)
 - `on_event` with the setting on: ignition → ×1, core collapse → ×0.1, supernova → ×0.1 — only ever slower (an event
   whose rung is not below the current one does nothing), never an automatic return; `banner()` names the event until the
-  rung actually changes (`slower` at the lowest rung keeps it). With the setting off, `on_event` does nothing.
+  rung actually changes (`slower` at the lowest rung keeps it). With the setting off, `on_event` does nothing. **One exception
+  to «nothing»** (M0-D127, contract §0.5 [M0-V12]): a supernova that comes while the core-collapse banner is up — the clock where
+  the collapse put it — takes the banner over, `banner.supernova`, the rung unchanged (at ×0.1 it slows nothing, so the
+  collapse's banner would otherwise stay through it); a later core collapse never replaces it, a player-chosen ×0.1 shows none.
 - **The latch** is the engine's (`step::latch`): an armed set with `Plan.slow_down` on stops the frame on the GPU, and the
   report says `latch_fired`. Time control then clamps owed to ≤ 0 — the stopped steps are never owed — and the app sends
   `on_event(Event::CoreCollapse)` (the drop to ×0.1; wired by M0-T86 — § The frame loop in the app). With the setting off the frame runs
@@ -96,19 +99,24 @@ lot (the lead, 2026-10-18, M0-TJ2: «we do not block anything on performance»).
 ## The frame loop in the app (§1.8.3, §1.8.5, §3.1, §4.2; `crates/sr-app/src/desktop.rs` `mod sim`, `ui/banner.rs`)
 M0-T84–M0-T87. `sr_physics::time` stays pure; the app owns the wall clock, the engine and the texture. `Sim` holds the
 `TimeControl`, the engine's `Step` on **eframe's own device** (one `RenderState`), a second `State` for α, the cell image
-registered as a native egui texture (nearest filtering), the `Watch` (the observers the headless run uses) and the banner's `Feed`.
-- **One frame, in order** (`Sim::frame(now, frozen)`, called once per egui pass after the top bar's commands ran):
-  1. `poll()` — never blocks: `Step::poll_frames` hands back the frames read back, in order; each report goes to
-     `TimeControl::on_report` (a **forced** frame's — a capture's `steps` — with `steps_run` 0: its Δt only, it owes nothing);
-     a planned frame the latch cut goes to `Feed::latch`; the block summary goes to `Watch::update` and each fresh event to
-     `Feed::event`.
+registered as a native egui texture (nearest filtering) and `ui::banner::Frames` — the routing of the frames read back, which owns
+the `Watch` (the observers the headless run uses) and the banner's `Feed` (M0-D122).
+- **One pass, in order** (`SandboxApp::ui`, once per egui pass; `Sim::frame(now, frozen)` is its last step):
+  0. `banner::views(&mut sim)` — **before anything else reads the clock** (M0-D120): `Sim::poll` never blocks and hands back the
+     frames read back, in order, through `Frames::read_back` — each report goes to `TimeControl::on_report` whatever world the
+     frame ran in (a **forced** frame's — a capture's `steps` — with `steps_run` 0: its Δt only, it owes nothing); a planned frame
+     the latch cut goes to `Feed::latch`, and the block summary to `Watch::update` with each fresh event to `Feed::event` — both
+     only for a frame of the **current** world (see Clear below). Then, from that one clock state, `topbar::view(&TimeControl,
+     &WorldBar)` and `banner::view`: the pass that reads an event draws the new banner beside the rung it slowed to, never
+     beside the one it replaced.
+  1. The commands reach the clock: the keys and the bar's buttons (`Sim::command`), before the pass plans its frame.
   2. The plan: `plan_frame(Estimates { wall_s })` with the wall time since the last pass (1/60 s on the first). A capture's
      forced steps replace it (chunks of `FORCED_CHUNK`, slow-down off so the latch never cuts them).
   3. α (below), then, when steps > 0, the state is copied to the previous-state buffers **before** `encode_frame(&FramePlan
-     { steps, slow_down })`; the frame is queued as in flight (forced or not) so its report is told apart.
-  4. `render` draws the active view into the texture with α, one submit. The image is drawn by the central panel; the
-     status bar's steps per frame is the **mean of the frames that ran any steps in the last second** (a mean over every frame
-     reads 0 at ×1, where a Sun-like star is owed less than one step a frame).
+     { steps, slow_down })`; the frame is queued as in flight (`Frames::submitted`, forced or not) so its report is told apart.
+  4. `render` draws the active view into the texture with α, one submit. The image is drawn by the central panel, the banner
+     over it; the status bar's steps per frame is the **mean of the frames that ran any steps in the last second** (a mean over
+     every frame reads 0 at ×1, where a Sun-like star is owed less than one step a frame).
 - **Interpolation α (§1.8.3, TW-E4)**: when the rung owes less than one step a frame (per-frame sim time `rung / f_target` below
   Δt_est) and the clock runs, α = 1 + owed / Δt_est, clamped to [0, 1] — the previous state just after a step, the current one
   when the next is due; otherwise α = 1 (any rung owing a step or more a frame, Max, paused, a forced frame, no Δt yet). The app
@@ -116,7 +124,7 @@ registered as a native egui texture (nearest filtering), the `Watch` (the observ
   owed / Δt_est is ≤ 0 under its own bound; the `1 +` is the app's reading, declared by M0-T84.
 - **Empty world**: Δt is the floor gas's (≈ 0.45 t.u., M0-D96), so the clock steps once per ~27 frames at ×1 and an edit
   (a drop) lands at the next step, ≤ ~0.45 s later. A new world starts empty, at ×1, running, the slow-down on.
-- **The commands** reach the clock before the frame: the top bar's buttons and the keys (`ui::topbar::apply`, running.md
+- **The commands** reach the clock before the frame (step 1): the top bar's buttons and the keys (`ui::topbar::apply`, running.md
   § The window) — Pause/Play, Step (`step_once`: one step the next plan runs; while running it pauses), a rung, Max, ±, the
   slow-down. The world's two (`WorldBar::apply`) do not touch the clock: the edge choice goes to `Step::set_edge_mode`, Clear to
   an engine `Edit::Clear` for the next P0.
@@ -126,20 +134,26 @@ registered as a native egui texture (nearest filtering), the `Watch` (the observ
   `Feed::event(time, object, kind)` takes the observers' `ignition`, `core_collapse` and `supernova` (`sink_formed` and `ending`
   are ignored). Each (object, event) is booked once (§1.9.4), and a Tracker `core_collapse` that follows a latch cut is the
   same collapse and is **swallowed once**, so no second banner. The clock stays the one place that says only-slower, the
-  rung and the setting off; the banner shows until the player's own rung change — **no automatic return**. `desktop.rs` reads
-  `banner::view` *after* the frame, so an event read back in this pass has slowed the clock already, and draws it over the
-  world's top centre.
-- **Clear starts the watch over**: `Sim::clear` makes a new `Watch` and `Feed` (the old objects are gone; a reused object id
-  would otherwise never banner again). Frames in flight at the click still carry the old world's summary — unmeasured.
+  rung and the setting off; the banner shows until the player's own rung change — **no automatic return** — except that a supernova takes a core-collapse banner over (§ The slow-down and the
+  latch). `banner::views` reads it with the bar, right after the pass's read-back (step 0), so an event read back in this pass
+  has slowed the clock already when both are built, and `desktop.rs` draws it over the world's top centre.
+- **Clear starts the watch over** (M0-D122): `Sim::clear` queues `Edit::Clear` and calls `Frames::clear`, which starts the next
+  world. Frames are read back ≤ 2 frames late, so a Clear finds the old world's frames in flight; each frame is tagged with the
+  world it was submitted in, **always** reports to `on_report` (Δt and sim time are the engine's, whatever the world), and an
+  older world's latch cut and block summary are dropped — otherwise the new observers would take the old star's objects for new
+  ones and fire their ignition again. The new `Watch` and `Feed` are built at the new world's first frame read back, from the
+  old world's last sim time (not the click's). The window repro is NOT PROVEN (synthetic | source only; M0-TW's).
 - **Not proven**: the banner on screen (a collapse or supernova is not reachable on lavapipe within a capture); `Watch::update`'s
   per-frame cost on a real GPU (it decodes the whole block summary every frame; nothing blocks on it, M0-TJ2); fps at ×1 off
-  lavapipe (25 there, linux-pc, M0-T84). The readout's `{actual}` is written as `sig2` writes it, **ungrouped** (×4200) while
-  `format::actual_number` groups it (4,200) — an unsettled contract point (§4.12 against M0-T24's flag), the lead's ruling.
+  lavapipe (25 there, linux-pc, M0-T84). The readout's `{actual}` is written as `sig2` writes it, **ungrouped** (×4200) — the lead's ruling at M0-V12
+  (contract §0.5 [M0-V12], "Ungrouped, ×4200"); format.rs's unread helpers (`actual_number` and the speed formatters) were removed
+  by M0-D126.
 
 ## What grades it
-The `time_control` scope (`bash tests/cpu.sh sr-physics time`, no GPU; R17 spells §5's `time-control` so) — 23 cases
-over §1.8 and §3.2 with a zero-latency driver, plants `slowdown-auto-return` and `time-max-paced` (Max paced like a
-numbered rung, `docs/agent/testing.md`). The app side is graded by
-`ui_topbar` (14 cases, the bar and the keys), `ui_banner` (12) and `ui_world` (7), all without a window, and the `capture` scope's
+The `time_control` scope (`bash tests/cpu.sh sr-physics time`, no GPU; R17 spells §5's `time-control` so) — 24 cases
+over §1.8 and §3.2 with a zero-latency driver, plants `slowdown-auto-return`, `slowdown-supernova-no-takeover` (the takeover
+dropped, M0-D127) and `time-max-paced` (Max paced like a numbered rung, `docs/agent/testing.md`). The app side is graded by
+`ui_topbar` (15 cases, the bar, its fixed widths and the keys), `ui_banner` (15, `views`' pass order and `Frames`' routing),
+`ui_world` (7) and `ui_theme` (8, the window's colours and the status line's 12 px), all without a window, and the `capture` scope's
 `actions` case (the bar on screen) and the `desktop` scope's `world` case (the loop drawing) — `docs/agent/testing.md`. G-WARP (M0-T110),
 G-TOP and G-FPS (⏱, the Quadro only, R12) grade it in the running game later.

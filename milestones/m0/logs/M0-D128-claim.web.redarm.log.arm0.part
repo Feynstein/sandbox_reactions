@@ -1,0 +1,9 @@
+==== 2026-10-31T10:48:57-04:00 web · clean · a fresh scratch copy of the tree
+== 2026-10-31T10:48:58-04:00 web[build] · task M0-D128-claim · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:48:58-04:00 web[ready] · task M0-D128-claim · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:48:58-04:00 web[no-webgpu] · task M0-D128-claim · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-10-31T10:48:58-04:00 web[ready-held] · task M0-D128-claim · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 9.00 s
+web build: trunk 0.21.14, 5.1M wasm; check on line 38, wasm on line 48
+=== GO ===
+
