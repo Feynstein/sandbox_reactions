@@ -1,0 +1,58 @@
+==== 2026-10-31T16:36:55-04:00 ui_presets · clean · a fresh scratch copy of the tree
+== 2026-10-31T16:36:55-04:00 ui_presets · task M0-T90 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::left::presets_tests
+-- ui_presets · exit=0 · 4.63 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tumdhbnz/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-tumdhbnz/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-tumdhbnz/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.24s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::left::presets_tests::a_refusal_shows_for_three_seconds_and_the_preset_stays_armed ... ok
+test ui::left::presets_tests::esc_disarms_and_no_other_key_is ... ok
+test ui::left::presets_tests::the_hint_shows_while_armed_and_a_drop_spends_the_click ... ok
+test ui::left::presets_tests::arming_leaves_the_tools_alone ... ok
+test ui::left::presets_tests::a_button_arms_its_preset_and_only_one_is_armed ... ok
+test ui::left::presets_tests::the_texts_are_byte_exact ... ok
+test ui::left::presets_tests::the_outline_is_the_clouds_radius_and_agrees_with_the_refusal ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 75 filtered out; finished in 0.33s
+
+
+==== 2026-10-31T16:36:59-04:00 ui_presets · plant preset-no-disarm · a fresh scratch copy of the tree
+planted preset-no-disarm: tests/plants/preset-no-disarm.patch -> crates/sr-app/src/ui/left.rs
+== 2026-10-31T16:37:00-04:00 ui_presets · task M0-T90 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::left::presets_tests
+-- ui_presets · exit=101 · 4.48 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tumdhbnz/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-tumdhbnz/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-tumdhbnz/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.09s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::left::presets_tests::a_refusal_shows_for_three_seconds_and_the_preset_stays_armed ... ok
+test ui::left::presets_tests::the_hint_shows_while_armed_and_a_drop_spends_the_click ... ok
+test ui::left::presets_tests::arming_leaves_the_tools_alone ... ok
+test ui::left::presets_tests::a_button_arms_its_preset_and_only_one_is_armed ... ok
+test ui::left::presets_tests::esc_disarms_and_no_other_key_is ... FAILED
+test ui::left::presets_tests::the_texts_are_byte_exact ... ok
+test ui::left::presets_tests::the_outline_is_the_clouds_radius_and_agrees_with_the_refusal ... ok
+
+failures:
+
+---- ui::left::presets_tests::esc_disarms_and_no_other_key_is stdout ----
+
+thread 'ui::left::presets_tests::esc_disarms_and_no_other_key_is' (3604253) panicked at crates/sr-app/src/ui/left.rs:723:9:
+assertion `left == right` failed
+  left: (Some(Giant), ["Giant star"], ["Click in the world to drop the star. Esc cancels."])
+ right: (None, [], [])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::left::presets_tests::esc_disarms_and_no_other_key_is
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 75 filtered out; finished in 0.33s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

@@ -2030,7 +2030,7 @@
       ]
     },
     "capture": {
-      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own",
+      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own; since M0-T89 the actions case also runs tool, element and paint: the left panel (220 px) differs after tool and element, its accent moving down, and the world's upper-left corner differs after paint (plant capture-paint-ignored); since M0-T92 it runs select too (14 steps): the right panel (300 px) differs from start's \"No star yet\" and holds more lit pixels, and a malformed select is refused (plant capture-star-panel-blank, the readout's lines never drawn)",
       "cases": [
         "smoke",
         "refuse",
@@ -2067,6 +2067,14 @@
         {
           "id": "capture-edge-ignored",
           "patch": "tests/plants/capture-edge-ignored.patch"
+        },
+        {
+          "id": "capture-paint-ignored",
+          "patch": "tests/plants/capture-paint-ignored.patch"
+        },
+        {
+          "id": "capture-star-panel-blank",
+          "patch": "tests/plants/capture-star-panel-blank.patch"
         }
       ]
     },
@@ -2635,6 +2643,100 @@
         {
           "id": "clear-without-confirm",
           "patch": "tests/plants/clear-without-confirm.patch"
+        }
+      ]
+    },
+    "ui_tools": {
+      "desc": "the left panel's tools (contract §1.5, §1.12, §4.1, §4.2, §4.4, §4.10; M0-T89): crates/sr-app/src/ui/left.rs - Brush, Eraser, Heat and Cool (one selected, B E H C), the brush size slider 1-40 from 8 with [ and ] by 2 and stopping at both ends, the nine paintable elements in the registry's order with their §1.5 swatches and Hydrogen first, neutron matter never listed nor selectable, and the edit one frame of the held button queues (one per frame, with the radius and the species of that frame, each tool its own edit), the pointer mapped to a cell and the brush disk's outline following it. The bin's own unit tests, `ui::left::tools_tests` (cpu.sh's --bin mode); M0-T91 added the views' cases to it (6). The plan spells the scope `ui-tools`; R17 makes it `ui_tools`. Plant tools-lists-neutron (the element list holds every species).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::left::tools_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 18,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/tools-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "tools-lists-neutron",
+          "patch": "tests/plants/tools-lists-neutron.patch"
+        }
+      ]
+    },
+    "ui_presets": {
+      "desc": "the left panel's presets (contract §1.12, §2.10, §4.1, §4.2, §4.5, §4.10; M0-T90): crates/sr-app/src/ui/left.rs - presets.heading with the three buttons and their notes byte-exact, a button arming its preset (one armed at a time, the armed one in accent, the tools untouched), presets.place_hint while armed, a drop spending the click, a refusal showing presets.no_room for 3 s with the preset still armed, Esc disarming (and no other key), and the cloud's outline drawn at the radius the engine lays the cloud out with (150 cells for 15 and 40 Suns, not the uncapped 40 sqrt(M/M_sun)) agreeing with Edit::drop_preset's NoRoom on a grid of cells. The bin's own unit tests, `ui::left::presets_tests` (cpu.sh's --bin mode); the drop on screen is the `desktop` scope's `world` case and `capture`'s `actions` (the preset action goes through the panel's arm and place). The plan spells the scope `ui-presets`; R17 makes it `ui_presets`. Plant preset-no-disarm (Esc ignored).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::left::presets_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 7,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/elements.json",
+        "assets/physics.json",
+        "assets/calibration.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/preset-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "preset-no-disarm",
+          "patch": "tests/plants/preset-no-disarm.patch"
+        }
+      ]
+    },
+    "ui_star": {
+      "desc": "the right panel's star readout and the selection (contract \u00a71.9.5, \u00a71.9.6, \u00a74.1, \u00a74.2, \u00a74.6, \u00a74.10, \u00a74.12; M0-T92): crates/sr-app/src/ui/right.rs - the stage label (the Supergiant rows at M >= M_up, the other rows unchanged), star.mass, star.fate or star.ending once a remnant holds (the ending replacing the fate, a close call naming both), star.age, star.rate (hidden while paused), star.surface and star.core, each line byte-exact on synthetic objects; star.none with no object and star.select_hint with several; the selection kept by the tracker's id (the heaviest by default, the object under a right click, empty space leaving it, a list that shifts under it, a new world emptying it) on synthetic block summaries through the real Tracker, stages and age clock. The bin's own unit tests, `ui::right::star_tests` (cpu.sh's --bin mode). The right click on the window and the panel drawn are `capture`'s `actions` (the select action). The plan spells the scope `ui-star`; R17 makes it `ui_star`. Plant star-rate-while-paused (the rate shown while paused).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::right::star_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 13,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/calibration.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/star-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "star-rate-while-paused",
+          "patch": "tests/plants/star-rate-while-paused.patch"
         }
       ]
     }

@@ -49,6 +49,7 @@ import re, struct, sys, zlib
 d = sys.argv[1]
 BG = (0x05, 0x07, 0x0D)
 W, H, TOP, BAR = 600, 400, 44, 24  # the world's cells (§1.11), the top bar's and the status bar's heights (§4.2)
+LEFT, RIGHT = 220, 300             # the panels' widths (§4.2): the world is centred between them (M0-T92: the right one)
 def read(name):
     raw = open(f"{d}/{name}.png", "rb").read(); pos, idat, ihdr = 8, b"", None
     while pos < len(raw):
@@ -74,8 +75,9 @@ def read(name):
 w, h, empty = read("empty")
 _, _, running = read("running")
 s = max(1, min(w // W, (h - TOP - BAR) // H))                # the integer scale (§1.11), 2 in the default window
-x0, y0 = (w - W * s) // 2, TOP + (h - TOP - BAR - H * s) // 2
-cx, cy = w // 2, TOP + (h - TOP - BAR) // 2
+left, right = round(LEFT * w / 1760), round(RIGHT * w / 1760)
+x0, y0 = left + (w - left - right - W * s) // 2, TOP + (h - TOP - BAR - H * s) // 2
+cx, cy = left + (w - left - right) // 2, TOP + (h - TOP - BAR) // 2
 for name, (x, y) in {"centre": (cx, cy), "top-left cell": (x0, y0), "bottom-right cell": (x0 + W * s - 1, y0 + H * s - 1)}.items():
     if empty(x, y) != BG:
         sys.exit(f"empty world, {name} ({x}, {y}): {empty(x, y)}, expected bg.space {BG}")

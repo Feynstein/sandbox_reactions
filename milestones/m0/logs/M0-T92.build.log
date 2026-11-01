@@ -1,0 +1,61 @@
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+warning: field `cal` is never read
+   --> crates/sr-app/src/ui/banner.rs:108:5
+    |
+106 | pub struct Frames {
+    |            ------ field in this struct
+107 |     physics: Physics,
+108 |     cal: Calibration,
+    |     ^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-app` (bin "sandbox-reactions" test) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 1.07s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 13 tests
+test ui::right::star_tests::a_close_call_names_both_fates ... ok
+test ui::right::star_tests::each_line_is_byte_exact_in_the_contracts_order ... ok
+test ui::right::star_tests::no_object_reads_star_none_and_several_add_the_hint ... ok
+test ui::right::star_tests::the_ending_replaces_the_fate ... ok
+test ui::right::star_tests::a_click_on_empty_space_keeps_the_selection ... ok
+test ui::right::star_tests::every_stage_has_a_label_row ... ok
+test ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor ... ok
+test ui::right::star_tests::the_rate_is_hidden_while_paused_and_before_it_exists ... ok
+test ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages ... ok
+test ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection ... ok
+test ui::right::star_tests::the_default_is_the_heaviest_object ... ok
+test ui::right::star_tests::the_supergiant_rows_switch_at_m_up ... ok
+test ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 88 filtered out; finished in 0.00s
+
+
+real	0m1.112s
+user	0m4.300s
+sys	0m0.287s
+== 2026-10-31T17:30:34-04:00 build[native] · task M0-T92 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-31T17:30:34-04:00 build[wasm] · task M0-T92 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.72 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (4.5G)
+=== GO ===
+
+-- build[native] · exit=1 · 0.87 s
+--- cargo clippy --workspace --release --locked -- -D warnings (clippy) ---
+    Checking sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+error: method `selected` is never used
+   --> crates/sr-app/src/ui/right.rs:187:12
+    |
+121 | impl Stars {
+    | ---------- method in this implementation
+...
+187 |     pub fn selected(&self) -> Option<u32> {
+    |            ^^^^^^^^
+    |
+    = note: `-D dead-code` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[expect(dead_code)]` or `#[allow(dead_code)]`
+
+error: could not compile `sr-app` (bin "sandbox-reactions") due to 1 previous error
+=== NO-GO: cargo clippy -D warnings failed ===
+

@@ -5,11 +5,15 @@
 #            llvmpipe` on linux-pc, `--offscreen-window` on win-laptop (R4, R15). Pass: exit 0; two PNGs of the window's
 #            size (the IHDR matching captions.json's viewport) whose pixels DIFFER (a screenshot taken before the frame it
 #            names is presented would show the previous state); a valid captions.json in review_page.py's shape.
-#   actions — tests/capture/actions.json (M0-T85): one step per action built (pause, steps, preset, rung, slowdown, edge x2), run on the same
+#   actions — tests/capture/actions.json (M0-T85): one step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select), run on the same
 #            route. Pass: exit 0; a PNG per step, in the script's order, each the window's size; the top bar (§4.2's 44 px)
 #            differs from the previous step's after `paused`, `rung`, `slowdown`, `rung-max` and `edge-leave` (a paused readout both times, so only the radios differ); the accent (the selected
-#            rung's text) sits further right in `rung` than in `start`, and further right again in `rung-max`.
-#   refuse — an action not built yet, an unknown action and a bad id each → exit 4 and an `SR-ERROR` line naming the
+#            rung's text) sits further right in `rung` than in `start`, and further right again in `rung-max`. The left panel
+#            (§4.2's 220 px) differs after `tool` and after `element`, its accent (the selected tool and element) sitting lower
+#            in `tool` than in `edge-leave` and lower again in `element`; the world's upper-left corner (35 % each way) differs in `paint`
+#            (two blobs of iron painted at cells (100, 100) and (130, 100), far from the star at the centre); the right panel (§4.2's 300 px)
+#            differs in `select` from `start`'s "No star yet" and holds more lit pixels (the star's readout, M0-T92).
+#   refuse — an action not built yet, a malformed select, an unknown action and a bad id each → exit 4 and an `SR-ERROR` line naming the
 #            culprit, before any window opens (no display needed).
 # Ends in `=== GO ===` or `=== NO-GO: <reason> ===`.
 source "$(dirname "${BASH_SOURCE[0]}")/../cargo.sh"
@@ -79,11 +83,11 @@ PY
     out="$("${runner[@]}" "$bin" "${window[@]}" --capture tests/capture/actions.json --out "$dir" 2>&1)"; rc=$?
     echo "$out" | grep -v '^$' | tail -n 8
     [ $rc -eq 0 ] || { echo "=== NO-GO: the capture run exited $rc, expected 0 ==="; exit 1; }
-    echo "$out" | grep -q '^SR-CAPTURE DONE 9 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 9' line ==="; exit 1; }
+    echo "$out" | grep -q '^SR-CAPTURE DONE 14 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 14' line ==="; exit 1; }
     $PY -I - "$dir" <<'PY' || { echo "=== NO-GO: the actions did not reach the top bar ==="; exit 1; }
 import json, struct, sys, zlib
 d = sys.argv[1]
-WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave"]
+WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave", "tool", "element", "paint", "view", "select"]
 caps = json.load(open(f"{d}/captions.json", encoding="utf-8"))
 if [c.get("id") for c in caps] != WANT:
     sys.exit(f"captions.json ids {[c.get('id') for c in caps]}, expected {WANT}")
@@ -109,12 +113,13 @@ def read(name):
                 line[x] = (line[x] + (a if pa <= pb and pa <= pc else b if pb <= pc else c)) & 255
         rows.append(line); prev = line
     return w, h, rows
-shots, size = {}, set()
+shots, full, size = {}, {}, set()
 for name in WANT:
     w, h, rows = read(name)
     size.add((w, h))
     bar = round(44 * w / 1760)                          # the top bar's height in the window's pixels (§4.2: 44 px of 1760)
     shots[name] = (w, [bytes(r) for r in rows[:bar]])
+    full[name] = (w, h, [bytes(r) for r in rows])
 if len(size) != 1 or min(next(iter(size))) < 500:
     sys.exit(f"the PNGs' sizes: {sorted(size)}")
 def accent_x(name):                                    # mean column of the accent-coloured pixels (#F2B33D, text anti-aliased)
@@ -132,7 +137,44 @@ if None in (x_start, x_rung, x_max):
     sys.exit(f"no accent text in the bar: start {x_start}, rung {x_rung}, rung-max {x_max}")
 if not x_start < x_rung < x_max:
     sys.exit(f"the selected rung's accent should move right: start {x_start:.0f}, rung {x_rung:.0f}, rung-max {x_max:.0f}")
-print(f"9 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max)")
+# The left panel (220 px of 1760, below the bar) and the world's upper-left corner (the centre between the panels).
+w, h, _ = full["start"]
+bar, left_w, status = round(44 * w / 1760), round(220 * w / 1760), round(24 * w / 1760)
+def left_panel(name):
+    return [r[:3 * left_w] for r in full[name][2][bar:h - status]]
+def accent_y(name):                                    # mean row of the accent-coloured pixels in the left panel
+    ys = []
+    for y, r in enumerate(left_panel(name)):
+        for x in range(left_w):
+            R, G, B = r[3 * x:3 * x + 3]
+            if abs(R - 0xF2) < 50 and abs(G - 0xB3) < 50 and abs(B - 0x3D) < 70: ys.append(y)
+    return sum(ys) / len(ys) if len(ys) >= 10 else None
+for name, before in [("tool", "edge-leave"), ("element", "tool")]:
+    if left_panel(name) == left_panel(before):
+        sys.exit(f"the left panel of {name} is the same as {before}'s: the action did not reach the panel")
+y_edge, y_tool, y_element = accent_y("edge-leave"), accent_y("tool"), accent_y("element")
+if None in (y_edge, y_tool, y_element):
+    sys.exit(f"no accent text in the left panel: edge-leave {y_edge}, tool {y_tool}, element {y_element}")
+if not y_edge < y_tool < y_element:
+    sys.exit(f"the selected tool and element's accent should move down: edge-leave {y_edge:.0f}, tool {y_tool:.0f}, element {y_element:.0f}")
+def quarter(name):                                     # the centre's upper-left 35 % each way: both blobs, not the star's halo
+    rows = full[name][2][bar:bar + (h - bar - status) * 35 // 100]
+    return [r[3 * left_w:3 * (left_w + (w - left_w) * 35 // 100)] for r in rows]
+changed = sum(ra[i:i + 3] != rb[i:i + 3] for ra, rb in zip(quarter("element"), quarter("paint")) for i in range(0, len(ra), 3))
+if changed < 300:
+    sys.exit(f"the world's upper-left corner of paint differs from element's in {changed} pixels: the paint did not reach the world")
+if left_panel("view") == left_panel("paint"):
+    sys.exit("the left panel of view is the same as paint's: the view action did not reach the panel")
+def right_panel(name):                                 # the right panel (300 px of 1760, below the bar, above the status bar)
+    return [r[3 * (w - right_w):] for r in full[name][2][bar:h - status]]
+def lit(name):                                         # pixels of the right panel that are not bg.panel (#10141E): text and the border
+    return sum(any(abs(p[i] - q) > 24 for i, q in enumerate((0x10, 0x14, 0x1E))) for r in right_panel(name) for p in (r[i:i + 3] for i in range(0, len(r), 3)))
+right_w = round(300 * w / 1760)
+if right_panel("select") == right_panel("start"):
+    sys.exit("the right panel of select is the same as start's: the star's readout never reached it")
+if lit("select") <= lit("start") + 100:
+    sys.exit(f"the right panel of select holds {lit('select')} lit pixels, start's note {lit('start')}: no star readout")
+print(f"14 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one")
 PY
     echo "capture actions: ok"
     echo "=== GO ==="
@@ -145,10 +187,11 @@ PY
       echo "$out" | grep '^SR-ERROR' | grep -q -- "$2" || { echo "$out" | tail -n 5; echo "=== NO-GO: no SR-ERROR line naming $2 ==="; exit 1; }
       ls "$dir/o"/*.png >/dev/null 2>&1 && { echo "=== NO-GO: a refused script left a PNG ==="; exit 1; }
     }
-    expect '[{"id":"a","caption":"c","actions":[{"view":"heat"}],"frames":1}]' '"view"'
+    expect '[{"id":"a","caption":"c","actions":[{"hover":[1,1]}],"frames":1}]' '"hover"'
+    expect '[{"id":"a","caption":"c","actions":[{"select":"x"}],"frames":1}]' '"select"'
     expect '[{"id":"a","caption":"c","actions":[{"frobnicate":1}],"frames":1}]' '"frobnicate"'
     expect '[{"id":"-a","caption":"c","actions":[],"frames":1}]' '"-a"'
-    echo "capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4"
+    echo "capture refuse: a not-built action, a malformed select, an unknown action and a bad id each refused, exit 4"
     echo "=== GO ==="
     ;;
   *) echo "=== NO-GO: usage: bash tests/capture/check.sh smoke|refuse|actions ==="; exit 1 ;;

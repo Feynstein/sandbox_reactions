@@ -1,0 +1,100 @@
+==== 2026-10-31T16:44:33-04:00 capture · clean · a fresh scratch copy of the tree
+== 2026-10-31T16:44:34-04:00 capture[smoke] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:44:34-04:00 capture[refuse] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:44:34-04:00 capture[actions] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 4.33 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 6.18 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.xqMtBOSsRQ
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=0 · 17.71 s
+SR-CAPTURE-STATUS tool llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE element element.png 1760x940
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 50 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 13 /tmp/tmp.z6ok6TgnVI
+13 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max); the left panel's accent at y = 327 (Brush), 336 (Heat), 374 (Iron); 1960 pixels painted
+capture actions: ok
+=== GO ===
+
+==== 2026-10-31T16:44:51-04:00 capture · plant capture-no-captions · a fresh scratch copy of the tree
+planted capture-no-captions: tests/plants/capture-no-captions.patch -> crates/sr-app/src/capture.rs
+== 2026-10-31T16:44:52-04:00 capture[smoke] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:44:52-04:00 capture[refuse] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:44:52-04:00 capture[actions] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 4.38 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=1 · 6.28 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.ejITKa14tM
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.ejITKa14tM/captions.json'
+=== NO-GO: the captures do not match §3.3 ===
+
+-- capture[actions] · exit=1 · 12.60 s
+SR-CAPTURE-STATUS tool llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE element element.png 1760x940
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 50 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 13 /tmp/tmp.wsUvFhVEHx
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.wsUvFhVEHx/captions.json'
+=== NO-GO: the actions did not reach the top bar ===
+
+==== 2026-10-31T16:45:04-04:00 capture · plant capture-edge-ignored · a fresh scratch copy of the tree
+planted capture-edge-ignored: tests/plants/capture-edge-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-31T16:45:04-04:00 capture[smoke] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:45:04-04:00 capture[refuse] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:45:04-04:00 capture[actions] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 4.28 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 6.13 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.ME60kih9kA
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 17.46 s
+SR-CAPTURE-STATUS tool llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE element element.png 1760x940
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 50 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 13 /tmp/tmp.THKd6uBWCl
+the top bar of edge-leave is the same as edge's: the action did not reach the bar
+=== NO-GO: the actions did not reach the top bar ===
+
+==== 2026-10-31T16:45:22-04:00 capture · plant capture-paint-ignored · a fresh scratch copy of the tree

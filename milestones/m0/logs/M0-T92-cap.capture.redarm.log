@@ -1,0 +1,163 @@
+==== 2026-10-31T17:28:42-04:00 capture · clean · a fresh scratch copy of the tree
+== 2026-10-31T17:28:42-04:00 capture[smoke] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:28:42-04:00 capture[refuse] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:28:42-04:00 capture[actions] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 5.83 s
+capture refuse: a not-built action, a malformed select, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 7.53 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.Y51caDBc0s
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=0 · 20.06 s
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 49 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE select select.png 1760x940
+SR-CAPTURE-STATUS select llvmpipe (LLVM 20.1.2, 256 bits) · 52 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 14 /tmp/tmp.zwR9FeDztD
+14 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max); the left panel's accent at y = 327 (Brush), 336 (Heat), 374 (Iron); 1960 pixels painted; the right panel 4166 lit pixels without a star, 6170 with one
+capture actions: ok
+=== GO ===
+
+==== 2026-10-31T17:29:03-04:00 capture · plant capture-no-captions · a fresh scratch copy of the tree
+planted capture-no-captions: tests/plants/capture-no-captions.patch -> crates/sr-app/src/capture.rs
+== 2026-10-31T17:29:03-04:00 capture[smoke] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:29:03-04:00 capture[refuse] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:29:03-04:00 capture[actions] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 4.43 s
+capture refuse: a not-built action, a malformed select, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=1 · 6.23 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.2ubLoVzpV9
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.2ubLoVzpV9/captions.json'
+=== NO-GO: the captures do not match §3.3 ===
+
+-- capture[actions] · exit=1 · 13.15 s
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 38 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 38 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE select select.png 1760x940
+SR-CAPTURE-STATUS select llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 14 /tmp/tmp.G2u3PzcjA8
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.G2u3PzcjA8/captions.json'
+=== NO-GO: the actions did not reach the top bar ===
+
+==== 2026-10-31T17:29:16-04:00 capture · plant capture-edge-ignored · a fresh scratch copy of the tree
+planted capture-edge-ignored: tests/plants/capture-edge-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-31T17:29:16-04:00 capture[smoke] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:29:16-04:00 capture[refuse] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:29:16-04:00 capture[actions] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 4.93 s
+capture refuse: a not-built action, a malformed select, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 6.78 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.moriupAHJ9
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 18.81 s
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 50 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE select select.png 1760x940
+SR-CAPTURE-STATUS select llvmpipe (LLVM 20.1.2, 256 bits) · 52 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 14 /tmp/tmp.IIat6O6hP9
+the top bar of edge-leave is the same as edge's: the action did not reach the bar
+=== NO-GO: the actions did not reach the top bar ===
+
+==== 2026-10-31T17:29:35-04:00 capture · plant capture-paint-ignored · a fresh scratch copy of the tree
+planted capture-paint-ignored: tests/plants/capture-paint-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-31T17:29:35-04:00 capture[smoke] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:29:35-04:00 capture[refuse] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:29:35-04:00 capture[actions] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 4.58 s
+capture refuse: a not-built action, a malformed select, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 6.43 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.ZiEU9dt0mP
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 18.31 s
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 50 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE select select.png 1760x940
+SR-CAPTURE-STATUS select llvmpipe (LLVM 20.1.2, 256 bits) · 53 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 14 /tmp/tmp.YAuZoUJ3RS
+the world's upper-left corner of paint differs from element's in 0 pixels: the paint did not reach the world
+=== NO-GO: the actions did not reach the top bar ===
+
+==== 2026-10-31T17:29:54-04:00 capture · plant capture-star-panel-blank · a fresh scratch copy of the tree
+planted capture-star-panel-blank: tests/plants/capture-star-panel-blank.patch -> crates/sr-app/src/desktop.rs
+== 2026-10-31T17:29:54-04:00 capture[smoke] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:29:54-04:00 capture[refuse] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T17:29:54-04:00 capture[actions] · task M0-T92-cap · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 4.53 s
+capture refuse: a not-built action, a malformed select, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 6.38 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.YtmcAHNkGx
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 18.31 s
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 50 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE select select.png 1760x940
+SR-CAPTURE-STATUS select llvmpipe (LLVM 20.1.2, 256 bits) · 53 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 14 /tmp/tmp.kJWHmDdgYI
+the right panel of select is the same as start's: the star's readout never reached it
+=== NO-GO: the actions did not reach the top bar ===
+

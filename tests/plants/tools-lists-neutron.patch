@@ -1,0 +1,13 @@
+--- a/crates/sr-app/src/ui/left.rs
++++ b/crates/sr-app/src/ui/left.rs
+@@ -79,8 +79,8 @@
+ impl Tools {
+     /// A new world's tools: the Brush, Hydrogen (B2: «Paint hydrogen gas with the brush») and 8 cells.
+     pub fn new(elements: &Elements) -> Tools {
+-        let paintable: Vec<usize> =
+-            elements.species().iter().enumerate().filter(|(_, s)| s.paintable).map(|(id, _)| id).collect();
++        // Planted: the list holds every species, neutron matter's row too (M0-T89's plant).
++        let paintable: Vec<usize> = elements.species().iter().enumerate().map(|(id, _)| id).collect();
+         Tools { tool: Tool::Brush, species: paintable.first().copied().unwrap_or(0), radius: DEFAULT_RADIUS, paintable }
+     }
+ 

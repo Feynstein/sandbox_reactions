@@ -1,0 +1,62 @@
+== 2026-10-31T16:44:03-04:00 capture[smoke] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:44:03-04:00 capture[refuse] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:44:03-04:00 capture[actions] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 1.17 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 3.22 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.uNnIrSvSrU
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=0 · 14.75 s
+SR-CAPTURE-STATUS tool llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE element element.png 1760x940
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 50 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 13 /tmp/tmp.rUjLbgXwSB
+13 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max); the left panel's accent at y = 327 (Brush), 336 (Heat), 374 (Iron); 1960 pixels painted
+capture actions: ok
+=== GO ===
+
+== 2026-10-31T16:47:52-04:00 capture[smoke] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-10-31T16:47:53-04:00 capture[refuse] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 0.11 s
+capture refuse: a not-built action, an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+== 2026-10-31T16:47:53-04:00 capture[actions] · task M0-T91 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=0 · 2.12 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.4Y6QMilSz8
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=0 · 14.24 s
+SR-CAPTURE-STATUS tool llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE element element.png 1760x940
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 45 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE view view.png 1760x940
+SR-CAPTURE-STATUS view llvmpipe (LLVM 20.1.2, 256 bits) · 50 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 13 /tmp/tmp.UXtUKEnxBH
+13 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max); the left panel's accent at y = 327 (Brush), 336 (Heat), 374 (Iron); 1960 pixels painted
+capture actions: ok
+=== GO ===
+

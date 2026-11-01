@@ -1,0 +1,13 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -115,8 +115,9 @@
+             }
+             // One frame of the held button per cell, with the tool and the element the panel holds.
+             Action::Paint(cells) => {
++                // Planted: the cells are read and dropped, nothing is queued (M0-T89's plant).
+                 for cell in cells {
+-                    self.sim.edit(Some(*cell)).map_err(|e| format!("paint {cell:?}: {e}"))?;
++                    let _ = cell;
+                 }
+             }
+         }

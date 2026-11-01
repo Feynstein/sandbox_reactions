@@ -7,5 +7,10 @@
   {"id": "slowdown", "caption": "The slow-down checkbox cleared", "actions": [{"slowdown": false}], "frames": 3},
   {"id": "rung-max", "caption": "Rung key 0: Max, the readout showing the running speed", "actions": [{"rung": 0}], "frames": 6},
   {"id": "edge", "caption": "World edge: Bounce back chosen in the bar, paused", "actions": [{"pause": true}, {"edge": "bounce"}], "frames": 3},
-  {"id": "edge-leave", "caption": "World edge: Leave for good chosen again, paused", "actions": [{"edge": "leave"}], "frames": 3}
+  {"id": "edge-leave", "caption": "World edge: Leave for good chosen again, paused", "actions": [{"edge": "leave"}], "frames": 3},
+  {"id": "tool", "caption": "Left panel: Heat chosen, in accent", "actions": [{"tool": "heat"}], "frames": 3},
+  {"id": "element", "caption": "Left panel: Iron chosen in the element list", "actions": [{"element": "Fe"}], "frames": 3},
+  {"id": "paint", "caption": "The brush back: two cells of iron painted far from the star, one step taken", "actions": [{"tool": "brush"}, {"paint": [[100, 100], [130, 100]]}, {"steps": 1}], "frames": 3},
+  {"id": "view", "caption": "Left panel: the Density view chosen, in accent", "actions": [{"view": "density"}], "frames": 3},
+  {"id": "select", "caption": "Right click on the star: the right panel reads its stage, mass, fate, age, temperatures", "actions": [{"select": [300, 200]}], "frames": 3}
 ]

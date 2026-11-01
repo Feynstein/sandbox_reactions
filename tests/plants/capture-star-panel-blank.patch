@@ -1,0 +1,17 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -476,12 +476,8 @@
+ fn draw_star_panel(ui: &mut egui::Ui, panel: &StarPanel) {
+     ui.spacing_mut().item_spacing = egui::vec2(8.0, 6.0);
+     ui.label(egui::RichText::new(&panel.heading).size(HEADING_FONT).color(TEXT_PRIMARY));
+-    for line in &panel.lines {
+-        ui.label(egui::RichText::new(line).size(BAR_FONT).color(TEXT_PRIMARY));
+-    }
+-    if let Some(note) = &panel.note {
+-        ui.label(egui::RichText::new(note).size(BAR_FONT).color(TEXT_SECONDARY));
+-    }
++    // Planted: the readout's lines and note are never drawn (M0-T92's capture plant).
++    let _ = panel;
+ }
+ 
+ /// The left panel as the view model gives it (§4.2): the selected tool and element in `accent`, each element's swatch

@@ -1,0 +1,12 @@
+desktop · clean · GO · arm 1/9, 8 left
+desktop · plant port-handover-early · RED (proven: desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not) · arm 2/9, 7 left
+desktop · plant status-never-ready · RED (proven: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[lau) · arm 3/9, 6 left
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb) · arm 4/9, 5 left
+desktop · plant launcher-stop-all · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start () · arm 5/9, 4 left
+desktop · plant launcher-decoy-left · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the decoy web server on 47840 (pid 4122382) still) · arm 6/9, 3 left
+desktop · plant launcher-start-ignored · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never said the game did not start) · arm 7/9, 2 left
+desktop · plant port-no-fallback · RED (proven: desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: the game failed: SR-ERROR --statu) · arm 8/9, 1 left
+desktop · plant world-not-drawn · RED (proven: desktop[world]: 1 failed; desktop[world]: its own verdict NO-GO: the world is not in the window) · arm 9/9, 0 left
+redarm: 8 plants · 8 red · 0 green · 0 errors · scope desktop · 582.46 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D133.desktop.redarm.log
+=== GO ===
+done

@@ -1,0 +1,160 @@
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 0.83s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 12 tests
+test ui::left::tools_tests::a_change_of_tool_keeps_the_element_and_the_size ... ok
+test ui::left::tools_tests::a_held_button_queues_one_edit_per_frame_with_the_radius_and_species_of_that_frame ... ok
+test ui::left::tools_tests::each_tool_queues_its_own_edit_at_the_radius ... ok
+test ui::left::tools_tests::the_keys_are_mapped_and_nothing_else_is ... ok
+test ui::left::tools_tests::the_brackets_step_by_two_and_stop_at_the_ends ... ok
+test ui::left::tools_tests::hydrogen_is_selected_at_first_and_neutron_matter_never_is ... ok
+test ui::left::tools_tests::the_list_is_the_nine_in_order_and_never_neutron_matter ... ok
+test ui::left::tools_tests::the_pointer_maps_to_cells_and_the_outline_follows_the_cell ... ok
+test ui::left::tools_tests::one_tool_is_selected_and_it_follows_the_commands ... ok
+test ui::left::tools_tests::the_swatches_are_the_registry_colours ... ok
+test ui::left::tools_tests::the_texts_are_byte_exact ... ok
+test ui::left::tools_tests::the_slider_runs_1_to_40_from_8 ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 63 filtered out; finished in 0.00s
+
+capture run (manual, to look)
+SR-CAPTURE-STATUS tool llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE element element.png 1760x940
+SR-CAPTURE-STATUS element llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE paint paint.png 1760x940
+SR-CAPTURE-STATUS paint llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 12 /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/eb38e1fb-0de9-421a-bf7e-1057aba1ca81/scratchpad/cap
+--- verify 1: ui_tools capture
+ui_tools  12/0/0       2.42 s  GO · step 1/2, 1 left
+capture   3/0/0       24.00 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-T89.<scope>.log · record: loop_times.jsonl · tree e7f0ba2cb1c2+31fe18ec4437
+anchor: 134 path×scope entries moved by this run
+anchor: 361 paths checked · 344 skipped (3 classes) · 1 never checked · 5 stale · 0 unclassified · 0 owed · 367 covered of 711 visible
+verify: 15 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 18.16 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 12.15->12.63
+=== GO ===
+--- verify 2: redarm ui_tools
+ui_tools · clean · GO · arm 1/2, 1 left
+ui_tools · plant tools-lists-neutron · RED (proven: 2 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope ui_tools · 9.27 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T89.ui_tools.redarm.log
+=== GO ===
+--- redarm capture (check changed + new plant)
+capture · clean · GO · arm 1/4, 3 left
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3; capture[actions]: 1 fai) · arm 2/4, 2 left
+capture · plant capture-edge-ignored · ERROR (the patch tests/plants/capture-edge-ignored.patch does not apply: crates/sr-app/src/desktop.rs @@ -95,7 +95,8 @@: its old lines appear 0 times in the file, not once) · arm 3/4, 1 left
+capture · plant capture-paint-ignored · GREEN (unfailable) · arm 4/4, 0 left
+FAILED:
+  plant capture-edge-ignored: the patch tests/plants/capture-edge-ignored.patch does not apply: crates/sr-app/src/desktop.rs @@ -95,7 +95,8 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  plant capture-paint-ignored: stayed GO - the scope cannot see this bug
+redarm: 3 plants · 1 red · 1 green · 1 errors · scope capture · 47.19 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T89.capture.redarm.log
+=== NO-GO: plant capture-edge-ignored: the patch tests/plants/capture-edge-ignored.patch does not apply: crates/sr-app/src/desktop.rs @@ -95,7 +95,8 @@: its old lines appear 0 times in the file, not once - an error, not a red; plant capture-paint-ignored: stayed GO - the scope cannot see this bug ===
+--- redarm capture again
+capture · clean · GO · arm 1/4, 3 left
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3; capture[actions]: 1 fai) · arm 2/4, 2 left
+capture · plant capture-edge-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 3/4, 1 left
+capture · plant capture-paint-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope capture · 65.66 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T89.capture.redarm.log
+=== GO ===
+--- claim: --changed
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-app/src/ui/left.rs · stale: crates/sr-app/src/capture.rs (+3)
+why boot: never: crates/sr-app/src/ui/left.rs · stale: crates/sr-app/src/capture.rs (+3)
+why desktop: never: crates/sr-app/src/ui/left.rs · stale: crates/sr-app/src/capture.rs (+3)
+why web: never: crates/sr-app/src/ui/left.rs · stale: crates/sr-app/src/capture.rs (+3)
+why capture: never: tests/plants/capture-paint-ignored.patch · stale: tests/capture/check.sh (+1)
+why ui_topbar: never: crates/sr-app/src/ui/left.rs · stale: crates/sr-app/src/desktop.rs (+2)
+why ui_banner: never: crates/sr-app/src/ui/left.rs · stale: crates/sr-app/src/desktop.rs (+2)
+why ui_theme: never: crates/sr-app/src/ui/left.rs · stale: crates/sr-app/src/desktop.rs (+2)
+why ui_world: never: crates/sr-app/src/ui/left.rs · stale: crates/sr-app/src/ui/mod.rs (+1)
+plan_lint         746/0/0      0.07 s  GO · step 1/10, 9 left
+build             2/0/0        3.09 s  GO · step 2/10, 8 left
+boot              1/0/0       16.06 s  GO · step 3/10, 7 left
+desktop           5/0/0      119.52 s  GO · step 4/10, 6 left
+web               4/0/0      191.01 s  GO · step 5/10, 5 left
+capture           3/0/0       18.64 s  GO · step 6/10, 4 left
+ui_topbar         15/0/0       1.32 s  GO · step 7/10, 3 left
+ui_banner         15/0/0       0.27 s  GO · step 8/10, 2 left
+ui_theme          8/0/0        0.16 s  GO · step 9/10, 1 left
+ui_world          7/0/0        0.17 s  GO · step 10/10, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 143 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+multi             NOT RUN (not impacted: its 139 path(s) checked at the anchor)
+edits             NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+edits_file        NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 125 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 114 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 87 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 87 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 138 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 143 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 140 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 139 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 150 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 139 path(s) checked at the anchor)
+views             NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+glow              NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+frames            NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+ui_tools          NOT RUN (not impacted: its 127 path(s) checked at the anchor)
+capture · red-arm proven by M0-T89 2026-10-31T16:28:49-04:00 (fingerprint 11653a30be6c) - not re-run
+ui_tools · red-arm proven by M0-T89 2026-10-31T16:26:32-04:00 (fingerprint d711e2346ad5) - not re-run
+FLAG oracle: tests/capture/check.sh changed since M0-T89's start - a test, case or check M0-T89's Deliver: does not name
+FLAG oracle: tests/plants/capture-edge-ignored.patch changed since M0-T89's start - a test, case or check M0-T89's Deliver: does not name
+FLAG oracle: tests/plants/capture-paint-ignored.patch changed since M0-T89's start - a test, case or check M0-T89's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-T89's start - a test, case or check M0-T89's Deliver: does not name
+FLAG oracle: scope `ui_tools` added in tools/pb/verify.json - M0-T89's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-T89.<scope>.log · record: loop_times.jsonl · tree e7f0ba2cb1c2+003855016314
+anchor: 39 path×scope entries moved by this run
+anchor: 368 paths checked · 344 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 368 covered of 712 visible
+skipped   336  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 806 passed, 0 failed, 0 skipped · 10/10 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 67 not impacted · 123.53 s + loop 0.14 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 6.08->3.82 · base: M0-T89's start 2026-10-31T16:19:20-04:00
+=== GO ===

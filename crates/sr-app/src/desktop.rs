@@ -14,7 +14,12 @@ use eframe::{egui, egui_wgpu};
 
 use crate::format;
 use crate::ui::banner::{self, Banner};
-use crate::ui::theme::{self, ACCENT, BANNER_BG, BANNER_FONT, BANNER_TEXT, BG_PANEL, BG_SPACE, BORDER_PANEL, STATUS_FONT, TEXT_PRIMARY, TEXT_SECONDARY};
+use crate::ui::left::{self, LeftPanel};
+use crate::ui::right::StarPanel;
+use crate::ui::theme::{
+    self, ACCENT, BANNER_BG, BANNER_FONT, BANNER_TEXT, BG_PANEL, BG_SPACE, BORDER_PANEL, ERROR_TEXT, HEADING_FONT, STATUS_FONT, TEXT_PRIMARY,
+    TEXT_SECONDARY,
+};
 use crate::ui::topbar::{self, Command, Dialog, TopBar};
 
 /// The default window (§4.2), in logical px.
@@ -89,7 +94,7 @@ impl SandboxApp {
 
     /// A scripted action (§3.3) — the ones built so far. An error is the line the capture fails with.
     #[cfg(not(target_arch = "wasm32"))]
-    fn apply(&mut self, action: &crate::capture::Action) -> Result<(), String> {
+    fn apply(&mut self, action: &crate::capture::Action, now: f64) -> Result<(), String> {
         use crate::capture::Action;
         match action {
             // The clock's actions go through the bar's own door (ui::topbar::apply), as a click or a key does.
@@ -102,7 +107,30 @@ impl SandboxApp {
             Action::SlowDown(on) => self.sim.command(Command::SetSlowDown(*on)),
             Action::Edge(mode) => self.sim.command(Command::SetEdge(*mode)),
             Action::Steps(n) => self.sim.queue_steps(*n),
-            Action::Preset(name) => self.sim.drop_preset(name)?,
+            // The panel's path (§4.5): the button arms the preset and a click on the world's centre drops it.
+            Action::Preset(name) => {
+                let preset = left::Preset::parse(name).ok_or_else(|| format!("unknown preset {name:?}"))?;
+                self.sim.preset_command(left::PresetCommand::Arm(preset));
+                let world = self.sim.world();
+                let cell = [world.width / 2, world.height / 2];
+                self.sim.place(cell, now).map_err(|e| format!("preset {name}: {e}"))?;
+            }
+            // The view buttons' door (ui::left::Views::apply), as a click or F1–F4 go through.
+            Action::View(view) => self.sim.view_command(left::ViewCommand::Select(*view)),
+            // The right click's door (ui::right::Stars::select_at), on the cell as the pointer would name it.
+            Action::Select(cell) => self.sim.select_star(*cell),
+            // The panel's own door too (ui::left::Tools::apply), as a click or a key goes through.
+            Action::Tool(tool) => self.sim.tool_command(left::Command::SelectTool(*tool)),
+            Action::Element(key) => {
+                let id = self.sim.species_of(key).ok_or_else(|| format!("element {key:?} is not in the list"))?;
+                self.sim.tool_command(left::Command::SelectElement(id));
+            }
+            // One frame of the held button per cell, with the tool and the element the panel holds.
+            Action::Paint(cells) => {
+                for cell in cells {
+                    self.sim.edit(Some(*cell)).map_err(|e| format!("paint {cell:?}: {e}"))?;
+                }
+            }
         }
         Ok(())
     }
@@ -130,7 +158,8 @@ impl eframe::App for SandboxApp {
         let frozen = match self.capture.take() {
             Some(mut driver) => {
                 let begin = driver.begin(ui.ctx(), self.presented);
-                if let Some(e) = begin.actions.iter().find_map(|a| self.apply(a).err()) {
+                let now = ui.input(|i| i.time);
+                if let Some(e) = begin.actions.iter().find_map(|a| self.apply(a, now).err()) {
                     driver.abort(ui.ctx(), e);
                 }
                 self.capture = Some(driver);
@@ -145,7 +174,8 @@ impl eframe::App for SandboxApp {
         // built from that one clock state (M0-D120). The keys of the bar (§4.10) and its buttons reach the clock before this
         // pass plans its frame.
         let (bar, banner) = banner::views(&mut self.sim);
-        let mut commands = key_commands(ui.ctx());
+        let Keys { bar_commands: mut commands, tool_commands, preset_commands, view_commands } =
+            key_commands(ui.ctx(), self.sim.presets().armed().is_some());
         egui::Panel::top("topbar")
             .exact_size(TOP_BAR_HEIGHT)
             .frame(
@@ -160,6 +190,15 @@ impl eframe::App for SandboxApp {
         }
         for command in commands {
             self.sim.command(command);
+        }
+        for command in tool_commands {
+            self.sim.tool_command(command);
+        }
+        for command in preset_commands {
+            self.sim.preset_command(command);
+        }
+        for command in view_commands {
+            self.sim.view_command(command);
         }
 
         let now = ui.input(|i| i.time);
@@ -196,20 +235,109 @@ impl eframe::App for SandboxApp {
             .show(ui, |ui| {
                 ui.label(egui::RichText::new(&status_line).size(STATUS_FONT).color(TEXT_SECONDARY));
             });
-        egui::CentralPanel::no_frame().frame(egui::Frame::NONE.fill(BG_SPACE)).show(ui, |ui| {
-            let painter = ui.painter();
-            let area = ui.available_rect_before_wrap();
-            let rect = world_rect(area, world, ui.ctx().pixels_per_point());
-            painter.image(
-                self.sim.texture(),
-                rect,
-                egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0)),
-                egui::Color32::WHITE,
-            );
-            if let Some(banner) = &banner {
-                draw_banner(painter, rect, banner);
-            }
-        });
+        // The left panel (§4.2, 220 px) between the two bars; its clicks reach the tools before the centre reads the pointer.
+        let panel = left::view(self.sim.tools(), self.sim.presets(), self.sim.views(), self.sim.elements());
+        let mut tool_commands = Vec::new();
+        let mut preset_commands = Vec::new();
+        let mut view_commands = Vec::new();
+        egui::Panel::left("left")
+            .exact_size(LEFT_PANEL_WIDTH)
+            .frame(
+                egui::Frame::NONE
+                    .fill(BG_PANEL)
+                    .stroke(egui::Stroke::new(1.0, BORDER_PANEL))
+                    .inner_margin(egui::Margin::same(8)),
+            )
+            .show(ui, |ui| {
+                let (tools, presets, views) = draw_left_panel(ui, &panel);
+                tool_commands.extend(tools);
+                preset_commands.extend(presets);
+                view_commands.extend(views);
+            });
+        for command in tool_commands {
+            self.sim.tool_command(command);
+        }
+        for command in preset_commands {
+            self.sim.preset_command(command);
+        }
+        for command in view_commands {
+            self.sim.view_command(command);
+        }
+
+        // The right panel (§4.2, 300 px): the star readout (§4.6), then the centre.
+        let star = self.sim.star_panel(now);
+        egui::Panel::right("right")
+            .exact_size(RIGHT_PANEL_WIDTH)
+            .frame(
+                egui::Frame::NONE
+                    .fill(BG_PANEL)
+                    .stroke(egui::Stroke::new(1.0, BORDER_PANEL))
+                    .inner_margin(egui::Margin::same(8)),
+            )
+            .show(ui, |ui| draw_star_panel(ui, &star));
+
+        // The tools act while the left button is held on the world, once per frame (§1.12) — never under the Clear dialog, and
+        // never while a preset is armed: the next left click is the preset's alone (§4.5), a click reaches the brush or the
+        // preset, never both.
+        let modal = bar.dialog.is_some();
+        let armed = self.sim.presets().armed();
+        let mut placed = None;
+        let mut selected = None;
+        let held = egui::CentralPanel::no_frame()
+            .frame(egui::Frame::NONE.fill(BG_SPACE))
+            .show(ui, |ui| {
+                let area = ui.available_rect_before_wrap();
+                let rect = world_rect(area, world, ui.ctx().pixels_per_point());
+                let response = ui.interact(rect, egui::Id::new("world"), egui::Sense::click_and_drag());
+                let hover = response.hover_pos().filter(|_| !modal).and_then(|p| left::cell_at(p, rect, world));
+                let painter = ui.painter();
+                painter.image(
+                    self.sim.texture(),
+                    rect,
+                    egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0)),
+                    egui::Color32::WHITE,
+                );
+                if let Some(banner) = &banner {
+                    draw_banner(painter, rect, banner);
+                }
+                if let Some(cell) = hover {
+                    // The armed preset's cloud at the radius the engine lays it out with, or the brush's disk.
+                    let (centre, radius) = match armed {
+                        Some(preset) => left::cloud_outline(rect, world, cell, left::cloud_radius(self.sim.preset_mass(preset))),
+                        None => left::outline(self.sim.tools(), rect, world, cell),
+                    };
+                    painter.circle_stroke(centre, radius, egui::Stroke::new(1.0, TEXT_PRIMARY));
+                }
+                // The lines under the world: the hint while armed, the refusal for 3 s (§4.5).
+                let notices = self.sim.presets().notices(now);
+                for (i, line) in notices.iter().enumerate() {
+                    let at = egui::pos2(rect.center().x, (rect.bottom() + 6.0 + 16.0 * i as f32).min(area.bottom() - 16.0 * (notices.len() - i) as f32));
+                    let colour = if i == 0 && armed.is_some() { TEXT_SECONDARY } else { ERROR_TEXT };
+                    painter.text(at, egui::Align2::CENTER_TOP, line, egui::FontId::proportional(BAR_FONT), colour);
+                }
+                // A right click selects the star under the cursor (§4.10), whatever is armed.
+                if !modal && response.clicked_by(egui::PointerButton::Secondary) {
+                    selected = response.interact_pointer_pos().and_then(|p| left::cell_at(p, rect, world));
+                }
+                if armed.is_some() {
+                    if !modal && response.clicked_by(egui::PointerButton::Primary) {
+                        placed = response.interact_pointer_pos().and_then(|p| left::cell_at(p, rect, world));
+                    }
+                    return None;
+                }
+                let down = !modal && response.is_pointer_button_down_on() && ui.input(|i| i.pointer.primary_down());
+                down.then(|| response.interact_pointer_pos().and_then(|p| left::cell_at(p, rect, world))).flatten()
+            })
+            .inner;
+        if let Some(cell) = selected {
+            self.sim.select_star(cell);
+        }
+        if let Some(cell) = placed {
+            // A refused drop is shown by the presets themselves; any other refusal (the step's queue full) asks for another click.
+            let _ = self.sim.place(cell, now);
+        }
+        // A refused edit (the step's queue holds MAX_EDITS already) is asked again next frame, as the button is still held.
+        let _ = self.sim.edit(held);
         #[cfg(not(target_arch = "wasm32"))]
         if let Some(driver) = &mut self.capture {
             driver.end(ui.ctx(), &status_line);
@@ -227,29 +355,48 @@ const STATUS_BAR_HEIGHT: f32 = 24.0;
 /// The top bar's height in logical px (§4.2).
 pub const TOP_BAR_HEIGHT: f32 = 44.0;
 
+/// The commands of this pass's key presses (§4.10): the bar's (ui::topbar) and the panel's (ui::left).
+#[derive(Default)]
+struct Keys {
+    bar_commands: Vec<Command>,
+    tool_commands: Vec<left::Command>,
+    preset_commands: Vec<left::PresetCommand>,
+    view_commands: Vec<left::ViewCommand>,
+}
+
 /// The commands of this pass's key presses (§4.10). The presses it takes leave the pass's input, so a button that holds the
 /// keyboard focus (egui focuses what the mouse clicked) is not pressed a second time by the Space that paused the clock.
-/// A key with Ctrl, Alt or Command held is not the bar's, and neither is any key while a text field is being typed in.
-fn key_commands(ctx: &egui::Context) -> Vec<Command> {
+/// A key with Ctrl, Alt or Command held is not the app's, and neither is any key while a text field is being typed in.
+///
+/// Esc is taken only while a preset is `armed`: otherwise it stays in the input for whoever reads it.
+fn key_commands(ctx: &egui::Context, armed: bool) -> Keys {
     if ctx.egui_wants_keyboard_input() {
-        return Vec::new();
+        return Keys::default();
     }
-    let mut commands = Vec::new();
+    let mut keys = Keys::default();
     ctx.input_mut(|input| {
         input.events.retain(|event| match event {
             egui::Event::Key { key, pressed: true, repeat: false, modifiers, .. } if !modifiers.command && !modifiers.alt => {
-                match topbar::key_command(*key) {
-                    Some(command) => {
-                        commands.push(command);
-                        false
-                    }
-                    None => true,
+                if let Some(command) = topbar::key_command(*key) {
+                    keys.bar_commands.push(command);
+                    false
+                } else if let Some(command) = left::key_command(*key) {
+                    keys.tool_commands.push(command);
+                    false
+                } else if let Some(command) = left::view_key_command(*key) {
+                    keys.view_commands.push(command);
+                    false
+                } else if let Some(command) = left::preset_key_command(*key).filter(|_| armed) {
+                    keys.preset_commands.push(command);
+                    false
+                } else {
+                    true
                 }
             }
             _ => true,
         });
     });
-    commands
+    keys
 }
 
 /// The bar's text size (§4.11: body 14 px).
@@ -319,6 +466,96 @@ pub(crate) fn draw_top_bar(ui: &mut egui::Ui, bar: &TopBar) -> Vec<Command> {
     commands
 }
 
+/// The left panel's width in logical px (§4.2).
+const LEFT_PANEL_WIDTH: f32 = 220.0;
+
+/// The right panel's width in logical px (§4.2).
+const RIGHT_PANEL_WIDTH: f32 = 300.0;
+
+/// The star readout as the view model gives it (§4.6): the heading, one line each, the note under them.
+fn draw_star_panel(ui: &mut egui::Ui, panel: &StarPanel) {
+    ui.spacing_mut().item_spacing = egui::vec2(8.0, 6.0);
+    ui.label(egui::RichText::new(&panel.heading).size(HEADING_FONT).color(TEXT_PRIMARY));
+    for line in &panel.lines {
+        ui.label(egui::RichText::new(line).size(BAR_FONT).color(TEXT_PRIMARY));
+    }
+    if let Some(note) = &panel.note {
+        ui.label(egui::RichText::new(note).size(BAR_FONT).color(TEXT_SECONDARY));
+    }
+}
+
+/// The left panel as the view model gives it (§4.2): the selected tool and element in `accent`, each element's swatch
+/// beside its name, the armed preset in `accent`; the commands of what was clicked or dragged handed back.
+fn draw_left_panel(ui: &mut egui::Ui, panel: &LeftPanel) -> (Vec<left::Command>, Vec<left::PresetCommand>, Vec<left::ViewCommand>) {
+    let mut commands = Vec::new();
+    let mut preset_commands = Vec::new();
+    let mut view_commands = Vec::new();
+    let text = |label: &str, selected: bool| {
+        egui::RichText::new(label).size(BAR_FONT).color(if selected { ACCENT } else { TEXT_PRIMARY })
+    };
+    let heading = |label: &str| egui::RichText::new(label).size(HEADING_FONT).color(TEXT_PRIMARY);
+    ui.spacing_mut().item_spacing = egui::vec2(8.0, 6.0);
+
+    ui.label(heading(&panel.tools.heading));
+    let width = (ui.available_width() - ui.spacing().item_spacing.x) / 2.0;
+    for pair in panel.tools.buttons.chunks(2) {
+        ui.horizontal(|ui| {
+            for button in pair {
+                let widget = egui::Button::new(text(&button.label, button.selected)).selected(button.selected);
+                if ui.add_sized([width, 24.0], widget).clicked() {
+                    commands.push(button.command);
+                }
+            }
+        });
+    }
+    let size = &panel.tools.size;
+    ui.label(text(&size.label, false));
+    let mut radius = size.value;
+    // The slider's rail is `widgets.inactive.bg_fill`, `bg.panel` — the panel's own colour — so it is drawn in `border.panel`.
+    ui.visuals_mut().widgets.inactive.bg_fill = BORDER_PANEL;
+    ui.spacing_mut().slider_width = ui.available_width() - 56.0;
+    if ui.add(egui::Slider::new(&mut radius, size.min..=size.max)).changed() {
+        commands.push(left::Command::SetRadius(radius));
+    }
+
+    ui.add_space(8.0);
+    ui.label(heading(&panel.elements.heading));
+    for row in &panel.elements.rows {
+        ui.horizontal(|ui| {
+            let (slot, _) = ui.allocate_exact_size(egui::vec2(16.0, 22.0), egui::Sense::hover());
+            ui.painter().rect_filled(egui::Rect::from_center_size(slot.center(), egui::vec2(16.0, 16.0)), 2.0, theme::swatch(row.swatch));
+            let widget = egui::Button::new(text(&row.label, row.selected)).selected(row.selected);
+            if ui.add_sized([ui.available_width(), 22.0], widget).clicked() {
+                commands.push(row.command);
+            }
+        });
+    }
+
+    ui.add_space(8.0);
+    ui.label(heading(&panel.presets.heading));
+    for button in &panel.presets.buttons {
+        let widget = egui::Button::new(text(&button.label, button.armed)).selected(button.armed);
+        if ui.add_sized([ui.available_width(), 24.0], widget).clicked() {
+            preset_commands.push(button.command);
+        }
+        ui.label(egui::RichText::new(&button.note).size(STATUS_FONT).color(TEXT_SECONDARY));
+    }
+
+    ui.add_space(8.0);
+    ui.label(heading(&panel.views.heading));
+    for pair in panel.views.buttons.chunks(2) {
+        ui.horizontal(|ui| {
+            for button in pair {
+                let widget = egui::Button::new(text(&button.label, button.selected)).selected(button.selected);
+                if ui.add_sized([width, 24.0], widget).clicked() {
+                    view_commands.push(button.command);
+                }
+            }
+        });
+    }
+    (commands, preset_commands, view_commands)
+}
+
 /// The Clear dialog (§4.7), modal over the window: the question, then `world.clear_yes` and `world.clear_no`.
 fn draw_dialog(ctx: &egui::Context, dialog: &Dialog) -> Vec<Command> {
     let mut commands = Vec::new();
@@ -363,11 +600,11 @@ mod sim {
     use std::collections::VecDeque;
 
     use eframe::{egui, egui_wgpu};
-    use sr_engine::render::{Renderer, View, IMAGE_FORMAT};
+    use sr_engine::render::{Renderer, IMAGE_FORMAT};
     use sr_engine::scene::{Scene, Switches, TestSettings};
     use sr_engine::state::{Booking, SideFields, State, WorldConfig};
     use sr_engine::step::boxfit::BoxMode;
-    use sr_engine::step::edit::Edit;
+    use sr_engine::step::edit::{Edit, EditError};
     use sr_engine::step::heat::HeatSetup;
     use sr_engine::step::latch::FramePlan;
     use sr_engine::step::nuheat::NuHeatSetup;
@@ -379,6 +616,8 @@ mod sim {
     use sr_physics::time::{Estimates, TimeControl};
 
     use crate::ui::banner::{Frames, Pass};
+    use crate::ui::left::{self, Presets, Tools, Views};
+    use crate::ui::right::StarPanel;
     use crate::ui::topbar::{self, Command, Effect, WorldBar};
 
     /// Most steps one scripted `steps` action puts into a single frame: a capture asking for 10⁶ would otherwise build one
@@ -394,13 +633,14 @@ mod sim {
         device: wgpu::Device,
         queue: wgpu::Queue,
         world: WorldConfig,
-        // What a preset's drop reads: only a script drops one until the panel's (M0-T90), so the web build leaves them.
-        #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
+        /// What a preset's drop reads.
         physics: Physics,
-        #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
         elements: Elements,
-        #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
         masses: PresetMasses,
+        /// The selected tool, element and brush size (ui::left).
+        tools: Tools,
+        /// The armed preset, and the refusal shown under the world (ui::left).
+        presets: Presets,
         state: State,
         /// The state before the last frame's steps (the renderer blends with it by α, §1.8.3).
         previous: State,
@@ -414,7 +654,8 @@ mod sim {
         world_bar: WorldBar,
         /// The frames in flight and the observers they feed (ui::banner): their events slow the clock.
         frames: Frames,
-        view: View,
+        /// The view the renderer draws (ui::left).
+        views: Views,
         /// Steps a capture asked of the real loop and the loop has not yet submitted.
         forced: u64,
         /// The last Δt read back; none before the first report and while the world is empty.
@@ -467,7 +708,8 @@ mod sim {
             // reads its textures as gamma-encoded bytes in Rgba8Unorm too, so the quad needs no view of its own.
             let texture = render.renderer.write().register_native_texture(&device, &target, wgpu::FilterMode::Nearest);
             let time = TimeControl::new(Some(cal.top_rung), cal.render_reserve_ms)?;
-            let frames = Frames::new(&physics, world.width);
+            let frames = Frames::new(&physics, &cal, world.width)?;
+            let tools = Tools::new(&elements);
             Ok(Sim {
                 device,
                 queue,
@@ -475,6 +717,8 @@ mod sim {
                 physics,
                 elements,
                 masses: cal.preset_mass_sb,
+                tools,
+                presets: Presets::default(),
                 state,
                 previous,
                 step,
@@ -484,7 +728,7 @@ mod sim {
                 time,
                 world_bar,
                 frames,
-                view: View::Glow,
+                views: Views::default(),
                 forced: 0,
                 dt_est: None,
                 owed: 0.0,
@@ -592,6 +836,53 @@ mod sim {
             }
         }
 
+        pub fn tools(&self) -> &Tools {
+            &self.tools
+        }
+
+        pub fn elements(&self) -> &Elements {
+            &self.elements
+        }
+
+        pub fn views(&self) -> &Views {
+            &self.views
+        }
+
+        /// The star readout at egui time `now` (ui::right): the selected object's lines, the rate hidden while paused.
+        pub fn star_panel(&self, now: f64) -> StarPanel {
+            self.frames.stars().panel(now, self.time.paused())
+        }
+
+        /// A right click on world cell `cell` (§4.10): selects the star under it.
+        pub fn select_star(&mut self, cell: [u32; 2]) {
+            self.frames.stars_mut().select_at(cell);
+        }
+
+        /// A view button or F1–F4 (ui::left): the next frame draws it.
+        pub fn view_command(&mut self, command: left::ViewCommand) {
+            self.views.apply(command);
+        }
+
+        /// A command of the left panel or a key (ui::left).
+        pub fn tool_command(&mut self, command: left::Command) {
+            self.tools.apply(command);
+        }
+
+        /// The species id of the paintable element `key` names (a script's `element`).
+        #[cfg(not(target_arch = "wasm32"))]
+        pub fn species_of(&self, key: &str) -> Option<usize> {
+            self.tools.species_of(&self.elements, key)
+        }
+
+        /// One frame of the left button held on `cell` (none: not held), as the tool and the brush size stand (§1.12): the
+        /// edit for the next step's P0. A full queue (MAX_EDITS in one step) refuses it, and the held button asks again.
+        pub fn edit(&mut self, cell: Option<[u32; 2]>) -> Result<(), sr_engine::step::edit::EditError> {
+            match left::frame_edit(&self.tools, cell) {
+                Some(edit) => self.step.queue_edit(&self.queue, &edit),
+                None => Ok(()),
+            }
+        }
+
         /// Clear world (§1.12): the engine's `Clear` edit for the next step's P0 — every cell to the floor state, the sinks
         /// removed — and the observers of the old objects start over with the new world's first frame, the frames still in
         /// flight booking nothing (M0-D122). The rung, the view, the edge mode and the slow-down are not touched.
@@ -630,18 +921,49 @@ mod sim {
             self.forced += n;
         }
 
-        #[cfg(not(target_arch = "wasm32"))]
-        /// A preset dropped at the world's centre, as the engine's `DropPreset` (§3.1) — the panel's own comes with M0-T90.
-        pub fn drop_preset(&mut self, name: &str) -> Result<(), String> {
-            let mass = match name {
-                "sun" => self.masses.sun,
-                "massive" => self.masses.massive,
-                "giant" => self.masses.giant,
-                _ => return Err(format!("unknown preset {name:?}")),
-            };
-            let cell = [self.world.width / 2, self.world.height / 2];
-            let edit = Edit::drop_preset(name, mass, cell, self.world, &self.physics, &self.elements).map_err(|e| e.to_string())?;
-            self.step.queue_edit(&self.queue, &edit).map_err(|e| e.to_string())
+        /// A preset's mass in sandbox units (calibration's `preset_mass_sb`, §2.11).
+        pub fn preset_mass(&self, preset: left::Preset) -> f64 {
+            match preset {
+                left::Preset::Sun => self.masses.sun,
+                left::Preset::Massive => self.masses.massive,
+                left::Preset::Giant => self.masses.giant,
+            }
+        }
+
+        /// The left click on the world at `cell` while a preset is armed (§4.5): the engine's `DropPreset` (§3.1) centred
+        /// there, for the next step's P0. Dropped, the click is spent; `NoRoom` is shown as `presets.no_room` at egui time
+        /// `now` and the preset stays armed. Another refusal (the step's queue full) is the caller's, and the preset stays
+        /// armed for another click. Nothing armed: nothing happens.
+        ///
+        /// An edit lands at a step's P0, and a paused clock takes none: a drop while paused asks the clock for one step
+        /// (the Step button's own), so the star is on screen when it is dropped (M0-T84's flag).
+        pub fn place(&mut self, cell: [u32; 2], now: f64) -> Result<(), EditError> {
+            let Some(preset) = self.presets.armed() else { return Ok(()) };
+            let dropped = Edit::drop_preset(preset.name(), self.preset_mass(preset), cell, self.world, &self.physics, &self.elements)
+                .and_then(|edit| self.step.queue_edit(&self.queue, &edit));
+            match dropped {
+                Ok(()) => {
+                    self.presets.placed();
+                    if self.time.paused() {
+                        self.command(Command::Step);
+                    }
+                    Ok(())
+                }
+                Err(EditError::NoRoom) => {
+                    self.presets.refused(now);
+                    Err(EditError::NoRoom)
+                }
+                Err(e) => Err(e),
+            }
+        }
+
+        pub fn presets(&self) -> &Presets {
+            &self.presets
+        }
+
+        /// A preset button or Esc (ui::left).
+        pub fn preset_command(&mut self, command: left::PresetCommand) {
+            self.presets.apply(command);
         }
 
         /// The frames read back since the last call, in order: each one's report to `on_report`, its latch cut and the
@@ -650,7 +972,7 @@ mod sim {
             for frame in self.step.poll_frames(&self.device) {
                 self.sim_time = frame.report.sim_time;
                 self.dt_est = real_dt(f64::from(frame.report.dt_next));
-                self.frames.read_back(&mut self.time, &frame);
+                self.frames.read_back(&mut self.time, &frame, self.last_now.unwrap_or(0.0));
             }
         }
 
@@ -691,7 +1013,7 @@ mod sim {
                 self.frames.submitted(forced);
                 self.submitted += u64::from(steps);
             }
-            self.renderer.render(self.view, self.alpha, &self.target, &mut encoder);
+            self.renderer.render(self.views.active(), self.alpha, &self.target, &mut encoder);
             self.queue.submit([encoder.finish()]);
         }
 

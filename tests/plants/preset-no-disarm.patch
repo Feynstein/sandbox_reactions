@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/ui/left.rs
++++ b/crates/sr-app/src/ui/left.rs
+@@ -193,7 +193,8 @@
+         self.refused_until = None;
+         self.armed = match command {
+             PresetCommand::Arm(preset) => Some(preset),
+-            PresetCommand::Disarm => None,
++            // Planted: Esc leaves the preset armed (M0-T90's plant).
++            PresetCommand::Disarm => self.armed,
+         };
+     }
+ 

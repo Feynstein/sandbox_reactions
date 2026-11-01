@@ -1,0 +1,38 @@
+== 2026-10-31T16:37:23-04:00 build[native] · task M0-T90 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-31T16:37:23-04:00 build[wasm] · task M0-T90 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=1 · 0.57 s
+--- cargo check --workspace --target wasm32-unknown-unknown --locked (check) ---
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Checking sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+error[E0599]: no method named `paused` found for mutable reference `&mut Sim` in the current scope
+   --> crates/sr-app/src/desktop.rs:860:29
+    |
+860 |                     if self.paused() {
+    |                             ^^^^^^ method not found in `&mut Sim`
+    |
+help: one of the expressions' fields has a method of the same name
+    |
+860 |                     if self.time.paused() {
+    |                             +++++
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `sr-app` (bin "sandbox-reactions") due to 1 previous error
+=== NO-GO: cargo check --target wasm32-unknown-unknown failed ===
+
+-- build[native] · exit=0 · 0.97 s
+build native: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (4.5G)
+=== GO ===
+
+== 2026-10-31T16:38:11-04:00 build[native] · task M0-T90 · box laserax-ai :: bash tests/cargo.sh build {case}
+== 2026-10-31T16:38:11-04:00 build[wasm] · task M0-T90 · box laserax-ai :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.42 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/private/sandbox_reactions/build/target (4.5G)
+=== GO ===
+
+-- build[native] · exit=0 · 2.02 s
+build native: 1.99.0 in 2 s, target /home/ybelanger/private/sandbox_reactions/build/target (4.5G)
+=== GO ===
+

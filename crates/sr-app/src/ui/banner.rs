@@ -3,7 +3,7 @@
 //! door the slow-down's two sources go through — the latch's report and the Tracker's events — so that an event is booked
 //! once however late its second source arrives (§1.9.4: each event fires once per object). `Frames` routes the frames read
 //! back to the clock, the observers and the `Feed`, and keeps a frame submitted before a Clear away from the new world's
-//! observers (M0-D122).
+//! observers (M0-D122) — the star readout's (ui::right) among them.
 //!
 //! The egui layer (desktop.rs) reads only the `Banner` and draws it in the banner tokens.
 
@@ -12,10 +12,12 @@ use std::collections::VecDeque;
 use sr_engine::ledger::At;
 use sr_engine::summary::Frame;
 use sr_engine::watch::Watch;
+use sr_physics::calibration::Calibration;
 use sr_physics::registry::Physics;
 use sr_physics::time::{Event, Report, TimeControl};
 
 use crate::strings;
+use crate::ui::right::Stars;
 use crate::ui::topbar::{self, TopBar, WorldBar};
 
 /// What the banner says.
@@ -117,12 +119,14 @@ pub struct Frames {
     watch: Watch,
     /// The slow-down's two sources, booked once per event.
     events: Feed,
+    /// The objects of the world as the right panel reads them, and the selection (ui::right).
+    stars: Stars,
 }
 
 impl Frames {
     /// The frames of a new world `world_width` cells wide, its sim time at 0.
-    pub fn new(physics: &Physics, world_width: u32) -> Frames {
-        Frames {
+    pub fn new(physics: &Physics, cal: &Calibration, world_width: u32) -> Result<Frames, String> {
+        Ok(Frames {
             physics: physics.clone(),
             world_width,
             in_flight: VecDeque::new(),
@@ -131,7 +135,17 @@ impl Frames {
             sim_time: 0.0,
             watch: Watch::new(physics, world_width, 0.0),
             events: Feed::new(),
-        }
+            stars: Stars::new(physics, cal, world_width, 0.0)?,
+        })
+    }
+
+    /// The objects of the world and the selection.
+    pub fn stars(&self) -> &Stars {
+        &self.stars
+    }
+
+    pub fn stars_mut(&mut self) -> &mut Stars {
+        &mut self.stars
     }
 
     /// A frame submitted to the engine; `forced` when a capture forced it.
@@ -140,14 +154,16 @@ impl Frames {
     }
 
     /// A Clear queued for the next frame's P0: the frames submitted from now run in a new world, which new observers watch
-    /// from its first frame on.
+    /// from its first frame on. The star readout empties at once.
     pub fn clear(&mut self) {
         self.world += 1;
+        self.stars.restart(self.sim_time);
     }
 
     /// A frame read back, in submission order: its report to the clock, then its latch cut and the events its block summary
-    /// names to the slow-down (§1.8.5) — a frame of a world cleared since books none.
-    pub fn read_back(&mut self, time: &mut TimeControl, frame: &Frame) {
+    /// names to the slow-down (§1.8.5) and its objects to the star readout, at wall time `wall` (s) — a frame of a world
+    /// cleared since books none.
+    pub fn read_back(&mut self, time: &mut TimeControl, frame: &Frame, wall: f64) {
         let r = &frame.report;
         let (world, forced) = self.in_flight.pop_front().unwrap_or((self.world, false));
         // A forced frame was never planned, so it owes nothing: its report carries the next Δt and no steps.
@@ -166,15 +182,18 @@ impl Frames {
             // The new world's first frame: its observers' first frame time runs from the old world's last.
             self.watch = Watch::new(&self.physics, self.world_width, start);
             self.events = Feed::new();
+            self.stars.restart(start);
             self.watched = world;
         }
         // A forced frame runs with the slow-down off (`frame`), so the latch never cut it.
         if !forced && r.latch_fired.is_some() {
             self.events.latch(time);
         }
-        for event in self.watch.update(&frame.summary, At { step: r.steps, sim_time: r.sim_time }) {
+        let at = At { step: r.steps, sim_time: r.sim_time };
+        for event in self.watch.update(&frame.summary, at) {
             self.events.event(time, event.object, event.kind);
         }
+        self.stars.update(&frame.summary, at, wall);
     }
 }
 
@@ -394,12 +413,16 @@ mod tests {
         Physics::shipped().unwrap()
     }
 
+    fn calibration() -> Calibration {
+        sr_physics::calibration::resolve(sr_physics::calibration::EMBEDDED, true).unwrap().expect("the shipped calibration")
+    }
+
     #[test]
     fn a_main_sequence_frame_of_the_current_world_ignites() {
         // The control: the frame the next test reads after a Clear is an ignition for observers that are new to it.
-        let (mut time, mut frames) = (clock(5), Frames::new(&physics(), 600));
+        let (mut time, mut frames) = (clock(5), Frames::new(&physics(), &calibration(), 600).unwrap());
         frames.submitted(false);
-        frames.read_back(&mut time, &star_frame(4, 0.1, None));
+        frames.read_back(&mut time, &star_frame(4, 0.1, None), 0.0);
         assert_eq!(value(&time), 1.0, "ignition → ×1");
         assert_eq!(text(&time).as_deref(), Some("Slowed down: hydrogen ignition — press + to speed up again"));
     }
@@ -408,22 +431,22 @@ mod tests {
     fn a_frame_submitted_before_a_clear_books_nothing_after_it() {
         // Two frames of a main-sequence star in flight when the player confirms Clear (§1.9.1: read back ≤ 2 frames late),
         // the old world's observers never having seen the star.
-        let (mut time, mut frames) = (clock(5), Frames::new(&physics(), 600));
+        let (mut time, mut frames) = (clock(5), Frames::new(&physics(), &calibration(), 600).unwrap());
         frames.submitted(false);
         frames.submitted(false);
         frames.clear();
-        frames.read_back(&mut time, &star_frame(4, 0.1, None));
-        frames.read_back(&mut time, &star_frame(8, 0.2, Some(2)));
+        frames.read_back(&mut time, &star_frame(4, 0.1, None), 0.0);
+        frames.read_back(&mut time, &star_frame(8, 0.2, Some(2)), 0.0);
         assert_eq!((value(&time), view(&time)), (30.0, None), "no ignition, no latch: the rung and the banner untouched");
         // The new world's first frame is empty: no object, no event, and its observers start from it.
         frames.submitted(false);
         let mut empty = star_frame(12, 0.3, None);
         empty.summary = sr_engine::summary::BlockSummary { origin: [0, 0], size: [0, 0], columns: 0, blocks: Vec::new(), sinks: Vec::new() };
-        frames.read_back(&mut time, &empty);
+        frames.read_back(&mut time, &empty, 0.0);
         assert_eq!((value(&time), view(&time)), (30.0, None));
         // A star painted into the new world is the new observers' to see.
         frames.submitted(false);
-        frames.read_back(&mut time, &star_frame(16, 0.4, None));
+        frames.read_back(&mut time, &star_frame(16, 0.4, None), 0.0);
         assert_eq!((value(&time), text(&time).is_some()), (1.0, true), "the new world's own ignition slows the clock");
     }
 

@@ -1,0 +1,24 @@
+== 2026-10-31T17:27:30-04:00 ui_star · task M0-T92 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::right::star_tests
+-- ui_star · exit=0 · 1.12 s
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 1.04s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 13 tests
+test ui::right::star_tests::a_close_call_names_both_fates ... ok
+test ui::right::star_tests::each_line_is_byte_exact_in_the_contracts_order ... ok
+test ui::right::star_tests::no_object_reads_star_none_and_several_add_the_hint ... ok
+test ui::right::star_tests::the_ending_replaces_the_fate ... ok
+test ui::right::star_tests::the_rate_is_hidden_while_paused_and_before_it_exists ... ok
+test ui::right::star_tests::a_click_on_empty_space_keeps_the_selection ... ok
+test ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection ... ok
+test ui::right::star_tests::every_stage_has_a_label_row ... ok
+test ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor ... ok
+test ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages ... ok
+test ui::right::star_tests::the_default_is_the_heaviest_object ... ok
+test ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders ... ok
+test ui::right::star_tests::the_supergiant_rows_switch_at_m_up ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 88 filtered out; finished in 0.00s
+
+

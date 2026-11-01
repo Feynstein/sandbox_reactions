@@ -25,6 +25,14 @@ pub const BANNER_FONT: f32 = 20.0;
 /// The status line's font size in px (§4.11's «small 12 px»; egui's body text is 13).
 pub const STATUS_FONT: f32 = 12.0;
 
+/// The headings' font size in px (§4.11: heading 18 px).
+pub const HEADING_FONT: f32 = 18.0;
+
+/// An element's swatch (§1.5's colour, from the registry) as an egui colour.
+pub fn swatch(rgb: [u8; 3]) -> Color32 {
+    Color32::from_rgb(rgb[0], rgb[1], rgb[2])
+}
+
 /// The modal's backdrop: `bg.space` at 60 %, in place of egui's black at 100/255.
 pub fn backdrop() -> Color32 {
     BG_SPACE.gamma_multiply(0.6)

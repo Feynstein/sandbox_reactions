@@ -3,7 +3,7 @@
 //! run, takes one screenshot through eframe's viewport command, writes `<dir>/<id>.png` with `png`, and at the end
 //! `<dir>/captions.json` in review_page.py's shape (PLAYBOOK §A.4), then closes the window — exit 0.
 //!
-//! Only the actions that exist today are built (`pause`, `steps`, `preset`, `rung`, `slowdown`, `edge`). Every later block that builds a feature with a §3.3
+//! Only the actions that exist today are built (`pause`, `steps`, `preset`, `rung`, `slowdown`, `edge`, `tool`, `element`, `view`, `paint`, `select`). Every later block that builds a feature with a §3.3
 //! action adds the action to `Action`, `parse_action` and the app's `apply`, and takes it off `NOT_BUILT`. A script that
 //! names an action not built yet is refused before the window opens — `SR-ERROR` naming it, exit 4.
 //!
@@ -18,6 +18,9 @@ use std::sync::{Arc, Mutex, PoisonError};
 use eframe::egui;
 use serde_json::{json, Value};
 use sr_engine::scene::EdgeMode;
+use sr_physics::registry::Elements;
+
+use crate::ui::left::Tool;
 
 /// A §3.3 action built so far.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -26,7 +29,7 @@ pub enum Action {
     Pause(bool),
     /// `{"steps": n}` — n simulation steps through the real frame loop, paused or not.
     Steps(u64),
-    /// `{"preset": "sun" | "massive" | "giant"}` — the engine's DropPreset at the world's centre (until the panel's, M0-T90).
+    /// `{"preset": "sun" | "massive" | "giant"}` — the panel's path (§4.5): the preset's button arms it and a click on the world's centre drops it (the engine's DropPreset).
     Preset(String),
     /// `{"rung": k}` — the key k of the bar (§4.10): 1…9 the numbered rungs in order, 0 Max. A key past the ladder (it is cut
     /// at TOP / 1.5, §1.8.2) does nothing, as pressing it does.
@@ -35,10 +38,20 @@ pub enum Action {
     SlowDown(bool),
     /// `{"edge": "leave|bounce"}` — the bar's edge choice.
     Edge(EdgeMode),
+    /// `{"tool": "brush|eraser|heat|cool"}` — the panel's tool buttons.
+    Tool(Tool),
+    /// `{"element": "<key>"}` — a row of the panel's element list; neutron matter is not in it.
+    Element(String),
+    /// `{"view": "glow|heat|element|density"}` — the panel's view buttons (F1–F4).
+    View(sr_engine::render::View),
+    /// `{"paint": [[x, y], …]}` — one frame of the held left button per cell, with the tool and element the panel holds.
+    Paint(Vec<[u32; 2]>),
+    /// `{"select": [x, y]}` — a right click on world cell (x, y): the star under it is the readout's.
+    Select([u32; 2]),
 }
 
 /// §3.3's actions whose blocks have not built them: refused by name, not as unknown.
-const NOT_BUILT: &[&str] = &["tool", "element", "paint", "view", "hover", "select"];
+const NOT_BUILT: &[&str] = &["hover"];
 
 /// Most frames one step may wait: a typo of a few zeros would hang a run for hours.
 const MAX_FRAMES: u64 = 100_000;
@@ -57,6 +70,12 @@ fn valid_id(id: &str) -> bool {
     let mut chars = id.chars();
     chars.next().is_some_and(|c| c.is_ascii_alphanumeric())
         && chars.all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '-')
+}
+
+/// `[x, y]`, two whole numbers.
+fn cell(value: &Value) -> Option<[u32; 2]> {
+    let pair = value.as_array().filter(|p| p.len() == 2)?;
+    Some([u32::try_from(pair[0].as_u64()?).ok()?, u32::try_from(pair[1].as_u64()?).ok()?])
 }
 
 fn parse_action(step: &str, value: &Value) -> Result<Action, String> {
@@ -94,6 +113,33 @@ fn parse_action(step: &str, value: &Value) -> Result<Action, String> {
             .and_then(|m| EdgeMode::parse(m).ok())
             .map(Action::Edge)
             .ok_or_else(|| format!("step {step:?}: action \"edge\" takes \"leave\" or \"bounce\", got {arg}")),
+        "tool" => arg
+            .as_str()
+            .and_then(Tool::parse)
+            .map(Action::Tool)
+            .ok_or_else(|| format!("step {step:?}: action \"tool\" takes \"brush\", \"eraser\", \"heat\" or \"cool\", got {arg}")),
+        "element" => {
+            let elements = Elements::shipped().map_err(|e| e.to_string())?;
+            let keys: Vec<&str> = elements.species().iter().filter(|s| s.paintable).map(|s| s.key.as_str()).collect();
+            arg.as_str()
+                .filter(|k| keys.contains(k))
+                .map(|k| Action::Element(k.to_string()))
+                .ok_or_else(|| format!("step {step:?}: action \"element\" takes one of {keys:?}, got {arg}"))
+        }
+        "view" => arg
+            .as_str()
+            .and_then(crate::ui::left::parse_view)
+            .map(Action::View)
+            .ok_or_else(|| format!("step {step:?}: action \"view\" takes \"glow\", \"heat\", \"element\" or \"density\", got {arg}")),
+        "paint" => arg
+            .as_array()
+            .and_then(|cells| cells.iter().map(cell).collect::<Option<Vec<[u32; 2]>>>())
+            .filter(|cells| !cells.is_empty())
+            .map(Action::Paint)
+            .ok_or_else(|| format!("step {step:?}: action \"paint\" takes a list of [x, y] cells, got {arg}")),
+        "select" => cell(arg)
+            .map(Action::Select)
+            .ok_or_else(|| format!("step {step:?}: action \"select\" takes an [x, y] cell, got {arg}")),
         other if NOT_BUILT.contains(&other) => Err(format!(
             "step {step:?}: action {other:?} is not built yet (the block that builds its feature adds it to capture.rs)"
         )),
