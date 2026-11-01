@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -150,7 +150,8 @@
+             Action::GlowWhite(kelvin) => {
+                 self.expect_view(&[View::Glow], "glow_white")?;
+                 let x = display::parse(View::Glow, &kelvin.to_string()).ok_or("glow_white: not a number the control takes")?;
+-                self.sim.display_command(DisplayCommand::SetGlow(10f64.powf(x)));
++                // Planted: the scripted glow_white never reaches the renderer (M0-T127c's capture plant).
++                let _ = x;
+             }
+             Action::Range([from, to]) => {
+                 let view = self.expect_view(&[View::Heat, View::Density], "range")?;

@@ -17,6 +17,8 @@ use crate::format;
 use crate::ui::banner::{self, Banner};
 use crate::ui::display::{self, DisplayCommand, DisplayPanel};
 use crate::ui::left::{self, LeftPanel};
+use crate::ui::legend::{self, Bar, Legend};
+use crate::ui::zoom::{self, Zoom};
 use crate::ui::right::{CellPanel, StarPanel};
 use crate::ui::theme::{
     self, ACCENT, BANNER_BG, BANNER_FONT, BANNER_TEXT, BG_PANEL, BG_SPACE, BORDER_PANEL, ERROR_TEXT, HEADING_FONT, STATUS_FONT, TEXT_PRIMARY,
@@ -64,6 +66,12 @@ pub struct SandboxApp {
     adapter: String,
     /// The world and its frame loop (§1.8.3).
     sim: sim::Sim,
+    /// The legend's bars, kept while the Glow setting holds (ui::legend).
+    legend_bars: legend::Bars,
+    /// The zoom (§1.11 [M0-R12], ui::zoom): kept by Clear, as the four display settings are.
+    zoom: Zoom,
+    /// The wheel's notches until they make a step of z.
+    wheel: zoom::Wheel,
     #[cfg(not(target_arch = "wasm32"))]
     status: Option<std::sync::Arc<crate::status::Status>>,
     /// `--capture`'s driver (capture.rs): the app waits on it before it advances.
@@ -78,12 +86,16 @@ impl SandboxApp {
     /// A new world — empty, at ×1, running (§1.8.2) — on the render state's device; an error is the `SR-ERROR` line that
     /// says why the engine could not start (a stale calibration is exit 6 on the desktop, §2.11).
     pub fn new(render: &egui_wgpu::RenderState) -> Result<Self, String> {
+        let sim = sim::Sim::new(render)?;
         Ok(Self {
             frames: 0,
             recent: VecDeque::new(),
             presented: false,
             adapter: render.adapter.get_info().name,
-            sim: sim::Sim::new(render)?,
+            zoom: Zoom::home(sim.world()),
+            wheel: zoom::Wheel::default(),
+            sim,
+            legend_bars: legend::Bars::default(),
             #[cfg(not(target_arch = "wasm32"))]
             status: None,
             #[cfg(not(target_arch = "wasm32"))]
@@ -97,6 +109,17 @@ impl SandboxApp {
     #[cfg(target_arch = "wasm32")]
     pub fn dry_run(device: &wgpu::Device, queue: &wgpu::Queue) -> Result<(), String> {
         sim::Sim::dry_run(device, queue)
+    }
+
+    /// The active view when it is one of `views`, else the error naming `action` (the display controls exist under these views only).
+    #[cfg(not(target_arch = "wasm32"))]
+    fn expect_view(&self, views: &[View], action: &str) -> Result<View, String> {
+        let active = self.sim.views().active();
+        if views.contains(&active) {
+            Ok(active)
+        } else {
+            Err(format!("{action}: the {active:?} view has no such control (it acts on {views:?})"))
+        }
     }
 
     /// A scripted action (§3.3) — the ones built so far. An error is the line the capture fails with.
@@ -133,6 +156,35 @@ impl SandboxApp {
             Action::Element(key) => {
                 let id = self.sim.species_of(key).ok_or_else(|| format!("element {key:?} is not in the list"))?;
                 self.sim.tool_command(left::Command::SelectElement(id));
+            }
+            // The display section's door (Sim::display_command), on the active view as the controls act: a view the control
+            // is not shown under is an error, never a silent no-op.
+            Action::GlowWhite(kelvin) => {
+                self.expect_view(&[View::Glow], "glow_white")?;
+                let x = display::parse(View::Glow, &kelvin.to_string()).ok_or("glow_white: not a number the control takes")?;
+                self.sim.display_command(DisplayCommand::SetGlow(10f64.powf(x)));
+            }
+            Action::Range([from, to]) => {
+                let view = self.expect_view(&[View::Heat, View::Density], "range")?;
+                let (from, to) = (display::parse(view, &from.to_string()), display::parse(view, &to.to_string()));
+                let (Some(from), Some(to)) = (from, to) else { return Err("range: not numbers the controls take".into()) };
+                self.sim.display_command(DisplayCommand::SetRange([from, to]));
+            }
+            Action::Fit => {
+                self.expect_view(&[View::Heat, View::Density], "fit")?;
+                self.sim.display_command(DisplayCommand::Fit);
+            }
+            Action::DisplayReset => {
+                self.expect_view(&[View::Glow, View::Heat, View::Density], "display_reset")?;
+                self.sim.display_command(DisplayCommand::Reset);
+            }
+            // The view's own door (ui::zoom::Zoom), as the wheel and the middle drag go through.
+            Action::Zoom { z, at } => {
+                let world = self.sim.world();
+                if at[0] >= world.width || at[1] >= world.height {
+                    return Err(format!("zoom: cell {at:?} is outside the {} x {} world", world.width, world.height));
+                }
+                self.zoom.centre_on(*z, *at, world);
             }
             // One frame of the held button per cell, with the tool and the element the panel holds.
             Action::Paint(cells) => {
@@ -183,8 +235,11 @@ impl eframe::App for SandboxApp {
         // built from that one clock state (M0-D120). The keys of the bar (§4.10) and its buttons reach the clock before this
         // pass plans its frame.
         let (bar, banner) = banner::views(&mut self.sim);
-        let Keys { bar_commands: mut commands, tool_commands, preset_commands, view_commands } =
+        let Keys { bar_commands: mut commands, tool_commands, preset_commands, view_commands, zoom_home } =
             key_commands(ui.ctx(), self.sim.presets().armed().is_some());
+        if zoom_home {
+            self.zoom.reset(self.sim.world());
+        }
         egui::Panel::top("topbar")
             .exact_size(TOP_BAR_HEIGHT)
             .frame(
@@ -309,47 +364,87 @@ impl eframe::App for SandboxApp {
             .frame(egui::Frame::NONE.fill(BG_SPACE))
             .show(ui, |ui| {
                 let area = ui.available_rect_before_wrap();
-                let rect = world_rect(area, world, ui.ctx().pixels_per_point());
+                let ppp = ui.ctx().pixels_per_point();
+                let placed_at = legend::layout(area, (world.width, world.height), ppp);
+                // The world's place at z = 1 is the viewport the zoomed image is clipped to (§4.2, ui::zoom): the wheel and the
+                // middle drag move the view before anything reads the pointer, so every reader sees the same one.
+                let rect = placed_at.world;
                 let response = ui.interact(rect, egui::Id::new("world"), egui::Sense::click_and_drag());
-                let hover = response.hover_pos().filter(|_| !modal).and_then(|p| left::cell_at(p, rect, world));
+                if !modal {
+                    if let Some(pos) = response.hover_pos() {
+                        let notches: Vec<(f32, bool)> = ui.input(|i| {
+                            i.events
+                                .iter()
+                                .filter_map(|e| match e {
+                                    egui::Event::MouseWheel { unit, delta, modifiers, .. } if !modifiers.command => {
+                                        Some((delta.y, *unit != egui::MouseWheelUnit::Point))
+                                    }
+                                    _ => None,
+                                })
+                                .collect()
+                        });
+                        for (delta, lines) in notches {
+                            let steps = self.wheel.steps(delta, lines);
+                            self.zoom.step(steps, pos, rect, world);
+                        }
+                    }
+                    if response.dragged_by(egui::PointerButton::Middle) {
+                        self.zoom.pan(response.drag_delta(), rect, world);
+                    }
+                }
+                let image = self.zoom.image(rect, world, ppp);
+                let cell_at = |p: egui::Pos2| self.zoom.cell_at(p, rect, world, ppp);
+                let hover = response.hover_pos().filter(|_| !modal).and_then(cell_at);
                 hovered = hover;
                 let painter = ui.painter();
-                painter.image(
-                    self.sim.texture(),
-                    rect,
-                    egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0)),
-                    egui::Color32::WHITE,
-                );
+                painter.image(self.sim.texture(), rect, self.zoom.uv(rect, image), egui::Color32::WHITE);
                 if let Some(banner) = &banner {
                     draw_banner(painter, rect, banner);
                 }
                 if let Some(cell) = hover {
-                    // The armed preset's cloud at the radius the engine lays it out with, or the brush's disk.
+                    // The armed preset's cloud at the radius the engine lays it out with, or the brush's disk — the zoomed image's
+                    // scale, clipped to the viewport.
                     let (centre, radius) = match armed {
-                        Some(preset) => left::cloud_outline(rect, world, cell, left::cloud_radius(self.sim.preset_mass(preset))),
-                        None => left::outline(self.sim.tools(), rect, world, cell),
+                        Some(preset) => left::cloud_outline(image, world, cell, left::cloud_radius(self.sim.preset_mass(preset))),
+                        None => left::outline(self.sim.tools(), image, world, cell),
                     };
-                    painter.circle_stroke(centre, radius, egui::Stroke::new(1.0, TEXT_PRIMARY));
+                    painter.with_clip_rect(rect).circle_stroke(centre, radius, egui::Stroke::new(1.0, TEXT_PRIMARY));
                 }
-                // The lines under the world: the hint while armed, the refusal for 3 s (§4.5).
+                // The legend of the active view under the world (§4.2, M0-T128), then the lines under it: the hint while armed, the
+                // refusal for 3 s (§4.5).
+                let view = self.sim.views().active();
+                let bar = self.legend_bars.of(view, self.sim.display());
+                let text_width = |text: &str| {
+                    ui.ctx().fonts_mut(|f| f.layout_no_wrap(text.to_string(), egui::FontId::proportional(LEGEND_FONT), TEXT_PRIMARY).size().x)
+                };
+                let strip = legend::legend(
+                    view,
+                    self.sim.display(),
+                    self.sim.elements(),
+                    self.sim.cursor_cell().as_ref(),
+                    bar,
+                    placed_at.legend.width(),
+                    &text_width,
+                );
+                draw_legend(painter, placed_at.legend, &strip, &text_width);
                 let notices = self.sim.presets().notices(now);
                 for (i, line) in notices.iter().enumerate() {
-                    let at = egui::pos2(rect.center().x, (rect.bottom() + 6.0 + 16.0 * i as f32).min(area.bottom() - 16.0 * (notices.len() - i) as f32));
+                    let at = egui::pos2(rect.center().x, (placed_at.hint.top() + 2.0 + 16.0 * i as f32).min(area.bottom() - 16.0 * (notices.len() - i) as f32));
                     let colour = if i == 0 && armed.is_some() { TEXT_SECONDARY } else { ERROR_TEXT };
                     painter.text(at, egui::Align2::CENTER_TOP, line, egui::FontId::proportional(BAR_FONT), colour);
                 }
                 // A right click selects the star under the cursor (§4.10), whatever is armed.
                 if !modal && response.clicked_by(egui::PointerButton::Secondary) {
-                    selected = response.interact_pointer_pos().and_then(|p| left::cell_at(p, rect, world));
+                    selected = response.interact_pointer_pos().and_then(cell_at);
                 }
                 if armed.is_some() {
                     if !modal && response.clicked_by(egui::PointerButton::Primary) {
-                        placed = response.interact_pointer_pos().and_then(|p| left::cell_at(p, rect, world));
+                        placed = response.interact_pointer_pos().and_then(cell_at);
                     }
                     return None;
                 }
                 let down = !modal && response.is_pointer_button_down_on() && ui.input(|i| i.pointer.primary_down());
-                down.then(|| response.interact_pointer_pos().and_then(|p| left::cell_at(p, rect, world))).flatten()
+                down.then(|| response.interact_pointer_pos().and_then(cell_at)).flatten()
             })
             .inner;
         // The cell under the pointer is the inspector's (§4.6); a capture's scripted hover stands in for a pointer it has none of.
@@ -389,6 +484,8 @@ struct Keys {
     tool_commands: Vec<left::Command>,
     preset_commands: Vec<left::PresetCommand>,
     view_commands: Vec<left::ViewCommand>,
+    /// Home (§4.10): back to the whole world.
+    zoom_home: bool,
 }
 
 /// The commands of this pass's key presses (§4.10). The presses it takes leave the pass's input, so a button that holds the
@@ -415,6 +512,9 @@ fn key_commands(ctx: &egui::Context, armed: bool) -> Keys {
                     false
                 } else if let Some(command) = left::preset_key_command(*key).filter(|_| armed) {
                     keys.preset_commands.push(command);
+                    false
+                } else if *key == egui::Key::Home {
+                    keys.zoom_home = true;
                     false
                 } else {
                     true
@@ -656,14 +756,65 @@ fn draw_banner(painter: &egui::Painter, world: egui::Rect, banner: &Banner) {
     painter.galley(min + pad, galley, BANNER_TEXT);
 }
 
-/// Where the world's image sits in `area` (§1.11): at the integer scale s = max(1, ⌊min(width / W, height / H)⌋) of the
-/// screen's pixels — visible square cells — centred, its corner on a pixel so nearest filtering shows every cell whole.
-fn world_rect(area: egui::Rect, world: sr_engine::state::WorldConfig, pixels_per_point: f32) -> egui::Rect {
-    let (w, h) = (world.width as f32, world.height as f32);
-    let scale = ((area.width() * pixels_per_point / w).min(area.height() * pixels_per_point / h)).floor().max(1.0);
-    let size = egui::vec2(w, h) * scale / pixels_per_point;
-    let min = ((area.center() - size / 2.0) * pixels_per_point).round() / pixels_per_point;
-    egui::Rect::from_min_size(min, size)
+/// The legend's text size (§4.11: small, 12 px).
+const LEGEND_FONT: f32 = 12.0;
+
+/// The legend strip in `strip` (§4.2, §4.11): the title and the marks' labels on the top row, the 12 px bar under them, the ticks and
+/// their labels under the bar; a mark is a 10 px triangle over a 2 px line through the bar. The Glow setting is `accent`, the cursor
+/// `text.primary`.
+fn draw_legend(painter: &egui::Painter, strip: egui::Rect, legend: &Legend, text_width: &dyn Fn(&str) -> f32) {
+    let font = egui::FontId::proportional(LEGEND_FONT);
+    painter.text(strip.left_top(), egui::Align2::LEFT_TOP, &legend.title, font.clone(), TEXT_SECONDARY);
+    let bar_top = strip.top() + legend::MARK_TRIANGLE + 6.0;
+    let bar = egui::Rect::from_min_size(egui::pos2(strip.left(), bar_top), egui::vec2(strip.width(), legend::BAR_HEIGHT));
+    let slices = match &legend.bar {
+        Bar::Gradient(colours) | Bar::Swatches(colours) => colours,
+    };
+    let x_at = |f: f32| (bar.left() + bar.width() * f).round();
+    for (i, colour) in slices.iter().enumerate() {
+        let (a, b) = (x_at(i as f32 / slices.len() as f32), x_at((i + 1) as f32 / slices.len() as f32));
+        let slice = egui::Rect::from_min_max(egui::pos2(a, bar.top()), egui::pos2(b, bar.bottom()));
+        painter.rect_filled(slice, 0.0, theme::swatch(*colour));
+    }
+    for tick in &legend.ticks {
+        let x = bar.left() + bar.width() * tick.position as f32;
+        painter.line_segment(
+            [egui::pos2(x, bar.bottom()), egui::pos2(x, bar.bottom() + legend::TICK_LENGTH)],
+            egui::Stroke::new(1.0, TEXT_SECONDARY),
+        );
+        if let Some(label) = &tick.label {
+            let left = bar.left() + legend::label_left(tick.position, text_width(label), bar.width());
+            painter.text(egui::pos2(left, bar.bottom() + legend::TICK_LENGTH), egui::Align2::LEFT_TOP, label, font.clone(), TEXT_SECONDARY);
+        }
+    }
+    // The marks' labels sit on the top row to the right of their triangle, to its left at the strip's right edge or where the
+    // cursor's would cover the Glow setting's.
+    let mut taken: Option<egui::Rect> = None;
+    for (mark, colour) in legend.white.iter().map(|m| (m, ACCENT)).chain(legend.cursor.iter().map(|m| (m, TEXT_PRIMARY))) {
+        let x = bar.left() + bar.width() * mark.position as f32;
+        let tip = bar.top();
+        let top = tip - legend::MARK_TRIANGLE;
+        painter.add(egui::Shape::convex_polygon(
+            vec![egui::pos2(x - 5.0, top), egui::pos2(x + 5.0, top), egui::pos2(x, tip)],
+            colour,
+            egui::Stroke::NONE,
+        ));
+        painter.rect_filled(
+            egui::Rect::from_min_max(egui::pos2(x - legend::MARK_LINE / 2.0, tip), egui::pos2(x + legend::MARK_LINE / 2.0, bar.bottom())),
+            0.0,
+            colour,
+        );
+        let w = text_width(&mark.label);
+        let right = egui::Rect::from_min_size(egui::pos2(x + 6.0, strip.top()), egui::vec2(w, LEGEND_FONT + 2.0));
+        let covers = |r: egui::Rect| taken.is_some_and(|t| t.expand(4.0).intersects(r));
+        let at = if right.right() <= strip.right() && !covers(right) {
+            right
+        } else {
+            egui::Rect::from_min_size(egui::pos2(x - 6.0 - w, strip.top()), right.size())
+        };
+        painter.text(at.left_top(), egui::Align2::LEFT_TOP, &mark.label, font.clone(), colour);
+        taken = Some(at);
+    }
 }
 
 /// The world and its frame loop on the app's device (§1.8.3, §3.1): `TimeControl` plans each frame, the engine's
@@ -987,6 +1138,11 @@ mod sim {
 
         pub fn display(&self) -> &Display {
             &self.display
+        }
+
+        /// The hovered cell as the inspector last read it, for the legend's cursor mark: none off the world or before a reply.
+        pub fn cursor_cell(&self) -> Option<Cell> {
+            self.hover.and(self.reading.clone())
         }
 
         /// A control of the display section (ui::display): the renderer is handed the settings only when they changed.

@@ -1,0 +1,17 @@
+--- a/crates/sr-app/src/ui/zoom.rs
++++ b/crates/sr-app/src/ui/zoom.rs
+@@ -53,11 +53,9 @@
+             return;
+         }
+         // The pointer's place across the viewport, -½ to ½ each way; the world point there is centre + rel · (W, H) / z.
+-        let rel = if viewport.contains(pos) {
+-            [(pos.x - viewport.center().x) / viewport.width(), (pos.y - viewport.center().y) / viewport.height()]
+-        } else {
+-            [0.0, 0.0]
+-        };
++        // Planted: the zoom about the world's centre, not the cursor (M0-T129's plant): the cell under the pointer drifts.
++        let rel = [0.0f32; 2];
++        let _ = pos;
+         let extent = |size: u32, z: u32| size as f32 / z as f32;
+         let under = [
+             self.centre[0] + rel[0] * extent(world.width, self.z),

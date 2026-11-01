@@ -1,0 +1,9 @@
+ui_legend   GO (already GO on this tree at 2026-11-01T18:23:14-05:00 — not re-run)
+strings     3/0/0        0.52 s  GO · step 1/3, 2 left
+ui_inspect  9/0/0        0.47 s  GO · step 2/3, 1 left
+desktop     5/0/0       43.52 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-T128.<scope>.log · record: loop_times.jsonl · tree 18bf699f8501+2dd7db01a7ac
+anchor: 3 path×scope entries moved by this run
+anchor: 376 paths checked · 353 skipped (3 classes) · 1 never checked · 7 stale · 0 unclassified · 0 owed · 384 covered of 737 visible
+verify: 35 passed, 0 failed, 0 skipped · 4/4 scopes GO · 0 skipped · 0 owed · 1 not re-run · 0 NOT RUN · 0 not impacted · 18.82 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.84->4.14
+=== GO ===

@@ -1,16 +1,11 @@
 --- a/crates/sr-app/src/desktop.rs
 +++ b/crates/sr-app/src/desktop.rs
-@@ -291,12 +291,7 @@
-                 let response = ui.interact(rect, egui::Id::new("world"), egui::Sense::click_and_drag());
-                 let hover = response.hover_pos().filter(|_| !modal).and_then(|p| left::cell_at(p, rect, world));
+@@ -397,7 +397,7 @@
+                 let hover = response.hover_pos().filter(|_| !modal).and_then(cell_at);
+                 hovered = hover;
                  let painter = ui.painter();
--                painter.image(
--                    self.sim.texture(),
--                    rect,
--                    egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0)),
--                    egui::Color32::WHITE,
--                );
-+                let _ = (&rect, self.sim.texture());
+-                painter.image(self.sim.texture(), rect, self.zoom.uv(rect, image), egui::Color32::WHITE);
++                let _ = (&rect, &image, self.sim.texture());
                  if let Some(banner) = &banner {
                      draw_banner(painter, rect, banner);
                  }

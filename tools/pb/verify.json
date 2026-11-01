@@ -2030,7 +2030,7 @@
       ]
     },
     "capture": {
-      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own; since M0-T89 the actions case also runs tool, element and paint: the left panel (220 px) differs after tool and element, its accent moving down, and the world's upper-left corner differs after paint (plant capture-paint-ignored); since M0-T92 it runs select too (14 steps): the right panel (300 px) differs from start's \"No star yet\" and holds more lit pixels, and a malformed select is refused (plant capture-star-panel-blank, the readout's lines never drawn); since M0-T93b it runs hover too (15 steps): the right panel differs from select's and holds more lit pixels (the Cell inspector's four lines for the star's centre), and a malformed hover is refused (plant capture-hover-ignored, the scripted hover never reaching the pointer's place)",
+      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own; since M0-T89 the actions case also runs tool, element and paint: the left panel (220 px) differs after tool and element, its accent moving down, and the world's upper-left corner differs after paint (plant capture-paint-ignored); since M0-T92 it runs select too (14 steps): the right panel (300 px) differs from start's \"No star yet\" and holds more lit pixels, and a malformed select is refused (plant capture-star-panel-blank, the readout's lines never drawn); since M0-T93b it runs hover too (15 steps): the right panel differs from select's and holds more lit pixels (the Cell inspector's four lines for the star's centre), and a malformed hover is refused (plant capture-hover-ignored, the scripted hover never reaching the pointer's place); since M0-T127c it runs glow_white, display_reset and fit too (20 steps: the Massive preset at its supergiant, paused): the world (the centre between the panels) after glow_white differs from the default Glow step's, after display_reset equals it pixel for pixel, and Heat after fit differs from Heat's default, and a malformed glow_white, range, fit or display_reset is refused (plant capture-glow-white-ignored, the scripted glow_white never reaching the renderer); since M0-T129 it runs zoom too (21 steps, `star-zoom`: the paused supergiant of star-heat-fit zoomed to 8 about cell (300, 200)): the world differs from star-heat-fit's and six probed cells read off both shots (2 x 2 px whole, 16 x 16 px zoomed) are the same colour, and a malformed zoom is refused (plant capture-zoom-ignored, the scripted zoom never reaching the view)",
       "cases": [
         "smoke",
         "refuse",
@@ -2079,6 +2079,14 @@
         {
           "id": "capture-hover-ignored",
           "patch": "tests/plants/capture-hover-ignored.patch"
+        },
+        {
+          "id": "capture-glow-white-ignored",
+          "patch": "tests/plants/capture-glow-white-ignored.patch"
+        },
+        {
+          "id": "capture-zoom-ignored",
+          "patch": "tests/plants/capture-zoom-ignored.patch"
         }
       ]
     },
@@ -2808,6 +2816,68 @@
         {
           "id": "star-rate-while-paused",
           "patch": "tests/plants/star-rate-while-paused.patch"
+        }
+      ]
+    },
+    "ui_legend": {
+      "desc": "the live legend under the world (contract \u00a74.1's legend.* keys, \u00a74.2's Centre, \u00a74.11's legend row, \u00a74.12's ticks [M0-R12]; M0-T128): crates/sr-app/src/ui/legend.rs - the active view's legend as a view model, no GPU and no window: the six `legend.*` texts as the string table holds them; the ticks at every power of ten inside the shown range, placed by log T (1,000 K a third of the way along 10 K - 10 billion K, never linearly), both ends when fewer than two fall inside, a label that would overlap its left neighbour left out and its tick kept, the first and last labels kept inside the bar, the labels in the units without trailing zeros (\"1 million K\", \"1e-6\", \"0.001\"); the marks - S at its place in Glow only with `legend.white`, the hovered cell's value at its place on the view's range with `legend.cursor`, none over vacuum, off the world or in Element; the Glow bar's colours against the CPU formula written out directly (the exact dimming and the blackbody, not their tables) at S = 3,000 K, 10^6 K and 10^9 K within 2 levels, dimmed by a higher S; the Heat and Density bars the maps whatever the range; Element's ten swatches with their names; and the layout at the default window (the centre area 1240 x 872: the world at s = 2, the legend 8 px under it as wide, the hint under that, all inside) and the scale giving way when they would not fit. The bin's own unit tests, `ui::legend::legend_tests` (cpu.sh's --bin mode). NOT PROVEN by a case: the egui drawing of the strip (the capture's shots, M0-TV3). Plant legend-ticks-linear (ticks placed linearly in T).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::legend::legend_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 18,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/legend-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "legend-ticks-linear",
+          "patch": "tests/plants/legend-ticks-linear.patch"
+        }
+      ]
+    },
+    "ui_zoom": {
+      "desc": "the zoom (contract \u00a71.11 [M0-R12], \u00a73.3's zoom action, \u00a74.2's Centre, \u00a74.10's wheel / middle drag / Home; M0-T129): crates/sr-app/src/ui/zoom.rs - the view as a model, no GPU and no window: z from 1 to 8 stepped by the wheel and held there, the world point under the cursor kept under it across every step in and out, the middle drag moving the world with the pointer and clamped so the zoomed image always covers the viewport (the far corner reachable, nothing at z = 1), Home back to z = 1, the zoomed image's corner on a physical pixel at 1, 1.5 and 2 points per pixel, the one pointer-to-cell mapping (nothing outside the viewport or the world, equal to today's `left::cell_at` at z = 1), `centre_on` (the capture's zoom action: the cell at the view's centre as far as the clamp lets), a brush at z = 8 queuing the edit of the cell the zoom names - read from `left::frame_edit`'s Edit, not from an image - and the wheel's points summed into steps. The bin's own unit tests, `ui::zoom::zoom_tests` (cpu.sh's --bin mode). NOT PROVEN by a case: the egui path (the wheel events, the middle drag, the Home key and the painter's clip - no pointer in a capture; the zoom action's picture is `capture`'s `actions`, M0-TV3 looks at it). Plant zoom-cell-drifts (the zoom about the world's centre, not the cursor).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::zoom::zoom_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 11,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/zoom-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "zoom-cell-drifts",
+          "patch": "tests/plants/zoom-cell-drifts.patch"
         }
       ]
     },

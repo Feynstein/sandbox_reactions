@@ -3,7 +3,7 @@
 //! run, takes one screenshot through eframe's viewport command, writes `<dir>/<id>.png` with `png`, and at the end
 //! `<dir>/captions.json` in review_page.py's shape (PLAYBOOK §A.4), then closes the window — exit 0.
 //!
-//! Only the actions that exist today are built (`pause`, `steps`, `preset`, `rung`, `slowdown`, `edge`, `tool`, `element`, `view`, `paint`, `select`, `hover`). Every later block that builds a feature with a §3.3
+//! Only the actions that exist today are built (`pause`, `steps`, `preset`, `rung`, `slowdown`, `edge`, `tool`, `element`, `view`, `paint`, `select`, `hover`, `glow_white`, `range`, `fit`, `display_reset`, `zoom`). Every later block that builds a feature with a §3.3
 //! action adds the action to `Action`, `parse_action` and the app's `apply`, and takes it off `NOT_BUILT`. A script that
 //! names an action not built yet is refused before the window opens — `SR-ERROR` naming it, exit 4.
 //!
@@ -23,7 +23,7 @@ use sr_physics::registry::Elements;
 use crate::ui::left::Tool;
 
 /// A §3.3 action built so far.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Action {
     /// `{"pause": true|false}`
     Pause(bool),
@@ -51,6 +51,17 @@ pub enum Action {
     /// `{"hover": [x, y]}` — the pointer rests on world cell (x, y), as the central panel reads it each frame: the inspector
     /// reads that cell until another `hover` moves it. A cell outside the world is the pointer off the world.
     Hover([u32; 2]),
+    /// `{"glow_white": K}` — the Glow view's «Full brightness at» setting, in kelvins (typed in place, so snapped and clamped as it is).
+    GlowWhite(f64),
+    /// `{"range": [from, to]}` — the active view's range, in kelvins (Heat) or sandbox Σ (Density), typed in place.
+    Range([f64; 2]),
+    /// `{"fit": true}` — the active view's «Fit to view».
+    Fit,
+    /// `{"display_reset": true}` — the active view's Reset.
+    DisplayReset,
+    /// `{"zoom": z, "at": [x, y]}` — the view at z (1 to 8) around cell (x, y), as far as the clamp lets it centre there (the only
+    /// action of two keys).
+    Zoom { z: u32, at: [u32; 2] },
 }
 
 /// §3.3's actions whose blocks have not built them: refused by name, not as unknown.
@@ -82,6 +93,14 @@ fn cell(value: &Value) -> Option<[u32; 2]> {
 }
 
 fn parse_action(step: &str, value: &Value) -> Result<Action, String> {
+    if let Some(zoom) = value.as_object().filter(|o| o.contains_key("zoom")) {
+        let z = zoom.get("zoom").and_then(Value::as_u64).filter(|z| (1..=u64::from(crate::ui::zoom::MAX_Z)).contains(z));
+        let at = zoom.get("at").and_then(cell);
+        return match (z, at) {
+            (Some(z), Some(at)) if zoom.len() == 2 => Ok(Action::Zoom { z: z as u32, at }),
+            _ => Err(format!("step {step:?}: action \"zoom\" takes {{\"zoom\": z, \"at\": [x, y]}} with z from 1 to 8, got {value}")),
+        };
+    }
     let obj = value.as_object().filter(|o| o.len() == 1).ok_or_else(|| {
         format!("step {step:?}: an action is an object with exactly one key, got {value}")
     })?;
@@ -146,6 +165,26 @@ fn parse_action(step: &str, value: &Value) -> Result<Action, String> {
         "hover" => cell(arg)
             .map(Action::Hover)
             .ok_or_else(|| format!("step {step:?}: action \"hover\" takes an [x, y] cell, got {arg}")),
+        "glow_white" => arg
+            .as_f64()
+            .filter(|k| k.is_finite() && *k > 0.0)
+            .map(Action::GlowWhite)
+            .ok_or_else(|| format!("step {step:?}: action \"glow_white\" takes a positive number of kelvins, got {arg}")),
+        "range" => arg
+            .as_array()
+            .filter(|p| p.len() == 2)
+            .and_then(|p| Some([p[0].as_f64()?, p[1].as_f64()?]))
+            .filter(|[from, to]| from.is_finite() && to.is_finite() && *from > 0.0 && from < to)
+            .map(Action::Range)
+            .ok_or_else(|| format!("step {step:?}: action \"range\" takes [from, to], two positive numbers with from < to, got {arg}")),
+        "fit" => match arg.as_bool() {
+            Some(true) => Ok(Action::Fit),
+            _ => Err(format!("step {step:?}: action \"fit\" takes true, got {arg}")),
+        },
+        "display_reset" => match arg.as_bool() {
+            Some(true) => Ok(Action::DisplayReset),
+            _ => Err(format!("step {step:?}: action \"display_reset\" takes true, got {arg}")),
+        },
         other if NOT_BUILT.contains(&other) => Err(format!(
             "step {step:?}: action {other:?} is not built yet (the block that builds its feature adds it to capture.rs)"
         )),

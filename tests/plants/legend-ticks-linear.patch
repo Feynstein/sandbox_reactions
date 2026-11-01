@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/ui/legend.rs
++++ b/crates/sr-app/src/ui/legend.rs
+@@ -148,7 +148,8 @@
+     let first = (lo - 1e-9).ceil() as i32;
+     let last = (hi + 1e-9).floor() as i32;
+     let at: Vec<(f64, String)> = if last - first >= 1 {
+-        (first..=last).map(|k| ((f64::from(k) - lo) / (hi - lo), label(10f64.powi(k)))).collect()
++        // Planted: the ticks placed linearly in T, not in log T (M0-T128's plant).
++        (first..=last).map(|k| ((10f64.powi(k) - 10f64.powf(lo)) / (10f64.powf(hi) - 10f64.powf(lo)), label(10f64.powi(k)))).collect()
+     } else {
+         vec![(0.0, label(10f64.powf(lo))), (1.0, label(10f64.powf(hi)))]
+     };

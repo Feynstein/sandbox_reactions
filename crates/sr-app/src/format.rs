@@ -171,6 +171,43 @@ pub fn inspect_density(density: f64) -> String {
     fill("inspect.density", &[("density", &number(density))])
 }
 
+/// A legend tick's label (§4.12 [M0-R12]): `text`'s first number without trailing zeros — "1.00 million K" is "1 million K",
+/// "0.00100" is "0.001", "1.00e-6" is "1e-6"; a number with no decimal point ("100,000 K", "1,000") is left as it is.
+pub fn tick(text: &str) -> String {
+    let start = text.find(|c: char| c.is_ascii_digit()).unwrap_or(text.len());
+    let end = text[start..].find(|c: char| !(c.is_ascii_digit() || c == ',' || c == '.')).map_or(text.len(), |n| start + n);
+    let number = &text[start..end];
+    if !number.contains('.') {
+        return text.to_string();
+    }
+    format!("{}{}{}", &text[..start], number.trim_end_matches('0').trim_end_matches('.'), &text[end..])
+}
+
+/// A legend tick at `kelvin` (§4.12 [M0-R12]): the temperature without trailing zeros ("10 K", "1 million K").
+pub fn tick_temperature(kelvin: f64) -> String {
+    tick(&temperature(kelvin))
+}
+
+/// A legend tick at density `x` (§4.12 [M0-R12]): the inspector's number without trailing zeros ("1e-6", "0.001", "1,000").
+pub fn tick_number(x: f64) -> String {
+    tick(&number(x))
+}
+
+/// `legend.white`: the Glow setting `kelvin`, as the temperature reads.
+pub fn legend_white(kelvin: f64) -> String {
+    fill("legend.white", &[("temperature", &temperature(kelvin))])
+}
+
+/// `legend.cursor` over a hovered cell's temperature, as the inspector reads it.
+pub fn legend_cursor_temperature(kelvin: f64) -> String {
+    fill("legend.cursor", &[("value", &temperature(kelvin))])
+}
+
+/// `legend.cursor` over a hovered cell's density, as the inspector reads it.
+pub fn legend_cursor_density(density: f64) -> String {
+    fill("legend.cursor", &[("value", &number(density))])
+}
+
 /// `inspect.speed`: the speed in cells per time unit and its Mach number.
 pub fn inspect_speed(speed: f64, mach: f64) -> String {
     fill("inspect.speed", &[("speed", &number(speed)), ("mach", &number(mach))])

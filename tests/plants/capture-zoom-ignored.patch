@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -184,7 +184,8 @@
+                 if at[0] >= world.width || at[1] >= world.height {
+                     return Err(format!("zoom: cell {at:?} is outside the {} x {} world", world.width, world.height));
+                 }
+-                self.zoom.centre_on(*z, *at, world);
++                // Planted: the scripted zoom never reaches the view (M0-T129's capture plant).
++                let _ = z;
+             }
+             // One frame of the held button per cell, with the tool and the element the panel holds.
+             Action::Paint(cells) => {

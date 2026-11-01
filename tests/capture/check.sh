@@ -5,7 +5,7 @@
 #            llvmpipe` on linux-pc, `--offscreen-window` on win-laptop (R4, R15). Pass: exit 0; two PNGs of the window's
 #            size (the IHDR matching captions.json's viewport) whose pixels DIFFER (a screenshot taken before the frame it
 #            names is presented would show the previous state); a valid captions.json in review_page.py's shape.
-#   actions — tests/capture/actions.json (M0-T85): one step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select, hover), run on the same
+#   actions — tests/capture/actions.json (M0-T85, M0-T127c): one step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select, hover, glow_white, display_reset, fit, zoom), run on the same
 #            route. Pass: exit 0; a PNG per step, in the script's order, each the window's size; the top bar (§4.2's 44 px)
 #            differs from the previous step's after `paused`, `rung`, `slowdown`, `rung-max` and `edge-leave` (a paused readout both times, so only the radios differ); the accent (the selected
 #            rung's text) sits further right in `rung` than in `start`, and further right again in `rung-max`. The left panel
@@ -14,8 +14,12 @@
 #            (two blobs of iron painted at cells (100, 100) and (130, 100), far from the star at the centre); the right panel (§4.2's 300 px)
 #            differs in `select` from `start`'s "No star yet" and holds more lit pixels (the star's readout, M0-T92), and differs in `hover`
 #            from `select`'s one "Hover over a cell" line and holds more lit pixels (the Cell inspector's four lines for the star's
-#            centre, M0-T93b).
-#   refuse — a malformed hover, a malformed select, an unknown action and a bad id each → exit 4 and an `SR-ERROR` line naming the
+#            centre, M0-T93b). Then the Massive preset at its supergiant (step 768, paused): the world (the centre between the
+#            panels) after `glow_white` 10^8 K differs from the default Glow step's, after `display_reset` equals it pixel for pixel
+#            (the two steps hold the same paused state), and Heat after `fit` differs from Heat's default (M0-T127c). Then `star-zoom` (M0-T129):
+#            zoom 8 about cell (300, 200) of that same paused state — the world differs from `star-heat-fit`'s, and six cells read off both
+#            shots (2 x 2 px whole, 16 x 16 px at z = 8) are the same colour, three colours at least.
+#   refuse — a malformed hover, a malformed select, a malformed glow_white, range, fit, display_reset and zoom, an unknown action and a bad id each → exit 4 and an `SR-ERROR` line naming the
 #            culprit, before any window opens (no display needed).
 # Ends in `=== GO ===` or `=== NO-GO: <reason> ===`.
 source "$(dirname "${BASH_SOURCE[0]}")/../cargo.sh"
@@ -85,11 +89,11 @@ PY
     out="$("${runner[@]}" "$bin" "${window[@]}" --capture tests/capture/actions.json --out "$dir" 2>&1)"; rc=$?
     echo "$out" | grep -v '^$' | tail -n 8
     [ $rc -eq 0 ] || { echo "=== NO-GO: the capture run exited $rc, expected 0 ==="; exit 1; }
-    echo "$out" | grep -q '^SR-CAPTURE DONE 15 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 15' line ==="; exit 1; }
+    echo "$out" | grep -q '^SR-CAPTURE DONE 21 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 21' line ==="; exit 1; }
     $PY -I - "$dir" <<'PY' || { echo "=== NO-GO: the actions did not reach the top bar ==="; exit 1; }
 import json, struct, sys, zlib
 d = sys.argv[1]
-WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave", "tool", "element", "paint", "view", "select", "hover"]
+WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave", "tool", "element", "paint", "view", "select", "hover", "star-glow", "star-glow-white", "star-glow-reset", "star-heat", "star-heat-fit", "star-zoom"]
 caps = json.load(open(f"{d}/captions.json", encoding="utf-8"))
 if [c.get("id") for c in caps] != WANT:
     sys.exit(f"captions.json ids {[c.get('id') for c in caps]}, expected {WANT}")
@@ -180,7 +184,33 @@ if right_panel("hover") == right_panel("select"):
     sys.exit("the right panel of hover is the same as select's: the Cell inspector never read the hovered cell")
 if lit("hover") <= lit("select") + 100:
     sys.exit(f"the right panel of hover holds {lit('hover')} lit pixels, select's {lit('select')}: the Cell inspector's lines are missing")
-print(f"15 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one")
+def centre(name):                                      # the world's area, between the panels: the display controls act here only
+    return [r[3 * left_w:3 * (w - right_w)] for r in full[name][2][bar:h - status]]
+if centre("star-glow-white") == centre("star-glow-reset"):
+    sys.exit("the world of star-glow-white is the same as star-glow-reset's: glow_white did not reach the renderer")
+if centre("star-glow-reset") != centre("star-glow"):
+    sys.exit("the world of star-glow-reset differs from star-glow's: display_reset did not bring Glow back to its default")
+if centre("star-heat-fit") == centre("star-heat"):
+    sys.exit("the world of star-heat-fit is the same as star-heat's: fit did not change Heat's range")
+# The zoom (M0-T129): `star-zoom` is `star-heat-fit`'s state (paused, the same view and range) at z = 8 around cell (300, 200). The world's
+# place is the viewport at z = 1 (s = 2 in the 1760 x 940 window: x from 240, y from 44, 1200 x 800), so a cell (300 + dx, 200 + dy) is
+# 2 x 2 px there and 16 x 16 px at z = 8, the cell (300, 200) centred on the viewport's centre (840, 444).
+if w != 1760:
+    sys.exit(f"the zoom's check reads the 1760-px window, got {w}")
+def pixel(name, x, y):
+    return full[name][2][y][3 * x:3 * x + 3]
+if centre("star-zoom") == centre("star-heat-fit"):
+    sys.exit("the world of star-zoom is the same as star-heat-fit's: zoom did not reach the view")
+colours = set()
+for dx, dy in [(0, 0), (-3, 2), (4, -4), (10, 7), (-12, -9), (20, 11)]:
+    whole = pixel("star-heat-fit", 240 + 2 * (300 + dx), 44 + 2 * (200 + dy))
+    zoomed = pixel("star-zoom", 840 + 16 * dx, 444 + 16 * dy)
+    if whole != zoomed:
+        sys.exit(f"the cell ({300 + dx}, {200 + dy}) is {tuple(whole)} whole and {tuple(zoomed)} at z = 8: the zoom is not about (300, 200) at 16 px a cell")
+    colours.add(whole)
+if len(colours) < 3:
+    sys.exit(f"the zoom's probes read {len(colours)} colours: they prove nothing")
+print(f"21 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one; Glow toned down differs, its Reset matches the default, Heat fitted differs; zoom 8 about (300, 200) matches the whole world on 6 probed cells ({len(colours)} colours), 16 px a cell")
 PY
     echo "capture actions: ok"
     echo "=== GO ==="
@@ -195,9 +225,16 @@ PY
     }
     expect '[{"id":"a","caption":"c","actions":[{"hover":"x"}],"frames":1}]' '"hover"'
     expect '[{"id":"a","caption":"c","actions":[{"select":"x"}],"frames":1}]' '"select"'
+    expect '[{"id":"a","caption":"c","actions":[{"glow_white":"hot"}],"frames":1}]' '"glow_white"'
+    expect '[{"id":"a","caption":"c","actions":[{"range":[5,3]}],"frames":1}]' '"range"'
+    expect '[{"id":"a","caption":"c","actions":[{"fit":false}],"frames":1}]' '"fit"'
+    expect '[{"id":"a","caption":"c","actions":[{"display_reset":1}],"frames":1}]' '"display_reset"'
+    expect '[{"id":"a","caption":"c","actions":[{"zoom":9,"at":[1,1]}],"frames":1}]' '"zoom"'
+    expect '[{"id":"a","caption":"c","actions":[{"zoom":2}],"frames":1}]' '"zoom"'
+    expect '[{"id":"a","caption":"c","actions":[{"zoom":2,"at":[1,1],"x":3}],"frames":1}]' '"zoom"'
     expect '[{"id":"a","caption":"c","actions":[{"frobnicate":1}],"frames":1}]' '"frobnicate"'
     expect '[{"id":"-a","caption":"c","actions":[],"frames":1}]' '"-a"'
-    echo "capture refuse: a malformed hover, a malformed select, an unknown action and a bad id each refused, exit 4"
+    echo "capture refuse: a malformed hover, select, glow_white, range, fit, display_reset and zoom, an unknown action and a bad id each refused, exit 4"
     echo "=== GO ==="
     ;;
   *) echo "=== NO-GO: usage: bash tests/capture/check.sh smoke|refuse|actions ==="; exit 1 ;;

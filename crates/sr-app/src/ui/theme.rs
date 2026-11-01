@@ -28,7 +28,7 @@ pub const STATUS_FONT: f32 = 12.0;
 /// The headings' font size in px (§4.11: heading 18 px).
 pub const HEADING_FONT: f32 = 18.0;
 
-/// An element's swatch (§1.5's colour, from the registry) as an egui colour.
+/// An element's swatch (§1.5's colour, from the registry) or a legend slice (M0-T128) as an egui colour.
 pub fn swatch(rgb: [u8; 3]) -> Color32 {
     Color32::from_rgb(rgb[0], rgb[1], rgb[2])
 }

@@ -1,0 +1,21 @@
+== 2026-11-01T18:50:45-05:00 ui_display · task M0-T129 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::display::display_tests
+-- ui_display · exit=0 · 0.16 s
+    Finished `release` profile [optimized] target(s) in 0.10s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 11 tests
+test ui::display::display_tests::fit_sets_the_active_views_range_and_element_ignores_everything ... ok
+test ui::display::display_tests::from_and_to_are_kept_a_tenth_of_a_decade_apart ... ok
+test ui::display::display_tests::good_numbers_parse_grouped_e_notation_and_k_alike ... ok
+test ui::display::display_tests::junk_restores_the_shown_value ... ok
+test ui::display::display_tests::out_of_range_is_clamped_to_the_span ... ok
+test ui::display::display_tests::reset_goes_to_the_defaults_of_the_active_view_alone ... ok
+test ui::display::display_tests::switching_views_keeps_every_setting_and_shows_the_active_ones ... ok
+test ui::display::display_tests::the_renderer_is_asked_only_when_a_setting_changed ... ok
+test ui::display::display_tests::the_slider_maps_logarithmically_and_lands_on_exact_kelvins ... ok
+test ui::display::display_tests::the_texts_are_byte_exact_and_element_has_none ... ok
+test ui::display::display_tests::the_values_read_in_the_inspectors_formats ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 139 filtered out; finished in 0.00s
+
+

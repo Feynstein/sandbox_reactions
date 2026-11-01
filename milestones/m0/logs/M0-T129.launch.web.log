@@ -1,0 +1,7 @@
+# M0-T129 | launch web | 2026-11-01T18:51:44-0500
+$ python3 -m http.server 47841 --bind 127.0.0.1 --directory web/dist
+127.0.0.1 - - [01/Nov/2026 18:51:44] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [01/Nov/2026 18:51:44] code 404, message File not found
+127.0.0.1 - - [01/Nov/2026 18:51:44] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [01/Nov/2026 18:51:45] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [01/Nov/2026 18:51:45] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
