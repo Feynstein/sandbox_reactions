@@ -11,11 +11,13 @@ use std::collections::VecDeque;
 use std::sync::Arc;
 
 use eframe::{egui, egui_wgpu};
+use sr_engine::render::View;
 
 use crate::format;
 use crate::ui::banner::{self, Banner};
+use crate::ui::display::{self, DisplayCommand, DisplayPanel};
 use crate::ui::left::{self, LeftPanel};
-use crate::ui::right::StarPanel;
+use crate::ui::right::{CellPanel, StarPanel};
 use crate::ui::theme::{
     self, ACCENT, BANNER_BG, BANNER_FONT, BANNER_TEXT, BG_PANEL, BG_SPACE, BORDER_PANEL, ERROR_TEXT, HEADING_FONT, STATUS_FONT, TEXT_PRIMARY,
     TEXT_SECONDARY,
@@ -67,6 +69,9 @@ pub struct SandboxApp {
     /// `--capture`'s driver (capture.rs): the app waits on it before it advances.
     #[cfg(not(target_arch = "wasm32"))]
     capture: Option<crate::capture::Driver>,
+    /// The cell a script's `hover` action holds the pointer on: it stands in for the pointer, which a capture has none of.
+    #[cfg(not(target_arch = "wasm32"))]
+    scripted_hover: Option<[u32; 2]>,
 }
 
 impl SandboxApp {
@@ -83,6 +88,8 @@ impl SandboxApp {
             status: None,
             #[cfg(not(target_arch = "wasm32"))]
             capture: None,
+            #[cfg(not(target_arch = "wasm32"))]
+            scripted_hover: None,
         })
     }
 
@@ -119,6 +126,8 @@ impl SandboxApp {
             Action::View(view) => self.sim.view_command(left::ViewCommand::Select(*view)),
             // The right click's door (ui::right::Stars::select_at), on the cell as the pointer would name it.
             Action::Select(cell) => self.sim.select_star(*cell),
+            // The pointer's place, as the central panel reads it each frame (ui::right::Asker asks the engine for the cell).
+            Action::Hover(cell) => self.scripted_hover = Some(*cell),
             // The panel's own door too (ui::left::Tools::apply), as a click or a key goes through.
             Action::Tool(tool) => self.sim.tool_command(left::Command::SelectTool(*tool)),
             Action::Element(key) => {
@@ -240,6 +249,9 @@ impl eframe::App for SandboxApp {
         let mut tool_commands = Vec::new();
         let mut preset_commands = Vec::new();
         let mut view_commands = Vec::new();
+        let mut display_commands = Vec::new();
+        let active = self.sim.views().active();
+        let display_panel = display::panel(active, self.sim.display());
         egui::Panel::left("left")
             .exact_size(LEFT_PANEL_WIDTH)
             .frame(
@@ -249,10 +261,11 @@ impl eframe::App for SandboxApp {
                     .inner_margin(egui::Margin::same(8)),
             )
             .show(ui, |ui| {
-                let (tools, presets, views) = draw_left_panel(ui, &panel);
+                let (tools, presets, views, displays) = draw_left_panel(ui, &panel, active, display_panel.as_ref());
                 tool_commands.extend(tools);
                 preset_commands.extend(presets);
                 view_commands.extend(views);
+                display_commands.extend(displays);
             });
         for command in tool_commands {
             self.sim.tool_command(command);
@@ -263,9 +276,13 @@ impl eframe::App for SandboxApp {
         for command in view_commands {
             self.sim.view_command(command);
         }
+        for command in display_commands {
+            self.sim.display_command(command);
+        }
 
         // The right panel (§4.2, 300 px): the star readout (§4.6), then the centre.
         let star = self.sim.star_panel(now);
+        let cell = self.sim.cell_panel();
         egui::Panel::right("right")
             .exact_size(RIGHT_PANEL_WIDTH)
             .frame(
@@ -274,7 +291,11 @@ impl eframe::App for SandboxApp {
                     .stroke(egui::Stroke::new(1.0, BORDER_PANEL))
                     .inner_margin(egui::Margin::same(8)),
             )
-            .show(ui, |ui| draw_star_panel(ui, &star));
+            .show(ui, |ui| {
+                draw_star_panel(ui, &star);
+                ui.add_space(8.0);
+                draw_cell_panel(ui, &cell);
+            });
 
         // The tools act while the left button is held on the world, once per frame (§1.12) — never under the Clear dialog, and
         // never while a preset is armed: the next left click is the preset's alone (§4.5), a click reaches the brush or the
@@ -283,6 +304,7 @@ impl eframe::App for SandboxApp {
         let armed = self.sim.presets().armed();
         let mut placed = None;
         let mut selected = None;
+        let mut hovered = None;
         let held = egui::CentralPanel::no_frame()
             .frame(egui::Frame::NONE.fill(BG_SPACE))
             .show(ui, |ui| {
@@ -290,6 +312,7 @@ impl eframe::App for SandboxApp {
                 let rect = world_rect(area, world, ui.ctx().pixels_per_point());
                 let response = ui.interact(rect, egui::Id::new("world"), egui::Sense::click_and_drag());
                 let hover = response.hover_pos().filter(|_| !modal).and_then(|p| left::cell_at(p, rect, world));
+                hovered = hover;
                 let painter = ui.painter();
                 painter.image(
                     self.sim.texture(),
@@ -329,6 +352,10 @@ impl eframe::App for SandboxApp {
                 down.then(|| response.interact_pointer_pos().and_then(|p| left::cell_at(p, rect, world))).flatten()
             })
             .inner;
+        // The cell under the pointer is the inspector's (§4.6); a capture's scripted hover stands in for a pointer it has none of.
+        #[cfg(not(target_arch = "wasm32"))]
+        let hovered = self.scripted_hover.or(hovered);
+        self.sim.set_hover(hovered);
         if let Some(cell) = selected {
             self.sim.select_star(cell);
         }
@@ -472,6 +499,15 @@ const LEFT_PANEL_WIDTH: f32 = 220.0;
 /// The right panel's width in logical px (§4.2).
 const RIGHT_PANEL_WIDTH: f32 = 300.0;
 
+/// The cell inspector as the view model gives it (§4.6): the heading, one line each.
+fn draw_cell_panel(ui: &mut egui::Ui, panel: &CellPanel) {
+    ui.spacing_mut().item_spacing = egui::vec2(8.0, 6.0);
+    ui.label(egui::RichText::new(&panel.heading).size(HEADING_FONT).color(TEXT_PRIMARY));
+    for line in &panel.lines {
+        ui.label(egui::RichText::new(line).size(BAR_FONT).color(TEXT_PRIMARY));
+    }
+}
+
 /// The star readout as the view model gives it (§4.6): the heading, one line each, the note under them.
 fn draw_star_panel(ui: &mut egui::Ui, panel: &StarPanel) {
     ui.spacing_mut().item_spacing = egui::vec2(8.0, 6.0);
@@ -486,8 +522,14 @@ fn draw_star_panel(ui: &mut egui::Ui, panel: &StarPanel) {
 
 /// The left panel as the view model gives it (§4.2): the selected tool and element in `accent`, each element's swatch
 /// beside its name, the armed preset in `accent`; the commands of what was clicked or dragged handed back.
-fn draw_left_panel(ui: &mut egui::Ui, panel: &LeftPanel) -> (Vec<left::Command>, Vec<left::PresetCommand>, Vec<left::ViewCommand>) {
+fn draw_left_panel(
+    ui: &mut egui::Ui,
+    panel: &LeftPanel,
+    active: View,
+    display_panel: Option<&DisplayPanel>,
+) -> (Vec<left::Command>, Vec<left::PresetCommand>, Vec<left::ViewCommand>, Vec<DisplayCommand>) {
     let mut commands = Vec::new();
+    let mut display_commands = Vec::new();
     let mut preset_commands = Vec::new();
     let mut view_commands = Vec::new();
     let text = |label: &str, selected: bool| {
@@ -553,7 +595,38 @@ fn draw_left_panel(ui: &mut egui::Ui, panel: &LeftPanel) -> (Vec<left::Command>,
             }
         });
     }
-    (commands, preset_commands, view_commands)
+    // The active view's display controls (§4.2): each a slider over its span and its value typed in place, then Fit and Reset.
+    if let Some(display_panel) = display_panel {
+        ui.add_space(4.0);
+        for control in &display_panel.controls {
+            ui.label(text(&control.label, false));
+            ui.horizontal(|ui| {
+                let mut x = control.value;
+                ui.spacing_mut().slider_width = (ui.available_width() - 96.0).max(40.0);
+                let slid = ui.add(egui::Slider::new(&mut x, control.min..=control.max).show_value(false)).changed();
+                let value = egui::DragValue::new(&mut x)
+                    .speed(0.0)
+                    .range(control.min..=control.max)
+                    .custom_formatter(move |x, _| display::show(active, x))
+                    .custom_parser(move |typed| display::parse(active, typed));
+                let typed = ui.add_sized([ui.available_width(), 20.0], value).changed();
+                if slid || typed {
+                    display_commands.push(display::command(control.control, x));
+                }
+            });
+        }
+        ui.horizontal(|ui| {
+            if let Some(fit) = &display_panel.fit {
+                if ui.add_sized([width, 24.0], egui::Button::new(text(fit, false))).clicked() {
+                    display_commands.push(DisplayCommand::Fit);
+                }
+            }
+            if ui.add_sized([width, 24.0], egui::Button::new(text(&display_panel.reset, false))).clicked() {
+                display_commands.push(DisplayCommand::Reset);
+            }
+        });
+    }
+    (commands, preset_commands, view_commands, display_commands)
 }
 
 /// The Clear dialog (§4.7), modal over the window: the question, then `world.clear_yes` and `world.clear_no`.
@@ -600,9 +673,9 @@ mod sim {
     use std::collections::VecDeque;
 
     use eframe::{egui, egui_wgpu};
-    use sr_engine::render::{Renderer, IMAGE_FORMAT};
+    use sr_engine::render::{Display, Renderer, IMAGE_FORMAT};
     use sr_engine::scene::{Scene, Switches, TestSettings};
-    use sr_engine::state::{Booking, SideFields, State, WorldConfig};
+    use sr_engine::state::{Booking, Inspector, SideFields, State, WorldConfig};
     use sr_engine::step::boxfit::BoxMode;
     use sr_engine::step::edit::{Edit, EditError};
     use sr_engine::step::heat::HeatSetup;
@@ -616,8 +689,9 @@ mod sim {
     use sr_physics::time::{Estimates, TimeControl};
 
     use crate::ui::banner::{Frames, Pass};
+    use crate::ui::display::{self, DisplayCommand};
     use crate::ui::left::{self, Presets, Tools, Views};
-    use crate::ui::right::StarPanel;
+    use crate::ui::right::{inspect_view, Asker, Cell, CellPanel, Reader, StarPanel};
     use crate::ui::topbar::{self, Command, Effect, WorldBar};
 
     /// Most steps one scripted `steps` action puts into a single frame: a capture asking for 10⁶ would otherwise build one
@@ -656,6 +730,15 @@ mod sim {
         frames: Frames,
         /// The view the renderer draws (ui::left).
         views: Views,
+        /// The Glow setting and the Heat and Density ranges (ui::display): kept by Clear and by a switch of view.
+        display: Display,
+        /// The cell inspector (§4.6): the engine's one-cell readback, the one request it may have in flight, what its reply
+        /// reads as, and the cell under the pointer.
+        inspector: Inspector,
+        asker: Asker,
+        reader: Reader,
+        hover: Option<[u32; 2]>,
+        reading: Option<Cell>,
         /// Steps a capture asked of the real loop and the loop has not yet submitted.
         forced: u64,
         /// The last Δt read back; none before the first report and while the world is empty.
@@ -709,6 +792,8 @@ mod sim {
             let texture = render.renderer.write().register_native_texture(&device, &target, wgpu::FilterMode::Nearest);
             let time = TimeControl::new(Some(cal.top_rung), cal.render_reserve_ms)?;
             let frames = Frames::new(&physics, &cal, world.width)?;
+            let inspector = Inspector::new(world, &physics, &elements);
+            let reader = Reader::new(&physics, &cal, &elements)?;
             let tools = Tools::new(&elements);
             Ok(Sim {
                 device,
@@ -729,6 +814,12 @@ mod sim {
                 world_bar,
                 frames,
                 views: Views::default(),
+                display: Display::default(),
+                inspector,
+                asker: Asker::default(),
+                reader,
+                hover: None,
+                reading: None,
                 forced: 0,
                 dt_est: None,
                 owed: 0.0,
@@ -853,6 +944,37 @@ mod sim {
             self.frames.stars().panel(now, self.time.paused())
         }
 
+        /// The cell inspector's panel (§4.6): the last reply for the cell under the pointer, or `inspect.empty` — no cell, or
+        /// no reply yet.
+        pub fn cell_panel(&self) -> CellPanel {
+            inspect_view(self.hover.and(self.reading.as_ref()))
+        }
+
+        /// The cell under the pointer this frame (none: the pointer is off the world, §4.6): the next `frame` asks the engine
+        /// for it. Leaving the world drops the last reply, so coming back never shows a cell the pointer left.
+        pub fn set_hover(&mut self, cell: Option<[u32; 2]>) {
+            self.hover = cell;
+            if cell.is_none() {
+                self.reading = None;
+            }
+        }
+
+        /// The replies of the inspector's readback (never blocks), then the next request: one in flight at a time, for the cell
+        /// hovered now (ui::right::Asker).
+        fn inspect_frame(&mut self) {
+            for reply in self.inspector.poll(&self.device) {
+                self.asker.answered();
+                if self.hover.is_some() {
+                    self.reading = Some(self.reader.read(&reply));
+                }
+            }
+            if let Some([x, y]) = self.asker.next(self.hover) {
+                if self.inspector.inspect(&self.device, &self.queue, &self.state, (x, y)).is_err() {
+                    self.asker.answered();
+                }
+            }
+        }
+
         /// A right click on world cell `cell` (§4.10): selects the star under it.
         pub fn select_star(&mut self, cell: [u32; 2]) {
             self.frames.stars_mut().select_at(cell);
@@ -861,6 +983,37 @@ mod sim {
         /// A view button or F1–F4 (ui::left): the next frame draws it.
         pub fn view_command(&mut self, command: left::ViewCommand) {
             self.views.apply(command);
+        }
+
+        pub fn display(&self) -> &Display {
+            &self.display
+        }
+
+        /// A control of the display section (ui::display): the renderer is handed the settings only when they changed.
+        /// «Fit to view» asks the renderer once, here, on the click (a blocking read-back; the web build has no way to
+        /// wait for it, so there the button leaves the range as it is).
+        pub fn display_command(&mut self, command: DisplayCommand) {
+            let view = self.views.active();
+            let command = match command {
+                DisplayCommand::Fit => match self.fit(view) {
+                    Some(range) => DisplayCommand::SetRange(range),
+                    None => return,
+                },
+                other => other,
+            };
+            if display::apply(&mut self.display, view, command) {
+                self.renderer.set_display(self.display);
+            }
+        }
+
+        #[cfg(not(target_arch = "wasm32"))]
+        fn fit(&self, view: sr_engine::render::View) -> Option<[f64; 2]> {
+            self.renderer.fit_range(&self.queue, view)
+        }
+
+        #[cfg(target_arch = "wasm32")]
+        fn fit(&self, _view: sr_engine::render::View) -> Option<[f64; 2]> {
+            None
         }
 
         /// A command of the left panel or a key (ui::left).
@@ -982,6 +1135,7 @@ mod sim {
             if frozen {
                 return;
             }
+            self.inspect_frame();
             let wall_s = self.last_now.replace(now).map_or(1.0 / 60.0, |t| (now - t).max(0.0));
             let (steps, slow_down, forced) = if self.forced > 0 {
                 let n = self.forced.min(FORCED_CHUNK);

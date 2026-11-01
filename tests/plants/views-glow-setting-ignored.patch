@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/render.rs
++++ b/crates/sr-engine/src/render.rs
+@@ -405,7 +405,7 @@
+     /// Sets the display settings (§1.11 [M0-R12]); drawn from the next [`Renderer::render`] on. S is clamped to its domain; the
+     /// dimming table is rebuilt only when S changed, the ranges being two uniforms.
+     pub fn set_display(&mut self, display: Display) {
+-        let display = Display { glow_s: display.glow_s.clamp(GLOW_S_MIN, GLOW_S_MAX), ..display };
++        let display = Display { glow_s: GLOW_S_DEFAULT, ..display };
+         if display.glow_s != self.display.glow_s {
+             self.dimming = dimming_table(display.glow_s);
+         }

@@ -3,7 +3,7 @@
 //! run, takes one screenshot through eframe's viewport command, writes `<dir>/<id>.png` with `png`, and at the end
 //! `<dir>/captions.json` in review_page.py's shape (PLAYBOOK §A.4), then closes the window — exit 0.
 //!
-//! Only the actions that exist today are built (`pause`, `steps`, `preset`, `rung`, `slowdown`, `edge`, `tool`, `element`, `view`, `paint`, `select`). Every later block that builds a feature with a §3.3
+//! Only the actions that exist today are built (`pause`, `steps`, `preset`, `rung`, `slowdown`, `edge`, `tool`, `element`, `view`, `paint`, `select`, `hover`). Every later block that builds a feature with a §3.3
 //! action adds the action to `Action`, `parse_action` and the app's `apply`, and takes it off `NOT_BUILT`. A script that
 //! names an action not built yet is refused before the window opens — `SR-ERROR` naming it, exit 4.
 //!
@@ -48,10 +48,13 @@ pub enum Action {
     Paint(Vec<[u32; 2]>),
     /// `{"select": [x, y]}` — a right click on world cell (x, y): the star under it is the readout's.
     Select([u32; 2]),
+    /// `{"hover": [x, y]}` — the pointer rests on world cell (x, y), as the central panel reads it each frame: the inspector
+    /// reads that cell until another `hover` moves it. A cell outside the world is the pointer off the world.
+    Hover([u32; 2]),
 }
 
 /// §3.3's actions whose blocks have not built them: refused by name, not as unknown.
-const NOT_BUILT: &[&str] = &["hover"];
+const NOT_BUILT: &[&str] = &[];
 
 /// Most frames one step may wait: a typo of a few zeros would hang a run for hours.
 const MAX_FRAMES: u64 = 100_000;
@@ -140,6 +143,9 @@ fn parse_action(step: &str, value: &Value) -> Result<Action, String> {
         "select" => cell(arg)
             .map(Action::Select)
             .ok_or_else(|| format!("step {step:?}: action \"select\" takes an [x, y] cell, got {arg}")),
+        "hover" => cell(arg)
+            .map(Action::Hover)
+            .ok_or_else(|| format!("step {step:?}: action \"hover\" takes an [x, y] cell, got {arg}")),
         other if NOT_BUILT.contains(&other) => Err(format!(
             "step {step:?}: action {other:?} is not built yet (the block that builds its feature adds it to capture.rs)"
         )),

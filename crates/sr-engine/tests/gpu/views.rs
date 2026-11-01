@@ -9,7 +9,7 @@
 //! views that read only Σ and X.
 
 use sr_engine::gpu::Gpu;
-use sr_engine::render::{blackbody_lookup, blackbody_table, Renderer, View, IMAGE_FORMAT};
+use sr_engine::render::{blackbody_lookup, blackbody_table, Display, Renderer, View, IMAGE_FORMAT};
 use sr_engine::state::{State as GpuState, WorldConfig};
 use sr_engine::step::EosGpu;
 use sr_physics::calibration::{physics_hash, Calibration};
@@ -66,6 +66,31 @@ fn map(stops: &[&str], p: f64) -> [f64; 3] {
     std::array::from_fn(|k| enc(lin(a[k]) * (1.0 - f) + lin(b[k]) * f))
 }
 
+/// Wyman, Sloan & Shirley's ȳ (§1.11's Table 1), written out here, and Planck's B_λ (c₂ = 1.438777 × 10⁷ nm·K): Y(T), the
+/// blackbody's visible luminance, the sum over 380–780 nm in 5 nm steps, unnormalised.
+fn luminance(t: f64) -> f64 {
+    let lobe = |l: f64, a: f64, b: f64, g: f64, d: f64| {
+        let u = (l - b) * if l < b { g } else { d };
+        a * (-0.5 * u * u).exp()
+    };
+    (0..=80)
+        .map(|i| {
+            let l = 380.0 + 5.0 * f64::from(i);
+            let y = lobe(l, 0.821, 568.8, 0.0213, 0.0247) + lobe(l, 0.286, 530.9, 0.0613, 0.0322);
+            y / l.powi(5) / (1.438777e7 / (l * t)).exp_m1()
+        })
+        .sum()
+}
+
+/// §1.11 [M0-R12]'s D: 1 at S ≤ 3,000 K, else asinh(x/β)/asinh(1/β) clamped, x = Y(max(T, 3,000 K))/Y(S), β = 10⁻⁴.
+fn dim(t: f64, s: f64) -> f64 {
+    if s <= 3000.0 {
+        return 1.0;
+    }
+    let x = luminance(t.max(3000.0)) / luminance(s);
+    ((x / 1e-4).asinh() / (1.0f64 / 1e-4).asinh()).clamp(0.0, 1.0)
+}
+
 /// A cell of the CPU formula: the 14 channels, f64 from the f32 values the GPU holds.
 #[derive(Clone, Debug)]
 struct Cell {
@@ -105,6 +130,8 @@ struct Rig {
     texture: wgpu::Texture,
     cur_planes: Vec<f32>,
     prev_planes: Vec<f32>,
+    /// The display settings the CPU formula draws with — the ones last handed to the renderer.
+    display: Display,
 }
 
 fn anchors(c: &Calibration, p: &Physics) -> [f64; 8] {
@@ -167,6 +194,7 @@ fn rig(cur: Vec<f32>, prev: Vec<f32>, physics: Physics, elements: Elements) -> R
         texture,
         cur_planes: cur,
         prev_planes: prev,
+        display: Display::default(),
     }
 }
 
@@ -177,6 +205,11 @@ fn setup(cur: &[(usize, Spec)], prev: &[(usize, Spec)]) -> Rig {
 }
 
 impl Rig {
+    fn set_display(&mut self, display: Display) {
+        self.renderer.set_display(display);
+        self.display = display;
+    }
+
     /// The image of `view` at `alpha`, one RGBA per cell, row-major; waited for.
     fn image(&self, view: View, alpha: f32) -> Vec<[u8; 4]> {
         let (device, queue) = (&self.gpu.device, &self.gpu.queue);
@@ -248,14 +281,17 @@ impl Rig {
         match view {
             View::Glow => {
                 let t_k = self.kelvin(c);
-                let b = 1.0 - (-(t_k / 3000.0).powi(4)).exp();
+                let b = (1.0 - (-(t_k / self.display.glow_s.min(3000.0)).powi(4)).exp()) * dim(t_k, self.display.glow_s);
                 let table = blackbody_table();
                 let bb = blackbody_lookup(&table, t_k);
                 let haze = hex(HAZE);
                 let h = ((l10_sigma + 8.0) / 8.0).clamp(0.0, 1.0) * 0.6;
                 std::array::from_fn(|k| f64::from(bb[k]) * b + haze[k] * h * (1.0 - b))
             }
-            View::Heat => map(&HEAT_STOPS, (self.kelvin(c).log10() - 1.0) / 9.0),
+            View::Heat => {
+                let [lo, hi] = self.display.heat;
+                map(&HEAT_STOPS, (self.kelvin(c).log10() - lo) / (hi - lo))
+            }
             View::Element => {
                 let visible = ((l10_sigma + 6.0) / 8.0).clamp(0.15, 1.0);
                 let mut sum = [0.0; 3];
@@ -266,7 +302,10 @@ impl Rig {
                 }
                 sum.map(|v| enc(v * visible))
             }
-            View::Density => map(&DENSITY_STOPS, (l10_sigma + 6.0) / 10.0),
+            View::Density => {
+                let [lo, hi] = self.display.density;
+                map(&DENSITY_STOPS, (l10_sigma - lo) / (hi - lo))
+            }
         }
     }
 
@@ -498,4 +537,112 @@ fn alpha_between_blends_the_states() {
     }
     assert_ne!(rig.image(View::Density, 0.5), rig.image(View::Density, 1.0), "α = ½ is not the current state");
     assert_ne!(rig.image(View::Density, 0.5), rig.image(View::Density, 0.0), "α = ½ is not the previous state");
+}
+
+// -- The display settings (M0-T126; §1.11 [M0-R12]): the Glow setting S and the Heat and Density ranges.
+
+/// Gas at Σ = 0.01 over `n` cells (from cell 0), T_K log-uniform from `lo` to `hi` — a strip in temperature.
+fn strip(probe: &Rig, n: usize, lo: f64, hi: f64) -> Vec<(usize, Spec)> {
+    (0..n).map(|c| (c, gas(0.01, sb_of(probe, lo * (hi / lo).powf(c as f64 / (n - 1) as f64))))).collect()
+}
+
+/// A world of gas at Σ = 0.01 and T_K log-uniform over 10²–10¹⁰ K, so S at 10⁵–10⁹ K grades the image across its dimming.
+fn hot_world() -> Vec<(usize, Spec)> {
+    let probe = setup(&[], &[]);
+    let mut rng = Lcg(126);
+    (0..CELLS).map(|c| (c, gas(0.01 * 10f64.powf(2.0 * rng.next() - 1.0), sb_of(&probe, 1e2 * 1e8f64.powf(rng.next()))))).collect()
+}
+
+/// S = 3,000 K is today's formula on every cell, and so is a renderer handed `Display::default()` after another setting.
+#[test]
+fn the_default_display_is_todays_image() {
+    let world = hot_world();
+    let mut rig = setup(&world, &world);
+    let today: Vec<_> = [View::Glow, View::Heat, View::Density].iter().map(|v| rig.image(*v, 1.0)).collect();
+    for (v, image) in [View::Glow, View::Heat, View::Density].iter().zip(&today) {
+        rig.assert_matches(*v, 1.0, image, 0..CELLS);
+    }
+    rig.set_display(Display { glow_s: 1e8, heat: [4.0, 8.0], density: [-3.0, 1.0] });
+    assert_ne!(rig.image(View::Glow, 1.0), today[0], "S = 10⁸ K changes the Glow image");
+    rig.set_display(Display::default());
+    for (v, image) in [View::Glow, View::Heat, View::Density].iter().zip(&today) {
+        assert_eq!(&rig.image(*v, 1.0), image, "{v:?}: the default again is today's image, bit for bit");
+    }
+}
+
+/// The Glow image at S = 10⁵, 10⁷ and 10⁹ K, and at 1,000 K (under 3,000 K: D stays 1), against the formula within a level.
+#[test]
+fn glow_matches_the_formula_at_the_setting() {
+    let world = hot_world();
+    let mut rig = setup(&world, &world);
+    for s in [1e3, 1e5, 1e7, 1e9] {
+        rig.set_display(Display { glow_s: s, ..Display::default() });
+        rig.assert_matches(View::Glow, 1.0, &rig.image(View::Glow, 1.0), 0..CELLS);
+    }
+    // The setting dims: a cell at S = 10⁷ K is full brightness and one at 10⁴ K, which today draws full too, is under 100.
+    rig.set_display(Display { glow_s: 1e7, ..Display::default() });
+    let image = rig.image(View::Glow, 1.0);
+    let at = |t: f64| (0..CELLS).min_by(|&a, &b| (rig.kelvin(&Rig::cell(&rig.cur_planes, a)) - t).abs().total_cmp(&(rig.kelvin(&Rig::cell(&rig.cur_planes, b)) - t).abs())).unwrap();
+    let bright = |c: usize| image[c][..3].iter().map(|&v| u32::from(v)).max().unwrap();
+    assert!(bright(at(1e7)) > 200 && bright(at(1e4)) < 100, "10⁷ K: {}, 10⁴ K: {}", bright(at(1e7)), bright(at(1e4)));
+}
+
+/// Two Heat ranges and two Density ranges against the formula.
+#[test]
+fn heat_and_density_follow_their_ranges() {
+    let world = hot_world();
+    let mut rig = setup(&world, &world);
+    let wide = random_world(81, 1e4, 0.1, 10.0, &[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    for heat in [[3.0, 9.0], [5.0, 5.3]] {
+        rig.set_display(Display { heat, ..Display::default() });
+        rig.assert_matches(View::Heat, 1.0, &rig.image(View::Heat, 1.0), 0..CELLS);
+    }
+    let (physics, elements) = (Physics::shipped().unwrap(), Elements::shipped().unwrap());
+    let mut rig = rig_of(&wide, physics, elements);
+    for density in [[-4.0, 2.0], [0.5, 1.5]] {
+        rig.set_display(Display { density, ..Display::default() });
+        rig.assert_matches(View::Density, 1.0, &rig.image(View::Density, 1.0), 0..CELLS);
+    }
+}
+
+fn rig_of(world: &[(usize, Spec)], physics: Physics, elements: Elements) -> Rig {
+    let p = planes(&physics, &elements, world);
+    rig(p.clone(), p, physics, elements)
+}
+
+/// CIE 1931 x of an sRGB colour in 0…1.
+fn cie_x(c: [f64; 3]) -> f64 {
+    let l = c.map(lin);
+    let xx = 0.4124 * l[0] + 0.3576 * l[1] + 0.1805 * l[2];
+    let yy = 0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2];
+    let zz = 0.0193 * l[0] + 0.1192 * l[1] + 0.9505 * l[2];
+    xx / (xx + yy + zz)
+}
+
+/// §1.11 [M0-R12]'s guarantee on the GPU's drawn values: a strip of T 10³–10¹¹ K at five settings — no drawn colour whose
+/// brightest channel is ≥ 16/255 has a CIE x above max(x of the table's colour at its T, 0.3127) + 0.005; and the dimming
+/// really dims there (a strip's brightest drawn cell is not the whole strip's — some colour passes the threshold).
+#[test]
+fn a_hotter_body_is_never_drawn_redder_than_its_blackbody_or_white() {
+    let probe = setup(&[], &[]);
+    let world = strip(&probe, CELLS, 1e3, 1e11);
+    let mut rig = setup(&world, &world);
+    let table = blackbody_table();
+    for s in [3e3, 3e4, 1e6, 1e8, 1e10] {
+        rig.set_display(Display { glow_s: s, ..Display::default() });
+        let image = rig.image(View::Glow, 1.0);
+        let mut checked = 0;
+        for c in 0..CELLS {
+            let drawn = [0, 1, 2].map(|k| f64::from(image[c][k]) / 255.0);
+            if drawn.iter().cloned().fold(0.0, f64::max) < 16.0 / 255.0 {
+                continue;
+            }
+            checked += 1;
+            let t = rig.kelvin(&Rig::cell(&rig.cur_planes, c));
+            let bb = blackbody_lookup(&table, t).map(f64::from);
+            let bound = cie_x(bb).max(0.3127) + 0.005;
+            assert!(cie_x(drawn) <= bound, "S = {s}: cell {c} at {t:.0} K drawn {:?}, x {:.4} > {bound:.4}", image[c], cie_x(drawn));
+        }
+        assert!(checked > CELLS / 20, "S = {s}: only {checked} cells reach 16/255");
+    }
 }

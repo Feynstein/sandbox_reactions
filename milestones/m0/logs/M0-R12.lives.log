@@ -1,0 +1,82 @@
+== 2026-11-01T16:49:53-05:00 lives on laserax-ai-server, RTX 4090
++ cd /home/ybelanger/workspace/sandbox_reactions
++ B=build/target/release/sandbox-reactions
++ rm -rf /tmp/r12
++ mkdir -p /tmp/r12
++ build/target/release/sandbox-reactions headless --scene preset:sun --until stage:main_sequence --dump-every 512 --adapter 'RTX 4090' --out /tmp/r12/sun
++ tail -2
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2720 sim_time=33.003020 until=met
++ build/target/release/sandbox-reactions headless --scene preset:massive --until event:supernova --dump-every 64 --adapter 'RTX 4090' --out /tmp/r12/massive
++ tail -2
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=928 sim_time=7.774671 until=met
++ ls /tmp/r12/sun/dumps /tmp/r12/massive/dumps
++ tr '\n' ' '
+/tmp/r12/massive/dumps: s_128.bin s_128.observers.json s_192.bin s_192.observers.json s_256.bin s_256.observers.json s_320.bin s_320.observers.json s_384.bin s_384.observers.json s_448.bin s_448.observers.json s_512.bin s_512.observers.json s_576.bin s_576.observers.json s_640.bin s_640.observers.json s_64.bin s_64.observers.json s_704.bin s_704.observers.json s_768.bin s_768.observers.json s_832.bin s_832.observers.json s_896.bin s_896.observers.json s_928.bin s_928.observers.json  /tmp/r12/sun/dumps: s_1024.bin s_1024.observers.json s_1536.bin s_1536.observers.json s_2048.bin s_2048.observers.json s_2560.bin s_2560.observers.json s_2720.bin s_2720.observers.json s_512.bin s_512.observers.json + cd /home/ybelanger/workspace/sandbox_reactions
++ B=build/target/release/sandbox-reactions
++ build/target/release/sandbox-reactions headless --scene preset:massive --load-dump /tmp/r12/massive/dumps/s_928.bin --continue --steps 8000 --dump-every 1000 --adapter 'RTX 4090' --out /tmp/r12/remnant
++ tail -2
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=8000 sim_time=59.501512 until=none
++ python3 -c '
+import json,glob
+for f in sorted(glob.glob("/tmp/r12/*/dumps/*.observers.json")):
+  s=json.load(open(f)); 
+  objs=s.get("objects") or s.get("tracker",{}).get("objects") or s
+  print(f, str(objs)[:160])
+'
++ head -5
+/tmp/r12/massive/dumps/s_128.observers.json {'adapter': 'NVIDIA GeForce RTX 4090', 'done': 128, 'driver': 'NVIDIA', 'dt_next': '0.016016177833080292', 'heat_unconverged': 0, 'ledger': {'booked': ['0.0', '
+/tmp/r12/massive/dumps/s_192.observers.json {'adapter': 'NVIDIA GeForce RTX 4090', 'done': 192, 'driver': 'NVIDIA', 'dt_next': '0.01186772808432579', 'heat_unconverged': 0, 'ledger': {'booked': ['0.0', '0
+/tmp/r12/massive/dumps/s_256.observers.json {'adapter': 'NVIDIA GeForce RTX 4090', 'done': 256, 'driver': 'NVIDIA', 'dt_next': '0.008656732738018036', 'heat_unconverged': 0, 'ledger': {'booked': ['0.0', '
+/tmp/r12/massive/dumps/s_320.observers.json {'adapter': 'NVIDIA GeForce RTX 4090', 'done': 320, 'driver': 'NVIDIA', 'dt_next': '0.0071526989340782166', 'heat_unconverged': 0, 'ledger': {'booked': ['0.0', 
+/tmp/r12/massive/dumps/s_384.observers.json {'adapter': 'NVIDIA GeForce RTX 4090', 'done': 384, 'driver': 'NVIDIA', 'dt_next': '0.007247476372867823', 'heat_unconverged': 0, 'ledger': {'booked': ['0.0', '
+== 2026-11-01T16:52:00-05:00 v9 sun dumps' stages
+SR-HEADLESS DONE steps=1 sim_time=3555.311096 until=none
+300000 [(None, 1498)]
+SR-HEADLESS DONE steps=1 sim_time=4498.217100 until=none
+380000 [(None, 1496)]
+SR-HEADLESS DONE steps=1 sim_time=4944.892302 until=none
+420000 [(None, 1496)]
+SR-HEADLESS DONE steps=1 sim_time=5379.162886 until=none
+460000 [(None, 1495)]
+SR-HEADLESS DONE steps=1 sim_time=5697.875211 until=none
+490000 [(None, 1494)]
+{'id': 1, 'mass_sb': 1498.0940779885277, 'stage': None}
+150000 {'id': 1, 'mass_sb': 2912.6873, 'stage': None}
+200000 {'id': 1, 'mass_sb': 1840.8197, 'stage': None}
+230000 {'id': 1, 'mass_sb': 1543.9027, 'stage': None}
+250000 {'id': 1, 'mass_sb': 1507.2198, 'stage': None}
+270000 {'id': 1, 'mass_sb': 1498.5728, 'stage': None}
+== 2026-11-01T16:52:38-05:00 the binary's frames, 4 views, each dump + 1 step
+sun_ms glow: SR-HEADLESS DONE steps=1 sim_time=33.014467 until=none
+sun_ms heat: SR-HEADLESS DONE steps=1 sim_time=33.014467 until=none
+sun_ms element: SR-HEADLESS DONE steps=1 sim_time=33.014467 until=none
+sun_ms density: SR-HEADLESS DONE steps=1 sim_time=33.014467 until=none
+massive_sg glow: SR-HEADLESS DONE steps=1 sim_time=7.010755 until=none
+massive_sg heat: SR-HEADLESS DONE steps=1 sim_time=7.010755 until=none
+massive_sg element: SR-HEADLESS DONE steps=1 sim_time=7.010755 until=none
+massive_sg density: SR-HEADLESS DONE steps=1 sim_time=7.010755 until=none
+massive_sn glow: SR-HEADLESS DONE steps=1 sim_time=7.778442 until=none
+massive_sn heat: SR-HEADLESS DONE steps=1 sim_time=7.778442 until=none
+massive_sn element: SR-HEADLESS DONE steps=1 sim_time=7.778442 until=none
+massive_sn density: SR-HEADLESS DONE steps=1 sim_time=7.778442 until=none
+remnant glow: SR-HEADLESS DONE steps=1 sim_time=59.510048 until=none
+remnant heat: SR-HEADLESS DONE steps=1 sim_time=59.510048 until=none
+remnant element: SR-HEADLESS DONE steps=1 sim_time=59.510048 until=none
+remnant density: SR-HEADLESS DONE steps=1 sim_time=59.510048 until=none
+sun_giant150 glow: SR-HEADLESS DONE steps=1 sim_time=1749.826253 until=none
+sun_giant150 heat: SR-HEADLESS DONE steps=1 sim_time=1749.826253 until=none
+sun_giant150 element: SR-HEADLESS DONE steps=1 sim_time=1749.826253 until=none
+sun_giant150 density: SR-HEADLESS DONE steps=1 sim_time=1749.826253 until=none
+sun_giant200 glow: SR-HEADLESS DONE steps=1 sim_time=2331.235445 until=none
+sun_giant200 heat: SR-HEADLESS DONE steps=1 sim_time=2331.235445 until=none
+sun_giant200 element: SR-HEADLESS DONE steps=1 sim_time=2331.235445 until=none
+sun_giant200 density: SR-HEADLESS DONE steps=1 sim_time=2331.235445 until=none
+/tmp/r12/f/sun_ms.glow/dumps:
+s_2721.bin
+s_2721.observers.json
+
+/tmp/r12/f/sun_ms.glow/frames:
+f_2721.png

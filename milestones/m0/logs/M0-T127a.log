@@ -1,0 +1,11 @@
+extents   7/0/0        3.72 s  GO · step 1/2, 1 left
+views     15/0/0      33.46 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-T127a.<scope>.log · record: loop_times.jsonl · tree 02fe17f576e3+aded63dc79f0
+anchor: 121 path×scope entries moved by this run
+anchor: 374 paths checked · 351 skipped (3 classes) · 1 never checked · 4 stale · 0 unclassified · 0 owed · 379 covered of 730 visible
+verify: 22 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 33.46 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 2.63->4.43
+=== GO ===
+extents · clean · GO · arm 1/2, 1 left
+extents · plant extents-vacuum-counted · RED (proven: 4 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope extents · 23.75 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-T127a.extents.redarm.log
+=== GO ===

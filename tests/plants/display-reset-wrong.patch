@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/ui/display.rs
++++ b/crates/sr-app/src/ui/display.rs
+@@ -235,7 +235,8 @@
+             }
+         }
+         DisplayCommand::Reset => match view {
+-            View::Glow => display.glow_s = GLOW_S_DEFAULT,
++            // Planted: Reset goes to 1,000 K, not the 3,000 K default (M0-T127b's plant).
++            View::Glow => display.glow_s = 1_000.0,
+             View::Heat => display.heat = HEAT_SPAN,
+             View::Density => display.density = DENSITY_SPAN,
+             View::Element => {}

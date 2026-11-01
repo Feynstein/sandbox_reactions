@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/ui/right.rs
++++ b/crates/sr-app/src/ui/right.rs
+@@ -236,7 +236,8 @@
+ }
+ 
+ /// Most species the cell's mix lists (§4.6).
+-const MIX_ITEMS: usize = 3;
++// Planted: a fourth species is listed (M0-T93b's plant).
++const MIX_ITEMS: usize = 4;
+ 
+ /// The least share of a cell's mass, in percent, that a species must hold to be listed (§4.6).
+ const MIX_MIN_PERCENT: f64 = 0.5;

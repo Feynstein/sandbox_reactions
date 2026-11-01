@@ -3,9 +3,10 @@
 
 use super::device;
 use sr_engine::gpu::Gpu;
-use sr_engine::state::{Booking, State, StateError, WorldConfig, CHANNELS, N_CHANNELS, SPECIES};
+use sr_engine::state::{Booking, InspectReply, Inspector, State, StateError, WorldConfig, CHANNELS, N_CHANNELS, SPECIES};
 use sr_engine::step::{EosGpu, Pass, Step};
-use sr_physics::registry::{Elements, Physics};
+use sr_physics::eos::Eos;
+use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 /// A fixed sequence of values in [0, 1) — the same on every run (xorshift64*).
 struct Seq(u64);
@@ -194,4 +195,170 @@ fn two_runs_from_the_same_state_are_bit_identical() {
     let (a, b) = (run(), run());
     assert_eq!(bits(&a), bits(&b), "two runs of 3 steps differ");
     assert_ne!(bits(&a), bits(&start), "the step changed nothing: the case would pass with no pass at all");
+}
+
+/// A 64 × 64 state of distinct, valid cells: Σ in [1, 2), a velocity per cell, E/Σ well above the floor, and a
+/// two-species mix (hydrogen / helium) that changes from cell to cell.
+fn inspectable(world: WorldConfig) -> Vec<f32> {
+    let cells = world.cells();
+    let mut planes = vec![0f32; N_CHANNELS * cells];
+    let mut seq = Seq(0x1234_5678_9abc_def1);
+    for i in 0..cells {
+        let sigma = 1.0 + seq.next();
+        let (ux, uy) = (seq.next() - 0.5, seq.next() - 0.5);
+        let h = 0.2 + 0.6 * seq.next();
+        planes[i] = sigma as f32;
+        planes[cells + i] = (sigma * ux) as f32;
+        planes[2 * cells + i] = (sigma * uy) as f32;
+        planes[3 * cells + i] = (sigma * (600.0 + 400.0 * seq.next() + 0.5 * (ux * ux + uy * uy))) as f32;
+        planes[SPECIES.start * cells + i] = h as f32;
+        planes[(SPECIES.start + 1) * cells + i] = (1.0 - h) as f32;
+    }
+    planes
+}
+
+/// What the dump's cell says, graded in f64 from the canonical planes: Σ, u, T = μ ε_th and X.
+fn from_dump(planes: &[f32], cells: usize, i: usize, eos: &Eos, elements: &Elements) -> (f32, [f32; 2], f64, [f32; N_SPECIES]) {
+    let at = |c: usize| planes[c * cells + i];
+    let x: [f32; N_SPECIES] = std::array::from_fn(|k| at(SPECIES.start + k));
+    let xf: [f64; N_SPECIES] = std::array::from_fn(|k| f64::from(x[k]));
+    let comp = elements.composition(&xf);
+    let mu = 1.0 / comp.inv_mu;
+    let (s, mom) = (f64::from(at(0)), [f64::from(at(1)), f64::from(at(2))]);
+    let th = eos.thermal(f64::from(at(3)), s, mom, comp.y_e, xf[N_SPECIES - 1], mu);
+    (at(0), [(mom[0] / s) as f32, (mom[1] / s) as f32], Eos::temperature(th.eps_th, mu), x)
+}
+
+struct Probe {
+    gpu: Gpu,
+    world: WorldConfig,
+    state: State,
+    inspector: Inspector,
+    planes: Vec<f32>,
+    eos: Eos,
+    elements: Elements,
+}
+
+fn probe(planes: Option<Vec<f32>>) -> Probe {
+    let gpu = device();
+    let world = WorldConfig::new(64, 64).unwrap();
+    let (physics, elements) = (Physics::shipped().unwrap(), Elements::shipped().unwrap());
+    let state = State::new(&gpu.device, world).unwrap();
+    let planes = planes.unwrap_or_else(|| inspectable(world));
+    state.upload(&gpu.queue, &planes).unwrap();
+    let inspector = Inspector::new(world, &physics, &elements);
+    Probe { gpu, world, state, inspector, planes, eos: Eos::from_physics(&physics).unwrap(), elements }
+}
+
+impl Probe {
+    fn ask(&mut self, cell: (u32, u32)) {
+        self.inspector.inspect(&self.gpu.device, &self.gpu.queue, &self.state, cell).unwrap();
+    }
+
+    /// Frames of 16 ms, each a `poll()` that never waits; the replies and the frame that delivered them (1-based).
+    fn frames_until(&mut self, count: usize, limit: usize) -> (Vec<InspectReply>, usize) {
+        let mut got = Vec::new();
+        for frame in 1..=limit {
+            got.extend(self.inspector.poll(&self.gpu.device));
+            if got.len() >= count {
+                return (got, frame);
+            }
+            std::thread::sleep(std::time::Duration::from_millis(16));
+        }
+        (got, limit + 1)
+    }
+}
+
+#[test]
+fn inspect_replies_with_the_dumps_cell_sigma_u_t_and_x() {
+    let mut p = probe(None);
+    let cells = p.world.cells();
+    for cell in [(0, 0), (63, 63), (17, 40), (40, 17)] {
+        p.ask(cell);
+        let (replies, _) = p.frames_until(1, 5);
+        let r = replies.first().unwrap_or_else(|| panic!("no reply for {cell:?}"));
+        let i = (cell.1 * 64 + cell.0) as usize;
+        let (sigma, u, t, x) = from_dump(&p.planes, cells, i, &p.eos, &p.elements);
+        assert_eq!(r.cell, cell);
+        assert_eq!(r.sigma.to_bits(), sigma.to_bits(), "{cell:?} Σ");
+        assert_eq!([r.u[0].to_bits(), r.u[1].to_bits()], [u[0].to_bits(), u[1].to_bits()], "{cell:?} u");
+        assert_eq!(r.x.map(f32::to_bits), x.map(f32::to_bits), "{cell:?} X");
+        assert!((f64::from(r.temperature) - t).abs() <= 1e-6 * t, "{cell:?} T {} vs {t}", r.temperature);
+        assert!(r.temperature > 100.0, "{cell:?}: a hot cell reads hot, not the floor");
+    }
+}
+
+#[test]
+fn the_reply_arrives_within_2_frames_and_poll_never_waits() {
+    let mut p = probe(None);
+    p.ask((5, 9));
+    let (replies, frame) = p.frames_until(1, 10);
+    println!("inspect: reply in frame {frame}");
+    assert_eq!(replies.len(), 1, "no reply in 10 frames");
+    assert!(frame <= 2, "the reply took {frame} frames");
+    // The adversarial case: a poll with nothing pending is instant, and one made at once after a request returns
+    // whatever has arrived — never waits for the rest.
+    let t0 = std::time::Instant::now();
+    assert!(p.inspector.poll(&p.gpu.device).is_empty());
+    assert!(t0.elapsed() < std::time::Duration::from_millis(5), "an empty poll took {:?}", t0.elapsed());
+}
+
+#[test]
+fn the_reply_is_the_cell_as_it_stood_at_the_request_not_at_the_poll() {
+    let mut p = probe(None);
+    p.ask((3, 3));
+    let cells = p.world.cells();
+    let mut changed = p.planes.clone();
+    changed[3 * 64 + 3] = 99.0;
+    p.state.upload(&p.gpu.queue, &changed).unwrap();
+    let (replies, _) = p.frames_until(1, 5);
+    assert_eq!(replies[0].sigma.to_bits(), p.planes[3 * 64 + 3].to_bits());
+    assert_ne!(replies[0].sigma, changed[3 * 64 + 3]);
+    assert_eq!(cells, 4096);
+}
+
+#[test]
+fn several_requests_answer_in_order_each_with_its_own_cell() {
+    let mut p = probe(None);
+    let cells = [(1, 1), (62, 2), (30, 31), (1, 1)];
+    for c in cells {
+        p.ask(c);
+    }
+    let (replies, frame) = p.frames_until(cells.len(), 6);
+    assert!(frame <= 2, "{frame} frames for four requests");
+    assert_eq!(replies.iter().map(|r| r.cell).collect::<Vec<_>>(), cells);
+    assert_eq!(replies[0], replies[3]);
+    assert_ne!(replies[0].sigma, replies[1].sigma);
+}
+
+#[test]
+fn a_cell_outside_the_world_is_refused_and_asks_nothing() {
+    let mut p = probe(None);
+    for cell in [(64, 0), (0, 64), (u32::MAX, 3)] {
+        let e = p.inspector.inspect(&p.gpu.device, &p.gpu.queue, &p.state, cell).unwrap_err();
+        assert_eq!(e, StateError::CellOutside { cell, world: (64, 64) });
+    }
+    let (replies, _) = p.frames_until(1, 3);
+    assert!(replies.is_empty());
+}
+
+#[test]
+fn an_empty_cell_reads_zero_sigma_and_the_floor_temperature_and_a_cold_cell_the_floor() {
+    let world = WorldConfig::new(64, 64).unwrap();
+    let mut planes = inspectable(world);
+    let cells = world.cells();
+    // Cell 0: no mass at all. Cell 1: energy under the floor's — P8 would raise it, the inspector reads the floor.
+    for c in 0..N_CHANNELS {
+        planes[c * cells] = 0.0;
+    }
+    planes[3 * cells + 1] = 0.0;
+    let mut p = probe(Some(planes));
+    p.ask((0, 0));
+    p.ask((1, 0));
+    let (r, _) = p.frames_until(2, 5);
+    let floor = p.eos.t_floor() as f32;
+    assert_eq!((r[0].sigma, r[0].u, r[0].temperature), (0.0, [0.0, 0.0], floor));
+    assert!(r[1].sigma > 0.0 && r[1].temperature > 0.0);
+    let mu = 1.0 / p.elements.composition(&r[1].x.map(f64::from)).inv_mu;
+    assert!((f64::from(r[1].temperature) - p.eos.t_floor()).abs() < 1e-5, "T {} mu {mu}", r[1].temperature);
 }

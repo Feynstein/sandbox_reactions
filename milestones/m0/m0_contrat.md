@@ -761,6 +761,14 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     nothing, so the core-collapse banner stayed through it and `banner.supernova` showed only if the player had sped up in between
     (`TimeControl::on_event`, a probe of `sr_physics::time` on linux-pc), while on the RTX 4090 the massive preset's supernova comes 16
     steps (0.068 t.u., about 0.7 s at ×0.1) after its collapse — the lead's answer at M0-V12: «Supernova takes over (Recommended)».
+  - [M0-R12] §1.11's Glow b "1 − exp(−(T_K / 3000 K)⁴)", its Heat map "over log₁₀ T_K from 1 to 10" and Density map "over log₁₀ Σ
+    from −6 to 4", §1.12's Clear "settings (rung, view, edge mode, slow-down)", §4.2's Centre "`presets.place_hint` shows under the
+    world" and its integer scale s · **b at the player's setting S (today's at the default 3,000 K, byte for byte), each map over
+    the player's range (today's the default, «Fit to view» once on a click), a legend under the world with the hint below it, a zoom
+    z · s, and Clear keeping the four settings — amended in place, each passage tagged [M0-R12]** · measured on real dumps
+    (reports/display_range.md: the Massive supergiant 100 % one white disk in Glow, the Sun-like envelope in 0.16 of a Heat stop) —
+    the lead's answers at M0-R12, 2026-11-01: «G3 luminance dimming (Recommended)», «Keep today's white bloom (Recommended)», «Range +
+    Fit to view (Recommended)», «Under the world (Recommended)», and for the zoom «File a zoom block after R12's (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1158,6 +1166,16 @@ between the listed masses, held constant beyond them:
   0.0624, 0.0374), (1.056, 599.8, 0.0264, 0.0323), (−0.065, 501.1, 0.0490, 0.0382); ȳ (0.821, 568.8,
   0.0213, 0.0247), (0.286, 530.9, 0.0613, 0.0322); z̄ (1.217, 437.0, 0.0845, 0.0278), (0.681, 459.0,
   0.0385, 0.0725); each lobe α · exp(−½[(λ − β) · (λ < β ? γ : δ)]²).
+  [M0-R12] **The Glow setting S** («Full brightness at», §4.2), a temperature from 10 K to 10¹⁰ K, default 3,000 K: b =
+  (1 − exp(−(T_K / min(S, 3000 K))⁴)) · D, with D = clamp(asinh(x / β) / asinh(1 / β), 0, 1), x = Y(max(T_K, 3000 K)) / Y(S),
+  β = 10⁻⁴, Y(T) = Σ over 380–780 nm in 5 nm steps of B_λ(λ, T) · ȳ(λ) — the table's own Planck and ȳ, unnormalised (a constant
+  factor cancels). At S ≤ 3,000 K, D = 1 for every T: at the default the Glow view is the formula above with 3,000 K, byte for byte.
+  The shader evaluates the exponential factor as today and reads D from a 1,024-entry table over log₁₀ T_K from log₁₀ 3,000 to 11,
+  linear in log T, clamped to its ends, built on the CPU when S changes (every entry 1 at S ≤ 3,000 K). The colour, the haze and
+  the glow are unchanged — the hottest matter that blooms still clamps white per channel (the lead, M0-R12: «Keep today's white
+  bloom (Recommended)»). Guarantee (the `views` scope, on the drawn values): no drawn Glow colour whose brightest channel is ≥ 16/255
+  has a CIE 1931 x above max(x of the table's colour at its T, 0.3127) + 0.005 — a hotter body is never drawn redder than its own
+  blackbody colour or white (reports/display_range.md § Evidence).
 - **Glow** (the Glow view only): bright pass on luminance > 0.8 at half resolution, a separable
   9-tap Gaussian (σ = 3 px at half resolution), upsampled and added at intensity 0.6 (§4.11) — hot
   matter glows and a supernova flashes (B12).
@@ -1165,6 +1183,18 @@ between the listed masses, held constant beyond them:
   mass-fraction-weighted blend of the species colours (§1.5) in linear RGB, times a visibility
   clamp((log₁₀ Σ + 6) / 8, 0.15, 1); vacuum black. **Density view**: the sequential map of §4.11 over
   log₁₀ Σ from −6 to 4 (sandbox units).
+- [M0-R12] **The Heat and Density ranges.** The Heat map runs over log₁₀ T_K from L to H, the Density map over log₁₀ Σ from L
+  to H — the view's range (§4.2's From and To), each end within the span above (Heat 1–10, Density −6–4), H − L ≥ 0.1, the
+  default and the Reset the span itself (today's maps). **Fit to view** sets the active view's range once, on its click, from a
+  1,024-bin histogram of the quantity over the span, counting the cells with Σ ≥ Σ_vac: L the lower edge of the bin holding
+  the 0.5th percentile, H the upper edge of the highest non-empty bin, widened about their middle to 0.1 if narrower and
+  clamped to the span; no matter in the world leaves the range unchanged. The range never follows the matter by itself. The
+  Element view has no range (reports/display_range.md § Problem).
+- [M0-R12] **The zoom** (the lead at M0-R12: «File a zoom block after R12's (Recommended)», built by M0-T129): the world drawn
+  at an integer scale z · s, z from 1 (the default, the whole world) to 8, around a view centre; the mouse wheel steps z by one
+  keeping the cell under the cursor under it, the middle button drags the view (clamped so the world covers the centre area
+  whenever it is larger), Home returns to z = 1. The cell image is unchanged (nearest filtering); every tool, the preset drop,
+  the selection and the inspector read the cell under the cursor through the zoom.
 
 ### 1.12 Edits — the player's tools (B7, B16), applied in P0 and booked in the ledger
 - **Brush**: inside the brush disk (radius 1–40 cells, §4.4), each frame the button is held adds
@@ -1175,7 +1205,8 @@ between the listed masses, held constant beyond them:
   message if any of its cells would fall outside the world. Painting, erasing, heating and cooling
   work on a shining star exactly as on gas (B7: "it reacts through the same physics").
 - **Clear world**: after the §4.7 confirmation, every cell returns to the floor state, sinks are
-  removed, the ledger restarts; settings (rung, view, edge mode, slow-down) are kept.
+  removed, the ledger restarts; settings (rung, view, edge mode, slow-down) are kept — [M0-R12] the Glow setting, the Heat and
+  Density ranges and the zoom too (none is saved across launches, §2.13).
 
 ## §2 Data model
 
@@ -1530,7 +1561,9 @@ Unit-tested without a GPU against §1.8.
   `{"element": "<key>"}` · `{"paint": [[x, y], …]}` · `{"view": "glow|heat|element|density"}` ·
   `{"rung": k}` · `{"pause": true|false}` · `{"steps": n}` · `{"hover": [x, y]}` ·
   `{"select": [x, y]}` · `{"edge": "leave|bounce"}` · `{"slowdown": true|false}`; the screenshot is
-  taken after `frames` frames.
+  taken after `frames` frames. [M0-R12] `{"glow_white": <kelvins>}` · `{"range": [from, to]}` (the active view's: kelvins for
+  Heat, sandbox Σ for Density) · `{"fit": true}` · `{"display_reset": true}` (the active view's Reset) — M0-T127c · `{"zoom": z,
+  "at": [x, y]}` (z around cell x, y) — M0-T129.
 - **Measure UI:** `--measure-ui <frames>` runs the desktop app with the Sun-like preset at ×1 and
   prints `SR-UI p95_ms=<x>` — the panels' and presentation's cost per frame — then writes
   render_reserve_ms = p95 + 0.5 into calibration.json. A visible window: asked of the lead each
@@ -1635,6 +1668,11 @@ views.glow = "Glow"
 views.heat = "Heat"
 views.element = "Element"
 views.density = "Density"
+views.glow_white = "Full brightness at"
+views.range_from = "From"
+views.range_to = "To"
+views.fit = "Fit to view"
+views.reset = "Reset"
 star.heading = "Star"
 star.none = "No star yet. Paint gas or drop a star."
 star.select_hint = "Right-click a star to select it."
@@ -1706,6 +1744,11 @@ web.no_webgpu_browsers = "It runs in Google Chrome on Windows, macOS and ChromeO
 The browser list restates ES-E3 (Chrome on Windows, macOS and ChromeOS since 113, on Linux for Intel
 Gen12+ since 144 and NVIDIA on Wayland since 147; Safari 26; Firefox on Windows since 141 and macOS
 since 147); a later amendment updates it when that page changes.
+[M0-R12] The display controls' and the legend's keys join §4.1's block and strings.rs together in the block that first shows
+them (G-STR reads the block at run time), exactly — M0-T127b: `views.glow_white = "Full brightness at"`, `views.range_from =
+"From"`, `views.range_to = "To"`, `views.fit = "Fit to view"`, `views.reset = "Reset"`; M0-T128: `legend.glow = "Temperature —
+colour and brightness"`, `legend.heat = "Temperature"`, `legend.density = "Density (sandbox units)"`, `legend.element =
+"Elements"`, `legend.white = "Full brightness at {temperature}"`, `legend.cursor = "Cursor: {value}"`.
 
 ### 4.2 Layout (desktop; the web build draws the same into its canvas)
 - Default window 1760 × 940 logical px (fits a 1920 × 1080 screen), title `app.title`.
@@ -1717,9 +1760,22 @@ since 147); a later amendment updates it when that page changes.
   `tools.brush_size` slider (1–40 cells); `tools.element_heading` — the nine paintable elements with
   colour swatches (§1.5; neutron matter is never listed); `presets.heading` — three buttons, each
   with its note; `views.heading` — Glow, Heat, Element, Density.
+  [M0-R12] Under the four views, the active view's display controls (M0-T127b; «Fit to view»'s histogram M0-T127a): Glow — `views.glow_white`, a slider logarithmic in
+  T from 10 K to 10 billion K with its value in §4.12's temperature format, typed in place (a number of kelvins: digits with
+  optional "," groups, a "." and e-notation, an optional "K"; out of range clamped; anything else restores the shown value), then
+  `views.reset` (S back to 3,000 K); Heat — `views.range_from` and `views.range_to`, two such sliders over 10 K – 10 billion K
+  (From kept ≥ 0.1 decade under To), `views.fit`, `views.reset` (10 K – 10 billion K); Density — the same over Σ 10⁻⁶ – 10⁴ in
+  §4.12's inspector numbers; Element — none.
 - **Centre:** the world at integer scale s (§1.11), centred on `bg.space`; at the default size
   s = 2, so the world is 1200 × 800 px. While a preset is armed, `presets.place_hint` shows under
-  the world and its outline follows the cursor.
+  the world and its outline follows the cursor. [M0-R12] Under the world, 8 px below it and as wide as it, the **legend** (M0-T128,
+  the lead at M0-R12: «Under the world (Recommended)»): its title (`legend.glow`, `legend.heat`, `legend.density` or
+  `legend.element`, small, `text.secondary`), a 12 px bar and its ticks — Glow: the colour of each temperature over 10 K – 10
+  billion K, logarithmic, as the cell image draws a Σ = 1 cell at the current S (the glow not added); Heat and Density: the map
+  over the view's range; Element: the ten species' swatches with their `element.*` names — then the marks: the Glow setting (a
+  `accent` triangle and line, `legend.white`) and the hovered cell's value (`text.primary`, `legend.cursor` with the inspector's
+  temperature or density; none over vacuum, outside the world or in the Element view). `presets.place_hint` shows under the
+  legend. With the zoom (M0-T129) the world's scale is z · s, clipped to the centre area.
 - **Right panel** (300 px): `star.heading` and the star readout (§4.6); `inspect.heading` and the
   cell inspector (§4.6).
 - **Banner:** over the top centre of the world, after an automatic slow-down (§1.8.5), until the
@@ -1781,6 +1837,7 @@ heading, then `web.no_webgpu_body` and `web.no_webgpu_browsers` as paragraphs, i
 | left button | apply the tool, or drop the armed preset |
 | right click | select the star under the cursor |
 | hover | the cell inspector |
+| mouse wheel · middle-button drag · Home | zoom in or out around the cursor · pan · back to the whole world [M0-R12, M0-T129] |
 
 ### 4.11 Design tokens
 | Token | Value |
@@ -1800,6 +1857,7 @@ heading, then `web.no_webgpu_body` and `web.no_webgpu_browsers` as paragraphs, i
 | heat map | stops at log₁₀ T_K = 1, 2.8, 4.6, 6.4, 8.2, 10: #000004, #3B0F70, #8C2981, #DE4968, #FE9F6D, #FCFDBF |
 | density map | stops at log₁₀ Σ = −6, −3.5, −1, 1.5, 4: #440154, #3B528B, #21918C, #5EC962, #FDE725 |
 | element colours | §1.5 |
+| legend [M0-R12] | 44 px strip, 8 px under the world; title small (12 px); bar 12 px; tick marks 3 px, labels small; marks: a 10 px triangle over a 2 px line |
 Maps interpolate linearly in linear RGB between stops and clamp outside.
 
 ### 4.12 Number formats (English: "," groups thousands, "." is the decimal point)
@@ -1815,6 +1873,9 @@ Maps interpolate linearly in linear RGB between stops and clamp outside.
 - **Inspector numbers:** 3 significant digits; scientific notation (1.23e-5) below 0.001 or at
   100,000 and above. **Mix percentages:** 3 significant digits ("73.5", "0.770").
 - **fps** and **steps per frame:** integers.
+- [M0-R12] **Legend ticks:** at every power of ten inside the shown range (both ends when fewer than two fall inside), with no
+  trailing zeros — temperatures in the units above ("10 K", "100,000 K", "1 million K", "10 billion K"), densities by the
+  inspector's rule ("1e-6", "0.001", "1", "1,000"); a label that would overlap its left neighbour is left out.
 
 ## §5 Non-regression guarantees (R8; PLAYBOOK §8)
 

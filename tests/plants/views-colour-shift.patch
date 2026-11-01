@@ -1,0 +1,30 @@
+--- a/crates/sr-engine/src/render.rs
++++ b/crates/sr-engine/src/render.rs
+@@ -195,7 +195,7 @@
+ /// two ranges, then the dimming table.
+ fn display_words(display: &Display, dimming: &[f32]) -> Vec<u32> {
+     let s_eff = display.glow_s.min(GLOW_S_DEFAULT);
+-    let mut words: Vec<u32> = [s_eff, 0.0, 0.0, 0.0].map(|v| (v as f32).to_bits()).to_vec();
++    let mut words: Vec<u32> = [s_eff, display.glow_s, 0.0, 0.0].map(|v| (v as f32).to_bits()).to_vec();
+     words.extend([display.heat[0], display.heat[1], display.density[0], display.density[1]].map(|v| (v as f32).to_bits()));
+     words.extend(dimming.iter().map(|v| v.to_bits()));
+     words
+--- a/crates/sr-engine/shaders/render.wgsl
++++ b/crates/sr-engine/shaders/render.wgsl
+@@ -99,6 +99,7 @@
+ );
+ const HAZE: vec3<f32> = vec3<f32>(0.164706, 0.207843, 0.313725); // #2A3550
+ const HAZE_GAIN: f32 = 0.6;
++const GLOW_T_SCALE: f32 = 3000.0;
+ const BG_SPACE: vec3<f32> = vec3<f32>(0.019608, 0.027451, 0.050980); // #05070D
+ 
+ fn srgb_to_linear(c: vec3<f32>) -> vec3<f32> {
+@@ -229,7 +230,7 @@
+ fn glow_colour(c: Cell, t_k: f32) -> vec3<f32> {
+     let b = (1.0 - exp(-pow(t_k / display.glow.x, 4.0))) * dimming(t_k);
+     let haze = HAZE * clamp((log2(c.sigma) * 0.30102999566 + 8.0) / 8.0, 0.0, 1.0) * HAZE_GAIN;
+-    return blackbody(t_k) * b + haze * (1.0 - b);
++    return blackbody(t_k * GLOW_T_SCALE / display.glow.y) * b + haze * (1.0 - b);
+ }
+ 
+ fn element_colour(c: Cell) -> vec3<f32> {

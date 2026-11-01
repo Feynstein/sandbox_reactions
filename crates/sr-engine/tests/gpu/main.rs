@@ -81,6 +81,9 @@ mod sink;
 /// M0-T80 — the cell image and the four views (contract §1.11, §1.10.2, §1.8.3, §4.11).
 mod views;
 
+/// M0-T127a — «Fit to view»'s histogram: the matter's extent in log T and log Σ (contract §1.11 [M0-R12]).
+mod extents;
+
 /// M0-T81 — the glow of the Glow view (contract §1.11, §4.11).
 mod glow;
 

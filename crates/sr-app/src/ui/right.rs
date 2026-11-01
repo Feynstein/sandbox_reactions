@@ -4,21 +4,26 @@
 //! M0-T73) — fed the same frames the slow-down's observers see (ui::banner::Frames); `view` turns the selected one's `Facts`
 //! into the panel's lines, byte for byte the string table's. The egui layer (desktop.rs) only draws what `view` gives.
 //!
+//! The cell inspector (§4.6, M0-T93b) is under it: `Reader` turns the engine's reply for the hovered cell into `Cell`, `inspect_view`
+//! into the panel's lines, and `Asker` keeps one request in flight at a time.
+//!
 //! The selection is the tracker's id, never an index into the list (§1.9.6): the list shifts when an object merges or leaves.
 //! Display only: nothing here reaches back into a step (G-WATCH).
 
 use std::collections::BTreeMap;
 
 use sr_engine::ledger::At;
+use sr_engine::state::InspectReply;
 use sr_engine::summary::BlockSummary;
 use sr_engine::watch::report;
 use sr_physics::calibration::Calibration;
 use sr_physics::observe::age::AgeClock;
 use sr_physics::observe::ending::{Ending, Prediction, Predictor, Readout, Remnant};
 use sr_physics::observe::tracker::SUN_MASS_NOMINAL;
+use sr_physics::eos::Eos;
 use sr_physics::observe::translate::Translations;
 use sr_physics::observe::{Object, Stage, StageTracker, Tracker, TrackerConfig};
-use sr_physics::registry::Physics;
+use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::format;
 use crate::strings;
@@ -227,6 +232,132 @@ impl Stars {
     /// The panel of the selected star at wall time `wall`, `paused` hiding the rate.
     pub fn panel(&self, wall: f64, paused: bool) -> StarPanel {
         view(self.facts(wall).as_ref(), self.count(), paused)
+    }
+}
+
+/// Most species the cell's mix lists (§4.6).
+const MIX_ITEMS: usize = 3;
+
+/// The least share of a cell's mass, in percent, that a species must hold to be listed (§4.6).
+const MIX_MIN_PERCENT: f64 = 0.5;
+
+/// What the inspector reads of a cell that holds gas, in the units a reader sees (§4.12).
+#[derive(Clone, Debug, PartialEq)]
+pub struct CellFacts {
+    /// (element name, percent of the cell's mass), the largest share first.
+    pub mix: Vec<(String, f64)>,
+    pub kelvin: f64,
+    pub density: f64,
+    /// |u| in cells per time unit.
+    pub speed: f64,
+    /// |u| over the cell's wave speed √(2Π/Σ).
+    pub mach: f64,
+}
+
+/// The cell under the cursor as the inspector reads it (§4.6): gas, or vacuum below `sigma_vac`.
+#[derive(Clone, Debug, PartialEq)]
+pub enum Cell {
+    Vacuum,
+    Gas(CellFacts),
+}
+
+/// The inspector of the right panel (§4.6): its heading and one line each.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct CellPanel {
+    pub heading: String,
+    pub lines: Vec<String>,
+}
+
+/// The inspector's panel for `cell` (§4.6): the mix, `inspect.temperature`, `inspect.density`, `inspect.speed`; `inspect.vacuum`
+/// for an empty cell; `inspect.empty` when there is none — the cursor is outside the world (D6).
+pub fn inspect_view(cell: Option<&Cell>) -> CellPanel {
+    let heading = strings::get("inspect.heading").to_string();
+    let lines = match cell {
+        None => vec![strings::get("inspect.empty").to_string()],
+        Some(Cell::Vacuum) => vec![strings::get("inspect.vacuum").to_string()],
+        Some(Cell::Gas(c)) => {
+            let mix: Vec<(&str, f64)> = c.mix.iter().map(|(name, p)| (name.as_str(), *p)).collect();
+            let mut lines = Vec::new();
+            if !mix.is_empty() {
+                lines.push(format::inspect_mix(&mix));
+            }
+            lines.push(format::inspect_temperature(c.kelvin));
+            lines.push(format::inspect_density(c.density));
+            lines.push(format::inspect_speed(c.speed, c.mach));
+            lines
+        }
+    };
+    CellPanel { heading, lines }
+}
+
+/// Turns the engine's reply for one cell into what the inspector shows: the species names and the composition's μ and Y_e,
+/// the pressure law for the Mach number, the temperature's translation to kelvins, `sigma_vac` for the vacuum.
+pub struct Reader {
+    eos: Eos,
+    elements: Elements,
+    translations: Translations,
+    sigma_vac: f64,
+}
+
+impl Reader {
+    pub fn new(physics: &Physics, cal: &Calibration, elements: &Elements) -> Result<Reader, String> {
+        Ok(Reader {
+            eos: Eos::from_physics(physics).map_err(|e| e.to_string())?,
+            elements: elements.clone(),
+            translations: Translations::new(cal, physics).map_err(|e| e.to_string())?,
+            sigma_vac: physics.get("sigma_vac").ok_or("physics.json holds no sigma_vac")?,
+        })
+    }
+
+    /// The cell `reply` describes. Below `sigma_vac` a cell is vacuum (§2.8); otherwise its mix is the (up to three) species of
+    /// at least [`MIX_MIN_PERCENT`] of the mass, largest first, ties by species id.
+    pub fn read(&self, reply: &InspectReply) -> Cell {
+        let sigma = f64::from(reply.sigma);
+        if sigma < self.sigma_vac {
+            return Cell::Vacuum;
+        }
+        let x: [f64; N_SPECIES] = std::array::from_fn(|k| f64::from(reply.x[k]));
+        let mut shares: Vec<(usize, f64)> = x.iter().map(|f| f * 100.0).enumerate().collect();
+        // A share is read from an f32 fraction: 0.5 % arrives as 0.4999999…, and still counts as 0.5.
+        shares.retain(|&(_, p)| p >= MIX_MIN_PERCENT * (1.0 - 1e-6));
+        shares.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.0.cmp(&b.0)));
+        let mix = shares.iter().take(MIX_ITEMS).map(|&(k, p)| (self.elements.species()[k].name.clone(), p)).collect();
+
+        let comp = self.elements.composition(&x);
+        let eps_th = Eos::eps_th_of_t(f64::from(reply.temperature), 1.0 / comp.inv_mu);
+        let pi = self.eos.pi(sigma, eps_th, comp.y_e, x[N_SPECIES - 1]);
+        let speed = f64::from(reply.u[0]).hypot(f64::from(reply.u[1]));
+        let c2 = Eos::wave_speed_sq(sigma, pi);
+        Cell::Gas(CellFacts {
+            mix,
+            kelvin: self.translations.temp.to_kelvin(f64::from(reply.temperature)),
+            density: sigma,
+            speed,
+            mach: if c2 > 0.0 { speed / c2.sqrt() } else { 0.0 },
+        })
+    }
+}
+
+/// One cell request in flight at a time (§3.1's `inspect` is a readback): while one waits for its reply nothing more is asked,
+/// and the next request is for the cell hovered then — the latest cell wins, never a queue of old ones.
+#[derive(Default)]
+pub struct Asker {
+    in_flight: bool,
+}
+
+impl Asker {
+    /// The cell to request this frame, given the cell under the cursor: none while a reply is awaited or nothing is hovered.
+    pub fn next(&mut self, hover: Option<[u32; 2]>) -> Option<[u32; 2]> {
+        if self.in_flight {
+            return None;
+        }
+        self.in_flight = hover.is_some();
+        hover
+    }
+
+    /// The request's reply came back, or the request was refused: the next frame may ask again.
+    pub fn answered(&mut self) {
+        self.in_flight = false;
     }
 }
 
@@ -489,5 +620,173 @@ mod star_tests {
         assert!(panel.lines[1].starts_with("Mass: "), "{panel:?}");
         assert!(panel.lines.iter().any(|l| l.starts_with("Age: ")), "{panel:?}");
         assert_eq!(panel.note, None);
+    }
+}
+
+#[cfg(test)]
+mod inspect_tests {
+    use super::*;
+    use sr_physics::calibration;
+
+    fn shipped() -> Calibration {
+        calibration::resolve(calibration::EMBEDDED, true).unwrap().expect("the shipped calibration")
+    }
+
+    fn reader() -> Reader {
+        Reader::new(&Physics::shipped().unwrap(), &shipped(), &Elements::shipped().unwrap()).unwrap()
+    }
+
+    /// A reply for a cell of density `sigma` at sandbox temperature `t`, moving at `u`, with the species shares `x` given as
+    /// (species id, percent) pairs.
+    fn reply(sigma: f32, u: [f32; 2], t: f32, shares: &[(usize, f32)]) -> InspectReply {
+        let mut x = [0.0f32; N_SPECIES];
+        for &(k, percent) in shares {
+            x[k] = percent / 100.0;
+        }
+        InspectReply { cell: (3, 4), sigma, u, temperature: t, x }
+    }
+
+    fn gas(cell: Cell) -> CellFacts {
+        match cell {
+            Cell::Gas(c) => c,
+            Cell::Vacuum => panic!("read as vacuum"),
+        }
+    }
+
+    fn mix(shares: &[(usize, f32)]) -> Vec<(String, f64)> {
+        gas(reader().read(&reply(1.0, [0.0; 2], 1.0, shares))).mix.into_iter().map(|(n, p)| (n, (p * 1e3).round() / 1e3)).collect()
+    }
+
+    #[test]
+    fn the_mix_lists_the_largest_shares_first_and_cuts_at_half_a_percent() {
+        // H 60 %, He 39.6 %, C 0.4 % (under the cut), Fe 0.5 % (at it: listed).
+        let got = mix(&[(0, 60.0), (1, 39.1), (2, 0.4), (8, 0.5)]);
+        let names: Vec<&str> = got.iter().map(|(n, _)| n.as_str()).collect();
+        assert_eq!(names, ["Hydrogen", "Helium", "Iron"], "{got:?}");
+        assert_eq!(got[2].1, 0.5, "0.5 % reads as 0.5, f32's 0.4999999 notwithstanding");
+        let order = mix(&[(1, 20.0), (0, 30.0), (3, 50.0)]);
+        assert_eq!(order.iter().map(|(n, _)| n.as_str()).collect::<Vec<_>>(), ["Oxygen", "Hydrogen", "Helium"], "by share, not by id");
+    }
+
+    #[test]
+    fn the_mix_is_never_more_than_three_species() {
+        let got = mix(&[(0, 40.0), (1, 30.0), (2, 20.0), (3, 10.0)]);
+        assert_eq!(got.len(), 3, "{got:?}");
+        assert_eq!(got.last().unwrap().0, "Carbon", "the fourth, Oxygen at 10 %, is cut");
+        let ties = mix(&[(4, 25.0), (2, 25.0), (7, 25.0), (0, 25.0)]);
+        assert_eq!(ties.iter().map(|(n, _)| n.as_str()).collect::<Vec<_>>(), ["Hydrogen", "Carbon", "Neon"], "equal shares keep species order");
+    }
+
+    #[test]
+    fn the_mach_number_is_the_speed_over_the_wave_speed() {
+        // Pure hydrogen, fully ionized: μ = ½, so ε_th = 2T. At Σ = 10⁻⁵ and T = 1 the degenerate pressures are negligible
+        // (0.5 % of Π already at 10⁻³), Π = Σ ε_th = 2·10⁻⁵ and c = √(2Π/Σ) = 2 exactly; u = (3, 4) is a speed of 5: Mach 2.5.
+        let c = gas(reader().read(&reply(1e-5, [3.0, 4.0], 1.0, &[(0, 100.0)])));
+        assert_eq!(c.speed, 5.0);
+        assert!((c.mach - 2.5).abs() < 2.5e-3, "Mach {}", c.mach);
+        let still = gas(reader().read(&reply(1e-5, [0.0, 0.0], 1.0, &[(0, 100.0)])));
+        assert_eq!((still.speed, still.mach), (0.0, 0.0));
+        // The wave speed grows with the pressure: the same speed in hotter gas is a lower Mach number.
+        let hot = gas(reader().read(&reply(1e-5, [3.0, 4.0], 4.0, &[(0, 100.0)])));
+        assert!((hot.mach - 1.25).abs() < 1.25e-3, "Mach {}", hot.mach);
+    }
+
+    #[test]
+    fn a_cell_below_sigma_vac_is_empty_space() {
+        let physics = Physics::shipped().unwrap();
+        let vac = physics.get("sigma_vac").unwrap() as f32;
+        let r = reader();
+        assert_eq!(r.read(&reply(vac * 0.5, [0.0; 2], 0.05, &[(0, 100.0)])), Cell::Vacuum);
+        assert_eq!(r.read(&reply(0.0, [0.0; 2], 0.05, &[(0, 100.0)])), Cell::Vacuum);
+        assert!(matches!(r.read(&reply(vac * 2.0, [0.0; 2], 0.05, &[(0, 100.0)])), Cell::Gas(_)), "above the line it is gas");
+        assert_eq!(inspect_view(Some(&Cell::Vacuum)).lines, ["Empty space"]);
+    }
+
+    #[test]
+    fn outside_the_world_the_panel_asks_for_a_hover() {
+        let panel = inspect_view(None);
+        assert_eq!(panel.heading, "Cell");
+        assert_eq!(panel.lines, ["Hover over a cell to inspect it."]);
+    }
+
+    #[test]
+    fn a_gas_cell_reads_each_line_in_the_contracts_numbers() {
+        let cell = Cell::Gas(CellFacts {
+            mix: vec![("Hydrogen".into(), 73.5), ("Helium".into(), 25.0), ("Carbon".into(), 0.77)],
+            kelvin: 15.7e6,
+            density: 1.234e-5,
+            speed: 123_456.0,
+            mach: 2.5,
+        });
+        let panel = inspect_view(Some(&cell));
+        assert_eq!(panel.heading, "Cell");
+        assert_eq!(
+            panel.lines,
+            [
+                "Hydrogen 73.5% · Helium 25.0% · Carbon 0.770%",
+                "Temperature: 15.7 million K",
+                "Density: 1.23e-5 (sandbox units)",
+                "Speed: 1.23e5 cells per time unit (Mach 2.50)",
+            ]
+        );
+        let mild = Cell::Gas(CellFacts { mix: vec![("Iron".into(), 100.0)], kelvin: 5770.0, density: 0.5, speed: 12.3456, mach: 0.0123 });
+        assert_eq!(
+            inspect_view(Some(&mild)).lines,
+            ["Iron 100%", "Temperature: 5,770 K", "Density: 0.500 (sandbox units)", "Speed: 12.3 cells per time unit (Mach 0.0123)"]
+        );
+    }
+
+    #[test]
+    fn the_temperature_is_translated_to_kelvins_as_the_star_readout_does() {
+        let cal = shipped();
+        let physics = Physics::shipped().unwrap();
+        let temp = Translations::new(&cal, &physics).unwrap().temp;
+        let c = gas(reader().read(&reply(1.0, [0.0; 2], cal.t_eff_sun_sb as f32, &[(0, 100.0)])));
+        let want = temp.to_kelvin(f64::from(cal.t_eff_sun_sb as f32));
+        assert_eq!(c.kelvin, want);
+        assert!((5000.0..6500.0).contains(&c.kelvin), "the Sun's surface anchor reads {} K", c.kelvin);
+        assert_eq!(c.density, 1.0);
+    }
+
+    #[test]
+    fn hovering_every_frame_keeps_one_request_in_flight() {
+        let mut asker = Asker::default();
+        let started = std::time::Instant::now();
+        // No reply ever comes back: 120 frames of hover make one request, not 120.
+        let sent = (0..120).filter(|n| asker.next(Some([*n, 7])).is_some()).count();
+        assert_eq!(sent, 1, "a queue of unanswered requests floods the readback");
+        eprintln!("hover, no reply: 120 frames in {:?} ({:?} a frame)", started.elapsed(), started.elapsed() / 120);
+
+        // Replies arrive two frames after their request: one request every second frame, each for the cell hovered then.
+        let mut asker = Asker::default();
+        let (mut in_flight, mut asked) = (None::<(u32, u32)>, Vec::new());
+        let started = std::time::Instant::now();
+        for frame in 0..120u32 {
+            if in_flight.is_some_and(|(_, at)| frame >= at + 2) {
+                in_flight = None;
+                asker.answered();
+            }
+            if let Some(cell) = asker.next(Some([frame, 0])) {
+                assert!(in_flight.is_none(), "a second request while one waits");
+                in_flight = Some((cell[0], frame));
+                asked.push(cell[0]);
+            }
+        }
+        assert_eq!(asked.len(), 60, "{asked:?}");
+        assert!(asked.windows(2).all(|w| w[1] == w[0] + 2), "the latest cell each time: {asked:?}");
+        eprintln!("hover, replies after 2 frames: 120 frames, {} requests, {:?} a frame", asked.len(), started.elapsed() / 120);
+    }
+
+    #[test]
+    fn nothing_is_asked_off_the_world_and_a_refusal_frees_the_slot() {
+        let mut asker = Asker::default();
+        assert_eq!(asker.next(None), None);
+        assert_eq!(asker.next(None), None, "no cell hovered holds nothing in flight");
+        assert_eq!(asker.next(Some([5, 6])), Some([5, 6]));
+        assert_eq!(asker.next(Some([5, 7])), None, "a request waits");
+        asker.answered();
+        assert_eq!(asker.next(Some([5, 7])), Some([5, 7]), "after the reply, the cell hovered now");
+        asker.answered();
+        assert_eq!(asker.next(None), None, "the cursor left the world: no request");
     }
 }

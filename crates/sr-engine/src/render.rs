@@ -10,6 +10,13 @@
 //! α (§1.8.3). Temperatures go through §1.10.2's translation to kelvins, the same eight anchors that build the readouts'
 //! `TempScale`.
 //!
+//! The display settings ([`Display`], M0-T126; §1.11 [M0-R12]): the Glow setting S — a temperature the Glow view's brightness is
+//! dimmed against, a 1,024-entry table over log₁₀ T from log₁₀ 3,000 to 11 built on the CPU when S changes — and the Heat and
+//! Density views' ranges, two uniforms. At the default they are today's formulas, byte for byte.
+//!
+//! Fit to view ([`Renderer::fit_range`], M0-T127a): one compute pass bins the Heat view's log₁₀ T_K or the Density view's log₁₀ Σ of the
+//! cells with Σ ≥ Σ_vac into 1,024 bins by atomics, read back once; [`extent_from_bins`] turns the bins into the range.
+//!
 //! The glow: for the Glow view, [`Renderer::render`] draws the cell image into an image of its own, then runs shaders/glow.wgsl's
 //! passes over it — a bright pass on the brightest channel > 0.8 at half resolution, a separable 9-tap Gaussian (σ = 3 texels), the result
 //! upsampled and added at 0.6 — into the caller's target. The other views never go through them.
@@ -115,6 +122,125 @@ pub fn blackbody_lookup(table: &[[f32; 3]], t: f64) -> [f32; 3] {
     let i = (u.floor() as usize).min(n - 2);
     let f = (u - i as f64) as f32;
     [0, 1, 2].map(|k| table[i][k] * (1.0 - f) + table[i + 1][k] * f)
+}
+
+/// The Glow setting S's domain (§1.11 [M0-R12]) and its default: today's 3,000 K.
+pub const GLOW_S_MIN: f64 = 10.0;
+pub const GLOW_S_MAX: f64 = 1.0e10;
+pub const GLOW_S_DEFAULT: f64 = 3_000.0;
+/// The Heat view's span, log₁₀ T_K, and the Density view's, log₁₀ Σ: the ranges' bounds and their defaults.
+pub const HEAT_SPAN: [f64; 2] = [1.0, 10.0];
+pub const DENSITY_SPAN: [f64; 2] = [-6.0, 4.0];
+
+/// «Fit to view»'s histogram: its bin count, the percentile its low end reads and the narrowest range it hands back (§1.11 [M0-R12]).
+pub const EXTENT_BINS: usize = 1024;
+const EXTENT_PERCENTILE_PER_MILLE: u64 = 5;
+const EXTENT_MIN_WIDTH: f64 = 0.1;
+
+/// The range «Fit to view» sets from a histogram of the quantity's `EXTENT_BINS` equal bins over `span` (§1.11 [M0-R12]): L the
+/// lower edge of the bin holding the 0.5th percentile (the ⌈0.005 n⌉-th cell counted from below), H the upper edge of the highest
+/// non-empty bin, widened about their middle to 0.1 if narrower, and kept inside the span — the 0.1 window slid in, never
+/// shortened, so H − L ≥ 0.1 holds at the span's ends. `None` when the bins hold no cell.
+pub fn extent_from_bins(bins: &[u32], span: [f64; 2]) -> Option<[f64; 2]> {
+    let n: u64 = bins.iter().map(|&b| u64::from(b)).sum();
+    if n == 0 {
+        return None;
+    }
+    let rank = (n * EXTENT_PERCENTILE_PER_MILLE).div_ceil(1000).max(1);
+    let mut cumulative = 0;
+    let low = bins
+        .iter()
+        .position(|&b| {
+            cumulative += u64::from(b);
+            cumulative >= rank
+        })
+        .expect("the bins hold n cells");
+    let high = bins.iter().rposition(|&b| b > 0).expect("the bins hold n cells");
+    let width = (span[1] - span[0]) / bins.len() as f64;
+    let (mut lo, mut hi) = (span[0] + width * low as f64, span[0] + width * (high + 1) as f64);
+    if hi - lo < EXTENT_MIN_WIDTH {
+        let mid = 0.5 * (lo + hi);
+        (lo, hi) = (mid - 0.5 * EXTENT_MIN_WIDTH, mid + 0.5 * EXTENT_MIN_WIDTH);
+    }
+    if lo < span[0] {
+        (lo, hi) = (span[0], span[0] + EXTENT_MIN_WIDTH.max(hi - lo));
+    }
+    if hi > span[1] {
+        (lo, hi) = (span[1] - EXTENT_MIN_WIDTH.max(hi - lo), span[1]);
+    }
+    Some([lo.max(span[0]), hi.min(span[1])])
+}
+
+pub const DIMMING_LEN: usize = 1024;
+/// The dimming table's span, log₁₀ T_K: from log₁₀ 3,000 to 11.
+const DIMMING_L10_LO: f64 = 3.477_121_254_719_662;
+const DIMMING_L10_HI: f64 = 11.0;
+/// β of §1.11 [M0-R12]'s asinh stretch: about four decades of luminance.
+const DIMMING_BETA: f64 = 1.0e-4;
+
+/// The display settings (§1.11 [M0-R12]): the Glow setting S in kelvins, and the Heat and Density views' ranges as log₁₀ ends
+/// (log₁₀ T_K and log₁₀ Σ), each inside its span, `[lo, hi]` with `hi − lo ≥ 0.1` — what the caller keeps in order.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Display {
+    pub glow_s: f64,
+    pub heat: [f64; 2],
+    pub density: [f64; 2],
+}
+
+impl Default for Display {
+    /// Today's look: 3,000 K, the whole spans.
+    fn default() -> Display {
+        Display { glow_s: GLOW_S_DEFAULT, heat: HEAT_SPAN, density: DENSITY_SPAN }
+    }
+}
+
+/// The blackbody's visible luminance Y(T): Planck × ȳ summed over 380–780 nm in 5 nm steps — the table's own sum, unnormalised.
+pub fn visible_luminance(t: f64) -> f64 {
+    let steps = ((LAMBDA_MAX - LAMBDA_MIN) / LAMBDA_STEP).round() as usize;
+    (0..=steps)
+        .map(|i| {
+            let lambda = LAMBDA_MIN + LAMBDA_STEP * i as f64;
+            planck(lambda, t) * lobes(&Y_LOBES, lambda)
+        })
+        .sum()
+}
+
+/// The Glow view's dimming D(T; S) (§1.11 [M0-R12]): 1 for S ≤ 3,000 K, else clamp(asinh(x/β)/asinh(1/β), 0, 1) with
+/// x = Y(max(T, 3,000 K)) / Y(S).
+pub fn dimming(t: f64, s: f64) -> f64 {
+    if s <= GLOW_S_DEFAULT {
+        return 1.0;
+    }
+    let x = visible_luminance(t.max(GLOW_S_DEFAULT)) / visible_luminance(s);
+    ((x / DIMMING_BETA).asinh() / (1.0 / DIMMING_BETA).asinh()).clamp(0.0, 1.0)
+}
+
+/// The temperature of dimming-table entry `i`: log₁₀ T linear from log₁₀ 3,000 to 11.
+pub fn dimming_temperature(i: usize) -> f64 {
+    10f64.powf(DIMMING_L10_LO + (DIMMING_L10_HI - DIMMING_L10_LO) * i as f64 / (DIMMING_LEN - 1) as f64)
+}
+
+/// The 1,024-entry dimming table for the setting `s`: every entry 1 at S ≤ 3,000 K.
+pub fn dimming_table(s: f64) -> Vec<f32> {
+    (0..DIMMING_LEN).map(|i| dimming(dimming_temperature(i), s) as f32).collect()
+}
+
+/// A dimming-table lookup: linear in log T between entries, clamped to the ends (render.wgsl `dimming`).
+pub fn dimming_lookup(table: &[f32], t: f64) -> f32 {
+    let n = table.len();
+    let u = ((t.log10() - DIMMING_L10_LO) / (DIMMING_L10_HI - DIMMING_L10_LO)).clamp(0.0, 1.0) * (n - 1) as f64;
+    let i = (u.floor() as usize).min(n - 2);
+    table[i] + (table[i + 1] - table[i]) * (u - i as f64) as f32
+}
+
+/// render.wgsl's `DisplayParams` as words: S clamped to its domain and to 3,000 K above (the exposure curve's own scale), the
+/// two ranges, then the dimming table.
+fn display_words(display: &Display, dimming: &[f32]) -> Vec<u32> {
+    let s_eff = display.glow_s.min(GLOW_S_DEFAULT);
+    let mut words: Vec<u32> = [s_eff, 0.0, 0.0, 0.0].map(|v| (v as f32).to_bits()).to_vec();
+    words.extend([display.heat[0], display.heat[1], display.density[0], display.density[1]].map(|v| (v as f32).to_bits()));
+    words.extend(dimming.iter().map(|v| v.to_bits()));
+    words
 }
 
 /// The four views of the cell image (§1.11); the discriminant is the shader's `view` word.
@@ -247,6 +373,10 @@ pub struct Renderer {
     previous: [wgpu::Buffer; 3],
     dims: wgpu::Buffer,
     palette: wgpu::Buffer,
+    display: Display,
+    dimming: Vec<f32>,
+    display_buf: wgpu::Buffer,
+    extent: (wgpu::ComputePipeline, wgpu::BindGroup),
     glow: Glow,
     width: u32,
     height: u32,
@@ -271,6 +401,8 @@ impl Renderer {
             source: wgpu::ShaderSource::Wgsl(with_eos(RENDER_WGSL).into()),
         });
         let pipeline = compute_pipeline(device, &module, "render_cells");
+        let extent_pipeline = compute_pipeline(device, &module, "extent_bins");
+        let extent_eos = eos.bind_group(device, &extent_pipeline);
         let eos = eos.bind_group(device, &pipeline);
 
         // The palette uniform (render.wgsl `Palette`): ln T_sb, ln T_K, slopes, the species in linear RGB, the table.
@@ -294,6 +426,9 @@ impl Renderer {
             words.push(0);
         }
         let palette = init_buffer(device, "render.palette", wgpu::BufferUsages::UNIFORM, &words);
+        let display = Display::default();
+        let dimming = dimming_table(display.glow_s);
+        let display_buf = init_buffer(device, "render.display", wgpu::BufferUsages::UNIFORM, &display_words(&display, &dimming));
         let group = |s: &State| std::array::from_fn(|g| s.group(g).clone());
         Renderer {
             device: device.clone(),
@@ -303,10 +438,25 @@ impl Renderer {
             previous: group(previous),
             dims: state.dims().clone(),
             palette,
+            display,
+            dimming,
+            display_buf,
+            extent: (extent_pipeline, extent_eos),
             glow: Glow::new(device, world.width, world.height),
             width: world.width,
             height: world.height,
         }
+    }
+
+    /// Sets the display settings (§1.11 [M0-R12]); drawn from the next [`Renderer::render`] on. S is clamped to its domain; the
+    /// dimming table is rebuilt only when S changed, the ranges being two uniforms.
+    pub fn set_display(&mut self, display: Display) {
+        let display = Display { glow_s: display.glow_s.clamp(GLOW_S_MIN, GLOW_S_MAX), ..display };
+        if display.glow_s != self.display.glow_s {
+            self.dimming = dimming_table(display.glow_s);
+        }
+        self.display_buf = init_buffer(&self.device, "render.display", wgpu::BufferUsages::UNIFORM, &display_words(&display, &self.dimming));
+        self.display = display;
     }
 
     /// Records the image of `view` into `target` (a view of an [`IMAGE_FORMAT`] storage texture of the world's size): the
@@ -326,6 +476,75 @@ impl Renderer {
     /// views, and what the glow is added to (`target` as for `render`).
     pub fn render_cells(&self, view: View, alpha: f32, target: &wgpu::TextureView, encoder: &mut wgpu::CommandEncoder) {
         self.cell_image(view, alpha, target, encoder);
+    }
+
+    /// The range «Fit to view» sets for `view` (§1.11 [M0-R12]): log₁₀ T_K ends for Heat, log₁₀ Σ ends for Density, from the
+    /// histogram of the current state's cells with Σ ≥ Σ_vac (a cell past the span counts in its end bin) — one pass, read back
+    /// once and waited for. `None` for Glow and Element, which have no range, and for a world with no matter.
+    pub fn fit_range(&self, queue: &wgpu::Queue, view: View) -> Option<[f64; 2]> {
+        let span = match view {
+            View::Heat => HEAT_SPAN,
+            View::Density => DENSITY_SPAN,
+            View::Glow | View::Element => return None,
+        };
+        let params = init_buffer(
+            &self.device,
+            "render.extent_params",
+            wgpu::BufferUsages::UNIFORM,
+            &[view as u32, 0, (span[0] as f32).to_bits(), ((span[1] - span[0]) as f32).to_bits()],
+        );
+        let bins = init_buffer(
+            &self.device,
+            "render.extent_bins",
+            wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_SRC,
+            &[0; EXTENT_BINS],
+        );
+        let bytes = (EXTENT_BINS * 4) as u64;
+        let staging = self.device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("render.extent_staging"),
+            size: bytes,
+            usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+        });
+        let (pipeline, eos) = &self.extent;
+        let bind_group = self.device.create_bind_group(&wgpu::BindGroupDescriptor {
+            label: Some("render.extent"),
+            layout: &pipeline.get_bind_group_layout(0),
+            entries: &[
+                entry(0, self.dims.as_entire_binding()),
+                entry(1, self.state[0].as_entire_binding()),
+                entry(2, self.state[1].as_entire_binding()),
+                entry(3, self.state[2].as_entire_binding()),
+                entry(4, self.previous[0].as_entire_binding()),
+                entry(5, self.previous[1].as_entire_binding()),
+                entry(6, self.previous[2].as_entire_binding()),
+                entry(7, params.as_entire_binding()),
+                entry(8, self.palette.as_entire_binding()),
+                entry(11, bins.as_entire_binding()),
+            ],
+        });
+        let mut encoder = self.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("render.extent") });
+        {
+            let mut pass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some("render.extent"), timestamp_writes: None });
+            pass.set_pipeline(pipeline);
+            pass.set_bind_group(0, &bind_group, &[]);
+            pass.set_bind_group(1, eos, &[]);
+            pass.dispatch_workgroups(self.width.div_ceil(TILE), self.height.div_ceil(TILE), 1);
+        }
+        encoder.copy_buffer_to_buffer(&bins, 0, &staging, 0, bytes);
+        queue.submit([encoder.finish()]);
+        let (tx, rx) = std::sync::mpsc::channel();
+        staging.map_async(wgpu::MapMode::Read, .., move |r| {
+            let _ = tx.send(r);
+        });
+        self.device.poll(wgpu::PollType::wait_indefinitely()).expect("the device is lost");
+        rx.recv().expect("the map callback ran").expect("the histogram maps");
+        let counts: Vec<u32> = {
+            let mapped = staging.get_mapped_range(..).expect("mapped");
+            mapped.as_chunks::<4>().0.iter().map(|b| u32::from_le_bytes(*b)).collect()
+        };
+        staging.unmap();
+        extent_from_bins(&counts, span)
     }
 
     fn cell_image(&self, view: View, alpha: f32, target: &wgpu::TextureView, encoder: &mut wgpu::CommandEncoder) {
@@ -349,6 +568,7 @@ impl Renderer {
                 entry(7, params.as_entire_binding()),
                 entry(8, self.palette.as_entire_binding()),
                 entry(9, wgpu::BindingResource::TextureView(target)),
+                entry(10, self.display_buf.as_entire_binding()),
             ],
         });
         let mut pass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor { label: Some("render"), timestamp_writes: None });
@@ -448,6 +668,34 @@ mod tests {
         let looked = blackbody_lookup(&t, 5_770.0);
         for k in 0..3 {
             assert!((looked[k] as f64 - direct[k]).abs() < 0.01, "{looked:?} vs {direct:?}");
+        }
+    }
+
+    #[test]
+    fn dimming_is_one_everywhere_at_or_under_3000_kelvin() {
+        for s in [10.0, 1_000.0, 3_000.0] {
+            assert!(dimming_table(s).iter().all(|&d| d == 1.0), "S = {s}");
+        }
+    }
+
+    #[test]
+    fn dimming_rises_with_temperature_and_reaches_one_at_s() {
+        for s in [1.0e5, 1.0e7, 1.0e9] {
+            let t = dimming_table(s);
+            assert!(t.windows(2).all(|w| w[1] >= w[0]), "S = {s}: not monotone");
+            assert!(t[0] < 0.5 && t[t.len() - 1] == 1.0, "S = {s}: ends {} … {}", t[0], t[t.len() - 1]);
+            assert!(dimming(s, s) > 0.99 && dimming(s / 1.0e4, s) < 0.5, "S = {s}");
+        }
+    }
+
+    #[test]
+    fn dimming_lookup_follows_the_table_and_clamps() {
+        let t = dimming_table(1.0e7);
+        assert_eq!(dimming_lookup(&t, 10.0), t[0]);
+        assert_eq!(dimming_lookup(&t, 1.0e12), t[DIMMING_LEN - 1]);
+        assert!((dimming_lookup(&t, dimming_temperature(500)) - t[500]).abs() < 1e-5);
+        for k in [3.0e3, 2.0e5, 4.0e6, 8.0e6, 3.0e7] {
+            assert!((f64::from(dimming_lookup(&t, k)) - dimming(k, 1.0e7)).abs() < 2e-3, "T = {k}");
         }
     }
 }

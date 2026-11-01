@@ -1,0 +1,114 @@
+== 2026-11-01T16:59:35-05:00 linux-pc: the redder-than-cooler sweep on drawn 8-bit values
+-- Σ = Σ_vac (haze ×0.25)
+G1      S    1e+01  worst x rise 0.0000 ok     
+G1      S    1e+02  worst x rise 0.0000 ok     
+G1      S    3e+03  worst x rise 0.1136 REDDER at 2.11e+03 K vs 1.33e+03 K
+G1      S    1e+04  worst x rise 0.0379 REDDER at 1.14e+04 K vs 1.11e+04 K
+G1      S    1e+05  worst x rise 0.0637 REDDER at 1.51e+05 K vs 1.11e+05 K
+G1      S    1e+06  worst x rise 0.0637 REDDER at 1.51e+06 K vs 1.11e+06 K
+G1      S    1e+07  worst x rise 0.0637 REDDER at 1.51e+07 K vs 1.11e+07 K
+G1      S    1e+08  worst x rise 0.0637 REDDER at 1.51e+08 K vs 1.11e+08 K
+G1      S    1e+09  worst x rise 0.0637 REDDER at 1.51e+09 K vs 1.11e+09 K
+G1      S    1e+10  worst x rise 0.0637 REDDER at 1.51e+10 K vs 1.11e+10 K
+G3      S    1e+01  worst x rise 0.0000 ok     
+G3      S    1e+02  worst x rise 0.0000 ok     
+G3      S    3e+03  worst x rise 0.1136 REDDER at 2.11e+03 K vs 1.33e+03 K
+G3      S    1e+04  worst x rise 0.0610 REDDER at 2.66e+03 K vs 1.7e+03 K
+G3      S    1e+05  worst x rise 0.0557 REDDER at 9.55e+04 K vs 2.14e+04 K
+G3      S    1e+06  worst x rise 0.0638 REDDER at 9.44e+05 K vs 1.2e+05 K
+G3      S    1e+07  worst x rise 0.0638 REDDER at 9.44e+06 K vs 1.24e+06 K
+G3      S    1e+08  worst x rise 0.0638 REDDER at 9.44e+07 K vs 1.1e+07 K
+G3      S    1e+09  worst x rise 0.0638 REDDER at 9.44e+08 K vs 1.1e+08 K
+G3      S    1e+10  worst x rise 0.0638 REDDER at 9.44e+09 K vs 1.23e+09 K
+G3-hue  S    1e+01  worst x rise 0.0000 ok     
+G3-hue  S    1e+02  worst x rise 0.0000 ok     
+G3-hue  S    3e+03  worst x rise 0.1136 REDDER at 2.11e+03 K vs 1.33e+03 K
+G3-hue  S    1e+04  worst x rise 0.0610 REDDER at 2.66e+03 K vs 1.7e+03 K
+G3-hue  S    1e+05  worst x rise 0.0379 REDDER at 3.8e+03 K vs 3.05e+03 K
+G3-hue  S    1e+06  worst x rise 0.0209 REDDER at 4.73e+03 K vs 3.8e+03 K
+G3-hue  S    1e+07  worst x rise 0.0069 REDDER at 5.62e+03 K vs 5.25e+03 K
+G3-hue  S    1e+08  worst x rise 0.0078 REDDER at 1.04e+04 K vs 8.91e+03 K
+G3-hue  S    1e+09  worst x rise 0.0066 REDDER at 3.24e+04 K vs 2.99e+04 K
+G3-hue  S    1e+10  worst x rise 0.0066 REDDER at 2.24e+05 K vs 2e+05 K
+G4      S    1e+01  worst x rise 0.0000 ok     
+G4      S    1e+02  worst x rise 0.0000 ok     
+G4      S    3e+03  worst x rise 0.1136 REDDER at 2.11e+03 K vs 1.33e+03 K
+G4      S    1e+04  worst x rise 0.1113 REDDER at 7.08e+03 K vs 4.42e+03 K
+G4      S    1e+05  worst x rise 0.1113 REDDER at 7.08e+04 K vs 4.42e+04 K
+G4      S    1e+06  worst x rise 0.1113 REDDER at 7.08e+05 K vs 4.42e+05 K
+G4      S    1e+07  worst x rise 0.1113 REDDER at 7.08e+06 K vs 4.42e+06 K
+G4      S    1e+08  worst x rise 0.1113 REDDER at 7.08e+07 K vs 4.42e+07 K
+G4      S    1e+09  worst x rise 0.1113 REDDER at 7.08e+08 K vs 4.42e+08 K
+G4      S    1e+10  worst x rise 0.1113 REDDER at 7.08e+09 K vs 4.42e+09 K
+-- Σ = 1 (full haze)
+G1      S    1e+01  worst x rise 0.0000 ok     
+G1      S    1e+02  worst x rise 0.0000 ok     
+G1      S    3e+03  worst x rise 0.1589 REDDER at 2.82e+03 K vs 1e+03 K
+G1      S    1e+04  worst x rise 0.0670 REDDER at 1.12e+04 K vs 1e+03 K
+G1      S    1e+05  worst x rise 0.0668 REDDER at 1.5e+05 K vs 2.95e+04 K
+G1      S    1e+06  worst x rise 0.0678 REDDER at 1.5e+06 K vs 3.63e+05 K
+G1      S    1e+07  worst x rise 0.0678 REDDER at 1.5e+07 K vs 3.63e+06 K
+G1      S    1e+08  worst x rise 0.0678 REDDER at 1.5e+08 K vs 3.63e+07 K
+G1      S    1e+09  worst x rise 0.0678 REDDER at 1.5e+09 K vs 3.63e+08 K
+G1      S    1e+10  worst x rise 0.0678 REDDER at 1.5e+10 K vs 3.63e+09 K
+G3      S    1e+01  worst x rise 0.0000 ok     
+G3      S    1e+02  worst x rise 0.0000 ok     
+G3      S    3e+03  worst x rise 0.1589 REDDER at 2.82e+03 K vs 1e+03 K
+G3      S    1e+04  worst x rise 0.1177 REDDER at 3.59e+03 K vs 1e+03 K
+G3      S    1e+05  worst x rise 0.0737 REDDER at 4.52e+03 K vs 1e+03 K
+G3      S    1e+06  worst x rise 0.0657 REDDER at 9.33e+05 K vs 1e+03 K
+G3      S    1e+07  worst x rise 0.0657 REDDER at 9.33e+06 K vs 1e+03 K
+G3      S    1e+08  worst x rise 0.0662 REDDER at 9.33e+07 K vs 4.12e+04 K
+G3      S    1e+09  worst x rise 0.0668 REDDER at 9.33e+08 K vs 4.37e+04 K
+G3      S    1e+10  worst x rise 0.0678 REDDER at 9.33e+09 K vs 1.82e+05 K
+G3-hue  S    1e+01  worst x rise 0.0000 ok     
+G3-hue  S    1e+02  worst x rise 0.0000 ok     
+G3-hue  S    3e+03  worst x rise 0.1589 REDDER at 2.82e+03 K vs 1e+03 K
+G3-hue  S    1e+04  worst x rise 0.1177 REDDER at 3.59e+03 K vs 1e+03 K
+G3-hue  S    1e+05  worst x rise 0.0737 REDDER at 4.52e+03 K vs 1e+03 K
+G3-hue  S    1e+06  worst x rise 0.0415 REDDER at 6.03e+03 K vs 1e+03 K
+G3-hue  S    1e+07  worst x rise 0.0173 REDDER at 8.91e+03 K vs 1e+03 K
+G3-hue  S    1e+08  worst x rise 0.0054 REDDER at 1.1e+04 K vs 1e+03 K
+G3-hue  S    1e+09  worst x rise 0.0037 ok     at 1.95e+05 K vs 4.37e+04 K
+G3-hue  S    1e+10  worst x rise 0.0044 ok     at 3.76e+06 K vs 1.82e+05 K
+G4      S    1e+01  worst x rise 0.0000 ok     
+G4      S    1e+02  worst x rise 0.0000 ok     
+G4      S    3e+03  worst x rise 0.1589 REDDER at 2.82e+03 K vs 1e+03 K
+G4      S    1e+04  worst x rise 0.1690 REDDER at 8.91e+03 K vs 1e+03 K
+G4      S    1e+05  worst x rise 0.1690 REDDER at 8.91e+04 K vs 1e+03 K
+G4      S    1e+06  worst x rise 0.1690 REDDER at 8.91e+05 K vs 1e+03 K
+G4      S    1e+07  worst x rise 0.1690 REDDER at 8.91e+06 K vs 1e+03 K
+G4      S    1e+08  worst x rise 0.1690 REDDER at 8.91e+07 K vs 1e+03 K
+G4      S    1e+09  worst x rise 0.1690 REDDER at 8.91e+08 K vs 1e+03 K
+G4      S    1e+10  worst x rise 0.1690 REDDER at 8.91e+09 K vs 1e+03 K
+-- a 1e9 K body's drawn colour (Σ = 1)
+3,000 K body at the default: [170 129  87] x 0.412
+G1      S    3e+03: [253 255 255] x 0.311
+G1      S    1e+07: [253 255 255] x 0.311
+G1      S    1e+08: [253 255 255] x 0.311
+G1      S    1e+09: [109 128 179] x 0.247
+G1      S    1e+10: [25 32 48] x 0.246
+G3      S    3e+03: [253 255 255] x 0.311
+G3      S    1e+07: [253 255 255] x 0.311
+G3      S    1e+08: [253 255 255] x 0.311
+G3      S    1e+09: [253 255 255] x 0.311
+G3      S    1e+10: [203 238 255] x 0.281
+G3-hue  S    3e+03: [158 184 255] x 0.247
+G3-hue  S    1e+07: [158 184 255] x 0.247
+G3-hue  S    1e+08: [158 184 255] x 0.247
+G3-hue  S    1e+09: [158 184 255] x 0.247
+G3-hue  S    1e+10: [156 184 255] x 0.246
+G4      S    3e+03: [253 255 255] x 0.311
+G4      S    1e+07: [253 255 255] x 0.311
+G4      S    1e+08: [255 255 255] x 0.313
+G4      S    1e+09: [170 129  87] x 0.412
+G4      S    1e+10: [25 32 48] x 0.246
+-- bound: drawn x ≤ max(x of the table's own colour at T, D65 white 0.3127) + 0.005, drawn max channel ≥ 16/255
+Σ 1e-06 G1      worst excess +0.0000 PASS at S 10 K, T 6.61e+03 K, drawn [255 255 255]
+Σ 1e-06 G3      worst excess +0.0000 PASS at S 10 K, T 6.61e+03 K, drawn [255 255 255]
+Σ 1e-06 G3-hue  worst excess +0.0012 PASS at S 1e+03 K, T 1.68e+03 K, drawn [255 120   0]
+Σ 1e-06 G4      worst excess +0.1387 FAIL at S 1e+04 K, T 7.08e+03 K, drawn [62 39 18]
+Σ 1 G1      worst excess +0.0000 PASS at S 10 K, T 6.61e+03 K, drawn [255 255 255]
+Σ 1 G3      worst excess +0.0000 PASS at S 10 K, T 6.61e+03 K, drawn [255 255 255]
+Σ 1 G3-hue  worst excess +0.0012 PASS at S 1e+03 K, T 1.68e+03 K, drawn [255 120   0]
+Σ 1 G4      worst excess +0.1020 FAIL at S 1e+04 K, T 8.91e+03 K, drawn [133  98  66]

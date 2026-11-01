@@ -1,0 +1,144 @@
+==== 2026-11-01T15:59:21-05:00 state · clean · a fresh scratch copy of the tree
+== 2026-11-01T15:59:21-05:00 state · task M0-T93a · box laserax-ai :: bash tests/gpu.sh state physics
+-- state · exit=0 · 10.19 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-dw5q_f6s/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-dw5q_f6s/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.69s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 12 tests
+test state::a_cell_outside_the_world_is_refused_and_asks_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::a_step_is_p0_to_p9_with_p1s_dt_p8s_floors_and_renormalisation_and_p9s_dt_reduction_its_only_dispatches_today ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::an_empty_cell_reads_zero_sigma_and_the_floor_temperature_and_a_cold_cell_the_floor ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::inspect_replies_with_the_dumps_cell_sigma_u_t_and_x ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+4096 cells: worst |Σ X − 1| = 1.8719583749771118e-7, worst |X − oracle| = 6.857620882261273e-8 (tolerance 1e-6)
+ok
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::several_requests_answer_in_order_each_with_its_own_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::the_reply_arrives_within_2_frames_and_poll_never_waits ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+inspect: reply in frame 2
+ok
+test state::the_reply_is_the_cell_as_it_stood_at_the_request_not_at_the_poll ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 436 filtered out; finished in 1.39s
+
+
+==== 2026-11-01T15:59:32-05:00 state · plant state-renorm-skip · a fresh scratch copy of the tree
+planted state-renorm-skip: tests/plants/state-renorm-skip.patch -> crates/sr-engine/shaders/floors.wgsl
+== 2026-11-01T15:59:32-05:00 state · task M0-T93a · box laserax-ai :: bash tests/gpu.sh state physics
+-- state · exit=101 · 10.05 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-dw5q_f6s/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-dw5q_f6s/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.56s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 12 tests
+test state::a_cell_outside_the_world_is_refused_and_asks_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::a_step_is_p0_to_p9_with_p1s_dt_p8s_floors_and_renormalisation_and_p9s_dt_reduction_its_only_dispatches_today ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::an_empty_cell_reads_zero_sigma_and_the_floor_temperature_and_a_cold_cell_the_floor ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::inspect_replies_with_the_dumps_cell_sigma_u_t_and_x ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical' (1795324) panicked at crates/sr-engine/tests/gpu/state.rs:173:9:
+cell 0: Σ X = 3.076705766841769 (from [1.846926, 1.323412, 1.065141, 2.997755, 2.0507193, 1.0349799, 2.0447667, 0.41873652, 0.28308526, 2.0767057], now [0.14135878, 0.10129041, 0.08152304, 0.22944015, 0.15695657, 0.079214595, 0.15650097, 0.032048974, 0.021666588, 2.0767057])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::several_requests_answer_in_order_each_with_its_own_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::the_reply_arrives_within_2_frames_and_poll_never_waits ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+inspect: reply in frame 2
+ok
+test state::the_reply_is_the_cell_as_it_stood_at_the_request_not_at_the_poll ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+failures:
+
+failures:
+    state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical
+
+test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 436 filtered out; finished in 1.37s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-01T15:59:42-05:00 state · plant state-inspect-row · a fresh scratch copy of the tree
+planted state-inspect-row: tests/plants/state-inspect-row.patch -> crates/sr-engine/src/state.rs
+== 2026-11-01T15:59:42-05:00 state · task M0-T93a · box laserax-ai :: bash tests/gpu.sh state physics
+-- state · exit=101 · 10.09 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-dw5q_f6s/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-dw5q_f6s/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.62s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 12 tests
+test state::a_cell_outside_the_world_is_refused_and_asks_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::a_step_is_p0_to_p9_with_p1s_dt_p8s_floors_and_renormalisation_and_p9s_dt_reduction_its_only_dispatches_today ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::an_empty_cell_reads_zero_sigma_and_the_floor_temperature_and_a_cold_cell_the_floor ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'state::an_empty_cell_reads_zero_sigma_and_the_floor_temperature_and_a_cold_cell_the_floor' (1795930) panicked at crates/sr-engine/tests/gpu/state.rs:363:5:
+T 560.35284 mu 0.6554973631852336
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test state::inspect_replies_with_the_dumps_cell_sigma_u_t_and_x ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'state::inspect_replies_with_the_dumps_cell_sigma_u_t_and_x' (1795938) panicked at crates/sr-engine/tests/gpu/state.rs:283:9:
+assertion `left == right` failed: (17, 40) Σ
+  left: 1068123009
+ right: 1065383552
+FAILED
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+4096 cells: worst |Σ X − 1| = 1.8719583749771118e-7, worst |X − oracle| = 6.857620882261273e-8 (tolerance 1e-6)
+ok
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::several_requests_answer_in_order_each_with_its_own_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::the_reply_arrives_within_2_frames_and_poll_never_waits ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+inspect: reply in frame 2
+ok
+test state::the_reply_is_the_cell_as_it_stood_at_the_request_not_at_the_poll ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+failures:
+
+failures:
+    state::an_empty_cell_reads_zero_sigma_and_the_floor_temperature_and_a_cold_cell_the_floor
+    state::inspect_replies_with_the_dumps_cell_sigma_u_t_and_x
+
+test result: FAILED. 10 passed; 2 failed; 0 ignored; 0 measured; 436 filtered out; finished in 1.37s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

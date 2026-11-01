@@ -15,6 +15,9 @@ use std::ops::Range;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::Arc;
 
+use sr_physics::eos::Eos;
+use sr_physics::registry::{Elements, Physics, N_SPECIES};
+
 use crate::step::Pass;
 
 /// §2.2's channels in canonical order — the dump's names (§2.12.3).
@@ -85,6 +88,8 @@ pub enum StateError {
     WorldSize { width: u32, height: u32 },
     /// An upload of other than 14 planes of this world's cells.
     PlanesLength { expected: usize, got: usize },
+    /// An inspection of a cell outside the world.
+    CellOutside { cell: (u32, u32), world: (u32, u32) },
 }
 
 impl fmt::Display for StateError {
@@ -99,6 +104,9 @@ impl fmt::Display for StateError {
             ),
             StateError::PlanesLength { expected, got } => {
                 write!(f, "state upload: {got} values, expected {expected} ({N_CHANNELS} planes of the world's cells)")
+            }
+            StateError::CellOutside { cell, world } => {
+                write!(f, "inspect: cell ({}, {}) is outside the {} × {} world", cell.0, cell.1, world.0, world.1)
             }
         }
     }
@@ -182,6 +190,121 @@ impl State {
     /// and headless only (§6.3) — a browser maps asynchronously.
     pub fn readback(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> Vec<f32> {
         read_buffers(device, queue, "state.readback", self.groups.iter())
+    }
+}
+
+/// What an inspection of one cell answers (§3.1, §4.6): the cell, its Σ, its velocity u = (Σu)/Σ, its temperature T = μ ε_th
+/// (the equation of state's, §2.3.1, floored at T_floor like P8's) and its mass fractions X, in the state's own f32.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct InspectReply {
+    pub cell: (u32, u32),
+    pub sigma: f32,
+    pub u: [f32; 2],
+    pub temperature: f32,
+    pub x: [f32; N_SPECIES],
+}
+
+struct Pending {
+    cell: (u32, u32),
+    staging: wgpu::Buffer,
+    mapped: std::sync::mpsc::Receiver<Result<(), wgpu::BufferAsyncError>>,
+}
+
+/// The cell inspector's readback (§3.1's `inspect`): [`Inspector::inspect`] copies one cell's 14 values into a staging
+/// buffer of its own and asks for its map; [`Inspector::poll`] collects the replies whose map has arrived, polling the
+/// device without waiting, so no frame stalls on either call. A reply lands in the poll after the one whose submission
+/// carried the copy.
+pub struct Inspector {
+    world: WorldConfig,
+    eos: Eos,
+    elements: Elements,
+    pending: Vec<Pending>,
+}
+
+impl Inspector {
+    pub fn new(world: WorldConfig, physics: &Physics, elements: &Elements) -> Inspector {
+        let eos = Eos::from_physics(physics).expect("validated physics.json: each cold pair is on or off");
+        Inspector { world, eos, elements: elements.clone(), pending: Vec::new() }
+    }
+
+    /// Requests `cell`'s reply: one submission of 14 four-byte copies. Never blocks.
+    pub fn inspect(
+        &mut self,
+        device: &wgpu::Device,
+        queue: &wgpu::Queue,
+        state: &State,
+        cell: (u32, u32),
+    ) -> Result<(), StateError> {
+        let (w, h) = (self.world.width, self.world.height);
+        if cell.0 >= w || cell.1 >= h {
+            return Err(StateError::CellOutside { cell, world: (w, h) });
+        }
+        let index = (cell.1 * w + cell.0) as u64;
+        let staging = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("state.inspect"),
+            size: N_CHANNELS as u64 * 4,
+            usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+        });
+        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("state.inspect") });
+        for (g, range) in GROUPS.iter().enumerate() {
+            for c in range.clone() {
+                let plane = (c - range.start) as u64 * self.world.cells() as u64;
+                encoder.copy_buffer_to_buffer(&state.groups[g], (plane + index) * 4, &staging, c as u64 * 4, 4);
+            }
+        }
+        queue.submit([encoder.finish()]);
+        let (tx, mapped) = std::sync::mpsc::channel();
+        staging.map_async(wgpu::MapMode::Read, .., move |r| {
+            let _ = tx.send(r);
+        });
+        self.pending.push(Pending { cell, staging, mapped });
+        Ok(())
+    }
+
+    /// The replies whose readback has arrived since the last call, in request order. Never blocks.
+    pub fn poll(&mut self, device: &wgpu::Device) -> Vec<InspectReply> {
+        let _ = device.poll(wgpu::PollType::Poll);
+        let mut replies = Vec::new();
+        let mut waiting = Vec::new();
+        for p in std::mem::take(&mut self.pending) {
+            match p.mapped.try_recv() {
+                Ok(Ok(())) => {
+                    let v: Vec<f32> = {
+                        let view = p.staging.get_mapped_range(..).expect("mapped for reading");
+                        view.as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect()
+                    };
+                    p.staging.unmap();
+                    replies.push(self.reply(p.cell, &v));
+                }
+                Ok(Err(e)) => panic!("inspect: map failed: {e}"),
+                Err(_) => waiting.push(p),
+            }
+        }
+        self.pending = waiting;
+        replies
+    }
+
+    /// Σ, u, T and X from one cell's 14 values (§2.2's order). T as P8 reads it: ε_th = E/Σ − ½|u|² − ε_cold floored at
+    /// T_floor/μ; a cell without mass reads T_floor.
+    fn reply(&self, cell: (u32, u32), v: &[f32]) -> InspectReply {
+        let sigma = v[0];
+        let x: [f32; N_SPECIES] = std::array::from_fn(|k| v[SPECIES.start + k]);
+        if sigma <= 0.0 {
+            return InspectReply { cell, sigma, u: [0.0; 2], temperature: self.eos.t_floor() as f32, x };
+        }
+        let xf: [f64; N_SPECIES] = std::array::from_fn(|k| f64::from(x[k]));
+        let comp = self.elements.composition(&xf);
+        let mu = 1.0 / comp.inv_mu;
+        let (s, mom) = (f64::from(sigma), [f64::from(v[1]), f64::from(v[2])]);
+        let th = self.eos.thermal(f64::from(v[3]), s, mom, comp.y_e, xf[N_SPECIES - 1], mu);
+        InspectReply {
+            cell,
+            sigma,
+            u: [(mom[0] / s) as f32, (mom[1] / s) as f32],
+            temperature: Eos::temperature(th.eps_th, mu) as f32,
+            x,
+        }
     }
 }
 

@@ -9,13 +9,15 @@
 // a state never written — reads as the floor state (Σ_floor, at rest, T_floor, hydrogen).
 //
 // Views, each one a function of the (blended) cell:
-//   Glow    blackbody(T_K) · b + haze · (1 − b), b = 1 − exp(−(T_K / 3000)⁴), haze = #2A3550 · clamp((log₁₀ Σ + 8) / 8, 0, 1) ·
+//   Glow    blackbody(T_K) · b + haze · (1 − b), b = (1 − exp(−(T_K / min(S, 3000))⁴)) · D(T_K), haze = #2A3550 · clamp((log₁₀ Σ + 8) / 8, 0, 1) ·
 //           0.6 — the formula's colours as written (the table is sRGB-encoded, §1.11), the table read linearly in log T between
 //           its 512 entries and clamped to its ends. (The glow added over this image is glow.wgsl's, M0-T81.)
-//   Heat    §4.11's map over log₁₀ T_K from 1 to 10.
+//   Heat    §4.11's map over the Heat range's log₁₀ T_K (1 … 10 by default).
 //   Element the species colours (§1.5) weighted by mass fraction, in linear RGB, times clamp((log₁₀ Σ + 6) / 8, 0.15, 1); a
 //           cell under Σ_vac is black.
-//   Density §4.11's map over log₁₀ Σ from −6 to 4 (sandbox units).
+//   Density §4.11's map over the Density range's log₁₀ Σ (−6 … 4 by default, sandbox units).
+// S, D and the ranges are the display settings ([M0-R12], M0-T126); at the defaults (3,000 K, D = 1, the whole spans) the
+// formulas are the ones above with 3000, 1 … 10 and −6 … 4.
 // The maps interpolate linearly in linear RGB between their stops and clamp outside (§4.11); the stops are sRGB hex.
 
 struct Dims {
@@ -25,12 +27,12 @@ struct Dims {
     _pad: u32,
 }
 
-// render.rs `View` as a word, and α.
+// render.rs `View` as a word, and α; `lo` and `span` (log₁₀ units) are `extent_bins`' histogram span, unused by `render_cells`.
 struct RenderParams {
     view: u32,
     alpha: f32,
-    _pad0: u32,
-    _pad1: u32,
+    lo: f32,
+    span: f32,
 }
 
 // The constants of one run, uploaded once (render.rs `Renderer::new`): §1.10.2's eight anchors as ln T_sb, ln T_K and the
@@ -44,6 +46,15 @@ struct Palette {
     blackbody: array<vec4<f32>, 512>,
 }
 
+// The display settings (render.rs `Display`, M0-T126; §1.11 [M0-R12]): glow.x = min(S, 3000) K, the Heat range ends
+// (log₁₀ T_K) and the Density range ends (log₁₀ Σ) in `ranges`, and the Glow dimming D over log₁₀ T_K from log₁₀ 3000 to 11
+// (1,024 entries, four to a vec4), built on the CPU when S changes; glow.yzw unused.
+struct DisplayParams {
+    glow: vec4<f32>,
+    ranges: vec4<f32>,
+    dimming: array<vec4<f32>, 256>,
+}
+
 @group(0) @binding(0) var<uniform> dims: Dims;
 // The current state, then the previous: hydro planes (sigma, mom_x, mom_y, energy), species planes x_H … x_Ne, x_Mg … x_n.
 @group(0) @binding(1) var<storage, read> hydro: array<f32>;
@@ -55,6 +66,9 @@ struct Palette {
 @group(0) @binding(7) var<uniform> params: RenderParams;
 @group(0) @binding(8) var<uniform> pal: Palette;
 @group(0) @binding(9) var image: texture_storage_2d<rgba8unorm, write>;
+@group(0) @binding(10) var<uniform> display: DisplayParams;
+// `extent_bins`' histogram: 1,024 counters, zero on entry (render.rs `Renderer::fit_range`).
+@group(0) @binding(11) var<storage, read_write> bins: array<atomic<u32>, 1024>;
 
 const VIEW_GLOW: u32 = 0u;
 const VIEW_HEAT: u32 = 1u;
@@ -65,6 +79,10 @@ const N_ANCHORS: u32 = 8u;
 const TABLE_LEN: u32 = 512u;
 const TABLE_T_MIN: f32 = 1000.0;
 const TABLE_LN_RANGE: f32 = 3.688879454113936; // ln(40,000 / 1,000)
+const EXTENT_BINS: u32 = 1024u;
+const DIMMING_LEN: u32 = 1024u;
+const DIMMING_L10_LO: f32 = 3.4771213; // log₁₀ 3,000
+const DIMMING_L10_SPAN: f32 = 7.5228787; // 11 − log₁₀ 3,000
 
 // §4.11 as sRGB bytes / 255, stops evenly spaced over log₁₀ T_K 1 … 10 and log₁₀ Σ −6 … 4.
 var<private> HEAT: array<vec3<f32>, 6> = array<vec3<f32>, 6>(
@@ -84,7 +102,6 @@ var<private> DENSITY: array<vec3<f32>, 5> = array<vec3<f32>, 5>(
 );
 const HAZE: vec3<f32> = vec3<f32>(0.164706, 0.207843, 0.313725); // #2A3550
 const HAZE_GAIN: f32 = 0.6;
-const GLOW_T_SCALE: f32 = 3000.0;
 const BG_SPACE: vec3<f32> = vec3<f32>(0.019608, 0.027451, 0.050980); // #05070D
 
 fn srgb_to_linear(c: vec3<f32>) -> vec3<f32> {
@@ -189,21 +206,31 @@ fn blackbody(t_k: f32) -> vec3<f32> {
     return mix(pal.blackbody[i].xyz, pal.blackbody[i + 1u].xyz, u - f32(i));
 }
 
+// The dimming table D(T), linear in log T between entries, clamped to its ends (render.rs `dimming_lookup`); a + (b − a) f is
+// exactly a where the entries are equal — every entry is 1 at S ≤ 3,000 K.
+fn dimming(t_k: f32) -> f32 {
+    let u = clamp((log2(t_k) * 0.30102999566 - DIMMING_L10_LO) / DIMMING_L10_SPAN, 0.0, 1.0) * f32(DIMMING_LEN - 1u);
+    let i = min(u32(floor(u)), DIMMING_LEN - 2u);
+    let a = display.dimming[i / 4u][i % 4u];
+    let b = display.dimming[(i + 1u) / 4u][(i + 1u) % 4u];
+    return a + (b - a) * (u - f32(i));
+}
+
 // A map of stops (sRGB) at position p ∈ [0, n − 1], interpolated in linear RGB, returned sRGB.
 fn heat_map(l10_t: f32) -> vec3<f32> {
-    let p = clamp((l10_t - 1.0) / 9.0, 0.0, 1.0) * 5.0;
+    let p = clamp((l10_t - display.ranges.x) / (display.ranges.y - display.ranges.x), 0.0, 1.0) * 5.0;
     let i = min(u32(floor(p)), 4u);
     return linear_to_srgb(mix(srgb_to_linear(HEAT[i]), srgb_to_linear(HEAT[i + 1u]), p - f32(i)));
 }
 
 fn density_map(l10_sigma: f32) -> vec3<f32> {
-    let p = clamp((l10_sigma + 6.0) / 10.0, 0.0, 1.0) * 4.0;
+    let p = clamp((l10_sigma - display.ranges.z) / (display.ranges.w - display.ranges.z), 0.0, 1.0) * 4.0;
     let i = min(u32(floor(p)), 3u);
     return linear_to_srgb(mix(srgb_to_linear(DENSITY[i]), srgb_to_linear(DENSITY[i + 1u]), p - f32(i)));
 }
 
 fn glow_colour(c: Cell, t_k: f32) -> vec3<f32> {
-    let b = 1.0 - exp(-pow(t_k / GLOW_T_SCALE, 4.0));
+    let b = (1.0 - exp(-pow(t_k / display.glow.x, 4.0))) * dimming(t_k);
     let haze = HAZE * clamp((log2(c.sigma) * 0.30102999566 + 8.0) / 8.0, 0.0, 1.0) * HAZE_GAIN;
     return blackbody(t_k) * b + haze * (1.0 - b);
 }
@@ -242,4 +269,26 @@ fn render_cells(@builtin(global_invocation_id) id: vec3<u32>) {
         rgb = BG_SPACE;
     }
     textureStore(image, vec2<i32>(i32(id.x), i32(id.y)), vec4<f32>(clamp(rgb, vec3<f32>(0.0), vec3<f32>(1.0)), 1.0));
+}
+
+// «Fit to view»'s histogram (M0-T127a, §1.11 [M0-R12]): one pass over the current state counting the cells with Σ ≥ Σ_vac into
+// 1,024 bins of the Heat view's log₁₀ T_K or the Density view's log₁₀ Σ (params.view) over [params.lo, params.lo + params.span];
+// a cell past the span lands in the end bin. No alpha: the query reads the current state.
+@compute @workgroup_size(8, 8)
+fn extent_bins(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= dims.width || id.y >= dims.height) {
+        return;
+    }
+    let c = load(id.y * dims.width + id.x, false);
+    if (c.sigma < eos.sigma_vac) {
+        return;
+    }
+    var q: f32;
+    if (params.view == VIEW_HEAT) {
+        q = log2(to_kelvin(cell_temperature(c))) * 0.30102999566;
+    } else {
+        q = log2(c.sigma) * 0.30102999566;
+    }
+    let u = clamp(floor((q - params.lo) / params.span * f32(EXTENT_BINS)), 0.0, f32(EXTENT_BINS - 1u));
+    atomicAdd(&bins[u32(u)], 1u);
 }

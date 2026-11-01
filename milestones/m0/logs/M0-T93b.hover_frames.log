@@ -1,0 +1,3 @@
+hover, no reply: 120 frames in 54ns (0ns a frame)
+hover, replies after 2 frames: 120 frames, 60 requests, 37ns a frame
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 109 filtered out; finished in 0.00s

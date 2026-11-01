@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/render.wgsl
++++ b/crates/sr-engine/shaders/render.wgsl
+@@ -280,7 +280,7 @@
+         return;
+     }
+     let c = load(id.y * dims.width + id.x, false);
+-    if (c.sigma < eos.sigma_vac) {
++    if (c.sigma < 0.0) {
+         return;
+     }
+     var q: f32;

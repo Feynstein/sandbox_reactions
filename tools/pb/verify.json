@@ -1516,11 +1516,11 @@
       ]
     },
     "blackbody": {
-      "desc": "the blackbody table (contract §1.11, M0-T79), no GPU: crates/sr-engine/src/render.rs — 512 entries over log T from 1,000 K to 40,000 K, Planck's B_λ over 380–780 nm in 5 nm steps against Wyman's multi-lobe fit, the IEC 61966-2-1 matrix, clamped ≥ 0, normalised to the largest channel, sRGB-encoded; c₂ from the exact SI constants, the blue-to-red ratio rising with T, 6,500 K near white, 1,000 K red-dominant, 40,000 K blue-dominant, the fit against the CIE 1931 values at 440, 555 and 600 nm (5 %, tails 0.005 absolute), the lookup's end colours. blackbody-matrix-transpose uses the matrix's columns for its rows",
+      "desc": "the blackbody table (contract §1.11, M0-T79), no GPU: crates/sr-engine/src/render.rs — 512 entries over log T from 1,000 K to 40,000 K, Planck's B_λ over 380–780 nm in 5 nm steps against Wyman's multi-lobe fit, the IEC 61966-2-1 matrix, clamped ≥ 0, normalised to the largest channel, sRGB-encoded; c₂ from the exact SI constants, the blue-to-red ratio rising with T, 6,500 K near white, 1,000 K red-dominant, 40,000 K blue-dominant, the fit against the CIE 1931 values at 440, 555 and 600 nm (5 %, tails 0.005 absolute), the lookup's end colours. blackbody-matrix-transpose uses the matrix's columns for its rows [M0-T126] the dimming D (§1.11 [M0-R12]): every table entry 1 at S ≤ 3,000 K; monotone in T, 1 at the top and under 0.5 at 3,000 K for S = 10⁵, 10⁷, 10⁹ K, 1 at T = S; the lookup following the table, clamped, and within 2 × 10⁻³ of the exact formula between entries",
       "cmd": "bash tests/cpu.sh sr-engine render",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 8,
+      "expected": 11,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -1572,7 +1572,7 @@
       "cmd": "bash tests/gpu.sh state physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 6,
+      "expected": 12,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -1592,7 +1592,7 @@
         {
           "id": "state-renorm-skip",
           "patch": "tests/plants/state-renorm-skip.patch"
-        }
+        }, {"id": "state-inspect-row", "patch": "tests/plants/state-inspect-row.patch"}
       ]
     },
     "booking": {
@@ -2030,7 +2030,7 @@
       ]
     },
     "capture": {
-      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own; since M0-T89 the actions case also runs tool, element and paint: the left panel (220 px) differs after tool and element, its accent moving down, and the world's upper-left corner differs after paint (plant capture-paint-ignored); since M0-T92 it runs select too (14 steps): the right panel (300 px) differs from start's \"No star yet\" and holds more lit pixels, and a malformed select is refused (plant capture-star-panel-blank, the readout's lines never drawn)",
+      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own; since M0-T89 the actions case also runs tool, element and paint: the left panel (220 px) differs after tool and element, its accent moving down, and the world's upper-left corner differs after paint (plant capture-paint-ignored); since M0-T92 it runs select too (14 steps): the right panel (300 px) differs from start's \"No star yet\" and holds more lit pixels, and a malformed select is refused (plant capture-star-panel-blank, the readout's lines never drawn); since M0-T93b it runs hover too (15 steps): the right panel differs from select's and holds more lit pixels (the Cell inspector's four lines for the star's centre), and a malformed hover is refused (plant capture-hover-ignored, the scripted hover never reaching the pointer's place)",
       "cases": [
         "smoke",
         "refuse",
@@ -2075,6 +2075,10 @@
         {
           "id": "capture-star-panel-blank",
           "patch": "tests/plants/capture-star-panel-blank.patch"
+        },
+        {
+          "id": "capture-hover-ignored",
+          "patch": "tests/plants/capture-hover-ignored.patch"
         }
       ]
     },
@@ -2409,11 +2413,11 @@
       ]
     },
     "views": {
-      "desc": "the cell image and the four views (contract §1.11, §1.10.2, §1.8.3, §4.11; M0-T80): crates/sr-engine/src/render.rs `Renderer::render_cells` (`render` for the other views) and shaders/render.wgsl — a compute pass writing the W × H RGBA8 image of Glow, Heat, Element or Density from the state, blended with the previous state by α — on the physics adapter, 64 × 64 hand-made worlds, each channel of each cell within 1/255 of a CPU formula written in the test from the contract's text (§4.11's hex stops, §1.5's colours, the cell's f32 values through the EOS and TempScale in f64): a gentle world (Σ ≤ 0.25, T from 0.08 to 30) for Glow and Heat, a wide one (Σ to 10⁴, every species) for Element and Density, 4,096 cells each; the heat map at T_K = 10^1 … 10^10 and the density map at Σ = 10^−6 … 10^4 reading §4.11's stop colours; the midpoint of each map (heat, density, element) the linear-RGB mean of its two stops, and apart from the sRGB mean by more than 2 levels; every view drawing bg.space #05070D below Σ_vac (M0-D113: the floor state, a cell at Σ 10⁻⁷, and a cell just above Σ_vac reading its view's formula, not bg.space); temperatures past T_Si extended (10^10 K the last heat stop) and inside the first segment translated; α = 1 and α = 0 bit for bit the images of rigs holding the current and the previous state alone, α = ¼ and ½ against the formula on the mixed state. views-heat-linear reads the heat map over T_K, not log₁₀ T_K; views-vacuum-black gives vacuum back to each view's formula. Synthetic worlds: the formulas are proven, a star's image is NOT PROVEN (synthetic)",
+      "desc": "the cell image and the four views (contract §1.11, §1.10.2, §1.8.3, §4.11; M0-T80): crates/sr-engine/src/render.rs `Renderer::render_cells` (`render` for the other views) and shaders/render.wgsl — a compute pass writing the W × H RGBA8 image of Glow, Heat, Element or Density from the state, blended with the previous state by α — on the physics adapter, 64 × 64 hand-made worlds, each channel of each cell within 1/255 of a CPU formula written in the test from the contract's text (§4.11's hex stops, §1.5's colours, the cell's f32 values through the EOS and TempScale in f64): a gentle world (Σ ≤ 0.25, T from 0.08 to 30) for Glow and Heat, a wide one (Σ to 10⁴, every species) for Element and Density, 4,096 cells each; the heat map at T_K = 10^1 … 10^10 and the density map at Σ = 10^−6 … 10^4 reading §4.11's stop colours; the midpoint of each map (heat, density, element) the linear-RGB mean of its two stops, and apart from the sRGB mean by more than 2 levels; every view drawing bg.space #05070D below Σ_vac (M0-D113: the floor state, a cell at Σ 10⁻⁷, and a cell just above Σ_vac reading its view's formula, not bg.space); temperatures past T_Si extended (10^10 K the last heat stop) and inside the first segment translated; α = 1 and α = 0 bit for bit the images of rigs holding the current and the previous state alone, α = ¼ and ½ against the formula on the mixed state. views-heat-linear reads the heat map over T_K, not log₁₀ T_K; views-vacuum-black gives vacuum back to each view's formula. [M0-T126] the display settings (`Renderer::set_display`, `Display`: the Glow setting S, the Heat and Density ranges): S = 3,000 K the image today's on every cell and the default handed back after another setting bit for bit today's; the Glow image at S = 10³, 10⁵, 10⁷, 10⁹ K, and two Heat and two Density ranges, against the formula within 1/255 (D the asinh dimming of Y(T), the table's Planck × ȳ); and the contract's bound on a strip of T 10³–10¹¹ K at five settings, read on the GPU's drawn values (no colour with its brightest channel ≥ 16/255 has CIE x above max(x of the table's colour at T, 0.3127) + 0.005). views-glow-setting-ignored holds S at 3,000 K; views-colour-shift reads the colour at T · 3,000 / S (G4). Synthetic worlds: the formulas are proven, a star's image is NOT PROVEN (synthetic)",
       "cmd": "bash tests/gpu.sh views physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 11,
+      "expected": 15,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -2437,6 +2441,42 @@
         {
           "id": "views-vacuum-black",
           "patch": "tests/plants/views-vacuum-black.patch"
+        },
+        {
+          "id": "views-glow-setting-ignored",
+          "patch": "tests/plants/views-glow-setting-ignored.patch"
+        },
+        {
+          "id": "views-colour-shift",
+          "patch": "tests/plants/views-colour-shift.patch"
+        }
+      ]
+    },
+    "extents": {
+      "desc": "«Fit to view»'s histogram (contract §1.11 [M0-R12]; M0-T127a): crates/sr-engine/src/render.rs `Renderer::fit_range` and `extent_from_bins`, shaders/render.wgsl `extent_bins` — one compute pass binning the Heat view's log₁₀ T_K (span 1–10) or the Density view's log₁₀ Σ (−6–4) of the cells with Σ ≥ Σ_vac into 1,024 bins by atomics, read back once; L the lower edge of the bin holding the 0.5th percentile (the ⌈0.005 n⌉-th cell from below), H the upper edge of the highest non-empty bin, widened to 0.1 about their middle and slid inside the span, `None` with no matter — on the physics adapter, 72 × 64 hand-made worlds, against a CPU histogram written in the test from the contract's text (the f32 planes through the EOS and TempScale in f64, the percentile read by sorting): a star-like disk over vacuum and a ring below Σ_vac (Heat and Density, asked twice), a one-cell world (a bin's edges widened about its middle; the temperature floor giving [1, 1.1]), an empty world and a world below Σ_vac (None; Glow and Element None), matter past the span (end bin: [9.9, 10] and [3.9, 4]), the extreme cell in the last row and column (the corner and the two far ends) setting H, the half percentile's rank (23 cold cells of 4,608 ignored, 24 set L), and `extent_from_bins` on hand-written bins. Cells sit at bin centres, so a percentile read from centres, or a bin off, fails. extents-vacuum-counted drops the Σ_vac test. Synthetic worlds: a star's own extent is NOT PROVEN (synthetic)",
+      "cmd": "bash tests/gpu.sh extents physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 7,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/elements.json",
+        "assets/physics.json",
+        "tests/gpu.sh",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/extents-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "extents-vacuum-counted",
+          "patch": "tests/plants/extents-vacuum-counted.patch"
         }
       ]
     },
@@ -2708,6 +2748,37 @@
         }
       ]
     },
+    "ui_display": {
+      "desc": "the left panel's display controls (contract \u00a71.11 [M0-R12], \u00a71.12, \u00a74.1, \u00a74.2, \u00a74.12; M0-T127b): crates/sr-app/src/ui/display.rs - under the four views the active view's controls as a view model, no GPU and no window: the five `views.*` texts byte-exact (Glow: `views.glow_white` and `views.reset`; Heat and Density: `views.range_from`, `views.range_to`, `views.fit`, `views.reset`; Element: none), the value in \u00a74.12's formats (\"3,000 K\", the inspector's numbers for Density), a typed value parsed - digits, valid \",\" groups only (\"1,5\" is not 15), \".\", e-notation (\"3e3K\" is 3,000), an optional \"K\" (not for Density) - junk restoring the shown value, out of range clamped to the span, the slider logarithmic from 10 K to 10 billion K and landing on exact kelvins (3,000 K is 3000.0, the default look byte for byte), From and To kept 0.1 decade apart inside the span over a sweep, Reset to each view's own default and no other, Fit's range set on the active view alone and every control inert on Element, every setting kept by a switch of view, and the renderer asked only when a setting changed (a slider repeating its value for 120 frames is one change; a drag over 20 places is 20). The bin's own unit tests, `ui::display::display_tests` (cpu.sh's --bin mode). NOT PROVEN by a case: Clear keeping the settings (Sim::clear queues Edit::Clear alone and the settings live apart from it - a source read) and the egui widgets on screen (the display capture actions are M0-T127c's). Plant display-reset-wrong (Glow's Reset goes to 1,000 K).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::display::display_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 11,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/elements.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/display-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "display-reset-wrong",
+          "patch": "tests/plants/display-reset-wrong.patch"
+        }
+      ]
+    },
     "ui_star": {
       "desc": "the right panel's star readout and the selection (contract \u00a71.9.5, \u00a71.9.6, \u00a74.1, \u00a74.2, \u00a74.6, \u00a74.10, \u00a74.12; M0-T92): crates/sr-app/src/ui/right.rs - the stage label (the Supergiant rows at M >= M_up, the other rows unchanged), star.mass, star.fate or star.ending once a remnant holds (the ending replacing the fate, a close call naming both), star.age, star.rate (hidden while paused), star.surface and star.core, each line byte-exact on synthetic objects; star.none with no object and star.select_hint with several; the selection kept by the tracker's id (the heaviest by default, the object under a right click, empty space leaving it, a list that shifts under it, a new world emptying it) on synthetic block summaries through the real Tracker, stages and age clock. The bin's own unit tests, `ui::right::star_tests` (cpu.sh's --bin mode). The right click on the window and the panel drawn are `capture`'s `actions` (the select action). The plan spells the scope `ui-star`; R17 makes it `ui_star`. Plant star-rate-while-paused (the rate shown while paused).",
       "cmd": "bash tests/cpu.sh sr-app --bin ui::right::star_tests",
@@ -2737,6 +2808,38 @@
         {
           "id": "star-rate-while-paused",
           "patch": "tests/plants/star-rate-while-paused.patch"
+        }
+      ]
+    },
+    "ui_inspect": {
+      "desc": "the right panel's cell inspector (contract \u00a73.1, \u00a74.1, \u00a74.6, \u00a74.12; M0-T93b): crates/sr-app/src/ui/right.rs - the engine's reply for the hovered cell read as the panel shows it: the mix (up to three species of at least 0.5 % by mass, the largest share first, equal shares in species order), inspect.temperature (translated to kelvins as the star readout does), inspect.density, inspect.speed with Mach = |u| / sqrt(2 Pi / Sigma) (a hand value in thin gas, the pressure law's), inspect.vacuum below sigma_vac, inspect.empty outside the world (D6), each line byte-exact with \u00a74.12's inspector numbers (scientific below 0.001 and from 100,000, three significant digits); and the Asker that keeps one request in flight while the cursor hovers every frame (120 frames, the frame time printed), the latest cell asked after each reply, nothing asked off the world. The bin's own unit tests, `ui::right::inspect_tests` (cpu.sh's --bin mode); the panel drawn and the hover on the window are `capture`'s `actions` (the hover action). The plan spells the scope `ui-inspect`; R17 makes it `ui_inspect`. Plant inspect-mix-four (a fourth species listed).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::right::inspect_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 9,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/calibration.json",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/inspect-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "inspect-mix-four",
+          "patch": "tests/plants/inspect-mix-four.patch"
         }
       ]
     }

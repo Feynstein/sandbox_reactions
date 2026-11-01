@@ -306,3 +306,9 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   nothing, so the core-collapse banner stayed and `banner.supernova` never showed in a life the player left alone, M0-V12) —
   superseded by contract §0.5 [M0-V12]: the supernova takes over a showing core-collapse banner, the rung unchanged (the lead,
   2026-10-30, M0-V12: «Supernova takes over (Recommended)»).
+
+- Contract §1.11's fixed Glow brightness at 3,000 K and fixed Heat (log₁₀ T_K 1–10) and Density (log₁₀ Σ −6–4) maps, §1.12's
+  settings kept by Clear and §4.2's hint under the world at scale s — superseded by contract §0.5 [M0-R12]: a Glow setting S (G3,
+  today's at 3,000 K), each map's range with «Fit to view», the legend under the world, the zoom, all kept by Clear (the lead,
+  2026-11-01, M0-R12: «G3 luminance dimming (Recommended)», «Range + Fit to view (Recommended)», «Under the world
+  (Recommended)», «File a zoom block after R12's (Recommended)»).

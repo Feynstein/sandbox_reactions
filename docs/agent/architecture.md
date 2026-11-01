@@ -270,6 +270,19 @@ The quad that draws the texture to the window at an integer scale is the app's (
   pass to a half-resolution texture, a horizontal and a vertical Gaussian blur, a composite that upsamples and adds into
   `target`. The other views write straight into `target`. Numbers: §1.11, §4.11. The bright pass keeps a cell whose brightest
   channel is above 0.8 (§0.5 [M0-D112]), so every cell hotter than ~3,400 K blooms, the table's end colour and matter past the table included.
+- **Fit to view** (M0-T127a, §1.11 [M0-R12]): `Renderer::fit_range(queue, view)` runs `extent_bins` (render.wgsl) once — the current state's
+  cells with Σ ≥ Σ_vac into 1,024 bins by atomics, of log₁₀ T_K over 1–10 (Heat) or log₁₀ Σ over −6–4 (Density), a cell past the span in
+  its end bin — and reads the bins back once, waited for; `extent_from_bins` gives L (the 0.5th percentile's bin, lower edge), H (the highest
+  non-empty bin, upper edge), widened to 0.1 about their middle and slid inside the span; `None` with no matter, and for Glow and Element.
+  The caller (the left panel's display section, M0-T127b: `ui/display.rs` + `desktop.rs`'s `Sim::display_command`) sets the range with
+  `set_display`, once, on the click (native only: the read-back blocks, so the web build's button leaves the range as it is); the range
+  never follows the matter by itself.
+- **The display controls** (M0-T127b, §4.2 [M0-R12]): `ui/display.rs` holds no state of its own — the state is the engine's `Display`
+  (`Sim.display`, apart from `Views`, `Tools` and the world, so a switch of view and Clear keep it); `panel(view, &Display)` is what the left
+  panel shows (none for Element), `parse`/`command` what the slider and the typed value (an egui `DragValue` with a custom formatter and
+  parser) ask, and `apply(&mut Display, view, command) -> bool` the one door — true only when a setting changed, and the window hands the
+  renderer `set_display` then and only then (the dimming table is rebuilt there when S changed). All ranges are log₁₀ values; S goes in
+  kelvins at 9 significant digits so 3,000 K stays 3000.0 and the default look byte for byte.
 - **Headless frames** (`headless --frames-every N [--view …]`, §3.3, `headless::FrameOut`): a `Renderer` at α = 1 draws into
   an offscreen RGBA8 texture, the read-back is padded to the row alignment and waited for before the PNG is written
   (`png`), to `DIR/frames/f_<step>.png` at every step index N divides — the chunks are cut there, so a frame is the state of

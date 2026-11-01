@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/state.rs
++++ b/crates/sr-engine/src/state.rs
+@@ -239,7 +239,7 @@
+         if cell.0 >= w || cell.1 >= h {
+             return Err(StateError::CellOutside { cell, world: (w, h) });
+         }
+-        let index = (cell.1 * w + cell.0) as u64;
++        let index = (cell.0 * w + cell.1) as u64; // planted: x and y swapped
+         let staging = device.create_buffer(&wgpu::BufferDescriptor {
+             label: Some("state.inspect"),
+             size: N_CHANNELS as u64 * 4,

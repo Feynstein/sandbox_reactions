@@ -1,0 +1,21 @@
+== 2026-11-01T16:56:40-05:00 linux-pc: the scratch renderer's today vs the binary's frames (RTX 4090, laserax-ai-server)
+sun_ms        glow     max   1.59 levels · cells over 1 level  0.0492 % · worst at (285,221) T_K 3236 Σ 0.0102
+sun_ms        heat     max   0.56 levels · cells over 1 level  0.0000 % · worst at (327,216) T_K 2600 Σ 0.000179
+sun_ms        element  max   0.56 levels · cells over 1 level  0.0000 % · worst at (235,183) T_K 1980 Σ 0.000134
+sun_ms        density  max   0.56 levels · cells over 1 level  0.0000 % · worst at (459,223) T_K 1677 Σ 7.12e-05
+sun_giant150  glow     max   2.31 levels · cells over 1 level  0.2592 % · worst at (262,257) T_K 3265 Σ 0.00251
+sun_giant150  heat     max   0.56 levels · cells over 1 level  0.0000 % · worst at (285,198) T_K 5.209e+04 Σ 0.458
+sun_giant150  element  max   0.56 levels · cells over 1 level  0.0000 % · worst at (546,387) T_K 2380 Σ 0.000144
+sun_giant150  density  max   0.56 levels · cells over 1 level  0.0000 % · worst at (267,178) T_K 4257 Σ 0.0136
+massive_sg    glow     max   0.72 levels · cells over 1 level  0.0000 % · worst at (260,366) T_K 1.313e+05 Σ 1.9e-05
+massive_sg    heat     max   0.56 levels · cells over 1 level  0.0000 % · worst at (164,177) T_K 1.785e+05 Σ 0.000796
+massive_sg    element  max   0.56 levels · cells over 1 level  0.0000 % · worst at (241,343) T_K 1.458e+05 Σ 0.000134
+massive_sg    density  max   0.56 levels · cells over 1 level  0.0000 % · worst at (442,273) T_K 1.296e+05 Σ 7.12e-05
+massive_sn    glow     max   1.38 levels · cells over 1 level  0.0004 % · worst at (303,201) T_K 10.01 Σ 0.603
+massive_sn    heat     max   4.21 levels · cells over 1 level  0.0037 % · worst at (300,198) T_K 10.34 Σ 142
+massive_sn    element  max   0.56 levels · cells over 1 level  0.0000 % · worst at (439,281) T_K 5971 Σ 0.00179
+massive_sn    density  max   0.56 levels · cells over 1 level  0.0000 % · worst at (215,368) T_K 5699 Σ 7.12e-05
+remnant       glow     max   2.08 levels · cells over 1 level  0.4154 % · worst at (379,101) T_K 3329 Σ 0.00126
+remnant       heat     max   0.98 levels · cells over 1 level  0.0000 % · worst at (306,185) T_K 10.08 Σ 74.5
+remnant       element  max   0.56 levels · cells over 1 level  0.0000 % · worst at (448,131) T_K 3083 Σ 0.000634
+remnant       density  max   0.56 levels · cells over 1 level  0.0000 % · worst at (409,186) T_K 3620 Σ 0.00485
