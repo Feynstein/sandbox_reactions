@@ -1,0 +1,81 @@
+==== 2026-11-02T16:58:08-05:00 ui_display · clean · a fresh scratch copy of the tree
+== 2026-11-02T16:58:08-05:00 ui_display · task M0-V13-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::display::display_tests
+-- ui_display · exit=0 · 5.68 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-c0hqeeob/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-c0hqeeob/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-c0hqeeob/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.60s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 11 tests
+test ui::display::display_tests::fit_sets_the_active_views_range_and_element_ignores_everything ... ok
+test ui::display::display_tests::junk_restores_the_shown_value ... ok
+test ui::display::display_tests::good_numbers_parse_grouped_e_notation_and_k_alike ... ok
+test ui::display::display_tests::out_of_range_is_clamped_to_the_span ... ok
+test ui::display::display_tests::from_and_to_are_kept_a_tenth_of_a_decade_apart ... ok
+test ui::display::display_tests::reset_goes_to_the_defaults_of_the_active_view_alone ... ok
+test ui::display::display_tests::switching_views_keeps_every_setting_and_shows_the_active_ones ... ok
+test ui::display::display_tests::the_slider_maps_logarithmically_and_lands_on_exact_kelvins ... ok
+test ui::display::display_tests::the_renderer_is_asked_only_when_a_setting_changed ... ok
+test ui::display::display_tests::the_texts_are_byte_exact_and_element_has_none ... ok
+test ui::display::display_tests::the_values_read_in_the_inspectors_formats ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 152 filtered out; finished in 0.00s
+
+
+==== 2026-11-02T16:58:14-05:00 ui_display · plant display-reset-wrong · a fresh scratch copy of the tree
+planted display-reset-wrong: tests/plants/display-reset-wrong.patch -> crates/sr-app/src/ui/display.rs
+== 2026-11-02T16:58:14-05:00 ui_display · task M0-V13-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::display::display_tests
+-- ui_display · exit=101 · 5.57 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-c0hqeeob/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-c0hqeeob/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-c0hqeeob/arm1/crates/sr-app)
+warning: unused import: `GLOW_S_DEFAULT`
+ --> crates/sr-app/src/ui/display.rs:9:54
+  |
+9 | use sr_engine::render::{Display, View, DENSITY_SPAN, GLOW_S_DEFAULT, GLOW_S_MAX, GLOW_S_MIN, HEAT_SPAN};
+  |                                                      ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-app` (bin "sandbox-reactions" test) generated 1 warning (run `cargo fix --bin "sandbox-reactions" -p sr-app --tests` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 5.51s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 11 tests
+test ui::display::display_tests::fit_sets_the_active_views_range_and_element_ignores_everything ... FAILED
+test ui::display::display_tests::out_of_range_is_clamped_to_the_span ... ok
+test ui::display::display_tests::good_numbers_parse_grouped_e_notation_and_k_alike ... ok
+test ui::display::display_tests::from_and_to_are_kept_a_tenth_of_a_decade_apart ... ok
+test ui::display::display_tests::junk_restores_the_shown_value ... ok
+test ui::display::display_tests::reset_goes_to_the_defaults_of_the_active_view_alone ... FAILED
+test ui::display::display_tests::switching_views_keeps_every_setting_and_shows_the_active_ones ... ok
+test ui::display::display_tests::the_slider_maps_logarithmically_and_lands_on_exact_kelvins ... ok
+test ui::display::display_tests::the_renderer_is_asked_only_when_a_setting_changed ... ok
+test ui::display::display_tests::the_texts_are_byte_exact_and_element_has_none ... ok
+test ui::display::display_tests::the_values_read_in_the_inspectors_formats ... ok
+
+failures:
+
+---- ui::display::display_tests::fit_sets_the_active_views_range_and_element_ignores_everything stdout ----
+
+thread 'ui::display::display_tests::fit_sets_the_active_views_range_and_element_ignores_everything' (936360) panicked at crates/sr-app/src/ui/display.rs:417:17:
+Glow Reset
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::display::display_tests::reset_goes_to_the_defaults_of_the_active_view_alone stdout ----
+
+thread 'ui::display::display_tests::reset_goes_to_the_defaults_of_the_active_view_alone' (936365) panicked at crates/sr-app/src/ui/display.rs:397:9:
+assertion `left == right` failed
+  left: 1000.0
+ right: 3000.0
+
+
+failures:
+    ui::display::display_tests::fit_sets_the_active_views_range_and_element_ignores_everything
+    ui::display::display_tests::reset_goes_to_the_defaults_of_the_active_view_alone
+
+test result: FAILED. 9 passed; 2 failed; 0 ignored; 0 measured; 152 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

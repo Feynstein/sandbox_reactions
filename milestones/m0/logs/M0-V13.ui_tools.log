@@ -1,0 +1,28 @@
+== 2026-11-02T15:37:52-05:00 ui_tools · task M0-V13 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::left::tools_tests
+-- ui_tools · exit=0 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 18 tests
+test ui::left::tools_tests::a_change_of_tool_keeps_the_element_and_the_size ... ok
+test ui::left::tools_tests::f1_to_f4_pick_the_views_and_nothing_else_does ... ok
+test ui::left::tools_tests::a_tool_or_element_change_leaves_the_view_alone ... ok
+test ui::left::tools_tests::each_button_sends_its_own_view ... ok
+test ui::left::tools_tests::a_held_button_queues_one_edit_per_frame_with_the_radius_and_species_of_that_frame ... ok
+test ui::left::tools_tests::each_tool_queues_its_own_edit_at_the_radius ... ok
+test ui::left::tools_tests::the_brackets_step_by_two_and_stop_at_the_ends ... ok
+test ui::left::tools_tests::a_view_switch_leaves_the_brush_the_element_and_the_size_alone ... ok
+test ui::left::tools_tests::the_keys_are_mapped_and_nothing_else_is ... ok
+test ui::left::tools_tests::the_pointer_maps_to_cells_and_the_outline_follows_the_cell ... ok
+test ui::left::tools_tests::the_list_is_the_nine_in_order_and_never_neutron_matter ... ok
+test ui::left::tools_tests::one_tool_is_selected_and_it_follows_the_commands ... ok
+test ui::left::tools_tests::hydrogen_is_selected_at_first_and_neutron_matter_never_is ... ok
+test ui::left::tools_tests::the_texts_are_byte_exact ... ok
+test ui::left::tools_tests::the_slider_runs_1_to_40_from_8 ... ok
+test ui::left::tools_tests::the_swatches_are_the_registry_colours ... ok
+test ui::left::tools_tests::the_views_texts_are_byte_exact ... ok
+test ui::left::tools_tests::glow_is_active_at_first_and_one_view_is_selected_after_each_command ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+

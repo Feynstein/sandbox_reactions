@@ -1,0 +1,8 @@
+2026-11-02T17:59:46-05:00
+plan_lint  793/0/0      0.11 s  GO
+logs: milestones/m0/logs/M0-V13-lint.<scope>.log · record: loop_times.jsonl · tree ea7aa38e1d16+7e3c0a921440
+anchor: 1 path×scope entries moved by this run
+anchor: 401 paths checked · 367 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 401 covered of 768 visible
+verify: 793 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 15.3->15.3
+=== GO ===
+exit 0 at 2026-11-02T17:59:47-05:00

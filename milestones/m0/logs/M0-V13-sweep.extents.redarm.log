@@ -1,0 +1,112 @@
+==== 2026-11-02T16:54:33-05:00 extents · clean · a fresh scratch copy of the tree
+== 2026-11-02T16:54:34-05:00 extents · task M0-V13-sweep · box laserax-ai-server :: bash tests/gpu.sh extents physics
+-- extents · exit=0 · 13.54 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-aqa1vsk3/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-aqa1vsk3/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.33s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test extents::a_one_cell_world_widens_to_a_tenth_about_its_bin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test extents::a_star_like_disk_fits_the_cpu_histogram ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test extents::an_empty_world_has_no_range ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test extents::matter_past_the_span_counts_in_the_end_bin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test extents::the_extreme_cell_in_the_last_row_and_column_sets_the_top ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test extents::the_low_end_is_the_half_percentile_not_the_minimum ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test extents::the_range_from_bins_follows_the_contract ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 454 filtered out; finished in 3.12s
+
+
+==== 2026-11-02T16:54:47-05:00 extents · plant extents-vacuum-counted · a fresh scratch copy of the tree
+planted extents-vacuum-counted: tests/plants/extents-vacuum-counted.patch -> crates/sr-engine/shaders/render.wgsl
+== 2026-11-02T16:54:47-05:00 extents · task M0-V13-sweep · box laserax-ai-server :: bash tests/gpu.sh extents physics
+-- extents · exit=101 · 12.89 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-aqa1vsk3/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-aqa1vsk3/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.26s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test extents::a_one_cell_world_widens_to_a_tenth_about_its_bin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'extents::a_one_cell_world_widens_to_a_tenth_about_its_bin' (930329) panicked at crates/sr-engine/tests/gpu/extents.rs:190:31:
+Heat bin 300: got [1.0, 3.6455078125], want [3.59111328125, 3.69111328125]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test extents::a_star_like_disk_fits_the_cpu_histogram ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'extents::a_star_like_disk_fits_the_cpu_histogram' (930339) panicked at crates/sr-engine/tests/gpu/extents.rs:190:31:
+Heat: got [1.0, 7.0029296875], want [2.9951171875, 7.0029296875]
+FAILED
+test extents::an_empty_world_has_no_range ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'extents::an_empty_world_has_no_range' (930348) panicked at crates/sr-engine/tests/gpu/extents.rs:262:9:
+assertion `left == right` failed
+  left: Some([1.0, 1.1])
+ right: None
+FAILED
+test extents::matter_past_the_span_counts_in_the_end_bin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'extents::matter_past_the_span_counts_in_the_end_bin' (930361) panicked at crates/sr-engine/tests/gpu/extents.rs:190:31:
+past 10¹⁰ K: got [1.0, 10.0], want [9.9, 10.0]
+FAILED
+test extents::the_extreme_cell_in_the_last_row_and_column_sets_the_top ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test extents::the_low_end_is_the_half_percentile_not_the_minimum ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test extents::the_range_from_bins_follows_the_contract ... ok
+
+failures:
+
+failures:
+    extents::a_one_cell_world_widens_to_a_tenth_about_its_bin
+    extents::a_star_like_disk_fits_the_cpu_histogram
+    extents::an_empty_world_has_no_range
+    extents::matter_past_the_span_counts_in_the_end_bin
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 454 filtered out; finished in 2.56s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

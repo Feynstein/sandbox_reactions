@@ -1,0 +1,4 @@
+2026-11-02T17:54:40-05:00
+changed: refused - nothing run
+=== NO-GO: NOT RUN (M0-V13.plan_lint.log: git already tracks it - another task's evidence is never appended to; pass --task <YOUR-TASK-ID>) ===
+exit 1 at 2026-11-02T17:54:41-05:00
