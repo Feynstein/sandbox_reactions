@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -216,7 +216,7 @@
+     (Stage::HeCore, |c| c.o.l_group[G_HE] > 0.0 && c.o.l_group[G_HE] >= 0.1 * c.o.luminosity && c.o.x_c[X_HE] >= SPENT),
+     (Stage::HeShell, |c| c.h.ignited && c.o.x_c[X_HE] < SPENT && c.o.x_c[X_H] < SPENT && !carbon_burns(c.o)),
+     (Stage::HShell, |c| c.h.ignited && c.o.x_c[X_H] < SPENT && c.o.l_group[G_HE] < 0.1 * c.o.luminosity),
+-    (Stage::MainSequence, |c| c.h.ignited && burns(c, G_H, X_H)),
++    (Stage::MainSequence, |c| hydrogen_leads(c.o) && c.o.x_c[X_H] >= SPENT),
+     (Stage::Collapsing, |c| !c.h.ignited && c.o.v_r <= -0.1 * c.v_dyn),
+     (Stage::Protostar, |c| !c.h.ignited && settled(c)),
+     (Stage::Cloud, |_| true),

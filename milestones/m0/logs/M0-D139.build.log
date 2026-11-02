@@ -1,0 +1,15 @@
+   Compiling wgpu-core-deps-windows-linux-android v30.0.1
+   Compiling wgpu-core v30.0.1
+   Compiling smithay-client-toolkit v0.19.2
+   Compiling smithay-client-toolkit v0.20.0
+   Compiling smithay-clipboard v0.7.3
+   Compiling x11rb v0.13.2
+   Compiling winit v0.30.13
+   Compiling arboard v3.6.1
+   Compiling wgpu v30.0.1
+   Compiling egui-winit v0.36.2
+   Compiling egui-wgpu v0.36.2
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling eframe v0.36.2
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.15s

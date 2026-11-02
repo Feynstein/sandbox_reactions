@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/ui/legend.rs
++++ b/crates/sr-app/src/ui/legend.rs
+@@ -169,7 +169,8 @@
+ /// triangle, else to its left, else at the nearest free place right of the title or of a label before it: it stays inside `strip_width`
+ /// and clear of the title and the labels placed before it by `MARK_LABEL_GAP` wherever one of the three allows.
+ pub fn mark_label_lefts(title_width: f32, marks: &[(f32, f32)], strip_width: f32) -> Vec<f32> {
+-    let mut spans: Vec<(f32, f32)> = vec![(0.0, title_width)];
++    // Planted: the title is not in the overlap test, a label placed over it (M0-D135's plant).
++    let mut spans: Vec<(f32, f32)> = vec![(0.0, title_width * 0.0)];
+     marks
+         .iter()
+         .map(|&(x, w)| {

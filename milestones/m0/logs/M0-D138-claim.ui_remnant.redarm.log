@@ -1,0 +1,64 @@
+==== 2026-11-02T15:00:34-05:00 ui_remnant · clean · a fresh scratch copy of the tree
+== 2026-11-02T15:00:34-05:00 ui_remnant · task M0-D138-claim · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::remnant::remnant_tests
+-- ui_remnant · exit=0 · 5.73 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-8nl5rnzt/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-8nl5rnzt/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-8nl5rnzt/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.63s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 6 tests
+test ui::remnant::remnant_tests::a_remnant_the_zoomed_view_does_not_show_has_no_ring ... ok
+test ui::remnant::remnant_tests::no_remnant_no_ring ... ok
+test ui::remnant::remnant_tests::the_ring_keeps_its_size_on_screen_at_every_z ... ok
+test ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_eight ... ok
+test ui::remnant::remnant_tests::a_ringed_star_reads_star_remnant_under_its_fate_or_ending ... ok
+test ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_one ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 154 filtered out; finished in 0.00s
+
+
+==== 2026-11-02T15:00:40-05:00 ui_remnant · plant remnant-ring-unzoomed · a fresh scratch copy of the tree
+planted remnant-ring-unzoomed: tests/plants/remnant-ring-unzoomed.patch -> crates/sr-app/src/ui/remnant.rs
+== 2026-11-02T15:00:40-05:00 ui_remnant · task M0-D138-claim · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::remnant::remnant_tests
+-- ui_remnant · exit=101 · 5.73 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-8nl5rnzt/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-8nl5rnzt/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-8nl5rnzt/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.64s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 6 tests
+test ui::remnant::remnant_tests::no_remnant_no_ring ... ok
+test ui::remnant::remnant_tests::the_ring_keeps_its_size_on_screen_at_every_z ... ok
+test ui::remnant::remnant_tests::a_remnant_the_zoomed_view_does_not_show_has_no_ring ... FAILED
+test ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_eight ... FAILED
+test ui::remnant::remnant_tests::a_ringed_star_reads_star_remnant_under_its_fate_or_ending ... ok
+test ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_one ... ok
+
+failures:
+
+---- ui::remnant::remnant_tests::a_remnant_the_zoomed_view_does_not_show_has_no_ring stdout ----
+
+thread 'ui::remnant::remnant_tests::a_remnant_the_zoomed_view_does_not_show_has_no_ring' (853222) panicked at crates/sr-app/src/ui/remnant.rs:98:9:
+assertion `left == right` failed
+  left: [Ring { centre: [831.0 461.0], radius: 14.0 }]
+ right: []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_eight stdout ----
+
+thread 'ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_eight' (853226) panicked at crates/sr-app/src/ui/remnant.rs:82:17:
+assertion `left == right` failed: ppp 1, view at [300, 200]
+  left: Some([300, 200])
+ right: Some([303, 198])
+
+
+failures:
+    ui::remnant::remnant_tests::a_remnant_the_zoomed_view_does_not_show_has_no_ring
+    ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_eight
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 154 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

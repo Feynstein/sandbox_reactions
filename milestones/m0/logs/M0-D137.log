@@ -1,0 +1,4 @@
+capture   1/0/0       19.81 s  GO
+logs: milestones/m0/logs/M0-D137.<scope>.log · record: loop_times.jsonl · tree 8c0d590bc06d+d7b49852d401
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 19.81 s · mode case · PARTIAL, not the loop (--case actions) · jobs 8 · box laserax-ai · python 3.12.3 · load 8.94->8.98
+=== GO ===

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* web/smoke.mjs - the web smoke (G-WEB; m0_contrat.md §5.4, §6.2.3). Project code, M0-T15.
  *
- *   node web/smoke.mjs <ready|no-webgpu> [--base http://127.0.0.1:47840] [--timeout-s 30]
+ *   node web/smoke.mjs <ready|no-webgpu|preset> [--base http://127.0.0.1:47840] [--timeout-s 30]
  *
  * Launches the box's installed Chrome through playwright-core, headless, with §6.2.3's flags (never `--no-sandbox`):
  *   linux-pc   /usr/bin/google-chrome   --headless=new --use-angle=vulkan --enable-features=Vulkan
@@ -13,7 +13,11 @@
  * Cases (the `web` scope's, tests/web/check.sh):
  *   ready      `/` sets document.body.dataset.srState to "ready" within 30 s (srError, "error" or "no-webgpu" ends it early);
  *              srAdapter is printed as `SR-ADAPTER <description>`, and a software adapter is named in a NOTE (it reaches
- *              "ready" without proving the GPU path). The preset case (`?preset=sun&steps=200`, canvas pixels) is M0-T94's.
+ *              "ready" without proving the GPU path).
+ *   preset     `/?preset=sun&steps=200` reaches "ready" within 30 s and the canvas's central 100 x 100 px are not all black (M0-T94).
+ *              The pixels come from a Chrome screenshot of that clip. "Not all black" is true of an empty canvas too (bg.space
+ *              #05070D is not black), so the log also counts the central pixels that differ from bg.space and the case
+ *              NOTEs when none do; a stricter case is the lead's to grant (M0-V13 names the gap).
  *   no-webgpu  `/?no-webgpu=1` sets srState "no-webgpu", shows the three web.no_webgpu_* texts exactly as
  *              crates/sr-app/src/strings.rs holds them (G-STR keeps that file equal to §4.1) and never fetches the wasm.
  * Ends in `=== GO ===` (exit 0) or `=== NO-GO: <reason> ===` (exit 1).
@@ -25,7 +29,7 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
-const CASES = ['ready', 'no-webgpu'];
+const CASES = ['ready', 'no-webgpu', 'preset'];
 
 const args = process.argv.slice(2);
 const flag = (name, dflt) => { const i = args.indexOf(name); return i >= 0 && args[i + 1] ? args[i + 1] : dflt; };
@@ -89,8 +93,8 @@ try {
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') problems.push(`console.${m.type()}: ${m.text().split('\n')[0].slice(0, 200)}`); });
   page.on('requestfailed', (r) => problems.push(`requestfailed: ${new URL(r.url()).pathname} ${r.failure()?.errorText ?? ''}`));
   page.on('response', (r) => { if (r.status() >= 400) problems.push(`HTTP ${r.status()}: ${new URL(r.url()).pathname}`); });
-  const states = kase === 'ready' ? ['ready', 'error', 'no-webgpu'] : ['no-webgpu', 'ready', 'error'];
-  const url = kase === 'ready' ? `${base}/` : `${base}/?no-webgpu=1`;
+  const states = kase !== 'no-webgpu' ? ['ready', 'error', 'no-webgpu'] : ['no-webgpu', 'ready', 'error'];
+  const url = kase === 'ready' ? `${base}/` : kase === 'preset' ? `${base}/?preset=sun&steps=200` : `${base}/?no-webgpu=1`;
   const resp = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
   if (!resp || !resp.ok()) throw new Error(`GET ${url} answered ${resp ? resp.status() : 'nothing'}`);
   const started = Date.now();
@@ -120,14 +124,44 @@ try {
     console.log(`SR-CHROME-ADAPTER vendor=${chromeAdapter.vendor} architecture=${chromeAdapter.architecture} device=${chromeAdapter.device} description=${chromeAdapter.description} fallback=${chromeAdapter.fallback}`);
   }
 
-  if (kase === 'ready') {
+  if (kase !== 'no-webgpu') {
     if (state !== 'ready') throw new Error(`srState "${state}"${info.error ? ` (${info.error})` : ''} - not "ready"${problems.length ? '; ' + problems.join(' | ') : ''}`);
     if (!info.adapter) throw new Error('srState "ready" but srAdapter is not set');
     const named = `${info.adapter} ${chromeAdapter ? Object.values(chromeAdapter).join(' ') : ''}`;
     if (!chromeAdapter || chromeAdapter.fallback || /swiftshader|llvmpipe|software|basic render|warp/i.test(named)) {
       console.log(`NOTE the adapter reads as software or unknown (${named.trim()}): "ready" does not prove the GPU path`);
     }
-    console.log(`ready: srState "ready" after ${took} s`);
+    console.log(`${kase}: srState "ready" after ${took} s`);
+    if (kase === 'preset') {
+      // The 200 steps run after "ready": sample the canvas's central 100 x 100 px (a screenshot clip, decoded in the page)
+      // until a pixel is not black, up to the case's timeout.
+      const box = await page.evaluate(() => { const r = document.getElementById('sr-canvas').getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; });
+      const clip = { x: Math.round(box.x + box.w / 2 - 50), y: Math.round(box.y + box.h / 2 - 50), width: 100, height: 100 };
+      const sample = async () => {
+        const png = await page.screenshot({ clip, type: 'png' });
+        return page.evaluate(async (b64) => {
+          const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+          const bmp = await createImageBitmap(new Blob([bytes], { type: 'image/png' }));
+          const cv = new OffscreenCanvas(bmp.width, bmp.height);
+          const ctx = cv.getContext('2d');
+          ctx.drawImage(bmp, 0, 0);
+          const d = ctx.getImageData(0, 0, bmp.width, bmp.height).data;
+          let lit = 0, offBg = 0;
+          for (let i = 0; i < d.length; i += 4) {
+            if (d[i] + d[i + 1] + d[i + 2] > 0) lit++;
+            if (d[i] !== 0x05 || d[i + 1] !== 0x07 || d[i + 2] !== 0x0d) offBg++;
+          }
+          return { w: bmp.width, h: bmp.height, lit, offBg };
+        }, png.toString('base64'));
+      };
+      const until = Date.now() + timeoutMs;
+      let px = await sample();
+      while (px.offBg === 0 && Date.now() < until) { await page.waitForTimeout(500); px = await sample(); }
+      console.log(`SR-PIXELS central ${px.w}x${px.h}: ${px.lit} not black, ${px.offBg} differ from bg.space #05070D`);
+      if (px.w !== 100 || px.h !== 100) throw new Error(`the central clip read ${px.w}x${px.h}, not 100x100 (canvas ${Math.round(box.w)}x${Math.round(box.h)})`);
+      if (px.lit === 0) throw new Error('the central 100 x 100 px of the canvas are all black');
+      if (px.offBg === 0) console.log('NOTE every central pixel is bg.space: "not all black" holds, but no star is drawn there');
+    }
   } else {
     if (state !== 'no-webgpu') throw new Error(`srState "${state}", not "no-webgpu"`);
     const want = noWebgpuTexts();

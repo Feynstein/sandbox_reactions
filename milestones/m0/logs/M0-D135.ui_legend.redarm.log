@@ -1,0 +1,170 @@
+==== 2026-11-02T14:09:50-05:00 ui_legend · clean · a fresh scratch copy of the tree
+== 2026-11-02T14:09:51-05:00 ui_legend · task M0-D135 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::legend::legend_tests
+-- ui_legend · exit=0 · 7.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 7.01s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 20 tests
+test ui::legend::legend_tests::a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title ... ok
+test ui::legend::legend_tests::a_label_that_would_overlap_its_left_neighbour_is_left_out_and_its_tick_kept ... ok
+test ui::legend::legend_tests::a_narrow_range_ticks_only_the_powers_inside_or_both_ends ... ok
+test ui::legend::legend_tests::a_tick_label_has_no_trailing_zeros ... ok
+test ui::legend::legend_tests::density_ticks_follow_the_inspectors_rule ... ok
+test ui::legend::legend_tests::element_is_the_ten_swatches_with_their_names ... ok
+test ui::legend::legend_tests::no_cursor_mark_over_vacuum_off_the_world_or_in_element ... ok
+test ui::legend::legend_tests::the_first_and_last_labels_stay_inside_the_bar ... ok
+test ui::legend::legend_tests::the_glow_ticks_are_ten_powers_of_ten_in_the_units ... ok
+test ui::legend::legend_tests::the_scale_gives_way_when_the_strip_would_not_fit ... ok
+test ui::legend::legend_tests::the_world_the_legend_and_the_hint_fit_the_centre_of_the_default_window ... ok
+test ui::legend::legend_tests::the_heat_and_density_bars_are_the_maps_and_the_ranges_move_the_ticks_only ... ok
+test ui::legend::legend_tests::the_title_is_the_views_and_the_strings_are_the_tables ... ok
+test ui::legend::legend_tests::ticks_stand_at_each_decade_not_linearly_in_t ... ok
+test ui::legend::legend_tests::the_cursor_mark_stands_at_the_cells_value_on_the_shown_range ... ok
+test ui::legend::legend_tests::the_glow_bar_dims_with_the_setting ... ok
+test ui::legend::legend_tests::the_glow_setting_is_marked_in_glow_only_at_its_place_on_the_bar ... ok
+test ui::legend::legend_tests::the_bars_cache_follows_the_setting ... ok
+test ui::legend::legend_tests::the_glow_bar_is_the_cpu_formula_at_three_settings ... ok
+test ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 133 filtered out; finished in 0.18s
+
+
+==== 2026-11-02T14:09:58-05:00 ui_legend · plant legend-ticks-linear · a fresh scratch copy of the tree
+planted legend-ticks-linear: tests/plants/legend-ticks-linear.patch -> crates/sr-app/src/ui/legend.rs
+== 2026-11-02T14:09:59-05:00 ui_legend · task M0-D135 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::legend::legend_tests
+-- ui_legend · exit=101 · 6.84 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 6.57s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 20 tests
+test ui::legend::legend_tests::a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title ... ok
+test ui::legend::legend_tests::a_narrow_range_ticks_only_the_powers_inside_or_both_ends ... FAILED
+test ui::legend::legend_tests::a_label_that_would_overlap_its_left_neighbour_is_left_out_and_its_tick_kept ... FAILED
+test ui::legend::legend_tests::a_tick_label_has_no_trailing_zeros ... ok
+test ui::legend::legend_tests::density_ticks_follow_the_inspectors_rule ... FAILED
+test ui::legend::legend_tests::element_is_the_ten_swatches_with_their_names ... ok
+test ui::legend::legend_tests::no_cursor_mark_over_vacuum_off_the_world_or_in_element ... ok
+test ui::legend::legend_tests::the_first_and_last_labels_stay_inside_the_bar ... ok
+test ui::legend::legend_tests::the_glow_ticks_are_ten_powers_of_ten_in_the_units ... FAILED
+test ui::legend::legend_tests::the_scale_gives_way_when_the_strip_would_not_fit ... ok
+test ui::legend::legend_tests::the_title_is_the_views_and_the_strings_are_the_tables ... ok
+test ui::legend::legend_tests::the_world_the_legend_and_the_hint_fit_the_centre_of_the_default_window ... ok
+test ui::legend::legend_tests::ticks_stand_at_each_decade_not_linearly_in_t ... FAILED
+test ui::legend::legend_tests::the_heat_and_density_bars_are_the_maps_and_the_ranges_move_the_ticks_only ... ok
+test ui::legend::legend_tests::the_cursor_mark_stands_at_the_cells_value_on_the_shown_range ... ok
+test ui::legend::legend_tests::the_glow_bar_dims_with_the_setting ... ok
+test ui::legend::legend_tests::the_glow_setting_is_marked_in_glow_only_at_its_place_on_the_bar ... ok
+test ui::legend::legend_tests::the_bars_cache_follows_the_setting ... ok
+test ui::legend::legend_tests::the_glow_bar_is_the_cpu_formula_at_three_settings ... ok
+test ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands ... ok
+
+failures:
+
+---- ui::legend::legend_tests::a_narrow_range_ticks_only_the_powers_inside_or_both_ends stdout ----
+
+thread 'ui::legend::legend_tests::a_narrow_range_ticks_only_the_powers_inside_or_both_ends' (2077087) panicked at crates/sr-app/src/ui/legend.rs:347:9:
+assertion `left == right` failed
+  left: ["10,000 K", "100 million K", "1 billion K"]
+ right: ["10,000 K", "100,000 K", "1 million K", "10 million K", "100 million K", "1 billion K"]
+
+---- ui::legend::legend_tests::a_label_that_would_overlap_its_left_neighbour_is_left_out_and_its_tick_kept stdout ----
+
+thread 'ui::legend::legend_tests::a_label_that_would_overlap_its_left_neighbour_is_left_out_and_its_tick_kept' (2077084) panicked at crates/sr-app/src/ui/legend.rs:381:9:
+assertion `left == right` failed
+  left: 3
+ right: 10
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::legend::legend_tests::density_ticks_follow_the_inspectors_rule stdout ----
+
+thread 'ui::legend::legend_tests::density_ticks_follow_the_inspectors_rule' (2077089) panicked at crates/sr-app/src/ui/legend.rs:361:9:
+assertion `left == right` failed
+  left: ["1e-6", "1,000", "10,000"]
+ right: ["1e-6", "1e-5", "1e-4", "0.001", "0.01", "0.1", "1", "10", "100", "1,000", "10,000"]
+
+---- ui::legend::legend_tests::the_glow_ticks_are_ten_powers_of_ten_in_the_units stdout ----
+
+thread 'ui::legend::legend_tests::the_glow_ticks_are_ten_powers_of_ten_in_the_units' (2077098) panicked at crates/sr-app/src/ui/legend.rs:326:9:
+assertion `left == right` failed
+  left: ["10 K", "1 billion K", "10 billion K"]
+ right: ["10 K", "100 K", "1,000 K", "10,000 K", "100,000 K", "1 million K", "10 million K", "100 million K", "1 billion K", "10 billion K"]
+
+---- ui::legend::legend_tests::ticks_stand_at_each_decade_not_linearly_in_t stdout ----
+
+thread 'ui::legend::legend_tests::ticks_stand_at_each_decade_not_linearly_in_t' (2077103) panicked at crates/sr-app/src/ui/legend.rs:337:13:
+tick 1 at 0.000000009000000009
+
+
+failures:
+    ui::legend::legend_tests::a_label_that_would_overlap_its_left_neighbour_is_left_out_and_its_tick_kept
+    ui::legend::legend_tests::a_narrow_range_ticks_only_the_powers_inside_or_both_ends
+    ui::legend::legend_tests::density_ticks_follow_the_inspectors_rule
+    ui::legend::legend_tests::the_glow_ticks_are_ten_powers_of_ten_in_the_units
+    ui::legend::legend_tests::ticks_stand_at_each_decade_not_linearly_in_t
+
+test result: FAILED. 15 passed; 5 failed; 0 ignored; 0 measured; 133 filtered out; finished in 0.16s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+==== 2026-11-02T14:10:05-05:00 ui_legend · plant legend-label-over-title · a fresh scratch copy of the tree
+planted legend-label-over-title: tests/plants/legend-label-over-title.patch -> crates/sr-app/src/ui/legend.rs
+== 2026-11-02T14:10:06-05:00 ui_legend · task M0-D135 · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::legend::legend_tests
+-- ui_legend · exit=101 · 7.40 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm2/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-vt1au0ok/arm2/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 7.29s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 20 tests
+test ui::legend::legend_tests::a_label_that_would_overlap_its_left_neighbour_is_left_out_and_its_tick_kept ... ok
+test ui::legend::legend_tests::a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title ... FAILED
+test ui::legend::legend_tests::a_narrow_range_ticks_only_the_powers_inside_or_both_ends ... ok
+test ui::legend::legend_tests::a_tick_label_has_no_trailing_zeros ... ok
+test ui::legend::legend_tests::density_ticks_follow_the_inspectors_rule ... ok
+test ui::legend::legend_tests::element_is_the_ten_swatches_with_their_names ... ok
+test ui::legend::legend_tests::no_cursor_mark_over_vacuum_off_the_world_or_in_element ... ok
+test ui::legend::legend_tests::the_first_and_last_labels_stay_inside_the_bar ... ok
+test ui::legend::legend_tests::the_glow_ticks_are_ten_powers_of_ten_in_the_units ... ok
+test ui::legend::legend_tests::the_scale_gives_way_when_the_strip_would_not_fit ... ok
+test ui::legend::legend_tests::the_world_the_legend_and_the_hint_fit_the_centre_of_the_default_window ... ok
+test ui::legend::legend_tests::the_heat_and_density_bars_are_the_maps_and_the_ranges_move_the_ticks_only ... ok
+test ui::legend::legend_tests::ticks_stand_at_each_decade_not_linearly_in_t ... ok
+test ui::legend::legend_tests::the_title_is_the_views_and_the_strings_are_the_tables ... ok
+test ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands ... FAILED
+test ui::legend::legend_tests::the_cursor_mark_stands_at_the_cells_value_on_the_shown_range ... ok
+test ui::legend::legend_tests::the_glow_bar_dims_with_the_setting ... ok
+test ui::legend::legend_tests::the_glow_setting_is_marked_in_glow_only_at_its_place_on_the_bar ... ok
+test ui::legend::legend_tests::the_glow_bar_is_the_cpu_formula_at_three_settings ... ok
+test ui::legend::legend_tests::the_bars_cache_follows_the_setting ... ok
+
+failures:
+
+---- ui::legend::legend_tests::a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title stdout ----
+
+thread 'ui::legend::legend_tests::a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title' (2079624) panicked at crates/sr-app/src/ui/legend.rs:586:9:
+assertion `left == right` failed
+  left: [6.0]
+ right: [249.0]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands stdout ----
+
+thread 'ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands' (2079625) panicked at crates/sr-app/src/ui/legend.rs:574:21:
+T = 10, S = 100: label 0 meets the title (139.33333 … 307.3333 against 0 … 245)
+
+
+failures:
+    ui::legend::legend_tests::a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title
+    ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands
+
+test result: FAILED. 18 passed; 2 failed; 0 ignored; 0 measured; 133 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

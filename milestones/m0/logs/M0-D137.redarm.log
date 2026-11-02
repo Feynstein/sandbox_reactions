@@ -1,0 +1,11 @@
+capture · clean · GO · arm 1/9, 8 left
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3; capture[actions]: 1 fai) · arm 2/9, 7 left
+capture · plant capture-edge-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 3/9, 6 left
+capture · plant capture-paint-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 4/9, 5 left
+capture · plant capture-star-panel-blank · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 5/9, 4 left
+capture · plant capture-hover-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 6/9, 3 left
+capture · plant capture-hover-off-world · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 7/9, 2 left
+capture · plant capture-glow-white-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 8/9, 1 left
+capture · plant capture-zoom-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 9/9, 0 left
+redarm: 8 plants · 8 red · 0 green · 0 errors · scope capture · 327.63 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D137.capture.redarm.log
+=== GO ===

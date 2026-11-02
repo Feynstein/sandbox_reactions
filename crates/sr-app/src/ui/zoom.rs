@@ -29,6 +29,7 @@ impl Zoom {
         Self { z: 1, centre: [world.width as f32 / 2.0, world.height as f32 / 2.0] }
     }
 
+    #[cfg(test)]
     pub fn z(&self) -> u32 {
         self.z
     }

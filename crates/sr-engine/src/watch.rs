@@ -46,8 +46,8 @@ const X_FE: usize = 8;
 const X_N: usize = 9;
 
 /// The heaviest object's numbers on a `calibrate` progress line (M0-D80; §1.9.2's quantities, sandbox units): M, R, τ_dyn, Σ_c,
-/// T_c, d_c, Y_e,c, X_Fe,c, X_n,c, v_r and v_r/√(GM/R), M_unb, L, L_nuc, L_N (≤ 0, the neutronization's absorbed power), L_ν,
-/// the sinks and their mass, the raw stage (this frame's result) and the shown one.
+/// T_c, d_c, Y_e,c, X_H,c, X_Fe,c, X_n,c, v_r and v_r/√(GM/R), 2P/|W|, M_unb, L, L_nuc, L_N (≤ 0, the neutronization's
+/// absorbed power), L_ν, the sinks and their mass, the raw stage (this frame's result) and the shown one.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Star {
     pub mass: f64,
@@ -57,10 +57,13 @@ pub struct Star {
     pub t_c: f64,
     pub d_c: f64,
     pub ye_c: f64,
+    pub x_h_c: f64,
     pub x_fe_c: f64,
     pub x_n_c: f64,
     pub v_r: f64,
     pub v_r_dyn: f64,
+    /// 2P/|W| — the settled test's virial share (§0.5 [M0-D134]); 0 while W is 0.
+    pub virial: f64,
     pub unbound: f64,
     pub luminosity: f64,
     pub l_nuc: f64,
@@ -70,6 +73,8 @@ pub struct Star {
     pub sink_mass: f64,
     pub raw: Option<&'static str>,
     pub shown: Option<&'static str>,
+    /// Its history's `ignited` flag (§1.9.4), for stage_order's grade (§0.5 [M0-D141]).
+    pub ignited: bool,
 }
 
 /// `--until`'s condition (§3.3).
@@ -384,10 +389,12 @@ impl Watch {
             t_c: o.t_c,
             d_c: o.d_c,
             ye_c: sr_physics::registry::electron_fraction(&o.x_c),
+            x_h_c: o.x_c[X_H],
             x_fe_c: o.x_c[X_FE],
             x_n_c: o.x_c[X_N],
             v_r: o.v_r,
             v_r_dyn: if v_dyn > 0.0 { o.v_r / v_dyn } else { 0.0 },
+            virial: if o.potential != 0.0 { 2.0 * o.pressure / o.potential.abs() } else { 0.0 },
             unbound: o.unbound,
             luminosity: o.luminosity,
             l_nuc: o.l_nuc,
@@ -397,6 +404,7 @@ impl Watch {
             sink_mass: o.sink_mass,
             raw: state.map(|s| s.raw.id()),
             shown: state.and_then(|s| s.shown).map(Stage::id),
+            ignited: state.is_some_and(|s| s.history.ignited),
         })
     }
 

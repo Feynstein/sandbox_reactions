@@ -1,0 +1,149 @@
+==== 2026-11-02T15:04:25-05:00 ui_theme · clean · a fresh scratch copy of the tree
+== 2026-11-02T15:04:25-05:00 ui_theme · task M0-D138-theme · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=0 · 5.78 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.71s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 8 tests
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... ok
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::the_desktop_and_the_web_install_the_tokens ... ok
+test ui::theme::tests::the_status_line_is_the_small_size ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::a_light_system_still_draws_the_tokens ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 152 filtered out; finished in 0.00s
+
+
+==== 2026-11-02T15:04:31-05:00 ui_theme · plant theme-default-selection · a fresh scratch copy of the tree
+planted theme-default-selection: tests/plants/theme-default-selection.patch -> crates/sr-app/src/ui/theme.rs
+== 2026-11-02T15:04:31-05:00 ui_theme · task M0-D138-theme · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=101 · 5.13 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.05s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 8 tests
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... FAILED
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... FAILED
+test ui::theme::tests::the_status_line_is_the_small_size ... ok
+test ui::theme::tests::the_desktop_and_the_web_install_the_tokens ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::a_light_system_still_draws_the_tokens ... FAILED
+
+failures:
+
+---- ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill stdout ----
+
+thread 'ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill' (2790283) panicked at crates/sr-app/src/ui/theme.rs:143:9:
+assertion `left == right` failed
+  left: #00_5C_80_FF
+ right: #23_2A_3A_FF
+
+---- ui::theme::tests::every_colour_of_the_visuals_is_a_token stdout ----
+
+thread 'ui::theme::tests::every_colour_of_the_visuals_is_a_token' (2790284) panicked at crates/sr-app/src/ui/theme.rs:135:13:
+selection.bg_fill is #00_5C_80_FF, not a §4.11 token
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::theme::tests::a_light_system_still_draws_the_tokens stdout ----
+
+thread 'ui::theme::tests::a_light_system_still_draws_the_tokens' (2790282) panicked at crates/sr-app/src/ui/theme.rs:165:9:
+assertion `left == right` failed
+  left: (#10_14_1E_FF, #00_5C_80_FF, #10_14_1E_FF)
+ right: (#10_14_1E_FF, #23_2A_3A_FF, #10_14_1E_FF)
+
+
+failures:
+    ui::theme::tests::a_light_system_still_draws_the_tokens
+    ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill
+    ui::theme::tests::every_colour_of_the_visuals_is_a_token
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 152 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+==== 2026-11-02T15:04:36-05:00 ui_theme · plant theme-follows-system · a fresh scratch copy of the tree
+planted theme-follows-system: tests/plants/theme-follows-system.patch -> crates/sr-app/src/ui/theme.rs
+== 2026-11-02T15:04:37-05:00 ui_theme · task M0-D138-theme · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=101 · 6.03 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm2/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm2/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.93s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 8 tests
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... ok
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::the_desktop_and_the_web_install_the_tokens ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... ok
+test ui::theme::tests::the_status_line_is_the_small_size ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::a_light_system_still_draws_the_tokens ... FAILED
+
+failures:
+
+---- ui::theme::tests::a_light_system_still_draws_the_tokens stdout ----
+
+thread 'ui::theme::tests::a_light_system_still_draws_the_tokens' (2791097) panicked at crates/sr-app/src/ui/theme.rs:163:9:
+assertion `left == right` failed
+  left: Light
+ right: Dark
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::theme::tests::a_light_system_still_draws_the_tokens
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 152 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+==== 2026-11-02T15:04:43-05:00 ui_theme · plant theme-web-not-installed · a fresh scratch copy of the tree
+planted theme-web-not-installed: tests/plants/theme-web-not-installed.patch -> crates/sr-app/src/web.rs
+== 2026-11-02T15:04:43-05:00 ui_theme · task M0-D138-theme · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::theme::tests
+-- ui_theme · exit=101 · 6.73 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm3/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-fdfz_nsn/arm3/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 6.64s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 8 tests
+test ui::theme::tests::a_selected_rung_is_accent_text_on_a_token_fill ... ok
+test ui::theme::tests::the_status_line_is_the_small_size ... ok
+test ui::theme::tests::the_windows_and_the_chips_read_the_panel_tokens ... ok
+test ui::theme::tests::the_desktop_and_the_web_install_the_tokens ... FAILED
+test ui::theme::tests::the_window_files_write_no_colour_literal ... ok
+test ui::theme::tests::the_modal_backdrop_is_bg_space_dimmed ... ok
+test ui::theme::tests::every_colour_of_the_visuals_is_a_token ... ok
+test ui::theme::tests::a_light_system_still_draws_the_tokens ... ok
+
+failures:
+
+---- ui::theme::tests::the_desktop_and_the_web_install_the_tokens stdout ----
+
+thread 'ui::theme::tests::the_desktop_and_the_web_install_the_tokens' (2791863) panicked at crates/sr-app/src/ui/theme.rs:173:13:
+web.rs does not install the tokens
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::theme::tests::the_desktop_and_the_web_install_the_tokens
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 152 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+==== 2026-11-02T15:04:50-05:00 ui_theme · plant theme-status-body-size · a fresh scratch copy of the tree

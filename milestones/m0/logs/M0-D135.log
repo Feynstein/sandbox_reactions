@@ -1,0 +1,45 @@
+M0-D135 start
+failures:
+
+---- ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands stdout ----
+
+thread 'ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands' (2071365) panicked at crates/sr-app/src/ui/legend.rs:571:21:
+T = 10, S = 10000000000: label 1 meets the title (1198 … 1296 against 0 … 245)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands
+
+test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 133 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+test ui::legend::legend_tests::the_glow_bar_dims_with_the_setting ... ok
+test ui::legend::legend_tests::the_glow_setting_is_marked_in_glow_only_at_its_place_on_the_bar ... ok
+test ui::legend::legend_tests::the_bars_cache_follows_the_setting ... ok
+test ui::legend::legend_tests::the_glow_bar_is_the_cpu_formula_at_three_settings ... ok
+test ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 133 filtered out; finished in 0.11s
+
+ui_legend  20/0/0       0.31 s  GO
+logs: milestones/m0/logs/M0-D135.<scope>.log · record: loop_times.jsonl · tree 8c0d590bc06d+d3fcf8c3b3d1
+anchor: 130 path×scope entries moved by this run
+anchor: 388 paths checked · 362 skipped (3 classes) · 1 never checked · 7 stale · 0 unclassified · 0 owed · 396 covered of 758 visible
+verify: 20 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.32 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 28.34->28.34
+=== GO ===
+redarm: refused - nothing run
+=== NO-GO: no --task: every run names its task, so its logs are its own (`--task <ID>`, or $PB_TASK) ===
+ui_legend · clean · GO · arm 1/3, 2 left
+ui_legend · plant legend-ticks-linear · RED (proven: 5 failed) · arm 2/3, 1 left
+ui_legend · plant legend-label-over-title · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope ui_legend · 23.48 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D135.ui_legend.redarm.log
+=== GO ===
+logs: milestones/m0/logs/M0-D135.<scope>.log · record: loop_times.jsonl · tree 8c0d590bc06d+d3fcf8c3b3d1
+anchor: 263 path×scope entries moved by this run
+anchor: 396 paths checked · 362 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 396 covered of 758 visible
+skipped   354  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 747 passed, 0 failed, 0 skipped · 73/73 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 13 not impacted · 315.54 s + loop 0.15 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 27.83->13.31 · base: M0-D135's start 2026-11-02T14:08:35-05:00
+=== GO ===

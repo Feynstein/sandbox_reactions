@@ -22,6 +22,9 @@ pub const GAP: f32 = 8.0;
 pub const BAR_HEIGHT: f32 = 12.0;
 pub const TICK_LENGTH: f32 = 3.0;
 pub const HINT_HEIGHT: f32 = 20.0;
+/// A notice line's gap under the hint slot's top and its height, logical px: one line fits the slot (the centre area has no room for two).
+pub const NOTICE_TOP: f32 = 2.0;
+pub const NOTICE_LINE: f32 = 16.0;
 /// A mark: a triangle this tall over a line this wide (§4.11).
 pub const MARK_TRIANGLE: f32 = 10.0;
 pub const MARK_LINE: f32 = 2.0;
@@ -161,6 +164,29 @@ pub fn label_left(position: f64, label_width: f32, width: f32) -> f32 {
     (position as f32 * width - label_width / 2.0).clamp(0.0, (width - label_width).max(0.0))
 }
 
+/// The least space between the title and a mark's label, or between two marks' labels, logical px.
+pub const MARK_LABEL_GAP: f32 = 4.0;
+
+/// The left edge of each mark's label on the strip's top row, px from the strip's left, in the marks' order. `marks` are each one's
+/// x on the strip and its label's width; the title fills the row from 0 to `title_width`. A label sits to the right of its
+/// triangle, else to its left, else at the nearest free place right of the title or of a label before it: it stays inside `strip_width`
+/// and clear of the title and the labels placed before it by `MARK_LABEL_GAP` wherever one of the three allows.
+pub fn mark_label_lefts(title_width: f32, marks: &[(f32, f32)], strip_width: f32) -> Vec<f32> {
+    let mut spans: Vec<(f32, f32)> = vec![(0.0, title_width)];
+    marks
+        .iter()
+        .map(|&(x, w)| {
+            let clear = |l: f32| l >= 0.0 && l + w <= strip_width && spans.iter().all(|&(a, b)| l >= b + MARK_LABEL_GAP || l + w + MARK_LABEL_GAP <= a);
+            let mut after: Vec<f32> = spans.iter().map(|&(_, b)| b + MARK_LABEL_GAP).collect();
+            after.sort_by(f32::total_cmp);
+            let last = after.last().copied().unwrap_or(0.0);
+            let left = [x + 6.0, x - 6.0 - w].into_iter().chain(after).find(|&l| clear(l)).unwrap_or(last);
+            spans.push((left, left + w));
+            left
+        })
+        .collect()
+}
+
 /// Keeps each label whose box (`label_left`) clears the last kept one by `LABEL_GAP`.
 fn spaced(at: Vec<(f64, String)>, width: f32, text_width: &dyn Fn(&str) -> f32) -> Vec<Tick> {
     let mut right = f32::NEG_INFINITY;
@@ -266,6 +292,13 @@ pub fn layout(area: egui::Rect, world: (u32, u32), pixels_per_point: f32) -> Lay
     let legend = egui::Rect::from_min_size(egui::pos2(world.left(), world.bottom() + GAP), egui::vec2(size.x, STRIP_HEIGHT));
     let hint = egui::Rect::from_min_size(egui::pos2(world.left(), legend.bottom()), egui::vec2(size.x, HINT_HEIGHT));
     Layout { world, legend, hint }
+}
+
+/// The lines under the legend, as (top, index into `notices`): the hint slot holds one, so while the refusal shows (the last line) it
+/// stands in the hint's place, never under it (M0-D136).
+pub fn notice_slots(hint: egui::Rect, notices: &[String]) -> Vec<(f32, usize)> {
+    let fits = NOTICE_TOP + NOTICE_LINE <= hint.height();
+    notices.len().checked_sub(1).filter(|_| fits).map(|last| vec![(hint.top() + NOTICE_TOP, last)]).unwrap_or_default()
 }
 
 #[cfg(test)]
@@ -526,5 +559,60 @@ mod legend_tests {
         let l = layout(area, (600, 400), 1.0);
         assert_eq!(l.world.size(), egui::vec2(600.0, 400.0));
         assert!(l.hint.bottom() <= area.bottom());
+    }
+
+    #[test]
+    fn the_hint_and_the_refusal_together_stay_clear_of_the_legend_and_inside_the_slot() {
+        let area = egui::Rect::from_min_size(egui::pos2(220.0, 44.0), egui::vec2(1240.0, 872.0));
+        let l = layout(area, (600, 400), 1.0);
+        let hint = "Click in the world to drop the star. Esc cancels.".to_string();
+        let refusal = "Not enough room here for this star.".to_string();
+        for notices in [vec![hint.clone()], vec![hint.clone(), refusal.clone()], vec![refusal.clone()]] {
+            let slots = notice_slots(l.hint, &notices);
+            assert!(!slots.is_empty() && slots.len() <= 1, "{notices:?}: the slot holds one line, got {slots:?}");
+            for &(top, i) in &slots {
+                assert!(top >= l.legend.bottom() - 1e-3, "the line at {top} meets the legend (bottom {})", l.legend.bottom());
+                assert!(top + NOTICE_LINE <= l.hint.bottom().min(area.bottom()) + 1e-3, "the line at {top} leaves the slot ({:?})", l.hint);
+                assert_eq!(notices[i], *notices.last().unwrap(), "the refusal shows when there is one");
+            }
+        }
+        assert!(notice_slots(l.hint, &[]).is_empty());
+    }
+
+    /// A mark's label rectangle on the strip's top row, from `mark_label_lefts`.
+    fn label_spans(l: &Legend, strip: f32) -> Vec<(f32, f32)> {
+        let marks: Vec<&Mark> = l.white.iter().chain(l.cursor.iter()).collect();
+        let xs: Vec<(f32, f32)> = marks.iter().map(|m| (m.position as f32 * strip, width(&m.label))).collect();
+        let lefts = mark_label_lefts(width(&l.title), &xs, strip);
+        lefts.iter().zip(&xs).map(|(&left, &(_, w))| (left, left + w)).collect()
+    }
+
+    #[test]
+    fn a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands() {
+        let title = width(strings::get("legend.glow"));
+        for kelvin in [10.0, 12.0, 20.0, 50.0, 193.0, 893.0, 1_690.0, 3_000.0, 5_000.0, 1e5, 1e8, 1e10] {
+            for s in [100.0, 3_000.0, 1e6, 1e10] {
+                let cell = gas(kelvin, 1.0);
+                let display = Display { glow_s: s, ..Display::default() };
+                let l = legend(View::Glow, &display, &elements(), Some(&cell), glow_bar(s), 1200.0, &width);
+                let spans = label_spans(&l, 1200.0);
+                assert_eq!(spans.len(), 2);
+                for (i, &(a, b)) in spans.iter().enumerate() {
+                    assert!(a >= title + MARK_LABEL_GAP && b <= 1200.0, "T = {kelvin}, S = {s}: label {i} meets the title ({a} … {b} against 0 … {title})");
+                }
+                let (first, second) = (spans[0], spans[1]);
+                assert!(second.0 >= first.1 + MARK_LABEL_GAP || second.1 + MARK_LABEL_GAP <= first.0, "T = {kelvin}, S = {s}: the labels meet ({first:?}, {second:?})");
+            }
+        }
+    }
+
+    #[test]
+    fn a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title() {
+        let title = 245.0;
+        let lefts = mark_label_lefts(title, &[(0.0, 100.0)], 1200.0);
+        assert_eq!(lefts, [title + MARK_LABEL_GAP]);
+        // Far from the title the label keeps its place right of the triangle; at the right edge it goes left of it.
+        assert_eq!(mark_label_lefts(title, &[(600.0, 100.0)], 1200.0), [606.0]);
+        assert_eq!(mark_label_lefts(title, &[(1190.0, 100.0)], 1200.0), [1084.0]);
     }
 }

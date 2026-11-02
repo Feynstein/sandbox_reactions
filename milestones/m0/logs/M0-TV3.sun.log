@@ -1,0 +1,75 @@
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE s01-start s01-start.png 1760x940
+SR-CAPTURE-STATUS s01-start llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE s02-drop s02-drop.png 1760x940
+SR-CAPTURE-STATUS s02-drop llvmpipe (LLVM 20.1.2, 256 bits) · 11 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE s03-steps100 s03-steps100.png 1760x940
+SR-CAPTURE-STATUS s03-steps100 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE s04-steps300 s04-steps300.png 1760x940
+SR-CAPTURE-STATUS s04-steps300 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE s05-steps1000 s05-steps1000.png 1760x940
+SR-CAPTURE-STATUS s05-steps1000 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 188 steps per frame · 600 × 400 cells
+SR-CAPTURE s06-steps2000 s06-steps2000.png 1760x940
+SR-CAPTURE-STATUS s06-steps2000 llvmpipe (LLVM 20.1.2, 256 bits) · 1 fps · 256 steps per frame · 600 × 400 cells
+SR-CAPTURE t01-brush t01-brush.png 1760x940
+SR-CAPTURE-STATUS t01-brush llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE t02-eraser t02-eraser.png 1760x940
+SR-CAPTURE-STATUS t02-eraser llvmpipe (LLVM 20.1.2, 256 bits) · 7 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE t03-heat t03-heat.png 1760x940
+SR-CAPTURE-STATUS t03-heat llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE t04-cool t04-cool.png 1760x940
+SR-CAPTURE-STATUS t04-cool llvmpipe (LLVM 20.1.2, 256 bits) · 17 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE e01-fe e01-fe.png 1760x940
+SR-CAPTURE-STATUS e01-fe llvmpipe (LLVM 20.1.2, 256 bits) · 22 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE e02-brush-fe e02-brush-fe.png 1760x940
+SR-CAPTURE-STATUS e02-brush-fe llvmpipe (LLVM 20.1.2, 256 bits) · 27 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE e03-heat-paint e03-heat-paint.png 1760x940
+SR-CAPTURE-STATUS e03-heat-paint llvmpipe (LLVM 20.1.2, 256 bits) · 32 fps · 2 steps per frame · 600 × 400 cells
+SR-CAPTURE e04-cool-paint e04-cool-paint.png 1760x940
+SR-CAPTURE-STATUS e04-cool-paint llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE e05-eraser-paint e05-eraser-paint.png 1760x940
+SR-CAPTURE-STATUS e05-eraser-paint llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v01-glow v01-glow.png 1760x940
+SR-CAPTURE-STATUS v01-glow llvmpipe (LLVM 20.1.2, 256 bits) · 17 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v02-heat v02-heat.png 1760x940
+SR-CAPTURE-STATUS v02-heat llvmpipe (LLVM 20.1.2, 256 bits) · 19 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v03-heat-fit v03-heat-fit.png 1760x940
+SR-CAPTURE-STATUS v03-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 22 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v04-heat-range v04-heat-range.png 1760x940
+SR-CAPTURE-STATUS v04-heat-range llvmpipe (LLVM 20.1.2, 256 bits) · 27 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v05-heat-reset v05-heat-reset.png 1760x940
+SR-CAPTURE-STATUS v05-heat-reset llvmpipe (LLVM 20.1.2, 256 bits) · 32 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v06-element v06-element.png 1760x940
+SR-CAPTURE-STATUS v06-element llvmpipe (LLVM 20.1.2, 256 bits) · 37 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v07-density v07-density.png 1760x940
+SR-CAPTURE-STATUS v07-density llvmpipe (LLVM 20.1.2, 256 bits) · 42 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v08-density-fit v08-density-fit.png 1760x940
+SR-CAPTURE-STATUS v08-density-fit llvmpipe (LLVM 20.1.2, 256 bits) · 47 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v09-density-reset v09-density-reset.png 1760x940
+SR-CAPTURE-STATUS v09-density-reset llvmpipe (LLVM 20.1.2, 256 bits) · 51 fps · 3 steps per frame · 600 × 400 cells
+SR-CAPTURE v10-glow-white v10-glow-white.png 1760x940
+SR-CAPTURE-STATUS v10-glow-white llvmpipe (LLVM 20.1.2, 256 bits) · 52 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE v11-glow-reset v11-glow-reset.png 1760x940
+SR-CAPTURE-STATUS v11-glow-reset llvmpipe (LLVM 20.1.2, 256 bits) · 57 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE z01-zoom4 z01-zoom4.png 1760x940
+SR-CAPTURE-STATUS z01-zoom4 llvmpipe (LLVM 20.1.2, 256 bits) · 62 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE z02-zoom8 z02-zoom8.png 1760x940
+SR-CAPTURE-STATUS z02-zoom8 llvmpipe (LLVM 20.1.2, 256 bits) · 67 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE z03-zoom1 z03-zoom1.png 1760x940
+SR-CAPTURE-STATUS z03-zoom1 llvmpipe (LLVM 20.1.2, 256 bits) · 72 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE i01-star i01-star.png 1760x940
+SR-CAPTURE-STATUS i01-star llvmpipe (LLVM 20.1.2, 256 bits) · 89 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE i02-edge i02-edge.png 1760x940
+SR-CAPTURE-STATUS i02-edge llvmpipe (LLVM 20.1.2, 256 bits) · 101 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE i03-vacuum i03-vacuum.png 1760x940
+SR-CAPTURE-STATUS i03-vacuum llvmpipe (LLVM 20.1.2, 256 bits) · 113 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE i04-outside i04-outside.png 1760x940
+SR-CAPTURE-STATUS i04-outside llvmpipe (LLVM 20.1.2, 256 bits) · 125 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE r01-select r01-select.png 1760x940
+SR-CAPTURE-STATUS r01-select llvmpipe (LLVM 20.1.2, 256 bits) · 121 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 34 milestones/m0/images/tv3/sun
+exit 0
+
+real	2m3.525s
+user	30m14.733s
+sys	1m2.403s

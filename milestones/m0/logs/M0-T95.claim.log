@@ -1,0 +1,119 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-app/src/measure.rs · stale: crates/sr-app/src/desktop.rs (+1)
+why strings: stale: milestones/m0/m0_contrat.md
+why formats: stale: crates/sr-app/src/main.rs
+why boot: never: crates/sr-app/src/measure.rs · stale: crates/sr-app/src/desktop.rs (+1)
+why desktop: never: crates/sr-app/src/measure.rs · stale: crates/sr-app/src/desktop.rs (+1)
+why web: never: crates/sr-app/src/measure.rs · stale: crates/sr-app/src/desktop.rs (+1)
+why capture: never: crates/sr-app/src/measure.rs · stale: crates/sr-app/src/desktop.rs (+1)
+why watch_only: stale: milestones/m0/m0_contrat.md
+why ui_topbar: stale: crates/sr-app/src/desktop.rs (+1)
+why ui_banner: stale: crates/sr-app/src/desktop.rs (+1)
+why ui_theme: stale: crates/sr-app/src/desktop.rs (+1)
+why ui_world: stale: crates/sr-app/src/main.rs
+why ui_tools: stale: crates/sr-app/src/main.rs
+why ui_presets: stale: crates/sr-app/src/main.rs
+why ui_display: stale: crates/sr-app/src/main.rs
+why ui_star: stale: crates/sr-app/src/main.rs
+why ui_legend: stale: crates/sr-app/src/main.rs
+why ui_zoom: stale: crates/sr-app/src/main.rs
+why ui_inspect: stale: crates/sr-app/src/main.rs
+plan_lint         761/0/0      0.11 s  GO · step 1/20, 19 left
+build             2/0/0        3.09 s  GO · step 2/20, 18 left
+strings           3/0/0        0.47 s  GO · step 3/20, 17 left
+formats           17/0/0       1.87 s  GO · step 4/20, 16 left
+boot              1/0/0       14.50 s  GO · step 5/20, 15 left
+desktop           5/0/0       74.59 s  GO · step 6/20, 14 left
+web               5/0/0      520.11 s  GO · step 7/20, 13 left
+capture           3/0/0       22.27 s  GO · step 8/20, 12 left
+watch_only        1/0/0        0.11 s  GO · step 9/20, 11 left
+ui_topbar         15/0/0       0.11 s  GO · step 10/20, 10 left
+ui_banner         15/0/0       0.16 s  GO · step 11/20, 9 left
+ui_theme          8/0/0        0.11 s  GO · step 12/20, 8 left
+ui_world          7/0/0        0.11 s  GO · step 13/20, 7 left
+ui_tools          18/0/0       0.11 s  GO · step 14/20, 6 left
+ui_presets        7/0/0        0.51 s  GO · step 15/20, 5 left
+ui_display        11/0/0       0.16 s  GO · step 16/20, 4 left
+ui_star           13/0/0       0.16 s  GO · step 17/20, 3 left
+ui_legend         18/0/0       0.16 s  GO · step 18/20, 2 left
+ui_zoom           11/0/0       0.16 s  GO · step 19/20, 1 left
+ui_inspect        9/0/0        0.16 s  GO · step 20/20, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 144 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 43 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+multi             NOT RUN (not impacted: its 140 path(s) checked at the anchor)
+edits             NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+edits_file        NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 125 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 125 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 126 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 115 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 88 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 88 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 139 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 144 path(s) checked at the anchor)
+measure_ui        NOT RUN (not impacted: its 138 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 140 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 151 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 142 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 140 path(s) checked at the anchor)
+views             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+extents           NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+glow              NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+frames            NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+measure_ui · red-arm proven by M0-T95 2026-11-02T09:53:26-05:00 (fingerprint 9c0af3c6c08d) - not re-run
+flags: M0-T95-claim is no block of a plan under milestones/ - no Deliver and no type to read them against
+logs: milestones/m0/logs/M0-T95-claim.<scope>.log · record: loop_times.jsonl · tree 8c0d590bc06d+8a3c1b09eac4
+anchor: 33 path×scope entries moved by this run
+anchor: 390 paths checked · 355 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 390 covered of 745 visible
+skipped   347  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 930 passed, 0 failed, 0 skipped · 20/20 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 65 not impacted · 178.38 s + loop 0.13 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 1.85->3.53 · base: M0-T95's start 2026-11-02T09:49:35-05:00 — no start for M0-T95-claim
+=== GO ===
+
+real	2m58.872s
+user	3m6.171s
+sys	0m27.076s

@@ -1,0 +1,8 @@
+SR-ERROR --capture /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3adf6de5-8c08-4fbd-b772-f0329abf7930/scratchpad/all_actions.json: step 1: id "!bad" does not match [A-Za-z0-9][A-Za-z0-9.-]*
+{"preset":"sun","at":[1,1]} => SR-ERROR --capture /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3adf6de5-8c08-4fbd-b772-f0329abf7930/scratchpad/one.json: step "a": an action is a rc=0
+{"zoom":9,"at":[1,1]} => SR-ERROR --capture /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3adf6de5-8c08-4fbd-b772-f0329abf7930/scratchpad/one.json: step "a": action "zoom"  rc=0
+{"zoom":2} => SR-ERROR --capture /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3adf6de5-8c08-4fbd-b772-f0329abf7930/scratchpad/one.json: step "a": action "zoom"  rc=0
+{"range":[5,1]} => SR-ERROR --capture /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3adf6de5-8c08-4fbd-b772-f0329abf7930/scratchpad/one.json: step "a": action "range" rc=0
+{"fit":false} => SR-ERROR --capture /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3adf6de5-8c08-4fbd-b772-f0329abf7930/scratchpad/one.json: step "a": action "fit" t rc=0
+{"bogus":1} => SR-ERROR --capture /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3adf6de5-8c08-4fbd-b772-f0329abf7930/scratchpad/one.json: step "a": unknown action rc=0
+{"elements":"x"} => SR-ERROR --capture /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3adf6de5-8c08-4fbd-b772-f0329abf7930/scratchpad/one.json: step "a": unknown action rc=0

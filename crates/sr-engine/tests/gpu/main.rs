@@ -321,3 +321,6 @@ mod edit;
 
 /// M0-T77 — the edits file and `headless --edits` (contract §2.12.5, §3.3).
 mod edits_file;
+
+/// M0-D134 — the stage a live preset life shows, frame by frame (contract §1.9.3, §1.9.4, §4.6).
+mod stage_order;

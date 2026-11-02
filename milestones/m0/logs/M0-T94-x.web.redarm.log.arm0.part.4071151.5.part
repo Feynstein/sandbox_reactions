@@ -1,0 +1,9 @@
+web: ready on port 47841, 0.0s (port 47840 held by a process we did not start) (log /tmp/pb-redarm-l0s06rvx/arm0/milestones/m0/logs/M0-T94-x.launch.web.log)
+services: 1, ready: 1
+web ready-held: 47840 held, the server on 47841
+web smoke ready: /usr/bin/google-chrome (156.0.8078.73) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47841
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+ready: srState "ready" after 6.1 s
+=== GO ===

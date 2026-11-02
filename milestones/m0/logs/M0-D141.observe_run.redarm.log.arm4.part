@@ -1,0 +1,3 @@
+==== 2026-11-02T13:30:09-05:00 observe_run · plant lone-sink-left-out · a fresh scratch copy of the tree
+planted lone-sink-left-out: tests/plants/lone-sink-left-out.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-02T13:30:09-05:00 observe_run · task M0-D141 · box laserax-ai-server :: bash tests/gpu.sh observe physics

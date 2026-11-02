@@ -1,0 +1,17 @@
+== 2026-11-02T12:18:47-05:00 ui_presets · task M0-D134-claim · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::left::presets_tests
+-- ui_presets · exit=0 · 0.56 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::left::presets_tests::a_refusal_shows_for_three_seconds_and_the_preset_stays_armed ... ok
+test ui::left::presets_tests::the_hint_shows_while_armed_and_a_drop_spends_the_click ... ok
+test ui::left::presets_tests::arming_leaves_the_tools_alone ... ok
+test ui::left::presets_tests::esc_disarms_and_no_other_key_is ... ok
+test ui::left::presets_tests::the_texts_are_byte_exact ... ok
+test ui::left::presets_tests::a_button_arms_its_preset_and_only_one_is_armed ... ok
+test ui::left::presets_tests::the_outline_is_the_clouds_radius_and_agrees_with_the_refusal ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 144 filtered out; finished in 0.41s
+
+

@@ -312,3 +312,19 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   today's at 3,000 K), each map's range with «Fit to view», the legend under the world, the zoom, all kept by Clear (the lead,
   2026-11-01, M0-R12: «G3 luminance dimming (Recommended)», «Range + Fit to view (Recommended)», «Under the world
   (Recommended)», «File a zoom block after R12's (Recommended)»).
+- Contract §1.9.3's failed_star row on d_c alone («never ignited, d_c ≥ 0.5, L_H < 0.01 L») and its display hold showing any
+  stage held 3 frames — superseded by contract §0.5 [M0-D134]: failed_star also needs the protostar's settled test, and the shown
+  stage never steps back (no cloud, collapsing or protostar once ignited; before it, those three forward only; no cloud after a
+  failed star) (the lead, 2026-11-02, M0-D134: «Must be settled (Recommended)», «Display holds (Recommended)»).
+- Contract §1.9.3's white_dwarf and planetary_nebula rows without a motion test («ignited, d_c ≥ 0.5, L_nuc < 0.01 L …»,
+  «… L_nuc < 0.1 L, M_unb ≥ 0.05 M», each M ≤ m_ch_sb by [M0-D81]) — superseded by contract §0.5 [M0-D140]: each also needs the
+  settled test, |v_r| ≤ 0.05 √(GM/R) and 2P/|W| ≥ 0.8 (the lead, 2026-11-02, M0-D140: «(a) Settled test (Recommended)»).
+- Contract §1.9.3's main_sequence row on the light window («L_H ≥ 0.5 L and X_H,c ≥ 10⁻³», 0.5 L ≤ L_H ≤ 2 L by [M0-D53]) —
+  superseded by contract §0.5 [M0-D141]: an ignited object whose largest burning group is hydrogen (≥ 0.1 L_nuc, X_H,c ≥ 10⁻³);
+  the window holds the ignition event alone (the lead, 2026-11-02, M0-D141: «(a) Largest group (Recommended)»).
+- Contract §4.2's Centre and §4.6's star readout as listed (nothing marks a remnant) — superseded by contract §0.5 [M0-D138]: from
+  core collapse on, a ring around each such object's centre in every view and zoom, and `star.remnant` under the fate or ending
+  line (the lead, 2026-11-02, M0-D138: «Mark the remnant (Recommended)», «From core collapse on (Recommended)»).
+- Contract §1.8.5's «with the setting off, steps run through events» and §4.2's banner «after an automatic slow-down» as the only
+  ignition sign — superseded by contract §0.5 [M0-D139]: an ignition the slow-down's banner does not name shows
+  `banner.ignition_notice` in the banner's slot for 5 s, the rung unchanged (the lead, 2026-11-02, M0-D139: «(a) Notice in banner spot»).

@@ -7,6 +7,7 @@
 #   ready      the page in the box's installed Chrome (web/smoke.mjs, §6.2.3): `launch.py start web`, then `/` reaches srState
 #              "ready" within 30 s; srAdapter and Chrome's own adapter go in the log (M0-T15)
 #   no-webgpu  `/?no-webgpu=1` shows srState "no-webgpu" and the three web.no_webgpu_* texts exactly (M0-T15)
+#   preset     `/?preset=sun&steps=200` reaches "ready" and the canvas's central 100 x 100 px are not all black (M0-T94)
 #   ready-held `ready` with a foreign listener on launch.json's `web` port: launch.py starts the server on the next free port of
 #              the service's `port_range`, prints it, and the page reaches "ready" there (M0-D107); the listener binds as
 #              launch.py's server does and a bind it cannot make is the case's own NO-GO, never launch.py's (M0-D128)
@@ -18,7 +19,7 @@
 #     build` (its `rm -rf dist` included), `npm ci`, the launch and the smoke; no case rebuilds dist under another's smoke
 #   the port lock (outside any tree) - taken after the build and `npm ci`, held for `launch.py start web`, the
 #     smoke and the stop, so one red-arm copy's trunk run overlaps another copy's Chrome run
-# The shared target's lock (tests/cargo.sh) still covers a whole trunk run, wasm-opt included. `ready` and `no-webgpu` serve the
+# The shared target's lock (tests/cargo.sh) still covers a whole trunk run, wasm-opt included. `ready`, `no-webgpu` and `preset` serve the
 # dist of a build that is fresh against every input (build/web-built.stamp), else they build it first - a smoke never runs
 # against a stale dist. In a red-arm copy (no .git) build/ is the arm's own: the first case to build records its verdict
 # (build/web-build.result) and its siblings reuse it while no input is newer - the arm runs trunk once, pass or fail; `build`
@@ -30,7 +31,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/../cargo.sh"
 root="$_sr_root"
 die() { echo "web $case_: $1"; echo "=== NO-GO: $1 ==="; exit 1; }
 
-case "$case_" in build | ready | no-webgpu | ready-held) ;; *) die "unknown case '$case_' (build|ready|no-webgpu|ready-held)" ;; esac
+case "$case_" in build | ready | no-webgpu | preset | ready-held) ;; *) die "unknown case '$case_' (build|ready|no-webgpu|preset|ready-held)" ;; esac
 case "$(uname -s)" in
   MINGW* | MSYS* | CYGWIN*) PY="py -3.12" ;;
   *) PY="python3" ;;
@@ -186,7 +187,7 @@ if [ "$case_" = build ]; then
   exit 0
 fi
 
-# ready, no-webgpu: serve web/dist through launch.py's `web` service and run web/smoke.mjs against it
+# ready, no-webgpu, preset: serve web/dist through launch.py's `web` service and run web/smoke.mjs against it
 command -v node >/dev/null 2>&1 || die "node not found on PATH (web/smoke.mjs)"
 cd "$root/web" || die "no web/ folder"
 if [ ! -d node_modules/playwright-core ]; then   # a red-arm scratch copy leaves node_modules out by name

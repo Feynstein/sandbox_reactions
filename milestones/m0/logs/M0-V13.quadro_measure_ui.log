@@ -1,0 +1,4 @@
+# M0-V13 — the lead's run (asked, the lead: «You launch it now (Recommended)»), 2026-11-02T15:46:49-05:00, linux-pc, binary 2026-11-02 15:17:37.716649465 -0500
+# build/target/release/sandbox-reactions --adapter "Quadro RTX 4000" --measure-ui 600
+SR-ERROR winit EventLoopError: os error at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winit-0.30.13/src/platform_impl/linux/mod.rs:765: neither WAYLAND_DISPLAY nor WAYLAND_SOCKET nor DISPLAY is set.
+exit 3 at 2026-11-02T15:46:49-05:00

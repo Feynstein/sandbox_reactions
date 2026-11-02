@@ -1,0 +1,13 @@
+--- a/crates/sr-app/src/ui/legend.rs
++++ b/crates/sr-app/src/ui/legend.rs
+@@ -297,8 +297,8 @@
+ /// The lines under the legend, as (top, index into `notices`): the hint slot holds one, so while the refusal shows (the last line) it
+ /// stands in the hint's place, never under it (M0-D136).
+ pub fn notice_slots(hint: egui::Rect, notices: &[String]) -> Vec<(f32, usize)> {
+-    let fits = NOTICE_TOP + NOTICE_LINE <= hint.height();
+-    notices.len().checked_sub(1).filter(|_| fits).map(|last| vec![(hint.top() + NOTICE_TOP, last)]).unwrap_or_default()
++    // Planted: every line takes its own slot, the refusal under the hint (M0-D136's plant).
++    (0..notices.len()).map(|i| (hint.top() + NOTICE_TOP + NOTICE_LINE * i as f32, i)).collect()
+ }
+ 
+ #[cfg(test)]

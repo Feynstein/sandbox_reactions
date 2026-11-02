@@ -5,6 +5,9 @@
 //! back to the clock, the observers and the `Feed`, and keeps a frame submitted before a Clear away from the new world's
 //! observers (M0-D122) — the star readout's (ui::right) among them.
 //!
+//! The ignition notice (§0.5 [M0-D139]) takes the banner's slot when a star lights and the slow-down's banner does not say so
+//! — the setting off, or the rung already at ×1 or slower — for [`NOTICE_SECONDS`]; it never changes the speed.
+//!
 //! The egui layer (desktop.rs) reads only the `Banner` and draws it in the banner tokens.
 
 use std::collections::VecDeque;
@@ -43,6 +46,16 @@ fn slow_down_event(kind: &str) -> Option<Event> {
     }
 }
 
+/// How long the ignition notice stays over the world (§0.5 [M0-D139]), in wall seconds.
+pub const NOTICE_SECONDS: f64 = 5.0;
+
+/// `views` at egui time `now`, the line over the world the one the window draws: the slow-down's banner, else the ignition
+/// notice (§0.5 [M0-D139]).
+pub fn views_at(app: &mut impl Pass, now: f64) -> (TopBar, Option<Banner>) {
+    let (bar, banner) = views(app);
+    (bar, banner.or_else(|| app.notice(now)))
+}
+
 /// What a pass reads of the app to draw the top bar and the banner: the frames read back since the last pass (which book the
 /// slow-down's events into the clock), and the clock and the world's actions as they stand after.
 pub trait Pass {
@@ -50,6 +63,8 @@ pub trait Pass {
     fn poll(&mut self);
     fn time(&self) -> &TimeControl;
     fn world_bar(&self) -> &WorldBar;
+    /// The ignition notice at egui time `now` (`Feed::notice`).
+    fn notice(&self, now: f64) -> Option<Banner>;
 }
 
 /// The bar and the banner of one pass, both built from the clock as the pass's read-back leaves it: an event booked by this
@@ -71,6 +86,8 @@ pub struct Feed {
     fired: Vec<(u32, Event)>,
     /// The latch slowed the clock for a collapse the Tracker has not yet named.
     latched: bool,
+    /// The egui time (s) the ignition notice stops showing at.
+    notice_until: Option<f64>,
 }
 
 impl Feed {
@@ -84,8 +101,9 @@ impl Feed {
         time.on_event(Event::CoreCollapse);
     }
 
-    /// An event of the Tracker, as the observers' `kind` writes it, for `object`.
-    pub fn event(&mut self, time: &mut TimeControl, object: u32, kind: &str) {
+    /// An event of the Tracker, as the observers' `kind` writes it, for `object`, read back at egui time `wall`. An ignition
+    /// the slow-down's banner does not name starts the notice, whatever the setting.
+    pub fn event(&mut self, time: &mut TimeControl, object: u32, kind: &str, wall: f64) {
         let Some(event) = slow_down_event(kind) else { return };
         if self.fired.contains(&(object, event)) {
             return;
@@ -95,6 +113,16 @@ impl Feed {
             return;
         }
         time.on_event(event);
+        if event == Event::Ignition && time.banner() != Some(Event::Ignition) {
+            self.notice_until = Some(wall + NOTICE_SECONDS);
+        }
+    }
+
+    /// `banner.ignition_notice` until [`NOTICE_SECONDS`] after the ignition that started it, at egui time `now`.
+    pub fn notice(&self, now: f64) -> Option<Banner> {
+        self.notice_until
+            .filter(|&until| now < until)
+            .map(|_| Banner { text: strings::get("banner.ignition_notice").to_string() })
     }
 }
 
@@ -154,10 +182,16 @@ impl Frames {
     }
 
     /// A Clear queued for the next frame's P0: the frames submitted from now run in a new world, which new observers watch
-    /// from its first frame on. The star readout empties at once.
+    /// from its first frame on. The star readout empties at once, and the old world's ignition notice with it.
     pub fn clear(&mut self) {
         self.world += 1;
         self.stars.restart(self.sim_time);
+        self.events = Feed::new();
+    }
+
+    /// The ignition notice at egui time `now` (`Feed::notice`).
+    pub fn notice(&self, now: f64) -> Option<Banner> {
+        self.events.notice(now)
     }
 
     /// A frame read back, in submission order: its report to the clock, then its latch cut and the events its block summary
@@ -191,7 +225,7 @@ impl Frames {
         }
         let at = At { step: r.steps, sim_time: r.sim_time };
         for event in self.watch.update(&frame.summary, at) {
-            self.events.event(time, event.object, event.kind);
+            self.events.event(time, event.object, event.kind, wall);
         }
         self.stars.update(&frame.summary, at, wall);
     }
@@ -217,18 +251,19 @@ mod tests {
         view(time).map(|b| b.text)
     }
 
-    /// An app whose read-back books `events` (object, kind) into the clock when the pass polls.
+    /// An app whose read-back books `events` (object, kind) into the clock when the pass polls, at egui time `wall`.
     struct App {
         time: TimeControl,
         feed: Feed,
         world_bar: WorldBar,
         events: Vec<(u32, &'static str)>,
+        wall: f64,
     }
 
     impl Pass for App {
         fn poll(&mut self) {
             for (object, kind) in self.events.drain(..) {
-                self.feed.event(&mut self.time, object, kind);
+                self.feed.event(&mut self.time, object, kind, self.wall);
             }
         }
         fn time(&self) -> &TimeControl {
@@ -237,7 +272,12 @@ mod tests {
         fn world_bar(&self) -> &WorldBar {
             &self.world_bar
         }
+        fn notice(&self, now: f64) -> Option<Banner> {
+            self.feed.notice(now)
+        }
     }
+
+    const NOTICE: &str = "Hydrogen ignition — the cloud has become a star";
 
     #[test]
     fn nothing_slowed_nothing_shown() {
@@ -248,7 +288,7 @@ mod tests {
     #[test]
     fn ignition_slows_to_one_and_says_so() {
         let (mut time, mut feed) = (clock(5), Feed::new());
-        feed.event(&mut time, 1, "ignition");
+        feed.event(&mut time, 1, "ignition", 0.0);
         assert_eq!(value(&time), 1.0);
         assert_eq!(text(&time).as_deref(), Some("Slowed down: hydrogen ignition — press + to speed up again"));
     }
@@ -264,7 +304,7 @@ mod tests {
     #[test]
     fn supernova_slows_to_a_tenth_with_its_text() {
         let (mut time, mut feed) = (clock(5), Feed::new());
-        feed.event(&mut time, 1, "supernova");
+        feed.event(&mut time, 1, "supernova", 0.0);
         assert_eq!(value(&time), 0.1);
         assert_eq!(text(&time).as_deref(), Some("Slowed down: supernova — press + to speed up again"));
     }
@@ -272,7 +312,7 @@ mod tests {
     #[test]
     fn the_banner_stays_until_the_player_changes_the_rung() {
         let (mut time, mut feed) = (clock(5), Feed::new());
-        feed.event(&mut time, 1, "supernova");
+        feed.event(&mut time, 1, "supernova", 0.0);
         // Frames pass, a pause and a step change nothing about the rung: the banner stays (no auto-return, D8).
         topbar::apply(&mut time, Command::TogglePause);
         topbar::apply(&mut time, Command::Step);
@@ -280,7 +320,7 @@ mod tests {
         assert!(view(&time).is_some());
         topbar::apply(&mut time, Command::Faster);
         assert_eq!((view(&time), value(&time)), (None, 0.3));
-        feed.event(&mut time, 2, "supernova");
+        feed.event(&mut time, 2, "supernova", 0.0);
         topbar::apply(&mut time, Command::Select(2));
         assert_eq!(view(&time), None, "a click on a rung ends it too");
     }
@@ -289,40 +329,40 @@ mod tests {
     fn the_setting_off_means_no_slow_down_and_no_banner() {
         let (mut time, mut feed) = (clock(5), Feed::new());
         topbar::apply(&mut time, Command::SetSlowDown(false));
-        feed.event(&mut time, 1, "ignition");
+        feed.event(&mut time, 1, "ignition", 0.0);
         feed.latch(&mut time);
-        feed.event(&mut time, 1, "core_collapse");
-        feed.event(&mut time, 1, "supernova");
+        feed.event(&mut time, 1, "core_collapse", 0.0);
+        feed.event(&mut time, 1, "supernova", 0.0);
         assert_eq!((value(&time), view(&time)), (30.0, None));
     }
 
     #[test]
     fn only_ever_slower() {
         let (mut time, mut feed) = (clock(0), Feed::new());
-        feed.event(&mut time, 1, "ignition");
+        feed.event(&mut time, 1, "ignition", 0.0);
         assert_eq!((value(&time), view(&time)), (0.1, None), "×0.1 is already slower than ×1");
         let mut time = clock(1);
-        feed.event(&mut time, 2, "ignition");
+        feed.event(&mut time, 2, "ignition", 0.0);
         assert_eq!((value(&time), view(&time)), (0.3, None));
     }
 
     #[test]
     fn events_that_are_not_the_slow_downs_do_nothing() {
         let (mut time, mut feed) = (clock(5), Feed::new());
-        feed.event(&mut time, 1, "sink_formed");
-        feed.event(&mut time, 1, "ending");
-        feed.event(&mut time, 1, "something_else");
+        feed.event(&mut time, 1, "sink_formed", 0.0);
+        feed.event(&mut time, 1, "ending", 0.0);
+        feed.event(&mut time, 1, "something_else", 0.0);
         assert_eq!((value(&time), view(&time)), (30.0, None));
     }
 
     #[test]
     fn each_event_fires_once_per_object() {
         let (mut time, mut feed) = (clock(5), Feed::new());
-        feed.event(&mut time, 1, "ignition");
+        feed.event(&mut time, 1, "ignition", 0.0);
         topbar::apply(&mut time, Command::Select(5));
-        feed.event(&mut time, 1, "ignition");
+        feed.event(&mut time, 1, "ignition", 0.0);
         assert_eq!((value(&time), view(&time)), (30.0, None), "the same object's ignition does not slow it again");
-        feed.event(&mut time, 2, "ignition");
+        feed.event(&mut time, 2, "ignition", 0.0);
         assert_eq!((value(&time), text(&time).is_some()), (1.0, true), "another object's does");
     }
 
@@ -334,10 +374,10 @@ mod tests {
         // The player speeds up at once; the Tracker's event for the same collapse reaches the app two frames late.
         topbar::apply(&mut time, Command::Faster);
         assert_eq!(view(&time), None);
-        feed.event(&mut time, 1, "core_collapse");
+        feed.event(&mut time, 1, "core_collapse", 0.0);
         assert_eq!((value(&time), view(&time)), (0.3, None), "no second slow-down, no second banner");
         // The supernova that follows is its own event.
-        feed.event(&mut time, 1, "supernova");
+        feed.event(&mut time, 1, "supernova", 0.0);
         assert_eq!(value(&time), 0.1);
         assert_eq!(text(&time).as_deref(), Some("Slowed down: supernova — press + to speed up again"));
     }
@@ -346,7 +386,7 @@ mod tests {
     fn a_collapse_the_latch_did_not_cut_still_slows_the_clock() {
         // The latch's frame was never read back as cut (it is a Tracker event alone): the event is the slow-down.
         let (mut time, mut feed) = (clock(5), Feed::new());
-        feed.event(&mut time, 1, "core_collapse");
+        feed.event(&mut time, 1, "core_collapse", 0.0);
         assert_eq!(value(&time), 0.1);
         assert_eq!(text(&time).as_deref(), Some("Slowed down: core collapse — press + to speed up again"));
     }
@@ -457,7 +497,7 @@ mod tests {
             ("core_collapse", 0.1, "Speed ×0.1", "Slowed down: core collapse — press + to speed up again"),
             ("supernova", 0.1, "Speed ×0.1", "Slowed down: supernova — press + to speed up again"),
         ] {
-            let mut app = App { time: clock(5), feed: Feed::new(), world_bar: WorldBar::default(), events: vec![(1, kind)] };
+            let mut app = App { time: clock(5), feed: Feed::new(), world_bar: WorldBar::default(), events: vec![(1, kind)], wall: 0.0 };
             let (bar, shown) = views(&mut app);
             let selected: Vec<usize> = bar.rungs.iter().enumerate().filter(|(_, r)| r.selected).map(|(i, _)| i).collect();
             assert_eq!(selected.len(), 1, "{kind}: one rung selected");
@@ -465,5 +505,53 @@ mod tests {
             assert_eq!(bar.speed, speed, "{kind}: the readout");
             assert_eq!(shown.map(|b| b.text).as_deref(), Some(banner), "{kind}: the banner");
         }
+    }
+
+    #[test]
+    fn with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed() {
+        // A large star lights at ×30 with «Slow down for big events» cleared (M0-D139): the rung stays, the notice says so.
+        let mut app = App { time: clock(5), feed: Feed::new(), world_bar: WorldBar::default(), events: vec![(1, "ignition")], wall: 0.0 };
+        topbar::apply(&mut app.time, Command::SetSlowDown(false));
+        let (bar, shown) = views_at(&mut app, 0.0);
+        assert_eq!((value(&app.time), bar.speed.as_str(), app.time.banner()), (30.0, "Speed ×30", None), "the speed unchanged");
+        assert_eq!(shown.map(|b| b.text).as_deref(), Some(NOTICE));
+        assert_eq!(views_at(&mut app, NOTICE_SECONDS - 0.1).1.map(|b| b.text).as_deref(), Some(NOTICE), "it stays its time");
+        assert_eq!(views_at(&mut app, NOTICE_SECONDS).1, None, "then goes");
+        // Another star's ignition shows it again; the latch's collapse and a supernova with the setting off show nothing.
+        (app.events, app.wall) = (vec![(2, "ignition")], 10.0);
+        assert_eq!(views_at(&mut app, 10.0).1.map(|b| b.text).as_deref(), Some(NOTICE));
+        (app.events, app.wall) = (vec![(2, "core_collapse"), (2, "supernova")], 20.0);
+        assert_eq!((views_at(&mut app, 20.0).1, value(&app.time)), (None, 30.0));
+    }
+
+    #[test]
+    fn with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence() {
+        // Ticked: the slow-down's own banner names the ignition, the notice never shows over or after it.
+        let mut app = App { time: clock(5), feed: Feed::new(), world_bar: WorldBar::default(), events: vec![(1, "ignition")], wall: 0.0 };
+        let (bar, shown) = views_at(&mut app, 0.0);
+        assert_eq!((value(&app.time), bar.speed.as_str()), (1.0, "Speed ×1"));
+        assert_eq!(shown.map(|b| b.text).as_deref(), Some("Slowed down: hydrogen ignition — press + to speed up again"));
+        topbar::apply(&mut app.time, Command::Faster);
+        assert_eq!(views_at(&mut app, 1.0).1, None, "the player's + ends the banner, and no notice follows it");
+        // Ticked at ×0.3 the slow-down does nothing (only ever slower): the notice tells it, the rung untouched.
+        let mut app = App { time: clock(1), feed: Feed::new(), world_bar: WorldBar::default(), events: vec![(1, "ignition")], wall: 0.0 };
+        let shown = views_at(&mut app, 0.0).1;
+        assert_eq!((value(&app.time), app.time.banner(), shown.map(|b| b.text)), (0.3, None, Some(NOTICE.to_string())));
+        // The core collapse's banner takes the slot over the notice still showing.
+        app.events = vec![(1, "core_collapse")];
+        let shown = views_at(&mut app, 1.0).1;
+        assert_eq!(shown.map(|b| b.text).as_deref(), Some("Slowed down: core collapse — press + to speed up again"));
+    }
+
+    #[test]
+    fn a_clear_ends_the_notice() {
+        let (mut time, mut frames) = (clock(5), Frames::new(&physics(), &calibration(), 600).unwrap());
+        time.set_slow_down(false);
+        frames.submitted(false);
+        frames.read_back(&mut time, &star_frame(4, 0.1, None), 2.0);
+        assert_eq!((value(&time), frames.notice(6.9).map(|b| b.text).as_deref()), (30.0, Some(NOTICE)), "from the read-back's time");
+        assert_eq!(frames.notice(7.0), None);
+        frames.clear();
+        assert_eq!(frames.notice(3.0), None, "the old world's star is gone, its notice with it");
     }
 }

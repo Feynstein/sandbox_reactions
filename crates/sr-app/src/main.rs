@@ -8,6 +8,8 @@ mod desktop;
 #[allow(dead_code)]
 mod format;
 #[cfg(not(target_arch = "wasm32"))]
+mod measure;
+#[cfg(not(target_arch = "wasm32"))]
 mod status;
 mod strings;
 mod ui;
@@ -15,7 +17,7 @@ mod ui;
 mod web;
 
 #[cfg(not(target_arch = "wasm32"))]
-const USAGE: &str = "usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] | \
+const USAGE: &str = "usage: sandbox-reactions [--adapter S] [--status-port P] [--offscreen-window] [--capture SCRIPT --out DIR] [--measure-ui FRAMES [--calibration FILE]] | \
 sandbox-reactions headless --scene <FILE|preset:<sun|massive|giant>> --steps N [--world WxH] [--edge leave|bounce] \
 [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE [--continue]] [--edits FILE] [--adapter S | --cpu-reference] | \
 sandbox-reactions calibrate --out FILE [--adapter S] [--only ITEM] [--resume DIR] [--progress-every N] [--checkpoint-every M]";

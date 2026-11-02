@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/measure.rs
++++ b/crates/sr-app/src/measure.rs
+@@ -92,7 +92,8 @@
+         let text = std::fs::read_to_string(&self.file).map_err(|e| format!("cannot read {}: {e}", self.file.display()))?;
+         let mut cal = Calibration::parse(&text).map_err(|e| e.line())?;
+         cal.render_reserve_ms = Some(reserve);
+-        std::fs::write(&self.file, cal.to_json()).map_err(|e| format!("cannot write {}: {e}", self.file.display()))?;
++        // Planted: the key is worked out and reported, never written (M0-T95's plant).
++        let _ = cal.to_json();
+         println!("SR-UI render_reserve_ms={reserve} file={} (the next build embeds it)", self.file.display());
+         Ok(())
+     }

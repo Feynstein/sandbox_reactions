@@ -14,7 +14,10 @@ use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::js_sys::{Array, Function, Object, Promise, Reflect};
 use wasm_bindgen_futures::JsFuture;
 
+use sr_engine::render::View;
+
 use crate::desktop::{wgpu_setup, SandboxApp};
+use crate::ui::left::{self, Preset};
 use crate::ui::theme::{self, BG_SPACE};
 
 /// `error.no_adapter` and `error.device_lost` (§4.1, §4.8), verbatim; the string table (strings.rs) comes with M0-T13.
@@ -24,6 +27,36 @@ const ERROR_DEVICE_LOST: &str = "The graphics card stopped responding. Please re
 
 const CANVAS_ID: &str = "sr-canvas";
 const LOADING_ID: &str = "sr-loading";
+
+/// The page's URL parameters (§3.5): `preset=<sun|massive|giant>` dropped at the world's centre, `steps=<n>` run and then
+/// paused, `view=<glow|heat|element|density>`, `rung=<k>` (the bar's key, 0 for Max). None is the default page.
+#[derive(Default)]
+pub struct Query {
+    pub preset: Option<Preset>,
+    pub steps: Option<u64>,
+    pub view: Option<View>,
+    pub rung: Option<usize>,
+}
+
+impl Query {
+    /// `search` is `location.search` ("?a=b&c=d"). A key the page does not know is ignored (`no-webgpu` is index.html's);
+    /// a known key with a value that is none of its own is an error naming it.
+    pub fn parse(search: &str) -> Result<Self, String> {
+        let mut query = Self::default();
+        for pair in search.trim_start_matches('?').split('&').filter(|p| !p.is_empty()) {
+            let (key, value) = pair.split_once('=').unwrap_or((pair, ""));
+            let bad = |what: &str| format!("URL parameter {key}={value}: {what}");
+            match key {
+                "preset" => query.preset = Some(Preset::parse(value).ok_or_else(|| bad("not sun, massive or giant"))?),
+                "steps" => query.steps = Some(value.parse().map_err(|_| bad("not a whole number"))?),
+                "view" => query.view = Some(left::parse_view(value).ok_or_else(|| bad("not glow, heat, element or density"))?),
+                "rung" => query.rung = Some(value.parse().ok().filter(|k| *k <= 9).ok_or_else(|| bad("not a key from 0 to 9"))?),
+                _ => {}
+            }
+        }
+        Ok(query)
+    }
+}
 
 fn body() -> Option<web_sys::HtmlElement> {
     web_sys::window()?.document()?.body()
@@ -113,6 +146,8 @@ async fn run() -> Result<(), String> {
 struct Warming {
     built: Rc<RefCell<Option<Result<SandboxApp, String>>>>,
     app: Option<SandboxApp>,
+    /// The page's URL parameters, read when the app is built and applied before its first pass.
+    query: Result<Query, String>,
 }
 
 impl Warming {
@@ -126,7 +161,8 @@ impl Warming {
             *slot.borrow_mut() = Some(SandboxApp::new(&render));
             ctx.request_repaint();
         });
-        Self { built, app: None }
+        let search = web_sys::window().and_then(|w| w.location().search().ok()).unwrap_or_default();
+        Self { built, app: None, query: Query::parse(&search) }
     }
 }
 
@@ -134,7 +170,13 @@ impl eframe::App for Warming {
     fn ui(&mut self, ui: &mut egui::Ui, frame: &mut eframe::Frame) {
         if self.app.is_none() {
             match self.built.borrow_mut().take() {
-                Some(Ok(app)) => self.app = Some(app),
+                Some(Ok(mut app)) => {
+                    let now = ui.input(|i| i.time);
+                    match std::mem::replace(&mut self.query, Ok(Query::default())).and_then(|q| app.open_with(&q, now)) {
+                        Ok(()) => self.app = Some(app),
+                        Err(detail) => fail(&detail, &detail),
+                    }
+                }
                 Some(Err(detail)) => fail(ERROR_NO_ADAPTER, &detail),
                 None => {}
             }

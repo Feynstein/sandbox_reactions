@@ -1,0 +1,9 @@
+    Finished `release` profile [optimized] target(s) in 0.07s
+2026-11-02T11:32:00-05:00 measure: stage_order on llvmpipe (linux-pc), rsync to server refused by auto mode
+2026-11-02T11:33:11-05:00 measure r2: 16-step frames (--until stage:black_hole --max-steps)
+2026-11-02T11:42:26-05:00 classify iterate
+2026-11-02T11:42:49-05:00 stage_order iterate (fixed tree, llvmpipe)
+2026-11-02T11:46:35-05:00 redarm classify + stage_order (SR_TEST_ADAPTER=llvmpipe)
+2026-11-02T11:51:59-05:00 scopes: plan_lint objects ending age_clock ui_star
+2026-11-02T11:52:38-05:00 captures tv3-sun + tv3-massive on llvmpipe, private Xvfb
+2026-11-02T12:22:56-05:00 linux-pc's owed scopes after the server claim: desktop web capture measure_ui

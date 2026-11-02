@@ -30,12 +30,8 @@ block that builds their feature and are refused with exit 4 until then:
   - `--offscreen-window` places the window outside every monitor, never activated, out of the taskbar (§3.3 [M0-TJ3]).
   - `--capture` runs a scripted session, one PNG per step plus `captions.json`, then exits 0 (§3.3; the harness is
     `tests/capture/`). An action not built yet is refused with `SR-ERROR`, exit 4.
-    Built: `pause`, `steps N` (N steps through the real frame loop, paused or not), `preset sun|massive|giant` (the engine's
-    DropPreset at the world's centre; the panel's own is M0-T90), `rung k` (the key: 1–9 numbered, 0 Max — not an index), `slowdown
-    on|off` and `edge leave|bounce` (the bar's own commands, M0-T85, M0-T87). Each step also prints `SR-CAPTURE-STATUS <id> <status.line as the
-    step's last frame drew it>` (M0-T84). A new world is empty, at ×1, running: at ×1 a Sun-like star is owed less than one step a
-    frame, and an empty world steps once per ~0.45 s (Δt is the floor gas's, M0-D96), so a capture that needs a state asks for
-    `steps`.
+    The actions, their arguments and what each refuses are in § Captures below; each step also prints `SR-CAPTURE-STATUS <id> <status.line as the
+    step's last frame drew it>` (M0-T84).
 - **Headless**: `headless --scene <scenes/FILE.json | preset:<sun|massive|giant>> --steps N [--world WxH]
   [--edge leave|bounce] [--max-steps N] [--out DIR] [--timing] [--dump-every N] [--load-dump FILE [--continue]]
   [--adapter S | --cpu-reference]` — the
@@ -56,18 +52,18 @@ block that builds their feature and are refused with exit 4 until then:
 - **`calibrate`** (M0-T66b–M0-T70): `calibrate --out FILE [--adapter S] [--only a,b] [--max-steps N] [--bracket LO,HI] [--resume DIR] [--progress-every N] [--checkpoint-every M]` —
   § Calibrating below. (sr-app's usage line lists `--only`, `--resume`, `--progress-every` and `--checkpoint-every`; `--max-steps` and `--bracket` are refused with exit 4 where they
   do not apply.)
-- Later blocks add `bench`, `--measure-ui` (a visible window — asked of the lead each time, R4) and the headless run's
-  `--until`, `--frames-every`, `--edits` (§3.3).
+- **`--measure-ui <frames> [--calibration FILE]`** (M0-T95): § Measuring the UI below — a visible window, asked of the lead each time (R4).
+- Later blocks add `bench` and the headless run's `--until`, `--frames-every`, `--edits` (§3.3).
 
 ## The window (§4.1–§4.3, §4.10, §1.11; `crates/sr-app/src/desktop.rs`, `ui/`)
-What the window holds so far (M0-T84–M0-T87, M0-D119–M0-D123); the left and right panels, the tools, the views and the inspector are later
-blocks and are not in it. Sizes and colours are §4.11's tokens, named in the code, never restated here.
+What the window holds (M0-T84–M0-T93b, M0-T126–M0-T129, M0-D119–M0-D123): the top bar, the world, the banner and the status bar here; the left
+and right panels, the legend and the zoom in § Tools and presets below. Sizes and colours are §4.11's tokens, named in the code, never restated here.
   **The theme** (`ui/theme.rs`, M0-D119, M0-V12): `theme::install(&ctx)` runs once at start-up, from both entries (`desktop.rs`'s
   creator and `web.rs`), and puts the tokens' `Visuals` on the context for good — egui's dark preference pinned, both of its themes
   dressed — so the window is dark and drawn from the tokens whatever the system's light or dark setting says (a light browser had
   drawn egui's light fills under the light text, the bar's buttons blank). No other file writes a colour literal; graded by
   `ui_theme`, the pixels on screen NOT PROVEN.
-- **Layout**, top to bottom: the **top bar** (44 px, `bg.panel` with `border.panel`), the **world** (the centre, `bg.space`),
+- **Layout**, top to bottom: the **top bar** (44 px, `bg.panel` with `border.panel`), the **world** (the centre between the left and the right panel, `bg.space`; the legend and the place hint under it),
   the **status bar** (24 px) carrying `status.line` live at §4.11's small 12 px (`STATUS_FONT`; egui's body text is 13, M0-D123). The world is a 600 × 400 cell image drawn at the integer scale
   s = max(1, ⌊min(w/W, h/H)⌋) physical px, centred with its corner on a pixel and nearest filtering (§1.11), so every cell shows
   whole; a new world is empty (`bg.space` exactly, pinned by the `desktop` scope's `world` case). The banner sits over the world's
@@ -101,15 +97,160 @@ blocks and are not in it. Sizes and colours are §4.11's tokens, named in the co
 | + or = / − | faster / slower | `Faster` / `Slower` |
 | Delete | opens the Clear dialog | `OpenClear` |
 
-  Esc and the dialog's buttons are not key-bound (the buttons are clicked). B · E · H · C, `[` `]`, F1–F4 and the mouse actions of
-  §4.10 are bound by the blocks that build the tools, the brush and the views (later lot) — a key not in the table above does nothing.
-- **Scripting it** (`--capture`, §3.3, `tests/capture/actions.json`, nine steps — `check.sh actions`): `rung` (the key), `slowdown`,
-  `edge`, `pause`, `steps`, `preset`. The check compares each step's top bar (44 px) with the step before and the accent's column
-  (×1 → ×10 → Max); `edge-leave` is compared with `edge` (both paused, so only the radios differ). **No capture action opens the
-  Clear dialog** and no key is scriptable — the dialog is seen in a visible window with the lead's yes (R4) or is NOT PROVEN
-  (M0-T87's flag, M0-TV2's).
+  The dialog's buttons are not key-bound (the buttons are clicked). B · E · H · C, `[` `]`, F1–F4, Esc, Home and the mouse are the panels' —
+  § Tools and presets, with their own tables; a key in neither table does nothing.
+- **Scripting it** (`--capture`, § Captures below): `rung` (the key), `slowdown`, `edge`, `pause`, `steps`, `preset` drive the bar. `check.sh actions`
+  compares each step's top bar (44 px) with the step before and the accent's column (×1 → ×10 → Max); `edge-leave` is compared with `edge` (both
+  paused, so only the radios differ). **No capture action opens the Clear dialog** and no key is scriptable — the dialog is seen in a visible
+  window with the lead's yes (R4) or is NOT PROVEN (M0-T87's flag, M0-TV2's).
 - **Not proven by the scopes**: the bar, the banner and the dialog *on screen* — the view models are graded, the drawing by a
   capture's pixels (lavapipe) and the lead's launcher run (the real GPU).
+
+## Tools and presets — the left and right panels, the legend and the zoom (§4.1, §4.2, §4.4–§4.6, §4.10, §1.11; `ui/left.rs`, `display.rs`, `legend.rs`, `zoom.rs`, `right.rs`)
+Written by M0-T96 (2026-11-02) from the handoffs of M0-T89–M0-T95 and M0-T126–M0-T129. Every panel is **a view model first**: the file computes
+what is shown and what a click or key means, `desktop.rs` only draws it and hands the commands back, and the scope named on each line grades it
+with no GPU and no window. The pixels on screen are NOT PROVEN by those scopes (a capture is lavapipe's, § Captures); the pointer is not scripted
+but for `hover` and `select`.
+- **Layout.** The left panel (220 px) holds, top to bottom: tools, the brush size, the elements, the presets, the views with their display
+  controls. The right panel (300 px): the star readout, then the cell inspector. The world sits between them; under it the legend (8 px below,
+  as wide as the world), under that the preset's place hint. The scale is `s · z` (§1.11, the zoom's `z`), clipped to the world's `z = 1` rectangle
+  (`legend::layout`); `s` gives way (stays 2 at 1240 × 872) when the world, legend and hint would not fit.
+- **Tools** (`ui/left.rs`, `Tools`; scope `ui_tools`, M0-T89): Brush, Eraser, Heat, Cool — one selected, the selected one in `accent`. The nine
+  paintable elements in the registry's order with their §1.5 swatches, Hydrogen selected at first; neutron matter is never listed and never
+  selectable. The brush size slider and `[` `]` (by 2, stopping at both ends); the range and the default are §4.4's. A change of tool keeps the
+  element, the size and the view, and a change of element or view keeps the tool. **A held left button queues one edit per frame**
+  (`left::frame_edit`): the radius and the species of *that* frame, each tool its own engine `Edit`; the brush outline follows the cell under
+  the pointer (`left::outline`). Source read only, not measured: a held brush while paused or at ×0.1–×1 queues at most 8 edits per step (the
+  queue's `QueueFull` is ignored), and M0-D110's one-step-late paint (M0-T89's handoff).
+- **Presets** (`Presets`; scope `ui_presets`, M0-T90): three buttons, each with its note (the mass and the ending, `presets.*_note`). A click on a
+  button arms it (one armed at a time, the armed one `accent`, the tools untouched); `presets.place_hint` shows while one is armed; **the next
+  left click in the world drops it there** through `Sim::place` (the engine's `Edit::drop_preset`), and the click is spent — it reaches the
+  preset or the brush, never both. A drop that does not fit shows `presets.no_room` for 3 s and **keeps the preset armed**; Esc (only Esc)
+  disarms. The cloud's outline follows the cursor at `cloud_radius`'s radius, the engine's own (`scene::cloud_shape`, capped at 150 cells),
+  and agrees with the refusal. A drop while the clock is paused asks for one Step to show (M0-T84's flag; the engine takes the edit at the next
+  step's P0, as Clear does).
+- **Views** (`Views`; M0-T91, in `ui_tools`): Glow (active at first), Heat, Element, Density — the four buttons, the active one `accent`, and F1–F4.
+  A switch leaves the brush, the element and the size alone. The renderer draws `views.active()`.
+- **Display controls** (`ui/display.rs`; scope `ui_display`, M0-T127b; the renderer's side `Renderer::set_display` and `Display`, scopes `views`
+  and `extents`, M0-T126, M0-T127a; why, `reports/display_range.md`), under the four buttons, for the **active** view:
+  Glow — `views.glow_white` («Full brightness at»), a slider logarithmic in T over §4.2's span with the value typed in place, and `views.reset`
+  (S back to 3,000 K, where the image is today's, bit for bit); Heat — `views.range_from`, `views.range_to`, `views.fit`, `views.reset`;
+  Density — the same over Σ; Element — none. A typed value takes digits with `,` in 3-digit groups only («1,5» is junk, not 15), a `.`, an
+  e-notation and, for temperatures, an optional `K`; out of range is clamped, anything else restores the shown value. From and To stay 0.1 decade
+  apart (the moved end stops at the other). The settings are kept by a switch of view, and the renderer is asked only when one changed (a drag
+  over 20 places is 20 asks, 120 frames at one value one ask). **Fit to view** reads the matter's extent from a 1,024-bin histogram of log T or
+  log Σ (cells with Σ ≥ Σ_vac only; `Renderer::fit_range`): L is the lower edge of the 0.5th percentile's bin, H the upper edge of the highest
+  non-empty bin, widened to 0.1 about the middle and slid inside the span; with no matter it does nothing. It is one **blocking** read-back,
+  so on the web build it is a no-op. NOT PROVEN: Clear keeping the settings (by construction — `Sim::clear` queues `Edit::Clear` alone — no case).
+- **The legend** (`ui/legend.rs`; scope `ui_legend`, M0-T128): the active view's title, a 12 px bar and its ticks at every power of ten inside the
+  shown range, **placed by log T, never linearly** (a label that would overlap its left neighbour is dropped, its tick kept; the first and last
+  labels stay inside the bar), then the marks: S in Glow only (`legend.white`, an `accent` triangle and line) and the hovered cell's value
+  (`legend.cursor`; none over vacuum, off the world or in Element). The Glow bar is the cell image's colour at S, the Heat and Density bars the maps
+  over the range, Element's ten swatches carry their names. A cursor past the shown range stands at the bar's end. Not proven: the drawing (a
+  capture's shot, read by eye, M0-TV3); the marks' labels may overlap when S and the cursor are within a label's width (the cursor's flips left).
+- **The zoom** (`ui/zoom.rs`; scope `ui_zoom`, M0-T129): the wheel zooms in and out **about the cell under the cursor** (z from 1 to 8, held at the
+  ends), the middle-button drag moves the world with the pointer, clamped so the zoomed image always covers the viewport (nothing to pan at
+  z = 1), **Home** returns to z = 1. One `cell_at` mapping serves every reader of the pointer — the brush, the preset drop, the right click and the
+  inspector — equal to the z = 1 mapping at z = 1, so a brush at z = 8 edits the cell the zoom names. The zoomed image's corner sits on a physical
+  pixel at 1, 1.5 and 2 points per pixel. NOT PROVEN by a case: the egui path (wheel events, drag, Home, the painter's clip — no pointer in a capture);
+  the remnant at z = 8 is M0-TV3's on a GPU.
+- **The star readout** (`ui/right.rs`, `Stars`; scope `ui_star`, M0-T92): the selected object's stage (the Supergiant rows at M ≥ M_up), `star.mass`,
+  `star.fate`, or `star.ending` once a remnant holds, `star.age`, `star.rate` (**hidden while paused**), `star.surface`, `star.core`; `star.none`
+  with no object, `star.select_hint` with several. The app runs its own tracker, stage tracker, age clock and predictor (beside the banner's
+  `Watch`, so the GPU scopes stay out of the UI's claim); `banner::Frames` owns `Stars` and restarts it with the world. **The selection is by the
+  tracker's id**: the heaviest by default; a right click selects the nearest centre within max(R, 3 cells); a click on empty space keeps the
+  selection; a list that shifts under it keeps the id; a new world empties it.
+- **The cell inspector** (`right::Reader`, `Asker`; scope `ui_inspect`, M0-T93b; the engine's side `Inspector::inspect`/`poll`, scope `state`,
+  M0-T93a): the hovered cell's mix (up to three species of at least 0.5 % by mass, the largest first, equal shares in species order),
+  `inspect.temperature` (in kelvins as the star readout translates it), `inspect.density`, `inspect.speed` with Mach = |u| / √(2Π/Σ) from the
+  engine's EOS; `inspect.vacuum` below Σ_vac, `inspect.empty` off the world (D6). **One request is in flight**: the engine's reply comes within
+  2 frames and an empty poll costs under 5 ms; the latest hovered cell is asked after each reply and nothing is asked off the world. NOT PROVEN
+  (synthetic): the Asker over 120 hovered frames ran with simulated replies, not the real read-back queue; the real `Inspector` ran only in a
+  lavapipe capture's 30 hovered frames.
+
+| Key | Action | Where |
+|---|---|---|
+| B · E · H · C | Brush · Eraser · Heat · Cool | `left::key_command` |
+| `[` · `]` | brush size −2 / +2 | `left::key_command` |
+| F1 · F2 · F3 · F4 | Glow · Heat · Element · Density view | `left::view_key_command` |
+| Esc | disarm the armed preset (read only while one is armed) | `left::preset_key_command` |
+| Home | the zoom back to z = 1 | `desktop.rs` key pass → `Zoom::home` |
+
+| Mouse | Action |
+|---|---|
+| left button | the tool's edit once per held frame, or the armed preset's drop (never both) |
+| right click | select the star under the cursor |
+| hover | the cell inspector (and the legend's cursor mark) |
+| wheel · middle drag | zoom about the cursor · pan |
+
+The §3.3 capture actions for all of it — `tool`, `element`, `paint`, `view`, `preset`, `select`, `hover`, `glow_white`, `range`, `fit`,
+`display_reset`, `zoom` — are in § Captures.
+
+## Captures — `--capture SCRIPT --out DIR`, the full action list (§3.3; `crates/sr-app/src/capture.rs`, `tests/capture/`)
+A script is a JSON list of steps `{"id", "caption", "actions": [ … ], "frames": n}`: `id` matches `[A-Za-z0-9][A-Za-z0-9.-]*` and is unique;
+`caption` is required; `actions` may be left out; `frames` is a whole number from 1 to 100,000 (1 when left out); any other key in a step is
+refused. Each action is an object with **exactly one key** — the one exception is `zoom`, which takes two. The run applies a step's actions in
+order, lets `frames` frames run, takes one screenshot and writes `DIR/<id>.png` and, at the end, `DIR/captions.json` (review_page.py's shape);
+exit 0. The app stands still until the first step begins and from the pass that asked for a screenshot until the PNG is written, so a shot shows
+the state after exactly `frames` passes of its step, whatever the machine's speed. A new world is empty, at ×1, running; at ×1 a Sun-like star
+is owed less than one step a frame and an empty world steps once per ~0.45 s (Δt is the floor gas's, M0-D96), so a capture that needs a state asks
+for `steps`.
+
+| Action | Argument | What it does (the door it goes through) | Refused at parse (exit 4, before any window) |
+|---|---|---|---|
+| `pause` | `true` / `false` | the clock paused or running (the bar's Pause/Play) | not a boolean |
+| `steps` | whole number n | n simulation steps through the real frame loop, paused or not | not a whole number |
+| `preset` | `"sun"` / `"massive"` / `"giant"` | the panel's path: arms the preset and drops it **at the world's centre** (`Sim::place`) | any other name; **any second key — §3.3's `"at": [x, y]` is not built** |
+| `rung` | key 0–9 | the bar's key: 1–9 the numbered rungs, 0 Max; a key past the ladder does nothing | past 9, not a whole number |
+| `slowdown` | `true` / `false` | the bar's checkbox | not a boolean |
+| `edge` | `"leave"` / `"bounce"` | the bar's edge choice | any other word |
+| `tool` | `"brush"` / `"eraser"` / `"heat"` / `"cool"` | the panel's tool button | any other word |
+| `element` | a paintable species' key (`"Fe"`) | a row of the element list; neutron matter is not in it | a key not in the list |
+| `view` | `"glow"` / `"heat"` / `"element"` / `"density"` | the panel's view button (F1–F4) | any other word |
+| `paint` | `[[x, y], …]` | one frame of the held left button per cell, with the tool and element the panel holds | an empty list, a pair that is not two whole numbers |
+| `select` | `[x, y]` | a right click on world cell (x, y) | not a cell |
+| `hover` | `[x, y]` | the pointer rests on cell (x, y) as the central panel reads it, **until another `hover` moves it** — it wins over the real pointer; a cell off the world is the pointer off the world | not a cell |
+| `glow_white` | kelvins > 0 | the Glow view's «Full brightness at», snapped and clamped as a typed value is | not a positive finite number |
+| `range` | `[from, to]` | the active view's range, kelvins for Heat, sandbox Σ for Density, typed in place | not two positive numbers with from < to |
+| `fit` | `true` | the active view's «Fit to view» | anything but `true` |
+| `display_reset` | `true` | the active view's Reset | anything but `true` |
+| `zoom` | `z` 1–8, with `"at": [x, y]` | the view at z centred on cell (x, y) as far as the clamp lets it | z outside 1–8, a missing or extra key, `at` not a cell |
+
+An unknown action is refused by name (`unknown action …`); `NOT_BUILT` in capture.rs is empty today. **Refused at run time** (the capture stops with
+the line, a window already open): `glow_white` outside the Glow view, `range` or `fit` outside Heat and Density, `display_reset` in Element
+(«the … view has no such control», never a silent no-op), `zoom` at a cell off the world, a `preset` that does not fit, a `paint` the engine
+refuses. A pointer click, a key and the Clear dialog are not scriptable. A capture shows the brush's outline at the Xvfb pointer (pre-existing,
+M0-T93b).
+- **The harness**: `bash tests/capture/check.sh smoke|refuse|actions` (scope `capture`, `docs/agent/testing.md`). `actions` runs
+  `tests/capture/actions.json` (21 steps: `start` … `star-zoom`; the Massive preset paused at step 768 for the star's shots) and compares the
+  regions each action must change — the top bar, the left panel (220 px), the right panel (300 px) with its lit pixels, the world — and that
+  `display_reset` equals the default pixel for pixel and a `zoom` shot's six probed cells keep their colours; `refuse` runs the malformed ones.
+  Seven plants hold it red (`capture-*.patch`). Shots are lavapipe's on linux-pc (`xvfb-run`) and `--offscreen-window` on win-laptop; a real
+  GPU's picture is M0-TW's.
+- **Checked against the code** (M0-T96's adversarial): the table's seventeen actions, all in one script, parse in the built binary (the script's last
+  step carried a bad id, so the run stops there with exit 4 naming the id — never an action; logs/M0-T96.capture_actions.log); `preset` with
+  `at`, `zoom` out of 1–8 or with one key, `range` with from ≥ to, `fit` false and an unknown name are each refused.
+
+## Measuring the UI — `--measure-ui` (§3.3, §1.8.3's R_reserve; `crates/sr-app/src/measure.rs`, M0-T95)
+`sandbox-reactions [--adapter S] --measure-ui <frames> [--calibration FILE]` runs the desktop app with the Sun-like preset dropped at ×1 and measures
+**the UI's CPU cost per frame**: eframe's own figure for the frame (the egui pass, the tessellation, the paint; the vsync wait taken out) less what
+the app spent on the world itself (its read-back and its frame), after 30 frames of warm-up, the nearest-rank 95th percentile of `<frames>`
+samples. It prints `SR-UI p95_ms=<x>` (and names the adapter) and writes `render_reserve_ms` = x + 0.5 into the calibration file; the key is outside
+`physics_hash`, so G-CAL holds, and the file is otherwise rewritten as `calibrate` writes it (keys sorted). The time control uses §1.8.3's 3.0 ms
+until the key is there.
+- **What it is not**: the GPU's time of the presentation (a CPU figure only), and not a number from lavapipe — a **software adapter with no
+  `--calibration` is refused** (exit 3, the real file untouched), because a reserve measured there would be in every frame budget.
+- **Exits.** 0 done · 3 a software adapter without `--calibration`, or a `--calibration` file that is no calibration (untouched) · 4 `<frames>` of 0 or
+  not a number, none, `--capture` beside it, `--calibration` alone — all before any window.
+- **Who runs what.** The measurement needs a visible window on the real GPU: **the lead's, asked each time** (R4). The agents' check is
+  `bash tests/measure/check.sh run|refuse` (scope `measure_ui`, plant `measure-no-write`): 20 frames on the box's window route into a **copy** of
+  `assets/calibration.json` — one `SR-UI` line, x > 0, the copy holding x + 0.5 and every other key as it was, the real file's hash unchanged — and
+  the refusals above. It grades the flag, never the number.
+- **Owed** (M0-T95): the real run on the Quadro, in M0-V13's window, from the repo root — then a rebuild embeds the file (M0-D62):
+  ```
+  build/target/release/sandbox-reactions --adapter "Quadro RTX 4000" --measure-ui 600
+  ```
+  win-laptop: NOT RUN (owed on `Laser2025-20`, R15).
 
 ## launch.py — how a service is started, polled, stopped (`tools/pb/launch.py`, §3.4, §3.6)
 `python3 tools/pb/launch.py start|stop|status|smoke|list <service> --task <ID>` (`py -3.12 …` on win-laptop). A service's
@@ -127,7 +268,7 @@ number names its adapter** (R13).
 
 | Box | Adapters wgpu lists | Use |
 |---|---|---|
-| linux-pc | Quadro RTX 4000 (drives the display) · RTX 5090 · "Intel(R) Graphics (RPL-S)" (the Intel iGPU — match it with `--adapter "RPL-S"`; `"UHD"` finds nothing) · llvmpipe (Mesa software Vulkan) | physics scopes `--adapter "RTX 5090"` (`SR_TEST_ADAPTER`, `tests/gpu.sh … physics`); timing scopes the Quadro only (`box: laserax-ai`); private-display windows `--adapter llvmpipe` |
+| linux-pc | Quadro RTX 4000 (drives the display) · RTX 5090 · "Intel(R) Graphics (RPL-S)" (the Intel iGPU — match it with `--adapter "RPL-S"`; `"UHD"` finds nothing) · llvmpipe (Mesa software Vulkan) | physics scopes `--adapter "RTX 5090"` (`SR_TEST_ADAPTER`, `tests/gpu.sh … physics`) — but a block executed on this box runs its GPU runs on laserax-ai-server's RTX 4090 (R18); timing scopes the Quadro only (`box: laserax-ai`); private-display windows `--adapter llvmpipe` |
 | win-laptop | RTX 4080 Laptop · Intel Arc Graphics · WARP where wgpu lists it (UNVERIFIED) | physics reads the 4080 where linux-pc reads the 5090 (§6.4, R15); timing is never measured here (`owed on laserax-ai`) |
 
 The default pick on linux-pc is **not** the 5090 (the display sits on the Quadro): never rely on it — name the adapter.
@@ -164,6 +305,25 @@ Results agree across adapters within G-REF's tolerances, never bit for bit (§6.
   `/usr/bin/google-chrome` on linux-pc, `C:\Program Files\Google\Chrome\Application\chrome.exe` on win-laptop.
   `tools/pb/capture_web.mjs` launches Chromium without flags, so it captures only the no-WebGPU page.
 
+### The web build's parameters (§3.5; `crates/sr-app/src/web.rs` `Query`, `SandboxApp::open_with`, M0-T94)
+`web/dist/index.html?<key>=<value>&…` — for smoke and captures; each goes through the door the matching capture action uses (§ Captures), applied
+before the first pass in this order:
+
+| Parameter | Value | Effect |
+|---|---|---|
+| `view` | `glow` · `heat` · `element` · `density` | the view's button |
+| `rung` | key 0–9 | the bar's key — 1–9 the numbered rungs, 0 Max |
+| `preset` | `sun` · `massive` · `giant` | armed and dropped at the world's centre by the panel's path |
+| `steps` | whole number n | n steps queued, **then the clock paused** (a page opened with `steps` ends paused) |
+| `no-webgpu` | `1` | index.html's test hook (§3.5): the §4.9 page, the wasm never loaded; not the app's |
+
+A key the page does not know is ignored; a known key with a value that is none of its own is an error naming it (`srState` → `error`, the detail in
+`data-sr-error-detail`). **On the web the forced steps run one a frame** (`FORCED_CHUNK` is 1; 256 on the desktop): several steps in one submit closed
+Chrome's GPU process (8 a frame died at steps=24, 1 a frame ran 200), so `steps=200` is 200 frames. The `web` scope's `preset` case (`node web/smoke.mjs
+preset`: `/?preset=sun&steps=200` reaches `ready` within 30 s and the canvas's central 100 × 100 px are not all black) grades the page's loading
+with the parameters; **it cannot tell a star from an empty canvas** (`page.screenshot` and `drawImage` of this WebGPU canvas read all zeros) —
+M0-V13 names the gap. `--redarm web` is ≈ 10–11 min, the lead's (Rule 4).
+
 ## Long runs (§6.4)
 `calibrate`, the ⏱ scopes and benches at low rungs can pass 10 minutes on the Quadro: **the lead's**, in one visible
 terminal, placed in the V windows. A run over 10 minutes is never an agent's (PLAYBOOK §4 Rule 4).
@@ -174,7 +334,7 @@ lives — and writes `assets/calibration.json`. The file's schema and every boun
 into a page — read the file (`docs/agent/physics.md` § Calibration says what each key is). Commands run from the repo root,
 the binary built first (top of this page).
 ```
-build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out assets/calibration.json
+build/target/release/sandbox-reactions calibrate --adapter "RTX 4090" --out assets/calibration.json
 ```
 - **`--out FILE`** is merged, never rewritten blind: the file's other items are kept, so one item re-run leaves the rest.
   A file under another `physics_hash` (or not JSON) is dropped with `SR-WARN` and its items are measured again. K9's order
@@ -279,13 +439,14 @@ build/target/release/sandbox-reactions calibrate --adapter "RTX 5090" --out asse
   halving of the bracket to 2 %: life 01 is LO, life 02 is HI; before life 02 ends it uses `--bracket`, else the item's default, and says
   so); the ETA is marked a guess until 3 lives have finished. A progress.json that is missing, torn or another item's is not read: the
   line says the folder's age instead.
-- **Who runs it.** Items 1–2 are the agents' (CPU, seconds). `m_ign_sb` is ~2 minutes on the RTX 5090 (10 lives; 126 s with M0-D78's
+- **Who runs it.** Items 1–2 are the agents' (CPU, seconds). `m_ign_sb` is ~2 minutes on the RTX 5090 (measured there before R18; 10 lives; 126 s with M0-D78's
   hold where it was ~30 s at 10 t.u.); `m_up_sb`, `m_bh_sb` and the
   preset lives are **whole stellar lives** — hours at the defaults — so the whole calibration is **the lead's**, in one visible
   terminal, in M0-V9's window (§6.4; PLAYBOOK §4 Rule 4). Item by item (`--only`) is how it splits. An agent runs no life
   here; the scopes `calibrate_cold`, `calibrate_bisect`, `calibrate_order`, `cold_core` and `calibration` (`testing.md`) grade
   the code on stubs and the CPU.
-- **Which adapter.** Physics numbers are measured on the RTX 5090 (`--adapter "RTX 5090"`, §6.4) and named in the file;
+- **Which adapter.** Physics numbers are measured on the adapter named in the file — the shipped calibration is the RTX 4090's on laserax-ai-server
+  (`measured.adapter`, 2026-10-26; R18 makes that box the GPU's for a block run on laserax-ai, §6.4's 5090 predating it);
   they are used on every other adapter by leaning on G-REF's cross-adapter tolerance (§6.7), not on identity. Timing is
   never part of it.
 - **The hash rule: change a constant, calibrate again.** The file carries a `physics_hash` of the canonical JSON of

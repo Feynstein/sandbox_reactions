@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -381,7 +381,7 @@
+             }
+             state.streak = if stage == state.raw { state.streak + 1 } else { 1 };
+             state.raw = stage;
+-            if (stage.is_immediate() || state.streak >= HOLD) && !steps_back(stage, state.shown, state.history.ignited) {
++            if stage.is_immediate() || state.streak >= HOLD {
+                 state.shown = Some(stage);
+             }
+         }

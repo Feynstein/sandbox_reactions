@@ -1,0 +1,9 @@
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-UI p95_ms=3.385 frames=20 adapter=llvmpipe (LLVM 20.1.2, 256 bits)
+SR-UI render_reserve_ms=3.885 file=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/234cf632-8749-4be3-ade3-12d6c368f5ea/scratchpad/cal.json (the next build embeds it)
+SR-UI p95_ms=3.416 frames=21 adapter=llvmpipe (LLVM 20.1.2, 256 bits)
+SR-UI render_reserve_ms=3.916 file=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/234cf632-8749-4be3-ade3-12d6c368f5ea/scratchpad/cal.json (the next build embeds it)
+
+real	0m2.048s
+user	0m5.519s
+sys	0m1.015s

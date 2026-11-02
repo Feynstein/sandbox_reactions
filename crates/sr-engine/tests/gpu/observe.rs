@@ -387,8 +387,10 @@ fn until_is_checked_before_a_device_is_touched() {
 /// and cut at the dump [`CONTINUE_CUT`] — after the ignition and before a stage change, so a lost `ignited` or ledger start
 /// shows past it. The continued run writes the unbroken run's summary.json line for line but `wall_s`, its events.jsonl and
 /// its final dump byte for byte; a snapshot of another step beside the dump, none beside it, and `--continue` without
-/// `--load-dump` are exit 4.
-const CONTINUE_UNTIL: &str = "stage:main_sequence";
+/// `--load-dump` are exit 4. The life ran to `stage:main_sequence` (step 1,616) until §0.5 [M0-D141] showed main_sequence
+/// three frames after the ignition (672 → 704 on the RTX 4090), ahead of the cut; it now runs to sim time 20 (step 1,623),
+/// main_sequence shown from 704 on.
+const CONTINUE_UNTIL: &str = "sim_time:20";
 const CONTINUE_EVERY: u64 = 256;
 const CONTINUE_CUT: u64 = 768;
 
@@ -407,7 +409,7 @@ fn sun_life(out: &Path, extra: &[&str]) -> (i32, Vec<String>) {
 fn a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary() {
     let dir = temp("continue");
     let every = CONTINUE_EVERY.to_string();
-    // The cap a little past the unbroken life's 1,616 steps on the V-cycle (M0-D84; 1,184 on Jacobi's looser solve, the lead
+    // The cap a little past the unbroken life's 1,616 steps (1,623 to sim time 20, M0-D141) on the V-cycle (M0-D84; 1,184 on Jacobi's looser solve, the lead
     // at M0-D84: «Raise cap to 2,000 (Recommended)»): a plant that never meets the condition stops there.
     let life = ["--until", CONTINUE_UNTIL, "--dump-every", &every, "--max-steps", "2000"];
     let (whole, cut, on) = (dir.join("whole"), dir.join("cut"), dir.join("on"));

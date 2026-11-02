@@ -1,16 +1,16 @@
 --- a/crates/sr-app/src/ui/right.rs
 +++ b/crates/sr-app/src/ui/right.rs
-@@ -79,7 +79,7 @@
- 
+@@ -86,7 +86,7 @@
  /// The readout's panel for the selected star (§4.6): the stage, `star.mass`, `star.fate` — or `star.ending` once a remnant
- /// holds —, `star.age`, `star.rate` (not while `paused`), `star.surface`, `star.core`; `objects` is how many the world holds.
+ /// holds —, `star.remnant` while its remnant is ringed (§0.5 [M0-D138], ui::remnant), `star.age`, `star.rate` (not while
+ /// `paused`), `star.surface`, `star.core`; `objects` is how many the world holds.
 -pub fn view(star: Option<&Facts>, objects: usize, paused: bool) -> StarPanel {
 +pub fn view(star: Option<&Facts>, objects: usize, _paused: bool) -> StarPanel {
      let heading = strings::get("star.heading").to_string();
      let Some(star) = star else {
          return StarPanel { heading, lines: Vec::new(), note: Some(strings::get("star.none").to_string()) };
-@@ -91,7 +91,8 @@
-         None => {}
+@@ -101,7 +101,8 @@
+         lines.push(strings::get("star.remnant").to_string());
      }
      lines.push(fill("star.age", &[("age", &format::age(star.age_years))]));
 -    if let Some(rate) = star.rate.filter(|_| !paused) {

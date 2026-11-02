@@ -1,0 +1,13 @@
+measure_ui  2/0/0        8.35 s  GO
+logs: milestones/m0/logs/M0-T95.<scope>.log · record: loop_times.jsonl · tree 8c0d590bc06d+7f7ec888d0af
+anchor: 138 path×scope entries moved by this run
+anchor: 386 paths checked · 355 skipped (3 classes) · 1 never checked · 3 stale · 0 unclassified · 0 owed · 390 covered of 745 visible
+verify: 2 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 4.73 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 0.7->1.04
+=== GO ===
+_ms=4.995, the copy holds render_reserve_ms = p95 + 0.5, every other key and the real file unchanged
+=== GO ===
+
+-- measure_ui[refuse] · exit=0 · 4.73 s
+measure-ui refuse: a bad frame count, a missing one, --capture beside it, --calibration alone → exit 4; a file that is no calibration → exit 3, untouched; a software adapter without --calibration → exit 3, the real file untouched
+=== GO ===
+

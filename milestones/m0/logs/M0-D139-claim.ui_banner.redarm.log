@@ -1,0 +1,217 @@
+==== 2026-11-02T15:16:49-05:00 ui_banner · clean · a fresh scratch copy of the tree
+== 2026-11-02T15:16:49-05:00 ui_banner · task M0-D139-claim · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::banner
+-- ui_banner · exit=0 · 5.78 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.62s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 18 tests
+test ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock ... ok
+test ui::banner::tests::a_core_collapse_named_two_frames_after_the_latch_is_not_a_second_banner ... ok
+test ui::banner::tests::a_second_latch_slows_the_clock_again ... ok
+test ui::banner::tests::each_event_fires_once_per_object ... ok
+test ui::banner::tests::events_that_are_not_the_slow_downs_do_nothing ... ok
+test ui::banner::tests::ignition_slows_to_one_and_says_so ... ok
+test ui::banner::tests::nothing_slowed_nothing_shown ... ok
+test ui::banner::tests::only_ever_slower ... ok
+test ui::banner::tests::supernova_slows_to_a_tenth_with_its_text ... ok
+test ui::banner::tests::the_banner_stays_until_the_player_changes_the_rung ... ok
+test ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text ... ok
+test ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock ... ok
+test ui::banner::tests::the_setting_off_means_no_slow_down_and_no_banner ... ok
+test ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed ... ok
+test ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence ... ok
+test ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites ... ok
+test ui::banner::tests::a_clear_ends_the_notice ... ok
+test ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.06s
+
+
+==== 2026-11-02T15:16:55-05:00 ui_banner · plant banner-wrong-event · a fresh scratch copy of the tree
+planted banner-wrong-event: tests/plants/banner-wrong-event.patch -> crates/sr-app/src/ui/banner.rs
+== 2026-11-02T15:16:55-05:00 ui_banner · task M0-D139-claim · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::banner
+-- ui_banner · exit=101 · 5.88 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.73s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 18 tests
+test ui::banner::tests::a_core_collapse_named_two_frames_after_the_latch_is_not_a_second_banner ... ok
+test ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock ... FAILED
+test ui::banner::tests::a_second_latch_slows_the_clock_again ... ok
+test ui::banner::tests::each_event_fires_once_per_object ... ok
+test ui::banner::tests::events_that_are_not_the_slow_downs_do_nothing ... ok
+test ui::banner::tests::ignition_slows_to_one_and_says_so ... ok
+test ui::banner::tests::nothing_slowed_nothing_shown ... ok
+test ui::banner::tests::only_ever_slower ... ok
+test ui::banner::tests::supernova_slows_to_a_tenth_with_its_text ... ok
+test ui::banner::tests::the_banner_stays_until_the_player_changes_the_rung ... ok
+test ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text ... FAILED
+test ui::banner::tests::the_setting_off_means_no_slow_down_and_no_banner ... ok
+test ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock ... FAILED
+test ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed ... ok
+test ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence ... FAILED
+test ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites ... ok
+test ui::banner::tests::a_clear_ends_the_notice ... ok
+test ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it ... ok
+
+failures:
+
+---- ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock stdout ----
+
+thread 'ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock' (858568) panicked at crates/sr-app/src/ui/banner.rs:395:9:
+assertion `left == right` failed
+  left: Some("Slowed down: supernova — press + to speed up again")
+ right: Some("Slowed down: core collapse — press + to speed up again")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text stdout ----
+
+thread 'ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text' (858580) panicked at crates/sr-app/src/ui/banner.rs:305:9:
+assertion `left == right` failed
+  left: Some("Slowed down: supernova — press + to speed up again")
+ right: Some("Slowed down: core collapse — press + to speed up again")
+
+---- ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock stdout ----
+
+thread 'ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock' (858581) panicked at crates/sr-app/src/ui/banner.rs:510:13:
+assertion `left == right` failed: core_collapse: the banner
+  left: Some("Slowed down: supernova — press + to speed up again")
+ right: Some("Slowed down: core collapse — press + to speed up again")
+
+---- ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence stdout ----
+
+thread 'ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence' (858584) panicked at crates/sr-app/src/ui/banner.rs:547:9:
+assertion `left == right` failed
+  left: Some("Slowed down: supernova — press + to speed up again")
+ right: Some("Slowed down: core collapse — press + to speed up again")
+
+
+failures:
+    ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock
+    ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text
+    ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock
+    ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence
+
+test result: FAILED. 14 passed; 4 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+==== 2026-11-02T15:17:01-05:00 ui_banner · plant banner-bar-before-poll · a fresh scratch copy of the tree
+planted banner-bar-before-poll: tests/plants/banner-bar-before-poll.patch -> crates/sr-app/src/ui/banner.rs
+== 2026-11-02T15:17:01-05:00 ui_banner · task M0-D139-claim · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::banner
+-- ui_banner · exit=101 · 5.68 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm2/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm2/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.56s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 18 tests
+test ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock ... ok
+test ui::banner::tests::a_core_collapse_named_two_frames_after_the_latch_is_not_a_second_banner ... ok
+test ui::banner::tests::a_second_latch_slows_the_clock_again ... ok
+test ui::banner::tests::each_event_fires_once_per_object ... ok
+test ui::banner::tests::events_that_are_not_the_slow_downs_do_nothing ... ok
+test ui::banner::tests::ignition_slows_to_one_and_says_so ... ok
+test ui::banner::tests::nothing_slowed_nothing_shown ... ok
+test ui::banner::tests::only_ever_slower ... ok
+test ui::banner::tests::supernova_slows_to_a_tenth_with_its_text ... ok
+test ui::banner::tests::the_banner_stays_until_the_player_changes_the_rung ... ok
+test ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text ... ok
+test ui::banner::tests::the_setting_off_means_no_slow_down_and_no_banner ... ok
+test ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock ... FAILED
+test ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed ... ok
+test ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence ... FAILED
+test ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites ... ok
+test ui::banner::tests::a_clear_ends_the_notice ... ok
+test ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it ... ok
+
+failures:
+
+---- ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock stdout ----
+
+thread 'ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock' (858798) panicked at crates/sr-app/src/ui/banner.rs:506:13:
+assertion `left == right` failed: ignition: the bar's selected rung is the slowed one
+  left: 30.0
+ right: 1.0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence stdout ----
+
+thread 'ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence' (858801) panicked at crates/sr-app/src/ui/banner.rs:534:9:
+assertion `left == right` failed
+  left: (1.0, "Speed ×30")
+ right: (1.0, "Speed ×1")
+
+
+failures:
+    ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock
+    ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence
+
+test result: FAILED. 16 passed; 2 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+==== 2026-11-02T15:17:07-05:00 ui_banner · plant banner-clear-in-flight · a fresh scratch copy of the tree
+==== 2026-11-02T15:17:07-05:00 ui_banner · plant banner-notice-tied-to-setting · a fresh scratch copy of the tree
+planted banner-notice-tied-to-setting: tests/plants/banner-notice-tied-to-setting.patch -> crates/sr-app/src/ui/banner.rs
+== 2026-11-02T15:17:08-05:00 ui_banner · task M0-D139-claim · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::banner
+-- ui_banner · exit=101 · 5.73 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm4/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm4/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-p6rks5_k/arm4/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.58s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 18 tests
+test ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock ... ok
+test ui::banner::tests::a_core_collapse_named_two_frames_after_the_latch_is_not_a_second_banner ... ok
+test ui::banner::tests::a_second_latch_slows_the_clock_again ... ok
+test ui::banner::tests::each_event_fires_once_per_object ... ok
+test ui::banner::tests::events_that_are_not_the_slow_downs_do_nothing ... ok
+test ui::banner::tests::ignition_slows_to_one_and_says_so ... ok
+test ui::banner::tests::nothing_slowed_nothing_shown ... ok
+test ui::banner::tests::only_ever_slower ... ok
+test ui::banner::tests::supernova_slows_to_a_tenth_with_its_text ... ok
+test ui::banner::tests::the_banner_stays_until_the_player_changes_the_rung ... ok
+test ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text ... ok
+test ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock ... ok
+test ui::banner::tests::the_setting_off_means_no_slow_down_and_no_banner ... ok
+test ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed ... FAILED
+test ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence ... ok
+test ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites ... ok
+test ui::banner::tests::a_clear_ends_the_notice ... FAILED
+test ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it ... ok
+
+failures:
+
+---- ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed stdout ----
+
+thread 'ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed' (859122) panicked at crates/sr-app/src/ui/banner.rs:518:9:
+assertion `left == right` failed
+  left: None
+ right: Some("Hydrogen ignition — the cloud has become a star")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::banner::tests::a_clear_ends_the_notice stdout ----
+
+thread 'ui::banner::tests::a_clear_ends_the_notice' (859106) panicked at crates/sr-app/src/ui/banner.rs:553:9:
+assertion `left == right` failed: from the read-back's time
+  left: (30.0, None)
+ right: (30.0, Some("Hydrogen ignition — the cloud has become a star"))
+
+
+failures:
+    ui::banner::tests::a_clear_ends_the_notice
+    ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed
+
+test result: FAILED. 16 passed; 2 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

@@ -1,0 +1,2 @@
+# M0-D134-claim-pc-decoy | launch web | 2026-11-02T12:22:57-0500
+$ python3 -m http.server 47840 --bind 127.0.0.1 --directory web/dist

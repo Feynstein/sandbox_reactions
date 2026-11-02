@@ -496,7 +496,7 @@
       ]
     },
     "observe_run": {
-      "desc": "the observers in headless runs (contract §1.9, §2.12.2, §3.3; M0-T60): crates/sr-engine/src/watch.rs and headless.rs — `--until sim_time:<t> | event:<kind> | stage:<id> | ending`, `--max-steps`, DIR/events.jsonl and summary.json's `events`, `objects` and `until` on the engine's own block summary (the tracker and the stages ran on synthetic summaries alone before); `bash tests/gpu.sh observe physics`, every run through headless::run_captured on the physics adapter, its stdout lines kept: scenes/cold_disk.json `--until stage:collapsing` met (step 49, the stop on a frame boundary — the first step, then 16 a frame —, the object showing the stage from that step, the run one frame shorter unmet); `--until sim_time:5` met at the first step past 5 (step 1355 at 5.00284; the run one step shorter at 4.99722); an unmet `--until stage:black_hole --max-steps 100` exit 2 with the DONE line reading `until=unmet`, summary.json's until met false, and a `--steps` run cut by --max-steps `unmet` as before, a complete one `none`; scenes/sink_cloud.json at T 0.5 (the case's own copy, M0-D66; T 0.05 fragments, M0-D70) with a sink the test drops into the middle of a seed run's dump (--load-dump): events.jsonl one JSON object a line with the §2.12.2 keys, the same as summary.json's events — sink_formed, then `ending` when the black hole has been displayed 10 t.u. (10.03 held), the run one frame shorter with no ending; the arguments (both --steps and --until, neither, a condition of no form, an unknown stage, `event:ending`, a negative time, --until with --cpu-reference) refused exit 4 before a device is touched. The overshoot allowed: sim_time none past the step, the rest one frame (16 steps) — untuned (headless's FRAME), asserted. A frame is 16 steps with --until, 256 without. objects' `mass_suns`, `predicted_ending`, `ending` and `age_years` come with M0-T69, M0-T72, M0-T73. until-never-met reads the stop condition only when the run is already at its cap. M0-D76 (§0.5 [M0-D76]): every dump of a GPU run has its observers' snapshot beside it (dumps/s_<step>.observers.json — the Watch, the Ledger, the steps done, wall time, next Δt and P5's unconverged count, every f64 an exact string), and `--load-dump FILE --continue` goes on as the cut run would have: the Sun-like preset built in code (run_scene_captured, as calibrate builds a life — it reads no calibration, O13) `--until stage:main_sequence --dump-every 256 --max-steps 1600` unbroken (ignition at step 672, cloud shown from 720, main_sequence at 1184 on the RTX 5090) and the same life cut at 768 by --max-steps and continued from s_768 write the same summary.json line for line but wall_s, the same events.jsonl and the final dump byte for byte; a snapshot of another step beside the dump, none beside it and --continue without --load-dump are exit 4. continue-ignited-left-out writes every snapshot's `ignited` false; continue-ledger-start-lost restores the ledger without its start §0.5 [M0-D70]: the T 0.5 cloud in a 256 × 256 world with a 50 sink the test drops into the vacuum at (16.5, 16.5), outside the box — `sink_formed` at step 41 on an object of 50.0 exactly (no block's gas) and `--until stage:black_hole` met (step 73 on the RTX 4090) on that object, still 50.0, the same id, the cloud beside it. lone-sink-left-out drops the sinks no block holds §0.5 [M0-D96]: sink_cloud at T 3, a 50 sink dropped at its centre after 40 steps, eats the whole cloud and the box empties (step 1,521 on the RTX 4090); `--until ending` met (step 1,529, t 14.13), black_hole, the final dump's sink finite and in the world. dt-empty-box-unbounded freezes the clock there and throws the sink to infinity. §0.5 [M0-D95]: a life's ending is its heaviest object's — two T 0.5 clouds 324 cells apart in 448 × 96 (1,600 and 256), a 50 sink in the lighter after 40 steps, the life cut at step 240 (`--until ending --max-steps 200`: exit 2, `until` naming no object) and continued with a 50 sink in the heavier: the lighter's `ending` is logged and the run goes on, the life ends on the heavier's (step 2,720, t 12.94 on the RTX 4090; the lighter's at 2,496), `until.object` its id and the heaviest of the last frame. ending-any-object reads the life's ending from any object's first.",
+      "desc": "the observers in headless runs (contract §1.9, §2.12.2, §3.3; M0-T60): crates/sr-engine/src/watch.rs and headless.rs — `--until sim_time:<t> | event:<kind> | stage:<id> | ending`, `--max-steps`, DIR/events.jsonl and summary.json's `events`, `objects` and `until` on the engine's own block summary (the tracker and the stages ran on synthetic summaries alone before); `bash tests/gpu.sh observe physics`, every run through headless::run_captured on the physics adapter, its stdout lines kept: scenes/cold_disk.json `--until stage:collapsing` met (step 49, the stop on a frame boundary — the first step, then 16 a frame —, the object showing the stage from that step, the run one frame shorter unmet); `--until sim_time:5` met at the first step past 5 (step 1355 at 5.00284; the run one step shorter at 4.99722); an unmet `--until stage:black_hole --max-steps 100` exit 2 with the DONE line reading `until=unmet`, summary.json's until met false, and a `--steps` run cut by --max-steps `unmet` as before, a complete one `none`; scenes/sink_cloud.json at T 0.5 (the case's own copy, M0-D66; T 0.05 fragments, M0-D70) with a sink the test drops into the middle of a seed run's dump (--load-dump): events.jsonl one JSON object a line with the §2.12.2 keys, the same as summary.json's events — sink_formed, then `ending` when the black hole has been displayed 10 t.u. (10.03 held), the run one frame shorter with no ending; the arguments (both --steps and --until, neither, a condition of no form, an unknown stage, `event:ending`, a negative time, --until with --cpu-reference) refused exit 4 before a device is touched. The overshoot allowed: sim_time none past the step, the rest one frame (16 steps) — untuned (headless's FRAME), asserted. A frame is 16 steps with --until, 256 without. objects' `mass_suns`, `predicted_ending`, `ending` and `age_years` come with M0-T69, M0-T72, M0-T73. until-never-met reads the stop condition only when the run is already at its cap. M0-D76 (§0.5 [M0-D76]): every dump of a GPU run has its observers' snapshot beside it (dumps/s_<step>.observers.json — the Watch, the Ledger, the steps done, wall time, next Δt and P5's unconverged count, every f64 an exact string), and `--load-dump FILE --continue` goes on as the cut run would have: the Sun-like preset built in code (run_scene_captured, as calibrate builds a life — it reads no calibration, O13) `--until stage:main_sequence --dump-every 256 --max-steps 1600` unbroken (ignition at step 672, cloud shown from 720, main_sequence at 1184 on the RTX 5090; since M0-D141 `--until sim_time:20`, 1,623 steps on the RTX 4090, main_sequence shown from 704 — §0.5 [M0-D141] shows it three frames after the ignition, ahead of the cut) and the same life cut at 768 by --max-steps and continued from s_768 write the same summary.json line for line but wall_s, the same events.jsonl and the final dump byte for byte; a snapshot of another step beside the dump, none beside it and --continue without --load-dump are exit 4. continue-ignited-left-out writes every snapshot's `ignited` false; continue-ledger-start-lost restores the ledger without its start §0.5 [M0-D70]: the T 0.5 cloud in a 256 × 256 world with a 50 sink the test drops into the vacuum at (16.5, 16.5), outside the box — `sink_formed` at step 41 on an object of 50.0 exactly (no block's gas) and `--until stage:black_hole` met (step 73 on the RTX 4090) on that object, still 50.0, the same id, the cloud beside it. lone-sink-left-out drops the sinks no block holds §0.5 [M0-D96]: sink_cloud at T 3, a 50 sink dropped at its centre after 40 steps, eats the whole cloud and the box empties (step 1,521 on the RTX 4090); `--until ending` met (step 1,529, t 14.13), black_hole, the final dump's sink finite and in the world. dt-empty-box-unbounded freezes the clock there and throws the sink to infinity. §0.5 [M0-D95]: a life's ending is its heaviest object's — two T 0.5 clouds 324 cells apart in 448 × 96 (1,600 and 256), a 50 sink in the lighter after 40 steps, the life cut at step 240 (`--until ending --max-steps 200`: exit 2, `until` naming no object) and continued with a 50 sink in the heavier: the lighter's `ending` is logged and the run goes on, the life ends on the heavier's (step 2,720, t 12.94 on the RTX 4090; the lighter's at 2,496), `until.object` its id and the heaviest of the last frame. ending-any-object reads the life's ending from any object's first.",
       "cmd": "bash tests/gpu.sh observe physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
@@ -600,11 +600,11 @@
       ]
     },
     "classify": {
-      "desc": "classify (contract §1.9.3, §1.9.4; M0-T59): sr_physics::observe::stages on synthetic objects (no GPU) — each of §1.9.3's 19 rows matching on an object built for it and not matching one step either side of its threshold, the table's order (black_hole before neutron_star, supernova before core_collapse, si_burn · o_burn · ne_burn · c_burn on a tie, collapsing before protostar — disjoint as written, so graded as the table's order), failed_star only for an object that never ignited and the same object ignited a white dwarf, the supernova's 20 t.u. window after a core collapse, the display hold (a stage shows after 3 identical results, a different result restarts the count, core collapse and supernova show at once), the ignited flag (turns on at 0.5 L ≤ L_H ≤ 2 L — §0.5 [M0-D53] —, stays on, this frame's result already reads it; a flash of L_H 277 against L 2.1 × 10⁻⁷ does not ignite and the cloud reads collapsing, each end of the band within and a hair outside it not) and main_sequence on the same band, and each event — ignition, core collapse, supernova, sink formed — once per object, in object order. Synthetic objects only: the engine's own summary runs through the tracker and the stages in `observe_run` (M0-T60). §0.5 [M0-D78] (the lead at M0-V9, «Burnt fuel also counts», «max(10 t.u., 20 τ_dyn)»): a flashed centre — X_H,c 0.7346 at L_H 18,681 against L 1.55, past the window at every frame — ignites `by` fuel at the frame it reaches 0.9 × the most it has shown (0.70 not yet, 0.66 yes; 0.9 × exactly within, a hair over not), once, and its cold degenerate burnt core shows white_dwarf where the same core never flashed shows failed_star; X_H,c falling with L_H = 0 (a centre on painted helium) leaves it unignited and its core a failed star; a centre under 10⁻³ throughout never ignites by it; [M0-D53]'s flash burning 0.04 % does not; the light window still ignites `by` light; ending_hold is 10 t.u. at τ_dyn 0.25 and 0.5 and 20 at τ_dyn 1; StageTracker's snapshot round-trips the history (x_h_max included, the fuel test firing after the restore) and one without x_h_max is refused. classify-order plants protostar tested ahead of collapsing in the table; ignite-on-a-flash plants the band's upper end dropped (L_H ≥ 0.5 L alone); ignite-light-only drops the fuel test; ending-hold-ten-tu leaves the hold at 10 t.u.; snapshot-x-h-max-left-out writes the snapshot without x_h_max. §0.5 [M0-D79] (the lead at M0-R5, «Rate + NS row (Recommended)»): the table's order is now black_hole, supernova, neutron_star, core_collapse; the neutron_star row reads Y_e,c ≤ 0.35 (Σ X_c Z/A, `registry::electron_fraction`), d_c ≥ 0.5, no sink, no |v_r| — a collapsed iron centre as the gate leaves it (X_n 0.46, Y_e,c 0.251, v_r 0.49 √(GM/R)) matches ignited or not, Y_e,c exactly 0.35 within and 0.3501 not, d_c exactly 0.5 within and 0.49 not; carbon, oxygen and pure iron white dwarfs (Y_e 0.5, 0.5, 0.464) and M0-R5's stalled iron core (X_n,c 0.011) stay white_dwarf; a sink makes it a black hole, a supernova's window shows supernova before it, and it shows before core_collapse while the gate re-opens (L_N < 0), core_collapse when not degenerate. neutron-star-old-row puts back the row's X_n,c ≥ 0.5 and |v_r| ≤ 0.05 √(GM/R). §0.5 [M0-D81] (the lead at M0-D81, «Refuse above m_ch_sb (Recommended)»): white_dwarf and planetary_nebula read an object of at most m_ch_sb (StageTracker::new(m_ch) and classify's m_ch; the tests read the shipped 3,216.42) — exactly m_ch_sb within, the next f64 above not, an iron centre past it iron_core; the 4,572.394 life's flashed iron core on the RTX 4090 (M 4,570.5, X_Fe 1, d_c 0.588, L_nuc 8.9 × 10⁻¹³ L, v_r 0.42 √(GM/R); then M 4,543.3 at 6 % unbound) reads iron_core, and the same centre at m_up_sb's light-side ending mass 1,978.8 white_dwarf. white-dwarf-any-mass drops the bound from both rows. §0.5 [M0-D88] (the lead at M0-D88, «NS needs a collapse (Recommended)»): the neutron_star row also needs the object to have passed core collapse (its history's last core-collapse frame) — the 6,702.064 life's centre at step 1,553 on the RTX 4090 (Y_e,c 0.342 a frame after 0.464, L_N −5.22 × 10⁷) reads core_collapse never collapsed and neutron_star once collapsed, and with L_N 0 and no collapse behind it no neutron star; through the tracker its frames give the core_collapse event, then supernova at 16.7 % unbound, then neutron_star under 0.1 M unbound. neutron-star-without-collapse drops the passed-collapse term. §0.5 [M0-D92] (the lead at M0-D92, «No collapse ≤ m_ch_sb (Recommended)»): core_collapse also needs the object past m_ch_sb (none refused where the run has no ceiling, m_ch ∞) — the next f64 above m_ch_sb collapses, exactly m_ch_sb not; the M₀ life's frame at step 133,534 on the RTX 4090 (M 2,922, a cold flashed iron centre overshooting into the gate: X_Fe 0.989, d_c 1.0, L_N −2.34 × 10⁵, 474.7 unbound) reads planetary_nebula; the collapsing cores the other cases build weigh 2 m_ch_sb (the 6,702 life's 6,631.5). core-collapse-any-mass drops the bound",
+      "desc": "classify (contract §1.9.3, §1.9.4; M0-T59): sr_physics::observe::stages on synthetic objects (no GPU) — each of §1.9.3's 19 rows matching on an object built for it and not matching one step either side of its threshold, the table's order (black_hole before neutron_star, supernova before core_collapse, si_burn · o_burn · ne_burn · c_burn on a tie, collapsing before protostar — disjoint as written, so graded as the table's order), failed_star only for an object that never ignited and the same object ignited a white dwarf, the supernova's 20 t.u. window after a core collapse, the display hold (a stage shows after 3 identical results, a different result restarts the count, core collapse and supernova show at once), the ignited flag (turns on at 0.5 L ≤ L_H ≤ 2 L — §0.5 [M0-D53] —, stays on, this frame's result already reads it; a flash of L_H 277 against L 2.1 × 10⁻⁷ does not ignite and the cloud reads collapsing, each end of the band within and a hair outside it not) and main_sequence on the same band, and each event — ignition, core collapse, supernova, sink formed — once per object, in object order. Synthetic objects only: the engine's own summary runs through the tracker and the stages in `observe_run` (M0-T60). §0.5 [M0-D78] (the lead at M0-V9, «Burnt fuel also counts», «max(10 t.u., 20 τ_dyn)»): a flashed centre — X_H,c 0.7346 at L_H 18,681 against L 1.55, past the window at every frame — ignites `by` fuel at the frame it reaches 0.9 × the most it has shown (0.70 not yet, 0.66 yes; 0.9 × exactly within, a hair over not), once, and its cold degenerate burnt core shows white_dwarf where the same core never flashed shows failed_star; X_H,c falling with L_H = 0 (a centre on painted helium) leaves it unignited and its core a failed star; a centre under 10⁻³ throughout never ignites by it; [M0-D53]'s flash burning 0.04 % does not; the light window still ignites `by` light; ending_hold is 10 t.u. at τ_dyn 0.25 and 0.5 and 20 at τ_dyn 1; StageTracker's snapshot round-trips the history (x_h_max included, the fuel test firing after the restore) and one without x_h_max is refused. classify-order plants protostar tested ahead of collapsing in the table; ignite-on-a-flash plants the band's upper end dropped (L_H ≥ 0.5 L alone); ignite-light-only drops the fuel test; ending-hold-ten-tu leaves the hold at 10 t.u.; snapshot-x-h-max-left-out writes the snapshot without x_h_max. §0.5 [M0-D79] (the lead at M0-R5, «Rate + NS row (Recommended)»): the table's order is now black_hole, supernova, neutron_star, core_collapse; the neutron_star row reads Y_e,c ≤ 0.35 (Σ X_c Z/A, `registry::electron_fraction`), d_c ≥ 0.5, no sink, no |v_r| — a collapsed iron centre as the gate leaves it (X_n 0.46, Y_e,c 0.251, v_r 0.49 √(GM/R)) matches ignited or not, Y_e,c exactly 0.35 within and 0.3501 not, d_c exactly 0.5 within and 0.49 not; carbon, oxygen and pure iron white dwarfs (Y_e 0.5, 0.5, 0.464) and M0-R5's stalled iron core (X_n,c 0.011) stay white_dwarf; a sink makes it a black hole, a supernova's window shows supernova before it, and it shows before core_collapse while the gate re-opens (L_N < 0), core_collapse when not degenerate. neutron-star-old-row puts back the row's X_n,c ≥ 0.5 and |v_r| ≤ 0.05 √(GM/R). §0.5 [M0-D81] (the lead at M0-D81, «Refuse above m_ch_sb (Recommended)»): white_dwarf and planetary_nebula read an object of at most m_ch_sb (StageTracker::new(m_ch) and classify's m_ch; the tests read the shipped 3,216.42) — exactly m_ch_sb within, the next f64 above not, an iron centre past it iron_core; the 4,572.394 life's flashed iron core on the RTX 4090 (M 4,570.5, X_Fe 1, d_c 0.588, L_nuc 8.9 × 10⁻¹³ L, v_r 0.42 √(GM/R); then M 4,543.3 at 6 % unbound) reads iron_core, and the same centre at m_up_sb's light-side ending mass 1,978.8 white_dwarf. white-dwarf-any-mass drops the bound from both rows. §0.5 [M0-D88] (the lead at M0-D88, «NS needs a collapse (Recommended)»): the neutron_star row also needs the object to have passed core collapse (its history's last core-collapse frame) — the 6,702.064 life's centre at step 1,553 on the RTX 4090 (Y_e,c 0.342 a frame after 0.464, L_N −5.22 × 10⁷) reads core_collapse never collapsed and neutron_star once collapsed, and with L_N 0 and no collapse behind it no neutron star; through the tracker its frames give the core_collapse event, then supernova at 16.7 % unbound, then neutron_star under 0.1 M unbound. neutron-star-without-collapse drops the passed-collapse term. §0.5 [M0-D92] (the lead at M0-D92, «No collapse ≤ m_ch_sb (Recommended)»): core_collapse also needs the object past m_ch_sb (none refused where the run has no ceiling, m_ch ∞) — the next f64 above m_ch_sb collapses, exactly m_ch_sb not; the M₀ life's frame at step 133,534 on the RTX 4090 (M 2,922, a cold flashed iron centre overshooting into the gate: X_Fe 0.989, d_c 1.0, L_N −2.34 × 10⁵, 474.7 unbound) reads planetary_nebula; the collapsing cores the other cases build weigh 2 m_ch_sb (the 6,702 life's 6,631.5). core-collapse-any-mass drops the bound §0.5 [M0-D134] (the lead at M0-D134, «Must be settled (Recommended)», «Display holds (Recommended)»): failed_star also needs the protostar's settled test (|v_r| ≤ 0.05 √(GM/R), 2P/|W| ≥ 0.8) — the preset cloud's cold centre (d_c 0.65) reads collapsing at −0.6 √(GM/R), cloud at −0.075 and at 2P/|W| 0.78, failed_star at |v_r| exactly 0.05; the shown stage never steps back (`steps_back`): cloud → collapsing → protostar forward only, no cloud after a failed star (a collapse after it shows), none of the three once ignited (L_H at 3 L falls through to a raw cloud and main_sequence stays shown; an ignition before any stage held shows nothing). failed-star-unsettled drops the settled test from the row; stage-steps-back drops the hold's steps_back. §0.5 [M0-D140] (the lead at M0-D140, «(a) Settled test (Recommended)»): white_dwarf and planetary_nebula also need the settled test — the Sun-like's post-flash frames on the RTX 4090 (ignited, X_H,c 0.7318, L_nuc 0: step 433 at +0.18 √(GM/R), step 545 at 2P/|W| 0.787) read no white dwarf, |v_r| exactly 0.05 and 2P/|W| exactly 0.8 within, 0.0501 and 0.798 not, for each row; the carbon, oxygen and iron white dwarfs and m_up_sb's 1,978.8 one at rest, that one pulsing at 0.42 √(GM/R) no white dwarf. remnant-unsettled drops the settled test from both rows. §0.5 [M0-D141] (the lead at M0-D141, «(a) Largest group (Recommended)»): main_sequence reads an ignited object whose largest burning group is hydrogen, at least a tenth of L_nuc, X_H,c ≥ 10⁻³ (`burns`, as the other burning rows) — the [0.5 L, 2 L] window holds the ignition event alone; never ignited, burning nothing, X_H,c 0.0009, helium the larger group no main sequence, X_H,c exactly 10⁻³, a tie with helium and L_N absorbing yes; the Sun-like's post-flash frames on the RTX 4090 (logs/M0-D140.iterate.log) at L_H 0.21 L (step 289), 0.007 L (401) and 86 L (769) read main_sequence, at L_nuc 0 (433) cloud, and the same burning never ignited none; the steps-back case's raw cloud is now an ignited object burning nothing. main-sequence-light-window puts the window back on the row.",
       "cmd": "bash tests/cpu.sh sr-physics observe::stages",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 47,
+      "expected": 52,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -624,7 +624,11 @@
         "tests/plants/neutron-star-old-row.patch",
         "tests/plants/white-dwarf-any-mass.patch",
         "tests/plants/neutron-star-without-collapse.patch",
-        "tests/plants/core-collapse-any-mass.patch"
+        "tests/plants/core-collapse-any-mass.patch",
+        "tests/plants/failed-star-unsettled.patch",
+        "tests/plants/stage-steps-back.patch",
+        "tests/plants/remnant-unsettled.patch",
+        "tests/plants/main-sequence-light-window.patch"
       ],
       "plants": [
         {
@@ -662,6 +666,68 @@
         {
           "id": "core-collapse-any-mass",
           "patch": "tests/plants/core-collapse-any-mass.patch"
+        },
+        {
+          "id": "failed-star-unsettled",
+          "patch": "tests/plants/failed-star-unsettled.patch"
+        },
+        {
+          "id": "stage-steps-back",
+          "patch": "tests/plants/stage-steps-back.patch"
+        },
+        {
+          "id": "remnant-unsettled",
+          "patch": "tests/plants/remnant-unsettled.patch"
+        },
+        {
+          "id": "main-sequence-light-window",
+          "patch": "tests/plants/main-sequence-light-window.patch"
+        }
+      ]
+    },
+    "stage_order": {
+      "desc": "the stage a live preset life shows (contract §1.9.3, §1.9.4, §4.6 as §0.5 [M0-D134] reads them; M0-D134): crates/sr-engine/tests/gpu/stage_order.rs — the Sun-like (2,000 steps since M0-D140) and the 15-Sun preset (500 steps) at calibration's masses, headless on the physics adapter through the run's progress hook with frames of 16 steps (an unmet `--until`), the heaviest object's shown stage read every frame — the stages the app's readout shows, its `Stars` running the same Tracker and StageTracker. Pass: no failed_star, cloud → collapsing → protostar forward only, none of the three after a later stage. Measured before the fix on linux-pc's lavapipe: failed_star from step 17 to 161 (Sun-like) and 193 (15-Sun) in free fall, d_c 0.55–0.65, and the Sun-like's cloud after its ignition (logs/M0-D134.measure.log). §0.5 [M0-D140]: and no white_dwarf shown while X_H,c ≥ 10⁻³ or before h_shell — measured before the fix on linux-pc's lavapipe and the RTX 4090 alike: the Sun-like's white_dwarf from step 433, re-expanding at +0.2 √(GM/R), X_H,c 0.7318 (logs/M0-D140.measure.log). §0.5 [M0-D141]: and no cloud, collapsing, protostar or no stage shown more than 3 frames after the star's ignition (watch.rs `Star.ignited`, the history's flag) — measured before the fix on the RTX 4090: the Sun-like ignited at step 273 and showed «collapsing» from step 65 to 2,000, raw cloud on every frame from 289, never inside [0.5 L, 2 L] (logs/M0-D140.iterate.log). failed-star-unsettled, stage-steps-back, remnant-unsettled and main-sequence-light-window as in `classify`.",
+      "cmd": "bash tests/gpu.sh stage_order physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 2,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-physics/**",
+        "crates/sr-engine/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "assets/calibration.json",
+        "scenes/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/gpu.sh",
+        "tests/plants/failed-star-unsettled.patch",
+        "tests/plants/stage-steps-back.patch",
+        "tests/plants/remnant-unsettled.patch",
+        "tests/plants/main-sequence-light-window.patch"
+      ],
+      "plants": [
+        {
+          "id": "failed-star-unsettled",
+          "patch": "tests/plants/failed-star-unsettled.patch"
+        },
+        {
+          "id": "stage-steps-back",
+          "patch": "tests/plants/stage-steps-back.patch"
+        },
+        {
+          "id": "remnant-unsettled",
+          "patch": "tests/plants/remnant-unsettled.patch"
+        },
+        {
+          "id": "main-sequence-light-window",
+          "patch": "tests/plants/main-sequence-light-window.patch"
         }
       ]
     },
@@ -1963,11 +2029,12 @@
       ]
     },
     "web": {
-      "desc": "G-WEB (contract §3.5, §6.2.1, §6.2.4, §5.4, §6.2.3): case build - trunk build --release writes web/dist with index.html, the .wasm and the wasm-bindgen glue; index.html keeps the canvas, the web.* texts and the inline WebGPU check ahead of the wasm, trunk's auto-loader stripped (M0-T7); cases ready and no-webgpu - web/smoke.mjs drives the box's installed Chrome (playwright-core, headless, §6.2.3's flags) against the `web` service launch.py starts over web/dist (M0-T15): `/` reaches srState \"ready\" within 30 s and srAdapter is logged; `/?no-webgpu=1` shows srState \"no-webgpu\" and the three web.no_webgpu_* texts exactly; both read Chrome's command line from chrome://version and refuse a run with --no-sandbox (chromiumSandbox on, M0-D17). Each case builds first when web/dist is not fresh against its inputs",
+      "desc": "G-WEB (contract §3.5, §6.2.1, §6.2.4, §5.4, §6.2.3): case build - trunk build --release writes web/dist with index.html, the .wasm and the wasm-bindgen glue; index.html keeps the canvas, the web.* texts and the inline WebGPU check ahead of the wasm, trunk's auto-loader stripped (M0-T7); cases ready and no-webgpu - web/smoke.mjs drives the box's installed Chrome (playwright-core, headless, §6.2.3's flags) against the `web` service launch.py starts over web/dist (M0-T15): `/` reaches srState \"ready\" within 30 s and srAdapter is logged; `/?no-webgpu=1` shows srState \"no-webgpu\" and the three web.no_webgpu_* texts exactly; case preset (M0-T94) - `/?preset=sun&steps=200` reaches \"ready\" and the canvas's central 100 x 100 px are not all black (the URL parameters of §3.5, crates/sr-app/src/web.rs); all read Chrome's command line from chrome://version and refuse a run with --no-sandbox (chromiumSandbox on, M0-D17). Each case builds first when web/dist is not fresh against its inputs",
       "cases": [
         "build",
         "ready",
         "no-webgpu",
+        "preset",
         "ready-held"
       ],
       "case_cmd": "bash tests/web/check.sh {case}",
@@ -1975,7 +2042,7 @@
         "laserax-ai",
         "Laser2025-20"
       ],
-      "expected": 4,
+      "expected": 5,
       "timeout_s": 900,
       "paths": [
         "web/**",
@@ -2030,7 +2097,7 @@
       ]
     },
     "capture": {
-      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own; since M0-T89 the actions case also runs tool, element and paint: the left panel (220 px) differs after tool and element, its accent moving down, and the world's upper-left corner differs after paint (plant capture-paint-ignored); since M0-T92 it runs select too (14 steps): the right panel (300 px) differs from start's \"No star yet\" and holds more lit pixels, and a malformed select is refused (plant capture-star-panel-blank, the readout's lines never drawn); since M0-T93b it runs hover too (15 steps): the right panel differs from select's and holds more lit pixels (the Cell inspector's four lines for the star's centre), and a malformed hover is refused (plant capture-hover-ignored, the scripted hover never reaching the pointer's place); since M0-T127c it runs glow_white, display_reset and fit too (20 steps: the Massive preset at its supergiant, paused): the world (the centre between the panels) after glow_white differs from the default Glow step's, after display_reset equals it pixel for pixel, and Heat after fit differs from Heat's default, and a malformed glow_white, range, fit or display_reset is refused (plant capture-glow-white-ignored, the scripted glow_white never reaching the renderer); since M0-T129 it runs zoom too (21 steps, `star-zoom`: the paused supergiant of star-heat-fit zoomed to 8 about cell (300, 200)): the world differs from star-heat-fit's and six probed cells read off both shots (2 x 2 px whole, 16 x 16 px zoomed) are the same colour, and a malformed zoom is refused (plant capture-zoom-ignored, the scripted zoom never reaching the view)",
+      "desc": "the capture harness, first form (contract §3.3, M0-T8): --capture <script> --out <dir> on the box's window route (xvfb-run + llvmpipe on linux-pc, --offscreen-window on win-laptop, R15) writes one PNG per step of the window's size, the two steps' pixels differ (paused vs running), and a valid captions.json in review_page.py's shape, exit 0; an action not built yet, an unknown action and a bad id are each refused with SR-ERROR, exit 4; `actions` runs tests/capture/actions.json, one step per action built (pause, steps, preset, rung, slowdown, M0-T85), each writing its PNG, and the top bar (its 44 px) differs from the previous step's after pause, rung (a numbered rung, then Max) and slowdown; the build is the tree's own; since M0-T89 the actions case also runs tool, element and paint: the left panel (220 px) differs after tool and element, its accent moving down, and the world's upper-left corner differs after paint (plant capture-paint-ignored); since M0-T92 it runs select too (14 steps): the right panel (300 px) differs from start's \"No star yet\" and holds more lit pixels, and a malformed select is refused (plant capture-star-panel-blank, the readout's lines never drawn); since M0-T93b it runs hover too (15 steps): the right panel differs from select's and holds more lit pixels (the Cell inspector's four lines for the star's centre), and a malformed hover is refused (plant capture-hover-ignored, the scripted hover never reaching the pointer's place); since M0-D137 it runs hover-outside too (22 steps in all, after hover: hover on cell (700, 500), off the world): the right panel holds fewer lit pixels than hover's by more than 100 (plant capture-hover-off-world, an off-world cell still reaching the inspector as a hovered cell); since M0-T127c it runs glow_white, display_reset and fit too (20 steps: the Massive preset at its supergiant, paused): the world (the centre between the panels) after glow_white differs from the default Glow step's, after display_reset equals it pixel for pixel, and Heat after fit differs from Heat's default, and a malformed glow_white, range, fit or display_reset is refused (plant capture-glow-white-ignored, the scripted glow_white never reaching the renderer); since M0-T129 it runs zoom too (21 steps then, `star-zoom`: the paused supergiant of star-heat-fit zoomed to 8 about cell (300, 200)): the world differs from star-heat-fit's and six probed cells read off both shots (2 x 2 px whole, 16 x 16 px zoomed) are the same colour, and a malformed zoom is refused (plant capture-zoom-ignored, the scripted zoom never reaching the view)",
       "cases": [
         "smoke",
         "refuse",
@@ -2081,12 +2148,52 @@
           "patch": "tests/plants/capture-hover-ignored.patch"
         },
         {
+          "id": "capture-hover-off-world",
+          "patch": "tests/plants/capture-hover-off-world.patch"
+        },
+        {
           "id": "capture-glow-white-ignored",
           "patch": "tests/plants/capture-glow-white-ignored.patch"
         },
         {
           "id": "capture-zoom-ignored",
           "patch": "tests/plants/capture-zoom-ignored.patch"
+        }
+      ]
+    },
+    "measure_ui": {
+      "desc": "the UI's cost (contract §3.3, §1.8.3's R_reserve, M0-T95): `--measure-ui <frames> [--calibration <file>]` runs the desktop app with the Sun-like preset at ×1, reads eframe's CPU time per frame less the app's own world work, prints `SR-UI p95_ms=<x>` and writes render_reserve_ms = p95 + 0.5 into the file named (the default assets/calibration.json when none — refused on a software adapter, whose cost is not the GPU's); a check of the flag on lavapipe, never the measurement (R4): `run` — 20 frames into a copy of calibration.json, exit 0, one SR-UI line with p95 > 0, the copy holds p95 + 0.5 and every other key as it was, the real file's hash unchanged (plant measure-no-write: the key never written); `refuse` — a bad or missing frame count, --capture beside it and --calibration alone exit 4, a file that is no calibration exits 3 and stays untouched, a software adapter without --calibration exits 3 and leaves the real file untouched. The real run on the Quadro is the lead's, in M0-V13's window",
+      "cases": [
+        "run",
+        "refuse"
+      ],
+      "case_cmd": "bash tests/measure/check.sh {case}",
+      "box": [
+        "laserax-ai",
+        "Laser2025-20"
+      ],
+      "expected": 2,
+      "timeout_s": 900,
+      "paths": [
+        "crates/sr-app/**",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "assets/physics.json",
+        "assets/elements.json",
+        "assets/reactions.json",
+        "assets/calibration.json",
+        "tests/measure/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/plants/measure-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "measure-no-write",
+          "patch": "tests/plants/measure-no-write.patch"
         }
       ]
     },
@@ -2587,11 +2694,11 @@
       ]
     },
     "ui_banner": {
-      "desc": "the banner's view model (contract §1.8.5, §1.9.4, §4.2, §4.3, §4.11; M0-T86): crates/sr-app/src/ui/banner.rs - the text and rung each automatic slow-down shows (ignition ×1 `banner.ignition`, the latch's core collapse and the supernova ×0.1), the banner kept until the player changes the rung, the setting off meaning no slow-down and no banner, only ever slower, each event once per object, and a Tracker core collapse that arrives after the latch already slowed the clock never a second banner. The bin's own unit tests, `ui::banner::` (cpu.sh's --bin mode). The plan spells the scope `ui-banner`; R17 makes it `ui_banner`. Since M0-D120 `banner::views` builds the bar and the banner of a pass from one clock state after the read-back (the case `the_pass_that_reads_an_event_...`). Since M0-D122 `banner::Frames` routes the frames read back: a frame submitted before a Clear still reports to the clock but never reaches the new world's observers or Feed (the cases `a_main_sequence_frame_of_the_current_world_ignites`, its control, and `a_frame_submitted_before_a_clear_books_nothing_after_it`). Plants banner-wrong-event (supernova shown for core collapse), banner-bar-before-poll (the bar read before the pass books an event), banner-clear-in-flight (every frame read back taken for the current world's).",
+      "desc": "the banner's view model (contract §1.8.5, §1.9.4, §4.2, §4.3, §4.11; M0-T86): crates/sr-app/src/ui/banner.rs - the text and rung each automatic slow-down shows (ignition ×1 `banner.ignition`, the latch's core collapse and the supernova ×0.1), the banner kept until the player changes the rung, the setting off meaning no slow-down and no banner, only ever slower, each event once per object, and a Tracker core collapse that arrives after the latch already slowed the clock never a second banner. The bin's own unit tests, `ui::banner::` (cpu.sh's --bin mode). The plan spells the scope `ui-banner`; R17 makes it `ui_banner`. Since M0-D120 `banner::views` builds the bar and the banner of a pass from one clock state after the read-back (the case `the_pass_that_reads_an_event_...`). Since M0-D122 `banner::Frames` routes the frames read back: a frame submitted before a Clear still reports to the clock but never reaches the new world's observers or Feed (the cases `a_main_sequence_frame_of_the_current_world_ignites`, its control, and `a_frame_submitted_before_a_clear_books_nothing_after_it`). Plants banner-wrong-event (supernova shown for core collapse), banner-bar-before-poll (the bar read before the pass books an event), banner-clear-in-flight (every frame read back taken for the current world's). Since M0-D139 `banner::views_at` puts the ignition notice (`banner.ignition_notice`, §0.5 [M0-D139]) in the banner's slot when a star lights and the slow-down's banner does not say so, for NOTICE_SECONDS, the speed unchanged, ended by a Clear (the cases `with_the_setting_off_an_ignition_shows_the_notice_...`, `with_the_setting_on_the_slow_down_banner_is_unchanged_...` and `a_clear_ends_the_notice`); plant banner-notice-tied-to-setting (the notice shown only with the setting on).",
       "cmd": "bash tests/cpu.sh sr-app --bin ui::banner",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 15,
+      "expected": 18,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -2622,6 +2729,10 @@
         {
           "id": "banner-clear-in-flight",
           "patch": "tests/plants/banner-clear-in-flight.patch"
+        },
+        {
+          "id": "banner-notice-tied-to-setting",
+          "patch": "tests/plants/banner-notice-tied-to-setting.patch"
         }
       ]
     },
@@ -2820,11 +2931,11 @@
       ]
     },
     "ui_legend": {
-      "desc": "the live legend under the world (contract \u00a74.1's legend.* keys, \u00a74.2's Centre, \u00a74.11's legend row, \u00a74.12's ticks [M0-R12]; M0-T128): crates/sr-app/src/ui/legend.rs - the active view's legend as a view model, no GPU and no window: the six `legend.*` texts as the string table holds them; the ticks at every power of ten inside the shown range, placed by log T (1,000 K a third of the way along 10 K - 10 billion K, never linearly), both ends when fewer than two fall inside, a label that would overlap its left neighbour left out and its tick kept, the first and last labels kept inside the bar, the labels in the units without trailing zeros (\"1 million K\", \"1e-6\", \"0.001\"); the marks - S at its place in Glow only with `legend.white`, the hovered cell's value at its place on the view's range with `legend.cursor`, none over vacuum, off the world or in Element; the Glow bar's colours against the CPU formula written out directly (the exact dimming and the blackbody, not their tables) at S = 3,000 K, 10^6 K and 10^9 K within 2 levels, dimmed by a higher S; the Heat and Density bars the maps whatever the range; Element's ten swatches with their names; and the layout at the default window (the centre area 1240 x 872: the world at s = 2, the legend 8 px under it as wide, the hint under that, all inside) and the scale giving way when they would not fit. The bin's own unit tests, `ui::legend::legend_tests` (cpu.sh's --bin mode). NOT PROVEN by a case: the egui drawing of the strip (the capture's shots, M0-TV3). Plant legend-ticks-linear (ticks placed linearly in T).",
+      "desc": "the live legend under the world (contract \u00a74.1's legend.* keys, \u00a74.2's Centre, \u00a74.11's legend row, \u00a74.12's ticks [M0-R12]; M0-T128): crates/sr-app/src/ui/legend.rs - the active view's legend as a view model, no GPU and no window: the six `legend.*` texts as the string table holds them; the ticks at every power of ten inside the shown range, placed by log T (1,000 K a third of the way along 10 K - 10 billion K, never linearly), both ends when fewer than two fall inside, a label that would overlap its left neighbour left out and its tick kept, the first and last labels kept inside the bar, the labels in the units without trailing zeros (\"1 million K\", \"1e-6\", \"0.001\"); the marks - S at its place in Glow only with `legend.white`, the hovered cell's value at its place on the view's range with `legend.cursor`, none over vacuum, off the world or in Element; the Glow bar's colours against the CPU formula written out directly (the exact dimming and the blackbody, not their tables) at S = 3,000 K, 10^6 K and 10^9 K within 2 levels, dimmed by a higher S; the Heat and Density bars the maps whatever the range; Element's ten swatches with their names; and the layout at the default window (the centre area 1240 x 872: the world at s = 2, the legend 8 px under it as wide, the hint under that, all inside) and the scale giving way when they would not fit. The bin's own unit tests, `ui::legend::legend_tests` (cpu.sh's --bin mode). NOT PROVEN by a case: the egui drawing of the strip (the capture's shots, M0-TV3). Plants legend-ticks-linear (ticks placed linearly in T) and legend-label-over-title (a mark's label placed without the title in the overlap test, M0-D135) and legend-notices-stack (the refusal placed under the hint, not in its place, M0-D136). The hint and the refusal together: one line in the hint slot, clear of the legend, inside the slot (M0-D136).",
       "cmd": "bash tests/cpu.sh sr-app --bin ui::legend::legend_tests",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 18,
+      "expected": 21,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -2847,6 +2958,14 @@
         {
           "id": "legend-ticks-linear",
           "patch": "tests/plants/legend-ticks-linear.patch"
+        },
+        {
+          "id": "legend-label-over-title",
+          "patch": "tests/plants/legend-label-over-title.patch"
+        },
+        {
+          "id": "legend-notices-stack",
+          "patch": "tests/plants/legend-notices-stack.patch"
         }
       ]
     },
@@ -2878,6 +2997,36 @@
         {
           "id": "zoom-cell-drifts",
           "patch": "tests/plants/zoom-cell-drifts.patch"
+        }
+      ]
+    },
+    "ui_remnant": {
+      "desc": "the remnant's ring (contract \u00a70.5 [M0-D138], \u00a74.2's Centre, \u00a74.6; M0-D138): crates/sr-app/src/ui/remnant.rs - from core collapse on, the ring around each remnant's centre as a view model, no GPU and no window: the ring's centre on the remnant's own cell through `Zoom::cell_at` at z = 1 (the world's centre, an off-centre cell and both corners) and at z = 8 (centred on it and off it, at 1, 1.5 and 2 points per pixel, never where z = 1 would put it), none for a remnant the zoomed view does not show, none with no remnant, ringed for core_collapse, supernova, neutron_star and black_hole only (no ring before core collapse, nor around a white dwarf), the radius the same on screen at every z, and the readout's `star.remnant` line byte-exact under the fate or ending of a ringed star and absent otherwise. The bin's own unit tests, `ui::remnant::remnant_tests` (cpu.sh's --bin mode); a main-sequence star's no ring through the real Tracker is `ui_star`'s. NOT PROVEN by a case: the painter's ring on the window (the supernova is not reached by a capture under 10 minutes; M0-D138's Verify 2). Plant remnant-ring-unzoomed (the ring placed by z = 1's mapping, the zoom ignored).",
+      "cmd": "bash tests/cpu.sh sr-app --bin ui::remnant::remnant_tests",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 6,
+      "timeout_s": 900,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-app/src/ui/**",
+        "crates/sr-app/src/strings.rs",
+        "crates/sr-app/src/format.rs",
+        "crates/sr-app/src/main.rs",
+        "crates/sr-engine/**",
+        "crates/sr-physics/**",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".cargo/**",
+        "tests/cargo.sh",
+        "tests/cpu.sh",
+        "tests/plants/remnant-*.patch"
+      ],
+      "plants": [
+        {
+          "id": "remnant-ring-unzoomed",
+          "patch": "tests/plants/remnant-ring-unzoomed.patch"
         }
       ]
     },

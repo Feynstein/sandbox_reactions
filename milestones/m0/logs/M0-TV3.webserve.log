@@ -1,0 +1,14 @@
+127.0.0.1 - - [02/Nov/2026 10:22:14] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:22:14] code 404, message File not found
+127.0.0.1 - - [02/Nov/2026 10:22:14] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [02/Nov/2026 10:22:15] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:22:15] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:22:34] "GET /?preset=sun&steps=200 HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:22:35] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:22:35] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:23:19] "GET /?preset=sun&steps=200&view=heat HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:23:21] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:23:21] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:24:02] "GET /?preset=massive&steps=100&view=density HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:24:04] "GET /sandbox-reactions.js HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2026 10:24:04] "GET /sandbox-reactions_bg.wasm HTTP/1.1" 200 -

@@ -18,6 +18,7 @@ use crate::ui::banner::{self, Banner};
 use crate::ui::display::{self, DisplayCommand, DisplayPanel};
 use crate::ui::left::{self, LeftPanel};
 use crate::ui::legend::{self, Bar, Legend};
+use crate::ui::remnant;
 use crate::ui::zoom::{self, Zoom};
 use crate::ui::right::{CellPanel, StarPanel};
 use crate::ui::theme::{
@@ -77,9 +78,16 @@ pub struct SandboxApp {
     /// `--capture`'s driver (capture.rs): the app waits on it before it advances.
     #[cfg(not(target_arch = "wasm32"))]
     capture: Option<crate::capture::Driver>,
-    /// The cell a script's `hover` action holds the pointer on: it stands in for the pointer, which a capture has none of.
+    /// What a script's `hover` action holds the pointer on: it stands in for the pointer, which a capture has none of (`Some(None)`:
+    /// the pointer held off the world).
     #[cfg(not(target_arch = "wasm32"))]
-    scripted_hover: Option<[u32; 2]>,
+    scripted_hover: Option<Option<[u32; 2]>>,
+    /// `--measure-ui`'s meter (measure.rs): the frames' cost is read at the start of each pass.
+    #[cfg(not(target_arch = "wasm32"))]
+    measure: Option<crate::measure::Meter>,
+    /// What the pass has spent on the world itself (the read-back and the frame): not the UI's, so `--measure-ui` takes it off.
+    #[cfg(not(target_arch = "wasm32"))]
+    sim_cost: std::time::Duration,
 }
 
 impl SandboxApp {
@@ -102,6 +110,10 @@ impl SandboxApp {
             capture: None,
             #[cfg(not(target_arch = "wasm32"))]
             scripted_hover: None,
+            #[cfg(not(target_arch = "wasm32"))]
+            measure: None,
+            #[cfg(not(target_arch = "wasm32"))]
+            sim_cost: std::time::Duration::ZERO,
         })
     }
 
@@ -120,6 +132,31 @@ impl SandboxApp {
         } else {
             Err(format!("{action}: the {active:?} view has no such control (it acts on {views:?})"))
         }
+    }
+
+    /// The web page's URL parameters (§3.5) through the same doors a script's actions use: the view and the rung, the
+    /// preset dropped at the world's centre by the panel's path (§4.5), then `steps` forced through the loop and the clock
+    /// paused. An error is the line the page fails with.
+    #[cfg(target_arch = "wasm32")]
+    pub fn open_with(&mut self, query: &crate::web::Query, now: f64) -> Result<(), String> {
+        if let Some(view) = query.view {
+            self.sim.view_command(left::ViewCommand::Select(view));
+        }
+        if let Some(k) = query.rung {
+            self.sim.command(if k == 0 { Command::Max } else { Command::Numbered(k) });
+        }
+        if let Some(preset) = query.preset {
+            self.sim.preset_command(left::PresetCommand::Arm(preset));
+            let world = self.sim.world();
+            self.sim.place([world.width / 2, world.height / 2], now).map_err(|e| format!("preset: {e}"))?;
+        }
+        if let Some(n) = query.steps {
+            self.sim.queue_steps(n);
+            if !self.sim.paused() {
+                self.sim.command(Command::TogglePause);
+            }
+        }
+        Ok(())
     }
 
     /// A scripted action (§3.3) — the ones built so far. An error is the line the capture fails with.
@@ -150,7 +187,11 @@ impl SandboxApp {
             // The right click's door (ui::right::Stars::select_at), on the cell as the pointer would name it.
             Action::Select(cell) => self.sim.select_star(*cell),
             // The pointer's place, as the central panel reads it each frame (ui::right::Asker asks the engine for the cell).
-            Action::Hover(cell) => self.scripted_hover = Some(*cell),
+            // A cell off the world is the pointer off the world (§3.3), as `cell_at` names it.
+            Action::Hover(cell) => {
+                let world = self.sim.world();
+                self.scripted_hover = Some((cell[0] < world.width && cell[1] < world.height).then_some(*cell));
+            }
             // The panel's own door too (ui::left::Tools::apply), as a click or a key goes through.
             Action::Tool(tool) => self.sim.tool_command(left::Command::SelectTool(*tool)),
             Action::Element(key) => {
@@ -198,7 +239,7 @@ impl SandboxApp {
 }
 
 impl eframe::App for SandboxApp {
-    fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
+    fn ui(&mut self, ui: &mut egui::Ui, frame: &mut eframe::Frame) {
         // The presented-frame callback: egui-wgpu delivers a screenshot only for a frame whose surface texture it
         // acquired, and presents that frame right after starting the copy — so the event, read here a pass later,
         // proves a frame reached the screen. A frame that could not acquire its texture drops the request, so it is
@@ -210,6 +251,27 @@ impl eframe::App for SandboxApp {
                 crate::web::signal_ready();
             } else {
                 ui.ctx().send_viewport_cmd(egui::ViewportCommand::Screenshot(egui::UserData::default()));
+            }
+        }
+
+        // `--measure-ui` (measure.rs): the Sun-like preset at ×1 on the first pass; every pass reads what the pass before cost.
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            let sim_s = std::mem::take(&mut self.sim_cost).as_secs_f64();
+            if let Some(mut meter) = self.measure.take() {
+                let mut closed = false;
+                if meter.first_pass() {
+                    let now = ui.input(|i| i.time);
+                    let drop = [crate::capture::Action::Rung(1), crate::capture::Action::Preset("sun".into())];
+                    if let Some(e) = drop.iter().find_map(|a| self.apply(a, now).err()) {
+                        meter.fail(e);
+                        closed = true;
+                    }
+                }
+                if closed || meter.pass(frame.info().cpu_usage, sim_s) {
+                    ui.ctx().send_viewport_cmd(egui::ViewportCommand::Close);
+                }
+                self.measure = Some(meter);
             }
         }
 
@@ -232,9 +294,15 @@ impl eframe::App for SandboxApp {
         let frozen = false;
 
         // The frames read back since the last pass book their events into the clock first, then the bar and the banner are
-        // built from that one clock state (M0-D120). The keys of the bar (§4.10) and its buttons reach the clock before this
-        // pass plans its frame.
-        let (bar, banner) = banner::views(&mut self.sim);
+        // built from that one clock state (M0-D120); with no slow-down banner, the ignition notice takes its slot (M0-D139). The
+        // keys of the bar (§4.10) and its buttons reach the clock before this pass plans its frame.
+        #[cfg(not(target_arch = "wasm32"))]
+        let polled = std::time::Instant::now();
+        let (bar, banner) = banner::views_at(&mut self.sim, ui.input(|i| i.time));
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            self.sim_cost += polled.elapsed();
+        }
         let Keys { bar_commands: mut commands, tool_commands, preset_commands, view_commands, zoom_home } =
             key_commands(ui.ctx(), self.sim.presets().armed().is_some());
         if zoom_home {
@@ -268,7 +336,13 @@ impl eframe::App for SandboxApp {
         let now = ui.input(|i| i.time);
         // The frame (§1.8.3): the plan, the steps, the cell image — all submitted here, so they run before the pass egui
         // draws the image in.
+        #[cfg(not(target_arch = "wasm32"))]
+        let planned = std::time::Instant::now();
         self.sim.frame(now, frozen);
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            self.sim_cost += planned.elapsed();
+        }
 
         self.frames += 1;
         self.recent.push_back(now);
@@ -398,6 +472,13 @@ impl eframe::App for SandboxApp {
                 hovered = hover;
                 let painter = ui.painter();
                 painter.image(self.sim.texture(), rect, self.zoom.uv(rect, image), egui::Color32::WHITE);
+                // The remnant's ring from core collapse on (§0.5 [M0-D138], ui::remnant), in every view and at every zoom: `accent`
+                // over a `bg.space` halo, so it reads on Glow's white ejecta and on the dark sky alike; the banner stays above it.
+                for ring in remnant::rings(&self.sim.remnant_centres(), &self.zoom, rect, world, ppp) {
+                    let clipped = painter.with_clip_rect(rect);
+                    clipped.circle_stroke(ring.centre, ring.radius, egui::Stroke::new(4.0, BG_SPACE));
+                    clipped.circle_stroke(ring.centre, ring.radius, egui::Stroke::new(2.0, ACCENT));
+                }
                 if let Some(banner) = &banner {
                     draw_banner(painter, rect, banner);
                 }
@@ -411,7 +492,7 @@ impl eframe::App for SandboxApp {
                     painter.with_clip_rect(rect).circle_stroke(centre, radius, egui::Stroke::new(1.0, TEXT_PRIMARY));
                 }
                 // The legend of the active view under the world (§4.2, M0-T128), then the lines under it: the hint while armed, the
-                // refusal for 3 s (§4.5).
+                // refusal for 3 s in its place (§4.5, M0-D136: the slot holds one line).
                 let view = self.sim.views().active();
                 let bar = self.legend_bars.of(view, self.sim.display());
                 let text_width = |text: &str| {
@@ -428,10 +509,10 @@ impl eframe::App for SandboxApp {
                 );
                 draw_legend(painter, placed_at.legend, &strip, &text_width);
                 let notices = self.sim.presets().notices(now);
-                for (i, line) in notices.iter().enumerate() {
-                    let at = egui::pos2(rect.center().x, (placed_at.hint.top() + 2.0 + 16.0 * i as f32).min(area.bottom() - 16.0 * (notices.len() - i) as f32));
+                for (top, i) in legend::notice_slots(placed_at.hint, &notices) {
+                    let at = egui::pos2(rect.center().x, top);
                     let colour = if i == 0 && armed.is_some() { TEXT_SECONDARY } else { ERROR_TEXT };
-                    painter.text(at, egui::Align2::CENTER_TOP, line, egui::FontId::proportional(BAR_FONT), colour);
+                    painter.text(at, egui::Align2::CENTER_TOP, &notices[i], egui::FontId::proportional(BAR_FONT), colour);
                 }
                 // A right click selects the star under the cursor (§4.10), whatever is armed.
                 if !modal && response.clicked_by(egui::PointerButton::Secondary) {
@@ -449,7 +530,7 @@ impl eframe::App for SandboxApp {
             .inner;
         // The cell under the pointer is the inspector's (§4.6); a capture's scripted hover stands in for a pointer it has none of.
         #[cfg(not(target_arch = "wasm32"))]
-        let hovered = self.scripted_hover.or(hovered);
+        let hovered = self.scripted_hover.unwrap_or(hovered);
         self.sim.set_hover(hovered);
         if let Some(cell) = selected {
             self.sim.select_star(cell);
@@ -788,9 +869,12 @@ fn draw_legend(painter: &egui::Painter, strip: egui::Rect, legend: &Legend, text
         }
     }
     // The marks' labels sit on the top row to the right of their triangle, to its left at the strip's right edge or where the
-    // cursor's would cover the Glow setting's.
-    let mut taken: Option<egui::Rect> = None;
-    for (mark, colour) in legend.white.iter().map(|m| (m, ACCENT)).chain(legend.cursor.iter().map(|m| (m, TEXT_PRIMARY))) {
+    // cursor's would cover the Glow setting's, and right of the title where either would meet it (`legend::mark_label_lefts`).
+    let marks: Vec<(&legend::Mark, egui::Color32)> =
+        legend.white.iter().map(|m| (m, ACCENT)).chain(legend.cursor.iter().map(|m| (m, TEXT_PRIMARY))).collect();
+    let xs: Vec<(f32, f32)> = marks.iter().map(|(m, _)| (bar.width() * m.position as f32, text_width(&m.label))).collect();
+    let lefts = legend::mark_label_lefts(text_width(&legend.title), &xs, strip.width());
+    for ((mark, colour), left) in marks.into_iter().zip(lefts) {
         let x = bar.left() + bar.width() * mark.position as f32;
         let tip = bar.top();
         let top = tip - legend::MARK_TRIANGLE;
@@ -804,16 +888,7 @@ fn draw_legend(painter: &egui::Painter, strip: egui::Rect, legend: &Legend, text
             0.0,
             colour,
         );
-        let w = text_width(&mark.label);
-        let right = egui::Rect::from_min_size(egui::pos2(x + 6.0, strip.top()), egui::vec2(w, LEGEND_FONT + 2.0));
-        let covers = |r: egui::Rect| taken.is_some_and(|t| t.expand(4.0).intersects(r));
-        let at = if right.right() <= strip.right() && !covers(right) {
-            right
-        } else {
-            egui::Rect::from_min_size(egui::pos2(x - 6.0 - w, strip.top()), right.size())
-        };
-        painter.text(at.left_top(), egui::Align2::LEFT_TOP, &mark.label, font.clone(), colour);
-        taken = Some(at);
+        painter.text(egui::pos2(strip.left() + left, strip.top()), egui::Align2::LEFT_TOP, &mark.label, font.clone(), colour);
     }
 }
 
@@ -839,7 +914,7 @@ mod sim {
     use sr_physics::registry::{Elements, Physics, Reactions};
     use sr_physics::time::{Estimates, TimeControl};
 
-    use crate::ui::banner::{Frames, Pass};
+    use crate::ui::banner::{Banner, Frames, Pass};
     use crate::ui::display::{self, DisplayCommand};
     use crate::ui::left::{self, Presets, Tools, Views};
     use crate::ui::right::{inspect_view, Asker, Cell, CellPanel, Reader, StarPanel};
@@ -847,7 +922,13 @@ mod sim {
 
     /// Most steps one scripted `steps` action puts into a single frame: a capture asking for 10⁶ would otherwise build one
     /// enormous command buffer.
+    /// On the web, Chrome's GPU process died (the browser closed) when `?preset=sun&steps=n` put several steps into one
+    /// submit on linux-pc's Quadro (M0-T94: 8 to a frame died at n = 24, 10 in one chunk was fine, 1 to a frame ran 200),
+    /// so the page's `steps` goes one to a frame.
+    #[cfg(not(target_arch = "wasm32"))]
     const FORCED_CHUNK: u64 = 256;
+    #[cfg(target_arch = "wasm32")]
+    const FORCED_CHUNK: u64 = 1;
 
     /// A Δt that is a CFL step: finite, above zero and below the empty world's `f32::MAX` (see `sr_physics::time`).
     fn real_dt(dt: f64) -> Option<f64> {
@@ -930,6 +1011,9 @@ mod sim {
         }
         fn world_bar(&self) -> &WorldBar {
             &self.world_bar
+        }
+        fn notice(&self, now: f64) -> Option<Banner> {
+            self.frames.notice(now)
         }
     }
 
@@ -1063,7 +1147,6 @@ mod sim {
             self.texture
         }
 
-        #[cfg(not(target_arch = "wasm32"))]
         pub fn paused(&self) -> bool {
             self.time.paused()
         }
@@ -1093,6 +1176,11 @@ mod sim {
         /// The star readout at egui time `now` (ui::right): the selected object's lines, the rate hidden while paused.
         pub fn star_panel(&self, now: f64) -> StarPanel {
             self.frames.stars().panel(now, self.time.paused())
+        }
+
+        /// The centres of the remnants to ring over the world (ui::remnant).
+        pub fn remnant_centres(&self) -> Vec<[f64; 2]> {
+            self.frames.stars().remnant_centres()
         }
 
         /// The cell inspector's panel (§4.6): the last reply for the cell under the pointer, or `inspect.empty` — no cell, or
@@ -1224,8 +1312,7 @@ mod sim {
             self.recent.iter().map(|&(_, n)| f64::from(n)).sum::<f64>() / ran as f64
         }
 
-        #[cfg(not(target_arch = "wasm32"))]
-        /// `steps` of a script (§3.3): `n` steps through the real loop, paused or not, however the clock stands.
+        /// `steps` of a script (§3.3) or of the web's URL (§3.5): `n` steps through the real loop, paused or not, however the clock stands.
         pub fn queue_steps(&mut self, n: u64) {
             self.forced += n;
         }
@@ -1364,7 +1451,7 @@ mod native {
     use crate::strings;
 
     const USAGE: &str = "usage: sandbox-reactions [--adapter <name substring>] [--status-port <port>] \
-[--offscreen-window] [--capture <script.json> --out <dir>]";
+[--offscreen-window] [--capture <script.json> --out <dir>] [--measure-ui <frames> [--calibration <file>]]";
 
     /// `--offscreen-window` (§3.3 [M0-TJ3]): far outside any monitor's area — monitors sit within a few screens of
     /// the origin, in either direction — never activated, out of the taskbar. Wayland ignores a position; the route
@@ -1377,11 +1464,14 @@ mod native {
         offscreen: bool,
         capture: Option<PathBuf>,
         out: Option<PathBuf>,
+        /// `--measure-ui`'s frame count (measure.rs) and the file its key goes into.
+        measure: Option<usize>,
+        calibration: Option<PathBuf>,
         help: bool,
     }
 
     fn parse(args: &[String]) -> Result<Args, String> {
-        let mut out = Args { adapter: None, status_port: None, offscreen: false, capture: None, out: None, help: false };
+        let mut out = Args { adapter: None, status_port: None, offscreen: false, capture: None, out: None, measure: None, calibration: None, help: false };
         let mut it = args.iter();
         while let Some(arg) = it.next() {
             let mut value = || it.next().cloned().ok_or_else(|| format!("{arg} needs a value"));
@@ -1396,9 +1486,12 @@ mod native {
                 "--offscreen-window" => out.offscreen = true,
                 "--capture" => out.capture = Some(value()?.into()),
                 "--out" => out.out = Some(value()?.into()),
-                "--world" | "--measure-ui" => {
-                    return Err(format!("{arg} is not built yet (its block comes later)"))
+                "--measure-ui" => {
+                    let v = value()?;
+                    out.measure = Some(v.parse().ok().filter(|n| *n > 0).ok_or_else(|| format!("--measure-ui {v:?}: not a frame count"))?);
                 }
+                "--calibration" => out.calibration = Some(value()?.into()),
+                "--world" => return Err(format!("{arg} is not built yet (its block comes later)")),
                 other => return Err(format!("unknown argument {other:?}")),
             }
         }
@@ -1409,6 +1502,12 @@ mod native {
             (Some(_), None) => return Err("--capture needs --out <dir>".into()),
             (None, Some(_)) => return Err("--out is for --capture".into()),
             _ => {}
+        }
+        if out.measure.is_some() && out.capture.is_some() {
+            return Err("--measure-ui and --capture are two different runs".into());
+        }
+        if out.calibration.is_some() && out.measure.is_none() {
+            return Err("--calibration is for --measure-ui".into());
         }
         Ok(out)
     }
@@ -1458,6 +1557,10 @@ mod native {
         };
         let outcome = capture.as_ref().map(|c| c.3.clone());
         let mut capture = capture.map(|(steps, script, out, outcome)| crate::capture::Driver::new(steps, &script, out, outcome));
+
+        let measure = args.measure.map(|frames| (frames, args.calibration.clone(), Arc::new(Mutex::new(crate::measure::Outcome::default()))));
+        let measured = measure.as_ref().map(|m| m.2.clone());
+        let mut measure = measure;
 
         // §2.11 (G-CAL): the game starts new worlds that drop presets, so a stale or missing calibration is exit 6 before any
         // window opens, as the headless run's gate is.
@@ -1515,10 +1618,28 @@ mod native {
                 }
                 app.status = status;
                 app.capture = capture.take();
+                if let Some((frames, file, outcome)) = measure.take() {
+                    let software = render.adapter.get_info().device_type == wgpu::DeviceType::Cpu;
+                    app.measure = Some(crate::measure::Meter::new(frames, file, &info.name, software, outcome)?);
+                }
                 Ok(Box::new(app))
             }),
         );
         match result {
+            Ok(()) if measured.is_some() => {
+                let outcome = measured.as_ref().map(|o| o.lock().unwrap_or_else(PoisonError::into_inner));
+                match outcome.as_deref() {
+                    Some(crate::measure::Outcome { error: Some(e), .. }) => {
+                        println!("SR-ERROR {e}");
+                        EXIT_GPU
+                    }
+                    Some(crate::measure::Outcome { done: true, .. }) => EXIT_DONE,
+                    _ => {
+                        println!("SR-ERROR measure-ui: the window closed before the frames were measured");
+                        EXIT_GPU
+                    }
+                }
+            }
             Ok(()) => match outcome {
                 None => EXIT_DONE,
                 Some(outcome) => {

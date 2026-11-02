@@ -1,0 +1,8 @@
+web       4/1/0      508.63 s  NO-GO
+logs: milestones/m0/logs/M0-T94-r3.<scope>.log · record: loop_times.jsonl · tree 8c0d590bc06d+6a54842c96af
+anchor: 0 path×scope entries moved by this run
+anchor: 235 paths checked · 355 skipped (3 classes) · 151 never checked · 1 stale · 0 unclassified · 0 owed · 387 covered of 742 visible
+FAILED:
+  web: web[preset]: 1 failed; web[preset]: its own verdict NO-GO: preset: srState is "loading" after 30 s; never ready - console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. · log milestones/m0/logs/M0-T94-r3.web.log
+verify: 4 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 143.59 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 2.49->2.75
+=== NO-GO: web: web[preset]: 1 failed; web[preset]: its own verdict NO-GO: preset: srState is "loading" after 30 s; never ready - console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. · log milestones/m0/logs/M0-T94-r3.web.log ===

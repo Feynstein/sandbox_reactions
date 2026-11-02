@@ -1,0 +1,13 @@
+--- a/crates/sr-app/src/ui/remnant.rs
++++ b/crates/sr-app/src/ui/remnant.rs
+@@ -29,7 +29,9 @@
+ /// The rings of the remnants at world points `centres` (cells, x to the right and y down) through `zoom` over `viewport`
+ /// (the world at z = 1): each centre's place on the zoomed image, none for a centre the viewport does not show.
+ pub fn rings(centres: &[[f64; 2]], zoom: &Zoom, viewport: egui::Rect, world: WorldConfig, pixels_per_point: f32) -> Vec<Ring> {
+-    let image = zoom.image(viewport, world, pixels_per_point);
++    // Planted: the ring placed by z = 1's mapping, the zoom ignored (M0-D138's plant): at z > 1 it marks the wrong cell.
++    let image = viewport;
++    let _ = (zoom, pixels_per_point);
+     let per_cell = image.width() / world.width as f32;
+     centres
+         .iter()

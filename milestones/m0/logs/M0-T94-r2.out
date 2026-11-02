@@ -1,0 +1,8 @@
+web       1/0/0     3604.55 s  NO-GO
+logs: milestones/m0/logs/M0-T94-r2.<scope>.log · record: loop_times.jsonl · tree 8c0d590bc06d+e2d64d46e7a9
+anchor: 151 path×scope entries moved by this run
+anchor: 235 paths checked · 355 skipped (3 classes) · 151 never checked · 1 stale · 0 unclassified · 0 owed · 387 covered of 742 visible
+FAILED:
+  web: web[no-webgpu]: timed out after 900 s; web[ready]: timed out after 900 s; web[ready-held]: timed out after 900 s; web[preset]: timed out after 900 s; 1 case(s) < expected 5 · log milestones/m0/logs/M0-T94-r2.web.log
+verify: 1 passed, 0 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 900.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 7.72->2.69
+=== NO-GO: web: web[no-webgpu]: timed out after 900 s; web[ready]: timed out after 900 s; web[ready-held]: timed out after 900 s; web[preset]: timed out after 900 s; 1 case(s) < expected 5 · log milestones/m0/logs/M0-T94-r2.web.log ===

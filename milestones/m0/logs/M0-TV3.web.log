@@ -1,0 +1,4 @@
+w01-ready state=ready adapter= (BrowserWebGpu, Other, driver ) overflow=false error: Failed to load resource: the server responded with a status of 404 (File not found) | warning: A valid external Instance reference no longer exists.
+w02-sun-steps200 state=ready adapter= (BrowserWebGpu, Other, driver ) overflow=false 
+w03-sun-heat state=ready adapter= (BrowserWebGpu, Other, driver ) overflow=false 
+w04-massive-density state=ready adapter= (BrowserWebGpu, Other, driver ) overflow=false 

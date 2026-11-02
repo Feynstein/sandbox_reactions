@@ -1,11 +1,11 @@
 --- a/crates/sr-app/src/desktop.rs
 +++ b/crates/sr-app/src/desktop.rs
-@@ -397,7 +397,7 @@
+@@ -471,7 +471,7 @@
                  let hover = response.hover_pos().filter(|_| !modal).and_then(cell_at);
                  hovered = hover;
                  let painter = ui.painter();
 -                painter.image(self.sim.texture(), rect, self.zoom.uv(rect, image), egui::Color32::WHITE);
 +                let _ = (&rect, &image, self.sim.texture());
-                 if let Some(banner) = &banner {
-                     draw_banner(painter, rect, banner);
-                 }
+                 // The remnant's ring from core collapse on (§0.5 [M0-D138], ui::remnant), in every view and at every zoom: `accent`
+                 // over a `bg.space` halo, so it reads on Glow's white ejecta and on the dark sky alike; the banner stays above it.
+                 for ring in remnant::rings(&self.sim.remnant_centres(), &self.zoom, rect, world, ppp) {

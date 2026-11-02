@@ -23,6 +23,6 @@ png.workspace = true
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen.workspace = true
 wasm-bindgen-futures.workspace = true
-web-sys = { workspace = true, features = ["Window", "Document", "Element", "HtmlElement", "HtmlCanvasElement", "DomStringMap"] }
+web-sys = { workspace = true, features = ["Window", "Document", "Element", "HtmlElement", "HtmlCanvasElement", "DomStringMap", "Location"] }
 console_error_panic_hook.workspace = true
 log.workspace = true

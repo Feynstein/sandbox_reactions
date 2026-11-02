@@ -19,8 +19,8 @@ use crate::registry::electron_fraction;
 const HOLD: u32 = 3;
 /// A supernova row is open this long (t.u.) after the object last passed core collapse.
 const SUPERNOVA_WINDOW: f64 = 20.0;
-/// L_H between these shares of L ignites an object, and holds the main sequence: a star shines what it burns (§1.9.3,
-/// §1.9.4 as §0.5 [M0-D53] reads them; the lead at M0-V18, «Burning matches light (Recommended)»).
+/// L_H between these shares of L ignites an object: a star shines what it burns (§1.9.4 as §0.5 [M0-D53] reads it; the lead at
+/// M0-V18, «Burning matches light (Recommended)»). The main sequence no longer reads the window — §0.5 [M0-D141].
 const HYDROGEN_SHARE: f64 = 0.5;
 const HYDROGEN_SHARE_MAX: f64 = 2.0;
 /// Or the centre has burned a tenth of its hydrogen: X_H,c at or under this share of the most it has shown, while hydrogen
@@ -147,6 +147,14 @@ fn burns(c: &Ctx, g: usize, fuel: usize) -> bool {
     l > 0.0 && largest && l >= BURN_SHARE * o.l_nuc && o.x_c[fuel] >= SPENT
 }
 
+/// At rest and pressure-supported, near virial: |v_r| ≤ 0.05 √(GM/R) and 2P/|W| ≥ 0.8 — the protostar's test, the failed
+/// star's since §0.5 [M0-D134] and the white dwarf's and planetary nebula's since §0.5 [M0-D140]: a cold cloud's centre is held
+/// mostly by the cold pressure (d_c 0.55–0.65 at the drop) while it falls in, and the Sun-like's still does while it re-expands
+/// after its flash, so d_c alone makes no remnant.
+fn settled(c: &Ctx) -> bool {
+    c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * c.o.pressure / c.o.potential.abs() >= 0.8
+}
+
 fn carbon_burns(o: &Object) -> bool {
     let l = o.l_group[G_C];
     l > 0.0 && l >= BURN_SHARE * o.l_nuc
@@ -168,7 +176,11 @@ type Row = (Stage, fn(&Ctx) -> bool);
 /// White dwarf and planetary nebula read an object of at most m_ch_sb: a heavier star's quiet, degenerate centre is its iron
 /// core on the way to collapse, never a remnant whose hold races the collapse — §0.5 [M0-D81]. Core collapse reads one of more
 /// (none refused where the run has no ceiling): a lighter remnant whose cold iron centre overshoots into N_Fe's gate bounces
-/// back to a white dwarf — §0.5 [M0-D92].
+/// back to a white dwarf — §0.5 [M0-D92]. White dwarf and planetary nebula are also settled: the Sun-like, re-expanding at
+/// +0.2 √(GM/R) after its flash with its hydrogen unburnt, is no remnant — §0.5 [M0-D140].
+/// Main sequence reads an ignited object whose largest burning group is hydrogen, as the other burning rows read theirs: the
+/// Sun-like after its flash burns from nothing to 86 times what it shines for 1,700 steps, never inside [0.5 L, 2 L], which now
+/// holds the ignition event alone — §0.5 [M0-D141].
 const ROWS: [Row; 19] = [
     (Stage::BlackHole, |c| c.o.sinks > 0),
     (Stage::Supernova, |c| {
@@ -185,10 +197,16 @@ const ROWS: [Row; 19] = [
             && c.o.unbound < 0.05 * c.o.mass
             && c.o.x_c[X_N] < 0.5
             && c.o.mass <= c.m_ch
+            && settled(c)
     }),
-    (Stage::FailedStar, |c| !c.h.ignited && c.o.d_c >= 0.5 && c.o.l_group[G_H] < 0.01 * c.o.luminosity),
+    (Stage::FailedStar, |c| !c.h.ignited && c.o.d_c >= 0.5 && c.o.l_group[G_H] < 0.01 * c.o.luminosity && settled(c)),
     (Stage::PlanetaryNebula, |c| {
-        c.h.ignited && c.o.d_c >= 0.5 && c.o.l_nuc < 0.1 * c.o.luminosity && c.o.unbound >= 0.05 * c.o.mass && c.o.mass <= c.m_ch
+        c.h.ignited
+            && c.o.d_c >= 0.5
+            && c.o.l_nuc < 0.1 * c.o.luminosity
+            && c.o.unbound >= 0.05 * c.o.mass
+            && c.o.mass <= c.m_ch
+            && settled(c)
     }),
     (Stage::IronCore, |c| c.o.x_c[X_FE] >= 0.5 && c.o.l_nuc < 0.1 * c.o.luminosity),
     (Stage::SiBurn, |c| burns(c, G_SI, FUEL_SI)),
@@ -198,11 +216,9 @@ const ROWS: [Row; 19] = [
     (Stage::HeCore, |c| c.o.l_group[G_HE] > 0.0 && c.o.l_group[G_HE] >= 0.1 * c.o.luminosity && c.o.x_c[X_HE] >= SPENT),
     (Stage::HeShell, |c| c.h.ignited && c.o.x_c[X_HE] < SPENT && c.o.x_c[X_H] < SPENT && !carbon_burns(c.o)),
     (Stage::HShell, |c| c.h.ignited && c.o.x_c[X_H] < SPENT && c.o.l_group[G_HE] < 0.1 * c.o.luminosity),
-    (Stage::MainSequence, |c| hydrogen_leads(c.o) && c.o.x_c[X_H] >= SPENT),
+    (Stage::MainSequence, |c| c.h.ignited && burns(c, G_H, X_H)),
     (Stage::Collapsing, |c| !c.h.ignited && c.o.v_r <= -0.1 * c.v_dyn),
-    (Stage::Protostar, |c| {
-        !c.h.ignited && c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * c.o.pressure / c.o.potential.abs() >= 0.8
-    }),
+    (Stage::Protostar, |c| !c.h.ignited && settled(c)),
     (Stage::Cloud, |_| true),
 ];
 
@@ -250,6 +266,26 @@ pub fn ignites(o: &Object, h: &History) -> Option<Ignition> {
     }
 }
 
+/// Whether showing `stage` would take the display back before the life it has shown (§0.5 [M0-D134]; the lead, «Display holds
+/// (Recommended)»): an ignited object never shows cloud, collapsing or protostar again, and before ignition those go only
+/// forward — cloud, collapsing, protostar — a cloud never following a failed star either. The rows are unchanged: the raw stage
+/// still reads them, only the shown one stays.
+pub fn steps_back(stage: Stage, shown: Option<Stage>, ignited: bool) -> bool {
+    let rank = |s: Stage| match s {
+        Stage::Cloud => Some(0),
+        Stage::Collapsing => Some(1),
+        Stage::Protostar => Some(2),
+        _ => None,
+    };
+    let Some(r) = rank(stage) else { return false };
+    match shown {
+        _ if ignited => true,
+        Some(Stage::FailedStar) => r == 0,
+        Some(s) => rank(s).is_some_and(|q| r < q),
+        None => false,
+    }
+}
+
 /// How long (t.u.) a remnant stage must show before it is the object's ending: max(10 t.u., 20 τ_dyn), τ_dyn the object's at
 /// the frame read (§1.9.5 as §0.5 [M0-D78] reads it). A compact remnant keeps 10 t.u.; an extended one waits out its dynamics.
 pub fn ending_hold(tau_dyn: f64) -> f64 {
@@ -291,7 +327,8 @@ pub struct Event {
 pub struct ObjectStage {
     /// This frame's result, before the hold.
     pub raw: Stage,
-    /// The displayed stage: none until a stage has held 3 frames or core collapse / supernova came; then the latest held.
+    /// The displayed stage: none until a stage has held 3 frames or core collapse / supernova came; then the latest held that
+    /// does not step back ([`steps_back`]).
     pub shown: Option<Stage>,
     pub history: History,
 }
@@ -355,7 +392,7 @@ impl StageTracker {
             }
             state.streak = if stage == state.raw { state.streak + 1 } else { 1 };
             state.raw = stage;
-            if stage.is_immediate() || state.streak >= HOLD {
+            if (stage.is_immediate() || state.streak >= HOLD) && !steps_back(stage, state.shown, state.history.ignited) {
                 state.shown = Some(stage);
             }
         }
@@ -569,10 +606,9 @@ mod tests {
 
     #[test]
     fn a_white_dwarf_never_matches_the_neutron_star_row() {
-        // Carbon-oxygen (Y_e 0.5) and pure iron (0.464), cold and wholly degenerate: white dwarfs, whatever the flow.
+        // Carbon-oxygen (Y_e 0.5) and pure iron (0.464), cold, wholly degenerate and settled (§0.5 [M0-D140]): white dwarfs.
         let mut o = degenerate();
         o.d_c = 1.0;
-        o.v_r = -4.9;
         for (species, y_e) in [(2, 0.5), (3, 0.5), (X_FE, 26.0 / 56.0)] {
             with_x(&mut o, species, 1.0);
             assert_eq!(electron_fraction(&o.x_c), y_e);
@@ -659,9 +695,11 @@ mod tests {
         assert_eq!(classify(&o, &h, 100.0, M_CH), Stage::Supernova);
     }
 
+    /// Cold-pressure supported and settled: 2P/|W| = 0.8 at rest.
     fn degenerate() -> Object {
         let mut o = cloud();
         o.d_c = 0.5;
+        o.pressure = 4.0;
         o.l_nuc = 0.0;
         o.luminosity = 10.0;
         o
@@ -689,6 +727,119 @@ mod tests {
         let mut o = degenerate();
         o.l_group[0] = 0.5;
         assert_ne!(stage_of(&o, &fresh()), Stage::FailedStar, "L_H at 0.05 L");
+    }
+
+    #[test]
+    fn a_failed_star_is_settled() {
+        // §0.5 [M0-D134]: the preset cloud's centre at the drop and in free fall reads d_c 0.55–0.65 (M0-D134's lives).
+        let mut o = degenerate();
+        o.d_c = 0.65;
+        o.v_r = -0.6;
+        assert_eq!(stage_of(&o, &fresh()), Stage::Collapsing, "falling in: a collapse, however cold");
+        o.v_r = -0.075;
+        assert_eq!(stage_of(&o, &fresh()), Stage::Cloud, "between the collapse and rest");
+        o.v_r = 0.05;
+        assert_eq!(stage_of(&o, &fresh()), Stage::FailedStar, "|v_r| = 0.05 √(GM/R) is within");
+        o.v_r = 0.0;
+        o.pressure = 3.9;
+        assert_eq!(stage_of(&o, &fresh()), Stage::Cloud, "at rest, short of virial: the dropped cloud (2P/|W| ≈ 0.49)");
+    }
+
+    /// `frames` frames of `o` at sim times from `t0`: the shown stage after them.
+    fn shown_after(t: &mut StageTracker, o: &Object, t0: f64, frames: u32) -> Option<Stage> {
+        for f in 0..frames {
+            t.update(&[o.clone()], t0 + f64::from(f));
+        }
+        t.stage(o.id).unwrap().shown
+    }
+
+    #[test]
+    fn the_shown_stage_never_steps_back() {
+        // §0.5 [M0-D134]: before ignition cloud → collapsing → protostar, forward only; the raw stage still reads the rows.
+        let mut falling = cloud();
+        falling.v_r = -1.0;
+        let mut supported = cloud();
+        supported.pressure = 4.0;
+        let mut t = StageTracker::new(M_CH);
+        assert_eq!(shown_after(&mut t, &cloud(), 0.0, 3), Some(Stage::Cloud));
+        assert_eq!(shown_after(&mut t, &falling, 3.0, 3), Some(Stage::Collapsing));
+        assert_eq!(shown_after(&mut t, &cloud(), 6.0, 5), Some(Stage::Collapsing), "a cloud after the collapse");
+        assert_eq!(t.stage(1).unwrap().raw, Stage::Cloud);
+        assert_eq!(shown_after(&mut t, &supported, 11.0, 3), Some(Stage::Protostar));
+        assert_eq!(shown_after(&mut t, &falling, 14.0, 5), Some(Stage::Protostar), "a collapse after the protostar");
+        assert_eq!(shown_after(&mut t, &cloud(), 19.0, 5), Some(Stage::Protostar));
+        // A failed star: no cloud after it; a new collapse shows (its ending hold restarts, §1.9.5).
+        let mut t = StageTracker::new(M_CH);
+        assert_eq!(shown_after(&mut t, &degenerate(), 0.0, 3), Some(Stage::FailedStar));
+        assert_eq!(shown_after(&mut t, &cloud(), 3.0, 5), Some(Stage::FailedStar), "a cloud after the failed star");
+        assert_eq!(shown_after(&mut t, &falling, 8.0, 3), Some(Stage::Collapsing));
+        // Ignited: none of the three again, whatever the rows fall through to.
+        let mut lit = cloud();
+        lit.l_group = [10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+        lit.l_nuc = 10.0;
+        let mut t = StageTracker::new(M_CH);
+        assert_eq!(shown_after(&mut t, &lit, 0.0, 3), Some(Stage::MainSequence));
+        let mut dim = lit.clone();
+        dim.l_group[0] = 0.0;
+        dim.l_nuc = 0.0;
+        assert_eq!(shown_after(&mut t, &dim, 3.0, 5), Some(Stage::MainSequence), "burning nothing: the rows fall through to cloud");
+        assert_eq!(t.stage(1).unwrap().raw, Stage::Cloud);
+        // An ignition before any stage held: the cloud never shows.
+        let mut t = StageTracker::new(M_CH);
+        t.update(&[lit.clone()], 0.0);
+        assert_eq!(shown_after(&mut t, &dim, 1.0, 5), None);
+    }
+
+    #[test]
+    fn steps_back_reads_only_the_three_early_labels() {
+        for s in stage_order() {
+            let early = matches!(s, Stage::Cloud | Stage::Collapsing | Stage::Protostar);
+            assert_eq!(steps_back(s, Some(Stage::MainSequence), true), early, "{s:?} once ignited");
+            assert!(!steps_back(s, None, false), "{s:?}: nothing shown yet");
+        }
+        assert!(!steps_back(Stage::Collapsing, Some(Stage::Cloud), false));
+        assert!(!steps_back(Stage::Protostar, Some(Stage::Collapsing), false));
+        assert!(steps_back(Stage::Cloud, Some(Stage::Protostar), false));
+        assert!(!steps_back(Stage::Protostar, Some(Stage::FailedStar), false));
+    }
+
+    /// The Sun-like preset's post-flash frames on the RTX 4090 (logs/M0-D140.measure.log; lavapipe the same): ignited, its
+    /// hydrogen unburnt (X_H,c 0.7318), degenerate by the cold pressure, L_nuc 0 — raw white_dwarf from step 401 to 657 before
+    /// §0.5 [M0-D140]. `v_r` in √(GM/R) (the cloud's is 1), `virial` its 2P/|W| (pressure / 5 against W = −10).
+    fn re_expanding(d_c: f64, v_r: f64, virial: f64, luminosity: f64) -> Object {
+        let mut o = degenerate();
+        (o.mass, o.d_c, o.v_r, o.pressure, o.luminosity) = (3134.0, d_c, v_r, 5.0 * virial, luminosity);
+        o.x_c[X_H] = 0.7318;
+        o
+    }
+
+    #[test]
+    fn a_white_dwarf_is_settled() {
+        // §0.5 [M0-D140]: step 433, re-expanding — shown «White dwarf» before; step 545, near rest but short of virial.
+        assert_ne!(stage_of(&re_expanding(0.5947, 0.1801, 0.877, 7161.0), &ignited()), Stage::WhiteDwarf, "step 433, +0.18 √(GM/R)");
+        assert_ne!(stage_of(&re_expanding(0.6052, 0.0149, 0.787, 758.4), &ignited()), Stage::WhiteDwarf, "step 545, 2P/|W| 0.787");
+        let mut o = degenerate();
+        o.v_r = 0.05;
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "|v_r| = 0.05 √(GM/R) and 2P/|W| = 0.8 are within");
+        o.v_r = -0.0501;
+        assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "falling at 0.0501 √(GM/R)");
+        o.v_r = 0.0;
+        o.pressure = 3.99;
+        assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "2P/|W| 0.798");
+    }
+
+    #[test]
+    fn a_planetary_nebula_is_settled() {
+        // §0.5 [M0-D140]: the remnant shedding its shell is settled too; moving, or short of virial, it is not.
+        let mut o = degenerate();
+        o.unbound = 5.0;
+        o.v_r = 0.05;
+        assert_eq!(stage_of(&o, &ignited()), Stage::PlanetaryNebula, "|v_r| = 0.05 √(GM/R) is within");
+        o.v_r = 0.0501;
+        assert_ne!(stage_of(&o, &ignited()), Stage::PlanetaryNebula, "moving at 0.0501 √(GM/R)");
+        o.v_r = 0.0;
+        o.pressure = 3.99;
+        assert_ne!(stage_of(&o, &ignited()), Stage::PlanetaryNebula, "2P/|W| 0.798");
     }
 
     #[test]
@@ -735,8 +886,11 @@ mod tests {
         assert_eq!(stage_of(&o, &ignited()), Stage::IronCore);
         (o.mass, o.d_c, o.unbound) = (4543.3, 0.764, 0.0615 * 4543.3);
         assert_eq!(stage_of(&o, &ignited()), Stage::IronCore);
-        // m_up_sb's light side ended white_dwarf at 1,978.8 (the 3,639.109 life, RTX 5090, 2026-10-21): it still does.
+        // m_up_sb's light side ended white_dwarf at 1,978.8 (the 3,639.109 life, RTX 5090, 2026-10-21): settled, it still does
+        // (§0.5 [M0-D140]); pulsing at 0.42 √(GM/R) it is no remnant yet.
         (o.mass, o.unbound) = (1978.8, 0.0);
+        assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "pulsing: not settled");
+        o.v_r = 0.0;
         assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf);
     }
 
@@ -830,28 +984,49 @@ mod tests {
 
     #[test]
     fn row_main_sequence() {
+        // §0.5 [M0-D141]: ignited, hydrogen the largest burning group and at least a tenth of L_nuc, X_H,c ≥ 10⁻³.
         let mut o = cloud();
         o.l_group = [5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
         o.l_nuc = 5.0;
         o.luminosity = 10.0;
         assert_eq!(stage_of(&o, &ignited()), Stage::MainSequence);
-        o.l_group[0] = 4.9;
-        assert_ne!(stage_of(&o, &ignited()), Stage::MainSequence, "L_H under half of L");
-        o.l_group[0] = 5.0;
+        assert_ne!(stage_of(&o, &fresh()), Stage::MainSequence, "never ignited");
         with_x(&mut o, X_H, 0.0009);
         assert_ne!(stage_of(&o, &ignited()), Stage::MainSequence, "the centre's hydrogen spent");
+        with_x(&mut o, X_H, 0.001);
+        assert_eq!(stage_of(&o, &ignited()), Stage::MainSequence, "X_H,c = 10⁻³ is within");
+        o.l_group = [0.0; 7];
+        o.l_nuc = 0.0;
+        assert_ne!(stage_of(&o, &ignited()), Stage::MainSequence, "burning nothing");
+        o.luminosity = 100.0;
+        o.l_group = [1.0, 1.1, 0.0, 0.0, 0.0, 0.0, 0.0];
+        o.l_nuc = 2.1;
+        assert_ne!(stage_of(&o, &ignited()), Stage::MainSequence, "helium the larger group (L_He under 0.1 L, no he_core)");
+        o.l_group = [1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+        o.l_nuc = 2.0;
+        assert_eq!(stage_of(&o, &ignited()), Stage::MainSequence, "a tie with helium is still the largest");
+        o.l_group = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, -50.0];
+        o.l_nuc = 1.0;
+        assert_eq!(stage_of(&o, &ignited()), Stage::MainSequence, "L_N absorbs, it burns nothing");
     }
 
     #[test]
-    fn the_main_sequence_shines_what_it_burns() {
-        // §0.5 [M0-D53]: 0.5 L ≤ L_H ≤ 2 L, both ends within.
-        let mut o = cloud();
-        o.l_group = [20.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
-        o.l_nuc = 20.0;
-        assert_eq!(stage_of(&o, &ignited()), Stage::MainSequence, "L_H = 2 L");
-        o.l_group[0] = 20.1;
-        o.l_nuc = 20.1;
-        assert_ne!(stage_of(&o, &ignited()), Stage::MainSequence, "burning more than twice the light it shines");
+    fn the_main_sequence_reads_its_burning_not_its_light() {
+        // §0.5 [M0-D141]: the Sun-like after its flash on the RTX 4090 (logs/M0-D140.iterate.log), ignited at step 273, burning
+        // hydrogen outside [0.5 L, 2 L] — raw cloud on every frame before; L_H = L_nuc, nothing else burns.
+        let frame = |l: f64, l_nuc: f64, x_h: f64| {
+            let mut o = cloud();
+            (o.luminosity, o.l_nuc, o.d_c, o.v_r) = (l, l_nuc, 0.57, 0.1);
+            o.l_group[G_H] = l_nuc;
+            o.x_c[X_H] = x_h;
+            o
+        };
+        assert_eq!(stage_of(&frame(1.015e5, 2.100e4, 0.7326), &ignited()), Stage::MainSequence, "step 289, L_H 0.21 L");
+        assert_eq!(stage_of(&frame(1.362e4, 9.646e1, 0.7318), &ignited()), Stage::MainSequence, "step 401, L_H 0.007 L");
+        assert_eq!(stage_of(&frame(1.871e1, 1.605e3, 0.7317), &ignited()), Stage::MainSequence, "step 769, L_H 86 L");
+        assert_eq!(stage_of(&frame(7.161e3, 0.0, 0.7318), &ignited()), Stage::Cloud, "step 433, burning nothing");
+        // The window still ignites (`ignites`), not the row: the same burning never ignited is no main sequence.
+        assert_ne!(stage_of(&frame(1.015e5, 2.100e4, 0.7326), &fresh()), Stage::MainSequence);
     }
 
     #[test]

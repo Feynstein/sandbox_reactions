@@ -1,0 +1,94 @@
+The XKEYBOARD keymap compiler (xkbcomp) reports:
+> Warning:          Could not resolve keysym XF86CameraAccessEnable
+> Warning:          Could not resolve keysym XF86CameraAccessDisable
+> Warning:          Could not resolve keysym XF86CameraAccessToggle
+> Warning:          Could not resolve keysym XF86NextElement
+> Warning:          Could not resolve keysym XF86PreviousElement
+> Warning:          Could not resolve keysym XF86AutopilotEngageToggle
+> Warning:          Could not resolve keysym XF86MarkWaypoint
+> Warning:          Could not resolve keysym XF86Sos
+> Warning:          Could not resolve keysym XF86NavChart
+> Warning:          Could not resolve keysym XF86FishingChart
+> Warning:          Could not resolve keysym XF86SingleRangeRadar
+> Warning:          Could not resolve keysym XF86DualRangeRadar
+> Warning:          Could not resolve keysym XF86RadarOverlay
+> Warning:          Could not resolve keysym XF86TraditionalSonar
+> Warning:          Could not resolve keysym XF86ClearvuSonar
+> Warning:          Could not resolve keysym XF86SidevuSonar
+> Warning:          Could not resolve keysym XF86NavInfo
+Errors from xkbcomp are not fatal to the X server
+shot x01-start
+shot x02-size14
+shot x03-size-min
+shot x04-size-max
+shot x05-armed-massive
+shot x06-armed-sun
+shot x07-armed-giant-centre
+shot x08-no-room
+shot x09-no-room-after
+shot x10-disarmed
+shot x11-two-stars
+shot x12-select-left
+shot x13-select-right
+shot x14-inspect-star
+shot x15-inspect-vacuum
+shot x16-inspect-outside-left
+shot x17-inspect-outside-right
+shot x18-zoom-in
+shot x19-pan
+shot x20-zoom-max
+shot x21-home
+shot x22-brush-drag
+shot x23-heat-drag
+shot x24-cool-drag
+shot x25-eraser-key
+The XKEYBOARD keymap compiler (xkbcomp) reports:
+> Warning:          Could not resolve keysym XF86CameraAccessEnable
+> Warning:          Could not resolve keysym XF86CameraAccessDisable
+> Warning:          Could not resolve keysym XF86CameraAccessToggle
+> Warning:          Could not resolve keysym XF86NextElement
+> Warning:          Could not resolve keysym XF86PreviousElement
+> Warning:          Could not resolve keysym XF86AutopilotEngageToggle
+> Warning:          Could not resolve keysym XF86MarkWaypoint
+> Warning:          Could not resolve keysym XF86Sos
+> Warning:          Could not resolve keysym XF86NavChart
+> Warning:          Could not resolve keysym XF86FishingChart
+> Warning:          Could not resolve keysym XF86SingleRangeRadar
+> Warning:          Could not resolve keysym XF86DualRangeRadar
+> Warning:          Could not resolve keysym XF86RadarOverlay
+> Warning:          Could not resolve keysym XF86TraditionalSonar
+> Warning:          Could not resolve keysym XF86ClearvuSonar
+> Warning:          Could not resolve keysym XF86SidevuSonar
+> Warning:          Could not resolve keysym XF86NavInfo
+Errors from xkbcomp are not fatal to the X server
+app.log
+geometry.txt
+x01-start.png
+x02-size14.png
+x03-size-min.png
+x04-size-max.png
+x05-armed-massive.png
+x06-armed-sun.png
+x07-armed-giant-centre.png
+x08-no-room.png
+x09-no-room-after.png
+x10-disarmed.png
+x11-two-stars.png
+x12-select-left.png
+x13-select-right.png
+x14-inspect-star.png
+x15-inspect-vacuum.png
+x16-inspect-outside-left.png
+x17-inspect-outside-right.png
+x18-zoom-in.png
+x19-pan.png
+x20-zoom-max.png
+x21-home.png
+x22-brush-drag.png
+x23-heat-drag.png
+x24-cool-drag.png
+x25-eraser-key.png
+
+real	1m36.654s
+user	10m58.272s
+sys	0m33.451s

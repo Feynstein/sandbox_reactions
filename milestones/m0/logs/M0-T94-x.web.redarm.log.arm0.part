@@ -1,0 +1,6 @@
+==== 2026-11-02T08:55:23-05:00 web · clean · a fresh scratch copy of the tree
+== 2026-11-02T08:55:24-05:00 web[build] · task M0-T94-x · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-02T08:55:24-05:00 web[ready] · task M0-T94-x · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-02T08:55:24-05:00 web[no-webgpu] · task M0-T94-x · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-02T08:55:24-05:00 web[preset] · task M0-T94-x · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-02T08:55:24-05:00 web[ready-held] · task M0-T94-x · box laserax-ai :: bash tests/web/check.sh {case}

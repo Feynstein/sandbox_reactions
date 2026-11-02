@@ -769,6 +769,50 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     (reports/display_range.md: the Massive supergiant 100 % one white disk in Glow, the Sun-like envelope in 0.16 of a Heat stop) —
     the lead's answers at M0-R12, 2026-11-01: «G3 luminance dimming (Recommended)», «Keep today's white bloom (Recommended)», «Range +
     Fit to view (Recommended)», «Under the world (Recommended)», and for the zoom «File a zoom block after R12's (Recommended)».
+  - [M0-D134] §1.9.3's failed_star row («never ignited, d_c ≥ 0.5, L_H < 0.01 L») and its display hold («a stage … is displayed after
+    3 consecutive identical results») · **failed_star also needs the protostar row's settled test, |v_r| ≤ 0.05 √(GM/R) and 2P/|W| ≥
+    0.8; and the displayed stage never steps back — an ignited object never shows cloud, collapsing or protostar again (a raw cloud
+    keeps the stage shown), before ignition those three show forward only, cloud → collapsing → protostar, and no cloud after a
+    failed star — the raw stage still reads every row as written** · measured on linux-pc's lavapipe (LLVM 20.1.2), 2026-11-02,
+    the presets at calibration's masses, 16-step frames (logs/M0-D134.measure.log): the cold cloud's centre is held mostly by the
+    cold pressure, d_c 0.55–0.65 at the drop, so the Sun-like preset read failed_star from step 17 to 161 and the 15-Sun from 17 to
+    193 while falling in at up to −0.6 √(GM/R); the Sun-like, ignited at step 273 with L_H then mostly outside [0.5 L, 2 L], fell
+    through to cloud — the lead's answers at M0-D134: «Must be settled (Recommended)», «Display holds (Recommended)».
+  - [M0-D140] §1.9.3's white_dwarf row (as [M0-D81] reads it) and planetary_nebula row · **each also needs the protostar row's
+    settled test, |v_r| ≤ 0.05 √(GM/R) and 2P/|W| ≥ 0.8, as failed_star does since [M0-D134]** — the other terms, the order,
+    [M0-D134]'s display hold and §1.9.5's ending hold unchanged · measured on linux-pc's lavapipe (LLVM 20.1.2) and the RTX 4090
+    (laserax-ai-server) alike, 2026-11-02, the Sun-like preset at calibration's mass, 16-step frames (logs/M0-D140.measure.log):
+    ignited at step 273, it re-expands after its flash with its centre still held mostly by the cold pressure (d_c 0.59–0.61) and
+    burns nothing (L_nuc 0), its hydrogen unburnt (X_H,c 0.7318) — raw white_dwarf from step 401 to 657 at v_r up to +0.20
+    √(GM/R), shown from 433, and with [M0-D134]'s hold shown through step 1,000; settled, it reads none on its first 2,000 steps
+    (near rest at steps 529–577 its 2P/|W| is 0.787–0.798) — the lead's answer at M0-D140: «(a) Settled test (Recommended)».
+  - [M0-D141] §1.9.3's main_sequence row («L_H ≥ 0.5 L and X_H,c ≥ 10⁻³», as [M0-D53] reads it: 0.5 L ≤ L_H ≤ 2 L) · **main_sequence
+    reads an ignited object whose largest burning group is hydrogen — L_H > 0, the largest L_g, ≥ 0.1 L_nuc, X_H,c ≥ 10⁻³ — as the
+    other burning rows read theirs; the [0.5 L, 2 L] window holds the ignition event alone (§1.9.4 as [M0-D53] and [M0-D78] read
+    it)** — the other rows, the order, [M0-D134]'s display hold and §1.9.5 unchanged · measured on the RTX 4090
+    (laserax-ai-server), 2026-11-02, the Sun-like preset at calibration's mass, 16-step frames (logs/M0-D140.iterate.log):
+    ignited at step 273, then raw cloud on every frame from 289 to 2,000, L_nuc/L from 0 (steps 417–657) to 86 (step 769), never
+    inside [0.5, 2], X_H,c 0.7326 → 0.7292 — with [M0-D134]'s hold the readout showed «Collapsing» from step 65 to 2,000; after
+    it, main_sequence from step 305 to 2,000, the 16 frames burning nothing raw cloud under the hold (logs/M0-D141.stage_order.log)
+    — the lead's answer at M0-D141: «(a) Largest group (Recommended)».
+  - [M0-D138] §4.2's Centre and §4.6's star readout (nothing over the world but the tool's outline, the banner and the armed
+    preset; the readout's lines as listed) · **from core collapse on — each object whose shown stage is core_collapse, supernova,
+    neutron_star or black_hole — a ring is drawn over the world in every view around the tracker's centre c (§1.9.2: its heaviest
+    sink, else its densest cell), 14 px radius on screen at every zoom, a 2 px `accent` stroke over a 4 px `bg.space` halo, under
+    the banner, none for a centre the zoomed view does not show; and the selected star's readout adds `star.remnant` = "Remnant:
+    ringed in the world" under its `star.fate` or `star.ending` line while it is ringed** — no view's colours change, Glow's S
+    and every map unchanged · measured by M0-TV3 on linux-pc's lavapipe, 2026-11-02, the 15-Sun preset (images/tv3/massive/):
+    from core collapse the ejecta cover the whole world, every cell white in Glow, the core a crosshair-sized dot or nothing at
+    scale 2 — the lead's answers at M0-D138: «Mark the remnant (Recommended)», «From core collapse on (Recommended)»,
+    ««Remnant: ringed in the world» (Recommended)».
+  - [M0-D139] §1.8.5's «with the setting off, steps run through events» and §4.2's banner (shown only «after an automatic
+    slow-down») · **an ignition (§1.9.4) the slow-down's banner does not name — the setting off, or the rung already at ×1 or
+    slower — shows `banner.ignition_notice` = "Hydrogen ignition — the cloud has become a star" in the banner's slot and tokens for
+    5 s of wall time, a Clear ending it; it never changes the rung, and the slow-down's banner, when there is one, takes the slot
+    over it** — the slow-down, its rungs, its banners and their end unchanged · measured by M0-TV3, 2026-11-02: with the box
+    cleared a 15-Sun cloud lights with no sign on screen (ui/banner.rs's «the_setting_off_means_no_slow_down_and_no_banner») —
+    the lead: «for large stars it goes so quick that I dont know when the gas cloud actually becomes a star», and at M0-D139:
+    «(a) Notice in banner spot».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1567,7 +1611,8 @@ Unit-tested without a GPU against §1.8.
 - **Measure UI:** `--measure-ui <frames>` runs the desktop app with the Sun-like preset at ×1 and
   prints `SR-UI p95_ms=<x>` — the panels' and presentation's cost per frame — then writes
   render_reserve_ms = p95 + 0.5 into calibration.json. A visible window: asked of the lead each
-  time (R4).
+  time (R4). [M0-T95] `--calibration <file>` names the file the key goes into (an addition, not a change; none named is
+  assets/calibration.json, refused on a software adapter — its cost is not the GPU's); the check writes only a copy.
 
 ### 3.4 Ready signals — what `tools/pb/launch.py` polls (its three kinds, PLAYBOOK §A.3)
 - **Headless boot:** kind `exit` — exits 0 within the deadline; `ready_forbid`: `["SR-ERROR",
@@ -1630,6 +1675,7 @@ time.slowdown = "Slow down for big events"
 banner.ignition = "Slowed down: hydrogen ignition — press + to speed up again"
 banner.core_collapse = "Slowed down: core collapse — press + to speed up again"
 banner.supernova = "Slowed down: supernova — press + to speed up again"
+banner.ignition_notice = "Hydrogen ignition — the cloud has become a star"
 edge.label = "World edge:"
 edge.leave = "Leave for good"
 edge.bounce = "Bounce back"
@@ -1685,6 +1731,7 @@ star.select_hint = "Right-click a star to select it."
 star.mass = "Mass: {mass}"
 star.fate = "Fate: {fate}"
 star.ending = "Ending: {ending}"
+star.remnant = "Remnant: ringed in the world"
 star.age = "Age: {age}"
 star.rate = "1 s ≈ {rate}"
 star.surface = "Surface: {temperature}"

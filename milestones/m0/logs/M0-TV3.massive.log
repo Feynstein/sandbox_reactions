@@ -1,0 +1,64 @@
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE m00-drop m00-drop.png 1760x940
+SR-CAPTURE-STATUS m00-drop llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE m01-steps100 m01-steps100.png 1760x940
+SR-CAPTURE-STATUS m01-steps100 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE m02-steps300 m02-steps300.png 1760x940
+SR-CAPTURE-STATUS m02-steps300 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE m03-steps500 m03-steps500.png 1760x940
+SR-CAPTURE-STATUS m03-steps500 llvmpipe (LLVM 20.1.2, 256 bits) · 7 fps · 200 steps per frame · 600 × 400 cells
+SR-CAPTURE m04-steps768 m04-steps768.png 1760x940
+SR-CAPTURE-STATUS m04-steps768 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m05-glow m05-glow.png 1760x940
+SR-CAPTURE-STATUS m05-glow llvmpipe (LLVM 20.1.2, 256 bits) · 7 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m06-glow-1e8 m06-glow-1e8.png 1760x940
+SR-CAPTURE-STATUS m06-glow-1e8 llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m07-glow-reset m07-glow-reset.png 1760x940
+SR-CAPTURE-STATUS m07-glow-reset llvmpipe (LLVM 20.1.2, 256 bits) · 17 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m08-heat m08-heat.png 1760x940
+SR-CAPTURE-STATUS m08-heat llvmpipe (LLVM 20.1.2, 256 bits) · 22 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m09-heat-fit m09-heat-fit.png 1760x940
+SR-CAPTURE-STATUS m09-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 27 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m10-heat-reset m10-heat-reset.png 1760x940
+SR-CAPTURE-STATUS m10-heat-reset llvmpipe (LLVM 20.1.2, 256 bits) · 32 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m11-density m11-density.png 1760x940
+SR-CAPTURE-STATUS m11-density llvmpipe (LLVM 20.1.2, 256 bits) · 37 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m12-density-fit m12-density-fit.png 1760x940
+SR-CAPTURE-STATUS m12-density-fit llvmpipe (LLVM 20.1.2, 256 bits) · 42 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m13-density-reset m13-density-reset.png 1760x940
+SR-CAPTURE-STATUS m13-density-reset llvmpipe (LLVM 20.1.2, 256 bits) · 47 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m14-element m14-element.png 1760x940
+SR-CAPTURE-STATUS m14-element llvmpipe (LLVM 20.1.2, 256 bits) · 52 fps · 12 steps per frame · 600 × 400 cells
+SR-CAPTURE m15-hover m15-hover.png 1760x940
+SR-CAPTURE-STATUS m15-hover llvmpipe (LLVM 20.1.2, 256 bits) · 83 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE m16-zoom8 m16-zoom8.png 1760x940
+SR-CAPTURE-STATUS m16-zoom8 llvmpipe (LLVM 20.1.2, 256 bits) · 88 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE m17-zoom1 m17-zoom1.png 1760x940
+SR-CAPTURE-STATUS m17-zoom1 llvmpipe (LLVM 20.1.2, 256 bits) · 93 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n0900 n0900.png 1760x940
+SR-CAPTURE-STATUS n0900 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n1050 n1050.png 1760x940
+SR-CAPTURE-STATUS n1050 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n1200 n1200.png 1760x940
+SR-CAPTURE-STATUS n1200 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n1350 n1350.png 1760x940
+SR-CAPTURE-STATUS n1350 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n1500 n1500.png 1760x940
+SR-CAPTURE-STATUS n1500 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n1650 n1650.png 1760x940
+SR-CAPTURE-STATUS n1650 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n1800 n1800.png 1760x940
+SR-CAPTURE-STATUS n1800 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n1950 n1950.png 1760x940
+SR-CAPTURE-STATUS n1950 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n2100 n2100.png 1760x940
+SR-CAPTURE-STATUS n2100 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n2250 n2250.png 1760x940
+SR-CAPTURE-STATUS n2250 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE n2400 n2400.png 1760x940
+SR-CAPTURE-STATUS n2400 llvmpipe (LLVM 20.1.2, 256 bits) · 2 fps · 0 steps per frame · 600 × 400 cells
+exit 124
+
+real	9m30.004s
+user	0m0.006s
+sys	0m0.003s

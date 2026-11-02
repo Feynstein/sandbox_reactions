@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/ui/banner.rs
++++ b/crates/sr-app/src/ui/banner.rs
+@@ -113,7 +113,8 @@
+             return;
+         }
+         time.on_event(event);
+-        if event == Event::Ignition && time.banner() != Some(Event::Ignition) {
++        // Planted: the notice tied to the slow-down's setting, so a cleared box shows nothing when a star lights (M0-D139's fault).
++        if event == Event::Ignition && time.slow_down() && time.banner() != Some(Event::Ignition) {
+             self.notice_until = Some(wall + NOTICE_SECONDS);
+         }
+     }

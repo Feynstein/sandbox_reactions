@@ -1,0 +1,66 @@
+# M0-V13 linux-pc chain (the lead: «Yes, run them all (Recommended)»), started 2026-11-02T15:49:03-05:00; load 3.85 3.62 4.90
+## verify.py desktop web capture toolchain measure_ui --task M0-V13-lpc — 2026-11-02T15:49:03-05:00, load 3.85 3.62 4.90
+desktop     5/0/0      135.82 s  GO · step 1/5, 4 left
+web         5/0/0      630.01 s  GO · step 2/5, 3 left
+capture     3/0/0       24.29 s  GO · step 3/5, 2 left
+toolchain   3/0/0        0.39 s  GO · step 4/5, 1 left
+measure_ui  2/0/0        6.19 s  GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-V13-lpc.<scope>.log · record: loop_times.jsonl · tree 8c0d590bc06d+5eca7db23ede
+anchor: 0 path×scope entries moved by this run
+anchor: 391 paths checked · 365 skipped (3 classes) · 1 never checked · 9 stale · 0 unclassified · 0 owed · 401 covered of 766 visible
+verify: 18 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 200.72 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.85->16.84
+=== GO ===
+## exit 0 at 2026-11-02T15:52:24-05:00
+## verify.py --redarm measure_ui --task M0-V13-lpc — 2026-11-02T15:52:24-05:00, load 16.84 9.07 6.74
+measure_ui · clean · GO · arm 1/2, 1 left
+measure_ui · plant measure-no-write · RED (proven: measure_ui[run]: 1 failed; measure_ui[run]: its own verdict NO-GO: the copy does not hold p95 + 0.5 and nothing else new) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope measure_ui · 23.50 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V13-lpc.measure_ui.redarm.log
+=== GO ===
+## exit 0 at 2026-11-02T15:52:48-05:00
+## verify.py --redarm toolchain --task M0-V13-lpc — 2026-11-02T15:52:48-05:00, load 17.72 9.81 7.03
+toolchain · clean · GO · arm 1/4, 3 left
+toolchain · plant toolchain-compiler · RED (proven: toolchain[desktop]: 1 failed; toolchain[desktop]: its own verdict NO-GO: carg0 not found on PATH (~/.cargo/bin is put fi) · arm 2/4, 2 left
+toolchain · plant toolchain-web-target · RED (proven: toolchain[wasm]: 1 failed; toolchain[wasm]: its own verdict NO-GO: cargo build --target wasm32-unknown-unknwn failed) · arm 3/4, 1 left
+toolchain · plant toolchain-trunk · RED (proven: toolchain[trunk]: 1 failed; toolchain[trunk]: its own verdict NO-GO: trunc not found on PATH) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope toolchain · 15.75 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V13-lpc.toolchain.redarm.log
+=== GO ===
+## exit 0 at 2026-11-02T15:53:04-05:00
+## verify.py --redarm capture --task M0-V13-lpc — 2026-11-02T15:53:04-05:00, load 17.12 10.20 7.22
+capture · clean · GO · arm 1/9, 8 left
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3; capture[actions]: 1 fai) · arm 2/9, 7 left
+capture · plant capture-edge-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 3/9, 6 left
+capture · plant capture-paint-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 4/9, 5 left
+capture · plant capture-star-panel-blank · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 5/9, 4 left
+capture · plant capture-hover-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 6/9, 3 left
+capture · plant capture-hover-off-world · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 7/9, 2 left
+capture · plant capture-glow-white-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 8/9, 1 left
+capture · plant capture-zoom-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the actions did not reach the top bar) · arm 9/9, 0 left
+redarm: 8 plants · 8 red · 0 green · 0 errors · scope capture · 239.61 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V13-lpc.capture.redarm.log
+=== GO ===
+## exit 0 at 2026-11-02T15:57:03-05:00
+## verify.py --redarm desktop --task M0-V13-lpc — 2026-11-02T15:57:03-05:00, load 10.40 10.99 8.28
+desktop · clean · GO · arm 1/9, 8 left
+desktop · plant port-handover-early · RED (proven: desktop[race]: 1 failed; desktop[race]: its own verdict NO-GO: game-xvfb, started straight behind the hand-over, did not) · arm 2/9, 7 left
+desktop · plant status-never-ready · RED (proven: desktop[window]: 1 failed; desktop[window]: its own verdict NO-GO: launch.py smoke game-xvfb did not end GO; desktop[rac) · arm 3/9, 6 left
+desktop · plant launcher-no-stop · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher did not stop game-xvfb) · arm 4/9, 5 left
+desktop · plant launcher-stop-all · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher stopped a service it did not start () · arm 5/9, 4 left
+desktop · plant launcher-decoy-left · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the decoy web server on 47840 (pid 3161624) still) · arm 6/9, 3 left
+desktop · plant launcher-start-ignored · RED (proven: desktop[launcher]: 1 failed; desktop[launcher]: its own verdict NO-GO: the launcher never said the game did not start) · arm 7/9, 2 left
+desktop · plant port-no-fallback · RED (proven: desktop[port-taken]: 1 failed; desktop[port-taken]: its own verdict NO-GO: port-taken: the game failed: SR-ERROR --statu) · arm 8/9, 1 left
+desktop · plant world-not-drawn · RED (proven: desktop[world]: 1 failed; desktop[world]: its own verdict NO-GO: the world is not in the window) · arm 9/9, 0 left
+redarm: 8 plants · 8 red · 0 green · 0 errors · scope desktop · 594.62 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V13-lpc.desktop.redarm.log
+=== GO ===
+## exit 0 at 2026-11-02T16:06:58-05:00
+## verify.py --redarm web --task M0-V13-lpc — 2026-11-02T16:06:58-05:00, load 8.39 11.86 10.45
+web · clean · GO · arm 1/8, 7 left
+web · plant web-no-gpu-check · RED (proven: web[build]: 1 failed; web[build]: its own verdict NO-GO: index.html has no navigator.gpu check; web[preset]: 1 failed; w) · arm 2/8, 6 left
+web · plant web-autoload · RED (proven: web[ready-held]: 1 failed; web[ready-held]: its own verdict NO-GO: trunk's auto-loader or preload for the wasm is still ) · arm 3/8, 5 left
+web · plant never-ready · RED (proven: web[ready-held]: 1 failed; web[ready-held]: its own verdict NO-GO: ready: srState is "loading" after 30 s; never ready -) · arm 4/8, 4 left
+web · plant smoke-no-sandbox · RED (proven: web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: no-webgpu: Chrome runs with --no-sandbox, which contrac) · arm 5/8, 3 left
+web · plant web-no-port-range · RED (proven: web[ready-held]: 1 failed; web[ready-held]: its own verdict NO-GO: launch.py start web did not end GO) · arm 6/8, 2 left
+web · plant web-port-ignored · RED (proven: web[ready-held]: 1 failed; web[ready-held]: its own verdict NO-GO: ready: page.goto: Timeout 30000ms exceeded.) · arm 7/8, 1 left
+web · plant web-stop-lost · RED (proven: web[no-webgpu]: 1 failed; web[no-webgpu]: its own verdict NO-GO: the web server on 47840 (pid 3236555) still bound 30 s ) · arm 8/8, 0 left
+redarm: 7 plants · 7 red · 0 green · 0 errors · scope web · 983.55 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V13-lpc.web.redarm.log
+=== GO ===
+## exit 0 at 2026-11-02T16:23:22-05:00
+## chain done 2026-11-02T16:23:22-05:00

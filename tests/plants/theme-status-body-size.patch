@@ -1,6 +1,6 @@
 --- a/crates/sr-app/src/desktop.rs
 +++ b/crates/sr-app/src/desktop.rs
-@@ -194,7 +194,8 @@
+@@ -371,7 +371,8 @@
              .exact_size(STATUS_BAR_HEIGHT)
              .frame(egui::Frame::NONE.fill(BG_SPACE).inner_margin(egui::Margin::symmetric(8, 4)))
              .show(ui, |ui| {
@@ -8,5 +8,5 @@
 +                // Planted: the status label with no size, as M0-T84 drew it — egui's 13 px body text, not §4.11's small 12 px.
 +                ui.label(egui::RichText::new(&status_line).color(TEXT_SECONDARY));
              });
-         egui::CentralPanel::no_frame().frame(egui::Frame::NONE.fill(BG_SPACE)).show(ui, |ui| {
-             let painter = ui.painter();
+         // The left panel (§4.2, 220 px) between the two bars; its clicks reach the tools before the centre reads the pointer.
+         let panel = left::view(self.sim.tools(), self.sim.presets(), self.sim.views(), self.sim.elements());

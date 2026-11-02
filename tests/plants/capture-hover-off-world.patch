@@ -1,0 +1,16 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -186,11 +186,8 @@
+             // The right click's door (ui::right::Stars::select_at), on the cell as the pointer would name it.
+             Action::Select(cell) => self.sim.select_star(*cell),
+             // The pointer's place, as the central panel reads it each frame (ui::right::Asker asks the engine for the cell).
+-            // A cell off the world is the pointer off the world (§3.3), as `cell_at` names it.
+-            Action::Hover(cell) => {
+-                let world = self.sim.world();
+-                self.scripted_hover = Some((cell[0] < world.width && cell[1] < world.height).then_some(*cell));
+-            }
++            // Planted: a cell off the world still reaches the inspector as a hovered cell (M0-D137).
++            Action::Hover(cell) => self.scripted_hover = Some(Some(*cell)),
+             // The panel's own door too (ui::left::Tools::apply), as a click or a key goes through.
+             Action::Tool(tool) => self.sim.tool_command(left::Command::SelectTool(*tool)),
+             Action::Element(key) => {

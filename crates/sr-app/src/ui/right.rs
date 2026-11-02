@@ -27,6 +27,7 @@ use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::format;
 use crate::strings;
+use crate::ui::remnant;
 
 /// How near a right click must land to an object's centre to pick it, at least, in cells: a star of a few cells is still
 /// a target.
@@ -83,7 +84,8 @@ fn fate_text(prediction: Prediction) -> String {
 }
 
 /// The readout's panel for the selected star (§4.6): the stage, `star.mass`, `star.fate` — or `star.ending` once a remnant
-/// holds —, `star.age`, `star.rate` (not while `paused`), `star.surface`, `star.core`; `objects` is how many the world holds.
+/// holds —, `star.remnant` while its remnant is ringed (§0.5 [M0-D138], ui::remnant), `star.age`, `star.rate` (not while
+/// `paused`), `star.surface`, `star.core`; `objects` is how many the world holds.
 pub fn view(star: Option<&Facts>, objects: usize, paused: bool) -> StarPanel {
     let heading = strings::get("star.heading").to_string();
     let Some(star) = star else {
@@ -94,6 +96,9 @@ pub fn view(star: Option<&Facts>, objects: usize, paused: bool) -> StarPanel {
         Some(Readout::Predicted(prediction)) => lines.push(fill("star.fate", &[("fate", &fate_text(prediction))])),
         Some(Readout::Ended(ending)) => lines.push(fill("star.ending", &[("ending", strings::get(ending.key()))])),
         None => {}
+    }
+    if remnant::ringed(star.stage) {
+        lines.push(strings::get("star.remnant").to_string());
     }
     lines.push(fill("star.age", &[("age", &format::age(star.age_years))]));
     if let Some(rate) = star.rate.filter(|_| !paused) {
@@ -209,6 +214,17 @@ impl Stars {
         if picked.is_some() {
             self.selected = picked;
         }
+    }
+
+    /// The centres of the objects ringed as remnants (ui::remnant, §0.5 [M0-D138]): each whose shown stage is from core
+    /// collapse on, every object and not only the selected one.
+    pub fn remnant_centres(&self) -> Vec<[f64; 2]> {
+        self.tracker
+            .objects()
+            .iter()
+            .filter(|o| self.stages.stage(o.id).and_then(|s| s.shown).is_some_and(remnant::ringed))
+            .map(|o| o.centre)
+            .collect()
     }
 
     /// The selected star's readout at wall time `wall` (s): none with no object.
@@ -620,6 +636,7 @@ mod star_tests {
         assert!(panel.lines[1].starts_with("Mass: "), "{panel:?}");
         assert!(panel.lines.iter().any(|l| l.starts_with("Age: ")), "{panel:?}");
         assert_eq!(panel.note, None);
+        assert_eq!(stars.remnant_centres(), Vec::<[f64; 2]>::new(), "a main-sequence star has no ring (ui::remnant)");
     }
 }
 

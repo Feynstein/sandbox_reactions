@@ -5,7 +5,7 @@
 #            llvmpipe` on linux-pc, `--offscreen-window` on win-laptop (R4, R15). Pass: exit 0; two PNGs of the window's
 #            size (the IHDR matching captions.json's viewport) whose pixels DIFFER (a screenshot taken before the frame it
 #            names is presented would show the previous state); a valid captions.json in review_page.py's shape.
-#   actions — tests/capture/actions.json (M0-T85, M0-T127c): one step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select, hover, glow_white, display_reset, fit, zoom), run on the same
+#   actions — tests/capture/actions.json (M0-T85, M0-T127c): one step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select, hover x2, glow_white, display_reset, fit, zoom), run on the same
 #            route. Pass: exit 0; a PNG per step, in the script's order, each the window's size; the top bar (§4.2's 44 px)
 #            differs from the previous step's after `paused`, `rung`, `slowdown`, `rung-max` and `edge-leave` (a paused readout both times, so only the radios differ); the accent (the selected
 #            rung's text) sits further right in `rung` than in `start`, and further right again in `rung-max`. The left panel
@@ -14,7 +14,8 @@
 #            (two blobs of iron painted at cells (100, 100) and (130, 100), far from the star at the centre); the right panel (§4.2's 300 px)
 #            differs in `select` from `start`'s "No star yet" and holds more lit pixels (the star's readout, M0-T92), and differs in `hover`
 #            from `select`'s one "Hover over a cell" line and holds more lit pixels (the Cell inspector's four lines for the star's
-#            centre, M0-T93b). Then the Massive preset at its supergiant (step 768, paused): the world (the centre between the
+#            centre, M0-T93b); `hover-outside` (hover on cell (700, 500), off the 600 x 400 world, M0-D137) takes it back: its right panel holds
+#            fewer lit pixels than `hover`'s by more than 100 (the inspector's four lines gone for its «Hover over a cell» line). Then the Massive preset at its supergiant (step 768, paused): the world (the centre between the
 #            panels) after `glow_white` 10^8 K differs from the default Glow step's, after `display_reset` equals it pixel for pixel
 #            (the two steps hold the same paused state), and Heat after `fit` differs from Heat's default (M0-T127c). Then `star-zoom` (M0-T129):
 #            zoom 8 about cell (300, 200) of that same paused state — the world differs from `star-heat-fit`'s, and six cells read off both
@@ -89,11 +90,11 @@ PY
     out="$("${runner[@]}" "$bin" "${window[@]}" --capture tests/capture/actions.json --out "$dir" 2>&1)"; rc=$?
     echo "$out" | grep -v '^$' | tail -n 8
     [ $rc -eq 0 ] || { echo "=== NO-GO: the capture run exited $rc, expected 0 ==="; exit 1; }
-    echo "$out" | grep -q '^SR-CAPTURE DONE 21 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 21' line ==="; exit 1; }
+    echo "$out" | grep -q '^SR-CAPTURE DONE 22 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 22' line ==="; exit 1; }
     $PY -I - "$dir" <<'PY' || { echo "=== NO-GO: the actions did not reach the top bar ==="; exit 1; }
 import json, struct, sys, zlib
 d = sys.argv[1]
-WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave", "tool", "element", "paint", "view", "select", "hover", "star-glow", "star-glow-white", "star-glow-reset", "star-heat", "star-heat-fit", "star-zoom"]
+WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave", "tool", "element", "paint", "view", "select", "hover", "hover-outside", "star-glow", "star-glow-white", "star-glow-reset", "star-heat", "star-heat-fit", "star-zoom"]
 caps = json.load(open(f"{d}/captions.json", encoding="utf-8"))
 if [c.get("id") for c in caps] != WANT:
     sys.exit(f"captions.json ids {[c.get('id') for c in caps]}, expected {WANT}")
@@ -184,6 +185,8 @@ if right_panel("hover") == right_panel("select"):
     sys.exit("the right panel of hover is the same as select's: the Cell inspector never read the hovered cell")
 if lit("hover") <= lit("select") + 100:
     sys.exit(f"the right panel of hover holds {lit('hover')} lit pixels, select's {lit('select')}: the Cell inspector's lines are missing")
+if lit("hover-outside") >= lit("hover") - 100:
+    sys.exit(f"the right panel of hover-outside holds {lit('hover-outside')} lit pixels, hover's {lit('hover')}: a cell off the world left the inspector on the last cell it read")
 def centre(name):                                      # the world's area, between the panels: the display controls act here only
     return [r[3 * left_w:3 * (w - right_w)] for r in full[name][2][bar:h - status]]
 if centre("star-glow-white") == centre("star-glow-reset"):
@@ -210,7 +213,7 @@ for dx, dy in [(0, 0), (-3, 2), (4, -4), (10, 7), (-12, -9), (20, 11)]:
     colours.add(whole)
 if len(colours) < 3:
     sys.exit(f"the zoom's probes read {len(colours)} colours: they prove nothing")
-print(f"21 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one; Glow toned down differs, its Reset matches the default, Heat fitted differs; zoom 8 about (300, 200) matches the whole world on 6 probed cells ({len(colours)} colours), 16 px a cell")
+print(f"22 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one, {lit('hover-outside')} with the pointer off the world; Glow toned down differs, its Reset matches the default, Heat fitted differs; zoom 8 about (300, 200) matches the whole world on 6 probed cells ({len(colours)} colours), 16 px a cell")
 PY
     echo "capture actions: ok"
     echo "=== GO ==="

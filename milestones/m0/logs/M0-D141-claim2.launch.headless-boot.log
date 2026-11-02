@@ -1,0 +1,4 @@
+# M0-D141-claim2 | launch headless-boot | 2026-11-02T13:43:42-0500
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-uchgdbb8
+SR-ADAPTER name=NVIDIA GeForce RTX 3060 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=3.538296 until=none

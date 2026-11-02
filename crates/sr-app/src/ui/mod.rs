@@ -6,6 +6,7 @@ pub mod banner;
 pub mod display;
 pub mod left;
 pub mod legend;
+pub mod remnant;
 pub mod right;
 pub mod theme;
 pub mod topbar;

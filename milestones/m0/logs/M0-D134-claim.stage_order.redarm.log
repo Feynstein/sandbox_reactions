@@ -1,0 +1,368 @@
+==== 2026-11-02T12:20:47-05:00 stage_order · clean · a fresh scratch copy of the tree
+== 2026-11-02T12:20:48-05:00 stage_order · task M0-D134-claim · box laserax-ai-server :: bash tests/gpu.sh stage_order physics
+-- stage_order · exit=0 · 21.17 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-xseodgy7/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-xseodgy7/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.15s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test stage_order::the_15_sun_preset_shows_its_stages_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=17 raw=cloud shown=none M=6677.2 R=49.96 Σc=1.009e0 Tc=6.748e0 d_c=0.5561 v_r/v_dyn=-0.0588 L=7.411e2 L_nuc=-0.000e0
+massive step=33 raw=collapsing shown=none M=6677.2 R=49.46 Σc=1.032e0 Tc=6.901e0 d_c=0.5558 v_r/v_dyn=-0.1081 L=2.357e2 L_nuc=-0.000e0
+massive step=49 raw=collapsing shown=none M=6677.2 R=48.97 Σc=1.070e0 Tc=7.153e0 d_c=0.5552 v_r/v_dyn=-0.1570 L=9.274e1 L_nuc=-0.000e0
+massive step=65 raw=collapsing shown=collapsing M=6677.2 R=48.19 Σc=1.125e0 Tc=7.521e0 d_c=0.5543 v_r/v_dyn=-0.2056 L=4.339e1 L_nuc=-0.000e0
+massive step=81 raw=collapsing shown=collapsing M=6677.2 R=47.31 Σc=1.202e0 Tc=8.033e0 d_c=0.5532 v_r/v_dyn=-0.2545 L=2.229e1 L_nuc=-0.000e0
+massive step=97 raw=collapsing shown=collapsing M=6677.1 R=46.42 Σc=1.307e0 Tc=8.737e0 d_c=0.5517 v_r/v_dyn=-0.3042 L=1.226e1 L_nuc=-0.000e0
+massive step=113 raw=collapsing shown=collapsing M=6676.9 R=45.42 Σc=1.452e0 Tc=9.711e0 d_c=0.5498 v_r/v_dyn=-0.3550 L=7.110e0 L_nuc=-0.000e0
+massive step=129 raw=collapsing shown=collapsing M=6676.7 R=43.95 Σc=1.647e0 Tc=1.101e1 d_c=0.5474 v_r/v_dyn=-0.4029 L=4.293e0 L_nuc=-0.000e0
+massive step=145 raw=collapsing shown=collapsing M=6676.4 R=42.71 Σc=1.903e0 Tc=1.272e1 d_c=0.5444 v_r/v_dyn=-0.4494 L=2.729e0 L_nuc=-0.000e0
+massive step=161 raw=collapsing shown=collapsing M=6676.2 R=41.72 Σc=2.248e0 Tc=1.503e1 d_c=0.5408 v_r/v_dyn=-0.4954 L=1.848e0 L_nuc=-0.000e0
+massive step=177 raw=collapsing shown=collapsing M=6676.1 R=40.12 Σc=2.723e0 Tc=1.820e1 d_c=0.5364 v_r/v_dyn=-0.5353 L=1.330e0 L_nuc=-0.000e0
+massive step=193 raw=collapsing shown=collapsing M=6675.8 R=38.79 Σc=3.400e0 Tc=2.270e1 d_c=0.5310 v_r/v_dyn=-0.5737 L=9.980e-1 L_nuc=-0.000e0
+massive step=209 raw=collapsing shown=collapsing M=6675.5 R=37.45 Σc=4.397e0 Tc=2.929e1 d_c=0.5243 v_r/v_dyn=-0.6073 L=7.654e-1 L_nuc=2.463e1
+massive step=225 raw=collapsing shown=collapsing M=6675.4 R=35.93 Σc=5.895e0 Tc=3.916e1 d_c=0.5158 v_r/v_dyn=-0.6314 L=6.006e-1 L_nuc=1.190e3
+massive step=241 raw=collapsing shown=collapsing M=6675.2 R=34.63 Σc=8.069e0 Tc=5.353e1 d_c=0.5052 v_r/v_dyn=-0.6439 L=4.851e-1 L_nuc=6.676e3
+massive step=257 raw=he_core shown=collapsing M=6675.0 R=33.43 Σc=1.069e1 Tc=7.636e1 d_c=0.4756 v_r/v_dyn=-0.6353 L=3.986e-1 L_nuc=4.277e4
+massive step=273 raw=he_shell shown=collapsing M=6674.7 R=32.66 Σc=9.315e0 Tc=1.432e2 d_c=0.3177 v_r/v_dyn=+0.2682 L=9.440e6 L_nuc=5.465e8
+massive step=289 raw=iron_core shown=collapsing M=6674.7 R=34.10 Σc=8.669e0 Tc=7.913e1 d_c=0.4417 v_r/v_dyn=+0.2544 L=7.638e5 L_nuc=9.289e-1
+massive step=305 raw=iron_core shown=collapsing M=6674.7 R=34.47 Σc=8.279e0 Tc=6.284e1 d_c=0.4889 v_r/v_dyn=+0.2043 L=2.065e5 L_nuc=1.079e-7
+massive step=321 raw=iron_core shown=iron_core M=6674.5 R=35.08 Σc=7.861e0 Tc=5.459e1 d_c=0.5127 v_r/v_dyn=+0.1388 L=1.124e5 L_nuc=8.258e-9
+massive step=337 raw=iron_core shown=iron_core M=6674.2 R=35.44 Σc=7.682e0 Tc=5.006e1 d_c=0.5292 v_r/v_dyn=+0.0735 L=7.623e4 L_nuc=3.229e-9
+massive step=353 raw=iron_core shown=iron_core M=6674.0 R=35.48 Σc=7.534e0 Tc=4.800e1 d_c=0.5354 v_r/v_dyn=+0.0136 L=5.877e4 L_nuc=1.767e-9
+massive step=369 raw=iron_core shown=iron_core M=6674.0 R=35.56 Σc=7.623e0 Tc=4.770e1 d_c=0.5395 v_r/v_dyn=-0.0479 L=4.995e4 L_nuc=1.195e-9
+massive step=385 raw=iron_core shown=iron_core M=6674.0 R=35.53 Σc=8.005e0 Tc=4.938e1 d_c=0.5416 v_r/v_dyn=-0.1090 L=4.654e4 L_nuc=9.745e-10
+massive step=401 raw=iron_core shown=iron_core M=6673.6 R=35.85 Σc=9.427e0 Tc=5.314e1 d_c=0.5590 v_r/v_dyn=-0.1648 L=4.846e4 L_nuc=9.578e-10
+massive step=417 raw=iron_core shown=iron_core M=6673.6 R=35.33 Σc=1.141e1 Tc=5.884e1 d_c=0.5748 v_r/v_dyn=-0.2268 L=5.842e4 L_nuc=1.172e-9
+massive step=433 raw=iron_core shown=iron_core M=6673.3 R=35.11 Σc=1.387e1 Tc=6.616e1 d_c=0.5873 v_r/v_dyn=-0.2753 L=8.504e4 L_nuc=2.357e-9
+massive step=449 raw=iron_core shown=iron_core M=6673.3 R=34.43 Σc=1.733e1 Tc=7.796e1 d_c=0.5934 v_r/v_dyn=-0.3174 L=1.536e5 L_nuc=2.118e-8
+massive step=465 raw=iron_core shown=iron_core M=6673.2 R=33.79 Σc=2.043e1 Tc=9.207e1 d_c=0.5865 v_r/v_dyn=-0.3616 L=3.139e5 L_nuc=5.305e-7
+massive step=481 raw=iron_core shown=iron_core M=6672.8 R=33.49 Σc=2.271e1 Tc=1.041e2 d_c=0.5781 v_r/v_dyn=-0.4020 L=5.688e5 L_nuc=1.431e-2
+massive step=497 raw=iron_core shown=iron_core M=6673.0 R=33.07 Σc=2.302e1 Tc=1.177e2 d_c=0.5506 v_r/v_dyn=-0.4132 L=7.845e5 L_nuc=7.472e-2
+SR-HEADLESS DONE steps=500 sim_time=5.547426 until=unmet
+massive shown: [("collapsing", 65), ("iron_core", 321)]
+ok
+test stage_order::the_sun_like_preset_shows_its_stages_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=17 raw=cloud shown=none M=3136.7 R=33.97 Σc=1.019e0 Tc=4.666e0 d_c=0.6463 v_r/v_dyn=-0.0750 L=1.199e2 L_nuc=-0.000e0
+sun step=33 raw=collapsing shown=none M=3136.7 R=33.74 Σc=1.070e0 Tc=4.900e0 d_c=0.6456 v_r/v_dyn=-0.1418 L=2.698e1 L_nuc=-0.000e0
+sun step=49 raw=collapsing shown=none M=3136.7 R=33.19 Σc=1.166e0 Tc=5.340e0 d_c=0.6442 v_r/v_dyn=-0.2113 L=7.370e0 L_nuc=-0.000e0
+sun step=65 raw=collapsing shown=collapsing M=3136.7 R=32.11 Σc=1.316e0 Tc=6.028e0 d_c=0.6422 v_r/v_dyn=-0.2763 L=2.575e0 L_nuc=-0.000e0
+sun step=81 raw=collapsing shown=collapsing M=3136.7 R=31.14 Σc=1.532e0 Tc=7.022e0 d_c=0.6396 v_r/v_dyn=-0.3365 L=1.086e0 L_nuc=-0.000e0
+sun step=97 raw=collapsing shown=collapsing M=3136.6 R=30.67 Σc=1.847e0 Tc=8.463e0 d_c=0.6361 v_r/v_dyn=-0.3952 L=5.251e-1 L_nuc=-0.000e0
+sun step=113 raw=collapsing shown=collapsing M=3136.6 R=29.55 Σc=2.313e0 Tc=1.060e1 d_c=0.6314 v_r/v_dyn=-0.4447 L=2.841e-1 L_nuc=-0.000e0
+sun step=129 raw=collapsing shown=collapsing M=3136.5 R=28.32 Σc=3.030e0 Tc=1.388e1 d_c=0.6254 v_r/v_dyn=-0.4860 L=1.720e-1 L_nuc=-0.000e0
+sun step=145 raw=collapsing shown=collapsing M=3136.3 R=27.07 Σc=4.153e0 Tc=1.898e1 d_c=0.6179 v_r/v_dyn=-0.5157 L=1.148e-1 L_nuc=-0.000e0
+sun step=161 raw=collapsing shown=collapsing M=3136.3 R=26.12 Σc=5.816e0 Tc=2.636e1 d_c=0.6100 v_r/v_dyn=-0.5304 L=7.538e-2 L_nuc=-0.000e0
+sun step=177 raw=collapsing shown=collapsing M=3136.3 R=25.29 Σc=7.774e0 Tc=3.476e1 d_c=0.6037 v_r/v_dyn=-0.5211 L=5.432e-2 L_nuc=2.491e2
+sun step=193 raw=collapsing shown=collapsing M=3136.2 R=23.32 Σc=9.180e0 Tc=4.077e1 d_c=0.5993 v_r/v_dyn=-0.4733 L=4.041e-2 L_nuc=1.606e3
+sun step=209 raw=collapsing shown=collapsing M=3136.1 R=22.41 Σc=1.002e1 Tc=4.475e1 d_c=0.5945 v_r/v_dyn=-0.4153 L=3.079e-2 L_nuc=4.470e3
+sun step=225 raw=collapsing shown=collapsing M=3136.0 R=21.08 Σc=1.069e1 Tc=4.836e1 d_c=0.5889 v_r/v_dyn=-0.3383 L=2.397e-2 L_nuc=8.814e3
+sun step=241 raw=collapsing shown=collapsing M=3135.9 R=19.22 Σc=1.115e1 Tc=5.138e1 d_c=0.5828 v_r/v_dyn=-0.2467 L=1.918e-2 L_nuc=1.411e4
+sun step=257 raw=collapsing shown=collapsing M=3135.8 R=17.72 Σc=1.133e1 Tc=5.338e1 d_c=0.5766 v_r/v_dyn=-0.1516 L=1.543e-2 L_nuc=1.924e4
+sun step=273 raw=main_sequence shown=collapsing M=3135.7 R=15.66 Σc=1.128e1 Tc=5.452e1 d_c=0.5706 v_r/v_dyn=-0.0571 L=1.498e4 L_nuc=2.214e4
+sun step=289 raw=cloud shown=collapsing M=3135.5 R=14.02 Σc=1.089e1 Tc=5.383e1 d_c=0.5666 v_r/v_dyn=+0.0239 L=1.015e5 L_nuc=2.100e4
+sun step=305 raw=cloud shown=collapsing M=3135.5 R=14.04 Σc=1.007e1 Tc=5.048e1 d_c=0.5660 v_r/v_dyn=+0.0900 L=8.133e4 L_nuc=1.604e4
+sun step=321 raw=cloud shown=collapsing M=3135.2 R=14.30 Σc=9.092e0 Tc=4.591e1 d_c=0.5683 v_r/v_dyn=+0.1387 L=6.105e4 L_nuc=1.016e4
+sun step=337 raw=cloud shown=collapsing M=3135.2 R=14.97 Σc=8.155e0 Tc=4.124e1 d_c=0.5720 v_r/v_dyn=+0.1728 L=4.559e4 L_nuc=5.707e3
+sun step=353 raw=cloud shown=collapsing M=3135.1 R=15.85 Σc=7.341e0 Tc=3.705e1 d_c=0.5762 v_r/v_dyn=+0.1949 L=3.397e4 L_nuc=2.938e3
+sun step=369 raw=cloud shown=collapsing M=3134.9 R=17.08 Σc=6.625e0 Tc=3.331e1 d_c=0.5806 v_r/v_dyn=+0.2085 L=2.520e4 L_nuc=1.346e3
+sun step=385 raw=cloud shown=collapsing M=3134.7 R=17.94 Σc=6.032e0 Tc=3.021e1 d_c=0.5847 v_r/v_dyn=+0.2107 L=1.859e4 L_nuc=5.126e2
+sun step=401 raw=white_dwarf shown=collapsing M=3134.5 R=18.43 Σc=5.558e0 Tc=2.771e1 d_c=0.5883 v_r/v_dyn=+0.2039 L=1.362e4 L_nuc=9.646e1
+sun step=417 raw=white_dwarf shown=collapsing M=3134.5 R=19.47 Σc=5.189e0 Tc=2.573e1 d_c=0.5918 v_r/v_dyn=+0.1946 L=9.887e3 L_nuc=-0.000e0
+sun step=433 raw=white_dwarf shown=white_dwarf M=3134.4 R=20.30 Σc=4.909e0 Tc=2.422e1 d_c=0.5947 v_r/v_dyn=+0.1801 L=7.161e3 L_nuc=-0.000e0
+sun step=449 raw=white_dwarf shown=white_dwarf M=3134.1 R=21.41 Σc=4.716e0 Tc=2.315e1 d_c=0.5970 v_r/v_dyn=+0.1632 L=5.197e3 L_nuc=-0.000e0
+sun step=465 raw=white_dwarf shown=white_dwarf M=3133.9 R=22.27 Σc=4.581e0 Tc=2.239e1 d_c=0.5990 v_r/v_dyn=+0.1426 L=3.764e3 L_nuc=-0.000e0
+sun step=481 raw=white_dwarf shown=white_dwarf M=3133.7 R=22.52 Σc=4.480e0 Tc=2.180e1 d_c=0.6007 v_r/v_dyn=+0.1182 L=2.719e3 L_nuc=-0.000e0
+sun step=497 raw=white_dwarf shown=white_dwarf M=3133.6 R=23.22 Σc=4.446e0 Tc=2.152e1 d_c=0.6021 v_r/v_dyn=+0.0937 L=1.966e3 L_nuc=-0.000e0
+sun step=513 raw=white_dwarf shown=white_dwarf M=3133.4 R=23.37 Σc=4.436e0 Tc=2.137e1 d_c=0.6033 v_r/v_dyn=+0.0673 L=1.426e3 L_nuc=-0.000e0
+sun step=529 raw=white_dwarf shown=white_dwarf M=3133.2 R=24.42 Σc=4.465e0 Tc=2.140e1 d_c=0.6044 v_r/v_dyn=+0.0415 L=1.040e3 L_nuc=-0.000e0
+sun step=545 raw=white_dwarf shown=white_dwarf M=3132.9 R=25.19 Σc=4.533e0 Tc=2.162e1 d_c=0.6052 v_r/v_dyn=+0.0149 L=7.584e2 L_nuc=-0.000e0
+sun step=561 raw=white_dwarf shown=white_dwarf M=3132.7 R=25.28 Σc=4.630e0 Tc=2.198e1 d_c=0.6057 v_r/v_dyn=-0.0118 L=5.550e2 L_nuc=-0.000e0
+sun step=577 raw=white_dwarf shown=white_dwarf M=3132.5 R=25.38 Σc=4.781e0 Tc=2.256e1 d_c=0.6061 v_r/v_dyn=-0.0377 L=4.089e2 L_nuc=-0.000e0
+sun step=593 raw=white_dwarf shown=white_dwarf M=3132.3 R=25.40 Σc=4.968e0 Tc=2.332e1 d_c=0.6063 v_r/v_dyn=-0.0622 L=2.993e2 L_nuc=-0.000e0
+sun step=609 raw=white_dwarf shown=white_dwarf M=3132.0 R=25.39 Σc=5.176e0 Tc=2.414e1 d_c=0.6065 v_r/v_dyn=-0.0846 L=2.208e2 L_nuc=-0.000e0
+sun step=625 raw=white_dwarf shown=white_dwarf M=3131.8 R=25.23 Σc=5.454e0 Tc=2.528e1 d_c=0.6065 v_r/v_dyn=-0.1042 L=1.619e2 L_nuc=-0.000e0
+sun step=641 raw=white_dwarf shown=white_dwarf M=3131.4 R=24.59 Σc=5.718e0 Tc=2.634e1 d_c=0.6065 v_r/v_dyn=-0.1187 L=1.186e2 L_nuc=-0.000e0
+sun step=657 raw=white_dwarf shown=white_dwarf M=3131.1 R=23.39 Σc=6.034e0 Tc=2.759e1 d_c=0.6066 v_r/v_dyn=-0.1271 L=9.109e1 L_nuc=-0.000e0
+sun step=673 raw=cloud shown=white_dwarf M=3130.8 R=23.06 Σc=6.333e0 Tc=2.884e1 d_c=0.6060 v_r/v_dyn=-0.1332 L=6.929e1 L_nuc=3.359e1
+sun step=689 raw=cloud shown=white_dwarf M=3130.6 R=22.42 Σc=6.654e0 Tc=3.016e1 d_c=0.6055 v_r/v_dyn=-0.1336 L=5.499e1 L_nuc=2.031e2
+sun step=705 raw=cloud shown=white_dwarf M=3130.2 R=21.91 Σc=6.958e0 Tc=3.147e1 d_c=0.6045 v_r/v_dyn=-0.1297 L=4.265e1 L_nuc=4.285e2
+sun step=721 raw=cloud shown=white_dwarf M=3129.9 R=20.48 Σc=7.247e0 Tc=3.266e1 d_c=0.6040 v_r/v_dyn=-0.1187 L=3.311e1 L_nuc=6.980e2
+sun step=737 raw=cloud shown=white_dwarf M=3129.6 R=19.23 Σc=7.481e0 Tc=3.372e1 d_c=0.6029 v_r/v_dyn=-0.1045 L=2.179e1 L_nuc=9.981e2
+sun step=753 raw=cloud shown=white_dwarf M=3129.1 R=18.21 Σc=7.722e0 Tc=3.472e1 d_c=0.6023 v_r/v_dyn=-0.0878 L=1.797e1 L_nuc=1.318e3
+sun step=769 raw=cloud shown=white_dwarf M=3128.8 R=17.95 Σc=7.863e0 Tc=3.538e1 d_c=0.6015 v_r/v_dyn=-0.0705 L=1.871e1 L_nuc=1.605e3
+sun step=785 raw=cloud shown=white_dwarf M=3128.9 R=17.39 Σc=8.009e0 Tc=3.603e1 d_c=0.6009 v_r/v_dyn=-0.0510 L=4.240e3 L_nuc=1.870e3
+sun step=801 raw=cloud shown=white_dwarf M=3128.8 R=17.11 Σc=8.044e0 Tc=3.620e1 d_c=0.6007 v_r/v_dyn=-0.0314 L=9.246e3 L_nuc=2.019e3
+sun step=817 raw=cloud shown=white_dwarf M=3129.1 R=17.04 Σc=8.050e0 Tc=3.625e1 d_c=0.6005 v_r/v_dyn=-0.0128 L=1.052e4 L_nuc=2.060e3
+sun step=833 raw=cloud shown=white_dwarf M=3129.4 R=17.07 Σc=7.988e0 Tc=3.598e1 d_c=0.6007 v_r/v_dyn=+0.0042 L=1.079e4 L_nuc=1.994e3
+sun step=849 raw=cloud shown=white_dwarf M=3129.7 R=17.13 Σc=7.866e0 Tc=3.542e1 d_c=0.6013 v_r/v_dyn=+0.0189 L=1.037e4 L_nuc=1.812e3
+sun step=865 raw=cloud shown=white_dwarf M=3130.2 R=17.29 Σc=7.677e0 Tc=3.457e1 d_c=0.6022 v_r/v_dyn=+0.0306 L=9.621e3 L_nuc=1.556e3
+sun step=881 raw=cloud shown=white_dwarf M=3130.4 R=17.41 Σc=7.478e0 Tc=3.365e1 d_c=0.6033 v_r/v_dyn=+0.0392 L=8.700e3 L_nuc=1.283e3
+sun step=897 raw=cloud shown=white_dwarf M=3130.8 R=17.57 Σc=7.268e0 Tc=3.265e1 d_c=0.6046 v_r/v_dyn=+0.0444 L=7.737e3 L_nuc=9.967e2
+sun step=913 raw=cloud shown=white_dwarf M=3131.0 R=18.00 Σc=7.065e0 Tc=3.168e1 d_c=0.6060 v_r/v_dyn=+0.0464 L=6.789e3 L_nuc=7.427e2
+sun step=929 raw=cloud shown=white_dwarf M=3131.1 R=18.24 Σc=6.888e0 Tc=3.081e1 d_c=0.6074 v_r/v_dyn=+0.0451 L=5.906e3 L_nuc=5.350e2
+sun step=945 raw=cloud shown=white_dwarf M=3131.5 R=18.35 Σc=6.750e0 Tc=3.011e1 d_c=0.6087 v_r/v_dyn=+0.0408 L=5.099e3 L_nuc=3.721e2
+sun step=961 raw=cloud shown=white_dwarf M=3131.7 R=18.37 Σc=6.636e0 Tc=2.953e1 d_c=0.6099 v_r/v_dyn=+0.0343 L=4.402e3 L_nuc=2.544e2
+sun step=977 raw=cloud shown=white_dwarf M=3131.9 R=18.62 Σc=6.556e0 Tc=2.908e1 d_c=0.6111 v_r/v_dyn=+0.0262 L=3.822e3 L_nuc=1.681e2
+sun step=993 raw=cloud shown=white_dwarf M=3132.1 R=18.99 Σc=6.513e0 Tc=2.880e1 d_c=0.6120 v_r/v_dyn=+0.0171 L=3.362e3 L_nuc=1.187e2
+SR-HEADLESS DONE steps=1000 sim_time=12.763184 until=unmet
+sun shown: [("collapsing", 65), ("white_dwarf", 433)]
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 459 filtered out; finished in 10.89s
+
+
+==== 2026-11-02T12:21:09-05:00 stage_order · plant failed-star-unsettled · a fresh scratch copy of the tree
+planted failed-star-unsettled: tests/plants/failed-star-unsettled.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-02T12:21:09-05:00 stage_order · task M0-D134-claim · box laserax-ai-server :: bash tests/gpu.sh stage_order physics
+-- stage_order · exit=101 · 21.32 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-xseodgy7/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-xseodgy7/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.21s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test stage_order::the_15_sun_preset_shows_its_stages_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=17 raw=failed_star shown=none M=6677.2 R=49.96 Σc=1.009e0 Tc=6.748e0 d_c=0.5561 v_r/v_dyn=-0.0588 L=7.411e2 L_nuc=-0.000e0
+massive step=33 raw=failed_star shown=failed_star M=6677.2 R=49.46 Σc=1.032e0 Tc=6.901e0 d_c=0.5558 v_r/v_dyn=-0.1081 L=2.357e2 L_nuc=-0.000e0
+massive step=49 raw=failed_star shown=failed_star M=6677.2 R=48.97 Σc=1.070e0 Tc=7.153e0 d_c=0.5552 v_r/v_dyn=-0.1570 L=9.274e1 L_nuc=-0.000e0
+massive step=65 raw=failed_star shown=failed_star M=6677.2 R=48.19 Σc=1.125e0 Tc=7.521e0 d_c=0.5543 v_r/v_dyn=-0.2056 L=4.339e1 L_nuc=-0.000e0
+massive step=81 raw=failed_star shown=failed_star M=6677.2 R=47.31 Σc=1.202e0 Tc=8.033e0 d_c=0.5532 v_r/v_dyn=-0.2545 L=2.229e1 L_nuc=-0.000e0
+massive step=97 raw=failed_star shown=failed_star M=6677.1 R=46.42 Σc=1.307e0 Tc=8.737e0 d_c=0.5517 v_r/v_dyn=-0.3042 L=1.226e1 L_nuc=-0.000e0
+massive step=113 raw=failed_star shown=failed_star M=6676.9 R=45.42 Σc=1.452e0 Tc=9.711e0 d_c=0.5498 v_r/v_dyn=-0.3550 L=7.110e0 L_nuc=-0.000e0
+massive step=129 raw=failed_star shown=failed_star M=6676.7 R=43.95 Σc=1.647e0 Tc=1.101e1 d_c=0.5474 v_r/v_dyn=-0.4029 L=4.293e0 L_nuc=-0.000e0
+massive step=145 raw=failed_star shown=failed_star M=6676.4 R=42.71 Σc=1.903e0 Tc=1.272e1 d_c=0.5444 v_r/v_dyn=-0.4494 L=2.729e0 L_nuc=-0.000e0
+massive step=161 raw=failed_star shown=failed_star M=6676.2 R=41.72 Σc=2.248e0 Tc=1.503e1 d_c=0.5408 v_r/v_dyn=-0.4954 L=1.848e0 L_nuc=-0.000e0
+massive step=177 raw=failed_star shown=failed_star M=6676.1 R=40.12 Σc=2.723e0 Tc=1.820e1 d_c=0.5364 v_r/v_dyn=-0.5353 L=1.330e0 L_nuc=-0.000e0
+massive step=193 raw=failed_star shown=failed_star M=6675.8 R=38.79 Σc=3.400e0 Tc=2.270e1 d_c=0.5310 v_r/v_dyn=-0.5737 L=9.980e-1 L_nuc=-0.000e0
+massive step=209 raw=collapsing shown=failed_star M=6675.5 R=37.45 Σc=4.397e0 Tc=2.929e1 d_c=0.5243 v_r/v_dyn=-0.6073 L=7.654e-1 L_nuc=2.463e1
+massive step=225 raw=collapsing shown=failed_star M=6675.4 R=35.93 Σc=5.895e0 Tc=3.916e1 d_c=0.5158 v_r/v_dyn=-0.6314 L=6.006e-1 L_nuc=1.190e3
+massive step=241 raw=collapsing shown=collapsing M=6675.2 R=34.63 Σc=8.069e0 Tc=5.353e1 d_c=0.5052 v_r/v_dyn=-0.6439 L=4.851e-1 L_nuc=6.676e3
+massive step=257 raw=he_core shown=collapsing M=6675.0 R=33.43 Σc=1.069e1 Tc=7.636e1 d_c=0.4756 v_r/v_dyn=-0.6353 L=3.986e-1 L_nuc=4.277e4
+massive step=273 raw=he_shell shown=collapsing M=6674.7 R=32.66 Σc=9.315e0 Tc=1.432e2 d_c=0.3177 v_r/v_dyn=+0.2682 L=9.440e6 L_nuc=5.465e8
+massive step=289 raw=iron_core shown=collapsing M=6674.7 R=34.10 Σc=8.669e0 Tc=7.913e1 d_c=0.4417 v_r/v_dyn=+0.2544 L=7.638e5 L_nuc=9.289e-1
+massive step=305 raw=iron_core shown=collapsing M=6674.7 R=34.47 Σc=8.279e0 Tc=6.284e1 d_c=0.4889 v_r/v_dyn=+0.2043 L=2.065e5 L_nuc=1.079e-7
+massive step=321 raw=iron_core shown=iron_core M=6674.5 R=35.08 Σc=7.861e0 Tc=5.459e1 d_c=0.5127 v_r/v_dyn=+0.1388 L=1.124e5 L_nuc=8.258e-9
+massive step=337 raw=iron_core shown=iron_core M=6674.2 R=35.44 Σc=7.682e0 Tc=5.006e1 d_c=0.5292 v_r/v_dyn=+0.0735 L=7.623e4 L_nuc=3.229e-9
+massive step=353 raw=iron_core shown=iron_core M=6674.0 R=35.48 Σc=7.534e0 Tc=4.800e1 d_c=0.5354 v_r/v_dyn=+0.0136 L=5.877e4 L_nuc=1.767e-9
+massive step=369 raw=iron_core shown=iron_core M=6674.0 R=35.56 Σc=7.623e0 Tc=4.770e1 d_c=0.5395 v_r/v_dyn=-0.0479 L=4.995e4 L_nuc=1.195e-9
+massive step=385 raw=iron_core shown=iron_core M=6674.0 R=35.53 Σc=8.005e0 Tc=4.938e1 d_c=0.5416 v_r/v_dyn=-0.1090 L=4.654e4 L_nuc=9.745e-10
+massive step=401 raw=iron_core shown=iron_core M=6673.6 R=35.85 Σc=9.427e0 Tc=5.314e1 d_c=0.5590 v_r/v_dyn=-0.1648 L=4.846e4 L_nuc=9.578e-10
+massive step=417 raw=iron_core shown=iron_core M=6673.6 R=35.33 Σc=1.141e1 Tc=5.884e1 d_c=0.5748 v_r/v_dyn=-0.2268 L=5.842e4 L_nuc=1.172e-9
+massive step=433 raw=iron_core shown=iron_core M=6673.3 R=35.11 Σc=1.387e1 Tc=6.616e1 d_c=0.5873 v_r/v_dyn=-0.2753 L=8.504e4 L_nuc=2.357e-9
+massive step=449 raw=iron_core shown=iron_core M=6673.3 R=34.43 Σc=1.733e1 Tc=7.796e1 d_c=0.5934 v_r/v_dyn=-0.3174 L=1.536e5 L_nuc=2.118e-8
+massive step=465 raw=iron_core shown=iron_core M=6673.2 R=33.79 Σc=2.043e1 Tc=9.207e1 d_c=0.5865 v_r/v_dyn=-0.3616 L=3.139e5 L_nuc=5.305e-7
+massive step=481 raw=iron_core shown=iron_core M=6672.8 R=33.49 Σc=2.271e1 Tc=1.041e2 d_c=0.5781 v_r/v_dyn=-0.4020 L=5.688e5 L_nuc=1.431e-2
+massive step=497 raw=iron_core shown=iron_core M=6673.0 R=33.07 Σc=2.302e1 Tc=1.177e2 d_c=0.5506 v_r/v_dyn=-0.4132 L=7.845e5 L_nuc=7.472e-2
+SR-HEADLESS DONE steps=500 sim_time=5.547426 until=unmet
+massive shown: [("failed_star", 33), ("collapsing", 241), ("iron_core", 321)]
+
+thread 'stage_order::the_15_sun_preset_shows_its_stages_in_order' (800306) panicked at crates/sr-engine/tests/gpu/stage_order.rs:75:5:
+massive showed «Failed star»: [("failed_star", 33), ("collapsing", 241), ("iron_core", 321)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test stage_order::the_sun_like_preset_shows_its_stages_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=17 raw=failed_star shown=none M=3136.7 R=33.97 Σc=1.019e0 Tc=4.666e0 d_c=0.6463 v_r/v_dyn=-0.0750 L=1.199e2 L_nuc=-0.000e0
+sun step=33 raw=failed_star shown=failed_star M=3136.7 R=33.74 Σc=1.070e0 Tc=4.900e0 d_c=0.6456 v_r/v_dyn=-0.1418 L=2.698e1 L_nuc=-0.000e0
+sun step=49 raw=failed_star shown=failed_star M=3136.7 R=33.19 Σc=1.166e0 Tc=5.340e0 d_c=0.6442 v_r/v_dyn=-0.2113 L=7.370e0 L_nuc=-0.000e0
+sun step=65 raw=failed_star shown=failed_star M=3136.7 R=32.11 Σc=1.316e0 Tc=6.028e0 d_c=0.6422 v_r/v_dyn=-0.2763 L=2.575e0 L_nuc=-0.000e0
+sun step=81 raw=failed_star shown=failed_star M=3136.7 R=31.14 Σc=1.532e0 Tc=7.022e0 d_c=0.6396 v_r/v_dyn=-0.3365 L=1.086e0 L_nuc=-0.000e0
+sun step=97 raw=failed_star shown=failed_star M=3136.6 R=30.67 Σc=1.847e0 Tc=8.463e0 d_c=0.6361 v_r/v_dyn=-0.3952 L=5.251e-1 L_nuc=-0.000e0
+sun step=113 raw=failed_star shown=failed_star M=3136.6 R=29.55 Σc=2.313e0 Tc=1.060e1 d_c=0.6314 v_r/v_dyn=-0.4447 L=2.841e-1 L_nuc=-0.000e0
+sun step=129 raw=failed_star shown=failed_star M=3136.5 R=28.32 Σc=3.030e0 Tc=1.388e1 d_c=0.6254 v_r/v_dyn=-0.4860 L=1.720e-1 L_nuc=-0.000e0
+sun step=145 raw=failed_star shown=failed_star M=3136.3 R=27.07 Σc=4.153e0 Tc=1.898e1 d_c=0.6179 v_r/v_dyn=-0.5157 L=1.148e-1 L_nuc=-0.000e0
+sun step=161 raw=failed_star shown=failed_star M=3136.3 R=26.12 Σc=5.816e0 Tc=2.636e1 d_c=0.6100 v_r/v_dyn=-0.5304 L=7.538e-2 L_nuc=-0.000e0
+sun step=177 raw=collapsing shown=failed_star M=3136.3 R=25.29 Σc=7.774e0 Tc=3.476e1 d_c=0.6037 v_r/v_dyn=-0.5211 L=5.432e-2 L_nuc=2.491e2
+sun step=193 raw=collapsing shown=failed_star M=3136.2 R=23.32 Σc=9.180e0 Tc=4.077e1 d_c=0.5993 v_r/v_dyn=-0.4733 L=4.041e-2 L_nuc=1.606e3
+sun step=209 raw=collapsing shown=collapsing M=3136.1 R=22.41 Σc=1.002e1 Tc=4.475e1 d_c=0.5945 v_r/v_dyn=-0.4153 L=3.079e-2 L_nuc=4.470e3
+sun step=225 raw=collapsing shown=collapsing M=3136.0 R=21.08 Σc=1.069e1 Tc=4.836e1 d_c=0.5889 v_r/v_dyn=-0.3383 L=2.397e-2 L_nuc=8.814e3
+sun step=241 raw=collapsing shown=collapsing M=3135.9 R=19.22 Σc=1.115e1 Tc=5.138e1 d_c=0.5828 v_r/v_dyn=-0.2467 L=1.918e-2 L_nuc=1.411e4
+sun step=257 raw=collapsing shown=collapsing M=3135.8 R=17.72 Σc=1.133e1 Tc=5.338e1 d_c=0.5766 v_r/v_dyn=-0.1516 L=1.543e-2 L_nuc=1.924e4
+sun step=273 raw=main_sequence shown=collapsing M=3135.7 R=15.66 Σc=1.128e1 Tc=5.452e1 d_c=0.5706 v_r/v_dyn=-0.0571 L=1.498e4 L_nuc=2.214e4
+sun step=289 raw=cloud shown=collapsing M=3135.5 R=14.02 Σc=1.089e1 Tc=5.383e1 d_c=0.5666 v_r/v_dyn=+0.0239 L=1.015e5 L_nuc=2.100e4
+sun step=305 raw=cloud shown=collapsing M=3135.5 R=14.04 Σc=1.007e1 Tc=5.048e1 d_c=0.5660 v_r/v_dyn=+0.0900 L=8.133e4 L_nuc=1.604e4
+sun step=321 raw=cloud shown=collapsing M=3135.2 R=14.30 Σc=9.092e0 Tc=4.591e1 d_c=0.5683 v_r/v_dyn=+0.1387 L=6.105e4 L_nuc=1.016e4
+sun step=337 raw=cloud shown=collapsing M=3135.2 R=14.97 Σc=8.155e0 Tc=4.124e1 d_c=0.5720 v_r/v_dyn=+0.1728 L=4.559e4 L_nuc=5.707e3
+sun step=353 raw=cloud shown=collapsing M=3135.1 R=15.85 Σc=7.341e0 Tc=3.705e1 d_c=0.5762 v_r/v_dyn=+0.1949 L=3.397e4 L_nuc=2.938e3
+sun step=369 raw=cloud shown=collapsing M=3134.9 R=17.08 Σc=6.625e0 Tc=3.331e1 d_c=0.5806 v_r/v_dyn=+0.2085 L=2.520e4 L_nuc=1.346e3
+sun step=385 raw=cloud shown=collapsing M=3134.7 R=17.94 Σc=6.032e0 Tc=3.021e1 d_c=0.5847 v_r/v_dyn=+0.2107 L=1.859e4 L_nuc=5.126e2
+sun step=401 raw=white_dwarf shown=collapsing M=3134.5 R=18.43 Σc=5.558e0 Tc=2.771e1 d_c=0.5883 v_r/v_dyn=+0.2039 L=1.362e4 L_nuc=9.646e1
+sun step=417 raw=white_dwarf shown=collapsing M=3134.5 R=19.47 Σc=5.189e0 Tc=2.573e1 d_c=0.5918 v_r/v_dyn=+0.1946 L=9.887e3 L_nuc=-0.000e0
+sun step=433 raw=white_dwarf shown=white_dwarf M=3134.4 R=20.30 Σc=4.909e0 Tc=2.422e1 d_c=0.5947 v_r/v_dyn=+0.1801 L=7.161e3 L_nuc=-0.000e0
+sun step=449 raw=white_dwarf shown=white_dwarf M=3134.1 R=21.41 Σc=4.716e0 Tc=2.315e1 d_c=0.5970 v_r/v_dyn=+0.1632 L=5.197e3 L_nuc=-0.000e0
+sun step=465 raw=white_dwarf shown=white_dwarf M=3133.9 R=22.27 Σc=4.581e0 Tc=2.239e1 d_c=0.5990 v_r/v_dyn=+0.1426 L=3.764e3 L_nuc=-0.000e0
+sun step=481 raw=white_dwarf shown=white_dwarf M=3133.7 R=22.52 Σc=4.480e0 Tc=2.180e1 d_c=0.6007 v_r/v_dyn=+0.1182 L=2.719e3 L_nuc=-0.000e0
+sun step=497 raw=white_dwarf shown=white_dwarf M=3133.6 R=23.22 Σc=4.446e0 Tc=2.152e1 d_c=0.6021 v_r/v_dyn=+0.0937 L=1.966e3 L_nuc=-0.000e0
+sun step=513 raw=white_dwarf shown=white_dwarf M=3133.4 R=23.37 Σc=4.436e0 Tc=2.137e1 d_c=0.6033 v_r/v_dyn=+0.0673 L=1.426e3 L_nuc=-0.000e0
+sun step=529 raw=white_dwarf shown=white_dwarf M=3133.2 R=24.42 Σc=4.465e0 Tc=2.140e1 d_c=0.6044 v_r/v_dyn=+0.0415 L=1.040e3 L_nuc=-0.000e0
+sun step=545 raw=white_dwarf shown=white_dwarf M=3132.9 R=25.19 Σc=4.533e0 Tc=2.162e1 d_c=0.6052 v_r/v_dyn=+0.0149 L=7.584e2 L_nuc=-0.000e0
+sun step=561 raw=white_dwarf shown=white_dwarf M=3132.7 R=25.28 Σc=4.630e0 Tc=2.198e1 d_c=0.6057 v_r/v_dyn=-0.0118 L=5.550e2 L_nuc=-0.000e0
+sun step=577 raw=white_dwarf shown=white_dwarf M=3132.5 R=25.38 Σc=4.781e0 Tc=2.256e1 d_c=0.6061 v_r/v_dyn=-0.0377 L=4.089e2 L_nuc=-0.000e0
+sun step=593 raw=white_dwarf shown=white_dwarf M=3132.3 R=25.40 Σc=4.968e0 Tc=2.332e1 d_c=0.6063 v_r/v_dyn=-0.0622 L=2.993e2 L_nuc=-0.000e0
+sun step=609 raw=white_dwarf shown=white_dwarf M=3132.0 R=25.39 Σc=5.176e0 Tc=2.414e1 d_c=0.6065 v_r/v_dyn=-0.0846 L=2.208e2 L_nuc=-0.000e0
+sun step=625 raw=white_dwarf shown=white_dwarf M=3131.8 R=25.23 Σc=5.454e0 Tc=2.528e1 d_c=0.6065 v_r/v_dyn=-0.1042 L=1.619e2 L_nuc=-0.000e0
+sun step=641 raw=white_dwarf shown=white_dwarf M=3131.4 R=24.59 Σc=5.718e0 Tc=2.634e1 d_c=0.6065 v_r/v_dyn=-0.1187 L=1.186e2 L_nuc=-0.000e0
+sun step=657 raw=white_dwarf shown=white_dwarf M=3131.1 R=23.39 Σc=6.034e0 Tc=2.759e1 d_c=0.6066 v_r/v_dyn=-0.1271 L=9.109e1 L_nuc=-0.000e0
+sun step=673 raw=cloud shown=white_dwarf M=3130.8 R=23.06 Σc=6.333e0 Tc=2.884e1 d_c=0.6060 v_r/v_dyn=-0.1332 L=6.929e1 L_nuc=3.359e1
+sun step=689 raw=cloud shown=white_dwarf M=3130.6 R=22.42 Σc=6.654e0 Tc=3.016e1 d_c=0.6055 v_r/v_dyn=-0.1336 L=5.499e1 L_nuc=2.031e2
+sun step=705 raw=cloud shown=white_dwarf M=3130.2 R=21.91 Σc=6.958e0 Tc=3.147e1 d_c=0.6045 v_r/v_dyn=-0.1297 L=4.265e1 L_nuc=4.285e2
+sun step=721 raw=cloud shown=white_dwarf M=3129.9 R=20.48 Σc=7.247e0 Tc=3.266e1 d_c=0.6040 v_r/v_dyn=-0.1187 L=3.311e1 L_nuc=6.980e2
+sun step=737 raw=cloud shown=white_dwarf M=3129.6 R=19.23 Σc=7.481e0 Tc=3.372e1 d_c=0.6029 v_r/v_dyn=-0.1045 L=2.179e1 L_nuc=9.981e2
+sun step=753 raw=cloud shown=white_dwarf M=3129.1 R=18.21 Σc=7.722e0 Tc=3.472e1 d_c=0.6023 v_r/v_dyn=-0.0878 L=1.797e1 L_nuc=1.318e3
+sun step=769 raw=cloud shown=white_dwarf M=3128.8 R=17.95 Σc=7.863e0 Tc=3.538e1 d_c=0.6015 v_r/v_dyn=-0.0705 L=1.871e1 L_nuc=1.605e3
+sun step=785 raw=cloud shown=white_dwarf M=3128.9 R=17.39 Σc=8.009e0 Tc=3.603e1 d_c=0.6009 v_r/v_dyn=-0.0510 L=4.240e3 L_nuc=1.870e3
+sun step=801 raw=cloud shown=white_dwarf M=3128.8 R=17.11 Σc=8.044e0 Tc=3.620e1 d_c=0.6007 v_r/v_dyn=-0.0314 L=9.246e3 L_nuc=2.019e3
+sun step=817 raw=cloud shown=white_dwarf M=3129.1 R=17.04 Σc=8.050e0 Tc=3.625e1 d_c=0.6005 v_r/v_dyn=-0.0128 L=1.052e4 L_nuc=2.060e3
+sun step=833 raw=cloud shown=white_dwarf M=3129.4 R=17.07 Σc=7.988e0 Tc=3.598e1 d_c=0.6007 v_r/v_dyn=+0.0042 L=1.079e4 L_nuc=1.994e3
+sun step=849 raw=cloud shown=white_dwarf M=3129.7 R=17.13 Σc=7.866e0 Tc=3.542e1 d_c=0.6013 v_r/v_dyn=+0.0189 L=1.037e4 L_nuc=1.812e3
+sun step=865 raw=cloud shown=white_dwarf M=3130.2 R=17.29 Σc=7.677e0 Tc=3.457e1 d_c=0.6022 v_r/v_dyn=+0.0306 L=9.621e3 L_nuc=1.556e3
+sun step=881 raw=cloud shown=white_dwarf M=3130.4 R=17.41 Σc=7.478e0 Tc=3.365e1 d_c=0.6033 v_r/v_dyn=+0.0392 L=8.700e3 L_nuc=1.283e3
+sun step=897 raw=cloud shown=white_dwarf M=3130.8 R=17.57 Σc=7.268e0 Tc=3.265e1 d_c=0.6046 v_r/v_dyn=+0.0444 L=7.737e3 L_nuc=9.967e2
+sun step=913 raw=cloud shown=white_dwarf M=3131.0 R=18.00 Σc=7.065e0 Tc=3.168e1 d_c=0.6060 v_r/v_dyn=+0.0464 L=6.789e3 L_nuc=7.427e2
+sun step=929 raw=cloud shown=white_dwarf M=3131.1 R=18.24 Σc=6.888e0 Tc=3.081e1 d_c=0.6074 v_r/v_dyn=+0.0451 L=5.906e3 L_nuc=5.350e2
+sun step=945 raw=cloud shown=white_dwarf M=3131.5 R=18.35 Σc=6.750e0 Tc=3.011e1 d_c=0.6087 v_r/v_dyn=+0.0408 L=5.099e3 L_nuc=3.721e2
+sun step=961 raw=cloud shown=white_dwarf M=3131.7 R=18.37 Σc=6.636e0 Tc=2.953e1 d_c=0.6099 v_r/v_dyn=+0.0343 L=4.402e3 L_nuc=2.544e2
+sun step=977 raw=cloud shown=white_dwarf M=3131.9 R=18.62 Σc=6.556e0 Tc=2.908e1 d_c=0.6111 v_r/v_dyn=+0.0262 L=3.822e3 L_nuc=1.681e2
+sun step=993 raw=cloud shown=white_dwarf M=3132.1 R=18.99 Σc=6.513e0 Tc=2.880e1 d_c=0.6120 v_r/v_dyn=+0.0171 L=3.362e3 L_nuc=1.187e2
+SR-HEADLESS DONE steps=1000 sim_time=12.763184 until=unmet
+sun shown: [("failed_star", 33), ("collapsing", 209), ("white_dwarf", 433)]
+
+thread 'stage_order::the_sun_like_preset_shows_its_stages_in_order' (800314) panicked at crates/sr-engine/tests/gpu/stage_order.rs:75:5:
+sun showed «Failed star»: [("failed_star", 33), ("collapsing", 209), ("white_dwarf", 433)]
+FAILED
+
+failures:
+
+failures:
+    stage_order::the_15_sun_preset_shows_its_stages_in_order
+    stage_order::the_sun_like_preset_shows_its_stages_in_order
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 459 filtered out; finished in 10.97s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-02T12:21:30-05:00 stage_order · plant stage-steps-back · a fresh scratch copy of the tree
+planted stage-steps-back: tests/plants/stage-steps-back.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-02T12:21:31-05:00 stage_order · task M0-D134-claim · box laserax-ai-server :: bash tests/gpu.sh stage_order physics
+-- stage_order · exit=101 · 21.17 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-xseodgy7/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-xseodgy7/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.17s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test stage_order::the_15_sun_preset_shows_its_stages_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=17 raw=cloud shown=none M=6677.2 R=49.96 Σc=1.009e0 Tc=6.748e0 d_c=0.5561 v_r/v_dyn=-0.0588 L=7.411e2 L_nuc=-0.000e0
+massive step=33 raw=collapsing shown=none M=6677.2 R=49.46 Σc=1.032e0 Tc=6.901e0 d_c=0.5558 v_r/v_dyn=-0.1081 L=2.357e2 L_nuc=-0.000e0
+massive step=49 raw=collapsing shown=none M=6677.2 R=48.97 Σc=1.070e0 Tc=7.153e0 d_c=0.5552 v_r/v_dyn=-0.1570 L=9.274e1 L_nuc=-0.000e0
+massive step=65 raw=collapsing shown=collapsing M=6677.2 R=48.19 Σc=1.125e0 Tc=7.521e0 d_c=0.5543 v_r/v_dyn=-0.2056 L=4.339e1 L_nuc=-0.000e0
+massive step=81 raw=collapsing shown=collapsing M=6677.2 R=47.31 Σc=1.202e0 Tc=8.033e0 d_c=0.5532 v_r/v_dyn=-0.2545 L=2.229e1 L_nuc=-0.000e0
+massive step=97 raw=collapsing shown=collapsing M=6677.1 R=46.42 Σc=1.307e0 Tc=8.737e0 d_c=0.5517 v_r/v_dyn=-0.3042 L=1.226e1 L_nuc=-0.000e0
+massive step=113 raw=collapsing shown=collapsing M=6676.9 R=45.42 Σc=1.452e0 Tc=9.711e0 d_c=0.5498 v_r/v_dyn=-0.3550 L=7.110e0 L_nuc=-0.000e0
+massive step=129 raw=collapsing shown=collapsing M=6676.7 R=43.95 Σc=1.647e0 Tc=1.101e1 d_c=0.5474 v_r/v_dyn=-0.4029 L=4.293e0 L_nuc=-0.000e0
+massive step=145 raw=collapsing shown=collapsing M=6676.4 R=42.71 Σc=1.903e0 Tc=1.272e1 d_c=0.5444 v_r/v_dyn=-0.4494 L=2.729e0 L_nuc=-0.000e0
+massive step=161 raw=collapsing shown=collapsing M=6676.2 R=41.72 Σc=2.248e0 Tc=1.503e1 d_c=0.5408 v_r/v_dyn=-0.4954 L=1.848e0 L_nuc=-0.000e0
+massive step=177 raw=collapsing shown=collapsing M=6676.1 R=40.12 Σc=2.723e0 Tc=1.820e1 d_c=0.5364 v_r/v_dyn=-0.5353 L=1.330e0 L_nuc=-0.000e0
+massive step=193 raw=collapsing shown=collapsing M=6675.8 R=38.79 Σc=3.400e0 Tc=2.270e1 d_c=0.5310 v_r/v_dyn=-0.5737 L=9.980e-1 L_nuc=-0.000e0
+massive step=209 raw=collapsing shown=collapsing M=6675.5 R=37.45 Σc=4.397e0 Tc=2.929e1 d_c=0.5243 v_r/v_dyn=-0.6073 L=7.654e-1 L_nuc=2.463e1
+massive step=225 raw=collapsing shown=collapsing M=6675.4 R=35.93 Σc=5.895e0 Tc=3.916e1 d_c=0.5158 v_r/v_dyn=-0.6314 L=6.006e-1 L_nuc=1.190e3
+massive step=241 raw=collapsing shown=collapsing M=6675.2 R=34.63 Σc=8.069e0 Tc=5.353e1 d_c=0.5052 v_r/v_dyn=-0.6439 L=4.851e-1 L_nuc=6.676e3
+massive step=257 raw=he_core shown=collapsing M=6675.0 R=33.43 Σc=1.069e1 Tc=7.636e1 d_c=0.4756 v_r/v_dyn=-0.6353 L=3.986e-1 L_nuc=4.277e4
+massive step=273 raw=he_shell shown=collapsing M=6674.7 R=32.66 Σc=9.315e0 Tc=1.432e2 d_c=0.3177 v_r/v_dyn=+0.2682 L=9.440e6 L_nuc=5.465e8
+massive step=289 raw=iron_core shown=collapsing M=6674.7 R=34.10 Σc=8.669e0 Tc=7.913e1 d_c=0.4417 v_r/v_dyn=+0.2544 L=7.638e5 L_nuc=9.289e-1
+massive step=305 raw=iron_core shown=collapsing M=6674.7 R=34.47 Σc=8.279e0 Tc=6.284e1 d_c=0.4889 v_r/v_dyn=+0.2043 L=2.065e5 L_nuc=1.079e-7
+massive step=321 raw=iron_core shown=iron_core M=6674.5 R=35.08 Σc=7.861e0 Tc=5.459e1 d_c=0.5127 v_r/v_dyn=+0.1388 L=1.124e5 L_nuc=8.258e-9
+massive step=337 raw=iron_core shown=iron_core M=6674.2 R=35.44 Σc=7.682e0 Tc=5.006e1 d_c=0.5292 v_r/v_dyn=+0.0735 L=7.623e4 L_nuc=3.229e-9
+massive step=353 raw=iron_core shown=iron_core M=6674.0 R=35.48 Σc=7.534e0 Tc=4.800e1 d_c=0.5354 v_r/v_dyn=+0.0136 L=5.877e4 L_nuc=1.767e-9
+massive step=369 raw=iron_core shown=iron_core M=6674.0 R=35.56 Σc=7.623e0 Tc=4.770e1 d_c=0.5395 v_r/v_dyn=-0.0479 L=4.995e4 L_nuc=1.195e-9
+massive step=385 raw=iron_core shown=iron_core M=6674.0 R=35.53 Σc=8.005e0 Tc=4.938e1 d_c=0.5416 v_r/v_dyn=-0.1090 L=4.654e4 L_nuc=9.745e-10
+massive step=401 raw=iron_core shown=iron_core M=6673.6 R=35.85 Σc=9.427e0 Tc=5.314e1 d_c=0.5590 v_r/v_dyn=-0.1648 L=4.846e4 L_nuc=9.578e-10
+massive step=417 raw=iron_core shown=iron_core M=6673.6 R=35.33 Σc=1.141e1 Tc=5.884e1 d_c=0.5748 v_r/v_dyn=-0.2268 L=5.842e4 L_nuc=1.172e-9
+massive step=433 raw=iron_core shown=iron_core M=6673.3 R=35.11 Σc=1.387e1 Tc=6.616e1 d_c=0.5873 v_r/v_dyn=-0.2753 L=8.504e4 L_nuc=2.357e-9
+massive step=449 raw=iron_core shown=iron_core M=6673.3 R=34.43 Σc=1.733e1 Tc=7.796e1 d_c=0.5934 v_r/v_dyn=-0.3174 L=1.536e5 L_nuc=2.118e-8
+massive step=465 raw=iron_core shown=iron_core M=6673.2 R=33.79 Σc=2.043e1 Tc=9.207e1 d_c=0.5865 v_r/v_dyn=-0.3616 L=3.139e5 L_nuc=5.305e-7
+massive step=481 raw=iron_core shown=iron_core M=6672.8 R=33.49 Σc=2.271e1 Tc=1.041e2 d_c=0.5781 v_r/v_dyn=-0.4020 L=5.688e5 L_nuc=1.431e-2
+massive step=497 raw=iron_core shown=iron_core M=6673.0 R=33.07 Σc=2.302e1 Tc=1.177e2 d_c=0.5506 v_r/v_dyn=-0.4132 L=7.845e5 L_nuc=7.472e-2
+SR-HEADLESS DONE steps=500 sim_time=5.547426 until=unmet
+massive shown: [("collapsing", 65), ("iron_core", 321)]
+ok
+test stage_order::the_sun_like_preset_shows_its_stages_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=17 raw=cloud shown=none M=3136.7 R=33.97 Σc=1.019e0 Tc=4.666e0 d_c=0.6463 v_r/v_dyn=-0.0750 L=1.199e2 L_nuc=-0.000e0
+sun step=33 raw=collapsing shown=none M=3136.7 R=33.74 Σc=1.070e0 Tc=4.900e0 d_c=0.6456 v_r/v_dyn=-0.1418 L=2.698e1 L_nuc=-0.000e0
+sun step=49 raw=collapsing shown=none M=3136.7 R=33.19 Σc=1.166e0 Tc=5.340e0 d_c=0.6442 v_r/v_dyn=-0.2113 L=7.370e0 L_nuc=-0.000e0
+sun step=65 raw=collapsing shown=collapsing M=3136.7 R=32.11 Σc=1.316e0 Tc=6.028e0 d_c=0.6422 v_r/v_dyn=-0.2763 L=2.575e0 L_nuc=-0.000e0
+sun step=81 raw=collapsing shown=collapsing M=3136.7 R=31.14 Σc=1.532e0 Tc=7.022e0 d_c=0.6396 v_r/v_dyn=-0.3365 L=1.086e0 L_nuc=-0.000e0
+sun step=97 raw=collapsing shown=collapsing M=3136.6 R=30.67 Σc=1.847e0 Tc=8.463e0 d_c=0.6361 v_r/v_dyn=-0.3952 L=5.251e-1 L_nuc=-0.000e0
+sun step=113 raw=collapsing shown=collapsing M=3136.6 R=29.55 Σc=2.313e0 Tc=1.060e1 d_c=0.6314 v_r/v_dyn=-0.4447 L=2.841e-1 L_nuc=-0.000e0
+sun step=129 raw=collapsing shown=collapsing M=3136.5 R=28.32 Σc=3.030e0 Tc=1.388e1 d_c=0.6254 v_r/v_dyn=-0.4860 L=1.720e-1 L_nuc=-0.000e0
+sun step=145 raw=collapsing shown=collapsing M=3136.3 R=27.07 Σc=4.153e0 Tc=1.898e1 d_c=0.6179 v_r/v_dyn=-0.5157 L=1.148e-1 L_nuc=-0.000e0
+sun step=161 raw=collapsing shown=collapsing M=3136.3 R=26.12 Σc=5.816e0 Tc=2.636e1 d_c=0.6100 v_r/v_dyn=-0.5304 L=7.538e-2 L_nuc=-0.000e0
+sun step=177 raw=collapsing shown=collapsing M=3136.3 R=25.29 Σc=7.774e0 Tc=3.476e1 d_c=0.6037 v_r/v_dyn=-0.5211 L=5.432e-2 L_nuc=2.491e2
+sun step=193 raw=collapsing shown=collapsing M=3136.2 R=23.32 Σc=9.180e0 Tc=4.077e1 d_c=0.5993 v_r/v_dyn=-0.4733 L=4.041e-2 L_nuc=1.606e3
+sun step=209 raw=collapsing shown=collapsing M=3136.1 R=22.41 Σc=1.002e1 Tc=4.475e1 d_c=0.5945 v_r/v_dyn=-0.4153 L=3.079e-2 L_nuc=4.470e3
+sun step=225 raw=collapsing shown=collapsing M=3136.0 R=21.08 Σc=1.069e1 Tc=4.836e1 d_c=0.5889 v_r/v_dyn=-0.3383 L=2.397e-2 L_nuc=8.814e3
+sun step=241 raw=collapsing shown=collapsing M=3135.9 R=19.22 Σc=1.115e1 Tc=5.138e1 d_c=0.5828 v_r/v_dyn=-0.2467 L=1.918e-2 L_nuc=1.411e4
+sun step=257 raw=collapsing shown=collapsing M=3135.8 R=17.72 Σc=1.133e1 Tc=5.338e1 d_c=0.5766 v_r/v_dyn=-0.1516 L=1.543e-2 L_nuc=1.924e4
+sun step=273 raw=main_sequence shown=collapsing M=3135.7 R=15.66 Σc=1.128e1 Tc=5.452e1 d_c=0.5706 v_r/v_dyn=-0.0571 L=1.498e4 L_nuc=2.214e4
+sun step=289 raw=cloud shown=collapsing M=3135.5 R=14.02 Σc=1.089e1 Tc=5.383e1 d_c=0.5666 v_r/v_dyn=+0.0239 L=1.015e5 L_nuc=2.100e4
+sun step=305 raw=cloud shown=collapsing M=3135.5 R=14.04 Σc=1.007e1 Tc=5.048e1 d_c=0.5660 v_r/v_dyn=+0.0900 L=8.133e4 L_nuc=1.604e4
+sun step=321 raw=cloud shown=cloud M=3135.2 R=14.30 Σc=9.092e0 Tc=4.591e1 d_c=0.5683 v_r/v_dyn=+0.1387 L=6.105e4 L_nuc=1.016e4
+sun step=337 raw=cloud shown=cloud M=3135.2 R=14.97 Σc=8.155e0 Tc=4.124e1 d_c=0.5720 v_r/v_dyn=+0.1728 L=4.559e4 L_nuc=5.707e3
+sun step=353 raw=cloud shown=cloud M=3135.1 R=15.85 Σc=7.341e0 Tc=3.705e1 d_c=0.5762 v_r/v_dyn=+0.1949 L=3.397e4 L_nuc=2.938e3
+sun step=369 raw=cloud shown=cloud M=3134.9 R=17.08 Σc=6.625e0 Tc=3.331e1 d_c=0.5806 v_r/v_dyn=+0.2085 L=2.520e4 L_nuc=1.346e3
+sun step=385 raw=cloud shown=cloud M=3134.7 R=17.94 Σc=6.032e0 Tc=3.021e1 d_c=0.5847 v_r/v_dyn=+0.2107 L=1.859e4 L_nuc=5.126e2
+sun step=401 raw=white_dwarf shown=cloud M=3134.5 R=18.43 Σc=5.558e0 Tc=2.771e1 d_c=0.5883 v_r/v_dyn=+0.2039 L=1.362e4 L_nuc=9.646e1
+sun step=417 raw=white_dwarf shown=cloud M=3134.5 R=19.47 Σc=5.189e0 Tc=2.573e1 d_c=0.5918 v_r/v_dyn=+0.1946 L=9.887e3 L_nuc=-0.000e0
+sun step=433 raw=white_dwarf shown=white_dwarf M=3134.4 R=20.30 Σc=4.909e0 Tc=2.422e1 d_c=0.5947 v_r/v_dyn=+0.1801 L=7.161e3 L_nuc=-0.000e0
+sun step=449 raw=white_dwarf shown=white_dwarf M=3134.1 R=21.41 Σc=4.716e0 Tc=2.315e1 d_c=0.5970 v_r/v_dyn=+0.1632 L=5.197e3 L_nuc=-0.000e0
+sun step=465 raw=white_dwarf shown=white_dwarf M=3133.9 R=22.27 Σc=4.581e0 Tc=2.239e1 d_c=0.5990 v_r/v_dyn=+0.1426 L=3.764e3 L_nuc=-0.000e0
+sun step=481 raw=white_dwarf shown=white_dwarf M=3133.7 R=22.52 Σc=4.480e0 Tc=2.180e1 d_c=0.6007 v_r/v_dyn=+0.1182 L=2.719e3 L_nuc=-0.000e0
+sun step=497 raw=white_dwarf shown=white_dwarf M=3133.6 R=23.22 Σc=4.446e0 Tc=2.152e1 d_c=0.6021 v_r/v_dyn=+0.0937 L=1.966e3 L_nuc=-0.000e0
+sun step=513 raw=white_dwarf shown=white_dwarf M=3133.4 R=23.37 Σc=4.436e0 Tc=2.137e1 d_c=0.6033 v_r/v_dyn=+0.0673 L=1.426e3 L_nuc=-0.000e0
+sun step=529 raw=white_dwarf shown=white_dwarf M=3133.2 R=24.42 Σc=4.465e0 Tc=2.140e1 d_c=0.6044 v_r/v_dyn=+0.0415 L=1.040e3 L_nuc=-0.000e0
+sun step=545 raw=white_dwarf shown=white_dwarf M=3132.9 R=25.19 Σc=4.533e0 Tc=2.162e1 d_c=0.6052 v_r/v_dyn=+0.0149 L=7.584e2 L_nuc=-0.000e0
+sun step=561 raw=white_dwarf shown=white_dwarf M=3132.7 R=25.28 Σc=4.630e0 Tc=2.198e1 d_c=0.6057 v_r/v_dyn=-0.0118 L=5.550e2 L_nuc=-0.000e0
+sun step=577 raw=white_dwarf shown=white_dwarf M=3132.5 R=25.38 Σc=4.781e0 Tc=2.256e1 d_c=0.6061 v_r/v_dyn=-0.0377 L=4.089e2 L_nuc=-0.000e0
+sun step=593 raw=white_dwarf shown=white_dwarf M=3132.3 R=25.40 Σc=4.968e0 Tc=2.332e1 d_c=0.6063 v_r/v_dyn=-0.0622 L=2.993e2 L_nuc=-0.000e0
+sun step=609 raw=white_dwarf shown=white_dwarf M=3132.0 R=25.39 Σc=5.176e0 Tc=2.414e1 d_c=0.6065 v_r/v_dyn=-0.0846 L=2.208e2 L_nuc=-0.000e0
+sun step=625 raw=white_dwarf shown=white_dwarf M=3131.8 R=25.23 Σc=5.454e0 Tc=2.528e1 d_c=0.6065 v_r/v_dyn=-0.1042 L=1.619e2 L_nuc=-0.000e0
+sun step=641 raw=white_dwarf shown=white_dwarf M=3131.4 R=24.59 Σc=5.718e0 Tc=2.634e1 d_c=0.6065 v_r/v_dyn=-0.1187 L=1.186e2 L_nuc=-0.000e0
+sun step=657 raw=white_dwarf shown=white_dwarf M=3131.1 R=23.39 Σc=6.034e0 Tc=2.759e1 d_c=0.6066 v_r/v_dyn=-0.1271 L=9.109e1 L_nuc=-0.000e0
+sun step=673 raw=cloud shown=white_dwarf M=3130.8 R=23.06 Σc=6.333e0 Tc=2.884e1 d_c=0.6060 v_r/v_dyn=-0.1332 L=6.929e1 L_nuc=3.359e1
+sun step=689 raw=cloud shown=white_dwarf M=3130.6 R=22.42 Σc=6.654e0 Tc=3.016e1 d_c=0.6055 v_r/v_dyn=-0.1336 L=5.499e1 L_nuc=2.031e2
+sun step=705 raw=cloud shown=cloud M=3130.2 R=21.91 Σc=6.958e0 Tc=3.147e1 d_c=0.6045 v_r/v_dyn=-0.1297 L=4.265e1 L_nuc=4.285e2
+sun step=721 raw=cloud shown=cloud M=3129.9 R=20.48 Σc=7.247e0 Tc=3.266e1 d_c=0.6040 v_r/v_dyn=-0.1187 L=3.311e1 L_nuc=6.980e2
+sun step=737 raw=cloud shown=cloud M=3129.6 R=19.23 Σc=7.481e0 Tc=3.372e1 d_c=0.6029 v_r/v_dyn=-0.1045 L=2.179e1 L_nuc=9.981e2
+sun step=753 raw=cloud shown=cloud M=3129.1 R=18.21 Σc=7.722e0 Tc=3.472e1 d_c=0.6023 v_r/v_dyn=-0.0878 L=1.797e1 L_nuc=1.318e3
+sun step=769 raw=cloud shown=cloud M=3128.8 R=17.95 Σc=7.863e0 Tc=3.538e1 d_c=0.6015 v_r/v_dyn=-0.0705 L=1.871e1 L_nuc=1.605e3
+sun step=785 raw=cloud shown=cloud M=3128.9 R=17.39 Σc=8.009e0 Tc=3.603e1 d_c=0.6009 v_r/v_dyn=-0.0510 L=4.240e3 L_nuc=1.870e3
+sun step=801 raw=cloud shown=cloud M=3128.8 R=17.11 Σc=8.044e0 Tc=3.620e1 d_c=0.6007 v_r/v_dyn=-0.0314 L=9.246e3 L_nuc=2.019e3
+sun step=817 raw=cloud shown=cloud M=3129.1 R=17.04 Σc=8.050e0 Tc=3.625e1 d_c=0.6005 v_r/v_dyn=-0.0128 L=1.052e4 L_nuc=2.060e3
+sun step=833 raw=cloud shown=cloud M=3129.4 R=17.07 Σc=7.988e0 Tc=3.598e1 d_c=0.6007 v_r/v_dyn=+0.0042 L=1.079e4 L_nuc=1.994e3
+sun step=849 raw=cloud shown=cloud M=3129.7 R=17.13 Σc=7.866e0 Tc=3.542e1 d_c=0.6013 v_r/v_dyn=+0.0189 L=1.037e4 L_nuc=1.812e3
+sun step=865 raw=cloud shown=cloud M=3130.2 R=17.29 Σc=7.677e0 Tc=3.457e1 d_c=0.6022 v_r/v_dyn=+0.0306 L=9.621e3 L_nuc=1.556e3
+sun step=881 raw=cloud shown=cloud M=3130.4 R=17.41 Σc=7.478e0 Tc=3.365e1 d_c=0.6033 v_r/v_dyn=+0.0392 L=8.700e3 L_nuc=1.283e3
+sun step=897 raw=cloud shown=cloud M=3130.8 R=17.57 Σc=7.268e0 Tc=3.265e1 d_c=0.6046 v_r/v_dyn=+0.0444 L=7.737e3 L_nuc=9.967e2
+sun step=913 raw=cloud shown=cloud M=3131.0 R=18.00 Σc=7.065e0 Tc=3.168e1 d_c=0.6060 v_r/v_dyn=+0.0464 L=6.789e3 L_nuc=7.427e2
+sun step=929 raw=cloud shown=cloud M=3131.1 R=18.24 Σc=6.888e0 Tc=3.081e1 d_c=0.6074 v_r/v_dyn=+0.0451 L=5.906e3 L_nuc=5.350e2
+sun step=945 raw=cloud shown=cloud M=3131.5 R=18.35 Σc=6.750e0 Tc=3.011e1 d_c=0.6087 v_r/v_dyn=+0.0408 L=5.099e3 L_nuc=3.721e2
+sun step=961 raw=cloud shown=cloud M=3131.7 R=18.37 Σc=6.636e0 Tc=2.953e1 d_c=0.6099 v_r/v_dyn=+0.0343 L=4.402e3 L_nuc=2.544e2
+sun step=977 raw=cloud shown=cloud M=3131.9 R=18.62 Σc=6.556e0 Tc=2.908e1 d_c=0.6111 v_r/v_dyn=+0.0262 L=3.822e3 L_nuc=1.681e2
+sun step=993 raw=cloud shown=cloud M=3132.1 R=18.99 Σc=6.513e0 Tc=2.880e1 d_c=0.6120 v_r/v_dyn=+0.0171 L=3.362e3 L_nuc=1.187e2
+SR-HEADLESS DONE steps=1000 sim_time=12.763184 until=unmet
+sun shown: [("collapsing", 65), ("cloud", 321), ("white_dwarf", 433), ("cloud", 705)]
+
+thread 'stage_order::the_sun_like_preset_shows_its_stages_in_order' (800542) panicked at crates/sr-engine/tests/gpu/stage_order.rs:81:17:
+sun: cloud at step 321 steps back: [("collapsing", 65), ("cloud", 321), ("white_dwarf", 433), ("cloud", 705)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    stage_order::the_sun_like_preset_shows_its_stages_in_order
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 459 filtered out; finished in 10.89s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

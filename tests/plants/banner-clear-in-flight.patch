@@ -1,8 +1,8 @@
 --- a/crates/sr-app/src/ui/banner.rs
 +++ b/crates/sr-app/src/ui/banner.rs
-@@ -149,7 +149,9 @@
-     /// names to the slow-down (§1.8.5) — a frame of a world cleared since books none.
-     pub fn read_back(&mut self, time: &mut TimeControl, frame: &Frame) {
+@@ -198,7 +198,9 @@
+     /// cleared since books none.
+     pub fn read_back(&mut self, time: &mut TimeControl, frame: &Frame, wall: f64) {
          let r = &frame.report;
 -        let (world, forced) = self.in_flight.pop_front().unwrap_or((self.world, false));
 +        let (_, forced) = self.in_flight.pop_front().unwrap_or((self.world, false));

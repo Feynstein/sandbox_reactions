@@ -1,0 +1,29 @@
+==== 2026-11-02T09:53:09-05:00 measure_ui · clean · a fresh scratch copy of the tree
+== 2026-11-02T09:53:09-05:00 measure_ui[run] · task M0-T95 · box laserax-ai :: bash tests/measure/check.sh {case}
+== 2026-11-02T09:53:09-05:00 measure_ui[refuse] · task M0-T95 · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[run] · exit=0 · 6.88 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-UI p95_ms=5.059 frames=20 adapter=llvmpipe (LLVM 20.1.2, 256 bits)
+SR-UI render_reserve_ms=5.559 file=/tmp/tmp.SaCmRclpup/cal.json (the next build embeds it)
+measure-ui run: SR-UI p95_ms=5.059, the copy holds render_reserve_ms = p95 + 0.5, every other key and the real file unchanged
+=== GO ===
+
+-- measure_ui[refuse] · exit=0 · 7.99 s
+measure-ui refuse: a bad frame count, a missing one, --capture beside it, --calibration alone → exit 4; a file that is no calibration → exit 3, untouched; a software adapter without --calibration → exit 3, the real file untouched
+=== GO ===
+
+==== 2026-11-02T09:53:17-05:00 measure_ui · plant measure-no-write · a fresh scratch copy of the tree
+planted measure-no-write: tests/plants/measure-no-write.patch -> crates/sr-app/src/measure.rs
+== 2026-11-02T09:53:17-05:00 measure_ui[run] · task M0-T95 · box laserax-ai :: bash tests/measure/check.sh {case}
+== 2026-11-02T09:53:17-05:00 measure_ui[refuse] · task M0-T95 · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[run] · exit=1 · 6.78 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-UI p95_ms=4.951 frames=20 adapter=llvmpipe (LLVM 20.1.2, 256 bits)
+SR-UI render_reserve_ms=5.451 file=/tmp/tmp.tR2KBOwoeF/cal.json (the next build embeds it)
+render_reserve_ms None, expected 4.951 + 0.5
+=== NO-GO: the copy does not hold p95 + 0.5 and nothing else new ===
+
+-- measure_ui[refuse] · exit=0 · 7.89 s
+measure-ui refuse: a bad frame count, a missing one, --capture beside it, --calibration alone → exit 4; a file that is no calibration → exit 3, untouched; a software adapter without --calibration → exit 3, the real file untouched
+=== GO ===
+
