@@ -5,7 +5,7 @@
 #            llvmpipe` on linux-pc, `--offscreen-window` on win-laptop (R4, R15). Pass: exit 0; two PNGs of the window's
 #            size (the IHDR matching captions.json's viewport) whose pixels DIFFER (a screenshot taken before the frame it
 #            names is presented would show the previous state); a valid captions.json in review_page.py's shape.
-#   actions — tests/capture/actions.json (M0-T85, M0-T127c): one step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select, hover x2, glow_white, display_reset, fit, zoom), run on the same
+#   actions — tests/capture/actions.json (M0-T85, M0-T127c): one step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select, hover x2, glow_white, display_reset, fit, zoom, preset's at), run on the same
 #            route. Pass: exit 0; a PNG per step, in the script's order, each the window's size; the top bar (§4.2's 44 px)
 #            differs from the previous step's after `paused`, `rung`, `slowdown`, `rung-max` and `edge-leave` (a paused readout both times, so only the radios differ); the accent (the selected
 #            rung's text) sits further right in `rung` than in `start`, and further right again in `rung-max`. The left panel
@@ -20,6 +20,9 @@
 #            (the two steps hold the same paused state), and Heat after `fit` differs from Heat's default (M0-T127c). Then `star-zoom` (M0-T129):
 #            zoom 8 about cell (300, 200) of that same paused state — the world differs from `star-heat-fit`'s, and six cells read off both
 #            shots (2 x 2 px whole, 16 x 16 px at z = 8) are the same colour, three colours at least.
+#            Then `drop-at` and `drop-no-room` (M0-D145): the preset's `at` — a Sun-like star dropped at cell (80, 80) shows as a cloud about (400, 204) px,
+#            over 120 px wide, in the world's upper-left; the one armed at (10, 10), too near the edge, shows `presets.no_room` in red under the world
+#            (100 pixels or more, none after the drop that fit), the left panel holds the armed button, and the world is as `drop-at`'s.
 #   refuse — a malformed hover, a malformed select, a malformed glow_white, range, fit, display_reset and zoom, an unknown action and a bad id each → exit 4 and an `SR-ERROR` line naming the
 #            culprit, before any window opens (no display needed).
 # Ends in `=== GO ===` or `=== NO-GO: <reason> ===`.
@@ -90,11 +93,11 @@ PY
     out="$("${runner[@]}" "$bin" "${window[@]}" --capture tests/capture/actions.json --out "$dir" 2>&1)"; rc=$?
     echo "$out" | grep -v '^$' | tail -n 8
     [ $rc -eq 0 ] || { echo "=== NO-GO: the capture run exited $rc, expected 0 ==="; exit 1; }
-    echo "$out" | grep -q '^SR-CAPTURE DONE 22 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 22' line ==="; exit 1; }
-    $PY -I - "$dir" <<'PY' || { echo "=== NO-GO: the actions did not reach the top bar ==="; exit 1; }
+    echo "$out" | grep -q '^SR-CAPTURE DONE 24 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 24' line ==="; exit 1; }
+    why="$($PY -I - "$dir" 2>&1 <<'PY'
 import json, struct, sys, zlib
 d = sys.argv[1]
-WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave", "tool", "element", "paint", "view", "select", "hover", "hover-outside", "star-glow", "star-glow-white", "star-glow-reset", "star-heat", "star-heat-fit", "star-zoom"]
+WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave", "tool", "element", "paint", "view", "select", "hover", "hover-outside", "star-glow", "star-glow-white", "star-glow-reset", "star-heat", "star-heat-fit", "star-zoom", "drop-at", "drop-no-room"]
 caps = json.load(open(f"{d}/captions.json", encoding="utf-8"))
 if [c.get("id") for c in caps] != WANT:
     sys.exit(f"captions.json ids {[c.get('id') for c in caps]}, expected {WANT}")
@@ -213,8 +216,37 @@ for dx, dy in [(0, 0), (-3, 2), (4, -4), (10, 7), (-12, -9), (20, 11)]:
     colours.add(whole)
 if len(colours) < 3:
     sys.exit(f"the zoom's probes read {len(colours)} colours: they prove nothing")
-print(f"22 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one, {lit('hover-outside')} with the pointer off the world; Glow toned down differs, its Reset matches the default, Heat fitted differs; zoom 8 about (300, 200) matches the whole world on 6 probed cells ({len(colours)} colours), 16 px a cell")
+# The preset's `at` (M0-D145): `drop-at` is `star-zoom`'s paused state back at z = 1 (the zoom's own action) with a Sun-like star dropped by the
+# panel's path on cell (80, 80) — 2 x 2 px a cell from (240, 44), so centred on (400, 204) px, a cloud of 39 cells' radius — and `drop-no-room`
+# arms it again at cell (10, 10), too near the edge: the refusal on screen, the preset armed, no cell of the world changed.
+if centre("drop-at") == centre("star-heat-fit"):
+    sys.exit("the world of drop-at is the same as star-heat-fit's: the drop at (80, 80) never reached the world")
+def moved(a, b):                                       # bounding box (px) of the pixels that differ in the world's upper-left, left of the iron blob and the supergiant
+    xs, ys = [], []
+    for y in range(44, 44 + 300):
+        ra, rb = full[a][2][y], full[b][2][y]
+        for x in range(240, 481):                      # up to the cloud's right edge (478): the iron blob painted at (130, 100) lies past it
+            if ra[3 * x:3 * x + 3] != rb[3 * x:3 * x + 3]: xs.append(x); ys.append(y)
+    return (min(xs), max(xs), min(ys), max(ys)) if xs else None
+box = moved("star-heat-fit", "drop-at")
+if box is None:
+    sys.exit("the world's upper-left of drop-at is the same as star-heat-fit's: a preset with `at` was not dropped at (80, 80)")
+cx, cy, wide = (box[0] + box[1]) / 2, (box[2] + box[3]) / 2, box[1] - box[0]
+if abs(cx - 400) > 6 or abs(cy - 204) > 6 or wide < 120:
+    sys.exit(f"the dropped star spans x {box[0]}..{box[1]}, y {box[2]}..{box[3]} px (centre {cx:.0f}, {cy:.0f}, {wide} wide): expected a cloud about (400, 204), over 120 px wide")
+def error_text(name):                                  # pixels near ERROR_TEXT (#FF6B6B) in the strip under the legend's labels (the bar above is pink): the refusal's line
+    return sum(abs(p[0] - 0xFF) < 40 and abs(p[1] - 0x6B) < 40 and abs(p[2] - 0x6B) < 40
+               for r in full[name][2][h - status - 24:h - status] for p in (r[i:i + 3] for i in range(3 * left_w, 3 * (w - right_w), 3)))
+if error_text("drop-at") > 5 or error_text("drop-no-room") < 100:
+    sys.exit(f"the refusal's red text: {error_text('drop-at')} pixels after the drop that fit, {error_text('drop-no-room')} after the one at (10, 10): expected none, then 100 or more")
+if left_panel("drop-no-room") == left_panel("drop-at"):
+    sys.exit("the left panel of drop-no-room is the same as drop-at's: the refused preset is not armed")
+if moved("drop-at", "drop-no-room") is not None:
+    sys.exit("the world's upper-left changed between drop-at and drop-no-room: a drop that did not fit changed the world")
+print(f"24 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one, {lit('hover-outside')} with the pointer off the world; Glow toned down differs, its Reset matches the default, Heat fitted differs; zoom 8 about (300, 200) matches the whole world on 6 probed cells ({len(colours)} colours), 16 px a cell; the preset dropped at (80, 80) spans x {box[0]}..{box[1]} px about ({cx:.0f}, {cy:.0f}), the one at (10, 10) refused ({error_text('drop-no-room')} red pixels, preset armed, world as it was)")
 PY
+)" || { echo "=== NO-GO: ${why##*$'\n'} ==="; exit 1; }
+    echo "$why"
     echo "capture actions: ok"
     echo "=== GO ==="
     ;;
@@ -235,9 +267,13 @@ PY
     expect '[{"id":"a","caption":"c","actions":[{"zoom":9,"at":[1,1]}],"frames":1}]' '"zoom"'
     expect '[{"id":"a","caption":"c","actions":[{"zoom":2}],"frames":1}]' '"zoom"'
     expect '[{"id":"a","caption":"c","actions":[{"zoom":2,"at":[1,1],"x":3}],"frames":1}]' '"zoom"'
+    expect '[{"id":"a","caption":"c","actions":[{"preset":"sun","at":"x"}],"frames":1}]' '"preset"'
+    expect '[{"id":"a","caption":"c","actions":[{"preset":"sun","at":[1,1],"x":3}],"frames":1}]' '"preset"'
+    expect '[{"id":"a","caption":"c","actions":[{"preset":"sun","x":3}],"frames":1}]' '"preset"'
+    expect '[{"id":"a","caption":"c","actions":[{"preset":"moon","at":[1,1]}],"frames":1}]' '"preset"'
     expect '[{"id":"a","caption":"c","actions":[{"frobnicate":1}],"frames":1}]' '"frobnicate"'
     expect '[{"id":"-a","caption":"c","actions":[],"frames":1}]' '"-a"'
-    echo "capture refuse: a malformed hover, select, glow_white, range, fit, display_reset and zoom, an unknown action and a bad id each refused, exit 4"
+    echo "capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4"
     echo "=== GO ==="
     ;;
   *) echo "=== NO-GO: usage: bash tests/capture/check.sh smoke|refuse|actions ==="; exit 1 ;;

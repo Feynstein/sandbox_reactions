@@ -14,10 +14,11 @@
  *   ready      `/` sets document.body.dataset.srState to "ready" within 30 s (srError, "error" or "no-webgpu" ends it early);
  *              srAdapter is printed as `SR-ADAPTER <description>`, and a software adapter is named in a NOTE (it reaches
  *              "ready" without proving the GPU path).
- *   preset     `/?preset=sun&steps=200` reaches "ready" within 30 s and the canvas's central 100 x 100 px are not all black (M0-T94).
- *              The pixels come from a Chrome screenshot of that clip. "Not all black" is true of an empty canvas too (bg.space
- *              #05070D is not black), so the log also counts the central pixels that differ from bg.space and the case
- *              NOTEs when none do; a stricter case is the lead's to grant (M0-V13 names the gap).
+ *   preset     `/?preset=sun&steps=200` reaches "ready" within 30 s and the dropped star is drawn (M0-T94; M0-D144): the
+ *              100 x 100 px at the world's centre (srWorld, the app's own report of the world's place) hold opaque pixels more
+ *              than 2 levels off bg.space #05070D on a channel (egui-wgpu's dither moves an empty world by 1) while the
+ *              world's two corners read bg.space (±1, opaque), so a read that sees nothing of the frame cannot pass. The pixels come from the canvas's own image (`toDataURL`): a Chrome
+ *              screenshot reads none of the WebGPU canvas under §6.2.3's flags (M0-D144 measured it all transparent).
  *   no-webgpu  `/?no-webgpu=1` sets srState "no-webgpu", shows the three web.no_webgpu_* texts exactly as
  *              crates/sr-app/src/strings.rs holds them (G-STR keeps that file equal to §4.1) and never fetches the wasm.
  * Ends in `=== GO ===` (exit 0) or `=== NO-GO: <reason> ===` (exit 1).
@@ -133,34 +134,42 @@ try {
     }
     console.log(`${kase}: srState "ready" after ${took} s`);
     if (kase === 'preset') {
-      // The 200 steps run after "ready": sample the canvas's central 100 x 100 px (a screenshot clip, decoded in the page)
-      // until a pixel is not black, up to the case's timeout.
-      const box = await page.evaluate(() => { const r = document.getElementById('sr-canvas').getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; });
-      const clip = { x: Math.round(box.x + box.w / 2 - 50), y: Math.round(box.y + box.h / 2 - 50), width: 100, height: 100 };
-      const sample = async () => {
-        const png = await page.screenshot({ clip, type: 'png' });
-        return page.evaluate(async (b64) => {
-          const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
-          const bmp = await createImageBitmap(new Blob([bytes], { type: 'image/png' }));
-          const cv = new OffscreenCanvas(bmp.width, bmp.height);
-          const ctx = cv.getContext('2d');
-          ctx.drawImage(bmp, 0, 0);
-          const d = ctx.getImageData(0, 0, bmp.width, bmp.height).data;
-          let lit = 0, offBg = 0;
-          for (let i = 0; i < d.length; i += 4) {
-            if (d[i] + d[i + 1] + d[i + 2] > 0) lit++;
-            if (d[i] !== 0x05 || d[i + 1] !== 0x07 || d[i + 2] !== 0x0d) offBg++;
-          }
-          return { w: bmp.width, h: bmp.height, lit, offBg };
-        }, png.toString('base64'));
-      };
+      // The 200 steps run after "ready": read the canvas's own image (toDataURL, decoded in the page) at the world's centre
+      // until a pixel there is drawn off bg.space, up to the case's timeout. The world's corners must read bg.space exactly:
+      // they prove the read sees the app's frame (an unread canvas is transparent black, which differs from bg.space too).
+      const sample = () => page.evaluate(async () => {
+        const world = (document.body.dataset.srWorld ?? '').split(' ').map(Number);
+        if (world.length !== 4 || world.some((v) => !Number.isFinite(v))) return { error: `srWorld is "${document.body.dataset.srWorld ?? '(unset)'}"` };
+        const canvas = document.getElementById('sr-canvas');
+        const r = canvas.getBoundingClientRect();
+        const [sx, sy] = [canvas.width / r.width, canvas.height / r.height];
+        const bmp = await createImageBitmap(await (await fetch(canvas.toDataURL('image/png'))).blob());
+        const cv = new OffscreenCanvas(bmp.width, bmp.height);
+        const ctx = cv.getContext('2d');
+        ctx.drawImage(bmp, 0, 0);
+        const [x, y, w, h] = world;
+        const at = (px, py) => Array.from(ctx.getImageData(Math.floor(px * sx), Math.floor(py * sy), 1, 1).data);
+        // egui-wgpu dithers what it draws: an empty world reads bg.space give or take 1 level a channel (M0-D144 measured ≤ 1).
+        const off = (p) => Math.max(Math.abs(p[0] - 0x05), Math.abs(p[1] - 0x07), Math.abs(p[2] - 0x0d));
+        const bg = (p) => p[3] === 0xff && off(p) <= 1;
+        const corners = [at(x + 2, y + 2), at(x + w - 3, y + h - 3)];
+        const cx = Math.round((x + w / 2) * sx - 50), cy = Math.round((y + h / 2) * sy - 50);
+        if (cx < 0 || cy < 0 || cx + 100 > bmp.width || cy + 100 > bmp.height) return { error: `the world's centre clip (${cx}, ${cy}) falls off the ${bmp.width}x${bmp.height} image` };
+        const d = ctx.getImageData(cx, cy, 100, 100).data;
+        let drawn = 0;
+        for (let i = 0; i < d.length; i += 4) {
+          if (d[i + 3] === 0xff && off(d.subarray(i, i + 4)) > 2) drawn++;
+        }
+        return { world: world.join(' '), image: `${bmp.width}x${bmp.height}`, cx, cy, drawn, cornersBg: corners.filter(bg).length,
+                 corners: corners.map((p) => p.map((v) => v.toString(16).padStart(2, '0')).join('')).join(' ') };
+      });
       const until = Date.now() + timeoutMs;
       let px = await sample();
-      while (px.offBg === 0 && Date.now() < until) { await page.waitForTimeout(500); px = await sample(); }
-      console.log(`SR-PIXELS central ${px.w}x${px.h}: ${px.lit} not black, ${px.offBg} differ from bg.space #05070D`);
-      if (px.w !== 100 || px.h !== 100) throw new Error(`the central clip read ${px.w}x${px.h}, not 100x100 (canvas ${Math.round(box.w)}x${Math.round(box.h)})`);
-      if (px.lit === 0) throw new Error('the central 100 x 100 px of the canvas are all black');
-      if (px.offBg === 0) console.log('NOTE every central pixel is bg.space: "not all black" holds, but no star is drawn there');
+      while (!px.error && px.drawn === 0 && Date.now() < until) { await page.waitForTimeout(500); px = await sample(); }
+      if (px.error) throw new Error(px.error);
+      console.log(`SR-PIXELS world ${px.world} (CSS px), canvas image ${px.image}: ${px.drawn} of the 100x100 at the world's centre (${px.cx}, ${px.cy}) drawn off bg.space #05070D (more than 2 levels); world corners ${px.corners} (${px.cornersBg}/2 bg.space, ±1)`);
+      if (px.cornersBg !== 2) throw new Error(`the world's corners read ${px.corners}, not bg.space: the canvas's image is not the app's frame`);
+      if (px.drawn === 0) throw new Error('no pixel of the 100 x 100 at the world\'s centre is drawn off bg.space: the preset\'s star is not on the canvas');
     }
   } else {
     if (state !== 'no-webgpu') throw new Error(`srState "${state}", not "no-webgpu"`);

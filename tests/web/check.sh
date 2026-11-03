@@ -7,7 +7,8 @@
 #   ready      the page in the box's installed Chrome (web/smoke.mjs, §6.2.3): `launch.py start web`, then `/` reaches srState
 #              "ready" within 30 s; srAdapter and Chrome's own adapter go in the log (M0-T15)
 #   no-webgpu  `/?no-webgpu=1` shows srState "no-webgpu" and the three web.no_webgpu_* texts exactly (M0-T15)
-#   preset     `/?preset=sun&steps=200` reaches "ready" and the canvas's central 100 x 100 px are not all black (M0-T94)
+#   preset     `/?preset=sun&steps=200` reaches "ready" and the dropped star is drawn: the canvas's own image (toDataURL) at the
+#              world's centre (srWorld) off bg.space, its corners bg.space (M0-T94, M0-D144)
 #   ready-held `ready` with a foreign listener on launch.json's `web` port: launch.py starts the server on the next free port of
 #              the service's `port_range`, prints it, and the page reaches "ready" there (M0-D107); the listener binds as
 #              launch.py's server does and a bind it cannot make is the case's own NO-GO, never launch.py's (M0-D128)

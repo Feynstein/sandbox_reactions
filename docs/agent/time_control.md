@@ -85,7 +85,8 @@ per step is the physics', not the rung's).
   `on_event(Event::CoreCollapse)` (the drop to ×0.1; wired by M0-T86 — § The frame loop in the app). With the setting off the frame runs
   through, and any shortfall shows in `running ×`.
 - Ignition and supernova are the observers' events (§1.9.4), not the latch's: the app feeds the `Watch`'s events to
-  `on_event` (M0-T86).
+  `on_event` (M0-T86). An ignition whose slow-down shows no banner — the setting off, or the rung already at ×1 or slower — is
+  told by the app's **notice** instead, which never touches the rung (§ The frame loop in the app, M0-D139).
 - **G-LATCH is NOT PROVEN (synthetic)** until M0-T111: the `latch` scope proves the mechanism on a test hook; the
   contract's scenario (the Massive preset from an iron-core dump) is M0-T111's.
 
@@ -137,6 +138,14 @@ the `Watch` (the observers the headless run uses) and the banner's `Feed` (M0-D1
   rung and the setting off; the banner shows until the player's own rung change — **no automatic return** — except that a supernova takes a core-collapse banner over (§ The slow-down and the
   latch). `banner::views` reads it with the bar, right after the pass's read-back (step 0), so an event read back in this pass
   has slowed the clock already when both are built, and `desktop.rs` draws it over the world's top centre.
+- **The ignition notice (§0.5 [M0-D139], the lead: «for large stars it goes so quick that I dont know when the gas cloud actually
+  becomes a star»)**: an ignition the slow-down's banner does not name shows `banner.ignition_notice` in the banner's slot, in its
+  tokens, for `NOTICE_SECONDS` of wall time (5 s, egui's clock; `Feed::notice(now)`, `views_at(app, now)`). `Feed::event` books it for
+  an ignition after `on_event` when `time.banner()` is not the ignition — so with the setting off, or the rung at ×1 or slower — and
+  for an ignition only (not a core collapse, not a supernova). **It never changes the rung**: the slow-down, its rungs, its banners and
+  their end are as above. The slow-down's banner, when there is one, takes the slot over the notice, and a Clear ends the notice with
+  the old world's feed. Graded by `ui_banner` (plant `banner-notice-tied-to-setting`); on screen NOT PROVEN (a 15-Sun ignition is not
+  reachable on lavapipe in a capture; the lead's window look, M0-TW).
 - **Clear starts the watch over** (M0-D122): `Sim::clear` queues `Edit::Clear` and calls `Frames::clear`, which starts the next
   world. Frames are read back ≤ 2 frames late, so a Clear finds the old world's frames in flight; each frame is tagged with the
   world it was submitted in, **always** reports to `on_report` (Δt and sim time are the engine's, whatever the world), and an
@@ -153,7 +162,7 @@ the `Watch` (the observers the headless run uses) and the banner's `Feed` (M0-D1
 The `time_control` scope (`bash tests/cpu.sh sr-physics time`, no GPU; R17 spells §5's `time-control` so) — 24 cases
 over §1.8 and §3.2 with a zero-latency driver, plants `slowdown-auto-return`, `slowdown-supernova-no-takeover` (the takeover
 dropped, M0-D127) and `time-max-paced` (Max paced like a numbered rung, `docs/agent/testing.md`). The app side is graded by
-`ui_topbar` (15 cases, the bar, its fixed widths and the keys), `ui_banner` (15, `views`' pass order and `Frames`' routing),
+`ui_topbar` (15 cases, the bar, its fixed widths and the keys), `ui_banner` (18, `views`' pass order, `Frames`' routing and the ignition notice),
 `ui_world` (7) and `ui_theme` (8, the window's colours and the status line's 12 px), all without a window, and the `capture` scope's
 `actions` case (the bar on screen) and the `desktop` scope's `world` case (the loop drawing) — `docs/agent/testing.md`. G-WARP (M0-T110),
 G-TOP and G-FPS (⏱, the Quadro only, R12) grade it in the running game later.

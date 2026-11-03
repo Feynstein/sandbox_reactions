@@ -1,0 +1,10 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -148,6 +148,5 @@
+         if let Some(preset) = query.preset {
+             self.sim.preset_command(left::PresetCommand::Arm(preset));
+-            let world = self.sim.world();
+-            self.sim.place([world.width / 2, world.height / 2], now).map_err(|e| format!("preset: {e}"))?;
++            // plant web-preset-not-dropped (G-WEB, M0-D144): the URL's preset is armed, never dropped; srState still "ready"
+         }
+         if let Some(n) = query.steps {

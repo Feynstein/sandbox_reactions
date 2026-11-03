@@ -29,8 +29,10 @@ pub enum Action {
     Pause(bool),
     /// `{"steps": n}` — n simulation steps through the real frame loop, paused or not.
     Steps(u64),
-    /// `{"preset": "sun" | "massive" | "giant"}` — the panel's path (§4.5): the preset's button arms it and a click on the world's centre drops it (the engine's DropPreset).
-    Preset(String),
+    /// `{"preset": "sun" | "massive" | "giant"}` or `{"preset": …, "at": [x, y]}` — the panel's path (§4.5): the preset's button arms it
+    /// and a click on cell `at` (the world's centre when there is none) drops it (the engine's DropPreset). A drop that does not fit
+    /// leaves it armed with `presets.no_room` on screen, as the window does, and the capture goes on.
+    Preset { name: String, at: Option<[u32; 2]> },
     /// `{"rung": k}` — the key k of the bar (§4.10): 1…9 the numbered rungs in order, 0 Max. A key past the ladder (it is cut
     /// at TOP / 1.5, §1.8.2) does nothing, as pressing it does.
     Rung(usize),
@@ -59,8 +61,8 @@ pub enum Action {
     Fit,
     /// `{"display_reset": true}` — the active view's Reset.
     DisplayReset,
-    /// `{"zoom": z, "at": [x, y]}` — the view at z (1 to 8) around cell (x, y), as far as the clamp lets it centre there (the only
-    /// action of two keys).
+    /// `{"zoom": z, "at": [x, y]}` — the view at z (1 to 8) around cell (x, y), as far as the clamp lets it centre there (with
+    /// `preset`'s optional `at`, the only actions of two keys).
     Zoom { z: u32, at: [u32; 2] },
 }
 
@@ -101,6 +103,18 @@ fn parse_action(step: &str, value: &Value) -> Result<Action, String> {
             _ => Err(format!("step {step:?}: action \"zoom\" takes {{\"zoom\": z, \"at\": [x, y]}} with z from 1 to 8, got {value}")),
         };
     }
+    if let Some(preset) = value.as_object().filter(|o| o.contains_key("preset")) {
+        let name = preset.get("preset").and_then(Value::as_str).filter(|n| sr_engine::scene::PRESETS.contains(n));
+        let at = preset.get("at").map(cell);
+        return match (name, at) {
+            (Some(n), None) if preset.len() == 1 => Ok(Action::Preset { name: n.to_string(), at: None }),
+            (Some(n), Some(Some(at))) if preset.len() == 2 => Ok(Action::Preset { name: n.to_string(), at: Some(at) }),
+            _ => Err(format!(
+                "step {step:?}: action \"preset\" takes one of {:?}, alone or with \"at\": [x, y], got {value}",
+                sr_engine::scene::PRESETS
+            )),
+        };
+    }
     let obj = value.as_object().filter(|o| o.len() == 1).ok_or_else(|| {
         format!("step {step:?}: an action is an object with exactly one key, got {value}")
     })?;
@@ -114,13 +128,6 @@ fn parse_action(step: &str, value: &Value) -> Result<Action, String> {
             .as_u64()
             .map(Action::Steps)
             .ok_or_else(|| format!("step {step:?}: action \"steps\" takes a whole number, got {arg}")),
-        "preset" => arg
-            .as_str()
-            .filter(|n| sr_engine::scene::PRESETS.contains(n))
-            .map(|n| Action::Preset(n.to_string()))
-            .ok_or_else(|| {
-                format!("step {step:?}: action \"preset\" takes one of {:?}, got {arg}", sr_engine::scene::PRESETS)
-            }),
         "rung" => arg
             .as_u64()
             .filter(|k| *k <= 9)

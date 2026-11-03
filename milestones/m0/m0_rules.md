@@ -313,6 +313,26 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   reach — `games-box`, a CDN, a game portal; serving a build on this machine for a test (the web smoke, `review_page.py
   serve`) is not one, and Steam's desktop release is outside R20 (the negative scope keeps Steam).
 
+## The Rules paragraph (moved byte for byte from the plan by M0-TC13, 2026-11-02)
+PLAYBOOK.md v12.3 + the instruction file bind every agent (cited once, never per block). Full text
+of every rule below: m0_rules.md. Header budget: 600 / 60. Rating refresh: 5 flags. Full-loop
+budget: 600 s on each box in play (the 10-minute line of Rule 4) — linux-pc measured 449.7 s wall at M0-V1
+(2026-10-09): 10 scopes, 537 cases in 6.1 s, then 443 s red-arming the six scopes new since HEAD (desktop's
+287 s); win-laptop 134 s wall at M0-V2 (2026-10-10): 15 scopes, 586 passed, none new since HEAD to red-arm, ≈ 113 s
+normalised by the measured load (15.6 % of the box external; per box since M0-TJ3, PLAYBOOK §8) — every lot's V
+restates its box's; over it — the median of the box's last three counted complete loops, normalised to an idle box,
+the raw beside it (now PLAYBOOK §4 Rule 4, v12.3 [M0-TE-V12.3]) — a TR fires. OPT modules: OPT-B (R6, confirmed at
+M0-TP), OPT-C (R2–R4). Grants (OPT-C lanes: scope · exclusions · ceiling): R2 BUILD lane, R3
+installs, R4 DEBUG lane — each $0. Derogations, dated: none. Sizing bar: §2.1 — ceilings and named
+exceptions by id — none declared; E blocks: 7 of 127 open BUILD blocks (M0-T39, M0-T48, M0-T52b,
+M0-T91, M0-T93a, M0-T94, M0-T111 — marked by M0-TG, counted by M0-TB, 2026-10-08; M0-T6 unmarked by M0-TJ3:
+start.bat and the box route take it past an edit job). Gates to builds: 7:5 at
+M0-TP (7:4 at bootstrap, then M0-R2 split); 26:128 after M0-TG's pipeline (2026-10-08 — 17 lot and final
+V's, two deferred TJs); 26:132 after M0-TB's four splits; 27:133 with M0-TE-win and M0-TJ3, the
+win-laptop pair the lead asked for (2026-10-08). Considered and REJECTED (false
+economy): m0_rules.md, binding (M0-TB). What a capture cannot show here: the simulation's motion and
+timing (a star evolving, flows, a time warp's smoothness), frame rate and input feel.
+
 ## Considered and REJECTED (false economy)
 Binding (PLAYBOOK §2.1, §11): a later agent proposing an item below re-opens a closed decision — it asks
 the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.

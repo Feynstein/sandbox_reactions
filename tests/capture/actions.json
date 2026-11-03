@@ -20,5 +20,7 @@
   {"id": "star-glow-reset", "caption": "Glow's Reset: back to 3,000 K, the world as in the default Glow step", "actions": [{"display_reset": true}], "frames": 3},
   {"id": "star-heat", "caption": "The same star in Heat over its default range", "actions": [{"view": "heat"}], "frames": 3},
   {"id": "star-heat-fit", "caption": "Heat after Fit to view: the range found from the star's own temperatures", "actions": [{"fit": true}], "frames": 3},
-  {"id": "star-zoom", "caption": "The same star zoomed to 8 around its centre (the capture action zoom): each cell 16 px, the legend and the hint where they were", "actions": [{"zoom": 8, "at": [300, 200]}], "frames": 3}
+  {"id": "star-zoom", "caption": "The same star zoomed to 8 around its centre (the capture action zoom): each cell 16 px, the legend and the hint where they were", "actions": [{"zoom": 8, "at": [300, 200]}], "frames": 3},
+  {"id": "drop-at", "caption": "Zoom back to 1, then a Sun-like star dropped by the panel's path at cell (80, 80), beside the supergiant", "actions": [{"zoom": 1, "at": [300, 200]}, {"preset": "sun", "at": [80, 80]}], "frames": 3},
+  {"id": "drop-no-room", "caption": "A Sun-like star armed and dropped at cell (10, 10), too near the edge: the refusal on screen, the preset still armed, the world as it was", "actions": [{"preset": "sun", "at": [10, 10]}], "frames": 3}
 ]

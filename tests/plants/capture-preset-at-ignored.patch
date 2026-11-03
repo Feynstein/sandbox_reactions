@@ -1,0 +1,13 @@
+--- a/crates/sr-app/src/desktop.rs
++++ b/crates/sr-app/src/desktop.rs
+@@ -180,7 +180,9 @@
+                 let preset = left::Preset::parse(name).ok_or_else(|| format!("unknown preset {name:?}"))?;
+                 self.sim.preset_command(left::PresetCommand::Arm(preset));
+                 let world = self.sim.world();
+-                let cell = at.unwrap_or([world.width / 2, world.height / 2]);
++                // Planted: the `at` is parsed and then dropped; every preset lands on the world's centre (M0-D145's capture plant).
++                let _ = at;
++                let cell = [world.width / 2, world.height / 2];
+                 match self.sim.place(cell, now) {
+                     Ok(()) | Err(sr_engine::step::edit::EditError::NoRoom) => {}
+                     Err(e) => return Err(format!("preset {name}: {e}")),

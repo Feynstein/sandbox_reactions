@@ -95,17 +95,29 @@ nothing in it. The boundary is in `docs/agent/architecture.md` § The observer b
   m_ch_sb, core_collapse one past it (`Watch` computes it from the run's physics; no electrons' cold pressure, no ceiling, none
   refused). A light remnant whose cold centre overshoots into N_Fe's gate shows white_dwarf or planetary_nebula and bounces back
   — the game's slow-down latch (§1.8.5, any N_Fe rate) still fires there.
+- **The settled test (§0.5 [M0-D134], [M0-D140])**: `settled(c)` is the protostar row's own test — at rest (|v_r| against √(GM/R)) and near
+  virial (2P/|W|), the bounds §1.9.3 gives — and failed_star, white_dwarf and planetary_nebula each need it too, besides their other terms
+  (the order and the rest unchanged). Why: a cold cloud's centre is held mostly by the cold pressure while it falls in (failed_star read
+  on a Sun-like preset still falling), and the Sun-like's does the same re-expanding after its flash (white_dwarf read while its hydrogen
+  was unburnt), so d_c alone makes no remnant. The raw stage reads the rows as written.
+- **main_sequence reads the largest burning group (§0.5 [M0-D141])**: an ignited object whose largest L_g is hydrogen, with L_H > 0,
+  a tenth of L_nuc at least (`burns(c, G_H, X_H)`) and hydrogen left at the centre — as the other burning rows read theirs. The L_H band
+  belongs to the ignition event alone (§1.9.4, § Events), no longer to the row: a Sun-like that burns nothing for a while after its flash
+  reads cloud raw, and the display hold below keeps its shown stage.
 - **`classify(&Object, &History, now) -> Stage`** is pure. `History` carries what a frame cannot: whether the object ever
   ignited and the last time it classified as core collapse.
 - **The display hold.** `StageTracker::update(&[Object], now)` shows a stage only after §1.9.3's count of consecutive
   identical results (core collapse and supernova are shown at once); a different result restarts the count; until one has
   held, the object's displayed stage is none. `StageTracker::stage(id)` returns the raw result, the shown stage and the
-  history. An object gone from a frame is forgotten.
+  history. An object gone from a frame is forgotten. **The shown stage never steps back** (§0.5 [M0-D134], `steps_back`): an
+  ignited object never shows cloud, collapsing or protostar again, before ignition those three go forward only — cloud →
+  collapsing → protostar — and no cloud follows a failed star; a raw result that would step back leaves the shown stage where it
+  is (a raw cloud keeps the stage shown). Only those three labels are held so; every row is read as written.
 - **Readings declared** (`milestones/m0/tasks/M0-T59.md`): the speed scale √(GM/R) is R/τ_dyn; a ratio against L needs L > 0
   where a comparison would read 0 ≥ 0 true, but `L_nuc < c·L` is literal (a remnant radiating nothing is not a white dwarf);
   "the largest L_g" ties in Si, O, Ne, C order; "no carbon burning" is not (L_C > 0 and ≥ a tenth of L_nuc); "passed core
-  collapse" is a frame whose result was core collapse, the last such time kept. **Ignition and main_sequence's hydrogen test
-  are a band** (§0.5 [M0-D53]): L_H between half and twice L — a flash inside a cloud that barely shines does not ignite it. **Collapsing and protostar are disjoint as
+  collapse" is a frame whose result was core collapse, the last such time kept. **Ignition is a band** (§0.5 [M0-D53]): L_H between half
+  and twice L — a flash inside a cloud that barely shines does not ignite it; main_sequence no longer reads it ([M0-D141], above). **Collapsing and protostar are disjoint as
   written** (their v_r bands do not meet), so `classify-order` grades the table's order, not a behaviour.
 - **Not here:** the fuel column of φ (§1.10.4), the "Supergiant" label and the stage's text (§4.6) — a label and the age
   clock's blocks.

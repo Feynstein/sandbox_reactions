@@ -813,6 +813,14 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     cleared a 15-Sun cloud lights with no sign on screen (ui/banner.rs's «the_setting_off_means_no_slow_down_and_no_banner») —
     the lead: «for large stars it goes so quick that I dont know when the gas cloud actually becomes a star», and at M0-D139:
     «(a) Notice in banner spot».
+  - [M0-D144] §5.4 G-WEB's «the canvas's central 100 × 100 px are not all black» · **read from the canvas's own image
+    (`toDataURL`), the 100 × 100 px at the world's centre (`srWorld`, a §3.5 dataset value the app now writes) hold opaque pixels
+    more than 2 levels off `bg.space` on a channel while the world's two corners read `bg.space` within 1; plant
+    `web-preset-not-dropped`** · «not all black» holds for an empty page (bg.space is not black), and a Chrome screenshot under
+    §6.2.3's flags reads the WebGPU canvas all transparent (measured by M0-D144 on linux-pc, Chrome 156, 2026-11-02; the canvas's
+    `toDataURL` reads the frame, panels and star; an empty world moves ≤ 1 level by egui-wgpu's dither) — the lead at M0-V13:
+    «File a D for a stricter case (Recommended)».
+  - [M0-D146] §1.11 [M0-R12]'s «the middle button drags the view (clamped so the world covers the centre area whenever it is larger)» and §4.2's «With the zoom (M0-T129) the world's scale is z · s, clipped to the centre area» · **the zoomed world is clipped to the world's place at z = 1 (`legend::layout`'s world rect), and the drag is clamped so the zoomed world covers that rect; the legend and the hint stay in view** · the build clips and clamps to that rect (crates/sr-app/src/ui/zoom.rs), declared by M0-T129 and left without its contract amendment; clipping to the whole centre area would paint the magnified world over the legend and the hint — the lead at M0-V13: «Keep the build (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1236,8 +1244,8 @@ between the listed masses, held constant beyond them:
   Element view has no range (reports/display_range.md § Problem).
 - [M0-R12] **The zoom** (the lead at M0-R12: «File a zoom block after R12's (Recommended)», built by M0-T129): the world drawn
   at an integer scale z · s, z from 1 (the default, the whole world) to 8, around a view centre; the mouse wheel steps z by one
-  keeping the cell under the cursor under it, the middle button drags the view (clamped so the world covers the centre area
-  whenever it is larger), Home returns to z = 1. The cell image is unchanged (nearest filtering); every tool, the preset drop,
+  keeping the cell under the cursor under it, the middle button drags the view (clamped so the zoomed world covers the world's
+  place at z = 1 [M0-D146]), Home returns to z = 1. The cell image is unchanged (nearest filtering); every tool, the preset drop,
   the selection and the inspector read the cell under the cursor through the zoom.
 
 ### 1.12 Edits — the player's tools (B7, B16), applied in P0 and booked in the ledger
@@ -1635,7 +1643,8 @@ Unit-tested without a GPU against §1.8.
   `document.body.dataset.srState = "no-webgpu"` and never loads the wasm (Q4).
 - The app sets `srState` to `"loading"`, then `"ready"` after its first presented frame, and
   `document.body.dataset.srAdapter` to the adapter's description; on a fatal error `"error"` with
-  §4.8's message.
+  §4.8's message. [M0-D144] `document.body.dataset.srWorld` is the world's place on the canvas at z = 1 (§4.2), "x y w h" in
+  the page's CSS px, written when it moves — where G-WEB reads the dropped star.
 - URL parameters (smoke and captures): `preset=<sun|massive|giant>` drops it at the world's centre ·
   `steps=<n>` runs n steps then pauses · `view=<glow|heat|element|density>` · `rung=<k>`.
 
@@ -1828,7 +1837,7 @@ colour and brightness"`, `legend.heat = "Temperature"`, `legend.density = "Densi
   over the view's range; Element: the ten species' swatches with their `element.*` names — then the marks: the Glow setting (a
   `accent` triangle and line, `legend.white`) and the hovered cell's value (`text.primary`, `legend.cursor` with the inspector's
   temperature or density; none over vacuum, outside the world or in the Element view). `presets.place_hint` shows under the
-  legend. With the zoom (M0-T129) the world's scale is z · s, clipped to the centre area.
+  legend. With the zoom (M0-T129) the world's scale is z · s, clipped to the world's place at z = 1 (`legend::layout`'s world rect), so the legend and the hint stay in view [M0-D146].
 - **Right panel** (300 px): `star.heading` and the star readout (§4.6); `inspect.heading` and the
   cell inspector (§4.6).
 - **Banner:** over the top centre of the world, after an automatic slow-down (§1.8.5), until the
@@ -2146,11 +2155,14 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   Plant `status-never-ready`: the status stays "booting".
 - **G-WEB · the web build** (Q4; the web kept alive). `trunk build --release`, the `web` service,
   web/smoke.mjs (§6.2.3) loading `/?preset=sun&steps=200` in headless Chrome: srState reaches
-  "ready" within 30 s and the canvas's central 100 × 100 px are not all black; `/?no-webgpu=1` shows
+  "ready" within 30 s and the dropped star is drawn — read from the canvas's own image (`toDataURL`), the 100 × 100 px at
+  the world's centre (`srWorld`, §3.5) hold opaque pixels more than 2 levels off `bg.space` on a channel while the world's two
+  corners read `bg.space` within 1 (egui-wgpu's dither) [M0-D144 — was "the canvas's central 100 × 100 px are not all black",
+  which an empty canvas meets; a Chrome screenshot reads none of the WebGPU canvas]; `/?no-webgpu=1` shows
   srState "no-webgpu" and the three `web.no_webgpu_*` texts exactly. *UNVERIFIED* (WebGPU in
   headless Chrome on linux-pc — ES — and on win-laptop, §6.2.3). Box: linux-pc or win-laptop, each
   with §6.2.3's Chrome [M0-TJ3 — was "Box: linux-pc"]. Scope `web`. Plant `never-ready`: srState never
-  set to "ready".
+  set to "ready"; plant `web-preset-not-dropped` [M0-D144]: the URL's preset armed, never dropped, srState still "ready".
 
 ### 5.5 UNVERIFIED — the satisfiability register
 G-VIR, G-JEANS, G-CONS (energy), G-THERMO, G-REF, G-SQUEEZE, G-END, G-STAGES, G-TOUCH,

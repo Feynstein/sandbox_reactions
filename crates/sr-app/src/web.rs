@@ -80,6 +80,15 @@ pub fn signal_ready() {
     }
 }
 
+/// `srWorld`: the world's place on the canvas at z = 1 (§3.5 [M0-D144]), "x y w h" in the page's CSS px — where the web
+/// smoke reads the canvas's own image for the dropped star (G-WEB). Written only when it moves.
+pub fn report_world(rect: egui::Rect) {
+    let place = format!("{} {} {} {}", rect.min.x, rect.min.y, rect.width(), rect.height());
+    if let Some(body) = body().filter(|b| b.dataset().get("srWorld").as_deref() != Some(place.as_str())) {
+        let _ = body.dataset().set("srWorld", &place);
+    }
+}
+
 /// A fatal error: `srState` "error", the message in `srError` and on the page where the loading line stood.
 fn fail(message: &str, detail: &str) {
     log::error!("{message} ({detail})");

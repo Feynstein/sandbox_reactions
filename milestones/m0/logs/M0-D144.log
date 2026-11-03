@@ -1,0 +1,38 @@
+web: ready on port 47840, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D144.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+== probe 1 (smoke flags)
+console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+console.warning: A valid external Instance reference no longer exists.
+state ready viewport {"width":1280,"height":720}
+canvas {"w":1280,"h":720,"cssW":1280,"cssH":720,"dpr":1}
+screenshot full {"w":1280,"h":720,"colours":1,"top":[["00000000",921600]]}
+toDataURL {"w":1280,"h":720,"colours":2507,"top":[["05070dff",495896],["10141eff",345929],["232a3aff",23225],["10131eff",8757],["04060dff",6323],["9eb8ffff",4309]]}
+services: 1, stopped: 1
+=== GO ===
+== web --case preset (r1)
+web       1/0/0       84.20 s  GO
+logs: milestones/m0/logs/M0-D144-r1.<scope>.log · record: loop_times.jsonl · tree 54c9a5ff5064+ef340b268797
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 84.20 s · mode case · PARTIAL, not the loop (--case preset) · jobs 8 · box laserax-ai · python 3.12.3 · load 7.97->16.75
+=== GO ===
+== plant web-preset-not-dropped, web --case preset in /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/60ed8034-a949-4e36-81eb-10d4756ab11f/scratchpad/plant
+web       1/0/0      116.76 s  GO
+logs: milestones/m0/logs/M0-D144-plant.<scope>.log · record: loop_times.jsonl · tree 2bdd98d421c4
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 116.76 s · mode case · PARTIAL, not the loop (--case preset) · jobs 8 · box laserax-ai · python 3.12.3 · load 15.53->10.08
+=== GO ===
+6:web smoke preset: /usr/bin/google-chrome (156.0.8078.73) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+10:preset: srState "ready" after 10.7 s
+11:SR-PIXELS world 300 134 600 400 (CSS px), canvas image 1280x720: 209 of the 100x100 at the world's centre (550, 284) drawn off bg.space #05070D; world corners 05070dff 05070dff (2/2 bg.space)
+12:=== GO ===
+scratchpad max-channel delta from bg.space, world-centre 100x100: [(0, 9791), (1, 209)] ... max 1 n>=8: 0
+real max-channel delta from bg.space, world-centre 100x100: [(0, 2468), (1, 55), (2, 40), (3, 104), (4, 16), (5, 24)] ... max 114 n>=8: 7229
+== plant web-preset-not-dropped (r2, dither tolerance), web --case preset in /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/60ed8034-a949-4e36-81eb-10d4756ab11f/scratchpad/plant
+verify: 0 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 101.99 s · mode case · PARTIAL, not the loop (--case preset) · jobs 8 · box laserax-ai · python 3.12.3 · load 6.51->7.16
+=== NO-GO: web: web[preset]: 1 failed; web[preset]: its own verdict NO-GO: preset: no pixel of the 100 x 100 at the world's centre is drawn off bg.space: the preset's star is not on the canvas · log milestones/m0/logs/M0-D144-plant2.web.log ===
+10:SR-PIXELS world 300 134 600 400 (CSS px), canvas image 1280x720: 0 of the 100x100 at the world's centre (550, 284) drawn off bg.space #05070D (more than 2 levels); world corners 05070dff 05070dff (2/2 bg.space, ±1)
+11:=== NO-GO: preset: no pixel of the 100 x 100 at the world's centre is drawn off bg.space: the preset's star is not on the canvas ===
+== web (r2, full scope)
+anchor: 399 paths checked · 367 skipped (3 classes) · 0 never checked · 3 stale · 0 unclassified · 0 owed · 402 covered of 769 visible
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 170.61 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.98->6.23
+=== GO ===
+SR-PIXELS world 300 134 600 400 (CSS px), canvas image 1280x720: 8603 of the 100x100 at the world's centre (550, 284) drawn off bg.space #05070D (more than 2 levels); world corners 05070dff 05070dff (2/2 bg.space, ±1)

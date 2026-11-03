@@ -1,0 +1,30 @@
+== 2026-11-02T19:22:27-05:00 capture[smoke] · task M0-D145b · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-02T19:22:27-05:00 capture[refuse] · task M0-D145b · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-02T19:22:27-05:00 capture[actions] · task M0-D145b · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 0.27 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 2.27 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.KkYK2cNHoY
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 21.82 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.JWn3ZCLYyE
+the refusal's red text: 860 pixels after the drop that fit, 1262 after the one at (10, 10): expected none, then 100 or more
+=== NO-GO: the actions check failed (the line above names it) ===
+

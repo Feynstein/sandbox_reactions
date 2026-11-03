@@ -67,7 +67,9 @@ and right panels, the legend and the zoom in § Tools and presets below. Sizes a
   the **status bar** (24 px) carrying `status.line` live at §4.11's small 12 px (`STATUS_FONT`; egui's body text is 13, M0-D123). The world is a 600 × 400 cell image drawn at the integer scale
   s = max(1, ⌊min(w/W, h/H)⌋) physical px, centred with its corner on a pixel and nearest filtering (§1.11), so every cell shows
   whole; a new world is empty (`bg.space` exactly, pinned by the `desktop` scope's `world` case). The banner sits over the world's
-  top centre (`banner.bg` / `banner.text`, 20 px) — `docs/agent/time_control.md` § The frame loop in the app.
+  top centre (`banner.bg` / `banner.text`, 20 px) — `docs/agent/time_control.md` § The frame loop in the app — and shows, in the same slot,
+  the slow-down's banner or, when an ignition has none, the ignition notice for 5 s (below). From core collapse on the remnant is ringed over the world
+  (§ Tools and presets, The star readout).
 - **The top bar**, left to right: Pause/Play, Step · the rung buttons (the ladder below TOP / 1.5, Max last; the selected one in
   `accent`) · the speed readout (`time.speed`, `time.speed_capped`, `time.speed_max`, `time.paused`; **`accent` while the clock is
   paused**, so a still world says so, §0.5 [M0-V12]) · the slow-down checkbox ·
@@ -149,17 +151,30 @@ but for `hover` and `select`.
   over the range, Element's ten swatches carry their names. A cursor past the shown range stands at the bar's end. Not proven: the drawing (a
   capture's shot, read by eye, M0-TV3); the marks' labels may overlap when S and the cursor are within a label's width (the cursor's flips left).
 - **The zoom** (`ui/zoom.rs`; scope `ui_zoom`, M0-T129): the wheel zooms in and out **about the cell under the cursor** (z from 1 to 8, held at the
-  ends), the middle-button drag moves the world with the pointer, clamped so the zoomed image always covers the viewport (nothing to pan at
-  z = 1), **Home** returns to z = 1. One `cell_at` mapping serves every reader of the pointer — the brush, the preset drop, the right click and the
+  ends), the middle-button drag moves the world with the pointer, clamped so the zoomed image always covers the viewport — the world's place at
+  z = 1, which also clips it, so the legend and the hint stay in view (§1.11, §4.2 [M0-D146]) — with nothing to pan at z = 1, **Home** returns to z = 1. One `cell_at` mapping serves every reader of the pointer — the brush, the preset drop, the right click and the
   inspector — equal to the z = 1 mapping at z = 1, so a brush at z = 8 edits the cell the zoom names. The zoomed image's corner sits on a physical
   pixel at 1, 1.5 and 2 points per pixel. NOT PROVEN by a case: the egui path (wheel events, drag, Home, the painter's clip — no pointer in a capture);
-  the remnant at z = 8 is M0-TV3's on a GPU.
+  the ring at z = 8 is `ui_remnant`'s as a view model, its look M0-TV3's on a GPU.
 - **The star readout** (`ui/right.rs`, `Stars`; scope `ui_star`, M0-T92): the selected object's stage (the Supergiant rows at M ≥ M_up), `star.mass`,
-  `star.fate`, or `star.ending` once a remnant holds, `star.age`, `star.rate` (**hidden while paused**), `star.surface`, `star.core`; `star.none`
+  `star.fate`, or `star.ending` once a remnant holds, `star.remnant` while the star is ringed (below), `star.age`, `star.rate` (**hidden while paused**), `star.surface`, `star.core`; `star.none`
   with no object, `star.select_hint` with several. The app runs its own tracker, stage tracker, age clock and predictor (beside the banner's
   `Watch`, so the GPU scopes stay out of the UI's claim); `banner::Frames` owns `Stars` and restarts it with the world. **The selection is by the
   tracker's id**: the heaviest by default; a right click selects the nearest centre within max(R, 3 cells); a click on empty space keeps the
   selection; a list that shifts under it keeps the id; a new world empties it.
+- **The remnant's ring** (`ui/remnant.rs`, `rings`, `ringed`; `Stars::remnant_centres`; scope `ui_remnant`, §0.5 [M0-D138], the lead at M0-TV3:
+  «when the star exploses sometimes I cant see whats left inside»): **from core collapse on** — each object whose *shown* stage is core_collapse,
+  supernova, neutron_star or black_hole, and no earlier one nor a white dwarf — a ring is drawn over the world in **every view**, around the
+  tracker's centre c (its heaviest sink, else its densest cell). Its radius is **14 px on screen at every zoom** (`RING_RADIUS`): a 2 px `accent`
+  stroke over a 4 px `bg.space` halo, under the banner, and none for a centre the zoomed view does not show (`rings` maps the cell through the
+  zoom's `image`). It changes no view's colours — the ejecta that fill the world and saturate Glow white stay as they were. The selected star's
+  readout adds `star.remnant` ("Remnant: ringed in the world") under its `star.fate` or `star.ending` line **while it is ringed**. Painted by
+  `desktop.rs` (and `web.rs`, which runs the same `SandboxApp`); the ring on the window is NOT PROVEN (a supernova is not reached by a capture,
+  M0-TV3 and M0-TW look at it).
+- **The ignition notice** (`ui/banner.rs`, `Feed::notice`; scope `ui_banner`, §0.5 [M0-D139]): a star lighting that the slow-down's banner does not
+  name — the slow-down box cleared, or the rung already at ×1 or slower — shows `banner.ignition_notice` ("Hydrogen ignition — the cloud has become
+  a star") in the banner's slot and tokens for 5 s of wall time (`NOTICE_SECONDS`). Ignition only; it never changes the rung; the slow-down's banner
+  takes the slot over it; a Clear ends it. `docs/agent/time_control.md` § The frame loop in the app. NOT PROVEN on screen (M0-TW).
 - **The cell inspector** (`right::Reader`, `Asker`; scope `ui_inspect`, M0-T93b; the engine's side `Inspector::inspect`/`poll`, scope `state`,
   M0-T93a): the hovered cell's mix (up to three species of at least 0.5 % by mass, the largest first, equal shares in species order),
   `inspect.temperature` (in kelvins as the star readout translates it), `inspect.density`, `inspect.speed` with Mach = |u| / √(2Π/Σ) from the
@@ -200,7 +215,7 @@ for `steps`.
 |---|---|---|---|
 | `pause` | `true` / `false` | the clock paused or running (the bar's Pause/Play) | not a boolean |
 | `steps` | whole number n | n simulation steps through the real frame loop, paused or not | not a whole number |
-| `preset` | `"sun"` / `"massive"` / `"giant"` | the panel's path: arms the preset and drops it **at the world's centre** (`Sim::place`) | any other name; **any second key — §3.3's `"at": [x, y]` is not built** |
+| `preset` | `"sun"` / `"massive"` / `"giant"`, with an optional `"at": [x, y]` | the panel's path: arms the preset and drops it on cell (x, y) — **the world's centre without `at`** (`Sim::place`); a drop that does not fit (a cell of its cloud off the world) leaves it **armed with `presets.no_room` on screen** and the capture goes on | any other name; `at` not a cell; any other second key |
 | `rung` | key 0–9 | the bar's key: 1–9 the numbered rungs, 0 Max; a key past the ladder does nothing | past 9, not a whole number |
 | `slowdown` | `true` / `false` | the bar's checkbox | not a boolean |
 | `edge` | `"leave"` / `"bounce"` | the bar's edge choice | any other word |
@@ -218,18 +233,18 @@ for `steps`.
 
 An unknown action is refused by name (`unknown action …`); `NOT_BUILT` in capture.rs is empty today. **Refused at run time** (the capture stops with
 the line, a window already open): `glow_white` outside the Glow view, `range` or `fit` outside Heat and Density, `display_reset` in Element
-(«the … view has no such control», never a silent no-op), `zoom` at a cell off the world, a `preset` that does not fit, a `paint` the engine
-refuses. A pointer click, a key and the Clear dialog are not scriptable. A capture shows the brush's outline at the Xvfb pointer (pre-existing,
+(«the … view has no such control», never a silent no-op), `zoom` at a cell off the world, a `paint` the engine refuses. A `preset` that does not fit is
+**not** one: as in the window, the refusal is shown and the preset stays armed (M0-D145). A pointer click, a key and the Clear dialog are not scriptable. A capture shows the brush's outline at the Xvfb pointer (pre-existing,
 M0-T93b).
 - **The harness**: `bash tests/capture/check.sh smoke|refuse|actions` (scope `capture`, `docs/agent/testing.md`). `actions` runs
-  `tests/capture/actions.json` (21 steps: `start` … `star-zoom`; the Massive preset paused at step 768 for the star's shots) and compares the
+  `tests/capture/actions.json` (24 steps: `start` … `drop-no-room`; the Massive preset paused at step 768 for the star's shots, then `drop-at` — a Sun-like star at cell (80, 80) — and `drop-no-room` — one at (10, 10), the refusal in red under the legend) and compares the
   regions each action must change — the top bar, the left panel (220 px), the right panel (300 px) with its lit pixels, the world — and that
   `display_reset` equals the default pixel for pixel and a `zoom` shot's six probed cells keep their colours; `refuse` runs the malformed ones.
-  Seven plants hold it red (`capture-*.patch`). Shots are lavapipe's on linux-pc (`xvfb-run`) and `--offscreen-window` on win-laptop; a real
+  Nine plants hold it red (`capture-*.patch`). Shots are lavapipe's on linux-pc (`xvfb-run`) and `--offscreen-window` on win-laptop; a real
   GPU's picture is M0-TW's.
 - **Checked against the code** (M0-T96's adversarial): the table's seventeen actions, all in one script, parse in the built binary (the script's last
   step carried a bad id, so the run stops there with exit 4 naming the id — never an action; logs/M0-T96.capture_actions.log); `preset` with
-  `at`, `zoom` out of 1–8 or with one key, `range` with from ≥ to, `fit` false and an unknown name are each refused.
+  `at` (refused then, built by M0-D145), `zoom` out of 1–8 or with one key, `range` with from ≥ to, `fit` false and an unknown name are each refused.
 
 ## Measuring the UI — `--measure-ui` (§3.3, §1.8.3's R_reserve; `crates/sr-app/src/measure.rs`, M0-T95)
 `sandbox-reactions [--adapter S] --measure-ui <frames> [--calibration FILE]` runs the desktop app with the Sun-like preset dropped at ×1 and measures

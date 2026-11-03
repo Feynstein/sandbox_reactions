@@ -174,13 +174,17 @@ impl SandboxApp {
             Action::SlowDown(on) => self.sim.command(Command::SetSlowDown(*on)),
             Action::Edge(mode) => self.sim.command(Command::SetEdge(*mode)),
             Action::Steps(n) => self.sim.queue_steps(*n),
-            // The panel's path (§4.5): the button arms the preset and a click on the world's centre drops it.
-            Action::Preset(name) => {
+            // The panel's path (§4.5): the button arms the preset and a click on cell `at` (the world's centre when none) drops
+            // it. A drop that does not fit is the window's own: the preset stays armed, `presets.no_room` is shown, the capture goes on.
+            Action::Preset { name, at } => {
                 let preset = left::Preset::parse(name).ok_or_else(|| format!("unknown preset {name:?}"))?;
                 self.sim.preset_command(left::PresetCommand::Arm(preset));
                 let world = self.sim.world();
-                let cell = [world.width / 2, world.height / 2];
-                self.sim.place(cell, now).map_err(|e| format!("preset {name}: {e}"))?;
+                let cell = at.unwrap_or([world.width / 2, world.height / 2]);
+                match self.sim.place(cell, now) {
+                    Ok(()) | Err(sr_engine::step::edit::EditError::NoRoom) => {}
+                    Err(e) => return Err(format!("preset {name}: {e}")),
+                }
             }
             // The view buttons' door (ui::left::Views::apply), as a click or F1–F4 go through.
             Action::View(view) => self.sim.view_command(left::ViewCommand::Select(*view)),
@@ -262,7 +266,7 @@ impl eframe::App for SandboxApp {
                 let mut closed = false;
                 if meter.first_pass() {
                     let now = ui.input(|i| i.time);
-                    let drop = [crate::capture::Action::Rung(1), crate::capture::Action::Preset("sun".into())];
+                    let drop = [crate::capture::Action::Rung(1), crate::capture::Action::Preset { name: "sun".into(), at: None }];
                     if let Some(e) = drop.iter().find_map(|a| self.apply(a, now).err()) {
                         meter.fail(e);
                         closed = true;
@@ -443,6 +447,8 @@ impl eframe::App for SandboxApp {
                 // The world's place at z = 1 is the viewport the zoomed image is clipped to (§4.2, ui::zoom): the wheel and the
                 // middle drag move the view before anything reads the pointer, so every reader sees the same one.
                 let rect = placed_at.world;
+                #[cfg(target_arch = "wasm32")]
+                crate::web::report_world(rect);
                 let response = ui.interact(rect, egui::Id::new("world"), egui::Sense::click_and_drag());
                 if !modal {
                     if let Some(pos) = response.hover_pos() {

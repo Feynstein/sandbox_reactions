@@ -328,3 +328,11 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
 - Contract §1.8.5's «with the setting off, steps run through events» and §4.2's banner «after an automatic slow-down» as the only
   ignition sign — superseded by contract §0.5 [M0-D139]: an ignition the slow-down's banner does not name shows
   `banner.ignition_notice` in the banner's slot for 5 s, the rung unchanged (the lead, 2026-11-02, M0-D139: «(a) Notice in banner spot»).
+- Contract §5.4 G-WEB's «the canvas's central 100 × 100 px are not all black» (a Chrome screenshot clip) — superseded by
+  contract §0.5 [M0-D144]: the canvas's own image (`toDataURL`) at the world's centre (`srWorld`, §3.5) holds opaque pixels more
+  than 2 levels off `bg.space`, the world's corners `bg.space` within 1; plant `web-preset-not-dropped` (M0-D144, 2026-11-02, the
+  lead at M0-V13: «File a D for a stricter case (Recommended)»).
+- Contract §1.11 [M0-R12]'s «clamped so the world covers the centre area whenever it is larger» and §4.2's «clipped to the centre
+  area» — superseded by contract §0.5 [M0-D146]: the zoomed world is clipped to the world's place at z = 1 (`legend::layout`'s world
+  rect), the drag clamped so it covers that rect, the legend and the hint kept in view (M0-D146, 2026-11-02, the lead at M0-V13:
+  «Keep the build (Recommended)»).
