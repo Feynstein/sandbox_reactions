@@ -601,7 +601,7 @@ fn first_non_finite(planes: &[f32]) -> Option<(usize, usize)> {
 /// The twin's state as a dump (§2.12.3): the planes in f32 as the GPU's are, the step index and sim time, and the step's
 /// records — Δt_n and Δt_{n+1} as f32, no latch, and the box record of the whole world with its FFT size per axis (§1.3.3:
 /// the smallest power of two ≥ 2 × the box, at least 32) and its indirect sizes, the twin having no active box; no F, the
-/// twin running no P5 (M0-T48).
+/// twin running no P5 (M0-T48); the hold's mask when any cell is held, as the GPU's dumps write it (§2.12.3 [M0-TG2]).
 pub fn twin_dump(twin: &Twin, world: WorldConfig) -> Dump {
     let fft = |n: u32| (2 * n).next_power_of_two().max(32);
     let (w, h) = (world.width, world.height);
@@ -620,6 +620,7 @@ pub fn twin_dump(twin: &Twin, world: WorldConfig) -> Dump {
         planes: twin.state.planes.iter().map(|&v| v as f32).collect(),
         flux: None,
         rate: None,
+        held: Some(twin.held_mask()).filter(|m| m.contains(&true)).map(|m| m.iter().map(|&h| u32::from(h)).collect()),
     }
 }
 

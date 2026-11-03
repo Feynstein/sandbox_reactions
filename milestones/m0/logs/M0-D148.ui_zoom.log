@@ -1,0 +1,25 @@
+== 2026-11-03T10:26:31-05:00 ui_zoom · task M0-D148 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::zoom::zoom_tests
+-- ui_zoom · exit=0 · 0.21 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.14s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 11 tests
+test ui::zoom::zoom_tests::a_drag_moves_the_world_with_the_pointer ... ok
+test ui::zoom::zoom_tests::centre_on_puts_the_cell_in_the_middle_as_far_as_the_world_allows ... ok
+test ui::zoom::zoom_tests::at_z_one_the_mapping_is_todays ... ok
+test ui::zoom::zoom_tests::a_brush_at_z_eight_edits_the_cell_the_zoom_names ... ok
+test ui::zoom::zoom_tests::home_returns_to_the_whole_world_and_is_the_default ... ok
+test ui::zoom::zoom_tests::nothing_outside_the_viewport_or_the_world_is_a_cell ... ok
+test ui::zoom::zoom_tests::the_image_always_covers_the_viewport ... ok
+test ui::zoom::zoom_tests::the_image_corner_sits_on_a_physical_pixel ... ok
+test ui::zoom::zoom_tests::the_wheel_keeps_the_cell_under_the_cursor ... ok
+test ui::zoom::zoom_tests::the_wheel_sums_points_into_steps_and_a_line_is_a_step ... ok
+test ui::zoom::zoom_tests::z_stops_at_one_and_eight ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 152 filtered out; finished in 0.00s
+
+

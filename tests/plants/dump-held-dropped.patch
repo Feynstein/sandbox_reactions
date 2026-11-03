@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/src/dump.rs
++++ b/crates/sr-engine/src/dump.rs
+@@ -351,7 +351,8 @@
+     let flux = step.side_flux().map(|f| read_buffers(device, queue, "side.flux.readback", std::iter::once(f)));
+     let rate = step.heat_rate(device, queue);
+     let sinks = step.read_sinks(device, queue).map(|r| r.sinks).unwrap_or_default();
+-    let held = Some(state.read_held(device, queue)).filter(|m| m.iter().any(|&h| h != 0));
++    // planted: the dump never writes the hold's mask
++    let held: Option<Vec<u32>> = Some(state.read_held(device, queue)).filter(|m| m.iter().any(|&h| h != 0)).and(None);
+     Dump { world: state.world(), step: index, sim_time, sinks, resume, planes: state.readback(device, queue), flux, rate, held }
+ }
+ 

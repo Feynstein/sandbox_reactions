@@ -1,5 +1,6 @@
 // P8 floors (m0_contrat.md §1.3.2, §2.7, §2.3.3, §2.9): two dispatches, in this order — `floor_cells` (the vacuum reset,
-// then the temperature floor) and `renormalise_species`. Compiled with eos.wgsl prepended (group 1).
+// then the temperature floor) and `renormalise_species`, which ends with the hold. Compiled with eos.wgsl prepended
+// (group 1).
 //
 // Species renormalisation, one cell per invocation: every mass fraction clamped ≥ 0, then divided by their sum, so
 // Σ_i X_i = 1. A cell whose fractions are all ≤ 0 becomes pure hydrogen (§2.7 [M0-T19]). The sum runs in §1.5's order,
@@ -14,8 +15,17 @@
 // an Inf or a NaN fraction: neither kernel touches it — no floor, no booking, its fractions as read — since the clamp's
 // max(NaN, 0) may return 0 and renormalise the NaN away before the guard reads it (M0-D18).
 //
-// Both run over the active box only (§1.3.3), as many 8 × 8 tiles as its indirect size says, from its origin: outside
-// it every cell is vacuum and static.
+// The hold (§2.7 [M0-TG2]; M0-D71's twin, sr_physics::reference::floors `Floors::hold`), P8's last act, in the
+// renormalisation's invocation once it has written the fractions: a cell with Σ ≥ σ_hold whose ε_th — as the floor left
+// it — is at most η_hold · ε_cold of the renormalised fractions, and which holds no iron (X_Fe = 0 exactly in f32, §2.7
+// [M0-D71f]: a collapsing iron core stays free), is held; a held cell is released past 2η_hold · ε_cold, under ½σ_hold
+// or once X_Fe > 0. The mask (state.rs `state.held`, one word per cell) is the next step's P4's. A newly held cell's
+// momentum — read by the test before — is set to 0, its kinetic energy left in E, and added into `held`'s two slots.
+// Every comparison is f32 of f32 inputs: a cell within f32's rounding of an edge may fall either side of the twin's f64.
+// `hold_cells` is the same hold alone, on the initial state before step 0 (step/mod.rs), so its zeroing is booked too.
+//
+// All three run over the active box only (§1.3.3), as many 8 × 8 tiles as its indirect size says, from its origin:
+// outside it every cell is vacuum and static, and a held cell (Σ ≥ ½σ_hold) is never vacuum.
 
 struct Dims {
     width: u32,
@@ -30,7 +40,8 @@ struct Dims {
 @group(0) @binding(2) var<storage, read_write> species_b: array<f32>;
 // The hydro planes: sigma, mom_x, mom_y, energy.
 @group(0) @binding(3) var<storage, read_write> hydro: array<f32>;
-// booking.floors (state.rs BOOK_GROUPS): mass.vacuum_reset's plane, then energy.floor_added's, one slot per cell.
+// booking.floors (state.rs BOOK_GROUPS): mass.vacuum_reset's plane, then energy.floor_added's, held.mom_x's and
+// held.mom_y's, one slot per cell.
 @group(0) @binding(4) var<storage, read_write> book: array<f32>;
 
 // The active box (reduce.wgsl `ActiveBox`, boxfit.rs).
@@ -47,8 +58,23 @@ struct ActiveBox {
 
 @group(0) @binding(5) var<uniform> abox: ActiveBox;
 
+// The hold's mask: 1 where a cell is held.
+@group(0) @binding(6) var held: texture_storage_2d<r32uint, read_write>;
+
+// σ_hold and η_hold (sr_physics::reference::floors' constants), padded to the uniform's 16 bytes.
+struct Hold {
+    sigma_hold: f32,
+    eta_hold: f32,
+    _pad0: f32,
+    _pad1: f32,
+}
+
+@group(0) @binding(7) var<uniform> hold_params: Hold;
+
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
+// Iron's slot in §1.5's order: a cell holding any is never held (§2.7 [M0-D71f]).
+const ID_FE: u32 = 8u;
 
 // An Inf or a NaN, told by its exponent bits as reduce.wgsl's guard tells it — never a float comparison, which WGSL may
 // fold away.
@@ -141,12 +167,39 @@ fn floor_cells(@builtin(global_invocation_id) id: vec3<u32>) {
     book[n + cell] += energy_added;
 }
 
+// The hold at `cell` (x, y), whose renormalised fractions are `x`: the mask's word written, a newly held cell's momentum
+// zeroed and booked.
+fn hold(cell: u32, xy: vec2<u32>, x: array<f32, 10>) {
+    let n = dims.cells;
+    let comp = composition(x);
+    let sigma = hydro[cell];
+    let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
+    let cold = eps_cold(sigma, comp.y_e, x[ID_N]);
+    let eps_th = hydro[3u * n + cell] / sigma - 0.5 * dot(mom / sigma, mom / sigma) - cold;
+    let iron = x[ID_FE] > 0.0;
+    let was = textureLoad(held, xy).x != 0u;
+    var now: bool;
+    if (was) {
+        now = !(eps_th > 2.0 * hold_params.eta_hold * cold || sigma < 0.5 * hold_params.sigma_hold || iron);
+    } else {
+        now = sigma >= hold_params.sigma_hold && eps_th <= hold_params.eta_hold * cold && !iron;
+    }
+    if (now && !was) {
+        book[2u * n + cell] += mom.x;
+        book[3u * n + cell] += mom.y;
+        hydro[n + cell] = 0.0;
+        hydro[2u * n + cell] = 0.0;
+    }
+    textureStore(held, xy, vec4<u32>(select(0u, 1u, now), 0u, 0u, 0u));
+}
+
 @compute @workgroup_size(8, 8)
 fn renormalise_species(@builtin(global_invocation_id) id: vec3<u32>) {
     if (id.x >= abox.w || id.y >= abox.h) {
         return;
     }
-    let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
+    let xy = vec2<u32>(abox.x0 + id.x, abox.y0 + id.y);
+    let cell = xy.y * dims.width + xy.x;
     let n = dims.cells;
     if (fractions_non_finite(cell)) {
         return;
@@ -159,4 +212,18 @@ fn renormalise_species(@builtin(global_invocation_id) id: vec3<u32>) {
     for (var i = 0u; i < PLANES_B; i++) {
         species_b[i * n + cell] = x[PLANES_A + i];
     }
+    hold(cell, xy, x);
+}
+
+@compute @workgroup_size(8, 8)
+fn hold_cells(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h) {
+        return;
+    }
+    let xy = vec2<u32>(abox.x0 + id.x, abox.y0 + id.y);
+    let cell = xy.y * dims.width + xy.x;
+    if (fractions_non_finite(cell)) {
+        return;
+    }
+    hold(cell, xy, renormalised(cell));
 }

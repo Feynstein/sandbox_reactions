@@ -1,0 +1,45 @@
+== 2026-11-03T14:14:18-05:00 jeans · task M0-D150 · box laserax-ai :: bash tests/gpu.sh jeans physics
+-- jeans · exit=101 · 0.36 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.10s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak ... 
+thread 'jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak' (2229910) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test jeans::the_collapse_reaches_a_hundred_times_the_central_sigma ... 
+thread 'jeans::the_collapse_reaches_a_hundred_times_the_central_sigma' (2229949) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test jeans::the_jeans_number_never_rises_a_hundredth_above_its_start ... 
+thread 'jeans::the_jeans_number_never_rises_a_hundredth_above_its_start' (2229950) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... 
+thread 'jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary' (2229951) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+ok
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 13208.96, U_th/|W| 0.050000
+SR-JEANS ripple: worst |Σ'/Σ − (1 + 0.01(cos 3θ + cos 5θ))| = 5.77e-8, mass 3351.648 → 3351.648
+ok
+
+failures:
+
+failures:
+    jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak
+    jeans::the_collapse_reaches_a_hundred_times_the_central_sigma
+    jeans::the_jeans_number_never_rises_a_hundredth_above_its_start
+    jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary
+
+test result: FAILED. 2 passed; 4 failed; 0 ignored; 0 measured; 483 filtered out; finished in 0.17s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

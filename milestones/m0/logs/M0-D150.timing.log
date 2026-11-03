@@ -1,0 +1,44 @@
+== 2026-11-03T14:14:21-05:00 timing · task M0-D150 · box laserax-ai :: bash tests/gpu.sh timing physics
+-- timing · exit=101 · 0.52 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... 
+thread 'timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps' (2230581) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test timing::bare_steps_time_every_pass_at_its_boundaries ... 
+thread 'timing::bare_steps_time_every_pass_at_its_boundaries' (2230594) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test timing::frames_report_their_cost_per_step_and_per_pass ... 
+thread 'timing::frames_report_their_cost_per_step_and_per_pass' (2230595) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... 
+thread 'timing::headless_timing_writes_every_pass_of_the_nominal_disk' (2230596) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... 
+thread 'timing::the_wall_clock_fallback_is_named_and_times_no_pass' (2230597) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps
+    timing::bare_steps_time_every_pass_at_its_boundaries
+    timing::frames_report_their_cost_per_step_and_per_pass
+    timing::headless_timing_writes_every_pass_of_the_nominal_disk
+    timing::the_wall_clock_fallback_is_named_and_times_no_pass
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 484 filtered out; finished in 0.32s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,9 +1,10 @@
 //! M0-D71 — the held core on the CPU twin (contract §2.7 [M0-TG2], §2.3.4 [M0-TG2], §1.4.2 [M0-TG2], §2.9's `held`, §5.1's
 //! G-REST; M0-R11's H, reports/unresolved_remnant.md). P8's last act holds a cell with Σ ≥ σ_hold and ε_th ≤ η_hold ε_cold
-//! whose N_Fe rate is 0, and releases it past 2η_hold, under ½σ_hold or at N_Fe's gate; P4 leaves a held cell as it is
-//! behind reflecting walls (HLL against the mirror, no mass, energy or species across, no work); the momentum the hold
-//! takes from the grid is booked `held`. One-way inflow (§2.3.4's item 2) is not built: it took the M 900 disk's floor to
-//! 392.6 (2.26 without) and moved to M0-D71f (§0.5 [M0-D71], the lead at M0-D71). The twin's cases touch no adapter (R12).
+//! which holds no iron (X_Fe = 0, §2.7 [M0-D71f]), and releases it past 2η_hold, under ½σ_hold or once X_Fe > 0; P4
+//! leaves a held cell as it is behind reflecting walls (HLL against the mirror, no mass, energy or species across, no
+//! work); the momentum the hold takes from the grid is booked `held`. One-way inflow (§2.3.4's item 2) is not built: it
+//! took the M 900 disk's floor to 392.6 (2.26 without) and moved to M0-D71f (§0.5 [M0-D71], the lead at M0-D71). The
+//! twin's cases touch no adapter (R12); the GPU's, below the twin's, are M0-D71c's.
 //!
 //! - **The SCF disks** (G-REST's twin half): `calibrate::cold_disk_scene`'s cold C/O disk at M 900 and 1,800 (the shipped
 //!   K's, T_floor, 64 × 64, bounce, gravity and hydro), 10,000 steps: every held cell's momentum exactly 0, floor_added over
@@ -20,13 +21,51 @@
 //!   cell's missed or reversed Σg·Δt is its share of M), the held cells' Σ, E and species bit for bit.
 //! - **The hysteresis**: held at η, kept to 2η, released past it and under ½σ_hold; never held under σ_hold or past η; a
 //!   newly held cell's momentum zeroed and booked, its E as it was.
-//! - **Item 1**: a held iron cell released once Y_eΣ passes Σ_N; cold iron past the gate never held, C/O there held.
+//! - **Item 1** (M0-D152, §2.7 [M0-D71f]: no iron is held): cold iron under and past N_Fe's gate never held, nor C/O with
+//!   X_Fe 10⁻³⁰; C/O beside it held, and released once its iron appears (X_Fe 10⁻⁴).
 //!
 //! Plant `held-wall-pressure-only`: the held wall takes §2.8's bounce flux, Π alone (M0-R11: the M 900 disk ran to KE 5 × 10⁶).
+//!
+//! **The GPU** (M0-D71c; hydro.wgsl's held cells, the adapter `SR_TEST_ADAPTER` names, R12): every GPU case starts from
+//! f32 planes, its mask the initial state's hold (step 0's, as `Twin::new`'s).
+//! - **G-REST's GPU half**: both disks 10,000 steps on G-REST's bounds, held cells' momentum 0 at every 50th step, grid +
+//!   held momentum (P8's `held.mom_*` and P4's `held.spared.mom_*`) printed, not graded (§0.5 [M0-D71]); each disk against
+//!   the twin at step 200 (G-REF's span): Σ and E relative L1 ≤ 10⁻³, the held set the same.
+//! - **The strips** (64 × 64, every row alike, a cold C/O column held by the rule among warm hydrogen), one step against
+//!   the twin's: the wall turns a free cell back; nothing crosses either way; the column's Σ, E and X bit for bit and its
+//!   momentum 0; what the column was spared the twin's within 10⁻³; grid + held momentum kept to 10⁻⁶ of Σm|u| (no
+//!   gravity). With P2: no work across the wall — the wall's free neighbours' E the twin's within 10⁻⁵, where the work
+//!   [M0-D64] would do there is larger — and the column's Σg kick booked as the twin books it.
+//! - **A held edge cell** in a leave world books nothing into `escaped`, its face carrying nothing.
+//! - **Item 1 on the GPU** (M0-D152): the twin's item-1 cells in a world of thin hydrogen — the masks the twin's, f32 alike.
+//! - **Clear in P0** (M0-D71b's flag): a Clear and a paint over a held core in one step give the planes the same edits give
+//!   with the mask zeroed by hand — P4 sees no stale wall.
+//! - **The pull** (M0-D151, §1.4.2 [M0-D149]: P2's g_pull, the field of all but the held cells, what hydro.wgsl's held
+//!   cells read): the twin's two pull cases on the GPU — the world of held cells books `held` exactly 0 (P2's f32 field
+//!   summed over it is not), the held block beside warm gas books the gas's pull within [`PULL_BAND`] of the twin's.
+//! - **G-REST's window** (M0-D71f): scenes/remnant_window.bin — M0-D67's box of the Sun-like life's step 450,000 in a
+//!   128 × 128 leave world ([`cut_window`]; `SR_WRITE_SCENES=1` re-cuts it from the git-ignored source) — 10,000 steps of
+//!   every pass through `headless`: floor_added ≤ 15 % of radiated, both halves printed (the twin's 1.2 % and 46 %).
+//!
+//! Plant `held-wall-gpu-pressure-only`: hydro.wgsl's held wall the bounce flux, Π alone. Plant `held-core-gpu-whole-g`:
+//! hydro.wgsl's held cells read P2's whole g again (the world of held cells books its f32 rounding). Plant
+//! `hold-iron-gate`: the gate form back on the twin and in floors.wgsl — iron held while Y_eΣ ≤ Σ_N (M0-D71f).
 
+use std::path::{Path, PathBuf};
+
+use serde_json::Value;
 use sr_engine::calibrate::{cold_disk_scene, Matter};
+use sr_engine::dump::Dump;
+use sr_engine::headless;
+use sr_engine::scene::EdgeMode;
+use sr_engine::state::{book_totals, Booking, SideFields, State as GpuState, WorldConfig, BOOK_GROUPS, N_TERMS, TERMS};
+use sr_engine::step::boxfit::BoxMode;
+use sr_engine::step::edit::Edit;
+use sr_engine::step::fft::read_back;
+use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::eos::Eos;
 use sr_physics::reference::floors::{Floors, ETA_HOLD, SIGMA_HOLD};
+use sr_physics::reference::grav::Gravity;
 use sr_physics::reference::hydro::{Edge, Hydro, State, COMPONENTS};
 use sr_physics::reference::{Switches, Twin};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
@@ -191,7 +230,7 @@ fn a_held_wall_reflects_and_passes_nothing() {
     let (mut st, held) = strip(|x| if x == COLUMN { 20.0 } else { 1.0 }, |x| if (3..COLUMN).contains(&x) { 0.05 } else { 0.0 });
     let before = st.clone();
     let dt = hydro.dt(&st, None);
-    let spared = hydro.step_held(&mut st, dt, None, None, &held);
+    let spared = hydro.step_held(&mut st, dt, None, None, None, &held);
     assert_column_kept(&before, &st);
     // The free cell against the wall: its momentum toward the wall falls (Π alone would push it on, +Δt Σu²).
     let dp: f64 = (0..H).map(|y| y * W + COLUMN - 1).map(|i| st.get(1, i) - before.get(1, i)).sum();
@@ -228,7 +267,7 @@ fn nothing_crosses_a_held_cell_either_way() {
     );
     let before = st.clone();
     let dt = hydro.dt(&st, None);
-    let spared = hydro.step_held(&mut st, dt, None, None, &held);
+    let spared = hydro.step_held(&mut st, dt, None, None, None, &held);
     let scale = sum_abs_momentum(&before) + spared[0].hypot(spared[1]);
     let drift = momentum_drift(&before, &st, spared, [0.0, 0.0], scale);
     println!("SR-HELD-NO-INFLOW held {spared:?}; momentum drift {drift:?} of {scale:.4e}");
@@ -249,7 +288,7 @@ fn gravity_kick_on_a_held_cell_is_booked() {
         gy: vec![0.0; W * H],
     };
     let dt = hydro.dt(&st, Some((&field.gx, &field.gy)));
-    let spared = hydro.step_held(&mut st, dt, Some(&field), None, &held);
+    let spared = hydro.step_held(&mut st, dt, Some(&field), None, None, &held);
     let mass = total(&before, 0);
     let held_mass: f64 = (0..H).map(|y| before.get(0, y * W + COLUMN)).sum();
     let kick = dt * g * mass;
@@ -257,6 +296,84 @@ fn gravity_kick_on_a_held_cell_is_booked() {
     println!("SR-HELD-GRAVITY Δt g M {kick:.6e} (the held column's share {:.6e}); held {spared:?}; drift {drift:?}", dt * g * held_mass);
     assert_column_kept(&before, &st);
     assert!(drift[0] <= STRIP_BAND && drift[1] <= STRIP_BAND, "grid + held momentum gained other than Δt·g·M: {drift:?}");
+}
+
+/// The pull cases' world: 32 × 32, bounce, gravity and hydro on the twin.
+const PW: usize = 32;
+
+/// The pull cases' state: held C/O cells (Σ 20 to 30, uneven, ε_th ½η_hold ε_cold) at `core`, warm hydrogen (Σ 1) at
+/// `gas`, vacuum elsewhere, all at rest — so each cell's half-step Σ is its Σ — and the twin of it.
+fn pull_world(core: &[(usize, usize)], gas: &[(usize, usize)]) -> (Twin, State) {
+    pull_world_of(PW, core, gas)
+}
+
+/// [`pull_world`] in a `size` × `size` world.
+fn pull_world_of(size: usize, core: &[(usize, usize)], gas: &[(usize, usize)]) -> (Twin, State) {
+    let physics = physics();
+    let eos = Eos::from_physics(&physics).unwrap();
+    let hy = fractions(&[("H", 1.0)]);
+    let cold_h = eos.eps_cold(1.0, elements().composition(&hy).y_e, 0.0);
+    let cells: Vec<Cell> = (0..size * size)
+        .map(|i| {
+            let p = (i % size, i / size);
+            if core.contains(&p) {
+                cold_cell(&eos, 20.0 + ((7 * p.0 + 3 * p.1) % 11) as f64, co(), 0.5 * ETA_HOLD, [0.0, 0.0])
+            } else if gas.contains(&p) {
+                Cell { sigma: 1.0, mom: [0.0, 0.0], energy: 1.0 + 2.0 * cold_h, x: hy }
+            } else {
+                Cell { sigma: 1e-8, mom: [0.0, 0.0], energy: 1e-8, x: hy }
+            }
+        })
+        .collect();
+    let st = state(size, size, &cells);
+    let switches = Switches { gravity: true, hydro: true, heat: false, reactions: false };
+    let twin = Twin::new(&physics, &elements(), Edge::Bounce, switches, None, size, size, st.planes.clone()).unwrap();
+    (twin, st)
+}
+
+/// Σ Δt·Σ_i·g_i over the cells `on` picks, (x, y): g the field P2 solves from the Σ of the cells `sources` picks.
+fn pull_on(st: &State, dt: f64, sources: impl Fn(usize) -> bool, on: impl Fn(usize) -> bool) -> [f64; 2] {
+    let n = st.cells();
+    let sigma: Vec<f64> = (0..n).map(|i| if sources(i) { st.get(0, i) } else { 0.0 }).collect();
+    let f = Gravity::new(1.0).field(&sigma, physics().get("sigma_vac").unwrap(), PW, PW).unwrap();
+    (0..n).filter(|&i| on(i)).fold([0.0, 0.0], |a, i| [a[0] + dt * st.get(0, i) * f.gx[i], a[1] + dt * st.get(0, i) * f.gy[i]])
+}
+
+/// §1.4.2 [M0-D149]: a held core books none of its own pull — a world of held C/O cells, its Σ uneven, one step: every
+/// face held–held or on the edge, so nothing but gravity could be booked, and `held` is exactly 0, where P2's whole field
+/// summed over the core (the booking before M0-D149) is not: f64's rounding of a sum that cancels, which in the GPU's f32
+/// was its whole `held` on G-REST's disks. (A core in vacuum books its walls' floor pressure, 1e-10.)
+#[test]
+fn a_held_core_books_none_of_its_own_pull() {
+    let core: Vec<(usize, usize)> = (0..PW).flat_map(|y| (0..PW).map(move |x| (x, y))).collect();
+    let (mut twin, st) = pull_world(&core, &[]);
+    twin.step();
+    let in_core = |i: usize| core.contains(&(i % PW, i / PW));
+    let own = pull_on(&st, twin.dt(), |_| true, in_core);
+    println!("SR-HELD-OWN-PULL held {:?}; P2's whole field summed over the core {own:?}", twin.held);
+    assert_eq!(twin.held_mask().iter().filter(|&&m| m).count(), core.len(), "the world is not held as built: the case grades no hold");
+    assert!(own != [0.0, 0.0], "the whole field sums to 0 over the core: the case cannot tell its own pull from none");
+    assert_eq!(twin.held, [0.0, 0.0], "the held core booked its own pull");
+}
+
+/// §1.4.2 [M0-D149]: what a held core books is the free gas's pull on it, the reaction of the core's pull on that gas
+/// (Newton's third law, which P2's even K keeps) — a 4 × 4 held block, a 6 × 6 square of warm hydrogen below and to its
+/// right, one step: `held` toward the gas, within 10⁻⁹ of minus Σ Δt·Σ·g_core over the gas (g_core the block's field
+/// alone). A booking that drops the pull fails here; one that keeps the core's own, the case above.
+#[test]
+fn a_held_core_books_the_free_gas_pull_as_its_reaction() {
+    let core: Vec<(usize, usize)> = (8..12).flat_map(|y| (6..10).map(move |x| (x, y))).collect();
+    let gas: Vec<(usize, usize)> = (12..18).flat_map(|y| (18..24).map(move |x| (x, y))).collect();
+    let (mut twin, st) = pull_world(&core, &gas);
+    twin.step();
+    let in_core = |i: usize| core.contains(&(i % PW, i / PW));
+    let in_gas = |i: usize| gas.contains(&(i % PW, i / PW));
+    let reaction = pull_on(&st, twin.dt(), in_core, in_gas);
+    let off = (twin.held[0] + reaction[0]).hypot(twin.held[1] + reaction[1]) / reaction[0].hypot(reaction[1]);
+    println!("SR-HELD-GAS-PULL held {:?}; minus the core's pull on the gas {:?} (off {off:.3e})", twin.held, reaction.map(|r| -r));
+    assert_eq!(twin.held_mask().iter().filter(|&&m| m).count(), core.len(), "the block is not held as built: the case grades no hold");
+    assert!(twin.held[0] > 0.0 && twin.held[1] > 0.0, "the held block booked {:?}: the gas lies toward +x and +y", twin.held);
+    assert!(off <= 1e-9, "held {:?} against the reaction {:?}: off by {off:e}", twin.held, reaction.map(|r| -r));
 }
 
 // ---- P8's hold ----
@@ -318,22 +435,652 @@ fn the_hold_has_its_hysteresis() {
     }
 }
 
-#[test]
-fn a_held_iron_cell_is_released_at_n_fe_gate() {
-    let physics = physics();
-    let (eos, floors) = (Eos::from_physics(&physics).unwrap(), Floors::new(&physics, &elements()).unwrap());
-    let sigma_n = physics.get("sigma_n").unwrap();
+/// Item 1's cells (§2.7 [M0-D71f]): [cold iron under N_Fe's gate, cold iron past it, C/O as dense, C/O as dense, C/O
+/// with a trace of iron 10⁻³⁰], all at ½η_hold; with `iron_appears` the fourth gains X_Fe 10⁻⁴ (from its O). Σ_N / Y_e of
+/// iron times 0.9 and 1.1 — the gate form held the first and refused the second.
+fn item1_cells(eos: &Eos, physics: &Physics, iron_appears: bool) -> ([Cell; 5], f64, f64) {
     let iron = fractions(&[("Fe", 1.0)]);
     let y_e = elements().composition(&iron).y_e;
+    let sigma_n = physics.get("sigma_n").unwrap();
     let (under, past) = (0.9 * sigma_n / y_e, 1.1 * sigma_n / y_e);
-    let c = |sigma: f64, x: [f64; N_SPECIES]| cold_cell(&eos, sigma, x, 0.05, [0.0, 0.0]);
-    let half = fractions(&[("He", 0.5), ("Fe", 0.5)]);
-    let mut held = vec![false; 4];
-    // [iron under its gate, iron past it, C/O as dense, He | Fe past the gate]
-    p8(&floors, &[c(under, iron), c(past, iron), c(past, co()), c(past, half)], &mut held);
-    assert_eq!(held, [true, false, true, false], "Y_eΣ against Σ_N {sigma_n} (iron's Y_e {y_e:.4})");
-    // The held iron cell compressed past the gate: released, though as cold as before.
-    p8(&floors, &[c(past, iron), c(past, iron), c(past, co()), c(past, half)], &mut held);
-    assert_eq!(held, [false, false, true, false], "the held iron cell past Y_eΣ = Σ_N");
-    println!("SR-HELD-NFE Σ_N {sigma_n}, iron Y_e {y_e:.4}: held at Σ {under:.1}, released at {past:.1}");
+    let c = |sigma: f64, x: [f64; N_SPECIES]| cold_cell(eos, sigma, x, 0.5 * ETA_HOLD, [0.0, 0.0]);
+    let fourth = if iron_appears { fractions(&[("C", 0.5), ("O", 0.4999), ("Fe", 1e-4)]) } else { co() };
+    let trace = fractions(&[("C", 0.5), ("O", 0.5), ("Fe", 1e-30)]);
+    ([c(under, iron), c(past, iron), c(past, co()), c(past, fourth), c(past, trace)], under, past)
+}
+
+/// Item 1's masks: after the first P8, and after the second, once the fourth cell's iron appears.
+const ITEM1: [[bool; 5]; 2] = [[false, false, true, true, false], [false, false, true, false, false]];
+
+#[test]
+fn no_iron_is_held() {
+    let physics = physics();
+    let (eos, floors) = (Eos::from_physics(&physics).unwrap(), Floors::new(&physics, &elements()).unwrap());
+    let mut held = vec![false; 5];
+    let (cells, under, past) = item1_cells(&eos, &physics, false);
+    p8(&floors, &cells, &mut held);
+    assert_eq!(held, ITEM1[0], "iron at Σ {under:.1} and {past:.1}, C/O beside it, C/O with X_Fe 1e-30");
+    // The held C/O cell gains iron: released, though as cold as before.
+    p8(&floors, &item1_cells(&eos, &physics, true).0, &mut held);
+    assert_eq!(held, ITEM1[1], "the held C/O cell with X_Fe 1e-4");
+    println!("SR-HELD-NO-IRON twin: iron never held at Σ {under:.1} or {past:.1}, a trace of 1e-30 neither; C/O held, released at X_Fe 1e-4");
+}
+
+// ---- the GPU (M0-D71c) ----
+
+/// G-REF's band (§5.1): relative L1 in Σ and E against the twin.
+const L1_BAND: f64 = 1e-3;
+/// What the held cells were spared, against the twin's: relative.
+const SPARED_BAND: f64 = 1e-3;
+/// The GPU strips' momentum band, relative to Σm|u|: f32 cells, a step.
+const GPU_STRIP_BAND: f64 = 1e-6;
+/// The wall's free neighbours' E against the twin's, relative, with P2.
+const WORK_BAND: f64 = 1e-5;
+/// Steps per submission on the GPU, and so how often the disks' held cells are read.
+const CHUNK: u64 = 50;
+/// The GPU's pull on the held block against the twin's, relative: f32 fields and an f32 product per cell, a step.
+const PULL_BAND: f64 = 1e-4;
+/// The GPU strips: 64 × 64, the held column at x = 40 (off the centre, so P2's g there is not 0).
+const GW: usize = 64;
+const GCOL: usize = 40;
+
+/// A GPU world from f32 planes: P4 under `edge`, P2 when `gravity`, P0 when `edits`; the box fit to the state.
+struct Gpu {
+    gpu: sr_engine::gpu::Gpu,
+    world: WorldConfig,
+    state: GpuState,
+    booking: Booking,
+    _side: SideFields,
+    step: Step,
+}
+
+impl Gpu {
+    fn new(physics: &Physics, world: WorldConfig, planes: &[f32], edge: EdgeMode, gravity: bool, edits: bool) -> Gpu {
+        let gpu = super::device();
+        let state = GpuState::new(&gpu.device, world).unwrap();
+        state.upload(&gpu.queue, planes).unwrap();
+        let booking = Booking::new(&gpu.device, world).unwrap();
+        let side = SideFields::new(&gpu.device, world).unwrap();
+        let eos = EosGpu::new(&gpu.device, physics, &elements());
+        let passes = Passes { mode: BoxMode::Fit, gravity: gravity.then_some(&side), hydro: Some(edge) };
+        let mut step = Step::with_passes(&gpu.device, &state, &booking, &eos, physics, &passes).unwrap();
+        if edits {
+            step = step.with_edits(&gpu.device, &state, &booking, &eos, physics);
+        }
+        Gpu { gpu, world, state, booking, _side: side, step }
+    }
+
+    fn run(&self, steps: u64) {
+        self.step.run(&self.gpu.device, &self.gpu.queue, steps as u32);
+    }
+
+    fn planes(&self) -> Vec<f32> {
+        self.state.readback(&self.gpu.device, &self.gpu.queue)
+    }
+
+    fn mask(&self) -> Vec<bool> {
+        self.state.read_held(&self.gpu.device, &self.gpu.queue).iter().map(|&m| m != 0).collect()
+    }
+
+    fn book(&self) -> Vec<f32> {
+        self.booking.readback(&self.gpu.device, &self.gpu.queue)
+    }
+
+    fn booked(&self, name: &str) -> f64 {
+        book_totals(self.world, &self.book())[TERMS.iter().position(|t| t.name == name).unwrap()]
+    }
+
+    /// The momentum the hold took from the grid: P8's newly held cells' and what P4 spared the held ones, (x, y).
+    fn held(&self) -> [f64; 2] {
+        let totals: [f64; N_TERMS] = book_totals(self.world, &self.book());
+        let t = |name: &str| totals[TERMS.iter().position(|t| t.name == name).unwrap()];
+        [t("held.mom_x") + t("held.spared.mom_x"), t("held.mom_y") + t("held.spared.mom_y")]
+    }
+}
+
+/// The slots of booked term `name` in a [`Booking`] readback.
+fn term_plane(world: WorldConfig, book: &[f32], name: &str) -> Vec<f32> {
+    let mut base = 0;
+    for g in &BOOK_GROUPS {
+        let slots = g.domain.slots(world);
+        for t in g.terms.clone() {
+            if TERMS[t].name == name {
+                return book[base..base + slots].to_vec();
+            }
+            base += slots;
+        }
+    }
+    panic!("no booked term {name}");
+}
+
+/// f32 planes of a state's f64 ones, and back: the GPU and the twin start from the same numbers.
+fn to_f32(st: &State) -> Vec<f32> {
+    st.planes.iter().map(|&v| v as f32).collect()
+}
+
+fn twin_of(physics: &Physics, planes: &[f32], world: WorldConfig, edge: EdgeMode, gravity: bool) -> Twin {
+    let edge = if edge == EdgeMode::Leave { Edge::Leave } else { Edge::Bounce };
+    let switches = Switches { gravity, hydro: true, heat: false, reactions: false };
+    let (w, h) = (world.width as usize, world.height as usize);
+    Twin::new(physics, &elements(), edge, switches, None, w, h, planes.iter().map(|&v| f64::from(v)).collect()).unwrap()
+}
+
+/// Grid momentum (x, y) of f32 planes in f64, and Σm|u|.
+fn gpu_momentum(planes: &[f32], n: usize) -> ([f64; 2], f64) {
+    let p = |i: usize| (f64::from(planes[n + i]), f64::from(planes[2 * n + i]));
+    let sum = (0..n).fold([0.0; 2], |s, i| [s[0] + p(i).0, s[1] + p(i).1]);
+    (sum, (0..n).map(|i| p(i).0.hypot(p(i).1)).sum())
+}
+
+fn gpu_kinetic(planes: &[f32], n: usize) -> f64 {
+    (0..n)
+        .filter(|&i| planes[i] > 0.0)
+        .map(|i| 0.5 * (f64::from(planes[n + i]).powi(2) + f64::from(planes[2 * n + i]).powi(2)) / f64::from(planes[i]))
+        .sum()
+}
+
+/// Relative L1 difference of plane `c`: Σ|a − b| / Σ|b| (b the twin's).
+fn l1(gpu: &[f32], twin: &[f64], c: usize, n: usize) -> f64 {
+    let r = c * n..(c + 1) * n;
+    let diff: f64 = gpu[r.clone()].iter().zip(&twin[r.clone()]).map(|(&a, &b)| (f64::from(a) - b).abs()).sum();
+    diff / twin[r].iter().map(|b| b.abs()).sum::<f64>()
+}
+
+/// The disk of `mass` as `calibrate` builds it: its f32 planes and world.
+fn disk(physics: &Physics, mass: f64) -> (Vec<f32>, WorldConfig, EdgeMode) {
+    let (scene, planes) = cold_disk_scene(mass, Matter::CarbonOxygen, physics, &elements(), &[]).unwrap().expect("an equilibrium");
+    (planes, scene.world, scene.edge)
+}
+
+/// The disk of `mass` stepped 10,000 times on the GPU, graded on G-REST's bounds; `r11` is M0-R11's held count.
+fn disk_rests_on_the_gpu(mass: f64, r11: usize) {
+    let physics = physics();
+    let (planes, world, edge) = disk(&physics, mass);
+    let gpu = Gpu::new(&physics, world, &planes, edge, true, false);
+    let n = world.cells();
+    let (p0, _) = gpu_momentum(&planes, n);
+    let (mut ke_from, mut floor_from, mut held_moving, mut held_first) = (f64::NAN, f64::NAN, 0usize, 0usize);
+    for chunk in 1..=STEPS / CHUNK {
+        gpu.run(CHUNK);
+        let (out, mask) = (gpu.planes(), gpu.mask());
+        held_moving += (0..n).filter(|&i| mask[i] && (out[n + i] != 0.0 || out[2 * n + i] != 0.0)).count();
+        if chunk == 1 {
+            held_first = mask.iter().filter(|&&m| m).count();
+        }
+        if chunk * CHUNK == FROM {
+            ke_from = gpu_kinetic(&out, n);
+            floor_from = gpu.booked("energy.floor_added");
+        }
+    }
+    let report = gpu.step.read_dt(&gpu.gpu.device, &gpu.gpu.queue);
+    assert_eq!(report.steps, STEPS, "the GPU ran {} steps", report.steps);
+    assert!(report.non_finite.is_none(), "non-finite state: {:?}", report.non_finite);
+    let out = gpu.planes();
+    let held = gpu.mask().iter().filter(|&&m| m).count();
+    let (ke_end, floor) = (gpu_kinetic(&out, n), gpu.booked("energy.floor_added") - floor_from);
+    let ((p1, scale), booked) = (gpu_momentum(&out, n), gpu.held());
+    let drift = (p1[0] + booked[0] - p0[0]).hypot(p1[1] + booked[1] - p0[1]);
+    println!(
+        "SR-HELD-CORE-GPU disk M {mass}: held {held_first} at step {CHUNK}, {held} at {STEPS} (M0-R11: {r11}); floor_added \
+         {floor:.4e} over {FROM}–{STEPS}; KE {ke_from:.4e} → {ke_end:.4e}; held momentum ({:.4e}, {:.4e}); momentum drift \
+         {drift:.3e} of Σm|u| {scale:.4e}; held cells moving {held_moving}",
+        booked[0],
+        booked[1]
+    );
+    assert!(held > 0, "the disk holds no cell: the hold never fired");
+    assert_eq!(held_moving, 0, "held cells with a momentum at a read");
+    assert!(floor <= FLOOR_BOUND, "floor_added {floor} over steps {FROM}–{STEPS} (bound {FLOOR_BOUND})");
+    assert!(ke_end <= KE_GROWTH * ke_from, "KE {ke_from} at {FROM} → {ke_end} at {STEPS} (bound × {KE_GROWTH})");
+}
+
+#[test]
+fn gpu_disk_m900_rests_held() {
+    disk_rests_on_the_gpu(900.0, 16);
+}
+
+#[test]
+fn gpu_disk_m1800_rests_held() {
+    disk_rests_on_the_gpu(1_800.0, 12);
+}
+
+/// The disk of `mass` on the GPU and the twin from the same f32 planes, 200 steps (G-REF's span): Σ and E within G-REF's
+/// band, the held set the same.
+fn disk_agrees_with_the_twin(mass: f64) {
+    const SPAN: u64 = 200;
+    let physics = physics();
+    let (planes, world, edge) = disk(&physics, mass);
+    let n = world.cells();
+    let mut twin = twin_of(&physics, &planes, world, edge, true);
+    for _ in 0..SPAN {
+        twin.step();
+    }
+    let gpu = Gpu::new(&physics, world, &planes, edge, true, false);
+    gpu.run(SPAN);
+    let (out, mask) = (gpu.planes(), gpu.mask());
+    let (sigma, energy) = (l1(&out, &twin.state.planes, 0, n), l1(&out, &twin.state.planes, 3, n));
+    let differ = (0..n).filter(|&i| mask[i] != twin.held_mask()[i]).count();
+    let held = mask.iter().filter(|&&m| m).count();
+    // The f32 slots' scale: what P4 spared each held cell over the span, summed in magnitude.
+    let book = gpu.book();
+    let spared: f64 = ["held.spared.mom_x", "held.spared.mom_y"].iter().flat_map(|t| term_plane(world, &book, t)).map(|v| f64::from(v).abs()).sum();
+    println!(
+        "SR-HELD-REF disk M {mass}, step {SPAN}: relative L1 Σ {sigma:.3e}, E {energy:.3e} (band {L1_BAND:e}); held {held}, {differ} \
+         cells held on one side only; held momentum GPU {:?} (Σ|slot| {spared:.4e}), twin {:?}",
+        gpu.held(),
+        twin.held
+    );
+    assert!(held > 0, "no cell held: the comparison grades no hold");
+    assert_eq!(differ, 0, "the held sets differ in {differ} cells");
+    assert!(sigma <= L1_BAND && energy <= L1_BAND, "relative L1 Σ {sigma:e}, E {energy:e} > {L1_BAND:e}");
+}
+
+#[test]
+fn gpu_disk_m900_agrees_with_the_twin_at_step_200() {
+    disk_agrees_with_the_twin(900.0);
+}
+
+#[test]
+fn gpu_disk_m1800_agrees_with_the_twin_at_step_200() {
+    disk_agrees_with_the_twin(1_800.0);
+}
+
+// ---- the pull on the GPU (M0-D151) ----
+
+/// [`pull_world`]'s state at the GPU's 64 × 64 on the GPU and the twin, one step: the GPU, its held total and the twin.
+fn gpu_pull_step(core: &[(usize, usize)], gas: &[(usize, usize)]) -> (Gpu, [f64; 2], Twin) {
+    let physics = physics();
+    let (mut twin, st) = pull_world_of(GW, core, gas);
+    twin.step();
+    let world = WorldConfig::new(GW as u32, GW as u32).unwrap();
+    let gpu = Gpu::new(&physics, world, &to_f32(&st), EdgeMode::Bounce, true, false);
+    gpu.run(1);
+    let held = gpu.held();
+    (gpu, held, twin)
+}
+
+/// §1.4.2 [M0-D149] on the GPU: a world of held cells (`a_held_core_books_none_of_its_own_pull`'s, at 64 × 64) books
+/// `held` exactly 0 — its g_pull is the field of nothing — where P2's whole f32 field summed over it (the booking before
+/// M0-D151) is not.
+#[test]
+fn gpu_a_held_core_books_none_of_its_own_pull() {
+    let core: Vec<(usize, usize)> = (0..GW).flat_map(|y| (0..GW).map(move |x| (x, y))).collect();
+    let (gpu, held, _) = gpu_pull_step(&core, &[]);
+    let g = read_back(&gpu.gpu.device, &gpu.gpu.queue, gpu.step.gravity_field().expect("a step with P2"));
+    let (n, planes) = (GW * GW, gpu.planes());
+    let own = (0..n).fold([0.0, 0.0], |a, i| [a[0] + f64::from(planes[i]) * f64::from(g[i]), a[1] + f64::from(planes[i]) * f64::from(g[n + i])]);
+    println!("SR-HELD-OWN-PULL-GPU held {held:?}; Σ Σ·g over the core, P2's whole field {own:?}");
+    assert_eq!(gpu.mask().iter().filter(|&&m| m).count(), n, "the world is not held as built: the case grades no hold");
+    assert!(own != [0.0, 0.0], "P2's whole field sums to 0 over the core: the case cannot tell its own pull from none");
+    assert_eq!(held, [0.0, 0.0], "the held core booked its own pull");
+}
+
+/// §1.4.2 [M0-D149] on the GPU: the held block beside warm gas
+/// (`a_held_core_books_the_free_gas_pull_as_its_reaction`'s) books the gas's pull, the twin's within [`PULL_BAND`].
+#[test]
+fn gpu_a_held_core_books_the_free_gas_pull_as_the_twins() {
+    let core: Vec<(usize, usize)> = (8..12).flat_map(|y| (6..10).map(move |x| (x, y))).collect();
+    let gas: Vec<(usize, usize)> = (12..18).flat_map(|y| (18..24).map(move |x| (x, y))).collect();
+    let (gpu, held, twin) = gpu_pull_step(&core, &gas);
+    let off = (held[0] - twin.held[0]).hypot(held[1] - twin.held[1]) / twin.held[0].hypot(twin.held[1]);
+    println!("SR-HELD-GAS-PULL-GPU held {held:?}; twin {:?} (off {off:.3e}, band {PULL_BAND:e})", twin.held);
+    assert_eq!(gpu.mask().iter().filter(|&&m| m).count(), core.len(), "the block is not held as built: the case grades no hold");
+    assert!(held[0] > 0.0 && held[1] > 0.0, "the held block booked {held:?}: the gas lies toward +x and +y");
+    assert!(off <= PULL_BAND, "held {held:?} against the twin's {:?}: off by {off:e}", twin.held);
+}
+
+// ---- the GPU strips ----
+
+/// A 64 × 64 world, every row alike: the columns `held` cold C/O at Σ 20 (ε_th ½η_hold ε_cold: held by the rule), the
+/// rest hydrogen of Σ `sigma`, warm (ε_th 1 + ε_cold), at x velocity `u(x)`.
+fn gpu_strip(eos: &Eos, held: &[usize], sigma: f64, u: impl Fn(usize) -> f64) -> Vec<f32> {
+    let hy = fractions(&[("H", 1.0)]);
+    let cold_h = eos.eps_cold(sigma, elements().composition(&hy).y_e, 0.0);
+    let cells: Vec<Cell> = (0..GW * GW)
+        .map(|i| {
+            let x = i % GW;
+            if held.contains(&x) {
+                return cold_cell(eos, 20.0, co(), 0.5 * ETA_HOLD, [0.0, 0.0]);
+            }
+            let v = u(x);
+            Cell { sigma, mom: [sigma * v, 0.0], energy: sigma * (1.0 + 2.0 * cold_h + 0.5 * v * v), x: hy }
+        })
+        .collect();
+    to_f32(&state(GW, GW, &cells))
+}
+
+/// One step of `planes` on the GPU and the twin: the GPU's state after it, and both.
+fn strip_step(physics: &Physics, planes: &[f32], edge: EdgeMode, gravity: bool) -> (Vec<f32>, Gpu, Twin) {
+    let world = WorldConfig::new(GW as u32, GW as u32).unwrap();
+    let mut twin = twin_of(physics, planes, world, edge, gravity);
+    twin.step();
+    let gpu = Gpu::new(physics, world, planes, edge, gravity, false);
+    gpu.run(1);
+    (gpu.planes(), gpu, twin)
+}
+
+/// The held columns `cols` of the GPU's state: held, their Σ, E and X bit for bit, their momentum 0.
+fn assert_gpu_columns_kept(gpu: &Gpu, before: &[f32], after: &[f32], cols: &[usize]) {
+    let n = GW * GW;
+    let mask = gpu.mask();
+    for i in (0..n).filter(|i| cols.contains(&(i % GW))) {
+        assert!(mask[i], "cell {i} of a held column is not held: the case grades no hold");
+        for c in (0..14).filter(|&c| c != 1 && c != 2) {
+            assert_eq!(after[c * n + i].to_bits(), before[c * n + i].to_bits(), "cell {i}: the held cell's channel {c} moved");
+        }
+        assert!(after[n + i] == 0.0 && after[2 * n + i] == 0.0, "cell {i}: the held cell's momentum");
+    }
+    assert_eq!(mask.iter().filter(|&&m| m).count(), cols.len() * GW, "cells held off the columns");
+}
+
+/// What the GPU's held cells were spared against the twin's, relative.
+fn spared_off(gpu: &Gpu, twin: &Twin) -> f64 {
+    let g = gpu.held();
+    (g[0] - twin.held[0]).hypot(g[1] - twin.held[1]) / twin.held[0].hypot(twin.held[1])
+}
+
+#[test]
+fn gpu_a_held_wall_reflects_as_the_twins() {
+    let physics = physics();
+    let eos = Eos::from_physics(&physics).unwrap();
+    // Gas at rest at both edges, cells 37–39 moving into the held column at 0.05.
+    let before = gpu_strip(&eos, &[GCOL], 1.0, |x| if (GCOL - 3..GCOL).contains(&x) { 0.05 } else { 0.0 });
+    let (after, gpu, twin) = strip_step(&physics, &before, EdgeMode::Bounce, false);
+    let n = GW * GW;
+    assert_gpu_columns_kept(&gpu, &before, &after, &[GCOL]);
+    let dp: f64 = (0..GW).map(|y| y * GW + GCOL - 1).map(|i| f64::from(after[n + i]) - f64::from(before[n + i])).sum();
+    let (p0, scale) = gpu_momentum(&before, n);
+    let (p1, held) = (gpu_momentum(&after, n).0, gpu.held());
+    let drift = [0, 1].map(|k| (p1[k] + held[k] - p0[k]).abs() / scale);
+    let off = spared_off(&gpu, &twin);
+    println!("SR-HELD-WALL-GPU Δp of the free cells {dp:.6e}; held GPU {held:?}, twin {:?} (off {off:.3e}); drift {drift:?} of {scale:.4e}", twin.held);
+    assert!(dp < 0.0, "the free cells' momentum into the wall rose by {dp}: the wall does not turn them back");
+    assert!(held[0] > 0.0, "the wall's impulse on the held column {held:?}: the gas pushes it toward +x");
+    assert!(off <= SPARED_BAND, "the held column was spared {held:?}, the twin's {:?}", twin.held);
+    assert!(drift[0] <= GPU_STRIP_BAND && drift[1] <= GPU_STRIP_BAND, "grid + held momentum drifted {drift:?}");
+}
+
+#[test]
+fn gpu_nothing_crosses_a_held_cell_either_way() {
+    let physics = physics();
+    let eos = Eos::from_physics(&physics).unwrap();
+    // Dense warm gas (Σ 30 against the column's 20), cells 37–39 driven into the column at 0.5 — its ordinary HLL flux
+    // carries mass in — and 41–42 drawn away from it at 0.5; two held columns side by side at 40 and 41 would also hold
+    // the held–held face, so 41 is free here and a second strip holds 40 and 41.
+    let mover = |x: usize| if (GCOL - 3..GCOL).contains(&x) || (GCOL + 1..GCOL + 3).contains(&x) { 0.5 } else { 0.0 };
+    for cols in [vec![GCOL], vec![GCOL, GCOL + 1]] {
+        let before = gpu_strip(&eos, &cols, 30.0, mover);
+        let (after, gpu, twin) = strip_step(&physics, &before, EdgeMode::Bounce, false);
+        let n = GW * GW;
+        assert_gpu_columns_kept(&gpu, &before, &after, &cols);
+        let (p0, scale) = gpu_momentum(&before, n);
+        let (p1, held) = (gpu_momentum(&after, n).0, gpu.held());
+        let drift = [0, 1].map(|k| (p1[k] + held[k] - p0[k]).abs() / scale);
+        let off = spared_off(&gpu, &twin);
+        println!("SR-HELD-NO-INFLOW-GPU columns {cols:?}: held GPU {held:?}, twin {:?} (off {off:.3e}); drift {drift:?} of {scale:.4e}", twin.held);
+        assert!(off <= SPARED_BAND, "columns {cols:?}: spared {held:?}, the twin's {:?}", twin.held);
+        assert!(drift[0] <= GPU_STRIP_BAND && drift[1] <= GPU_STRIP_BAND, "columns {cols:?}: grid + held momentum drifted {drift:?}");
+    }
+}
+
+#[test]
+fn gpu_no_work_crosses_a_held_wall_and_the_kick_is_booked() {
+    let physics = physics();
+    let eos = Eos::from_physics(&physics).unwrap();
+    // The wall strip under its own gravity (P2): the column's Σg kick booked, the wall's neighbours doing no work across it.
+    let before = gpu_strip(&eos, &[GCOL], 1.0, |x| if (GCOL - 3..GCOL).contains(&x) { 0.05 } else { 0.0 });
+    let (after, gpu, twin) = strip_step(&physics, &before, EdgeMode::Bounce, true);
+    let n = GW * GW;
+    assert_gpu_columns_kept(&gpu, &before, &after, &[GCOL]);
+    let off = spared_off(&gpu, &twin);
+    // The neighbours' E against the twin's, and how far E moved there over the step (what a face's work would be part of).
+    let near: Vec<usize> = (0..GW).flat_map(|y| [y * GW + GCOL - 1, y * GW + GCOL + 1]).collect();
+    let worst = near
+        .iter()
+        .map(|&i| (f64::from(after[3 * n + i]) - twin.state.planes[3 * n + i]).abs() / twin.state.planes[3 * n + i].abs())
+        .fold(0.0, f64::max);
+    let moved = near.iter().map(|&i| (f64::from(after[3 * n + i]) / f64::from(before[3 * n + i]) - 1.0).abs()).fold(0.0, f64::max);
+    println!(
+        "SR-HELD-WORK-GPU the wall's neighbours' E off the twin's by {worst:.3e} (band {WORK_BAND:e}; E moved by up to {moved:.3e}); \
+         held GPU {:?}, twin {:?} (off {off:.3e})",
+        gpu.held(),
+        twin.held
+    );
+    assert!(twin.held[1].abs() > 0.0 || twin.held[0].abs() > 0.0, "the twin booked no kick: the case grades nothing");
+    assert!(off <= SPARED_BAND, "the held column was spared {:?}, the twin's {:?}", gpu.held(), twin.held);
+    assert!(worst <= WORK_BAND, "the wall's neighbours' E off the twin's by {worst:e}: work done across the wall");
+}
+
+#[test]
+fn gpu_a_held_edge_cell_lets_nothing_escape() {
+    let physics = physics();
+    let eos = Eos::from_physics(&physics).unwrap();
+    let before = gpu_strip(&eos, &[0], 1.0, |_| 0.0);
+    let (after, gpu, _) = strip_step(&physics, &before, EdgeMode::Leave, false);
+    assert_gpu_columns_kept(&gpu, &before, &after, &[0]);
+    // Slots: x = 0 by y, x = 63 by y, y = 0 by x, y = 63 by x. The held column's: the x = 0 side's and x = 0 on y's sides.
+    let book = gpu.book();
+    let held_slot = |s: usize| s < GW || s == 2 * GW || s == 3 * GW;
+    let mut leaked = Vec::new();
+    for t in TERMS.iter().filter(|t| t.name.starts_with("escaped.")) {
+        let plane = term_plane(gpu.world, &book, t.name);
+        leaked.extend((0..plane.len()).filter(|&s| held_slot(s) && plane[s] != 0.0).map(|s| (t.name, s, plane[s])));
+    }
+    let free = term_plane(gpu.world, &book, "escaped.mom_y");
+    let free_booked = (2 * GW + 1..3 * GW).filter(|&s| free[s] != 0.0).count();
+    println!("SR-HELD-EDGE-GPU {} held slots booked, {free_booked} of the free cells' y = 0 slots booked", leaked.len());
+    assert!(free_booked > 0, "no free edge cell booked escaped: the case grades no booking");
+    assert!(leaked.is_empty(), "the held edge cells booked escaped: {:?}", &leaked[..leaked.len().min(4)]);
+}
+
+#[test]
+fn gpu_clear_leaves_p4_no_stale_wall() {
+    // M0-D71b's flag: P0's Clear zeroes the mask, which only P4 — between P0 and P8 — can tell. A cold C/O core held by
+    // the rule, then a Clear and a paint across the core's place in one step: the planes the same edits give with the
+    // mask zeroed by hand, bit for bit; the paint's edge lies inside the core's place, so a stale wall would hold gas there.
+    let physics = physics();
+    let eos = Eos::from_physics(&physics).unwrap();
+    let block = |i: usize| (30..34).contains(&(i % GW)) && (30..34).contains(&(i / GW));
+    let hy = fractions(&[("H", 1.0)]);
+    let cells: Vec<Cell> = (0..GW * GW)
+        .map(|i| if block(i) { cold_cell(&eos, 50.0, co(), 0.5 * ETA_HOLD, [0.0, 0.0]) } else { Cell { sigma: 1.0, mom: [0.0; 2], energy: 1.0, x: hy } })
+        .collect();
+    let planes = to_f32(&state(GW, GW, &cells));
+    let world = WorldConfig::new(GW as u32, GW as u32).unwrap();
+    let h = elements().index_of("H").unwrap();
+    let run = |zeroed: bool| {
+        let gpu = Gpu::new(&physics, world, &planes, EdgeMode::Bounce, false, true);
+        gpu.run(1);
+        let held = gpu.mask().iter().filter(|&&m| m).count();
+        if zeroed {
+            gpu.state.upload_held(&gpu.gpu.queue, &vec![0; GW * GW]).unwrap();
+        }
+        for e in [Edit::Clear, Edit::Paint { cell: [28, 31], radius: 3, species: h }] {
+            gpu.step.queue_edit(&gpu.gpu.queue, &e).unwrap();
+        }
+        gpu.run(1);
+        (held, gpu.planes())
+    };
+    let (held, cleared) = run(false);
+    let (_, reference) = run(true);
+    let n = GW * GW;
+    let moved = (0..n).filter(|&i| block(i) && (reference[n + i] != 0.0 || reference[2 * n + i] != 0.0)).count();
+    let differ = (0..cleared.len()).filter(|&k| cleared[k].to_bits() != reference[k].to_bits()).count();
+    println!("SR-HELD-CLEAR-GPU {held} held before the Clear; {moved} of the core's cells moving after it; {differ} values differ");
+    assert_eq!(held, 16, "the core is not held before the Clear: the case grades nothing");
+    assert!(moved > 0, "no cell of the core's place moved: a stale wall would show nothing");
+    assert_eq!(differ, 0, "the Clear's step differs from the same step with the mask zeroed: P4 read a stale mask");
+}
+
+#[test]
+fn gpu_no_iron_is_held() {
+    // Item 1 on the GPU (§2.7 [M0-D71f], floors.wgsl's `hold`, f32 alike): item 1's five cells in a row of a 64 × 64
+    // world of thin warm hydrogen (Σ 1, never held), 12 cells apart; the mask after the initial hold and one step, then
+    // the same planes uploaded with the fourth cell's iron appeared (the mask kept) and one step more.
+    let physics = physics();
+    let eos = Eos::from_physics(&physics).unwrap();
+    let world = WorldConfig::new(GW as u32, GW as u32).unwrap();
+    let at: [usize; 5] = std::array::from_fn(|k| 32 * GW + 8 + 12 * k);
+    let hy = fractions(&[("H", 1.0)]);
+    let planes = |iron_appears: bool| {
+        let (five, _, _) = item1_cells(&eos, &physics, iron_appears);
+        let cells: Vec<Cell> = (0..GW * GW)
+            .map(|i| at.iter().position(|&a| a == i).map_or(Cell { sigma: 1.0, mom: [0.0; 2], energy: 1.0, x: hy }, |k| five[k]))
+            .collect();
+        to_f32(&state(GW, GW, &cells))
+    };
+    let gpu = Gpu::new(&physics, world, &planes(false), EdgeMode::Bounce, false, false);
+    let read = |gpu: &Gpu| {
+        let mask = gpu.mask();
+        (at.map(|i| mask[i]), mask.iter().filter(|&&m| m).count())
+    };
+    gpu.run(1);
+    let (first, n_first) = read(&gpu);
+    gpu.state.upload(&gpu.gpu.queue, &planes(true)).unwrap();
+    gpu.run(1);
+    let (second, n_second) = read(&gpu);
+    println!("SR-HELD-NO-IRON GPU: masks {first:?} ({n_first} held) then {second:?} ({n_second} held)");
+    assert_eq!(first, ITEM1[0], "iron under and past N_Fe's gate, C/O beside it, C/O with X_Fe 1e-30");
+    assert_eq!(second, ITEM1[1], "the held C/O cell with X_Fe 1e-4");
+    assert_eq!((n_first, n_second), (2, 1), "cells held off item 1's");
+}
+
+// ---- G-REST's window on the GPU (M0-D71f) ----
+
+/// The window's source, the Sun-like life's step 450,000 (git-ignored: on linux-pc and laserax-ai-server, not in a clone).
+const WINDOW_SOURCE: &str = "build/v9-sun-life/dumps/s_450000.bin";
+/// M0-D67's box of the source, x, y, w, h, set at (`WINDOW_AT`, `WINDOW_AT`) of a `WINDOW` × `WINDOW` world.
+const WINDOW_BOX: [usize; 4] = [248, 144, 104, 104];
+const WINDOW: usize = 128;
+const WINDOW_AT: usize = 12;
+/// G-REST's ruled bound on the window: floor_added over its 10,000 steps against radiated.
+const WINDOW_SHARE: f64 = 0.15;
+
+fn repo_dir() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("../..")
+}
+
+fn scenes_dir() -> PathBuf {
+    repo_dir().join("scenes")
+}
+
+fn scratch(name: &str) -> PathBuf {
+    let dir = std::env::temp_dir().join(format!("sr-held-core-{}-{name}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).expect("a scratch directory");
+    dir
+}
+
+/// The window cut from the source dump: every plane's box (Σ … X, F, the rate and the mask when the dump holds them) at
+/// (`WINDOW_AT`, `WINDOW_AT`), the source's corner cell (vacuum) outside — M0-R11's crop — and the active box moved with it,
+/// so the window's box, its FFT size and its records are the life's: outside the box is vacuum, and gravity free-space.
+fn cut_window(src: &Dump) -> Dump {
+    let (w0, n0, n) = (src.world.width as usize, src.world.cells(), WINDOW * WINDOW);
+    assert_eq!(src.resume.box_record[..4].iter().map(|&v| v as usize).collect::<Vec<_>>(), WINDOW_BOX, "the source's active box");
+    assert!(src.sinks.is_empty(), "the source holds sinks");
+    fn crop<T: Copy + Default>(planes: &[T], w0: usize, n0: usize, n: usize) -> Vec<T> {
+        let mut out = vec![T::default(); planes.len() / n0 * n];
+        for (c, plane) in planes.chunks(n0).enumerate() {
+            for y in 0..WINDOW {
+                for x in 0..WINDOW {
+                    let inside = (WINDOW_AT..WINDOW_AT + WINDOW_BOX[2]).contains(&x) && (WINDOW_AT..WINDOW_AT + WINDOW_BOX[3]).contains(&y);
+                    let from = if inside { (y - WINDOW_AT + WINDOW_BOX[1]) * w0 + x - WINDOW_AT + WINDOW_BOX[0] } else { 0 };
+                    out[c * n + y * WINDOW + x] = plane[from];
+                }
+            }
+        }
+        out
+    }
+    let mut resume = src.resume;
+    resume.box_record[0] = WINDOW_AT as u32;
+    resume.box_record[1] = WINDOW_AT as u32;
+    Dump {
+        world: WorldConfig::new(WINDOW as u32, WINDOW as u32).unwrap(),
+        step: src.step,
+        sim_time: src.sim_time,
+        sinks: Vec::new(),
+        resume,
+        planes: crop(&src.planes, w0, n0, n),
+        flux: src.flux.as_deref().map(|f| crop(f, w0, n0, n)),
+        rate: src.rate.as_deref().map(|r| crop(r, w0, n0, n)),
+        held: src.held.as_deref().map(|h| crop(h, w0, n0, n)),
+    }
+}
+
+/// scenes/remnant_window.bin, checked against the cut where the source is on disk: stale is a failure, never a silent
+/// re-cut (`SR_WRITE_SCENES=1` writes it first, the one way to refresh it); where the source is absent it is read as it is.
+fn window_file() -> PathBuf {
+    let path = scenes_dir().join("remnant_window.bin");
+    let source = repo_dir().join(WINDOW_SOURCE);
+    match Dump::read(&source) {
+        Ok(src) => {
+            let cut = cut_window(&src);
+            if std::env::var_os("SR_WRITE_SCENES").is_some() {
+                cut.write(&path).expect("write scenes/remnant_window.bin");
+            }
+            let file = Dump::read(&path).unwrap_or_else(|e| panic!("{e} — SR_WRITE_SCENES=1 bash tests/gpu.sh held_core physics writes it"));
+            assert!(file == cut, "scenes/remnant_window.bin is not the cut of {WINDOW_SOURCE} — SR_WRITE_SCENES=1 bash tests/gpu.sh held_core physics rewrites it");
+            println!("SR-HELD-WINDOW scenes/remnant_window.bin is the cut of {WINDOW_SOURCE}");
+        }
+        Err(e) => {
+            assert!(std::env::var_os("SR_WRITE_SCENES").is_none(), "SR_WRITE_SCENES=1 needs {WINDOW_SOURCE}: {e}");
+            println!("SR-HELD-WINDOW {WINDOW_SOURCE} is not here ({e}): scenes/remnant_window.bin read as it is, not re-cut");
+        }
+    }
+    path
+}
+
+/// A ledger number: summary.json writes f64s, an observers' snapshot their exact text.
+fn number(v: &Value) -> f64 {
+    v.as_f64().or_else(|| v.as_str().and_then(|s| s.parse().ok())).unwrap_or_else(|| panic!("not a number: {v}"))
+}
+
+#[test]
+fn gpu_the_remnant_window_shines_on_its_own_heat() {
+    // G-REST's window: the cut 10,000 steps on the GPU, every pass of the Sun preset's scene in a leave world; P8's
+    // floor_added ≤ 15 % of the light radiated. Both halves printed: the twin's crop under H read 1.2 % and 46 %, 3.8 % in
+    // all (M0-R11), so a whole-run share can hide a second half fed by the floor.
+    let file = window_file();
+    let from = Dump::read(&file).unwrap().step;
+    let dir = scratch("window");
+    let mut args: Vec<String> = ["--scene", "preset:sun", "--load-dump", &file.display().to_string(), "--edge", "leave", "--steps", &STEPS.to_string(), "--dump-every", &(STEPS / 2).to_string(), "--out", &dir.display().to_string()]
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
+    if let Some(adapter) = std::env::var("SR_TEST_ADAPTER").ok().filter(|s| !s.trim().is_empty()) {
+        args.extend(["--adapter".to_string(), adapter]);
+    }
+    assert_eq!(headless::run(&args), 0, "headless {args:?}");
+    let summary: Value = serde_json::from_slice(&std::fs::read(dir.join("summary.json")).unwrap()).unwrap();
+    assert_eq!(summary["steps"].as_u64(), Some(STEPS), "the window's steps");
+    let mid_step = from + STEPS / 2;
+    let observers: Value = serde_json::from_slice(&std::fs::read(dir.join(format!("dumps/s_{mid_step}.observers.json"))).unwrap()).unwrap();
+    let (start, mid, end) = (&summary["ledger"]["start"], &observers["ledger"]["last"], &summary["ledger"]["end"]);
+    assert_eq!(mid["step"].as_u64().or_else(|| mid["step"].as_str().and_then(|s| s.parse().ok())), Some(mid_step), "the mid record's step");
+    let e = |r: &Value, k: &str| number(&r["energy"][k]);
+    let span = |a: &Value, b: &Value| (e(b, "floor_added") - e(a, "floor_added"), e(b, "radiated") - e(a, "radiated"));
+    let (halves, (floor, radiated)) = ([span(start, mid), span(mid, end)], span(start, end));
+    let last = Dump::read(&dir.join(format!("dumps/s_{}.bin", from + STEPS))).unwrap();
+    let held = last.held.as_ref().map_or(0, |h| h.iter().filter(|&&m| m != 0).count());
+    let drift = e(end, "invariant") - e(start, "invariant");
+    println!(
+        "SR-HELD-WINDOW GPU {}: floor_added {floor:.4e} of radiated {radiated:.4e} = {:.2} % over {STEPS} steps (bound {:.0} %; \
+         M0-R11's twin 3.8 %); halves {:.2} % and {:.2} % ({:.3e}/{:.3e}, {:.3e}/{:.3e}); held {held} at step {}; the energy \
+         invariant {:+.4e} of |W| {:.4e}",
+        summary["adapter"]["name"],
+        100.0 * floor / radiated,
+        100.0 * WINDOW_SHARE,
+        100.0 * halves[0].0 / halves[0].1,
+        100.0 * halves[1].0 / halves[1].1,
+        halves[0].0,
+        halves[0].1,
+        halves[1].0,
+        halves[1].1,
+        from + STEPS,
+        drift,
+        e(start, "potential").abs()
+    );
+    assert!(held > 0, "no cell held at the window's end: the hold never fired");
+    assert!(radiated > 0.0, "the window radiated nothing");
+    assert!(floor <= WINDOW_SHARE * radiated, "floor_added {floor} over the window's {STEPS} steps against radiated {radiated} (bound {WINDOW_SHARE})");
+    let _ = std::fs::remove_dir_all(dir);
 }

@@ -1,0 +1,25 @@
+== read-only probe of laserax-ai-server, from linux-pc, 2026-11-03T10:50:02-05:00
+ 10:50:03 up 6 days,  3:52,  2 users,  load average: 0.00, 0.03, 0.40
+milestones/m0/logs/loop_times.jsonl 2091 records
+  M0-D146 laserax-ai changed GO
+  M0-D147 laserax-ai changed GO
+  M0-D71-r2 laserax-ai changed GO
+  M0-TG2 laserax-ai changed GO
+  M0-TB2 laserax-ai changed GO
+  M0-D71-r3 laserax-ai scope GO
+  M0-D71b-owed laserax-ai scope GO
+  M0-D148 laserax-ai-server changed GO
+tools/pb/verify.anchor.json 1614013 bytes, sha256 619f5e35bb3143aa mtime 1793719672
+milestones/m0/logs/loop_times.jsonl 3017328 bytes, sha256 cd3b93bb28c33cbf mtime 1793719672
+== local, 2026-11-03T10:50:03-05:00
+tools/pb/verify.anchor.json 1606800 bytes, sha256 3dbd4c8c4f36ae1a mtime 1793720861
+milestones/m0/logs/loop_times.jsonl 3018826 bytes, sha256 a0d47d1d54df8c4c mtime 1793720861
+loop_times at HEAD 3007790 bytes
+== the D71b/D148 records, server then local, 2026-11-03T10:50:18-05:00
+-- server:
+  M0-D71b-owed laserax-ai scope GO c9a4fc2dca53+8ae1fa1ef771
+  M0-D148 laserax-ai-server changed GO 255ec370c6a7+05c27fc1d09f
+-- local:
+  M0-D71b-owed laserax-ai scope GO c9a4fc2dca53+8ae1fa1ef771
+  M0-D148-owed laserax-ai scope GO c9a4fc2dca53+05c27fc1d09f
+  M0-D148-close laserax-ai scope GO c9a4fc2dca53+bace2a3d8e72

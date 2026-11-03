@@ -1,0 +1,16 @@
+PROBE3 M 900 step 1: held 16 | full g f32 Δt·Σ·g (1.011e-4, 8.965e-5) Σ|·| 2.012e3 | free-gas g GPU f32 (1.110e-6, 6.929e-7) Σ|·| 9.198e0, twin (-1.937e-9, 8.817e-10) Σ|·| 9.198e0
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PROBE3 M 900 step 199: held 16 | full g f32 Δt·Σ·g (1.545e-4, 1.507e-4) Σ|·| 2.012e3 | free-gas g GPU f32 (6.419e-6, 2.813e-6) Σ|·| 9.120e0, twin (5.899e-6, 2.274e-6) Σ|·| 9.120e0
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PROBE3 M 900 step 800: held 16 | full g f32 Δt·Σ·g (2.842e-4, 1.011e-4) Σ|·| 2.012e3 | free-gas g GPU f32 (1.490e-4, 3.162e-5) Σ|·| 8.063e0, twin (1.481e-4, 3.084e-5) Σ|·| 8.063e0
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PROBE3 M 1800 step 1: held 12 | full g f32 Δt·Σ·g (9.613e-4, 3.681e-4) Σ|·| 9.904e3 | free-gas g GPU f32 (0.000e0, 0.000e0) Σ|·| 0.000e0, twin (0.000e0, 0.000e0) Σ|·| 0.000e0
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PROBE3 M 1800 step 199: held 12 | full g f32 Δt·Σ·g (9.613e-4, 3.681e-4) Σ|·| 9.904e3 | free-gas g GPU f32 (0.000e0, 0.000e0) Σ|·| 0.000e0, twin (0.000e0, 0.000e0) Σ|·| 0.000e0
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PROBE3 M 1800 step 800: held 12 | full g f32 Δt·Σ·g (9.613e-4, 3.681e-4) Σ|·| 9.904e3 | free-gas g GPU f32 (0.000e0, 0.000e0) Σ|·| 0.000e0, twin (0.000e0, 0.000e0) Σ|·| 0.000e0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 487 filtered out; finished in 2.24s
+

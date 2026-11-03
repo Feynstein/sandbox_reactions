@@ -13,6 +13,15 @@
 // K̂(kx, ky) for kx ≤ nx/2 and ky ≤ ny/2 — row-major in ky, (nx/2 + 1) per row — taken in f64 on the CPU; a size's
 // quarter starts at koffsets[(log2 nx − 5) · ny_sizes + log2 ny − 5], and K̂(kx, ky) is read at
 // (min(kx, nx − kx), min(ky, ny − ky)).
+//
+// The pull (§1.4.2 [M0-D149]): what a held cell's spared Σg·Δt reads is the field of all but the held cells — φ_pull =
+// K ∗ Σ_src with the held cells emptied, g_pull = −∇φ_pull, the sinks' pull added (`grav_sinks`) — so a held core's own
+// pull, which cancels over it in exact arithmetic but not in an f32 FFT, is never booked. A second chain solves it before
+// φ's, on the same work buffer: `grav_rows_pull` empties the held cells (the mask the last P8 wrote, as P4 reads it) and
+// sets `pull_flag` when its row holds one; `grav_columns`, `grav_rows_inverse` and `grav_gradient_pull` then run only
+// while `gate` — that flag, bound as a uniform — is set, φ_pull into a scratch plane and g_pull into g's planes 3 and 4.
+// `grav_rows` clears the flag for the next step. With no held cell the pull chain costs its rows alone, and planes 3 and
+// 4 keep their last values, which no pass reads then.
 
 struct GravParams {
     sigma_vac: f32,
@@ -57,20 +66,22 @@ const MAX_SINKS: u32 = 16u;
 @group(0) @binding(9) var<storage, read> koffsets: array<u32>;
 // φ as conv_rows_inverse wrote it into `dst` (the same buffer, never bound both ways in one dispatch)
 @group(0) @binding(10) var<storage, read> phi: array<f32>;
-// g = −∇φ: the x plane, the y plane, then φ's (P4's energy source reads it, §0.5 [M0-D64]) — the gas's alone when the step runs P3 (`gas_field`), else the field itself
+// g = −∇φ: the x plane, the y plane, then φ's (P4's energy source reads it, §0.5 [M0-D64]), then g_pull's x and y planes
+// — the gas's alone when the step runs P3 (`gas_field`), else the field itself
 @group(0) @binding(11) var<storage, read_write> g: array<f32>;
 // the sinks (P3's buffer) and g and φ with their pull added (the field P4 and Δt read), used by `grav_sinks` alone
 @group(0) @binding(12) var<storage, read> sink_state: SinkState;
 @group(0) @binding(13) var<storage, read_write> g_total: array<f32>;
+// The hold's mask (state.rs `State::held`): 1 where a cell is held, as the last P8 left it — `grav_rows_pull`'s.
+@group(0) @binding(14) var held: texture_2d<u32>;
+// Set by `grav_rows_pull` when the box holds a held cell, cleared by `grav_rows`.
+@group(0) @binding(15) var<storage, read_write> pull_flag: atomic<u32>;
+// The pull chain's gate: `pull_flag` read back as a uniform; for φ's chain a constant 1.
+@group(0) @binding(16) var<uniform> gate: vec4<u32>;
 
-// 1 of 4: the box's rows of Σ_src — Σ, or 0 in vacuum (Σ < Σ_vac, §1.4.2) — zero-padded to fft_w, forward:
-// conv_rows with the vacuum mask.
-@compute @workgroup_size(256)
-fn grav_rows(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_index) lid: u32) {
-    let row = wg.x;
-    if (row >= abox.h) {
-        return;
-    }
+// 1 of 4: the box's rows of Σ_src — Σ, or 0 in vacuum (Σ < Σ_vac, §1.4.2), or, with `pull`, 0 in a held cell —
+// zero-padded to fft_w, forward: conv_rows with the vacuum mask.
+fn rows_forward(row: u32, lid: u32, pull: bool) {
     let n = abox.fft_w;
     let log_n = countTrailingZeros(n);
     let base = fp.src_offset + (abox.y0 + row) * fp.stride + abox.x0;
@@ -82,6 +93,10 @@ fn grav_rows(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_ind
                 v = 0.0;
             }
         }
+        if (pull && x < abox.w && textureLoad(held, vec2<u32>(abox.x0 + x, abox.y0 + row), 0).x != 0u) {
+            v = 0.0;
+            atomicOr(&pull_flag, 1u);
+        }
         buf[bitrev(x, log_n)] = vec2<f32>(v, 0.0);
     }
     dit(n, lid, false);
@@ -90,13 +105,34 @@ fn grav_rows(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_ind
     }
 }
 
+// φ's rows; the pull chain has run, so its flag is cleared here for the next step.
+@compute @workgroup_size(256)
+fn grav_rows(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_index) lid: u32) {
+    if (wg.x == 0u && lid == 0u) {
+        atomicStore(&pull_flag, 0u);
+    }
+    if (wg.x >= abox.h) {
+        return;
+    }
+    rows_forward(wg.x, lid, false);
+}
+
+// φ_pull's rows: the held cells emptied, the flag set where one is.
+@compute @workgroup_size(256)
+fn grav_rows_pull(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_index) lid: u32) {
+    if (wg.x >= abox.h) {
+        return;
+    }
+    rows_forward(wg.x, lid, true);
+}
+
 // 2 of 4: each column forward over fft_h (rows ≥ h are zero), times K̂ and 1 / (fft_w · fft_h), back by decimation in
 // frequency: conv_columns with the kernel's real quarter for the box's size, rows y < h back into spec and the ring's
 // two, y = h and y = fft_h − 1, into its rows h and h + 1. Then `grav_rows_inverse` (3 of 4) writes φ.
 @compute @workgroup_size(256)
 fn grav_columns(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_index) lid: u32) {
     let col = wg.x;
-    if (col >= abox.fft_w) {
+    if (col >= abox.fft_w || gate.x == 0u) {
         return;
     }
     let nx = abox.fft_w;
@@ -131,7 +167,7 @@ fn grav_columns(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_
 @compute @workgroup_size(256)
 fn grav_rows_inverse(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_index) lid: u32) {
     let row = wg.x;
-    if (row >= abox.h + 2u) {
+    if (row >= abox.h + 2u || gate.x == 0u) {
         return;
     }
     let n = abox.fft_w;
@@ -156,13 +192,9 @@ fn grav_rows_inverse(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invoca
     }
 }
 
-// 4 of 4: g = −∇φ over the box's 8 × 8 tiles by central differences, the box's outermost ring reading φ past the box
-// from spec (the ring, above; the twin's rule).
-@compute @workgroup_size(8, 8)
-fn grav_gradient(@builtin(global_invocation_id) id: vec3<u32>) {
-    if (id.x >= abox.w || id.y >= abox.h) {
-        return;
-    }
+// 4 of 4: −∇ of the φ `phi` holds at the box cell `id` by central differences, the box's outermost ring reading φ past
+// the box from spec (the ring, above; the twin's rule).
+fn gradient_at(id: vec2<u32>) -> vec2<f32> {
     let x = abox.x0 + id.x;
     let y = abox.y0 + id.y;
     let s = fp.stride;
@@ -191,15 +223,36 @@ fn grav_gradient(@builtin(global_invocation_id) id: vec3<u32>) {
     } else {
         yh = phi[(y + 1u) * s + x];
     }
-    let a = vec2<f32>(-(xh - xl) * 0.5, -(yh - yl) * 0.5);
-    let cell = y * s + x;
+    return vec2<f32>(-(xh - xl) * 0.5, -(yh - yl) * 0.5);
+}
+
+// g = −∇φ over the box's 8 × 8 tiles, and φ beside it.
+@compute @workgroup_size(8, 8)
+fn grav_gradient(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h) {
+        return;
+    }
+    let a = gradient_at(id.xy);
+    let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
     g[cell] = a.x;
     g[gp.cells + cell] = a.y;
     g[2u * gp.cells + cell] = phi[cell];
 }
 
+// g_pull = −∇φ_pull over the box's 8 × 8 tiles, into g's planes 3 and 4, while a cell is held (`gate`).
+@compute @workgroup_size(8, 8)
+fn grav_gradient_pull(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h || gate.x == 0u) {
+        return;
+    }
+    let a = gradient_at(id.xy);
+    let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
+    g[3u * gp.cells + cell] = a.x;
+    g[4u * gp.cells + cell] = a.y;
+}
+
 // An optional 5th, only in a step that runs P3 (§1.4.3): every sink's softened potential −G M / √(r² + r_acc²) added to φ, and its
-// exact gradient −G M d / (r² + r_acc²)^{3/2} (d from the sink to the cell's centre) added to the gas's g into `g_total`,
+// exact gradient −G M d / (r² + r_acc²)^{3/2} (d from the sink to the cell's centre) added to the gas's g and g_pull into `g_total`,
 // over the box's 8 × 8 tiles — the twin's `grav::add_sinks`, in the sinks' slot order. `g` keeps the gas's pull alone:
 // P3's kick-drift-kick reads it, since a g with the sinks' own pull would make a sink pull on itself through the bilinear
 // read. φ is rewritten whole by `conv_rows_inverse` every step, so adding in place never counts a sink twice.
@@ -227,4 +280,15 @@ fn grav_sinks(@builtin(global_invocation_id) id: vec3<u32>) {
     g_total[cell] = a.x;
     g_total[gp.cells + cell] = a.y;
     g_total[2u * gp.cells + cell] = p;
+    // g_pull with the same pulls, in the same order.
+    var b = vec2<f32>(g[3u * gp.cells + cell], g[4u * gp.cells + cell]);
+    for (var k = 0u; k < min(sink_state.count, MAX_SINKS); k++) {
+        let m = sink_state.sinks[k].m + sink_state.sinks[k].m_lo;
+        let ra = max(2.0, 2.0 * gp.grav * m / gp.c2);
+        let d = c - sink_state.sinks[k].pos;
+        let soft = dot(d, d) + ra * ra;
+        b -= (gp.grav * m * inverseSqrt(soft) / soft) * d;
+    }
+    g_total[3u * gp.cells + cell] = b.x;
+    g_total[4u * gp.cells + cell] = b.y;
 }

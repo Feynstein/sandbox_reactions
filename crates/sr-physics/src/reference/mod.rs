@@ -112,6 +112,8 @@ pub struct Twin {
     sigma_vac: f64,
     /// P2's g for the state the last step started from (the initial state's before step 0).
     g: Option<Field>,
+    /// The pull on the held cells, P2's field of the state with them emptied (§1.4.2 [M0-D149]); `None` while none is held.
+    pull: Option<Field>,
     step: u64,
     sim_time: f64,
     dt: f64,
@@ -161,6 +163,7 @@ impl Twin {
             flux: None,
             sigma_vac: physics.get("sigma_vac").expect("physics.json key sigma_vac"),
             g: None,
+            pull: None,
             step: 0,
             sim_time: 0.0,
             dt: 0.0,
@@ -229,12 +232,18 @@ impl Twin {
         self.held[1] += taken[1];
     }
 
-    /// P2 on the state as it stands (a no-op without gravity).
+    /// P2 on the state as it stands (a no-op without gravity), and, while a cell is held, the pull on the held cells: the
+    /// field of the state with them emptied (§1.4.2 [M0-D149]).
     fn solve_gravity(&mut self) {
         let (w, h) = (self.state.width, self.state.height);
         if let Some(gravity) = &mut self.gravity {
             let field = gravity.field(self.state.plane(0), self.sigma_vac, w, h).expect("a world within MAX_WORLD pads within the FFT");
             self.g = Some(field);
+            self.pull = None;
+            if self.mask.contains(&true) {
+                let free: Vec<f64> = self.state.plane(0).iter().zip(&self.mask).map(|(&s, &m)| if m { 0.0 } else { s }).collect();
+                self.pull = Some(gravity.field(&free, self.sigma_vac, w, h).expect("the same box as P2's"));
+            }
         }
     }
 
@@ -259,7 +268,7 @@ impl Twin {
         if self.switches.hydro {
             self.ran.push("P4 hydro");
             let radiation = self.flux.as_ref().map(|(x, y)| (&x[..], &y[..]));
-            let spared = self.hydro.step_held(&mut self.state, dt, self.g.as_ref(), radiation, &self.mask);
+            let spared = self.hydro.step_held(&mut self.state, dt, self.g.as_ref(), self.pull.as_ref(), radiation, &self.mask);
             self.held[0] += spared[0];
             self.held[1] += spared[1];
         }

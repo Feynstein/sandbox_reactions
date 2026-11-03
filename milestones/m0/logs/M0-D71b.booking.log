@@ -1,0 +1,42 @@
+== 2026-11-03T09:53:22-05:00 booking · task M0-D71b · box laserax-ai-server :: bash tests/gpu.sh booking physics
+-- booking · exit=0 · 11.29 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.59s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+39 terms, 6028000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 469 filtered out; finished in 1.59s
+
+
+== 2026-11-03T09:57:39-05:00 booking · task M0-D71b · box laserax-ai-server :: bash tests/gpu.sh booking physics
+-- booking · exit=0 · 2.62 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+39 terms, 6028000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 469 filtered out; finished in 2.44s
+
+

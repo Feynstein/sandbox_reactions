@@ -1,0 +1,42 @@
+== 2026-11-03T14:14:17-05:00 edges · task M0-D150 · box laserax-ai :: bash tests/gpu.sh edges physics
+-- edges · exit=101 · 4.47 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test edges::a_new_world_starts_in_leave ... ok
+test edges::gpu_bounce_returns_the_pulse ... 
+thread 'edges::gpu_bounce_returns_the_pulse' (2229791) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edges::gpu_bounce_walls_are_the_twins ... 
+thread 'edges::gpu_bounce_walls_are_the_twins' (2229863) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edges::gpu_leave_books_what_crosses ... 
+thread 'edges::gpu_leave_books_what_crosses' (2229865) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edges::gpu_set_edge_mode_lands_at_the_step_boundary ... 
+thread 'edges::gpu_set_edge_mode_lands_at_the_step_boundary' (2229868) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edges::twin_bounce_returns_the_pulse ... SR-EDGE-BOUNCE twin 256x4: 1417 steps to t = 200, v at 0 2.000000e-3 (v0 0.002), at 200 -2.000013e-3, 0.001 % from -v0; mass 2.2e-16 relative, escaped 0.0
+ok
+test edges::twin_leave_books_what_crosses ... SR-EDGE-LEAVE twin 128x64: 384 steps to t = 40, escaped mass 3540.1971 of 8960.0000 (39.5 %), loss − escaped 1.16e-15 of escaped, worst component 1.30e-15; by side [40.410683745030184, 1593.4087293297164, 83.63581938233126, 1822.7418222728545]; a face's mass fell 0 times
+SR-EDGE-SPECIES twin: Σ species escaped 3540.197066 for mass 3540.197055, the scene's |ΣX − 1| ≤ 3.0e-8
+ok
+
+failures:
+
+failures:
+    edges::gpu_bounce_returns_the_pulse
+    edges::gpu_bounce_walls_are_the_twins
+    edges::gpu_leave_books_what_crosses
+    edges::gpu_set_edge_mode_lands_at_the_step_boundary
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 482 filtered out; finished in 4.33s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

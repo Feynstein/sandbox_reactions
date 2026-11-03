@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/shaders/floors.wgsl
++++ b/crates/sr-engine/shaders/floors.wgsl
+@@ -187,8 +187,7 @@
+     if (now && !was) {
+         book[2u * n + cell] += mom.x;
+         book[3u * n + cell] += mom.y;
+-        hydro[n + cell] = 0.0;
+-        hydro[2u * n + cell] = 0.0;
++        // planted: the mask set, the momentum left
+     }
+     textureStore(held, xy, vec4<u32>(select(0u, 1u, now), 0u, 0u, 0u));
+ }

@@ -13,10 +13,10 @@
 //! guard (M0-D18).
 //!
 //! The hold (§2.7 [M0-TG2]; M0-R11's H), P8's last act ([`Floors::hold`]): a cell with Σ ≥ σ_hold whose ε_th — as the
-//! floor leaves it — is at most η_hold · ε_cold and whose N_Fe rate is 0 (X_Fe = 0 or Y_eΣ ≤ Σ_N) is held, and the next
+//! floor leaves it — is at most η_hold · ε_cold and which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) is held, and the next
 //! step's P4 leaves it as it is (hydro.rs's held walls). A held cell is released past 2η_hold · ε_cold, under ½σ_hold or
-//! once its N_Fe rate is > 0. A newly held cell's momentum is set to 0 — its kinetic energy left in E, where it becomes
-//! heat — and booked `held`. ε_th and ε_cold are read in f64 of the renormalised fractions.
+//! once X_Fe > 0, so a collapsing iron core stays free. A newly held cell's momentum is set to 0 — its kinetic energy left
+//! in E, where it becomes heat — and booked `held`. ε_th and ε_cold are read in f64 of the renormalised fractions.
 
 use super::hydro::State;
 use crate::eos::Eos;
@@ -25,7 +25,7 @@ use crate::registry::{Elements, Physics, RegistryError, N_SPECIES};
 const NS: usize = N_SPECIES;
 /// The neutron fraction's slot in §1.5's order (the registry's `ID_N`).
 const ID_N: usize = 9;
-/// Iron's slot in §1.5's order: N_Fe's input (§1.6.2).
+/// Iron's slot in §1.5's order: a cell holding any is never held (§2.7 [M0-D71f]).
 const ID_FE: usize = 8;
 /// σ_hold: the least Σ a held cell has (§2.7 [M0-TG2]; a code constant until M0-D71g moves it into physics.json).
 pub const SIGMA_HOLD: f64 = 10.0;
@@ -86,8 +86,6 @@ pub struct Floors {
     elements: Elements,
     sigma_vac: f64,
     sigma_floor: f64,
-    /// Σ_N, N_Fe's gate on Y_eΣ (§1.6.2).
-    sigma_n: f64,
 }
 
 impl Floors {
@@ -98,7 +96,6 @@ impl Floors {
             elements: elements.clone(),
             sigma_vac: get("sigma_vac"),
             sigma_floor: get("sigma_floor"),
-            sigma_n: physics.get("sigma_n").expect("physics.json key"),
         })
     }
 
@@ -163,11 +160,11 @@ impl Floors {
         let comp = self.elements.composition(&x);
         let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
         let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
-        let n_fe = x[ID_FE] > 0.0 && comp.y_e * sigma > self.sigma_n;
+        let iron = x[ID_FE] > 0.0;
         if was_held {
-            !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || n_fe)
+            !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || iron)
         } else {
-            sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && !n_fe
+            sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && !iron
         }
     }
 

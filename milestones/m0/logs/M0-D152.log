@@ -1,0 +1,187 @@
+# M0-D152 2026-11-03T16:08:57-05:00 linux-pc: cargo check --tests
+    Checking sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.46s
+# 2026-11-03T16:09:08-05:00 linux-pc: twin case held_core::no_iron_is_held (no adapter)
+SR-HELD-NO-IRON twin: iron never held at Σ 310.2 or 379.1, a trace of 1e-30 neither; C/O held, released at X_Fe 1e-4
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 492 filtered out; finished in 0.00s
+# 2026-11-03T16:11:01-05:00 rsync to laserax-ai-server (loop_times.jsonl excluded, M0-D71f's slip)
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB
+NVIDIA GeForce RTX 4090, 0 %, 19 MiB
+1196062 bash -c nvidia-smi --query-gpu=name,utilization.gpu,memory.used --format=csv,noheader; pgrep -fa "sandbox-reactions|cargo" | head -5
+# 2026-11-03T16:11:26-05:00 Verify 1 on laserax-ai-server RTX 4090
+held_core  22/0/0     149.59 s  GO · step 1/5, 4 left
+floors     12/0/0      15.30 s  GO · step 2/5, 3 left
+sink       34/0/0      20.50 s  GO · step 3/5, 2 left
+cold_core  8/0/0       18.95 s  GO · step 4/5, 1 left
+ledger     8/0/0       19.95 s  GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-D152.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+d3934a9d0a6a
+anchor: 618 path×scope entries moved by this run
+anchor: 176 paths checked · 382 skipped (3 classes) · 235 never checked · 2 stale · 0 unclassified · 0 owed · 413 covered of 795 visible
+verify: 84 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 149.60 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.0->1.16
+=== GO ===
+test held_core::disk_m1800_rests_held ... SR-HELD-CORE disk M 1800: held 12 at step 0, 12 at 10000 (M0-R11: 12); floor_added -6.1736e-4 over 1000–10000; KE 0.0000e0 → 0.0000e0; held momentum (2.5846e-22, 5.1709e-22); momentum drift 5.781e-22 of Σm|u| 0.0000e0; held cells moving 0
+test held_core::disk_m900_rests_held ... SR-HELD-CORE disk M 900: held 16 at step 0, 16 at 10000 (M0-R11: 16); floor_added 2.2610e0 over 1000–10000; KE 1.5546e2 → 1.5418e2; held momentum (-6.3714e-1, 9.7478e-3); momentum drift 7.879e-1 of Σm|u| 6.3185e1; held cells moving 0
+SR-HELD-CORE-GPU disk M 1800: held 12 at step 50, 12 at 10000 (M0-R11: 12); floor_added -6.1738e-4 over 1000–10000; KE 0.0000e0 → 0.0000e0; held momentum (0.0000e0, 0.0000e0); momentum drift 0.000e0 of Σm|u| 0.0000e0; held cells moving 0
+SR-HELD-CORE-GPU disk M 900: held 16 at step 50, 16 at 10000 (M0-R11: 16); floor_added 2.3401e0 over 1000–10000; KE 1.5545e2 → 1.5407e2; held momentum (4.8401e-1, -7.7521e-1); momentum drift 9.850e-1 of Σm|u| 6.3163e1; held cells moving 0
+SR-HELD-NO-IRON GPU: masks [false, false, true, true, false] (2 held) then [false, false, true, false, false] (1 held)
+test held_core::gpu_the_remnant_window_shines_on_its_own_heat ... SR-HELD-WINDOW scenes/remnant_window.bin is the cut of build/v9-sun-life/dumps/s_450000.bin
+SR-HELD-WINDOW GPU "NVIDIA GeForce RTX 4090": floor_added 5.0566e3 of radiated 1.3125e5 = 3.85 % over 10000 steps (bound 15 %; M0-R11's twin 3.8 %); halves 1.24 % and 45.95 % (1.527e3/1.236e5, 3.529e3/7.680e3); held 37 at step 460000; the energy invariant -1.6153e3 of |W| 3.4213e5
+test held_core::no_iron_is_held ... SR-HELD-NO-IRON twin: iron never held at Σ 310.2 or 379.1, a trace of 1e-30 neither; C/O held, released at X_Fe 1e-4
+# 2026-11-03T16:14:19-05:00 hand red-arm of hold-iron-gate on laserax-ai-server, scratch /tmp/d152/arm
+crates/sr-physics/src/reference/floors.rs:1
+crates/sr-engine/shaders/floors.wgsl:1
+   Compiling static_assertions v1.1.0
+test floors::the_hold_mask_and_momenta_equal_the_twins_cell_for_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test held_core::gpu_no_iron_is_held ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-NO-IRON GPU: masks [true, false, true, true, false] (3 held) then [true, false, true, false, false] (2 held)
+thread 'held_core::gpu_no_iron_is_held' (1199448) panicked at crates/sr-engine/tests/gpu/held_core.rs:942:5:
+assertion `left == right` failed: iron under and past N_Fe's gate, C/O beside it, C/O with X_Fe 1e-30
+  left: [true, false, true, true, false]
+ right: [false, false, true, true, false]
+test held_core::no_iron_is_held ... 
+thread 'held_core::no_iron_is_held' (1199453) panicked at crates/sr-engine/tests/gpu/held_core.rs:462:5:
+assertion `left == right` failed: iron at Σ 310.2 and 379.1, C/O beside it, C/O with X_Fe 1e-30
+  left: [true, false, true, true, false]
+ right: [false, false, true, true, false]
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 490 filtered out; finished in 0.46s
+# 2026-11-03T16:14:57-05:00 Verify 3: build + Repro on laserax-ai-server
+ger 16320389 Nov  3 15:03 /tmp/d71f/lives/keep/m_bh_sb-02/s_1362.bin
+   Compiling sr-app v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.41s
+ger 23193600 Nov  3 16:15 build/target/release/sandbox-reactions
+exit=0 wall=61s
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1700 sim_time=16.358251 until=none
+dumps
+events.jsonl
+summary.json
+2 events.jsonl
+{"detail":{"mass_sb":66526.57169248722},"kind":"core_collapse","object":1,"sim_time":10.414076326880604,"step":1700}
+{"detail":{"mass_sb":64601.4769581873},"kind":"sink_formed","object":1,"sim_time":14.409028858179227,"step":2600}
+/tmp/d71f/heldset.py
+/tmp/d71f/window.py
+s_1400.bin
+s_1400.observers.json
+s_1500.bin
+s_3000.observers.json
+s_3062.bin
+s_3062.observers.json
+['adapter', 'events', 'git', 'ledger', 'max_gas_speed', 'objects', 'scene', 'sim_time', 'steps', 'tool', 'until', 'version', 'wall_s', 'world']
+Traceback (most recent call last):
+  File "<string>", line 5, in <module>
+KeyError: 'nuclear'
+start step 1363
+floor_added 0.0 168003628.8127602 168003628.8127602
+nuclear_released 0.0 -150325627.25902975 -150325627.25902975
+invariant -36000433.41603735 -18653408.623919785 17347024.792117566
+radiated 0.0 15594940.547286987 15594940.547286987
+  File "<stdin>", line 2
+    raw=open(sys.argv[1],\"rb\").read(); n=struct.unpack(\"<I\",raw[8:12])[0]; h=json.loads(raw[12:12+n])
+                          ^
+SyntaxError: unexpected character after line continuation character
+  File "<stdin>", line 2
+    raw=open(sys.argv[1],\"rb\").read(); n=struct.unpack(\"<I\",raw[8:12])[0]; h=json.loads(raw[12:12+n])
+                          ^
+SyntaxError: unexpected character after line continuation character
+  File "<stdin>", line 2
+    raw=open(sys.argv[1],\"rb\").read(); n=struct.unpack(\"<I\",raw[8:12])[0]; h=json.loads(raw[12:12+n])
+                          ^
+SyntaxError: unexpected character after line continuation character
+s_2500.bin step 2500: sinks null | no held plane
+s_2600.bin step 2600: sinks [{"m": 5165.740234375, "vx": 2.133664131164551, "vy": 2.2720589637756348, "x": 243.7945556640625, "y": 142.91744995117188}] | no held plane
+s_3000.bin step 3000: sinks [{"m": 6872.865234375, "vx": 5.162420749664307, "vy": 4.830935955047607, "x": 250.5771026611328, "y": 148.5255126953125}, {"m": 5668.796875, "vx": -5.2447052001953125, "vy": 3.4651200771331787, "x": 354.2124328613281, "y": 142.81195068359375}] | no held plane
+s_3062.bin step 3062: sinks [{"m": 6896.208984375, "vx": 5.956467151641846, "vy": 5.185013771057129, "x": 252.00547790527344, "y": 149.80221557617188}, {"m": 5898.84326171875, "vx": -4.609314441680908, "vy": 2.4882164001464844, "x": 352.9567565917969, "y": 143.5401611328125}] | no held plane
+18
+18
+# 2026-11-03T16:17:49-05:00 the 600x400 window on laserax-ai-server
+exit=0 wall=44s
+first half floor 1719 radiated 1.239e+05 share 1.39 %
+second half floor 4311 radiated 8348 share 51.64 %
+whole floor 6030 radiated 1.323e+05 share 4.56 %
+invariant -171572.87016713357 -173029.11513780884
+s_455000.bin step 455000: sinks null | held 37 cells, mass 1321.9, X_Fe max 0
+s_460000.bin step 460000: sinks null | held 37 cells, mass 1321.9, X_Fe max 0
+# 2026-11-03T16:18:59-05:00 the lives on laserax-ai-server (/tmp/d152/lives.sh: D71f's, out /tmp/d152/lives, --checkpoint-every 250, SIGINT at 570 s)
+3:# /tmp/d152/lives/keep/<life>/ as calibrate writes it (calibrate prunes all but the last).
+5:out=/tmp/d152/lives
+23:  --adapter "RTX 4090" --out "$out/cal.json" --checkpoint-every 250 --progress-every 100 > "$out/run.log" 2>&1
+  light  L         9.825e6 L_nuc    4.571e-5 L_N             0 L_nu        154.3
+  world  escaped     14757 objects         1 sinks           3 sink_M      44271
+exit 124 wall 570 s
+d87_cont
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=32059 sim_time=335.269 wall_s=278.5 record=build/calibrate_runs/2026-11-03T21-18-59Z/m_bh_sb-01
+s_6761.bin
+s_6761.observers.json
+s_754.bin
+s_754.observers.json
+m_bh_sb-01
+m_bh_sb-02
+m_bh_sb-01:
+events.jsonl
+summary.json
+
+m_bh_sb-02:
+checkpoint
+dumps
+progress.json
+{"detail":{"by":"fuel","mass_sb":4570.7915558014065},"kind":"ignition","object":1,"sim_time":3.9512633197009563,"step":257}
+{"detail":{"mass_sb":4567.530459121801},"kind":"core_collapse","object":1,"sim_time":7.474271295592189,"step":833}
+{"detail":{"mass_sb":4567.166722645052},"kind":"supernova","object":1,"sim_time":7.717913388740271,"step":891}
+{"detail":{"held_t":317.9977249917574,"hold_t":317.64865327768354,"mass_sb":3118.7244442738593,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":335.26949240639806,"step":32059}
+
+{'L': 9824982.263723152, 'L_N': 0.0, 'L_nu': 154.2849534075614, 'L_nuc': 4.570594729332725e-05, 'M': 52257.124382485636, 'M_unb': 330.45818951781257, 'R': 62.53816019253309, 'T_c': 78.83454895019531, 'X_Fe_c': 0.9697820544242859, 'X_n_c': 0.030217930674552917, 'Ye_c': 0.4502559624559796, 'checkpoint_step': 6761, 'continued_from_step': None, 'd_c': 0.07317537069320679}
+2840:SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=6809 sim_time=27.382 heat_unconverged=7 stage=black_hole | raw=black_hole
+2847:SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=6905 sim_time=27.624 heat_unconverged=7 stage=black_hole | raw=black_hole
+life 4572.394: 330 progress lines, last step 32011 stage neutron_star
+  neutron_star from step 2715: 294 lines, 75 over 0.05, last over at 31211; max |vr/vdyn| after it 0.0238
+    step 2715 R 18.63 M 3730.0 sigma_c 143.8 X_Fe 0.4165 X_n 0.5835 Ye_c 0.1934 vr/vdyn 0.01494
+    step 6315 R 40.71 M 3597.0 sigma_c 85.77 X_Fe 0.4172 X_n 0.5828 Ye_c 0.1937 vr/vdyn -0.05715
+    step 9915 R 54.36 M 3486.0 sigma_c 63.69 X_Fe 0.4174 X_n 0.5826 Ye_c 0.1938 vr/vdyn 0.02152
+    step 13515 R 70.93 M 3462.0 sigma_c 63.25 X_Fe 0.4175 X_n 0.5825 Ye_c 0.1938 vr/vdyn 0.006059
+    step 17115 R 123.8 M 3410.0 sigma_c 58.38 X_Fe 0.4175 X_n 0.5825 Ye_c 0.1939 vr/vdyn 0.03026
+    step 20715 R 88.55 M 3273.0 sigma_c 39.75 X_Fe 0.4175 X_n 0.5824 Ye_c 0.1939 vr/vdyn -0.00127
+    step 24315 R 79.48 M 3199.0 sigma_c 39.37 X_Fe 0.4175 X_n 0.5824 Ye_c 0.1939 vr/vdyn 0.03548
+    step 27915 R 94.17 M 3200.0 sigma_c 59.53 X_Fe 0.4176 X_n 0.5824 Ye_c 0.1939 vr/vdyn 0.09291
+    step 31515 R 98.42 M 3112.0 sigma_c 43.23 X_Fe 0.4176 X_n 0.5824 Ye_c 0.1939 vr/vdyn 0.01413
+    step 32011 R 93.33 M 3118.0 sigma_c 36.27 X_Fe 0.4176 X_n 0.5824 Ye_c 0.1939 vr/vdyn 0.008768
+life 67020.643: 77 progress lines, last step 6905 stage black_hole
+  first line with a sink: step 2613 t 14.469 sinks 1 sink_M 5408.0
+  first black_hole line: step 2613 t 14.469
+  neutron_star from step 1701: 9 lines, 9 over 0.05, last over at 2501; max |vr/vdyn| after it 0.0000
+    step 1701 R 144.7 M 66526.0 sigma_c 1002.0 X_Fe 0.356 X_n 0.644 Ye_c 0.1653 vr/vdyn 0.3096
+    step 1813 R 150.5 M 66411.0 sigma_c 885.5 X_Fe 0.3965 X_n 0.6035 Ye_c 0.1841 vr/vdyn 0.3501
+    step 1909 R 157.5 M 66286.0 sigma_c 816.2 X_Fe 0.3754 X_n 0.6246 Ye_c 0.1743 vr/vdyn 0.3542
+    step 2005 R 172.3 M 66134.0 sigma_c 792.9 X_Fe 0.4524 X_n 0.5476 Ye_c 0.21 vr/vdyn 0.3347
+    step 2101 R 177.6 M 65940.0 sigma_c 332.7 X_Fe 0.5577 X_n 0.4423 Ye_c 0.2589 vr/vdyn 0.3078
+    step 2213 R 175.2 M 65677.0 sigma_c 339.4 X_Fe 0.4309 X_n 0.5691 Ye_c 0.2 vr/vdyn 0.2581
+    step 2309 R 181.0 M 65438.0 sigma_c 315.5 X_Fe 0.439 X_n 0.561 Ye_c 0.2038 vr/vdyn 0.2306
+    step 2405 R 193.7 M 65195.0 sigma_c 280.4 X_Fe 0.6247 X_n 0.3753 Ye_c 0.29 vr/vdyn 0.1808
+    step 2501 R 199.8 M 64924.0 sigma_c 353.1 X_Fe 0.6621 X_n 0.3379 Ye_c 0.3074 vr/vdyn 0.1956
+    step 2501 R 199.8 M 64924.0 sigma_c 353.1 X_Fe 0.6621 X_n 0.3379 Ye_c 0.3074 vr/vdyn 0.1956
+life 01 last kept: /tmp/d152/lives/keep/m_bh_sb-01/s_9755.bin
+== today (no iron held)
+m_bh_sb-01/s_1003.observers.json step 1003: floor_added 2.0310e+07 nuclear 1.6102e+07 radiated 3.4416e+06 invariant -4.6892e+05; momentum grid ['-3842.79077009484', '4479.790521260542'] sinks ['0.0', '0.0'] escaped ['2.7086038016932434e-6', '0.004036742661798961'] held ['0.0', '0.0'] invariant ['-3842.790767386236', '4479.794558003204']; Σm|u| (grid + sinks) 8.0882e+04
+m_bh_sb-01/s_4251.observers.json step 4251: floor_added 2.5550e+07 nuclear 1.6032e+07 radiated 4.1612e+06 invariant -6.1654e+05; momentum grid ['-407.58928433055553', '401.9044840559832'] sinks ['0.0', '0.0'] escaped ['-91.20142048781814', '148.16492564186936'] held ['0.0', '0.0'] invariant ['-498.7907048183737', '550.0694096978525']; Σm|u| (grid + sinks) 4.7235e+04
+m_bh_sb-01/s_9755.observers.json step 9755: floor_added 2.6264e+07 nuclear 1.6032e+07 radiated 4.5525e+06 invariant -6.5887e+05; momentum grid ['147.0692812792622', '1092.4678268905845'] sinks ['0.0', '0.0'] escaped ['-423.58731318327517', '265.7295235362195'] held ['0.0', '0.0'] invariant ['-276.51803190401296', '1358.197350426804']; Σm|u| (grid + sinks) 3.3929e+04
+m_bh_sb-01/summary.json step 32059: floor_added 2.7281e+07 nuclear 1.6032e+07 radiated 5.3420e+06 invariant -7.3645e+05; momentum grid [-41.71001864805612, -93.79228013174452] sinks [0.0, 0.0] escaped [-397.24262427186835, 417.64668583897037] held [0.0, 0.0] invariant [-438.9526429199245, 323.85440570722585]
+m_bh_sb-02/s_6761.observers.json step 6761: floor_added 1.7104e+08 nuclear 4.2106e+08 radiated 5.0731e+07 invariant 5.8362e+07; momentum grid ['15222.849864730953', '-10662.735399239473'] sinks ['15714.489151753718', '46403.97085229773'] escaped ['5907.136401370274', '-2975.5344381014834'] held ['0.0', '0.0'] invariant ['36844.47541785495', '32765.701014956776']; Σm|u| (grid + sinks) 1.3281e+06
+== M0-D71f held run
+m_bh_sb-01/s_1007.observers.json step 1007: floor_added 4.6207e+06 nuclear 3.1537e+07 radiated 2.8728e+06 invariant -3.7715e+05; momentum grid ['517.0175306456003', '-113.59488477348896'] sinks ['0.0', '0.0'] escaped ['-0.00024095168598137207', '0.010173380051935443'] held ['-7072.728154063225', '3031.4364535808563'] invariant ['-6555.71086436931', '2917.8517421874194']; Σm|u| (grid + sinks) 2.0180e+04
+m_bh_sb-01/summary.json step 4239: floor_added 4.8992e+06 nuclear 3.1537e+07 radiated 3.3681e+06 invariant -3.6874e+05; momentum grid [-34.49277762589918, 71.10136491087087] sinks [0.0, 0.0] escaped [-146.72409021488932, 56.42079021605904] held [-21454.126558750868, 3389.0633375272155] invariant [-21635.343426591655, 3516.5854926541456]
+== held sets
+0
+s_9755.bin step 9755: sinks null | no held plane
+s_6761.bin step 6761: sinks [{"m": 8289.3486328125, "vx": 1.0321152210235596, "vy": -13.00114917755127, "x": 335.0624694824219, "y": 255.72084045410156}, {"m": 13717.8125, "vx": 26.56241798400879, "vy": 14.5220308303833, "x": 304.9220886230469, "y": 193.49407958984375}, {"m": 7944.921875, "vx": -22.69431495666504, "vy": 15.234914779663086, "x": 292.92364501953125, "y": 199.7655029296875}, {"m": 12577.0791015625, "vx": -14.06 | no held plane
+life 01: 128 kept, first s_257.bin, last s_32011.bin; held in any: 0
+life 02: 27 kept, first s_257.bin, last s_6761.bin; held in any: 0
+s_32011.bin step 32011: sinks null | no held plane
+m_bh_sb-01/s_32011.observers.json step 32011: floor_added 2.7280e+07 nuclear 1.6032e+07 radiated 5.3414e+06 invariant -7.3644e+05; momentum grid ['-55.57685930593698', '-96.03532740997161'] sinks ['0.0', '0.0'] escaped ['-397.2359048842204', '417.3592128194152'] held ['0.0', '0.0'] invariant ['-452.8127641901574', '321.32388540944356']; Σm|u| (grid + sinks) 2.0685e+04
+m_bh_sb-02/s_257.observers.json step 257: floor_added -2.9004e+01 nuclear 3.4486e+03 radiated 8.4618e+04 invariant -2.4351e+07; momentum grid ['0.00018918646401289152', '0.0006117317407188239'] sinks ['0.0', '0.0'] escaped ['0.0', '0.0'] held ['0.0', '0.0'] invariant ['0.00018918646401289152', '0.0006117317407188239']; Σm|u| (grid + sinks) 4.5464e+05
+life 01 start 1 [1.3033859431743622e-06, 9.845243766903877e-07] 0.0
+# 2026-11-03T16:32:28-05:00 the claim on laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" timeout 590 python3 tools/pb/verify.py --changed --task M0-D152
+# (restored: the fetch-back of M0-D152.* at 16:4x overwrote this file with the server's copy, dropping these two lines)
+# the claim: killed by timeout 590 at ≈16:42:18 during its held_core red-arm (arm0 clean GO 22; arm1 red 6 failed; arm2 cut); 75 scopes exit=0 and the headless-boot smoke DONE before it (16:32–16:35); orphans 1263673/1263678/1263867 killed, /tmp/pb-redarm-p80fd366 removed, partial arm logs moved to /tmp/d152/claim-killed on the server — no verdict: NOT RUN (over 10 minutes, the lead's)
+# 2026-11-03T16:44:40-05:00 linux-pc: plan_lint after the close
+verify: 815 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 15.48->15.48
+=== GO ===

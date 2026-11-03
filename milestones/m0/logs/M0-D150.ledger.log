@@ -1,0 +1,67 @@
+== 2026-11-03T14:14:07-05:00 ledger · task M0-D150 · box laserax-ai :: bash tests/gpu.sh ledger physics
+-- ledger · exit=101 · 9.89 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 8.82s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons' (2229343) panicked at crates/sr-engine/tests/gpu/ledger.rs:101:5:
+assertion `left == right` failed: headless
+  left: 3
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test ledger::a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero ... ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'ledger::bounce_500_steps_the_mass_and_the_momentum_hold' (2229608) panicked at crates/sr-engine/tests/gpu/ledger.rs:101:5:
+assertion `left == right` failed: headless
+  left: 3
+ right: 0
+FAILED
+test ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds' (2229609) panicked at crates/sr-engine/tests/gpu/ledger.rs:101:5:
+assertion `left == right` failed: headless
+  left: 3
+ right: 0
+FAILED
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it' (2229610) panicked at crates/sr-engine/tests/gpu/ledger.rs:101:5:
+assertion `left == right` failed: headless
+  left: 3
+ right: 0
+FAILED
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes' (2229612) panicked at crates/sr-engine/tests/gpu/ledger.rs:101:5:
+assertion `left == right` failed: headless
+  left: 3
+ right: 0
+FAILED
+test ledger::the_held_disk_writes_the_ledgers_held_into_summary_json ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'ledger::the_held_disk_writes_the_ledgers_held_into_summary_json' (2229613) panicked at crates/sr-engine/tests/gpu/ledger.rs:424:5:
+assertion `left == right` failed: headless: ["SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)"]
+  left: 3
+ right: 0
+FAILED
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+failures:
+
+failures:
+    ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons
+    ledger::bounce_500_steps_the_mass_and_the_momentum_hold
+    ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds
+    ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it
+    ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes
+    ledger::the_held_disk_writes_the_ledgers_held_into_summary_json
+
+test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 481 filtered out; finished in 0.97s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

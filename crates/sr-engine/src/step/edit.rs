@@ -7,7 +7,8 @@
 //! per cell; `edit_finish` empties it and, for a Clear, removes the sinks. The two single-invocation dispatches take the
 //! latch's fixed size, `edit_cells` the gate the latch already zeroes, so a frame's latch reaches P0 as it reaches every
 //! pass (§1.8.5). Each edit is booked in §2.9's terms into the booking's P0 buffers (state.rs): mass painted, erased,
-//! preset_dropped, cleared; energy `tools.*` — the E plane's stored change, so the ledger balances to the bit. A step whose
+//! preset_dropped, cleared; energy `tools.*` — the E plane's stored change, so the ledger balances to the bit. A Clear also
+//! empties the hold's mask (state.rs `State::held`, §2.7 [M0-TG2]); the other edits leave it to P8. A step whose
 //! queue holds a paint or a drop records Δt's re-reduction after the box's re-fit ([`super::dt`], §0.5 [M0-D110]), so it
 //! steps on the bound of the gas it added.
 //!
@@ -187,6 +188,7 @@ impl Edits {
                 9 => boxfit.gate().as_entire_binding(),
                 10 => boxfit.edit_flag().as_entire_binding(),
                 11 => boxfit.active().as_entire_binding(),
+                13 => wgpu::BindingResource::TextureView(state.held()),
                 _ => sinks.as_entire_binding(),
             }
         };
@@ -207,7 +209,7 @@ impl Edits {
         let one = || Size::Fixed([1, 1, 1]);
         let dispatches = vec![
             dispatch("edit_gate", &[0, 6, 9, 10, 11], one(), false),
-            dispatch("edit_cells", &[0, 1, 2, 3, 4, 5, 6, 7, 8], Size::Indirect(boxfit.gate().clone(), 0), true),
+            dispatch("edit_cells", &[0, 1, 2, 3, 4, 5, 6, 7, 8, 13], Size::Indirect(boxfit.gate().clone(), 0), true),
             dispatch("edit_finish", &[6, 12], one(), false),
         ];
         Edits { world, queue, patch, pending: Default::default(), dispatches }

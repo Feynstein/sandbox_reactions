@@ -20,6 +20,10 @@
 //! not. Likewise whether it runs P5: the radiation force f = κΣF/c_sb (§2.4.4; M0-T43) added to the update's momentum
 //! from the F P5 left in `side.flux` at the end of the last step, with physics.json's κ₀, c_sb, κ_dust and T_dust in the
 //! same uniform.
+//!
+//! The hold (§2.3.4 [M0-TG2]; M0-D71c): the three dispatches read the mask the last P8 wrote (`State::held`) as a
+//! sampled texture, outside the storage limit; `hydro_commit` books what a held cell was spared into the booking's `held`
+//! buffer (`booking.held`), P4's second.
 
 use sr_physics::registry::Physics;
 
@@ -153,6 +157,7 @@ fn dispatches(
             entry(8, dt_record),
             entry(13, edge),
             entry(14, gravity),
+            held(15, state),
         ],
     });
     let eos_group = eos.bind_group(device, &update);
@@ -172,12 +177,14 @@ fn dispatches(
             entry(12, booking.group(book)),
             entry(13, edge),
             entry(14, gravity),
+            held(15, state),
         ],
     });
     let edges_eos = eos.bind_group(device, &edges);
     let world = state.world();
     let faces = 2 * (world.width + world.height);
 
+    let held_book = BOOK_GROUPS.iter().position(|g| g.name == "booking.held").expect("the booking buffer of P4's held cells");
     let commit = compute_pipeline(device, &module, "hydro_commit");
     let commit_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
         label: Some("P4 hydro_commit"),
@@ -190,6 +197,8 @@ fn dispatches(
             entry(9, state.group(0)),
             entry(10, state.group(1)),
             entry(11, state.group(2)),
+            held(15, state),
+            entry(16, booking.group(held_book)),
         ],
     });
     let tiles = || Size::Indirect(boxfit.args().clone(), ARGS_TILES);
@@ -208,4 +217,9 @@ fn dispatches(
 /// A bind group entry binding the whole of `buffer`.
 fn entry(binding: u32, buffer: &wgpu::Buffer) -> wgpu::BindGroupEntry<'_> {
     wgpu::BindGroupEntry { binding, resource: buffer.as_entire_binding() }
+}
+
+/// A bind group entry binding the hold's mask (`State::held`), read as a sampled texture.
+fn held(binding: u32, state: &State) -> wgpu::BindGroupEntry<'_> {
+    wgpu::BindGroupEntry { binding, resource: wgpu::BindingResource::TextureView(state.held()) }
 }

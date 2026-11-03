@@ -9,10 +9,11 @@
 //! M0-T36), P5 heat when the step is built with it ([`heat`], [`Step::with_heat`], M0-T42), P6 burning when the step is
 //! built with it ([`react`], [`Step::with_reactions`], M0-T46), P7 neutrino heating when the step is built with it
 //! ([`nuheat`], [`Step::with_neutrino_heating`], M0-T54), P8 the floors, then the
-//! species renormalisation (shaders/floors.wgsl, M0-T19); every other pass is an empty slot its lot fills, in place,
-//! without reordering the others. A step knows its index — the guard runs on every 64th
-//! (index ≡ 0 mod 64), and step 0 is preceded by the initial state's Δt reduction — after P2 on that state, so step 0's
-//! Δt has its gravity term.
+//! species renormalisation (shaders/floors.wgsl, M0-T19) and the hold's mask (§2.7 [M0-TG2], M0-D71b); every other pass
+//! is an empty slot its lot fills, in place, without reordering the others. A step knows its index — the guard runs on
+//! every 64th (index ≡ 0 mod 64), and step 0 is preceded by the initial state's hold and Δt reduction — the hold before
+//! P2 on that state, so Δt reads the momenta the hold left, and P2 before the reduction, so step 0's Δt has its gravity
+//! term.
 //!
 //! Every pass runs inside the active box ([`boxfit`], §1.3.3, M0-T21): a box-sized dispatch takes its workgroup count
 //! from the box's indirect sizes on the GPU ([`Size::Indirect`]), never from a readback. The box is fit before step 0
@@ -54,6 +55,7 @@ pub mod sinks;
 use std::cell::{Cell, RefCell};
 
 use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
+use sr_physics::reference::floors::{ETA_HOLD, SIGMA_HOLD};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::scene::EdgeMode;
@@ -157,6 +159,8 @@ pub struct Step {
     sinks: Option<sinks::Sinks>,
     nuheat: Option<nuheat::NuHeat>,
     edits: Option<edit::Edits>,
+    /// P8's hold alone, on the initial state before step 0 (§2.7 [M0-TG2]).
+    hold: Dispatch,
     boxfit: BoxFit,
     latch: Latch,
     summary: Summary,
@@ -497,7 +501,8 @@ impl Step {
         passes[Pass::Reactions as usize] = burn.as_mut().map(|r| std::mem::take(&mut r.dispatches)).unwrap_or_default();
         let mut heating = nuheat.map(|n| nuheat::NuHeat::new(device, state, booking, physics, &boxfit, dt.record(), n)).transpose()?;
         passes[Pass::NeutrinoHeating as usize] = heating.as_mut().map(|p| std::mem::take(&mut p.dispatches)).unwrap_or_default();
-        passes[Pass::Floors as usize] = floors(device, state, booking, eos, &boxfit);
+        let (floor_list, hold) = floors(device, state, booking, eos, &boxfit);
+        passes[Pass::Floors as usize] = floor_list;
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
         let latch = Latch::new(device, &passes, &dt, &boxfit, warm.as_ref().map(heat::Heat::gate_buffers));
         // P6 sets the latch after its cells: its flag copy needs the latch's record, so it joins the list now (one fixed
@@ -509,7 +514,7 @@ impl Step {
         if let Some(s) = &sink {
             passes[Pass::Sinks as usize].push(s.latch_dispatch(device, latch.flag()));
         }
-        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, sinks: sink, nuheat: heating, edits: None, boxfit, latch, summary, next: Cell::new(0), timer: Timer::default() })
+        Ok(Step { passes, dt, gravity, hydro: flow, heat: warm, react: burn, sinks: sink, nuheat: heating, edits: None, hold, boxfit, latch, summary, next: Cell::new(0), timer: Timer::default() })
     }
 
     /// P2's g = −∇φ (the x plane, then the y plane, f32, row-major over the world) when the step runs gravity; φ is the
@@ -601,10 +606,11 @@ impl Step {
         self.timer.begin_step();
         let mut passes: Vec<(&'static str, usize, Lists<'_>)> = Vec::with_capacity(11);
         if n == 0 {
-            // The box fit to the initial state, P2 on it, then P9's Δt reduction over it; the dispatches are P2's and P9's
-            // own lists.
+            // The box fit to the initial state, P8's hold on it, P2, then P9's Δt reduction over it; the dispatches are
+            // P2's and P9's own lists.
             let lists = vec![
                 (&self.boxfit.refit[..], REFIT_EVERY, false),
+                (std::slice::from_ref(&self.hold), 1, false),
                 (&self.passes[Pass::Gravity as usize][..], 1, false),
                 (&self.passes[Pass::Reductions as usize][..], 1, false),
             ];
@@ -893,8 +899,10 @@ pub(crate) fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModul
 }
 
 /// P8 floors (§1.3.2): `floor_cells` — the vacuum reset and the temperature floor, booked into P8's booking buffer —
-/// then `renormalise_species`, both over the box's 8 × 8 tiles.
-fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, boxfit: &BoxFit) -> Vec<Dispatch> {
+/// then `renormalise_species`, which ends with the hold's mask (§2.7 [M0-TG2]), both over the box's 8 × 8 tiles; and
+/// `hold_cells`, the hold alone, for the initial state. σ_hold and η_hold are sr_physics::reference::floors' constants,
+/// uploaded in f32; the hold reads no physics.json key (§2.7 [M0-D71f]: no iron is held, so no Σ_N).
+fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, boxfit: &BoxFit) -> (Vec<Dispatch>, Dispatch) {
     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("floors.wgsl"),
         source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/floors.wgsl")).into()),
@@ -919,21 +927,38 @@ fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu,
     });
     let eos_group = eos.bind_group(device, &floor_cells);
 
-    let renormalise = compute_pipeline(device, &module, "renormalise_species");
-    let species_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
-        label: Some("P8 renormalise_species"),
-        layout: &renormalise.get_bind_group_layout(0),
-        entries: &[
+    let params = [SIGMA_HOLD as f32, ETA_HOLD as f32, 0.0, 0.0];
+    let params = init_buffer(device, "floors.hold", wgpu::BufferUsages::UNIFORM, &params.map(f32::to_bits));
+    let hold_dispatch = |entry: &'static str| {
+        let pipeline = compute_pipeline(device, &module, entry);
+        // Both entry points bind the same set: `hold_cells` writes no fraction, but reads them all.
+        let entries = [
             wgpu::BindGroupEntry { binding: 0, resource: state.dims().as_entire_binding() },
             wgpu::BindGroupEntry { binding: 1, resource: state.group(1).as_entire_binding() },
             wgpu::BindGroupEntry { binding: 2, resource: state.group(2).as_entire_binding() },
+            wgpu::BindGroupEntry { binding: 3, resource: state.group(0).as_entire_binding() },
+            wgpu::BindGroupEntry { binding: 4, resource: booking.group(book).as_entire_binding() },
             wgpu::BindGroupEntry { binding: 5, resource: boxfit.active().as_entire_binding() },
-        ],
-    });
-    let tiles = || Size::Indirect(boxfit.args().clone(), ARGS_TILES);
+            wgpu::BindGroupEntry { binding: 6, resource: wgpu::BindingResource::TextureView(state.held()) },
+            wgpu::BindGroupEntry { binding: 7, resource: params.as_entire_binding() },
+        ];
+        let own = device.create_bind_group(&wgpu::BindGroupDescriptor {
+            label: Some(entry),
+            layout: &pipeline.get_bind_group_layout(0),
+            entries: &entries,
+        });
+        let eos_group = eos.bind_group(device, &pipeline);
+        Dispatch { label: entry, pipeline, bind_groups: vec![own, eos_group], size: Size::Indirect(boxfit.args().clone(), ARGS_TILES) }
+    };
 
-    vec![
-        Dispatch { label: "floor_cells", pipeline: floor_cells, bind_groups: vec![cells_group, eos_group], size: tiles() },
-        Dispatch { label: "renormalise_species", pipeline: renormalise, bind_groups: vec![species_group], size: tiles() },
-    ]
+    let list = vec![
+        Dispatch {
+            label: "floor_cells",
+            pipeline: floor_cells,
+            bind_groups: vec![cells_group, eos_group],
+            size: Size::Indirect(boxfit.args().clone(), ARGS_TILES),
+        },
+        hold_dispatch("renormalise_species"),
+    ];
+    (list, hold_dispatch("hold_cells"))
 }

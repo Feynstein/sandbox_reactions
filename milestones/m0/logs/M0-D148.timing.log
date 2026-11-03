@@ -1,0 +1,57 @@
+== 2026-11-03T10:26:08-05:00 timing · task M0-D148 · box laserax-ai-server :: bash tests/gpu.sh timing physics
+-- timing · exit=0 · 22.19 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+a 240-step frame: encoded 30.98ms, submitted 1.59s, done 1.62s (wall)
+a 240-step frame: StepCost { source: GpuTimestamp, steps: 204, ended: 240, step_ms: 3.85082494117647, pass_ms: [Some(0.010141333333333334), Some(0.003125176470588236), Some(0.033752784313725484), Some(0.24480109803921588), Some(0.21466980392156862), Some(2.8660236862745094), Some(0.1133239215686275), Some(0.0263585882352941), Some(0.04689176470588235), Some(0.034796549019607874)], frame_ms: Some(0.006368) }
+a 240-step frame: 204 steps recorded for 240 ended
+a 240-step frame: passes sum 3.593885 ms, step 3.850825 ms, off by 6.7 %
+a 10-step frame: encoded 986.18µs, submitted 27.68ms, done 79.73ms (wall)
+the next frame starts a fresh query set: StepCost { source: GpuTimestamp, steps: 10, ended: 10, step_ms: 6.683942399999999, pass_ms: [Some(0.0093856), Some(0.0029824), Some(0.0163168), Some(0.5379904), Some(0.3404384), Some(4.8842432), Some(0.3170016), Some(0.0106656), Some(0.011593599999999999), Some(0.011929599999999999)], frame_ms: Some(0.007008) }
+the next frame starts a fresh query set: 10 steps recorded for 10 ended
+the next frame starts a fresh query set: passes sum 6.142547 ms, step 6.683942 ms, off by 8.1 %
+ok
+test timing::bare_steps_time_every_pass_at_its_boundaries ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+recorded passes: ["P0 edits", "P1 dt", "P2 gravity", "P3 sinks", "P4 hydro", "P5 heat", "P6 reactions", "P7 neutrino heating", "P8 floors", "P9 reductions"]
+steps 0–63: StepCost { source: GpuTimestamp, steps: 64, ended: 64, step_ms: 8.620702500000004, pass_ms: [Some(0.0100665), Some(0.0032204999999999994), Some(0.020191499999999998), Some(0.1514895), Some(0.173022), Some(7.8794865), Some(0.038278999999999994), Some(0.0683215), Some(0.013030999999999996), Some(0.0315565)], frame_ms: None }
+steps 0–63: 64 steps recorded for 64 ended
+steps 0–63: passes sum 8.388664 ms, step 8.620703 ms, off by 2.7 %
+steps 64–78: StepCost { source: GpuTimestamp, steps: 15, ended: 15, step_ms: 6.933073066666666, pass_ms: [Some(0.12002986666666664), Some(0.0034645333333333337), Some(0.020663466666666668), Some(0.43545173333333337), Some(0.17994666666666673), Some(5.1847573333333346), Some(0.24838186666666665), Some(0.010952533333333332), Some(0.013493333333333331), Some(0.21867306666666672)], frame_ms: None }
+steps 64–78: 15 steps recorded for 15 ended
+steps 64–78: passes sum 6.435814 ms, step 6.933073 ms, off by 7.2 %
+ok
+test timing::frames_report_their_cost_per_step_and_per_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+a 8-step frame: encoded 13.82ms, submitted 245.26ms, done 275.44ms (wall)
+a 40-step frame: encoded 7.20ms, submitted 618.71ms, done 644.82ms (wall)
+frame 0: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 11.967304, pass_ms: [Some(0.0098168), Some(0.0033712), Some(0.11027760000000002), Some(0.0732688), Some(0.45562), Some(10.121361599999998), Some(0.42819039999999997), Some(0.04585360000000001), Some(0.212652), Some(0.07835839999999998)], frame_ms: Some(0.008192) }
+frame 0: 40 steps recorded for 40 ended
+frame 0: passes sum 11.538770 ms, step 11.967304 ms, off by 3.6 %
+a 40-step frame: encoded 5.50ms, submitted 315.85ms, done 340.62ms (wall)
+frame 1: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 6.0683504, pass_ms: [Some(0.13306880000000001), Some(0.003044), Some(0.020264000000000004), Some(0.0728632), Some(0.6024064000000001), Some(4.205322399999998), Some(0.1059672), Some(0.2100888), Some(0.0136048), Some(0.012548)], frame_ms: Some(0.006848) }
+frame 1: 40 steps recorded for 40 ended
+frame 1: passes sum 5.379178 ms, step 6.068350 ms, off by 11.4 %
+a 40-step frame: encoded 4.01ms, submitted 268.85ms, done 292.58ms (wall)
+frame 2: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 5.420220000000001, pass_ms: [Some(0.009776799999999999), Some(0.0031127999999999998), Some(0.0284888), Some(0.1794232), Some(0.1895448), Some(3.923384800000001), Some(0.044259999999999994), Some(0.16759920000000003), Some(0.06986079999999999), Some(0.16490239999999998)], frame_ms: Some(0.006815999999999999) }
+frame 2: 40 steps recorded for 40 ended
+frame 2: passes sum 4.780354 ms, step 5.420220 ms, off by 11.8 %
+ok
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=300 sim_time=4.530240 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=300 sim_time=4.530240 until=none
+summary.json timing: {"per_pass_ms":{"P0 edits":0.04105822326797385,"P1 dt":0.014738589281045752,"P2 gravity":0.08538415477124185,"P3 sinks":0.1886605762091503,"P4 hydro":0.3005833160784314,"P5 heat":7.1870250687581745,"P6 reactions":0.308649825882353,"P7 neutrino heating":0.08029585777777776,"P8 floors":0.08138618562091503,"P9 reductions":0.06207662849673207},"source":"gpu-timestamp","step_ms_mean":8.763844544836603}
+headless: passes sum 8.349858 ms, step 8.763845 ms, off by 4.7 %
+ok
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+bare, wall: StepCost { source: Wall, steps: 20, ended: 20, step_ms: 11.337881450000168, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+a 20-step frame: encoded 2.41ms, submitted 157.69ms, done 174.52ms (wall)
+frame, wall: StepCost { source: Wall, steps: 20, ended: 20, step_ms: 8.726864199999909, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 468 filtered out; finished in 21.76s
+
+

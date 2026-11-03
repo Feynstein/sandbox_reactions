@@ -1,0 +1,33 @@
+== 2026-11-03T14:14:17-05:00 collapse · task M0-D150 · box laserax-ai :: bash tests/gpu.sh collapse physics
+-- collapse · exit=101 · 1.07 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time ... 
+thread 'collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time' (2229824) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test collapse::gpu_half_mass_radius_at_half_the_free_fall_time ... 
+thread 'collapse::gpu_half_mass_radius_at_half_the_free_fall_time' (2229901) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test collapse::the_oracle_gives_the_contracts_numbers ... ok
+test collapse::the_scene_is_a_cold_maclaurin_disk_with_only_the_cold_pressure_off ... SR-COLL scene: 5024 cells, mass 3351.648 (2πΣc a²/3 = 3351.032), t_ff 3.1623
+ok
+test collapse::twin_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-COLL twin: t = 2.52982 (0.80000 t_ff), r50/r50(0) = 0.53504, homologous 0.52796, error +1.340 % (76 steps in the run)
+ok
+test collapse::twin_half_mass_radius_at_half_the_free_fall_time ... SR-COLL twin: t = 1.58114 (0.50000 t_ff), r50/r50(0) = 0.83822, homologous 0.83681, error +0.169 % (76 steps in the run)
+ok
+
+failures:
+
+failures:
+    collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time
+    collapse::gpu_half_mass_radius_at_half_the_free_fall_time
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 483 filtered out; finished in 0.91s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

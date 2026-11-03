@@ -1,0 +1,63 @@
+== 2026-11-03T14:14:23-05:00 frames · task M0-D150 · box laserax-ai :: bash tests/gpu.sh frames physics
+-- frames · exit=101 · 0.26 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test frames::bad_frame_arguments_are_exit_4 ... SR-ERROR bad arguments: --frames-every must be at least 1
+SR-ERROR bad arguments: --frames-every takes a whole number, got "x"
+SR-ERROR bad arguments: --view takes glow, heat, element or density, got "mass"
+SR-ERROR bad arguments: --view needs --frames-every (the view the frames are drawn in)
+SR-ERROR bad arguments: --adapter is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --frames-every needs --out (frames go to DIR/frames)
+ok
+test frames::each_frame_is_the_state_of_the_step_in_its_name_glow ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'frames::each_frame_is_the_state_of_the_step_in_its_name_glow' (2231248) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "40", "--frames-every", "10", "--dump-every", "10"]: ["SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)"]
+  left: 3
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test frames::frames_land_at_every_n_steps_at_the_worlds_size ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'frames::frames_land_at_every_n_steps_at_the_worlds_size' (2231268) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "50", "--frames-every", "10"]: ["SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)"]
+  left: 3
+ right: 0
+FAILED
+test frames::frames_leave_the_run_unchanged ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'frames::frames_leave_the_run_unchanged' (2231269) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "50", "--frames-every", "7"]: ["SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)"]
+  left: 3
+ right: 0
+FAILED
+test frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre' (2231270) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "10", "--frames-every", "10"]: ["SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)"]
+  left: 3
+ right: 0
+FAILED
+test frames::the_view_flag_draws_the_chosen_view ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'frames::the_view_flag_draws_the_chosen_view' (2231271) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "40", "--frames-every", "10", "--dump-every", "10", "--view", "heat"]: ["SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)"]
+  left: 3
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    frames::each_frame_is_the_state_of_the_step_in_its_name_glow
+    frames::frames_land_at_every_n_steps_at_the_worlds_size
+    frames::frames_leave_the_run_unchanged
+    frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre
+    frames::the_view_flag_draws_the_chosen_view
+
+test result: FAILED. 1 passed; 5 failed; 0 ignored; 0 measured; 483 filtered out; finished in 0.15s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

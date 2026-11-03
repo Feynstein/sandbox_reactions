@@ -1,0 +1,5 @@
+state · clean · GO · arm 1/3, 2 left
+state · plant state-renorm-skip · RED (proven: 1 failed) · arm 2/3, 1 left
+state · plant state-inspect-row · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope state · 38.36 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D150-state.state.redarm.log
+=== GO ===

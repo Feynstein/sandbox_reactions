@@ -1,0 +1,105 @@
+== 2026-11-03T14:14:16-05:00 edits · task M0-D150 · box laserax-ai :: bash tests/gpu.sh edit physics
+-- edits · exit=101 · 1.62 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.96s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 17 tests
+test edit::a_drop_that_would_leave_the_world_is_refused_with_no_room ... 
+thread 'edit::a_drop_that_would_leave_the_world_is_refused_with_no_room' (2229763) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edit::a_frame_applies_the_queued_edit_once_in_its_first_step ... 
+thread 'edit::a_frame_applies_the_queued_edit_once_in_its_first_step' (2229826) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::a_paint_queued_before_the_first_step_steps_on_its_bound ... 
+thread 'edit::a_paint_queued_before_the_first_step_steps_on_its_bound' (2229827) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it ... 
+thread 'edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it' (2229828) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas ... 
+thread 'edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas' (2229829) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared ... 
+thread 'edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared' (2229831) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::erase_writes_the_floor_state_and_books_what_left ... 
+thread 'edit::erase_writes_the_floor_state_and_books_what_left' (2229833) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone ... 
+thread 'edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone' (2229839) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it ... 
+thread 'edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it' (2229852) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded ... 
+thread 'edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded' (2229861) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::the_box_grows_to_an_edit_outside_it_and_only_then ... 
+thread 'edit::the_box_grows_to_an_edit_outside_it_and_only_then' (2229862) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound ... 
+thread 'edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound' (2229864) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced ... 
+thread 'edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced' (2229866) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite ... 
+thread 'edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite' (2229867) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced ... 
+thread 'edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced' (2229869) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced ... 
+thread 'edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced' (2229870) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test edit::whole_steps_without_an_edit_keep_their_bits ... 
+thread 'edit::whole_steps_without_an_edit_keep_their_bits' (2229872) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    edit::a_drop_that_would_leave_the_world_is_refused_with_no_room
+    edit::a_frame_applies_the_queued_edit_once_in_its_first_step
+    edit::a_paint_queued_before_the_first_step_steps_on_its_bound
+    edit::a_preset_drop_writes_the_cloud_centred_on_the_cell_and_books_it
+    edit::an_edit_on_a_hot_dense_field_acts_exactly_as_on_gas
+    edit::clear_restores_the_floor_state_removes_the_sinks_and_books_cleared
+    edit::erase_writes_the_floor_state_and_books_what_left
+    edit::heat_and_cool_scale_the_thermal_energy_floor_it_and_leave_vacuum_alone
+    edit::paint_adds_paint_sigma_at_rest_mixed_by_mass_and_books_it
+    edit::queued_edits_apply_once_in_order_and_the_queue_is_bounded
+    edit::the_box_grows_to_an_edit_outside_it_and_only_then
+    edit::whole_steps_after_a_paint_into_a_cold_box_step_on_the_paints_bound
+    edit::whole_steps_after_a_paint_into_an_empty_world_stay_finite_and_balanced
+    edit::whole_steps_after_a_paint_on_an_older_dumps_zero_vacuum_stay_finite
+    edit::whole_steps_after_a_paint_outside_a_stars_box_stay_finite_and_balanced
+    edit::whole_steps_after_a_preset_drop_outside_the_box_stay_finite_and_balanced
+    edit::whole_steps_without_an_edit_keep_their_bits
+
+test result: FAILED. 0 passed; 17 failed; 0 ignored; 0 measured; 472 filtered out; finished in 0.54s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

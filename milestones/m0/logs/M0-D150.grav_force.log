@@ -1,0 +1,64 @@
+== 2026-11-03T14:14:19-05:00 grav_force · task M0-D150 · box laserax-ai :: bash tests/gpu.sh grav::force physics
+-- grav_force · exit=101 · 0.31 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test grav::force::force_error_halves_when_the_disk_doubles ... SR-GRAV1 largest error a=20: 5.786e-3 (0.58 %) at (39, 38); a=40: 3.005e-3 (0.30 %) at (24, 66); ratio 1.926
+ok
+test grav::force::gpu_a_frames_gravity_is_the_bare_steps_bit_for_bit ... 
+thread 'grav::force::gpu_a_frames_gravity_is_the_bare_steps_bit_for_bit' (2230144) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::force::gpu_force_error_halves_when_the_disk_doubles ... 
+thread 'grav::force::gpu_force_error_halves_when_the_disk_doubles' (2230166) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term ... 
+thread 'grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term' (2230167) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin ... 
+thread 'grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin' (2230168) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::force::gpu_sub_vacuum_cells_are_no_source ... 
+thread 'grav::force::gpu_sub_vacuum_cells_are_no_source' (2230169) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::force::gpu_tall_box_has_the_twins_and_the_kernels_potential ... 
+thread 'grav::force::gpu_tall_box_has_the_twins_and_the_kernels_potential' (2230170) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::force::gpu_whole_default_world_has_the_twins_and_the_kernels_potential ... 
+thread 'grav::force::gpu_whole_default_world_has_the_twins_and_the_kernels_potential' (2230171) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::force::gpu_wide_box_has_the_twins_and_the_kernels_potential ... 
+thread 'grav::force::gpu_wide_box_has_the_twins_and_the_kernels_potential' (2230173) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::force::kernel_is_minus_g_over_r_at_every_offset_of_a_64_box ... ok
+test grav::force::kernel_is_the_section_1_4_2_kernel ... ok
+test grav::force::maclaurin_disk_a40_force_is_within_2_percent_everywhere ... SR-GRAV1 a=40 centred on a cell: largest |Δg|/|g| = 3.005e-3 (0.30 %) at cell (24, 66), 2820 cells with 0 < r ≤ 0.75a
+ok
+test grav::force::maclaurin_disk_centred_on_a_cell_corner_holds_too ... SR-GRAV1 a=40 centred on a corner: largest |Δg|/|g| = 3.104e-3 (0.31 %) at cell (19, 49), 2828 cells
+ok
+
+failures:
+
+failures:
+    grav::force::gpu_a_frames_gravity_is_the_bare_steps_bit_for_bit
+    grav::force::gpu_force_error_halves_when_the_disk_doubles
+    grav::force::gpu_gravity_bounds_dt_with_the_section_2_3_5_term
+    grav::force::gpu_maclaurin_disk_a40_force_is_within_2_percent_and_on_the_twin
+    grav::force::gpu_sub_vacuum_cells_are_no_source
+    grav::force::gpu_tall_box_has_the_twins_and_the_kernels_potential
+    grav::force::gpu_whole_default_world_has_the_twins_and_the_kernels_potential
+    grav::force::gpu_wide_box_has_the_twins_and_the_kernels_potential
+
+test result: FAILED. 5 passed; 8 failed; 0 ignored; 0 measured; 476 filtered out; finished in 0.20s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

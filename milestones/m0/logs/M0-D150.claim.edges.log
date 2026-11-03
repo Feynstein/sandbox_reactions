@@ -1,0 +1,6 @@
+edges     7/0/0        6.23 s  GO
+logs: milestones/m0/logs/M0-D150-cedges.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+d9adb83763f2
+anchor: 6 path×scope entries moved by this run
+anchor: 282 paths checked · 379 skipped (3 classes) · 1 never checked · 127 stale · 0 unclassified · 0 owed · 410 covered of 789 visible
+verify: 7 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.23 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.3->0.35
+=== GO ===

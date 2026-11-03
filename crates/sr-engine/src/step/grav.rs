@@ -9,8 +9,16 @@
 //! too: each size keeps its real quarter, (nx/2 + 1) × (ny/2 + 1) values — 8.3 MB at 600 × 400 where whole complex
 //! spectra would take 65 MB — and `grav_columns` reads the quarter of the size the box names.
 //!
-//! Four dispatches — five in a step that runs P3 — each a fixed size or the box's tiles, so a frame's latch reaches them
-//! (latch.rs):
+//! The pull (§1.4.2 [M0-D149]): a held cell's spared Σg·Δt (P4, hydro.wgsl) reads g_pull, the field of all but the held
+//! cells — the same solve on Σ_src with the held cells emptied, the mask the last P8 wrote ([`State::held`]) — so a held
+//! core's own pull, which cancels over it in exact arithmetic but not in P2's f32 field, is never booked (M0-D149
+//! measured that net force as the GPU's whole `held` on G-REST's M 900 disk). It runs first, on the same work buffer, its
+//! φ in a scratch plane and g_pull in [`Gravity::field`]'s planes 3 and 4; its rows set a flag when the box holds a held
+//! cell, and its other three dispatches return at once while the flag is clear (bound to them as a uniform), so with no
+//! held cell it costs its rows alone. φ's own rows clear the flag for the next step.
+//!
+//! Eight dispatches — nine in a step that runs P3 — each a fixed size or the box's tiles, so a frame's latch reaches them
+//! (latch.rs): the pull's `grav_rows_pull`, `grav_columns`, `grav_rows_inverse` and `grav_gradient_pull`, then φ's:
 //! - `grav_rows`: the box's rows of Σ, vacuum (Σ < Σ_vac) as 0, zero-padded and forward — one workgroup per world row;
 //! - `grav_columns`: each column forward, times K̂ ÷ (nx · ny), back — one per column of the world's largest padded size;
 //!   the box's rows and the two just past it (y = h, y = −1) kept;
@@ -19,7 +27,7 @@
 //! - `grav_gradient`: g = −∇φ over the box's 8 × 8 tiles by central differences everywhere, the outermost ring reading φ
 //!   past the box, as the twin — so Σ m·g cancels with matter on a world edge's ring;
 //! - `grav_sinks` (a step with P3 only, M0-T52a): the sinks' softened potentials (§1.4.3) added to φ in place and their
-//!   exact pull added to g — into a second field, so [`Gravity::gas_field`] stays the gas's alone for P3's kick-drift-kick
+//!   exact pull added to g and g_pull — into a second field, so [`Gravity::gas_field`] stays the gas's alone for P3's kick-drift-kick
 //!   (a g carrying a sink's own pull would pull the sink on itself through the bilinear read) while [`Gravity::field`],
 //!   what P4 and Δt read, carries every pull. φ is the gas's plus the sinks'.
 //!
@@ -38,8 +46,8 @@ use crate::state::{SideFields, State};
 
 /// G = 1 in the sandbox's units (§2.1).
 pub const G: f64 = 1.0;
-/// Dispatches per step (one more, `grav_sinks`, in a step that runs P3).
-pub const DISPATCHES: usize = 4;
+/// Dispatches per step: the pull's four, then φ's (one more, `grav_sinks`, in a step that runs P3).
+pub const DISPATCHES: usize = 8;
 
 /// The kernel's transform for a `width` × `height` world: every padded size's real quarter, in f32, and where each size
 /// starts — at index (log2 nx − 5) · `ny_sizes` + log2 ny − 5 — with `ny_sizes`. Refused when an axis pads past
@@ -149,10 +157,11 @@ impl Gravity {
             usage: storage,
             mapped_at_creation: false,
         });
+        // g's two planes, φ's, then g_pull's two (the pull, above).
         let plane = |label| {
             device.create_buffer(&wgpu::BufferDescriptor {
                 label: Some(label),
-                size: 3 * u64::from(cells) * 4,
+                size: 5 * u64::from(cells) * 4,
                 usage: storage | wgpu::BufferUsages::COPY_SRC,
                 mapped_at_creation: false,
             })
@@ -160,28 +169,44 @@ impl Gravity {
         let field = plane("grav.g");
         // With sinks, grav_gradient writes the gas's g here and grav_sinks adds the sinks' pull into `field`.
         let gas = sinks.map(|_| plane("grav.g_gas"));
+        // The pull's φ, its flag (written as storage by the rows, read as a uniform by the rest of its chain) and φ's
+        // chain's constant gate.
+        let pull_phi = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("grav.phi_pull"),
+            size: u64::from(cells) * 4,
+            usage: storage,
+            mapped_at_creation: false,
+        });
+        let pull_flag = init_buffer(device, "grav.pull_flag", storage | wgpu::BufferUsages::UNIFORM, &[0u32; 4]);
+        let always = init_buffer(device, "grav.gate", wgpu::BufferUsages::UNIFORM, &[1u32, 0, 0, 0]);
 
-        // Every entry point binds the subset of group 0 it uses (auto layouts); `entry` maps a binding to its buffer.
-        let entry = |binding: u32| -> wgpu::BindingResource<'_> {
+        // Every entry point binds the subset of group 0 it uses (auto layouts); `entry` maps a binding to its buffer, the
+        // pull's chain (`pull`) its own φ and gate.
+        let entry = |binding: u32, pull: bool| -> wgpu::BindingResource<'_> {
             match binding {
                 0 => boxfit.active().as_entire_binding(),
                 1 => fft_params.as_entire_binding(),
                 2 => twiddles.as_entire_binding(),
                 3 => work.as_entire_binding(),
                 4 => state.group(0).as_entire_binding(),
+                5 | 10 if pull => pull_phi.as_entire_binding(),
                 5 | 10 => side.phi().as_entire_binding(),
                 7 => grav_params.as_entire_binding(),
                 8 => kquarter.as_entire_binding(),
                 9 => koffsets.as_entire_binding(),
                 11 => gas.as_ref().unwrap_or(&field).as_entire_binding(),
                 12 => sinks.expect("a step with P3").as_entire_binding(),
+                14 => wgpu::BindingResource::TextureView(state.held()),
+                15 => pull_flag.as_entire_binding(),
+                16 if pull => pull_flag.as_entire_binding(),
+                16 => always.as_entire_binding(),
                 _ => field.as_entire_binding(),
             }
         };
-        let dispatch = |label: &'static str, bindings: &[u32], size: Size| {
+        let dispatch = |label: &'static str, bindings: &[u32], size: Size, pull: bool| {
             let pipeline = compute_pipeline(device, &module, label);
             let entries: Vec<wgpu::BindGroupEntry> =
-                bindings.iter().map(|&b| wgpu::BindGroupEntry { binding: b, resource: entry(b) }).collect();
+                bindings.iter().map(|&b| wgpu::BindGroupEntry { binding: b, resource: entry(b, pull) }).collect();
             let bind_groups = vec![device.create_bind_group(&wgpu::BindGroupDescriptor {
                 label: Some(label),
                 layout: &pipeline.get_bind_group_layout(0),
@@ -190,20 +215,28 @@ impl Gravity {
             Dispatch { label, pipeline, bind_groups, size }
         };
         let rows = || Size::Fixed([world.height, 1, 1]);
+        let columns = || Size::Fixed([max_nx, 1, 1]);
+        let inverse = || Size::Fixed([world.height + 2, 1, 1]);
+        let tiles = || Size::Indirect(boxfit.args().clone(), ARGS_TILES);
         let mut dispatches = vec![
-            dispatch("grav_rows", &[0, 1, 2, 3, 4, 7], rows()),
-            dispatch("grav_columns", &[0, 2, 3, 7, 8, 9], Size::Fixed([max_nx, 1, 1])),
-            dispatch("grav_rows_inverse", &[0, 1, 2, 3, 5], Size::Fixed([world.height + 2, 1, 1])),
-            dispatch("grav_gradient", &[0, 1, 3, 7, 10, 11], Size::Indirect(boxfit.args().clone(), ARGS_TILES)),
+            dispatch("grav_rows_pull", &[0, 1, 2, 3, 4, 7, 14, 15], rows(), true),
+            dispatch("grav_columns", &[0, 2, 3, 7, 8, 9, 16], columns(), true),
+            dispatch("grav_rows_inverse", &[0, 1, 2, 3, 5, 16], inverse(), true),
+            dispatch("grav_gradient_pull", &[0, 1, 3, 7, 10, 11, 16], tiles(), true),
+            dispatch("grav_rows", &[0, 1, 2, 3, 4, 7, 14, 15], rows(), false),
+            dispatch("grav_columns", &[0, 2, 3, 7, 8, 9, 16], columns(), false),
+            dispatch("grav_rows_inverse", &[0, 1, 2, 3, 5, 16], inverse(), false),
+            dispatch("grav_gradient", &[0, 1, 3, 7, 10, 11], tiles(), false),
         ];
         if sinks.is_some() {
-            dispatches.push(dispatch("grav_sinks", &[0, 1, 5, 7, 11, 12, 13], Size::Indirect(boxfit.args().clone(), ARGS_TILES)));
+            dispatches.push(dispatch("grav_sinks", &[0, 1, 5, 7, 11, 12, 13], tiles(), false));
         }
         Ok(Gravity { field, gas, dispatches })
     }
 
-    /// g = −∇φ, f32: the x plane, the y plane, then φ's (P4's energy source, §0.5 [M0-D64]), row-major over the world (y
-    /// down, §2.12.4); with sinks, their pull (§1.4.3) included — the field P4 and Δt read.
+    /// g = −∇φ, f32: the x plane, the y plane, then φ's (P4's energy source, §0.5 [M0-D64]), then g_pull's x and y planes
+    /// (the pull, above: what P4's held cells read, last solved while a cell was held), row-major over the world (y down,
+    /// §2.12.4); with sinks, their pull (§1.4.3) included in g and g_pull — the field P4 and Δt read.
     pub fn field(&self) -> &wgpu::Buffer {
         &self.field
     }

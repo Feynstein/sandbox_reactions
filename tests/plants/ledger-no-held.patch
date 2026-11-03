@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/ledger.rs
++++ b/crates/sr-engine/src/ledger.rs
+@@ -110,7 +110,7 @@
+ impl Momentum {
+     /// §2.9: grid + sinks + escaped + held, each axis.
+     pub fn invariant(&self) -> [f64; 2] {
+-        std::array::from_fn(|k| self.grid[k] + self.sinks[k] + self.escaped[k] + self.held[k])
++        std::array::from_fn(|k| self.grid[k] + self.sinks[k] + self.escaped[k])
+     }
+ }
+ 

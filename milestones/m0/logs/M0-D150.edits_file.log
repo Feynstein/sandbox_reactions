@@ -1,0 +1,82 @@
+== 2026-11-03T14:14:16-05:00 edits_file · task M0-D150 · box laserax-ai :: bash tests/gpu.sh edits_file physics
+-- edits_file · exit=101 · 1.32 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.76s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test edits_file::a_bad_edits_file_is_refused ... refused: not a list: the edits file must be a list
+refused: unknown entry key: [0].when: unknown key
+refused: unknown edit key: [0].edit.colour: unknown key
+refused: two triggers: [0].at: give one of step, object_until, mass_until
+refused: a fractional step: [0].at.step: must be a whole number
+refused: a negative step: [0].at.step: must be a whole number
+refused: an unknown condition: [0].at.object_until.x_he_c_below: unknown key
+refused: both mass bounds: [0].at.mass_until: give at_least or at_most
+refused: a negative mass: [0].at.mass_until.at_least: a mass is not negative
+refused: a cell outside the world: [0].edit: cell (64, 10) is outside the 64x64 world
+refused: a radius of 0: [0].edit.radius: 0 is outside 1–40
+refused: a radius of 41: [0].edit.radius: 41 is outside 1–40
+refused: an unknown species: [0].edit.species: "Xx" is not in the registry
+refused: a paint with no species: [0].edit.species: a paint names its species
+refused: an erase with a species: [0].edit.species: only a paint has one
+refused: an unknown kind: [0].edit.kind: "smear" is not paint, erase, heat or cool
+refused: frames of 0: [0].edit.frames: 0 is outside 1–8
+refused: frames of 9: [0].edit.frames: 9 is outside 1–8
+SR-ERROR bad edits: the edits file must be a list
+SR-ERROR bad edits: /tmp/sr-edits-file-2229764/missing.json: No such file or directory (os error 2)
+SR-ERROR bad arguments: --edits is the GPU's: it has no meaning with --cpu-reference
+ok
+test edits_file::a_chunked_run_stops_at_the_step_trigger ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'edits_file::a_chunked_run_stops_at_the_step_trigger' (2229772) panicked at crates/sr-engine/tests/gpu/edits_file.rs:154:5:
+assertion `left == right` failed
+  left: (3, 3, 3)
+ right: (0, 0, 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test edits_file::a_mass_repeat_stops_once_the_mass_passes ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'edits_file::a_mass_repeat_stops_once_the_mass_passes' (2229817) panicked at crates/sr-engine/tests/gpu/edits_file.rs:116:5:
+assertion `left == right` failed
+  left: 3
+ right: 0
+FAILED
+test edits_file::a_step_trigger_and_a_state_trigger_land_in_the_step_they_name ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'edits_file::a_step_trigger_and_a_state_trigger_land_in_the_step_they_name' (2229819) panicked at crates/sr-engine/tests/gpu/edits_file.rs:116:5:
+assertion `left == right` failed
+  left: 3
+ right: 0
+FAILED
+test edits_file::the_queue_takes_eight_edits_a_step_in_the_files_order ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'edits_file::the_queue_takes_eight_edits_a_step_in_the_files_order' (2229820) panicked at crates/sr-engine/tests/gpu/edits_file.rs:116:5:
+assertion `left == right` failed
+  left: 3
+ right: 0
+FAILED
+test edits_file::two_runs_are_bit_identical ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'edits_file::two_runs_are_bit_identical' (2229821) panicked at crates/sr-engine/tests/gpu/edits_file.rs:226:5:
+assertion `left == right` failed
+  left: (3, 3)
+ right: (0, 0)
+FAILED
+
+failures:
+
+failures:
+    edits_file::a_chunked_run_stops_at_the_step_trigger
+    edits_file::a_mass_repeat_stops_once_the_mass_passes
+    edits_file::a_step_trigger_and_a_state_trigger_land_in_the_step_they_name
+    edits_file::the_queue_takes_eight_edits_a_step_in_the_files_order
+    edits_file::two_runs_are_bit_identical
+
+test result: FAILED. 1 passed; 5 failed; 0 ignored; 0 measured; 483 filtered out; finished in 0.46s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

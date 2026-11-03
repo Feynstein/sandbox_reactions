@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -973,7 +973,8 @@
+     if (here) {
+         var spared = -dt * vec2<f32>((fxr[1] - fxl[1]) + (fyr[1] - fyl[1]), (fxr[2] - fxl[2]) + (fyr[2] - fyl[2]));
+         if (edges.gravity != 0u) {
+-            spared += dt * pred.mid.x * pull_at(x, y);
++            // planted: a held cell's Σg·Δt read from P2's whole g, the core's own pull booked
++            spared += dt * pred.mid.x * accel_at(x, y);
+         }
+         keep(cell);
+         put_next(1u, cell, spared.x);

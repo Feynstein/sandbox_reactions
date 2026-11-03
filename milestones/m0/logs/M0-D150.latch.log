@@ -1,0 +1,41 @@
+== 2026-11-03T14:14:20-05:00 latch · task M0-D150 · box laserax-ai :: bash tests/gpu.sh latch physics
+-- latch · exit=101 · 0.47 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run ... 
+thread 'latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run' (2230446) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs ... 
+thread 'latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs' (2230492) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test latch::poll_never_waits_and_reports_each_frame_once_in_order ... 
+thread 'latch::poll_never_waits_and_reports_each_frame_once_in_order' (2230493) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test latch::the_latch_re_arms_only_after_1_tu_without_a_set ... 
+thread 'latch::the_latch_re_arms_only_after_1_tu_without_a_set' (2230494) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag ... 
+thread 'latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag' (2230495) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run
+    latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs
+    latch::poll_never_waits_and_reports_each_frame_once_in_order
+    latch::the_latch_re_arms_only_after_1_tu_without_a_set
+    latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 484 filtered out; finished in 0.33s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

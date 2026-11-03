@@ -30,10 +30,12 @@ use sr_engine::step::fft::read_back;
 use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::sinks::{SinkReport, SinkSetup};
 use sr_engine::step::{EosGpu, Passes, Step};
+use sr_physics::eos::Eos;
+use sr_physics::reference::floors::{Floors, ETA_HOLD, SIGMA_HOLD};
 use sr_physics::reference::grav::{add_sinks, Field, Gravity, SinkSource};
 use sr_physics::reference::hydro::{Edge, Hydro, State, COMPONENTS};
 use sr_physics::reference::sinks::{disk, r_acc, Sink, Sinks, MAX_SINKS, R_CORE};
-use sr_physics::registry::{Elements, Physics};
+use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 fn elements() -> Elements {
     Elements::shipped().unwrap()
@@ -372,9 +374,41 @@ fn mass_sinks() -> Sinks {
     Sinks::new(&shipped(), &elements(), 1.0).unwrap()
 }
 
+/// A warmed cell's ε_th in units of its ε_cold: past the hold's release edge 2η_hold (§2.7 [M0-TG2]).
+const CORE_WARMTH: f64 = 2.5 * ETA_HOLD;
+
+/// Warms every cell at Σ ≥ σ_hold to ε_th = [`CORE_WARMTH`] · ε_cold of its own Σ and fractions under the shipped physics,
+/// its kinetic energy kept: a cold dense cell is held before step 0 and its momentum zeroed (§2.7 [M0-TG2]), so §2.6's
+/// converging test would read ∇·u = 0 there (M0-D148); a warmed one is held neither then nor by step 0's P8.
+fn free_of_the_hold(st: &mut State) {
+    let (els, eos) = (elements(), Eos::from_physics(&shipped()).unwrap());
+    let (n, k_n) = (st.width * st.height, els.index_of("n").unwrap());
+    for i in 0..n {
+        let sigma = st.get(0, i);
+        if sigma < SIGMA_HOLD {
+            continue;
+        }
+        let x: [f64; N_SPECIES] = std::array::from_fn(|s| st.get(4 + s, i));
+        let cold = eos.eps_cold(sigma, els.composition(&x).y_e, x[k_n]);
+        st.planes[3 * n + i] = sigma * (1.0 + CORE_WARMTH) * cold + 0.5 * (st.get(1, i).powi(2) + st.get(2, i).powi(2)) / sigma;
+    }
+}
+
+/// No cell of `st` passes the hold's test under the shipped physics (the twin's `Floors::holds`, nothing held before).
+fn assert_none_held(name: &str, st: &State) {
+    let floors = Floors::new(&shipped(), &elements()).unwrap();
+    let held = (0..st.width * st.height).filter(|&i| {
+        let x: [f64; N_SPECIES] = std::array::from_fn(|s| st.get(4 + s, i));
+        floors.holds(st.get(0, i), [st.get(1, i), st.get(2, i)], st.get(3, i), &x, false)
+    });
+    assert_eq!(held.count(), 0, "{name}: cells held before step 0");
+}
+
 /// A `w` × `h` world of hydrogen at Σ = 1 at rest with, about cell (cx, cy), a core of `mass` in the disk r ≤ 4 (49 cells,
 /// Σ = mass/50, its centre twice that: the one local maximum) of pure `species`, converging on its centre at 0.1 per cell
-/// (diverging, `sign` = +1); ε_th = 0.1 everywhere and φ = −100 + ½d² about the centre.
+/// (diverging, `sign` = +1); ε_th = 0.1 beyond the core, the core [`free_of_the_hold`], and φ = −1,000 + ½d² about the
+/// centre: the warmed centre bound whatever the core (1.05 m_tov_sb: ε_th ≈ 96 for neutrons, ≈ 120 for iron), so each
+/// refusal is its own criterion's, never the boundness (M0-D148).
 fn core_world(w: usize, h: usize, (cx, cy): (usize, usize), mass: f64, species: &str, sign: f64) -> (State, Vec<f64>) {
     let (n, k) = (w * h, elements().index_of(species).unwrap());
     let mut planes = vec![0.0; COMPONENTS * n];
@@ -393,10 +427,12 @@ fn core_world(w: usize, h: usize, (cx, cy): (usize, usize), mass: f64, species: 
             planes[2 * n + i] = sigma * u[1];
             planes[3 * n + i] = sigma * (0.1 + 0.5 * (u[0] * u[0] + u[1] * u[1]));
             planes[(4 + sp) * n + i] = 1.0;
-            phi[i] = -100.0 + 0.5 * (d[0] * d[0] + d[1] * d[1]);
+            phi[i] = -1000.0 + 0.5 * (d[0] * d[0] + d[1] * d[1]);
         }
     }
-    (State::new(w, h, planes), phi)
+    let mut st = State::new(w, h, planes);
+    free_of_the_hold(&mut st);
+    (st, phi)
 }
 
 #[test]
@@ -1249,6 +1285,12 @@ fn gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin() 
     };
     let (st, phi) = world(1.05, "n", -1.0);
     let (mass0, _) = grid_totals(&st);
+    // The core is free of the hold (§2.7 [M0-TG2]): the GPU's hold before step 0 leaves its ∇·u to §2.6's test (M0-D148).
+    assert_none_held("mass formation", &st);
+    let centre = 32 * 64 + 32;
+    let cold = Eos::from_physics(&phys).unwrap().eps_cold(st.get(0, centre), 0.0, 1.0);
+    let margin = (st.get(3, centre) / st.get(0, centre) - cold) / cold;
+    println!("SR-SINK mass formation scene: 64 × 64, 1.05 m_tov_sb of neutrons in r ≤ 4 at (32, 32), Σ_centre {:.3}, ε_th / ε_cold {margin:.4} at the centre (held at ≤ η_hold {ETA_HOLD}, released past {})", st.get(0, centre), 2.0 * ETA_HOLD);
     let r = rig_with(&phys, &st, Some(&phi), false, None, &[]);
     let report = r.run(1);
     let mut twin = mass_sinks();
@@ -1267,6 +1309,7 @@ fn gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin() 
     // Refused: under m_tov_sb, iron, diverging — the world untouched.
     for (name, mass, species, sign) in [("0.95 m_tov_sb", 0.95, "n", -1.0), ("iron, Y_e 0.464", 1.05, "Fe", -1.0), ("∇·u > 0", 1.05, "n", 1.0)] {
         let (st, phi) = world(mass, species, sign);
+        assert_none_held(name, &st);
         let r = rig_with(&phys, &st, Some(&phi), false, None, &[]);
         let report = r.run(1);
         assert!(report.formed.is_none() && report.sinks.is_empty(), "{name}: {report:?}");
@@ -1274,9 +1317,14 @@ fn gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin() 
         let cells = r.cells();
         assert!(core.iter().all(|&i| cells.get(0, i) == st.get(0, i)), "{name}: a cell of the disk was taken");
     }
-    // Σ ≥ Σ_BH alone, hydrogen: the cell alone, as §2.6.
-    let (st, phi) = world64(&[(32, 32, 7000.0)], -1.0, 0.0);
+    // Σ ≥ Σ_BH alone, hydrogen: the cell alone, as §2.6. Its cells at Σ ≥ σ_hold free of the hold, as the core's: the
+    // centre's ε_cold ≈ 17,937 under the shipped physics, so ε_th ≈ 4,484, bound in the bowl deepened by 10⁴.
+    let (mut st, phi) = world64(&[(32, 32, 7000.0)], -1.0, -10_000.0);
+    free_of_the_hold(&mut st);
+    let st = rounded(&st);
+    assert_none_held("Σ_BH alone", &st);
     let report = rig_with(&phys, &st, Some(&phi), false, None, &[]).run(1);
+    println!("SR-SINK gpu Σ_BH formation (shipped physics): {report:?}");
     assert_eq!(report.formed, Some((32, 32)));
     // Formation took the cell alone; the same step's accretion then took the bound cells within r_acc = 2 (12 × 100), not
     // the disk r ≤ 4 (48 × 100).

@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/floors.rs
++++ b/crates/sr-physics/src/reference/floors.rs
+@@ -160,7 +160,7 @@
+         let comp = self.elements.composition(&x);
+         let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
+         let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
+-        let iron = x[ID_FE] > 0.0;
++        let iron = x[ID_FE] > 0.0 && comp.y_e * sigma > 160.0; // planted: the gate form back, iron held while Y_eΣ ≤ Σ_N
+         if was_held {
+             !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || iron)
+         } else {
+--- a/crates/sr-engine/shaders/floors.wgsl
++++ b/crates/sr-engine/shaders/floors.wgsl
+@@ -176,7 +176,7 @@
+     let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
+     let cold = eps_cold(sigma, comp.y_e, x[ID_N]);
+     let eps_th = hydro[3u * n + cell] / sigma - 0.5 * dot(mom / sigma, mom / sigma) - cold;
+-    let iron = x[ID_FE] > 0.0;
++    let iron = x[ID_FE] > 0.0 && comp.y_e * sigma > 160.0; // planted: the gate form back
+     let was = textureLoad(held, xy).x != 0u;
+     var now: bool;
+     if (was) {

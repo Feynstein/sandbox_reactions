@@ -1,0 +1,23 @@
+== 2026-11-03T09:57:53-05:00 held_core · task M0-D71b · box laserax-ai-server :: bash tests/gpu.sh held_core physics
+-- held_core · exit=0 · 86.78 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test held_core::a_held_iron_cell_is_released_at_n_fe_gate ... SR-HELD-NFE Σ_N 160, iron Y_e 0.4643: held at Σ 310.2, released at 379.1
+ok
+test held_core::a_held_wall_reflects_and_passes_nothing ... SR-HELD-WALL Δp of the free cell -4.069482e-2 (Δt 1.3896e-1); held [0.04208447174097868, 0.0]; momentum drift [1.7290918461473528e-16, 0.0] of 6.4208e-1
+ok
+test held_core::disk_m1800_rests_held ... SR-HELD-CORE disk M 1800: held 12 at step 0, 12 at 10000 (M0-R11: 12); floor_added -6.1736e-4 over 1000–10000; KE 0.0000e0 → 0.0000e0; held momentum (6.2525e-9, 1.3927e-8); momentum drift 1.527e-8 of Σm|u| 0.0000e0; held cells moving 0
+ok
+test held_core::disk_m900_rests_held ... SR-HELD-CORE disk M 900: held 16 at step 0, 16 at 10000 (M0-R11: 16); floor_added 2.2610e0 over 1000–10000; KE 1.5546e2 → 1.5418e2; held momentum (-6.3714e-1, 9.7478e-3); momentum drift 7.879e-1 of Σm|u| 6.3185e1; held cells moving 0
+ok
+test held_core::gravity_kick_on_a_held_cell_is_booked ... SR-HELD-GRAVITY Δt g M 1.753625e-1 (the held column's share 1.131371e-1); held [0.11426902152517097, 0.0]; drift [0.0, 0.0]
+ok
+test held_core::nothing_crosses_a_held_cell_either_way ... SR-HELD-NO-INFLOW held [27.605306515736036, 0.0]; momentum drift [0.0, 0.0] of 3.2761e2
+ok
+test held_core::the_hold_has_its_hysteresis ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 466 filtered out; finished in 86.68s
+
+

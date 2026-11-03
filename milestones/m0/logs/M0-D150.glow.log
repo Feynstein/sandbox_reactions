@@ -1,0 +1,51 @@
+== 2026-11-03T14:14:23-05:00 glow · task M0-D150 · box laserax-ai :: bash tests/gpu.sh glow physics
+-- glow · exit=101 · 0.26 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test glow::a_bright_block_halo_follows_the_gaussian_and_is_visible ... 
+thread 'glow::a_bright_block_halo_follows_the_gaussian_and_is_visible' (2231219) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test glow::a_bright_cell_at_the_corner_and_one_on_the_edge ... 
+thread 'glow::a_bright_cell_at_the_corner_and_one_on_the_edge' (2231249) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test glow::a_lone_bright_cell_halo_follows_the_gaussian ... 
+thread 'glow::a_lone_bright_cell_halo_follows_the_gaussian' (2231250) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test glow::dense_cold_gas_does_not_bloom ... 
+thread 'glow::dense_cold_gas_does_not_bloom' (2231251) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test glow::hotter_than_the_luminance_band_still_blooms ... 
+thread 'glow::hotter_than_the_luminance_band_still_blooms' (2231252) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test glow::nothing_is_added_below_the_threshold ... 
+thread 'glow::nothing_is_added_below_the_threshold' (2231253) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test glow::the_other_views_are_untouched ... 
+thread 'glow::the_other_views_are_untouched' (2231254) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    glow::a_bright_block_halo_follows_the_gaussian_and_is_visible
+    glow::a_bright_cell_at_the_corner_and_one_on_the_edge
+    glow::a_lone_bright_cell_halo_follows_the_gaussian
+    glow::dense_cold_gas_does_not_bloom
+    glow::hotter_than_the_luminance_band_still_blooms
+    glow::nothing_is_added_below_the_threshold
+    glow::the_other_views_are_untouched
+
+test result: FAILED. 0 passed; 7 failed; 0 ignored; 0 measured; 482 filtered out; finished in 0.14s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,50 @@
+== 2026-11-03T11:22:50-05:00 floors · task M0-D71c · box laserax-ai-server :: bash tests/gpu.sh floors physics
+-- floors · exit=0 · 8.07 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 12 tests
+test floors::a_cell_with_a_non_finite_fraction_is_left_for_the_guard ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+5 planted cells left as read (non-finite fractions kept, nothing booked); 4091 other cells as the clean run
+ok
+test floors::a_second_p8_over_the_held_state_moves_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+1460 cells held; the second step's P8 kept the mask, the momenta and booked 0 on all 4096 cells
+ok
+test floors::booked_terms_equal_the_mass_and_energy_changed ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+vacuum_reset -1.2779251958193072e-1 (Σ fell by -1.2779251808082392e-1, Σ|ΔΣ| 1.2821747807846862e-1); floor_added 4.45896987519032e3 (E rose by 4.458969875755135e3, Σ|ΔE| 4.970839360435396e3); tol 1e-6
+ok
+test floors::clear_leaves_no_cell_held ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+1460 cells held, then a Clear: none held after its step
+ok
+test floors::cold_cells_rise_to_t_floor_and_hot_cells_stay_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+2048 cold cells floored: worst |E − twin|/E = 5.432605968133433e-6 (tol 2e-5); 1024 hot cells bit-identical
+ok
+test floors::eos_helpers_equal_the_cpu_eos_with_the_cold_pairs_on_and_off ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+cold pairs on: 481 cases; worst relative error: 1/mu 6.3e-8, Y_e 4.1e-8, Z_met 8.8e-7, Pi_e 3.3e-7, Pi_n 2.4e-7, eps_cold 5.1e-6, Pi 2.6e-7, c^2 2.4e-7, T 1.3e-7
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+cold pairs off: 481 cases; worst relative error: 1/mu 6.3e-8, Y_e 4.1e-8, Z_met 8.8e-7, Pi_e 0.0e0, Pi_n 0.0e0, eps_cold 0.0e0, Pi 5.4e-8, c^2 9.5e-8, T 1.3e-7
+ok
+test floors::p8_dispatches_the_floors_ahead_of_the_renormalisation ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test floors::species_renormalised_after_the_floors ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+4096 cells: worst |X − twin| = 6.865331247940532e-8; 1024 all-≤ 0 cells now pure hydrogen
+ok
+test floors::the_held_momentum_is_booked_as_the_twin_books_it ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+held booked (7.77584424354136e2, -1.357379734814167e3) over the graded cells, the twin's (7.77584424354136e2, -1.357379734814167e3); Σ|taken| 3.4622437925726175e4
+ok
+test floors::the_hold_mask_and_momenta_equal_the_twins_cell_for_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+3470 cells graded, 626 within f32's rounding of an edge left out (624 built on one); newly held 338, kept (η < ε_th/ε_cold ≤ 2η) 252, released past 2η 336, released under ½σ_hold 224, at N_Fe's gate 456, refused under σ_hold 160, refused in the band 372
+ok
+test floors::the_initial_states_hold_comes_before_its_dt ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+Δt_0: moving block 9.897702e-4, its momenta zeroed by hand 9.897702e-4, uploaded held (kept moving) 1.5524428e-3
+ok
+test floors::vacuum_cells_reset_to_the_floor_state ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+1024 vacuum cells reset: Σ = Σ_floor bit-exact, u = 0, worst |E − twin|/E = 3.584469000188277e-7 (tol 2e-5)
+ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 470 filtered out; finished in 7.95s
+
+

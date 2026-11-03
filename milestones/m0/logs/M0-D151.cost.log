@@ -1,0 +1,18 @@
+M0-D151 2026-11-03T13:07:32-05:00 release builds for the P2 cost (before / this task / gate on), linux-pc
+    Finished `release` profile [optimized] target(s) in 27.62s
+    Finished `release` profile [optimized] target(s) in 0.06s
+    Finished `release` profile [optimized] target(s) in 0.06s
+    Finished `release` profile [optimized] target(s) in 3.98s
+    Finished `release` profile [optimized] target(s) in 3.81s
+2026-11-03T13:08:51-05:00 now preset:sun 2000 steps Quadro, uptime  13:08:51 up  3:35,  8 users,  load average: 12.75, 17.21, 20.64
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=24.689646 until=none
+before r1 P2 0.3739 P4 1.5174 step 8.2427 load 8.66
+now r1 P2 0.4557 P4 1.5343 step 8.3969 load 12.30
+gateon r1 P2 0.7615 P4 1.5482 step 8.7536 load 16.78
+before r2 P2 0.3823 P4 1.5479 step 8.2975 load 16.85
+now r2 P2 0.4611 P4 1.5524 step 8.4461 load 16.37
+gateon r2 P2 0.7686 P4 1.5616 step 8.7909 load 13.51
+before r3 P2 0.3843 P4 1.5573 step 8.3456 load 9.66
+now r3 P2 0.4627 P4 1.5593 step 8.4339 load 7.92
+gateon r3 P2 0.7677 P4 1.5608 step 8.7416 load 9.05

@@ -17,10 +17,15 @@
 //! from the temperatures after P4, not from the dumped cells, so no resume can rebuild them. After F, P5's rate in the
 //! step (one f32 plane, (T − T⁰)/Δt a cell) and `resume.rate` true (contract §0.5 [M0-D85]): the next step's first Newton
 //! iterate is built from it; a dump without it resumes with the rate zero.
+//! When any cell is held (§2.7 [M0-TG2]), the hold's mask follows as one more f32 plane, 1 held and 0 free, row-major, after
+//! every other plane, and `resume.held` is true (§2.12.3 [M0-TG2]): the mask carries the hold's hysteresis, a cell inside
+//! η < ε_th/ε_cold ≤ 2η staying held, which no dumped cell can rebuild. With no cell held the key is not written, so such a
+//! dump keeps its bytes; a header without it reads as none held.
 //!
 //! [`Dump::from_bytes`] refuses, naming the cause: a wrong magic, a file cut anywhere, bytes past the last plane, a
 //! header that is not UTF-8 JSON, an unknown or missing key, another version, a world §2.8 refuses, a channel list other
-//! than §2.2's, more than 16 sinks, a `flux` or `rate` flag the planes disagree with, a rate without F.
+//! than §2.2's, more than 16 sinks, a `flux`, `rate` or `held` flag the planes disagree with, a rate without F, a mask
+//! value other than 0 or 1.
 
 use std::path::Path;
 
@@ -69,6 +74,9 @@ pub struct Dump {
     pub flux: Option<Vec<f32>>,
     /// P5's rate in the step, one plane after F (§0.5 [M0-D85]); the header's `resume.rate` says which.
     pub rate: Option<Vec<f32>>,
+    /// The hold's mask, one word per cell (1 held, 0 free), when any cell is held (§2.12.3 [M0-TG2]); the header's
+    /// `resume.held` says which.
+    pub held: Option<Vec<u32>>,
 }
 
 impl Dump {
@@ -77,7 +85,7 @@ impl Dump {
         let r = &self.resume;
         let sinks: Vec<Value> =
             self.sinks.iter().map(|s| json!({"x": s.x, "y": s.y, "vx": s.vx, "vy": s.vy, "m": s.m})).collect();
-        json!({
+        let mut header = json!({
             "version": VERSION,
             "width": self.world.width,
             "height": self.world.height,
@@ -94,7 +102,11 @@ impl Dump {
                 "flux": self.flux.is_some(),
                 "rate": self.rate.is_some(),
             },
-        })
+        });
+        if self.held.is_some() {
+            header["resume"]["held"] = true.into();
+        }
+        header
     }
 
     /// The file's bytes (§2.12.3).
@@ -106,7 +118,9 @@ impl Dump {
         assert!(self.flux.is_none() || flux.len() == FLUX_PLANES * cells, "F is 2 planes of its world");
         let rate = self.rate.as_deref().unwrap_or_default();
         assert!(self.rate.is_none() || (self.flux.is_some() && rate.len() == cells), "the rate is 1 plane of its world, after F");
-        let mut out = Vec::with_capacity(12 + header.len() + 4 * (self.planes.len() + flux.len() + rate.len()));
+        let held = self.held.as_deref().unwrap_or_default();
+        assert!(self.held.is_none() || held.len() == cells, "the mask is 1 plane of its world");
+        let mut out = Vec::with_capacity(12 + header.len() + 4 * (self.planes.len() + flux.len() + rate.len() + held.len()));
         out.extend_from_slice(MAGIC);
         out.extend_from_slice(&(header.len() as u32).to_le_bytes());
         out.extend_from_slice(header.as_bytes());
@@ -117,6 +131,9 @@ impl Dump {
         }
         for v in flux.iter().chain(rate) {
             out.extend_from_slice(&v.to_le_bytes());
+        }
+        for &h in held {
+            out.extend_from_slice(&(h as f32).to_le_bytes());
         }
         out
     }
@@ -134,28 +151,36 @@ impl Dump {
         })?;
         let text = std::str::from_utf8(text).map_err(|e| format!("header: not UTF-8: {e}"))?;
         let header: Value = serde_json::from_str(text).map_err(|e| format!("header: not JSON: {e}"))?;
-        let (mut dump, flux, rate) = parse_header(&header)?;
+        let (mut dump, flux, rate, held) = parse_header(&header)?;
         dump.sim_time = exact_number(text, "sim_time").unwrap_or(dump.sim_time);
         dump.sinks = exact_sinks(text).unwrap_or(dump.sinks);
 
-        // §2.2's 14 planes, then F's 2 and the rate's 1 when the flags say so: a body the other flag would fit is the flag's
-        // refusal.
+        // §2.2's 14 planes, then F's 2, the rate's 1 and the mask's 1 when the flags say so: a body the other flag would fit
+        // is the flag's refusal.
         let body = &bytes[12 + len..];
         let plane = dump.world.cells() * 4;
         let channels = N_CHANNELS * plane;
         let with_flux = channels + usize::from(flux) * FLUX_PLANES * plane;
-        let want = with_flux + usize::from(rate) * plane;
-        if flux && body.len() == channels {
+        let with_rate = with_flux + usize::from(rate) * plane;
+        let want = with_rate + usize::from(held) * plane;
+        if flux && body.len() == want - FLUX_PLANES * plane {
             return Err("header.resume.flux: true, but no F planes follow §2.2's 14".to_string());
         }
-        if !flux && body.len() == channels + FLUX_PLANES * plane {
+        if !flux && body.len() == want + FLUX_PLANES * plane {
             return Err("header.resume.flux: false, but F's 2 planes follow §2.2's 14".to_string());
         }
-        if rate && body.len() == with_flux {
+        // One plane short is the last one's flag, the mask's before the rate's; one plane long the rate's, F's next.
+        if held && body.len() == want - plane {
+            return Err("header.resume.held: true, but no mask plane follows the last".to_string());
+        }
+        if rate && body.len() == want - plane {
             return Err("header.resume.rate: true, but no rate plane follows F's 2".to_string());
         }
-        if !rate && body.len() == with_flux + plane {
+        if flux && !rate && body.len() == want + plane {
             return Err("header.resume.rate: false, but a plane follows F's 2".to_string());
+        }
+        if !held && body.len() == want + plane {
+            return Err("header.resume.held: not true, but a plane follows the last".to_string());
         }
         if body.len() < want {
             return Err(format!("truncated in the planes: {} of {want} bytes", body.len()));
@@ -164,6 +189,13 @@ impl Dump {
             return Err(format!("{} bytes past the last plane", body.len() - want));
         }
         let mut values: Vec<f32> = body.as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect();
+        if held {
+            let mask = values.split_off(with_rate / 4);
+            if let Some((i, v)) = mask.iter().enumerate().find(|(_, v)| v.to_bits() != 0 && **v != 1.0) {
+                return Err(format!("header.resume.held: the mask's cell {i} is {v}, not 0 or 1"));
+            }
+            dump.held = Some(mask.iter().map(|&v| u32::from(v == 1.0)).collect());
+        }
         dump.rate = rate.then(|| values.split_off(with_flux / 4));
         dump.flux = flux.then(|| values.split_off(channels / 4));
         dump.planes = values;
@@ -248,8 +280,9 @@ fn words<const N: usize>(m: &Map<String, Value>, at: &str, k: &str) -> Result<[u
     Ok(out)
 }
 
-/// The header's values and its `resume.flux` and `resume.rate` flags; the planes are left empty for the caller.
-fn parse_header(v: &Value) -> Result<(Dump, bool, bool), String> {
+/// The header's values and its `resume.flux`, `resume.rate` and `resume.held` flags; the planes are left empty for the
+/// caller.
+fn parse_header(v: &Value) -> Result<(Dump, bool, bool, bool), String> {
     let at = "header";
     let keys = ["version", "width", "height", "step", "sim_time", "channels", "sinks", "resume"];
     let m = object(v, at, &keys)?;
@@ -278,12 +311,14 @@ fn parse_header(v: &Value) -> Result<(Dump, bool, bool), String> {
         })
         .collect::<Result<Vec<Sink>, String>>()?;
     let at_r = "header.resume";
-    let r = object_with(&m["resume"], at_r, &["dt", "dt_next", "latch_since", "box", "box_args", "flux"], &["rate"])?;
+    let r = object_with(&m["resume"], at_r, &["dt", "dt_next", "latch_since", "box", "box_args", "flux"], &["rate", "held"])?;
     let flux = r["flux"].as_bool().ok_or_else(|| format!("{at_r}.flux: not true or false: {}", r["flux"]))?;
-    let rate = match r.get("rate") {
-        None => false,
-        Some(v) => v.as_bool().ok_or_else(|| format!("{at_r}.rate: not true or false: {v}"))?,
+    // A header without the key — every dump written before it — reads false.
+    let optional = |k: &str| match r.get(k) {
+        None => Ok(false),
+        Some(v) => v.as_bool().ok_or_else(|| format!("{at_r}.{k}: not true or false: {v}")),
     };
+    let (rate, held) = (optional("rate")?, optional("held")?);
     if rate && !flux {
         return Err(format!("{at_r}.rate: true without F (flux false): the rate is P5's"));
     }
@@ -304,26 +339,30 @@ fn parse_header(v: &Value) -> Result<(Dump, bool, bool), String> {
         planes: Vec::new(),
         flux: None,
         rate: None,
+        held: None,
     };
-    Ok((dump, flux, rate))
+    Ok((dump, flux, rate, held))
 }
 
 /// §3.1 `dump_state()`: the state, the step index, the frames' sim time, the step's records and, when the step runs P5,
-/// F (§0.5 [M0-D33]) and P5's rate (§0.5 [M0-D85]), read back after every submitted step. Blocks on the device (tests and headless runs only, §6.3).
+/// F (§0.5 [M0-D33]) and P5's rate (§0.5 [M0-D85]), and the hold's mask when any cell is held (§2.12.3 [M0-TG2]), read back
+/// after every submitted step. Blocks on the device (tests and headless runs only, §6.3).
 pub fn dump_state(device: &wgpu::Device, queue: &wgpu::Queue, state: &State, step: &Step) -> Dump {
     let (index, sim_time, resume) = step.resume_records(device, queue);
     let flux = step.side_flux().map(|f| read_buffers(device, queue, "side.flux.readback", std::iter::once(f)));
     let rate = step.heat_rate(device, queue);
     let sinks = step.read_sinks(device, queue).map(|r| r.sinks).unwrap_or_default();
-    Dump { world: state.world(), step: index, sim_time, sinks, resume, planes: state.readback(device, queue), flux, rate }
+    let held = Some(state.read_held(device, queue)).filter(|m| m.iter().any(|&h| h != 0));
+    Dump { world: state.world(), step: index, sim_time, sinks, resume, planes: state.readback(device, queue), flux, rate, held }
 }
 
 /// §3.1 `load_dump(dump)`: writes the dump's cells into `state` and its records into `step`, whose next step is then
 /// the dump's `step`; its sinks, when the step runs P3, go into P3's state (M0-T52b); its F, when it holds one, goes into
-/// the step's `side.flux` (§0.5 [M0-D33]); its P5 rate, or zeros when it holds none, into the step's (§0.5 [M0-D85]). Call
-/// it before `step` records anything. Refused: another world than the state's, a step index past the GPU's u32 count,
-/// sinks into a step that runs no P3, F without P5 to read it, P5 without F (its first step would push with F = 0), a rate
-/// of another length than the world's cells.
+/// the step's `side.flux` (§0.5 [M0-D33]); its P5 rate, or zeros when it holds none, into the step's (§0.5 [M0-D85]); its
+/// hold's mask, or none held when it holds none, into the state's (§2.12.3 [M0-TG2]). Call it before `step` records
+/// anything. Refused: another world than the state's, a step index past the GPU's u32 count, sinks into a step that runs
+/// no P3, F without P5 to read it, P5 without F (its first step would push with F = 0), a rate or a mask of another length
+/// than the world's cells.
 pub fn load_dump(queue: &wgpu::Queue, state: &State, step: &Step, dump: &Dump) -> Result<(), String> {
     if dump.world != state.world() {
         let (d, s) = (dump.world, state.world());
@@ -348,7 +387,12 @@ pub fn load_dump(queue: &wgpu::Queue, state: &State, step: &Step, dump: &Dump) -
     if let Some(r) = dump.rate.as_ref().filter(|r| r.len() != dump.world.cells()) {
         return Err(format!("dump rate: {} values, 1 plane of its world holds {}", r.len(), dump.world.cells()));
     }
+    if let Some(h) = dump.held.as_ref().filter(|h| h.len() != dump.world.cells()) {
+        return Err(format!("dump mask: {} values, 1 plane of its world holds {}", h.len(), dump.world.cells()));
+    }
     state.upload(queue, &dump.planes).map_err(|e| e.to_string())?;
+    let none = vec![0u32; dump.world.cells()];
+    state.upload_held(queue, dump.held.as_deref().unwrap_or(&none)).map_err(|e| e.to_string())?;
     if let Some((f, side)) = flux {
         let bytes: Vec<u8> = f.iter().flat_map(|v| v.to_le_bytes()).collect();
         queue.write_buffer(side, 0, &bytes);

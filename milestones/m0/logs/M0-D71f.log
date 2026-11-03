@@ -1,0 +1,92 @@
+# M0-D71f — 2026-11-03T14:56:16-05:00 linux-pc (laserax-ai); GPU runs on laserax-ai-server RTX 4090 (R18)
+rsync up OK 2026-11-03T14:56:17-05:00
+    Finished `release` profile [optimized] target(s) in 0.07s
+
+real	0m0.113s
+user	0m0.063s
+sys	0m0.047s
+-rwxrwxr-x 2 ybelanger ybelanger 23194144 Nov  3 14:34 build/target/release/sandbox-reactions
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10000 sim_time=5364.259462 until=none
+wall 45.98 s
+/tmp/d71f/window:
+dumps
+events.jsonl
+summary.json
+
+/tmp/d71f/window/dumps:
+s_455000.bin
+s_455000.observers.json
+s_460000.bin
+s_460000.observers.json
+half 1: steps 450001->455000 floor_added 1.7193e+03 radiated 1.2393e+05 share 1.39 % nuclear 1.7426e+04
+half 2: steps 455000->460000 floor_added 4.3111e+03 radiated 8.3483e+03 share 51.64 % nuclear 0.0000e+00
+whole : steps 450001->460000 floor_added 6.0304e+03 radiated 1.3228e+05 share 4.56 % nuclear 1.7426e+04
+invariant -1.715729e+05 -> -1.730291e+05 drift -1.4562e+03 = 4.256e-03 |W0| over t 92.661
+  kinetic: 1.82805e+02 -> 1.75226e+02 -> 1.80723e+02
+  thermal: 6.12103e+04 -> 2.39698e+04 -> 1.99394e+04
+  cold: 1.09166e+05 -> 2.53303e+05 -> 2.53372e+05
+  potential: -3.42132e+05 -> -5.55263e+05 -> -5.55344e+05
+momentum end grid [1.3679369688034058, 15.954902648925781] held [-101.9913435364142, -21.625361442565918] invariant [-100.6234065676108, -5.670458793640137]
+s_455000.bin: held 37, box (298, 193, 304, 199), Σ_max 61.29, held mass 1321.92
+s_460000.bin: held 37, box (298, 193, 304, 199), Σ_max 61.29, held mass 1321.92
+dumps/s_455000.observers.json R 3.15966304046375 tau_dyn 0.14524280510221216 M 1495.3162554502487 W -555262.6779251099 L 213.25823939622575
+dumps/s_460000.observers.json R 3.1576992463959592 tau_dyn 0.14510741929863158 M 1495.316252619028 W -555344.1376113892 L 161.62188012155215
+lives run started on server 2026-11-03T15:01:35-05:00: calibrate bracket capped 570 s, /tmp/d71f/lives
+d87_cont
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=4239 sim_time=26.965 wall_s=87.8 record=build/calibrate_runs/2026-11-03T20-01-35Z/m_bh_sb-01
+exit 124 wall 570 s
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=8807 sim_time=48.141 heat_unconverged=1 stage=neutron_star | raw=neutron_star
+  frame  steps          16 dt       0.005217 s/step     0.1224 P5_ceil         0
+  star   M           51621 R           152.1 tau_dyn     8.252 M_unb           0
+  core   sigma_c     461.6 T_c         60.06 d_c        0.9236 Ye_c       0.3466
+  centre X_Fe       0.7465 X_n        0.2535 v_r      -0.03484 vr/vdyn -0.001891
+  light  L           63804 L_nuc   9.911e-10 L_N             0 L_nu            0
+  world  escaped     12294 objects         3 sinks           0 sink_M          0
+338
+cut: /home/ybelanger/workspace/sandbox_reactions/build/calibrate_runs/2026-11-03T20-01-35Z/m_bh_sb-02/events.jsonl: No such file or directory
+held exit 0 wall 31.12 s
+pre exit 0 wall 60.09 s
+== held
+{"detail":{"mass_sb":66514.50752066541},"kind":"core_collapse","object":1,"sim_time":10.4635820731055,"step":1700}
+objects [(1, 60644.1, 'neutron_star')]
+sinks mass 0.0 floor 4040307.7072656155
+step   1400 t    8.822 held    0 mass   cells 0 sinks []
+step   1600 t    9.968 held    0 mass   cells 0 sinks [] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   1800 t   10.969 held   78 mass  12,157) Fe-gated cells 0 sinks [] | +50 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2000 t   12.051 held   89 mass  22,157) Fe-gated cells 0 sinks [] | +4 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2200 t   13.204 held  103 mass  22,157) Fe-gated cells 0 sinks [] | +10 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2400 t   14.310 held  125 mass  22,157) Fe-gated cells 0 sinks [] | +11 held, released 1 {'gate': 0, 'thin': 1, 'warm': 0}
+step   2600 t   15.353 held  148 mass  22,157) Fe-gated cells 0 sinks [] | +16 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2800 t   16.377 held  203 mass  3,157) Fe-gated cells 2 sinks [] | +23 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   3000 t   17.516 held  254 mass  4,157) Fe-gated cells 2 sinks [] | +18 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+== pre
+{"detail":{"mass_sb":66526.57169248722},"kind":"core_collapse","object":1,"sim_time":10.414076326880604,"step":1700}
+{"detail":{"mass_sb":64601.4769581873},"kind":"sink_formed","object":1,"sim_time":14.409028858179227,"step":2600}
+objects [(1, 62203.5, 'black_hole')]
+sinks mass 12795.05224609375 floor 168003628.8127602
+step   1400 t    8.822 held    0 mass   cells 0 sinks []
+step   1600 t    9.968 held    0 mass   cells 0 sinks [] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   1800 t   10.800 held    0 mass   cells 6 sinks [] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2000 t   11.617 held    0 mass   cells 2 sinks [] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2200 t   12.544 held    0 mass   cells 0 sinks [] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2400 t   13.452 held    0 mass   cells 0 sinks [] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2600 t   14.409 held    0 mass   cells 0 sinks [(243.8, 142.9, 5165.7)] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   2800 t   15.295 held    0 mass   cells 0 sinks [(246.8, 145.2, 6731.7)] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+step   3000 t   16.101 held    0 mass   cells 0 sinks [(250.6, 148.5, 6872.9), (354.2, 142.8, 5668.8)] | +0 held, released 0 {'gate': 0, 'thin': 0, 'warm': 0}
+held 1363 -> 3062 floor_added +4.04 nuclear_released -5.62 radiated +15.45 neutrino_lost +0.02 invariant -0.01 potential -35.13 thermal -1.24 cold +17.86 kinetic -0.16 (10^6) escaped 6180.4 W0 -44.04
+pre 1363 -> 3062 floor_added +168.00 nuclear_released -150.33 radiated +15.59 neutrino_lost +0.15 invariant +17.35 potential +5.98 thermal -1.51 cold +1.95 kinetic +6.74 (10^6) escaped 4622.4 W0 -44.04
+test held_core::gpu_the_remnant_window_shines_on_its_own_heat ... SR-HELD-WINDOW scenes/remnant_window.bin is the cut of build/v9-sun-life/dumps/s_450000.bin
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10000 sim_time=5364.303269 until=none
+SR-HELD-WINDOW GPU "NVIDIA GeForce RTX 4090": floor_added 5.0566e3 of radiated 1.3125e5 = 3.85 % over 10000 steps (bound 15 %; M0-R11's twin 3.8 %); halves 1.24 % and 45.95 % (1.527e3/1.236e5, 3.529e3/7.680e3); held 37 at step 460000; the energy invariant -1.6153e3 of |W| 3.4213e5
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 491 filtered out; finished in 34.04s
+wall 41.18 s
+-rw-rw-r-- 1 ybelanger ybelanger 1048971 Nov  3 15:13 scenes/remnant_window.bin
+3c5e31026f96afd32c429b7e80b04ef9b8c12586cdaa81e9de9d6db0bb801107  /home/ybelanger/workspace/sandbox_reactions/scenes/remnant_window.bin
+w2500 floor -0.3184561058466068 radiated 116536.10115873814 wall 8.056178993
+test held_core::gpu_the_remnant_window_shines_on_its_own_heat ... SR-HELD-WINDOW scenes/remnant_window.bin is the cut of build/v9-sun-life/dumps/s_450000.bin
+SR-HELD-WINDOW GPU "NVIDIA GeForce RTX 4090": floor_added 1.3257e5 of radiated 2.5893e5 = 51.20 % over 10000 steps (bound 15 %; M0-R11's twin 3.8 %); halves 24.51 % and 94.92 % (3.941e4/1.608e5, 9.315e4/9.814e4); held 24 at step 460000; the energy invariant -2.9182e3 of |W| 3.4213e5
+thread 'held_core::gpu_the_remnant_window_shines_on_its_own_heat' (1184036) panicked at crates/sr-engine/tests/gpu/held_core.rs:1037:5:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 491 filtered out; finished in 61.39s
+wall 86.23 s

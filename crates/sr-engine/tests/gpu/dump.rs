@@ -14,6 +14,10 @@
 //! slots — bare, and in frames under the latch — dump the bytes of the run at the engine's own choice.
 //! P5's warm start (§0.5 [M0-D85]): the rate is the dump's 17th plane, after F — a sun_disk life cut by a dump and continued
 //! is the unbroken one byte for byte 10 steps on, and the same dump without its rate visibly is not.
+//! The hold's mask (§2.12.3 [M0-TG2], M0-D71e): one more plane after every other, flagged `resume.held`, written only when a
+//! cell is held — a held run cut by a dump and continued is the straight run bit for bit, its core held inside the
+//! hysteresis band (η < ε_th/ε_cold ≤ 2η), which an empty mask leaves free, so the same dump with the key dropped visibly is
+//! not.
 
 use super::device;
 use sr_engine::dump::{dump_state, load_dump, Dump, Resume, Sink};
@@ -27,7 +31,9 @@ use sr_engine::step::dt::DtReport;
 use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::sinks::SinkSetup;
 use sr_engine::step::{EosGpu, Passes, Step};
-use sr_physics::registry::{Elements, Physics, Reactions};
+use sr_physics::eos::Eos;
+use sr_physics::reference::floors::{ETA_HOLD, SIGMA_HOLD};
+use sr_physics::registry::{Elements, Physics, Reactions, N_SPECIES};
 
 /// §2.2's channels, written out from the contract (not from `state::CHANNELS`).
 const SPEC_CHANNELS: [&str; 14] =
@@ -125,6 +131,19 @@ impl Run {
         Run { state, step }
     }
 
+    /// P2 and P4 on the `leave` edge, no P5 (M0-D71e): a held cell's walls and the free gas's pull, with no F or rate in
+    /// the dump.
+    fn held(gpu: &Gpu, c: &Constants, (world, planes): (WorldConfig, &[f32])) -> Run {
+        let state = State::new(&gpu.device, world).unwrap();
+        state.upload(&gpu.queue, planes).unwrap();
+        let booking = Booking::new(&gpu.device, world).unwrap();
+        let eos = EosGpu::new(&gpu.device, &c.physics, &c.elements);
+        let side = SideFields::new(&gpu.device, world).unwrap();
+        let passes = Passes { mode: BoxMode::Fit, gravity: Some(&side), hydro: Some(EdgeMode::Leave) };
+        let step = Step::with_heat(&gpu.device, &state, &booking, &eos, &c.physics, &passes, None).unwrap();
+        Run { state, step }
+    }
+
     /// One frame with the slow-down on, submitted, waited for, and its report.
     fn frame(&self, gpu: &Gpu, steps: u32) -> FrameReport {
         let mut encoder = gpu.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frame") });
@@ -153,7 +172,17 @@ fn small_dump() -> Dump {
         box_record: [8, 16, 24, 32, 64, 64, 17, 3],
         box_args: [3, 4, 1, 3, 1, 1],
     };
-    Dump { world, step: 17, sim_time: 7.123456789012345, sinks: Vec::new(), resume, planes, flux: None, rate: None }
+    Dump { world, step: 17, sim_time: 7.123456789012345, sinks: Vec::new(), resume, planes, flux: None, rate: None, held: None }
+}
+
+/// A dump's bytes with header `h` and planes `body`, read.
+fn with_header(h: &serde_json::Value, body: &[u8]) -> Result<Dump, String> {
+    let text = h.to_string();
+    let mut out = b"SRDUMP01".to_vec();
+    out.extend((text.len() as u32).to_le_bytes());
+    out.extend(text.as_bytes());
+    out.extend(body);
+    Dump::from_bytes(&out)
 }
 
 /// The header's bytes and the planes' offset, read by hand.
@@ -833,4 +862,191 @@ fn headless_builds_p3_and_p7_from_the_scenes_switches_and_resumes_a_dump_holding
     let err = load_dump(&gpu.queue, &no_p3.state, &no_p3.step, &dump).unwrap_err();
     assert!(err.contains("P3"), "{err}");
     let _ = std::fs::remove_dir_all(&root);
+}
+
+/// The core of [`held_start`]: x 60..68, y 28..36.
+const CORE: (std::ops::Range<usize>, std::ops::Range<usize>) = (60..68, 28..36);
+
+/// ε_th / (η_hold ε_cold) of cell `i`, read from the planes in f64 as §2.7 [M0-TG2]'s rule reads it.
+fn hold_ratio(c: &Constants, eos: &Eos, planes: &[f32], cells: usize, i: usize) -> f64 {
+    let at = |ch: usize| f64::from(planes[ch * cells + i]);
+    let sigma = at(0);
+    let x: [f64; N_SPECIES] = std::array::from_fn(|k| at(4 + k));
+    let cold = eos.eps_cold(sigma, c.elements.composition(&x).y_e, x[9]);
+    let th = at(3) / sigma - 0.5 * (at(1) * at(1) + at(2) * at(2)) / (sigma * sigma) - cold;
+    th / (ETA_HOLD * cold)
+}
+
+/// A 128 × 64 world of vacuum hydrogen: an 8 × 8 core ([`CORE`]) of Σ 2σ_hold at rest, ε_th = 1.5 η_hold ε_cold — inside the
+/// hysteresis band, so held only because its mask says so (a held remnant warmed on the grid) — in gas of Σ 2 at T 1 falling
+/// onto it at 0.25 over x 32..96, y 8..56; the mask, held on the core.
+fn held_start(c: &Constants, eos: &Eos) -> (WorldConfig, Vec<f32>, Vec<u32>) {
+    let world = WorldConfig::new(128, 64).unwrap();
+    let (w, cells) = (world.width as usize, world.cells());
+    let mut x = [0f64; N_SPECIES];
+    (x[0], x[1]) = (0.7, 0.3);
+    let comp = c.elements.composition(&x);
+    let mut p = vec![0f32; N_CHANNELS * cells];
+    p[4 * cells..5 * cells].fill(1.0);
+    let mut mask = vec![0u32; cells];
+    for y in 8..56 {
+        for xx in 32..96 {
+            let i = y * w + xx;
+            let core = CORE.0.contains(&xx) && CORE.1.contains(&y);
+            let sigma = if core { 2.0 * SIGMA_HOLD } else { 2.0 };
+            let cold = eos.eps_cold(sigma, comp.y_e, x[9]);
+            let (dx, dy) = (xx as f64 + 0.5 - 64.0, y as f64 + 0.5 - 32.0);
+            let v = if core { [0.0, 0.0] } else { [-0.25 * dx / dx.hypot(dy), -0.25 * dy / dx.hypot(dy)] };
+            let th = if core { 1.5 * ETA_HOLD * cold } else { comp.inv_mu };
+            let values = [sigma, sigma * v[0], sigma * v[1], sigma * (cold + th) + 0.5 * sigma * (v[0] * v[0] + v[1] * v[1])];
+            for (ch, v) in values.iter().chain(&x).enumerate() {
+                p[ch * cells + i] = *v as f32;
+            }
+            mask[i] = u32::from(core);
+        }
+    }
+    (world, p, mask)
+}
+
+/// §2.12.3 [M0-TG2]: the hold's mask carries the hysteresis. [`held_start`] (the shipped constants, P2 and P4), 200 steps
+/// straight against 100, a dump, and 100 from it loaded into a fresh step: the bytes bit for bit, the mask among them. The
+/// dump's mask read by hand as the plane after §2.2's 14 (no P5: no F, no rate), its core held inside the band. Adversarial:
+/// a mask whose cells all sit under η re-holds identically from none, so the core sits in the band, which an empty mask
+/// leaves free — the same dump with its key and plane dropped by hand runs P4 over the core and visibly differs.
+#[test]
+fn a_held_run_through_a_dump_equals_200_straight_steps_and_the_mask_dropped_visibly_does_not() {
+    let gpu = device();
+    let c = Constants { physics: Physics::shipped().unwrap(), elements: Elements::shipped().unwrap() };
+    let eos = Eos::from_physics(&c.physics).unwrap();
+    let (world, planes, mask) = held_start(&c, &eos);
+    let cells = world.cells();
+    let held_run = |planes: &[f32], mask: &[u32]| {
+        let run = Run::held(&gpu, &c, (world, planes));
+        run.state.upload_held(&gpu.queue, mask).unwrap();
+        run
+    };
+    let straight = held_run(&planes, &mask);
+    straight.step.run(&gpu.device, &gpu.queue, 200);
+    let want = dump_state(&gpu.device, &gpu.queue, &straight.state, &straight.step);
+    assert!(want.held.is_some(), "the straight run holds its core at step 200");
+    let want = want.to_bytes();
+
+    let first = held_run(&planes, &mask);
+    first.step.run(&gpu.device, &gpu.queue, 100);
+    let cut = dump_state(&gpu.device, &gpu.queue, &first.state, &first.step);
+    assert_eq!(cut.step, 100);
+    let bytes = cut.to_bytes();
+    let (header, base) = split(&bytes);
+    assert_eq!((header["resume"]["held"].as_bool(), header["resume"]["flux"].as_bool()), (Some(true), Some(false)), "{}", header["resume"]);
+    assert_eq!(bytes.len(), base + 4 * (N_CHANNELS + 1) * cells, "no P5: the mask's plane right after §2.2's 14");
+    let by_hand: Vec<f32> = bytes[base + 4 * N_CHANNELS * cells..].as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect();
+    let gpu_mask = first.state.read_held(&gpu.device, &gpu.queue);
+    assert!(by_hand.iter().zip(&gpu_mask).all(|(&v, &h)| v.to_bits() == (h as f32).to_bits()), "the plane is the GPU's mask, 1 held, 0 free");
+    let held: Vec<usize> = (0..cells).filter(|&i| gpu_mask[i] == 1).collect();
+    let ratios: Vec<f64> = held.iter().map(|&i| hold_ratio(&c, &eos, &cut.planes, cells, i)).collect();
+    let band = ratios.iter().filter(|&&r| r > 1.0 && r <= 2.0).count();
+    let (lo, hi) = ratios.iter().fold((f64::INFINITY, f64::NEG_INFINITY), |(a, b), &r| (a.min(r), b.max(r)));
+    println!("step 100: {} cells held, {band} inside the band (ε_th / η ε_cold {lo:.4} to {hi:.4})", held.len());
+    assert!(band > 0, "no held cell inside the band: an empty mask would re-hold them all, and the case could not see it lost");
+
+    let read = Dump::from_bytes(&bytes).unwrap();
+    assert_eq!(read, cut, "the held dump reads back the same");
+    let zeros = vec![0f32; N_CHANNELS * cells];
+    let resumed = held_run(&zeros, &vec![0; cells]);
+    load_dump(&gpu.queue, &resumed.state, &resumed.step, &read).unwrap();
+    resumed.step.run(&gpu.device, &gpu.queue, 100);
+    let got = dump_state(&gpu.device, &gpu.queue, &resumed.state, &resumed.step).to_bytes();
+    assert!(got == want, "the resumed run's dump at step 200 differs from the straight run's");
+
+    // The case can see the bug it guards: the key and the plane dropped by hand, the core resumes free.
+    let mut dropped = header.clone();
+    dropped["resume"].as_object_mut().unwrap().remove("held");
+    let dropped = with_header(&dropped, &bytes[base..bytes.len() - 4 * cells]).unwrap();
+    assert!(dropped.held.is_none(), "a header without the key reads none held");
+    let lost = held_run(&zeros, &vec![1; cells]);
+    load_dump(&gpu.queue, &lost.state, &lost.step, &dropped).unwrap();
+    assert!(lost.state.read_held(&gpu.device, &gpu.queue).iter().all(|&h| h == 0), "load_dump empties the mask a dump holds none of");
+    lost.step.run(&gpu.device, &gpu.queue, 100);
+    let lost = dump_state(&gpu.device, &gpu.queue, &lost.state, &lost.step);
+    let off = lost.planes.iter().zip(&Dump::from_bytes(&want).unwrap().planes).filter(|(a, b)| a.to_bits() != b.to_bits()).count();
+    println!("the same dump without its mask: {off} state values differ at step 200, {} cells held", lost.held.map_or(0, |m| m.iter().sum::<u32>()));
+    assert!(off > 0, "a resume that drops the mask must not pass for one");
+}
+
+/// §2.12.3 [M0-TG2]: the mask's plane read by hand — after F's 2 and the rate's 1, or right after §2.2's 14 with neither,
+/// `resume.held` true, 1 held and 0 free — and back to the same dump; with none held the key is absent and the bytes those
+/// of a dump before it; a header without the key reads none held, and scenes/heat_ceiling.bin and heat_overflow.bin load as
+/// before, none held, their bytes their own. Refused: the flag set with no plane, a plane with the key absent or false, a
+/// value other than 0 or 1, a flag not true or false.
+#[test]
+fn the_mask_follows_every_plane_flagged_held_and_a_header_without_it_reads_none_held() {
+    let _gpu = device();
+    let cells = 64 * 64;
+    let warm = Dump {
+        flux: Some((0..2 * cells).map(|i| i as f32 * -0.25).collect()),
+        rate: Some((0..cells).map(|i| i as f32 * 0.125).collect()),
+        ..small_dump()
+    };
+    let mask: Vec<u32> = (0..cells).map(|i| u32::from(i % 7 == 3)).collect();
+    let held = Dump { held: Some(mask.clone()), ..warm.clone() };
+    let bytes = held.to_bytes();
+    let (header, base) = split(&bytes);
+    println!("resume: {}", header["resume"]);
+    assert_eq!(header["resume"]["held"].as_bool(), Some(true));
+    assert_eq!(bytes.len(), base + 4 * (N_CHANNELS + 4) * cells, "14 channels, F's 2, the rate's 1, the mask's 1");
+    for k in 0..cells {
+        let o = base + 4 * ((N_CHANNELS + 3) * cells + k);
+        assert_eq!(f32::from_le_bytes(bytes[o..o + 4].try_into().unwrap()).to_bits(), (mask[k] as f32).to_bits(), "the 18th plane at cell {k}");
+    }
+    assert_eq!(Dump::from_bytes(&bytes).unwrap(), held, "a dump with the mask reads back the same");
+    let bare = Dump { held: Some(mask.clone()), ..small_dump() };
+    let bare_bytes = bare.to_bytes();
+    let (bare_header, bare_base) = split(&bare_bytes);
+    assert_eq!(bare_bytes.len(), bare_base + 4 * (N_CHANNELS + 1) * cells, "no F, no rate: the mask right after the 14");
+    assert_eq!(Dump::from_bytes(&bare_bytes).unwrap(), bare);
+
+    // None held: the key absent, the bytes those of the same dump before [M0-TG2].
+    let none = warm.to_bytes();
+    let (none_header, none_base) = split(&none);
+    assert!(none_header["resume"].get("held").is_none(), "no cell held, no key: {}", none_header["resume"]);
+    assert_eq!(none.len(), none_base + 4 * (N_CHANNELS + 3) * cells);
+    assert_eq!(&none[none_base..], &bytes[base..bytes.len() - 4 * cells], "the planes before the mask unchanged");
+
+    let mut cleared = header.clone();
+    cleared["resume"].as_object_mut().unwrap().remove("held");
+    let mut falsed = header.clone();
+    falsed["resume"]["held"] = false.into();
+    let mut bare_cleared = bare_header.clone();
+    bare_cleared["resume"].as_object_mut().unwrap().remove("held");
+    let mut numbered = header.clone();
+    numbered["resume"]["held"] = 1.into();
+    let mut half = bytes[base..].to_vec();
+    let last = half.len() - 4;
+    half[last..].copy_from_slice(&0.5f32.to_le_bytes());
+    for (want, got) in [
+        ("header.resume.held: not true, but a plane follows the last", with_header(&cleared, &bytes[base..])),
+        ("header.resume.held: not true, but a plane follows the last", with_header(&falsed, &bytes[base..])),
+        ("header.resume.held: not true, but a plane follows the last", with_header(&bare_cleared, &bare_bytes[bare_base..])),
+        ("header.resume.held: true, but no mask plane follows", with_header(&header, &bytes[base..bytes.len() - 4 * cells])),
+        ("header.resume.held: the mask's cell 4095 is 0.5, not 0 or 1", with_header(&header, &half)),
+        ("header.resume.held: not true or false", with_header(&numbered, &bytes[base..])),
+    ] {
+        let err = got.unwrap_err();
+        println!("{want}: {err}");
+        assert!(err.starts_with(want), "expected {want:?}, got {err:?}");
+    }
+    let mut older = header.clone();
+    older["resume"].as_object_mut().unwrap().remove("held");
+    assert_eq!(with_header(&older, &bytes[base..bytes.len() - 4 * cells]).unwrap(), warm, "a header without `held` reads none held");
+
+    // The shipped dumps, written before [M0-TG2]: read as before, none held, their bytes their own.
+    for name in ["heat_ceiling.bin", "heat_overflow.bin"] {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../scenes").join(name);
+        let file = std::fs::read(&path).unwrap();
+        let dump = Dump::from_bytes(&file).unwrap_or_else(|e| panic!("{name}: {e}"));
+        let (h, _) = split(&file);
+        println!("{name}: step {}, {} × {}, resume {}", dump.step, dump.world.width, dump.world.height, h["resume"]);
+        assert!(h["resume"].get("held").is_none() && dump.held.is_none(), "{name}: none held");
+        assert!(dump.to_bytes() == file, "{name}: its bytes written back differ");
+    }
 }

@@ -1,0 +1,42 @@
+== 2026-11-03T14:14:19-05:00 grav_selfforce · task M0-D150 · box laserax-ai :: bash tests/gpu.sh grav::selfforce physics
+-- grav_selfforce · exit=101 · 0.31 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test grav::selfforce::asym_blob_has_no_net_self_force ... SR-GRAV2 asym_blob 128x128: mass 1025.592, |Σ m·g| = 1.509e-12, Σ m|g| = 2.767e3, ratio 5.452e-16
+ok
+test grav::selfforce::gpu_asym_blob_has_no_net_self_force ... 
+thread 'grav::selfforce::gpu_asym_blob_has_no_net_self_force' (2230157) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force ... 
+thread 'grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force' (2230195) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::selfforce::gpu_tall_box_has_no_net_self_force ... 
+thread 'grav::selfforce::gpu_tall_box_has_no_net_self_force' (2230196) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::selfforce::gpu_wide_box_has_no_net_self_force ... 
+thread 'grav::selfforce::gpu_wide_box_has_no_net_self_force' (2230197) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test grav::selfforce::masses_on_the_boxs_outermost_ring_have_none_either ... SR-GRAV2 random on the ring 50x37: 72 ring cells hold mass, ratio 1.501e-16
+ok
+test grav::selfforce::random_asymmetric_masses_have_none_either ... SR-GRAV2 random 50x37: ratio 2.355e-16
+ok
+
+failures:
+
+failures:
+    grav::selfforce::gpu_asym_blob_has_no_net_self_force
+    grav::selfforce::gpu_matter_on_the_worlds_edges_has_no_net_self_force
+    grav::selfforce::gpu_tall_box_has_no_net_self_force
+    grav::selfforce::gpu_wide_box_has_no_net_self_force
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 482 filtered out; finished in 0.20s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

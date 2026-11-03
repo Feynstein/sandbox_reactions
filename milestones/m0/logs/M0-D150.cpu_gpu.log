@@ -1,0 +1,34 @@
+== 2026-11-03T14:14:18-05:00 cpu_gpu · task M0-D150 · box laserax-ai :: bash tests/gpu.sh cpu_gpu physics
+-- cpu_gpu · exit=101 · 5.92 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.11s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test cpu_gpu::the_burning_field_gpu_against_the_twin ... 
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (2229923) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... 
+thread 'cpu_gpu::the_collapsing_disk_gpu_against_the_twin' (2230922) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... 
+thread 'cpu_gpu::the_sod_strip_gpu_against_the_twin' (2231140) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    cpu_gpu::the_burning_field_gpu_against_the_twin
+    cpu_gpu::the_collapsing_disk_gpu_against_the_twin
+    cpu_gpu::the_sod_strip_gpu_against_the_twin
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 486 filtered out; finished in 5.74s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

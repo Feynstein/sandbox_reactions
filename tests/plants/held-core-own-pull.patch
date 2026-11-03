@@ -1,0 +1,12 @@
+--- a/crates/sr-physics/src/reference/mod.rs
++++ b/crates/sr-physics/src/reference/mod.rs
+@@ -268,7 +268,8 @@
+         if self.switches.hydro {
+             self.ran.push("P4 hydro");
+             let radiation = self.flux.as_ref().map(|(x, y)| (&x[..], &y[..]));
+-            let spared = self.hydro.step_held(&mut self.state, dt, self.g.as_ref(), self.pull.as_ref(), radiation, &self.mask);
++            // planted: a held cell's Σg·Δt read from P2's whole field, the core's own pull booked
++            let spared = self.hydro.step_held(&mut self.state, dt, self.g.as_ref(), None, radiation, &self.mask);
+             self.held[0] += spared[0];
+             self.held[1] += spared[1];
+         }

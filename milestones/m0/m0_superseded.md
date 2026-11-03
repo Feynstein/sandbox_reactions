@@ -348,3 +348,20 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   disks' momentum printed and the `held` booking graded to 10⁻¹² on strip cases (measured by M0-D71: inflow took the M 900
   disk's floor to 392.6 against 10; source-term gravity drifts 1.4 × 10⁻² of Σm|u| with no hold; the lead at M0-D71,
   2026-11-02: «Walls only, inflow later (Recommended)», «Booking exact, disks reported (Recommended)»).
+- Contract §1.4.2 [M0-TG2]'s and §2.3.4 [M0-TG2]'s held cell «its Σg·Δt booked `held`» with P2's whole field —
+  superseded by contract §0.5 [M0-D149]: a held cell's spared Σg·Δt reads the pull of all but the held cells (φ_pull of Σ
+  with the held cells emptied, plus the sinks), solved by P2 beside φ while a cell is held; the core's own pull is never
+  booked (measured by M0-D149 on the RTX 4090: P2's f32 field nets ≈ 1.5 × 10⁻⁴ of Δt·Σ·g a step, 5 × 10⁻⁸ of its Σ|·|,
+  and the held core carried it all — 2.0 × 10⁻³ of Σm|u| on the M 900 disk over 1,000 steps, the twin's 10⁻¹¹; the lead
+  at M0-D149, 2026-11-03: «Free-gas field (Recommended)»).
+- Contract §0.5 [M0-D71]'s «the disks' grid + held momentum printed, not graded», for the ledger's M 900 disk — superseded by
+  contract §0.5 [M0-D151]: its `held` over 1,000 steps graded at or under the invariant's drift without `held` (measured by
+  M0-D151 on the RTX 4090 with g_pull: 6.6 × 10⁻⁶ against 2.0 × 10⁻⁵; the lead at M0-D151, 2026-11-03: «Grade it
+  (Recommended)»).
+- Contract §0.5 [M0-TG2]'s items 1–2 as «the forms the build starts from», §2.7 [M0-TG2]'s hold test «its N_Fe rate is 0: X_Fe = 0
+  or Y_eΣ ≤ Σ_N» with its release «or its N_Fe rate is > 0» and the ceiling-release fallback, §2.3.4 [M0-TG2]'s one-way inflow and
+  §1.4.2 [M0-TG2]'s inflow face — superseded by contract §0.5 [M0-D71f]: no iron is ever held (X_Fe = 0, released once X_Fe > 0;
+  built by M0-D152) and a held wall passes nothing either way, final (measured by M0-D71f on the RTX 4090: the gate form froze
+  the 4,572 life's iron core at the gate and a dozen iron clumps of the 20 M₀ life, which formed no sink by step 8,807 where the
+  tree before M0-D71's build forms one at step 2,600; the lead at M0-D71f, 2026-11-03: «Hold no iron (Recommended)», «Walls only,
+  final (Recommended)»).

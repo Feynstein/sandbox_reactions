@@ -1,0 +1,94 @@
+M0-D151 2026-11-03T12:49:12-05:00 rsync up + held_core on laserax-ai-server RTX 4090
+held_core  18/2/0     115.48 s  NO-GO
+logs: milestones/m0/logs/M0-D151.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+afd2a0b21028
+anchor: 123 path×scope entries moved by this run
+anchor: 286 paths checked · 378 skipped (3 classes) · 124 never checked · 0 stale · 0 unclassified · 0 owed · 410 covered of 788 visible
+FAILED:
+  held_core: 2 failed · log milestones/m0/logs/M0-D151.held_core.log
+verify: 18 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 115.48 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.1->0.73
+=== NO-GO: held_core: 2 failed · log milestones/m0/logs/M0-D151.held_core.log ===
+M0-D151 2026-11-03T12:52:07-05:00 held_core pull cases (64x64)
+held_core  0/0/0        0.00 s  NO-GO
+logs: milestones/m0/logs/M0-D151-r2.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+63800b78f7e3
+FAILED:
+  held_core: this scope has no cases: no `cases`, no `case_cmd`; 0 case(s) < expected 1 · log milestones/m0/logs/M0-D151-r2.held_core.log
+verify: 0 passed, 0 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.00 s · mode case · PARTIAL, not the loop (--case gpu_a_held_core_books) · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.38->0.38
+=== NO-GO: held_core: this scope has no cases: no `cases`, no `case_cmd`; 0 case(s) < expected 1 · log milestones/m0/logs/M0-D151-r2.held_core.log ===
+held_core  20/0/0     110.71 s  GO
+logs: milestones/m0/logs/M0-D151-r2.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+63800b78f7e3
+anchor: 124 path×scope entries moved by this run
+anchor: 406 paths checked · 378 skipped (3 classes) · 0 never checked · 4 stale · 0 unclassified · 0 owed · 410 covered of 788 visible
+verify: 20 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 110.71 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.35->0.9
+=== GO ===
+M0-D151 2026-11-03T12:54:52-05:00 Verify 1 on laserax-ai-server
+ledger          8/0/0       16.09 s  GO · step 1/5, 4 left
+held_core       20/0/0     111.46 s  GO · step 2/5, 3 left
+booking         4/0/0        8.83 s  GO · step 3/5, 2 left
+grav_force      13/0/0       9.78 s  GO · step 4/5, 1 left
+grav_selfforce  7/0/0        8.98 s  GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-D151.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+7f07e551cd98
+anchor: 144 path×scope entries moved by this run
+anchor: 405 paths checked · 378 skipped (3 classes) · 0 never checked · 5 stale · 0 unclassified · 0 owed · 410 covered of 788 visible
+verify: 52 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 111.46 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.47->1.07
+=== GO ===
+M0-D151 2026-11-03T12:56:55-05:00 Verify 2 redarm held_core on laserax-ai-server
+held_core · clean · GO · arm 1/5, 4 left
+held_core · plant held-wall-pressure-only · RED (proven: 6 failed) · arm 2/5, 3 left
+held_core · plant held-wall-gpu-pressure-only · RED (proven: 5 failed) · arm 3/5, 2 left
+held_core · plant held-core-own-pull · RED (proven: 1 failed) · arm 4/5, 1 left
+held_core · plant held-core-gpu-whole-g · RED (proven: 1 failed) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope held_core · 577.07 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D151.held_core.redarm.log
+=== GO ===
+M0-D151 2026-11-03T13:14:44-05:00 redarm ledger on laserax-ai-server
+ledger · clean · GO · arm 1/5, 4 left
+ledger · plant ledger-no-escaped · RED (proven: 4 failed) · arm 2/5, 3 left
+ledger · plant ledger-cell-grav-work · RED (proven: 1 failed) · arm 3/5, 2 left
+ledger · plant grav-ring-one-sided · ERROR (the patch tests/plants/grav-ring-one-sided.patch does not apply: crates/sr-engine/shaders/grav.wgsl @@ -171,27 +171,16 @@: its old lines appear 0 times in the file, not once) · arm 4/5, 1 left
+ledger · plant ledger-no-held · RED (proven: 3 failed) · arm 5/5, 0 left
+FAILED:
+  plant grav-ring-one-sided: the patch tests/plants/grav-ring-one-sided.patch does not apply: crates/sr-engine/shaders/grav.wgsl @@ -171,27 +171,16 @@: its old lines appear 0 times in the file, not once - an error, not a red
+redarm: 4 plants · 3 red · 0 green · 1 errors · scope ledger · 74.21 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D151.ledger.redarm.log
+=== NO-GO: plant grav-ring-one-sided: the patch tests/plants/grav-ring-one-sided.patch does not apply: crates/sr-engine/shaders/grav.wgsl @@ -171,27 +171,16 @@: its old lines appear 0 times in the file, not once - an error, not a red ===
+M0-D151 2026-11-03T13:17:33-05:00 Verify 1 re-run (final tree) on laserax-ai-server
+ledger          8/0/0       18.90 s  GO · step 1/5, 4 left
+held_core       20/0/0     114.27 s  GO · step 2/5, 3 left
+booking         4/0/0       11.69 s  GO · step 3/5, 2 left
+grav_force      13/0/0      12.69 s  GO · step 4/5, 1 left
+grav_selfforce  7/0/0       11.84 s  GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-D151-v1.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+08850f3b477b
+anchor: 147 path×scope entries moved by this run
+anchor: 405 paths checked · 378 skipped (3 classes) · 0 never checked · 5 stale · 0 unclassified · 0 owed · 410 covered of 788 visible
+verify: 52 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 114.27 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.51->1.08
+=== GO ===
+M0-D151 2026-11-03T13:19:37-05:00 redarm ledger + held_core (final tree) on laserax-ai-server
+ledger · clean · GO · arm 1/5, 4 left
+ledger · plant ledger-no-escaped · RED (proven: 4 failed) · arm 2/5, 3 left
+ledger · plant ledger-cell-grav-work · RED (proven: 1 failed) · arm 3/5, 2 left
+ledger · plant grav-ring-one-sided · RED (proven: 1 failed) · arm 4/5, 1 left
+ledger · plant ledger-no-held · RED (proven: 3 failed) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope ledger · 90.19 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D151-v2.ledger.redarm.log
+=== GO ===
+held_core · clean · GO · arm 1/5, 4 left
+held_core · plant held-wall-pressure-only · RED (proven: 6 failed) · arm 2/5, 3 left
+held_core · plant held-wall-gpu-pressure-only · RED (proven: 5 failed) · arm 3/5, 2 left
+held_core · plant held-core-own-pull · RED (proven: 1 failed) · arm 4/5, 1 left
+held_core · plant held-core-gpu-whole-g · RED (proven: 1 failed) · arm 5/5, 0 left
+redarm: 4 plants · 4 red · 0 green · 0 errors · scope held_core · 577.31 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D151-v2.held_core.redarm.log
+=== GO ===
+M0-D151 2026-11-03T13:32:53-05:00 ledger graded + redarm ledger on laserax-ai-server
+ledger    8/0/0       13.75 s  GO
+logs: milestones/m0/logs/M0-D151-v3.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+8123f74d85bb
+anchor: 7 path×scope entries moved by this run
+anchor: 284 paths checked · 378 skipped (3 classes) · 1 never checked · 125 stale · 0 unclassified · 0 owed · 410 covered of 788 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 13.75 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.14->1.15
+=== GO ===
+ledger · clean · GO · arm 1/6, 5 left
+ledger · plant ledger-no-escaped · RED (proven: 4 failed) · arm 2/6, 4 left
+ledger · plant ledger-cell-grav-work · RED (proven: 2 failed) · arm 3/6, 3 left
+ledger · plant grav-ring-one-sided · RED (proven: 1 failed) · arm 4/6, 2 left
+ledger · plant ledger-no-held · RED (proven: 3 failed) · arm 5/6, 1 left
+ledger · plant held-core-gpu-whole-g · RED (proven: 1 failed) · arm 6/6, 0 left
+redarm: 5 plants · 5 red · 0 green · 0 errors · scope ledger · 107.90 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D151-v3.ledger.redarm.log
+=== GO ===
+M0-D151 2026-11-03T13:35:45-05:00 claim --changed on laserax-ai-server
+M0-D151 2026-11-03T13:48:38-05:00 owed scopes on linux-pc

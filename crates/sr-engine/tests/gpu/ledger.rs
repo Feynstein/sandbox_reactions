@@ -15,16 +15,28 @@
 //!
 //! M0-D64: the energy invariant graded on a hot compact remnant radiating into vacuum, where gravity's energy source must pay
 //! for the mass HLL's diffusion moves across φ (§0.5 [M0-D64]) — G-CONS's bound, 10⁻³ |W| per τ_dyn, over 1,000 steps.
+//!
+//! M0-D71d: the momentum term `held` (§2.9 [M0-TG2]) — the scenes above switch the cold pressure off, so none holds a cell.
+//! Graded where the held cells feel a net force (§0.5 [M0-D71]: the booking graded where it holds by construction): gas
+//! driven against a held C/O block, gravity off, in a leave world. G-REST's M 900 SCF disk: its held cores feel almost no
+//! net force. What the GPU booked there until M0-D151 was not its f32 slots' rounding but P2's f32 field's net force,
+//! carried by the held core's own pull (2.0e-3 of Σm|u| over 1,000 steps on the RTX 4090; the twin's 1e-11; M0-D149's
+//! measurement); since §1.4.2 [M0-D149] a held cell's Σg·Δt reads g_pull, the field of all but the held cells, and the disk
+//! is graded on its `held` at or under the drift without held, the grid's own source-term error (§0.5 [M0-D151], the lead
+//! at M0-D151: «Grade it (Recommended)»; measured 6.6e-6 under 2.0e-5) — the free gas's pull, not P2's rounding; its
+//! invariant's drifts stay printed (§0.5 [M0-D71]).
+//! A snapshot written before [M0-TG2] is restored with the hold's terms 0.
 
 use std::path::PathBuf;
 
 use serde_json::Value;
-use sr_engine::calibrate::radius_holding;
+use sr_engine::calibrate::{cold_disk_scene, radius_holding, Matter};
 use sr_engine::dump::{Dump, Sink};
+use sr_engine::headless::{parse_args, run_scene_captured};
 use sr_engine::ledger::{At, Ledger};
 use sr_engine::state::{WorldConfig, N_TERMS, TERMS};
 use sr_engine::summary::{Block, BlockSummary};
-use sr_physics::registry::Physics;
+use sr_physics::registry::{Elements, Physics};
 
 const STEPS: u64 = 500;
 const N: u32 = 128;
@@ -386,3 +398,169 @@ fn the_terms_and_the_invariants_on_a_hand_made_summary() {
     assert_eq!((again.mass.escaped, again.mass.erased, again.energy.radiated, again.energy.tools), (0.0, 0.0, 0.0, 0.0));
     assert_eq!(ledger.start(), Some(&again));
 }
+
+/// The hold's four booked terms (§2.9 [M0-TG2]): P8's, then P4's.
+const HELD_TERMS: [&str; 4] = ["held.mom_x", "held.mom_y", "held.spared.mom_x", "held.spared.mom_y"];
+/// The held disk's span: G-REST's step 1,000.
+const HELD_STEPS: u64 = 1_000;
+
+/// M0-D71d: G-REST's M 900 SCF disk (`calibrate`'s cold C/O disk, the shipped K's, 64 × 64 bounce, gravity and hydro) through
+/// `headless`, 1,000 steps, so cells are held and the hold books momentum. summary.json's `momentum.held` is the ledger's —
+/// the four `held` terms of the observers' snapshot beside the final dump, cumulative since the start — and its invariant
+/// is grid + sinks + escaped + held. The drift with and without `held` is printed (§0.5 [M0-D71]); `held` is graded at or
+/// under the drift without it (§0.5 [M0-D151]: the free gas's pull, not P2's f32 net force, which read 2.0e-3 against 2.0e-5).
+#[test]
+fn the_held_disk_writes_the_ledgers_held_into_summary_json() {
+    let (physics, elements) = (Physics::shipped().unwrap(), Elements::shipped().unwrap());
+    let (scene, _) = cold_disk_scene(900.0, Matter::CarbonOxygen, &physics, &elements, &[]).unwrap().expect("an equilibrium");
+    let dir = temp("held");
+    let out = dir.join("out");
+    let mut args: Vec<String> =
+        ["--scene", "disk:m900", "--steps", &HELD_STEPS.to_string(), "--out", &out.display().to_string()].map(String::from).to_vec();
+    if let Ok(a) = std::env::var("SR_TEST_ADAPTER") {
+        args.extend(["--adapter".to_string(), a]);
+    }
+    let (code, lines) = run_scene_captured(parse_args(&args).unwrap(), scene, None);
+    assert_eq!(code, 0, "headless: {lines:?}");
+    let summary: Value = serde_json::from_slice(&std::fs::read(out.join("summary.json")).unwrap()).unwrap();
+    let final_dump = out.join("dumps").join(format!("s_{HELD_STEPS}.bin"));
+    let out = Out { summary, dump: Dump::read(&final_dump).unwrap() };
+    let snapshot: Value = serde_json::from_slice(&std::fs::read(final_dump.with_extension("observers.json")).unwrap()).unwrap();
+    let booked = |name: &str| {
+        let v = &snapshot["ledger"]["booked"][index(name)];
+        v.as_str().expect("an exact f64").parse::<f64>().unwrap()
+    };
+    let (s, e) = (out.start(), out.end());
+    let pair = |v: &Value, k: &str| [0, 1].map(|i| v["momentum"][k][i].as_f64().unwrap_or_else(|| panic!("momentum.{k}: {v}")));
+    let (held, grid, inv0, inv1) = (pair(e, "held"), pair(e, "grid"), pair(s, "invariant"), pair(e, "invariant"));
+    let scale = out.momentum_scale();
+    let drift = (inv1[0] - inv0[0]).hypot(inv1[1] - inv0[1]) / scale;
+    let without = (inv1[0] - held[0] - inv0[0] + pair(s, "held")[0]).hypot(inv1[1] - held[1] - inv0[1] + pair(s, "held")[1]) / scale;
+    println!(
+        "SR-LEDGER-HELD disk M 900: steps {}..{}, held ({:.4e}, {:.4e}) = {:.3e} of Σm|u| {scale:.4e}; grid ({:.4e}, {:.4e}); \
+         invariant drift {drift:.3e} of Σm|u| with held, {without:.3e} without (held {} the drift without); snapshot's held ({:.4e}, \
+         {:.4e}) + spared ({:.4e}, {:.4e})",
+        num(s, &["step"]),
+        num(e, &["step"]),
+        held[0],
+        held[1],
+        held[0].hypot(held[1]) / scale,
+        grid[0],
+        grid[1],
+        if held[0].hypot(held[1]) / scale <= without { "at or under" } else { "over" },
+        booked(HELD_TERMS[0]),
+        booked(HELD_TERMS[1]),
+        booked(HELD_TERMS[2]),
+        booked(HELD_TERMS[3]),
+    );
+    assert_eq!(num(e, &["step"]), HELD_STEPS as f64);
+    assert_eq!(held, [booked(HELD_TERMS[0]) + booked(HELD_TERMS[2]), booked(HELD_TERMS[1]) + booked(HELD_TERMS[3])], "summary.json's held");
+    for (k, &inv) in inv1.iter().enumerate() {
+        let sum = ["grid", "sinks", "escaped", "held"].iter().map(|t| pair(e, t)[k]).sum::<f64>();
+        assert_eq!(inv, sum, "the invariant, axis {k}: grid + sinks + escaped + held");
+    }
+    let taken = held[0].hypot(held[1]) / scale;
+    assert!(taken <= without, "held {taken:.3e} of Σm|u| over the drift without held {without:.3e}: the held cores book more than the free gas's pull");
+    assert_grid_matches_the_state(&out);
+}
+
+/// M0-D71d: an H disk (a = 16, Σc = 1, T 2) driven at (1, 0.3) into a held C/O block (16 × 64, Σ 20 ≥ σ_hold, T_floor, the
+/// shipped K's), gravity off, a leave world, 500 steps: the gas is turned back by the block's walls and the impulse it gives
+/// the block is booked `held` (§2.3.4 [M0-TG2]). Graded: momentum (grid + sinks + escaped + held) to 1e-6 of Σm|u| plus what
+/// a vacuum reset removes, as the gravity-off leave case; `held` over 100 times that bound, so leaving it out of the
+/// invariant breaks it (measured on the RTX 4090: held 0.26 of Σm|u|, drift 6.9e-6 against 2.2e-4).
+#[test]
+fn gas_driven_against_a_held_block_books_held_and_the_momentum_holds() {
+    let scene = format!(
+        r#"{{"version": 1,
+ "world": {{"width": {N}, "height": {N}, "edge": "leave"}},
+ "slowdown": false,
+ "switches": {{"gravity": false, "hydro": true, "heat": false, "reactions": false, "neutrinos": false, "sinks": false}},
+ "objects": [
+   {{"kind": "rect", "x0": 76, "y0": 32, "w": 16, "h": 64, "sigma": 20.0, "t": 0.05, "composition": {{"C": 0.5, "O": 0.5}}, "v": [0, 0]}},
+   {{"kind": "disk", "x": 44, "y": 60, "a": 16, "sigma_c": 1.0, "t": 2.0, "composition": {{"H": 1.0}}, "v": [1.0, 0.3]}}
+ ]}}"#
+    );
+    let out = run("held-wall", &scene);
+    let d = drift(&out);
+    let (s, e) = (out.start(), out.end());
+    let pair = |v: &Value, k: &str| [0, 1].map(|i| v["momentum"][k][i].as_f64().unwrap_or_else(|| panic!("momentum.{k}: {v}")));
+    let (held, held0) = (pair(e, "held"), pair(s, "held"));
+    let scale = out.momentum_scale();
+    let taken = (held[0] - held0[0]).hypot(held[1] - held0[1]) / scale;
+    let cells = out.dump.world.cells();
+    let u_max = (0..cells)
+        .filter(|&i| out.dump.planes[i] > 1e-6)
+        .map(|i| f64::from(out.dump.planes[cells + i]).hypot(f64::from(out.dump.planes[2 * cells + i])) / f64::from(out.dump.planes[i]))
+        .fold(0.0, f64::max);
+    let reset = num(e, &["mass", "vacuum_reset"]);
+    let bound = BAND + reset * u_max / scale;
+    println!(
+        "SR-LEDGER-HELD wall: held ({:.4e}, {:.4e}) = {taken:.3e} of Σm|u| {scale:.4e}, escaped {}; vacuum_reset {reset:.3e} × u_max \
+         {u_max:.3} → bound {bound:.3e}; mass drift {:.3e}, momentum drift {:.3e} of Σm|u|",
+        held[0],
+        held[1],
+        e["momentum"]["escaped"],
+        d.mass,
+        d.momentum,
+    );
+    assert!(taken > 100.0 * bound, "held {taken:.3e} of Σm|u|: not over 100 × the bound {bound:.3e} — the block took no impulse");
+    assert!(d.mass <= BAND, "mass invariant drift {:.3e}", d.mass);
+    assert!(d.momentum <= bound, "momentum drift {:.3e} of Σm|u| against {bound:.3e}", d.momentum);
+    assert_grid_matches_the_state(&out);
+}
+
+/// A snapshot written before [M0-TG2] (§2.9, §0.5 [M0-D76]): its `booked` list ends before the hold's four terms and its
+/// records carry no `momentum.held` — restored, they read 0, every other term as written; today's snapshot keeps `held`
+/// through the round trip; a list of any other length is refused. NOT PROVEN (synthetic): a hand-made ledger.
+#[test]
+fn a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero() {
+    let physics = Physics::shipped().unwrap();
+    let world = WorldConfig::new(64, 64).unwrap();
+    let summary = BlockSummary { origin: [8, 8], size: [8, 8], columns: 2, blocks: vec![block(3.0, 1.0, -2.0, 0.5); 4], sinks: Vec::new() };
+    let mut ledger = Ledger::new(world, &physics);
+    ledger.restart(&summary, At { step: 1, sim_time: 0.5 });
+    let mut booked = [0f64; N_TERMS];
+    booked[index("escaped.mom_x")] = 0.5;
+    for (k, name) in HELD_TERMS.iter().enumerate() {
+        booked[index(name)] = 0.25 * (k + 1) as f64;
+    }
+    let end = ledger.update(&summary, &booked, At { step: 2, sim_time: 1.0 }).clone();
+    assert_eq!(end.momentum.held, [0.25 + 0.75, 0.5 + 1.0]);
+    assert_eq!(end.momentum.invariant(), [4.0 + 0.5 + 1.0, -8.0 + 1.5]);
+    assert_eq!(ledger.json()["end"]["momentum"]["held"], serde_json::json!([1.0, 1.5]));
+
+    // Today's snapshot round-trips the hold.
+    let now = ledger.snapshot();
+    let back = Ledger::restore(world, &physics, &now).unwrap();
+    assert_eq!(back.last(), Some(&end));
+
+    // The same ledger as a pre-[M0-TG2] tree wrote it: 37 terms, no `momentum.held` in either record.
+    let first = index(HELD_TERMS[0]);
+    assert_eq!((first, N_TERMS - first), (37, 4), "the hold's terms are TERMS' last four");
+    let mut old = now.clone();
+    old["booked"].as_array_mut().unwrap().truncate(first);
+    for r in ["start", "last"] {
+        old[r]["momentum"].as_object_mut().unwrap().remove("held");
+    }
+    let back = Ledger::restore(world, &physics, &old).unwrap();
+    let last = back.last().unwrap();
+    assert_eq!(last.momentum.held, [0.0, 0.0]);
+    assert_eq!((last.momentum.grid, last.momentum.escaped), (end.momentum.grid, end.momentum.escaped));
+    assert_eq!(last.momentum.invariant(), [4.0 + 0.5, -8.0]);
+    assert_eq!((last.mass.clone(), last.energy.clone()), (end.mass.clone(), end.energy.clone()));
+    let restored = back.snapshot();
+    let tail: Vec<&str> = restored["booked"].as_array().unwrap()[first..].iter().map(|v| v.as_str().unwrap()).collect();
+    assert_eq!(tail, ["0.0"; 4], "the hold's terms restored");
+    for k in 0..first {
+        assert_eq!(restored["booked"][k], now["booked"][k], "booked term {k}");
+    }
+
+    // Any other length is refused.
+    for len in [first - 1, first + 2] {
+        let mut bad = now.clone();
+        bad["booked"].as_array_mut().unwrap().truncate(len);
+        assert!(Ledger::restore(world, &physics, &bad).is_err(), "a {len}-term booked list restored");
+    }
+}
+

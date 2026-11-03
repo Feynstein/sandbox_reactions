@@ -1,0 +1,55 @@
+== 2026-11-03T14:14:06-05:00 summary · task M0-D150 · box laserax-ai :: bash tests/gpu.sh summary physics
+-- summary · exit=101 · 10.44 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 9.77s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test summary::gpu_every_field_is_an_f64_sum_of_the_dump ... 
+thread 'summary::gpu_every_field_is_an_f64_sum_of_the_dump' (2229340) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test summary::gpu_the_accumulators_reset_after_each_summary ... 
+thread 'summary::gpu_the_accumulators_reset_after_each_summary' (2229549) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test summary::gpu_the_blocks_tile_the_box ... 
+thread 'summary::gpu_the_blocks_tile_the_box' (2229550) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test summary::gpu_the_max_cell_is_the_densest_the_lowest_y_then_x ... 
+thread 'summary::gpu_the_max_cell_is_the_densest_the_lowest_y_then_x' (2229551) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test summary::gpu_the_sinks_inside_are_marked ... 
+thread 'summary::gpu_the_sinks_inside_are_marked' (2229552) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test summary::gpu_the_summary_arrives_with_its_frame_at_most_two_frames_late ... 
+thread 'summary::gpu_the_summary_arrives_with_its_frame_at_most_two_frames_late' (2229553) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test summary::gpu_two_runs_give_the_same_bits ... 
+thread 'summary::gpu_two_runs_give_the_same_bits' (2229554) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    summary::gpu_every_field_is_an_f64_sum_of_the_dump
+    summary::gpu_the_accumulators_reset_after_each_summary
+    summary::gpu_the_blocks_tile_the_box
+    summary::gpu_the_max_cell_is_the_densest_the_lowest_y_then_x
+    summary::gpu_the_sinks_inside_are_marked
+    summary::gpu_the_summary_arrives_with_its_frame_at_most_two_frames_late
+    summary::gpu_two_runs_give_the_same_bits
+
+test result: FAILED. 0 passed; 7 failed; 0 ignored; 0 measured; 482 filtered out; finished in 0.56s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

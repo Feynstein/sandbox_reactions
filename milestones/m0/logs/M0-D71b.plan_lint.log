@@ -1,0 +1,13 @@
+== 2026-11-03T09:56:56-05:00 plan_lint · task M0-D71b · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=1 · 0.12 s
+lint: checks=808 failed=1 warnings=7 · blocks=378 · flow_rows=378 · verify_fences=0 · history=0 · flow=per-task · header=601/600 · pipeline=9/60 · ladder=6 rungs · refresh=7/5
+FAIL: rating refresh: 7 carried flag(s) on open BUILD blocks since `Model ratings: 2026-10-29 by M0-TM13` reach `Rating refresh: 5 flags` and no TM<n> is pending - file the rating pass (§14.3's TM<n> template, rated), it runs next: python3 tools/pb/plan.py --plan milestones/m0/m0_implementation_plan.md append <M0-TM14 block.md> --after M0-D71b --goal "Rating pass - 7 carried flags"
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== NO-GO: 1 violation(s) ===
+

@@ -1,0 +1,82 @@
+== 2026-11-03T14:14:19-05:00 radiation_force · task M0-D150 · box laserax-ai :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=101 · 0.57 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi ... SR-PRECOND Jacobi
+SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi' (2230131) panicked at crates/sr-engine/tests/gpu/radforce.rs:491:5:
+assertion `left == right` failed: headless
+  left: 3
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid ... SR-PRECOND Multigrid
+SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid' (2230158) panicked at crates/sr-engine/tests/gpu/radforce.rs:491:5:
+assertion `left == right` failed: headless
+  left: 3
+ right: 0
+FAILED
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi ... SR-PRECOND Jacobi
+
+thread 'radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi' (2230159) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid ... SR-PRECOND Multigrid
+
+thread 'radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid' (2230160) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test radforce::gpu_p4_reads_the_previous_steps_flux::jacobi ... SR-PRECOND Jacobi
+
+thread 'radforce::gpu_p4_reads_the_previous_steps_flux::jacobi' (2230161) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test radforce::gpu_p4_reads_the_previous_steps_flux::multigrid ... SR-PRECOND Multigrid
+
+thread 'radforce::gpu_p4_reads_the_previous_steps_flux::multigrid' (2230162) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi ... SR-PRECOND Jacobi
+
+thread 'radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi' (2230163) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid ... SR-PRECOND Multigrid
+
+thread 'radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid' (2230164) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.19329, E 9.9882e6, floor_added -3.7858e-5, mass invariant 5000.000040920 → 5000.000040972 (1.04e-11)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -3.301163298e-1, Σ Δt·f -3.301163298e-1, relative 1.68e-16
+SR-RADFORCE twin x, right: gained 3.301163298e-1, Σ Δt·f 3.301163298e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -2.179488876e-2, Σ Δt·f -2.179488876e-2, relative 3.18e-16
+SR-RADFORCE twin y, bottom: gained 2.179488876e-2, Σ Δt·f 2.179488876e-2, relative 4.78e-16
+SR-RADFORCE twin cells: worst |gained − Δt·f| 1.63e-19 of the largest Δt·f 9.41e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -7.698094182e2, Σ s·Δt·f -7.698094182e2 (0.00e0), uncapped Σ Δt·f -6.622e5
+SR-RADFORCE twin cap, x right: gained 7.698094182e2, Σ s·Δt·f 7.698094182e2 (0.00e0), uncapped Σ Δt·f 6.622e5
+SR-RADFORCE twin cap: 284 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+
+failures:
+
+failures:
+    radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi
+    radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid
+    radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi
+    radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid
+    radforce::gpu_p4_reads_the_previous_steps_flux::jacobi
+    radforce::gpu_p4_reads_the_previous_steps_flux::multigrid
+    radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi
+    radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid
+
+test result: FAILED. 3 passed; 8 failed; 0 ignored; 0 measured; 478 filtered out; finished in 0.46s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

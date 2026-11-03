@@ -19,6 +19,9 @@
 //! - `cleared` is booked but not in the mass invariant: a clear restarts the ledger (§2.9), so it never reaches it.
 //! - The ledger starts at a summary, not before step 0: the box and φ exist only after the first step, so a run's ledger
 //!   starts after its first step and `start.step` says which.
+//! - The momentum `held` (§2.9 [M0-TG2]) is P8's and P4's booking summed: the momentum a newly held cell had when P8 zeroed
+//!   it (`held.mom_*`) and what P4 spared the held cells (`held.spared.mom_*`). What the initial state's hold zeroed before
+//!   step 0 is booked before the ledger starts and dropped with the first interval, as every term booked then is.
 
 use serde_json::{json, Value};
 use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole};
@@ -80,6 +83,8 @@ pub struct Momentum {
     pub grid: [f64; 2],
     pub sinks: [f64; 2],
     pub escaped: [f64; 2],
+    /// The momentum the hold took from the grid (§2.9 [M0-TG2]), signed.
+    pub held: [f64; 2],
 }
 
 impl Mass {
@@ -103,9 +108,9 @@ impl Energy {
 }
 
 impl Momentum {
-    /// §2.9: grid + sinks + escaped, each axis.
+    /// §2.9: grid + sinks + escaped + held, each axis.
     pub fn invariant(&self) -> [f64; 2] {
-        std::array::from_fn(|k| self.grid[k] + self.sinks[k] + self.escaped[k])
+        std::array::from_fn(|k| self.grid[k] + self.sinks[k] + self.escaped[k] + self.held[k])
     }
 }
 
@@ -134,11 +139,15 @@ impl Record {
                 "nuclear_released": num(e.nuclear_released), "floor_added": num(e.floor_added), "tools": num(e.tools),
                 "invariant": num(e.invariant()),
             },
-            "momentum": {"grid": pair(p.grid), "sinks": pair(p.sinks), "escaped": pair(p.escaped), "invariant": pair(p.invariant())},
+            "momentum": {
+                "grid": pair(p.grid), "sinks": pair(p.sinks), "escaped": pair(p.escaped), "held": pair(p.held),
+                "invariant": pair(p.invariant()),
+            },
         })
     }
 
-    /// The record the snapshot wrote with [`exact`] numbers (the invariants are recomputed, not read).
+    /// The record the snapshot wrote with [`exact`] numbers (the invariants are recomputed, not read). A record written
+    /// before [M0-TG2] has no `momentum.held`, and reads it as 0 (§2.9).
     fn restore(v: &Value) -> Result<Record, String> {
         let n = |group: &str, k: &str| read_exact(&v[group][k], &format!("ledger.{group}.{k}"));
         let pair = |k: &str| -> Result<[f64; 2], String> {
@@ -171,7 +180,12 @@ impl Record {
                 floor_added: n("energy", "floor_added")?,
                 tools: n("energy", "tools")?,
             },
-            momentum: Momentum { grid: pair("grid")?, sinks: pair("sinks")?, escaped: pair("escaped")? },
+            momentum: Momentum {
+                grid: pair("grid")?,
+                sinks: pair("sinks")?,
+                escaped: pair("escaped")?,
+                held: if v["momentum"]["held"].is_null() { [0.0; 2] } else { pair("held")? },
+            },
         })
     }
 }
@@ -256,12 +270,14 @@ impl Ledger {
         })
     }
 
-    /// The ledger [`Ledger::snapshot`] wrote, in `world` under `physics` (the run's own).
+    /// The ledger [`Ledger::snapshot`] wrote, in `world` under `physics` (the run's own). A snapshot written before
+    /// [M0-TG2] books no hold: its list ends before the `held.*` terms, which read 0 (§2.9).
     pub fn restore(world: WorldConfig, physics: &Physics, v: &Value) -> Result<Ledger, String> {
         let mut ledger = Ledger::new(world, physics);
         let booked = read_list(v, "booked")?;
-        if booked.len() != N_TERMS {
-            return Err(format!("ledger.booked: {} terms, expected {N_TERMS}", booked.len()));
+        let before_held = TERMS.iter().position(|t| t.name.starts_with("held.")).expect("the hold's booked terms");
+        if booked.len() != N_TERMS && booked.len() != before_held {
+            return Err(format!("ledger.booked: {} terms, expected {N_TERMS} (or {before_held}, before [M0-TG2])", booked.len()));
         }
         for (slot, x) in ledger.booked.iter_mut().zip(booked) {
             *slot = read_exact(x, "ledger.booked")?;
@@ -343,7 +359,12 @@ impl Ledger {
                 floor_added: t("energy.floor_added"),
                 tools,
             },
-            momentum: Momentum { grid: [px, py], sinks: [sink_px, sink_py], escaped: [t("escaped.mom_x"), t("escaped.mom_y")] },
+            momentum: Momentum {
+                grid: [px, py],
+                sinks: [sink_px, sink_py],
+                escaped: [t("escaped.mom_x"), t("escaped.mom_y")],
+                held: [t("held.mom_x") + t("held.spared.mom_x"), t("held.mom_y") + t("held.spared.mom_y")],
+            },
         }
     }
 }

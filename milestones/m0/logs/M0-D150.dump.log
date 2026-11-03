@@ -1,0 +1,76 @@
+== 2026-11-03T14:14:21-05:00 dump · task M0-D150 · box laserax-ai :: bash tests/gpu.sh dump physics
+-- dump · exit=101 · 0.51 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 12 tests
+test dump::a_dump_carries_two_sinks_bit_for_bit_through_the_file_and_the_load ... 
+thread 'dump::a_dump_carries_two_sinks_bit_for_bit_through_the_file_and_the_load' (2230592) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test dump::a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump ... 
+thread 'dump::a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump' (2230617) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::a_truncated_dump_is_refused_wherever_it_is_cut ... 
+thread 'dump::a_truncated_dump_is_refused_wherever_it_is_cut' (2230618) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on ... 
+thread 'dump::a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on' (2230619) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::a_wrong_magic_or_a_header_off_the_contract_is_refused ... 
+thread 'dump::a_wrong_magic_or_a_header_off_the_contract_is_refused' (2230620) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::an_empty_worlds_steps_run_the_clock_on_the_floor_gas ... 
+thread 'dump::an_empty_worlds_steps_run_the_clock_on_the_floor_gas' (2230621) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::forty_steps_as_one_two_or_forty_frames_or_bare_give_one_dump_and_one_sim_time ... 
+thread 'dump::forty_steps_as_one_two_or_forty_frames_or_bare_give_one_dump_and_one_sim_time' (2230622) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::headless_builds_p3_and_p7_from_the_scenes_switches_and_resumes_a_dump_holding_sinks ... 
+thread 'dump::headless_builds_p3_and_p7_from_the_scenes_switches_and_resumes_a_dump_holding_sinks' (2230623) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte ... 
+thread 'dump::headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte' (2230624) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::sun_disk_200_steps_carried_over_submissions_of_8_rounds_dump_the_engines_own_choice_byte_for_byte ... 
+thread 'dump::sun_disk_200_steps_carried_over_submissions_of_8_rounds_dump_the_engines_own_choice_byte_for_byte' (2230625) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::two_hundred_steps_through_a_dump_equal_two_hundred_straight_steps_state_and_reports ... 
+thread 'dump::two_hundred_steps_through_a_dump_equal_two_hundred_straight_steps_state_and_reports' (2230626) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dump::write_then_read_gives_a_bit_identical_state_and_the_bytes_follow_2_12_3 ... 
+thread 'dump::write_then_read_gives_a_bit_identical_state_and_the_bytes_follow_2_12_3' (2230627) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    dump::a_dump_carries_two_sinks_bit_for_bit_through_the_file_and_the_load
+    dump::a_headless_run_writes_one_sim_time_in_its_summary_and_its_final_dump
+    dump::a_truncated_dump_is_refused_wherever_it_is_cut
+    dump::a_warm_life_cut_by_a_dump_and_continued_is_the_unbroken_one_byte_for_byte_ten_steps_on
+    dump::a_wrong_magic_or_a_header_off_the_contract_is_refused
+    dump::an_empty_worlds_steps_run_the_clock_on_the_floor_gas
+    dump::forty_steps_as_one_two_or_forty_frames_or_bare_give_one_dump_and_one_sim_time
+    dump::headless_builds_p3_and_p7_from_the_scenes_switches_and_resumes_a_dump_holding_sinks
+    dump::headless_two_runs_of_100_through_a_dump_write_the_200_step_runs_dumps_byte_for_byte
+    dump::sun_disk_200_steps_carried_over_submissions_of_8_rounds_dump_the_engines_own_choice_byte_for_byte
+    dump::two_hundred_steps_through_a_dump_equal_two_hundred_straight_steps_state_and_reports
+    dump::write_then_read_gives_a_bit_identical_state_and_the_bytes_follow_2_12_3
+
+test result: FAILED. 0 passed; 12 failed; 0 ignored; 0 measured; 477 filtered out; finished in 0.38s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

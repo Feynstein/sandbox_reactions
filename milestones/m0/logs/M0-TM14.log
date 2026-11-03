@@ -1,0 +1,270 @@
+== M0-TM14 probe (§B.3), linux-pc, 2026-11-03T10:34:05-05:00
+CLAUDECODE=1
+CLAUDE_EFFORT=xhigh
+AI_AGENT=claude-code_2-1-314_agent
+== rung_record.py report, linux-pc, 2026-11-03T10:34:12-05:00
+report: 336 DONE blocks · 15 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 84 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 12 D block(s) naming no cause in the record · $1206.24 read from the sessions' own cost
+BUILD on Haiku 5.5, high: 1 block(s) · first-try 0/1 · $3.20 per DONE block · off the ladder
+BUILD on Opus 5.5, high: 113 block(s) · first-try 50/104 · $11.22 per DONE block · usual
+BUILD on Opus 5.5, max: 1 block(s) · first-try n/a · $3.29 per DONE block · above (usual)
+BUILD on Opus 5.5, xhigh: 3 block(s) · first-try 0/3 · $4.38 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 119 block(s) · first-try 78/115 · $2.52 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on unknown: 17 block(s) · first-try 14/17 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 11 block(s) · first-try 8/10 · $0.77 per DONE block · off the ladder
+BUILD·E on Opus 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 14 block(s) · first-try 12/12 · $0.74 per DONE block · cheaper on Sonnet 5.5, medium · vs (usual) BUILD blocks, all classes
+CHECK on Opus 5.5, max: 18 block(s) · first-try 11/18 · $22.41 per DONE block · above (usual)
+MOVE on Haiku 5.5, high: 5 block(s) · first-try 4/5 · $0.11 per DONE block · off the ladder
+MOVE on Opus 5.5, high: 1 block(s) · first-try 0/1 · $1.59 per DONE block · usual
+MOVE on Sonnet 5.5, medium: 5 block(s) · first-try 4/4 · $0.23 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 25 block(s) · first-try 15/22 · $11.27 per DONE block · above (usual)
+=== GO ===
+== plan.py lint at the start, linux-pc, 2026-11-03T10:36:22-05:00
+lint: checks=812 failed=0 warnings=7 · blocks=380 · flow_rows=380 · verify_fences=0 · history=0 · flow=per-task · header=603/600 · pipeline=9/60 · ladder=6 rungs · refresh=6/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== GO ===
+== the lint's refresh count, attributed on scratch copies (the plan never written), linux-pc, 2026-11-03T10:38:58-05:00
+start copy: refresh=6/5 · mutant A (M0-T103's [M0-D141, 2026-11-02] stamp dropped): refresh=5/5 · mutant B (M0-D71f's two [M0-D71, 2026-11-02] stamps on one flag dropped): refresh=5/5 — each copy NO-GO 4 violations for its location alone (the unmutated copy reads the same)
+== plan.py status, linux-pc, 2026-11-03T10:41:59-05:00
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+== plan.py register, linux-pc, 2026-11-03T10:42:37-05:00
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+== checkdiff.py (scratchpad, read-only), linux-pc, 2026-11-03T10:42:43-05:00 — post-status snapshot → plan:
+models   line 23: Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonn
+register line 598: - Model ratings: 2026-11-03 by M0-TM14
+rating=0 · models=1 · register=1 · own=0 · other=0
+=== GO ===
+exit 0
+== checkdiff.py — start snapshot → plan:
+models   line 23: Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonn
+own      line 373: | M0-TM14 | PLAN | Rating pass - 7 carried flags | AFTER M0-D71b | IN PROGRESS (2026-11-03 10:41) | | |
+register line 598: - Model ratings: 2026-11-03 by M0-TM14
+own      line 2742: - Status: IN PROGRESS (2026-11-03 10:41)
+rating=0 · models=1 · register=1 · own=2 · other=0
+=== GO ===
+exit 0
+== plan.py lint after the edits, linux-pc, 2026-11-03T10:42:44-05:00
+lint: checks=812 failed=0 warnings=7 · blocks=380 · flow_rows=380 · verify_fences=0 · history=0 · flow=per-task · header=603/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== GO ===
+exit 0
+== the Models: line, word diff (start → now): [('replace', ['2026-10-29'], ['2026-11-03']), ('replace', ['2.1.312,'], ['2.1.314,'])] · words 103 → 103
+== the claim: python3 tools/pb/verify.py --changed --task M0-TM14, linux-pc, 2026-11-03T10:45:16-05:00
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why registry: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why eos: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why rates: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why burn_cell: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why burn_order: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why neutrino: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why sink: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why nu_heat: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why summary: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ledger: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why preset_cloud: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why observe_run: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why objects: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why classify: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why stage_order: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ending: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why age_clock: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why multi: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why edits: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why edits_file: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why fft_twin: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why riemann: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why sheet: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why sod: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why edges: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why collapse: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why jeans: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why twin: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+12)
+why cpu_gpu: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why heat_gauss: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why heat_implicit: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why heat_limiter: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why heat_stiff: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why heat_multigrid: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why radiation_force: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why grav_force: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why grav_selfforce: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why fft: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why strings: stale: milestones/m0/m0_contrat.md
+why adapter: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+8)
+why state: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why booking: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+8)
+why floors: never: crates/sr-engine/tests/gpu/held_core.rs (+1) · stale: .cargo/config.toml (+117)
+why dt: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why box: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why latch: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why timing: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why scene: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why dump: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why boot: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why watch_only: stale: crates/sr-engine/shaders/edit.wgsl (+4)
+why calibration: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why calibrate_cold: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why cold_core: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why held_core: never: .cargo/config.toml (+120)
+why calibrate_bisect: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why calibrate_order: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why readouts: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why views: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why extents: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why glow: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why frames: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_topbar: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why ui_banner: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_world: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why ui_tools: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_presets: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_display: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_star: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_legend: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_zoom: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_remnant: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why ui_inspect: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+plan_lint         812/0/0      0.12 s  GO · step 1/75, 74 left
+build             2/0/0        5.75 s  GO · step 2/75, 73 left
+registry          29/0/0       2.27 s  GO · step 3/75, 72 left
+eos               13/0/0       2.27 s  GO · step 4/75, 71 left
+rates             8/0/0        2.27 s  GO · step 5/75, 70 left
+burn_cell         18/0/0       8.43 s  GO · step 6/75, 69 left
+burn_order        4/0/0        4.32 s  GO · step 7/75, 68 left
+neutrino          18/0/0       8.18 s  GO · step 8/75, 67 left
+sink              34/0/0      19.86 s  GO · step 9/75, 66 left
+nu_heat           15/0/0       9.73 s  GO · step 10/75, 65 left
+summary           7/0/0        6.33 s  GO · step 11/75, 64 left
+ledger            5/0/0       14.54 s  GO · step 12/75, 63 left
+preset_cloud      5/0/0       41.65 s  GO · step 13/75, 62 left
+observe_run       9/0/0       56.89 s  GO · step 14/75, 61 left
+objects           24/0/0       0.11 s  GO · step 15/75, 60 left
+classify          52/0/0       0.16 s  GO · step 16/75, 59 left
+stage_order       2/0/0       37.60 s  GO · step 17/75, 58 left
+ending            11/0/0       0.06 s  GO · step 18/75, 57 left
+age_clock         17/0/0       0.11 s  GO · step 19/75, 56 left
+multi             5/0/0       48.93 s  GO · step 20/75, 55 left
+edits             17/0/0      11.09 s  GO · step 21/75, 54 left
+edits_file        6/0/0        7.68 s  GO · step 22/75, 53 left
+fft_twin          10/0/0       0.16 s  GO · step 23/75, 52 left
+riemann           8/0/0        0.11 s  GO · step 24/75, 51 left
+sheet             7/0/0        0.26 s  GO · step 25/75, 50 left
+sod               15/0/0       7.18 s  GO · step 26/75, 49 left
+edges             7/0/0        9.29 s  GO · step 27/75, 48 left
+collapse          6/0/0        1.77 s  GO · step 28/75, 47 left
+jeans             6/0/0        0.67 s  GO · step 29/75, 46 left
+twin              6/0/0        1.52 s  GO · step 30/75, 45 left
+cpu_gpu           3/0/0        6.93 s  GO · step 31/75, 44 left
+heat_gauss        14/0/0       3.72 s  GO · step 32/75, 43 left
+heat_implicit     8/0/0        3.07 s  GO · step 33/75, 42 left
+heat_limiter      8/0/0        3.62 s  GO · step 34/75, 41 left
+heat_stiff        13/0/0       5.38 s  GO · step 35/75, 40 left
+heat_multigrid    4/0/0        4.62 s  GO · step 36/75, 39 left
+radiation_force   11/0/0      10.69 s  GO · step 37/75, 38 left
+grav_force        13/0/0       2.37 s  GO · step 38/75, 37 left
+grav_selfforce    7/0/0        1.47 s  GO · step 39/75, 36 left
+fft               8/0/0        3.42 s  GO · step 40/75, 35 left
+strings           3/0/0        0.42 s  GO · step 41/75, 34 left
+adapter           10/0/0       2.02 s  GO · step 42/75, 33 left
+state             12/0/0       5.12 s  GO · step 43/75, 32 left
+booking           4/0/0        2.37 s  GO · step 44/75, 31 left
+floors            12/0/0       6.68 s  GO · step 45/75, 30 left
+dt                8/0/0        5.38 s  GO · step 46/75, 29 left
+box               8/0/0        7.28 s  GO · step 47/75, 28 left
+latch             5/0/0        2.77 s  GO · step 48/75, 27 left
+timing            5/0/0       21.32 s  GO · step 49/75, 26 left
+scene             8/0/0        1.87 s  GO · step 50/75, 25 left
+dump              12/0/0      39.57 s  GO · step 51/75, 24 left
+boot              1/0/0        9.94 s  GO · step 52/75, 23 left
+watch_only        1/0/0        0.11 s  GO · step 53/75, 22 left
+calibration       12/0/0       0.16 s  GO · step 54/75, 21 left
+calibrate_cold    8/0/0        1.22 s  GO · step 55/75, 20 left
+cold_core         8/0/0        7.23 s  GO · step 56/75, 19 left
+held_core         7/0/0       74.34 s  GO · step 57/75, 18 left
+calibrate_bisect  19/0/0      97.32 s  GO · step 58/75, 17 left
+calibrate_order   13/0/0       0.16 s  GO · step 59/75, 16 left
+readouts          9/0/0        0.11 s  GO · step 60/75, 15 left
+views             15/0/0      35.88 s  GO · step 61/75, 14 left
+extents           7/0/0        6.53 s  GO · step 62/75, 13 left
+glow              7/0/0        2.77 s  GO · step 63/75, 12 left
+frames            6/0/0        7.58 s  GO · step 64/75, 11 left
+ui_topbar         15/0/0       2.07 s  GO · step 65/75, 10 left
+ui_banner         18/0/0       2.02 s  GO · step 66/75, 9 left
+ui_world          7/0/0        0.16 s  GO · step 67/75, 8 left
+ui_tools          18/0/0       0.16 s  GO · step 68/75, 7 left
+ui_presets        7/0/0        0.51 s  GO · step 69/75, 6 left
+ui_display        11/0/0       0.16 s  GO · step 70/75, 5 left
+ui_star           13/0/0       0.21 s  GO · step 71/75, 4 left
+ui_legend         21/0/0       0.36 s  GO · step 72/75, 3 left
+ui_zoom           11/0/0       0.16 s  GO · step 73/75, 2 left
+ui_remnant        6/0/0        0.11 s  GO · step 74/75, 1 left
+ui_inspect        9/0/0        0.11 s  GO · step 75/75, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 153 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 156 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 152 path(s) checked at the anchor)
+measure_ui        NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TM14.<scope>.log · record: loop_times.jsonl · tree c9a4fc2dca53+66608ecffcbe
+anchor: 1033 path×scope entries moved by this run
+anchor: 406 paths checked · 375 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 406 covered of 781 visible
+skipped   367  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 1603 passed, 0 failed, 0 skipped · 75/75 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 13 not impacted · 144.64 s + loop 0.08 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 4.67->5.46 · base: M0-TM14's start 2026-11-03T10:33:33-05:00
+=== GO ===
+exit 0
+== plan.py close, linux-pc, 2026-11-03T10:51:32-05:00
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+== after the close, linux-pc, 2026-11-03T10:51:38-05:00 — checkdiff.py post-status → plan:
+models   line 23: Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonn
+own      line 373: | M0-TM14 | PLAN | Rating pass - 7 carried flags | AFTER M0-D71b | DONE (2026-11-03 10:51, started 10:41) | | 
+register line 598: - Model ratings: 2026-11-03 by M0-TM14
+own      line 2742: - Status: DONE (2026-11-03 10:51, started 10:41)
+own      line 2761: - Handoff: linux-pc (laserax-ai); model=claude-opus-5-5 level=max (rung_record now; the heading's rung). Ladde
+rating=0 · models=1 · register=1 · own=3 · other=0
+=== GO ===
+exit 0
+== checkdiff.py start → plan:
+models   line 23: Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonn
+own      line 373: | M0-TM14 | PLAN | Rating pass - 7 carried flags | AFTER M0-D71b | DONE (2026-11-03 10:51, started 10:41) | | 
+register line 598: - Model ratings: 2026-11-03 by M0-TM14
+own      line 2742: - Status: DONE (2026-11-03 10:51, started 10:41)
+own      line 2761: - Handoff: linux-pc (laserax-ai); model=claude-opus-5-5 level=max (rung_record now; the heading's rung). Ladde
+rating=0 · models=1 · register=1 · own=3 · other=0
+=== GO ===
+exit 0
+== plan.py lint:
+lint: checks=811 failed=0 warnings=7 · blocks=380 · flow_rows=380 · verify_fences=0 · history=0 · flow=per-task · header=603/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+== verify.py plan_lint --task M0-TM14-close:
+plan_lint  811/0/0      0.11 s  GO
+logs: milestones/m0/logs/M0-TM14-close.<scope>.log · record: loop_times.jsonl · tree c9a4fc2dca53+a9727472a1e4
+anchor: 1 path×scope entries moved by this run
+anchor: 406 paths checked · 375 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 406 covered of 781 visible
+verify: 811 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 16.47->16.47
+=== GO ===
+exit 0

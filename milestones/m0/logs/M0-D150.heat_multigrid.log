@@ -1,0 +1,36 @@
+== 2026-11-03T14:14:19-05:00 heat_multigrid · task M0-D150 · box laserax-ai :: bash tests/gpu.sh heat::multigrid physics
+-- heat_multigrid · exit=101 · 0.27 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test heat::multigrid::gpu_the_burnt_fields_first_pass_converges_within_twice_the_models_rounds ... 
+thread 'heat::multigrid::gpu_the_burnt_fields_first_pass_converges_within_twice_the_models_rounds' (2230098) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds ... 
+thread 'heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds' (2230132) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_burnt_field ... 
+thread 'heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_burnt_field' (2230133) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_hot_disk_in_a_thin_ring ... 
+thread 'heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_hot_disk_in_a_thin_ring' (2230134) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    heat::multigrid::gpu_the_burnt_fields_first_pass_converges_within_twice_the_models_rounds
+    heat::multigrid::gpu_the_hot_disks_first_pass_converges_within_twice_the_models_rounds
+    heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_burnt_field
+    heat::multigrid::gpu_the_v_cycle_is_symmetric_and_positive_on_the_hot_disk_in_a_thin_ring
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 485 filtered out; finished in 0.15s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

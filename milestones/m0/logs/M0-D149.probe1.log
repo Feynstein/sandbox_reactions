@@ -1,0 +1,4 @@
+PROBE every 1: spared (1.4635e-1, 1.0407e-1) = 2.831e-3 of Σm|u| 6.3440e1; P8 held (0.0000e0, 0.0000e0); grid (4.6349e-4, 1.1740e-3); Σ≥10 cells 16
+PROBE every 16: spared (1.3000e-1, 9.4376e-2) = 2.532e-3 of Σm|u| 6.3440e1; P8 held (0.0000e0, 0.0000e0); grid (4.6349e-4, 1.1740e-3); Σ≥10 cells 16
+PROBE every 256: spared (1.0889e-1, 6.5918e-2) = 2.006e-3 of Σm|u| 6.3440e1; P8 held (0.0000e0, 0.0000e0); grid (4.6349e-4, 1.1740e-3); Σ≥10 cells 16
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 485 filtered out; finished in 3.48s

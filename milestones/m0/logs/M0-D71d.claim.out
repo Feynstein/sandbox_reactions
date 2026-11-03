@@ -1,0 +1,25 @@
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+ui_topbar         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+ledger · red-arm proven by M0-D71d-r2 2026-11-03T11:55:14-05:00 (fingerprint 66ad4ed0f1c1) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/ledger.rs changed since M0-D71d's start - a test, case or check M0-D71d's Deliver: does not name
+FLAG oracle: tests/plants/ledger-cell-grav-work.patch changed since M0-D71d's start - a test, case or check M0-D71d's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D71d's start - a test, case or check M0-D71d's Deliver: does not name
+logs: milestones/m0/logs/M0-D71d.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+f030eb8473a8
+anchor: 242 path×scope entries moved by this run
+anchor: 404 paths checked · 377 skipped (3 classes) · 2 never checked · 0 stale · 0 unclassified · 2 owed · 408 covered of 785 visible
+NEVER CHECKED  milestones/m0/m0_implementation_plan.md  (no entry for plan_lint)
+NEVER CHECKED  milestones/m0/m0_rules.md  (no entry for plan_lint)
+skipped   369  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  plan_lint: 816 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-D71d.plan_lint.log
+  anchor: 2 never checked, 0 stale, 0 unclassified - every one named above
+verify: 598 passed, 816 failed, 0 skipped · 60/61 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 22 not impacted · 163.11 s + loop 0.23 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.19->2.62 · base: M0-D71d's start 2026-11-03T11:37:08-05:00
+=== NO-GO: plan_lint: 816 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-D71d.plan_lint.log; anchor: 2 never checked, 0 stale, 0 unclassified - every one named above ===

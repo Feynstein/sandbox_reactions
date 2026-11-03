@@ -1,0 +1,3 @@
+M0-D71e 2026-11-03T14:21:52-05:00 rsync to laserax-ai-server, then verify dump twin heat_stiff there
+M0-D71e 2026-11-03T14:36:32-05:00 claim: verify.py --changed on laserax-ai-server (RTX 4090)
+M0-D71e 2026-11-03T14:45:12-05:00 owed: toolchain desktop web capture measure_ui on linux-pc

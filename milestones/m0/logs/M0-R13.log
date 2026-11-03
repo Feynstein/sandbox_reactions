@@ -1,0 +1,332 @@
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB
+NVIDIA GeForce RTX 4090, 0 %, 19 MiB
+f
+massive
+remnant
+s_150000.bin
+s_200000.bin
+sun
+v9
+dumps
+events.jsonl
+summary.json
+/dev/nvme0n1p2  937G  376G  514G  43% /
+255ec37 M0-D90 done: a black hole from mass; G-WATCH's m_tov_sb exemption
+=== NO-GO: unknown case '--release' (native or wasm) ===
+/tmp/r12/massive:
+dumps
+events.jsonl
+summary.json
+
+/tmp/r12/remnant:
+dumps
+events.jsonl
+summary.json
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 4090"
+  },
+  "events": [
+    {
+      "detail": {
+        "by": "fuel",
+        "mass_sb": 6674.780519258231
+      },
+      "kind": "ignition",
+      "object": 1,
+      "sim_time": 3.9590200989041477,
+      "step": 272
+    },
+    {
+      "detail": {
+        "mass_sb": 6670.410657503642
+      },
+      "kind": "core_collapse",
+      "object": 1,
+      "sim_time": 7.705261811381206,
+      "step": 912
+    },
+    {
+      "detail": {
+        "mass_sb": 6670.342578647658
+      },
+      "kind": "supernova",
+      "object": 1,
+      "sim_time": 7.774670975049958,
+      "step": 928
+    }
+  ],
+  "git": "255ec37-dirty",
+  "ledger": {
+    "end": {
+      "energy": {
+        "cold": 70006.06321370273,
+        "escaped": 501646.6094168619,
+        "floor_added": 33907216.889246896,
+        "invariant": -1136516.5526299067,
+        "kinetic": 290535.62783720077,
+        "neutrino_deposited": 210.55618997495705,
+        "neutrino_lost": 54860903.174567334,
+        "nuclear_released": 27391310.19288155,
+        "potential": -877769.7489165901,
+        "radiated": 5250418.807218311,
+        "swallowed": 0.0,
+        "thermal": 66480.55235169118,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 2248.615404006344,
+        "grid": 4428.224025124451,
+        "invariant": 6677.220372204428,
+        "painted": 0.0,
+        "preset_dropped": 0.0/home/ybelanger/.cargo/bin/cargo
+    Finished `release` profile [optimized] target(s) in 0.08s
+== massive 0-2000, 2026-11-03T16:50:16-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=12.839809 until=none
+wall 27.67 s
+{"detail":{"by":"fuel","mass_sb":6674.966924982145},"kind":"ignition","object":1,"sim_time":3.888845312874764,"step":260}
+{"detail":{"mass_sb":6670.579011557624},"kind":"core_collapse","object":1,"sim_time":7.6487111484166235,"step":900}
+{"detail":{"mass_sb":6670.297982918099},"kind":"supernova","object":1,"sim_time":7.742504049791023,"step":920}
+== massive 2000-ending, 2026-11-03T16:50:49-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=29208 sim_time=279.945924 until=met
+wall 224.36 s
+{"detail":{"by":"fuel","mass_sb":6674.966924982145},"kind":"ignition","object":1,"sim_time":3.888845312874764,"step":260}
+{"detail":{"mass_sb":6670.579011557624},"kind":"core_collapse","object":1,"sim_time":7.6487111484166235,"step":900}
+{"detail":{"mass_sb":6670.297982918099},"kind":"supernova","object":1,"sim_time":7.742504049791023,"step":920}
+{"detail":{"held_t":257.3988790907897,"hold_t":257.3788577577795,"mass_sb":4118.105652314611,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":279.94592395122163,"step":29208}
+{'condition': 'ending', 'met': True, 'object': 1} 29208 279.94592395122163 250.723864236
+1 4118.105652314611 neutron_star [('iron_core', 340), ('core_collapse', 900), ('supernova', 920), ('neutron_star', 3474)]
+== r13core over the Massive life (/tmp/r13/a every 20 to 2000, /tmp/r13/b every 250 to 29208)
+# anchors t_floor 0.05 t_eff_sun_sb 11.633381191364432 m_ch_sb 3216.4199210979236 m_tov? k2n 58.2
+step 840 t 7.361 held 0 c (300,199) Sc 263.6 Tc_sb 67.567 Tc_K 6.126e7 eth/cold_c 2.41e-1 Ye_c 0.464 Xn_c 0.000 XFe_c 1.000 | core n 52 M 4151.7 Hth 4.7647e5 Habove 4.7604e5 Ecold 1.5171e6 at_floor 0 TKmax 6.375e7 | rem M 4316.0 Hth 4.8488e5 Ecold 1.5194e6 KE 2.6296e4 R90(r<=20) 12.81
+step 880 t 7.554 held 0 c (300,199) Sc 312.9 Tc_sb 68.877 Tc_K 7.041e7 eth/cold_c 2.16e-1 Ye_c 0.464 Xn_c 0.000 XFe_c 1.000 | core n 36 M 4132.9 Hth 4.9186e5 Habove 4.9143e5 Ecold 1.7968e6 at_floor 0 TKmax 7.373e7 | rem M 4298.6 Hth 5.0105e5 Ecold 1.8009e6 KE 3.6811e4 R90(r<=20) 12.17
+step 900 t 7.649 held 0 c (300,199) Sc 346.1 Tc_sb 62.433 Tc_K 3.455e7 eth/cold_c 1.82e-1 Ye_c 0.464 Xn_c 0.002 XFe_c 0.998 | core n 36 M 4212.3 Hth 4.9970e5 Habove 4.9926e5 Ecold 1.9718e6 at_floor 0 TKmax 7.846e7 | rem M 4305.4 Hth 5.0466e5 Ecold 1.9734e6 KE 4.7874e4 R90(r<=20) 10.44
+
+thread 'main' (1268005) panicked at crates/sr-engine/examples/r13core.rs:20:48:
+dump: "/tmp/r13/a/dumps/s_910.bin: No such file or directory (os error 2)"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+# anchors t_floor 0.05 t_eff_sun_sb 11.633381191364432 m_ch_sb 3216.4199210979236 m_tov? k2n 58.2
+step 840 t 7.361 held 0 c (300,199) Sc 263.6 Tc_sb 67.567 Tc_K 6.126e7 eth/cold_c 2.41e-1 Ye_c 0.464 Xn_c 0.000 XFe_c 1.000 | core n 52 M 4151.7 Hth 4.7647e5 Habove 4.7604e5 Ecold 1.5171e6 at_floor 0 TKmax 6.375e7 | rem M 4316.0 Hth 4.8488e5 Ecold 1.5194e6 KE 2.6296e4 R90(r<=20) 12.81
+step 880 t 7.554 held 0 c (300,199) Sc 312.9 Tc_sb 68.877 Tc_K 7.041e7 eth/cold_c 2.16e-1 Ye_c 0.464 Xn_c 0.000 XFe_c 1.000 | core n 36 M 4132.9 Hth 4.9186e5 Habove 4.9143e5 Ecold 1.7968e6 at_floor 0 TKmax 7.373e7 | rem M 4298.6 Hth 5.0105e5 Ecold 1.8009e6 KE 3.6811e4 R90(r<=20) 12.17
+step 900 t 7.649 held 0 c (300,199) Sc 346.1 Tc_sb 62.433 Tc_K 3.455e7 eth/cold_c 1.82e-1 Ye_c 0.464 Xn_c 0.002 XFe_c 0.998 | core n 36 M 4212.3 Hth 4.9970e5 Habove 4.9926e5 Ecold 1.9718e6 at_floor 0 TKmax 7.846e7 | rem M 4305.4 Hth 5.0466e5 Ecold 1.9734e6 KE 4.7874e4 R90(r<=20) 10.44
+step 920 t 7.743 held 0 c (300,199) Sc 746.5 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 5.19e-5 Ye_c 0.240 Xn_c 0.484 XFe_c 0.516 | core n 32 M 4261.8 Hth 1.8330e4 Habove 1.7969e4 Ecold 2.2380e6 at_floor 21 TKmax 7.759e5 | rem M 4322.5 Hth 1.8876e4 Ecold 2.2391e6 KE 8.2158e5 R90(r<=20) 4.24
+step 940 t 7.817 held 0 c (300,199) Sc 1021.8 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 4.36e-5 Ye_c 0.169 Xn_c 0.636 XFe_c 0.364 | core n 8 M 4281.2 Hth 1.6711e2 Habove -1.1053e2 Ecold 3.5961e6 at_floor 8 TKmax 1.000e1 | rem M 4323.7 Hth 2.3552e2 Ecold 3.5969e6 KE 2.2855e6 R90(r<=20) 1.41
+step 960 t 7.879 held 0 c (300,200) Sc 1033.8 Tc_sb 9.667 Tc_K 4.651e3 eth/cold_c 1.25e-2 Ye_c 0.157 Xn_c 0.662 XFe_c 0.338 | core n 9 M 4331.0 Hth 2.5998e5 Habove 2.5971e5 Ecold 3.5281e6 at_floor 0 TKmax 3.041e9 | rem M 4337.4 Hth 2.6071e5 Ecold 3.5282e6 KE 1.9269e6 R90(r<=20) 2.00
+step 980 t 7.954 held 0 c (300,199) Sc 1164.7 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 4.31e-5 Ye_c 0.141 Xn_c 0.697 XFe_c 0.303 | core n 15 M 4318.3 Hth 7.1183e5 Habove 7.1157e5 Ecold 2.6035e6 at_floor 1 TKmax 4.330e9 | rem M 4344.6 Hth 7.1394e5 Ecold 2.6037e6 KE 4.3487e5 R90(r<=20) 2.00
+step 1000 t 8.044 held 0 c (300,199) Sc 1020.0 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 4.45e-5 Ye_c 0.143 Xn_c 0.693 XFe_c 0.307 | core n 19 M 4322.8 Hth 5.2355e5 Habove 5.2329e5 Ecold 2.2673e6 at_floor 3 TKmax 2.180e9 | rem M 4347.4 Hth 5.2379e5 Ecold 2.2676e6 KE 3.4997e5 R90(r<=20) 2.00
+step 1040 t 8.218 held 0 c (300,199) Sc 887.5 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 5.14e-5 Ye_c 0.156 Xn_c 0.664 XFe_c 0.336 | core n 19 M 4325.7 Hth 2.9955e5 Habove 2.9929e5 Ecold 2.1514e6 at_floor 6 TKmax 1.787e9 | rem M 4350.8 Hth 3.0010e5 Ecold 2.1516e6 KE 1.1402e6 R90(r<=20) 2.24
+step 1100 t 8.471 held 0 c (300,198) Sc 480.9 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 8.22e-5 Ye_c 0.164 Xn_c 0.647 XFe_c 0.353 | core n 37 M 4294.7 Hth 2.7939e4 Habove 2.7676e4 Ecold 1.1873e6 at_floor 17 TKmax 3.125e7 | rem M 4353.5 Hth 3.0036e4 Ecold 1.1878e6 KE 1.7779e6 R90(r<=20) 2.83
+step 1200 t 8.929 held 0 c (301,197) Sc 368.2 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 1.00e-4 Ye_c 0.165 Xn_c 0.645 XFe_c 0.355 | core n 48 M 4111.6 Hth 4.9564e4 Habove 4.9312e4 Ecold 8.6489e5 at_floor 9 TKmax 1.596e7 | rem M 4344.9 Hth 5.9286e4 Ecold 8.6673e5 KE 1.6386e6 R90(r<=20) 3.61
+step 1400 t 9.871 held 0 c (301,196) Sc 351.5 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 1.08e-4 Ye_c 0.165 Xn_c 0.644 XFe_c 0.356 | core n 40 M 3496.0 Hth 5.0050e4 Habove 4.9836e4 Ecold 7.2871e5 at_floor 10 TKmax 7.873e6 | rem M 3912.7 Hth 6.8277e4 Ecold 7.3132e5 KE 1.2372e6 R90(r<=20) 8.60
+step 1600 t 10.807 held 0 c (301,195) Sc 325.6 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 1.15e-4 Ye_c 0.165 Xn_c 0.644 XFe_c 0.356 | core n 39 M 3111.2 Hth 3.3230e4 Habove 3.3039e4 Ecold 5.8968e5 at_floor 11 TKmax 1.201e7 | rem M 3576.4 Hth 5.3413e4 Ecold 5.9284e5 KE 1.0067e6 R90(r<=20) 11.18
+step 2000 t 12.840 held 0 c (303,192) Sc 214.4 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 1.61e-4 Ye_c 0.166 Xn_c 0.643 XFe_c 0.357 | core n 38 M 2385.6 Hth 1.9690e4 Habove 1.9543e4 Ecold 3.4072e5 at_floor 13 TKmax 4.165e6 | rem M 2838.9 Hth 3.6853e4 Ecold 3.4355e5 KE 6.0786e5 R90(r<=20) 12.65
+step 2250 t 14.351 held 0 c (302,193) Sc 174.5 Tc_sb 6.515 Tc_K 2.934e3 eth/cold_c 3.76e-2 Ye_c 0.166 Xn_c 0.643 XFe_c 0.357 | core n 81 M 2663.1 Hth 6.1223e4 Habove 6.1060e4 Ecold 2.5311e5 at_floor 4 TKmax 7.727e6 | rem M 3215.2 Hth 8.4586e4 Ecold 2.5817e5 KE 6.5043e5 R90(r<=20) 12.04
+step 4250 t 28.287 held 0 c (300,191) Sc 125.5 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 2.57e-4 Ye_c 0.168 Xn_c 0.639 XFe_c 0.361 | core n 31 M 1446.8 Hth 3.5779e3 Habove 3.4889e3 Ecold 1.3486e5 at_floor 16 TKmax 4.963e4 | rem M 2133.2 Hth 2.1958e4 Ecold 1.4008e5 KE 2.9385e5 R90(r<=20) 15.26
+step 6250 t 44.381 held 0 c (299,187) Sc 110.3 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 2.87e-4 Ye_c 0.168 Xn_c 0.638 XFe_c 0.362 | core n 33 M 1263.4 Hth 4.3778e3 Habove 4.3001e3 Ecold 9.8997e4 at_floor 10 TKmax 2.851e4 | rem M 1707.7 Hth 1.3788e4 Ecold 1.0147e5 KE 1.9318e5 R90(r<=20) 15.62
+step 8250 t 61.628 held 0 c (305,182) Sc 87.7 Tc_sb 0.051 Tc_K 1.033e1 eth/cold_c 5.46e-4 Ye_c 0.168 Xn_c 0.638 XFe_c 0.362 | core n 31 M 1050.6 Hth 7.3229e3 Habove 7.2582e3 Ecold 7.0250e4 at_floor 2 TKmax 6.379e4 | rem M 1426.9 Hth 1.5495e4 Ecold 7.2499e4 KE 1.3911e5 R90(r<=20) 18.38
+step 10250 t 79.257 held 0 c (298,185) Sc 74.6 Tc_sb 0.902 Tc_K 2.922e2 eth/cold_c 1.11e-2 Ye_c 0.168 Xn_c 0.638 XFe_c 0.362 | core n 32 M 931.1 Hth 1.1709e4 Habove 1.1652e4 Ecold 5.2056e4 at_floor 0 TKmax 4.680e6 | rem M 1377.9 Hth 2.5225e4 Ecold 5.5592e4 KE 1.1437e5 R90(r<=20) 16.64
+step 12250 t 97.660 held 0 c (304,184) Sc 74.1 Tc_sb 0.125 Tc_K 2.922e1 eth/cold_c 1.55e-3 Ye_c 0.168 Xn_c 0.637 XFe_c 0.363 | core n 27 M 821.5 Hth 2.1623e3 Habove 2.1118e3 Ecold 4.6990e4 at_floor 7 TKmax 2.767e4 | rem M 1218.7 Hth 9.6425e3 Ecold 4.9334e4 KE 9.5744e4 R90(r<=20) 16.76
+step 14250 t 116.959 held 0 c (304,187) Sc 69.1 Tc_sb 10.930 Tc_K 5.367e3 eth/cold_c 1.44e-1 Ye_c 0.168 Xn_c 0.637 XFe_c 0.363 | core n 33 M 932.9 Hth 1.4632e4 Habove 1.4575e4 Ecold 5.0322e4 at_floor 0 TKmax 2.427e5 | rem M 1289.7 Hth 2.1489e4 Ecold 5.2731e4 KE 1.0213e5 R90(r<=20) 17.12
+step 16250 t 136.573 held 0 c (302,183) Sc 55.5 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 5.31e-4 Ye_c 0.168 Xn_c 0.637 XFe_c 0.363 | core n 26 M 679.0 Hth 1.5956e3 Habove 1.5538e3 Ecold 3.2558e4 at_floor 9 TKmax 8.228e3 | rem M 1056.7 Hth 8.8577e3 Ecold 3.4785e4 KE 6.9470e4 R90(r<=20) 17.00
+step 18250 t 158.163 held 0 c (303,183) Sc 51.6 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 5.69e-4 Ye_c 0.168 Xn_c 0.637 XFe_c 0.363 | core n 26 M 631.9 Hth 1.3601e3 Habove 1.3212e3 Ecold 2.7876e4 at_floor 10 TKmax 1.205e4 | rem M 990.8 Hth 7.2736e3 Ecold 2.9806e4 KE 6.2681e4 R90(r<=20) 17.46
+step 20250 t 179.519 held 0 c (303,183) Sc 52.4 Tc_sb 28.851 Tc_K 5.579e5 eth/cold_c 4.89e-1 Ye_c 0.168 Xn_c 0.637 XFe_c 0.363 | core n 49 M 1093.6 Hth 3.8273e4 Habove 3.8206e4 Ecold 4.4478e4 at_floor 1 TKmax 9.995e6 | rem M 1401.1 Hth 4.6013e4 Ecold 4.7214e4 KE 1.0296e5 R90(r<=20) 14.14
+step 22250 t 200.581 held 0 c (302,184) Sc 46.9 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 6.18e-4 Ye_c 0.169 Xn_c 0.637 XFe_c 0.363 | core n 21 M 504.5 Hth 7.0627e2 Habove 6.7521e2 Ecold 2.0930e4 at_floor 9 TKmax 3.178e3 | rem M 879.9 Hth 5.5236e3 Ecold 2.3075e4 KE 4.6708e4 R90(r<=20) 16.64
+step 24250 t 223.403 held 0 c (308,188) Sc 45.3 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 6.42e-4 Ye_c 0.169 Xn_c 0.637 XFe_c 0.363 | core n 20 M 490.4 Hth 1.9979e2 Habove 1.6959e2 Ecold 2.0536e4 at_floor 14 TKmax 1.045e3 | rem M 802.8 Hth 3.2053e3 Ecold 2.2358e4 KE 4.3329e4 R90(r<=20) 16.76
+step 26250 t 245.053 held 0 c (306,186) Sc 46.1 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 6.30e-4 Ye_c 0.169 Xn_c 0.637 XFe_c 0.363 | core n 23 M 545.4 Hth 9.6231e2 Habove 9.2873e2 Ecold 2.2447e4 at_floor 7 TKmax 4.217e3 | rem M 946.5 Hth 6.0711e3 Ecold 2.4848e4 KE 5.5962e4 R90(r<=20) 16.64
+step 28250 t 268.506 held 0 c (298,178) Sc 41.3 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 6.95e-4 Ye_c 0.169 Xn_c 0.637 XFe_c 0.363 | core n 22 M 477.0 Hth 2.6342e2 Habove 2.3405e2 Ecold 1.8008e4 at_floor 15 TKmax 1.636e3 | rem M 718.0 Hth 2.6137e3 Ecold 1.9450e4 KE 3.5693e4 R90(r<=20) 18.03
+step 29208 t 279.946 held 0 c (296,178) Sc 45.1 Tc_sb 12.604 Tc_K 8.638e3 eth/cold_c 2.45e-1 Ye_c 0.169 Xn_c 0.637 XFe_c 0.363 | core n 28 M 598.5 Hth 9.7369e3 Habove 9.7001e3 Ecold 2.2538e4 at_floor 0 TKmax 3.681e4 | rem M 998.1 Hth 1.5343e4 Ecold 2.4996e4 KE 5.0648e4 R90(r<=20) 16.40
+# 1.000e6 K ↔ T_sb 32.3978
+# 1.000e9 K ↔ T_sb 120.7342
+# 1.000e10 K ↔ T_sb 462.2652
+# 1.000e11 K ↔ T_sb 1880.9042
+# 5.000e11 K ↔ T_sb 5016.1639
+step t floor_added neutrino_lost nuclear_released radiated thermal cold kinetic potential escaped invariant
+20 0.41 -8.9019e-02 0.0000e+00 0.0000e+00 2.5827e+02 7.3950e+04 7.4276e+04 2.9739e+03 -7.4652e+05 0.0000e+00 -5.9506e+05
+500 5.55 -2.9774e+01 5.4843e+07 5.5314e+07 1.3296e+06 3.1212e+05 2.8060e+05 3.3227e+05 -2.3914e+06 0.0000e+00 -6.0715e+05
+800 7.17 -1.1912e+02 5.4848e+07 5.5314e+07 3.0583e+06 5.2486e+05 1.2819e+06 2.4166e+05 -5.2764e+06 0.0000e+00 -6.3518e+05
+880 7.55 -1.5387e+02 5.4854e+07 5.5314e+07 3.4122e+06 5.6587e+05 1.8039e+06 3.7889e+05 -6.3382e+06 0.0000e+00 -6.3690e+05
+900 7.65 -1.6285e+02 5.4856e+07 5.5308e+07 3.5083e+06 5.6922e+05 1.9761e+06 4.3335e+05 -6.6711e+06 1.3568e+00 -6.3637e+05
+920 7.74 8.4150e+06 5.4856e+07 4.4899e+07 3.5758e+06 5.4987e+04 2.2414e+06 1.2303e+06 -9.2050e+06 1.0178e+01 -5.6015e+05
+940 7.82 2.1392e+07 5.4856e+07 3.0441e+07 3.5836e+06 2.3516e+04 3.5991e+06 2.6925e+06 -1.3644e+07 2.1108e+01 -7.2183e+05
+960 7.88 2.3527e+07 5.4856e+07 2.8376e+07 3.5901e+06 3.4212e+05 3.5302e+06 2.3255e+06 -1.3586e+07 3.3471e+01 -8.4549e+05
+1000 8.04 2.5623e+07 5.4860e+07 2.7391e+07 3.8557e+06 5.5985e+05 2.2693e+06 8.8436e+05 -1.0318e+07 9.0977e+01 -9.0298e+05
+1100 8.47 2.8853e+07 5.4861e+07 2.7391e+07 3.9601e+06 5.9021e+04 1.1891e+06 2.3225e+06 -7.1273e+06 7.1887e+02 -9.7909e+05
+1200 8.93 2.9733e+07 5.4861e+07 2.7391e+07 4.0190e+06 8.8484e+04 8.6777e+05 2.1695e+06 -5.8689e+06 5.6961e+03 -9.8206e+05
+1600 10.81 3.0857e+07 5.4861e+07 2.7391e+07 4.1685e+06 9.5138e+04 5.9506e+05 1.5625e+06 -4.0722e+06 4.2521e+04 -9.9645e+05
+2000 12.84 3.1699e+07 5.4861e+07 2.7391e+07 4.2676e+06 9.3557e+04 3.5007e+05 1.1368e+06 -2.7242e+06 8.9606e+04 -1.0163e+06
+2250 14.35 3.2044e+07 5.4861e+07 2.7391e+07 4.3666e+06 1.3325e+05 2.6302e+05 1.1520e+06 -2.4897e+06 1.1592e+05 -1.0335e+06
+6250 44.38 3.3579e+07 5.4861e+07 2.7391e+07 5.0849e+06 5.1652e+04 1.0519e+05 3.2868e+05 -1.0729e+06 5.0086e+05 -1.1114e+06
+10250 79.26 3.4203e+07 5.4861e+07 2.7391e+07 5.4690e+06 7.1860e+04 6.0410e+04 2.5033e+05 -7.7717e+05 5.0202e+05 -1.1572e+06
+14250 116.96 3.4538e+07 5.4861e+07 2.7391e+07 5.7363e+06 5.7624e+04 5.5950e+04 2.1599e+05 -6.7694e+05 5.0310e+05 -1.1765e+06
+18250 158.16 3.4828e+07 5.4861e+07 2.7391e+07 5.9264e+06 3.9445e+04 3.2554e+04 1.7152e+05 -5.0237e+05 5.0393e+05 -1.1871e+06
+22250 200.58 3.5062e+07 5.4861e+07 2.7391e+07 6.0980e+06 3.5464e+04 2.5723e+04 1.3960e+05 -4.2255e+05 5.0439e+05 -1.2119e+06
+26250 245.05 3.5251e+07 5.4861e+07 2.7391e+07 6.2434e+06 3.0896e+04 2.6310e+04 1.2841e+05 -3.9598e+05 5.0483e+05 -1.2437e+06
+29208 279.95 3.5347e+07 5.4861e+07 2.7391e+07 6.3284e+06 4.3661e+04 2.6588e+04 1.3959e+05 -4.1937e+05 5.0534e+05 -1.2535e+06
+windows (delta):
+800-900 floor_ -4.374e+01 neutri +7.722e+03 nuclea -5.475e+03 radiat +4.500e+05 therma +4.436e+04 cold +6.942e+05 kineti +1.917e+05 potent -1.395e+06 escape +1.357e+00 invari -1.191e+03
+900-920 floor_ +8.415e+06 neutri +2.617e+02 nuclea -1.041e+07 radiat +6.746e+04 therma -5.142e+05 cold +2.654e+05 kineti +7.970e+05 potent -2.534e+06 escape +8.821e+00 invari +7.621e+04
+920-1000 floor_ +1.721e+07 neutri +4.223e+03 nuclea -1.751e+07 radiat +2.800e+05 therma +5.049e+05 cold +2.787e+04 kineti -3.460e+05 potent -1.113e+06 escape +8.080e+01 invari -3.428e+05
+1000-2000 floor_ +6.076e+06 neutri +6.885e+02 nuclea +3.757e-02 radiat +4.119e+05 therma -4.663e+05 cold -1.919e+06 kineti +2.525e+05 potent +7.594e+06 escape +8.951e+04 invari -1.133e+05
+2250-10250 floor_ +2.159e+06 neutri +1.795e-01 nuclea +0.000e+00 radiat +1.102e+06 therma -6.139e+04 cold -2.026e+05 kineti -9.016e+05 potent +1.713e+06 escape +3.861e+05 invari -1.237e+05
+10250-29208 floor_ +1.144e+06 neutri +0.000e+00 nuclea +0.000e+00 radiat +8.593e+05 therma -2.820e+04 cold -3.382e+04 kineti -1.107e+05 potent +3.578e+05 escape +3.321e+03 invari -9.628e+04
+920-29208 floor_ +2.693e+07 neutri +4.912e+03 nuclea -1.751e+07 radiat +2.753e+06 therma -1.133e+04 cold -2.215e+06 kineti -1.091e+06 potent +8.786e+06 escape +5.053e+05 invari -6.933e+05
+== r13twin (scratch twin crop, per-pass core heat)
+dump /tmp/r13/a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.050 Sc 499.4 core n 36 heat 1.4048e5 | window: P4 +1.297e5 P5 -7.074e4 P6 -2.530e6 (nu 1.863e2) P8 +2.111e6 | floor_added(all) +2.111e6 held 0
++   20 t 0.096 Sc 784.5 core n 28 heat 9.9029e3 | window: P4 +7.340e5 P5 -7.037e3 P6 -8.921e6 (nu 1.610e0) P8 +8.065e6 | floor_added(all) +8.066e6 held 0
++   30 t 0.134 Sc 938.6 core n 14 heat 4.0069e2 | window: P4 +1.005e6 P5 -5.891e2 P6 -8.802e6 (nu 2.373e-3) P8 +7.789e6 | floor_added(all) +7.817e6 held 0
++   40 t 0.167 Sc 1025.0 core n 8 heat 1.7084e2 | window: P4 +3.483e5 P5 -2.513e0 P6 -4.602e6 (nu 0.000e0) P8 +4.254e6 | floor_added(all) +4.282e6 held 0
++   50 t 0.199 Sc 1095.2 core n 8 heat 8.7105e4 | window: P4 +1.660e5 P5 -1.114e3 P6 -1.878e6 (nu 1.192e-1) P8 +1.800e6 | floor_added(all) +1.814e6 held 0
++   60 t 0.229 Sc 940.6 core n 12 heat 5.5382e5 | window: P4 +4.964e5 P5 -2.053e5 P6 -1.843e5 (nu 5.852e2) P8 +3.357e5 | floor_added(all) +3.366e5 held 0
++   70 t 0.270 Sc 935.7 core n 15 heat 2.2252e5 | window: P4 -6.777e5 P5 -1.175e5 P6 -5.030e2 (nu 5.031e2) P8 +4.530e5 | floor_added(all) +4.535e5 held 0
++   80 t 0.307 Sc 1238.4 core n 15 heat 1.0091e6 | window: P4 +6.633e5 P5 -1.234e5 P6 -6.435e5 (nu 1.869e4) P8 +8.902e5 | floor_added(all) +8.908e5 held 0
++   90 t 0.353 Sc 949.1 core n 23 heat 3.5077e5 | window: P4 -9.793e5 P5 -1.365e5 P6 -1.032e5 (nu 7.524e3) P8 +5.504e5 | floor_added(all) +5.504e5 held 0
++  100 t 0.400 Sc 1025.6 core n 20 heat 7.0291e5 | window: P4 +3.148e5 P5 -2.025e4 P6 -3.552e2 (nu 3.553e2) P8 +5.904e4 | floor_added(all) +5.938e4 held 0
++  110 t 0.447 Sc 1017.3 core n 22 heat 5.3810e5 | window: P4 -1.036e5 P5 -7.973e4 P6 -3.790e2 (nu 3.790e2) P8 +1.662e4 | floor_added(all) +1.662e4 held 0
++  120 t 0.494 Sc 1050.3 core n 18 heat 6.4322e5 | window: P4 +1.353e5 P5 -5.448e4 P6 -3.881e2 (nu 3.881e2) P8 +2.606e4 | floor_added(all) +2.781e4 held 0
+TOTAL P4 +2.2320e6 P5 -8.1654e5 P6 -2.7667e7 (nu 2.8614e4) P8 +2.6351e7 floor_added(all) +2.6425e7
+wall 39.97 s
+dump /tmp/r13/b/dumps/s_20250.bin step 20250 crop centre (303,183) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++  250 t 2.446 Sc 63.4 core n 38 heat 3.1614e4 | window: P4 +6.854e3 P5 -1.319e4 P6 -2.125e-4 (nu 0.000e0) P8 +1.570e2 | floor_added(all) +2.532e2 held 0
++  500 t 4.966 Sc 77.4 core n 33 heat 1.5432e4 | window: P4 -1.340e4 P5 -2.544e3 P6 +6.912e-11 (nu 0.000e0) P8 +1.346e-10 | floor_added(all) +0.000e0 held 0
++  750 t 7.476 Sc 77.3 core n 26 heat 1.3918e3 | window: P4 -4.272e4 P5 +7.105e2 P6 +0.000e0 (nu 0.000e0) P8 +2.772e4 | floor_added(all) +2.809e4 held 0
++ 1000 t 10.079 Sc 59.8 core n 26 heat 7.3211e2 | window: P4 -4.655e4 P5 +8.849e2 P6 +0.000e0 (nu 0.000e0) P8 +4.437e4 | floor_added(all) +4.503e4 held 0
++ 1250 t 12.742 Sc 61.2 core n 25 heat 6.3180e3 | window: P4 -1.563e4 P5 +1.889e3 P6 +9.095e-13 (nu 0.000e0) P8 +1.876e4 | floor_added(all) +1.963e4 held 0
++ 1500 t 15.425 Sc 59.1 core n 25 heat 8.0285e2 | window: P4 -2.023e4 P5 +1.112e3 P6 +0.000e0 (nu 0.000e0) P8 +1.330e4 | floor_added(all) +1.338e4 held 0
++ 1750 t 18.249 Sc 49.3 core n 24 heat 5.1810e2 | window: P4 -2.911e4 P5 +6.180e2 P6 +0.000e0 (nu 0.000e0) P8 +2.790e4 | floor_added(all) +2.845e4 held 0
++ 2000 t 21.083 Sc 50.1 core n 21 heat 1.1669e3 | window: P4 -1.449e4 P5 +7.238e2 P6 +0.000e0 (nu 0.000e0) P8 +1.266e4 | floor_added(all) +1.394e4 held 0
+TOTAL P4 -1.7528e5 P5 -9.7998e3 P6 -2.1251e-4 (nu 0.0000e0) P8 +1.4487e5 floor_added(all) +1.4879e5
+wall 210.19 s
+dump /tmp/r13/a/dumps/s_1000.bin step 1000 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++  100 t 0.420 Sc 493.7 core n 35 heat 2.6766e4 | window: P4 -3.470e6 P5 -1.621e5 P6 -6.915e2 (nu 6.916e2) P8 +3.128e6 | floor_added(all) +3.152e6 held 0
++  200 t 0.876 Sc 366.1 core n 49 heat 5.1312e4 | window: P4 -8.939e5 P5 -2.498e4 P6 -3.466e-4 (nu 3.466e-4) P8 +9.346e5 | floor_added(all) +9.365e5 held 0
++  300 t 1.360 Sc 364.1 core n 42 heat 3.8947e4 | window: P4 -3.355e5 P5 -1.714e4 P6 +0.000e0 (nu 0.000e0) P8 +3.434e5 | floor_added(all) +3.434e5 held 0
++  400 t 1.864 Sc 335.6 core n 43 heat 4.3363e4 | window: P4 -3.076e5 P5 -8.951e3 P6 -2.692e-10 (nu 0.000e0) P8 +3.195e5 | floor_added(all) +3.195e5 held 0
++  500 t 2.390 Sc 318.4 core n 41 heat 3.5443e4 | window: P4 -3.393e5 P5 +3.081e3 P6 +6.185e-11 (nu 0.000e0) P8 +3.291e5 | floor_added(all) +3.291e5 held 0
++  600 t 2.936 Sc 274.4 core n 43 heat 2.5110e4 | window: P4 -2.985e5 P5 +6.237e3 P6 +2.183e-11 (nu 0.000e0) P8 +2.810e5 | floor_added(all) +2.810e5 held 0
++  700 t 3.490 Sc 238.3 core n 40 heat 2.2297e4 | window: P4 -2.866e5 P5 +7.243e3 P6 +1.091e-11 (nu 0.000e0) P8 +2.769e5 | floor_added(all) +2.769e5 held 0
++  800 t 4.066 Sc 249.1 core n 37 heat 1.8637e4 | window: P4 -2.127e5 P5 +5.929e3 P6 -5.639e-11 (nu 0.000e0) P8 +2.030e5 | floor_added(all) +2.030e5 held 0
+B build 0     Finished `release` profile [optimized] target(s) in 24.53s
+B9 build 0     Finished `release` profile [optimized] target(s) in 4.49s
+C build 0     Finished `release` profile [optimized] target(s) in 5.45s
+D build 0     Finished `release` profile [optimized] target(s) in 5.56s
+F build 0     Finished `release` profile [optimized] target(s) in 5.47s
+total 113288
+drwxrwxr-x 2 ybelanger ybelanger     4096 Nov  3 17:04 .
+drwxrwxr-x 6 ybelanger ybelanger     4096 Nov  3 17:03 ..
+-rwxrwxr-x 1 ybelanger ybelanger 23198840 Nov  3 17:04 sr-B
+-rwxrwxr-x 1 ybelanger ybelanger 23198808 Nov  3 17:04 sr-B9
+-rwxrwxr-x 1 ybelanger ybelanger 23198664 Nov  3 17:04 sr-C
+-rwxrwxr-x 1 ybelanger ybelanger 23198656 Nov  3 17:04 sr-D
+-rwxrwxr-x 1 ybelanger ybelanger 23198840 Nov  3 17:04 sr-F
+crates/sr-engine/shaders/floors.wgsl restored
+assets/physics.json restored
+assets/reactions.json restored
+== candidate lives (Massive, to ending), 2026-11-03T17:04:44-05:00, 5 at once on the RTX 4090
+Command exited with non-zero status 124
+B wall 570.34 s
+B exit 124
+Command exited with non-zero status 124
+B9 wall 570.14 s
+B9 exit 124
+Command exited with non-zero status 6
+C wall 0.01 s
+C exit 6
+Command exited with non-zero status 6
+D wall 0.01 s
+D exit 6
+Command exited with non-zero status 124
+F wall 570.24 s
+F exit 124
+C build 0     Finished `release` profile [optimized] target(s) in 5.45s
+D build 0     Finished `release` profile [optimized] target(s) in 5.39s
+SR-HEADLESS DONE steps=2 sim_time=0.056459 until=none
+SR-HEADLESS DONE steps=2 sim_time=0.056459 until=none
+assets/calibration.json restored
+assets/physics.json restored
+assets/reactions.json restored
+== candidate lives round 2, 2026-11-03T17:15:16-05:00: C, D fresh; B from s_24000, B9 from s_27000 (--continue)
+C wall 542.03 s
+C exit 0
+{"detail":{"mass_sb":6610.335693498142},"kind":"sink_formed","object":1,"sim_time":16.73799088667147,"step":2474}
+{"detail":{"held_t":10.013804708141834,"hold_t":10.0,"mass_sb":6085.344843240455,"stage":"black_hole"},"kind":"ending","object":1,"sim_time":26.897966034011915,
+D wall 570.17 s
+D exit 124
+B_2 wall 329.50 s
+B_2 exit 0
+{"detail":{"mass_sb":6670.374170244671},"kind":"supernova","object":1,"sim_time":7.7680517949629575,"step":926}
+{"detail":{"held_t":398.4461416355334,"hold_t":395.54118094797457,"mass_sb":3121.0913473833352,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":414
+B9_2 wall 570.08 s
+B9_2 exit 124
+== candidate lives round 3, 2026-11-03T17:24:57-05:00: B9, D, F --continue from their last dumps
+from /tmp/r13/cB9_2/dumps/s_51000.bin /tmp/r13/cD/dumps/s_22000.bin /tmp/r13/cF/dumps/s_7750.bin
+B9_3 wall 206.76 s
+B9_3 exit 2
+{"detail":{"mass_sb":6670.365857754834},"kind":"core_collapse","object":1,"sim_time":7.695813137339428,"step":910}
+{"detail":{"mass_sb":6670.366133408621},"kind":"supernova","object":1,"sim_time":7.767547224415466,"step":926}
+D_2 wall 290.41 s
+D_2 exit 0
+{"detail":{"mass_sb":6670.345258337446},"kind":"supernova","object":1,"sim_time":7.770824468461797,"step":926}
+{"detail":{"held_t":399.2816933640279,"hold_t":399.17730397432535,"mass_sb":3344.7596121598035,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":418.191028051544,"step":41750}
+F_2 wall 350.13 s
+F_2 exit 0
+{"detail":{"mass_sb":6670.358011491597},"kind":"supernova","object":1,"sim_time":7.767760340357199,"step":926}
+{"detail":{"held_t":65.00181868392974,"hold_t":63.71313318046369,"mass_sb":3919.348620242905,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":79.13653762149625,"step":14394}
+### today
+step 1000 t 8.044 held 0 c (300,199) Sc 1020.0 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 4.45e-5 Ye_c 0.143 Xn_c 0.693 XFe_c 0.307 | core n 19 M 4322.8 Hth 5.2355e5 Habove 5.2329e5 Ecold 2.2673e6 at_floor 3 TKmax 2.180e9 | rem M 4347.4 Hth 5.2379e5 Ecold 2.2676e6 KE 3.4997e5 R90(r<=20) 2.00
+step 2000 t 12.840 held 0 c (303,192) Sc 214.4 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 1.61e-4 Ye_c 0.166 Xn_c 0.643 XFe_c 0.357 | core n 38 M 2385.6 Hth 1.9690e4 Habove 1.9543e4 Ecold 3.4072e5 at_floor 13 TKmax 4.165e6 | rem M 2838.9 Hth 3.6853e4 Ecold 3.4355e5 KE 6.0786e5 R90(r<=20) 12.65
+step 5000 t 34.183 held 0 c (301,189) Sc 123.4 Tc_sb 11.975 Tc_K 6.678e3 eth/cold_c 9.39e-2 Ye_c 0.168 Xn_c 0.638 XFe_c 0.362 | core n 39 M 1558.8 Hth 2.6620e4 Habove 2.6524e4 Ecold 1.2942e5 at_floor 0 TKmax 1.004e5 | rem M 2084.9 Hth 3.8699e4 Ecold 1.3282e5 KE 2.7242e5 R90(r<=20) 15.03
+step 10000 t 76.908 held 0 c (298,183) Sc 82.4 Tc_sb 0.229 Tc_K 5.899e1 eth/cold_c 2.57e-3 Ye_c 0.168 Xn_c 0.638 XFe_c 0.362 | core n 29 M 938.1 Hth 2.6496e3 Habove 2.5919e3 Ecold 5.8072e4 at_floor 7 TKmax 1.500e4 | rem M 1378.9 Hth 1.0840e4 Ecold 6.0706e4 KE 1.2247e5 R90(r<=20) 17.20
+step 20000 t 176.998 held 0 c (309,183) Sc 48.7 Tc_sb 0.800 Tc_K 2.539e2 eth/cold_c 1.45e-2 Ye_c 0.168 Xn_c 0.637 XFe_c 0.363 | core n 35 M 735.8 Hth 6.7452e3 Habove 6.6999e3 Ecold 2.9246e4 at_floor 4 TKmax 3.614e5 | rem M 862.8 Hth 7.6115e3 Ecold 2.8499e4 KE 5.0387e4 R90(r<=20) 18.11
+step 29000 t 277.547 held 0 c (299,179) Sc 45.6 Tc_sb 0.129 Tc_K 3.032e1 eth/cold_c 2.49e-3 Ye_c 0.169 Xn_c 0.637 XFe_c 0.363 | core n 21 M 475.4 Hth 2.6476e3 Habove 2.6184e3 Ecold 1.8428e4 at_floor 0 TKmax 4.227e4 | rem M 742.1 Hth 6.8427e3 Ecold 2.0215e4 KE 3.4498e4 R90(r<=20) 17.12
+step 29208 t 279.946 held 0 c (296,178) Sc 45.1 Tc_sb 12.604 Tc_K 8.638e3 eth/cold_c 2.45e-1 Ye_c 0.169 Xn_c 0.637 XFe_c 0.363 | core n 28 M 598.5 Hth 9.7369e3 Habove 9.7001e3 Ecold 2.2538e4 at_floor 0 TKmax 3.681e4 | rem M 998.1 Hth 1.5343e4 Ecold 2.4996e4 KE 5.0648e4 R90(r<=20) 16.40
+### B
+step 1000 t 8.056 held 0 c (300,199) Sc 866.8 Tc_sb 69.053 Tc_K 7.172e7 eth/cold_c 1.00e-1 Ye_c 0.147 Xn_c 0.683 XFe_c 0.317 | core n 22 M 4327.4 Hth 5.4588e5 Habove 5.4560e5 Ecold 1.9686e6 at_floor 0 TKmax 1.113e9 | rem M 4348.4 Hth 5.4672e5 Ecold 1.9689e6 KE 1.8119e5 R90(r<=20) 2.24
+step 2000 t 10.790 held 0 c (304,195) Sc 305.1 Tc_sb 27.324 Tc_K 4.244e5 eth/cold_c 1.00e-1 Ye_c 0.176 Xn_c 0.620 XFe_c 0.380 | core n 47 M 3601.0 Hth 1.1018e5 Habove 1.0995e5 Ecold 6.6617e5 at_floor 0 TKmax 6.546e6 | rem M 3800.5 Hth 1.1792e5 Ecold 6.6750e5 KE 1.2206e6 R90(r<=20) 5.83
+step 5000 t 31.208 held 0 c (307,193) Sc 108.6 Tc_sb 12.543 Tc_K 8.431e3 eth/cold_c 1.12e-1 Ye_c 0.176 Xn_c 0.620 XFe_c 0.380 | core n 37 M 1409.2 Hth 2.4948e4 Habove 2.4861e4 Ecold 1.0951e5 at_floor 0 TKmax 6.384e5 | rem M 2068.7 Hth 4.2896e4 Ecold 1.1480e5 KE 2.5024e5 R90(r<=20) 15.81
+step 10000 t 75.507 held 0 c (309,193) Sc 86.6 Tc_sb 14.016 Tc_K 1.474e4 eth/cold_c 1.53e-1 Ye_c 0.176 Xn_c 0.620 XFe_c 0.380 | core n 32 M 1074.0 Hth 2.2147e4 Habove 2.2080e4 Ecold 6.8423e4 at_floor 0 TKmax 1.817e5 | rem M 1462.1 Hth 2.9399e4 Ecold 7.1021e4 KE 1.2816e5 R90(r<=20) 17.69
+step 20000 t 174.660 held 0 c (309,192) Sc 70.4 Tc_sb 7.608 Tc_K 3.517e3 eth/cold_c 1.00e-1 Ye_c 0.176 Xn_c 0.620 XFe_c 0.380 | core n 29 M 812.4 Hth 7.8679e3 Habove 7.8173e3 Ecold 4.3184e4 at_floor 0 TKmax 7.360e3 | rem M 1147.6 Hth 1.2696e4 Ecold 4.5150e4 KE 8.3637e4 R90(r<=20) 15.13
+step 29000 t 271.558 held 0 c (310,204) Sc 52.9 Tc_sb 5.864 Tc_K 2.596e3 eth/cold_c 1.00e-1 Ye_c 0.176 Xn_c 0.620 XFe_c 0.380 | core n 22 M 578.8 Hth 4.7275e3 Habove 4.6914e3 Ecold 2.5907e4 at_floor 0 TKmax 4.855e3 | rem M 892.5 Hth 8.7259e3 Ecold 2.8179e4 KE 5.1365e4 R90(r<=20) 17.03
+step 40000 t 398.786 held 0 c (315,209) Sc 48.0 Tc_sb 7.043 Tc_K 3.214e3 eth/cold_c 1.31e-1 Ye_c 0.176 Xn_c 0.620 XFe_c 0.380 | core n 25 M 559.2 Hth 5.8393e3 Habove 5.8045e3 Ecold 2.2177e4 at_floor 0 TKmax 5.519e3 | rem M 783.3 Hth 7.7863e3 Ecold 2.3655e4 KE 3.7752e4 R90(r<=20) 15.81
+step 41224 t 414.859 held 0 c (316,209) Sc 33.0 Tc_sb 3.798 Tc_K 1.564e3 eth/cold_c 1.00e-1 Ye_c 0.176 Xn_c 0.620 XFe_c 0.380 | core n 17 M 336.2 Hth 1.6147e3 Habove 1.5938e3 Ecold 1.0878e4 at_floor 0 TKmax 2.707e3 | rem M 646.0 Hth 4.4205e3 Ecold 1.2733e4 KE 2.3559e4 R90(r<=20) 17.20
+### B9
+step 1000 t 8.065 held 0 c (300,199) Sc 1031.4 Tc_sb 80.691 Tc_K 2.051e8 eth/cold_c 1.07e-1 Ye_c 0.164 Xn_c 0.648 XFe_c 0.352 | core n 19 M 4318.5 Hth 8.7833e5 Habove 8.7806e5 Ecold 2.2949e6 at_floor 0 TKmax 3.832e9 | rem M 4346.2 Hth 8.7955e5 Ecold 2.2952e6 KE 4.3605e5 R90(r<=20) 2.00
+step 2000 t 12.304 held 0 c (298,203) Sc 228.4 Tc_sb 97.900 Tc_K 4.932e8 eth/cold_c 4.56e-1 Ye_c 0.174 Xn_c 0.625 XFe_c 0.375 | core n 47 M 2896.0 Hth 3.2118e5 Habove 3.2100e5 Ecold 4.0842e5 at_floor 0 TKmax 6.127e8 | rem M 3224.7 Hth 3.4250e5 Ecold 4.1052e5 KE 4.6603e5 R90(r<=20) 10.05
+step 5000 t 37.423 held 0 c (289,204) Sc 10.2 Tc_sb 78.378 Tc_K 1.796e8 eth/cold_c 6.21e0 Ye_c 0.174 Xn_c 0.625 XFe_c 0.375 | core n 6 M 60.6 Hth 5.8947e3 Habove 5.8909e3 Ecold 9.4031e2 at_floor 0 TKmax 1.796e8 | rem M 1246.6 Hth 6.1645e4 Ecold 1.4569e4 KE 3.2718e3 R90(r<=20) 11.18
+step 10000 t 105.108 held 0 c (280,202) Sc 9.7 Tc_sb 43.246 Tc_K 4.278e6 eth/cold_c 3.61e0 Ye_c 0.174 Xn_c 0.625 XFe_c 0.375 | core n 0 M 0.0 Hth 0.0000e0 Habove 0.0000e0 Ecold 0.0000e0 at_floor 0 TKmax 0.000e0 | rem M 887.2 Hth 3.8326e4 Ecold 9.2783e3 KE 1.0110e2 R90(r<=20) 9.06
+step 20000 t 261.267 held 0 c (279,200) Sc 9.5 Tc_sb 34.613 Tc_K 1.395e6 eth/cold_c 2.95e0 Ye_c 0.174 Xn_c 0.625 XFe_c 0.375 | core n 0 M 0.0 Hth 0.0000e0 Habove 0.0000e0 Ecold 0.0000e0 at_floor 0 TKmax 0.000e0 | rem M 550.0 Hth 1.9128e4 Ecold 5.2688e3 KE 2.8410e1 R90(r<=20) 7.28
+step 29000 t 413.140 held 0 c (277,201) Sc 10.1 Tc_sb 78.384 Tc_K 1.797e8 eth/cold_c 6.30e0 Ye_c 0.174 Xn_c 0.625 XFe_c 0.375 | core n 3 M 30.1 Hth 2.9256e3 Habove 2.9238e3 Ecold 4.6336e2 at_floor 0 TKmax 1.797e8 | rem M 426.3 Hth 1.4921e4 Ecold 4.0036e3 KE 1.0165e2 R90(r<=20) 6.32
+step 40000 t 608.973 held 0 c (278,201) Sc 10.1 Tc_sb 78.387 Tc_K 1.798e8 eth/cold_c 6.26e0 Ye_c 0.174 Xn_c 0.625 XFe_c 0.375 | core n 1 M 10.1 Hth 9.8436e2 Habove 9.8373e2 Ecold 1.5729e2 at_floor 0 TKmax 1.798e8 | rem M 356.6 Hth 9.9330e3 Ecold 3.3592e3 KE 2.2571e1 R90(r<=20) 5.10
+step 60000 t 1020.189 held 0 c (279,202) Sc 9.6 Tc_sb 16.516 Tc_K 3.368e4 eth/cold_c 1.38e0 Ye_c 0.174 Xn_c 0.625 XFe_c 0.375 | core n 0 M 0.0 Hth 0.0000e0 Habove 0.0000e0 Ecold 0.0000e0 at_floor 0 TKmax 0.000e0 | rem M 223.2 Hth 3.5099e3 Ecold 1.8754e3 KE 1.0715e2 R90(r<=20) 5.00
+### C
+step 1000 t 8.406 held 0 c (335,186) Sc 14.6 Tc_sb 7.534 Tc_K 3.477e3 eth/cold_c 2.96e-1 Ye_c 0.464 Xn_c 0.000 XFe_c 1.000 | core n 112 M 1339.2 Hth 2.0702e4 Habove 2.0563e4 Ecold 5.9790e4 at_floor 0 TKmax 3.615e3 | rem M 512.0 Hth 6.7515e3 Ecold 1.4265e4 KE 2.6076e3 R90(r<=20) 17.20
+step 2000 t 13.967 held 0 c (311,188) Sc 143.4 Tc_sb 7.908 Tc_K 3.679e3 eth/cold_c 4.50e-2 Ye_c 0.464 Xn_c 0.000 XFe_c 1.000 | core n 102 M 5792.3 Hth 1.2590e5 Habove 1.2530e5 Ecold 1.3444e6 at_floor 3 TKmax 8.771e4 | rem M 1519.1 Hth 3.2822e4 Ecold 3.3849e5 KE 5.2465e4 R90(r<=20) 2.83
+step 4846 t 26.898 held 0 c (35,230) Sc 0.0 Tc_sb 0.612 Tc_K 1.857e2 eth/cold_c 1.15e1 Ye_c 0.464 Xn_c 0.000 XFe_c 1.000 | core n 0 M 0.0 Hth 0.0000e0 Habove 0.0000e0 Ecold 0.0000e0 at_floor 0 TKmax 0.000e0 | rem M 0.0 Hth 0.0000e0 Ecold 0.0000e0 KE 0.0000e0 R90(r<=20) 18.11
+### D
+step 1000 t 8.121 held 0 c (300,199) Sc 426.1 Tc_sb 139.461 Tc_K 1.327e9 eth/cold_c 3.96e-1 Ye_c 0.373 Xn_c 0.197 XFe_c 0.803 | core n 30 M 4331.3 Hth 5.4326e5 Habove 5.4284e5 Ecold 2.1449e6 at_floor 0 TKmax 1.327e9 | rem M 4350.3 Hth 5.4398e5 Ecold 2.1456e6 KE 7.1457e4 R90(r<=20) 2.83
+step 2000 t 12.583 held 0 c (295,206) Sc 307.0 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 1.20e-4 Ye_c 0.186 Xn_c 0.600 XFe_c 0.400 | core n 40 M 3021.2 Hth 2.8670e4 Habove 2.8479e4 Ecold 5.4297e5 at_floor 11 TKmax 3.153e6 | rem M 3408.7 Hth 4.3782e4 Ecold 5.4519e5 KE 9.1371e5 R90(r<=20) 11.18
+step 5000 t 33.490 held 0 c (294,211) Sc 99.8 Tc_sb 23.076 Tc_K 1.813e5 eth/cold_c 2.26e-1 Ye_c 0.186 Xn_c 0.600 XFe_c 0.400 | core n 44 M 1521.0 Hth 4.0787e4 Habove 4.0691e4 Ecold 1.0852e5 at_floor 1 TKmax 1.660e6 | rem M 2089.7 Hth 5.6943e4 Ecold 1.1269e5 KE 2.4104e5 R90(r<=20) 16.28
+step 10000 t 76.373 held 0 c (294,212) Sc 88.3 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 3.44e-4 Ye_c 0.186 Xn_c 0.600 XFe_c 0.400 | core n 28 M 1019.4 Hth 1.2386e3 Habove 1.1743e3 Ecold 7.0362e4 at_floor 17 TKmax 4.513e3 | rem M 1524.8 Hth 1.0811e4 Ecold 7.3293e4 KE 1.5101e5 R90(r<=20) 16.12
+step 20000 t 175.225 held 0 c (295,212) Sc 52.1 Tc_sb 0.934 Tc_K 3.042e2 eth/cold_c 1.64e-2 Ye_c 0.186 Xn_c 0.600 XFe_c 0.400 | core n 24 M 616.7 Hth 3.8435e3 Habove 3.8046e3 Ecold 2.7487e4 at_floor 0 TKmax 3.172e4 | rem M 918.3 Hth 9.4183e3 Ecold 2.9827e4 KE 5.6256e4 R90(r<=20) 17.46
+step 29000 t 271.763 held 0 c (296,216) Sc 56.0 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 5.19e-4 Ye_c 0.186 Xn_c 0.600 XFe_c 0.400 | core n 27 M 682.2 Hth 1.9531e3 Habove 1.9100e3 Ecold 3.1618e4 at_floor 7 TKmax 4.752e3 | rem M 971.4 Hth 6.6975e3 Ecold 3.3315e4 KE 6.4028e4 R90(r<=20) 15.52
+step 40000 t 396.374 held 0 c (289,213) Sc 49.6 Tc_sb 6.586 Tc_K 2.972e3 eth/cold_c 1.21e-1 Ye_c 0.186 Xn_c 0.600 XFe_c 0.400 | core n 25 M 615.0 Hth 6.4685e3 Habove 6.4297e3 Ecold 2.6646e4 at_floor 0 TKmax 1.525e4 | rem M 861.0 Hth 9.1130e3 Ecold 2.8454e4 KE 4.8250e4 R90(r<=20) 16.16
+step 41750 t 418.191 held 0 c (293,215) Sc 34.5 Tc_sb 0.669 Tc_K 2.063e2 eth/cold_c 1.72e-2 Ye_c 0.186 Xn_c 0.600 XFe_c 0.400 | core n 21 M 418.9 Hth 6.7512e2 Habove 6.4870e2 Ecold 1.4243e4 at_floor 8 TKmax 3.060e3 | rem M 631.4 Hth 2.8061e3 Ecold 1.5670e4 KE 2.8801e4 R90(r<=20) 17.49
+### F
+step 1000 t 8.116 held 4 c (299,199) Sc 783.1 Tc_sb 0.432 Tc_K 1.238e2 eth/cold_c 7.76e-4 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 16 M 4348.6 Hth 5.7054e4 Habove 5.6722e4 Ecold 2.5752e6 at_floor 3 TKmax 1.033e7 | rem M 4348.6 Hth 5.7054e4 Ecold 2.5752e6 KE 1.7845e5 R90(r<=20) 2.24
+step 2000 t 12.538 held 4 c (299,199) Sc 783.1 Tc_sb 27.153 Tc_K 4.111e5 eth/cold_c 4.88e-2 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 24 M 4366.0 Hth 1.5103e5 Habove 1.5069e5 Ecold 2.4750e6 at_floor 5 TKmax 8.390e6 | rem M 4408.0 Hth 1.5103e5 Ecold 2.4760e6 KE 5.5776e5 R90(r<=20) 2.24
+step 5000 t 27.787 held 4 c (299,199) Sc 783.1 Tc_sb 61.184 Tc_K 2.984e7 eth/cold_c 1.10e-1 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 6 M 3036.3 Hth 1.9614e5 Habove 1.9594e5 Ecold 2.0991e6 at_floor 0 TKmax 2.984e7 | rem M 3096.6 Hth 1.9678e5 Ecold 2.1001e6 KE 4.5823e4 R90(r<=20) 11.00
+step 10000 t 54.661 held 4 c (299,199) Sc 783.1 Tc_sb 44.738 Tc_K 5.075e6 eth/cold_c 8.03e-2 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 24 M 3300.4 Hth 1.6425e5 Habove 1.6402e5 Ecold 2.1124e6 at_floor 0 TKmax 5.075e6 | rem M 3025.4 Hth 1.6101e5 Ecold 2.0974e6 KE 5.4327e3 R90(r<=20) 15.30
+step 9750 t 53.267 held 4 c (299,199) Sc 783.1 Tc_sb 45.389 Tc_K 5.458e6 eth/cold_c 8.15e-2 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 26 M 3319.1 Hth 1.6596e5 Habove 1.6573e5 Ecold 2.1131e6 at_floor 0 TKmax 5.458e6 | rem M 3031.0 Hth 1.6283e5 Ecold 2.0976e6 KE 8.3056e3 R90(r<=20) 1.41
+== F on M0-D152's Repro (20 M0 from s_1362, 1,700 steps), 2026-11-03T17:32:24-05:00
+-rw-rw-r-- 1 ybelanger ybelanger 16320389 Nov  3 15:03 /tmp/d71f/lives/keep/m_bh
+SR-HEADLESS DONE steps=1700 sim_time=16.581622 until=none
+F repro wall 74.79 s
+{"detail":{"mass_sb":66521.2905399371},"kind":"core_collapse","object":1,"sim_time":10.435956890461966,"step":1700}
+floor 153826060.34414673 nuclear -142337735.91863704
+1 61874.5 neutron_star

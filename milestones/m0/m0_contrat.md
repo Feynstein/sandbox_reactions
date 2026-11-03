@@ -852,6 +852,40 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     with no hold drifts 1.4 × 10⁻² and 2.2 × 10⁻⁵ of Σm|u| on the two disks, the hold 1.2 × 10⁻² (M 900), and at M 1,800
     every gas cell is held or vacuum (Σm|u| = 0, drift 1.5 × 10⁻⁸) — the lead at M0-D71, 2026-11-02: «Walls only, inflow
     later (Recommended)», «Booking exact, disks reported (Recommended)».
+  - [M0-D149] §1.4.2 [M0-TG2]'s and §2.3.4 [M0-TG2]'s «its Σg·Δt booked `held`» and §1.3.2's P2 row · **a held cell's
+    spared Σg·Δt reads the pull of everything but the held cells — φ_pull = K ∗ Σ_src with the held cells emptied, plus
+    the sinks' §1.4.3, g_pull = −∇φ_pull as §1.4.2's g — which P2 solves beside φ on every step whose mask holds a cell;
+    the core's own pull, which cancels over it, is never booked; the free cells' g, the held walls and every other
+    `held` term as they were** — amended in place, each passage tagged [M0-D149] · measured by M0-D149 on
+    laserax-ai-server's RTX 4090 (2026-11-03; tasks/M0-D149.md): the GPU's `held` on G-REST's M 900 disk, 2.0 × 10⁻³ of
+    Σm|u| over 1,000 steps against the twin's 10⁻¹¹, was neither the f32 slots nor their cadence (read every step it grew
+    to 2.8 × 10⁻³) but P2's f32 field: a step's Σ Δt·Σ·g over the grid nets ≈ 1.5 × 10⁻⁴ (5 × 10⁻⁸ of its Σ|·|, the
+    twin's g 10⁻¹³ on the same state), and the held core carries it all, its spared impulse being its Σg·Δt (2.0 × 10³ a
+    step, its walls' 21); from the field of the free gas the core's pull reads (6.4, 2.8) × 10⁻⁶ a step against the
+    twin's (5.9, 2.3) × 10⁻⁶ — ≈ 10⁻⁵ of Σm|u| over 1,000 steps, under the grid's own 2 × 10⁻⁵ — and 0 at M 1,800,
+    where every gas cell is held; P2's cost is ≈ 1.1 of 10.7 ms a step on the whole world (reports/step_cost.md, Quadro
+    RTX 4000) — the lead at M0-D149, 2026-11-03: «Free-gas field (Recommended)».
+  - [M0-D151] §0.5 [M0-D71]'s «the disks' grid + held momentum printed, not graded», for G-REST's M 900 SCF disk through
+    `headless` (tests/gpu/ledger.rs) · **its `held` over 1,000 steps graded at or under the momentum invariant's drift
+    without `held` (the grid's own source-term error), both relative to Σm|u|; the invariant's drifts and the GPU disks'
+    grid + held stay printed** · measured by M0-D151 on laserax-ai-server's RTX 4090 (2026-11-03) with g_pull built:
+    held 6.6 × 10⁻⁶ against 2.0 × 10⁻⁵ (P2's whole field: 2.0 × 10⁻³) — the lead at M0-D151, 2026-11-03: «Grade it
+    (Recommended)».
+  - [M0-D71f] §0.5 [M0-TG2]'s items 1–2 («the forms the build starts from, ruled final on the GPU lives' measurement at
+    M0-D71f»), §2.7 [M0-TG2]'s hold test («its N_Fe rate is 0: X_Fe = 0 or Y_eΣ ≤ Σ_N … the form measured next») and release
+    («or its N_Fe rate is > 0»), §2.3.4 [M0-TG2]'s one-way inflow and §1.4.2 [M0-TG2]'s inflow face · **item 1: a cell holding
+    any iron is never held — the test reads X_Fe = 0 and a held cell is released once X_Fe > 0; item 2: walls only, final —
+    every face between a held and a free cell is §2.3.4's reflecting wall, nothing crossing it either way (§0.5 [M0-D71]'s
+    build), the one-way inflow retired** — amended in place, each passage tagged [M0-D71f], and G-REST struck from §5.5 (its
+    GPU disks measured by M0-D71c, its window and crop here); item 1 built by M0-D152 ·
+    measured by M0-D71f on laserax-ai-server's RTX 4090 (2026-11-03; reports/held_core.md): the gate form holds iron up to
+    Y_eΣ = Σ_N and a held cell never compresses — the 4,572 life's core is 19 held iron cells (3,617, X_Fe 0.84) frozen at the
+    gate from step ≈ 863, its ending neutron_star kept; the 20 M₀ life holds a dozen iron clumps of 2,979–3,731 (277 cells,
+    42,818 of 67,020 by step 3,159) and forms no sink by step 8,807, where from the same step-1,362 state the tree before
+    M0-D71's build forms one at step 2,600 (5,165.7, 1.06 m_tov_sb, a free ring clump) and shows black_hole; with the hold no
+    core reaches m_tov_sb, and before it the sink needs no fallback onto a held core; the window's floor 4.56 % of radiated
+    (1.39 % and 51.6 % by halves), the crop's 3.85 % — the lead at M0-D71f, 2026-11-03: «Hold no iron (Recommended)», «Walls
+    only, final (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -915,7 +949,7 @@ clock, the rung, the frame or a label.
 |---|---|
 | P0 edits | queued player edits (§1.12) applied at the step boundary; the box re-fit if an edit lands outside it; ledger entries |
 | P1 Δt | Δt_n is the reduction P9 made at the end of step n−1 (step 0 reduces the initial state first) |
-| P2 gravity | φ = K ∗ Σ_src over the box (§1.4.2), re-solved on the cadence of §1.4.4; sinks' potentials added (§1.4.3); g = −∇φ |
+| P2 gravity | φ = K ∗ Σ_src over the box (§1.4.2), re-solved on the cadence of §1.4.4; sinks' potentials added (§1.4.3); g = −∇φ; [M0-D149] while the mask holds a cell, φ_pull and g_pull of all but the held cells beside them (§1.4.2) |
 | P3 sinks | formation (at most one per step) and accretion, then the sinks' kick-drift (§2.6) |
 | P4 hydro | MUSCL-Hancock + HLL (§2.3) with the gravity source, the radiation force from the previous step's flux (§2.4.4), the edge ghosts (§2.8); escaped counters; [M0-TG2] a held cell (the mask the last P8 wrote, §2.7) left as it is behind reflecting walls, the momentum it is spared booked `held` (§2.3.4) |
 | P5 heat | flux-limited diffusion stepped by RKL2 with s stages (§2.4); radiated energy counted; the flux field F kept for step n+1's P4 |
@@ -954,10 +988,11 @@ exact potential at a unit square's centre from its own uniform mass, ∫∫_{[�
 error). Computed by a zero-padded FFT convolution over the box (Hockney–Eastwood, SM-E8), radix-2
 sizes (§1.3.3). g = −∇φ by central differences. P4 adds the momentum source Σg and the energy source
 Σu·g, time-centred on the predictor's half-step velocity. [M0-TG2] A held cell (§2.3.4, §2.7) takes neither source,
-its Σg·Δt booked `held`, and no gravitational work is done across a face between a held and a free cell: neither cell
-takes §0.5 [M0-D64]'s ½Δt·p·Δφ share nor [M0-D68]'s D there, and the free cell keeps its Σg kick. A face whose one-way
-inflow passes mass into a held cell (§2.3.4) does the work as any face does, the held cell's impulse booked `held`
-and its kinetic part left in E.
+its Σg·Δt booked `held` — [M0-D149] g there being g_pull = −∇φ_pull, φ_pull = K ∗ Σ_src with the held cells emptied plus
+the sinks' §1.4.3, which P2 solves beside φ while the mask holds a cell, so the core's own pull, which cancels over it,
+is never booked —, and no gravitational work is done across a face between a held and a free cell: neither cell
+takes §0.5 [M0-D64]'s ½Δt·p·Δφ share nor [M0-D68]'s D there, and the free cell keeps its Σg kick. [M0-D71f] No face
+passes mass into a held cell (§2.3.4's walls, final), so no held face does work.
 
 **1.4.3 Sinks** add −G M_s / √(r² + r_acc²) to φ (r from the sink's position, §2.6).
 
@@ -1343,18 +1378,15 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   of §2.4.4.
   [M0-TG2] **Held cells** (§2.7's hold; M0-R11's H, reports/unresolved_remnant.md): P4 leaves a held cell as it is —
   no flux difference, no gravity source, no radiation force — and books `held` (§2.9) the momentum its flux
-  differences and Σg·Δt would have given it. A face between two held cells, or between a held cell and the world's
+  differences and Σg·Δt would have given it ([M0-D149] g the pull of all but the held cells, §1.4.2 [M0-D149]). A face between two held cells, or between a held cell and the world's
   edge, carries nothing (nothing escapes from a held cell). A face between a held and a free cell is a reflecting
   wall: HLL between the free side's predicted face state and its mirror (the normal velocity negated), the mass,
   energy and species fluxes set to exactly 0, so the normal-momentum flux is HLL's Π + Σu_n² + S·Σu_n — never §2.8's
   bounce flux, Π alone, under which gravity drove a free cell into the wall without bound (M0-R11). The free cell
   keeps its own slopes (a mirrored stencil zeroed its pressure slope and unbalanced gravity, M0-R11) and its Σg kick;
-  no work is done across the wall (§1.4.2). One-way inflow (report item 2; the form the build starts from, ruled
-  final on the GPU lives' measurement at M0-D71f): where the face's ordinary HLL flux — both cells' predicted faces —
-  carries mass into the held cell, the face takes that flux instead of the wall's: the held cell gains its mass,
-  energy and species, its momentum stays 0, and the momentum that entered is booked `held` with its kinetic energy
-  left in E; outflow never passes. Fallback can so take a held proto-neutron star past m_tov_sb (§0.5 [M0-R6]); a
-  held core's ∇·u is 0, so §2.6's converging test passes there only once the core is released (read at M0-D71f).
+  no work is done across the wall (§1.4.2). [M0-D71f] Walls only, final (report item 2): nothing crosses a held wall
+  either way — no inflow; a held core's ∇·u is 0, and since no iron is held (§2.7 [M0-D71f]) a collapsing core is free,
+  so §2.6's sinks form from free gas (the 20 M₀ life's from a free ring clump at 1.06 m_tov_sb, M0-D71f).
   The hold's limits (report items 3–5): a held cell never moves, so a kicked or orbiting remnant stays put while
   held, the forces on it booked `held`; a resolved cold core at Σ ≥ σ_hold is held too (G-CORE (d)'s resolved disk
   peaks at Σ 0.150, scenes/cold_co_disk.json, so it holds none); held cells still set Δt (§2.3.5) by their cold
@@ -1466,10 +1498,9 @@ fractions; every energy P8 changes — the vacuum reset's E_floor − E as well 
 
 [M0-TG2] **The hold** — P8's last act, after the floors and the renormalisation, writes the mask the next step's P4
 reads (§2.3.4). A cell is held when Σ ≥ σ_hold and ε_th ≤ η_hold · ε_cold — ε_th as the temperature floor leaves it,
-ε_cold = (u_e + u_n)/Σ of the renormalised fractions (§2.3.2) — and its N_Fe rate is 0: X_Fe = 0 or Y_eΣ ≤ Σ_N, §1.6.2's
-gate (report item 1; the form the build starts from, ruled final on the GPU lives' measurement at M0-D71f — if a held
-core below the gate never reaches it, a held set released once its mass passes its ceiling is the form measured
-next). A held cell is released when ε_th > 2η_hold · ε_cold, Σ < ½σ_hold or its N_Fe rate is > 0. A newly held cell's
+ε_cold = (u_e + u_n)/Σ of the renormalised fractions (§2.3.2) — and it holds no iron, X_Fe = 0 ([M0-D71f], report item
+1, final: a held iron cell below N_Fe's gate never compressed to it, so cores froze unneutronized and no sink formed). A
+held cell is released when ε_th > 2η_hold · ε_cold, Σ < ½σ_hold or X_Fe > 0 [M0-D71f]. A newly held cell's
 momentum is set to 0 — the test reads it before — its kinetic energy left in E, where it becomes heat, and that
 momentum is booked `held` (§2.9). Before step 0 the mask is the rule's on the initial state, held where the test
 passes, its zeroed momenta booked; a dump's mask is read back (§2.12.3); Clear world empties it, and P0's other edits
@@ -2104,7 +2135,9 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   Sun-like life's step 450,000 — the box (248, 144, 104, 104) of build/v9-sun-life/dumps/s_450000.bin in a 128 × 128
   leave world, every pass — as scenes/remnant_window.bin, on the GPU; the whole 600 × 400 window is read once, by
   M0-D71f. *Measured* on the twin by M0-R11 (a scratch build, 2026-10-28: held u = 0, floor_added 2.1 and 0, KE
-  155 → 154 and 0 → 0; the crop 3.8 % — today's tree 7.2 × 10⁴, 2.9 × 10³ and 71.2 %); the GPU *UNVERIFIED*. Scope
+  155 → 154 and 0 → 0; the crop 3.8 % — today's tree 7.2 × 10⁴, 2.9 × 10³ and 71.2 %); on the GPU [M0-D71f] (RTX 4090,
+  2026-11-03): the disks as M0-D71c read them, the crop 3.85 % (1.24 % and 45.95 % by halves), the whole window 4.56 %
+  (1.39 % and 51.6 %; reports/held_core.md). Scope
   `held_core`. Plant `held-wall-pressure-only`: a held wall's flux is §2.8's bounce flux, Π alone (the M 900 disk ran
   to KE 5 × 10⁶ on it, M0-R11).
 - **G-CONS · conservation.** A whole Sun-like life (bounce) and a supernova (leave; the Massive
@@ -2253,7 +2286,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   set to "ready"; plant `web-preset-not-dropped` [M0-D144]: the URL's preset armed, never dropped, srState still "ready".
 
 ### 5.5 UNVERIFIED — the satisfiability register
-G-VIR, G-JEANS, G-CONS (energy), G-THERMO, G-REF, G-REST (the GPU's disks and window [M0-TG2]), G-SQUEEZE, G-END, G-STAGES, G-TOUCH,
+G-VIR, G-JEANS, G-CONS (energy), G-THERMO, G-REF, G-SQUEEZE, G-END, G-STAGES, G-TOUCH,
 G-FIT, G-FPS, G-TOP (their controller checks; the frame times and the life's wall time are reported,
 never graded, and G-CAD is not built in M0 — [M0-TJ2]), G-DESK, G-WEB rest on runs not yet made, and on the model risks behind
 them: a red giant forming at all in the sheet; shell ejection (S1's trigger); the explosion (S2's

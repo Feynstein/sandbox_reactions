@@ -6,6 +6,11 @@
 //! default binding size (128 MiB) holds at most eight 2048 × 2048 planes, and three buffers leave five of a stage's
 //! eight storage slots (TW-E15, §6.2.2) to the passes. Upload and readback go through the canonical form only.
 //!
+//! Beside the planes, the hold's mask (§2.7 [M0-TG2]): one word per cell, 1 where the cell is held, written by P8 and
+//! read by the next step's P4. It is an `r32uint` texture, not a buffer: P4's `hydro_update` already binds the eight
+//! storage buffers a stage may (§2.2), and a texture binds outside that limit — P8 as a read-write storage texture, P0's
+//! Clear as a write-only one, P4 as a plain `texture_2d<u32>` read by `textureLoad`.
+//!
 //! Beside the state, and not part of it (§2.2's last paragraph): the per-cell side fields φ, F and S_ν
 //! ([`SideFields`]), and the booking layout ([`Booking`]) every pass adds its §2.9 ledger terms and §1.9.1 frame
 //! accumulators into — f32 per slot, read back and summed in f64 in a fixed order by [`book_totals`].
@@ -120,6 +125,9 @@ pub struct State {
     world: WorldConfig,
     groups: [wgpu::Buffer; 3],
     dims: wgpu::Buffer,
+    /// The hold's mask, and the view every pass binds it through.
+    held: wgpu::Texture,
+    held_view: wgpu::TextureView,
     /// How many times [`State::upload`] wrote the state: P5 reads it to forget the last step's rate (§0.5 [M0-D85]).
     uploads: Arc<AtomicU64>,
 }
@@ -149,7 +157,21 @@ impl State {
             dims.get_mapped_range_mut(..).expect("mapped at creation").copy_from_slice(&bytes);
         }
         dims.unmap();
-        Ok(State { world, groups, dims, uploads: Arc::default() })
+        let held = device.create_texture(&wgpu::TextureDescriptor {
+            label: Some("state.held"),
+            size: wgpu::Extent3d { width: world.width, height: world.height, depth_or_array_layers: 1 },
+            mip_level_count: 1,
+            sample_count: 1,
+            dimension: wgpu::TextureDimension::D2,
+            format: wgpu::TextureFormat::R32Uint,
+            usage: wgpu::TextureUsages::STORAGE_BINDING
+                | wgpu::TextureUsages::TEXTURE_BINDING
+                | wgpu::TextureUsages::COPY_DST
+                | wgpu::TextureUsages::COPY_SRC,
+            view_formats: &[],
+        });
+        let held_view = held.create_view(&wgpu::TextureViewDescriptor::default());
+        Ok(State { world, groups, dims, held, held_view, uploads: Arc::default() })
     }
 
     pub fn world(&self) -> WorldConfig {
@@ -163,6 +185,64 @@ impl State {
 
     pub fn dims(&self) -> &wgpu::Buffer {
         &self.dims
+    }
+
+    /// The hold's mask (§2.7 [M0-TG2]): an `r32uint` texture of the world's size, 1 where a cell is held, zeroed at
+    /// creation.
+    pub fn held(&self) -> &wgpu::TextureView {
+        &self.held_view
+    }
+
+    /// Writes the hold's mask, one word per cell, row-major (a dump's mask read back, §2.12.3; a test's).
+    pub fn upload_held(&self, queue: &wgpu::Queue, mask: &[u32]) -> Result<(), StateError> {
+        let cells = self.world.cells();
+        if mask.len() != cells {
+            return Err(StateError::PlanesLength { expected: cells, got: mask.len() });
+        }
+        let bytes: Vec<u8> = mask.iter().flat_map(|v| v.to_le_bytes()).collect();
+        queue.write_texture(
+            self.held.as_image_copy(),
+            &bytes,
+            wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(self.world.width * 4), rows_per_image: None },
+            self.held.size(),
+        );
+        Ok(())
+    }
+
+    /// Reads the hold's mask back, one word per cell, row-major, after every submitted step. Blocks on the device:
+    /// native and headless only (§6.3).
+    pub fn read_held(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> Vec<u32> {
+        let (w, h) = (self.world.width as usize, self.world.height as usize);
+        // A texture copy's rows are 256-byte aligned.
+        let row = (w * 4).next_multiple_of(wgpu::COPY_BYTES_PER_ROW_ALIGNMENT as usize);
+        let staging = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("state.held.readback"),
+            size: (row * h) as u64,
+            usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+        });
+        let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("state.held.readback") });
+        encoder.copy_texture_to_buffer(
+            self.held.as_image_copy(),
+            wgpu::TexelCopyBufferInfo {
+                buffer: &staging,
+                layout: wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(row as u32), rows_per_image: None },
+            },
+            self.held.size(),
+        );
+        queue.submit([encoder.finish()]);
+        let (tx, rx) = std::sync::mpsc::channel();
+        staging.map_async(wgpu::MapMode::Read, .., move |r| {
+            let _ = tx.send(r);
+        });
+        device.poll(wgpu::PollType::wait_indefinitely()).unwrap_or_else(|e| panic!("state.held.readback: device lost: {e}"));
+        rx.recv().expect("map callback dropped").unwrap_or_else(|e| panic!("state.held.readback: map failed: {e}"));
+        let mask = {
+            let view = staging.get_mapped_range(..).expect("mapped for reading");
+            view.chunks(row).flat_map(|r| r[..w * 4].as_chunks::<4>().0.iter().map(|b| u32::from_le_bytes(*b))).collect()
+        };
+        staging.unmap();
+        mask
     }
 
     /// Writes the whole state from its canonical form: 14 row-major planes in §2.2's order.
@@ -442,8 +522,9 @@ const fn accumulator(name: &'static str, writer: Pass) -> Term {
 /// Every §2.9 booked term and §1.9.1 frame accumulator, with its writer, in booking order. Masses, energies and
 /// momenta in sandbox units (§2.1) per slot; energies added are signed (floor_added, tools, nuclear). The ledger's
 /// state-derived terms (grid mass, kinetic, thermal, cold, W, the sinks) come from the state and the block summary,
-/// not from here; nuclear_released is the sum of the seven nuclear groups.
-pub const TERMS: [Term; 37] = [
+/// not from here; nuclear_released is the sum of the seven nuclear groups. A term added later is appended at the end, so
+/// a record of the shorter list reads as this one with the new terms 0 (§2.9).
+pub const TERMS: [Term; 41] = [
     // P0 edits (§1.12): mass entered or left by the tools, and the tools' net energy.
     term("mass.painted", Pass::Edits),
     term("mass.erased", Pass::Edits),
@@ -488,18 +569,25 @@ pub const TERMS: [Term; 37] = [
     // P8 floors (§2.7, §2.3.3): mass reset to vacuum, and the energy the floors add (signed).
     term("mass.vacuum_reset", Pass::Floors),
     term("energy.floor_added", Pass::Floors),
+    // P8's hold (§2.7 [M0-TG2]): the momentum a newly held cell had when it was zeroed (`momentum.held`, §2.9).
+    term("held.mom_x", Pass::Floors),
+    term("held.mom_y", Pass::Floors),
+    // P4's held cells (§2.3.4 [M0-TG2]): the momentum a held cell is spared — its flux differences and Σg·Δt — booked by
+    // `hydro_commit` (`momentum.held`, §2.9).
+    term("held.spared.mom_x", Pass::Hydro),
+    term("held.spared.mom_y", Pass::Hydro),
 ];
 pub const N_TERMS: usize = TERMS.len();
 
 /// The booking buffers: buffer `g` holds the planes of `TERMS[BOOK_GROUPS[g].terms]`, in order, each plane
-/// `domain.slots(world)` f32. One writer pass per buffer, so a pass binds only its own (P0 binds two).
+/// `domain.slots(world)` f32. One writer pass per buffer, so a pass binds only its own (P0 and P4 bind two).
 pub struct BookGroup {
     pub name: &'static str,
     pub terms: Range<usize>,
     pub domain: Domain,
 }
 
-pub const BOOK_GROUPS: [BookGroup; 8] = [
+pub const BOOK_GROUPS: [BookGroup; 9] = [
     BookGroup { name: "booking.tools_mass", terms: 0..4, domain: Domain::Cells },
     BookGroup { name: "booking.tools_energy", terms: 4..10, domain: Domain::Cells },
     BookGroup { name: "booking.sinks", terms: 10..11, domain: Domain::Cells },
@@ -507,7 +595,8 @@ pub const BOOK_GROUPS: [BookGroup; 8] = [
     BookGroup { name: "booking.heat", terms: 25..26, domain: Domain::Cells },
     BookGroup { name: "booking.reactions", terms: 26..34, domain: Domain::Cells },
     BookGroup { name: "booking.neutrino_heating", terms: 34..35, domain: Domain::Cells },
-    BookGroup { name: "booking.floors", terms: 35..37, domain: Domain::Cells },
+    BookGroup { name: "booking.floors", terms: 35..39, domain: Domain::Cells },
+    BookGroup { name: "booking.held", terms: 39..41, domain: Domain::Cells },
 ];
 
 /// The groups tile `TERMS` in order, each group has one writer, and each fits WebGPU's default binding size at the
@@ -540,7 +629,7 @@ const _: () = {
 /// and then clears it.
 pub struct Booking {
     world: WorldConfig,
-    groups: [wgpu::Buffer; 8],
+    groups: [wgpu::Buffer; BOOK_GROUPS.len()],
 }
 
 impl Booking {

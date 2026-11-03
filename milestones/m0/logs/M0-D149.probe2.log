@@ -1,0 +1,9 @@
+PROBE2 M 900 step 2: held 16 dt 8.4871e-3 | spared Σ (1.087e-4, 9.155e-5) Σ|·| 2.019e3 | held Δt·Σ·g GPU (1.050e-4, 8.706e-5) Σ|·| 2.012e3, twin-g (-1.937e-9, 8.818e-10) | flux part (3.747e-6, 4.496e-6) Σ|·| 7.736e0 | all cells Δt·Σ·g GPU (1.052e-4, 8.829e-5) twin-g (1.227e-13, 1.606e-13) Σ|·| 2.034e3 | held |g_gpu−g_twin|/|g| 1.510e-7
+PROBE2 M 900 step 202: held 16 dt 8.4871e-3 | spared Σ (1.564e-4, 1.545e-4) Σ|·| 2.033e3 | held Δt·Σ·g GPU (1.626e-4, 1.630e-4) Σ|·| 2.012e3, twin-g (5.899e-6, 2.274e-6) | flux part (-6.160e-6, -8.538e-6) Σ|·| 2.134e1 | all cells Δt·Σ·g GPU (1.561e-4, 1.600e-4) twin-g (3.365e-14, 7.290e-14) Σ|·| 2.034e3 | held |g_gpu−g_twin|/|g| 2.091e-7
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PROBE2 M 1800 step 2: held 12 dt 5.4867e-3 | spared Σ (9.613e-4, 3.681e-4) Σ|·| 9.904e3 | held Δt·Σ·g GPU (8.093e-4, 2.768e-4) Σ|·| 9.904e3, twin-g (5.826e-13, 1.450e-12) | flux part (1.520e-4, 9.133e-5) Σ|·| 5.106e-4 | all cells Δt·Σ·g GPU (8.093e-4, 2.768e-4) twin-g (6.588e-13, 1.301e-12) Σ|·| 9.904e3 | held |g_gpu−g_twin|/|g| 1.201e-7
+PROBE2 M 1800 step 202: held 12 dt 5.4867e-3 | spared Σ (9.613e-4, 3.681e-4) Σ|·| 9.904e3 | held Δt·Σ·g GPU (8.093e-4, 2.768e-4) Σ|·| 9.904e3, twin-g (5.826e-13, 1.450e-12) | flux part (1.520e-4, 9.133e-5) Σ|·| 5.106e-4 | all cells Δt·Σ·g GPU (8.093e-4, 2.768e-4) twin-g (6.588e-13, 1.301e-12) Σ|·| 9.904e3 | held |g_gpu−g_twin|/|g| 1.201e-7
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 486 filtered out; finished in 1.16s
+

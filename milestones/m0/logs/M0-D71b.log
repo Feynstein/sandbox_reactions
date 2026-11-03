@@ -1,0 +1,749 @@
+M0-D71b 2026-11-03T09:45:20-05:00 cargo check sr-engine --tests (linux-pc)
+=== NO-GO: usage: bash tests/cargo.sh build native|wasm ===
+M0-D71b 2026-11-03T09:45:29-05:00 cargo check -p sr-engine --tests (linux-pc)
+    Checking sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.33s
+M0-D71b 2026-11-03T09:50:29-05:00 cargo clippy -p sr-engine --tests (linux-pc)
+    Checking sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+error: the loop variable `ch` is used to index `CHANNELS`
+   --> crates/sr-engine/tests/gpu/floors.rs:460:19
+    |
+460 |         for ch in 0..3 {
+    |                   ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+460 -         for ch in 0..3 {
+460 +         for (ch, <item>) in CHANNELS.iter().enumerate().take(3) {
+    |
+
+error: the loop variable `k` is used to index `CHANNELS`
+   --> crates/sr-engine/tests/gpu/floors.rs:528:18
+    |
+528 |         for k in 0..N_CHANNELS {
+    |                  ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+528 -         for k in 0..N_CHANNELS {
+528 +         for (k, <item>) in CHANNELS.iter().enumerate().take(N_CHANNELS) {
+    |
+
+error: the loop variable `k` is used to index `CHANNELS`
+   --> crates/sr-engine/tests/gpu/floors.rs:536:18
+    |
+536 |         for k in 0..N_CHANNELS {
+    |                  ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+536 -         for k in 0..N_CHANNELS {
+536 +         for (k, <item>) in CHANNELS.iter().enumerate().take(N_CHANNELS) {
+    |
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/box.rs:134:17
+    |
+134 |     let places: Vec<(&str, Vec<(u32, u32)>, [u32; 4])> = vec![
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+    = note: `-D clippy::type-complexity` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::type_complexity)]`
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/box.rs:167:16
+    |
+167 |     let cases: [((u32, u32), Vec<(u32, u32)>, [u32; 2]); 5] = [
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: the loop variable `c` is used to index `CHANNELS`
+   --> crates/sr-engine/tests/gpu/box.rs:339:14
+    |
+339 |     for c in 4..N_CHANNELS {
+    |              ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+339 -     for c in 4..N_CHANNELS {
+339 +     for (c, <item>) in CHANNELS.iter().enumerate().take(N_CHANNELS).skip(4) {
+    |
+
+error: the loop variable `k` is only used to index `s`
+   --> crates/sr-engine/tests/gpu/box.rs:362:14
+    |
+362 |     for k in 4..s.len() {
+    |              ^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator
+    |
+362 -     for k in 4..s.len() {
+362 +     for <item> in s.iter_mut().skip(4) {
+    |
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/latch.rs:163:17
+    |
+163 |     let script: [((u32, u32, u32), u32, Option<u32>); 4] = [
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/dump.rs:526:16
+    |
+526 |     let cases: [(&str, &dyn Fn(&mut serde_json::Value)); 10] = [
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: using `chunks_exact` with a constant chunk size
+  --> crates/sr-engine/tests/gpu/fft.rs:59:7
+   |
+59 |     v.chunks_exact(2).map(|c| Complex::new(f64::from(c[0]), f64::from(c[1]))).collect()
+   |       ^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<2>().0.iter()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+   = note: `-D clippy::chunks-exact-to-as-chunks` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::chunks_exact_to_as_chunks)]`
+
+error: the loop variable `s` is used to index `end`
+   --> crates/sr-engine/tests/gpu/sod.rs:183:14
+    |
+183 |     for s in 5..COMPONENTS {
+    |              ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+183 -     for s in 5..COMPONENTS {
+183 +     for (s, <item>) in end.iter().enumerate().take(COMPONENTS).skip(5) {
+    |
+
+error: useless conversion to the same type: `f64`
+   --> crates/sr-engine/tests/gpu/cpu_gpu.rs:126:17
+    |
+126 |     let t_gpu = f64::from(report.sim_time);
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider removing `f64::from()`: `report.sim_time`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#useless_conversion
+    = note: `-D clippy::useless-conversion` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::useless_conversion)]`
+
+error: the loop variable `i` is used to index `t`
+   --> crates/sr-engine/tests/gpu/heat.rs:105:14
+    |
+105 |     for i in 0..n {
+    |              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+105 -     for i in 0..n {
+105 +     for (i, <item>) in t.iter().enumerate().take(n) {
+    |
+
+error: the loop variable `i` is used to index `t`
+   --> crates/sr-engine/tests/gpu/heat.rs:136:14
+    |
+136 |     for i in 0..n {
+    |              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+136 -     for i in 0..n {
+136 +     for (i, <item>) in t.iter().enumerate().take(n) {
+    |
+
+error: the loop variable `i` is used to index `f`
+   --> crates/sr-engine/tests/gpu/radforce.rs:143:18
+    |
+143 |         for i in 0..n {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+143 -         for i in 0..n {
+143 +         for (i, <item>) in f.iter().enumerate().take(n) {
+    |
+
+error: the loop variable `c` is used to index `names`
+   --> crates/sr-engine/tests/gpu/radforce.rs:161:18
+    |
+161 |         for c in 0..2 {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+161 -         for c in 0..2 {
+161 +         for (c, <item>) in names.iter().enumerate() {
+    |
+
+error: the loop variable `h` is used to index `names`
+   --> crates/sr-engine/tests/gpu/radforce.rs:162:22
+    |
+162 |             for h in 0..2 {
+    |                      ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+162 -             for h in 0..2 {
+162 +             for (h, <item>) in names.iter().enumerate() {
+    |
+
+error: the loop variable `i` is used to index `f`
+   --> crates/sr-engine/tests/gpu/radforce.rs:379:14
+    |
+379 |     for i in 0..n {
+    |              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+379 -     for i in 0..n {
+379 +     for (i, <item>) in f.iter().enumerate().take(n) {
+    |
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/burn.rs:581:20
+    |
+581 |         let cases: [(&str, &str, (f64, f64, [f64; NS]), Vec<f64>, Oracle); 3] = [
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: module has the same name as its containing module
+   --> crates/sr-engine/tests/gpu/neutrino.rs:134:1
+    |
+134 | / mod neutrino {
+135 | |     use super::*;
+136 | |
+137 | |     /// A cell held at T (pin) loses exactly ε_ν Σ Δt — booked `neutrino_lost` within 1e-6 of A_ν (T/T_ν)^8 Σ Δt — at four
+...   |
+368 | | }
+    | |_^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#module_inception
+    = note: `-D clippy::module-inception` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::module_inception)]`
+
+error: using `chunks_exact` with a constant chunk size
+   --> crates/sr-engine/tests/gpu/neutrino.rs:398:73
+    |
+398 | ...e().expect("mapped").chunks_exact(4).map(|c| u32::from_le_bytes(c.try_into().unwrap())).collect();
+    |                         ^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<4>().0.iter()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+
+error: the loop variable `i` is used to index `lost`
+   --> crates/sr-engine/tests/gpu/neutrino.rs:605:18
+    |
+605 |         for i in 0..5 {
+    |                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+605 -         for i in 0..5 {
+605 +         for (i, <item>) in lost.iter().enumerate().take(5) {
+    |
+
+error: the loop variable `k` is used to index `sum`
+   --> crates/sr-engine/tests/gpu/views.rs:299:30
+    |
+299 |                     for k in 0..3 {
+    |                              ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+299 -                     for k in 0..3 {
+299 +                     for (k, <item>) in sum.iter_mut().enumerate() {
+    |
+
+error: the loop variable `c` is used to index `image`
+   --> crates/sr-engine/tests/gpu/views.rs:635:18
+    |
+635 |         for c in 0..CELLS {
+    |                  ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+635 -         for c in 0..CELLS {
+635 +         for (c, <item>) in image.iter().enumerate().take(CELLS) {
+    |
+
+error: manually reimplementing `div_ceil`
+   --> crates/sr-engine/tests/gpu/extents.rs:171:13
+    |
+171 |     let k = ((5 * n + 999) / 1000).max(1);
+    |             ^^^^^^^^^^^^^^^^^^^^^^ help: consider using `.div_ceil()`: `(5 * n).div_ceil(1000)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#manual_div_ceil
+    = note: `-D clippy::manual-div-ceil` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_div_ceil)]`
+
+error: manually reimplementing `div_ceil`
+   --> crates/sr-engine/tests/gpu/extents.rs:229:17
+    |
+229 |         let k = ((5 * n + 999) / 1000).max(1);
+    |                 ^^^^^^^^^^^^^^^^^^^^^^ help: consider using `.div_ceil()`: `(5 * n).div_ceil(1000)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#manual_div_ceil
+
+error: the loop variable `ch` is used to index `out`
+   --> crates/sr-engine/tests/gpu/glow.rs:192:23
+    |
+192 |             for ch in 0..3 {
+    |                       ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+192 -             for ch in 0..3 {
+192 +             for (ch, <item>) in out.iter_mut().enumerate().take(3) {
+    |
+
+error: using `chunks_exact` with a constant chunk size
+   --> crates/sr-engine/tests/gpu/frames.rs:180:21
+    |
+180 |     let lit = image.chunks_exact(4).filter(|p| brightness([p[0], p[1], p[2], p[3]]) > 0).count();
+    |                     ^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<4>().0.iter()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+
+error: the loop variable `i` is used to index `q`
+   --> crates/sr-engine/tests/gpu/nuheat.rs:395:18
+    |
+395 |         for i in 0..GW * GH {
+    |                  ^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+395 -         for i in 0..GW * GH {
+395 +         for (i, <item>) in q.iter().enumerate().take(GW * GH) {
+    |
+
+error: redundant slicing of the whole range
+   --> crates/sr-engine/tests/gpu/nuheat.rs:429:60
+    |
+429 |         let (e1, booked, sigma) = (r.energy(), r.booked(), &st.plane(0)[..]);
+    |                                                            ^^^^^^^^^^^^^^^^ help: use the original value instead: `st.plane(0)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#redundant_slicing
+    = note: `-D clippy::redundant-slicing` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::redundant_slicing)]`
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> crates/sr-engine/tests/gpu/summary.rs:207:94
+    |
+207 | ...], s: &BlockSummary, col: u32, row: u32) -> (Vec<(String, f64, f64, f64)>, Vec<u32>) {
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: the use of negated comparison operators on partially ordered types produces code that is hard to read and refactor, please consider using the `partial_cmp` method instead, to make it clear that the two values could be incomparable
+   --> crates/sr-engine/tests/gpu/cold_core.rs:336:58
+    |
+336 |                 if (x0, y0, w, h) != (x1, y1, w1, h1) || !(apart <= SIGMA_REBUILD) || !same_gas(gas, g1) {
+    |                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#neg_cmp_op_on_partial_ord
+    = note: `-D clippy::neg-cmp-op-on-partial-ord` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::neg_cmp_op_on_partial_ord)]`
+
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-engine/tests/gpu/calibrate_bisect.rs:278:11
+    |
+278 |     clean(&[record.clone()]);
+    |           ^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&record)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: very complex type used. Consider factoring parts into `type` definitions
+  --> crates/sr-engine/tests/gpu/edits_file.rs:96:56
+   |
+96 | fn grade(name: &str, run: &Run, base: &[f32], brushes: &[(Vec<usize>, Box<dyn Fn(usize) -> usize>)]) {
+   |                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#type_complexity
+
+error: could not compile `sr-engine` (test "gpu") due to 34 previous errors
+M0-D71b 2026-11-03T09:53:15-05:00 rsync tree → laserax-ai-server (the lead: «you can run the rsync yourself, go»)
+M0-D71b 2026-11-03T09:53:21-05:00 Verify 1 on laserax-ai-server: verify.py floors booking edits
+floors    11/1/0      13.69 s  NO-GO · step 1/3, 2 left
+booking   4/0/0       11.29 s  GO · step 2/3, 1 left
+edits     17/0/0      15.25 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-D71b.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+7d64f92827f9
+anchor: 139 path×scope entries moved by this run
+anchor: 280 paths checked · 372 skipped (3 classes) · 123 never checked · 3 stale · 0 unclassified · 0 owed · 406 covered of 778 visible
+FAILED:
+  floors: 1 failed · log milestones/m0/logs/M0-D71b.floors.log
+verify: 32 passed, 1 failed, 0 skipped · 2/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.25 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.07->0.79
+=== NO-GO: floors: 1 failed · log milestones/m0/logs/M0-D71b.floors.log ===
+M0-D71b 2026-11-03T09:54:26-05:00 Verify 1 (r2) on laserax-ai-server
+floors    12/0/0      10.69 s  GO · step 1/3, 2 left
+booking   4/0/0        8.44 s  GO · step 2/3, 1 left
+edits     17/0/0      12.29 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-D71b-r2.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+f868c0d5d593
+anchor: 141 path×scope entries moved by this run
+anchor: 282 paths checked · 372 skipped (3 classes) · 121 never checked · 3 stale · 0 unclassified · 0 owed · 406 covered of 778 visible
+verify: 33 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.30 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.34->1.48
+=== GO ===
+held booked (7.77584424354136e2, -1.357379734814167e3) over the graded cells, the twin's (7.77584424354136e2, -1.357379734814167e3); Σ|taken| 3.4622437925726175e4
+3470 cells graded, 626 within f32's rounding of an edge left out (624 built on one); newly held 338, kept (η < ε_th/ε_cold ≤ 2η) 252, released past 2η 336, released under ½σ_hold 224, at N_Fe's gate 456, refused under σ_hold 160, refused in the band 372
+Δt_0: moving block 9.897702e-4, its momenta zeroed by hand 9.897702e-4, uploaded held (kept moving) 1.5524428e-3
+M0-D71b 2026-11-03T09:54:45-05:00 Verify 2+3 --redarm floors, booking on laserax-ai-server
+floors · clean · GO · arm 1/3, 2 left
+floors · plant floors-no-cold-energy · RED (proven: 11 failed) · arm 2/3, 1 left
+floors · plant hold-momentum-kept · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope floors · 38.62 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D71b-r2.floors.redarm.log
+=== GO ===
+booking · clean · GO · arm 1/2, 1 left
+booking · plant booking-row-skip · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope booking · 23.50 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D71b-r2.booking.redarm.log
+=== GO ===
+M0-D71b 2026-11-03T10:06:05-05:00 NOTE: this log's tail after the redarm (the claim's header and output) was overwritten by the server's copy on the logs' copy-back; restored here from logs/M0-D71b.changed.log
+M0-D71b 2026-11-03 claim: verify.py --changed --task M0-D71b on laserax-ai-server
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why registry: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why eos: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why rates: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why burn_cell: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why burn_order: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why neutrino: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why sink: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why nu_heat: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why summary: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ledger: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why preset_cloud: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why observe_run: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why objects: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why classify: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why stage_order: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ending: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why age_clock: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why multi: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why edits: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why edits_file: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why fft_twin: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why riemann: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why sheet: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why sod: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why edges: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why collapse: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why jeans: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why twin: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+11)
+why cpu_gpu: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why heat_gauss: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why heat_implicit: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why heat_limiter: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why heat_stiff: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why heat_multigrid: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why radiation_force: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why grav_force: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why grav_selfforce: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why fft: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why strings: stale: milestones/m0/m0_contrat.md
+why adapter: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+7)
+why state: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why booking: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+7)
+why floors: never: crates/sr-engine/tests/gpu/held_core.rs (+1) · stale: .cargo/config.toml (+117)
+why dt: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why box: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why latch: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why timing: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why scene: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why dump: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why boot: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why watch_only: stale: crates/sr-engine/shaders/edit.wgsl (+4)
+why calibration: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why calibrate_cold: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why cold_core: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why held_core: never: .cargo/config.toml (+120)
+why calibrate_bisect: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why calibrate_order: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why readouts: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why views: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why extents: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why glow: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why frames: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_topbar: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why ui_banner: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_world: stale: crates/sr-physics/src/reference/floors.rs (+2)
+why ui_tools: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_presets: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_display: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_star: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_legend: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_zoom: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_remnant: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+why ui_inspect: never: crates/sr-engine/tests/gpu/held_core.rs · stale: crates/sr-engine/shaders/edit.wgsl (+10)
+plan_lint         0/808/0      0.12 s  NO-GO · step 1/75, 74 left
+toolchain         owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+build             2/0/0        7.14 s  GO · step 2/75, 73 left
+registry          29/0/0       0.32 s  GO · step 3/75, 72 left
+eos               13/0/0       0.31 s  GO · step 4/75, 71 left
+rates             8/0/0        0.31 s  GO · step 5/75, 70 left
+burn_cell         18/0/0      12.04 s  GO · step 6/75, 69 left
+burn_order        4/0/0        6.98 s  GO · step 7/75, 68 left
+neutrino          18/0/0      12.79 s  GO · step 8/75, 67 left
+sink              33/1/0      26.41 s  NO-GO · step 9/75, 66 left
+nu_heat           15/0/0      15.99 s  GO · step 10/75, 65 left
+summary           7/0/0       11.73 s  GO · step 11/75, 64 left
+ledger            5/0/0       17.94 s  GO · step 12/75, 63 left
+preset_cloud      5/0/0       50.13 s  GO · step 13/75, 62 left
+observe_run       9/0/0       64.55 s  GO · step 14/75, 61 left
+objects           24/0/0       0.11 s  GO · step 15/75, 60 left
+classify          52/0/0       0.11 s  GO · step 16/75, 59 left
+stage_order       2/0/0       39.97 s  GO · step 17/75, 58 left
+ending            11/0/0       0.11 s  GO · step 18/75, 57 left
+age_clock         17/0/0       0.06 s  GO · step 19/75, 56 left
+multi             5/0/0       58.29 s  GO · step 20/75, 55 left
+edits             17/0/0      12.93 s  GO · step 21/75, 54 left
+edits_file        6/0/0        9.53 s  GO · step 22/75, 53 left
+fft_twin          10/0/0       0.16 s  GO · step 23/75, 52 left
+riemann           8/0/0        0.11 s  GO · step 24/75, 51 left
+sheet             7/0/0        0.21 s  GO · step 25/75, 50 left
+sod               15/0/0       8.83 s  GO · step 26/75, 49 left
+edges             7/0/0       11.73 s  GO · step 27/75, 48 left
+collapse          6/0/0        1.77 s  GO · step 28/75, 47 left
+jeans             6/0/0        0.82 s  GO · step 29/75, 46 left
+twin              6/0/0        1.57 s  GO · step 30/75, 45 left
+cpu_gpu           3/0/0        8.13 s  GO · step 31/75, 44 left
+heat_gauss        14/0/0       4.32 s  GO · step 32/75, 43 left
+heat_implicit     8/0/0        2.97 s  GO · step 33/75, 42 left
+heat_limiter      8/0/0        4.97 s  GO · step 34/75, 41 left
+heat_stiff        13/0/0       5.62 s  GO · step 35/75, 40 left
+heat_multigrid    4/0/0        4.52 s  GO · step 36/75, 39 left
+radiation_force   11/0/0      11.93 s  GO · step 37/75, 38 left
+grav_force        13/0/0       3.27 s  GO · step 38/75, 37 left
+grav_selfforce    7/0/0        2.02 s  GO · step 39/75, 36 left
+fft               8/0/0        4.32 s  GO · step 40/75, 35 left
+strings           3/0/0        0.46 s  GO · step 41/75, 34 left
+adapter           10/0/0       2.32 s  GO · step 42/75, 33 left
+state             12/0/0       5.02 s  GO · step 43/75, 32 left
+booking           4/0/0        2.62 s  GO · step 44/75, 31 left
+floors            12/0/0       7.62 s  GO · step 45/75, 30 left
+dt                8/0/0        6.67 s  GO · step 46/75, 29 left
+box               8/0/0       12.08 s  GO · step 47/75, 28 left
+latch             5/0/0        3.22 s  GO · step 48/75, 27 left
+timing            5/0/0       20.89 s  GO · step 49/75, 26 left
+scene             8/0/0        2.52 s  GO · step 50/75, 25 left
+dump              12/0/0      45.38 s  GO · step 51/75, 24 left
+boot              1/0/0        9.93 s  GO · step 52/75, 23 left
+desktop           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+web               owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+capture           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+measure_ui        owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+watch_only        1/0/0        0.11 s  GO · step 53/75, 22 left
+calibration       12/0/0       0.16 s  GO · step 54/75, 21 left
+calibrate_cold    8/0/0        1.42 s  GO · step 55/75, 20 left
+cold_core         8/0/0        9.23 s  GO · step 56/75, 19 left
+held_core         7/0/0       86.78 s  GO · step 57/75, 18 left
+calibrate_bisect  19/0/0      98.38 s  GO · step 58/75, 17 left
+calibrate_order   13/0/0       0.16 s  GO · step 59/75, 16 left
+readouts          9/0/0        0.11 s  GO · step 60/75, 15 left
+views             15/0/0      42.40 s  GO · step 61/75, 14 left
+extents           7/0/0        6.57 s  GO · step 62/75, 13 left
+glow              7/0/0        2.42 s  GO · step 63/75, 12 left
+frames            6/0/0        6.93 s  GO · step 64/75, 11 left
+ui_topbar         15/0/0       2.02 s  GO · step 65/75, 10 left
+ui_banner         18/0/0       1.12 s  GO · step 66/75, 9 left
+ui_world          7/0/0        1.07 s  GO · step 67/75, 8 left
+ui_tools          18/0/0       0.16 s  GO · step 68/75, 7 left
+ui_presets        7/0/0        0.61 s  GO · step 69/75, 6 left
+ui_display        11/0/0       0.21 s  GO · step 70/75, 5 left
+ui_star           13/0/0       0.16 s  GO · step 71/75, 4 left
+ui_legend         21/0/0       0.26 s  GO · step 72/75, 3 left
+ui_zoom           11/0/0       0.11 s  GO · step 73/75, 2 left
+ui_remnant        6/0/0        0.11 s  GO · step 74/75, 1 left
+ui_inspect        9/0/0        0.16 s  GO · step 75/75, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+floors · clean · GO · arm 1/3, 2 left
+floors · plant floors-no-cold-energy · RED (proven: 11 failed) · arm 2/3, 1 left
+floors · plant hold-momentum-kept · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope floors · 38.82 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D71b.floors.redarm.log
+FLAG oracle: crates/sr-engine/tests/gpu/floors.rs changed since M0-D71b's start - a test, case or check M0-D71b's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D71b's start - a test, case or check M0-D71b's Deliver: does not name
+logs: milestones/m0/logs/M0-D71b.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+f242a1f7d5cb
+anchor: 1088 path×scope entries moved by this run
+anchor: 279 paths checked · 372 skipped (3 classes) · 127 never checked · 0 stale · 0 unclassified · 0 owed · 406 covered of 778 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for sink)
+NEVER CHECKED  Cargo.lock  (no entry for sink)
+NEVER CHECKED  Cargo.toml  (no entry for sink)
+NEVER CHECKED  assets/elements.json  (no entry for sink)
+NEVER CHECKED  assets/physics.json  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/edit.wgsl  (no entry for sink; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for sink; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/shaders/glow.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/render.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/render.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for sink; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/edit.rs  (no entry for sink; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for sink; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for sink; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_order.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edit.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edits_file.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/extents.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for sink; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/tests/gpu/frames.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/glow.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/held_core.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/multi.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/readouts.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/stage_order.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-engine/tests/gpu/views.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/build.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/calibration.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/calibration_embed.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/observe/age.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/observe/ending.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/observe/mod.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/observe/stages.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/observe/tracker.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/observe/translate.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/sheet.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for sink)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for sink)
+NEVER CHECKED  milestones/m0/m0_implementation_plan.md  (no entry for plan_lint)
+NEVER CHECKED  milestones/m0/m0_rules.md  (no entry for plan_lint)
+NEVER CHECKED  rust-toolchain.toml  (no entry for sink)
+NEVER CHECKED  scenes/sink_cloud.json  (no entry for sink)
+NEVER CHECKED  tests/cargo.sh  (no entry for sink)
+NEVER CHECKED  tests/gpu.sh  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-latch-off.patch  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-momentum.patch  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-not-carried.patch  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-phi-skip.patch  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-pull-grid.patch  (no entry for sink)
+NEVER CHECKED  tests/plants/sink-ye-filter-off.patch  (no entry for sink)
+skipped   364  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  plan_lint: 808 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-D71b.plan_lint.log
+  sink: 1 failed · log milestones/m0/logs/M0-D71b.sink.log
+  anchor: 127 never checked, 0 stale, 0 unclassified - every one named above
+verify: 790 passed, 809 failed, 0 skipped · 73/75 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 8 not impacted · 156.32 s + loop 39.05 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 1.16->2.77 · base: M0-D71b's start 2026-11-03T09:37:44-05:00
+=== NO-GO: plan_lint: 808 failed; its own verdict NO-GO: 1 violation(s) · log milestones/m0/logs/M0-D71b.plan_lint.log; sink: 1 failed · log milestones/m0/logs/M0-D71b.sink.log; anchor: 127 never checked, 0 stale, 0 unclassified - every one named above ===
+exit 1 wall 196 s
+M0-D71b plan: M0-TM14 and M0-D148 filed (plan.py append), M0-TM14 pointed after M0-D148; lint GO
+M0-D71b 2026-11-03 (running) plan_lint + the 5 owed scopes on linux-pc: verify.py plan_lint toolchain desktop web capture measure_ui --task M0-D71b-owed
+plan_lint   814/0/0      0.12 s  GO · step 1/6, 5 left
+toolchain   3/0/0        1.15 s  GO · step 2/6, 4 left
+desktop     5/0/0      156.26 s  GO · step 3/6, 3 left
+web         5/0/0      358.09 s  GO · step 4/6, 2 left
+capture     3/0/0       25.29 s  GO · step 5/6, 1 left
+measure_ui  2/0/0        6.49 s  GO · step 6/6, 0 left
+logs: milestones/m0/logs/M0-D71b-owed.<scope>.log · record: loop_times.jsonl · tree c9a4fc2dca53+8ae1fa1ef771
+anchor: 29 path×scope entries moved by this run
+anchor: 281 paths checked · 373 skipped (3 classes) · 122 never checked · 3 stale · 0 unclassified · 0 owed · 406 covered of 779 visible
+verify: 832 passed, 0 failed, 0 skipped · 6/6 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 147.66 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.81->4.53
+=== GO ===
+exit 0 wall 148 s

@@ -1,0 +1,51 @@
+== 2026-11-03T14:14:16-05:00 multi · task M0-D150 · box laserax-ai :: bash tests/gpu.sh multi physics
+-- multi · exit=101 · 1.62 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.96s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test multi::clouds_one_empty_block_apart_are_two_objects ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'multi::clouds_one_empty_block_apart_are_two_objects' (2229760) panicked at crates/sr-engine/tests/gpu/multi.rs:227:5:
+assertion `left == right` failed: Some("SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)")
+  left: 3
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test multi::headless_presets_start_at_calibrations_masses ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'multi::headless_presets_start_at_calibrations_masses' (2229814) panicked at crates/sr-engine/tests/gpu/multi.rs:108:9:
+assertion `left == right` failed: preset:sun: Some("SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)")
+  left: 3
+ right: 0
+FAILED
+test multi::the_three_presets_hold_calibrations_masses ... preset:sun: calibrated mass 3136.718, the cells hold 3136.720, a = 38.70
+preset:massive: calibrated mass 6677.218, the cells hold 6677.221, a = 56.46
+preset:giant: calibrated mass 18211.504, the cells hold 18211.506, a = 93.25
+ok
+test multi::the_two_suns_are_far_enough_apart_not_to_be_one_cloud ... two_suns: 240 cells apart, a = 38.70 and 38.70: 162.60 cells of vacuum between the edges
+ok
+test multi::two_suns_stay_two_objects_with_stable_ids ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'multi::two_suns_stay_two_objects_with_stable_ids' (2229830) panicked at crates/sr-engine/tests/gpu/multi.rs:168:5:
+assertion `left == right` failed: Some("SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)")
+  left: 3
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    multi::clouds_one_empty_block_apart_are_two_objects
+    multi::headless_presets_start_at_calibrations_masses
+    multi::two_suns_stay_two_objects_with_stable_ids
+
+test result: FAILED. 2 passed; 3 failed; 0 ignored; 0 measured; 484 filtered out; finished in 0.56s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

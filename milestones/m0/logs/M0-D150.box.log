@@ -1,0 +1,60 @@
+== 2026-11-03T14:14:20-05:00 box · task M0-D150 · box laserax-ai :: bash tests/gpu.sh box physics
+-- box · exit=101 · 0.57 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.10s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test r#box::a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode ... 
+thread 'r#box::a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode' (2230425) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears ... 
+thread 'r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears' (2230448) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000 ... 
+thread 'r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000' (2230449) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between ... 
+thread 'r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between' (2230450) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners ... 
+thread 'r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners' (2230451) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32 ... 
+thread 'r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32' (2230452) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test r#box::the_passes_read_their_dispatch_sizes_from_the_box ... 
+thread 'r#box::the_passes_read_their_dispatch_sizes_from_the_box' (2230453) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test r#box::the_whole_world_switch_holds_the_box_at_the_world ... 
+thread 'r#box::the_whole_world_switch_holds_the_box_at_the_world' (2230454) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    r#box::a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode
+    r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears
+    r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000
+    r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between
+    r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners
+    r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32
+    r#box::the_passes_read_their_dispatch_sizes_from_the_box
+    r#box::the_whole_world_switch_holds_the_box_at_the_world
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 481 filtered out; finished in 0.34s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,7 +1,8 @@
 --- a/crates/sr-engine/src/dump.rs
 +++ b/crates/sr-engine/src/dump.rs
-@@ -351,6 +351,7 @@
-     state.upload(queue, &dump.planes).map_err(|e| e.to_string())?;
+@@ -394,7 +394,8 @@
+     let none = vec![0u32; dump.world.cells()];
+     state.upload_held(queue, dump.held.as_deref().unwrap_or(&none)).map_err(|e| e.to_string())?;
      if let Some((f, side)) = flux {
 -        let bytes: Vec<u8> = f.iter().flat_map(|v| v.to_le_bytes()).collect();
 +        // planted: the resume drops F, uploading zeros

@@ -1,0 +1,6 @@
+state     12/0/0       1.67 s  GO
+logs: milestones/m0/logs/M0-D150-cstate.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+d9adb83763f2
+anchor: 6 path×scope entries moved by this run
+anchor: 283 paths checked · 379 skipped (3 classes) · 1 never checked · 126 stale · 0 unclassified · 0 owed · 410 covered of 789 visible
+verify: 12 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.67 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.35->0.35
+=== GO ===

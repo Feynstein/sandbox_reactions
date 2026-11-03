@@ -1,0 +1,79 @@
+== 2026-11-03T14:14:16-05:00 observe_run · task M0-D150 · box laserax-ai :: bash tests/gpu.sh observe physics
+-- observe_run · exit=101 · 1.42 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.99s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 9 tests
+test observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending' (2229746) panicked at crates/sr-engine/tests/gpu/observe.rs:65:83:
+summary.json: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary' (2229792) panicked at crates/sr-engine/tests/gpu/observe.rs:417:5:
+assertion `left == right` failed: ["SR-ERROR no adapter name contains \"RTX 4090\"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)"]
+  left: 3
+ right: 0
+FAILED
+test observe::a_lighter_objects_ending_never_ends_the_life ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'observe::a_lighter_objects_ending_never_ends_the_life' (2229793) panicked at crates/sr-engine/tests/gpu/observe.rs:65:83:
+summary.json: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test observe::a_sink_outside_the_box_is_an_object_of_its_own ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'observe::a_sink_outside_the_box_is_an_object_of_its_own' (2229794) panicked at crates/sr-engine/tests/gpu/observe.rs:65:83:
+summary.json: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test observe::an_unmet_condition_is_exit_2_with_until_unmet ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'observe::an_unmet_condition_is_exit_2_with_until_unmet' (2229795) panicked at crates/sr-engine/tests/gpu/observe.rs:65:83:
+summary.json: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test observe::events_jsonl_and_the_ending_of_a_black_hole ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'observe::events_jsonl_and_the_ending_of_a_black_hole' (2229796) panicked at crates/sr-engine/tests/gpu/observe.rs:65:83:
+summary.json: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test observe::until_a_stage_stops_at_the_frame_that_shows_it ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'observe::until_a_stage_stops_at_the_frame_that_shows_it' (2229797) panicked at crates/sr-engine/tests/gpu/observe.rs:65:83:
+summary.json: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+test observe::until_is_checked_before_a_device_is_touched ... SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: --until "later": expected sim_time:<t>, event:<kind>, stage:<id> or ending
+SR-ERROR bad arguments: --until "stage:nova": a stage is one of black_hole|supernova|neutron_star|core_collapse|white_dwarf|failed_star|planetary_nebula|iron_core|si_burn|o_burn|ne_burn|c_burn|he_core|he_shell|h_shell|main_sequence|collapsing|protostar|cloud, got "nova"
+SR-ERROR bad arguments: --until "event:ending": an event is one of ignition|core_collapse|supernova|sink_formed, got "ending"
+SR-ERROR bad arguments: --until "sim_time:-3": sim_time takes a time of 0 or more, got "-3"
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+ok
+test observe::until_sim_time_stops_at_the_first_step_past_it ... SR-ERROR no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+
+thread 'observe::until_sim_time_stops_at_the_first_step_past_it' (2229799) panicked at crates/sr-engine/tests/gpu/observe.rs:65:83:
+summary.json: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+FAILED
+
+failures:
+
+failures:
+    observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending
+    observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary
+    observe::a_lighter_objects_ending_never_ends_the_life
+    observe::a_sink_outside_the_box_is_an_object_of_its_own
+    observe::an_unmet_condition_is_exit_2_with_until_unmet
+    observe::events_jsonl_and_the_ending_of_a_black_hole
+    observe::until_a_stage_stops_at_the_frame_that_shows_it
+    observe::until_sim_time_stops_at_the_first_step_past_it
+
+test result: FAILED. 1 passed; 8 failed; 0 ignored; 0 measured; 480 filtered out; finished in 0.33s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

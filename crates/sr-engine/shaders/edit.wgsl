@@ -13,7 +13,8 @@
 // What each kind does to a cell (m0_contrat.md §1.12; all at rest, momentum density unchanged):
 // - paint: inside the disk, ΔΣ = paint_sigma of the species at T = paint_t, mixed by mass;
 // - drop: where the preset cloud's patch holds Σ_p, that mass at the cloud's temperature and composition, mixed likewise;
-// - erase, clear: the floor state — Σ_floor, u = 0, T_floor, pure hydrogen (M0-T3's default composition);
+// - erase, clear: the floor state — Σ_floor, u = 0, T_floor, pure hydrogen (M0-T3's default composition); a clear also
+//   empties the hold's mask (§2.7 [M0-TG2]), so the step's P4 meets no held cell — the other kinds leave it to P8;
 // - heat, cool: ε_th × heat_factor or cool_factor, floored at T_floor, on cells that are not vacuum.
 // A deposit keeps the gas it lands on exactly as it was: its thermal energy Σ ε_th is added to, the cold energy follows the
 // new Σ and composition, and the kinetic energy follows the unchanged momentum on the larger Σ. Nothing branches on the
@@ -65,6 +66,8 @@ struct ActiveBox {
 @group(0) @binding(11) var<uniform> abox: ActiveBox;
 // The sinks' state buffer: its first word is the count, its second the formed-cell marker.
 @group(0) @binding(12) var<storage, read_write> sinks: array<u32>;
+// The hold's mask (state.rs `state.held`): a clear writes 0.
+@group(0) @binding(13) var held: texture_storage_2d<r32uint, write>;
 
 const WG: u32 = 256u;
 const HEAD: u32 = 4u;
@@ -244,6 +247,7 @@ fn edit_cells(@builtin(global_invocation_id) id: vec3<u32>) {
     var mass = vec4<f32>(0.0);
     var en: array<f32, 6>;
     var touched = false;
+    var cleared = false;
     for (var k = 0u; k < count; k++) {
         let kind = word(k, W_KIND);
         let dx = i32(px) - i32(word(k, W_X));
@@ -293,10 +297,14 @@ fn edit_cells(@builtin(global_invocation_id) id: vec3<u32>) {
             mass.w += d.x;
             en[5] += d.y;
             touched = true;
+            cleared = true;
         }
     }
     if (!touched) {
         return;
+    }
+    if (cleared) {
+        textureStore(held, vec2<u32>(px, py), vec4<u32>(0u));
     }
 
     hydro[cell] = c.sigma;

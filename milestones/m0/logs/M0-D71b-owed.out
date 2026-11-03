@@ -1,0 +1,12 @@
+plan_lint   814/0/0      0.12 s  GO · step 1/6, 5 left
+toolchain   3/0/0        1.15 s  GO · step 2/6, 4 left
+desktop     5/0/0      156.26 s  GO · step 3/6, 3 left
+web         5/0/0      358.09 s  GO · step 4/6, 2 left
+capture     3/0/0       25.29 s  GO · step 5/6, 1 left
+measure_ui  2/0/0        6.49 s  GO · step 6/6, 0 left
+logs: milestones/m0/logs/M0-D71b-owed.<scope>.log · record: loop_times.jsonl · tree c9a4fc2dca53+8ae1fa1ef771
+anchor: 29 path×scope entries moved by this run
+anchor: 281 paths checked · 373 skipped (3 classes) · 122 never checked · 3 stale · 0 unclassified · 0 owed · 406 covered of 779 visible
+verify: 832 passed, 0 failed, 0 skipped · 6/6 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 147.66 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.81->4.53
+=== GO ===
+exit 0 wall 148 s

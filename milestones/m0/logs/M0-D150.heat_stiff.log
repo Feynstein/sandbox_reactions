@@ -1,0 +1,77 @@
+== 2026-11-03T14:14:18-05:00 heat_stiff · task M0-D150 · box laserax-ai :: bash tests/gpu.sh heat::stiff physics
+-- heat_stiff · exit=101 · 1.12 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::jacobi ... SR-PRECOND Jacobi
+
+thread 'heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::jacobi' (2230060) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::multigrid ... SR-PRECOND Multigrid
+
+thread 'heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::multigrid' (2230070) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::stiff::gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold::jacobi ... SR-PRECOND Jacobi
+SR-STIFF heat_overflow.bin: hottest T⁰ 3.744049198963488e7, u 7.860065755477906e25 (√f32::MAX 1.844674352395373e19)
+
+thread 'heat::stiff::gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold::jacobi' (2230071) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::stiff::gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold::multigrid ... SR-PRECOND Multigrid
+SR-STIFF heat_overflow.bin: hottest T⁰ 3.744049198963488e7, u 7.860065755477906e25 (√f32::MAX 1.844674352395373e19)
+
+thread 'heat::stiff::gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold::multigrid' (2230072) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+
+thread 'heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi' (2230074) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+
+thread 'heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid' (2230076) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi ... SR-PRECOND Jacobi
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi' (2230077) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid ... SR-PRECOND Multigrid
+
+thread 'heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid' (2230078) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test heat::stiff::the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more ... SR-STIFF heat_hot heat left: one pass 0.2937, 64 passes of Δt/64 0.1618 (up to 6 Newton passes, 566 rounds a pass), ratio 1.816
+ok
+test heat::stiff::the_scenes_are_stiff_for_rkl2_and_carry_what_the_oracles_assume ... SR-STIFF RKL2 would need 5797 stages on heat_hot (Δt 0.02) and 115470 on heat_rim (Δt 0.01)
+ok
+test heat::stiff::the_twin_at_the_ceiling_moves_no_more_heat_than_its_cells_hold ... SR-STIFF twin heat_ceiling.bin: 11 passes, 4096 rounds, converged false, delta 0e0, radiated 7.297954946853175e2
+SR-STIFF ceiling: heat above the floor 1.425399e5, the grid lost 7.297955e2, radiated 7.297955e2; the worst cell (32, 32) lost 5.385551e0 of 5.385551e0 held
+ok
+test heat::stiff::the_twin_solves_the_burnt_field_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_hot.json: 8 Newton passes, 899 rounds, converged true, delta 4.5e-12; T in [652.3847, 2805.3371]; lost 1.528789369e9 of radiated 1.528789369e9; worst balance 1.17e-12
+ok
+test heat::stiff::the_twin_solves_the_hot_disk_in_a_thin_ring_with_the_maximum_principle_and_a_closed_balance ... SR-STIFF twin heat_rim.json: 6 Newton passes, 888 rounds, converged true, delta -2.1e-11; T in [40.9207, 95.7215]; lost 2.871497932e4 of radiated 2.871497932e4; worst balance 8.50e-10
+ok
+
+failures:
+
+failures:
+    heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::jacobi
+    heat::stiff::gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold::multigrid
+    heat::stiff::gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold::jacobi
+    heat::stiff::gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold::multigrid
+    heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::jacobi
+    heat::stiff::gpu_the_burnt_field_is_the_twins_and_books_the_heat_it_lost::multigrid
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::jacobi
+    heat::stiff::gpu_the_hot_disk_in_a_thin_ring_is_the_twins_and_books_the_heat_it_lost::multigrid
+
+test result: FAILED. 5 passed; 8 failed; 0 ignored; 0 measured; 476 filtered out; finished in 1.01s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

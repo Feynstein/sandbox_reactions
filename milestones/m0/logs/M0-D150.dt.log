@@ -1,0 +1,59 @@
+== 2026-11-03T14:14:20-05:00 dt · task M0-D150 · box laserax-ai :: bash tests/gpu.sh dt physics
+-- dt · exit=101 · 0.57 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.11s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test dt::a_run_ending_between_two_scans_exits_5_on_a_non_finite_world ... 
+thread 'dt::a_run_ending_between_two_scans_exits_5_on_a_non_finite_world' (2230423) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test dt::an_empty_box_steps_on_the_floor_gas_of_hydrogen ... 
+thread 'dt::an_empty_box_steps_on_the_floor_gas_of_hydrogen' (2230455) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dt::dt_and_the_state_are_bit_identical_over_two_runs_on_a_600_by_400_field ... 
+thread 'dt::dt_and_the_state_are_bit_identical_over_two_runs_on_a_600_by_400_field' (2230456) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dt::dt_equals_the_cfl_formula_on_fields_of_known_u_and_c ... 
+thread 'dt::dt_equals_the_cfl_formula_on_fields_of_known_u_and_c' (2230457) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dt::p1_advances_dt_and_p9_reduces_it_and_guards_every_64th_step ... 
+thread 'dt::p1_advances_dt_and_p9_reduces_it_and_guards_every_64th_step' (2230458) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dt::step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1 ... 
+thread 'dt::step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1' (2230459) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dt::the_guard_names_a_nan_fraction_that_p8_would_renormalise_away ... 
+thread 'dt::the_guard_names_a_nan_fraction_that_p8_would_renormalise_away' (2230460) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+test dt::the_guard_names_the_step_cell_and_channel_of_a_planted_non_finite_value ... 
+thread 'dt::the_guard_names_the_step_cell_and_channel_of_a_planted_non_finite_value' (2230461) panicked at crates/sr-engine/tests/gpu/main.rs:13:29:
+no test device (SR_TEST_ADAPTER=Some("RTX 4090")): no adapter name contains "RTX 4090"; adapters seen: [0] Quadro RTX 4000 (Vulkan, DiscreteGpu, driver NVIDIA); [1] NVIDIA GeForce RTX 5090 (Vulkan, DiscreteGpu, driver NVIDIA); [2] llvmpipe (LLVM 20.1.2, 256 bits) (Vulkan, Cpu, driver llvmpipe)
+FAILED
+
+failures:
+
+failures:
+    dt::a_run_ending_between_two_scans_exits_5_on_a_non_finite_world
+    dt::an_empty_box_steps_on_the_floor_gas_of_hydrogen
+    dt::dt_and_the_state_are_bit_identical_over_two_runs_on_a_600_by_400_field
+    dt::dt_equals_the_cfl_formula_on_fields_of_known_u_and_c
+    dt::p1_advances_dt_and_p9_reduces_it_and_guards_every_64th_step
+    dt::step_n_runs_on_the_dt_p9_made_at_the_end_of_step_n_minus_1
+    dt::the_guard_names_a_nan_fraction_that_p8_would_renormalise_away
+    dt::the_guard_names_the_step_cell_and_channel_of_a_planted_non_finite_value
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 481 filtered out; finished in 0.36s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

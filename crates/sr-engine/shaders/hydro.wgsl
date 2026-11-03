@@ -41,6 +41,17 @@
 // [M0-D58], `push_share`). The predictor is not kicked and the boundary fluxes do not see it, so `hydro_edges` binds no F.
 // The twin's `Hydro::step_forced` is the reference.
 //
+// Held cells (§2.3.4 [M0-TG2], §1.4.2 [M0-TG2]; M0-D71c), the mask the last P8 wrote (state.rs `State::held`, read here
+// as a sampled texture: the update's 8 storage slots are full): a face between two held cells, or between a held cell and
+// the world's edge, carries nothing, and a face between a held and a free cell is a reflecting wall — HLL between the
+// free side's predicted face and its mirror, mass, energy and species exactly 0 (`held_wall`), never §2.8's Π alone. No
+// work is done across a face with a held side, so neither cell takes `face_work` there; the free cell keeps its slopes
+// and its Σg kick. A held cell takes no flux difference, no gravity source and no radiation force: `hydro_update` writes
+// its Σ, E and species as they were and, in its momentum planes, the momentum it was spared — its momentum flux
+// differences and Δt·Σg, g there P2's g_pull, the pull of all but the held cells (§1.4.2 [M0-D149], `pull_at`) —, which `hydro_commit` books into `held` (`booking.held`) and never writes, so the held cell
+// keeps its momentum, 0 since P8 held it. `hydro_edges` books nothing at a held edge cell. One-way inflow is not built
+// (§0.5 [M0-D71]; M0-D71f). The twin's `Hydro::step_held` is the reference.
+//
 // A cell below Σ_vac reads as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20) — the box's ghost
 // ring included, where an uploaded vacuum cell may hold Σ = 0; a cell and its four neighbours all below Σ_vac are left
 // as they are. A face state's Σ is held between its cell's and the neighbour's on that side, as MC keeps it in exact
@@ -104,9 +115,14 @@ struct Edges {
     t_dust: f32,
 }
 @group(0) @binding(13) var<uniform> edges: Edges;
-// P2's g = −∇φ (step/grav.rs `field`): the x plane, the y plane, then φ's, row-major over the world — read only when
-// `edges.gravity` is 1 (else a placeholder is bound).
+// P2's g = −∇φ (step/grav.rs `field`): the x plane, the y plane, then φ's, then g_pull's x and y planes, row-major over
+// the world — read only when `edges.gravity` is 1 (else a placeholder is bound).
 @group(0) @binding(14) var<storage, read> grav: array<f32>;
+// The hold's mask (state.rs `State::held`): 1 where a cell is held, as the last P8 left it.
+@group(0) @binding(15) var held: texture_2d<u32>;
+// The booking's `held` buffer (state.rs `booking.held`): held.spared.mom_x's plane, then held.spared.mom_y's, one slot per
+// cell — `hydro_commit`'s.
+@group(0) @binding(16) var<storage, read_write> held_book: array<f32>;
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
@@ -211,6 +227,14 @@ fn read_at(x: i32, y: i32) -> Prim {
     return p;
 }
 
+// Whether the cell at (x, y) is held; a cell outside the world is not.
+fn held_at(x: i32, y: i32) -> bool {
+    if (x < 0 || y < 0 || x >= i32(dims.width) || y >= i32(dims.height)) {
+        return false;
+    }
+    return textureLoad(held, vec2<i32>(x, y), 0).x != 0u;
+}
+
 // Whether the cell at (x, y) holds less than Σ_vac; a cell outside the world counts as vacuum.
 fn vacuum_at(x: i32, y: i32) -> bool {
     if (x < 0 || y < 0 || x >= i32(dims.width) || y >= i32(dims.height)) {
@@ -282,6 +306,13 @@ fn accel_at(x: i32, y: i32) -> vec2<f32> {
 fn phi_at(x: i32, y: i32) -> f32 {
     let cell = u32(clamp(y, 0, i32(dims.height) - 1)) * dims.width + u32(clamp(x, 0, i32(dims.width) - 1));
     return grav[2u * dims.cells + cell];
+}
+
+// g_pull at the cell (x, y) inside the world — the pull of all but the held cells, what a held cell's spared Σg·Δt reads
+// (§1.4.2 [M0-D149]); read only when the step runs P2.
+fn pull_at(x: i32, y: i32) -> vec2<f32> {
+    let cell = u32(y) * dims.width + u32(x);
+    return vec2<f32>(grav[3u * dims.cells + cell], grav[4u * dims.cells + cell]);
 }
 
 // Gravity's source at one face over the step (the header comment), for the face's low cell (−x or −y) and its high cell
@@ -563,6 +594,35 @@ fn wall(face: Face, dir: u32) -> array<f32, 14> {
     return f;
 }
 
+// A held cell's wall (§2.3.4 [M0-TG2]) is HLL between the free cell's predicted face and its mirror — the normal velocity
+// and momentum negated — with mass, energy and species set to exactly 0 (`held_flux`): `hydro_update` gives the face's
+// one `hll` the mirror in the held side's place (DXC inlines every call, M0-D118).
+fn mirrored(face: Face, dir: u32) -> Face {
+    var m = face;
+    if (dir == 0u) {
+        m.p.u = -face.p.u;
+        m.q.y = -face.q.y;
+    } else {
+        m.p.v = -face.p.v;
+        m.q.z = -face.q.z;
+    }
+    return m;
+}
+
+// A face's flux `f` once the hold is read: as it is when neither side is held; nothing when both are, or when the held
+// side faces the world's edge (`edge`); else the held wall's — `f` the HLL against the mirror, its momentum alone kept.
+fn held_flux(f: array<f32, 14>, held_lo: bool, held_hi: bool, edge: bool) -> array<f32, 14> {
+    if (!held_lo && !held_hi) {
+        return f;
+    }
+    var w: array<f32, 14>;
+    if (!(held_lo && held_hi) && !edge) {
+        w[1] = f[1];
+        w[2] = f[2];
+    }
+    return w;
+}
+
 // The flux through the boundary face on `side` (0: x = 0, 1: x = width − 1, 2: y = 0, 3: y = height − 1) of the edge
 // cell (x, y), from its own predicted face there (§2.8). Bounce: the wall. Leave: HLL between that face and the facing
 // predicted face of the ghost beyond it, clamped to outflow — a face whose mass flux points into the world is a wall,
@@ -640,11 +700,15 @@ fn write_next(cell: u32, u: array<f32, 14>) {
     }
 }
 
-// Copies cell `cell` into the next state unchanged.
+// Copies cell `cell` into the next state unchanged — a held cell with no momentum spared, its momentum planes 0.
 fn keep(cell: u32) {
     let n = dims.cells;
     for (var k = 0u; k < 4u; k++) {
         put_next(k, cell, hydro[k * n + cell]);
+    }
+    if (held_at(i32(cell % dims.width), i32(cell / dims.width))) {
+        put_next(1u, cell, 0.0);
+        put_next(2u, cell, 0.0);
     }
     for (var i = 0u; i < PLANES_A; i++) {
         put_next(4u + i, cell, species_a[i * n + cell]);
@@ -814,17 +878,34 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         put_face(64u + (TILE - 1u) * TILE + li - TILE, ring);
     }
     workgroupBarrier();
+    // The hold (the header comment): a held side's face is the free side's mirror, then `held_flux`.
+    let here = held_at(x, y);
+    let held_l = held_at(x - 1, y);
+    let held_r = held_at(x + 1, y);
     if (moves) {
-        let before = get_face(lid.x * TILE + lid.y);
-        let after = get_face(64u + lid.x * TILE + lid.y);
-        fxl = hll(before, own[0], 0u);
+        var before = get_face(lid.x * TILE + lid.y);
+        var after = get_face(64u + lid.x * TILE + lid.y);
+        var mine = own;
+        if (held_l && !here) {
+            before = mirrored(mine[0], 0u);
+        } else if (here && !held_l) {
+            mine[0] = mirrored(before, 0u);
+        }
+        if (held_r && !here) {
+            after = mirrored(mine[1], 0u);
+        } else if (here && !held_r) {
+            mine[1] = mirrored(after, 0u);
+        }
+        fxl = hll(before, mine[0], 0u);
         if (x == 0) {
             fxl = edge_flux(0u, own[0], fxl);
         }
-        fxr = hll(own[1], after, 0u);
+        fxl = held_flux(fxl, held_l, here, x == 0);
+        fxr = hll(mine[1], after, 0u);
         if (x == last_x) {
             fxr = edge_flux(1u, own[1], fxr);
         }
+        fxr = held_flux(fxr, here, held_r, x == last_x);
     }
     workgroupBarrier();
     if (b < i32(TILE) - 1) {
@@ -845,16 +926,31 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         }
         return;
     }
-    let below = get_face(lid.y * TILE + lid.x);
-    let above = get_face(64u + lid.y * TILE + lid.x);
-    fyl = hll(below, own[2], 1u);
+    var below = get_face(lid.y * TILE + lid.x);
+    var above = get_face(64u + lid.y * TILE + lid.x);
+    var mine = own;
+    let held_u = held_at(x, y - 1);
+    let held_d = held_at(x, y + 1);
+    if (held_u && !here) {
+        below = mirrored(mine[2], 1u);
+    } else if (here && !held_u) {
+        mine[2] = mirrored(below, 1u);
+    }
+    if (held_d && !here) {
+        above = mirrored(mine[3], 1u);
+    } else if (here && !held_d) {
+        mine[3] = mirrored(above, 1u);
+    }
+    fyl = hll(below, mine[2], 1u);
     if (y == 0) {
         fyl = edge_flux(2u, own[2], fyl);
     }
-    fyr = hll(own[3], above, 1u);
+    fyl = held_flux(fyl, held_u, here, y == 0);
+    fyr = hll(mine[3], above, 1u);
     if (y == last_y) {
         fyr = edge_flux(3u, own[3], fyr);
     }
+    fyr = held_flux(fyr, here, held_d, y == last_y);
     let empty_here = vacuum_at(x, y);
 
     // The stored vector where there is gas (bit for bit what the planes hold), the floor state's below Σ_vac.
@@ -872,10 +968,22 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
             u[4u + PLANES_A + i] = u[0] * species_b[i * n + cell];
         }
     }
+    // A held cell: its Σ, E and species as they were (its faces carry none, and no work is done across them), the
+    // momentum it is spared — its momentum flux differences and Δt·Σg_pull — in its momentum planes, for `hydro_commit`.
+    if (here) {
+        var spared = -dt * vec2<f32>((fxr[1] - fxl[1]) + (fyr[1] - fyl[1]), (fxr[2] - fxl[2]) + (fyr[2] - fyl[2]));
+        if (edges.gravity != 0u) {
+            spared += dt * pred.mid.x * pull_at(x, y);
+        }
+        keep(cell);
+        put_next(1u, cell, spared.x);
+        put_next(2u, cell, spared.y);
+        return;
+    }
     for (var k = 0u; k < COMPONENTS; k++) {
         u[k] -= dt * ((fxr[k] - fxl[k]) + (fyr[k] - fyl[k]));
     }
-    // Gravity's source, time-centred on the predictor's half step (§1.4.2).
+    // Gravity's source, time-centred on the predictor's half step (§1.4.2); no work across a face to a held cell.
     if (edges.gravity != 0u) {
         let g = accel_at(x, y);
         u[1] += dt * pred.mid.x * g.x;
@@ -886,10 +994,11 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         let mr = mids[select(72u + lid.y, lid.y * TILE + lid.x + 1u, lid.x + 1u < TILE)];
         let mu = mids[select(80u + lid.x, (lid.y - 1u) * TILE + lid.x, lid.y > 0u)];
         let md = mids[select(88u + lid.x, (lid.y + 1u) * TILE + lid.x, lid.y + 1u < TILE)];
-        let r = face_work(fxr[0], m.x, mr.x, m.y, mr.y, p - phi_at(x + 1, y), dt);
-        let l = face_work(fxl[0], ml.x, m.x, ml.y, m.y, phi_at(x - 1, y) - p, dt);
-        let dn = face_work(fyr[0], m.x, md.x, m.z, md.z, p - phi_at(x, y + 1), dt);
-        let up = face_work(fyl[0], mu.x, m.x, mu.z, m.z, phi_at(x, y - 1) - p, dt);
+        // A face to a held cell does no work: its φ difference taken as 0, so `face_work` returns exactly 0.
+        let r = face_work(fxr[0], m.x, mr.x, m.y, mr.y, select(p - phi_at(x + 1, y), 0.0, held_r), dt);
+        let l = face_work(fxl[0], ml.x, m.x, ml.y, m.y, select(phi_at(x - 1, y) - p, 0.0, held_l), dt);
+        let dn = face_work(fyr[0], m.x, md.x, m.z, md.z, select(p - phi_at(x, y + 1), 0.0, held_d), dt);
+        let up = face_work(fyl[0], mu.x, m.x, mu.z, m.z, select(phi_at(x, y - 1) - p, 0.0, held_u), dt);
         u[1] += r.x - l.x;
         u[2] += dn.x - up.x;
         u[3] += r.y + l.z + dn.y + up.z;
@@ -907,7 +1016,7 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
 
 // One invocation per boundary-face slot, leaving only: the face's `boundary` flux, as `hydro_update` applied it to its
 // edge cell, added to the slot's escaped terms — the grid loses dt·f through a high face, −dt·f through a low one. A face
-// whose cell `hydro_update` did not move (outside the box, or left empty) books nothing. Runs before `hydro_commit`, on
+// whose cell `hydro_update` did not move (outside the box, left empty, or held) books nothing. Runs before `hydro_commit`, on
 // the state as the step found it.
 @compute @workgroup_size(64)
 fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
@@ -940,7 +1049,8 @@ fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     let x = i32(cx);
     let y = i32(cy);
-    if (left_empty(x, y)) {
+    // A held edge cell's boundary face carries nothing (§2.3.4 [M0-TG2]).
+    if (left_empty(x, y) || held_at(x, y)) {
         return;
     }
     let dt = dt_rec.x;
@@ -959,6 +1069,12 @@ fn hydro_commit(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
     let n = dims.cells;
+    // A held cell is left as it is; the momentum `hydro_update` carried in its next state is what it was spared.
+    if (held_at(i32(abox.x0 + id.x), i32(abox.y0 + id.y))) {
+        held_book[cell] += get_next(1u, cell);
+        held_book[n + cell] += get_next(2u, cell);
+        return;
+    }
     for (var k = 0u; k < 4u; k++) {
         out_hydro[k * n + cell] = get_next(k, cell);
     }

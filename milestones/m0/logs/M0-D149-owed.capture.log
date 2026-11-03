@@ -1,0 +1,31 @@
+== 2026-11-03T12:36:40-05:00 capture[smoke] · task M0-D149-owed · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=0 · 2.77 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.SUauCV2Ji5
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+== 2026-11-03T12:36:43-05:00 capture[refuse] · task M0-D149-owed · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 0.21 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+== 2026-11-03T12:36:43-05:00 capture[actions] · task M0-D149-owed · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[actions] · exit=0 · 23.05 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.oRPp2giPCC
+24 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max); the left panel's accent at y = 327 (Brush), 336 (Heat), 374 (Iron); 1988 pixels painted; the right panel 5031 lit pixels without a star, 6650 with one, 7037 with the pointer off the world; Glow toned down differs, its Reset matches the default, Heat fitted differs; zoom 8 about (300, 200) matches the whole world on 6 probed cells (6 colours), 16 px a cell; the preset dropped at (80, 80) spans x 322..479 px about (400, 204), the one at (10, 10) refused (402 red pixels, preset armed, world as it was)
+capture actions: ok
+=== GO ===
+

@@ -1,0 +1,58 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -894,11 +894,27 @@
+             fxl = edge_flux(0u, own[0], fxl);
+         }
+         fxl = held_flux(fxl, held_l, here, x == 0);
++        // planted: the held wall takes §2.8's bounce flux, Π alone
++        if (held_l != here && x != 0) {
++            var free = own[0];
++            if (here) {
++                free = before;
++            }
++            fxl = wall(free, 0u);
++        }
+         fxr = hll(mine[1], after, 0u);
+         if (x == last_x) {
+             fxr = edge_flux(1u, own[1], fxr);
+         }
+         fxr = held_flux(fxr, here, held_r, x == last_x);
++        // planted: the held wall takes §2.8's bounce flux, Π alone
++        if (held_r != here && x != last_x) {
++            var free = own[1];
++            if (here) {
++                free = after;
++            }
++            fxr = wall(free, 0u);
++        }
+     }
+     workgroupBarrier();
+     if (b < i32(TILE) - 1) {
+@@ -939,11 +955,27 @@
+         fyl = edge_flux(2u, own[2], fyl);
+     }
+     fyl = held_flux(fyl, held_u, here, y == 0);
++    // planted: the held wall takes §2.8's bounce flux, Π alone
++    if (held_u != here && y != 0) {
++        var free = own[2];
++        if (here) {
++            free = below;
++        }
++        fyl = wall(free, 1u);
++    }
+     fyr = hll(mine[3], above, 1u);
+     if (y == last_y) {
+         fyr = edge_flux(3u, own[3], fyr);
+     }
+     fyr = held_flux(fyr, here, held_d, y == last_y);
++    // planted: the held wall takes §2.8's bounce flux, Π alone
++    if (held_d != here && y != last_y) {
++        var free = own[3];
++        if (here) {
++            free = above;
++        }
++        fyr = wall(free, 1u);
++    }
+     let empty_here = vacuum_at(x, y);
+ 
+     // The stored vector where there is gas (bit for bit what the planes hold), the floor state's below Σ_vac.

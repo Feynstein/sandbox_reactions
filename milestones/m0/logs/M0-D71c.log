@@ -1,0 +1,26 @@
+# M0-D71c — linux-pc (laserax-ai), 2026-11-03T11:03:07-05:00; GPU runs on laserax-ai-server (R18)
+- brought back: M0-D148's server claim line appended to logs/loop_times.jsonl (R18; M0-TM14's flag); the server's verify.anchor.json (D148's claim) left — the local one is M0-TM14's later full claim
+- rsync up 2026-11-03T11:07:50-05:00
+- manual red checks (work skip removed; Clear's zeroing removed): see the next lines
+  RED (RTX 4090, laserax-ai-server): gpu_no_work_crosses… — the wall's neighbours' E off the twin's 4.010e-3 (band 1e-5; green 1.245e-7)
+  RED: gpu_clear_leaves_p4_no_stale_wall — 30 values differ (green 0); both shaders restored from the scratchpad copies
+- Verify 1 (2026-11-03, laserax-ai-server, RTX 4090): SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core booking cpu_gpu sod edges collapse --task M0-D71c
+  held_core 16/0/0 · booking 4/0/0 · cpu_gpu 3/0/0 · sod 15/0/0 · edges 7/0/0 · collapse 6/0/0 — 51 passed, 6/6 GO, 102.50 s · === GO ===
+- Verify 2: --redarm held_core — clean GO; held-wall-pressure-only RED (6 failed: the twin's wall and M 900 disk, the GPU wall, no-inflow,
+  work and M 900 step-200 cases, which compare against the planted twin); held-wall-gpu-pressure-only RED (5 failed: gpu wall, no-inflow,
+  work, M 900 step 200, M 900 rests) · 312.10 s · === GO ===
+- Verify 3: --redarm booking — clean GO; booking-row-skip RED (1 failed) · 25.07 s · === GO ===
+- (the two lines above were restored by hand: the copy-back's `--include 'M0-D71c.*'` overwrote this log with the server's copy of my
+  earlier rsync; later copy-backs exclude M0-D71c.log)
+SR-HELD-REF disk M 1800, step 200: relative L1 Σ 0.000e0, E 1.802e-6 (band 1e-3); held 12, 0 cells held on one side only; held momentum GPU [-0.135498046875, 0.0126953125] (Σ|slot| 2.7558e6), twin [1.248139369636192e-10, 2.787032826745417e-10]
+SR-HELD-CORE-GPU disk M 1800: held 12 at step 50, 12 at 10000 (M0-R11: 12); floor_added -6.1738e-4 over 1000–10000; KE 0.0000e0 → 0.0000e0; held momentum (-2.5000e-1, 0.0000e0); momentum drift 2.500e-1 of Σm|u| 0.0000e0; held cells moving 0
+SR-HELD-REF disk M 900, step 200: relative L1 Σ 3.187e-8, E 9.671e-7 (band 1e-3); held 16, 0 cells held on one side only; held momentum GPU [0.01953125, 0.017578125] (Σ|slot| 5.3892e5), twin [4.1389114358025836e-12, 7.862155371185509e-12]
+SR-HELD-CORE-GPU disk M 900: held 16 at step 50, 16 at 10000 (M0-R11: 16); floor_added 2.3401e0 over 1000–10000; KE 1.5545e2 → 1.5407e2; held momentum (2.2969e0, 4.4531e0); momentum drift 5.073e0 of Σm|u| 6.3163e1; held cells moving 0
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 478 filtered out; finished in 9.46s
+- claim 2026-11-03T11:22:08-05:00: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-D71c (laserax-ai-server)
+- claim: 1407 passed, 62/62 GO, 5 owed, 21 not impacted; logs, loop lines and verify.anchor.json brought back (R18)
+- owed on linux-pc 2026-11-03T11:30:16-05:00: python3 tools/pb/verify.py toolchain desktop web capture measure_ui --task M0-D71c-owed
+- closed 2026-11-03T11:34:21-05:00; plan_lint after the close (linux-pc):
+anchor: 407 paths checked · 376 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 407 covered of 783 visible
+verify: 810 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 16.98->16.98
+=== GO ===

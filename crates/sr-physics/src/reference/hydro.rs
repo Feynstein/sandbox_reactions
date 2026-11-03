@@ -53,7 +53,9 @@
 //!
 //! Held cells (§2.3.4 [M0-TG2]; P8's hold, floors.rs), when a step is given the hold's mask ([`Hydro::step_held`]): a held
 //! cell takes no flux difference in its momentum, no gravity source and no radiation force, and what its momentum's flux
-//! differences, Δt·Σg and its faces' impulses would have given it is returned — the momentum booked `held`. A face
+//! differences, Δt·Σg and its faces' impulses would have given it is returned — the momentum booked `held`, its g that of
+//! all but the held cells when the step is given that field (§1.4.2 [M0-D149]: the core's own pull cancels over it in
+//! exact arithmetic, and in f32 its rounding was the GPU's whole `held`, M0-D149). A face
 //! between two held cells, or between a held cell and the world's edge, carries nothing. A face between a held and a free
 //! cell is a reflecting wall: HLL between the free side's predicted face and its mirror (the normal velocity negated),
 //! the mass, energy and species fluxes exactly 0 — never §2.8's bounce flux, Π alone, under which gravity drove a free
@@ -597,16 +599,18 @@ impl Hydro {
     /// As [`Hydro::step_with`], with the radiation force when `radiation` holds the previous step's F (its x plane, then
     /// its y plane, cell-centred, over the world) — module doc.
     pub fn step_forced(&self, st: &mut State, dt: f64, gravity: Option<&Field>, radiation: Option<(&[f64], &[f64])>) {
-        self.step_held(st, dt, gravity, radiation, &[]);
+        self.step_held(st, dt, gravity, None, radiation, &[]);
     }
 
     /// As [`Hydro::step_forced`], the cells `held` flags left as they are behind reflecting walls (module doc; `held` one
-    /// flag per cell, or empty: none held). Returns the momentum the held cells were spared, (x, y) — booked `held`.
+    /// flag per cell, or empty: none held). Returns the momentum the held cells were spared, (x, y) — booked `held`. A held
+    /// cell's Σg·Δt reads `pull`, the field of everything but the held cells, when given, else `gravity`'s (module doc).
     pub fn step_held(
         &self,
         st: &mut State,
         dt: f64,
         gravity: Option<&Field>,
+        pull: Option<&Field>,
         radiation: Option<(&[f64], &[f64])>,
         held: &[bool],
     ) -> [f64; 2] {
@@ -818,6 +822,11 @@ impl Hydro {
                     kick[0] += r[0] - l[0];
                     kick[1] += dn[0] - up[0];
                     if held_here {
+                        // The core's own pull cancels over it: Σg·Δt from the field of all but the held cells (§1.4.2
+                        // [M0-D149]); a held cell's faces are all still, so its kick is that alone.
+                        if let Some(p) = pull {
+                            kick = [dt * m[0] * p.gx[i], dt * m[0] * p.gy[i]];
+                        }
                         spared[0] += kick[0];
                         spared[1] += kick[1];
                     } else {
