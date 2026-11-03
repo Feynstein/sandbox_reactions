@@ -50,6 +50,17 @@
 //!
 //! A cell below Σ_vac is read as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20); a cell and its
 //! four neighbours all below Σ_vac are left as they are, so empty space is not filled by the floor.
+//!
+//! Held cells (§2.3.4 [M0-TG2]; P8's hold, floors.rs), when a step is given the hold's mask ([`Hydro::step_held`]): a held
+//! cell takes no flux difference in its momentum, no gravity source and no radiation force, and what its momentum's flux
+//! differences, Δt·Σg and its faces' impulses would have given it is returned — the momentum booked `held`. A face
+//! between two held cells, or between a held cell and the world's edge, carries nothing. A face between a held and a free
+//! cell is a reflecting wall: HLL between the free side's predicted face and its mirror (the normal velocity negated),
+//! the mass, energy and species fluxes exactly 0 — never §2.8's bounce flux, Π alone, under which gravity drove a free
+//! cell into the wall without bound (M0-R11) — and no gravitational work is done across it; the free cell keeps its own
+//! slopes and its Σg kick. Nothing crosses a held cell's faces either way: §2.3.4's one-way inflow (report item 2) is not
+//! built — on the twin it took the M 900 SCF disk's floor_added over steps 1,000–10,000 to 392.6 against G-REST's 10
+//! (2.26 without), and it moved to M0-D71f's measurement on the GPU lives (§0.5 [M0-D71], the lead at M0-D71).
 
 use super::grav::Field;
 use crate::eos::Eos;
@@ -478,6 +489,21 @@ impl Hydro {
         f
     }
 
+    /// The flux through a held cell's wall (§2.3.4 [M0-TG2]): HLL between the free cell's predicted face `face` and its
+    /// mirror, the mass, energy and species fluxes set to exactly 0; `low` when the free cell is on the face's low side.
+    fn held_wall(face: &Face, dir: usize, low: bool) -> [f64; COMPONENTS] {
+        let mut mirror = *face;
+        mirror.p = mirror.p.mirrored(dir);
+        mirror.u[1 + dir] = -mirror.u[1 + dir];
+        let mut f = if low { Self::hll(face, &mirror, dir) } else { Self::hll(&mirror, face, dir) };
+        f[0] = 0.0;
+        f[3] = 0.0;
+        for fk in f.iter_mut().skip(4) {
+            *fk = 0.0;
+        }
+        f
+    }
+
     /// The flux through a wall (§2.8, bounce): mass, energy and species exactly 0, the normal momentum the pressure
     /// alone.
     fn wall(face: &Face, dir: usize) -> [f64; COMPONENTS] {
@@ -571,8 +597,23 @@ impl Hydro {
     /// As [`Hydro::step_with`], with the radiation force when `radiation` holds the previous step's F (its x plane, then
     /// its y plane, cell-centred, over the world) — module doc.
     pub fn step_forced(&self, st: &mut State, dt: f64, gravity: Option<&Field>, radiation: Option<(&[f64], &[f64])>) {
+        self.step_held(st, dt, gravity, radiation, &[]);
+    }
+
+    /// As [`Hydro::step_forced`], the cells `held` flags left as they are behind reflecting walls (module doc; `held` one
+    /// flag per cell, or empty: none held). Returns the momentum the held cells were spared, (x, y) — booked `held`.
+    pub fn step_held(
+        &self,
+        st: &mut State,
+        dt: f64,
+        gravity: Option<&Field>,
+        radiation: Option<(&[f64], &[f64])>,
+        held: &[bool],
+    ) -> [f64; 2] {
         let (w, h) = (st.width, st.height);
         let n = st.cells();
+        assert!(held.is_empty() || held.len() == n, "one held flag per cell, or none");
+        let is_held = |i: usize| !held.is_empty() && held[i];
         let (pw, ph) = (w + 2 * GHOSTS, h + 2 * GHOSTS);
         let at = |x: usize, y: usize| (y + GHOSTS) * pw + x + GHOSTS;
 
@@ -673,6 +714,45 @@ impl Hydro {
             }
         }
 
+        // Held cells' faces (§2.3.4 [M0-TG2]): nothing between two held cells or at a held cell's edge, a wall between a
+        // held and a free cell. `still` marks them, the faces with a held side: no gravitational work is done across them.
+        let mut still_x = vec![false; (w + 1) * h];
+        let mut still_y = vec![false; w * (h + 1)];
+        if !held.is_empty() {
+            // One face between `a` (low side) and `b` (high side), each `None` past the edge: the wall takes the free side's
+            // predicted face on it.
+            let face = |f: &mut [f64; COMPONENTS], a: Option<usize>, b: Option<usize>, dir: usize| -> bool {
+                let (ha, hb) = (a.is_some_and(is_held), b.is_some_and(is_held));
+                if !ha && !hb {
+                    return false;
+                }
+                *f = match (a, b) {
+                    (Some(a), Some(b)) if ha != hb => {
+                        if ha {
+                            Self::held_wall(&faces[b][2 * dir], dir, false)
+                        } else {
+                            Self::held_wall(&faces[a][2 * dir + 1], dir, true)
+                        }
+                    }
+                    _ => [0.0; COMPONENTS],
+                };
+                true
+            };
+            for y in 0..h {
+                for i in 0..=w {
+                    let k = y * (w + 1) + i;
+                    still_x[k] = face(&mut fx[k], (i > 0).then(|| y * w + i - 1), (i < w).then(|| y * w + i), 0);
+                }
+            }
+            for j in 0..=h {
+                for x in 0..w {
+                    let k = j * w + x;
+                    still_y[k] = face(&mut fy[k], (j > 0).then(|| (j - 1) * w + x), (j < h).then(|| j * w + x), 1);
+                }
+            }
+        }
+        let mut spared = [0.0f64; 2];
+
         // The update, in place; a cell with no gas around it stays empty.
         let vacuum = |x: usize, y: usize| st.get(0, y * w + x) < self.sigma_vac;
         let mut next = st.clone();
@@ -700,27 +780,50 @@ impl Hydro {
                     }
                     u
                 };
+                let held_here = is_held(i);
+                // A held cell takes no radiation force (§2.3.4 [M0-TG2]).
+                let radiation = radiation.filter(|_| !held_here);
                 for k in 0..COMPONENTS {
-                    u[k] -= dt * ((fx[y * (w + 1) + x + 1][k] - fx[y * (w + 1) + x][k]) + (fy[(y + 1) * w + x][k] - fy[y * w + x][k]));
+                    let d = dt * ((fx[y * (w + 1) + x + 1][k] - fx[y * (w + 1) + x][k]) + (fy[(y + 1) * w + x][k] - fy[y * w + x][k]));
+                    if held_here && (k == 1 || k == 2) {
+                        spared[k - 1] -= d;
+                    } else {
+                        u[k] -= d;
+                    }
                 }
                 // Gravity's source, time-centred on the predictor's half step (§1.4.2), its energy the faces' work and the
                 // pairs' impulses (module doc): each face as its low cell and its high cell both read it. A face on the world's edge does none (its φ difference is 0).
+                // A held cell's kick and impulses are booked, not taken; no work crosses a still face (§1.4.2 [M0-TG2]).
                 if let (Some([gx, gy]), Some(f)) = (accel(at(x, y)), gravity) {
                     let m = mids[i];
-                    u[1] += dt * m[0] * gx;
-                    u[2] += dt * m[0] * gy;
+                    let mut kick = [dt * m[0] * gx, dt * m[0] * gy];
                     let p = f.phi[i];
                     let next = |nx: usize, ny: usize| (f.phi[ny * w + nx], mids[ny * w + nx]);
                     let (pr, mr) = if x + 1 < w { next(x + 1, y) } else { (p, m) };
                     let (pl, ml) = if x > 0 { next(x - 1, y) } else { (p, m) };
                     let (pd, md) = if y + 1 < h { next(x, y + 1) } else { (p, m) };
                     let (pu, mu) = if y > 0 { next(x, y - 1) } else { (p, m) };
-                    let r = face_work(fx[y * (w + 1) + x + 1][0], m[0], mr[0], m[1], mr[1], p - pr, dt);
-                    let l = face_work(fx[y * (w + 1) + x][0], ml[0], m[0], ml[1], m[1], pl - p, dt);
-                    let dn = face_work(fy[(y + 1) * w + x][0], m[0], md[0], m[2], md[2], p - pd, dt);
-                    let up = face_work(fy[y * w + x][0], mu[0], m[0], mu[2], m[2], pu - p, dt);
-                    u[1] += r[0] - l[0];
-                    u[2] += dn[0] - up[0];
+                    let work = |still: bool, q: f64, sl: f64, sh: f64, ql: f64, qh: f64, d: f64| {
+                        if still {
+                            [0.0; 3]
+                        } else {
+                            face_work(q, sl, sh, ql, qh, d, dt)
+                        }
+                    };
+                    let (kr, kl, kd, ku) = (y * (w + 1) + x + 1, y * (w + 1) + x, (y + 1) * w + x, y * w + x);
+                    let r = work(still_x[kr], fx[kr][0], m[0], mr[0], m[1], mr[1], p - pr);
+                    let l = work(still_x[kl], fx[kl][0], ml[0], m[0], ml[1], m[1], pl - p);
+                    let dn = work(still_y[kd], fy[kd][0], m[0], md[0], m[2], md[2], p - pd);
+                    let up = work(still_y[ku], fy[ku][0], mu[0], m[0], mu[2], m[2], pu - p);
+                    kick[0] += r[0] - l[0];
+                    kick[1] += dn[0] - up[0];
+                    if held_here {
+                        spared[0] += kick[0];
+                        spared[1] += kick[1];
+                    } else {
+                        u[1] += kick[0];
+                        u[2] += kick[1];
+                    }
                     u[3] += r[1] + l[2] + dn[1] + up[2];
                 }
                 // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
@@ -759,6 +862,7 @@ impl Hydro {
             }
         }
         *st = next;
+        spared
     }
 
     /// Steps `st` to sim time `t_end` from `t`, each Δt per §2.3.5 and the last cut to land on `t_end`; returns the

@@ -1,0 +1,12 @@
+--- a/crates/sr-physics/src/reference/hydro.rs
++++ b/crates/sr-physics/src/reference/hydro.rs
+@@ -495,7 +495,8 @@
+         let mut mirror = *face;
+         mirror.p = mirror.p.mirrored(dir);
+         mirror.u[1 + dir] = -mirror.u[1 + dir];
+-        let mut f = if low { Self::hll(face, &mirror, dir) } else { Self::hll(&mirror, face, dir) };
++        // planted: the held wall takes §2.8's bounce flux, Π alone
++        let mut f = if low { Self::wall(face, dir) } else { Self::wall(&mirror, dir) };
+         f[0] = 0.0;
+         f[3] = 0.0;
+         for fk in f.iter_mut().skip(4) {

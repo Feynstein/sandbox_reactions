@@ -1,0 +1,12 @@
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=2/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=3/5
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=4/5
+=== GO ===
+register: checks=2 failed=0 warnings=0 · set=2 · replaced=2 · appended=0
+=== GO ===
+handoff: checks=1 failed=0 warnings=0
+=== GO ===

@@ -324,3 +324,6 @@ mod edits_file;
 
 /// M0-D134 — the stage a live preset life shows, frame by frame (contract §1.9.3, §1.9.4, §4.6).
 mod stage_order;
+
+/// M0-D71 — the held core on the CPU twin (contract §2.7, §2.3.4, §1.4.2 [M0-TG2], §5.1's G-REST).
+mod held_core;

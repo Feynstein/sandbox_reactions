@@ -11,6 +11,12 @@
 //! Σ_vac and Σ_floor are compared and written as the f32 the GPU holds (the planes are f32 there); T_floor stays f64, as
 //! the GPU's EOS table reads it. A cell holding an Inf or a NaN fraction is left as read, nothing booked, for P9's
 //! guard (M0-D18).
+//!
+//! The hold (§2.7 [M0-TG2]; M0-R11's H), P8's last act ([`Floors::hold`]): a cell with Σ ≥ σ_hold whose ε_th — as the
+//! floor leaves it — is at most η_hold · ε_cold and whose N_Fe rate is 0 (X_Fe = 0 or Y_eΣ ≤ Σ_N) is held, and the next
+//! step's P4 leaves it as it is (hydro.rs's held walls). A held cell is released past 2η_hold · ε_cold, under ½σ_hold or
+//! once its N_Fe rate is > 0. A newly held cell's momentum is set to 0 — its kinetic energy left in E, where it becomes
+//! heat — and booked `held`. ε_th and ε_cold are read in f64 of the renormalised fractions.
 
 use super::hydro::State;
 use crate::eos::Eos;
@@ -19,6 +25,12 @@ use crate::registry::{Elements, Physics, RegistryError, N_SPECIES};
 const NS: usize = N_SPECIES;
 /// The neutron fraction's slot in §1.5's order (the registry's `ID_N`).
 const ID_N: usize = 9;
+/// Iron's slot in §1.5's order: N_Fe's input (§1.6.2).
+const ID_FE: usize = 8;
+/// σ_hold: the least Σ a held cell has (§2.7 [M0-TG2]; a code constant until M0-D71g moves it into physics.json).
+pub const SIGMA_HOLD: f64 = 10.0;
+/// η_hold: a cell is held at ε_th ≤ η_hold · ε_cold and released past twice that (§2.7 [M0-TG2]; as [`SIGMA_HOLD`]).
+pub const ETA_HOLD: f64 = 0.1;
 /// The state's species planes (§2.2: channels 4–13).
 const FIRST_SPECIES: usize = 4;
 
@@ -74,12 +86,20 @@ pub struct Floors {
     elements: Elements,
     sigma_vac: f64,
     sigma_floor: f64,
+    /// Σ_N, N_Fe's gate on Y_eΣ (§1.6.2).
+    sigma_n: f64,
 }
 
 impl Floors {
     pub fn new(physics: &Physics, elements: &Elements) -> Result<Floors, RegistryError> {
         let get = |k: &str| f64::from(physics.get(k).expect("physics.json key") as f32);
-        Ok(Floors { eos: Eos::from_physics(physics)?, elements: elements.clone(), sigma_vac: get("sigma_vac"), sigma_floor: get("sigma_floor") })
+        Ok(Floors {
+            eos: Eos::from_physics(physics)?,
+            elements: elements.clone(),
+            sigma_vac: get("sigma_vac"),
+            sigma_floor: get("sigma_floor"),
+            sigma_n: physics.get("sigma_n").expect("physics.json key"),
+        })
     }
 
     /// P8 on one cell: `raw` are the fractions as read (not yet renormalised).
@@ -134,5 +154,44 @@ impl Floors {
             booked += Booked { vacuum_reset: c.mass_out, floor_added: c.energy_added };
         }
         booked
+    }
+
+    /// Whether a cell of Σ `sigma`, momentum `mom`, energy `energy` and fractions `x` is held after P8, given whether it
+    /// was held before (§2.7 [M0-TG2]): the hold's test, or its release with the hysteresis.
+    pub fn holds(&self, sigma: f64, mom: [f64; 2], energy: f64, x: &[f64; NS], was_held: bool) -> bool {
+        let x = renormalised(x);
+        let comp = self.elements.composition(&x);
+        let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
+        let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
+        let n_fe = x[ID_FE] > 0.0 && comp.y_e * sigma > self.sigma_n;
+        if was_held {
+            !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || n_fe)
+        } else {
+            sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && !n_fe
+        }
+    }
+
+    /// The hold over the whole world, in place, after [`Floors::apply`]: `held` (one flag per cell) becomes the mask the
+    /// next step's P4 reads; a newly held cell's momentum is zeroed and returned summed — the momentum booked `held`.
+    pub fn hold(&self, st: &mut State, held: &mut [bool]) -> [f64; 2] {
+        let n = st.cells();
+        assert_eq!(held.len(), n, "one held flag per cell");
+        let mut taken = [0.0; 2];
+        for (i, h) in held.iter_mut().enumerate() {
+            let raw: [f64; NS] = std::array::from_fn(|k| st.planes[(FIRST_SPECIES + k) * n + i]);
+            if raw.iter().any(|v| !v.is_finite()) {
+                continue;
+            }
+            let mom = [st.planes[n + i], st.planes[2 * n + i]];
+            let now = self.holds(st.planes[i], mom, st.planes[3 * n + i], &raw, *h);
+            if now && !*h {
+                taken[0] += mom[0];
+                taken[1] += mom[1];
+                st.planes[n + i] = 0.0;
+                st.planes[2 * n + i] = 0.0;
+            }
+            *h = now;
+        }
+        taken
     }
 }

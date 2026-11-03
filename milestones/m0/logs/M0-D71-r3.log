@@ -1,0 +1,26 @@
+held_core  7/0/0       92.41 s  GO · step 1/3, 2 left
+twin       6/0/0       11.74 s  GO · step 2/3, 1 left
+sod        15/0/0      16.75 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-D71-r3.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+d82d304bc6b9
+anchor: 132 path×scope entries moved by this run
+anchor: 398 paths checked · 372 skipped (3 classes) · 1 never checked · 6 stale · 0 unclassified · 0 owed · 405 covered of 777 visible
+verify: 28 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 92.41 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.08->1.03
+=== GO ===
+held_core · clean · GO · arm 1/2, 1 left
+held_core · plant held-wall-pressure-only · RED (proven: 2 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope held_core · 185.51 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D71-r3.held_core.redarm.log
+=== GO ===
+twin · clean · GO · arm 1/2, 1 left
+twin · plant twin-skip-floors · RED (proven: 3 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope twin · 23.38 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D71-r3.twin.redarm.log
+=== GO ===
+toolchain   3/0/0        0.95 s  GO · step 1/5, 4 left
+desktop     5/0/0       69.88 s  GO · step 2/5, 3 left
+web         5/0/0      535.21 s  GO · step 3/5, 2 left
+capture     3/0/0       26.65 s  GO · step 4/5, 1 left
+measure_ui  2/0/0        7.75 s  GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-D71-r3.<scope>.log · record: loop_times.jsonl · tree f98f96d90183+584740986537
+anchor: 20 path×scope entries moved by this run
+anchor: 281 paths checked · 372 skipped (3 classes) · 121 never checked · 3 stale · 0 unclassified · 0 owed · 405 covered of 777 visible
+verify: 18 passed, 0 failed, 0 skipped · 5/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 175.20 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.65->4.96
+=== GO ===

@@ -1,11 +1,12 @@
 --- a/crates/sr-physics/src/reference/mod.rs
 +++ b/crates/sr-physics/src/reference/mod.rs
-@@ -244,8 +244,7 @@
+@@ -272,9 +272,7 @@
              self.ran.push("P6 reactions");
              react.step(&mut self.state, dt);
          }
 -        self.ran.push("P8 floors");
 -        self.booked += self.floors.apply(&mut self.state);
+-        self.hold();
 +        // planted: P8 skipped, neither run nor listed
          self.ran.push("P9 reductions");
          self.dt_next = self.reduce_dt();

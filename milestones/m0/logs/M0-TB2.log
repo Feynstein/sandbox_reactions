@@ -1,0 +1,136 @@
+# M0-TB2 — log (linux-pc, laserax-ai, 2026-11-02T20:46:31-05:00)
+register: checks=2 failed=0 warnings=0 · set=2 · replaced=2 · appended=0
+=== GO ===
+## Verify 1 — plan lint, 2026-11-02T21:14:48-05:00
+lint: checks=810 failed=0 warnings=7 · blocks=378 · flow_rows=378 · verify_fences=0 · history=0 · flow=per-task · header=601/600 · pipeline=9/60 · ladder=6 rungs · refresh=1/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== GO ===
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+## Claim — verify.py --changed, 2026-11-02T21:15:26-05:00
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint         810/0/0      0.11 s  GO
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 135 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 145 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+stage_order       NOT RUN (not impacted: its 144 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+multi             NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+edits             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+edits_file        NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 126 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 126 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 127 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 89 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 89 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 140 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 145 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 152 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 155 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 151 path(s) checked at the anchor)
+measure_ui        NOT RUN (not impacted: its 140 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 142 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 152 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 143 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+views             NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+extents           NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+glow              NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+frames            NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+ui_topbar         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+ui_banner         NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+ui_tools          NOT RUN (not impacted: its 134 path(s) checked at the anchor)
+ui_presets        NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+ui_display        NOT RUN (not impacted: its 130 path(s) checked at the anchor)
+ui_star           NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+ui_legend         NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+ui_zoom           NOT RUN (not impacted: its 130 path(s) checked at the anchor)
+ui_remnant        NOT RUN (not impacted: its 130 path(s) checked at the anchor)
+ui_inspect        NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TB2.<scope>.log · record: loop_times.jsonl · tree f98f96d90183+a1915a339d84
+anchor: 1 path×scope entries moved by this run
+anchor: 403 paths checked · 371 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 403 covered of 774 visible
+skipped   363  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 810 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 86 not impacted · 0.12 s + loop 0.08 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 6.37->6.37 · base: M0-TB2's start 2026-11-02T20:46:11-05:00
+=== GO ===
+flag: checks=1 failed=0 warnings=0 · refresh=2/5
+=== GO ===
+## Verify 1 — plan lint after the flag, 2026-11-02T21:18:10-05:00
+lint: checks=810 failed=0 warnings=7 · blocks=378 · flow_rows=378 · verify_fences=0 · history=0 · flow=per-task · header=601/600 · pipeline=9/60 · ladder=6 rungs · refresh=2/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== GO ===
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+## Final lint after close, 2026-11-02T21:18:22-05:00
+lint: checks=809 failed=0 warnings=7 · blocks=378 · flow_rows=378 · verify_fences=0 · history=0 · flow=per-task · header=601/600 · pipeline=9/60 · ladder=6 rungs · refresh=2/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== GO ===

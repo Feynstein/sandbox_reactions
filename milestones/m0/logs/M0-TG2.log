@@ -1,0 +1,268 @@
+# M0-TG2 — task generation: M0-D71's held core cut into BUILD blocks (linux-pc, laserax-ai)
+# 2026-11-02 · model=claude-opus-5-5 level=max (rung_record.py now, launch prompt and the lead's prompt; = the heading's rung)
+# Commands below are appended as they run (plan.py append/lint/register/flag, verify.py --changed).
+$ plan.py append tb2.md --after M0-TG2
+append: checks=3 failed=1 warnings=0 · flow=per-task · flow_row=none
+FAIL: no `TB=<n>` counter in the `- Counters:` line of the Pipeline state - nothing was written; add it first, e.g. `python3 tools/pb/plan.py --plan milestones/m0/m0_implementation_plan.md register --set "Counters=<the whole line> · TB=0"`, then re-run this append
+REFUSED: append wrote nothing - the failed check(s) above blocked the write
+=== NO-GO: 1 violation(s) ===
+exit 1
+$ plan.py register --set Counters=... · TB=1
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+exit 0
+$ plan.py append tb2.md --after M0-TG2
+append: checks=3 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit 0
+$ plan.py append d71b.md --after M0-D71
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit 0
+$ plan.py append d71c.md --after M0-D71b
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit 0
+$ plan.py append d71d.md --after M0-D71c
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit 0
+$ plan.py append d71e.md --after M0-D71d
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit 0
+$ plan.py append d71f.md --after M0-D71e
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit 0
+$ plan.py append d71g.md --after M0-T98a
+append: checks=2 failed=0 warnings=0 · flow=per-task · flow_row=written
+=== GO ===
+exit 0
+$ plan.py register --set Next task=... --set Open D/BLOCKED register=...
+register: checks=2 failed=0 warnings=0 · set=2 · replaced=2 · appended=0
+=== GO ===
+exit 0
+$ plan.py flag M0-V14 ... --from M0-TG2
+flag: checks=1 failed=0 warnings=0 · refresh=1/5
+=== GO ===
+exit 0
+$ plan.py lint
+lint: checks=811 failed=0 warnings=11 · blocks=378 · flow_rows=378 · verify_fences=0 · history=0 · flow=per-task · header=601/600 · pipeline=9/60 · ladder=6 rungs · refresh=1/5
+WARN: 1 carried flag(s) on open BUILD blocks carry no `[<from>, <date>]` stamp - history, read by the pass since `Model ratings: 2026-10-29 by M0-TM13`, never counted (§0): M0-D71
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-TG2: `Read:` names logs/M0-R11.scratch.diff whole (689 lines > 500) - name a section or a line range
+WARN: M0-D71: `Read:` names logs/M0-R11.scratch.diff whole (689 lines > 500) - name a section or a line range
+WARN: M0-D71c: `Read:` names crates/sr-engine/shaders/hydro.wgsl whole (971 lines > 500) - name a section or a line range
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-TG2 9 · M0-TB2 1 · M0-D71 7 · M0-D71b 4 · M0-D71c 5 · M0-D71e 1 · M0-D71f 2 · M0-D91 3
+=== GO ===
+exit 0
+== M0-TB2: 3 paths
+   present                milestones/m0/m0_contrat.md
+   present                tools/pb/verify.json
+   MISSING                tasks/M0-TB2.md
+== M0-D71: 12 paths
+   present                logs/M0-R11.scratch.diff
+   present                crates/sr-physics/src/reference/mod.rs
+   NEW                    crates/sr-engine/tests/gpu/held_core.rs
+   present                crates/sr-engine/tests/gpu/main.rs
+   present                tools/pb/verify.json
+   NEW                    tests/plants/held-wall-pressure-only.patch
+   present                docs/agent/testing.md
+   present                crates/sr-engine/src/calibrate.rs
+   present                milestones/m0/reports/unresolved_remnant.md
+   present                milestones/m0/tasks/M0-D71.md
+   present                tests/gpu.sh
+   present                tools/pb/verify.py
+== M0-D71b: 11 paths
+   present                crates/sr-engine/shaders/floors.wgsl
+   present                crates/sr-engine/src/step/mod.rs
+   present                crates/sr-engine/src/state.rs
+   present                crates/sr-engine/tests/gpu/floors.rs
+   present                crates/sr-engine/tests/gpu/booking.rs
+   present                tools/pb/verify.json
+   NEW                    tests/plants/hold-momentum-kept.patch
+   present                docs/agent/testing.md
+   present                crates/sr-physics/src/reference/floors.rs
+   MISSING                tests/gpu/booking.rs
+   present                tools/pb/verify.py
+== M0-D71c: 10 paths
+   present                crates/sr-engine/shaders/hydro.wgsl
+   present                crates/sr-engine/src/step/hydro.rs
+   present                crates/sr-engine/src/state.rs
+   MISSING                crates/sr-engine/tests/gpu/held_core.rs
+   present                crates/sr-engine/tests/gpu/booking.rs
+   present                tools/pb/verify.json
+   NEW                    tests/plants/held-wall-gpu-pressure-only.patch
+   present                docs/agent/testing.md
+   MISSING                tests/gpu/booking.rs
+   present                tools/pb/verify.py
+== M0-D71d: 6 paths
+   present                crates/sr-engine/src/ledger.rs
+   present                crates/sr-engine/tests/gpu/ledger.rs
+   present                tools/pb/verify.json
+   NEW                    tests/plants/ledger-no-held.patch
+   present                docs/agent/testing.md
+   present                tools/pb/verify.py
+== M0-D71e: 8 paths
+   present                crates/sr-engine/src/dump.rs
+   present                crates/sr-engine/src/headless.rs
+   present                crates/sr-engine/tests/gpu/dump.rs
+   present                tools/pb/verify.json
+   NEW                    tests/plants/dump-held-dropped.patch
+   present                docs/agent/testing.md
+   present                scenes/heat_ceiling.bin
+   present                tools/pb/verify.py
+== M0-D71f: 11 paths
+   MISSING                crates/sr-engine/tests/gpu/held_core.rs
+   NEW                    scenes/remnant_window.bin
+   present                tools/pb/verify.json
+   NEW                    milestones/m0/reports/held_core.md
+   present                milestones/m0/m0_contrat.md
+   present                docs/agent/testing.md
+   present                build/v9-sun-life/dumps/s_450000.bin
+   present                milestones/m0/reports/unresolved_remnant.md
+   present                milestones/m0/reports/black_hole.md
+   NEW                    reports/held_core.md
+   present                tools/pb/verify.py
+== M0-D71g: 8 paths
+   present                assets/physics.json
+   present                crates/sr-physics/src/reference/floors.rs
+   present                crates/sr-engine/src/step/mod.rs
+   MISSING                crates/sr-engine/tests/gpu/held_core.rs
+   present                milestones/m0/m0_contrat.md
+   present                tools/pb/verify.json
+   NEW                    tests/plants/hold-constants-ignored.patch
+   present                tools/pb/verify.py
+paths 69 missing-unlabelled 6
+paths 67: present 53, labelled new 14, unlabelled missing 0
+$ grep -n "M0-TG2" milestones/m0/m0_contrat.md
+824:  - [M0-TG2] §2.3.4's scheme (P4 updates every cell), §1.4.2's sources as §0.5 [M0-D64] and [M0-D68] read them (work at
+831:    §5.1 row, G-REST, on M0-R11's measured bounds — amended in place, each passage tagged [M0-TG2]; items 1–2 (collapse,
+840:    (Recommended)», «η 0.1 (Recommended)», «Measured bounds (Recommended)»; at M0-TG2, 2026-11-02: «In code
+908:| P4 hydro | MUSCL-Hancock + HLL (§2.3) with the gravity source, the radiation force from the previous step's flux (§2.4.4), the edge ghosts (§
+912:| P8 floors | vacuum reset, temperature floor, species renormalised; ledger floor terms (§2.7); [M0-TG2] then the hold's mask, which the next ste
+944:Σu·g, time-centred on the predictor's half-step velocity. [M0-TG2] A held cell (§2.3.4, §2.7) takes neither source,
+1332:  [M0-TG2] **Held cells** (§2.7's hold; M0-R11's H, reports/unresolved_remnant.md): P4 leaves a held cell as it is —
+1455:[M0-TG2] **The hold** — P8's last act, after the floors and the renormalisation, writes the mask the next step's P4
+1467:M0-D71g moves them into this table, physics.json (the lead at M0-TG2: «Code now, move later (Recommended)»).
+1490:- **Momentum:** grid · sinks · escaped · held [M0-TG2] — the momentum the hold took from the grid (§2.7, §2.3.4): a
+1493:  before [M0-TG2] reads it, and the booking terms it lacks, as 0.
+1577:  `dumps/s_<step>.observers.json`, which `--continue` reads (§0.5 [M0-D76]). [M0-TG2] When any cell is held (§2.7),
+1580:  the key is not written, and a header without it — every dump written before [M0-TG2] — reads as none held, so such
+2085:- **G-REST · a remnant at rest** [M0-TG2]. An unresolved cold remnant sits still and shines on its own heat (§2.7's
+2100:  + sinks + escaped + held [M0-TG2]) to 10⁻⁶ of Σm|u|; the energy invariant drifting ≤ 10⁻³ |W| per τ_dyn (SM-O10).
+2244:G-VIR, G-JEANS, G-CONS (energy), G-THERMO, G-REF, G-REST (the GPU's disks and window [M0-TG2]), G-SQUEEZE, G-END, G-STAGES, G-TOUCH,
+$ verify.py --changed --task M0-TG2  (2026-11-02T20:33:17-05:00)
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why strings: stale: milestones/m0/m0_contrat.md
+why watch_only: stale: milestones/m0/m0_contrat.md
+plan_lint         811/0/0      0.11 s  GO · step 1/3, 2 left
+strings           3/0/0        0.11 s  GO · step 2/3, 1 left
+watch_only        1/0/0        0.16 s  GO · step 3/3, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 135 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 145 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+stage_order       NOT RUN (not impacted: its 144 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+multi             NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+edits             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+edits_file        NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 126 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 126 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 127 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 116 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 89 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 89 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 140 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 145 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 152 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 155 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 151 path(s) checked at the anchor)
+measure_ui        NOT RUN (not impacted: its 140 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 142 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 152 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 143 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+views             NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+extents           NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+glow              NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+frames            NOT RUN (not impacted: its 118 path(s) checked at the anchor)
+ui_topbar         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+ui_banner         NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+ui_tools          NOT RUN (not impacted: its 134 path(s) checked at the anchor)
+ui_presets        NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+ui_display        NOT RUN (not impacted: its 130 path(s) checked at the anchor)
+ui_star           NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+ui_legend         NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+ui_zoom           NOT RUN (not impacted: its 130 path(s) checked at the anchor)
+ui_remnant        NOT RUN (not impacted: its 130 path(s) checked at the anchor)
+ui_inspect        NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TG2.<scope>.log · record: loop_times.jsonl · tree f98f96d90183+cd89875febf8
+anchor: 3 path×scope entries moved by this run
+anchor: 403 paths checked · 370 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 403 covered of 773 visible
+skipped   362  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 815 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 84 not impacted · 0.17 s + loop 0.15 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 5.32->5.32 · base: M0-TG2's start 2026-11-02T19:53:55-05:00
+=== GO ===
+exit 0
+$ plan.py close M0-TG2 --status DONE --text ...
+close: checks=3 failed=0 warnings=1 · handoff_lines=1 · flow=per-task
+WARN: block M0-TG2 had no `- Handoff:` field; one was appended at the end of the block
+=== GO ===
+exit 0
+$ plan.py lint
+lint: checks=810 failed=0 warnings=7 · blocks=378 · flow_rows=378 · verify_fences=0 · history=0 · flow=per-task · header=601/600 · pipeline=9/60 · ladder=6 rungs · refresh=1/5
+=== GO ===

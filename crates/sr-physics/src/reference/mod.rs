@@ -10,6 +10,11 @@
 //! has its gravity term), and P9's gravity term reads g from the same step's P2 — the field of the state the step started
 //! from — not from the state P9 reduces. The twin runs the whole world, no active box (§1.3.3); outside the GPU's box the
 //! vacuum is left alone where the twin's P8 resets it to the floor, a difference of Σ_floor per cell (G-BOX's, §5.3).
+//!
+//! The held core (§2.7 [M0-TG2], §2.3.4; M0-R11's H): P8's last act writes the hold's mask, which the next step's P4 reads
+//! — a held cell left as it is behind reflecting walls — and the momentum the hold takes from the grid, a newly held cell's
+//! and the impulse P4 spares a held cell, is booked [`Twin::held`]. Before step 0 the mask is the rule's on the initial
+//! state, its zeroed momenta booked.
 
 pub mod fft;
 pub mod floors;
@@ -91,6 +96,10 @@ pub struct Twin {
     pub state: State,
     /// What P8 has booked since the twin was made.
     pub booked: Booked,
+    /// Momentum booked `held` since the twin was made (§2.9 [M0-TG2]): (x, y), signed.
+    pub held: [f64; 2],
+    /// The hold's mask (§2.7 [M0-TG2]), one flag per cell: what the next step's P4 leaves as it is.
+    mask: Vec<bool>,
     switches: Switches,
     hydro: Hydro,
     floors: Floors,
@@ -141,6 +150,8 @@ impl Twin {
         let mut twin = Twin {
             state: State::new(width, height, planes),
             booked: Booked::default(),
+            held: [0.0; 2],
+            mask: vec![false; width * height],
             switches,
             hydro: Hydro::new(physics, elements, edge)?,
             floors: Floors::new(physics, elements)?,
@@ -156,6 +167,7 @@ impl Twin {
             dt_next: 0.0,
             ran: Vec::new(),
         };
+        twin.hold();
         twin.solve_gravity();
         twin.dt_next = twin.reduce_dt();
         Ok(twin)
@@ -205,6 +217,18 @@ impl Twin {
         self.dt_next
     }
 
+    /// The hold's mask as the last P8 wrote it (before step 0, the initial state's): `true` where a cell is held.
+    pub fn held_mask(&self) -> &[bool] {
+        &self.mask
+    }
+
+    /// The hold on the state as it stands (§2.7 [M0-TG2]): the mask written, a newly held cell's momentum booked `held`.
+    fn hold(&mut self) {
+        let taken = self.floors.hold(&mut self.state, &mut self.mask);
+        self.held[0] += taken[0];
+        self.held[1] += taken[1];
+    }
+
     /// P2 on the state as it stands (a no-op without gravity).
     fn solve_gravity(&mut self) {
         let (w, h) = (self.state.width, self.state.height);
@@ -235,7 +259,9 @@ impl Twin {
         if self.switches.hydro {
             self.ran.push("P4 hydro");
             let radiation = self.flux.as_ref().map(|(x, y)| (&x[..], &y[..]));
-            self.hydro.step_forced(&mut self.state, dt, self.g.as_ref(), radiation);
+            let spared = self.hydro.step_held(&mut self.state, dt, self.g.as_ref(), radiation, &self.mask);
+            self.held[0] += spared[0];
+            self.held[1] += spared[1];
         }
         if let Some(heat) = &self.heat {
             self.ran.push("P5 heat");
@@ -248,6 +274,7 @@ impl Twin {
         }
         self.ran.push("P8 floors");
         self.booked += self.floors.apply(&mut self.state);
+        self.hold();
         self.ran.push("P9 reductions");
         self.dt_next = self.reduce_dt();
         self.step += 1;

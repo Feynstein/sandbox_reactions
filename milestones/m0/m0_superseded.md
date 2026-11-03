@@ -336,3 +336,15 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   area» — superseded by contract §0.5 [M0-D146]: the zoomed world is clipped to the world's place at z = 1 (`legend::layout`'s world
   rect), the drag clamped so it covers that rect, the legend and the hint kept in view (M0-D146, 2026-11-02, the lead at M0-V13:
   «Keep the build (Recommended)»).
+- Contract §2.3.4's scheme updating every cell, §1.4.2's sources with work at every face ([M0-D64], [M0-D68]), §2.7
+  [M0-T19]'s P8 rules, §2.9's momentum «grid · sinks · escaped» with G-CONS's sum, §1.3.2's P4 and P8 rows and §2.12.3's
+  dump — superseded by contract §0.5 [M0-TG2]: the held core — P8 holds a cold dense cell (σ_hold 10, η_hold 0.1, code
+  constants until M0-D71g moves them into physics.json), P4 leaves it still behind reflecting walls with no work across
+  them and one-way inflow, a momentum term `held`, the mask in dumps, a new row G-REST (the lead at M0-R11, 2026-10-28:
+  «H, held core (Recommended)», «η 0.1 (Recommended)», «Measured bounds (Recommended)»; at M0-TG2, 2026-11-02: «Code
+  now, move later (Recommended)»).
+- Contract §2.3.4 [M0-TG2]'s and §1.4.2 [M0-TG2]'s one-way inflow into a held cell, and §5.1 G-REST's disk momentum to
+  10⁻⁶ of Σm|u| — superseded by contract §0.5 [M0-D71]: no inflow (item 2 to M0-D71f, measured on the GPU lives), the
+  disks' momentum printed and the `held` booking graded to 10⁻¹² on strip cases (measured by M0-D71: inflow took the M 900
+  disk's floor to 392.6 against 10; source-term gravity drifts 1.4 × 10⁻² of Σm|u| with no hold; the lead at M0-D71,
+  2026-11-02: «Walls only, inflow later (Recommended)», «Booking exact, disks reported (Recommended)»).
