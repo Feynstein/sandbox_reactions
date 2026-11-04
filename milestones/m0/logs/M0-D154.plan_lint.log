@@ -1,0 +1,25 @@
+== 2026-11-04T10:03:18-05:00 plan_lint · task M0-D154 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=1 · 0.06 s
+lint: checks=826 failed=1 warnings=7 · blocks=389 · flow_rows=389 · verify_fences=0 · history=0 · flow=per-task · header=612/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+FAIL: Flow row M0-D155 says None, block says 'TODO'
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1481 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== NO-GO: 1 violation(s) ===
+
+== 2026-11-04T10:03:28-05:00 plan_lint · task M0-D154 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=826 failed=0 warnings=7 · blocks=389 · flow_rows=389 · verify_fences=0 · history=0 · flow=per-task · header=612/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1481 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== GO ===
+

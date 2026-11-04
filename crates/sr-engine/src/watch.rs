@@ -23,12 +23,21 @@
 //!   «Heaviest object's (Recommended)»): `ending` holds at the first frame whose heaviest object (gas + sinks, §1.9.6's default
 //!   selected star) has fired its `ending`, now or at an earlier frame — a lighter object's ending is logged and never stops
 //!   the run. [`Watch::life_ending`] is that event, summary.json's `until.object` its object.
+//! - The Sun's mass — the wisp cut, 1 % of it (§1.9.2) — and the four readouts of summary.json's objects (`mass_suns`,
+//!   `predicted_ending`, `ending`, `age_years`; §2.12.2, M0-D103) come from the calibration the binary embeds, read as
+//!   `Scene::with_embedded_masses` reads it; with none embedded the cut is the nominal Sun-like cloud's and the four are null.
+//!   The age clock runs on every frame's displayed stages (§1.10.4) and rides in the observers' snapshot (§0.5 [M0-D103]); it
+//!   reads no wall time — its rate is never read here — so its instants are the frames' sim times.
 
 use std::collections::{BTreeMap, BTreeSet};
 
 use serde_json::{json, Value};
+use sr_physics::calibration::{Calibration, EMBEDDED};
+use sr_physics::observe::age::AgeClock;
+use sr_physics::observe::ending::{self, Prediction, Predictor, Readout};
 use sr_physics::observe::stages::{ending_hold, stage_order};
 use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole, SUN_MASS_NOMINAL};
+use sr_physics::observe::translate::MassScale;
 use sr_physics::observe::{BlockData, EventKind, Object, Report, SinkData, Stage, StageTracker, Tracker, TrackerConfig, GROUP_N};
 use sr_physics::eos::Eos;
 use sr_physics::registry::Physics;
@@ -75,6 +84,9 @@ pub struct Star {
     pub shown: Option<&'static str>,
     /// Its history's `ignited` flag (§1.9.4), for stage_order's grade (§0.5 [M0-D141]).
     pub ignited: bool,
+    /// The tracker's id and the age clock's reading (§1.10.4; `None` before a stage has held or with no calibration embedded).
+    pub id: u32,
+    pub age_years: Option<f64>,
 }
 
 /// `--until`'s condition (§3.3).
@@ -225,11 +237,50 @@ struct Remnant {
     since: f64,
 }
 
+/// The calibration this binary embeds (§2.11), read as [`crate::scene::Scene::with_embedded_masses`] reads it: none where no
+/// file is embedded or it does not parse.
+pub fn embedded_calibration() -> Option<Calibration> {
+    EMBEDDED.and_then(|text| Calibration::parse(text).ok())
+}
+
+/// The Sun's mass the wisp cut is 1 % of (§1.9.2): calibration's `preset_mass_sb.sun`, the nominal Sun-like cloud's with none.
+fn sun_mass(cal: Option<&Calibration>) -> f64 {
+    cal.map_or(SUN_MASS_NOMINAL, |c| c.preset_mass_sb.sun)
+}
+
+/// summary.json's four readouts (§2.12.2): the mass in Suns (§1.10.1), the predicted ending (§1.9.5) and the age clock
+/// (§1.10.4), on calibration's four mass anchors.
+struct Readouts {
+    scale: MassScale,
+    predictor: Predictor,
+    ages: AgeClock,
+}
+
+impl Readouts {
+    /// `None` with no calibration, or one whose anchors the translations refuse.
+    fn new(cal: Option<&Calibration>) -> Option<Readouts> {
+        let cal = cal?;
+        let anchors = (cal.m_ign_sb, cal.m_ch_sb, cal.m_up_sb, cal.m_bh_sb);
+        Some(Readouts {
+            scale: MassScale::new(anchors.0, anchors.1, anchors.2, anchors.3).ok()?,
+            predictor: Predictor::new(anchors.0, anchors.1, anchors.2, anchors.3).ok()?,
+            ages: AgeClock::from_calibration(cal).ok()?,
+        })
+    }
+}
+
+/// A fate's or an ending's id: its strings-table key without the table's prefix (`fate.white_dwarf` → `white_dwarf`).
+fn key_id(key: &'static str) -> &'static str {
+    key.split_once('.').map_or(key, |(_, id)| id)
+}
+
 /// The observers of one run.
 pub struct Watch {
     world_width: u32,
     tracker: Tracker,
     stages: StageTracker,
+    /// The four readouts, `None` with no calibration embedded (summary.json writes them null).
+    readouts: Option<Readouts>,
     /// The sim time of the last frame (the run's start before the first): a frame's sim_dt is the difference.
     last_sim: f64,
     events: Vec<RunEvent>,
@@ -253,13 +304,20 @@ pub struct XhMark {
 }
 
 impl Watch {
-    /// Observers for a run in a world `world_width` cells wide whose sim time starts at `start_sim_time`. The Sun's mass is
-    /// the nominal Sun-like cloud's until calibration gives `preset_mass_sb.sun`.
+    /// Observers for a run in a world `world_width` cells wide whose sim time starts at `start_sim_time`, on the embedded
+    /// calibration ([`embedded_calibration`]).
     pub fn new(physics: &Physics, world_width: u32, start_sim_time: f64) -> Watch {
+        Watch::with_calibration(physics, world_width, start_sim_time, embedded_calibration().as_ref())
+    }
+
+    /// [`Watch::new`] on `cal` instead of the embedded calibration: the Sun's mass of the wisp cut and the four readouts
+    /// (none: the nominal Sun-like cloud's mass and four nulls).
+    pub fn with_calibration(physics: &Physics, world_width: u32, start_sim_time: f64, cal: Option<&Calibration>) -> Watch {
         Watch {
             world_width,
-            tracker: Tracker::new(TrackerConfig::from_physics(physics, SUN_MASS_NOMINAL)),
+            tracker: Tracker::new(TrackerConfig::from_physics(physics, sun_mass(cal))),
             stages: StageTracker::new(m_ch(physics)),
+            readouts: Readouts::new(cal),
             last_sim: start_sim_time,
             events: Vec::new(),
             lives: BTreeMap::new(),
@@ -294,6 +352,11 @@ impl Watch {
                 RunEvent { step: at.step, sim_time: e.time, kind: e.kind.id(), object: e.object, detail }
             })
             .collect();
+        // The age clock, every frame on each object's displayed stage (§1.10.4): the frame's sim time stands for its wall time.
+        let stages = &self.stages;
+        if let Some(r) = self.readouts.as_mut() {
+            r.ages.update(at.sim_time, at.sim_time, &objects, |id| stages.stage(id).and_then(|s| s.shown));
+        }
         self.lives.retain(|id, _| objects.iter().any(|o| o.id == *id));
         self.remnants.retain(|id, _| objects.iter().any(|o| o.id == *id));
         for o in &objects {
@@ -405,6 +468,8 @@ impl Watch {
             raw: state.map(|s| s.raw.id()),
             shown: state.and_then(|s| s.shown).map(Stage::id),
             ignited: state.is_some_and(|s| s.history.ignited),
+            id: o.id,
+            age_years: self.readouts.as_ref().and_then(|r| r.ages.age(o.id)),
         })
     }
 
@@ -426,7 +491,7 @@ impl Watch {
 
     /// Everything the next frame and summary.json read, for the observers' snapshot beside a dump (§0.5 [M0-D76]): the
     /// tracker, the stages, the last frame's sim time, the events, each object's stage trail, the remnant holds, the objects
-    /// ended, the at_x_h marks and max_gas_speed — every f64 [`exact`].
+    /// ended, the at_x_h marks, max_gas_speed and the age clock (§0.5 [M0-D103]; null with no calibration) — every f64 [`exact`].
     pub fn snapshot(&self) -> Value {
         let by_id = |entries: Vec<(u32, Value)>| entries.into_iter().map(|(id, v)| json!([id, v])).collect::<Vec<_>>();
         let events: Vec<Value> = self
@@ -454,12 +519,21 @@ impl Watch {
             "ended": self.ended,
             "marks": by_id(marks.collect()),
             "max_gas_speed": exact(self.max_gas_speed),
+            "ages": self.readouts.as_ref().map(|r| r.ages.snapshot()),
         })
     }
 
-    /// The observers [`Watch::snapshot`] wrote, for a run in a world `world_width` cells wide under `physics`.
+    /// The observers [`Watch::snapshot`] wrote, for a run in a world `world_width` cells wide under `physics`, on the embedded
+    /// calibration as [`Watch::new`]. A snapshot whose age clock is null (written with no calibration) restores an empty one.
     pub fn restore(physics: &Physics, world_width: u32, v: &Value) -> Result<Watch, String> {
-        let config = TrackerConfig::from_physics(physics, SUN_MASS_NOMINAL);
+        let cal = embedded_calibration();
+        let config = TrackerConfig::from_physics(physics, sun_mass(cal.as_ref()));
+        let mut readouts = Readouts::new(cal.as_ref());
+        if let (Some(r), ages) = (readouts.as_mut(), &v["ages"]) {
+            if !ages.is_null() {
+                r.ages.restore(ages)?;
+            }
+        }
         let id = |v: &Value| v.as_u64().and_then(|n| u32::try_from(n).ok()).ok_or_else(|| format!("not an object id: {v}"));
         // `[id, value]` pairs into a map, each value read by `read`.
         fn by_id<T>(v: &Value, key: &str, read: impl Fn(&Value) -> Result<T, String>) -> Result<BTreeMap<u32, T>, String> {
@@ -504,6 +578,7 @@ impl Watch {
             world_width,
             tracker: Tracker::restore(config, &v["tracker"])?,
             stages: StageTracker::restore(&v["stages"], m_ch(physics))?,
+            readouts,
             last_sim: read_exact(&v["last_sim"], "last_sim")?,
             events,
             lives,
@@ -514,8 +589,11 @@ impl Watch {
         })
     }
 
-    /// summary.json's `objects` (§2.12.2): the last frame's, with the stages each displayed. `mass_suns`,
-    /// `predicted_ending`, `ending` and `age_years` come with M0-T69, M0-T72 and M0-T73.
+    /// summary.json's `objects` (§2.12.2): the last frame's, with the stages each displayed and the four readouts (M0-D103) —
+    /// `mass_suns` (§1.10.1), `predicted_ending` (§1.9.5: the fate ids, one for a sure call, the close call's two lighter
+    /// first), `ending` (the ending id once [`Predictor::readout`] reads it ended — the displayed remnant held
+    /// [`ending_hold`] at the last frame's τ_dyn — else null) and `age_years` (§1.10.4: null before a stage has held); all four
+    /// null with no calibration embedded.
     pub fn objects_json(&self) -> Vec<Value> {
         self.tracker
             .objects()
@@ -529,7 +607,21 @@ impl Watch {
                     .flatten()
                     .map(|l| json!({"stage": l.stage.id(), "from_step": l.from_step, "sim_time": l.sim_time}))
                     .collect();
-                let mut object = json!({"id": o.id, "stage": shown.map(Stage::id), "mass_sb": o.mass, "stages": stages});
+                let mut object = json!({"id": o.id, "stage": shown.map(Stage::id), "mass_sb": o.mass, "stages": stages,
+                                        "mass_suns": null, "predicted_ending": null, "ending": null, "age_years": null});
+                if let Some(r) = &self.readouts {
+                    object["mass_suns"] = json!(r.scale.to_suns(o.mass));
+                    object["predicted_ending"] = match r.predictor.predict(o.mass) {
+                        Some(Prediction::Sure(f)) => json!([key_id(f.key())]),
+                        Some(Prediction::CloseCall(a, b)) => json!([key_id(a.key()), key_id(b.key())]),
+                        None => Value::Null,
+                    };
+                    let held = self.remnants.get(&o.id).map(|h| ending::Remnant { stage: h.stage, held_t: self.last_sim - h.since, tau_dyn: o.tau_dyn });
+                    if let Some(Readout::Ended(e)) = r.predictor.readout(o.mass, held) {
+                        object["ending"] = json!(key_id(e.key()));
+                    }
+                    object["age_years"] = json!(r.ages.age(o.id));
+                }
                 if let Some(m) = self.marks.get(&o.id) {
                     object["at_x_h"] = json!({"x_h_c": T_EFF_X_H, "sim_time": m.sim_time, "luminosity": m.luminosity, "radius": m.radius});
                 }

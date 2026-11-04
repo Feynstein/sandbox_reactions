@@ -15,10 +15,18 @@
 //! momentum in f32's reach; the tube laid along y (64 × 400) the x run, step for step; the cold pressure on, conserving.
 //! Tolerances of the f32 cases, fixed before any GPU run: rows and the y-laid run within 1e-5 of Σ's unit, mass and
 //! energy within 1e-5 relative, the walls' momentum within 1e-4 relative.
+//!
+//! M0-D155 — the thermal bracket (§2.3.4 [M0-D155]): scenes/thin_cell.bin, 64 × 64 cells of the Massive life's s_3326 (the
+//! git-ignored source re-cut where it is on disk, `SR_WRITE_SCENES=1`), where a dense cell (Σ 7.25) lies between a thin one
+//! (Σ 8.4e-4) and denser gas; one step of P4 alone on the twin and on the GPU, the hold's rule on the cut: no free gas cell's
+//! |v| over 10 × its free neighbours' largest (Verify 2's bound). Without the bracket the thin cell leaves at |v| ≈ 2,100,
+//! 54.6 × its neighbours' (the life's step on the RTX 4090). Plants `hll-hot-face-twin` and `hll-hot-face-gpu` take the
+//! bracket out of the twin's `slope` and hydro.wgsl's.
 
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
+use sr_engine::dump::Dump;
 use sr_engine::gpu::Gpu;
 use sr_engine::scene::{EdgeMode, Scene};
 use sr_engine::state::{Booking, State as GpuState, WorldConfig};
@@ -26,6 +34,7 @@ use sr_engine::step::boxfit::BoxMode;
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::reference::hydro::{Edge, Hydro, State, COMPONENTS};
 use sr_physics::reference::riemann::{self, Solution, Wave};
+use sr_physics::reference::{Switches, Twin};
 use sr_physics::registry::{Elements, Physics};
 
 /// Sod's read time (the 0.2 of the unit tube, scaled to 400 cells), and where the diaphragm sits (§5.1).
@@ -547,4 +556,152 @@ fn gpu_with_cold_pressure_on_a_flow_conserves_and_stays_physical() {
     assert!(rel(end[0], start[0]) <= 1e-5, "mass");
     assert!(rel(end[3], start[3]) <= 1e-5, "energy");
     assert!(rel(end[1], pushed) <= 1e-4, "x momentum {} ≠ {pushed}", end[1]);
+}
+
+// ---- M0-D155: the thermal bracket (§2.3.4 [M0-D155]) ----
+
+/// The cut's source, the Massive life's s_3326 (M0-D153's s_2000 run on, M0-D154's Repro; git-ignored, on
+/// laserax-ai-server only — a clone reads scenes/thin_cell.bin as it is).
+const THIN_SOURCE: &str = "build/m0-d155/s_3326.bin";
+/// The cut's cells, x 266–329 and y 165–228 of the source's 600 × 400 world: the thin cell (298, 197) at (32, 32), the
+/// dense cell (298, 198) below it, the held core (299–302, 199–200) at (33–36, 34–35).
+const THIN_AT: [usize; 2] = [266, 165];
+const THIN: usize = 64;
+const THIN_CELL: usize = 32 * THIN + 32;
+/// Verify 2's bound (M0-D155): no free cell's |v| over this many times its free neighbours' largest after one step.
+const LEAP: f64 = 10.0;
+
+fn repo_dir() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("../..")
+}
+
+/// The cut: every plane's 64 × 64 cells and the hold's mask from the source, its F and P5's rate left out (P4 alone runs
+/// here), its records the source's (unused: a case fits its own box), as scenes/heat_overflow.bin's are.
+fn cut_thin(src: &Dump) -> Dump {
+    let (w0, n0) = (src.world.width as usize, src.world.cells());
+    fn crop<T: Copy + Default>(planes: &[T], w0: usize, n0: usize) -> Vec<T> {
+        let mut out = vec![T::default(); planes.len() / n0 * THIN * THIN];
+        for (c, plane) in planes.chunks(n0).enumerate() {
+            for y in 0..THIN {
+                for x in 0..THIN {
+                    out[(c * THIN + y) * THIN + x] = plane[(y + THIN_AT[1]) * w0 + x + THIN_AT[0]];
+                }
+            }
+        }
+        out
+    }
+    Dump {
+        world: WorldConfig::new(THIN as u32, THIN as u32).unwrap(),
+        step: src.step,
+        sim_time: src.sim_time,
+        sinks: Vec::new(),
+        resume: src.resume,
+        planes: crop(&src.planes, w0, n0),
+        flux: None,
+        rate: None,
+        held: src.held.as_deref().map(|h| crop(h, w0, n0)),
+    }
+}
+
+/// scenes/thin_cell.bin, checked against the cut where the source is on disk: stale is a failure (`SR_WRITE_SCENES=1`
+/// writes it first, the one way to refresh it); where the source is absent it is read as it is.
+fn thin_cut() -> Dump {
+    let path = scenes_dir().join("thin_cell.bin");
+    match Dump::read(&repo_dir().join(THIN_SOURCE)) {
+        Ok(src) => {
+            let cut = cut_thin(&src);
+            if std::env::var_os("SR_WRITE_SCENES").is_some() {
+                cut.write(&path).expect("write scenes/thin_cell.bin");
+            }
+            let file = Dump::read(&path).unwrap_or_else(|e| panic!("{e} — SR_WRITE_SCENES=1 bash tests/gpu.sh sod physics writes it"));
+            assert!(file == cut, "scenes/thin_cell.bin is not the cut of {THIN_SOURCE} — SR_WRITE_SCENES=1 bash tests/gpu.sh sod physics rewrites it");
+            println!("SR-SOD-THIN scenes/thin_cell.bin is the cut of {THIN_SOURCE}");
+            file
+        }
+        Err(e) => {
+            assert!(std::env::var_os("SR_WRITE_SCENES").is_none(), "SR_WRITE_SCENES=1 needs {THIN_SOURCE}: {e}");
+            println!("SR-SOD-THIN {THIN_SOURCE} is not here ({e}): scenes/thin_cell.bin read as it is, not re-cut");
+            Dump::read(&path).unwrap_or_else(|e| panic!("{e}"))
+        }
+    }
+}
+
+/// The worst free gas cell inside the world's edge ring: its |v| over the largest of its eight free gas neighbours'
+/// (ratio, cell, |v|); a cell with none is left out.
+fn worst_leap(st: &State, held: &[bool], sigma_vac: f64) -> (f64, usize, f64) {
+    let (w, n) = (st.width, st.cells());
+    let gas = |c: usize| !held[c] && st.planes[c] >= sigma_vac;
+    let speed = |c: usize| st.planes[n + c].hypot(st.planes[2 * n + c]) / st.planes[c];
+    let mut worst = (0.0, 0, 0.0);
+    for y in 1..st.height - 1 {
+        for x in 1..w - 1 {
+            let c = y * w + x;
+            if !gas(c) {
+                continue;
+            }
+            let near = [c - w - 1, c - w, c - w + 1, c - 1, c + 1, c + w - 1, c + w, c + w + 1];
+            let most = near.iter().filter(|&&q| gas(q)).map(|&q| speed(q)).fold(0.0, f64::max);
+            if most > 0.0 && speed(c) / most > worst.0 {
+                worst = (speed(c) / most, c, speed(c));
+            }
+        }
+    }
+    worst
+}
+
+/// The cut's step on one side, graded: the thin cell printed, then [`LEAP`] on every free gas cell.
+fn assert_no_leap(side: &str, st: &State, held: &[bool], sigma_vac: f64) {
+    let (ratio, c, v) = worst_leap(st, held, sigma_vac);
+    let n = st.cells();
+    let t = THIN_CELL;
+    println!(
+        "SR-SOD-THIN {side}: the thin cell Σ {:.4e}, m ({:+.4e}, {:+.4e}), E {:.4e}, |v| {:.4e}; the worst free cell ({}, {}) \
+         |v| {v:.4e}, {ratio:.3} × its neighbours' largest (bound {LEAP}; without the bracket 54.6 at the thin cell, M0-D155)",
+        st.planes[t],
+        st.planes[n + t],
+        st.planes[2 * n + t],
+        st.planes[3 * n + t],
+        st.planes[n + t].hypot(st.planes[2 * n + t]) / st.planes[t],
+        c % st.width,
+        c / st.width,
+    );
+    assert!(ratio <= LEAP, "{side}: cell ({}, {}) at |v| {v:e}, {ratio} × its neighbours' largest", c % st.width, c / st.width);
+}
+
+#[test]
+fn a_thin_cell_beside_dense_gas_takes_no_leap() {
+    // M0-D155: the twin's step (P4 alone, leave edges, the hold's rule on the cut as before step 0) from the Massive life's
+    // s_3326 cut. Without the bracket the dense cell (32, 33) faces the thin one with its Σ and a third of its Π, and the
+    // thin cell leaves at |v| ≈ 2,100 (P4's flux differences alone: gravity and the radiation force change it by 2 %).
+    let dump = thin_cut();
+    let physics = Physics::shipped().unwrap();
+    let planes: Vec<f64> = dump.planes.iter().map(|&v| f64::from(v)).collect();
+    let switches = Switches { gravity: false, hydro: true, heat: false, reactions: false };
+    let mut twin = Twin::new(&physics, &elements(), Edge::Leave, switches, None, THIN, THIN, planes).unwrap();
+    let life = dump.held.as_ref().map_or(0, |h| h.iter().filter(|&&m| m != 0).count());
+    let rule = twin.held_mask().iter().filter(|&&m| m).count();
+    println!("SR-SOD-THIN twin: the rule holds {rule} cells of the cut, the life held {life}; Δt {:.6e}", twin.dt_next());
+    twin.step();
+    assert_no_leap("twin", &twin.state, twin.held_mask(), physics.get("sigma_vac").unwrap());
+}
+
+#[test]
+fn gpu_a_thin_cell_beside_dense_gas_takes_no_leap() {
+    // The twin's case on the GPU's P4 (hydro.wgsl's `slope`): the same cut, the same step.
+    let dump = thin_cut();
+    let physics = Physics::shipped().unwrap();
+    let gpu: Gpu = super::device();
+    let state = GpuState::new(&gpu.device, dump.world).unwrap();
+    state.upload(&gpu.queue, &dump.planes).unwrap();
+    let booking = Booking::new(&gpu.device, dump.world).unwrap();
+    let eos = EosGpu::new(&gpu.device, &physics, &elements());
+    let passes = Passes { mode: BoxMode::Fit, gravity: None, hydro: Some(EdgeMode::Leave) };
+    let step = Step::with_passes(&gpu.device, &state, &booking, &eos, &physics, &passes).unwrap();
+    step.run(&gpu.device, &gpu.queue, 1);
+    let report = step.read_dt(&gpu.device, &gpu.queue);
+    assert!(report.non_finite.is_none(), "non-finite state: {:?}", report.non_finite);
+    let planes = state.readback(&gpu.device, &gpu.queue).iter().map(|&v| f64::from(v)).collect();
+    let held: Vec<bool> = state.read_held(&gpu.device, &gpu.queue).iter().map(|&m| m != 0).collect();
+    println!("SR-SOD-THIN gpu: Δt {:.6e}, {} cells held after the step", report.dt, held.iter().filter(|&&m| m).count());
+    assert_no_leap("gpu", &State::new(THIN, THIN, planes), &held, physics.get("sigma_vac").unwrap());
 }

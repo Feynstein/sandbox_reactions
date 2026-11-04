@@ -1,0 +1,157 @@
+== 2026-11-04T11:32:16-05:00 boot · task M0-D91 · box laserax-ai-server :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 9.73 s
+headless-boot: ready - exit 0, 2.3s (log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-D91.launch.headless-boot.log)
+headless-boot: pid 1511318 not signalled - gone
+headless-boot: log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-D91.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+git revision: a clean tree -> 916769d
+git revision: only assets/calibration.json rewritten and a log written -> 916769d
+git revision: a source changed -> 916769d-dirty
+git revision: a new source untracked -> 916769d-dirty
+git revision: no repository -> unknown
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 3060"
+  },
+  "events": [],
+  "git": "255ec37-dirty",
+  "ledger": {
+    "end": {
+      "energy": {
+        "cold": 161088.42806412998,
+        "escaped": 0.0,
+        "floor_added": -0.4685891216496333,
+        "invariant": -180588.5383267621,
+        "kinetic": 59953.1425126409,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 585.9212914705347,
+        "potential": -512950.2321431013,
+        "radiated": 61.55891993828618,
+        "swallowed": 0.0,
+        "thermal": 111844.01702197889,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.705270985619,
+        "invariant": 3136.72022270321,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.014951717590908409
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          0.0005950767872491269,
+          0.00048061557117762277
+        ],
+        "held": [
+          0.0,
+          0.0
+        ],
+        "invariant": [
+          0.0005950767872491269,
+          0.00048061557117762277
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 3.538296341896057,
+      "step": 200
+    },
+    "start": {
+      "energy": {
+        "cold": 34684.23563502729,
+        "escaped": 0.0,
+        "floor_added": 0.0,
+        "invariant": -180591.62877490063,
+        "kinetic": 10.412091037258506,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 0.0,
+        "potential": -239193.30447845458,
+        "radiated": 0.0,
+        "swallowed": 0.0,
+        "thermal": 23907.02797748939,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7201981313733,
+        "invariant": 3136.7201981313733,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.0
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          4.410743713378906e-6,
+          4.837289452552795e-6
+        ],
+        "held": [
+          0.0,
+          0.0
+        ],
+        "invariant": [
+          4.410743713378906e-6,
+          4.837289452552795e-6
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 0.030442580580711365,
+      "step": 1
+    }
+  },
+  "max_gas_speed": 9.41042987410942,
+  "objects": [
+    {
+      "id": 1,
+      "mass_sb": 3136.1813494246453,
+      "stage": null,
+      "stages": []
+    }
+  ],
+  "scene": "preset:sun",
+  "sim_time": 3.538296341896057,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 1.990896894,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 0 s, booted and checked in 10 s
+=== GO ===
+

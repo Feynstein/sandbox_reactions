@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -97,7 +97,7 @@
+ // 4090, the Jacobi step then converging in 17 passes, 3,518 rounds once scaled). A power of two scales exactly, so the quotient
+ // is bit-identical wherever 1/b was normal.
+ fn ratio(a: f32, b: f32) -> f32 {
+-    if (abs(b) >= 18446744073709551616.0) {
++    if (false) {
+         return (a * 5.421010862427522e-20) / (b * 5.421010862427522e-20);
+     }
+     return a / b;

@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/watch.rs
++++ b/crates/sr-engine/src/watch.rs
+@@ -245,7 +245,7 @@
+ 
+ /// The Sun's mass the wisp cut is 1 % of (§1.9.2): calibration's `preset_mass_sb.sun`, the nominal Sun-like cloud's with none.
+ fn sun_mass(cal: Option<&Calibration>) -> f64 {
+-    cal.map_or(SUN_MASS_NOMINAL, |c| c.preset_mass_sb.sun)
++    cal.map_or(SUN_MASS_NOMINAL, |_| SUN_MASS_NOMINAL)
+ }
+ 
+ /// summary.json's four readouts (§2.12.2): the mass in Suns (§1.10.1), the predicted ending (§1.9.5) and the age clock

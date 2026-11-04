@@ -91,6 +91,18 @@ fn finite(v: f32) -> bool {
     return (bitcast<u32>(v) & 0x7f800000u) != 0x7f800000u;
 }
 
+// a / b for the solve's quotients of two sums (α, β, the heat-free shift, the closure δ): both scaled by 2⁻⁶⁴ when |b| ≥ 2⁶⁴.
+// The GPU divides as a × (1/b) and flushes a subnormal 1/b to 0, so past |b| ≥ 2¹²⁶ the plain quotient reads 0 (M0-D91: on
+// heat_ceiling.bin's thin hot cell γ = 1.10e38 and η = 1.28e38, so α = β = 0 and CG stood still for 4,096 rounds on the RTX
+// 4090, the Jacobi step then converging in 17 passes, 3,518 rounds once scaled). A power of two scales exactly, so the quotient
+// is bit-identical wherever 1/b was normal.
+fn ratio(a: f32, b: f32) -> f32 {
+    if (abs(b) >= 18446744073709551616.0) {
+        return (a * 5.421010862427522e-20) / (b * 5.421010862427522e-20);
+    }
+    return a / b;
+}
+
 fn nx() -> u32 {
     return (dims.width + 1u) * dims.height;
 }
@@ -218,7 +230,8 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // Jacobi-preconditioned conjugate gradients in f32 until both of (4)'s measures hold at 10⁻⁵ (checked before every round,
 // the start included), each pass's solve started from the iterate shifted along z, the indicator of the pass's heat-free
 // cells (`free_at`), by the Galerkin step zᵀr/zᵀA z (M0-D36: a thin ring's common level, which the rounds barely move and
-// the measures do not see, set once a pass — its emission 1 % high and the closure δ −1.4 × 10⁻⁴ on heat_rim without it);
+// the measures do not see, set once a pass — its emission 1 % high and the closure δ −1.4 × 10⁻⁴ on heat_rim without it; past a
+// step's first downward shift the set holds the heat-free cells it moves within (3)'s per-cell test, off the floor — M0-D156);
 // the update keeps u ≥ u_vac and moves no T by more than a factor 2; the passes end after the first
 // one that moves Σ C|ΔT| by at most 10⁻⁶ Σ C T⁰ and every cell by at most 10⁻³ of its T. Where Σ_f D_f is 10⁵ c_i (thin gas
 // at the shipped a_r; heat_spot) f32 must not lose what the measures weigh (M0-D56): every product with A and the residual
@@ -269,8 +282,8 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // Krylov planes live in their buffers between slots, so a carried pass goes on from what its last slot left.
 
 // The machine's record, one per parity: the slot that reads it, its mode, the passes and rounds so far, this pass's
-// rounds, how many partial sums the slot reads, the rounds' tiles, Δt, Σ C T⁰, this pass's two bounds and the last
-// round's γ and η.
+// rounds, how many partial sums the slot reads, the rounds' tiles, Δt, Σ C T⁰, this pass's two bounds, the last
+// round's γ and η, and the step's reach (its largest downward heat-free shift so far, `shifted_at`).
 struct Machine {
     slot: u32,
     mode: u32,
@@ -286,7 +299,7 @@ struct Machine {
     t_bound: f32,
     gamma: f32,
     eta: f32,
-    _a: u32,
+    reach: f32,
     _b: u32,
 }
 
@@ -347,6 +360,8 @@ const MAX_ROUNDS: u32 = 4096u;
 const TILE: u32 = 16u;
 // A gas cell whose heat term c_i is at most this share of its faces' Σ_f D_f is heat-free (`free_at`).
 const FREE_SHARE: f32 = 1.0e-3;
+// A gas cell whose iterate's T is within this share above T_floor is on the floor (`pinned`): f32's T of u_vac, a few ε off.
+const FLOOR_TOL: f32 = 1.0e-6;
 const DO_INIT: u32 = 0u;
 const DO_RESID: u32 = 1u;
 const DO_START: u32 = 2u;
@@ -444,6 +459,32 @@ fn free_at(x: u32, y: u32, dt: f32) -> bool {
     return heat_term(y * dims.width + x, dt) <= FREE_SHARE * d_sums(x, y).x;
 }
 
+// Whether gas cell (x, y)'s iterate sits on the floor, T ≤ T_floor (the update keeps u ≥ u_vac, so such a cell cannot go lower).
+fn pinned(x: u32, y: u32) -> bool {
+    return solve[SV_T * dims.cells + y * dims.width + x] <= params.t_floor * (1.0 + FLOOR_TOL);
+}
+
+// Whether (x, y) is in the start's shift set z (one set, either direction): a heat-free cell off the floor on which a shift of
+// `reach` — the step's largest downward shift so far, 0 at its first start, where z is every heat-free cell off the floor —
+// keeps u above u_vac and moves T by less than (3)'s per-cell test: |Δu| < 4 NEWTON_CELL u (NEWTON_CELL u under
+// constant_diffusivity). M0-D156, the Sun-like life on the RTX 4090: one level over the world's ~150,000 heat-free cells, their
+// u eight decades apart, is an additive move the cold ones cannot take — at step 13,594 cells the update holds on the floor
+// carried 95 % of zᵀA z, so each shift was undone there, zᵀr came back with the same sign and every other heat-free cell walked
+// ~1 % in u a pass for 64 passes; the floor alone left out moved the stall to cells the shift walks freely (step 14,447: 0
+// rounds, 3,000–40,000 cells past the test a pass), and a set per direction cycled (step 17,488). An upward shift leaves the
+// reach as it is: heat_rim's ring walks up through the factor 2 pass after pass (M0-D36), and dropped by its own climb it
+// closed at a C-weighted L1 of 1.4e-4 from the twin on Jacobi.
+fn shifted_at(x: u32, y: u32, dt: f32, reach: f32) -> bool {
+    if (!free_at(x, y, dt) || pinned(x, y)) {
+        return false;
+    }
+    let i = y * dims.width + x;
+    let u = solve[SV_X * dims.cells + i] + solve[SV_L * dims.cells + i];
+    // dT/T = du/(4u), or du/u under constant_diffusivity (u = T).
+    let per_t = select(4.0, 1.0, (params.flags & CONSTANT_DIFFUSIVITY) != 0u);
+    return u - u_of(params.t_floor) > reach && reach < per_t * NEWTON_CELL * u;
+}
+
 // c_i of gas cell i, this pass's heat term (C_i/Δt) dT/du at the iterate's T: the diagonal less Σ_f D_f, taken from C_i and
 // T, never as that difference (f32 holds the diagonal to ε of Σ_f D_f, a few % of c_i in thin gas at the shipped a_r).
 fn heat_term(i: u32, dt: f32) -> f32 {
@@ -510,7 +551,16 @@ fn build(x: u32, y: u32, t: f32, dt: f32) -> vec2<f32> {
     let u = u_of(t);
     solve[SV_T * n + i] = t;
     solve[SV_D * n + i] = c + d_sums(x, y).x;
-    return vec2<f32>(c * u * u, heat * t * t);
+    // c u² as (c u) u, the bits every step had; past √f32::MAX of u the GPU forms u² first (M0-D154: the Massive life's step
+    // 3,328 on the RTX 4090, u 4.1e19, Σ c u² 7.2e24 read inf, the step ended at pass 0), so a product that is not finite is
+    // re-formed without u² — (C/Δt)(T/4) u, (C/Δt) T u under constant_diffusivity: only a bound out of f32's range ends a step
+    // (§0.5 [M0-D93]). The rounds' measures keep their b² (r²/D, (C/Δt) ê²): re-formed the same way, the Massive life's step
+    // 4,443 ran to 4,096 rounds and the state went non-finite at step 4,736 (M0-D154; the lead's).
+    var cu2 = c * u * u;
+    if (!finite(cu2)) {
+        cu2 = heat * select(0.25 * t, t, (params.flags & CONSTANT_DIFFUSIVITY) != 0u) * u;
+    }
+    return vec2<f32>(cu2, heat * t * t);
 }
 
 @compute @workgroup_size(8, 8)
@@ -538,7 +588,7 @@ fn heat_open() {
     let ty = (abox.h + TILE - 1u) / TILE;
     let stepped = (params.flags & PIN_TEMPERATURE) == 0u && dt > 0.0 && finite(dt) && tx * ty > 0u;
     let on = select(0u, 1u, stepped);
-    machine.rec[1] = Machine(0u, DO_INIT, 0u, 0u, 0u, 0u, tx, ty, dt, 0.0, 0.0, 0.0, 0.0, 0.0, 0u, 0u);
+    machine.rec[1] = Machine(0u, DO_INIT, 0u, 0u, 0u, 0u, tx, ty, dt, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0u);
     // reduce.wgsl's DtState: its third word is the step in flight.
     let step = bitcast<u32>(dt_rec[2]);
     let kept = machine.report;
@@ -602,8 +652,10 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
             }
         }
         case DO_START: {
-            // The start's shift along z, the heat-free cells' indicator: zᵀr / zᵀA z (none when no cell is heat-free).
-            shift = select(0.0, total.x / total.y, total.y > 0.0);
+            // The start's shift along z, the shift set's indicator (`shifted_at`): zᵀr / zᵀA z (none when the set is empty);
+            // the step's reach keeps its largest downward one (M0-D156).
+            shift = select(0.0, ratio(total.x, total.y), total.y > 0.0);
+            next.reach = max(rec.reach, -shift);
             action = CELL_START;
             next.mode = DO_SOLVE;
         }
@@ -611,7 +663,7 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
             let gamma = total.x;
             var eta = total.y;
             if (!first) {
-                beta = gamma / rec.gamma;
+                beta = ratio(gamma, rec.gamma);
                 eta = total.y - beta * beta * rec.eta;
             }
             // (4)'s u-measure is (r, D⁻¹r) whatever the preconditioner: Jacobi's γ, the V-cycle's fourth sum.
@@ -623,7 +675,7 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 next.mode = DO_RESID;
             } else {
                 action = CELL_ROUND;
-                alpha = gamma / eta;
+                alpha = ratio(gamma, eta);
                 next.gamma = gamma;
                 next.eta = eta;
                 next.k = rec.k + 1u;
@@ -677,12 +729,13 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 // beyond a vacuum or edge face — the step's own residual, face by face (M0-D56).
                 // The start's Galerkin shift along z (`free_at`): (A z)_i into p's plane, which the solve's first round
                 // overwrites, and this cell's share of zᵀr and zᵀA z — taken face by face over the faces leaving the
-                // heat-free cells, so the huge D_f between two of them cancel exactly instead of in f32's sum of r.
+                // heat-free cells, so the huge D_f between two of them cancel exactly instead of in f32's sum of r (the shift
+                // set, `shifted_at`: M0-D156).
                 let xi = solve[SV_X * n + i];
                 let lo = solve[SV_L * n + i];
                 var fd = face_d(x, y);
                 var nb = neighbours(x, y);
-                let free = free_at(x, y, rec.dt);
+                let free = shifted_at(x, y, rec.dt, rec.reach);
                 let kept = -heat * (solve[SV_T * n + i] - frozen[T0 * n + i]);
                 var r = kept;
                 var zr = kept;
@@ -692,7 +745,7 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
                 }
                 for (var f = 0u; f < 4u; f++) {
                     let o = nb[f];
-                    let other = free_at(o.x, o.y, rec.dt);
+                    let other = shifted_at(o.x, o.y, rec.dt, rec.reach);
                     var far = u_of(params.t_floor);
                     var far_lo = 0.0;
                     if (gas_at(o.x, o.y)) {
@@ -717,7 +770,7 @@ fn heat_round(@builtin(workgroup_id) wid: vec3<u32>, @builtin(local_invocation_i
             case CELL_START: {
                 let d = solve[SV_D * n + i];
                 let r = krylov[(KR_R + old) * n + i] - shift * solve[SV_P * n + i];
-                if (free_at(x, y, rec.dt)) {
+                if (shifted_at(x, y, rec.dt, rec.reach)) {
                     raise(i, shift);
                 }
                 krylov[(KR_R + me) * n + i] = r;
@@ -1018,7 +1071,7 @@ fn heat_sum(@builtin(local_invocation_index) li: u32) {
         // Past the ceiling the limited fluxes book each face on both sides: no closure (§0.5 [M0-D89]).
         var delta = 0.0;
         if (machine.report.stepped != 0u && machine.report.converged != 0u && s.z > 0.0) {
-            delta = -(s.x + s.y) / s.z;
+            delta = ratio(-(s.x + s.y), s.z);
         }
         machine.report.delta = delta;
         machine.report.gained = s.x;

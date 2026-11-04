@@ -1,0 +1,25 @@
+# M0-D91 — the 40 M₀ life from build/r6_evidence/m40/s_2510.bin to step 3,100, laserax-ai-server, RTX 4090, today's assets/physics.json; 2026-11-04T11:25:45-05:00
+== sr-base (988ccd3a, the tree before M0-D91)
+wall 0.00 s
+exit 4
+== sr-base (988ccd3a, the tree before M0-D91), --scene the item file beside the dump (an empty 600 x 400 leave world)
+SR-ERROR bad dump: --continue: build/r6_evidence/m40/s_2510.observers.json is scene "calibrate:m_bh_sb:134041.287", the run's "/tmp/d91/m40_scene.json"
+wall 0.03 s
+exit 4
+== sr-base, run from build/r6_evidence/m40 with --scene calibrate:m_bh_sb:134041.287
+SR-ERROR bad dump: --continue: s_2510.observers.json is sinks: not a list: null
+wall 0.02 s
+exit 4
+== sr-base, --load-dump s_2510.bin without --continue (its observers.json predates the sinks list), --steps 590
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+wall 22.78 s
+exit 0
+s_2520.bin
+s_3100.observers.json
+    Finished `release` profile [optimized] target(s) in 4.52s
+080bb068ac2b86552130dc71032235df  build/target/release/sandbox-reactions
+== sr-fix (the tree with M0-D91), the same command
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+wall 22.82 s
+exit 0
+dumps compared 59, differing 0

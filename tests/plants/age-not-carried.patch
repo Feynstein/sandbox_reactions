@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/watch.rs
++++ b/crates/sr-engine/src/watch.rs
+@@ -519,7 +519,7 @@
+             "ended": self.ended,
+             "marks": by_id(marks.collect()),
+             "max_gas_speed": exact(self.max_gas_speed),
+-            "ages": self.readouts.as_ref().map(|r| r.ages.snapshot()),
++            "ages": Value::Null,
+         })
+     }
+ 

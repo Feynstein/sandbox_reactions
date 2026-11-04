@@ -1,0 +1,554 @@
+# M0-D91 scratch probe (never in the tree): /tmp/d91/probe on laserax-ai-server against the tree with M0-D91 (its heat.rs test file before the new case; the probe shader carries an earlier comment on ratio()). Hooks: Heat keeps its planes (probe, probe2), latch.rs run_gated dumps them after each submission under D91_TRACE (one slot a submission asked, MIN_ROUNDS 2), mod d91 in tests/gpu/heat.rs (d91_probe on heat_ceiling.bin, d91_analyse on a headless trace).
+diff -ru --label a/ --label b/ a/ b/
+--- a/
++++ b/
+@@ -71,7 +71,7 @@
+ /// The fewest slots a step records (8 is the fewest a submission carries, G-STIFF (d)); [`FIRST_ROUNDS`] is the engine's
+ /// first choice before any step was read back, past the 84 the Sun-like disk's hardest early step uses (12 passes, 46
+ /// rounds; measured on the RTX 5090, M0-T121).
+-pub const MIN_ROUNDS: usize = 8;
++pub const MIN_ROUNDS: usize = 2;
+ const FIRST_ROUNDS: usize = 128;
+ /// heat.wgsl's flag bits.
+ const CONSTANT_DIFFUSIVITY: u32 = 1;
+@@ -208,6 +208,8 @@
+     krylov: wgpu::Buffer,
+     uploads: Arc<AtomicU64>,
+     seen: Cell<u64>,
++    pub(super) probe: Vec<wgpu::Buffer>,
++    pub(super) probe2: Vec<wgpu::Buffer>,
+ }
+ 
+ /// P5's record after the last step run.
+@@ -264,17 +266,17 @@
+             })
+         };
+         let none = wgpu::BufferUsages::empty();
+-        let frozen = scratch("heat.frozen", FROZEN_PLANES * cells, none);
++        let frozen = scratch("heat.frozen", FROZEN_PLANES * cells, wgpu::BufferUsages::COPY_SRC);
+         let faces = scratch("heat.faces", 2 * ((w + 1) * h + w * (h + 1)), wgpu::BufferUsages::COPY_SRC);
+         let storage = wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_SRC;
+         // The solve's planes, the machine, the partial sums (two parities of 16 × 16 tiles, then the commit's 8 × 8 tiles)
+         // and the rounds' sizes, a buffer per parity (zero: no round runs until `heat_open`).
+         let tiles = w.div_ceil(16) * h.div_ceil(16);
+-        let solve = scratch("heat.solve", SOLVE_PLANES * cells, none);
++        let solve = scratch("heat.solve", SOLVE_PLANES * cells, wgpu::BufferUsages::COPY_SRC);
+         let krylov = scratch("heat.krylov", KRYLOV_PLANES * cells, wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST);
+         let machine = init_buffer(device, "heat.machine", storage | wgpu::BufferUsages::COPY_DST, &[0; MACHINE_WORDS]);
+-        let partials = scratch("heat.partials", 4 * (2 * tiles + w.div_ceil(8) * h.div_ceil(8)), none);
+-        let sizes = [0, 1].map(|_| init_buffer(device, "heat.rounds", wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::INDIRECT, &[0; ROUND_WORDS + 3 * MGA_COUNT]));
++        let partials = scratch("heat.partials", 4 * (2 * tiles + w.div_ceil(8) * h.div_ceil(8)), wgpu::BufferUsages::COPY_SRC);
++        let sizes = [0, 1].map(|_| init_buffer(device, "heat.rounds", wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::INDIRECT | wgpu::BufferUsages::COPY_SRC, &[0; ROUND_WORDS + 3 * MGA_COUNT]));
+         // Per parity on Jacobi, then on the V-cycle (`mg`).
+         let parity = [0, 1, 2, 3].map(|k| init_buffer(device, "heat.parity", wgpu::BufferUsages::UNIFORM, &[k % 2, k / 2, 0, 0]));
+         let (mg_layout, [coef_words, vec_words]) = mg_layout(w, h);
+@@ -422,6 +424,8 @@
+         let precond = Cell::new(if DEFAULT_MULTIGRID.load(Ordering::Relaxed) { HeatPrecond::Multigrid } else { HeatPrecond::Jacobi });
+         let uploads = state.uploads();
+         let seen = Cell::new(uploads.load(Ordering::Relaxed));
++        let probe = vec![frozen.clone(), solve.clone(), krylov.clone(), machine.clone(), faces.clone()];
++        let probe2 = vec![partials.clone(), sizes[0].clone(), sizes[1].clone()];
+         Heat {
+             dispatches: list,
+             park,
+@@ -443,6 +447,8 @@
+             krylov,
+             uploads,
+             seen,
++            probe,
++            probe2,
+         }
+     }
+ 
+diff -ru --label a/ --label b/ a/ b/
+--- a/
++++ b/
+@@ -454,6 +454,9 @@
+             self.timer.start();
+         }
+         let ceiling = steps.saturating_mul(SUBMISSIONS_PER_SLOT * super::heat::SLOTS as u32);
++        if std::env::var("D91_TRACE").is_ok() {
++            self.set_heat_rounds(Some(1));
++        }
+         let (mut left, mut held, mut submissions) = (steps, false, 0u32);
+         while left > 0 {
+             assert!(submissions < ceiling, "{steps} steps still {left} short after {submissions} submissions: P5's carry never ends");
+@@ -461,6 +464,15 @@
+             self.encode_latched(&mut encoder, &FramePlan { steps: if held { 1 } else { left }, slow_down: false }, false);
+             queue.submit([encoder.finish()]);
+             submissions += 1;
++            if let Ok(dir) = std::env::var("D91_TRACE") {
++                let all = read_buffers(device, queue, "d91", heat.probe.iter());
++                let bytes: Vec<u8> = all.iter().flat_map(|v| v.to_le_bytes()).collect();
++                static D91_N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
++                let k = D91_N.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
++                std::fs::write(format!("{dir}/sub_{k:06}.bin"), bytes).unwrap();
++                let aux = read_buffers(device, queue, "d91b", heat.probe2.iter());
++                std::fs::write(format!("{dir}/aux_{k:06}.bin"), aux.iter().flat_map(|v| v.to_le_bytes()).collect::<Vec<u8>>()).unwrap();
++            }
+             let w: Vec<u32> = read_buffers(device, queue, "latch.run", [&self.latch.record, machine].into_iter()).iter().map(|v| v.to_bits()).collect();
+             let most = w[RECORD_WORDS + super::heat::MOST_BYTE as usize / 4];
+             heat.learn(most);
+--- /home/ybelanger/workspace/sandbox_reactions/crates/sr-engine/tests/gpu/heat.rs	2026-11-04 11:22:43.759497132 -0500
++++ /tmp/d91/probe/crates/sr-engine/tests/gpu/heat.rs	2026-11-04 11:19:33.607743661 -0500
+@@ -1496,18 +1496,16 @@
+         assert_bounded(&physics, &before, &after, p.radiated, 1e-9, 1e-12);
+     }
+ 
+-    /// M0-D89 on the GPU: the cut's step reaches the ceiling, and the commit holds the bounds to f32's 1e-5 with δ 0 — where the
+-    /// last iterate with (5)'s closure booked 4.2e16 radiated against ~1e5 of heat above the floor, δ −2.9e11. P8 runs after P5
+-    /// here and would floor a cell that gave more than it held, so its `floor_added` is held to the same 1e-5 of the heat above
+-    /// the floor: (a) on the state P5 left. Run at twice the cut's Δt: at its own Δt the Jacobi step converges since M0-D91
+-    /// (17 passes, 3,518 rounds — [`gpu_jacobi_converges_the_ceiling_cut_whose_first_sums_pass_2_to_the_126`]); at 2 Δt it
+-    /// reaches 4,096 rounds in 10 passes on the RTX 4090, and the V-cycle ends at pass 1, round 0 (a round's r²/D past f32's
+-    /// range, §0.5 [M0-D93], [M0-D154]) at either Δt.
++    /// M0-D89 on the GPU: the cut's step reaches the ceiling (1 pass, 4,096 rounds on the RTX 4090 on either preconditioner: in
++    /// f32 the thin hot cell's residual never meets (4)'s u-measure), and the commit holds the bounds to f32's 1e-5 with δ 0 —
++    /// where the last iterate with (5)'s closure booked 4.2e16 radiated against ~1e5 of heat above the floor, δ −2.9e11. P8
++    /// runs after P5 here and would floor a cell that gave more than it held, so its `floor_added` is held to the same 1e-5 of
++    /// the heat above the floor: (a) on the state P5 left.
+     fn gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold() {
+         let (st, physics, dt) = ceiling_cut();
+         let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
+         let before = gpu.first.clone();
+-        let r = gpu.pass(2.0 * dt);
++        let r = gpu.pass(dt);
+         let after = gpu.planes();
+         let radiated: f64 = gpu.radiated().iter().sum();
+         let floored = book_totals(gpu.state.world(), &gpu.booking.readback(&gpu.gpu.device, &gpu.gpu.queue))
+@@ -1520,49 +1518,6 @@
+         assert_bounded(&physics, &before, &after, radiated, 1e-5, 2.0 * f64::from(f32::EPSILON));
+     }
+ 
+-    /// M0-D91 on the GPU, on Jacobi: the cut's thin hot cell (u ≈ 5.3e17 beside vacuum, heat-free) puts the first round's sums
+-    /// past 2¹²⁶ (γ 1.10e38, η 1.28e38 on the RTX 4090), where the GPU's 1/b is subnormal and flushed to 0 — so α = γ/η and β
+-    /// read 0 and CG stood still for 4,096 rounds in its first pass, the step committed by limited fluxes (M0-D89's record).
+-    /// With the solve's quotients scaled (heat.wgsl `ratio`) the step converges — 17 passes, 3,518 rounds, δ 9.5e-7, R 1,406.3
+-    /// measured — and its commit holds M0-D89's bounds to f32's 1e-5 with |δ| ≤ 1e-5 ((4)'s tolerance). The precondition, in f64
+-    /// from the twin's law at T⁰ (Jacobi's first iterate): the hottest term r²/D ≈ (its net outflow) × u, the cell's faces
+-    /// toward ~10² of u and its c ≪ Σ D_f, passes 2¹²⁶. The V-cycle ends this cut at round 0 instead (§0.5 [M0-D154]'s term
+-    /// exit), so the case runs on Jacobi alone.
+-    #[test]
+-    fn gpu_jacobi_converges_the_ceiling_cut_whose_first_sums_pass_2_to_the_126() {
+-        on_precond(HeatPrecond::Jacobi, || {
+-            let (st, physics, dt) = ceiling_cut();
+-            let heat = Heat::new(&physics, &elements(), TestFlags::default()).unwrap();
+-            let f = heat.law(&st);
+-            let w = st.width;
+-            let a_r = physics.get("a_r").unwrap();
+-            let n = st.cells();
+-            let elements = elements();
+-            let t_floor = Eos::from_physics(&physics).unwrap().t_floor();
+-            let held = held_above_floor(&physics, &st);
+-            let inv_mu = |i: usize| elements.composition(&std::array::from_fn(|s| st.planes[(4 + s) * n + i])).inv_mu;
+-            let term = (0..n)
+-                .filter(|&i| held[i] > 0.0)
+-                .map(|i| {
+-                    let (x, y) = (i % w, i / w);
+-                    let out = f.x[y * (w + 1) + x + 1] - f.x[y * (w + 1) + x] + f.y[(y + 1) * w + x] - f.y[y * w + x];
+-                    out * a_r * (t_floor + held[i] / (st.planes[i] * inv_mu(i))).powi(4)
+-                })
+-                .fold(0.0, f64::max);
+-            println!("SR-STIFF heat_ceiling.bin: the first round's largest r²/D ≈ {term:e} (2^126 = {:e})", 2f64.powi(126));
+-            assert!(term >= 2f64.powi(126), "the cut must put the first round's sums past 2^126: {term:e}");
+-            let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
+-            let before = gpu.first.clone();
+-            let r = gpu.pass(dt);
+-            let after = gpu.planes();
+-            let radiated: f64 = gpu.radiated().iter().sum();
+-            println!("SR-STIFF GPU heat_ceiling.bin at its Δt: {r:?}, radiated booked {radiated:e}");
+-            assert!(r.converged && r.passes < 64 && r.rounds < 4096, "the cut's step converges: {r:?}");
+-            assert!(r.delta.abs() <= 1e-5, "the closure is of (4)'s tolerance: {r:?}");
+-            assert_bounded(&physics, &before, &after, radiated, 1e-5, 2.0 * f64::from(f32::EPSILON));
+-        });
+-    }
+-
+     /// M0-D93 on the GPU: the cut's thin hot cell holds u = a_r T⁴ past √f32::MAX, so P5's round sums (γ, η) are not finite;
+     /// the step ends unconverged (§0.5 [M0-D93]) and commits by limited fluxes, held to M0-D89's bounds — where the method
+     /// stopped as solved at round 0 in every pass, the Newton test read 17 passes as converged and (5)'s closure booked
+@@ -1753,3 +1708,355 @@
+         converges_within_twice_the_model(&RIM, MODEL_RIM);
+     }
+ }
++
++
++
++
++/// M0-D91's scratch probe (never in the tree): heat_ceiling.bin's step, one slot a submission, the solve's planes read
++/// after each (D91_TRACE), then both of (4)'s measures by cell, slot by slot, the true residual and an f64 solve of pass 1.
++mod d91 {
++    use super::*;
++
++    fn cut() -> (State, Physics, f64) {
++        let file = std::env::var("D91_CUT").unwrap_or("heat_ceiling.bin".into());
++        let dump = Dump::read(&scenes_dir().join(&file)).unwrap();
++        let (w, h) = (dump.world.width as usize, dump.world.height as usize);
++        let st = State::new(w, h, dump.planes.iter().map(|&v| f64::from(v)).collect());
++        let mut physics = Physics::shipped().unwrap();
++        if std::env::var("D91_TODAY").is_err() {
++            physics = physics.with(&[("a_r", 4e-5), ("c_sb", 200.0)]).unwrap();
++        }
++        (st, physics, f64::from(dump.resume.dt_next))
++    }
++
++    struct Slot {
++        mode: u32,
++        passes: u32,
++        rounds: u32,
++        u_bound: f32,
++        t_bound: f32,
++        gamma: f32,
++        p: usize,
++    }
++
++    fn slot_of(m: &[f32]) -> Slot {
++        let rec = |k: usize| &m[16 * k..16 * k + 16];
++        let bits = |v: f32| v.to_bits();
++        let p = if bits(rec(0)[0]) >= bits(rec(1)[0]) { 0 } else { 1 };
++        let r = rec(p);
++        Slot { mode: bits(r[1]), passes: bits(r[2]), rounds: bits(r[3]), u_bound: r[10], t_bound: r[11], gamma: r[12], p }
++    }
++
++    #[test]
++    fn d91_probe() {
++        let precond = if std::env::var("D91_MG").is_ok() { sr_engine::step::heat::HeatPrecond::Multigrid } else { sr_engine::step::heat::HeatPrecond::Jacobi };
++        on_precond(precond, run);
++    }
++
++    fn run() {
++        let (st, physics, dt) = cut();
++        let a_r = physics.get("a_r").unwrap();
++        let t_floor = Eos::from_physics(&physics).unwrap().t_floor();
++        let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
++        let dt = dt * std::env::var("D91_DTX").ok().and_then(|s| s.parse::<f64>().ok()).unwrap_or(1.0);
++        if std::env::var("D91_ALL").is_ok() {
++            let before = gpu.first.clone();
++            let rep = gpu.pass(dt);
++            let after = gpu.planes();
++            let radiated: f64 = gpu.radiated().iter().sum();
++            let n = before.cells();
++            let lost: f64 = (0..n).map(|i| before.planes[3 * n + i] - after.planes[3 * n + i]).sum();
++            println!("D91 report {rep:?} dt {dt:e} radiated {radiated:.6e} grid lost {lost:.6e}");
++            return;
++        }
++        let dir = std::env::var("D91_DIR").unwrap();
++        std::fs::create_dir_all(&dir).unwrap();
++        unsafe { std::env::set_var("D91_TRACE", &dir) };
++        let (rep, subs) = gpu.pass_in(dt, Some(1));
++        unsafe { std::env::remove_var("D91_TRACE") };
++        println!("D91 report {rep:?} submissions {subs} dt {dt:e} a_r {a_r:e}");
++        analyse(&dir, st.width, st.height, a_r, t_floor, subs as usize, 0);
++    }
++
++    /// A trace taken by a headless run (D91_DIR, D91_W, D91_H, D91_FIRST: the first submission of the step; today's a_r).
++    #[test]
++    fn d91_analyse() {
++        let Ok(dir) = std::env::var("D91_DIR") else { return };
++        let get = |k: &str| std::env::var(k).unwrap().parse::<usize>().unwrap();
++        let physics = Physics::shipped().unwrap();
++        let t_floor = Eos::from_physics(&physics).unwrap().t_floor();
++        let subs = std::fs::read_dir(&dir).unwrap().count();
++        analyse(&dir, get("D91_W"), get("D91_H"), physics.get("a_r").unwrap(), t_floor, get("D91_FIRST") + subs - 1, get("D91_FIRST"));
++    }
++
++    fn analyse(dir: &str, w: usize, h: usize, a_r: f64, t_floor: f64, subs: usize, first: usize) {
++        let u_vac = a_r * t_floor.powi(4);
++        let mut dt = 0.0;
++        let mut t_prev: Option<Vec<f32>> = None;
++        let mut moved_by: Vec<u32> = vec![0; w * h];
++        let mut sign_flips: Vec<u32> = vec![0; w * h];
++        let mut last_dir: Vec<i8> = vec![0; w * h];
++        let n = w * h;
++        let nxf = (w + 1) * h;
++        let every: usize = std::env::var("D91_EVERY").ok().and_then(|s| s.parse().ok()).unwrap_or(256);
++        let mut x_start: Vec<f64> = vec![0.0; n];
++        let mut r0: Vec<f64> = vec![0.0; n];
++        let mut pass1: Option<(Vec<f64>, Vec<f64>, Vec<f64>, Vec<f64>, Vec<f64>)> = None; // (c, d_faces flat, gas, r0, x_start)
++        let mut last_x: Vec<f64> = vec![0.0; n];
++        let mut prev_mode = u32::MAX;
++        let mut prev_passes = u32::MAX;
++        for k in first.max(1)..=subs {
++            let path = format!("{dir}/sub_{k:06}.bin");
++            let Ok(bytes) = std::fs::read(&path) else { continue };
++            let v: Vec<f32> = bytes.chunks_exact(4).map(|b| f32::from_le_bytes([b[0], b[1], b[2], b[3]])).collect();
++            let faces_len = 2 * ((w + 1) * h + w * (h + 1));
++            let m_len = v.len() - 16 * n - faces_len;
++            let (frozen, rest) = v.split_at(5 * n);
++            let (solve, rest) = rest.split_at(5 * n);
++            let (krylov, rest) = rest.split_at(6 * n);
++            let (mach, faces) = rest.split_at(m_len);
++            let s = slot_of(mach);
++            dt = f64::from(mach[16 * s.p + 8]);
++            let cap = &frozen[n..2 * n];
++            let t0 = &frozen[0..n];
++            let gas: Vec<bool> = (0..n).map(|i| cap[i] > 0.0).collect();
++            let tt = &solve[n..2 * n];
++            let d = &solve[3 * n..4 * n];
++            let x: Vec<f64> = (0..n).map(|i| f64::from(solve[i]) + f64::from(solve[4 * n + i])).collect();
++            let r = &krylov[s.p * n..(s.p + 1) * n];
++            let fd = |i: usize| -> [(f64, Option<usize>); 4] {
++                let (cx, cy) = (i % w, i / w);
++                let nb = |dx: isize, dy: isize| -> Option<usize> {
++                    let (ox, oy) = (cx as isize + dx, cy as isize + dy);
++                    if ox < 0 || oy < 0 || ox >= w as isize || oy >= h as isize {
++                        return None;
++                    }
++                    let o = oy as usize * w + ox as usize;
++                    gas[o].then_some(o)
++                };
++                [
++                    (f64::from(faces[cy * (w + 1) + cx]), nb(-1, 0)),
++                    (f64::from(faces[cy * (w + 1) + cx + 1]), nb(1, 0)),
++                    (f64::from(faces[nxf + cy * w + cx]), nb(0, -1)),
++                    (f64::from(faces[nxf + (cy + 1) * w + cx]), nb(0, 1)),
++                ]
++            };
++            let heat = |i: usize| f64::from(cap[i]) / dt;
++            let slope = |i: usize| 1.0 / (4.0 * a_r * f64::from(tt[i]).powi(3));
++            let c = |i: usize| heat(i) * slope(i);
++            // After a RESID slot (the machine now in DO_START = 2) the pass's start: x and r.
++            if s.mode == 2 && prev_mode != 2 {
++                x_start = x.clone();
++                r0 = (0..n).map(|i| f64::from(r[i])).collect();
++                if s.passes == 1 && pass1.is_none() {
++                    let cs: Vec<f64> = (0..n).map(|i| if gas[i] { c(i) } else { 0.0 }).collect();
++                    let df: Vec<f64> = (0..n).flat_map(|i| fd(i).map(|f| f.0)).collect();
++                    let gs: Vec<f64> = gas.iter().map(|&g| if g { 1.0 } else { 0.0 }).collect();
++                    pass1 = Some((cs, df, gs, r0.clone(), x_start.clone()));
++                }
++            }
++            if s.passes != prev_passes {
++                prev_passes = s.passes;
++                let cap_sum_t0: f64 = (0..n).filter(|&i| gas[i]).map(|i| f64::from(cap[i]) * f64::from(t0[i])).sum();
++                if let Some(tp) = &t_prev {
++                    let mut moved = 0.0;
++                    let mut over = Vec::new();
++                    for i in (0..n).filter(|&i| gas[i]) {
++                        let dif = f64::from(tt[i]) - f64::from(tp[i]);
++                        moved += f64::from(cap[i]) * dif.abs();
++                        if dif.abs() > 1e-3 * f64::from(tp[i]) {
++                            over.push((dif.abs() / f64::from(tp[i]), i, dif));
++                            moved_by[i] += 1;
++                            let dr: i8 = if dif > 0.0 { 1 } else { -1 };
++                            if last_dir[i] != 0 && last_dir[i] != dr {
++                                sign_flips[i] += 1;
++                            }
++                            last_dir[i] = dr;
++                        }
++                    }
++                    over.sort_by(|a, b| b.0.total_cmp(&a.0));
++                    let list: Vec<String> = over.iter().take(4).map(|(q, i, d)| format!("({},{}) {:+.3e} rel {:.2e} T {:.3e}", i % w, i / w, d, q, tp[*i])).collect();
++                    println!(
++                        "D91 newton pass {} rounds {} | ΣC|ΔT| {:.3e} vs 1e-6 ΣC T0 {:.3e} | cells over 1e-3: {} | {}",
++                        s.passes, s.rounds, moved, 1e-6 * cap_sum_t0, over.len(), list.join(" ; ")
++                    );
++                }
++                t_prev = Some(tt.to_vec());
++            }
++            prev_mode = s.mode;
++            let gas_ids: Vec<usize> = (0..n).filter(|&i| gas[i]).collect();
++            let mut mu = 0.0;
++            let mut mt = 0.0;
++            let mut mtrue = 0.0;
++            let mut top_u = (0.0, 0usize);
++            let mut top_t = (0.0, 0usize);
++            let mut top_true = (0.0, 0usize);
++            for &i in &gas_ids {
++                let di = f64::from(d[i]);
++                let ri = f64::from(r[i]);
++                let tu = ri * ri / di;
++                let e = ri * slope(i) / di;
++                let tt_ = heat(i) * e * e;
++                // b − A x at x, the pass's linearisation at x_start (its T the pass's T).
++                let mut rt = -heat(i) * (f64::from(tt[i]) - f64::from(t0[i])) - c(i) * (x[i] - x_start[i]);
++                for (df, o) in fd(i) {
++                    let far = match o {
++                        Some(o) => x[o],
++                        None => u_vac,
++                    };
++                    rt -= df * (x[i] - far);
++                }
++                let ttrue = rt * rt / di;
++                mu += tu;
++                mt += tt_;
++                mtrue += ttrue;
++                if tu > top_u.0 {
++                    top_u = (tu, i);
++                }
++                if tt_ > top_t.0 {
++                    top_t = (tt_, i);
++                }
++                if ttrue > top_true.0 {
++                    top_true = (ttrue, i);
++                }
++            }
++            let cell = |i: usize| format!("({},{})", i % w, i / w);
++            if (k <= 6 || k % every == 0 || k == subs) && std::env::var("D91_CELLS").is_ok() {
++                let rec = &mach[16 * s.p..16 * s.p + 16];
++                let old = &mach[16 * (1 - s.p)..16 * (1 - s.p) + 16];
++                println!("D91 rec sub {k}: p {} slot {} mode {} k {} γ {:.4e} η {:.4e} | other: slot {} mode {} k {} γ {:.4e} η {:.4e}", s.p, rec[0].to_bits(), rec[1].to_bits(), rec[4].to_bits(), rec[12], rec[13], old[0].to_bits(), old[1].to_bits(), old[4].to_bits(), old[12], old[13]);
++                for name in std::env::var("D91_CELLS").unwrap().split(';') {
++                    let xy: Vec<usize> = name.split(',').map(|v| v.parse().unwrap()).collect();
++                    let i = xy[1] * w + xy[0];
++                    println!(
++                        "D91 cell ({},{}) sub {k}: x {:.6e} lo {:.3e} T {:.6e} p {:.4e} d {:.4e} | r {:.4e} {:.4e} w {:.4e} {:.4e} s {:.4e} {:.4e}",
++                        xy[0], xy[1], solve[i], solve[4 * n + i], tt[i], solve[2 * n + i], d[i], krylov[i], krylov[n + i], krylov[2 * n + i], krylov[3 * n + i], krylov[4 * n + i], krylov[5 * n + i]
++                    );
++                }
++            }
++            if k <= 40 || k % every == 0 || k == subs || s.rounds % 1024 == 0 && s.rounds > 0 && s.mode == 3 && k % 2 == 0 {
++                println!(
++                    "D91 sub {k} mode {} pass {} round {} | u: gpu-γ {:.3e} f64 Σr²/D {:.3e} bound {:.3e} top {} {:.3e} | t: Σ {:.3e} bound {:.3e} top {} {:.3e} | true Σ {:.3e} top {} {:.3e}",
++                    s.mode, s.passes, s.rounds, s.gamma, mu, s.u_bound, cell(top_u.1), top_u.0, mt, s.t_bound, cell(top_t.1), top_t.0, mtrue, cell(top_true.1), top_true.0
++                );
++            }
++            if k == subs || k == subs - 1 {
++                let mut by: Vec<(f64, usize)> = gas_ids.iter().map(|&i| (f64::from(r[i]) * f64::from(r[i]) / f64::from(d[i]), i)).collect();
++                by.sort_by(|a, b| b.0.total_cmp(&a.0));
++                for &(tu, i) in by.iter().take(8) {
++                    let sd: f64 = fd(i).iter().map(|f| f.0).sum();
++                    let vac: f64 = fd(i).iter().filter(|f| f.1.is_none()).map(|f| f.0).sum();
++                    println!(
++                        "D91 last cell {} r²/D {:.3e} r {:.3e} D {:.3e} c {:.3e} ΣD_f {:.3e} vacD {:.3e} u {:.3e} x−x0 {:.3e} T {:.3e} T0 {:.3e} cap {:.3e} c·u² {:.3e}",
++                        cell(i), tu, r[i], d[i], c(i), sd, vac, x[i], x[i] - x_start[i], tt[i], t0[i], cap[i], c(i) * x[i] * x[i]
++                    );
++                }
++                let bound_terms: Vec<(f64, usize)> = {
++                    let mut b: Vec<(f64, usize)> = gas_ids.iter().map(|&i| (c(i) * x_start[i] * x_start[i], i)).collect();
++                    b.sort_by(|a, b| b.0.total_cmp(&a.0));
++                    b.into_iter().take(4).collect()
++                };
++                for (bt, i) in bound_terms {
++                    println!("D91 bound term {} c u² {:.3e}", cell(i), bt);
++                }
++            }
++            last_x = x;
++        }
++        let mut most: Vec<(u32, usize)> = (0..w * h).filter(|&i| moved_by[i] > 0).map(|i| (moved_by[i], i)).collect();
++        most.sort_by(|a, b| b.0.cmp(&a.0));
++        for &(c, i) in most.iter().take(10) {
++            println!("D91 newton offender ({},{}) over 1e-3 in {c} passes, {} sign flips", i % w, i / w, sign_flips[i]);
++        }
++        println!("D91 newton offenders: {} cells", most.len());
++        // Pass 1 in f64: A δ = r0 by Jacobi-PCG to 1e-28 relative, then the GPU's δ against it.
++        if let Some((cs, df, gs, b, xs)) = pass1 {
++            let gas = |i: usize| gs[i] > 0.0;
++            let nbs = |i: usize| -> [Option<usize>; 4] {
++                let (cx, cy) = (i % w, i / w);
++                let at = |dx: isize, dy: isize| {
++                    let (ox, oy) = (cx as isize + dx, cy as isize + dy);
++                    if ox < 0 || oy < 0 || ox >= w as isize || oy >= h as isize {
++                        return None;
++                    }
++                    let o = oy as usize * w + ox as usize;
++                    gas(o).then_some(o)
++                };
++                [at(-1, 0), at(1, 0), at(0, -1), at(0, 1)]
++            };
++            let apply = |v: &[f64]| -> Vec<f64> {
++                (0..n)
++                    .map(|i| {
++                        if !gas(i) {
++                            return 0.0;
++                        }
++                        let mut s = cs[i] * v[i];
++                        for (f, o) in nbs(i).iter().enumerate() {
++                            s += df[4 * i + f] * (v[i] - o.map_or(0.0, |o| v[o]));
++                        }
++                        s
++                    })
++                    .collect()
++            };
++            let diag: Vec<f64> = (0..n).map(|i| if gas(i) { cs[i] + df[4 * i..4 * i + 4].iter().sum::<f64>() } else { 1.0 }).collect();
++            let dot = |a: &[f64], b: &[f64]| a.iter().zip(b).map(|(a, b)| a * b).sum::<f64>();
++            let mut xx = vec![0.0; n];
++            let mut rr: Vec<f64> = (0..n).map(|i| if gas(i) { b[i] } else { 0.0 }).collect();
++            let mut z: Vec<f64> = (0..n).map(|i| rr[i] / diag[i]).collect();
++            let mut pp = z.clone();
++            let mut g = dot(&rr, &z);
++            let g0 = g;
++            let mut it = 0;
++            while g > 1e-28 * g0 && it < 200_000 {
++                let q = apply(&pp);
++                let al = g / dot(&pp, &q);
++                for i in 0..n {
++                    xx[i] += al * pp[i];
++                    rr[i] -= al * q[i];
++                }
++                z = (0..n).map(|i| rr[i] / diag[i]).collect();
++                let g2 = dot(&rr, &z);
++                for i in 0..n {
++                    pp[i] = z[i] + g2 / g * pp[i];
++                }
++                g = g2;
++                it += 1;
++            }
++            println!("D91 f64 pass-1 solve: {it} rounds, γ {g:.3e} of γ0 {g0:.3e}");
++            let bnd: f64 = (0..n).filter(|&i| gas(i)).map(|i| cs[i] * xs[i] * xs[i]).sum::<f64>() * 1e-10;
++            println!("D91 f64 pass-1 u bound (1e-5)² Σ c u² {bnd:.3e}");
++            // The f64 answer's own residual measure when rounded to f32 (x in f32 hi+lo is ~exact; the residual floor is the
++            // f32 evaluation of b − A x at the answer).
++            let mut worst = (0.0, 0usize);
++            let mut floor = 0.0;
++            for i in (0..n).filter(|&i| gas(i)) {
++                let u = xs[i] + xx[i];
++                let mut terms = cs[i].abs() * xx[i].abs() + b[i].abs();
++                for (f, o) in nbs(i).iter().enumerate() {
++                    terms += df[4 * i + f] * u.abs().max(o.map_or(u_vac, |o| xs[o] + xx[o]).abs());
++                }
++                let e32 = f64::from(f32::EPSILON) * terms;
++                let t = e32 * e32 / diag[i];
++                floor += t;
++                if t > worst.0 {
++                    worst = (t, i);
++                }
++            }
++            println!("D91 f32 rounding floor of Σ r²/D at the f64 answer (ε × Σ|terms|): {floor:.3e}, worst ({},{}) {:.3e}", worst.1 % w, worst.1 / w, worst.0);
++            let gd: Vec<f64> = (0..n).map(|i| last_x[i] - xs[i]).collect();
++            let mut worst = (0.0, 0usize);
++            for i in (0..n).filter(|&i| gas(i)) {
++                let e = (gd[i] - xx[i]).abs() / (xs[i] + xx[i]).abs().max(1e-300);
++                if e > worst.0 {
++                    worst = (e, i);
++                }
++            }
++            let i = worst.1;
++            println!(
++                "D91 GPU's last δ against f64 pass 1: worst rel {:.3e} at ({},{}) gpu δ {:.4e} f64 δ {:.4e} u0 {:.4e}",
++                worst.0, i % w, i / w, gd[i], xx[i], xs[i]
++            );
++            let hot = 32 * w + 32;
++            if w == 64 { println!("D91 cell (32,32): gpu δ {:.6e} f64 δ {:.6e} u0 {:.6e} c {:.3e} ΣD {:.3e}", gd[hot], xx[hot], xs[hot], cs[hot], df[4 * hot..4 * hot + 4].iter().sum::<f64>()); }
++        }
++    }
++}
+--- /home/ybelanger/workspace/sandbox_reactions/crates/sr-engine/shaders/heat.wgsl	2026-11-04 11:22:43.431495834 -0500
++++ /tmp/d91/probe/crates/sr-engine/shaders/heat.wgsl	2026-11-04 11:14:39.661235111 -0500
+@@ -87,15 +87,7 @@
+     ks: f32,
+ }
+ 
+-fn finite(v: f32) -> bool {
+-    return (bitcast<u32>(v) & 0x7f800000u) != 0x7f800000u;
+-}
+-
+-// a / b for the solve's quotients of two sums (α, β, the heat-free shift, the closure δ): both scaled by 2⁻⁶⁴ when |b| ≥ 2⁶⁴.
+-// The GPU divides as a × (1/b) and flushes a subnormal 1/b to 0, so past |b| ≥ 2¹²⁶ the plain quotient reads 0 (M0-D91: on
+-// heat_ceiling.bin's thin hot cell γ = 1.10e38 and η = 1.28e38, so α = β = 0 and CG stood still for 4,096 rounds on the RTX
+-// 4090, the Jacobi step then converging in 17 passes, 3,518 rounds once scaled). A power of two scales exactly, so the quotient
+-// is bit-identical wherever 1/b was normal.
++// a / b of two sums, both scaled by 2^-64 when |b| >= 2^64 (D91 probe).
+ fn ratio(a: f32, b: f32) -> f32 {
+     if (abs(b) >= 18446744073709551616.0) {
+         return (a * 5.421010862427522e-20) / (b * 5.421010862427522e-20);
+@@ -103,6 +95,10 @@
+     return a / b;
+ }
+ 
++fn finite(v: f32) -> bool {
++    return (bitcast<u32>(v) & 0x7f800000u) != 0x7f800000u;
++}
++
+ fn nx() -> u32 {
+     return (dims.width + 1u) * dims.height;
+ }

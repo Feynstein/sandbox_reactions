@@ -1,0 +1,220 @@
+# M0-D91 probe — scratch /tmp/d91/probe on laserax-ai-server (tree + trace hooks, never in the tree), RTX 4090; 2026-11-04T11:08:09-05:00
+    --> crates/sr-engine/tests/gpu/heat.rs:1780:22
+    Finished `release` profile [optimized] target(s) in 25.01s
+  Executable tests/gpu/main.rs (/tmp/d91/target/release/deps/gpu-2b2e5ebd221682e6)
+## heat_ceiling.bin, Jacobi, old constants (a_r 4e-5, c_sb 200), one slot a submission
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+D91 report HeatReport { dt: 0.00078751025, passes: 1, rounds: 4096, converged: false, delta: 0.0 } submissions 513 dt 7.875102455727756e-4 a_r 4e-5
+D91 sub 1 mode 3 pass 1 round 4 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 2 mode 3 pass 1 round 12 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 3 mode 3 pass 1 round 20 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 4 mode 3 pass 1 round 28 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 5 mode 3 pass 1 round 36 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 6 mode 3 pass 1 round 44 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 7 mode 3 pass 1 round 52 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 8 mode 3 pass 1 round 60 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 9 mode 3 pass 1 round 68 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 10 mode 3 pass 1 round 76 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 11 mode 3 pass 1 round 84 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 12 mode 3 pass 1 round 92 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 13 mode 3 pass 1 round 100 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 14 mode 3 pass 1 round 108 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 15 mode 3 pass 1 round 116 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 16 mode 3 pass 1 round 124 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 17 mode 3 pass 1 round 132 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 18 mode 3 pass 1 round 140 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 19 mode 3 pass 1 round 148 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 20 mode 3 pass 1 round 156 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 21 mode 3 pass 1 round 164 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 22 mode 3 pass 1 round 172 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 23 mode 3 pass 1 round 180 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 24 mode 3 pass 1 round 188 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 25 mode 3 pass 1 round 196 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 26 mode 3 pass 1 round 204 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 27 mode 3 pass 1 round 212 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 28 mode 3 pass 1 round 220 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 29 mode 3 pass 1 round 228 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 30 mode 3 pass 1 round 236 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 31 mode 3 pass 1 round 244 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 32 mode 3 pass 1 round 252 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 33 mode 3 pass 1 round 260 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 34 mode 3 pass 1 round 268 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 35 mode 3 pass 1 round 276 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 36 mode 3 pass 1 round 284 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 37 mode 3 pass 1 round 292 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 38 mode 3 pass 1 round 300 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 39 mode 3 pass 1 round 308 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 40 mode 3 pass 1 round 316 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 512 mode 3 pass 1 round 4092 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 last cell (32,32) r²/D 1.017e38 r -1.913e20 D 3.600e2 c 3.211e-15 ΣD_f 3.600e2 vacD 1.000e2 u 5.314e17 x−x0 5.314e17 T 3.397e5 T0 3.397e5 cap 1.586e-5 c·u² 9.068e20
+D91 last cell (31,32) r²/D 3.774e36 r 5.104e19 D 6.904e2 c 7.523e0 ΣD_f 6.829e2 vacD -0.000e0 u 2.288e2 x−x0 2.288e2 T 4.891e1 T0 4.891e1 cap 1.109e-1 c·u² 3.939e5
+D91 last cell (32,33) r²/D 3.634e36 r 5.201e19 D 7.442e2 c 1.050e0 ΣD_f 7.431e2 vacD -0.000e0 u 8.413e2 x−x0 8.413e2 T 6.772e1 T0 6.772e1 cap 4.111e-2 c·u² 7.435e5
+D91 last cell (32,31) r²/D 1.136e36 r 3.474e19 D 1.062e3 c 8.928e2 ΣD_f 1.697e2 vacD -0.000e0 u 6.614e0 x−x0 6.614e0 T 2.016e1 T0 2.016e1 cap 9.224e-1 c·u² 3.905e4
+D91 last cell (45,10) r²/D 4.769e33 r -4.612e18 D 4.460e3 c 4.476e0 ΣD_f 4.455e3 vacD -0.000e0 u 1.304e2 x−x0 1.304e2 T 4.249e1 T0 4.249e1 cap 4.327e-2 c·u² 7.612e4
+D91 last cell (48,7) r²/D 2.749e33 r -3.517e18 D 4.499e3 c 4.500e0 ΣD_f 4.494e3 vacD -0.000e0 u 1.277e2 x−x0 1.277e2 T 4.227e1 T0 4.227e1 cap 4.283e-2 c·u² 7.342e4
+D91 last cell (39,12) r²/D 2.635e33 r -3.172e18 D 3.820e3 c 5.356e0 ΣD_f 3.815e3 vacD -0.000e0 u 1.393e2 x−x0 1.393e2 T 4.320e1 T0 4.320e1 cap 5.441e-2 c·u² 1.039e5
+D91 last cell (44,11) r²/D 2.569e33 r -3.307e18 D 4.257e3 c 4.670e0 ΣD_f 4.252e3 vacD -0.000e0 u 1.319e2 x−x0 1.319e2 T 4.261e1 T0 4.261e1 cap 4.553e-2 c·u² 8.126e4
+D91 bound term (0,0) c u² 0.000e0
+D91 bound term (1,0) c u² 0.000e0
+D91 bound term (2,0) c u² 0.000e0
+D91 bound term (3,0) c u² 0.000e0
+D91 sub 513 mode 4 pass 1 round 4096 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.301e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.103e38 top (32,32) 1.017e38
+D91 last cell (32,32) r²/D 1.017e38 r -1.913e20 D 3.600e2 c 3.216e-15 ΣD_f 3.600e2 vacD 1.000e2 u 5.314e17 x−x0 5.314e17 T 3.395e5 T0 3.397e5 cap 1.586e-5 c·u² 9.081e20
+D91 last cell (31,32) r²/D 3.774e36 r 5.104e19 D 6.904e2 c 7.523e0 ΣD_f 6.829e2 vacD -0.000e0 u 2.248e2 x−x0 2.248e2 T 4.891e1 T0 4.891e1 cap 1.109e-1 c·u² 3.803e5
+D91 last cell (32,33) r²/D 3.634e36 r 5.201e19 D 7.442e2 c 1.050e0 ΣD_f 7.431e2 vacD -0.000e0 u 8.400e2 x−x0 8.400e2 T 6.772e1 T0 6.772e1 cap 4.111e-2 c·u² 7.412e5
+D91 last cell (32,31) r²/D 1.136e36 r 3.474e19 D 1.062e3 c 8.928e2 ΣD_f 1.697e2 vacD -0.000e0 u 1.625e1 x−x0 1.625e1 T 2.016e1 T0 2.016e1 cap 9.224e-1 c·u² 2.358e5
+D91 last cell (45,10) r²/D 4.769e33 r -4.612e18 D 4.460e3 c 4.476e0 ΣD_f 4.455e3 vacD -0.000e0 u 1.286e2 x−x0 1.286e2 T 4.249e1 T0 4.249e1 cap 4.327e-2 c·u² 7.399e4
+D91 last cell (48,7) r²/D 2.749e33 r -3.517e18 D 4.499e3 c 4.500e0 ΣD_f 4.494e3 vacD -0.000e0 u 1.259e2 x−x0 1.259e2 T 4.227e1 T0 4.227e1 cap 4.283e-2 c·u² 7.135e4
+D91 last cell (39,12) r²/D 2.635e33 r -3.172e18 D 3.820e3 c 5.356e0 ΣD_f 3.815e3 vacD -0.000e0 u 1.380e2 x−x0 1.380e2 T 4.320e1 T0 4.320e1 cap 5.441e-2 c·u² 1.019e5
+D91 last cell (44,11) r²/D 2.569e33 r -3.307e18 D 4.257e3 c 4.670e0 ΣD_f 4.252e3 vacD -0.000e0 u 1.300e2 x−x0 1.300e2 T 4.261e1 T0 4.261e1 cap 4.553e-2 c·u² 7.889e4
+D91 bound term (0,0) c u² 0.000e0
+D91 bound term (1,0) c u² 0.000e0
+D91 bound term (2,0) c u² 0.000e0
+D91 bound term (3,0) c u² 0.000e0
+D91 newton offenders: 0 cells
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 498 filtered out; finished in 0.71s
+  Executable tests/gpu/main.rs (/tmp/d91/target/release/deps/gpu-2b2e5ebd221682e6)
+D91 report HeatReport { dt: 0.00078751025, passes: 1, rounds: 4096, converged: false, delta: 0.0 } submissions 513 dt 7.875102455727756e-4 a_r 4e-5
+D91 rec sub 1: p 0 slot 7 mode 3 k 4 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 5 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 1: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 1: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 cell (32,31) sub 1: x 6.613822e0 lo 0.000e0 T 2.016500e1 p 3.2697e16 d 1.0624e3 | r 3.4738e19 3.4738e19 w 6.9477e19 6.9477e19 s 6.9477e19 6.9477e19
+D91 rec sub 2: p 0 slot 7 mode 3 k 12 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 13 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 2: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 2: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 cell (32,31) sub 2: x 6.613822e0 lo 0.000e0 T 2.016500e1 p 3.2697e16 d 1.0624e3 | r 3.4738e19 3.4738e19 w 6.9477e19 6.9477e19 s 6.9477e19 6.9477e19
+D91 rec sub 3: p 0 slot 7 mode 3 k 20 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 21 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 3: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 3: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 cell (32,31) sub 3: x 6.613822e0 lo 0.000e0 T 2.016500e1 p 3.2697e16 d 1.0624e3 | r 3.4738e19 3.4738e19 w 6.9477e19 6.9477e19 s 6.9477e19 6.9477e19
+D91 rec sub 4: p 0 slot 7 mode 3 k 28 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 29 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 4: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 4: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 cell (32,31) sub 4: x 6.613822e0 lo 0.000e0 T 2.016500e1 p 3.2697e16 d 1.0624e3 | r 3.4738e19 3.4738e19 w 6.9477e19 6.9477e19 s 6.9477e19 6.9477e19
+D91 rec sub 5: p 0 slot 7 mode 3 k 36 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 37 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 5: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 5: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 cell (32,31) sub 5: x 6.613822e0 lo 0.000e0 T 2.016500e1 p 3.2697e16 d 1.0624e3 | r 3.4738e19 3.4738e19 w 6.9477e19 6.9477e19 s 6.9477e19 6.9477e19
+D91 rec sub 6: p 0 slot 7 mode 3 k 44 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 45 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 6: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 6: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 cell (32,31) sub 6: x 6.613822e0 lo 0.000e0 T 2.016500e1 p 3.2697e16 d 1.0624e3 | r 3.4738e19 3.4738e19 w 6.9477e19 6.9477e19 s 6.9477e19 6.9477e19
+D91 rec sub 513: p 0 slot 5 mode 4 k 4096 γ 1.1037e38 η 1.2753e38 | other: slot 4 mode 1 k 4096 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 513: x 5.314204e17 lo -5.386e0 T 3.395037e5 p 3.5744e-17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -4.3132e8 -2.0746e20
+D91 cell (31,32) sub 513: x 2.288221e2 lo -3.980e0 T 4.890570e1 p 2.8636e-1 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s -4.5584e4 1.0209e20
+D91 cell (32,31) sub 513: x 6.613822e0 lo 9.638e0 T 2.016500e1 p 1.0000e0 d 1.0624e3 | r 3.4738e19 3.4738e19 w 6.9477e19 6.9477e19 s 1.3269e4 6.9477e19
+74:pub const MIN_ROUNDS: usize = 2;
+496:fn even(n: usize) -> usize {
+497-    n + n % 2
+498-}
+499-
+  Executable tests/gpu/main.rs (/tmp/d91/target/release/deps/gpu-2b2e5ebd221682e6)
+D91 report HeatReport { dt: 0.00078751025, passes: 1, rounds: 4096, converged: false, delta: 0.0 } submissions 2051 dt 7.875102455727756e-4 a_r 4e-5
+D91 rec sub 1: p 0 slot 1 mode 1 k 0 γ 0.0000e0 η 0.0000e0 | other: slot 0 mode 2 k 0 γ 0.0000e0 η 0.0000e0
+D91 cell (32,32) sub 1: x 5.324555e17 lo 0.000e0 T 3.396689e5 p 3.6003e2 d 3.6003e2 | r -1.9152e20 -1.9170e20 w -2.0592e20 -2.0592e20 s 0.0000e0 -2.0592e20
+D91 cell (31,32) sub 1: x 2.288221e2 lo 0.000e0 T 4.890570e1 p -9.6052e1 d 6.9040e2 | r 5.1095e19 5.1144e19 w 1.0219e20 1.0219e20 s 0.0000e0 1.0219e20
+D91 sub 1 mode 1 pass 0 round 0 | u: gpu-γ 0.000e0 f64 Σr²/D 1.105e38 bound 0.000e0 top (32,32) 1.019e38 | t: Σ 7.313e35 bound 0.000e0 top (32,31) 7.290e35 | true Σ 1.107e38 top (32,32) 1.021e38
+D91 rec sub 2: p 0 slot 1 mode 3 k 0 γ 0.0000e0 η 0.0000e0 | other: slot 0 mode 3 k 1 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 2: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s 0.0000e0 -2.0746e20
+D91 cell (31,32) sub 2: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 0.0000e0 1.0209e20
+D91 sub 2 mode 3 pass 1 round 0 | u: gpu-γ 0.000e0 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 rec sub 3: p 0 slot 1 mode 3 k 2 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 3 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 3: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 3: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 sub 3 mode 3 pass 1 round 2 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 rec sub 4: p 0 slot 1 mode 3 k 4 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 5 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 4: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 4: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 sub 4 mode 3 pass 1 round 4 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 rec sub 5: p 0 slot 1 mode 3 k 6 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 7 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 5: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 5: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 sub 5 mode 3 pass 1 round 6 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 rec sub 6: p 0 slot 1 mode 3 k 8 γ 1.1037e38 η 1.2753e38 | other: slot 0 mode 3 k 9 γ 1.1037e38 η 1.2753e38
+D91 cell (32,32) sub 6: x 5.314204e17 lo 0.000e0 T 3.396689e5 p -5.3142e17 d 3.6003e2 | r -1.9133e20 -1.9133e20 w -2.0746e20 -2.0746e20 s -2.0746e20 -2.0746e20
+D91 cell (31,32) sub 6: x 2.288221e2 lo 0.000e0 T 4.890570e1 p 7.3934e16 d 6.9040e2 | r 5.1044e19 5.1044e19 w 1.0209e20 1.0209e20 s 1.0209e20 1.0209e20
+D91 sub 6 mode 3 pass 1 round 8 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 7 mode 3 pass 1 round 10 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 8 mode 3 pass 1 round 12 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 9 mode 3 pass 1 round 14 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 10 mode 3 pass 1 round 16 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 11 mode 3 pass 1 round 18 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 12 mode 3 pass 1 round 20 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 13 mode 3 pass 1 round 22 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 14 mode 3 pass 1 round 24 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 15 mode 3 pass 1 round 26 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 16 mode 3 pass 1 round 28 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 17 mode 3 pass 1 round 30 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 18 mode 3 pass 1 round 32 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 19 mode 3 pass 1 round 34 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 20 mode 3 pass 1 round 36 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 21 mode 3 pass 1 round 38 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 22 mode 3 pass 1 round 40 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 23 mode 3 pass 1 round 42 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 24 mode 3 pass 1 round 44 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 25 mode 3 pass 1 round 46 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 26 mode 3 pass 1 round 48 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38
+D91 sub 27 mode 3 pass 1 round 50 | u: gpu-γ 1.104e38 f64 Σr²/D 1.104e38 bound 9.103e10 top (32,32) 1.017e38 | t: Σ 7.298e35 bound 1.223e0 top (32,31) 7.275e35 | true Σ 1.104e38 top (32,32) 1.017e38(8,8) sub x 0.0000e0 d 7.7334e2
+(12,3) sub x 0.0000e0 d 1.2221e3
+(24,8) sub x 0.0000e0 d 2.1025e3
+(8,24) sub x 0.0000e0 d 1.6943e3
+(40,40) sub x 3.3819e-1 d 5.1268e4
+(45,10) sub x -4.4551e3 d 4.4596e3
+(56,56) sub x 3.7269e-1 d 4.9951e4
+(8,8) sub x -2.7240e-2 d 7.7334e2
+(12,3) sub x -8.2511e-2 d 1.2221e3
+(24,8) sub x 5.8624e-1 d 2.1025e3
+(8,24) sub x -7.5355e-4 d 1.6943e3
+(40,40) sub x 6.8281e9 d 5.1268e4
+(45,10) sub x -1.0341e15 d 4.4596e3
+(56,56) sub x 7.7230e9 d 4.9951e4
+(8,8) sub x -2.7240e-2 d 7.7334e2
+(12,3) sub x -8.2511e-2 d 1.2221e3
+(24,8) sub x 5.8624e-1 d 2.1025e3
+(8,24) sub x -7.5355e-4 d 1.6943e3
+(40,40) sub x 6.8281e9 d 5.1268e4
+(45,10) sub x -1.0341e15 d 4.4596e3
+(56,56) sub x 7.7230e9 d 4.9951e4
+D91 cell (8,8) sub 2: x 1.384442e2 lo 0.000e0 T 4.313241e1 p -2.7240e-2 d 7.7334e2 | r -2.1066e1 -2.1066e1 w -4.2744e0 -4.2744e0 s 0.0000e0 -4.2744e0
+D91 cell (24,8) sub 2: x 1.347526e2 lo 0.000e0 T 4.284195e1 p 5.8624e-1 d 2.1025e3 | r 1.2326e3 1.2326e3 w 6.7051e2 6.7051e2 s 0.0000e0 6.7051e2
+D91 cell (40,40) sub 2: x -1.035113e15 lo 0.000e0 T 4.395172e1 p 6.8281e9 d 5.1268e4 | r 3.5006e14 3.5006e14 w -2.3471e12 -2.3471e12 s 0.0000e0 -2.3471e12
+D91 cell (45,10) sub 2: x 1.304048e2 lo 0.000e0 T 4.249212e1 p -1.0341e15 d 4.4596e3 | r -4.6115e18 -4.6115e18 w -6.2502e18 -6.2502e18 s 0.0000e0 -6.2502e18
+D91 cell (8,8) sub 3: x 1.384442e2 lo 0.000e0 T 4.313241e1 p -2.7240e-2 d 7.7334e2 | r -2.1066e1 -2.1066e1 w -4.2744e0 -4.2744e0 s -4.2744e0 -4.2744e0
+D91 cell (24,8) sub 3: x 1.347526e2 lo 0.000e0 T 4.284195e1 p 5.8624e-1 d 2.1025e3 | r 1.2326e3 1.2326e3 w 6.7051e2 6.7051e2 s 6.7051e2 6.7051e2
+D91 cell (40,40) sub 3: x -1.035113e15 lo 0.000e0 T 4.395172e1 p 6.8281e9 d 5.1268e4 | r 3.5006e14 3.5006e14 w -2.3471e12 -2.3471e12 s -2.3471e12 -2.3471e12
+D91 cell (45,10) sub 3: x 1.304048e2 lo 0.000e0 T 4.249212e1 p -1.0341e15 d 4.4596e3 | r -4.6115e18 -4.6115e18 w -6.2502e18 -6.2502e18 s -6.2502e18 -6.2502e18
+D91 cell (8,8) sub 4: x 1.384442e2 lo 0.000e0 T 4.313241e1 p -2.7240e-2 d 7.7334e2 | r -2.1066e1 -2.1066e1 w -4.2744e0 -4.2744e0 s -4.2744e0 -4.2744e0
+D91 cell (24,8) sub 4: x 1.347526e2 lo 0.000e0 T 4.284195e1 p 5.8624e-1 d 2.1025e3 | r 1.2326e3 1.2326e3 w 6.7051e2 6.7051e2 s 6.7051e2 6.7051e2
+D91 cell (40,40) sub 4: x -1.035113e15 lo 0.000e0 T 4.395172e1 p 6.8281e9 d 5.1268e4 | r 3.5006e14 3.5006e14 w -2.3471e12 -2.3471e12 s -2.3471e12 -2.3471e12
+D91 cell (45,10) sub 4: x 1.304048e2 lo 0.000e0 T 4.249212e1 p -1.0341e15 d 4.4596e3 | r -4.6115e18 -4.6115e18 w -6.2502e18 -6.2502e18 s -6.2502e18 -6.2502e18
+D91 cell (8,8) sub 5: x 1.384442e2 lo 0.000e0 T 4.313241e1 p -2.7240e-2 d 7.7334e2 | r -2.1066e1 -2.1066e1 w -4.2744e0 -4.2744e0 s -4.2744e0 -4.2744e0
+D91 cell (24,8) sub 5: x 1.347526e2 lo 0.000e0 T 4.284195e1 p 5.8624e-1 d 2.1025e3 | r 1.2326e3 1.2326e3 w 6.7051e2 6.7051e2 s 6.7051e2 6.7051e2
+D91 cell (40,40) sub 5: x -1.035113e15 lo 0.000e0 T 4.395172e1 p 6.8281e9 d 5.1268e4 | r 3.5006e14 3.5006e14 w -2.3471e12 -2.3471e12 s -2.3471e12 -2.3471e12
+D91 cell (45,10) sub 5: x 1.304048e2 lo 0.000e0 T 4.249212e1 p -1.0341e15 d 4.4596e3 | r -4.6115e18 -4.6115e18 w -6.2502e18 -6.2502e18 s -6.2502e18 -6.2502e18
+  Executable tests/gpu/main.rs (/tmp/d91/target/release/deps/gpu-2b2e5ebd221682e6)
+D91 report HeatReport { dt: 0.00078751025, passes: 1, rounds: 4096, converged: false, delta: 0.0 } submissions 2051 dt 7.875102455727756e-4 a_r 4e-5
+aux 1: parity0 sums 1.4278e+05 0.0000e+00 9.1033e+20 1.2234e+10 | parity1 sums -1.9170e+20 1.8520e+05 0.0000e+00 0.0000e+00 | sizes0 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) sizes1 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+aux 2: parity0 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | parity1 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | sizes0 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) sizes1 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+aux 3: parity0 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | parity1 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | sizes0 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) sizes1 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+aux 4: parity0 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | parity1 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | sizes0 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) sizes1 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+aux 5: parity0 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | parity1 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | sizes0 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) sizes1 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+aux 6: parity0 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | parity1 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | sizes0 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) sizes1 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+aux 7: parity0 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | parity1 sums 1.1037e+38 1.2753e+38 7.2983e+35 0.0000e+00 | sizes0 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) sizes1 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+  Executable tests/gpu/main.rs (/tmp/d91/target/release/deps/gpu-2b2e5ebd221682e6)
+test heat::d91::d91_probe ... SR-PRECOND Jacobi
+D91 report HeatReport { dt: 0.00078751025, passes: 17, rounds: 3518, converged: true, delta: 9.4807825e-7 } submissions 1786 dt 7.875102455727756e-4 a_r 4e-5
+test heat::d91::d91_probe ... SR-PRECOND Multigrid
+D91 report HeatReport { dt: 0.00078751025, passes: 1, rounds: 0, converged: false, delta: 0.0 } submissions 2 dt 7.875102455727756e-4 a_r 4e-5
+  Executable tests/gpu/main.rs (/tmp/d91/target/release/deps/gpu-2b2e5ebd221682e6)
+dtx 1
+D91 report HeatReport { dt: 0.00078751025, passes: 17, rounds: 3518, converged: true, delta: 9.4807825e-7 } dt 7.875102455727756e-4 radiated 1.406300e3 grid lost 1.406287e3
+dtx 2
+D91 report HeatReport { dt: 0.0015750205, passes: 10, rounds: 4096, converged: false, delta: 0.0 } dt 1.5750204911455512e-3 radiated 7.308578e2 grid lost 7.308512e2
+dtx 4
+D91 report HeatReport { dt: 0.003150041, passes: 12, rounds: 4096, converged: false, delta: 0.0 } dt 3.1500409822911024e-3 radiated 9.546719e2 grid lost 9.546831e2
+dtx 8
+D91 report HeatReport { dt: 0.006300082, passes: 11, rounds: 4096, converged: false, delta: 0.0 } dt 6.300081964582205e-3 radiated 1.040413e3 grid lost 1.040400e3
+dtx 16
+D91 report HeatReport { dt: 0.012600164, passes: 10, rounds: 4096, converged: false, delta: 0.0 } dt 1.260016392916441e-2 radiated 3.623197e2 grid lost 3.623169e2
+dtx 64
+D91 report HeatReport { dt: 0.050400656, passes: 13, rounds: 4096, converged: false, delta: 0.0 } dt 5.040065571665764e-2 radiated 1.336034e3 grid lost 1.336044e3

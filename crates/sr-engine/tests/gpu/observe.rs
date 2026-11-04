@@ -11,9 +11,17 @@
 
 use std::path::{Path, PathBuf};
 
-use serde_json::Value;
+use serde_json::{json, Value};
 use sr_engine::dump::{Dump, Sink};
 use sr_engine::headless::{observers_path, run_captured};
+use sr_engine::ledger::At;
+use sr_engine::summary::{Block, BlockSummary};
+use sr_engine::watch::{embedded_calibration, Star, Watch};
+use sr_physics::observe::age::AgeClock;
+use sr_physics::observe::ending::{Prediction, Predictor, Readout};
+use sr_physics::observe::tracker::SUN_MASS_NOMINAL;
+use sr_physics::observe::translate::MassScale;
+use sr_physics::observe::{Object, Stage};
 use sr_physics::registry::Physics;
 
 /// A frame while `--until` watches (headless's FRAME), in steps: the first step stands alone.
@@ -405,31 +413,55 @@ fn sun_life(out: &Path, extra: &[&str]) -> (i32, Vec<String>) {
     run_scene_captured(parse_args(&args).unwrap(), sr_engine::scene::Scene::preset("sun", Default::default()).unwrap(), None)
 }
 
+/// The life's arguments, capped at `cap` steps. The cap a little past the unbroken life's 1,616 steps (1,623 to sim time 20,
+/// M0-D141) on the V-cycle (M0-D84; 1,184 on Jacobi's looser solve, the lead at M0-D84: «Raise cap to 2,000 (Recommended)»):
+/// a plant that never meets the condition stops there.
+fn continue_args(cap: u64) -> Vec<String> {
+    ["--until", CONTINUE_UNTIL, "--dump-every", &CONTINUE_EVERY.to_string(), "--max-steps", &cap.to_string()].map(String::from).to_vec()
+}
+
+/// The continued life's three runs — `whole/` unbroken, `cut/` stopped at the dump [`CONTINUE_CUT`], `on/` continued from it —
+/// run once and read by the two cases that grade it (M0-D76's and M0-D103's), and the unbroken life's step count.
+struct Continued {
+    dir: PathBuf,
+    steps: u64,
+}
+
+fn text(d: &Path, f: &str) -> String {
+    std::fs::read_to_string(d.join(f)).unwrap_or_else(|e| panic!("{}: {e}", d.join(f).display()))
+}
+
+fn continued_life() -> &'static Continued {
+    static LIFE: std::sync::OnceLock<Continued> = std::sync::OnceLock::new();
+    LIFE.get_or_init(|| {
+        let dir = temp("continue");
+        let life = continue_args(2000);
+        let life: Vec<&str> = life.iter().map(String::as_str).collect();
+        let (code, lines) = sun_life(&dir.join("whole"), &life);
+        assert_eq!(code, 0, "{lines:?}");
+        let summary: Value = serde_json::from_str(&text(&dir.join("whole"), "summary.json")).unwrap();
+        let steps = summary["steps"].as_u64().unwrap();
+        println!("unbroken: {steps} steps, events {}", summary["events"]);
+        println!("stages {}", summary["objects"][0]["stages"]);
+
+        // The cut: the same life stopped at the dump CONTINUE_CUT, then continued from it.
+        let cut_life = continue_args(CONTINUE_CUT);
+        let cut_life: Vec<&str> = cut_life.iter().map(String::as_str).collect();
+        assert_eq!(sun_life(&dir.join("cut"), &cut_life).0, 2, "cut by --max-steps");
+        let from = dir.join("cut").join("dumps").join(format!("s_{CONTINUE_CUT}.bin")).display().to_string();
+        let (code, lines) = sun_life(&dir.join("on"), &[&life[..], &["--load-dump", &from, "--continue"]].concat());
+        assert_eq!(code, 0, "{lines:?}");
+        Continued { dir, steps }
+    })
+}
+
 #[test]
 fn a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary() {
-    let dir = temp("continue");
-    let every = CONTINUE_EVERY.to_string();
-    // The cap a little past the unbroken life's 1,616 steps (1,623 to sim time 20, M0-D141) on the V-cycle (M0-D84; 1,184 on Jacobi's looser solve, the lead
-    // at M0-D84: «Raise cap to 2,000 (Recommended)»): a plant that never meets the condition stops there.
-    let life = ["--until", CONTINUE_UNTIL, "--dump-every", &every, "--max-steps", "2000"];
+    let Continued { dir, steps } = continued_life();
     let (whole, cut, on) = (dir.join("whole"), dir.join("cut"), dir.join("on"));
-    let (code, lines) = sun_life(&whole, &life);
-    assert_eq!(code, 0, "{lines:?}");
-    let text = |d: &Path, f: &str| std::fs::read_to_string(d.join(f)).unwrap_or_else(|e| panic!("{}: {e}", d.join(f).display()));
-    let summary: Value = serde_json::from_str(&text(&whole, "summary.json")).unwrap();
-    let steps = summary["steps"].as_u64().unwrap();
-    println!("unbroken: {steps} steps, events {}", summary["events"]);
-    println!("stages {}", summary["objects"][0]["stages"]);
-
-    // The cut: the same life stopped at the dump CONTINUE_CUT, then continued from it.
-    let cap = CONTINUE_CUT.to_string();
-    let mut cut_life = life.to_vec();
-    cut_life[5] = &cap;
-    assert_eq!(sun_life(&cut, &cut_life).0, 2, "cut by --max-steps");
-    let from = cut.join("dumps").join(format!("s_{CONTINUE_CUT}.bin"));
-    let from = from.display().to_string();
-    let (code, lines) = sun_life(&on, &[&life[..], &["--load-dump", &from, "--continue"]].concat());
-    assert_eq!(code, 0, "{lines:?}");
+    let life = continue_args(2000);
+    let life: Vec<&str> = life.iter().map(String::as_str).collect();
+    let from = cut.join("dumps").join(format!("s_{CONTINUE_CUT}.bin")).display().to_string();
 
     let but_wall = |d: &Path| text(d, "summary.json").lines().filter(|l| !l.trim_start().starts_with("\"wall_s\"")).map(String::from).collect::<Vec<_>>();
     assert_eq!(but_wall(&on), but_wall(&whole), "summary.json, wall_s aside");
@@ -448,4 +480,211 @@ fn a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary() {
     let (code, lines) = run_captured(&["--scene", "preset:sun", "--until", "ending", "--continue"].map(String::from));
     assert_eq!(code, 4, "{lines:?}");
     assert!(lines.iter().any(|l| l.contains("--continue needs --load-dump")), "{lines:?}");
+}
+
+/// M0-D103 — summary.json's four readouts (§2.12.2): a short life of the Sun-like preset at its calibrated mass, as headless
+/// loads `preset:sun` (`Scene::with_embedded_masses`), to [`READOUT_UNTIL`] with a progress tick every frame — the summary and
+/// each frame's heaviest object as the Watch saw it (none on a frame without one). Run once, read by the two cases below.
+const READOUT_UNTIL: &str = "sim_time:20";
+
+struct Watched {
+    summary: Value,
+    frames: Vec<(f64, Option<Star>)>,
+}
+
+fn watched_sun() -> &'static Watched {
+    use sr_engine::headless::{parse_args, run_scene_captured, Progress, Tick};
+    static LIFE: std::sync::OnceLock<Watched> = std::sync::OnceLock::new();
+    LIFE.get_or_init(|| {
+        let out = temp("readouts").join("out");
+        let mut args: Vec<String> =
+            ["--scene", "preset:sun", "--until", READOUT_UNTIL, "--max-steps", "2000", "--out", &out.display().to_string()].map(String::from).to_vec();
+        if let Ok(a) = std::env::var("SR_TEST_ADAPTER") {
+            args.extend(["--adapter".to_string(), a]);
+        }
+        let scene = sr_engine::scene::Scene::preset("sun", Default::default()).unwrap().with_embedded_masses();
+        let mut frames = Vec::new();
+        let (code, lines) = {
+            let mut tick = |t: &Tick| frames.push((t.sim_time, t.star.clone()));
+            let mut saved = |_: u64, _: f64, _: &str| {};
+            let progress = Progress { every: 1, tick: &mut tick, checkpoint_every: None, saved: &mut saved };
+            run_scene_captured(parse_args(&args).unwrap(), scene, Some(progress))
+        };
+        assert_eq!(code, 0, "{lines:?}");
+        let summary: Value = serde_json::from_str(&text(&out, "summary.json")).unwrap();
+        println!("readouts life: {} steps, {} frames, objects {}", summary["steps"], frames.len(), summary["objects"]);
+        Watched { summary, frames }
+    })
+}
+
+/// A fate's or an ending's id: its strings-table key without the prefix.
+fn key_id(key: &str) -> &str {
+    key.split_once('.').map_or(key, |(_, id)| id)
+}
+
+fn close(a: f64, b: f64) -> bool {
+    (a - b).abs() <= 1e-12 * b.abs()
+}
+
+/// Each listed object's `mass_suns`, `predicted_ending` and `ending` are the library's for its `mass_sb` — MassScale::to_suns,
+/// Predictor::predict (the fate ids), no ending in a life's first t.u. — and the last frame's heaviest object's `age_years` is
+/// what the library's AgeClock reads when fed every frame's heaviest object (its mass, central hydrogen and shown stage) — the
+/// stages a life this short shows have no fuel but hydrogen. Within 1e-12: serde_json's float parse is not correctly rounded
+/// (M0-D100); the Watch's own reading of the last frame equals the library's bit for bit.
+#[test]
+fn the_four_readouts_are_the_librarys_for_the_last_frame() {
+    let cal = embedded_calibration().expect("assets/calibration.json is embedded: summary.json's readouts read it");
+    let life = watched_sun();
+    let scale = MassScale::new(cal.m_ign_sb, cal.m_ch_sb, cal.m_up_sb, cal.m_bh_sb).unwrap();
+    let predictor = Predictor::new(cal.m_ign_sb, cal.m_ch_sb, cal.m_up_sb, cal.m_bh_sb).unwrap();
+    let objects = life.summary["objects"].as_array().expect("objects");
+    assert!(!objects.is_empty(), "the Sun-like cloud is listed");
+    for o in objects {
+        let m = o["mass_sb"].as_f64().unwrap();
+        assert!(close(o["mass_suns"].as_f64().expect("mass_suns"), scale.to_suns(m)), "{o}");
+        let want = match predictor.predict(m).unwrap() {
+            Prediction::Sure(f) => json!([key_id(f.key())]),
+            Prediction::CloseCall(a, b) => json!([key_id(a.key()), key_id(b.key())]),
+        };
+        assert_eq!(o["predicted_ending"], want, "{o}");
+        assert!(matches!(predictor.readout(m, None), Some(Readout::Predicted(_))));
+        assert!(o.get("ending").is_some_and(Value::is_null), "no remnant has held in {READOUT_UNTIL}: {o}");
+    }
+    let mut clock = AgeClock::from_calibration(&cal).unwrap();
+    for (t, star) in &life.frames {
+        let Some(s) = star else {
+            clock.update(*t, *t, &[], |_| None);
+            continue;
+        };
+        let shown = s.shown.map(|id| Stage::from_id(&json!(id)).unwrap());
+        assert!(matches!(shown, None | Some(Stage::Cloud | Stage::Collapsing | Stage::Protostar | Stage::MainSequence)), "{shown:?}");
+        let mut o = Object { id: s.id, mass: s.mass, ..Object::default() };
+        o.x_c[0] = s.x_h_c;
+        clock.update(*t, *t, &[o], |_| shown);
+    }
+    let last = life.frames.last().and_then(|(_, s)| s.as_ref()).expect("the last frame has an object");
+    let want = clock.age(last.id).expect("the heaviest object has shown a stage");
+    assert_eq!(last.age_years, Some(want), "the Watch's clock is the library's, fed every frame");
+    let o = objects.iter().find(|o| o["id"] == last.id).expect("the last frame's heaviest object is listed");
+    let age = o["age_years"].as_f64().expect("age_years");
+    assert!(age > 0.0 && close(age, want), "age_years {age} against the library's {want}: {o}");
+    println!("readouts: {:.4} Suns, {}, age {age:.6e} years ({} shown)", o["mass_suns"], o["predicted_ending"], o["stage"]);
+}
+
+/// The age never decreases over the frames and is not one jump (the adversarial line: an age computed once from the last
+/// frame reads 0, then everything at once): the Watch's per-frame readings of the life's heaviest object rise frame by frame,
+/// on at least [`AGE_RISES`] frames, no frame adding more than half the final age.
+const AGE_RISES: usize = 10;
+
+#[test]
+fn the_age_never_decreases_over_the_frames() {
+    let life = watched_sun();
+    let id = life.frames.last().and_then(|(_, s)| s.as_ref()).expect("an object").id;
+    let ages: Vec<f64> = life.frames.iter().filter_map(|(_, s)| s.as_ref().filter(|s| s.id == id).and_then(|s| s.age_years)).collect();
+    for (k, w) in ages.windows(2).enumerate() {
+        assert!(w[1] >= w[0], "frame {k}: the age fell from {} to {}", w[0], w[1]);
+    }
+    let rises = ages.windows(2).filter(|w| w[1] > w[0]).count();
+    let total = *ages.last().expect("ages");
+    let biggest = ages.windows(2).map(|w| w[1] - w[0]).fold(0.0, f64::max);
+    println!("age over {} frames: {rises} rises, the largest {biggest:.4e} of {total:.4e} years", ages.len());
+    assert!(rises >= AGE_RISES, "the age rose on {rises} frames: {ages:?}");
+    assert!(total > 0.0 && biggest <= 0.5 * total, "one frame added {biggest} of {total}");
+}
+
+/// A life cut at a dump and continued counts its age on from the cut (§0.5 [M0-D103]): the continued life's `age_years` are
+/// the unbroken life's, object by object, bit for bit — and the clock had already run at the cut (the cut run's own
+/// summary.json lists a positive age), so a snapshot without the clock would restart it.
+#[test]
+fn a_continued_lifes_ages_are_the_unbroken_lifes() {
+    let Continued { dir, .. } = continued_life();
+    let objects = |d: &str| -> Vec<Value> {
+        let summary: Value = serde_json::from_str(&text(&dir.join(d), "summary.json")).unwrap();
+        summary["objects"].as_array().expect("objects").clone()
+    };
+    let at_cut = objects("cut");
+    assert!(at_cut.iter().any(|o| o["age_years"].as_f64().is_some_and(|a| a > 0.0)), "the clock ran before the cut: {at_cut:?}");
+    let (whole, on) = (objects("whole"), objects("on"));
+    assert_eq!(whole.len(), on.len(), "{whole:?} against {on:?}");
+    for (w, o) in whole.iter().zip(&on) {
+        assert_eq!(w["id"], o["id"]);
+        let age = w["age_years"].as_f64().expect("the unbroken life's age");
+        assert_eq!(o["age_years"].as_f64(), Some(age), "object {}: the continued life's age", w["id"]);
+    }
+    println!("ages at the cut {:?}, unbroken and continued {:?}", at_cut.iter().map(|o| &o["age_years"]).collect::<Vec<_>>(), whole.iter().map(|o| &o["age_years"]).collect::<Vec<_>>());
+}
+
+/// The wisp cut is 1 % of calibration's Sun-like preset (§1.9.2; M0-V10's F2, merged here by M0-V22): one cold rect in a
+/// 128 × 128 bounce world, Σ 0.1 over 25 × 12 (30.0) or 25 × 13 (32.5), one step — 32.5 listed, 30.0 not, the cut
+/// 0.01 × `preset_mass_sb.sun` between them; the nominal Sun-like cloud's cut (33.5) would drop both (M0-V10's probe, RTX 4090).
+#[test]
+fn a_cloud_over_a_hundredth_of_the_calibrated_sun_is_listed() {
+    let cal = embedded_calibration().expect("assets/calibration.json is embedded");
+    let cut = 0.01 * cal.preset_mass_sb.sun;
+    assert!(30.0 < cut && cut < 32.5 && 32.5 < 0.01 * SUN_MASS_NOMINAL, "the rects straddle the cut {cut}, and the nominal one drops both");
+    let dir = temp("wisp");
+    let listed = |h: u32| -> Vec<Value> {
+        let scene = json!({"version": 1, "world": {"width": 128, "height": 128, "edge": "bounce"}, "objects": [
+            {"kind": "rect", "x0": 50, "y0": 50, "w": 25, "h": h, "sigma": 0.1, "t": 0.05, "composition": {"H": 1.0}, "v": [0, 0]}]});
+        let file = dir.join(format!("wisp_{h}.json"));
+        std::fs::write(&file, scene.to_string()).unwrap();
+        let out = go(&format!("wisp-{h}"), &file, &["--steps", "1"]);
+        assert_eq!(out.code, 0, "{:?}", out.lines);
+        out.summary["objects"].as_array().expect("objects").clone()
+    };
+    let (light, heavy) = (listed(12), listed(13));
+    assert!(light.is_empty(), "30.0 is a wisp under {cut}: {light:?}");
+    assert_eq!(heavy.len(), 1, "32.5 is over {cut}: {heavy:?}");
+    assert!((heavy[0]["mass_sb"].as_f64().unwrap() - 32.5).abs() < 0.01, "{heavy:?}");
+}
+
+/// A frame of one 4 × 4 block holding `mass` of cold hydrogen at cell (2, 2) of a 64-wide world, three empty blocks beside it.
+fn one_block(mass: f32) -> BlockSummary {
+    let block = |m: f32| Block {
+        mass: m,
+        mx: 2.5 * m,
+        my: 2.5 * m,
+        momentum: [0.0; 2],
+        kinetic: 0.0,
+        thermal: 0.1 * m,
+        cold: 0.0,
+        pressure: 0.1 * m,
+        species: std::array::from_fn(|i| if i == 0 { m } else { 0.0 }),
+        phi_m: 0.0,
+        max_cell: if m > 0.0 { 2 * 64 + 2 } else { 0 },
+        max_sigma: m / 16.0,
+        max_t: 0.05,
+        max_x: std::array::from_fn(|i| if i == 0 && m > 0.0 { 1.0 } else { 0.0 }),
+        cold_ratio: 0.0,
+        radiated: 0.0,
+        nuclear: [0.0; 7],
+        neutrino_lost: 0.0,
+        neutrino_deposited: 0.0,
+        unbound: 0.0,
+        sinks: 0,
+    };
+    BlockSummary { origin: [0, 0], size: [8, 8], columns: 2, blocks: vec![block(mass), block(0.0), block(0.0), block(0.0)], sinks: Vec::new() }
+}
+
+/// With no calibration embedded the four readouts are written null (M0-D103's Deliver): the same frame through a Watch on no
+/// calibration and on the embedded one — the object listed by both, its four keys there and null on the first, the mass and
+/// the prediction filled on the second (no stage has held after one frame: the age is null on both).
+#[test]
+fn a_watch_with_no_calibration_writes_the_four_as_null() {
+    let physics = Physics::shipped().expect("shipped physics.json");
+    let cal = embedded_calibration().expect("assets/calibration.json is embedded");
+    let at = At { step: 1, sim_time: 0.1 };
+    let first = |cal| {
+        let mut watch = Watch::with_calibration(&physics, 64, 0.0, cal);
+        watch.update(&one_block(100.0), at);
+        let objects = watch.objects_json();
+        assert_eq!(objects.len(), 1, "{objects:?}");
+        objects[0].clone()
+    };
+    let (none, some) = (first(None), first(Some(&cal)));
+    for key in ["mass_suns", "predicted_ending", "ending", "age_years"] {
+        assert!(none.get(key).is_some_and(Value::is_null), "{key} null with no calibration: {none}");
+    }
+    assert!(some["mass_suns"].is_f64() && some["predicted_ending"].is_array(), "{some}");
+    assert!(some["ending"].is_null() && some["age_years"].is_null(), "{some}");
 }

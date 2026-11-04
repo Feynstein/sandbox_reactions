@@ -1,0 +1,306 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why burn_cell: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why burn_order: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why neutrino: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why sink: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why nu_heat: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why summary: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ledger: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why preset_cloud: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why observe_run: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why stage_order: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why multi: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why edits: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why edits_file: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why sod: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why edges: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why collapse: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why jeans: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why twin: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why cpu_gpu: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why radiation_force: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why grav_force: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why grav_selfforce: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why fft: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why adapter: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why state: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why booking: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why floors: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why dt: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why box: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why latch: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why timing: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why scene: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why dump: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why boot: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why watch_only: stale: crates/sr-engine/shaders/heat.wgsl
+why calibration: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why calibrate_cold: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why cold_core: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why held_core: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why calibrate_bisect: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why calibrate_order: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why readouts: never: scenes/sun_13593.bin (+1) · stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why views: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why extents: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why glow: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why frames: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_banner: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_tools: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_presets: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_display: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_star: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_legend: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_zoom: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_remnant: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+why ui_inspect: stale: crates/sr-engine/shaders/heat.wgsl (+1)
+plan_lint         826/0/0      0.12 s  GO · step 1/57, 56 left
+toolchain         owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+build             2/0/0        2.69 s  GO · step 2/57, 55 left
+burn_cell         18/0/0       7.98 s  GO · step 3/57, 54 left
+burn_order        4/0/0        2.82 s  GO · step 4/57, 53 left
+neutrino          18/0/0       8.43 s  GO · step 5/57, 52 left
+sink              34/0/0      25.15 s  GO · step 6/57, 51 left
+nu_heat           15/0/0      12.33 s  GO · step 7/57, 50 left
+summary           7/0/0        8.28 s  GO · step 8/57, 49 left
+ledger            8/0/0       18.04 s  GO · step 9/57, 48 left
+preset_cloud      5/0/0       50.64 s  GO · step 10/57, 47 left
+observe_run       9/0/0       62.65 s  GO · step 11/57, 46 left
+stage_order       2/0/0       35.76 s  GO · step 12/57, 45 left
+multi             5/0/0       59.20 s  GO · step 13/57, 44 left
+edits             17/0/0      13.58 s  GO · step 14/57, 43 left
+edits_file        6/0/0       10.13 s  GO · step 15/57, 42 left
+sod               17/0/0      10.03 s  GO · step 16/57, 41 left
+edges             7/0/0       12.58 s  GO · step 17/57, 40 left
+collapse          6/0/0        1.82 s  GO · step 18/57, 39 left
+jeans             6/0/0        1.02 s  GO · step 19/57, 38 left
+twin              6/0/0        1.77 s  GO · step 20/57, 37 left
+cpu_gpu           3/0/0        8.73 s  GO · step 21/57, 36 left
+radiation_force   11/0/0      10.93 s  GO · step 22/57, 35 left
+grav_force        13/0/0       3.12 s  GO · step 23/57, 34 left
+grav_selfforce    7/0/0        1.62 s  GO · step 24/57, 33 left
+fft               8/0/0        6.82 s  GO · step 25/57, 32 left
+adapter           10/0/0       2.37 s  GO · step 26/57, 31 left
+state             12/0/0       6.27 s  GO · step 27/57, 30 left
+booking           4/0/0        3.07 s  GO · step 28/57, 29 left
+floors            12/0/0       9.33 s  GO · step 29/57, 28 left
+dt                8/0/0        7.37 s  GO · step 30/57, 27 left
+box               8/0/0       14.44 s  GO · step 31/57, 26 left
+latch             5/0/0        3.97 s  GO · step 32/57, 25 left
+timing            5/0/0       23.95 s  GO · step 33/57, 24 left
+scene             7/1/0        4.02 s  NO-GO · step 34/57, 23 left
+dump              14/0/0      43.03 s  GO · step 35/57, 22 left
+boot              1/0/0       10.13 s  GO · step 36/57, 21 left
+desktop           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+web               owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+capture           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+measure_ui        owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+watch_only        1/0/0        0.11 s  GO · step 37/57, 20 left
+calibration       12/0/0       0.16 s  GO · step 38/57, 19 left
+calibrate_cold    8/0/0        1.42 s  GO · step 39/57, 18 left
+cold_core         8/0/0        8.68 s  GO · step 40/57, 17 left
+held_core         24/0/0     151.16 s  GO · step 41/57, 16 left
+calibrate_bisect  19/0/0     102.09 s  GO · step 42/57, 15 left
+calibrate_order   13/0/0       0.16 s  GO · step 43/57, 14 left
+readouts          9/0/0        0.11 s  GO · step 44/57, 13 left
+views             15/0/0      44.11 s  GO · step 45/57, 12 left
+extents           7/0/0        8.03 s  GO · step 46/57, 11 left
+glow              7/0/0        3.27 s  GO · step 47/57, 10 left
+frames            6/0/0        7.98 s  GO · step 48/57, 9 left
+ui_banner         18/0/0       2.22 s  GO · step 49/57, 8 left
+ui_tools          18/0/0       2.07 s  GO · step 50/57, 7 left
+ui_presets        7/0/0        1.47 s  GO · step 51/57, 6 left
+ui_display        11/0/0       0.21 s  GO · step 52/57, 5 left
+ui_star           13/0/0       0.16 s  GO · step 53/57, 4 left
+ui_legend         21/0/0       0.36 s  GO · step 54/57, 3 left
+ui_zoom           11/0/0       0.21 s  GO · step 55/57, 2 left
+ui_remnant        6/0/0        0.21 s  GO · step 56/57, 1 left
+ui_inspect        9/0/0        0.16 s  GO · step 57/57, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+ui_topbar         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+heat_stiff · red-arm proven by M0-D156 2026-11-04T12:40:08-05:00 (fingerprint 0153cf3e992a) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/heat.rs changed since M0-D156's start - a test, case or check M0-D156's Deliver: does not name
+FLAG oracle: tests/plants/shift-every-heat-free.patch changed since M0-D156's start - a test, case or check M0-D156's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D156's start - a test, case or check M0-D156's Deliver: does not name
+FLAG oracle: scope `heat_stiff` changed in tools/pb/verify.json - M0-D156's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-D156.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+0651f5a0845b
+anchor: 271 path×scope entries moved by this run
+anchor: 277 paths checked · 391 skipped (3 classes) · 145 never checked · 0 stale · 0 unclassified · 0 owed · 422 covered of 813 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for scene)
+NEVER CHECKED  Cargo.lock  (no entry for scene)
+NEVER CHECKED  Cargo.toml  (no entry for scene)
+NEVER CHECKED  assets/elements.json  (no entry for scene)
+NEVER CHECKED  assets/physics.json  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/edit.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/glow.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for scene; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/render.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/render.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/edit.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_order.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edit.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edits_file.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/extents.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/frames.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/glow.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for scene; stale for desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/tests/gpu/held_core.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/multi.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/readouts.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/stage_order.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-engine/tests/gpu/views.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/build.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/calibration.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/calibration_embed.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/observe/age.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/observe/ending.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/observe/mod.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/observe/stages.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/observe/tracker.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/observe/translate.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/sheet.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for scene)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for scene)
+NEVER CHECKED  rust-toolchain.toml  (no entry for scene)
+NEVER CHECKED  scenes/asym_blob.json  (no entry for scene)
+NEVER CHECKED  scenes/box_blob.json  (no entry for scene)
+NEVER CHECKED  scenes/cold_co_disk.json  (no entry for scene)
+NEVER CHECKED  scenes/cold_disk.json  (no entry for scene)
+NEVER CHECKED  scenes/edge_pulse.json  (no entry for scene)
+NEVER CHECKED  scenes/edits_triggers.json  (no entry for scene)
+NEVER CHECKED  scenes/fill_world.json  (no entry for scene)
+NEVER CHECKED  scenes/heat_ceiling.bin  (no entry for scene)
+NEVER CHECKED  scenes/heat_hot.json  (no entry for scene)
+NEVER CHECKED  scenes/heat_overflow.bin  (no entry for scene)
+NEVER CHECKED  scenes/heat_pulse.json  (no entry for scene)
+NEVER CHECKED  scenes/heat_rim.json  (no entry for scene)
+NEVER CHECKED  scenes/heat_spot.json  (no entry for scene)
+NEVER CHECKED  scenes/jeans_ripple.json  (no entry for scene)
+NEVER CHECKED  scenes/ref_burn.json  (no entry for scene)
+NEVER CHECKED  scenes/ref_disk.json  (no entry for scene)
+NEVER CHECKED  scenes/ref_sod.json  (no entry for scene)
+NEVER CHECKED  scenes/remnant_window.bin  (no entry for scene)
+NEVER CHECKED  scenes/sink_cloud.json  (no entry for scene)
+NEVER CHECKED  scenes/sod.json  (no entry for scene)
+NEVER CHECKED  scenes/sun_13593.bin  (no entry for scene)
+NEVER CHECKED  scenes/sun_13593.observers.json  (no entry for scene)
+NEVER CHECKED  scenes/sun_disk.json  (no entry for scene)
+NEVER CHECKED  scenes/thin_cell.bin  (no entry for scene)
+NEVER CHECKED  scenes/two_suns.json  (no entry for scene)
+NEVER CHECKED  tests/cargo.sh  (no entry for scene)
+NEVER CHECKED  tests/gpu.sh  (no entry for scene)
+NEVER CHECKED  tests/plants/scene-refuse.patch  (no entry for scene)
+NEVER CHECKED  tests/plants/scene-unknown-key.patch  (no entry for scene)
+skipped   383  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  scene: 1 failed · log milestones/m0/logs/M0-D156.scene.log
+  anchor: 145 never checked, 0 stale, 0 unclassified - every one named above
+verify: 1389 passed, 1 failed, 0 skipped · 56/57 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 26 not impacted · 203.67 s + loop 0.32 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.08->1.71 · base: M0-D156's start 2026-11-04T11:38:15-05:00
+=== NO-GO: scene: 1 failed · log milestones/m0/logs/M0-D156.scene.log; anchor: 145 never checked, 0 stale, 0 unclassified - every one named above ===

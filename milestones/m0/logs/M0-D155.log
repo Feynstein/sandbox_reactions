@@ -1,0 +1,266 @@
+# M0-D155 log — opened 2026-11-04T10:12:02-05:00 on linux-pc (laserax-ai); GPU runs on laserax-ai-server RTX 4090 (R18)
+dump step 3326 dt(resume) 4.950023e-3 dt_next(resume) 4.949993e-3 · GPU step dt 4.949993e-3
+== dump (start)
+y195 |  2.35e-4 T  4.12e1 m( +5.8e-3, +3.2e-3) v  2.8e1 |  3.74e-4 T  4.44e1 m( +8.5e-3, +7.2e-3) v  3.0e1 |  1.02e-3 T  4.75e1 m( +2.1e-2, +2.9e-2) v  3.5e1 |  1.34e-3 T  4.84e1 m( +2.0e-2, +4.8e-2) v  3.9e1 |  7.39e-4 T  4.84e1 m( +5.3e-3, +2.8e-2) v  3.9e1
+y196 |  2.03e-4 T  4.28e1 m( +6.2e-3, +2.6e-3) v  3.3e1 |  2.25e-4 T  4.53e1 m( +6.6e-3, +4.3e-3) v  3.5e1 |  5.27e-4 T  5.26e1 m( +1.4e-2, +1.4e-2) v  3.8e1 |  1.82e-3 T  5.55e1 m( +2.6e-2, +4.0e-2) v  2.6e1 |  6.00e-3 T  5.50e1 m( -1.6e-2, +7.1e-2) v  1.2e1
+y197 |  2.40e-4 T  4.62e1 m( +8.1e-3, +2.8e-3) v  3.6e1 |  2.79e-4 T  5.08e1 m( +8.2e-3, +5.4e-3) v  3.5e1 |  8.38e-4 T  6.08e1 m( +1.9e-2, +1.1e-2) v  2.7e1 |  1.39e-1 T  6.44e1 m( -9.7e-1,  +1.8e0) v  1.4e1 |  8.68e-1 T 5.00e-2 m(  -4.0e0,  +1.4e1) v  1.6e1
+y198 |  2.45e-4 T  4.69e1 m( +9.4e-3, +2.0e-3) v  3.9e1 |  3.41e-4 T  4.87e1 m( +1.0e-2, +6.3e-3) v  3.6e1 |   7.25e0 T  9.60e1 m(  +7.0e1,  +2.8e1) v  1.0e1 |   1.46e2 T  1.98e2 m(  +1.0e3,  +1.2e3) v  1.1e1 |   2.72e2 T  1.28e2 m(  +4.5e2,  +2.6e3) v  9.7e0
+y199 |  2.46e-4 T  4.02e1 m( +8.3e-3, +1.0e-3) v  3.4e1 |  1.09e-3 T  4.29e1 m( +2.5e-2, +7.7e-3) v  2.4e1 |   3.14e1 T  1.35e1 m(  +4.1e2,  +3.3e1) v  1.3e1 |H  6.81e2 T  1.16e2 m(  +0.0e0,  +0.0e0) v  0.0e0 |H  1.09e3 T  5.87e1 m(  +0.0e0,  +0.0e0) v  0.0e0
+-- GPU after P0_edits: 0 words differ from the dump
+   GPU after P0_edits           (298,197) Σ 8.381343e-4 m (+1.923910e-2, +1.139266e-2) E 3.282795e-1 |v| 2.6677e1 ε_th,raw +3.5835e1 T 6.0752e1
+-- GPU after P1_dt: 0 words differ from the dump
+   GPU after P1_dt              (298,197) Σ 8.381343e-4 m (+1.923910e-2, +1.139266e-2) E 3.282795e-1 |v| 2.6677e1 ε_th,raw +3.5835e1 T 6.0752e1
+-- GPU after P2_gravity: 0 words differ from the dump
+   GPU after P2_gravity         (298,197) Σ 8.381343e-4 m (+1.923910e-2, +1.139266e-2) E 3.282795e-1 |v| 2.6677e1 ε_th,raw +3.5835e1 T 6.0752e1
+-- GPU after P3_sinks: 0 words differ from the dump
+   GPU after P3_sinks           (298,197) Σ 8.381343e-4 m (+1.923910e-2, +1.139266e-2) E 3.282795e-1 |v| 2.6677e1 ε_th,raw +3.5835e1 T 6.0752e1
+-- GPU after P4_hydro: 3126467 words differ from the dump
+   GPU after P4_hydro           (298,197) Σ 2.290831e-4 m (-2.942288e-2, -4.882919e-1) E 3.381042e2 |v| 2.1354e3 ε_th,raw -8.0400e5 T 5.0000e-2
+-- GPU after P5_heat: 3126467 words differ from the dump
+   GPU after P5_heat            (298,197) Σ 2.290831e-4 m (-2.942288e-2, -4.882919e-1) E 3.381042e2 |v| 2.1354e3 ε_th,raw -8.0400e5 T 5.0000e-2
+-- GPU after P6_reactions: 3126467 words differ from the dump
+   GPU after P6_reactions       (298,197) Σ 2.290831e-4 m (-2.942288e-2, -4.882919e-1) E 3.381042e2 |v| 2.1354e3 ε_th,raw -8.0400e5 T 5.0000e-2
+-- GPU after P7_neutrino: 3126467 words differ from the dump
+   GPU after P7_neutrino        (298,197) Σ 2.290831e-4 m (-2.942288e-2, -4.882919e-1) E 3.381042e2 |v| 2.1354e3 ε_th,raw -8.0400e5 T 5.0000e-2
+-- GPU after P8_floors: 3126467 words differ from the dump
+   GPU after P8_floors          (298,197) Σ 2.290831e-4 m (-2.942288e-2, -4.882919e-1) E 3.381042e2 |v| 2.1354e3 ε_th,raw -8.0400e5 T 5.0000e-2
+-- GPU after P9_reductions: 3126467 words differ from the dump
+   GPU after P9_reductions      (298,197) Σ 2.290831e-4 m (-2.942288e-2, -4.882919e-1) E 3.381042e2 |v| 2.1354e3 ε_th,raw -8.0400e5 T 5.0000e-2
+   g at (298,197): (+3.3266e2, +4.4041e2) φ -1.551770e3 pull (+1.1041e2, +9.3504e1)
+   g at (298,198): (+8.8942e2, +5.0274e2) φ -2.076391e3 pull (+3.3386e2, +5.9790e1)
+   g at (298,196): (+1.5158e2, +2.9529e2) φ -1.195575e3 pull (+4.4356e1, +6.8997e1)
+   g at (299,197): (+2.4615e2, +9.4735e2) φ -1.899279e3 pull (+9.8716e1, +3.2365e2)
+   g at (297,197): (+2.7553e2, +2.0951e2) φ -1.233950e3 pull (+7.2465e1, +3.4147e1)
+   F at (298,197): (-2.5756e4, -4.2016e4)
+== GPU after P4
+y195 |  2.34e-4 T  5.12e1 m( +5.8e-3, +3.2e-3) v  2.8e1 |  3.74e-4 T  5.13e1 m( +8.4e-3, +7.2e-3) v  3.0e1 |  1.02e-3 T  6.93e1 m( +2.1e-2, +2.9e-2) v  3.5e1 |  1.33e-3 T  7.89e1 m( +2.1e-2, +4.7e-2) v  3.9e1 |  7.32e-4 T  7.03e1 m( +5.6e-3, +2.7e-2) v  3.8e1
+y196 |  2.03e-4 T  6.21e1 m( +6.1e-3, +2.6e-3) v  3.3e1 |  2.25e-4 T  5.75e1 m( +6.6e-3, +4.2e-3) v  3.5e1 |  5.10e-4 T  8.81e1 m( +1.4e-2, +1.4e-2) v  3.9e1 |  1.98e-3 T  1.06e2 m( +2.9e-2, +4.6e-2) v  2.8e1 |  5.43e-3 T  2.50e1 m( -1.0e-2, +9.1e-2) v  1.7e1
+y197 |  2.32e-4 T  6.04e1 m( +7.9e-3, +2.7e-3) v  3.6e1 |  2.70e-4 T  6.99e1 m( +8.1e-3, +5.2e-3) v  3.6e1 |  2.29e-4 T 5.00e-2 m( -2.9e-2, -4.9e-1) v  2.1e3 |  1.51e-1 T 5.00e-2 m( -7.9e-1,  +2.4e0) v  1.7e1 |  7.06e-1 T 5.00e-2 m(  -3.3e0,  +1.5e1) v  2.1e1
+y198 |  2.36e-4 T  9.30e1 m( +9.1e-3, +2.0e-3) v  3.9e1 |  3.35e-4 T  9.30e1 m( +9.3e-3, +6.1e-3) v  3.3e1 |   8.90e0 T  7.22e1 m(  +7.8e1,  +4.8e1) v  1.0e1 |   1.43e2 T  1.63e2 m(  +9.7e2,  +1.4e3) v  1.2e1 |   2.69e2 T  9.83e1 m(  +4.8e2,  +3.0e3) v  1.1e1
+y199 |  2.45e-4 T  2.96e1 m( +8.3e-3, +1.1e-3) v  3.4e1 |  1.00e-3 T 5.00e-2 m( +2.6e-2, +7.2e-3) v  2.7e1 |   3.12e1 T 5.00e-2 m(  +5.3e2,  +5.5e1) v  1.7e1 |H  6.81e2 T  1.16e2 m(  +0.0e0,  +0.0e0) v  0.0e0 |H  1.09e3 T  5.87e1 m(  +0.0e0,  +0.0e0) v  0.0e0
+   twin full                    (64,64) Σ 2.287960e-4 m (-2.942736e-2, -4.882940e-1) E 3.381333e2 |v| 2.1381e3 ε_th,raw -8.0777e5 T 5.0000e-2
+== twin full
+y 62 |  2.34e-4 T  5.12e1 m( +5.8e-3, +3.2e-3) v  2.8e1 |  3.74e-4 T  5.13e1 m( +8.4e-3, +7.2e-3) v  3.0e1 |  1.02e-3 T  6.93e1 m( +2.1e-2, +2.9e-2) v  3.5e1 |  1.33e-3 T  7.89e1 m( +2.1e-2, +4.7e-2) v  3.9e1 |  7.32e-4 T  7.03e1 m( +5.6e-3, +2.7e-2) v  3.8e1
+y 63 |  2.03e-4 T  6.21e1 m( +6.1e-3, +2.6e-3) v  3.3e1 |  2.25e-4 T  5.75e1 m( +6.6e-3, +4.2e-3) v  3.5e1 |  5.10e-4 T  8.81e1 m( +1.4e-2, +1.4e-2) v  3.9e1 |  1.98e-3 T  1.06e2 m( +2.9e-2, +4.6e-2) v  2.8e1 |  5.43e-3 T  2.51e1 m( -1.0e-2, +9.1e-2) v  1.7e1
+y 64 |  2.32e-4 T  6.04e1 m( +7.9e-3, +2.7e-3) v  3.6e1 |  2.70e-4 T  6.99e1 m( +8.1e-3, +5.2e-3) v  3.6e1 |  2.29e-4 T 5.00e-2 m( -2.9e-2, -4.9e-1) v  2.1e3 |  1.51e-1 T 5.00e-2 m( -7.9e-1,  +2.4e0) v  1.7e1 |  7.06e-1 T 5.00e-2 m(  -3.3e0,  +1.5e1) v  2.1e1
+y 65 |  2.36e-4 T  9.31e1 m( +9.1e-3, +2.0e-3) v  3.9e1 |  3.35e-4 T  9.30e1 m( +9.3e-3, +6.1e-3) v  3.3e1 |   8.90e0 T  7.22e1 m(  +7.8e1,  +4.8e1) v  1.0e1 |   1.43e2 T  1.63e2 m(  +9.7e2,  +1.4e3) v  1.2e1 |   2.69e2 T  9.83e1 m(  +4.8e2,  +3.0e3) v  1.1e1
+y 66 |  2.45e-4 T  2.96e1 m( +8.3e-3, +1.1e-3) v  3.4e1 |  1.00e-3 T 5.00e-2 m( +2.6e-2, +7.2e-3) v  2.7e1 |   3.12e1 T 5.00e-2 m(  +5.3e2,  +5.5e1) v  1.7e1 |H  6.81e2 T  1.16e2 m(  +0.0e0,  +0.0e0) v  0.0e0 |H  1.09e3 T  5.87e1 m(  +0.0e0,  +0.0e0) v  0.0e0
+   twin no radiation            (64,64) Σ 2.287960e-4 m (-2.942736e-2, -4.882940e-1) E 3.381333e2 |v| 2.1381e3 ε_th,raw -8.0777e5 T 5.0000e-2
+   twin no gravity              (64,64) Σ 2.316325e-4 m (-2.909490e-2, -4.850276e-1) E 3.381625e2 |v| 2.0977e3 ε_th,raw -7.4030e5 T 5.0000e-2
+   twin neither                 (64,64) Σ 2.316325e-4 m (-2.909490e-2, -4.850276e-1) E 3.381625e2 |v| 2.0977e3 ε_th,raw -7.4030e5 T 5.0000e-2
+    Finished `release` profile [optimized] target(s) in 4.55s
+## K=off
+   twin full                    (64,64) Σ 2.287960e-4 m (-2.942736e-2, -4.882940e-1) E 3.381333e2 |v| 2.1381e3 ε_th,raw -8.0777e5 T 5.0000e-2
+   twin full: slopes flattened 0 of 0 (D155_K None)
+   twin full: largest |v| over its neighbours' largest 54.654 at (298,197) |v| 2.1381e3
+   twin no radiation            (64,64) Σ 2.287960e-4 m (-2.942736e-2, -4.882940e-1) E 3.381333e2 |v| 2.1381e3 ε_th,raw -8.0777e5 T 5.0000e-2
+   twin no radiation: slopes flattened 0 of 0 (D155_K None)
+   twin no radiation: largest |v| over its neighbours' largest 54.128 at (298,197) |v| 2.1381e3
+   twin no gravity              (64,64) Σ 2.316325e-4 m (-2.909490e-2, -4.850276e-1) E 3.381625e2 |v| 2.0977e3 ε_th,raw -7.4030e5 T 5.0000e-2
+   twin no gravity: slopes flattened 0 of 0 (D155_K None)
+   twin no gravity: largest |v| over its neighbours' largest 55.772 at (298,197) |v| 2.0977e3
+   twin neither                 (64,64) Σ 2.316325e-4 m (-2.909490e-2, -4.850276e-1) E 3.381625e2 |v| 2.0977e3 ε_th,raw -7.4030e5 T 5.0000e-2
+   twin neither: slopes flattened 0 of 0 (D155_K None)
+   twin neither: largest |v| over its neighbours' largest 55.216 at (298,197) |v| 2.0977e3
+## K=1
+   twin full                    (64,64) Σ 9.896727e-2 m (+9.894726e-1, +2.666887e-1) E 1.382860e1 |v| 1.0355e1 ε_th,raw +8.5948e1 T 1.1268e2
+   twin full: slopes flattened 4263 of 33792 (D155_K Some("1"))
+   twin full: largest |v| over its neighbours' largest 1.122 at (304,200) |v| 4.1342e1
+   twin no radiation            (64,64) Σ 9.896727e-2 m (+9.897397e-1, +2.671245e-1) E 1.382860e1 |v| 1.0359e1 ε_th,raw +8.5909e1 T 1.1263e2
+   twin no radiation: slopes flattened 4263 of 33792 (D155_K Some("1"))
+   twin no radiation: largest |v| over its neighbours' largest 1.122 at (304,200) |v| 4.1482e1
+   twin no gravity              (64,64) Σ 1.208934e-1 m (+9.864462e-1, +1.434604e-1) E 1.388735e1 |v| 8.2455e0 ε_th,raw +8.0670e1 T 1.0570e2
+   twin no gravity: slopes flattened 4263 of 33792 (D155_K Some("1"))
+   twin no gravity: largest |v| over its neighbours' largest 1.127 at (304,200) |v| 4.0115e1
+   twin neither                 (64,64) Σ 1.208934e-1 m (+9.867133e-1, +1.438962e-1) E 1.388735e1 |v| 8.2482e0 ε_th,raw +8.0648e1 T 1.0567e2
+   twin neither: slopes flattened 4263 of 33792 (D155_K Some("1"))
+   twin neither: largest |v| over its neighbours' largest 1.127 at (304,200) |v| 4.0254e1
+## K=2
+   twin full                    (64,64) Σ 9.896687e-2 m (+9.894583e-1, +2.666803e-1) E 1.382820e1 |v| 1.0355e1 ε_th,raw +8.5945e1 T 1.1268e2
+   twin full: slopes flattened 3 of 33792 (D155_K Some("2"))
+   twin full: largest |v| over its neighbours' largest 1.121 at (304,200) |v| 4.1342e1
+   twin no radiation            (64,64) Σ 9.896687e-2 m (+9.897254e-1, +2.671161e-1) E 1.382820e1 |v| 1.0358e1 ε_th,raw +8.5906e1 T 1.1263e2
+   twin no radiation: slopes flattened 3 of 33792 (D155_K Some("2"))
+   twin no radiation: largest |v| over its neighbours' largest 1.122 at (304,200) |v| 4.1482e1
+   twin no gravity              (64,64) Σ 1.208930e-1 m (+9.864339e-1, +1.434520e-1) E 1.388707e1 |v| 8.2454e0 ε_th,raw +8.0669e1 T 1.0570e2
+   twin no gravity: slopes flattened 3 of 33792 (D155_K Some("2"))
+   twin no gravity: largest |v| over its neighbours' largest 1.127 at (304,200) |v| 4.0115e1
+   twin neither                 (64,64) Σ 1.208930e-1 m (+9.867011e-1, +1.438878e-1) E 1.388707e1 |v| 8.2481e0 ε_th,raw +8.0647e1 T 1.0567e2
+   twin neither: slopes flattened 3 of 33792 (D155_K Some("2"))
+   twin neither: largest |v| over its neighbours' largest 1.127 at (304,200) |v| 4.0254e1
+## K=4
+   twin full                    (64,64) Σ 9.896687e-2 m (+9.894583e-1, +2.666803e-1) E 1.382820e1 |v| 1.0355e1 ε_th,raw +8.5945e1 T 1.1268e2
+   twin full: slopes flattened 3 of 33792 (D155_K Some("4"))
+   twin full: largest |v| over its neighbours' largest 1.121 at (304,200) |v| 4.1342e1
+   twin no radiation            (64,64) Σ 9.896687e-2 m (+9.897254e-1, +2.671161e-1) E 1.382820e1 |v| 1.0358e1 ε_th,raw +8.5906e1 T 1.1263e2
+   twin no radiation: slopes flattened 3 of 33792 (D155_K Some("4"))
+   twin no radiation: largest |v| over its neighbours' largest 1.122 at (304,200) |v| 4.1482e1
+   twin no gravity              (64,64) Σ 1.208930e-1 m (+9.864339e-1, +1.434520e-1) E 1.388707e1 |v| 8.2454e0 ε_th,raw +8.0669e1 T 1.0570e2
+   twin no gravity: slopes flattened 3 of 33792 (D155_K Some("4"))
+   twin no gravity: largest |v| over its neighbours' largest 1.127 at (304,200) |v| 4.0115e1
+   twin neither                 (64,64) Σ 1.208930e-1 m (+9.867011e-1, +1.438878e-1) E 1.388707e1 |v| 8.2481e0 ε_th,raw +8.0647e1 T 1.0567e2
+   twin neither: slopes flattened 3 of 33792 (D155_K Some("4"))
+   twin neither: largest |v| over its neighbours' largest 1.127 at (304,200) |v| 4.0254e1
+### base
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+D155 LEAP s_3326: near-held 54.59 at (298,197) |v| 2.135e3 · anywhere 54.59 at (298,197) |v| 2.135e3
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+SR-WARN heat unconverged step 3328 passes 1 rounds 0
+SR-HEADLESS DONE steps=3330 sim_time=19.251675 until=none
+### fix
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3330 sim_time=19.275245 until=none
+== fix
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4878 sim_time=26.906149 until=met
+0
+{"detail":{"held_t":10.02908037416637,"hold_t":10.0,"mass_sb":4435.877471923828,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":26.906148558482528,"step":4878}
+== fixleap
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4833 sim_time=26.685236 until=met
+0
+D155 LEAP max to s_4800: near-held 1.76 at s_2547 (300,197) |v| 2.178e1 · anywhere 1.76 at s_2547 (300,197) |v| 2.178e1 · states over 10: 0
+{"detail":{"held_t":10.001598894130439,"hold_t":10.0,"mass_sb":4435.851623535156,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":26.685235808603466,"step":4833}
+== baseleap
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+SR-WARN heat unconverged step 3328 passes 1 rounds 0
+SR-WARN heat unconverged step 4048 passes 1 rounds 0
+SR-WARN heat unconverged step 4049 passes 1 rounds 0
+SR-WARN heat unconverged step 4115 passes 1 rounds 0
+SR-WARN heat unconverged step 4116 passes 1 rounds 0
+SR-WARN heat unconverged step 4443 passes 1 rounds 0
+SR-WARN heat unconverged step 4444 passes 1 rounds 0
+SR-WARN heat unconverged step 4519 passes 1 rounds 0
+SR-WARN heat unconverged step 4520 passes 1 rounds 0
+SR-WARN heat unconverged step 4659 passes 1 rounds 0
+SR-WARN heat unconverged step 4699 passes 1 rounds 0
+SR-WARN heat unconverged step 4739 passes 1 rounds 0
+SR-HEADLESS DONE steps=4933 sim_time=26.747974 until=met
+6
+D155 LEAP max to s_4900: near-held 54.59 at s_3326 (298,197) |v| 2.135e3 · anywhere 54.59 at s_3326 (298,197) |v| 2.135e3 · states over 10: 6
+{"detail":{"held_t":10.00375894496392,"hold_t":10.0,"mass_sb":4436.157623291016,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":26.74797386296268,"step":4933}
+== flagged states, base
+D155 LEAP s_3326: near-held 54.59 at (298,197) |v| 2.135e3 · anywhere 54.59 at (298,197) |v| 2.135e3
+D155 LEAP s_4048: near-held 19.13 at (298,197) |v| 6.090e2 · anywhere 19.13 at (298,197) |v| 6.090e2
+D155 LEAP s_4114: near-held 47.82 at (298,197) |v| 1.898e3 · anywhere 47.82 at (298,197) |v| 1.898e3
+D155 LEAP s_4442: near-held 36.24 at (302,202) |v| 1.500e3 · anywhere 36.24 at (302,202) |v| 1.500e3
+D155 LEAP s_4519: near-held 20.09 at (298,197) |v| 7.438e2 · anywhere 20.09 at (298,197) |v| 7.438e2
+D155 LEAP s_4699: near-held 11.13 at (298,202) |v| 4.631e2 · anywhere 11.13 at (298,202) |v| 4.631e2
+== identity plain vs one-step chunks (fix)
+s_2250 identical
+s_3000 identical
+s_3500 identical
+s_4000 identical
+s_4500 identical
+s_4750 identical
+## 2026-11-04T10:38:18-05:00 linux-pc: cargo build of the gpu test binary + clippy (no GPU)
+    Finished `release` profile [optimized] target(s) in 11.67s
+  Executable tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+test sod::a_strip_laid_along_y_is_the_same_run ... SR-SOD-RUN twin 400x4 strip: 824 steps to t = 80
+test sod::a_thin_cell_beside_dense_gas_takes_no_leap ... SR-SOD-THIN scenes/thin_cell.bin is the cut of build/m0-d155/s_3326.bin
+SR-SOD-THIN twin: the rule holds 1 cells of the cut, the life held 7; Δt 4.949983e-3
+SR-SOD-THIN twin: the thin cell Σ 1.2089e-1, m (+9.8670e-1, +1.4389e-1), E 1.3887e1, |v| 8.2481e0; the worst free cell (38, 35) |v| 4.0254e1, 1.127 × its neighbours' largest (bound 10; without the bracket 54.6 at the thin cell, M0-D155)
+test sod::gpu_a_thin_cell_beside_dense_gas_takes_no_leap ... SR-SOD-THIN scenes/thin_cell.bin is the cut of build/m0-d155/s_3326.bin
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-THIN gpu: Δt 4.949993e-3, 1 cells held after the step
+SR-SOD-THIN gpu: the thin cell Σ 1.2089e-1, m (+9.8670e-1, +1.4389e-1), E 1.3887e1, |v| 8.2481e0; the worst free cell (38, 35) |v| 4.0254e1, 1.127 × its neighbours' largest (bound 10; without the bracket 54.6 at the thin cell, M0-D155)
+test sod::gpu_every_row_is_the_same_gas ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SOD-RUN gpu 400x64 world: 824 steps to t = 80.006677 (SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test sod::gpu_mass_energy_and_the_walls_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test sod::gpu_the_l1_density_error_is_within_two_percent ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test sod::gpu_the_shock_is_within_one_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test sod::gpu_the_tube_laid_along_y_is_the_same_run ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test sod::gpu_with_cold_pressure_on_a_flow_conserves_and_stays_physical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test sod::mass_energy_and_the_walls_momentum_are_exact ... SR-SOD-CONS twin: mass 9.000000000000000e2 → 9.000000000000005e2, energy 8.800000011920929e2 → 8.800000011920927e2
+test sod::species_ride_the_mass_flux_and_change_nothing_else ... SR-SOD-SPECIES twin: ΣX_i − 1 within 1.6e-15, X_H in [0.00e0, 1.000000000000000], contact 262.252 for exact 260.805
+test sod::the_l1_density_error_is_within_two_percent ... SR-SOD-L1 twin: Σ|ρ − ρ_exact| / Σρ_exact = 0.3187 % ≤ 2 %
+test sod::the_mirrored_tube_gives_the_mirrored_run ... SR-SOD-MIRROR twin: the mirrored run within 0.00e0 of the straight one
+test sod::the_scene_is_sods_tube ... ok
+test sod::the_shock_is_within_one_cell ... SR-SOD-SHOCK twin: numerical 356.935, exact 356.598, off 0.337 cells ≤ 1
+test sod::the_tall_scene_world_runs_as_its_strip ... SR-SOD-ROWS twin: 64 rows over 101 steps, every row within 9.44e-15 of the strip's
+test sod::with_cold_pressure_on_a_flow_conserves_and_stays_physical ... SR-SOD-COLD twin: Π 77.563 | 6.787 (cold 69.563 | 4.787), 972 steps, mass 2.00000000000000e3 → 2.00000000000000e3, momentum 5662.049117191 for 5662.049117191
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 480 filtered out; finished in 8.40s
+-rw-rw-r-- 1 ybelanger ybelanger 246161 Nov  4 10:39 scenes/thin_cell.bin
+ed7816c927012c8d809a25fb8c9ba152  scenes/thin_cell.bin
+## 2026-11-04T10:40:14-05:00 laserax-ai-server: verify.py sod --task M0-D155 (RTX 4090)
+sod       17/0/0       6.43 s  GO
+logs: milestones/m0/logs/M0-D155.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+8f4876f40b97
+anchor: 123 path×scope entries moved by this run
+anchor: 403 paths checked · 387 skipped (3 classes) · 1 never checked · 3 stale · 0 unclassified · 11 owed · 418 covered of 805 visible
+verify: 17 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.43 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.82->0.84
+=== GO ===
+## 2026-11-04T10:40:29-05:00 laserax-ai-server: verify.py --redarm sod --task M0-D155 (RTX 4090)
+sod · clean · GO · arm 1/4, 3 left
+sod · plant hll-swap · RED (proven: 14 failed) · arm 2/4, 2 left
+sod · plant hll-hot-face-twin · RED (proven: 1 failed) · arm 3/4, 1 left
+sod · plant hll-hot-face-gpu · RED (proven: 1 failed) · arm 4/4, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope sod · 73.24 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D155.sod.redarm.log
+=== GO ===
+## 2026-11-04T10:42:04-05:00 laserax-ai-server: Verify 1 — verify.py held_core heat_stiff --task M0-D155 (RTX 4090)
+held_core   24/0/0     145.39 s  GO · step 1/2, 1 left
+heat_stiff  13/0/0       2.72 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-D155.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+8f4876f40b97
+anchor: 6 path×scope entries moved by this run
+anchor: 403 paths checked · 387 skipped (3 classes) · 1 never checked · 3 stale · 0 unclassified · 11 owed · 418 covered of 805 visible
+verify: 37 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 145.40 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 1.73->1.11
+=== GO ===
+repro dumps compared 80, differing 0
+repro exit 0 wall 13 s
+life exit 0 wall 184 s
+ALL
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4878 sim_time=26.906149 until=met
+{"detail":{"held_t":10.02908037416637,"hold_t":10.0,"mass_sb":4435.877471923828,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":26.906148558482528,"step":4878}
+life dumps compared with sr-fix: 12, differing 0
+## Verify 2 on the tree's own binary (sr-tree = laserax-ai-server build/target/release/sandbox-reactions, md5 988ccd3a…), RTX 4090
+repro (s_3250 → 3330): exit 0, 13 s, no SR-WARN; its 80 dumps byte-identical to sr-fix's repro (whose leap checker flagged none)
+life (massive_b's command from /tmp/d153/massive_a s_2000): exit 0, 184 s, no SR-WARN; SR-HEADLESS DONE steps=4878 sim_time=26.906149 until=met
+ending: neutron_star, object 1, step 4878, mass_sb 4435.877; its 12 dumps byte-identical to sr-fix's life (sr-fix one-step chunks: 0 states over 10 ×, largest 1.76)
+## 2026-11-04T10:48:38-05:00 laserax-ai-server: the claim — verify.py --changed --task M0-D155 (RTX 4090), read against M0-D155's start
+ui_star           13/0/0       0.11 s  GO · step 68/72, 4 left
+ui_legend         21/0/0       0.31 s  GO · step 69/72, 3 left
+ui_zoom           11/0/0       0.11 s  GO · step 70/72, 2 left
+ui_remnant        6/0/0        0.11 s  GO · step 71/72, 1 left
+ui_inspect        9/0/0        0.11 s  GO · step 72/72, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 128 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+held_core         NOT RUN (not impacted: its 127 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+sod · red-arm proven by M0-D155 2026-11-04T10:41:43-05:00 (fingerprint 5c7221440931) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/sod.rs changed since M0-D155's start - a test, case or check M0-D155's Deliver: does not name
+FLAG oracle: tests/plants/hll-hot-face-gpu.patch changed since M0-D155's start - a test, case or check M0-D155's Deliver: does not name
+FLAG oracle: tests/plants/hll-hot-face-twin.patch changed since M0-D155's start - a test, case or check M0-D155's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D155's start - a test, case or check M0-D155's Deliver: does not name
+FLAG oracle: scope `sod` changed in tools/pb/verify.json - M0-D155's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-D155.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+3ab4fbdbb15e
+anchor: 195 path×scope entries moved by this run
+anchor: 404 paths checked · 389 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 14 owed · 418 covered of 807 visible
+skipped   381  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 1587 passed, 0 failed, 0 skipped · 72/72 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 11 not impacted · 160.29 s + loop 0.25 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.65->1.71 · base: M0-D155's start 2026-11-04T10:11:29-05:00
+=== GO ===
+## 2026-11-04T10:52:18-05:00 linux-pc: verify.py toolchain desktop capture measure_ui --task M0-D155-owed (the claim's owed scopes but web)
+toolchain   3/0/0        0.85 s  GO · step 1/4, 3 left
+desktop     5/0/0      102.71 s  GO · step 2/4, 2 left
+capture     3/0/0       44.32 s  GO · step 3/4, 1 left
+measure_ui  2/0/0        9.05 s  GO · step 4/4, 0 left
+logs: milestones/m0/logs/M0-D155-owed.<scope>.log · record: loop_times.jsonl · tree 3b496e148519+3ab4fbdbb15e
+anchor: 42 path×scope entries moved by this run
+anchor: 404 paths checked · 389 skipped (3 classes) · 0 never checked · 14 stale · 0 unclassified · 0 owed · 418 covered of 807 visible
+verify: 13 passed, 0 failed, 0 skipped · 4/4 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 30.87 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.84->5.38
+=== GO ===
+## 2026-11-04 linux-pc (laserax-ai): the lead's run — verify.py web --task M0-D155-owed
+web       5/0/0      620.75 s  GO  (wall 175.43 s; tree 3b496e148519+086daa690225; load 2.76->6.92)
+=== GO ===  (an earlier try on laserax-ai-server read `owed … never NO-GO`, 0 cases: the scope is linux-pc's or win-laptop's)

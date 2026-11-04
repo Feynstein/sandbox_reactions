@@ -1,0 +1,12 @@
+== 2026-11-04T09:07:09-05:00 plan_lint · task M0-T130-close · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.06 s
+lint: checks=824 failed=0 warnings=7 · blocks=388 · flow_rows=388 · verify_fences=0 · history=0 · flow=per-task · header=611/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-D91: `Read:` names crates/sr-engine/shaders/heat.wgsl whole (1472 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D91 3
+=== GO ===
+

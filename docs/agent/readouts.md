@@ -142,8 +142,13 @@ a run resumed from a dump counts on from the dump's step — while `summary.json
 - **Files.** `DIR/events.jsonl` (one event a line, equal to `summary.json`'s `events`), and in `summary.json`:
   `events`, `objects` and `until`. Each object: `id`, `stage` (the displayed one — `null` until a stage has held),
   `mass_sb` and `stages` — `[{stage, from_step, sim_time}]` for each stage displayed, from the frame that showed it. The objects
-  listed are the last frame's. **Left out until their blocks:** `mass_suns` (M0-T69), `predicted_ending` (the drawing lots' readout wires `observe::ending`),
-  `ending` and `age_years` (M0-T73 built the clock, `observe::age`; the summary does not carry it yet) — the summary has no placeholder for them.
+  listed are the last frame's. **The four readouts (M0-D103)**, from the calibration the binary embeds (read as `Scene::with_embedded_masses`
+  reads it; all four null with none): `mass_suns` (`MassScale::to_suns`), `predicted_ending` (`Predictor::predict` as a list of fate ids —
+  one for a sure call, the close call's two lighter first), `ending` (the ending id once `Predictor::readout` reads `Ended` at the last frame —
+  the displayed remnant held `ending_hold` at that frame's τ_dyn — else null) and `age_years` (the Watch's `AgeClock`, updated every frame on
+  each object's displayed stage; null before a stage has held). The clock rides in the observers' snapshot (version 3, `watch.ages`; §0.5
+  [M0-D103]), so a `--continue`d life writes the unbroken life's ages. The wisp cut is 1 % of the same calibration's `preset_mass_sb.sun`
+  (the nominal Sun-like cloud's with none).
 - **`--until`** (exactly one of `--steps` / `--until`; refused with `--cpu-reference`): `sim_time:<t>` · `event:<kind>` ·
   `stage:<id>` · `ending`. `--max-steps` bounds either; reaching it with the condition unmet exits 2 and the DONE line reads
   `until=unmet`. `sim_time:<t>` stops at the first step past `t` (the last chunks are single steps); the others are read on a
@@ -186,8 +191,8 @@ them; nothing a step computes depends on one. They live in `sr_physics::observe:
 - **The anchors' values are the contract's and calibration's** — read `MASS_SUNS`, `TEMP_KELVIN`, §1.10 and `assets/calibration.json`; this page
   copies none. The scope `readouts` (`testing.md`) runs on `Calibration::test_calibration`, and its real-calibration case stays **NOT PROVEN**
   until M0-V9's run writes `assets/calibration.json`.
-- **Not wired yet.** summary.json's `mass_suns` and the readout strings come with M0-T72, M0-T73 and the drawing lots; nothing in the engine
-  consumes `Translations` today but `calibrate` (the preset masses, the Sun-like T_eff check). The age clock (§1.10.4) is § The age clock (M0-T73).
+- **Where it is read.** summary.json's `mass_suns` is the Watch's `MassScale` (M0-D103); in the engine `calibrate` reads the scales too (the preset
+  masses, the Sun-like T_eff check), and the game's readout panel holds `Translations`. The age clock (§1.10.4) is § The age clock (M0-T73).
 
 ## The predicted ending (§1.9.5; M0-T72)
 `sr_physics::observe::ending::Predictor` (built from calibration's M_ign, M_Ch, M_up, M_BH): `predict(mass_sb)` reads the mass in Suns — below 0.08 failed
@@ -195,7 +200,8 @@ star, below 8 white dwarf, below 25 supernova then neutron star, else black hole
 (the band closed, the nearer threshold if two meet) is `CloseCall(lighter, heavier)`, for `fate.close_call`. `readout(mass_sb, remnant)` shows
 `Ended(ending)` instead once the displayed remnant stage (white_dwarf, neutron_star, black_hole, failed_star) has held `stages::ending_hold(τ_dyn)`
 = max(10 t.u., 20 τ_dyn) (§0.5 [M0-D78]) — the same function the engine's `ending` event reads. `Fate::key` / `Ending::key` give the strings table's keys
-(`fate.*`, `ending.*`); the text lives in `sr-app`'s strings. Display only, nothing wired to a panel or summary.json yet.
+(`fate.*`, `ending.*`); the text lives in `sr-app`'s strings. Display only; summary.json's `predicted_ending` and `ending` write the keys' ids
+without the prefix (M0-D103).
 
 ## The age clock (§1.10.4; M0-T73)
 `sr_physics::observe::age::AgeClock` (built from calibration: `from_calibration`, or `new((M_ign, M_Ch, M_up, M_BH), stage_durations_sb)`): `update(now, wall, &objects, |id| shown_stage)`
@@ -204,7 +210,9 @@ none shown yet → the age waits), so it never decreases and never jumps (G-AGE)
 ne_burn Ne, o_burn O, si_burn Si) = (X_f,c,start − X_f,c) / (X_f,c,start − 10⁻³), clamped to [0, 1], fuel painted back in raising the start; any other stage sums Δt / its `stage_durations_sb` duration
 (log-log in mass, held beyond its pairs, 10 t.u. unmeasured; capped at 1); the four remnant stages add 10⁸ years per t.u. τ_s is §1.10.4's table, log-log in Suns, held under 1 and over 25 (`collapsing` on
 the cloud's row). A stage that ends is banked up to the frame that ends it; a stage entered again goes on from where it stood. The rate is the age gained over the last wall second up to the `wall` asked (0 when
-paused). Not wired to a panel or summary.json (`age_years` is left out of it until the drawing lots). Display only (G-WATCH).
+paused). summary.json's `age_years` is the Watch's clock (M0-D103): updated every frame, its instants the frames' sim times (it reads no wall
+time — its rate is never read there); `snapshot` / `restore` carry each object's age, last frame and shown stage and each stage's φ and fuel
+start (not the rate's samples) in the observers' snapshot. Display only (G-WATCH).
 
 ## Number formats (§4.12; M0-T75; `crates/sr-app/src/format.rs`)
 Every number the app shows becomes text here, through the string table's templates (§4.1) — no caller formats a number itself. English: "," groups thousands, "." is the decimal point.

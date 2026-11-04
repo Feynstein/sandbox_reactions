@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -516,7 +516,7 @@
+     // (§0.5 [M0-D93]). The rounds' measures keep their b² (r²/D, (C/Δt) ê²): re-formed the same way, the Massive life's step
+     // 4,443 ran to 4,096 rounds and the state went non-finite at step 4,736 (M0-D154; the lead's).
+     var cu2 = c * u * u;
+-    if (!finite(cu2)) {
++    if (false) {
+         cu2 = heat * select(0.25 * t, t, (params.flags & CONSTANT_DIFFUSIVITY) != 0u) * u;
+     }
+     return vec2<f32>(cu2, heat * t * t);

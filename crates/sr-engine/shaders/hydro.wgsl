@@ -6,7 +6,9 @@
 // central limiter on the primitives (Σ, u, v, Π, X_i), the species slopes sharing one limiter factor so ΣX_i = 1 holds;
 // the Hancock predictor advances a cell's four face states by half a step with both axes' flux differences; HLL fluxes
 // with Davis speeds (c² = 2Π/Σ) join the predicted states across each face, the species riding the mass flux's upwind
-// side. One workgroup per 8 × 8 tile (M0-D30): the tile's 12 × 12 primitives are read once into workgroup memory, each
+// side. The thermal bracket (§2.3.4 [M0-D155]): a slope whose either face would hold Π/Σ above HOT_FACE times the largest
+// of its three cells' — a dense cell's face beside thin gas, Σ the thin cell's and Π a third of its own — takes Σ and Π
+// flat on that axis (the twin's module doc). One workgroup per 8 × 8 tile (M0-D30): the tile's 12 × 12 primitives are read once into workgroup memory, each
 // predictor runs once — the tile's 64 and the 32 of the ring around it whose faces the tile's faces need — and the
 // predicted faces cross between invocations through the same memory, one axis at a time; no face state is stored in a
 // buffer, so the dispatch needs no scratch beyond the next state. The update writes the next state, never the state it
@@ -362,8 +364,13 @@ fn mc(l: f32, c: f32, r: f32) -> f32 {
     return select(-m, m, a > 0.0);
 }
 
+// The thermal bracket's bound (§2.3.4 [M0-D155]; the twin's `HOT_FACE`): a face's Π/Σ at most this many times the largest
+// of its slope's three cells'.
+const HOT_FACE: f32 = 2.0;
+
 // The slope of a cell along one axis from its two neighbours on it; the species' central differences all scaled by the
-// one factor that brings the most limited within its MC slope (so they keep summing to zero).
+// one factor that brings the most limited within its MC slope (so they keep summing to zero); Σ and Π flat where the
+// thermal bracket refuses their faces.
 fn slope(l: Prim, c: Prim, r: Prim) -> Prim {
     var central: array<f32, 10>;
     var theta = 1.0;
@@ -376,7 +383,17 @@ fn slope(l: Prim, c: Prim, r: Prim) -> Prim {
     for (var i = 0u; i < N_SPECIES; i++) {
         central[i] = theta * central[i];
     }
-    return Prim(mc(l.sigma, c.sigma, r.sigma), mc(l.u, c.u, r.u), mc(l.v, c.v, r.v), mc(l.pi, c.pi, r.pi), central);
+    var s = Prim(mc(l.sigma, c.sigma, r.sigma), mc(l.u, c.u, r.u), mc(l.v, c.v, r.v), mc(l.pi, c.pi, r.pi), central);
+    // The thermal bracket (§2.3.4 [M0-D155]): Σ and Π flat when either face's Π/Σ passes HOT_FACE × the hottest of the
+    // three cells' (or is not a number) — the twin's `slope`.
+    let hottest = max(max(l.pi / l.sigma, c.pi / c.sigma), r.pi / r.sigma);
+    let lo_ok = c.pi - 0.5 * s.pi <= HOT_FACE * hottest * (c.sigma - 0.5 * s.sigma);
+    let hi_ok = c.pi + 0.5 * s.pi <= HOT_FACE * hottest * (c.sigma + 0.5 * s.sigma);
+    if (!(lo_ok && hi_ok)) {
+        s.sigma = 0.0;
+        s.pi = 0.0;
+    }
+    return s;
 }
 
 // `c + f · s`.

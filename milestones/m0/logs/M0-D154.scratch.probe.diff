@@ -1,0 +1,203 @@
+--- /home/ybelanger/workspace/sandbox_reactions/crates/sr-engine/src/headless.rs	2026-11-03 14:19:22.753472100 -0500
++++ crates/sr-engine/src/headless.rs	2026-11-04 09:36:21.227501021 -0500
+@@ -1176,6 +1176,9 @@
+         }
+         // A one-step stretch (M0-D80): a step at P5's ceiling or a core collapse in the frame before.
+         let one_step_frame = one_step;
++        if std::env::var("D154_ONESTEP").is_ok() {
++            n = 1;
++        }
+         if one_step_frame {
+             n = 1;
+         }
+@@ -1198,10 +1201,15 @@
+         }
+         done += n;
+         // Every step of the chunk that reached P5's ceiling (§0.5 [M0-TJ4] (6)); a chunk is never longer than the log.
+-        for w in step.heat_warnings(&gpu.device, &gpu.queue) {
++        let d154_warns = step.heat_warnings(&gpu.device, &gpu.queue);
++        let d154_any = !d154_warns.is_empty() || std::env::var("D154_ALL").is_ok();
++        for w in d154_warns {
+             unconverged += 1;
+             say(&w);
+         }
++        if d154_any {
++            d154_report(&step, &gpu, world.width as usize, world.height as usize, first + done);
++        }
+         if let Some(c) = step.read_cost(&gpu.device, &gpu.queue) {
+             cost.add(&c);
+         }
+@@ -1357,3 +1365,98 @@
+         EXIT_UNMET
+     }
+ }
++
++/// M0-D154 scratch: P5's frozen T⁰ and C, its iterate and its faces after a warned chunk — the cells whose build() terms
++/// (c u², (C/Δt) T²) or D_f leave f32's range, and the largest of each.
++fn d154_report(step: &crate::step::Step, gpu: &Gpu, w: usize, h: usize, at: u64) {
++    let a_r = 2e-5f32;
++    let rep = step.read_heat(&gpu.device, &gpu.queue);
++    let Some((fz, sv, faces)) = step.d154_planes(&gpu.device, &gpu.queue) else { return };
++    let n = w * h;
++    let dt = rep.as_ref().map_or(0.0, |r| r.dt);
++    println!("D154 after step {at}: report {:?}", rep.as_ref().map(|r| (r.dt, r.passes, r.rounds, r.converged, r.delta)));
++    let (mut s1, mut s2) = (0f32, 0f32);
++    let mut top: Vec<(f64, usize)> = Vec::new();
++    let mut bad = 0usize;
++    for i in 0..n {
++        let (t, c) = (fz[i], fz[n + i]);
++        if !(c > 0.0) {
++            continue;
++        }
++        let heat = c / dt;
++        let cc = heat * (1.0 / (4.0 * a_r * t * t * t));
++        let q = t * t;
++        let u = a_r * q * q;
++        let (a, b) = (cc * u * u, heat * t * t);
++        s1 += a;
++        s2 += b;
++        if !(a.is_finite() && b.is_finite() && t.is_finite()) {
++            bad += 1;
++            if bad <= 8 {
++                println!("D154   bad ({},{}) T0 {t:e} C {c:e} u {u:e} c {cc:e} cu2 {a:e} hT2 {b:e} x {:e} T {:e}", i % w, i / w, sv[i], sv[n + i]);
++            }
++        }
++        top.push((f64::from(c) / f64::from(dt) * f64::from(a_r) * f64::from(t).powi(5) / 4.0, i));
++    }
++    top.sort_by(|a, b| b.0.total_cmp(&a.0));
++    println!("D154   Σcu2 {s1:e} Σ(C/dt)T2 {s2:e} bad cells {bad}");
++    for (v, i) in top.iter().take(5) {
++        println!("D154   top ({},{}) cu2(f64) {v:e} T0 {:e} C {:e} x {:e} T {:e} D {:e}", i % w, i / w, fz[*i], fz[n + *i], sv[*i], sv[n + *i], sv[3 * n + *i]);
++    }
++    if let Some(m) = step.d154_machine(&gpu.device, &gpu.queue) {
++        for r in 0..2 {
++            let q = &m[16 * r..16 * r + 16];
++            let f = |i: usize| f32::from_bits(q[i]);
++            println!("D154   rec{r} slot {} mode {} passes {} rounds {} k {} parts {} tx {} ty {} dt {:e} heat0 {:e} u_bound {:e} t_bound {:e} gamma {:e} eta {:e}",
++                q[0], q[1], q[2], q[3], q[4], q[5], q[6], q[7], f(8), f(9), f(10), f(11), f(12), f(13));
++            let rdt = f(8);
++            if rdt > 0.0 {
++                let (mut z, mut ww, mut zt, mut wt) = (0f32, 0f32, 0f32, 0f32);
++                for i in 0..n {
++                    let c = fz[n + i];
++                    if !(c > 0.0) { continue; }
++                    let heat = c / rdt;
++                    for (t, zz, wq) in [(sv[n + i], &mut z, &mut ww), (fz[i], &mut zt, &mut wt)] {
++                        let cc = heat * (1.0 / (4.0 * a_r * t * t * t));
++                        let qq = t * t;
++                        let u = a_r * qq * qq;
++                        *zz += cc * u * u;
++                        *wq += heat * t * t;
++                    }
++                }
++                println!("D154   rec{r} build sums at the iterate T: {z:e} {ww:e} · at T0: {zt:e} {wt:e}");
++            }
++        }
++        println!("D154   report words {:?}", &m[32..44]);
++    }
++    if let Some(kr) = step.d154_krylov(&gpu.device, &gpu.queue) {
++        for par in 0..2 {
++            let r = &kr[par * n..(par + 1) * n];
++            let (mut rr, mut he, mut rr32bad, mut he32bad, mut rmax) = (0f64, 0f64, 0usize, 0usize, 0f64);
++            let (mut he_at, mut he_max) = (0usize, 0f64);
++            for i in 0..n {
++                let c = fz[n + i];
++                if !(c > 0.0) { continue; }
++                let (ri, d, t) = (r[i], sv[3 * n + i], sv[n + i]);
++                let slope = 1.0 / (4.0 * a_r * t * t * t);
++                let e32 = ri * slope / d;
++                if !((ri * ri / d).is_finite()) { rr32bad += 1; }
++                if !((c / dt * e32 * e32).is_finite()) { he32bad += 1; }
++                let (r64, d64, t64) = (f64::from(ri), f64::from(d), f64::from(t));
++                let e64 = r64 / (4.0 * f64::from(a_r) * t64.powi(3) * d64);
++                let hv = f64::from(c) / f64::from(dt) * e64 * e64;
++                rr += r64 * r64 / d64;
++                he += hv;
++                if hv > he_max { he_max = hv; he_at = i; }
++                rmax = rmax.max(r64.abs());
++            }
++            println!("D154   r[{par}] max |r| {rmax:e} · Σ r²/D {rr:e} (f32 terms not finite {rr32bad}) · Σ (C/Δt) ê² {he:e} (f32 terms not finite {he32bad}); its largest term {he_max:e} at ({},{}) T {:e} r {:e} D {:e}",
++                he_at % w, he_at / w, sv[n + he_at], r[he_at], sv[3 * n + he_at]);
++        }
++    }
++    let nd = (w + 1) * h + w * (h + 1);
++    let dmax = faces[..nd].iter().copied().filter(|v| v.is_finite()).fold(0f32, f32::max);
++    let dbad = faces[..nd].iter().filter(|v| !v.is_finite()).count();
++    let svbad: Vec<usize> = (0..5).map(|p| sv[p * n..(p + 1) * n].iter().filter(|v| !v.is_finite()).count()).collect();
++    println!("D154   D_f max {dmax:e} non-finite D_f {dbad} · solve non-finite per plane {svbad:?}");
++}
+--- /home/ybelanger/workspace/sandbox_reactions/crates/sr-engine/src/step/heat.rs	2026-11-04 09:24:25.961074401 -0500
++++ crates/sr-engine/src/step/heat.rs	2026-11-04 09:36:21.227213895 -0500
+@@ -183,6 +183,8 @@
+     pub(super) park: Dispatch,
+     /// The implicit step's `Machines`: its records and its report.
+     machine: wgpu::Buffer,
++    d154_frozen: wgpu::Buffer,
++    d154_solve: wgpu::Buffer,
+     faces: wgpu::Buffer,
+     /// `side.flux`, F's two planes: P5 writes it, the next step's P4 reads it, and a dump carries it (§0.5 [M0-D33]).
+     flux: wgpu::Buffer,
+@@ -226,9 +228,8 @@
+ }
+ 
+ impl HeatReport {
+-    /// `SR-WARN heat unconverged step <n> passes <k> rounds <r>` when the step hit its ceiling (§0.5 [M0-TJ4] (6)) or its
+-    /// sums left f32's range (§0.5 [M0-D93]: k and r where they did, e.g. passes 1 rounds 0 — M0-D154); `step` is the
+-    /// step's index.
++    /// `SR-WARN heat unconverged step <n> passes <k> rounds <r>` when the step hit its ceiling (§0.5 [M0-TJ4] (6)); `step`
++    /// is the step's index.
+     pub fn warning(&self, step: u64) -> Option<String> {
+         (!self.converged).then(|| format!("SR-WARN heat unconverged step {step} passes {} rounds {}", self.passes, self.rounds))
+     }
+@@ -264,13 +265,13 @@
+             })
+         };
+         let none = wgpu::BufferUsages::empty();
+-        let frozen = scratch("heat.frozen", FROZEN_PLANES * cells, none);
++        let frozen = scratch("heat.frozen", FROZEN_PLANES * cells, wgpu::BufferUsages::COPY_SRC);
+         let faces = scratch("heat.faces", 2 * ((w + 1) * h + w * (h + 1)), wgpu::BufferUsages::COPY_SRC);
+         let storage = wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_SRC;
+         // The solve's planes, the machine, the partial sums (two parities of 16 × 16 tiles, then the commit's 8 × 8 tiles)
+         // and the rounds' sizes, a buffer per parity (zero: no round runs until `heat_open`).
+         let tiles = w.div_ceil(16) * h.div_ceil(16);
+-        let solve = scratch("heat.solve", SOLVE_PLANES * cells, none);
++        let solve = scratch("heat.solve", SOLVE_PLANES * cells, wgpu::BufferUsages::COPY_SRC);
+         let krylov = scratch("heat.krylov", KRYLOV_PLANES * cells, wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST);
+         let machine = init_buffer(device, "heat.machine", storage | wgpu::BufferUsages::COPY_DST, &[0; MACHINE_WORDS]);
+         let partials = scratch("heat.partials", 4 * (2 * tiles + w.div_ceil(8) * h.div_ceil(8)), none);
+@@ -426,6 +427,8 @@
+             dispatches: list,
+             park,
+             machine,
++            d154_frozen: frozen.clone(),
++            d154_solve: solve.clone(),
+             faces,
+             flux,
+             sizes,
+@@ -523,6 +526,26 @@
+         (0..logged).map(|i| format!("SR-WARN heat unconverged step {} passes {} rounds {}", log[4 * i], log[4 * i + 1], log[4 * i + 2])).collect()
+     }
+ 
++    /// M0-D154 scratch: the Krylov planes.
++    pub fn d154_krylov(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> Option<Vec<f32>> {
++        Some(read_buffers(device, queue, "d154.krylov", std::iter::once(&self.heat.as_ref()?.krylov)))
++    }
++
++    /// M0-D154 scratch: the machine words.
++    pub fn d154_machine(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> Option<Vec<u32>> {
++        Some(machine_words(device, queue, self.heat.as_ref()?))
++    }
++
++    /// M0-D154 scratch: (frozen planes, solve planes, faces) of the last P5.
++    pub fn d154_planes(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> Option<(Vec<f32>, Vec<f32>, Vec<f32>)> {
++        let heat = self.heat.as_ref()?;
++        Some((
++            read_buffers(device, queue, "d154.frozen", std::iter::once(&heat.d154_frozen)),
++            read_buffers(device, queue, "d154.solve", std::iter::once(&heat.d154_solve)),
++            read_buffers(device, queue, "d154.faces", std::iter::once(&heat.faces)),
++        ))
++    }
++
+     /// The slots each step records from the next submission on (§0.5 [M0-TJ4] (6)): `Some(n)` fixes them — n rounded up to
+     /// even within [[`MIN_ROUNDS`], [`SLOTS`]] (8 is the fewest a submission carries, G-STIFF (d)) — and `None` leaves them to
+     /// the engine. Nothing a step computes depends on them. No effect without P5.

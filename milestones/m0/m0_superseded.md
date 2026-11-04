@@ -372,3 +372,14 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   disk held the Massive core but froze the 20 M₀ Repro's clumps, no sink by step 3,062, and was reverted; the lead at M0-T130,
   2026-11-03: «P3's disk mass (Recommended)», «Build it here (Recommended)», «Revert to M0-D152's rule (Recommended)», «Same
   gate, r ≤ 24 (Recommended)»).
+- Contract §2.3.4's «MUSCL-Hancock with the monotonised-central slope limiter on primitive variables (Σ, u, v, Π, X_i)», Σ and Π
+  limited apart everywhere — superseded by contract §0.5 [M0-D155]: the thermal bracket, a slope whose either face would hold
+  Π/Σ above 2 × the largest of its three cells' takes Σ and Π flat on that axis, the twin and the GPU alike (measured by M0-D155
+  on the RTX 4090: in the Massive life's step 3,326 a dense cell faced a thin one with its Σ and a third of its Π, c 691 against
+  8–13, and P4 alone sent the thin cell to |v| 2,135, the twin alike; the life read 6 such leaps and 13 heat warnings without
+  the bracket, none with it, ending neutron_star; the lead at M0-D155, 2026-11-04: «Thermal bracket, K 2 (Recommended)»).
+- Contract §0.5 [M0-D76]'s observers' snapshot as [M0-D78] left it, «the observers' snapshot is version 2» — superseded by
+  contract §0.5 [M0-D103]: version 3, its `watch` gaining `ages` (the age clock of summary.json's `age_years`), a version-2
+  snapshot refused by `--continue` and not used as a checkpoint, scenes/sun_13593.observers upgraded in place with an empty
+  clock (measured by M0-D103 on the RTX 4090: the Sun-like preset cut at step 768 and continued writes the unbroken life's
+  `age_years`, 3,279,122.408 years; the lead at M0-D103, 2026-11-04: «Upgrade it in place (Recommended)»).

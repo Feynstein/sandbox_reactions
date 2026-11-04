@@ -8,6 +8,13 @@
 //! face. Species travel with the mass flux (the upwind side's X_i), so ΣX_i = 1 is kept exactly: the species slopes of a
 //! cell share one limiter factor (the smallest any species needs) and, summing to zero before it, still sum to zero.
 //!
+//! The thermal bracket (§2.3.4 [M0-D155]): Σ and Π are limited apart, so a dense cell between thin gas and denser gas can
+//! put on its thin side a face with the thin cell's Σ and a third of its own Π — Π/Σ, half the face's c², thousands of
+//! times any cell's. HLL across that face pours energy and momentum into the thin cell while its mass flows out (M0-D155:
+//! the Massive life's step 3,326, |v| 2,135 against neighbours ≤ 40, the twin and the GPU alike). A slope whose either
+//! face holds Π/Σ above [`HOT_FACE`] times the largest of its three cells' takes Σ and Π flat on that axis, so its faces
+//! hold the cell's own Π/Σ; the velocities and the species keep their slopes.
+//!
 //! The pressure is the contract's total Π = Π_th + Π_e + Π_n (§2.3.3) with the cold terms of [`Eos`]: a K pair of 0
 //! means none (G-SOD's `overrides`), the energy a face state carries is Σ(ε_th + ε_cold) + ½Σ|u|², and the wave speed is
 //! the bound c² = 2Π/Σ. Conventions as [`fft`](super::fft): channel-major planes in §2.2's order, row-major cells,
@@ -271,15 +278,32 @@ fn species_slopes(l: &[f64; NS], c: &[f64; NS], r: &[f64; NS]) -> [f64; NS] {
     central.map(|d| theta * d)
 }
 
-/// The slope of a cell along one axis from its two neighbours on that axis.
+/// The thermal bracket's bound (§2.3.4 [M0-D155], module doc): a face's Π/Σ at most this many times the largest of its
+/// slope's three cells'. Measured on the Massive life's s_3326 (a 128 × 128 crop about the core, one twin step): at 1 the
+/// bracket flattens 4,263 of 33,792 slopes (the limiters' ordinary overshoot), at 2 and at 4 the same 3.
+pub const HOT_FACE: f64 = 2.0;
+
+/// The slope of a cell along one axis from its two neighbours on that axis; Σ and Π flat where the thermal bracket
+/// (module doc) refuses their faces.
 fn slope(l: &Prim, c: &Prim, r: &Prim) -> Prim {
-    Prim {
+    let mut s = Prim {
         sigma: mc(l.sigma, c.sigma, r.sigma),
         u: mc(l.u, c.u, r.u),
         v: mc(l.v, c.v, r.v),
         pi: mc(l.pi, c.pi, r.pi),
         x: species_slopes(&l.x, &c.x, &r.x),
+    };
+    let hottest = (l.pi / l.sigma).max(c.pi / c.sigma).max(r.pi / r.sigma);
+    // A face is hot when its Π/Σ passes HOT_FACE × the hottest cell's — or when it is not a number.
+    let hot = |f: f64| {
+        let (pi, bound) = (c.pi + f * s.pi, HOT_FACE * hottest * (c.sigma + f * s.sigma));
+        matches!(pi.partial_cmp(&bound), None | Some(std::cmp::Ordering::Greater))
+    };
+    if hot(-0.5) || hot(0.5) {
+        s.sigma = 0.0;
+        s.pi = 0.0;
     }
+    s
 }
 
 /// P4's CPU f64 twin: the constants of a run and the scheme.

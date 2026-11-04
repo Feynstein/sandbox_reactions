@@ -1,0 +1,2 @@
+# M0-D155-owed-decoy | launch web | 2026-11-04T10:52:38-0500
+$ python3 -m http.server 47840 --bind 127.0.0.1 --directory web/dist

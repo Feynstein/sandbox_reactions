@@ -464,11 +464,13 @@ fn the_held_disk_writes_the_ledgers_held_into_summary_json() {
     assert_grid_matches_the_state(&out);
 }
 
-/// M0-D71d: an H disk (a = 16, Σc = 1, T 2) driven at (1, 0.3) into a held C/O block (16 × 64, Σ 20 ≥ σ_hold, T_floor, the
+/// M0-D71d: an H disk (a = 16, Σc = 1, T 2) driven at (1, 0.3) into a held C/O block (4 × 64, Σ 20 ≥ σ_hold, T_floor, the
 /// shipped K's), gravity off, a leave world, 500 steps: the gas is turned back by the block's walls and the impulse it gives
 /// the block is booked `held` (§2.3.4 [M0-TG2]). Graded: momentum (grid + sinks + escaped + held) to 1e-6 of Σm|u| plus what
 /// a vacuum reset removes, as the gravity-off leave case; `held` over 100 times that bound, so leaving it out of the
-/// invariant breaks it (measured on the RTX 4090: held 0.26 of Σm|u|, drift 6.9e-6 against 2.2e-4).
+/// invariant breaks it (measured on the RTX 4090: held 0.26 of Σm|u|, drift 6.9e-6 against 2.2e-4). The block is 4 wide so
+/// its mass within r ≤ 24 of any of its cells (at most 4 × 49 × 20 = 3,920, the disk's gas on top) stays under m_tov_sb
+/// (4,853.17), the hold's gate (§0.5 [M0-T130]); 16 wide (≈ 15,700) it was never held (M0-T130's claim, 2026-11-04).
 #[test]
 fn gas_driven_against_a_held_block_books_held_and_the_momentum_holds() {
     let scene = format!(
@@ -477,7 +479,7 @@ fn gas_driven_against_a_held_block_books_held_and_the_momentum_holds() {
  "slowdown": false,
  "switches": {{"gravity": false, "hydro": true, "heat": false, "reactions": false, "neutrinos": false, "sinks": false}},
  "objects": [
-   {{"kind": "rect", "x0": 76, "y0": 32, "w": 16, "h": 64, "sigma": 20.0, "t": 0.05, "composition": {{"C": 0.5, "O": 0.5}}, "v": [0, 0]}},
+   {{"kind": "rect", "x0": 76, "y0": 32, "w": 4, "h": 64, "sigma": 20.0, "t": 0.05, "composition": {{"C": 0.5, "O": 0.5}}, "v": [0, 0]}},
    {{"kind": "disk", "x": 44, "y": 60, "a": 16, "sigma_c": 1.0, "t": 2.0, "composition": {{"H": 1.0}}, "v": [1.0, 0.3]}}
  ]}}"#
     );

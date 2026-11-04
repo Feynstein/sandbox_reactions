@@ -774,6 +774,7 @@ fn a_cut_life_resumes_at_its_last_checkpoint() {
         ("no snapshot", with(&[])),
         ("another adapter", with(&["--adapter", "no such adapter"])),
     ];
+    let version_needle = format!("is version 1, this build reads {}", sr_engine::headless::OBSERVERS_VERSION);
     for (what, base) in reasons {
         let copy = out_dir.join(format!("copy-{}", what.replace(' ', "-")));
         copy_tree(&cut_dir, &copy);
@@ -789,10 +790,11 @@ fn a_cut_life_resumes_at_its_last_checkpoint() {
                 edit("physics_hash", "0".repeat(64).into());
                 "physics_hash"
             }
-            // A snapshot of M0-D77's binary, before each object's history carried `x_h_max` (§0.5 [M0-D78]).
+            // A snapshot of M0-D77's binary, before each object's history carried `x_h_max` (§0.5 [M0-D78]); the build's own
+            // version read from the constant (3 since §0.5 [M0-D103]).
             "version 1" => {
                 edit("version", 1.into());
-                "is version 1, this build reads 2"
+                version_needle.as_str()
             }
             "another step" => {
                 edit("step", 81.into());

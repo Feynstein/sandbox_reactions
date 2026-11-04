@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -389,7 +389,7 @@
+     let hottest = max(max(l.pi / l.sigma, c.pi / c.sigma), r.pi / r.sigma);
+     let lo_ok = c.pi - 0.5 * s.pi <= HOT_FACE * hottest * (c.sigma - 0.5 * s.sigma);
+     let hi_ok = c.pi + 0.5 * s.pi <= HOT_FACE * hottest * (c.sigma + 0.5 * s.sigma);
+-    if (!(lo_ok && hi_ok)) {
++    if (false) {
+         s.sigma = 0.0;
+         s.pi = 0.0;
+     }

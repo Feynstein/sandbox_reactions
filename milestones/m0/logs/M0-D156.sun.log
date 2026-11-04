@@ -1,0 +1,9 @@
+# M0-D156 Verify 2 — the Sun-like preset to 30,000 on the final tree (binary md5 1059e7e9; heat.wgsl e74780b2), RTX 4090, laserax-ai-server; 2026-11-04T12:41:48-05:00
+NVIDIA GeForce RTX 3060, 0 %
+NVIDIA GeForce RTX 4090, 0 %
+ 12:41:48 up 7 days,  5:44,  4 users,  load average: 2.41, 2.10, 1.50
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=30000 sim_time=338.478958 until=none
+exit 0
+wall 139.847873884 s
+SR-WARN heat lines: 0

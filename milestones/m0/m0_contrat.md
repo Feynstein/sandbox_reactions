@@ -915,6 +915,45 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     4,853.17 between them (margins −5 % and +10 %; NOT PROVEN on a life) — the lead's answers at M0-T130, 2026-11-03: «P3's disk
     mass (Recommended)», «Build it here (Recommended)», then «Revert to M0-D152's rule (Recommended)», «Same gate, r ≤ 24
     (Recommended)».
+  - [M0-D154] §0.5 [M0-D93]'s «a pass's two bounds …, or a round's sums …, not finite end the step at once» · **a pass's
+    bound Σ c u² that is in f32's range never ends a step: the GPU's c u², formed u² first past √f32::MAX of u, is re-formed
+    without u² where it is not finite (bit-identical wherever it was); a round's term out of f32's range — r²/D, (C/Δt) ê², as
+    the GPU forms them, b² first — ends the step as its sum would (§0.5 [M0-D93]), unchanged** · measured on laserax-ai-server's
+    RTX 4090 (2026-11-04; tasks/M0-D154.md): in the Massive life from M0-D153's s_2000 to its ending (step 4,990), 13 steps
+    print the warning at passes 0 or 1, rounds 0 — 4 at passes 0 with Σ c u² 1.5 × 10²³–2.3 × 10³¹ (step 3,328: u 4.1 × 10¹⁹
+    beside the held core, the bound read inf), 6 with γ, η inf (step 4,520: Σ r²/D 3.4 × 10⁴²), step 4,048 at T⁰ 6.3 × 10⁷
+    (u 3.1 × 10²⁶), and 6 with γ ≤ 2.2 × 10³⁸ and the sums in range but a term inf (step 4,443: Σ r²/D 2.05 × 10³⁸, 5 terms
+    r * r past f32::MAX; step 4,739: the largest (C/Δt) ê² 1.54 × 10³⁸, its ê² 2.9 × 10⁴⁰ — inf if formed first, inferred);
+    with the bound re-formed all 13 read passes 1, rounds 0 and the life is byte-identical to its ending; with the
+    measures re-formed too, step 4,443 runs to 4,096 rounds, 22 steps warn and the state goes non-finite at step 4,736 (energy,
+    cell (298, 195)) — the lead's answers at M0-D154, 2026-11-04: «Amend Verify 2, DONE (Recommended)», «Keep them as exits
+    (Recommended)».
+  - [M0-D155] §2.3.4's «MUSCL-Hancock with the monotonised-central slope limiter on primitive variables (Σ, u, v, Π, X_i)»
+    · **the thermal bracket: a cell's slope along an axis whose either face would hold Π/Σ above 2 × the largest Π/Σ of its
+    three cells (HOT_FACE, a constant of sr_physics::reference::hydro and hydro.wgsl) takes Σ and Π flat on that axis, its
+    faces the cell's own Π/Σ; u, v and the species keep their slopes; the twin and the GPU alike** — amended in place, tagged
+    [M0-D155] · measured on laserax-ai-server's RTX 4090 (2026-11-04; tasks/M0-D155.md): in the Massive life's step 3,326 (M0-D154's
+    Repro) P1–P3 leave the state as it was and P4 alone gives the thin cell (298, 197) its |v| 2,135, 54.6 × its neighbours'
+    largest: MC limits Σ and Π apart, so the dense cell (298, 198) (Σ 7.25, Π 612) faces it with Σ 8.38 × 10⁻⁴, the thin
+    cell's own, and Π 200 — c 691 against 8–13 in every cell about — and HLL across that face gives the thin cell 100.7 of
+    y-momentum flux and 6.8 × 10⁴ of energy while its mass flows out (Σ 8.4 × 10⁻⁴ → 2.3 × 10⁻⁴, E 0.33 → 338, ε_th −8 × 10⁵,
+    P8's floor refilling it); the f64 twin from the same state, the GPU's P2 field and F reads the same to three digits, with or
+    without gravity and the radiation force, so the refusal arm's «honest expansion» it is not (the dense gas's escape speed
+    is ≈ u + 2c ≈ 30); at 2 × the bracket flattens 3 of 33,792 slopes of a 128 × 128 crop about the core (4,263 at 1 ×, 3 at
+    4 ×) and leaves the thin cell at |v| 10.4; the Massive life from M0-D153's s_2000 reads 6 steps with a free cell past 10 ×
+    its neighbours' largest |v| beside the held core (11.1–54.6 ×) and 13 `SR-WARN heat unconverged` lines without it, none
+    and none with it (the life's largest 1.76 ×), ending neutron_star at step 4,878 (4,435.9; 4,990 before) — the lead's
+    answers at M0-D155, 2026-11-04: «Thermal bracket, K 2 (Recommended)», «sod, the scheme's (Recommended)».
+  - [M0-D103] §0.5 [M0-D76]'s observers' snapshot as [M0-D78] left it («the observers' snapshot is version 2») · **the
+    observers' snapshot is version 3: its `watch` gains `ages`, the age clock of summary.json's `age_years` (§1.10.4, §2.12.2) —
+    per object its age, its last frame's sim time and shown stage, and each stage's φ and fuel start, every f64 an exact string;
+    null from a binary with no calibration embedded, which `--continue` reads as an empty clock — so a `--continue`d life
+    writes the unbroken life's `age_years`; a version-2 snapshot is refused by `--continue` (exit 4) and not used as
+    `calibrate`'s checkpoint; scenes/sun_13593.observers (heat_stiff's M0-D156 case) is upgraded in place, version 3 with an
+    empty clock, its star's age restarting at step 13,593** · measured on laserax-ai-server's RTX 4090 (2026-11-04;
+    tasks/M0-D103.md): the Sun-like preset cut at step 768 and continued writes the unbroken life's `age_years`, 3,279,122.408
+    years (1,106,833 at the cut); with the snapshot's clock written null the continued life's age differs (the plant
+    age-not-carried) — the lead at M0-D103, 2026-11-04: «Upgrade it in place (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1401,7 +1440,9 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   log-slope in Σ is ≤ 2). ε_th = E/Σ − ½|u|² − ε_cold, floored at T_floor/μ; the floor's energy is
   booked (§2.9).
 - **2.3.4 Scheme** (SM M3): finite volume, MUSCL-Hancock with the monotonised-central slope limiter
-  on primitive variables (Σ, u, v, Π, X_i); HLL fluxes with Davis wave speeds S_L = min(u_L − c_L,
+  on primitive variables (Σ, u, v, Π, X_i) — [M0-D155] save the thermal bracket: a slope whose either face would hold Π/Σ
+  above 2 × the largest of its three cells' (HOT_FACE) takes Σ and Π flat on that axis, since Σ and Π limited apart put a
+  dense cell's face beside thin gas at the thin cell's Σ and a third of its own Π (M0-D155) —; HLL fluxes with Davis wave speeds S_L = min(u_L − c_L,
   u_R − c_R), S_R = max(u_L + c_L, u_R + c_R); unsplit (both directions' fluxes from the half-step
   states); species advected with the mass flux; the gravity source of §1.4.2 and the radiation force
   of §2.4.4.

@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/reference/hydro.rs
++++ b/crates/sr-physics/src/reference/hydro.rs
+@@ -299,7 +299,7 @@
+         let (pi, bound) = (c.pi + f * s.pi, HOT_FACE * hottest * (c.sigma + f * s.sigma));
+         matches!(pi.partial_cmp(&bound), None | Some(std::cmp::Ordering::Greater))
+     };
+-    if hot(-0.5) || hot(0.5) {
++    if false {
+         s.sigma = 0.0;
+         s.pi = 0.0;
+     }

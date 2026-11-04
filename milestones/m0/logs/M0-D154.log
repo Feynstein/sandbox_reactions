@@ -1,0 +1,535 @@
+## 2026-11-04T09:13:29-05:00 laserax-ai-server: scratch copy /tmp/d154/w + the scratch reader d154bounds (an example, never in the tree)
+dest=/tmp/d154/w · files=13519 · size=245M · linked=none · excluded=13
+=== GO ===
+=== NO-GO: unknown case '--release' (native or wasm) ===
+/home/ybelanger/.cargo/bin/cargo
+   Compiling png v0.18.1
+   Compiling parking_lot v0.12.5
+   Compiling ordered-float v5.5.0
+   Compiling thiserror-impl v2.0.21
+   Compiling bytemuck_derive v1.12.1
+   Compiling zerocopy-derive v0.8.62
+   Compiling bytemuck v1.25.2
+   Compiling naga-types v30.0.1
+   Compiling wgpu-types v30.0.1
+   Compiling half v2.7.1
+   Compiling gpu-allocator v0.28.0
+   Compiling wgpu-naga-bridge v30.0.1
+   Compiling wgpu-core-deps-windows-linux-android v30.0.1
+   Compiling sr-engine v0.0.0 (/tmp/d154/w/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 17.89s
+## 2026-11-04T09:13:59-05:00 laserax-ai-server: d154bounds over /tmp/d153/massive_a s_2000 + massive_b dumps
+# a_r 0.00002 t_floor 0.05 sigma_floor 0.00000001 f32::MAX 3.4028235e38
+step 2000 dt 4.9984884e-3 held 7 · f32 Σcu² 6.480049e10 Σ(C/Δt)T² 7.127274e9 · f64 6.480210608249719e10 7.132004639433392e9 · non-finite cells 0
+  top (300,200) HELD cu²(f64) 2.223804428030312e10 Σ 7.4228e2 T 1.2947e2
+  top (300,198) free cu²(f64) 1.5347891379511475e10 Σ 2.2766e2 T 1.5468e2
+  top (299,199) HELD cu²(f64) 6.289991334100908e9 Σ 6.8087e2 T 1.0239e2
+  top (301,198) free cu²(f64) 5.520830305507764e9 Σ 1.1054e2 T 1.4565e2
+step 2250 dt 4.989348e-3 held 8 · f32 Σcu² 4.5348643e10 Σ(C/Δt)T² 6.3345864e9 · f64 4.534936104302555e10 6.339454396969633e9 · non-finite cells 0
+  top (300,200) HELD cu²(f64) 1.8176569810423367e10 Σ 7.4228e2 T 1.2431e2
+  top (299,199) HELD cu²(f64) 7.487015760331365e9 Σ 6.8087e2 T 1.0598e2
+  top (299,200) HELD cu²(f64) 5.135906414930029e9 Σ 4.2048e2 T 1.0841e2
+  top (299,198) HELD cu²(f64) 4.096812698663106e9 Σ 1.2120e2 T 1.3472e2
+step 3000 dt 4.960434e-3 held 7 · f32 Σcu² 5.059281e10 Σ(C/Δt)T² 6.2813466e9 · f64 5.059301363501939e10 6.283091882489829e9 · non-finite cells 0
+  top (299,198) free cu²(f64) 1.260160101182895e10 Σ 1.3893e2 T 1.6388e2
+  top (300,200) HELD cu²(f64) 1.186416360367747e10 Σ 7.4228e2 T 1.1401e2
+  top (299,199) HELD cu²(f64) 1.1234352076480402e10 Σ 6.8087e2 T 1.1481e2
+  top (300,198) free cu²(f64) 4.453476093244667e9 Σ 2.5243e2 T 1.1817e2
+step 3250 dt 4.9533607e-3 held 10 · f32 Σcu² 2.0475349e11 Σ(C/Δt)T² 8.17525e9 · f64 2.047536207413284e11 8.180224539052836e9 · non-finite cells 0
+  top (300,198) free cu²(f64) 1.5732518028462796e11 Σ 2.8304e2 T 2.3553e2
+  top (299,198) free cu²(f64) 1.6654161116439348e10 Σ 1.2921e2 T 1.7578e2
+  top (299,199) HELD cu²(f64) 1.112061057756257e10 Σ 6.8087e2 T 1.1454e2
+  top (300,200) HELD cu²(f64) 1.0385487799745459e10 Σ 7.4228e2 T 1.1098e2
+step 3500 dt 4.9458886e-3 held 10 · f32 Σcu² 3.985103e10 Σ(C/Δt)T² 6.22902e9 · f64 3.985106765103429e10 6.233120173612084e9 · non-finite cells 0
+  top (299,199) HELD cu²(f64) 1.227123925012657e10 Σ 6.8087e2 T 1.1679e2
+  top (300,200) HELD cu²(f64) 9.174672957295853e9 Σ 7.4228e2 T 1.0823e2
+  top (298,199) HELD cu²(f64) 4.374795817571182e9 Σ 2.8565e1 T 1.8153e2
+  top (301,199) HELD cu²(f64) 2.6206131609455442e9 Σ 4.2328e2 T 9.5325e1
+step 4000 dt 4.9383524e-3 held 10 · f32 Σcu² 1.8882673e11 Σ(C/Δt)T² 8.761503e9 · f64 1.8882677220024893e11 8.76389449523931e9 · non-finite cells 0
+  top (299,198) free cu²(f64) 1.041440192134943e11 Σ 1.2788e2 T 2.5399e2
+  top (300,198) free cu²(f64) 2.569329537110602e10 Σ 2.9586e2 T 1.6235e2
+  top (301,198) free cu²(f64) 2.466535858755119e10 Σ 7.5769e1 T 2.1147e2
+  top (299,199) HELD cu²(f64) 9.93400801761196e9 Σ 6.8087e2 T 1.1192e2
+step 4500 dt 4.9276203e-3 held 9 · f32 Σcu² 7.326375e10 Σ(C/Δt)T² 6.962643e9 · f64 7.326377178269124e10 6.963343321718371e9 · non-finite cells 0
+  top (299,198) free cu²(f64) 2.4236717326086304e10 Σ 1.5927e2 T 1.8151e2
+  top (299,199) HELD cu²(f64) 1.1755256196907246e10 Σ 6.8087e2 T 1.1570e2
+  top (299,201) free cu²(f64) 1.0502930365854715e10 Σ 4.5621e1 T 1.9649e2
+  top (300,200) HELD cu²(f64) 7.399222000748907e9 Σ 7.4228e2 T 1.0360e2
+step 4750 dt 4.924044e-3 held 11 · f32 Σcu² 4.445955e10 Σ(C/Δt)T² 6.455636e9 · f64 4.4459547544008575e10 6.45588507938627e9 · non-finite cells 0
+  top (299,199) HELD cu²(f64) 1.1097736309317915e10 Σ 6.8087e2 T 1.1436e2
+  top (299,198) HELD cu²(f64) 1.0084330968005512e10 Σ 1.4003e2 T 1.5626e2
+  top (300,200) HELD cu²(f64) 7.055563805327779e9 Σ 7.4228e2 T 1.0260e2
+  top (300,201) HELD cu²(f64) 4.1578012296415367e9 Σ 6.1272e1 T 1.5385e2
+## 2026-11-04T09:14:28-05:00 laserax-ai-server: sr-d153 (the tree's binary) from massive_b s_3250 --continue --steps 3330 --dump-every 1, RTX 4090
+exit 0
+4
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+SR-WARN heat unconverged step 3328 passes 0 rounds 0
+SR-HEADLESS DONE steps=3330 sim_time=19.251675 until=none
+## 2026-11-04T09:14:54-05:00 laserax-ai-server: d154bounds (+ non-finite planes, hottest, |rate|) over /tmp/d154/m3330 s_3325..3329
+s_3251.bin
+s_3251.observers.json
+s_3252.bin
+# a_r 0.00002 t_floor 0.05 sigma_floor 0.00000001 f32::MAX 3.4028235e38
+step 3325 dt 4.9500796e-3 held 8 · f32 Σcu² 1.7158134e11 Σ(C/Δt)T² 8.4976317e9 · f64 1.715815710714478e11 8.499922206095041e9 · non-finite cells 0
+  top (299,198) free cu²(f64) 6.803593893972348e10 Σ 1.4831e2 T 2.2653e2
+  top (301,198) free cu²(f64) 4.33399213416494e10 Σ 1.1425e2 T 2.1817e2
+  top (300,198) free cu²(f64) 2.7147189397157063e10 Σ 2.7675e2 T 1.6646e2
+  top (299,199) HELD cu²(f64) 1.1821397641921127e10 Σ 6.8087e2 T 1.1594e2
+  non-finite: planes [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] flux 0 rate 0
+  hottest (299,198) free Σ 1.4831e2 T 2.2653e2 P5-rate -1.9634293e3
+  hottest (301,198) free Σ 1.1425e2 T 2.1817e2 P5-rate -2.8464521e3
+  hottest (300,198) free Σ 2.7675e2 T 1.6646e2 P5-rate 1.2654111e2
+  |rate| (299,196) free rate -3.3029645e4 Σ 1.5630e-3
+  |rate| (302,197) free rate -3.2674527e4 Σ 1.6514e-3
+  |rate| (301,196) free rate -2.6404043e4 Σ 5.9793e-4
+step 3326 dt 4.950023e-3 held 7 · f32 Σcu² 9.3907804e10 Σ(C/Δt)T² 7.4216023e9 · f64 9.39080152244316e10 7.423917319662042e9 · non-finite cells 0
+  top (299,198) free cu²(f64) 3.388299973911057e10 Σ 1.4601e2 T 1.9767e2
+  top (301,198) free cu²(f64) 2.2819430878466038e10 Σ 1.1791e2 T 1.9070e2
+  top (299,199) HELD cu²(f64) 1.1848933970155622e10 Σ 6.8087e2 T 1.1599e2
+  top (300,200) HELD cu²(f64) 9.9841958739209e9 Σ 7.4228e2 T 1.1010e2
+  non-finite: planes [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] flux 0 rate 0
+  hottest (299,198) free Σ 1.4601e2 T 1.9767e2 P5-rate -1.1688579e3
+  hottest (301,198) free Σ 1.1791e2 T 1.9070e2 P5-rate -1.5699619e3
+  hottest (299,201) free Σ 4.6931e1 T 1.3889e2 P5-rate -2.5240972e3
+  |rate| (303,199) free rate -3.929803e4 Σ 5.7791e-3
+  |rate| (299,202) free rate -2.9180682e4 Σ 1.5689e-3
+  |rate| (302,197) free rate -2.790337e4 Σ 7.9670e-3
+step 3327 dt 4.949993e-3 held 8 · f32 Σcu² 5.9961934e10 Σ(C/Δt)T² 6.7006915e9 · f64 5.9962086084098076e10 6.704726680261387e9 · non-finite cells 0
+  top (301,198) free cu²(f64) 1.3214510986766983e10 Σ 1.2061e2 T 1.7018e2
+  top (299,199) HELD cu²(f64) 1.185128905321273e10 Σ 6.8087e2 T 1.1600e2
+  top (299,198) free cu²(f64) 1.166786022304841e10 Σ 1.4294e2 T 1.6039e2
+  top (300,200) HELD cu²(f64) 9.974798116884104e9 Σ 7.4228e2 T 1.1008e2
+  non-finite: planes [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] flux 0 rate 0
+  hottest (298,199) HELD Σ 3.1195e1 T 1.8642e2 P5-rate 8.7886743e2
+  hottest (301,198) free Σ 1.2061e2 T 1.7018e2 P5-rate -9.593045e2
+  hottest (299,198) free Σ 1.4294e2 T 1.6039e2 P5-rate -5.2662933e2
+  |rate| (297,200) free rate -3.9475305e4 Σ 6.7093e-4
+  |rate| (303,198) free rate -2.5251557e4 Σ 1.0743e-3
+  |rate| (299,202) free rate -1.7673064e4 Σ 1.4703e-3
+step 3328 dt 1.7686932e-4 held 6 · f32 Σcu² 1.9510476e12 Σ(C/Δt)T² 1.8608231e11 · f64 1.9510523104831514e12 1.8625869114041995e11 · non-finite cells 0
+  top (301,198) free cu²(f64) 3.594503469620242e11 Σ 1.2072e2 T 1.6919e2
+  top (299,199) HELD cu²(f64) 3.317212021642068e11 Σ 6.8087e2 T 1.1600e2
+  top (299,198) free cu²(f64) 3.0387473089211395e11 Σ 1.4285e2 T 1.5812e2
+  top (300,200) HELD cu²(f64) 2.791528390269051e11 Σ 7.4228e2 T 1.1008e2
+  non-finite: planes [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] flux 0 rate 0
+  hottest (298,197) free Σ 1.3511e-4 T 1.1050e3 P5-rate 2.2869294e9
+  hottest (299,202) free Σ 1.4675e-3 T 1.1028e3 P5-rate 2.3788606e7
+  hottest (301,196) free Σ 7.5902e-4 T 1.1025e3 P5-rate 6.855398e7
+  |rate| (298,196) free rate -3.3513907e9 Σ 5.9580e-4
+  |rate| (297,196) free rate 2.4592965e9 Σ 2.2472e-4
+  |rate| (298,197) free rate 2.2869294e9 Σ 1.3511e-4
+step 3329 dt 1.8053663e-4 held 6 · f32 Σcu² 1.7961728e12 Σ(C/Δt)T² 1.8149229e11 · f64 1.7962778720271533e12 1.815654322422984e11 · non-finite cells 0
+  top (301,198) free cu²(f64) 3.402454491593121e11 Σ 1.2082e2 T 1.6800e2
+  top (299,199) HELD cu²(f64) 3.250180814387779e11 Σ 6.8087e2 T 1.1600e2
+  top (299,198) free cu²(f64) 2.759152037168484e11 Σ 1.4276e2 T 1.5575e2
+  top (300,200) HELD cu²(f64) 2.7347338286093173e11 Σ 7.4228e2 T 1.1007e2
+  non-finite: planes [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] flux 0 rate 0
+  hottest (299,196) free Σ 1.9772e-3 T 1.0887e3 P5-rate 1.24660104e8
+  hottest (298,196) free Σ 6.4668e-4 T 1.0863e3 P5-rate -7.4738394e8
+  hottest (297,197) free Σ 2.7756e-4 T 1.0857e3 P5-rate 8.256144e8
+  |rate| (298,197) free rate -4.341044e9 Σ 1.6372e-4
+  |rate| (297,196) free rate 1.2882548e9 Σ 2.2627e-4
+  |rate| (297,197) free rate 8.256144e8 Σ 2.7756e-4
+## 2026-11-04T09:16:15-05:00 laserax-ai-server: scratch probe (d154probe.py: frozen/solve readable, a report after each warned chunk) built in /tmp/d154/w
+Traceback (most recent call last):
+  File "<stdin>", line 23, in <module>
+AssertionError
+-rwxrwxr-x 2 ybelanger ybelanger 23199064 Nov  4 09:16 /tmp/d154/target/release/sandbox-reactions
+## 2026-11-04T09:17:00-05:00 laserax-ai-server: scratch probe take 2 (anchor fixed)
+patched
+error[E0609]: no field `frozen` on type `&step::heat::Heat`
+   --> crates/sr-engine/src/step/heat.rs:529:78
+    |
+529 |             read_buffers(device, queue, "d154.frozen", std::iter::once(&heat.frozen)),
+    |                                                                              ^^^^^^ unknown field
+    |
+    = note: available fields are: `dispatches`, `park`, `machine`, `faces`, `flux` ... and 15 others
+
+error[E0609]: no field `solve` on type `&step::heat::Heat`
+   --> crates/sr-engine/src/step/heat.rs:530:77
+    |
+530 |             read_buffers(device, queue, "d154.solve", std::iter::once(&heat.solve)),
+    |                                                                             ^^^^^ unknown field
+    |
+    = note: available fields are: `dispatches`, `park`, `machine`, `faces`, `flux` ... and 15 others
+
+For more information about this error, try `rustc --explain E0609`.
+error: could not compile `sr-engine` (lib) due to 2 previous errors
+-rwxrwxr-x 2 ybelanger ybelanger 23199064 Nov  4 09:16 /tmp/d154/target/release/sandbox-reactions
+## 2026-11-04T09:17:17-05:00 laserax-ai-server: scratch probe take 3 (Heat keeps clones of frozen and solve)
+patched 3
+-rwxrwxr-x 2 ybelanger ybelanger 23226480 Nov  4 09:17 /tmp/d154/target/release/sandbox-reactions
+## 2026-11-04T09:17:28-05:00 laserax-ai-server: probe from /tmp/d154/m3330/dumps/s_3320 --continue --steps 3330 --dump-every 1, D154_ALL=1, RTX 4090
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+D154 after step 3321: report Some((0.004950315, 13, 202, true, 5.726148e-6))
+D154   Σcu2 3.701449e10 Σ(C/dt)T2 5.70231e9 bad cells 0
+D154   top (299,199) cu2(f64) 1.1725105377289728e10 T0 1.1574925e2 C 5.587128e2 x 3.5870762e3 T 1.1572512e2 D 9.1139e2
+D154   top (300,200) cu2(f64) 1.0009365399983078e10 T0 1.1015369e2 C 6.1104645e2 x 2.9454963e3 T 1.1016208e2 D 1.1550928e3
+D154   top (300,201) cu2(f64) 5.860509431399568e9 T0 1.5899553e2 C 5.710494e1 x 1.1128264e4 T 1.5358519e2 D 4.8365067e1
+D154   top (299,201) cu2(f64) 2.5850844595527396e9 T0 1.4774287e2 C 3.635841e1 x 7.273221e3 T 1.380938e2 D 4.830735e1
+D154   top (301,199) cu2(f64) 2.560004022680413e9 T0 9.489721e1 C 3.293338e2 x 1.6193639e3 T 9.485901e1 D 9.75924e2
+D154   D_f max 1.3367545e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+D154 after step 3322: report Some((0.0049502994, 15, 268, true, 7.293657e-6))
+D154   Σcu2 3.5290587e10 Σ(C/dt)T2 5.336133e9 bad cells 0
+D154   top (299,199) cu2(f64) 1.1713218933723492e10 T0 1.157257e2 C 5.587128e2 x 3.5831436e3 T 1.1569339e2 D 9.1214264e2
+D154   top (300,200) cu2(f64) 1.0013488342082035e10 T0 1.1016269e2 C 6.1104645e2 x 2.944495e3 T 1.1015271e2 D 1.1553915e3
+D154   top (300,197) cu2(f64) 5.395181865865042e9 T0 3.78556e2 C 6.8709517e-1 x 1.623991e2 T 5.3381207e1 D 4.5027246e2
+D154   top (301,199) cu2(f64) 2.5549346518505573e9 T0 9.4859535e1 C 3.293338e2 x 1.617852e3 T 9.483686e1 D 9.7661273e2
+D154   top (300,201) cu2(f64) 1.5305898891343746e9 T0 1.219308e2 C 5.622807e1 x 4.186614e3 T 1.20284096e2 D 9.024296e1
+D154   D_f max 1.3337538e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+D154 after step 3323: report Some((0.004950282, 11, 207, true, 1.265469e-6))
+D154   Σcu2 1.15210945e11 Σ(C/dt)T2 6.999039e9 bad cells 0
+D154   top (300,198) cu2(f64) 8.787843351088594e10 T0 2.0916756e2 C 2.1730547e2 x 3.682925e4 T 2.0715276e2 D 6.414358e1
+D154   top (299,199) cu2(f64) 1.169730286625978e10 T0 1.1569415e2 C 5.587128e2 x 3.5793489e3 T 1.1566274e2 D 9.1287e2
+D154   top (300,200) cu2(f64) 1.0009342126170803e10 T0 1.1015349e2 C 6.1104645e2 x 2.9423477e3 T 1.1013263e2 D 1.1560272e3
+D154   top (301,199) cu2(f64) 2.5519868873816376e9 T0 9.483757e1 C 3.293338e2 x 1.6154412e3 T 9.480151e1 D 9.777072e2
+D154   top (298,200) cu2(f64) 9.680896898957229e8 T0 1.3306071e2 C 2.2978745e1 x 3.7366775e3 T 1.169133e2 D 5.731198e1
+D154   D_f max 1.6317049e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+D154 after step 3324: report Some((0.0049501676, 15, 288, true, -7.513819e-7))
+D154   Σcu2 3.0134875e11 Σ(C/dt)T2 9.160159e9 bad cells 0
+D154   top (301,198) cu2(f64) 1.3184861178168175e11 T0 2.7456955e2 C 8.364955e1 x 7.658218e4 T 2.487565e2 D 1.9722616e1
+D154   top (299,198) cu2(f64) 8.150733917715794e10 T0 2.3495204e2 C 1.127069e2 x 5.1835375e4 T 2.2563115e2 D 2.927492e1
+D154   top (300,198) cu2(f64) 5.578069913757461e10 T0 1.9131027e2 C 2.1549759e2 x 2.7035176e4 T 1.9174535e2 D 7.961621e1
+D154   top (299,199) cu2(f64) 1.1681745476473902e10 T0 1.1566283e2 C 5.587128e2 x 3.59778e3 T 1.15811356e2 D 9.093843e2
+D154   top (300,200) cu2(f64) 1.0000145261682407e10 T0 1.1013273e2 C 6.1104645e2 x 2.9401106e3 T 1.1011169e2 D 1.1567129e3
+D154   D_f max 1.390887e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+D154 after step 3325: report Some((0.0049500796, 14, 213, true, 4.1154482e-7))
+D154   Σcu2 2.0094403e11 Σ(C/dt)T2 8.535707e9 bad cells 0
+D154   top (299,198) cu2(f64) 8.39528529755045e10 T0 2.362595e2 C 1.1290968e2 x 5.267597e4 T 2.2654037e2 D 2.9008638e1
+D154   top (301,198) cu2(f64) 5.927063822214444e10 T0 2.3226878e2 C 8.680157e1 x 4.531884e4 T 2.1817862e2 D 2.6891289e1
+D154   top (300,198) cu2(f64) 2.6640342346851154e10 T0 1.6582945e2 C 2.1031665e2 x 1.5354169e4 T 1.6645584e2 D 1.1761777e2
+D154   top (299,199) cu2(f64) 1.175708357460205e10 T0 1.1581122e2 C 5.587128e2 x 3.6132734e3 T 1.1593584e2 D 9.0647815e2
+D154   top (300,200) cu2(f64) 9.99071113961226e9 T0 1.1011155e2 C 6.1104645e2 x 2.9400579e3 T 1.1011119e2 D 1.1567493e3
+D154   D_f max 1.1632235e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+D154 after step 3326: report Some((0.004950023, 14, 192, true, -2.8093467e-7))
+D154   Σcu2 1.0528732e11 Σ(C/dt)T2 7.5051484e9 bad cells 0
+D154   top (299,198) cu2(f64) 3.914291139899759e10 T0 2.0345485e2 C 1.111604e2 x 3.0534027e4 T 1.9766898e2 D 4.0868965e1
+D154   top (301,198) cu2(f64) 2.786518258487608e10 T0 1.9846841e2 C 8.95864e1 x 2.644881e4 T 1.9069707e2 D 3.82321e1
+D154   top (299,199) cu2(f64) 1.1820611498407686e10 T0 1.1593584e2 C 5.587128e2 x 3.6199849e3 T 1.1598963e2 D 9.052306e2
+D154   top (300,200) cu2(f64) 9.990687353684484e9 T0 1.10111244e2 C 6.1104645e2 x 2.9386184e3 T 1.1009772e2 D 1.157187e3
+D154   top (300,198) cu2(f64) 7.153263138458699e9 T0 1.27910515e2 C 2.068284e2 x 5.451663e3 T 1.284916e2 D 2.4869492e2
+D154   D_f max 1.2058324e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+D154 after step 3327: report Some((0.004949993, 13, 169, true, 3.321462e-7))
+D154   Σcu2 5.7753354e10 Σ(C/dt)T2 6.581817e9 bad cells 0
+D154   top (301,198) cu2(f64) 1.5164215500443888e10 T0 1.7493367e2 C 9.164051e1 x 1.677708e4 T 1.7018512e2 D 5.242961e1
+D154   top (299,198) cu2(f64) 1.2647508308367867e10 T0 1.6299825e2 C 1.0882406e2 x 1.3235937e4 T 1.6039143e2 D 7.119172e1
+D154   top (299,199) cu2(f64) 1.1848081778362236e10 T0 1.1598953e2 C 5.587128e2 x 3.6205303e3 T 1.15994e2 D 9.0513513e2
+D154   top (300,200) cu2(f64) 9.984574254270344e9 T0 1.1009763e2 C 6.1104645e2 x 2.9363745e3 T 1.1007668e2 D 1.157857e3
+D154   top (301,199) cu2(f64) 2.685714470315284e9 T0 9.581017e1 C 3.293338e2 x 1.6915306e3 T 9.589864e1 D 9.4463525e2
+D154   D_f max 1.3239568e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+D154 after step 3328: report Some((0.00017686932, 1, 0, false, 0.0))
+D154   Σcu2 6.0472556e23 Σ(C/dt)T2 7.8748156e11 bad cells 0
+D154   top (298,196) cu2(f64) 6.0417671041739e23 T0 5.927583e5 C 2.9205068e-4 x 2.4690826e18 T 5.927566e5 D 8.040795e2
+D154   top (298,197) cu2(f64) 5.2791630917363604e20 T0 1.911041e5 C 7.326518e-5 x 2.667613e16 T 1.9110581e5 D 6.446645e2
+D154   top (297,197) cu2(f64) 2.093749222402158e19 T0 8.8835664e4 C 1.3386604e-4 x 1.2453722e15 T 8.883456e4 D 8.194872e2
+D154   top (301,198) cu2(f64) 3.612073879162614e11 T0 1.6935493e2 C 9.1717e1 x 1.6386266e4 T 1.6918526e2 D 1.3439802e3
+D154   top (299,199) cu2(f64) 3.316529182417344e11 T0 1.15994e2 C 5.587128e2 x 3.6205496e3 T 1.1599416e2 D 2.53021e4
+D154   D_f max 1.4965744e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+SR-WARN heat unconverged step 3328 passes 0 rounds 0
+D154 after step 3329: report Some((0.00018053663, 0, 0, false, 0.0))
+D154   Σcu2 8.7517544e23 Σ(C/dt)T2 6.299282e11 bad cells 0
+D154   top (298,197) cu2(f64) 8.706540912603374e23 T0 7.8371756e5 C 1.0632689e-4 x 4.10029e19 T 1.1965921e6 D 6.229918e2
+D154   top (298,196) cu2(f64) 4.5202435300539006e21 T0 2.1960842e5 C 3.1953043e-4 x 4.651853e16 T 2.1960842e5 D 8.021812e2
+D154   top (297,197) cu2(f64) 1.0680651119007788e18 T0 4.9107438e4 C 1.3503822e-4 x 1.1631055e14 T 4.9107438e4 D 7.999043e2
+D154   top (301,198) cu2(f64) 3.4191581904285345e11 T0 1.681647e2 C 9.17995e1 x 1.593028e4 T 1.6799577e2 D 1.3460421e3
+D154   top (299,199) cu2(f64) 3.2495748383889026e11 T0 1.1599697e2 C 5.587128e2 x 3.6212776e3 T 1.1599999e2 D 2.4784414e4
+D154   D_f max 1.4057174e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+D154 after step 3330: report Some((0.0003794477, 18, 1106, true, 1.1160265e-6))
+D154   Σcu2 8.5669354e19 Σ(C/dt)T2 9.061318e10 bad cells 0
+D154   top (298,197) cu2(f64) 8.550838498402553e19 T0 1.5713588e5 C 6.773512e-5 x 9.687171e2 T 8.342414e1 D 6.20861e2
+D154   top (298,196) cu2(f64) 1.6015534768394026e17 T0 3.2565852e4 C 3.318266e-4 x 8.736779e2 T 8.129809e1 D 8.0116925e2
+D154   top (297,197) cu2(f64) 7.546723945074878e14 T0 1.3338346e4 C 1.3565336e-4 x 8.656526e2 T 8.111075e1 D 8.090291e2
+D154   top (298,195) cu2(f64) 5.2270206579192086e13 T0 5.9707476e3 C 5.227483e-4 x 7.49882e2 T 7.825115e1 D 8.007171e2
+D154   top (297,196) cu2(f64) 5.334946172851295e12 T0 5.146596e3 C 1.1212734e-4 x 8.1725476e2 T 7.995247e1 D 8.10601e2
+D154   D_f max 7.374972e5 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+SR-HEADLESS DONE steps=3330 sim_time=19.251675 until=none
+## 2026-11-04T09:18:26-05:00 laserax-ai-server: scratch probe take 4 (+ the machine's two records and the build sums at the first iterate)
+patched 4
+-rwxrwxr-x 2 ybelanger ybelanger 23229568 Nov  4 09:18 /tmp/d154/target/release/sandbox-reactions
+## 2026-11-04T09:18:35-05:00 laserax-ai-server: probe take 4 from s_3326 --continue --steps 3330, D154_ALL=1, RTX 4090
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+D154 after step 3327: report Some((0.004949993, 13, 169, true, 3.321462e-7))
+D154   Σcu2 5.7753354e10 Σ(C/dt)T2 6.581817e9 bad cells 0
+D154   rec0 slot 81 mode 1 passes 13 rounds 169 k 0 parts 950 tx 38 ty 25 dt 4.949993e-3 heat0 3.2673134e5 u_bound 5.4175863e0 t_bound 6.504808e-1 gamma 2.7867088e1 eta 6.4149666e0
+D154   rec0 build sums at the iterate T: 5.417572e10 6.5007724e9 · at T0: 5.7753354e10 6.581817e9
+D154   rec1 slot 82 mode 4 passes 13 rounds 169 k 0 parts 950 tx 38 ty 25 dt 4.949993e-3 heat0 3.2673134e5 u_bound 5.4175863e0 t_bound 6.504808e-1 gamma 2.7867088e1 eta 6.4149666e0
+D154   rec1 build sums at the iterate T: 5.417572e10 6.5007724e9 · at T0: 5.7753354e10 6.581817e9
+D154   report words [13, 169, 1, 1, 884101587, 3300427884, 1152943351, 1218367714, 0, 3326, 0, 210]
+D154   D_f max 1.3239568e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+D154 after step 3328: report Some((0.00017686932, 1, 0, false, 0.0))
+D154   Σcu2 6.0472556e23 Σ(C/dt)T2 7.8748156e11 bad cells 0
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 1.7686932e-4 heat0 3.2997338e5 u_bound 6.047171e13 t_bound 7.876633e1 gamma 0e0 eta 0e0
+D154   rec0 build sums at the iterate T: 6.04717e23 7.8741334e11 · at T0: 6.0472556e23 7.8748156e11
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 1.7686932e-4 heat0 3.2997338e5 u_bound 6.047171e13 t_bound 7.876633e1 gamma inf eta inf
+D154   rec1 build sums at the iterate T: 6.04717e23 7.8741334e11 · at T0: 6.0472556e23 7.8748156e11
+D154   report words [1, 0, 0, 1, 0, 3254886714, 1107403062, 1218517662, 0, 3327, 0, 5]
+D154   D_f max 1.4965744e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+SR-WARN heat unconverged step 3328 passes 0 rounds 0
+D154 after step 3329: report Some((0.00018053663, 0, 0, false, 0.0))
+D154   Σcu2 8.7517544e23 Σ(C/dt)T2 6.299282e11 bad cells 0
+D154   rec0 slot 1 mode 1 passes 0 rounds 0 k 0 parts 950 tx 38 ty 25 dt 1.8053663e-4 heat0 0e0 u_bound 0e0 t_bound 0e0 gamma 0e0 eta 0e0
+D154   rec0 build sums at the iterate T: 7.228533e24 1.1112882e12 · at T0: 8.7517544e23 6.299282e11
+D154   rec1 slot 2 mode 4 passes 0 rounds 0 k 0 parts 950 tx 38 ty 25 dt 1.8053663e-4 heat0 3.2878022e5 u_bound 0e0 t_bound 0e0 gamma 0e0 eta 0e0
+D154   rec1 build sums at the iterate T: 7.228533e24 1.1112882e12 · at T0: 8.7517544e23 6.299282e11
+D154   report words [0, 0, 0, 1, 0, 3251182141, 1103698486, 1218479717, 0, 3328, 0, 2]
+D154   D_f max 1.4057174e6 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+D154 after step 3330: report Some((0.0003794477, 18, 1106, true, 1.1160265e-6))
+D154   Σcu2 8.5669354e19 Σ(C/dt)T2 9.061318e10 bad cells 0
+D154   rec0 slot 111 mode 1 passes 18 rounds 1106 k 0 parts 950 tx 38 ty 25 dt 3.794477e-4 heat0 3.264416e5 u_bound 6.8666824e1 t_bound 8.484178e0 gamma 2.6577924e2 eta 7.970394e1
+D154   rec0 build sums at the iterate T: 6.8666124e11 8.4743586e10 · at T0: 8.5669354e19 9.061318e10
+D154   rec1 slot 112 mode 4 passes 18 rounds 1106 k 0 parts 950 tx 38 ty 25 dt 3.794477e-4 heat0 3.264416e5 u_bound 6.8666824e1 t_bound 8.484178e0 gamma 2.6577924e2 eta 7.970394e1
+D154   rec1 build sums at the iterate T: 6.8666124e11 8.4743586e10 · at T0: 8.5669354e19 9.061318e10
+D154   report words [18, 1106, 1, 1, 899009121, 3255897546, 1108318405, 1218404520, 0, 3329, 0, 1162]
+D154   D_f max 7.374972e5 non-finite D_f 0 · solve non-finite per plane [0, 0, 0, 0, 0]
+SR-HEADLESS DONE steps=3330 sim_time=19.251675 until=none
+## 2026-11-04T09:19:37-05:00 laserax-ai-server: scratch variant V1 — build()'s c u² as heat·(slope·u)-free form heat·tq·u (tq = T/4, or T under constant_diffusivity); probe from s_3326 to 3330
+V1 patched
+D154 after step 3327: report Some((0.004949993, 13, 169, true, 3.321462e-7))
+D154   rec0 slot 81 mode 1 passes 13 rounds 169 k 0 parts 950 tx 38 ty 25 dt 4.949993e-3 heat0 3.2673134e5 u_bound 5.4175863e0 t_bound 6.504808e-1 gamma 2.7867088e1 eta 6.4149666e0
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+D154 after step 3328: report Some((0.00017686932, 1, 0, false, 0.0))
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 1.7686932e-4 heat0 3.2997338e5 u_bound 6.04717e13 t_bound 7.876633e1 gamma 0e0 eta 0e0
+SR-WARN heat unconverged step 3328 passes 1 rounds 0
+D154 after step 3329: report Some((0.00018053663, 1, 0, false, 0.0))
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 1.8053663e-4 heat0 3.2878022e5 u_bound 7.2285326e14 t_bound 1.11153595e2 gamma 0e0 eta 0e0
+D154 after step 3330: report Some((0.0003794477, 18, 1106, true, 1.1160265e-6))
+D154   rec0 slot 111 mode 1 passes 18 rounds 1106 k 0 parts 950 tx 38 ty 25 dt 3.794477e-4 heat0 3.264416e5 u_bound 6.8666824e1 t_bound 8.484178e0 gamma 2.6577924e2 eta 7.970394e1
+SR-HEADLESS DONE steps=3330 sim_time=19.251675 until=none
+## 2026-11-04T09:21:59-05:00 laserax-ai-server: d154win (window x 296-300, y 194-198) over /tmp/d154/m3330 s_3326..3328
+== step 3326 dt 4.950023e-3 held [(299, 199), (300, 199), (301, 199), (298, 200), (299, 200), (300, 200), (301, 200)]
+y194 |  2.29e-4 T  3.89e1 v  2.5e1 |  2.95e-4 T  4.06e1 v  2.5e1 |  6.85e-4 T  4.28e1 v  2.8e1 |  1.38e-3 T  4.37e1 v  3.1e1 |  1.19e-3 T  4.38e1 v  3.3e1 |  4.78e-4 T  4.39e1 v  3.6e1 |  2.65e-4 T  4.42e1 v  3.7e1
+y195 |  2.11e-4 T  3.90e1 v  2.8e1 |  2.35e-4 T  4.12e1 v  2.8e1 |  3.74e-4 T  4.44e1 v  3.0e1 |  1.02e-3 T  4.75e1 v  3.5e1 |  1.34e-3 T  4.84e1 v  3.9e1 |  7.39e-4 T  4.84e1 v  3.9e1 |  3.31e-4 T  4.83e1 v  4.0e1
+y196 |  1.96e-4 T  4.09e1 v  3.2e1 |  2.03e-4 T  4.28e1 v  3.3e1 |  2.25e-4 T  4.53e1 v  3.5e1 |  5.27e-4 T  5.26e1 v  3.8e1 |  1.82e-3 T  5.55e1 v  2.6e1 |  6.00e-3 T  5.50e1 v  1.2e1 |  6.70e-4 T  5.58e1 v  2.6e1
+y197 |  2.13e-4 T  4.01e1 v  3.4e1 |  2.40e-4 T  4.62e1 v  3.6e1 |  2.79e-4 T  5.08e1 v  3.5e1 |  8.38e-4 T  6.08e1 v  2.7e1 |  1.39e-1 T  6.44e1 v  1.4e1 |  8.68e-1 T 5.00e-2 v  1.6e1 |  2.00e-1 T  6.52e1 v  5.1e0
+y198 |  2.10e-4 T  4.22e1 v  3.6e1 |  2.45e-4 T  4.69e1 v  3.9e1 |  3.41e-4 T  4.87e1 v  3.6e1 |   7.25e0 T  9.60e1 v  1.0e1 |   1.46e2 T  1.98e2 v  1.1e1 |   2.72e2 T  1.28e2 v  9.7e0 |   1.18e2 T  1.91e2 v  5.1e0
+y199 |  2.11e-4 T  3.95e1 v  3.6e1 |  2.46e-4 T  4.02e1 v  3.4e1 |  1.09e-3 T  4.29e1 v  2.4e1 |   3.14e1 T  1.35e1 v  1.3e1 |H  6.81e2 T  1.16e2 v  0.0e0 |H  1.09e3 T  5.87e1 v  0.0e0 |H  4.23e2 T  9.58e1 v  0.0e0
+y200 |  2.07e-4 T  3.75e1 v  3.7e1 |  2.36e-4 T  3.94e1 v  3.6e1 |  5.97e-4 T  4.00e1 v  2.8e1 |H  2.94e1 T  1.32e2 v  0.0e0 |H  4.02e2 T  7.43e1 v  0.0e0 |H  7.42e2 T  1.10e2 v  0.0e0 |H  2.99e2 T  5.80e1 v  0.0e0
+== step 3327 dt 4.949993e-3 held [(298, 199), (299, 199), (300, 199), (301, 199), (299, 200), (300, 200), (301, 200), (302, 200)]
+y194 |  2.28e-4 T  3.18e1 v  2.5e1 |  2.95e-4 T  3.23e1 v  2.5e1 |  6.84e-4 T  3.35e1 v  2.7e1 |  1.38e-3 T  3.43e1 v  3.1e1 |  1.19e-3 T  3.45e1 v  3.3e1 |  4.75e-4 T  3.55e1 v  3.6e1 |  2.62e-4 T  3.51e1 v  3.7e1
+y195 |  2.11e-4 T  3.21e1 v  2.8e1 |  2.34e-4 T  3.40e1 v  2.8e1 |  3.74e-4 T  3.41e1 v  3.0e1 |  1.02e-3 T  3.73e1 v  3.5e1 |  1.33e-3 T  3.84e1 v  3.9e1 |  7.32e-4 T  3.84e1 v  3.8e1 |  3.27e-4 T  3.85e1 v  4.0e1
+y196 |  1.96e-4 T  3.32e1 v  3.1e1 |  2.03e-4 T  3.59e1 v  3.3e1 |  2.25e-4 T  3.67e1 v  3.5e1 |  5.10e-4 T  4.12e1 v  3.9e1 |  1.98e-3 T  4.25e1 v  2.8e1 |  5.43e-3 T  4.43e1 v  1.7e1 |  7.56e-4 T  4.66e1 v  2.4e1
+y197 |  2.12e-4 T  3.34e1 v  3.4e1 |  2.32e-4 T  3.63e1 v  3.6e1 |  2.70e-4 T  3.92e1 v  3.6e1 |  2.29e-4 T 5.00e-2 v  2.1e3 |  1.51e-1 T  2.49e1 v  1.7e1 |  7.06e-1 T 5.00e-2 v  2.1e1 |  2.93e-1 T  5.41e1 v  7.5e0
+y198 |  2.07e-4 T  3.48e1 v  3.6e1 |  2.36e-4 T  4.00e1 v  3.9e1 |  3.35e-4 T  4.01e1 v  3.3e1 |   8.90e0 T  6.96e1 v  1.0e1 |   1.43e2 T  1.60e2 v  1.2e1 |   2.69e2 T  9.87e1 v  1.1e1 |   1.21e2 T  1.70e2 v  6.4e0
+y199 |  2.10e-4 T  3.37e1 v  3.6e1 |  2.45e-4 T  3.80e1 v  3.4e1 |  1.00e-3 T 5.00e-2 v  2.7e1 |H  3.12e1 T  1.86e2 v  0.0e0 |H  6.81e2 T  1.16e2 v  0.0e0 |H  1.09e3 T  5.87e1 v  0.0e0 |H  4.23e2 T  9.59e1 v  0.0e0
+y200 |  2.07e-4 T  3.39e1 v  3.7e1 |  2.35e-4 T  3.60e1 v  3.6e1 |  6.71e-4 T  4.81e1 v  2.7e1 |   2.94e1 T  1.16e2 v  0.0e0 |H  4.02e2 T  7.43e1 v  0.0e0 |H  7.42e2 T  1.10e2 v  0.0e0 |H  2.99e2 T  5.80e1 v  0.0e0
+== step 3328 dt 1.7686932e-4 held [(299, 199), (300, 199), (301, 199), (299, 200), (300, 200), (301, 200)]
+y194 |  2.28e-4 T  3.65e1 v  2.5e1 |  2.95e-4 T  4.91e1 v  2.5e1 |  6.84e-4 T  4.81e1 v  2.7e1 |  1.38e-3 T  3.64e1 v  3.1e1 |  1.19e-3 T  2.70e1 v  3.3e1 |  4.75e-4 T  1.29e1 v  3.6e1 |  2.62e-4 T  4.14e1 v  3.7e1
+y195 |  2.11e-4 T  3.44e1 v  2.8e1 |  2.34e-4 T  3.80e1 v  2.8e1 |  3.74e-4 T  5.84e1 v  3.0e1 |  1.02e-3 T  1.09e3 v  3.5e1 |  1.33e-3 T  8.37e1 v  3.9e1 |  7.32e-4 T  8.86e1 v  3.8e1 |  3.27e-4 T  7.52e1 v  4.0e1
+y196 |  1.96e-4 T  3.58e1 v  3.1e1 |  2.03e-4 T  4.79e1 v  3.3e1 |  2.25e-4 T  1.09e3 v  3.5e1 |  5.96e-4 T 5.00e-2 v  2.8e2 |  1.98e-3 T  1.09e3 v  2.6e1 |  5.41e-3 T  2.22e0 v  1.8e1 |  7.59e-4 T  1.10e3 v  1.9e1
+y197 |  2.12e-4 T  3.08e1 v  3.4e1 |  2.32e-4 T  1.09e3 v  3.6e1 |  2.75e-4 T  1.09e3 v  3.5e1 |  1.35e-4 T  1.11e3 v  2.0e3 |  1.51e-1 T  5.47e1 v  1.5e1 |  7.00e-1 T  2.01e1 v  1.9e1 |  2.95e-1 T  2.84e1 v  7.4e0
+y198 |  2.07e-4 T  2.24e1 v  3.6e1 |  2.36e-4 T  3.97e1 v  3.9e1 |  3.35e-4 T  1.09e3 v  2.9e1 |   8.94e0 T  7.45e1 v  9.9e0 |   1.43e2 T  1.58e2 v  1.2e1 |   2.69e2 T  9.65e1 v  1.1e1 |   1.21e2 T  1.69e2 v  6.4e0
+y199 |  2.10e-4 T  3.42e1 v  3.6e1 |  2.45e-4 T  2.31e0 v  3.4e1 |  1.01e-3 T  1.09e3 v  2.7e1 |   3.12e1 T  1.83e2 v  0.0e0 |H  6.81e2 T  1.16e2 v  0.0e0 |H  1.09e3 T  5.87e1 v  0.0e0 |H  4.23e2 T  9.59e1 v  0.0e0
+y200 |  2.07e-4 T  2.22e1 v  3.7e1 |  2.35e-4 T  7.98e1 v  3.6e1 |  6.70e-4 T  1.09e3 v  2.1e1 |   2.94e1 T  1.16e2 v 2.1e-1 |H  4.02e2 T  7.43e1 v  0.0e0 |H  7.42e2 T  1.10e2 v  0.0e0 |H  2.99e2 T  5.80e1 v  0.0e0
+## 2026-11-04T09:24:33-05:00 laserax-ai-server: verify.py heat_stiff --task M0-D154 (RTX 4090)
+heat_stiff  13/0/0      12.79 s  GO
+logs: milestones/m0/logs/M0-D154.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+d8bb1e394347
+anchor: 12 path×scope entries moved by this run
+anchor: 288 paths checked · 387 skipped (3 classes) · 1 never checked · 126 stale · 0 unclassified · 0 owed · 415 covered of 802 visible
+verify: 13 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.79 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.08->1.42
+=== GO ===
+SR-STIFF heat_overflow.bin: hottest T⁰ 3.744049198963488e7, u 7.860065755477906e25 (√f32::MAX 1.844674352395373e19)
+SR-STIFF heat_overflow.bin: the first pass's Σ c u² 4.493025484208855e29 (f32::MAX 3.4028235e38)
+SR-STIFF GPU heat_overflow.bin: HeatReport { dt: 0.0021468466, passes: 1, rounds: 0, converged: false, delta: 0.0 }, radiated booked 2.935493911043741e2, P8's floor_added 3.847479820251465e-5
+SR-STIFF heat_overflow.bin: hottest T⁰ 3.744049198963488e7, u 7.860065755477906e25 (√f32::MAX 1.844674352395373e19)
+SR-STIFF heat_overflow.bin: the first pass's Σ c u² 4.493025484208855e29 (f32::MAX 3.4028235e38)
+SR-STIFF GPU heat_overflow.bin: HeatReport { dt: 0.0021468466, passes: 1, rounds: 0, converged: false, delta: 0.0 }, radiated booked 2.935493911043741e2, P8's floor_added 3.847479820251465e-5
+## 2026-11-04T09:25:00-05:00 laserax-ai-server: verify.py --redarm heat_stiff --task M0-D154 (RTX 4090)
+heat_stiff · clean · GO · arm 1/7, 6 left
+heat_stiff · plant newton-one-pass · RED (proven: 9 failed) · arm 2/7, 5 left
+heat_stiff · plant carry-commit-early · RED (proven: 4 failed) · arm 3/7, 4 left
+heat_stiff · plant vcycle-carry-restart · RED (proven: 2 failed) · arm 4/7, 3 left
+heat_stiff · plant ceiling-unlimited · RED (proven: 5 failed) · arm 5/7, 2 left
+heat_stiff · plant overflow-converged · RED (proven: 2 failed) · arm 6/7, 1 left
+heat_stiff · plant bound-u-squared · RED (proven: 2 failed) · arm 7/7, 0 left
+redarm: 6 plants · 6 red · 0 green · 0 errors · scope heat_stiff · 100.27 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D154.heat_stiff.redarm.log
+=== GO ===
+## 2026-11-04T09:27:03-05:00 laserax-ai-server: Verify 1 — verify.py heat_implicit held_core --task M0-D154 (RTX 4090)
+heat_implicit  8/0/0        1.82 s  GO · step 1/2, 1 left
+held_core      24/0/0     153.10 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-D154.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+d8bb1e394347
+anchor: 138 path×scope entries moved by this run
+anchor: 404 paths checked · 387 skipped (3 classes) · 0 never checked · 11 stale · 0 unclassified · 0 owed · 415 covered of 802 visible
+verify: 32 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 153.10 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 3.03->1.1
+=== GO ===
+## 2026-11-04T09:29:46-05:00 laserax-ai-server: release build of the fixed tree (build/target/release/sandbox-reactions)
+=== NO-GO: usage: bash tests/cargo.sh build native|wasm ===
+-rwxrwxr-x 2 ybelanger ybelanger 23199544 Nov  4 09:29 build/target/release/sandbox-reactions
+## 2026-11-04T09:29:59-05:00 laserax-ai-server: Verify 2 — the Repro on the fixed tree: /tmp/d154/sr-d154 from /tmp/d153/massive_a s_2000 --continue --until ending --max-steps 60000 --dump-every 250 (massive_b's command), timeout 570, RTX 4090
+exit 0 wall 221 s
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+SR-WARN heat unconverged step 3328 passes 1 rounds 0
+SR-WARN heat unconverged step 4048 passes 1 rounds 0
+SR-WARN heat unconverged step 4049 passes 1 rounds 0
+SR-WARN heat unconverged step 4115 passes 1 rounds 0
+SR-WARN heat unconverged step 4116 passes 1 rounds 0
+SR-WARN heat unconverged step 4443 passes 1 rounds 0
+SR-WARN heat unconverged step 4444 passes 1 rounds 0
+SR-WARN heat unconverged step 4519 passes 1 rounds 0
+SR-WARN heat unconverged step 4520 passes 1 rounds 0
+SR-WARN heat unconverged step 4659 passes 1 rounds 0
+SR-WARN heat unconverged step 4699 passes 1 rounds 0
+SR-WARN heat unconverged step 4739 passes 1 rounds 0
+13
+SR-HEADLESS DONE steps=4990 sim_time=27.028510 until=met
+## 2026-11-04T09:34:01-05:00 laserax-ai-server: probe rebuilt on the exact fix (the tree's heat.wgsl into /tmp/d154/w) + D154_ONESTEP (one step a chunk, no dumps)
+onestep patched
+-rwxrwxr-x 2 ybelanger ybelanger 23230192 Nov  4 09:34 /tmp/d154/target/release/sandbox-reactions
+s_2250.bin s_2500.bin s_2750.bin s_3000.bin s_3250.bin s_3500.bin s_3750.bin s_4000.bin s_4250.bin s_4500.bin s_4750.bin s_4990.bin ## 2026-11-04T09:34:15-05:00 laserax-ai-server: the warned steps' records, probe on the exact fix, one step a chunk, from /tmp/d154/mb s_3250→3330, s_4000→4118, s_4250→4446, s_4500→4741, RTX 4090
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+D154 after step 3328: report Some((0.00017686932, 1, 0, false, 0.0))
+D154   Σcu2 6.0472556e23 Σ(C/dt)T2 7.8748156e11 bad cells 0
+D154   top (298,196) cu2(f64) 6.0417671041739e23 T0 5.927583e5 C 2.9205068e-4 x 2.4690826e18 T 5.927566e5 D 8.040795e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 1.7686932e-4 heat0 3.2997338e5 u_bound 6.047171e13 t_bound 7.876633e1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 1.7686932e-4 heat0 3.2997338e5 u_bound 6.047171e13 t_bound 7.876633e1 gamma inf eta inf
+SR-WARN heat unconverged step 3328 passes 1 rounds 0
+D154 after step 3329: report Some((0.00018053663, 1, 0, false, 0.0))
+D154   Σcu2 8.7517544e23 Σ(C/dt)T2 6.299282e11 bad cells 0
+D154   top (298,197) cu2(f64) 8.706540912603374e23 T0 7.8371756e5 C 1.0632689e-4 x 4.1002856e19 T 1.1965921e6 D 6.229918e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 1.8053663e-4 heat0 3.2878022e5 u_bound 7.2285326e14 t_bound 1.11153595e2 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 1.8053663e-4 heat0 3.2878022e5 u_bound 7.2285326e14 t_bound 1.11153595e2 gamma inf eta inf
+SR-WARN heat unconverged step 4048 passes 1 rounds 0
+D154 after step 4049: report Some((0.0049366704, 1, 0, false, 0.0))
+D154   Σcu2 2.3386196e31 Σ(C/dt)T2 1.8871474e13 bad cells 0
+D154   top (298,197) cu2(f64) 2.3386197150978055e31 T0 6.2823256e7 C 2.3595085e-5 x 3.114495e26 T 6.2823256e7 D 6.0157935e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 4.9366704e-3 heat0 3.5300534e5 u_bound 2.3386198e21 t_bound 1.8871366e3 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 4.9366704e-3 heat0 3.5300534e5 u_bound 2.3386198e21 t_bound 1.8871366e3 gamma 0e0 eta 0e0
+SR-WARN heat unconverged step 4049 passes 1 rounds 0
+D154 after step 4050: report Some((0.0006210265, 1, 0, false, 0.0))
+D154   Σcu2 3.6370707e23 Σ(C/dt)T2 3.8102552e11 bad cells 0
+D154   top (302,197) cu2(f64) 3.637070529947415e23 T0 6.0936994e5 C 5.37634e-4 x 2.7501043e18 T 6.0894756e5 D 6.754836e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 6.210265e-4 heat0 3.47579e5 u_bound 3.624483e13 t_bound 3.8083645e1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 6.210265e-4 heat0 3.47579e5 u_bound 3.624483e13 t_bound 3.8083645e1 gamma inf eta inf
+SR-WARN heat unconverged step 4115 passes 1 rounds 0
+D154 after step 4116: report Some((0.00020641294, 1, 0, false, 0.0))
+D154   Σcu2 2.2642978e23 Σ(C/dt)T2 4.10296e11 bad cells 0
+D154   top (298,196) cu2(f64) 2.2642712494167384e23 T0 5.6327875e5 C 1.6484605e-4 x 2.0133234e18 T 5.632775e5 D 7.999735e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 2.0641294e-4 heat0 3.27217e5 u_bound 2.264273e13 t_bound 4.1028652e1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 2.0641294e-4 heat0 3.27217e5 u_bound 2.264273e13 t_bound 4.1028652e1 gamma inf eta inf
+SR-WARN heat unconverged step 4116 passes 1 rounds 0
+D154 after step 4117: report Some((0.0002055373, 1, 0, false, 0.0))
+D154   Σcu2 1.4948929e23 Σ(C/dt)T2 3.126531e11 bad cells 0
+D154   top (298,197) cu2(f64) 1.477644281374718e23 T0 6.290181e5 C 6.168432e-5 x 1.9371625e19 T 9.920513e5 D 6.126738e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 2.055373e-4 heat0 3.2635653e5 u_bound 1.4435902e14 t_bound 4.8903267e1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 2.055373e-4 heat0 3.2635653e5 u_bound 1.4435902e14 t_bound 4.8903267e1 gamma inf eta inf
+SR-WARN heat unconverged step 4443 passes 1 rounds 0
+D154 after step 4444: report Some((0.00025763988, 1, 0, false, 0.0))
+D154   Σcu2 6.180905e21 Σ(C/dt)T2 1.6664573e11 bad cells 0
+D154   top (302,203) cu2(f64) 6.177122905466461e21 T0 3.935406e5 C 3.371954e-5 x 4.797178e17 T 3.935401e5 D 8.02618e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 2.5763988e-4 heat0 3.4602466e5 u_bound 6.1808666e11 t_bound 1.66601e1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 2.5763988e-4 heat0 3.4602466e5 u_bound 6.1808666e11 t_bound 1.66601e1 gamma 1.8407313e38 eta 1.8404993e38
+SR-WARN heat unconverged step 4444 passes 1 rounds 0
+D154 after step 4445: report Some((0.00026414767, 1, 0, false, 0.0))
+D154   Σcu2 6.537367e19 Σ(C/dt)T2 1.455576e11 bad cells 0
+D154   top (302,202) cu2(f64) 3.549270567025949e19 T0 1.8976169e5 C 7.6203205e-6 x 2.5933657e16 T 1.8976169e5 D 8.0773596e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 2.6414767e-4 heat0 3.4588247e5 u_bound 6.537354e9 t_bound 1.4537355e1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 2.6414767e-4 heat0 3.4588247e5 u_bound 6.537354e9 t_bound 1.4537355e1 gamma 4.7263513e35 eta 4.7253597e35
+SR-WARN heat unconverged step 4519 passes 1 rounds 0
+D154 after step 4520: report Some((0.004927221, 1, 0, false, 0.0))
+D154   Σcu2 1.9962305e21 Σ(C/dt)T2 1.3093771e10 bad cells 0
+D154   top (298,197) cu2(f64) 1.996230631247421e21 T0 4.1679084e5 C 1.5640547e-4 x 6.026791e17 T 4.1668603e5 D 5.978439e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 4.927221e-3 heat0 3.4019853e5 u_bound 1.9937216e11 t_bound 1.3023399e0 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.927221e-3 heat0 3.4019853e5 u_bound 1.9937216e11 t_bound 1.3023399e0 gamma 2.1716662e38 eta 2.170798e38
+SR-WARN heat unconverged step 4520 passes 1 rounds 0
+D154 after step 4521: report Some((0.00047591096, 1, 0, false, 0.0))
+D154   Σcu2 3.7242365e24 Σ(C/dt)T2 3.726324e11 bad cells 0
+D154   top (298,197) cu2(f64) 3.724023191345841e24 T0 1.3897635e6 C 6.8369685e-5 x 6.633299e19 T 1.3495065e6 D 5.967325e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 4.7591096e-4 heat0 3.5088703e5 u_bound 3.2152384e14 t_bound 3.5799286e1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.7591096e-4 heat0 3.5088703e5 u_bound 3.2152384e14 t_bound 3.5799286e1 gamma inf eta inf
+SR-WARN heat unconverged step 4659 passes 1 rounds 0
+D154 after step 4660: report Some((0.0049250275, 1, 0, false, 0.0))
+D154   Σcu2 4.117626e19 Σ(C/dt)T2 6.82418e9 bad cells 0
+D154   top (298,197) cu2(f64) 4.11762637126209e19 T0 2.4615322e5 C 4.4880533e-5 x 7.095955e16 T 2.44085e5 D 5.7601855e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 4.9250275e-3 heat0 3.1690138e5 u_bound 3.9475236e9 t_bound 6.768923e-1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.9250275e-3 heat0 3.1690138e5 u_bound 3.9475236e9 t_bound 6.768923e-1 gamma 2.9000832e36 eta 2.898191e36
+SR-WARN heat unconverged step 4699 passes 1 rounds 0
+D154 after step 4700: report Some((0.004924558, 1, 0, false, 0.0))
+D154   Σcu2 1.3401926e21 Σ(C/dt)T2 1.0353156e10 bad cells 0
+D154   top (298,202) cu2(f64) 1.3401923328868771e21 T0 3.931068e5 C 1.4060849e-4 x 4.7737094e17 T 3.9306634e5 D 6.371766e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 4.924558e-3 heat0 3.1062125e5 u_bound 1.3395029e11 t_bound 1.0307112e0 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.924558e-3 heat0 3.1062125e5 u_bound 1.3395029e11 t_bound 1.0307112e0 gamma 1.4522531e38 eta 1.4522532e38
+SR-WARN heat unconverged step 4739 passes 1 rounds 0
+D154 after step 4740: report Some((0.004924155, 1, 0, false, 0.0))
+D154   Σcu2 4.30274e17 Σ(C/dt)T2 5.708379e9 bad cells 0
+D154   top (297,197) cu2(f64) 4.302741079203241e17 T0 1.228685e5 C 1.5132272e-5 x 4.536139e15 T 1.2273906e5 D 7.943631e2
+D154   rec0 slot 3 mode 3 passes 1 rounds 0 k 0 parts 950 tx 38 ty 25 dt 4.924155e-3 heat0 2.9970303e5 u_bound 4.280125e7 t_bound 5.7024693e-1 gamma 0e0 eta 0e0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.924155e-3 heat0 2.9970303e5 u_bound 4.280125e7 t_bound 5.7024693e-1 gamma 1.6355778e34 eta 1.6355692e34
+wall 71 s
+## 2026-11-04T09:36:20-05:00 laserax-ai-server: probe take 5 (+ Krylov r planes: per-sum f64 totals and the f32 terms at round 0)
+patched 5
+SR-WARN heat unconverged step 4443 passes 1 rounds 0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 2.5763988e-4 heat0 3.4602466e5 u_bound 6.1808666e11 t_bound 1.66601e1 gamma 1.8407313e38 eta 1.8404993e38
+D154   r[0] max |r| 3.8439229092648924e20 · Σ r²/D 2.045363317702935e38 (f32 terms not finite 5) · Σ (C/Δt) ê² 3.087861622433022e31 (f32 terms not finite 0); its largest term 1.0752997611759199e31 at (301,203) T 3.7315346e1 r 9.59404e19 D 2.407966e3
+D154   r[1] max |r| 3.8439229092648924e20 · Σ r²/D 2.0453632931421606e38 (f32 terms not finite 5) · Σ (C/Δt) ê² 3.0879327942425022e31 (f32 terms not finite 0); its largest term 1.0752997611759199e31 at (301,203) T 3.7315346e1 r 9.59404e19 D 2.407966e3
+SR-WARN heat unconverged step 4444 passes 1 rounds 0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 2.6414767e-4 heat0 3.4588247e5 u_bound 6.537354e9 t_bound 1.4537355e1 gamma 4.7263513e35 eta 4.7253597e35
+D154   r[0] max |r| 1.8876659717239734e19 · Σ r²/D 5.249227447008761e35 (f32 terms not finite 1) · Σ (C/Δt) ê² 3.644856253988203e32 (f32 terms not finite 0); its largest term 3.6447413052552415e32 at (302,201) T 4.7183628e1 r 2.0561127e18 D 1.1620491e3
+D154   r[1] max |r| 1.887666191626299e19 · Σ r²/D 5.2492281104952e35 (f32 terms not finite 1) · Σ (C/Δt) ê² 3.644751537700584e32 (f32 terms not finite 0); its largest term 3.644751537695638e32 at (302,201) T 4.7183628e1 r 2.0561156e18 D 1.1620491e3
+SR-WARN heat unconverged step 4519 passes 1 rounds 0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.927221e-3 heat0 3.4019853e5 u_bound 1.9937216e11 t_bound 1.3023399e0 gamma 2.1716662e38 eta 2.170798e38
+D154   r[0] max |r| 3.6040773779223006e20 · Σ r²/D 2.3414912529113932e38 (f32 terms not finite 5) · Σ (C/Δt) ê² 1.0237902277108934e38 (f32 terms not finite 0); its largest term 9.880333222355488e37 at (299,197) T 5e-2 r 9.780981e19 D 9.682628e9
+D154   r[1] max |r| 3.604570662818986e20 · Σ r²/D 2.3421045715868517e38 (f32 terms not finite 5) · Σ (C/Δt) ê² 9.922956318134412e37 (f32 terms not finite 0); its largest term 9.89669809003567e37 at (299,197) T 5e-2 r 9.789078e19 D 9.682628e9
+SR-WARN heat unconverged step 4520 passes 1 rounds 0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.7591096e-4 heat0 3.5088703e5 u_bound 3.2152384e14 t_bound 3.5799286e1 gamma inf eta inf
+D154   r[0] max |r| 3.958266404611569e22 · Σ r²/D 3.3898699842702275e42 (f32 terms not finite 5) · Σ (C/Δt) ê² 2.1678130282773242e38 (f32 terms not finite 0); its largest term 1.4195530172460573e38 at (298,198) T 1.1485164e2 r 2.3443855e21 D 1.7513939e2
+D154   r[1] max |r| 3.958266404611569e22 · Σ r²/D 3.389869857883827e42 (f32 terms not finite 5) · Σ (C/Δt) ê² 1.4195911025909092e38 (f32 terms not finite 0); its largest term 1.4195577894695607e38 at (298,198) T 1.1485164e2 r 2.3443895e21 D 1.7513939e2
+SR-WARN heat unconverged step 4659 passes 1 rounds 0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.9250275e-3 heat0 3.1690138e5 u_bound 3.9475236e9 t_bound 6.768923e-1 gamma 2.9000832e36 eta 2.898191e36
+D154   r[0] max |r| 4.088601277996676e19 · Σ r²/D 3.377278549208053e36 (f32 terms not finite 1) · Σ (C/Δt) ê² 1.3002432522601666e36 (f32 terms not finite 0); its largest term 1.2934746321634394e36 at (299,197) T 5e-2 r 1.1413299e19 D 1.0070811e10
+D154   r[1] max |r| 4.089129043578008e19 · Σ r²/D 3.3778780174245016e36 (f32 terms not finite 1) · Σ (C/Δt) ê² 1.2945696821318786e36 (f32 terms not finite 0); its largest term 1.2945679260273042e36 at (299,197) T 5e-2 r 1.1418121e19 D 1.0070811e10
+SR-WARN heat unconverged step 4699 passes 1 rounds 0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.924558e-3 heat0 3.1062125e5 u_bound 1.3395029e11 t_bound 1.0307112e0 gamma 1.4522531e38 eta 1.4522532e38
+D154   r[0] max |r| 3.041942646402287e20 · Σ r²/D 1.6899255565871684e38 (f32 terms not finite 4) · Σ (C/Δt) ê² 2.841407257656364e35 (f32 terms not finite 0); its largest term 1.3449453656872922e35 at (298,201) T 4.1963356e1 r 1.7787232e19 D 2.6931287e2
+D154   r[1] max |r| 3.041958127526006e20 · Σ r²/D 1.6899436330020543e38 (f32 terms not finite 4) · Σ (C/Δt) ê² 1.3454262439001934e35 (f32 terms not finite 0); its largest term 1.3454106424554526e35 at (298,201) T 4.1963356e1 r 1.7790308e19 D 2.6931287e2
+SR-WARN heat unconverged step 4739 passes 1 rounds 0
+D154   rec1 slot 4 mode 4 passes 1 rounds 1 k 1 parts 950 tx 38 ty 25 dt 4.924155e-3 heat0 2.9970303e5 u_bound 4.280125e7 t_bound 5.7024693e-1 gamma 1.6355778e34 eta 1.6355692e34
+D154   r[0] max |r| 3.604489661797368e18 · Σ r²/D 1.7703331537107176e34 (f32 terms not finite 0) · Σ (C/Δt) ê² 1.540543361893315e38 (f32 terms not finite 0); its largest term 1.5400629143326841e38 at (297,198) T 5e-2 r 9.060605e17 D 5.3244394e5
+D154   r[1] max |r| 3.605622158773977e18 · Σ r²/D 1.7713609868150348e34 (f32 terms not finite 0) · Σ (C/Δt) ê² 1.5464053458493577e38 (f32 terms not finite 0); its largest term 1.5459255484933906e38 at (297,198) T 5e-2 r 9.0778346e17 D 5.3244394e5
+## 2026-11-04T09:38:42-05:00 laserax-ai-server: Verify 2 take 2 — the measures' squares re-formed too (times_square, square_over); release build, then massive_b's command, timeout 570, RTX 4090
+exit 5 wall 220 s
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+SR-WARN heat unconverged step 3328 passes 1 rounds 0
+SR-WARN heat unconverged step 4048 passes 1 rounds 0
+SR-WARN heat unconverged step 4049 passes 1 rounds 0
+SR-WARN heat unconverged step 4115 passes 1 rounds 0
+SR-WARN heat unconverged step 4116 passes 1 rounds 0
+SR-WARN heat unconverged step 4443 passes 1 rounds 4096
+SR-WARN heat unconverged step 4487 passes 1 rounds 4096
+SR-WARN heat unconverged step 4488 passes 1 rounds 4096
+SR-WARN heat unconverged step 4651 passes 1 rounds 0
+SR-WARN heat unconverged step 4652 passes 1 rounds 0
+SR-WARN heat unconverged step 4653 passes 1 rounds 0
+SR-WARN heat unconverged step 4654 passes 1 rounds 0
+SR-WARN heat unconverged step 4709 passes 1 rounds 0
+SR-WARN heat unconverged step 4710 passes 1 rounds 0
+SR-WARN heat unconverged step 4711 passes 1 rounds 0
+SR-WARN heat unconverged step 4712 passes 1 rounds 0
+SR-WARN heat unconverged step 4713 passes 1 rounds 0
+SR-WARN heat unconverged step 4717 passes 1 rounds 0
+SR-WARN heat unconverged step 4718 passes 1 rounds 0
+SR-WARN heat unconverged step 4719 passes 1 rounds 0
+SR-WARN heat unconverged step 4723 passes 1 rounds 0
+22
+## 2026-11-04T09:43:18-05:00 laserax-ai-server: the final tree (measures reverted, bound fix only): verify.py --redarm heat_stiff --task M0-D154-final (RTX 4090)
+heat_stiff · clean · GO · arm 1/7, 6 left
+heat_stiff · plant newton-one-pass · RED (proven: 9 failed) · arm 2/7, 5 left
+heat_stiff · plant carry-commit-early · RED (proven: 4 failed) · arm 3/7, 4 left
+heat_stiff · plant vcycle-carry-restart · RED (proven: 2 failed) · arm 4/7, 3 left
+heat_stiff · plant ceiling-unlimited · RED (proven: 5 failed) · arm 5/7, 2 left
+heat_stiff · plant overflow-converged · RED (proven: 2 failed) · arm 6/7, 1 left
+heat_stiff · plant bound-u-squared · RED (proven: 2 failed) · arm 7/7, 0 left
+redarm: 6 plants · 6 red · 0 green · 0 errors · scope heat_stiff · 99.83 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D154-final.heat_stiff.redarm.log
+=== GO ===
+## 2026-11-04T09:45:08-05:00 laserax-ai-server: the final tree: Verify 1 — verify.py heat_implicit held_core --task M0-D154-final (RTX 4090)
+heat_implicit  8/0/0       11.79 s  GO · step 1/2, 1 left
+held_core      24/0/0     155.02 s  GO · step 2/2, 0 left
+verify: 32 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 155.02 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 3.57->1.27
+=== GO ===
+## 2026-11-04T09:47:44-05:00 laserax-ai-server: the final tree: Verify 2 — release build, massive_b's command, timeout 570, RTX 4090
+exit 0 wall 217 s
+SR-WARN heat unconverged step 3327 passes 1 rounds 0;SR-WARN heat unconverged step 3328 passes 1 rounds 0;SR-WARN heat unconverged step 4048 passes 1 rounds 0;SR-WARN heat unconverged step 4049 passes 1 rounds 0;SR-WARN heat unconverged step 4115 passes 1 rounds 0;SR-WARN heat unconverged step 4116 passes 1 rounds 0;SR-WARN heat unconverged step 4443 passes 1 rounds 0;SR-WARN heat unconverged step 4444 passes 1 rounds 0;SR-WARN heat unconverged step 4519 passes 1 rounds 0;SR-WARN heat unconverged step 4520 passes 1 rounds 0;SR-WARN heat unconverged step 4659 passes 1 rounds 0;SR-WARN heat unconverged step 4699 passes 1 rounds 0;SR-WARN heat unconverged step 4739 passes 1 rounds 0;
+13
+SR-HEADLESS DONE steps=4990 sim_time=27.028510 until=met
+s_4990 identical to M0-D153s

@@ -226,8 +226,9 @@ pub struct HeatReport {
 }
 
 impl HeatReport {
-    /// `SR-WARN heat unconverged step <n> passes <k> rounds <r>` when the step hit its ceiling (§0.5 [M0-TJ4] (6)); `step`
-    /// is the step's index.
+    /// `SR-WARN heat unconverged step <n> passes <k> rounds <r>` when the step hit its ceiling (§0.5 [M0-TJ4] (6)) or its
+    /// sums left f32's range (§0.5 [M0-D93]: k and r where they did, e.g. passes 1 rounds 0 — M0-D154); `step` is the
+    /// step's index.
     pub fn warning(&self, step: u64) -> Option<String> {
         (!self.converged).then(|| format!("SR-WARN heat unconverged step {step} passes {} rounds {}", self.passes, self.rounds))
     }

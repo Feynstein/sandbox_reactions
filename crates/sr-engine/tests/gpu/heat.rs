@@ -1496,16 +1496,19 @@ mod stiff {
         assert_bounded(&physics, &before, &after, p.radiated, 1e-9, 1e-12);
     }
 
-    /// M0-D89 on the GPU: the cut's step reaches the ceiling (1 pass, 4,096 rounds on the RTX 4090 on either preconditioner: in
-    /// f32 the thin hot cell's residual never meets (4)'s u-measure), and the commit holds the bounds to f32's 1e-5 with δ 0 —
-    /// where the last iterate with (5)'s closure booked 4.2e16 radiated against ~1e5 of heat above the floor, δ −2.9e11. P8
-    /// runs after P5 here and would floor a cell that gave more than it held, so its `floor_added` is held to the same 1e-5 of
-    /// the heat above the floor: (a) on the state P5 left.
+    /// M0-D89 on the GPU: the cut's step reaches the ceiling, and the commit holds the bounds to f32's 1e-5 with δ 0 — where the
+    /// last iterate with (5)'s closure booked 4.2e16 radiated against ~1e5 of heat above the floor, δ −2.9e11. P8 runs after P5
+    /// here and would floor a cell that gave more than it held, so its `floor_added` is held to the same 1e-5 of the heat above
+    /// the floor: (a) on the state P5 left. Run at 16 times the cut's Δt: at its own Δt the Jacobi step converges since M0-D91
+    /// (17 passes, 3,518 rounds then; 2,693 since M0-D156 — [`gpu_jacobi_converges_the_ceiling_cut_whose_first_sums_pass_2_to_the_126`]),
+    /// and since M0-D156's heat-free shift set (heat.wgsl `shifted_at`) at 2, 4 and 8 Δt too (18–19 passes, 3,376–3,823 rounds;
+    /// 10–12 passes at 4,096 rounds before); at 16 Δt it reaches 4,096 rounds in 13 passes on the RTX 4090, and the V-cycle ends
+    /// at pass 1, round 0 (a round's r²/D past f32's range, §0.5 [M0-D93], [M0-D154]) at every Δt.
     fn gpu_a_step_at_the_ceiling_moves_no_more_heat_than_its_cells_hold() {
         let (st, physics, dt) = ceiling_cut();
         let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
         let before = gpu.first.clone();
-        let r = gpu.pass(dt);
+        let r = gpu.pass(16.0 * dt);
         let after = gpu.planes();
         let radiated: f64 = gpu.radiated().iter().sum();
         let floored = book_totals(gpu.state.world(), &gpu.booking.readback(&gpu.gpu.device, &gpu.gpu.queue))
@@ -1518,10 +1521,91 @@ mod stiff {
         assert_bounded(&physics, &before, &after, radiated, 1e-5, 2.0 * f64::from(f32::EPSILON));
     }
 
-    /// M0-D93 on the GPU: the cut's thin hot cell holds u = a_r T⁴ past √f32::MAX, so P5's sums (Σ c u², γ, η) are not finite;
+    /// M0-D91 on the GPU, on Jacobi: the cut's thin hot cell (u ≈ 5.3e17 beside vacuum, heat-free) puts the first round's sums
+    /// past 2¹²⁶ (γ 1.10e38, η 1.28e38 on the RTX 4090), where the GPU's 1/b is subnormal and flushed to 0 — so α = γ/η and β
+    /// read 0 and CG stood still for 4,096 rounds in its first pass, the step committed by limited fluxes (M0-D89's record).
+    /// With the solve's quotients scaled (heat.wgsl `ratio`) the step converges — 17 passes, 3,518 rounds, δ 9.5e-7, R 1,406.3
+    /// measured — and its commit holds M0-D89's bounds to f32's 1e-5 with |δ| ≤ 1e-5 ((4)'s tolerance). The precondition, in f64
+    /// from the twin's law at T⁰ (Jacobi's first iterate): the hottest term r²/D ≈ (its net outflow) × u, the cell's faces
+    /// toward ~10² of u and its c ≪ Σ D_f, passes 2¹²⁶. The V-cycle ends this cut at round 0 instead (§0.5 [M0-D154]'s term
+    /// exit), so the case runs on Jacobi alone.
+    #[test]
+    fn gpu_jacobi_converges_the_ceiling_cut_whose_first_sums_pass_2_to_the_126() {
+        on_precond(HeatPrecond::Jacobi, || {
+            let (st, physics, dt) = ceiling_cut();
+            let heat = Heat::new(&physics, &elements(), TestFlags::default()).unwrap();
+            let f = heat.law(&st);
+            let w = st.width;
+            let a_r = physics.get("a_r").unwrap();
+            let n = st.cells();
+            let elements = elements();
+            let t_floor = Eos::from_physics(&physics).unwrap().t_floor();
+            let held = held_above_floor(&physics, &st);
+            let inv_mu = |i: usize| elements.composition(&std::array::from_fn(|s| st.planes[(4 + s) * n + i])).inv_mu;
+            let term = (0..n)
+                .filter(|&i| held[i] > 0.0)
+                .map(|i| {
+                    let (x, y) = (i % w, i / w);
+                    let out = f.x[y * (w + 1) + x + 1] - f.x[y * (w + 1) + x] + f.y[(y + 1) * w + x] - f.y[y * w + x];
+                    out * a_r * (t_floor + held[i] / (st.planes[i] * inv_mu(i))).powi(4)
+                })
+                .fold(0.0, f64::max);
+            println!("SR-STIFF heat_ceiling.bin: the first round's largest r²/D ≈ {term:e} (2^126 = {:e})", 2f64.powi(126));
+            assert!(term >= 2f64.powi(126), "the cut must put the first round's sums past 2^126: {term:e}");
+            let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
+            let before = gpu.first.clone();
+            let r = gpu.pass(dt);
+            let after = gpu.planes();
+            let radiated: f64 = gpu.radiated().iter().sum();
+            println!("SR-STIFF GPU heat_ceiling.bin at its Δt: {r:?}, radiated booked {radiated:e}");
+            assert!(r.converged && r.passes < 64 && r.rounds < 4096, "the cut's step converges: {r:?}");
+            assert!(r.delta.abs() <= 1e-5, "the closure is of (4)'s tolerance: {r:?}");
+            assert_bounded(&physics, &before, &after, radiated, 1e-5, 2.0 * f64::from(f32::EPSILON));
+        });
+    }
+
+    /// M0-D156 on the GPU: scenes/sun_13593.bin — the Sun-like life's dump at step 13,593 (preset:sun on the RTX 4090, the tree
+    /// at M0-D91's start, binary 988ccd3a), its observers' snapshot scenes/sun_13593.observers (not `.json`: scenes/'s every
+    /// `.json` is a scene, the `scene` scope) both copied to the run's folder as `--continue` reads them — run on through steps
+    /// 13,594 and 13,595, every pass of the life on and P5 on its default V-cycle; neither step prints `SR-WARN heat unconverged`.
+    /// Before the fix step 13,594 reached the ceiling at 64 passes, 3 rounds: from the third pass each solve met (4)'s two
+    /// measures at its start, and the heat-free START shift — one level over the world's ~150,000 heat-free cells, 95 % of
+    /// zᵀA z carried by cold cells at the world's top edge the update holds on the floor — came back with the same sign every
+    /// pass and walked every other heat-free cell ~1 % in u a pass, past (3)'s per-cell test. The shift set since (heat.wgsl
+    /// `shifted_at`): the heat-free cells off the floor that the step's largest downward shift leaves above it and moves within
+    /// that test. A whole world, not a cut: P5's start alone (a pinned step's state, its rate restored) converges on the old
+    /// shader in 3 passes — the stall needs the life's own P4 → P5 state, which no dump holds.
+    #[test]
+    fn gpu_the_sun_like_lifes_step_13594_ends_its_newton_passes_below_the_ceiling() {
+        let dir = std::env::temp_dir().join(format!("sr-heat-d156-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        let file = dir.join("s_13593.bin");
+        std::fs::copy(scenes_dir().join("sun_13593.bin"), &file).unwrap();
+        std::fs::copy(scenes_dir().join("sun_13593.observers"), sr_engine::headless::observers_path(&file)).unwrap();
+        let out = dir.join("out");
+        let mut args: Vec<String> = ["--scene", "preset:sun", "--load-dump", &file.display().to_string(), "--continue", "--steps", "13595", "--out", &out.display().to_string()]
+            .iter()
+            .map(|s| s.to_string())
+            .collect();
+        if let Some(adapter) = std::env::var("SR_TEST_ADAPTER").ok().filter(|s| !s.trim().is_empty()) {
+            args.extend(["--adapter".to_string(), adapter]);
+        }
+        let (code, lines) = sr_engine::headless::run_captured(&args);
+        let _ = std::fs::remove_dir_all(&dir);
+        assert_eq!(code, 0, "headless {args:?}");
+        assert!(lines.iter().any(|l| l.starts_with("SR-HEADLESS DONE steps=13595 ")), "the run reached step 13,595: {lines:?}");
+        let warned: Vec<&String> = lines.iter().filter(|l| l.starts_with("SR-WARN heat unconverged")).collect();
+        println!("SR-STIFF GPU sun_13593.bin, steps 13,594–13,595: {} heat-unconverged warnings", warned.len());
+        assert!(warned.is_empty(), "P5 reached its ceiling: {warned:?}");
+    }
+
+    /// M0-D93 on the GPU: the cut's thin hot cell holds u = a_r T⁴ past √f32::MAX, so P5's round sums (γ, η) are not finite;
     /// the step ends unconverged (§0.5 [M0-D93]) and commits by limited fluxes, held to M0-D89's bounds — where the method
     /// stopped as solved at round 0 in every pass, the Newton test read 17 passes as converged and (5)'s closure booked
     /// 3.4e25 radiated, δ −1.3e20, against ~2.6e5 of heat above the floor in the world (RTX 4090, the 20 M₀ life's step 16,127).
+    /// M0-D154: the first pass's bound Σ c u² is in f32's range (checked here), so the step ends in its first pass's round,
+    /// never before the pass — the GPU formed u² first and read the bound inf (passes 0, rounds 0) until build() re-formed it.
     fn gpu_a_step_whose_sums_overflow_f32_moves_no_more_heat_than_its_cells_hold() {
         let (st, physics, dt) = overflow_cut();
         let n = st.cells();
@@ -1534,6 +1618,17 @@ mod stiff {
         let u_hot = physics.get("a_r").unwrap() * t_hot.powi(4);
         println!("SR-STIFF heat_overflow.bin: hottest T⁰ {t_hot:e}, u {u_hot:e} (√f32::MAX {:e})", f64::from(f32::MAX).sqrt());
         assert!(u_hot > f64::from(f32::MAX).sqrt(), "the cut must hold a cell whose u² leaves f32's range: u {u_hot:e}");
+        // The first pass's bound Σ c u² = Σ (C/Δt) a_r T⁵/4 at T⁰ — the first iterate on either preconditioner (no rate yet).
+        let a_r = physics.get("a_r").unwrap();
+        let bound: f64 = (0..n)
+            .filter(|&i| held[i] > 0.0)
+            .map(|i| {
+                let c = st.planes[i] * inv_mu(i);
+                c / dt * a_r * (t_floor + held[i] / c).powi(5) / 4.0
+            })
+            .sum();
+        println!("SR-STIFF heat_overflow.bin: the first pass's Σ c u² {bound:e} (f32::MAX {:e})", f32::MAX);
+        assert!(bound < f64::from(f32::MAX), "the cut's first-pass bound must be in f32's range: Σ c u² {bound:e}");
         let gpu = OnGpu::new(&physics, TestFlags::default(), &st);
         let before = gpu.first.clone();
         let r = gpu.pass(dt);
@@ -1547,6 +1642,7 @@ mod stiff {
         assert_bounded(&physics, &before, &after, radiated, 1e-5, 2.0 * f64::from(f32::EPSILON));
         assert!(!r.converged, "a step whose sums leave f32's range ends unconverged: {r:?}");
         assert_eq!(r.delta, 0.0, "past the ceiling the fluxes are booked on both sides: no closure");
+        assert!(r.passes >= 1, "Σ c u² {bound:e} is in f32's range: the step ends in a pass's round, not before it: {r:?}");
     }
 }
 

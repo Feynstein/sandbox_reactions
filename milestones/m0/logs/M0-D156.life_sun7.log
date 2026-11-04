@@ -1,0 +1,9 @@
+# M0-D156 — the Sun-like preset to 30,000 (sr-tree7 2fb5a486), RTX 4090, laserax-ai-server; 2026-11-04T12:26:19-05:00
+ 12:26:19 up 7 days,  5:28,  4 users,  load average: 1.25, 1.20, 1.03
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 14456 passes 64 rounds 3
+SR-WARN heat unconverged step 14524 passes 64 rounds 6
+SR-WARN heat unconverged step 15406 passes 64 rounds 1
+SR-HEADLESS DONE steps=30000 sim_time=338.448321 until=none
+exit 0
+wall 171.911393304 s

@@ -1,0 +1,12 @@
+=== age-not-carried
+test observe::a_continued_lifes_ages_are_the_unbroken_lifes ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+thread 'observe::a_continued_lifes_ages_are_the_unbroken_lifes' (1617551) panicked at crates/sr-engine/tests/gpu/observe.rs:612:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 503 filtered out; finished in 19.52s
+=== wisp-cut-nominal
+test observe::a_cloud_over_a_hundredth_of_the_calibrated_sun_is_listed ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+thread 'observe::a_cloud_over_a_hundredth_of_the_calibrated_sun_is_listed' (1617900) panicked at crates/sr-engine/tests/gpu/observe.rs:637:5:
+assertion `left == right` failed: 32.5 is over 31.36717853126336: []
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 503 filtered out; finished in 0.64s
+=== clean
+test observe::a_cloud_over_a_hundredth_of_the_calibrated_sun_is_listed ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 503 filtered out; finished in 0.65s

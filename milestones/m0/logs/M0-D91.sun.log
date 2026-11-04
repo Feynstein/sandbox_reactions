@@ -1,0 +1,375 @@
+# M0-D91 — the Sun-like preset on today's tree (988ccd3a binary), RTX 4090, laserax-ai-server; started 2026-11-04T11:03:09-05:00
+NVIDIA GeForce RTX 3060, 0 %
+NVIDIA GeForce RTX 4090, 0 %
+ 11:03:10 up 7 days,  4:05,  4 users,  load average: 0.01, 0.18, 0.59
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 13594 passes 64 rounds 3
+SR-WARN heat unconverged step 13801 passes 64 rounds 8
+SR-WARN heat unconverged step 13999 passes 64 rounds 10
+SR-WARN heat unconverged step 14020 passes 64 rounds 11
+SR-WARN heat unconverged step 14055 passes 64 rounds 7
+SR-WARN heat unconverged step 14056 passes 64 rounds 42
+SR-WARN heat unconverged step 14057 passes 64 rounds 89
+SR-WARN heat unconverged step 14088 passes 64 rounds 5
+SR-WARN heat unconverged step 14110 passes 64 rounds 11
+SR-WARN heat unconverged step 14149 passes 64 rounds 3
+SR-WARN heat unconverged step 14214 passes 64 rounds 6
+SR-WARN heat unconverged step 14235 passes 64 rounds 5
+SR-WARN heat unconverged step 14277 passes 64 rounds 35
+SR-WARN heat unconverged step 14281 passes 64 rounds 6
+SR-WARN heat unconverged step 14341 passes 64 rounds 7
+SR-WARN heat unconverged step 14359 passes 64 rounds 2
+SR-WARN heat unconverged step 14383 passes 64 rounds 3
+SR-WARN heat unconverged step 14425 passes 64 rounds 4
+SR-WARN heat unconverged step 14444 passes 64 rounds 5
+SR-WARN heat unconverged step 14477 passes 64 rounds 6
+SR-WARN heat unconverged step 14539 passes 64 rounds 3
+SR-WARN heat unconverged step 14564 passes 64 rounds 1
+SR-WARN heat unconverged step 14602 passes 64 rounds 4
+SR-WARN heat unconverged step 14607 passes 64 rounds 13
+SR-WARN heat unconverged step 14663 passes 64 rounds 7
+SR-WARN heat unconverged step 14689 passes 64 rounds 6
+SR-WARN heat unconverged step 14703 passes 64 rounds 1
+SR-WARN heat unconverged step 14714 passes 64 rounds 2
+SR-WARN heat unconverged step 14753 passes 64 rounds 6
+SR-WARN heat unconverged step 14756 passes 64 rounds 33
+SR-WARN heat unconverged step 14794 passes 64 rounds 2
+SR-WARN heat unconverged step 14824 passes 64 rounds 4
+SR-WARN heat unconverged step 14839 passes 64 rounds 15
+SR-WARN heat unconverged step 14840 passes 64 rounds 44
+SR-WARN heat unconverged step 14841 passes 64 rounds 62
+SR-WARN heat unconverged step 14860 passes 64 rounds 2
+SR-WARN heat unconverged step 14907 passes 64 rounds 6
+SR-WARN heat unconverged step 14929 passes 64 rounds 1
+SR-WARN heat unconverged step 14977 passes 64 rounds 5
+SR-WARN heat unconverged step 14980 passes 64 rounds 35
+SR-WARN heat unconverged step 14984 passes 64 rounds 44
+SR-WARN heat unconverged step 14987 passes 64 rounds 26
+SR-WARN heat unconverged step 14990 passes 64 rounds 20
+SR-WARN heat unconverged step 15027 passes 64 rounds 5
+SR-WARN heat unconverged step 15059 passes 64 rounds 5
+SR-WARN heat unconverged step 15063 passes 64 rounds 15
+SR-WARN heat unconverged step 15077 passes 64 rounds 3
+SR-WARN heat unconverged step 15085 passes 64 rounds 19
+SR-WARN heat unconverged step 15102 passes 64 rounds 2
+SR-WARN heat unconverged step 15123 passes 64 rounds 1
+SR-WARN heat unconverged step 15144 passes 64 rounds 1
+SR-WARN heat unconverged step 15166 passes 64 rounds 2
+SR-WARN heat unconverged step 15168 passes 64 rounds 31
+SR-WARN heat unconverged step 15199 passes 64 rounds 1
+SR-WARN heat unconverged step 15214 passes 64 rounds 5
+SR-WARN heat unconverged step 15219 passes 64 rounds 12
+SR-WARN heat unconverged step 15234 passes 64 rounds 4
+SR-WARN heat unconverged step 15250 passes 64 rounds 1
+SR-WARN heat unconverged step 15251 passes 64 rounds 48
+SR-WARN heat unconverged step 15263 passes 64 rounds 1
+SR-WARN heat unconverged step 15264 passes 64 rounds 61
+SR-WARN heat unconverged step 15267 passes 64 rounds 27
+SR-WARN heat unconverged step 15270 passes 64 rounds 33
+SR-WARN heat unconverged step 15273 passes 64 rounds 28
+SR-WARN heat unconverged step 15283 passes 64 rounds 1
+SR-WARN heat unconverged step 15284 passes 64 rounds 43
+SR-WARN heat unconverged step 15286 passes 64 rounds 31
+SR-WARN heat unconverged step 15289 passes 64 rounds 35
+SR-WARN heat unconverged step 15292 passes 64 rounds 29
+SR-WARN heat unconverged step 15293 passes 64 rounds 41
+SR-WARN heat unconverged step 15296 passes 64 rounds 26
+SR-WARN heat unconverged step 15319 passes 64 rounds 1
+SR-WARN heat unconverged step 15332 passes 64 rounds 2
+SR-WARN heat unconverged step 15336 passes 64 rounds 13
+SR-WARN heat unconverged step 15353 passes 64 rounds 2
+SR-WARN heat unconverged step 15387 passes 64 rounds 10
+SR-WARN heat unconverged step 15395 passes 64 rounds 12
+SR-WARN heat unconverged step 15404 passes 64 rounds 19
+SR-WARN heat unconverged step 15405 passes 64 rounds 48
+SR-WARN heat unconverged step 15408 passes 64 rounds 28
+SR-WARN heat unconverged step 15419 passes 64 rounds 2
+SR-WARN heat unconverged step 15425 passes 64 rounds 7
+SR-WARN heat unconverged step 15444 passes 64 rounds 4
+SR-WARN heat unconverged step 15466 passes 64 rounds 4
+SR-WARN heat unconverged step 15476 passes 64 rounds 5
+SR-WARN heat unconverged step 15485 passes 64 rounds 5
+SR-WARN heat unconverged step 15505 passes 64 rounds 11
+SR-WARN heat unconverged step 15512 passes 64 rounds 11
+SR-WARN heat unconverged step 15528 passes 64 rounds 8
+SR-WARN heat unconverged step 15531 passes 64 rounds 12
+SR-WARN heat unconverged step 15554 passes 64 rounds 2
+SR-WARN heat unconverged step 15557 passes 64 rounds 23
+SR-WARN heat unconverged step 15560 passes 64 rounds 16
+SR-WARN heat unconverged step 15570 passes 64 rounds 6
+SR-WARN heat unconverged step 15582 passes 64 rounds 15
+SR-WARN heat unconverged step 15585 passes 64 rounds 27
+SR-WARN heat unconverged step 15604 passes 64 rounds 21
+SR-WARN heat unconverged step 15607 passes 64 rounds 26
+SR-WARN heat unconverged step 15610 passes 64 rounds 21
+SR-WARN heat unconverged step 15613 passes 64 rounds 38
+SR-WARN heat unconverged step 15619 passes 64 rounds 9
+SR-WARN heat unconverged step 15629 passes 64 rounds 29
+SR-WARN heat unconverged step 15630 passes 64 rounds 53
+SR-WARN heat unconverged step 15637 passes 64 rounds 10
+SR-WARN heat unconverged step 15639 passes 64 rounds 20
+SR-WARN heat unconverged step 15657 passes 64 rounds 8
+SR-WARN heat unconverged step 15659 passes 64 rounds 18
+SR-WARN heat unconverged step 15661 passes 64 rounds 25
+SR-WARN heat unconverged step 15665 passes 64 rounds 5
+SR-WARN heat unconverged step 15669 passes 64 rounds 6
+SR-WARN heat unconverged step 15672 passes 64 rounds 12
+SR-WARN heat unconverged step 15676 passes 64 rounds 6
+SR-WARN heat unconverged step 15680 passes 64 rounds 6
+SR-WARN heat unconverged step 15689 passes 64 rounds 7
+SR-WARN heat unconverged step 15694 passes 64 rounds 5
+SR-WARN heat unconverged step 15695 passes 64 rounds 56
+SR-WARN heat unconverged step 15698 passes 64 rounds 14
+SR-WARN heat unconverged step 15701 passes 64 rounds 20
+SR-WARN heat unconverged step 15704 passes 64 rounds 13
+SR-WARN heat unconverged step 15707 passes 64 rounds 13
+SR-WARN heat unconverged step 15710 passes 64 rounds 27
+SR-WARN heat unconverged step 15712 passes 64 rounds 24
+SR-WARN heat unconverged step 15716 passes 64 rounds 8
+SR-WARN heat unconverged step 15719 passes 64 rounds 13
+SR-WARN heat unconverged step 15726 passes 64 rounds 7
+SR-WARN heat unconverged step 15730 passes 64 rounds 6
+SR-WARN heat unconverged step 15735 passes 64 rounds 5
+SR-WARN heat unconverged step 15743 passes 64 rounds 4
+SR-WARN heat unconverged step 15744 passes 64 rounds 42
+SR-WARN heat unconverged step 15747 passes 64 rounds 11
+SR-WARN heat unconverged step 15749 passes 64 rounds 20
+SR-WARN heat unconverged step 15753 passes 64 rounds 5
+SR-WARN heat unconverged step 15756 passes 64 rounds 11
+SR-WARN heat unconverged step 15759 passes 64 rounds 13
+SR-WARN heat unconverged step 15761 passes 64 rounds 20
+SR-WARN heat unconverged step 15764 passes 64 rounds 13
+SR-WARN heat unconverged step 15767 passes 64 rounds 11
+SR-WARN heat unconverged step 15772 passes 64 rounds 6
+SR-WARN heat unconverged step 15775 passes 64 rounds 14
+SR-WARN heat unconverged step 15778 passes 64 rounds 11
+SR-WARN heat unconverged step 15780 passes 64 rounds 19
+SR-WARN heat unconverged step 15784 passes 64 rounds 7
+SR-WARN heat unconverged step 15787 passes 64 rounds 13
+SR-WARN heat unconverged step 15793 passes 64 rounds 4
+SR-WARN heat unconverged step 15797 passes 64 rounds 10
+SR-WARN heat unconverged step 15809 passes 64 rounds 3
+SR-WARN heat unconverged step 15840 passes 64 rounds 16
+SR-WARN heat unconverged step 15858 passes 64 rounds 1
+SR-WARN heat unconverged step 15859 passes 64 rounds 35
+SR-WARN heat unconverged step 15877 passes 64 rounds 3
+SR-WARN heat unconverged step 15894 passes 64 rounds 1
+SR-WARN heat unconverged step 15896 passes 64 rounds 15
+SR-WARN heat unconverged step 15918 passes 64 rounds 1
+SR-WARN heat unconverged step 15943 passes 64 rounds 18
+SR-WARN heat unconverged step 15958 passes 64 rounds 2
+SR-WARN heat unconverged step 15975 passes 64 rounds 30
+SR-WARN heat unconverged step 15999 passes 64 rounds 2
+SR-WARN heat unconverged step 16023 passes 64 rounds 2
+SR-WARN heat unconverged step 16038 passes 64 rounds 14
+SR-WARN heat unconverged step 16040 passes 64 rounds 19
+SR-WARN heat unconverged step 16057 passes 64 rounds 1
+SR-WARN heat unconverged step 16074 passes 64 rounds 18
+SR-WARN heat unconverged step 16082 passes 64 rounds 10
+SR-WARN heat unconverged step 16112 passes 64 rounds 12
+SR-WARN heat unconverged step 16136 passes 64 rounds 1
+SR-WARN heat unconverged step 16159 passes 64 rounds 22
+SR-WARN heat unconverged step 16161 passes 64 rounds 24
+SR-WARN heat unconverged step 16178 passes 64 rounds 4
+SR-WARN heat unconverged step 16197 passes 64 rounds 2
+SR-WARN heat unconverged step 16200 passes 64 rounds 25
+SR-WARN heat unconverged step 16220 passes 64 rounds 6
+SR-WARN heat unconverged step 16260 passes 64 rounds 1
+SR-WARN heat unconverged step 16284 passes 64 rounds 2
+SR-WARN heat unconverged step 16297 passes 64 rounds 13
+SR-WARN heat unconverged step 16301 passes 64 rounds 6
+SR-WARN heat unconverged step 16306 passes 64 rounds 4
+SR-WARN heat unconverged step 16373 passes 64 rounds 3
+SR-WARN heat unconverged step 16396 passes 64 rounds 12
+SR-WARN heat unconverged step 16429 passes 64 rounds 3
+SR-WARN heat unconverged step 16452 passes 64 rounds 4
+SR-WARN heat unconverged step 16475 passes 64 rounds 2
+SR-WARN heat unconverged step 16500 passes 64 rounds 5
+SR-WARN heat unconverged step 16531 passes 64 rounds 2
+SR-WARN heat unconverged step 16536 passes 64 rounds 16
+SR-WARN heat unconverged step 16540 passes 64 rounds 13
+SR-WARN heat unconverged step 16584 passes 64 rounds 7
+SR-WARN heat unconverged step 16641 passes 64 rounds 2
+SR-WARN heat unconverged step 16676 passes 64 rounds 12
+SR-WARN heat unconverged step 16691 passes 64 rounds 2
+SR-WARN heat unconverged step 16699 passes 64 rounds 8
+SR-WARN heat unconverged step 16744 passes 64 rounds 2
+SR-WARN heat unconverged step 16766 passes 64 rounds 9
+SR-WARN heat unconverged step 16786 passes 64 rounds 1
+SR-WARN heat unconverged step 16815 passes 64 rounds 2
+SR-WARN heat unconverged step 16839 passes 64 rounds 2
+SR-WARN heat unconverged step 16862 passes 64 rounds 2
+SR-WARN heat unconverged step 16865 passes 64 rounds 14
+SR-WARN heat unconverged step 16866 passes 64 rounds 40
+SR-WARN heat unconverged step 16875 passes 64 rounds 15
+SR-WARN heat unconverged step 16876 passes 64 rounds 41
+SR-WARN heat unconverged step 16894 passes 64 rounds 2
+SR-WARN heat unconverged step 16913 passes 64 rounds 2
+SR-WARN heat unconverged step 16917 passes 64 rounds 9
+SR-WARN heat unconverged step 16927 passes 64 rounds 9
+SR-WARN heat unconverged step 16934 passes 64 rounds 8
+SR-WARN heat unconverged step 16956 passes 64 rounds 6
+SR-WARN heat unconverged step 16960 passes 64 rounds 19
+SR-WARN heat unconverged step 16980 passes 64 rounds 1
+SR-WARN heat unconverged step 16983 passes 64 rounds 10
+SR-WARN heat unconverged step 17006 passes 64 rounds 2
+SR-WARN heat unconverged step 17026 passes 64 rounds 1
+SR-WARN heat unconverged step 17041 passes 64 rounds 1
+SR-WARN heat unconverged step 17071 passes 64 rounds 5
+SR-WARN heat unconverged step 17117 passes 64 rounds 1
+SR-WARN heat unconverged step 17135 passes 64 rounds 1
+SR-WARN heat unconverged step 17140 passes 64 rounds 5
+SR-WARN heat unconverged step 17142 passes 64 rounds 17
+SR-WARN heat unconverged step 17153 passes 64 rounds 5
+SR-WARN heat unconverged step 17177 passes 64 rounds 7
+SR-WARN heat unconverged step 17193 passes 64 rounds 1
+SR-WARN heat unconverged step 17207 passes 64 rounds 16
+wall 201.91 s
+exit 0
+s_10000.bin
+s_10000.observers.json
+s_1000.bin
+60
+s_13593.bin
+s_13593.observers.json
+    Finished `release` profile [optimized] target(s) in 27.67s
+untraced-done
+16
+148M	/tmp/d91/tr_sun
+tree-done
+SAME-STATE
+SR-WARN heat unconverged step 13594 passes 64 rounds 3
+SR-WARN heat unconverged step 13801 passes 64 rounds 8
+SR-WARN heat unconverged step 13999 passes 64 rounds 10
+SR-WARN heat unconverged step 14020 passes 64 rounds 11
+SR-WARN heat unconverged step 14055 passes 64 rounds 7
+SR-WARN heat unconverged step 14056 passes 64 rounds 42
+SR-WARN heat unconverged step 14057 passes 64 rounds 89
+SR-WARN heat unconverged step 14088 passes 64 rounds 5
+done
+SAME-14000
+SR-WARN heat unconverged step 13594 passes 64 rounds 3
+tree-done
+SR-WARN heat unconverged step 13594 passes 64 rounds 3
+scratch-done
+SAME
+SR-WARN heat unconverged step 13594 passes 64 rounds 3
+107
+2.0G	/tmp/d91/tr_sun
+D91 newton offenders: 0 cells
+  Executable tests/gpu/main.rs (/tmp/d91/target/release/deps/gpu-2b2e5ebd221682e6)
+D91 newton pass 1 rounds 0 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 2 rounds 4 | ΣC|ΔT| 5.043e-2 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 47253 | (499,2) -3.849e-1 rel 2.57e-1 T 1.497e0 ; (498,2) -3.849e-1 rel 2.57e-1 T 1.497e0 ; (500,2) -3.848e-1 rel 2.57e-1 T 1.497e0 ; (501,2) -3.848e-1 rel 2.57e-1 T 1.497e0
+D91 newton pass 3 rounds 4 | ΣC|ΔT| 1.685e-4 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 1127 | (496,0) -2.392e-3 rel 2.15e-3 T 1.111e0 ; (497,0) -2.390e-3 rel 2.15e-3 T 1.111e0 ; (498,0) -2.389e-3 rel 2.15e-3 T 1.112e0 ; (499,0) -2.389e-3 rel 2.15e-3 T 1.112e0
+D91 newton pass 0 rounds 0 | ΣC|ΔT| 8.701e-1 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 129622 | (499,2) -4.453e-1 rel 4.01e-1 T 1.109e0 ; (498,2) -4.453e-1 rel 4.01e-1 T 1.109e0 ; (500,2) -4.452e-1 rel 4.01e-1 T 1.109e0 ; (498,1) -4.452e-1 rel 4.01e-1 T 1.109e0
+D91 newton pass 1 rounds 0 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 2 rounds 3 | ΣC|ΔT| 4.346e-2 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 79466 | (496,0) -4.988e-1 rel 7.50e-1 T 6.651e-1 ; (497,0) -4.990e-1 rel 7.50e-1 T 6.653e-1 ; (498,0) -4.990e-1 rel 7.50e-1 T 6.654e-1 ; (499,0) -4.991e-1 rel 7.50e-1 T 6.654e-1
+D91 newton pass 3 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 4 rounds 3 | ΣC|ΔT| 1.336e-4 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 499 | (513,1) -1.827e-1 rel 7.50e-1 T 2.436e-1 ; (513,2) -1.831e-1 rel 7.50e-1 T 2.442e-1 ; (513,3) -1.830e-1 rel 7.50e-1 T 2.441e-1 ; (513,4) -1.833e-1 rel 7.50e-1 T 2.445e-1
+D91 newton pass 5 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 6 rounds 3 | ΣC|ΔT| 6.783e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 337 | (530,4) -1.422e-1 rel 7.40e-1 T 1.922e-1 ; (529,4) -1.421e-1 rel 7.40e-1 T 1.921e-1 ; (532,2) -1.413e-1 rel 7.39e-1 T 1.913e-1 ; (529,2) -1.412e-1 rel 7.38e-1 T 1.912e-1
+D91 newton pass 7 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 8 rounds 3 | ΣC|ΔT| 1.100e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 184 | (536,2) -5.053e-2 rel 5.00e-1 T 1.011e-1 ; (536,3) -4.837e-2 rel 4.92e-1 T 9.837e-2 ; (524,2) -3.837e-2 rel 4.34e-1 T 8.837e-2 ; (524,3) -3.807e-2 rel 4.32e-1 T 8.807e-2
+D91 newton pass 9 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 10 rounds 3 | ΣC|ΔT| 1.039e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 160 | (523,4) -8.581e-2 rel 6.02e-1 T 1.426e-1 ; (523,2) -8.627e-2 rel 5.82e-1 T 1.482e-1 ; (523,3) -8.637e-2 rel 5.80e-1 T 1.489e-1 ; (523,5) -3.220e-2 rel 2.31e-1 T 1.396e-1
+D91 newton pass 11 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 12 rounds 3 | ΣC|ΔT| 9.658e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 152 | (537,5) -8.516e-2 rel 5.85e-1 T 1.455e-1 ; (537,4) -5.720e-2 rel 3.75e-1 T 1.526e-1 ; (515,1) -4.787e-2 rel 3.06e-1 T 1.564e-1 ; (515,3) -4.375e-2 rel 2.76e-1 T 1.587e-1
+D91 newton pass 13 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 14 rounds 3 | ΣC|ΔT| 9.224e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 146 | (515,3) -5.748e-2 rel 5.00e-1 T 1.150e-1 ; (515,1) -5.428e-2 rel 5.00e-1 T 1.086e-1 ; (515,2) -5.779e-2 rel 5.00e-1 T 1.156e-1 ; (537,3) -6.095e-2 rel 5.00e-1 T 1.219e-1
+D91 newton pass 15 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 16 rounds 3 | ΣC|ΔT| 8.756e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 133 | (516,1) -5.754e-2 rel 5.00e-1 T 1.151e-1 ; (516,2) -5.909e-2 rel 5.00e-1 T 1.182e-1 ; (522,5) -4.660e-2 rel 3.01e-1 T 1.551e-1 ; (522,4) -3.997e-2 rel 2.51e-1 T 1.591e-1
+D91 newton pass 17 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 18 rounds 3 | ΣC|ΔT| 8.571e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 128 | (522,2) -8.246e-2 rel 6.05e-1 T 1.362e-1 ; (522,3) -8.245e-2 rel 6.04e-1 T 1.365e-1 ; (522,4) -6.918e-2 rel 5.80e-1 T 1.192e-1 ; (522,5) -5.423e-2 rel 5.00e-1 T 1.085e-1
+D91 newton pass 19 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 20 rounds 3 | ΣC|ΔT| 8.390e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 119 | (538,2) -5.995e-2 rel 5.00e-1 T 1.199e-1 ; (538,3) -5.918e-2 rel 5.00e-1 T 1.184e-1 ; (517,5) -2.930e-2 rel 1.75e-1 T 1.673e-1 ; (517,1) -2.882e-2 rel 1.72e-1 T 1.679e-1
+D91 newton pass 21 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 22 rounds 3 | ΣC|ΔT| 9.471e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 112 | (517,5) -8.372e-2 rel 6.07e-1 T 1.380e-1 ; (517,1) -8.372e-2 rel 6.02e-1 T 1.391e-1 ; (517,4) -8.377e-2 rel 5.96e-1 T 1.406e-1 ; (517,3) -8.396e-2 rel 5.87e-1 T 1.430e-1
+D91 newton pass 23 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 24 rounds 3 | ΣC|ΔT| 1.154e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 115 | (539,4) -8.344e-2 rel 5.97e-1 T 1.397e-1 ; (539,3) -7.443e-2 rel 4.76e-1 T 1.564e-1 ; (539,1) -7.016e-2 rel 4.46e-1 T 1.572e-1 ; (539,2) -6.789e-2 rel 4.31e-1 T 1.577e-1
+D91 newton pass 25 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 26 rounds 3 | ΣC|ΔT| 1.677e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 126 | (540,4) -9.351e-2 rel 6.52e-1 T 1.435e-1 ; (521,2) -9.031e-2 rel 6.44e-1 T 1.403e-1 ; (521,3) -8.781e-2 rel 6.37e-1 T 1.378e-1 ; (540,3) -9.541e-2 rel 6.17e-1 T 1.546e-1
+D91 newton pass 27 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 28 rounds 3 | ΣC|ΔT| 1.483e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 104 | (543,2) -9.224e-2 rel 6.48e-1 T 1.422e-1 ; (544,1) -9.493e-2 rel 6.48e-1 T 1.465e-1 ; (544,2) -9.374e-2 rel 6.22e-1 T 1.507e-1 ; (544,3) -9.361e-2 rel 6.17e-1 T 1.516e-1
+D91 newton pass 29 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 30 rounds 3 | ΣC|ΔT| 1.489e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 106 | (520,5) -8.653e-2 rel 6.34e-1 T 1.365e-1 ; (546,2) -8.037e-2 rel 6.16e-1 T 1.304e-1 ; (544,5) -9.734e-2 rel 5.70e-1 T 1.709e-1 ; (520,2) -9.735e-2 rel 5.69e-1 T 1.710e-1
+D91 newton pass 31 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 32 rounds 3 | ΣC|ΔT| 2.158e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 111 | (547,0) -1.156e-1 rel 6.05e-1 T 1.912e-1 ; (546,4) -1.710e-2 rel 5.85e-2 T 2.925e-1 ; (548,0) -1.336e-2 rel 4.24e-2 T 3.150e-1 ; (545,5) -1.326e-2 rel 4.20e-2 T 3.157e-1
+D91 newton pass 33 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 34 rounds 3 | ΣC|ΔT| 2.023e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 108 | (546,4) -1.986e-2 rel 7.21e-2 T 2.754e-1 ; (548,0) -1.457e-2 rel 4.83e-2 T 3.017e-1 ; (545,5) -1.444e-2 rel 4.78e-2 T 3.025e-1 ; (547,2) -1.437e-2 rel 4.74e-2 T 3.029e-1
+D91 newton pass 35 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 36 rounds 3 | ΣC|ΔT| 1.698e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 101 | (546,4) -2.143e-2 rel 8.39e-2 T 2.555e-1 ; (548,0) -1.435e-2 rel 5.00e-2 T 2.871e-1 ; (545,5) -1.420e-2 rel 4.93e-2 T 2.880e-1 ; (547,2) -1.411e-2 rel 4.89e-2 T 2.886e-1
+D91 newton pass 37 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 38 rounds 3 | ΣC|ΔT| 1.480e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 95 | (546,4) -2.440e-2 rel 1.04e-1 T 2.341e-1 ; (548,0) -1.425e-2 rel 5.23e-2 T 2.728e-1 ; (545,5) -1.407e-2 rel 5.14e-2 T 2.738e-1 ; (547,2) -1.396e-2 rel 5.09e-2 T 2.744e-1
+D91 newton pass 39 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 40 rounds 3 | ΣC|ΔT| 1.251e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 90 | (546,4) -3.060e-2 rel 1.46e-1 T 2.097e-1 ; (548,0) -1.422e-2 rel 5.50e-2 T 2.585e-1 ; (545,5) -1.400e-2 rel 5.39e-2 T 2.598e-1 ; (547,2) -1.386e-2 rel 5.32e-2 T 2.605e-1
+D91 newton pass 41 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 42 rounds 3 | ΣC|ΔT| 1.059e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 76 | (546,4) -5.178e-2 rel 2.89e-1 T 1.791e-1 ; (548,0) -1.436e-2 rel 5.88e-2 T 2.443e-1 ; (545,5) -1.407e-2 rel 5.72e-2 T 2.458e-1 ; (547,2) -1.390e-2 rel 5.64e-2 T 2.466e-1
+D91 newton pass 43 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 44 rounds 3 | ΣC|ΔT| 1.114e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 79 | (546,4) -6.366e-2 rel 5.00e-1 T 1.273e-1 ; (548,0) -1.817e-2 rel 7.90e-2 T 2.299e-1 ; (545,5) -1.769e-2 rel 7.63e-2 T 2.317e-1 ; (547,2) -1.741e-2 rel 7.48e-2 T 2.327e-1
+D91 newton pass 45 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 46 rounds 3 | ΣC|ΔT| 1.084e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 79 | (548,0) -2.496e-2 rel 1.18e-1 T 2.118e-1 ; (545,5) -2.396e-2 rel 1.12e-1 T 2.140e-1 ; (547,2) -2.341e-2 rel 1.09e-1 T 2.153e-1 ; (547,1) -2.265e-2 rel 1.04e-1 T 2.172e-1
+D91 newton pass 47 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 48 rounds 3 | ΣC|ΔT| 9.445e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 69 | (548,0) -3.439e-2 rel 1.84e-1 T 1.868e-1 ; (545,5) -3.184e-2 rel 1.68e-1 T 1.900e-1 ; (547,2) -3.053e-2 rel 1.59e-1 T 1.919e-1 ; (547,1) -2.879e-2 rel 1.48e-1 T 1.946e-1
+D91 newton pass 49 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 50 rounds 3 | ΣC|ΔT| 9.677e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 69 | (545,5) -9.107e-2 rel 5.76e-1 T 1.582e-1 ; (547,2) -9.168e-2 rel 5.68e-1 T 1.614e-1 ; (547,1) -6.556e-2 rel 3.95e-1 T 1.658e-1 ; (548,0) -2.820e-2 rel 1.85e-1 T 1.524e-1
+D91 newton pass 51 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 52 rounds 3 | ΣC|ΔT| 1.513e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 93 | (547,1) -5.011e-2 rel 5.00e-1 T 1.002e-1 ; (547,3) -7.002e-2 rel 3.70e-1 T 1.894e-1 ; (547,2) -1.969e-2 rel 2.83e-1 T 6.969e-2 ; (548,1) -1.077e-2 rel 3.61e-2 T 2.983e-1
+D91 newton pass 53 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 54 rounds 3 | ΣC|ΔT| 1.645e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 92 | (547,3) -5.967e-2 rel 5.00e-1 T 1.193e-1 ; (548,1) -1.357e-2 rel 4.72e-2 T 2.875e-1 ; (548,2) -1.163e-2 rel 3.86e-2 T 3.014e-1 ; (548,3) -1.117e-2 rel 3.66e-2 T 3.052e-1
+D91 newton pass 55 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 56 rounds 3 | ΣC|ΔT| 1.528e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 91 | (548,1) -1.495e-2 rel 5.46e-2 T 2.739e-1 ; (548,2) -1.240e-2 rel 4.28e-2 T 2.898e-1 ; (548,3) -1.184e-2 rel 4.03e-2 T 2.940e-1 ; (547,4) -1.115e-2 rel 3.73e-2 T 2.994e-1
+D91 newton pass 57 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 58 rounds 3 | ΣC|ΔT| 1.287e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 87 | (548,1) -1.491e-2 rel 5.76e-2 T 2.590e-1 ; (548,2) -1.187e-2 rel 4.28e-2 T 2.774e-1 ; (548,3) -1.122e-2 rel 3.98e-2 T 2.822e-1 ; (547,4) -1.047e-2 rel 3.63e-2 T 2.883e-1
+D91 newton pass 59 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 60 rounds 3 | ΣC|ΔT| 1.070e-5 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 76 | (548,1) -1.504e-2 rel 6.16e-2 T 2.441e-1 ; (548,2) -1.136e-2 rel 4.28e-2 T 2.655e-1 ; (548,3) -1.063e-2 rel 3.93e-2 T 2.709e-1 ; (547,4) -9.809e-3 rel 3.53e-2 T 2.778e-1
+D91 newton pass 61 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 62 rounds 3 | ΣC|ΔT| 9.051e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 65 | (548,1) -1.542e-2 rel 6.73e-2 T 2.290e-1 ; (548,2) -1.087e-2 rel 4.28e-2 T 2.542e-1 ; (548,3) -1.006e-2 rel 3.86e-2 T 2.603e-1 ; (547,4) -9.156e-3 rel 3.42e-2 T 2.680e-1
+D91 newton pass 63 rounds 3 | ΣC|ΔT| 0.000e0 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 0 | 
+D91 newton pass 64 rounds 3 | ΣC|ΔT| 7.705e-6 vs 1e-6 ΣC T0 1.218e-1 | cells over 1e-3: 54 | (548,1) -1.617e-2 rel 7.57e-2 T 2.136e-1 ; (548,2) -1.042e-2 rel 4.28e-2 T 2.433e-1 ; (548,3) -9.503e-3 rel 3.80e-2 T 2.502e-1 ; (547,4) -8.524e-3 rel 3.29e-2 T 2.588e-1
+D91 newton offender (549,0) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (550,0) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (551,0) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (548,1) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (549,1) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (550,1) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (551,1) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (548,2) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (549,2) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offender (550,2) over 1e-3 in 35 passes, 0 sign flips
+D91 newton offenders: 135728 cells
+D91 cell (546,4) sub 40: x 2.141530e-7 lo 0.000e0 T 3.216796e-1 p 9.4124e1 d 2.5609e6 | r 4.2227e-2 4.2227e-2 w 4.2227e-2 4.2227e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 41: p 0 slot 1 mode 2 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 3 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 41: x 4.209480e-7 lo 0.000e0 T 3.818986e-1 p 5.7034e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.2142e-2 -2.2135e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 41: x 2.096765e-7 lo 0.000e0 T 3.216796e-1 p 9.5499e1 d 2.5609e6 | r 4.2227e-2 4.2228e-2 w 4.2227e-2 4.2228e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 42: p 0 slot 1 mode 1 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 2 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 42: x 4.209480e-7 lo 0.000e0 T 3.808900e-1 p 5.7488e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.2142e-2 -2.2135e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 42: x 2.096765e-7 lo 0.000e0 T 3.199852e-1 p 9.7024e1 d 2.5609e6 | r 4.2227e-2 4.2228e-2 w 4.2227e-2 4.2228e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 43: p 0 slot 1 mode 3 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 1 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 43: x 4.166134e-7 lo 0.000e0 T 3.799057e-1 p 5.7488e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.2123e-2 -2.2135e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 43: x 2.053419e-7 lo 0.000e0 T 3.183185e-1 p 9.7024e1 d 2.5609e6 | r 4.2228e-2 4.2228e-2 w 4.2228e-2 4.2228e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 44: p 0 slot 1 mode 2 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 3 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 44: x 4.122016e-7 lo 0.000e0 T 3.799057e-1 p 5.7936e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.2123e-2 -2.2102e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 44: x 2.009301e-7 lo 0.000e0 T 3.183185e-1 p 9.8556e1 d 2.5609e6 | r 4.2228e-2 4.2228e-2 w 4.2228e-2 4.2229e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 45: p 0 slot 1 mode 1 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 2 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 45: x 4.122016e-7 lo 0.000e0 T 3.788959e-1 p 5.8401e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.2123e-2 -2.2102e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 45: x 2.009301e-7 lo 0.000e0 T 3.165948e-1 p 1.0017e2 d 2.5609e6 | r 4.2228e-2 4.2229e-2 w 4.2228e-2 4.2229e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 46: p 0 slot 1 mode 3 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 1 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 46: x 4.055518e-7 lo 0.000e0 T 3.773585e-1 p 5.8401e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.2087e-2 -2.2102e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 46: x 1.942803e-7 lo 0.000e0 T 3.139422e-1 p 1.0017e2 d 2.5609e6 | r 4.2229e-2 4.2229e-2 w 4.2230e-2 4.2229e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 47: p 0 slot 1 mode 2 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 3 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 47: x 3.980544e-7 lo 0.000e0 T 3.773585e-1 p 5.9118e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.2087e-2 -2.2050e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 47: x 1.867829e-7 lo 0.000e0 T 3.139422e-1 p 1.0274e2 d 2.5609e6 | r 4.2229e-2 4.2230e-2 w 4.2230e-2 4.2230e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 48: p 0 slot 1 mode 1 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 2 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 48: x 3.980544e-7 lo 0.000e0 T 3.756022e-1 p 5.9951e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.2087e-2 -2.2050e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 48: x 1.867829e-7 lo 0.000e0 T 3.108686e-1 p 1.0581e2 d 2.5609e6 | r 4.2229e-2 4.2230e-2 w 4.2230e-2 4.2230e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 49: p 0 slot 1 mode 3 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 1 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 49: x 3.906411e-7 lo 0.000e0 T 3.738410e-1 p 5.9951e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.1908e-2 -2.2050e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 49: x 1.793696e-7 lo 0.000e0 T 3.077370e-1 p 1.0581e2 d 2.5609e6 | r 4.2231e-2 4.2230e-2 w 4.2231e-2 4.2230e-2 s 7.4298e-5 -3.9334e-5
+D91 rec sub 50: p 0 slot 1 mode 2 k 0 γ 1.1780e-2 η 3.2619e-3 | other: slot 0 mode 3 k 0 γ 1.1780e-2 η 3.2619e-3
+D91 cell (548,1) sub 50: x 3.836942e-7 lo 0.000e0 T 3.738410e-1 p 6.0802e1 d 8.3923e6 | r 1.1189e-1 1.1189e-1 w -2.1908e-2 -2.1658e-2 s -2.5848e-2 -1.3027e-2
+D91 cell (546,4) sub 50: x 1.724226e-7 lo 0.000e0 T 3.077370e-1 p 1.0908e2 d 2.5609e6 | r 4.2231e-2 4.2232e-2 w 4.2231e-2 4.2232e-2 s 7.4298e-5 -3.9334e-5
+== sr-fix (080bb068, the tree with M0-D91): the Sun-like life to 30,000, dumps every 1,000, against the first run (988ccd3a); 2026-11-04T11:27:33-05:00
+221
+wall 199.48 s
+dumps compared 30, differing 0
+warnings identical to the base run

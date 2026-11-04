@@ -1,0 +1,6 @@
+# M0-D103 — task log (linux-pc build check, then laserax-ai-server GPU runs)
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.14s
+records back after the scoped calibrate_bisect run 2026-11-04T15:35:05-05:00
+plan_lint after close 2026-11-04T15:35:51-05:00 (linux-pc)

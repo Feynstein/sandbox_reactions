@@ -878,8 +878,10 @@ fn hold_ratio(c: &Constants, eos: &Eos, planes: &[f32], cells: usize, i: usize) 
 }
 
 /// A 128 × 64 world of vacuum hydrogen: an 8 × 8 core ([`CORE`]) of Σ 2σ_hold at rest, ε_th = 1.5 η_hold ε_cold — inside the
-/// hysteresis band, so held only because its mask says so (a held remnant warmed on the grid) — in gas of Σ 2 at T 1 falling
-/// onto it at 0.25 over x 32..96, y 8..56; the mask, held on the core.
+/// hysteresis band, so held only because its mask says so (a held remnant warmed on the grid) — in gas of Σ 1 at T 1 falling
+/// onto it at 0.25 over x 32..96, y 8..56; the mask, held on the core. Σ 1, so a core cell's mass within r ≤ 24 (≈ 3,000 at
+/// step 0) stays under m_tov_sb (4,853.17), the hold's gate (§0.5 [M0-T130]); at Σ 2 it started at 4,626–4,736 and the
+/// infall carried it over, so nothing was held by step 200 (M0-T130's claim, 2026-11-04).
 fn held_start(c: &Constants, eos: &Eos) -> (WorldConfig, Vec<f32>, Vec<u32>) {
     let world = WorldConfig::new(128, 64).unwrap();
     let (w, cells) = (world.width as usize, world.cells());
@@ -893,7 +895,7 @@ fn held_start(c: &Constants, eos: &Eos) -> (WorldConfig, Vec<f32>, Vec<u32>) {
         for xx in 32..96 {
             let i = y * w + xx;
             let core = CORE.0.contains(&xx) && CORE.1.contains(&y);
-            let sigma = if core { 2.0 * SIGMA_HOLD } else { 2.0 };
+            let sigma = if core { 2.0 * SIGMA_HOLD } else { 1.0 };
             let cold = eos.eps_cold(sigma, comp.y_e, x[9]);
             let (dx, dy) = (xx as f64 + 0.5 - 64.0, y as f64 + 0.5 - 32.0);
             let v = if core { [0.0, 0.0] } else { [-0.25 * dx / dx.hypot(dy), -0.25 * dy / dx.hypot(dy)] };

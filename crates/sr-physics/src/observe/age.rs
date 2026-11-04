@@ -11,11 +11,17 @@
 //! gives *then*, so a mass jump moves no φ; a stage entered again goes on from where it stood.
 //!
 //! The "1 s ≈ …" rate is the age gained over the last wall second ([`AgeClock::rate`]).
+//!
+//! [`AgeClock::snapshot`] and [`AgeClock::restore`] carry what the next frame reads — each object's age, its last frame's
+//! sim time and shown stage, and each stage's φ and fuel start — so a life cut at a dump and continued counts on from the
+//! cut (§0.5 [M0-D103]); the rate's wall-time samples are not carried (the rate restarts with the next frames).
 
 use std::collections::{BTreeMap, VecDeque};
 
+use serde_json::{json, Value};
+
 use super::stages::Stage;
-use super::tracker::Object;
+use super::tracker::{exact, read_exact, Object};
 use super::translate::{MassScale, TranslateError};
 use crate::calibration::Calibration;
 
@@ -220,6 +226,36 @@ impl AgeClock {
         let reference = t.samples.iter().rev().find(|s| s.0 <= wall - RATE_WINDOW).or_else(|| t.samples.front())?;
         let span = wall - reference.0;
         (span > 0.0).then(|| (latest.1 - reference.1) / span)
+    }
+
+    /// Each object's track as `[id, [age, last_now, stage | null, [[stage, φ, x_start]…]]]`, every f64 [`exact`] — what
+    /// [`AgeClock::restore`] reads back. The wall-time samples of the rate are left out.
+    pub fn snapshot(&self) -> Value {
+        let track = |t: &Track| {
+            let progress: Vec<Value> = t.progress.iter().map(|(s, p)| json!([s.id(), exact(p.phi), exact(p.x_start)])).collect();
+            json!([exact(t.age), exact(t.last_now), t.stage.map(Stage::id), progress])
+        };
+        Value::Array(self.tracks.iter().map(|(id, t)| json!([id, track(t)])).collect())
+    }
+
+    /// The tracks [`AgeClock::snapshot`] wrote, onto this clock's mass scale and durations (the calibration's); the rate starts
+    /// over from the next frame.
+    pub fn restore(&mut self, v: &Value) -> Result<(), String> {
+        let list = |v: &Value, at: &str| v.as_array().cloned().ok_or_else(|| format!("{at}: not a list: {v}"));
+        let mut tracks = BTreeMap::new();
+        for pair in list(v, "ages")? {
+            let id = pair[0].as_u64().and_then(|n| u32::try_from(n).ok()).ok_or_else(|| format!("ages: not [id, …]: {pair}"))?;
+            let t = &pair[1];
+            let stage = if t[2].is_null() { None } else { Some(Stage::from_id(&t[2])?) };
+            let progress = list(&t[3], "ages.progress")?
+                .iter()
+                .map(|p| Ok((Stage::from_id(&p[0])?, Progress { phi: read_exact(&p[1], "ages.phi")?, x_start: read_exact(&p[2], "ages.x_start")? })))
+                .collect::<Result<BTreeMap<_, _>, String>>()?;
+            let track = Track { age: read_exact(&t[0], "ages.age")?, last_now: read_exact(&t[1], "ages.last_now")?, stage, progress, samples: VecDeque::new() };
+            tracks.insert(id, track);
+        }
+        self.tracks = tracks;
+        Ok(())
     }
 }
 

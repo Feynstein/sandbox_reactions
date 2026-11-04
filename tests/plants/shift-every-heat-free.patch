@@ -1,0 +1,14 @@
+--- a/crates/sr-engine/shaders/heat.wgsl
++++ b/crates/sr-engine/shaders/heat.wgsl
+@@ -475,9 +475,10 @@
+ // reach as it is: heat_rim's ring walks up through the factor 2 pass after pass (M0-D36), and dropped by its own climb it
+ // closed at a C-weighted L1 of 1.4e-4 from the twin on Jacobi.
+ fn shifted_at(x: u32, y: u32, dt: f32, reach: f32) -> bool {
+-    if (!free_at(x, y, dt) || pinned(x, y)) {
++    if (!free_at(x, y, dt)) {
+         return false;
+     }
++    return true;
+     let i = y * dims.width + x;
+     let u = solve[SV_X * dims.cells + i] + solve[SV_L * dims.cells + i];
+     // dT/T = du/(4u), or du/u under constant_diffusivity (u = T).

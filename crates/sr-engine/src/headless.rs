@@ -76,9 +76,10 @@ pub const EXIT_CALIBRATION: i32 = sr_physics::calibration::EXIT_CALIBRATION;
 
 /// §3.3: `--max-steps` defaults to 2,000,000.
 pub const DEFAULT_MAX_STEPS: u64 = 2_000_000;
-/// The observers' snapshot's version: 2 since each object's history carries `x_h_max` (§0.5 [M0-D78]); a snapshot of
-/// another version is refused by `--continue` and not used as `calibrate`'s checkpoint.
-pub const OBSERVERS_VERSION: u64 = 2;
+/// The observers' snapshot's version: 2 since each object's history carries `x_h_max` (§0.5 [M0-D78]), 3 since the watch
+/// carries the age clock (`ages`, §0.5 [M0-D103]); a snapshot of another version is refused by `--continue` and not used as
+/// `calibrate`'s checkpoint.
+pub const OBSERVERS_VERSION: u64 = 3;
 /// Steps recorded per submission: the queue never holds more than this many at once — nor P5's log of unconverged steps.
 const CHUNK: u64 = 256;
 /// A frame while `--until` watches, in steps (untuned): the cold disk's whole collapse is some 250 steps, so a stage that
