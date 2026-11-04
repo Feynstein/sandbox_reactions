@@ -13,24 +13,34 @@
 //! guard (M0-D18).
 //!
 //! The hold (§2.7 [M0-TG2]; M0-R11's H), P8's last act ([`Floors::hold`]): a cell with Σ ≥ σ_hold whose ε_th — as the
-//! floor leaves it — is at most η_hold · ε_cold and which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) is held, and the next
-//! step's P4 leaves it as it is (hydro.rs's held walls). A held cell is released past 2η_hold · ε_cold, under ½σ_hold or
-//! once X_Fe > 0, so a collapsing iron core stays free. A newly held cell's momentum is set to 0 — its kinetic energy left
-//! in E, where it becomes heat — and booked `held`. ε_th and ε_cold are read in f64 of the renormalised fractions.
+//! floor leaves it — is at most η_hold · ε_cold, which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) or is neutron-rich (X_n ≥
+//! 0.5, §2.7 [M0-R13]), and whose disk r ≤ 24 holds less than m_tov_sb (§0.5 [M0-T130]: P3's mass test's disk form and
+//! limit, sinks.rs [`disk`] and [`m_tov_sb`], at [`R_HOLD`], read on Σ as the floors leave it; M0-D153) is held, and the next step's P4 leaves it
+//! as it is (hydro.rs's held walls). A held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe > 0 with X_n
+//! < 0.5, or once its disk holds m_tov_sb: a collapsing iron core stays free, a remnant's neutron core is held degenerate,
+//! and a core heading past m_tov_sb is free for P3's sink. A newly held cell's momentum is set to 0 — its kinetic energy
+//! left in E, where it becomes heat — and booked `held`. ε_th and ε_cold are read in f64 of the renormalised fractions.
 
 use super::hydro::State;
+use super::sinks::{disk, m_tov_sb};
 use crate::eos::Eos;
 use crate::registry::{Elements, Physics, RegistryError, N_SPECIES};
 
 const NS: usize = N_SPECIES;
 /// The neutron fraction's slot in §1.5's order (the registry's `ID_N`).
 const ID_N: usize = 9;
-/// Iron's slot in §1.5's order: a cell holding any is never held (§2.7 [M0-D71f]).
+/// Iron's slot in §1.5's order: a cell holding any is held only once neutron-rich (§2.7 [M0-D71f], [M0-R13]).
 const ID_FE: usize = 8;
+/// X_n from which a cell holding iron is neutron-rich, past N_Fe's gate (§2.7 [M0-R13]).
+const NEUTRON_RICH: f64 = 0.5;
 /// σ_hold: the least Σ a held cell has (§2.7 [M0-TG2]; a code constant until M0-D71g moves it into physics.json).
 pub const SIGMA_HOLD: f64 = 10.0;
 /// η_hold: a cell is held at ε_th ≤ η_hold · ε_cold and released past twice that (§2.7 [M0-TG2]; as [`SIGMA_HOLD`]).
 pub const ETA_HOLD: f64 = 0.1;
+/// The hold's gate radius (§0.5 [M0-T130], M0-D153): a cell is held only while the mass within `R_HOLD` cells of it, centre
+/// to centre, is under m_tov_sb — P3's disk form (§0.5 [M0-R6]) at a radius wide enough to take a collapsing clump's infall
+/// (r ≤ 4 froze the 20 M₀ life's clumps at birth, M0-T130).
+pub const R_HOLD: f64 = 24.0;
 /// The state's species planes (§2.2: channels 4–13).
 const FIRST_SPECIES: usize = 4;
 
@@ -86,6 +96,8 @@ pub struct Floors {
     elements: Elements,
     sigma_vac: f64,
     sigma_floor: f64,
+    /// m_tov_sb for the run's physics (§2.11 item 2, sinks.rs [`m_tov_sb`]): a cell whose disk r ≤ 24 holds it is free.
+    m_tov: f64,
 }
 
 impl Floors {
@@ -96,6 +108,7 @@ impl Floors {
             elements: elements.clone(),
             sigma_vac: get("sigma_vac"),
             sigma_floor: get("sigma_floor"),
+            m_tov: m_tov_sb(physics, elements),
         })
     }
 
@@ -153,19 +166,33 @@ impl Floors {
         booked
     }
 
-    /// Whether a cell of Σ `sigma`, momentum `mom`, energy `energy` and fractions `x` is held after P8, given whether it
-    /// was held before (§2.7 [M0-TG2]): the hold's test, or its release with the hysteresis.
-    pub fn holds(&self, sigma: f64, mom: [f64; 2], energy: f64, x: &[f64; NS], was_held: bool) -> bool {
+    /// m_tov_sb as the hold reads it.
+    pub fn m_tov(&self) -> f64 {
+        self.m_tov
+    }
+
+    /// The mass of cell `i`'s disk r ≤ [`R_HOLD`] (sinks.rs [`disk`], row-major, P3's mass test's form), the hold's gate.
+    pub fn disk_mass(st: &State, i: usize) -> f64 {
+        disk(i % st.width, i / st.width, R_HOLD, st.width, st.height).map(|c| st.planes[c]).sum()
+    }
+
+    /// Whether a cell of Σ `sigma`, momentum `mom`, energy `energy` and fractions `x`, whose disk r ≤ 24 holds `m_disk()`,
+    /// is held after P8, given whether it was held before (§2.7 [M0-TG2], [M0-D71f], [M0-R13]; §0.5 [M0-T130]): the
+    /// hold's test, or its release with the hysteresis. The disk gate reads on both kinds alike, so no cell flickers at it;
+    /// `m_disk` is called only where the rest of the test holds or keeps the cell (so only at Σ ≥ ½σ_hold) — the answer
+    /// is the same, the 1,809-cell sum spared everywhere else.
+    pub fn holds(&self, sigma: f64, mom: [f64; 2], energy: f64, x: &[f64; NS], m_disk: impl FnOnce() -> f64, was_held: bool) -> bool {
         let x = renormalised(x);
         let comp = self.elements.composition(&x);
         let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
         let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
-        let iron = x[ID_FE] > 0.0;
-        if was_held {
-            !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || iron)
+        let kind = x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH;
+        let rest = if was_held {
+            !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || !kind)
         } else {
-            sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && !iron
-        }
+            sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && kind
+        };
+        rest && m_disk() < self.m_tov
     }
 
     /// The hold over the whole world, in place, after [`Floors::apply`]: `held` (one flag per cell) becomes the mask the
@@ -180,7 +207,7 @@ impl Floors {
                 continue;
             }
             let mom = [st.planes[n + i], st.planes[2 * n + i]];
-            let now = self.holds(st.planes[i], mom, st.planes[3 * n + i], &raw, *h);
+            let now = self.holds(st.planes[i], mom, st.planes[3 * n + i], &raw, || Self::disk_mass(st, i), *h);
             if now && !*h {
                 taken[0] += mom[0];
                 taken[1] += mom[1];

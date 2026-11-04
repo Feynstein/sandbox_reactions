@@ -55,7 +55,8 @@ pub mod sinks;
 use std::cell::{Cell, RefCell};
 
 use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
-use sr_physics::reference::floors::{ETA_HOLD, SIGMA_HOLD};
+use sr_physics::reference::floors::{ETA_HOLD, R_HOLD, SIGMA_HOLD};
+use sr_physics::reference::sinks::m_tov_sb;
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
 use crate::scene::EdgeMode;
@@ -501,7 +502,7 @@ impl Step {
         passes[Pass::Reactions as usize] = burn.as_mut().map(|r| std::mem::take(&mut r.dispatches)).unwrap_or_default();
         let mut heating = nuheat.map(|n| nuheat::NuHeat::new(device, state, booking, physics, &boxfit, dt.record(), n)).transpose()?;
         passes[Pass::NeutrinoHeating as usize] = heating.as_mut().map(|p| std::mem::take(&mut p.dispatches)).unwrap_or_default();
-        let (floor_list, hold) = floors(device, state, booking, eos, &boxfit);
+        let (floor_list, hold) = floors(device, state, booking, eos, physics, &boxfit);
         passes[Pass::Floors as usize] = floor_list;
         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
         let latch = Latch::new(device, &passes, &dt, &boxfit, warm.as_ref().map(heat::Heat::gate_buffers));
@@ -900,9 +901,9 @@ pub(crate) fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModul
 
 /// P8 floors (§1.3.2): `floor_cells` — the vacuum reset and the temperature floor, booked into P8's booking buffer —
 /// then `renormalise_species`, which ends with the hold's mask (§2.7 [M0-TG2]), both over the box's 8 × 8 tiles; and
-/// `hold_cells`, the hold alone, for the initial state. σ_hold and η_hold are sr_physics::reference::floors' constants,
-/// uploaded in f32; the hold reads no physics.json key (§2.7 [M0-D71f]: no iron is held, so no Σ_N).
-fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, boxfit: &BoxFit) -> (Vec<Dispatch>, Dispatch) {
+/// `hold_cells`, the hold alone, for the initial state. σ_hold, η_hold and r_hold are sr_physics::reference::floors'
+/// constants, uploaded in f32 with m_tov_sb (the twin's own for `physics`, as P3's — §0.5 [M0-T130]'s gate, M0-D153).
+fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, physics: &Physics, boxfit: &BoxFit) -> (Vec<Dispatch>, Dispatch) {
     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("floors.wgsl"),
         source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/floors.wgsl")).into()),
@@ -927,7 +928,8 @@ fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu,
     });
     let eos_group = eos.bind_group(device, &floor_cells);
 
-    let params = [SIGMA_HOLD as f32, ETA_HOLD as f32, 0.0, 0.0];
+    let m_tov = m_tov_sb(physics, &Elements::shipped().expect("the shipped elements")).min(f64::from(f32::MAX)) as f32;
+    let params = [SIGMA_HOLD as f32, ETA_HOLD as f32, m_tov, R_HOLD as f32];
     let params = init_buffer(device, "floors.hold", wgpu::BufferUsages::UNIFORM, &params.map(f32::to_bits));
     let hold_dispatch = |entry: &'static str| {
         let pipeline = compute_pipeline(device, &module, entry);

@@ -365,3 +365,10 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   the 4,572 life's iron core at the gate and a dozen iron clumps of the 20 M₀ life, which formed no sink by step 8,807 where the
   tree before M0-D71's build forms one at step 2,600; the lead at M0-D71f, 2026-11-03: «Hold no iron (Recommended)», «Walls only,
   final (Recommended)»).
+- Contract §0.5 [M0-R13]'s and §2.7's neutron hold gated by «the cell's object (§1.9.2)» against m_tov_sb, and §2.3.4's «none
+  whose object reaches m_tov_sb» — superseded by contract §0.5 [M0-T130]: the gate reads the mass within r ≤ 24 cells of the
+  cell, never the observer's object (G-WATCH), built and measured by M0-D153; until then no neutron-rich cell is held (measured
+  by M0-T130 on the RTX 4090: the Massive object stays over m_tov_sb until step ≈ 3,600, its core already spread; P3's r ≤ 4
+  disk held the Massive core but froze the 20 M₀ Repro's clumps, no sink by step 3,062, and was reverted; the lead at M0-T130,
+  2026-11-03: «P3's disk mass (Recommended)», «Build it here (Recommended)», «Revert to M0-D152's rule (Recommended)», «Same
+  gate, r ≤ 24 (Recommended)»).

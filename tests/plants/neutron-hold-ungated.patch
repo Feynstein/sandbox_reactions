@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/floors.rs
++++ b/crates/sr-physics/src/reference/floors.rs
+@@ -192,7 +192,7 @@
+         } else {
+             sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && kind
+         };
+-        rest && m_disk() < self.m_tov
++        rest && (m_disk() < self.m_tov || x[ID_N] >= NEUTRON_RICH) // planted: the m_tov_sb gate dropped for neutron-rich cells (M0-R13's F)
+     }
+ 
+     /// The hold over the whole world, in place, after [`Floors::apply`]: `held` (one flag per cell) becomes the mask the
+--- a/crates/sr-engine/shaders/floors.wgsl
++++ b/crates/sr-engine/shaders/floors.wgsl
+@@ -208,7 +208,7 @@
+     }
+     // The gate (§0.5 [M0-T130]): the disk summed only where the rest holds or keeps the cell, as the twin's `holds`.
+     if (now) {
+-        now = disk_mass(xy) < hold_params.m_tov;
++        now = disk_mass(xy) < hold_params.m_tov || x[ID_N] >= NEUTRON_RICH; // planted: the m_tov_sb gate dropped
+     }
+     if (now && !was) {
+         book[2u * n + cell] += mom.x;

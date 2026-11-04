@@ -26,7 +26,11 @@
 //! within 10⁻⁵ of Σ_N, at either hold, is within f32's rounding of an edge (ε_cold alone carries 2 × 10⁻⁵, TABLE_TOL):
 //! counted, printed and left out. Then a second step over the held state moves nothing; the initial state's hold
 //! precedes its Δt (a held cell's speed bounds no Δt_0); Clear leaves no cell held. The legacy field above keeps every
-//! cell of Σ ≥ σ_hold at rest, so the hold, whatever it decides there, moves none of the floors' cases.
+//! cell of Σ ≥ σ_hold at rest, so the hold, whatever it decides there, moves none of the floors' cases. The field's
+//! cases run on [`field_constants`]: the shipped ones with the neutrons' cold pressure off (K₁ₙ = K₂ₙ = 0), so m_tov_sb
+//! is infinite (f32's largest on the GPU), no disk r ≤ 24 the field makes (≤ 1,809 × 1,030) reaches it and §0.5 [M0-T130]'s
+//! gate frees none of its cells — no field cell holds neutrons, so the K's reach nothing else; the gate is held_core's
+//! (M0-T130), on the twin and the GPU. (K₂ₙ × 10 is refused by physics.json's K9 bound, m_tov/m_ch ≤ 2.)
 
 use super::device;
 use sr_engine::state::{book_totals, Booking, State, WorldConfig, BOOK_GROUPS, CHANNELS, N_CHANNELS, SPECIES, TERMS};
@@ -67,7 +71,20 @@ struct Constants {
 }
 
 fn shipped() -> Constants {
-    let physics = Physics::shipped().expect("shipped physics.json");
+    constants(Physics::shipped().expect("shipped physics.json"))
+}
+
+/// The hold field's constants: the shipped ones with the neutrons' cold pressure off, m_tov_sb infinite — so the disk gate
+/// (§0.5 [M0-T130]) frees none of the field's cells, which hold no neutrons (the K's reach nothing else of theirs).
+fn field_constants() -> Constants {
+    let physics = Physics::shipped().expect("shipped physics.json").with(&[("k1n", 0.0), ("k2n", 0.0)]).expect("K₁ₙ = K₂ₙ = 0");
+    let c = constants(physics);
+    assert!(c.floors.m_tov().is_infinite(), "m_tov_sb {} with the neutrons' cold pressure off", c.floors.m_tov());
+    assert!(HOLD_X.iter().all(|x| x[9] == 0.0), "a hold field mix holds neutrons: the K's would reach its ε_cold");
+    c
+}
+
+fn constants(physics: Physics) -> Constants {
     let eos = Eos::from_physics(&physics).expect("shipped constants");
     let elements = Elements::shipped().expect("shipped elements.json");
     let floors = Floors::new(&physics, &elements).expect("shipped constants");
@@ -782,7 +799,7 @@ fn twin_hold(c: &Constants, world: WorldConfig, before: &[f32], mask0: &[u32]) -
 
 #[test]
 fn the_hold_mask_and_momenta_equal_the_twins_cell_for_cell() {
-    let c = shipped();
+    let c = field_constants();
     let world = WorldConfig::new(64, 64).unwrap();
     let cells = world.cells();
     let (before, mask0, params) = hold_field(&c, world);
@@ -840,7 +857,7 @@ fn the_hold_mask_and_momenta_equal_the_twins_cell_for_cell() {
 
 #[test]
 fn the_held_momentum_is_booked_as_the_twin_books_it() {
-    let c = shipped();
+    let c = field_constants();
     let world = WorldConfig::new(64, 64).unwrap();
     let cells = world.cells();
     let (before, mask0, _) = hold_field(&c, world);
@@ -869,7 +886,7 @@ fn the_held_momentum_is_booked_as_the_twin_books_it() {
 
 #[test]
 fn a_second_p8_over_the_held_state_moves_nothing() {
-    let c = shipped();
+    let c = field_constants();
     let world = WorldConfig::new(64, 64).unwrap();
     let cells = world.cells();
     let (before, mask0, _) = hold_field(&c, world);
@@ -938,7 +955,7 @@ fn the_initial_states_hold_comes_before_its_dt() {
 
 #[test]
 fn clear_leaves_no_cell_held() {
-    let c = shipped();
+    let c = field_constants();
     let world = WorldConfig::new(64, 64).unwrap();
     let (before, mask0, _) = hold_field(&c, world);
     let gpu = HoldGpu::new(&c, world, &before, &mask0, true);

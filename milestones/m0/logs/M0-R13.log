@@ -330,3 +330,26 @@ F repro wall 74.79 s
 {"detail":{"mass_sb":66521.2905399371},"kind":"core_collapse","object":1,"sim_time":10.435956890461966,"step":1700}
 floor 153826060.34414673 nuclear -142337735.91863704
 1 61874.5 neutron_star
+== M0-R13 session 2 resume, 2026-11-03T18:33:50-05:00, reads from dumps on laserax-ai-server
+# anchors t_floor 0.05 t_eff_sun_sb 11.633381191364432 m_ch_sb 3216.4199210979236 m_tov? k2n 58.2
+step 13750 t 75.488 held 4 c (299,199) Sc 783.1 Tc_sb 38.321 Tc_K 2.328e6 eth/cold_c 6.88e-2 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 5 M 3015.1 Hth 1.4508e5 Habove 1.4488e5 Ecold 2.0973e6 at_floor 0 TKmax 2.328e6 | rem M 3066.1 Hth 1.4575e5 Ecold 2.0978e6 KE 2.3085e4 R90(r<=20) 6.71
+step 14000 t 76.908 held 4 c (299,199) Sc 783.1 Tc_sb 38.006 Tc_K 2.233e6 eth/cold_c 6.83e-2 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 6 M 3024.0 Hth 1.4439e5 Habove 1.4419e5 Ecold 2.0975e6 at_floor 0 TKmax 2.261e6 | rem M 3030.8 Hth 1.4443e5 Ecold 2.0976e6 KE 8.5532e3 R90(r<=20) 9.22
+step 14250 t 78.318 held 4 c (299,199) Sc 783.1 Tc_sb 37.703 Tc_K 2.145e6 eth/cold_c 6.77e-2 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 5 M 3014.7 Hth 1.4332e5 Habove 1.4312e5 Ecold 2.0973e6 at_floor 0 TKmax 2.207e6 | rem M 3047.9 Hth 1.4385e5 Ecold 2.0977e6 KE 1.7460e4 R90(r<=20) 7.00
+step 14394 t 79.137 held 4 c (299,199) Sc 783.1 Tc_sb 37.537 Tc_K 2.098e6 eth/cold_c 6.74e-2 Ye_c 0.204 Xn_c 0.560 XFe_c 0.440 | core n 5 M 3014.0 Hth 1.4280e5 Habove 1.4260e5 Ecold 2.0972e6 at_floor 0 TKmax 2.181e6 | rem M 3030.9 Hth 1.4312e5 Ecold 2.0976e6 KE 8.5492e3 R90(r<=20) 7.81
+Traceback (most recent call last):
+  File "<stdin>", line 14, in <module>
+  File "<stdin>", line 14, in <genexpr>
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+today s_1000->s_29208: nuclear_released +0.0376  floor_added +9.72e+06  radiated +2.47e+06  neutrino_lost +689  escaped +5.05e+05  thermal -5.16e+05 | floor/radiated 3.93
+B s_1000->s_41224: nuclear_released -1.59e+06  floor_added +1.27e+07  radiated +3.34e+06  neutrino_lost +4.03e+04  escaped +1.07e+06  thermal -5.66e+05 | floor/radiated 3.80
+B9 s_1000->s_60000: nuclear_released -2.28e+06  floor_added +3.04e+07  radiated +1.98e+07  neutrino_lost +2.56e+04  escaped +2.01e+06  thermal -9.22e+05 | floor/radiated 1.54
+C s_1000->s_4846: nuclear_released -1.26e+07  floor_added +1.03e+07  radiated +4.86e+06  neutrino_lost +599  escaped +6.65e+04  thermal -7.46e+04 | floor/radiated 2.12
+D s_1000->s_41750: nuclear_released -2.32e+06  floor_added +1.22e+07  radiated +3.97e+06  neutrino_lost +2.95e+05  escaped +8.32e+05  thermal -5.62e+05 | floor/radiated 3.07
+F s_1000->s_14394: nuclear_released +0.00505  floor_added +8.51e+06  radiated +5.1e+06  neutrino_lost +791  escaped +9.11e+05  thermal +5.94e+04 | floor/radiated 1.67
+== B9 events
+cB9_3 {"detail":{"by":"fuel","mass_sb":6674.911018371582},"kind":"ignition","object":1,"sim_time":3.924438162241131,"step":266}
+cB9_3 {"detail":{"mass_sb":6670.365857754834},"kind":"core_collapse","object":1,"sim_time":7.695813137339428,"step":910}
+cB9_3 {"detail":{"mass_sb":6670.366133408621},"kind":"supernova","object":1,"sim_time":7.767547224415466,"step":926}
+B9 until {'condition': 'ending', 'met': False} steps 60000
+[{"at_x_h": {"luminosity": 257172.10088637727, "radius": 32.604498556765684, "sim_time": 3.924438162241131, "x_h_c": 0.35}, "id": 1, "mass_sb": 260.99386083334684, "stage": "he_shell", "stages": [{"from_step": 65, "sim_time": 1.220557613298297, "stage": "collapsing"}, {"from_step": 330, "sim_time": 4.374867020873353, "stage": "iron_core"}, {"from_step": 910, "sim_time": 7.695813137339428, "stage": "core_collapse"}, {"from_step": 926, "sim_time": 7.767547224415466, "stage": "supernova"}, {"from_step": 4176, "sim_time": 28.10051161213778, "stage": "he_shell"}]}]
+== session 2: report written, the lead's pick G + D, contract [M0-R13], M0-T130/M0-T131 filed, 2026-11-03T18:42:29-05:00

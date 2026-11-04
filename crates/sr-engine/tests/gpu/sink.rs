@@ -399,7 +399,7 @@ fn assert_none_held(name: &str, st: &State) {
     let floors = Floors::new(&shipped(), &elements()).unwrap();
     let held = (0..st.width * st.height).filter(|&i| {
         let x: [f64; N_SPECIES] = std::array::from_fn(|s| st.get(4 + s, i));
-        floors.holds(st.get(0, i), [st.get(1, i), st.get(2, i)], st.get(3, i), &x, false)
+        floors.holds(st.get(0, i), [st.get(1, i), st.get(2, i)], st.get(3, i), &x, || Floors::disk_mass(st, i), false)
     });
     assert_eq!(held.count(), 0, "{name}: cells held before step 0");
 }

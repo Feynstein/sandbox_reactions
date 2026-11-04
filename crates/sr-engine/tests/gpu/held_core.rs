@@ -1,6 +1,8 @@
 //! M0-D71 — the held core on the CPU twin (contract §2.7 [M0-TG2], §2.3.4 [M0-TG2], §1.4.2 [M0-TG2], §2.9's `held`, §5.1's
 //! G-REST; M0-R11's H, reports/unresolved_remnant.md). P8's last act holds a cell with Σ ≥ σ_hold and ε_th ≤ η_hold ε_cold
-//! which holds no iron (X_Fe = 0, §2.7 [M0-D71f]), and releases it past 2η_hold, under ½σ_hold or once X_Fe > 0; P4
+//! which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]) with its disk r ≤ 24 under
+//! m_tov_sb (§0.5 [M0-T130], M0-D153), and releases it past 2η_hold, under ½σ_hold, once X_Fe > 0 with X_n < 0.5 or its disk
+//! reaches m_tov_sb; P4
 //! leaves a held cell as it is behind reflecting walls (HLL against the mirror, no mass, energy or species across, no
 //! work); the momentum the hold takes from the grid is booked `held`. One-way inflow (§2.3.4's item 2) is not built: it
 //! took the M 900 disk's floor to 392.6 (2.26 without) and moved to M0-D71f (§0.5 [M0-D71], the lead at M0-D71). The
@@ -23,6 +25,9 @@
 //!   newly held cell's momentum zeroed and booked, its E as it was.
 //! - **Item 1** (M0-D152, §2.7 [M0-D71f]: no iron is held): cold iron under and past N_Fe's gate never held, nor C/O with
 //!   X_Fe 10⁻³⁰; C/O beside it held, and released once its iron appears (X_Fe 10⁻⁴).
+//! - **The neutron core** (M0-T130, M0-D153, §2.7 [M0-R13], §0.5 [M0-T130]): a cold neutron-rich cell (X_n 0.6, X_Fe 0.4)
+//!   held while its disk r ≤ 24 holds 0.95 m_tov_sb (ballast spread over the disk, probes 64 apart), never at 1.05,
+//!   released once its disk crosses to 1.05; iron at X_n 0.4 never held.
 //!
 //! Plant `held-wall-pressure-only`: the held wall takes §2.8's bounce flux, Π alone (M0-R11: the M 900 disk ran to KE 5 × 10⁶).
 //!
@@ -38,6 +43,7 @@
 //!   [M0-D64] would do there is larger — and the column's Σg kick booked as the twin books it.
 //! - **A held edge cell** in a leave world books nothing into `escaped`, its face carrying nothing.
 //! - **Item 1 on the GPU** (M0-D152): the twin's item-1 cells in a world of thin hydrogen — the masks the twin's, f32 alike.
+//! - **The neutron core on the GPU** (M0-T130): the twin's probes, one step each side of the crossing — the masks the twin's.
 //! - **Clear in P0** (M0-D71b's flag): a Clear and a paint over a held core in one step give the planes the same edits give
 //!   with the mask zeroed by hand — P4 sees no stale wall.
 //! - **The pull** (M0-D151, §1.4.2 [M0-D149]: P2's g_pull, the field of all but the held cells, what hydro.wgsl's held
@@ -49,7 +55,9 @@
 //!
 //! Plant `held-wall-gpu-pressure-only`: hydro.wgsl's held wall the bounce flux, Π alone. Plant `held-core-gpu-whole-g`:
 //! hydro.wgsl's held cells read P2's whole g again (the world of held cells books its f32 rounding). Plant
-//! `hold-iron-gate`: the gate form back on the twin and in floors.wgsl — iron held while Y_eΣ ≤ Σ_N (M0-D71f).
+//! `hold-iron-gate`: the gate form back on the twin and in floors.wgsl — iron held while Y_eΣ ≤ Σ_N (M0-D71f). Plant
+//! `neutron-hold-ungated`: the m_tov_sb gate dropped on the twin and in floors.wgsl — M0-R13's F, the neutron-rich core
+//! held at any mass.
 
 use std::path::{Path, PathBuf};
 
@@ -64,7 +72,7 @@ use sr_engine::step::edit::Edit;
 use sr_engine::step::fft::read_back;
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::eos::Eos;
-use sr_physics::reference::floors::{Floors, ETA_HOLD, SIGMA_HOLD};
+use sr_physics::reference::floors::{Floors, ETA_HOLD, R_HOLD, SIGMA_HOLD};
 use sr_physics::reference::grav::Gravity;
 use sr_physics::reference::hydro::{Edge, Hydro, State, COMPONENTS};
 use sr_physics::reference::{Switches, Twin};
@@ -85,6 +93,15 @@ fn elements() -> Elements {
 
 fn physics() -> Physics {
     Physics::shipped().unwrap()
+}
+
+/// The shipped physics with the neutrons' cold pressure off (K₁ₙ = K₂ₙ = 0), m_tov_sb infinite: for the fixtures that pack
+/// cold C/O past m_tov_sb within r ≤ 24 (a world of held cells, the dense strip) to grade the walls and the pull, never the
+/// gate (§0.5 [M0-T130], M0-D153; floors' `field_constants`, M0-T130). They hold no neutrons, so the K's reach nothing else.
+fn gate_off() -> Physics {
+    let physics = physics().with(&[("k1n", 0.0), ("k2n", 0.0)]).expect("K₁ₙ = K₂ₙ = 0");
+    assert!(Floors::new(&physics, &elements()).unwrap().m_tov().is_infinite(), "m_tov_sb with the neutrons' cold pressure off");
+    physics
 }
 
 /// Mass fractions of the named species.
@@ -302,14 +319,15 @@ fn gravity_kick_on_a_held_cell_is_booked() {
 const PW: usize = 32;
 
 /// The pull cases' state: held C/O cells (Σ 20 to 30, uneven, ε_th ½η_hold ε_cold) at `core`, warm hydrogen (Σ 1) at
-/// `gas`, vacuum elsewhere, all at rest — so each cell's half-step Σ is its Σ — and the twin of it.
+/// `gas`, vacuum elsewhere, all at rest — so each cell's half-step Σ is its Σ — and the twin of it, on [`gate_off`]'s physics
+/// (a world of such cells holds ≈ 4 × 10⁴ within r ≤ 24).
 fn pull_world(core: &[(usize, usize)], gas: &[(usize, usize)]) -> (Twin, State) {
     pull_world_of(PW, core, gas)
 }
 
 /// [`pull_world`] in a `size` × `size` world.
 fn pull_world_of(size: usize, core: &[(usize, usize)], gas: &[(usize, usize)]) -> (Twin, State) {
-    let physics = physics();
+    let physics = gate_off();
     let eos = Eos::from_physics(&physics).unwrap();
     let hy = fractions(&[("H", 1.0)]);
     let cold_h = eos.eps_cold(1.0, elements().composition(&hy).y_e, 0.0);
@@ -464,6 +482,75 @@ fn no_iron_is_held() {
     p8(&floors, &item1_cells(&eos, &physics, true).0, &mut held);
     assert_eq!(held, ITEM1[1], "the held C/O cell with X_Fe 1e-4");
     println!("SR-HELD-NO-IRON twin: iron never held at Σ {under:.1} or {past:.1}, a trace of 1e-30 neither; C/O held, released at X_Fe 1e-4");
+}
+
+/// The neutron probes' world edge: four disks r ≤ 24, `NP` cells apart, inside it.
+const NW: usize = 128;
+/// The probes' spacing, ≥ 50 so no probe's disk r ≤ 24 reaches another's ballast.
+const NP: usize = 64;
+
+/// The neutron hold's probes (§2.7 [M0-R13], §0.5 [M0-T130], M0-D153): in an `NW` × `NW` world of thin warm hydrogen
+/// (Σ 1, never held), four cold centres at ½η_hold at (32, 32), (96, 32), (32, 96) and (96, 96), `NP` apart —
+/// [neutron-rich (X_n 0.6, X_Fe 0.4) with its disk r ≤ 24 at 0.95 m_tov_sb, the same at 1.05 m_tov_sb, iron under X_n 0.5
+/// (X_n 0.4, X_Fe 0.6) at 0.95, neutron-rich at 0.95 — or at 1.05 once `crossed`]: every other cell of each centre's disk
+/// r ≤ [`R_HOLD`] warm hydrogen ballast (Σ ≈ 2, under σ_hold; ε_th = 1 + 10 ε_cold), spread so the disk (centre + 1,808
+/// ballast cells) holds the share asked. Returns the cells and the centres' indices.
+fn neutron_probes(eos: &Eos, m_tov: f64, crossed: bool) -> (Vec<Cell>, [usize; 4]) {
+    const CENTRE: f64 = 1_000.0;
+    let at: [usize; 4] = std::array::from_fn(|k| (32 + NP * (k / 2)) * NW + 32 + NP * (k % 2));
+    let r = R_HOLD as i64;
+    let ring: Vec<(i64, i64)> =
+        (-r..=r).flat_map(|dy| (-r..=r).map(move |dx| (dx, dy))).filter(|&(dx, dy)| (dx, dy) != (0, 0) && dx * dx + dy * dy <= r * r).collect();
+    let hy = fractions(&[("H", 1.0)]);
+    let rich = fractions(&[("n", 0.6), ("Fe", 0.4)]);
+    let iron = fractions(&[("n", 0.4), ("Fe", 0.6)]);
+    let ballast = |share: f64| {
+        let b = (share * m_tov - CENTRE) / ring.len() as f64;
+        assert!(b < 0.5 * SIGMA_HOLD, "ballast Σ {b}: never held, never summed");
+        let cold = eos.eps_cold(b, elements().composition(&hy).y_e, 0.0);
+        Cell { sigma: b, mom: [0.0; 2], energy: b * (cold + 1.0 + 10.0 * cold), x: hy }
+    };
+    let probes = [(rich, 0.95), (rich, 1.05), (iron, 0.95), (rich, if crossed { 1.05 } else { 0.95 })];
+    let mut cells = vec![Cell { sigma: 1.0, mom: [0.0; 2], energy: 1.0, x: hy }; NW * NW];
+    for (&c, &(x, share)) in at.iter().zip(&probes) {
+        cells[c] = cold_cell(eos, CENTRE, x, 0.5 * ETA_HOLD, [0.0, 0.0]);
+        for &(dx, dy) in &ring {
+            cells[(c as i64 + dy * NW as i64 + dx) as usize] = ballast(share);
+        }
+    }
+    (cells, at)
+}
+
+/// The probes' masks: after the first P8, and after the second, once the fourth's disk has crossed m_tov_sb.
+const NEUTRON: [[bool; 4]; 2] = [[true, false, false, true], [true, false, false, false]];
+
+#[test]
+fn a_neutron_core_is_held_under_m_tov_sb() {
+    // §2.7 [M0-R13] as §0.5 [M0-T130] gates it (M0-D153): a cold neutron-rich cell is held while its disk r ≤ 24 is under
+    // m_tov_sb, never over it, released once its disk crosses it; iron under X_n 0.5 is never held (M0-D152's rule kept).
+    let physics = physics();
+    let (eos, floors) = (Eos::from_physics(&physics).unwrap(), Floors::new(&physics, &elements()).unwrap());
+    let m_tov = floors.m_tov();
+    assert!((4_800.0..4_900.0).contains(&m_tov), "m_tov_sb {m_tov} (§2.11's shipped 4,853.17)");
+    let mut held = vec![false; NW * NW];
+    let mut masks = Vec::new();
+    for crossed in [false, true] {
+        let (cells, at) = neutron_probes(&eos, m_tov, crossed);
+        let mut st = state(NW, NW, &cells);
+        floors.apply(&mut st);
+        let disks = at.map(|c| Floors::disk_mass(&st, c));
+        floors.hold(&mut st, &mut held);
+        let mask = at.map(|c| held[c]);
+        println!(
+            "SR-HELD-NEUTRON twin: disks {:?} of m_tov_sb {m_tov:.2} → mask {mask:?} ({} held)",
+            disks.map(|d| (d / m_tov * 1e3).round() / 1e3),
+            held.iter().filter(|&&h| h).count()
+        );
+        masks.push((mask, held.iter().filter(|&&h| h).count()));
+    }
+    assert_eq!(masks[0].0, NEUTRON[0], "neutron-rich at 0.95 and 1.05 m_tov_sb, iron at X_n 0.4, neutron-rich at 0.95");
+    assert_eq!(masks[1].0, NEUTRON[1], "the fourth's disk crossed to 1.05 m_tov_sb");
+    assert_eq!((masks[0].1, masks[1].1), (2, 1), "cells held off the probes'");
 }
 
 // ---- the GPU (M0-D71c) ----
@@ -688,7 +775,7 @@ fn gpu_disk_m1800_agrees_with_the_twin_at_step_200() {
 
 /// [`pull_world`]'s state at the GPU's 64 × 64 on the GPU and the twin, one step: the GPU, its held total and the twin.
 fn gpu_pull_step(core: &[(usize, usize)], gas: &[(usize, usize)]) -> (Gpu, [f64; 2], Twin) {
-    let physics = physics();
+    let physics = gate_off();
     let (mut twin, st) = pull_world_of(GW, core, gas);
     twin.step();
     let world = WorldConfig::new(GW as u32, GW as u32).unwrap();
@@ -801,7 +888,8 @@ fn gpu_a_held_wall_reflects_as_the_twins() {
 
 #[test]
 fn gpu_nothing_crosses_a_held_cell_either_way() {
-    let physics = physics();
+    // Two columns of Σ 20 beside Σ 30 gas put ≈ 4 × 10⁴ within r ≤ 24 of a column cell: the gate off (`gate_off`).
+    let physics = gate_off();
     let eos = Eos::from_physics(&physics).unwrap();
     // Dense warm gas (Σ 30 against the column's 20), cells 37–39 driven into the column at 0.5 — its ordinary HLL flux
     // carries mass in — and 41–42 drawn away from it at 0.5; two held columns side by side at 40 and 41 would also hold
@@ -942,6 +1030,33 @@ fn gpu_no_iron_is_held() {
     assert_eq!(first, ITEM1[0], "iron under and past N_Fe's gate, C/O beside it, C/O with X_Fe 1e-30");
     assert_eq!(second, ITEM1[1], "the held C/O cell with X_Fe 1e-4");
     assert_eq!((n_first, n_second), (2, 1), "cells held off item 1's");
+}
+
+#[test]
+fn gpu_a_neutron_core_is_held_under_m_tov_sb() {
+    // The neutron hold on the GPU (§2.7 [M0-R13], §0.5 [M0-T130]; floors.wgsl's `hold` and `disk_mass`, f32 alike): the
+    // twin's probes, the mask after one step, then the planes uploaded with the fourth's disk crossed (the mask kept) and
+    // one step more. One hydro step moves the ballast by less than a cell, its disk's mass within the 5 % margin.
+    let physics = physics();
+    let eos = Eos::from_physics(&physics).unwrap();
+    let m_tov = Floors::new(&physics, &elements()).unwrap().m_tov();
+    let world = WorldConfig::new(NW as u32, NW as u32).unwrap();
+    let planes = |crossed: bool| to_f32(&state(NW, NW, &neutron_probes(&eos, m_tov, crossed).0));
+    let at = neutron_probes(&eos, m_tov, false).1;
+    let gpu = Gpu::new(&physics, world, &planes(false), EdgeMode::Bounce, false, false);
+    let read = |gpu: &Gpu| {
+        let mask = gpu.mask();
+        (at.map(|i| mask[i]), mask.iter().filter(|&&m| m).count())
+    };
+    gpu.run(1);
+    let (first, n_first) = read(&gpu);
+    gpu.state.upload(&gpu.gpu.queue, &planes(true)).unwrap();
+    gpu.run(1);
+    let (second, n_second) = read(&gpu);
+    println!("SR-HELD-NEUTRON GPU: masks {first:?} ({n_first} held) then {second:?} ({n_second} held), m_tov_sb {m_tov:.2}");
+    assert_eq!(first, NEUTRON[0], "neutron-rich at 0.95 and 1.05 m_tov_sb, iron at X_n 0.4, neutron-rich at 0.95");
+    assert_eq!(second, NEUTRON[1], "the fourth's disk crossed to 1.05 m_tov_sb");
+    assert_eq!((n_first, n_second), (2, 1), "cells held off the probes'");
 }
 
 // ---- G-REST's window on the GPU (M0-D71f) ----

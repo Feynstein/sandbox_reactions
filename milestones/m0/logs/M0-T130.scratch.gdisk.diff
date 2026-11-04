@@ -1,0 +1,586 @@
+diff --git a/crates/sr-engine/shaders/floors.wgsl b/crates/sr-engine/shaders/floors.wgsl
+index 3a4e646..187a08b 100644
+--- a/crates/sr-engine/shaders/floors.wgsl
++++ b/crates/sr-engine/shaders/floors.wgsl
+@@ -17,9 +17,11 @@
+ //
+ // The hold (§2.7 [M0-TG2]; M0-D71's twin, sr_physics::reference::floors `Floors::hold`), P8's last act, in the
+ // renormalisation's invocation once it has written the fractions: a cell with Σ ≥ σ_hold whose ε_th — as the floor left
+-// it — is at most η_hold · ε_cold of the renormalised fractions, and which holds no iron (X_Fe = 0 exactly in f32, §2.7
+-// [M0-D71f]: a collapsing iron core stays free), is held; a held cell is released past 2η_hold · ε_cold, under ½σ_hold
+-// or once X_Fe > 0. The mask (state.rs `state.held`, one word per cell) is the next step's P4's. A newly held cell's
++// it — is at most η_hold · ε_cold of the renormalised fractions, which holds no iron (X_Fe = 0 exactly in f32, §2.7
++// [M0-D71f]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]), and whose disk r ≤ 4 holds less than m_tov_sb (§0.5 [M0-T130]:
++// sinks.wgsl's mass test's disk, summed row-major in f32 as `core` sums it, of Σ as `floor_cells` left it — no
++// invocation here writes a Σ) is held; a held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe > 0 with
++// X_n < 0.5, or once its disk holds m_tov_sb. The mask (state.rs `state.held`, one word per cell) is the next step's P4's. A newly held cell's
+ // momentum — read by the test before — is set to 0, its kinetic energy left in E, and added into `held`'s two slots.
+ // Every comparison is f32 of f32 inputs: a cell within f32's rounding of an edge may fall either side of the twin's f64.
+ // `hold_cells` is the same hold alone, on the initial state before step 0 (step/mod.rs), so its zeroing is booked too.
+@@ -61,20 +63,23 @@ struct ActiveBox {
+ // The hold's mask: 1 where a cell is held.
+ @group(0) @binding(6) var held: texture_storage_2d<r32uint, read_write>;
+ 
+-// σ_hold and η_hold (sr_physics::reference::floors' constants), padded to the uniform's 16 bytes.
++// σ_hold and η_hold (sr_physics::reference::floors' constants), m_tov_sb (f32's largest when the neutrons' cold pressure
++// is off: no disk reaches it) and the disk's radius r_core (sr_physics::reference::sinks::R_CORE, 4).
+ struct Hold {
+     sigma_hold: f32,
+     eta_hold: f32,
+-    _pad0: f32,
+-    _pad1: f32,
++    m_tov: f32,
++    r_core: f32,
+ }
+ 
+ @group(0) @binding(7) var<uniform> hold_params: Hold;
+ 
+ const PLANES_A: u32 = 5u;
+ const PLANES_B: u32 = 5u;
+-// Iron's slot in §1.5's order: a cell holding any is never held (§2.7 [M0-D71f]).
++// Iron's slot in §1.5's order: a cell holding any is held only once neutron-rich (§2.7 [M0-D71f], [M0-R13]).
+ const ID_FE: u32 = 8u;
++// X_n from which a cell holding iron is neutron-rich (§2.7 [M0-R13]).
++const NEUTRON_RICH: f32 = 0.5;
+ 
+ // An Inf or a NaN, told by its exponent bits as reduce.wgsl's guard tells it — never a float comparison, which WGSL may
+ // fold away.
+@@ -167,6 +172,22 @@ fn floor_cells(@builtin(global_invocation_id) id: vec3<u32>) {
+     book[n + cell] += energy_added;
+ }
+ 
++// The mass of the disk r ≤ r_core about (x, y), centre to centre, clipped to the world: row-major, as sinks.wgsl's `core`.
++fn disk_mass(xy: vec2<u32>) -> f32 {
++    let r = i32(hold_params.r_core);
++    var mass = 0.0;
++    for (var dy = -r; dy <= r; dy++) {
++        for (var dx = -r; dx <= r; dx++) {
++            let cx = i32(xy.x) + dx;
++            let cy = i32(xy.y) + dy;
++            if (dx * dx + dy * dy <= r * r && cx >= 0 && cy >= 0 && cx < i32(dims.width) && cy < i32(dims.height)) {
++                mass += hydro[u32(cy) * dims.width + u32(cx)];
++            }
++        }
++    }
++    return mass;
++}
++
+ // The hold at `cell` (x, y), whose renormalised fractions are `x`: the mask's word written, a newly held cell's momentum
+ // zeroed and booked.
+ fn hold(cell: u32, xy: vec2<u32>, x: array<f32, 10>) {
+@@ -176,13 +197,18 @@ fn hold(cell: u32, xy: vec2<u32>, x: array<f32, 10>) {
+     let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
+     let cold = eps_cold(sigma, comp.y_e, x[ID_N]);
+     let eps_th = hydro[3u * n + cell] / sigma - 0.5 * dot(mom / sigma, mom / sigma) - cold;
+-    let iron = x[ID_FE] > 0.0;
++    // The disk is summed only where the gate can matter: under ½σ_hold no cell is held or kept (the twin's order).
++    var m_disk = 0.0;
++    if (sigma >= 0.5 * hold_params.sigma_hold) {
++        m_disk = disk_mass(xy);
++    }
++    let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH) && m_disk < hold_params.m_tov;
+     let was = textureLoad(held, xy).x != 0u;
+     var now: bool;
+     if (was) {
+-        now = !(eps_th > 2.0 * hold_params.eta_hold * cold || sigma < 0.5 * hold_params.sigma_hold || iron);
++        now = !(eps_th > 2.0 * hold_params.eta_hold * cold || sigma < 0.5 * hold_params.sigma_hold || !kind);
+     } else {
+-        now = sigma >= hold_params.sigma_hold && eps_th <= hold_params.eta_hold * cold && !iron;
++        now = sigma >= hold_params.sigma_hold && eps_th <= hold_params.eta_hold * cold && kind;
+     }
+     if (now && !was) {
+         book[2u * n + cell] += mom.x;
+diff --git a/crates/sr-engine/src/step/mod.rs b/crates/sr-engine/src/step/mod.rs
+index abc9fe0..37f91de 100644
+--- a/crates/sr-engine/src/step/mod.rs
++++ b/crates/sr-engine/src/step/mod.rs
+@@ -56,6 +56,7 @@ use std::cell::{Cell, RefCell};
+ 
+ use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
+ use sr_physics::reference::floors::{ETA_HOLD, SIGMA_HOLD};
++use sr_physics::reference::sinks::{m_tov_sb, R_CORE};
+ use sr_physics::registry::{Elements, Physics, N_SPECIES};
+ 
+ use crate::scene::EdgeMode;
+@@ -501,7 +502,7 @@ impl Step {
+         passes[Pass::Reactions as usize] = burn.as_mut().map(|r| std::mem::take(&mut r.dispatches)).unwrap_or_default();
+         let mut heating = nuheat.map(|n| nuheat::NuHeat::new(device, state, booking, physics, &boxfit, dt.record(), n)).transpose()?;
+         passes[Pass::NeutrinoHeating as usize] = heating.as_mut().map(|p| std::mem::take(&mut p.dispatches)).unwrap_or_default();
+-        let (floor_list, hold) = floors(device, state, booking, eos, &boxfit);
++        let (floor_list, hold) = floors(device, state, booking, eos, physics, &boxfit);
+         passes[Pass::Floors as usize] = floor_list;
+         passes[Pass::Reductions as usize] = std::mem::take(&mut dt.reduce);
+         let latch = Latch::new(device, &passes, &dt, &boxfit, warm.as_ref().map(heat::Heat::gate_buffers));
+@@ -900,9 +901,9 @@ pub(crate) fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModul
+ 
+ /// P8 floors (§1.3.2): `floor_cells` — the vacuum reset and the temperature floor, booked into P8's booking buffer —
+ /// then `renormalise_species`, which ends with the hold's mask (§2.7 [M0-TG2]), both over the box's 8 × 8 tiles; and
+-/// `hold_cells`, the hold alone, for the initial state. σ_hold and η_hold are sr_physics::reference::floors' constants,
+-/// uploaded in f32; the hold reads no physics.json key (§2.7 [M0-D71f]: no iron is held, so no Σ_N).
+-fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, boxfit: &BoxFit) -> (Vec<Dispatch>, Dispatch) {
++/// `hold_cells`, the hold alone, for the initial state. σ_hold and η_hold are sr_physics::reference::floors' constants and
++/// r_core sinks' R_CORE, uploaded in f32 with m_tov_sb (the twin's own for `physics`, as P3's — §0.5 [M0-T130]'s gate).
++fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, physics: &Physics, boxfit: &BoxFit) -> (Vec<Dispatch>, Dispatch) {
+     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
+         label: Some("floors.wgsl"),
+         source: wgpu::ShaderSource::Wgsl(with_eos(include_str!("../../shaders/floors.wgsl")).into()),
+@@ -927,7 +928,8 @@ fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu,
+     });
+     let eos_group = eos.bind_group(device, &floor_cells);
+ 
+-    let params = [SIGMA_HOLD as f32, ETA_HOLD as f32, 0.0, 0.0];
++    let m_tov = m_tov_sb(physics, &Elements::shipped().expect("the shipped elements")).min(f64::from(f32::MAX)) as f32;
++    let params = [SIGMA_HOLD as f32, ETA_HOLD as f32, m_tov, R_CORE as f32];
+     let params = init_buffer(device, "floors.hold", wgpu::BufferUsages::UNIFORM, &params.map(f32::to_bits));
+     let hold_dispatch = |entry: &'static str| {
+         let pipeline = compute_pipeline(device, &module, entry);
+diff --git a/crates/sr-engine/tests/gpu/floors.rs b/crates/sr-engine/tests/gpu/floors.rs
+index 6603145..81b369b 100644
+--- a/crates/sr-engine/tests/gpu/floors.rs
++++ b/crates/sr-engine/tests/gpu/floors.rs
+@@ -26,7 +26,11 @@
+ //! within 10⁻⁵ of Σ_N, at either hold, is within f32's rounding of an edge (ε_cold alone carries 2 × 10⁻⁵, TABLE_TOL):
+ //! counted, printed and left out. Then a second step over the held state moves nothing; the initial state's hold
+ //! precedes its Δt (a held cell's speed bounds no Δt_0); Clear leaves no cell held. The legacy field above keeps every
+-//! cell of Σ ≥ σ_hold at rest, so the hold, whatever it decides there, moves none of the floors' cases.
++//! cell of Σ ≥ σ_hold at rest, so the hold, whatever it decides there, moves none of the floors' cases. The field's
++//! cases run on [`field_constants`]: the shipped ones with the neutrons' cold pressure off (K₁ₙ = K₂ₙ = 0), so m_tov_sb
++//! is infinite (f32's largest on the GPU), no disk r ≤ 4 the field makes (≤ 49 × 1,030) reaches it and §0.5 [M0-T130]'s
++//! gate frees none of its cells — no field cell holds neutrons, so the K's reach nothing else; the gate is held_core's
++//! (M0-T130), on the twin and the GPU. (K₂ₙ × 10 is refused by physics.json's K9 bound, m_tov/m_ch ≤ 2.)
+ 
+ use super::device;
+ use sr_engine::state::{book_totals, Booking, State, WorldConfig, BOOK_GROUPS, CHANNELS, N_CHANNELS, SPECIES, TERMS};
+@@ -67,7 +71,20 @@ struct Constants {
+ }
+ 
+ fn shipped() -> Constants {
+-    let physics = Physics::shipped().expect("shipped physics.json");
++    constants(Physics::shipped().expect("shipped physics.json"))
++}
++
++/// The hold field's constants: the shipped ones with the neutrons' cold pressure off, m_tov_sb infinite — so the disk gate
++/// (§0.5 [M0-T130]) frees none of the field's cells, which hold no neutrons (the K's reach nothing else of theirs).
++fn field_constants() -> Constants {
++    let physics = Physics::shipped().expect("shipped physics.json").with(&[("k1n", 0.0), ("k2n", 0.0)]).expect("K₁ₙ = K₂ₙ = 0");
++    let c = constants(physics);
++    assert!(c.floors.m_tov().is_infinite(), "m_tov_sb {} with the neutrons' cold pressure off", c.floors.m_tov());
++    assert!(HOLD_X.iter().all(|x| x[9] == 0.0), "a hold field mix holds neutrons: the K's would reach its ε_cold");
++    c
++}
++
++fn constants(physics: Physics) -> Constants {
+     let eos = Eos::from_physics(&physics).expect("shipped constants");
+     let elements = Elements::shipped().expect("shipped elements.json");
+     let floors = Floors::new(&physics, &elements).expect("shipped constants");
+@@ -782,7 +799,7 @@ fn twin_hold(c: &Constants, world: WorldConfig, before: &[f32], mask0: &[u32]) -
+ 
+ #[test]
+ fn the_hold_mask_and_momenta_equal_the_twins_cell_for_cell() {
+-    let c = shipped();
++    let c = field_constants();
+     let world = WorldConfig::new(64, 64).unwrap();
+     let cells = world.cells();
+     let (before, mask0, params) = hold_field(&c, world);
+@@ -840,7 +857,7 @@ fn the_hold_mask_and_momenta_equal_the_twins_cell_for_cell() {
+ 
+ #[test]
+ fn the_held_momentum_is_booked_as_the_twin_books_it() {
+-    let c = shipped();
++    let c = field_constants();
+     let world = WorldConfig::new(64, 64).unwrap();
+     let cells = world.cells();
+     let (before, mask0, _) = hold_field(&c, world);
+@@ -869,7 +886,7 @@ fn the_held_momentum_is_booked_as_the_twin_books_it() {
+ 
+ #[test]
+ fn a_second_p8_over_the_held_state_moves_nothing() {
+-    let c = shipped();
++    let c = field_constants();
+     let world = WorldConfig::new(64, 64).unwrap();
+     let cells = world.cells();
+     let (before, mask0, _) = hold_field(&c, world);
+@@ -938,7 +955,7 @@ fn the_initial_states_hold_comes_before_its_dt() {
+ 
+ #[test]
+ fn clear_leaves_no_cell_held() {
+-    let c = shipped();
++    let c = field_constants();
+     let world = WorldConfig::new(64, 64).unwrap();
+     let (before, mask0, _) = hold_field(&c, world);
+     let gpu = HoldGpu::new(&c, world, &before, &mask0, true);
+diff --git a/crates/sr-engine/tests/gpu/held_core.rs b/crates/sr-engine/tests/gpu/held_core.rs
+index a010677..c1847f6 100644
+--- a/crates/sr-engine/tests/gpu/held_core.rs
++++ b/crates/sr-engine/tests/gpu/held_core.rs
+@@ -1,6 +1,8 @@
+ //! M0-D71 — the held core on the CPU twin (contract §2.7 [M0-TG2], §2.3.4 [M0-TG2], §1.4.2 [M0-TG2], §2.9's `held`, §5.1's
+ //! G-REST; M0-R11's H, reports/unresolved_remnant.md). P8's last act holds a cell with Σ ≥ σ_hold and ε_th ≤ η_hold ε_cold
+-//! which holds no iron (X_Fe = 0, §2.7 [M0-D71f]), and releases it past 2η_hold, under ½σ_hold or once X_Fe > 0; P4
++//! which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]) with its disk r ≤ 4 under
++//! m_tov_sb (§0.5 [M0-T130]), and releases it past 2η_hold, under ½σ_hold, once X_Fe > 0 with X_n < 0.5 or its disk
++//! reaches m_tov_sb; P4
+ //! leaves a held cell as it is behind reflecting walls (HLL against the mirror, no mass, energy or species across, no
+ //! work); the momentum the hold takes from the grid is booked `held`. One-way inflow (§2.3.4's item 2) is not built: it
+ //! took the M 900 disk's floor to 392.6 (2.26 without) and moved to M0-D71f (§0.5 [M0-D71], the lead at M0-D71). The
+@@ -23,6 +25,8 @@
+ //!   newly held cell's momentum zeroed and booked, its E as it was.
+ //! - **Item 1** (M0-D152, §2.7 [M0-D71f]: no iron is held): cold iron under and past N_Fe's gate never held, nor C/O with
+ //!   X_Fe 10⁻³⁰; C/O beside it held, and released once its iron appears (X_Fe 10⁻⁴).
++//! - **The neutron core** (M0-T130, §2.7 [M0-R13], §0.5 [M0-T130]): a cold neutron-rich cell (X_n 0.6, X_Fe 0.4) held while
++//!   its disk r ≤ 4 holds 0.95 m_tov_sb, never at 1.05, released once its disk crosses to 1.05; iron at X_n 0.4 never held.
+ //!
+ //! Plant `held-wall-pressure-only`: the held wall takes §2.8's bounce flux, Π alone (M0-R11: the M 900 disk ran to KE 5 × 10⁶).
+ //!
+@@ -38,6 +42,7 @@
+ //!   [M0-D64] would do there is larger — and the column's Σg kick booked as the twin books it.
+ //! - **A held edge cell** in a leave world books nothing into `escaped`, its face carrying nothing.
+ //! - **Item 1 on the GPU** (M0-D152): the twin's item-1 cells in a world of thin hydrogen — the masks the twin's, f32 alike.
++//! - **The neutron core on the GPU** (M0-T130): the twin's probes, one step each side of the crossing — the masks the twin's.
+ //! - **Clear in P0** (M0-D71b's flag): a Clear and a paint over a held core in one step give the planes the same edits give
+ //!   with the mask zeroed by hand — P4 sees no stale wall.
+ //! - **The pull** (M0-D151, §1.4.2 [M0-D149]: P2's g_pull, the field of all but the held cells, what hydro.wgsl's held
+@@ -49,7 +54,9 @@
+ //!
+ //! Plant `held-wall-gpu-pressure-only`: hydro.wgsl's held wall the bounce flux, Π alone. Plant `held-core-gpu-whole-g`:
+ //! hydro.wgsl's held cells read P2's whole g again (the world of held cells books its f32 rounding). Plant
+-//! `hold-iron-gate`: the gate form back on the twin and in floors.wgsl — iron held while Y_eΣ ≤ Σ_N (M0-D71f).
++//! `hold-iron-gate`: the gate form back on the twin and in floors.wgsl — iron held while Y_eΣ ≤ Σ_N (M0-D71f). Plant
++//! `neutron-hold-ungated`: the m_tov_sb gate dropped on the twin and in floors.wgsl — M0-R13's F, the neutron-rich core
++//! held at any mass.
+ 
+ use std::path::{Path, PathBuf};
+ 
+@@ -466,6 +473,69 @@ fn no_iron_is_held() {
+     println!("SR-HELD-NO-IRON twin: iron never held at Σ {under:.1} or {past:.1}, a trace of 1e-30 neither; C/O held, released at X_Fe 1e-4");
+ }
+ 
++/// The neutron hold's probes (§2.7 [M0-R13], §0.5 [M0-T130]): in a `GW` × `GW` world of thin warm hydrogen (Σ 1, never
++/// held), four cold centres at ½η_hold, 16 cells apart on row 32 — [neutron-rich (X_n 0.6, X_Fe 0.4) with its disk r ≤ 4 at
++/// 0.95 m_tov_sb, the same at 1.05 m_tov_sb, iron under X_n 0.5 (X_n 0.4, X_Fe 0.6) at 0.95, neutron-rich at 0.95 — or at
++/// 1.05 once `crossed`]: each centre's 8 neighbours warm hydrogen ballast (ε_th = 1 + 10 ε_cold, never held) that brings its
++/// disk (centre + 8 ballast + 40 background cells) to the share asked. Returns the cells and the centres' indices.
++fn neutron_probes(eos: &Eos, m_tov: f64, crossed: bool) -> (Vec<Cell>, [usize; 4]) {
++    const CENTRE: f64 = 1_000.0;
++    let at: [usize; 4] = std::array::from_fn(|k| 32 * GW + 8 + 16 * k);
++    let hy = fractions(&[("H", 1.0)]);
++    let rich = fractions(&[("n", 0.6), ("Fe", 0.4)]);
++    let iron = fractions(&[("n", 0.4), ("Fe", 0.6)]);
++    let ballast = |share: f64| {
++        let b = (share * m_tov - CENTRE - 40.0) / 8.0;
++        let cold = eos.eps_cold(b, elements().composition(&hy).y_e, 0.0);
++        Cell { sigma: b, mom: [0.0; 2], energy: b * (cold + 1.0 + 10.0 * cold), x: hy }
++    };
++    let probes = [(rich, 0.95), (rich, 1.05), (iron, 0.95), (rich, if crossed { 1.05 } else { 0.95 })];
++    let mut cells = vec![Cell { sigma: 1.0, mom: [0.0; 2], energy: 1.0, x: hy }; GW * GW];
++    for (&c, &(x, share)) in at.iter().zip(&probes) {
++        cells[c] = cold_cell(eos, CENTRE, x, 0.5 * ETA_HOLD, [0.0, 0.0]);
++        for dy in -1..=1i64 {
++            for dx in -1..=1i64 {
++                if (dx, dy) != (0, 0) {
++                    cells[(c as i64 + dy * GW as i64 + dx) as usize] = ballast(share);
++                }
++            }
++        }
++    }
++    (cells, at)
++}
++
++/// The probes' masks: after the first P8, and after the second, once the fourth's disk has crossed m_tov_sb.
++const NEUTRON: [[bool; 4]; 2] = [[true, false, false, true], [true, false, false, false]];
++
++#[test]
++fn a_neutron_core_is_held_under_m_tov_sb() {
++    // §2.7 [M0-R13] as §0.5 [M0-T130] gates it: a cold neutron-rich cell is held while its disk r ≤ 4 is under m_tov_sb,
++    // never over it, released once its disk crosses it; iron under X_n 0.5 is never held (M0-D152's rule kept).
++    let physics = physics();
++    let (eos, floors) = (Eos::from_physics(&physics).unwrap(), Floors::new(&physics, &elements()).unwrap());
++    let m_tov = floors.m_tov();
++    assert!((4_800.0..4_900.0).contains(&m_tov), "m_tov_sb {m_tov} (§2.11's shipped 4,853.17)");
++    let mut held = vec![false; GW * GW];
++    let mut masks = Vec::new();
++    for crossed in [false, true] {
++        let (cells, at) = neutron_probes(&eos, m_tov, crossed);
++        let mut st = state(GW, GW, &cells);
++        floors.apply(&mut st);
++        let disks = at.map(|c| Floors::disk_mass(&st, c));
++        floors.hold(&mut st, &mut held);
++        let mask = at.map(|c| held[c]);
++        println!(
++            "SR-HELD-NEUTRON twin: disks {:?} of m_tov_sb {m_tov:.2} → mask {mask:?} ({} held)",
++            disks.map(|d| (d / m_tov * 1e3).round() / 1e3),
++            held.iter().filter(|&&h| h).count()
++        );
++        masks.push((mask, held.iter().filter(|&&h| h).count()));
++    }
++    assert_eq!(masks[0].0, NEUTRON[0], "neutron-rich at 0.95 and 1.05 m_tov_sb, iron at X_n 0.4, neutron-rich at 0.95");
++    assert_eq!(masks[1].0, NEUTRON[1], "the fourth's disk crossed to 1.05 m_tov_sb");
++    assert_eq!((masks[0].1, masks[1].1), (2, 1), "cells held off the probes'");
++}
++
+ // ---- the GPU (M0-D71c) ----
+ 
+ /// G-REF's band (§5.1): relative L1 in Σ and E against the twin.
+@@ -944,6 +1014,33 @@ fn gpu_no_iron_is_held() {
+     assert_eq!((n_first, n_second), (2, 1), "cells held off item 1's");
+ }
+ 
++#[test]
++fn gpu_a_neutron_core_is_held_under_m_tov_sb() {
++    // The neutron hold on the GPU (§2.7 [M0-R13], §0.5 [M0-T130]; floors.wgsl's `hold` and `disk_mass`, f32 alike): the
++    // twin's probes, the mask after one step, then the planes uploaded with the fourth's disk crossed (the mask kept) and
++    // one step more. One hydro step moves the ballast by less than a cell, its disk's mass within the 5 % margin.
++    let physics = physics();
++    let eos = Eos::from_physics(&physics).unwrap();
++    let m_tov = Floors::new(&physics, &elements()).unwrap().m_tov();
++    let world = WorldConfig::new(GW as u32, GW as u32).unwrap();
++    let planes = |crossed: bool| to_f32(&state(GW, GW, &neutron_probes(&eos, m_tov, crossed).0));
++    let at = neutron_probes(&eos, m_tov, false).1;
++    let gpu = Gpu::new(&physics, world, &planes(false), EdgeMode::Bounce, false, false);
++    let read = |gpu: &Gpu| {
++        let mask = gpu.mask();
++        (at.map(|i| mask[i]), mask.iter().filter(|&&m| m).count())
++    };
++    gpu.run(1);
++    let (first, n_first) = read(&gpu);
++    gpu.state.upload(&gpu.gpu.queue, &planes(true)).unwrap();
++    gpu.run(1);
++    let (second, n_second) = read(&gpu);
++    println!("SR-HELD-NEUTRON GPU: masks {first:?} ({n_first} held) then {second:?} ({n_second} held), m_tov_sb {m_tov:.2}");
++    assert_eq!(first, NEUTRON[0], "neutron-rich at 0.95 and 1.05 m_tov_sb, iron at X_n 0.4, neutron-rich at 0.95");
++    assert_eq!(second, NEUTRON[1], "the fourth's disk crossed to 1.05 m_tov_sb");
++    assert_eq!((n_first, n_second), (2, 1), "cells held off the probes'");
++}
++
+ // ---- G-REST's window on the GPU (M0-D71f) ----
+ 
+ /// The window's source, the Sun-like life's step 450,000 (git-ignored: on linux-pc and laserax-ai-server, not in a clone).
+diff --git a/crates/sr-engine/tests/gpu/sink.rs b/crates/sr-engine/tests/gpu/sink.rs
+index 7a548f6..7517ea1 100644
+--- a/crates/sr-engine/tests/gpu/sink.rs
++++ b/crates/sr-engine/tests/gpu/sink.rs
+@@ -399,7 +399,7 @@ fn assert_none_held(name: &str, st: &State) {
+     let floors = Floors::new(&shipped(), &elements()).unwrap();
+     let held = (0..st.width * st.height).filter(|&i| {
+         let x: [f64; N_SPECIES] = std::array::from_fn(|s| st.get(4 + s, i));
+-        floors.holds(st.get(0, i), [st.get(1, i), st.get(2, i)], st.get(3, i), &x, false)
++        floors.holds(st.get(0, i), [st.get(1, i), st.get(2, i)], st.get(3, i), &x, Floors::disk_mass(st, i), false)
+     });
+     assert_eq!(held.count(), 0, "{name}: cells held before step 0");
+ }
+diff --git a/crates/sr-physics/src/reference/floors.rs b/crates/sr-physics/src/reference/floors.rs
+index e705dbb..21863f7 100644
+--- a/crates/sr-physics/src/reference/floors.rs
++++ b/crates/sr-physics/src/reference/floors.rs
+@@ -13,20 +13,26 @@
+ //! guard (M0-D18).
+ //!
+ //! The hold (§2.7 [M0-TG2]; M0-R11's H), P8's last act ([`Floors::hold`]): a cell with Σ ≥ σ_hold whose ε_th — as the
+-//! floor leaves it — is at most η_hold · ε_cold and which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) is held, and the next
+-//! step's P4 leaves it as it is (hydro.rs's held walls). A held cell is released past 2η_hold · ε_cold, under ½σ_hold or
+-//! once X_Fe > 0, so a collapsing iron core stays free. A newly held cell's momentum is set to 0 — its kinetic energy left
+-//! in E, where it becomes heat — and booked `held`. ε_th and ε_cold are read in f64 of the renormalised fractions.
++//! floor leaves it — is at most η_hold · ε_cold, which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) or is neutron-rich (X_n ≥
++//! 0.5, §2.7 [M0-R13]), and whose disk r ≤ 4 holds less than m_tov_sb (§0.5 [M0-T130]: P3's mass test's own disk and
++//! limit, sinks.rs [`disk`] and [`m_tov_sb`], read on Σ as the floors leave it) is held, and the next step's P4 leaves it
++//! as it is (hydro.rs's held walls). A held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe > 0 with X_n
++//! < 0.5, or once its disk holds m_tov_sb: a collapsing iron core stays free, a remnant's neutron core is held degenerate,
++//! and a core heading past m_tov_sb is free for P3's sink. A newly held cell's momentum is set to 0 — its kinetic energy
++//! left in E, where it becomes heat — and booked `held`. ε_th and ε_cold are read in f64 of the renormalised fractions.
+ 
+ use super::hydro::State;
++use super::sinks::{disk, m_tov_sb, R_CORE};
+ use crate::eos::Eos;
+ use crate::registry::{Elements, Physics, RegistryError, N_SPECIES};
+ 
+ const NS: usize = N_SPECIES;
+ /// The neutron fraction's slot in §1.5's order (the registry's `ID_N`).
+ const ID_N: usize = 9;
+-/// Iron's slot in §1.5's order: a cell holding any is never held (§2.7 [M0-D71f]).
++/// Iron's slot in §1.5's order: a cell holding any is held only once neutron-rich (§2.7 [M0-D71f], [M0-R13]).
+ const ID_FE: usize = 8;
++/// X_n from which a cell holding iron is neutron-rich, past N_Fe's gate (§2.7 [M0-R13]).
++const NEUTRON_RICH: f64 = 0.5;
+ /// σ_hold: the least Σ a held cell has (§2.7 [M0-TG2]; a code constant until M0-D71g moves it into physics.json).
+ pub const SIGMA_HOLD: f64 = 10.0;
+ /// η_hold: a cell is held at ε_th ≤ η_hold · ε_cold and released past twice that (§2.7 [M0-TG2]; as [`SIGMA_HOLD`]).
+@@ -86,6 +92,8 @@ pub struct Floors {
+     elements: Elements,
+     sigma_vac: f64,
+     sigma_floor: f64,
++    /// m_tov_sb for the run's physics (§2.11 item 2, sinks.rs [`m_tov_sb`]): a cell whose disk r ≤ 4 holds it is free.
++    m_tov: f64,
+ }
+ 
+ impl Floors {
+@@ -96,6 +104,7 @@ impl Floors {
+             elements: elements.clone(),
+             sigma_vac: get("sigma_vac"),
+             sigma_floor: get("sigma_floor"),
++            m_tov: m_tov_sb(physics, elements),
+         })
+     }
+ 
+@@ -153,18 +162,29 @@ impl Floors {
+         booked
+     }
+ 
+-    /// Whether a cell of Σ `sigma`, momentum `mom`, energy `energy` and fractions `x` is held after P8, given whether it
+-    /// was held before (§2.7 [M0-TG2]): the hold's test, or its release with the hysteresis.
+-    pub fn holds(&self, sigma: f64, mom: [f64; 2], energy: f64, x: &[f64; NS], was_held: bool) -> bool {
++    /// m_tov_sb as the hold reads it.
++    pub fn m_tov(&self) -> f64 {
++        self.m_tov
++    }
++
++    /// The mass of cell `i`'s disk r ≤ 4 (sinks.rs [`disk`], row-major, P3's mass test's sum), the hold's gate.
++    pub fn disk_mass(st: &State, i: usize) -> f64 {
++        disk(i % st.width, i / st.width, R_CORE, st.width, st.height).map(|c| st.planes[c]).sum()
++    }
++
++    /// Whether a cell of Σ `sigma`, momentum `mom`, energy `energy` and fractions `x`, whose disk r ≤ 4 holds `m_disk`, is
++    /// held after P8, given whether it was held before (§2.7 [M0-TG2], [M0-D71f], [M0-R13]; §0.5 [M0-T130]): the hold's
++    /// test, or its release with the hysteresis. The disk gate reads on both kinds alike, so no cell flickers at it.
++    pub fn holds(&self, sigma: f64, mom: [f64; 2], energy: f64, x: &[f64; NS], m_disk: f64, was_held: bool) -> bool {
+         let x = renormalised(x);
+         let comp = self.elements.composition(&x);
+         let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
+         let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
+-        let iron = x[ID_FE] > 0.0;
++        let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH) && m_disk < self.m_tov;
+         if was_held {
+-            !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || iron)
++            !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || !kind)
+         } else {
+-            sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && !iron
++            sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && kind
+         }
+     }
+ 
+@@ -180,7 +200,10 @@ impl Floors {
+                 continue;
+             }
+             let mom = [st.planes[n + i], st.planes[2 * n + i]];
+-            let now = self.holds(st.planes[i], mom, st.planes[3 * n + i], &raw, *h);
++            let sigma = st.planes[i];
++            // The disk is summed only where the gate can matter: under ½σ_hold no cell is held or kept.
++            let m_disk = if sigma >= 0.5 * SIGMA_HOLD { Self::disk_mass(st, i) } else { 0.0 };
++            let now = self.holds(sigma, mom, st.planes[3 * n + i], &raw, m_disk, *h);
+             if now && !*h {
+                 taken[0] += mom[0];
+                 taken[1] += mom[1];
+diff --git a/docs/agent/testing.md b/docs/agent/testing.md
+index 014877c..f3fc7c3 100644
+--- a/docs/agent/testing.md
++++ b/docs/agent/testing.md
+@@ -143,7 +143,7 @@ The calibration file and its hash: `crates/sr-physics/src/calibration.rs` (modul
+ | `calibrate_bisect` | `calibrate` items 3–4, the bisection driver and the items' sides, no GPU and no life run but the last case — every other run a stub (§2.11 items 3–4, §3.3, §6.4; M0-T68; M0-D60; M0-D72; M0-D75): `bash tests/gpu.sh calibrate_bisect physics`. `calibrate::bisect` on a stubbed outcome closes on a known threshold from five masses inside a 100–20,000 bracket within `BISECT_TOLERANCE` (the bracket ≤ 2 % wide, the value within 1 %, the threshold inside the final bracket), asks the bracket's low then high end first, stays inside it and spends the expected number of runs (a bracket already inside the tolerance spends 2); ends that agree (both Heavy, both Light) or run the wrong way round are refused after two runs naming `--bracket`; a failing run stops the bisection with its own error (exit 6) and no run after it; each item's side of a life (`side_ign`: ignition over, failed_star under · `side_up`: core collapse over, white_dwarf under · `side_bh`: black_hole over, neutron_star under, anything else refused); `measure` over a stub physics finds m_ign, m_up and m_bh within 1 % and logs one `SR-CALIBRATE run` line per run (mass, side, ending, steps, wall time; an unplaced run `side=none` and refused); `--bracket` outside one bisected item, a malformed or inverted bracket, `--max-steps 0`, a bad name in an `--only` list and `--only render_reserve_ms` are exit 4 before any GPU is touched; two short real lives (the nominal cloud and 1.02 × it, ignition ends each) keep their summary.json and events.jsonl under `build/calibrate_runs/` and no dump, name them with `record=` on their run lines and show `SR-CALIBRATE progress` lines, and a third cut at `--max-steps 64` is exit 6 naming its kept record; `--resume DIR` (M0-D72, on the same short lives) reads a finished invocation's lives back — resumed whole, both run lines say `replayed` and equal the unbroken ones, no progress line, same exit 6 — and after a cut during the second life (its record gone, or half-written) replays the first and runs only the second in the same folder; a record of another mass (at run 1 or run 2), another adapter or another item, and a folder that is not one, are exit 4 before any life runs; items 1–2 ignore the flag. M0-D74: the failed life's `progress.json` stays and says the terminal's last progress line's item, stage, step and `heat_unconverged` (a finished life's goes, no `.tmp` left); `capturing(true, …)` counts a life's `SR-WARN heat unconverged` lines and neither prints nor keeps them, every other line still said, `capturing(false, …)` says them all. M0-D75: `Threshold::until` is `CollapseOrEnding` for m_up_sb (`collapse|ending`, not parsed by `--until`), `IgnitionOrEnding` for m_ign_sb and `Ending` for m_bh_sb, and `Watch::holds` is true on a `core_collapse` or `ending` event, false on `ignition`, `supernova` and `sink_formed`; records `--resume` reads back (no GPU) side as they should whichever condition stopped them — one run to its ending (before M0-D75), one cut at the core collapse with no `ending` event, one showing a neutron star or a black hole without the event (all heavy), a white dwarf light, a collapse-less ending-less record refused; `--progress-every 16` gives a life a progress line each frame of 16 steps (the default 10,000 none in a short life) and `progress.json` says `progress_every`, items 1–2 ignore it, `0`, `-5`, a word, `1.5` and no value are exit 4 before any GPU; one real life seeded with a black hole (the observe scope's sink cloud, on the physics adapter) stops under `CollapseOrEnding` the frame it shows `black_hole` (`until.met`, no `ending`) where `Ending` runs on to the ending. The real lives (`m_ign_sb` 10 runs ≈ 139 s on the RTX 5090; `m_up_sb`, `m_bh_sb` whole lives) are not a scope: `calibrate --only <item> --adapter "RTX 5090"`, the lead's in M0-V9's window (`docs/agent/running.md` § Calibrating). M0-D77, `--checkpoint-every M` (apart from `--progress-every`) and `--resume` continuing a cut life: two real short lives — the unbroken invocation leaves no `checkpoint/`; the same cut at `--max-steps 130` with progress every 16 and a checkpoint every 48 keeps one whole pair `checkpoint/s_97.bin` + `.observers.json` (saves at the first frame boundary past each multiple, 49 and 97), progress lines 17, 33 … 129 and a progress.json `checkpoint_step` 97; `--resume` continues the first life from it (`SR-CALIBRATE continue … from step 97`, run line `continued from step 97`, no progress line at or before it, summary.json but for `wall_s` and events.jsonl byte for byte the unbroken life's, no checkpoint or progress.json left) and runs the second fresh; a continued life cut again says `continued_from_step` 97 and its new `checkpoint_step`, and carries the cut run's stage trail; a checkpoint of another mass, another physics_hash or adapter, a snapshot of version 1 (M0-D77's, before `x_h_max`, §0.5 [M0-D78]) or of another step beside its dump, a torn dump and a dump with no snapshot are not used (`SR-WARN checkpoint not used (…)`, the life runs from step 0), a torn newer pair leaves the older whole one; `--checkpoint-every` 0, a negative, a fraction, a word or no value is exit 4 before any GPU; a continued life whose restored state already met its `until` (the nominal cloud's ignition) ends at once, `until.met`, at the step it began. **M0-D80, one-step frames (§0.5 [M0-D80]):** `headless::one_step_next` reads the state alone — a step at P5's ceiling in the frame just run, or the heaviest object's raw stage `core_collapse` — never wall time (no GPU); a 16 × 16 iron block at Σ 400 (gravity on, hydro off, 64 × 64 bounce world; Y_e Σ 186 over Σ_N 160, so N_Fe converts it from the first step until the gate closes 22 steps on at §0.5 [M0-R10]'s rate — M0-D87, RTX 4090; ~60 on the capped sub-cycles before) under a progress hook ticking every 64: one-step frames from step 2, one tick a step, raw `core_collapse` through the stretch and not on its last tick, then frames of 16 ticking only on the 64-step grid; the same life cut at 30 (its ticks and events through 30 the unbroken life's) with a checkpoint every 20 (the snapshot's `one_step` true) and continued from `s_20`, the unbroken life's ticks after 20, summary.json but `wall_s` and events.jsonl; the m_ign life's progress lines end ` | raw=` and each is followed by its six rows (frame, star, core, centre, light, world; four named numbers each, ≤ 80 columns) and its progress.json carries the same keys; `calibrate::paint` (the terminal's colours) keeps the text once the codes are stripped, colours core_collapse, P5_ceil > 0 and L_N < 0 red and a one-step frame yellow, and leaves other lines plain. Plain `headless` frames are graded by `observe_run` and `dump`, which run without a hook. A collapse step of the iron block costs 0.6–3 s, ~all of it in P6's N_Fe (RTX 4090, laserax-ai-server, 2026-10-22; M0-R10): the case runs ~90 of them; the scope's timeout_s is 2,700 (set by M0-D80 when its red-arm's arms queued on one build target, the wait inside each arm's timeout: 7 of 12 timed out at 900 s; since M0-D108 its arms run one at a time, `arms_at_once` 1, so the timeout is each arm's own); M0-D95: a life's ending is its heaviest object's (§0.5 [M0-D95]) — `Watch::holds` false on an `ending` event alone, and a `--resume`d m_bh_sb record whose fragment ended neutron_star before the star ended black_hole sides heavy, the same record stopped on the fragment's ending alone exit 6, never light. | 19 | seconds (stubs) + ~25 s (3 short lives on the RTX 4080) + the resume case's 4 short lives + the tick's 3 and the seeded black hole's 2 + the iron block's ~2–3 min (builds aside) | `bisect-tolerance` (`BISECT_TOLERANCE` 0.02 → 0.2: the driver stops at 20 %) · `calibrate-record-removed` (the run's whole folder removed after it is read) · `calibrate-resume-any-mass` (`--resume` replays a record whatever its mass) · `calibrate-progress-wrong-stage` (progress.json's stage not the terminal's) · `calibrate-heat-warnings-printed` (a life's heat warnings counted and printed too) · `calibrate-up-until-ending` (m_up_sb's until left `Ending`) · `calibrate-progress-every-ignored` (`--progress-every` parsed, not passed to the lives) · `calibrate-checkpoint-without-observers` (the checkpoint loaded without `--continue`: the observers start over) · `calibrate-checkpoint-on-the-tick` (the checkpoint written on the progress tick, the two flags tied) · `calibrate-checkpoint-step-unchecked` (the pair's step check removed: a snapshot of another step used) · `continue-until-unchecked` (a continued life's restored `until` not read) · `calibrate-one-step-never` (`one_step_next` always false: one-step frames never engage) |
+ | `calibrate_order` | `calibrate` items 5–6, the order and the presets' lives, no GPU and no life run (§2.11 items 5–7, §1.8.2, §1.10.1, §3.3; M0-T70; [M0-D94]: the shipped c_sb against the fastest gas measured, plant `light-speed-200`): `bash tests/gpu.sh calibrate_order`. `calibrate::check_order` / `check_speed` / `measure_presets` on stubbed tables and lives, and `run_with` on a file under the shipped physics hash. Cases: each K9 inequality refused with its own message (exit 6), the ratio band's ends inside, sigma_bh against ns_sigma_max_sb, c_sb against twice the gas speed; the presets asked at `MassScale::to_sb` of 1, 15 and 40 Suns, each ending as promised; life_sun_sb, top_rung (two significant digits) and t_eff_sun_sb from the Sun-like life, T_eff off the scale refused; stage durations one pair a life, remnant stages left out wherever they come; life_sun_sb the start of the white dwarf the ending closes, not a transient bounce's (M0-D61); the order checked before any preset life; `--only render_reserve_ms` exit 4, item 7 kept across a re-run. The real lives (`calibrate --adapter "RTX 5090" --out assets/calibration.json`, hours) are the lead's, in M0-V9's window. Plants `calibrate-order-skip`, `calibrate-first-white-dwarf`. |
+ | `cold_core` | G-CORE, the cold ceiling holds (§5.1 [M0-R4], §1.4.1 K9, §2.3.2, §2.11 items 1–2; M0-T67): `bash tests/gpu.sh cold_core physics` (the case (d) run is on the physics adapter, R12). Cases: (a) the ring kernel gives the Maclaurin disk's potential within 1e-4; c_sheet from the test's own pure Π = KΣ^{3/2} solver within 1e-3 of 1.4331 at 100 and 200 annuli; the sequence M(10^k), k = 0…8, rises with every virial ≤ 1e-3 and `calibrate`'s m_ch_sb and m_tov_sb (read from the file it writes) are within 0.5 % of c_sheet K₂′²/G² (C/O, neutron), K9's order and band, ns_sigma_max_sb = m_tov_sb; (b) a fresh half-decade scan: an equilibrium at 0.95 m_ch_sb, none at 1.1; (c) the pure Σ² radius flat within 3 % over ¼, ½, 1 × m_ch_sb, falling on the full law; (d) scenes/cold_co_disk.json (rebuilt by `calibrate::cold_disk_scene`, a stale file refused — σ over f32's 2⁻²⁴ relative from the rebuild, the resolution of the planes the hold starts from: the f64 rebuild differs across boxes' libm, 4.1e-12 win-laptop against linux-pc's file, planes bit-identical, M0-D65 — `SR_WRITE_SCENES=1 bash tests/gpu.sh cold_core physics` rewrites it) holds R₉₀ within 3 % of its start over 10 τ_dyn on the GPU and the CPU twin (the same steps), GPU's final R₉₀ within 1 % of the twin's — the grid's statics and hydro, never the ceiling (no grid run reaches it). | 8 | ≈ 6 s the scope (linux-pc, RTX 5090, 2026-10-19) | `cold-exponent` (eos.rs's relativistic exponent 3/2 → 1.6: no ceiling), `cold-gpu-pressure` (eos.wgsl's cold pressure × 0.9: (d)), `cold-scene-moved` (one cell's σ in the file × (1 + 1e-7) — past 2⁻²⁴, under the planes' 1e-6: the stale refusal alone, M0-D65) |
+-| `held_core` | G-REST, the held core on the CPU twin and, since M0-D71c, the GPU (§2.7 [M0-TG2], §2.3.4 [M0-TG2], §1.4.2 [M0-TG2], §2.9's `held`, §5.1 G-REST, §0.5 [M0-D71]; M0-D71): `bash tests/gpu.sh held_core physics` (the twin's cases touch no adapter; the GPU's `gpu_…` run on the physics one, R12). P8's last act (`reference::floors`' `SIGMA_HOLD` 10, `ETA_HOLD` 0.1, `Floors::hold`) holds a cell at Σ ≥ σ_hold, ε_th ≤ η ε_cold and no iron (X_Fe = 0, §2.7 [M0-D71f]; the gate form, iron held while Y_eΣ ≤ Σ_N, froze the 20 M₀ life's iron clumps until M0-D152), releases it past 2η, under ½σ_hold or once X_Fe > 0, zeroes a newly held cell's momentum and books it; `Twin::new` writes the initial state's mask; P4 (`Hydro::step_held`, `step_forced` delegating with no mask) leaves a held cell as it is and returns what its momentum's flux differences and Σg·Δt would have been (`Twin::held`), held–held and held–edge faces carry nothing, a held–free face is a reflecting wall (HLL against the free face's mirror, mass, energy and species exactly 0, no work across); one-way inflow is not built (§0.5 [M0-D71]: 392.6 floor on the M 900 disk; M0-D71f). Cases: the SCF cold C/O disks (`calibrate::cold_disk_scene`, M 900 and 1,800, 64 × 64 bounce, gravity + hydro) over 10,000 steps — held momentum exactly 0, floor_added over steps 1,000–10,000 ≤ 10 (2.26, −6e-4), KE(10,000) ≤ 2 × KE(1,000) (155 → 154, 0 → 0), held counts 16 and 12 (M0-R11's), grid + held momentum printed only (`SR-HELD-CORE`); a 12 × 4 strip with a held column — the wall turns a free cell back, nothing crosses either way (dense gas driven in, gas drawn away), a uniform g's Δt g M booked, each with the column bit for bit and grid + held momentum to 1e-12; the hysteresis on hand-made C/O cells; item 1 (M0-D152) — cold iron under and past N_Fe's gate never held, nor C/O with X_Fe 1e-30, C/O beside it held and released once X_Fe 1e-4 appears. **The GPU (M0-D71c)** — hydro.wgsl reads P8's mask (`State::held`) as a `texture_2d<u32>` in all three dispatches: a held side's face is the free side's mirror in the face's one `hll`, `held_flux` keeps its momentum alone (nothing on held–held and held–edge faces), a face to a held cell does no work (its φ difference 0 in `face_work`); a held cell keeps Σ, E and species bit for bit and carries what it was spared (momentum flux differences, Δt·Σg) in its next momentum, which `hydro_commit` books into `booking.held` (`held.spared.mom_x`/`_y`, Pass::Hydro, TERMS' last two) and never writes; `hydro_edges` books nothing at a held edge cell. Cases `gpu_…`: both disks 10,000 steps on G-REST's bounds (RTX 4090: held 16 and 12, floor 2.34 and −6.2e-4, KE 155.45 → 154.07 and 0 → 0; held momentum 0 at every 50th step; grid + held printed — f32 per-cell `held` slots never cleared over 10,000 steps); each disk against the twin at step 200 (L1 Σ 3.2e-8 / 0, E 9.7e-7 / 1.8e-6, held sets equal); 64 × 64 strips, a cold C/O column held by the rule, one step against the twin — the wall turns the free cells back, nothing crosses (one column, two side by side), spared within 1e-3 of the twin's (1.6e-6), grid + held to 1e-6 of Σm|u| (3.1e-9); with P2 the wall's neighbours' E within 1e-5 of the twin's (1.2e-7; 4.0e-3 with work across, red-checked by M0-D71c) and the kick booked; a held edge cell in leave books no escaped slot; Clear + paint over a held core equals the step with the mask zeroed by hand (30 values off without P0's zeroing, red-checked); [M0-D149] the twin's held cells read the pull of all but the held cells (§1.4.2 [M0-D149], `Twin::pull`): a 32 × 32 world of held C/O cells books held exactly 0 where P2's whole field sums to ~1e-12 over it, a held 4 × 4 block beside a warm H square books the gas's pull, within 1e-9 of minus the block's pull on the gas (1.9e-11); [M0-D151] the GPU's too: P2 solves g_pull beside g (grav.wgsl's pull chain, gated by a flag `grav_rows_pull` sets where a cell is held; step/grav.rs `field`'s planes 3 and 4) and hydro.wgsl's held cells read it (`pull_at`) — the same world of held cells at 64 × 64 books held exactly 0 where P2's whole f32 field sums to (−0.016, 0.087) over it, the held block beside warm H books the twin's held within 1e-4 (1.1e-6); SR-HELD-REF's M 900 disk held (4.1e-4, 1.7e-4) at step 200 (P2's whole field: (0.0195, 0.0176)); **G-REST's window on the GPU** (M0-D71f): scenes/remnant_window.bin, the box (248, 144, 104, 104) of build/v9-sun-life/dumps/s_450000.bin at (12, 12) of a 128 × 128 world (the source's corner cell outside, the box record moved with it; checked against the cut where the git-ignored source is on disk, `SR_WRITE_SCENES=1` re-cuts it), `headless --scene preset:sun --load-dump … --edge leave --steps 10000` in-process — floor_added ≤ 15 % of radiated (3.85 %; halves 1.24 % and 45.95 % printed, the twin's 3.8 %), held > 0 at the end (37); **item 1 on the GPU** (M0-D152, floors.wgsl's `hold` in f32): the twin's item-1 cells in a 64 × 64 world of thin warm H, the masks the twin's (2 held, then 1) | 22 | ≈ 140 s warm (laserax-ai-server, RTX 4090, 2026-11-03; the twin's disks ≈ 35 s each, the window 34 s) | `held-wall-pressure-only` (the twin's held wall Π alone), `held-wall-gpu-pressure-only` (hydro.wgsl's held wall Π alone; the window 51.2 %, red by hand, M0-D71f), `held-core-own-pull` (the twin's held cells read P2's whole field), `held-core-gpu-whole-g` (hydro.wgsl's held cells read P2's whole g), `hold-iron-gate` (the gate form back on the twin and in floors.wgsl, M0-D152) |
++| `held_core` | G-REST, the held core on the CPU twin and, since M0-D71c, the GPU (§2.7 [M0-TG2], §2.3.4 [M0-TG2], §1.4.2 [M0-TG2], §2.9's `held`, §5.1 G-REST, §0.5 [M0-D71]; M0-D71): `bash tests/gpu.sh held_core physics` (the twin's cases touch no adapter; the GPU's `gpu_…` run on the physics one, R12). P8's last act (`reference::floors`' `SIGMA_HOLD` 10, `ETA_HOLD` 0.1, `Floors::hold`) holds a cell at Σ ≥ σ_hold, ε_th ≤ η ε_cold and no iron (X_Fe = 0, §2.7 [M0-D71f]; the gate form, iron held while Y_eΣ ≤ Σ_N, froze the 20 M₀ life's iron clumps until M0-D152), releases it past 2η, under ½σ_hold or once X_Fe > 0, zeroes a newly held cell's momentum and books it; `Twin::new` writes the initial state's mask; P4 (`Hydro::step_held`, `step_forced` delegating with no mask) leaves a held cell as it is and returns what its momentum's flux differences and Σg·Δt would have been (`Twin::held`), held–held and held–edge faces carry nothing, a held–free face is a reflecting wall (HLL against the free face's mirror, mass, energy and species exactly 0, no work across); one-way inflow is not built (§0.5 [M0-D71]: 392.6 floor on the M 900 disk; M0-D71f). Cases: the SCF cold C/O disks (`calibrate::cold_disk_scene`, M 900 and 1,800, 64 × 64 bounce, gravity + hydro) over 10,000 steps — held momentum exactly 0, floor_added over steps 1,000–10,000 ≤ 10 (2.26, −6e-4), KE(10,000) ≤ 2 × KE(1,000) (155 → 154, 0 → 0), held counts 16 and 12 (M0-R11's), grid + held momentum printed only (`SR-HELD-CORE`); a 12 × 4 strip with a held column — the wall turns a free cell back, nothing crosses either way (dense gas driven in, gas drawn away), a uniform g's Δt g M booked, each with the column bit for bit and grid + held momentum to 1e-12; the hysteresis on hand-made C/O cells; item 1 (M0-D152) — cold iron under and past N_Fe's gate never held, nor C/O with X_Fe 1e-30, C/O beside it held and released once X_Fe 1e-4 appears. **The GPU (M0-D71c)** — hydro.wgsl reads P8's mask (`State::held`) as a `texture_2d<u32>` in all three dispatches: a held side's face is the free side's mirror in the face's one `hll`, `held_flux` keeps its momentum alone (nothing on held–held and held–edge faces), a face to a held cell does no work (its φ difference 0 in `face_work`); a held cell keeps Σ, E and species bit for bit and carries what it was spared (momentum flux differences, Δt·Σg) in its next momentum, which `hydro_commit` books into `booking.held` (`held.spared.mom_x`/`_y`, Pass::Hydro, TERMS' last two) and never writes; `hydro_edges` books nothing at a held edge cell. Cases `gpu_…`: both disks 10,000 steps on G-REST's bounds (RTX 4090: held 16 and 12, floor 2.34 and −6.2e-4, KE 155.45 → 154.07 and 0 → 0; held momentum 0 at every 50th step; grid + held printed — f32 per-cell `held` slots never cleared over 10,000 steps); each disk against the twin at step 200 (L1 Σ 3.2e-8 / 0, E 9.7e-7 / 1.8e-6, held sets equal); 64 × 64 strips, a cold C/O column held by the rule, one step against the twin — the wall turns the free cells back, nothing crosses (one column, two side by side), spared within 1e-3 of the twin's (1.6e-6), grid + held to 1e-6 of Σm|u| (3.1e-9); with P2 the wall's neighbours' E within 1e-5 of the twin's (1.2e-7; 4.0e-3 with work across, red-checked by M0-D71c) and the kick booked; a held edge cell in leave books no escaped slot; Clear + paint over a held core equals the step with the mask zeroed by hand (30 values off without P0's zeroing, red-checked); [M0-D149] the twin's held cells read the pull of all but the held cells (§1.4.2 [M0-D149], `Twin::pull`): a 32 × 32 world of held C/O cells books held exactly 0 where P2's whole field sums to ~1e-12 over it, a held 4 × 4 block beside a warm H square books the gas's pull, within 1e-9 of minus the block's pull on the gas (1.9e-11); [M0-D151] the GPU's too: P2 solves g_pull beside g (grav.wgsl's pull chain, gated by a flag `grav_rows_pull` sets where a cell is held; step/grav.rs `field`'s planes 3 and 4) and hydro.wgsl's held cells read it (`pull_at`) — the same world of held cells at 64 × 64 books held exactly 0 where P2's whole f32 field sums to (−0.016, 0.087) over it, the held block beside warm H books the twin's held within 1e-4 (1.1e-6); SR-HELD-REF's M 900 disk held (4.1e-4, 1.7e-4) at step 200 (P2's whole field: (0.0195, 0.0176)); **G-REST's window on the GPU** (M0-D71f): scenes/remnant_window.bin, the box (248, 144, 104, 104) of build/v9-sun-life/dumps/s_450000.bin at (12, 12) of a 128 × 128 world (the source's corner cell outside, the box record moved with it; checked against the cut where the git-ignored source is on disk, `SR_WRITE_SCENES=1` re-cuts it), `headless --scene preset:sun --load-dump … --edge leave --steps 10000` in-process — floor_added ≤ 15 % of radiated (3.85 %; halves 1.24 % and 45.95 % printed, the twin's 3.8 %), held > 0 at the end (37); **item 1 on the GPU** (M0-D152, floors.wgsl's `hold` in f32): the twin's item-1 cells in a 64 × 64 world of thin warm H, the masks the twin's (2 held, then 1); **the neutron core** (M0-T130, §2.7 [M0-R13], §0.5 [M0-T130]: X_Fe = 0 or X_n ≥ 0.5, gated by the cell's disk r ≤ 4 against m_tov_sb — `Floors::disk_mass`, floors.wgsl's `disk_mass`, P3's disk and limit): four cold probes in a 64 × 64 world of thin warm H, warm H ballast setting each disk — neutron-rich (X_n 0.6, X_Fe 0.4) held at 0.95 m_tov_sb, never at 1.05, iron at X_n 0.4 never, a held one released once its disk crosses to 1.05 — on the twin and the GPU (masks [T, F, F, T] then [T, F, F, F]) | 24 | ≈ 140 s warm (laserax-ai-server, RTX 4090, 2026-11-03; the twin's disks ≈ 35 s each, the window 34 s) | `held-wall-pressure-only` (the twin's held wall Π alone), `held-wall-gpu-pressure-only` (hydro.wgsl's held wall Π alone; the window 51.2 %, red by hand, M0-D71f), `held-core-own-pull` (the twin's held cells read P2's whole field), `held-core-gpu-whole-g` (hydro.wgsl's held cells read P2's whole g), `hold-iron-gate` (the gate form back on the twin and in floors.wgsl, M0-D152; re-cut by M0-T130 onto the `kind` line), `neutron-hold-ungated` (the m_tov_sb gate dropped on the twin and in floors.wgsl — M0-R13's F, M0-T130) |
+ | `readouts` | G-READ, the real-equivalent translations, no GPU (§1.10.1–§1.10.3, §5.4; M0-T69): `bash tests/gpu.sh readouts` (the module sits in the one GPU binary, R11). Mass → Suns and temperature → kelvins, each a power law per segment (ln y straight in ln x) through the contract's anchors, on `Calibration::test_calibration` and the shipped physics.json: both maps strictly increasing (temperature from T_floor up, 10 K at and below it); every anchor exact to 10⁻⁹ and its inverse exact; a midpoint case per segment (the geometric mean of the real ends, never the linear one); the end segments extended (below M_ign, above M_BH, the O–Si segment above T_Si); the presets read 1, 15 and 40 Suns as the inverse translation; the Sun-like surface at t_eff_sun_sb through L = 2πRσT⁴ (σ = a_r c_sb / 4) reads 5,772 K within 1 %; a non-monotonic or non-positive anchor set is refused. The last case reads `assets/calibration.json` once M0-V9 writes it and prints `NOT PROVEN (no assets/calibration.json yet)` until then — the translations are not proven against a real calibration. | 9 | ≈ 4.4 s (linux-pc, RTX 5090, 2026-10-19) | `anchor-reverse` (the 8 and 25 Suns anchors swapped: the map is refused, 7 of 9 red) |
+ | `views` | §1.11, §1.10.2, §1.8.3, §4.11 (M0-T80), on the physics adapter: `bash tests/gpu.sh views physics` — `Renderer::render` (render.rs, shaders/render.wgsl) writes the 64 × 64 RGBA8 image of Glow, Heat, Element or Density, each channel within 1/255 of a CPU formula written in the test from the contract's text (§4.11's hex stops, §1.5's colours, the cell's f32 values through the EOS and `TempScale` in f64): a gentle world (Σ ≤ 0.25, T 0.08–30) for Glow and Heat, a wide one (Σ to 10⁴, ten species) for Element and Density, 4,096 cells each; the heat stops at T_K = 10^1 … 10^10 and the density stops at Σ = 10^−6 … 10^4 reading §4.11's colours; each map's midpoint (heat, density, element) the linear-RGB mean of its two stops, apart from the sRGB mean by more than 2 levels; every view bg.space #05070D below Σ_vac (M0-D113: the floor state and a cell at Σ 10⁻⁷), a cell just above Σ_vac its view's formula; temperatures past T_Si extended; α = 1 and α = 0 bit for bit the current and the previous state, α = ¼ and ½ against the formula on the mixed state. [M0-T126] the display settings (`Renderer::set_display`, `Display`: the Glow setting S and the Heat and Density ranges; §1.11 [M0-R12]): S = 3,000 K the image today's on every cell and the default handed back after another setting bit for bit today's; the Glow image at S = 10³, 10⁵, 10⁷ and 10⁹ K, and two Heat and two Density ranges, within 1/255 of the formula (D the asinh dimming of the visible luminance Y(T), the table's Planck × ȳ); and the contract's bound on a strip of T 10³–10¹¹ K at five settings, read on the GPU's drawn values (no colour with its brightest channel ≥ 16/255 has CIE x above max(x of the table's colour at T, 0.3127) + 0.005); the cell image, glow-less, so the glow is unchanged (the dimming's own unit tests are `blackbody`'s). Synthetic worlds: a star's image is NOT PROVEN (synthetic); the Glow view's glow is `glow`'s (M0-T81; `views` draws `Renderer::render_cells`, the cell image alone); the GPU cost of the settings (`bench`'s Glow frame_ms before and after) is NOT RUN (no `bench` yet). | 15 | ≈ 7.3 s (linux-pc, RTX 5090, 2026-10-29, 11 cases) · M0-T126's 15 cases within `--changed`'s 57 scopes, laserax-ai-server not re-timed here | `views-heat-linear` (the heat map read over T_K, not log₁₀ T_K), `views-vacuum-black` (vacuum back to each view's formula), `views-glow-setting-ignored` (S held at 3,000 K; 2 failed), `views-colour-shift` (the colour read at T · 3,000 / S; 2 failed) — `--redarm` 4 plants RED, 171 s (laserax-ai, M0-T126) |
+ | `extents` | §1.11 [M0-R12] (M0-T127a), on the physics adapter: `bash tests/gpu.sh extents physics` — `Renderer::fit_range` (render.rs, shaders/render.wgsl `extent_bins`) bins the Heat view's log₁₀ T_K (1–10) or the Density view's log₁₀ Σ (−6–4) of the cells with Σ ≥ Σ_vac into 1,024 bins by atomics, read back once; `extent_from_bins` turns them into L (lower edge of the 0.5th percentile's bin), H (upper edge of the highest non-empty bin), widened to 0.1 about the middle and slid inside the span, `None` with no matter. 72 × 64 hand-made worlds against a CPU histogram written in the test (sorted quantities, f64 EOS and TempScale): a star-like disk over vacuum (Heat and Density, asked twice), a one-cell world, an empty world and a world below Σ_vac, matter past the span (end bin), the extreme cell in the last row and column, the half percentile's rank (23 of 4,608 ignored, 24 count), `extent_from_bins` on hand-written bins. Cells sit at bin centres, so edges-vs-centres and off-by-one-bin readings fail. Synthetic worlds: a star's own extent is NOT PROVEN (synthetic). | 7 | ≈ 3.7 s (linux-pc, RTX 5090, 2026-11-01) | `extents-vacuum-counted` (the Σ_vac test dropped from the histogram pass; 4 failed) |
+diff --git a/tests/plants/hold-iron-gate.patch b/tests/plants/hold-iron-gate.patch
+index fe54fd3..164d8c8 100644
+--- a/tests/plants/hold-iron-gate.patch
++++ b/tests/plants/hold-iron-gate.patch
+@@ -1,22 +1,22 @@
+ --- a/crates/sr-physics/src/reference/floors.rs
+ +++ b/crates/sr-physics/src/reference/floors.rs
+-@@ -160,7 +160,7 @@
++@@ -180,7 +180,7 @@
+          let comp = self.elements.composition(&x);
+          let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
+          let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
+--        let iron = x[ID_FE] > 0.0;
+-+        let iron = x[ID_FE] > 0.0 && comp.y_e * sigma > 160.0; // planted: the gate form back, iron held while Y_eΣ ≤ Σ_N
++-        let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH) && m_disk < self.m_tov;
+++        let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH || comp.y_e * sigma <= 160.0) && m_disk < self.m_tov; // planted: the gate form back, iron held while Y_eΣ ≤ Σ_N
+          if was_held {
+-             !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || iron)
++             !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || !kind)
+          } else {
+ --- a/crates/sr-engine/shaders/floors.wgsl
+ +++ b/crates/sr-engine/shaders/floors.wgsl
+-@@ -176,7 +176,7 @@
+-     let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
+-     let cold = eps_cold(sigma, comp.y_e, x[ID_N]);
+-     let eps_th = hydro[3u * n + cell] / sigma - 0.5 * dot(mom / sigma, mom / sigma) - cold;
+--    let iron = x[ID_FE] > 0.0;
+-+    let iron = x[ID_FE] > 0.0 && comp.y_e * sigma > 160.0; // planted: the gate form back
++@@ -202,7 +202,7 @@
++     if (sigma >= 0.5 * hold_params.sigma_hold) {
++         m_disk = disk_mass(xy);
++     }
++-    let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH) && m_disk < hold_params.m_tov;
+++    let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH || comp.y_e * sigma <= 160.0) && m_disk < hold_params.m_tov; // planted: the gate form back
+      let was = textureLoad(held, xy).x != 0u;
+      var now: bool;
+      if (was) {
+diff --git a/tools/pb/verify.json b/tools/pb/verify.json
+index b154099..627e550 100644
+--- a/tools/pb/verify.json
++++ b/tools/pb/verify.json
+@@ -2372,11 +2372,11 @@
+       ]
+     },
+     "held_core": {
+-      "desc": "G-REST, the held core on the CPU twin and the GPU (contract §2.7 [M0-TG2], §2.3.4 [M0-TG2], §1.4.2 [M0-TG2], §2.9's held, §5.1 G-REST, §0.5 [M0-D71]; M0-D71, M0-R11's H, reports/unresolved_remnant.md): P8's hold (sr_physics::reference::floors::{SIGMA_HOLD 10, ETA_HOLD 0.1}, Floors::hold, after the floors) — held at Σ ≥ σ_hold, ε_th ≤ η ε_cold and no iron (X_Fe = 0, §2.7 [M0-D71f], M0-D152), released past 2η, under ½σ_hold or once X_Fe > 0, a newly held cell's momentum zeroed and booked; P4's held cells (Hydro::step_held, step_forced delegating with no mask): no momentum flux difference, gravity source or radiation force, what they would have given booked `held` (Twin::held beside booked); held–held and held–edge faces carry nothing; a held–free face is a reflecting wall, HLL against the free face's mirror with mass, energy and species exactly 0, no work across it; no inflow (item 2 moved to M0-D71f, §0.5 [M0-D71]). Cases: calibrate::cold_disk_scene's SCF cold C/O disks at M 900 and 1,800 (shipped K's, 64 × 64 bounce, gravity + hydro), 10,000 steps — every held cell's momentum exactly 0 after every step, floor_added over steps 1,000–10,000 ≤ 10 (measured 2.26 and −6e-4), KE(10,000) ≤ 2 × KE(1,000) (155 → 154, 0 → 0), held counts printed against M0-R11's 16 and 12 (measured 16, 12), grid + held momentum printed, not graded (§0.5 [M0-D71]); a 12 × 4 bounce strip with a held column: a free cell driven into it turned back (Δp < 0; Π alone pushes it on), the column's Σ, E and X bit for bit, grid + held momentum to 1e-12; dense gas driven in (the ordinary flux inward) and gas drawn away — nothing crosses either way, momentum to 1e-12; the strip at rest in a uniform g — grid + held gains Δt g M to 1e-12 (a held cell's missed Σg is 65 % of it); the hysteresis on hand-made C/O cells through Floors::apply then hold; item 1 (M0-D152): cold iron under and past N_Fe's gate never held, nor C/O with X_Fe 1e-30, C/O beside it held and released once X_Fe 1e-4 appears. The GPU (M0-D71c; hydro.wgsl reads P8's mask, State::held, as a sampled texture in hydro_update, hydro_edges and hydro_commit; a held side's face is the free side's mirror in the face's one hll, held_flux keeps its momentum alone; a face to a held cell does no work; a held cell keeps its Σ, E and species, carries what it was spared — momentum flux differences and Δt·Σg — in its next momentum, which hydro_commit books into booking.held (held.spared.mom_x/y, P4's) and never writes; hydro_edges books nothing at a held edge cell), on the physics adapter: both disks 10,000 steps on G-REST's bounds (held momentum 0 at every 50th step; grid + held printed), each against the twin at step 200 (Σ, E relative L1 ≤ 1e-3, the held set the same); 64 × 64 strips with a cold C/O column held by the rule, one step against the twin — the wall turns the free cells back, nothing crosses either way (one column and two side by side), the columns' Σ, E, X bit for bit and momentum 0, the spared momentum the twin's within 1e-3, grid + held to 1e-6 of Σm|u|; with P2 the wall's free neighbours' E the twin's within 1e-5 (no work across it) and the kick booked as the twin's; a held edge cell in leave books no escaped slot; a Clear and a paint over a held core in one step equal the same step with the mask zeroed by hand (P0's zeroing, M0-D71b's flag). held-wall-pressure-only gives the held wall §2.8's bounce flux, Π alone (the strip's free cell pushed on; M0-R11: the M 900 disk to KE 5e6); held-wall-gpu-pressure-only gives hydro.wgsl's held wall the same (the GPU strip's free cells pushed on). [M0-D149] A held cell's Σg·Δt reads the field of all but the held cells (§1.4.2 [M0-D149]; Twin's `pull`, step_held's `pull`), so the core's own pull is never booked: a 32 × 32 world of held C/O cells (Σ 20–30, uneven) books held exactly 0 over a step where P2's whole field sums to ~1e-12 over it; a held 4 × 4 block beside a 6 × 6 warm H square books the gas's pull toward it, within 1e-9 of minus the block's pull on the gas (third law; measured 1.9e-11). held-core-own-pull reads P2's whole field for the held cells again (the world of held cells books ~1e-12). [M0-D151] The GPU: P2 solves g_pull beside g (grav.wgsl's pull chain — grav_rows_pull empties the held cells, State::held, and sets a flag; its columns, inverse and grav_gradient_pull run while the flag is set; g_pull in step/grav.rs field's planes 3 and 4, the sinks' pull added by grav_sinks) and hydro.wgsl's held cells read it (pull_at): the same world of held cells on the GPU books held exactly 0 where P2's whole f32 field summed over it is not; the held block beside warm gas books the twin's held within 1e-4. held-core-gpu-whole-g reads P2's whole g for hydro.wgsl's held cells again (the world of held cells books its f32 rounding) M0-D71f (G-REST's window on the GPU, §5.1 [M0-TG2]): scenes/remnant_window.bin — the box (248, 144, 104, 104) of build/v9-sun-life/dumps/s_450000.bin at (12, 12) of a 128 × 128 world, every plane cropped, the source's corner cell (vacuum) outside, the active box record moved with it — checked against the cut where the source is on disk (stale fails; SR_WRITE_SCENES=1 re-cuts it, an absent source read as is); `headless --scene preset:sun --load-dump … --edge leave --steps 10000 --dump-every 5000` in-process: floor_added ≤ 15 % of radiated over the 10,000 steps, both halves printed (RTX 4090: 3.85 %, 1.24 % and 45.95 %; the twin's 3.8 %), held > 0 at the end (37). M0-D152 (item 1 on the GPU, floors.wgsl's hold in f32): the twin's item-1 cells in a 64 × 64 world of thin warm H — the masks the twin's, 2 then 1 held. hold-iron-gate puts the gate form back on the twin and in floors.wgsl (iron held while Y_eΣ ≤ Σ_N, M0-D71f's).",
++      "desc": "G-REST, the held core on the CPU twin and the GPU (contract §2.7 [M0-TG2], §2.3.4 [M0-TG2], §1.4.2 [M0-TG2], §2.9's held, §5.1 G-REST, §0.5 [M0-D71]; M0-D71, M0-R11's H, reports/unresolved_remnant.md): P8's hold (sr_physics::reference::floors::{SIGMA_HOLD 10, ETA_HOLD 0.1}, Floors::hold, after the floors) — held at Σ ≥ σ_hold, ε_th ≤ η ε_cold and no iron (X_Fe = 0, §2.7 [M0-D71f], M0-D152), released past 2η, under ½σ_hold or once X_Fe > 0, a newly held cell's momentum zeroed and booked; P4's held cells (Hydro::step_held, step_forced delegating with no mask): no momentum flux difference, gravity source or radiation force, what they would have given booked `held` (Twin::held beside booked); held–held and held–edge faces carry nothing; a held–free face is a reflecting wall, HLL against the free face's mirror with mass, energy and species exactly 0, no work across it; no inflow (item 2 moved to M0-D71f, §0.5 [M0-D71]). Cases: calibrate::cold_disk_scene's SCF cold C/O disks at M 900 and 1,800 (shipped K's, 64 × 64 bounce, gravity + hydro), 10,000 steps — every held cell's momentum exactly 0 after every step, floor_added over steps 1,000–10,000 ≤ 10 (measured 2.26 and −6e-4), KE(10,000) ≤ 2 × KE(1,000) (155 → 154, 0 → 0), held counts printed against M0-R11's 16 and 12 (measured 16, 12), grid + held momentum printed, not graded (§0.5 [M0-D71]); a 12 × 4 bounce strip with a held column: a free cell driven into it turned back (Δp < 0; Π alone pushes it on), the column's Σ, E and X bit for bit, grid + held momentum to 1e-12; dense gas driven in (the ordinary flux inward) and gas drawn away — nothing crosses either way, momentum to 1e-12; the strip at rest in a uniform g — grid + held gains Δt g M to 1e-12 (a held cell's missed Σg is 65 % of it); the hysteresis on hand-made C/O cells through Floors::apply then hold; item 1 (M0-D152): cold iron under and past N_Fe's gate never held, nor C/O with X_Fe 1e-30, C/O beside it held and released once X_Fe 1e-4 appears. The GPU (M0-D71c; hydro.wgsl reads P8's mask, State::held, as a sampled texture in hydro_update, hydro_edges and hydro_commit; a held side's face is the free side's mirror in the face's one hll, held_flux keeps its momentum alone; a face to a held cell does no work; a held cell keeps its Σ, E and species, carries what it was spared — momentum flux differences and Δt·Σg — in its next momentum, which hydro_commit books into booking.held (held.spared.mom_x/y, P4's) and never writes; hydro_edges books nothing at a held edge cell), on the physics adapter: both disks 10,000 steps on G-REST's bounds (held momentum 0 at every 50th step; grid + held printed), each against the twin at step 200 (Σ, E relative L1 ≤ 1e-3, the held set the same); 64 × 64 strips with a cold C/O column held by the rule, one step against the twin — the wall turns the free cells back, nothing crosses either way (one column and two side by side), the columns' Σ, E, X bit for bit and momentum 0, the spared momentum the twin's within 1e-3, grid + held to 1e-6 of Σm|u|; with P2 the wall's free neighbours' E the twin's within 1e-5 (no work across it) and the kick booked as the twin's; a held edge cell in leave books no escaped slot; a Clear and a paint over a held core in one step equal the same step with the mask zeroed by hand (P0's zeroing, M0-D71b's flag). held-wall-pressure-only gives the held wall §2.8's bounce flux, Π alone (the strip's free cell pushed on; M0-R11: the M 900 disk to KE 5e6); held-wall-gpu-pressure-only gives hydro.wgsl's held wall the same (the GPU strip's free cells pushed on). [M0-D149] A held cell's Σg·Δt reads the field of all but the held cells (§1.4.2 [M0-D149]; Twin's `pull`, step_held's `pull`), so the core's own pull is never booked: a 32 × 32 world of held C/O cells (Σ 20–30, uneven) books held exactly 0 over a step where P2's whole field sums to ~1e-12 over it; a held 4 × 4 block beside a 6 × 6 warm H square books the gas's pull toward it, within 1e-9 of minus the block's pull on the gas (third law; measured 1.9e-11). held-core-own-pull reads P2's whole field for the held cells again (the world of held cells books ~1e-12). [M0-D151] The GPU: P2 solves g_pull beside g (grav.wgsl's pull chain — grav_rows_pull empties the held cells, State::held, and sets a flag; its columns, inverse and grav_gradient_pull run while the flag is set; g_pull in step/grav.rs field's planes 3 and 4, the sinks' pull added by grav_sinks) and hydro.wgsl's held cells read it (pull_at): the same world of held cells on the GPU books held exactly 0 where P2's whole f32 field summed over it is not; the held block beside warm gas books the twin's held within 1e-4. held-core-gpu-whole-g reads P2's whole g for hydro.wgsl's held cells again (the world of held cells books its f32 rounding) M0-D71f (G-REST's window on the GPU, §5.1 [M0-TG2]): scenes/remnant_window.bin — the box (248, 144, 104, 104) of build/v9-sun-life/dumps/s_450000.bin at (12, 12) of a 128 × 128 world, every plane cropped, the source's corner cell (vacuum) outside, the active box record moved with it — checked against the cut where the source is on disk (stale fails; SR_WRITE_SCENES=1 re-cuts it, an absent source read as is); `headless --scene preset:sun --load-dump … --edge leave --steps 10000 --dump-every 5000` in-process: floor_added ≤ 15 % of radiated over the 10,000 steps, both halves printed (RTX 4090: 3.85 %, 1.24 % and 45.95 %; the twin's 3.8 %), held > 0 at the end (37). M0-D152 (item 1 on the GPU, floors.wgsl's hold in f32): the twin's item-1 cells in a 64 × 64 world of thin warm H — the masks the twin's, 2 then 1 held. hold-iron-gate puts the gate form back on the twin and in floors.wgsl (iron held while Y_eΣ ≤ Σ_N, M0-D71f's; re-cut by M0-T130 onto its `kind` line). M0-T130 (§2.7 [M0-R13], §0.5 [M0-T130]: the neutron core held, gated by its disk r ≤ 4 against m_tov_sb — Floors::disk_mass, sinks' disk and m_tov_sb; floors.wgsl's disk_mass and Hold's m_tov and r_core): a cell is held when X_Fe = 0 or X_n ≥ 0.5, its disk under m_tov_sb, and released once X_Fe > 0 with X_n < 0.5 or its disk holds m_tov_sb — four cold probes in a 64 × 64 world of thin warm H, each centre's 8 neighbours warm H ballast setting its disk: neutron-rich (X_n 0.6, X_Fe 0.4) at 0.95 m_tov_sb held, at 1.05 never held, iron at X_n 0.4 never held, neutron-rich at 0.95 then crossed to 1.05 released — the twin through Floors::apply then hold, the GPU one step each side (masks [T, F, F, T] then [T, F, F, F], 2 then 1 held). neutron-hold-ungated drops the m_tov_sb gate on the twin and in floors.wgsl (M0-R13's F: the 1.05 probe held, the crossed one kept).",
+       "cmd": "bash tests/gpu.sh held_core physics",
+       "parse": "regex",
+       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+-      "expected": 22,
++      "expected": 24,
+       "timeout_s": 900,
+       "arms_at_once": 1,
+       "paths": [
+@@ -2394,6 +2394,7 @@
+         "tests/plants/held-core-own-pull.patch",
+         "tests/plants/held-core-gpu-whole-g.patch",
+         "tests/plants/hold-iron-gate.patch",
++        "tests/plants/neutron-hold-ungated.patch",
+         "scenes/remnant_window.bin"
+       ],
+       "plants": [
+@@ -2416,6 +2417,10 @@
+         {
+           "id": "hold-iron-gate",
+           "patch": "tests/plants/hold-iron-gate.patch"
++        },
++        {
++          "id": "neutron-hold-ungated",
++          "patch": "tests/plants/neutron-hold-ungated.patch"
+         }
+       ]
+     },
+diff --git a/tests/plants/neutron-hold-ungated.patch b/tests/plants/neutron-hold-ungated.patch
+new file mode 100644
+index 0000000..8a27a6d
+--- /dev/null
++++ b/tests/plants/neutron-hold-ungated.patch
+@@ -0,0 +1,22 @@
++--- a/crates/sr-physics/src/reference/floors.rs
+++++ b/crates/sr-physics/src/reference/floors.rs
++@@ -180,7 +180,7 @@
++         let comp = self.elements.composition(&x);
++         let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
++         let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
++-        let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH) && m_disk < self.m_tov;
+++        let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH) || m_disk < 0.0; // planted: the m_tov_sb gate dropped (M0-R13's F)
++         if was_held {
++             !(eps_th > 2.0 * ETA_HOLD * cold || sigma < 0.5 * SIGMA_HOLD || !kind)
++         } else {
++--- a/crates/sr-engine/shaders/floors.wgsl
+++++ b/crates/sr-engine/shaders/floors.wgsl
++@@ -202,7 +202,7 @@
++     if (sigma >= 0.5 * hold_params.sigma_hold) {
++         m_disk = disk_mass(xy);
++     }
++-    let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH) && m_disk < hold_params.m_tov;
+++    let kind = (x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH) || m_disk < 0.0; // planted: the m_tov_sb gate dropped
++     let was = textureLoad(held, xy).x != 0u;
++     var now: bool;
++     if (was) {

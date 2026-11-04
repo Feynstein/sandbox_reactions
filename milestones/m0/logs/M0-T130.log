@@ -1,0 +1,552 @@
+# M0-T130 log — opened 2026-11-03T18:55:53-05:00 on linux-pc (laserax-ai); GPU and lives on laserax-ai-server (R18)
+## The gate's mass, read before anything else (the Adversarial) — scratch reader t130obj (build/r13/w/crates/sr-engine/examples/t130obj.rs on laserax-ai-server, never in the tree) over M0-R13's dumps, RTX 4090 lives
+## M_obj: §1.9.2's form on the CPU (4×4 blocks with a cell Σ ≥ 1e-3, 8-connected, about the max-Σ cell, + sinks inside); M_core4: P3's disk r ≤ 4 about the max-Σ cell; clusters: 8-connected Σ ≥ 10 cells
+## Massive, today's tree: build/r13/a (to step 2,000) and build/r13/b (to the ending, 29,208); F: build/r13/cF_2; the 20 M0 Repro: /tmp/d152/repro (M0-D152)
+== ../a
+step 20 t 0.407 M_obj 6677.2 (sink 0.0, blocks 732) M_world 6677.2 M_core4 49.6 Sc 1.0 R90 19.00 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 40 t 0.772 M_obj 6677.2 (sink 0.0, blocks 796) M_world 6677.2 M_core4 51.2 Sc 1.0 R90 19.00 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 60 t 1.131 M_obj 6677.2 (sink 0.0, blocks 856) M_world 6677.2 M_core4 54.1 Sc 1.1 R90 19.00 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 80 t 1.487 M_obj 6677.2 (sink 0.0, blocks 944) M_world 6677.2 M_core4 58.5 Sc 1.2 R90 19.00 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 100 t 1.839 M_obj 6677.0 (sink 0.0, blocks 1004) M_world 6677.2 M_core4 65.1 Sc 1.3 R90 18.97 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 120 t 2.186 M_obj 6676.7 (sink 0.0, blocks 1052) M_world 6677.2 M_core4 74.8 Sc 1.5 R90 18.97 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 140 t 2.504 M_obj 6676.5 (sink 0.0, blocks 1104) M_world 6677.2 M_core4 88.7 Sc 1.8 R90 18.97 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 160 t 2.794 M_obj 6676.2 (sink 0.0, blocks 1136) M_world 6677.2 M_core4 108.4 Sc 2.2 R90 18.87 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 180 t 3.058 M_obj 6676.0 (sink 0.0, blocks 1168) M_world 6677.2 M_core4 137.8 Sc 2.8 R90 18.68 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 200 t 3.298 M_obj 6675.6 (sink 0.0, blocks 1176) M_world 6677.2 M_core4 183.4 Sc 3.8 R90 18.44 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 220 t 3.516 M_obj 6675.5 (sink 0.0, blocks 1200) M_world 6677.2 M_core4 256.5 Sc 5.4 R90 18.25 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 240 t 3.712 M_obj 6675.3 (sink 0.0, blocks 1208) M_world 6677.2 M_core4 369.5 Sc 7.9 R90 17.89 Xn_c 0.000 XFe_c 0.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 260 t 3.889 M_obj 6675.0 (sink 0.0, blocks 1208) M_world 6677.2 M_core4 508.4 Sc 11.1 R90 17.26 Xn_c 0.000 XFe_c 1.000 n10 36 n10_Xn 0 held 0 sinks 0
+step 280 t 4.016 M_obj 6674.8 (sink 0.0, blocks 1233) M_world 6677.2 M_core4 372.3 Sc 8.9 R90 17.72 Xn_c 0.000 XFe_c 1.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 300 t 4.159 M_obj 6674.6 (sink 0.0, blocks 1291) M_world 6677.2 M_core4 327.9 Sc 8.4 R90 18.03 Xn_c 0.000 XFe_c 1.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 320 t 4.303 M_obj 6674.5 (sink 0.0, blocks 1354) M_world 6677.2 M_core4 308.3 Sc 7.9 R90 18.38 Xn_c 0.000 XFe_c 1.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 340 t 4.447 M_obj 6674.3 (sink 0.0, blocks 1413) M_world 6677.2 M_core4 301.8 Sc 7.7 R90 18.44 Xn_c 0.000 XFe_c 1.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 360 t 4.591 M_obj 6674.3 (sink 0.0, blocks 1499) M_world 6677.2 M_core4 305.7 Sc 7.5 R90 18.44 Xn_c 0.000 XFe_c 1.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 380 t 4.736 M_obj 6674.0 (sink 0.0, blocks 1554) M_world 6677.2 M_core4 328.6 Sc 7.9 R90 18.60 Xn_c 0.000 XFe_c 1.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 400 t 4.880 M_obj 6673.6 (sink 0.0, blocks 1609) M_world 6677.2 M_core4 362.3 Sc 9.3 R90 18.68 Xn_c 0.000 XFe_c 1.000 n10 0 n10_Xn 0 held 0 sinks 0
+step 420 t 5.022 M_obj 6673.6 (sink 0.0, blocks 1694) M_world 6677.2 M_core4 418.2 Sc 11.9 R90 18.79 Xn_c 0.000 XFe_c 1.000 n10 78 n10_Xn 0 held 0 sinks 0
+step 440 t 5.162 M_obj 6673.2 (sink 0.0, blocks 1758) M_world 6677.2 M_core4 489.4 Sc 15.1 R90 18.60 Xn_c 0.000 XFe_c 1.000 n10 196 n10_Xn 0 held 0 sinks 0
+step 460 t 5.297 M_obj 6673.3 (sink 0.0, blocks 1852) M_world 6677.1 M_core4 572.1 Sc 19.1 R90 17.89 Xn_c 0.000 XFe_c 1.000 n10 212 n10_Xn 0 held 0 sinks 0
+step 480 t 5.425 M_obj 6672.8 (sink 0.0, blocks 1906) M_world 6677.1 M_core4 659.7 Sc 22.6 R90 16.76 Xn_c 0.000 XFe_c 1.000 n10 212 n10_Xn 0 held 0 sinks 0
+step 500 t 5.547 M_obj 6672.9 (sink 0.0, blocks 2011) M_world 6677.1 M_core4 773.0 Sc 23.4 R90 15.13 Xn_c 0.000 XFe_c 1.000 n10 204 n10_Xn 0 held 0 sinks 0
+step 520 t 5.666 M_obj 6672.6 (sink 0.0, blocks 2082) M_world 6677.1 M_core4 999.7 Sc 27.7 R90 13.04 Xn_c 0.000 XFe_c 1.000 n10 208 n10_Xn 0 held 0 sinks 0
+step 540 t 5.776 M_obj 6672.6 (sink 0.0, blocks 2184) M_world 6677.1 M_core4 1400.6 Sc 41.1 R90 11.18 Xn_c 0.000 XFe_c 1.000 n10 202 n10_Xn 0 held 0 sinks 0
+step 560 t 5.888 M_obj 6672.1 (sink 0.0, blocks 2268) M_world 6677.1 M_core4 1267.0 Sc 32.8 R90 11.18 Xn_c 0.000 XFe_c 1.000 n10 216 n10_Xn 0 held 0 sinks 0
+step 580 t 6.004 M_obj 6672.2 (sink 0.0, blocks 2400) M_world 6677.1 M_core4 1315.6 Sc 32.9 R90 11.18 Xn_c 0.000 XFe_c 1.000 n10 224 n10_Xn 0 held 0 sinks 0
+step 600 t 6.122 M_obj 6672.1 (sink 0.0, blocks 2534) M_world 6677.1 M_core4 1674.4 Sc 43.3 R90 10.77 Xn_c 0.000 XFe_c 1.000 n10 184 n10_Xn 0 held 0 sinks 0
+step 620 t 6.235 M_obj 6671.7 (sink 0.0, blocks 2634) M_world 6677.1 M_core4 2354.0 Sc 86.9 R90 10.00 Xn_c 0.000 XFe_c 1.000 n10 144 n10_Xn 0 held 0 sinks 0
+step 640 t 6.340 M_obj 6671.8 (sink 0.0, blocks 2779) M_world 6677.1 M_core4 2484.8 Sc 89.7 R90 10.00 Xn_c 0.000 XFe_c 1.000 n10 140 n10_Xn 0 held 0 sinks 0
+step 660 t 6.448 M_obj 6671.7 (sink 0.0, blocks 2929) M_world 6677.1 M_core4 2545.6 Sc 92.9 R90 10.20 Xn_c 0.000 XFe_c 1.000 n10 120 n10_Xn 0 held 0 sinks 0
+step 680 t 6.556 M_obj 6671.1 (sink 0.0, blocks 3045) M_world 6677.1 M_core4 2903.2 Sc 130.2 R90 10.20 Xn_c 0.000 XFe_c 1.000 n10 104 n10_Xn 0 held 0 sinks 0
+step 700 t 6.659 M_obj 6671.2 (sink 0.0, blocks 3213) M_world 6677.1 M_core4 3066.1 Sc 135.8 R90 10.30 Xn_c 0.000 XFe_c 1.000 n10 88 n10_Xn 0 held 0 sinks 0
+step 720 t 6.762 M_obj 6671.2 (sink 0.0, blocks 3384) M_world 6677.1 M_core4 3235.1 Sc 155.5 R90 10.77 Xn_c 0.000 XFe_c 1.000 n10 88 n10_Xn 0 held 0 sinks 0
+step 740 t 6.864 M_obj 6671.3 (sink 0.0, blocks 3569) M_world 6677.1 M_core4 3417.7 Sc 172.6 R90 11.05 Xn_c 0.000 XFe_c 1.000 n10 64 n10_Xn 0 held 0 sinks 0
+step 760 t 6.965 M_obj 6670.9 (sink 0.0, blocks 3729) M_world 6677.1 M_core4 3566.0 Sc 188.7 R90 11.40 Xn_c 0.000 XFe_c 1.000 n10 60 n10_Xn 0 held 0 sinks 0
+step 780 t 7.066 M_obj 6670.9 (sink 0.0, blocks 3919) M_world 6677.0 M_core4 3713.2 Sc 207.2 R90 12.00 Xn_c 0.000 XFe_c 1.000 n10 60 n10_Xn 0 held 0 sinks 0
+step 800 t 7.165 M_obj 6670.7 (sink 0.0, blocks 4107) M_world 6677.0 M_core4 3847.9 Sc 224.3 R90 12.17 Xn_c 0.000 XFe_c 1.000 n10 60 n10_Xn 0 held 0 sinks 0
+step 820 t 7.264 M_obj 6670.6 (sink 0.0, blocks 4314) M_world 6677.0 M_core4 3968.5 Sc 242.4 R90 12.53 Xn_c 0.000 XFe_c 1.000 n10 52 n10_Xn 0 held 0 sinks 0
+step 840 t 7.361 M_obj 6670.7 (sink 0.0, blocks 4538) M_world 6677.0 M_core4 4068.2 Sc 263.6 R90 12.81 Xn_c 0.000 XFe_c 1.000 n10 52 n10_Xn 0 held 0 sinks 0
+step 860 t 7.458 M_obj 6670.6 (sink 0.0, blocks 4762) M_world 6677.0 M_core4 4143.8 Sc 285.9 R90 12.81 Xn_c 0.000 XFe_c 1.000 n10 44 n10_Xn 0 held 0 sinks 0
+step 880 t 7.554 M_obj 6670.7 (sink 0.0, blocks 5003) M_world 6677.0 M_core4 4203.1 Sc 312.9 R90 12.17 Xn_c 0.000 XFe_c 1.000 n10 36 n10_Xn 0 held 0 sinks 0
+step 900 t 7.649 M_obj 6670.6 (sink 0.0, blocks 5241) M_world 6677.0 M_core4 4251.4 Sc 346.1 R90 10.44 Xn_c 0.002 XFe_c 0.998 n10 36 n10_Xn 0 held 0 sinks 0
+step 920 t 7.743 M_obj 6670.3 (sink 0.0, blocks 5473) M_world 6677.0 M_core4 4297.2 Sc 746.5 R90 4.24 Xn_c 0.484 XFe_c 0.516 n10 32 n10_Xn 0 held 0 sinks 0
+step 940 t 7.817 M_obj 6670.1 (sink 0.0, blocks 5667) M_world 6677.0 M_core4 4335.7 Sc 1021.8 R90 1.41 Xn_c 0.636 XFe_c 0.364 n10 8 n10_Xn 4 held 0 sinks 0
+step 960 t 7.879 M_obj 6670.0 (sink 0.0, blocks 5834) M_world 6676.9 M_core4 4345.3 Sc 1033.8 R90 2.00 Xn_c 0.662 XFe_c 0.338 n10 9 n10_Xn 6 held 0 sinks 0
+step 980 t 7.954 M_obj 6670.0 (sink 0.0, blocks 6052) M_world 6676.9 M_core4 4348.4 Sc 1164.7 R90 2.00 Xn_c 0.697 XFe_c 0.303 n10 15 n10_Xn 15 held 0 sinks 0
+step 1000 t 8.044 M_obj 6669.6 (sink 0.0, blocks 6296) M_world 6676.9 M_core4 4350.7 Sc 1020.0 R90 2.00 Xn_c 0.693 XFe_c 0.307 n10 19 n10_Xn 19 held 0 sinks 0
+step 1020 t 8.135 M_obj 6669.1 (sink 0.0, blocks 6549) M_world 6676.8 M_core4 4353.4 Sc 1040.3 R90 2.00 Xn_c 0.678 XFe_c 0.322 n10 18 n10_Xn 18 held 0 sinks 0
+step 1040 t 8.218 M_obj 6668.8 (sink 0.0, blocks 6792) M_world 6676.8 M_core4 4355.4 Sc 887.5 R90 2.24 Xn_c 0.664 XFe_c 0.336 n10 19 n10_Xn 19 held 0 sinks 0
+step 1060 t 8.300 M_obj 6668.1 (sink 0.0, blocks 7016) M_world 6676.7 M_core4 4357.3 Sc 647.0 R90 2.24 Xn_c 0.648 XFe_c 0.352 n10 24 n10_Xn 24 held 0 sinks 0
+step 1080 t 8.385 M_obj 6667.3 (sink 0.0, blocks 7246) M_world 6676.5 M_core4 4357.0 Sc 561.2 R90 2.24 Xn_c 0.647 XFe_c 0.353 n10 31 n10_Xn 31 held 0 sinks 0
+step 1100 t 8.471 M_obj 6666.5 (sink 0.0, blocks 7481) M_world 6676.2 M_core4 4338.0 Sc 480.9 R90 2.83 Xn_c 0.647 XFe_c 0.353 n10 37 n10_Xn 37 held 0 sinks 0
+step 1120 t 8.561 M_obj 6665.2 (sink 0.0, blocks 7703) M_world 6675.8 M_core4 4291.1 Sc 433.8 R90 3.00 Xn_c 0.646 XFe_c 0.354 n10 40 n10_Xn 40 held 0 sinks 0
+step 1140 t 8.650 M_obj 6663.8 (sink 0.0, blocks 7923) M_world 6675.0 M_core4 4228.2 Sc 379.6 R90 3.16 Xn_c 0.646 XFe_c 0.354 n10 41 n10_Xn 41 held 0 sinks 0
+step 1160 t 8.742 M_obj 6662.6 (sink 0.0, blocks 8160) M_world 6674.0 M_core4 4203.9 Sc 353.3 R90 3.16 Xn_c 0.645 XFe_c 0.355 n10 45 n10_Xn 45 held 0 sinks 0
+step 1180 t 8.835 M_obj 6660.6 (sink 0.0, blocks 8361) M_world 6672.8 M_core4 4173.4 Sc 354.8 R90 3.16 Xn_c 0.645 XFe_c 0.355 n10 45 n10_Xn 45 held 0 sinks 0
+step 1200 t 8.929 M_obj 6658.3 (sink 0.0, blocks 8544) M_world 6671.4 M_core4 4115.5 Sc 368.2 R90 3.61 Xn_c 0.645 XFe_c 0.355 n10 48 n10_Xn 48 held 0 sinks 0
+step 1220 t 9.024 M_obj 6655.7 (sink 0.0, blocks 8714) M_world 6669.8 M_core4 4039.2 Sc 382.3 R90 3.61 Xn_c 0.645 XFe_c 0.355 n10 47 n10_Xn 47 held 0 sinks 0
+step 1240 t 9.118 M_obj 6652.7 (sink 0.0, blocks 8864) M_world 6668.0 M_core4 3958.9 Sc 391.3 R90 4.12 Xn_c 0.644 XFe_c 0.356 n10 49 n10_Xn 49 held 0 sinks 0
+step 1260 t 9.212 M_obj 6649.8 (sink 0.0, blocks 9016) M_world 6666.2 M_core4 3885.9 Sc 366.9 R90 4.47 Xn_c 0.644 XFe_c 0.356 n10 45 n10_Xn 45 held 0 sinks 0
+step 1280 t 9.306 M_obj 6646.5 (sink 0.0, blocks 9143) M_world 6664.2 M_core4 3836.4 Sc 358.0 R90 5.00 Xn_c 0.644 XFe_c 0.356 n10 45 n10_Xn 45 held 0 sinks 0
+step 1300 t 9.400 M_obj 6643.2 (sink 0.0, blocks 9270) M_world 6662.1 M_core4 3805.7 Sc 365.1 R90 5.39 Xn_c 0.644 XFe_c 0.356 n10 43 n10_Xn 43 held 0 sinks 0
+step 1320 t 9.494 M_obj 6639.7 (sink 0.0, blocks 9388) M_world 6660.0 M_core4 3764.5 Sc 373.2 R90 6.08 Xn_c 0.644 XFe_c 0.356 n10 42 n10_Xn 42 held 0 sinks 0
+step 1340 t 9.589 M_obj 6636.1 (sink 0.0, blocks 9495) M_world 6657.8 M_core4 3704.6 Sc 368.5 R90 7.00 Xn_c 0.644 XFe_c 0.356 n10 43 n10_Xn 43 held 0 sinks 0
+step 1360 t 9.683 M_obj 6632.3 (sink 0.0, blocks 9590) M_world 6655.5 M_core4 3645.1 Sc 372.4 R90 7.28 Xn_c 0.644 XFe_c 0.356 n10 44 n10_Xn 44 held 0 sinks 0
+step 1380 t 9.777 M_obj 6628.5 (sink 0.0, blocks 9682) M_world 6653.2 M_core4 3596.2 Sc 371.1 R90 8.06 Xn_c 0.644 XFe_c 0.356 n10 44 n10_Xn 44 held 0 sinks 0
+step 1400 t 9.871 M_obj 6624.7 (sink 0.0, blocks 9767) M_world 6650.9 M_core4 3557.5 Sc 351.5 R90 8.60 Xn_c 0.644 XFe_c 0.356 n10 40 n10_Xn 40 held 0 sinks 0
+step 1420 t 9.965 M_obj 6620.7 (sink 0.0, blocks 9838) M_world 6648.5 M_core4 3519.3 Sc 330.0 R90 9.22 Xn_c 0.644 XFe_c 0.356 n10 42 n10_Xn 42 held 0 sinks 0
+step 1440 t 10.059 M_obj 6616.6 (sink 0.0, blocks 9904) M_world 6646.1 M_core4 3493.6 Sc 311.7 R90 9.85 Xn_c 0.644 XFe_c 0.356 n10 42 n10_Xn 42 held 0 sinks 0
+step 1460 t 10.153 M_obj 6612.3 (sink 0.0, blocks 9949) M_world 6643.6 M_core4 3469.7 Sc 314.7 R90 10.05 Xn_c 0.644 XFe_c 0.356 n10 42 n10_Xn 42 held 0 sinks 0
+step 1480 t 10.246 M_obj 6608.0 (sink 0.0, blocks 9988) M_world 6641.2 M_core4 3443.6 Sc 314.9 R90 10.44 Xn_c 0.644 XFe_c 0.356 n10 42 n10_Xn 42 held 0 sinks 0
+step 1500 t 10.340 M_obj 6603.7 (sink 0.0, blocks 10029) M_world 6638.7 M_core4 3405.1 Sc 323.0 R90 10.77 Xn_c 0.644 XFe_c 0.356 n10 41 n10_Xn 41 held 0 sinks 0
+step 1520 t 10.434 M_obj 6599.2 (sink 0.0, blocks 10051) M_world 6636.1 M_core4 3360.3 Sc 329.3 R90 10.82 Xn_c 0.644 XFe_c 0.356 n10 39 n10_Xn 39 held 0 sinks 0
+step 1540 t 10.527 M_obj 6594.4 (sink 0.0, blocks 10056) M_world 6633.4 M_core4 3307.4 Sc 330.0 R90 11.05 Xn_c 0.644 XFe_c 0.356 n10 41 n10_Xn 41 held 0 sinks 0
+step 1560 t 10.620 M_obj 6589.9 (sink 0.0, blocks 10072) M_world 6630.5 M_core4 3257.5 Sc 331.0 R90 11.18 Xn_c 0.644 XFe_c 0.356 n10 37 n10_Xn 37 held 0 sinks 0
+step 1580 t 10.714 M_obj 6585.4 (sink 0.0, blocks 10085) M_world 6627.6 M_core4 3221.7 Sc 326.0 R90 11.18 Xn_c 0.644 XFe_c 0.356 n10 39 n10_Xn 39 held 0 sinks 0
+step 1600 t 10.807 M_obj 6580.8 (sink 0.0, blocks 10086) M_world 6624.5 M_core4 3183.7 Sc 325.6 R90 11.18 Xn_c 0.644 XFe_c 0.356 n10 39 n10_Xn 39 held 0 sinks 0
+step 1620 t 10.900 M_obj 6575.5 (sink 0.0, blocks 10038) M_world 6621.4 M_core4 3142.1 Sc 316.6 R90 11.31 Xn_c 0.644 XFe_c 0.356 n10 40 n10_Xn 40 held 0 sinks 0
+step 1640 t 10.993 M_obj 6568.1 (sink 0.0, blocks 9848) M_world 6618.2 M_core4 3101.1 Sc 298.6 R90 11.40 Xn_c 0.644 XFe_c 0.356 n10 42 n10_Xn 42 held 0 sinks 0
+step 1660 t 11.085 M_obj 6560.5 (sink 0.0, blocks 9631) M_world 6615.0 M_core4 3073.8 Sc 277.5 R90 11.66 Xn_c 0.644 XFe_c 0.356 n10 42 n10_Xn 42 held 0 sinks 0
+step 1680 t 11.178 M_obj 6553.6 (sink 0.0, blocks 9449) M_world 6611.8 M_core4 3057.4 Sc 290.2 R90 12.00 Xn_c 0.644 XFe_c 0.356 n10 43 n10_Xn 43 held 0 sinks 0
+step 1700 t 11.270 M_obj 6543.5 (sink 0.0, blocks 9051) M_world 6608.5 M_core4 3035.9 Sc 285.5 R90 12.04 Xn_c 0.644 XFe_c 0.356 n10 38 n10_Xn 38 held 0 sinks 0
+step 1720 t 11.363 M_obj 6532.3 (sink 0.0, blocks 8574) M_world 6605.2 M_core4 2998.0 Sc 286.6 R90 12.04 Xn_c 0.644 XFe_c 0.356 n10 39 n10_Xn 39 held 0 sinks 0
+step 1740 t 11.458 M_obj 6499.5 (sink 0.0, blocks 6798) M_world 6601.8 M_core4 2945.1 Sc 281.6 R90 12.04 Xn_c 0.644 XFe_c 0.356 n10 40 n10_Xn 40 held 0 sinks 0
+step 1760 t 11.554 M_obj 6490.8 (sink 0.0, blocks 6431) M_world 6598.4 M_core4 2893.7 Sc 266.7 R90 12.04 Xn_c 0.644 XFe_c 0.356 n10 40 n10_Xn 40 held 0 sinks 0
+step 1780 t 11.652 M_obj 6489.9 (sink 0.0, blocks 6545) M_world 6594.9 M_core4 2850.9 Sc 236.5 R90 12.08 Xn_c 0.643 XFe_c 0.357 n10 39 n10_Xn 39 held 0 sinks 0
+step 1800 t 11.752 M_obj 6489.5 (sink 0.0, blocks 6687) M_world 6591.4 M_core4 2839.8 Sc 246.5 R90 12.21 Xn_c 0.643 XFe_c 0.357 n10 38 n10_Xn 38 held 0 sinks 0
+step 1820 t 11.853 M_obj 6488.8 (sink 0.0, blocks 6817) M_world 6587.8 M_core4 2809.7 Sc 245.2 R90 12.17 Xn_c 0.643 XFe_c 0.357 n10 39 n10_Xn 39 held 0 sinks 0
+step 1840 t 11.956 M_obj 6488.4 (sink 0.0, blocks 6976) M_world 6584.2 M_core4 2758.4 Sc 251.7 R90 12.17 Xn_c 0.643 XFe_c 0.357 n10 43 n10_Xn 43 held 0 sinks 0
+step 1860 t 12.061 M_obj 6487.9 (sink 0.0, blocks 7127) M_world 6580.6 M_core4 2706.8 Sc 251.1 R90 12.08 Xn_c 0.643 XFe_c 0.357 n10 41 n10_Xn 41 held 0 sinks 0
+step 1880 t 12.167 M_obj 6487.6 (sink 0.0, blocks 7296) M_world 6577.0 M_core4 2677.5 Sc 247.6 R90 12.37 Xn_c 0.643 XFe_c 0.357 n10 39 n10_Xn 39 held 0 sinks 0
+step 1900 t 12.276 M_obj 6486.9 (sink 0.0, blocks 7445) M_world 6573.4 M_core4 2642.2 Sc 248.8 R90 12.37 Xn_c 0.643 XFe_c 0.357 n10 37 n10_Xn 37 held 0 sinks 0
+step 1920 t 12.385 M_obj 6486.6 (sink 0.0, blocks 7628) M_world 6569.7 M_core4 2596.5 Sc 239.2 R90 12.37 Xn_c 0.643 XFe_c 0.357 n10 42 n10_Xn 42 held 0 sinks 0
+step 1940 t 12.497 M_obj 6486.1 (sink 0.0, blocks 7797) M_world 6566.1 M_core4 2547.3 Sc 231.3 R90 12.37 Xn_c 0.643 XFe_c 0.357 n10 38 n10_Xn 38 held 0 sinks 0
+step 1960 t 12.609 M_obj 6485.7 (sink 0.0, blocks 7980) M_world 6562.3 M_core4 2523.8 Sc 237.7 R90 12.73 Xn_c 0.643 XFe_c 0.357 n10 39 n10_Xn 39 held 0 sinks 0
+step 1980 t 12.724 M_obj 6485.0 (sink 0.0, blocks 8149) M_world 6558.6 M_core4 2493.7 Sc 232.5 R90 12.65 Xn_c 0.643 XFe_c 0.357 n10 36 n10_Xn 36 held 0 sinks 0
+step 2000 t 12.840 M_obj 6484.1 (sink 0.0, blocks 8313) M_world 6554.7 M_core4 2445.8 Sc 214.4 R90 12.65 Xn_c 0.643 XFe_c 0.357 n10 38 n10_Xn 38 held 0 sinks 0
+== ../b
+step 2250 t 14.351 M_obj 6451.5 (sink 0.0, blocks 10182) M_world 6492.2 M_core4 2275.6 Sc 174.5 R90 12.04 Xn_c 0.643 XFe_c 0.357 n10 81 n10_Xn 81 held 0 sinks 0
+step 2500 t 15.924 M_obj 6230.8 (sink 0.0, blocks 11792) M_world 6255.6 M_core4 2315.9 Sc 170.0 R90 13.45 Xn_c 0.641 XFe_c 0.359 n10 72 n10_Xn 72 held 0 sinks 0
+step 2750 t 17.535 M_obj 5911.6 (sink 0.0, blocks 13208) M_world 5928.2 M_core4 2165.2 Sc 168.0 R90 15.23 Xn_c 0.640 XFe_c 0.360 n10 42 n10_Xn 42 held 0 sinks 0
+step 3000 t 19.236 M_obj 5649.1 (sink 0.0, blocks 13234) M_world 5668.9 M_core4 1861.8 Sc 160.6 R90 14.14 Xn_c 0.640 XFe_c 0.360 n10 39 n10_Xn 39 held 0 sinks 0
+step 3250 t 20.954 M_obj 5241.1 (sink 0.0, blocks 11259) M_world 5283.3 M_core4 1853.4 Sc 155.0 R90 14.21 Xn_c 0.640 XFe_c 0.360 n10 39 n10_Xn 39 held 0 sinks 0
+step 3500 t 22.733 M_obj 4860.0 (sink 0.0, blocks 9206) M_world 4918.5 M_core4 1775.3 Sc 154.1 R90 15.62 Xn_c 0.640 XFe_c 0.360 n10 38 n10_Xn 38 held 0 sinks 0
+step 3750 t 24.584 M_obj 4474.3 (sink 0.0, blocks 2903) M_world 4699.8 M_core4 1531.2 Sc 122.4 R90 14.42 Xn_c 0.639 XFe_c 0.361 n10 72 n10_Xn 72 held 0 sinks 0
+step 4000 t 26.414 M_obj 4468.4 (sink 0.0, blocks 3086) M_world 4602.0 M_core4 1758.9 Sc 120.9 R90 15.65 Xn_c 0.639 XFe_c 0.361 n10 44 n10_Xn 44 held 0 sinks 0
+step 4250 t 28.287 M_obj 4467.3 (sink 0.0, blocks 3591) M_world 4555.5 M_core4 1574.9 Sc 125.5 R90 15.26 Xn_c 0.639 XFe_c 0.361 n10 31 n10_Xn 31 held 0 sinks 0
+step 4500 t 30.215 M_obj 4463.9 (sink 0.0, blocks 4012) M_world 4530.3 M_core4 1295.3 Sc 102.3 R90 15.23 Xn_c 0.639 XFe_c 0.361 n10 60 n10_Xn 60 held 0 sinks 0
+step 4750 t 32.152 M_obj 4456.2 (sink 0.0, blocks 4172) M_world 4514.6 M_core4 1617.0 Sc 95.5 R90 16.40 Xn_c 0.639 XFe_c 0.361 n10 48 n10_Xn 48 held 0 sinks 0
+step 5000 t 34.183 M_obj 4436.9 (sink 0.0, blocks 3543) M_world 4503.3 M_core4 1632.9 Sc 123.4 R90 15.03 Xn_c 0.638 XFe_c 0.362 n10 39 n10_Xn 39 held 0 sinks 0
+step 5250 t 36.194 M_obj 4430.9 (sink 0.0, blocks 3720) M_world 4492.6 M_core4 1361.8 Sc 112.2 R90 15.00 Xn_c 0.638 XFe_c 0.362 n10 32 n10_Xn 32 held 0 sinks 0
+step 5500 t 38.264 M_obj 4423.8 (sink 0.0, blocks 3935) M_world 4481.3 M_core4 1329.5 Sc 97.3 R90 16.49 Xn_c 0.638 XFe_c 0.362 n10 39 n10_Xn 39 held 0 sinks 0
+step 5750 t 40.308 M_obj 4415.4 (sink 0.0, blocks 3985) M_world 4472.1 M_core4 1266.3 Sc 89.4 R90 16.97 Xn_c 0.638 XFe_c 0.362 n10 62 n10_Xn 62 held 0 sinks 0
+step 6000 t 42.332 M_obj 4406.7 (sink 0.0, blocks 3910) M_world 4464.3 M_core4 1543.4 Sc 103.4 R90 16.16 Xn_c 0.638 XFe_c 0.362 n10 41 n10_Xn 41 held 0 sinks 0
+step 6250 t 44.381 M_obj 4394.1 (sink 0.0, blocks 3458) M_world 4457.3 M_core4 1360.5 Sc 110.3 R90 15.62 Xn_c 0.638 XFe_c 0.362 n10 33 n10_Xn 33 held 0 sinks 0
+step 6500 t 46.530 M_obj 4384.6 (sink 0.0, blocks 3086) M_world 4450.1 M_core4 1215.5 Sc 90.6 R90 15.81 Xn_c 0.638 XFe_c 0.362 n10 32 n10_Xn 32 held 0 sinks 0
+step 6750 t 48.685 M_obj 4383.7 (sink 0.0, blocks 3232) M_world 4444.3 M_core4 1116.4 Sc 87.5 R90 17.09 Xn_c 0.638 XFe_c 0.362 n10 40 n10_Xn 40 held 0 sinks 0
+step 7000 t 50.819 M_obj 4381.1 (sink 0.0, blocks 3261) M_world 4439.7 M_core4 1364.8 Sc 75.6 R90 16.76 Xn_c 0.638 XFe_c 0.362 n10 45 n10_Xn 45 held 0 sinks 0
+step 7250 t 53.023 M_obj 4378.3 (sink 0.0, blocks 3251) M_world 4435.9 M_core4 1389.8 Sc 102.7 R90 16.28 Xn_c 0.638 XFe_c 0.362 n10 37 n10_Xn 37 held 0 sinks 0
+step 7500 t 55.182 M_obj 4376.4 (sink 0.0, blocks 3252) M_world 4433.0 M_core4 1220.8 Sc 86.9 R90 15.62 Xn_c 0.638 XFe_c 0.362 n10 32 n10_Xn 32 held 0 sinks 0
+step 7750 t 57.324 M_obj 4375.6 (sink 0.0, blocks 3327) M_world 4430.5 M_core4 1142.1 Sc 88.5 R90 17.03 Xn_c 0.638 XFe_c 0.362 n10 29 n10_Xn 29 held 0 sinks 0
+step 8000 t 59.502 M_obj 4373.4 (sink 0.0, blocks 3341) M_world 4428.2 M_core4 1139.6 Sc 75.8 R90 17.49 Xn_c 0.638 XFe_c 0.362 n10 33 n10_Xn 33 held 0 sinks 0
+step 8250 t 61.628 M_obj 4371.6 (sink 0.0, blocks 3367) M_world 4426.0 M_core4 1157.4 Sc 87.7 R90 18.38 Xn_c 0.638 XFe_c 0.362 n10 31 n10_Xn 31 held 0 sinks 0
+step 8500 t 63.773 M_obj 4374.2 (sink 0.0, blocks 3741) M_world 4423.6 M_core4 1158.9 Sc 81.8 R90 17.72 Xn_c 0.638 XFe_c 0.362 n10 39 n10_Xn 39 held 0 sinks 0
+step 8750 t 65.889 M_obj 4378.6 (sink 0.0, blocks 4343) M_world 4421.0 M_core4 1343.5 Sc 91.4 R90 15.30 Xn_c 0.638 XFe_c 0.362 n10 40 n10_Xn 40 held 0 sinks 0
+step 9000 t 68.037 M_obj 4380.9 (sink 0.0, blocks 4904) M_world 4418.4 M_core4 1254.2 Sc 96.0 R90 16.03 Xn_c 0.638 XFe_c 0.362 n10 29 n10_Xn 29 held 0 sinks 0
+step 9250 t 70.180 M_obj 4381.4 (sink 0.0, blocks 5386) M_world 4415.9 M_core4 1212.5 Sc 84.7 R90 16.49 Xn_c 0.638 XFe_c 0.362 n10 31 n10_Xn 31 held 0 sinks 0
+step 9500 t 72.348 M_obj 4381.5 (sink 0.0, blocks 5889) M_world 4413.6 M_core4 1185.4 Sc 84.5 R90 17.26 Xn_c 0.638 XFe_c 0.362 n10 30 n10_Xn 30 held 0 sinks 0
+step 9750 t 74.615 M_obj 4380.1 (sink 0.0, blocks 6333) M_world 4411.5 M_core4 1131.5 Sc 85.2 R90 16.64 Xn_c 0.638 XFe_c 0.362 n10 29 n10_Xn 29 held 0 sinks 0
+step 10000 t 76.908 M_obj 4372.1 (sink 0.0, blocks 6358) M_world 4409.3 M_core4 1064.0 Sc 82.4 R90 17.20 Xn_c 0.638 XFe_c 0.362 n10 29 n10_Xn 29 held 0 sinks 0
+step 10250 t 79.257 M_obj 4356.1 (sink 0.0, blocks 5812) M_world 4406.9 M_core4 1040.2 Sc 74.6 R90 16.64 Xn_c 0.638 XFe_c 0.362 n10 32 n10_Xn 32 held 0 sinks 0
+step 10500 t 81.521 M_obj 4342.6 (sink 0.0, blocks 5310) M_world 4404.0 M_core4 1135.5 Sc 76.9 R90 16.76 Xn_c 0.637 XFe_c 0.363 n10 33 n10_Xn 33 held 0 sinks 0
+step 10750 t 83.796 M_obj 4338.4 (sink 0.0, blocks 5336) M_world 4401.1 M_core4 1114.2 Sc 74.4 R90 17.12 Xn_c 0.637 XFe_c 0.363 n10 30 n10_Xn 30 held 0 sinks 0
+step 11000 t 86.176 M_obj 4333.7 (sink 0.0, blocks 5331) M_world 4398.4 M_core4 1003.9 Sc 75.3 R90 17.20 Xn_c 0.637 XFe_c 0.363 n10 28 n10_Xn 28 held 0 sinks 0
+step 11250 t 88.478 M_obj 4332.0 (sink 0.0, blocks 5489) M_world 4395.7 M_core4 1045.4 Sc 75.3 R90 17.69 Xn_c 0.637 XFe_c 0.363 n10 30 n10_Xn 30 held 0 sinks 0
+step 11500 t 90.694 M_obj 4330.3 (sink 0.0, blocks 5646) M_world 4392.2 M_core4 1031.1 Sc 78.6 R90 17.49 Xn_c 0.637 XFe_c 0.363 n10 29 n10_Xn 29 held 0 sinks 0
+step 11750 t 92.929 M_obj 4325.5 (sink 0.0, blocks 5649) M_world 4388.0 M_core4 1178.4 Sc 75.3 R90 16.76 Xn_c 0.637 XFe_c 0.363 n10 34 n10_Xn 34 held 0 sinks 0
+step 12000 t 95.223 M_obj 4324.5 (sink 0.0, blocks 5908) M_world 4383.7 M_core4 1080.9 Sc 76.9 R90 17.00 Xn_c 0.637 XFe_c 0.363 n10 28 n10_Xn 28 held 0 sinks 0
+step 12250 t 97.660 M_obj 4325.7 (sink 0.0, blocks 6349) M_world 4379.6 M_core4 952.0 Sc 74.1 R90 16.76 Xn_c 0.637 XFe_c 0.363 n10 27 n10_Xn 27 held 0 sinks 0
+step 12500 t 100.044 M_obj 4328.9 (sink 0.0, blocks 6974) M_world 4375.9 M_core4 899.2 Sc 67.3 R90 17.09 Xn_c 0.637 XFe_c 0.363 n10 25 n10_Xn 25 held 0 sinks 0
+step 12750 t 102.459 M_obj 4333.4 (sink 0.0, blocks 7788) M_world 4372.6 M_core4 1008.2 Sc 72.7 R90 17.46 Xn_c 0.637 XFe_c 0.363 n10 32 n10_Xn 32 held 0 sinks 0
+step 13000 t 104.907 M_obj 4336.9 (sink 0.0, blocks 8640) M_world 4369.1 M_core4 968.7 Sc 79.4 R90 17.69 Xn_c 0.637 XFe_c 0.363 n10 27 n10_Xn 27 held 0 sinks 0
+step 13250 t 107.376 M_obj 4336.9 (sink 0.0, blocks 9394) M_world 4363.6 M_core4 905.7 Sc 67.2 R90 17.46 Xn_c 0.637 XFe_c 0.363 n10 28 n10_Xn 28 held 0 sinks 0
+step 13500 t 109.819 M_obj 4333.2 (sink 0.0, blocks 9942) M_world 4358.1 M_core4 941.2 Sc 65.5 R90 18.00 Xn_c 0.637 XFe_c 0.363 n10 27 n10_Xn 27 held 0 sinks 0
+step 13750 t 112.152 M_obj 4320.6 (sink 0.0, blocks 9859) M_world 4352.8 M_core4 940.1 Sc 70.7 R90 18.03 Xn_c 0.637 XFe_c 0.363 n10 29 n10_Xn 29 held 0 sinks 0
+step 14000 t 114.567 M_obj 4300.0 (sink 0.0, blocks 9181) M_world 4347.4 M_core4 919.6 Sc 64.3 R90 18.03 Xn_c 0.637 XFe_c 0.363 n10 27 n10_Xn 27 held 0 sinks 0
+step 14250 t 116.959 M_obj 4286.7 (sink 0.0, blocks 8848) M_world 4342.1 M_core4 1040.6 Sc 69.1 R90 17.12 Xn_c 0.637 XFe_c 0.363 n10 33 n10_Xn 33 held 0 sinks 0
+step 14500 t 119.337 M_obj 4270.5 (sink 0.0, blocks 8262) M_world 4336.7 M_core4 1015.0 Sc 80.0 R90 16.76 Xn_c 0.637 XFe_c 0.363 n10 29 n10_Xn 29 held 0 sinks 0
+step 14750 t 121.653 M_obj 4256.3 (sink 0.0, blocks 7681) M_world 4330.8 M_core4 1110.6 Sc 78.2 R90 15.13 Xn_c 0.637 XFe_c 0.363 n10 32 n10_Xn 32 held 0 sinks 0
+step 15000 t 123.989 M_obj 4245.2 (sink 0.0, blocks 7218) M_world 4324.7 M_core4 1083.4 Sc 82.4 R90 16.97 Xn_c 0.637 XFe_c 0.363 n10 29 n10_Xn 29 held 0 sinks 0
+step 15250 t 126.420 M_obj 4235.2 (sink 0.0, blocks 6747) M_world 4318.5 M_core4 963.2 Sc 69.5 R90 16.55 Xn_c 0.637 XFe_c 0.363 n10 28 n10_Xn 28 held 0 sinks 0
+step 15500 t 128.887 M_obj 4228.8 (sink 0.0, blocks 6439) M_world 4312.8 M_core4 940.6 Sc 70.1 R90 16.55 Xn_c 0.637 XFe_c 0.363 n10 27 n10_Xn 27 held 0 sinks 0
+step 15750 t 131.364 M_obj 4225.4 (sink 0.0, blocks 6287) M_world 4307.8 M_core4 926.2 Sc 66.4 R90 17.20 Xn_c 0.637 XFe_c 0.363 n10 28 n10_Xn 28 held 0 sinks 0
+step 16000 t 133.924 M_obj 4220.3 (sink 0.0, blocks 6000) M_world 4303.1 M_core4 890.4 Sc 68.0 R90 17.72 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 16250 t 136.573 M_obj 4216.8 (sink 0.0, blocks 5766) M_world 4298.9 M_core4 795.6 Sc 55.5 R90 17.00 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 16500 t 139.176 M_obj 4221.4 (sink 0.0, blocks 6052) M_world 4295.3 M_core4 885.4 Sc 61.9 R90 16.64 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 16750 t 141.802 M_obj 4226.9 (sink 0.0, blocks 6438) M_world 4292.1 M_core4 822.6 Sc 57.3 R90 17.00 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 17000 t 144.549 M_obj 4231.5 (sink 0.0, blocks 6809) M_world 4289.2 M_core4 737.7 Sc 53.7 R90 17.00 Xn_c 0.637 XFe_c 0.363 n10 22 n10_Xn 22 held 0 sinks 0
+step 17250 t 147.339 M_obj 4233.3 (sink 0.0, blocks 7037) M_world 4286.3 M_core4 701.2 Sc 51.9 R90 17.03 Xn_c 0.637 XFe_c 0.363 n10 23 n10_Xn 23 held 0 sinks 0
+step 17500 t 150.023 M_obj 4230.4 (sink 0.0, blocks 6971) M_world 4283.6 M_core4 795.0 Sc 58.2 R90 17.46 Xn_c 0.637 XFe_c 0.363 n10 24 n10_Xn 24 held 0 sinks 0
+step 17750 t 152.716 M_obj 4220.5 (sink 0.0, blocks 6399) M_world 4281.3 M_core4 792.8 Sc 55.9 R90 17.72 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 18000 t 155.401 M_obj 4218.2 (sink 0.0, blocks 6263) M_world 4279.3 M_core4 754.1 Sc 50.2 R90 17.26 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 18250 t 158.163 M_obj 4219.1 (sink 0.0, blocks 6326) M_world 4277.7 M_core4 747.1 Sc 51.6 R90 17.46 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 18500 t 160.864 M_obj 4223.6 (sink 0.0, blocks 6644) M_world 4276.1 M_core4 734.2 Sc 52.1 R90 17.69 Xn_c 0.637 XFe_c 0.363 n10 24 n10_Xn 24 held 0 sinks 0
+step 18750 t 163.563 M_obj 4229.5 (sink 0.0, blocks 7163) M_world 4274.3 M_core4 712.9 Sc 50.8 R90 18.11 Xn_c 0.637 XFe_c 0.363 n10 22 n10_Xn 22 held 0 sinks 0
+step 19000 t 166.256 M_obj 4232.6 (sink 0.0, blocks 7685) M_world 4270.7 M_core4 727.1 Sc 50.2 R90 17.69 Xn_c 0.637 XFe_c 0.363 n10 25 n10_Xn 25 held 0 sinks 0
+step 19250 t 168.882 M_obj 4234.3 (sink 0.0, blocks 8204) M_world 4267.0 M_core4 829.0 Sc 56.4 R90 17.03 Xn_c 0.637 XFe_c 0.363 n10 27 n10_Xn 27 held 0 sinks 0
+step 19500 t 171.559 M_obj 4235.2 (sink 0.0, blocks 8716) M_world 4263.3 M_core4 834.9 Sc 63.6 R90 16.28 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 19750 t 174.244 M_obj 4233.0 (sink 0.0, blocks 9016) M_world 4260.2 M_core4 768.0 Sc 55.2 R90 17.03 Xn_c 0.637 XFe_c 0.363 n10 23 n10_Xn 23 held 0 sinks 0
+step 20000 t 176.998 M_obj 4225.0 (sink 0.0, blocks 8912) M_world 4257.4 M_core4 732.1 Sc 48.7 R90 18.11 Xn_c 0.637 XFe_c 0.363 n10 35 n10_Xn 35 held 0 sinks 0
+step 20250 t 179.519 M_obj 4215.1 (sink 0.0, blocks 8596) M_world 4254.9 M_core4 1005.7 Sc 52.4 R90 14.14 Xn_c 0.637 XFe_c 0.363 n10 49 n10_Xn 49 held 0 sinks 0
+step 20500 t 181.964 M_obj 4204.2 (sink 0.0, blocks 8150) M_world 4252.0 M_core4 1080.9 Sc 63.8 R90 14.87 Xn_c 0.637 XFe_c 0.363 n10 38 n10_Xn 38 held 0 sinks 0
+step 20750 t 184.477 M_obj 4192.1 (sink 0.0, blocks 7539) M_world 4249.1 M_core4 1070.8 Sc 74.5 R90 13.60 Xn_c 0.637 XFe_c 0.363 n10 30 n10_Xn 30 held 0 sinks 0
+step 21000 t 186.978 M_obj 4183.3 (sink 0.0, blocks 7046) M_world 4246.3 M_core4 947.7 Sc 73.8 R90 15.65 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 21250 t 189.593 M_obj 4172.9 (sink 0.0, blocks 6379) M_world 4243.6 M_core4 837.2 Sc 64.4 R90 17.00 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 21500 t 192.237 M_obj 4164.0 (sink 0.0, blocks 5729) M_world 4241.1 M_core4 851.8 Sc 60.2 R90 16.28 Xn_c 0.637 XFe_c 0.363 n10 27 n10_Xn 27 held 0 sinks 0
+step 21750 t 194.924 M_obj 4158.3 (sink 0.0, blocks 5228) M_world 4238.9 M_core4 819.9 Sc 63.1 R90 16.49 Xn_c 0.637 XFe_c 0.363 n10 25 n10_Xn 25 held 0 sinks 0
+step 22000 t 197.722 M_obj 4155.2 (sink 0.0, blocks 4827) M_world 4237.1 M_core4 712.5 Sc 51.1 R90 16.16 Xn_c 0.637 XFe_c 0.363 n10 24 n10_Xn 24 held 0 sinks 0
+step 22250 t 200.581 M_obj 4155.2 (sink 0.0, blocks 4600) M_world 4235.4 M_core4 640.1 Sc 46.9 R90 16.64 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 22500 t 203.389 M_obj 4159.9 (sink 0.0, blocks 4700) M_world 4234.1 M_core4 654.7 Sc 43.1 R90 17.00 Xn_c 0.637 XFe_c 0.363 n10 23 n10_Xn 23 held 0 sinks 0
+step 22750 t 206.301 M_obj 4167.4 (sink 0.0, blocks 5064) M_world 4232.9 M_core4 698.6 Sc 48.7 R90 17.09 Xn_c 0.637 XFe_c 0.363 n10 24 n10_Xn 24 held 0 sinks 0
+step 23000 t 209.155 M_obj 4174.0 (sink 0.0, blocks 5460) M_world 4232.0 M_core4 643.4 Sc 47.6 R90 17.20 Xn_c 0.637 XFe_c 0.363 n10 20 n10_Xn 20 held 0 sinks 0
+step 23250 t 211.991 M_obj 4179.7 (sink 0.0, blocks 5865) M_world 4231.2 M_core4 700.8 Sc 51.2 R90 17.69 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 23500 t 214.781 M_obj 4184.9 (sink 0.0, blocks 6313) M_world 4230.6 M_core4 694.5 Sc 49.6 R90 18.03 Xn_c 0.637 XFe_c 0.363 n10 24 n10_Xn 24 held 0 sinks 0
+step 23750 t 217.673 M_obj 4188.0 (sink 0.0, blocks 6688) M_world 4229.9 M_core4 672.5 Sc 44.8 R90 17.89 Xn_c 0.637 XFe_c 0.363 n10 24 n10_Xn 24 held 0 sinks 0
+step 24000 t 220.515 M_obj 4189.4 (sink 0.0, blocks 7041) M_world 4228.1 M_core4 701.0 Sc 52.2 R90 17.20 Xn_c 0.637 XFe_c 0.363 n10 24 n10_Xn 24 held 0 sinks 0
+step 24250 t 223.403 M_obj 4188.7 (sink 0.0, blocks 7346) M_world 4225.3 M_core4 629.9 Sc 45.3 R90 16.76 Xn_c 0.637 XFe_c 0.363 n10 20 n10_Xn 20 held 0 sinks 0
+step 24500 t 226.342 M_obj 4185.1 (sink 0.0, blocks 7496) M_world 4221.9 M_core4 562.6 Sc 37.9 R90 18.11 Xn_c 0.637 XFe_c 0.363 n10 33 n10_Xn 33 held 0 sinks 0
+step 24750 t 228.949 M_obj 4181.6 (sink 0.0, blocks 7665) M_world 4218.2 M_core4 919.9 Sc 37.5 R90 14.14 Xn_c 0.637 XFe_c 0.363 n10 46 n10_Xn 46 held 0 sinks 0
+step 25000 t 231.590 M_obj 4178.8 (sink 0.0, blocks 7883) M_world 4214.2 M_core4 965.7 Sc 52.7 R90 15.56 Xn_c 0.637 XFe_c 0.363 n10 34 n10_Xn 34 held 0 sinks 0
+step 25250 t 234.243 M_obj 4178.1 (sink 0.0, blocks 8221) M_world 4210.5 M_core4 972.1 Sc 67.7 R90 13.93 Xn_c 0.637 XFe_c 0.363 n10 32 n10_Xn 32 held 0 sinks 0
+step 25500 t 236.829 M_obj 4177.4 (sink 0.0, blocks 8528) M_world 4207.4 M_core4 860.3 Sc 70.3 R90 16.03 Xn_c 0.637 XFe_c 0.363 n10 25 n10_Xn 25 held 0 sinks 0
+step 25750 t 239.542 M_obj 4177.3 (sink 0.0, blocks 8875) M_world 4204.9 M_core4 744.7 Sc 58.9 R90 16.12 Xn_c 0.637 XFe_c 0.363 n10 22 n10_Xn 22 held 0 sinks 0
+step 26000 t 242.206 M_obj 4176.2 (sink 0.0, blocks 9150) M_world 4202.9 M_core4 699.4 Sc 48.4 R90 15.62 Xn_c 0.637 XFe_c 0.363 n10 25 n10_Xn 25 held 0 sinks 0
+step 26250 t 245.053 M_obj 4173.8 (sink 0.0, blocks 9374) M_world 4201.3 M_core4 695.2 Sc 46.1 R90 16.64 Xn_c 0.637 XFe_c 0.363 n10 23 n10_Xn 23 held 0 sinks 0
+step 26500 t 247.859 M_obj 4167.7 (sink 0.0, blocks 9345) M_world 4200.0 M_core4 616.6 Sc 46.8 R90 16.64 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 26750 t 250.687 M_obj 4161.2 (sink 0.0, blocks 9287) M_world 4198.8 M_core4 736.9 Sc 45.8 R90 17.20 Xn_c 0.637 XFe_c 0.363 n10 26 n10_Xn 26 held 0 sinks 0
+step 27000 t 253.631 M_obj 4152.0 (sink 0.0, blocks 9031) M_world 4196.6 M_core4 722.8 Sc 53.9 R90 17.12 Xn_c 0.637 XFe_c 0.363 n10 23 n10_Xn 23 held 0 sinks 0
+step 27250 t 256.564 M_obj 4140.2 (sink 0.0, blocks 8516) M_world 4192.7 M_core4 660.6 Sc 47.6 R90 17.46 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 27500 t 259.520 M_obj 4126.3 (sink 0.0, blocks 7762) M_world 4188.4 M_core4 638.3 Sc 44.1 R90 18.03 Xn_c 0.637 XFe_c 0.363 n10 23 n10_Xn 23 held 0 sinks 0
+step 27750 t 262.484 M_obj 4116.3 (sink 0.0, blocks 7169) M_world 4184.4 M_core4 635.6 Sc 44.9 R90 18.03 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 28000 t 265.446 M_obj 4110.9 (sink 0.0, blocks 6817) M_world 4180.7 M_core4 627.4 Sc 45.5 R90 18.03 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 28250 t 268.506 M_obj 4110.7 (sink 0.0, blocks 6787) M_world 4177.3 M_core4 603.6 Sc 41.3 R90 18.03 Xn_c 0.637 XFe_c 0.363 n10 22 n10_Xn 22 held 0 sinks 0
+step 28500 t 271.570 M_obj 4113.1 (sink 0.0, blocks 6982) M_world 4174.0 M_core4 602.6 Sc 45.8 R90 17.80 Xn_c 0.637 XFe_c 0.363 n10 19 n10_Xn 19 held 0 sinks 0
+step 28750 t 274.540 M_obj 4115.3 (sink 0.0, blocks 7345) M_world 4168.8 M_core4 603.2 Sc 40.1 R90 17.89 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 29000 t 277.547 M_obj 4117.4 (sink 0.0, blocks 7802) M_world 4163.2 M_core4 619.8 Sc 45.6 R90 17.12 Xn_c 0.637 XFe_c 0.363 n10 21 n10_Xn 21 held 0 sinks 0
+step 29208 t 279.946 M_obj 4118.1 (sink 0.0, blocks 8162) M_world 4158.8 M_core4 731.9 Sc 45.1 R90 16.40 Xn_c 0.637 XFe_c 0.363 n10 28 n10_Xn 28 held 0 sinks 0
+== ../cF_2
+step 10000 t 54.661 M_obj 4281.5 (sink 0.0, blocks 5137) M_world 4354.4 M_core4 3033.5 Sc 783.1 R90 15.30 Xn_c 0.560 XFe_c 0.440 n10 24 n10_Xn 4 held 4 sinks 0
+step 10250 t 55.979 M_obj 4267.5 (sink 0.0, blocks 4634) M_world 4347.2 M_core4 3111.3 Sc 783.1 R90 8.94 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 10500 t 57.391 M_obj 4252.3 (sink 0.0, blocks 4017) M_world 4340.0 M_core4 3061.0 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 10750 t 58.801 M_obj 4249.6 (sink 0.0, blocks 4148) M_world 4333.1 M_core4 3075.2 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 11000 t 60.199 M_obj 4252.5 (sink 0.0, blocks 4677) M_world 4326.3 M_core4 3058.9 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 11250 t 61.582 M_obj 4251.8 (sink 0.0, blocks 5177) M_world 4317.3 M_core4 3065.5 Sc 783.1 R90 2.00 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 11500 t 62.966 M_obj 4242.6 (sink 0.0, blocks 5498) M_world 4303.4 M_core4 3052.7 Sc 783.1 R90 2.24 Xn_c 0.560 XFe_c 0.440 n10 6 n10_Xn 4 held 4 sinks 0
+step 11750 t 64.306 M_obj 4226.8 (sink 0.0, blocks 5723) M_world 4284.9 M_core4 3058.1 Sc 783.1 R90 3.00 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 12000 t 65.711 M_obj 4197.4 (sink 0.0, blocks 5650) M_world 4258.0 M_core4 3048.5 Sc 783.1 R90 7.07 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 12250 t 67.068 M_obj 4168.9 (sink 0.0, blocks 5926) M_world 4226.2 M_core4 3055.8 Sc 783.1 R90 5.83 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 12500 t 68.482 M_obj 4144.0 (sink 0.0, blocks 6340) M_world 4197.1 M_core4 3045.3 Sc 783.1 R90 8.60 Xn_c 0.560 XFe_c 0.440 n10 6 n10_Xn 4 held 4 sinks 0
+step 12750 t 69.846 M_obj 4123.9 (sink 0.0, blocks 6788) M_world 4173.1 M_core4 3056.8 Sc 783.1 R90 6.71 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 13000 t 71.267 M_obj 4102.3 (sink 0.0, blocks 7084) M_world 4150.8 M_core4 3046.5 Sc 783.1 R90 9.00 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 13250 t 72.657 M_obj 4086.3 (sink 0.0, blocks 7607) M_world 4130.9 M_core4 3052.3 Sc 783.1 R90 7.07 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 13500 t 74.082 M_obj 4062.4 (sink 0.0, blocks 7907) M_world 4107.2 M_core4 3043.1 Sc 783.1 R90 9.00 Xn_c 0.560 XFe_c 0.440 n10 6 n10_Xn 4 held 4 sinks 0
+step 13750 t 75.488 M_obj 4023.4 (sink 0.0, blocks 8341) M_world 4066.0 M_core4 3054.5 Sc 783.1 R90 6.71 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 14000 t 76.908 M_obj 3979.3 (sink 0.0, blocks 8695) M_world 4019.9 M_core4 3041.6 Sc 783.1 R90 9.22 Xn_c 0.560 XFe_c 0.440 n10 6 n10_Xn 4 held 4 sinks 0
+step 14250 t 78.318 M_obj 3940.1 (sink 0.0, blocks 8846) M_world 3981.3 M_core4 3050.9 Sc 783.1 R90 7.00 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 14394 t 79.137 M_obj 3919.3 (sink 0.0, blocks 8837) M_world 3962.1 M_core4 3042.3 Sc 783.1 R90 7.81 Xn_c 0.560 XFe_c 0.440 n10 5 n10_Xn 4 held 4 sinks 0
+step 8000 t 44.169 M_obj 4370.5 (sink 0.0, blocks 5625) M_world 4397.6 M_core4 3063.8 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 6 n10_Xn 4 held 4 sinks 0
+step 8250 t 45.466 M_obj 4366.3 (sink 0.0, blocks 6098) M_world 4393.1 M_core4 3067.3 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 6 n10_Xn 4 held 4 sinks 0
+step 8500 t 46.693 M_obj 4357.5 (sink 0.0, blocks 6241) M_world 4388.8 M_core4 3055.7 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 6 n10_Xn 4 held 4 sinks 0
+step 8750 t 47.937 M_obj 4350.1 (sink 0.0, blocks 6453) M_world 4384.5 M_core4 3073.7 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 10 n10_Xn 4 held 4 sinks 0
+step 9000 t 49.166 M_obj 4338.2 (sink 0.0, blocks 6375) M_world 4380.5 M_core4 3176.1 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 14 n10_Xn 4 held 4 sinks 0
+step 9250 t 50.449 M_obj 4325.1 (sink 0.0, blocks 6198) M_world 4376.0 M_core4 3102.0 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 18 n10_Xn 4 held 4 sinks 0
+step 9500 t 51.853 M_obj 4311.2 (sink 0.0, blocks 5958) M_world 4369.8 M_core4 3052.8 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 23 n10_Xn 4 held 4 sinks 0
+step 9750 t 53.267 M_obj 4297.8 (sink 0.0, blocks 5685) M_world 4362.0 M_core4 3040.2 Sc 783.1 R90 1.41 Xn_c 0.560 XFe_c 0.440 n10 26 n10_Xn 4 held 4 sinks 0
+## clusters
+   clusters Σ≥10: 1 · at c0 4261.8 · neutron-rich (mass/cells) [] · cells in neutron-rich clusters under m_tov 0
+step 920 Sc 746.5 R90 4.24
+   clusters Σ≥10: 1 · at c0 4281.2 · neutron-rich (mass/cells) [4281/8] · cells in neutron-rich clusters under m_tov 8
+step 940 Sc 1021.8 R90 1.41
+   clusters Σ≥10: 1 · at c0 4322.8 · neutron-rich (mass/cells) [4323/19] · cells in neutron-rich clusters under m_tov 19
+step 1000 Sc 1020.0 R90 2.00
+   clusters Σ≥10: 1 · at c0 4294.7 · neutron-rich (mass/cells) [4295/37] · cells in neutron-rich clusters under m_tov 37
+step 1100 Sc 480.9 R90 2.83
+   clusters Σ≥10: 1 · at c0 3340.1 · neutron-rich (mass/cells) [3340/41] · cells in neutron-rich clusters under m_tov 41
+step 1500 Sc 323.0 R90 10.77
+   clusters Σ≥10: 1 · at c0 2385.6 · neutron-rich (mass/cells) [2386/38] · cells in neutron-rich clusters under m_tov 38
+step 2000 Sc 214.4 R90 12.65
+   clusters Σ≥10: 1 · at c0 1697.9 · neutron-rich (mass/cells) [1698/38] · cells in neutron-rich clusters under m_tov 38
+step 3500 Sc 154.1 R90 15.62
+   clusters Σ≥10: 1 · at c0 1906.2 · neutron-rich (mass/cells) [1906/72] · cells in neutron-rich clusters under m_tov 72
+step 3750 Sc 122.4 R90 14.42
+   clusters Σ≥10: 1 · at c0 938.1 · neutron-rich (mass/cells) [938/29] · cells in neutron-rich clusters under m_tov 29
+step 10000 Sc 82.4 R90 17.20
+   clusters Σ≥10: 1 · at c0 598.5 · neutron-rich (mass/cells) [599/28] · cells in neutron-rich clusters under m_tov 28
+step 29208 Sc 45.1 R90 16.40
+== repro
+   clusters Σ≥10: 8 · at c0 2926.6 · neutron-rich (mass/cells) [] · cells in neutron-rich clusters under m_tov 0
+step 1400 Sc 124.3 R90 18.03
+   clusters Σ≥10: 8 · at c0 3157.6 · neutron-rich (mass/cells) [] · cells in neutron-rich clusters under m_tov 0
+step 1500 Sc 193.7 R90 17.49
+   clusters Σ≥10: 14 · at c0 3470.1 · neutron-rich (mass/cells) [] · cells in neutron-rich clusters under m_tov 0
+step 1600 Sc 323.3 R90 17.26
+   clusters Σ≥10: 24 · at c0 3687.8 · neutron-rich (mass/cells) [3686/16 3685/14 3634/14 3688/13] · cells in neutron-rich clusters under m_tov 57
+step 1700 Sc 1006.8 R90 16.12
+   clusters Σ≥10: 17 · at c0 3751.6 · neutron-rich (mass/cells) [3757/17 3752/16 3740/16] · cells in neutron-rich clusters under m_tov 49
+step 1800 Sc 1010.3 R90 9.49
+   clusters Σ≥10: 24 · at c0 3787.1 · neutron-rich (mass/cells) [3794/16 3787/17 3786/28] · cells in neutron-rich clusters under m_tov 61
+step 1900 Sc 892.3 R90 2.83
+   clusters Σ≥10: 24 · at c0 2931.9 · neutron-rich (mass/cells) [3782/39 2932/15 3785/37 3760/42] · cells in neutron-rich clusters under m_tov 133
+step 2000 Sc 742.5 R90 2.24
+   clusters Σ≥10: 24 · at c0 2959.7 · neutron-rich (mass/cells) [3668/45 3625/51 3709/46] · cells in neutron-rich clusters under m_tov 142
+step 2100 Sc 335.4 R90 3.00
+   clusters Σ≥10: 23 · at c0 3541.6 · neutron-rich (mass/cells) [3542/53 3515/49 3389/50] · cells in neutron-rich clusters under m_tov 152
+step 2200 Sc 332.9 R90 5.83
+   clusters Σ≥10: 21 · at c0 3338.2 · neutron-rich (mass/cells) [3400/55 3338/52 3236/52] · cells in neutron-rich clusters under m_tov 159
+step 2300 Sc 321.5 R90 7.00
+   clusters Σ≥10: 22 · at c0 3011.5 · neutron-rich (mass/cells) [3209/47 3012/48 3207/52] · cells in neutron-rich clusters under m_tov 147
+step 2400 Sc 270.3 R90 9.22
+   clusters Σ≥10: 20 · at c0 6648.7 · neutron-rich (mass/cells) [3054/50 2933/42 2755/39] · cells in neutron-rich clusters under m_tov 131
+step 2500 Sc 352.0 R90 10.05
+   clusters Σ≥10: 18 · at c0 2704.4 · neutron-rich (mass/cells) [2753/41 2555/38 2704/38] · cells in neutron-rich clusters under m_tov 117
+step 2600 Sc 282.6 R90 11.18
+   clusters Σ≥10: 19 · at c0 2622.5 · neutron-rich (mass/cells) [2595/39 2622/40 2437/39] · cells in neutron-rich clusters under m_tov 118
+step 2700 Sc 251.2 R90 12.65
+   clusters Σ≥10: 16 · at c0 3249.7 · neutron-rich (mass/cells) [2477/42 2475/37 2260/38] · cells in neutron-rich clusters under m_tov 117
+step 2800 Sc 292.5 R90 14.00
+   clusters Σ≥10: 14 · at c0 3488.9 · neutron-rich (mass/cells) [5968/86 2374/39 5895/110 3489/20] · cells in neutron-rich clusters under m_tov 59
+step 2900 Sc 802.1 R90 18.87
+   clusters Σ≥10: 13 · at c0 3691.5 · neutron-rich (mass/cells) [381/26 2254/38 5837/124] · cells in neutron-rich clusters under m_tov 64
+step 3000 Sc 392.9 R90 17.80
+   clusters Σ≥10: 13 · at c0 3788.4 · neutron-rich (mass/cells) [2160/38] · cells in neutron-rich clusters under m_tov 38
+step 3062 Sc 354.8 R90 13.89
+## 2026-11-03T19:04:46-05:00 linux-pc: twin cases (no adapter) — cargo test held_core::a_neutron / no_iron / hysteresis
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.62s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test held_core::a_neutron_core_is_held_under_m_tov_sb ... SR-HELD-NEUTRON twin: disks [0.95, 1.05, 0.95, 0.95] of m_tov_sb 4853.17 → mask [true, false, false, true] (2 held)
+SR-HELD-NEUTRON twin: disks [0.95, 1.05, 0.95, 1.05] of m_tov_sb 4853.17 → mask [true, false, false, false] (1 held)
+ok
+test held_core::no_iron_is_held ... SR-HELD-NO-IRON twin: iron never held at Σ 310.2 or 379.1, a trace of 1e-30 neither; C/O held, released at X_Fe 1e-4
+ok
+test held_core::the_hold_has_its_hysteresis ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 492 filtered out; finished in 0.15s
+
+## 2026-11-03T19:06:21-05:00 Verify 1 on laserax-ai-server (RTX 4090): SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core floors twin --task M0-T130
+held_core  24/0/0     150.25 s  GO · step 1/3, 2 left
+floors     10/2/0      13.89 s  NO-GO · step 2/3, 1 left
+twin       6/0/0       12.64 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-T130.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+4be432f25780
+anchor: 252 path×scope entries moved by this run
+anchor: 293 paths checked · 385 skipped (3 classes) · 120 never checked · 1 stale · 0 unclassified · 0 owed · 414 covered of 799 visible
+FAILED:
+  floors: 2 failed · log milestones/m0/logs/M0-T130.floors.log
+verify: 40 passed, 2 failed, 0 skipped · 2/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 150.25 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.08->0.89
+=== NO-GO: floors: 2 failed · log milestones/m0/logs/M0-T130.floors.log ===
+## 2026-11-03T19:10:26-05:00 Verify 1, take 2 (floors' hold field on field_constants) on laserax-ai-server (RTX 4090)
+held_core  24/0/0     146.61 s  GO · step 1/3, 2 left
+floors     8/4/0        9.33 s  NO-GO · step 2/3, 1 left
+twin       6/0/0        8.73 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-T130.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+0cb7ae02eb44
+anchor: 253 path×scope entries moved by this run
+anchor: 293 paths checked · 385 skipped (3 classes) · 120 never checked · 1 stale · 0 unclassified · 0 owed · 414 covered of 799 visible
+FAILED:
+  floors: 4 failed · log milestones/m0/logs/M0-T130.floors.log
+verify: 38 passed, 4 failed, 0 skipped · 2/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 146.61 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.24->1.05
+=== NO-GO: floors: 4 failed · log milestones/m0/logs/M0-T130.floors.log ===
+## 2026-11-03T19:13:17-05:00 Verify 1, take 3 (field_constants: K1n = K2n = 0) on laserax-ai-server (RTX 4090)
+held_core  24/0/0     146.54 s  GO · step 1/3, 2 left
+floors     12/0/0       9.74 s  GO · step 2/3, 1 left
+twin       6/0/0        8.63 s  GO · step 3/3, 0 left
+logs: milestones/m0/logs/M0-T130.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+e2af43374d4b
+anchor: 139 path×scope entries moved by this run
+anchor: 407 paths checked · 385 skipped (3 classes) · 0 never checked · 7 stale · 0 unclassified · 0 owed · 414 covered of 799 visible
+verify: 42 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 146.54 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.93->1.02
+=== GO ===
+## 2026-11-03T19:16:55-05:00 Verify 3: the three lives on laserax-ai-server (RTX 4090), logs/M0-T130.scratch.lives.sh, out /tmp/t130
+all done wall 451 s
+== /tmp/t130/massive_a.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=12.537770 until=none
+massive_a exit 0 wall 100 s
+== /tmp/t130/massive_b.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=14394 sim_time=79.136538 until=met
+massive_b exit 0 wall 451 s
+== /tmp/t130/repro.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1700 sim_time=16.581622 until=none
+repro exit 0 wall 126 s
+== /tmp/t130/life01.out
+SR-ERROR bad arguments: --bracket takes LO,HI in sandbox mass with 0 < LO < HI, got "4572.394,4572.394"
+life01 exit 4 wall 0 s
+{"detail":{"by":"fuel","mass_sb":6674.966924982145},"kind":"ignition","object":1,"sim_time":3.888845312874764,"step":260}
+{"detail":{"mass_sb":6670.579011557624},"kind":"core_collapse","object":1,"sim_time":7.6487111484166235,"step":900}
+{"detail":{"mass_sb":6670.297982918099},"kind":"supernova","object":1,"sim_time":7.742504049791023,"step":920}
+{"detail":{"held_t":65.00181868392974,"hold_t":63.71313318046369,"mass_sb":3919.348620242905,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":79.13653762149625,"step":14394}
+
+{"detail":{"mass_sb":66521.2905399371},"kind":"core_collapse","object":1,"sim_time":10.435956890461966,"step":1700}
+d87_cont
+## Verify 3 reads (scratch t130rad + r13core on /tmp/t130, RTX 4090 lives)
+    Finished `release` profile [optimized] target(s) in 0.33s
+== Massive (G-disk) 900–2,000 every 20, then every 250
+step 900 held 0 (+0 −0) · max-Σ (300,199) Σ 346.1 M(r≤4/8/12/16/24/32) 4251/4361/4450/4629/5139/5451 · held groups: 
+step 1000 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4351/4362/4385/4431/4600/5057 · held groups: (299,199) 4351/4362/4385/4431/4600/5057
+step 1100 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4371/4377/4389/4412/4461/4590 · held groups: (299,199) 4371/4377/4389/4412/4461/4590
+step 1200 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4384/4389/4397/4409/4439/4480 · held groups: (299,199) 4384/4389/4397/4409/4439/4480
+step 1300 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4394/4397/4402/4409/4428/4453 · held groups: (299,199) 4394/4397/4402/4409/4428/4453
+step 1400 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4400/4402/4405/4409/4422/4439 · held groups: (299,199) 4400/4402/4405/4409/4422/4439
+step 1500 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4404/4405/4407/4410/4418/4430 · held groups: (299,199) 4404/4405/4407/4410/4418/4430
+step 1600 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4406/4407/4408/4410/4415/4423 · held groups: (299,199) 4406/4407/4408/4410/4415/4423
+step 1700 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4408/4408/4409/4410/4414/4419 · held groups: (299,199) 4408/4408/4409/4410/4414/4419
+step 1800 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4409/4409/4410/4411/4413/4416 · held groups: (299,199) 4409/4409/4410/4411/4413/4416
+step 1900 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4410/4410/4410/4411/4412/4415 · held groups: (299,199) 4410/4410/4410/4411/4412/4415
+step 2000 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4410/4411/4411/4411/4412/4414 · held groups: (299,199) 4410/4411/4411/4411/4412/4414
+total: 4 holds, 0 releases seen between consecutive dumps
+step 2250 held 4 (+4 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 4285/4355/4395/4410/4413/4414 · held groups: (299,199) 4285/4355/4395/4410/4413/4414
+step 4250 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 3129/3244/3410/3627/4240/4327 · held groups: (299,199) 3129/3244/3410/3627/4240/4327
+step 6250 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 3075/3124/3181/3255/3451/3650 · held groups: (299,199) 3075/3124/3181/3255/3451/3650
+step 8250 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 3067/3078/3093/3115/3168/3268 · held groups: (299,199) 3067/3078/3093/3115/3168/3268
+step 10250 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 3111/3213/3484/3599/3645/3662 · held groups: (299,199) 3111/3213/3484/3599/3645/3662
+step 12250 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 3056/3149/3291/3395/3450/3473 · held groups: (299,199) 3056/3149/3291/3395/3450/3473
+step 14250 held 4 (+0 −0) · max-Σ (299,199) Σ 783.1 M(r≤4/8/12/16/24/32) 3051/3123/3240/3355/3490/3521 · held groups: (299,199) 3051/3123/3240/3355/3490/3521
+total: 4 holds, 0 releases seen between consecutive dumps
+== Repro (G-disk)
+step 1400 held 0 (+0 −0) · max-Σ (262,160) Σ 124.3 M(r≤4/8/12/16/24/32) 2372/3328/3789/4503/6619/8699 · held groups: 
+step 1500 held 0 (+0 −0) · max-Σ (260,159) Σ 193.7 M(r≤4/8/12/16/24/32) 3002/3671/4134/4756/6607/8439 · held groups: 
+step 1600 held 0 (+0 −0) · max-Σ (341,157) Σ 323.3 M(r≤4/8/12/16/24/32) 3522/3738/3994/4437/6195/7986 · held groups: 
+step 1700 held 7 (+7 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3707/3776/3899/4116/5356/7738 · held groups: (257,156) 3708/3764/3868/4103/5701/7668 | (342,156) 3710/3769/3877/4089/5370/7615 | (256,243) 3707/3776/3899/4116/5356/7738 | (342,243) 3709/3768/3876/4086/5349/7607
+step 1800 held 9 (+2 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3796/3839/3907/4030/4443/7179 · held groups: (257,156) 3774/3799/3842/3926/4688/7213 | (342,156) 3786/3816/3869/3977/4440/6978 | (256,243) 3796/3839/3907/4030/4443/7179 | (342,243) 3785/3815/3868/3976/4432/6962
+step 1900 held 12 (+3 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3882/3910/3958/4040/4270/5358 · held groups: (257,156) 3810/3832/3858/3900/4197/6489 | (342,156) 3839/3862/3899/3968/4258/5315 | (342,243) 3840/3863/3901/3969/4256/5278 | (256,243) 3882/3910/3958/4040/4270/5358 | (299,268) 2921/2965/3028/3118/3408/4317
+step 2000 held 15 (+3 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3944/3972/4013/4072/4224/4615 · held groups: (257,156) 3584/3808/3875/3903/4036/5899 | (342,156) 3887/3907/3938/3988/4180/4674 | (369,199) 2974/3011/3053/3112/3280/3651 | (230,201) 2982/3011/3053/3111/3276/3624 | (342,243) 3891/3911/3942/3992/4182/4657 | (256,243) 3944/3972/4013/4072/4224/4615 | (299,268) 2995/3023/3063/3118/3281/3631
+step 2100 held 15 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3986/4023/4057/4100/4206/4397 · held groups: (257,156) 3276/3639/3827/3883/3966/5727 | (342,156) 3934/3951/3976/4014/4139/4540 | (369,199) 2725/3026/3091/3130/3234/3408 | (230,201) 2816/3057/3089/3128/3231/3399 | (342,243) 3940/3958/3984/4022/4147/4524 | (256,243) 3986/4023/4057/4100/4206/4397 | (299,268) 2917/3072/3100/3138/3240/3408
+step 2200 held 15 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3982/4043/4070/4108/4196/4327 · held groups: (257,156) 3004/3415/3715/3826/3933/5681 | (342,156) 3968/3989/4010/4038/4123/4439 | (369,199) 2353/2858/3048/3149/3224/3324 | (230,201) 2459/2954/3093/3143/3221/3331 | (342,243) 3974/3998/4019/4048/4134/4420 | (256,243) 3982/4043/4070/4108/4196/4327 | (299,268) 2612/2992/3116/3159/3230/3331
+step 2300 held 15 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3857/4040/4090/4116/4186/4290 · held groups: (257,156) 2743/3203/3550/3753/3905/6003 | (342,156) 3972/4022/4038/4059/4117/4341 | (369,199) 1980/2643/2917/3103/3221/3294 | (230,201) 2079/2742/3016/3140/3219/3312 | (342,243) 3920/3990/4031/4064/4127/4328 | (256,243) 3857/4040/4090/4116/4186/4290 | (299,268) 2297/2851/3055/3139/3232/3306
+step 2400 held 15 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3711/3911/4029/4092/4176/4260 · held groups: (257,156) 2523/3002/3380/3637/3846/6190 | (342,156) 3915/4026/4059/4075/4118/4240 | (369,199) 1635/2363/2749/2995/3200/3288 | (230,201) 1706/2484/2876/3063/3217/3307 | (342,243) 3774/3916/4012/4052/4116/4284 | (256,243) 3711/3911/4029/4092/4176/4260 | (299,268) 1961/2675/2952/3106/3216/3296
+step 2500 held 15 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3588/3854/3969/4042/4134/4226 · held groups: (257,156) 2303/2800/3237/3507/3845/7542 | (342,156) 3809/3967/4047/4085/4123/4187 | (369,199) 1387/2064/2526/2857/3172/3286 | (230,201) 1403/2218/2690/2957/3183/3317 | (342,243) 3597/3688/3887/4020/4105/4287 | (256,243) 3588/3854/3969/4042/4134/4226 | (299,268) 1672/2454/2830/3034/3200/3278
+step 2600 held 16 (+1 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3404/3774/3953/4012/4099/4182 · held groups: (235,139) 3544/3819/4050/4211/4823/7481 | (257,156) 2116/2545/3055/3380/3980/7932 | (342,156) 3667/3869/4006/4076/4128/4189 | (369,199) 1192/1750/2203/2644/3112/3298 | (230,201) 1138/1860/2481/2815/3122/3329 | (342,243) 3427/3540/3627/3809/4085/4357 | (256,243) 3404/3774/3953/4012/4099/4182 | 
+step 2700 held 16 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3249/3623/3920/4003/4075/4162 · held groups: (235,139) 3623/3881/4127/4325/4950/7501 | (257,156) 1973/2312/2809/3192/3845/7970 | (342,156) 3510/3755/3960/4056/4131/4266 | (369,199) 1123/1456/1827/2285/2993/3339 | (230,201) 1095/1517/2058/2644/3045/3286 | (342,243) 3258/3388/3515/3639/3932/4648 | (256,243) 3249/3623/3920/4003/4075/4162 | 
+step 2800 held 16 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 3097/3438/3814/3979/4061/4455 · held groups: (235,139) 3212/3974/4246/4502/5108/7562 | (257,156) 1874/2153/2547/2952/4035/8019 | (342,156) 3367/3636/3910/4039/4140/6598 | (369,199) 1123/1314/1507/1814/2704/3390 | (230,201) 1079/1360/1654/2184/2956/3200 | (342,243) 3092/3221/3387/3534/3819/6060 | (256,243) 3097/3438/3814/3979/4061/4455 | 
+step 2900 held 19 (+3 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 2999/3250/3696/3932/4158/5802 · held groups: (362,136) 3471/3622/3791/3875/4118/7690 | (235,139) 3093/3996/4316/4605/5245/7653 | (257,156) 1848/2103/2396/2759/4137/8311 | (342,156) 3271/3575/3867/4027/4317/8085 | (369,199) 1116/1235/1364/1530/2188/3422 | (230,201) 1101/1256/1440/1749/2748/3143 | (342,243) 2976/3093/3256/3454/4079/8025 | 
+step 3000 held 19 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 2934/3211/3553/3841/4213/7859 · held groups: (362,136) 3258/3627/3693/3766/4099/7656 | (235,139) 2855/4036/4441/4738/5417/7740 | (257,156) 1816/2046/2303/2650/4461/8844 | (342,156) 3204/3518/3868/4065/4328/8204 | (369,199) 1064/1172/1268/1378/1721/2919 | (230,201) 1085/1204/1328/1506/2227/3038 | (342,243) 2906/3020/3173/3433/4786/8557 | 
+step 3062 held 19 (+0 −0) · max-Σ (256,243) Σ 788.9 M(r≤4/8/12/16/24/32) 2902/3200/3497/3810/4791/7898 · held groups: (362,136) 3068/3570/3698/3742/4039/7640 | (235,139) 2764/3828/4553/4885/5517/7817 | (257,156) 1801/2008/2261/2589/4840/9097 | (342,156) 3165/3497/3920/4096/4365/8403 | (369,199) 1026/1115/1217/1312/1560/2275 | (230,201) 1060/1172/1279/1421/1907/2890 | (342,243) 2897/3005/3183/3614/5442/8126 | 
+total: 19 holds, 0 releases seen between consecutive dumps
+== Repro, today (M0-D152, none held): max-Σ only
+step 1400 held 0 (+0 −0) · max-Σ (262,160) Σ 124.3 M(r≤4/8/12/16/24/32) 2372/3328/3789/4503/6619/8699 · held gro
+step 1500 held 0 (+0 −0) · max-Σ (260,159) Σ 193.7 M(r≤4/8/12/16/24/32) 3002/3671/4134/4756/6607/8439 · held gro
+step 1600 held 0 (+0 −0) · max-Σ (341,157) Σ 323.3 M(r≤4/8/12/16/24/32) 3522/3738/3994/4437/6195/7986 · held gro
+step 1700 held 0 (+0 −0) · max-Σ (343,243) Σ 1006.8 M(r≤4/8/12/16/24/32) 3717/3781/3905/4139/5590/7685 · held gr
+step 1800 held 0 (+0 −0) · max-Σ (343,244) Σ 1010.3 M(r≤4/8/12/16/24/32) 3789/3829/3898/4042/4683/7338 · held gr
+step 1900 held 0 (+0 −0) · max-Σ (344,245) Σ 892.3 M(r≤4/8/12/16/24/32) 3827/3874/3937/4044/4405/6568 · held gro
+step 2000 held 0 (+0 −0) · max-Σ (370,199) Σ 742.5 M(r≤4/8/12/16/24/32) 2965/3001/3052/3120/3314/3781 · held gro
+step 2100 held 0 (+0 −0) · max-Σ (371,199) Σ 335.4 M(r≤4/8/12/16/24/32) 3023/3055/3090/3135/3255/3475 · held gro
+step 2200 held 0 (+0 −0) · max-Σ (345,151) Σ 332.9 M(r≤4/8/12/16/24/32) 3476/3935/4050/4130/4306/4913 · held gro
+step 2300 held 0 (+0 −0) · max-Σ (345,248) Σ 321.5 M(r≤4/8/12/16/24/32) 3285/3840/3990/4092/4229/4766 · held gro
+step 2400 held 0 (+0 −0) · max-Σ (247,249) Σ 270.3 M(r≤4/8/12/16/24/32) 3002/3660/3943/4103/4285/5896 · held gro
+step 2500 held 0 (+0 −0) · max-Σ (242,140) Σ 352.0 M(r≤4/8/12/16/24/32) 4080/6023/7228/7479/7737/7889 · held gro
+step 2600 held 0 (+0 −0) · max-Σ (346,249) Σ 282.6 M(r≤4/8/12/16/24/32) 2786/3229/3627/3852/4059/5668 · held gro
+step 2700 held 0 (+0 −0) · max-Σ (346,249) Σ 251.2 M(r≤4/8/12/16/24/32) 2680/3047/3426/3728/3976/7100 · held gro
+step 2800 held 0 (+0 −0) · max-Σ (366,267) Σ 292.5 M(r≤4/8/12/16/24/32) 3223/3634/3874/4148/4811/7782 · held gro
+step 2900 held 0 (+0 −0) · max-Σ (363,264) Σ 802.1 M(r≤4/8/12/16/24/32) 3577/3758/4021/4344/7343/7806 · held gro
+step 3000 held 0 (+0 −0) · max-Σ (361,262) Σ 392.9 M(r≤4/8/12/16/24/32) 3759/3963/4224/5089/7421/7769 · held gro
+step 3062 held 0 (+0 −0) · max-Σ (359,260) Σ 354.8 M(r≤4/8/12/16/24/32) 3811/4118/5194/6936/7403/7729 · held gro
+total: 0 holds, 0 releases seen between consecutive dumps
+step 940 t 7.828 held 4 c (299,199) Sc 783.1 Tc_sb 0.050 Tc_K 1.000e1 eth/cold_c 5.48e-5 Xn_c 0.560 XFe_c 0.440 | core n 16 M 4261.3 Hth 1.0404e5 Habove 1.0372e5 Ecold 2.4895e6 at_floor 3 TKmax 1.719e7 | R90(r<=20) 2.24
+step 1000 t 8.116 held 4 c (299,199) Sc 783.1 Tc_sb 0.432 Tc_K 1.238e2 eth/cold_c 7.76e-4 Xn_c 0.560 XFe_c 0.440 | core n 16 M 4348.6 Hth 5.7054e4 Habove 5.6722e4 Ecold 2.5752e6 at_floor 3 TKmax 1.033e7 | R90(r<=20) 2.24
+step 2000 t 12.538 held 4 c (299,199) Sc 783.1 Tc_sb 27.153 Tc_K 4.111e5 eth/cold_c 4.88e-2 Xn_c 0.560 XFe_c 0.440 | core n 24 M 4366.0 Hth 1.5103e5 Habove 1.5069e5 Ecold 2.4750e6 at_floor 5 TKmax 8.390e6 | R90(r<=20) 2.24
+step 5000 t 27.787 held 4 c (299,199) Sc 783.1 Tc_sb 61.184 Tc_K 2.984e7 eth/cold_c 1.10e-1 Xn_c 0.560 XFe_c 0.440 | core n 6 M 3036.3 Hth 1.9614e5 Habove 1.9594e5 Ecold 2.0991e6 at_floor 0 TKmax 2.984e7 | R90(r<=20) 11.00
+step 10000 t 54.661 held 4 c (299,199) Sc 783.1 Tc_sb 44.738 Tc_K 5.075e6 eth/cold_c 8.03e-2 Xn_c 0.560 XFe_c 0.440 | core n 24 M 3300.4 Hth 1.6425e5 Habove 1.6402e5 Ecold 2.1124e6 at_floor 0 TKmax 5.075e6 | R90(r<=20) 15.30
+step 14394 t 79.137 held 4 c (299,199) Sc 783.1 Tc_sb 37.537 Tc_K 2.098e6 eth/cold_c 6.74e-2 Xn_c 0.560 XFe_c 0.440 | core n 5 M 3014.0 Hth 1.4280e5 Habove 1.4260e5 Ecold 2.0972e6 at_floor 0 TKmax 2.181e6 | R90(r<=20) 7.81
+Massive (G-disk) after the supernova (s_920 → ending 14,394): floor_added 1.3503e+07 radiated 5.3224e+06 ratio 2.54 (today 3.93, F 1.67)
+Repro (G-disk) core_collapse at 1,700 → 3,062: floor_added 1.1712e+08 radiated 1.0158e+07 ratio 11.53; no supernova event
+s_1400.bin
+s_1400.observers.json
+s_1500.bin
+Massive (G-disk) s_1000 → ending 14,394 (M0-R13s window): floor_added 8.5081e+06 radiated 5.1037e+06 ratio 1.67 (today 3.93, F 1.67: 8.51e6 / 5.10e6)
+## 2026-11-03T19:41:11-05:00 claim on linux-pc: python3 tools/pb/verify.py --changed --task M0-T130
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why strings: stale: milestones/m0/m0_contrat.md
+why watch_only: stale: milestones/m0/m0_contrat.md
+plan_lint         823/0/0      0.11 s  GO · step 1/3, 2 left
+strings           3/0/0        4.93 s  GO · step 2/3, 1 left
+watch_only        1/0/0        0.11 s  GO · step 3/3, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 136 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 125 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 147 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+stage_order       NOT RUN (not impacted: its 146 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+multi             NOT RUN (not impacted: its 143 path(s) checked at the anchor)
+edits             NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+edits_file        NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 127 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 127 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 128 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 142 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 148 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 142 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 153 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 156 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 152 path(s) checked at the anchor)
+measure_ui        NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 144 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 143 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+held_core         NOT RUN (not impacted: its 126 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 154 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 145 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 143 path(s) checked at the anchor)
+views             NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+extents           NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+glow              NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+frames            NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+ui_topbar         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+ui_banner         NOT RUN (not impacted: its 134 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+ui_tools          NOT RUN (not impacted: its 135 path(s) checked at the anchor)
+ui_presets        NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+ui_display        NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+ui_star           NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+ui_legend         NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+ui_zoom           NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+ui_remnant        NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+ui_inspect        NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-T130.<scope>.log · record: loop_times.jsonl · tree 7b483ca72d60+6accedb8e4cb
+anchor: 3 path×scope entries moved by this run
+anchor: 413 paths checked · 386 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 413 covered of 799 visible
+skipped   378  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 827 passed, 0 failed, 0 skipped · 3/3 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 85 not impacted · 4.93 s + loop 0.09 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 2.42->2.55 · base: M0-T130's start 2026-11-03T18:54:16-05:00
+=== GO ===
+## 2026-11-03T21:06:19-05:00 linux-pc: rerun on M0-D153's tree — rung_record now: model=claude-opus-5-5 level=high plugin=installed
+## md5 of the 10 D153 files, linux-pc vs laserax-ai-server checkout: SAME (last edit 20:11:35; D153 Verify 1 take 2 20:13, lives build 20:16)
+## Verify 1 and 3: not re-run (green on the same tree, logs/M0-D153.{log,held_core,floors,twin,sink,lives}.log)
+## server grep -c "heat unconverged": d153/massive_b 13, d153/cost_today.b 112, build/r13/cB 110; t130/*, d152/*, d153 others 0 -> M0-D154

@@ -1,0 +1,235 @@
+# M0-D153 — raw lines (2026-11-03T19:50:22-05:00)
+## linux-pc: build + twin neutron case
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.28s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test held_core::a_neutron_core_is_held_under_m_tov_sb ... SR-HELD-NEUTRON twin: disks [0.95, 1.05, 0.95, 0.95] of m_tov_sb 4853.17 → mask [true, false, false, true] (2 held)
+SR-HELD-NEUTRON twin: disks [0.95, 1.05, 0.95, 1.05] of m_tov_sb 4853.17 → mask [true, false, false, false] (1 held)
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 494 filtered out; finished in 0.12s
+
+## 2026-11-03T19:53:44-05:00 linux-pc: twin case a_neutron_core_is_held_under_m_tov_sb PASS (1 passed); rsync to laserax-ai-server refused twice by auto mode (Data Exfiltration) — awaiting the lead
+## 2026-11-03T20:08:17-05:00 laserax-ai-server: Verify 1 (held_core floors twin sink), RTX 4090
+held_core  21/3/0     156.53 s  NO-GO · step 1/4, 3 left
+floors     12/0/0      15.20 s  GO · step 2/4, 2 left
+twin       6/0/0       13.09 s  GO · step 3/4, 1 left
+sink       34/0/0      19.45 s  GO · step 4/4, 0 left
+logs: milestones/m0/logs/M0-D153.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+f94b3e21a0b3
+anchor: 144 path×scope entries moved by this run
+anchor: 286 paths checked · 386 skipped (3 classes) · 127 never checked · 1 stale · 0 unclassified · 0 owed · 414 covered of 800 visible
+FAILED:
+  held_core: 3 failed · log milestones/m0/logs/M0-D153.held_core.log
+verify: 73 passed, 3 failed, 0 skipped · 3/4 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 156.53 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.0->1.01
+=== NO-GO: held_core: 3 failed · log milestones/m0/logs/M0-D153.held_core.log ===
+## 2026-11-03T20:11:40-05:00 linux-pc: held_core twin pull cases after gate_off
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 6.44s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test held_core::a_held_core_books_none_of_its_own_pull ... SR-HELD-OWN-PULL held [0.0, 0.0]; P2's whole field summed over the core [1.5134560271690134e-12, -4.483524662646232e-12]
+ok
+test held_core::a_held_core_books_the_free_gas_pull_as_its_reaction ... SR-HELD-GAS-PULL held [1.0128070249507397, 0.3840593557873474]; minus the core's pull on the gas [1.0128070249707597, 0.3840593557936977] (off 1.939e-11)
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 493 filtered out; finished in 0.03s
+
+## 2026-11-03T20:13:22-05:00 laserax-ai-server: Verify 1 take 2 (held_core floors twin sink), RTX 4090
+970758309cee
+held_core  24/0/0     151.99 s  GO · step 1/4, 3 left
+floors     12/0/0      10.89 s  GO · step 2/4, 2 left
+twin       6/0/0        8.88 s  GO · step 3/4, 1 left
+sink       34/0/0      15.20 s  GO · step 4/4, 0 left
+logs: milestones/m0/logs/M0-D153.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+70753fc1a3a3
+anchor: 145 path×scope entries moved by this run
+anchor: 407 paths checked · 386 skipped (3 classes) · 0 never checked · 7 stale · 0 unclassified · 0 owed · 414 covered of 800 visible
+verify: 76 passed, 0 failed, 0 skipped · 4/4 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 151.99 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.25->0.99
+=== GO ===
+## 2026-11-03T20:16:54-05:00 laserax-ai-server: release build of sandbox-reactions
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.53s
+-rwxrwxr-x 2 ybelanger ybelanger 23199064 Nov  3 20:16 build/target/release/sandbox-reactions
+## 2026-11-03T20:17:07-05:00 laserax-ai-server: Verify 3, the three lives (logs/M0-D153.scratch.lives.sh piped over ssh), out /tmp/d153
+all done wall 570 s
+## 2026-11-03T20:27:00-05:00 Verify 3 reads (t130rad, r13core on /tmp/d153; RTX 4090 lives)
+s_4750.bin
+s_4990.bin
+== Massive 860-2000 (every 20) + b
+step 860 held 0 (+0 −0) · max-Σ (300,199) Σ 285.9 M(r≤4/8/12/16/24/32) 4144/4364/4525/4823/5302/5520 · held groups: 
+step 880 held 0 (+0 −0) · max-Σ (300,199) Σ 312.9 M(r≤4/8/12/16/24/32) 4203/4362/4482/4728/5229/5484 · held groups: 
+step 900 held 0 (+0 −0) · max-Σ (300,199) Σ 346.1 M(r≤4/8/12/16/24/32) 4251/4361/4450/4629/5139/5451 · held groups: 
+step 920 held 0 (+0 −0) · max-Σ (300,199) Σ 746.5 M(r≤4/8/12/16/24/32) 4297/4360/4426/4552/5036/5415 · held groups: 
+step 940 held 0 (+0 −0) · max-Σ (300,199) Σ 1021.8 M(r≤4/8/12/16/24/32) 4336/4363/4416/4517/4955/5374 · held groups: 
+step 960 held 0 (+0 −0) · max-Σ (300,200) Σ 1033.8 M(r≤4/8/12/16/24/32) 4345/4367/4413/4497/4893/5329 · held groups: 
+step 980 held 2 (+2 −0) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4348/4366/4405/4471/4801/5255 · held groups: (300,199) 4348/4366/4405/4471/4801/5255
+step 1000 held 4 (+2 −0) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4351/4364/4395/4448/4681/5151 · held groups: (300,199) 4351/4364/4395/4448/4681/5151
+step 1020 held 4 (+1 −1) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4353/4364/4388/4434/4594/5041 · held groups: (300,199) 4353/4364/4388/4434/4594/5041
+step 1040 held 4 (+1 −1) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4356/4365/4384/4425/4540/4926 · held groups: (300,199) 4356/4365/4384/4425/4540/4926
+step 1060 held 5 (+1 −0) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4360/4367/4382/4417/4503/4803 · held groups: (300,199) 4360/4367/4382/4417/4503/4803
+step 1080 held 5 (+0 −0) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4363/4369/4382/4410/4479/4690 · held groups: (300,199) 4363/4369/4382/4410/4479/4690
+step 1160 held 6 (+1 −0) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4374/4378/4387/4401/4445/4502 · held groups: (300,199) 4374/4378/4387/4401/4445/4502
+step 1320 held 6 (+1 −0) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4392/4395/4399/4406/4425/4449 · held groups: (300,199) 4392/4395/4399/4406/4425/4449
+step 1480 held 6 (+1 −0) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4404/4406/4409/4412/4422/4436 · held groups: (300,199) 4404/4406/4409/4412/4422/4436
+step 1640 held 5 (+0 −1) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4412/4414/4415/4418/4424/4432 · held groups: (300,199) 4412/4414/4415/4418/4424/4432
+step 1800 held 8 (+2 −1) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4418/4419/4420/4421/4426/4431 · held groups: (300,199) 4418/4419/4420/4421/4426/4431
+step 1960 held 7 (+1 −0) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4422/4423/4424/4425/4427/4431 · held groups: (300,199) 4422/4423/4424/4425/4427/4431
+step 3500 held 10 (+1 −1) · max-Σ (300,199) Σ 1085.4 M(r≤4/8/12/16/24/32) 4434/4434/4434/4435/4435/4435 · held groups: (300,199) 4434/4434/4434/4435/4435/4435
+total: 65 holds, 56 releases seen between consecutive dumps
+== Repro
+step 1400 held 0 (+0 −0) · max-Σ (262,160) Σ 124.3 M(r≤4/8/12/16/24/32) 2372/3328/3789/4503/6619/8699 · held groups: 
+step 1500 held 0 (+0 −0) · max-Σ (260,159) Σ 193.7 M(r≤4/8/12/16/24/32) 3002/3671/4134/4756/6607/8439 · held groups: 
+step 1600 held 0 (+0 −0) · max-Σ (341,157) Σ 323.3 M(r≤4/8/12/16/24/32) 3522/3738/3994/4437/6195/7986 · held groups: 
+step 1700 held 0 (+0 −0) · max-Σ (343,243) Σ 1006.8 M(r≤4/8/12/16/24/32) 3717/3781/3905/4139/5590/7685 · held groups: 
+step 1800 held 3 (+3 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 3796/3835/3905/4051/4710/7351 · held groups: (343,155) 3796/3835/3905/4051/4710/7351 | (255,244) 3776/3830/3912/4058/4613/7517 | (343,244) 3790/3829/3898/4042/4677/7334
+step 1900 held 6 (+3 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 3859/3888/3936/4027/4362/6139 · held groups: (343,155) 3859/3888/3936/4027/4362/6139 | (255,244) 3831/3872/3937/4031/4283/5843 | (343,244) 3847/3878/3925/4013/4337/6009
+step 2000 held 8 (+2 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 3738/3938/3980/4046/4279/4910 · held groups: (343,155) 3738/3938/3980/4046/4279/4910 | (369,199) 2966/2998/3044/3108/3292/3694 | (255,244) 3890/3920/3968/4036/4209/4751 | (343,244)
+step 2100 held 10 (+2 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 3074/3592/3980/4065/4234/4679 · held groups: (343,155) 3074/3592/3980/4065/4234/4679 | (369,199) 2901/3046/3077/3120/3234/3422 | (255,244) 3940/3966/4003/4050/4167/4398 | (343,244
+step 2200 held 10 (+0 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 2462/3060/3700/3934/4204/4598 · held groups: (343,155) 2462/3060/3700/3934/4204/4598 | (369,199) 2563/2998/3094/3136/3216/3339 | (255,244) 3983/4002/4031/4067/4153/4291 | (343,244
+step 2300 held 10 (+0 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 1929/2606/3426/3794/4075/4517 · held groups: (343,155) 1929/2606/3426/3794/4075/4517 | (369,199) 2175/2819/3055/3141/3222/3339 | (255,244) 4017/4033/4054/4081/4147/4245 | (343,244
+step 2400 held 10 (+0 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 1487/2160/3247/3674/3994/4363 · held groups: (343,155) 1487/2160/3247/3674/3994/4363 | (369,199) 1816/2596/2983/3101/3238/3345 | (255,244) 4043/4055/4073/4094/4145/4221 | (343,244
+step 2500 held 10 (+0 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 1187/1600/2998/3597/3911/4183 · held groups: (343,155) 1187/1600/2998/3597/3911/4183 | (369,199) 1518/2325/2837/3063/3246/3354 | (255,244) 4064/4073/4086/4104/4145/4205 | (343,244
+step 2600 held 10 (+0 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 1025/1262/2519/3499/3856/4063 · held groups: (343,155) 1025/1262/2519/3499/3856/4063 | (369,199) 1242/1971/2628/2973/3247/3355 | (255,244) 4080/4088/4098/4112/4146/4196 | (343,244
+step 2700 held 10 (+0 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 953/1256/2195/3318/3819/4009 · held groups: (343,155) 953/1256/2195/3318/3819/4009 | (369,199) 1147/1656/2290/2835/3222/3361 | (255,244) 4093/4100/4109/4119/4146/4199 | (343,244) 
+step 2800 held 10 (+0 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 1058/1417/2137/3083/3742/5058 · held groups: (343,155) 1058/1417/2137/3083/3742/5058 | (369,199) 1122/1447/1902/2520/3170/3399 | (255,244) 4107/4112/4118/4126/4148/4205 | (343,244
+step 2900 held 12 (+2 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 1175/1526/2187/2887/3638/7521 · held groups: (364,134) 3447/3666/3810/3964/4397/5929 | (343,155) 1175/1526/2187/2887/3638/7521 | (369,199) 1122/1329/1621/2085/3082/3429 | (255,244
+step 3000 held 13 (+1 −0) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 1238/1638/2313/2768/3436/7314 · held groups: (364,134) 3570/3724/3818/3936/4274/5851 | (343,155) 1238/1638/2313/2768/3436/7314 | (369,199) 1124/1292/1473/1729/2820/3421 | (255,244
+step 3062 held 12 (+0 −1) · max-Σ (343,155) Σ 866.4 M(r≤4/8/12/16/24/32) 1289/1812/2384/2714/3290/7175 · held groups: (364,134) 3181/3710/3841/3934/4199/6045 | (343,155) 1289/1812/2384/2714/3290/7175 | (369,199) 1108/1277/1437/1629/2464/3371 | (255,244
+total: 13 holds, 1 releases seen between consecutive dumps
+{}
+## 2026-11-03T20:27:58-05:00 laserax-ai-server: today's tree (HEAD's crates) built in /tmp/d153/today for the cost timing
+patching file crates/sr-engine/shaders/floors.wgsl
+patching file crates/sr-engine/src/step/mod.rs
+patching file crates/sr-engine/tests/gpu/floors.rs
+patching file crates/sr-engine/tests/gpu/held_core.rs
+patching file crates/sr-engine/tests/gpu/sink.rs
+patching file crates/sr-physics/src/reference/floors.rs
+0
+/tmp/d153/today
+
+error: could not compile `sr-physics` (lib) due to 1 previous error
+## 2026-11-03T20:29:00-05:00 laserax-ai-server: the cost (RTX 4090, each run alone, in sequence)
+'today': steps 0-2000 87.0 s · 2000-3000 from the held s_2000 0.6 s
+SR-HEADLESS DONE steps=2000 sim_time=12.839809 until=none SR-HEADLESS DONE steps=2000 sim_time=12.663946 until=unmet 
+'d153': steps 0-2000 113.8 s · 2000-3000 from the held s_2000 0.6 s
+SR-HEADLESS DONE steps=2000 sim_time=12.663946 until=none SR-HEADLESS DONE steps=2000 sim_time=12.663946 until=unmet 
+'today': steps 0-2000 81.2 s · 2000-3000 from the held s_2000 0.7 s
+SR-HEADLESS DONE steps=2000 sim_time=12.839809 until=none SR-HEADLESS DONE steps=2000 sim_time=12.663946 until=unmet 
+'d153': steps 0-2000 110.2 s · 2000-3000 from the held s_2000 0.6 s
+SR-HEADLESS DONE steps=2000 sim_time=12.663946 until=none SR-HEADLESS DONE steps=2000 sim_time=12.663946 until=unmet 
+## 2026-11-03T20:36:02-05:00 the cost, take 2 of the held stretch (--steps 3000 with --continue)
+'today': 2000-3000 from the held s_2000 217.8 s
+SR-HEADLESS DONE steps=3000 sim_time=15.154788 until=none
+'d153': 2000-3000 from the held s_2000 80.8 s
+SR-HEADLESS DONE steps=3000 sim_time=17.641884 until=none
+'today': 2000-3000 from the held s_2000 217.1 s
+SR-HEADLESS DONE steps=3000 sim_time=15.154788 until=none
+'d153': 2000-3000 from the held s_2000 80.7 s
+SR-HEADLESS DONE steps=3000 sim_time=17.641884 until=none
+## 2026-11-03T20:46:17-05:00 the cost, steps 0-900 (no neutron cell yet; the same life on both)
+'today': steps 0-900 50.0 s
+SR-HEADLESS DONE steps=900 sim_time=7.648711 until=none
+'d153': steps 0-900 50.0 s
+SR-HEADLESS DONE steps=900 sim_time=7.648711 until=none
+'today': steps 0-900 50.2 s
+SR-HEADLESS DONE steps=900 sim_time=7.648711 until=none
+'d153': steps 0-900 49.9 s
+SR-HEADLESS DONE steps=900 sim_time=7.648711 until=none
+s_900 identical
+## 2026-11-03T20:50:30-05:00 laserax-ai-server: the two plants by hand (server-local copy /tmp/d153/plant, shared red-arm target), RTX 4090
+== neutron-hold-ungated applied
+test calibrate_order::sigma_bh_must_not_sit_under_the_densest_holding_neutron_star ... ok
+test cold_core::neutron_m_tov_sb_is_c_sheet_k2_squared_and_k9_holds ... ok
+test held_core::a_held_core_books_none_of_its_own_pull ... ok
+test held_core::a_held_core_books_the_free_gas_pull_as_its_reaction ... ok
+test held_core::a_held_wall_reflects_and_passes_nothing ... ok
+test held_core::a_neutron_core_is_held_under_m_tov_sb ... FAILED
+test held_core::disk_m1800_rests_held ... ok
+test held_core::disk_m900_rests_held ... ok
+test held_core::gpu_a_held_core_books_none_of_its_own_pull ... ok
+test held_core::gpu_a_held_core_books_the_free_gas_pull_as_the_twins ... ok
+test held_core::gpu_a_held_edge_cell_lets_nothing_escape ... ok
+test held_core::gpu_a_held_wall_reflects_as_the_twins ... ok
+test held_core::gpu_a_neutron_core_is_held_under_m_tov_sb ... FAILED
+test held_core::gpu_clear_leaves_p4_no_stale_wall ... ok
+test held_core::gpu_disk_m1800_agrees_with_the_twin_at_step_200 ... ok
+test held_core::gpu_disk_m1800_rests_held ... ok
+test held_core::gpu_disk_m900_agrees_with_the_twin_at_step_200 ... ok
+test held_core::gpu_disk_m900_rests_held ... ok
+test held_core::gpu_no_iron_is_held ... ok
+test held_core::gpu_no_work_crosses_a_held_wall_and_the_kick_is_booked ... ok
+test held_core::gpu_nothing_crosses_a_held_cell_either_way ... ok
+test held_core::gpu_the_remnant_window_shines_on_its_own_heat ... ok
+test held_core::gravity_kick_on_a_held_cell_is_booked ... ok
+test held_core::no_iron_is_held ... ok
+test held_core::nothing_crosses_a_held_cell_either_way ... ok
+test held_core::the_hold_has_its_hysteresis ... ok
+test nuheat::gpu_none_inside_the_neutron_star ... ok
+test nuheat::none_inside_the_neutron_star ... ok
+test sink::a_neutronized_core_holding_m_tov_sb_within_4_cells_forms_a_sink_that_takes_the_disk ... ok
+test sink::gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin ... ok
+test result: FAILED. 28 passed; 2 failed; 0 ignored; 0 measured; 465 filtered out; finished in 145.62s
+test held_core::a_held_core_books_none_of_its_own_pull ... ok
+test held_core::a_held_core_books_the_free_gas_pull_as_its_reaction ... ok
+test held_core::a_held_wall_reflects_and_passes_nothing ... ok
+test held_core::a_neutron_core_is_held_under_m_tov_sb ... FAILED
+test held_core::disk_m1800_rests_held ... ok
+test held_core::disk_m900_rests_held ... ok
+test held_core::gpu_a_held_core_books_none_of_its_own_pull ... ok
+test held_core::gpu_a_held_core_books_the_free_gas_pull_as_the_twins ... ok
+test held_core::gpu_a_held_edge_cell_lets_nothing_escape ... ok
+test held_core::gpu_a_held_wall_reflects_as_the_twins ... ok
+test held_core::gpu_a_neutron_core_is_held_under_m_tov_sb ... FAILED
+test held_core::gpu_clear_leaves_p4_no_stale_wall ... ok
+test held_core::gpu_disk_m1800_agrees_with_the_twin_at_step_200 ... ok
+test held_core::gpu_disk_m1800_rests_held ... ok
+test held_core::gpu_disk_m900_agrees_with_the_twin_at_step_200 ... ok
+test held_core::gpu_disk_m900_rests_held ... ok
+test held_core::gpu_no_iron_is_held ... ok
+test held_core::gpu_no_work_crosses_a_held_wall_and_the_kick_is_booked ... ok
+test held_core::gpu_nothing_crosses_a_held_cell_either_way ... ok
+test held_core::gpu_the_remnant_window_shines_on_its_own_heat ... ok
+test held_core::gravity_kick_on_a_held_cell_is_booked ... ok
+test held_core::no_iron_is_held ... ok
+test held_core::nothing_crosses_a_held_cell_either_way ... ok
+test held_core::the_hold_has_its_hysteresis ... ok
+test result: FAILED. 22 passed; 2 failed; 0 ignored; 0 measured; 471 filtered out; finished in 144.48s
+== hold-iron-gate applied
+test calibrate_order::sigma_bh_must_not_sit_under_the_densest_holding_neutron_star ... ok
+test cold_core::neutron_m_tov_sb_is_c_sheet_k2_squared_and_k9_holds ... ok
+test held_core::a_held_core_books_none_of_its_own_pull ... ok
+test held_core::a_held_core_books_the_free_gas_pull_as_its_reaction ... ok
+test held_core::a_held_wall_reflects_and_passes_nothing ... ok
+test held_core::a_neutron_core_is_held_under_m_tov_sb ... ok
+test held_core::disk_m1800_rests_held ... ok
+test held_core::disk_m900_rests_held ... ok
+test held_core::gpu_a_held_core_books_none_of_its_own_pull ... ok
+test held_core::gpu_a_held_core_books_the_free_gas_pull_as_the_twins ... ok
+test held_core::gpu_a_held_edge_cell_lets_nothing_escape ... ok
+test held_core::gpu_a_held_wall_reflects_as_the_twins ... ok
+test held_core::gpu_a_neutron_core_is_held_under_m_tov_sb ... ok
+test held_core::gpu_clear_leaves_p4_no_stale_wall ... ok
+test held_core::gpu_disk_m1800_agrees_with_the_twin_at_step_200 ... ok
+test held_core::gpu_disk_m1800_rests_held ... ok
+test held_core::gpu_disk_m900_agrees_with_the_twin_at_step_200 ... ok
+test held_core::gpu_disk_m900_rests_held ... ok
+test held_core::gpu_no_iron_is_held ... FAILED
+test held_core::gpu_no_work_crosses_a_held_wall_and_the_kick_is_booked ... ok
+test held_core::gpu_nothing_crosses_a_held_cell_either_way ... ok
+test held_core::gpu_the_remnant_window_shines_on_its_own_heat ... ok
+test held_core::gravity_kick_on_a_held_cell_is_booked ... ok
+test held_core::no_iron_is_held ... FAILED
+test held_core::nothing_crosses_a_held_cell_either_way ... ok
+test held_core::the_hold_has_its_hysteresis ... ok
+test nuheat::gpu_none_inside_the_neutron_star ... ok
+test nuheat::none_inside_the_neutron_star ... ok
+test sink::a_neutronized_core_holding_m_tov_sb_within_4_cells_forms_a_sink_that_takes_the_disk ... ok
+test sink::gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin ... ok
+test result: FAILED. 28 passed; 2 failed; 0 ignored; 0 measured; 465 filtered out; finished in 145.32s
+(stopped by hand after both plants read red: the second plant's repeat run killed by PID 1344900 1344692 1344689 1343409; /tmp/d153/plant and /tmp/d153/today removed)
+verify: 822 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.72->8.72
+=== GO ===

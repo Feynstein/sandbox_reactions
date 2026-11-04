@@ -886,6 +886,35 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     core reaches m_tov_sb, and before it the sink needs no fallback onto a held core; the window's floor 4.56 % of radiated
     (1.39 % and 51.6 % by halves), the crop's 3.85 % — the lead at M0-D71f, 2026-11-03: «Hold no iron (Recommended)», «Walls
     only, final (Recommended)».
+  - [M0-R13] §2.7 [M0-D71f]'s hold test («it holds no iron, X_Fe = 0») and release («or X_Fe > 0»), §2.3.4 [M0-D71f]'s «since no
+    iron is held … a collapsing core is free», and §2.5.1's N_Fe row, q_ratio −1.14 · **the hold also takes a neutron-rich cell:
+    X_Fe = 0, or X_n ≥ 0.5 while the cell's object (§1.9.2) is under m_tov_sb; released once X_Fe > 0 with X_n < 0.5, or once its
+    object reaches m_tov_sb (G, the form M0-T130 builds and measures on three lives, ruled final there); N_Fe's q_ratio re-set so
+    the collapse keeps nature's share — over the Massive life's collapse window (its core_collapse step + 120, the twin crop's R13
+    tally) the core's P4 heat over the heat N_Fe absorbs inside [7.5, 30] (nature's ≈ 15, ×/÷ 2), the value M0-T131 measures and
+    writes, K8's «not tuned» lifted for this one row** — amended in place, each passage tagged [M0-R13] · measured by M0-R13 on
+    laserax-ai-server's RTX 4090 (2026-11-03; reports/cold_remnant.md): today's Massive core is never held (X_Fe 0.36, X_n 0.64),
+    reads T_floor 10 K from step 920 to the ending (step 29,208) and spreads (Σ_c 1,020 → 45), N_Fe taking ≈ 12× the collapse's P4
+    heat (nature: the binding ≈ 15× the iron's cost) and P4's pump the rest, the floor paying 3.93× the light after the supernova;
+    held once X_n ≥ 0.5 (F), the core stays at Σ 783.1, degenerate (ε_th/ε_cold 0.05–0.11) at 2 × 10⁶ – 3 × 10⁷ K, floor 1.67×,
+    ending neutron_star at step 14,394 — but M0-D152's 20 M₀ Repro forms no sink (today's at step 2,600, 1.06 m_tov_sb); q ÷ 10 (D)
+    reads 1.3 × 10⁹ K at step 1,000 and 10 K by 2,000 without a hold — the lead's answers at M0-R13, 2026-11-03: «G: gated hold
+    (Recommended)», «File it with the fix».
+  - [M0-T130] §0.5 [M0-R13]'s and §2.7's «while the cell's object (§1.9.2) is under m_tov_sb» / «once its object reaches
+    m_tov_sb», and §2.3.4's «none whose object reaches m_tov_sb» · **the gate reads the step's own mass, never §1.9.2's object
+    (an observer: G-WATCH, I2) — the mass within r ≤ 24 cells of the cell, centre to centre (P3's disk form, §0.5 [M0-R6], at a
+    wider radius), against m_tov_sb; built and measured by M0-D153, ruled final on its three lives; until then the step holds
+    [M0-D71f]'s test alone (no neutron-rich cell is held)** · measured by M0-T130 on laserax-ai-server's RTX 4090 (2026-11-03;
+    tasks/M0-T130.md): the Massive object stays over m_tov_sb until step 3,500–3,750 (4,860.0 → 4,474.3), its core spread by then
+    (Σ_c 154.1, R₉₀ 15.6, against 1,022 and 1.4 at step 940), so the object gate holds nothing in time; the gate on P3's own disk
+    r ≤ 4, built, holds the Massive core from step 940 (4 cells at Σ 783.1, 0 releases; ending neutron_star at step 14,394,
+    3,919.3; T_c 2.1 × 10⁶ K, ε_th/ε_cold 0.067; floor ÷ radiated 1.67 from s_1000, today's 3.93) but holds the 20 M₀ Repro's
+    neutron clumps at birth (disks 3,700–3,990, 7 → 19 cells frozen at Σ 788.9) and forms no sink by step 3,062 (the tree's
+    sink at 2,600) — the held walls stop the infall, the disks fall to 1,000–3,900; offline on the same dumps, the mass within
+    r ≤ 24 reads 4,600 at the Massive hold (step 1,000) and 5,349–5,701 about each Repro clump at its birth (step 1,700), m_tov_sb
+    4,853.17 between them (margins −5 % and +10 %; NOT PROVEN on a life) — the lead's answers at M0-T130, 2026-11-03: «P3's disk
+    mass (Recommended)», «Build it here (Recommended)», then «Revert to M0-D152's rule (Recommended)», «Same gate, r ≤ 24
+    (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1056,7 +1085,7 @@ holds it). Chemistry later adds records, never code (B23).
 | Mg_burn | O | Mg → Si | 1; [1] | (T_O, 30, 1) | 1/12.6 | SP-E3, Table 12.1's "O, Mg" fuel |
 | Si_burn | Si | Si → Fe | 1; [1] | (T_Si, 30, 1) | 1/33 | SP-E3 (1.9 × 10¹⁷ erg/g), SP-E21 |
 | S_burn | Si | S → Fe | 1; [1] | (T_Si, 30, 1) | 1/33 | SP-E3, the "Si, S" fuel |
-| N_Fe | N | Fe → n | 0; [1] | f ≡ 1; gate Σ_g = Σ_N, p = 1 | −1.14 | SM-E24: an iron core's photodisintegration absorbs ~2 × 10⁵² erg ≈ 7.2 × 10¹⁸ erg/g for a ~1.4-Sun core, against H's 6.3 × 10¹⁸ (my arithmetic) |
+| N_Fe | N | Fe → n | 0; [1] | f ≡ 1; gate Σ_g = Σ_N, p = 1 | −1.14 until M0-T131 writes the value inside §0.5 [M0-R13]'s bound (the collapse's P4 heat ÷ N_Fe's in [7.5, 30]) [M0-R13] | SM-E24: an iron core's photodisintegration absorbs ~2 × 10⁵² erg ≈ 7.2 × 10¹⁸ erg/g for a ~1.4-Sun core, against H's 6.3 × 10¹⁸ (my arithmetic) |
 
 Split-product shares (Ne 0.8 / Mg 0.2, O 0.4 / Mg 0.6, Si 0.7 / S 0.3) are opinion: they keep the
 ladder's products (SP-E3) with mass conserved, and are not tuned. ν = 30 for C, Ne, O and Si is a
@@ -1385,7 +1414,8 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   bounce flux, Π alone, under which gravity drove a free cell into the wall without bound (M0-R11). The free cell
   keeps its own slopes (a mirrored stencil zeroed its pressure slope and unbalanced gravity, M0-R11) and its Σg kick;
   no work is done across the wall (§1.4.2). [M0-D71f] Walls only, final (report item 2): nothing crosses a held wall
-  either way — no inflow; a held core's ∇·u is 0, and since no iron is held (§2.7 [M0-D71f]) a collapsing core is free,
+  either way — no inflow; a held core's ∇·u is 0, and since no iron is held (§2.7 [M0-D71f]) — none under X_n 0.5, and none
+  whose object reaches m_tov_sb [M0-R13], its mass within r ≤ 24 [M0-T130] — a collapsing core is free,
   so §2.6's sinks form from free gas (the 20 M₀ life's from a free ring clump at 1.06 m_tov_sb, M0-D71f).
   The hold's limits (report items 3–5): a held cell never moves, so a kicked or orbiting remnant stays put while
   held, the forces on it booked `held`; a resolved cold core at Σ ≥ σ_hold is held too (G-CORE (d)'s resolved disk
@@ -1499,8 +1529,12 @@ fractions; every energy P8 changes — the vacuum reset's E_floor − E as well 
 [M0-TG2] **The hold** — P8's last act, after the floors and the renormalisation, writes the mask the next step's P4
 reads (§2.3.4). A cell is held when Σ ≥ σ_hold and ε_th ≤ η_hold · ε_cold — ε_th as the temperature floor leaves it,
 ε_cold = (u_e + u_n)/Σ of the renormalised fractions (§2.3.2) — and it holds no iron, X_Fe = 0 ([M0-D71f], report item
-1, final: a held iron cell below N_Fe's gate never compressed to it, so cores froze unneutronized and no sink formed). A
-held cell is released when ε_th > 2η_hold · ε_cold, Σ < ½σ_hold or X_Fe > 0 [M0-D71f]. A newly held cell's
+1, final: a held iron cell below N_Fe's gate never compressed to it, so cores froze unneutronized and no sink formed) —
+or, [M0-R13], it is neutron-rich, X_n ≥ 0.5, while its object (§1.9.2) is under m_tov_sb (§2.11) — [M0-T130] the object read
+as the mass within r ≤ 24 cells of the cell, never the observer's (G-WATCH); not built until M0-D153: past N_Fe's gate, so the
+remnant's core is held degenerate and warm instead of P4 pumping it to T_floor, and a core heading past m_tov_sb stays free
+for §2.6's sink (the form M0-T130 builds, ruled final on its lives). A held cell is released when ε_th > 2η_hold · ε_cold,
+Σ < ½σ_hold or X_Fe > 0 [M0-D71f] with X_n < 0.5, or its object reaches m_tov_sb [M0-R13] (its r ≤ 24 mass, [M0-T130]). A newly held cell's
 momentum is set to 0 — the test reads it before — its kinetic energy left in E, where it becomes heat, and that
 momentum is booked `held` (§2.9). Before step 0 the mask is the rule's on the initial state, held where the test
 passes, its zeroed momenta booked; a dump's mask is read back (§2.12.3); Clear world empties it, and P0's other edits

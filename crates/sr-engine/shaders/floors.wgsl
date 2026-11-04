@@ -17,9 +17,12 @@
 //
 // The hold (§2.7 [M0-TG2]; M0-D71's twin, sr_physics::reference::floors `Floors::hold`), P8's last act, in the
 // renormalisation's invocation once it has written the fractions: a cell with Σ ≥ σ_hold whose ε_th — as the floor left
-// it — is at most η_hold · ε_cold of the renormalised fractions, and which holds no iron (X_Fe = 0 exactly in f32, §2.7
-// [M0-D71f]: a collapsing iron core stays free), is held; a held cell is released past 2η_hold · ε_cold, under ½σ_hold
-// or once X_Fe > 0. The mask (state.rs `state.held`, one word per cell) is the next step's P4's. A newly held cell's
+// it — is at most η_hold · ε_cold of the renormalised fractions, which holds no iron (X_Fe = 0 exactly in f32, §2.7
+// [M0-D71f]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]), and whose disk r ≤ 24 holds less than m_tov_sb (§0.5 [M0-T130],
+// M0-D153: sinks.wgsl's mass test's disk form at the twin's R_HOLD, summed row-major in f32 as `core` sums it, of Σ as
+// `floor_cells` left it — no invocation here writes a Σ — and only where the rest of the test holds or keeps the cell,
+// as the twin calls it) is held; a held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe > 0 with
+// X_n < 0.5, or once its disk holds m_tov_sb. The mask (state.rs `state.held`, one word per cell) is the next step's P4's. A newly held cell's
 // momentum — read by the test before — is set to 0, its kinetic energy left in E, and added into `held`'s two slots.
 // Every comparison is f32 of f32 inputs: a cell within f32's rounding of an edge may fall either side of the twin's f64.
 // `hold_cells` is the same hold alone, on the initial state before step 0 (step/mod.rs), so its zeroing is booked too.
@@ -61,20 +64,23 @@ struct ActiveBox {
 // The hold's mask: 1 where a cell is held.
 @group(0) @binding(6) var held: texture_storage_2d<r32uint, read_write>;
 
-// σ_hold and η_hold (sr_physics::reference::floors' constants), padded to the uniform's 16 bytes.
+// σ_hold, η_hold and the gate's radius r_hold (sr_physics::reference::floors' SIGMA_HOLD, ETA_HOLD and R_HOLD, 24) and
+// m_tov_sb (f32's largest when the neutrons' cold pressure is off: no disk reaches it).
 struct Hold {
     sigma_hold: f32,
     eta_hold: f32,
-    _pad0: f32,
-    _pad1: f32,
+    m_tov: f32,
+    r_hold: f32,
 }
 
 @group(0) @binding(7) var<uniform> hold_params: Hold;
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
-// Iron's slot in §1.5's order: a cell holding any is never held (§2.7 [M0-D71f]).
+// Iron's slot in §1.5's order: a cell holding any is held only once neutron-rich (§2.7 [M0-D71f], [M0-R13]).
 const ID_FE: u32 = 8u;
+// X_n from which a cell holding iron is neutron-rich (§2.7 [M0-R13]).
+const NEUTRON_RICH: f32 = 0.5;
 
 // An Inf or a NaN, told by its exponent bits as reduce.wgsl's guard tells it — never a float comparison, which WGSL may
 // fold away.
@@ -167,6 +173,22 @@ fn floor_cells(@builtin(global_invocation_id) id: vec3<u32>) {
     book[n + cell] += energy_added;
 }
 
+// The mass of the disk r ≤ r_hold about (x, y), centre to centre, clipped to the world: row-major, as sinks.wgsl's `core`.
+fn disk_mass(xy: vec2<u32>) -> f32 {
+    let r = i32(hold_params.r_hold);
+    var mass = 0.0;
+    for (var dy = -r; dy <= r; dy++) {
+        for (var dx = -r; dx <= r; dx++) {
+            let cx = i32(xy.x) + dx;
+            let cy = i32(xy.y) + dy;
+            if (dx * dx + dy * dy <= r * r && cx >= 0 && cy >= 0 && cx < i32(dims.width) && cy < i32(dims.height)) {
+                mass += hydro[u32(cy) * dims.width + u32(cx)];
+            }
+        }
+    }
+    return mass;
+}
+
 // The hold at `cell` (x, y), whose renormalised fractions are `x`: the mask's word written, a newly held cell's momentum
 // zeroed and booked.
 fn hold(cell: u32, xy: vec2<u32>, x: array<f32, 10>) {
@@ -176,13 +198,17 @@ fn hold(cell: u32, xy: vec2<u32>, x: array<f32, 10>) {
     let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
     let cold = eps_cold(sigma, comp.y_e, x[ID_N]);
     let eps_th = hydro[3u * n + cell] / sigma - 0.5 * dot(mom / sigma, mom / sigma) - cold;
-    let iron = x[ID_FE] > 0.0;
+    let kind = x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH;
     let was = textureLoad(held, xy).x != 0u;
     var now: bool;
     if (was) {
-        now = !(eps_th > 2.0 * hold_params.eta_hold * cold || sigma < 0.5 * hold_params.sigma_hold || iron);
+        now = !(eps_th > 2.0 * hold_params.eta_hold * cold || sigma < 0.5 * hold_params.sigma_hold || !kind);
     } else {
-        now = sigma >= hold_params.sigma_hold && eps_th <= hold_params.eta_hold * cold && !iron;
+        now = sigma >= hold_params.sigma_hold && eps_th <= hold_params.eta_hold * cold && kind;
+    }
+    // The gate (§0.5 [M0-T130]): the disk summed only where the rest holds or keeps the cell, as the twin's `holds`.
+    if (now) {
+        now = disk_mass(xy) < hold_params.m_tov;
     }
     if (now && !was) {
         book[2u * n + cell] += mom.x;

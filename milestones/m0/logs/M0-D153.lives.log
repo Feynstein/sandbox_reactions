@@ -1,0 +1,31 @@
+===== /tmp/d153/massive_a.out (grep: adapter, events, DONE, run, exit)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=12.663946 until=none
+massive_a exit 0 wall 136 s
+===== /tmp/d153/massive_b.out (grep: adapter, events, DONE, run, exit)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-WARN heat unconverged step 3327 passes 1 rounds 0
+SR-WARN heat unconverged step 3328 passes 0 rounds 0
+SR-WARN heat unconverged step 4048 passes 0 rounds 0
+SR-WARN heat unconverged step 4049 passes 1 rounds 0
+SR-WARN heat unconverged step 4115 passes 1 rounds 0
+SR-WARN heat unconverged step 4116 passes 0 rounds 0
+SR-WARN heat unconverged step 4443 passes 1 rounds 0
+SR-WARN heat unconverged step 4444 passes 1 rounds 0
+SR-WARN heat unconverged step 4519 passes 1 rounds 0
+SR-WARN heat unconverged step 4520 passes 0 rounds 0
+SR-WARN heat unconverged step 4659 passes 1 rounds 0
+SR-WARN heat unconverged step 4699 passes 1 rounds 0
+SR-WARN heat unconverged step 4739 passes 1 rounds 0
+SR-HEADLESS DONE steps=4990 sim_time=27.028510 until=met
+massive_b exit 0 wall 535 s
+===== /tmp/d153/repro.out (grep: adapter, events, DONE, run, exit)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1700 sim_time=16.397902 until=none
+repro exit 0 wall 215 s
+===== /tmp/d153/life01.out (grep: adapter, events, DONE, run, exit)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=11003 sim_time=64.180813 until=met
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4572.394 ignited=true core_collapse=true ending=neutron_star steps=11003 sim_time=64.181 wall_s=464.6 record=build/calibrate_runs/2026-11-04T01-17-08Z/m_bh_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+life01 exit 124 wall 570 s
