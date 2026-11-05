@@ -243,6 +243,66 @@ for f in massive_d/dumps/s_*.bin; do python3 -I probe/dumpread.py $f; done > mas
 python3 -I probe/unbound.py s2_0.1/dumps/s_5000.bin s2_0.1/dumps/s_5000.observers.json
 ```
 
+## Tuning — K1 (M0-T98a, 2026-11-05)
+Written by M0-T98a (model=claude-sonnet-5-5 level=high, `rung_record.py now` at launch). Box: task on **linux-pc** (laserax-ai); every run on
+**laserax-ai-server, RTX 4090** (Vulkan), the binary M0-T97 used (`git 255ec37-dirty` in summary.json — the server's checkout; HEAD here
+`3cce799`, no source changed since M0-T97, only plan files). Scenes: `scenes/tune_k1_sun.json` (a 38.69977, Σc 1, T₀ 4.5796299, the SUN_MIX) and
+`scenes/tune_k1_massive.json` (a 56.46359, T₀ 6.68555) — `disk` objects, no preset, each candidate its `overrides` (generated copies, `build/t98a/cand_<name>.json`
+on the server), so no run needed the calibration (G-CAL). Raw output: server `~/workspace/sandbox_reactions/build/t98a/<name>{.out,/summary.json,/dumps}`;
+trail `logs/M0-T98a.log`. Readings: `probe/clocks.py` (§ Appendix), τ_nuc with M_core = mass within 8 cells, Q_H 8,700 — the script hard-codes Q_H 8,700, so for the two Q_H runs the τ_nuc/τ_KH column (marked †) is the script's value × Q_H/8,700 (× 0.747, × 0.575) — arithmetic on the script's output, not a re-run.
+
+**Commands** (all `[ALREADY RUN]`; `name` ∈ the first column, `OV` its overrides):
+```
+server$ cd ~/workspace/sandbox_reactions/build/t98a && ../target/release/sandbox-reactions headless --scene cand_<name>.json --until <ending|sim_time:T> --max-steps N --adapter "RTX 4090" --out <name> --dump-every D
+```
+Rounds: R1 `--until ending --max-steps 100000`; R2 `--until ending --max-steps 120000`; R3 and R4 `--until sim_time:200 --max-steps 22000 --dump-every 4000`; the baseline `sim_time:225`; the Massive `sim_time:30`.
+
+**The baseline reproduces M0-T97's life.** `sun_base` (no overrides): ignition step 273 (t 4.266) by light, `main_sequence` from step 305 (t 4.580) — identical to the preset's; τ_KH/τ_dyn 213.6 / 238.8 / 219.2 and τ_nuc/τ_KH 29.4 / 28.9 / 28.0 at t 58.7 / 114.1 / 169.6 (T97: 201.7 / 27.1 at t 225.5). 19,958 steps to t 225.
+
+**Candidates — what the Sun-like did** (X_H,c = the centre's hydrogen; ratios at the dumps of each run, first → last):
+
+| Candidate (overrides) | Outcome (stages) | τ_KH/τ_dyn | τ_nuc/τ_KH | L (first → last) | steps to X_H,c 10⁻³ (linear, labelled) | life at the Quadro 10.709 ms/step (labelled) |
+|---|---|---|---|---|---|---|
+| base (none) | main_sequence to t 225 (T97: to t 800) | 213.6 → 219.2 | 29.4 → 28.0 | 1,496 → 1,478 | ≈ 217,000 | ≈ 38.7 min |
+| κ₀ 0.8 | main_sequence to t 200 | 190.1 → 232.8 | 30.1 → 28.1 | 1,791 → 1,559 | ≈ 203,000 | ≈ 36.3 min |
+| Q_H 6,500 | main_sequence to t 200 | 214.6 → 368.4 | 22.4 → 21.4 † | 1,553 → 1,075 | ≈ 231,000 | ≈ 41.3 min |
+| Q_H 5,000 | main_sequence, then **white_dwarf** at t 135 (H unburnt, X_H,c 0.73) | 239 → 2,961 | 17.5 → 18.6 † | 1,471 → 242 | — (fades) | — |
+| κ₀ 0.65 | failed_star, ignition t 8.5, main_sequence, **white_dwarf** at t 134 | 208 → 2,750 | 30.7 → 32.5 | 1,904 → 284 | — (fades) | — |
+| κ₀ 0.5 | failed_star at t 6.9, ignition t 8.46, main_sequence 42.7 t.u., **white_dwarf** at t 51.6 (H unburnt, X_H,c 0.72), ending t 63.8 | 275 → 495 | 31.5 → 32.0 | 1,920 → 1,353 | — (fades) | — |
+| κ₀ 0.3 / 0.2 / 0.1 | failed_star (0.3, 0.1), flickering main_sequence ↔ white_dwarf (0.2); ending at t 36.5 / 27.5 / 20.8 | — | — | — | — | — |
+| c_sb 800 / 1,200 | as κ₀ 0.5: ignites late, **white_dwarf** with X_H,c 0.72 at t 54.5 / 29.3 | 261 → 531 / 414 | 31.4–32.3 | 2,009 → 1,276 / 1,693 | — (fades) | — |
+| c_sb 2,000 / 4,000, a_r 2 × 10⁻⁴ | failed_star, ending at t 28.0 / 20.2 / 20.5 | — | — | — | — | — |
+
+Outside the four named levers, **A_H (`a_h_burn`, §2.5.1's rate normalisation, bound > 0)** — a probe, labelled (M0-D50: A_H × 1.4 holds, × 2 runs away):
+
+| Candidate (overrides) | Outcome | τ_KH/τ_dyn | τ_nuc/τ_KH | L (first → last) | steps to X_H,c 10⁻³ (linear) | life at the Quadro (labelled) |
+|---|---|---|---|---|---|---|
+| A_H × 1.4 (7 × 10⁻⁴) | main_sequence to t 200, ignition 689 (t 9.06) | 145.7 → 132.6 | 28.3 → 25.8 | 1,843 → 1,932 | ≈ 155,000 | ≈ 27.7 min |
+| A_H × 1.4, κ₀ 0.65 | main_sequence to t 200 | 151.6 → 133.2 | 29.7 → 26.3 | 2,207 → 2,435 | ≈ 132,000 | ≈ 23.6 min |
+| A_H × 1.4, κ₀ 0.5 | main_sequence to t 200 (failed_star first) | 176.6 → 145.1 | 30.6 → 26.7 | 2,298 → 2,589 | ≈ 128,000 | ≈ 22.8 min |
+| A_H × 1.7 (8.5 × 10⁻⁴), κ₀ 0.55 | main_sequence to t 200, ignition 273 | 135.5 → 102.7 | 29.5 → 25.4 | 2,470 → 3,096 | ≈ 108,000 | ≈ 19.3 min |
+| A_H × 1.4, κ₀ 0.4 | failed_star, main_sequence 49 t.u., **white_dwarf** at t 58 (H unburnt), ending t 70 | 252 → 11,552 | 31.4–32.2 | 2,138 → 83 | — (fades) | — |
+
+Wall times: steps × 10.709 ms = the Quadro's whole-world step of reports/step_cost.md (M0-T63, before M0-D50's constants); the burning star's Quadro step is **NOT RUN**
+(M0-T124, owed on laserax-ai) — the figures are arithmetic, UNVERIFIED, and the linear step counts understate how fast X_H,c falls late (L rises), so they are upper bounds.
+The run wall times on the RTX 4090 (4–5 candidates in parallel, so slower than alone) are in each summary.json.
+
+**The Massive** (`tune_k1_massive.json`, to t 30): baseline `iron_core` from step 321 (t 4.317, 3.4 t.u.), `core_collapse` at step 897, `supernova`, `neutron_star` — the stage
+order H > He > C > {Ne, O} > Si is not displayed (the life skips to raw iron_core: M0-T98b's, unchanged by this task). With A_H × 1.7, κ₀ 0.55: `iron_core` 1.43 t.u., `core_collapse`
+at step 577, then a **neutron_star at t 5.97 before the supernova at t 6.54** (a new flicker) — the ending still a neutron star, the sequence worse.
+
+**What it says.**
+1. G-SQUEEZE's two ≥ 10 bounds already hold, far from the aim: τ_KH/τ_dyn ≈ 200–240, τ_nuc/τ_KH ≈ 28–29 on the Sun-like main sequence (the second reaches the aim only by t ≈ 800).
+2. **The named levers do not reach the gap.** κ₀, c_sb and a_r enter the transport only as a_r c_sb/κ₀ (thick gas) and scale-free R (§2.4.1); they do not raise the main sequence's L —
+   it is pinned by the nuclear rate at T_c ≈ 33–37. Lowering κ₀ or raising c_sb/a_r instead lets the star radiate its heat: it contracts (R 14.3 → 10–11), T_c falls (33 → 15–25), and
+   because the Sun-like mass (3,137) is 0.975 M_ch (3,217; §2.7 K₁ₑ, K₂ₑ) the contraction ends degenerate — a **white dwarf with the hydrogen unburnt** — or the star never ignites (`failed_star`).
+   The edge between the two is sharp (κ₀ 0.8 holds, 0.65 fades).
+3. Q_H cannot be lowered either: τ_nuc/τ_KH is independent of L and ∝ Q_H, so Q_H 6,500 holds the ratio (21.4 †) but the star's lower L lengthens the life; Q_H 5,000 fades.
+4. The only lever that shortens the life is the burn rate A_H (outside the four named): A_H × 1.7 with κ₀ 0.55 halves the steps (≈ 108,000 against ≈ 217,000, labelled) and keeps both ratios ≥ 10 —
+   but τ_KH/τ_dyn stays ≈ 100–135, ten times the aim, and it worsens the Massive's collapse (above). D50's × 2 runaway sits just beyond.
+
+**Status: BLOCKED** — no in-bounds value of a_r, c_sb, κ₀, Q_H brings either gap toward 10–20; assets/physics.json **unchanged**. Question to the lead: see the handoff.
+
 ## Appendix — the reading scripts (extract each under `probe/`)
 Pure Python 3 + numpy, run with `-I`; read dumps and snapshots, write nothing.
 
