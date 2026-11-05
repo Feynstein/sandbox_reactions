@@ -32,7 +32,6 @@ use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::sinks::SinkSetup;
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::eos::Eos;
-use sr_physics::reference::floors::{ETA_HOLD, SIGMA_HOLD};
 use sr_physics::registry::{Elements, Physics, Reactions, N_SPECIES};
 
 /// §2.2's channels, written out from the contract (not from `state::CHANNELS`).
@@ -874,7 +873,7 @@ fn hold_ratio(c: &Constants, eos: &Eos, planes: &[f32], cells: usize, i: usize) 
     let x: [f64; N_SPECIES] = std::array::from_fn(|k| at(4 + k));
     let cold = eos.eps_cold(sigma, c.elements.composition(&x).y_e, x[9]);
     let th = at(3) / sigma - 0.5 * (at(1) * at(1) + at(2) * at(2)) / (sigma * sigma) - cold;
-    th / (ETA_HOLD * cold)
+    th / (c.physics.get("eta_hold").unwrap() * cold)
 }
 
 /// A 128 × 64 world of vacuum hydrogen: an 8 × 8 core ([`CORE`]) of Σ 2σ_hold at rest, ε_th = 1.5 η_hold ε_cold — inside the
@@ -895,11 +894,11 @@ fn held_start(c: &Constants, eos: &Eos) -> (WorldConfig, Vec<f32>, Vec<u32>) {
         for xx in 32..96 {
             let i = y * w + xx;
             let core = CORE.0.contains(&xx) && CORE.1.contains(&y);
-            let sigma = if core { 2.0 * SIGMA_HOLD } else { 1.0 };
+            let sigma = if core { 2.0 * c.physics.get("sigma_hold").unwrap() } else { 1.0 };
             let cold = eos.eps_cold(sigma, comp.y_e, x[9]);
             let (dx, dy) = (xx as f64 + 0.5 - 64.0, y as f64 + 0.5 - 32.0);
             let v = if core { [0.0, 0.0] } else { [-0.25 * dx / dx.hypot(dy), -0.25 * dy / dx.hypot(dy)] };
-            let th = if core { 1.5 * ETA_HOLD * cold } else { comp.inv_mu };
+            let th = if core { 1.5 * c.physics.get("eta_hold").unwrap() * cold } else { comp.inv_mu };
             let values = [sigma, sigma * v[0], sigma * v[1], sigma * (cold + th) + 0.5 * sigma * (v[0] * v[0] + v[1] * v[1])];
             for (ch, v) in values.iter().chain(&x).enumerate() {
                 p[ch * cells + i] = *v as f32;

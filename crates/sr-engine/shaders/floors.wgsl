@@ -18,8 +18,8 @@
 // The hold (§2.7 [M0-TG2]; M0-D71's twin, sr_physics::reference::floors `Floors::hold`), P8's last act, in the
 // renormalisation's invocation once it has written the fractions: a cell with Σ ≥ σ_hold whose ε_th — as the floor left
 // it — is at most η_hold · ε_cold of the renormalised fractions, which holds no iron (X_Fe = 0 exactly in f32, §2.7
-// [M0-D71f]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]), and whose disk r ≤ 24 holds less than m_tov_sb (§0.5 [M0-T130],
-// M0-D153: sinks.wgsl's mass test's disk form at the twin's R_HOLD, summed row-major in f32 as `core` sums it, of Σ as
+// [M0-D71f]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]), and whose disk r ≤ r_hold holds less than m_tov_sb (§0.5 [M0-T130],
+// M0-D153: sinks.wgsl's mass test's disk form at the twin's r_hold, summed row-major in f32 as `core` sums it, of Σ as
 // `floor_cells` left it — no invocation here writes a Σ — and only where the rest of the test holds or keeps the cell,
 // as the twin calls it) is held; a held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe > 0 with
 // X_n < 0.5, or once its disk holds m_tov_sb. The mask (state.rs `state.held`, one word per cell) is the next step's P4's. A newly held cell's
@@ -64,7 +64,7 @@ struct ActiveBox {
 // The hold's mask: 1 where a cell is held.
 @group(0) @binding(6) var held: texture_storage_2d<r32uint, read_write>;
 
-// σ_hold, η_hold and the gate's radius r_hold (sr_physics::reference::floors' SIGMA_HOLD, ETA_HOLD and R_HOLD, 24) and
+// σ_hold, η_hold and the gate's radius r_hold (physics.json's sigma_hold, eta_hold and r_hold, §2.7 [M0-D71g]) and
 // m_tov_sb (f32's largest when the neutrons' cold pressure is off: no disk reaches it).
 struct Hold {
     sigma_hold: f32,

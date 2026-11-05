@@ -1,8 +1,8 @@
 --- a/crates/sr-physics/src/reference/floors.rs
 +++ b/crates/sr-physics/src/reference/floors.rs
-@@ -192,7 +192,7 @@
+@@ -212,7 +212,7 @@
          } else {
-             sigma >= SIGMA_HOLD && eps_th <= ETA_HOLD * cold && kind
+             sigma >= self.sigma_hold && eps_th <= self.eta_hold * cold && kind
          };
 -        rest && m_disk() < self.m_tov
 +        rest && (m_disk() < self.m_tov || x[ID_N] >= NEUTRON_RICH) // planted: the m_tov_sb gate dropped for neutron-rich cells (M0-R13's F)

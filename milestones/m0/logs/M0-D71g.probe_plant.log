@@ -1,0 +1,25 @@
+   Compiling sr-physics v0.0.0 (/tmp/d71g/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/d71g/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.18s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test held_core::gpu_an_overridden_sigma_hold_reaches_the_twin_and_the_gpu ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-KEYS disk M 900, step 1: shipped σ_hold 10 → held twin 16, GPU 16 (0 on one side only); sigma_hold 1.1497e3 (10 × the densest Σ 1.1497e2) → twin 16, GPU 16 (0)
+
+thread 'held_core::gpu_an_overridden_sigma_hold_reaches_the_twin_and_the_gpu' (1738979) panicked at crates/sr-engine/tests/gpu/held_core.rs:815:5:
+assertion `left == right` failed: sigma_hold past every Σ: a side still holds — it read a literal
+  left: (16, 16)
+ right: (0, 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    held_core::gpu_an_overridden_sigma_hold_reaches_the_twin_and_the_gpu
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 505 filtered out; finished in 0.89s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

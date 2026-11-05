@@ -1,0 +1,323 @@
+### q-1.14.txt
+N_Fe q_ratio -1.14
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.050 Sc 499.4 core n 36 heat 1.4048e5 | window: P4 +1.297e5 P5 -7.074e4 P6 -2.530e6 (nu 1.863e2) P8 +2.111e6 | floor_added(all) +2.111e6 held 0
++   20 t 0.096 Sc 784.5 core n 28 heat 9.9029e3 | window: P4 +7.340e5 P5 -7.037e3 P6 -8.921e6 (nu 1.610e0) P8 +8.065e6 | floor_added(all) +8.066e6 held 0
++   30 t 0.134 Sc 938.6 core n 14 heat 4.0069e2 | window: P4 +1.005e6 P5 -5.891e2 P6 -8.802e6 (nu 2.373e-3) P8 +7.789e6 | floor_added(all) +7.817e6 held 0
++   40 t 0.167 Sc 1025.0 core n 8 heat 1.7084e2 | window: P4 +3.483e5 P5 -2.513e0 P6 -4.602e6 (nu 0.000e0) P8 +4.254e6 | floor_added(all) +4.282e6 held 0
++   50 t 0.199 Sc 1095.2 core n 8 heat 8.7105e4 | window: P4 +1.660e5 P5 -1.114e3 P6 -1.878e6 (nu 1.192e-1) P8 +1.800e6 | floor_added(all) +1.814e6 held 0
++   60 t 0.229 Sc 940.6 core n 12 heat 5.5412e5 | window: P4 +4.964e5 P5 -2.053e5 P6 -1.843e5 (nu 5.853e2) P8 +3.361e5 | floor_added(all) +3.370e5 held 0
++   70 t 0.270 Sc 964.9 core n 15 heat 6.2708e5 | window: P4 -5.901e5 P5 -1.258e5 P6 -5.106e2 (nu 5.107e2) P8 +7.781e5 | floor_added(all) +4.101e5 held 3
++   80 t 0.314 Sc 964.9 core n 16 heat 4.7578e5 | window: P4 -1.498e5 P5 -5.805e4 P6 -1.278e2 (nu 1.278e2) P8 +5.563e4 | floor_added(all) +0.000e0 held 3
++   90 t 0.359 Sc 964.9 core n 15 heat 4.6782e5 | window: P4 +3.006e4 P5 -3.717e4 P6 -9.542e1 (nu 9.542e1) P8 +0.000e0 | floor_added(all) +4.320e-1 held 3
++  100 t 0.402 Sc 964.9 core n 15 heat 4.4330e5 | window: P4 +7.136e3 P5 -3.161e4 P6 -4.162e1 (nu 4.162e1) P8 +0.000e0 | floor_added(all) +8.063e1 held 3
++  110 t 0.446 Sc 964.9 core n 15 heat 4.1971e5 | window: P4 +4.036e2 P5 -2.397e4 P6 -2.445e1 (nu 2.445e1) P8 +0.000e0 | floor_added(all) +1.975e2 held 3
++  120 t 0.489 Sc 964.9 core n 14 heat 4.4742e5 | window: P4 -4.482e4 P5 -2.477e4 P6 -2.822e1 (nu 2.822e1) P8 +9.736e4 | floor_added(all) +5.472e2 held 3
+NFE dn_core +2.7912e3 q_sb -9.91800e3 heat_NFe -2.7683e7
+TOTAL P4 +2.1320e6 P5 -5.8612e5 P6 -2.6919e7 (nu 1.6015e3) P8 +2.5287e7 floor_added(all) +2.4838e7
+### q-0.57.txt
+N_Fe q_ratio -0.57
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 488.0 core n 36 heat 1.6305e5 | window: P4 +1.194e5 P5 -7.488e4 P6 -9.153e5 (nu 2.324e2) P8 +5.342e5 | floor_added(all) +5.342e5 held 0
++   20 t 0.096 Sc 770.4 core n 32 heat 1.1259e4 | window: P4 +7.042e5 P5 -9.820e3 P6 -3.956e6 (nu 2.395e0) P8 +3.111e6 | floor_added(all) +3.111e6 held 0
++   30 t 0.135 Sc 940.3 core n 16 heat 4.6892e2 | window: P4 +9.995e5 P5 -7.266e2 P6 -4.403e6 (nu 2.699e-3) P8 +3.393e6 | floor_added(all) +3.420e6 held 0
++   40 t 0.169 Sc 1035.3 core n 8 heat 1.6946e2 | window: P4 +3.998e5 P5 -4.820e0 P6 -2.452e6 (nu 0.000e0) P8 +2.052e6 | floor_added(all) +2.081e6 held 0
++   50 t 0.200 Sc 1052.5 core n 8 heat 9.7972e4 | window: P4 +1.322e5 P5 -4.858e1 P6 -6.946e5 (nu 2.555e-2) P8 +6.602e5 | floor_added(all) +6.755e5 held 0
++   60 t 0.231 Sc 1006.6 core n 9 heat 2.9846e5 | window: P4 +1.232e5 P5 -5.705e4 P6 -9.139e4 (nu 2.561e2) P8 +2.225e5 | floor_added(all) +2.243e5 held 0
++   70 t 0.265 Sc 1103.7 core n 15 heat 4.9421e5 | window: P4 +3.520e5 P5 -1.844e5 P6 -2.365e5 (nu 1.227e3) P8 +2.455e5 | floor_added(all) +2.455e5 held 0
++   80 t 0.307 Sc 1080.3 core n 15 heat 4.1835e5 | window: P4 -4.245e5 P5 -7.289e4 P6 -2.439e3 (nu 2.954e2) P8 +4.240e5 | floor_added(all) +1.633e5 held 3
++   90 t 0.356 Sc 1080.3 core n 16 heat 4.2054e5 | window: P4 +6.175e3 P5 -3.354e4 P6 -1.327e2 (nu 1.328e2) P8 +2.963e4 | floor_added(all) +7.007e2 held 4
++  100 t 0.402 Sc 1080.3 core n 16 heat 3.7469e5 | window: P4 -3.095e4 P5 -3.866e4 P6 -1.192e2 (nu 1.192e2) P8 +2.387e4 | floor_added(all) +8.951e2 held 3
++  110 t 0.448 Sc 1080.3 core n 16 heat 3.3562e5 | window: P4 -4.300e4 P5 -1.446e4 P6 -1.599e1 (nu 1.599e1) P8 +1.841e4 | floor_added(all) +2.408e3 held 4
++  120 t 0.490 Sc 1080.3 core n 16 heat 3.4904e5 | window: P4 +2.725e4 P5 -1.940e4 P6 -3.917e1 (nu 3.917e1) P8 +5.605e3 | floor_added(all) +1.606e3 held 3
+NFE dn_core +2.7298e3 q_sb -4.95900e3 heat_NFe -1.3537e7
+TOTAL P4 +2.3654e6 P5 -5.0586e5 P6 -1.2752e7 (nu 2.3201e3) P8 +1.0721e7 floor_added(all) +1.0460e7
+### q-0.228.txt
+N_Fe q_ratio -0.228
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 409.5 core n 36 heat 4.4644e5 | window: P4 +1.331e5 P5 -8.180e4 P6 -1.046e5 (nu 4.943e2) P8 -5.821e-10 | floor_added(all) +0.000e0 held 0
++   20 t 0.098 Sc 553.9 core n 32 heat 3.1164e5 | window: P4 +2.937e5 P5 -2.798e4 P6 -4.091e5 (nu 9.173e1) P8 +1.023e4 | floor_added(all) +1.023e4 held 0
++   30 t 0.141 Sc 806.5 core n 16 heat 4.2723e5 | window: P4 +8.899e5 P5 -4.152e2 P6 -1.160e6 (nu 3.899e1) P8 +3.857e5 | floor_added(all) +3.975e5 held 0
++   40 t 0.179 Sc 960.2 core n 14 heat 7.6800e5 | window: P4 +7.737e5 P5 -5.489e3 P6 -8.160e5 (nu 5.852e3) P8 +3.886e5 | floor_added(all) +4.082e5 held 0
++   50 t 0.219 Sc 1003.3 core n 16 heat 5.5685e5 | window: P4 +2.769e4 P5 -1.331e5 P6 -1.774e5 (nu 2.076e4) P8 +6.313e4 | floor_added(all) +6.451e4 held 0
++   60 t 0.261 Sc 988.6 core n 16 heat 5.3041e5 | window: P4 -2.128e4 P5 -3.831e4 P6 -1.516e5 (nu 1.213e3) P8 +1.848e5 | floor_added(all) +1.848e5 held 0
++   70 t 0.304 Sc 1014.0 core n 16 heat 5.7963e5 | window: P4 +1.226e5 P5 -9.320e4 P6 -1.610e5 (nu 1.937e3) P8 +1.808e5 | floor_added(all) +4.063e4 held 1
++   80 t 0.349 Sc 1014.0 core n 19 heat 5.3265e5 | window: P4 -3.883e4 P5 -3.411e4 P6 -2.673e3 (nu 5.176e2) P8 +2.743e4 | floor_added(all) +2.743e4 held 1
++   90 t 0.394 Sc 1014.0 core n 19 heat 5.0828e5 | window: P4 +1.837e4 P5 -6.629e4 P6 -8.479e2 (nu 8.221e2) P8 +2.331e4 | floor_added(all) +2.331e4 held 1
++  100 t 0.440 Sc 1014.0 core n 20 heat 4.6229e5 | window: P4 -4.346e4 P5 -4.142e4 P6 -3.071e2 (nu 3.069e2) P8 +3.834e4 | floor_added(all) +3.857e4 held 1
++  110 t 0.484 Sc 1014.0 core n 15 heat 4.0609e5 | window: P4 +1.872e4 P5 -5.500e4 P6 -3.928e4 (nu 2.961e2) P8 +2.016e4 | floor_added(all) +2.376e4 held 1
++  120 t 0.526 Sc 1014.0 core n 15 heat 3.8778e5 | window: P4 -4.506e4 P5 -5.070e4 P6 -4.911e4 (nu 1.779e2) P8 +1.266e5 | floor_added(all) +1.281e5 held 1
+NFE dn_core +2.0106e3 q_sb -1.98360e3 heat_NFe -3.9883e6
+TOTAL P4 +2.1291e6 P5 -6.2782e5 P6 -3.0714e6 (nu 3.2512e4) P8 +1.4489e6 floor_added(all) +1.3471e6
+### q-0.114.txt
+N_Fe q_ratio -0.114
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 375.6 core n 36 heat 5.6179e5 | window: P4 +1.345e5 P5 -8.735e4 P6 +1.490e4 (nu 1.752e3) P8 -1.746e-9 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 366.5 core n 34 heat 5.0442e5 | window: P4 +2.901e4 P5 -8.366e4 P6 -1.645e3 (nu 2.585e3) P8 -1.746e-9 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 389.1 core n 32 heat 5.5799e5 | window: P4 +1.050e5 P5 -5.662e4 P6 +6.168e3 (nu 2.573e3) P8 -6.985e-10 | floor_added(all) +0.000e0 held 0
++   40 t 0.199 Sc 390.8 core n 32 heat 5.7283e5 | window: P4 +8.577e4 P5 -6.652e4 P6 -4.411e3 (nu 7.070e3) P8 -6.985e-10 | floor_added(all) +0.000e0 held 0
++   50 t 0.250 Sc 396.9 core n 32 heat 5.2657e5 | window: P4 +7.866e2 P5 -4.253e4 P6 -4.523e3 (nu 4.747e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   60 t 0.299 Sc 419.5 core n 32 heat 6.2038e5 | window: P4 +1.326e5 P5 -3.085e4 P6 -7.910e3 (nu 8.740e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   70 t 0.350 Sc 410.5 core n 32 heat 5.2299e5 | window: P4 -4.602e4 P5 -4.226e4 P6 -9.106e3 (nu 9.083e3) P8 -2.328e-10 | floor_added(all) +0.000e0 held 0
++   80 t 0.400 Sc 439.8 core n 30 heat 6.0374e5 | window: P4 +9.995e4 P5 -8.357e3 P6 -1.041e4 (nu 8.264e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.449 Sc 429.8 core n 27 heat 5.7824e5 | window: P4 +2.291e4 P5 -3.104e4 P6 -1.655e4 (nu 1.433e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++  100 t 0.499 Sc 433.3 core n 30 heat 5.3180e5 | window: P4 -2.844e4 P5 -1.170e4 P6 -8.291e3 (nu 7.622e3) P8 +9.551e1 | floor_added(all) +4.275e2 held 0
++  110 t 0.548 Sc 460.8 core n 24 heat 6.7016e5 | window: P4 +1.727e5 P5 -9.217e3 P6 -2.636e4 (nu 1.662e4) P8 +1.234e3 | floor_added(all) +3.909e3 held 0
++  120 t 0.598 Sc 436.9 core n 28 heat 5.1303e5 | window: P4 -1.222e5 P5 -2.516e4 P6 -1.129e4 (nu 1.129e4) P8 -2.328e-10 | floor_added(all) +0.000e0 held 0
+NFE dn_core +4.4551e2 q_sb -9.91800e2 heat_NFe -4.4186e5
+TOTAL P4 +5.8663e5 P5 -4.9527e5 P6 -7.9427e4 (nu 9.4679e4) P8 +1.3298e3 floor_added(all) +4.3363e3
+### q-0.057.txt
+N_Fe q_ratio -0.057
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 364.4 core n 36 heat 5.7661e5 | window: P4 +1.268e5 P5 -9.101e4 P6 +4.114e4 (nu 2.628e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 358.7 core n 36 heat 4.8295e5 | window: P4 -6.019e3 P5 -8.584e4 P6 -1.801e3 (nu 1.801e3) P8 -8.149e-10 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 385.2 core n 32 heat 6.1069e5 | window: P4 +1.434e5 P5 -6.099e4 P6 +4.736e4 (nu 4.008e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   40 t 0.200 Sc 368.4 core n 32 heat 4.9655e5 | window: P4 -2.752e4 P5 -8.344e4 P6 -3.185e3 (nu 4.844e3) P8 -1.746e-9 | floor_added(all) +0.000e0 held 0
++   50 t 0.250 Sc 400.2 core n 32 heat 6.0718e5 | window: P4 +1.155e5 P5 -3.353e4 P6 +2.868e4 (nu 4.634e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   60 t 0.301 Sc 382.2 core n 32 heat 5.2346e5 | window: P4 -1.015e4 P5 -7.430e4 P6 +7.209e2 (nu 9.569e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   70 t 0.352 Sc 413.5 core n 32 heat 5.6250e5 | window: P4 +4.994e4 P5 -1.940e4 P6 +8.501e3 (nu 4.563e3) P8 -6.985e-10 | floor_added(all) +0.000e0 held 0
++   80 t 0.402 Sc 406.5 core n 32 heat 5.8551e5 | window: P4 +6.301e4 P5 -4.930e4 P6 +9.304e3 (nu 1.445e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.453 Sc 419.8 core n 32 heat 5.1973e5 | window: P4 -3.808e4 P5 -2.316e4 P6 -4.550e3 (nu 5.047e3) P8 -1.746e-9 | floor_added(all) +0.000e0 held 0
++  100 t 0.502 Sc 428.4 core n 28 heat 6.6251e5 | window: P4 +1.480e5 P5 -1.952e4 P6 +1.262e4 (nu 1.685e4) P8 +1.914e3 | floor_added(all) +1.916e3 held 0
++  110 t 0.553 Sc 417.1 core n 32 heat 5.0022e5 | window: P4 -1.238e5 P5 -3.412e4 P6 -6.451e3 (nu 6.451e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++  120 t 0.602 Sc 448.9 core n 26 heat 7.1736e5 | window: P4 +2.117e5 P5 -1.016e4 P6 +1.091e4 (nu 1.756e4) P8 +4.728e3 | floor_added(all) +5.090e3 held 0
+NFE dn_core +4.3185e2 q_sb -4.95900e2 heat_NFe -2.1416e5
+TOTAL P4 +6.5275e5 P5 -5.8477e5 P6 +1.4324e5 (nu 9.2399e4) P8 +6.6420e3 floor_added(all) +7.0064e3
+### q-0.0228.txt
+N_Fe q_ratio -0.0228
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 358.9 core n 36 heat 5.7806e5 | window: P4 +1.202e5 P5 -9.326e4 P6 +5.141e4 (nu 3.104e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 355.2 core n 36 heat 4.7381e5 | window: P4 -1.857e4 P5 -8.417e4 P6 -1.506e3 (nu 1.507e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 381.6 core n 32 heat 6.3377e5 | window: P4 +1.598e5 P5 -6.529e4 P6 +6.742e4 (nu 5.505e3) P8 -2.328e-10 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 362.6 core n 32 heat 4.7640e5 | window: P4 -6.725e4 P5 -8.643e4 P6 -3.698e3 (nu 3.698e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 397.9 core n 32 heat 6.5428e5 | window: P4 +1.604e5 P5 -3.549e4 P6 +5.294e4 (nu 6.574e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   60 t 0.302 Sc 372.8 core n 32 heat 4.8556e5 | window: P4 -7.963e4 P5 -8.495e4 P6 -4.149e3 (nu 7.516e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 413.1 core n 32 heat 6.2960e5 | window: P4 +1.246e5 P5 -1.483e4 P6 +3.432e4 (nu 6.109e3) P8 -1.513e-9 | floor_added(all) +0.000e0 held 0
++   80 t 0.404 Sc 387.0 core n 32 heat 5.1264e5 | window: P4 -4.735e4 P5 -7.240e4 P6 +2.784e3 (nu 1.228e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.454 Sc 424.9 core n 32 heat 5.8782e5 | window: P4 +7.217e4 P5 -1.126e4 P6 +1.423e4 (nu 5.436e3) P8 +4.263e1 | floor_added(all) +4.263e1 held 0
++  100 t 0.505 Sc 400.8 core n 32 heat 5.5735e5 | window: P4 +8.768e3 P5 -5.274e4 P6 +1.284e4 (nu 1.649e4) P8 +4.691e2 | floor_added(all) +4.691e2 held 0
++  110 t 0.556 Sc 422.7 core n 32 heat 5.4998e5 | window: P4 +4.768e3 P5 -1.451e4 P6 +1.946e3 (nu 5.003e3) P8 +4.260e2 | floor_added(all) +4.260e2 held 0
++  120 t 0.605 Sc 413.6 core n 27 heat 6.1446e5 | window: P4 +7.854e4 P5 -3.871e4 P6 +2.016e4 (nu 2.049e4) P8 +3.951e3 | floor_added(all) +3.961e3 held 0
+NFE dn_core +3.9694e2 q_sb -1.98360e2 heat_NFe -7.8737e4
+TOTAL P4 +5.1645e5 P5 -6.5405e5 P6 +2.4869e5 (nu 9.3723e4) P8 +4.8889e3 floor_added(all) +4.8984e3
+### q-0.0187.txt
+N_Fe q_ratio -0.0187
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 358.3 core n 36 heat 5.7807e5 | window: P4 +1.194e5 P5 -9.353e4 P6 +5.253e4 (nu 3.158e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 354.9 core n 36 heat 4.7286e5 | window: P4 -1.985e4 P5 -8.388e4 P6 -1.477e3 (nu 1.477e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 381.1 core n 32 heat 6.3588e5 | window: P4 +1.614e5 P5 -6.591e4 P6 +6.948e4 (nu 5.705e3) P8 -5.821e-11 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 361.9 core n 32 heat 4.7432e5 | window: P4 -7.140e4 P5 -8.658e4 P6 -3.582e3 (nu 3.582e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 397.6 core n 32 heat 6.5952e5 | window: P4 +1.653e5 P5 -3.588e4 P6 +5.576e4 (nu 6.865e3) P8 -3.492e-10 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 371.8 core n 32 heat 4.8229e5 | window: P4 -8.686e4 P5 -8.596e4 P6 -4.407e3 (nu 7.323e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.8 core n 32 heat 6.3656e5 | window: P4 +1.318e5 P5 -1.456e4 P6 +3.703e4 (nu 6.357e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   80 t 0.404 Sc 385.6 core n 32 heat 5.0747e5 | window: P4 -5.651e4 P5 -7.430e4 P6 +1.721e3 (nu 1.200e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.1 core n 32 heat 5.9649e5 | window: P4 +8.201e4 P5 -1.057e4 P6 +1.752e4 (nu 5.623e3) P8 +5.728e1 | floor_added(all) +5.728e1 held 0
++  100 t 0.505 Sc 398.5 core n 32 heat 5.4844e5 | window: P4 -4.523e3 P5 -5.584e4 P6 +1.195e4 (nu 1.622e4) P8 +3.520e2 | floor_added(all) +3.520e2 held 0
++  110 t 0.556 Sc 423.1 core n 32 heat 5.5847e5 | window: P4 +1.875e4 P5 -1.316e4 P6 +3.799e3 (nu 5.083e3) P8 +6.389e2 | floor_added(all) +6.389e2 held 0
++  120 t 0.606 Sc 410.5 core n 28 heat 6.0098e5 | window: P4 +6.003e4 P5 -4.214e4 P6 +2.005e4 (nu 2.031e4) P8 +3.610e3 | floor_added(all) +3.621e3 held 0
+NFE dn_core +3.9325e2 q_sb -1.62690e2 heat_NFe -6.3978e4
+TOTAL P4 +4.9951e5 P5 -6.6231e5 P6 +2.6037e5 (nu 9.3695e4) P8 +4.6580e3 floor_added(all) +4.6692e3
+### q-0.016.txt
+N_Fe q_ratio -0.016
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 357.9 core n 36 heat 5.7808e5 | window: P4 +1.188e5 P5 -9.371e4 P6 +5.328e4 (nu 3.195e3) P8 -6.985e-10 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 354.7 core n 36 heat 4.7224e5 | window: P4 -2.069e4 P5 -8.368e4 P6 -1.458e3 (nu 1.458e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 380.7 core n 32 heat 6.3725e5 | window: P4 +1.624e5 P5 -6.630e4 P6 +7.084e4 (nu 5.839e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 361.4 core n 32 heat 4.7301e5 | window: P4 -7.407e4 P5 -8.666e4 P6 -3.509e3 (nu 3.509e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 397.4 core n 32 heat 6.6282e5 | window: P4 +1.684e5 P5 -3.615e4 P6 +5.755e4 (nu 7.055e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 371.2 core n 32 heat 4.8025e5 | window: P4 -9.136e4 P5 -8.663e4 P6 -4.590e3 (nu 7.204e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.7 core n 32 heat 6.4117e5 | window: P4 +1.364e5 P5 -1.442e4 P6 +3.890e4 (nu 6.529e3) P8 -3.260e-9 | floor_added(all) +0.000e0 held 0
++   80 t 0.404 Sc 384.9 core n 32 heat 5.0426e5 | window: P4 -6.242e4 P5 -7.554e4 P6 +1.052e3 (nu 1.182e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.2 core n 32 heat 6.0230e5 | window: P4 +8.840e4 P5 -1.015e4 P6 +1.971e4 (nu 5.762e3) P8 +6.834e1 | floor_added(all) +6.834e1 held 0
++  100 t 0.505 Sc 397.2 core n 32 heat 5.4265e5 | window: P4 -1.342e4 P5 -5.760e4 P6 +1.111e4 (nu 1.600e4) P8 +2.633e2 | floor_added(all) +2.633e2 held 0
++  110 t 0.556 Sc 423.7 core n 32 heat 5.6457e5 | window: P4 +2.814e4 P5 -1.228e4 P6 +5.285e3 (nu 5.157e3) P8 +7.745e2 | floor_added(all) +7.745e2 held 0
++  120 t 0.606 Sc 408.6 core n 30 heat 5.9303e5 | window: P4 +4.753e4 P5 -4.458e4 P6 +2.012e4 (nu 2.020e4) P8 +3.376e3 | floor_added(all) +3.388e3 held 0
+NFE dn_core +3.9139e2 q_sb -1.39200e2 heat_NFe -5.4482e4
+TOTAL P4 +4.8815e5 P5 -6.6770e5 P6 +2.6830e5 (nu 9.3729e4) P8 +4.4821e3 floor_added(all) +4.4943e3
+### q-0.013.txt
+N_Fe q_ratio -0.013
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 357.5 core n 36 heat 5.7807e5 | window: P4 +1.182e5 P5 -9.390e4 P6 +5.410e4 (nu 3.234e3) P8 -6.985e-10 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 354.4 core n 36 heat 4.7156e5 | window: P4 -2.162e4 P5 -8.345e4 P6 -1.438e3 (nu 1.438e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 380.3 core n 32 heat 6.3868e5 | window: P4 +1.635e5 P5 -6.675e4 P6 +7.231e4 (nu 5.989e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 360.9 core n 32 heat 4.7154e5 | window: P4 -7.699e4 P5 -8.672e4 P6 -3.429e3 (nu 3.429e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 397.2 core n 32 heat 6.6655e5 | window: P4 +1.719e5 P5 -3.647e4 P6 +5.958e4 (nu 7.280e3) P8 -6.985e-10 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 370.6 core n 32 heat 4.7799e5 | window: P4 -9.638e4 P5 -8.734e4 P6 -4.837e3 (nu 7.063e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.6 core n 32 heat 6.4644e5 | window: P4 +1.417e5 P5 -1.429e4 P6 +4.105e4 (nu 6.738e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   80 t 0.404 Sc 383.9 core n 32 heat 5.0071e5 | window: P4 -6.939e4 P5 -7.690e4 P6 +5.639e2 (nu 1.164e4) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.2 core n 32 heat 6.0825e5 | window: P4 +9.534e4 P5 -9.686e3 P6 +2.181e4 (nu 5.913e3) P8 +8.413e1 | floor_added(all) +8.413e1 held 0
++  100 t 0.505 Sc 395.8 core n 32 heat 5.3715e5 | window: P4 -2.203e4 P5 -5.944e4 P6 +1.018e4 (nu 1.578e4) P8 +1.887e2 | floor_added(all) +1.887e2 held 0
++  110 t 0.556 Sc 424.3 core n 32 heat 5.7147e5 | window: P4 +3.748e4 P5 -1.149e4 P6 +7.427e3 (nu 5.253e3) P8 +9.044e2 | floor_added(all) +9.044e2 held 0
++  120 t 0.605 Sc 407.3 core n 30 heat 5.8882e5 | window: P4 +3.799e4 P5 -4.553e4 P6 +1.980e4 (nu 1.989e4) P8 +3.028e3 | floor_added(all) +3.042e3 held 0
+NFE dn_core +3.8935e2 q_sb -1.13100e2 heat_NFe -4.4035e4
+TOTAL P4 +4.7963e5 P5 -6.7197e5 P6 +2.7711e5 (nu 9.3651e4) P8 +4.2048e3 floor_added(all) +4.2190e3
+### q-0.0114.txt
+N_Fe q_ratio -0.0114
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 357.3 core n 36 heat 5.7805e5 | window: P4 +1.178e5 P5 -9.401e4 P6 +5.452e4 (nu 3.255e3) P8 -2.328e-10 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 354.3 core n 36 heat 4.7118e5 | window: P4 -2.211e4 P5 -8.332e4 P6 -1.428e3 (nu 1.428e3) P8 -6.985e-10 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 380.1 core n 32 heat 6.3941e5 | window: P4 +1.640e5 P5 -6.699e4 P6 +7.309e4 (nu 6.071e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 360.7 core n 32 heat 4.7074e5 | window: P4 -7.855e4 P5 -8.674e4 P6 -3.385e3 (nu 3.385e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 397.0 core n 32 heat 6.6861e5 | window: P4 +1.738e5 P5 -3.665e4 P6 +6.068e4 (nu 7.412e3) P8 -1.746e-9 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 370.3 core n 32 heat 4.7679e5 | window: P4 -9.914e4 P5 -8.768e4 P6 -5.002e3 (nu 6.979e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.5 core n 32 heat 6.4936e5 | window: P4 +1.446e5 P5 -1.424e4 P6 +4.225e4 (nu 6.859e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   80 t 0.404 Sc 383.4 core n 32 heat 4.9879e5 | window: P4 -7.322e4 P5 -7.768e4 P6 +3.262e2 (nu 1.155e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.1 core n 32 heat 6.1145e5 | window: P4 +9.913e4 P5 -9.433e3 P6 +2.287e4 (nu 6.001e3) P8 +9.189e1 | floor_added(all) +9.189e1 held 0
++  100 t 0.505 Sc 395.1 core n 32 heat 5.3435e5 | window: P4 -2.650e4 P5 -6.038e4 P6 +9.622e3 (nu 1.566e4) P8 +1.574e2 | floor_added(all) +1.574e2 held 0
++  110 t 0.556 Sc 424.6 core n 32 heat 5.7527e5 | window: P4 +4.235e4 P5 -1.108e4 P6 +8.683e3 (nu 5.318e3) P8 +9.724e2 | floor_added(all) +9.724e2 held 0
++  120 t 0.606 Sc 406.3 core n 30 heat 5.8405e5 | window: P4 +3.108e4 P5 -4.650e4 P6 +1.930e4 (nu 1.977e4) P8 +2.878e3 | floor_added(all) +2.893e3 held 0
+NFE dn_core +3.8806e2 q_sb -9.91800e1 heat_NFe -3.8487e4
+TOTAL P4 +4.7332e5 P5 -6.7471e5 P6 +2.8153e5 (nu 9.3685e4) P8 +4.0992e3 floor_added(all) +4.1146e3
+### q-0.0100.txt
+N_Fe q_ratio -0.01
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 357.1 core n 36 heat 5.7802e5 | window: P4 +1.175e5 P5 -9.410e4 P6 +5.488e4 (nu 3.274e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 354.2 core n 36 heat 4.7087e5 | window: P4 -2.253e4 P5 -8.321e4 P6 -1.419e3 (nu 1.419e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 379.9 core n 32 heat 6.4003e5 | window: P4 +1.645e5 P5 -6.720e4 P6 +7.376e4 (nu 6.142e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 360.5 core n 32 heat 4.7004e5 | window: P4 -7.988e4 P5 -8.676e4 P6 -3.346e3 (nu 3.346e3) P8 -1.979e-9 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.9 core n 32 heat 6.7044e5 | window: P4 +1.756e5 P5 -3.683e4 P6 +6.166e4 (nu 7.535e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 369.9 core n 32 heat 4.7575e5 | window: P4 -1.016e5 P5 -8.794e4 P6 -5.168e3 (nu 6.899e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.4 core n 32 heat 6.5210e5 | window: P4 +1.472e5 P5 -1.418e4 P6 +4.336e4 (nu 6.976e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   80 t 0.404 Sc 383.0 core n 32 heat 4.9710e5 | window: P4 -7.671e4 P5 -7.836e4 P6 +6.498e1 (nu 1.146e4) P8 -2.445e-9 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.2 core n 32 heat 6.1440e5 | window: P4 +1.026e5 P5 -9.206e3 P6 +2.384e4 (nu 6.086e3) P8 +9.934e1 | floor_added(all) +9.934e1 held 0
++  100 t 0.506 Sc 394.5 core n 32 heat 5.3190e5 | window: P4 -3.054e4 P5 -6.125e4 P6 +9.136e3 (nu 1.554e4) P8 +1.465e2 | floor_added(all) +1.465e2 held 0
++  110 t 0.556 Sc 424.7 core n 32 heat 5.7854e5 | window: P4 +4.658e4 P5 -1.073e4 P6 +9.763e3 (nu 5.378e3) P8 +1.029e3 | floor_added(all) +1.029e3 held 0
++  120 t 0.606 Sc 405.4 core n 30 heat 5.7995e5 | window: P4 +2.517e4 P5 -4.732e4 P6 +1.884e4 (nu 1.967e4) P8 +2.741e3 | floor_added(all) +2.758e3 held 0
+NFE dn_core +3.8695e2 q_sb -8.70000e1 heat_NFe -3.3665e4
+TOTAL P4 +4.6788e5 P5 -6.7708e5 P6 +2.8538e5 (nu 9.3731e4) P8 +4.0165e3 floor_added(all) +4.0327e3
+### q-0.0092.txt
+N_Fe q_ratio -0.0092
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 357.0 core n 36 heat 5.7801e5 | window: P4 +1.174e5 P5 -9.415e4 P6 +5.509e4 (nu 3.284e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 354.2 core n 36 heat 4.7068e5 | window: P4 -2.276e4 P5 -8.315e4 P6 -1.414e3 (nu 1.414e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 379.8 core n 32 heat 6.4036e5 | window: P4 +1.648e5 P5 -6.733e4 P6 +7.414e4 (nu 6.183e3) P8 -2.328e-10 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 360.3 core n 32 heat 4.6965e5 | window: P4 -8.063e4 P5 -8.676e4 P6 -3.323e3 (nu 3.323e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.8 core n 32 heat 6.7149e5 | window: P4 +1.766e5 P5 -3.694e4 P6 +6.222e4 (nu 7.608e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 369.8 core n 32 heat 4.7515e5 | window: P4 -1.030e5 P5 -8.809e4 P6 -5.267e3 (nu 6.850e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.4 core n 32 heat 6.5373e5 | window: P4 +1.487e5 P5 -1.416e4 P6 +4.402e4 (nu 7.049e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   80 t 0.404 Sc 382.8 core n 32 heat 4.9612e5 | window: P4 -7.876e4 P5 -7.874e4 P6 -1.139e2 (nu 1.140e4) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.2 core n 32 heat 6.1619e5 | window: P4 +1.046e5 P5 -9.073e3 P6 +2.444e4 (nu 6.141e3) P8 +1.185e2 | floor_added(all) +1.185e2 held 0
++  100 t 0.506 Sc 394.1 core n 32 heat 5.3041e5 | window: P4 -3.307e4 P5 -6.171e4 P6 +8.849e3 (nu 1.547e4) P8 +1.391e2 | floor_added(all) +1.391e2 held 0
++  110 t 0.556 Sc 424.8 core n 32 heat 5.8073e5 | window: P4 +4.934e4 P5 -1.052e4 P6 +1.044e4 (nu 5.422e3) P8 +1.061e3 | floor_added(all) +1.061e3 held 0
++  120 t 0.606 Sc 404.2 core n 30 heat 5.7258e5 | window: P4 +1.855e4 P5 -4.851e4 P6 +1.838e4 (nu 1.971e4) P8 +2.575e3 | floor_added(all) +2.592e3 held 0
+NFE dn_core +3.8632e2 q_sb -8.00400e1 heat_NFe -3.0921e4
+TOTAL P4 +4.6171e5 P5 -6.7912e5 P6 +2.8746e5 (nu 9.3860e4) P8 +3.8937e3 floor_added(all) +3.9103e3
+### q-0.0085.txt
+N_Fe q_ratio -0.0085
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 356.9 core n 36 heat 5.7799e5 | window: P4 +1.172e5 P5 -9.420e4 P6 +5.527e4 (nu 3.293e3) P8 -1.048e-9 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 354.1 core n 36 heat 4.7053e5 | window: P4 -2.297e4 P5 -8.309e4 P6 -1.409e3 (nu 1.409e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 379.7 core n 32 heat 6.4069e5 | window: P4 +1.650e5 P5 -6.744e4 P6 +7.451e4 (nu 6.220e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 360.2 core n 32 heat 4.6929e5 | window: P4 -8.133e4 P5 -8.677e4 P6 -3.305e3 (nu 3.305e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.8 core n 32 heat 6.7240e5 | window: P4 +1.774e5 P5 -3.701e4 P6 +6.269e4 (nu 7.668e3) P8 -4.424e-9 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 369.6 core n 32 heat 4.7464e5 | window: P4 -1.042e5 P5 -8.823e4 P6 -5.347e3 (nu 6.814e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.4 core n 32 heat 6.5503e5 | window: P4 +1.500e5 P5 -1.413e4 P6 +4.455e4 (nu 7.106e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   80 t 0.405 Sc 382.6 core n 32 heat 4.9533e5 | window: P4 -8.040e4 P5 -7.906e4 P6 -2.434e2 (nu 1.136e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.2 core n 32 heat 6.1760e5 | window: P4 +1.062e5 P5 -8.969e3 P6 +2.493e4 (nu 6.183e3) P8 +1.210e2 | floor_added(all) +1.210e2 held 0
++  100 t 0.506 Sc 393.8 core n 32 heat 5.2925e5 | window: P4 -3.499e4 P5 -6.213e4 P6 +8.640e3 (nu 1.542e4) P8 +1.338e2 | floor_added(all) +1.338e2 held 0
++  110 t 0.556 Sc 424.8 core n 32 heat 5.8233e5 | window: P4 +5.137e4 P5 -1.036e4 P6 +1.097e4 (nu 5.452e3) P8 +1.088e3 | floor_added(all) +1.088e3 held 0
++  120 t 0.607 Sc 403.8 core n 30 heat 5.7063e5 | window: P4 +1.562e4 P5 -4.922e4 P6 +1.817e4 (nu 1.966e4) P8 +2.539e3 | floor_added(all) +2.556e3 held 0
+NFE dn_core +3.8584e2 q_sb -7.39500e1 heat_NFe -2.8533e4
+TOTAL P4 +4.5896e5 P5 -6.8060e5 P6 +2.8942e5 (nu 9.3890e4) P8 +3.8824e3 floor_added(all) +3.8993e3
+### q-0.0075.txt
+N_Fe q_ratio -0.0075
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 356.8 core n 36 heat 5.7799e5 | window: P4 +1.170e5 P5 -9.426e4 P6 +5.554e4 (nu 3.307e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 354.0 core n 36 heat 4.7029e5 | window: P4 -2.329e4 P5 -8.301e4 P6 -1.403e3 (nu 1.403e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 379.6 core n 32 heat 6.4121e5 | window: P4 +1.654e5 P5 -6.758e4 P6 +7.504e4 (nu 6.273e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 360.1 core n 32 heat 4.6874e5 | window: P4 -8.239e4 P5 -8.680e4 P6 -3.282e3 (nu 3.282e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.7 core n 32 heat 6.7369e5 | window: P4 +1.787e5 P5 -3.710e4 P6 +6.336e4 (nu 7.752e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 369.4 core n 32 heat 4.7390e5 | window: P4 -1.059e5 P5 -8.845e4 P6 -5.453e3 (nu 6.768e3) P8 -4.657e-10 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.3 core n 32 heat 6.5679e5 | window: P4 +1.517e5 P5 -1.409e4 P6 +4.527e4 (nu 7.182e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   80 t 0.405 Sc 382.3 core n 32 heat 4.9426e5 | window: P4 -8.260e4 P5 -7.951e4 P6 -4.144e2 (nu 1.131e4) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.1 core n 32 heat 6.1952e5 | window: P4 +1.084e5 P5 -8.832e3 P6 +2.561e4 (nu 6.238e3) P8 +1.229e2 | floor_added(all) +1.229e2 held 0
++  100 t 0.506 Sc 393.3 core n 32 heat 5.2769e5 | window: P4 -3.767e4 P5 -6.271e4 P6 +8.429e3 (nu 1.536e4) P8 +1.262e2 | floor_added(all) +1.262e2 held 0
++  110 t 0.556 Sc 424.9 core n 32 heat 5.8443e5 | window: P4 +5.413e4 P5 -1.015e4 P6 +1.162e4 (nu 5.491e3) P8 +1.138e3 | floor_added(all) +1.138e3 held 0
++  120 t 0.607 Sc 403.2 core n 30 heat 5.6814e5 | window: P4 +1.192e4 P5 -4.977e4 P6 +1.793e4 (nu 1.959e4) P8 +2.452e3 | floor_added(all) +2.469e3 held 0
+NFE dn_core +3.8520e2 q_sb -6.52500e1 heat_NFe -2.5134e4
+TOTAL P4 +4.5537e5 P5 -6.8226e5 P6 +2.9224e5 (nu 9.3948e4) P8 +3.8385e3 floor_added(all) +3.8559e3
+### q-0.0065.txt
+N_Fe q_ratio -0.0065
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 356.6 core n 36 heat 5.7798e5 | window: P4 +1.168e5 P5 -9.432e4 P6 +5.581e4 (nu 3.320e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 353.9 core n 36 heat 4.7004e5 | window: P4 -2.362e4 P5 -8.292e4 P6 -1.397e3 (nu 1.397e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 379.5 core n 32 heat 6.4173e5 | window: P4 +1.658e5 P5 -6.772e4 P6 +7.557e4 (nu 6.325e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 359.9 core n 32 heat 4.6819e5 | window: P4 -8.345e4 P5 -8.683e4 P6 -3.259e3 (nu 3.260e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.7 core n 32 heat 6.7499e5 | window: P4 +1.800e5 P5 -3.718e4 P6 +6.402e4 (nu 7.837e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 369.2 core n 32 heat 4.7316e5 | window: P4 -1.076e5 P5 -8.868e4 P6 -5.563e3 (nu 6.722e3) P8 -2.910e-10 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.2 core n 32 heat 6.5863e5 | window: P4 +1.535e5 P5 -1.406e4 P6 +4.601e4 (nu 7.265e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   80 t 0.405 Sc 382.0 core n 32 heat 4.9320e5 | window: P4 -8.485e4 P5 -7.995e4 P6 -6.189e2 (nu 1.124e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.2 core n 32 heat 6.2164e5 | window: P4 +1.106e5 P5 -8.693e3 P6 +2.636e4 (nu 6.303e3) P8 +1.246e2 | floor_added(all) +1.246e2 held 0
++  100 t 0.506 Sc 392.8 core n 32 heat 5.2596e5 | window: P4 -4.073e4 P5 -6.329e4 P6 +8.221e3 (nu 1.529e4) P8 +1.177e2 | floor_added(all) +1.177e2 held 0
++  110 t 0.556 Sc 425.1 core n 32 heat 5.8686e5 | window: P4 +5.730e4 P5 -9.905e3 P6 +1.232e4 (nu 5.539e3) P8 +1.191e3 | floor_added(all) +1.191e3 held 0
++  120 t 0.607 Sc 402.7 core n 30 heat 5.6526e5 | window: P4 +7.715e3 P5 -5.009e4 P6 +1.761e4 (nu 1.950e4) P8 +2.349e3 | floor_added(all) +2.368e3 held 0
+NFE dn_core +3.8459e2 q_sb -5.65500e1 heat_NFe -2.1749e4
+TOTAL P4 +4.5145e5 P5 -6.8364e5 P6 +2.9508e5 (nu 9.4003e4) P8 +3.7824e3 floor_added(all) +3.8008e3
+### q-0.0057.txt
+N_Fe q_ratio -0.0057
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 356.5 core n 36 heat 5.7798e5 | window: P4 +1.166e5 P5 -9.438e4 P6 +5.602e4 (nu 3.331e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 353.9 core n 36 heat 4.6985e5 | window: P4 -2.387e4 P5 -8.286e4 P6 -1.392e3 (nu 1.392e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 379.4 core n 32 heat 6.4213e5 | window: P4 +1.660e5 P5 -6.783e4 P6 +7.599e4 (nu 6.368e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   40 t 0.201 Sc 359.8 core n 32 heat 4.6775e5 | window: P4 -8.428e4 P5 -8.685e4 P6 -3.241e3 (nu 3.241e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.6 core n 32 heat 6.7603e5 | window: P4 +1.810e5 P5 -3.725e4 P6 +6.456e4 (nu 7.906e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 369.1 core n 32 heat 4.7258e5 | window: P4 -1.089e5 P5 -8.885e4 P6 -5.652e3 (nu 6.683e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.1 core n 32 heat 6.6010e5 | window: P4 +1.549e5 P5 -1.403e4 P6 +4.661e4 (nu 7.333e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   80 t 0.405 Sc 381.8 core n 32 heat 4.9240e5 | window: P4 -8.661e4 P5 -8.029e4 P6 -7.975e2 (nu 1.119e4) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.2 core n 32 heat 6.2329e5 | window: P4 +1.124e5 P5 -8.591e3 P6 +2.695e4 (nu 6.354e3) P8 +1.248e2 | floor_added(all) +1.248e2 held 0
++  100 t 0.506 Sc 392.5 core n 32 heat 5.2472e5 | window: P4 -4.298e4 P5 -6.375e4 P6 +8.049e3 (nu 1.523e4) P8 +1.105e2 | floor_added(all) +1.105e2 held 0
++  110 t 0.557 Sc 425.2 core n 32 heat 5.8862e5 | window: P4 +5.959e4 P5 -9.734e3 P6 +1.282e4 (nu 5.574e3) P8 +1.224e3 | floor_added(all) +1.224e3 held 0
++  120 t 0.607 Sc 402.3 core n 30 heat 5.6334e5 | window: P4 +4.736e3 P5 -5.056e4 P6 +1.746e4 (nu 1.945e4) P8 +2.301e3 | floor_added(all) +2.320e3 held 0
+NFE dn_core +3.8416e2 q_sb -4.95900e1 heat_NFe -1.9050e4
+TOTAL P4 +4.4862e5 P5 -6.8498e5 P6 +2.9738e5 (nu 9.4053e4) P8 +3.7606e3 floor_added(all) +3.7793e3
+### q-0.0045.txt
+N_Fe q_ratio -0.0045
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 356.4 core n 36 heat 5.7796e5 | window: P4 +1.164e5 P5 -9.445e4 P6 +5.634e4 (nu 3.347e3) P8 -2.328e-9 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 353.7 core n 36 heat 4.6956e5 | window: P4 -2.426e4 P5 -8.276e4 P6 -1.385e3 (nu 1.385e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 379.3 core n 32 heat 6.4273e5 | window: P4 +1.665e5 P5 -6.800e4 P6 +7.662e4 (nu 6.432e3) P8 -8.149e-10 | floor_added(all) +0.000e0 held 0
++   40 t 0.202 Sc 359.6 core n 32 heat 4.6710e5 | window: P4 -8.553e4 P5 -8.689e4 P6 -3.214e3 (nu 3.214e3) P8 -6.985e-10 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.5 core n 32 heat 6.7757e5 | window: P4 +1.825e5 P5 -3.736e4 P6 +6.536e4 (nu 8.012e3) P8 -5.821e-11 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 368.8 core n 32 heat 4.7174e5 | window: P4 -1.109e5 P5 -8.911e4 P6 -5.793e3 (nu 6.623e3) P8 -1.863e-9 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 412.0 core n 32 heat 6.6231e5 | window: P4 +1.571e5 P5 -1.400e4 P6 +4.752e4 (nu 7.438e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   80 t 0.405 Sc 381.5 core n 32 heat 4.9123e5 | window: P4 -8.919e4 P5 -8.080e4 P6 -1.084e3 (nu 1.110e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.2 core n 32 heat 6.2571e5 | window: P4 +1.150e5 P5 -8.438e3 P6 +2.783e4 (nu 6.430e3) P8 +1.239e2 | floor_added(all) +1.239e2 held 0
++  100 t 0.506 Sc 392.0 core n 32 heat 5.2290e5 | window: P4 -4.628e4 P5 -6.443e4 P6 +7.794e3 (nu 1.515e4) P8 +9.971e1 | floor_added(all) +9.971e1 held 0
++  110 t 0.557 Sc 425.4 core n 32 heat 5.9127e5 | window: P4 +6.299e4 P5 -9.491e3 P6 +1.361e4 (nu 5.628e3) P8 +1.271e3 | floor_added(all) +1.271e3 held 0
++  120 t 0.607 Sc 401.7 core n 30 heat 5.6044e5 | window: P4 +1.971e2 P5 -5.124e4 P6 +1.725e4 (nu 1.937e4) P8 +2.218e3 | floor_added(all) +2.237e3 held 0
+NFE dn_core +3.8355e2 q_sb -3.91500e1 heat_NFe -1.5016e4
+TOTAL P4 +4.4433e5 P5 -6.8696e5 P6 +3.0085e5 (nu 9.4132e4) P8 +3.7134e3 floor_added(all) +3.7323e3
+### q-0.00228.txt
+N_Fe q_ratio -0.00228
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 356.1 core n 36 heat 5.7793e5 | window: P4 +1.159e5 P5 -9.460e4 P6 +5.693e4 (nu 3.378e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 353.5 core n 36 heat 4.6904e5 | window: P4 -2.495e4 P5 -8.257e4 P6 -1.372e3 (nu 1.372e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 379.0 core n 32 heat 6.4379e5 | window: P4 +1.672e5 P5 -6.832e4 P6 +7.777e4 (nu 6.551e3) P8 -1.863e-9 | floor_added(all) +0.000e0 held 0
++   40 t 0.202 Sc 359.2 core n 32 heat 4.6588e5 | window: P4 -8.782e4 P5 -8.693e4 P6 -3.163e3 (nu 3.163e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.3 core n 32 heat 6.8042e5 | window: P4 +1.853e5 P5 -3.756e4 P6 +6.685e4 (nu 8.213e3) P8 -1.746e-9 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 368.4 core n 32 heat 4.7021e5 | window: P4 -1.146e5 P5 -8.957e4 P6 -6.070e3 (nu 6.512e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 411.8 core n 32 heat 6.6630e5 | window: P4 +1.609e5 P5 -1.396e4 P6 +4.917e4 (nu 7.632e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   80 t 0.405 Sc 381.0 core n 32 heat 4.8919e5 | window: P4 -9.382e4 P5 -8.167e4 P6 -1.623e3 (nu 1.094e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.1 core n 32 heat 6.3009e5 | window: P4 +1.194e5 P5 -8.181e3 P6 +2.952e4 (nu 6.571e3) P8 +1.187e2 | floor_added(all) +1.187e2 held 0
++  100 t 0.506 Sc 391.2 core n 32 heat 5.1982e5 | window: P4 -5.196e4 P5 -6.565e4 P6 +7.264e3 (nu 1.500e4) P8 +7.888e1 | floor_added(all) +7.888e1 held 0
++  110 t 0.557 Sc 425.8 core n 32 heat 5.9612e5 | window: P4 +6.892e4 P5 -9.086e3 P6 +1.511e4 (nu 5.727e3) P8 +1.352e3 | floor_added(all) +1.352e3 held 0
++  120 t 0.607 Sc 400.6 core n 30 heat 5.5522e5 | window: P4 -7.556e3 P5 -5.278e4 P6 +1.686e4 (nu 1.922e4) P8 +2.057e3 | floor_added(all) +2.076e3 held 0
+NFE dn_core +3.8244e2 q_sb -1.98360e1 heat_NFe -7.5861e3
+TOTAL P4 +4.3696e5 P5 -6.9088e5 P6 +3.0725e5 (nu 9.4279e4) P8 +3.6074e3 floor_added(all) +3.6260e3
+### q-0.00114.txt
+N_Fe q_ratio -0.00114
+dump /tmp/d153/massive_a/dumps/s_900.bin step 900 crop centre (300,199) switches Switches { gravity: true, hydro: true, heat: true, reactions: true } neutrinos true
++   10 t 0.049 Sc 355.9 core n 36 heat 5.7791e5 | window: P4 +1.157e5 P5 -9.467e4 P6 +5.722e4 (nu 3.393e3) P8 -1.630e-9 | floor_added(all) +0.000e0 held 0
++   20 t 0.100 Sc 353.4 core n 36 heat 4.6877e5 | window: P4 -2.530e4 P5 -8.247e4 P6 -1.366e3 (nu 1.366e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   30 t 0.149 Sc 378.9 core n 32 heat 6.4433e5 | window: P4 +1.676e5 P5 -6.848e4 P6 +7.836e4 (nu 6.613e3) P8 -1.164e-10 | floor_added(all) +0.000e0 held 0
++   40 t 0.202 Sc 359.0 core n 32 heat 4.6524e5 | window: P4 -8.901e4 P5 -8.694e4 P6 -3.138e3 (nu 3.138e3) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   50 t 0.251 Sc 396.3 core n 32 heat 6.8192e5 | window: P4 +1.867e5 P5 -3.766e4 P6 +6.763e4 (nu 8.320e3) P8 -8.149e-10 | floor_added(all) +0.000e0 held 0
++   60 t 0.303 Sc 368.2 core n 32 heat 4.6942e5 | window: P4 -1.165e5 P5 -8.982e4 P6 -6.197e3 (nu 6.462e3) P8 -2.561e-9 | floor_added(all) +0.000e0 held 0
++   70 t 0.353 Sc 411.7 core n 32 heat 6.6822e5 | window: P4 +1.628e5 P5 -1.393e4 P6 +4.997e4 (nu 7.725e3) P8 -1.513e-9 | floor_added(all) +0.000e0 held 0
++   80 t 0.405 Sc 380.8 core n 32 heat 4.8819e5 | window: P4 -9.603e4 P5 -8.213e4 P6 -1.864e3 (nu 1.087e4) P8 +0.000e0 | floor_added(all) +0.000e0 held 0
++   90 t 0.455 Sc 425.0 core n 32 heat 6.3221e5 | window: P4 +1.216e5 P5 -8.063e3 P6 +3.035e4 (nu 6.638e3) P8 +1.176e2 | floor_added(all) +1.176e2 held 0
++  100 t 0.506 Sc 390.8 core n 32 heat 5.1827e5 | window: P4 -5.477e4 P5 -6.625e4 P6 +7.010e3 (nu 1.492e4) P8 +6.867e1 | floor_added(all) +6.867e1 held 0
++  110 t 0.557 Sc 426.0 core n 32 heat 5.9859e5 | window: P4 +7.191e4 P5 -8.888e3 P6 +1.591e4 (nu 5.777e3) P8 +1.397e3 | floor_added(all) +1.397e3 held 0
++  120 t 0.607 Sc 400.1 core n 30 heat 5.5271e5 | window: P4 -1.155e4 P5 -5.349e4 P6 +1.672e4 (nu 1.916e4) P8 +1.978e3 | floor_added(all) +1.998e3 held 0
+NFE dn_core +3.8201e2 q_sb -9.91800e0 heat_NFe -3.7888e3
+TOTAL P4 +4.3310e5 P5 -6.9280e5 P6 +3.1061e5 (nu 9.4388e4) P8 +3.5618e3 floor_added(all) +3.5808e3

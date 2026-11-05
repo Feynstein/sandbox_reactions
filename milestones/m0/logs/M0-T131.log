@@ -1,0 +1,9 @@
+registry  29/0/0       2.52 s  GO · step 1/2, 1 left
+twin      4/2/0       14.54 s  NO-GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-T131.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+768aabcadf6d
+anchor: 124 path×scope entries moved by this run
+anchor: 298 paths checked · 401 skipped (3 classes) · 121 never checked · 11 stale · 0 unclassified · 0 owed · 430 covered of 831 visible
+FAILED:
+  twin: 2 failed · log milestones/m0/logs/M0-T131.twin.log
+verify: 33 passed, 2 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 14.55 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 2.12->2.97
+=== NO-GO: twin: 2 failed · log milestones/m0/logs/M0-T131.twin.log ===

@@ -1,0 +1,6 @@
+M0-T99a start 2026-11-05T13:46:20-05:00 linux-pc; model=claude-sonnet-5-5 level=high
+pulled T97 dumps read-only from the server (rsync push denied by auto mode)
+user allowed rsync; pushed 2026-11-05T13:49:28-05:00
+server build done 2026-11-05T13:49:46-05:00
+batch1 massive base/f0.1/f0.02 to t60 launched 2026-11-05T13:50:22-05:00
+massive batch1 done: f_dep 0.02/0.1/base all d=0.5 from t29 (m16 3.4-5.2 at t60); giant base+f0.1 launched 2026-11-05T15:29:43-05:00

@@ -303,6 +303,38 @@ at step 577, then a **neutron_star at t 5.97 before the supernova at t 6.54** (a
 
 **Status: BLOCKED** — no in-bounds value of a_r, c_sb, κ₀, Q_H brings either gap toward 10–20; assets/physics.json **unchanged**. Question to the lead: see the handoff.
 
+## Tuning — the mass ladder (M0-T99a, 2026-11-05)
+Written by M0-T99a (model=claude-sonnet-5-5 level=high, `rung_record.py now` at launch). Box: task on **linux-pc** (laserax-ai); every run on **laserax-ai-server, RTX 4090** (Vulkan). Tree: HEAD `8832213` + the uncommitted working tree
+rsync'd up (assets/physics.json sha256 `8ad6c983791e`, M0-D71g's keys in); the server binary rebuilt from it (`cargo build --release --locked -p sr-app`; summary.json still prints `git 255ec37-dirty`, the server checkout's own HEAD).
+Scenes: `scenes/tune_fit_massive.json` (a 56.46359, Σc 1, T₀ 6.68555) and `scenes/tune_fit_giant.json` (a 93.249, T₀ 11.0453 — the preset's values to the digits lives.md § Giant records, labelled), `scenes/tune_fit_sun.json` (not run: T97 read the Sun-like clear to t 800, nearest 142.5) — `disk` objects, no preset, each candidate its `overrides` (generated copies `build/t99a/cand_<life>_<tag>.json` on the server), so no run needed the calibration (G-CAL). Raw output: server `~/workspace/sandbox_reactions/build/t99a/`; trail `logs/M0-T99a.log`.
+Measured by T97's bracket (§ Method: nec = ½|u|²+φ < 0, suf = E/Σ+φ < 0; no ε_th in a dump), `probe/dumpread.py` + `probe/fitsum.py` (§ Appendix), unchanged.
+
+**Command** (all `[ALREADY RUN — PASS (exit 0, until met) on laserax-ai-server, RTX 4090]`; `<life>` ∈ massive, giant; `<tag>` ∈ base, f0.1 (`{"f_dep": 0.1}`), f0.02 (`{"f_dep": 0.02}`)):
+```
+server$ cd ~/workspace/sandbox_reactions/build/t99a && ../target/release/sandbox-reactions headless --scene cand_<life>_<tag>.json --until sim_time:<60 | 38> --max-steps 40000 --adapter "RTX 4090" --out <life>_<tag> --dump-every 2500
+```
+The Massive three at once (10,727 / 10,734 / 10,739 steps to t 60), the Giant two at once (10,619 steps to t 38, its ending's time in T97). **Not run:** the Massive to its ending (t ≈ 113.8; 20,000 steps, T97's 564 s alone — over the 10-minute line in parallel, the lead's); Giant f0.02; any candidate outside `f_dep`.
+
+**The closest bound gas per life (cells from an edge; mass within 16 cells, nec / suf):**
+
+| Life, candidate | step 2,500 | 5,000 | 7,500 | 10,000 | last (t) |
+|---|---|---|---|---|---|
+| Massive base (f_dep 0.05) | 83.5 / 86.5 · 0 | **0.5** · 1.36 / 0.67 (t 28.9) | 0.5 · 2.29 / 2.07 | 0.5 · 4.11 / 3.33 | 0.5 · 4.00 / 3.57 (60.0) |
+| Massive f_dep 0.1 | 83.5 / 86.5 · 0 | 0.5 · 1.44 / 0.78 | 0.5 · 2.20 / 1.94 | 0.5 · 3.56 / 3.09 | 0.5 · 3.44 / 3.17 (60.0) |
+| Massive f_dep 0.02 | 84.5 / 87.5 · 0 | 0.5 · 0.65 / 0.26 (suf 2.5) | 0.5 · 2.98 / 2.65 | 0.5 · 5.18 / 3.71 | 0.5 · 5.12 / 4.35 (60.0) |
+| Giant base | 32.5 / 36.5 · 0 | 0.5 · 334.95 / 310.12 | 0.5 · 322.42 / 289.47 | 0.5 · 241.97 / 241.97 | 0.5 · 201.47 / 201.47 (38.0) |
+| Giant f_dep 0.1 | **byte-identical to base at every dump** | | | | |
+
+(total mass at the Massive's step 10,000: 4,382 / 4,398 / 4,337; the Giant's at step 5,000: 4,768, one sink inside.) The Massive's G-FIT fails from step 5,000 (t ≈ 29) on this tree — T97's dump cadence (5,000 steps, the first read t 57) put the crossing later; the Giant's from step 5,000 (T97: t ≈ 13 on its dense run).
+
+**What it says.**
+1. `f_dep` over its whole bound (0.02–0.1, §2.7) moves the Massive's mass within 16 cells by ≤ 1.5× and the nearest bound gas not at all (0.5 cell at every dump from t 29): **no value in the bound fits**.
+2. The Giant's life ignores `f_dep` — identical to the byte, no neutrino deposit acts (it collapses to a sink, no supernova) — so that lever is inert there; its 16-cell band holds 201–335 mass (4–7 % of the gas, nec) (T97's ending dump: every cell of the band, Σ ≈ 0.002 — not re-read per cell here).
+3. The edge gas is the bound halo of the explosion/collapse (T97's reading of the dumps, M0-T99a's tasks file): a tail of the energy spread; a physics.json constant moves the energy, not the tail.
+4. The levers that could change it are outside physics.json: §2.10's radius a = 40√(M/M_sun) (cap 150), the presets' Suns (1, 15, 40), and G-FIT's wording (a tolerance, §0.4) — each changes only by asking the lead.
+
+**Status: BLOCKED** — no in-bounds physics.json value brings a life's closest bound approach to 16 cells; assets/physics.json **unchanged**. Question to the lead: see the handoff.
+
 ## Appendix — the reading scripts (extract each under `probe/`)
 Pure Python 3 + numpy, run with `-I`; read dumps and snapshots, write nothing.
 

@@ -52,12 +52,16 @@
 //! - **G-REST's window** (M0-D71f): scenes/remnant_window.bin — M0-D67's box of the Sun-like life's step 450,000 in a
 //!   128 × 128 leave world ([`cut_window`]; `SR_WRITE_SCENES=1` re-cuts it from the git-ignored source) — 10,000 steps of
 //!   every pass through `headless`: floor_added ≤ 15 % of radiated, both halves printed (the twin's 1.2 % and 46 %).
+//! - **The hold's keys** (M0-D71g, §2.7 [M0-D71g]): σ_hold, η_hold and r_hold are physics.json's `sigma_hold`,
+//!   `eta_hold` and `r_hold`, read through `Physics` by the twin and the GPU's P8 — the M 900 disk, one step: the shipped
+//!   σ_hold holds 16 on each side, the same set; `sigma_hold` overridden past every Σ holds none on either side.
 //!
 //! Plant `held-wall-gpu-pressure-only`: hydro.wgsl's held wall the bounce flux, Π alone. Plant `held-core-gpu-whole-g`:
 //! hydro.wgsl's held cells read P2's whole g again (the world of held cells books its f32 rounding). Plant
 //! `hold-iron-gate`: the gate form back on the twin and in floors.wgsl — iron held while Y_eΣ ≤ Σ_N (M0-D71f). Plant
 //! `neutron-hold-ungated`: the m_tov_sb gate dropped on the twin and in floors.wgsl — M0-R13's F, the neutron-rich core
-//! held at any mass.
+//! held at any mass. Plant `hold-constants-ignored`: the old literals (10, 0.1, 24) back in the twin's `Floors::new` and
+//! P8's uniform — the override case holds 16 on both sides.
 
 use std::path::{Path, PathBuf};
 
@@ -72,7 +76,7 @@ use sr_engine::step::edit::Edit;
 use sr_engine::step::fft::read_back;
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::eos::Eos;
-use sr_physics::reference::floors::{Floors, ETA_HOLD, R_HOLD, SIGMA_HOLD};
+use sr_physics::reference::floors::Floors;
 use sr_physics::reference::grav::Gravity;
 use sr_physics::reference::hydro::{Edge, Hydro, State, COMPONENTS};
 use sr_physics::reference::{Switches, Twin};
@@ -93,6 +97,11 @@ fn elements() -> Elements {
 
 fn physics() -> Physics {
     Physics::shipped().unwrap()
+}
+
+/// One of the shipped hold's keys — `sigma_hold`, `eta_hold` or `r_hold` — as physics.json holds it (§2.7 [M0-D71g]).
+fn hold_key(key: &str) -> f64 {
+    physics().get(key).unwrap_or_else(|| panic!("physics.json key {key}"))
 }
 
 /// The shipped physics with the neutrons' cold pressure off (K₁ₙ = K₂ₙ = 0), m_tov_sb infinite: for the fixtures that pack
@@ -335,7 +344,7 @@ fn pull_world_of(size: usize, core: &[(usize, usize)], gas: &[(usize, usize)]) -
         .map(|i| {
             let p = (i % size, i / size);
             if core.contains(&p) {
-                cold_cell(&eos, 20.0 + ((7 * p.0 + 3 * p.1) % 11) as f64, co(), 0.5 * ETA_HOLD, [0.0, 0.0])
+                cold_cell(&eos, 20.0 + ((7 * p.0 + 3 * p.1) % 11) as f64, co(), 0.5 * hold_key("eta_hold"), [0.0, 0.0])
             } else if gas.contains(&p) {
                 Cell { sigma: 1.0, mom: [0.0, 0.0], energy: 1.0 + 2.0 * cold_h, x: hy }
             } else {
@@ -421,7 +430,7 @@ fn p8(floors: &Floors, cells: &[Cell], held: &mut [bool]) -> (State, [f64; 2]) {
 fn the_hold_has_its_hysteresis() {
     let physics = physics();
     let (eos, floors) = (Eos::from_physics(&physics).unwrap(), Floors::new(&physics, &elements()).unwrap());
-    assert_eq!((SIGMA_HOLD, ETA_HOLD), (10.0, 0.1), "§2.7 [M0-TG2]'s σ_hold and η_hold");
+    assert_eq!((floors.sigma_hold(), floors.eta_hold(), floors.r_hold()), (10.0, 0.1, 24.0), "§2.7 [M0-D71g]'s σ_hold, η_hold and r_hold");
     let c = |sigma: f64, ratio: f64| cold_cell(&eos, sigma, co(), ratio, [0.0, 0.0]);
     // Column by column: [a held at η then warmed, never held past η, never held under σ_hold, held then thinned, newly held moving].
     let steps: [[Cell; 5]; 5] = [
@@ -461,7 +470,7 @@ fn item1_cells(eos: &Eos, physics: &Physics, iron_appears: bool) -> ([Cell; 5], 
     let y_e = elements().composition(&iron).y_e;
     let sigma_n = physics.get("sigma_n").unwrap();
     let (under, past) = (0.9 * sigma_n / y_e, 1.1 * sigma_n / y_e);
-    let c = |sigma: f64, x: [f64; N_SPECIES]| cold_cell(eos, sigma, x, 0.5 * ETA_HOLD, [0.0, 0.0]);
+    let c = |sigma: f64, x: [f64; N_SPECIES]| cold_cell(eos, sigma, x, 0.5 * hold_key("eta_hold"), [0.0, 0.0]);
     let fourth = if iron_appears { fractions(&[("C", 0.5), ("O", 0.4999), ("Fe", 1e-4)]) } else { co() };
     let trace = fractions(&[("C", 0.5), ("O", 0.5), ("Fe", 1e-30)]);
     ([c(under, iron), c(past, iron), c(past, co()), c(past, fourth), c(past, trace)], under, past)
@@ -493,12 +502,12 @@ const NP: usize = 64;
 /// (Σ 1, never held), four cold centres at ½η_hold at (32, 32), (96, 32), (32, 96) and (96, 96), `NP` apart —
 /// [neutron-rich (X_n 0.6, X_Fe 0.4) with its disk r ≤ 24 at 0.95 m_tov_sb, the same at 1.05 m_tov_sb, iron under X_n 0.5
 /// (X_n 0.4, X_Fe 0.6) at 0.95, neutron-rich at 0.95 — or at 1.05 once `crossed`]: every other cell of each centre's disk
-/// r ≤ [`R_HOLD`] warm hydrogen ballast (Σ ≈ 2, under σ_hold; ε_th = 1 + 10 ε_cold), spread so the disk (centre + 1,808
+/// r ≤ r_hold warm hydrogen ballast (Σ ≈ 2, under σ_hold; ε_th = 1 + 10 ε_cold), spread so the disk (centre + 1,808
 /// ballast cells) holds the share asked. Returns the cells and the centres' indices.
 fn neutron_probes(eos: &Eos, m_tov: f64, crossed: bool) -> (Vec<Cell>, [usize; 4]) {
     const CENTRE: f64 = 1_000.0;
     let at: [usize; 4] = std::array::from_fn(|k| (32 + NP * (k / 2)) * NW + 32 + NP * (k % 2));
-    let r = R_HOLD as i64;
+    let r = hold_key("r_hold") as i64;
     let ring: Vec<(i64, i64)> =
         (-r..=r).flat_map(|dy| (-r..=r).map(move |dx| (dx, dy))).filter(|&(dx, dy)| (dx, dy) != (0, 0) && dx * dx + dy * dy <= r * r).collect();
     let hy = fractions(&[("H", 1.0)]);
@@ -506,14 +515,14 @@ fn neutron_probes(eos: &Eos, m_tov: f64, crossed: bool) -> (Vec<Cell>, [usize; 4
     let iron = fractions(&[("n", 0.4), ("Fe", 0.6)]);
     let ballast = |share: f64| {
         let b = (share * m_tov - CENTRE) / ring.len() as f64;
-        assert!(b < 0.5 * SIGMA_HOLD, "ballast Σ {b}: never held, never summed");
+        assert!(b < 0.5 * hold_key("sigma_hold"), "ballast Σ {b}: never held, never summed");
         let cold = eos.eps_cold(b, elements().composition(&hy).y_e, 0.0);
         Cell { sigma: b, mom: [0.0; 2], energy: b * (cold + 1.0 + 10.0 * cold), x: hy }
     };
     let probes = [(rich, 0.95), (rich, 1.05), (iron, 0.95), (rich, if crossed { 1.05 } else { 0.95 })];
     let mut cells = vec![Cell { sigma: 1.0, mom: [0.0; 2], energy: 1.0, x: hy }; NW * NW];
     for (&c, &(x, share)) in at.iter().zip(&probes) {
-        cells[c] = cold_cell(eos, CENTRE, x, 0.5 * ETA_HOLD, [0.0, 0.0]);
+        cells[c] = cold_cell(eos, CENTRE, x, 0.5 * hold_key("eta_hold"), [0.0, 0.0]);
         for &(dx, dy) in &ring {
             cells[(c as i64 + dy * NW as i64 + dx) as usize] = ballast(share);
         }
@@ -538,7 +547,7 @@ fn a_neutron_core_is_held_under_m_tov_sb() {
         let (cells, at) = neutron_probes(&eos, m_tov, crossed);
         let mut st = state(NW, NW, &cells);
         floors.apply(&mut st);
-        let disks = at.map(|c| Floors::disk_mass(&st, c));
+        let disks = at.map(|c| floors.disk_mass(&st, c));
         floors.hold(&mut st, &mut held);
         let mask = at.map(|c| held[c]);
         println!(
@@ -771,6 +780,41 @@ fn gpu_disk_m1800_agrees_with_the_twin_at_step_200() {
     disk_agrees_with_the_twin(1_800.0);
 }
 
+// ---- the hold's keys read from the physics (M0-D71g) ----
+
+/// The M 900 disk's held count after one step, twin and GPU, under `physics` (the disk built from the shipped physics).
+fn disk_m900_held(physics: &Physics, planes: &[f32], world: WorldConfig, edge: EdgeMode) -> (usize, usize, usize) {
+    let mut twin = twin_of(physics, planes, world, edge, true);
+    twin.step();
+    let gpu = Gpu::new(physics, world, planes, edge, true, false);
+    gpu.run(1);
+    let mask = gpu.mask();
+    let differ = (0..world.cells()).filter(|&i| mask[i] != twin.held_mask()[i]).count();
+    (twin.held_mask().iter().filter(|&&b| b).count(), mask.iter().filter(|&&m| m).count(), differ)
+}
+
+/// §2.7 [M0-D71g]: σ_hold, η_hold and r_hold are physics.json's keys, read through `Physics` by the twin (`Floors`) and
+/// the GPU's P8 (its uniform) — a scene's `overrides` reaches both. The M 900 disk, one step: the shipped σ_hold holds 16
+/// cells on each side, the same set; `sigma_hold` overridden to ten times the disk's densest Σ holds none on either side.
+/// Adversarial: a side reading a literal holds its 16 under the override, which no literal holds.
+#[test]
+fn gpu_an_overridden_sigma_hold_reaches_the_twin_and_the_gpu() {
+    let shipped = physics();
+    let (planes, world, edge) = disk(&shipped, 900.0);
+    let densest = planes[..world.cells()].iter().fold(0f32, |m, &v| m.max(v)) as f64;
+    let over = shipped.with(&[("sigma_hold", 10.0 * densest)]).expect("sigma_hold overridden");
+    let (twin, gpu, differ) = disk_m900_held(&shipped, &planes, world, edge);
+    let (twin_over, gpu_over, differ_over) = disk_m900_held(&over, &planes, world, edge);
+    println!(
+        "SR-HELD-KEYS disk M 900, step 1: shipped σ_hold {} → held twin {twin}, GPU {gpu} ({differ} on one side only); \
+         sigma_hold {:.4e} (10 × the densest Σ {densest:.4e}) → twin {twin_over}, GPU {gpu_over} ({differ_over})",
+        hold_key("sigma_hold"),
+        10.0 * densest
+    );
+    assert_eq!((twin, gpu, differ), (16, 16, 0), "the shipped σ_hold holds the M 900 disk's 16, the same set on each side");
+    assert_eq!((twin_over, gpu_over), (0, 0), "sigma_hold past every Σ: a side still holds — it read a literal");
+}
+
 // ---- the pull on the GPU (M0-D151) ----
 
 /// [`pull_world`]'s state at the GPU's 64 × 64 on the GPU and the twin, one step: the GPU, its held total and the twin.
@@ -826,7 +870,7 @@ fn gpu_strip(eos: &Eos, held: &[usize], sigma: f64, u: impl Fn(usize) -> f64) ->
         .map(|i| {
             let x = i % GW;
             if held.contains(&x) {
-                return cold_cell(eos, 20.0, co(), 0.5 * ETA_HOLD, [0.0, 0.0]);
+                return cold_cell(eos, 20.0, co(), 0.5 * hold_key("eta_hold"), [0.0, 0.0]);
             }
             let v = u(x);
             Cell { sigma, mom: [sigma * v, 0.0], energy: sigma * (1.0 + 2.0 * cold_h + 0.5 * v * v), x: hy }
@@ -970,7 +1014,7 @@ fn gpu_clear_leaves_p4_no_stale_wall() {
     let block = |i: usize| (30..34).contains(&(i % GW)) && (30..34).contains(&(i / GW));
     let hy = fractions(&[("H", 1.0)]);
     let cells: Vec<Cell> = (0..GW * GW)
-        .map(|i| if block(i) { cold_cell(&eos, 50.0, co(), 0.5 * ETA_HOLD, [0.0, 0.0]) } else { Cell { sigma: 1.0, mom: [0.0; 2], energy: 1.0, x: hy } })
+        .map(|i| if block(i) { cold_cell(&eos, 50.0, co(), 0.5 * hold_key("eta_hold"), [0.0, 0.0]) } else { Cell { sigma: 1.0, mom: [0.0; 2], energy: 1.0, x: hy } })
         .collect();
     let planes = to_f32(&state(GW, GW, &cells));
     let world = WorldConfig::new(GW as u32, GW as u32).unwrap();

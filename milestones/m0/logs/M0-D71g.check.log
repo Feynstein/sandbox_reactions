@@ -1,0 +1,35 @@
+M0-D71g 2026-11-05T12:28:10-05:00 cargo check --workspace --all-targets (linux-pc)
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Checking sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.04s
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-physics/src/observe/age.rs:535:28
+    |
+535 |         c.update(1.0, 0.1, &[a.clone()], |_| Some(Stage::WhiteDwarf));
+    |                            ^^^^^^^^^^^^ help: try: `std::slice::from_ref(&a)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/sr-physics/src/observe/stages.rs:751:22
+    |
+751 |             t.update(&[o.clone()], t0 + f64::from(f));
+    |                      ^^^^^^^^^^^^ help: try: `std::slice::from_ref(o)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+
+error: unnecessary use of `clone` to create a slice from a reference
+    --> crates/sr-physics/src/observe/stages.rs:1114:22
+     |
+1114 |             t.update(&[o.clone()], frame as f64);
+     |                      ^^^^^^^^^^^^ help: try: `std::slice::from_ref(&o)`
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cloned_ref_to_slice_refs
+
+error: could not compile `sr-physics` (lib test) due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...

@@ -1,0 +1,27 @@
+--- a/crates/sr-physics/src/reference/floors.rs
++++ b/crates/sr-physics/src/reference/floors.rs
+@@ -111,9 +111,9 @@
+             sigma_vac: get("sigma_vac"),
+             sigma_floor: get("sigma_floor"),
+             m_tov: m_tov_sb(physics, elements),
+-            sigma_hold: physics.get("sigma_hold").expect("physics.json key sigma_hold"),
+-            eta_hold: physics.get("eta_hold").expect("physics.json key eta_hold"),
+-            r_hold: physics.get("r_hold").expect("physics.json key r_hold"),
++            sigma_hold: 10.0, // planted: the twin holds at the old literals, not the physics
++            eta_hold: 0.1,
++            r_hold: 24.0,
+         })
+     }
+ 
+--- a/crates/sr-engine/src/step/mod.rs
++++ b/crates/sr-engine/src/step/mod.rs
+@@ -938,7 +938,8 @@
+ 
+     let m_tov = m_tov_sb(physics, &Elements::shipped().expect("the shipped elements")).min(f64::from(f32::MAX)) as f32;
+     let key = |k: &str| physics.get(k).unwrap_or_else(|| panic!("physics.json key {k}")) as f32;
+-    let params = [key("sigma_hold"), key("eta_hold"), m_tov, key("r_hold")];
++    let params = [10.0f32, 0.1, m_tov, 24.0]; // planted: P8 holds at the old literals, not the physics
++    let _ = key;
+     let params = init_buffer(device, "floors.hold", wgpu::BufferUsages::UNIFORM, &params.map(f32::to_bits));
+     let hold_dispatch = |entry: &'static str| {
+         let pipeline = compute_pipeline(device, &module, entry);

@@ -72,3 +72,7 @@ lives in the current plan — `milestones/m0/m0_implementation_plan.md` today.
   (Recommended)»). This project's web work ends at its static web build: when the lead calls one ready, the block that
   closes on that word writes `Web build ready: <folder> · <commit, or tree id> · <date> · <what changed>` here, and
   `../tykun_games` deploys it. Worklist item 4 closed; the web build, Steam and reports/web_hosting.md kept. Next: M0-TC9.
+- 2026-11-05 · M0-T131: nature's share of N_Fe's cost (the collapse's P4 heat ÷ what N_Fe absorbs ≈ 15; it reads 0.08 in M0) is
+  routed past M0: the bound [7.5, 30] is reachable (q_ratio −0.0092) but lies in a shallow collapse that breaks the neutron-star lives
+  (reports/nfe_cost.md); it needs a mechanism that deepens the collapse without N_Fe's heat (electron-capture pressure loss) — a design
+  for a later milestone (the lead: «well do your recommendation»).

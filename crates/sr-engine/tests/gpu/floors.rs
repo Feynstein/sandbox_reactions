@@ -37,7 +37,7 @@ use sr_engine::state::{book_totals, Booking, State, WorldConfig, BOOK_GROUPS, CH
 use sr_engine::step::edit::Edit;
 use sr_engine::step::{with_eos, EosGpu, Pass, Step};
 use sr_physics::eos::Eos;
-use sr_physics::reference::floors::{self, Cell, Floors, ETA_HOLD, SIGMA_HOLD};
+use sr_physics::reference::floors::{self, Cell, Floors};
 use sr_physics::reference::hydro::State as TwinState;
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
@@ -342,7 +342,7 @@ fn field(c: &Constants, world: WorldConfig) -> Vec<f32> {
             Kind::Hot => (1e-5 * 1e7f64.powf(seq.next()), 10.0 + 1e4 * seq.next()),
         };
         let sigma = sigma as f32 as f64;
-        if sigma >= SIGMA_HOLD {
+        if sigma >= c.floors.sigma_hold() {
             v = [0.0, 0.0];
         }
         let energy = if Kind::of(i) == Kind::Vacuum {
@@ -686,7 +686,7 @@ fn hold_field(c: &Constants, world: WorldConfig) -> (Vec<f32>, Vec<u32>, Vec<Hol
         let s = f64::from(sigma);
         let cold = c.eos.eps_cold(s, comp.y_e, comp_x[9]);
         let v = [seq.next() - 0.5, seq.next() - 0.5];
-        let energy = s * (cold + f * ETA_HOLD * cold) + 0.5 * s * (v[0] * v[0] + v[1] * v[1]);
+        let energy = s * (cold + f * c.floors.eta_hold() * cold) + 0.5 * s * (v[0] * v[0] + v[1] * v[1]);
         planes[i] = sigma;
         planes[cells + i] = (s * v[0]) as f32;
         planes[2 * cells + i] = (s * v[1]) as f32;
@@ -782,7 +782,7 @@ fn twin_hold(c: &Constants, world: WorldConfig, before: &[f32], mask0: &[u32]) -
             let (mx, my) = (p[cells + i], p[2 * cells + i]);
             let eps_th = energy / sigma - 0.5 * (mx * mx + my * my) / (sigma * sigma) - cold;
             let band = EDGE_EPS * (energy / sigma).abs().max(cold);
-            let at_eta = [1.0, 2.0].iter().any(|k| (eps_th - k * ETA_HOLD * cold).abs() <= band);
+            let at_eta = [1.0, 2.0].iter().any(|k| (eps_th - k * c.floors.eta_hold() * cold).abs() <= band);
             let at_gate = x[8] > 0.0 && (comp.y_e * sigma - sigma_n).abs() <= EDGE_GATE * sigma_n;
             *e |= at_eta || at_gate;
         }
@@ -925,7 +925,7 @@ fn the_initial_states_hold_comes_before_its_dt() {
     for i in 0..cells {
         let (sigma, eps_th, v) = if block(i) { (50.0, None, 200.0) } else { (1.0, Some(1.0), 0.0) };
         let cold = c.eos.eps_cold(sigma, comp.y_e, x[9]);
-        let eps_th = eps_th.unwrap_or(0.5 * ETA_HOLD * cold);
+        let eps_th = eps_th.unwrap_or(0.5 * c.floors.eta_hold() * cold);
         moving[i] = sigma as f32;
         moving[cells + i] = (sigma * v) as f32;
         moving[3 * cells + i] = (sigma * (cold + eps_th) + 0.5 * sigma * v * v) as f32;

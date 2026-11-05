@@ -1,0 +1,30 @@
+== 2026-11-05T15:40:47-05:00 ui_presets · task M0-T99a · box laserax-ai :: bash tests/cpu.sh sr-app --bin ui::left::presets_tests
+-- ui_presets · exit=101 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 7 tests
+test ui::left::presets_tests::a_refusal_shows_for_three_seconds_and_the_preset_stays_armed ... ok
+test ui::left::presets_tests::the_hint_shows_while_armed_and_a_drop_spends_the_click ... ok
+test ui::left::presets_tests::arming_leaves_the_tools_alone ... ok
+test ui::left::presets_tests::esc_disarms_and_no_other_key_is ... ok
+test ui::left::presets_tests::the_texts_are_byte_exact ... ok
+test ui::left::presets_tests::a_button_arms_its_preset_and_only_one_is_armed ... ok
+test ui::left::presets_tests::the_outline_is_the_clouds_radius_and_agrees_with_the_refusal ... FAILED
+
+failures:
+
+---- ui::left::presets_tests::the_outline_is_the_clouds_radius_and_agrees_with_the_refusal stdout ----
+
+thread 'ui::left::presets_tests::the_outline_is_the_clouds_radius_and_agrees_with_the_refusal' (2188628) panicked at crates/sr-app/src/ui/left.rs:804:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea", assets: "05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::left::presets_tests::the_outline_is_the_clouds_radius_and_agrees_with_the_refusal
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 156 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

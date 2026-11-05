@@ -1,0 +1,88 @@
+######## lives (q_ratio -0.0092, scratch tree w2)
+all done wall 570 s
+== lives/massive_a.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=12.841618 until=none
+massive_a exit 0 wall 74 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=12.841618 until=none
+massive_a exit 0 wall 74 s
+== lives/massive_b.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive_b exit 124 wall 570 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive_b exit 124 wall 570 s
+== lives/repro.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1700 sim_time=16.561067 until=none
+repro exit 0 wall 124 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1700 sim_time=16.561067 until=none
+repro exit 0 wall 124 s
+== lives/life01.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=257 sim_time=3.951 heat_unconverged=0 stage=collapsing | raw=he_shell
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=513 sim_time=5.766 heat_unconverged=0 stage=iron_core | raw=iron_core
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=839 sim_time=7.500 heat_unconverged=0 stage=core_collapse | raw=core_collapse
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=1263 sim_time=9.499 heat_unconverged=0 stage=supernova | raw=supernova
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=3759 sim_time=22.240 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=6255 sim_time=35.813 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=8751 sim_time=49.455 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=11263 sim_time=63.250 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=13759 sim_time=76.976 heat_unconverged=0 stage=cloud | raw=cloud
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=16255 sim_time=90.738 heat_unconverged=0 stage=cloud | raw=cloud
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=18751 sim_time=104.527 heat_unconverged=0 stage=cloud | raw=cloud
+  frame  steps          16 dt       0.005529 s/step    0.01378 P5_ceil         0
+  star   M            1100 R           188.6 tau_dyn     78.09 M_unb       35.26
+  core   sigma_c     862.1 T_c         48.19 d_c        0.9416 Ye_c       0.1856
+  centre X_Fe       0.3997 X_n        0.6003 v_r        0.2447 vr/vdyn    0.1013
+  light  L           657.9 L_nuc   1.856e-10 L_N             0 L_nu            0
+  world  escaped      3399 objects         1 sinks           0 sink_M          0
+life01 exit 124 wall 570 s
+######## lives_w6 (q_ratio -1.14 control, scratch tree w6)
+ls: cannot access 'build/calibrate_runs': No such file or directory
+all done wall 571 s
+== lives_w6/massive_a.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=13.073868 until=none
+massive_a exit 0 wall 94 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=13.073868 until=none
+massive_a exit 0 wall 94 s
+== lives_w6/massive_b.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive_b exit 124 wall 570 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive_b exit 124 wall 570 s
+== lives_w6/repro.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1700 sim_time=16.430914 until=none
+repro exit 0 wall 219 s
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1700 sim_time=16.430914 until=none
+repro exit 0 wall 219 s
+== lives_w6/life01.out
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=257 sim_time=3.951 heat_unconverged=0 stage=collapsing | raw=he_shell
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=513 sim_time=5.766 heat_unconverged=0 stage=iron_core | raw=iron_core
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=839 sim_time=7.500 heat_unconverged=0 stage=core_collapse | raw=core_collapse
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=2251 sim_time=14.100 heat_unconverged=0 stage=supernova | raw=supernova
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=4763 sim_time=27.890 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=4572.394 step=7259 sim_time=42.114 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+life01 exit 124 wall 570 s
+  frame  steps          16 dt       0.005333 s/step    0.07481 P5_ceil         0
+  star   M            3671 R           42.90 tau_dyn     4.637 M_unb       53.72
+  core   sigma_c     756.6 T_c         59.83 d_c        0.9232 Ye_c       0.2115
+  centre X_Fe       0.4554 X_n        0.5445 v_r       -0.3695 vr/vdyn  -0.03995
+  light  L           44180 L_nuc    6.012e-7 L_N             0 L_nu            0
+  world  escaped     864.2 objects         1 sinks           0 sink_M          0
+life01 exit 124 wall 570 s
+######## repro continued (-0.0092, s_3062 -> 3900)
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3900 sim_time=24.247555 until=none
+######## w3
+exit 124 wall 570 s
+######## w4
+exit 124 wall 571 s
+######## w5
+exit 124 wall 570 s

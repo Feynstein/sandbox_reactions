@@ -383,3 +383,9 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   snapshot refused by `--continue` and not used as a checkpoint, scenes/sun_13593.observers upgraded in place with an empty
   clock (measured by M0-D103 on the RTX 4090: the Sun-like preset cut at step 768 and continued writes the unbroken life's
   `age_years`, 3,279,122.408 years; the lead at M0-D103, 2026-11-04: «Upgrade it in place (Recommended)»).
+- Contract §0.5 [M0-R13]'s «N_Fe's q_ratio re-set so the collapse keeps nature's share — … the core's P4 heat over the heat N_Fe
+  absorbs inside [7.5, 30] … the value M0-T131 measures and writes, K8's «not tuned» lifted for this one row» and §2.5.1's N_Fe row
+  «−1.14 until M0-T131 writes the value» — superseded by contract §0.5 [M0-T131]: the bound is withdrawn for M0 and q_ratio stays
+  −1.14 (K8, not tuned) (measured by M0-T131 on the RTX 4090, reports/nfe_cost.md: the bound is reachable, q −0.0092 reads 14.93,
+  but lies in a shallow collapse and breaks life 01's neutron star; the lead at M0-T131, 2026-11-05: «Keep −1.14, BLOCKED
+  (Recommended)», then «well do your recommendation»).

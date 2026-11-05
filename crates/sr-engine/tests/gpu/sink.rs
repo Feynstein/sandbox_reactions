@@ -31,7 +31,7 @@ use sr_engine::step::latch::{FramePlan, FrameReport};
 use sr_engine::step::sinks::{SinkReport, SinkSetup};
 use sr_engine::step::{EosGpu, Passes, Step};
 use sr_physics::eos::Eos;
-use sr_physics::reference::floors::{Floors, ETA_HOLD, SIGMA_HOLD};
+use sr_physics::reference::floors::Floors;
 use sr_physics::reference::grav::{add_sinks, Field, Gravity, SinkSource};
 use sr_physics::reference::hydro::{Edge, Hydro, State, COMPONENTS};
 use sr_physics::reference::sinks::{disk, r_acc, Sink, Sinks, MAX_SINKS, R_CORE};
@@ -374,32 +374,40 @@ fn mass_sinks() -> Sinks {
     Sinks::new(&shipped(), &elements(), 1.0).unwrap()
 }
 
-/// A warmed cell's ε_th in units of its ε_cold: past the hold's release edge 2η_hold (§2.7 [M0-TG2]).
-const CORE_WARMTH: f64 = 2.5 * ETA_HOLD;
+/// The shipped hold (physics.json's sigma_hold, eta_hold and r_hold, §2.7 [M0-D71g]).
+fn shipped_floors() -> Floors {
+    Floors::new(&shipped(), &elements()).unwrap()
+}
 
-/// Warms every cell at Σ ≥ σ_hold to ε_th = [`CORE_WARMTH`] · ε_cold of its own Σ and fractions under the shipped physics,
+/// A warmed cell's ε_th in units of its ε_cold: past the hold's release edge 2η_hold (§2.7 [M0-TG2]), at the shipped η_hold.
+fn core_warmth() -> f64 {
+    2.5 * shipped_floors().eta_hold()
+}
+
+/// Warms every cell at Σ ≥ σ_hold to ε_th = [`core_warmth`] · ε_cold of its own Σ and fractions under the shipped physics,
 /// its kinetic energy kept: a cold dense cell is held before step 0 and its momentum zeroed (§2.7 [M0-TG2]), so §2.6's
 /// converging test would read ∇·u = 0 there (M0-D148); a warmed one is held neither then nor by step 0's P8.
 fn free_of_the_hold(st: &mut State) {
     let (els, eos) = (elements(), Eos::from_physics(&shipped()).unwrap());
     let (n, k_n) = (st.width * st.height, els.index_of("n").unwrap());
+    let (sigma_hold, warmth) = (shipped_floors().sigma_hold(), core_warmth());
     for i in 0..n {
         let sigma = st.get(0, i);
-        if sigma < SIGMA_HOLD {
+        if sigma < sigma_hold {
             continue;
         }
         let x: [f64; N_SPECIES] = std::array::from_fn(|s| st.get(4 + s, i));
         let cold = eos.eps_cold(sigma, els.composition(&x).y_e, x[k_n]);
-        st.planes[3 * n + i] = sigma * (1.0 + CORE_WARMTH) * cold + 0.5 * (st.get(1, i).powi(2) + st.get(2, i).powi(2)) / sigma;
+        st.planes[3 * n + i] = sigma * (1.0 + warmth) * cold + 0.5 * (st.get(1, i).powi(2) + st.get(2, i).powi(2)) / sigma;
     }
 }
 
 /// No cell of `st` passes the hold's test under the shipped physics (the twin's `Floors::holds`, nothing held before).
 fn assert_none_held(name: &str, st: &State) {
-    let floors = Floors::new(&shipped(), &elements()).unwrap();
+    let floors = shipped_floors();
     let held = (0..st.width * st.height).filter(|&i| {
         let x: [f64; N_SPECIES] = std::array::from_fn(|s| st.get(4 + s, i));
-        floors.holds(st.get(0, i), [st.get(1, i), st.get(2, i)], st.get(3, i), &x, || Floors::disk_mass(st, i), false)
+        floors.holds(st.get(0, i), [st.get(1, i), st.get(2, i)], st.get(3, i), &x, || floors.disk_mass(st, i), false)
     });
     assert_eq!(held.count(), 0, "{name}: cells held before step 0");
 }
@@ -1290,7 +1298,8 @@ fn gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin() 
     let centre = 32 * 64 + 32;
     let cold = Eos::from_physics(&phys).unwrap().eps_cold(st.get(0, centre), 0.0, 1.0);
     let margin = (st.get(3, centre) / st.get(0, centre) - cold) / cold;
-    println!("SR-SINK mass formation scene: 64 × 64, 1.05 m_tov_sb of neutrons in r ≤ 4 at (32, 32), Σ_centre {:.3}, ε_th / ε_cold {margin:.4} at the centre (held at ≤ η_hold {ETA_HOLD}, released past {})", st.get(0, centre), 2.0 * ETA_HOLD);
+    let eta = shipped_floors().eta_hold();
+    println!("SR-SINK mass formation scene: 64 × 64, 1.05 m_tov_sb of neutrons in r ≤ 4 at (32, 32), Σ_centre {:.3}, ε_th / ε_cold {margin:.4} at the centre (held at ≤ η_hold {eta}, released past {})", st.get(0, centre), 2.0 * eta);
     let r = rig_with(&phys, &st, Some(&phi), false, None, &[]);
     let report = r.run(1);
     let mut twin = mass_sinks();

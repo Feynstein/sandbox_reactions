@@ -55,7 +55,6 @@ pub mod sinks;
 use std::cell::{Cell, RefCell};
 
 use sr_physics::eos::{ColdTable, Eos, TABLE_POINTS, X_MIN};
-use sr_physics::reference::floors::{ETA_HOLD, R_HOLD, SIGMA_HOLD};
 use sr_physics::reference::sinks::m_tov_sb;
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
 
@@ -909,8 +908,9 @@ pub(crate) fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModul
 
 /// P8 floors (§1.3.2): `floor_cells` — the vacuum reset and the temperature floor, booked into P8's booking buffer —
 /// then `renormalise_species`, which ends with the hold's mask (§2.7 [M0-TG2]), both over the box's 8 × 8 tiles; and
-/// `hold_cells`, the hold alone, for the initial state. σ_hold, η_hold and r_hold are sr_physics::reference::floors'
-/// constants, uploaded in f32 with m_tov_sb (the twin's own for `physics`, as P3's — §0.5 [M0-T130]'s gate, M0-D153).
+/// `hold_cells`, the hold alone, for the initial state. σ_hold, η_hold and r_hold are the run's physics.json keys
+/// `sigma_hold`, `eta_hold` and `r_hold` (§2.7 [M0-D71g], a scene's `overrides` included), uploaded in f32 with m_tov_sb
+/// (the twin's own for `physics`, as P3's — §0.5 [M0-T130]'s gate, M0-D153).
 fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, physics: &Physics, boxfit: &BoxFit) -> (Vec<Dispatch>, Dispatch) {
     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("floors.wgsl"),
@@ -937,7 +937,8 @@ fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu,
     let eos_group = eos.bind_group(device, &floor_cells);
 
     let m_tov = m_tov_sb(physics, &Elements::shipped().expect("the shipped elements")).min(f64::from(f32::MAX)) as f32;
-    let params = [SIGMA_HOLD as f32, ETA_HOLD as f32, m_tov, R_HOLD as f32];
+    let key = |k: &str| physics.get(k).unwrap_or_else(|| panic!("physics.json key {k}")) as f32;
+    let params = [key("sigma_hold"), key("eta_hold"), m_tov, key("r_hold")];
     let params = init_buffer(device, "floors.hold", wgpu::BufferUsages::UNIFORM, &params.map(f32::to_bits));
     let hold_dispatch = |entry: &'static str| {
         let pipeline = compute_pipeline(device, &module, entry);

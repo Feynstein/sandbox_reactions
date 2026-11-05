@@ -1,0 +1,116 @@
+--- /home/ybelanger/workspace/sandbox_reactions/crates/sr-physics/src/reference/mod.rs	2026-11-03 12:15:49.372983465 -0500
++++ crates/sr-physics/src/reference/mod.rs	2026-11-05 12:52:37.900927501 -0500
+@@ -120,6 +120,56 @@
+     dt_next: f64,
+     /// The passes the last step ran, by the GPU's labels (`Pass::label`).
+     ran: Vec<&'static str>,
++    /// M0-R13 scratch: the core's heat by pass.
++    pub r13: Option<R13>,
++}
++
++/// M0-R13 scratch: Σ over the core (Σ ≥ sigma_core at the step's start) of Σε_th, its change by pass.
++pub struct R13 {
++    pub eos: crate::eos::Eos,
++    pub elements: Elements,
++    pub sigma_core: f64,
++    pub core: Vec<bool>,
++    /// P4, P5, P6, P8 (with the hold).
++    pub by_pass: [f64; 4],
++    pub nu_core: f64,
++    /// M0-T131: Σ over the core of the neutron mass N_Fe made (ΔΣ·X_n across P6).
++    pub dn_core: f64,
++    last: f64,
++}
++
++impl R13 {
++    pub fn new(eos: crate::eos::Eos, elements: Elements, sigma_core: f64) -> R13 {
++        R13 { eos, elements, sigma_core, core: Vec::new(), by_pass: [0.0; 4], nu_core: 0.0, dn_core: 0.0, last: 0.0 }
++    }
++    pub fn n_mass(&self, st: &State) -> f64 {
++        let n = st.cells();
++        (0..n).filter(|&i| self.core[i]).map(|i| st.planes[i] * st.planes[(4 + 9) * n + i]).sum()
++    }
++    pub fn heat(&self, st: &State) -> f64 {
++        let n = st.cells();
++        let mut h = 0.0;
++        for i in 0..n {
++            if !self.core[i] {
++                continue;
++            }
++            let s = st.planes[i];
++            let x: [f64; crate::registry::N_SPECIES] = std::array::from_fn(|k| st.planes[(4 + k) * n + i]);
++            let comp = self.elements.composition(&x);
++            let ke = 0.5 * (st.planes[n + i].powi(2) + st.planes[2 * n + i].powi(2)) / s;
++            h += st.planes[3 * n + i] - ke - s * self.eos.eps_cold(s, comp.y_e, x[9]);
++        }
++        h
++    }
++    fn start(&mut self, st: &State) {
++        self.core = (0..st.cells()).map(|i| st.planes[i] >= self.sigma_core).collect();
++        self.last = self.heat(st);
++    }
++    fn mark(&mut self, k: usize, st: &State) {
++        let h = self.heat(st);
++        self.by_pass[k] += h - self.last;
++        self.last = h;
++    }
+ }
+ 
+ impl Twin {
+@@ -169,6 +219,7 @@
+             dt: 0.0,
+             dt_next: 0.0,
+             ran: Vec::new(),
++            r13: None,
+         };
+         twin.hold();
+         twin.solve_gravity();
+@@ -265,6 +316,9 @@
+             self.ran.push("P2 gravity");
+             self.solve_gravity();
+         }
++        if let Some(r) = &mut self.r13 {
++            r.start(&self.state);
++        }
+         if self.switches.hydro {
+             self.ran.push("P4 hydro");
+             let radiation = self.flux.as_ref().map(|(x, y)| (&x[..], &y[..]));
+@@ -272,18 +326,37 @@
+             self.held[0] += spared[0];
+             self.held[1] += spared[1];
+         }
++        if let Some(r) = &mut self.r13 {
++            r.mark(0, &self.state);
++        }
+         if let Some(heat) = &self.heat {
+             self.ran.push("P5 heat");
+             let pass = heat.step(&mut self.state, dt);
+             self.flux = Some(pass.flux.cells());
+         }
++        if let Some(r) = &mut self.r13 {
++            r.mark(1, &self.state);
++        }
+         if let Some(react) = &self.react {
+             self.ran.push("P6 reactions");
+-            react.step(&mut self.state, dt);
++            let n0 = self.r13.as_ref().map(|r| r.n_mass(&self.state));
++            let pass = react.step(&mut self.state, dt);
++            if let (Some(r), Some(n0)) = (&mut self.r13, n0) {
++                r.dn_core += r.n_mass(&self.state) - n0;
++            }
++            if let Some(r) = &mut self.r13 {
++                r.nu_core += pass.neutrino_lost.iter().zip(&r.core).filter(|(_, &c)| c).map(|(v, _)| v).sum::<f64>();
++            }
++        }
++        if let Some(r) = &mut self.r13 {
++            r.mark(2, &self.state);
+         }
+         self.ran.push("P8 floors");
+         self.booked += self.floors.apply(&mut self.state);
+         self.hold();
++        if let Some(r) = &mut self.r13 {
++            r.mark(3, &self.state);
++        }
+         self.ran.push("P9 reductions");
+         self.dt_next = self.reduce_dt();
+         self.step += 1;

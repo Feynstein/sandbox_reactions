@@ -977,6 +977,15 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     0.956); a painted stroke at Σ 0.02 heated to ≈ 6,700 K draws its brightest channel at 109/255 (255 before) — the lead at
     M0-D157, 2026-11-05: «ε, τ ×10 (Recommended)», and on the faint square «the fix works... the faint square is not visible
     enough for it to be an issue».
+  - [M0-T131] §0.5 [M0-R13]'s «N_Fe's q_ratio re-set so the collapse keeps nature's share — … the core's P4 heat over the heat N_Fe
+    absorbs inside [7.5, 30] (nature's ≈ 15, ×/÷ 2), the value M0-T131 measures and writes, K8's «not tuned» lifted for this one row»
+    and §2.5.1's N_Fe row «−1.14 until M0-T131 writes the value» · **the bound is withdrawn for M0: N_Fe's q_ratio stays −1.14 (K8, not
+    tuned); nature's share of the collapse waits for a mechanism that deepens the collapse without N_Fe's heat** · measured by M0-T131
+    on laserax-ai-server's RTX 4090 (2026-11-05; reports/nfe_cost.md): the bound is reachable on the twin crop (q −0.0092 reads 14.93;
+    the window ≈ −0.0187 … −0.0045) but lies wholly in a shallow collapse (Σ_c ≈ 405 against ≈ 965 at −1.14 at core_collapse + 120; the
+    deep collapse needs |q| ≥ ~0.2, ratio ≲ 0.5), and at −0.0092 life 01 (m_bh_sb 4,572.394) loses its neutron star to `cloud` (the
+    control at −1.14 on the same tree holds it compact), the Repro's sink moves 2,700 → 3,000, the Massive's ending is not reached
+    in 570 s — the lead at M0-T131, 2026-11-05: «Keep −1.14, BLOCKED (Recommended)», then «well do your recommendation».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1147,7 +1156,7 @@ holds it). Chemistry later adds records, never code (B23).
 | Mg_burn | O | Mg → Si | 1; [1] | (T_O, 30, 1) | 1/12.6 | SP-E3, Table 12.1's "O, Mg" fuel |
 | Si_burn | Si | Si → Fe | 1; [1] | (T_Si, 30, 1) | 1/33 | SP-E3 (1.9 × 10¹⁷ erg/g), SP-E21 |
 | S_burn | Si | S → Fe | 1; [1] | (T_Si, 30, 1) | 1/33 | SP-E3, the "Si, S" fuel |
-| N_Fe | N | Fe → n | 0; [1] | f ≡ 1; gate Σ_g = Σ_N, p = 1 | −1.14 until M0-T131 writes the value inside §0.5 [M0-R13]'s bound (the collapse's P4 heat ÷ N_Fe's in [7.5, 30]) [M0-R13] | SM-E24: an iron core's photodisintegration absorbs ~2 × 10⁵² erg ≈ 7.2 × 10¹⁸ erg/g for a ~1.4-Sun core, against H's 6.3 × 10¹⁸ (my arithmetic) |
+| N_Fe | N | Fe → n | 0; [1] | f ≡ 1; gate Σ_g = Σ_N, p = 1 | −1.14 (K8, not tuned) [M0-T131]: §0.5 [M0-R13]'s ratio bound (the collapse's P4 heat ÷ N_Fe's in [7.5, 30]) is withdrawn for M0 — the ratio reads 0.08 here; the bound's window breaks the lives (§0.5 [M0-T131]) | SM-E24: an iron core's photodisintegration absorbs ~2 × 10⁵² erg ≈ 7.2 × 10¹⁸ erg/g for a ~1.4-Sun core, against H's 6.3 × 10¹⁸ (my arithmetic) |
 
 Split-product shares (Ne 0.8 / Mg 0.2, O 0.4 / Mg 0.6, Si 0.7 / S 0.3) are opinion: they keep the
 ladder's products (SP-E3) with mass conserved, and are not tuned. ν = 30 for C, Ne, O and Si is a
@@ -1585,6 +1594,9 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
 | cfl, eta_g | 0.4, 0.3 | §2.3.5 |
 | kappa_dust, t_dust | 0, 0 | S1, disabled (§1.6.4) |
 | block | 4 | summary block edge in cells (§1.9.1) |
+| sigma_hold | 10 | [M0-D71g] σ_hold: the least Σ a held cell has; released under ½σ_hold (the hold, [M0-TG2] below) |
+| eta_hold | 0.1 | [M0-D71g] η_hold: held at ε_th ≤ η_hold · ε_cold, released past 2η_hold (M0-R11's measured pick, [M0-TG2] below) |
+| r_hold | 24 | [M0-D71g] the hold's gate radius in cells: a cell is held only while its disk r ≤ r_hold is under m_tov_sb (§0.5 [M0-T130]) |
 
 [M0-T19] P8's rules where the table is silent (the lead's answer at M0-T19, 2026-10-10: «Yes, add to §2.7
 (Recommended)»): the dispatch order is the vacuum reset and the temperature floor, then the species renormalised; the
@@ -1608,8 +1620,10 @@ momentum is booked `held` (§2.9). Before step 0 the mask is the rule's on the i
 passes, its zeroed momenta booked; a dump's mask is read back (§2.12.3); Clear world empties it, and P0's other edits
 leave it to the step's P8. σ_hold = 10 and η_hold = 0.1 — M0-R11's measured pick: at 0.1 a remnant's core is held while
 still warm and cools on the grid, at 10⁻³ the floor pumped until it was cold, both tuned on one dump (report item 7) —
-are code constants of sr_physics::reference::floors, as §0.5 [M0-R6]'s r_core is one of reference::sinks, until
-M0-D71g moves them into this table, physics.json (the lead at M0-TG2: «Code now, move later (Recommended)»).
+~~are code constants of sr_physics::reference::floors, as §0.5 [M0-R6]'s r_core is one of reference::sinks, until
+M0-D71g moves them into this table, physics.json~~ [M0-D71g] are this table's `sigma_hold` and `eta_hold`, with the gate's
+radius `r_hold` 24 (§0.5 [M0-T130], M0-D153's flag), read through the run's physics — a scene's `overrides` included — by
+the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (Recommended)»).
 
 ### 2.8 World and edges (B20, I8, I9; D1, D9)
 - **WorldConfig {width, height}** is a setting, never built in (I9; D9): default 600 × 400 cells —

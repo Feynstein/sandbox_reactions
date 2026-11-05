@@ -50,5 +50,8 @@
   "eta_g": 0.3,
   "kappa_dust": 0,
   "t_dust": 0,
-  "block": 4
+  "block": 4,
+  "sigma_hold": 10,
+  "eta_hold": 0.1,
+  "r_hold": 24
 }

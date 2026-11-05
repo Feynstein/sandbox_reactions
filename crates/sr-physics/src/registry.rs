@@ -231,7 +231,7 @@ enum Class {
 }
 
 /// Every key of physics.json, in file order, with its own bound.
-const SCHEMA: [(&str, Class); 52] = [
+const SCHEMA: [(&str, Class); 55] = [
     ("t_h", Class::Pos),
     ("t_he", Class::Pos),
     ("t_c", Class::Pos),
@@ -284,6 +284,10 @@ const SCHEMA: [(&str, Class); 52] = [
     ("kappa_dust", Class::NonNeg),
     ("t_dust", Class::NonNeg),
     ("block", Class::Whole),
+    // §2.7 [M0-TG2]'s hold, read from here since [M0-D71g]: σ_hold, η_hold and the gate's radius r_hold (cells).
+    ("sigma_hold", Class::Pos),
+    ("eta_hold", Class::Pos),
+    ("r_hold", Class::Pos),
 ];
 
 /// The ν keys of the late records (m must stay below each — §2.5.3).
@@ -794,7 +798,7 @@ mod tests {
     fn shipped_files_load() {
         let r = Registry::load().expect("both embedded files load");
         assert_eq!(r.elements.species().len(), N_SPECIES);
-        assert_eq!(Physics::keys().count(), 52);
+        assert_eq!(Physics::keys().count(), 55);
     }
 
     #[test]
@@ -837,10 +841,11 @@ mod tests {
     }
 
     /// §2.7's initial values as amended by §0.5 [M0-D50]: the ladder × 0.56, a_r 4 × 10⁻⁵ and T_ν 93; a_n_fe 100 by §0.5
-    /// [M0-D79]; c_sb 400 and a_r 2 × 10⁻⁵ (a_r c_sb held) by §0.5 [M0-D94].
+    /// [M0-D79]; c_sb 400 and a_r 2 × 10⁻⁵ (a_r c_sb held) by §0.5 [M0-D94]; the hold's σ_hold 10, η_hold 0.1 and r_hold
+    /// 24 by §2.7 [M0-D71g].
     #[test]
     fn physics_initial_values_verbatim() {
-        let expected: [(&str, f64); 52] = [
+        let expected: [(&str, f64); 55] = [
             ("t_h", 56.0), ("t_he", 78.4), ("t_c", 109.8), ("t_ne", 153.4), ("t_o", 168.0), ("t_si", 235.2),
             ("q_h", 8700.0), ("a_h_burn", 5e-4), ("a_he_burn", 1e-3), ("a_c_alpha", 1e-3), ("a_c_burn", 1e-3),
             ("a_ne_burn", 1e-3), ("a_o_burn", 1e-3), ("a_mg_burn", 1e-3), ("a_si_burn", 1e-3), ("a_s_burn", 1e-3),
@@ -851,6 +856,7 @@ mod tests {
             ("k1n", 2.67), ("k2n", 58.2), ("a_r", 2e-5), ("c_sb", 400.0), ("kappa0", 1.0), ("k_cond", 0.0),
             ("a_nu", 1e-3), ("t_nu", 93.0), ("m_nu", 8.0), ("f_dep", 0.05), ("sigma_bh", 6000.0), ("cfl", 0.4),
             ("eta_g", 0.3), ("kappa_dust", 0.0), ("t_dust", 0.0), ("block", 4.0),
+            ("sigma_hold", 10.0), ("eta_hold", 0.1), ("r_hold", 24.0),
         ];
         let p = phys();
         for (key, x) in expected {
