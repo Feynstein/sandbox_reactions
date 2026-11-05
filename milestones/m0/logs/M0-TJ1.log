@@ -1,0 +1,155 @@
+# M0-TJ1 log — linux-pc (laserax-ai), bash; opened 2026-11-05 10:43 EST, after the read-only probes below (recorded from the session's output, verbatim where shown)
+rung: model=claude-opus-5-5 level=max plugin=installed (rung_record.py now, launch prompt — the heading's rung, no MISMATCH)
+
+$ grep -n "^## M0-TJ1 " milestones/m0/m0_implementation_plan.md
+3506:## M0-TJ1 · Direction ruling — the stand-ins S1 and S2, only on a measured failure · **PLAN + LEAD answers** · Opus 5.5, max · switch · (AFTER M0-T97)
+
+$ sleep 2; python3 tools/pb/rung_record.py now
+model=claude-opus-5-5 level=max plugin=installed
+
+$ python3 tools/pb/plan.py show M0-TJ1
+baseline: M0-TJ1, 824 files, 2026-11-05T10:35:43-05:00
+show: checks=2 failed=0 warnings=0 · header=218 · flow_left_out=396 · block=17 · total=236
+=== GO ===
+
+$ ssh ybelanger@192.168.1.134 'ls ~/workspace/sandbox_reactions/build/t97; ls sun_life; nvidia-smi …'   # read-only: has C4b (the Sun's full life) run?
+build/t97: giant giant_d massive massive_d p1_giant p1_massive p1_sun s2_0.05 s2_0.1 sun_ms (+ their .out, the two s2 scenes) — newest 2026-11-05T10:25; no sun_life
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB
+NVIDIA GeForce RTX 4090, 0 %, 20 MiB
+→ C4b NOT RUN; the RTX 4090 idle
+
+$ git diff --stat acaca48 fbcbadf -- . ':(exclude)milestones'   # is the server's tree (M0-T97's rsync) HEAD's code?
+21 files changed, 587 insertions(+), 194 deletions(-) — crates/sr-engine (grav.rs, step/mod.rs, gpu tests), docs/agent, tests/plants, tools/pb/verify*.json: M0-D109's and M0-D157's edits, which M0-T97 measured uncommitted (reports/lives.md: «acaca48 + the uncommitted working tree»)
+$ git status --short
+(clean)
+
+question tool, one question (S1 reading): the lead: «At M0-V14, after tuning (Recommended)»
+
+$ python3 tools/pb/plan.py flag M0-V14 "<S1 and S2 read on the tuned lives>" --from M0-TJ1
+flag: checks=1 failed=0 warnings=0 · refresh=5/5
+=== GO ===
+
+$ python3 tools/pb/plan.py close M0-TJ1 --status "DEFERRED (wake: …M0-V14…)" --text "<handoff, claim pending>" --set "Next task=M0-TM15 on; …"
+close: checks=4 failed=0 warnings=0 · handoff_lines=1 · flow=per-task · set=1 · replaced=1 · appended=0
+=== GO ===
+
+$ python3 tools/pb/verify.py --changed --task M0-TJ1   # the claim run
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+plan_lint         827/0/0      0.11 s  GO
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+toolchain         NOT RUN (not impacted: its 8 path(s) checked at the anchor)
+build             NOT RUN (not impacted: its 136 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+burn_cell         NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+burn_order        NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+neutrino          NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+sink              NOT RUN (not impacted: its 125 path(s) checked at the anchor)
+nu_heat           NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+summary           NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+preset_cloud      NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+observe_run       NOT RUN (not impacted: its 152 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+stage_order       NOT RUN (not impacted: its 149 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+multi             NOT RUN (not impacted: its 146 path(s) checked at the anchor)
+edits             NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+edits_file        NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sod               NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+edges             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+collapse          NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+jeans             NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+twin              NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+cpu_gpu           NOT RUN (not impacted: its 122 path(s) checked at the anchor)
+heat_gauss        NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+heat_implicit     NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+heat_limiter      NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+heat_stiff        NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+heat_multigrid    NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+radiation_force   NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+grav_force        NOT RUN (not impacted: its 127 path(s) checked at the anchor)
+grav_selfforce    NOT RUN (not impacted: its 128 path(s) checked at the anchor)
+fft               NOT RUN (not impacted: its 117 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+strings           NOT RUN (not impacted: its 11 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+adapter           NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+state             NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+booking           NOT RUN (not impacted: its 90 path(s) checked at the anchor)
+floors            NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+dt                NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+box               NOT RUN (not impacted: its 121 path(s) checked at the anchor)
+latch             NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+timing            NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+scene             NOT RUN (not impacted: its 145 path(s) checked at the anchor)
+dump              NOT RUN (not impacted: its 151 path(s) checked at the anchor)
+boot              NOT RUN (not impacted: its 142 path(s) checked at the anchor)
+desktop           NOT RUN (not impacted: its 153 path(s) checked at the anchor)
+web               NOT RUN (not impacted: its 156 path(s) checked at the anchor)
+capture           NOT RUN (not impacted: its 152 path(s) checked at the anchor)
+measure_ui        NOT RUN (not impacted: its 141 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+watch_only        NOT RUN (not impacted: its 30 path(s) checked at the anchor)
+calibration       NOT RUN (not impacted: its 147 path(s) checked at the anchor)
+calibrate_cold    NOT RUN (not impacted: its 146 path(s) checked at the anchor)
+cold_core         NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+held_core         NOT RUN (not impacted: its 127 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+calibrate_bisect  NOT RUN (not impacted: its 157 path(s) checked at the anchor)
+calibrate_order   NOT RUN (not impacted: its 148 path(s) checked at the anchor)
+readouts          NOT RUN (not impacted: its 146 path(s) checked at the anchor)
+views             NOT RUN (not impacted: its 123 path(s) checked at the anchor)
+extents           NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+glow              NOT RUN (not impacted: its 120 path(s) checked at the anchor)
+frames            NOT RUN (not impacted: its 119 path(s) checked at the anchor)
+ui_topbar         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+ui_banner         NOT RUN (not impacted: its 134 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+ui_tools          NOT RUN (not impacted: its 135 path(s) checked at the anchor)
+ui_presets        NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+ui_display        NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+ui_star           NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+ui_legend         NOT RUN (not impacted: its 133 path(s) checked at the anchor)
+ui_zoom           NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+ui_remnant        NOT RUN (not impacted: its 131 path(s) checked at the anchor)
+ui_inspect        NOT RUN (not impacted: its 132 path(s) checked at the anchor)
+logs: milestones/m0/logs/M0-TJ1.<scope>.log · record: loop_times.jsonl · tree fbcbadfa31e3+b803528f02a7
+anchor: 1 path×scope entries moved by this run
+anchor: 427 paths checked · 398 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 0 owed · 427 covered of 825 visible
+skipped   390  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 827 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 87 not impacted · 0.12 s + loop 0.10 s · mode changed · jobs 8 · box laserax-ai · python 3.12.3 · load 3.77->3.77 · base: M0-TJ1's start 2026-11-05T10:35:43-05:00
+=== GO ===
+exit=0
+
+$ python3 tools/pb/plan.py handoff M0-TJ1 --text "<the close's handoff, its claim line filled>"
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+
+$ python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md   # once, after the handoff edit
+lint: checks=827 failed=0 warnings=5 · blocks=392 · flow_rows=392 · verify_fences=0 · history=0 · flow=per-task · header=615/600 · pipeline=9/60 · ladder=6 rungs · refresh=5/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+=== GO ===
+
+$ python3 tools/pb/plan.py handoff M0-TJ1 --text "<+ the measured-not-acted header line>"
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+
+$ python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md   # after the last handoff edit
+lint: checks=827 failed=0 warnings=5 · blocks=392 · flow_rows=392 · verify_fences=0 · history=0 · flow=per-task · header=615/600 · pipeline=9/60 · ladder=6 rungs · refresh=5/5
+=== GO ===
