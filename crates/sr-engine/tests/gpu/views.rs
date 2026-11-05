@@ -281,7 +281,10 @@ impl Rig {
         match view {
             View::Glow => {
                 let t_k = self.kelvin(c);
-                let b = (1.0 - (-(t_k / self.display.glow_s.min(3000.0)).powi(4)).exp()) * dim(t_k, self.display.glow_s);
+                // [M0-D157] ε = 1 − exp(−τ), τ = 10 κ₀(1 + X_H) Σ: the cell's emissivity (§1.11, §2.4.2).
+                let tau = 10.0 * self.physics.get("kappa0").unwrap() * (1.0 + c.x[0]) * c.sigma;
+                let eps = 1.0 - (-tau).exp();
+                let b = (1.0 - (-(t_k / self.display.glow_s.min(3000.0)).powi(4)).exp()) * dim(t_k, self.display.glow_s) * eps;
                 let table = blackbody_table();
                 let bb = blackbody_lookup(&table, t_k);
                 let haze = hex(HAZE);
@@ -374,6 +377,37 @@ fn glow_matches_the_formula_across_a_world() {
     let image = rig.image(View::Glow, 1.0);
     assert!(image.iter().all(|p| p[3] == 255), "alpha is 1 everywhere");
     rig.assert_matches(View::Glow, 1.0, &image, 0..CELLS);
+}
+
+/// [M0-D157] Hot hydrogen at one temperature (≈ 6,000 K, b's T factor ≈ 1) over Σ from 10⁻⁵ to 1 (the gentle EOS range): each cell the formula, and
+/// the glow follows the emissivity — the brightest channel never falls as Σ rises, thin gas (τ ≤ 0.01) stays within the haze's
+/// own levels plus 2 % of the blackbody's, and the thick end (τ ≥ 10) draws the blackbody colour within a level and 1 %.
+#[test]
+fn glow_follows_the_emissivity_over_sigma() {
+    let probe = setup(&[], &[]);
+    let t = sb_of(&probe, 6_000.0);
+    let n = 64;
+    let world: Vec<(usize, Spec)> = (0..n).map(|c| (c, gas(1e-5 * 1e5f64.powf(c as f64 / (n - 1) as f64), t))).collect();
+    let rig = setup(&world, &world);
+    let image = rig.image(View::Glow, 1.0);
+    rig.assert_matches(View::Glow, 1.0, &image, 0..n);
+    let top = |c: usize| u32::from(image[c].iter().take(3).copied().max().unwrap());
+    for c in 1..n {
+        assert!(top(c) + 1 >= top(c - 1), "cell {c} (Σ {:.2e}) darker than cell {}: {} < {}", world[c].1.sigma, c - 1, top(c), top(c - 1));
+    }
+    let kappa = 10.0 * rig.physics.get("kappa0").unwrap() * 2.0;
+    let bb = blackbody_lookup(&blackbody_table(), rig.kelvin(&Rig::cell(&rig.cur_planes, n - 1)));
+    for (c, spec) in &world {
+        let tau = kappa * spec.sigma;
+        if tau <= 0.01 {
+            assert!(f64::from(top(*c)) <= 255.0 * (0.6 * 0.3138 + 0.02) + 1.0, "thin cell {c} (τ {tau:.1e}) glows: {:?}", image[*c]);
+        }
+        if tau >= 10.0 {
+            for k in 0..3 {
+                assert!((f64::from(image[*c][k]) - 255.0 * f64::from(bb[k])).abs() <= 1.0 + 255.0 * 0.01, "thick cell {c}: {:?} vs {bb:?}", image[*c]);
+            }
+        }
+    }
 }
 
 #[test]
@@ -480,6 +514,11 @@ fn vacuum_is_bg_space_in_every_view() {
             assert_eq!(image[c][3], 255);
         }
         rig.assert_matches(view, 1.0, &image, std::iter::once(above));
+        if view == View::Glow {
+            // [M0-D157] At Σ 1.2 × 10⁻⁶ Glow's formula is the haze (ε ≈ 2 × 10⁻⁵): within a level of bg.space by design, so
+            // only the formula match above grades it; the floor and Σ 10⁻⁷ cells still read bg.space, not the formula's black.
+            continue;
+        }
         let off = (0..3).map(|k| (f64::from(image[above][k]) - 255.0 * bg[k]).abs()).fold(0.0, f64::max);
         assert!(off > 3.0, "{view:?}: the cell just above Σ_vac reads {:?}, bg.space within {off:.1} levels", image[above]);
     }
@@ -579,12 +618,17 @@ fn glow_matches_the_formula_at_the_setting() {
         rig.set_display(Display { glow_s: s, ..Display::default() });
         rig.assert_matches(View::Glow, 1.0, &rig.image(View::Glow, 1.0), 0..CELLS);
     }
-    // The setting dims: a cell at S = 10⁷ K is full brightness and one at 10⁴ K, which today draws full too, is under 100.
+    // The setting dims: a cell at S = 10⁷ K is full brightness and one at 10⁴ K, which today draws full too, is under 100 —
+    // two optically thick cells (Σ 0.25, ε ≈ 0.99, [M0-D157]), so the emissivity does not dim them.
+    let probe = setup(&[], &[]);
+    let (hot, warm) = (idx(10, 10), idx(12, 10));
+    let pair = [(hot, gas(0.25, sb_of(&probe, 1e7))), (warm, gas(0.25, sb_of(&probe, 1e4)))];
+    let mut rig = setup(&pair, &pair);
     rig.set_display(Display { glow_s: 1e7, ..Display::default() });
     let image = rig.image(View::Glow, 1.0);
-    let at = |t: f64| (0..CELLS).min_by(|&a, &b| (rig.kelvin(&Rig::cell(&rig.cur_planes, a)) - t).abs().total_cmp(&(rig.kelvin(&Rig::cell(&rig.cur_planes, b)) - t).abs())).unwrap();
+    rig.assert_matches(View::Glow, 1.0, &image, [hot, warm].into_iter());
     let bright = |c: usize| image[c][..3].iter().map(|&v| u32::from(v)).max().unwrap();
-    assert!(bright(at(1e7)) > 200 && bright(at(1e4)) < 100, "10⁷ K: {}, 10⁴ K: {}", bright(at(1e7)), bright(at(1e4)));
+    assert!(bright(hot) > 200 && bright(warm) < 100, "10⁷ K: {}, 10⁴ K: {}", bright(hot), bright(warm));
 }
 
 /// Two Heat ranges and two Density ranges against the formula.

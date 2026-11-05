@@ -1,0 +1,10 @@
+M0-T97 start 2026-11-05T14:59:52Z on laserax-ai (linux-pc); GPU runs on laserax-ai-server RTX 4090 (R18)
+    Finished `release` profile [optimized] target(s) in 0.09s
+
+real	0m0.147s
+user	0m0.087s
+sys	0m0.043s
+-rwxrwxr-x 2 ybelanger ybelanger 23308744 Nov  5 09:53 build/target/release/sandbox-reactions
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20272 sim_time=113.757455 until=met
+exit=0

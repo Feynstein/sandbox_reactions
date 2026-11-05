@@ -1,0 +1,120 @@
+M0-D157 log — opened 2026-11-05T09:01:13-05:00 on linux-pc (laserax-ai); GPU runs on laserax-ai-server RTX 4090 (R18)
+    Finished `release` profile [optimized] target(s) in 0.07s
+total 24796
+drwxrwxr-x    2 ybelanger ybelanger     4096 Nov  5 09:01 .
+drwxrwxrwt 4728 root      root       2105344 Nov  5 09:01 ..
+-rwxrwxr-x    1 ybelanger ybelanger 23307752 Nov  5 09:01 sr-before
+sun glow: SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun glow: SR-HEADLESS DONE steps=3000 sim_time=36.211496 until=none
+massive glow: SR-HEADLESS DONE steps=300 sim_time=4.162113 until=none
+sun heat: SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun heat: SR-HEADLESS DONE steps=3000 sim_time=36.211496 until=none
+massive heat: SR-HEADLESS DONE steps=300 sim_time=4.162113 until=none
+sun density: SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun density: SR-HEADLESS DONE steps=3000 sim_time=36.211496 until=none
+massive density: SR-HEADLESS DONE steps=300 sim_time=4.162113 until=none
+b_mas_glow/frames:
+f_300.png
+
+b_sun_glow/frames:
+f_1200.png
+f_1500.png
+f_1800.png
+f_2100.png
+f_2400.png
+f_2700.png
+f_3000.png
+f_300.png
+f_600.png
+f_900.png
+8f2c387e8e5d54acb9a8b3b7c522e802  sr-before
+0073f94e2a1484138d20b07b78fb97ce  sr-after
+after sun glow: SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+after sun glow: SR-HEADLESS DONE steps=3000 sim_time=36.211496 until=none
+after massive glow: SR-HEADLESS DONE steps=300 sim_time=4.162113 until=none
+STATE_IDENTICAL_3000
+k10 sun: SR-HEADLESS DONE steps=3000 sim_time=36.211496 until=none
+k10 massive: SR-HEADLESS DONE steps=300 sim_time=4.162113 until=none
+strokes before: SR-HEADLESS DONE steps=1 sim_time=0.018446 until=none
+strokes after: SR-HEADLESS DONE steps=1 sim_time=0.018446 until=none
+strokes k10: SR-HEADLESS DONE steps=1 sim_time=0.018446 until=none
+f_1.png
+cd4e53b405c93c28477b1750b6ea5358  crates/sr-engine/shaders/render.wgsl
+    Finished `release` profile [optimized] target(s) in 4.60s
+0073f94e2a1484138d20b07b78fb97ce  build/target/release/sandbox-reactions
+k3 sun: SR-HEADLESS DONE steps=3000 sim_time=36.211496 until=none
+k3 massive: SR-HEADLESS DONE steps=300 sim_time=4.162113 until=none
+k30 sun: SR-HEADLESS DONE steps=3000 sim_time=36.211496 until=none
+k30 massive: SR-HEADLESS DONE steps=300 sim_time=4.162113 until=none
+k100 sun: SR-HEADLESS DONE steps=3000 sim_time=36.211496 until=none
+k100 massive: SR-HEADLESS DONE steps=300 sim_time=4.162113 until=none
+k3_sun_glow/frames/f_300.png peak=255/255 | L0.5 (=128/255): r_ax= 22.69 r_dg= 23.11 ax/dg=0.9818 a4=-0.0062 | L0.125 (=32/255): r_ax= 52.62 r_dg= 54.54 ax/dg=0.9649 a4=-0.0227
+k3_sun_glow/frames/f_3000.png peak=255/255 | L0.5 (=128/255): r_ax= 21.40 r_dg= 21.53 ax/dg=0.9940 a4=-0.0031 | L0.125 (=32/255): r_ax= 30.06 r_dg= 30.44 ax/dg=0.9877 a4=-0.0054
+k3_mas_glow/frames/f_300.png peak=255/255 | L0.5 (=128/255): r_ax= 37.86 r_dg= 38.24 ax/dg=0.9899 a4=-0.0051 | L0.125 (=32/255): r_ax= 79.12 r_dg= 78.99 ax/dg=1.0017 a4=-0.0103
+k30_sun_glow/frames/f_300.png peak=255/255 | L0.5 (=128/255): r_ax= 39.53 r_dg= 40.89 ax/dg=0.9667 a4=-0.0139 | L0.125 (=32/255): r_ax= 58.62 r_dg= 61.61 ax/dg=0.9516 a4=-0.0276
+k30_sun_glow/frames/f_3000.png peak=255/255 | L0.5 (=128/255): r_ax= 25.52 r_dg= 25.67 ax/dg=0.9941 a4=-0.0034 | L0.125 (=32/255): r_ax= 30.91 r_dg= 31.24 ax/dg=0.9896 a4=-0.0048
+k30_mas_glow/frames/f_300.png peak=255/255 | L0.5 (=128/255): r_ax= 63.21 r_dg= 63.70 ax/dg=0.9922 a4=-0.0054 | L0.125 (=32/255): r_ax= 86.86 r_dg= 87.62 ax/dg=0.9913 a4=-0.0128
+k100_sun_glow/frames/f_300.png peak=255/255 | L0.5 (=128/255): r_ax= 46.66 r_dg= 48.83 ax/dg=0.9555 a4=-0.0195 | L0.125 (=32/255): r_ax= 62.21 r_dg= 66.41 ax/dg=0.9368 a4=-0.0348
+k100_sun_glow/frames/f_3000.png peak=255/255 | L0.5 (=128/255): r_ax= 27.97 r_dg= 28.12 ax/dg=0.9949 a4=-0.0022 | L0.125 (=32/255): r_ax= 31.44 r_dg= 31.66 ax/dg=0.9928 a4=-0.0032
+k100_mas_glow/frames/f_300.png peak=255/255 | L0.5 (=128/255): r_ax= 71.79 r_dg= 72.41 ax/dg=0.9915 a4=-0.0083 | L0.125 (=32/255): r_ax= 91.56 r_dg= 93.23 ax/dg=0.9821 a4=-0.0170
+== Deliver 1/Verify 1 — drawn Glow ratio ax/dg (360 rays, brightest channel, ½ | ⅛ of peak 255), RTX 4090, same states (dumps cmp-identical)
+               Sun 300          Sun 3,000              Massive 300
+today          0.8913 | 0.9060  0.9971 | n/a (halo fills box)  0.9312 | 0.9361
+eps x1         0.9705 | 0.9529  0.9981 | 0.9946       0.9968 | 0.9930
+eps x3         0.9818 | 0.9649  0.9940 | 0.9877       0.9899 | 1.0017
+eps x10        0.9803 | 0.9628  0.9955 | 0.9897       0.9926 | 0.9927
+eps x30        0.9667 | 0.9516  0.9941 | 0.9896       0.9922 | 0.9913
+eps x100       0.9555 | 0.9368  0.9949 | 0.9928       0.9915 | 0.9821
+drawn ½-radius (cells), Sun 300 / Sun 3,000 / Massive 300: today 67/32/99 · x1 17/19/28 · x3 23/21/38 · x10 32/24/55
+strokes T_sb 12 (~6,700 K), max channel at Σ 0.02/0.2/2: today 255/255/255 · x1 46/113/255 · x3 62/191/255 · x10 109/255/255
+Sun 300 ⅛ level < 0.97 at every scale: it crosses the haze (log Σ, unchanged) of the thin envelope — P4's square.
+views     13/3/0      48.01 s  NO-GO
+logs: milestones/m0/logs/M0-D157.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+5a3617924d65
+anchor: 122 path×scope entries moved by this run
+anchor: 304 paths checked · 393 skipped (3 classes) · 123 never checked · 0 stale · 0 unclassified · 0 owed · 427 covered of 820 visible
+FAILED:
+  views: 3 failed · log milestones/m0/logs/M0-D157.views.log
+verify: 13 passed, 3 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 48.01 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.05->1.36
+=== NO-GO: views: 3 failed · log milestones/m0/logs/M0-D157.views.log ===
+anchor: 407 paths checked · 393 skipped (3 classes) · 0 never checked · 4 stale · 0 unclassified · 16 owed · 427 covered of 820 visible
+verify: 16 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 45.36 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.82->1.57
+=== GO ===
+thread 'views::glow_follows_the_emissivity_over_sigma' (1704387) panicked at crates/sr-engine/tests/gpu/views.rs:396:9:
+cell 57 (Σ 3.34e-1) darker than cell 56: 255 < 254
+--
+thread 'views::glow_matches_the_formula_at_the_setting' (1704420) panicked at crates/sr-engine/tests/gpu/views.rs:621:5:
+10⁷ K: 42, 10⁴ K: 50
+--
+thread 'views::vacuum_is_bg_space_in_every_view' (1704506) panicked at crates/sr-engine/tests/gpu/views.rs:518:9:
+Glow: the cell just above Σ_vac reads [7, 8, 12, 255], bg.space within 2.0 levels
+views · clean · GO · arm 1/6, 5 left
+views · plant views-heat-linear · RED (proven: 8 failed) · arm 2/6, 4 left
+views · plant views-vacuum-black · RED (proven: 7 failed) · arm 3/6, 3 left
+views · plant views-glow-setting-ignored · RED (proven: 2 failed) · arm 4/6, 2 left
+views · plant views-colour-shift · ERROR (the patch tests/plants/views-colour-shift.patch does not apply: crates/sr-engine/src/render.rs @@ -195,7 +195,7 @@: its old lines appear 0 times in the file, not once) · arm 5/6, 1 left
+views · plant views-emissivity-ignored · RED (proven: 5 failed) · arm 6/6, 0 left
+FAILED:
+  plant views-colour-shift: the patch tests/plants/views-colour-shift.patch does not apply: crates/sr-engine/src/render.rs @@ -195,7 +195,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+redarm: 5 plants · 4 red · 0 green · 1 errors · scope views · 214.42 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D157.views.redarm.log
+=== NO-GO: plant views-colour-shift: the patch tests/plants/views-colour-shift.patch does not apply: crates/sr-engine/src/render.rs @@ -195,7 +195,7 @@: its old lines appear 0 times in the file, not once - an error, not a red ===
+views · clean · GO · arm 1/6, 5 left
+views · plant views-heat-linear · RED (proven: 8 failed) · arm 2/6, 4 left
+views · plant views-vacuum-black · RED (proven: 7 failed) · arm 3/6, 3 left
+views · plant views-glow-setting-ignored · RED (proven: 2 failed) · arm 4/6, 2 left
+views · plant views-colour-shift · RED (proven: 2 failed) · arm 5/6, 1 left
+views · plant views-emissivity-ignored · RED (proven: 5 failed) · arm 6/6, 0 left
+redarm: 5 plants · 5 red · 0 green · 0 errors · scope views · 245.57 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D157.views.redarm.log
+=== GO ===
+exit=0
+FLAG oracle: crates/sr-engine/tests/gpu/views.rs changed since M0-D157's start - a test, case or check M0-D157's Deliver: does not name
+FLAG oracle: tests/plants/views-colour-shift.patch changed since M0-D157's start - a test, case or check M0-D157's Deliver: does not name
+FLAG oracle: tests/plants/views-emissivity-ignored.patch changed since M0-D157's start - a test, case or check M0-D157's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D157's start - a test, case or check M0-D157's Deliver: does not name
+logs: milestones/m0/logs/M0-D157.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+f754beb05ef7
+anchor: 243 path×scope entries moved by this run
+anchor: 407 paths checked · 394 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 20 owed · 427 covered of 821 visible
+skipped   386  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 1458 passed, 0 failed, 0 skipped · 64/64 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 19 not impacted · 209.03 s + loop 0.27 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.34->1.73 · base: M0-D157's start 2026-11-05T08:59:54-05:00
+=== GO ===

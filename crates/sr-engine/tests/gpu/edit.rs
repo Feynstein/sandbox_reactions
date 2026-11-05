@@ -570,9 +570,11 @@ fn a_frame_applies_the_queued_edit_once_in_its_first_step() {
 /// P8 floors only once a box holds them, so a paint there read 0/0 (exit 5) and a box grown over them moved the mass
 /// invariant by Σ_floor a cell against the ledger's floor outside the box. Graded over [`AFTER`] steps: every cell of every
 /// plane finite, the box holding the edit and its margin from the step that applied it, and §2.9's mass invariant from the
-/// ledger to G-CONS's 10⁻⁶ of the grid's mass. The energy invariant is reported, not graded (the lead at M0-D101, as
-/// tests/gpu/ledger.rs's runs: G-CONS grades it over whole lives): the edit's step moves it by the potential energy the
-/// added mass brings, which no §2.9 term books (M0-D109), and the steps after it drift as the same scene's without the edit.
+/// ledger to G-CONS's 10⁻⁶ of the grid's mass. M0-D109 (§2.9 [M0-D109]): the energy invariant across the edit's step,
+/// less the same step of the same scene run with nothing queued (its twin), within [`EDIT_ENERGY`] of the potential
+/// energy the edit brought (`edit_potential`, booked by P2's edit chain) — the twin takes out the scene's own step (its
+/// start-up drift is over G-CONS's per-τ_dyn bound with no edit at all, M0-D101); before the term the edit's step moved
+/// it by its ΔW. The steps after it are reported: they drift as the twin's.
 struct Whole {
     gpu: Gpu,
     world: WorldConfig,
@@ -583,6 +585,9 @@ struct Whole {
     physics: Physics,
     elements: Elements,
     steps: u64,
+    /// The scene and the vacuum it was built with, for the edit's twin.
+    scene: String,
+    zero_vacuum: bool,
 }
 
 /// The steps run after the edit's.
@@ -593,6 +598,11 @@ const CONS_MASS: f64 = 1e-6;
 /// from the f32 state through the u(x) table (TABLE_TOL) and ε_th's subtraction (THERMAL_TOL), and c is their square root;
 /// the measured miss it guards against was ×6 (0.447 against ≈ 0.07).
 const CFL_TOL: f64 = 1e-3;
+/// M0-D109: the energy invariant across the edit's step, less its twin's, relative to |edit_potential| — the lead's
+/// «Twin-differenced, 2e-2 (Recommended)», 2026-11-05, ruled before the term's first run: the ledger's W is ½ m φ with
+/// φ from the step's start, so it lags the step's own motion by half — the hot paint's first step in an empty world,
+/// −0.016 of its ΔW −1.64 (1.0 %, M0-D101) — which no term books; a dropped term reads 100 %, a dropped half ≈ 50 %.
+const EDIT_ENERGY: f64 = 2e-2;
 
 /// What an edit's run measured: the mass it booked (painted + preset_dropped) and the mass invariant's drift; the state
 /// before the edit's step, the Δt that step would have taken from the step before (P9's) and the one it took, and the
@@ -614,11 +624,11 @@ impl Whole {
     }
 
     /// [`Whole::new`], P0's edits built only when `edits`.
-    fn build(scene: &str, zero_vacuum: bool, edits: bool) -> Whole {
+    fn build(scene_text: &str, zero_vacuum: bool, edits: bool) -> Whole {
         use sr_engine::step::{heat::HeatSetup, nuheat::NuHeatSetup, react::ReactSetup};
         let gpu = device();
         let elements = Elements::shipped().unwrap();
-        let scene = Scene::parse(scene, &elements).unwrap();
+        let scene = Scene::parse(scene_text, &elements).unwrap();
         let (physics, world) = (scene.physics().unwrap(), scene.world);
         let (mut planes, _) = scene.planes(world, &physics, &elements).unwrap();
         let n = world.cells();
@@ -645,7 +655,8 @@ impl Whole {
             .unwrap();
         let step = if edits { step.with_edits(&gpu.device, &state, &booking, &eos, &physics) } else { step };
         let ledger = sr_engine::ledger::Ledger::new(world, &physics);
-        Whole { gpu, world, state, booking, step, ledger, physics, elements, steps: 0 }
+        let scene = scene_text.to_string();
+        Whole { gpu, world, state, booking, step, ledger, physics, elements, steps: 0, scene, zero_vacuum }
     }
 
     /// One step, then the ledger as headless keeps it: started after the first step, updated after each one.
@@ -667,8 +678,18 @@ impl Whole {
     }
 
     /// Runs one step, queues `edit` and runs its step, asserts the box holds the edit's cells `[lo, hi)` grown by the
-    /// margin, runs [`AFTER`] more and asserts every cell finite; prints the ledger's mass and energy.
+    /// margin, runs [`AFTER`] more and asserts every cell finite; prints the ledger's mass and energy, and grades the energy
+    /// invariant across the edit's step against its twin's ([`EDIT_ENERGY`]).
     fn edit_and_run(&mut self, edit: Edit, lo: [u32; 2], hi: [u32; 2], what: &str) -> Graded {
+        assert_eq!(self.steps, 0, "{what}: the edit's run starts on a fresh world, as its twin does");
+        // The twin: the same scene, P0 built, nothing queued — its second step is the edit's step without the edit.
+        let twin_step = {
+            let mut twin = Whole::new(&self.scene, self.zero_vacuum);
+            twin.step();
+            twin.step();
+            let (s, e) = (twin.ledger.start().unwrap(), twin.ledger.last().unwrap());
+            e.energy.invariant() - s.energy.invariant()
+        };
         self.step();
         let before = self.state.readback(&self.gpu.device, &self.gpu.queue);
         let pre_dt = self.step.read_dt(&self.gpu.device, &self.gpu.queue).dt_next;
@@ -693,11 +714,15 @@ impl Whole {
         let (s, e) = (self.ledger.start().unwrap(), self.ledger.last().unwrap());
         let mass_drift = (e.mass.invariant() - s.mass.invariant()).abs() / e.mass.grid;
         let edit_vacuum_reset = edited.mass.vacuum_reset - s.mass.vacuum_reset;
+        let edit_step = edited.energy.invariant() - s.energy.invariant();
+        let edit_potential = edited.energy.edit_potential - s.energy.edit_potential;
+        let energy_miss = (edit_step - twin_step).abs() / edit_potential.abs();
         println!(
             "{what}: steps {}..{}, sim time {:.4}, the edit's Δt {edit_dt:.4} (P9's before it {pre_dt:.4}), its vacuum_reset \
              {edit_vacuum_reset:.3e}, box {b:?}; mass {:.6e}, invariant drift {mass_drift:.3e} of it \
-             (painted {:.6e}, preset_dropped {:.6e}, vacuum_reset {:.3e}); energy invariant (reported): the edit's step {:.4e} with \
-             ΔW {:.4e}, the {AFTER} steps after it {:.4e} of |W| {:.4e} (tools {:.4e}, floor_added {:.4e}, radiated {:.4e})",
+             (painted {:.6e}, preset_dropped {:.6e}, vacuum_reset {:.3e}); energy invariant: the edit's step {edit_step:.4e} \
+             against its twin's {twin_step:.4e} — {energy_miss:.3e} of edit_potential {edit_potential:.4e} (bound {EDIT_ENERGY:.0e}; \
+             ΔW {:.4e}); the {AFTER} steps after it {:.4e} of |W| {:.4e} (tools {:.4e}, floor_added {:.4e}, radiated {:.4e})",
             s.at.step,
             e.at.step,
             e.at.sim_time - s.at.sim_time,
@@ -705,13 +730,17 @@ impl Whole {
             e.mass.painted,
             e.mass.preset_dropped,
             e.mass.vacuum_reset,
-            edited.energy.invariant() - s.energy.invariant(),
             edited.energy.potential - s.energy.potential,
             e.energy.invariant() - edited.energy.invariant(),
             e.energy.potential.abs(),
             e.energy.tools,
             e.energy.floor_added,
             e.energy.radiated,
+        );
+        assert!(
+            energy_miss <= EDIT_ENERGY,
+            "{what}: the energy invariant across the edit's step {edit_step:.6e} against its twin's {twin_step:.6e}: {energy_miss:.3e} \
+             of edit_potential {edit_potential:.6e} (bound {EDIT_ENERGY:.0e})"
         );
         Graded { added: e.mass.painted + e.mass.preset_dropped, mass_drift, before, pre_dt, edit_dt, edit_vacuum_reset }
     }

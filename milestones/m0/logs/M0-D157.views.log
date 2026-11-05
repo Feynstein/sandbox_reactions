@@ -1,0 +1,186 @@
+== 2026-11-05T09:40:53-05:00 views · task M0-D157 · box laserax-ai-server :: bash tests/gpu.sh views physics
+-- views · exit=101 · 48.01 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.99s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 16 tests
+test views::a_hotter_body_is_never_drawn_redder_than_its_blackbody_or_white ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_follows_the_emissivity_over_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::glow_follows_the_emissivity_over_sigma' (1704387) panicked at crates/sr-engine/tests/gpu/views.rs:396:9:
+cell 57 (Σ 3.34e-1) darker than cell 56: 255 < 254
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_at_the_setting ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::glow_matches_the_formula_at_the_setting' (1704420) panicked at crates/sr-engine/tests/gpu/views.rs:621:5:
+10⁷ K: 42, 10⁴ K: 50
+FAILED
+test views::heat_and_density_follow_their_ranges ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_default_display_is_todays_image ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::vacuum_is_bg_space_in_every_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'views::vacuum_is_bg_space_in_every_view' (1704506) panicked at crates/sr-engine/tests/gpu/views.rs:518:9:
+Glow: the cell just above Σ_vac reads [7, 8, 12, 255], bg.space within 2.0 levels
+FAILED
+
+failures:
+
+failures:
+    views::glow_follows_the_emissivity_over_sigma
+    views::glow_matches_the_formula_at_the_setting
+    views::vacuum_is_bg_space_in_every_view
+
+test result: FAILED. 13 passed; 3 failed; 0 ignored; 0 measured; 489 filtered out; finished in 37.95s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-05T09:42:35-05:00 views · task M0-D157 · box laserax-ai-server :: bash tests/gpu.sh views physics
+-- views · exit=0 · 45.36 s
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.10s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 16 tests
+test views::a_hotter_body_is_never_drawn_redder_than_its_blackbody_or_white ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_follows_the_emissivity_over_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_at_the_setting ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_and_density_follow_their_ranges ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_default_display_is_todays_image ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::vacuum_is_bg_space_in_every_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 489 filtered out; finished in 38.17s
+
+
+== 2026-11-05T09:54:44-05:00 views · task M0-D157 · box laserax-ai-server :: bash tests/gpu.sh views physics
+-- views · exit=0 · 44.81 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 16 tests
+test views::a_hotter_body_is_never_drawn_redder_than_its_blackbody_or_white ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_between_blends_the_states ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::alpha_zero_and_one_give_the_two_states_exactly ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::density_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::element_matches_the_formula_across_a_wide_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_follows_the_emissivity_over_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::glow_matches_the_formula_at_the_setting ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_and_density_follow_their_ranges ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_matches_the_formula_across_a_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::heat_reads_the_stops_colours ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::temperatures_translate_past_the_anchors ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_default_display_is_todays_image ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::the_maps_midpoints_are_linear_rgb_means ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test views::vacuum_is_bg_space_in_every_view ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 489 filtered out; finished in 44.68s
+
+

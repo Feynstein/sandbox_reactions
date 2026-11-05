@@ -22,6 +22,10 @@
 //! - The momentum `held` (§2.9 [M0-TG2]) is P8's and P4's booking summed: the momentum a newly held cell had when P8 zeroed
 //!   it (`held.mom_*`) and what P4 spared the held cells (`held.spared.mom_*`). What the initial state's hold zeroed before
 //!   step 0 is booked before the ledger starts and dropped with the first interval, as every term booked then is.
+//! - `edit_potential` (§2.9 [M0-D109]) is the potential energy P0's mass changes brought: ½ ΔΣ (φ_before + φ_after) a cell,
+//!   booked by P2 on the edit's step (step/grav.rs) — what W = ½ Σ m φ, sinks included, moves by under an instantaneous
+//!   edit. W itself is ½ m φ with φ from the step's start, so it lags each step's own motion by half (a hot paint expanding
+//!   in its first step: 1 % of its ΔW, M0-D101); that lag is the step's, and no term books it.
 
 use serde_json::{json, Value};
 use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole};
@@ -76,6 +80,8 @@ pub struct Energy {
     pub floor_added: f64,
     /// The tools' net energy: painted, erased, heated, cooled, preset, cleared.
     pub tools: f64,
+    /// The potential energy the tools' mass changes brought (§2.9 [M0-D109]), signed.
+    pub edit_potential: f64,
 }
 
 #[derive(Clone, Debug, PartialEq, Default)]
@@ -96,7 +102,7 @@ impl Mass {
 
 impl Energy {
     /// §2.9: kinetic + thermal + cold + W + radiated + neutrino_lost − neutrino_deposited + escaped + swallowed −
-    /// nuclear_released − floor_added − tools.
+    /// nuclear_released − floor_added − tools − edit_potential [M0-D109].
     pub fn invariant(&self) -> f64 {
         self.kinetic + self.thermal + self.cold + self.potential + self.radiated + self.neutrino_lost - self.neutrino_deposited
             + self.escaped
@@ -104,6 +110,7 @@ impl Energy {
             - self.nuclear_released
             - self.floor_added
             - self.tools
+            - self.edit_potential
     }
 }
 
@@ -137,7 +144,7 @@ impl Record {
                 "radiated": num(e.radiated), "neutrino_lost": num(e.neutrino_lost),
                 "neutrino_deposited": num(e.neutrino_deposited), "escaped": num(e.escaped), "swallowed": num(e.swallowed),
                 "nuclear_released": num(e.nuclear_released), "floor_added": num(e.floor_added), "tools": num(e.tools),
-                "invariant": num(e.invariant()),
+                "edit_potential": num(e.edit_potential), "invariant": num(e.invariant()),
             },
             "momentum": {
                 "grid": pair(p.grid), "sinks": pair(p.sinks), "escaped": pair(p.escaped), "held": pair(p.held),
@@ -147,7 +154,7 @@ impl Record {
     }
 
     /// The record the snapshot wrote with [`exact`] numbers (the invariants are recomputed, not read). A record written
-    /// before [M0-TG2] has no `momentum.held`, and reads it as 0 (§2.9).
+    /// before [M0-TG2] has no `momentum.held`, one written before [M0-D109] no `energy.edit_potential`; each reads 0 (§2.9).
     fn restore(v: &Value) -> Result<Record, String> {
         let n = |group: &str, k: &str| read_exact(&v[group][k], &format!("ledger.{group}.{k}"));
         let pair = |k: &str| -> Result<[f64; 2], String> {
@@ -179,6 +186,7 @@ impl Record {
                 nuclear_released: n("energy", "nuclear_released")?,
                 floor_added: n("energy", "floor_added")?,
                 tools: n("energy", "tools")?,
+                edit_potential: if v["energy"]["edit_potential"].is_null() { 0.0 } else { n("energy", "edit_potential")? },
             },
             momentum: Momentum {
                 grid: pair("grid")?,
@@ -271,13 +279,18 @@ impl Ledger {
     }
 
     /// The ledger [`Ledger::snapshot`] wrote, in `world` under `physics` (the run's own). A snapshot written before
-    /// [M0-TG2] books no hold: its list ends before the `held.*` terms, which read 0 (§2.9).
+    /// [M0-TG2] books no hold: its list ends before the `held.*` terms, which read 0 (§2.9); one written before [M0-D109]
+    /// ends before `energy.edit_potential`, which reads 0.
     pub fn restore(world: WorldConfig, physics: &Physics, v: &Value) -> Result<Ledger, String> {
         let mut ledger = Ledger::new(world, physics);
         let booked = read_list(v, "booked")?;
-        let before_held = TERMS.iter().position(|t| t.name.starts_with("held.")).expect("the hold's booked terms");
-        if booked.len() != N_TERMS && booked.len() != before_held {
-            return Err(format!("ledger.booked: {} terms, expected {N_TERMS} (or {before_held}, before [M0-TG2])", booked.len()));
+        let before = |name: &str| TERMS.iter().position(|t| t.name.starts_with(name)).expect("a booked term of that name");
+        let (before_held, before_edit) = (before("held."), before("energy.edit_potential"));
+        if ![N_TERMS, before_edit, before_held].contains(&booked.len()) {
+            return Err(format!(
+                "ledger.booked: {} terms, expected {N_TERMS} (or {before_edit}, before [M0-D109]; {before_held}, before [M0-TG2])",
+                booked.len()
+            ));
         }
         for (slot, x) in ledger.booked.iter_mut().zip(booked) {
             *slot = read_exact(x, "ledger.booked")?;
@@ -358,6 +371,7 @@ impl Ledger {
                 nuclear_released: self.nuclear,
                 floor_added: t("energy.floor_added"),
                 tools,
+                edit_potential: t("energy.edit_potential"),
             },
             momentum: Momentum {
                 grid: [px, py],

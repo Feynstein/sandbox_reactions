@@ -1,7 +1,7 @@
 //! P0 edits (m0_contrat.md §1.3.2, §1.12, §2.9, §3.1; M0-T76), on shaders/edit.wgsl: the player's tools — paint, erase,
 //! heat, cool, drop a preset, clear the world — queued by [`Step::queue_edit`] and applied at the next step's P0.
 //!
-//! Three dispatches, all before the box's own re-fit ([`super::boxfit`]) in P0: `edit_gate` (one invocation) sizes
+//! Three dispatches (five with M0-D109's two around `edit_cells`, below), all before the box's own re-fit ([`super::boxfit`]) in P0: `edit_gate` (one invocation) sizes
 //! `edit_cells` from the queue's count through the box's gate buffer — nothing when no edit is queued — and sets the box's
 //! edit flag when a paint or a drop lands outside the active box; `edit_cells` walks the queue in order, one invocation
 //! per cell; `edit_finish` empties it and, for a Clear, removes the sinks. The two single-invocation dispatches take the
@@ -11,6 +11,11 @@
 //! empties the hold's mask (state.rs `State::held`, §2.7 [M0-TG2]); the other edits leave it to P8. A step whose
 //! queue holds a paint or a drop records Δt's re-reduction after the box's re-fit ([`super::dt`], §0.5 [M0-D110]), so it
 //! steps on the bound of the gas it added.
+//!
+//! The edit's potential energy (§2.9 [M0-D109]): `edit_gate` sets a flag on a step whose queue paints, erases, drops or
+//! clears, and `edit_sigma_before` and `edit_sigma_delta`, around `edit_cells` and sized as it is, leave each cell's stored
+//! ΔΣ in a plane; [`Step::with_edits`] adds P2's edit chain ([`super::grav::Gravity::edit_potential`]) on them, which
+//! books `energy.edit_potential` on that step.
 //!
 //! The queue lives on the GPU; the CPU keeps the records queued since the last step so that a second edit before a step
 //! joins the first ([`Step::queue_edit`]). At most [`MAX_EDITS`] records, and preset clouds of at most [`PATCH_CELLS`] cells
@@ -122,6 +127,9 @@ pub struct Edits {
     world: WorldConfig,
     queue: wgpu::Buffer,
     patch: wgpu::Buffer,
+    /// P2's edit chain's gate (word 0: this step's queue moves mass) and each cell's ΔΣ of this step's edits.
+    moved: wgpu::Buffer,
+    delta: wgpu::Buffer,
     pending: std::cell::RefCell<Pending>,
     pub(super) dispatches: Vec<Dispatch>,
 }
@@ -154,6 +162,13 @@ impl Edits {
             label: Some("edit.patch"),
             size: u64::from(patch_cells) * 4,
             usage: storage | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
+        });
+        let moved = init_buffer(device, "edit.moved", storage | wgpu::BufferUsages::UNIFORM, &[0u32; 4]);
+        let delta = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("edit.delta"),
+            size: world.cells() as u64 * 4,
+            usage: storage,
             mapped_at_creation: false,
         });
         let get = |k: &str| physics.get(k).unwrap_or_else(|| panic!("physics.json key {k}")) as f32;
@@ -189,6 +204,8 @@ impl Edits {
                 10 => boxfit.edit_flag().as_entire_binding(),
                 11 => boxfit.active().as_entire_binding(),
                 13 => wgpu::BindingResource::TextureView(state.held()),
+                14 => moved.as_entire_binding(),
+                15 => delta.as_entire_binding(),
                 _ => sinks.as_entire_binding(),
             }
         };
@@ -208,11 +225,13 @@ impl Edits {
         };
         let one = || Size::Fixed([1, 1, 1]);
         let dispatches = vec![
-            dispatch("edit_gate", &[0, 6, 9, 10, 11], one(), false),
+            dispatch("edit_gate", &[0, 6, 9, 10, 11, 14], one(), false),
+            dispatch("edit_sigma_before", &[0, 3, 15], Size::Indirect(boxfit.gate().clone(), 0), false),
             dispatch("edit_cells", &[0, 1, 2, 3, 4, 5, 6, 7, 8, 13], Size::Indirect(boxfit.gate().clone(), 0), true),
+            dispatch("edit_sigma_delta", &[0, 3, 15], Size::Indirect(boxfit.gate().clone(), 0), false),
             dispatch("edit_finish", &[6, 12], one(), false),
         ];
-        Edits { world, queue, patch, pending: Default::default(), dispatches }
+        Edits { world, queue, patch, moved, delta, pending: Default::default(), dispatches }
     }
 }
 
@@ -227,10 +246,23 @@ impl Edits {
 
 impl Step {
     /// This step with P0's edit pass: [`Step::queue_edit`] works from here on. Built on the step's own box, booking and
-    /// sinks (the Clear removes them), so the other passes' dispatch lists are untouched.
+    /// sinks (the Clear removes them). With P2, its edit chain joins P2's list ([`super::grav::Gravity::edit_potential`],
+    /// §2.9 [M0-D109]): the solve before φ's rows, the first half of the booking after `grav_gradient`, the second last —
+    /// after `grav_sinks` in a step with P3. Every other pass's list is untouched.
     pub fn with_edits(mut self, device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, physics: &Physics) -> Step {
         let mut edits = Edits::new(device, state, booking, eos, physics, &self.boxfit, self.sinks.as_ref().map(|s| s.state_buffer()));
         self.passes[Pass::Edits as usize] = std::mem::take(&mut edits.dispatches);
+        if let Some(gravity) = &self.gravity {
+            let g = BOOK_GROUPS.iter().position(|g| TERMS[g.terms.start].writer == Pass::Gravity).expect("P2's booking buffer");
+            let chain = gravity.edit_potential(device, &edits.delta, &edits.moved, booking.group(g));
+            let list = &mut self.passes[Pass::Gravity as usize];
+            let at = |list: &[Dispatch], label: &str| list.iter().position(|d| d.label == label).expect("P2's dispatch of that label");
+            let rows = at(list, "grav_rows");
+            list.splice(rows..rows, chain.solve);
+            let gradient = at(list, "grav_gradient");
+            list.insert(gradient + 1, chain.before);
+            list.push(chain.after);
+        }
         self.edits = Some(edits);
         self
     }

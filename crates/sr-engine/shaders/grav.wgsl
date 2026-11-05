@@ -22,6 +22,11 @@
 // while `gate` — that flag, bound as a uniform — is set, φ_pull into a scratch plane and g_pull into g's planes 3 and 4.
 // `grav_rows` clears the flag for the next step. With no held cell the pull chain costs its rows alone, and planes 3 and
 // 4 keep their last values, which no pass reads then.
+//
+// The edit chain (§2.9 [M0-D109]; step/grav.rs `Gravity::edit_potential`, joined by step/edit.rs): on a step whose P0 moved
+// mass — `gate` is P0's flag — φ_δ = K ∗ ΔΣ of P0's ΔΣ plane (bound as `src`), solved before φ's rows on the same work
+// buffer into a scratch plane (`dst`, then `phi_edit`); `grav_edit_before` books ½ ΔΣ (φ − φ_δ) after `grav_gradient`, φ the
+// gas's, and `grav_edit_after` ½ ΔΣ φ last, φ with the sinks' — ½ ΔΣ (φ_before + φ_after) a cell, into `book_edit`.
 
 struct GravParams {
     sigma_vac: f32,
@@ -76,8 +81,11 @@ const MAX_SINKS: u32 = 16u;
 @group(0) @binding(14) var held: texture_2d<u32>;
 // Set by `grav_rows_pull` when the box holds a held cell, cleared by `grav_rows`.
 @group(0) @binding(15) var<storage, read_write> pull_flag: atomic<u32>;
-// The pull chain's gate: `pull_flag` read back as a uniform; for φ's chain a constant 1.
+// The pull chain's gate: `pull_flag` read back as a uniform; for φ's chain a constant 1; for the edit chain P0's flag.
 @group(0) @binding(16) var<uniform> gate: vec4<u32>;
+// The edit chain's φ_δ (what `grav_rows_inverse` wrote into its `dst`) and its booking plane, `energy.edit_potential`.
+@group(0) @binding(17) var<storage, read> phi_edit: array<f32>;
+@group(0) @binding(18) var<storage, read_write> book_edit: array<f32>;
 
 // 1 of 4: the box's rows of Σ_src — Σ, or 0 in vacuum (Σ < Σ_vac, §1.4.2), or, with `pull`, 0 in a held cell —
 // zero-padded to fft_w, forward: conv_rows with the vacuum mask.
@@ -124,6 +132,30 @@ fn grav_rows_pull(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocatio
         return;
     }
     rows_forward(wg.x, lid, true);
+}
+
+// The edit chain's rows: P0's ΔΣ over the box, signed and unmasked, zero-padded to fft_w and forward — on a step whose P0
+// moved mass only.
+@compute @workgroup_size(256)
+fn grav_rows_edit(@builtin(workgroup_id) wg: vec3<u32>, @builtin(local_invocation_index) lid: u32) {
+    let row = wg.x;
+    if (row >= abox.h || gate.x == 0u) {
+        return;
+    }
+    let n = abox.fft_w;
+    let log_n = countTrailingZeros(n);
+    let base = fp.src_offset + (abox.y0 + row) * fp.stride + abox.x0;
+    for (var x = lid; x < n; x = x + WG) {
+        var v = 0.0;
+        if (x < abox.w) {
+            v = src[base + x];
+        }
+        buf[bitrev(x, log_n)] = vec2<f32>(v, 0.0);
+    }
+    dit(n, lid, false);
+    for (var x = lid; x < n; x = x + WG) {
+        spec[row * n + x] = buf[x];
+    }
 }
 
 // 2 of 4: each column forward over fft_h (rows ≥ h are zero), times K̂ and 1 / (fft_w · fft_h), back by decimation in
@@ -291,4 +323,25 @@ fn grav_sinks(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     g_total[3u * gp.cells + cell] = b.x;
     g_total[4u * gp.cells + cell] = b.y;
+}
+
+// The edit chain's booking, first half (after `grav_gradient`, before `grav_sinks`): ½ ΔΣ (φ − φ_δ), φ the gas's — the
+// gas's φ before the edit at the cell.
+@compute @workgroup_size(8, 8)
+fn grav_edit_before(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h || gate.x == 0u) {
+        return;
+    }
+    let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
+    book_edit[cell] += 0.5 * src[cell] * (phi[cell] - phi_edit[cell]);
+}
+
+// The edit chain's booking, second half (last in P2): ½ ΔΣ φ, φ after the edit with the sinks' added.
+@compute @workgroup_size(8, 8)
+fn grav_edit_after(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h || gate.x == 0u) {
+        return;
+    }
+    let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
+    book_edit[cell] += 0.5 * src[cell] * phi[cell];
 }

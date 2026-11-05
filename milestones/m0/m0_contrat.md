@@ -954,6 +954,29 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     tasks/M0-D103.md): the Sun-like preset cut at step 768 and continued writes the unbroken life's `age_years`, 3,279,122.408
     years (1,106,833 at the cut); with the snapshot's clock written null the continued life's age differs (the plant
     age-not-carried) — the lead at M0-D103, 2026-11-04: «Upgrade it in place (Recommended)».
+  - [M0-D109] §2.9's energy terms and invariant ("… floor_added · tools (painted, erased, heated, cooled, preset, cleared)";
+    "… − floor_added − tools is constant"), under which an edit's step moved the invariant by the W its mass brought · **a
+    term `edit_potential`, the invariant less it: on a step whose P0 paints, erases, drops or clears, P2 solves φ_δ = K ∗ ΔΣ
+    of P0's stored ΔΣ (a second solve before φ's, zero dispatches' work on any other step) and books ½ ΔΣ (φ_before +
+    φ_after) a cell — φ_after P2's φ with the sinks', φ_before the gas's φ less φ_δ — what W = ½ Σ m φ moves by under the
+    edit, sinks included; P2's φ before the edit would not do, being stale outside the box where a paint beside a star's box
+    lands. The whole-step edit cases grade the invariant across the edit's step less the same step of the same scene with
+    nothing queued within 2 × 10⁻² of |edit_potential|: the ledger's W is ½ m φ with φ from the step's start, so it lags a
+    step's own motion by half (a hot paint's first step, 1.0 % of its ΔW, M0-D101), which no term books** · measured on
+    laserax-ai-server's RTX 4090 (2026-11-05; tasks/M0-D109.md): before it the edit's step moved the invariant by its ΔW (the
+    Sun drop −2.661 × 10⁵); with it 8.3 × 10⁻⁴ (paint beside a star), 5.0 × 10⁻³ (empty world), 2.4 × 10⁻³ (cold box), 5.6 ×
+    10⁻⁶ (Sun drop) of edit_potential — the lead's answers at M0-D109, 2026-11-05: «Second solve in P2 (Recommended)»,
+    «edit_potential (Recommended)», «Twin-differenced, 2e-2 (Recommended)».
+  - [M0-D157] §1.11's Glow b "(1 − exp(−(T_K / min(S, 3000 K))⁴)) · D", a function of T alone, under which the near-empty
+    envelope a star throws off drew at the star's own white · **b is multiplied by the cell's emissivity ε = 1 − exp(−τ), τ =
+    10 κ₀(1 + X_H) Σ — §2.4.2's κ without the dust term (κ_dust 0, S1 disabled), across the plane, × 10 (render.rs
+    `EMISSIVITY_SCALE`); the haze, the colour, the glow passes and S unchanged** · measured on laserax-ai-server's RTX 4090
+    (2026-11-05; tasks/M0-D157.md; images/M0-D157/): the drawn Glow's axis/diagonal ratio at ½ of its peak, Sun-like step 300,
+    0.891 → 0.980 (3,000: 0.997 → 0.996; Massive 300: 0.931 → 0.993); at ⅛ the Sun-like 300 reads 0.963, the haze's log Σ of
+    P4's envelope (§1.11's Heat and Density views keep that square); × 1, 3, 30 and 100 measured too (0.971, 0.982, 0.967,
+    0.956); a painted stroke at Σ 0.02 heated to ≈ 6,700 K draws its brightest channel at 109/255 (255 before) — the lead at
+    M0-D157, 2026-11-05: «ε, τ ×10 (Recommended)», and on the faint square «the fix works... the faint square is not visible
+    enough for it to be an issue».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1356,6 +1379,10 @@ between the listed masses, held constant beyond them:
   0.0624, 0.0374), (1.056, 599.8, 0.0264, 0.0323), (−0.065, 501.1, 0.0490, 0.0382); ȳ (0.821, 568.8,
   0.0213, 0.0247), (0.286, 530.9, 0.0613, 0.0322); z̄ (1.217, 437.0, 0.0845, 0.0278), (0.681, 459.0,
   0.0385, 0.0725); each lobe α · exp(−½[(λ − β) · (λ < β ? γ : δ)]²).
+  [M0-D157] **The emissivity.** b is multiplied by ε = 1 − exp(−τ), τ = 10 κ₀(1 + X_H) Σ — the cell's optical depth across the
+  plane by §2.4.2's κ (its dust term 0 while S1 is disabled), × 10 (render.rs `EMISSIVITY_SCALE`, the lead's pick): thin gas
+  glows as faintly as it emits; κ₀ is the run's (a scene's overrides included). Both terms of the colour read the product
+  (blackbody(T_K) · bε + haze · (1 − bε)), with b as the S bullet below gives it.
   [M0-R12] **The Glow setting S** («Full brightness at», §4.2), a temperature from 10 K to 10¹⁰ K, default 3,000 K: b =
   (1 − exp(−(T_K / min(S, 3000 K))⁴)) · D, with D = clamp(asinh(x / β) / asinh(1 / β), 0, 1), x = Y(max(T_K, 3000 K)) / Y(S),
   β = 10⁻⁴, Y(T) = Σ over 380–780 nm in 5 nm steps of B_λ(λ, T) · ȳ(λ) — the table's own Planck and ȳ, unnormalised (a constant
@@ -1604,18 +1631,20 @@ M0-D71g moves them into this table, physics.json (the lead at M0-TG2: «Code now
 - **Mass:** grid · sinks · escaped · painted · erased · preset_dropped · vacuum_reset · cleared.
 - **Energy:** kinetic · thermal · cold · potential W = ½Σmφ (sinks included) · radiated ·
   neutrino_lost · neutrino_deposited · escaped · swallowed · nuclear_released (Σ q·ω·Δm, signed) ·
-  floor_added · tools (painted, erased, heated, cooled, preset, cleared).
+  floor_added · tools (painted, erased, heated, cooled, preset, cleared) · [M0-D109] edit_potential — the potential energy
+  P0's mass changes brought, ½ Σ ΔΣ (φ_before + φ_after) over the cells, booked by P2 on the edit's step (§0.5 [M0-D109]);
+  summary.json's ledger records carry it as `energy.edit_potential`, a record or snapshot written before [M0-D109] reads it 0.
 - **Momentum:** grid · sinks · escaped · held [M0-TG2] — the momentum the hold took from the grid (§2.7, §2.3.4): a
   newly held cell's, the impulse P4 spares a held cell and what one-way inflow carries into it; signed. summary.json's
   ledger records carry it as `momentum.held`; a ledger record or an observers' snapshot (§0.5 [M0-D76]) written
   before [M0-TG2] reads it, and the booking terms it lacks, as 0.
 - Each booked term is cumulative since the ledger (re)started: escaped, erased and vacuum_reset
   count mass that left the grid by that route; painted and preset_dropped mass that entered;
-  floor_added and tools are net energies added (signed).
+  floor_added, tools and edit_potential [M0-D109] are net energies added (signed).
 - **Invariants (G-CONS):** mass — grid + sinks + escaped + erased + vacuum_reset − painted −
   preset_dropped is constant (escaped stays 0 in bounce mode). Energy — kinetic + thermal + cold + W
   + radiated + neutrino_lost − neutrino_deposited + escaped + swallowed − nuclear_released −
-  floor_added − tools is constant, within G-CONS's tolerance. Clear world restarts the ledger.
+  floor_added − tools − edit_potential [M0-D109] is constant, within G-CONS's tolerance. Clear world restarts the ledger.
 
 ### 2.10 Presets (B3, I3; D2, D3)
 - **Three presets:** `sun` — 1 Sun, ends as a white dwarf · `massive` — 15 Suns, a supernova and a

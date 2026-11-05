@@ -249,6 +249,8 @@ fn the_layout_names_every_term_and_accumulator_with_its_writer() {
         ("held.mom_y", Pass::Floors, false),
         ("held.spared.mom_x", Pass::Hydro, false),
         ("held.spared.mom_y", Pass::Hydro, false),
+        // §2.9 [M0-D109]: P2's edit chain books the potential energy an edit's mass brought.
+        ("energy.edit_potential", Pass::Gravity, false),
     ];
     let got: Vec<(&str, Pass, bool)> = TERMS.iter().map(|t| (t.name, t.writer, t.accumulator)).collect();
     assert_eq!(got, expected);

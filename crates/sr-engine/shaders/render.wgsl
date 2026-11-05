@@ -9,9 +9,11 @@
 // a state never written — reads as the floor state (Σ_floor, at rest, T_floor, hydrogen).
 //
 // Views, each one a function of the (blended) cell:
-//   Glow    blackbody(T_K) · b + haze · (1 − b), b = (1 − exp(−(T_K / min(S, 3000))⁴)) · D(T_K), haze = #2A3550 · clamp((log₁₀ Σ + 8) / 8, 0, 1) ·
+//   Glow    blackbody(T_K) · b + haze · (1 − b), b = (1 − exp(−(T_K / min(S, 3000))⁴)) · D(T_K) · ε, haze = #2A3550 · clamp((log₁₀ Σ + 8) / 8, 0, 1) ·
 //           0.6 — the formula's colours as written (the table is sRGB-encoded, §1.11), the table read linearly in log T between
-//           its 512 entries and clamped to its ends. (The glow added over this image is glow.wgsl's, M0-T81.)
+//           its 512 entries and clamped to its ends; ε = 1 − exp(−10 κ₀(1 + X_H) Σ) the cell's emissivity, from its optical
+//           depth across the plane (§2.4.2's κ, scaled by render.rs `EMISSIVITY_SCALE`; [M0-D157]: thin gas glows as faintly as
+//           it emits). (The glow added over this image is glow.wgsl's, M0-T81.)
 //   Heat    §4.11's map over the Heat range's log₁₀ T_K (1 … 10 by default).
 //   Element the species colours (§1.5) weighted by mass fraction, in linear RGB, times clamp((log₁₀ Σ + 6) / 8, 0.15, 1); a
 //           cell under Σ_vac is black.
@@ -48,7 +50,8 @@ struct Palette {
 
 // The display settings (render.rs `Display`, M0-T126; §1.11 [M0-R12]): glow.x = min(S, 3000) K, the Heat range ends
 // (log₁₀ T_K) and the Density range ends (log₁₀ Σ) in `ranges`, and the Glow dimming D over log₁₀ T_K from log₁₀ 3000 to 11
-// (1,024 entries, four to a vec4), built on the CPU when S changes; glow.yzw unused.
+// (1,024 entries, four to a vec4), built on the CPU when S changes; glow.y = EMISSIVITY_SCALE · κ₀, the run's κ₀ scaled
+// (the emissivity, [M0-D157]); glow.zw unused.
 struct DisplayParams {
     glow: vec4<f32>,
     ranges: vec4<f32>,
@@ -229,8 +232,13 @@ fn density_map(l10_sigma: f32) -> vec3<f32> {
     return linear_to_srgb(mix(srgb_to_linear(DENSITY[i]), srgb_to_linear(DENSITY[i + 1u]), p - f32(i)));
 }
 
+// ε = 1 − exp(−τ), τ = 10 κ₀(1 + X_H) Σ: the cell's optical depth across the plane (§2.4.2), × EMISSIVITY_SCALE ([M0-D157]).
+fn emissivity(c: Cell) -> f32 {
+    return 1.0 - exp(-display.glow.y * (1.0 + c.x[ID_H]) * c.sigma);
+}
+
 fn glow_colour(c: Cell, t_k: f32) -> vec3<f32> {
-    let b = (1.0 - exp(-pow(t_k / display.glow.x, 4.0))) * dimming(t_k);
+    let b = (1.0 - exp(-pow(t_k / display.glow.x, 4.0))) * dimming(t_k) * emissivity(c);
     let haze = HAZE * clamp((log2(c.sigma) * 0.30102999566 + 8.0) / 8.0, 0.0, 1.0) * HAZE_GAIN;
     return blackbody(t_k) * b + haze * (1.0 - b);
 }

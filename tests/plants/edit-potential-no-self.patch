@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/shaders/grav.wgsl
++++ b/crates/sr-engine/shaders/grav.wgsl
+@@ -333,7 +333,7 @@
+         return;
+     }
+     let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
+-    book_edit[cell] += 0.5 * src[cell] * (phi[cell] - phi_edit[cell]);
++    book_edit[cell] += 0.5 * src[cell] * (phi[cell] - 0.0 * phi_edit[cell]);
+ }
+ 
+ // The edit chain's booking, second half (last in P2): ½ ΔΣ φ, φ after the edit with the sinks' added.

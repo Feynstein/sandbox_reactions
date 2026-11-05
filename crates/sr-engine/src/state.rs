@@ -524,7 +524,7 @@ const fn accumulator(name: &'static str, writer: Pass) -> Term {
 /// state-derived terms (grid mass, kinetic, thermal, cold, W, the sinks) come from the state and the block summary,
 /// not from here; nuclear_released is the sum of the seven nuclear groups. A term added later is appended at the end, so
 /// a record of the shorter list reads as this one with the new terms 0 (§2.9).
-pub const TERMS: [Term; 41] = [
+pub const TERMS: [Term; 42] = [
     // P0 edits (§1.12): mass entered or left by the tools, and the tools' net energy.
     term("mass.painted", Pass::Edits),
     term("mass.erased", Pass::Edits),
@@ -576,6 +576,9 @@ pub const TERMS: [Term; 41] = [
     // `hydro_commit` (`momentum.held`, §2.9).
     term("held.spared.mom_x", Pass::Hydro),
     term("held.spared.mom_y", Pass::Hydro),
+    // P2 after an edit (§2.9 [M0-D109]): the potential energy P0's mass changes brought, ½ ΔΣ (φ_before + φ_after) a cell —
+    // booked by step/grav.rs's edit chain on a step whose P0 painted, erased, dropped or cleared (`energy.edit_potential`).
+    term("energy.edit_potential", Pass::Gravity),
 ];
 pub const N_TERMS: usize = TERMS.len();
 
@@ -587,7 +590,7 @@ pub struct BookGroup {
     pub domain: Domain,
 }
 
-pub const BOOK_GROUPS: [BookGroup; 9] = [
+pub const BOOK_GROUPS: [BookGroup; 10] = [
     BookGroup { name: "booking.tools_mass", terms: 0..4, domain: Domain::Cells },
     BookGroup { name: "booking.tools_energy", terms: 4..10, domain: Domain::Cells },
     BookGroup { name: "booking.sinks", terms: 10..11, domain: Domain::Cells },
@@ -597,6 +600,7 @@ pub const BOOK_GROUPS: [BookGroup; 9] = [
     BookGroup { name: "booking.neutrino_heating", terms: 34..35, domain: Domain::Cells },
     BookGroup { name: "booking.floors", terms: 35..39, domain: Domain::Cells },
     BookGroup { name: "booking.held", terms: 39..41, domain: Domain::Cells },
+    BookGroup { name: "booking.edit_potential", terms: 41..42, domain: Domain::Cells },
 ];
 
 /// The groups tile `TERMS` in order, each group has one writer, and each fits WebGPU's default binding size at the

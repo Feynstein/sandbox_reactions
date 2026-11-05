@@ -1,0 +1,165 @@
+why plan_lint: stale: milestones/m0/m0_implementation_plan.md
+why build: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why burn_cell: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why burn_order: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why neutrino: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why sink: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why nu_heat: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why summary: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ledger: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why preset_cloud: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why observe_run: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why stage_order: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why multi: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why edits: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why edits_file: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why sod: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why edges: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why collapse: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why jeans: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why twin: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why cpu_gpu: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why heat_gauss: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why heat_implicit: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why heat_limiter: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why heat_stiff: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why heat_multigrid: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why radiation_force: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why grav_force: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why grav_selfforce: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why fft: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why strings: stale: milestones/m0/m0_contrat.md
+why blackbody: stale: crates/sr-engine/src/render.rs
+why adapter: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why state: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why booking: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why floors: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why dt: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why box: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why latch: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why timing: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why scene: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why dump: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why boot: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why watch_only: stale: crates/sr-engine/shaders/render.wgsl (+2)
+why calibration: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why calibrate_cold: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why cold_core: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why held_core: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why calibrate_bisect: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why calibrate_order: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why readouts: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why views: stale: tests/plants/views-colour-shift.patch
+why extents: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why glow: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why frames: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_banner: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_tools: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_presets: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_display: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_star: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_legend: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_zoom: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_remnant: stale: crates/sr-engine/shaders/render.wgsl (+3)
+why ui_inspect: stale: crates/sr-engine/shaders/render.wgsl (+3)
+plan_lint         825/0/0      0.11 s  GO · step 1/64, 63 left
+toolchain         owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+build             2/0/0        7.54 s  GO · step 2/64, 62 left
+burn_cell         18/0/0      12.39 s  GO · step 3/64, 61 left
+burn_order        4/0/0        1.67 s  GO · step 4/64, 60 left
+neutrino          18/0/0       3.57 s  GO · step 5/64, 59 left
+sink              34/0/0      25.06 s  GO · step 6/64, 58 left
+nu_heat           15/0/0       4.57 s  GO · step 7/64, 57 left
+summary           7/0/0       11.78 s  GO · step 8/64, 56 left
+ledger            8/0/0       23.40 s  GO · step 9/64, 55 left
+preset_cloud      5/0/0       53.39 s  GO · step 10/64, 54 left
+observe_run       14/0/0      82.98 s  GO · step 11/64, 53 left
+stage_order       2/0/0       40.37 s  GO · step 12/64, 52 left
+multi             5/0/0       55.64 s  GO · step 13/64, 51 left
+edits             17/0/0      14.48 s  GO · step 14/64, 50 left
+edits_file        6/0/0       10.08 s  GO · step 15/64, 49 left
+sod               17/0/0       9.13 s  GO · step 16/64, 48 left
+edges             7/0/0       12.78 s  GO · step 17/64, 47 left
+collapse          6/0/0        1.52 s  GO · step 18/64, 46 left
+jeans             6/0/0        1.02 s  GO · step 19/64, 45 left
+twin              6/0/0        1.72 s  GO · step 20/64, 44 left
+cpu_gpu           3/0/0        8.18 s  GO · step 21/64, 43 left
+heat_gauss        14/0/0       4.02 s  GO · step 22/64, 42 left
+heat_implicit     8/0/0        3.32 s  GO · step 23/64, 41 left
+heat_limiter      8/0/0        5.52 s  GO · step 24/64, 40 left
+heat_stiff        15/0/0       8.28 s  GO · step 25/64, 39 left
+heat_multigrid    4/0/0        4.32 s  GO · step 26/64, 38 left
+radiation_force   11/0/0      12.68 s  GO · step 27/64, 37 left
+grav_force        13/0/0       3.77 s  GO · step 28/64, 36 left
+grav_selfforce    7/0/0        2.02 s  GO · step 29/64, 35 left
+fft               8/0/0        3.47 s  GO · step 30/64, 34 left
+strings           3/0/0        0.46 s  GO · step 31/64, 33 left
+blackbody         11/0/0       1.32 s  GO · step 32/64, 32 left
+adapter           10/0/0       4.52 s  GO · step 33/64, 31 left
+state             12/0/0       8.13 s  GO · step 34/64, 30 left
+booking           4/0/0        3.52 s  GO · step 35/64, 29 left
+floors            12/0/0      10.63 s  GO · step 36/64, 28 left
+dt                8/0/0        8.08 s  GO · step 37/64, 27 left
+box               8/0/0       11.43 s  GO · step 38/64, 26 left
+latch             5/0/0        3.92 s  GO · step 39/64, 25 left
+timing            5/0/0       22.39 s  GO · step 40/64, 24 left
+scene             8/0/0        2.87 s  GO · step 41/64, 23 left
+dump              14/0/0      44.25 s  GO · step 42/64, 22 left
+boot              1/0/0        9.93 s  GO · step 43/64, 21 left
+desktop           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+web               owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+capture           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+measure_ui        owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+watch_only        1/0/0        0.11 s  GO · step 44/64, 20 left
+calibration       12/0/0       0.16 s  GO · step 45/64, 19 left
+calibrate_cold    8/0/0        1.42 s  GO · step 46/64, 18 left
+cold_core         8/0/0        9.43 s  GO · step 47/64, 17 left
+held_core         24/0/0     151.54 s  GO · step 48/64, 16 left
+calibrate_bisect  19/0/0     103.72 s  GO · step 49/64, 15 left
+calibrate_order   13/0/0       0.16 s  GO · step 50/64, 14 left
+readouts          9/0/0        0.11 s  GO · step 51/64, 13 left
+views             16/0/0      44.81 s  GO · step 52/64, 12 left
+extents           7/0/0        8.58 s  GO · step 53/64, 11 left
+glow              7/0/0        3.87 s  GO · step 54/64, 10 left
+frames            6/0/0       10.39 s  GO · step 55/64, 9 left
+ui_banner         18/0/0       2.07 s  GO · step 56/64, 8 left
+ui_tools          18/0/0       2.02 s  GO · step 57/64, 7 left
+ui_presets        7/0/0        0.61 s  GO · step 58/64, 6 left
+ui_display        11/0/0       0.16 s  GO · step 59/64, 5 left
+ui_star           13/0/0       0.11 s  GO · step 60/64, 4 left
+ui_legend         21/0/0       0.26 s  GO · step 61/64, 3 left
+ui_zoom           11/0/0       0.16 s  GO · step 62/64, 2 left
+ui_remnant        6/0/0        0.16 s  GO · step 63/64, 1 left
+ui_inspect        9/0/0        0.11 s  GO · step 64/64, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 40 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+sun_burn          NOT RUN (not impacted: its 7 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+ui_topbar         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+views · red-arm proven by M0-D157 2026-11-05T09:51:27-05:00 (fingerprint 218c3b62b756) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/views.rs changed since M0-D157's start - a test, case or check M0-D157's Deliver: does not name
+FLAG oracle: tests/plants/views-colour-shift.patch changed since M0-D157's start - a test, case or check M0-D157's Deliver: does not name
+FLAG oracle: tests/plants/views-emissivity-ignored.patch changed since M0-D157's start - a test, case or check M0-D157's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D157's start - a test, case or check M0-D157's Deliver: does not name
+logs: milestones/m0/logs/M0-D157.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+f754beb05ef7
+anchor: 243 path×scope entries moved by this run
+anchor: 407 paths checked · 394 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 20 owed · 427 covered of 821 visible
+skipped   386  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+verify: 1458 passed, 0 failed, 0 skipped · 64/64 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 19 not impacted · 209.03 s + loop 0.27 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.34->1.73 · base: M0-D157's start 2026-11-05T08:59:54-05:00
+=== GO ===

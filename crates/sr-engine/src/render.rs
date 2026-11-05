@@ -233,11 +233,16 @@ pub fn dimming_lookup(table: &[f32], t: f64) -> f32 {
     table[i] + (table[i + 1] - table[i]) * (u - i as f64) as f32
 }
 
-/// render.wgsl's `DisplayParams` as words: S clamped to its domain and to 3,000 K above (the exposure curve's own scale), the
-/// two ranges, then the dimming table.
-fn display_words(display: &Display, dimming: &[f32]) -> Vec<u32> {
+/// The Glow view's emissivity scale (§1.11 [M0-D157]): ε = 1 − exp(−τ), τ = EMISSIVITY_SCALE · κ₀(1 + X_H) Σ. Measured
+/// against 1, 3, 30 and 100 on the Sun-like and Massive presets (RTX 4090; tasks/M0-D157.md): 10 draws the body as round as 3
+/// (axis/diagonal 0.980 against 0.982 at the Sun-like step 300) and keeps a painted stroke visible — the lead's pick.
+pub const EMISSIVITY_SCALE: f64 = 10.0;
+
+/// render.wgsl's `DisplayParams` as words: S clamped to its domain and to 3,000 K above (the exposure curve's own scale) and
+/// the emissivity's coefficient EMISSIVITY_SCALE · κ₀ (§1.11 [M0-D157]), the two ranges, then the dimming table.
+fn display_words(display: &Display, kappa0: f64, dimming: &[f32]) -> Vec<u32> {
     let s_eff = display.glow_s.min(GLOW_S_DEFAULT);
-    let mut words: Vec<u32> = [s_eff, 0.0, 0.0, 0.0].map(|v| (v as f32).to_bits()).to_vec();
+    let mut words: Vec<u32> = [s_eff, EMISSIVITY_SCALE * kappa0, 0.0, 0.0].map(|v| (v as f32).to_bits()).to_vec();
     words.extend([display.heat[0], display.heat[1], display.density[0], display.density[1]].map(|v| (v as f32).to_bits()));
     words.extend(dimming.iter().map(|v| v.to_bits()));
     words
@@ -374,6 +379,7 @@ pub struct Renderer {
     dims: wgpu::Buffer,
     palette: wgpu::Buffer,
     display: Display,
+    kappa0: f64,
     dimming: Vec<f32>,
     display_buf: wgpu::Buffer,
     extent: (wgpu::ComputePipeline, wgpu::BindGroup),
@@ -385,7 +391,7 @@ pub struct Renderer {
 impl Renderer {
     /// For `state`'s world, blending with `previous` (the same world; the last state before `state`'s). `anchors_sb` are
     /// §1.10.2's eight sandbox temperatures — T_floor, the Sun-like T_eff, T_H, T_He, T_C, T_Ne, T_O, T_Si — paired with
-    /// [`TEMP_KELVIN`]; the species colours come from `elements`.
+    /// [`TEMP_KELVIN`]; the species colours come from `elements`; the Glow view's emissivity reads `eos`'s κ₀ (§1.11 [M0-D157]).
     pub fn new(
         device: &wgpu::Device,
         state: &State,
@@ -402,6 +408,7 @@ impl Renderer {
         });
         let pipeline = compute_pipeline(device, &module, "render_cells");
         let extent_pipeline = compute_pipeline(device, &module, "extent_bins");
+        let kappa0 = eos.kappa0();
         let extent_eos = eos.bind_group(device, &extent_pipeline);
         let eos = eos.bind_group(device, &pipeline);
 
@@ -428,7 +435,8 @@ impl Renderer {
         let palette = init_buffer(device, "render.palette", wgpu::BufferUsages::UNIFORM, &words);
         let display = Display::default();
         let dimming = dimming_table(display.glow_s);
-        let display_buf = init_buffer(device, "render.display", wgpu::BufferUsages::UNIFORM, &display_words(&display, &dimming));
+        let display_buf =
+            init_buffer(device, "render.display", wgpu::BufferUsages::UNIFORM, &display_words(&display, kappa0, &dimming));
         let group = |s: &State| std::array::from_fn(|g| s.group(g).clone());
         Renderer {
             device: device.clone(),
@@ -439,6 +447,7 @@ impl Renderer {
             dims: state.dims().clone(),
             palette,
             display,
+            kappa0,
             dimming,
             display_buf,
             extent: (extent_pipeline, extent_eos),
@@ -455,7 +464,7 @@ impl Renderer {
         if display.glow_s != self.display.glow_s {
             self.dimming = dimming_table(display.glow_s);
         }
-        self.display_buf = init_buffer(&self.device, "render.display", wgpu::BufferUsages::UNIFORM, &display_words(&display, &self.dimming));
+        self.display_buf = init_buffer(&self.device, "render.display", wgpu::BufferUsages::UNIFORM, &display_words(&display, self.kappa0, &self.dimming));
         self.display = display;
     }
 

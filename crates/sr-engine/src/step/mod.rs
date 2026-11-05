@@ -790,6 +790,7 @@ const EOS_PARAMS_BYTES: usize = 2 * 48 + 3 * 16;
 pub struct EosGpu {
     params: wgpu::Buffer,
     table: wgpu::Buffer,
+    kappa0: f64,
 }
 
 impl EosGpu {
@@ -830,7 +831,14 @@ impl EosGpu {
         EosGpu {
             params: init_buffer(device, "eos.params", wgpu::BufferUsages::UNIFORM, &words),
             table: init_buffer(device, "eos.table", wgpu::BufferUsages::STORAGE, &table),
+            kappa0: physics.get("kappa0").expect("physics.json key kappa0"),
         }
+    }
+
+    /// The run's κ₀ (§2.4.2; a scene's `overrides` included) — not in `EosParams`: the Glow view's emissivity reads it
+    /// ([`crate::render::Renderer`], §1.11 [M0-D157]).
+    pub fn kappa0(&self) -> f64 {
+        self.kappa0
     }
 
     /// The group-1 bind group of a pipeline compiled with [`with_eos`].

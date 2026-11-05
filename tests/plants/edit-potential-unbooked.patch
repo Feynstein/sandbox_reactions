@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/step/edit.rs
++++ b/crates/sr-engine/src/step/edit.rs
+@@ -252,7 +252,7 @@
+     pub fn with_edits(mut self, device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu, physics: &Physics) -> Step {
+         let mut edits = Edits::new(device, state, booking, eos, physics, &self.boxfit, self.sinks.as_ref().map(|s| s.state_buffer()));
+         self.passes[Pass::Edits as usize] = std::mem::take(&mut edits.dispatches);
+-        if let Some(gravity) = &self.gravity {
++        if let Some(gravity) = self.gravity.as_ref().filter(|_| false) {
+             let g = BOOK_GROUPS.iter().position(|g| TERMS[g.terms.start].writer == Pass::Gravity).expect("P2's booking buffer");
+             let chain = gravity.edit_potential(device, &edits.delta, &edits.moved, booking.group(g));
+             let list = &mut self.passes[Pass::Gravity as usize];

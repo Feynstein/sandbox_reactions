@@ -1,5 +1,6 @@
-// P0 edits (m0_contrat.md §1.3.2, §1.12, §2.7, §2.9): the player's queued edits applied at the step boundary, three
-// dispatches in this order — `edit_gate`, `edit_cells`, `edit_finish`. Compiled with eos.wgsl prepended (group 1).
+// P0 edits (m0_contrat.md §1.3.2, §1.12, §2.7, §2.9): the player's queued edits applied at the step boundary, five
+// dispatches in this order — `edit_gate`, `edit_sigma_before`, `edit_cells`, `edit_sigma_delta`, `edit_finish`.
+// Compiled with eos.wgsl prepended (group 1).
 //
 // The queue (step/edit.rs `Edits`): a header whose first word is the count of edits queued since the last step, then up to
 // MAX_EDITS records of REC words, applied in queue order. Every record is a plain value; no pass reads the wall clock.
@@ -23,6 +24,12 @@
 // Booking (state.rs BOOK_GROUPS 0 and 1, one slot per cell and term, written only by the cell's own invocation): the mass
 // a cell gained (painted, preset_dropped) or lost (erased, cleared), and the energy its E plane changed by under each
 // tool — the stored difference, so the ledger balances to the bit whatever the f32 rounding of the update.
+//
+// The edit's potential energy (§2.9 [M0-D109]): `edit_gate` sets `moved` when the queue holds a paint, an erase, a drop or a
+// Clear, else clears it, every step; `edit_sigma_before` (before `edit_cells`) and `edit_sigma_delta` (after it), sized as
+// `edit_cells` is, leave every cell's stored ΔΣ in `delta` (0 where nothing landed) — two dispatches of their own, since
+// `edit_cells` already binds WebGPU's 8 storage buffers. P2 reads both on the same step (step/grav.rs's edit chain): it
+// solves φ_δ = K ∗ ΔΣ and books ½ ΔΣ (φ_before + φ_after).
 
 struct Dims {
     width: u32,
@@ -68,6 +75,10 @@ struct ActiveBox {
 @group(0) @binding(12) var<storage, read_write> sinks: array<u32>;
 // The hold's mask (state.rs `state.held`): a clear writes 0.
 @group(0) @binding(13) var held: texture_storage_2d<r32uint, write>;
+// P2's edit chain's gate (step/grav.rs, read there as a uniform): word 0 is 1 on a step whose queue moves mass.
+@group(0) @binding(14) var<storage, read_write> moved: array<u32, 4>;
+// Each cell's stored ΔΣ of this step's edits, rewritten whole on every step that applies an edit.
+@group(0) @binding(15) var<storage, read_write> delta: array<f32>;
 
 const WG: u32 = 256u;
 const HEAD: u32 = 4u;
@@ -115,8 +126,12 @@ fn edit_gate() {
     let bx0 = i32(abox.x0);
     let by0 = i32(abox.y0);
     var outside = false;
+    var mass_moves = 0u;
     for (var k = 0u; k < count; k++) {
         let kind = word(k, W_KIND);
+        if (kind == PAINT || kind == ERASE || kind == DROP || kind == CLEAR) {
+            mass_moves = 1u;
+        }
         var lo = vec2<i32>(0, 0);
         var hi = vec2<i32>(0, 0);
         if (kind == PAINT) {
@@ -139,6 +154,7 @@ fn edit_gate() {
     if (outside) {
         atomicOr(&box_flag, 1u);
     }
+    moved[0] = mass_moves;
 }
 
 fn floor_hydrogen() -> array<f32, 10> {
@@ -321,6 +337,24 @@ fn edit_cells(@builtin(global_invocation_id) id: vec3<u32>) {
     for (var t = 0u; t < 6u; t++) {
         book_energy[t * n + cell] += en[t];
     }
+}
+
+// Before `edit_cells`: each cell's Σ as it stood.
+@compute @workgroup_size(256)
+fn edit_sigma_before(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= dims.cells) {
+        return;
+    }
+    delta[id.x] = hydro[id.x];
+}
+
+// After `edit_cells`: each cell's ΔΣ, the stored Σ less the Σ it stood at.
+@compute @workgroup_size(256)
+fn edit_sigma_delta(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= dims.cells) {
+        return;
+    }
+    delta[id.x] = hydro[id.x] - delta[id.x];
 }
 
 @compute @workgroup_size(1)

@@ -31,6 +31,16 @@
 //!   (a g carrying a sink's own pull would pull the sink on itself through the bilinear read) while [`Gravity::field`],
 //!   what P4 and Δt read, carries every pull. φ is the gas's plus the sinks'.
 //!
+//! The edit chain (§2.9 [M0-D109]), added by [`Step::with_edits`](super::Step::with_edits) through
+//! [`Gravity::edit_potential`]: on a step whose P0 moved mass (P0's flag, bound as `gate`), φ_δ = K ∗ ΔΣ of P0's ΔΣ plane
+//! — `grav_rows_edit` (no vacuum mask: ΔΣ is signed), `grav_columns`, `grav_rows_inverse` into a scratch plane, before φ's
+//! rows on the same work buffer — then `energy.edit_potential` booked a cell as ½ ΔΣ (φ_before + φ_after), the trapezoid,
+//! exact for a field linear in Σ: `grav_edit_before` adds ½ ΔΣ (φ − φ_δ) after `grav_gradient`, φ the gas's (the gas's φ
+//! before the edit), and `grav_edit_after` ½ ΔΣ φ last, φ with the sinks' added — so the sum is what W = ½ Σ m φ, sinks
+//! included, moves by under the edit (§2.9; the ledger's W counts a cell's φ from the sinks at ½). P2's φ before the edit
+//! would not do: outside the box it is stale (below), where a paint beside a star's box lands. With the flag clear every
+//! dispatch of the chain returns at once.
+//!
 //! Workgroups past the box return at once. φ and g outside the box keep their last values: no pass reads them there.
 //! P9's Δt reads |g| ([`super::dt`], §2.3.5's gravity term); P4 and the block summary read φ and g (their lots). The
 //! cadence (§1.4.4) is not built.
@@ -114,6 +124,26 @@ pub struct Gravity {
     /// With P3: the gas's own g, which `field` holds plus the sinks' pull.
     gas: Option<wgpu::Buffer>,
     pub(super) dispatches: Vec<Dispatch>,
+    /// What [`Gravity::edit_potential`] builds its chain from.
+    kit: Kit,
+}
+
+/// P2's module and the buffers its convolution reads, kept for the edit chain.
+struct Kit {
+    module: wgpu::ShaderModule,
+    world: [u32; 2],
+    max_nx: u32,
+    buffers: [wgpu::Buffer; 7],
+    phi: wgpu::Buffer,
+    args: wgpu::Buffer,
+}
+
+/// The edit chain's dispatches (§2.9 [M0-D109]): the solve, to run before φ's rows; the first half of the booking, after
+/// `grav_gradient`; the second, last in P2.
+pub struct EditChain {
+    pub solve: Vec<Dispatch>,
+    pub before: Dispatch,
+    pub after: Dispatch,
 }
 
 impl Gravity {
@@ -231,7 +261,59 @@ impl Gravity {
         if sinks.is_some() {
             dispatches.push(dispatch("grav_sinks", &[0, 1, 5, 7, 11, 12, 13], tiles(), false));
         }
-        Ok(Gravity { field, gas, dispatches })
+        let kit = Kit {
+            module,
+            world: [world.width, world.height],
+            max_nx,
+            buffers: [boxfit.active().clone(), fft_params, twiddles, work, grav_params, kquarter, koffsets],
+            phi: side.phi().clone(),
+            args: boxfit.args().clone(),
+        };
+        Ok(Gravity { field, gas, dispatches, kit })
+    }
+
+    /// The edit chain on P0's ΔΣ plane `delta` and its flag `moved` (word 0 set on a step whose edits move mass), booking
+    /// into `book` — P2's booking buffer, `energy.edit_potential` (§2.9 [M0-D109]). Its own scratch plane holds φ_δ.
+    pub fn edit_potential(&self, device: &wgpu::Device, delta: &wgpu::Buffer, moved: &wgpu::Buffer, book: &wgpu::Buffer) -> EditChain {
+        let k = &self.kit;
+        let [width, height] = k.world;
+        let phi_edit = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("grav.phi_edit"),
+            size: u64::from(width) * u64::from(height) * 4,
+            usage: wgpu::BufferUsages::STORAGE,
+            mapped_at_creation: false,
+        });
+        let entry = |binding: u32| -> wgpu::BindingResource<'_> {
+            match binding {
+                0..=3 => k.buffers[binding as usize].as_entire_binding(),
+                4 => delta.as_entire_binding(),
+                5 | 17 => phi_edit.as_entire_binding(),
+                7..=9 => k.buffers[binding as usize - 3].as_entire_binding(),
+                10 => k.phi.as_entire_binding(),
+                16 => moved.as_entire_binding(),
+                _ => book.as_entire_binding(),
+            }
+        };
+        let dispatch = |label: &'static str, bindings: &[u32], size: Size| {
+            let pipeline = compute_pipeline(device, &k.module, label);
+            let entries: Vec<wgpu::BindGroupEntry> = bindings.iter().map(|&b| wgpu::BindGroupEntry { binding: b, resource: entry(b) }).collect();
+            let bind_groups = vec![device.create_bind_group(&wgpu::BindGroupDescriptor {
+                label: Some(label),
+                layout: &pipeline.get_bind_group_layout(0),
+                entries: &entries,
+            })];
+            Dispatch { label, pipeline, bind_groups, size }
+        };
+        let tiles = || Size::Indirect(k.args.clone(), ARGS_TILES);
+        EditChain {
+            solve: vec![
+                dispatch("grav_rows_edit", &[0, 1, 2, 3, 4, 16], Size::Fixed([height, 1, 1])),
+                dispatch("grav_columns", &[0, 2, 3, 7, 8, 9, 16], Size::Fixed([k.max_nx, 1, 1])),
+                dispatch("grav_rows_inverse", &[0, 1, 2, 3, 5, 16], Size::Fixed([height + 2, 1, 1])),
+            ],
+            before: dispatch("grav_edit_before", &[0, 1, 4, 10, 16, 17, 18], tiles()),
+            after: dispatch("grav_edit_after", &[0, 1, 4, 10, 16, 18], tiles()),
+        }
     }
 
     /// g = −∇φ, f32: the x plane, the y plane, then φ's (P4's energy source, §0.5 [M0-D64]), then g_pull's x and y planes
