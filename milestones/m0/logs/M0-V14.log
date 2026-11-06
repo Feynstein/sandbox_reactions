@@ -1,0 +1,16 @@
+M0-V14 trail — linux-pc (laserax-ai), started 2026-11-06 16:10:37 EST (plan.py show baseline: 846 files)
+rung_record.py now at launch: model=claude-opus-5-5 level=max plugin=installed (the heading's rung)
+16:1x probes (read-only): server laserax-ai-server idle (RTX 4090 18 MiB, 0 %); its 432 tracked code files = linux-pc's HEAD 860cd54 (only tools/pb/verify.anchor.json differs: the plan's entry); server's plan, lives.md, physics.md older; no server-only loop_times lines or logs; assets/calibration.json on both = 53d692bb… (physics_hash 56df8ade…, 2026-10-26), stale against today's assets.
+The lead (question tool): «I launch the chain now (Recommended)» — rsync up (R18), the chain in tmux `v14` on laserax-ai-server, log milestones/m0/logs/M0-V14.chain.log there.
+16:2x rsync up (R18; logs/M0-V14.log excluded): exit 0; the server's plan sha256 = linux-pc's (b7b25e1e…).
+16:24:56 chain launched: tmux v14 on laserax-ai-server, build/v14/chain.sh sha256 36ad6b214739…; log there: milestones/m0/logs/M0-V14.chain.log.
+  build up to date (0.38 s); items 1-2: m_ch_sb 3216.419921, m_tov_sb = ns_sigma_max_sb 4853.169982 (old file dropped: another physics_hash).
+16:26:31 S2's C6 pair launched: tmux v14s2 (build/v14/s2_0.05, s2_0.1; s2.done).
+16:27 code checks: MAX_PASSES 128 (reference/heat.rs:55, shaders/heat.wgsl:359); no SIGMA_HOLD/ETA_HOLD/R_HOLD in crates/; reactions.json N_Fe q_ratio -1.14.
+16:28:41 m_ign_sb done (10 lives, 3 min 44 s; light 2471.967 / heavy 2501.064); m_up_sb started. The lead's second prompt: make it survive a disconnect, IN PROGRESS, a handoff, they re-run the task after the run.
+  Survives a disconnect: tmux on the server, logind KillUserProcesses default (no); checked from a fresh SSH connection.
+Handoff written (plan.py handoff); detail milestones/m0/tasks/M0-V14.md. Claim NOT RUN — owed at the close (R18: on the server, after the chain's outputs are home).
+16:32-16:34 the lead's «do a quick check»: tmux v14 and v14s2 up; RTX 4090 95 %, 3.8 GB, 53 C. m_ign_sb DONE (224.3 s). m_up_sb life 01 (3351.032) main_sequence step 15,009, 62 steps/s (GPU shared), heat_unconverged 0.
+  T98a sun_base re-run: 19,958 steps, t 225.009863; dumps s_5000/10000/15000/19958 byte-identical to build/t98a/sun_base (cmp) — § Tuning — K1 reproduces.
+  S2 f_dep 0.05 done (5,189 steps, t 30.003); 0.1 and the Giant re-run running. calibrate_status.py (no --item): NO-GO on m_bh_sb's bracket projection only; --item m_up_sb: GO.
+  The lead asked to commit from linux-pc: plain git push to origin only; R18's push to the server waits (updateInstead would rewrite files under the chain).
